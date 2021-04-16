@@ -10,6 +10,7 @@ import { HeadProvider } from "react-head"
 import { graphql } from "react-relay"
 import { PurchaseHistoryProps } from "../Components/PurchaseHistory"
 import { PurchaseAppFragmentContainer } from "../PurchaseApp"
+import { Pagination } from "@artsy/palette"
 
 jest.unmock("react-relay")
 jest.mock("v2/Components/Pagination/useComputeHref")
@@ -100,7 +101,7 @@ describe("Purchase app", () => {
         const component = await render(mockMe, userType)
         const text = component.text()
         expect(text).toContain(
-          "pending•Track orderLisa BreslowGramercy Park SouthA Gallery New York, NYOrder No.abcdefgTotal$12,000Payment MethodN/AFulfillmentPickupMore infoNeed Help? Contact Us.1234...7Navigate leftPrevNextNavigate right"
+          "pending•Track orderLisa BreslowGramercy Park SouthA Gallery New York, NYOrder No.abcdefgTotal$12,000Payment MethodN/AFulfillmentPickupMore infoNeed Help? Contact Us."
         )
       })
     })
@@ -123,9 +124,9 @@ describe("Purchase app", () => {
           "refetch"
         )
 
-        const pagination = component.find("LargePagination")
+        const pagination = component.find(Pagination)
         expect(pagination.length).toBe(1)
-        expect(pagination.text()).toContain("1234...7")
+        expect(pagination.text()).toContain("1234…7")
         pagination.find("a").at(1).simulate("click")
         expect(refetchSpy).toHaveBeenCalledTimes(1)
         expect(refetchSpy.mock.calls[0][0]).toEqual(

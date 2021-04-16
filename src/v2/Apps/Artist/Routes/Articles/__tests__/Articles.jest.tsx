@@ -6,6 +6,7 @@ import { ReactWrapper } from "enzyme"
 import React from "react"
 import { graphql } from "react-relay"
 import { Breakpoint } from "v2/Utils/Responsive"
+import { Pagination } from "v2/Components/Pagination"
 
 jest.unmock("react-relay")
 jest.mock("v2/Components/Pagination/useComputeHref")
@@ -40,8 +41,8 @@ describe("Articles Route", () => {
 
     it("renders proper elements", () => {
       expect(wrapper.find("ArticleItem").length).toBe(10)
-      expect(wrapper.find("Pagination").length).toBe(1)
-      expect(wrapper.find("Pagination").find("a").length).toBe(6)
+      expect(wrapper.find(Pagination).length).toBe(1)
+      expect(wrapper.find(Pagination).find("a").length).toBe(6)
     })
 
     it("renders proper article contents", () => {

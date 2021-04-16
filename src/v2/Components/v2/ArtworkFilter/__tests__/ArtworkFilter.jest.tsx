@@ -9,6 +9,7 @@ import { renderToString } from "v2/DevTools/__tests__/MockRelayRendererFixtures"
 import React from "react"
 import { ArtworkQueryFilter } from "../ArtworkQueryFilter"
 import { ArtworkFilterFixture } from "./fixtures/ArtworkFilter.fixture"
+import { Pagination } from "v2/Components/Pagination"
 
 jest.unmock("react-relay")
 jest.mock("v2/Artsy/Analytics/useTracking")
@@ -56,7 +57,7 @@ describe("ArtworkFilter", () => {
       const wrapper = await getWrapper()
       expect(wrapper.find("ArtworkFilterArtworkGrid").length).toEqual(1)
       expect(wrapper.find("SortFilter").length).toEqual(1)
-      expect(wrapper.find("Pagination").length).toEqual(1)
+      expect(wrapper.find(Pagination).length).toEqual(1)
     })
 
     it("triggers #onFilterClick on filter click, passing back the changed value and current filter state", async () => {

@@ -6,6 +6,7 @@ import { ReactWrapper } from "enzyme"
 import React from "react"
 import { graphql } from "react-relay"
 import { Breakpoint } from "v2/Utils/Responsive"
+import { Pagination } from "v2/Components/Pagination"
 
 jest.unmock("react-relay")
 jest.mock("v2/Components/Pagination/useComputeHref")
@@ -40,7 +41,7 @@ describe("Shows Route", () => {
 
     it("renders proper components", () => {
       expect(wrapper.find("ArtistShows").length).toBe(3)
-      expect(wrapper.find("Pagination").length).toBe(3)
+      expect(wrapper.find(Pagination).length).toBe(3)
       expect(wrapper.find("ArtistShowBlockItem").length).toBe(4)
       expect(wrapper.find("ArtistShowBlockItem").find("img").length).toBe(4)
       expect(wrapper.find("ArtistShowListItem").length).toBe(8)
@@ -70,7 +71,7 @@ describe("Shows Route", () => {
 
     it("renders the correct number of pages", () => {
       const getPaginationAt = index =>
-        wrapper.find("Pagination").at(index).find("a")
+        wrapper.find(Pagination).at(index).find("a")
 
       expect(getPaginationAt(0).length).toBe(4)
       expect(getPaginationAt(1).length).toBe(5)
