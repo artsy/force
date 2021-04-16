@@ -2,7 +2,6 @@ import React from "react"
 import { AppContainer } from "v2/Apps/Components/AppContainer"
 import { Box, Separator, Spacer } from "@artsy/palette"
 
-import { Footer } from "v2/Components/Footer"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtistSeriesApp_artistSeries } from "v2/__generated__/ArtistSeriesApp_artistSeries.graphql"
 import { ArtistSeriesHeaderFragmentContainer as ArtistSeriesHeader } from "./Components/ArtistSeriesHeader"
@@ -71,7 +70,6 @@ const ArtistSeriesApp: React.FC<ArtistSeriesAppProps> = ({ artistSeries }) => {
                   />
                 </LazyLoadComponent>
               )}
-              <Footer />
             </AppContainer>
           </Box>
         </AppContainer>

@@ -5,8 +5,11 @@ import { useMaybeReloadAfterInquirySignIn } from "v2/Artsy/Router/Utils/useMaybe
 import { NAV_BAR_HEIGHT, NavBar, MOBILE_NAV_HEIGHT } from "v2/Components/NavBar"
 import { Match } from "found"
 import { isFunction } from "lodash"
+import { Footer } from "v2/Components/Footer"
 import React, { useEffect } from "react"
 import createLogger from "v2/Utils/logger"
+import { useSystemContext } from "v2/Artsy"
+import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
 
 const logger = createLogger("Apps/Components/AppShell")
 
@@ -18,6 +21,8 @@ interface AppShellProps {
 export const AppShell: React.FC<AppShellProps> = props => {
   const { children, match } = props
   const routeConfig = findCurrentRoute(match)
+  const { isEigen } = useSystemContext()
+  const showFooter = !isEigen
 
   /**
    * Check to see if a route has a prepare key; if so call it. Used typically to
@@ -61,6 +66,7 @@ export const AppShell: React.FC<AppShellProps> = props => {
       </Box>
 
       <NetworkOfflineMonitor />
+      <HorizontalPadding>{showFooter && <Footer />}</HorizontalPadding>
     </Box>
   )
 }

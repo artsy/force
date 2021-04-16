@@ -1,6 +1,5 @@
 import React from "react"
 import { Separator } from "@artsy/palette"
-import { Footer } from "v2/Components/Footer"
 import { AppContainer } from "../Components/AppContainer"
 import { HorizontalPadding } from "../Components/HorizontalPadding"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -40,8 +39,6 @@ export const PartnerApp: React.FC<PartnerAppProps> = ({
             <NavigationTabs partner={partner} />
 
             {children}
-
-            <Footer />
           </HorizontalPadding>
         </AppContainer>
       </Foreground>

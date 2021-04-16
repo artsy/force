@@ -8,7 +8,6 @@ import { withSystemContext } from "v2/Artsy"
 import { track } from "v2/Artsy/Analytics"
 import * as Schema from "v2/Artsy/Analytics/Schema"
 
-import { Footer } from "v2/Components/Footer"
 import { RecentlyViewedQueryRenderer as RecentlyViewed } from "v2/Components/RecentlyViewed"
 
 import { RouterState, withRouter } from "found"
@@ -86,12 +85,6 @@ export class SearchApp extends React.Component<Props> {
         <Row>
           <Col>
             <RecentlyViewed />
-          </Col>
-        </Row>
-
-        <Row>
-          <Col>
-            <Footer />
           </Col>
         </Row>
       </>

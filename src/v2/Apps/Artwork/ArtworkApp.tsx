@@ -23,7 +23,6 @@ import { PricingContextFragmentContainer as PricingContext } from "./Components/
 import { withSystemContext } from "v2/Artsy"
 import * as Schema from "v2/Artsy/Analytics/Schema"
 import { useRouteTracking } from "v2/Artsy/Analytics/useRouteTracking"
-import { Footer } from "v2/Components/Footer"
 import { RecentlyViewedQueryRenderer as RecentlyViewed } from "v2/Components/RecentlyViewed"
 import { RouterContext } from "found"
 import { TrackingProp } from "react-tracking"
@@ -295,13 +294,6 @@ export class ArtworkApp extends React.Component<Props> {
               </Row>
             </LazyLoadComponent>
           )}
-
-          <Row>
-            <Col>
-              <Footer />
-            </Col>
-          </Row>
-
           <div
             id="lightbox-container"
             style={{
