@@ -1,4 +1,4 @@
-import { Box, Col, Row } from "@artsy/palette"
+import { Box } from "@artsy/palette"
 import { NetworkOfflineMonitor } from "v2/Artsy/Router/NetworkOfflineMonitor"
 import { findCurrentRoute } from "v2/Artsy/Router/Utils/findCurrentRoute"
 import { useMaybeReloadAfterInquirySignIn } from "v2/Artsy/Router/Utils/useMaybeReloadAfterInquirySignIn"
@@ -8,6 +8,8 @@ import { isFunction } from "lodash"
 import { Footer } from "v2/Components/Footer"
 import React, { useEffect } from "react"
 import createLogger from "v2/Utils/logger"
+import { useSystemContext } from "v2/Artsy"
+import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
 
 const logger = createLogger("Apps/Components/AppShell")
 
@@ -19,6 +21,8 @@ interface AppShellProps {
 export const AppShell: React.FC<AppShellProps> = props => {
   const { children, match } = props
   const routeConfig = findCurrentRoute(match)
+  const { isEigen } = useSystemContext()
+  const showFooter = !isEigen
 
   /**
    * Check to see if a route has a prepare key; if so call it. Used typically to
@@ -62,12 +66,7 @@ export const AppShell: React.FC<AppShellProps> = props => {
       </Box>
 
       <NetworkOfflineMonitor />
-
-      <Row>
-        <Col>
-          <Footer />
-        </Col>
-      </Row>
+      <HorizontalPadding>{showFooter && <Footer />}</HorizontalPadding>
     </Box>
   )
 }
