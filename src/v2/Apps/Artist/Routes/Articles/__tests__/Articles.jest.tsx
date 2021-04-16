@@ -42,7 +42,7 @@ describe("Articles Route", () => {
     it("renders proper elements", () => {
       expect(wrapper.find("ArticleItem").length).toBe(10)
       expect(wrapper.find(Pagination).length).toBe(1)
-      expect(wrapper.find(Pagination).find("a").length).toBe(6)
+      expect(wrapper.find(Pagination).find("a").length).toBe(5)
     })
 
     it("renders proper article contents", () => {
