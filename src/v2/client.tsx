@@ -66,7 +66,7 @@ async function setupClient() {
   try {
     await setupBraze()
   } catch (error) {
-    console.error("Braze marketing sdk setup failed:", error)
+    console.error("[v2/client.tsx] Braze marketing sdk setup failed:", error)
   }
 })()
 
