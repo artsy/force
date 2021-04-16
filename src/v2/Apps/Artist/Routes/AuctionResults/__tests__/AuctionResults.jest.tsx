@@ -10,6 +10,7 @@ import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { Breakpoint } from "v2/Utils/Responsive"
 import { openAuthModal } from "v2/Utils/openAuthModal"
+import { Pagination } from "v2/Components/Pagination"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
@@ -68,7 +69,7 @@ describe("AuctionResults", () => {
     })
 
     it("calls auth modal for 1st pagination but not for 2nd", done => {
-      const pagination = wrapper.find("Pagination")
+      const pagination = wrapper.find(Pagination)
       pagination.find("a").at(1).simulate("click")
 
       setTimeout(() => {
@@ -109,7 +110,7 @@ describe("AuctionResults", () => {
 
     it("renders proper elements", () => {
       expect(wrapper.find("select")).toHaveLength(3) // year created earliest, year created latest, sale date
-      expect(wrapper.find("Pagination").length).toBe(1)
+      expect(wrapper.find(Pagination).length).toBe(1)
       expect(wrapper.find("ArtistAuctionResultItem").length).toBe(10)
     })
 
@@ -161,7 +162,7 @@ describe("AuctionResults", () => {
       })
       describe("pagination", () => {
         it("triggers relay refetch with after, and re-shows sign up to see price", done => {
-          const pagination = wrapper.find("Pagination")
+          const pagination = wrapper.find(Pagination)
 
           pagination.find("a").at(1).simulate("click")
 
