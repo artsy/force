@@ -1,7 +1,6 @@
-import { Box, Spacer } from "@artsy/palette"
+import { Spacer, useThemeConfig } from "@artsy/palette"
 import React from "react"
 import { RelayProp, createFragmentContainer, graphql } from "react-relay"
-
 import { ArtworkFilterArtworkGrid_filtered_artworks } from "v2/__generated__/ArtworkFilterArtworkGrid_filtered_artworks.graphql"
 import { useSystemContext, useTracking } from "v2/Artsy"
 import ArtworkGrid from "v2/Components/ArtworkGrid"
@@ -27,6 +26,11 @@ const ArtworkFilterArtworkGrid: React.FC<ArtworkFilterArtworkGridProps> = props 
     contextPageOwnerId,
   } = useAnalyticsContext()
   const context = useArtworkFilterContext()
+
+  const tokens = useThemeConfig({
+    v2: { separator: <Spacer my={3} /> },
+    v3: { separator: null },
+  })
 
   const {
     columnCount,
@@ -80,17 +84,15 @@ const ArtworkFilterArtworkGrid: React.FC<ArtworkFilterArtworkGridProps> = props 
           }}
         />
 
-        <Spacer mb={3} />
+        {tokens.separator}
 
-        <Box>
-          <Pagination
-            hasNextPage={hasNextPage}
-            pageCursors={pageCursors}
-            onClick={(_cursor, page) => loadPage(page)}
-            onNext={() => loadNext()}
-            scrollTo="#jump--artworkFilter"
-          />
-        </Box>
+        <Pagination
+          hasNextPage={hasNextPage}
+          pageCursors={pageCursors}
+          onClick={(_cursor, page) => loadPage(page)}
+          onNext={() => loadNext()}
+          scrollTo="#jump--artworkFilter"
+        />
       </LoadingArea>
     </>
   )
