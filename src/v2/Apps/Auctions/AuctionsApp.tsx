@@ -86,7 +86,7 @@ const AuctionsApp: React.FC<AuctionsAppProps> = props => {
           </HorizontalPadding>
         )}
         <HorizontalPadding mt={4}>
-          <RouteTabs mb={2}>
+          <RouteTabs mb={2} fill>
             <RouteTab exact to="/auctions">
               Current Auctions
             </RouteTab>
