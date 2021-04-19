@@ -17,6 +17,7 @@ interface Props {
   hasNextPage: boolean
   pageCursors: Pagination_pageCursors
   scrollTo?: string
+  offset?: number
   getHref?: PaginationProps["getHref"]
   onClick?: (cursor: string, page: number) => void
   onNext?: (page: number) => void
@@ -29,6 +30,7 @@ export const Pagination: React.FC<Props> = ({
   getHref: __getHref__,
   onClick = _cursor => ({}),
   onNext = () => ({}),
+  offset,
 }) => {
   const getHref = __getHref__ ?? useComputeHref()
 
@@ -49,14 +51,14 @@ export const Pagination: React.FC<Props> = ({
     if (userIsForcingNavigation(event)) return
     event.preventDefault()
     onClick(cursor, page)
-    scrollIntoView({ selector: scrollTo, offset: 40 })
+    scrollIntoView({ selector: scrollTo, offset })
   }
 
   const handleNext = (event: React.MouseEvent, page: number) => {
     if (userIsForcingNavigation(event)) return
     event.preventDefault()
     onNext(page)
-    scrollIntoView({ selector: scrollTo, offset: 40 })
+    scrollIntoView({ selector: scrollTo, offset })
   }
 
   const paginationProps: PaginationProps = {
@@ -88,6 +90,10 @@ export const Pagination: React.FC<Props> = ({
       )}
     </>
   )
+}
+
+Pagination.defaultProps = {
+  offset: 40,
 }
 
 export const PaginationFragmentContainer = createFragmentContainer(Pagination, {
