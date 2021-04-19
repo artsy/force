@@ -89,10 +89,6 @@ const FairArtworksFilter: React.FC<FairArtworksFilterProps> = props => {
         mt={[0, "-1px"]}
         relay={relay}
         viewer={fair}
-        relayVariables={{
-          aggregations: ["TOTAL"],
-          shouldFetchCounts: false, // We don't need to refetch counts.
-        }}
         Filters={Filters}
       ></BaseArtworkFilter>
     </ArtworkFilterContextProvider>
