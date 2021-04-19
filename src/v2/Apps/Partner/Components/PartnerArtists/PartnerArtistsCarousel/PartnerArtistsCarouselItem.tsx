@@ -37,7 +37,7 @@ export const PartnerArtistsCarouselItem: React.FC<PartnerArtistsCarouselItemProp
   const artwork = artist.filterArtworksConnection.edges[0].node
 
   return (
-    <Box width={[300, "100%"]} key={artist.id}>
+    <Box width={[300, "100%"]}>
       <ResponsiveImage>
         <RouterLink to={partnerArtistHref}>
           <Image
@@ -70,7 +70,7 @@ export const PartnerArtistsCarouselItem: React.FC<PartnerArtistsCarouselItemProp
   )
 }
 
-export const PartnerArtistsCarouselFragmentContainer = createFragmentContainer(
+export const PartnerArtistsCarouselItemFragmentContainer = createFragmentContainer(
   PartnerArtistsCarouselItem,
   {
     artist: graphql`

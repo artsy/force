@@ -78,9 +78,9 @@ fragment PartnerArtistsCarousel_partner_2HEEH6 on Partner {
         artworks
       }
       node {
+        id
         slug
         ...PartnerArtistsCarouselItem_artist
-        id
         __typename
       }
       cursor
@@ -238,8 +238,8 @@ return {
                     "name": "node",
                     "plural": false,
                     "selections": [
-                      (v3/*: any*/),
                       (v4/*: any*/),
+                      (v3/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -494,7 +494,7 @@ return {
     "metadata": {},
     "name": "PartnerArtistsCarouselQuery",
     "operationKind": "query",
-    "text": "query PartnerArtistsCarouselQuery(\n  $partnerId: String!\n  $first: Int!\n  $after: String\n) {\n  partner(id: $partnerId) @principalField {\n    ...PartnerArtistsCarousel_partner_2HEEH6\n    id\n  }\n}\n\nfragment FollowArtistButton_artist on Artist {\n  id\n  internalID\n  name\n  slug\n  is_followed: isFollowed\n  counts {\n    follows\n  }\n}\n\nfragment PartnerArtistsCarouselItem_artist on Artist {\n  id\n  name\n  formattedNationalityAndBirthday\n  ...FollowArtistButton_artist\n  image {\n    cropped(width: 100, height: 100) {\n      url\n    }\n  }\n  filterArtworksConnection(first: 1, partnerIDs: [$partnerId]) {\n    edges {\n      node {\n        id\n        image {\n          cropped(height: 200, width: 300) {\n            src\n            srcSet\n          }\n        }\n      }\n    }\n    id\n  }\n}\n\nfragment PartnerArtistsCarousel_partner_2HEEH6 on Partner {\n  slug\n  artists: artistsConnection(first: $first, after: $after) {\n    edges {\n      isDisplayOnPartnerProfile\n      counts {\n        artworks\n      }\n      node {\n        slug\n        ...PartnerArtistsCarouselItem_artist\n        id\n        __typename\n      }\n      cursor\n      id\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query PartnerArtistsCarouselQuery(\n  $partnerId: String!\n  $first: Int!\n  $after: String\n) {\n  partner(id: $partnerId) @principalField {\n    ...PartnerArtistsCarousel_partner_2HEEH6\n    id\n  }\n}\n\nfragment FollowArtistButton_artist on Artist {\n  id\n  internalID\n  name\n  slug\n  is_followed: isFollowed\n  counts {\n    follows\n  }\n}\n\nfragment PartnerArtistsCarouselItem_artist on Artist {\n  id\n  name\n  formattedNationalityAndBirthday\n  ...FollowArtistButton_artist\n  image {\n    cropped(width: 100, height: 100) {\n      url\n    }\n  }\n  filterArtworksConnection(first: 1, partnerIDs: [$partnerId]) {\n    edges {\n      node {\n        id\n        image {\n          cropped(height: 200, width: 300) {\n            src\n            srcSet\n          }\n        }\n      }\n    }\n    id\n  }\n}\n\nfragment PartnerArtistsCarousel_partner_2HEEH6 on Partner {\n  slug\n  artists: artistsConnection(first: $first, after: $after) {\n    edges {\n      isDisplayOnPartnerProfile\n      counts {\n        artworks\n      }\n      node {\n        id\n        slug\n        ...PartnerArtistsCarouselItem_artist\n        __typename\n      }\n      cursor\n      id\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();

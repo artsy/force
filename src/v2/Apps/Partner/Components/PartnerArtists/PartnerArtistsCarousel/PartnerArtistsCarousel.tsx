@@ -10,7 +10,7 @@ import {
   themeProps,
 } from "@artsy/palette"
 import React from "react"
-import { createPaginationContainer, graphql, QueryRenderer } from "react-relay"
+import { createFragmentContainer, graphql, QueryRenderer } from "react-relay"
 import styled from "styled-components"
 import { useSystemContext } from "v2/Artsy"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
@@ -19,7 +19,7 @@ import { Media } from "v2/Utils/Responsive"
 import { PartnerArtistsCarouselQuery } from "v2/__generated__/PartnerArtistsCarouselQuery.graphql"
 import { PartnerArtistsCarousel_partner } from "v2/__generated__/PartnerArtistsCarousel_partner.graphql"
 import {
-  PartnerArtistsCarouselFragmentContainer,
+  PartnerArtistsCarouselItemFragmentContainer,
   ResponsiveImage,
 } from "./PartnerArtistsCarouselItem"
 import { PartnerArtistsCarouselPlaceholder } from "./PartnerArtistsCarouselPlaceholder"
@@ -48,7 +48,7 @@ const ArtistCarouselRail = styled(CarouselRail)`
   `};
 `
 
-const PAGE_SIZE = 20
+const PAGE_SIZE = 19
 
 export interface PartnerArtistsCarouselProps {
   partner: PartnerArtistsCarousel_partner
@@ -102,7 +102,8 @@ export const PartnerArtistsCarousel: React.FC<PartnerArtistsCarouselProps> = ({
         .filter(e => e.isDisplayOnPartnerProfile && e.counts.artworks > 0)
         .map(edge => {
           return (
-            <PartnerArtistsCarouselFragmentContainer
+            <PartnerArtistsCarouselItemFragmentContainer
+              key={edge.node.id}
               artist={edge.node}
               partnerArtistHref={`/partner2/${slug}/artists/${edge.node.slug}`}
             />
@@ -136,13 +137,13 @@ export const PARTNER_ARTISTS_CAROUSEL_QUERY = graphql`
   }
 `
 
-export const PartnerArtistsCarouselPaginationContainer = createPaginationContainer(
+export const PartnerArtistsCarouselFragmentContainer = createFragmentContainer(
   PartnerArtistsCarousel,
   {
     partner: graphql`
       fragment PartnerArtistsCarousel_partner on Partner
         @argumentDefinitions(
-          first: { type: "Int", defaultValue: 20 }
+          first: { type: "Int", defaultValue: 19 }
           after: { type: "String" }
         ) {
         slug
@@ -154,6 +155,7 @@ export const PartnerArtistsCarouselPaginationContainer = createPaginationContain
               artworks
             }
             node {
+              id
               slug
               ...PartnerArtistsCarouselItem_artist
             }
@@ -161,17 +163,6 @@ export const PartnerArtistsCarouselPaginationContainer = createPaginationContain
         }
       }
     `,
-  },
-  {
-    query: PARTNER_ARTISTS_CAROUSEL_QUERY,
-    direction: "forward",
-    getVariables(
-      { partner: { slug: partnerId } },
-      { cursor: after },
-      { first }
-    ) {
-      return { partnerId, after, first }
-    },
   }
 )
 
@@ -195,9 +186,7 @@ export const PartnerArtistsCarouselRenderer: React.FC<{
         if (error || !props)
           return <PartnerArtistsCarouselPlaceholder count={PAGE_SIZE} />
 
-        return (
-          <PartnerArtistsCarouselPaginationContainer {...rest} {...props} />
-        )
+        return <PartnerArtistsCarouselFragmentContainer {...rest} {...props} />
       }}
     />
   )

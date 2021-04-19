@@ -12,6 +12,7 @@ export type PartnerArtistsCarousel_partner = {
                 readonly artworks: number | null;
             } | null;
             readonly node: {
+                readonly id: string;
                 readonly slug: string;
                 readonly " $fragmentRefs": FragmentRefs<"PartnerArtistsCarouselItem_artist">;
             } | null;
@@ -38,7 +39,7 @@ var v0 = {
 return {
   "argumentDefinitions": [
     {
-      "defaultValue": 20,
+      "defaultValue": 19,
       "kind": "LocalArgument",
       "name": "first",
       "type": "Int"
@@ -115,6 +116,13 @@ return {
               "name": "node",
               "plural": false,
               "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "id",
+                  "storageKey": null
+                },
                 (v0/*: any*/),
                 {
                   "alias": null,
@@ -173,5 +181,5 @@ return {
   "type": "Partner"
 };
 })();
-(node as any).hash = 'ab9685357dc93d89fe04636eabe19cac';
+(node as any).hash = 'e2eeee0bb9409f729e03572dff23b588';
 export default node;
