@@ -35,7 +35,9 @@ export const PartnerArtistDetails: React.FC<PartnerArtistDetailsProps> = ({
               <RouterLink to={href} noUnderline>
                 <Text variant="largeTitle">{name}</Text>
               </RouterLink>
-              <Text variant="title">{formattedNationalityAndBirthday}</Text>
+              <Text color="black60" variant="title">
+                {formattedNationalityAndBirthday}
+              </Text>
             </Column>
             <Column span={[12, 6]}>
               <FollowArtistButton
