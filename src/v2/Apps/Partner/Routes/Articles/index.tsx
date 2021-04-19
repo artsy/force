@@ -58,7 +58,7 @@ const Articles: React.FC<ArticlesProps> = ({ partner, relay }) => {
   }
 
   return (
-    <Box>
+    <Box id="jumpto--articlesGrid">
       <GridColumns mt={6} gridRowGap={[2, 4]}>
         {articles.map(({ node: article }) => {
           return (
@@ -74,6 +74,8 @@ const Articles: React.FC<ArticlesProps> = ({ partner, relay }) => {
           pageCursors={pageCursors}
           onClick={handleClick}
           onNext={handleNext}
+          scrollTo="#jumpto--articlesGrid"
+          offset={200}
         />
       </Box>
     </Box>
