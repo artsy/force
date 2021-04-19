@@ -203,7 +203,7 @@ const BidInfo: React.FC<DetailsProps> = ({
     return null
   }
 
-  const bidderPositionCounts = sale_artwork.counts.bidder_positions ?? 0
+  const bidderPositionCounts = sale_artwork?.counts.bidder_positions ?? 0
 
   if (bidderPositionCounts === 0) {
     return null
