@@ -52,6 +52,7 @@ export const partnerRoutes: RouteConfig[] = [
         prepare: () => {
           OverviewRoute.preload()
         },
+        ignoreScrollBehavior: true,
         query: graphql`
           query partnerRoutes_OverviewQuery($partnerId: String!) {
             partner(id: $partnerId) @principalField {
@@ -78,6 +79,7 @@ export const partnerRoutes: RouteConfig[] = [
       {
         getComponent: () => ShowsRoute,
         path: "shows",
+        ignoreScrollBehavior: true,
         prepare: () => {
           ShowsRoute.preload()
         },
@@ -88,6 +90,7 @@ export const partnerRoutes: RouteConfig[] = [
         prepare: () => {
           WorksRoute.preload()
         },
+        ignoreScrollBehavior: true,
         query: graphql`
           query partnerRoutes_WorksQuery(
             $partnerId: String!
@@ -150,6 +153,7 @@ export const partnerRoutes: RouteConfig[] = [
         prepare: () => {
           ContactRoute.preload()
         },
+        ignoreScrollBehavior: true,
         query: graphql`
           query partnerRoutes_ContactQuery($partnerId: String!) {
             partner(id: $partnerId) @principalField {

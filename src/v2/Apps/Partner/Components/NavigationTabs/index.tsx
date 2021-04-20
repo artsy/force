@@ -3,8 +3,10 @@ import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
 import { FullBleed } from "v2/Components/FullBleed"
+import { useNavBarHeigth } from "v2/Components/NavBar/useNavBarHeigth"
 import { RouteTab, RouteTabs } from "v2/Components/RouteTabs"
 import { StickyContainer } from "v2/Components/StickyContainer"
+import { ScrollIntoView } from "v2/Utils"
 import { NavigationTabs_partner } from "v2/__generated__/NavigationTabs_partner.graphql"
 
 // TODO: Update value in component heigth changed
@@ -15,6 +17,7 @@ interface NavigationTabsProps {
 }
 
 export const NavigationTabs: React.FC<NavigationTabsProps> = ({ partner }) => {
+  const navBarHeigth = useNavBarHeigth()
   const renderTabs = () => {
     const {
       slug,
@@ -65,9 +68,15 @@ export const NavigationTabs: React.FC<NavigationTabsProps> = ({ partner }) => {
     return routes
       .filter(route => !route.hidden)
       .map(route => (
-        <RouteTab to={route.href} exact={route.exact} key={route.href}>
-          {route.name}
-        </RouteTab>
+        <ScrollIntoView
+          key={route.href}
+          selector="#jumpto--PartnerHeader"
+          offset={navBarHeigth}
+        >
+          <RouteTab to={route.href} exact={route.exact}>
+            {route.name}
+          </RouteTab>
+        </ScrollIntoView>
       ))
   }
 
