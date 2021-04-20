@@ -89,7 +89,13 @@ const node: ReaderFragment = {
                   "storageKey": null
                 },
                 {
-                  "args": null,
+                  "args": [
+                    {
+                      "kind": "Literal",
+                      "name": "width",
+                      "value": 325
+                    }
+                  ],
                   "kind": "FragmentSpread",
                   "name": "CarouselArtwork_artwork"
                 }
@@ -105,5 +111,5 @@ const node: ReaderFragment = {
   ],
   "type": "Viewer"
 };
-(node as any).hash = '13b7d5a54434be03ddc8128e7a3a5c6a';
+(node as any).hash = '4915a4bebd06055da9be719bccdd6c78';
 export default node;

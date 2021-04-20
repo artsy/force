@@ -6,15 +6,21 @@ const Ready = ({ onMount }) => {
   return null
 }
 
+interface LazyLoadComponentProps {
+  threshold?: number
+}
+
 /**
  * Simple hooks wrapper around LazyLoadComponent.
  * Allows one to swap out components once the `Waypoint` appears on screen.
  */
-export const useLazyLoadComponent = () => {
+export const useLazyLoadComponent = ({
+  threshold = 1000,
+}: LazyLoadComponentProps = {}) => {
   const [isEnteredView, setIsEnteredView] = useState(false)
 
   const Waypoint = () => (
-    <LazyLoadComponent style={{ display: "inline" }}>
+    <LazyLoadComponent threshold={threshold} style={{ display: "inline" }}>
       <Ready
         onMount={() => {
           setIsEnteredView(true)

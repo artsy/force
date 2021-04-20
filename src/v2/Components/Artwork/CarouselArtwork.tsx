@@ -1,16 +1,72 @@
 import { Box, Image } from "@artsy/palette"
+import { useSystemContext } from "v2/Artsy"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
+import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import { CarouselArtwork_artwork } from "v2/__generated__/CarouselArtwork_artwork.graphql"
+import { SaveButtonFragmentContainer } from "./SaveButton"
+import Metadata from "./Metadata"
+import { AuthContextModule } from "@artsy/cohesion"
 
 interface CarouselArtworkProps {
   artwork: CarouselArtwork_artwork
+  contextModule: AuthContextModule
+  hideArtistName?: boolean
+  hidePartnerName?: boolean
+  hideSaleInfo?: boolean
+  lazyLoad?: boolean
+  showExtended?: boolean
+  showMetadata?: boolean
+  onClick?: () => void
 }
 
-const CarouselArtwork: React.FC<CarouselArtworkProps> = props => {
+const CarouselArtwork: React.FC<CarouselArtworkProps> = ({
+  artwork,
+  contextModule,
+  hideArtistName,
+  hidePartnerName,
+  hideSaleInfo,
+  lazyLoad,
+  onClick,
+  showExtended,
+  showMetadata = true,
+}) => {
+  const { mediator, user } = useSystemContext()
+
   return (
     <Box>
-      <Image src={props.artwork.image.url} width={200} />
+      <RouterLink
+        to={artwork.href}
+        noUnderline
+        onClick={() => {
+          if (onClick) {
+            onClick()
+          }
+        }}
+      >
+        <Image
+          src={artwork.image.resized.src}
+          srcSet={artwork.image.resized.srcSet}
+          lazyLoad={lazyLoad}
+        />
+
+        <SaveButtonFragmentContainer
+          mediator={mediator}
+          user={user}
+          contextModule={contextModule}
+          artwork={artwork}
+        />
+
+        {showMetadata && (
+          <Metadata
+            artwork={artwork}
+            extended={showExtended}
+            hidePartnerName={hidePartnerName}
+            hideArtistName={hideArtistName}
+            hideSaleInfo={hideSaleInfo}
+          />
+        )}
+      </RouterLink>
     </Box>
   )
 }
@@ -19,9 +75,13 @@ export const CarouselArtworkFragmentContainer = createFragmentContainer(
   CarouselArtwork,
   {
     artwork: graphql`
-      fragment CarouselArtwork_artwork on Artwork {
+      fragment CarouselArtwork_artwork on Artwork
+        @argumentDefinitions(width: { type: "Int", defaultValue: 200 }) {
         image {
-          url(version: "large")
+          resized(width: $width) {
+            src
+            srcSet
+          }
           aspectRatio
           height
         }

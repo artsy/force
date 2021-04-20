@@ -9,7 +9,7 @@ export type AuctionArtworksRailArtworks_sale = {
             readonly node: {
                 readonly internalID: string;
                 readonly slug: string;
-                readonly " $fragmentRefs": FragmentRefs<"FillwidthItem_artwork">;
+                readonly " $fragmentRefs": FragmentRefs<"CarouselArtwork_artwork">;
             } | null;
         } | null> | null;
     } | null;
@@ -74,9 +74,15 @@ const node: ReaderFragment = {
                   "storageKey": null
                 },
                 {
-                  "args": null,
+                  "args": [
+                    {
+                      "kind": "Literal",
+                      "name": "width",
+                      "value": 200
+                    }
+                  ],
                   "kind": "FragmentSpread",
-                  "name": "FillwidthItem_artwork"
+                  "name": "CarouselArtwork_artwork"
                 }
               ],
               "storageKey": null
@@ -90,5 +96,5 @@ const node: ReaderFragment = {
   ],
   "type": "Sale"
 };
-(node as any).hash = '79dd4798b58a3582d9f1ff9cc4319bc6';
+(node as any).hash = '3b75d7bd8c4b9d5836a30350f82af609';
 export default node;

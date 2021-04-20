@@ -1,7 +1,8 @@
 import React from "react"
 import { auctionHeights } from "../Utils/auctionsHelpers"
 import { Box, SkeletonBox, SkeletonText } from "@artsy/palette"
-import { Carousel } from "v2/Components/Carousel"
+import { Carousel, SwiperWithProgress } from "v2/Components/Carousel"
+import { random } from "lodash"
 
 interface FairExhibitorRailPlaceholderProps {
   done?: boolean
@@ -10,14 +11,14 @@ interface FairExhibitorRailPlaceholderProps {
 export const AuctionArtworksRailPlaceholder: React.FC<FairExhibitorRailPlaceholderProps> = ({
   done = true,
 }) => (
-  <Box height={auctionHeights.artworksRail}>
-    <Carousel arrowHeight={auctionHeights.artworksImage}>
+  <Box>
+    <SwiperWithProgress>
       {[...new Array(10)].map((_, i) => {
         return (
           <Box key={i}>
             <SkeletonBox
-              width={220}
-              height={auctionHeights.artworksImage}
+              width={200}
+              height={random(200, 400)}
               mb={1}
               done={done}
             />
@@ -36,6 +37,6 @@ export const AuctionArtworksRailPlaceholder: React.FC<FairExhibitorRailPlacehold
           </Box>
         )
       })}
-    </Carousel>
+    </SwiperWithProgress>
   </Box>
 )
