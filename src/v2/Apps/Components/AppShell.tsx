@@ -68,7 +68,7 @@ export const AppShell: React.FC<AppShellProps> = props => {
 
       <NetworkOfflineMonitor />
 
-      <Flex backgroundColor="white">
+      <Flex backgroundColor="white100">
         <AppContainer>
           <HorizontalPadding>{showFooter && <Footer />}</HorizontalPadding>
         </AppContainer>
