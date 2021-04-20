@@ -1,7 +1,6 @@
 import { omit } from "lodash"
-import React, { useContext, useEffect, useReducer, useState } from "react"
+import React, { useContext, useReducer, useState } from "react"
 import useDeepCompareEffect from "use-deep-compare-effect"
-import { useRouter } from "v2/Artsy/Router/useRouter"
 import { hasFilters } from "./Utils/hasFilters"
 import { isDefaultFilter } from "./Utils/isDefaultFilter"
 import { rangeToTuple } from "./Utils/rangeToTuple"
@@ -331,22 +330,6 @@ export const ArtworkFilterContextProvider: React.FC<
       force ? dispatch(action) : dispatchOrStage(action)
     },
   }
-
-  // If pathname changes, reset the filter state
-  const { router, match } = useRouter()
-  const currentPathname = match?.location?.pathname
-
-  useEffect(() => {
-    if (!router || !currentPathname) return
-
-    router.addNavigationListener(({ pathname: nextPathname }) => {
-      if (currentPathname !== nextPathname) {
-        artworkFilterContext.resetFilters()
-      }
-
-      return true
-    })
-  }, [artworkFilterContext, currentPathname, router])
 
   return (
     <ArtworkFilterContext.Provider value={artworkFilterContext}>
