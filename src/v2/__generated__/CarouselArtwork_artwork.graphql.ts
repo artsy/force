@@ -3,7 +3,7 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type FillheightItem_artwork = {
+export type CarouselArtwork_artwork = {
     readonly image: {
         readonly url: string | null;
         readonly aspectRatio: number;
@@ -13,12 +13,12 @@ export type FillheightItem_artwork = {
     readonly title: string | null;
     readonly href: string | null;
     readonly " $fragmentRefs": FragmentRefs<"Metadata_artwork" | "SaveButton_artwork" | "Badge_artwork">;
-    readonly " $refType": "FillheightItem_artwork";
+    readonly " $refType": "CarouselArtwork_artwork";
 };
-export type FillheightItem_artwork$data = FillheightItem_artwork;
-export type FillheightItem_artwork$key = {
-    readonly " $data"?: FillheightItem_artwork$data;
-    readonly " $fragmentRefs": FragmentRefs<"FillheightItem_artwork">;
+export type CarouselArtwork_artwork$data = CarouselArtwork_artwork;
+export type CarouselArtwork_artwork$key = {
+    readonly " $data"?: CarouselArtwork_artwork$data;
+    readonly " $fragmentRefs": FragmentRefs<"CarouselArtwork_artwork">;
 };
 
 
@@ -27,7 +27,7 @@ const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "FillheightItem_artwork",
+  "name": "CarouselArtwork_artwork",
   "selections": [
     {
       "alias": null,
@@ -106,5 +106,5 @@ const node: ReaderFragment = {
   ],
   "type": "Artwork"
 };
-(node as any).hash = '446f228bdde47f7484dbbf0af975cb01';
+(node as any).hash = '70d42fb95f945c09eef1e3abc1e5e9b5';
 export default node;

@@ -9,6 +9,7 @@ import { clickedArtworkGroup } from "@artsy/cohesion"
 import { tabTypeToContextModuleMap } from "../../Utils/tabTypeToContextModuleMap"
 import { Box, Text } from "@artsy/palette"
 import { FillheightItemFragmentContainer } from "v2/Components/Artwork/FillheightItem"
+import { CarouselArtworkFragmentContainer } from "v2/Components/Artwork/CarouselArtwork"
 
 export interface WorksByArtistsYouFollowRailProps {
   viewer: WorksByArtistsYouFollowRail_viewer
@@ -43,33 +44,32 @@ const WorksByArtistsYouFollowRail: React.FC<WorksByArtistsYouFollowRailProps> = 
       </Box>
 
       <SwiperWithProgress>
-        {/* <Carousel arrowHeight={auctionHeights.artworksImage}> */}
-        {viewer.saleArtworksConnection.edges.map(({ node }, index) => {
+        {viewer.saleArtworksConnection.edges.map(({ node }) => {
           return (
-            <FillheightItemFragmentContainer
-              key={index}
-              contextModule={contextModule}
-              artwork={node}
-              imageWidth={220}
-              // imageHeight={auctionHeights.artworksImage}
-              hidePartnerName
-              lazyLoad
-              onClick={() => {
-                trackEvent(
-                  clickedArtworkGroup({
-                    contextModule,
-                    contextPageOwnerType,
-                    artworkID: node.internalID,
-                    artworkSlug: node.slug,
-                    horizontalSlidePosition: index,
-                  })
-                )
-              }}
-            />
+            <CarouselArtworkFragmentContainer artwork={node} key={node.slug} />
+            // <FillheightItemFragmentContainer
+            //   key={index}
+            //   contextModule={contextModule}
+            //   artwork={node}
+            //   imageWidth={220}
+            //   // imageHeight={auctionHeights.artworksImage}
+            //   hidePartnerName
+            //   lazyLoad
+            //   onClick={() => {
+            //     trackEvent(
+            //       clickedArtworkGroup({
+            //         contextModule,
+            //         contextPageOwnerType,
+            //         artworkID: node.internalID,
+            //         artworkSlug: node.slug,
+            //         horizontalSlidePosition: index,
+            //       })
+            //     )
+            //   }}
+            // />
           )
         })}
       </SwiperWithProgress>
-      {/* </Carousel> */}
     </>
   )
 }
@@ -89,7 +89,7 @@ export const WorksByArtistsYouFollowRailFragmentContainer = createFragmentContai
             node {
               internalID
               slug
-              ...FillheightItem_artwork
+              ...CarouselArtwork_artwork
             }
           }
         }

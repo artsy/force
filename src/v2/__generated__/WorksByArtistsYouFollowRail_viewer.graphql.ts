@@ -9,7 +9,7 @@ export type WorksByArtistsYouFollowRail_viewer = {
             readonly node: {
                 readonly internalID: string;
                 readonly slug: string;
-                readonly " $fragmentRefs": FragmentRefs<"FillheightItem_artwork">;
+                readonly " $fragmentRefs": FragmentRefs<"CarouselArtwork_artwork">;
             } | null;
         } | null> | null;
     } | null;
@@ -91,7 +91,7 @@ const node: ReaderFragment = {
                 {
                   "args": null,
                   "kind": "FragmentSpread",
-                  "name": "FillheightItem_artwork"
+                  "name": "CarouselArtwork_artwork"
                 }
               ],
               "storageKey": null
@@ -105,5 +105,5 @@ const node: ReaderFragment = {
   ],
   "type": "Viewer"
 };
-(node as any).hash = '51e4c36661dd0c1d7c36a5c2a5fd0249';
+(node as any).hash = '13b7d5a54434be03ddc8128e7a3a5c6a';
 export default node;
