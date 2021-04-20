@@ -4,9 +4,11 @@ import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import { CarouselArtwork_artwork } from "v2/__generated__/CarouselArtwork_artwork.graphql"
-import { SaveButtonFragmentContainer } from "./SaveButton"
+import { ClickContainer, SaveButtonFragmentContainer } from "./SaveButton"
 import Metadata from "./Metadata"
 import { AuthContextModule } from "@artsy/cohesion"
+import styled from "styled-components"
+import { Flex } from "@artsy/palette"
 
 interface CarouselArtworkProps {
   artwork: CarouselArtwork_artwork
@@ -44,18 +46,20 @@ const CarouselArtwork: React.FC<CarouselArtworkProps> = ({
           }
         }}
       >
-        <Image
-          src={artwork.image.resized.src}
-          srcSet={artwork.image.resized.srcSet}
-          lazyLoad={lazyLoad}
-        />
+        <Container>
+          <Image
+            src={artwork.image.resized.src}
+            srcSet={artwork.image.resized.srcSet}
+            lazyLoad={lazyLoad}
+          />
 
-        <SaveButtonFragmentContainer
-          mediator={mediator}
-          user={user}
-          contextModule={contextModule}
-          artwork={artwork}
-        />
+          <SaveButtonFragmentContainer
+            mediator={mediator}
+            user={user}
+            contextModule={contextModule}
+            artwork={artwork}
+          />
+        </Container>
 
         {showMetadata && (
           <Metadata
@@ -70,6 +74,16 @@ const CarouselArtwork: React.FC<CarouselArtworkProps> = ({
     </Box>
   )
 }
+
+const Container = styled(Flex)`
+  position: relative;
+
+  &:hover {
+    ${ClickContainer} {
+      opacity: 1;
+    }
+  }
+`
 
 export const CarouselArtworkFragmentContainer = createFragmentContainer(
   CarouselArtwork,
