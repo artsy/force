@@ -4,11 +4,10 @@ import { useAnalyticsContext } from "v2/Artsy"
 import { WorksByArtistsYouFollowRail_viewer } from "v2/__generated__/WorksByArtistsYouFollowRail_viewer.graphql"
 import { SwiperWithProgress } from "v2/Components/Carousel"
 import { useTracking } from "react-tracking"
-import { clickedArtworkGroup } from "@artsy/cohesion"
+import { AuthContextModule, clickedArtworkGroup } from "@artsy/cohesion"
 // import { auctionHeights } from "../../Utils/auctionsHelpers"
 import { tabTypeToContextModuleMap } from "../../Utils/tabTypeToContextModuleMap"
-import { Box, Text } from "@artsy/palette"
-import { FillheightItemFragmentContainer } from "v2/Components/Artwork/FillheightItem"
+import { Box, Spacer, Text } from "@artsy/palette"
 import { CarouselArtworkFragmentContainer } from "v2/Components/Artwork/CarouselArtwork"
 
 export interface WorksByArtistsYouFollowRailProps {
@@ -20,7 +19,7 @@ const WorksByArtistsYouFollowRail: React.FC<WorksByArtistsYouFollowRailProps> = 
 }) => {
   const { trackEvent } = useTracking()
   const { contextPageOwnerType } = useAnalyticsContext()
-  const contextModule = tabTypeToContextModuleMap.worksByArtistsYouFollow
+  const contextModule = tabTypeToContextModuleMap.worksByArtistsYouFollow as AuthContextModule
 
   if (viewer.saleArtworksConnection.edges.length === 0) {
     return null
@@ -43,30 +42,28 @@ const WorksByArtistsYouFollowRail: React.FC<WorksByArtistsYouFollowRailProps> = 
         </Text>
       </Box>
 
+      <Spacer mb={4} />
+
       <SwiperWithProgress>
-        {viewer.saleArtworksConnection.edges.map(({ node }) => {
+        {viewer.saleArtworksConnection.edges.map(({ node }, index) => {
           return (
-            <CarouselArtworkFragmentContainer artwork={node} key={node.slug} />
-            // <FillheightItemFragmentContainer
-            //   key={index}
-            //   contextModule={contextModule}
-            //   artwork={node}
-            //   imageWidth={220}
-            //   // imageHeight={auctionHeights.artworksImage}
-            //   hidePartnerName
-            //   lazyLoad
-            //   onClick={() => {
-            //     trackEvent(
-            //       clickedArtworkGroup({
-            //         contextModule,
-            //         contextPageOwnerType,
-            //         artworkID: node.internalID,
-            //         artworkSlug: node.slug,
-            //         horizontalSlidePosition: index,
-            //       })
-            //     )
-            //   }}
-            // />
+            <CarouselArtworkFragmentContainer
+              artwork={node}
+              key={node.slug}
+              contextModule={contextModule}
+              hidePartnerName
+              onClick={() => {
+                trackEvent(
+                  clickedArtworkGroup({
+                    contextModule,
+                    contextPageOwnerType,
+                    artworkID: node.internalID,
+                    artworkSlug: node.slug,
+                    horizontalSlidePosition: index,
+                  })
+                )
+              }}
+            />
           )
         })}
       </SwiperWithProgress>
@@ -89,7 +86,7 @@ export const WorksByArtistsYouFollowRailFragmentContainer = createFragmentContai
             node {
               internalID
               slug
-              ...CarouselArtwork_artwork
+              ...CarouselArtwork_artwork @arguments(width: 325)
             }
           }
         }

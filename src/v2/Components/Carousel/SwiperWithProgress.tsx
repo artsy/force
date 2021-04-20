@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useCallback, useState } from "react"
 import { FullBleed } from "../FullBleed"
 
 import {
@@ -24,29 +24,33 @@ export const SwiperWithProgress: React.FC<SwiperWithProgressProps> = ({
   const [index, setIndex] = useState(0)
   const progress = (index * 100) / (count - 1)
 
+  const Rail = useCallback(
+    props => {
+      return (
+        <SwiperRail
+          {...props}
+          alignItems={verticalAlign === "top" ? "flex-start" : "flex-end"}
+          px={4}
+          mx={4}
+        />
+      )
+    },
+    [verticalAlign]
+  )
+
   return (
     <Box {...boxProps}>
       <FullBleed>
-        <Swiper
-          onChange={setIndex}
-          mb={6}
-          Rail={props => {
-            return (
-              <SwiperRail
-                {...props}
-                alignItems={verticalAlign === "top" ? "flex-start" : "flex-end"}
-                px={4}
-                mx={4}
-              />
-            )
-          }}
-          {...swiperProps}
-        >
+        <Swiper onChange={setIndex} mb={6} Rail={Rail} {...swiperProps}>
           {React.Children.map(children, (child: any, i) => {
-            return React.cloneElement(child, {
-              ml: i === 0 ? [2, 4] : undefined,
-              mr: i === count - 1 ? [2, 4] : undefined,
-            })
+            return (
+              <Box
+                ml={i === 0 ? [2, 4] : undefined}
+                mr={i === count - 1 ? [2, 4] : undefined}
+              >
+                {child}
+              </Box>
+            )
           })}
         </Swiper>
       </FullBleed>

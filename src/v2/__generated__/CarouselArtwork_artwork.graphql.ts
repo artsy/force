@@ -5,7 +5,10 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type CarouselArtwork_artwork = {
     readonly image: {
-        readonly url: string | null;
+        readonly resized: {
+            readonly src: string;
+            readonly srcSet: string;
+        } | null;
         readonly aspectRatio: number;
         readonly height: number | null;
     } | null;
@@ -24,7 +27,14 @@ export type CarouselArtwork_artwork$key = {
 
 
 const node: ReaderFragment = {
-  "argumentDefinitions": [],
+  "argumentDefinitions": [
+    {
+      "defaultValue": 200,
+      "kind": "LocalArgument",
+      "name": "width",
+      "type": "Int"
+    }
+  ],
   "kind": "Fragment",
   "metadata": null,
   "name": "CarouselArtwork_artwork",
@@ -41,14 +51,32 @@ const node: ReaderFragment = {
           "alias": null,
           "args": [
             {
-              "kind": "Literal",
-              "name": "version",
-              "value": "large"
+              "kind": "Variable",
+              "name": "width",
+              "variableName": "width"
             }
           ],
-          "kind": "ScalarField",
-          "name": "url",
-          "storageKey": "url(version:\"large\")"
+          "concreteType": "ResizedImageUrl",
+          "kind": "LinkedField",
+          "name": "resized",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "src",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "srcSet",
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
         },
         {
           "alias": null,
@@ -106,5 +134,5 @@ const node: ReaderFragment = {
   ],
   "type": "Artwork"
 };
-(node as any).hash = '70d42fb95f945c09eef1e3abc1e5e9b5';
+(node as any).hash = 'f7d27bdc9c148144b08532bde8717860';
 export default node;
