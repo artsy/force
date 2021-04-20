@@ -7,6 +7,7 @@ import { PartnerHeaderImageFragmentContainer as PartnerHeaderImage } from "../Co
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
+jest.mock("v2/Utils/Hooks/useMatchMedia")
 
 const { getWrapper } = setupTestWrapper<PartnerApp_Test_Query>({
   Component: props => {
