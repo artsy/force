@@ -1,5 +1,5 @@
 import React from "react"
-import { Box, Text, themeProps } from "@artsy/palette"
+import { Box, Text } from "@artsy/palette"
 import { Match } from "found"
 import {
   PartnerArtistDetailsListRenderer,
@@ -8,11 +8,10 @@ import {
 } from "../../Components/PartnerArtists"
 import { Artists_partner } from "v2/__generated__/Artists_partner.graphql"
 import { scrollIntoView } from "v2/Utils/scrollHelpers"
-import { useMatchMedia } from "v2/Utils/Hooks/useMatchMedia"
-import { MOBILE_NAV_HEIGHT, NAV_BAR_HEIGHT } from "v2/Components/NavBar"
 import { PARTHER_NAV_BAR_HEIGHT } from "../../Components/NavigationTabs"
 import { graphql } from "lib/graphql"
 import { createFragmentContainer } from "react-relay"
+import { useNavBarHeigth } from "v2/Components/NavBar/useNavBarHeigth"
 
 export interface ArtistsRouteProps {
   partner: Artists_partner
@@ -23,13 +22,10 @@ export const ArtistsRoute: React.FC<ArtistsRouteProps> = ({
   partner,
   match,
 }) => {
-  const isMobile = useMatchMedia(themeProps.mediaQueries.xs)
+  const navBarHeigth = useNavBarHeigth()
 
   const handleArtistClick = () => {
-    const offset =
-      PARTHER_NAV_BAR_HEIGHT +
-      (isMobile ? MOBILE_NAV_HEIGHT : NAV_BAR_HEIGHT) +
-      20
+    const offset = PARTHER_NAV_BAR_HEIGHT + navBarHeigth + 20
 
     scrollIntoView({
       offset: offset,
