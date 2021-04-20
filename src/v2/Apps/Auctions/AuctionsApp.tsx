@@ -10,6 +10,7 @@ import {
   GridColumns,
   Join,
   Separator,
+  Spacer,
   Text,
   ThemeProviderV3,
 } from "@artsy/palette"
@@ -21,6 +22,7 @@ import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import { RouteTabs, RouteTab } from "v2/Components/RouteTabs"
 import { useSystemContext } from "v2/Artsy/useSystemContext"
 import { WorksByArtistsYouFollowRailFragmentContainer } from "./Components/WorksByArtistsYouFollowRail/WorksByArtistsYouFollowRail"
+import { ChevronButton } from "v2/Components/ChevronButton"
 export interface AuctionsAppProps {
   viewer: AuctionsApp_viewer
 }
@@ -55,18 +57,7 @@ const AuctionsApp: React.FC<AuctionsAppProps> = props => {
                 to="https://support.artsy.net/hc/en-us/sections/360008298773-Bid-at-Auction"
                 noUnderline
               >
-                <Text variant="md" fontWeight="bold" py={1}>
-                  Learn more about bidding on Artsy{" "}
-                  <ChevronIcon
-                    title={null}
-                    direction="right"
-                    color="black"
-                    height="15px"
-                    width="14px"
-                    top="3px"
-                    left="3px"
-                  />
-                </Text>
+                <ChevronButton>Learn more about bidding on Artsy</ChevronButton>
               </RouterLink>
             </HorizontalPadding>
           </Column>
@@ -85,7 +76,10 @@ const AuctionsApp: React.FC<AuctionsAppProps> = props => {
             </Join>
           </HorizontalPadding>
         )}
-        <HorizontalPadding mt={4}>
+
+        <Spacer py={5} />
+
+        <HorizontalPadding>
           <RouteTabs mb={2} fill>
             <RouteTab exact to="/auctions">
               Current Auctions

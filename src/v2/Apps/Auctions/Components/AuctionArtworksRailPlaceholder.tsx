@@ -1,7 +1,6 @@
 import React from "react"
-import { auctionHeights } from "../Utils/auctionsHelpers"
 import { Box, SkeletonBox, SkeletonText } from "@artsy/palette"
-import { Carousel, SwiperWithProgress } from "v2/Components/Carousel"
+import { SwiperWithProgress } from "v2/Components/Carousel"
 import { random } from "lodash"
 
 interface FairExhibitorRailPlaceholderProps {
