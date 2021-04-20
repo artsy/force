@@ -1,4 +1,4 @@
-import { Box } from "@artsy/palette"
+import { Box, Flex } from "@artsy/palette"
 import { NetworkOfflineMonitor } from "v2/Artsy/Router/NetworkOfflineMonitor"
 import { findCurrentRoute } from "v2/Artsy/Router/Utils/findCurrentRoute"
 import { useMaybeReloadAfterInquirySignIn } from "v2/Artsy/Router/Utils/useMaybeReloadAfterInquirySignIn"
@@ -10,6 +10,7 @@ import React, { useEffect } from "react"
 import createLogger from "v2/Utils/logger"
 import { useSystemContext } from "v2/Artsy"
 import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
+import { AppContainer } from "./AppContainer"
 
 const logger = createLogger("Apps/Components/AppShell")
 
@@ -66,7 +67,12 @@ export const AppShell: React.FC<AppShellProps> = props => {
       </Box>
 
       <NetworkOfflineMonitor />
-      <HorizontalPadding>{showFooter && <Footer />}</HorizontalPadding>
+
+      <Flex backgroundColor="white">
+        <AppContainer>
+          <HorizontalPadding>{showFooter && <Footer />}</HorizontalPadding>
+        </AppContainer>
+      </Flex>
     </Box>
   )
 }
