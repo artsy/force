@@ -5,7 +5,7 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type GeneShow_gene = {
     readonly name: string | null;
-    readonly description: string | null;
+    readonly formattedDescription: string | null;
     readonly similar: {
         readonly edges: ReadonlyArray<{
             readonly node: {
@@ -73,11 +73,17 @@ return {
   "selections": [
     (v0/*: any*/),
     {
-      "alias": null,
-      "args": null,
+      "alias": "formattedDescription",
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "format",
+          "value": "HTML"
+        }
+      ],
       "kind": "ScalarField",
       "name": "description",
-      "storageKey": null
+      "storageKey": "description(format:\"HTML\")"
     },
     {
       "alias": null,
@@ -163,5 +169,5 @@ return {
   "type": "Gene"
 };
 })();
-(node as any).hash = 'ff6c6879fdb69b581b9ae8c88d977204';
+(node as any).hash = '6b9a28c15bdff53001b66028d832f49b';
 export default node;

@@ -1,4 +1,4 @@
-import { Button, Column, GridColumns, Text } from "@artsy/palette"
+import { Button, Column, GridColumns, HTML, Text } from "@artsy/palette"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { GeneShow_gene } from "v2/__generated__/GeneShow_gene.graphql"
@@ -35,9 +35,7 @@ export const GeneShow: React.FC<GeneShowProps> = ({ gene }) => {
             About
           </Text>
 
-          <Text variant="sm" mb={2}>
-            {gene.description}
-          </Text>
+          <HTML variant="sm" mb={2} html={gene.formattedDescription} />
 
           {gene.similar?.edges.length > 0 && (
             <>
@@ -90,8 +88,7 @@ export const GeneShowFragmentContainer = createFragmentContainer(GeneShow, {
       ...GeneMeta_gene
       ...GeneArtworkFilter_gene @arguments(input: $input)
       name
-      # TODO: use (format: HTML) once added in Metaphysics
-      description
+      formattedDescription: description(format: HTML)
       similar(first: 10) {
         edges {
           node {
