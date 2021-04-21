@@ -6,7 +6,7 @@ import { ArticleCardFragmentContainer as ArticleCard } from "v2/Apps/Partner/Com
 import { ArticlesRail_articles } from "v2/__generated__/ArticlesRail_articles.graphql"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import { ScrollIntoView } from "v2/Utils"
-import { useNavBarHeigth } from "v2/Components/NavBar/useNavBarHeigth"
+import { useNavBarHeight } from "v2/Components/NavBar/useNavBarHeight"
 
 interface ArticlesRailProps {
   articles: ArticlesRail_articles
@@ -17,7 +17,7 @@ const ArticlesRail: React.FC<ArticlesRailProps> = ({
   articles,
   partnerSlug,
 }) => {
-  const navBarHeigth = useNavBarHeigth()
+  const navBarHeight = useNavBarHeight()
 
   return (
     <>
@@ -26,7 +26,7 @@ const ArticlesRail: React.FC<ArticlesRailProps> = ({
         <RouterLink to={`/partner2/${partnerSlug}/articles`}>
           <ScrollIntoView
             selector="#jumpto--PartnerHeader"
-            offset={navBarHeigth}
+            offset={navBarHeight}
           >
             <Text variant="text" color="black">
               View all

@@ -2,7 +2,7 @@ import { themeProps } from "@artsy/palette"
 import { useMatchMedia } from "v2/Utils/Hooks/useMatchMedia"
 import { MOBILE_NAV_HEIGHT, NAV_BAR_HEIGHT } from "./constants"
 
-export const useNavBarHeigth = (
+export const useNavBarHeight = (
   mobileMediaQueryString: string = themeProps.mediaQueries.xs
 ) => {
   const isMobile = useMatchMedia(mobileMediaQueryString)

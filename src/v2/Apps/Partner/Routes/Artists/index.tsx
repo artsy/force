@@ -11,7 +11,7 @@ import { scrollIntoView } from "v2/Utils/scrollHelpers"
 import { PARTHER_NAV_BAR_HEIGHT } from "../../Components/NavigationTabs"
 import { graphql } from "lib/graphql"
 import { createFragmentContainer } from "react-relay"
-import { useNavBarHeigth } from "v2/Components/NavBar/useNavBarHeigth"
+import { useNavBarHeight } from "v2/Components/NavBar/useNavBarHeight"
 
 export interface ArtistsRouteProps {
   partner: Artists_partner
@@ -22,10 +22,10 @@ export const ArtistsRoute: React.FC<ArtistsRouteProps> = ({
   partner,
   match,
 }) => {
-  const navBarHeigth = useNavBarHeigth()
+  const navBarHeight = useNavBarHeight()
 
   const handleArtistClick = () => {
-    const offset = PARTHER_NAV_BAR_HEIGHT + navBarHeigth + 20
+    const offset = PARTHER_NAV_BAR_HEIGHT + navBarHeight + 20
 
     scrollIntoView({
       offset: offset,
