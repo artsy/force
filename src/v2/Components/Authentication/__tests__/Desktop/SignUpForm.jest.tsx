@@ -148,7 +148,7 @@ describe("SignUpForm", () => {
     mockEnableRequestSignInWithApple.mockReturnValue(true)
     props.values = SignupValues
     const wrapper = getWrapper()
-    wrapper.find(Link).at(1).simulate("click")
+    wrapper.find(Link).at(3).simulate("click")
 
     setTimeout(() => {
       expect(props.onAppleLogin).toBeCalled()
