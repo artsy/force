@@ -44,47 +44,45 @@ const CarouselArtwork: React.FC<CarouselArtworkProps> = ({
       : artwork.image.resized.height
 
   return (
-    <Box>
-      <RouterLink
-        to={artwork.href}
-        noUnderline
-        onClick={() => {
-          onClick && onClick()
-        }}
+    <RouterLink
+      to={artwork.href}
+      noUnderline
+      onClick={() => {
+        onClick && onClick()
+      }}
+    >
+      <Container
+        width={artwork.image.resized.width}
+        height={imgHeight}
+        bg="black10"
       >
-        <Container
+        <Image
+          src={artwork.image.resized.src}
+          srcSet={artwork.image.resized.srcSet}
           width={artwork.image.resized.width}
           height={imgHeight}
-          bg="black10"
-        >
-          <Image
-            src={artwork.image.resized.src}
-            srcSet={artwork.image.resized.srcSet}
-            width={artwork.image.resized.width}
-            height={imgHeight}
-            lazyLoad={lazyLoad}
-            style={{ objectFit: "cover" }}
-          />
+          lazyLoad={lazyLoad}
+          style={{ objectFit: "cover" }}
+        />
 
-          <SaveButtonFragmentContainer
-            mediator={mediator}
-            user={user}
-            contextModule={contextModule}
-            artwork={artwork}
-          />
-        </Container>
+        <SaveButtonFragmentContainer
+          mediator={mediator}
+          user={user}
+          contextModule={contextModule}
+          artwork={artwork}
+        />
+      </Container>
 
-        {showMetadata && (
-          <Metadata
-            artwork={artwork}
-            extended={showExtended}
-            hidePartnerName={hidePartnerName}
-            hideArtistName={hideArtistName}
-            hideSaleInfo={hideSaleInfo}
-          />
-        )}
-      </RouterLink>
-    </Box>
+      {showMetadata && (
+        <Metadata
+          artwork={artwork}
+          extended={showExtended}
+          hidePartnerName={hidePartnerName}
+          hideArtistName={hideArtistName}
+          hideSaleInfo={hideSaleInfo}
+        />
+      )}
+    </RouterLink>
   )
 }
 
@@ -97,6 +95,7 @@ const Container = styled(Flex)`
     }
   }
 `
+
 export const CarouselArtworkFragmentContainer = createFragmentContainer(
   CarouselArtwork,
   {
