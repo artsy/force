@@ -21,4 +21,5 @@ export const setupBraze = async () => {
     enableLogging: BRAZE_LOGGING,
   })
   braze.display.automaticallyShowNewInAppMessages()
+  braze.openSession()
 }
