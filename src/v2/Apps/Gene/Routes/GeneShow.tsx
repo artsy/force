@@ -1,6 +1,7 @@
-import { Button, Column, GridColumns, HTML, Text } from "@artsy/palette"
+import { Column, GridColumns, HTML, Text } from "@artsy/palette"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
+import { FollowGeneButtonFragmentContainer } from "v2/Components/FollowButton/FollowGeneButton"
 import { GeneShow_gene } from "v2/__generated__/GeneShow_gene.graphql"
 import { GeneArtworkFilterRefetchContainer } from "../Components/GeneArtworkFilter"
 import { GeneMetaFragmentContainer } from "../Components/GeneMeta"
@@ -20,14 +21,10 @@ export const GeneShow: React.FC<GeneShowProps> = ({ gene }) => {
             {gene.name}
           </Text>
 
-          <Button
+          <FollowGeneButtonFragmentContainer
+            gene={gene}
             variant="secondaryOutline"
-            onClick={() => {
-              alert("TODO")
-            }}
-          >
-            Follow
-          </Button>
+          />
         </Column>
 
         <Column span={6}>
@@ -87,6 +84,7 @@ export const GeneShowFragmentContainer = createFragmentContainer(GeneShow, {
       @argumentDefinitions(input: { type: "FilterArtworksInput" }) {
       ...GeneMeta_gene
       ...GeneArtworkFilter_gene @arguments(input: $input)
+      ...FollowGeneButton_gene
       name
       formattedDescription: description(format: HTML)
       similar(first: 10) {

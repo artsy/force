@@ -22,7 +22,7 @@ export type GeneShow_gene = {
             } | null;
         } | null> | null;
     } | null;
-    readonly " $fragmentRefs": FragmentRefs<"GeneMeta_gene" | "GeneArtworkFilter_gene">;
+    readonly " $fragmentRefs": FragmentRefs<"GeneMeta_gene" | "GeneArtworkFilter_gene" | "FollowGeneButton_gene">;
     readonly " $refType": "GeneShow_gene";
 };
 export type GeneShow_gene$data = GeneShow_gene;
@@ -164,10 +164,15 @@ return {
       ],
       "kind": "FragmentSpread",
       "name": "GeneArtworkFilter_gene"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "FollowGeneButton_gene"
     }
   ],
   "type": "Gene"
 };
 })();
-(node as any).hash = '6b9a28c15bdff53001b66028d832f49b';
+(node as any).hash = 'db708b8305d6f1d8d6db3064ac9a1799';
 export default node;
