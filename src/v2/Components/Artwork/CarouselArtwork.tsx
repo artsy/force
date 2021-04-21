@@ -36,10 +36,7 @@ const CarouselArtwork: React.FC<CarouselArtworkProps> = ({
   const { mediator, user } = useSystemContext()
 
   return (
-    <Placeholder
-      width={artwork.image.resized.width}
-      height={artwork.image.resized.height}
-    >
+    <Box>
       <RouterLink
         to={artwork.href}
         noUnderline
@@ -49,7 +46,11 @@ const CarouselArtwork: React.FC<CarouselArtworkProps> = ({
           }
         }}
       >
-        <Container>
+        <Container
+          width={artwork.image.resized.width}
+          minHeight={artwork.image.resized.height}
+          bg="black60"
+        >
           <Image
             src={artwork.image.resized.src}
             srcSet={artwork.image.resized.srcSet}
@@ -74,7 +75,7 @@ const CarouselArtwork: React.FC<CarouselArtworkProps> = ({
           />
         )}
       </RouterLink>
-    </Placeholder>
+    </Box>
   )
 }
 
@@ -87,12 +88,6 @@ const Container = styled(Flex)`
     }
   }
 `
-
-const Placeholder = styled(Box).attrs({ bg: "gray10" })`
-  position: relative;
-  width: 100%;
-`
-
 export const CarouselArtworkFragmentContainer = createFragmentContainer(
   CarouselArtwork,
   {
