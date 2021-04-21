@@ -23,6 +23,7 @@ import { RouteTabs, RouteTab } from "v2/Components/RouteTabs"
 import { useSystemContext } from "v2/Artsy/useSystemContext"
 import { WorksByArtistsYouFollowRailFragmentContainer } from "./Components/WorksByArtistsYouFollowRail/WorksByArtistsYouFollowRail"
 import { ChevronButton } from "v2/Components/ChevronButton"
+
 export interface AuctionsAppProps {
   viewer: AuctionsApp_viewer
 }
@@ -77,7 +78,7 @@ const AuctionsApp: React.FC<AuctionsAppProps> = props => {
           </HorizontalPadding>
         )}
 
-        <Spacer py={5} />
+        <Spacer my={4} />
 
         <HorizontalPadding>
           <RouteTabs mb={2} fill>

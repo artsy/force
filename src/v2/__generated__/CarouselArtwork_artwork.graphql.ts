@@ -8,6 +8,8 @@ export type CarouselArtwork_artwork = {
         readonly resized: {
             readonly src: string;
             readonly srcSet: string;
+            readonly width: number | null;
+            readonly height: number | null;
         } | null;
         readonly aspectRatio: number;
         readonly height: number | null;
@@ -26,7 +28,15 @@ export type CarouselArtwork_artwork$key = {
 
 
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "height",
+  "storageKey": null
+};
+return {
   "argumentDefinitions": [
     {
       "defaultValue": 200,
@@ -74,7 +84,15 @@ const node: ReaderFragment = {
               "kind": "ScalarField",
               "name": "srcSet",
               "storageKey": null
-            }
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "width",
+              "storageKey": null
+            },
+            (v0/*: any*/)
           ],
           "storageKey": null
         },
@@ -85,13 +103,7 @@ const node: ReaderFragment = {
           "name": "aspectRatio",
           "storageKey": null
         },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "height",
-          "storageKey": null
-        }
+        (v0/*: any*/)
       ],
       "storageKey": null
     },
@@ -134,5 +146,6 @@ const node: ReaderFragment = {
   ],
   "type": "Artwork"
 };
-(node as any).hash = 'f7d27bdc9c148144b08532bde8717860';
+})();
+(node as any).hash = '3af1550be67a6adac9e2fb0300ce7854';
 export default node;
