@@ -17,11 +17,30 @@ export const TermsOfServiceCheckbox = ({
       <Serif color={color} size="3t" ml={0.5}>
         {"By checking this box, you consent to our "}
         <Link
+          href="https://www.artsy.net/terms"
+          target="_blank"
+          color="blue100"
+          underlineBehavior="hover"
+        >
+          Terms of Use
+        </Link>
+        {", "}
+        <Link
           href="https://www.artsy.net/privacy"
           target="_blank"
-          color={color}
+          color="blue100"
+          underlineBehavior="hover"
         >
-          privacy policy
+          Privacy Policy
+        </Link>
+        {", and "}
+        <Link
+          href="https://www.artsy.net/conditions-of-sale"
+          target="_blanks"
+          color="blue100"
+          underlineBehavior="hover"
+        >
+          Conditions of Sale
         </Link>
         {"."}
       </Serif>
