@@ -1,4 +1,4 @@
-import { Box, Image } from "@artsy/palette"
+import { Image } from "@artsy/palette"
 import { useSystemContext } from "v2/Artsy"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -95,7 +95,6 @@ const Container = styled(Flex)`
     }
   }
 `
-
 export const CarouselArtworkFragmentContainer = createFragmentContainer(
   CarouselArtwork,
   {
