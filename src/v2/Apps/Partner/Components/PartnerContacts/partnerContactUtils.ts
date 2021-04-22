@@ -16,7 +16,7 @@ export function getContactAddressLines(
       compact([location.city?.trim(), location.state?.trim()]).join(", "),
       location.postalCode?.trim(),
     ]).join(" "),
-    location.country,
+    location.displayCountry,
   ])
 }
 

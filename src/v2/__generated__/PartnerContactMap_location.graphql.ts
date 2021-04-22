@@ -7,10 +7,10 @@ export type PartnerContactMap_location = {
     readonly city: string | null;
     readonly phone: string | null;
     readonly state: string | null;
-    readonly country: string | null;
     readonly address: string | null;
     readonly address2: string | null;
     readonly postalCode: string | null;
+    readonly displayCountry: string | null;
     readonly coordinates: {
         readonly lat: number | null;
         readonly lng: number | null;
@@ -56,13 +56,6 @@ const node: ReaderFragment = {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "country",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
       "name": "address",
       "storageKey": null
     },
@@ -78,6 +71,13 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "ScalarField",
       "name": "postalCode",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "displayCountry",
       "storageKey": null
     },
     {
@@ -108,5 +108,5 @@ const node: ReaderFragment = {
   ],
   "type": "Location"
 };
-(node as any).hash = 'd8df62f9ee2a1b7ad1df9b946c4ee1b3';
+(node as any).hash = '2be6af5e124ca605f82560d8ffec41e7';
 export default node;

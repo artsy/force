@@ -46,10 +46,10 @@ fragment PartnerContactAddress_location on Location {
   city
   phone
   state
-  country
   address
   address2
   postalCode
+  displayCountry
 }
 
 fragment PartnerContactCard_location on Location {
@@ -61,10 +61,10 @@ fragment PartnerContactMap_location on Location {
   city
   phone
   state
-  country
   address
   address2
   postalCode
+  displayCountry
   coordinates {
     lat
     lng
@@ -218,13 +218,6 @@ return {
                         "alias": null,
                         "args": null,
                         "kind": "ScalarField",
-                        "name": "country",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
                         "name": "address",
                         "storageKey": null
                       },
@@ -240,6 +233,13 @@ return {
                         "args": null,
                         "kind": "ScalarField",
                         "name": "postalCode",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "displayCountry",
                         "storageKey": null
                       },
                       {
@@ -288,7 +288,7 @@ return {
     "metadata": {},
     "name": "partnerRoutes_ContactQuery",
     "operationKind": "query",
-    "text": "query partnerRoutes_ContactQuery(\n  $partnerId: String!\n) {\n  partner(id: $partnerId) @principalField {\n    ...Contact_partner\n    locations: locationsConnection(first: 50) {\n      totalCount\n    }\n    id\n  }\n}\n\nfragment Contact_partner on Partner {\n  locations: locationsConnection(first: 50) {\n    edges {\n      ...PartnerContacts_edges\n    }\n  }\n}\n\nfragment PartnerContactAddress_location on Location {\n  city\n  phone\n  state\n  country\n  address\n  address2\n  postalCode\n}\n\nfragment PartnerContactCard_location on Location {\n  ...PartnerContactAddress_location\n  ...PartnerContactMap_location\n}\n\nfragment PartnerContactMap_location on Location {\n  city\n  phone\n  state\n  country\n  address\n  address2\n  postalCode\n  coordinates {\n    lat\n    lng\n  }\n}\n\nfragment PartnerContacts_edges on LocationEdge {\n  node {\n    id\n    ...PartnerContactCard_location\n  }\n}\n"
+    "text": "query partnerRoutes_ContactQuery(\n  $partnerId: String!\n) {\n  partner(id: $partnerId) @principalField {\n    ...Contact_partner\n    locations: locationsConnection(first: 50) {\n      totalCount\n    }\n    id\n  }\n}\n\nfragment Contact_partner on Partner {\n  locations: locationsConnection(first: 50) {\n    edges {\n      ...PartnerContacts_edges\n    }\n  }\n}\n\nfragment PartnerContactAddress_location on Location {\n  city\n  phone\n  state\n  address\n  address2\n  postalCode\n  displayCountry\n}\n\nfragment PartnerContactCard_location on Location {\n  ...PartnerContactAddress_location\n  ...PartnerContactMap_location\n}\n\nfragment PartnerContactMap_location on Location {\n  city\n  phone\n  state\n  address\n  address2\n  postalCode\n  displayCountry\n  coordinates {\n    lat\n    lng\n  }\n}\n\nfragment PartnerContacts_edges on LocationEdge {\n  node {\n    id\n    ...PartnerContactCard_location\n  }\n}\n"
   }
 };
 })();

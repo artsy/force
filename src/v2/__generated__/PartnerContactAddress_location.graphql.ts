@@ -7,10 +7,10 @@ export type PartnerContactAddress_location = {
     readonly city: string | null;
     readonly phone: string | null;
     readonly state: string | null;
-    readonly country: string | null;
     readonly address: string | null;
     readonly address2: string | null;
     readonly postalCode: string | null;
+    readonly displayCountry: string | null;
     readonly " $refType": "PartnerContactAddress_location";
 };
 export type PartnerContactAddress_location$data = PartnerContactAddress_location;
@@ -52,13 +52,6 @@ const node: ReaderFragment = {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "country",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
       "name": "address",
       "storageKey": null
     },
@@ -75,9 +68,16 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "name": "postalCode",
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "displayCountry",
+      "storageKey": null
     }
   ],
   "type": "Location"
 };
-(node as any).hash = 'e0ddef63fb26e59a221c31615a1fa74c';
+(node as any).hash = '22f6058e36dba8b51303698d218bcc35';
 export default node;

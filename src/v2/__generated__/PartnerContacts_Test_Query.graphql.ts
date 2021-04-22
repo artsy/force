@@ -22,10 +22,10 @@ export type PartnerContacts_Test_QueryRawResponse = {
                     readonly city: string | null;
                     readonly phone: string | null;
                     readonly state: string | null;
-                    readonly country: string | null;
                     readonly address: string | null;
                     readonly address2: string | null;
                     readonly postalCode: string | null;
+                    readonly displayCountry: string | null;
                     readonly coordinates: ({
                         readonly lat: number | null;
                         readonly lng: number | null;
@@ -60,10 +60,10 @@ fragment PartnerContactAddress_location on Location {
   city
   phone
   state
-  country
   address
   address2
   postalCode
+  displayCountry
 }
 
 fragment PartnerContactCard_location on Location {
@@ -75,10 +75,10 @@ fragment PartnerContactMap_location on Location {
   city
   phone
   state
-  country
   address
   address2
   postalCode
+  displayCountry
   coordinates {
     lat
     lng
@@ -227,13 +227,6 @@ return {
                         "alias": null,
                         "args": null,
                         "kind": "ScalarField",
-                        "name": "country",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
                         "name": "address",
                         "storageKey": null
                       },
@@ -249,6 +242,13 @@ return {
                         "args": null,
                         "kind": "ScalarField",
                         "name": "postalCode",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "displayCountry",
                         "storageKey": null
                       },
                       {
@@ -296,7 +296,7 @@ return {
     "metadata": {},
     "name": "PartnerContacts_Test_Query",
     "operationKind": "query",
-    "text": "query PartnerContacts_Test_Query {\n  partner(id: \"white-cube\") {\n    locations: locationsConnection(first: 50) {\n      edges {\n        ...PartnerContacts_edges\n      }\n    }\n    id\n  }\n}\n\nfragment PartnerContactAddress_location on Location {\n  city\n  phone\n  state\n  country\n  address\n  address2\n  postalCode\n}\n\nfragment PartnerContactCard_location on Location {\n  ...PartnerContactAddress_location\n  ...PartnerContactMap_location\n}\n\nfragment PartnerContactMap_location on Location {\n  city\n  phone\n  state\n  country\n  address\n  address2\n  postalCode\n  coordinates {\n    lat\n    lng\n  }\n}\n\nfragment PartnerContacts_edges on LocationEdge {\n  node {\n    id\n    ...PartnerContactCard_location\n  }\n}\n"
+    "text": "query PartnerContacts_Test_Query {\n  partner(id: \"white-cube\") {\n    locations: locationsConnection(first: 50) {\n      edges {\n        ...PartnerContacts_edges\n      }\n    }\n    id\n  }\n}\n\nfragment PartnerContactAddress_location on Location {\n  city\n  phone\n  state\n  address\n  address2\n  postalCode\n  displayCountry\n}\n\nfragment PartnerContactCard_location on Location {\n  ...PartnerContactAddress_location\n  ...PartnerContactMap_location\n}\n\nfragment PartnerContactMap_location on Location {\n  city\n  phone\n  state\n  address\n  address2\n  postalCode\n  displayCountry\n  coordinates {\n    lat\n    lng\n  }\n}\n\nfragment PartnerContacts_edges on LocationEdge {\n  node {\n    id\n    ...PartnerContactCard_location\n  }\n}\n"
   }
 };
 })();
