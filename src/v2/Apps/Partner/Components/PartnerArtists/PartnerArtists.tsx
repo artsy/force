@@ -10,13 +10,14 @@ import {
   PartnerArtistListPlaceholder,
 } from "../../Components/PartnerArtists"
 import { PartnerArtists_partner } from "v2/__generated__/PartnerArtists_partner.graphql"
+import { ScrollIntoViewProps } from "v2/Utils/scrollHelpers"
 
 const PAGE_SIZE = 20
 
 export interface PartnerArtistsProps {
   partner: PartnerArtists_partner
   relay: RelayPaginationProp
-  onArtistClick?: () => void
+  scrollTo?: ScrollIntoViewProps
 }
 
 function sleep(ms) {
@@ -26,7 +27,7 @@ function sleep(ms) {
 export const PartnerArtists: React.FC<PartnerArtistsProps> = ({
   partner: { artistsConnection: artists, distinguishRepresentedArtists, slug },
   relay,
-  onArtistClick,
+  scrollTo,
 }) => {
   const [artistsLoading, setArtistsLoading] = useState(relay.hasMore())
   const [isRefetching, setIsRefetching] = useState(false)
@@ -88,7 +89,7 @@ export const PartnerArtists: React.FC<PartnerArtistsProps> = ({
         <>
           <PartnerArtistListFragmentContainer
             partnerSlug={slug}
-            onArtistClick={onArtistClick}
+            scrollTo={scrollTo}
             artists={isRefetching ? tempArtists.edges : artists.edges}
             distinguishRepresentedArtists={distinguishRepresentedArtists}
           />

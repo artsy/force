@@ -3,10 +3,11 @@ import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
 import { FullBleed } from "v2/Components/FullBleed"
-import { useNavBarHeight } from "v2/Components/NavBar/useNavBarHeight"
+import { MOBILE_NAV_HEIGHT, NAV_BAR_HEIGHT } from "v2/Components/NavBar"
 import { RouteTab, RouteTabs } from "v2/Components/RouteTabs"
 import { StickyContainer } from "v2/Components/StickyContainer"
 import { ScrollIntoView } from "v2/Utils"
+import { Media } from "v2/Utils/Responsive"
 import { NavigationTabs_partner } from "v2/__generated__/NavigationTabs_partner.graphql"
 
 // TODO: Update value in component height changed
@@ -17,8 +18,7 @@ interface NavigationTabsProps {
 }
 
 export const NavigationTabs: React.FC<NavigationTabsProps> = ({ partner }) => {
-  const navBarHeight = useNavBarHeight()
-  const renderTabs = () => {
+  const renderTabs = (scrollOffset: number) => {
     const {
       slug,
       locations,
@@ -71,7 +71,7 @@ export const NavigationTabs: React.FC<NavigationTabsProps> = ({ partner }) => {
         <ScrollIntoView
           key={route.href}
           selector="#jumpto--PartnerHeader"
-          offset={navBarHeight}
+          offset={scrollOffset}
         >
           <RouteTab to={route.href} exact={route.exact}>
             {route.name}
@@ -89,7 +89,12 @@ export const NavigationTabs: React.FC<NavigationTabsProps> = ({ partner }) => {
             style={stuck ? { boxShadow: DROP_SHADOW } : undefined}
           >
             <HorizontalPadding maxWidth={breakpoints.xl}>
-              <RouteTabs fill>{renderTabs()}</RouteTabs>
+              <Media greaterThan="xs">
+                <RouteTabs fill>{renderTabs(NAV_BAR_HEIGHT)}</RouteTabs>
+              </Media>
+              <Media at="xs">
+                <RouteTabs fill>{renderTabs(MOBILE_NAV_HEIGHT)}</RouteTabs>
+              </Media>
             </HorizontalPadding>
           </FullBleed>
         )
