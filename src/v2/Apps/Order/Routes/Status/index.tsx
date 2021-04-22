@@ -68,7 +68,7 @@ export class StatusRoute extends Component<StatusProps> {
                 <>
                   Thank you for your purchase. You will receive a confirmation
                   email by {stateExpiresAt}.
-                  <br />
+                  <Spacer mb={1} />
                   Disruptions caused by COVID-19 may cause delays — we
                   appreciate your understanding.
                 </>
@@ -81,7 +81,7 @@ export class StatusRoute extends Component<StatusProps> {
             <>
               Thank you for your purchase. You will be notified when the work
               has shipped, typically within 5–7 business days.
-              <br />
+              <Spacer mb={1} />
               Disruptions caused by COVID-19 may cause delays — we appreciate
               your understanding.
             </>
@@ -89,7 +89,7 @@ export class StatusRoute extends Component<StatusProps> {
             <>
               Thank you for your purchase. A specialist will contact you within
               2 business days to coordinate pickup.
-              <br />
+              <Spacer mb={1} />
               Disruptions caused by COVID-19 may cause delays — we appreciate
               your understanding.
             </>
@@ -148,8 +148,7 @@ export class StatusRoute extends Component<StatusProps> {
             <>
               Thank you for your response. The seller will be informed of your
               decision to end the negotiation process.
-              <br />
-              <br />
+              <Spacer mb={2} />
               We’d love to get your feedback. Contact{" "}
               <a href="mailto:orders@artsy.net">orders@artsy.net</a> with any
               comments you have.
@@ -216,18 +215,17 @@ export class StatusRoute extends Component<StatusProps> {
     return (
       <>
         Your work is on its way.
-        <br />
-        <br />
+        <Spacer mb={2} />
         {fulfillment.courier && (
           <>
             Shipper: {fulfillment.courier}
-            <br />
+            <Spacer mb={1} />
           </>
         )}
         {fulfillment.trackingId && (
           <>
             <>Tracking info: {fulfillment.trackingId}</>
-            <br />
+            <Spacer mb={1} />
           </>
         )}
         {fulfillment.estimatedDelivery && (
