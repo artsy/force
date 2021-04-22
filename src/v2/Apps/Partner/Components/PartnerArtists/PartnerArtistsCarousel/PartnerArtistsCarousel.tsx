@@ -2,19 +2,16 @@ import {
   Box,
   Carousel,
   CarouselCell,
-  CarouselRail,
   Text,
   Flex,
-  media,
   Swiper,
-  themeProps,
+  CarouselProps,
 } from "@artsy/palette"
+import { flatten } from "lodash"
 import React from "react"
 import { createFragmentContainer, graphql, QueryRenderer } from "react-relay"
-import styled from "styled-components"
 import { useSystemContext } from "v2/Artsy"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
-import { useMatchMedia } from "v2/Utils/Hooks/useMatchMedia"
 import { Media } from "v2/Utils/Responsive"
 import { PartnerArtistsCarouselQuery } from "v2/__generated__/PartnerArtistsCarouselQuery.graphql"
 import { PartnerArtistsCarousel_partner } from "v2/__generated__/PartnerArtistsCarousel_partner.graphql"
@@ -24,55 +21,61 @@ import {
 } from "./PartnerArtistsCarouselItem"
 import { PartnerArtistsCarouselPlaceholder } from "./PartnerArtistsCarouselPlaceholder"
 
-const ArtistCarouselRail = styled(CarouselRail)`
-  li {
-    // 4 items per viewport
-    flex-basis: calc((100% - 3 * 20px) / 4);
-    flex-grow: 0;
-    flex-shrink: 0;
-    box-sizing: initial;
-  }
-
-  ${media.lg`
-    li {
-      // 3 items per viewport
-      flex-basis: calc((100% - 2 * 20px) / 3);
-    }
-  `};
-
-  ${media.md`
-    li {
-      // 2 items per viewport
-      flex-basis: calc((100% - 20px) / 2);
-    }
-  `};
-`
-
 const PAGE_SIZE = 19
+
+const DesktopCarousel: React.FC<
+  CarouselProps & { itemsPerViewport: number }
+> = ({ children, itemsPerViewport, ...rest }) => {
+  return (
+    <Carousel
+      Cell={React.forwardRef((props, ref) => {
+        return (
+          <CarouselCell
+            display="inline-flex"
+            flexGrow={0}
+            flexShrink={0}
+            style={{
+              boxSizing: "initial",
+              flexBasis: `calc((100% - ${
+                itemsPerViewport - 1
+              } * 20px) / ${itemsPerViewport})`,
+            }}
+            {...props}
+            ref={ref as any}
+          />
+        )
+      })}
+      {...rest}
+    >
+      {children}
+    </Carousel>
+  )
+}
 
 export interface PartnerArtistsCarouselProps {
   partner: PartnerArtistsCarousel_partner
 }
 
-export const PartnerArtistsCarouselContainer: React.FC = ({ children }) => {
+export interface PartnerArtistsCarouselContainerProps {
+  children: (itemsPerViewport: number) => JSX.Element | JSX.Element[]
+}
+
+export const PartnerArtistsCarouselContainer: React.FC<PartnerArtistsCarouselContainerProps> = ({
+  children,
+}) => {
   return (
     <>
-      <Media greaterThan="xs">
-        <Carousel
-          Rail={props => {
-            return <ArtistCarouselRail {...props} />
-          }}
-          Cell={React.forwardRef((props, ref) => {
-            return (
-              <CarouselCell {...props} ref={ref as any} display="inline-flex" />
-            )
-          })}
-        >
-          {children as JSX.Element}
-        </Carousel>
+      <Media greaterThan="md">
+        <DesktopCarousel itemsPerViewport={4}>{children(4)}</DesktopCarousel>
+      </Media>
+      <Media at="md">
+        <DesktopCarousel itemsPerViewport={3}>{children(3)}</DesktopCarousel>
+      </Media>
+      <Media at="sm">
+        <DesktopCarousel itemsPerViewport={2}>{children(2)}</DesktopCarousel>
       </Media>
       <Media at="xs">
-        <Swiper>{children as JSX.Element}</Swiper>
+        <Swiper>{children(2)}</Swiper>
       </Media>
     </>
   )
@@ -81,46 +84,40 @@ export const PartnerArtistsCarouselContainer: React.FC = ({ children }) => {
 export const PartnerArtistsCarousel: React.FC<PartnerArtistsCarouselProps> = ({
   partner,
 }) => {
-  const xs = useMatchMedia(themeProps.mediaQueries.xs)
-  const sm = useMatchMedia(themeProps.mediaQueries.sm)
-  const md = useMatchMedia(themeProps.mediaQueries.md)
-
   if (!partner || !partner.artists || !partner.artists.edges) {
     return null
   }
 
   const { artists, slug } = partner
 
-  const hasMoreArtists =
-    ((xs || sm) && artists.edges.length > 2) ||
-    (md && artists.edges.length > 3) ||
-    artists.edges.length > 4
-
   return (
     <PartnerArtistsCarouselContainer>
-      {artists.edges
-        .filter(e => e.isDisplayOnPartnerProfile && e.counts.artworks > 0)
-        .map(edge => {
-          return (
-            <PartnerArtistsCarouselItemFragmentContainer
-              key={edge.node.id}
-              artist={edge.node}
-              partnerArtistHref={`/partner2/${slug}/artists/${edge.node.slug}`}
-            />
-          )
-        })}
-
-      {hasMoreArtists && (
-        <Box width={[300, "100%"]} key="see-all-artists-button">
-          <ResponsiveImage>
-            <Flex height="100%" alignItems="center" justifyContent="center">
-              <RouterLink to={`/partner2/${slug}/artists`}>
-                <Text>See all artists</Text>
-              </RouterLink>
-            </Flex>
-          </ResponsiveImage>
-        </Box>
-      )}
+      {itemsPerViewport => {
+        return flatten([
+          artists.edges
+            .filter(e => e.isDisplayOnPartnerProfile && e.counts.artworks > 0)
+            .map(edge => {
+              return (
+                <PartnerArtistsCarouselItemFragmentContainer
+                  key={edge.node.id}
+                  artist={edge.node}
+                  partnerArtistHref={`/partner2/${slug}/artists/${edge.node.slug}`}
+                />
+              )
+            }),
+          artists.edges.length > itemsPerViewport && (
+            <Box width={[300, "100%"]}>
+              <ResponsiveImage>
+                <Flex height="100%" alignItems="center" justifyContent="center">
+                  <RouterLink to={`/partner2/${slug}/artists`}>
+                    <Text>See all artists</Text>
+                  </RouterLink>
+                </Flex>
+              </ResponsiveImage>
+            </Box>
+          ),
+        ])
+      }}
     </PartnerArtistsCarouselContainer>
   )
 }
