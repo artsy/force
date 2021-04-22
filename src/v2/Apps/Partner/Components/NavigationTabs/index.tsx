@@ -10,7 +10,7 @@ import { ScrollIntoView } from "v2/Utils"
 import { NavigationTabs_partner } from "v2/__generated__/NavigationTabs_partner.graphql"
 
 // TODO: Update value in component height changed
-export const PARTHER_NAV_BAR_HEIGHT = 78
+export const PARTNER_NAV_BAR_HEIGHT = 78
 
 interface NavigationTabsProps {
   partner: NavigationTabs_partner

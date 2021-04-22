@@ -8,7 +8,7 @@ import {
 } from "../../Components/PartnerArtists"
 import { Artists_partner } from "v2/__generated__/Artists_partner.graphql"
 import { scrollIntoView } from "v2/Utils/scrollHelpers"
-import { PARTHER_NAV_BAR_HEIGHT } from "../../Components/NavigationTabs"
+import { PARTNER_NAV_BAR_HEIGHT } from "../../Components/NavigationTabs"
 import { graphql } from "lib/graphql"
 import { createFragmentContainer } from "react-relay"
 import { useNavBarHeight } from "v2/Components/NavBar/useNavBarHeight"
@@ -25,7 +25,7 @@ export const ArtistsRoute: React.FC<ArtistsRouteProps> = ({
   const navBarHeight = useNavBarHeight()
 
   const handleArtistClick = () => {
-    const offset = PARTHER_NAV_BAR_HEIGHT + navBarHeight + 20
+    const offset = PARTNER_NAV_BAR_HEIGHT + navBarHeight + 20
 
     scrollIntoView({
       offset: offset,
