@@ -31,10 +31,10 @@ export const PartnerContactAddressFragmentContainer = createFragmentContainer(
         city
         phone
         state
-        country
         address
         address2
         postalCode
+        displayCountry
       }
     `,
   }

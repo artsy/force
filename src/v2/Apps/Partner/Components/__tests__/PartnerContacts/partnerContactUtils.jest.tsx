@@ -12,7 +12,7 @@ describe("PartnerContactUtils", () => {
       {
         city: "city",
         state: "state",
-        country: "US",
+        displayCountry: "United States",
         address: "address",
         address2: "address2",
         postalCode: "postalCode",
@@ -24,7 +24,7 @@ describe("PartnerContactUtils", () => {
       {
         city: "city",
         state: "state",
-        country: "US",
+        displayCountry: "United States",
         address: "address",
         postalCode: "postalCode",
       },
@@ -35,7 +35,7 @@ describe("PartnerContactUtils", () => {
       {
         city: "city",
         state: "state",
-        country: "US",
+        displayCountry: "United States",
         postalCode: "postalCode",
       },
       ["city, state postalCode", "United States"],
@@ -44,7 +44,7 @@ describe("PartnerContactUtils", () => {
       "without city",
       {
         state: "state",
-        country: "US",
+        displayCountry: "United States",
         postalCode: "postalCode",
       },
       ["state postalCode", "United States"],
@@ -53,7 +53,7 @@ describe("PartnerContactUtils", () => {
       "without state",
       {
         city: "city",
-        country: "US",
+        displayCountry: "United States",
         postalCode: "postalCode",
       },
       ["city postalCode", "United States"],
@@ -63,7 +63,7 @@ describe("PartnerContactUtils", () => {
       {
         city: "city",
         state: "state",
-        country: "US",
+        displayCountry: "United States",
       },
       ["city, state", "United States"],
     ],
@@ -97,7 +97,7 @@ describe("PartnerContactUtils", () => {
         },
         city: "city",
         state: "state",
-        country: "US",
+        displayCountry: "United States",
         address: "address",
         postalCode: "postalCode",
       } as PartnerContactMap_location)
@@ -107,7 +107,7 @@ describe("PartnerContactUtils", () => {
   it("getGoogleMapUrl returns correct result when coordinates empty", () => {
     expect(
       getGoogleMapUrl({
-        country: "US",
+        displayCountry: "United States",
         address: "address",
         postalCode: "postalCode",
       } as PartnerContactMap_location)
@@ -124,7 +124,7 @@ describe("PartnerContactUtils", () => {
       },
       city: "city",
       state: "state",
-      country: "US",
+      displayCountry: "United States",
       address: "address",
       postalCode: "postalCode",
     } as PartnerContactMap_location)
@@ -136,7 +136,7 @@ describe("PartnerContactUtils", () => {
 
   it("getGoogleStaticMapImageUrl returns correct result when coordinates empty", () => {
     const result = getGoogleStaticMapImageUrl({
-      country: "US",
+      displayCountry: "United States",
       address: "address",
       postalCode: "postalCode",
     } as PartnerContactMap_location)

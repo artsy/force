@@ -71,10 +71,10 @@ export const PartnerContactMapFragmentContainer = createFragmentContainer(
         city
         phone
         state
-        country
         address
         address2
         postalCode
+        displayCountry
         coordinates {
           lat
           lng
