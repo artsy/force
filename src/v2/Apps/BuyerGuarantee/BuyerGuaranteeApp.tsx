@@ -7,9 +7,5 @@ interface BuyerGuaranteeAppProps {}
 export const BuyerGuaranteeApp: React.FC<BuyerGuaranteeAppProps> = ({
   children,
 }) => {
-  return (
-    <AppContainer>
-      <HorizontalPadding>{children}</HorizontalPadding>
-    </AppContainer>
-  )
+  return <AppContainer>{children}</AppContainer>
 }
