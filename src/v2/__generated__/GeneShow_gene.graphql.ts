@@ -5,7 +5,7 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type GeneShow_gene = {
     readonly name: string | null;
-    readonly description: string | null;
+    readonly formattedDescription: string | null;
     readonly similar: {
         readonly edges: ReadonlyArray<{
             readonly node: {
@@ -22,7 +22,7 @@ export type GeneShow_gene = {
             } | null;
         } | null> | null;
     } | null;
-    readonly " $fragmentRefs": FragmentRefs<"GeneMeta_gene" | "GeneArtworkFilter_gene">;
+    readonly " $fragmentRefs": FragmentRefs<"GeneMeta_gene" | "GeneArtworkFilter_gene" | "FollowGeneButton_gene">;
     readonly " $refType": "GeneShow_gene";
 };
 export type GeneShow_gene$data = GeneShow_gene;
@@ -73,11 +73,17 @@ return {
   "selections": [
     (v0/*: any*/),
     {
-      "alias": null,
-      "args": null,
+      "alias": "formattedDescription",
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "format",
+          "value": "HTML"
+        }
+      ],
       "kind": "ScalarField",
       "name": "description",
-      "storageKey": null
+      "storageKey": "description(format:\"HTML\")"
     },
     {
       "alias": null,
@@ -158,10 +164,15 @@ return {
       ],
       "kind": "FragmentSpread",
       "name": "GeneArtworkFilter_gene"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "FollowGeneButton_gene"
     }
   ],
   "type": "Gene"
 };
 })();
-(node as any).hash = 'ff6c6879fdb69b581b9ae8c88d977204';
+(node as any).hash = 'db708b8305d6f1d8d6db3064ac9a1799';
 export default node;

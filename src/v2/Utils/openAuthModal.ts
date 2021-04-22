@@ -93,6 +93,7 @@ function getDesktopIntent(options: AuthModalOptions): ModalOptions {
   switch (options.intent) {
     case Intent.followArtist:
     case Intent.followPartner:
+    case Intent.followGene:
       return getDesktopIntentToFollow(options)
     case Intent.saveArtwork:
       return getDesktopIntentToSaveArtwork(options)
