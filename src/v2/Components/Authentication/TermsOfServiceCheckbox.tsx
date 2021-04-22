@@ -19,7 +19,7 @@ export const TermsOfServiceCheckbox = ({
         <Link
           href="https://www.artsy.net/terms"
           target="_blank"
-          color="blue100"
+          color={color}
           underlineBehavior="hover"
         >
           Terms of Use
@@ -28,7 +28,7 @@ export const TermsOfServiceCheckbox = ({
         <Link
           href="https://www.artsy.net/privacy"
           target="_blank"
-          color="blue100"
+          color={color}
           underlineBehavior="hover"
         >
           Privacy Policy
@@ -37,7 +37,7 @@ export const TermsOfServiceCheckbox = ({
         <Link
           href="https://www.artsy.net/conditions-of-sale"
           target="_blanks"
-          color="blue100"
+          color={color}
           underlineBehavior="hover"
         >
           Conditions of Sale
