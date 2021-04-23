@@ -22,6 +22,7 @@ import { DownloadAppBadge } from "v2/Components/DownloadAppBadge"
 import { ContextModule } from "@artsy/cohesion"
 import { CCPARequest } from "./CCPARequest"
 import { LazyLoadComponent } from "react-lazy-load-image-component"
+import { resized } from "v2/Utils/resized"
 
 const Column = styled(Flex).attrs({
   flex: 1,
@@ -34,6 +35,13 @@ interface Props {
 }
 
 const DownloadAppBanner = () => {
+
+  const resizedImg = resized("https://files.artsy.net/consign/banner-large.jpg", {
+    height: 320,
+    quality: 70,
+    width: 957,
+  })
+
   return (
     <Flex
       flexDirection="row"
@@ -71,7 +79,8 @@ const DownloadAppBanner = () => {
           <Image
             height={320}
             width="102%"
-            src="https://files.artsy.net/consign/banner-large.jpg"
+            src={resizedImg.src}
+            srcSet={resizedImg.srcSet}
             mr={2}
             style={{
               objectFit: "cover",
