@@ -13,6 +13,7 @@ import { MOBILE_NAV_HEIGHT, NAV_BAR_HEIGHT } from "v2/Components/NavBar"
 import { PARTHER_NAV_BAR_HEIGHT } from "../../Components/NavigationTabs"
 import { graphql } from "lib/graphql"
 import { createFragmentContainer } from "react-relay"
+import { PartnerArtistsLoadingContextProvider } from "../../Utils/PartnerArtistsLoadingContext"
 
 export interface ArtistsRouteProps {
   partner: Artists_partner
@@ -25,7 +26,7 @@ export const ArtistsRoute: React.FC<ArtistsRouteProps> = ({
 }) => {
   const isMobile = useMatchMedia(themeProps.mediaQueries.xs)
 
-  const handleArtistClick = () => {
+  const scrollIntoArtistDetails = () => {
     const offset =
       PARTHER_NAV_BAR_HEIGHT +
       (isMobile ? MOBILE_NAV_HEIGHT : NAV_BAR_HEIGHT) +
@@ -37,26 +38,36 @@ export const ArtistsRoute: React.FC<ArtistsRouteProps> = ({
     })
   }
 
+  const handleArtistsLoaded = () => {
+    if (match.params.artistId) {
+      scrollIntoArtistDetails()
+    }
+  }
+
   return (
-    <Box mt={4}>
-      <Text variant="title" mb={6}>
-        Artists
-      </Text>
+    <PartnerArtistsLoadingContextProvider onArtistsLoaded={handleArtistsLoaded}>
+      <Box mt={4}>
+        <Text variant="title" mb={6}>
+          Artists
+        </Text>
 
-      <PartnerArtistsPaginationContainer
-        onArtistClick={handleArtistClick}
-        partner={partner}
-      />
-
-      {match.params.artistId ? (
-        <PartnerArtistDetailsRenderer
-          partnerId={match.params.partnerId}
-          artistId={match.params.artistId}
+        <PartnerArtistsPaginationContainer
+          onArtistClick={scrollIntoArtistDetails}
+          partner={partner}
         />
-      ) : (
-        <PartnerArtistDetailsListRenderer partnerId={match.params.partnerId} />
-      )}
-    </Box>
+
+        {match.params.artistId ? (
+          <PartnerArtistDetailsRenderer
+            partnerId={match.params.partnerId}
+            artistId={match.params.artistId}
+          />
+        ) : (
+          <PartnerArtistDetailsListRenderer
+            partnerId={match.params.partnerId}
+          />
+        )}
+      </Box>
+    </PartnerArtistsLoadingContextProvider>
   )
 }
 
