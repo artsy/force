@@ -4,13 +4,31 @@ import { PartnerApp_Test_Query } from "v2/__generated__/PartnerApp_Test_Query.gr
 import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
 import { PartnerAppFragmentContainer } from "../PartnerApp"
 import { PartnerHeaderImageFragmentContainer as PartnerHeaderImage } from "../Components/PartnerHeader/PartnerHeaderImage"
+import { HeadProvider } from "react-head"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
+jest.mock("v2/Artsy/Router/useRouter", () => ({
+  useRouter: () => ({
+    match: {
+      params: {
+        artistId: "andy-warhol",
+      },
+      location: {
+        pathname: "/partner/example",
+      },
+    },
+  }),
+  useIsRouteActive: () => false,
+}))
 
 const { getWrapper } = setupTestWrapper<PartnerApp_Test_Query>({
   Component: props => {
-    return <PartnerAppFragmentContainer {...props} />
+    return (
+      <HeadProvider>
+        <PartnerAppFragmentContainer {...props} />
+      </HeadProvider>
+    )
   },
   query: graphql`
     query PartnerApp_Test_Query {
