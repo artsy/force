@@ -21,5 +21,11 @@ export const setupBraze = async () => {
     enableLogging: BRAZE_LOGGING,
   })
   braze.display.automaticallyShowNewInAppMessages()
+
+  const userID = getENV("CURRENT_USER")?.id
+  if (userID) {
+    braze.changeUser(userID)
+  }
+
   braze.openSession()
 }
