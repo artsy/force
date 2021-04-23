@@ -9,6 +9,7 @@ import { PartnerApp_partner } from "v2/__generated__/PartnerApp_partner.graphql"
 import { FullBleed } from "v2/Components/FullBleed"
 import { PartnerHeaderImageFragmentContainer as PartnerHeaderImage } from "./Components/PartnerHeader/PartnerHeaderImage"
 import styled from "styled-components"
+import { PartnerMetaFragmentContainer } from "./Components/PartnerMeta"
 
 export interface PartnerAppProps {
   partner: PartnerApp_partner
@@ -17,6 +18,7 @@ export interface PartnerAppProps {
 const Foreground = styled(FullBleed)`
   background-color: white;
   z-index: 1;
+  display: flex;
 `
 
 export const PartnerApp: React.FC<PartnerAppProps> = ({
@@ -30,6 +32,8 @@ export const PartnerApp: React.FC<PartnerAppProps> = ({
       <Foreground>
         <AppContainer>
           <HorizontalPadding>
+            <PartnerMetaFragmentContainer partner={partner} />
+
             <PartnerHeader partner={partner} />
 
             <FullBleed mb={[2, 4]}>
@@ -52,6 +56,7 @@ export const PartnerAppFragmentContainer = createFragmentContainer(PartnerApp, {
       profile {
         ...PartnerHeaderImage_profile
       }
+      ...PartnerMeta_partner
       ...PartnerHeader_partner
       ...NavigationTabs_partner
     }

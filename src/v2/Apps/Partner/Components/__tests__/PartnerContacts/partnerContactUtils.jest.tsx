@@ -12,60 +12,60 @@ describe("PartnerContactUtils", () => {
       {
         city: "city",
         state: "state",
-        country: "country",
+        displayCountry: "United States",
         address: "address",
         address2: "address2",
         postalCode: "postalCode",
       },
-      ["address", "address2", "city, state postalCode", "country"],
+      ["address", "address2", "city, state postalCode", "United States"],
     ],
     [
       "without address2",
       {
         city: "city",
         state: "state",
-        country: "country",
+        displayCountry: "United States",
         address: "address",
         postalCode: "postalCode",
       },
-      ["address", "city, state postalCode", "country"],
+      ["address", "city, state postalCode", "United States"],
     ],
     [
       "without address",
       {
         city: "city",
         state: "state",
-        country: "country",
+        displayCountry: "United States",
         postalCode: "postalCode",
       },
-      ["city, state postalCode", "country"],
+      ["city, state postalCode", "United States"],
     ],
     [
       "without city",
       {
         state: "state",
-        country: "country",
+        displayCountry: "United States",
         postalCode: "postalCode",
       },
-      ["state postalCode", "country"],
+      ["state postalCode", "United States"],
     ],
     [
       "without state",
       {
         city: "city",
-        country: "country",
+        displayCountry: "United States",
         postalCode: "postalCode",
       },
-      ["city postalCode", "country"],
+      ["city postalCode", "United States"],
     ],
     [
       "without postalCode",
       {
         city: "city",
         state: "state",
-        country: "country",
+        displayCountry: "United States",
       },
-      ["city, state", "country"],
+      ["city, state", "United States"],
     ],
     [
       "without country",
@@ -97,7 +97,7 @@ describe("PartnerContactUtils", () => {
         },
         city: "city",
         state: "state",
-        country: "country",
+        displayCountry: "United States",
         address: "address",
         postalCode: "postalCode",
       } as PartnerContactMap_location)
@@ -107,12 +107,12 @@ describe("PartnerContactUtils", () => {
   it("getGoogleMapUrl returns correct result when coordinates empty", () => {
     expect(
       getGoogleMapUrl({
-        country: "country",
+        displayCountry: "United States",
         address: "address",
         postalCode: "postalCode",
       } as PartnerContactMap_location)
     ).toEqual(
-      "https://maps.google.com/maps?q=address%2C%20postalCode%2C%20country&hnear=address%2C%20postalCode%2C%20country"
+      "https://maps.google.com/maps?q=address%2C%20postalCode%2C%20United%20States&hnear=address%2C%20postalCode%2C%20United%20States"
     )
   })
 
@@ -124,7 +124,7 @@ describe("PartnerContactUtils", () => {
       },
       city: "city",
       state: "state",
-      country: "country",
+      displayCountry: "United States",
       address: "address",
       postalCode: "postalCode",
     } as PartnerContactMap_location)
@@ -136,14 +136,16 @@ describe("PartnerContactUtils", () => {
 
   it("getGoogleStaticMapImageUrl returns correct result when coordinates empty", () => {
     const result = getGoogleStaticMapImageUrl({
-      country: "country",
+      displayCountry: "United States",
       address: "address",
       postalCode: "postalCode",
     } as PartnerContactMap_location)
 
-    expect(result).toContain("center=address%2C%20postalCode%2C%20country")
     expect(result).toContain(
-      "markers=color%3A0x873ff0%7Caddress%2C%20postalCode%2C%20country"
+      "center=address%2C%20postalCode%2C%20United%20States"
+    )
+    expect(result).toContain(
+      "markers=color%3A0x873ff0%7Caddress%2C%20postalCode%2C%20United%20States"
     )
   })
 })

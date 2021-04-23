@@ -1,7 +1,7 @@
 import { getENV } from "v2/Utils/getENV"
 
 export const setupBraze = async () => {
-  const isClient = typeof window === "undefined"
+  const isClient = typeof window !== "undefined"
   const BRAZE_API_KEY = getENV("BRAZE_API_KEY")
   const BRAZE_API_URL = getENV("BRAZE_API_URL")
   const BRAZE_LOGGING = Boolean(getENV("BRAZE_LOGGING"))
@@ -21,4 +21,11 @@ export const setupBraze = async () => {
     enableLogging: BRAZE_LOGGING,
   })
   braze.display.automaticallyShowNewInAppMessages()
+
+  const userID = getENV("CURRENT_USER")?.id
+  if (userID) {
+    braze.changeUser(userID)
+  }
+
+  braze.openSession()
 }

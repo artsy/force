@@ -281,6 +281,12 @@ const PolicyLinks = () => (
       </Text>
     </Link>
 
+    <Link to="/page/artsy-curated-auctions-listing-agreement">
+      <Text variant="caption" color="black60" mr={1}>
+        ACA Seller’s Agreement
+      </Text>
+    </Link>
+
     <CCPAWrapper py={1} justifyContent="center">
       <CCPARequest />
     </CCPAWrapper>
