@@ -12,7 +12,6 @@ interface PartnerMetaProps {
 const PartnerMeta: React.FC<PartnerMetaProps> = ({
   partner: {
     slug,
-    type,
     meta: { description, image, title },
   },
 }) => {
@@ -41,17 +40,10 @@ const PartnerMeta: React.FC<PartnerMetaProps> = ({
       <Meta property="twitter:description" content={description} />
       <Meta property="twitter:card" content="summary" />
 
-      <Meta property="profile:type" content={type} />
-      <Meta property="profile:username" content={slug} />
-
       <Link rel="canonical" href={canonicalHref} />
 
       {image && <Meta property="og:image" content={image} />}
       {image && <Meta name="thumbnail" content={image} />}
-
-      {getENV("INCLUDE_ESCAPED_FRAGMENT") && (
-        <Meta name="fragment" content="!" />
-      )}
     </>
   )
 }
@@ -62,7 +54,6 @@ export const PartnerMetaFragmentContainer = createFragmentContainer(
     partner: graphql`
       fragment PartnerMeta_partner on Partner {
         slug
-        type
         meta {
           image
           title
