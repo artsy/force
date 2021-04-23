@@ -57,6 +57,7 @@ declare module "sharify" {
       readonly BRAZE_API_KEY: string
       readonly BRAZE_API_URL: string
       readonly BRAZE_LOGGING: boolean
+      readonly INCLUDE_ESCAPED_FRAGMENT: boolean
 
       // FORCE Tokens
       AP: {
