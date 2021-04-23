@@ -7,7 +7,7 @@ export type PartnerApp_partner = {
     readonly profile: {
         readonly " $fragmentRefs": FragmentRefs<"PartnerHeaderImage_profile">;
     } | null;
-    readonly " $fragmentRefs": FragmentRefs<"PartnerHeader_partner" | "NavigationTabs_partner">;
+    readonly " $fragmentRefs": FragmentRefs<"PartnerMeta_partner" | "PartnerHeader_partner" | "NavigationTabs_partner">;
     readonly " $refType": "PartnerApp_partner";
 };
 export type PartnerApp_partner$data = PartnerApp_partner;
@@ -43,6 +43,11 @@ const node: ReaderFragment = {
     {
       "args": null,
       "kind": "FragmentSpread",
+      "name": "PartnerMeta_partner"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
       "name": "PartnerHeader_partner"
     },
     {
@@ -53,5 +58,5 @@ const node: ReaderFragment = {
   ],
   "type": "Partner"
 };
-(node as any).hash = 'a864ccfb753be5b51d70bf8379a6da29';
+(node as any).hash = '977fe5aa7ca51bedabaa52e9ed840d10';
 export default node;
