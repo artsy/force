@@ -1,4 +1,4 @@
-import { Box, Flex } from "@artsy/palette"
+import { Box, Flex, Theme } from "@artsy/palette"
 import { NetworkOfflineMonitor } from "v2/Artsy/Router/NetworkOfflineMonitor"
 import { findCurrentRoute } from "v2/Artsy/Router/Utils/findCurrentRoute"
 import { useMaybeReloadAfterInquirySignIn } from "v2/Artsy/Router/Utils/useMaybeReloadAfterInquirySignIn"
@@ -22,6 +22,7 @@ interface AppShellProps {
 export const AppShell: React.FC<AppShellProps> = props => {
   const { children, match } = props
   const routeConfig = findCurrentRoute(match)
+
   const { isEigen } = useSystemContext()
   const showFooter = !isEigen
 
@@ -62,17 +63,21 @@ export const AppShell: React.FC<AppShellProps> = props => {
         </Box>
       </Box>
 
-      <Box as="main" id="main">
-        {children}
-      </Box>
+      <Theme theme={routeConfig.theme ?? "v2"}>
+        <>
+          <Box as="main" id="main">
+            {children}
+          </Box>
 
-      <NetworkOfflineMonitor />
+          <NetworkOfflineMonitor />
 
-      <Flex backgroundColor="white100">
-        <AppContainer>
-          <HorizontalPadding>{showFooter && <Footer />}</HorizontalPadding>
-        </AppContainer>
-      </Flex>
+          <Flex backgroundColor="white100">
+            <AppContainer>
+              <HorizontalPadding>{showFooter && <Footer />}</HorizontalPadding>
+            </AppContainer>
+          </Flex>
+        </>
+      </Theme>
     </Box>
   )
 }
