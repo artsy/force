@@ -19,6 +19,7 @@ export const geneRoutes: RouteConfig[] = [
     },
     children: [
       {
+        theme: "v3",
         path: "",
         getComponent: () => GeneShowRoute,
         prepare: () => {

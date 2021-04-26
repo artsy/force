@@ -38,6 +38,7 @@ export const DownloadAppBadge: React.FC<DownloadAppBadgeProps> = track(null, {
         padding={0}
         href={downloadAppUrl}
         onClick={trackClickedDownloadAppBadge}
+        title="Download on the App Store"
       >
         <DownloadAppBadgeSVG />
       </Link>
