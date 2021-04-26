@@ -17,9 +17,8 @@ export interface TransactionDetailsSummaryItemProps
   useLastSubmittedOffer?: boolean
   offerContextPrice?: "LIST_PRICE" | "LAST_OFFER"
   showOfferNote?: boolean
+  placeholderOverride?: string | null
 }
-
-const emDash = "—"
 
 export class TransactionDetailsSummaryItem extends React.Component<
   TransactionDetailsSummaryItemProps
@@ -27,8 +26,18 @@ export class TransactionDetailsSummaryItem extends React.Component<
   static defaultProps: Partial<TransactionDetailsSummaryItemProps> = {
     offerContextPrice: "LIST_PRICE",
   }
+
+  amountPlaceholder = this.props.placeholderOverride || "—"
+
   render() {
-    const { showOfferNote, offerOverride, order, ...others } = this.props
+    const {
+      showOfferNote,
+      offerOverride,
+      order,
+      placeholderOverride,
+      ...others
+    } = this.props
+
     return (
       <StepSummaryItem {...others}>
         {this.renderPriceEntry()}
@@ -53,10 +62,10 @@ export class TransactionDetailsSummaryItem extends React.Component<
     const { order } = this.props
     switch (order.mode) {
       case "BUY":
-        return order.shippingTotal || emDash
+        return order.shippingTotal || this.amountPlaceholder
       case "OFFER":
         const offer = this.getOffer()
-        return (offer && offer.shippingTotal) || emDash
+        return (offer && offer.shippingTotal) || this.amountPlaceholder
     }
   }
 
@@ -64,10 +73,10 @@ export class TransactionDetailsSummaryItem extends React.Component<
     const { order } = this.props
     switch (order.mode) {
       case "BUY":
-        return order.taxTotal || emDash
+        return order.taxTotal || this.amountPlaceholder
       case "OFFER":
         const offer = this.getOffer()
-        return (offer && offer.taxTotal) || emDash
+        return (offer && offer.taxTotal) || this.amountPlaceholder
     }
   }
 
@@ -96,7 +105,9 @@ export class TransactionDetailsSummaryItem extends React.Component<
       <>
         <Entry
           label={isBuyerOffer ? "Your offer" : "Seller's offer"}
-          value={offerOverride || (offer && offer.amount) || emDash}
+          value={
+            offerOverride || (offer && offer.amount) || this.amountPlaceholder
+          }
         />
         {offerContextPrice === "LIST_PRICE" ? (
           offerItem && (

@@ -23,6 +23,7 @@ export type Review_order = {
         } | null> | null;
     } | null;
     readonly myLastOffer?: {
+        readonly hasDefiniteTotal: boolean;
         readonly internalID: string;
     } | null;
     readonly " $fragmentRefs": FragmentRefs<"ArtworkSummaryItem_order" | "TransactionDetailsSummaryItem_order" | "ShippingSummaryItem_order" | "CreditCardSummaryItem_order" | "OfferSummaryItem_order">;
@@ -152,6 +153,13 @@ return {
           "name": "myLastOffer",
           "plural": false,
           "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "hasDefiniteTotal",
+              "storageKey": null
+            },
             (v0/*: any*/)
           ],
           "storageKey": null
@@ -188,5 +196,5 @@ return {
   "type": "CommerceOrder"
 };
 })();
-(node as any).hash = '60dfd6ec4add50147123f983c4b5e086';
+(node as any).hash = '18e203a8f4bcd919bd1c8690df82043d';
 export default node;
