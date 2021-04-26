@@ -3,18 +3,26 @@ import { graphql } from "react-relay"
 import { FollowGeneButtonFragmentContainer } from "../FollowGeneButton"
 import * as openAuthModal from "v2/Utils/openAuthModal"
 import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
-import { MockBoot } from "v2/DevTools"
 import { FollowGeneButton_Test_Query } from "v2/__generated__/FollowGeneButton_Test_Query.graphql"
 import { mediator } from "lib/mediator"
+import { FollowButton } from "../Button"
 
-jest.unmock("react-relay")
+jest.mock("react-relay", () => ({
+  ...jest.requireActual("react-relay"),
+  commitMutation: jest.fn(),
+}))
+
+import { commitMutation } from "react-relay"
+import { SystemContextProvider } from "v2/Artsy"
+
+let user = {}
 
 const { getWrapper } = setupTestWrapper<FollowGeneButton_Test_Query>({
   Component: props => {
     return (
-      <MockBoot>
+      <SystemContextProvider user={user}>
         <FollowGeneButtonFragmentContainer {...props} />
-      </MockBoot>
+      </SystemContextProvider>
     )
   },
   query: graphql`
@@ -27,25 +35,45 @@ const { getWrapper } = setupTestWrapper<FollowGeneButton_Test_Query>({
 })
 
 describe("FollowGeneButton", () => {
-  it("renders correctly if you are not following", () => {
+  describe("when you are not following", () => {
     const wrapper = getWrapper({
       Gene: () => ({ isFollowed: false }),
     })
 
-    // The first following is for handling the width of the element and can be ignored
-    expect(wrapper.text()).toEqual("FollowingFollow")
+    it("renders correctly", () => {
+      // The first following is for handling the width of the element and can be ignored
+      expect(wrapper.text()).toEqual("FollowingFollow")
+    })
+
+    it("follows on button click", async () => {
+      wrapper.find(FollowButton).simulate("click")
+      const mutation = (commitMutation as any).mock.calls[0][1].variables.input
+
+      expect(mutation.unfollow).toBe(false)
+    })
   })
 
-  it("renders correctly if you are following", () => {
+  describe("when you are following", () => {
     const wrapper = getWrapper({
       Gene: () => ({ isFollowed: true }),
     })
 
-    // The first following is for handling the width of the element and can be ignored
-    expect(wrapper.text()).toEqual("FollowingFollowing")
+    it("renders correctly", () => {
+      // The first following is for handling the width of the element and can be ignored
+      expect(wrapper.text()).toEqual("FollowingFollowing")
+    })
+
+    it("unfollows on button click", () => {
+      wrapper.find(FollowButton).simulate("click")
+      const mutation = (commitMutation as any).mock.calls[1][1].variables.input
+
+      expect(mutation.unfollow).toBe(true)
+    })
   })
 
   describe("logged out", () => {
+    user = null
+
     it("pops up the auth model when clicked", () => {
       const wrapper = getWrapper({
         Gene: () => ({
@@ -62,7 +90,7 @@ describe("FollowGeneButton", () => {
         "openAuthToFollowSave"
       )
 
-      wrapper.find("button").simulate("click")
+      wrapper.find(FollowButton).simulate("click")
 
       expect(openAuthToFollowSave).toBeCalledWith(mediator, {
         intent: "followGene",

@@ -51,6 +51,7 @@ const FollowGeneButton: React.FC<FollowGeneButtonProps> = ({
       variables: {
         input: {
           geneID: gene.internalID,
+          unfollow: gene.isFollowed,
         },
       },
     })
