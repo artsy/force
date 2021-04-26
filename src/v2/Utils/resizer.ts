@@ -1,5 +1,5 @@
 import qs from "qs"
-const GEMINI_CLOUDFRONT_URL = "https://d7hftxdivxxvm.cloudfront.net"
+import { data } from "sharify"
 
 const warn = message => {
   if (process.env.NODE_ENV === "development") {
@@ -41,7 +41,7 @@ export const crop = (
     convert_to,
   }
 
-  return [GEMINI_CLOUDFRONT_URL, qs.stringify(config)].join("?")
+  return [data.GEMINI_CLOUDFRONT_URL, qs.stringify(config)].join("?")
 }
 
 export const resize = (
@@ -76,5 +76,5 @@ export const resize = (
     convert_to,
   }
 
-  return [GEMINI_CLOUDFRONT_URL, qs.stringify(config)].join("?")
+  return [data.GEMINI_CLOUDFRONT_URL, qs.stringify(config)].join("?")
 }
