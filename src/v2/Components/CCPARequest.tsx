@@ -9,6 +9,7 @@ import {
   Serif,
   TextArea,
   Text,
+  Clickable,
 } from "@artsy/palette"
 import { CCPARequestMutation } from "v2/__generated__/CCPARequestMutation.graphql"
 import { useSystemContext } from "v2/Artsy"
@@ -309,11 +310,12 @@ export const CCPARequest: React.SFC<Props> = props => {
 
   return (
     <>
-      <Box style={{ cursor: "pointer" }} onClick={() => setShowModal(true)}>
+      <Clickable onClick={() => setShowModal(true)}>
         <Text variant="caption" color="black60">
           Do not sell my personal information
         </Text>
-      </Box>
+      </Clickable>
+
       <Modal
         title={title}
         show={showModal}

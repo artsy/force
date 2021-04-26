@@ -34,7 +34,7 @@ export const MarketingLandingApp = () => {
         <FAQ />
         <ArtworkCredits />
         <SectionContainer py={0}>
-          <Footer flushWithContent />
+          <Footer mt={0} borderTop={0} />
         </SectionContainer>
       </AppContainer>
     </>
