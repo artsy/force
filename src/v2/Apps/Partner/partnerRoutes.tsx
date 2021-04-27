@@ -81,10 +81,20 @@ export const partnerRoutes: RouteConfig[] = [
         prepare: () => {
           ShowsRoute.preload()
         },
+        prepareVariables: ({ partnerId }) => {
+          return {
+            partnerId,
+            featuredShowStatus: null,
+          }
+        },
         query: graphql`
-          query partnerRoutes_ShowsQuery($partnerId: String!) {
+          query partnerRoutes_ShowsQuery(
+            $partnerId: String!
+            $featuredShowStatus: EventStatus
+          ) {
             partner(id: $partnerId) @principalField {
               ...Shows_partner
+                @arguments(featuredShowStatus: $featuredShowStatus)
             }
           }
         `,
