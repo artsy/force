@@ -1,5 +1,5 @@
 import { Box } from "@artsy/palette"
-import React from "react"
+import React, { useState } from "react"
 import {
   createRefetchContainer,
   graphql,
@@ -7,12 +7,12 @@ import {
   RelayRefetchProp,
 } from "react-relay"
 import { PaginationFragmentContainer } from "v2/Components/Pagination"
-
+import { LoadingArea } from "v2/Components/LoadingArea"
+import { ShowEventsFragmentContainer } from "v2/Apps/Partner/Components/PartnerShows/ShowEvents"
 import { useSystemContext } from "v2/Artsy"
 import { useRouter } from "v2/Artsy/Router/useRouter"
 import { ShowPaginatedEventsQuery } from "v2/__generated__/ShowPaginatedEventsQuery.graphql"
 import { ShowPaginatedEvents_partner } from "v2/__generated__/ShowPaginatedEvents_partner.graphql"
-import { ShowEventsFragmentContainer } from "v2/Apps/Partner/Components/PartnerShows/ShowEvents"
 import { EventStatus } from "v2/__generated__/ShowPaginatedEventsRendererQuery.graphql"
 
 interface ShowEventsProps {
@@ -34,6 +34,7 @@ const ShowPaginatedEvents: React.FC<ShowEventsProps> = ({
     match: { location },
     router,
   } = useRouter()
+  const [isLoading, setIsLoading] = useState(false)
 
   if (!partner.showsList) {
     return null
@@ -49,6 +50,8 @@ const ShowPaginatedEvents: React.FC<ShowEventsProps> = ({
   } = partner
 
   const handleClick = (cursor: string, page: number) => {
+    setIsLoading(true)
+
     relay.refetch(
       {
         first: 24,
@@ -62,13 +65,14 @@ const ShowPaginatedEvents: React.FC<ShowEventsProps> = ({
         if (error) {
           console.error(error)
         }
+        setIsLoading(false)
+
+        router.push({
+          pathname: location.pathname,
+          query: { ...location.query, page },
+        })
       }
     )
-
-    router.push({
-      pathname: location.pathname,
-      query: { ...location.query, page },
-    })
   }
 
   const handleNext = (page: number) => {
@@ -77,7 +81,10 @@ const ShowPaginatedEvents: React.FC<ShowEventsProps> = ({
 
   return (
     <Box id={scrollTo.substring(1)}>
-      <ShowEventsFragmentContainer edges={shows} eventTitle={eventTitle} />
+      <LoadingArea isLoading={isLoading}>
+        <ShowEventsFragmentContainer edges={shows} eventTitle={eventTitle} />
+      </LoadingArea>
+
       <Box mt={9}>
         <PaginationFragmentContainer
           hasNextPage={hasNextPage}
