@@ -11,6 +11,12 @@ export type buyerGuaranteeRoutes_BuyerGuaranteeQueryResponse = {
     readonly authenticityImage: {
         readonly " $fragmentRefs": FragmentRefs<"BuyerGuaranteeIndex_authenticityImage">;
     } | null;
+    readonly moneyBackGuaranteeImage: {
+        readonly " $fragmentRefs": FragmentRefs<"BuyerGuaranteeIndex_moneyBackGuaranteeImage">;
+    } | null;
+    readonly securePaymentImage: {
+        readonly " $fragmentRefs": FragmentRefs<"BuyerGuaranteeIndex_securePaymentImage">;
+    } | null;
 };
 export type buyerGuaranteeRoutes_BuyerGuaranteeQuery = {
     readonly response: buyerGuaranteeRoutes_BuyerGuaranteeQueryResponse;
@@ -27,6 +33,14 @@ query buyerGuaranteeRoutes_BuyerGuaranteeQuery {
   }
   authenticityImage: artwork(id: "5fecdbfa19d5ae5bf95c1dd8") {
     ...BuyerGuaranteeIndex_authenticityImage
+    id
+  }
+  moneyBackGuaranteeImage: artwork(id: "5fce729a212bcf54e2551f21") {
+    ...BuyerGuaranteeIndex_moneyBackGuaranteeImage
+    id
+  }
+  securePaymentImage: artwork(id: "580fb7cd2a893a65c100086a") {
+    ...BuyerGuaranteeIndex_securePaymentImage
     id
   }
 }
@@ -58,6 +72,34 @@ fragment BuyerGuaranteeIndex_headerImage on Artwork {
     }
   }
 }
+
+fragment BuyerGuaranteeIndex_moneyBackGuaranteeImage on Artwork {
+  imageTitle
+  imageUrl
+  artist {
+    name
+    id
+  }
+  image {
+    resized(version: "larger") {
+      url
+    }
+  }
+}
+
+fragment BuyerGuaranteeIndex_securePaymentImage on Artwork {
+  imageTitle
+  imageUrl
+  artist {
+    name
+    id
+  }
+  image {
+    resized(version: "larger") {
+      url
+    }
+  }
+}
 */
 
 const node: ConcreteRequest = (function(){
@@ -75,14 +117,28 @@ v1 = [
     "value": "5fecdbfa19d5ae5bf95c1dd8"
   }
 ],
-v2 = {
+v2 = [
+  {
+    "kind": "Literal",
+    "name": "id",
+    "value": "5fce729a212bcf54e2551f21"
+  }
+],
+v3 = [
+  {
+    "kind": "Literal",
+    "name": "id",
+    "value": "580fb7cd2a893a65c100086a"
+  }
+],
+v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v3 = [
+v5 = [
   {
     "alias": null,
     "args": null,
@@ -112,7 +168,7 @@ v3 = [
         "name": "name",
         "storageKey": null
       },
-      (v2/*: any*/)
+      (v4/*: any*/)
     ],
     "storageKey": null
   },
@@ -151,7 +207,7 @@ v3 = [
     ],
     "storageKey": null
   },
-  (v2/*: any*/)
+  (v4/*: any*/)
 ];
 return {
   "fragment": {
@@ -191,6 +247,38 @@ return {
           }
         ],
         "storageKey": "artwork(id:\"5fecdbfa19d5ae5bf95c1dd8\")"
+      },
+      {
+        "alias": "moneyBackGuaranteeImage",
+        "args": (v2/*: any*/),
+        "concreteType": "Artwork",
+        "kind": "LinkedField",
+        "name": "artwork",
+        "plural": false,
+        "selections": [
+          {
+            "args": null,
+            "kind": "FragmentSpread",
+            "name": "BuyerGuaranteeIndex_moneyBackGuaranteeImage"
+          }
+        ],
+        "storageKey": "artwork(id:\"5fce729a212bcf54e2551f21\")"
+      },
+      {
+        "alias": "securePaymentImage",
+        "args": (v3/*: any*/),
+        "concreteType": "Artwork",
+        "kind": "LinkedField",
+        "name": "artwork",
+        "plural": false,
+        "selections": [
+          {
+            "args": null,
+            "kind": "FragmentSpread",
+            "name": "BuyerGuaranteeIndex_securePaymentImage"
+          }
+        ],
+        "storageKey": "artwork(id:\"580fb7cd2a893a65c100086a\")"
       }
     ],
     "type": "Query"
@@ -208,7 +296,7 @@ return {
         "kind": "LinkedField",
         "name": "artwork",
         "plural": false,
-        "selections": (v3/*: any*/),
+        "selections": (v5/*: any*/),
         "storageKey": "artwork(id:\"5dd8084d257aaf000e4a0396\")"
       },
       {
@@ -218,8 +306,28 @@ return {
         "kind": "LinkedField",
         "name": "artwork",
         "plural": false,
-        "selections": (v3/*: any*/),
+        "selections": (v5/*: any*/),
         "storageKey": "artwork(id:\"5fecdbfa19d5ae5bf95c1dd8\")"
+      },
+      {
+        "alias": "moneyBackGuaranteeImage",
+        "args": (v2/*: any*/),
+        "concreteType": "Artwork",
+        "kind": "LinkedField",
+        "name": "artwork",
+        "plural": false,
+        "selections": (v5/*: any*/),
+        "storageKey": "artwork(id:\"5fce729a212bcf54e2551f21\")"
+      },
+      {
+        "alias": "securePaymentImage",
+        "args": (v3/*: any*/),
+        "concreteType": "Artwork",
+        "kind": "LinkedField",
+        "name": "artwork",
+        "plural": false,
+        "selections": (v5/*: any*/),
+        "storageKey": "artwork(id:\"580fb7cd2a893a65c100086a\")"
       }
     ]
   },
@@ -228,9 +336,9 @@ return {
     "metadata": {},
     "name": "buyerGuaranteeRoutes_BuyerGuaranteeQuery",
     "operationKind": "query",
-    "text": "query buyerGuaranteeRoutes_BuyerGuaranteeQuery {\n  headerImage: artwork(id: \"5dd8084d257aaf000e4a0396\") {\n    ...BuyerGuaranteeIndex_headerImage\n    id\n  }\n  authenticityImage: artwork(id: \"5fecdbfa19d5ae5bf95c1dd8\") {\n    ...BuyerGuaranteeIndex_authenticityImage\n    id\n  }\n}\n\nfragment BuyerGuaranteeIndex_authenticityImage on Artwork {\n  imageTitle\n  imageUrl\n  artist {\n    name\n    id\n  }\n  image {\n    resized(version: \"larger\") {\n      url\n    }\n  }\n}\n\nfragment BuyerGuaranteeIndex_headerImage on Artwork {\n  imageTitle\n  imageUrl\n  artist {\n    name\n    id\n  }\n  image {\n    resized(version: \"larger\") {\n      url\n    }\n  }\n}\n"
+    "text": "query buyerGuaranteeRoutes_BuyerGuaranteeQuery {\n  headerImage: artwork(id: \"5dd8084d257aaf000e4a0396\") {\n    ...BuyerGuaranteeIndex_headerImage\n    id\n  }\n  authenticityImage: artwork(id: \"5fecdbfa19d5ae5bf95c1dd8\") {\n    ...BuyerGuaranteeIndex_authenticityImage\n    id\n  }\n  moneyBackGuaranteeImage: artwork(id: \"5fce729a212bcf54e2551f21\") {\n    ...BuyerGuaranteeIndex_moneyBackGuaranteeImage\n    id\n  }\n  securePaymentImage: artwork(id: \"580fb7cd2a893a65c100086a\") {\n    ...BuyerGuaranteeIndex_securePaymentImage\n    id\n  }\n}\n\nfragment BuyerGuaranteeIndex_authenticityImage on Artwork {\n  imageTitle\n  imageUrl\n  artist {\n    name\n    id\n  }\n  image {\n    resized(version: \"larger\") {\n      url\n    }\n  }\n}\n\nfragment BuyerGuaranteeIndex_headerImage on Artwork {\n  imageTitle\n  imageUrl\n  artist {\n    name\n    id\n  }\n  image {\n    resized(version: \"larger\") {\n      url\n    }\n  }\n}\n\nfragment BuyerGuaranteeIndex_moneyBackGuaranteeImage on Artwork {\n  imageTitle\n  imageUrl\n  artist {\n    name\n    id\n  }\n  image {\n    resized(version: \"larger\") {\n      url\n    }\n  }\n}\n\nfragment BuyerGuaranteeIndex_securePaymentImage on Artwork {\n  imageTitle\n  imageUrl\n  artist {\n    name\n    id\n  }\n  image {\n    resized(version: \"larger\") {\n      url\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'c5e4cbe9d10cf0bb089ae17752934887';
+(node as any).hash = '75a4a2e0001cf58a99f503eb4f3f3f26';
 export default node;

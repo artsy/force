@@ -36,6 +36,12 @@ export const buyerGuaranteeRoutes: RouteConfig[] = [
             authenticityImage: artwork(id: "5fecdbfa19d5ae5bf95c1dd8") {
               ...BuyerGuaranteeIndex_authenticityImage
             }
+            moneyBackGuaranteeImage: artwork(id: "5fce729a212bcf54e2551f21") {
+              ...BuyerGuaranteeIndex_moneyBackGuaranteeImage
+            }
+            securePaymentImage: artwork(id: "580fb7cd2a893a65c100086a") {
+              ...BuyerGuaranteeIndex_securePaymentImage
+            }
           }
         `,
       },
