@@ -35,7 +35,7 @@ export const PartnerHeader: React.FC<PartnerHeaderProps> = ({ partner }) => {
     partner && partner.type !== "Auction House" && !!partner.profile
 
   return (
-    <GridColumns gridRowGap={2} py={[2, 4]}>
+    <GridColumns id="jumpto--PartnerHeader" gridRowGap={2} py={[2, 4]}>
       <Column span={[12, 10]}>
         <Flex>
           {partner.profile?.icon && (

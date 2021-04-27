@@ -4,6 +4,8 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import { PartnerArtistItem_artist } from "v2/__generated__/PartnerArtistItem_artist.graphql"
 import { Text } from "@artsy/palette"
+import { ScrollIntoViewProps } from "v2/Utils/scrollHelpers"
+import { ScrollIntoView } from "v2/Utils"
 
 const Name = styled(Text).attrs({ py: 0.5 })`
   display: inline-block;
@@ -15,23 +17,21 @@ export interface PartnerArtistItemProps {
   artist: PartnerArtistItem_artist
   hasPublishedArtworks: boolean
   partnerSlug: string
-  onArtistClick?: () => void
+  scrollTo: ScrollIntoViewProps
 }
 
 export const PartnerArtistItem: React.FC<PartnerArtistItemProps> = ({
   artist: { name, slug },
   hasPublishedArtworks,
   partnerSlug,
-  onArtistClick,
+  scrollTo,
 }) => {
   return hasPublishedArtworks ? (
-    <RouterLink
-      onClick={onArtistClick}
-      noUnderline
-      to={`/partner2/${partnerSlug}/artists/${slug}`}
-    >
-      <Name color="black100">{name}</Name>
-    </RouterLink>
+    <ScrollIntoView {...scrollTo}>
+      <RouterLink noUnderline to={`/partner2/${partnerSlug}/artists/${slug}`}>
+        <Name color="black100">{name}</Name>
+      </RouterLink>
+    </ScrollIntoView>
   ) : (
     <Name color="black60">{name}</Name>
   )
