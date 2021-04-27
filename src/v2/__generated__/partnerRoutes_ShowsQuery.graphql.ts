@@ -43,15 +43,24 @@ fragment ShowCard_show on Show {
   }
 }
 
+fragment ShowEvents_edges on ShowEdge {
+  node {
+    internalID
+    ...ShowCard_show
+    id
+  }
+}
+
 fragment Shows_partner on Partner {
   slug
-  showsConnection(first: 18) {
+  currentEvents: showsConnection(first: 12, status: RUNNING) {
     edges {
-      node {
-        internalID
-        ...ShowCard_show
-        id
-      }
+      ...ShowEvents_edges
+    }
+  }
+  upcomingEvents: showsConnection(first: 12, status: UPCOMING) {
+    edges {
+      ...ShowEvents_edges
     }
   }
 }
@@ -74,12 +83,138 @@ v1 = [
   }
 ],
 v2 = {
+  "kind": "Literal",
+  "name": "first",
+  "value": 12
+},
+v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
-};
+},
+v4 = [
+  {
+    "alias": null,
+    "args": null,
+    "concreteType": "ShowEdge",
+    "kind": "LinkedField",
+    "name": "edges",
+    "plural": true,
+    "selections": [
+      {
+        "alias": null,
+        "args": null,
+        "concreteType": "Show",
+        "kind": "LinkedField",
+        "name": "node",
+        "plural": false,
+        "selections": [
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "internalID",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "href",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "name",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "isFairBooth",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "exhibitionPeriod",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "Image",
+            "kind": "LinkedField",
+            "name": "coverImage",
+            "plural": false,
+            "selections": [
+              {
+                "alias": "medium",
+                "args": [
+                  {
+                    "kind": "Literal",
+                    "name": "height",
+                    "value": 222
+                  },
+                  {
+                    "kind": "Literal",
+                    "name": "width",
+                    "value": 263
+                  }
+                ],
+                "concreteType": "CroppedImageUrl",
+                "kind": "LinkedField",
+                "name": "cropped",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "width",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "height",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "src",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "srcSet",
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": "cropped(height:222,width:263)"
+              }
+            ],
+            "storageKey": null
+          },
+          (v3/*: any*/)
+        ],
+        "storageKey": null
+      }
+    ],
+    "storageKey": null
+  }
+];
 return {
   "fragment": {
     "argumentDefinitions": (v0/*: any*/),
@@ -128,142 +263,40 @@ return {
             "storageKey": null
           },
           {
-            "alias": null,
+            "alias": "currentEvents",
             "args": [
+              (v2/*: any*/),
               {
                 "kind": "Literal",
-                "name": "first",
-                "value": 18
+                "name": "status",
+                "value": "RUNNING"
               }
             ],
             "concreteType": "ShowConnection",
             "kind": "LinkedField",
             "name": "showsConnection",
             "plural": false,
-            "selections": [
+            "selections": (v4/*: any*/),
+            "storageKey": "showsConnection(first:12,status:\"RUNNING\")"
+          },
+          {
+            "alias": "upcomingEvents",
+            "args": [
+              (v2/*: any*/),
               {
-                "alias": null,
-                "args": null,
-                "concreteType": "ShowEdge",
-                "kind": "LinkedField",
-                "name": "edges",
-                "plural": true,
-                "selections": [
-                  {
-                    "alias": null,
-                    "args": null,
-                    "concreteType": "Show",
-                    "kind": "LinkedField",
-                    "name": "node",
-                    "plural": false,
-                    "selections": [
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "internalID",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "href",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "name",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "isFairBooth",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "exhibitionPeriod",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "concreteType": "Image",
-                        "kind": "LinkedField",
-                        "name": "coverImage",
-                        "plural": false,
-                        "selections": [
-                          {
-                            "alias": "medium",
-                            "args": [
-                              {
-                                "kind": "Literal",
-                                "name": "height",
-                                "value": 222
-                              },
-                              {
-                                "kind": "Literal",
-                                "name": "width",
-                                "value": 263
-                              }
-                            ],
-                            "concreteType": "CroppedImageUrl",
-                            "kind": "LinkedField",
-                            "name": "cropped",
-                            "plural": false,
-                            "selections": [
-                              {
-                                "alias": null,
-                                "args": null,
-                                "kind": "ScalarField",
-                                "name": "width",
-                                "storageKey": null
-                              },
-                              {
-                                "alias": null,
-                                "args": null,
-                                "kind": "ScalarField",
-                                "name": "height",
-                                "storageKey": null
-                              },
-                              {
-                                "alias": null,
-                                "args": null,
-                                "kind": "ScalarField",
-                                "name": "src",
-                                "storageKey": null
-                              },
-                              {
-                                "alias": null,
-                                "args": null,
-                                "kind": "ScalarField",
-                                "name": "srcSet",
-                                "storageKey": null
-                              }
-                            ],
-                            "storageKey": "cropped(height:222,width:263)"
-                          }
-                        ],
-                        "storageKey": null
-                      },
-                      (v2/*: any*/)
-                    ],
-                    "storageKey": null
-                  }
-                ],
-                "storageKey": null
+                "kind": "Literal",
+                "name": "status",
+                "value": "UPCOMING"
               }
             ],
-            "storageKey": "showsConnection(first:18)"
+            "concreteType": "ShowConnection",
+            "kind": "LinkedField",
+            "name": "showsConnection",
+            "plural": false,
+            "selections": (v4/*: any*/),
+            "storageKey": "showsConnection(first:12,status:\"UPCOMING\")"
           },
-          (v2/*: any*/)
+          (v3/*: any*/)
         ],
         "storageKey": null
       }
@@ -274,7 +307,7 @@ return {
     "metadata": {},
     "name": "partnerRoutes_ShowsQuery",
     "operationKind": "query",
-    "text": "query partnerRoutes_ShowsQuery(\n  $partnerId: String!\n) {\n  partner(id: $partnerId) @principalField {\n    ...Shows_partner\n    id\n  }\n}\n\nfragment ShowCard_show on Show {\n  href\n  name\n  isFairBooth\n  exhibitionPeriod\n  coverImage {\n    medium: cropped(width: 263, height: 222) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment Shows_partner on Partner {\n  slug\n  showsConnection(first: 18) {\n    edges {\n      node {\n        internalID\n        ...ShowCard_show\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query partnerRoutes_ShowsQuery(\n  $partnerId: String!\n) {\n  partner(id: $partnerId) @principalField {\n    ...Shows_partner\n    id\n  }\n}\n\nfragment ShowCard_show on Show {\n  href\n  name\n  isFairBooth\n  exhibitionPeriod\n  coverImage {\n    medium: cropped(width: 263, height: 222) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ShowEvents_edges on ShowEdge {\n  node {\n    internalID\n    ...ShowCard_show\n    id\n  }\n}\n\nfragment Shows_partner on Partner {\n  slug\n  currentEvents: showsConnection(first: 12, status: RUNNING) {\n    edges {\n      ...ShowEvents_edges\n    }\n  }\n  upcomingEvents: showsConnection(first: 12, status: UPCOMING) {\n    edges {\n      ...ShowEvents_edges\n    }\n  }\n}\n"
   }
 };
 })();
