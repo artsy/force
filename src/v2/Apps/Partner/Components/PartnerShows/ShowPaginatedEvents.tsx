@@ -13,6 +13,7 @@ import { useRouter } from "v2/Artsy/Router/useRouter"
 import { ShowPaginatedEventsQuery } from "v2/__generated__/ShowPaginatedEventsQuery.graphql"
 import { ShowPaginatedEvents_partner } from "v2/__generated__/ShowPaginatedEvents_partner.graphql"
 import { ShowEventsFragmentContainer } from "v2/Apps/Partner/Components/PartnerShows/ShowEvents"
+import { EventStatus } from "v2/__generated__/ShowPaginatedEventsRendererQuery.graphql"
 
 interface ShowEventsProps {
   relay: RelayRefetchProp
@@ -151,7 +152,7 @@ export const ShowEventsRefetchContainer = createRefetchContainer(
 interface ShowPaginatedEventsRendererProps {
   partnerId: string
   first: number
-  status: string
+  status: EventStatus
   eventTitle: string
   scrollTo: string
   offset: number
