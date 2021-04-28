@@ -71,10 +71,37 @@ export const partnerRoutes: RouteConfig[] = [
         query: graphql`
           query partnerRoutes_ArticlesQuery($partnerId: String!) {
             partner(id: $partnerId) @principalField {
+              articles: articlesConnection(first: 0) {
+                totalCount
+              }
               ...Articles_partner
             }
           }
         `,
+        render: ({ Component, props, match }) => {
+          if (!(Component && props)) {
+            return
+          }
+
+          const { partner } = props as any
+
+          if (!partner) {
+            return
+          }
+
+          const {
+            articles: { totalCount },
+          } = partner
+
+          if (!totalCount) {
+            throw new RedirectException(
+              `/partner2/${match.params.partnerId}`,
+              302
+            )
+          }
+
+          return <Component {...props} />
+        },
       },
       {
         getComponent: () => ShowsRoute,
