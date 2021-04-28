@@ -6,7 +6,7 @@ import { FragmentRefs } from "relay-runtime";
 export type PartnerArtists_partner = {
     readonly slug: string;
     readonly distinguishRepresentedArtists: boolean | null;
-    readonly artistsConnection: {
+    readonly allArtistsConnection: {
         readonly edges: ReadonlyArray<{
             readonly " $fragmentRefs": FragmentRefs<"PartnerArtistList_artists">;
         } | null> | null;
@@ -22,33 +22,9 @@ export type PartnerArtists_partner$key = {
 
 
 const node: ReaderFragment = {
-  "argumentDefinitions": [
-    {
-      "defaultValue": 20,
-      "kind": "LocalArgument",
-      "name": "first",
-      "type": "Int"
-    },
-    {
-      "defaultValue": null,
-      "kind": "LocalArgument",
-      "name": "after",
-      "type": "String"
-    }
-  ],
+  "argumentDefinitions": [],
   "kind": "Fragment",
-  "metadata": {
-    "connection": [
-      {
-        "count": "first",
-        "cursor": "after",
-        "direction": "forward",
-        "path": [
-          "artistsConnection"
-        ]
-      }
-    ]
-  },
+  "metadata": null,
   "name": "PartnerArtists_partner",
   "selections": [
     {
@@ -66,11 +42,22 @@ const node: ReaderFragment = {
       "storageKey": null
     },
     {
-      "alias": "artistsConnection",
-      "args": null,
+      "alias": null,
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "displayOnPartnerProfile",
+          "value": true
+        },
+        {
+          "kind": "Literal",
+          "name": "hasNotRepresentedArtistWithPublishedArtworks",
+          "value": true
+        }
+      ],
       "concreteType": "ArtistPartnerConnection",
       "kind": "LinkedField",
-      "name": "__PartnerArtistsQuery_artistsConnection_connection",
+      "name": "allArtistsConnection",
       "plural": false,
       "selections": [
         {
@@ -82,68 +69,18 @@ const node: ReaderFragment = {
           "plural": true,
           "selections": [
             {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "cursor",
-              "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "concreteType": "Artist",
-              "kind": "LinkedField",
-              "name": "node",
-              "plural": false,
-              "selections": [
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "__typename",
-                  "storageKey": null
-                }
-              ],
-              "storageKey": null
-            },
-            {
               "args": null,
               "kind": "FragmentSpread",
               "name": "PartnerArtistList_artists"
             }
           ],
           "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "concreteType": "PageInfo",
-          "kind": "LinkedField",
-          "name": "pageInfo",
-          "plural": false,
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "endCursor",
-              "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "hasNextPage",
-              "storageKey": null
-            }
-          ],
-          "storageKey": null
         }
       ],
-      "storageKey": null
+      "storageKey": "allArtistsConnection(displayOnPartnerProfile:true,hasNotRepresentedArtistWithPublishedArtworks:true)"
     }
   ],
   "type": "Partner"
 };
-(node as any).hash = 'b6c162077e5925c02e8b21d5ab76d415';
+(node as any).hash = '38a24506ae8418b5f3f2092cffd30cca';
 export default node;

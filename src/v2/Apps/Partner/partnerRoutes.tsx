@@ -2,6 +2,7 @@ import React from "react"
 import loadable from "@loadable/component"
 import { RedirectException, RouteConfig } from "found"
 import { graphql } from "react-relay"
+import { ArtistsRoutePlaceholder } from "./Routes/Artists"
 
 const PartnerApp = loadable(() => import("./PartnerApp"), {
   resolveComponent: component => component.PartnerAppFragmentContainer,
@@ -146,7 +147,7 @@ export const partnerRoutes: RouteConfig[] = [
         query: graphql`
           query partnerRoutes_ArtistsQuery($partnerId: String!) {
             partner(id: $partnerId) @principalField {
-              ...Artists_partner
+              ...ArtistsRoute_partner
               displayArtistsSection
               artists: artistsConnection(first: 20, after: null) {
                 totalCount
@@ -155,23 +156,17 @@ export const partnerRoutes: RouteConfig[] = [
           }
         `,
         render: ({ Component, props, match }) => {
-          if (!(Component && props)) {
-            return undefined
+          const pageProps = props as any
+
+          if (!(Component && pageProps && pageProps.partner)) {
+            return <ArtistsRoutePlaceholder />
           }
 
-          const { partner } = props as any
+          const {
+            partner: { displayArtistsSection, artists },
+          } = pageProps
 
-          if (!partner) {
-            return undefined
-          }
-
-          if (
-            !(
-              partner.displayArtistsSection &&
-              partner.artists &&
-              partner.artists.totalCount > 0
-            )
-          ) {
+          if (!(displayArtistsSection && artists && artists.totalCount > 0)) {
             throw new RedirectException(
               `/partner2/${match.params.partnerId}`,
               302

@@ -92,7 +92,6 @@ fragment PartnerArtistItem_artist on Artist {
 
 fragment PartnerArtistList_artists on ArtistPartnerEdge {
   representedBy
-  isDisplayOnPartnerProfile
   counts {
     artworks
   }
@@ -106,19 +105,10 @@ fragment PartnerArtistList_artists on ArtistPartnerEdge {
 fragment PartnerArtists_partner on Partner {
   slug
   distinguishRepresentedArtists
-  artistsConnection(first: 20) {
+  allArtistsConnection(displayOnPartnerProfile: true, hasNotRepresentedArtistWithPublishedArtworks: true) {
     edges {
       ...PartnerArtistList_artists
-      cursor
-      node {
-        __typename
-        id
-      }
       id
-    }
-    pageInfo {
-      endCursor
-      hasNextPage
     }
   }
 }
@@ -147,83 +137,37 @@ v2 = {
   "name": "slug",
   "storageKey": null
 },
-v3 = [
-  {
-    "kind": "Literal",
-    "name": "first",
-    "value": 20
-  }
-],
-v4 = {
+v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "internalID",
   "storageKey": null
 },
-v5 = {
+v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "name",
   "storageKey": null
 },
-v6 = {
+v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v7 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "__typename",
-  "storageKey": null
-},
-v8 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "cursor",
-  "storageKey": null
-},
-v9 = {
-  "alias": null,
-  "args": null,
-  "concreteType": "PageInfo",
-  "kind": "LinkedField",
-  "name": "pageInfo",
-  "plural": false,
-  "selections": [
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "endCursor",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "hasNextPage",
-      "storageKey": null
-    }
-  ],
-  "storageKey": null
-},
-v10 = [
+v6 = [
   {
     "kind": "Literal",
     "name": "first",
     "value": 10
   }
 ],
-v11 = [
-  (v5/*: any*/),
-  (v6/*: any*/)
+v7 = [
+  (v4/*: any*/),
+  (v5/*: any*/)
 ];
 return {
   "fragment": {
@@ -289,10 +233,21 @@ return {
           },
           {
             "alias": null,
-            "args": (v3/*: any*/),
+            "args": [
+              {
+                "kind": "Literal",
+                "name": "displayOnPartnerProfile",
+                "value": true
+              },
+              {
+                "kind": "Literal",
+                "name": "hasNotRepresentedArtistWithPublishedArtworks",
+                "value": true
+              }
+            ],
             "concreteType": "ArtistPartnerConnection",
             "kind": "LinkedField",
-            "name": "artistsConnection",
+            "name": "allArtistsConnection",
             "plural": false,
             "selections": [
               {
@@ -308,13 +263,6 @@ return {
                     "args": null,
                     "kind": "ScalarField",
                     "name": "representedBy",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "isDisplayOnPartnerProfile",
                     "storageKey": null
                   },
                   {
@@ -343,35 +291,23 @@ return {
                     "name": "node",
                     "plural": false,
                     "selections": [
+                      (v3/*: any*/),
                       (v4/*: any*/),
-                      (v5/*: any*/),
                       (v2/*: any*/),
-                      (v6/*: any*/),
-                      (v7/*: any*/)
+                      (v5/*: any*/)
                     ],
                     "storageKey": null
                   },
-                  (v8/*: any*/),
-                  (v6/*: any*/)
+                  (v5/*: any*/)
                 ],
                 "storageKey": null
-              },
-              (v9/*: any*/)
+              }
             ],
-            "storageKey": "artistsConnection(first:20)"
+            "storageKey": "allArtistsConnection(displayOnPartnerProfile:true,hasNotRepresentedArtistWithPublishedArtworks:true)"
           },
           {
             "alias": null,
-            "args": (v3/*: any*/),
-            "filters": null,
-            "handle": "connection",
-            "key": "PartnerArtistsQuery_artistsConnection",
-            "kind": "LinkedHandle",
-            "name": "artistsConnection"
-          },
-          {
-            "alias": null,
-            "args": (v10/*: any*/),
+            "args": (v6/*: any*/),
             "concreteType": "ArticleConnection",
             "kind": "LinkedField",
             "name": "articlesConnection",
@@ -400,7 +336,7 @@ return {
                     "name": "node",
                     "plural": false,
                     "selections": [
-                      (v4/*: any*/),
+                      (v3/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -429,7 +365,7 @@ return {
                         "kind": "LinkedField",
                         "name": "author",
                         "plural": false,
-                        "selections": (v11/*: any*/),
+                        "selections": (v7/*: any*/),
                         "storageKey": null
                       },
                       {
@@ -439,7 +375,7 @@ return {
                         "kind": "LinkedField",
                         "name": "contributingAuthors",
                         "plural": true,
-                        "selections": (v11/*: any*/),
+                        "selections": (v7/*: any*/),
                         "storageKey": null
                       },
                       {
@@ -503,29 +439,65 @@ return {
                         ],
                         "storageKey": null
                       },
-                      (v6/*: any*/),
-                      (v7/*: any*/)
+                      (v5/*: any*/),
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "__typename",
+                        "storageKey": null
+                      }
                     ],
                     "storageKey": null
                   },
-                  (v8/*: any*/)
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "cursor",
+                    "storageKey": null
+                  }
                 ],
                 "storageKey": null
               },
-              (v9/*: any*/)
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "PageInfo",
+                "kind": "LinkedField",
+                "name": "pageInfo",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "endCursor",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "hasNextPage",
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              }
             ],
             "storageKey": "articlesConnection(first:10)"
           },
           {
             "alias": null,
-            "args": (v10/*: any*/),
+            "args": (v6/*: any*/),
             "filters": null,
             "handle": "connection",
             "key": "ArticlesQuery_articlesConnection",
             "kind": "LinkedHandle",
             "name": "articlesConnection"
           },
-          (v6/*: any*/)
+          (v5/*: any*/)
         ],
         "storageKey": null
       }
@@ -536,7 +508,7 @@ return {
     "metadata": {},
     "name": "partnerRoutes_OverviewQuery",
     "operationKind": "query",
-    "text": "query partnerRoutes_OverviewQuery(\n  $partnerId: String!\n) {\n  partner(id: $partnerId) @principalField {\n    ...Overview_partner\n    id\n  }\n}\n\nfragment ArticleCard_article on Article {\n  channelID\n  thumbnailTitle\n  href\n  author {\n    name\n    id\n  }\n  contributingAuthors {\n    name\n    id\n  }\n  thumbnailImage {\n    medium: cropped(width: 357, height: 320) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ArticlesRail_articles on ArticleEdge {\n  node {\n    internalID\n    ...ArticleCard_article\n    id\n  }\n}\n\nfragment ArtistsRail_partner on Partner {\n  slug\n  profileArtistsLayout\n  ...PartnerArtists_partner\n}\n\nfragment Overview_partner on Partner {\n  slug\n  displayArtistsSection\n  ...ArtistsRail_partner\n  articlesConnection(first: 10) {\n    totalCount\n    edges {\n      ...ArticlesRail_articles\n      cursor\n      node {\n        __typename\n        id\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment PartnerArtistItem_artist on Artist {\n  name\n  slug\n}\n\nfragment PartnerArtistList_artists on ArtistPartnerEdge {\n  representedBy\n  isDisplayOnPartnerProfile\n  counts {\n    artworks\n  }\n  node {\n    internalID\n    ...PartnerArtistItem_artist\n    id\n  }\n}\n\nfragment PartnerArtists_partner on Partner {\n  slug\n  distinguishRepresentedArtists\n  artistsConnection(first: 20) {\n    edges {\n      ...PartnerArtistList_artists\n      cursor\n      node {\n        __typename\n        id\n      }\n      id\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query partnerRoutes_OverviewQuery(\n  $partnerId: String!\n) {\n  partner(id: $partnerId) @principalField {\n    ...Overview_partner\n    id\n  }\n}\n\nfragment ArticleCard_article on Article {\n  channelID\n  thumbnailTitle\n  href\n  author {\n    name\n    id\n  }\n  contributingAuthors {\n    name\n    id\n  }\n  thumbnailImage {\n    medium: cropped(width: 357, height: 320) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ArticlesRail_articles on ArticleEdge {\n  node {\n    internalID\n    ...ArticleCard_article\n    id\n  }\n}\n\nfragment ArtistsRail_partner on Partner {\n  slug\n  profileArtistsLayout\n  ...PartnerArtists_partner\n}\n\nfragment Overview_partner on Partner {\n  slug\n  displayArtistsSection\n  ...ArtistsRail_partner\n  articlesConnection(first: 10) {\n    totalCount\n    edges {\n      ...ArticlesRail_articles\n      cursor\n      node {\n        __typename\n        id\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment PartnerArtistItem_artist on Artist {\n  name\n  slug\n}\n\nfragment PartnerArtistList_artists on ArtistPartnerEdge {\n  representedBy\n  counts {\n    artworks\n  }\n  node {\n    internalID\n    ...PartnerArtistItem_artist\n    id\n  }\n}\n\nfragment PartnerArtists_partner on Partner {\n  slug\n  distinguishRepresentedArtists\n  allArtistsConnection(displayOnPartnerProfile: true, hasNotRepresentedArtistWithPublishedArtworks: true) {\n    edges {\n      ...PartnerArtistList_artists\n      id\n    }\n  }\n}\n"
   }
 };
 })();

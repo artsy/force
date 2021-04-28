@@ -51,26 +51,18 @@ export function groupArtists(
   distinguishRepresentedArtists: boolean,
   columnSize: number = 6
 ): Array<ArtistsGroup> {
-  const filteredArtists = artists
-    .filter(artist => artist.isDisplayOnPartnerProfile)
-    .filter(artists => artists.representedBy || artists.counts.artworks > 0)
-
   if (!distinguishRepresentedArtists) {
     return [
       {
-        artists: filteredArtists,
+        artists: artists,
         columnSize: columnSize,
         columnName: undefined,
       },
     ]
   }
 
-  const representedArtists = filteredArtists.filter(
-    artist => artist.representedBy
-  )
-  const worksAvailableArtists = filteredArtists.filter(
-    artist => !artist.representedBy
-  )
+  const representedArtists = artists.filter(artist => artist.representedBy)
+  const worksAvailableArtists = artists.filter(artist => !artist.representedBy)
 
   const columnSizes = getColumnsCountForEachArtistType(
     representedArtists.length,
