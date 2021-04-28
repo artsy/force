@@ -1,6 +1,7 @@
 import { Column, GridColumns, HTML, Text } from "@artsy/palette"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
+import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import { FollowGeneButtonFragmentContainer } from "v2/Components/FollowButton/FollowGeneButton"
 import { GeneShow_gene } from "v2/__generated__/GeneShow_gene.graphql"
 import { GeneArtworkFilterRefetchContainer } from "../Components/GeneArtworkFilter"
@@ -44,7 +45,7 @@ export const GeneShow: React.FC<GeneShowProps> = ({ gene }) => {
                 {gene.similar.edges.map(({ node }, i) => {
                   return (
                     <React.Fragment key={node.internalID}>
-                      <a href="#example">{node.name}</a>
+                      <RouterLink to={node.href}>{node.name}</RouterLink>
                       {i !== gene.similar.edges.length - 1 && ", "}
                     </React.Fragment>
                   )
@@ -63,7 +64,7 @@ export const GeneShow: React.FC<GeneShowProps> = ({ gene }) => {
                 {gene.artistsConnection.edges.map(({ node }, i) => {
                   return (
                     <React.Fragment key={node.internalID}>
-                      <a href="#example">{node.name}</a>
+                      <RouterLink to={node.href}>{node.name}</RouterLink>
                       {i !== gene.artistsConnection.edges.length - 1 && ", "}
                     </React.Fragment>
                   )
@@ -92,6 +93,7 @@ export const GeneShowFragmentContainer = createFragmentContainer(GeneShow, {
           node {
             internalID
             name
+            href
           }
         }
       }
@@ -100,6 +102,7 @@ export const GeneShowFragmentContainer = createFragmentContainer(GeneShow, {
           node {
             internalID
             name
+            href
           }
         }
       }
