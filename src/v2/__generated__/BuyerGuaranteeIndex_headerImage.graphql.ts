@@ -76,7 +76,7 @@ const node: ReaderFragment = {
             {
               "kind": "Literal",
               "name": "version",
-              "value": "larger"
+              "value": "normalized"
             }
           ],
           "concreteType": "ResizedImageUrl",
@@ -92,7 +92,7 @@ const node: ReaderFragment = {
               "storageKey": null
             }
           ],
-          "storageKey": "resized(version:\"larger\")"
+          "storageKey": "resized(version:\"normalized\")"
         }
       ],
       "storageKey": null
@@ -100,5 +100,5 @@ const node: ReaderFragment = {
   ],
   "type": "Artwork"
 };
-(node as any).hash = '999cbd22db933e8cfafb806bec92b850';
+(node as any).hash = '452e71128a83f85a09937c23bcbbc413';
 export default node;
