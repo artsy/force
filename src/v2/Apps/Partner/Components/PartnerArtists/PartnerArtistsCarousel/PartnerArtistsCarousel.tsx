@@ -1,18 +1,9 @@
-import {
-  Box,
-  Carousel,
-  CarouselCell,
-  Text,
-  Flex,
-  Swiper,
-  CarouselProps,
-} from "@artsy/palette"
-import { flatten } from "lodash"
 import React from "react"
+import { Box, Text, Flex } from "@artsy/palette"
+import { flatten } from "lodash"
 import { createFragmentContainer, graphql, QueryRenderer } from "react-relay"
 import { useSystemContext } from "v2/Artsy"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
-import { Media } from "v2/Utils/Responsive"
 import { PartnerArtistsCarouselQuery } from "v2/__generated__/PartnerArtistsCarouselQuery.graphql"
 import { PartnerArtistsCarousel_partner } from "v2/__generated__/PartnerArtistsCarousel_partner.graphql"
 import {
@@ -20,65 +11,13 @@ import {
   ResponsiveImage,
 } from "./PartnerArtistsCarouselItem"
 import { PartnerArtistsCarouselPlaceholder } from "./PartnerArtistsCarouselPlaceholder"
+import { Carousel } from "../../Carousel"
+import { ScrollToPartnerHeader } from "../../ScrollToPartnerHeader"
 
 const PAGE_SIZE = 19
 
-const DesktopCarousel: React.FC<
-  CarouselProps & { itemsPerViewport: number }
-> = ({ children, itemsPerViewport, ...rest }) => {
-  return (
-    <Carousel
-      Cell={React.forwardRef((props, ref) => {
-        return (
-          <CarouselCell
-            display="inline-flex"
-            flexGrow={0}
-            flexShrink={0}
-            style={{
-              boxSizing: "initial",
-              flexBasis: `calc((100% - ${
-                itemsPerViewport - 1
-              } * 20px) / ${itemsPerViewport})`,
-            }}
-            {...props}
-            ref={ref as any}
-          />
-        )
-      })}
-      {...rest}
-    >
-      {children}
-    </Carousel>
-  )
-}
-
 export interface PartnerArtistsCarouselProps {
   partner: PartnerArtistsCarousel_partner
-}
-
-export interface PartnerArtistsCarouselContainerProps {
-  children: (itemsPerViewport: number) => JSX.Element | JSX.Element[]
-}
-
-export const PartnerArtistsCarouselContainer: React.FC<PartnerArtistsCarouselContainerProps> = ({
-  children,
-}) => {
-  return (
-    <>
-      <Media greaterThan="md">
-        <DesktopCarousel itemsPerViewport={4}>{children(4)}</DesktopCarousel>
-      </Media>
-      <Media at="md">
-        <DesktopCarousel itemsPerViewport={3}>{children(3)}</DesktopCarousel>
-      </Media>
-      <Media at="sm">
-        <DesktopCarousel itemsPerViewport={2}>{children(2)}</DesktopCarousel>
-      </Media>
-      <Media at="xs">
-        <Swiper>{children(2)}</Swiper>
-      </Media>
-    </>
-  )
 }
 
 export const PartnerArtistsCarousel: React.FC<PartnerArtistsCarouselProps> = ({
@@ -91,7 +30,7 @@ export const PartnerArtistsCarousel: React.FC<PartnerArtistsCarouselProps> = ({
   const { artists, slug } = partner
 
   return (
-    <PartnerArtistsCarouselContainer>
+    <Carousel>
       {itemsPerViewport => {
         return flatten([
           artists.edges
@@ -107,18 +46,26 @@ export const PartnerArtistsCarousel: React.FC<PartnerArtistsCarouselProps> = ({
             }),
           artists.edges.length > itemsPerViewport && (
             <Box width={[300, "100%"]}>
-              <ResponsiveImage>
-                <Flex height="100%" alignItems="center" justifyContent="center">
-                  <RouterLink to={`/partner2/${slug}/artists`}>
-                    <Text>See all artists</Text>
-                  </RouterLink>
-                </Flex>
-              </ResponsiveImage>
+              <ScrollToPartnerHeader>
+                <RouterLink to={`/partner2/${slug}/artists`}>
+                  <ResponsiveImage>
+                    <Flex
+                      height="100%"
+                      alignItems="center"
+                      justifyContent="center"
+                    >
+                      <Text style={{ textDecoration: "underline" }}>
+                        See all artists
+                      </Text>
+                    </Flex>
+                  </ResponsiveImage>
+                </RouterLink>
+              </ScrollToPartnerHeader>
             </Box>
           ),
         ])
       }}
-    </PartnerArtistsCarouselContainer>
+    </Carousel>
   )
 }
 

@@ -7,6 +7,7 @@ import {
   PartnerArtistsCarouselRenderer,
   PartnerArtistsPaginationContainer,
 } from "../PartnerArtists"
+import { ScrollToPartnerHeader } from "../ScrollToPartnerHeader"
 
 interface ArtistsRailProps {
   partner: ArtistsRail_partner
@@ -22,9 +23,9 @@ const ArtistsRail: React.FC<ArtistsRailProps> = ({ partner }) => {
           {profileArtistsLayout === "Grid" ? "Featured Artists" : "Artists"}
         </Text>
         <RouterLink to={`/partner2/${slug}/artists`}>
-          <Text variant="text" color="black">
-            View all
-          </Text>
+          <ScrollToPartnerHeader>
+            <Text>View all</Text>
+          </ScrollToPartnerHeader>
         </RouterLink>
       </Flex>
 

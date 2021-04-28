@@ -1,6 +1,6 @@
 import { Box, Flex, SkeletonBox, SkeletonText } from "@artsy/palette"
 import React from "react"
-import { PartnerArtistsCarouselContainer } from "./PartnerArtistsCarousel"
+import { Carousel } from "../../Carousel/Carousel"
 import { ResponsiveImage } from "./PartnerArtistsCarouselItem"
 
 export interface PartnerArtistsCarouselPlaceholderProps {
@@ -11,7 +11,7 @@ export const PartnerArtistsCarouselPlaceholder: React.FC<PartnerArtistsCarouselP
   count,
 }) => {
   return (
-    <PartnerArtistsCarouselContainer>
+    <Carousel>
       {() =>
         [...Array(count)].map((_, i) => {
           return (
@@ -39,6 +39,6 @@ export const PartnerArtistsCarouselPlaceholder: React.FC<PartnerArtistsCarouselP
           )
         })
       }
-    </PartnerArtistsCarouselContainer>
+    </Carousel>
   )
 }
