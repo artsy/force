@@ -22,7 +22,6 @@ import { PricingContextFragmentContainer as PricingContext } from "./Components/
 
 import { withSystemContext } from "v2/Artsy"
 import * as Schema from "v2/Artsy/Analytics/Schema"
-import { useRouteTracking } from "v2/Artsy/Analytics/useRouteTracking"
 import { RecentlyViewedQueryRenderer as RecentlyViewed } from "v2/Components/RecentlyViewed"
 import { RouterContext } from "found"
 import { TrackingProp } from "react-tracking"
@@ -34,6 +33,7 @@ import {
 import { Mediator } from "lib/mediator"
 import { data } from "sharify"
 import { ReCaptchaContainer } from "v2/Utils/ReCaptchaContainer"
+import { useRouteComplete } from "v2/Utils/Hooks/useRouteComplete"
 
 export interface Props {
   artwork: ArtworkApp_artwork
@@ -322,7 +322,7 @@ const TrackingWrappedArtworkApp: React.FC<Props> = props => {
   // Check to see if referrer comes from link interception.
   // @see interceptLinks.ts
   const referrer = state && state.previousHref
-  const shouldTrackPageView = useRouteTracking()
+  const { isComplete } = useRouteComplete()
 
   return (
     <AnalyticsContext.Provider
@@ -336,7 +336,7 @@ const TrackingWrappedArtworkApp: React.FC<Props> = props => {
         {...props}
         routerPathname={pathname}
         referrer={referrer}
-        shouldTrackPageView={shouldTrackPageView}
+        shouldTrackPageView={isComplete}
       />
     </AnalyticsContext.Provider>
   )
