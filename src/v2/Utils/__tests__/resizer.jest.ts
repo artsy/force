@@ -1,5 +1,11 @@
 import { crop, resize } from "../resizer"
 
+jest.mock("sharify", () => ({
+  data: {
+    GEMINI_CLOUDFRONT_URL: "d7hftxdivxxvm.cloudfront.net",
+  },
+}))
+
 describe("resizer", () => {
   describe("#crop", () => {
     it("uses width, height, and quality", () => {
