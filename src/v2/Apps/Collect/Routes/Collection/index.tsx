@@ -31,6 +31,7 @@ import {
 import { updateUrl } from "v2/Components/v2/ArtworkFilter/Utils/urlBuilder"
 import { TrackingProp } from "react-tracking"
 import { ErrorPage } from "v2/Components/ErrorPage"
+import { usePathnameComplete } from "v2/Utils/Hooks/usePathnameComplete"
 
 interface CollectionAppProps extends SystemContextProps, AnalyticsContextProps {
   collection: Collection_collection
@@ -45,6 +46,8 @@ export const CollectionApp: React.FC<CollectionAppProps> = props => {
     match: { location },
     relay,
   } = props
+
+  const { pathname } = usePathnameComplete()
 
   if (!collection) return <ErrorPage code={404} />
 
@@ -114,6 +117,9 @@ export const CollectionApp: React.FC<CollectionAppProps> = props => {
             )}
             <Box>
               <ArtworkFilterContextProvider
+                // Reset state of filter context without calling reset; which would
+                // affect analytics.
+                key={pathname}
                 filters={location.query}
                 sortOptions={[
                   { text: "Default", value: "-decayed_merch" },
