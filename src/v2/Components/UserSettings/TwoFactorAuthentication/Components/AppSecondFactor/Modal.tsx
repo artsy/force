@@ -8,6 +8,7 @@ import * as Yup from "yup"
 import { ApiError } from "../../ApiError"
 import { EnableSecondFactor } from "../Mutation/EnableSecondFactor"
 import { UpdateAppSecondFactor } from "./Mutation/UpdateAppSecondFactor"
+import { BackupSecondFactorReminder } from "../BackupSecondFactorReminder"
 
 export interface FormValues {
   name: string
@@ -35,6 +36,10 @@ interface AppSecondFactorModalProps {
 export const AppSecondFactorModal: React.FC<AppSecondFactorModalProps> = props => {
   const { secondFactor, onComplete } = props
   const { relayEnvironment } = useSystemContext()
+
+  const [showForm, setShowForm] = useState(true)
+  const [showRecoveryCodes, setShowRecoveryCodes] = useState(false)
+  const [recoveryCodes, setRecoveryCodes] = useState(null)
 
   if (!secondFactor || secondFactor.__typename !== "AppSecondFactor") {
     return null
@@ -75,31 +80,62 @@ export const AppSecondFactorModal: React.FC<AppSecondFactorModalProps> = props =
         },
       })
 
-      await EnableSecondFactor(relayEnvironment, {
+      const response = await EnableSecondFactor(relayEnvironment, {
         secondFactorID: secondFactor.internalID,
         code: values.code,
       })
 
+      setRecoveryCodes(response.enableSecondFactor.recoveryCodes)
+
       actions.setSubmitting(false)
-      onComplete()
+
+      setShowForm(false)
+      setShowRecoveryCodes(true)
     } catch (error) {
       actions.setSubmitting(false)
       handleMutationError(actions, error)
     }
   }
 
+  const handleRecoveryReminderNext = () => {
+    setShowRecoveryCodes(false)
+    onComplete()
+  }
+
   return (
-    <Modal title="Set up with app" show={props.show} onClose={props.onClose}>
-      <Formik
-        validationSchema={validationSchema}
-        initialValues={{ name: secondFactor.name || "", code: "" }}
-        onSubmit={handleSubmit}
+    <>
+      <Modal
+        title="Set up with app"
+        show={showForm}
+        onClose={() => setShowForm(false)}
       >
-        {(formikProps: FormikProps<FormValues>) => (
-          <InnerForm secondFactor={secondFactor} {...formikProps} />
-        )}
-      </Formik>
-    </Modal>
+        <Formik
+          validationSchema={validationSchema}
+          initialValues={{ name: secondFactor.name || "", code: "" }}
+          onSubmit={handleSubmit}
+        >
+          {(formikProps: FormikProps<FormValues>) => (
+            <InnerForm secondFactor={secondFactor} {...formikProps} />
+          )}
+        </Formik>
+      </Modal>
+      <Modal
+        title="Recovery Codes"
+        onClose={handleRecoveryReminderNext}
+        show={showRecoveryCodes}
+        hideCloseButton={true}
+        FixedButton={
+          <Button onClick={handleRecoveryReminderNext} width="100%">
+            Next
+          </Button>
+        }
+      >
+        <BackupSecondFactorReminder
+          backupSecondFactors={recoveryCodes}
+          factorTypeName={secondFactor.__typename}
+        />
+      </Modal>
+    </>
   )
 }
 
