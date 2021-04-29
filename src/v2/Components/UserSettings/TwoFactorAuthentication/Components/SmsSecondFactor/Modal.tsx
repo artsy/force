@@ -14,6 +14,7 @@ import { ApiError } from "../../ApiError"
 import { EnableSecondFactor } from "../Mutation/EnableSecondFactor"
 import { DeliverSecondFactor } from "./Mutation/DeliverSecondFactor"
 import { UpdateSmsSecondFactor } from "./Mutation/UpdateSmsSecondFactor"
+import { BackupSecondFactorReminder } from "../BackupSecondFactorReminder"
 
 import { CreateSmsSecondFactorMutationResponse } from "v2/__generated__/CreateSmsSecondFactorMutation.graphql"
 
@@ -35,6 +36,9 @@ export const SmsSecondFactorModal: React.FC<SmsSecondFactorModalProps> = props =
   const [isSubmitting, setSubmitting] = useState(false)
   const [isDelivering, setDelivering] = useState(false)
 
+  const [showRecoveryCodes, setShowRecoveryCodes] = useState(false)
+  const [recoveryCodes, setRecoveryCodes] = useState(null)
+
   if (!secondFactor || secondFactor.__typename !== "SmsSecondFactor") {
     return null
   }
@@ -46,12 +50,16 @@ export const SmsSecondFactorModal: React.FC<SmsSecondFactorModalProps> = props =
     setSubmitting(true)
 
     try {
-      await EnableSecondFactor(relayEnvironment, {
+      const response = await EnableSecondFactor(relayEnvironment, {
         secondFactorID: secondFactor.internalID,
         code: values.code,
       })
 
-      onComplete()
+      console.log("RESPONSE", response)
+
+      setRecoveryCodes(response.enableSecondFactor.recoveryCodes)
+
+      setShowRecoveryCodes(true)
     } catch (error) {
       handleMutationError(actions, error)
     }
@@ -123,6 +131,11 @@ export const SmsSecondFactorModal: React.FC<SmsSecondFactorModalProps> = props =
 
       setDelivering(false)
     })
+  }
+
+  const handleRecoveryReminderNext = () => {
+    setShowRecoveryCodes(false)
+    onComplete()
   }
 
   const steps: StepElement[] = [
@@ -233,22 +246,39 @@ export const SmsSecondFactorModal: React.FC<SmsSecondFactorModalProps> = props =
   ]
 
   return (
-    <Modal
-      title="Set up with text message"
-      show={props.show}
-      onClose={props.onClose}
-    >
-      <Wizard
-        onComplete={handleOnComplete}
-        initialValues={{ countryCode: "US", phoneNumber: "", code: "" }}
-        steps={steps}
+    <>
+      <Modal
+        title="Set up with text message"
+        show={props.show}
+        onClose={props.onClose}
       >
-        {wizardProps => {
-          const { wizard } = wizardProps
-          const { currentStep } = wizard
-          return <Box>{currentStep}</Box>
-        }}
-      </Wizard>
-    </Modal>
+        <Wizard
+          onComplete={handleOnComplete}
+          initialValues={{ countryCode: "US", phoneNumber: "", code: "" }}
+          steps={steps}
+        >
+          {wizardProps => {
+            const { wizard } = wizardProps
+            const { currentStep } = wizard
+            return <Box>{currentStep}</Box>
+          }}
+        </Wizard>
+      </Modal>
+      <Modal
+        title="Recovery Codes"
+        onClose={onComplete}
+        show={showRecoveryCodes}
+        FixedButton={
+          <Button onClick={handleRecoveryReminderNext} width="100%">
+            next
+          </Button>
+        }
+      >
+        <BackupSecondFactorReminder
+          backupSecondFactors={recoveryCodes}
+          factorTypeName={secondFactor.__typename}
+        />
+      </Modal>
+    </>
   )
 }

@@ -50,6 +50,7 @@ export const EnableSecondFactor = (
                   }
                 }
               }
+              recoveryCodes
             }
           }
         `,
