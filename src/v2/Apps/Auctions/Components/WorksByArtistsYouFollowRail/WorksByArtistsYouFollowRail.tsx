@@ -5,7 +5,6 @@ import { WorksByArtistsYouFollowRail_viewer } from "v2/__generated__/WorksByArti
 import { SwiperWithProgress } from "v2/Components/Carousel"
 import { useTracking } from "react-tracking"
 import { AuthContextModule, clickedArtworkGroup } from "@artsy/cohesion"
-// import { auctionHeights } from "../../Utils/auctionsHelpers"
 import { tabTypeToContextModuleMap } from "../../Utils/tabTypeToContextModuleMap"
 import { Box, Spacer, Text } from "@artsy/palette"
 import { CarouselArtworkFragmentContainer } from "v2/Components/Artwork/CarouselArtwork"

@@ -2,6 +2,7 @@ import React from "react"
 import { Box, SkeletonBox, SkeletonText } from "@artsy/palette"
 import { SwiperWithProgress } from "v2/Components/Carousel"
 import { random } from "lodash"
+import { MAX_IMG_HEIGHT } from "v2/Components/Artwork/CarouselArtwork"
 
 interface FairExhibitorRailPlaceholderProps {
   done?: boolean
@@ -17,7 +18,7 @@ export const AuctionArtworksRailPlaceholder: React.FC<FairExhibitorRailPlacehold
           <Box key={i}>
             <SkeletonBox
               width={200}
-              height={random(200, 400)}
+              height={random(200, MAX_IMG_HEIGHT)}
               mb={1}
               done={done}
             />

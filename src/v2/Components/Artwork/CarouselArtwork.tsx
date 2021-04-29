@@ -13,7 +13,7 @@ import { Flex } from "@artsy/palette"
 /**
  * The max height for an image in the carousel
  */
-const MAX_IMG_HEIGHT = 250
+export const MAX_IMG_HEIGHT = 250
 interface CarouselArtworkProps {
   artwork: CarouselArtwork_artwork
   contextModule: AuthContextModule

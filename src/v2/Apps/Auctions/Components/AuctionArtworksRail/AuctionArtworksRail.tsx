@@ -40,7 +40,7 @@ export const AuctionArtworksRail: React.FC<AuctionArtworksRailProps> = ({
 }) => {
   const ref = useRef<HTMLDivElement | null>(null)
   const { trackEvent } = useTracking()
-  const { isEnteredView, Waypoint } = useLazyLoadComponent()
+  const { isEnteredView, Waypoint } = useLazyLoadComponent({ threshold: 2000 })
   const { contextPageOwnerType } = useAnalyticsContext()
   const contextModule = tabTypeToContextModuleMap[tabType]
 
