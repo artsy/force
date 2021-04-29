@@ -56,12 +56,6 @@ const node: ReaderFragment = {
       "kind": "LocalArgument",
       "name": "before",
       "type": "String"
-    },
-    {
-      "defaultValue": null,
-      "kind": "LocalArgument",
-      "name": "featuredShowStatus",
-      "type": "EventStatus"
     }
   ],
   "kind": "Fragment",
@@ -87,9 +81,9 @@ const node: ReaderFragment = {
           "value": "FEATURED_DESC_END_AT_DESC"
         },
         {
-          "kind": "Variable",
+          "kind": "Literal",
           "name": "status",
-          "variableName": "featuredShowStatus"
+          "value": "ALL"
         }
       ],
       "concreteType": "ShowConnection",
@@ -132,7 +126,7 @@ const node: ReaderFragment = {
           "storageKey": null
         }
       ],
-      "storageKey": null
+      "storageKey": "showsConnection(first:1,isDisplayable:true,sort:\"FEATURED_DESC_END_AT_DESC\",status:\"ALL\")"
     },
     {
       "alias": null,
@@ -210,5 +204,5 @@ const node: ReaderFragment = {
   ],
   "type": "Partner"
 };
-(node as any).hash = 'f1537ee45fdc519bbd15ce98ba71f75d';
+(node as any).hash = 'd011a65c1d78735ef4a4fc64eac159d5';
 export default node;

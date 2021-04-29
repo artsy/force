@@ -49,11 +49,10 @@ export const ShowsFragmentContainer = createFragmentContainer(Shows, {
         last: { type: "Int" }
         after: { type: "String" }
         before: { type: "String" }
-        featuredShowStatus: { type: "EventStatus" }
       ) {
       featured: showsConnection(
         first: 1
-        status: $featuredShowStatus
+        status: ALL
         sort: FEATURED_DESC_END_AT_DESC
         isDisplayable: true
       ) {
