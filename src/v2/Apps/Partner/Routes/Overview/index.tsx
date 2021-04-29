@@ -15,14 +15,14 @@ const Overview: React.FC<OverviewProps> = ({ partner }) => {
     displayArtistsSection,
   } = partner
 
-  const AreArticlesExisted = !!articles.length
+  const hasArticles = articles.length > 0
 
   return (
     <Box>
       {displayArtistsSection && (
         <ArtistsRailFragmentContainer partner={partner} />
       )}
-      {AreArticlesExisted && (
+      {hasArticles && (
         <ArticlesRailFragmentContainer
           partnerSlug={partner.slug}
           articles={articles}
