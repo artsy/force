@@ -28,6 +28,26 @@ query partnerRoutes_ShowsQuery(
   }
 }
 
+fragment ShowBanner_show on Show {
+  slug
+  name
+  href
+  isFairBooth
+  exhibitionPeriod
+  status
+  description
+  location {
+    city
+    id
+  }
+  coverImage {
+    medium: cropped(width: 600, height: 480) {
+      src
+      srcSet
+    }
+  }
+}
+
 fragment ShowCard_show on Show {
   href
   name
@@ -44,6 +64,15 @@ fragment ShowCard_show on Show {
 }
 
 fragment Shows_partner on Partner {
+  featured: showsConnection(first: 1, status: ALL, sort: FEATURED_DESC_END_AT_DESC, isDisplayable: true) {
+    edges {
+      node {
+        isFeatured
+        ...ShowBanner_show
+        id
+      }
+    }
+  }
   slug
   showsConnection(first: 18) {
     edges {
@@ -77,7 +106,56 @@ v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
+  "name": "slug",
+  "storageKey": null
+},
+v3 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "name",
+  "storageKey": null
+},
+v4 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "href",
+  "storageKey": null
+},
+v5 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "isFairBooth",
+  "storageKey": null
+},
+v6 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "exhibitionPeriod",
+  "storageKey": null
+},
+v7 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
   "name": "id",
+  "storageKey": null
+},
+v8 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "src",
+  "storageKey": null
+},
+v9 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "srcSet",
   "storageKey": null
 };
 return {
@@ -121,12 +199,141 @@ return {
         "plural": false,
         "selections": [
           {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "slug",
-            "storageKey": null
+            "alias": "featured",
+            "args": [
+              {
+                "kind": "Literal",
+                "name": "first",
+                "value": 1
+              },
+              {
+                "kind": "Literal",
+                "name": "isDisplayable",
+                "value": true
+              },
+              {
+                "kind": "Literal",
+                "name": "sort",
+                "value": "FEATURED_DESC_END_AT_DESC"
+              },
+              {
+                "kind": "Literal",
+                "name": "status",
+                "value": "ALL"
+              }
+            ],
+            "concreteType": "ShowConnection",
+            "kind": "LinkedField",
+            "name": "showsConnection",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "ShowEdge",
+                "kind": "LinkedField",
+                "name": "edges",
+                "plural": true,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "Show",
+                    "kind": "LinkedField",
+                    "name": "node",
+                    "plural": false,
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "isFeatured",
+                        "storageKey": null
+                      },
+                      (v2/*: any*/),
+                      (v3/*: any*/),
+                      (v4/*: any*/),
+                      (v5/*: any*/),
+                      (v6/*: any*/),
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "status",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "description",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": "Location",
+                        "kind": "LinkedField",
+                        "name": "location",
+                        "plural": false,
+                        "selections": [
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "city",
+                            "storageKey": null
+                          },
+                          (v7/*: any*/)
+                        ],
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": "Image",
+                        "kind": "LinkedField",
+                        "name": "coverImage",
+                        "plural": false,
+                        "selections": [
+                          {
+                            "alias": "medium",
+                            "args": [
+                              {
+                                "kind": "Literal",
+                                "name": "height",
+                                "value": 480
+                              },
+                              {
+                                "kind": "Literal",
+                                "name": "width",
+                                "value": 600
+                              }
+                            ],
+                            "concreteType": "CroppedImageUrl",
+                            "kind": "LinkedField",
+                            "name": "cropped",
+                            "plural": false,
+                            "selections": [
+                              (v8/*: any*/),
+                              (v9/*: any*/)
+                            ],
+                            "storageKey": "cropped(height:480,width:600)"
+                          }
+                        ],
+                        "storageKey": null
+                      },
+                      (v7/*: any*/)
+                    ],
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              }
+            ],
+            "storageKey": "showsConnection(first:1,isDisplayable:true,sort:\"FEATURED_DESC_END_AT_DESC\",status:\"ALL\")"
           },
+          (v2/*: any*/),
           {
             "alias": null,
             "args": [
@@ -164,34 +371,10 @@ return {
                         "name": "internalID",
                         "storageKey": null
                       },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "href",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "name",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "isFairBooth",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "exhibitionPeriod",
-                        "storageKey": null
-                      },
+                      (v4/*: any*/),
+                      (v3/*: any*/),
+                      (v5/*: any*/),
+                      (v6/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -233,27 +416,15 @@ return {
                                 "name": "height",
                                 "storageKey": null
                               },
-                              {
-                                "alias": null,
-                                "args": null,
-                                "kind": "ScalarField",
-                                "name": "src",
-                                "storageKey": null
-                              },
-                              {
-                                "alias": null,
-                                "args": null,
-                                "kind": "ScalarField",
-                                "name": "srcSet",
-                                "storageKey": null
-                              }
+                              (v8/*: any*/),
+                              (v9/*: any*/)
                             ],
                             "storageKey": "cropped(height:222,width:263)"
                           }
                         ],
                         "storageKey": null
                       },
-                      (v2/*: any*/)
+                      (v7/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -263,7 +434,7 @@ return {
             ],
             "storageKey": "showsConnection(first:18)"
           },
-          (v2/*: any*/)
+          (v7/*: any*/)
         ],
         "storageKey": null
       }
@@ -274,7 +445,7 @@ return {
     "metadata": {},
     "name": "partnerRoutes_ShowsQuery",
     "operationKind": "query",
-    "text": "query partnerRoutes_ShowsQuery(\n  $partnerId: String!\n) {\n  partner(id: $partnerId) @principalField {\n    ...Shows_partner\n    id\n  }\n}\n\nfragment ShowCard_show on Show {\n  href\n  name\n  isFairBooth\n  exhibitionPeriod\n  coverImage {\n    medium: cropped(width: 263, height: 222) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment Shows_partner on Partner {\n  slug\n  showsConnection(first: 18) {\n    edges {\n      node {\n        internalID\n        ...ShowCard_show\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query partnerRoutes_ShowsQuery(\n  $partnerId: String!\n) {\n  partner(id: $partnerId) @principalField {\n    ...Shows_partner\n    id\n  }\n}\n\nfragment ShowBanner_show on Show {\n  slug\n  name\n  href\n  isFairBooth\n  exhibitionPeriod\n  status\n  description\n  location {\n    city\n    id\n  }\n  coverImage {\n    medium: cropped(width: 600, height: 480) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ShowCard_show on Show {\n  href\n  name\n  isFairBooth\n  exhibitionPeriod\n  coverImage {\n    medium: cropped(width: 263, height: 222) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment Shows_partner on Partner {\n  featured: showsConnection(first: 1, status: ALL, sort: FEATURED_DESC_END_AT_DESC, isDisplayable: true) {\n    edges {\n      node {\n        isFeatured\n        ...ShowBanner_show\n        id\n      }\n    }\n  }\n  slug\n  showsConnection(first: 18) {\n    edges {\n      node {\n        internalID\n        ...ShowCard_show\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();
