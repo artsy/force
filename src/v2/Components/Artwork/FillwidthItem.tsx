@@ -6,7 +6,6 @@ import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { get } from "v2/Utils/get"
-import { getENV } from "v2/Utils/getENV"
 import createLogger from "v2/Utils/logger"
 import { userIsTeam } from "v2/Utils/user"
 import Badge from "./Badge"
@@ -17,10 +16,9 @@ import {
 } from "./SaveButton"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import { Mediator } from "lib/mediator"
+import { cropped, resized } from "v2/Utils/resized"
 
 const logger = createLogger("FillwidthItem.tsx")
-
-const IMAGE_QUALITY = 80
 
 const Placeholder = styled(Box).attrs({ bg: "gray10" })`
   position: relative;
@@ -75,31 +73,6 @@ export class FillwidthItemContainer extends React.Component<
     return this.props.imageHeight
   }
 
-  getImageUrl(pixelRatio = 1) {
-    const imageURL = this.props.artwork.image.url
-
-    if (!imageURL) {
-      return null
-    }
-
-    const {
-      artwork: {
-        image: { aspectRatio },
-      },
-    } = this.props
-
-    // Either scale or crop, based on if an aspect ratio is 1. Either the image
-    // actually is a square — or the geometry is missing and utilizing fill prevents
-    // distortion when it is sized to fit.
-    const type = aspectRatio === 1 ? "fill" : "fit"
-
-    return `${getENV("GEMINI_CLOUDFRONT_URL")}/?resize_to=${type}&width=${
-      this.imageWidth * pixelRatio
-    }&height=${
-      this.imageHeight * pixelRatio
-    }&quality=${IMAGE_QUALITY}&src=${encodeURIComponent(imageURL)}`
-  }
-
   render() {
     const {
       artwork,
@@ -130,11 +103,25 @@ export class FillwidthItemContainer extends React.Component<
       return null
     }
 
+    let scaledImage
+    switch (artwork.image.aspectRatio === 1 ? "fill" : "fit") {
+      case "fit":
+        scaledImage = resized(artwork.image.url, {
+          width: this.imageWidth,
+          height: this.imageHeight,
+        })
+        break
+      case "fill":
+      default:
+        scaledImage = cropped(artwork.image.url, {
+          width: this.imageWidth,
+          height: this.imageHeight,
+        })
+    }
+
     return (
       <Box className={className} width={this.imageWidth}>
-        <Placeholder
-          style={{ height: this.imageHeight, width: this.imageWidth }}
-        >
+        <Placeholder style={{ height: imageHeight, width: this.imageWidth }}>
           <RouterLink
             to={artwork.href}
             onClick={() => {
@@ -144,8 +131,8 @@ export class FillwidthItemContainer extends React.Component<
             }}
           >
             <Image
-              src={this.getImageUrl(1)}
-              srcSet={`${this.getImageUrl(1)} 1x, ${this.getImageUrl(2)} 2x`}
+              src={scaledImage.src}
+              srcSet={scaledImage.srcSet}
               width="100%"
               height={imageHeight}
               lazyLoad={lazyLoad}
@@ -198,7 +185,7 @@ export default createFragmentContainer(withSystemContext(FillwidthItem), {
   artwork: graphql`
     fragment FillwidthItem_artwork on Artwork {
       image {
-        url(version: "large")
+        url(version: "larger")
         aspectRatio
       }
       imageTitle
