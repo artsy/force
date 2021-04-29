@@ -6,6 +6,8 @@ import { basePath, env } from "../utils/env"
 
 export const standardDevtool = env.webpackDevtool || "eval"
 
+export const productionDevtool = env.webpackDevtool || "source-map"
+
 export const standardMode = env.webpackDebug ? "development" : env.nodeEnv
 
 export const standardStats = env.webpackStats || "errors-only"

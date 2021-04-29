@@ -3,6 +3,7 @@ import { createRefetchContainer, RelayRefetchProp, graphql } from "react-relay"
 import { useRouter } from "v2/Artsy/Router/useRouter"
 import { BaseArtworkFilter } from "v2/Components/v2/ArtworkFilter"
 import { ArtworkFilterContextProvider } from "v2/Components/v2/ArtworkFilter/ArtworkFilterContext"
+import { updateUrl } from "v2/Components/v2/ArtworkFilter/Utils/urlBuilder"
 import { GeneArtworkFilter_gene } from "v2/__generated__/GeneArtworkFilter_gene.graphql"
 
 interface GeneArtworkFilterProps {
@@ -19,6 +20,7 @@ const GeneArtworkFilter: React.FC<GeneArtworkFilterProps> = ({
   return (
     <ArtworkFilterContextProvider
       filters={match && match.location.query}
+      onChange={updateUrl}
       sortOptions={[
         { text: "Default", value: "-decayed_merch" },
         { text: "Price (desc.)", value: "-has_price,-prices" },

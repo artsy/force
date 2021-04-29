@@ -19,6 +19,7 @@ import styled from "styled-components"
 import { ErrorWithMetadata } from "v2/Utils/errors"
 import { get } from "v2/Utils/get"
 import createLogger from "v2/Utils/logger"
+import { themeGet } from "@styled-system/theme-get"
 
 export const EMAIL_REGEX = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 
@@ -310,11 +311,9 @@ export const CCPARequest: React.SFC<Props> = props => {
 
   return (
     <>
-      <Clickable onClick={() => setShowModal(true)}>
-        <Text variant="caption" color="black60">
-          Do not sell my personal information
-        </Text>
-      </Clickable>
+      <CCPALink onClick={() => setShowModal(true)}>
+        <Text variant="caption">Do not sell my personal information</Text>
+      </CCPALink>
 
       <Modal
         title={title}
@@ -327,3 +326,13 @@ export const CCPARequest: React.SFC<Props> = props => {
     </>
   )
 }
+
+// Matches FooterLink styling
+const CCPALink = styled(Clickable)`
+  transition: color 0.25s;
+  color: ${themeGet("colors.black60")};
+
+  &:hover {
+    color: ${themeGet("colors.black100")};
+  }
+`

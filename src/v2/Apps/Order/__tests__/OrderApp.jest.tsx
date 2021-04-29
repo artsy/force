@@ -38,6 +38,10 @@ jest.mock("@stripe/stripe-js", () => {
     _mockReset: () => (mock = mockStripe()),
   }
 })
+jest.mock("desktop/components/inquiry_questionnaire/index.coffee", () =>
+  jest.fn()
+)
+const openInquiryQuestionnaireFor = require("desktop/components/inquiry_questionnaire/index.coffee") as jest.Mock
 
 describe("OrderApp routing redirects", () => {
   // FIXME: move to DevTools folder
@@ -538,6 +542,15 @@ describe("OrderApp", () => {
     expect(subject.text()).toMatch(
       "Need help? Visit our help center or ask a question."
     )
+  })
+
+  it("opens inquiry questionaire modal when user clicks on 'ask a question'", () => {
+    const props = getProps() as any
+    const subject = getWrapper({ props }) as any
+
+    subject.find('a[children="ask a question"]').simulate("click")
+
+    expect(openInquiryQuestionnaireFor).toBeCalledWith(expect.any(Object))
   })
 
   it("shows an error page if the order is missing", () => {

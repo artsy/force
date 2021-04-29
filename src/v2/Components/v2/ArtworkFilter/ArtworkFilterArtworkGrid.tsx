@@ -14,6 +14,7 @@ interface ArtworkFilterArtworkGridProps {
   columnCount: number[]
   filtered_artworks: ArtworkFilterArtworkGrid_filtered_artworks
   isLoading?: boolean
+  offset?: number
   relay: RelayProp
 }
 
@@ -38,6 +39,7 @@ const ArtworkFilterArtworkGrid: React.FC<ArtworkFilterArtworkGridProps> = props 
       pageCursors,
       pageInfo: { hasNextPage },
     },
+    offset,
   } = props
 
   /**
@@ -92,6 +94,7 @@ const ArtworkFilterArtworkGrid: React.FC<ArtworkFilterArtworkGridProps> = props 
           onClick={(_cursor, page) => loadPage(page)}
           onNext={() => loadNext()}
           scrollTo="#jump--artworkFilter"
+          offset={offset}
         />
       </LoadingArea>
     </>

@@ -11,6 +11,7 @@ export type GeneShow_gene = {
             readonly node: {
                 readonly internalID: string;
                 readonly name: string | null;
+                readonly href: string | null;
             } | null;
         } | null> | null;
     } | null;
@@ -19,6 +20,7 @@ export type GeneShow_gene = {
             readonly node: {
                 readonly internalID: string;
                 readonly name: string | null;
+                readonly href: string | null;
             } | null;
         } | null> | null;
     } | null;
@@ -56,7 +58,14 @@ v2 = [
     "name": "internalID",
     "storageKey": null
   },
-  (v0/*: any*/)
+  (v0/*: any*/),
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "href",
+    "storageKey": null
+  }
 ];
 return {
   "argumentDefinitions": [
@@ -174,5 +183,5 @@ return {
   "type": "Gene"
 };
 })();
-(node as any).hash = 'db708b8305d6f1d8d6db3064ac9a1799';
+(node as any).hash = '6c3c115878f919b45e49f380bc6da99e';
 export default node;

@@ -10,7 +10,6 @@ export function bundleAnalyzer(config) {
   }
 
   return merge.smart(config, {
-    devtool: false,
     stats: "normal",
     optimization: {
       concatenateModules: false,

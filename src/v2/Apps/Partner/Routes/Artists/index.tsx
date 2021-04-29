@@ -7,13 +7,14 @@ import {
   PartnerArtistsPaginationContainer,
 } from "../../Components/PartnerArtists"
 import { Artists_partner } from "v2/__generated__/Artists_partner.graphql"
-import { scrollIntoView } from "v2/Utils/scrollHelpers"
-import { useMatchMedia } from "v2/Utils/Hooks/useMatchMedia"
-import { MOBILE_NAV_HEIGHT, NAV_BAR_HEIGHT } from "v2/Components/NavBar"
-import { PARTHER_NAV_BAR_HEIGHT } from "../../Components/NavigationTabs"
+import { PARTNER_NAV_BAR_HEIGHT } from "../../Components/NavigationTabs"
 import { graphql } from "lib/graphql"
 import { createFragmentContainer } from "react-relay"
+import { Media } from "v2/Utils/Responsive"
+import { MOBILE_NAV_HEIGHT, NAV_BAR_HEIGHT } from "v2/Components/NavBar"
 import { PartnerArtistsLoadingContextProvider } from "../../Utils/PartnerArtistsLoadingContext"
+import { scrollIntoView } from "v2/Utils/scrollHelpers"
+import { useMatchMedia } from "v2/Utils/Hooks/useMatchMedia"
 
 export interface ArtistsRouteProps {
   partner: Artists_partner
@@ -28,7 +29,7 @@ export const ArtistsRoute: React.FC<ArtistsRouteProps> = ({
 
   const scrollIntoArtistDetails = () => {
     const offset =
-      PARTHER_NAV_BAR_HEIGHT +
+      PARTNER_NAV_BAR_HEIGHT +
       (isMobile ? MOBILE_NAV_HEIGHT : NAV_BAR_HEIGHT) +
       20
 
@@ -50,11 +51,24 @@ export const ArtistsRoute: React.FC<ArtistsRouteProps> = ({
         <Text variant="title" mb={6}>
           Artists
         </Text>
-
-        <PartnerArtistsPaginationContainer
-          onArtistClick={scrollIntoArtistDetails}
-          partner={partner}
-        />
+        <Media greaterThan="xs">
+          <PartnerArtistsPaginationContainer
+            scrollTo={{
+              selector: "#jump--PartnerArtistDetails",
+              offset: PARTNER_NAV_BAR_HEIGHT + NAV_BAR_HEIGHT + 20,
+            }}
+            partner={partner}
+          />
+        </Media>
+        <Media at="xs">
+          <PartnerArtistsPaginationContainer
+            scrollTo={{
+              selector: "#jump--PartnerArtistDetails",
+              offset: PARTNER_NAV_BAR_HEIGHT + MOBILE_NAV_HEIGHT + 20,
+            }}
+            partner={partner}
+          />
+        </Media>
 
         {match.params.artistId ? (
           <PartnerArtistDetailsRenderer

@@ -1,5 +1,11 @@
 import { cropped, resized } from "../resized"
 
+jest.mock("sharify", () => ({
+  data: {
+    GEMINI_CLOUDFRONT_URL: "d7hftxdivxxvm.cloudfront.net",
+  },
+}))
+
 describe("#cropped", () => {
   it("uses width, height, and quality", () => {
     const { src, srcSet } = cropped("https://media.artsy.net/img.jpg", {
