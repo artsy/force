@@ -1,4 +1,4 @@
-\# Contributing to Force
+# Contributing to Force
 
 This project is work of [many developers](https://github.com/artsy/force/graphs/contributors).
 
