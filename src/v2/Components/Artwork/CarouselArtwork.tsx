@@ -10,6 +10,10 @@ import { AuthContextModule } from "@artsy/cohesion"
 import styled from "styled-components"
 import { Flex } from "@artsy/palette"
 
+/**
+ * The max height for an image in the carousel
+ */
+const MAX_IMG_HEIGHT = 250
 interface CarouselArtworkProps {
   artwork: CarouselArtwork_artwork
   contextModule: AuthContextModule
@@ -34,6 +38,10 @@ const CarouselArtwork: React.FC<CarouselArtworkProps> = ({
   showMetadata = true,
 }) => {
   const { mediator, user } = useSystemContext()
+  const imgHeight =
+    artwork.image.resized.height > MAX_IMG_HEIGHT
+      ? MAX_IMG_HEIGHT
+      : artwork.image.resized.height
 
   return (
     <Box>
@@ -41,20 +49,21 @@ const CarouselArtwork: React.FC<CarouselArtworkProps> = ({
         to={artwork.href}
         noUnderline
         onClick={() => {
-          if (onClick) {
-            onClick()
-          }
+          onClick && onClick()
         }}
       >
         <Container
           width={artwork.image.resized.width}
-          minHeight={artwork.image.resized.height}
-          bg="black60"
+          height={imgHeight}
+          bg="black10"
         >
           <Image
             src={artwork.image.resized.src}
             srcSet={artwork.image.resized.srcSet}
+            width={artwork.image.resized.width}
+            height={imgHeight}
             lazyLoad={lazyLoad}
+            style={{ objectFit: "cover" }}
           />
 
           <SaveButtonFragmentContainer

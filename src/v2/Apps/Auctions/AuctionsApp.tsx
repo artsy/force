@@ -5,7 +5,6 @@ import { AuctionsMeta } from "./Components/AuctionsMeta"
 import { MyBidsFragmentContainer } from "./Components/MyBids/MyBids"
 import {
   Box,
-  ChevronIcon,
   Column,
   GridColumns,
   Join,
