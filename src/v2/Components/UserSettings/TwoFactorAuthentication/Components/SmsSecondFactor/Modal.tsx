@@ -55,8 +55,6 @@ export const SmsSecondFactorModal: React.FC<SmsSecondFactorModalProps> = props =
         code: values.code,
       })
 
-      console.log("RESPONSE", response)
-
       setRecoveryCodes(response.enableSecondFactor.recoveryCodes)
 
       setShowRecoveryCodes(true)
@@ -268,6 +266,7 @@ export const SmsSecondFactorModal: React.FC<SmsSecondFactorModalProps> = props =
         title="Recovery Codes"
         onClose={onComplete}
         show={showRecoveryCodes}
+        hideCloseButton={true}
         FixedButton={
           <Button onClick={handleRecoveryReminderNext} width="100%">
             next
