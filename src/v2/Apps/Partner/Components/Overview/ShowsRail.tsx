@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import { Box, BoxProps, Flex, ResponsiveBox, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ShowsRail_partner } from "v2/__generated__/ShowsRail_partner.graphql"
@@ -13,6 +13,7 @@ interface ShowsRailProps extends BoxProps {
 }
 
 const ShowsRail: React.FC<ShowsRailProps> = ({ partner, ...rest }) => {
+  const [isSeeAllAvaliable, setIsSeeAllAvaliable] = useState<boolean>(undefined)
   if (
     !partner ||
     !partner.showsConnection ||
@@ -37,42 +38,43 @@ const ShowsRail: React.FC<ShowsRailProps> = ({ partner, ...rest }) => {
         </RouterLink>
       </Flex>
 
-      <Carousel>
-        {itemsPerViewport => {
-          return flatten([
-            shows.map(edge => {
-              return (
-                <Box key={edge.node.id} width={[300, "100%"]}>
-                  <ShowCardFragmentContainer show={edge.node} />
-                </Box>
-              )
-            }),
-            shows.length > itemsPerViewport && (
-              <Box width={[300, "100%"]}>
-                <RouterLink to={`/partner2/${slug}/shows`}>
-                  <ScrollToPartnerHeader width="100%">
-                    <ResponsiveBox
-                      aspectWidth={263}
-                      aspectHeight={222}
-                      maxWidth="100%"
-                      bg="black10"
-                    >
-                      <Flex
-                        height="100%"
-                        alignItems="center"
-                        justifyContent="center"
-                      >
-                        <Text style={{ textDecoration: "underline" }}>
-                          See all shows
-                        </Text>
-                      </Flex>
-                    </ResponsiveBox>
-                  </ScrollToPartnerHeader>
-                </RouterLink>
+      <Carousel
+        onRailOverflowChange={setIsSeeAllAvaliable}
+        itemsPerViewport={[2, 2, 3, 4]}
+      >
+        {flatten([
+          shows.map(edge => {
+            return (
+              <Box key={edge.node.id} width={[300, "100%"]}>
+                <ShowCardFragmentContainer show={edge.node} />
               </Box>
-            ),
-          ])
-        }}
+            )
+          }),
+          isSeeAllAvaliable && (
+            <Box key="see-all-button" width={[300, "100%"]}>
+              <RouterLink to={`/partner2/${slug}/shows`}>
+                <ScrollToPartnerHeader width="100%">
+                  <ResponsiveBox
+                    aspectWidth={263}
+                    aspectHeight={222}
+                    maxWidth="100%"
+                    bg="black10"
+                  >
+                    <Flex
+                      height="100%"
+                      alignItems="center"
+                      justifyContent="center"
+                    >
+                      <Text style={{ textDecoration: "underline" }}>
+                        See all shows
+                      </Text>
+                    </Flex>
+                  </ResponsiveBox>
+                </ScrollToPartnerHeader>
+              </RouterLink>
+            </Box>
+          ),
+        ])}
       </Carousel>
     </Box>
   )

@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import { Box, Text, Flex } from "@artsy/palette"
 import { flatten } from "lodash"
 import { createFragmentContainer, graphql, QueryRenderer } from "react-relay"
@@ -11,8 +11,8 @@ import {
   ResponsiveImage,
 } from "./PartnerArtistsCarouselItem"
 import { PartnerArtistsCarouselPlaceholder } from "./PartnerArtistsCarouselPlaceholder"
-import { Carousel } from "../../Carousel"
 import { ScrollToPartnerHeader } from "../../ScrollToPartnerHeader"
+import { Carousel } from "../../Carousel"
 
 const PAGE_SIZE = 19
 
@@ -23,6 +23,8 @@ export interface PartnerArtistsCarouselProps {
 export const PartnerArtistsCarousel: React.FC<PartnerArtistsCarouselProps> = ({
   partner,
 }) => {
+  const [isSeeAllAvaliable, setIsSeeAllAvaliable] = useState<boolean>(undefined)
+
   if (!partner || !partner.artists || !partner.artists.edges) {
     return null
   }
@@ -30,41 +32,42 @@ export const PartnerArtistsCarousel: React.FC<PartnerArtistsCarouselProps> = ({
   const { artists, slug } = partner
 
   return (
-    <Carousel>
-      {itemsPerViewport => {
-        return flatten([
-          artists.edges
-            .filter(e => e.isDisplayOnPartnerProfile && e.counts.artworks > 0)
-            .map(edge => {
-              return (
-                <PartnerArtistsCarouselItemFragmentContainer
-                  key={edge.node.id}
-                  artist={edge.node}
-                  partnerArtistHref={`/partner2/${slug}/artists/${edge.node.slug}`}
-                />
-              )
-            }),
-          artists.edges.length > itemsPerViewport && (
-            <Box width={[300, "100%"]}>
-              <RouterLink to={`/partner2/${slug}/artists`}>
-                <ScrollToPartnerHeader width="100%">
-                  <ResponsiveImage>
-                    <Flex
-                      height="100%"
-                      alignItems="center"
-                      justifyContent="center"
-                    >
-                      <Text style={{ textDecoration: "underline" }}>
-                        See all artists
-                      </Text>
-                    </Flex>
-                  </ResponsiveImage>
-                </ScrollToPartnerHeader>
-              </RouterLink>
-            </Box>
-          ),
-        ])
-      }}
+    <Carousel
+      onRailOverflowChange={setIsSeeAllAvaliable}
+      itemsPerViewport={[2, 2, 3, 4]}
+    >
+      {flatten([
+        artists.edges
+          .filter(e => e.isDisplayOnPartnerProfile && e.counts.artworks > 0)
+          .map(edge => {
+            return (
+              <PartnerArtistsCarouselItemFragmentContainer
+                key={edge.node.id}
+                artist={edge.node}
+                partnerArtistHref={`/partner2/${slug}/artists/${edge.node.slug}`}
+              />
+            )
+          }),
+        isSeeAllAvaliable && (
+          <Box key="see-all-button" width={[300, "100%"]}>
+            <RouterLink to={`/partner2/${slug}/artists`}>
+              <ScrollToPartnerHeader width="100%">
+                <ResponsiveImage>
+                  <Flex
+                    height="100%"
+                    alignItems="center"
+                    justifyContent="center"
+                  >
+                    <Text style={{ textDecoration: "underline" }}>
+                      See all artists
+                    </Text>
+                  </Flex>
+                </ResponsiveImage>
+              </ScrollToPartnerHeader>
+            </RouterLink>
+          </Box>
+        ),
+      ])}
     </Carousel>
   )
 }
