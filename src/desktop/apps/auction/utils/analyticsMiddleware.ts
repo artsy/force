@@ -58,7 +58,7 @@ function trackParamChange(changed, newState) {
     sale_id: _id,
     auction_slug: id,
     user_id: USER_ID,
-    current,
-    changed,
+    current: JSON.stringify(current),
+    changed: JSON.stringify(changed),
   })
 }
