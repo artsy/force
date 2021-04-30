@@ -54,9 +54,6 @@ declare module "sharify" {
       readonly XAPP_TOKEN: string
       readonly GOOGLE_MAPS_API_KEY: string
       readonly ZENDESK_KEY: string
-      readonly BRAZE_API_KEY: string
-      readonly BRAZE_API_URL: string
-      readonly BRAZE_LOGGING: boolean
 
       // FORCE Tokens
       AP: {
