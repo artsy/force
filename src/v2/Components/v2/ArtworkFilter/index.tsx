@@ -148,13 +148,13 @@ export const BaseArtworkFilter: React.FC<
 
           tracking.trackEvent(
             commercialFilterParamsChanged({
-              changed: {
+              changed: JSON.stringify({
                 [filterKey]: filterContext.filters[filterKey],
-              },
+              }),
               contextOwnerId: contextPageOwnerId,
               contextOwnerSlug: contextPageOwnerSlug,
               contextOwnerType: contextPageOwnerType,
-              current: filterContext.filters,
+              current: JSON.stringify(filterContext.filters),
             })
           )
         }

@@ -173,28 +173,38 @@ describe("ArtworkFilter", () => {
       wrapper.find("WaysToBuyFilter").find("ChevronIcon").simulate("click")
       wrapper.find("WaysToBuyFilter").find("Checkbox").first().simulate("click")
 
-      expect(trackEvent).toHaveBeenCalledWith({
-        action: "commercialFilterParamsChanged",
-        context_module: "artworkGrid",
-        context_owner_id: undefined,
-        context_owner_slug: undefined,
-        context_owner_type: "home",
-        changed: { acquireable: true },
-        current: {
-          acquireable: true,
-          majorPeriods: [],
-          page: 1,
-          sizes: [],
-          sort: "-decayed_merch",
-          artistIDs: [],
-          attributionClass: [],
-          partnerIDs: [],
-          additionalGeneIDs: [],
-          colors: [],
-          locationCities: [],
-          artistNationalities: [],
-          materialsTerms: [],
-        },
+      expect(trackEvent).toHaveBeenCalledWith(
+        expect.objectContaining({
+          action: "commercialFilterParamsChanged",
+          context_module: "artworkGrid",
+          context_owner_id: undefined,
+          context_owner_slug: undefined,
+          context_owner_type: "home",
+          // `current` and `changed` are sent as
+          // JSON blobs, and verified below
+        })
+      )
+
+      const { current, changed } = trackEvent.mock.calls[0][0]
+
+      expect(JSON.parse(current)).toMatchObject({
+        acquireable: true,
+        majorPeriods: [],
+        page: 1,
+        sizes: [],
+        sort: "-decayed_merch",
+        artistIDs: [],
+        attributionClass: [],
+        partnerIDs: [],
+        additionalGeneIDs: [],
+        colors: [],
+        locationCities: [],
+        artistNationalities: [],
+        materialsTerms: [],
+      })
+
+      expect(JSON.parse(changed)).toMatchObject({
+        acquireable: true,
       })
     })
   })
