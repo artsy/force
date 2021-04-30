@@ -9,7 +9,7 @@ export type partnerRoutes_ArtistsQueryVariables = {
 export type partnerRoutes_ArtistsQueryResponse = {
     readonly partner: {
         readonly displayArtistsSection: boolean | null;
-        readonly artists: {
+        readonly allArtistsConnection: {
             readonly totalCount: number | null;
         } | null;
         readonly " $fragmentRefs": FragmentRefs<"ArtistsRoute_partner">;
@@ -29,7 +29,7 @@ query partnerRoutes_ArtistsQuery(
   partner(id: $partnerId) @principalField {
     ...ArtistsRoute_partner
     displayArtistsSection
-    artists: artistsConnection(first: 20) {
+    allArtistsConnection(displayOnPartnerProfile: true, hasNotRepresentedArtistWithPublishedArtworks: true) {
       totalCount
     }
     id
@@ -92,38 +92,33 @@ v2 = {
   "name": "displayArtistsSection",
   "storageKey": null
 },
-v3 = {
-  "alias": "artists",
-  "args": [
-    {
-      "kind": "Literal",
-      "name": "first",
-      "value": 20
-    }
-  ],
-  "concreteType": "ArtistPartnerConnection",
-  "kind": "LinkedField",
-  "name": "artistsConnection",
-  "plural": false,
-  "selections": [
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "totalCount",
-      "storageKey": null
-    }
-  ],
-  "storageKey": "artistsConnection(first:20)"
-},
+v3 = [
+  {
+    "kind": "Literal",
+    "name": "displayOnPartnerProfile",
+    "value": true
+  },
+  {
+    "kind": "Literal",
+    "name": "hasNotRepresentedArtistWithPublishedArtworks",
+    "value": true
+  }
+],
 v4 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "totalCount",
+  "storageKey": null
+},
+v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "slug",
   "storageKey": null
 },
-v5 = {
+v6 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -146,7 +141,18 @@ return {
         "plural": false,
         "selections": [
           (v2/*: any*/),
-          (v3/*: any*/),
+          {
+            "alias": null,
+            "args": (v3/*: any*/),
+            "concreteType": "ArtistPartnerConnection",
+            "kind": "LinkedField",
+            "name": "allArtistsConnection",
+            "plural": false,
+            "selections": [
+              (v4/*: any*/)
+            ],
+            "storageKey": "allArtistsConnection(displayOnPartnerProfile:true,hasNotRepresentedArtistWithPublishedArtworks:true)"
+          },
           {
             "args": null,
             "kind": "FragmentSpread",
@@ -172,7 +178,7 @@ return {
         "name": "partner",
         "plural": false,
         "selections": [
-          (v4/*: any*/),
+          (v5/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -182,18 +188,7 @@ return {
           },
           {
             "alias": null,
-            "args": [
-              {
-                "kind": "Literal",
-                "name": "displayOnPartnerProfile",
-                "value": true
-              },
-              {
-                "kind": "Literal",
-                "name": "hasNotRepresentedArtistWithPublishedArtworks",
-                "value": true
-              }
-            ],
+            "args": (v3/*: any*/),
             "concreteType": "ArtistPartnerConnection",
             "kind": "LinkedField",
             "name": "allArtistsConnection",
@@ -254,21 +249,21 @@ return {
                         "name": "name",
                         "storageKey": null
                       },
-                      (v4/*: any*/),
-                      (v5/*: any*/)
+                      (v5/*: any*/),
+                      (v6/*: any*/)
                     ],
                     "storageKey": null
                   },
-                  (v5/*: any*/)
+                  (v6/*: any*/)
                 ],
                 "storageKey": null
-              }
+              },
+              (v4/*: any*/)
             ],
             "storageKey": "allArtistsConnection(displayOnPartnerProfile:true,hasNotRepresentedArtistWithPublishedArtworks:true)"
           },
           (v2/*: any*/),
-          (v3/*: any*/),
-          (v5/*: any*/)
+          (v6/*: any*/)
         ],
         "storageKey": null
       }
@@ -279,9 +274,9 @@ return {
     "metadata": {},
     "name": "partnerRoutes_ArtistsQuery",
     "operationKind": "query",
-    "text": "query partnerRoutes_ArtistsQuery(\n  $partnerId: String!\n) {\n  partner(id: $partnerId) @principalField {\n    ...ArtistsRoute_partner\n    displayArtistsSection\n    artists: artistsConnection(first: 20) {\n      totalCount\n    }\n    id\n  }\n}\n\nfragment ArtistsRoute_partner on Partner {\n  ...PartnerArtists_partner\n}\n\nfragment PartnerArtistItem_artist on Artist {\n  name\n  slug\n}\n\nfragment PartnerArtistList_artists on ArtistPartnerEdge {\n  representedBy\n  counts {\n    artworks\n  }\n  node {\n    internalID\n    ...PartnerArtistItem_artist\n    id\n  }\n}\n\nfragment PartnerArtists_partner on Partner {\n  slug\n  distinguishRepresentedArtists\n  allArtistsConnection(displayOnPartnerProfile: true, hasNotRepresentedArtistWithPublishedArtworks: true) {\n    edges {\n      ...PartnerArtistList_artists\n      id\n    }\n  }\n}\n"
+    "text": "query partnerRoutes_ArtistsQuery(\n  $partnerId: String!\n) {\n  partner(id: $partnerId) @principalField {\n    ...ArtistsRoute_partner\n    displayArtistsSection\n    allArtistsConnection(displayOnPartnerProfile: true, hasNotRepresentedArtistWithPublishedArtworks: true) {\n      totalCount\n    }\n    id\n  }\n}\n\nfragment ArtistsRoute_partner on Partner {\n  ...PartnerArtists_partner\n}\n\nfragment PartnerArtistItem_artist on Artist {\n  name\n  slug\n}\n\nfragment PartnerArtistList_artists on ArtistPartnerEdge {\n  representedBy\n  counts {\n    artworks\n  }\n  node {\n    internalID\n    ...PartnerArtistItem_artist\n    id\n  }\n}\n\nfragment PartnerArtists_partner on Partner {\n  slug\n  distinguishRepresentedArtists\n  allArtistsConnection(displayOnPartnerProfile: true, hasNotRepresentedArtistWithPublishedArtworks: true) {\n    edges {\n      ...PartnerArtistList_artists\n      id\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'bb08bb00a1aa754f9daac498286f90d5';
+(node as any).hash = '8eb5527874d6d1a52c849ccd5beab03b';
 export default node;

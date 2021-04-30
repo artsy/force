@@ -2,7 +2,6 @@ import React from "react"
 import loadable from "@loadable/component"
 import { RedirectException, RouteConfig } from "found"
 import { graphql } from "react-relay"
-import { ArtistsRoutePlaceholder } from "./Routes/Artists"
 
 const PartnerApp = loadable(() => import("./PartnerApp"), {
   resolveComponent: component => component.PartnerAppFragmentContainer,
@@ -149,7 +148,10 @@ export const partnerRoutes: RouteConfig[] = [
             partner(id: $partnerId) @principalField {
               ...ArtistsRoute_partner
               displayArtistsSection
-              artists: artistsConnection(first: 20, after: null) {
+              allArtistsConnection(
+                displayOnPartnerProfile: true
+                hasNotRepresentedArtistWithPublishedArtworks: true
+              ) {
                 totalCount
               }
             }
@@ -159,11 +161,11 @@ export const partnerRoutes: RouteConfig[] = [
           const pageProps = props as any
 
           if (!(Component && pageProps && pageProps.partner)) {
-            return <ArtistsRoutePlaceholder />
+            return undefined
           }
 
           const {
-            partner: { displayArtistsSection, artists },
+            partner: { displayArtistsSection, allArtistsConnection: artists },
           } = pageProps
 
           if (!(displayArtistsSection && artists && artists.totalCount > 0)) {
