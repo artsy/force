@@ -3065,6 +3065,7 @@ type CommerceOffer {
   from: CommerceOrderPartyUnion!
   fromDetails: OrderParty
   fromParticipant: CommerceOrderParticipantEnum
+  hasDefiniteTotal: Boolean!
   id: ID!
   internalID: ID!
   note: String
