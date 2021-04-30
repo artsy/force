@@ -6,7 +6,6 @@ import { FragmentRefs } from "relay-runtime";
 export type ArtistsRail_partner = {
     readonly slug: string;
     readonly profileArtistsLayout: string | null;
-    readonly " $fragmentRefs": FragmentRefs<"PartnerArtists_partner">;
     readonly " $refType": "ArtistsRail_partner";
 };
 export type ArtistsRail_partner$data = ArtistsRail_partner;
@@ -36,14 +35,9 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "name": "profileArtistsLayout",
       "storageKey": null
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "PartnerArtists_partner"
     }
   ],
   "type": "Partner"
 };
-(node as any).hash = '967990219fb70fbe110f96e2c2170e8c';
+(node as any).hash = '3a3b8ceaefe97b374f43f0f98074aa1c';
 export default node;

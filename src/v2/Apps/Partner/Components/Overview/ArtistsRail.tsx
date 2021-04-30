@@ -5,7 +5,7 @@ import { ArtistsRail_partner } from "v2/__generated__/ArtistsRail_partner.graphq
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import {
   PartnerArtistsCarouselRenderer,
-  PartnerArtistsFragmentContainer,
+  PartnerArtistsRenderer,
 } from "../PartnerArtists"
 
 interface ArtistsRailProps {
@@ -31,7 +31,7 @@ const ArtistsRail: React.FC<ArtistsRailProps> = ({ partner }) => {
       {profileArtistsLayout === "Grid" ? (
         <PartnerArtistsCarouselRenderer partnerId={slug} />
       ) : (
-        <PartnerArtistsFragmentContainer partner={partner} />
+        <PartnerArtistsRenderer partnerId={slug} />
       )}
     </Box>
   )
@@ -44,7 +44,6 @@ export const ArtistsRailFragmentContainer = createFragmentContainer(
       fragment ArtistsRail_partner on Partner {
         slug
         profileArtistsLayout
-        ...PartnerArtists_partner
       }
     `,
   }

@@ -1,13 +1,15 @@
 import React, { useEffect } from "react"
 import { Box } from "@artsy/palette"
-import { createFragmentContainer, graphql } from "react-relay"
+import { createFragmentContainer, graphql, QueryRenderer } from "react-relay"
 import {
   PartnerArtistListFragmentContainer,
   PartnerArtistListPlaceholder,
 } from "../../Components/PartnerArtists"
 import { PartnerArtists_partner } from "v2/__generated__/PartnerArtists_partner.graphql"
+import { PartnerArtistsQuery } from "v2/__generated__/PartnerArtistsQuery.graphql"
 import { ScrollIntoViewProps } from "v2/Utils/scrollHelpers"
 import { usePartnerArtistsLoadingContext } from "../../Utils/PartnerArtistsLoadingContext"
+import { useSystemContext } from "v2/Artsy"
 
 export interface PartnerArtistsProps {
   partner: PartnerArtists_partner
@@ -64,3 +66,28 @@ export const PartnerArtistsFragmentContainer = createFragmentContainer(
     `,
   }
 )
+
+export const PartnerArtistsRenderer: React.FC<{
+  partnerId: string
+  scrollTo?: ScrollIntoViewProps
+}> = ({ partnerId, ...rest }) => {
+  const { relayEnvironment } = useSystemContext()
+
+  return (
+    <QueryRenderer<PartnerArtistsQuery>
+      environment={relayEnvironment}
+      query={graphql`
+        query PartnerArtistsQuery($partnerId: String!) {
+          partner(id: $partnerId) @principalField {
+            ...PartnerArtists_partner
+          }
+        }
+      `}
+      variables={{ partnerId }}
+      render={({ error, props }) => {
+        if (error || !props) return <PartnerArtistListPlaceholder />
+        return <PartnerArtistsFragmentContainer {...rest} {...props} />
+      }}
+    />
+  )
+}
