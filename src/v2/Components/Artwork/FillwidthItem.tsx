@@ -103,21 +103,11 @@ export class FillwidthItemContainer extends React.Component<
       return null
     }
 
-    let scaledImage
-    switch (artwork.image.aspectRatio === 1 ? "fill" : "fit") {
-      case "fit":
-        scaledImage = resized(artwork.image.url, {
-          width: this.imageWidth,
-          height: this.imageHeight,
-        })
-        break
-      case "fill":
-      default:
-        scaledImage = cropped(artwork.image.url, {
-          width: this.imageWidth,
-          height: this.imageHeight,
-        })
-    }
+    const transform = artwork.image.aspectRatio === 1 ? cropped : resized
+    const scaledImage = transform(artwork.image.url, {
+      width: this.imageWidth,
+      height: this.imageHeight,
+    })
 
     return (
       <Box className={className} width={this.imageWidth}>
