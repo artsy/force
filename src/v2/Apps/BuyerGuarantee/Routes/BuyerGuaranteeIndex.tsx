@@ -253,7 +253,7 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
             src={authenticityImage.image.resized.url}
             alt={authenticityImage.artist.name}
             lazyLoad
-            width={2090}
+            width={2250}
             height={400}
             aria-label={authenticityImage.imageTitle}
           />
@@ -336,7 +336,7 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
             alt={securePaymentImage.artist.name}
             aria-label={securePaymentImage.imageTitle}
             lazyLoad
-            width={1200}
+            width={1300}
             height={400}
           />
           <Flex flexDirection="column" p={space(9)}>
