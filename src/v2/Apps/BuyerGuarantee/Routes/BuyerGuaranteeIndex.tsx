@@ -1,4 +1,3 @@
-import { FullBleed } from "v2/Components/FullBleed"
 import React from "react"
 import {
   ArrowRightIcon,
@@ -16,13 +15,14 @@ import {
   Text,
   VerifiedIcon,
 } from "@artsy/palette"
-import { graphql, createFragmentContainer } from "react-relay"
+import { BuyerGuaranteeIndex_authenticityImage } from "v2/__generated__/BuyerGuaranteeIndex_authenticityImage.graphql"
 import { BuyerGuaranteeIndex_headerImage } from "v2/__generated__/BuyerGuaranteeIndex_headerImage.graphql"
 import { BuyerGuaranteeIndex_moneyBackGuaranteeImage } from "v2/__generated__/BuyerGuaranteeIndex_moneyBackGuaranteeImage.graphql"
 import { BuyerGuaranteeIndex_securePaymentImage } from "v2/__generated__/BuyerGuaranteeIndex_securePaymentImage.graphql"
-import { BuyerGuaranteeIndex_authenticityImage } from "v2/__generated__/BuyerGuaranteeIndex_authenticityImage.graphql"
-import { useSystemContext } from "v2/Artsy"
+import { FullBleed } from "v2/Components/FullBleed"
+import { graphql, createFragmentContainer } from "react-relay"
 import { Media } from "@artsy/reaction/dist/Utils/Responsive"
+import { useSystemContext } from "v2/Artsy"
 import PoweredByStripeIcon from "../../../../desktop/components/main_layout/public/icons/PoweredbyStripe-black.svg"
 
 interface BuyerGuaranteeIndexProps {
@@ -83,6 +83,7 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
             color={color("white100")}
             position="relative"
             mt={["60%", "50%"]}
+            as="h1"
           >
             The Artsy Guarantee
           </Text>
