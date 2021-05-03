@@ -372,40 +372,45 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
             textAlign="center"
             variant="mediumText"
             borderBottom={`solid 1px ${color("black10")}`}
+            backgroundColor={color("white100")}
           >
             Purchasing with Artsy’s secure checkout
           </Text>
-          <Text
-            py={2}
-            style={{ outline: `solid 1px ${color("black10")}` }}
-            textAlign="center"
-            height="90px"
-            variant="mediumText"
+          <Flex
+            height="60px"
+            borderTop="none"
+            flex-flexDirection="column"
+            alignItems="center"
+            justifyContent="center"
           >
-            Vetted Sellers
-          </Text>
+            <Text textAlign="center" variant="mediumText">
+              Vetted Sellers
+            </Text>
+          </Flex>
           <Flex
             justifyContent="space-around"
             alignItems="center"
-            height="61px"
             border={`solid 1px ${color("black10")}`}
             borderTop="none"
+            height="60px"
           >
             <VerifiedIcon width="40px" height="40px" />
           </Flex>
           <Flex
             justifyContent="space-around"
             alignItems="center"
-            height="61px"
+            height="60px"
             borderBottom={`solid 1px ${color("black10")}`}
+            backgroundColor={color("white100")}
           >
             <VerifiedIcon width="40px" height="40px" />
           </Flex>
           <Flex
+            justifyContent="center"
+            flexDirection="column"
             alignItems="center"
             style={{ outline: `solid 1px ${color("black10")}` }}
-            height="90px"
-            py={2}
+            height="60px"
           >
             <Text textAlign="center" variant="mediumText">
               Dedicated Support
@@ -425,14 +430,14 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
             alignItems="center"
             height="61px"
             borderBottom={`solid 1px ${color("black10")}`}
+            backgroundColor={color("white100")}
           >
             <VerifiedIcon width="40px" height="40px" />
           </Flex>
           <Flex
             alignItems="center"
             style={{ outline: `solid 1px ${color("black10")}` }}
-            height="90px"
-            py={2}
+            height="60px"
           >
             <Text textAlign="center" variant="mediumText">
               Authenticity Guarantee
@@ -452,14 +457,14 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
             alignItems="center"
             height="61px"
             borderBottom={`solid 1px ${color("black10")}`}
+            backgroundColor={color("white100")}
           >
             <VerifiedIcon width="40px" height="40px" />
           </Flex>
           <Flex
             alignItems="center"
             style={{ outline: `solid 1px ${color("black10")}` }}
-            height="90px"
-            py={2}
+            height="60px"
           >
             <Text textAlign="center" variant="mediumText">
               Money-Back Guarantee
@@ -479,6 +484,7 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
             alignItems="center"
             height="61px"
             borderBottom={`solid 1px ${color("black10")}`}
+            backgroundColor={color("white100")}
           >
             <VerifiedIcon width="40px" height="40px" />
           </Flex>
@@ -486,12 +492,10 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
             alignItems="center"
             justifyContent="center"
             style={{ outline: `solid 1px ${color("black10")}` }}
-            height="90px"
-            py={2}
+            height="60px"
             flexDirection="column"
           >
-            <Text variant="mediumText">Secure</Text>
-            <Text variant="mediumText">Payment</Text>
+            <Text variant="mediumText">Secure Payment</Text>
           </Flex>
 
           <Flex
@@ -508,6 +512,7 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
             alignItems="center"
             height="61px"
             borderBottom={`solid 1px ${color("black10")}`}
+            backgroundColor={color("white100")}
           >
             <VerifiedIcon width="40px" height="40px" />
           </Flex>
