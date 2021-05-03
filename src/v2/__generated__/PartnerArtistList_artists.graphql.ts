@@ -5,7 +5,6 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type PartnerArtistList_artists = ReadonlyArray<{
     readonly representedBy: boolean | null;
-    readonly isDisplayOnPartnerProfile: boolean | null;
     readonly counts: {
         readonly artworks: number | null;
     } | null;
@@ -36,13 +35,6 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "ScalarField",
       "name": "representedBy",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "isDisplayOnPartnerProfile",
       "storageKey": null
     },
     {
@@ -89,5 +81,5 @@ const node: ReaderFragment = {
   ],
   "type": "ArtistPartnerEdge"
 };
-(node as any).hash = 'cefe09b8b7ec6cfff5c5620fb2cc9bc0';
+(node as any).hash = '43f62dc2e715435fc8ebc6d90b287413';
 export default node;

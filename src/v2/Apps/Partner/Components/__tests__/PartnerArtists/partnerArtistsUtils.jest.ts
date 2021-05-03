@@ -49,20 +49,8 @@ describe("partnerArtistsUtils", () => {
       generateArtistGroup(50, 10, 5, 1),
     ],
     [
-      "Without artists that not display on partner profile",
-      generateArtistList(50, 10, 10),
-      true,
-      generateArtistGroup(50, 10, 5, 1),
-    ],
-    [
-      "Without artists that don't have published artworks",
-      generateArtistList(50, 10, 0, 10),
-      true,
-      generateArtistGroup(50, 10, 5, 1),
-    ],
-    [
       "Without separating into two columns",
-      generateArtistList(50, 10, 10, 10),
+      generateArtistList(50, 10),
       false,
       [
         {
@@ -74,7 +62,7 @@ describe("partnerArtistsUtils", () => {
     ],
     [
       "Without artists",
-      generateArtistList(0, 0, 10, 10),
+      generateArtistList(0, 0),
       false,
       [
         {
@@ -107,32 +95,21 @@ describe("partnerArtistsUtils", () => {
 
 function generateArtistList(
   representedByCount = 10,
-  worksAvailableArtistCount = 10,
-  isNotDisplayOnPartnerProfileCount = 0,
-  withoutArtworkCount = 0
+  worksAvailableArtistCount = 10
 ): PartnerArtistList_artists {
   return flatten([
     [...Array(representedByCount)].map(() => generateArtistItem()),
     [...Array(worksAvailableArtistCount)].map(() => generateArtistItem(false)),
-    [...Array(isNotDisplayOnPartnerProfileCount)].map(() =>
-      generateArtistItem(false, false)
-    ),
-    [...Array(withoutArtworkCount)].map(() =>
-      generateArtistItem(false, true, 0)
-    ),
   ])
 }
 
 function generateArtistItem(
-  representedBy = true,
-  isDisplayOnPartnerProfile = true,
-  artworkCount = 3
+  representedBy = true
 ): PartnerArtistList_artists[0] {
   return {
     counts: {
-      artworks: artworkCount,
+      artworks: 3,
     },
-    isDisplayOnPartnerProfile: isDisplayOnPartnerProfile,
     representedBy: representedBy,
     node: {
       internalID: null,

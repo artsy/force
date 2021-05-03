@@ -5,8 +5,6 @@ import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type PartnerArtistsQueryVariables = {
     partnerId: string;
-    first: number;
-    after?: string | null;
 };
 export type PartnerArtistsQueryResponse = {
     readonly partner: {
@@ -23,11 +21,9 @@ export type PartnerArtistsQuery = {
 /*
 query PartnerArtistsQuery(
   $partnerId: String!
-  $first: Int!
-  $after: String
 ) {
-  partner(id: $partnerId) {
-    ...PartnerArtists_partner_2HEEH6
+  partner(id: $partnerId) @principalField {
+    ...PartnerArtists_partner
     id
   }
 }
@@ -39,7 +35,6 @@ fragment PartnerArtistItem_artist on Artist {
 
 fragment PartnerArtistList_artists on ArtistPartnerEdge {
   representedBy
-  isDisplayOnPartnerProfile
   counts {
     artworks
   }
@@ -50,22 +45,13 @@ fragment PartnerArtistList_artists on ArtistPartnerEdge {
   }
 }
 
-fragment PartnerArtists_partner_2HEEH6 on Partner {
+fragment PartnerArtists_partner on Partner {
   slug
   distinguishRepresentedArtists
-  artistsConnection(first: $first, after: $after) {
+  allArtistsConnection(displayOnPartnerProfile: true, hasNotRepresentedArtistWithPublishedArtworks: true) {
     edges {
       ...PartnerArtistList_artists
-      cursor
-      node {
-        __typename
-        id
-      }
       id
-    }
-    pageInfo {
-      endCursor
-      hasNextPage
     }
   }
 }
@@ -78,18 +64,6 @@ var v0 = [
     "kind": "LocalArgument",
     "name": "partnerId",
     "type": "String!"
-  },
-  {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "first",
-    "type": "Int!"
-  },
-  {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "after",
-    "type": "String"
   }
 ],
 v1 = [
@@ -99,26 +73,14 @@ v1 = [
     "variableName": "partnerId"
   }
 ],
-v2 = [
-  {
-    "kind": "Variable",
-    "name": "after",
-    "variableName": "after"
-  },
-  {
-    "kind": "Variable",
-    "name": "first",
-    "variableName": "first"
-  }
-],
-v3 = {
+v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "slug",
   "storageKey": null
 },
-v4 = {
+v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -141,7 +103,7 @@ return {
         "plural": false,
         "selections": [
           {
-            "args": (v2/*: any*/),
+            "args": null,
             "kind": "FragmentSpread",
             "name": "PartnerArtists_partner"
           }
@@ -165,7 +127,7 @@ return {
         "name": "partner",
         "plural": false,
         "selections": [
-          (v3/*: any*/),
+          (v2/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -175,10 +137,21 @@ return {
           },
           {
             "alias": null,
-            "args": (v2/*: any*/),
+            "args": [
+              {
+                "kind": "Literal",
+                "name": "displayOnPartnerProfile",
+                "value": true
+              },
+              {
+                "kind": "Literal",
+                "name": "hasNotRepresentedArtistWithPublishedArtworks",
+                "value": true
+              }
+            ],
             "concreteType": "ArtistPartnerConnection",
             "kind": "LinkedField",
-            "name": "artistsConnection",
+            "name": "allArtistsConnection",
             "plural": false,
             "selections": [
               {
@@ -194,13 +167,6 @@ return {
                     "args": null,
                     "kind": "ScalarField",
                     "name": "representedBy",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "isDisplayOnPartnerProfile",
                     "storageKey": null
                   },
                   {
@@ -243,67 +209,19 @@ return {
                         "name": "name",
                         "storageKey": null
                       },
-                      (v3/*: any*/),
-                      (v4/*: any*/),
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "__typename",
-                        "storageKey": null
-                      }
+                      (v2/*: any*/),
+                      (v3/*: any*/)
                     ],
                     "storageKey": null
                   },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "cursor",
-                    "storageKey": null
-                  },
-                  (v4/*: any*/)
-                ],
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "concreteType": "PageInfo",
-                "kind": "LinkedField",
-                "name": "pageInfo",
-                "plural": false,
-                "selections": [
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "endCursor",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "hasNextPage",
-                    "storageKey": null
-                  }
+                  (v3/*: any*/)
                 ],
                 "storageKey": null
               }
             ],
-            "storageKey": null
+            "storageKey": "allArtistsConnection(displayOnPartnerProfile:true,hasNotRepresentedArtistWithPublishedArtworks:true)"
           },
-          {
-            "alias": null,
-            "args": (v2/*: any*/),
-            "filters": null,
-            "handle": "connection",
-            "key": "PartnerArtistsQuery_artistsConnection",
-            "kind": "LinkedHandle",
-            "name": "artistsConnection"
-          },
-          (v4/*: any*/)
+          (v3/*: any*/)
         ],
         "storageKey": null
       }
@@ -314,9 +232,9 @@ return {
     "metadata": {},
     "name": "PartnerArtistsQuery",
     "operationKind": "query",
-    "text": "query PartnerArtistsQuery(\n  $partnerId: String!\n  $first: Int!\n  $after: String\n) {\n  partner(id: $partnerId) {\n    ...PartnerArtists_partner_2HEEH6\n    id\n  }\n}\n\nfragment PartnerArtistItem_artist on Artist {\n  name\n  slug\n}\n\nfragment PartnerArtistList_artists on ArtistPartnerEdge {\n  representedBy\n  isDisplayOnPartnerProfile\n  counts {\n    artworks\n  }\n  node {\n    internalID\n    ...PartnerArtistItem_artist\n    id\n  }\n}\n\nfragment PartnerArtists_partner_2HEEH6 on Partner {\n  slug\n  distinguishRepresentedArtists\n  artistsConnection(first: $first, after: $after) {\n    edges {\n      ...PartnerArtistList_artists\n      cursor\n      node {\n        __typename\n        id\n      }\n      id\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query PartnerArtistsQuery(\n  $partnerId: String!\n) {\n  partner(id: $partnerId) @principalField {\n    ...PartnerArtists_partner\n    id\n  }\n}\n\nfragment PartnerArtistItem_artist on Artist {\n  name\n  slug\n}\n\nfragment PartnerArtistList_artists on ArtistPartnerEdge {\n  representedBy\n  counts {\n    artworks\n  }\n  node {\n    internalID\n    ...PartnerArtistItem_artist\n    id\n  }\n}\n\nfragment PartnerArtists_partner on Partner {\n  slug\n  distinguishRepresentedArtists\n  allArtistsConnection(displayOnPartnerProfile: true, hasNotRepresentedArtistWithPublishedArtworks: true) {\n    edges {\n      ...PartnerArtistList_artists\n      id\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '1166f8ac0373b8875fee7a204521b77a';
+(node as any).hash = '3dc0b320c725913caf67d58c3a19af9e';
 export default node;

@@ -3,14 +3,14 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type Artists_partner = {
+export type ArtistsRoute_partner = {
     readonly " $fragmentRefs": FragmentRefs<"PartnerArtists_partner">;
-    readonly " $refType": "Artists_partner";
+    readonly " $refType": "ArtistsRoute_partner";
 };
-export type Artists_partner$data = Artists_partner;
-export type Artists_partner$key = {
-    readonly " $data"?: Artists_partner$data;
-    readonly " $fragmentRefs": FragmentRefs<"Artists_partner">;
+export type ArtistsRoute_partner$data = ArtistsRoute_partner;
+export type ArtistsRoute_partner$key = {
+    readonly " $data"?: ArtistsRoute_partner$data;
+    readonly " $fragmentRefs": FragmentRefs<"ArtistsRoute_partner">;
 };
 
 
@@ -19,7 +19,7 @@ const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "Artists_partner",
+  "name": "ArtistsRoute_partner",
   "selections": [
     {
       "args": null,
@@ -29,5 +29,5 @@ const node: ReaderFragment = {
   ],
   "type": "Partner"
 };
-(node as any).hash = '3db43de679886881e01578594462f8eb';
+(node as any).hash = 'eedf6b5906161ff447a026210485105c';
 export default node;
