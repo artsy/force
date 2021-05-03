@@ -12,6 +12,7 @@ import { useSystemContext } from "v2/Artsy"
 import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
 import { AppContainer } from "./AppContainer"
 import { useRouteComplete } from "v2/Utils/Hooks/useRouteComplete"
+import { useAuthIntent } from "v2/Utils/Hooks/useAuthIntent"
 
 const logger = createLogger("Apps/Components/AppShell")
 
@@ -21,6 +22,8 @@ interface AppShellProps {
 }
 
 export const AppShell: React.FC<AppShellProps> = props => {
+  useAuthIntent()
+
   const { children, match } = props
   const routeConfig = findCurrentRoute(match)
 

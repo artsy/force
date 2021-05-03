@@ -52,12 +52,19 @@ export const openAuthToFollowSave = (
   }
 }
 
+const FOLLOW_INTENTS = {
+  [Intent.followArtist]: "artist",
+  [Intent.followPartner]: "profile",
+  [Intent.followGene]: "gene",
+}
+
 function getDesktopIntentToFollow({
   contextModule,
   entity,
   intent,
 }: AuthModalOptions): ModalOptions {
-  const kind = intent === Intent.followArtist ? "artist" : "profile"
+  const kind = FOLLOW_INTENTS[intent]
+
   return {
     afterSignUpAction: {
       action: "follow",
