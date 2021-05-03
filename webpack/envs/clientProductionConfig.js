@@ -15,7 +15,7 @@ import {
 } from "./commonLoaders"
 import {
   clientExternals,
-  standardDevtool,
+  productionDevtool,
   standardMinimizer,
   standardMode,
   standardResolve,
@@ -25,7 +25,7 @@ import { standardPlugins } from "./commonPlugins"
 import { clientChunks } from "./clientCommonConfig"
 
 export const clientProductionConfig = {
-  devtool: standardDevtool,
+  devtool: productionDevtool,
   entry: {
     "artsy-novo": [path.resolve(process.cwd(), "src/v2/client.tsx")],
   },

@@ -45,7 +45,7 @@ export const PartnerArtistDetailsPlaceholder: React.FC<PartnerArtistDetailsPlace
             ullamcorper nunc.
           </SkeletonText>
         </Column>
-        <Column span={12}>
+        <Column span={12} maxWidth="100%">
           <Carousel arrowHeight={160}>
             {[...new Array(10)].map((_, i) => {
               return (

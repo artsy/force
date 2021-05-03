@@ -4,6 +4,7 @@ import { Media } from "v2/Utils/Responsive"
 import {
   ArtsyMarkIcon,
   Box,
+  boxMixin,
   BoxProps,
   Column,
   FacebookIcon,
@@ -20,8 +21,8 @@ import {
 import { DownloadAppBadge } from "v2/Components/DownloadAppBadge"
 import { ContextModule } from "@artsy/cohesion"
 import { CCPARequest } from "../CCPARequest"
-import { FooterLink } from "./FooterLink"
 import { FooterDownloadAppBanner } from "./FooterDownloadAppBanner"
+import { RouterLink, RouterLinkProps } from "v2/Artsy/Router/RouterLink"
 
 interface FooterProps extends BoxProps {}
 
@@ -234,23 +235,27 @@ const PolicyLinks = () => {
     >
       <Flex mr={1}>© {new Date().getFullYear()} Artsy</Flex>
 
-      <FooterLink mr={1} to="/terms">
+      <FooterLink color="black60" mr={1} to="/terms">
         Terms of Use
       </FooterLink>
 
-      <FooterLink mr={1} to="/privacy">
+      <FooterLink color="black60" mr={1} to="/privacy">
         Privacy Policy
       </FooterLink>
 
-      <FooterLink mr={1} to="/security">
+      <FooterLink color="black60" mr={1} to="/security">
         Security
       </FooterLink>
 
-      <FooterLink mr={1} to="/conditions-of-sale">
+      <FooterLink color="black60" mr={1} to="/conditions-of-sale">
         Conditions of Sale
       </FooterLink>
 
-      <FooterLink mr={1} to="/page/artsy-curated-auctions-listing-agreement">
+      <FooterLink
+        color="black60"
+        mr={1}
+        to="/page/artsy-curated-auctions-listing-agreement"
+      >
         ACA Seller’s Agreement
       </FooterLink>
 
@@ -260,3 +265,10 @@ const PolicyLinks = () => {
     </Text>
   )
 }
+
+export const FooterLink = styled(RouterLink)<RouterLinkProps & BoxProps>`
+  display: flex;
+  text-decoration: none;
+  white-space: nowrap;
+  ${boxMixin}
+`

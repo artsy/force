@@ -52,6 +52,7 @@ export const partnerRoutes: RouteConfig[] = [
         prepare: () => {
           OverviewRoute.preload()
         },
+        ignoreScrollBehavior: true,
         query: graphql`
           query partnerRoutes_OverviewQuery($partnerId: String!) {
             partner(id: $partnerId) @principalField {
@@ -70,14 +71,42 @@ export const partnerRoutes: RouteConfig[] = [
         query: graphql`
           query partnerRoutes_ArticlesQuery($partnerId: String!) {
             partner(id: $partnerId) @principalField {
+              articles: articlesConnection(first: 0) {
+                totalCount
+              }
               ...Articles_partner
             }
           }
         `,
+        render: ({ Component, props, match }) => {
+          if (!(Component && props)) {
+            return
+          }
+
+          const { partner } = props as any
+
+          if (!partner) {
+            return
+          }
+
+          const {
+            articles: { totalCount },
+          } = partner
+
+          if (!totalCount) {
+            throw new RedirectException(
+              `/partner2/${match.params.partnerId}`,
+              302
+            )
+          }
+
+          return <Component {...props} />
+        },
       },
       {
         getComponent: () => ShowsRoute,
         path: "shows",
+        ignoreScrollBehavior: true,
         prepare: () => {
           ShowsRoute.preload()
         },
@@ -95,6 +124,7 @@ export const partnerRoutes: RouteConfig[] = [
         prepare: () => {
           WorksRoute.preload()
         },
+        ignoreScrollBehavior: true,
         query: graphql`
           query partnerRoutes_WorksQuery(
             $partnerId: String!
@@ -157,6 +187,7 @@ export const partnerRoutes: RouteConfig[] = [
         prepare: () => {
           ContactRoute.preload()
         },
+        ignoreScrollBehavior: true,
         query: graphql`
           query partnerRoutes_ContactQuery($partnerId: String!) {
             partner(id: $partnerId) @principalField {

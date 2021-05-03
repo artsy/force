@@ -30,7 +30,7 @@ export const Artworks: React.FC<PartnerArtworkFilterProps> = ({
         { text: "Artwork year (asc.)", value: "year" },
       ]}
     >
-      <BaseArtworkFilter relay={relay} viewer={partner as any} />
+      <BaseArtworkFilter relay={relay} offset={200} viewer={partner as any} />
     </ArtworkFilterContextProvider>
   )
 }

@@ -3,19 +3,22 @@ import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
 import { FullBleed } from "v2/Components/FullBleed"
+import { MOBILE_NAV_HEIGHT, NAV_BAR_HEIGHT } from "v2/Components/NavBar"
 import { RouteTab, RouteTabs } from "v2/Components/RouteTabs"
 import { StickyContainer } from "v2/Components/StickyContainer"
+import { ScrollIntoView } from "v2/Utils"
+import { Media } from "v2/Utils/Responsive"
 import { NavigationTabs_partner } from "v2/__generated__/NavigationTabs_partner.graphql"
 
-// TODO: Update value in component heigth changed
-export const PARTHER_NAV_BAR_HEIGHT = 78
+// TODO: Update value in component height changed
+export const PARTNER_NAV_BAR_HEIGHT = 78
 
 interface NavigationTabsProps {
   partner: NavigationTabs_partner
 }
 
 export const NavigationTabs: React.FC<NavigationTabsProps> = ({ partner }) => {
-  const renderTabs = () => {
+  const renderTabs = (scrollOffset: number) => {
     const {
       slug,
       locations,
@@ -65,9 +68,15 @@ export const NavigationTabs: React.FC<NavigationTabsProps> = ({ partner }) => {
     return routes
       .filter(route => !route.hidden)
       .map(route => (
-        <RouteTab to={route.href} exact={route.exact} key={route.href}>
-          {route.name}
-        </RouteTab>
+        <ScrollIntoView
+          key={route.href}
+          selector="#jumpto--PartnerHeader"
+          offset={scrollOffset}
+        >
+          <RouteTab to={route.href} exact={route.exact}>
+            {route.name}
+          </RouteTab>
+        </ScrollIntoView>
       ))
   }
 
@@ -80,7 +89,12 @@ export const NavigationTabs: React.FC<NavigationTabsProps> = ({ partner }) => {
             style={stuck ? { boxShadow: DROP_SHADOW } : undefined}
           >
             <HorizontalPadding maxWidth={breakpoints.xl}>
-              <RouteTabs fill>{renderTabs()}</RouteTabs>
+              <Media greaterThan="xs">
+                <RouteTabs fill>{renderTabs(NAV_BAR_HEIGHT)}</RouteTabs>
+              </Media>
+              <Media at="xs">
+                <RouteTabs fill>{renderTabs(MOBILE_NAV_HEIGHT)}</RouteTabs>
+              </Media>
             </HorizontalPadding>
           </FullBleed>
         )

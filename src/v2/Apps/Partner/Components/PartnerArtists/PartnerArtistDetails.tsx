@@ -78,7 +78,7 @@ export const PartnerArtistDetails: React.FC<PartnerArtistDetailsProps> = ({
             </Text>
           )}
         </Column>
-        <Column span={12}>
+        <Column span={12} maxWidth="100%">
           <Carousel arrowHeight={160}>
             {filterArtworksConnection.edges.map((artwork, i) => {
               return (

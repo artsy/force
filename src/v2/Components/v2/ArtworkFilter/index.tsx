@@ -93,8 +93,17 @@ export const BaseArtworkFilter: React.FC<
       | FairArtworks_fair
       | ShowArtworks_show
     Filters?: JSX.Element
+    offset?: number
   }
-> = ({ relay, viewer, Filters, relayVariables = {}, children, ...rest }) => {
+> = ({
+  relay,
+  viewer,
+  Filters,
+  relayVariables = {},
+  children,
+  offset,
+  ...rest
+}) => {
   const { filtered_artworks } = viewer
   const hasFilter = filtered_artworks && filtered_artworks.id
 
@@ -197,6 +206,7 @@ export const BaseArtworkFilter: React.FC<
       <ArtworkFilterArtworkGrid
         filtered_artworks={viewer.filtered_artworks}
         isLoading={isFetching}
+        offset={offset}
         columnCount={[2, 2, 2, 3]}
       />
     )

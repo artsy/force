@@ -136,7 +136,6 @@ function initializeVariablesWithFilterState({ slug }, props) {
   )
 
   let aggregations: string[] = ["TOTAL", "MAJOR_PERIOD", "ARTIST"]
-  if (props.context.user) aggregations = aggregations.concat("FOLLOWED_ARTISTS")
   const additionalAggregations = getENV("ENABLE_NEW_ARTWORK_FILTERS")
     ? ["ARTIST_NATIONALITY", "MATERIALS_TERMS", "PARTNER"]
     : ["GALLERY"]
@@ -147,6 +146,7 @@ function initializeVariablesWithFilterState({ slug }, props) {
     includeArtworksByFollowedArtists:
       !!props.context.user &&
       camelCasedFilterStateFromUrl["includeArtworksByFollowedArtists"],
+    aggregations: !!props.context.user ? ["FOLLOWED_ARTISTS"] : undefined,
   }
 
   return {

@@ -22,6 +22,20 @@ export const BackupSecondFactors = [
   { code: "a9zmemiejs", __typename: "BackupSecondFactor" },
 ]
 
+export const RecoveryCodes = [
+  "d038183sj8",
+  "2494nzki4a",
+  "ze93hzna31",
+  "xfr93424b1",
+  "a93n5nziu3",
+  "asdf93nz81",
+  "8d300a5493",
+  "q0499zn411",
+  "fn3i1x239m",
+  "asd0893n2d",
+  "a9zmemiejs",
+]
+
 export const CreateBackupSecondFactorsMutationSuccessResponse: CreateBackupSecondFactorsMutationResponse = {
   createBackupSecondFactors: {
     secondFactorsOrErrors: {
@@ -153,6 +167,7 @@ export const EnableAppSecondFactorMutationSuccessResponse: EnableSecondFactorMut
     secondFactorOrErrors: {
       __typename: "AppSecondFactor",
     },
+    recoveryCodes: RecoveryCodes,
   },
 }
 
@@ -161,6 +176,7 @@ export const EnableSmsSecondFactorMutationSuccessResponse: EnableSecondFactorMut
     secondFactorOrErrors: {
       __typename: "SmsSecondFactor",
     },
+    recoveryCodes: RecoveryCodes,
   },
 }
 
@@ -176,6 +192,7 @@ export const EnableSmsSecondFactorMutationErrorResponse: EnableSecondFactorMutat
         },
       ],
     },
+    recoveryCodes: null,
   },
 }
 
