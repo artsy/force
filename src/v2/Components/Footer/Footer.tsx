@@ -89,7 +89,7 @@ export const Footer: React.FC<FooterProps> = props => {
             </Text>
 
             <Text variant={tokens.body}>
-              <FooterLink my={2} to="https://artsy.github.com/open-source">
+              <FooterLink my={2} to="https://artsy.github.io/open-source">
                 Open Source
               </FooterLink>
 
