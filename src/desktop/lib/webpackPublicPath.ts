@@ -40,7 +40,7 @@ if (process.env.NODE_ENV === "production") {
     "/fair/",
     "/fairs",
     "/feature/",
-    "/gene2",
+    "/gene/",
     "/identity-verification",
     "/order",
     "/search",

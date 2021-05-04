@@ -14,7 +14,6 @@ const routes = {
   "^/contact": require("../apps/contact/client/index.coffee").init,
   "^/how-auctions-work[/]?.*": require("../apps/how_auctions_work/client/index.coffee")
     .init,
-  "^/gene/.*": require("../apps/gene/client.coffee").init,
   "^/tag/.*": require("../apps/tag/client.coffee").init,
   "^/unsubscribe*": require("../apps/unsubscribe/client.coffee").init,
   "^/profile/.*": require("../apps/profile/client.coffee"),
