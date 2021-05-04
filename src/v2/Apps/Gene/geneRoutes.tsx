@@ -1,9 +1,9 @@
 import loadable from "@loadable/component"
 import { graphql } from "react-relay"
 import { RedirectException, RouteConfig } from "found"
-import { allowedFilters } from "v2/Components/v2/ArtworkFilter/Utils/allowedFilters"
-import { paramsToCamelCase } from "v2/Components/v2/ArtworkFilter/Utils/urlBuilder"
-import { initialArtworkFilterState } from "v2/Components/v2/ArtworkFilter/ArtworkFilterContext"
+import { allowedFilters } from "v2/Components/ArtworkFilter/Utils/allowedFilters"
+import { paramsToCamelCase } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
+import { initialArtworkFilterState } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
 
 const GeneApp = loadable(() => import("./GeneApp"), {
   resolveComponent: component => component.GeneApp,

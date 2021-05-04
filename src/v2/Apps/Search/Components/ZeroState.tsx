@@ -1,6 +1,6 @@
 import { Box, Flex, Text } from "@artsy/palette"
 import { SendFeedback } from "v2/Apps/Search/Components/SendFeedback"
-import { useArtworkFilterContext } from "v2/Components/v2/ArtworkFilter/ArtworkFilterContext"
+import { useArtworkFilterContext } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
 import React, { FC } from "react"
 
 interface ZeroStateProps {

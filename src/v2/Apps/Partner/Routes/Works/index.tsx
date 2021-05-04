@@ -2,9 +2,9 @@ import React from "react"
 import { createRefetchContainer, RelayRefetchProp } from "react-relay"
 import { graphql } from "relay-runtime"
 import { Articles_partner } from "v2/__generated__/Articles_partner.graphql"
-import { ArtworkFilterContextProvider } from "v2/Components/v2/ArtworkFilter/ArtworkFilterContext"
-import { BaseArtworkFilter } from "v2/Components/v2/ArtworkFilter"
-import { updateUrl } from "v2/Components/v2/ArtworkFilter/Utils/urlBuilder"
+import { ArtworkFilterContextProvider } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
+import { BaseArtworkFilter } from "v2/Components/ArtworkFilter"
+import { updateUrl } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
 import { Match, RouterState, withRouter } from "found"
 
 interface PartnerArtworkFilterProps {

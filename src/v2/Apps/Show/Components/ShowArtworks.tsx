@@ -1,24 +1,24 @@
 import { ShowArtworks_show } from "v2/__generated__/ShowArtworks_show.graphql"
-import { BaseArtworkFilter } from "v2/Components/v2/ArtworkFilter"
+import { BaseArtworkFilter } from "v2/Components/ArtworkFilter"
 import {
   ArtworkFilterContextProvider,
   SharedArtworkFilterContextProps,
-} from "v2/Components/v2/ArtworkFilter/ArtworkFilterContext"
-import { updateUrl } from "v2/Components/v2/ArtworkFilter/Utils/urlBuilder"
+} from "v2/Components/ArtworkFilter/ArtworkFilterContext"
+import { updateUrl } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
 import React from "react"
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
-import { MediumFilter } from "v2/Components/v2/ArtworkFilter/ArtworkFilters/MediumFilter"
-import { PriceRangeFilter } from "v2/Components/v2/ArtworkFilter/ArtworkFilters/PriceRangeFilter"
-import { WaysToBuyFilter } from "v2/Components/v2/ArtworkFilter/ArtworkFilters/WaysToBuyFilter"
-import { SizeFilter } from "v2/Components/v2/ArtworkFilter/ArtworkFilters/SizeFilter"
-import { TimePeriodFilter } from "v2/Components/v2/ArtworkFilter/ArtworkFilters/TimePeriodFilter"
-import { ColorFilter } from "v2/Components/v2/ArtworkFilter/ArtworkFilters/ColorFilter"
+import { MediumFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/MediumFilter"
+import { PriceRangeFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/PriceRangeFilter"
+import { WaysToBuyFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/WaysToBuyFilter"
+import { SizeFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/SizeFilter"
+import { TimePeriodFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/TimePeriodFilter"
+import { ColorFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/ColorFilter"
 import { BoxProps } from "@artsy/palette"
 import { useRouter } from "v2/Artsy/Router/useRouter"
 import { getENV } from "v2/Utils/getENV"
-import { MaterialsFilter } from "v2/Components/v2/ArtworkFilter/ArtworkFilters/MaterialsFilter"
+import { MaterialsFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/MaterialsFilter"
 import { omit } from "lodash"
-import { SizeFilter2 } from "v2/Components/v2/ArtworkFilter/ArtworkFilters/SizeFilter2"
+import { SizeFilter2 } from "v2/Components/ArtworkFilter/ArtworkFilters/SizeFilter2"
 
 interface ShowArtworksFilterProps extends BoxProps {
   show: ShowArtworks_show

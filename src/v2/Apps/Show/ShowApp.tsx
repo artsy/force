@@ -18,7 +18,7 @@ import {
   useAnalyticsContext,
 } from "v2/Artsy/Analytics/AnalyticsContext"
 import { ShowArtworksEmptyStateFragmentContainer as ShowArtworksEmptyState } from "./Components/ShowArtworksEmptyState"
-import { SharedArtworkFilterContextProps } from "v2/Components/v2/ArtworkFilter/ArtworkFilterContext"
+import { SharedArtworkFilterContextProps } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
 
 interface ShowAppProps {
   show: ShowApp_show

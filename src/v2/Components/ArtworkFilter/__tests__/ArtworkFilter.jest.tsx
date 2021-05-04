@@ -1,9 +1,6 @@
 import { Breakpoint } from "@artsy/palette"
 import { useTracking } from "v2/Artsy/Analytics/useTracking"
-import {
-  ArtworkFilter,
-  BaseArtworkFilter,
-} from "v2/Components/v2/ArtworkFilter"
+import { ArtworkFilter, BaseArtworkFilter } from "v2/Components/ArtworkFilter"
 import { MockBoot, renderRelayTree } from "v2/DevTools"
 import { renderToString } from "v2/DevTools/__tests__/MockRelayRendererFixtures"
 import React from "react"

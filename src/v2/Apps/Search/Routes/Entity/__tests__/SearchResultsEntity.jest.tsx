@@ -15,7 +15,7 @@ jest.mock("v2/Artsy/Router/useRouter", () => ({
   }),
 }))
 
-jest.mock("v2/Components/v2/ArtworkFilter/ArtworkFilterContext", () => ({
+jest.mock("v2/Components/ArtworkFilter/ArtworkFilterContext", () => ({
   useArtworkFilterContext: () => ({
     currentlySelectedFilters: () => ({}),
     filters: {

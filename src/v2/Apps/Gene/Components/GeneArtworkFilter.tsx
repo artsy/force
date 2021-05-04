@@ -1,9 +1,9 @@
 import React from "react"
 import { createRefetchContainer, RelayRefetchProp, graphql } from "react-relay"
 import { useRouter } from "v2/Artsy/Router/useRouter"
-import { BaseArtworkFilter } from "v2/Components/v2/ArtworkFilter"
-import { ArtworkFilterContextProvider } from "v2/Components/v2/ArtworkFilter/ArtworkFilterContext"
-import { updateUrl } from "v2/Components/v2/ArtworkFilter/Utils/urlBuilder"
+import { BaseArtworkFilter } from "v2/Components/ArtworkFilter"
+import { ArtworkFilterContextProvider } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
+import { updateUrl } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
 import { GeneArtworkFilter_gene } from "v2/__generated__/GeneArtworkFilter_gene.graphql"
 
 interface GeneArtworkFilterProps {

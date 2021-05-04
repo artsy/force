@@ -1,9 +1,9 @@
 import loadable from "@loadable/component"
 import { graphql } from "react-relay"
 import { RouteConfig } from "found"
-import { paramsToCamelCase } from "v2/Components/v2/ArtworkFilter/Utils/urlBuilder"
+import { paramsToCamelCase } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
 import { getENV } from "v2/Utils/getENV"
-import { allowedFilters } from "v2/Components/v2/ArtworkFilter/Utils/allowedFilters"
+import { allowedFilters } from "v2/Components/ArtworkFilter/Utils/allowedFilters"
 
 const ArtistSeriesApp = loadable(() => import("./ArtistSeriesApp"), {
   resolveComponent: component => component.ArtistSeriesAppFragmentContainer,
