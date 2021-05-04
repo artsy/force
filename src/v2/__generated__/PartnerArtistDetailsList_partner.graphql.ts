@@ -7,15 +7,13 @@ export type PartnerArtistDetailsList_partner = {
     readonly slug: string;
     readonly artists: {
         readonly edges: ReadonlyArray<{
+            readonly id: string;
             readonly isDisplayOnPartnerProfile: boolean | null;
             readonly representedBy: boolean | null;
             readonly counts: {
                 readonly artworks: number | null;
             } | null;
-            readonly node: {
-                readonly id: string;
-                readonly " $fragmentRefs": FragmentRefs<"PartnerArtistDetails_artist">;
-            } | null;
+            readonly " $fragmentRefs": FragmentRefs<"PartnerArtistDetails_partnerArtist">;
         } | null> | null;
     } | null;
     readonly " $refType": "PartnerArtistDetailsList_partner";
@@ -85,6 +83,13 @@ const node: ReaderFragment = {
               "alias": null,
               "args": null,
               "kind": "ScalarField",
+              "name": "id",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
               "name": "isDisplayOnPartnerProfile",
               "storageKey": null
             },
@@ -116,6 +121,13 @@ const node: ReaderFragment = {
             {
               "alias": null,
               "args": null,
+              "kind": "ScalarField",
+              "name": "cursor",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
               "concreteType": "Artist",
               "kind": "LinkedField",
               "name": "node",
@@ -125,30 +137,16 @@ const node: ReaderFragment = {
                   "alias": null,
                   "args": null,
                   "kind": "ScalarField",
-                  "name": "id",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
                   "name": "__typename",
                   "storageKey": null
-                },
-                {
-                  "args": null,
-                  "kind": "FragmentSpread",
-                  "name": "PartnerArtistDetails_artist"
                 }
               ],
               "storageKey": null
             },
             {
-              "alias": null,
               "args": null,
-              "kind": "ScalarField",
-              "name": "cursor",
-              "storageKey": null
+              "kind": "FragmentSpread",
+              "name": "PartnerArtistDetails_partnerArtist"
             }
           ],
           "storageKey": null
@@ -184,5 +182,5 @@ const node: ReaderFragment = {
   ],
   "type": "Partner"
 };
-(node as any).hash = '2a1951c950edd378e34f29e634bba964';
+(node as any).hash = '3e7ea0403ad77f1321d60fe07e50f5eb';
 export default node;

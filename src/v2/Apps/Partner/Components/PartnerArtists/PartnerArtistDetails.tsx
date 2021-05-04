@@ -1,6 +1,6 @@
 import React from "react"
 import { createFragmentContainer, graphql, QueryRenderer } from "react-relay"
-import { PartnerArtistDetails_artist } from "v2/__generated__/PartnerArtistDetails_artist.graphql"
+import { PartnerArtistDetails_partnerArtist } from "v2/__generated__/PartnerArtistDetails_partnerArtist.graphql"
 import { PartnerArtistDetailsQuery } from "v2/__generated__/PartnerArtistDetailsQuery.graphql"
 import { Carousel } from "v2/Components/Carousel"
 import FillwidthItem from "v2/Components/Artwork/FillwidthItem"
@@ -19,20 +19,23 @@ import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import { PartnerArtistDetailsPlaceholder } from "./PartnerArtistDetailsPlaceholder"
 
 export interface PartnerArtistDetailsProps {
-  artist: PartnerArtistDetails_artist
+  partnerArtist: PartnerArtistDetails_partnerArtist
 }
 
 export const PartnerArtistDetails: React.FC<PartnerArtistDetailsProps> = ({
-  artist,
+  partnerArtist,
 }) => {
-  if (!artist) return null
+  if (!partnerArtist || !partnerArtist.node) return null
 
   const {
-    name,
-    filterArtworksConnection,
-    href,
-    formattedNationalityAndBirthday,
-  } = artist
+    node: {
+      name,
+      filterArtworksConnection,
+      href,
+      formattedNationalityAndBirthday,
+    },
+    biographyBlurb,
+  } = partnerArtist
 
   return (
     <Box>
@@ -50,7 +53,7 @@ export const PartnerArtistDetails: React.FC<PartnerArtistDetailsProps> = ({
             </Column>
             <Column span={[12, 6]}>
               <FollowArtistButton
-                artist={artist}
+                artist={partnerArtist.node}
                 contextModule={ContextModule.artistHeader}
                 buttonProps={{
                   variant: "secondaryOutline",
@@ -61,16 +64,21 @@ export const PartnerArtistDetails: React.FC<PartnerArtistDetailsProps> = ({
           </GridColumns>
         </Column>
         <Column span={6}>
-          {artist.biographyBlurb?.text && (
+          {biographyBlurb?.text && (
             <Text>
+              <ReadMore maxChars={320} content={biographyBlurb.text}></ReadMore>
+            </Text>
+          )}
+          {biographyBlurb?.credit && (
+            <Text mt={1} color="black60">
               <ReadMore
                 maxChars={320}
-                content={artist.biographyBlurb.text}
+                content={`— ${biographyBlurb.credit}`}
               ></ReadMore>
             </Text>
           )}
         </Column>
-        <Column span={12}>
+        <Column span={12} maxWidth="100%">
           <Carousel arrowHeight={160}>
             {filterArtworksConnection.edges.map((artwork, i) => {
               return (
@@ -92,20 +100,23 @@ export const PartnerArtistDetails: React.FC<PartnerArtistDetailsProps> = ({
 export const PartnerArtistDetailsFragmentContainer = createFragmentContainer(
   PartnerArtistDetails,
   {
-    artist: graphql`
-      fragment PartnerArtistDetails_artist on Artist {
-        name
-        href
-        formattedNationalityAndBirthday
-        biographyBlurb(format: HTML, partnerBio: true) {
+    partnerArtist: graphql`
+      fragment PartnerArtistDetails_partnerArtist on ArtistPartnerEdge {
+        biographyBlurb(format: HTML) {
           text
+          credit
         }
-        ...FollowArtistButton_artist
-        filterArtworksConnection(first: 12, partnerIDs: [$partnerId]) {
-          edges {
-            node {
-              id
-              ...FillwidthItem_artwork
+        node {
+          name
+          href
+          formattedNationalityAndBirthday
+          ...FollowArtistButton_artist
+          filterArtworksConnection(first: 12, partnerIDs: [$partnerId]) {
+            edges {
+              node {
+                id
+                ...FillwidthItem_artwork
+              }
             }
           }
         }
@@ -128,15 +139,25 @@ export const PartnerArtistDetailsRenderer: React.FC<{
           $partnerId: String!
           $artistId: String!
         ) {
-          artist(id: $artistId) {
-            ...PartnerArtistDetails_artist
+          partner(id: $partnerId) {
+            artistsConnection(artistIDs: [$artistId], first: 1) {
+              edges {
+                ...PartnerArtistDetails_partnerArtist
+              }
+            }
           }
         }
       `}
       variables={{ partnerId, artistId }}
       render={({ error, props }) => {
         if (error || !props) return <PartnerArtistDetailsPlaceholder />
-        return <PartnerArtistDetailsFragmentContainer {...rest} {...props} />
+        return (
+          <PartnerArtistDetailsFragmentContainer
+            {...rest}
+            {...props}
+            partnerArtist={props?.partner?.artistsConnection?.edges[0]}
+          />
+        )
       }}
     />
   )

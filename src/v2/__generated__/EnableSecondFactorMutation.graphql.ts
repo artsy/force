@@ -28,6 +28,7 @@ export type EnableSecondFactorMutationResponse = {
             value in case none of the concrete values match.*/
             readonly __typename: "%other";
         };
+        readonly recoveryCodes: ReadonlyArray<string> | null;
     } | null;
 };
 export type EnableSecondFactorMutationRawResponse = {
@@ -45,6 +46,7 @@ export type EnableSecondFactorMutationRawResponse = {
         } | {
             readonly __typename: string | null;
         };
+        readonly recoveryCodes: ReadonlyArray<string> | null;
     }) | null;
 };
 export type EnableSecondFactorMutation = {
@@ -76,6 +78,7 @@ mutation EnableSecondFactorMutation(
         }
       }
     }
+    recoveryCodes
   }
 }
 */
@@ -147,6 +150,13 @@ v6 = {
     }
   ],
   "type": "Errors"
+},
+v7 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "recoveryCodes",
+  "storageKey": null
 };
 return {
   "fragment": {
@@ -176,7 +186,8 @@ return {
               (v6/*: any*/)
             ],
             "storageKey": null
-          }
+          },
+          (v7/*: any*/)
         ],
         "storageKey": null
       }
@@ -211,7 +222,8 @@ return {
               (v6/*: any*/)
             ],
             "storageKey": null
-          }
+          },
+          (v7/*: any*/)
         ],
         "storageKey": null
       }
@@ -222,9 +234,9 @@ return {
     "metadata": {},
     "name": "EnableSecondFactorMutation",
     "operationKind": "mutation",
-    "text": "mutation EnableSecondFactorMutation(\n  $input: EnableSecondFactorInput!\n) {\n  enableSecondFactor(input: $input) {\n    secondFactorOrErrors {\n      __typename\n      ... on SmsSecondFactor {\n        __typename\n      }\n      ... on AppSecondFactor {\n        __typename\n      }\n      ... on Errors {\n        __typename\n        errors {\n          message\n          code\n        }\n      }\n    }\n  }\n}\n"
+    "text": "mutation EnableSecondFactorMutation(\n  $input: EnableSecondFactorInput!\n) {\n  enableSecondFactor(input: $input) {\n    secondFactorOrErrors {\n      __typename\n      ... on SmsSecondFactor {\n        __typename\n      }\n      ... on AppSecondFactor {\n        __typename\n      }\n      ... on Errors {\n        __typename\n        errors {\n          message\n          code\n        }\n      }\n    }\n    recoveryCodes\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'deb895d4ddc2170a4c05725b6276fae4';
+(node as any).hash = 'e3165b7db63bdd9ed7fd8fcef2304f43';
 export default node;

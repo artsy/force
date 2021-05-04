@@ -42,12 +42,12 @@ const node: ReaderFragment = {
             {
               "kind": "Literal",
               "name": "version",
-              "value": "large"
+              "value": "larger"
             }
           ],
           "kind": "ScalarField",
           "name": "url",
-          "storageKey": "url(version:\"large\")"
+          "storageKey": "url(version:\"larger\")"
         },
         {
           "alias": null,
@@ -98,5 +98,5 @@ const node: ReaderFragment = {
   ],
   "type": "Artwork"
 };
-(node as any).hash = 'f4de3713979ec717f6aff565587216f4';
+(node as any).hash = 'f6a47553f20499b5a115eedeb6eddb24';
 export default node;

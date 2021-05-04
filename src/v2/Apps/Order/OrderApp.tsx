@@ -44,6 +44,13 @@ class OrderApp extends React.Component<OrderAppProps, {}> {
     if (window.zEmbed) {
       window.zEmbed.show()
     }
+
+    if (this.mediator) {
+      this.mediator.on(
+        "openOrdersContactArtsyModal",
+        this.openAskSpecialistInquireableModal
+      )
+    }
   }
 
   componentWillUnmount() {
@@ -57,6 +64,42 @@ class OrderApp extends React.Component<OrderAppProps, {}> {
     if (window.zEmbed) {
       window.zEmbed.hide()
     }
+
+    if (this.mediator) {
+      this.mediator.off("openOrdersContactArtsyModal")
+    }
+  }
+
+  openAskSpecialistInquireableModal = () => {
+    const User = require("desktop/models/user.coffee")
+    const Artwork = require("desktop/models/artwork.coffee")
+    const ArtworkInquiry = require("desktop/models/artwork_inquiry.coffee")
+    const openInquiryQuestionnaireFor = require("desktop/components/inquiry_questionnaire/index.coffee")
+    const $ = require("jquery")
+
+    const user = User.instantiate()
+    const inquiry = new ArtworkInquiry({ notification_delay: 600 })
+
+    const artworkId = get(
+      this.props,
+      props => props.order.lineItems.edges[0].node.artwork.slug
+    )
+    const artwork = new Artwork({
+      id: artworkId,
+    })
+
+    // Set token to be able to load user's collector profile later
+    $.ajaxSettings.headers = {
+      "X-ACCESS-TOKEN":
+        sd.CURRENT_USER != null ? sd.CURRENT_USER.accessToken : undefined,
+      "X-XAPP-TOKEN": sd.ARTSY_XAPP_TOKEN,
+    }
+    openInquiryQuestionnaireFor({
+      artwork,
+      ask_specialist: true,
+      inquiry,
+      user,
+    })
   }
 
   preventHardReload = event => {
@@ -132,30 +175,35 @@ class OrderApp extends React.Component<OrderAppProps, {}> {
         {({ isEigen, mediator }) => {
           this.mediator = mediator
           return (
-            <MinimalNavBar to={artworkHref}>
-              <AppContainer>
-                <Title>Checkout | Artsy</Title>
-                {isEigen ? (
-                  <Meta
-                    name="viewport"
-                    content="width=device-width, user-scalable=no"
-                  />
-                ) : (
-                  <Meta
-                    name="viewport"
-                    content="width=device-width, initial-scale=1, maximum-scale=5 viewport-fit=cover"
-                  />
-                )}
-                {!isEigen && this.renderZendeskScript()}
-                <SafeAreaContainer>
-                  <Elements stripe={stripePromise}>
-                    <>{children}</>
-                  </Elements>
-                </SafeAreaContainer>
-                <StickyFooter orderType={order.mode} artworkId={artworkId} />
-                <ConnectedModalDialog />
-              </AppContainer>
-            </MinimalNavBar>
+            <Box>
+              {/* FIXME: remove once we refactor out legacy backbone code.
+                  Add place to attach legacy flash message, used in legacy inquiry flow
+              */}
+              <div id="main-layout-flash" />
+              <MinimalNavBar to={artworkHref}>
+                <AppContainer>
+                  <Title>Checkout | Artsy</Title>
+                  {isEigen ? (
+                    <Meta
+                      name="viewport"
+                      content="width=device-width, user-scalable=no"
+                    />
+                  ) : (
+                    <Meta
+                      name="viewport"
+                      content="width=device-width, initial-scale=1, maximum-scale=5 viewport-fit=cover"
+                    />
+                  )}
+                  <SafeAreaContainer>
+                    <Elements stripe={stripePromise}>
+                      <>{children}</>
+                    </Elements>
+                  </SafeAreaContainer>
+                  <StickyFooter orderType={order.mode} artworkId={artworkId} />
+                  <ConnectedModalDialog />
+                </AppContainer>
+              </MinimalNavBar>
+            </Box>
           )
         }}
       </SystemContextConsumer>

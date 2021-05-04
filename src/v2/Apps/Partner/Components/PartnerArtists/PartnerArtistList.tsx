@@ -7,12 +7,13 @@ import { ColumnSpan } from "@artsy/palette/dist/elements/GridColumns/calculateGr
 import { Media } from "v2/Utils/Responsive"
 import { PartnerArtistItemFragmentContainer as PartnerArtistItem } from "./PartnerArtistItem"
 import { Carousel } from "v2/Components/Carousel"
+import { ScrollIntoViewProps } from "v2/Utils/scrollHelpers"
 
 export interface PartnerArtistListProps {
   artists: PartnerArtistList_artists
   distinguishRepresentedArtists: boolean
   partnerSlug: string
-  onArtistClick?: () => void
+  scrollTo: ScrollIntoViewProps
 }
 
 export const PartnerArtistListContainer: React.FC = ({ children }) => {
@@ -30,7 +31,7 @@ export const PartnerArtistList: React.FC<PartnerArtistListProps> = ({
   artists,
   distinguishRepresentedArtists,
   partnerSlug,
-  onArtistClick,
+  scrollTo,
 }) => {
   if (!artists) return null
 
@@ -51,7 +52,7 @@ export const PartnerArtistList: React.FC<PartnerArtistListProps> = ({
                 {group.artists.map(({ node, counts: { artworks } }) => {
                   return (
                     <PartnerArtistItem
-                      onArtistClick={onArtistClick}
+                      scrollTo={scrollTo}
                       key={node.internalID}
                       artist={node}
                       partnerSlug={partnerSlug}
@@ -75,7 +76,6 @@ export const PartnerArtistListFragmentContainer = createFragmentContainer(
       fragment PartnerArtistList_artists on ArtistPartnerEdge
         @relay(plural: true) {
         representedBy
-        isDisplayOnPartnerProfile
         counts {
           artworks
         }

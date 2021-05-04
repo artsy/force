@@ -22,8 +22,17 @@ describe("BuyerGuaranteeIndex when admin", () => {
     },
     query: graphql`
       query BuyerGuaranteeIndex_Test_Query {
-        buyerGuarantee: me {
-          ...BuyerGuaranteeIndex_buyerGuarantee
+        headerImage: artwork(id: "any-id1") {
+          ...BuyerGuaranteeIndex_headerImage
+        }
+        authenticityImage: artwork(id: "any-id2") {
+          ...BuyerGuaranteeIndex_authenticityImage
+        }
+        moneyBackGuaranteeImage: artwork(id: "any-id3") {
+          ...BuyerGuaranteeIndex_moneyBackGuaranteeImage
+        }
+        securePaymentImage: artwork(id: "any-id4") {
+          ...BuyerGuaranteeIndex_securePaymentImage
         }
       }
     `,
@@ -35,7 +44,7 @@ describe("BuyerGuaranteeIndex when admin", () => {
     const html = wrapper.html()
 
     expect(wrapper.find("h1")).toHaveLength(1)
-    expect(html).toContain("Welcome to the Buyer's Guarantee Page")
+    expect(html).toContain("The Artsy Guarantee")
   })
 })
 
@@ -52,8 +61,17 @@ describe("BuyerGuaranteeIndex when non-admin", () => {
     },
     query: graphql`
       query BuyerGuaranteeIndexNonAdmin_Test_Query {
-        buyerGuarantee: me {
-          ...BuyerGuaranteeIndex_buyerGuarantee
+        headerImage: artwork(id: "any-id1") {
+          ...BuyerGuaranteeIndex_headerImage
+        }
+        authenticityImage: artwork(id: "any-id2") {
+          ...BuyerGuaranteeIndex_authenticityImage
+        }
+        moneyBackGuaranteeImage: artwork(id: "any-id3") {
+          ...BuyerGuaranteeIndex_moneyBackGuaranteeImage
+        }
+        securePaymentImage: artwork(id: "any-id4") {
+          ...BuyerGuaranteeIndex_securePaymentImage
         }
       }
     `,

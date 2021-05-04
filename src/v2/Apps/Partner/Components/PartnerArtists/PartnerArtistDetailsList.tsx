@@ -73,8 +73,8 @@ export const PartnerArtistDetailsList: React.FC<PartnerArtistDetailsListProps> =
       {artists.map(edge => {
         return (
           <PartnerArtistDetailsFragmentContainer
-            key={edge.node.id}
-            artist={edge.node}
+            key={edge.id}
+            partnerArtist={edge}
           />
         )
       })}
@@ -110,15 +110,13 @@ export const PartnerArtistDetailsListPaginationContainer = createPaginationConta
         artists: artistsConnection(first: $first, after: $after)
           @connection(key: "PartnerArtistDetailsList_artists") {
           edges {
+            id
             isDisplayOnPartnerProfile
             representedBy
             counts {
               artworks
             }
-            node {
-              id
-              ...PartnerArtistDetails_artist
-            }
+            ...PartnerArtistDetails_partnerArtist
           }
         }
       }

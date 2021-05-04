@@ -1468,6 +1468,9 @@ type Artwork implements Node & Searchable & Sellable {
   # Whether this artwork is unlisted or not
   unlisted: Boolean
 
+  # Based on artwork location verify that VAT info for the partner is complete.
+  vatRequirementComplete: Boolean
+
   # If the category is video, then it returns the href for the (youtube/vimeo) video, otherwise returns the website from CMS
   website: String
 
@@ -3062,6 +3065,7 @@ type CommerceOffer {
   from: CommerceOrderPartyUnion!
   fromDetails: OrderParty
   fromParticipant: CommerceOrderParticipantEnum
+  hasDefiniteTotal: Boolean!
   id: ID!
   internalID: ID!
   note: String
@@ -5614,6 +5618,9 @@ type Errors {
 }
 
 enum EventStatus {
+  # Load all shows
+  ALL
+
   # End date is in the past
   CLOSED
 
@@ -8272,6 +8279,13 @@ type PageInfo {
 }
 
 type Partner implements Node {
+  # A connection of all artists from a Partner.
+  allArtistsConnection(
+    displayOnPartnerProfile: Boolean
+    hasNotRepresentedArtistWithPublishedArtworks: Boolean
+    hasPublishedArtworks: Boolean
+    representedBy: Boolean
+  ): ArtistPartnerConnection
   analytics: AnalyticsPartnerStats
 
   # A connection of articles related to a partner.
@@ -8421,6 +8435,7 @@ type Partner implements Node {
   name: String
   profile: Profile
   profileArtistsLayout: String
+  profileBannerDisplay: String
 
   # A connection of shows from a Partner.
   showsConnection(
@@ -8433,6 +8448,9 @@ type Partner implements Node {
     # Only used when status is CLOSING_SOON or UPCOMING. Number of days used to filter upcoming and closing soon shows
     dayThreshold: Int
     first: Int
+
+    # If True returns only displayable items
+    isDisplayable: Boolean
     last: Int
     sort: ShowSorts
 
@@ -10669,6 +10687,7 @@ type Show implements EntityWithFilterArtworksConnectionInterface & Node {
 
   # Does the show exist as a fair booth?
   isFairBooth: Boolean
+  isFeatured: Boolean
 
   # Is the user following this show
   isFollowed: Boolean
@@ -10842,6 +10861,7 @@ enum ShowSorts {
   END_AT_DESC
   FEATURED_ASC
   FEATURED_DESC
+  FEATURED_DESC_END_AT_DESC
   NAME_ASC
   NAME_DESC
   PARTNER_ASC

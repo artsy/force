@@ -30,8 +30,17 @@ export const buyerGuaranteeRoutes: RouteConfig[] = [
         },
         query: graphql`
           query buyerGuaranteeRoutes_BuyerGuaranteeQuery {
-            buyerGuarantee: me {
-              ...BuyerGuaranteeIndex_buyerGuarantee
+            headerImage: artwork(id: "5dd8084d257aaf000e4a0396") {
+              ...BuyerGuaranteeIndex_headerImage
+            }
+            authenticityImage: artwork(id: "5fecdbfa19d5ae5bf95c1dd8") {
+              ...BuyerGuaranteeIndex_authenticityImage
+            }
+            moneyBackGuaranteeImage: artwork(id: "5fce729a212bcf54e2551f21") {
+              ...BuyerGuaranteeIndex_moneyBackGuaranteeImage
+            }
+            securePaymentImage: artwork(id: "580fb7cd2a893a65c100086a") {
+              ...BuyerGuaranteeIndex_securePaymentImage
             }
           }
         `,

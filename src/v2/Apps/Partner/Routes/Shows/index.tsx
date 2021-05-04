@@ -1,9 +1,11 @@
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Shows_partner } from "v2/__generated__/Shows_partner.graphql"
+
 import { ShowEventsFragmentContainer } from "../../Components/PartnerShows/ShowEvents"
 import { ShowPaginatedEventsRenderer } from "../../Components/PartnerShows/ShowPaginatedEvents"
-import { Box } from "@artsy/palette"
+
+import { ShowBannerFragmentContainer } from "../../Components/PartnerShows"
 
 interface PartnerShowsProps {
   partner: Shows_partner
@@ -12,12 +14,21 @@ interface PartnerShowsProps {
 export const Shows: React.FC<PartnerShowsProps> = ({
   partner,
 }): JSX.Element => {
-  const { currentEvents, upcomingEvents } = partner
+  const {
+    currentEvents,
+    upcomingEvents,
+    featured: { edges: featuredShows },
+  } = partner
   const isCurrentEventsExist = !!currentEvents.edges.length
   const isUpcomingEventsExist = !!upcomingEvents.edges.length
 
   return (
-    <Box>
+    <>
+      {featuredShows.length > 0 &&
+        featuredShows[0].node &&
+        featuredShows[0].node.isFeatured && (
+          <ShowBannerFragmentContainer my={4} show={featuredShows[0].node} />
+        )}
       {isCurrentEventsExist && (
         <ShowEventsFragmentContainer
           edges={currentEvents.edges}
@@ -38,7 +49,7 @@ export const Shows: React.FC<PartnerShowsProps> = ({
         scrollTo="#jumpto--pastShowsGrid"
         offset={200}
       />
-    </Box>
+    </>
   )
 }
 
@@ -46,6 +57,19 @@ export const ShowsFragmentContainer = createFragmentContainer(Shows, {
   partner: graphql`
     fragment Shows_partner on Partner {
       slug
+      featured: showsConnection(
+        first: 1
+        status: ALL
+        sort: FEATURED_DESC_END_AT_DESC
+        isDisplayable: true
+      ) {
+        edges {
+          node {
+            isFeatured
+            ...ShowBanner_show
+          }
+        }
+      }
       currentEvents: showsConnection(first: 12, status: RUNNING) {
         edges {
           ...ShowEvents_edges

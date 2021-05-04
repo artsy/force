@@ -5,6 +5,14 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type Shows_partner = {
     readonly slug: string;
+    readonly featured: {
+        readonly edges: ReadonlyArray<{
+            readonly node: {
+                readonly isFeatured: boolean | null;
+                readonly " $fragmentRefs": FragmentRefs<"ShowBanner_show">;
+            } | null;
+        } | null> | null;
+    } | null;
     readonly currentEvents: {
         readonly edges: ReadonlyArray<{
             readonly " $fragmentRefs": FragmentRefs<"ShowEvents_edges">;
@@ -63,6 +71,72 @@ return {
       "storageKey": null
     },
     {
+      "alias": "featured",
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "first",
+          "value": 1
+        },
+        {
+          "kind": "Literal",
+          "name": "isDisplayable",
+          "value": true
+        },
+        {
+          "kind": "Literal",
+          "name": "sort",
+          "value": "FEATURED_DESC_END_AT_DESC"
+        },
+        {
+          "kind": "Literal",
+          "name": "status",
+          "value": "ALL"
+        }
+      ],
+      "concreteType": "ShowConnection",
+      "kind": "LinkedField",
+      "name": "showsConnection",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "ShowEdge",
+          "kind": "LinkedField",
+          "name": "edges",
+          "plural": true,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": "Show",
+              "kind": "LinkedField",
+              "name": "node",
+              "plural": false,
+              "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "isFeatured",
+                  "storageKey": null
+                },
+                {
+                  "args": null,
+                  "kind": "FragmentSpread",
+                  "name": "ShowBanner_show"
+                }
+              ],
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        }
+      ],
+      "storageKey": "showsConnection(first:1,isDisplayable:true,sort:\"FEATURED_DESC_END_AT_DESC\",status:\"ALL\")"
+    },
+    {
       "alias": "currentEvents",
       "args": [
         (v0/*: any*/),
@@ -100,5 +174,5 @@ return {
   "type": "Partner"
 };
 })();
-(node as any).hash = '38a4d2c65f4388388bbe0ae5af18ab81';
+(node as any).hash = 'b62889efe000f4a90c736b7907655ee1';
 export default node;

@@ -52,6 +52,7 @@ export const partnerRoutes: RouteConfig[] = [
         prepare: () => {
           OverviewRoute.preload()
         },
+        ignoreScrollBehavior: true,
         query: graphql`
           query partnerRoutes_OverviewQuery($partnerId: String!) {
             partner(id: $partnerId) @principalField {
@@ -70,18 +71,45 @@ export const partnerRoutes: RouteConfig[] = [
         query: graphql`
           query partnerRoutes_ArticlesQuery($partnerId: String!) {
             partner(id: $partnerId) @principalField {
+              articles: articlesConnection(first: 0) {
+                totalCount
+              }
               ...Articles_partner
             }
           }
         `,
+        render: ({ Component, props, match }) => {
+          if (!(Component && props)) {
+            return
+          }
+
+          const { partner } = props as any
+
+          if (!partner) {
+            return
+          }
+
+          const {
+            articles: { totalCount },
+          } = partner
+
+          if (!totalCount) {
+            throw new RedirectException(
+              `/partner2/${match.params.partnerId}`,
+              302
+            )
+          }
+
+          return <Component {...props} />
+        },
       },
       {
         getComponent: () => ShowsRoute,
         path: "shows",
+        ignoreScrollBehavior: true,
         prepare: () => {
           ShowsRoute.preload()
         },
-        ignoreScrollBehavior: true,
         query: graphql`
           query partnerRoutes_ShowsQuery($partnerId: String!) {
             partner(id: $partnerId) @principalField {
@@ -96,6 +124,7 @@ export const partnerRoutes: RouteConfig[] = [
         prepare: () => {
           WorksRoute.preload()
         },
+        ignoreScrollBehavior: true,
         query: graphql`
           query partnerRoutes_WorksQuery(
             $partnerId: String!
@@ -117,32 +146,29 @@ export const partnerRoutes: RouteConfig[] = [
         query: graphql`
           query partnerRoutes_ArtistsQuery($partnerId: String!) {
             partner(id: $partnerId) @principalField {
-              ...Artists_partner
+              ...ArtistsRoute_partner
               displayArtistsSection
-              artists: artistsConnection(first: 20, after: null) {
+              allArtistsConnection(
+                displayOnPartnerProfile: true
+                hasNotRepresentedArtistWithPublishedArtworks: true
+              ) {
                 totalCount
               }
             }
           }
         `,
         render: ({ Component, props, match }) => {
-          if (!(Component && props)) {
+          const pageProps = props as any
+
+          if (!(Component && pageProps && pageProps.partner)) {
             return undefined
           }
 
-          const { partner } = props as any
+          const {
+            partner: { displayArtistsSection, allArtistsConnection: artists },
+          } = pageProps
 
-          if (!partner) {
-            return undefined
-          }
-
-          if (
-            !(
-              partner.displayArtistsSection &&
-              partner.artists &&
-              partner.artists.totalCount > 0
-            )
-          ) {
+          if (!(displayArtistsSection && artists && artists.totalCount > 0)) {
             throw new RedirectException(
               `/partner2/${match.params.partnerId}`,
               302
@@ -158,6 +184,7 @@ export const partnerRoutes: RouteConfig[] = [
         prepare: () => {
           ContactRoute.preload()
         },
+        ignoreScrollBehavior: true,
         query: graphql`
           query partnerRoutes_ContactQuery($partnerId: String!) {
             partner(id: $partnerId) @principalField {
