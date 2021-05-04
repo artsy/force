@@ -50,7 +50,7 @@ const ShowsRail: React.FC<ShowsRailProps> = ({ partner, ...rest }) => {
             shows.length > itemsPerViewport && (
               <Box width={[300, "100%"]}>
                 <RouterLink to={`/partner2/${slug}/shows`}>
-                  <ScrollToPartnerHeader>
+                  <ScrollToPartnerHeader width="100%">
                     <ResponsiveBox
                       aspectWidth={263}
                       aspectHeight={222}

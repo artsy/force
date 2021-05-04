@@ -46,8 +46,8 @@ export const PartnerArtistsCarousel: React.FC<PartnerArtistsCarouselProps> = ({
             }),
           artists.edges.length > itemsPerViewport && (
             <Box width={[300, "100%"]}>
-              <ScrollToPartnerHeader>
-                <RouterLink to={`/partner2/${slug}/artists`}>
+              <RouterLink to={`/partner2/${slug}/artists`}>
+                <ScrollToPartnerHeader width="100%">
                   <ResponsiveImage>
                     <Flex
                       height="100%"
@@ -59,8 +59,8 @@ export const PartnerArtistsCarousel: React.FC<PartnerArtistsCarouselProps> = ({
                       </Text>
                     </Flex>
                   </ResponsiveImage>
-                </RouterLink>
-              </ScrollToPartnerHeader>
+                </ScrollToPartnerHeader>
+              </RouterLink>
             </Box>
           ),
         ])
