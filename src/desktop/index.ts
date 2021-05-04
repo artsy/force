@@ -60,7 +60,6 @@ app.use(require("./apps/personalize"))
 app.use(require("./apps/press"))
 
 app.use(require("./apps/shows"))
-app.use(require("./apps/tag"))
 app.use(require("./apps/unsubscribe"))
 app.use(require("./apps/unsupported_browser"))
 app.use(require("./apps/style_guide"))

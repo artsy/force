@@ -189,10 +189,6 @@
                             "name": "Childhood"
                         },
                         {
-                            "href": "/tag/reclining",
-                            "name": "Reclining"
-                        },
-                        {
                             "href": "/gene/stolen-moments",
                             "name": "Stolen Moments"
                         }
@@ -316,10 +312,6 @@
                     "artist": "Agnolo Bronzino",
                     "date": "Mid-1540s",
                     "genes": [
-                        {
-                            "href": "/tag/venus",
-                            "name": "Venus"
-                        },
                         {
                             "href": "/gene/movement",
                             "name": "Movement"
