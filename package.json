@@ -77,7 +77,7 @@
   },
   "dependencies": {
     "@artsy/backbone-mixins": "2.0.0",
-    "@artsy/cohesion": "1.85.0",
+    "@artsy/cohesion": "2.0.0",
     "@artsy/express-reloadable": "1.4.8",
     "@artsy/fresnel": "1.4.0",
     "@artsy/gemup": "0.1.0",
@@ -87,7 +87,6 @@
     "@artsy/stitch": "6.2.0",
     "@artsy/xapp": "1.0.6",
     "@babel/runtime": "7.13.10",
-    "@braze/web-sdk": "^3.2.0",
     "@loadable/component": "5.14.1",
     "@loadable/server": "5.14.0",
     "@sentry/browser": "4.5.4",

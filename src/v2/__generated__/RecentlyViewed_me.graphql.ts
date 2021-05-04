@@ -86,12 +86,12 @@ const node: ReaderFragment = {
                         {
                           "kind": "Literal",
                           "name": "version",
-                          "value": "large"
+                          "value": "larger"
                         }
                       ],
                       "kind": "ScalarField",
                       "name": "url",
-                      "storageKey": "url(version:\"large\")"
+                      "storageKey": "url(version:\"larger\")"
                     },
                     {
                       "alias": null,

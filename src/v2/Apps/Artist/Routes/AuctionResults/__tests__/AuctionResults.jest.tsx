@@ -218,22 +218,29 @@ describe("AuctionResults", () => {
               )
 
               expect(trackEvent).toHaveBeenCalledTimes(3)
-              expect(trackEvent.mock.calls[0][0]).toEqual({
+              expect(trackEvent.mock.calls[0][0]).toMatchObject({
                 action_type: "Auction results filter params changed",
                 context_page: "Artist Auction Results",
-                changed: { categories: ["Work on Paper"] },
-                current: {
-                  categories: ["Work on Paper"],
-                  pageAndCursor: { page: 1, cursor: null },
-                  sort: "DATE_DESC",
-                  organizations: [],
-                  sizes: [],
-                  createdAfterYear: 1880,
-                  createdBeforeYear: 1973,
-                  earliestCreatedYear: 1880,
-                  latestCreatedYear: 1973,
-                  allowEmptyCreatedDates: true,
-                },
+                // `changed` & `current` supplied as JSON blobs
+              })
+
+              const { changed, current } = trackEvent.mock.calls[0][0]
+
+              expect(JSON.parse(changed)).toMatchObject({
+                categories: ["Work on Paper"],
+              })
+
+              expect(JSON.parse(current)).toMatchObject({
+                categories: ["Work on Paper"],
+                organizations: [],
+                sizes: [],
+                pageAndCursor: { page: 1, cursor: null },
+                sort: "DATE_DESC",
+                allowEmptyCreatedDates: true,
+                earliestCreatedYear: 1880,
+                latestCreatedYear: 1973,
+                createdAfterYear: 1880,
+                createdBeforeYear: 1973,
               })
 
               wrapper.update()
@@ -321,22 +328,29 @@ describe("AuctionResults", () => {
               )
 
               expect(trackEvent).toHaveBeenCalledTimes(3)
-              expect(trackEvent.mock.calls[0][0]).toEqual({
+              expect(trackEvent.mock.calls[0][0]).toMatchObject({
                 action_type: "Auction results filter params changed",
                 context_page: "Artist Auction Results",
-                changed: { sizes: ["MEDIUM"] },
-                current: {
-                  sizes: ["MEDIUM"],
-                  pageAndCursor: { page: 1, cursor: null },
-                  sort: "DATE_DESC",
-                  organizations: [],
-                  categories: [],
-                  createdAfterYear: 1880,
-                  createdBeforeYear: 1973,
-                  earliestCreatedYear: 1880,
-                  latestCreatedYear: 1973,
-                  allowEmptyCreatedDates: true,
-                },
+                // `changed` & `current` supplied as JSON blobs
+              })
+
+              const { changed, current } = trackEvent.mock.calls[0][0]
+
+              expect(JSON.parse(changed)).toMatchObject({
+                sizes: ["MEDIUM"],
+              })
+
+              expect(JSON.parse(current)).toMatchObject({
+                sizes: ["MEDIUM"],
+                pageAndCursor: { page: 1, cursor: null },
+                sort: "DATE_DESC",
+                organizations: [],
+                categories: [],
+                createdAfterYear: 1880,
+                createdBeforeYear: 1973,
+                earliestCreatedYear: 1880,
+                latestCreatedYear: 1973,
+                allowEmptyCreatedDates: true,
               })
 
               wrapper.update()

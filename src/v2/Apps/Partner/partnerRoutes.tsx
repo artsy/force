@@ -146,32 +146,29 @@ export const partnerRoutes: RouteConfig[] = [
         query: graphql`
           query partnerRoutes_ArtistsQuery($partnerId: String!) {
             partner(id: $partnerId) @principalField {
-              ...Artists_partner
+              ...ArtistsRoute_partner
               displayArtistsSection
-              artists: artistsConnection(first: 20, after: null) {
+              allArtistsConnection(
+                displayOnPartnerProfile: true
+                hasNotRepresentedArtistWithPublishedArtworks: true
+              ) {
                 totalCount
               }
             }
           }
         `,
         render: ({ Component, props, match }) => {
-          if (!(Component && props)) {
+          const pageProps = props as any
+
+          if (!(Component && pageProps && pageProps.partner)) {
             return undefined
           }
 
-          const { partner } = props as any
+          const {
+            partner: { displayArtistsSection, allArtistsConnection: artists },
+          } = pageProps
 
-          if (!partner) {
-            return undefined
-          }
-
-          if (
-            !(
-              partner.displayArtistsSection &&
-              partner.artists &&
-              partner.artists.totalCount > 0
-            )
-          ) {
+          if (!(displayArtistsSection && artists && artists.totalCount > 0)) {
             throw new RedirectException(
               `/partner2/${match.params.partnerId}`,
               302

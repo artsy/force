@@ -97,11 +97,11 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
           tracking.trackEvent({
             action_type:
               AnalyticsSchema.ActionType.AuctionResultFilterParamChanged,
-            changed: {
+            changed: JSON.stringify({
               [filterKey]: filterContext.filters[filterKey],
-            },
+            }),
             context_page: AnalyticsSchema.PageName.ArtistAuctionResults,
-            current: filterContext.filters,
+            current: JSON.stringify(filterContext.filters),
           })
         }
       }

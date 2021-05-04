@@ -76,7 +76,6 @@ export const PartnerArtistListFragmentContainer = createFragmentContainer(
       fragment PartnerArtistList_artists on ArtistPartnerEdge
         @relay(plural: true) {
         representedBy
-        isDisplayOnPartnerProfile
         counts {
           artworks
         }

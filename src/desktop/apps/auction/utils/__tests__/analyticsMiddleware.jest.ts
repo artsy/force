@@ -33,13 +33,13 @@ describe("analytics middleware", () => {
         auction_slug: "auction-slug",
         sale_id: "123",
         user_id: "321",
-        current: [
+        current: JSON.stringify([
           { artists: [] },
           { medium: ["painting"] },
           { sort: "position" },
           { price: "" },
-        ],
-        changed: { medium: "painting" },
+        ]),
+        changed: JSON.stringify({ medium: "painting" }),
       }
     )
   })
@@ -58,13 +58,13 @@ describe("analytics middleware", () => {
         auction_slug: "auction-slug",
         sale_id: "123",
         user_id: "321",
-        current: [
+        current: JSON.stringify([
           { artists: ["andy-warhol"] },
           { medium: [] },
           { sort: "position" },
           { price: "" },
-        ],
-        changed: { artist: "andy-warhol" },
+        ]),
+        changed: JSON.stringify({ artist: "andy-warhol" }),
       }
     )
   })
@@ -83,13 +83,13 @@ describe("analytics middleware", () => {
         auction_slug: "auction-slug",
         sale_id: "123",
         user_id: "321",
-        current: [
+        current: JSON.stringify([
           { artists: ["artists-you-follow"] },
           { medium: [] },
           { sort: "position" },
           { price: "" },
-        ],
-        changed: { artist: "artists-you-follow" },
+        ]),
+        changed: JSON.stringify({ artist: "artists-you-follow" }),
       }
     )
   })
@@ -108,13 +108,13 @@ describe("analytics middleware", () => {
         auction_slug: "auction-slug",
         sale_id: "123",
         user_id: "321",
-        current: [
+        current: JSON.stringify([
           { artists: [] },
           { medium: [] },
           { sort: "position" },
           { price: "10000-*" },
-        ],
-        changed: { price: "10000-*" },
+        ]),
+        changed: JSON.stringify({ price: "10000-*" }),
       }
     )
   })
@@ -130,13 +130,13 @@ describe("analytics middleware", () => {
         auction_slug: "auction-slug",
         sale_id: "123",
         user_id: "321",
-        current: [
+        current: JSON.stringify([
           { artists: [] },
           { medium: [] },
           { sort: "lot_number" },
           { price: "" },
-        ],
-        changed: { sort: "lot_number" },
+        ]),
+        changed: JSON.stringify({ sort: "lot_number" }),
       }
     )
   })
