@@ -4,6 +4,7 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type Shows_partner = {
+    readonly slug: string;
     readonly featured: {
         readonly edges: ReadonlyArray<{
             readonly node: {
@@ -12,13 +13,14 @@ export type Shows_partner = {
             } | null;
         } | null> | null;
     } | null;
-    readonly slug: string;
-    readonly showsConnection: {
+    readonly currentEvents: {
         readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly internalID: string;
-                readonly " $fragmentRefs": FragmentRefs<"ShowCard_show">;
-            } | null;
+            readonly " $fragmentRefs": FragmentRefs<"ShowEvents_edges">;
+        } | null> | null;
+    } | null;
+    readonly upcomingEvents: {
+        readonly edges: ReadonlyArray<{
+            readonly " $fragmentRefs": FragmentRefs<"ShowEvents_edges">;
         } | null> | null;
     } | null;
     readonly " $refType": "Shows_partner";
@@ -31,37 +33,43 @@ export type Shows_partner$key = {
 
 
 
-const node: ReaderFragment = {
-  "argumentDefinitions": [
-    {
-      "defaultValue": 18,
-      "kind": "LocalArgument",
-      "name": "first",
-      "type": "Int"
-    },
-    {
-      "defaultValue": null,
-      "kind": "LocalArgument",
-      "name": "last",
-      "type": "Int"
-    },
-    {
-      "defaultValue": null,
-      "kind": "LocalArgument",
-      "name": "after",
-      "type": "String"
-    },
-    {
-      "defaultValue": null,
-      "kind": "LocalArgument",
-      "name": "before",
-      "type": "String"
-    }
-  ],
+const node: ReaderFragment = (function(){
+var v0 = {
+  "kind": "Literal",
+  "name": "first",
+  "value": 12
+},
+v1 = [
+  {
+    "alias": null,
+    "args": null,
+    "concreteType": "ShowEdge",
+    "kind": "LinkedField",
+    "name": "edges",
+    "plural": true,
+    "selections": [
+      {
+        "args": null,
+        "kind": "FragmentSpread",
+        "name": "ShowEvents_edges"
+      }
+    ],
+    "storageKey": null
+  }
+];
+return {
+  "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
   "name": "Shows_partner",
   "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "slug",
+      "storageKey": null
+    },
     {
       "alias": "featured",
       "args": [
@@ -129,80 +137,42 @@ const node: ReaderFragment = {
       "storageKey": "showsConnection(first:1,isDisplayable:true,sort:\"FEATURED_DESC_END_AT_DESC\",status:\"ALL\")"
     },
     {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "slug",
-      "storageKey": null
-    },
-    {
-      "alias": null,
+      "alias": "currentEvents",
       "args": [
+        (v0/*: any*/),
         {
-          "kind": "Variable",
-          "name": "after",
-          "variableName": "after"
-        },
-        {
-          "kind": "Variable",
-          "name": "before",
-          "variableName": "before"
-        },
-        {
-          "kind": "Variable",
-          "name": "first",
-          "variableName": "first"
-        },
-        {
-          "kind": "Variable",
-          "name": "last",
-          "variableName": "last"
+          "kind": "Literal",
+          "name": "status",
+          "value": "RUNNING"
         }
       ],
       "concreteType": "ShowConnection",
       "kind": "LinkedField",
       "name": "showsConnection",
       "plural": false,
-      "selections": [
+      "selections": (v1/*: any*/),
+      "storageKey": "showsConnection(first:12,status:\"RUNNING\")"
+    },
+    {
+      "alias": "upcomingEvents",
+      "args": [
+        (v0/*: any*/),
         {
-          "alias": null,
-          "args": null,
-          "concreteType": "ShowEdge",
-          "kind": "LinkedField",
-          "name": "edges",
-          "plural": true,
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "concreteType": "Show",
-              "kind": "LinkedField",
-              "name": "node",
-              "plural": false,
-              "selections": [
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "internalID",
-                  "storageKey": null
-                },
-                {
-                  "args": null,
-                  "kind": "FragmentSpread",
-                  "name": "ShowCard_show"
-                }
-              ],
-              "storageKey": null
-            }
-          ],
-          "storageKey": null
+          "kind": "Literal",
+          "name": "status",
+          "value": "UPCOMING"
         }
       ],
-      "storageKey": null
+      "concreteType": "ShowConnection",
+      "kind": "LinkedField",
+      "name": "showsConnection",
+      "plural": false,
+      "selections": (v1/*: any*/),
+      "storageKey": "showsConnection(first:12,status:\"UPCOMING\")"
     }
   ],
   "type": "Partner"
 };
-(node as any).hash = 'd011a65c1d78735ef4a4fc64eac159d5';
+})();
+(node as any).hash = 'b62889efe000f4a90c736b7907655ee1';
 export default node;

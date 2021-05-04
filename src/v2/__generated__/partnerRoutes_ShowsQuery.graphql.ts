@@ -63,7 +63,16 @@ fragment ShowCard_show on Show {
   }
 }
 
+fragment ShowEvents_edges on ShowEdge {
+  node {
+    internalID
+    ...ShowCard_show
+    id
+  }
+}
+
 fragment Shows_partner on Partner {
+  slug
   featured: showsConnection(first: 1, status: ALL, sort: FEATURED_DESC_END_AT_DESC, isDisplayable: true) {
     edges {
       node {
@@ -73,14 +82,14 @@ fragment Shows_partner on Partner {
       }
     }
   }
-  slug
-  showsConnection(first: 18) {
+  currentEvents: showsConnection(first: 12, status: RUNNING) {
     edges {
-      node {
-        internalID
-        ...ShowCard_show
-        id
-      }
+      ...ShowEvents_edges
+    }
+  }
+  upcomingEvents: showsConnection(first: 12, status: UPCOMING) {
+    edges {
+      ...ShowEvents_edges
     }
   }
 }
@@ -157,7 +166,97 @@ v9 = {
   "kind": "ScalarField",
   "name": "srcSet",
   "storageKey": null
-};
+},
+v10 = {
+  "kind": "Literal",
+  "name": "first",
+  "value": 12
+},
+v11 = [
+  {
+    "alias": null,
+    "args": null,
+    "concreteType": "ShowEdge",
+    "kind": "LinkedField",
+    "name": "edges",
+    "plural": true,
+    "selections": [
+      {
+        "alias": null,
+        "args": null,
+        "concreteType": "Show",
+        "kind": "LinkedField",
+        "name": "node",
+        "plural": false,
+        "selections": [
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "internalID",
+            "storageKey": null
+          },
+          (v4/*: any*/),
+          (v3/*: any*/),
+          (v5/*: any*/),
+          (v6/*: any*/),
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "Image",
+            "kind": "LinkedField",
+            "name": "coverImage",
+            "plural": false,
+            "selections": [
+              {
+                "alias": "medium",
+                "args": [
+                  {
+                    "kind": "Literal",
+                    "name": "height",
+                    "value": 222
+                  },
+                  {
+                    "kind": "Literal",
+                    "name": "width",
+                    "value": 263
+                  }
+                ],
+                "concreteType": "CroppedImageUrl",
+                "kind": "LinkedField",
+                "name": "cropped",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "width",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "height",
+                    "storageKey": null
+                  },
+                  (v8/*: any*/),
+                  (v9/*: any*/)
+                ],
+                "storageKey": "cropped(height:222,width:263)"
+              }
+            ],
+            "storageKey": null
+          },
+          (v7/*: any*/)
+        ],
+        "storageKey": null
+      }
+    ],
+    "storageKey": null
+  }
+];
 return {
   "fragment": {
     "argumentDefinitions": (v0/*: any*/),
@@ -198,6 +297,7 @@ return {
         "name": "partner",
         "plural": false,
         "selections": [
+          (v2/*: any*/),
           {
             "alias": "featured",
             "args": [
@@ -333,106 +433,39 @@ return {
             ],
             "storageKey": "showsConnection(first:1,isDisplayable:true,sort:\"FEATURED_DESC_END_AT_DESC\",status:\"ALL\")"
           },
-          (v2/*: any*/),
           {
-            "alias": null,
+            "alias": "currentEvents",
             "args": [
+              (v10/*: any*/),
               {
                 "kind": "Literal",
-                "name": "first",
-                "value": 18
+                "name": "status",
+                "value": "RUNNING"
               }
             ],
             "concreteType": "ShowConnection",
             "kind": "LinkedField",
             "name": "showsConnection",
             "plural": false,
-            "selections": [
+            "selections": (v11/*: any*/),
+            "storageKey": "showsConnection(first:12,status:\"RUNNING\")"
+          },
+          {
+            "alias": "upcomingEvents",
+            "args": [
+              (v10/*: any*/),
               {
-                "alias": null,
-                "args": null,
-                "concreteType": "ShowEdge",
-                "kind": "LinkedField",
-                "name": "edges",
-                "plural": true,
-                "selections": [
-                  {
-                    "alias": null,
-                    "args": null,
-                    "concreteType": "Show",
-                    "kind": "LinkedField",
-                    "name": "node",
-                    "plural": false,
-                    "selections": [
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "internalID",
-                        "storageKey": null
-                      },
-                      (v4/*: any*/),
-                      (v3/*: any*/),
-                      (v5/*: any*/),
-                      (v6/*: any*/),
-                      {
-                        "alias": null,
-                        "args": null,
-                        "concreteType": "Image",
-                        "kind": "LinkedField",
-                        "name": "coverImage",
-                        "plural": false,
-                        "selections": [
-                          {
-                            "alias": "medium",
-                            "args": [
-                              {
-                                "kind": "Literal",
-                                "name": "height",
-                                "value": 222
-                              },
-                              {
-                                "kind": "Literal",
-                                "name": "width",
-                                "value": 263
-                              }
-                            ],
-                            "concreteType": "CroppedImageUrl",
-                            "kind": "LinkedField",
-                            "name": "cropped",
-                            "plural": false,
-                            "selections": [
-                              {
-                                "alias": null,
-                                "args": null,
-                                "kind": "ScalarField",
-                                "name": "width",
-                                "storageKey": null
-                              },
-                              {
-                                "alias": null,
-                                "args": null,
-                                "kind": "ScalarField",
-                                "name": "height",
-                                "storageKey": null
-                              },
-                              (v8/*: any*/),
-                              (v9/*: any*/)
-                            ],
-                            "storageKey": "cropped(height:222,width:263)"
-                          }
-                        ],
-                        "storageKey": null
-                      },
-                      (v7/*: any*/)
-                    ],
-                    "storageKey": null
-                  }
-                ],
-                "storageKey": null
+                "kind": "Literal",
+                "name": "status",
+                "value": "UPCOMING"
               }
             ],
-            "storageKey": "showsConnection(first:18)"
+            "concreteType": "ShowConnection",
+            "kind": "LinkedField",
+            "name": "showsConnection",
+            "plural": false,
+            "selections": (v11/*: any*/),
+            "storageKey": "showsConnection(first:12,status:\"UPCOMING\")"
           },
           (v7/*: any*/)
         ],
@@ -445,7 +478,7 @@ return {
     "metadata": {},
     "name": "partnerRoutes_ShowsQuery",
     "operationKind": "query",
-    "text": "query partnerRoutes_ShowsQuery(\n  $partnerId: String!\n) {\n  partner(id: $partnerId) @principalField {\n    ...Shows_partner\n    id\n  }\n}\n\nfragment ShowBanner_show on Show {\n  slug\n  name\n  href\n  isFairBooth\n  exhibitionPeriod\n  status\n  description\n  location {\n    city\n    id\n  }\n  coverImage {\n    medium: cropped(width: 600, height: 480) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ShowCard_show on Show {\n  href\n  name\n  isFairBooth\n  exhibitionPeriod\n  coverImage {\n    medium: cropped(width: 263, height: 222) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment Shows_partner on Partner {\n  featured: showsConnection(first: 1, status: ALL, sort: FEATURED_DESC_END_AT_DESC, isDisplayable: true) {\n    edges {\n      node {\n        isFeatured\n        ...ShowBanner_show\n        id\n      }\n    }\n  }\n  slug\n  showsConnection(first: 18) {\n    edges {\n      node {\n        internalID\n        ...ShowCard_show\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query partnerRoutes_ShowsQuery(\n  $partnerId: String!\n) {\n  partner(id: $partnerId) @principalField {\n    ...Shows_partner\n    id\n  }\n}\n\nfragment ShowBanner_show on Show {\n  slug\n  name\n  href\n  isFairBooth\n  exhibitionPeriod\n  status\n  description\n  location {\n    city\n    id\n  }\n  coverImage {\n    medium: cropped(width: 600, height: 480) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ShowCard_show on Show {\n  href\n  name\n  isFairBooth\n  exhibitionPeriod\n  coverImage {\n    medium: cropped(width: 263, height: 222) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ShowEvents_edges on ShowEdge {\n  node {\n    internalID\n    ...ShowCard_show\n    id\n  }\n}\n\nfragment Shows_partner on Partner {\n  slug\n  featured: showsConnection(first: 1, status: ALL, sort: FEATURED_DESC_END_AT_DESC, isDisplayable: true) {\n    edges {\n      node {\n        isFeatured\n        ...ShowBanner_show\n        id\n      }\n    }\n  }\n  currentEvents: showsConnection(first: 12, status: RUNNING) {\n    edges {\n      ...ShowEvents_edges\n    }\n  }\n  upcomingEvents: showsConnection(first: 12, status: UPCOMING) {\n    edges {\n      ...ShowEvents_edges\n    }\n  }\n}\n"
   }
 };
 })();

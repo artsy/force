@@ -1,12 +1,11 @@
 import React from "react"
-import { createFragmentContainer } from "react-relay"
-import { graphql } from "relay-runtime"
+import { createFragmentContainer, graphql } from "react-relay"
 import { Shows_partner } from "v2/__generated__/Shows_partner.graphql"
-import { Column, GridColumns } from "@artsy/palette"
-import {
-  ShowBannerFragmentContainer,
-  ShowCardFragmentContainer,
-} from "../../Components/PartnerShows"
+
+import { ShowEventsFragmentContainer } from "../../Components/PartnerShows/ShowEvents"
+import { ShowPaginatedEventsRenderer } from "../../Components/PartnerShows/ShowPaginatedEvents"
+
+import { ShowBannerFragmentContainer } from "../../Components/PartnerShows"
 
 interface PartnerShowsProps {
   partner: Shows_partner
@@ -16,40 +15,48 @@ export const Shows: React.FC<PartnerShowsProps> = ({
   partner,
 }): JSX.Element => {
   const {
-    showsConnection: { edges: shows },
+    currentEvents,
+    upcomingEvents,
     featured: { edges: featuredShows },
   } = partner
+  const isCurrentEventsExist = !!currentEvents.edges.length
+  const isUpcomingEventsExist = !!upcomingEvents.edges.length
 
   return (
     <>
       {featuredShows.length > 0 &&
         featuredShows[0].node &&
         featuredShows[0].node.isFeatured && (
-          <ShowBannerFragmentContainer mt={4} show={featuredShows[0].node} />
+          <ShowBannerFragmentContainer my={4} show={featuredShows[0].node} />
         )}
-      //TODO: implementing of shows tab in progress
-      <GridColumns mt={6} gridRowGap={[2, 4]}>
-        {shows.map(({ node: show }) => {
-          return (
-            <Column key={show.internalID} span={3}>
-              <ShowCardFragmentContainer show={show} />
-            </Column>
-          )
-        })}
-      </GridColumns>
+      {isCurrentEventsExist && (
+        <ShowEventsFragmentContainer
+          edges={currentEvents.edges}
+          eventTitle="Current Events"
+        />
+      )}
+      {isUpcomingEventsExist && (
+        <ShowEventsFragmentContainer
+          edges={upcomingEvents.edges}
+          eventTitle="Upcoming Events"
+        />
+      )}
+      <ShowPaginatedEventsRenderer
+        eventTitle="Past Events"
+        partnerId={partner.slug}
+        status="CLOSED"
+        first={24}
+        scrollTo="#jumpto--pastShowsGrid"
+        offset={200}
+      />
     </>
   )
 }
 
 export const ShowsFragmentContainer = createFragmentContainer(Shows, {
   partner: graphql`
-    fragment Shows_partner on Partner
-      @argumentDefinitions(
-        first: { type: "Int", defaultValue: 18 }
-        last: { type: "Int" }
-        after: { type: "String" }
-        before: { type: "String" }
-      ) {
+    fragment Shows_partner on Partner {
+      slug
       featured: showsConnection(
         first: 1
         status: ALL
@@ -63,18 +70,14 @@ export const ShowsFragmentContainer = createFragmentContainer(Shows, {
           }
         }
       }
-      slug
-      showsConnection(
-        first: $first
-        last: $last
-        after: $after
-        before: $before
-      ) {
+      currentEvents: showsConnection(first: 12, status: RUNNING) {
         edges {
-          node {
-            internalID
-            ...ShowCard_show
-          }
+          ...ShowEvents_edges
+        }
+      }
+      upcomingEvents: showsConnection(first: 12, status: UPCOMING) {
+        edges {
+          ...ShowEvents_edges
         }
       }
     }

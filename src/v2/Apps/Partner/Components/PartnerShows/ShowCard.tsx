@@ -13,7 +13,7 @@ const ShowCard: React.FC<ShowCardProps> = ({ show }): JSX.Element => {
   const showType = isFairBooth ? "fair booth" : "show"
 
   return (
-    <RouterLink to={href} style={{ textDecoration: "none" }}>
+    <RouterLink to={href} noUnderline>
       {coverImage && (
         <ResponsiveBox
           aspectWidth={coverImage.medium.width}
