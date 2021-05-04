@@ -10,6 +10,7 @@ import { FullBleed } from "v2/Components/FullBleed"
 import { PartnerHeaderImageFragmentContainer as PartnerHeaderImage } from "./Components/PartnerHeader/PartnerHeaderImage"
 import styled from "styled-components"
 import { PartnerMetaFragmentContainer } from "./Components/PartnerMeta"
+import { StickyProvider } from "v2/Components/Sticky"
 
 export interface PartnerAppProps {
   partner: PartnerApp_partner
@@ -26,7 +27,7 @@ export const PartnerApp: React.FC<PartnerAppProps> = ({
   children,
 }) => {
   return (
-    <>
+    <StickyProvider>
       <PartnerHeaderImage profile={partner.profile} />
 
       <Foreground>
@@ -46,7 +47,7 @@ export const PartnerApp: React.FC<PartnerAppProps> = ({
           </HorizontalPadding>
         </AppContainer>
       </Foreground>
-    </>
+    </StickyProvider>
   )
 }
 
