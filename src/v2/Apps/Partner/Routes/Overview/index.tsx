@@ -4,6 +4,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { ArticlesRailFragmentContainer } from "../../Components/Overview/ArticlesRail"
 import { Overview_partner } from "v2/__generated__/Overview_partner.graphql"
 import { ArtistsRailFragmentContainer } from "../../Components/Overview/ArtistsRail"
+import { ShowsRailFragmentContainer } from "../../Components/Overview/ShowsRail"
 
 interface OverviewProps {
   partner: Overview_partner
@@ -19,6 +20,7 @@ const Overview: React.FC<OverviewProps> = ({ partner }) => {
 
   return (
     <Box>
+      <ShowsRailFragmentContainer mt={4} mb={[4, 80]} partner={partner} />
       {displayArtistsSection && (
         <ArtistsRailFragmentContainer partner={partner} />
       )}
@@ -37,6 +39,7 @@ export const OverviewFragmentContainer = createFragmentContainer(Overview, {
     fragment Overview_partner on Partner {
       slug
       displayArtistsSection
+      ...ShowsRail_partner
       ...ArtistsRail_partner
       articlesConnection(first: 10)
         @connection(key: "ArticlesQuery_articlesConnection") {

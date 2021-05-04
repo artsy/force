@@ -5,9 +5,7 @@ import { Carousel } from "v2/Components/Carousel"
 import { ArticleCardFragmentContainer as ArticleCard } from "v2/Apps/Partner/Components/PartnerArticles/ArticleCard"
 import { ArticlesRail_articles } from "v2/__generated__/ArticlesRail_articles.graphql"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
-import { Media } from "v2/Utils/Responsive"
-import { MOBILE_NAV_HEIGHT, NAV_BAR_HEIGHT } from "v2/Components/NavBar"
-import { ViewAllButton } from "./ViewAllButton"
+import { ScrollToPartnerHeader } from "../ScrollToPartnerHeader"
 
 interface ArticlesRailProps {
   articles: ArticlesRail_articles
@@ -23,12 +21,9 @@ const ArticlesRail: React.FC<ArticlesRailProps> = ({
       <Flex justifyContent="space-between" alignItems="center">
         <Text variant="title">Articles</Text>
         <RouterLink to={`/partner2/${partnerSlug}/articles`}>
-          <Media greaterThan="xs">
-            <ViewAllButton offset={NAV_BAR_HEIGHT} />
-          </Media>
-          <Media at="xs">
-            <ViewAllButton offset={MOBILE_NAV_HEIGHT} />
-          </Media>
+          <ScrollToPartnerHeader>
+            <Text>View all</Text>
+          </ScrollToPartnerHeader>
         </RouterLink>
       </Flex>
 
