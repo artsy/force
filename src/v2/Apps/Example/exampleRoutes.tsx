@@ -1,22 +1,29 @@
 import loadable from "@loadable/component"
 import { graphql } from "react-relay"
-import { WelcomeApp } from "./Routes/Welcome/WelcomeApp"
+import { WelcomeRoute } from "./Routes/Welcome/WelcomeRoute"
 
-const ExampleApp = loadable(() => import("./Routes/Example/ExampleApp"), {
+const ExampleApp = loadable(() => import("./ExampleApp"), {
   resolveComponent: component => component.ExampleAppFragmentContainer,
 })
-
-const ArtistApp = loadable(
-  () => import("./Routes/ExampleArtist/ExampleArtistApp"),
+const ArtistRoute = loadable(
+  () => import("./Routes/Artist/ExampleArtistRoute"),
   {
-    resolveComponent: component => component.ExampleArtistAppFragmentContainer,
+    resolveComponent: component =>
+      component.ExampleArtistRouteFragmentContainer,
   }
 )
-
-const ArtworkApp = loadable(
-  () => import("./Routes/ExampleArtwork/ExampleArtworkApp"),
+const ArtworkRoute = loadable(
+  () => import("./Routes/Artwork/ExampleArtworkRoute"),
   {
-    resolveComponent: component => component.ExampleArtworkAppFragmentContainer,
+    resolveComponent: component =>
+      component.ExampleArtworkRouteFragmentContainer,
+  }
+)
+const ArtworkFilterRoute = loadable(
+  () => import("./Routes/ArtworkFilter/ExampleArtworkFilterRoute"),
+  {
+    resolveComponent: component =>
+      component.ExampleArtworkFilterFragmentContainer,
   }
 )
 
@@ -37,34 +44,51 @@ export const exampleRoutes = [
     children: [
       {
         path: "",
-        Component: WelcomeApp,
+        Component: WelcomeRoute,
       },
       {
         path: "artist/:slug",
-        getComponent: () => ArtistApp,
+        getComponent: () => ArtistRoute,
         prepare: () => {
-          ArtistApp.preload()
+          ArtistRoute.preload()
         },
         query: graphql`
           query exampleRoutes_ArtistQuery($slug: String!) {
             artist(id: $slug) @principalField {
               id
-              ...ExampleArtistApp_artist
+              ...ExampleArtistRoute_artist
             }
           }
         `,
       },
       {
         path: "artwork/:slug",
-        getComponent: () => ArtworkApp,
+        getComponent: () => ArtworkRoute,
         prepare: () => {
-          ArtworkApp.preload()
+          ArtworkRoute.preload()
         },
         query: graphql`
           query exampleRoutes_ArtworkQuery($slug: String!) {
             artwork(id: $slug) {
               id
-              ...ExampleArtworkApp_artwork
+              ...ExampleArtworkRoute_artwork
+            }
+          }
+        `,
+      },
+      {
+        path: "artwork-filter/:slug",
+        getComponent: () => ArtworkFilterRoute,
+        prepare: () => {
+          ArtworkRoute.preload()
+        },
+        query: graphql`
+          query exampleRoutes_TagQuery(
+            $slug: String!
+            $input: FilterArtworksInput
+          ) {
+            tag(id: $slug) @principalField {
+              ...ExampleArtworkFilterRoute_tag @arguments(input: $input)
             }
           }
         `,

@@ -3,18 +3,18 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type ExampleArtistApp_artist = {
+export type ExampleArtistRoute_artist = {
     readonly name: string | null;
     readonly bio: string | null;
     readonly internalID: string;
     readonly slug: string;
     readonly " $fragmentRefs": FragmentRefs<"FollowArtistButton_artist">;
-    readonly " $refType": "ExampleArtistApp_artist";
+    readonly " $refType": "ExampleArtistRoute_artist";
 };
-export type ExampleArtistApp_artist$data = ExampleArtistApp_artist;
-export type ExampleArtistApp_artist$key = {
-    readonly " $data"?: ExampleArtistApp_artist$data;
-    readonly " $fragmentRefs": FragmentRefs<"ExampleArtistApp_artist">;
+export type ExampleArtistRoute_artist$data = ExampleArtistRoute_artist;
+export type ExampleArtistRoute_artist$key = {
+    readonly " $data"?: ExampleArtistRoute_artist$data;
+    readonly " $fragmentRefs": FragmentRefs<"ExampleArtistRoute_artist">;
 };
 
 
@@ -23,7 +23,7 @@ const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "ExampleArtistApp_artist",
+  "name": "ExampleArtistRoute_artist",
   "selections": [
     {
       "alias": null,
@@ -61,5 +61,5 @@ const node: ReaderFragment = {
   ],
   "type": "Artist"
 };
-(node as any).hash = 'b2e9621542c69db4667173720552247b';
+(node as any).hash = 'feb5bf31bb5822979e66bc3ba8770815';
 export default node;

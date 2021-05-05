@@ -3,7 +3,7 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type ExampleArtworkApp_artwork = {
+export type ExampleArtworkRoute_artwork = {
     readonly title: string | null;
     readonly artistNames: string | null;
     readonly medium: string | null;
@@ -22,12 +22,12 @@ export type ExampleArtworkApp_artwork = {
             } | null;
         } | null;
     } | null;
-    readonly " $refType": "ExampleArtworkApp_artwork";
+    readonly " $refType": "ExampleArtworkRoute_artwork";
 };
-export type ExampleArtworkApp_artwork$data = ExampleArtworkApp_artwork;
-export type ExampleArtworkApp_artwork$key = {
-    readonly " $data"?: ExampleArtworkApp_artwork$data;
-    readonly " $fragmentRefs": FragmentRefs<"ExampleArtworkApp_artwork">;
+export type ExampleArtworkRoute_artwork$data = ExampleArtworkRoute_artwork;
+export type ExampleArtworkRoute_artwork$key = {
+    readonly " $data"?: ExampleArtworkRoute_artwork$data;
+    readonly " $fragmentRefs": FragmentRefs<"ExampleArtworkRoute_artwork">;
 };
 
 
@@ -49,7 +49,7 @@ const node: ReaderFragment = {
       }
     ]
   },
-  "name": "ExampleArtworkApp_artwork",
+  "name": "ExampleArtworkRoute_artwork",
   "selections": [
     {
       "alias": null,
@@ -208,5 +208,5 @@ const node: ReaderFragment = {
   ],
   "type": "Artwork"
 };
-(node as any).hash = 'edd82d5be9058e72fd7c488bca73832b';
+(node as any).hash = 'f1b4e3070df07103039646cd7f21bb77';
 export default node;

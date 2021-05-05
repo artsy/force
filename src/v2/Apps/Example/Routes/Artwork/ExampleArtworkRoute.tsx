@@ -2,20 +2,22 @@ import { Box, Flex, Image, Text, Title } from "@artsy/palette"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { AnalyticsContext, useAnalyticsContext } from "v2/Artsy"
-import { ExampleArtworkApp_artwork } from "v2/__generated__/ExampleArtworkApp_artwork.graphql"
+import { ExampleArtworkRoute_artwork } from "v2/__generated__/ExampleArtworkRoute_artwork.graphql"
 import { ArtistCardFragmentContainer as ArtistCard } from "v2/Components/ArtistCard"
 import { ContextModule } from "@artsy/cohesion"
 
-export interface ExampleArtworkAppProps {
-  artwork: ExampleArtworkApp_artwork
+export interface ExampleArtworkRouteProps {
+  artwork: ExampleArtworkRoute_artwork
 }
 
-const ExampleArtworkApp: React.FC<ExampleArtworkAppProps> = ({ artwork }) => {
+const ExampleArtworkRoute: React.FC<ExampleArtworkRouteProps> = ({
+  artwork,
+}) => {
   return (
     <Box>
       <Title>{artwork.title} | Artsy</Title>
       <Box mb={4}>
-        <Text variant="title" mb={2}>
+        <Text variant="lg" mb={2}>
           {artwork.title}
         </Text>
         <Image src={artwork.imageUrl} alt={artwork.title} />
@@ -24,7 +26,7 @@ const ExampleArtworkApp: React.FC<ExampleArtworkAppProps> = ({ artwork }) => {
         <Text>{artwork.medium}</Text>
       </Box>
       <Box>
-        <Text variant="title">Related Artists</Text>
+        <Text variant="md">Related Artists</Text>
         <Flex my={2}>
           {artwork.artist.related.artistsConnection.edges.map(({ node }) => (
             <Box width={["100%", "25%"]} pr={[0, "20px"]}>
@@ -45,7 +47,7 @@ const ExampleArtworkApp: React.FC<ExampleArtworkAppProps> = ({ artwork }) => {
  * Routes with /:id require an additional AnalyticsContext.Provider
  * declaration to add slug and id, extending the context provided by <Boot>
  */
-const TrackingWrappedExampleArtworkApp: React.FC<ExampleArtworkAppProps> = props => {
+const TrackingWrappedExampleArtworkRoute: React.FC<ExampleArtworkRouteProps> = props => {
   const {
     artwork: { internalID, slug },
   } = props
@@ -60,16 +62,16 @@ const TrackingWrappedExampleArtworkApp: React.FC<ExampleArtworkAppProps> = props
         contextPageOwnerType,
       }}
     >
-      <ExampleArtworkApp {...props} />
+      <ExampleArtworkRoute {...props} />
     </AnalyticsContext.Provider>
   )
 }
 
-export const ExampleArtworkAppFragmentContainer = createFragmentContainer(
-  TrackingWrappedExampleArtworkApp,
+export const ExampleArtworkRouteFragmentContainer = createFragmentContainer(
+  TrackingWrappedExampleArtworkRoute,
   {
     artwork: graphql`
-      fragment ExampleArtworkApp_artwork on Artwork {
+      fragment ExampleArtworkRoute_artwork on Artwork {
         title
         artistNames
         medium
