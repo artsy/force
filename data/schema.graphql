@@ -8294,6 +8294,7 @@ type Partner implements Node {
     before: String
     first: Int
     last: Int
+    page: Int
     sort: ArticleSorts
   ): ArticleConnection
 
@@ -8452,6 +8453,7 @@ type Partner implements Node {
     # If True returns only displayable items
     isDisplayable: Boolean
     last: Int
+    page: Int
     sort: ShowSorts
 
     # Filter shows by chronological event status
