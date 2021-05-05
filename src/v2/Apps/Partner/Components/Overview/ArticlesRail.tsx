@@ -4,8 +4,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { Carousel } from "v2/Components/Carousel"
 import { ArticleCardFragmentContainer as ArticleCard } from "v2/Apps/Partner/Components/PartnerArticles/ArticleCard"
 import { ArticlesRail_articles } from "v2/__generated__/ArticlesRail_articles.graphql"
-import { RouterLink } from "v2/Artsy/Router/RouterLink"
-import { ScrollToPartnerHeader } from "../ScrollToPartnerHeader"
+import { ViewAllButton } from "./ViewAllButton"
 
 interface ArticlesRailProps {
   articles: ArticlesRail_articles
@@ -20,11 +19,8 @@ const ArticlesRail: React.FC<ArticlesRailProps> = ({
     <>
       <Flex justifyContent="space-between" alignItems="center">
         <Text variant="title">Articles</Text>
-        <RouterLink to={`/partner2/${partnerSlug}/articles`}>
-          <ScrollToPartnerHeader>
-            <Text>View all</Text>
-          </ScrollToPartnerHeader>
-        </RouterLink>
+
+        <ViewAllButton to={`/partner2/${partnerSlug}/articles`} />
       </Flex>
 
       <Carousel arrowHeight={320} mt={4}>

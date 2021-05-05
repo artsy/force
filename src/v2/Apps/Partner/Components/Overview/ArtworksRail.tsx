@@ -10,6 +10,7 @@ import FillwidthItem from "v2/Components/Artwork/FillwidthItem"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import { ScrollToPartnerHeader } from "../ScrollToPartnerHeader"
 import { ArtworksRailPlaceholder } from "./ArtworkRailPlaceholder"
+import { ViewAllButton } from "./ViewAllButton"
 
 interface ArtworksRailProps extends BoxProps {
   partner: ArtworksRail_partner
@@ -36,11 +37,8 @@ const ArtworksRail: React.FC<ArtworksRailProps> = ({ partner, ...rest }) => {
     <Box {...rest}>
       <Flex mb={4} justifyContent="space-between" alignItems="center">
         <Text variant="title">Featured Artworks</Text>
-        <RouterLink to={`/partner2/${slug}/works`}>
-          <ScrollToPartnerHeader>
-            <Text>View all</Text>
-          </ScrollToPartnerHeader>
-        </RouterLink>
+
+        <ViewAllButton to={`/partner2/${slug}/works`} />
       </Flex>
 
       <Carousel onRailOverflowChange={setIsSeeAllAvaliable}>
