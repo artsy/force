@@ -2,12 +2,11 @@ import React from "react"
 import { Box, Flex, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtistsRail_partner } from "v2/__generated__/ArtistsRail_partner.graphql"
-import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import {
   PartnerArtistsCarouselRenderer,
   PartnerArtistsRenderer,
 } from "../PartnerArtists"
-import { ScrollToPartnerHeader } from "../ScrollToPartnerHeader"
+import { ViewAllButton } from "./ViewAllButton"
 
 interface ArtistsRailProps {
   partner: ArtistsRail_partner
@@ -22,11 +21,8 @@ const ArtistsRail: React.FC<ArtistsRailProps> = ({ partner }) => {
         <Text variant="title">
           {profileArtistsLayout === "Grid" ? "Featured Artists" : "Artists"}
         </Text>
-        <RouterLink to={`/partner2/${slug}/artists`}>
-          <ScrollToPartnerHeader>
-            <Text>View all</Text>
-          </ScrollToPartnerHeader>
-        </RouterLink>
+
+        <ViewAllButton to={`/partner2/${slug}/artists`} />
       </Flex>
 
       {profileArtistsLayout === "Grid" ? (

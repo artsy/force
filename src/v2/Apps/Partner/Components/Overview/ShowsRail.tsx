@@ -7,6 +7,7 @@ import { flatten } from "lodash"
 import { ShowCardFragmentContainer } from "../PartnerShows/ShowCard"
 import { Carousel } from "../Carousel"
 import { ScrollToPartnerHeader } from "../ScrollToPartnerHeader"
+import { ViewAllButton } from "./ViewAllButton"
 
 interface ShowsRailProps extends BoxProps {
   partner: ShowsRail_partner
@@ -31,11 +32,8 @@ const ShowsRail: React.FC<ShowsRailProps> = ({ partner, ...rest }) => {
     <Box {...rest}>
       <Flex mb={4} justifyContent="space-between" alignItems="center">
         <Text variant="title">All Events</Text>
-        <RouterLink to={`/partner2/${slug}/shows`}>
-          <ScrollToPartnerHeader>
-            <Text>View all</Text>
-          </ScrollToPartnerHeader>
-        </RouterLink>
+
+        <ViewAllButton to={`/partner2/${slug}/shows`} />
       </Flex>
 
       <Carousel

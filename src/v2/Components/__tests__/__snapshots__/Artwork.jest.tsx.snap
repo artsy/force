@@ -146,7 +146,10 @@ exports[`Artwork renders correctly 1`] = `
           color="black60"
           fontFamily="sans"
         >
-          Some Kind of Dinosaur, 2015
+          <i>
+            Some Kind of Dinosaur
+          </i>
+          , 2015
         </div>
       </div>
       <div
