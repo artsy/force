@@ -14,7 +14,7 @@ type BaseFilterContext<T> = () => {
 
 /**
  * Note: This implementation was cloned to:
- * src/v2/Components/v2/ArtworkFilter/ArtworkFilters/SizeFilter.tsx
+ * src/v2/Components/ArtworkFilter/ArtworkFilters/SizeFilter.tsx
  */
 export const SizeFilter: React.FC<{
   useFilterContext: BaseFilterContext<{ sizes: string[] }>
