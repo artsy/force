@@ -11,34 +11,27 @@ export const PartnerArtistsCarouselPlaceholder: React.FC<PartnerArtistsCarouselP
   count,
 }) => {
   return (
-    <Carousel>
-      {() =>
-        [...Array(count)].map((_, i) => {
-          return (
-            <Box width={[300, "100%"]} key={i}>
-              <ResponsiveImage>
-                <SkeletonBox height="100%" width="100%" />
-              </ResponsiveImage>
+    <Carousel itemsPerViewport={[2, 2, 3, 4]}>
+      {[...Array(count)].map((_, i) => {
+        return (
+          <Box width={[300, "100%"]} key={i}>
+            <ResponsiveImage>
+              <SkeletonBox height="100%" width="100%" />
+            </ResponsiveImage>
 
-              <Flex mt={1} justifyContent="space-between">
-                <Flex>
-                  <SkeletonBox
-                    mr={1}
-                    height={45}
-                    width={45}
-                    borderRadius="50%"
-                  />
-                  <Flex flexDirection="column">
-                    <SkeletonText>Artist Name</SkeletonText>
-                    <SkeletonText>Artist brief</SkeletonText>
-                  </Flex>
+            <Flex mt={1} justifyContent="space-between">
+              <Flex>
+                <SkeletonBox mr={1} height={45} width={45} borderRadius="50%" />
+                <Flex flexDirection="column">
+                  <SkeletonText>Artist Name</SkeletonText>
+                  <SkeletonText>Artist brief</SkeletonText>
                 </Flex>
-                <SkeletonBox height={30} width={60} />
               </Flex>
-            </Box>
-          )
-        })
-      }
+              <SkeletonBox height={30} width={60} />
+            </Flex>
+          </Box>
+        )
+      })}
     </Carousel>
   )
 }
