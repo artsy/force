@@ -52,19 +52,18 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
   the issue within 180 days from delivery arrival and we’ll help
   facilitate a refund for the sale.`
 
-  const moneyBackGuaranteeText = `If a work purchased through Artsy’s secure checkout does not arrive, arrives damaged, or is deemed not as described, we will work with you to find the best resolution—including a full refund where applicable.`
-
   const securePaymentText = `Purchases completed through our secure checkout are powered by
   Stripe, the leader in online payment processing that’s trusted by
   millions of global businesses.`
 
+  const moneyBackGuaranteeText = `If a work purchased through Artsy’s secure checkout does not arrive, arrives damaged, or is deemed not as described, we will work with you to find the best resolution—including a full refund where applicable.`
+
+  const supportArticleURL =
+    "https://support.artsy.net/hc/en-us/articles/360048946973"
+
   const learnMoreIcon = (
     <Flex pt={2} justifyContent="center">
-      <Link
-        href="https://support.artsy.net/hc/en-us/articles/360048946973"
-        mt="-2px"
-        underlineBehavior="none"
-      >
+      <Link href={supportArticleURL} mt="-2px" underlineBehavior="none">
         <Flex>
           <Text variant="mediumText">Learn More</Text>
           <ArrowRightIcon height="15px" width="15px" mt="2px" ml="2px" />
@@ -73,10 +72,8 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
     </Flex>
   )
 
-  const navigateTo = "https://support.artsy.net/hc/en-us/articles/360048946973"
-
   const learnMoreButton = (width: string) => (
-    <RouterLink to={navigateTo}>
+    <RouterLink to={supportArticleURL}>
       <Button width={width} variant="secondaryOutline">
         Learn More
       </Button>
@@ -176,7 +173,12 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
         </Flex>
 
         {/* Third Row */}
-        <Flex mt={[2, 3]} flexWrap={["wrap", "nowrap"]} alignItems="flex-end">
+        <Flex
+          mt={[2, 3]}
+          mb={[0, space(9)]}
+          flexWrap={["wrap", "nowrap"]}
+          alignItems="flex-end"
+        >
           <Flex
             flexDirection="column"
             mt={5}
@@ -252,7 +254,58 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
         </Flex>
       </Flex>
 
-      {/*  Authenticity Guarantee block */}
+      {/*  Artsy Guarantee Sections desktop */}
+      <Media greaterThanOrEqual="sm">
+        <CSSGrid gridTemplateColumns="repeat(2, 1fr)">
+          <Image
+            src={authenticityImage.image.resized.url}
+            alt={authenticityImage.artist.name}
+            lazyLoad
+            width="100%"
+            height={400}
+            aria-label={authenticityImage.imageTitle}
+          />
+          <Flex flexDirection="column" p={space(9)}>
+            <Text variant="title">Authenticity Guarantee</Text>
+            <Text variant="text" my={2}>
+              {authenticityText}
+            </Text>
+            {learnMoreButton("40%")}
+          </Flex>
+          <Flex flexDirection="column" p={space(9)}>
+            <Text variant="title">Money-Back Guarantee</Text>
+            <Text variant="text" my={2}>
+              {moneyBackGuaranteeText}
+            </Text>
+            {learnMoreButton("40%")}
+          </Flex>
+          <Image
+            src={moneyBackGuaranteeImage.image.resized.url}
+            alt={moneyBackGuaranteeImage.artist.name}
+            lazyLoad
+            aria-label={moneyBackGuaranteeImage.imageTitle}
+            width="100%"
+            height={400}
+          />
+          <Image
+            src={securePaymentImage.image.resized.url}
+            alt={securePaymentImage.artist.name}
+            aria-label={securePaymentImage.imageTitle}
+            lazyLoad
+            width="100%"
+            height={400}
+          />
+          <Flex flexDirection="column" px={space(9)} pt={space(9)}>
+            <Text variant="title">Secure Payment</Text>
+            <Text variant="text" my={2}>
+              {securePaymentText}
+            </Text>
+            <PoweredByStripeIcon h="40%" w="40%" />
+          </Flex>
+        </CSSGrid>
+      </Media>
+
+      {/*  Artsy Guarantee Sections mobile */}
       <Media lessThan="sm">
         <Flex flexDirection="column" mt={5} mx={2} mb={4}>
           <Image
@@ -269,29 +322,6 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
           </Text>
           {learnMoreButton("50%")}
         </Flex>
-      </Media>
-      <Media greaterThanOrEqual="sm">
-        <Flex justifyContent="space-evenly" mt={space(9)}>
-          <Image
-            src={authenticityImage.image.resized.url}
-            alt={authenticityImage.artist.name}
-            lazyLoad
-            width={2250}
-            height={400}
-            aria-label={authenticityImage.imageTitle}
-          />
-          <Flex flexDirection="column" p={space(9)}>
-            <Text variant="title">Authenticity Guarantee</Text>
-            <Text variant="text" my={2}>
-              {authenticityText}
-            </Text>
-            {learnMoreButton("40%")}
-          </Flex>
-        </Flex>
-      </Media>
-
-      {/*  Money-Back Guarantee block */}
-      <Media lessThan="sm">
         <Flex flexDirection="column" mt={5} mx={2} mb={4}>
           <Image
             src={moneyBackGuaranteeImage.image.resized.url}
@@ -307,29 +337,6 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
           </Text>
           {learnMoreButton("50%")}
         </Flex>
-      </Media>
-      <Media greaterThanOrEqual="sm">
-        <Flex justifyContent="space-evenly">
-          <Flex flexDirection="column" p={space(9)}>
-            <Text variant="title">Money-Back Guarantee</Text>
-            <Text variant="text" my={2}>
-              {moneyBackGuaranteeText}
-            </Text>
-            {learnMoreButton("40%")}
-          </Flex>
-          <Image
-            src={moneyBackGuaranteeImage.image.resized.url}
-            alt={moneyBackGuaranteeImage.artist.name}
-            lazyLoad
-            width={2000}
-            height={400}
-            aria-label={moneyBackGuaranteeImage.imageTitle}
-          />
-        </Flex>
-      </Media>
-
-      {/*  Secure Payment block */}
-      <Media lessThan="sm">
         <Flex flexDirection="column" mt={5} mx={2} mb={4}>
           <Image
             src={securePaymentImage.image.resized.url}
@@ -344,25 +351,6 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
             {securePaymentText}
           </Text>
           <PoweredByStripeIcon h="40%" w="40%" />
-        </Flex>
-      </Media>
-      <Media greaterThanOrEqual="sm">
-        <Flex justifyContent="space-evenly">
-          <Image
-            src={securePaymentImage.image.resized.url}
-            alt={securePaymentImage.artist.name}
-            aria-label={securePaymentImage.imageTitle}
-            lazyLoad
-            width={1300}
-            height={400}
-          />
-          <Flex flexDirection="column" p={space(9)}>
-            <Text variant="title">Secure Payment</Text>
-            <Text variant="text" my={2}>
-              {securePaymentText}
-            </Text>
-            <PoweredByStripeIcon h="40%" w="40%" />
-          </Flex>
         </Flex>
       </Media>
 
