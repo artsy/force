@@ -4,7 +4,6 @@ import { RedirectException, RouteConfig } from "found"
 import { graphql } from "react-relay"
 import { initialArtworkFilterState } from "v2/Components/v2/ArtworkFilter/ArtworkFilterContext"
 import { paramsToCamelCase } from "v2/Components/v2/ArtworkFilter/Utils/urlBuilder"
-import { getENV } from "v2/Utils/getENV"
 import { allowedFilters } from "v2/Components/v2/ArtworkFilter/Utils/allowedFilters"
 
 const PartnerApp = loadable(() => import("./PartnerApp"), {

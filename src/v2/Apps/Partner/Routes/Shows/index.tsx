@@ -56,7 +56,7 @@ export const Shows: React.FC<PartnerShowsProps> = ({
         first={24}
         scrollTo="#jumpto--pastShowsGrid"
         offset={200}
-        page={query?.page}
+        page={+query?.page}
       />
     </>
   )

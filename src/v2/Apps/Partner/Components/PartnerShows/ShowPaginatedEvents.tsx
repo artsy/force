@@ -11,7 +11,7 @@ import { LoadingArea } from "v2/Components/LoadingArea"
 import { ShowEventsFragmentContainer } from "v2/Apps/Partner/Components/PartnerShows/ShowEvents"
 import { useSystemContext } from "v2/Artsy"
 import { useRouter } from "v2/Artsy/Router/useRouter"
-import { ShowPaginatedEventsQuery } from "v2/__generated__/ShowPaginatedEventsQuery.graphql"
+import { ShowPaginatedEventsRendererQuery } from "v2/__generated__/ShowPaginatedEventsRendererQuery.graphql"
 import { ShowPaginatedEvents_partner } from "v2/__generated__/ShowPaginatedEvents_partner.graphql"
 import { EventStatus } from "v2/__generated__/ShowPaginatedEventsRendererQuery.graphql"
 
@@ -165,7 +165,7 @@ interface ShowPaginatedEventsRendererProps {
   eventTitle: string
   scrollTo: string
   offset: number
-  page: number | undefined
+  page?: number
 }
 
 export const ShowPaginatedEventsRenderer: React.FC<ShowPaginatedEventsRendererProps> = ({
@@ -178,7 +178,7 @@ export const ShowPaginatedEventsRenderer: React.FC<ShowPaginatedEventsRendererPr
   const { relayEnvironment } = useSystemContext()
 
   return (
-    <QueryRenderer<ShowPaginatedEventsQuery>
+    <QueryRenderer<ShowPaginatedEventsRendererQuery>
       environment={relayEnvironment}
       query={graphql`
         query ShowPaginatedEventsRendererQuery(
