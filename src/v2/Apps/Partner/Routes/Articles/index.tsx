@@ -92,6 +92,7 @@ export const ArticlesPaginationContainer = createRefetchContainer(
           last: { type: "Int" }
           after: { type: "String" }
           before: { type: "String" }
+          page: { type: "Int" }
         ) {
         slug
         articlesConnection(
@@ -99,6 +100,7 @@ export const ArticlesPaginationContainer = createRefetchContainer(
           last: $last
           after: $after
           before: $before
+          page: $page
         ) {
           pageInfo {
             hasNextPage

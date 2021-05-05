@@ -107,6 +107,7 @@ export const ShowEventsRefetchContainer = createRefetchContainer(
         @argumentDefinitions(
           first: { type: "Int", defaultValue: 24 }
           last: { type: "Int" }
+          page: { type: "Int" }
           after: { type: "String" }
           before: { type: "String" }
           status: { type: "EventStatus", defaultValue: CLOSED }
@@ -118,6 +119,7 @@ export const ShowEventsRefetchContainer = createRefetchContainer(
           after: $after
           before: $before
           status: $status
+          page: $page
         ) {
           pageInfo {
             hasNextPage
@@ -163,12 +165,14 @@ interface ShowPaginatedEventsRendererProps {
   eventTitle: string
   scrollTo: string
   offset: number
+  page: number | undefined
 }
 
 export const ShowPaginatedEventsRenderer: React.FC<ShowPaginatedEventsRendererProps> = ({
   partnerId,
   first,
   status,
+  page,
   ...rest
 }) => {
   const { relayEnvironment } = useSystemContext()
@@ -180,15 +184,16 @@ export const ShowPaginatedEventsRenderer: React.FC<ShowPaginatedEventsRendererPr
         query ShowPaginatedEventsRendererQuery(
           $partnerId: String!
           $first: Int
+          $page: Int
           $status: EventStatus
         ) {
           partner(id: $partnerId) @principalField {
             ...ShowPaginatedEvents_partner
-              @arguments(first: $first, status: $status)
+              @arguments(first: $first, status: $status, page: $page)
           }
         }
       `}
-      variables={{ partnerId, first, status }}
+      variables={{ partnerId, first, status, page }}
       render={({ error, props }) => {
         if (error || !props) return null
 

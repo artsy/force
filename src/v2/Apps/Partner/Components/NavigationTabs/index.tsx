@@ -113,7 +113,7 @@ export const NavigationTabsFragmentContainer = createFragmentContainer(
         locations: locationsConnection(first: 20) {
           totalCount
         }
-        articles: articlesConnection(first: 20) {
+        articles: articlesConnection {
           totalCount
         }
         artists: artistsConnection(first: 20) {

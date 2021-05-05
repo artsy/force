@@ -2,6 +2,10 @@ import React from "react"
 import loadable from "@loadable/component"
 import { RedirectException, RouteConfig } from "found"
 import { graphql } from "react-relay"
+import { initialArtworkFilterState } from "v2/Components/v2/ArtworkFilter/ArtworkFilterContext"
+import { paramsToCamelCase } from "v2/Components/v2/ArtworkFilter/Utils/urlBuilder"
+import { getENV } from "v2/Utils/getENV"
+import { allowedFilters } from "v2/Components/v2/ArtworkFilter/Utils/allowedFilters"
 
 const PartnerApp = loadable(() => import("./PartnerApp"), {
   resolveComponent: component => component.PartnerAppFragmentContainer,
@@ -68,13 +72,19 @@ export const partnerRoutes: RouteConfig[] = [
           ArticlesRoute.preload()
         },
         ignoreScrollBehavior: true,
+        prepareVariables: (params, { location }) => {
+          return {
+            ...params,
+            page: location.query.page,
+          }
+        },
         query: graphql`
-          query partnerRoutes_ArticlesQuery($partnerId: String!) {
+          query partnerRoutes_ArticlesQuery($partnerId: String!, $page: Int) {
             partner(id: $partnerId) @principalField {
               articles: articlesConnection(first: 0) {
                 totalCount
               }
-              ...Articles_partner
+              ...Articles_partner @arguments(page: $page)
             }
           }
         `,
@@ -123,6 +133,21 @@ export const partnerRoutes: RouteConfig[] = [
         path: "works",
         prepare: () => {
           WorksRoute.preload()
+        },
+        prepareVariables: (data, props) => {
+          const filterStateFromUrl = props.location ? props.location.query : {}
+
+          const filterParams = {
+            ...initialArtworkFilterState,
+            ...paramsToCamelCase(filterStateFromUrl),
+          }
+
+          return {
+            input: {
+              ...allowedFilters(filterParams),
+            },
+            partnerId: data.partnerId,
+          }
         },
         ignoreScrollBehavior: true,
         query: graphql`
