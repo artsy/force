@@ -23,6 +23,7 @@ import { RouteConfig } from "found"
 import { searchRoutes } from "v2/Apps/Search/searchRoutes"
 import { showRoutes } from "v2/Apps/Show/showRoutes"
 import { viewingRoomRoutes } from "v2/Apps/ViewingRoom/viewingRoomRoutes"
+import { tagRoutes } from "./Apps/Tag/tagRoutes"
 
 /**
  * **WARNING***
@@ -95,6 +96,9 @@ export function getAppRoutes(): RouteConfig[] {
     },
     {
       routes: showRoutes,
+    },
+    {
+      routes: tagRoutes,
     },
     {
       routes: viewingRoomRoutes,
