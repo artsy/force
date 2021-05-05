@@ -11,7 +11,7 @@ import { LoadingArea } from "v2/Components/LoadingArea"
 import { ShowEventsFragmentContainer } from "v2/Apps/Partner/Components/PartnerShows/ShowEvents"
 import { useSystemContext } from "v2/Artsy"
 import { useRouter } from "v2/Artsy/Router/useRouter"
-import { ShowPaginatedEventsQuery } from "v2/__generated__/ShowPaginatedEventsQuery.graphql"
+import { ShowPaginatedEventsRendererQuery } from "v2/__generated__/ShowPaginatedEventsRendererQuery.graphql"
 import { ShowPaginatedEvents_partner } from "v2/__generated__/ShowPaginatedEvents_partner.graphql"
 import { EventStatus } from "v2/__generated__/ShowPaginatedEventsRendererQuery.graphql"
 
@@ -107,6 +107,7 @@ export const ShowEventsRefetchContainer = createRefetchContainer(
         @argumentDefinitions(
           first: { type: "Int", defaultValue: 24 }
           last: { type: "Int" }
+          page: { type: "Int" }
           after: { type: "String" }
           before: { type: "String" }
           status: { type: "EventStatus", defaultValue: CLOSED }
@@ -118,6 +119,7 @@ export const ShowEventsRefetchContainer = createRefetchContainer(
           after: $after
           before: $before
           status: $status
+          page: $page
         ) {
           pageInfo {
             hasNextPage
@@ -163,32 +165,35 @@ interface ShowPaginatedEventsRendererProps {
   eventTitle: string
   scrollTo: string
   offset: number
+  page?: number
 }
 
 export const ShowPaginatedEventsRenderer: React.FC<ShowPaginatedEventsRendererProps> = ({
   partnerId,
   first,
   status,
+  page,
   ...rest
 }) => {
   const { relayEnvironment } = useSystemContext()
 
   return (
-    <QueryRenderer<ShowPaginatedEventsQuery>
+    <QueryRenderer<ShowPaginatedEventsRendererQuery>
       environment={relayEnvironment}
       query={graphql`
         query ShowPaginatedEventsRendererQuery(
           $partnerId: String!
           $first: Int
+          $page: Int
           $status: EventStatus
         ) {
           partner(id: $partnerId) @principalField {
             ...ShowPaginatedEvents_partner
-              @arguments(first: $first, status: $status)
+              @arguments(first: $first, status: $status, page: $page)
           }
         }
       `}
-      variables={{ partnerId, first, status }}
+      variables={{ partnerId, first, status, page }}
       render={({ error, props }) => {
         if (error || !props) return null
 

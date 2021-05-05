@@ -4,19 +4,20 @@ import { graphql } from "relay-runtime"
 import { Articles_partner } from "v2/__generated__/Articles_partner.graphql"
 import { ArtworkFilterContextProvider } from "v2/Components/v2/ArtworkFilter/ArtworkFilterContext"
 import { BaseArtworkFilter } from "v2/Components/v2/ArtworkFilter"
-import { useRouter } from "v2/Artsy/Router/useRouter"
+import { updateUrl } from "v2/Components/v2/ArtworkFilter/Utils/urlBuilder"
+import { Match, RouterState, withRouter } from "found"
 
 interface PartnerArtworkFilterProps {
   partner: Articles_partner
   relay: RelayRefetchProp
+  match?: Match
 }
 
 export const Artworks: React.FC<PartnerArtworkFilterProps> = ({
   partner,
   relay,
+  match,
 }) => {
-  const { match } = useRouter()
-
   return (
     <ArtworkFilterContextProvider
       filters={match && match.location.query}
@@ -29,6 +30,7 @@ export const Artworks: React.FC<PartnerArtworkFilterProps> = ({
         { text: "Artwork year (desc.)", value: "-year" },
         { text: "Artwork year (asc.)", value: "year" },
       ]}
+      onChange={updateUrl}
     >
       <BaseArtworkFilter relay={relay} offset={200} viewer={partner as any} />
     </ArtworkFilterContextProvider>
@@ -36,7 +38,7 @@ export const Artworks: React.FC<PartnerArtworkFilterProps> = ({
 }
 
 export const ArtworksRefetchContainer = createRefetchContainer(
-  Artworks,
+  withRouter<PartnerArtworkFilterProps & RouterState>(Artworks),
   {
     partner: graphql`
       fragment Works_partner on Partner
@@ -45,6 +47,7 @@ export const ArtworksRefetchContainer = createRefetchContainer(
         internalID
         filtered_artworks: filterArtworksConnection(first: 30, input: $input) {
           id
+
           ...ArtworkFilterArtworkGrid_filtered_artworks
         }
       }

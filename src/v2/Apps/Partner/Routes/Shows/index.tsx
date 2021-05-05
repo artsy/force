@@ -6,6 +6,7 @@ import { ShowEventsFragmentContainer } from "../../Components/PartnerShows/ShowE
 import { ShowPaginatedEventsRenderer } from "../../Components/PartnerShows/ShowPaginatedEvents"
 
 import { ShowBannerFragmentContainer } from "../../Components/PartnerShows"
+import { useRouter } from "v2/Artsy/Router/useRouter"
 
 interface PartnerShowsProps {
   partner: Shows_partner
@@ -19,6 +20,13 @@ export const Shows: React.FC<PartnerShowsProps> = ({
     upcomingEvents,
     featured: { edges: featuredShows },
   } = partner
+
+  const {
+    match: {
+      location: { query },
+    },
+  } = useRouter()
+
   const isCurrentEventsExist = !!currentEvents.edges.length
   const isUpcomingEventsExist = !!upcomingEvents.edges.length
 
@@ -48,6 +56,7 @@ export const Shows: React.FC<PartnerShowsProps> = ({
         first={24}
         scrollTo="#jumpto--pastShowsGrid"
         offset={200}
+        page={+query?.page}
       />
     </>
   )
