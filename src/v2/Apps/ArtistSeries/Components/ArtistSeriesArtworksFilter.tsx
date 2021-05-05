@@ -1,10 +1,10 @@
 import { ArtistSeriesArtworksFilter_artistSeries } from "v2/__generated__/ArtistSeriesArtworksFilter_artistSeries.graphql"
-import { BaseArtworkFilter } from "v2/Components/v2/ArtworkFilter"
+import { BaseArtworkFilter } from "v2/Components/ArtworkFilter"
 import {
   ArtworkFilterContextProvider,
   SharedArtworkFilterContextProps,
-} from "v2/Components/v2/ArtworkFilter/ArtworkFilterContext"
-import { updateUrl } from "v2/Components/v2/ArtworkFilter/Utils/urlBuilder"
+} from "v2/Components/ArtworkFilter/ArtworkFilterContext"
+import { updateUrl } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
 import { Match, RouterState, withRouter } from "found"
 import React from "react"
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"

@@ -4,7 +4,7 @@ import {
   ArtworkFilterContextProps,
   ArtworkFilterContextProvider,
   useArtworkFilterContext,
-} from "v2/Components/v2/ArtworkFilter/ArtworkFilterContext"
+} from "v2/Components/ArtworkFilter/ArtworkFilterContext"
 import { SizeFilter } from "../Components/AuctionFilters/SizeFilter"
 
 describe("SizeFilter", () => {

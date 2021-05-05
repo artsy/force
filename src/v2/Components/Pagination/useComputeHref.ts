@@ -1,5 +1,5 @@
-import { buildUrl } from "v2/Components/v2/ArtworkFilter/Utils/urlBuilder"
-import { useArtworkFilterContext } from "v2/Components/v2/ArtworkFilter/ArtworkFilterContext"
+import { buildUrl } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
+import { useArtworkFilterContext } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
 import { useRouter } from "v2/Artsy/Router/useRouter"
 import { stringify } from "qs"
 

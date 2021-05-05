@@ -23,12 +23,12 @@ import {
   useAnalyticsContext,
 } from "v2/Artsy/Analytics/AnalyticsContext"
 
-import { BaseArtworkFilter } from "v2/Components/v2/ArtworkFilter"
+import { BaseArtworkFilter } from "v2/Components/ArtworkFilter"
 import {
   ArtworkFilterContextProvider,
   SharedArtworkFilterContextProps,
-} from "v2/Components/v2/ArtworkFilter/ArtworkFilterContext"
-import { updateUrl } from "v2/Components/v2/ArtworkFilter/Utils/urlBuilder"
+} from "v2/Components/ArtworkFilter/ArtworkFilterContext"
+import { updateUrl } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
 import { TrackingProp } from "react-tracking"
 import { ErrorPage } from "v2/Components/ErrorPage"
 import { usePathnameComplete } from "v2/Utils/Hooks/usePathnameComplete"

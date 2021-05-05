@@ -16,7 +16,7 @@ import {
   AnalyticsContext,
   useAnalyticsContext,
 } from "v2/Artsy/Analytics/AnalyticsContext"
-import { SharedArtworkFilterContextProps } from "v2/Components/v2/ArtworkFilter/ArtworkFilterContext"
+import { SharedArtworkFilterContextProps } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
 
 interface ArtistSeriesAppProps {
   artistSeries: ArtistSeriesApp_artistSeries

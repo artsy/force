@@ -5,13 +5,13 @@ import { graphql } from "react-relay"
 
 import { hasSections as showMarketInsights } from "v2/Apps/Artist/Components/MarketInsights/MarketInsights"
 
-import { paramsToCamelCase } from "v2/Components/v2/ArtworkFilter/Utils/urlBuilder"
+import { paramsToCamelCase } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
 import { getENV } from "v2/Utils/getENV"
 
 import { hasOverviewContent } from "./Components/NavigationTabs"
 
-import { initialArtworkFilterState } from "v2/Components/v2/ArtworkFilter/ArtworkFilterContext"
-import { allowedFilters } from "v2/Components/v2/ArtworkFilter/Utils/allowedFilters"
+import { initialArtworkFilterState } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
+import { allowedFilters } from "v2/Components/ArtworkFilter/Utils/allowedFilters"
 
 graphql`
   fragment artistRoutes_Artist on Artist {

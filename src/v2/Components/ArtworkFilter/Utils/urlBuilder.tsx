@@ -1,5 +1,5 @@
-import { ArtworkFilters } from "v2/Components/v2/ArtworkFilter/ArtworkFilterContext"
-import { isDefaultFilter } from "v2/Components/v2/ArtworkFilter/Utils/isDefaultFilter"
+import { ArtworkFilters } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
+import { isDefaultFilter } from "v2/Components/ArtworkFilter/Utils/isDefaultFilter"
 import { camelCase, snakeCase } from "lodash"
 import qs from "qs"
 

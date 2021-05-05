@@ -2,8 +2,8 @@ import { RouterState, withRouter } from "found"
 import React from "react"
 import { ArtworkFilter_viewer } from "v2/__generated__/ArtworkFilter_viewer.graphql"
 import { ZeroState } from "v2/Apps/Search/Components/ZeroState"
-import { ArtworkFilter } from "v2/Components/v2/ArtworkFilter"
-import { updateUrl } from "v2/Components/v2/ArtworkFilter/Utils/urlBuilder"
+import { ArtworkFilter } from "v2/Components/ArtworkFilter"
+import { updateUrl } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
 
 interface SearchResultsRouteProps extends RouterState {
   viewer: ArtworkFilter_viewer

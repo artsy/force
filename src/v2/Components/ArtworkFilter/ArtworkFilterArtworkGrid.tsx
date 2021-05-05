@@ -5,7 +5,7 @@ import { ArtworkFilterArtworkGrid_filtered_artworks } from "v2/__generated__/Art
 import { useSystemContext, useTracking } from "v2/Artsy"
 import ArtworkGrid from "v2/Components/ArtworkGrid"
 import { PaginationFragmentContainer as Pagination } from "v2/Components/Pagination"
-import { LoadingArea } from "../../LoadingArea"
+import { LoadingArea } from "../LoadingArea"
 import { useArtworkFilterContext } from "./ArtworkFilterContext"
 import { ContextModule, clickedMainArtworkGrid } from "@artsy/cohesion"
 import { useAnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
