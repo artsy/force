@@ -9,7 +9,7 @@ export type exampleRoutes_ArtistQueryVariables = {
 export type exampleRoutes_ArtistQueryResponse = {
     readonly artist: {
         readonly id: string;
-        readonly " $fragmentRefs": FragmentRefs<"ExampleArtistApp_artist">;
+        readonly " $fragmentRefs": FragmentRefs<"ExampleArtistRoute_artist">;
     } | null;
 };
 export type exampleRoutes_ArtistQuery = {
@@ -25,11 +25,11 @@ query exampleRoutes_ArtistQuery(
 ) {
   artist(id: $slug) @principalField {
     id
-    ...ExampleArtistApp_artist
+    ...ExampleArtistRoute_artist
   }
 }
 
-fragment ExampleArtistApp_artist on Artist {
+fragment ExampleArtistRoute_artist on Artist {
   name
   bio
   internalID
@@ -91,7 +91,7 @@ return {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "ExampleArtistApp_artist"
+            "name": "ExampleArtistRoute_artist"
           }
         ],
         "storageKey": null
@@ -177,9 +177,9 @@ return {
     "metadata": {},
     "name": "exampleRoutes_ArtistQuery",
     "operationKind": "query",
-    "text": "query exampleRoutes_ArtistQuery(\n  $slug: String!\n) {\n  artist(id: $slug) @principalField {\n    id\n    ...ExampleArtistApp_artist\n  }\n}\n\nfragment ExampleArtistApp_artist on Artist {\n  name\n  bio\n  internalID\n  slug\n  ...FollowArtistButton_artist\n}\n\nfragment FollowArtistButton_artist on Artist {\n  id\n  internalID\n  name\n  slug\n  is_followed: isFollowed\n  counts {\n    follows\n  }\n}\n"
+    "text": "query exampleRoutes_ArtistQuery(\n  $slug: String!\n) {\n  artist(id: $slug) @principalField {\n    id\n    ...ExampleArtistRoute_artist\n  }\n}\n\nfragment ExampleArtistRoute_artist on Artist {\n  name\n  bio\n  internalID\n  slug\n  ...FollowArtistButton_artist\n}\n\nfragment FollowArtistButton_artist on Artist {\n  id\n  internalID\n  name\n  slug\n  is_followed: isFollowed\n  counts {\n    follows\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '84fb1c95d07f623f0ae2b2c99b19265f';
+(node as any).hash = 'f240123309eb71f60ebf184aef275d94';
 export default node;

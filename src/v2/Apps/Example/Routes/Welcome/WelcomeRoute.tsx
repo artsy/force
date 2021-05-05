@@ -3,7 +3,7 @@ import { Box, Button, Dialog, Text } from "@artsy/palette"
 import { useAnalyticsContext, useTracking } from "v2/Artsy"
 import { ContextModule, clickedShowMore } from "@artsy/cohesion"
 
-export const WelcomeApp: React.FC = () => {
+export const WelcomeRoute: React.FC = () => {
   const { trackEvent } = useTracking()
   const {
     contextPageOwnerType,

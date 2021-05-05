@@ -9,7 +9,7 @@ export type exampleRoutes_ArtworkQueryVariables = {
 export type exampleRoutes_ArtworkQueryResponse = {
     readonly artwork: {
         readonly id: string;
-        readonly " $fragmentRefs": FragmentRefs<"ExampleArtworkApp_artwork">;
+        readonly " $fragmentRefs": FragmentRefs<"ExampleArtworkRoute_artwork">;
     } | null;
 };
 export type exampleRoutes_ArtworkQuery = {
@@ -25,7 +25,7 @@ query exampleRoutes_ArtworkQuery(
 ) {
   artwork(id: $slug) {
     id
-    ...ExampleArtworkApp_artwork
+    ...ExampleArtworkRoute_artwork
   }
 }
 
@@ -42,7 +42,7 @@ fragment ArtistCard_artist on Artist {
   ...FollowArtistButton_artist
 }
 
-fragment ExampleArtworkApp_artwork on Artwork {
+fragment ExampleArtworkRoute_artwork on Artwork {
   title
   artistNames
   medium
@@ -151,7 +151,7 @@ return {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "ExampleArtworkApp_artwork"
+            "name": "ExampleArtworkRoute_artwork"
           }
         ],
         "storageKey": null
@@ -416,9 +416,9 @@ return {
     "metadata": {},
     "name": "exampleRoutes_ArtworkQuery",
     "operationKind": "query",
-    "text": "query exampleRoutes_ArtworkQuery(\n  $slug: String!\n) {\n  artwork(id: $slug) {\n    id\n    ...ExampleArtworkApp_artwork\n  }\n}\n\nfragment ArtistCard_artist on Artist {\n  name\n  slug\n  href\n  image {\n    cropped(width: 400, height: 300) {\n      url\n    }\n  }\n  formatted_nationality_and_birthday: formattedNationalityAndBirthday\n  ...FollowArtistButton_artist\n}\n\nfragment ExampleArtworkApp_artwork on Artwork {\n  title\n  artistNames\n  medium\n  imageUrl\n  date\n  internalID\n  slug\n  artist {\n    related {\n      artistsConnection(kind: MAIN, first: 4) {\n        edges {\n          node {\n            ...ArtistCard_artist\n            id\n            __typename\n          }\n          cursor\n        }\n        pageInfo {\n          endCursor\n          hasNextPage\n        }\n      }\n    }\n    id\n  }\n}\n\nfragment FollowArtistButton_artist on Artist {\n  id\n  internalID\n  name\n  slug\n  is_followed: isFollowed\n  counts {\n    follows\n  }\n}\n"
+    "text": "query exampleRoutes_ArtworkQuery(\n  $slug: String!\n) {\n  artwork(id: $slug) {\n    id\n    ...ExampleArtworkRoute_artwork\n  }\n}\n\nfragment ArtistCard_artist on Artist {\n  name\n  slug\n  href\n  image {\n    cropped(width: 400, height: 300) {\n      url\n    }\n  }\n  formatted_nationality_and_birthday: formattedNationalityAndBirthday\n  ...FollowArtistButton_artist\n}\n\nfragment ExampleArtworkRoute_artwork on Artwork {\n  title\n  artistNames\n  medium\n  imageUrl\n  date\n  internalID\n  slug\n  artist {\n    related {\n      artistsConnection(kind: MAIN, first: 4) {\n        edges {\n          node {\n            ...ArtistCard_artist\n            id\n            __typename\n          }\n          cursor\n        }\n        pageInfo {\n          endCursor\n          hasNextPage\n        }\n      }\n    }\n    id\n  }\n}\n\nfragment FollowArtistButton_artist on Artist {\n  id\n  internalID\n  name\n  slug\n  is_followed: isFollowed\n  counts {\n    follows\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'da115c64db3be7296145b17049a36d41';
+(node as any).hash = 'e4867e175e2712d78c6e1a6c2f868646';
 export default node;
