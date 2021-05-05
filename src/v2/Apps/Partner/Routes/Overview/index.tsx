@@ -5,6 +5,7 @@ import { ArticlesRailFragmentContainer } from "../../Components/Overview/Article
 import { Overview_partner } from "v2/__generated__/Overview_partner.graphql"
 import { ArtistsRailFragmentContainer } from "../../Components/Overview/ArtistsRail"
 import { ShowsRailFragmentContainer } from "../../Components/Overview/ShowsRail"
+import { ArtworksRailRenderer } from "../../Components/Overview/ArtworksRail"
 
 interface OverviewProps {
   partner: Overview_partner
@@ -14,12 +15,16 @@ const Overview: React.FC<OverviewProps> = ({ partner }) => {
   const {
     articlesConnection: { edges: articles },
     displayArtistsSection,
+    profileBannerDisplay,
   } = partner
 
   const hasArticles = articles.length > 0
 
   return (
     <Box>
+      {profileBannerDisplay === "Artworks" && (
+        <ArtworksRailRenderer mt={4} mb={[4, 80]} partnerId={partner.slug} />
+      )}
       <ShowsRailFragmentContainer mt={4} mb={[4, 80]} partner={partner} />
       {displayArtistsSection && (
         <ArtistsRailFragmentContainer partner={partner} />
@@ -38,6 +43,7 @@ export const OverviewFragmentContainer = createFragmentContainer(Overview, {
   partner: graphql`
     fragment Overview_partner on Partner {
       slug
+      profileBannerDisplay
       displayArtistsSection
       ...ShowsRail_partner
       ...ArtistsRail_partner

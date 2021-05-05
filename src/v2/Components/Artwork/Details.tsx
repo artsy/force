@@ -99,7 +99,8 @@ const TitleLine: React.FC<DetailsProps> = ({
     <ConditionalLink includeLinks={includeLinks} href={href}>
       <TruncatedLine>
         <Text variant={tokens.variant} color="black60">
-          {date ? `${title}, ${date}` : title}
+          <i>{title}</i>
+          {date && `, ${date}`}
         </Text>
       </TruncatedLine>
     </ConditionalLink>
