@@ -44,6 +44,12 @@ const node: ReaderFragment = {
     {
       "defaultValue": null,
       "kind": "LocalArgument",
+      "name": "page",
+      "type": "Int"
+    },
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
       "name": "after",
       "type": "String"
     },
@@ -93,6 +99,11 @@ const node: ReaderFragment = {
           "kind": "Variable",
           "name": "last",
           "variableName": "last"
+        },
+        {
+          "kind": "Variable",
+          "name": "page",
+          "variableName": "page"
         },
         {
           "kind": "Variable",
@@ -168,5 +179,5 @@ const node: ReaderFragment = {
   ],
   "type": "Partner"
 };
-(node as any).hash = '7472a9dac4c6ae4788b235c9375eaa77';
+(node as any).hash = '0796f9ebb9c7906f547fb20143e880e6';
 export default node;

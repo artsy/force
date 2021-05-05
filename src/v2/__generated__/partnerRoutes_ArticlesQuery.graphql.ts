@@ -5,6 +5,7 @@ import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type partnerRoutes_ArticlesQueryVariables = {
     partnerId: string;
+    page?: number | null;
 };
 export type partnerRoutes_ArticlesQueryResponse = {
     readonly partner: {
@@ -24,12 +25,13 @@ export type partnerRoutes_ArticlesQuery = {
 /*
 query partnerRoutes_ArticlesQuery(
   $partnerId: String!
+  $page: Int
 ) {
   partner(id: $partnerId) @principalField {
     articles: articlesConnection(first: 0) {
       totalCount
     }
-    ...Articles_partner
+    ...Articles_partner_2Pg8Wv
     id
   }
 }
@@ -56,9 +58,9 @@ fragment ArticleCard_article on Article {
   }
 }
 
-fragment Articles_partner on Partner {
+fragment Articles_partner_2Pg8Wv on Partner {
   slug
-  articlesConnection(first: 18) {
+  articlesConnection(first: 18, page: $page) {
     pageInfo {
       hasNextPage
       endCursor
@@ -106,6 +108,12 @@ var v0 = [
     "kind": "LocalArgument",
     "name": "partnerId",
     "type": "String!"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "page",
+    "type": "Int"
   }
 ],
 v1 = [
@@ -140,22 +148,27 @@ v2 = {
   "storageKey": "articlesConnection(first:0)"
 },
 v3 = {
+  "kind": "Variable",
+  "name": "page",
+  "variableName": "page"
+},
+v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "cursor",
   "storageKey": null
 },
-v4 = {
+v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "page",
   "storageKey": null
 },
-v5 = [
-  (v3/*: any*/),
+v6 = [
   (v4/*: any*/),
+  (v5/*: any*/),
   {
     "alias": null,
     "args": null,
@@ -164,14 +177,14 @@ v5 = [
     "storageKey": null
   }
 ],
-v6 = {
+v7 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v7 = [
+v8 = [
   {
     "alias": null,
     "args": null,
@@ -179,7 +192,7 @@ v7 = [
     "name": "name",
     "storageKey": null
   },
-  (v6/*: any*/)
+  (v7/*: any*/)
 ];
 return {
   "fragment": {
@@ -198,7 +211,9 @@ return {
         "selections": [
           (v2/*: any*/),
           {
-            "args": null,
+            "args": [
+              (v3/*: any*/)
+            ],
             "kind": "FragmentSpread",
             "name": "Articles_partner"
           }
@@ -237,7 +252,8 @@ return {
                 "kind": "Literal",
                 "name": "first",
                 "value": 18
-              }
+              },
+              (v3/*: any*/)
             ],
             "concreteType": "ArticleConnection",
             "kind": "LinkedField",
@@ -284,7 +300,7 @@ return {
                     "kind": "LinkedField",
                     "name": "around",
                     "plural": true,
-                    "selections": (v5/*: any*/),
+                    "selections": (v6/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -294,7 +310,7 @@ return {
                     "kind": "LinkedField",
                     "name": "first",
                     "plural": false,
-                    "selections": (v5/*: any*/),
+                    "selections": (v6/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -304,7 +320,7 @@ return {
                     "kind": "LinkedField",
                     "name": "last",
                     "plural": false,
-                    "selections": (v5/*: any*/),
+                    "selections": (v6/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -315,8 +331,8 @@ return {
                     "name": "previous",
                     "plural": false,
                     "selections": [
-                      (v3/*: any*/),
-                      (v4/*: any*/)
+                      (v4/*: any*/),
+                      (v5/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -374,7 +390,7 @@ return {
                         "kind": "LinkedField",
                         "name": "author",
                         "plural": false,
-                        "selections": (v7/*: any*/),
+                        "selections": (v8/*: any*/),
                         "storageKey": null
                       },
                       {
@@ -384,7 +400,7 @@ return {
                         "kind": "LinkedField",
                         "name": "contributingAuthors",
                         "plural": true,
-                        "selections": (v7/*: any*/),
+                        "selections": (v8/*: any*/),
                         "storageKey": null
                       },
                       {
@@ -448,7 +464,7 @@ return {
                         ],
                         "storageKey": null
                       },
-                      (v6/*: any*/)
+                      (v7/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -456,9 +472,9 @@ return {
                 "storageKey": null
               }
             ],
-            "storageKey": "articlesConnection(first:18)"
+            "storageKey": null
           },
-          (v6/*: any*/)
+          (v7/*: any*/)
         ],
         "storageKey": null
       }
@@ -469,9 +485,9 @@ return {
     "metadata": {},
     "name": "partnerRoutes_ArticlesQuery",
     "operationKind": "query",
-    "text": "query partnerRoutes_ArticlesQuery(\n  $partnerId: String!\n) {\n  partner(id: $partnerId) @principalField {\n    articles: articlesConnection(first: 0) {\n      totalCount\n    }\n    ...Articles_partner\n    id\n  }\n}\n\nfragment ArticleCard_article on Article {\n  channelID\n  thumbnailTitle\n  href\n  author {\n    name\n    id\n  }\n  contributingAuthors {\n    name\n    id\n  }\n  thumbnailImage {\n    medium: cropped(width: 357, height: 320) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment Articles_partner on Partner {\n  slug\n  articlesConnection(first: 18) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        internalID\n        ...ArticleCard_article\n        id\n      }\n    }\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n"
+    "text": "query partnerRoutes_ArticlesQuery(\n  $partnerId: String!\n  $page: Int\n) {\n  partner(id: $partnerId) @principalField {\n    articles: articlesConnection(first: 0) {\n      totalCount\n    }\n    ...Articles_partner_2Pg8Wv\n    id\n  }\n}\n\nfragment ArticleCard_article on Article {\n  channelID\n  thumbnailTitle\n  href\n  author {\n    name\n    id\n  }\n  contributingAuthors {\n    name\n    id\n  }\n  thumbnailImage {\n    medium: cropped(width: 357, height: 320) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment Articles_partner_2Pg8Wv on Partner {\n  slug\n  articlesConnection(first: 18, page: $page) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        internalID\n        ...ArticleCard_article\n        id\n      }\n    }\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '675c55991644b1b911d8e149fd9b84a1';
+(node as any).hash = '52f276d97d7e5cbefc6644fcbedff846';
 export default node;

@@ -47,7 +47,7 @@ fragment NavigationTabs_partner on Partner {
   locations: locationsConnection(first: 20) {
     totalCount
   }
-  articles: articlesConnection(first: 20) {
+  articles: articlesConnection {
     totalCount
   }
   artists: artistsConnection(first: 20) {
@@ -146,13 +146,13 @@ return {
           },
           {
             "alias": "articles",
-            "args": (v1/*: any*/),
+            "args": null,
             "concreteType": "ArticleConnection",
             "kind": "LinkedField",
             "name": "articlesConnection",
             "plural": false,
             "selections": (v2/*: any*/),
-            "storageKey": "articlesConnection(first:20)"
+            "storageKey": null
           },
           {
             "alias": "artists",
@@ -181,7 +181,7 @@ return {
     "metadata": {},
     "name": "NavigationTabs_Test_PartnerQuery",
     "operationKind": "query",
-    "text": "query NavigationTabs_Test_PartnerQuery {\n  partner(id: \"white-cube\") {\n    ...NavigationTabs_partner\n    id\n  }\n}\n\nfragment NavigationTabs_partner on Partner {\n  slug\n  displayArtistsSection\n  locations: locationsConnection(first: 20) {\n    totalCount\n  }\n  articles: articlesConnection(first: 20) {\n    totalCount\n  }\n  artists: artistsConnection(first: 20) {\n    totalCount\n  }\n}\n"
+    "text": "query NavigationTabs_Test_PartnerQuery {\n  partner(id: \"white-cube\") {\n    ...NavigationTabs_partner\n    id\n  }\n}\n\nfragment NavigationTabs_partner on Partner {\n  slug\n  displayArtistsSection\n  locations: locationsConnection(first: 20) {\n    totalCount\n  }\n  articles: articlesConnection {\n    totalCount\n  }\n  artists: artistsConnection(first: 20) {\n    totalCount\n  }\n}\n"
   }
 };
 })();

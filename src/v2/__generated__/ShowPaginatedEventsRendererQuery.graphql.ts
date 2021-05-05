@@ -7,6 +7,7 @@ export type EventStatus = "ALL" | "CLOSED" | "CLOSING_SOON" | "CURRENT" | "RUNNI
 export type ShowPaginatedEventsRendererQueryVariables = {
     partnerId: string;
     first?: number | null;
+    page?: number | null;
     status?: EventStatus | null;
 };
 export type ShowPaginatedEventsRendererQueryResponse = {
@@ -25,10 +26,11 @@ export type ShowPaginatedEventsRendererQuery = {
 query ShowPaginatedEventsRendererQuery(
   $partnerId: String!
   $first: Int
+  $page: Int
   $status: EventStatus
 ) {
   partner(id: $partnerId) @principalField {
-    ...ShowPaginatedEvents_partner_37Zpyb
+    ...ShowPaginatedEvents_partner_JfDnP
     id
   }
 }
@@ -78,9 +80,9 @@ fragment ShowEvents_edges on ShowEdge {
   }
 }
 
-fragment ShowPaginatedEvents_partner_37Zpyb on Partner {
+fragment ShowPaginatedEvents_partner_JfDnP on Partner {
   slug
-  showsList: showsConnection(first: $first, status: $status) {
+  showsList: showsConnection(first: $first, status: $status, page: $page) {
     pageInfo {
       hasNextPage
       endCursor
@@ -112,6 +114,12 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
+    "name": "page",
+    "type": "Int"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
     "name": "status",
     "type": "EventStatus"
   }
@@ -128,6 +136,11 @@ v2 = [
     "kind": "Variable",
     "name": "first",
     "variableName": "first"
+  },
+  {
+    "kind": "Variable",
+    "name": "page",
+    "variableName": "page"
   },
   {
     "kind": "Variable",
@@ -434,9 +447,9 @@ return {
     "metadata": {},
     "name": "ShowPaginatedEventsRendererQuery",
     "operationKind": "query",
-    "text": "query ShowPaginatedEventsRendererQuery(\n  $partnerId: String!\n  $first: Int\n  $status: EventStatus\n) {\n  partner(id: $partnerId) @principalField {\n    ...ShowPaginatedEvents_partner_37Zpyb\n    id\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n\nfragment ShowCard_show on Show {\n  href\n  name\n  isFairBooth\n  exhibitionPeriod\n  coverImage {\n    medium: cropped(width: 263, height: 222) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ShowEvents_edges on ShowEdge {\n  node {\n    internalID\n    ...ShowCard_show\n    id\n  }\n}\n\nfragment ShowPaginatedEvents_partner_37Zpyb on Partner {\n  slug\n  showsList: showsConnection(first: $first, status: $status) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      ...ShowEvents_edges\n    }\n  }\n}\n"
+    "text": "query ShowPaginatedEventsRendererQuery(\n  $partnerId: String!\n  $first: Int\n  $page: Int\n  $status: EventStatus\n) {\n  partner(id: $partnerId) @principalField {\n    ...ShowPaginatedEvents_partner_JfDnP\n    id\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n\nfragment ShowCard_show on Show {\n  href\n  name\n  isFairBooth\n  exhibitionPeriod\n  coverImage {\n    medium: cropped(width: 263, height: 222) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ShowEvents_edges on ShowEdge {\n  node {\n    internalID\n    ...ShowCard_show\n    id\n  }\n}\n\nfragment ShowPaginatedEvents_partner_JfDnP on Partner {\n  slug\n  showsList: showsConnection(first: $first, status: $status, page: $page) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      ...ShowEvents_edges\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '00fd1533b06f859a401dfd31a2b70497';
+(node as any).hash = '8787f2e69fc3c8c39b1065daefcd3a5a';
 export default node;

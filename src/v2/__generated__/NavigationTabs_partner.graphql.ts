@@ -74,13 +74,13 @@ return {
     },
     {
       "alias": "articles",
-      "args": (v0/*: any*/),
+      "args": null,
       "concreteType": "ArticleConnection",
       "kind": "LinkedField",
       "name": "articlesConnection",
       "plural": false,
       "selections": (v1/*: any*/),
-      "storageKey": "articlesConnection(first:20)"
+      "storageKey": null
     },
     {
       "alias": "artists",
@@ -96,5 +96,5 @@ return {
   "type": "Partner"
 };
 })();
-(node as any).hash = '07da3865f2f665ac7cdcf2d11fbf925a';
+(node as any).hash = 'de1ed4717fa1ad5aa7926720e399acc7';
 export default node;
