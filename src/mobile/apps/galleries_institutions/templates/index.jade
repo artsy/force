@@ -5,7 +5,7 @@ block content
     if featuredPartner
       a.galleries-institutions-featured-partner(
         href= featuredPartner.href()
-        style="background-image: url(#{featuredPartner.coverImage().imageUrl('wide')})"
+        style="background-image: url(#{featuredPartner.coverImage().optimizedImageUrl('wide')})"
       )
 
     h1.galleries-institutions-header.avant-garde-header-center
