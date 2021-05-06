@@ -45,6 +45,7 @@ if (process.env.NODE_ENV === "production") {
     "/order",
     "/search",
     "/show/",
+    "/tag/",
     "/partner2/",
     "/user/conversations",
     "/user/payments",
