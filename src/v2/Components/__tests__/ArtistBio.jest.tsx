@@ -12,8 +12,9 @@ jest.unmock("react-relay")
 
 describe("ArtistBio", () => {
   const biographyBlurb = {
-    text: '<a href="hi">hello how are you</a>',
     credit: "",
+    partnerID: "",
+    text: '<a href="hi">hello how are you</a>',
   }
 
   const getWrapper = () => {
@@ -43,5 +44,16 @@ describe("ArtistBio", () => {
     const wrapper = await getWrapper()
 
     expect(wrapper.html()).toContain(biographyBlurb.text)
+    expect(wrapper.html()).not.toContain("Submitted by")
+  })
+
+  it("renders credit when available", async () => {
+    biographyBlurb.credit = "Submitted by Great Gallery"
+    biographyBlurb.partnerID = "great-gallery"
+
+    const wrapper = await getWrapper()
+
+    expect(wrapper.html()).toContain("Submitted by Great Gallery")
+    expect(wrapper.html()).toContain("great-gallery")
   })
 })
