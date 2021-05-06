@@ -21,6 +21,7 @@ interface ShowEventsProps {
   scrollTo: string
   eventTitle: string
   offset: number
+  paramsPage: number
 }
 
 const ShowPaginatedEvents: React.FC<ShowEventsProps> = ({
@@ -29,6 +30,7 @@ const ShowPaginatedEvents: React.FC<ShowEventsProps> = ({
   partner,
   scrollTo,
   offset,
+  paramsPage,
 }): JSX.Element => {
   const {
     match: { location },
@@ -50,29 +52,35 @@ const ShowPaginatedEvents: React.FC<ShowEventsProps> = ({
   } = partner
 
   const handleClick = (cursor: string, page: number) => {
-    setIsLoading(true)
+    const refetchPage = paramsPage !== page
 
-    relay.refetch(
-      {
-        first: 24,
-        after: cursor,
-        partnerID: slug,
-        before: null,
-        last: null,
-      },
-      null,
-      error => {
-        if (error) {
-          console.error(error)
+    refetchPage && setIsLoading(true)
+
+    refetchPage &&
+      relay.refetch(
+        {
+          first: 40,
+          after: cursor,
+          partnerID: slug,
+          before: null,
+          last: null,
+        },
+        null,
+        error => {
+          if (error) {
+            console.error(error)
+          }
+
+          const query = page === 1 ? {} : { ...location.query, page }
+
+          router.push({
+            pathname: location.pathname,
+            query,
+          })
+
+          setIsLoading(false)
         }
-        setIsLoading(false)
-
-        router.push({
-          pathname: location.pathname,
-          query: { ...location.query, page },
-        })
-      }
-    )
+      )
   }
 
   const handleNext = (page: number) => {
@@ -105,12 +113,13 @@ export const ShowEventsRefetchContainer = createRefetchContainer(
     partner: graphql`
       fragment ShowPaginatedEvents_partner on Partner
         @argumentDefinitions(
-          first: { type: "Int", defaultValue: 24 }
+          first: { type: "Int", defaultValue: 40 }
           last: { type: "Int" }
           page: { type: "Int" }
           after: { type: "String" }
           before: { type: "String" }
           status: { type: "EventStatus", defaultValue: CLOSED }
+          isDisplayable: { type: "Boolean", defaultValue: true }
         ) {
         slug
         showsList: showsConnection(
@@ -120,6 +129,7 @@ export const ShowEventsRefetchContainer = createRefetchContainer(
           before: $before
           status: $status
           page: $page
+          isDisplayable: $isDisplayable
         ) {
           pageInfo {
             hasNextPage
@@ -197,7 +207,9 @@ export const ShowPaginatedEventsRenderer: React.FC<ShowPaginatedEventsRendererPr
       render={({ error, props }) => {
         if (error || !props) return null
 
-        return <ShowEventsRefetchContainer {...rest} {...props} />
+        return (
+          <ShowEventsRefetchContainer {...rest} {...props} paramsPage={page} />
+        )
       }}
     />
   )

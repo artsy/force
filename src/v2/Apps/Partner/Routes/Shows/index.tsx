@@ -29,6 +29,7 @@ export const Shows: React.FC<PartnerShowsProps> = ({
 
   const isCurrentEventsExist = !!currentEvents.edges.length
   const isUpcomingEventsExist = !!upcomingEvents.edges.length
+  const page = +query.page || 1
 
   return (
     <>
@@ -53,10 +54,10 @@ export const Shows: React.FC<PartnerShowsProps> = ({
         eventTitle="Past Events"
         partnerId={partner.slug}
         status="CLOSED"
-        first={24}
+        first={40}
         scrollTo="#jumpto--pastShowsGrid"
         offset={200}
-        page={+query?.page}
+        page={page}
       />
     </>
   )
@@ -79,12 +80,20 @@ export const ShowsFragmentContainer = createFragmentContainer(Shows, {
           }
         }
       }
-      currentEvents: showsConnection(first: 12, status: RUNNING) {
+      currentEvents: showsConnection(
+        first: 12
+        status: RUNNING
+        isDisplayable: true
+      ) {
         edges {
           ...ShowEvents_edges
         }
       }
-      upcomingEvents: showsConnection(first: 12, status: UPCOMING) {
+      upcomingEvents: showsConnection(
+        first: 12
+        status: UPCOMING
+        isDisplayable: true
+      ) {
         edges {
           ...ShowEvents_edges
         }

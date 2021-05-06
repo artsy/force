@@ -1,10 +1,11 @@
-import React from "react"
+import React, { useState } from "react"
 import { Column, GridColumns, Box } from "@artsy/palette"
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 import { useRouter } from "v2/Artsy/Router/useRouter"
 import { Articles_partner } from "v2/__generated__/Articles_partner.graphql"
 import { ArticleCardFragmentContainer } from "../../Components/PartnerArticles/ArticleCard"
 import { PaginationFragmentContainer } from "v2/Components/Pagination"
+import { LoadingArea } from "v2/Components/LoadingArea"
 
 interface ArticlesProps {
   partner: Articles_partner
@@ -16,6 +17,8 @@ const Articles: React.FC<ArticlesProps> = ({ partner, relay }) => {
     match: { location },
     router,
   } = useRouter()
+
+  const [isLoading, setIsLoading] = useState(false)
 
   if (!partner.articlesConnection) {
     return null
@@ -31,26 +34,36 @@ const Articles: React.FC<ArticlesProps> = ({ partner, relay }) => {
   } = partner
 
   const handleClick = (cursor: string, page: number) => {
-    relay.refetch(
-      {
-        first: 18,
-        after: cursor,
-        partnerID: slug,
-        before: null,
-        last: null,
-      },
-      null,
-      error => {
-        if (error) {
-          console.error(error)
+    const paramsPage = +location.query.page || 1
+    const refetchPage = paramsPage !== page
+
+    refetchPage && setIsLoading(true)
+
+    refetchPage &&
+      relay.refetch(
+        {
+          first: 18,
+          after: cursor,
+          partnerID: slug,
+          before: null,
+          last: null,
+        },
+        null,
+        error => {
+          if (error) {
+            console.error(error)
+          }
         }
-      }
-    )
+      )
+
+    const query = page === 1 ? {} : { ...location.query, page }
 
     router.push({
       pathname: location.pathname,
-      query: { ...location.query, page },
+      query,
     })
+
+    setIsLoading(false)
   }
 
   const handleNext = (page: number) => {
@@ -59,15 +72,18 @@ const Articles: React.FC<ArticlesProps> = ({ partner, relay }) => {
 
   return (
     <Box id="jumpto--articlesGrid">
-      <GridColumns mt={6} gridRowGap={[2, 4]}>
-        {articles.map(({ node: article }) => {
-          return (
-            <Column key={article.internalID} span={4}>
-              <ArticleCardFragmentContainer article={article} />
-            </Column>
-          )
-        })}
-      </GridColumns>
+      <LoadingArea isLoading={isLoading}>
+        <GridColumns mt={6} gridRowGap={[2, 4]}>
+          {articles.map(({ node: article }) => {
+            return (
+              <Column key={article.internalID} span={4}>
+                <ArticleCardFragmentContainer article={article} />
+              </Column>
+            )
+          })}
+        </GridColumns>
+      </LoadingArea>
+
       <Box mt={9}>
         <PaginationFragmentContainer
           hasNextPage={hasNextPage}
