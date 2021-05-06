@@ -86,7 +86,7 @@ fragment ShowEvents_edges on ShowEdge {
 
 fragment ShowPaginatedEvents_partner_qVb3U on Partner {
   slug
-  showsList: showsConnection(first: $first, last: $last, after: $after, before: $before, status: $status) {
+  showsList: showsConnection(first: $first, last: $last, after: $after, before: $before, status: $status, isDisplayable: true) {
     pageInfo {
       hasNextPage
       endCursor
@@ -147,50 +147,48 @@ v1 = [
     "variableName": "partnerId"
   }
 ],
-v2 = [
-  {
-    "kind": "Variable",
-    "name": "after",
-    "variableName": "after"
-  },
-  {
-    "kind": "Variable",
-    "name": "before",
-    "variableName": "before"
-  },
-  {
-    "kind": "Variable",
-    "name": "first",
-    "variableName": "first"
-  },
-  {
-    "kind": "Variable",
-    "name": "last",
-    "variableName": "last"
-  },
-  {
-    "kind": "Variable",
-    "name": "status",
-    "variableName": "status"
-  }
-],
+v2 = {
+  "kind": "Variable",
+  "name": "after",
+  "variableName": "after"
+},
 v3 = {
+  "kind": "Variable",
+  "name": "before",
+  "variableName": "before"
+},
+v4 = {
+  "kind": "Variable",
+  "name": "first",
+  "variableName": "first"
+},
+v5 = {
+  "kind": "Variable",
+  "name": "last",
+  "variableName": "last"
+},
+v6 = {
+  "kind": "Variable",
+  "name": "status",
+  "variableName": "status"
+},
+v7 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "cursor",
   "storageKey": null
 },
-v4 = {
+v8 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "page",
   "storageKey": null
 },
-v5 = [
-  (v3/*: any*/),
-  (v4/*: any*/),
+v9 = [
+  (v7/*: any*/),
+  (v8/*: any*/),
   {
     "alias": null,
     "args": null,
@@ -199,7 +197,7 @@ v5 = [
     "storageKey": null
   }
 ],
-v6 = {
+v10 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -222,7 +220,13 @@ return {
         "plural": false,
         "selections": [
           {
-            "args": (v2/*: any*/),
+            "args": [
+              (v2/*: any*/),
+              (v3/*: any*/),
+              (v4/*: any*/),
+              (v5/*: any*/),
+              (v6/*: any*/)
+            ],
             "kind": "FragmentSpread",
             "name": "ShowPaginatedEvents_partner"
           }
@@ -255,7 +259,18 @@ return {
           },
           {
             "alias": "showsList",
-            "args": (v2/*: any*/),
+            "args": [
+              (v2/*: any*/),
+              (v3/*: any*/),
+              (v4/*: any*/),
+              {
+                "kind": "Literal",
+                "name": "isDisplayable",
+                "value": true
+              },
+              (v5/*: any*/),
+              (v6/*: any*/)
+            ],
             "concreteType": "ShowConnection",
             "kind": "LinkedField",
             "name": "showsConnection",
@@ -301,7 +316,7 @@ return {
                     "kind": "LinkedField",
                     "name": "around",
                     "plural": true,
-                    "selections": (v5/*: any*/),
+                    "selections": (v9/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -311,7 +326,7 @@ return {
                     "kind": "LinkedField",
                     "name": "first",
                     "plural": false,
-                    "selections": (v5/*: any*/),
+                    "selections": (v9/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -321,7 +336,7 @@ return {
                     "kind": "LinkedField",
                     "name": "last",
                     "plural": false,
-                    "selections": (v5/*: any*/),
+                    "selections": (v9/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -332,8 +347,8 @@ return {
                     "name": "previous",
                     "plural": false,
                     "selections": [
-                      (v3/*: any*/),
-                      (v4/*: any*/)
+                      (v7/*: any*/),
+                      (v8/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -452,7 +467,7 @@ return {
                         ],
                         "storageKey": null
                       },
-                      (v6/*: any*/)
+                      (v10/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -462,7 +477,7 @@ return {
             ],
             "storageKey": null
           },
-          (v6/*: any*/)
+          (v10/*: any*/)
         ],
         "storageKey": null
       }
@@ -473,7 +488,7 @@ return {
     "metadata": {},
     "name": "ShowPaginatedEventsQuery",
     "operationKind": "query",
-    "text": "query ShowPaginatedEventsQuery(\n  $partnerId: String!\n  $first: Int\n  $last: Int\n  $after: String\n  $before: String\n  $status: EventStatus\n) {\n  partner(id: $partnerId) @principalField {\n    ...ShowPaginatedEvents_partner_qVb3U\n    id\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n\nfragment ShowCard_show on Show {\n  href\n  name\n  isFairBooth\n  exhibitionPeriod\n  coverImage {\n    medium: cropped(width: 263, height: 222) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ShowEvents_edges on ShowEdge {\n  node {\n    internalID\n    ...ShowCard_show\n    id\n  }\n}\n\nfragment ShowPaginatedEvents_partner_qVb3U on Partner {\n  slug\n  showsList: showsConnection(first: $first, last: $last, after: $after, before: $before, status: $status) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      ...ShowEvents_edges\n    }\n  }\n}\n"
+    "text": "query ShowPaginatedEventsQuery(\n  $partnerId: String!\n  $first: Int\n  $last: Int\n  $after: String\n  $before: String\n  $status: EventStatus\n) {\n  partner(id: $partnerId) @principalField {\n    ...ShowPaginatedEvents_partner_qVb3U\n    id\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n\nfragment ShowCard_show on Show {\n  href\n  name\n  isFairBooth\n  exhibitionPeriod\n  coverImage {\n    medium: cropped(width: 263, height: 222) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ShowEvents_edges on ShowEdge {\n  node {\n    internalID\n    ...ShowCard_show\n    id\n  }\n}\n\nfragment ShowPaginatedEvents_partner_qVb3U on Partner {\n  slug\n  showsList: showsConnection(first: $first, last: $last, after: $after, before: $before, status: $status, isDisplayable: true) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      ...ShowEvents_edges\n    }\n  }\n}\n"
   }
 };
 })();
