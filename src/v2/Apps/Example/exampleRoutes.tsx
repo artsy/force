@@ -1,4 +1,5 @@
 import loadable from "@loadable/component"
+import { RouteConfig } from "found"
 import { graphql } from "react-relay"
 import { WelcomeRoute } from "./Routes/Welcome/WelcomeRoute"
 
@@ -27,7 +28,7 @@ const ArtworkFilterRoute = loadable(
   }
 )
 
-export const exampleRoutes = [
+export const exampleRoutes: RouteConfig[] = [
   {
     path: "/example",
     getComponent: () => ExampleApp,
