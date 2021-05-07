@@ -137,7 +137,10 @@ export class SaveButton extends React.Component<
 
   mixinButtonActions() {
     return {
-      onClick: () => this.handleSave(),
+      onClick: event => {
+        event.preventDefault()
+        this.handleSave()
+      },
       onMouseEnter: () => {
         this.setState({
           isHovered: true,
