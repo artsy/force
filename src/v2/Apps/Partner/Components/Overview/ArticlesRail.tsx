@@ -1,10 +1,13 @@
-import React from "react"
-import { Box, Flex, Text } from "@artsy/palette"
+import React, { useState } from "react"
+import { ResponsiveBox, Box, Flex, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { Carousel } from "v2/Components/Carousel"
+import { Carousel } from "../Carousel"
 import { ArticleCardFragmentContainer as ArticleCard } from "v2/Apps/Partner/Components/PartnerArticles/ArticleCard"
 import { ArticlesRail_articles } from "v2/__generated__/ArticlesRail_articles.graphql"
 import { ViewAllButton } from "./ViewAllButton"
+import { RouterLink } from "v2/Artsy/Router/RouterLink"
+import { ScrollToPartnerHeader } from "v2/Apps/Partner/Components/ScrollToPartnerHeader"
+import { flatten } from "lodash"
 
 interface ArticlesRailProps {
   articles: ArticlesRail_articles
@@ -15,23 +18,52 @@ const ArticlesRail: React.FC<ArticlesRailProps> = ({
   articles,
   partnerSlug,
 }) => {
+  const [isSeeAllAvaliable, setIsSeeAllAvaliable] = useState<boolean>(undefined)
   return (
     <>
-      <Flex justifyContent="space-between" alignItems="center">
+      <Flex justifyContent="space-between" alignItems="center" mb={4}>
         <Text variant="title">Articles</Text>
 
         <ViewAllButton to={`/partner2/${partnerSlug}/articles`} />
       </Flex>
 
-      <Carousel arrowHeight={320} mt={4}>
-        {articles.map(({ node: article }) => (
-          <Box
-            width={["280px", "334px", "301px", "357px"]}
-            key={article.internalID}
-          >
-            <ArticleCard article={article} />
-          </Box>
-        ))}
+      <Carousel
+        itemsPerViewport={[2, 2, 3]}
+        onRailOverflowChange={setIsSeeAllAvaliable}
+      >
+        {flatten([
+          articles.map(({ node: article }) => {
+            return (
+              <Box width={["280px", "100%"]} key={article.internalID}>
+                <ArticleCard article={article} />
+              </Box>
+            )
+          }),
+          isSeeAllAvaliable && (
+            <Box key="see-all-button" width={[300, "100%"]}>
+              <RouterLink to={`/partner2/${partnerSlug}/articles`}>
+                <ScrollToPartnerHeader width="100%">
+                  <ResponsiveBox
+                    aspectWidth={4}
+                    aspectHeight={3}
+                    maxWidth={"100%"}
+                    bg="black10"
+                  >
+                    <Flex
+                      height="100%"
+                      alignItems="center"
+                      justifyContent="center"
+                    >
+                      <Text style={{ textDecoration: "underline" }}>
+                        See all articles
+                      </Text>
+                    </Flex>
+                  </ResponsiveBox>
+                </ScrollToPartnerHeader>
+              </RouterLink>
+            </Box>
+          ),
+        ])}
       </Carousel>
     </>
   )

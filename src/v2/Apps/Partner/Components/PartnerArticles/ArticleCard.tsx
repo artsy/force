@@ -28,11 +28,7 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ article }): JSX.Element => {
     <>
       <RouterLink to={href} style={{ textDecoration: "none" }}>
         {thumbnailImage && (
-          <ResponsiveBox
-            aspectWidth={thumbnailImage.medium.width}
-            aspectHeight={thumbnailImage.medium.height}
-            maxWidth="100%"
-          >
+          <ResponsiveBox aspectWidth={4} aspectHeight={3} maxWidth="100%">
             <Image
               src={thumbnailImage.medium.src}
               srcSet={thumbnailImage.medium.srcSet}
@@ -86,7 +82,7 @@ export const ArticleCardFragmentContainer = createFragmentContainer(
           name
         }
         thumbnailImage {
-          medium: cropped(width: 357, height: 320) {
+          medium: cropped(width: 400, height: 300) {
             width
             height
             src
