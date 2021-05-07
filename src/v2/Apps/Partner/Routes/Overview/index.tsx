@@ -47,7 +47,7 @@ export const OverviewFragmentContainer = createFragmentContainer(Overview, {
       displayArtistsSection
       ...ShowsRail_partner
       ...ArtistsRail_partner
-      articlesConnection(first: 10)
+      articlesConnection(first: 8)
         @connection(key: "ArticlesQuery_articlesConnection") {
         totalCount
         edges {

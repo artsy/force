@@ -69,7 +69,7 @@ fragment Overview_partner on Partner {
   displayArtistsSection
   ...ShowsRail_partner
   ...ArtistsRail_partner
-  articlesConnection(first: 10) {
+  articlesConnection(first: 8) {
     totalCount
     edges {
       ...ArticlesRail_articles
@@ -185,7 +185,7 @@ v6 = [
   {
     "kind": "Literal",
     "name": "first",
-    "value": 10
+    "value": 8
   }
 ],
 v7 = [
@@ -510,7 +510,7 @@ return {
                 "storageKey": null
               }
             ],
-            "storageKey": "articlesConnection(first:10)"
+            "storageKey": "articlesConnection(first:8)"
           },
           {
             "alias": null,
@@ -532,7 +532,7 @@ return {
     "metadata": {},
     "name": "partnerRoutes_OverviewQuery",
     "operationKind": "query",
-    "text": "query partnerRoutes_OverviewQuery(\n  $partnerId: String!\n) {\n  partner(id: $partnerId) @principalField {\n    ...Overview_partner\n    id\n  }\n}\n\nfragment ArticleCard_article on Article {\n  channelID\n  thumbnailTitle\n  href\n  author {\n    name\n    id\n  }\n  contributingAuthors {\n    name\n    id\n  }\n  thumbnailImage {\n    medium: cropped(width: 400, height: 300) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ArticlesRail_articles on ArticleEdge {\n  node {\n    internalID\n    ...ArticleCard_article\n    id\n  }\n}\n\nfragment ArtistsRail_partner on Partner {\n  slug\n  profileArtistsLayout\n}\n\nfragment Overview_partner on Partner {\n  slug\n  profileBannerDisplay\n  displayArtistsSection\n  ...ShowsRail_partner\n  ...ArtistsRail_partner\n  articlesConnection(first: 10) {\n    totalCount\n    edges {\n      ...ArticlesRail_articles\n      cursor\n      node {\n        __typename\n        id\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment ShowCard_show on Show {\n  href\n  name\n  isFairBooth\n  exhibitionPeriod\n  coverImage {\n    medium: cropped(width: 263, height: 222) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ShowsRail_partner on Partner {\n  slug\n  showsConnection(status: ALL, first: 19, isDisplayable: true) {\n    edges {\n      node {\n        id\n        ...ShowCard_show\n      }\n    }\n  }\n}\n"
+    "text": "query partnerRoutes_OverviewQuery(\n  $partnerId: String!\n) {\n  partner(id: $partnerId) @principalField {\n    ...Overview_partner\n    id\n  }\n}\n\nfragment ArticleCard_article on Article {\n  channelID\n  thumbnailTitle\n  href\n  author {\n    name\n    id\n  }\n  contributingAuthors {\n    name\n    id\n  }\n  thumbnailImage {\n    medium: cropped(width: 400, height: 300) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ArticlesRail_articles on ArticleEdge {\n  node {\n    internalID\n    ...ArticleCard_article\n    id\n  }\n}\n\nfragment ArtistsRail_partner on Partner {\n  slug\n  profileArtistsLayout\n}\n\nfragment Overview_partner on Partner {\n  slug\n  profileBannerDisplay\n  displayArtistsSection\n  ...ShowsRail_partner\n  ...ArtistsRail_partner\n  articlesConnection(first: 8) {\n    totalCount\n    edges {\n      ...ArticlesRail_articles\n      cursor\n      node {\n        __typename\n        id\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment ShowCard_show on Show {\n  href\n  name\n  isFairBooth\n  exhibitionPeriod\n  coverImage {\n    medium: cropped(width: 263, height: 222) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ShowsRail_partner on Partner {\n  slug\n  showsConnection(status: ALL, first: 19, isDisplayable: true) {\n    edges {\n      node {\n        id\n        ...ShowCard_show\n      }\n    }\n  }\n}\n"
   }
 };
 })();
