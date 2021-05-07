@@ -7,7 +7,6 @@ import { data as sd } from "sharify"
 
 import { SeoProductsForArtworks } from "v2/Apps/Collect/Components/SeoProductsForArtworks"
 import { buildUrlForCollectApp } from "v2/Apps/Collect/Utils/urlBuilder"
-import { AppContainer } from "v2/Apps/Components/AppContainer"
 
 import { FrameWithRecentlyViewed } from "v2/Components/FrameWithRecentlyViewed"
 import { BreadCrumbList } from "v2/Components/Seo"
@@ -60,7 +59,7 @@ export const CollectApp: React.FC<CollectAppProps> = ({
   }
 
   return (
-    <AppContainer>
+    <>
       <FrameWithRecentlyViewed>
         <Title>{title}</Title>
         <Meta property="og:url" content={`${sd.APP_URL}/collect`} />
@@ -141,7 +140,7 @@ export const CollectApp: React.FC<CollectAppProps> = ({
           />
         </Box>
       </FrameWithRecentlyViewed>
-    </AppContainer>
+    </>
   )
 }
 

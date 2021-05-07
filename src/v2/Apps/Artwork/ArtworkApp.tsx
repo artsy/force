@@ -6,7 +6,6 @@ import { data as sd } from "sharify"
 
 import { ArtworkApp_artwork } from "v2/__generated__/ArtworkApp_artwork.graphql"
 import { ArtworkApp_me } from "v2/__generated__/ArtworkApp_me.graphql"
-import { AppContainer } from "v2/Apps/Components/AppContainer"
 import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
 
 import { ArtistInfoFragmentContainer as ArtistInfo } from "./Components/ArtistInfo"
@@ -213,7 +212,7 @@ export class ArtworkApp extends React.Component<Props> {
   render() {
     const { artwork, me } = this.props
     return (
-      <AppContainer>
+      <>
         <LegacyArtworkDllContainer />
         {/* FIXME: remove once we refactor out legacy backbone code.
             Add place to attach legacy flash message, used in legacy inquiry flow
@@ -303,7 +302,7 @@ export class ArtworkApp extends React.Component<Props> {
             }}
           />
         </HorizontalPadding>
-      </AppContainer>
+      </>
     )
   }
 }

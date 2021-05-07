@@ -1,5 +1,4 @@
 import { ArtsyLogoBlackIcon, Box } from "@artsy/palette"
-import { AppContainer } from "v2/Apps/Components/AppContainer"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import React from "react"
 import { useSystemContext } from "v2/Artsy"
@@ -22,19 +21,17 @@ export const MinimalNavBar: React.FC<MinimalNavBarProps> = props => {
       pt={4}
     >
       {!isEigen && (
-        <AppContainer>
-          <Box height={70} px={[2, 4]}>
-            <RouterLink
-              to={props.to}
-              // TODO: figure out a minimal example of the underlying cause of this error
-              // and submit an issue to TS 😓
-              // @ts-ignore
-              data-test="logoLink"
-            >
-              <ArtsyLogoBlackIcon />
-            </RouterLink>
-          </Box>
-        </AppContainer>
+        <Box height={70} px={[2, 4]}>
+          <RouterLink
+            to={props.to}
+            // TODO: figure out a minimal example of the underlying cause of this error
+            // and submit an issue to TS 😓
+            // @ts-ignore
+            data-test="logoLink"
+          >
+            <ArtsyLogoBlackIcon />
+          </RouterLink>
+        </Box>
       )}
 
       {props.children}

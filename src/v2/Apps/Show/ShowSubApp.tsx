@@ -1,5 +1,4 @@
 import React from "react"
-import { AppContainer } from "v2/Apps/Components/AppContainer"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Box } from "@artsy/palette"
 import { ShowSubApp_show } from "v2/__generated__/ShowSubApp_show.graphql"
@@ -22,7 +21,7 @@ const ShowApp: React.FC<ShowAppProps> = ({ children, show }) => {
     <>
       <ShowMeta show={show} />
 
-      <AppContainer>
+      <>
         <AnalyticsContext.Provider
           value={{
             contextPageOwnerId: show.internalID,
@@ -41,7 +40,7 @@ const ShowApp: React.FC<ShowAppProps> = ({ children, show }) => {
             <Box minHeight="50vh">{children}</Box>
           </HorizontalPadding>
         </AnalyticsContext.Provider>
-      </AppContainer>
+      </>
     </>
   )
 }

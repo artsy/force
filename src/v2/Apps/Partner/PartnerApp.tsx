@@ -1,6 +1,5 @@
 import React from "react"
 import { Separator } from "@artsy/palette"
-import { AppContainer } from "../Components/AppContainer"
 import { HorizontalPadding } from "../Components/HorizontalPadding"
 import { createFragmentContainer, graphql } from "react-relay"
 import { NavigationTabsFragmentContainer as NavigationTabs } from "v2/Apps/Partner/Components/NavigationTabs"
@@ -30,7 +29,7 @@ export const PartnerApp: React.FC<PartnerAppProps> = ({
       <PartnerHeaderImage profile={partner.profile} />
 
       <Foreground>
-        <AppContainer>
+        <>
           <HorizontalPadding>
             <PartnerMetaFragmentContainer partner={partner} />
 
@@ -44,7 +43,7 @@ export const PartnerApp: React.FC<PartnerAppProps> = ({
 
             {children}
           </HorizontalPadding>
-        </AppContainer>
+        </>
       </Foreground>
     </>
   )

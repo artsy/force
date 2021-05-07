@@ -1,5 +1,4 @@
 import React from "react"
-import { AppContainer } from "v2/Apps/Components/AppContainer"
 import { AuctionsApp_viewer } from "v2/__generated__/AuctionsApp_viewer.graphql"
 import { AuctionsMeta } from "./Components/AuctionsMeta"
 import { MyBidsFragmentContainer } from "./Components/MyBids/MyBids"
@@ -23,7 +22,7 @@ const AuctionsApp: React.FC<AuctionsAppProps> = props => {
   const { user } = useSystemContext()
 
   return (
-    <AppContainer>
+    <>
       <AuctionsMeta />
       <GridColumns>
         <Column span={[12, 6]}>
@@ -89,7 +88,7 @@ const AuctionsApp: React.FC<AuctionsAppProps> = props => {
           </>
         )}
       </HorizontalPadding>
-    </AppContainer>
+    </>
   )
 }
 

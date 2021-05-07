@@ -1,5 +1,4 @@
 import React from "react"
-import { AppContainer } from "v2/Apps/Components/AppContainer"
 import { Box, Separator, Spacer } from "@artsy/palette"
 
 import { createFragmentContainer, graphql } from "react-relay"
@@ -36,7 +35,7 @@ const ArtistSeriesApp: React.FC<ArtistSeriesAppProps> = ({ artistSeries }) => {
           contextPageOwnerType,
         }}
       >
-        <AppContainer maxWidth="100%">
+        <>
           {/* NOTE: react-head automatically moves these tags to the <head> element */}
           <ArtistSeriesMeta artistSeries={artistSeries} />
           <ArtistSeriesHeader artistSeries={artistSeries} />
@@ -47,7 +46,7 @@ const ArtistSeriesApp: React.FC<ArtistSeriesAppProps> = ({ artistSeries }) => {
             <Media at="xs">
               <Separator my={2} />
             </Media>
-            <AppContainer>
+            <>
               <ArtistSeriesArtworksFilter
                 aggregations={
                   sidebarAggregations.aggregations as SharedArtworkFilterContextProps["aggregations"]
@@ -70,9 +69,9 @@ const ArtistSeriesApp: React.FC<ArtistSeriesAppProps> = ({ artistSeries }) => {
                   />
                 </LazyLoadComponent>
               )}
-            </AppContainer>
+            </>
           </Box>
-        </AppContainer>
+        </>
       </AnalyticsContext.Provider>
     )
   } else {

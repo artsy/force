@@ -93,21 +93,19 @@ const ArtistSeriesHeaderLarge: React.FC<ArtistSeriesHeaderProps> = props => {
   return (
     <>
       <Box m={2}>
-        <AppContainer>
-          <Flex alignItems="center" justifyContent="center" position="relative">
-            <Flex position="absolute" left={0}>
-              {artists.length && (
-                <ArtistInfo
-                  contextOwnerId={internalID}
-                  contextOwnerSlug={slug}
-                  artist={artists[0]}
-                />
-              )}
-            </Flex>
-
-            <Text variant="text">Series</Text>
+        <Flex alignItems="center" justifyContent="center" position="relative">
+          <Flex position="absolute" left={0}>
+            {artists.length && (
+              <ArtistInfo
+                contextOwnerId={internalID}
+                contextOwnerSlug={slug}
+                artist={artists[0]}
+              />
+            )}
           </Flex>
-        </AppContainer>
+
+          <Text variant="text">Series</Text>
+        </Flex>
       </Box>
 
       <Separator />

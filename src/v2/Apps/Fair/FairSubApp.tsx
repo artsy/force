@@ -1,5 +1,4 @@
 import React from "react"
-import { AppContainer } from "v2/Apps/Components/AppContainer"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FairSubApp_fair } from "v2/__generated__/FairSubApp_fair.graphql"
 import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
@@ -25,7 +24,7 @@ const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
     <>
       <FairMeta fair={fair} />
 
-      <AppContainer>
+      <>
         <HorizontalPadding>
           <BackLink my={3} to={`/fair/${fair.slug}`}>
             Back to {fair.name}
@@ -33,7 +32,7 @@ const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
 
           {children}
         </HorizontalPadding>
-      </AppContainer>
+      </>
     </>
   )
 }

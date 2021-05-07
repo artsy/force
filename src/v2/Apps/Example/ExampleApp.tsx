@@ -1,5 +1,4 @@
 import React from "react"
-import { AppContainer } from "v2/Apps/Components/AppContainer"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ExampleApp_system } from "v2/__generated__/ExampleApp_system.graphql"
 import {
@@ -31,7 +30,7 @@ const ExampleApp: React.FC<ExampleAppProps> = ({ system, children }) => {
       <>
         <ExampleAppMeta />
 
-        <AppContainer>
+        <>
           <HorizontalPadding>
             <Box mt={2}>
               <Text variant="xl">Hello Artsy Dev!</Text>
@@ -62,7 +61,7 @@ const ExampleApp: React.FC<ExampleAppProps> = ({ system, children }) => {
             <Separator />
             <Box my={2}>{children}</Box>
           </HorizontalPadding>
-        </AppContainer>
+        </>
       </>
     </ThemeProviderV3>
   )

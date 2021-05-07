@@ -1,5 +1,4 @@
 import { PurchaseApp_me } from "v2/__generated__/PurchaseApp_me.graphql"
-import { AppContainer } from "v2/Apps/Components/AppContainer"
 import React from "react"
 import { Title } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -13,11 +12,11 @@ export interface PurchaseAppProps {
 export const PurchaseApp = (props: any) => {
   const { me } = props
   return (
-    <AppContainer>
+    <>
       <Title>My Orders | Artsy</Title>
       <Spacer mt={2} />
       <PurchaseHistory me={me} />
-    </AppContainer>
+    </>
   )
 }
 

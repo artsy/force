@@ -2,7 +2,6 @@ import { Box, ChevronIcon, Col, Flex, Row, Sans, Spacer } from "@artsy/palette"
 import { ArtistApp_artist } from "v2/__generated__/ArtistApp_artist.graphql"
 import { ArtistMetaFragmentContainer as ArtistMeta } from "v2/Apps/Artist/Components/ArtistMeta"
 import { NavigationTabsFragmentContainer as NavigationTabs } from "v2/Apps/Artist/Components/NavigationTabs"
-import { AppContainer } from "v2/Apps/Components/AppContainer"
 import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
 import { useTracking } from "v2/Artsy"
 import { track } from "v2/Artsy/Analytics"
@@ -43,7 +42,7 @@ export const ArtistApp: React.FC<ArtistAppProps> = props => {
   }
 
   return (
-    <AppContainer maxWidth={maxWidth}>
+    <>
       <ArtistMeta artist={artist} />
       {route.displayNavigationTabs && (
         <Row>
@@ -117,7 +116,7 @@ export const ArtistApp: React.FC<ArtistAppProps> = props => {
           </>
         )}
       </HorizontalPaddingArea>
-    </AppContainer>
+    </>
   )
 }
 

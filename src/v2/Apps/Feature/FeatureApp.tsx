@@ -1,5 +1,4 @@
 import React from "react"
-import { AppContainer } from "v2/Apps/Components/AppContainer"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FeatureMetaFragmentContainer as FeatureMeta } from "./Components/FeatureMeta"
 import { FeatureHeaderFragmentContainer as FeatureHeader } from "./Components/FeatureHeader"
@@ -21,7 +20,7 @@ const FeatureApp: React.FC<FeatureAppProps> = ({ feature }) => {
 
       <FeatureHeader feature={feature} />
 
-      <AppContainer>
+      <>
         <HorizontalPadding>
           {(feature.description || feature.callout) && (
             <Grid my={3} px={3}>
@@ -46,7 +45,7 @@ const FeatureApp: React.FC<FeatureAppProps> = ({ feature }) => {
               ({ node: set }) => set && <FeatureSet key={set.id} set={set} />
             )}
         </HorizontalPadding>
-      </AppContainer>
+      </>
     </>
   )
 }

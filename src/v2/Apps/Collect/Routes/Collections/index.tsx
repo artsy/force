@@ -1,6 +1,5 @@
 import { Box, Button, Flex, Text } from "@artsy/palette"
 import { Collections_marketingCategories } from "v2/__generated__/Collections_marketingCategories.graphql"
-import { AppContainer } from "v2/Apps/Components/AppContainer"
 import { withSystemContext } from "v2/Artsy"
 import { FrameWithRecentlyViewed } from "v2/Components/FrameWithRecentlyViewed"
 import { BreadCrumbList } from "v2/Components/Seo"
@@ -40,7 +39,7 @@ export class CollectionsApp extends Component<CollectionsAppProps> {
           items={[{ name: "Collections", path: "/collections" }]}
         />
 
-        <AppContainer>
+        <>
           <FrameWithRecentlyViewed>
             <Flex
               mt={3}
@@ -70,7 +69,7 @@ export class CollectionsApp extends Component<CollectionsAppProps> {
                   )
                 })}
           </FrameWithRecentlyViewed>
-        </AppContainer>
+        </>
       </>
     )
   }

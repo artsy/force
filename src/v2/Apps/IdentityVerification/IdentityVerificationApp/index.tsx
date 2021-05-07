@@ -1,7 +1,6 @@
 import { Box, Button, Link, Sans, Serif } from "@artsy/palette"
 import { IdentityVerificationApp_me } from "v2/__generated__/IdentityVerificationApp_me.graphql"
 import { IdentityVerificationAppStartMutation } from "v2/__generated__/IdentityVerificationAppStartMutation.graphql"
-import { AppContainer } from "v2/Apps/Components/AppContainer"
 import * as Schema from "v2/Artsy/Analytics/Schema"
 import { ErrorModal } from "v2/Components/Modal/ErrorModal"
 import React, { useState } from "react"
@@ -118,7 +117,7 @@ const IdentityVerificationApp: React.FC<Props> = ({ me, relay }) => {
   }
 
   return (
-    <AppContainer>
+    <>
       <HeadTitle>Artsy | ID Verification</HeadTitle>
       {AlternateComponent ? (
         <AlternateComponent />
@@ -191,7 +190,7 @@ const IdentityVerificationApp: React.FC<Props> = ({ me, relay }) => {
           </Box>
         </>
       )}
-    </AppContainer>
+    </>
   )
 }
 

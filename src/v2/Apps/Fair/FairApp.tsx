@@ -1,5 +1,4 @@
 import React from "react"
-import { AppContainer } from "v2/Apps/Components/AppContainer"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FairApp_fair } from "v2/__generated__/FairApp_fair.graphql"
 import { Box, CSSGrid, Text } from "@artsy/palette"
@@ -69,7 +68,7 @@ const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
     <>
       <FairMetaFragmentContainer fair={fair} />
 
-      <AppContainer>
+      <>
         <HorizontalPadding>
           <FairHeaderFragmentContainer fair={fair} />
 
@@ -147,7 +146,7 @@ const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
 
           {children}
         </HorizontalPadding>
-      </AppContainer>
+      </>
     </>
   )
 }
