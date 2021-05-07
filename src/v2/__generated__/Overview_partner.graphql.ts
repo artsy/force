@@ -159,5 +159,5 @@ const node: ReaderFragment = {
   ],
   "type": "Partner"
 };
-(node as any).hash = '8e8f5c11d70c24b47749cc3bfb3c39b8';
+(node as any).hash = 'defd689131e06d6a812f29d607e9e5b7';
 export default node;

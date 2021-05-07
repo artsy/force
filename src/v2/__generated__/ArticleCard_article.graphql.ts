@@ -102,12 +102,12 @@ return {
             {
               "kind": "Literal",
               "name": "height",
-              "value": 320
+              "value": 300
             },
             {
               "kind": "Literal",
               "name": "width",
-              "value": 357
+              "value": 400
             }
           ],
           "concreteType": "CroppedImageUrl",
@@ -144,7 +144,7 @@ return {
               "storageKey": null
             }
           ],
-          "storageKey": "cropped(height:320,width:357)"
+          "storageKey": "cropped(height:300,width:400)"
         }
       ],
       "storageKey": null
@@ -153,5 +153,5 @@ return {
   "type": "Article"
 };
 })();
-(node as any).hash = 'a9b0ec177274cb745cf0eac203a64b8b';
+(node as any).hash = '71953c97a72df5280f08f018bbb9c7a5';
 export default node;
