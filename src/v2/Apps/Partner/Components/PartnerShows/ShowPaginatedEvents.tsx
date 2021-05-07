@@ -52,11 +52,11 @@ const ShowPaginatedEvents: React.FC<ShowEventsProps> = ({
   } = partner
 
   const handleClick = (cursor: string, page: number) => {
-    const refetchPage = paramsPage !== page
+    const canRefetch = paramsPage !== page
 
-    refetchPage && setIsLoading(true)
+    canRefetch && setIsLoading(true)
 
-    refetchPage &&
+    canRefetch &&
       relay.refetch(
         {
           first: 40,

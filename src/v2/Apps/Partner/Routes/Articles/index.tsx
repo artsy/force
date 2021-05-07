@@ -35,11 +35,11 @@ const Articles: React.FC<ArticlesProps> = ({ partner, relay }) => {
 
   const handleClick = (cursor: string, page: number) => {
     const paramsPage = +location.query.page || 1
-    const refetchPage = paramsPage !== page
+    const canRefetch = paramsPage !== page
 
-    refetchPage && setIsLoading(true)
+    canRefetch && setIsLoading(true)
 
-    refetchPage &&
+    canRefetch &&
       relay.refetch(
         {
           first: 18,
