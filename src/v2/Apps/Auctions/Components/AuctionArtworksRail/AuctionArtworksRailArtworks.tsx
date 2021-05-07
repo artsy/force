@@ -10,6 +10,7 @@ import { useTracking } from "react-tracking"
 import { AuthContextModule, clickedArtworkGroup } from "@artsy/cohesion"
 import { tabTypeToContextModuleMap } from "../../Utils/tabTypeToContextModuleMap"
 import { ShelfArtworkFragmentContainer } from "v2/Components/Artwork/ShelfArtwork"
+import { extractNodes } from "v2/Utils/extractNodes"
 
 export interface AuctionArtworksRailArtworksProps {
   sale: AuctionArtworksRailArtworks_sale
@@ -24,13 +25,15 @@ const AuctionArtworksRailArtworks: React.FC<AuctionArtworksRailArtworksProps> = 
   const { contextPageOwnerType } = useAnalyticsContext()
   const contextModule = tabTypeToContextModuleMap[tabType] as AuthContextModule
 
-  if (sale.artworksConnection.edges.length === 0) {
+  const nodes = extractNodes(sale.artworksConnection)
+
+  if (nodes.length === 0) {
     return null
   }
 
   return (
     <Shelf>
-      {sale.artworksConnection.edges.map(({ node }, index) => {
+      {nodes.map((node, index) => {
         return (
           <ShelfArtworkFragmentContainer
             artwork={node}

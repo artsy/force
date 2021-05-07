@@ -37,6 +37,16 @@ describe("PastAuctions", () => {
     })
   })
 
+  it("guards against null data", () => {
+    expect(() =>
+      getWrapper({
+        SaleConnection: () => ({
+          edges: null,
+        }),
+      })
+    ).not.toThrowError()
+  })
+
   it("renders zerostate if no auctions", () => {
     const wrapper = getWrapper({
       SaleConnection: () => ({
