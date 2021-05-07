@@ -9,11 +9,15 @@ import Metadata from "./Metadata"
 import { AuthContextModule } from "@artsy/cohesion"
 import styled from "styled-components"
 import { Flex } from "@artsy/palette"
+import { Media } from "v2/Utils/Responsive"
 
 /**
  * The max height for an image in the carousel
  */
-export const MAX_IMG_HEIGHT = 320
+export const IMG_HEIGHT = {
+  mobile: 250,
+  desktop: 320,
+}
 
 interface ShelfArtworkProps {
   artwork: ShelfArtwork_artwork
@@ -39,10 +43,35 @@ const ShelfArtwork: React.FC<ShelfArtworkProps> = ({
   showMetadata = true,
 }) => {
   const { mediator, user } = useSystemContext()
-  const imgHeight =
-    artwork.image.resized.height > MAX_IMG_HEIGHT
-      ? MAX_IMG_HEIGHT
+
+  const getHeight = (size: keyof typeof IMG_HEIGHT) => {
+    return artwork.image.resized.height > IMG_HEIGHT[size]
+      ? IMG_HEIGHT[size]
       : artwork.image.resized.height
+  }
+
+  const ResponsiveContainer = ({ children }) => {
+    return (
+      <>
+        <Media at="xs">
+          <Container
+            width={artwork.image.resized.width}
+            height={getHeight("mobile")}
+          >
+            {children}
+          </Container>
+        </Media>
+        <Media greaterThan="xs">
+          <Container
+            width={artwork.image.resized.width}
+            height={getHeight("desktop")}
+          >
+            {children}
+          </Container>
+        </Media>
+      </>
+    )
+  }
 
   return (
     <Box>
@@ -53,12 +82,12 @@ const ShelfArtwork: React.FC<ShelfArtworkProps> = ({
           onClick && onClick()
         }}
       >
-        <Container width={artwork.image.resized.width} height={imgHeight}>
+        <ResponsiveContainer>
           <Image
             src={artwork.image.resized.src}
             srcSet={artwork.image.resized.srcSet}
             width={artwork.image.resized.width}
-            height={imgHeight}
+            maxHeight={[IMG_HEIGHT.mobile, IMG_HEIGHT.desktop]}
             lazyLoad={lazyLoad}
             style={{ objectFit: "contain" }}
           />
@@ -69,7 +98,7 @@ const ShelfArtwork: React.FC<ShelfArtworkProps> = ({
             contextModule={contextModule}
             artwork={artwork}
           />
-        </Container>
+        </ResponsiveContainer>
       </RouterLink>
 
       {showMetadata && (
