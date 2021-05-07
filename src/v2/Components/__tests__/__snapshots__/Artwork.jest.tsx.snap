@@ -1,50 +1,36 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Artwork renders correctly 1`] = `
-.c4 {
+.c3 {
   text-align: left;
   margin-top: 4px;
 }
 
-.c8 {
+.c7 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
 }
 
+.c5 {
+  font-family: sans;
+}
+
 .c6 {
-  font-family: sans;
-}
-
-.c7 {
   color: black60;
   color: black60;
   font-family: sans;
 }
 
-.c9 {
+.c8 {
   color: black60;
   color: black60;
   font-weight: normal;
   font-family: sans;
 }
 
-.c3 {
-  color: #000;
-  -webkit-transition: color 0.25s;
-  transition: color 0.25s;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-}
-
-.c3:hover {
-  -webkit-text-decoration: none;
-  text-decoration: none;
-  color: #000;
-}
-
-.c5 {
+.c4 {
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
@@ -117,21 +103,25 @@ exports[`Artwork renders correctly 1`] = `
     />
   </div>
   <a
-    className="c3"
     href="/artwork/mikael-olson-some-kind-of-dinosaur"
+    style={
+      Object {
+        "textDecoration": "none",
+      }
+    }
   >
     <div
-      className="c4"
+      className="c3"
     >
       <div
-        className="c5"
+        className="c4"
       >
         <div
-          className="c6"
+          className="c5"
           fontFamily="sans"
         >
           <div
-            className="c6"
+            className="c5"
             fontFamily="sans"
           >
             Mikael Olson
@@ -139,10 +129,10 @@ exports[`Artwork renders correctly 1`] = `
         </div>
       </div>
       <div
-        className="c5"
+        className="c4"
       >
         <div
-          className="c7"
+          className="c6"
           color="black60"
           fontFamily="sans"
         >
@@ -153,10 +143,10 @@ exports[`Artwork renders correctly 1`] = `
         </div>
       </div>
       <div
-        className="c5"
+        className="c4"
       >
         <div
-          className="c7"
+          className="c6"
           color="black60"
           fontFamily="sans"
         >
@@ -164,14 +154,14 @@ exports[`Artwork renders correctly 1`] = `
         </div>
       </div>
       <div
-        className="c8"
+        className="c7"
         display="flex"
       >
         <div
-          className="c5"
+          className="c4"
         >
           <div
-            className="c9"
+            className="c8"
             color="black60"
             fontFamily="sans"
             fontWeight="normal"

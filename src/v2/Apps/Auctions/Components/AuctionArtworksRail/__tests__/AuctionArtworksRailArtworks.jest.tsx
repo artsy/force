@@ -55,7 +55,7 @@ describe("AuctionArtworksRailArtworks", () => {
       }),
     })
 
-    expect(wrapper.find("Carousel")).toBeDefined()
+    expect(wrapper.find("Shelf")).toBeDefined()
     expect(wrapper.find("FillwidthItem")).toBeDefined()
   })
 

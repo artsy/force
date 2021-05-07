@@ -1,17 +1,15 @@
 import React from "react"
-import { Box } from "@artsy/palette"
+import { Shelf } from "@artsy/palette"
 import { QueryRenderer, createFragmentContainer, graphql } from "react-relay"
 import { useAnalyticsContext, useSystemContext } from "v2/Artsy"
 import { AuctionArtworksRailArtworksQuery } from "v2/__generated__/AuctionArtworksRailArtworksQuery.graphql"
 import { AuctionArtworksRailArtworks_sale } from "v2/__generated__/AuctionArtworksRailArtworks_sale.graphql"
-import { Carousel } from "v2/Components/Carousel"
-import FillwidthItem from "v2/Components/Artwork/FillwidthItem"
 import { TabType } from "./AuctionArtworksRail"
 import { AuctionArtworksRailPlaceholder } from "../AuctionArtworksRailPlaceholder"
 import { useTracking } from "react-tracking"
-import { clickedArtworkGroup } from "@artsy/cohesion"
+import { AuthContextModule, clickedArtworkGroup } from "@artsy/cohesion"
 import { tabTypeToContextModuleMap } from "../../Utils/tabTypeToContextModuleMap"
-import { auctionHeights } from "../../Utils/auctionsHelpers"
+import { ShelfArtworkFragmentContainer } from "v2/Components/Artwork/ShelfArtwork"
 
 export interface AuctionArtworksRailArtworksProps {
   sale: AuctionArtworksRailArtworks_sale
@@ -22,42 +20,38 @@ const AuctionArtworksRailArtworks: React.FC<AuctionArtworksRailArtworksProps> = 
   sale,
   tabType,
 }) => {
-  const tracking = useTracking()
+  const { trackEvent } = useTracking()
   const { contextPageOwnerType } = useAnalyticsContext()
-  const contextModule = tabTypeToContextModuleMap[tabType]
+  const contextModule = tabTypeToContextModuleMap[tabType] as AuthContextModule
 
   if (sale.artworksConnection.edges.length === 0) {
     return null
   }
 
   return (
-    <Box height={auctionHeights.artworksRail}>
-      <Carousel arrowHeight={auctionHeights.artworksImage}>
-        {sale.artworksConnection.edges.map(({ node }, index) => {
-          return (
-            <FillwidthItem
-              key={index}
-              contextModule={contextModule}
-              artwork={node}
-              imageHeight={auctionHeights.artworksImage}
-              hidePartnerName
-              lazyLoad
-              onClick={() => {
-                tracking.trackEvent(
-                  clickedArtworkGroup({
-                    contextModule,
-                    contextPageOwnerType,
-                    artworkID: node.internalID,
-                    artworkSlug: node.slug,
-                    horizontalSlidePosition: index,
-                  })
-                )
-              }}
-            />
-          )
-        })}
-      </Carousel>
-    </Box>
+    <Shelf>
+      {sale.artworksConnection.edges.map(({ node }, index) => {
+        return (
+          <ShelfArtworkFragmentContainer
+            artwork={node}
+            key={node.slug}
+            contextModule={contextModule}
+            hidePartnerName
+            onClick={() => {
+              trackEvent(
+                clickedArtworkGroup({
+                  contextModule,
+                  contextPageOwnerType,
+                  artworkID: node.internalID,
+                  artworkSlug: node.slug,
+                  horizontalSlidePosition: index,
+                })
+              )
+            }}
+          />
+        )
+      })}
+    </Shelf>
   )
 }
 
@@ -71,7 +65,7 @@ export const AuctionArtworksRailArtworksFragmentContainer = createFragmentContai
             node {
               internalID
               slug
-              ...FillwidthItem_artwork
+              ...ShelfArtwork_artwork @arguments(width: 200)
             }
           }
         }

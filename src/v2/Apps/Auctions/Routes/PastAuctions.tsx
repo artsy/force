@@ -53,7 +53,7 @@ const PastAuctions: React.FC<PastAuctionsProps> = ({ viewer, relay }) => {
       <Box>
         {viewer.salesConnection.edges.map(({ node }, index) => {
           return (
-            <Box my={4} key={index}>
+            <Box my={6} key={index}>
               <AuctionArtworksRailFragmentContainer
                 sale={node}
                 tabType="past"
