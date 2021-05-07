@@ -30,7 +30,7 @@ export type ShowPaginatedEvents_partner$key = {
 const node: ReaderFragment = {
   "argumentDefinitions": [
     {
-      "defaultValue": 24,
+      "defaultValue": 40,
       "kind": "LocalArgument",
       "name": "first",
       "type": "Int"
@@ -64,6 +64,12 @@ const node: ReaderFragment = {
       "kind": "LocalArgument",
       "name": "status",
       "type": "EventStatus"
+    },
+    {
+      "defaultValue": true,
+      "kind": "LocalArgument",
+      "name": "isDisplayable",
+      "type": "Boolean"
     }
   ],
   "kind": "Fragment",
@@ -94,6 +100,11 @@ const node: ReaderFragment = {
           "kind": "Variable",
           "name": "first",
           "variableName": "first"
+        },
+        {
+          "kind": "Variable",
+          "name": "isDisplayable",
+          "variableName": "isDisplayable"
         },
         {
           "kind": "Variable",
@@ -179,5 +190,5 @@ const node: ReaderFragment = {
   ],
   "type": "Partner"
 };
-(node as any).hash = '0796f9ebb9c7906f547fb20143e880e6';
+(node as any).hash = '0af75016e048646a50556989af3d7c4e';
 export default node;

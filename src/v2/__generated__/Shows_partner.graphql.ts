@@ -36,10 +36,15 @@ export type Shows_partner$key = {
 const node: ReaderFragment = (function(){
 var v0 = {
   "kind": "Literal",
+  "name": "isDisplayable",
+  "value": true
+},
+v1 = {
+  "kind": "Literal",
   "name": "first",
   "value": 12
 },
-v1 = [
+v2 = [
   {
     "alias": null,
     "args": null,
@@ -78,11 +83,7 @@ return {
           "name": "first",
           "value": 1
         },
-        {
-          "kind": "Literal",
-          "name": "isDisplayable",
-          "value": true
-        },
+        (v0/*: any*/),
         {
           "kind": "Literal",
           "name": "sort",
@@ -139,6 +140,7 @@ return {
     {
       "alias": "currentEvents",
       "args": [
+        (v1/*: any*/),
         (v0/*: any*/),
         {
           "kind": "Literal",
@@ -150,12 +152,13 @@ return {
       "kind": "LinkedField",
       "name": "showsConnection",
       "plural": false,
-      "selections": (v1/*: any*/),
-      "storageKey": "showsConnection(first:12,status:\"RUNNING\")"
+      "selections": (v2/*: any*/),
+      "storageKey": "showsConnection(first:12,isDisplayable:true,status:\"RUNNING\")"
     },
     {
       "alias": "upcomingEvents",
       "args": [
+        (v1/*: any*/),
         (v0/*: any*/),
         {
           "kind": "Literal",
@@ -167,12 +170,12 @@ return {
       "kind": "LinkedField",
       "name": "showsConnection",
       "plural": false,
-      "selections": (v1/*: any*/),
-      "storageKey": "showsConnection(first:12,status:\"UPCOMING\")"
+      "selections": (v2/*: any*/),
+      "storageKey": "showsConnection(first:12,isDisplayable:true,status:\"UPCOMING\")"
     }
   ],
   "type": "Partner"
 };
 })();
-(node as any).hash = 'b62889efe000f4a90c736b7907655ee1';
+(node as any).hash = 'bab1be09c87841bf9381c9ff73d914f5';
 export default node;
