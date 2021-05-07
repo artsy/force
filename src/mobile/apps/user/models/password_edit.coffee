@@ -17,14 +17,14 @@ module.exports = class PasswordEdit extends CurrentUser
     "#{super}/password"
 
   errorMessages:
-    new_password_min: "Minimum 6 characters."
+    new_password_min: "Minimum 8 characters."
     new_password_same: "Your new password must be different."
     password_confirmation: "Passwords don't match up. Please try again."
 
   validate: (attrs, options) ->
     errors = {}
 
-    if attrs.new_password and attrs.new_password.length < 6
+    if attrs.new_password and attrs.new_password.length < 8
       errors.new_password = @errorMessages.new_password_min
     else if attrs.new_password and attrs.new_password is attrs.current_password
       errors.new_password = @errorMessages.new_password_same
