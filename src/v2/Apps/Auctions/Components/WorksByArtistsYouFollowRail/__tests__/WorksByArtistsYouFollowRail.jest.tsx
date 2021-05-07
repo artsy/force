@@ -38,6 +38,16 @@ describe("WorksByArtistsYouFollowRail", () => {
     jest.clearAllMocks()
   })
 
+  it("guards against null data", () => {
+    expect(() =>
+      getWrapper({
+        SaleArtworksConnection: () => ({
+          edges: null,
+        }),
+      })
+    ).not.toThrowError()
+  })
+
   it("does not render if no followed artists", () => {
     const wrapper = getWrapper({
       SaleArtworksConnection: () => ({

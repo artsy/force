@@ -8,6 +8,7 @@ import {
 
 import { UpcomingAuctions_viewer } from "v2/__generated__/UpcomingAuctions_viewer.graphql"
 import { AuctionArtworksRailFragmentContainer } from "../Components/AuctionArtworksRail/AuctionArtworksRail"
+import { extractNodes } from "v2/Utils/extractNodes"
 
 export interface UpcomingAuctionsProps {
   viewer: UpcomingAuctions_viewer
@@ -43,7 +44,9 @@ const UpcomingAuctions: React.FC<UpcomingAuctionsProps> = ({
     })
   }
 
-  if (viewer.salesConnection.edges.length === 0) {
+  const nodes = extractNodes(viewer.salesConnection)
+
+  if (nodes.length === 0) {
     return (
       <Box>
         <Text>No upcoming auctions.</Text>
@@ -54,7 +57,7 @@ const UpcomingAuctions: React.FC<UpcomingAuctionsProps> = ({
   return (
     <>
       <Box>
-        {viewer.salesConnection.edges.map(({ node }, index) => {
+        {nodes.map((node, index) => {
           return (
             <Box my={6} key={index}>
               <AuctionArtworksRailFragmentContainer
