@@ -63,7 +63,7 @@ export const AuctionArtworksRail: React.FC<AuctionArtworksRailProps> = ({
       <Waypoint />
 
       <Box ref={ref as any} {...rest}>
-        <Box display="flex" mb={4}>
+        <Box display="flex" mb={[2, 4]} pr={[1, 0]}>
           <Box flex="1">
             <Text as="h3" variant="lg" color="black100">
               <RouterLink

@@ -28,7 +28,7 @@ const AuctionsApp: React.FC<AuctionsAppProps> = props => {
       <GridColumns>
         <Column span={[12, 6]}>
           <HorizontalPadding>
-            <Text mt={4} mb={[0, 1]} variant="xxl" as="h1">
+            <Text mt={4} mb={1} variant={["xl", "xxl"]} as="h1">
               Auctions
             </Text>
           </HorizontalPadding>
@@ -69,7 +69,7 @@ const AuctionsApp: React.FC<AuctionsAppProps> = props => {
         </>
       )}
 
-      <Spacer my={12} />
+      <Spacer my={[4, 12]} />
 
       <HorizontalPadding>
         <RouteTabs mb={2} fill>
