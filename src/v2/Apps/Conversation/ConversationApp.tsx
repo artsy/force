@@ -1,6 +1,5 @@
 import { ConversationApp_me } from "v2/__generated__/ConversationApp_me.graphql"
 import { ConversationListPaginationContainer as ConversationList } from "v2/Apps/Conversation/Components/ConversationList"
-import { findCurrentRoute } from "v2/Artsy/Router/Utils/findCurrentRoute"
 import { Match, Router } from "found"
 import React, { useEffect, useState } from "react"
 import { Title } from "react-head"
@@ -50,7 +49,6 @@ const Inbox: React.FC<InboxProps> = ({ selectedConversation, me }) => {
 export const ConversationApp: React.FC<ConversationAppProps> = props => {
   const { me, router } = props
   const [width, setWidth] = useState(0)
-  const route = findCurrentRoute(props.match)
 
   const firstConversation = me?.conversationsConnection?.edges[0]?.node
 

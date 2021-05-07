@@ -17,6 +17,7 @@ import { ConnectedModalDialog } from "./Dialogs"
 import { Mediator } from "lib/mediator"
 import { data as sd } from "sharify"
 import { ZendeskWrapper } from "v2/Components/ZendeskWrapper"
+import { HorizontalPadding } from "../Components/HorizontalPadding"
 
 export interface OrderAppProps extends RouterState {
   params: {
@@ -180,7 +181,7 @@ class OrderApp extends React.Component<OrderAppProps, {}> {
               */}
               <div id="main-layout-flash" />
               <MinimalNavBar to={artworkHref}>
-                <>
+                <HorizontalPadding>
                   <Title>Checkout | Artsy</Title>
                   {isEigen ? (
                     <Meta
@@ -200,7 +201,7 @@ class OrderApp extends React.Component<OrderAppProps, {}> {
                   </SafeAreaContainer>
                   <StickyFooter orderType={order.mode} artworkId={artworkId} />
                   <ConnectedModalDialog />
-                </>
+                </HorizontalPadding>
               </MinimalNavBar>
             </Box>
           )

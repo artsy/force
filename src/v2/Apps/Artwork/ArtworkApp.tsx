@@ -6,7 +6,6 @@ import { data as sd } from "sharify"
 
 import { ArtworkApp_artwork } from "v2/__generated__/ArtworkApp_artwork.graphql"
 import { ArtworkApp_me } from "v2/__generated__/ArtworkApp_me.graphql"
-import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
 
 import { ArtistInfoFragmentContainer as ArtistInfo } from "./Components/ArtistInfo"
 import { ArtworkBannerFragmentContainer as ArtworkBanner } from "./Components/ArtworkBanner"
@@ -219,7 +218,7 @@ export class ArtworkApp extends React.Component<Props> {
          */}
         <div id="main-layout-flash" />
         <ReCaptchaContainer />
-        <HorizontalPadding>
+        <>
           {/* NOTE: react-head automatically moves these tags to the <head> element */}
           <ArtworkMeta artwork={artwork} />
 
@@ -301,7 +300,7 @@ export class ArtworkApp extends React.Component<Props> {
               zIndex: 1100, // over top nav
             }}
           />
-        </HorizontalPadding>
+        </>
       </>
     )
   }

@@ -2,7 +2,6 @@ import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FairApp_fair } from "v2/__generated__/FairApp_fair.graphql"
 import { Box, CSSGrid, Text } from "@artsy/palette"
-import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
 import {
   FairEditorialFragmentContainer,
   FAIR_EDITORIAL_AMOUNT,
@@ -68,85 +67,77 @@ const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
     <>
       <FairMetaFragmentContainer fair={fair} />
 
-      <>
-        <HorizontalPadding>
-          <FairHeaderFragmentContainer fair={fair} />
+      <FairHeaderFragmentContainer fair={fair} />
 
-          {hasArticles && (
-            <Box my={3} pt={3} borderTop="1px solid" borderColor="black10">
-              <Box display="flex" justifyContent="space-between">
-                <Text variant="subtitle" as="h3" mb={2}>
-                  Related Reading
+      {hasArticles && (
+        <Box my={3} pt={3} borderTop="1px solid" borderColor="black10">
+          <Box display="flex" justifyContent="space-between">
+            <Text variant="subtitle" as="h3" mb={2}>
+              Related Reading
+            </Text>
+
+            {fair.articlesConnection.totalCount > FAIR_EDITORIAL_AMOUNT && (
+              <RouterLink to={`${fair.href}/articles`} noUnderline>
+                <Text variant="subtitle" color="black60">
+                  View all
                 </Text>
+              </RouterLink>
+            )}
+          </Box>
 
-                {fair.articlesConnection.totalCount > FAIR_EDITORIAL_AMOUNT && (
-                  <RouterLink to={`${fair.href}/articles`} noUnderline>
-                    <Text variant="subtitle" color="black60">
-                      View all
-                    </Text>
-                  </RouterLink>
-                )}
-              </Box>
+          <CSSGrid
+            gridAutoFlow="row"
+            gridColumnGap={3}
+            gridRowGap={2}
+            gridTemplateColumns={["repeat(1, 1fr)", "repeat(2, 1fr)"]}
+          >
+            <FairEditorialFragmentContainer fair={fair} />
+          </CSSGrid>
+        </Box>
+      )}
 
-              <CSSGrid
-                gridAutoFlow="row"
-                gridColumnGap={3}
-                gridRowGap={2}
-                gridTemplateColumns={["repeat(1, 1fr)", "repeat(2, 1fr)"]}
-              >
-                <FairEditorialFragmentContainer fair={fair} />
-              </CSSGrid>
-            </Box>
-          )}
+      {hasCollections && (
+        <Box my={3} pt={3} borderTop="1px solid" borderColor="black10">
+          <Text variant="subtitle" as="h3" mb={2}>
+            Curated Highlights
+          </Text>
 
-          {hasCollections && (
-            <Box my={3} pt={3} borderTop="1px solid" borderColor="black10">
-              <Text variant="subtitle" as="h3" mb={2}>
-                Curated Highlights
-              </Text>
+          <FairCollectionsFragmentContainer fair={fair} />
+        </Box>
+      )}
 
-              <FairCollectionsFragmentContainer fair={fair} />
-            </Box>
-          )}
+      {!!user && (
+        <FairFollowedArtistsFragmentContainer
+          fair={fair}
+          my={3}
+          pt={3}
+          borderTop="1px solid"
+          borderColor="black10"
+        />
+      )}
 
-          {!!user && (
-            <FairFollowedArtistsFragmentContainer
-              fair={fair}
-              my={3}
-              pt={3}
-              borderTop="1px solid"
-              borderColor="black10"
-            />
-          )}
+      <RouteTabs position="relative">
+        <RouteTab
+          to={fair.href}
+          exact
+          onClick={() => tracking.trackEvent(clickedExhibitorsTabTrackingData)}
+        >
+          Exhibitors
+        </RouteTab>
 
-          <RouteTabs position="relative">
-            <RouteTab
-              to={fair.href}
-              exact
-              onClick={() =>
-                tracking.trackEvent(clickedExhibitorsTabTrackingData)
-              }
-            >
-              Exhibitors
-            </RouteTab>
+        <RouteTab
+          to={`${fair.href}/artworks`}
+          exact
+          onClick={() => tracking.trackEvent(clickedArtworksTabTrackingData)}
+        >
+          Artworks
+          <Text variant="text" display="inline">
+            &nbsp;({artworkCount})
+          </Text>
+        </RouteTab>
+      </RouteTabs>
 
-            <RouteTab
-              to={`${fair.href}/artworks`}
-              exact
-              onClick={() =>
-                tracking.trackEvent(clickedArtworksTabTrackingData)
-              }
-            >
-              Artworks
-              <Text variant="text" display="inline">
-                &nbsp;({artworkCount})
-              </Text>
-            </RouteTab>
-          </RouteTabs>
-
-          {children}
-        </HorizontalPadding>
-      </>
+      {children}
     </>
   )
 }

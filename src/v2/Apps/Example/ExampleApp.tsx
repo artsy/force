@@ -15,7 +15,6 @@ import {
   RouterLinkProps,
 } from "v2/Artsy/Router/RouterLink"
 import { ExampleAppMeta } from "./Components/ExampleAppMeta"
-import { HorizontalPadding } from "../Components/HorizontalPadding"
 import styled from "styled-components"
 
 export interface ExampleAppProps {
@@ -30,38 +29,34 @@ const ExampleApp: React.FC<ExampleAppProps> = ({ system, children }) => {
       <>
         <ExampleAppMeta />
 
-        <>
-          <HorizontalPadding>
-            <Box mt={2}>
-              <Text variant="xl">Hello Artsy Dev!</Text>
-              <Text>
-                Wecome to our framework example app. See the links below for a
-                few possibilities.
-              </Text>
-            </Box>
-            <Flex mt={2}>
-              <Join separator={<Spacer mx={2} />}>
-                <RouterLink to="/example" exact>
-                  <Text>Welcome</Text>
-                </RouterLink>
-                <RouterLink to="/example/artist/andy-warhol">
-                  <Text>Artist page</Text>
-                </RouterLink>
-                <RouterLink to="/example/artwork/andy-warhol-dollar-sign-144">
-                  <Text>Artwork page</Text>
-                </RouterLink>
-                <RouterLink to="/example/artwork-filter/guitar">
-                  <Text>Artwork Filter Example</Text>
-                </RouterLink>
-              </Join>
-            </Flex>
-            <Text my={2}>
-              Today is {day}/{month}/{year}.
-            </Text>
-            <Separator />
-            <Box my={2}>{children}</Box>
-          </HorizontalPadding>
-        </>
+        <Box mt={2}>
+          <Text variant="xl">Hello Artsy Dev!</Text>
+          <Text>
+            Wecome to our framework example app. See the links below for a few
+            possibilities.
+          </Text>
+        </Box>
+        <Flex mt={2}>
+          <Join separator={<Spacer mx={2} />}>
+            <RouterLink to="/example" exact>
+              <Text>Welcome</Text>
+            </RouterLink>
+            <RouterLink to="/example/artist/andy-warhol">
+              <Text>Artist page</Text>
+            </RouterLink>
+            <RouterLink to="/example/artwork/andy-warhol-dollar-sign-144">
+              <Text>Artwork page</Text>
+            </RouterLink>
+            <RouterLink to="/example/artwork-filter/guitar">
+              <Text>Artwork Filter Example</Text>
+            </RouterLink>
+          </Join>
+        </Flex>
+        <Text my={2}>
+          Today is {day}/{month}/{year}.
+        </Text>
+        <Separator />
+        <Box my={2}>{children}</Box>
       </>
     </ThemeProviderV3>
   )

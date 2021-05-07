@@ -14,7 +14,6 @@ import {
 } from "@artsy/palette"
 import { Shipping_order } from "v2/__generated__/Shipping_order.graphql"
 import { CommerceOrderFulfillmentTypeEnum } from "v2/__generated__/SetShippingMutation.graphql"
-import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "v2/Apps/Order/Components/ArtworkSummaryItem"
 import {
   OrderStepper,
@@ -349,147 +348,137 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
             })
           }}
         />
-        <HorizontalPadding px={[0, 4]}>
-          <Row>
-            <Col>
-              <OrderStepper
-                currentStep="Shipping"
-                steps={
-                  order.mode === "OFFER" ? offerFlowSteps : buyNowFlowSteps
-                }
-              />
-            </Col>
-          </Row>
-        </HorizontalPadding>
-
-        <HorizontalPadding>
-          <TwoColumnLayout
-            Content={
-              <Flex
-                flexDirection="column"
-                style={isCommittingMutation ? { pointerEvents: "none" } : {}}
-              >
-                {/* TODO: Make RadioGroup generic for the allowed values,
+        <Row>
+          <Col>
+            <OrderStepper
+              currentStep="Shipping"
+              steps={order.mode === "OFFER" ? offerFlowSteps : buyNowFlowSteps}
+            />
+          </Col>
+        </Row>
+        <TwoColumnLayout
+          Content={
+            <Flex
+              flexDirection="column"
+              style={isCommittingMutation ? { pointerEvents: "none" } : {}}
+            >
+              {/* TODO: Make RadioGroup generic for the allowed values,
                   which could also ensure the children only use
                   allowed values. */}
-                {artwork.pickup_available && (
-                  <>
-                    <RadioGroup
-                      onSelect={this.onSelectShippingOption.bind(this)}
-                      defaultValue={this.state.shippingOption}
+              {artwork.pickup_available && (
+                <>
+                  <RadioGroup
+                    onSelect={this.onSelectShippingOption.bind(this)}
+                    defaultValue={this.state.shippingOption}
+                  >
+                    <Text variant="mediumText" mb="1">
+                      Delivery Method
+                    </Text>
+                    <BorderedRadio value="SHIP" label="Shipping" />
+
+                    <BorderedRadio
+                      value="PICKUP"
+                      label="Arrange for pickup (free)"
+                      data-test="pickupOption"
                     >
-                      <Text variant="mediumText" mb="1">
-                        Delivery Method
-                      </Text>
-                      <BorderedRadio value="SHIP" label="Shipping" />
-
-                      <BorderedRadio
-                        value="PICKUP"
-                        label="Arrange for pickup (free)"
-                        data-test="pickupOption"
-                      >
-                        <Collapse open={this.state.shippingOption === "PICKUP"}>
-                          <Sans size="2" color="black60">
-                            After your order is confirmed, a specialist will
-                            contact you within 2 business days to coordinate
-                            pickup.
-                          </Sans>
-                        </Collapse>
-                      </BorderedRadio>
-                    </RadioGroup>
-                    <Spacer mb={3} />
-                  </>
-                )}
-                {showSavedAddresses && (
-                  <SavedAddresses
-                    me={this.props.me}
-                    onSelect={value => onSelectSavedAddress(value)}
-                    handleClickEdit={this.handleClickEdit}
-                    inCollectorProfile={false}
-                  />
-                )}
-                <Collapse
-                  data-test="addressFormCollapse"
-                  open={showAddressForm}
-                >
-                  <AddressForm
-                    value={address}
-                    errors={addressErrors}
-                    touched={addressTouched}
-                    onChange={this.onAddressChange}
-                    domesticOnly={artwork.onlyShipsDomestically}
-                    euOrigin={artwork.euShippingOrigin}
-                    shippingCountry={artwork.shippingCountry}
-                    showPhoneNumberInput={false}
-                  />
-                  <Spacer mb={2} />
-                  <PhoneNumberForm
-                    value={phoneNumber}
-                    errors={phoneNumberError}
-                    touched={phoneNumberTouched}
-                    onChange={this.onPhoneNumberChange}
-                    label="Required for shipping logistics"
-                  />
-                  <Checkbox
-                    onSelect={selected =>
-                      this.setState({ saveAddress: selected })
-                    }
-                    selected={this.state.saveAddress}
-                    data-test="save-address-checkbox"
-                  >
-                    Save shipping address for later use
-                  </Checkbox>
-                  <Spacer mt={3} />
-                </Collapse>
-
-                <Collapse
-                  data-test="phoneNumberCollapse"
-                  open={this.state.shippingOption === "PICKUP"}
-                >
-                  <PhoneNumberForm
-                    data-test="pickupPhoneNumberForm"
-                    value={phoneNumber}
-                    errors={phoneNumberError}
-                    touched={phoneNumberTouched}
-                    onChange={this.onPhoneNumberChange}
-                    label="Number to contact you for pickup logistics"
-                  />
-                </Collapse>
-                <Media greaterThan="xs">
-                  <Button
-                    onClick={this.onContinueButtonPressed}
-                    loading={isCommittingMutation}
-                    size="large"
-                    width="100%"
-                  >
-                    Continue
-                  </Button>
-                </Media>
-              </Flex>
-            }
-            Sidebar={
-              <Flex flexDirection="column">
-                <Flex flexDirection="column">
-                  <ArtworkSummaryItem order={order} />
-                  <TransactionDetailsSummaryItem order={order} />
-                </Flex>
-                <BuyerGuarantee />
-                <Spacer mb={[2, 3]} />
-                <Media at="xs">
+                      <Collapse open={this.state.shippingOption === "PICKUP"}>
+                        <Sans size="2" color="black60">
+                          After your order is confirmed, a specialist will
+                          contact you within 2 business days to coordinate
+                          pickup.
+                        </Sans>
+                      </Collapse>
+                    </BorderedRadio>
+                  </RadioGroup>
                   <Spacer mb={3} />
-                  <Button
-                    onClick={this.onContinueButtonPressed}
-                    loading={isCommittingMutation}
-                    size="large"
-                    width="100%"
-                  >
-                    Continue
-                  </Button>
-                </Media>
+                </>
+              )}
+              {showSavedAddresses && (
+                <SavedAddresses
+                  me={this.props.me}
+                  onSelect={value => onSelectSavedAddress(value)}
+                  handleClickEdit={this.handleClickEdit}
+                  inCollectorProfile={false}
+                />
+              )}
+              <Collapse data-test="addressFormCollapse" open={showAddressForm}>
+                <AddressForm
+                  value={address}
+                  errors={addressErrors}
+                  touched={addressTouched}
+                  onChange={this.onAddressChange}
+                  domesticOnly={artwork.onlyShipsDomestically}
+                  euOrigin={artwork.euShippingOrigin}
+                  shippingCountry={artwork.shippingCountry}
+                  showPhoneNumberInput={false}
+                />
+                <Spacer mb={2} />
+                <PhoneNumberForm
+                  value={phoneNumber}
+                  errors={phoneNumberError}
+                  touched={phoneNumberTouched}
+                  onChange={this.onPhoneNumberChange}
+                  label="Required for shipping logistics"
+                />
+                <Checkbox
+                  onSelect={selected =>
+                    this.setState({ saveAddress: selected })
+                  }
+                  selected={this.state.saveAddress}
+                  data-test="save-address-checkbox"
+                >
+                  Save shipping address for later use
+                </Checkbox>
+                <Spacer mt={3} />
+              </Collapse>
+
+              <Collapse
+                data-test="phoneNumberCollapse"
+                open={this.state.shippingOption === "PICKUP"}
+              >
+                <PhoneNumberForm
+                  data-test="pickupPhoneNumberForm"
+                  value={phoneNumber}
+                  errors={phoneNumberError}
+                  touched={phoneNumberTouched}
+                  onChange={this.onPhoneNumberChange}
+                  label="Number to contact you for pickup logistics"
+                />
+              </Collapse>
+              <Media greaterThan="xs">
+                <Button
+                  onClick={this.onContinueButtonPressed}
+                  loading={isCommittingMutation}
+                  size="large"
+                  width="100%"
+                >
+                  Continue
+                </Button>
+              </Media>
+            </Flex>
+          }
+          Sidebar={
+            <Flex flexDirection="column">
+              <Flex flexDirection="column">
+                <ArtworkSummaryItem order={order} />
+                <TransactionDetailsSummaryItem order={order} />
               </Flex>
-            }
-          />
-        </HorizontalPadding>
+              <BuyerGuarantee />
+              <Spacer mb={[2, 3]} />
+              <Media at="xs">
+                <Spacer mb={3} />
+                <Button
+                  onClick={this.onContinueButtonPressed}
+                  loading={isCommittingMutation}
+                  size="large"
+                  width="100%"
+                >
+                  Continue
+                </Button>
+              </Media>
+            </Flex>
+          }
+        />
       </Box>
     )
   }

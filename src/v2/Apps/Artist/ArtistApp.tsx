@@ -34,10 +34,8 @@ export const ArtistApp: React.FC<ArtistAppProps> = props => {
   let HorizontalPaddingArea:
     | typeof HorizontalPadding
     | typeof Box = HorizontalPadding
-  let maxWidth
 
   if (route.displayFullPage) {
-    maxWidth = "100%"
     HorizontalPaddingArea = Box
   }
 

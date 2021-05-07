@@ -1,6 +1,5 @@
 import { Col, Row } from "@artsy/palette"
 import { FeatureAKGApp_viewer } from "v2/__generated__/FeatureAKGApp_viewer.graphql"
-import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
 import { Footer } from "v2/Components/Footer"
 import React from "react"
 import { Title } from "react-head"
@@ -18,9 +17,7 @@ export const FeatureAKGApp: React.FC<FeatureAKGAppProps> = props => {
       <Feature viewer={props.viewer} />
       <Row>
         <Col>
-          <HorizontalPadding>
-            <Footer />
-          </HorizontalPadding>
+          <Footer />
         </Col>
       </Row>
     </>

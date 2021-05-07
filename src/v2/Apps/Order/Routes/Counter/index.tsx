@@ -1,7 +1,6 @@
 import { Button, Col, Flex, Row, Spacer } from "@artsy/palette"
 import { Counter_order } from "v2/__generated__/Counter_order.graphql"
 import { CounterSubmitMutation } from "v2/__generated__/CounterSubmitMutation.graphql"
-import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "v2/Apps/Order/Components/ArtworkSummaryItem"
 import { ConditionsOfSaleDisclaimer } from "v2/Apps/Order/Components/ConditionsOfSaleDisclaimer"
 import { CreditCardSummaryItemFragmentContainer as CreditCardSummaryItem } from "v2/Apps/Order/Components/CreditCardSummaryItem"
@@ -130,42 +129,62 @@ export class CounterRoute extends Component<CounterProps> {
 
     return (
       <>
-        <HorizontalPadding px={[0, 4]}>
-          <Row>
-            <Col>
-              <OrderStepper
-                currentStep="Review"
-                steps={counterofferFlowSteps}
-              />
-            </Col>
-          </Row>
-        </HorizontalPadding>
-
-        <HorizontalPadding>
-          <TwoColumnLayout
-            Content={
-              <Flex
-                flexDirection="column"
-                style={isCommittingMutation ? { pointerEvents: "none" } : {}}
-              >
-                <Flex flexDirection="column">
-                  <CountdownTimer
-                    action="Respond"
-                    note="Expired offers end the negotiation process permanently."
-                    countdownStart={order.lastOffer.createdAt}
-                    countdownEnd={order.stateExpiresAt}
-                  />
-                  <TransactionDetailsSummaryItem
-                    order={order}
-                    title="Your counteroffer"
-                    onChange={this.onChangeResponse}
-                    offerContextPrice="LAST_OFFER"
-                    showOfferNote={true}
-                  />
-                </Flex>
-                <Spacer mb={[2, 3]} />
-                <Flex flexDirection="column" />
-                <Media greaterThan="xs">
+        <Row>
+          <Col>
+            <OrderStepper currentStep="Review" steps={counterofferFlowSteps} />
+          </Col>
+        </Row>
+        <TwoColumnLayout
+          Content={
+            <Flex
+              flexDirection="column"
+              style={isCommittingMutation ? { pointerEvents: "none" } : {}}
+            >
+              <Flex flexDirection="column">
+                <CountdownTimer
+                  action="Respond"
+                  note="Expired offers end the negotiation process permanently."
+                  countdownStart={order.lastOffer.createdAt}
+                  countdownEnd={order.stateExpiresAt}
+                />
+                <TransactionDetailsSummaryItem
+                  order={order}
+                  title="Your counteroffer"
+                  onChange={this.onChangeResponse}
+                  offerContextPrice="LAST_OFFER"
+                  showOfferNote={true}
+                />
+              </Flex>
+              <Spacer mb={[2, 3]} />
+              <Flex flexDirection="column" />
+              <Media greaterThan="xs">
+                <Button
+                  onClick={this.onSubmitButtonPressed}
+                  loading={isCommittingMutation}
+                  size="large"
+                  width="100%"
+                >
+                  Submit
+                </Button>
+                <Spacer mb={2} />
+                <ConditionsOfSaleDisclaimer textAlign="center" />
+              </Media>
+            </Flex>
+          }
+          Sidebar={
+            <Flex flexDirection="column">
+              <Flex flexDirection="column">
+                <ArtworkSummaryItem order={order} />
+                <ShippingSummaryItem order={order} locked />
+                <CreditCardSummaryItem order={order} locked />
+              </Flex>
+              <BuyerGuarantee />
+              <Media greaterThan="xs">
+                <Spacer mb={2} />
+              </Media>
+              <Spacer mb={[2, 3]} />
+              <Media at="xs">
+                <>
                   <Button
                     onClick={this.onSubmitButtonPressed}
                     loading={isCommittingMutation}
@@ -175,40 +194,12 @@ export class CounterRoute extends Component<CounterProps> {
                     Submit
                   </Button>
                   <Spacer mb={2} />
-                  <ConditionsOfSaleDisclaimer textAlign="center" />
-                </Media>
-              </Flex>
-            }
-            Sidebar={
-              <Flex flexDirection="column">
-                <Flex flexDirection="column">
-                  <ArtworkSummaryItem order={order} />
-                  <ShippingSummaryItem order={order} locked />
-                  <CreditCardSummaryItem order={order} locked />
-                </Flex>
-                <BuyerGuarantee />
-                <Media greaterThan="xs">
-                  <Spacer mb={2} />
-                </Media>
-                <Spacer mb={[2, 3]} />
-                <Media at="xs">
-                  <>
-                    <Button
-                      onClick={this.onSubmitButtonPressed}
-                      loading={isCommittingMutation}
-                      size="large"
-                      width="100%"
-                    >
-                      Submit
-                    </Button>
-                    <Spacer mb={2} />
-                    <ConditionsOfSaleDisclaimer />
-                  </>
-                </Media>
-              </Flex>
-            }
-          />
-        </HorizontalPadding>
+                  <ConditionsOfSaleDisclaimer />
+                </>
+              </Media>
+            </Flex>
+          }
+        />
       </>
     )
   }

@@ -83,7 +83,7 @@ export const AppShell: React.FC<AppShellProps> = props => {
         <>
           <Box as="main" id="main">
             <AppContainer maxWidth={appContainerMaxWidth}>
-              {children}
+              <HorizontalPadding>{children}</HorizontalPadding>
             </AppContainer>
           </Box>
 

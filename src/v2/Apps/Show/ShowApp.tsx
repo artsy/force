@@ -1,6 +1,5 @@
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
 import { Column, GridColumns, Separator } from "@artsy/palette"
 import { ShowMetaFragmentContainer as ShowMeta } from "v2/Apps/Show/Components/ShowMeta"
 import { ShowHeaderFragmentContainer as ShowHeader } from "./Components/ShowHeader"
@@ -43,62 +42,57 @@ export const ShowApp: React.FC<ShowAppProps> = ({ show }) => {
             contextPageOwnerType,
           }}
         >
-          <HorizontalPadding>
-            <ShowContextualLink show={show} />
-            <ShowInstallShots show={show} my={2} />
+          <ShowContextualLink show={show} />
+          <ShowInstallShots show={show} my={2} />
 
-            <GridColumns>
-              <Column
-                span={hasWideHeader ? [12, 8, 6] : 6}
-                wrap={hasWideHeader}
-              >
-                <ShowHeader show={show} />
+          <GridColumns>
+            <Column span={hasWideHeader ? [12, 8, 6] : 6} wrap={hasWideHeader}>
+              <ShowHeader show={show} />
 
-                {!hasAbout && show.href && (
-                  <ForwardLink to={`${show.href}/info`} mt={1}>
+              {!hasAbout && show.href && (
+                <ForwardLink to={`${show.href}/info`} mt={1}>
+                  More info
+                </ForwardLink>
+              )}
+            </Column>
+
+            {hasAbout && (
+              <Column span={6}>
+                <ShowAbout show={show} />
+
+                {show.href && (
+                  <ForwardLink to={`${show.href}/info`} mt={2}>
                     More info
                   </ForwardLink>
                 )}
               </Column>
-
-              {hasAbout && (
-                <Column span={6}>
-                  <ShowAbout show={show} />
-
-                  {show.href && (
-                    <ForwardLink to={`${show.href}/info`} mt={2}>
-                      More info
-                    </ForwardLink>
-                  )}
-                </Column>
-              )}
-
-              {hasViewingRoom && (
-                <Column span={5} start={8}>
-                  <ShowViewingRoom show={show} />
-                </Column>
-              )}
-            </GridColumns>
-
-            {show.counts.eligibleArtworks > 0 ? (
-              <ShowArtworks
-                aggregations={
-                  sidebarAggregations.aggregations as SharedArtworkFilterContextProps["aggregations"]
-                }
-                show={show}
-                my={3}
-              />
-            ) : (
-              <>
-                <Separator my={3} />
-                <ShowArtworksEmptyState show={show} />
-              </>
             )}
 
-            <Separator as="hr" my={3} />
+            {hasViewingRoom && (
+              <Column span={5} start={8}>
+                <ShowViewingRoom show={show} />
+              </Column>
+            )}
+          </GridColumns>
 
-            <ShowContextCard show={show} />
-          </HorizontalPadding>
+          {show.counts.eligibleArtworks > 0 ? (
+            <ShowArtworks
+              aggregations={
+                sidebarAggregations.aggregations as SharedArtworkFilterContextProps["aggregations"]
+              }
+              show={show}
+              my={3}
+            />
+          ) : (
+            <>
+              <Separator my={3} />
+              <ShowArtworksEmptyState show={show} />
+            </>
+          )}
+
+          <Separator as="hr" my={3} />
+
+          <ShowContextCard show={show} />
         </AnalyticsContext.Provider>
       </>
     </>
