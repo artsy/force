@@ -32,7 +32,7 @@ import { ChunkExtractor } from "@loadable/server"
 import { getENV } from "v2/Utils/getENV"
 import RelayServerSSR from "react-relay-network-modern-ssr/lib/server"
 import { buildServerAppContext } from "desktop/lib/buildServerAppContext"
-import { RouteConfig } from "found"
+import { AppRouteConfig } from "v2/Artsy/Router/Route"
 
 export interface ServerAppResolve {
   bodyHTML?: string
@@ -51,7 +51,7 @@ const logger = createLogger("Artsy/Router/buildServerApp.tsx")
 export interface ServerRouterConfig extends RouterConfig {
   req: Request
   res: Response
-  routes: RouteConfig[]
+  routes: AppRouteConfig[]
   context?: {
     injectedData?: any
   }

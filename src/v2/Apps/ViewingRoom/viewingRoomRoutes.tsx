@@ -1,6 +1,6 @@
 import loadable from "@loadable/component"
 import { graphql } from "react-relay"
-import { RouteConfig } from "found"
+import { AppRouteConfig } from "v2/Artsy/Router/Route"
 
 import { ViewingRoomStatementRouteFragmentContainer as StatementRoute } from "./Routes/Statement/ViewingRoomStatementRoute"
 import { ViewingRoomWorksRouteFragmentContainer as WorksRoute } from "./Routes/Works/ViewingRoomWorksRoute"
@@ -12,7 +12,7 @@ const ViewingRoomsApp = loadable(() => import("./ViewingRoomsApp"), {
   resolveComponent: component => component.ViewingRoomsAppFragmentContainer,
 })
 
-export const viewingRoomRoutes: RouteConfig[] = [
+export const viewingRoomRoutes: AppRouteConfig[] = [
   {
     path: "/viewing-rooms",
     getComponent: () => ViewingRoomsApp,

@@ -1,5 +1,5 @@
 import loadable from "@loadable/component"
-import { Redirect, RedirectException, RouteConfig } from "found"
+import { Redirect, RedirectException } from "found"
 import React from "react"
 import { graphql } from "react-relay"
 
@@ -12,6 +12,7 @@ import { hasOverviewContent } from "./Components/NavigationTabs"
 
 import { initialArtworkFilterState } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
 import { allowedFilters } from "v2/Components/ArtworkFilter/Utils/allowedFilters"
+import { AppRouteConfig } from "v2/Artsy/Router/Route"
 
 graphql`
   fragment artistRoutes_Artist on Artist {
@@ -89,7 +90,7 @@ if (typeof window !== "undefined") {
   ConsignRoute.preload()
 }
 
-export const artistRoutes: RouteConfig[] = [
+export const artistRoutes: AppRouteConfig[] = [
   {
     children: [
       // Routes in tabs

@@ -1,10 +1,11 @@
 import React from "react"
 import loadable from "@loadable/component"
-import { RedirectException, RouteConfig } from "found"
+import { RedirectException } from "found"
 import { graphql } from "react-relay"
 import { initialArtworkFilterState } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
 import { paramsToCamelCase } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
 import { allowedFilters } from "v2/Components/ArtworkFilter/Utils/allowedFilters"
+import { AppRouteConfig } from "v2/Artsy/Router/Route"
 
 const PartnerApp = loadable(() => import("./PartnerApp"), {
   resolveComponent: component => component.PartnerAppFragmentContainer,
@@ -34,7 +35,7 @@ const ContactRoute = loadable(() => import("./Routes/Contact"), {
   resolveComponent: component => component.ContactRouteFragmentContainer,
 })
 
-export const partnerRoutes: RouteConfig[] = [
+export const partnerRoutes: AppRouteConfig[] = [
   {
     getComponent: () => PartnerApp,
     path: "/partner2/:partnerId",

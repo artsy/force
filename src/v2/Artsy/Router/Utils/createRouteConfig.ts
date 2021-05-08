@@ -1,7 +1,7 @@
-import { RouteConfig } from "found"
+import { AppRouteConfig } from "v2/Artsy/Router/Route"
 import { Route } from "../Route"
 
-export function createRouteConfig(routes): RouteConfig[] {
+export function createRouteConfig(routes): AppRouteConfig[] {
   return routes.map(route => {
     if (route.__proto__ === Object.prototype) {
       return new Route({

@@ -1,5 +1,5 @@
 import loadable from "@loadable/component"
-import { RouteConfig } from "found"
+import { AppRouteConfig } from "v2/Artsy/Router/Route"
 import { graphql } from "react-relay"
 import { allowedFilters } from "v2/Components/ArtworkFilter/Utils/allowedFilters"
 
@@ -17,7 +17,7 @@ const CollectionApp = loadable(() => import("./Routes/Collection"), {
   resolveComponent: component => component.CollectionRefetchContainer,
 })
 
-export const collectRoutes: RouteConfig[] = [
+export const collectRoutes: AppRouteConfig[] = [
   {
     path: "/collect/:medium?",
     getComponent: () => CollectApp,
