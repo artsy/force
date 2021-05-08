@@ -45,10 +45,30 @@ export const partnerRoutes: AppRouteConfig[] = [
     query: graphql`
       query partnerRoutes_PartnerQuery($partnerId: String!) {
         partner(id: $partnerId) @principalField {
+          isNonSubscriber
           ...PartnerApp_partner
         }
       }
     `,
+    render: ({ Component, props, match }) => {
+      if (!(Component && props)) {
+        return undefined
+      }
+
+      const { partner } = props as any
+
+      if (!partner) {
+        return undefined
+      }
+
+      const overviewPath = `/partner2/${match.params.partnerId}`
+
+      if (partner.isNonSubscriber && match.location.pathname !== overviewPath) {
+        throw new RedirectException(overviewPath, 302)
+      }
+
+      return <Component {...props} />
+    },
     children: [
       {
         getComponent: () => OverviewRoute,
