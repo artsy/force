@@ -33,6 +33,7 @@ export interface FillwidthItemContainerProps
   hideArtistName?: boolean
   hidePartnerName?: boolean
   hideSaleInfo?: boolean
+  hideSaveButton?: boolean
   imageHeight: number
   lazyLoad?: boolean
   marginLeft?: number
@@ -87,6 +88,7 @@ export class FillwidthItemContainer extends React.Component<
       hidePartnerName,
       hideArtistName,
       hideSaleInfo,
+      hideSaveButton,
     } = this.props
 
     let userSpread = {}
@@ -133,12 +135,14 @@ export class FillwidthItemContainer extends React.Component<
 
           {showExtended && <Badge artwork={artwork} width={this.imageWidth} />}
 
-          <SaveButton
-            {...userSpread}
-            mediator={mediator}
-            contextModule={contextModule}
-            artwork={artwork}
-          />
+          {!hideSaveButton && (
+            <SaveButton
+              {...userSpread}
+              mediator={mediator}
+              contextModule={contextModule}
+              artwork={artwork}
+            />
+          )}
         </Placeholder>
 
         {showMetadata && (

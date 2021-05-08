@@ -9,7 +9,7 @@ import { ArtworksRailRendererQuery } from "v2/__generated__/ArtworksRailRenderer
 import FillwidthItem from "v2/Components/Artwork/FillwidthItem"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import { ScrollToPartnerHeader } from "../ScrollToPartnerHeader"
-import { ArtworksRailPlaceholder } from "./ArtworkRailPlaceholder"
+import { ArtworksRailPlaceholder } from "./ArtworksRailPlaceholder"
 import { ViewAllButton } from "./ViewAllButton"
 
 interface ArtworksRailProps extends BoxProps {
@@ -50,6 +50,7 @@ const ArtworksRail: React.FC<ArtworksRailProps> = ({ partner, ...rest }) => {
                 artwork={artwork.node}
                 imageHeight={ARTWORK_CAROUSEL_ITEM_HEIGHT}
                 hidePartnerName
+                hideSaveButton
                 lazyLoad
               />
             )
