@@ -7,11 +7,11 @@ import {
   QueryRenderer,
   RelayPaginationProp,
 } from "react-relay"
-import { PartnerArtistDetailsFragmentContainer } from "../../Components/PartnerArtists"
 import { PartnerArtistDetailsList_partner } from "v2/__generated__/PartnerArtistDetailsList_partner.graphql"
 import { PartnerArtistDetailsListQuery } from "v2/__generated__/PartnerArtistDetailsListQuery.graphql"
 import { take } from "lodash"
 import { PartnerArtistDetailsListPlaceholder } from "./PartnerArtistDetailsListPlaceholder"
+import { PartnerArtistDetailsFragmentContainer } from "../PartnerArtistDetails"
 
 export interface PartnerArtistDetailsListProps {
   partner: PartnerArtistDetailsList_partner
