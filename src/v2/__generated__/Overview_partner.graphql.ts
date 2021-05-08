@@ -5,6 +5,7 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type Overview_partner = {
     readonly slug: string;
+    readonly isNonSubscriber: boolean | null;
     readonly profileBannerDisplay: string | null;
     readonly displayArtistsSection: boolean | null;
     readonly articlesConnection: {
@@ -46,6 +47,13 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "ScalarField",
       "name": "slug",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "isNonSubscriber",
       "storageKey": null
     },
     {
@@ -164,5 +172,5 @@ const node: ReaderFragment = {
   ],
   "type": "Partner"
 };
-(node as any).hash = 'e447d23cca6b1182d7e2820c3b073623';
+(node as any).hash = '0984cc9cfa6984f07ffe2d19d55c9cc1';
 export default node;
