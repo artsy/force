@@ -104,7 +104,12 @@ const ShowBannersRail: React.FC<ShowBannersRailProps> = ({
       <ShowBannersRailContainer onChange={setCurrentCarouselPage}>
         {shows.map((edge, i) => {
           return (
-            <ShowBannerFragmentContainer key={edge.node.id} show={edge.node} />
+            <ShowBannerFragmentContainer
+              withAnimation
+              selected={i === currentCarouselPage}
+              key={edge.node.id}
+              show={edge.node}
+            />
           )
         })}
       </ShowBannersRailContainer>
