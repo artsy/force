@@ -1,6 +1,6 @@
 import { Grid, Theme, injectGlobalStyles, themeProps } from "@artsy/palette"
 import { SystemContextProvider, track } from "v2/Artsy"
-import { RouteConfig } from "found"
+import { AppRouteConfig } from "v2/Artsy/Router/Route"
 import React, { useEffect } from "react"
 import { HeadProvider } from "react-head"
 import { Environment } from "relay-runtime"
@@ -29,7 +29,7 @@ export interface BootProps {
   headTags?: JSX.Element[]
   onlyMatchMediaQueries?: MatchingMediaQueries
   relayEnvironment: Environment
-  routes: RouteConfig
+  routes: AppRouteConfig[]
   user: User
 }
 

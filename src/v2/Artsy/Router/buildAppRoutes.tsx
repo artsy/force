@@ -1,13 +1,14 @@
-import { Match, RouteConfig, Router, withRouter } from "found"
+import { Match, Router, withRouter } from "found"
 import { flatten } from "lodash"
 import React, { useEffect } from "react"
 
 import { AppShell } from "v2/Apps/Components/AppShell"
 import { useSystemContext } from "v2/Artsy/SystemContext"
 import { interceptLinks } from "./interceptLinks"
+import { AppRouteConfig } from "./Route"
 
 interface RouteList {
-  routes: RouteConfig
+  routes: AppRouteConfig[]
 
   /**
    * Disabled routes are not mounted within global route
@@ -15,7 +16,7 @@ interface RouteList {
   disabled?: boolean
 }
 
-export function buildAppRoutes(routeList: RouteList[]): RouteConfig[] {
+export function buildAppRoutes(routeList: RouteList[]): AppRouteConfig[] {
   const routes = getActiveRoutes(routeList)
 
   const Component: React.FC<{
@@ -64,7 +65,7 @@ function getActiveRoutes(routeList) {
   return routes
 }
 
-function createRouteConfiguration(route): RouteConfig {
+function createRouteConfiguration(route): AppRouteConfig {
   let path = route.path
   // FIXME: I'm certain this logic is incorrect. If the last character is a `/`
   // trim the first character of the path.

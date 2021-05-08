@@ -2,7 +2,7 @@ import loadable from "@loadable/component"
 import { getRedirect } from "v2/Apps/Order/getRedirect"
 import { redirects } from "v2/Apps/Order/redirects"
 import { ErrorPage } from "v2/Components/ErrorPage"
-import { Redirect, RedirectException, RouteConfig } from "found"
+import { Redirect, RedirectException } from "found"
 import React from "react"
 import { graphql } from "react-relay"
 
@@ -16,6 +16,7 @@ import { ReviewFragmentContainer as ReviewRoute } from "./Routes/Review"
 import { AcceptFragmentContainer as AcceptRoute } from "./Routes/Accept"
 import { RejectFragmentContainer as DeclineRoute } from "./Routes/Reject"
 import { StatusFragmentContainer as StatusRoute } from "./Routes/Status"
+import { AppRouteConfig } from "v2/Artsy/Router/Route"
 
 const OrderApp = loadable(() => import("./OrderApp"), {
   resolveComponent: component => component.OrderApp,
@@ -23,7 +24,7 @@ const OrderApp = loadable(() => import("./OrderApp"), {
 
 // FIXME:
 // * `render` functions requires casting
-export const orderRoutes: RouteConfig[] = [
+export const orderRoutes: AppRouteConfig[] = [
   {
     // TODO: Still need order2?
     path: "/order(2|s)/:orderID",

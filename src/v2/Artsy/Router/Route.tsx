@@ -4,9 +4,27 @@
  */
 
 import { RouteSpinner } from "v2/Artsy/Relay/renderWithLoadProgress"
-import { HttpError } from "found"
+import { RouteConfig, HttpError } from "found"
 import BaseRoute from "found/Route"
 import React from "react"
+import { CacheConfig, GraphQLTaggedNode } from "relay-runtime";
+
+type RemoveIndex<T> = {
+  [ P in keyof T as string extends P ? never : number extends P ? never : P ]: T[P]
+};
+
+interface RouteConfigProps extends RouteConfig {
+  cacheConfig?: CacheConfig
+  displayFullPage?: boolean
+  fetchIndicator?: FetchIndicator
+  ignoreScrollBehavior?: boolean
+  prepare?: () => void
+  prepareVariables?: (params: any, props: any) => object
+  query?: GraphQLTaggedNode
+  theme?: 'v2' | 'v3'
+}
+
+export type AppRouteConfig = RemoveIndex<RouteConfigProps>
 
 type FetchIndicator = "spinner" | "overlay"
 

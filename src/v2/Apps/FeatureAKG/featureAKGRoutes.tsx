@@ -1,12 +1,12 @@
 import loadable from "@loadable/component"
-import { RouteConfig } from "found"
+import { AppRouteConfig } from "v2/Artsy/Router/Route"
 import { graphql } from "react-relay"
 
 const FeatureAKGApp = loadable(() => import("./FeatureAKGApp"), {
   resolveComponent: component => component.FeatureAKGAppFragmentContainer,
 })
 
-export const featureAKGRoutes: RouteConfig[] = [
+export const featureAKGRoutes: AppRouteConfig[] = [
   {
     path: "/campaign/art-keeps-going",
     getComponent: () => FeatureAKGApp,

@@ -1,5 +1,5 @@
 import loadable from "@loadable/component"
-import { RouteConfig } from "found"
+import { AppRouteConfig } from "v2/Artsy/Router/Route"
 import { graphql } from "relay-runtime"
 import { initialArtworkFilterState } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
 import { allowedFilters } from "v2/Components/ArtworkFilter/Utils/allowedFilters"
@@ -9,7 +9,7 @@ const TagApp = loadable(() => import("./TagApp"), {
   resolveComponent: component => component.TagAppFragmentContainer,
 })
 
-export const tagRoutes: RouteConfig[] = [
+export const tagRoutes: AppRouteConfig[] = [
   {
     path: "/tag/:slug",
     getComponent: () => TagApp,

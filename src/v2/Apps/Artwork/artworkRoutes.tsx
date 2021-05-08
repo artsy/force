@@ -1,11 +1,12 @@
 import loadable from "@loadable/component"
 import { graphql } from "react-relay"
+import { AppRouteConfig } from "v2/Artsy/Router/Route"
 
 const ArtworkApp = loadable(() => import("./ArtworkApp"), {
   resolveComponent: component => component.ArtworkAppFragmentContainer,
 })
 
-export const artworkRoutes = [
+export const artworkRoutes: AppRouteConfig[] = [
   {
     path: "/artwork/:artworkID/:optional?", // There's a `confirm-bid` nested route.
     getComponent: () => ArtworkApp,

@@ -1,5 +1,6 @@
 import loadable from "@loadable/component"
 import { graphql } from "react-relay"
+import { AppRouteConfig } from "v2/Artsy/Router/Route"
 import { CurrentAuctionsPaginationContainer } from "./Routes/CurrentAuctions"
 import { PastAuctionsPaginationContainer } from "./Routes/PastAuctions"
 import { UpcomingAuctionsPaginationContainer } from "./Routes/UpcomingAuctions"
@@ -8,7 +9,7 @@ const AuctionsApp = loadable(() => import("./AuctionsApp"), {
   resolveComponent: component => component.AuctionsAppFragmentContainer,
 })
 
-export const auctionsRoutes = [
+export const auctionsRoutes: AppRouteConfig[] = [
   {
     path: "/auctions",
     theme: "v3",

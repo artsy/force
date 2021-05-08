@@ -10,7 +10,7 @@ To add a new app to force we can leverage our React-based SSR router.
 
 ```tsx
 // routes.tsx
-export const routes = [
+export const routes: AppRouteConfig[] = [
   {
     path: "/new-app",
     Component: props => {

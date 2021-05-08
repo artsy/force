@@ -1,6 +1,6 @@
 import loadable from "@loadable/component"
 import { graphql } from "react-relay"
-import { RouteConfig } from "found"
+import { AppRouteConfig } from "v2/Artsy/Router/Route"
 
 const ArtistsApp = loadable(() => import("./ArtistsApp"), {
   resolveComponent: component => component.ArtistsApp,
@@ -17,7 +17,7 @@ const ArtistsByLetterRoute = loadable(
   }
 )
 
-export const artistsRoutes: RouteConfig[] = [
+export const artistsRoutes: AppRouteConfig[] = [
   {
     path: "/artists",
     getComponent: () => ArtistsApp,

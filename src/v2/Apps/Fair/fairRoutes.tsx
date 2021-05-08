@@ -1,6 +1,6 @@
 import loadable from "@loadable/component"
 import { graphql } from "react-relay"
-import { RouteConfig } from "found"
+import { AppRouteConfig } from "v2/Artsy/Router/Route"
 import { paramsToCamelCase } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
 import { getENV } from "v2/Utils/getENV"
 import { allowedFilters } from "v2/Components/ArtworkFilter/Utils/allowedFilters"
@@ -24,7 +24,7 @@ const FairArticlesRoute = loadable(() => import("./Routes/FairArticles"), {
   resolveComponent: component => component.FairArticlesPaginationContainer,
 })
 
-export const fairRoutes: RouteConfig[] = [
+export const fairRoutes: AppRouteConfig[] = [
   {
     path: "/fair/:slug",
     ignoreScrollBehavior: true,

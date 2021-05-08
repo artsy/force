@@ -1,6 +1,7 @@
 import loadable from "@loadable/component"
 import { graphql } from "react-relay"
-import { RedirectException, RouteConfig } from "found"
+import { RedirectException } from "found"
+import { AppRouteConfig } from "v2/Artsy/Router/Route"
 
 const FairsApp = loadable(() => import("./FairsApp"), {
   resolveComponent: component => component.FairsApp,
@@ -10,7 +11,7 @@ const FairsIndexRoute = loadable(() => import("./Routes/FairsIndex"), {
   resolveComponent: component => component.FairsIndexFragmentContainer,
 })
 
-export const fairsRoutes: RouteConfig[] = [
+export const fairsRoutes: AppRouteConfig[] = [
   {
     path: "/fairs",
     render: _props => {

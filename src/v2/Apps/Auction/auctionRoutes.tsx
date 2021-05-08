@@ -1,10 +1,11 @@
 import loadable from "@loadable/component"
 import { ErrorPage } from "v2/Components/ErrorPage"
-import { RedirectException, RouteConfig } from "found"
+import { RedirectException } from "found"
 import React from "react"
 import { graphql } from "react-relay"
 import createLogger from "v2/Utils/logger"
 import { Redirect, confirmBidRedirect, registerRedirect } from "./getRedirect"
+import { AppRouteConfig } from "v2/Artsy/Router/Route"
 
 const logger = createLogger("Apps/Auction/routes")
 
@@ -18,7 +19,7 @@ const RegisterRoute = loadable(() => import("./Routes/Register"), {
   resolveComponent: component => component.RegisterRouteFragmentContainer,
 })
 
-export const auctionRoutes: RouteConfig[] = [
+export const auctionRoutes: AppRouteConfig[] = [
   {
     path: "/auction-faq",
     getComponent: () => AuctionFAQRoute,

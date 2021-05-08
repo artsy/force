@@ -1,4 +1,4 @@
-import { RouteConfig } from "found"
+import { AppRouteConfig } from "v2/Artsy/Router/Route"
 import { omit } from "lodash"
 import React from "react"
 import { graphql } from "react-relay"
@@ -73,7 +73,7 @@ const entityTabs = Object.entries(tabsToEntitiesMap).map(([key, entities]) => {
   }
 })
 
-export const searchRoutes: RouteConfig[] = [
+export const searchRoutes: AppRouteConfig[] = [
   {
     path: "/search",
     Component: SearchAppFragmentContainer,
