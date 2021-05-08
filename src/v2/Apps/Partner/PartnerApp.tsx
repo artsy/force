@@ -25,10 +25,12 @@ export const PartnerApp: React.FC<PartnerAppProps> = ({
   partner,
   children,
 }) => {
+  const { profile, isNonSubscriber } = partner
+
   return (
     <StickyProvider>
       {/* @ts-expect-error STRICT_NULL_CHECK */}
-      <PartnerHeaderImage profile={partner.profile} />
+      <PartnerHeaderImage profile={profile} />
 
       <Foreground>
         <AppContainer>
@@ -41,7 +43,7 @@ export const PartnerApp: React.FC<PartnerAppProps> = ({
               <Separator />
             </FullBleed>
 
-            <NavigationTabs partner={partner} />
+            {!isNonSubscriber && <NavigationTabs partner={partner} />}
 
             {children}
           </HorizontalPadding>
@@ -54,6 +56,7 @@ export const PartnerApp: React.FC<PartnerAppProps> = ({
 export const PartnerAppFragmentContainer = createFragmentContainer(PartnerApp, {
   partner: graphql`
     fragment PartnerApp_partner on Partner {
+      isNonSubscriber
       profile {
         ...PartnerHeaderImage_profile
       }
