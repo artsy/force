@@ -27,7 +27,8 @@ describe("PartnerNavigationTabs", () => {
         id: "white-cube",
         slug: "white-cube",
         displayArtistsSection: true,
-        artists: { totalCount: 10 },
+        representedArtists: { totalCount: 10 },
+        notRepresentedArtists: { totalCount: 10 },
       }),
     })
     const html = wrapper.html()
@@ -62,7 +63,8 @@ describe("PartnerNavigationTabs", () => {
     const wrapper = getWrapper({
       Partner: () => ({
         displayArtistsSection: true,
-        artists: { totalCount: 0 },
+        representedArtists: { totalCount: 0 },
+        notRepresentedArtists: { totalCount: 0 },
       }),
     })
     const html = wrapper.html()
@@ -74,7 +76,8 @@ describe("PartnerNavigationTabs", () => {
     const wrapper = getWrapper({
       Partner: () => ({
         displayArtistsSection: false,
-        artists: { totalCount: 10 },
+        representedArtists: { totalCount: 10 },
+        notRepresentedArtists: { totalCount: 0 },
       }),
     })
     const html = wrapper.html()

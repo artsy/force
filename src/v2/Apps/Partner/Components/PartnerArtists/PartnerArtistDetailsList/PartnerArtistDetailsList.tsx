@@ -9,7 +9,6 @@ import {
 } from "react-relay"
 import { PartnerArtistDetailsList_partner } from "v2/__generated__/PartnerArtistDetailsList_partner.graphql"
 import { PartnerArtistDetailsListQuery } from "v2/__generated__/PartnerArtistDetailsListQuery.graphql"
-import { take } from "lodash"
 import { PartnerArtistDetailsListPlaceholder } from "./PartnerArtistDetailsListPlaceholder"
 import { PartnerArtistDetailsFragmentContainer } from "../PartnerArtistDetails"
 
@@ -57,20 +56,9 @@ export const PartnerArtistDetailsList: React.FC<PartnerArtistDetailsListProps> =
     })
   }
 
-  const filteredArtists = partner.artists.edges.filter(
-    artist => artist.isDisplayOnPartnerProfile && artist.counts.artworks > 0
-  )
-
-  const artists = relay.hasMore()
-    ? take(
-        filteredArtists,
-        filteredArtists.length - (filteredArtists.length % PAGE_SIZE)
-      )
-    : filteredArtists
-
   return (
     <Box ref={ref => ref && (containerRef.current = ref)} mt={4}>
-      {artists.map(edge => {
+      {partner.artists.edges.map(edge => {
         return (
           <PartnerArtistDetailsFragmentContainer
             key={edge.id}
@@ -107,11 +95,14 @@ export const PartnerArtistDetailsListPaginationContainer = createPaginationConta
           after: { type: "String" }
         ) {
         slug
-        artists: artistsConnection(first: $first, after: $after)
-          @connection(key: "PartnerArtistDetailsList_artists") {
+        artists: artistsConnection(
+          first: $first
+          after: $after
+          hasPublishedArtworks: true
+          displayOnPartnerProfile: true
+        ) @connection(key: "PartnerArtistDetailsList_artists") {
           edges {
             id
-            isDisplayOnPartnerProfile
             representedBy
             counts {
               artworks
