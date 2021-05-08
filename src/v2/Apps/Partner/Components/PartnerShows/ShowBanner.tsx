@@ -4,6 +4,7 @@ import {
   Column,
   GridColumns,
   Image,
+  ReadMore,
   Text,
 } from "@artsy/palette"
 import React from "react"
@@ -57,7 +58,11 @@ const ShowBanner: React.FC<ShowBannerProps> = ({
               {location.city}
             </Text>
           )}
-          {description && <Text mt={1}>{description}</Text>}
+          {description && (
+            <Text mt={1}>
+              <ReadMore maxChars={280} content={description} />
+            </Text>
+          )}
         </RouterLink>
 
         <GridColumns mt={[2, 3]}>
@@ -77,7 +82,6 @@ const ShowBanner: React.FC<ShowBannerProps> = ({
               alt={name}
               width="100%"
               height={[280, 480]}
-              lazyLoad
               style={{ objectFit: "cover", objectPosition: "center" }}
             />
           </RouterLink>

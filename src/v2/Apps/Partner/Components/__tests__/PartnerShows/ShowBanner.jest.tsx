@@ -50,8 +50,6 @@ describe("ShowBanner", () => {
       }),
     })
 
-    console.log(wrapper)
-
     wrapper.find("a").every(el => {
       expect(el.props().href).toEqual("/show/white-cube-ellen-altfest-nature")
     })
