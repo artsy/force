@@ -4,10 +4,11 @@ import {
   Image,
   ModalBase,
   ResponsiveBox,
+  Shelf,
   Text,
 } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { Carousel, CarouselProps } from "v2/Components/Carousel"
+import { CarouselProps } from "v2/Components/Carousel"
 import { ShowInstallShots_show } from "v2/__generated__/ShowInstallShots_show.graphql"
 
 type InstallShot = ShowInstallShots_show["images"][number]
@@ -34,7 +35,7 @@ export const ShowInstallShots: React.FC<ShowInstallShotsProps> = ({
 
   return (
     <>
-      <Carousel {...rest}>
+      <Shelf showProgress={false} alignItems="flex-end">
         {show.images.map((image, i) => {
           return (
             <Clickable
@@ -46,17 +47,18 @@ export const ShowInstallShots: React.FC<ShowInstallShotsProps> = ({
                 src={image.desktop.src}
                 srcSet={image.desktop.srcSet}
                 width={[image.mobile.width, image.desktop.width]}
-                height={[image.mobile.height, image.desktop.height]}
+                maxHeight={[300, 480]}
+                style={{ objectFit: "contain" }}
                 alt={`${show.name}, installation view`}
-                lazyLoad={i > 2}
               />
 
               {image.caption && (
                 <Text
+                  variant="xs"
                   mt={1}
                   color="black60"
                   textAlign="left"
-                  maxWidth={image.desktop.width}
+                  width={image.desktop.width}
                   title={image.caption}
                   overflowEllipsis
                 >
@@ -66,7 +68,7 @@ export const ShowInstallShots: React.FC<ShowInstallShotsProps> = ({
             </Clickable>
           )
         })}
-      </Carousel>
+      </Shelf>
       {selectedImage !== null && (
         <ModalBase
           onClose={handleClose}
@@ -116,11 +118,11 @@ export const ShowInstallShotsFragmentContainer = createFragmentContainer(
         images(default: false, size: 100) {
           internalID
           caption
-          mobile: resized(height: 300) {
+          mobile: resized(width: 200) {
             width
             height
           }
-          desktop: resized(height: 400, version: ["larger", "large"]) {
+          desktop: resized(width: 325) {
             src
             srcSet
             width

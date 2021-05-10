@@ -28,7 +28,7 @@ const ShowApp: React.FC<ShowAppProps> = ({ children, show }) => {
             contextPageOwnerType,
           }}
         >
-          <BackLink my={3} to={show.href}>
+          <BackLink my={2} to={show.href}>
             Back to {show.name}
             {!show.isFairBooth && show.partner?.name && (
               <> at {show.partner.name}</>

@@ -44,8 +44,8 @@ const ShowArtworksFilter: React.FC<ShowArtworksFilterProps> = ({
     <>
       <MediumFilter expanded />
       {showNewFilters && <MaterialsFilter expanded />}
-      <PriceRangeFilter />
-      {showNewFilters ? <SizeFilter2 /> : <SizeFilter />}
+      <PriceRangeFilter expanded />
+      {showNewFilters ? <SizeFilter2 expanded /> : <SizeFilter expanded />}
       <WaysToBuyFilter />
       <TimePeriodFilter />
       <ColorFilter />

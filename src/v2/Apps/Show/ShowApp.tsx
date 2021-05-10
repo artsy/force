@@ -1,15 +1,20 @@
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { Column, GridColumns, Separator } from "@artsy/palette"
+import {
+  Box,
+  Column,
+  GridColumns,
+  Separator,
+  Spacer,
+  Text,
+} from "@artsy/palette"
 import { ShowMetaFragmentContainer as ShowMeta } from "v2/Apps/Show/Components/ShowMeta"
 import { ShowHeaderFragmentContainer as ShowHeader } from "./Components/ShowHeader"
 import { ShowAboutFragmentContainer as ShowAbout } from "./Components/ShowAbout"
 import { ShowInstallShotsFragmentContainer as ShowInstallShots } from "./Components/ShowInstallShots"
-import { ShowContextualLinkFragmentContainer as ShowContextualLink } from "./Components/ShowContextualLink"
 import { ShowViewingRoomFragmentContainer as ShowViewingRoom } from "./Components/ShowViewingRoom"
 import { ShowApp_show } from "v2/__generated__/ShowApp_show.graphql"
-import { ShowArtworksRefetchContainer as ShowArtworks } from "./Components/ShowArtworks"
-import { ForwardLink } from "v2/Components/Links/ForwardLink"
+import { ShowArtworksRefetchContainer as ShowArtworksFilter } from "./Components/ShowArtworks"
 import { ShowContextCardFragmentContainer as ShowContextCard } from "./Components/ShowContextCard"
 import {
   AnalyticsContext,
@@ -17,6 +22,7 @@ import {
 } from "v2/Artsy/Analytics/AnalyticsContext"
 import { ShowArtworksEmptyStateFragmentContainer as ShowArtworksEmptyState } from "./Components/ShowArtworksEmptyState"
 import { SharedArtworkFilterContextProps } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
+import { RouterLink } from "v2/Artsy/Router/RouterLink"
 
 interface ShowAppProps {
   show: ShowApp_show
@@ -42,17 +48,22 @@ export const ShowApp: React.FC<ShowAppProps> = ({ show }) => {
             contextPageOwnerType,
           }}
         >
-          <ShowContextualLink show={show} />
-          <ShowInstallShots show={show} my={2} />
+          <Box mt={4} mb={6}>
+            <ShowInstallShots show={show} mt={4} mb={6} />
+          </Box>
 
           <GridColumns>
             <Column span={hasWideHeader ? [12, 8, 6] : 6} wrap={hasWideHeader}>
               <ShowHeader show={show} />
 
               {!hasAbout && show.href && (
-                <ForwardLink to={`${show.href}/info`} mt={1}>
-                  More info
-                </ForwardLink>
+                <>
+                  <Spacer mt={1} />
+
+                  <RouterLink to={`${show.href}/info`}>
+                    <Text variant="sm">More info</Text>
+                  </RouterLink>
+                </>
               )}
             </Column>
 
@@ -61,9 +72,9 @@ export const ShowApp: React.FC<ShowAppProps> = ({ show }) => {
                 <ShowAbout show={show} />
 
                 {show.href && (
-                  <ForwardLink to={`${show.href}/info`} mt={2}>
-                    More info
-                  </ForwardLink>
+                  <RouterLink to={`${show.href}/info`}>
+                    <Text variant="sm">More info</Text>
+                  </RouterLink>
                 )}
               </Column>
             )}
@@ -75,23 +86,22 @@ export const ShowApp: React.FC<ShowAppProps> = ({ show }) => {
             )}
           </GridColumns>
 
+          <Spacer mt={12} />
+
           {show.counts.eligibleArtworks > 0 ? (
-            <ShowArtworks
+            <ShowArtworksFilter
               aggregations={
                 sidebarAggregations.aggregations as SharedArtworkFilterContextProps["aggregations"]
               }
               show={show}
-              my={3}
             />
           ) : (
             <>
-              <Separator my={3} />
+              <Separator my={2} />
               <ShowArtworksEmptyState show={show} />
             </>
           )}
-
-          <Separator as="hr" my={3} />
-
+          <Separator as="hr" my={6} />
           <ShowContextCard show={show} />
         </AnalyticsContext.Provider>
       </>
@@ -133,7 +143,6 @@ export const ShowAppFragmentContainer = createFragmentContainer(ShowApp, {
           }
         }
       }
-      ...ShowContextualLink_show
       ...ShowHeader_show
       ...ShowAbout_show
       ...ShowMeta_show

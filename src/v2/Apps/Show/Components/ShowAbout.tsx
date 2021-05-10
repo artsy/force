@@ -18,11 +18,11 @@ export const ShowAbout: React.FC<ShowAboutProps> = ({
     <Box {...rest}>
       {about && (
         <>
-          <Text variant="mediumText" as="h3" mb={1}>
+          <Text variant="xs" as="h3" mb={1} textTransform="uppercase">
             About
           </Text>
 
-          <Text variant="subtitle" as="p">
+          <Text variant="sm" as="p">
             {about}
           </Text>
         </>

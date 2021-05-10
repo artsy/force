@@ -1,39 +1,41 @@
 import React from "react"
-import { Box, BoxProps, Text } from "@artsy/palette"
+import { Box, BoxProps, Join, Spacer, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ShowHeader_show } from "v2/__generated__/ShowHeader_show.graphql"
 import { useCurrentTime } from "v2/Utils/Hooks/useCurrentTime"
 import { useEventTiming } from "v2/Utils/Hooks/useEventTiming"
+import { ShowContextualLinkFragmentContainer } from "./ShowContextualLink"
 
 interface ShowHeaderProps extends BoxProps {
   show: ShowHeader_show
 }
-export const ShowHeader: React.FC<ShowHeaderProps> = ({
-  show: { name, startAt, endAt, formattedStartAt, formattedEndAt, partner },
-  ...rest
-}) => {
+export const ShowHeader: React.FC<ShowHeaderProps> = ({ show, ...rest }) => {
+  const { name, startAt, endAt, formattedStartAt, formattedEndAt } = show
+
   const currentTime = useCurrentTime({ syncWithServer: true })
   const { formattedTime } = useEventTiming({ currentTime, startAt, endAt })
 
   return (
     <Box {...rest}>
-      <Text as="h1" variant="largeTitle" mb={1.5}>
-        {name}
-      </Text>
-
-      <Text variant="mediumText">
-        {formattedStartAt} – {formattedEndAt}
-      </Text>
-
-      <Text variant="text" color="black60" mb={1}>
-        {formattedTime}
-      </Text>
-
-      {partner?.name && (
-        <Text variant="text" color="black60">
-          {partner.name}
+      <Join separator={<Spacer mb={1} />}>
+        <Text variant="xs" textTransform="uppercase">
+          Show
         </Text>
-      )}
+
+        <Box>
+          <Text as="h1" variant="xl">
+            {name}
+          </Text>
+
+          <Text variant="xl" color="black60">
+            {formattedStartAt} – {formattedEndAt}
+          </Text>
+        </Box>
+
+        <Text variant="lg">{formattedTime}</Text>
+
+        <ShowContextualLinkFragmentContainer show={show} />
+      </Join>
     </Box>
   )
 }
@@ -43,6 +45,7 @@ export const ShowHeaderFragmentContainer = createFragmentContainer(ShowHeader, {
       name
       startAt
       endAt
+      status
       formattedStartAt: startAt(format: "MMMM D")
       formattedEndAt: endAt(format: "MMMM D, YYYY")
       partner {
@@ -53,6 +56,8 @@ export const ShowHeaderFragmentContainer = createFragmentContainer(ShowHeader, {
           name
         }
       }
+
+      ...ShowContextualLink_show
     }
   `,
 })
