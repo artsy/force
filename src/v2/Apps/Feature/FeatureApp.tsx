@@ -3,7 +3,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { FeatureMetaFragmentContainer as FeatureMeta } from "./Components/FeatureMeta"
 import { FeatureHeaderFragmentContainer as FeatureHeader } from "./Components/FeatureHeader"
 import { FeatureApp_feature } from "v2/__generated__/FeatureApp_feature.graphql"
-import { Col, Grid, HTML, Join, Row, Spacer } from "@artsy/palette"
+import { Col, FullBleed, Grid, HTML, Join, Row, Spacer } from "@artsy/palette"
 import { FeatureSetFragmentContainer as FeatureSet } from "./Components/FeatureSet"
 
 interface FeatureAppProps {
@@ -17,7 +17,9 @@ const FeatureApp: React.FC<FeatureAppProps> = ({ feature }) => {
     <>
       <FeatureMeta feature={feature} />
 
-      <FeatureHeader feature={feature} />
+      <FullBleed>
+        <FeatureHeader feature={feature} />
+      </FullBleed>
 
       {(feature.description || feature.callout) && (
         <Grid my={3} px={3}>
