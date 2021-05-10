@@ -43,7 +43,7 @@ describe("BuyerGuaranteeIndex when admin", () => {
 
     const html = wrapper.html()
 
-    expect(wrapper.find("h1")).toHaveLength(1)
+    expect(wrapper.find("h1")).toHaveLength(2)
     expect(html).toContain("The Artsy Guarantee")
   })
 })
