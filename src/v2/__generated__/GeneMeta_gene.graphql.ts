@@ -6,7 +6,9 @@ import { FragmentRefs } from "relay-runtime";
 export type GeneMeta_gene = {
     readonly name: string | null;
     readonly href: string | null;
-    readonly description: string | null;
+    readonly meta: {
+        readonly description: string;
+    };
     readonly image: {
         readonly cropped: {
             readonly src: string;
@@ -45,8 +47,19 @@ const node: ReaderFragment = {
     {
       "alias": null,
       "args": null,
-      "kind": "ScalarField",
-      "name": "description",
+      "concreteType": "GeneMeta",
+      "kind": "LinkedField",
+      "name": "meta",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "description",
+          "storageKey": null
+        }
+      ],
       "storageKey": null
     },
     {
@@ -92,5 +105,5 @@ const node: ReaderFragment = {
   ],
   "type": "Gene"
 };
-(node as any).hash = '39b287fef5f18943388ab08ceabb3dee';
+(node as any).hash = '68c9b21b8a0c1a15b7664d135ee8ff82';
 export default node;
