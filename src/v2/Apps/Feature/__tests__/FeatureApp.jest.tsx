@@ -30,7 +30,6 @@ describe("FeatureApp", () => {
       OrderedSet: () => ({ itemType: "Artwork" }),
     })
 
-    expect(wrapper.find("AppContainer").length).toBe(1)
     expect(wrapper.find("FeatureHeader").length).toBe(1)
     expect(wrapper.find("ArtworkGridItemContainer").length).toBe(1)
   })

@@ -9,7 +9,6 @@ import {
   media,
 } from "@artsy/palette"
 import { Status_order } from "v2/__generated__/Status_order.graphql"
-import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
 import { TransactionDetailsSummaryItemFragmentContainer as TransactionDetailsSummaryItem } from "v2/Apps/Order/Components/TransactionDetailsSummaryItem"
 import { TwoColumnLayout } from "v2/Apps/Order/Components/TwoColumnLayout"
 import { Router } from "found"
@@ -250,7 +249,7 @@ export class StatusRoute extends Component<StatusProps> {
       <SystemContextConsumer>
         {({ isEigen }) => {
           return (
-            <HorizontalPadding>
+            <>
               <Serif size="6" weight="regular" color="black100">
                 {title}
               </Serif>
@@ -299,7 +298,7 @@ export class StatusRoute extends Component<StatusProps> {
                   )
                 }
               />
-            </HorizontalPadding>
+            </>
           )
         }}
       </SystemContextConsumer>

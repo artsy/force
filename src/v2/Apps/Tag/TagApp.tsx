@@ -2,8 +2,6 @@ import { Column, GridColumns, Text } from "@artsy/palette"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { TagApp_tag } from "v2/__generated__/TagApp_tag.graphql"
-import { AppContainer } from "../Components/AppContainer"
-import { HorizontalPadding } from "../Components/HorizontalPadding"
 import { TagMetaFragmentContainer } from "./Components/TagMeta"
 import { TagArtworkFilterRefetchContainer } from "./Components/TagArtworkFilter"
 
@@ -16,19 +14,15 @@ const TagApp: React.FC<TagAppProps> = ({ tag }) => {
     <>
       <TagMetaFragmentContainer tag={tag} />
 
-      <AppContainer>
-        <HorizontalPadding>
-          <GridColumns my={4} gridRowGap={[2, 0]}>
-            <Column span={6}>
-              <Text as="h1" variant="xl" mb={2}>
-                {tag.name}
-              </Text>
-            </Column>
-          </GridColumns>
+      <GridColumns my={4} gridRowGap={[2, 0]}>
+        <Column span={6}>
+          <Text as="h1" variant="xl" mb={2}>
+            {tag.name}
+          </Text>
+        </Column>
+      </GridColumns>
 
-          <TagArtworkFilterRefetchContainer tag={tag} />
-        </HorizontalPadding>
-      </AppContainer>
+      <TagArtworkFilterRefetchContainer tag={tag} />
     </>
   )
 }

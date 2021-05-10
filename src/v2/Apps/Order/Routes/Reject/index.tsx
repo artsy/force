@@ -7,7 +7,6 @@ import { TwoColumnLayout } from "v2/Apps/Order/Components/TwoColumnLayout"
 import { Router } from "found"
 import React, { Component } from "react"
 
-import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
 import { CountdownTimer } from "v2/Components/CountdownTimer"
 import { StepSummaryItem } from "v2/Components/StepSummaryItem"
 import { Media } from "v2/Utils/Responsive"
@@ -97,49 +96,65 @@ export class Reject extends Component<RejectProps> {
 
     return (
       <>
-        <HorizontalPadding px={[0, 4]}>
-          <Row>
-            <Col>
-              <OrderStepper
-                currentStep="Review"
-                steps={counterofferFlowSteps}
-              />
-            </Col>
-          </Row>
-        </HorizontalPadding>
-        <HorizontalPadding>
-          <TwoColumnLayout
-            Content={
-              <Flex
-                flexDirection="column"
-                style={isCommittingMutation ? { pointerEvents: "none" } : {}}
-              >
-                <Media at="xs">
-                  <Flex flexDirection="column">
-                    <ArtworkSummaryItem order={order} />
-                  </Flex>
-                  <Spacer mb={2} />
-                </Media>
+        <Row>
+          <Col>
+            <OrderStepper currentStep="Review" steps={counterofferFlowSteps} />
+          </Col>
+        </Row>
+        <TwoColumnLayout
+          Content={
+            <Flex
+              flexDirection="column"
+              style={isCommittingMutation ? { pointerEvents: "none" } : {}}
+            >
+              <Media at="xs">
                 <Flex flexDirection="column">
-                  <CountdownTimer
-                    action="Respond"
-                    note="Expired offers end the negotiation process permanently."
-                    countdownStart={order.lastOffer.createdAt}
-                    countdownEnd={order.stateExpiresAt}
-                  />
-                  <StepSummaryItem
-                    title="Decline seller's offer"
-                    onChange={this.onChangeResponse}
-                  >
-                    <Sans size="2" color="black60">
-                      Declining an offer permanently ends the negotiation
-                      process. The seller will not be able to make a
-                      counteroffer.
-                    </Sans>
-                  </StepSummaryItem>
+                  <ArtworkSummaryItem order={order} />
                 </Flex>
-                <Spacer mb={[2, 3]} />
-                <Media greaterThan="xs">
+                <Spacer mb={2} />
+              </Media>
+              <Flex flexDirection="column">
+                <CountdownTimer
+                  action="Respond"
+                  note="Expired offers end the negotiation process permanently."
+                  countdownStart={order.lastOffer.createdAt}
+                  countdownEnd={order.stateExpiresAt}
+                />
+                <StepSummaryItem
+                  title="Decline seller's offer"
+                  onChange={this.onChangeResponse}
+                >
+                  <Sans size="2" color="black60">
+                    Declining an offer permanently ends the negotiation process.
+                    The seller will not be able to make a counteroffer.
+                  </Sans>
+                </StepSummaryItem>
+              </Flex>
+              <Spacer mb={[2, 3]} />
+              <Media greaterThan="xs">
+                <Button
+                  onClick={this.onSubmit}
+                  loading={isCommittingMutation}
+                  size="large"
+                  width="100%"
+                >
+                  Submit
+                </Button>
+                <Spacer mb={2} />
+                <ConditionsOfSaleDisclaimer textAlign="center" />
+              </Media>
+            </Flex>
+          }
+          Sidebar={
+            <Flex flexDirection="column">
+              <Media greaterThan="xs">
+                <Flex flexDirection="column">
+                  <ArtworkSummaryItem order={order} />
+                </Flex>
+                <Spacer mb={2} />
+              </Media>
+              <Media at="xs">
+                <>
                   <Button
                     onClick={this.onSubmit}
                     loading={isCommittingMutation}
@@ -149,36 +164,12 @@ export class Reject extends Component<RejectProps> {
                     Submit
                   </Button>
                   <Spacer mb={2} />
-                  <ConditionsOfSaleDisclaimer textAlign="center" />
-                </Media>
-              </Flex>
-            }
-            Sidebar={
-              <Flex flexDirection="column">
-                <Media greaterThan="xs">
-                  <Flex flexDirection="column">
-                    <ArtworkSummaryItem order={order} />
-                  </Flex>
-                  <Spacer mb={2} />
-                </Media>
-                <Media at="xs">
-                  <>
-                    <Button
-                      onClick={this.onSubmit}
-                      loading={isCommittingMutation}
-                      size="large"
-                      width="100%"
-                    >
-                      Submit
-                    </Button>
-                    <Spacer mb={2} />
-                    <ConditionsOfSaleDisclaimer />
-                  </>
-                </Media>
-              </Flex>
-            }
-          />
-        </HorizontalPadding>
+                  <ConditionsOfSaleDisclaimer />
+                </>
+              </Media>
+            </Flex>
+          }
+        />
       </>
     )
   }

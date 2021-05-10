@@ -7,7 +7,6 @@ import {
 } from "v2/__generated__/RegisterCreateBidderMutation.graphql"
 import { createCreditCardAndUpdatePhone } from "v2/Apps/Auction/Operations/CreateCreditCardAndUpdatePhone"
 import { RegistrationForm } from "v2/Apps/Auction/Components/RegistrationForm"
-import { AppContainer } from "v2/Apps/Components/AppContainer"
 import { track } from "v2/Artsy"
 import * as Schema from "v2/Artsy/Analytics/Schema"
 import React, { ComponentProps } from "react"
@@ -160,7 +159,7 @@ export const RegisterRoute: React.FC<RegisterProps> = props => {
   }
 
   return (
-    <AppContainer>
+    <>
       <Title>Auction Registration</Title>
       <Box maxWidth={550} px={[2, 0]} mx="auto" mt={[1, 0]} mb={[1, 100]}>
         <Serif size="10">Register to Bid on Artsy</Serif>
@@ -175,7 +174,7 @@ export const RegisterRoute: React.FC<RegisterProps> = props => {
           })}
         />
       </Box>
-    </AppContainer>
+    </>
   )
 }
 

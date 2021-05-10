@@ -1,10 +1,15 @@
 import { ContextModule } from "@artsy/cohesion"
-import { EntityHeader, ReadMore, Text, breakpoints } from "@artsy/palette"
+import {
+  EntityHeader,
+  ReadMore,
+  Text,
+  breakpoints,
+  FullBleed,
+} from "@artsy/palette"
 import { Box, Col, Flex, Grid, Row, Spacer, color, media } from "@artsy/palette"
 import { Header_artworks } from "v2/__generated__/Header_artworks.graphql"
 import { Header_collection } from "v2/__generated__/Header_collection.graphql"
 import { CollectionDefaultHeaderFragmentContainer as CollectionDefaultHeader } from "v2/Apps/Collect/Routes/Collection/Components/Header/DefaultHeader"
-import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
 import { unica } from "v2/Assets/Fonts"
 import { FollowArtistButtonFragmentContainer as FollowArtistButton } from "v2/Components/FollowButton/FollowArtistButton"
 import { Link } from "found"
@@ -151,29 +156,33 @@ export const CollectionHeader: FC<Props> = ({ artworks, collection }) => {
           <header>
             <Flex flexDirection="column">
               <Box>
-                {resizedHeaderImage ? (
-                  <CollectionSingleImageHeader
-                    p={2}
-                    headerImageUrl={resizedHeaderImage}
-                    height={imageHeight}
-                    key="singleImageHeader"
-                  >
-                    <Overlay />
+                <FullBleed>
+                  {resizedHeaderImage ? (
+                    <CollectionSingleImageHeader
+                      p={2}
+                      headerImageUrl={resizedHeaderImage}
+                      height={imageHeight}
+                      key="singleImageHeader"
+                    >
+                      <Overlay />
 
-                    {collection.credit && (
-                      <ImageCaption
-                        dangerouslySetInnerHTML={{ __html: collection.credit }}
-                      />
-                    )}
-                  </CollectionSingleImageHeader>
-                ) : (
-                  <CollectionDefaultHeader
-                    headerArtworks={artworks}
-                    collectionId={collection.id}
-                    collectionSlug={collection.slug}
-                    key={collection.slug}
-                  />
-                )}
+                      {collection.credit && (
+                        <ImageCaption
+                          dangerouslySetInnerHTML={{
+                            __html: collection.credit,
+                          }}
+                        />
+                      )}
+                    </CollectionSingleImageHeader>
+                  ) : (
+                    <CollectionDefaultHeader
+                      headerArtworks={artworks}
+                      collectionId={collection.id}
+                      collectionSlug={collection.slug}
+                      key={collection.slug}
+                    />
+                  )}
+                </FullBleed>
 
                 <Box
                   mt={[2, 3]}
@@ -181,50 +190,48 @@ export const CollectionHeader: FC<Props> = ({ artworks, collection }) => {
                   mx="auto"
                   width="100%"
                 >
-                  <HorizontalPadding>
-                    <MetaContainer my={2}>
-                      <BreadcrumbContainer mt={[2, 0]}>
-                        <Link to="/collect">All works</Link> /{" "}
-                        <Link to={categoryTarget}>{collection.category}</Link>
-                      </BreadcrumbContainer>
+                  <MetaContainer my={2}>
+                    <BreadcrumbContainer mt={[2, 0]}>
+                      <Link to="/collect">All works</Link> /{" "}
+                      <Link to={categoryTarget}>{collection.category}</Link>
+                    </BreadcrumbContainer>
 
-                      <Spacer mt={1} />
+                    <Spacer mt={1} />
 
-                      <Text variant="largeTitle" as="h1">
-                        {collection.title}
-                      </Text>
-                    </MetaContainer>
+                    <Text variant="largeTitle" as="h1">
+                      {collection.title}
+                    </Text>
+                  </MetaContainer>
 
-                    <Grid>
-                      <Row>
-                        <Col sm="12" md="8">
-                          <Flex>
-                            <ExtendedText size="3">
-                              {smallerScreen ? (
-                                <ReadMore
-                                  maxChars={chars}
-                                  content={collection.description || ""}
-                                />
-                              ) : (
-                                htmlUnsafeDescription
-                              )}
-                              {collection.description && <Spacer mt={2} />}
-                            </ExtendedText>
-                          </Flex>
-                        </Col>
+                  <Grid>
+                    <Row>
+                      <Col sm="12" md="8">
+                        <Flex>
+                          <ExtendedText size="3">
+                            {smallerScreen ? (
+                              <ReadMore
+                                maxChars={chars}
+                                content={collection.description || ""}
+                              />
+                            ) : (
+                              htmlUnsafeDescription
+                            )}
+                            {collection.description && <Spacer mt={2} />}
+                          </ExtendedText>
+                        </Flex>
+                      </Col>
 
-                        <Col sm={12} md={12}>
-                          {featuredArtists && hasMultipleArtists && (
-                            <FeaturedArtists
-                              breakpointSize={size}
-                              featuredArtists={featuredArtists}
-                              hasMultipleArtists={hasMultipleArtists}
-                            />
-                          )}
-                        </Col>
-                      </Row>
-                    </Grid>
-                  </HorizontalPadding>
+                      <Col sm={12} md={12}>
+                        {featuredArtists && hasMultipleArtists && (
+                          <FeaturedArtists
+                            breakpointSize={size}
+                            featuredArtists={featuredArtists}
+                            hasMultipleArtists={hasMultipleArtists}
+                          />
+                        )}
+                      </Col>
+                    </Row>
+                  </Grid>
                 </Box>
 
                 <Spacer mb={1} />

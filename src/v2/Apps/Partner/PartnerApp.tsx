@@ -1,7 +1,5 @@
 import React from "react"
 import { Separator } from "@artsy/palette"
-import { AppContainer } from "../Components/AppContainer"
-import { HorizontalPadding } from "../Components/HorizontalPadding"
 import { createFragmentContainer, graphql } from "react-relay"
 import { NavigationTabsFragmentContainer as NavigationTabs } from "v2/Apps/Partner/Components/NavigationTabs"
 import { PartnerHeaderFragmentContainer as PartnerHeader } from "./Components/PartnerHeader"
@@ -31,21 +29,17 @@ export const PartnerApp: React.FC<PartnerAppProps> = ({
       <PartnerHeaderImage profile={partner.profile} />
 
       <Foreground>
-        <AppContainer>
-          <HorizontalPadding>
-            <PartnerMetaFragmentContainer partner={partner} />
+        <PartnerMetaFragmentContainer partner={partner} />
 
-            <PartnerHeader partner={partner} />
+        <PartnerHeader partner={partner} />
 
-            <FullBleed mb={[2, 4]}>
-              <Separator />
-            </FullBleed>
+        <FullBleed mb={[2, 4]}>
+          <Separator />
+        </FullBleed>
 
-            <NavigationTabs partner={partner} />
+        <NavigationTabs partner={partner} />
 
-            {children}
-          </HorizontalPadding>
-        </AppContainer>
+        {children}
       </Foreground>
     </StickyProvider>
   )

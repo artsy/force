@@ -29,6 +29,7 @@ export const AppShell: React.FC<AppShellProps> = props => {
 
   const { isEigen } = useSystemContext()
   const showFooter = !isEigen
+  const appContainerMaxWidth = routeConfig.displayFullPage ? "100%" : null
 
   /**
    * Check to see if a route has a prepare key; if so call it. Used typically to
@@ -81,7 +82,9 @@ export const AppShell: React.FC<AppShellProps> = props => {
       <Theme theme={theme}>
         <>
           <Box as="main" id="main">
-            {children}
+            <AppContainer maxWidth={appContainerMaxWidth}>
+              <HorizontalPadding>{children}</HorizontalPadding>
+            </AppContainer>
           </Box>
 
           <NetworkOfflineMonitor />

@@ -12,7 +12,6 @@ import { BidFormFragmentContainer as BidForm } from "v2/Apps/Auction/Components/
 import { LotInfoFragmentContainer as LotInfo } from "v2/Apps/Auction/Components/LotInfo"
 import { bidderPositionQuery } from "v2/Apps/Auction/Operations/BidderPositionQuery"
 import { createCreditCardAndUpdatePhone } from "v2/Apps/Auction/Operations/CreateCreditCardAndUpdatePhone"
-import { AppContainer } from "v2/Apps/Components/AppContainer"
 import { track } from "v2/Artsy"
 import * as Schema from "v2/Artsy/Analytics/Schema"
 import { useTracking } from "v2/Artsy/Analytics/useTracking"
@@ -305,7 +304,7 @@ export const ConfirmBidRoute: React.FC<
   }
 
   return (
-    <AppContainer>
+    <>
       <Title>Confirm Bid | Artsy</Title>
 
       <Box maxWidth={550} px={[2, 0]} mx="auto" mt={[1, 0]} mb={[1, 100]}>
@@ -329,7 +328,7 @@ export const ConfirmBidRoute: React.FC<
           }
         />
       </Box>
-    </AppContainer>
+    </>
   )
 }
 

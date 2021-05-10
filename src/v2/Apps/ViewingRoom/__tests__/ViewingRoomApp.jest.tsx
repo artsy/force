@@ -82,7 +82,6 @@ describe("ViewingRoomApp", () => {
     it("renders the correct components", async () => {
       const wrapper = await getWrapper()
       expect(wrapper.find("ViewingRoomMeta").length).toBe(1)
-      expect(wrapper.find("AppContainer").length).toBe(1)
       expect(wrapper.find("ViewingRoomHeader").length).toBe(1)
       expect(wrapper.find("ViewingRoomTabBar").length).toBe(1)
       expect(wrapper.find("ViewingRoomContentNotAccessible").length).toBe(0)
@@ -127,7 +126,6 @@ describe("ViewingRoomApp", () => {
     it("renders the correct components", async () => {
       const wrapper = await getWrapper()
       expect(wrapper.find("ViewingRoomMeta").length).toBe(1)
-      expect(wrapper.find("AppContainer").length).toBe(1)
       expect(wrapper.find("ViewingRoomHeader").length).toBe(1)
       expect(wrapper.find("ViewingRoomTabBar").length).toBe(0)
       expect(wrapper.find("ViewingRoomContentNotAccessible").length).toBe(1)
@@ -194,7 +192,6 @@ describe("ViewingRoomApp", () => {
     it("renders the correct components", async () => {
       const wrapper = await getWrapper()
       expect(wrapper.find("ViewingRoomMeta").length).toBe(1)
-      expect(wrapper.find("AppContainer").length).toBe(1)
       expect(wrapper.find("ViewingRoomHeader").length).toBe(1)
       expect(wrapper.find("ViewingRoomTabBar").length).toBe(1)
       expect(wrapper.find("ViewingRoomContentNotAccessible").length).toBe(0)
@@ -271,7 +268,6 @@ describe("ViewingRoomApp", () => {
     it("renders the correct components", async () => {
       const wrapper = await getWrapper()
       expect(wrapper.find("ViewingRoomMeta").length).toBe(1)
-      expect(wrapper.find("AppContainer").length).toBe(1)
       expect(wrapper.find("ViewingRoomHeader").length).toBe(1)
       expect(wrapper.find("ViewingRoomTabBar").length).toBe(0)
       expect(wrapper.find("ViewingRoomContentNotAccessible").length).toBe(1)
@@ -373,7 +369,6 @@ describe("ViewingRoomApp", () => {
     it("shows sign up modal", async () => {
       const wrapper = await getWrapper()
       expect(wrapper.find("ViewingRoomMeta").length).toBe(1)
-      expect(wrapper.find("AppContainer").length).toBe(1)
       expect(wrapper.find("ViewingRoomHeader").length).toBe(1)
       expect(wrapper.find("ViewingRoomTabBar").length).toBe(0)
       expect(wrapper.find("ViewingRoomContentNotAccessible").length).toBe(0)

@@ -1,12 +1,11 @@
 import { Box, Button, Sans, Serif } from "@artsy/palette"
-import { AppContainer } from "v2/Apps/Components/AppContainer"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import React from "react"
 import { Title as HeadTitle } from "react-head"
 
 export const CompleteWatchlistHit: React.FC = () => {
   return (
-    <AppContainer>
+    <>
       <HeadTitle>Artsy | ID Verification</HeadTitle>
 
       <Box
@@ -35,6 +34,6 @@ export const CompleteWatchlistHit: React.FC = () => {
           </Button>
         </RouterLink>
       </Box>
-    </AppContainer>
+    </>
   )
 }

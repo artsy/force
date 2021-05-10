@@ -3,7 +3,6 @@ import { Collection_collection } from "v2/__generated__/Collection_collection.gr
 import { SeoProductsForArtworks } from "v2/Apps/Collect/Components/SeoProductsForArtworks"
 import { SeoProductsForCollections } from "v2/Apps/Collect/Components/SeoProductsForCollections"
 import { CollectionFilterFragmentContainer as CollectionHeader } from "v2/Apps/Collect/Routes/Collection/Components/Header"
-import { AppContainer } from "v2/Apps/Components/AppContainer"
 import { SystemContextProps, withSystemContext } from "v2/Artsy/SystemContext"
 import { FrameWithRecentlyViewed } from "v2/Components/FrameWithRecentlyViewed"
 import { RelatedCollectionsRailFragmentContainer as RelatedCollectionsRail } from "v2/Components/RelatedCollectionsRail/RelatedCollectionsRail"
@@ -102,7 +101,7 @@ export const CollectionApp: React.FC<CollectionAppProps> = props => {
           collectionName={title}
         />
       )}
-      <AppContainer maxWidth="100%">
+      <>
         <CollectionHeader
           collection={collection}
           artworks={artworksConnection}
@@ -176,7 +175,7 @@ export const CollectionApp: React.FC<CollectionAppProps> = props => {
               )}
           </FrameWithRecentlyViewed>
         </Box>
-      </AppContainer>
+      </>
     </>
   )
 }

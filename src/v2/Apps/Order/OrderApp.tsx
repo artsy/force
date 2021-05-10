@@ -1,6 +1,5 @@
 import { Box } from "@artsy/palette"
 import { OrderApp_order } from "v2/__generated__/OrderApp_order.graphql"
-import { AppContainer } from "v2/Apps/Components/AppContainer"
 import { StickyFooter } from "v2/Apps/Order/Components/StickyFooter"
 import { SystemContextConsumer, withSystemContext } from "v2/Artsy"
 import { findCurrentRoute } from "v2/Artsy/Router/Utils/findCurrentRoute"
@@ -18,6 +17,7 @@ import { ConnectedModalDialog } from "./Dialogs"
 import { Mediator } from "lib/mediator"
 import { data as sd } from "sharify"
 import { ZendeskWrapper } from "v2/Components/ZendeskWrapper"
+import { HorizontalPadding } from "../Components/HorizontalPadding"
 
 export interface OrderAppProps extends RouterState {
   params: {
@@ -181,7 +181,7 @@ class OrderApp extends React.Component<OrderAppProps, {}> {
               */}
               <div id="main-layout-flash" />
               <MinimalNavBar to={artworkHref}>
-                <AppContainer>
+                <HorizontalPadding>
                   <Title>Checkout | Artsy</Title>
                   {isEigen ? (
                     <Meta
@@ -201,7 +201,7 @@ class OrderApp extends React.Component<OrderAppProps, {}> {
                   </SafeAreaContainer>
                   <StickyFooter orderType={order.mode} artworkId={artworkId} />
                   <ConnectedModalDialog />
-                </AppContainer>
+                </HorizontalPadding>
               </MinimalNavBar>
             </Box>
           )

@@ -1,5 +1,4 @@
 import React from "react"
-import { AppContainer } from "v2/Apps/Components/AppContainer"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Meta, Title } from "react-head"
 
@@ -24,7 +23,7 @@ const OfferDetailApp: React.FC<OfferDetailAppProps> = ({ offer }) => {
   return (
     <>
       <MinimalNavBar to="/">
-        <AppContainer>
+        <>
           <Title>Review Offer | Artsy</Title>
           <Meta
             name="viewport"
@@ -38,7 +37,7 @@ const OfferDetailApp: React.FC<OfferDetailAppProps> = ({ offer }) => {
             />
           </HorizontalPadding>
           <StickyFooter />
-        </AppContainer>
+        </>
       </MinimalNavBar>
     </>
   )

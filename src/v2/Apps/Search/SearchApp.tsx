@@ -1,7 +1,5 @@
 import { Box, Col, Row, Spacer, Text } from "@artsy/palette"
 import { SearchApp_viewer } from "v2/__generated__/SearchApp_viewer.graphql"
-import { AppContainer } from "v2/Apps/Components/AppContainer"
-import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
 import { NavigationTabsFragmentContainer as NavigationTabs } from "v2/Apps/Search/Components/NavigationTabs"
 import { SearchMeta } from "v2/Apps/Search/Components/SearchMeta"
 import { withSystemContext } from "v2/Artsy"
@@ -116,24 +114,18 @@ export class SearchApp extends React.Component<Props> {
     const hasResults = !!(countWithoutArtworks || artworkCount)
 
     return (
-      <AppContainer>
-        <HorizontalPadding>
-          {/* NOTE: react-head automatically moves these tags to the <head> element */}
-          <SearchMeta term={term} />
-          {hasResults ? (
-            this.renderResults(
-              countWithoutArtworks + artworkCount,
-              artworkCount
-            )
-          ) : (
-            <Box mt={3}>
-              <ZeroState term={term} />
-              {this.renderFooter()}
-            </Box>
-          )}
-          <Spacer mb={3} />
-        </HorizontalPadding>
-      </AppContainer>
+      <>
+        <SearchMeta term={term} />
+        {hasResults ? (
+          this.renderResults(countWithoutArtworks + artworkCount, artworkCount)
+        ) : (
+          <Box mt={3}>
+            <ZeroState term={term} />
+            {this.renderFooter()}
+          </Box>
+        )}
+        <Spacer mb={3} />
+      </>
     )
   }
 }

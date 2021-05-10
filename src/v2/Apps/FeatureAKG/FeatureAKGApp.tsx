@@ -1,7 +1,5 @@
 import { Col, Row } from "@artsy/palette"
 import { FeatureAKGApp_viewer } from "v2/__generated__/FeatureAKGApp_viewer.graphql"
-import { AppContainer } from "v2/Apps/Components/AppContainer"
-import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
 import { Footer } from "v2/Components/Footer"
 import React from "react"
 import { Title } from "react-head"
@@ -14,17 +12,15 @@ interface FeatureAKGAppProps {
 
 export const FeatureAKGApp: React.FC<FeatureAKGAppProps> = props => {
   return (
-    <AppContainer>
+    <>
       <Title>Art Keeps Going</Title>
       <Feature viewer={props.viewer} />
       <Row>
         <Col>
-          <HorizontalPadding>
-            <Footer />
-          </HorizontalPadding>
+          <Footer />
         </Col>
       </Row>
-    </AppContainer>
+    </>
   )
 }
 

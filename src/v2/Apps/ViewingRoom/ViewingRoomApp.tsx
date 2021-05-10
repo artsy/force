@@ -1,5 +1,4 @@
 import React, { useContext, useEffect } from "react"
-import { AppContainer } from "v2/Apps/Components/AppContainer"
 import { Banner, Box, ClosedEyeIcon, Text } from "@artsy/palette"
 import { ViewingRoomHeaderFragmentContainer as ViewingRoomHeader } from "./Components/ViewingRoomHeader"
 import { ViewingRoomContentNotAccessibleFragmentContainer as ViewingRoomContentNotAccessible } from "./Components/ViewingRoomContentNotAccessible"
@@ -82,10 +81,10 @@ const ViewingRoomApp: React.FC<ViewingRoomAppProps> = ({
         </Box>
       )}
 
-      <AppContainer maxWidth="100%">
+      <>
         <ViewingRoomHeader viewingRoom={viewingRoom} />
         {user && getView()}
-      </AppContainer>
+      </>
     </>
   )
 }
