@@ -5,6 +5,8 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ArtistBio_bio = {
     readonly biographyBlurb: {
+        readonly credit: string | null;
+        readonly partnerID: string | null;
         readonly text: string | null;
     } | null;
     readonly " $refType": "ArtistBio_bio";
@@ -46,6 +48,20 @@ const node: ReaderFragment = {
           "alias": null,
           "args": null,
           "kind": "ScalarField",
+          "name": "credit",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "partnerID",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
           "name": "text",
           "storageKey": null
         }
@@ -55,5 +71,5 @@ const node: ReaderFragment = {
   ],
   "type": "Artist"
 };
-(node as any).hash = '8d3d6cad9783dad9b00e24bb96e77b1a';
+(node as any).hash = '4addcc903e5cb13537a9a17269aba5e1';
 export default node;

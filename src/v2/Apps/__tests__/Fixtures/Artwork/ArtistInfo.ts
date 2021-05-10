@@ -69,6 +69,8 @@ export const ArtistInfoFixture: ArtistInfo_Test_QueryRawResponse["artist"] = {
     },
   ],
   biographyBlurb: {
+    credit: "",
+    partnerID: "",
     text:
       '<p>A prolific and tireless innovator of art forms, Pablo Picasso impacted the course of 20th-century art with unparalleled magnitude. Inspired by African and Iberian art and developments in the world around him, Picasso contributed significantly to a number of artistic movements, notably <a href="/gene/cubism">Cubism</a>, <a href="/gene/surrealism">Surrealism</a>, <a href="/gene/neoclassicism">Neoclassicism</a>, and <a href="/gene/austrian-and-german-expressionism">Expressionism</a>. Along with <a href="/artist/georges-braque">Georges Braque</a>, Picasso is best known for pioneering <a href="/gene/cubism">Cubism</a> in an attempt to reconcile three-dimensional space with the two-dimensional picture plane, once asking, “Are we to paint what’s on the face, what’s inside the face, or what’s behind it?” Responding to the Spanish Civil War, he painted his most famous work, <em>Guernica</em> (1937), whose violent images of anguished figures rendered in grisaille made it a definitive work of anti-war art. “Painting is not made to decorate apartments,” he said. “It’s an offensive and defensive weapon against the enemy.” Picasso’s sizable oeuvre includes over 20,000 paintings, prints, drawings, sculptures, ceramics, theater sets, and costume designs.</p>\n',
   },
