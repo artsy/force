@@ -41,7 +41,7 @@ import { ShowArtworks_show } from "v2/__generated__/ShowArtworks_show.graphql"
 import { useAnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
 import { commercialFilterParamsChanged } from "@artsy/cohesion"
 import { allowedFilters } from "./Utils/allowedFilters"
-import { StickyContainer } from "v2/Components/StickyContainer"
+import { Sticky } from "v2/Components/Sticky"
 
 /**
  * Primary ArtworkFilter which is wrapped with a context and refetch container.
@@ -227,7 +227,7 @@ export const BaseArtworkFilter: React.FC<
             </ArtworkFilterMobileActionSheet>
           )}
 
-          <StickyContainer>
+          <Sticky>
             {({ stuck }) => {
               return (
                 <Flex
@@ -257,7 +257,7 @@ export const BaseArtworkFilter: React.FC<
                 </Flex>
               )
             }}
-          </StickyContainer>
+          </Sticky>
 
           <Spacer mb={2} />
 

@@ -1,6 +1,5 @@
 import { Box, Text, GridColumns, Column, HTML } from "@artsy/palette"
 import React from "react"
-import { StickyContainer } from "../StickyContainer"
 import { Page } from "./Components/Page"
 
 export default {
@@ -74,15 +73,14 @@ export const TextCentered = () => {
   )
 }
 
+// TODO: Do we need a proper sticky library?
 export const TextFixedLeftScrollRight = () => {
   return (
     <Page title="<TextFixedLeftScrollRight />">
       <GridColumns>
-        <StickyContainer>
-          <Column span={6}>
-            <Box bg="black30" height={720} />
-          </Column>
-        </StickyContainer>
+        <Column span={6}>
+          <Box bg="black30" height={720} />
+        </Column>
 
         <Column span={6}>
           <HTML variant="sm">
@@ -218,6 +216,10 @@ export const TextScrollLeftFixedRight = () => {
               brooklyn vaporware tbh.
             </p>
           </HTML>
+        </Column>
+
+        <Column span={6}>
+          <Box bg="black30" height={720} />
         </Column>
       </GridColumns>
     </Page>

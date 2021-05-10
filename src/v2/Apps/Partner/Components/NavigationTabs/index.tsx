@@ -5,7 +5,7 @@ import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
 import { FullBleed } from "v2/Components/FullBleed"
 import { MOBILE_NAV_HEIGHT, NAV_BAR_HEIGHT } from "v2/Components/NavBar"
 import { RouteTab, RouteTabs } from "v2/Components/RouteTabs"
-import { StickyContainer } from "v2/Components/StickyContainer"
+import { Sticky } from "v2/Components/Sticky"
 import { ScrollIntoView } from "v2/Utils"
 import { Media } from "v2/Utils/Responsive"
 import { NavigationTabs_partner } from "v2/__generated__/NavigationTabs_partner.graphql"
@@ -81,7 +81,7 @@ export const NavigationTabs: React.FC<NavigationTabsProps> = ({ partner }) => {
   }
 
   return (
-    <StickyContainer>
+    <Sticky>
       {({ stuck }) => {
         return (
           <FullBleed
@@ -99,7 +99,7 @@ export const NavigationTabs: React.FC<NavigationTabsProps> = ({ partner }) => {
           </FullBleed>
         )
       }}
-    </StickyContainer>
+    </Sticky>
   )
 }
 
