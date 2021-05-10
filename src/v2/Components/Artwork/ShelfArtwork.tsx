@@ -45,9 +45,9 @@ const ShelfArtwork: React.FC<ShelfArtworkProps> = ({
   const { mediator, user } = useSystemContext()
 
   const getHeight = (size: keyof typeof IMG_HEIGHT) => {
-    return artwork.image.resized.height > IMG_HEIGHT[size]
+    return artwork.image?.resized.height > IMG_HEIGHT[size]
       ? IMG_HEIGHT[size]
-      : artwork.image.resized.height
+      : artwork.image?.resized.height
   }
 
   const ResponsiveContainer = ({ children }) => {
@@ -55,7 +55,7 @@ const ShelfArtwork: React.FC<ShelfArtworkProps> = ({
       <>
         <Media at="xs">
           <Container
-            width={artwork.image.resized.width}
+            width={artwork.image?.resized.width}
             height={getHeight("mobile")}
           >
             {children}
@@ -63,7 +63,7 @@ const ShelfArtwork: React.FC<ShelfArtworkProps> = ({
         </Media>
         <Media greaterThan="xs">
           <Container
-            width={artwork.image.resized.width}
+            width={artwork.image?.resized.width}
             height={getHeight("desktop")}
           >
             {children}
@@ -84,9 +84,9 @@ const ShelfArtwork: React.FC<ShelfArtworkProps> = ({
       >
         <ResponsiveContainer>
           <Image
-            src={artwork.image.resized.src}
-            srcSet={artwork.image.resized.srcSet}
-            width={artwork.image.resized.width}
+            src={artwork.image?.resized.src}
+            srcSet={artwork.image?.resized.srcSet}
+            width={artwork.image?.resized.width}
             maxHeight={[IMG_HEIGHT.mobile, IMG_HEIGHT.desktop]}
             lazyLoad={lazyLoad}
             style={{ objectFit: "contain" }}
