@@ -43,7 +43,6 @@ const NoResultsContainer = styled.div`
 
 class GeneSearchResultsContent extends React.Component<Props, null> {
   private excludedGeneIds: Set<string>
-  followCount: number = 0
 
   constructor(props: Props, context: any) {
     super(props, context)
@@ -55,10 +54,10 @@ class GeneSearchResultsContent extends React.Component<Props, null> {
   onGeneFollowed(
     gene: Gene,
     store: RecordSourceSelectorProxy,
-    data: GeneSearchResultsFollowGeneMutationResponse
+    data: GeneSearchResultsFollowGeneMutationResponse,
+    follow: boolean
   ): void {
-    this.followCount += 1
-    this.props.onGeneFollow(this.followCount, gene)
+    this.props.onGeneFollow(follow, gene)
 
     const suggestedGene = store.get(
       data.followGene.gene.similar.edges[0].node.id
@@ -81,7 +80,7 @@ class GeneSearchResultsContent extends React.Component<Props, null> {
     )
   }
 
-  followedGene(gene: Gene) {
+  followedGene(gene: Gene, follow: boolean) {
     this.excludedGeneIds.add(gene.internalID)
 
     commitMutation<GeneSearchResultsFollowGeneMutation>(
@@ -120,7 +119,8 @@ class GeneSearchResultsContent extends React.Component<Props, null> {
           },
           excludedGeneIds: Array.from(this.excludedGeneIds),
         },
-        updater: (store, data) => this.onGeneFollowed(gene, store, data),
+        updater: (store, data) =>
+          this.onGeneFollowed(gene, store, data, follow),
       }
     )
   }
@@ -142,7 +142,7 @@ class GeneSearchResultsContent extends React.Component<Props, null> {
                 id={item.slug}
                 name={item.name}
                 image_url={imageUrl}
-                onClick={() => this.followedGene(item)}
+                onFollow={(e, selected) => this.followedGene(item, selected)}
               />
             </ReplaceTransition>
           </LinkContainer>

@@ -32,7 +32,6 @@ interface Props extends React.HTMLProps<HTMLAnchorElement>, ContainerProps {
 
 class ArtistSearchResultsContent extends React.Component<Props, null> {
   private excludedArtistIds: Set<string>
-  followCount: number = 0
 
   constructor(props: Props, context: any) {
     super(props, context)
@@ -46,10 +45,10 @@ class ArtistSearchResultsContent extends React.Component<Props, null> {
   onArtistFollowed(
     artist: Artist,
     store: RecordSourceSelectorProxy,
-    data: ArtistSearchResultsArtistMutationResponse
+    data: ArtistSearchResultsArtistMutationResponse,
+    follow: boolean
   ): void {
-    this.followCount += 1
-    this.props.onArtistFollow(this.followCount, artist)
+    this.props.onArtistFollow(follow, artist)
 
     const suggestedArtistEdge =
       data.followArtist.artist.related.suggestedConnection.edges[0]
@@ -75,7 +74,7 @@ class ArtistSearchResultsContent extends React.Component<Props, null> {
     )
   }
 
-  onFollowedArtist(artist: Artist) {
+  onFollowedArtist(artist: Artist, follow: boolean) {
     commitMutation<ArtistSearchResultsArtistMutation>(
       this.props.relay.environment,
       {
@@ -129,11 +128,12 @@ class ArtistSearchResultsContent extends React.Component<Props, null> {
         variables: {
           input: {
             artistID: artist.internalID,
-            unfollow: false,
+            unfollow: !follow,
           },
           excludedArtistIds: Array.from(this.excludedArtistIds),
         },
-        updater: (store, data) => this.onArtistFollowed(artist, store, data),
+        updater: (store, data) =>
+          this.onArtistFollowed(artist, store, data, follow),
       }
     )
   }
@@ -154,7 +154,9 @@ class ArtistSearchResultsContent extends React.Component<Props, null> {
                 id={artist.internalID}
                 name={artist.displayLabel}
                 image_url={artist.imageUrl}
-                onClick={() => this.onFollowedArtist(artist)}
+                onFollow={(e, selected) =>
+                  this.onFollowedArtist(artist, selected)
+                }
               />
             </ReplaceTransition>
           </LinkContainer>

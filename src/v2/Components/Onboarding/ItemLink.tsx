@@ -48,6 +48,10 @@ interface Props extends React.HTMLProps<HTMLAnchorElement> {
   id: string
   name: string
   image_url: string
+  onFollow: (
+    e: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
+    selected: boolean
+  ) => void
 }
 
 interface State {
@@ -64,8 +68,14 @@ export default class ItemLink extends React.Component<Props, State> {
   }
 
   onClick(e) {
-    this.props.onClick(e)
-    this.setState({ selected: true })
+    this.setState(
+      state => ({
+        selected: !state.selected,
+      }),
+      () => {
+        this.props.onFollow(e, this.state.selected)
+      }
+    )
   }
 
   render() {
