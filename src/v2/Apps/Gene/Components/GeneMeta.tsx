@@ -10,7 +10,7 @@ interface GeneMetaProps {
 
 const GeneMeta: React.FC<GeneMetaProps> = ({ gene }) => {
   const title = `${gene.name} | Artsy`
-  const description = gene.description // TODO: meta { description }
+  const description = gene.meta.description
   const href = `${getENV("APP_URL")}/${gene.href}`
   const image = gene.image?.cropped?.src
 
@@ -39,7 +39,9 @@ export const GeneMetaFragmentContainer = createFragmentContainer(GeneMeta, {
     fragment GeneMeta_gene on Gene {
       name
       href
-      description
+      meta {
+        description
+      }
       image {
         cropped(width: 1200, height: 630) {
           src
