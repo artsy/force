@@ -1389,30 +1389,33 @@ exports[`strictNullCheck migration`] = {
       [35, 18, 34, "RegExp match", "1431155155"],
       [60, 23, 34, "RegExp match", "1431155155"]
     ],
-    "src/v2/Apps/BuyerGuarantee/Routes/BuyerGuaranteeIndex.tsx:3137648679": [
-      [87, 13, 34, "RegExp match", "1431155155"],
-      [89, 13, 34, "RegExp match", "1431155155"],
-      [91, 13, 34, "RegExp match", "1431155155"],
-      [263, 15, 34, "RegExp match", "1431155155"],
-      [265, 15, 34, "RegExp match", "1431155155"],
-      [270, 15, 34, "RegExp match", "1431155155"],
-      [288, 15, 34, "RegExp match", "1431155155"],
-      [290, 15, 34, "RegExp match", "1431155155"],
-      [293, 15, 34, "RegExp match", "1431155155"],
-      [299, 15, 34, "RegExp match", "1431155155"],
-      [301, 15, 34, "RegExp match", "1431155155"],
-      [303, 15, 34, "RegExp match", "1431155155"],
+    "src/v2/Apps/BuyerGuarantee/Routes/BuyerGuaranteeIndex.tsx:2317982746": [
+      [88, 19, 34, "RegExp match", "1431155155"],
+      [90, 19, 34, "RegExp match", "1431155155"],
+      [92, 19, 34, "RegExp match", "1431155155"],
+      [114, 19, 34, "RegExp match", "1431155155"],
+      [116, 19, 34, "RegExp match", "1431155155"],
+      [118, 19, 34, "RegExp match", "1431155155"],
+      [298, 15, 34, "RegExp match", "1431155155"],
+      [300, 15, 34, "RegExp match", "1431155155"],
+      [305, 15, 34, "RegExp match", "1431155155"],
       [323, 15, 34, "RegExp match", "1431155155"],
       [325, 15, 34, "RegExp match", "1431155155"],
       [328, 15, 34, "RegExp match", "1431155155"],
-      [341, 15, 34, "RegExp match", "1431155155"],
-      [343, 15, 34, "RegExp match", "1431155155"],
-      [346, 15, 34, "RegExp match", "1431155155"],
-      [359, 15, 34, "RegExp match", "1431155155"],
-      [361, 15, 34, "RegExp match", "1431155155"],
-      [364, 15, 34, "RegExp match", "1431155155"]
+      [334, 15, 34, "RegExp match", "1431155155"],
+      [336, 15, 34, "RegExp match", "1431155155"],
+      [338, 15, 34, "RegExp match", "1431155155"],
+      [358, 15, 34, "RegExp match", "1431155155"],
+      [360, 15, 34, "RegExp match", "1431155155"],
+      [363, 15, 34, "RegExp match", "1431155155"],
+      [376, 15, 34, "RegExp match", "1431155155"],
+      [378, 15, 34, "RegExp match", "1431155155"],
+      [381, 15, 34, "RegExp match", "1431155155"],
+      [394, 15, 34, "RegExp match", "1431155155"],
+      [396, 15, 34, "RegExp match", "1431155155"],
+      [399, 15, 34, "RegExp match", "1431155155"]
     ],
-    "src/v2/Apps/BuyerGuarantee/Routes/__tests__/BuyerGuaranteeIndex.jest.tsx:3610078061": [
+    "src/v2/Apps/BuyerGuarantee/Routes/__tests__/BuyerGuaranteeIndex.jest.tsx:4189761614": [
       [18, 14, 34, "RegExp match", "1431155155"],
       [58, 14, 34, "RegExp match", "1431155155"]
     ],
@@ -1872,10 +1875,10 @@ exports[`strictNullCheck migration`] = {
     "src/v2/Apps/Feature/Components/FeatureSet/FeatureSetContainer.tsx:515516309": [
       [14, 5, 34, "RegExp match", "1431155155"]
     ],
-    "src/v2/Apps/Feature/FeatureApp.tsx:2004393169": [
-      [39, 10, 34, "RegExp match", "1431155155"],
-      [41, 11, 34, "RegExp match", "1431155155"],
-      [43, 13, 34, "RegExp match", "1431155155"]
+    "src/v2/Apps/Feature/FeatureApp.tsx:1204457739": [
+      [41, 10, 34, "RegExp match", "1431155155"],
+      [43, 11, 34, "RegExp match", "1431155155"],
+      [45, 13, 34, "RegExp match", "1431155155"]
     ],
     "src/v2/Apps/Feature/__tests__/FeatureApp.jest.tsx:1719414137": [
       [13, 12, 34, "RegExp match", "1431155155"]
@@ -2821,8 +2824,8 @@ exports[`strictNullCheck migration`] = {
       [221, 19, 34, "RegExp match", "1431155155"],
       [225, 19, 34, "RegExp match", "1431155155"]
     ],
-    "src/v2/Components/ArtistBio.tsx:3924224303": [
-      [19, 15, 34, "RegExp match", "1431155155"]
+    "src/v2/Components/ArtistBio.tsx:3614080603": [
+      [16, 7, 34, "RegExp match", "1431155155"]
     ],
     "src/v2/Components/ArtistCard.tsx:454056029": [
       [39, 11, 34, "RegExp match", "1431155155"],
@@ -3801,8 +3804,8 @@ exports[`strictNullCheck migration`] = {
     "src/v2/Components/Wizard/Wizard.tsx:4014111243": [
       [158, 11, 34, "RegExp match", "1431155155"]
     ],
-    "src/v2/Components/__tests__/ArtistBio.jest.tsx:4228277929": [
-      [22, 14, 34, "RegExp match", "1431155155"]
+    "src/v2/Components/__tests__/ArtistBio.jest.tsx:804612742": [
+      [23, 14, 34, "RegExp match", "1431155155"]
     ],
     "src/v2/Components/__tests__/ArtistCard.jest.tsx:991180809": [
       [45, 11, 34, "RegExp match", "1431155155"],
