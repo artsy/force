@@ -57,7 +57,8 @@
     "unlink-all": "yalc remove --all && yarn --check-files",
     "stats": "NODE_ENV=production BUILD_CLIENT=true node --max_old_space_size=4096 -r dotenv/config -r @babel/register node_modules/.bin/webpack --profile --json --config ./webpack > stats.json",
     "storybook": "start-storybook -p 6006",
-    "webpack": "node --max_old_space_size=4096 -r dotenv/config -r @babel/register node_modules/.bin/webpack --config ./webpack"
+    "webpack": "node --max_old_space_size=4096 -r dotenv/config -r @babel/register node_modules/.bin/webpack --config ./webpack",
+    "betterer": "betterer"
   },
   "resolutions": {
     "@types/react": "16.9.34",
@@ -254,6 +255,8 @@
     "@babel/preset-react": "7.12.13",
     "@babel/preset-typescript": "7.13.0",
     "@babel/register": "7.13.8",
+    "@betterer/cli": "^4.2.0",
+    "@betterer/regexp": "^4.2.0",
     "@graphql-inspector/core": "1.14.0",
     "@loadable/babel-plugin": "5.13.2",
     "@loadable/webpack-plugin": "5.14.0",
