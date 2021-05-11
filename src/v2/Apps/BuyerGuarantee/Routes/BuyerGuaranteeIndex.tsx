@@ -6,7 +6,6 @@ import {
   CertificateIcon,
   color,
   CSSGrid,
-  FullBleed,
   Flex,
   Image,
   Link,
@@ -25,6 +24,7 @@ import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import { useSystemContext } from "v2/Artsy"
 import styled from "styled-components"
 import { resize } from "v2/Utils/resizer"
+import { FullBleedHeader } from "v2/Components/FullBleedHeader"
 
 interface BuyerGuaranteeIndexProps {
   headerImage: BuyerGuaranteeIndex_headerImage
@@ -98,68 +98,33 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
 
   return (
     <>
-      <FullBleed>
-        {/* Header Block */}
-        <Flex justifyContent="center" alignContent="center">
-          <Media lessThan="sm">
-            <Box height={400}>
-              <Image
-                src={heroImageURL}
-                alt={headerImage.artist.name}
-                aria-label={headerImage.imageTitle}
-                srcSet={headerImage.image.resized.srcSet}
-                lazyLoad
-              />
-            </Box>
-            <Box position="absolute">
-              <Text
-                variant="largeTitle"
-                color={color("white100")}
-                position="relative"
-                mt={"60%"}
-                as="h1"
-              >
-                The Artsy Guarantee
-              </Text>
-            </Box>
-          </Media>
-          <Media greaterThanOrEqual="sm">
-            <Box height={400} overflow="hidden">
-              <Image
-                src={heroImageURL}
-                alt={headerImage.artist.name}
-                aria-label={headerImage.imageTitle}
-                srcSet={headerImage.image.resized.srcSet}
-                lazyLoad
-              />
-            </Box>
-            <Flex alignItems="center" justifyContent="center">
-              <Box position="absolute">
-                <Text
-                  fontSize={80}
-                  color={color("white100")}
-                  position="relative"
-                  mt={"-35%"}
-                  as="h1"
-                >
-                  The Artsy Guarantee
-                </Text>
-              </Box>
-            </Flex>
-          </Media>
-        </Flex>
-        <Flex justifyContent="flex-end" mt={["-40px", "-30px"]} mr={1}>
+      <FullBleedHeader
+        height={[283, 469]}
+        src={heroImageURL}
+        caption={
+          headerImage.imageTitle +
+          ". Courtesy of the artist and Kenise Barnes Fine Art. "
+        }
+      >
+        <Flex
+          position="absolute"
+          top={0}
+          right={0}
+          bottom={0}
+          left={0}
+          justifyContent="center"
+          alignItems="center"
+        >
           <Text
-            variant={["small", "text"]}
+            fontSize={[34, null, 80]}
             color={color("white100")}
-            textAlign="right"
+            position="relative"
+            as="h1"
           >
-            {headerImage.imageTitle +
-              ". Courtesy of the artist and Kenise Barnes Fine Art. "}
+            The Artsy Guarantee
           </Text>
         </Flex>
-      </FullBleed>
-
+      </FullBleedHeader>
       {/* First Row */}
       <Flex justifyContent="center" flexDirection="column">
         <Flex justifyContent="center" mx={["10%", "25%"]} textAlign="center">
@@ -803,13 +768,16 @@ export const BuyerGuaranteeIndexFragmentContainer = createFragmentContainer(
       fragment BuyerGuaranteeIndex_headerImage on Artwork {
         imageTitle
         imageUrl
+        artist {
+          name
+        }
         image {
           resized(version: "normalized") {
             srcSet
           }
-        }
-        artist {
-          name
+          cropped(width: 1600, height: 600, version: "wide") {
+            src
+          }
         }
       }
     `,
@@ -858,18 +826,8 @@ export const BuyerGuaranteeIndexFragmentContainer = createFragmentContainer(
   }
 )
 
-const PoweredByStripeIconContainer = styled(Box)<{
-  width?: string
-  marginTop?: string
-  marginLeft?: string
-}>`
-  width: ${props => props.width}};
-  margin-top: ${props => props.marginTop}};
-  margin-left: ${props => props.marginLeft}};
-`
-
 const PoweredByStripeIcon = ({ w, mt, ml }) => (
-  <PoweredByStripeIconContainer mt={mt} ml={ml}>
+  <Box mt={mt} ml={ml}>
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width={w}
@@ -888,7 +846,7 @@ const PoweredByStripeIcon = ({ w, mt, ml }) => (
         fillRule="evenodd"
       />
     </svg>
-  </PoweredByStripeIconContainer>
+  </Box>
 )
 
 const MoneyBackIcon = ({ h, w }) => (
@@ -928,8 +886,8 @@ const ChatIconContainer = styled.svg<{
   height: string | number
   width: string | number
 }>`
-  height: ${props => props.height}};
-  width: ${props => props.width}};
+  height: ${props => props.height};
+  width: ${props => props.width};
 `
 
 const ChatIcon = ({ h, w }) => (

@@ -17,6 +17,7 @@ const BuyerGuaranteeIndexRoute = loadable(
 export const buyerGuaranteeRoutes: AppRouteConfig[] = [
   {
     path: "/buyer-guarantee",
+    theme: "v3",
     getComponent: () => BuyerGuaranteeApp,
     prepare: () => {
       BuyerGuaranteeApp.preload()
