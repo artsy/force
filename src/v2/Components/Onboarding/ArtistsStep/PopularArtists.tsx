@@ -49,15 +49,20 @@ class PopularArtistsContent extends React.Component<Props, null> {
     this.props.onArtistFollow(this.followCount, artist)
 
     const suggestedArtistEdge =
+      // @ts-expect-error STRICT_NULL_CHECK
       data.followArtist.artist.related.suggestedConnection.edges[0]
+    // @ts-expect-error STRICT_NULL_CHECK
     const popularArtist = data.followArtist.popular_artists[0]
     const artistToSuggest = store.get(
+      // @ts-expect-error STRICT_NULL_CHECK
       ((suggestedArtistEdge && suggestedArtistEdge.node) || popularArtist).id
     )
+    // @ts-expect-error STRICT_NULL_CHECK
     this.excludedArtistIds.add(artistToSuggest.getValue("internalID") as string)
 
     const popularArtistsRootField = store.get("client:root")
     const popularArtists =
+      // @ts-expect-error STRICT_NULL_CHECK
       popularArtistsRootField.getLinkedRecords("popular_artists", {
         exclude_followed_artists: true,
       }) || []
@@ -68,13 +73,16 @@ class PopularArtistsContent extends React.Component<Props, null> {
         artistItem.getDataID() === artist.id ? artistToSuggest : artistItem
       )
 
+    // @ts-expect-error STRICT_NULL_CHECK
     store
       .get("client:root")
+      // @ts-expect-error STRICT_NULL_CHECK
       .setLinkedRecords(updatedPopularArtists, "popular_artists")
   }
 
   onFollowedArtist(artist: Artist) {
     commitMutation<PopularArtistsFollowArtistMutation>(
+      // @ts-expect-error STRICT_NULL_CHECK
       this.props.relay.environment,
       {
         // TODO: Inputs to the mutation might have changed case of the keys!
@@ -142,6 +150,7 @@ class PopularArtistsContent extends React.Component<Props, null> {
     const artistItems = this.props.popular_artists
       .filter(Boolean)
       .map((artist, index) => {
+        // @ts-expect-error STRICT_NULL_CHECK
         const imageUrl = get(artist, a => a.image.cropped.url)
         return (
           <LinkContainer key={`popular-artists-${index}`}>
@@ -154,7 +163,9 @@ class PopularArtistsContent extends React.Component<Props, null> {
                 item={artist}
                 key={artist.id}
                 id={artist.id}
+                // @ts-expect-error STRICT_NULL_CHECK
                 name={artist.name}
+                // @ts-expect-error STRICT_NULL_CHECK
                 image_url={imageUrl}
                 onClick={() => this.onFollowedArtist(artist)}
               />
@@ -168,6 +179,7 @@ class PopularArtistsContent extends React.Component<Props, null> {
 }
 
 const PopularArtistContentContainer = createFragmentContainer(
+  // @ts-expect-error STRICT_NULL_CHECK
   PopularArtistsContent,
   {
     popular_artists: graphql`

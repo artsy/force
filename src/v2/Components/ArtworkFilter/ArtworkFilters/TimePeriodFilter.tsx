@@ -12,6 +12,7 @@ export interface TimePeriodFilterProps {
 
 export const TimePeriodFilter: FC<TimePeriodFilterProps> = ({ expanded }) => {
   const { aggregations, ...filterContext } = useArtworkFilterContext()
+  // @ts-expect-error STRICT_NULL_CHECK
   const timePeriods = aggregations.find(agg => agg.slice === "MAJOR_PERIOD")
 
   let periods
@@ -31,6 +32,7 @@ export const TimePeriodFilter: FC<TimePeriodFilterProps> = ({ expanded }) => {
   if (!periods.length) return null
 
   const togglePeriodSelection = (selected, period) => {
+    // @ts-expect-error STRICT_NULL_CHECK
     let majorPeriods = filterContext
       .currentlySelectedFilters()
       .majorPeriods.slice()
@@ -42,14 +44,18 @@ export const TimePeriodFilter: FC<TimePeriodFilterProps> = ({ expanded }) => {
     filterContext.setFilter("majorPeriods", majorPeriods)
   }
 
+  // @ts-expect-error STRICT_NULL_CHECK
   const currentFilters = filterContext.currentlySelectedFilters()
   const hasBelowTheFoldMajorPeriodFilter =
     intersection(
+      // @ts-expect-error STRICT_NULL_CHECK
       currentFilters.majorPeriods,
       periods.slice(INITIAL_ITEMS_TO_SHOW).map(({ name }) => name)
     ).length > 0
+  // @ts-expect-error STRICT_NULL_CHECK
   const hasMajorPeriodFilter = currentFilters.majorPeriods.length > 0
 
+  // @ts-expect-error STRICT_NULL_CHECK
   const resultsSorted = sortResults(currentFilters.majorPeriods, periods)
 
   return (
@@ -62,6 +68,7 @@ export const TimePeriodFilter: FC<TimePeriodFilterProps> = ({ expanded }) => {
           {resultsSorted.map(({ name }, index) => {
             return (
               <Checkbox
+                // @ts-expect-error STRICT_NULL_CHECK
                 selected={currentFilters.majorPeriods.includes(name)}
                 key={index}
                 onSelect={selected => togglePeriodSelection(selected, name)}

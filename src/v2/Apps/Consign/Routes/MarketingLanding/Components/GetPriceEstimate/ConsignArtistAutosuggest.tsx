@@ -44,6 +44,7 @@ export const ConsignArtistAutosuggest: React.FC = () => {
         owner_id: suggestion.internalID,
         owner_slug: suggestion.slug,
         owner_type: OwnerType.artist,
+        // @ts-expect-error STRICT_NULL_CHECK
         query: searchQuery,
       })
     )
@@ -54,6 +55,7 @@ export const ConsignArtistAutosuggest: React.FC = () => {
       searchedWithNoResults({
         context_module: ContextModule.priceEstimate,
         context_owner_type: OwnerType.consign,
+        // @ts-expect-error STRICT_NULL_CHECK
         query: searchQuery,
       })
     )
@@ -76,9 +78,11 @@ export const ConsignArtistAutosuggest: React.FC = () => {
     <Autosuggest
       suggestions={suggestions ?? []}
       onSuggestionsClearRequested={x => x}
+      // @ts-expect-error STRICT_NULL_CHECK
       onSuggestionsFetchRequested={() => fetchSuggestions(searchQuery)}
       onSuggestionSelected={(_, { suggestion }) => {
         trackSelectedItemFromSearch(suggestion)
+        // @ts-expect-error STRICT_NULL_CHECK
         selectSuggestion(suggestion)
       }}
       getSuggestionValue={suggestion => suggestion.node.displayLabel}
@@ -86,6 +90,7 @@ export const ConsignArtistAutosuggest: React.FC = () => {
       renderSuggestion={Suggestion}
       inputProps={{
         onChange: (_, { newValue }) => {
+          // @ts-expect-error STRICT_NULL_CHECK
           setSearchQuery(newValue)
         },
         onFocus: trackFocusedOnSearchInput,

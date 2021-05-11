@@ -52,6 +52,7 @@ export const resized = (
   })
 
   return {
+    // @ts-expect-error STRICT_NULL_CHECK
     src: _1x,
     srcSet: `${_1x} 1x, ${_2x} 2x`,
   }
@@ -88,6 +89,7 @@ export const cropped = (
   })
 
   return {
+    // @ts-expect-error STRICT_NULL_CHECK
     src: _1x,
     srcSet: `${_1x} 1x, ${_2x} 2x`,
   }

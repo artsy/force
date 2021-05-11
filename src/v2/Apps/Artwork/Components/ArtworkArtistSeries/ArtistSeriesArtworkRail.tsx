@@ -27,7 +27,9 @@ export const ArtistSeriesArtworkRail: React.FC<Props> = ({ artwork }) => {
     return null
   }
 
+  // @ts-expect-error STRICT_NULL_CHECK
   const artistSeries = artistSeriesConnection.edges[0].node
+  // @ts-expect-error STRICT_NULL_CHECK
   const { filterArtworksConnection, slug } = artistSeries
 
   const artworks = filterArtworksConnection?.edges?.map(({ node }) => node)
@@ -60,7 +62,9 @@ export const ArtistSeriesArtworkRail: React.FC<Props> = ({ artwork }) => {
       context_page_owner_slug: artwork.slug,
       context_page_owner_id: artwork.internalID,
       destination_page_owner_type: OwnerType.artistSeries,
+      // @ts-expect-error STRICT_NULL_CHECK
       destination_page_owner_id: artistSeries.internalID,
+      // @ts-expect-error STRICT_NULL_CHECK
       destination_page_owner_slug: artistSeries.slug,
       type: "viewAll",
     }

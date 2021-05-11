@@ -43,6 +43,7 @@ async function setupClient() {
   // Attach analytics
   if (getClientParam("disableAnalytics") !== "true") {
     beforeAnalyticsReady()
+    // @ts-expect-error STRICT_NULL_CHECK
     window.analytics.ready(() => {
       onAnalyticsReady()
     })

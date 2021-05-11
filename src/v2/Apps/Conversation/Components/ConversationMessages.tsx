@@ -17,8 +17,10 @@ export const ConversationMessages = ({
   return (
     <>
       {groupMessages(
+        // @ts-expect-error STRICT_NULL_CHECK
         messages.edges
           .map(edge => edge?.node)
+          // @ts-expect-error STRICT_NULL_CHECK
           .filter(node => node?.body?.length > 0)
       ).map((messageGroup, groupIndex) => {
         const today = fromToday(messageGroup[0].createdAt)

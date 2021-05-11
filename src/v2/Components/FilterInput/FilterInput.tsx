@@ -29,6 +29,7 @@ export const FilterInput: React.FC<InputProps> = ({
   const handleClick = () => {
     setValue("")
 
+    // @ts-expect-error STRICT_NULL_CHECK
     ref.current.focus()
 
     // HACK: simulate an onChange event

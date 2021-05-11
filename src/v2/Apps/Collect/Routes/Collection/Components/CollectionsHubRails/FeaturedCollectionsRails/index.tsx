@@ -77,6 +77,7 @@ export const FeaturedCollectionEntity: React.FC<FeaturedCollectionEntityProps> =
         contextModule: ContextModule.featuredCollectionsRail,
         contextPageOwnerId,
         contextPageOwnerSlug,
+        // @ts-expect-error STRICT_NULL_CHECK
         contextPageOwnerType,
         destinationPageOwnerId: id,
         destinationPageOwnerSlug: slug,
@@ -90,6 +91,7 @@ export const FeaturedCollectionEntity: React.FC<FeaturedCollectionEntityProps> =
       <StyledLink to={`/collection/${slug}`} onClick={handleClick}>
         <Flex height={["190px", "190px", "280px", "280px"]}>
           <FeaturedImage
+            // @ts-expect-error STRICT_NULL_CHECK
             src={resize(thumbnail, {
               width: 500,
               height: 500,

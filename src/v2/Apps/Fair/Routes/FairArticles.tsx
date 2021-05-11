@@ -25,6 +25,7 @@ interface FairArticlesProps {
 
 const FairArticles: React.FC<FairArticlesProps> = ({ fair, relay }) => {
   const {
+    // @ts-expect-error STRICT_NULL_CHECK
     articlesConnection: { edges: articles, totalCount },
   } = fair
 

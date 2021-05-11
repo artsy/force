@@ -43,6 +43,7 @@ export const ArtistSeriesItem: React.FC<Props> = props => {
     trackEvent(
       clickedArtistSeriesGroup({
         contextModule,
+        // @ts-expect-error STRICT_NULL_CHECK
         contextPageOwnerType,
         destinationPageOwnerId: internalID,
         destinationPageOwnerSlug: slug,
@@ -58,6 +59,7 @@ export const ArtistSeriesItem: React.FC<Props> = props => {
       <StyledLink onClick={onClick} to={`/artist-series/${slug}`}>
         {!!image ? (
           <SeriesImage
+            // @ts-expect-error STRICT_NULL_CHECK
             src={image.cropped.url}
             alt={title}
             lazyLoad={lazyLoad}

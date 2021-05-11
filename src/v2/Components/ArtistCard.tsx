@@ -37,6 +37,7 @@ export class ArtistCard extends React.Component<ArtistCardProps> {
     return (
       <RouterLink
         onClick={this.props.onClick}
+        // @ts-expect-error STRICT_NULL_CHECK
         to={this.props.artist.href}
         style={{ textDecoration: "none" }}
       >
@@ -66,6 +67,7 @@ export const LargeArtistCard: SFC<ArtistCardProps> = props => (
         <Box mb={1}>
           <Avatar
             lazyLoad={props.lazyLoad}
+            // @ts-expect-error STRICT_NULL_CHECK
             src={get(props.artist.image, i => i.cropped.url)}
           />
         </Box>
@@ -101,6 +103,7 @@ export const SmallArtistCard: SFC<ArtistCardProps> = props => (
         <Avatar
           lazyLoad={props.lazyLoad}
           size="xs"
+          // @ts-expect-error STRICT_NULL_CHECK
           src={get(props.artist.image, i => i.cropped.url)}
         />
       </Box>

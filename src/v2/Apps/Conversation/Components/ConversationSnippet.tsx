@@ -69,6 +69,7 @@ const ConversationSnippet: React.FC<ConversationSnippetProps> = props => {
   // If we cannot resolve items in the conversation, such as deleted fair booths
   // prior to snapshotting them at time of inquiry (generally older conversations),
   // just skip over the entire conversation.
+  // @ts-expect-error STRICT_NULL_CHECK
   if (conversation.items.length === 0) {
     console.warn(
       `Unable to load items for conversation with ID ${conversation.internalID}`
@@ -76,13 +77,18 @@ const ConversationSnippet: React.FC<ConversationSnippetProps> = props => {
     return null
   }
 
+  // @ts-expect-error STRICT_NULL_CHECK
   const item = conversation.items[0].item
 
   let imageURL
 
+  // @ts-expect-error STRICT_NULL_CHECK
   if (item.__typename === "Artwork") {
+    // @ts-expect-error STRICT_NULL_CHECK
     imageURL = item.image && item.image.url
+    // @ts-expect-error STRICT_NULL_CHECK
   } else if (item.__typename === "Show") {
+    // @ts-expect-error STRICT_NULL_CHECK
     imageURL = item.coverImage && item.coverImage.url
   }
 
@@ -138,11 +144,13 @@ const ConversationSnippet: React.FC<ConversationSnippetProps> = props => {
                       {partnerName}
                     </TruncatedTitle>
                     <Sans size="3t" color={"black30"}>
+                      {/* @ts-expect-error STRICT_NULL_CHECK */}
                       {conversation.messagesConnection.totalCount}
                     </Sans>
                   </Flex>
                   <TimeSinceFlex>
                     <TimeSince
+                      // @ts-expect-error STRICT_NULL_CHECK
                       time={conversation.lastMessageAt}
                       size="3t"
                       mr="15px"

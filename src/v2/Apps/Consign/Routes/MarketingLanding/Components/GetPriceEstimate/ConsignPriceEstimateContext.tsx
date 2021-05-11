@@ -23,7 +23,9 @@ interface PriceEstimateContextProps {
   suggestions?: Suggestions
 }
 
+// @ts-expect-error STRICT_NULL_CHECK
 type ArtistInsights = ConsignPriceEstimateContext_ArtistInsights_Query["response"]["priceInsights"]["edges"]
+// @ts-expect-error STRICT_NULL_CHECK
 type Suggestions = ConsignPriceEstimateContext_SearchConnection_Query["response"]["searchConnection"]["edges"]
 export type Suggestion = Suggestions[0]
 
@@ -59,6 +61,7 @@ type Action = {
 const initialState: State = {
   artistInsights: null,
   isFetching: false,
+  // @ts-expect-error STRICT_NULL_CHECK
   medium: null,
   mediums: [],
   searchQuery: "",
@@ -76,6 +79,7 @@ function getActions(dispatch: Dispatch<Action>, relayEnvironment: Environment) {
      * Fetch artist insights based on artist's internalID.
      */
     fetchArtistInsights: async artistInternalID => {
+      // @ts-expect-error STRICT_NULL_CHECK
       actions.setFetching(true)
 
       const response = await fetchQuery<
@@ -111,10 +115,14 @@ function getActions(dispatch: Dispatch<Action>, relayEnvironment: Environment) {
       const artistInsights = response?.priceInsights?.edges || []
 
       if (artistInsights.length) {
+        // @ts-expect-error STRICT_NULL_CHECK
         const mediums = artistInsights.map(({ node }) => node.medium)
+        // @ts-expect-error STRICT_NULL_CHECK
         const medium = artistInsights[0].node.medium
 
+        // @ts-expect-error STRICT_NULL_CHECK
         actions.setMediums(mediums)
+        // @ts-expect-error STRICT_NULL_CHECK
         actions.setMedium(medium)
       }
 
@@ -123,6 +131,7 @@ function getActions(dispatch: Dispatch<Action>, relayEnvironment: Environment) {
         type: "artistInsights",
       })
 
+      // @ts-expect-error STRICT_NULL_CHECK
       actions.setFetching(false)
     },
 
@@ -160,6 +169,7 @@ function getActions(dispatch: Dispatch<Action>, relayEnvironment: Environment) {
         { searchQuery }
       )
 
+      // @ts-expect-error STRICT_NULL_CHECK
       const suggestions = response.searchConnection.edges
 
       dispatch({
@@ -177,6 +187,7 @@ function getActions(dispatch: Dispatch<Action>, relayEnvironment: Environment) {
         type: "selectedSuggestion",
       })
 
+      // @ts-expect-error STRICT_NULL_CHECK
       await actions.fetchArtistInsights(selectedSuggestion.node.internalID)
     },
 
@@ -225,6 +236,7 @@ function reducer(state: State, action: Action): State {
 export const PriceEstimateContextProvider: React.FC = ({ children }) => {
   const { relayEnvironment } = useSystemContext()
   const [state, dispatch] = useReducer(reducer, initialState)
+  // @ts-expect-error STRICT_NULL_CHECK
   const actions = getActions(dispatch, relayEnvironment)
   const values = {
     ...state,

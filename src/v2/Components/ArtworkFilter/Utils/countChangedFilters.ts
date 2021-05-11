@@ -6,7 +6,8 @@ const difference = (initial: {}, next: {}) => {
     if (!isEqual(value, initial[key])) {
       result[key] =
         isObject(value) && isObject(initial[key])
-          ? difference(value, initial[key])
+          ? // @ts-expect-error STRICT_NULL_CHECK
+            difference(value, initial[key])
           : value
     }
   })

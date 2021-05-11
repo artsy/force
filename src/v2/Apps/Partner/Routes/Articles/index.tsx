@@ -67,6 +67,7 @@ const Articles: React.FC<ArticlesProps> = ({ partner, relay }) => {
   }
 
   const handleNext = (page: number) => {
+    // @ts-expect-error STRICT_NULL_CHECK
     handleClick(endCursor, page)
   }
 
@@ -74,6 +75,7 @@ const Articles: React.FC<ArticlesProps> = ({ partner, relay }) => {
     <Box id="jumpto--articlesGrid">
       <LoadingArea isLoading={isLoading}>
         <GridColumns mt={6} gridRowGap={[2, 4]}>
+          {/* @ts-expect-error STRICT_NULL_CHECK */}
           {articles.map(({ node: article }) => {
             return (
               <Column key={article.internalID} span={4}>

@@ -55,6 +55,7 @@ const ArtistSeriesArtworksFilter: React.FC<ArtistSeriesArtworksFilterProps> = pr
 
 export const ArtistSeriesArtworksFilterRefetchContainer = createRefetchContainer(
   withRouter<ArtistSeriesArtworksFilterProps & RouterState>(
+    // @ts-expect-error STRICT_NULL_CHECK
     ArtistSeriesArtworksFilter
   ),
   {

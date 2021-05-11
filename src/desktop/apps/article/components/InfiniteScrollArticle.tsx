@@ -138,6 +138,7 @@ export class InfiniteScrollArticle extends React.Component<
       articles.map((article, i) => {
         const articleType = article.layout
         // Feature articles and Standard articles should return true
+        // @ts-expect-error STRICT_NULL_CHECK
         const renderAd = shouldAdRender(null, null, null, articleType)
 
         return (

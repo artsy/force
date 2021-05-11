@@ -180,6 +180,7 @@ export class BaseCarousel<T> extends React.Component<
   /**
    * A reference to the Flickity instance
    */
+  // @ts-expect-error STRICT_NULL_CHECK
   flickity: FlickityType = null
   carouselRef = null
 
@@ -203,9 +204,11 @@ export class BaseCarousel<T> extends React.Component<
   allowPreventDefault = () => {
     // Fix for flickity bug introduced in iOS 13 https://github.com/metafizzy/flickity/issues/740
     let startX
+    // @ts-expect-error STRICT_NULL_CHECK
     this.carouselRef.ontouchstart = e => {
       startX = e.touches[0].clientX
     }
+    // @ts-expect-error STRICT_NULL_CHECK
     this.carouselRef.ontouchmove = e => {
       if (Math.abs(e.touches[0].clientX - startX) > 5 && e.cancelable) {
         e.preventDefault()
@@ -226,6 +229,7 @@ export class BaseCarousel<T> extends React.Component<
 
     const init = () => {
       const Flickity = require("flickity-imagesloaded") as typeof FlickityType
+      // @ts-expect-error STRICT_NULL_CHECK
       this.flickity = new Flickity(this.carouselRef, {
         imagesLoaded: true,
         ...this.options,
@@ -506,7 +510,8 @@ export const ArrowButton: typeof Flex = styled(Flex)<
   opacity: 0.3;
 
   transition: opacity 0.25s;
-  height: ${p => p.height || 200}px;
+  height: ${// @ts-expect-error STRICT_NULL_CHECK
+  p => p.height || 200}px;
 
   &:hover {
     opacity: 1;

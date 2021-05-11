@@ -33,12 +33,15 @@ export class MarketInsights extends React.Component<MarketInsightsProps> {
   renderAuctionHighlight() {
     if (
       !this.props.artist.auctionResultsConnection ||
+      // @ts-expect-error STRICT_NULL_CHECK
       this.props.artist.auctionResultsConnection.edges.length < 1
     ) {
       return null
     }
+    // @ts-expect-error STRICT_NULL_CHECK
     const topAuctionResult = this.props.artist.auctionResultsConnection.edges[0]
       .node
+    // @ts-expect-error STRICT_NULL_CHECK
     const display = `${topAuctionResult.price_realized.display}, ${topAuctionResult.organization}, ${topAuctionResult.sale_date}`
     return (
       <TextWrap>
@@ -53,6 +56,7 @@ export class MarketInsights extends React.Component<MarketInsightsProps> {
   }
   renderGalleryRepresentation() {
     const { highlights } = this.props.artist
+    // @ts-expect-error STRICT_NULL_CHECK
     const { partnersConnection } = highlights
     if (
       partnersConnection &&
@@ -94,6 +98,7 @@ export class MarketInsights extends React.Component<MarketInsightsProps> {
   }
 
   render() {
+    // @ts-expect-error STRICT_NULL_CHECK
     if (!hasSections(this.props.artist)) {
       return null
     }

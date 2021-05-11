@@ -46,6 +46,7 @@ export const RequestConditionReport: React.FC<RequestConditionReportProps> = pro
   const requestConditionReport = () => {
     return new Promise<RequestConditionReportMutationResponse>(
       async (resolve, reject) => {
+        // @ts-expect-error STRICT_NULL_CHECK
         commitMutation<RequestConditionReportMutation>(relayEnvironment, {
           onCompleted: data => {
             resolve(data)
@@ -65,6 +66,7 @@ export const RequestConditionReport: React.FC<RequestConditionReportProps> = pro
             }
           `,
           variables: {
+            // @ts-expect-error STRICT_NULL_CHECK
             input: { saleArtworkID: artwork.saleArtwork.internalID },
           },
         })
@@ -91,8 +93,10 @@ export const RequestConditionReport: React.FC<RequestConditionReportProps> = pro
     trackEvent({
       action_type: Schema.ActionType.Click,
       subject: Schema.Subject.Login,
+      // @ts-expect-error STRICT_NULL_CHECK
       sale_artwork_id: artwork.saleArtwork.internalID,
     })
+    // @ts-expect-error STRICT_NULL_CHECK
     openAuthModal(mediator, {
       mode: ModalType.login,
       redirectTo: location.href,
@@ -197,6 +201,7 @@ const TrackingWrappedRequestConditionReport: React.FC<RequestConditionReportProp
     context_page_owner_id: props.artwork.internalID,
     context_page_owner_slug: props.artwork.slug,
     context_page_owner_type: "Artwork",
+    // @ts-expect-error STRICT_NULL_CHECK
     sale_artwork_id: props.artwork.saleArtwork.internalID,
   }
 })(RequestConditionReport)

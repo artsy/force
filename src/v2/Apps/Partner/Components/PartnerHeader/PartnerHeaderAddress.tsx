@@ -16,6 +16,7 @@ export const PartnerHeaderAddress: React.FC<
 > = ({ edges }) => {
   return (
     <>
+      {/* @ts-expect-error STRICT_NULL_CHECK */}
       {uniq(edges.map(edge => edge.node.city?.trim()))
         .filter(city => !!city)
         .map<React.ReactNode>((city, index) => (

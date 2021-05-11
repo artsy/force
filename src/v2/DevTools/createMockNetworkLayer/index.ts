@@ -72,6 +72,7 @@ export const createMockFetchQuery = ({
       // whether to resolve fields in a given value
       if (typeof source !== "object") {
         const parentPath = pathAsArray.slice(0, -1).join("/")
+        // @ts-expect-error STRICT_NULL_CHECK
         const operationName = get(info, i => i.operation.name.value)
         throw new Error(
           `The value at path '${parentPath}' for operation '${operationName}' should be an object but is a ${typeof source}.`
@@ -216,6 +217,7 @@ function error(
     renderMessage({
       path: responsePathAsArray(info.path).join("/"),
       type: info.returnType.inspect(),
+      // @ts-expect-error STRICT_NULL_CHECK
       operationName: get(info, i => i.operation.name.value, "(unknown)"),
     })
   )

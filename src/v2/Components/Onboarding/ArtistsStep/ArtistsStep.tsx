@@ -78,7 +78,9 @@ export const ArtistsStep: React.FC<Props> = props => {
 
   return (
     <>
+      {/* @ts-expect-error STRICT_NULL_CHECK */}
       <ProgressIndicator percentComplete={0.25} />
+      {/* @ts-expect-error STRICT_NULL_CHECK */}
       <Layout
         buttonState={buttonState}
         onNextButtonPressed={handleNextButtonPress}

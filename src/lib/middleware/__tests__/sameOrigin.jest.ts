@@ -13,6 +13,7 @@ describe("Same origin middleware", () => {
     res = {
       headers,
       set(name, value) {
+        // @ts-expect-error STRICT_NULL_CHECK
         return (headers[name] = value)
       },
     }

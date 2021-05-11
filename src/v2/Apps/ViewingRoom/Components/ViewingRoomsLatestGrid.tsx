@@ -47,15 +47,18 @@ export const ViewingRoomsLatestGrid: React.FC<ViewingRoomsLatestGridProps> = pro
 
   const viewingRoomsForLatestGrid = viewingRooms.edges
     .map(vr => {
+      // @ts-expect-error STRICT_NULL_CHECK
       if (!vr.node) {
         return null
       }
 
+      // @ts-expect-error STRICT_NULL_CHECK
       if (vr.node.status != "scheduled" && vr.node.status != "live") {
         return null
       }
 
       return {
+        // @ts-expect-error STRICT_NULL_CHECK
         ...vr.node,
       }
     })
@@ -79,13 +82,21 @@ export const ViewingRoomsLatestGrid: React.FC<ViewingRoomsLatestGridProps> = pro
         >
           {viewingRoomsForLatestGrid.map((vr, index) => {
             const {
+              // @ts-expect-error STRICT_NULL_CHECK
               slug,
+              // @ts-expect-error STRICT_NULL_CHECK
               title,
+              // @ts-expect-error STRICT_NULL_CHECK
               status,
+              // @ts-expect-error STRICT_NULL_CHECK
               image,
+              // @ts-expect-error STRICT_NULL_CHECK
               partner,
+              // @ts-expect-error STRICT_NULL_CHECK
               distanceToOpen,
+              // @ts-expect-error STRICT_NULL_CHECK
               distanceToClose,
+              // @ts-expect-error STRICT_NULL_CHECK
               artworksConnection,
             } = vr
             const heroImageURL = cropped(image?.imageURLs?.normalized, {
@@ -110,6 +121,7 @@ export const ViewingRoomsLatestGrid: React.FC<ViewingRoomsLatestGridProps> = pro
                   title={title}
                   subtitle={partner.name}
                   images={[heroImageURL].concat(artworkImages)}
+                  // @ts-expect-error STRICT_NULL_CHECK
                   tag={tag}
                 />
               </RouterLink>

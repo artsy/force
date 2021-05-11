@@ -64,6 +64,7 @@ export class ErrorModal extends React.Component<ErrorModalProps> {
           </>
         }
         primaryCta={{
+          // @ts-expect-error STRICT_NULL_CHECK
           action: ctaAction || onClose,
           text: closeText,
         }}

@@ -42,11 +42,13 @@ jest.mock("@stripe/stripe-js", () => {
   return {
     loadStripe: () => {
       if (mock === null) {
+        // @ts-expect-error STRICT_NULL_CHECK
         mock = mockStripe()
       }
       return mock
     },
     _mockStripe: () => mock,
+    // @ts-expect-error STRICT_NULL_CHECK
     _mockReset: () => (mock = mockStripe()),
   }
 })
@@ -352,11 +354,16 @@ describe("PaymentPickerFragmentContainer", () => {
     const stripeToken: { token: Token } = {
       token: {
         id: "tokenId",
+        // @ts-expect-error STRICT_NULL_CHECK
         object: null,
         client_ip: null,
+        // @ts-expect-error STRICT_NULL_CHECK
         created: null,
+        // @ts-expect-error STRICT_NULL_CHECK
         livemode: null,
+        // @ts-expect-error STRICT_NULL_CHECK
         type: null,
+        // @ts-expect-error STRICT_NULL_CHECK
         used: null,
       },
     }
@@ -376,11 +383,16 @@ describe("PaymentPickerFragmentContainer", () => {
   it("shows an error message when CreateToken passes in an error", async () => {
     const stripeError: { error: StripeError } = {
       error: {
+        // @ts-expect-error STRICT_NULL_CHECK
         type: null,
+        // @ts-expect-error STRICT_NULL_CHECK
         charge: null,
         message: "Your card number is invalid.",
+        // @ts-expect-error STRICT_NULL_CHECK
         code: null,
+        // @ts-expect-error STRICT_NULL_CHECK
         decline_code: null,
+        // @ts-expect-error STRICT_NULL_CHECK
         param: null,
       },
     }
@@ -397,6 +409,7 @@ describe("PaymentPickerFragmentContainer", () => {
   })
 
   describe("when the user has existing credit cards", () => {
+    // @ts-expect-error STRICT_NULL_CHECK
     const cards: Array<PaymentPicker_me["creditCards"]["edges"][0]["node"]> = [
       {
         internalID: "card-id-1",

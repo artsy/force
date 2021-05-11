@@ -65,6 +65,7 @@ const FairHeader: React.FC<FairHeaderProps> = ({ fair, ...rest }) => {
         </Column>
 
         <Column span={6}>
+          {/* @ts-expect-error STRICT_NULL_CHECK */}
           <HTML variant="subtitle" lineHeight="body" html={previewText} />
 
           {canShowMoreInfoLink && (

@@ -50,8 +50,12 @@ const RawText: React.SFC<TextProps> = (props: TextProps) => {
  * https://palette.artsy.net/tokens/typography
  */
 const Text = styled(RawText)`
-  ${props => textStyleNameToCss[props.textStyle]};
-  font-size: ${props => TextStyleToTextSize[props.textStyle][props.textSize]};
+  ${props =>
+    // @ts-expect-error STRICT_NULL_CHECK
+    textStyleNameToCss[props.textStyle]};
+  font-size: ${props =>
+    // @ts-expect-error STRICT_NULL_CHECK
+    TextStyleToTextSize[props.textStyle][props.textSize]};
   text-align: ${props => props.align};
   color: ${props => props.color};
 `

@@ -39,8 +39,11 @@ const FeatureApp: React.FC<FeatureAppProps> = ({ feature }) => {
         </Grid>
       )}
 
+      {/* @ts-expect-error STRICT_NULL_CHECK */}
       {feature.sets.edges.length > 0 &&
+        // @ts-expect-error STRICT_NULL_CHECK
         feature.sets.edges.map(
+          // @ts-expect-error STRICT_NULL_CHECK
           ({ node: set }) => set && <FeatureSet key={set.id} set={set} />
         )}
     </>

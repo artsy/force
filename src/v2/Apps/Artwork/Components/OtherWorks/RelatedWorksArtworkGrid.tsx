@@ -77,6 +77,7 @@ class RelatedWorksArtworkGrid extends React.Component<
 
     // The layer might have failed to fetch, so we use the `get` helper
     // instead of ordinary destructuring.
+    // @ts-expect-error STRICT_NULL_CHECK
     const artworksConnection = get(layer, l => l.artworksConnection)
 
     if (hideGrid(artworksConnection)) {
@@ -85,6 +86,7 @@ class RelatedWorksArtworkGrid extends React.Component<
 
     // For sale artworks are already rendered on the page so we filter them from related works
     const names = take(
+      // @ts-expect-error STRICT_NULL_CHECK
       layers.filter(l => l.name !== "For Sale"),
       MAX_TAB_ITEMS
     )
@@ -96,7 +98,9 @@ class RelatedWorksArtworkGrid extends React.Component<
     return (
       <Box data-test={ContextModule.relatedWorksRail}>
         <Header title="Related works" />
+        {/* @ts-expect-error STRICT_NULL_CHECK */}
         <Tabs justifyContent="center" onChange={this.handleTabClick}>
+          {/* @ts-expect-error STRICT_NULL_CHECK */}
           {names.map(({ name, internalID }, key) => {
             return (
               <Tab name={name} key={key} data={{ layerId: internalID }}>
@@ -106,6 +110,7 @@ class RelatedWorksArtworkGrid extends React.Component<
                   ) : (
                     <ArtworkGrid
                       contextModule={ContextModule.relatedWorksRail}
+                      // @ts-expect-error STRICT_NULL_CHECK
                       artworks={artworksConnection}
                       columnCount={[2, 3, 4]}
                       preloadImageCount={0}

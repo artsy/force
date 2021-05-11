@@ -3,6 +3,7 @@ import React from "react"
 import styled from "styled-components"
 import { SavedAddresses_me } from "v2/__generated__/SavedAddresses_me.graphql"
 
+// @ts-expect-error STRICT_NULL_CHECK
 type AddressNode = SavedAddresses_me["addressConnection"]["edges"][number]["node"]
 
 interface SavedAddressItemProps {

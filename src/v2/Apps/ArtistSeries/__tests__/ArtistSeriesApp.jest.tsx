@@ -398,6 +398,7 @@ const ArtistSeriesAppFixture: ArtistSeriesApp_QueryRawResponse = {
 }
 
 const ArtistSeriesWithoutArtistAppFixture: ArtistSeriesApp_QueryRawResponse = {
+  // @ts-expect-error STRICT_NULL_CHECK
   artistSeries: {
     ...ArtistSeriesAppFixture.artistSeries,
     artists: [],

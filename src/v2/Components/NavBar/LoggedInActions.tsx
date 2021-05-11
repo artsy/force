@@ -24,9 +24,11 @@ export const LoggedInActions: React.FC<
 > = ({ error, me }) => {
   const { trackEvent } = useTracking()
   const hasUnreadNotifications =
+    // @ts-expect-error STRICT_NULL_CHECK
     me?.unreadNotificationsCount > 0 || getNotificationCount() > 0
   updateNotificationCache(me?.unreadNotificationsCount)
   const hasUnreadConversations =
+    // @ts-expect-error STRICT_NULL_CHECK
     me?.unreadConversationCount > 0 || getConversationCount() > 0
   updateConversationCache(me?.unreadConversationCount)
 

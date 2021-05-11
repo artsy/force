@@ -24,9 +24,11 @@ export class CreateAccount extends React.Component<CreateAccountProps> {
 
     let analyticsParams = []
     if (artistId && artistName) {
+      // @ts-expect-error STRICT_NULL_CHECK
       analyticsParams.push(`artistId=${artistId}`, `artistName=${artistName}`)
     }
     if (contextPath && subject) {
+      // @ts-expect-error STRICT_NULL_CHECK
       analyticsParams.push(`contextPath=${contextPath}`, `subject=${subject}`)
     }
 

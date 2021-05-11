@@ -17,7 +17,9 @@ export const PartnerContacts: React.FC<ContactRouteProps> = ({ edges }) => {
         .filter(edge => !!edge && !!edge.node)
         .map(edge => {
           return (
+            // @ts-expect-error STRICT_NULL_CHECK
             <Column key={edge.node.id} span={12}>
+              {/* @ts-expect-error STRICT_NULL_CHECK */}
               <PartnerContactCard location={edge.node} />
             </Column>
           )

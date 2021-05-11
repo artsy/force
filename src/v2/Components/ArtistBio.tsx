@@ -14,6 +14,7 @@ export interface ArtistBioProps {
 
 export class ArtistBio extends React.Component<ArtistBioProps> {
   render() {
+    // @ts-expect-error STRICT_NULL_CHECK
     const { credit, partnerID, text } = this.props.bio.biographyBlurb
     const showCredit = Boolean(credit)
     const partnerHref = `${sd.APP_URL}/${partnerID}`

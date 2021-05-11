@@ -19,6 +19,7 @@ export const fitHeaderArtworks = (
   headerWidth: number,
   isSmallViewport: boolean
 ): DefaultHeader_headerArtworks["edges"] => {
+  // @ts-expect-error STRICT_NULL_CHECK
   if (artworks.length < 1) return []
 
   // Initially render all the artworks
@@ -30,6 +31,7 @@ export const fitHeaderArtworks = (
   const headerArtworks: Writable<DefaultHeader_headerArtworks["edges"]> = []
 
   while (true) {
+    // @ts-expect-error STRICT_NULL_CHECK
     for (const artwork of artworks) {
       headerArtworks.push(artwork)
 
@@ -37,11 +39,14 @@ export const fitHeaderArtworks = (
         return headerArtworks
       }
 
+      // @ts-expect-error STRICT_NULL_CHECK
       if (!artwork.node.image) continue
 
       isSmallViewport
-        ? (artworkWidths += artwork.node.image.small.width + space(1))
-        : (artworkWidths += artwork.node.image.large.width + space(1))
+        ? // @ts-expect-error STRICT_NULL_CHECK
+          (artworkWidths += artwork.node.image.small.width + space(1))
+        : // @ts-expect-error STRICT_NULL_CHECK
+          (artworkWidths += artwork.node.image.large.width + space(1))
     }
   }
 }
@@ -59,6 +64,7 @@ export const CollectionDefaultHeader: FC<CollectionDefaultHeaderProps> = ({
 }) => {
   const { width: viewportWidth } = useWindowSize()
 
+  // @ts-expect-error STRICT_NULL_CHECK
   if (headerArtworks.edges.length === 0) return null
 
   const largeArtworks = fitHeaderArtworks(
@@ -77,9 +83,12 @@ export const CollectionDefaultHeader: FC<CollectionDefaultHeaderProps> = ({
     <Box my={[0, 0, 2]}>
       <Media greaterThanOrEqual="md">
         <Rail>
+          {/* @ts-expect-error STRICT_NULL_CHECK */}
           {largeArtworks.map(artwork => (
             <DefaultHeaderArtwork
+              // @ts-expect-error STRICT_NULL_CHECK
               key={artwork.node.id}
+              // @ts-expect-error STRICT_NULL_CHECK
               artwork={artwork}
               collectionId={collectionId}
               collectionSlug={collectionSlug}
@@ -90,9 +99,12 @@ export const CollectionDefaultHeader: FC<CollectionDefaultHeaderProps> = ({
 
       <Media lessThan="md">
         <Rail>
+          {/* @ts-expect-error STRICT_NULL_CHECK */}
           {smallArtworks.map(artwork => (
             <DefaultHeaderArtwork
+              // @ts-expect-error STRICT_NULL_CHECK
               key={artwork.node.id}
+              // @ts-expect-error STRICT_NULL_CHECK
               artwork={artwork}
               collectionId={collectionId}
               collectionSlug={collectionSlug}

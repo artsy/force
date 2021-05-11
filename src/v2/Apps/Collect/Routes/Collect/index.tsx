@@ -102,6 +102,7 @@ export const CollectApp: React.FC<CollectAppProps> = ({
           <ArtworkFilter
             viewer={viewer}
             aggregations={
+              // @ts-expect-error STRICT_NULL_CHECK
               viewer.artworksConnection
                 .aggregations as SharedArtworkFilterContextProps["aggregations"]
             }

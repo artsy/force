@@ -72,6 +72,7 @@ export const PriceRangeFilter: React.FC<PriceRangeFilterProps> = ({
   const [mode, setMode] = useState<"resting" | "done">("resting")
 
   const { currentlySelectedFilters, setFilter } = useArtworkFilterContext()
+  // @ts-expect-error STRICT_NULL_CHECK
   const { priceRange: initialRange, reset } = currentlySelectedFilters()
 
   const numericInitialRange = parseRange(initialRange)
@@ -116,6 +117,7 @@ export const PriceRangeFilter: React.FC<PriceRangeFilterProps> = ({
     }
 
     if (selectedOption !== null) {
+      // @ts-expect-error STRICT_NULL_CHECK
       setCustomRange(parseRange(selectedOption))
     }
 
@@ -128,6 +130,7 @@ export const PriceRangeFilter: React.FC<PriceRangeFilterProps> = ({
     v3: { my: 1 },
   })
 
+  // @ts-expect-error STRICT_NULL_CHECK
   const selection = currentlySelectedFilters().priceRange
   const hasSelection = selection && selection.length > 0
 

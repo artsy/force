@@ -38,6 +38,7 @@ const FairExhibitorRailArtworks: React.FC<FairExhibitorRailArtworksProps> = ({
   }): ClickedArtworkGroup => {
     return {
       context_module: ContextModule.galleryBoothRail,
+      // @ts-expect-error STRICT_NULL_CHECK
       context_page_owner_type: contextPageOwnerType,
       context_page_owner_id: contextPageOwnerId,
       context_page_owner_slug: contextPageOwnerSlug,
@@ -52,6 +53,7 @@ const FairExhibitorRailArtworks: React.FC<FairExhibitorRailArtworksProps> = ({
 
   return (
     <Carousel arrowHeight={FAIR_EXHIBITOR_IMAGE_HEIGHT}>
+      {/* @ts-expect-error STRICT_NULL_CHECK */}
       {show.artworks.edges.map(({ artwork }, index) => {
         return (
           <FillwidthItem
@@ -102,6 +104,7 @@ export const FairExhibitorRailArtworksQueryRenderer: React.FC<{
 
   return (
     <QueryRenderer<FairExhibitorRailArtworksQuery>
+      //  @ts-expect-error STRICT_NULL_CHECK
       environment={relayEnvironment}
       query={graphql`
         query FairExhibitorRailArtworksQuery($id: String!) {
@@ -114,6 +117,7 @@ export const FairExhibitorRailArtworksQueryRenderer: React.FC<{
       render={({ error, props }) => {
         if (error || !props) return <FairExhibitorRailPlaceholder />
         return (
+          // @ts-expect-error STRICT_NULL_CHECK
           <FairExhibitorRailArtworksFragmentContainer {...rest} {...props} />
         )
       }}

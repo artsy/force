@@ -27,6 +27,7 @@ describe("ad display logic in Feature and Standard Articles", () => {
 
   const getWrapper = (passedProps = props) => {
     return mount(
+      // @ts-expect-error STRICT_NULL_CHECK
       <SystemContextProvider user={null}>
         <ArticleLayout {...passedProps} />
       </SystemContextProvider>
@@ -67,6 +68,7 @@ describe("ad display logic in Feature and Standard Articles", () => {
 
   it("checks the shouldAdRender prop is passed to Feature articles", () => {
     const articleType = FeatureArticle.layout
+    // @ts-expect-error STRICT_NULL_CHECK
     const shouldRender = shouldAdRender(null, null, null, articleType)
 
     expect(shouldRender).toBe(true)
@@ -74,6 +76,7 @@ describe("ad display logic in Feature and Standard Articles", () => {
 
   it("checks the shouldAdRender prop is passed to Standard articles", () => {
     const articleType = StandardArticle.layout
+    // @ts-expect-error STRICT_NULL_CHECK
     const shouldRender = shouldAdRender(null, null, null, articleType)
 
     expect(shouldRender).toBe(true)
@@ -87,6 +90,7 @@ describe("ad display frequency logic in News Articles", () => {
 
   const getWrapper = (passedProps = props) => {
     return mount(
+      // @ts-expect-error STRICT_NULL_CHECK
       <SystemContextProvider user={null}>
         <NewsArticle {...passedProps} />
       </SystemContextProvider>
@@ -192,6 +196,7 @@ describe("#getBodyClass", () => {
 
   it("returns expected class for custom editorial", () => {
     const article = {
+      // @ts-ignore
       id: "5d2f8bd0cdc74b00208b7e16",
       ...SuperArticle,
     }

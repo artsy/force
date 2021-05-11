@@ -21,6 +21,7 @@ describe("ArtistBio", () => {
     return renderRelayTree({
       Component: ({ bio }: ArtistBioTestQueryResponse) => (
         <MockBoot breakpoint="xl">
+          {/* @ts-expect-error STRICT_NULL_CHECK */}
           <ArtistBio bio={bio} />
         </MockBoot>
       ),

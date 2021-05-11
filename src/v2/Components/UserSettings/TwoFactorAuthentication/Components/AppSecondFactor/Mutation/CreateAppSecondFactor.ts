@@ -13,6 +13,7 @@ export const CreateAppSecondFactor = (
     async (resolve, reject) => {
       commitMutation<CreateAppSecondFactorMutation>(environment, {
         onCompleted: data => {
+          // @ts-expect-error STRICT_NULL_CHECK
           const response = data.createAppSecondFactor.secondFactorOrErrors
 
           switch (response.__typename) {

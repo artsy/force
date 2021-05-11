@@ -30,6 +30,7 @@ const FairExhibitors: React.FC<FairExhibitorsProps> = ({ fair, relay }) => {
     context_module: ContextModule.exhibitorsTab,
     context_page_owner_id: contextPageOwnerId,
     context_page_owner_slug: contextPageOwnerSlug,
+    // @ts-expect-error STRICT_NULL_CHECK
     context_page_owner_type: contextPageOwnerType,
     subject: "Show More",
   }
@@ -61,6 +62,7 @@ const FairExhibitors: React.FC<FairExhibitorsProps> = ({ fair, relay }) => {
 
   return (
     <>
+      {/* @ts-expect-error STRICT_NULL_CHECK */}
       {fair.exhibitors?.edges.map(({ node: show }) => {
         if (show.counts.artworks === 0 || !show.partner) {
           // Skip rendering of booths without artworks

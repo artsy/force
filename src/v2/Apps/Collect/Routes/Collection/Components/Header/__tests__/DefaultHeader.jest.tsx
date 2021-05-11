@@ -14,6 +14,7 @@ describe("default collections header artworks", () => {
     const artworks = defaultCollectionHeaderArtworks.edges.slice(0, 3)
     const headerArtworks = fitHeaderArtworks(artworks as any, 1275, false)
 
+    // @ts-expect-error STRICT_NULL_CHECK
     expect(headerArtworks.length).toBeGreaterThan(artworks.length)
     expect(headerArtworks).toHaveLength(10)
   })
@@ -22,6 +23,7 @@ describe("default collections header artworks", () => {
     const artworks = defaultCollectionHeaderArtworks.edges.slice(0, 2)
     const headerArtworks = fitHeaderArtworks(artworks as any, 375, true)
 
+    // @ts-expect-error STRICT_NULL_CHECK
     expect(headerArtworks.length).toBeGreaterThan(artworks.length)
     expect(headerArtworks).toHaveLength(7)
   })
@@ -30,6 +32,7 @@ describe("default collections header artworks", () => {
     const artworks = defaultCollectionHeaderArtworks.edges
     const headerArtworks = fitHeaderArtworks(artworks as any, 675, false)
 
+    // @ts-expect-error STRICT_NULL_CHECK
     expect(headerArtworks.length).toBeLessThan(artworks.length)
     expect(headerArtworks).toHaveLength(5)
   })

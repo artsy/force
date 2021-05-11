@@ -135,6 +135,7 @@ export class MarketInsights extends React.Component<Props, null> {
         {introSentence}
         &nbsp;
         <TooltipContainer>
+          {/* @ts-expect-error STRICT_NULL_CHECK */}
           <Tooltip message={categoryTooltipContent}>
             <span style={{ verticalAlign: "text-top" }}>
               <HelpIcon />
@@ -149,6 +150,7 @@ export class MarketInsights extends React.Component<Props, null> {
   // Assumption: these are mutually exclusive categories among a partner.
   renderGalleryRepresentation() {
     const { highlights } = this.props.artist
+    // @ts-expect-error STRICT_NULL_CHECK
     const { partnersConnection } = highlights
     if (
       partnersConnection &&
@@ -170,12 +172,15 @@ export class MarketInsights extends React.Component<Props, null> {
   renderAuctionHighlight() {
     if (
       !this.props.artist.auctionResultsConnection ||
+      // @ts-expect-error STRICT_NULL_CHECK
       this.props.artist.auctionResultsConnection.edges.length < 1
     ) {
       return null
     }
+    // @ts-expect-error STRICT_NULL_CHECK
     const topAuctionResult = this.props.artist.auctionResultsConnection.edges[0]
       .node
+    // @ts-expect-error STRICT_NULL_CHECK
     return <div>{topAuctionResult.price_realized.display} auction record</div>
   }
 
@@ -196,6 +201,7 @@ export class MarketInsights extends React.Component<Props, null> {
         Generated using partial data.&nbsp;
         <TextLink
           color={colors.graySemibold}
+          // @ts-expect-error STRICT_NULL_CHECK
           underline
           href='mailto:productfeedback@artsy.net?subject=Feedback on "About the Artist" information'
         >
@@ -206,6 +212,7 @@ export class MarketInsights extends React.Component<Props, null> {
   }
 
   render() {
+    // @ts-expect-error STRICT_NULL_CHECK
     if (hasSections(this.props.artist)) {
       return (
         <MarketInsightsContainer>
@@ -223,6 +230,7 @@ export class MarketInsights extends React.Component<Props, null> {
 }
 
 export const MarketInsightsFragmentContainer = createFragmentContainer(
+  // @ts-expect-error STRICT_NULL_CHECK
   MarketInsights,
   {
     artist: graphql`

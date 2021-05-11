@@ -32,14 +32,19 @@ export const getFeaturedArtists = (
   collection: Header_collection,
   merchandisableArtists: Header_artworks["merchandisableArtists"]
 ): Header_artworks["merchandisableArtists"] => {
+  // @ts-expect-error STRICT_NULL_CHECK
   if (collection.query.artistIDs?.length > 0) {
     return filter(merchandisableArtists, artist =>
+      // @ts-expect-error STRICT_NULL_CHECK
       collection.query.artistIDs.includes(artist.internalID)
     )
   }
 
+  // @ts-expect-error STRICT_NULL_CHECK
   if (merchandisableArtists?.length > 0) {
+    // @ts-expect-error STRICT_NULL_CHECK
     const filteredArtistsIds = merchandisableArtists.filter(artist => {
+      // @ts-expect-error STRICT_NULL_CHECK
       return !collection.featuredArtistExclusionIds.includes(artist.internalID)
     })
     return take(filteredArtistsIds, artistsCount)
@@ -52,7 +57,9 @@ export const getFeaturedArtists = (
 export const featuredArtistsEntityCollection: (
   artists: Header_artworks["merchandisableArtists"]
 ) => JSX.Element[] = artists => {
+  // @ts-expect-error STRICT_NULL_CHECK
   return artists.map((artist, index) => {
+    // @ts-expect-error STRICT_NULL_CHECK
     const hasArtistMetaData = artist.nationality && artist.birthday
     return (
       <Box
@@ -62,16 +69,21 @@ export const featuredArtistsEntityCollection: (
         data-test={ContextModule.featuredArtistsRail}
       >
         <EntityHeader
+          // @ts-expect-error STRICT_NULL_CHECK
           imageUrl={artist.image.resized.url}
+          // @ts-expect-error STRICT_NULL_CHECK
           name={artist.name}
           meta={
             hasArtistMetaData
-              ? `${artist.nationality}, b. ${artist.birthday}`
+              ? // @ts-expect-error STRICT_NULL_CHECK
+                `${artist.nationality}, b. ${artist.birthday}`
               : undefined
           }
+          // @ts-expect-error STRICT_NULL_CHECK
           href={`/artist/${artist.slug}`}
           FollowButton={
             <FollowArtistButton
+              // @ts-expect-error STRICT_NULL_CHECK
               artist={artist}
               contextModule={ContextModule.featuredArtistsRail}
               render={({ is_followed }) => {

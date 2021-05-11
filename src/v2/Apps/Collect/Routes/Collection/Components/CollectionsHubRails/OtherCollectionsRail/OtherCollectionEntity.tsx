@@ -31,6 +31,7 @@ export const OtherCollectionEntity: React.FC<CollectionProps> = ({
         contextModule: ContextModule.otherCollectionsRail,
         contextPageOwnerId,
         contextPageOwnerSlug,
+        // @ts-expect-error STRICT_NULL_CHECK
         contextPageOwnerType,
         destinationPageOwnerId: id,
         destinationPageOwnerSlug: slug,
@@ -45,6 +46,7 @@ export const OtherCollectionEntity: React.FC<CollectionProps> = ({
         {thumbnail && (
           <ImageContainer>
             <ThumbnailImage
+              // @ts-expect-error STRICT_NULL_CHECK
               src={resize(thumbnail, {
                 width: 60,
                 height: 60,

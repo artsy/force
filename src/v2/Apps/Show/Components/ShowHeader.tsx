@@ -13,6 +13,7 @@ export const ShowHeader: React.FC<ShowHeaderProps> = ({
   ...rest
 }) => {
   const currentTime = useCurrentTime({ syncWithServer: true })
+  // @ts-expect-error STRICT_NULL_CHECK
   const { formattedTime } = useEventTiming({ currentTime, startAt, endAt })
 
   return (

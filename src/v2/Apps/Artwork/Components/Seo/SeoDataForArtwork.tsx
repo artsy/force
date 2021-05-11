@@ -24,11 +24,15 @@ export const SeoDataForArtwork: React.FC<SeoDataForArtworkProps> = ({
 }) => {
   const artistsName = artwork.artist_names
 
+  // @ts-expect-error STRICT_NULL_CHECK
   const dimensions = parseDimensions(get(artwork, a => a.dimensions.in, ""))
 
   const artworkMetaData = {
+    // @ts-expect-error STRICT_NULL_CHECK
     name: artwork.meta.title,
+    // @ts-expect-error STRICT_NULL_CHECK
     image: get(artwork, a => a.meta_image.resized.url),
+    // @ts-expect-error STRICT_NULL_CHECK
     description: get(artwork, a => a.meta.description),
     url: `${APP_URL}${artwork.href}`,
     ...dimensions,
@@ -38,6 +42,7 @@ export const SeoDataForArtwork: React.FC<SeoDataForArtworkProps> = ({
     },
   }
 
+  // @ts-expect-error STRICT_NULL_CHECK
   const partnerType = get(artwork, a => a.partner.type)
   if (partnerType === "Institution") {
     return <CreativeWork data={artworkMetaData} />
@@ -126,13 +131,16 @@ export const offerAttributes = (artwork: SeoDataForArtwork_artwork) => {
   if (!artwork.listPrice || artwork.is_price_hidden) return null
   const galleryProfileImage = get(
     artwork,
+    // @ts-expect-error STRICT_NULL_CHECK
     a => a.partner.profile.image.resized.url
   )
   const seller = galleryProfileImage && {
     "@type": "ArtGallery",
+    // @ts-expect-error STRICT_NULL_CHECK
     name: get(artwork, a => a.partner.name),
     image: galleryProfileImage,
   }
+  // @ts-expect-error STRICT_NULL_CHECK
   const availability = AVAILABILITY[artwork.availability]
   switch (artwork.listPrice.__typename) {
     case "PriceRange":
@@ -140,6 +148,7 @@ export const offerAttributes = (artwork: SeoDataForArtwork_artwork) => {
       if (!artwork.listPrice.minPrice) {
         return null
       }
+      // @ts-expect-error STRICT_NULL_CHECK
       const highPrice = get(artwork.listPrice, price => price.maxPrice.major)
       return {
         "@type": "AggregateOffer",

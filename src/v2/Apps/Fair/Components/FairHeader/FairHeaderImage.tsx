@@ -28,9 +28,13 @@ export const FairHeaderImage: React.FC<FairHeaderImageProps> = ({
   return (
     <Container bg="black10" height={600}>
       <picture>
+        {/* @ts-expect-error STRICT_NULL_CHECK */}
         <source srcSet={image.lg.srcSet} media="(min-width: 1200px)" />
+        {/* @ts-expect-error STRICT_NULL_CHECK */}
         <source srcSet={image.md.srcSet} media="(min-width: 700px)" />
+        {/* @ts-expect-error STRICT_NULL_CHECK */}
         <source srcSet={image.sm.srcSet} media="(max-width: 700px)" />
+        {/* @ts-expect-error STRICT_NULL_CHECK */}
         <Image src={image.sm.src} alt="" loading="lazy" />
       </picture>
     </Container>

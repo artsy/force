@@ -107,6 +107,7 @@ app.get("/ssr-experiments/all*", adminOnly, async (req, res, next) => {
     const layout = await stitch({
       basePath: __dirname,
       blocks: {
+        // @ts-expect-error STRICT_NULL_CHECK
         body: bodyHTML,
       },
       layout: "../../components/main_layout/templates/react_redesign.jade",

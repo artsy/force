@@ -3,7 +3,9 @@ import { Header_artworks } from "v2/__generated__/Header_artworks.graphql"
 import { DeFraged } from "v2/Utils/typeSupport"
 
 export const collectionHeaderArtworks: Header_artworks = {
+  // @ts-expect-error STRICT_NULL_CHECK
   " $refType": null,
+  // @ts-expect-error STRICT_NULL_CHECK
   " $fragmentRefs": null,
   merchandisableArtists: [
     {
@@ -18,6 +20,7 @@ export const collectionHeaderArtworks: Header_artworks = {
       },
       birthday: "1974",
       nationality: "American",
+      // @ts-expect-error STRICT_NULL_CHECK
       " $fragmentRefs": null,
     },
     {
@@ -32,6 +35,7 @@ export const collectionHeaderArtworks: Header_artworks = {
       },
       birthday: "1965",
       nationality: "American",
+      // @ts-expect-error STRICT_NULL_CHECK
       " $fragmentRefs": null,
     },
     {
@@ -46,6 +50,7 @@ export const collectionHeaderArtworks: Header_artworks = {
       },
       birthday: "",
       nationality: "",
+      // @ts-expect-error STRICT_NULL_CHECK
       " $fragmentRefs": null,
     },
     {
@@ -60,6 +65,7 @@ export const collectionHeaderArtworks: Header_artworks = {
       },
       birthday: "",
       nationality: "",
+      // @ts-expect-error STRICT_NULL_CHECK
       " $fragmentRefs": null,
     },
   ],

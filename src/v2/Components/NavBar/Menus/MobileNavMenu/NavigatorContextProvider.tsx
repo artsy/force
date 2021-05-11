@@ -14,6 +14,7 @@ export const NavigatorContextProvider: React.FC<NavigatorContextProps> = ({
   const [path, setPath] = useState([])
   const initialNavigatorContextValue = {
     push: entry => {
+      // @ts-expect-error STRICT_NULL_CHECK
       setPath(prevState => {
         return [...prevState, entry]
       })

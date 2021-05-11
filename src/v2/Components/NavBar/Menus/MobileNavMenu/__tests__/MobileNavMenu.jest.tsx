@@ -46,6 +46,7 @@ describe("MobileNavMenu", () => {
 
   it("calls logout auth action on logout menu click", () => {
     const wrapper = getWrapper({ user: { type: "NotAdmin" } })
+    // @ts-expect-error STRICT_NULL_CHECK
     wrapper
       .find("MobileLink")
       .last()
@@ -110,6 +111,7 @@ describe("MobileNavMenu", () => {
     })
 
     it("renders the account subnav when logged in", () => {
+      // @ts-expect-error STRICT_NULL_CHECK
       const linkContainer = getMobileMenuLinkContainer("notAdmin")
       const mobileSubmenuLinks = linkContainer.children()
       let linkText = mobileSubmenuLinks.last().text()
@@ -121,6 +123,7 @@ describe("MobileNavMenu", () => {
 
   describe("lab features", () => {
     it("shows inbox menu option if lab feature enabled", () => {
+      // @ts-expect-error STRICT_NULL_CHECK
       const linkContainer = getMobileMenuLinkContainer("notAdmin", [
         "User Conversations View",
       ])
@@ -130,6 +133,7 @@ describe("MobileNavMenu", () => {
 
   describe("Analytics tracking", () => {
     it("tracks back button click", () => {
+      // @ts-expect-error STRICT_NULL_CHECK
       const linkContainer = getMobileMenuLinkContainer("notAdmin")
 
       const backLink = linkContainer.find(BackLink)
@@ -143,6 +147,7 @@ describe("MobileNavMenu", () => {
     })
 
     it("tracks MobileSubmenuLink click", () => {
+      // @ts-expect-error STRICT_NULL_CHECK
       const linkContainer = getMobileMenuLinkContainer("notAdmin")
       linkContainer.children().first().find("a").simulate("click")
       expect(trackEvent).toHaveBeenCalledWith({

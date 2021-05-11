@@ -38,6 +38,7 @@ describe("ArtworkFilterContext", () => {
     it("#onFilterClick", () => {
       const spy = jest.fn()
       getWrapper({ onFilterClick: spy })
+      // @ts-expect-error STRICT_NULL_CHECK
       context.onFilterClick("color", "purple", initialArtworkFilterState)
       expect(spy).toHaveBeenCalledWith(
         "color",
@@ -72,9 +73,11 @@ describe("ArtworkFilterContext", () => {
         },
       })
       act(() => {
+        // @ts-expect-error STRICT_NULL_CHECK
         expect(context.filters.page).toEqual(10)
         context.setFilter("sort", "relevant")
       })
+      // @ts-expect-error STRICT_NULL_CHECK
       expect(context.filters.page).toEqual(1)
     })
 
@@ -86,9 +89,11 @@ describe("ArtworkFilterContext", () => {
         },
       })
       act(() => {
+        // @ts-expect-error STRICT_NULL_CHECK
         expect(context.filters.page).toEqual(10)
         context.unsetFilter("sort")
       })
+      // @ts-expect-error STRICT_NULL_CHECK
       expect(context.filters.page).toEqual(1)
     })
 
@@ -104,6 +109,7 @@ describe("ArtworkFilterContext", () => {
 
         // copy that to a 'staged' filter state
         act(() => {
+          // @ts-expect-error STRICT_NULL_CHECK
           context.setStagedFilters(filters)
         })
       })
@@ -111,6 +117,7 @@ describe("ArtworkFilterContext", () => {
       describe("when not in staged mode", () => {
         beforeEach(() => {
           act(() => {
+            // @ts-expect-error STRICT_NULL_CHECK
             context.setShouldStageFilterChanges(false)
           })
         })
@@ -119,7 +126,9 @@ describe("ArtworkFilterContext", () => {
           act(() => {
             context.setFilter("medium", "jewelry")
           })
+          // @ts-expect-error STRICT_NULL_CHECK
           expect(context.filters.medium).toEqual("jewelry")
+          // @ts-expect-error STRICT_NULL_CHECK
           expect(context.stagedFilters.medium).not.toEqual("jewelry")
         })
 
@@ -127,7 +136,9 @@ describe("ArtworkFilterContext", () => {
           act(() => {
             context.unsetFilter("medium")
           })
+          // @ts-expect-error STRICT_NULL_CHECK
           expect(context.filters.medium).not.toEqual("painting")
+          // @ts-expect-error STRICT_NULL_CHECK
           expect(context.stagedFilters.medium).toEqual("painting")
         })
 
@@ -149,6 +160,7 @@ describe("ArtworkFilterContext", () => {
           act(() => {
             context.setFilter("medium", "design")
           })
+          // @ts-expect-error STRICT_NULL_CHECK
           expect(context.currentlySelectedFilters()).toEqual(context.filters)
         })
       })
@@ -156,6 +168,7 @@ describe("ArtworkFilterContext", () => {
       describe("when in staged mode", () => {
         beforeEach(() => {
           act(() => {
+            // @ts-expect-error STRICT_NULL_CHECK
             context.setShouldStageFilterChanges(true)
           })
         })
@@ -164,7 +177,9 @@ describe("ArtworkFilterContext", () => {
           act(() => {
             context.setFilter("medium", "jewelry")
           })
+          // @ts-expect-error STRICT_NULL_CHECK
           expect(context.filters.medium).not.toEqual("jewelry")
+          // @ts-expect-error STRICT_NULL_CHECK
           expect(context.stagedFilters.medium).toEqual("jewelry")
         })
 
@@ -172,7 +187,9 @@ describe("ArtworkFilterContext", () => {
           act(() => {
             context.unsetFilter("medium")
           })
+          // @ts-expect-error STRICT_NULL_CHECK
           expect(context.filters.medium).toEqual("painting")
+          // @ts-expect-error STRICT_NULL_CHECK
           expect(context.stagedFilters.medium).not.toEqual("painting")
         })
 
@@ -194,6 +211,7 @@ describe("ArtworkFilterContext", () => {
           act(() => {
             context.setFilter("medium", "design")
           })
+          // @ts-expect-error STRICT_NULL_CHECK
           expect(context.currentlySelectedFilters()).toEqual(
             context.stagedFilters
           )
@@ -203,25 +221,31 @@ describe("ArtworkFilterContext", () => {
       describe("regardless of mode", () => {
         test("#setFilters replaces only the 'real' filters", () => {
           act(() => {
+            // @ts-expect-error STRICT_NULL_CHECK
             context.setFilters({
               ...initialArtworkFilterState,
               medium: "jewelry",
             })
           })
 
+          // @ts-expect-error STRICT_NULL_CHECK
           expect(context.filters.medium).toEqual("jewelry")
+          // @ts-expect-error STRICT_NULL_CHECK
           expect(context.stagedFilters.medium).not.toEqual("jewelry")
         })
 
         test("#setStagedFilters replaces only the staged filters", () => {
           act(() => {
+            // @ts-expect-error STRICT_NULL_CHECK
             context.setStagedFilters({
               ...initialArtworkFilterState,
               medium: "jewelry",
             })
           })
 
+          // @ts-expect-error STRICT_NULL_CHECK
           expect(context.filters.medium).not.toEqual("jewelry")
+          // @ts-expect-error STRICT_NULL_CHECK
           expect(context.stagedFilters.medium).toEqual("jewelry")
         })
       })

@@ -57,6 +57,7 @@ const Feature: React.FC<FeatureProps> = props => {
           <Box textAlign="center" mb={-1}>
             <Video
               src={heroVideo.large_src}
+              // @ts-expect-error STRICT_NULL_CHECK
               placeholder={resizedLargePlaceholder}
             />
           </Box>
@@ -67,6 +68,7 @@ const Feature: React.FC<FeatureProps> = props => {
           <Box textAlign="center" mb={-1}>
             <Video
               src={heroVideo.small_src}
+              // @ts-expect-error STRICT_NULL_CHECK
               placeholder={resizedSmallPlaceholder}
             />
           </Box>
@@ -291,6 +293,7 @@ export const FeaturedContentLink: React.FC<FeaturedLinkType> = props => {
       }
     >
       <Box position="relative">
+        {/* @ts-expect-error STRICT_NULL_CHECK */}
         <ResponsiveImage src={croppedUrl} ratio={height / width} />
         <ImageOverlayText maxWidth="150px">
           <BlockText size="2" color="white">

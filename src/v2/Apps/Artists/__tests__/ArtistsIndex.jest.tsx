@@ -12,6 +12,7 @@ const { getWrapper } = setupTestWrapper<
 >({
   Component: props => (
     <MockBoot>
+      {/* @ts-expect-error STRICT_NULL_CHECK */}
       <ArtistsIndexFragmentContainer {...props} />
     </MockBoot>
   ),

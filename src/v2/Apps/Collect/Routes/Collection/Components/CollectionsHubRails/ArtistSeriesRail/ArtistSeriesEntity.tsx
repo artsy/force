@@ -28,6 +28,7 @@ export const ArtistSeriesEntity: React.FC<ArtistSeriesEntityProps> = ({
     id,
     title,
   } = member
+  // @ts-expect-error STRICT_NULL_CHECK
   const artworks = artworksConnection.edges.map(({ node }) => node)
   const bgImages = artworks.map(({ image }) => image && image.url)
   const imageSize =
@@ -46,6 +47,7 @@ export const ArtistSeriesEntity: React.FC<ArtistSeriesEntityProps> = ({
         contextModule: ContextModule.artistSeriesRail,
         contextPageOwnerId,
         contextPageOwnerSlug,
+        // @ts-expect-error STRICT_NULL_CHECK
         contextPageOwnerType,
         destinationPageOwnerId: id,
         destinationPageOwnerSlug: slug,

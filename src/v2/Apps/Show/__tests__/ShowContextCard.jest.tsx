@@ -19,6 +19,7 @@ const { getWrapper } = setupTestWrapper<ShowContextCard_Test_Query>({
         contextPageOwnerType: OwnerType.show,
       }}
     >
+      {/* @ts-expect-error STRICT_NULL_CHECK */}
       <ShowContextCardFragmentContainer {...props} />
     </AnalyticsContext.Provider>
   ),

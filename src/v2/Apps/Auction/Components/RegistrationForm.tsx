@@ -65,11 +65,13 @@ export const RegistrationForm: React.FC<RegistrationFormProps> = props => (
 
         <CreditCardInput
           error={{ message: errors.creditCard } as StripeError}
+          // @ts-expect-error STRICT_NULL_CHECK
           onChange={({ error }) => setFieldError("creditCard", error?.message)}
         />
 
         <Spacer mt={4} />
 
+        {/* @ts-expect-error STRICT_NULL_CHECK */}
         <AddressForm
           value={values.address}
           onChange={(address, _key) => setFieldValue("address", address)}

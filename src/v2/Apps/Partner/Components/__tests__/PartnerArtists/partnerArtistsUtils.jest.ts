@@ -112,9 +112,12 @@ function generateArtistItem(
     },
     representedBy: representedBy,
     node: {
+      // @ts-expect-error STRICT_NULL_CHECK
       internalID: null,
+      // @ts-expect-error STRICT_NULL_CHECK
       " $fragmentRefs": null,
     },
+    // @ts-expect-error STRICT_NULL_CHECK
     " $refType": null,
   }
 }

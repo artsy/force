@@ -35,6 +35,7 @@ const ShowBanner: React.FC<ShowBannerProps> = ({
     description,
     href,
   } = show
+  // @ts-expect-error STRICT_NULL_CHECK
   const showType = `${statusLabelsMap[status]} ${
     isFairBooth ? "fair booth" : "show"
   }`
@@ -45,6 +46,7 @@ const ShowBanner: React.FC<ShowBannerProps> = ({
         <Text textTransform="capitalize" variant="mediumText" mb={1}>
           {showType}
         </Text>
+        {/* @ts-expect-error STRICT_NULL_CHECK */}
         <RouterLink to={href} noUnderline>
           {name && <Text variant="largeTitle">{name}</Text>}
           {exhibitionPeriod && (
@@ -62,6 +64,7 @@ const ShowBanner: React.FC<ShowBannerProps> = ({
 
         <GridColumns mt={[2, 3]}>
           <Column span={6}>
+            {/* @ts-expect-error STRICT_NULL_CHECK */}
             <RouterLink to={href}>
               <Button width="100%">View More</Button>
             </RouterLink>
@@ -70,10 +73,12 @@ const ShowBanner: React.FC<ShowBannerProps> = ({
       </Column>
       {coverImage && coverImage.medium && (
         <Column span={6}>
+          {/* @ts-expect-error STRICT_NULL_CHECK */}
           <RouterLink to={href}>
             <Image
               src={coverImage.medium.src}
               srcSet={coverImage.medium.srcSet}
+              // @ts-expect-error STRICT_NULL_CHECK
               alt={name}
               width="100%"
               height={[280, 480]}

@@ -14,10 +14,12 @@ interface ShowsRailProps extends BoxProps {
 }
 
 const ShowsRail: React.FC<ShowsRailProps> = ({ partner, ...rest }) => {
+  // @ts-expect-error STRICT_NULL_CHECK
   const [isSeeAllAvaliable, setIsSeeAllAvaliable] = useState<boolean>(undefined)
   if (
     !partner ||
     !partner.showsConnection ||
+    // @ts-expect-error STRICT_NULL_CHECK
     partner.showsConnection.edges.length === 0
   ) {
     return null
@@ -40,10 +42,14 @@ const ShowsRail: React.FC<ShowsRailProps> = ({ partner, ...rest }) => {
         onRailOverflowChange={setIsSeeAllAvaliable}
         itemsPerViewport={[2, 2, 3, 4]}
       >
+        {/* @ts-expect-error STRICT_NULL_CHECK */}
         {flatten([
+          // @ts-expect-error STRICT_NULL_CHECK
           shows.map(edge => {
             return (
+              // @ts-expect-error STRICT_NULL_CHECK
               <Box key={edge.node.id} width={[300, "100%"]}>
+                {/* @ts-expect-error STRICT_NULL_CHECK */}
                 <ShowCardFragmentContainer show={edge.node} />
               </Box>
             )

@@ -34,6 +34,7 @@ export const ArtistInsightResult: React.FC = () => {
     return <ZeroState />
   }
 
+  // @ts-expect-error STRICT_NULL_CHECK
   const mediumSelectOptions = mediums.map(medium => ({
     text: medium,
     value: medium,
@@ -57,6 +58,7 @@ export const ArtistInsightResult: React.FC = () => {
   const { artistName } = artistInsight
 
   const handleMediumChange = medium => {
+    // @ts-expect-error STRICT_NULL_CHECK
     setMedium(medium)
   }
 

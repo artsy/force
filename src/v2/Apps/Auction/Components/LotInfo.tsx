@@ -12,11 +12,13 @@ interface Props {
 
 export const LotInfo: React.FC<Props> = ({ artwork, saleArtwork }) => {
   const {
+    // @ts-expect-error STRICT_NULL_CHECK
     counts: { bidderPositions: bidCount },
   } = saleArtwork
   return (
     <Flex py={4}>
       <Box maxWidth="150px" width="100%" height="auto" p={0}>
+        {/* @ts-expect-error STRICT_NULL_CHECK */}
         <ResponsiveImage src={artwork.imageUrl} />
       </Box>
       <Flex pl={3} pt={1} flexDirection="column">
@@ -32,6 +34,7 @@ export const LotInfo: React.FC<Props> = ({ artwork, saleArtwork }) => {
         </Serif>
         <br />
         <Serif size="3">
+          {/* @ts-expect-error STRICT_NULL_CHECK */}
           Current Bid: {saleArtwork.minimumNextBid.display}
         </Serif>
         {bidCount > 0 && (

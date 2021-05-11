@@ -110,8 +110,10 @@ export function buildServerApp(
           return (
             <Boot
               context={serverContext}
+              // @ts-expect-error STRICT_NULL_CHECK
               user={user}
               headTags={tags}
+              // @ts-expect-error STRICT_NULL_CHECK
               onlyMatchMediaQueries={matchingMediaQueries}
               relayEnvironment={relayEnvironment}
               routes={routes}
@@ -155,6 +157,7 @@ export function buildServerApp(
 
         // Wrap component tree in library contexts to extract usage
         bundleJSX = extractor.collectChunks(
+          // @ts-expect-error STRICT_NULL_CHECK
           sheet.collectStyles(<ServerApp tags={headTags} />)
         )
 

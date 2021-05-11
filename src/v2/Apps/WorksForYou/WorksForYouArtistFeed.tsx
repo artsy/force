@@ -31,6 +31,7 @@ export class WorksForYouArtistFeed extends React.Component<Props, State> {
   }
 
   loadMoreArtworks() {
+    // @ts-expect-error STRICT_NULL_CHECK
     const hasMore = this.props.viewer.artist.artworks_connection.pageInfo
       .hasNextPage
 
@@ -53,16 +54,21 @@ export class WorksForYouArtistFeed extends React.Component<Props, State> {
       viewer: { artist },
     } = this.props
 
+    // @ts-expect-error STRICT_NULL_CHECK
     const avatarImageUrl = get(artist, p => p.image.resized.url)
     const meta =
       (forSale
-        ? get(artist, p => p.counts.for_sale_artworks.toLocaleString(), "")
-        : get(artist, p => p.counts.artworks.toLocaleString(), "")) + " Works"
+        ? // @ts-expect-error STRICT_NULL_CHECK
+          get(artist, p => p.counts.for_sale_artworks.toLocaleString(), "")
+        : // @ts-expect-error STRICT_NULL_CHECK
+          get(artist, p => p.counts.artworks.toLocaleString(), "")) + " Works"
+    // @ts-expect-error STRICT_NULL_CHECK
     const worksForSaleHref = artist.href + "/works-for-sale"
 
     return (
       <>
         <EntityHeader
+          // @ts-expect-error STRICT_NULL_CHECK
           name={artist.name}
           meta={meta}
           imageUrl={avatarImageUrl}
@@ -72,6 +78,7 @@ export class WorksForYouArtistFeed extends React.Component<Props, State> {
         <Spacer mb={3} />
 
         <ArtworkGrid
+          // @ts-expect-error STRICT_NULL_CHECK
           artworks={artist.artworks_connection}
           columnCount={3}
           itemMargin={40}
@@ -139,6 +146,7 @@ export const WorksForYouArtistFeedPaginationContainer = createPaginationContaine
   {
     direction: "forward",
     getConnectionFromProps(props) {
+      // @ts-expect-error STRICT_NULL_CHECK
       return props.viewer.artist.artworks_connection
     },
     getFragmentVariables(prevVars, totalCount) {

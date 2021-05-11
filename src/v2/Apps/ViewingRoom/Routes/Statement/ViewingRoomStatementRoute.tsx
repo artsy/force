@@ -26,6 +26,7 @@ const StatementRoute: React.FC<ViewingRoomStatementRouteProps> = ({
           <ViewingRoomBody viewingRoom={viewingRoom} />
           <ViewingRoomSubsections viewingRoom={viewingRoom} />
           <ViewWorksButton
+            // @ts-expect-error STRICT_NULL_CHECK
             artworksCount={viewingRoom.artworksConnection.totalCount}
           />
         </Join>

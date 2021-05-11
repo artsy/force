@@ -49,11 +49,14 @@ export const PartnerArtistList: React.FC<PartnerArtistListProps> = ({
                 </Text>
               )}
               <Box style={{ columnCount: group.columnSize }}>
+                {/* @ts-expect-error STRICT_NULL_CHECK */}
                 {group.artists.map(({ node, counts: { artworks } }) => {
                   return (
                     <PartnerArtistItem
                       scrollTo={scrollTo}
+                      // @ts-expect-error STRICT_NULL_CHECK
                       key={node.internalID}
+                      // @ts-expect-error STRICT_NULL_CHECK
                       artist={node}
                       partnerSlug={partnerSlug}
                       hasPublishedArtworks={artworks > 0}

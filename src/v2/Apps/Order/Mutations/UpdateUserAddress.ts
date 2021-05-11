@@ -52,11 +52,13 @@ export const updateUserAddress = async (
       }
     `,
     onCompleted: (data, e) => {
+      // @ts-expect-error STRICT_NULL_CHECK
       const errors = data.updateUserAddress.userAddressOrErrors.errors
       if (errors) {
         onError(errors.map(error => error.message).join(", "))
       } else {
         const address = convertShippingAddressForExchange(
+          // @ts-expect-error STRICT_NULL_CHECK
           data.updateUserAddress.userAddressOrErrors
         )
         onSuccess(address)

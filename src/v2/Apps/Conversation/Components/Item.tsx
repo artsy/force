@@ -3,6 +3,7 @@ import { Conversation_conversation } from "v2/__generated__/Conversation_convers
 import React from "react"
 
 interface ItemProps {
+  // @ts-expect-error STRICT_NULL_CHECK
   item: Conversation_conversation["items"][0]["item"]
 }
 

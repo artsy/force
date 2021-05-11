@@ -42,13 +42,16 @@ export const ViewingRoomArtworkDetails: React.FC<ViewingRoomArtworkDetailsProps>
       )}
 
       <RouterLink
+        // @ts-expect-error STRICT_NULL_CHECK
         to={href}
         onClick={() => {
           tracking.trackEvent({
             action_type: AnalyticsSchema.ActionType.ClickedBuyViewingGroup,
+            // @ts-expect-error STRICT_NULL_CHECK
             context_module:
               AnalyticsSchema.ContextModule.ViewingRoomArtworkRail,
             subject: AnalyticsSchema.Subject.Rail,
+            // @ts-expect-error STRICT_NULL_CHECK
             destination_path: href,
           })
         }}

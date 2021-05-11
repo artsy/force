@@ -42,6 +42,7 @@ export class ArtworkDetailsAboutTheWorkFromArtsy extends Component<
       <HTML>
         <ReadMore
           maxChars={maxChars}
+          // @ts-expect-error STRICT_NULL_CHECK
           content={description}
           onReadMoreClicked={this.trackReadMoreClick.bind(this)}
         />

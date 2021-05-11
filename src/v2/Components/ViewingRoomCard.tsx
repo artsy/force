@@ -9,6 +9,7 @@ export const getTagProps = (
   status: string,
   distanceToOpen: string | null,
   distanceToClose: string | null
+  // @ts-expect-error STRICT_NULL_CHECK
 ): CardTagProps | null => {
   switch (status) {
     case "closed":

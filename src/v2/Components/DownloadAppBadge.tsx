@@ -9,6 +9,7 @@ interface DownloadAppBadgeProps {
   contextModule: ContextModule
 }
 
+// @ts-expect-error STRICT_NULL_CHECK
 export const DownloadAppBadge: React.FC<DownloadAppBadgeProps> = track(null, {
   dispatch: data => Events.postEvent(data),
 })(({ contextModule }) => {
@@ -24,6 +25,7 @@ export const DownloadAppBadge: React.FC<DownloadAppBadgeProps> = track(null, {
     tracking.trackEvent(
       clickedAppDownload({
         context_module: contextModule,
+        // @ts-expect-error STRICT_NULL_CHECK
         context_page_owner_type: contextPageOwnerType,
         context_page_owner_slug: contextPageOwnerSlug,
         context_page_owner_id: contextPageOwnerId,

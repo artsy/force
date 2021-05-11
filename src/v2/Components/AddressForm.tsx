@@ -106,6 +106,7 @@ export class AddressForm extends React.Component<
             placeholder="Add full name"
             title={this.props.billing ? "Name on card" : "Full name"}
             autoCorrect="off"
+            // @ts-expect-error STRICT_NULL_CHECK
             value={this.props.value.name}
             onChange={this.changeEventHandler("name")}
             error={this.getError("name")}
@@ -148,6 +149,7 @@ export class AddressForm extends React.Component<
               title="Postal code"
               autoCapitalize="characters"
               autoCorrect="off"
+              // @ts-expect-error STRICT_NULL_CHECK
               value={this.props.value.postalCode}
               onChange={this.changeEventHandler("postalCode")}
               error={this.getError("postalCode")}
@@ -161,6 +163,7 @@ export class AddressForm extends React.Component<
               id="AddressForm_addressLine1"
               placeholder="Add street address"
               title="Address line 1"
+              // @ts-expect-error STRICT_NULL_CHECK
               value={this.props.value.addressLine1}
               onChange={this.changeEventHandler("addressLine1")}
               error={this.getError("addressLine1")}
@@ -173,6 +176,7 @@ export class AddressForm extends React.Component<
               id="AddressForm_addressLine2"
               placeholder="Add apt, floor, suite, etc."
               title="Address line 2 (optional)"
+              // @ts-expect-error STRICT_NULL_CHECK
               value={this.props.value.addressLine2}
               onChange={this.changeEventHandler("addressLine2")}
               error={this.getError("addressLine2")}
@@ -186,6 +190,7 @@ export class AddressForm extends React.Component<
               id="AddressForm_city"
               placeholder="Add city"
               title="City"
+              // @ts-expect-error STRICT_NULL_CHECK
               value={this.props.value.city}
               onChange={this.changeEventHandler("city")}
               error={this.getError("city")}
@@ -199,6 +204,7 @@ export class AddressForm extends React.Component<
               placeholder="Add State, province, or region"
               title="State, province, or region"
               autoCorrect="off"
+              // @ts-expect-error STRICT_NULL_CHECK
               value={this.props.value.region}
               onChange={this.changeEventHandler("region")}
               error={this.getError("region")}
@@ -213,9 +219,11 @@ export class AddressForm extends React.Component<
                 id="AddressForm_phoneNumber"
                 title="Phone number"
                 type="tel"
+                // @ts-expect-error STRICT_NULL_CHECK
                 description={this.phoneNumberInputDescription()}
                 placeholder="Add phone"
                 pattern="[^a-z]+"
+                // @ts-expect-error STRICT_NULL_CHECK
                 value={this.props.value.phoneNumber}
                 onChange={this.changeEventHandler("phoneNumber")}
                 error={this.getError("phoneNumber")}

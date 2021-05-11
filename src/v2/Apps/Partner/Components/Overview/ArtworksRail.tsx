@@ -19,6 +19,7 @@ interface ArtworksRailProps extends BoxProps {
 export const ARTWORK_CAROUSEL_ITEM_HEIGHT = 300
 
 const ArtworksRail: React.FC<ArtworksRailProps> = ({ partner, ...rest }) => {
+  // @ts-expect-error STRICT_NULL_CHECK
   const [isSeeAllAvaliable, setIsSeeAllAvaliable] = useState<boolean>(undefined)
 
   if (
@@ -42,11 +43,14 @@ const ArtworksRail: React.FC<ArtworksRailProps> = ({ partner, ...rest }) => {
       </Flex>
 
       <Carousel onRailOverflowChange={setIsSeeAllAvaliable}>
+        {/* @ts-expect-error STRICT_NULL_CHECK */}
         {flatten([
           artworks.map(artwork => {
             return (
               <FillwidthItem
+                // @ts-expect-error STRICT_NULL_CHECK
                 key={artwork.node.id}
+                // @ts-expect-error STRICT_NULL_CHECK
                 artwork={artwork.node}
                 imageHeight={ARTWORK_CAROUSEL_ITEM_HEIGHT}
                 hidePartnerName
@@ -112,6 +116,7 @@ export const ArtworksRailRenderer: React.FC<
 
   return (
     <QueryRenderer<ArtworksRailRendererQuery>
+      //  @ts-expect-error STRICT_NULL_CHECK
       environment={relayEnvironment}
       query={graphql`
         query ArtworksRailRendererQuery($partnerId: String!) {
@@ -125,6 +130,7 @@ export const ArtworksRailRenderer: React.FC<
         if (error || !props)
           return <ArtworksRailPlaceholder {...rest} count={15} />
 
+        // @ts-expect-error STRICT_NULL_CHECK
         return <ArtworksRailFragmentContainer {...rest} {...props} />
       }}
     />

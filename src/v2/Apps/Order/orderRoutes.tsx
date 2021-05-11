@@ -238,6 +238,7 @@ export const orderRoutes: AppRouteConfig[] = [
       {
         path: "*",
         Component: props => {
+          // @ts-expect-error STRICT_NULL_CHECK
           return <ErrorPage code={404} />
         },
       },

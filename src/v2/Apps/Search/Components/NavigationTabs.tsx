@@ -64,6 +64,7 @@ export class NavigationTabs extends React.Component<Props> {
         exact={exact}
         onClick={event => {
           event.preventDefault()
+          // @ts-expect-error STRICT_NULL_CHECK
           this.props.router.push(to)
           this.trackClick(tabName, to)
         }}
@@ -87,8 +88,10 @@ export class NavigationTabs extends React.Component<Props> {
     let restAggregationCount: number = 0
     MORE_TABS.forEach(
       key =>
+        // @ts-expect-error STRICT_NULL_CHECK
         (restAggregationCount += get(
           aggregationFor(this.props, key),
+          // @ts-expect-error STRICT_NULL_CHECK
           agg => agg.count,
           0
         ))
@@ -98,6 +101,7 @@ export class NavigationTabs extends React.Component<Props> {
 
     !!artworkCount &&
       tabs.push(
+        // @ts-expect-error STRICT_NULL_CHECK
         this.renderTab("Artworks", route(""), {
           count: artworkCount,
           exact: true,
@@ -107,6 +111,7 @@ export class NavigationTabs extends React.Component<Props> {
     Object.entries(tabCountMap(this.props)).map(
       ([key, value]: [string, number]) => {
         tabs.push(
+          // @ts-expect-error STRICT_NULL_CHECK
           this.renderTab(key, route(`/${key.toLowerCase()}`), {
             count: value,
           })
@@ -116,6 +121,7 @@ export class NavigationTabs extends React.Component<Props> {
 
     !!restAggregationCount &&
       tabs.push(
+        // @ts-expect-error STRICT_NULL_CHECK
         this.renderTab("More", route("/more"), {
           count: restAggregationCount,
         })
@@ -165,6 +171,7 @@ export interface TabCounts {
 
 export const tabCountMap: (props: Props) => TabCounts = props => {
   return Object.entries(TAB_NAME_MAP).reduce((acc, [key, val]) => {
+    // @ts-expect-error STRICT_NULL_CHECK
     let count = get(aggregationFor(props, key), agg => agg.count, 0)
     if (!count) {
       return acc
@@ -183,7 +190,9 @@ const aggregationFor = (props: Props, type: string) => {
   const { searchableConnection } = props
   const { aggregations } = searchableConnection
 
+  // @ts-expect-error STRICT_NULL_CHECK
   const typeAggregation = aggregations.find(agg => agg.slice === "TYPE").counts
 
+  // @ts-expect-error STRICT_NULL_CHECK
   return typeAggregation.find(agg => agg.name === type)
 }

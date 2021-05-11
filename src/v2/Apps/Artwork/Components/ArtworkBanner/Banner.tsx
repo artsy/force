@@ -40,8 +40,10 @@ const withLink = (href: string, children: React.ReactNode) => {
 export const Banner: React.SFC<BannerProps> = props => {
   return (
     <>
+      {/* @ts-expect-error STRICT_NULL_CHECK */}
       <Media at="xs">{withLink(props.href, <SmallBanner {...props} />)}</Media>
       <Media greaterThan="xs">
+        {/* @ts-expect-error STRICT_NULL_CHECK */}
         {withLink(props.href, <LargeBanner {...props} />)}
       </Media>
     </>

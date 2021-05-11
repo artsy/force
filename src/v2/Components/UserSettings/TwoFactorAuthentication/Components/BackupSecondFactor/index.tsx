@@ -31,6 +31,7 @@ export const BackupSecondFactor: React.FC<BackupSecondFactorProps> = props => {
     setCreating(true)
 
     try {
+      // @ts-expect-error STRICT_NULL_CHECK
       await CreateBackupSecondFactors(relayEnvironment)
       setShowModal(true)
     } catch (e) {
@@ -76,9 +77,11 @@ export const BackupSecondFactor: React.FC<BackupSecondFactorProps> = props => {
           </Serif>
         </Flex>
         <Flex mt={[3, 0]} flexDirection={["column", "row"]} alignItems="center">
+          {/* @ts-expect-error STRICT_NULL_CHECK */}
           {me.backupSecondFactors.length ? (
             <>
               <Sans color="black60" size="3" weight="medium">
+                {/* @ts-expect-error STRICT_NULL_CHECK */}
                 {me.backupSecondFactors.length} remaining
               </Sans>
               <ShowButton width={["100%", "auto"]} ml={[0, 1]} mt={[1, 0]} />

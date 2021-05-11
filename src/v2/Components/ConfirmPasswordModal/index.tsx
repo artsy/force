@@ -26,6 +26,7 @@ export const ConfirmPasswordModal: React.FC<ConfirmPasswordModalProps> = props =
   ) => {
     formikBag.setStatus({ error: undefined })
     try {
+      // @ts-expect-error STRICT_NULL_CHECK
       await ConfirmPassword(relayEnvironment, {
         password,
       })

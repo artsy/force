@@ -39,6 +39,7 @@ export const RelatedCollectionEntity: React.FC<CollectionProps> = ({
     slug,
     title,
   } = collection
+  // @ts-expect-error STRICT_NULL_CHECK
   const artworks = artworksConnection.edges.map(({ node }) => node)
   const bgImages = compact(
     artworks.map(({ image }) => image && image.resized && image.resized.url)
@@ -58,6 +59,7 @@ export const RelatedCollectionEntity: React.FC<CollectionProps> = ({
         contextModule: ContextModule.relatedCollectionsRail,
         contextPageOwnerId,
         contextPageOwnerSlug,
+        // @ts-expect-error STRICT_NULL_CHECK
         contextPageOwnerType,
         destinationPageOwnerId: id,
         destinationPageOwnerSlug: slug,
@@ -93,6 +95,7 @@ export const RelatedCollectionEntity: React.FC<CollectionProps> = ({
               )
             })
           ) : (
+            // @ts-expect-error STRICT_NULL_CHECK
             <ArtworkImage src={headerImage} alt={title} width={262} />
           )}
         </ImgWrapper>

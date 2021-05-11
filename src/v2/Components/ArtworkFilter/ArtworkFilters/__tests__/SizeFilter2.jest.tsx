@@ -39,9 +39,11 @@ describe("SizeFilter2", () => {
     const wrapper = getWrapper() as any
 
     await wrapper.find("Checkbox").at(0).simulate("click")
+    // @ts-expect-error STRICT_NULL_CHECK
     expect(context.filters.sizes).toEqual(["SMALL"])
 
     await wrapper.find("Checkbox").at(2).simulate("click")
+    // @ts-expect-error STRICT_NULL_CHECK
     expect(context.filters.sizes).toEqual(["SMALL", "LARGE"])
   })
 
@@ -70,6 +72,7 @@ describe("SizeFilter2", () => {
     const wrapper = getWrapper()
 
     await wrapper.find("Checkbox").at(0).simulate("click")
+    // @ts-expect-error STRICT_NULL_CHECK
     expect(context.filters.sizes).toEqual(["SMALL"])
 
     wrapper
@@ -86,9 +89,12 @@ describe("SizeFilter2", () => {
       .find("button")
       .filterWhere(n => n.text() === "Set size")
       .simulate("click")
+    // @ts-expect-error STRICT_NULL_CHECK
     expect(context.filters.sizes).toEqual([])
     // assert conversion from centimeters to inches
+    // @ts-expect-error STRICT_NULL_CHECK
     expect(context.filters.height).toEqual("4.72-6.3")
+    // @ts-expect-error STRICT_NULL_CHECK
     expect(context.filters.width).toEqual("4.72-6.3")
   })
 
@@ -107,9 +113,12 @@ describe("SizeFilter2", () => {
       .find("button")
       .filterWhere(n => n.text() === "Set size")
       .simulate("click")
+    // @ts-expect-error STRICT_NULL_CHECK
     expect(context.filters.sizes).toEqual([])
     // assert conversion centimeters to inches
+    // @ts-expect-error STRICT_NULL_CHECK
     expect(context.filters.height).toEqual("4.72-9.45")
+    // @ts-expect-error STRICT_NULL_CHECK
     expect(context.filters.width).toEqual("*-*")
   })
 

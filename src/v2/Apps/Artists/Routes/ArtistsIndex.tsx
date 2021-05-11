@@ -38,12 +38,16 @@ export const ArtistsIndex: React.FC<ArtistsIndexProps> = ({
 
         {artists && (
           <Carousel my={2} arrowHeight={410}>
+            {/* @ts-expect-error STRICT_NULL_CHECK */}
             {artists.map((featuredLink, index) => {
+              // @ts-expect-error STRICT_NULL_CHECK
               if (!featuredLink.internalID) return null
 
               return (
                 <ArtistsCarouselCellFragmentContainer
+                  // @ts-expect-error STRICT_NULL_CHECK
                   key={featuredLink.internalID}
+                  // @ts-expect-error STRICT_NULL_CHECK
                   featuredLink={featuredLink}
                   index={index}
                 />
@@ -60,19 +64,23 @@ export const ArtistsIndex: React.FC<ArtistsIndexProps> = ({
       </Media>
 
       {genes?.map(gene => {
+        // @ts-expect-error STRICT_NULL_CHECK
         if (gene.trendingArtists?.length === 0) return null
 
         return (
+          // @ts-expect-error STRICT_NULL_CHECK
           <React.Fragment key={gene.name}>
             <Media greaterThanOrEqual="sm">
               <Box my={4}>
                 <Box display="flex" justifyContent="space-between" my={2}>
+                  {/* @ts-expect-error STRICT_NULL_CHECK */}
                   <RouterLink to={gene.href} noUnderline>
                     <Text as="h2" variant="subtitle">
+                      {/* @ts-expect-error STRICT_NULL_CHECK */}
                       {gene.name}
                     </Text>
                   </RouterLink>
-
+                  {/* @ts-expect-error STRICT_NULL_CHECK */}
                   <RouterLink to={gene.href} noUnderline>
                     <Text variant="subtitle" color="black60">
                       View
@@ -81,9 +89,12 @@ export const ArtistsIndex: React.FC<ArtistsIndexProps> = ({
                 </Box>
 
                 <GridColumns>
+                  {/* @ts-expect-error STRICT_NULL_CHECK */}
                   {gene.trendingArtists.map(artist => {
                     return (
+                      // @ts-expect-error STRICT_NULL_CHECK
                       <Column key={artist.internalID} span={[12, 6, 6, 3]}>
+                        {/* @ts-expect-error STRICT_NULL_CHECK */}
                         <ArtistsArtistCardFragmentContainer artist={artist} />
                       </Column>
                     )
@@ -93,6 +104,7 @@ export const ArtistsIndex: React.FC<ArtistsIndexProps> = ({
             </Media>
 
             <Media lessThan="sm">
+              {/* @ts-expect-error STRICT_NULL_CHECK */}
               <RouterLink to={gene.href} noUnderline>
                 <Box
                   borderTop="1px solid"
@@ -101,17 +113,24 @@ export const ArtistsIndex: React.FC<ArtistsIndexProps> = ({
                   display="flex"
                   alignItems="center"
                 >
+                  {/* @ts-expect-error STRICT_NULL_CHECK */}
                   {gene.image && (
                     <Image
+                      // @ts-expect-error STRICT_NULL_CHECK
                       src={gene.image.thumb.src}
+                      // @ts-expect-error STRICT_NULL_CHECK
                       srcSet={gene.image.thumb.srcSet}
+                      // @ts-expect-error STRICT_NULL_CHECK
                       width={gene.image.thumb.width}
+                      // @ts-expect-error STRICT_NULL_CHECK
                       height={gene.image.thumb.height}
+                      // @ts-expect-error STRICT_NULL_CHECK
                       alt={gene.name}
                     />
                   )}
 
                   <Text ml={2} variant="subtitle">
+                    {/* @ts-expect-error STRICT_NULL_CHECK */}
                     {gene.name}
                   </Text>
                 </Box>

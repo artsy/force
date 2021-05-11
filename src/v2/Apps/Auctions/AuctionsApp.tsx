@@ -52,6 +52,7 @@ const AuctionsApp: React.FC<AuctionsAppProps> = props => {
           <Spacer py={2} />
           <Join separator={<Spacer my={[2, 6]} />}>
             <Box>
+              {/* @ts-expect-error STRICT_NULL_CHECK */}
               <MyBidsFragmentContainer me={viewer.me} />
             </Box>
 

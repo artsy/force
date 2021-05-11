@@ -45,6 +45,7 @@ describe("AuctionResultsFilterContext", () => {
       act(() => {
         context.setFilter("pageAndCursor", { page: 10, cursor: null })
         setTimeout(() => {
+          // @ts-expect-error STRICT_NULL_CHECK
           expect(context.filters.pageAndCursor).toEqual({
             page: 10,
             cursor: null,
@@ -61,9 +62,11 @@ describe("AuctionResultsFilterContext", () => {
         },
       })
       act(() => {
+        // @ts-expect-error STRICT_NULL_CHECK
         expect(context.filters.pageAndCursor.page).toEqual(10)
         context.setFilter("sort", "relevant")
         setTimeout(() => {
+          // @ts-expect-error STRICT_NULL_CHECK
           expect(context.filters.pageAndCursor).toEqual({
             page: 1,
             cursor: null,
@@ -83,6 +86,7 @@ describe("AuctionResultsFilterContext", () => {
         act(() => {
           context.setFilter("allowEmptyCreatedDates", false)
           setTimeout(() => {
+            // @ts-expect-error STRICT_NULL_CHECK
             expect(context.filters.allowEmptyCreatedDates).toEqual(false)
             done()
           })
@@ -100,7 +104,9 @@ describe("AuctionResultsFilterContext", () => {
         act(() => {
           context.setFilter("createdAfterYear", 1990)
           setTimeout(() => {
+            // @ts-expect-error STRICT_NULL_CHECK
             expect(context.filters.createdAfterYear).toEqual(1990)
+            // @ts-expect-error STRICT_NULL_CHECK
             expect(context.filters.createdBeforeYear).toEqual(2000)
             done()
           })
@@ -116,7 +122,9 @@ describe("AuctionResultsFilterContext", () => {
         act(() => {
           context.setFilter("createdAfterYear", 2001)
           setTimeout(() => {
+            // @ts-expect-error STRICT_NULL_CHECK
             expect(context.filters.createdAfterYear).toEqual(2001)
+            // @ts-expect-error STRICT_NULL_CHECK
             expect(context.filters.createdBeforeYear).toEqual(2001)
             done()
           })
@@ -134,7 +142,9 @@ describe("AuctionResultsFilterContext", () => {
         act(() => {
           context.setFilter("createdBeforeYear", 2000)
           setTimeout(() => {
+            // @ts-expect-error STRICT_NULL_CHECK
             expect(context.filters.createdBeforeYear).toEqual(2000)
+            // @ts-expect-error STRICT_NULL_CHECK
             expect(context.filters.createdAfterYear).toEqual(1990)
             done()
           })
@@ -150,7 +160,9 @@ describe("AuctionResultsFilterContext", () => {
         act(() => {
           context.setFilter("createdBeforeYear", 1990)
           setTimeout(() => {
+            // @ts-expect-error STRICT_NULL_CHECK
             expect(context.filters.createdBeforeYear).toEqual(1990)
+            // @ts-expect-error STRICT_NULL_CHECK
             expect(context.filters.createdAfterYear).toEqual(1990)
             done()
           })
@@ -163,10 +175,12 @@ describe("AuctionResultsFilterContext", () => {
       act(() => {
         context.setFilter("pageAndCursor", { page: 10, cursor: null })
         setTimeout(() => {
+          // @ts-expect-error STRICT_NULL_CHECK
           expect(context.filters.pageAndCursor.page).toEqual(10)
           act(() => {
             context.unsetFilter("pageAndCursor")
             setTimeout(() => {
+              // @ts-expect-error STRICT_NULL_CHECK
               expect(context.filters.pageAndCursor).toEqual({
                 page: 1,
                 cursor: null,
@@ -186,9 +200,11 @@ describe("AuctionResultsFilterContext", () => {
         },
       })
       act(() => {
+        // @ts-expect-error STRICT_NULL_CHECK
         expect(context.filters.pageAndCursor.page).toEqual(10)
         context.unsetFilter("sort")
         setTimeout(() => {
+          // @ts-expect-error STRICT_NULL_CHECK
           expect(context.filters.pageAndCursor).toEqual({
             page: 1,
             cursor: null,
@@ -205,6 +221,7 @@ describe("AuctionResultsFilterContext", () => {
           organizations: [],
         },
       })
+      // @ts-expect-error STRICT_NULL_CHECK
       expect(context.filters.organizations).toEqual([])
 
       act(() => {

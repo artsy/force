@@ -14,6 +14,7 @@ interface ArtworkBrowserProps {
   setCarouselRef: (carouselRef: FlickityType) => void
 }
 
+// @ts-expect-error STRICT_NULL_CHECK
 type Image = ArtworkBrowserProps["images"][number]
 
 export const ArtworkImageBrowser = (props: ArtworkBrowserProps) => {
@@ -33,11 +34,13 @@ export class LargeArtworkImageBrowser extends React.Component<
   ArtworkBrowserProps
 > {
   render() {
+    // @ts-expect-error STRICT_NULL_CHECK
     const hasMultipleImages = this.props.images.length > 1
     const { imageAlt, images, setCarouselRef } = this.props
 
     // FIXME: During SSR pass want to hide other images. Work around for lack
     // of SSR support in Flickity.
+    // @ts-expect-error STRICT_NULL_CHECK
     const carouselImages = typeof window === "undefined" ? [images[0]] : images
 
     const options = {
@@ -58,6 +61,7 @@ export class LargeArtworkImageBrowser extends React.Component<
           oneSlideVisible
           height="auto"
           setCarouselRef={setCarouselRef}
+          // @ts-expect-error STRICT_NULL_CHECK
           data={carouselImages}
           renderLeftArrow={({ flickity }) => (
             <Col sm={1}>
@@ -121,7 +125,9 @@ export class SmallArtworkImageBrowser extends React.Component<
     const { images, imageAlt, setCarouselRef } = this.props
     // FIXME: During SSR pass want to hide other images. Work around for lack
     // of SSR support in Flickity.
+    // @ts-expect-error STRICT_NULL_CHECK
     const carouselImages = typeof window === "undefined" ? [images[0]] : images
+    // @ts-expect-error STRICT_NULL_CHECK
     const hasMultipleImages = this.props.images.length > 1
     const options = {
       prevNextButtons: false,
@@ -136,6 +142,7 @@ export class SmallArtworkImageBrowser extends React.Component<
       <Container key={Math.random()}>
         <Carousel
           options={options}
+          // @ts-expect-error STRICT_NULL_CHECK
           data={carouselImages}
           oneSlideVisible
           setCarouselRef={setCarouselRef}

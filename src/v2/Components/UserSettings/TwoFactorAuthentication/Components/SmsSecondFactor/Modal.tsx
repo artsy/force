@@ -22,6 +22,7 @@ interface SmsSecondFactorModalProps {
   onClose: () => void
   show?: boolean
   onComplete: () => void
+  // @ts-expect-error STRICT_NULL_CHECK
   secondFactor: CreateSmsSecondFactorMutationResponse["createSmsSecondFactor"]["secondFactorOrErrors"]
 }
 
@@ -50,11 +51,14 @@ export const SmsSecondFactorModal: React.FC<SmsSecondFactorModalProps> = props =
     setSubmitting(true)
 
     try {
+      // @ts-expect-error STRICT_NULL_CHECK
       const response = await EnableSecondFactor(relayEnvironment, {
         secondFactorID: secondFactor.internalID,
+        // @ts-expect-error STRICT_NULL_CHECK
         code: values.code,
       })
 
+      // @ts-expect-error STRICT_NULL_CHECK
       setRecoveryCodes(response.enableSecondFactor.recoveryCodes)
 
       setShowRecoveryCodes(true)
@@ -102,17 +106,22 @@ export const SmsSecondFactorModal: React.FC<SmsSecondFactorModalProps> = props =
       setDelivering(true)
 
       try {
+        // @ts-expect-error STRICT_NULL_CHECK
         await UpdateSmsSecondFactor(relayEnvironment, {
           secondFactorID: secondFactor.internalID,
           attributes: {
+            // @ts-expect-error STRICT_NULL_CHECK
             phoneNumber: values.phoneNumber,
+            // @ts-expect-error STRICT_NULL_CHECK
             countryCode: values.countryCode,
           },
         })
+        // @ts-expect-error STRICT_NULL_CHECK
         const response = await DeliverSecondFactor(relayEnvironment, {
           secondFactorID: secondFactor.internalID,
         })
 
+        // @ts-expect-error STRICT_NULL_CHECK
         const factor = response.deliverSecondFactor.secondFactorOrErrors
 
         if (factor.__typename === "SmsSecondFactor") {
@@ -274,6 +283,7 @@ export const SmsSecondFactorModal: React.FC<SmsSecondFactorModalProps> = props =
         }
       >
         <BackupSecondFactorReminder
+          // @ts-expect-error STRICT_NULL_CHECK
           backupSecondFactors={recoveryCodes}
           factorTypeName={secondFactor.__typename}
         />

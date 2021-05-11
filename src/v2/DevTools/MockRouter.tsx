@@ -76,6 +76,7 @@ export class MockRouter extends React.Component<Props> {
 
     return (
       <React.Fragment>
+        {/* @ts-expect-error STRICT_NULL_CHECK */}
         {ClientApp && <ClientApp {...this.props.initialState} />}
       </React.Fragment>
     )

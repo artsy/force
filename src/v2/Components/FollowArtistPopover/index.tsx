@@ -37,9 +37,12 @@ interface Props extends SystemContextProps {
 const FollowArtistPopover: SFC<Props> = props => {
   const { artist: suggested, user } = props
   const { related } = suggested
+  // @ts-expect-error STRICT_NULL_CHECK
   const suggetionsCount = related.suggestedConnection.edges.length
   if (suggetionsCount === 0) return null
+  // @ts-expect-error STRICT_NULL_CHECK
   const excludeArtistIds = related.suggestedConnection.edges.map(
+    // @ts-expect-error STRICT_NULL_CHECK
     ({ node: { internalID } }) => {
       return internalID
     }
@@ -61,7 +64,9 @@ const FollowArtistPopover: SFC<Props> = props => {
           <Provider
             inject={[new FollowArtistPopoverState({ excludeArtistIds })]}
           >
+            {/* @ts-expect-error STRICT_NULL_CHECK */}
             {related.suggestedConnection.edges.map(
+              // @ts-expect-error STRICT_NULL_CHECK
               ({ node: artist }, index) => {
                 return (
                   <React.Fragment key={artist.id}>

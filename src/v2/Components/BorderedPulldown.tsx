@@ -53,6 +53,7 @@ export class BorderedPulldown extends React.Component<
     })
 
     const displayValue =
+      // @ts-expect-error STRICT_NULL_CHECK
       (this.state.selected && this.state.selected.name) ||
       selectedName ||
       defaultValue

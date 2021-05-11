@@ -99,6 +99,7 @@ export function createRelaySSREnvironment(config: Config = {}) {
     searchBarImmediateResolveMiddleware(),
     urlMiddleware({
       url: METAPHYSICS_ENDPOINT,
+      // @ts-expect-error STRICT_NULL_CHECK
       headers: authenticatedHeaders,
     }),
     relaySSRMiddleware.getMiddleware(),
@@ -114,6 +115,7 @@ export function createRelaySSREnvironment(config: Config = {}) {
       },
     }),
     principalFieldErrorHandlerMiddleware(),
+    // @ts-expect-error STRICT_NULL_CHECK
     metaphysicsErrorHandlerMiddleware({ checkStatus }),
     loggingEnabled && loggerMiddleware(),
     loggingEnabled && metaphysicsExtensionsLoggerMiddleware(),
@@ -122,6 +124,7 @@ export function createRelaySSREnvironment(config: Config = {}) {
     ...(sd.ENABLE_QUERY_BATCHING
       ? [
           batchMiddleware({
+            // @ts-expect-error STRICT_NULL_CHECK
             headers: authenticatedHeaders,
             batchUrl: `${METAPHYSICS_ENDPOINT}/batch`,
             // Period of time (integer in milliseconds) for gathering multiple requests

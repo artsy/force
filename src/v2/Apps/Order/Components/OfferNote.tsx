@@ -19,6 +19,7 @@ export const OfferNote: React.FC<{
           personal information in this field. For any questions about the work,{" "}
           <Link
             onClick={() =>
+              // @ts-expect-error STRICT_NULL_CHECK
               mediator.trigger("openOrdersContactArtsyModal", {
                 artworkId,
               })

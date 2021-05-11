@@ -20,6 +20,7 @@ describe("#trackEvent", () => {
       context_page_owner_slug: "andy-warhol",
       context_page_owner_type: OwnerType.artist,
     })
+    // @ts-expect-error STRICT_NULL_CHECK
     expect(window.analytics.track).toBeCalledWith(
       "Time on page",
       {
@@ -40,6 +41,7 @@ describe("#trackEvent", () => {
         contextPageOwnerType: OwnerType.artist,
       })
     )
+    // @ts-expect-error STRICT_NULL_CHECK
     expect(window.analytics.track).toBeCalledWith(
       "timeOnPage",
       {
@@ -59,7 +61,9 @@ describe("#trackEvent", () => {
       context_page_owner_slug: "andy-warhol",
       context_page_owner_type: OwnerType.artist,
     })
+    // @ts-expect-error STRICT_NULL_CHECK
     expect(window.analytics.track).not.toBeCalled()
+    // @ts-expect-error STRICT_NULL_CHECK
     expect(window.analytics.page).toBeCalledWith(
       { path: "/" },
       { integrations: { Marketo: false } }

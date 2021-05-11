@@ -138,8 +138,10 @@ export const BaseArtworkFilter: React.FC<
    * and trigger a reload.
    */
   useDeepCompareEffect(() => {
+    // @ts-expect-error STRICT_NULL_CHECK
     Object.entries(filterContext.filters).forEach(
       ([filterKey, currentFilter]) => {
+        // @ts-expect-error STRICT_NULL_CHECK
         const previousFilter = previousFilters[filterKey]
         const filtersHaveUpdated = !isEqual(currentFilter, previousFilter)
 
@@ -149,10 +151,12 @@ export const BaseArtworkFilter: React.FC<
           tracking.trackEvent(
             commercialFilterParamsChanged({
               changed: JSON.stringify({
+                // @ts-expect-error STRICT_NULL_CHECK
                 [filterKey]: filterContext.filters[filterKey],
               }),
               contextOwnerId: contextPageOwnerId,
               contextOwnerSlug: contextPageOwnerSlug,
+              // @ts-expect-error STRICT_NULL_CHECK
               contextOwnerType: contextPageOwnerType,
               current: JSON.stringify(filterContext.filters),
             })
@@ -185,6 +189,7 @@ export const BaseArtworkFilter: React.FC<
     const relayRefetchVariables = {
       first: 30,
       ...allowedFilters(filterContext.filters),
+      // @ts-expect-error STRICT_NULL_CHECK
       keyword: filterContext.filters.term,
     }
 
@@ -204,6 +209,7 @@ export const BaseArtworkFilter: React.FC<
   const ArtworkGrid = () => {
     return (
       <ArtworkFilterArtworkGrid
+        // @ts-expect-error STRICT_NULL_CHECK
         filtered_artworks={viewer.filtered_artworks}
         isLoading={isFetching}
         offset={offset}

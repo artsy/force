@@ -44,6 +44,7 @@ export const PartnerArtistDetails: React.FC<PartnerArtistDetailsProps> = ({
         <Column span={6}>
           <GridColumns gridRowGap={2}>
             <Column span={12}>
+              {/* @ts-expect-error STRICT_NULL_CHECK */}
               <RouterLink to={href} noUnderline>
                 <Text variant="largeTitle">{name}</Text>
               </RouterLink>
@@ -80,10 +81,13 @@ export const PartnerArtistDetails: React.FC<PartnerArtistDetailsProps> = ({
         </Column>
         <Column span={12} maxWidth="100%">
           <Carousel arrowHeight={160}>
+            {/* @ts-expect-error STRICT_NULL_CHECK */}
             {filterArtworksConnection.edges.map((artwork, i) => {
               return (
                 <FillwidthItem
+                  // @ts-expect-error STRICT_NULL_CHECK
                   key={artwork.node.id}
+                  // @ts-expect-error STRICT_NULL_CHECK
                   artwork={artwork.node}
                   imageHeight={160}
                   lazyLoad
@@ -133,6 +137,7 @@ export const PartnerArtistDetailsRenderer: React.FC<{
 
   return (
     <QueryRenderer<PartnerArtistDetailsQuery>
+      //  @ts-expect-error STRICT_NULL_CHECK
       environment={relayEnvironment}
       query={graphql`
         query PartnerArtistDetailsQuery(
@@ -155,6 +160,7 @@ export const PartnerArtistDetailsRenderer: React.FC<{
           <PartnerArtistDetailsFragmentContainer
             {...rest}
             {...props}
+            // @ts-expect-error STRICT_NULL_CHECK
             partnerArtist={props?.partner?.artistsConnection?.edges[0]}
           />
         )

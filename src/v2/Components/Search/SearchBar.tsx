@@ -86,6 +86,7 @@ const Form = styled.form`
   width: 100%;
 `
 
+// @ts-expect-error STRICT_NULL_CHECK
 @track(null, {
   dispatch: data => Events.postEvent(data),
 })
@@ -99,6 +100,7 @@ export class SearchBar extends Component<Props, State> {
 
   private removeNavigationListener: () => void
 
+  // @ts-expect-error STRICT_NULL_CHECK
   state = {
     entityID: null,
     entityType: null,
@@ -151,7 +153,9 @@ export class SearchBar extends Component<Props, State> {
           this.reportPerformanceMeasurement(performanceStart)
         }
         const { viewer } = this.props
+        // @ts-expect-error STRICT_NULL_CHECK
         const edges = get(viewer, v => v.searchConnection.edges, [])
+        // @ts-expect-error STRICT_NULL_CHECK
         this.trackSearch(term, edges.length > 0)
       }
     )
@@ -238,7 +242,9 @@ export class SearchBar extends Component<Props, State> {
     //  to follow it.
     if (!this.userClickedOnDescendant) {
       this.setState({
+        // @ts-expect-error STRICT_NULL_CHECK
         entityID: null,
+        // @ts-expect-error STRICT_NULL_CHECK
         entityType: null,
       })
     }
@@ -300,6 +306,7 @@ export class SearchBar extends Component<Props, State> {
   renderSuggestionsContainer = ({ containerProps, children, query }) => {
     const noResults = get(
       this.props,
+      // @ts-expect-error STRICT_NULL_CHECK
       p => p.viewer.searchConnection.edges.length === 0
     )
     const { focused } = this.state
@@ -392,7 +399,9 @@ export class SearchBar extends Component<Props, State> {
       },
     }
 
+    // @ts-expect-error STRICT_NULL_CHECK
     const edges = get(viewer, v => v.searchConnection.edges, [])
+    // @ts-expect-error STRICT_NULL_CHECK
     const suggestions = [firstSuggestionPlaceholder, ...edges]
 
     return (

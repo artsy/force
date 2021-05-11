@@ -31,6 +31,7 @@ describe("Works For Sale Rail", () => {
       artworksConnection: null,
     }
 
+    // @ts-expect-error STRICT_NULL_CHECK
     const wrapper = await getWrapper(request)
 
     expect(wrapper.find(Image).length).toEqual(0)
@@ -44,6 +45,7 @@ describe("Works For Sale Rail", () => {
       },
     }
 
+    // @ts-expect-error STRICT_NULL_CHECK
     const wrapper = await getWrapper(request)
 
     expect(wrapper.find(Image).length).toEqual(0)

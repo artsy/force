@@ -26,6 +26,7 @@ const FairTiming: React.FC<Props> = ({
               startAt,
               endAt,
             }
+            // @ts-expect-error STRICT_NULL_CHECK
             return <EventTiming {...props} />
           }}
         </WithCurrentTime>

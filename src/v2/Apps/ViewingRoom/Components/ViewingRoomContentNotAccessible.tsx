@@ -13,6 +13,7 @@ const ViewingRoomContentNotAccessible: React.FC<ViewingRoomContentNotAccessibleP
   const {
     viewingRoom: {
       status,
+      // @ts-expect-error STRICT_NULL_CHECK
       partner: { href },
     },
   } = props

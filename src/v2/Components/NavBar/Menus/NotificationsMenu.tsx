@@ -62,6 +62,7 @@ export const NotificationMenuItems: React.FC<NotificationsMenuQueryResponse> = p
   const notifications = get(
     props,
     p => {
+      // @ts-expect-error STRICT_NULL_CHECK
       return p.me.followsAndSaves.notifications.edges
     },
     []
@@ -80,7 +81,9 @@ export const NotificationMenuItems: React.FC<NotificationsMenuQueryResponse> = p
 
   return (
     <>
+      {/* @ts-expect-error STRICT_NULL_CHECK */}
       {notifications.map(
+        // @ts-expect-error STRICT_NULL_CHECK
         ({ node: { artists, href, image, summary } }, index) => {
           return (
             <MenuItem
@@ -113,6 +116,7 @@ export const NotificationMenuItems: React.FC<NotificationsMenuQueryResponse> = p
         }
       )}
 
+      {/* @ts-expect-error STRICT_NULL_CHECK */}
       {notifications.length === 0 && (
         <MenuItemPlaceholder justifyContent="center">
           <Text variant="small">No new works</Text>

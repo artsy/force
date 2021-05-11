@@ -13,6 +13,7 @@ interface OverviewProps {
 
 const Overview: React.FC<OverviewProps> = ({ partner }) => {
   const {
+    // @ts-expect-error STRICT_NULL_CHECK
     articlesConnection: { edges: articles },
     displayArtistsSection,
     profileBannerDisplay,

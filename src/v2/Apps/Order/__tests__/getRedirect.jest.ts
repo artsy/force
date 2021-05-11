@@ -10,6 +10,7 @@ describe("getRedirect", () => {
   ): RedirectRecord<{}> {
     return {
       path: "",
+      // @ts-expect-error STRICT_NULL_CHECK
       rules: [aNonMatchingPredicate],
       children: [...children],
     }
@@ -18,6 +19,7 @@ describe("getRedirect", () => {
   it("returns null when the root rule doesn`t match", () => {
     const rule: RedirectRecord<{}> = {
       path: "",
+      // @ts-expect-error STRICT_NULL_CHECK
       rules: [aNonMatchingPredicate],
     }
     const result = getRedirect(rule, "some-path", {})
@@ -32,6 +34,7 @@ describe("getRedirect", () => {
     }
     const result = getRedirect(rule, "some-path", {})
 
+    // @ts-expect-error STRICT_NULL_CHECK
     expect(result.path).toEqual("the-root")
   })
 
@@ -43,10 +46,12 @@ describe("getRedirect", () => {
     }
     const rule: RedirectRecord<{}> = {
       path: "",
+      // @ts-expect-error STRICT_NULL_CHECK
       rules: [isData],
       children: [
         {
           path: "hello",
+          // @ts-expect-error STRICT_NULL_CHECK
           rules: [isData],
         },
       ],
@@ -61,8 +66,11 @@ describe("getRedirect", () => {
     const rule: RedirectRecord<number> = {
       path: "",
       rules: [
+        // @ts-expect-error STRICT_NULL_CHECK
         n => (n === 1 ? { path: "/one", reason: "first" } : null),
+        // @ts-expect-error STRICT_NULL_CHECK
         n => (n === 2 ? { path: "/two", reason: "second" } : null),
+        // @ts-expect-error STRICT_NULL_CHECK
         n => (n === 3 ? { path: "/three", reason: "third" } : null),
       ],
     }
@@ -106,6 +114,7 @@ describe("getRedirect", () => {
 
       const result = getRedirect(rule, "this-section", {})
 
+      // @ts-expect-error STRICT_NULL_CHECK
       expect(result.path).toEqual("this-section-route")
     })
 
@@ -119,6 +128,7 @@ describe("getRedirect", () => {
 
       const result = getRedirect(rule, "this-section/and/this/page", {})
 
+      // @ts-expect-error STRICT_NULL_CHECK
       expect(result.path).toEqual("this-section-route")
     })
 
@@ -136,6 +146,7 @@ describe("getRedirect", () => {
 
       const result = getRedirect(rule, "this-section/and/this/page", {})
 
+      // @ts-expect-error STRICT_NULL_CHECK
       expect(result.path).toEqual("winning-route")
     })
 
@@ -153,6 +164,7 @@ describe("getRedirect", () => {
         {}
       )
 
+      // @ts-expect-error STRICT_NULL_CHECK
       expect(result.path).toEqual("this-section-route")
     })
   })

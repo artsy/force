@@ -68,6 +68,7 @@ export class RespondRoute extends Component<RespondProps, RespondState> {
     lowSpeedBumpEncountered: false,
     offerNoteValue: { exceedsCharacterLimit: false, value: "" },
     offerValue: 0,
+    // @ts-expect-error STRICT_NULL_CHECK
     responseOption: null,
   }
 
@@ -142,6 +143,7 @@ export class RespondRoute extends Component<RespondProps, RespondState> {
 
     if (
       !lowSpeedBumpEncountered &&
+      // @ts-expect-error STRICT_NULL_CHECK
       offerValue * 100 < currentOfferPrice * 0.75
     ) {
       this.showLowSpeedbump()
@@ -150,6 +152,7 @@ export class RespondRoute extends Component<RespondProps, RespondState> {
 
     if (
       !highSpeedBumpEncountered &&
+      // @ts-expect-error STRICT_NULL_CHECK
       this.state.offerValue * 100 > currentOfferPrice
     ) {
       this.showHighSpeedbump()
@@ -157,11 +160,13 @@ export class RespondRoute extends Component<RespondProps, RespondState> {
     }
 
     try {
+      // @ts-expect-error STRICT_NULL_CHECK
       const orderOrError = (
         await this.createCounterOffer({
           input: {
             amountCents: this.state.offerValue * 100,
             note: this.state.offerNoteValue && this.state.offerNoteValue.value,
+            // @ts-expect-error STRICT_NULL_CHECK
             offerId: this.props.order.lastOffer.internalID,
           },
         })
@@ -213,6 +218,7 @@ export class RespondRoute extends Component<RespondProps, RespondState> {
   render() {
     const { order, isCommittingMutation } = this.props
 
+    // @ts-expect-error STRICT_NULL_CHECK
     const artworkId = order.lineItems.edges[0].node.artwork.slug
 
     return (
@@ -232,7 +238,9 @@ export class RespondRoute extends Component<RespondProps, RespondState> {
                 <CountdownTimer
                   action="Respond"
                   note="Expiration will end negotiations on this offer. Keep in mind the work can be sold to another buyer in the meantime."
+                  // @ts-expect-error STRICT_NULL_CHECK
                   countdownStart={order.lastOffer.createdAt}
+                  // @ts-expect-error STRICT_NULL_CHECK
                   countdownEnd={order.stateExpiresAt}
                 />
                 <OfferHistoryItem order={order} />

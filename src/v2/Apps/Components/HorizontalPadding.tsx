@@ -9,14 +9,23 @@ export interface HorizontalPaddingProps {
 export const HorizontalPadding = styled(Box)<HorizontalPaddingProps>`
   ${p =>
     media.xs`
-      padding-right: ${(p.px[0] && space(p.px[0])) || 0}px;
-      padding-left: ${(p.px[0] && space(p.px[0])) || 0}px;
+      padding-right: ${
+        // @ts-expect-error STRICT_NULL_CHECK
+        (p.px[0] && space(p.px[0])) || 0
+      }px;
+      padding-left: ${
+        // @ts-expect-error STRICT_NULL_CHECK
+        (p.px[0] && space(p.px[0])) || 0
+      }px;
     `};
   ${p =>
+    // @ts-expect-error STRICT_NULL_CHECK
     p.px[1] &&
     css`
-      padding-right: ${space(p.px[1])}px;
-      padding-left: ${space(p.px[1])}px;
+      padding-right: ${// @ts-expect-error STRICT_NULL_CHECK
+      space(p.px[1])}px;
+      padding-left: ${// @ts-expect-error STRICT_NULL_CHECK
+      space(p.px[1])}px;
     `};
   margin-right: auto;
   margin-left: auto;

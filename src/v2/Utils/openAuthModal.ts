@@ -105,6 +105,7 @@ function getDesktopIntent(options: AuthModalOptions): ModalOptions {
     case Intent.saveArtwork:
       return getDesktopIntentToSaveArtwork(options)
     default:
+      // @ts-expect-error STRICT_NULL_CHECK
       return undefined
   }
 }

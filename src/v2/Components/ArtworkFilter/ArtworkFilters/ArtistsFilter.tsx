@@ -29,6 +29,7 @@ const ArtistItem: React.FC<{
 }) => {
   const { currentlySelectedFilters, setFilter } = useArtworkFilterContext()
   const toggleArtistSelection = (selected, slug) => {
+    // @ts-expect-error STRICT_NULL_CHECK
     let artistIDs = currentlySelectedFilters().artistIDs.slice()
     if (selected) {
       artistIDs.push(slug)
@@ -51,6 +52,7 @@ const ArtistItem: React.FC<{
   return (
     <Checkbox
       selected={
+        // @ts-expect-error STRICT_NULL_CHECK
         currentlySelectedFilters().artistIDs.includes(slug) ||
         (isFollowedArtistCheckboxSelected && isFollowedArtist)
       }
@@ -70,6 +72,7 @@ export const ArtistsFilter: FC<ArtistsFilterProps> = ({
   user,
 }) => {
   const { aggregations, ...filterContext } = useArtworkFilterContext()
+  // @ts-expect-error STRICT_NULL_CHECK
   const artists = aggregations.find(agg => agg.slice === "ARTIST")
 
   const [followedArtists, setFollowedArtists] = useState<FollowedArtistList>([])
@@ -77,6 +80,7 @@ export const ArtistsFilter: FC<ArtistsFilterProps> = ({
 
   useEffect(() => {
     if (relayEnvironment && user) {
+      // @ts-expect-error STRICT_NULL_CHECK
       fetchFollowedArtists({ relayEnvironment, fairID }).then(data => {
         setFollowedArtists(data)
       })
@@ -93,9 +97,11 @@ export const ArtistsFilter: FC<ArtistsFilterProps> = ({
 
   const isFollowedArtistCheckboxSelected =
     !!user &&
+    // @ts-expect-error STRICT_NULL_CHECK
     filterContext.currentlySelectedFilters()["includeArtworksByFollowedArtists"]
   const followedArtistArtworkCount = filterContext?.counts?.followedArtists ?? 0
 
+  // @ts-expect-error STRICT_NULL_CHECK
   const selection = filterContext.currentlySelectedFilters().artistIDs
   const hasSelection =
     (selection && selection.length > 0) || isFollowedArtistCheckboxSelected
@@ -121,6 +127,7 @@ export const ArtistsFilter: FC<ArtistsFilterProps> = ({
                 slug={slug}
                 name={name}
                 followedArtistSlugs={followedArtistSlugs}
+                // @ts-expect-error STRICT_NULL_CHECK
                 isFollowedArtistCheckboxSelected={
                   isFollowedArtistCheckboxSelected
                 }

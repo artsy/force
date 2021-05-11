@@ -21,12 +21,15 @@ export interface ArtworkSummaryItemProps extends Omit<FlexProps, "order"> {
 const ArtworkSummaryItem: React.SFC<ArtworkSummaryItemProps> = ({
   order: {
     lineItems,
+    // @ts-expect-error STRICT_NULL_CHECK
     sellerDetails: { name },
   },
   ...others
 }) => {
+  // @ts-expect-error STRICT_NULL_CHECK
   const artwork = get({}, props => lineItems.edges[0].node.artwork)
 
+  // @ts-expect-error STRICT_NULL_CHECK
   const { artist_names, title, date, shippingOrigin, image } = artwork
 
   const imageURL =

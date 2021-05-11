@@ -24,6 +24,7 @@ const ViewingRoomWorksRoute: React.FC<WorksRouteProps> = ({ viewingRoom }) => {
   }
   return (
     <Join separator={<Spacer my={4} />}>
+      {/* @ts-expect-error STRICT_NULL_CHECK */}
       {viewingRoom.artworksConnection.edges.map(({ node: artwork }) => {
         return (
           <Box key={artwork.internalID} id={artwork.internalID}>

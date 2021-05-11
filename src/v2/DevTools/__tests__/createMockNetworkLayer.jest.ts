@@ -86,6 +86,7 @@ describe("createMockNetworkLayer", () => {
           artwork: { title: "Untitled", id: "untitled" },
         },
       })
+      // @ts-expect-error STRICT_NULL_CHECK
       expect(data.artwork.title).toEqual("Untitled")
     })
 
@@ -95,6 +96,7 @@ describe("createMockNetworkLayer", () => {
           artwork: { title: null, id: "null" },
         },
       })
+      // @ts-expect-error STRICT_NULL_CHECK
       expect(data.artwork.title).toEqual(null)
     })
   })
@@ -202,9 +204,11 @@ describe("createMockNetworkLayer", () => {
         }
       `
     )
+    // @ts-expect-error STRICT_NULL_CHECK
     expect(data.artist.forSaleArtworks.edges[0].node).toEqual({
       id: "for-sale-work",
     })
+    // @ts-expect-error STRICT_NULL_CHECK
     expect(data.artist.notForSaleArtworks.edges[0].node).toEqual({
       id: "no-for-sale-work",
     })
@@ -237,6 +241,7 @@ describe("createMockNetworkLayer", () => {
         }
       `
     )
+    // @ts-expect-error STRICT_NULL_CHECK
     expect(data.artist.forSaleArtworks.edges[0].node).toEqual({
       id: "for-sale-work",
     })

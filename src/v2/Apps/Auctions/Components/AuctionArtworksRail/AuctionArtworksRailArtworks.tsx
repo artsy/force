@@ -44,6 +44,7 @@ const AuctionArtworksRailArtworks: React.FC<AuctionArtworksRailArtworksProps> = 
               trackEvent(
                 clickedArtworkGroup({
                   contextModule,
+                  // @ts-expect-error STRICT_NULL_CHECK
                   contextPageOwnerType,
                   artworkID: node.internalID,
                   artworkSlug: node.slug,
@@ -85,6 +86,7 @@ export const AuctionArtworksRailArtworksQueryRenderer: React.FC<{
 
   return (
     <QueryRenderer<AuctionArtworksRailArtworksQuery>
+      //  @ts-expect-error STRICT_NULL_CHECK
       environment={relayEnvironment}
       query={graphql`
         query AuctionArtworksRailArtworksQuery($id: String!) {
@@ -97,6 +99,7 @@ export const AuctionArtworksRailArtworksQueryRenderer: React.FC<{
       render={({ error, props }) => {
         if (error || !props) return <AuctionArtworksRailPlaceholder />
         return (
+          // @ts-expect-error STRICT_NULL_CHECK
           <AuctionArtworksRailArtworksFragmentContainer {...rest} {...props} />
         )
       }}

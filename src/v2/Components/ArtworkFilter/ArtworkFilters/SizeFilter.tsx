@@ -28,6 +28,7 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
   const filterContext = useArtworkFilterContext()
 
   const toggleSelection = (selected, name) => {
+    // @ts-expect-error STRICT_NULL_CHECK
     let sizes = filterContext.currentlySelectedFilters().sizes.slice()
     if (selected) {
       sizes.push(name)
@@ -55,6 +56,7 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
               <Checkbox
                 key={index}
                 onSelect={selected => toggleSelection(selected, name)}
+                // @ts-expect-error STRICT_NULL_CHECK
                 selected={filterContext
                   .currentlySelectedFilters()
                   .sizes.includes(name)}

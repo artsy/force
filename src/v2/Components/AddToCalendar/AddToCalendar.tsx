@@ -40,6 +40,7 @@ export const AddToCalendar: React.FC<CalendarEventProps> = props => {
         context_module: props.contextModule,
         context_owner_id: contextPageOwnerId,
         context_owner_slug: contextPageOwnerSlug,
+        // @ts-expect-error STRICT_NULL_CHECK
         context_owner_type: contextPageOwnerType,
         subject,
       })

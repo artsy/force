@@ -14,14 +14,17 @@ export const FlashMessage: React.FC = () => {
   const [message, setMessage] = useState(null)
 
   useEffect(() => {
+    // @ts-expect-error STRICT_NULL_CHECK
     mediator.on("modal:error:show", (options: FlashMessageProps) => {
       setShow(true)
+      // @ts-expect-error STRICT_NULL_CHECK
       setMessage(options.message)
     })
   })
 
   return show ? (
     <ErrorModal
+      // @ts-expect-error STRICT_NULL_CHECK
       detailText={message}
       onClose={() => {
         setShow(false)

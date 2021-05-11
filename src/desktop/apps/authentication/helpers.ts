@@ -60,15 +60,18 @@ export const handleSubmit = async (
         let analyticsOptions
         switch (type) {
           case ModalType.login:
+            // @ts-expect-error STRICT_NULL_CHECK
             analyticsOptions = successfullyLoggedIn(options)
             break
           case ModalType.signup:
+            // @ts-expect-error STRICT_NULL_CHECK
             analyticsOptions = createdAccount({
               onboarding: !redirectTo,
               ...options,
             })
             break
           case ModalType.forgot:
+            // @ts-expect-error STRICT_NULL_CHECK
             analyticsOptions = resetYourPassword(options)
             break
         }

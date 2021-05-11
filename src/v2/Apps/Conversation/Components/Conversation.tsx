@@ -40,8 +40,10 @@ const Conversation: React.FC<ConversationProps> = props => {
       (initialMount.current || lastMessageID !== conversation?.lastMessageID)
     ) {
       const scrollOptions = initialMount.current ? {} : { behavior: "smooth" }
+      // @ts-expect-error STRICT_NULL_CHECK
       bottomOfPage.current.scrollIntoView(scrollOptions)
       initialMount.current = false
+      // @ts-expect-error STRICT_NULL_CHECK
       setLastMessageID(conversation?.lastMessageID)
     }
   }
@@ -52,12 +54,16 @@ const Conversation: React.FC<ConversationProps> = props => {
     UpdateConversation(relay.environment, conversation)
   }, [conversation, relay.environment, conversation.lastMessageID])
 
+  // @ts-expect-error STRICT_NULL_CHECK
   const inquiryItemBox = conversation.items.map((i, idx) => (
     <Item
+      // @ts-expect-error STRICT_NULL_CHECK
       item={i.item}
       key={
+        // @ts-expect-error STRICT_NULL_CHECK
         i.item.__typename === "Artwork" || i.item.__typename === "Show"
-          ? i.item.id
+          ? // @ts-expect-error STRICT_NULL_CHECK
+            i.item.id
           : idx
       }
     />
@@ -71,14 +77,17 @@ const Conversation: React.FC<ConversationProps> = props => {
     if (relay.isLoading() || !relay.hasMore() || initialMount.current) return
     setFetchingMore(true)
     const scrollCursor = scrollContainer.current
-      ? scrollContainer.current.scrollHeight - scrollContainer.current.scrollTop
+      ? // @ts-expect-error STRICT_NULL_CHECK
+        scrollContainer.current.scrollHeight - scrollContainer.current.scrollTop
       : 0
     relay.loadMore(PAGE_SIZE, error => {
       if (error) console.error(error)
       setFetchingMore(false)
       if (scrollContainer.current) {
         // Scrolling to former position
+        // @ts-expect-error STRICT_NULL_CHECK
         scrollContainer.current.scrollTo({
+          // @ts-expect-error STRICT_NULL_CHECK
           top: scrollContainer.current.scrollHeight - scrollCursor,
           behavior: "smooth",
         })
@@ -106,6 +115,7 @@ const Conversation: React.FC<ConversationProps> = props => {
                 </SpinnerContainer>
               ) : null}
               <ConversationMessages
+                // @ts-expect-error STRICT_NULL_CHECK
                 messages={conversation.messagesConnection}
               />
               <Box ref={bottomOfPage}></Box>

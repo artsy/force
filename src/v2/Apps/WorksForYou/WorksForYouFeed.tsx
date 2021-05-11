@@ -45,12 +45,14 @@ export class WorksForYouFeed extends Component<Props, State> {
 
   componentWillUnmount() {
     if (this.state.interval) {
+      // @ts-expect-error STRICT_NULL_CHECK
       clearInterval(this.state.interval)
     }
   }
 
   maybeLoadMore() {
     const threshold = window.innerHeight + window.scrollY
+    // @ts-expect-error STRICT_NULL_CHECK
     const el = ReactDOM.findDOMNode(this).parentElement as Element
     if (threshold >= el.clientHeight + el.scrollTop) {
       this.loadMoreArtworks()
@@ -58,10 +60,12 @@ export class WorksForYouFeed extends Component<Props, State> {
   }
 
   loadMoreArtworks() {
+    // @ts-expect-error STRICT_NULL_CHECK
     const hasMore = this.props.viewer.me.followsAndSaves.notifications.pageInfo
       .hasNextPage
 
     if (!hasMore && this.state.interval) {
+      // @ts-expect-error STRICT_NULL_CHECK
       clearInterval(this.state.interval)
     }
     if (hasMore && !this.state.loading) {
@@ -80,7 +84,9 @@ export class WorksForYouFeed extends Component<Props, State> {
   render() {
     return (
       <>
+        {/* @ts-expect-error STRICT_NULL_CHECK */}
         {this.props.viewer.me.followsAndSaves.notifications.edges.map(
+          // @ts-expect-error STRICT_NULL_CHECK
           ({ node }, index) => {
             const avatarImageUrl = get(node, p => p.image.resized.url)
             const meta = `${node.summary}, ${node.published_at}`
@@ -169,6 +175,7 @@ export const WorksForYouFeedPaginationContainer = createPaginationContainer(
   {
     direction: "forward",
     getConnectionFromProps(props) {
+      // @ts-expect-error STRICT_NULL_CHECK
       return props.viewer.me.followsAndSaves.notifications
     },
     getFragmentVariables(prevVars, totalCount) {

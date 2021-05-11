@@ -21,6 +21,7 @@ const defaultMetrics: MetricMap = {
   "load-event-end": getLoadEventEnd,
   "first-paint": getFirstPaint,
   "first-contentful-paint": getFirstContentfulPaint,
+  // @ts-expect-error STRICT_NULL_CHECK
   "time-to-interactive": getTTI,
 }
 

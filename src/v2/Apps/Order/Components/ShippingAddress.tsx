@@ -30,6 +30,7 @@ export const ShippingAddress = ({
       {city}, {region} {postalCode}
     </Serif>
     <Serif size={["2", "3t"]}>
+      {/* @ts-expect-error STRICT_NULL_CHECK */}
       {COUNTRY_CODE_TO_COUNTRY_NAME[country] || country}
     </Serif>
     {phoneNumber && <Serif size={["2", "3t"]}>{phoneNumber}</Serif>}

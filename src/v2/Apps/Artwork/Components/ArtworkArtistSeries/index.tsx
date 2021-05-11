@@ -13,8 +13,10 @@ interface ArtworkArtistSeriesProps {
 
 const ArtworkArtistSeries: React.FC<ArtworkArtistSeriesProps> = props => {
   const { artwork } = props
+  // @ts-expect-error STRICT_NULL_CHECK
   const artworkArtistSeries = artwork?.seriesForCounts?.edges[0]?.node
   const artistArtistSeries =
+    // @ts-expect-error STRICT_NULL_CHECK
     artwork?.seriesArtist?.artistSeriesConnection?.edges[0]?.node
 
   if (!artworkArtistSeries && !artistArtistSeries) {
@@ -38,6 +40,7 @@ const ArtworkArtistSeries: React.FC<ArtworkArtistSeriesProps> = props => {
           {!hasArtistSeriesArtworks && <Separator mt={3} />}
           <Spacer my={3} />
           <ArtistSeriesRail
+            // @ts-expect-error STRICT_NULL_CHECK
             artist={artwork.seriesArtist}
             title="Series by this artist"
             contextModule={ContextModule.moreSeriesByThisArtist}

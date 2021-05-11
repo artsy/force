@@ -48,6 +48,7 @@ export const LoggedInLinks: React.FC<
         href: "#logout",
         onClick: event => {
           event.preventDefault()
+          // @ts-expect-error STRICT_NULL_CHECK
           mediator.trigger("auth:logout")
         },
       },

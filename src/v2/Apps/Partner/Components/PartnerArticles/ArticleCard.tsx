@@ -19,6 +19,7 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ article }): JSX.Element => {
     contributingAuthors,
   } = article
   const { authorName, editorialName } = getAuthors(
+    // @ts-expect-error STRICT_NULL_CHECK
     channelID,
     author,
     contributingAuthors
@@ -26,11 +27,14 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ article }): JSX.Element => {
 
   return (
     <>
+      {/* @ts-expect-error STRICT_NULL_CHECK */}
       <RouterLink to={href} style={{ textDecoration: "none" }}>
         {thumbnailImage && (
           <ResponsiveBox aspectWidth={4} aspectHeight={3} maxWidth="100%">
             <Image
+              // @ts-expect-error STRICT_NULL_CHECK
               src={thumbnailImage.medium.src}
+              // @ts-expect-error STRICT_NULL_CHECK
               srcSet={thumbnailImage.medium.srcSet}
               alt=""
               width="100%"
@@ -52,6 +56,7 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ article }): JSX.Element => {
         </Text>
       )}
 
+      {/* @ts-expect-error STRICT_NULL_CHECK */}
       <RouterLink to={href} style={{ textDecoration: "none" }}>
         <Text as="h3" variant="title" color="black" mt={1}>
           {thumbnailTitle}

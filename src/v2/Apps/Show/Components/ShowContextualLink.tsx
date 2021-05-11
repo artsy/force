@@ -37,9 +37,11 @@ export const ContextualLink: React.FC<Props> = ({ show }) => {
   if (isFairBooth) {
     return (
       <>
+        {/* @ts-expect-error STRICT_NULL_CHECK */}
         {fair.isActive && (
           <Box my={2}>
             <Text variant="caption">
+              {/* @ts-expect-error STRICT_NULL_CHECK */}
               Part of <Link href={fairHref}>{fairName}</Link>
             </Text>
             <FullScreenSeparator as="hr" my={2} />

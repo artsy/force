@@ -33,6 +33,7 @@ export const RouterLink: React.ForwardRefExoticComponent<RouterLinkProps> = Reac
      */
     const handlers = Object.keys(props).reduce((acc, prop) => {
       if (prop.startsWith("on")) {
+        // @ts-expect-error STRICT_NULL_CHECK
         acc.push(prop)
       }
       return acc
@@ -58,6 +59,7 @@ export const RouterLink: React.ForwardRefExoticComponent<RouterLinkProps> = Reac
           ref={ref as any}
           to={to}
           {...allowedProps}
+          // @ts-expect-error STRICT_NULL_CHECK
           style={{ ...styleProps, ...(props as LinkPropsSimple).style }}
         >
           {children}

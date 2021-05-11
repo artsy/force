@@ -45,6 +45,7 @@ class SendFeedbackForm extends React.Component<SystemContextProps, State> {
     const { relayEnvironment } = this.props
     const { message, name, email } = this.state
 
+    // @ts-expect-error STRICT_NULL_CHECK
     commitMutation<SendFeedbackSearchResultsMutation>(relayEnvironment, {
       // TODO: Inputs to the mutation might have changed case of the keys!
       mutation: graphql`
@@ -84,6 +85,7 @@ class SendFeedbackForm extends React.Component<SystemContextProps, State> {
       },
       onCompleted: data => {
         const {
+          // @ts-expect-error STRICT_NULL_CHECK
           sendFeedback: { feedbackOrError },
         } = data
         if (feedbackOrError.mutationError) {

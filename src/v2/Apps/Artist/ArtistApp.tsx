@@ -35,6 +35,7 @@ export const ArtistApp: React.FC<ArtistAppProps> = props => {
     | typeof HorizontalPadding
     | typeof Box = HorizontalPadding
 
+  // @ts-expect-error STRICT_NULL_CHECK
   if (route.displayFullPage) {
     HorizontalPaddingArea = Box
   }
@@ -42,6 +43,7 @@ export const ArtistApp: React.FC<ArtistAppProps> = props => {
   return (
     <>
       <ArtistMeta artist={artist} />
+      {/* @ts-expect-error STRICT_NULL_CHECK */}
       {route.displayNavigationTabs && (
         <Row>
           <Col>
@@ -56,6 +58,7 @@ export const ArtistApp: React.FC<ArtistAppProps> = props => {
             {/*
               Page with tabs
              */}
+            {/* @ts-expect-error STRICT_NULL_CHECK */}
             {route.displayNavigationTabs ? (
               <>
                 <Spacer mb={3} />
@@ -67,6 +70,7 @@ export const ArtistApp: React.FC<ArtistAppProps> = props => {
                * If full page, then we take over the entire area; if not, then
                * display the "Back to Artist link"
                */
+              // @ts-expect-error STRICT_NULL_CHECK
               !route.displayFullPage && (
                 <>
                   <Flex flexDirection="row" alignItems="center" my={3}>
@@ -96,12 +100,12 @@ export const ArtistApp: React.FC<ArtistAppProps> = props => {
                 </>
               )
             )}
-
             {children}
           </Col>
         </Row>
 
         {/* Fullpage is typically a stand-alone marketing page  */}
+        {/* @ts-expect-error STRICT_NULL_CHECK */}
         {!route.displayFullPage && typeof window !== "undefined" && (
           <>
             <LazyLoadComponent threshold={1000}>

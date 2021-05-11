@@ -45,6 +45,7 @@ afterAll(() => {
 if (typeof window !== "undefined") {
   window.open = jest.fn()
   // Needed for new tests
+  // @ts-expect-error STRICT_NULL_CHECK
   window.matchMedia = undefined
 
   window.grecaptcha = {
@@ -69,6 +70,7 @@ if (process.env.ALLOW_CONSOLE_LOGS !== "true") {
     if (args[0] instanceof Error) {
       const msg = explanation + chalk.red(args[0].message)
       const err = new Error(msg)
+      // @ts-expect-error STRICT_NULL_CHECK
       err.stack = args[0].stack.replace(`Error: ${args[0].message}`, msg)
       return err
     } else {

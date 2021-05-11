@@ -5,6 +5,7 @@ import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 
+// @ts-expect-error STRICT_NULL_CHECK
 type Artworks = ArtistConsignHeaderImages_artist["targetSupply"]["microfunnel"]["artworksConnection"]["edges"]
 
 interface HeaderImageProps {
@@ -13,8 +14,10 @@ interface HeaderImageProps {
 
 export const ArtistConsignHeaderImages: React.FC<HeaderImageProps> = props => {
   const leftImage =
+    // @ts-expect-error STRICT_NULL_CHECK
     props.artist.targetSupply.microfunnel?.artworksConnection?.edges?.[0]?.node
   const rightImage = last(
+    // @ts-expect-error STRICT_NULL_CHECK
     props.artist.targetSupply.microfunnel?.artworksConnection?.edges
   )?.node
   const error = !(leftImage && rightImage)
@@ -25,9 +28,11 @@ export const ArtistConsignHeaderImages: React.FC<HeaderImageProps> = props => {
     <HeaderImageContainer>
       <Flex width="100%" justifyContent="space-between" m="auto">
         <LeftImage>
+          {/* @ts-expect-error STRICT_NULL_CHECK */}
           <LeftImagePhoto {...leftImage} />
         </LeftImage>
         <RightImage>
+          {/* @ts-expect-error STRICT_NULL_CHECK */}
           <RightImagePhoto {...rightImage} />
         </RightImage>
       </Flex>

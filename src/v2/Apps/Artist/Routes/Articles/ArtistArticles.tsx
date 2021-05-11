@@ -39,6 +39,7 @@ export class ArtistArticles extends Component<
     const {
       artist: {
         articlesConnection: {
+          // @ts-expect-error STRICT_NULL_CHECK
           pageInfo: { hasNextPage, endCursor },
         },
       },
@@ -79,6 +80,7 @@ export class ArtistArticles extends Component<
   }
 
   render() {
+    // @ts-expect-error STRICT_NULL_CHECK
     const articlesLength = this.props.artist.articlesConnection.edges.length
     return (
       <>
@@ -88,7 +90,9 @@ export class ArtistArticles extends Component<
           <Col>
             <LoadingArea isLoading={this.state.isLoading}>
               <Container>
+                {/* @ts-expect-error STRICT_NULL_CHECK */}
                 {this.props.artist.articlesConnection.edges.map(
+                  // @ts-expect-error STRICT_NULL_CHECK
                   ({ node }, index) => {
                     return (
                       <ArticleItem
@@ -112,11 +116,13 @@ export class ArtistArticles extends Component<
             <Box>
               <Pagination
                 getHref={() => ""}
+                // @ts-expect-error STRICT_NULL_CHECK
                 pageCursors={this.props.artist.articlesConnection.pageCursors}
                 onClick={this.loadAfter}
                 onNext={this.loadNext}
                 scrollTo="#jumpto-ArtistHeader"
                 hasNextPage={
+                  // @ts-expect-error STRICT_NULL_CHECK
                   this.props.artist.articlesConnection.pageInfo.hasNextPage
                 }
               />

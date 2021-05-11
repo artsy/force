@@ -15,6 +15,7 @@ export const MediumFilter: React.FC = () => {
   const filterContext = useAuctionResultsFilterContext()
 
   const toggleSelection = (selected, name) => {
+    // @ts-expect-error STRICT_NULL_CHECK
     let categories = filterContext.filters.categories.slice()
     if (selected) {
       categories.push(name)
@@ -35,6 +36,7 @@ export const MediumFilter: React.FC = () => {
               onSelect: selected => {
                 toggleSelection(selected, name)
               },
+              // @ts-expect-error STRICT_NULL_CHECK
               selected: filterContext.filters.categories.includes(name),
             }
             return <Checkbox {...props}>{displayName}</Checkbox>

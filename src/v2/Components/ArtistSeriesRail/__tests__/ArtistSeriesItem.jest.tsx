@@ -40,6 +40,7 @@ describe("Artist Series Rail Item", () => {
       </AnalyticsContext.Provider>
     )
     const elem = component.find(StyledLink).first()
+    // @ts-expect-error STRICT_NULL_CHECK
     elem.props().onClick({} as any)
 
     expect(trackEvent).toHaveBeenCalledWith({
@@ -77,6 +78,7 @@ const itemContent: ArtistSeriesItem_artistSeries = {
   slug: "slug",
   title: "title",
   featured: true,
+  // @ts-expect-error STRICT_NULL_CHECK
   " $refType": null,
   image: {
     cropped: {

@@ -34,6 +34,7 @@ import { openAuthModal } from "v2/Utils/openAuthModal"
 import { ArtworkSidebarSizeInfoFragmentContainer as SizeInfo } from "./ArtworkSidebarSizeInfo"
 import { Mediator } from "lib/mediator"
 
+// @ts-expect-error STRICT_NULL_CHECK
 type EditionSet = ArtworkSidebarCommercial_artwork["edition_sets"][0]
 
 export interface ArtworkSidebarCommercialContainerProps
@@ -75,7 +76,9 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
   firstAvailableEcommerceEditionSet(): EditionSet {
     const editionSets = this.props.artwork.edition_sets
 
+    // @ts-expect-error STRICT_NULL_CHECK
     return editionSets.find(editionSet => {
+      // @ts-expect-error STRICT_NULL_CHECK
       return editionSet.is_acquireable || editionSet.is_offerable
     })
   }
@@ -122,12 +125,15 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
   renderEditionSets(includeSelectOption: boolean) {
     const editionSets = this.props.artwork.edition_sets
 
+    // @ts-expect-error STRICT_NULL_CHECK
     const editionSetsFragment = editionSets.map((editionSet, index) => {
       return (
+        // @ts-expect-error STRICT_NULL_CHECK
         <React.Fragment key={editionSet.id}>
           <Box py={3}>
             {this.renderEditionSet(editionSet, includeSelectOption)}
           </Box>
+          {/* @ts-expect-error STRICT_NULL_CHECK */}
           {index !== editionSets.length - 1 && <Separator />}
         </React.Fragment>
       )
@@ -172,6 +178,7 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
       {
         product_id: props.artwork.internalID,
         quantity: 1,
+        // @ts-expect-error STRICT_NULL_CHECK
         price: currency(props.artwork.listPrice.display).value,
       },
     ],
@@ -180,8 +187,10 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
     const { user, mediator } = this.props
     if (user && user.id) {
       this.setState({ isCommittingCreateOrderMutation: true }, () => {
+        // @ts-expect-error STRICT_NULL_CHECK
         if (get(this.props, props => props.relay.environment)) {
           commitMutation<ArtworkSidebarCommercialOrderMutation>(
+            // @ts-expect-error STRICT_NULL_CHECK
             this.props.relay.environment,
             {
               // TODO: Inputs to the mutation might have changed case of the keys!
@@ -223,6 +232,7 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
                   { isCommittingCreateOrderMutation: false },
                   () => {
                     const {
+                      // @ts-expect-error STRICT_NULL_CHECK
                       commerceCreateOrderWithArtwork: { orderOrError },
                     } = data
                     if (orderOrError.error) {
@@ -234,6 +244,7 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
                       )
                     } else {
                       const url = `/orders/${orderOrError.order.internalID}`
+                      // @ts-expect-error STRICT_NULL_CHECK
                       this.props.router.push(url)
                     }
                   }
@@ -265,8 +276,10 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
     const { user, mediator } = this.props
     if (user && user.id) {
       this.setState({ isCommittingCreateOfferOrderMutation: true }, () => {
+        // @ts-expect-error STRICT_NULL_CHECK
         if (get(this.props, props => props.relay.environment)) {
           commitMutation<ArtworkSidebarCommercialOfferOrderMutation>(
+            // @ts-expect-error STRICT_NULL_CHECK
             this.props.relay.environment,
             {
               // TODO: Inputs to the mutation might have changed case of the keys!
@@ -308,6 +321,7 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
                   { isCommittingCreateOfferOrderMutation: false },
                   () => {
                     const {
+                      // @ts-expect-error STRICT_NULL_CHECK
                       commerceCreateOfferOrderWithArtwork: { orderOrError },
                     } = data
                     if (orderOrError.error) {
@@ -319,6 +333,7 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
                       )
                     } else {
                       const url = `/orders/${orderOrError.order.internalID}/offer`
+                      // @ts-expect-error STRICT_NULL_CHECK
                       this.props.router.push(url)
                     }
                   }
@@ -357,6 +372,7 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
       <Box textAlign="left">
         {artwork.sale_message && <Separator />}
 
+        {/* @ts-expect-error STRICT_NULL_CHECK */}
         {artwork.edition_sets.length < 2 ? (
           artwork.sale_message && (
             <>
@@ -366,6 +382,7 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
           )
         ) : (
           <>
+            {/* @ts-expect-error STRICT_NULL_CHECK */}
             {this.renderEditionSets(artworkEcommerceAvailable)}
             {selectedEditionSet && (
               <>
@@ -458,6 +475,7 @@ export const ArtworkSidebarCommercial: FC<ArtworkSidebarCommercialProps> = props
   const { mediator, router, user } = useContext(SystemContext)
 
   return (
+    // @ts-expect-error STRICT_NULL_CHECK
     <ArtworkSidebarCommercialContainer
       {...props}
       mediator={mediator}

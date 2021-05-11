@@ -30,31 +30,41 @@ export const DefaultHeaderArtwork: React.FC<DefaultHeaderArtworkProps> = ({
 }) => {
   const { trackEvent } = useTracking()
 
+  // @ts-expect-error STRICT_NULL_CHECK
   if (!artwork.node.image) return null
 
   const handleClick = () => {
     trackEvent({
       action_type: AnalyticsSchema.ActionType.Click,
+      // @ts-expect-error STRICT_NULL_CHECK
       context_module: AnalyticsSchema.ContextModule.ArtworkBanner,
+      // @ts-expect-error STRICT_NULL_CHECK
       context_page_owner_type: AnalyticsSchema.OwnerType.Collection,
       context_page: AnalyticsSchema.PageName.CollectionPage,
       context_page_owner_id: collectionId,
       context_page_owner_slug: collectionSlug,
+      // @ts-expect-error STRICT_NULL_CHECK
       destination_path: artwork.node.href,
     })
   }
 
   return (
     <Link
+      // @ts-expect-error STRICT_NULL_CHECK
       to={artwork.node.href}
+      // @ts-expect-error STRICT_NULL_CHECK
       key={artwork.node.href}
       onClick={handleClick}
       {...rest}
     >
       <Image
+        // @ts-expect-error STRICT_NULL_CHECK
         width={artwork.node.image[small ? "small" : "large"].width}
+        // @ts-expect-error STRICT_NULL_CHECK
         height={artwork.node.image[small ? "small" : "large"].height}
+        // @ts-expect-error STRICT_NULL_CHECK
         src={artwork.node.image[small ? "small" : "large"].url}
+        // @ts-expect-error STRICT_NULL_CHECK
         alt={artwork.node.title}
         preventRightClick
         mr={1}

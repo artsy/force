@@ -48,7 +48,9 @@ export async function fetchFollowedArtists(
       props
     )
 
+    // @ts-expect-error STRICT_NULL_CHECK
     return data.me.followsAndSaves.artistsConnection.edges.map(
+      // @ts-expect-error STRICT_NULL_CHECK
       ({ node: { artist } }) => artist
     )
   } catch (error) {

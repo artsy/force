@@ -76,26 +76,36 @@ const PurchaseHistory: React.FC<PurchaseHistoryProps> = (
 ) => {
   const [loading, setLoading] = useState(false)
   const { me } = props
+  // @ts-expect-error STRICT_NULL_CHECK
   const pageInfo = me.orders.pageInfo
+  // @ts-expect-error STRICT_NULL_CHECK
   const myOrders = me.orders.edges && me.orders.edges.map(x => x.node)
 
   const paginationProps = {
+    // @ts-expect-error STRICT_NULL_CHECK
     hasNextPage: props.me.orders.pageInfo.hasNextPage,
     onClick: cursor => loadAfter(cursor, props.relay, setLoading),
     onNext: () => loadNext(pageInfo, props.relay, setLoading),
+    // @ts-expect-error STRICT_NULL_CHECK
     pageCursors: props.me.orders.pageCursors,
   }
 
   return !loading ? (
     <Box>
       <Box mx={["0px", "40px", "40px", "40px"]} mt="-5px">
+        {/* @ts-expect-error STRICT_NULL_CHECK */}
         <UserSettingsTabs route={sd.CURRENT_PATH} username={me.name} />
       </Box>
+      {/* @ts-expect-error STRICT_NULL_CHECK */}
       {myOrders.length ? (
+        // @ts-expect-error STRICT_NULL_CHECK
         myOrders.map((order, i) => (
           <OrderRow
+            // @ts-expect-error STRICT_NULL_CHECK
             key={order.code}
+            // @ts-expect-error STRICT_NULL_CHECK
             order={order}
+            // @ts-expect-error STRICT_NULL_CHECK
             hasDivider={i != myOrders.length - 1}
           />
         ))
@@ -106,6 +116,7 @@ const PurchaseHistory: React.FC<PurchaseHistoryProps> = (
       )}
       <StyledBox>
         <Media at="xs">
+          {/* @ts-expect-error STRICT_NULL_CHECK */}
           {props.me.orders.pageCursors && (
             <SmallPagination
               {...paginationProps}
@@ -120,6 +131,7 @@ const PurchaseHistory: React.FC<PurchaseHistoryProps> = (
         <Media greaterThan="xs">
           <Box>
             <Separator mb={3} pr={2} />
+            {/* @ts-expect-error STRICT_NULL_CHECK */}
             {props.me.orders.pageCursors && (
               <LargePagination
                 {...paginationProps}

@@ -80,9 +80,11 @@ export class CounterRoute extends Component<CounterProps> {
   onSubmitButtonPressed = async () => {
     try {
       const {
+        // @ts-expect-error STRICT_NULL_CHECK
         commerceSubmitPendingOffer: { orderOrError },
       } = await this.submitPendingOffer({
         input: {
+          // @ts-expect-error STRICT_NULL_CHECK
           offerId: this.props.order.myLastOffer.internalID,
         },
       })
@@ -144,7 +146,9 @@ export class CounterRoute extends Component<CounterProps> {
                 <CountdownTimer
                   action="Respond"
                   note="Expired offers end the negotiation process permanently."
+                  // @ts-expect-error STRICT_NULL_CHECK
                   countdownStart={order.lastOffer.createdAt}
+                  // @ts-expect-error STRICT_NULL_CHECK
                   countdownEnd={order.stateExpiresAt}
                 />
                 <TransactionDetailsSummaryItem

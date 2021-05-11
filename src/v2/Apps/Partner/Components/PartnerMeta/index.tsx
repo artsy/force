@@ -12,6 +12,7 @@ interface PartnerMetaProps {
 const PartnerMeta: React.FC<PartnerMetaProps> = ({
   partner: {
     slug,
+    // @ts-expect-error STRICT_NULL_CHECK
     meta: { description, image, title },
   },
 }) => {

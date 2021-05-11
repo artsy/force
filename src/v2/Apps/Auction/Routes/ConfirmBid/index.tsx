@@ -68,12 +68,14 @@ export const ConfirmBidRoute: React.FC<
   let registrationTracked = false
 
   const { artwork, me, relay, stripe, elements } = props
+  // @ts-expect-error STRICT_NULL_CHECK
   const { saleArtwork } = artwork
   const { sale } = saleArtwork
   const { environment } = relay
   const { trackEvent } = useTracking()
   const { requiresPaymentInformation } = determineDisplayRequirements(
     sale.registrationStatus,
+    // @ts-expect-error STRICT_NULL_CHECK
     me
   )
 
@@ -110,6 +112,7 @@ export const ConfirmBidRoute: React.FC<
           onError: reject,
           variables: {
             input: {
+              // @ts-expect-error STRICT_NULL_CHECK
               artworkID: artwork.internalID,
               maxBidAmountCents,
               saleID: sale.internalID,
@@ -188,25 +191,31 @@ export const ConfirmBidRoute: React.FC<
     const selectedBid = Number(values.selectedBid)
 
     if (requiresPaymentInformation) {
+      // @ts-expect-error STRICT_NULL_CHECK
       const stripeAddress = toStripeAddress(values.address)
+      // @ts-expect-error STRICT_NULL_CHECK
       const { phoneNumber } = values.address
       const { setFieldError, setSubmitting } = actions
 
       try {
         const element = elements.getElement(CardElement)
         const { error, token } = await stripe.createToken(
+          // @ts-expect-error STRICT_NULL_CHECK
           element,
           stripeAddress
         )
 
         if (error) {
+          // @ts-expect-error STRICT_NULL_CHECK
           setFieldError("creditCard", error.message)
           setSubmitting(false)
           return
         }
 
+        // @ts-expect-error STRICT_NULL_CHECK
         const { id } = token
         const {
+          // @ts-expect-error STRICT_NULL_CHECK
           createCreditCard: { creditCardOrError },
         } = await createCreditCardAndUpdatePhone(environment, phoneNumber, id)
 
@@ -239,6 +248,7 @@ export const ConfirmBidRoute: React.FC<
     data: ConfirmBidCreateBidderPositionMutationResponse
     selectedBid: number
   }) {
+    // @ts-expect-error STRICT_NULL_CHECK
     const { result } = data.createBidderPosition
     const { position } = result
 
@@ -276,6 +286,7 @@ export const ConfirmBidRoute: React.FC<
     data: BidderPositionQueryResponse
     selectedBid: number
   }) {
+    // @ts-expect-error STRICT_NULL_CHECK
     const { bidderPosition } = data.me
     const { status, position } = bidderPosition
 
@@ -297,6 +308,7 @@ export const ConfirmBidRoute: React.FC<
       pollCount += 1
     } else if (status === "WINNING") {
       trackConfirmBidSuccess(position.internalID, selectedBid)
+      // @ts-expect-error STRICT_NULL_CHECK
       window.location.assign(`/artwork/${artwork.slug}`)
     } else {
       handleMutationError(actions, bidderPosition)
@@ -309,14 +321,12 @@ export const ConfirmBidRoute: React.FC<
 
       <Box maxWidth={550} px={[2, 0]} mx="auto" mt={[1, 0]} mb={[1, 100]}>
         <Serif size="8">Confirm your bid</Serif>
-
         <Separator />
-
+        {/* @ts-expect-error STRICT_NULL_CHECK */}
         <LotInfo artwork={artwork} saleArtwork={artwork.saleArtwork} />
-
         <Separator />
-
         <BidForm
+          // @ts-expect-error STRICT_NULL_CHECK
           artworkSlug={artwork.slug}
           initialSelectedBid={props.match?.location?.query?.bid}
           saleArtwork={saleArtwork}
@@ -335,9 +345,12 @@ export const ConfirmBidRoute: React.FC<
 const StripeWrappedConfirmBidRoute = createStripeWrapper(ConfirmBidRoute)
 
 const TrackingWrappedConfirmBidRoute = track<ConfirmBidProps>(props => ({
+  // @ts-expect-error STRICT_NULL_CHECK
   artwork_slug: props.artwork.slug,
+  // @ts-expect-error STRICT_NULL_CHECK
   auction_slug: props.artwork.saleArtwork.sale.slug,
   context_page: Schema.PageName.AuctionConfirmBidPage,
+  // @ts-expect-error STRICT_NULL_CHECK
   sale_id: props.artwork.saleArtwork.sale.internalID,
   user_id: props.me.internalID,
 }))(StripeWrappedConfirmBidRoute)

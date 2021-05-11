@@ -32,7 +32,9 @@ const Title: React.SFC<TitleProps> = props => {
 const StyledTitle = styled(Title)`
   color: ${props => props.color};
   margin: 20px 0;
-  ${p => garamond(titleSizes[p.titleSize] as any)};
+  ${p =>
+    // @ts-expect-error STRICT_NULL_CHECK
+    garamond(titleSizes[p.titleSize] as any)};
   ${media.sm`
     font-size: ${titleSizes.small};
   `};

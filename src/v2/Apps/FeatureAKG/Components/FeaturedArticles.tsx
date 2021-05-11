@@ -54,19 +54,24 @@ const FeaturedArticles: React.FC<FeaturedArticlesProps> = props => {
         <Col md={6}>
           <Box pr={[0, 0, 1]}>
             <StyledLink
+              // @ts-expect-error STRICT_NULL_CHECK
               to={firstArticle.href}
+              // @ts-expect-error STRICT_NULL_CHECK
               onClick={() => trackClick(firstArticle.href)}
             >
               {firstArticleImage && (
                 <ResponsiveImage
+                  // @ts-expect-error STRICT_NULL_CHECK
                   src={firstArticle.thumbnailImage.cropped.url}
                   ratio={firstArticleImage.height / firstArticleImage.width}
                 />
               )}
               <Sans size={["4t", "4t", "6"]} my={1}>
+                {/* @ts-expect-error STRICT_NULL_CHECK */}
                 {firstArticle.thumbnailTitle}
               </Sans>
               <Sans size="2" color="black60">
+                {/* @ts-expect-error STRICT_NULL_CHECK */}
                 {firstArticle.publishedAt}
               </Sans>
             </StyledLink>
@@ -80,7 +85,9 @@ const FeaturedArticles: React.FC<FeaturedArticlesProps> = props => {
             return (
               <Box ml={[0, 0, 1]} key={`article-${index}`}>
                 <StyledLink
+                  // @ts-expect-error STRICT_NULL_CHECK
                   to={article.href}
+                  // @ts-expect-error STRICT_NULL_CHECK
                   onClick={() => trackClick(article.href)}
                 >
                   <Flex width="100%" justifyContent="space-between">
@@ -94,9 +101,11 @@ const FeaturedArticles: React.FC<FeaturedArticlesProps> = props => {
                     </Box>
                     <Box maxWidth={["90px", "120px"]}>
                       <Image
+                        // @ts-expect-error STRICT_NULL_CHECK
                         src={article.tinyImage.cropped.url}
                         width="60px"
                         height={60}
+                        // @ts-expect-error STRICT_NULL_CHECK
                         alt={article.thumbnailTitle}
                       />
                     </Box>

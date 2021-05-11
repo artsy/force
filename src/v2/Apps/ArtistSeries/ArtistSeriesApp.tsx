@@ -49,6 +49,7 @@ const ArtistSeriesApp: React.FC<ArtistSeriesAppProps> = ({ artistSeries }) => {
             <>
               <ArtistSeriesArtworksFilter
                 aggregations={
+                  // @ts-expect-error STRICT_NULL_CHECK
                   sidebarAggregations.aggregations as SharedArtworkFilterContextProps["aggregations"]
                 }
                 artistSeries={artistSeries}
@@ -60,9 +61,11 @@ const ArtistSeriesApp: React.FC<ArtistSeriesAppProps> = ({ artistSeries }) => {
 
               See: https://github.com/artsy/force/pull/6137
            */}
+              {/* @ts-expect-error STRICT_NULL_CHECK */}
               {railArtist.length && typeof window !== "undefined" && (
                 <LazyLoadComponent threshold={1000}>
                   <OtherArtistSeriesRail
+                    // @ts-expect-error STRICT_NULL_CHECK
                     artist={railArtist[0]}
                     title="Series by this artist"
                     contextModule={ContextModule.moreSeriesByThisArtist}
@@ -75,6 +78,7 @@ const ArtistSeriesApp: React.FC<ArtistSeriesAppProps> = ({ artistSeries }) => {
       </AnalyticsContext.Provider>
     )
   } else {
+    // @ts-expect-error STRICT_NULL_CHECK
     return <ErrorPage code={404} />
   }
 }

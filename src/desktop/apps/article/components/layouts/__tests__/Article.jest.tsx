@@ -20,6 +20,7 @@ describe("Article Layout", () => {
   let props
   const getWrapper = (passedProps = props) => {
     return mount(
+      // @ts-expect-error STRICT_NULL_CHECK
       <SystemContextProvider user={null}>
         <ArticleLayout {...passedProps} />
       </SystemContextProvider>

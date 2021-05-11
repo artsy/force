@@ -79,6 +79,7 @@ class LightboxComponent extends React.Component<LightboxProps, LightboxState> {
     lightboxId: "lightbox-container",
   }
 
+  // @ts-expect-error STRICT_NULL_CHECK
   state = {
     element: null,
     viewer: null,
@@ -107,10 +108,12 @@ class LightboxComponent extends React.Component<LightboxProps, LightboxState> {
   hide = () => {
     this.setState({ shown: false })
     if (this.state.viewer) {
+      // @ts-expect-error STRICT_NULL_CHECK
       this.state.viewer.destroy()
       this.state.viewer = null
     }
     document.removeEventListener(KEYBOARD_EVENT, this.handleKeyPress)
+    // @ts-expect-error STRICT_NULL_CHECK
     clearTimeout(this.state.activityTimer)
   }
 
@@ -121,6 +124,7 @@ class LightboxComponent extends React.Component<LightboxProps, LightboxState> {
   }
 
   detectActivity = throttle(() => {
+    // @ts-expect-error STRICT_NULL_CHECK
     clearTimeout(this.state.activityTimer)
     this.setState({
       showZoomSlider: true,
@@ -133,8 +137,11 @@ class LightboxComponent extends React.Component<LightboxProps, LightboxState> {
   }, 500) as () => void
 
   zoomBy = amount => {
+    // @ts-expect-error STRICT_NULL_CHECK
     if (this.state.viewer.viewport) {
+      // @ts-expect-error STRICT_NULL_CHECK
       this.state.viewer.viewport.zoomBy(amount)
+      // @ts-expect-error STRICT_NULL_CHECK
       this.state.viewer.viewport.applyConstraints()
     }
   }
@@ -148,6 +155,7 @@ class LightboxComponent extends React.Component<LightboxProps, LightboxState> {
   }
 
   initSeaDragon = () => {
+    // @ts-expect-error STRICT_NULL_CHECK
     this.state.promisedDragon.then(OpenSeaDragon => {
       const viewer = OpenSeaDragon({
         element: this.state.deepZoomRef.current,
@@ -186,6 +194,7 @@ class LightboxComponent extends React.Component<LightboxProps, LightboxState> {
   }
 
   onSliderChanged = event => {
+    // @ts-expect-error STRICT_NULL_CHECK
     this.state.viewer.viewport.zoomTo(event.target.value)
   }
 
@@ -194,14 +203,18 @@ class LightboxComponent extends React.Component<LightboxProps, LightboxState> {
     this.setState({
       slider: {
         ...this.state.slider,
+        // @ts-expect-error STRICT_NULL_CHECK
         min: this.state.viewer.viewport.getMinZoom(),
+        // @ts-expect-error STRICT_NULL_CHECK
         max: this.state.viewer.viewport.getMaxZoom(),
+        // @ts-expect-error STRICT_NULL_CHECK
         value: this.state.viewer.viewport.getZoom(),
       },
     })
   }
 
   componentDidMount() {
+    // @ts-expect-error STRICT_NULL_CHECK
     const element = document.getElementById(this.props.lightboxId)
     if (element) {
       this.setState({
@@ -278,7 +291,8 @@ class LightboxComponent extends React.Component<LightboxProps, LightboxState> {
 
   renderPortal = () => {
     return this.state.element
-      ? ReactDOM.createPortal(this.renderLightbox(), this.state.element)
+      ? // @ts-expect-error STRICT_NULL_CHECK
+        ReactDOM.createPortal(this.renderLightbox(), this.state.element)
       : null
   }
 
@@ -331,18 +345,23 @@ class LightboxComponent extends React.Component<LightboxProps, LightboxState> {
   }
 
   postRender = () => {
+    // @ts-expect-error STRICT_NULL_CHECK
     this.state.viewer.addHandler(
       "zoom",
       bind(throttle(this.onZoomChanged, 50), this)
     )
+    // @ts-expect-error STRICT_NULL_CHECK
     this.state.viewer.addHandler(
       "tile-drawn",
       once(() => {
         this.setState({
           slider: {
             ...this.state.slider,
+            // @ts-expect-error STRICT_NULL_CHECK
             min: this.state.viewer.viewport.getMinZoom(),
+            // @ts-expect-error STRICT_NULL_CHECK
             max: this.state.viewer.viewport.getMaxZoom(),
+            // @ts-expect-error STRICT_NULL_CHECK
             value: this.state.viewer.viewport.getHomeZoom(),
           },
         })

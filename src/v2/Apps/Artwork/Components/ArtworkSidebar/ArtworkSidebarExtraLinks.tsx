@@ -114,10 +114,14 @@ class ArtworkSidebarExtraLinksContainer extends React.Component<
   conditionsOfSaleText() {
     const first = "By placing your bid you agree to Artsy's "
     if (
+      // @ts-expect-error STRICT_NULL_CHECK
       !this.props.artwork.sale.isBenefit &&
+      // @ts-expect-error STRICT_NULL_CHECK
       !!this.props.artwork.sale.partner
     ) {
+      // @ts-expect-error STRICT_NULL_CHECK
       const partnerName = this.props.artwork.sale.partner.name
+      // @ts-expect-error STRICT_NULL_CHECK
       const possessivePartnerName = partnerName.endsWith("'s")
         ? partnerName
         : partnerName + "'s"
@@ -193,7 +197,9 @@ class ArtworkSidebarExtraLinksContainer extends React.Component<
 
   render() {
     const { artwork } = this.props
+    // @ts-expect-error STRICT_NULL_CHECK
     const consignableArtistsCount = artwork.artists.filter(
+      // @ts-expect-error STRICT_NULL_CHECK
       artist => artist.is_consignable
     ).length
     const isInOpenAuction =
@@ -218,6 +224,7 @@ class ArtworkSidebarExtraLinksContainer extends React.Component<
 
 export const ArtworkSidebarExtraLinks: SFC<ArtworkSidebarExtraLinksProps> = props => {
   const { mediator } = useContext(SystemContext)
+  // @ts-expect-error STRICT_NULL_CHECK
   return <ArtworkSidebarExtraLinksContainer {...props} mediator={mediator} />
 }
 

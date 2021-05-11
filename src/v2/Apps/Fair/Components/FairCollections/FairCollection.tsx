@@ -43,6 +43,7 @@ export const FairCollection: React.FC<FairCollectionProps> = ({
 
   const collectionTrackingData: ClickedCollectionGroup = {
     context_module: ContextModule.curatedHighlightsRail,
+    // @ts-expect-error STRICT_NULL_CHECK
     context_page_owner_type: contextPageOwnerType,
     context_page_owner_id: contextPageOwnerId,
     context_page_owner_slug: contextPageOwnerSlug,
@@ -55,6 +56,7 @@ export const FairCollection: React.FC<FairCollectionProps> = ({
   }
 
   const imageUrls = compact(
+    // @ts-expect-error STRICT_NULL_CHECK
     collection.artworks.edges.map(({ node }) => node?.image?.url)
   )
 
@@ -75,6 +77,7 @@ export const FairCollection: React.FC<FairCollectionProps> = ({
     }
   })
 
+  // @ts-expect-error STRICT_NULL_CHECK
   const count = collection.artworks.counts.total
 
   return (
@@ -87,6 +90,7 @@ export const FairCollection: React.FC<FairCollectionProps> = ({
         width={CARD_WIDTH}
         title={collection.title}
         subtitle={`${count} work${count === 1 ? "" : "s"}`}
+        // @ts-expect-error STRICT_NULL_CHECK
         images={images}
       />
     </RouterLink>

@@ -28,6 +28,7 @@ const ViewingRoomApp: React.FC<ViewingRoomAppProps> = ({
   const { router } = useRouter()
   useEffect(() => {
     if (user && user.id) return
+    // @ts-expect-error STRICT_NULL_CHECK
     openAuthModal(mediator, {
       afterClose: () => {
         router.push("/viewing-rooms")
@@ -42,11 +43,13 @@ const ViewingRoomApp: React.FC<ViewingRoomAppProps> = ({
   }, [user, router, mediator])
 
   if (!viewingRoom) {
+    // @ts-expect-error STRICT_NULL_CHECK
     return <ErrorPage code={404} />
   }
 
   const showPreview =
     user &&
+    // @ts-expect-error STRICT_NULL_CHECK
     userHasAccessToPartner(user, viewingRoom.partner.internalID) &&
     (viewingRoom.status === "draft" || viewingRoom.status === "scheduled")
 

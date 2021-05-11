@@ -40,6 +40,7 @@ export const PasswordInput: React.FC<PasswordInputProps> = ({
       error={error}
       type={type}
       rightAddOn={eyeIcon()}
+      // @ts-expect-error STRICT_NULL_CHECK
       note={note}
     />
   )

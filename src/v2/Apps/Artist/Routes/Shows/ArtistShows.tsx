@@ -41,6 +41,7 @@ class ArtistShows extends Component<ArtistShowsProps, LoadingAreaState> {
     const {
       artist: {
         showsConnection: {
+          // @ts-expect-error STRICT_NULL_CHECK
           pageInfo: { hasNextPage, endCursor },
         },
       },
@@ -85,6 +86,7 @@ class ArtistShows extends Component<ArtistShowsProps, LoadingAreaState> {
   render() {
     if (
       !this.props.artist.showsConnection ||
+      // @ts-expect-error STRICT_NULL_CHECK
       !this.props.artist.showsConnection.edges.length
     ) {
       return null
@@ -105,7 +107,9 @@ class ArtistShows extends Component<ArtistShowsProps, LoadingAreaState> {
                   <LoadingArea isLoading={this.state.isLoading}>
                     {this.props.status === "running" ? (
                       <Flex flexDirection={["column", "row"]} flexWrap="wrap">
+                        {/* @ts-expect-error STRICT_NULL_CHECK */}
                         {this.props.artist.showsConnection.edges.map(
+                          // @ts-expect-error STRICT_NULL_CHECK
                           ({ node }, index) => {
                             const imageUrl = get(
                               node,
@@ -134,7 +138,9 @@ class ArtistShows extends Component<ArtistShowsProps, LoadingAreaState> {
                       </Flex>
                     ) : (
                       <Box>
+                        {/* @ts-expect-error STRICT_NULL_CHECK */}
                         {this.props.artist.showsConnection.edges.map(
+                          // @ts-expect-error STRICT_NULL_CHECK
                           ({ node }, index) => {
                             return (
                               <React.Fragment key={index}>

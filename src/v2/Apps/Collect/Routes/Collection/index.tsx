@@ -48,6 +48,7 @@ export const CollectionApp: React.FC<CollectionAppProps> = props => {
 
   const { pathname } = usePathnameComplete()
 
+  // @ts-expect-error STRICT_NULL_CHECK
   if (!collection) return <ErrorPage code={404} />
 
   const {
@@ -72,6 +73,7 @@ export const CollectionApp: React.FC<CollectionAppProps> = props => {
   const socialImage =
     headerImage ||
     (fallbackHeaderImage?.edges &&
+      // @ts-expect-error STRICT_NULL_CHECK
       fallbackHeaderImage?.edges[0]?.node?.image?.resized.url)
 
   return (
@@ -94,8 +96,11 @@ export const CollectionApp: React.FC<CollectionAppProps> = props => {
       )}
       {artworksConnection && (
         <SeoProductsForCollections
+          // @ts-expect-error STRICT_NULL_CHECK
           descending_artworks={descending_artworks}
+          // @ts-expect-error STRICT_NULL_CHECK
           ascending_artworks={ascending_artworks}
+          // @ts-expect-error STRICT_NULL_CHECK
           collectionDescription={description}
           collectionURL={collectionHref}
           collectionName={title}
@@ -104,6 +109,7 @@ export const CollectionApp: React.FC<CollectionAppProps> = props => {
       <>
         <CollectionHeader
           collection={collection}
+          // @ts-expect-error STRICT_NULL_CHECK
           artworks={artworksConnection}
         />
 
@@ -138,6 +144,7 @@ export const CollectionApp: React.FC<CollectionAppProps> = props => {
                   { text: "Artwork year (desc.)", value: "-year" },
                   { text: "Artwork year (asc.)", value: "year" },
                 ]}
+                // @ts-expect-error STRICT_NULL_CHECK
                 aggregations={
                   artworksConnection !== null
                     ? (artworksConnection?.aggregations as SharedArtworkFilterContextProps["aggregations"])

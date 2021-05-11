@@ -44,6 +44,7 @@ export const deleteUserAddress = async (
       onError(e.message)
     },
     onCompleted: (data, e) => {
+      // @ts-expect-error STRICT_NULL_CHECK
       const errors = data.deleteUserAddress.userAddressOrErrors.errors
       if (errors) {
         onError(errors.map(error => error.message).join(", "))

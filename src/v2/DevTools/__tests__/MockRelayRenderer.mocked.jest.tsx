@@ -15,6 +15,7 @@ describe("MockRelayRenderer", () => {
 
   it("throws when react-relay is mocked", () => {
     expect(() => {
+      // @ts-expect-error STRICT_NULL_CHECK
       mount(<MockRelayRenderer Component={null} query={null} />)
     }).toThrowError('jest.unmock("react-relay")')
   })

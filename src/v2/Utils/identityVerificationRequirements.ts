@@ -51,6 +51,7 @@ export const bidderQualifications = (
 ) => {
   const registrationAttempted = Boolean(registration)
   const qualifiedForBidding =
+    // @ts-expect-error STRICT_NULL_CHECK
     registrationAttempted && registration.qualifiedForBidding
 
   const userLacksIdentityVerification =

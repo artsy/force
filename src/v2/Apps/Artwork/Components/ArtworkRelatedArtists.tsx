@@ -31,6 +31,7 @@ export const ArtworkRelatedArtists: React.FC<ArtworkRelatedArtistsProps> = track
       artwork: { artist },
       relay,
     } = props
+    // @ts-expect-error STRICT_NULL_CHECK
     if (hideGrid(artist.related.artistsConnection)) {
       return null
     }
@@ -56,6 +57,7 @@ export const ArtworkRelatedArtists: React.FC<ArtworkRelatedArtistsProps> = track
           </Text>
         </Flex>
         <Flex flexWrap="wrap" mr={-2} width="100%">
+          {/* @ts-expect-error STRICT_NULL_CHECK */}
           {artist.related.artistsConnection.edges.map(({ node }, index) => {
             return (
               <Box pr={2} mb={[1, 4]} width={["100%", "25%"]} key={index}>
@@ -134,6 +136,7 @@ export const ArtworkRelatedArtistsPaginationContainer = createPaginationContaine
   {
     direction: "forward",
     getConnectionFromProps(props) {
+      // @ts-expect-error STRICT_NULL_CHECK
       return props.artwork.artist.related.artistsConnection
     },
     getFragmentVariables(prevVars, count) {

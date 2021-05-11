@@ -26,6 +26,7 @@ export const PartnerApp: React.FC<PartnerAppProps> = ({
 }) => {
   return (
     <StickyProvider>
+      {/* @ts-expect-error STRICT_NULL_CHECK */}
       <PartnerHeaderImage profile={partner.profile} />
 
       <Foreground>

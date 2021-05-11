@@ -67,9 +67,11 @@ export class Reject extends Component<RejectProps> {
 
   onSubmit = async () => {
     try {
+      // @ts-expect-error STRICT_NULL_CHECK
       const orderOrError = (
         await this.rejectOffer({
           input: {
+            // @ts-expect-error STRICT_NULL_CHECK
             offerId: this.props.order.lastOffer.internalID,
           },
         })
@@ -117,7 +119,9 @@ export class Reject extends Component<RejectProps> {
                 <CountdownTimer
                   action="Respond"
                   note="Expired offers end the negotiation process permanently."
+                  // @ts-expect-error STRICT_NULL_CHECK
                   countdownStart={order.lastOffer.createdAt}
+                  // @ts-expect-error STRICT_NULL_CHECK
                   countdownEnd={order.stateExpiresAt}
                 />
                 <StepSummaryItem

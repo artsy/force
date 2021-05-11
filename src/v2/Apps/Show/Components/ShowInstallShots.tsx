@@ -10,6 +10,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { Carousel, CarouselProps } from "v2/Components/Carousel"
 import { ShowInstallShots_show } from "v2/__generated__/ShowInstallShots_show.graphql"
 
+// @ts-expect-error STRICT_NULL_CHECK
 type InstallShot = ShowInstallShots_show["images"][number]
 
 interface ShowInstallShotsProps extends Omit<CarouselProps, "children"> {
@@ -30,36 +31,47 @@ export const ShowInstallShots: React.FC<ShowInstallShotsProps> = ({
     selectImage(null)
   }
 
+  // @ts-expect-error STRICT_NULL_CHECK
   if (show.images.length === 0) return null
 
   return (
     <>
       <Carousel {...rest}>
+        {/* @ts-expect-error STRICT_NULL_CHECK */}
         {show.images.map((image, i) => {
           return (
             <Clickable
+              // @ts-expect-error STRICT_NULL_CHECK
               key={image.internalID}
               onClick={handleOpen(image)}
               display="block"
             >
               <Image
+                // @ts-expect-error STRICT_NULL_CHECK
                 src={image.desktop.src}
+                // @ts-expect-error STRICT_NULL_CHECK
                 srcSet={image.desktop.srcSet}
+                // @ts-expect-error STRICT_NULL_CHECK
                 width={[image.mobile.width, image.desktop.width]}
+                // @ts-expect-error STRICT_NULL_CHECK
                 height={[image.mobile.height, image.desktop.height]}
                 alt={`${show.name}, installation view`}
                 lazyLoad={i > 2}
               />
 
+              {/* @ts-expect-error STRICT_NULL_CHECK */}
               {image.caption && (
                 <Text
                   mt={1}
                   color="black60"
                   textAlign="left"
+                  // @ts-expect-error STRICT_NULL_CHECK
                   maxWidth={image.desktop.width}
+                  // @ts-expect-error STRICT_NULL_CHECK
                   title={image.caption}
                   overflowEllipsis
                 >
+                  {/* @ts-expect-error STRICT_NULL_CHECK */}
                   {image.caption}
                 </Text>
               )}

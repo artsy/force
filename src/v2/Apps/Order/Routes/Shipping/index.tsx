@@ -102,9 +102,11 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
     this.props.order.requestedFulfillment.__typename !== "CommerceShip"
       ? "PICKUP"
       : "SHIP") as CommerceOrderFulfillmentTypeEnum,
+    // @ts-expect-error STRICT_NULL_CHECK
     address: startingAddress(this.props.me, this.props.order),
     addressErrors: {},
     addressTouched: {},
+    // @ts-expect-error STRICT_NULL_CHECK
     phoneNumber: startingPhoneNumber(this.props.me, this.props.order),
     phoneNumberError: "",
     phoneNumberTouched: false,
@@ -127,6 +129,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
     }
   }
 
+  // @ts-expect-error STRICT_NULL_CHECK
   getAddressList = () => this.props.me.addressConnection.edges
 
   isCreateNewAddress = () => this.state.selectedSavedAddress === NEW_ADDRESS
@@ -141,6 +144,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
         const { error, hasError } = validatePhoneNumber(this.state.phoneNumber)
         if (hasErrors && hasError) {
           this.setState({
+            // @ts-expect-error STRICT_NULL_CHECK
             addressErrors: errors,
             addressTouched: this.touchedAddress,
             phoneNumberError: error,
@@ -149,6 +153,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
           return
         } else if (hasErrors) {
           this.setState({
+            // @ts-expect-error STRICT_NULL_CHECK
             addressErrors: errors,
             addressTouched: this.touchedAddress,
           })
@@ -177,13 +182,16 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
       const shipToAddress = this.isCreateNewAddress()
         ? address
         : convertShippingAddressForExchange(
+            // @ts-expect-error STRICT_NULL_CHECK
             this.getAddressList()[parseInt(this.state.selectedSavedAddress)]
               .node
           )
       const shipToPhoneNumber = this.isCreateNewAddress()
         ? phoneNumber
-        : this.getAddressList()[parseInt(this.state.selectedSavedAddress)].node
+        : // @ts-expect-error STRICT_NULL_CHECK
+          this.getAddressList()[parseInt(this.state.selectedSavedAddress)].node
             .phoneNumber
+      // @ts-expect-error STRICT_NULL_CHECK
       const orderOrError = (
         await setShipping(this.props.commitMutation, {
           input: {
@@ -203,6 +211,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
       ) {
         const { relayEnvironment } = this.props
         await createUserAddress(
+          // @ts-expect-error STRICT_NULL_CHECK
           relayEnvironment,
           {
             ...address,
@@ -220,6 +229,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
       }
 
       if (orderOrError.error) {
+        // @ts-expect-error STRICT_NULL_CHECK
         this.handleSubmitError(orderOrError.error)
         return
       }
@@ -265,6 +275,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
     const { errors } = validateAddress(address)
     this.setState({
       address,
+      // @ts-expect-error STRICT_NULL_CHECK
       addressErrors: {
         ...this.state.addressErrors,
         ...errors,
@@ -311,17 +322,21 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
     } = this.state
     const artwork = get(
       this.props,
+      // @ts-expect-error STRICT_NULL_CHECK
       props => props.order.lineItems.edges[0].node.artwork
     )
     const addressList = this.getAddressList()
 
     const shippingSelected =
+      // @ts-expect-error STRICT_NULL_CHECK
       !artwork.pickup_available || this.state.shippingOption === "SHIP"
 
     const showAddressForm =
       shippingSelected &&
+      // @ts-expect-error STRICT_NULL_CHECK
       (this.isCreateNewAddress() || addressList.length === 0)
 
+    // @ts-expect-error STRICT_NULL_CHECK
     const showSavedAddresses = shippingSelected && addressList.length > 0
 
     const onSelectSavedAddress = (value: string) => {
@@ -337,6 +352,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
           }}
           show={showModal}
           closeModal={() => this.setState({ showModal: false })}
+          // @ts-expect-error STRICT_NULL_CHECK
           address={addressList[this.state.editAddressIndex]?.node}
           onSuccess={() => {
             // this.setState({ address: updatedAddress })
@@ -365,6 +381,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
               {/* TODO: Make RadioGroup generic for the allowed values,
                   which could also ensure the children only use
                   allowed values. */}
+              {/* @ts-expect-error STRICT_NULL_CHECK */}
               {artwork.pickup_available && (
                 <>
                   <RadioGroup
@@ -402,13 +419,17 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
                 />
               )}
               <Collapse data-test="addressFormCollapse" open={showAddressForm}>
+                {/* @ts-expect-error STRICT_NULL_CHECK */}
                 <AddressForm
                   value={address}
                   errors={addressErrors}
                   touched={addressTouched}
                   onChange={this.onAddressChange}
+                  // @ts-expect-error STRICT_NULL_CHECK
                   domesticOnly={artwork.onlyShipsDomestically}
+                  // @ts-expect-error STRICT_NULL_CHECK
                   euOrigin={artwork.euShippingOrigin}
+                  // @ts-expect-error STRICT_NULL_CHECK
                   shippingCountry={artwork.shippingCountry}
                   showPhoneNumberInput={false}
                 />

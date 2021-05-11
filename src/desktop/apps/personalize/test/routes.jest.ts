@@ -80,6 +80,7 @@ describe("Personalize routes", () => {
     })
 
     it("calls next when there is a user", () => {
+      // @ts-expect-error STRICT_NULL_CHECK
       response.locals.sd.CURRENT_USER = {}
 
       ensureLoggedInUser(request, response, mockNext)

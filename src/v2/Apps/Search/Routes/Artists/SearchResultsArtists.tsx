@@ -24,6 +24,7 @@ const PAGE_SIZE = 10
 export class SearchResultsArtistsRoute extends React.Component<Props, State> {
   state: State = {
     isLoading: false,
+    // @ts-expect-error STRICT_NULL_CHECK
     page: null,
   }
 
@@ -32,6 +33,7 @@ export class SearchResultsArtistsRoute extends React.Component<Props, State> {
     const {
       match: { location },
     } = this.props
+    // @ts-expect-error STRICT_NULL_CHECK
     const { page } = get(location, l => l.query)
 
     this.state = { isLoading: false, page: (page && parseInt(page, 10)) || 1 }
@@ -51,6 +53,7 @@ export class SearchResultsArtistsRoute extends React.Component<Props, State> {
     const { searchConnection } = viewer
 
     const {
+      // @ts-expect-error STRICT_NULL_CHECK
       pageInfo: { hasNextPage, endCursor },
     } = searchConnection
 
@@ -81,6 +84,7 @@ export class SearchResultsArtistsRoute extends React.Component<Props, State> {
         const {
           match: { location },
         } = this.props
+        // @ts-expect-error STRICT_NULL_CHECK
         const { term } = get(location, l => l.query)
         const urlParams = qs.stringify({
           page,
@@ -88,6 +92,7 @@ export class SearchResultsArtistsRoute extends React.Component<Props, State> {
         })
         // TODO: Look into using router push w/ query params.
         // this.props.router.replace(`/search/artists?${urlParams}`)
+        // @ts-expect-error STRICT_NULL_CHECK
         window.history.pushState({}, null, `/search/artists?${urlParams}`)
       }
     )
@@ -98,27 +103,36 @@ export class SearchResultsArtistsRoute extends React.Component<Props, State> {
       viewer,
       match: { location },
     } = this.props
+    // @ts-expect-error STRICT_NULL_CHECK
     const { term } = get(location, l => l.query)
     const { searchConnection } = viewer
 
+    // @ts-expect-error STRICT_NULL_CHECK
     const artists = get(viewer, v => v.searchConnection.edges, []).map(
+      // @ts-expect-error STRICT_NULL_CHECK
       e => e.node
     )
 
     return (
       <>
         {artists.map((artist, index) => {
+          // @ts-expect-error STRICT_NULL_CHECK
           const worksForSaleHref = artist.href + "/works-for-sale"
           return (
             <Box key={index}>
+              {/* @ts-expect-error STRICT_NULL_CHECK */}
               <GenericSearchResultItem
+                // @ts-expect-error STRICT_NULL_CHECK
                 name={artist.name}
+                // @ts-expect-error STRICT_NULL_CHECK
                 description={artist.bio}
+                // @ts-expect-error STRICT_NULL_CHECK
                 imageUrl={artist.imageUrl}
                 entityType="Artist"
                 href={worksForSaleHref}
                 index={index}
                 term={term}
+                // @ts-expect-error STRICT_NULL_CHECK
                 id={artist.internalID}
               />
               {index < artists.length - 1 && <Separator />}
@@ -126,10 +140,12 @@ export class SearchResultsArtistsRoute extends React.Component<Props, State> {
           )
         })}
         <Pagination
+          // @ts-expect-error STRICT_NULL_CHECK
           pageCursors={searchConnection.pageCursors}
           onClick={this.loadAfter}
           onNext={this.loadNext}
           scrollTo="#jumpto--searchResultTabs"
+          // @ts-expect-error STRICT_NULL_CHECK
           hasNextPage={searchConnection.pageInfo.hasNextPage}
         />
       </>
@@ -141,9 +157,12 @@ export class SearchResultsArtistsRoute extends React.Component<Props, State> {
       viewer,
       match: { location },
     } = this.props
+    // @ts-expect-error STRICT_NULL_CHECK
     const { term } = get(location, l => l.query)
 
+    // @ts-expect-error STRICT_NULL_CHECK
     const artists = get(viewer, v => v.searchConnection.edges, []).map(
+      // @ts-expect-error STRICT_NULL_CHECK
       e => e.node
     )
     return (

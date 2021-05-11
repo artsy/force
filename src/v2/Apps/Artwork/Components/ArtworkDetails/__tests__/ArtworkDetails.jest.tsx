@@ -17,6 +17,7 @@ jest.unmock("react-relay")
 describe("ArtworkDetails", () => {
   const getWrapper = async (
     response: ArtworkDetails_Test_QueryRawResponse["artwork"] = ArtworkDetailsFixture,
+    // @ts-expect-error STRICT_NULL_CHECK
     user: User = null
   ) => {
     return await renderRelayTree({
@@ -42,6 +43,7 @@ describe("ArtworkDetails", () => {
 
   describe("ArtworkDetailsAdditionalInfo for a live sale artwork", () => {
     it("displays a request lot condition report button when canRequestLotConditionsReport is true", async () => {
+      // @ts-expect-error STRICT_NULL_CHECK
       wrapper = await getWrapper({
         ...ArtworkDetailsFixture,
         canRequestLotConditionsReport: true,
@@ -54,6 +56,7 @@ describe("ArtworkDetails", () => {
     })
 
     it("display condition description when canRequestLotConditionsReport is false but has condition description", async () => {
+      // @ts-expect-error STRICT_NULL_CHECK
       wrapper = await getWrapper({
         ...ArtworkDetailsFixture,
         canRequestLotConditionsReport: false,
@@ -68,6 +71,7 @@ describe("ArtworkDetails", () => {
     })
 
     it("does not display the condition section at all when canRequestLotConditionsReport is false and condition Description is missing", async () => {
+      // @ts-expect-error STRICT_NULL_CHECK
       wrapper = await getWrapper({
         ...ArtworkDetailsFixture,
         canRequestLotConditionsReport: false,
@@ -80,6 +84,7 @@ describe("ArtworkDetails", () => {
 
   describe("ArtworkDetails for a gallery artwork that is missing some fields", () => {
     it("renders additional info with just what is present", async () => {
+      // @ts-expect-error STRICT_NULL_CHECK
       wrapper = await getWrapper({
         ...ArtworkDetailsFixture,
         series: null,
@@ -112,6 +117,7 @@ describe("ArtworkDetails", () => {
       certificateOfAuthenticity: null,
     }
 
+    // @ts-expect-error STRICT_NULL_CHECK
     const emptyDataWrapper = await getWrapper(emptyData)
     expect(
       emptyDataWrapper.find("ArtworkDetailsAdditionalInfo").find("Row").length
@@ -146,8 +152,11 @@ describe("ArtworkDetails", () => {
       wrapper = await getWrapper({
         ...ArtworkDetailsFixture,
         partner: {
+          // @ts-expect-error STRICT_NULL_CHECK
           ...ArtworkDetailsFixture.partner,
+          // @ts-expect-error STRICT_NULL_CHECK
           profile: {
+            // @ts-expect-error STRICT_NULL_CHECK
             ...ArtworkDetailsFixture.partner.profile,
             icon: null,
           },
@@ -158,6 +167,7 @@ describe("ArtworkDetails", () => {
     })
 
     it("does not display partner Icon if artwork is from benefit auction", async () => {
+      // @ts-expect-error STRICT_NULL_CHECK
       wrapper = await getWrapper({
         ...ArtworkDetailsFixture,
         sale: {
@@ -171,6 +181,7 @@ describe("ArtworkDetails", () => {
     })
 
     it("does not display partner Icon if artwork is from gallery auction", async () => {
+      // @ts-expect-error STRICT_NULL_CHECK
       wrapper = await getWrapper({
         ...ArtworkDetailsFixture,
         sale: {
@@ -193,7 +204,9 @@ describe("ArtworkDetails", () => {
     it("does not display avatar when profile is not available and no initials for partner", async () => {
       wrapper = await getWrapper({
         ...ArtworkDetailsFixture,
+        // @ts-expect-error STRICT_NULL_CHECK
         partner: {
+          // @ts-expect-error STRICT_NULL_CHECK
           ...ArtworkDetailsFixture.partner,
           profile: null,
           initials: null,
@@ -212,7 +225,9 @@ describe("ArtworkDetails", () => {
     it("renders partner follow button for regular partner with profile", async () => {
       wrapper = await getWrapper({
         ...ArtworkDetailsFixture,
+        // @ts-expect-error STRICT_NULL_CHECK
         partner: {
+          // @ts-expect-error STRICT_NULL_CHECK
           ...ArtworkDetailsFixture.partner,
           type: "NOT Auction House",
         },
@@ -223,7 +238,9 @@ describe("ArtworkDetails", () => {
     it("does not render partner follow button if artwork is from an auction partner", async () => {
       wrapper = await getWrapper({
         ...ArtworkDetailsFixture,
+        // @ts-expect-error STRICT_NULL_CHECK
         partner: {
+          // @ts-expect-error STRICT_NULL_CHECK
           ...ArtworkDetailsFixture.partner,
           type: "Auction House",
         },
@@ -232,6 +249,7 @@ describe("ArtworkDetails", () => {
     })
 
     it("works without a partner", async () => {
+      // @ts-expect-error STRICT_NULL_CHECK
       wrapper = await getWrapper({
         ...ArtworkDetailsFixture,
         partner: null,

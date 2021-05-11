@@ -13,8 +13,10 @@ interface ViewingRoomsFeaturedRailProps {
 export const ViewingRoomsFeaturedRail: React.FC<ViewingRoomsFeaturedRailProps> = props => {
   const featuredViewingRooms = props.featuredViewingRooms
 
+  // @ts-expect-error STRICT_NULL_CHECK
   const featuredViewingRoomsForRail = featuredViewingRooms.edges
     .map(vr => {
+      // @ts-expect-error STRICT_NULL_CHECK
       return vr.node ? vr.node : null
     })
     .filter(Boolean)
@@ -43,6 +45,7 @@ export const ViewingRoomsFeaturedRail: React.FC<ViewingRoomsFeaturedRailProps> =
             image={sized}
             title={title}
             subtitle={partner.name}
+            // @ts-expect-error STRICT_NULL_CHECK
             tag={tag}
           />
         </Link>

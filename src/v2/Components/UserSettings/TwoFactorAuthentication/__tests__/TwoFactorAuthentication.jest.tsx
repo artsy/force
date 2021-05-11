@@ -28,6 +28,7 @@ const setupTestEnv = () => {
   return createTestEnv({
     TestPage: TwoFactorAuthenticationTestPage,
     Component: (props: TwoFactorAuthenticationQueryResponse) => (
+      // @ts-expect-error STRICT_NULL_CHECK
       <TwoFactorAuthenticationRefetchContainer {...props} />
     ),
     query: graphql`

@@ -16,6 +16,7 @@ describe("BuyerGuaranteeIndex when admin", () => {
     Component: props => {
       return (
         <MockBoot context={{ user: { roles: ["admin"] } }}>
+          {/* @ts-expect-error STRICT_NULL_CHECK */}
           <BuyerGuaranteeIndexFragmentContainer {...props} />
         </MockBoot>
       )
@@ -55,6 +56,7 @@ describe("BuyerGuaranteeIndex when non-admin", () => {
     Component: props => {
       return (
         <MockBoot context={{ user: { roles: ["user"] } }}>
+          {/* @ts-expect-error STRICT_NULL_CHECK */}
           <BuyerGuaranteeIndexFragmentContainer {...props} />
         </MockBoot>
       )

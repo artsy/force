@@ -4,9 +4,11 @@ import React from "react"
 
 const daysSinceDate = (time: string | DateTime): number => {
   if (!time) {
+    // @ts-expect-error STRICT_NULL_CHECK
     return null
   }
   const date = typeof time === "string" ? DateTime.fromISO(time) : time
+  // @ts-expect-error STRICT_NULL_CHECK
   return Math.floor(Math.abs(date.diffNow("days").toObject().days))
 }
 
@@ -37,6 +39,7 @@ const exactDate = (time: string) => {
 
 const minutesSinceDate = (time: string | DateTime): number => {
   if (!time) {
+    // @ts-expect-error STRICT_NULL_CHECK
     return null
   }
   const date = typeof time === "string" ? DateTime.fromISO(time) : time
@@ -75,6 +78,7 @@ interface TimeSinceProps extends Omit<BoxProps, "color"> {
   exact?: boolean
   style?: any // FIXME: React.CSSProperties
 }
+// @ts-expect-error STRICT_NULL_CHECK
 export const TimeSince: React.FC<TimeSinceProps> = ({
   size = "2",
   time,

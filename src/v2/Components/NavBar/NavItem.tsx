@@ -201,6 +201,7 @@ export const NavItem: React.FC<NavItemProps> = ({
       {!!Menu && (
         <NavItemPanel
           menuAnchor={menuAnchor}
+          // @ts-expect-error STRICT_NULL_CHECK
           relativeTo={containerRef}
           visible={showMenu}
         >
@@ -208,6 +209,7 @@ export const NavItem: React.FC<NavItemProps> = ({
         </NavItemPanel>
       )}
 
+      {/*  @ts-expect-error STRICT_NULL_CHECK */}
       {showOverlay && <Overlay />}
     </Container>
   )

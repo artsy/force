@@ -93,11 +93,13 @@ export const legacyArtworkClient = () => {
   mediator.on("openViewInRoom", (options: ViewInRoomEventOptions) => {
     try {
       const { dimensions, image } = options
+      // @ts-expect-error STRICT_NULL_CHECK
       const { url, width, height } = image
 
       let newWidth = width
       let newHeight = height
 
+      // @ts-expect-error STRICT_NULL_CHECK
       const bounds = document
         .querySelector("[data-is-default=true]")
         .getBoundingClientRect()

@@ -34,6 +34,7 @@ describe("AuctionCard", () => {
   })
 
   beforeAll(() => {
+    // @ts-expect-error STRICT_NULL_CHECK
     window.matchMedia = undefined // Immediately set matching media query in Boot
   })
 
@@ -117,6 +118,7 @@ describe("AuctionCard", () => {
 
   describe("upcomingLabel", () => {
     const sale: AuctionCard_sale = {
+      // @ts-expect-error STRICT_NULL_CHECK
       " $refType": null,
       cover_image: {
         cropped: {

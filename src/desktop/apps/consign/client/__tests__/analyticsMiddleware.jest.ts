@@ -25,7 +25,9 @@ describe("analyticsMiddleware", () => {
     })
     store.dispatch({ type: "SUBMIT_ARTIST" })
 
+    // @ts-expect-error STRICT_NULL_CHECK
     expect(window.analytics.track).toHaveBeenCalledTimes(1)
+    // @ts-expect-error STRICT_NULL_CHECK
     expect(window.analytics.track).toBeCalledWith(
       "consignment_artist_confirmed",
       {
@@ -41,7 +43,9 @@ describe("analyticsMiddleware", () => {
       payload: { errorType: "convection_create" },
     })
 
+    // @ts-expect-error STRICT_NULL_CHECK
     expect(window.analytics.track).toHaveBeenCalledTimes(1)
+    // @ts-expect-error STRICT_NULL_CHECK
     expect(window.analytics.track).toBeCalledWith(
       "consignment_failed_to_submit",
       {
@@ -58,7 +62,9 @@ describe("analyticsMiddleware", () => {
       payload: { errorType: "convection_complete_submission" },
     })
 
+    // @ts-expect-error STRICT_NULL_CHECK
     expect(window.analytics.track).toHaveBeenCalledTimes(1)
+    // @ts-expect-error STRICT_NULL_CHECK
     expect(window.analytics.track).toBeCalledWith(
       "consignment_failed_to_submit",
       {
@@ -75,7 +81,9 @@ describe("analyticsMiddleware", () => {
       payload: { submissionId: 123 },
     })
 
+    // @ts-expect-error STRICT_NULL_CHECK
     expect(window.analytics.track).toHaveBeenCalledTimes(1)
+    // @ts-expect-error STRICT_NULL_CHECK
     expect(window.analytics.track).toBeCalledWith("consignment_submitted", {
       contextPath: undefined,
       submissionId: 123,
@@ -93,7 +101,9 @@ describe("analyticsMiddleware", () => {
     })
     store.dispatch({ type: "SUBMISSION_COMPLETED" })
 
+    // @ts-expect-error STRICT_NULL_CHECK
     expect(window.analytics.track).toHaveBeenCalledTimes(1)
+    // @ts-expect-error STRICT_NULL_CHECK
     expect(window.analytics.track).toBeCalledWith(
       "consignment_asset_uploaded",
       {

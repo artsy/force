@@ -52,6 +52,7 @@ const render = (
 ) =>
   renderRelayTree({
     Component: (props: TransactionDetailsSummaryItemTestQueryResponse) => (
+      // @ts-expect-error STRICT_NULL_CHECK
       <TransactionDetailsSummaryItemFragmentContainer
         {...props}
         {...extraProps}

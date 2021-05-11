@@ -138,6 +138,7 @@ describe("trackingMiddleware", () => {
           { integrations: { Marketo: false } }
         )
 
+        // @ts-expect-error STRICT_NULL_CHECK
         expect(window.analytics.__artsyClientSideRoutingReferrer).toEqual(
           "http://testing.com/referrer?with=queryparams"
         )

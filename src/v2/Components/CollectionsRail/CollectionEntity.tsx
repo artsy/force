@@ -57,6 +57,7 @@ export class CollectionEntity extends React.Component<CollectionProps> {
           onClick={this.onLinkClick.bind(this)}
         >
           <Background
+            // @ts-expect-error STRICT_NULL_CHECK
             collectionImage={resize(collection.headerImage, {
               width: 645,
               height: 275,
@@ -65,7 +66,7 @@ export class CollectionEntity extends React.Component<CollectionProps> {
           />
           <CollectionTitle size="4">{collection.title}</CollectionTitle>
           <Sans size="2">
-            Works from $
+            Works from ${/* @ts-expect-error STRICT_NULL_CHECK */}
             {currency(collection.price_guidance, {
               separator: ",",
               precision: 0,

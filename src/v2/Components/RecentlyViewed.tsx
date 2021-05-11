@@ -46,9 +46,11 @@ export class RecentlyViewed extends React.Component<RecentlyViewedProps> {
                 </Text>
 
                 <Carousel arrowHeight={HEIGHT}>
+                  {/* @ts-expect-error STRICT_NULL_CHECK */}
                   {me.recentlyViewedArtworksConnection.edges.map(artwork => {
                     return (
                       <FillwidthItem
+                        // @ts-expect-error STRICT_NULL_CHECK
                         key={artwork.node.id}
                         lazyLoad={true}
                         // @ts-ignore // TODO: Correct typing

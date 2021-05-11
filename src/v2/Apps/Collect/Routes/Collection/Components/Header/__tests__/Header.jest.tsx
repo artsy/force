@@ -45,6 +45,7 @@ describe("collections header", () => {
   const props: Props = {
     artworks: collectionHeaderArtworks,
     collection: {
+      // @ts-expect-error STRICT_NULL_CHECK
       " $refType": null,
       id: "abcdefg1234",
       title: "KAWS: Toys",
@@ -138,7 +139,9 @@ describe("collections header", () => {
         artworks.merchandisableArtists
       )
 
+      // @ts-expect-error STRICT_NULL_CHECK
       expect(results.length).toBe(1)
+      // @ts-expect-error STRICT_NULL_CHECK
       const artist = results[0]
 
       expect(artist).toMatchObject({
@@ -174,6 +177,7 @@ describe("collections header", () => {
         artworks.merchandisableArtists
       )
 
+      // @ts-expect-error STRICT_NULL_CHECK
       const artistIds = results.map(artist => artist.slug)
       expect(artistIds).toEqual(expect.not.arrayContaining(excludedIds))
     })
@@ -226,6 +230,7 @@ describe("collections header", () => {
             ...props,
             collection: {
               ...props.collection,
+              // @ts-expect-error STRICT_NULL_CHECK
               description: undefined,
             },
           })
@@ -306,6 +311,7 @@ describe("collections header", () => {
       expect(entities.length).toEqual(0)
     })
 
+    // @ts-expect-error STRICT_NULL_CHECK
     function anArtist(): Header_artworks["merchandisableArtists"][number] {
       return {
         slug: "medicom-toy-slash-china",

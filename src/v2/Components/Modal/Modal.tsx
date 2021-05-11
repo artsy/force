@@ -47,6 +47,7 @@ export class Modal extends React.Component<ModalProps> {
   }
 
   close = () => {
+    // @ts-expect-error STRICT_NULL_CHECK
     this.props.onClose()
   }
 
@@ -82,7 +83,7 @@ export class Modal extends React.Component<ModalProps> {
           <CloseIcon />
         </Clickable>
         {image && <Image image={image} />}
-
+        {/* @ts-expect-error STRICT_NULL_CHECK */}
         <ModalContent cta={cta} hasImage={image && true}>
           {(hasLogo || title) && (
             <ModalHeader title={title} hasLogo={hasLogo} />
@@ -91,6 +92,7 @@ export class Modal extends React.Component<ModalProps> {
           <div>{children}</div>
 
           {cta && (
+            // @ts-expect-error STRICT_NULL_CHECK
             <ModalCta cta={cta} hasImage={image && true} onClose={this.close} />
           )}
         </ModalContent>
