@@ -399,7 +399,7 @@
   "husky": {
     "hooks": {
       "post-merge": "sh scripts/pull-lock.sh",
-      "pre-commit": "lint-staged",
+      "pre-commit": "betterer && git add .betterer.results && lint-staged",
       "pre-push": "yarn type-check"
     }
   },
