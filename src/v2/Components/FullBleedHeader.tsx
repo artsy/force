@@ -1,7 +1,6 @@
-import { BoxProps, Flex, HTML } from "@artsy/palette"
+import { BoxProps, Flex, HTML, FullBleed } from "@artsy/palette"
 import React from "react"
 import styled from "styled-components"
-import { FullBleed } from "v2/Components/FullBleed"
 import { cropped } from "v2/Utils/resized"
 
 export interface FullBleedHeaderProps extends BoxProps {
