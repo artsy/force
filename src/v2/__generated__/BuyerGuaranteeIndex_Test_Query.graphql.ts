@@ -52,11 +52,6 @@ fragment BuyerGuaranteeIndex_authenticityImage on Artwork {
     name
     id
   }
-  image {
-    resized(version: "large_rectangle") {
-      url
-    }
-  }
 }
 
 fragment BuyerGuaranteeIndex_headerImage on Artwork {
@@ -80,11 +75,6 @@ fragment BuyerGuaranteeIndex_moneyBackGuaranteeImage on Artwork {
     name
     id
   }
-  image {
-    resized(version: "large_rectangle") {
-      url
-    }
-  }
 }
 
 fragment BuyerGuaranteeIndex_securePaymentImage on Artwork {
@@ -93,11 +83,6 @@ fragment BuyerGuaranteeIndex_securePaymentImage on Artwork {
   artist {
     name
     id
-  }
-  image {
-    resized(version: "large_rectangle") {
-      url
-    }
   }
 }
 */
@@ -172,45 +157,9 @@ v7 = {
   "storageKey": null
 },
 v8 = [
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "url",
-    "storageKey": null
-  }
-],
-v9 = [
   (v4/*: any*/),
   (v5/*: any*/),
   (v7/*: any*/),
-  {
-    "alias": null,
-    "args": null,
-    "concreteType": "Image",
-    "kind": "LinkedField",
-    "name": "image",
-    "plural": false,
-    "selections": [
-      {
-        "alias": null,
-        "args": [
-          {
-            "kind": "Literal",
-            "name": "version",
-            "value": "large_rectangle"
-          }
-        ],
-        "concreteType": "ResizedImageUrl",
-        "kind": "LinkedField",
-        "name": "resized",
-        "plural": false,
-        "selections": (v8/*: any*/),
-        "storageKey": "resized(version:\"large_rectangle\")"
-      }
-    ],
-    "storageKey": null
-  },
   (v6/*: any*/)
 ];
 return {
@@ -325,7 +274,15 @@ return {
                 "kind": "LinkedField",
                 "name": "resized",
                 "plural": false,
-                "selections": (v8/*: any*/),
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "url",
+                    "storageKey": null
+                  }
+                ],
                 "storageKey": "resized(version:\"normalized\")"
               }
             ],
@@ -342,7 +299,7 @@ return {
         "kind": "LinkedField",
         "name": "artwork",
         "plural": false,
-        "selections": (v9/*: any*/),
+        "selections": (v8/*: any*/),
         "storageKey": "artwork(id:\"any-id2\")"
       },
       {
@@ -352,7 +309,7 @@ return {
         "kind": "LinkedField",
         "name": "artwork",
         "plural": false,
-        "selections": (v9/*: any*/),
+        "selections": (v8/*: any*/),
         "storageKey": "artwork(id:\"any-id3\")"
       },
       {
@@ -362,7 +319,7 @@ return {
         "kind": "LinkedField",
         "name": "artwork",
         "plural": false,
-        "selections": (v9/*: any*/),
+        "selections": (v8/*: any*/),
         "storageKey": "artwork(id:\"any-id4\")"
       }
     ]
@@ -372,7 +329,7 @@ return {
     "metadata": {},
     "name": "BuyerGuaranteeIndex_Test_Query",
     "operationKind": "query",
-    "text": "query BuyerGuaranteeIndex_Test_Query {\n  headerImage: artwork(id: \"any-id1\") {\n    ...BuyerGuaranteeIndex_headerImage\n    id\n  }\n  authenticityImage: artwork(id: \"any-id2\") {\n    ...BuyerGuaranteeIndex_authenticityImage\n    id\n  }\n  moneyBackGuaranteeImage: artwork(id: \"any-id3\") {\n    ...BuyerGuaranteeIndex_moneyBackGuaranteeImage\n    id\n  }\n  securePaymentImage: artwork(id: \"any-id4\") {\n    ...BuyerGuaranteeIndex_securePaymentImage\n    id\n  }\n}\n\nfragment BuyerGuaranteeIndex_authenticityImage on Artwork {\n  imageTitle\n  imageUrl\n  artist {\n    name\n    id\n  }\n  image {\n    resized(version: \"large_rectangle\") {\n      url\n    }\n  }\n}\n\nfragment BuyerGuaranteeIndex_headerImage on Artwork {\n  imageTitle\n  imageUrl\n  artist {\n    name\n    id\n  }\n  image {\n    resized(version: \"normalized\") {\n      url\n    }\n  }\n}\n\nfragment BuyerGuaranteeIndex_moneyBackGuaranteeImage on Artwork {\n  imageTitle\n  imageUrl\n  artist {\n    name\n    id\n  }\n  image {\n    resized(version: \"large_rectangle\") {\n      url\n    }\n  }\n}\n\nfragment BuyerGuaranteeIndex_securePaymentImage on Artwork {\n  imageTitle\n  imageUrl\n  artist {\n    name\n    id\n  }\n  image {\n    resized(version: \"large_rectangle\") {\n      url\n    }\n  }\n}\n"
+    "text": "query BuyerGuaranteeIndex_Test_Query {\n  headerImage: artwork(id: \"any-id1\") {\n    ...BuyerGuaranteeIndex_headerImage\n    id\n  }\n  authenticityImage: artwork(id: \"any-id2\") {\n    ...BuyerGuaranteeIndex_authenticityImage\n    id\n  }\n  moneyBackGuaranteeImage: artwork(id: \"any-id3\") {\n    ...BuyerGuaranteeIndex_moneyBackGuaranteeImage\n    id\n  }\n  securePaymentImage: artwork(id: \"any-id4\") {\n    ...BuyerGuaranteeIndex_securePaymentImage\n    id\n  }\n}\n\nfragment BuyerGuaranteeIndex_authenticityImage on Artwork {\n  imageTitle\n  imageUrl\n  artist {\n    name\n    id\n  }\n}\n\nfragment BuyerGuaranteeIndex_headerImage on Artwork {\n  imageTitle\n  imageUrl\n  artist {\n    name\n    id\n  }\n  image {\n    resized(version: \"normalized\") {\n      url\n    }\n  }\n}\n\nfragment BuyerGuaranteeIndex_moneyBackGuaranteeImage on Artwork {\n  imageTitle\n  imageUrl\n  artist {\n    name\n    id\n  }\n}\n\nfragment BuyerGuaranteeIndex_securePaymentImage on Artwork {\n  imageTitle\n  imageUrl\n  artist {\n    name\n    id\n  }\n}\n"
   }
 };
 })();

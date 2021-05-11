@@ -9,11 +9,6 @@ export type BuyerGuaranteeIndex_moneyBackGuaranteeImage = {
     readonly artist: {
         readonly name: string | null;
     } | null;
-    readonly image: {
-        readonly resized: {
-            readonly url: string;
-        } | null;
-    } | null;
     readonly " $refType": "BuyerGuaranteeIndex_moneyBackGuaranteeImage";
 };
 export type BuyerGuaranteeIndex_moneyBackGuaranteeImage$data = BuyerGuaranteeIndex_moneyBackGuaranteeImage;
@@ -61,44 +56,9 @@ const node: ReaderFragment = {
         }
       ],
       "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "concreteType": "Image",
-      "kind": "LinkedField",
-      "name": "image",
-      "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": [
-            {
-              "kind": "Literal",
-              "name": "version",
-              "value": "large_rectangle"
-            }
-          ],
-          "concreteType": "ResizedImageUrl",
-          "kind": "LinkedField",
-          "name": "resized",
-          "plural": false,
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "url",
-              "storageKey": null
-            }
-          ],
-          "storageKey": "resized(version:\"large_rectangle\")"
-        }
-      ],
-      "storageKey": null
     }
   ],
   "type": "Artwork"
 };
-(node as any).hash = 'f44dfca209feebdeb22a88baca72ec2a';
+(node as any).hash = '4ff4a314057b21480d1b55f1f20952b3';
 export default node;
