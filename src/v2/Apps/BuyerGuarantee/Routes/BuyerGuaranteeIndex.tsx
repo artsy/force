@@ -6,6 +6,7 @@ import {
   CertificateIcon,
   color,
   CSSGrid,
+  FullBleed,
   Flex,
   Image,
   Link,
@@ -18,7 +19,6 @@ import { BuyerGuaranteeIndex_authenticityImage } from "v2/__generated__/BuyerGua
 import { BuyerGuaranteeIndex_headerImage } from "v2/__generated__/BuyerGuaranteeIndex_headerImage.graphql"
 import { BuyerGuaranteeIndex_moneyBackGuaranteeImage } from "v2/__generated__/BuyerGuaranteeIndex_moneyBackGuaranteeImage.graphql"
 import { BuyerGuaranteeIndex_securePaymentImage } from "v2/__generated__/BuyerGuaranteeIndex_securePaymentImage.graphql"
-import { FullBleed } from "v2/Components/FullBleed"
 import { graphql, createFragmentContainer } from "react-relay"
 import { Media } from "@artsy/reaction/dist/Utils/Responsive"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
