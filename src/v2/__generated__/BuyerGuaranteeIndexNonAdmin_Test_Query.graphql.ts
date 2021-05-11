@@ -61,11 +61,6 @@ fragment BuyerGuaranteeIndex_headerImage on Artwork {
     name
     id
   }
-  image {
-    resized(version: "normalized") {
-      url
-    }
-  }
 }
 
 fragment BuyerGuaranteeIndex_moneyBackGuaranteeImage on Artwork {
@@ -120,47 +115,44 @@ v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "imageTitle",
-  "storageKey": null
-},
-v5 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "imageUrl",
-  "storageKey": null
-},
-v6 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v7 = {
-  "alias": null,
-  "args": null,
-  "concreteType": "Artist",
-  "kind": "LinkedField",
-  "name": "artist",
-  "plural": false,
-  "selections": [
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "name",
-      "storageKey": null
-    },
-    (v6/*: any*/)
-  ],
-  "storageKey": null
-},
-v8 = [
-  (v4/*: any*/),
-  (v5/*: any*/),
-  (v7/*: any*/),
-  (v6/*: any*/)
+v5 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "imageTitle",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "imageUrl",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "concreteType": "Artist",
+    "kind": "LinkedField",
+    "name": "artist",
+    "plural": false,
+    "selections": [
+      {
+        "alias": null,
+        "args": null,
+        "kind": "ScalarField",
+        "name": "name",
+        "storageKey": null
+      },
+      (v4/*: any*/)
+    ],
+    "storageKey": null
+  },
+  (v4/*: any*/)
 ];
 return {
   "fragment": {
@@ -249,47 +241,7 @@ return {
         "kind": "LinkedField",
         "name": "artwork",
         "plural": false,
-        "selections": [
-          (v4/*: any*/),
-          (v5/*: any*/),
-          (v7/*: any*/),
-          {
-            "alias": null,
-            "args": null,
-            "concreteType": "Image",
-            "kind": "LinkedField",
-            "name": "image",
-            "plural": false,
-            "selections": [
-              {
-                "alias": null,
-                "args": [
-                  {
-                    "kind": "Literal",
-                    "name": "version",
-                    "value": "normalized"
-                  }
-                ],
-                "concreteType": "ResizedImageUrl",
-                "kind": "LinkedField",
-                "name": "resized",
-                "plural": false,
-                "selections": [
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "url",
-                    "storageKey": null
-                  }
-                ],
-                "storageKey": "resized(version:\"normalized\")"
-              }
-            ],
-            "storageKey": null
-          },
-          (v6/*: any*/)
-        ],
+        "selections": (v5/*: any*/),
         "storageKey": "artwork(id:\"any-id1\")"
       },
       {
@@ -299,7 +251,7 @@ return {
         "kind": "LinkedField",
         "name": "artwork",
         "plural": false,
-        "selections": (v8/*: any*/),
+        "selections": (v5/*: any*/),
         "storageKey": "artwork(id:\"any-id2\")"
       },
       {
@@ -309,7 +261,7 @@ return {
         "kind": "LinkedField",
         "name": "artwork",
         "plural": false,
-        "selections": (v8/*: any*/),
+        "selections": (v5/*: any*/),
         "storageKey": "artwork(id:\"any-id3\")"
       },
       {
@@ -319,7 +271,7 @@ return {
         "kind": "LinkedField",
         "name": "artwork",
         "plural": false,
-        "selections": (v8/*: any*/),
+        "selections": (v5/*: any*/),
         "storageKey": "artwork(id:\"any-id4\")"
       }
     ]
@@ -329,7 +281,7 @@ return {
     "metadata": {},
     "name": "BuyerGuaranteeIndexNonAdmin_Test_Query",
     "operationKind": "query",
-    "text": "query BuyerGuaranteeIndexNonAdmin_Test_Query {\n  headerImage: artwork(id: \"any-id1\") {\n    ...BuyerGuaranteeIndex_headerImage\n    id\n  }\n  authenticityImage: artwork(id: \"any-id2\") {\n    ...BuyerGuaranteeIndex_authenticityImage\n    id\n  }\n  moneyBackGuaranteeImage: artwork(id: \"any-id3\") {\n    ...BuyerGuaranteeIndex_moneyBackGuaranteeImage\n    id\n  }\n  securePaymentImage: artwork(id: \"any-id4\") {\n    ...BuyerGuaranteeIndex_securePaymentImage\n    id\n  }\n}\n\nfragment BuyerGuaranteeIndex_authenticityImage on Artwork {\n  imageTitle\n  imageUrl\n  artist {\n    name\n    id\n  }\n}\n\nfragment BuyerGuaranteeIndex_headerImage on Artwork {\n  imageTitle\n  imageUrl\n  artist {\n    name\n    id\n  }\n  image {\n    resized(version: \"normalized\") {\n      url\n    }\n  }\n}\n\nfragment BuyerGuaranteeIndex_moneyBackGuaranteeImage on Artwork {\n  imageTitle\n  imageUrl\n  artist {\n    name\n    id\n  }\n}\n\nfragment BuyerGuaranteeIndex_securePaymentImage on Artwork {\n  imageTitle\n  imageUrl\n  artist {\n    name\n    id\n  }\n}\n"
+    "text": "query BuyerGuaranteeIndexNonAdmin_Test_Query {\n  headerImage: artwork(id: \"any-id1\") {\n    ...BuyerGuaranteeIndex_headerImage\n    id\n  }\n  authenticityImage: artwork(id: \"any-id2\") {\n    ...BuyerGuaranteeIndex_authenticityImage\n    id\n  }\n  moneyBackGuaranteeImage: artwork(id: \"any-id3\") {\n    ...BuyerGuaranteeIndex_moneyBackGuaranteeImage\n    id\n  }\n  securePaymentImage: artwork(id: \"any-id4\") {\n    ...BuyerGuaranteeIndex_securePaymentImage\n    id\n  }\n}\n\nfragment BuyerGuaranteeIndex_authenticityImage on Artwork {\n  imageTitle\n  imageUrl\n  artist {\n    name\n    id\n  }\n}\n\nfragment BuyerGuaranteeIndex_headerImage on Artwork {\n  imageTitle\n  imageUrl\n  artist {\n    name\n    id\n  }\n}\n\nfragment BuyerGuaranteeIndex_moneyBackGuaranteeImage on Artwork {\n  imageTitle\n  imageUrl\n  artist {\n    name\n    id\n  }\n}\n\nfragment BuyerGuaranteeIndex_securePaymentImage on Artwork {\n  imageTitle\n  imageUrl\n  artist {\n    name\n    id\n  }\n}\n"
   }
 };
 })();

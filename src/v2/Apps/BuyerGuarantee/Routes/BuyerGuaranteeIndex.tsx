@@ -211,84 +211,110 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
 
         {/* Third Row */}
         <Flex
-          mt={[2, 3]}
           mb={[0, space(9)]}
           flexWrap={["wrap", "nowrap"]}
-          alignItems="flex-end"
+          alignItems="flex-start"
         >
+          {/* Authenticity Guarantee */}
           <Flex
             flexDirection="column"
             mt={5}
-            mx={[4, 9]}
-            width="30%"
+            height={300}
+            width="100%"
             textAlign="center"
-            border="solid 5px white"
+            justifyContent="flex-end"
           >
-            <Media greaterThanOrEqual="sm">
-              <CertificateIcon height={60} width={60} />
-            </Media>
+            <Box>
+              <Media greaterThanOrEqual="sm">
+                <CertificateIcon height={60} width={60} />
+              </Media>
+            </Box>
             <Media lessThan="sm">
               <CertificateIcon height={50} width={50} />
-            </Media>
-            <Text my={2} variant="mediumText">
-              Authenticity Guarantee
-            </Text>
-            <Media greaterThan="xs">
-              <Text variant="text">
-                In the rare occasion that your artwork is found to be
-                inauthentic, we'll help facilitate a refund.
+              <Text my={2} variant="mediumText">
+                Authenticity Guarantee
               </Text>
-              {learnMoreIcon}
+            </Media>
+
+            <Media greaterThan="xs">
+              <Box>
+                <Text my={2} variant="mediumText">
+                  Authenticity Guarantee
+                </Text>
+                <Text variant="text">
+                  In the rare occasion that your artwork is found to be
+                  inauthentic, we'll help facilitate a refund.
+                </Text>
+              </Box>
+              <Box>{learnMoreIcon}</Box>
             </Media>
           </Flex>
+          {/* Money Back Guarantee */}
           <Flex
             flexDirection="column"
             mt={5}
-            mx={[4, 9]}
-            width="30%"
+            height={300}
+            width="100%"
             textAlign="center"
-            border="solid 5px white"
+            justifyContent="flex-end"
           >
-            <Media greaterThanOrEqual="sm">
-              <MoneyBackIcon h={60} w={60} />
-            </Media>
+            <Box>
+              <Media greaterThanOrEqual="sm">
+                <MoneyBackIcon h={60} w={60} />
+              </Media>
+            </Box>
             <Media lessThan="sm">
               <MoneyBackIcon h={50} w={50} />
-            </Media>
-            <Text my={2} variant="mediumText">
-              Money-Back Guarantee
-            </Text>
-            <Media greaterThan="xs">
-              <Text variant="text" mb={2}>
-                If an item arrives not as described, we’ll work with you to make
-                it right.
+              <Text my={2} variant="mediumText">
+                Money-Back Guarantee
               </Text>
-              {learnMoreIcon}
+            </Media>
+
+            <Media greaterThan="xs">
+              <Box>
+                <Text my={2} variant="mediumText">
+                  Money-Back Guarantee
+                </Text>
+                <Text variant="text">
+                  If an item arrives not as described, we’ll work with you to
+                  make it right.
+                </Text>
+              </Box>
+              <Box>{learnMoreIcon}</Box>
             </Media>
           </Flex>
+          {/* Secured Payment Guarantee */}
           <Flex
             flexDirection="column"
             mt={5}
-            mx={[4, 9]}
-            width="30%"
+            height={300}
+            width="100%"
             textAlign="center"
-            border="solid 5px white"
+            justifyContent="flex-end"
           >
-            <Media greaterThanOrEqual="sm">
-              <LockIcon height={60} width={60} />
-            </Media>
+            <Box>
+              <Media greaterThanOrEqual="sm">
+                <LockIcon height={60} width={60} />
+              </Media>
+            </Box>
             <Media lessThan="sm">
               <LockIcon height={50} width={50} />
-            </Media>
-            <Text my={2} variant="mediumText">
-              Secure Payment
-            </Text>
-            <Media greaterThan="xs">
-              <Text variant="text">
-                Payments made through our secure checkout are protected with
-                trusted, industry-leading technology.
+              <Text my={2} variant="mediumText">
+                Authenticity Guarantee
               </Text>
-              {learnMoreIcon}
+            </Media>
+
+            <Media greaterThan="xs">
+              <Box>
+                <Text my={2} variant="mediumText">
+                  Secure Payment
+                </Text>
+                <Text variant="text">
+                  Payments made through our secure checkout are protected with
+                  trusted, industry-leading technology.
+                </Text>
+              </Box>
+              <Box>{learnMoreIcon}</Box>
             </Media>
           </Flex>
         </Flex>
@@ -771,11 +797,6 @@ export const BuyerGuaranteeIndexFragmentContainer = createFragmentContainer(
         imageUrl
         artist {
           name
-        }
-        image {
-          resized(version: "normalized") {
-            url
-          }
         }
       }
     `,
