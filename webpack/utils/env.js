@@ -21,6 +21,7 @@ const env = {
   nodeEnv: process.env.NODE_ENV,
   onCi: yn(process.env.CI, { default: false }),
   port: process.env.PORT || "5000",
+  // @ts-expect-error STRICT_NULL_CHECK
   webpackCiCpuLimit: Number.parseInt(process.env.WEBPACK_CI_CPU_LIMIT) || 4,
   webpackConcatenate: yn(process.env.WEBPACK_CONCATENATE, { default: true }),
   webpackDebug: yn(process.env.WEBPACK_DEBUG),

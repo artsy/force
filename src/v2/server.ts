@@ -16,6 +16,10 @@ const { CDN_URL, NODE_ENV } = process.env
 const PUBLIC_DIR = path.resolve(__dirname, "../../public")
 const NOVO_MANIFEST = loadAssetManifest("manifest-novo.json")
 
+if (!NOVO_MANIFEST) {
+  throw new Error("manifest-novo.json not found")
+}
+
 const app = express()
 const routes = getAppRoutes()
 

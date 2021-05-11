@@ -40,7 +40,7 @@ const USER_AGENT = `Reaction/Migration`
 
 interface Config {
   cache?: object
-  user?: User
+  user?: User | null
   checkStatus?: boolean
   relayNetwork?: INetwork
   userAgent?: string
