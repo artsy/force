@@ -6,13 +6,13 @@ import { FragmentRefs } from "relay-runtime";
 export type BuyerGuaranteeIndex_moneyBackGuaranteeImage = {
     readonly imageTitle: string | null;
     readonly imageUrl: string | null;
-    readonly artist: {
-        readonly name: string | null;
-    } | null;
     readonly image: {
         readonly resized: {
-            readonly url: string;
+            readonly srcSet: string;
         } | null;
+    } | null;
+    readonly artist: {
+        readonly name: string | null;
     } | null;
     readonly " $refType": "BuyerGuaranteeIndex_moneyBackGuaranteeImage";
 };
@@ -47,24 +47,6 @@ const node: ReaderFragment = {
     {
       "alias": null,
       "args": null,
-      "concreteType": "Artist",
-      "kind": "LinkedField",
-      "name": "artist",
-      "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "name",
-          "storageKey": null
-        }
-      ],
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
       "concreteType": "Image",
       "kind": "LinkedField",
       "name": "image",
@@ -88,7 +70,7 @@ const node: ReaderFragment = {
               "alias": null,
               "args": null,
               "kind": "ScalarField",
-              "name": "url",
+              "name": "srcSet",
               "storageKey": null
             }
           ],
@@ -96,9 +78,27 @@ const node: ReaderFragment = {
         }
       ],
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "Artist",
+      "kind": "LinkedField",
+      "name": "artist",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "name",
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
     }
   ],
   "type": "Artwork"
 };
-(node as any).hash = 'f44dfca209feebdeb22a88baca72ec2a';
+(node as any).hash = '26ba2ab8b1a4132a653089dbede44d92';
 export default node;

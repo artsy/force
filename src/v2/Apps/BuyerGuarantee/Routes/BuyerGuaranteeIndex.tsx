@@ -24,6 +24,7 @@ import { Media } from "@artsy/reaction/dist/Utils/Responsive"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import { useSystemContext } from "v2/Artsy"
 import styled from "styled-components"
+import { resize } from "v2/Utils/resizer"
 
 interface BuyerGuaranteeIndexProps {
   headerImage: BuyerGuaranteeIndex_headerImage
@@ -59,6 +60,23 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
   const supportArticleURL =
     "https://support.artsy.net/hc/en-us/articles/360048946973"
 
+  const authenticityGuaranteeImageURL = resize(
+    "http://files.artsy.net/authenticityguaranteeartwork.jpg",
+    { width: 400, height: 600, convert_to: "jpg" }
+  )
+  const securePaymentImageURL = resize(
+    "http://files.artsy.net/securepaymentartwork.jpg",
+    { width: 400, height: 600, convert_to: "jpg" }
+  )
+  const moneyBackGuaranteeImageURL = resize(
+    "http://files.artsy.net/moneybackguaranteeartwork.jpg",
+    { width: 400, height: 600, convert_to: "jpg" }
+  )
+  const heroImageURL = resize(
+    "http://files.artsy.net/buyerGuaranteeHeroImage.jpg",
+    { width: 1600, height: 800, convert_to: "jpg" }
+  )
+
   const learnMoreIcon = (
     <Flex pt={2} justifyContent="center">
       <Link href={supportArticleURL} mt="-2px" underlineBehavior="none">
@@ -86,12 +104,11 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
           <Media lessThan="sm">
             <Box height={400}>
               <Image
-                src={headerImage.image.resized.url}
+                src={heroImageURL}
                 alt={headerImage.artist.name}
                 aria-label={headerImage.imageTitle}
+                srcSet={headerImage.image.resized.srcSet}
                 lazyLoad
-                width={1600}
-                height={800}
               />
             </Box>
             <Box position="absolute">
@@ -109,12 +126,11 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
           <Media greaterThanOrEqual="sm">
             <Box height={400} overflow="hidden">
               <Image
-                src={headerImage.image.resized.url}
+                src={heroImageURL}
                 alt={headerImage.artist.name}
                 aria-label={headerImage.imageTitle}
+                srcSet={headerImage.image.resized.srcSet}
                 lazyLoad
-                width={1600}
-                height={800}
               />
             </Box>
             <Flex alignItems="center" justifyContent="center">
@@ -203,84 +219,110 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
 
         {/* Third Row */}
         <Flex
-          mt={[2, 3]}
           mb={[0, space(9)]}
           flexWrap={["wrap", "nowrap"]}
-          alignItems="flex-end"
+          alignItems="flex-start"
         >
+          {/* Authenticity Guarantee */}
           <Flex
             flexDirection="column"
             mt={5}
-            mx={[4, 9]}
-            width="30%"
+            height={300}
+            width="100%"
             textAlign="center"
-            border="solid 5px white"
+            justifyContent="flex-end"
           >
-            <Media greaterThanOrEqual="sm">
-              <CertificateIcon height={60} width={60} />
-            </Media>
+            <Box>
+              <Media greaterThanOrEqual="sm">
+                <CertificateIcon height={60} width={60} />
+              </Media>
+            </Box>
             <Media lessThan="sm">
               <CertificateIcon height={50} width={50} />
-            </Media>
-            <Text my={2} variant="mediumText">
-              Authenticity Guarantee
-            </Text>
-            <Media greaterThan="xs">
-              <Text variant="text">
-                In the rare occasion that your artwork is found to be
-                inauthentic, we'll help facilitate a refund.
+              <Text my={2} variant="mediumText">
+                Authenticity Guarantee
               </Text>
-              {learnMoreIcon}
+            </Media>
+
+            <Media greaterThan="xs">
+              <Box>
+                <Text my={2} variant="mediumText">
+                  Authenticity Guarantee
+                </Text>
+                <Text variant="text">
+                  In the rare occasion that your artwork is found to be
+                  inauthentic, we'll help facilitate a refund.
+                </Text>
+              </Box>
+              <Box>{learnMoreIcon}</Box>
             </Media>
           </Flex>
+          {/* Money Back Guarantee */}
           <Flex
             flexDirection="column"
             mt={5}
-            mx={[4, 9]}
-            width="30%"
+            height={300}
+            width="100%"
             textAlign="center"
-            border="solid 5px white"
+            justifyContent="flex-end"
           >
-            <Media greaterThanOrEqual="sm">
-              <MoneyBackIcon h={60} w={60} />
-            </Media>
+            <Box>
+              <Media greaterThanOrEqual="sm">
+                <MoneyBackIcon h={60} w={60} />
+              </Media>
+            </Box>
             <Media lessThan="sm">
               <MoneyBackIcon h={50} w={50} />
-            </Media>
-            <Text my={2} variant="mediumText">
-              Money-Back Guarantee
-            </Text>
-            <Media greaterThan="xs">
-              <Text variant="text" mb={2}>
-                If an item arrives not as described, we’ll work with you to make
-                it right.
+              <Text my={4} variant="mediumText">
+                Money-Back Guarantee
               </Text>
-              {learnMoreIcon}
+            </Media>
+
+            <Media greaterThan="xs">
+              <Box>
+                <Text my={2} variant="mediumText">
+                  Money-Back Guarantee
+                </Text>
+                <Text variant="text">
+                  If an item arrives not as described, we’ll work with you to
+                  make it right.
+                </Text>
+              </Box>
+              <Box>{learnMoreIcon}</Box>
             </Media>
           </Flex>
+          {/* Secured Payment Guarantee */}
           <Flex
             flexDirection="column"
             mt={5}
-            mx={[4, 9]}
-            width="30%"
+            height={300}
+            width="100%"
             textAlign="center"
-            border="solid 5px white"
+            justifyContent="flex-end"
           >
-            <Media greaterThanOrEqual="sm">
-              <LockIcon height={60} width={60} />
-            </Media>
+            <Box>
+              <Media greaterThanOrEqual="sm">
+                <LockIcon height={60} width={60} />
+              </Media>
+            </Box>
             <Media lessThan="sm">
               <LockIcon height={50} width={50} />
-            </Media>
-            <Text my={2} variant="mediumText">
-              Secure Payment
-            </Text>
-            <Media greaterThan="xs">
-              <Text variant="text">
-                Payments made through our secure checkout are protected with
-                trusted, industry-leading technology.
+              <Text my={2} variant="mediumText">
+                Authenticity Guarantee
               </Text>
-              {learnMoreIcon}
+            </Media>
+
+            <Media greaterThan="xs">
+              <Box>
+                <Text my={2} variant="mediumText">
+                  Secure Payment
+                </Text>
+                <Text variant="text">
+                  Payments made through our secure checkout are protected with
+                  trusted, industry-leading technology.
+                </Text>
+              </Box>
+              <Box>{learnMoreIcon}</Box>
             </Media>
           </Flex>
         </Flex>
@@ -290,11 +332,10 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
       <Media greaterThanOrEqual="sm">
         <CSSGrid gridTemplateColumns="repeat(2, 1fr)">
           <Image
-            src={authenticityImage.image.resized.url}
+            src={authenticityGuaranteeImageURL}
             alt={authenticityImage.artist.name}
+            srcSet={authenticityImage.image.resized.srcSet}
             lazyLoad
-            width="100%"
-            height={400}
             aria-label={authenticityImage.imageTitle}
           />
           <Flex flexDirection="column" p={space(9)}>
@@ -312,20 +353,18 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
             {learnMoreButton("40%")}
           </Flex>
           <Image
-            src={moneyBackGuaranteeImage.image.resized.url}
+            src={moneyBackGuaranteeImageURL}
             alt={moneyBackGuaranteeImage.artist.name}
+            srcSet={moneyBackGuaranteeImage.image.resized.srcSet}
             lazyLoad
             aria-label={moneyBackGuaranteeImage.imageTitle}
-            width="100%"
-            height={400}
           />
           <Image
-            src={securePaymentImage.image.resized.url}
+            src={securePaymentImageURL}
             alt={securePaymentImage.artist.name}
+            srcSet={securePaymentImage.image.resized.srcSet}
             aria-label={securePaymentImage.imageTitle}
             lazyLoad
-            width="100%"
-            height={400}
           />
           <Flex flexDirection="column" px={space(9)} pt={space(9)}>
             <Text variant="title">Secure Payment</Text>
@@ -341,8 +380,9 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
       <Media lessThan="sm">
         <Flex flexDirection="column" mt={5} mx={2} mb={4}>
           <Image
-            src={authenticityImage.image.resized.url}
+            src={authenticityGuaranteeImageURL}
             alt={authenticityImage.artist.name}
+            srcSet={authenticityImage.image.resized.srcSet}
             lazyLoad
             aria-label={authenticityImage.imageTitle}
           />
@@ -356,8 +396,9 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
         </Flex>
         <Flex flexDirection="column" mt={5} mx={2} mb={4}>
           <Image
-            src={moneyBackGuaranteeImage.image.resized.url}
+            src={moneyBackGuaranteeImageURL}
             alt={moneyBackGuaranteeImage.artist.name}
+            srcSet={moneyBackGuaranteeImage.image.resized.srcSet}
             lazyLoad
             aria-label={moneyBackGuaranteeImage.imageTitle}
           />
@@ -371,8 +412,9 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
         </Flex>
         <Flex flexDirection="column" mt={5} mx={2} mb={4}>
           <Image
-            src={securePaymentImage.image.resized.url}
+            src={securePaymentImageURL}
             alt={securePaymentImage.artist.name}
+            srcSet={securePaymentImage.image.resized.srcSet}
             lazyLoad
             aria-label={securePaymentImage.imageTitle}
           />
@@ -761,13 +803,13 @@ export const BuyerGuaranteeIndexFragmentContainer = createFragmentContainer(
       fragment BuyerGuaranteeIndex_headerImage on Artwork {
         imageTitle
         imageUrl
-        artist {
-          name
-        }
         image {
           resized(version: "normalized") {
-            url
+            srcSet
           }
+        }
+        artist {
+          name
         }
       }
     `,
@@ -775,13 +817,13 @@ export const BuyerGuaranteeIndexFragmentContainer = createFragmentContainer(
       fragment BuyerGuaranteeIndex_authenticityImage on Artwork {
         imageTitle
         imageUrl
-        artist {
-          name
-        }
         image {
           resized(version: "large_rectangle") {
-            url
+            srcSet
           }
+        }
+        artist {
+          name
         }
       }
     `,
@@ -789,13 +831,13 @@ export const BuyerGuaranteeIndexFragmentContainer = createFragmentContainer(
       fragment BuyerGuaranteeIndex_moneyBackGuaranteeImage on Artwork {
         imageTitle
         imageUrl
-        artist {
-          name
-        }
         image {
           resized(version: "large_rectangle") {
-            url
+            srcSet
           }
+        }
+        artist {
+          name
         }
       }
     `,
@@ -803,13 +845,13 @@ export const BuyerGuaranteeIndexFragmentContainer = createFragmentContainer(
       fragment BuyerGuaranteeIndex_securePaymentImage on Artwork {
         imageTitle
         imageUrl
-        artist {
-          name
-        }
         image {
           resized(version: "large_rectangle") {
-            url
+            srcSet
           }
+        }
+        artist {
+          name
         }
       }
     `,
