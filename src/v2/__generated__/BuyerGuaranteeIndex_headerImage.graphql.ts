@@ -6,13 +6,13 @@ import { FragmentRefs } from "relay-runtime";
 export type BuyerGuaranteeIndex_headerImage = {
     readonly imageTitle: string | null;
     readonly imageUrl: string | null;
+    readonly artist: {
+        readonly name: string | null;
+    } | null;
     readonly image: {
         readonly resized: {
             readonly srcSet: string;
         } | null;
-    } | null;
-    readonly artist: {
-        readonly name: string | null;
     } | null;
     readonly " $refType": "BuyerGuaranteeIndex_headerImage";
 };
@@ -42,6 +42,24 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "ScalarField",
       "name": "imageUrl",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "Artist",
+      "kind": "LinkedField",
+      "name": "artist",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "name",
+          "storageKey": null
+        }
+      ],
       "storageKey": null
     },
     {
@@ -78,27 +96,9 @@ const node: ReaderFragment = {
         }
       ],
       "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "concreteType": "Artist",
-      "kind": "LinkedField",
-      "name": "artist",
-      "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "name",
-          "storageKey": null
-        }
-      ],
-      "storageKey": null
     }
   ],
   "type": "Artwork"
 };
-(node as any).hash = '449113e08d06d4b54c81935abe8818c3';
+(node as any).hash = 'db01dc82a545e01ab10cb4d9e3aa3356';
 export default node;

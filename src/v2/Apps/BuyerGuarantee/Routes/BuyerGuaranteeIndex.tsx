@@ -6,7 +6,6 @@ import {
   CertificateIcon,
   color,
   CSSGrid,
-  FullBleed,
   Flex,
   Image,
   Link,
@@ -25,6 +24,7 @@ import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import { useSystemContext } from "v2/Artsy"
 import styled from "styled-components"
 import { resize } from "v2/Utils/resizer"
+import { FullBleedHeader } from "v2/Components/FullBleedHeader"
 
 interface BuyerGuaranteeIndexProps {
   headerImage: BuyerGuaranteeIndex_headerImage
@@ -98,69 +98,34 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
 
   return (
     <>
-      <FullBleed>
-        {/* Header Block */}
-        <Flex justifyContent="center" alignContent="center">
-          <Media lessThan="sm">
-            <Box height={400}>
-              <Image
-                src={heroImageURL}
-                alt={headerImage.artist.name}
-                aria-label={headerImage.imageTitle}
-                srcSet={headerImage.image.resized.srcSet}
-                lazyLoad
-              />
-            </Box>
-            <Box position="absolute">
-              <Text
-                variant="largeTitle"
-                color={color("white100")}
-                position="relative"
-                mt={"60%"}
-                as="h1"
-              >
-                The Artsy Guarantee
-              </Text>
-            </Box>
-          </Media>
-          <Media greaterThanOrEqual="sm">
-            <Box height={400} overflow="hidden">
-              <Image
-                src={heroImageURL}
-                alt={headerImage.artist.name}
-                aria-label={headerImage.imageTitle}
-                srcSet={headerImage.image.resized.srcSet}
-                lazyLoad
-              />
-            </Box>
-            <Flex alignItems="center" justifyContent="center">
-              <Box position="absolute">
-                <Text
-                  fontSize={80}
-                  color={color("white100")}
-                  position="relative"
-                  mt={"-35%"}
-                  as="h1"
-                >
-                  The Artsy Guarantee
-                </Text>
-              </Box>
-            </Flex>
-          </Media>
-        </Flex>
-        <Flex justifyContent="flex-end" mt={["-40px", "-30px"]} mr={1}>
+      <FullBleedHeader
+        {...headerImage.image.resized.srcSet}
+        height={[283, 469]}
+        src={heroImageURL}
+        caption={
+          headerImage.imageTitle +
+          ". Courtesy of the artist and Kenise Barnes Fine Art. "
+        }
+      >
+        <Flex
+          position="absolute"
+          top={0}
+          right={0}
+          bottom={0}
+          left={0}
+          justifyContent="center"
+          alignItems="center"
+        >
           <Text
-            variant={["small", "text"]}
+            fontSize={[34, null, 80]}
             color={color("white100")}
-            textAlign="right"
+            position="relative"
+            as="h1"
           >
-            {headerImage.imageTitle +
-              ". Courtesy of the artist and Kenise Barnes Fine Art. "}
+            The Artsy Guarantee
           </Text>
         </Flex>
-      </FullBleed>
-
-      {/* First Row */}
+      </FullBleedHeader>
       <Flex justifyContent="center" flexDirection="column">
         <Flex justifyContent="center" mx={["10%", "25%"]} textAlign="center">
           <Text variant="title" mt={5}>
@@ -170,81 +135,119 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
           </Text>
         </Flex>
 
-        {/* Second Row */}
-        <Flex justifyContent="center" mt={4} mx="20%">
-          <Flex flexDirection="column" mr={5} alignItems="center">
-            <Media greaterThanOrEqual="md">
-              <VerifiedIcon height={60} width={60} />
-            </Media>
-            <Media lessThan="md">
+        <Media lessThan="sm">
+          <Flex justifyContent="space-around" mt={4}>
+            <Flex flexDirection="column" alignItems="center">
               <VerifiedIcon height={50} width={50} />
-            </Media>
-            <Text
-              variant="mediumText"
-              my={[0, 2]}
-              style={{ whiteSpace: "nowrap" }}
-            >
-              Vetted Sellers
-            </Text>
-            <Media greaterThan="xs">
+              <Text
+                variant="mediumText"
+                my={2}
+                style={{ whiteSpace: "nowrap" }}
+              >
+                Vetted Sellers
+              </Text>
+            </Flex>
+
+            <Flex flexDirection="column" ml={0} alignItems="center">
+              <ChatIcon h={50} w={50} />
+              <Text
+                variant="mediumText"
+                my={2}
+                style={{ whiteSpace: "nowrap" }}
+              >
+                Dedicated Support
+              </Text>
+            </Flex>
+          </Flex>
+          <Flex justifyContent="space-around" mt={4}>
+            <Flex flexDirection="column" alignItems="center">
+              <CertificateIcon height={50} width={50} />
+              <Text
+                variant="mediumText"
+                my={2}
+                style={{ whiteSpace: "nowrap" }}
+              >
+                Authenticity Guarantee
+              </Text>
+            </Flex>
+
+            <Flex flexDirection="column" ml={0} alignItems="center">
+              <MoneyBackIcon h={50} w={50} />
+              <Text
+                variant="mediumText"
+                my={2}
+                style={{ whiteSpace: "nowrap" }}
+              >
+                Money-Back Guarantee
+              </Text>
+            </Flex>
+          </Flex>
+
+          <Flex justifyContent="space-around" mt={4}>
+            <Flex flexDirection="column" alignItems="center">
+              <LockIcon height={50} width={50} />
+              <Text
+                variant="mediumText"
+                my={2}
+                style={{ whiteSpace: "nowrap" }}
+              >
+                Secure Payment
+              </Text>
+            </Flex>
+          </Flex>
+        </Media>
+
+        <Media greaterThan="xs">
+          <Flex justifyContent="center" mt={4} mx="20%">
+            <Flex flexDirection="column" mr={5} alignItems="center">
+              <VerifiedIcon height={60} width={60} />
+
+              <Text
+                variant="mediumText"
+                my={2}
+                style={{ whiteSpace: "nowrap" }}
+              >
+                Vetted Sellers
+              </Text>
               <Text variant="text" textAlign="center" color={color("black80")}>
                 We partner with leading galleries, institutions, and auction
                 houses around the world in order to maintain the integrity of
                 our listings
               </Text>
-            </Media>
-          </Flex>
-          <Flex flexDirection="column" ml={[0, 5]} alignItems="center">
-            <Media greaterThanOrEqual="sm">
+            </Flex>
+
+            <Flex flexDirection="column" ml={[0, 5]} alignItems="center">
               <ChatIcon h={60} w={60} />
-            </Media>
-            <Media lessThan="sm">
-              <ChatIcon h={50} w={50} />
-            </Media>
-            <Text
-              variant="mediumText"
-              my={[0, 2]}
-              style={{ whiteSpace: "nowrap" }}
-            >
-              Dedicated Support
-            </Text>
-            <Media greaterThan="xs">
+              <Text
+                variant="mediumText"
+                my={2}
+                style={{ whiteSpace: "nowrap" }}
+              >
+                Dedicated Support
+              </Text>
               <Text variant="text" textAlign="center" color={color("black80")}>
                 Our global team of specialists is always here to answer your
                 questions and assist with any purchase-related needs.
               </Text>
-            </Media>
+            </Flex>
           </Flex>
-        </Flex>
 
-        {/* Third Row */}
-        <Flex
-          mb={[0, space(9)]}
-          flexWrap={["wrap", "nowrap"]}
-          alignItems="flex-start"
-        >
-          {/* Authenticity Guarantee */}
           <Flex
-            flexDirection="column"
-            mt={5}
-            height={300}
-            width="100%"
-            textAlign="center"
-            justifyContent="flex-end"
+            mb={[0, space(9)]}
+            flexWrap={["wrap", "nowrap"]}
+            alignItems="flex-start"
           >
-            <Box>
-              <Media greaterThanOrEqual="sm">
+            <Flex
+              flexDirection="column"
+              mt={5}
+              height={300}
+              width="100%"
+              textAlign="center"
+              justifyContent="flex-end"
+            >
+              <Box>
                 <CertificateIcon height={60} width={60} />
-              </Media>
-            </Box>
-            <Media lessThan="sm">
-              <CertificateIcon height={50} width={50} />
-              <Text my={2} variant="mediumText">
-                Authenticity Guarantee
-              </Text>
-            </Media>
-
-            <Media greaterThan="xs">
+              </Box>
               <Box>
                 <Text my={2} variant="mediumText">
                   Authenticity Guarantee
@@ -255,30 +258,18 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
                 </Text>
               </Box>
               <Box>{learnMoreIcon}</Box>
-            </Media>
-          </Flex>
-          {/* Money Back Guarantee */}
-          <Flex
-            flexDirection="column"
-            mt={5}
-            height={300}
-            width="100%"
-            textAlign="center"
-            justifyContent="flex-end"
-          >
-            <Box>
-              <Media greaterThanOrEqual="sm">
+            </Flex>
+            <Flex
+              flexDirection="column"
+              mt={5}
+              height={300}
+              width="100%"
+              textAlign="center"
+              justifyContent="flex-end"
+            >
+              <Box>
                 <MoneyBackIcon h={60} w={60} />
-              </Media>
-            </Box>
-            <Media lessThan="sm">
-              <MoneyBackIcon h={50} w={50} />
-              <Text my={4} variant="mediumText">
-                Money-Back Guarantee
-              </Text>
-            </Media>
-
-            <Media greaterThan="xs">
+              </Box>
               <Box>
                 <Text my={2} variant="mediumText">
                   Money-Back Guarantee
@@ -289,30 +280,19 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
                 </Text>
               </Box>
               <Box>{learnMoreIcon}</Box>
-            </Media>
-          </Flex>
-          {/* Secured Payment Guarantee */}
-          <Flex
-            flexDirection="column"
-            mt={5}
-            height={300}
-            width="100%"
-            textAlign="center"
-            justifyContent="flex-end"
-          >
-            <Box>
-              <Media greaterThanOrEqual="sm">
+            </Flex>
+            <Flex
+              flexDirection="column"
+              mt={5}
+              height={300}
+              width="100%"
+              textAlign="center"
+              justifyContent="flex-end"
+            >
+              <Box>
                 <LockIcon height={60} width={60} />
-              </Media>
-            </Box>
-            <Media lessThan="sm">
-              <LockIcon height={50} width={50} />
-              <Text my={2} variant="mediumText">
-                Authenticity Guarantee
-              </Text>
-            </Media>
+              </Box>
 
-            <Media greaterThan="xs">
               <Box>
                 <Text my={2} variant="mediumText">
                   Secure Payment
@@ -323,9 +303,9 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
                 </Text>
               </Box>
               <Box>{learnMoreIcon}</Box>
-            </Media>
+            </Flex>
           </Flex>
-        </Flex>
+        </Media>
       </Flex>
 
       {/*  Artsy Guarantee Sections desktop */}
@@ -424,7 +404,7 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
           <Text variant="text" my={2}>
             {securePaymentText}
           </Text>
-          <PoweredByStripeIcon w={500} mt={"-50px"} ml={"-30px"} />
+          <PoweredByStripeIcon w={200} ml={"-30px"} mt={0} />
         </Flex>
       </Media>
 
@@ -803,13 +783,13 @@ export const BuyerGuaranteeIndexFragmentContainer = createFragmentContainer(
       fragment BuyerGuaranteeIndex_headerImage on Artwork {
         imageTitle
         imageUrl
+        artist {
+          name
+        }
         image {
           resized(version: "normalized") {
             srcSet
           }
-        }
-        artist {
-          name
         }
       }
     `,
@@ -858,18 +838,8 @@ export const BuyerGuaranteeIndexFragmentContainer = createFragmentContainer(
   }
 )
 
-const PoweredByStripeIconContainer = styled(Box)<{
-  width?: string
-  marginTop?: string
-  marginLeft?: string
-}>`
-  width: ${props => props.width}};
-  margin-top: ${props => props.marginTop}};
-  margin-left: ${props => props.marginLeft}};
-`
-
 const PoweredByStripeIcon = ({ w, mt, ml }) => (
-  <PoweredByStripeIconContainer mt={mt} ml={ml}>
+  <Box mt={mt} ml={ml}>
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width={w}
@@ -888,7 +858,7 @@ const PoweredByStripeIcon = ({ w, mt, ml }) => (
         fillRule="evenodd"
       />
     </svg>
-  </PoweredByStripeIconContainer>
+  </Box>
 )
 
 const MoneyBackIcon = ({ h, w }) => (
@@ -928,8 +898,8 @@ const ChatIconContainer = styled.svg<{
   height: string | number
   width: string | number
 }>`
-  height: ${props => props.height}};
-  width: ${props => props.width}};
+  height: ${props => props.height};
+  width: ${props => props.width};
 `
 
 const ChatIcon = ({ h, w }) => (
