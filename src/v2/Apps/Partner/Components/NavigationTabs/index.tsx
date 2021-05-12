@@ -23,7 +23,8 @@ export const NavigationTabs: React.FC<NavigationTabsProps> = ({ partner }) => {
       locations,
       articles,
       displayArtistsSection,
-      artists,
+      representedArtists,
+      notRepresentedArtists,
     } = partner
 
     const route = (path?: string) => `/partner2/${slug}${path ? path : ""}`
@@ -48,7 +49,11 @@ export const NavigationTabs: React.FC<NavigationTabsProps> = ({ partner }) => {
         name: "Artists",
         href: route("/artists"),
         exact: false,
-        hidden: !(displayArtistsSection && artists && artists.totalCount),
+        hidden: !(
+          displayArtistsSection &&
+          ((representedArtists && representedArtists.totalCount) ||
+            (notRepresentedArtists && notRepresentedArtists.totalCount))
+        ),
       },
       {
         name: "Articles",
@@ -115,7 +120,17 @@ export const NavigationTabsFragmentContainer = createFragmentContainer(
         articles: articlesConnection {
           totalCount
         }
-        artists: artistsConnection(first: 20) {
+        representedArtists: artistsConnection(
+          representedBy: true
+          displayOnPartnerProfile: true
+        ) {
+          totalCount
+        }
+        notRepresentedArtists: artistsConnection(
+          representedBy: false
+          hasPublishedArtworks: true
+          displayOnPartnerProfile: true
+        ) {
           totalCount
         }
       }

@@ -45,7 +45,10 @@ fragment NavigationTabs_partner on Partner {
   articles: articlesConnection {
     totalCount
   }
-  artists: artistsConnection(first: 20) {
+  representedArtists: artistsConnection(representedBy: true, displayOnPartnerProfile: true) {
+    totalCount
+  }
+  notRepresentedArtists: artistsConnection(representedBy: false, hasPublishedArtworks: true, displayOnPartnerProfile: true) {
     totalCount
   }
 }
@@ -175,23 +178,21 @@ v7 = {
   "name": "name",
   "storageKey": null
 },
-v8 = [
-  {
-    "kind": "Literal",
-    "name": "first",
-    "value": 20
-  }
-],
-v9 = {
+v8 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "totalCount",
   "storageKey": null
 },
-v10 = [
-  (v9/*: any*/)
-];
+v9 = [
+  (v8/*: any*/)
+],
+v10 = {
+  "kind": "Literal",
+  "name": "displayOnPartnerProfile",
+  "value": true
+};
 return {
   "fragment": {
     "argumentDefinitions": (v0/*: any*/),
@@ -416,13 +417,19 @@ return {
           },
           {
             "alias": "locations",
-            "args": (v8/*: any*/),
+            "args": [
+              {
+                "kind": "Literal",
+                "name": "first",
+                "value": 20
+              }
+            ],
             "concreteType": "LocationConnection",
             "kind": "LinkedField",
             "name": "locationsConnection",
             "plural": false,
             "selections": [
-              (v9/*: any*/),
+              (v8/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -470,18 +477,47 @@ return {
             "kind": "LinkedField",
             "name": "articlesConnection",
             "plural": false,
-            "selections": (v10/*: any*/),
+            "selections": (v9/*: any*/),
             "storageKey": null
           },
           {
-            "alias": "artists",
-            "args": (v8/*: any*/),
+            "alias": "representedArtists",
+            "args": [
+              (v10/*: any*/),
+              {
+                "kind": "Literal",
+                "name": "representedBy",
+                "value": true
+              }
+            ],
             "concreteType": "ArtistPartnerConnection",
             "kind": "LinkedField",
             "name": "artistsConnection",
             "plural": false,
-            "selections": (v10/*: any*/),
-            "storageKey": "artistsConnection(first:20)"
+            "selections": (v9/*: any*/),
+            "storageKey": "artistsConnection(displayOnPartnerProfile:true,representedBy:true)"
+          },
+          {
+            "alias": "notRepresentedArtists",
+            "args": [
+              (v10/*: any*/),
+              {
+                "kind": "Literal",
+                "name": "hasPublishedArtworks",
+                "value": true
+              },
+              {
+                "kind": "Literal",
+                "name": "representedBy",
+                "value": false
+              }
+            ],
+            "concreteType": "ArtistPartnerConnection",
+            "kind": "LinkedField",
+            "name": "artistsConnection",
+            "plural": false,
+            "selections": (v9/*: any*/),
+            "storageKey": "artistsConnection(displayOnPartnerProfile:true,hasPublishedArtworks:true,representedBy:false)"
           },
           (v5/*: any*/)
         ],
@@ -494,7 +530,7 @@ return {
     "metadata": {},
     "name": "partnerRoutes_PartnerQuery",
     "operationKind": "query",
-    "text": "query partnerRoutes_PartnerQuery(\n  $partnerId: String!\n) {\n  partner(id: $partnerId) @principalField {\n    ...PartnerApp_partner\n    id\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  is_followed: isFollowed\n}\n\nfragment NavigationTabs_partner on Partner {\n  slug\n  displayArtistsSection\n  locations: locationsConnection(first: 20) {\n    totalCount\n  }\n  articles: articlesConnection {\n    totalCount\n  }\n  artists: artistsConnection(first: 20) {\n    totalCount\n  }\n}\n\nfragment PartnerApp_partner on Partner {\n  profile {\n    ...PartnerHeaderImage_profile\n    id\n  }\n  ...PartnerMeta_partner\n  ...PartnerHeader_partner\n  ...NavigationTabs_partner\n}\n\nfragment PartnerHeaderImage_profile on Profile {\n  image {\n    sm: cropped(width: 480, height: 280, version: \"wide\") {\n      src\n      srcSet\n    }\n    md: cropped(width: 900, height: 600, version: \"wide\") {\n      src\n      srcSet\n    }\n    lg: cropped(width: 1600, height: 600, version: \"wide\") {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment PartnerHeader_partner on Partner {\n  name\n  type\n  href\n  profile {\n    icon {\n      resized(width: 80, height: 80, version: \"square140\") {\n        src\n        srcSet\n      }\n    }\n    ...FollowProfileButton_profile\n    id\n  }\n  locations: locationsConnection(first: 20) {\n    totalCount\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n}\n\nfragment PartnerMeta_partner on Partner {\n  slug\n  meta {\n    image\n    title\n    description\n  }\n}\n"
+    "text": "query partnerRoutes_PartnerQuery(\n  $partnerId: String!\n) {\n  partner(id: $partnerId) @principalField {\n    ...PartnerApp_partner\n    id\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  is_followed: isFollowed\n}\n\nfragment NavigationTabs_partner on Partner {\n  slug\n  displayArtistsSection\n  locations: locationsConnection(first: 20) {\n    totalCount\n  }\n  articles: articlesConnection {\n    totalCount\n  }\n  representedArtists: artistsConnection(representedBy: true, displayOnPartnerProfile: true) {\n    totalCount\n  }\n  notRepresentedArtists: artistsConnection(representedBy: false, hasPublishedArtworks: true, displayOnPartnerProfile: true) {\n    totalCount\n  }\n}\n\nfragment PartnerApp_partner on Partner {\n  profile {\n    ...PartnerHeaderImage_profile\n    id\n  }\n  ...PartnerMeta_partner\n  ...PartnerHeader_partner\n  ...NavigationTabs_partner\n}\n\nfragment PartnerHeaderImage_profile on Profile {\n  image {\n    sm: cropped(width: 480, height: 280, version: \"wide\") {\n      src\n      srcSet\n    }\n    md: cropped(width: 900, height: 600, version: \"wide\") {\n      src\n      srcSet\n    }\n    lg: cropped(width: 1600, height: 600, version: \"wide\") {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment PartnerHeader_partner on Partner {\n  name\n  type\n  href\n  profile {\n    icon {\n      resized(width: 80, height: 80, version: \"square140\") {\n        src\n        srcSet\n      }\n    }\n    ...FollowProfileButton_profile\n    id\n  }\n  locations: locationsConnection(first: 20) {\n    totalCount\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n}\n\nfragment PartnerMeta_partner on Partner {\n  slug\n  meta {\n    image\n    title\n    description\n  }\n}\n"
   }
 };
 })();

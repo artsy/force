@@ -8,7 +8,6 @@ export type PartnerArtistDetailsList_partner = {
     readonly artists: {
         readonly edges: ReadonlyArray<{
             readonly id: string;
-            readonly isDisplayOnPartnerProfile: boolean | null;
             readonly representedBy: boolean | null;
             readonly counts: {
                 readonly artworks: number | null;
@@ -65,7 +64,18 @@ const node: ReaderFragment = {
     },
     {
       "alias": "artists",
-      "args": null,
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "displayOnPartnerProfile",
+          "value": true
+        },
+        {
+          "kind": "Literal",
+          "name": "hasPublishedArtworks",
+          "value": true
+        }
+      ],
       "concreteType": "ArtistPartnerConnection",
       "kind": "LinkedField",
       "name": "__PartnerArtistDetailsList_artists_connection",
@@ -84,13 +94,6 @@ const node: ReaderFragment = {
               "args": null,
               "kind": "ScalarField",
               "name": "id",
-              "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "isDisplayOnPartnerProfile",
               "storageKey": null
             },
             {
@@ -177,10 +180,10 @@ const node: ReaderFragment = {
           "storageKey": null
         }
       ],
-      "storageKey": null
+      "storageKey": "__PartnerArtistDetailsList_artists_connection(displayOnPartnerProfile:true,hasPublishedArtworks:true)"
     }
   ],
   "type": "Partner"
 };
-(node as any).hash = '3e7ea0403ad77f1321d60fe07e50f5eb';
+(node as any).hash = '5d4d6e70b06363b805148e223f96606d';
 export default node;

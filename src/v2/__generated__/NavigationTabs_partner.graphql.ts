@@ -12,7 +12,10 @@ export type NavigationTabs_partner = {
     readonly articles: {
         readonly totalCount: number | null;
     } | null;
-    readonly artists: {
+    readonly representedArtists: {
+        readonly totalCount: number | null;
+    } | null;
+    readonly notRepresentedArtists: {
         readonly totalCount: number | null;
     } | null;
     readonly " $refType": "NavigationTabs_partner";
@@ -28,20 +31,18 @@ export type NavigationTabs_partner$key = {
 const node: ReaderFragment = (function(){
 var v0 = [
   {
-    "kind": "Literal",
-    "name": "first",
-    "value": 20
-  }
-],
-v1 = [
-  {
     "alias": null,
     "args": null,
     "kind": "ScalarField",
     "name": "totalCount",
     "storageKey": null
   }
-];
+],
+v1 = {
+  "kind": "Literal",
+  "name": "displayOnPartnerProfile",
+  "value": true
+};
 return {
   "argumentDefinitions": [],
   "kind": "Fragment",
@@ -64,12 +65,18 @@ return {
     },
     {
       "alias": "locations",
-      "args": (v0/*: any*/),
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "first",
+          "value": 20
+        }
+      ],
       "concreteType": "LocationConnection",
       "kind": "LinkedField",
       "name": "locationsConnection",
       "plural": false,
-      "selections": (v1/*: any*/),
+      "selections": (v0/*: any*/),
       "storageKey": "locationsConnection(first:20)"
     },
     {
@@ -79,22 +86,51 @@ return {
       "kind": "LinkedField",
       "name": "articlesConnection",
       "plural": false,
-      "selections": (v1/*: any*/),
+      "selections": (v0/*: any*/),
       "storageKey": null
     },
     {
-      "alias": "artists",
-      "args": (v0/*: any*/),
+      "alias": "representedArtists",
+      "args": [
+        (v1/*: any*/),
+        {
+          "kind": "Literal",
+          "name": "representedBy",
+          "value": true
+        }
+      ],
       "concreteType": "ArtistPartnerConnection",
       "kind": "LinkedField",
       "name": "artistsConnection",
       "plural": false,
-      "selections": (v1/*: any*/),
-      "storageKey": "artistsConnection(first:20)"
+      "selections": (v0/*: any*/),
+      "storageKey": "artistsConnection(displayOnPartnerProfile:true,representedBy:true)"
+    },
+    {
+      "alias": "notRepresentedArtists",
+      "args": [
+        (v1/*: any*/),
+        {
+          "kind": "Literal",
+          "name": "hasPublishedArtworks",
+          "value": true
+        },
+        {
+          "kind": "Literal",
+          "name": "representedBy",
+          "value": false
+        }
+      ],
+      "concreteType": "ArtistPartnerConnection",
+      "kind": "LinkedField",
+      "name": "artistsConnection",
+      "plural": false,
+      "selections": (v0/*: any*/),
+      "storageKey": "artistsConnection(displayOnPartnerProfile:true,hasPublishedArtworks:true,representedBy:false)"
     }
   ],
   "type": "Partner"
 };
 })();
-(node as any).hash = 'de1ed4717fa1ad5aa7926720e399acc7';
+(node as any).hash = 'c0da37bb93462a41ed058d6d13e51290';
 export default node;
