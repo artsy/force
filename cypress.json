@@ -1,4 +1,4 @@
 {
   "baseUrl": "http://localhost:5000",
-  "retries": 3
+  "retries": 5
 }
