@@ -7,13 +7,14 @@ import {
   Flex,
   HTML,
   Text,
+  Spacer,
 } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FairHeader_fair } from "v2/__generated__/FairHeader_fair.graphql"
-import { ForwardLink } from "v2/Components/Links/ForwardLink"
 import { FairTimingFragmentContainer as FairTiming } from "./FairTiming"
 import { FairHeaderImageFragmentContainer as FairHeaderImage } from "./FairHeaderImage"
 import { FairHeaderIconFragmentContainer } from "./FairHeaderIcon"
+import { RouterLink } from "v2/Artsy/Router/RouterLink"
 
 interface FairHeaderProps extends BoxProps {
   fair: FairHeader_fair
@@ -45,37 +46,36 @@ const FairHeader: React.FC<FairHeaderProps> = ({ fair, ...rest }) => {
 
   const previewText = summary || about
 
-  const columnCount = previewText ? 2 : 1
-
   return (
     <Box {...rest}>
       <FairHeaderImage fair={fair} />
 
-      <GridColumns mt={[2, 4]}>
+      <GridColumns mt={[2, 6]}>
         <Column span={6}>
           <Flex mb={2}>
             <FairHeaderIconFragmentContainer fair={fair} mr={2} />
+            <Box>
+              <Text as="h1" variant="xl">
+                {fair.name}
+              </Text>
 
-            <Text as="h1" variant="largeTitle">
-              {fair.name}
-            </Text>
+              <FairTiming fair={fair} />
+            </Box>
           </Flex>
-
-          <FairTiming fair={fair} />
         </Column>
 
         <Column span={6}>
           {/* @ts-expect-error STRICT_NULL_CHECK */}
-          <HTML variant="subtitle" lineHeight="body" html={previewText} />
+          <HTML variant="sm" html={previewText} />
 
           {canShowMoreInfoLink && (
-            <ForwardLink
-              to={`/fair/${fair.slug}/info`}
-              mt={previewText ? 1 : undefined}
-              justifyContent={columnCount === 1 ? "center" : undefined}
-            >
-              More info
-            </ForwardLink>
+            <>
+              <Spacer mt={2} />
+
+              <RouterLink to={`/fair/${fair.slug}/info`}>
+                <Text variant="sm">More info</Text>
+              </RouterLink>
+            </>
           )}
         </Column>
       </GridColumns>

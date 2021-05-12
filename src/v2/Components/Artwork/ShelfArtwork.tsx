@@ -100,12 +100,14 @@ const ShelfArtwork: React.FC<ShelfArtworkProps> = ({
             style={{ objectFit: "contain" }}
           />
 
-          <SaveButtonFragmentContainer
-            mediator={mediator}
-            user={user}
-            contextModule={contextModule}
-            artwork={artwork}
-          />
+          <Media greaterThan="sm">
+            <SaveButtonFragmentContainer
+              mediator={mediator}
+              user={user}
+              contextModule={contextModule}
+              artwork={artwork}
+            />
+          </Media>
         </ResponsiveContainer>
       </RouterLink>
 

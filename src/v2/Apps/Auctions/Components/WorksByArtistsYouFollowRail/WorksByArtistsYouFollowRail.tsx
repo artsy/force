@@ -54,6 +54,7 @@ const WorksByArtistsYouFollowRail: React.FC<WorksByArtistsYouFollowRailProps> = 
               key={node.slug}
               contextModule={contextModule}
               hidePartnerName
+              lazyLoad
               onClick={() => {
                 trackEvent(
                   clickedArtworkGroup({

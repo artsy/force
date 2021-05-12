@@ -60,14 +60,12 @@ export const FairEditorialItem: React.FC<FairEditorialItemProps> = ({
       aria-label={`${article.title} (${article.publishedAt})`}
       onClick={() => tracking.trackEvent(clickedArticleTrackingData)}
     >
-      <Box flex="1" pr={3}>
-        <Text variant="subtitle" as="h4" mb={0.5}>
+      <Box flex="1" pr={2}>
+        <Text variant="sm" as="h4" mb={0.5}>
           {article.title}
         </Text>
 
-        <Text variant="text" color="black60">
-          {article.publishedAt}
-        </Text>
+        <Text color="black60">{article.publishedAt}</Text>
       </Box>
 
       <Box
