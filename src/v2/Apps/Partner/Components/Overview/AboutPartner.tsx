@@ -19,11 +19,11 @@ export const AboutPartner: React.FC<AboutPartnerProps> = ({
 
   return (
     <GridColumns mb={140} gridRowGap={2}>
-      <Column span={[12, 6]}>
+      <Column span={6}>
         <Text variant="title">About</Text>
       </Column>
 
-      <Column span={[12, 6]}>
+      <Column span={6}>
         {profile?.fullBio && <Text variant="text">{profile.fullBio}</Text>}
         {website && (
           <RouterLink to={website}>
