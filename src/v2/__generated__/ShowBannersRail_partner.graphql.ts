@@ -29,6 +29,14 @@ export type ShowBannersRail_partner = {
             } | null;
         } | null> | null;
     } | null;
+    readonly pastShows: {
+        readonly edges: ReadonlyArray<{
+            readonly node: {
+                readonly id: string;
+                readonly " $fragmentRefs": FragmentRefs<"ShowBanner_show">;
+            } | null;
+        } | null> | null;
+    } | null;
     readonly " $refType": "ShowBannersRail_partner";
 };
 export type ShowBannersRail_partner$data = ShowBannersRail_partner;
@@ -171,10 +179,37 @@ return {
       "plural": false,
       "selections": (v1/*: any*/),
       "storageKey": "showsConnection(first:10,isDisplayable:true,sort:\"START_AT_ASC\",status:\"UPCOMING\")"
+    },
+    {
+      "alias": "pastShows",
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "first",
+          "value": 2
+        },
+        (v0/*: any*/),
+        {
+          "kind": "Literal",
+          "name": "sort",
+          "value": "END_AT_DESC"
+        },
+        {
+          "kind": "Literal",
+          "name": "status",
+          "value": "CLOSED"
+        }
+      ],
+      "concreteType": "ShowConnection",
+      "kind": "LinkedField",
+      "name": "showsConnection",
+      "plural": false,
+      "selections": (v1/*: any*/),
+      "storageKey": "showsConnection(first:2,isDisplayable:true,sort:\"END_AT_DESC\",status:\"CLOSED\")"
     }
   ],
   "type": "Partner"
 };
 })();
-(node as any).hash = '0553bac151185f66b3713294fcada56a';
+(node as any).hash = 'ddf964e8e3581a95807af242947a9369';
 export default node;

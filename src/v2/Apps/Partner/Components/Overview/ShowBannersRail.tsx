@@ -88,12 +88,18 @@ const ShowBannersRail: React.FC<ShowBannersRailProps> = ({
     featuredShow: { edges: featured },
     currentShows: { edges: current },
     upcomingShows: { edges: upcoming },
+    pastShows: { edges: past },
   } = partner
 
-  const shows = take(
+  let shows = take(
     uniqBy(compact([...featured, ...current, ...upcoming]), "node.id"),
     10
   )
+
+  // Display past shows only if no Featured, Current, or Upcoming shows.
+  if (shows.length === 0) {
+    shows = compact(past)
+  }
 
   if (shows.length === 0) {
     return null
@@ -158,6 +164,19 @@ const ShowBannersRailFragmentContainer = createFragmentContainer(
           first: 10
           status: UPCOMING
           sort: START_AT_ASC
+          isDisplayable: true
+        ) {
+          edges {
+            node {
+              id
+              ...ShowBanner_show
+            }
+          }
+        }
+        pastShows: showsConnection(
+          first: 2
+          status: CLOSED
+          sort: END_AT_DESC
           isDisplayable: true
         ) {
           edges {
