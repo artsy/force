@@ -26,6 +26,7 @@ export const artistsRoutes: AppRouteConfig[] = [
     },
     children: [
       {
+        theme: "v3",
         path: "",
         getComponent: () => ArtistsIndexRoute,
         prepare: () => {
@@ -42,8 +43,8 @@ export const artistsRoutes: AppRouteConfig[] = [
           }
         `,
       },
-
       {
+        theme: "v3",
         path: "artists-starting-with-:letter([a-zA-Z])",
         getComponent: () => ArtistsByLetterRoute,
         prepare: () => {

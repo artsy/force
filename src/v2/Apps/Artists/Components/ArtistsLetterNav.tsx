@@ -1,30 +1,10 @@
-import { Box, BoxProps, color, space, Text } from "@artsy/palette"
+import { Box, BoxProps, Flex, Text } from "@artsy/palette"
+import { themeGet } from "@styled-system/theme-get"
 import React from "react"
 import styled from "styled-components"
 import { RouterLink, RouterLinkProps } from "v2/Artsy/Router/RouterLink"
 
 export const LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("")
-
-const Container = styled(Box)`
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-start;
-  justify-content: flex-start;
-`
-
-const Letter = styled(RouterLink)<RouterLinkProps>`
-  display: block;
-  padding: ${space(0.5)}px ${space(1)}px;
-  text-align: center;
-  text-decoration: none;
-  border-radius: 2px;
-
-  &.active {
-    color: ${color("black100")};
-    background-color: ${color("black5")};
-    font-weight: bold;
-  }
-`
 
 interface ArtistsLetterNavProps extends BoxProps {}
 
@@ -32,21 +12,43 @@ export const ArtistsLetterNav: React.FC<ArtistsLetterNavProps> = ({
   ...rest
 }) => {
   return (
-    <Container {...rest}>
-      {LETTERS.map(letter => {
+    <Flex flexWrap="wrap" justifyContent={["flex-start", "flex-end"]}>
+      {LETTERS.map((letter, i) => {
         return (
-          <Text key={letter} variant="text" color="black60">
+          <Text key={letter} variant="md" color="black60">
             <Letter
               key={letter}
               activeClassName="active"
               to={`/artists/artists-starting-with-${letter.toLowerCase()}`}
               title={`View artists starting with “${letter}”`}
             >
-              {letter}
+              <Box
+                p={0.5}
+                pl={i === 0 ? 0 : undefined}
+                pr={i === LETTERS.length - 1 ? 0 : undefined}
+              >
+                {letter}
+              </Box>
             </Letter>
           </Text>
         )
       })}
-    </Container>
+    </Flex>
   )
 }
+
+const Letter = styled(RouterLink)<RouterLinkProps>`
+  display: block;
+  text-align: center;
+  text-decoration: none;
+  transition: color 250ms;
+
+  &:hover {
+    text-decoration: underline;
+    color: ${themeGet("colors.black100")};
+  }
+
+  &.active {
+    color: ${themeGet("colors.black100")};
+  }
+`

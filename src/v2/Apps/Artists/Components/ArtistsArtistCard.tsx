@@ -1,37 +1,31 @@
 import React from "react"
-import { Box, BoxProps, Image, ResponsiveBox, Text } from "@artsy/palette"
+import { Box, Flex, Image, ResponsiveBox, Text } from "@artsy/palette"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
-import { FollowArtistButtonFragmentContainer } from "v2/Components/FollowButton/FollowArtistButton"
 import { ContextModule } from "@artsy/cohesion"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtistsArtistCard_artist } from "v2/__generated__/ArtistsArtistCard_artist.graphql"
+import { FollowArtistButtonFragmentContainer } from "v2/Components/FollowButton/FollowArtistButton"
 
-interface ArtistsArtistCardProps extends BoxProps {
+interface ArtistsArtistCardProps {
   artist: ArtistsArtistCard_artist
 }
 
 export const ArtistsArtistCard: React.FC<ArtistsArtistCardProps> = ({
   artist,
-  ...rest
 }) => {
   const { image, counts } = artist
 
   if (!image) return null
 
   return (
-    <Box
-      display="flex"
-      flexDirection="column"
-      justifyContent="space-between"
-      height="100%"
-      p={1}
-      border="1px solid"
-      borderColor="black10"
-      borderRadius={2}
-      flex="1"
-      {...rest}
-    >
-      <RouterLink to={artist.href} noUnderline style={{ display: "block" }}>
+    <>
+      <RouterLink
+        to={artist.href}
+        noUnderline
+        style={{ display: "block" }}
+        // Avoid the redundant tab-stop
+        tabIndex={-1}
+      >
         <ResponsiveBox
           aspectWidth={image.thumb.width}
           aspectHeight={image.thumb.height}
@@ -46,35 +40,39 @@ export const ArtistsArtistCard: React.FC<ArtistsArtistCardProps> = ({
             lazyLoad
           />
         </ResponsiveBox>
-
-        <Box my={1}>
-          <Text variant="mediumText">{artist.name}</Text>
-
-          {artist.formattedNationalityAndBirthday && (
-            <Text color="black60">
-              {artist.formattedNationalityAndBirthday}
-            </Text>
-          )}
-
-          {counts && counts.artworks > 0 && (
-            <Text color="black60">
-              {counts.artworks} work
-              {counts.artworks === 1 ? "" : "s"}
-              {counts.forSaleArtworks > 0 &&
-                counts.forSaleArtworks !== counts.artworks && (
-                  <>, {counts.forSaleArtworks} for sale</>
-                )}
-            </Text>
-          )}
-        </Box>
       </RouterLink>
 
-      <FollowArtistButtonFragmentContainer
-        artist={artist}
-        contextModule={ContextModule.featuredArtistsRail}
-        buttonProps={{ width: "100%" }}
-      />
-    </Box>
+      <Flex mt={1} alignItems="center" justifyContent="space-between">
+        <Box mr={1}>
+          <RouterLink to={artist.href} noUnderline style={{ display: "block" }}>
+            <Text variant="md">{artist.name}</Text>
+
+            {artist.formattedNationalityAndBirthday && (
+              <Text color="black60">
+                {artist.formattedNationalityAndBirthday}
+              </Text>
+            )}
+
+            {counts && counts.artworks > 0 && (
+              <Text variant="xs" fontWeight="bold">
+                {counts.artworks} work
+                {counts.artworks === 1 ? "" : "s"}
+                {counts.forSaleArtworks > 0 &&
+                  counts.forSaleArtworks !== counts.artworks && (
+                    <>, {counts.forSaleArtworks} for sale</>
+                  )}
+              </Text>
+            )}
+          </RouterLink>
+        </Box>
+
+        <FollowArtistButtonFragmentContainer
+          artist={artist}
+          contextModule={ContextModule.featuredArtistsRail}
+          buttonProps={{ size: "small", variant: "secondaryOutline" }}
+        />
+      </Flex>
+    </>
   )
 }
 
@@ -92,7 +90,7 @@ export const ArtistsArtistCardFragmentContainer = createFragmentContainer(
           forSaleArtworks
         }
         image {
-          thumb: cropped(width: 270, height: 200) {
+          thumb: cropped(width: 445, height: 334) {
             width
             height
             src
