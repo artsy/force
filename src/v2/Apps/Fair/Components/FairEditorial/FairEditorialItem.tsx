@@ -58,11 +58,13 @@ export const FairEditorialItem: React.FC<FairEditorialItemProps> = ({
       onClick={() => tracking.trackEvent(clickedArticleTrackingData)}
     >
       <Box flex="1" pr={2}>
-        <Text variant="sm" as="h4" mb={0.5}>
+        <Text variant="md" as="h4">
           {article.title}
         </Text>
 
-        <Text color="black60">{article.publishedAt}</Text>
+        <Text variant="md" color="black60">
+          {article.publishedAt}
+        </Text>
       </Box>
 
       <Box

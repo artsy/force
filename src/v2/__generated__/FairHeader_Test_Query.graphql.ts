@@ -39,18 +39,7 @@ fragment FairHeaderIcon_fair on Fair {
 
 fragment FairHeaderImage_fair on Fair {
   image {
-    sm: cropped(width: 480, height: 600, version: "wide") {
-      src
-      srcSet
-    }
-    md: cropped(width: 900, height: 600, version: "wide") {
-      src
-      srcSet
-    }
-    lg: cropped(width: 1600, height: 600, version: "wide") {
-      src
-      srcSet
-    }
+    url(version: "wide")
   }
 }
 
@@ -90,39 +79,13 @@ var v0 = [
   }
 ],
 v1 = {
-  "kind": "Literal",
-  "name": "height",
-  "value": 600
-},
-v2 = {
-  "kind": "Literal",
-  "name": "version",
-  "value": "wide"
-},
-v3 = [
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "src",
-    "storageKey": null
-  },
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "srcSet",
-    "storageKey": null
-  }
-],
-v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v5 = [
+v2 = [
   {
     "kind": "Literal",
     "name": "format",
@@ -199,58 +162,17 @@ return {
             "plural": false,
             "selections": [
               {
-                "alias": "sm",
+                "alias": null,
                 "args": [
-                  (v1/*: any*/),
-                  (v2/*: any*/),
                   {
                     "kind": "Literal",
-                    "name": "width",
-                    "value": 480
+                    "name": "version",
+                    "value": "wide"
                   }
                 ],
-                "concreteType": "CroppedImageUrl",
-                "kind": "LinkedField",
-                "name": "cropped",
-                "plural": false,
-                "selections": (v3/*: any*/),
-                "storageKey": "cropped(height:600,version:\"wide\",width:480)"
-              },
-              {
-                "alias": "md",
-                "args": [
-                  (v1/*: any*/),
-                  (v2/*: any*/),
-                  {
-                    "kind": "Literal",
-                    "name": "width",
-                    "value": 900
-                  }
-                ],
-                "concreteType": "CroppedImageUrl",
-                "kind": "LinkedField",
-                "name": "cropped",
-                "plural": false,
-                "selections": (v3/*: any*/),
-                "storageKey": "cropped(height:600,version:\"wide\",width:900)"
-              },
-              {
-                "alias": "lg",
-                "args": [
-                  (v1/*: any*/),
-                  (v2/*: any*/),
-                  {
-                    "kind": "Literal",
-                    "name": "width",
-                    "value": 1600
-                  }
-                ],
-                "concreteType": "CroppedImageUrl",
-                "kind": "LinkedField",
-                "name": "cropped",
-                "plural": false,
-                "selections": (v3/*: any*/),
-                "storageKey": "cropped(height:600,version:\"wide\",width:1600)"
+                "kind": "ScalarField",
+                "name": "url",
+                "storageKey": "url(version:\"wide\")"
               }
             ],
             "storageKey": null
@@ -301,26 +223,41 @@ return {
                     "kind": "LinkedField",
                     "name": "cropped",
                     "plural": false,
-                    "selections": (v3/*: any*/),
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "src",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "srcSet",
+                        "storageKey": null
+                      }
+                    ],
                     "storageKey": "cropped(height:100,version:\"square140\",width:100)"
                   }
                 ],
                 "storageKey": null
               },
-              (v4/*: any*/)
+              (v1/*: any*/)
             ],
             "storageKey": null
           },
           {
             "alias": null,
-            "args": (v5/*: any*/),
+            "args": (v2/*: any*/),
             "kind": "ScalarField",
             "name": "about",
             "storageKey": "about(format:\"HTML\")"
           },
           {
             "alias": null,
-            "args": (v5/*: any*/),
+            "args": (v2/*: any*/),
             "kind": "ScalarField",
             "name": "summary",
             "storageKey": "summary(format:\"HTML\")"
@@ -354,7 +291,7 @@ return {
                 "name": "summary",
                 "storageKey": null
               },
-              (v4/*: any*/)
+              (v1/*: any*/)
             ],
             "storageKey": null
           },
@@ -367,33 +304,33 @@ return {
           },
           {
             "alias": null,
-            "args": (v5/*: any*/),
+            "args": (v2/*: any*/),
             "kind": "ScalarField",
             "name": "hours",
             "storageKey": "hours(format:\"HTML\")"
           },
           {
             "alias": null,
-            "args": (v5/*: any*/),
+            "args": (v2/*: any*/),
             "kind": "ScalarField",
             "name": "links",
             "storageKey": "links(format:\"HTML\")"
           },
           {
             "alias": null,
-            "args": (v5/*: any*/),
+            "args": (v2/*: any*/),
             "kind": "ScalarField",
             "name": "tickets",
             "storageKey": "tickets(format:\"HTML\")"
           },
           {
             "alias": null,
-            "args": (v5/*: any*/),
+            "args": (v2/*: any*/),
             "kind": "ScalarField",
             "name": "contact",
             "storageKey": "contact(format:\"HTML\")"
           },
-          (v4/*: any*/)
+          (v1/*: any*/)
         ],
         "storageKey": "fair(id:\"example\")"
       }
@@ -404,7 +341,7 @@ return {
     "metadata": {},
     "name": "FairHeader_Test_Query",
     "operationKind": "query",
-    "text": "query FairHeader_Test_Query {\n  fair(id: \"example\") {\n    ...FairHeader_fair\n    id\n  }\n}\n\nfragment FairHeaderIcon_fair on Fair {\n  name\n  profile {\n    icon {\n      cropped(width: 100, height: 100, version: \"square140\") {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment FairHeaderImage_fair on Fair {\n  image {\n    sm: cropped(width: 480, height: 600, version: \"wide\") {\n      src\n      srcSet\n    }\n    md: cropped(width: 900, height: 600, version: \"wide\") {\n      src\n      srcSet\n    }\n    lg: cropped(width: 1600, height: 600, version: \"wide\") {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment FairHeader_fair on Fair {\n  ...FairTiming_fair\n  ...FairHeaderImage_fair\n  ...FairHeaderIcon_fair\n  about(format: HTML)\n  summary(format: HTML)\n  name\n  slug\n  tagline\n  location {\n    summary\n    id\n  }\n  ticketsLink\n  hours(format: HTML)\n  links(format: HTML)\n  tickets(format: HTML)\n  contact(format: HTML)\n}\n\nfragment FairTiming_fair on Fair {\n  exhibitionPeriod\n  startAt\n  endAt\n}\n"
+    "text": "query FairHeader_Test_Query {\n  fair(id: \"example\") {\n    ...FairHeader_fair\n    id\n  }\n}\n\nfragment FairHeaderIcon_fair on Fair {\n  name\n  profile {\n    icon {\n      cropped(width: 100, height: 100, version: \"square140\") {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment FairHeaderImage_fair on Fair {\n  image {\n    url(version: \"wide\")\n  }\n}\n\nfragment FairHeader_fair on Fair {\n  ...FairTiming_fair\n  ...FairHeaderImage_fair\n  ...FairHeaderIcon_fair\n  about(format: HTML)\n  summary(format: HTML)\n  name\n  slug\n  tagline\n  location {\n    summary\n    id\n  }\n  ticketsLink\n  hours(format: HTML)\n  links(format: HTML)\n  tickets(format: HTML)\n  contact(format: HTML)\n}\n\nfragment FairTiming_fair on Fair {\n  exhibitionPeriod\n  startAt\n  endAt\n}\n"
   }
 };
 })();
