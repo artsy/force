@@ -55,7 +55,7 @@ const FairArticles: React.FC<FairArticlesProps> = ({ fair, relay }) => {
 
   return (
     <>
-      <Text as="h1" variant="largeTitle" my={3}>
+      <Text as="h1" variant="xl" my={2}>
         Articles
       </Text>
 
@@ -99,17 +99,17 @@ const FairArticles: React.FC<FairArticlesProps> = ({ fair, relay }) => {
               to={heroArticle.href}
               style={{ display: "block", textDecoration: "none" }}
             >
-              <Text as="h3" pt={[0, 6]} mb={0.5} variant="title">
+              <Text as="h3" pt={[0, 6]} mb={0.5} variant="lg">
                 {heroArticle.title}
               </Text>
 
               {heroArticle.author && (
-                <Text variant="caption" color="black60">
+                <Text variant="xs" color="black60">
                   {heroArticle.author.name}
                 </Text>
               )}
 
-              <Text variant="caption">{heroArticle.publishedAt}</Text>
+              <Text variant="xs">{heroArticle.publishedAt}</Text>
             </RouterLink>
 
             <FairEditorialShare
@@ -144,17 +144,17 @@ const FairArticles: React.FC<FairArticlesProps> = ({ fair, relay }) => {
                   </ResponsiveBox>
                 )}
 
-                <Text as="h3" variant="subtitle" mt={1} mb={0.5}>
+                <Text as="h3" variant="sm" mt={1} mb={0.5}>
                   {article.title}
                 </Text>
 
                 {article.author && (
-                  <Text color="black60" variant="caption">
+                  <Text color="black60" variant="xs">
                     {article.author.name}
                   </Text>
                 )}
 
-                <Text variant="caption">{article.publishedAt}</Text>
+                <Text variant="xs">{article.publishedAt}</Text>
               </RouterLink>
 
               <FairEditorialShare

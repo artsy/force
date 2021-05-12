@@ -27,6 +27,7 @@ const FairArticlesRoute = loadable(() => import("./Routes/FairArticles"), {
 export const fairRoutes: AppRouteConfig[] = [
   {
     path: "/fair/:slug",
+    theme: "v3",
     ignoreScrollBehavior: true,
     getComponent: () => FairApp,
     prepare: () => {
@@ -42,6 +43,7 @@ export const fairRoutes: AppRouteConfig[] = [
     children: [
       {
         path: "",
+        theme: "v3",
         getComponent: () => FairExhibitorsRoute,
         prepare: () => {
           FairExhibitorsRoute.preload()
@@ -56,6 +58,7 @@ export const fairRoutes: AppRouteConfig[] = [
       },
       {
         path: "artworks(.*)?",
+        theme: "v3",
         getComponent: () => FairArtworksRoute,
         prepare: () => {
           FairArtworksRoute.preload()
@@ -85,6 +88,7 @@ export const fairRoutes: AppRouteConfig[] = [
   // The root `path: ""` matches the `FairExhibitorsRoute`.
   {
     path: "/fair/:slug",
+    theme: "v3",
     getComponent: () => FairSubApp,
     prepare: () => {
       FairSubApp.preload()
@@ -99,6 +103,7 @@ export const fairRoutes: AppRouteConfig[] = [
     children: [
       {
         path: "info",
+        theme: "v3",
         getComponent: () => FairInfoRoute,
         prepare: () => {
           FairInfoRoute.preload()
@@ -113,6 +118,7 @@ export const fairRoutes: AppRouteConfig[] = [
       },
       {
         path: "articles",
+        theme: "v3",
         getComponent: () => FairArticlesRoute,
         prepare: () => {
           FairArticlesRoute.preload()

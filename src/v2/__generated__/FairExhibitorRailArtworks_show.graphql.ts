@@ -9,7 +9,7 @@ export type FairExhibitorRailArtworks_show = {
             readonly artwork: {
                 readonly internalID: string;
                 readonly slug: string;
-                readonly " $fragmentRefs": FragmentRefs<"FillwidthItem_artwork">;
+                readonly " $fragmentRefs": FragmentRefs<"ShelfArtwork_artwork">;
             } | null;
         } | null> | null;
     } | null;
@@ -74,9 +74,15 @@ const node: ReaderFragment = {
                   "storageKey": null
                 },
                 {
-                  "args": null,
+                  "args": [
+                    {
+                      "kind": "Literal",
+                      "name": "width",
+                      "value": 200
+                    }
+                  ],
                   "kind": "FragmentSpread",
-                  "name": "FillwidthItem_artwork"
+                  "name": "ShelfArtwork_artwork"
                 }
               ],
               "storageKey": null
@@ -90,5 +96,5 @@ const node: ReaderFragment = {
   ],
   "type": "Show"
 };
-(node as any).hash = '30c2338aa32b73b3949ac6bfb1955657';
+(node as any).hash = 'e4e2d3ecb54c79200333cba4389c8101';
 export default node;

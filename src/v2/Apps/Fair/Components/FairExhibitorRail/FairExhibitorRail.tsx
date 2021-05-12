@@ -1,5 +1,5 @@
 import React, { useRef } from "react"
-import { Box, BoxProps, Text } from "@artsy/palette"
+import { Box, BoxProps, Flex, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FairExhibitorRail_show } from "v2/__generated__/FairExhibitorRail_show.graphql"
 import { useLazyLoadComponent } from "v2/Utils/Hooks/useLazyLoadComponent"
@@ -19,21 +19,13 @@ interface FairExhibitorRailProps extends BoxProps {
   show: FairExhibitorRail_show
 }
 
-/**
- * Though it is likely to exist, the sale message line may be missing.
- * In order to avoid the page shifting between the loading state and the ready state,
- * we need to hardcode the height.
- */
-export const FAIR_EXHIBITOR_RAIL_HEIGHT = 233
-export const FAIR_EXHIBITOR_IMAGE_HEIGHT = 160
-
 export const FairExhibitorRail: React.FC<FairExhibitorRailProps> = ({
   show,
   ...rest
 }) => {
   const ref = useRef<HTMLDivElement | null>(null)
   const tracking = useTracking()
-  const { isEnteredView, Waypoint } = useLazyLoadComponent()
+  const { isEnteredView, Waypoint } = useLazyLoadComponent({ threshold: 2000 })
   const {
     contextPageOwnerId,
     contextPageOwnerSlug,
@@ -57,9 +49,9 @@ export const FairExhibitorRail: React.FC<FairExhibitorRailProps> = ({
       <Waypoint />
 
       <Box ref={ref as any} {...rest}>
-        <Box display="flex" mb={1}>
+        <Flex mb={[2, 4]} pr={[1, 0]}>
           <Box flex="1">
-            <Text as="h3" variant="subtitle">
+            <Text as="h3" variant="lg">
               <RouterLink
                 to={show.href}
                 noUnderline
@@ -69,25 +61,23 @@ export const FairExhibitorRail: React.FC<FairExhibitorRailProps> = ({
               </RouterLink>
             </Text>
 
-            <Text variant="text" color="black60" mb={1}>
+            <Text as="h3" variant="lg" color="black60" mb={1}>
               {show.counts.artworks} work{show.counts.artworks === 1 ? "" : "s"}
             </Text>
           </Box>
 
           {show.href && (
             <Text
-              variant="subtitle"
+              variant="sm"
               color="black60"
               onClick={() => tracking.trackEvent(tappedViewTrackingData)}
             >
-              <RouterLink to={show.href} noUnderline>
-                View
-              </RouterLink>
+              <RouterLink to={show.href}>View</RouterLink>
             </Text>
           )}
-        </Box>
+        </Flex>
 
-        <Box height={FAIR_EXHIBITOR_RAIL_HEIGHT}>
+        <Box>
           {isEnteredView ? (
             <FairExhibitorRailArtworks id={show.internalID} />
           ) : (

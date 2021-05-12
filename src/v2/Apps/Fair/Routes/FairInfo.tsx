@@ -1,5 +1,5 @@
 import React from "react"
-import { Col, HTML, Row, Spacer, Text } from "@artsy/palette"
+import { Column, GridColumns, HTML, Spacer, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FairInfo_fair } from "v2/__generated__/FairInfo_fair.graphql"
 import styled from "styled-components"
@@ -15,82 +15,82 @@ const TextWithNewlines = styled(Text)`
 const FairInfo: React.FC<FairInfoProps> = ({ fair }) => {
   return (
     <>
-      <Text variant="largeTitle">About</Text>
+      <Text variant="md" my={2}>
+        About
+      </Text>
 
       <Spacer my={1} />
 
-      <Row>
-        <Col sm="9" pr={2}>
+      <GridColumns>
+        <Column span={8}>
           {fair.summary && (
             <>
-              <HTML variant="text" html={fair.summary} />
-              <Spacer my={3} />
+              <HTML variant="md" html={fair.summary} />
+              <Spacer my={2} />
             </>
           )}
           {fair.about && (
             <>
-              <HTML variant="text" html={fair.about} />
-              <Spacer my={3} />
+              <HTML variant="md" html={fair.about} />
+              <Spacer my={2} />
             </>
           )}
 
           {fair.tagline && (
             <>
-              <TextWithNewlines variant="text">{fair.tagline}</TextWithNewlines>
-              <Spacer my={3} />
+              <TextWithNewlines variant="md">{fair.tagline}</TextWithNewlines>
+              <Spacer my={2} />
             </>
           )}
 
           {fair.location?.summary && (
             <>
-              <Text variant="mediumText">Location</Text>
-              <TextWithNewlines variant="text">
-                {fair.location?.summary}
-              </TextWithNewlines>
-              <Spacer my={3} />
+              <Text variant="md">Location</Text>
+              <TextWithNewlines>{fair.location?.summary}</TextWithNewlines>
+              <Spacer my={2} />
             </>
           )}
-        </Col>
+        </Column>
 
-        <Col sm="3">
+        <Column span={4}>
           {fair.hours && (
             <>
-              <Text variant="mediumText">Hours</Text>
-              <HTML variant="text" html={fair.hours} />
-              <Spacer my={3} />
+              <Text variant="md">Hours</Text>
+              <HTML html={fair.hours} />
+              <Spacer my={2} />
             </>
           )}
           {fair.tickets && (
             <>
-              <Text variant="mediumText">Tickets</Text>
-              <HTML variant="text" html={fair.tickets} />
-              <Spacer my={3} />
+              <Text variant="md">Tickets</Text>
+              <HTML html={fair.tickets} />
+              <Spacer my={2} />
             </>
           )}
           {fair.ticketsLink && (
             <>
               <a href={fair.ticketsLink}>
-                <Text variant="text">Buy Tickets</Text>
+                <Text>Buy Tickets</Text>
               </a>
-              <Spacer my={3} />
+              <Spacer my={2} />
             </>
           )}
           {fair.links && (
             <>
-              <Text variant="mediumText">Links</Text>
-              <HTML variant="text" html={fair.links} />
-              <Spacer my={3} />
+              <Text variant="md">Links</Text>
+              <HTML html={fair.links} />
+              <Spacer my={2} />
             </>
           )}
           {fair.contact && (
             <>
-              <Text variant="mediumText">Contact</Text>
-              <HTML variant="text" html={fair.contact} />
-              <Spacer my={3} />
+              <Text variant="md">Contact</Text>
+              <HTML html={fair.contact} />
+              <Spacer my={2} />
             </>
           )}
-        </Col>
-      </Row>
+        </Column>
+      </GridColumns>
     </>
   )
 }
