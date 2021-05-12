@@ -16,20 +16,22 @@ export const FullBleedHeader: React.FC<FullBleedHeaderProps> = ({
   caption,
   ...rest
 }) => {
-  const xs = cropped(src, { width: 767, height: 320 })
-  const sm = cropped(src, { width: 1024, height: 600 })
-  const md = cropped(src, { width: 1440, height: 600 })
-  const lg = cropped(src, { width: 2000, height: 600 })
+  const xs = cropped(src, { width: 450, height: 320 })
+  const sm = cropped(src, { width: 767, height: 320 })
+  const md = cropped(src, { width: 1024, height: 600 })
+  const lg = cropped(src, { width: 1440, height: 600 })
+  const xl = cropped(src, { width: 2000, height: 600 })
 
   return (
-    <Container bg="black10" height={600} position="absolute" {...rest}>
+    <Container bg="black10" height={[320, 600]} position="absolute" {...rest}>
       <picture>
-        <source srcSet={lg.srcSet} media="(min-width: 1720px)" />
-        <source srcSet={md.srcSet} media="(min-width: 1232px)" />
-        <source srcSet={sm.srcSet} media="(max-width: 896px)" />
-        <source srcSet={xs.srcSet} media="(max-width: 767px)" />
+        <source srcSet={xl.srcSet} media="(min-width: 1720px)" />
+        <source srcSet={lg.srcSet} media="(min-width: 1232px)" />
+        <source srcSet={md.srcSet} media="(min-width: 896px)" />
+        <source srcSet={sm.srcSet} media="(min-width: 767px)" />
+        <source srcSet={xs.srcSet} media="(max-width: 766px)" />
 
-        <Image src={md.src} alt="" loading="lazy" />
+        <Image src={sm.src} alt="" loading="lazy" />
       </picture>
 
       {caption && (
