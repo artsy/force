@@ -125,7 +125,7 @@ jobs:
           aws_secret_access_key: $AWS_SECRET_ACCESS_KEY
     working_directory: /app
     steps:
-      - run: node scripts/strictness-migration.js
+      - run: node scripts/strictness-migration.js check-pr
 
   relay-check:
     docker:
