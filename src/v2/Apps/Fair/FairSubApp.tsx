@@ -23,7 +23,7 @@ const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
     <>
       <FairMeta fair={fair} />
 
-      <BackLink my={3} to={`/fair/${fair.slug}`}>
+      <BackLink my={2} to={`/fair/${fair.slug}`}>
         Back to {fair.name}
       </BackLink>
 

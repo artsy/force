@@ -73,6 +73,7 @@ const AuctionsApp: React.FC<AuctionsAppProps> = props => {
       </RouteTabs>
 
       <Box>{children}</Box>
+
       {typeof window !== "undefined" && (
         <>
           <LazyLoadComponent threshold={1000}>

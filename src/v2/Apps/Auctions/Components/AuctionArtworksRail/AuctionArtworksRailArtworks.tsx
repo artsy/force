@@ -40,6 +40,7 @@ const AuctionArtworksRailArtworks: React.FC<AuctionArtworksRailArtworksProps> = 
             key={node.slug}
             contextModule={contextModule}
             hidePartnerName
+            lazyLoad
             onClick={() => {
               trackEvent(
                 clickedArtworkGroup({

@@ -86,7 +86,7 @@ const FairArtworksFilter: React.FC<FairArtworksFilterProps> = props => {
       }
     >
       <BaseArtworkFilter
-        mt={[0, "-1px"]}
+        mt={6}
         relay={relay}
         viewer={fair}
         Filters={Filters}

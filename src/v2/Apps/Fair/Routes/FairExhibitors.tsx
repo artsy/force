@@ -1,5 +1,5 @@
 import { ActionType, ClickedShowMore, ContextModule } from "@artsy/cohesion"
-import { Button, Col, Grid, Row } from "@artsy/palette"
+import { Box, Button, Col, Grid, Row } from "@artsy/palette"
 import React, { useState } from "react"
 import {
   RelayPaginationProp,
@@ -61,13 +61,17 @@ const FairExhibitors: React.FC<FairExhibitorsProps> = ({ fair, relay }) => {
 
   return (
     <>
-      {fair.exhibitors?.edges.map(({ node: show }) => {
+      {fair.exhibitors?.edges.map(({ node: show }, index) => {
         if (show.counts.artworks === 0 || !show.partner) {
           // Skip rendering of booths without artworks
           return null
         }
 
-        return <FairExhibitorRail key={show.id} show={show} my={3} />
+        return (
+          <Box my={6} key={index}>
+            <FairExhibitorRail key={show.id} show={show} />
+          </Box>
+        )
       })}
 
       <Grid my={6}>

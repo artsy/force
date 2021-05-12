@@ -14,11 +14,11 @@ const FairTiming: React.FC<Props> = ({
 }) => {
   return (
     <>
-      <Text variant="title" color="black100" mb={1}>
+      <Text variant="xl" color="black60" mb={1}>
         {exhibitionPeriod}
       </Text>
 
-      <Text variant="text" color="black60">
+      <Text variant="lg">
         <WithCurrentTime syncWithServer>
           {currentTime => {
             const props = {

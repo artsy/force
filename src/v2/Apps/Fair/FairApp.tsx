@@ -1,7 +1,7 @@
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FairApp_fair } from "v2/__generated__/FairApp_fair.graphql"
-import { Box, CSSGrid, Text } from "@artsy/palette"
+import { Box, CSSGrid, Spacer, Text } from "@artsy/palette"
 import {
   FairEditorialFragmentContainer,
   FAIR_EDITORIAL_AMOUNT,
@@ -70,15 +70,15 @@ const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
       <FairHeaderFragmentContainer fair={fair} />
 
       {hasArticles && (
-        <Box my={3} pt={3} borderTop="1px solid" borderColor="black10">
+        <Box my={6} pt={4} borderTop="1px solid" borderColor="black10">
           <Box display="flex" justifyContent="space-between">
-            <Text variant="subtitle" as="h3" mb={2}>
+            <Text variant="sm" as="h3" mb={2}>
               Related Reading
             </Text>
 
             {fair.articlesConnection.totalCount > FAIR_EDITORIAL_AMOUNT && (
               <RouterLink to={`${fair.href}/articles`} noUnderline>
-                <Text variant="subtitle" color="black60">
+                <Text variant="sm" color="black60">
                   View all
                 </Text>
               </RouterLink>
@@ -97,8 +97,8 @@ const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
       )}
 
       {hasCollections && (
-        <Box my={3} pt={3} borderTop="1px solid" borderColor="black10">
-          <Text variant="subtitle" as="h3" mb={2}>
+        <Box my={6} pt={4} borderTop="1px solid" borderColor="black10">
+          <Text variant="sm" as="h3" mb={2}>
             Curated Highlights
           </Text>
 
@@ -109,14 +109,16 @@ const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
       {!!user && (
         <FairFollowedArtistsFragmentContainer
           fair={fair}
-          my={3}
-          pt={3}
+          my={2}
+          pt={2}
           borderTop="1px solid"
           borderColor="black10"
         />
       )}
 
-      <RouteTabs position="relative">
+      <Spacer my={[4, 12]} />
+
+      <RouteTabs mb={2} fill>
         <RouteTab
           to={fair.href}
           exact
@@ -131,9 +133,7 @@ const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
           onClick={() => tracking.trackEvent(clickedArtworksTabTrackingData)}
         >
           Artworks
-          <Text variant="text" display="inline">
-            &nbsp;({artworkCount})
-          </Text>
+          <Text display="inline">&nbsp;({artworkCount})</Text>
         </RouteTab>
       </RouteTabs>
 
