@@ -16,8 +16,8 @@ import { Link } from "found"
 import { compact, filter, take } from "lodash"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { slugify } from "underscore.string"
 import { FullBleedHeader } from "v2/Components/FullBleedHeader"
+import { slugify } from "underscore.string"
 
 export interface CollectionHeaderProps {
   collection: Header_collection
@@ -54,7 +54,10 @@ export const CollectionHeader: React.FC<CollectionHeaderProps> = ({
 
           <Breadcrumbs>
             <Link to="/collect">All works</Link> /{" "}
-            <Link to={`/collections#${slugify(collection.category)}`}>
+            <Link
+              // TODO: Metaphysics should expose a slug
+              to={`/collections#${slugify(collection.category)}`}
+            >
               {collection.category}
             </Link>
           </Breadcrumbs>
