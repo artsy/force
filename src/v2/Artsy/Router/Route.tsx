@@ -17,6 +17,7 @@ interface RouteConfigProps extends RouteConfig {
   cacheConfig?: CacheConfig
   displayFullPage?: boolean
   fetchIndicator?: FetchIndicator
+  hideFooter?: true
   ignoreScrollBehavior?: boolean
   prepare?: () => void
   prepareVariables?: (params: any, props: any) => object

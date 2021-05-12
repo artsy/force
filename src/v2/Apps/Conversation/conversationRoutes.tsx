@@ -6,6 +6,7 @@ export const conversationRoutes: AppRouteConfig[] = [
   {
     path: "/user/conversations",
     displayFullPage: true,
+    hideFooter: true,
     getComponent: () =>
       loadable(() => import("./ConversationApp"), {
         resolveComponent: component =>
@@ -30,6 +31,7 @@ export const conversationRoutes: AppRouteConfig[] = [
   {
     path: "/user/conversations/:conversationID",
     displayFullPage: true,
+    hideFooter: true,
     Component: loadable(() => import("./Routes/Conversation"), {
       resolveComponent: component => component.ConversationPaginationContainer,
     }),

@@ -26,9 +26,8 @@ export const AppShell: React.FC<AppShellProps> = props => {
 
   const { children, match } = props
   const routeConfig = findCurrentRoute(match)
-
   const { isEigen } = useSystemContext()
-  const showFooter = !isEigen
+  const showFooter = !isEigen && !routeConfig.hideFooter
   const appContainerMaxWidth = routeConfig.displayFullPage ? "100%" : null
 
   /**
@@ -89,11 +88,15 @@ export const AppShell: React.FC<AppShellProps> = props => {
 
           <NetworkOfflineMonitor />
 
-          <Flex backgroundColor="white100">
-            <AppContainer>
-              <HorizontalPadding>{showFooter && <Footer />}</HorizontalPadding>
-            </AppContainer>
-          </Flex>
+          {showFooter && (
+            <Flex backgroundColor="white100">
+              <AppContainer>
+                <HorizontalPadding>
+                  <Footer />
+                </HorizontalPadding>
+              </AppContainer>
+            </Flex>
+          )}
         </>
       </Theme>
     </Box>
