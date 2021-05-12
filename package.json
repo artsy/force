@@ -255,8 +255,6 @@
     "@babel/preset-react": "7.12.13",
     "@babel/preset-typescript": "7.13.0",
     "@babel/register": "7.13.8",
-    "@betterer/cli": "^4.2.0",
-    "@betterer/regexp": "^4.2.0",
     "@graphql-inspector/core": "1.14.0",
     "@loadable/babel-plugin": "5.13.2",
     "@loadable/webpack-plugin": "5.14.0",
@@ -399,7 +397,7 @@
   "husky": {
     "hooks": {
       "post-merge": "sh scripts/pull-lock.sh",
-      "pre-commit": "betterer && git add .betterer.results && lint-staged",
+      "pre-commit": "lint-staged",
       "pre-push": "yarn type-check"
     }
   },

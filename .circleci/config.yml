@@ -117,7 +117,7 @@ jobs:
       - run: yarn type-check
 
   # For strict type checking
-  betterer:
+  strict-migration-check:
     docker:
       - image: 585031190124.dkr.ecr.us-east-1.amazonaws.com/force:$CIRCLE_SHA1-builder
         aws_auth:
@@ -125,7 +125,7 @@ jobs:
           aws_secret_access_key: $AWS_SECRET_ACCESS_KEY
     working_directory: /app
     steps:
-      - run: yarn betterer ci
+      - run: node scripts/strictness-migration.js
 
   relay-check:
     docker:
@@ -261,7 +261,7 @@ workflows:
           requires:
             - builder-image-push
 
-      - betterer:
+      - strict-migration-check:
           <<: *not_staging_or_release
           context: hokusai
           requires:
