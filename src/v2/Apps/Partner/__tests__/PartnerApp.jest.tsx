@@ -44,16 +44,16 @@ describe("PartnerApp", () => {
   it("displays navigation tabs for the partner page", () => {
     const wrapper = getWrapper({
       Partner: () => ({
-        isNonSubscriber: false,
+        fullProfileEligible: true,
       }),
     })
     expect(wrapper.find("NavigationTabs").length).toBe(1)
   })
 
-  it("doesn't display navigation tabs if non-subscriber profile", () => {
+  it("does not display nav tabs for limited profile", () => {
     const wrapper = getWrapper({
       Partner: () => ({
-        isNonSubscriber: true,
+        fullProfileEligible: false,
       }),
     })
     expect(wrapper.find("NavigationTabs").length).toBe(0)

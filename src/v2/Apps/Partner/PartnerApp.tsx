@@ -25,7 +25,7 @@ export const PartnerApp: React.FC<PartnerAppProps> = ({
   partner,
   children,
 }) => {
-  const { profile, isNonSubscriber } = partner
+  const { profile, fullProfileEligible } = partner
 
   return (
     <StickyProvider>
@@ -43,7 +43,7 @@ export const PartnerApp: React.FC<PartnerAppProps> = ({
               <Separator />
             </FullBleed>
 
-            {!isNonSubscriber && <NavigationTabs partner={partner} />}
+            {fullProfileEligible && <NavigationTabs partner={partner} />}
 
             {children}
           </HorizontalPadding>
@@ -56,7 +56,7 @@ export const PartnerApp: React.FC<PartnerAppProps> = ({
 export const PartnerAppFragmentContainer = createFragmentContainer(PartnerApp, {
   partner: graphql`
     fragment PartnerApp_partner on Partner {
-      isNonSubscriber
+      fullProfileEligible
       profile {
         ...PartnerHeaderImage_profile
       }

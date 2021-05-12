@@ -45,7 +45,7 @@ export const partnerRoutes: AppRouteConfig[] = [
     query: graphql`
       query partnerRoutes_PartnerQuery($partnerId: String!) {
         partner(id: $partnerId) @principalField {
-          isNonSubscriber
+          fullProfileEligible
           ...PartnerApp_partner
         }
       }
@@ -63,7 +63,10 @@ export const partnerRoutes: AppRouteConfig[] = [
 
       const overviewPath = `/partner2/${match.params.partnerId}`
 
-      if (partner.isNonSubscriber && match.location.pathname !== overviewPath) {
+      if (
+        !partner.fullProfileEligible &&
+        match.location.pathname !== overviewPath
+      ) {
         throw new RedirectException(overviewPath, 302)
       }
 
