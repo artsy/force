@@ -6,6 +6,11 @@ import { FragmentRefs } from "relay-runtime";
 export type BuyerGuaranteeIndex_securePaymentImage = {
     readonly imageTitle: string | null;
     readonly imageUrl: string | null;
+    readonly image: {
+        readonly resized: {
+            readonly srcSet: string;
+        } | null;
+    } | null;
     readonly artist: {
         readonly name: string | null;
     } | null;
@@ -42,6 +47,41 @@ const node: ReaderFragment = {
     {
       "alias": null,
       "args": null,
+      "concreteType": "Image",
+      "kind": "LinkedField",
+      "name": "image",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": [
+            {
+              "kind": "Literal",
+              "name": "version",
+              "value": "large_rectangle"
+            }
+          ],
+          "concreteType": "ResizedImageUrl",
+          "kind": "LinkedField",
+          "name": "resized",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "srcSet",
+              "storageKey": null
+            }
+          ],
+          "storageKey": "resized(version:\"large_rectangle\")"
+        }
+      ],
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
       "concreteType": "Artist",
       "kind": "LinkedField",
       "name": "artist",
@@ -60,5 +100,5 @@ const node: ReaderFragment = {
   ],
   "type": "Artwork"
 };
-(node as any).hash = 'cf4cd87f88fb95b072bc837e4a2903ff';
+(node as any).hash = '33d11abb3bb8f392307a007dc6984acf';
 export default node;
