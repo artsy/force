@@ -85,9 +85,13 @@ const ShowBannersRail: React.FC<ShowBannersRailProps> = ({
   if (!partner) return null
 
   const {
+    // @ts-expect-error STRICT_NULL_CHECK
     featuredShow: { edges: featured },
+    // @ts-expect-error STRICT_NULL_CHECK
     currentShows: { edges: current },
+    // @ts-expect-error STRICT_NULL_CHECK
     upcomingShows: { edges: upcoming },
+    // @ts-expect-error STRICT_NULL_CHECK
     pastShows: { edges: past },
   } = partner
 
@@ -200,6 +204,7 @@ export const ShowBannersRailRenderer: React.FC<
 
   return (
     <QueryRenderer<ShowBannersRailRendererQuery>
+      // @ts-expect-error STRICT_NULL_CHECK
       environment={relayEnvironment}
       query={graphql`
         query ShowBannersRailRendererQuery($partnerId: String!) {
@@ -213,6 +218,7 @@ export const ShowBannersRailRenderer: React.FC<
         if (error || !props)
           return <ShowBannersRailPlaceholder count={10} {...rest} />
 
+        // @ts-expect-error STRICT_NULL_CHECK
         return <ShowBannersRailFragmentContainer {...rest} {...props} />
       }}
     />
