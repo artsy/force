@@ -1,4 +1,4 @@
-import { Box, Separator, breakpoints } from "@artsy/palette"
+import { Spacer } from "@artsy/palette"
 import { Collection_collection } from "v2/__generated__/Collection_collection.graphql"
 import { SeoProductsForArtworks } from "v2/Apps/Collect/Components/SeoProductsForArtworks"
 import { SeoProductsForCollections } from "v2/Apps/Collect/Components/SeoProductsForCollections"
@@ -21,7 +21,6 @@ import {
   AnalyticsContextProps,
   useAnalyticsContext,
 } from "v2/Artsy/Analytics/AnalyticsContext"
-
 import { BaseArtworkFilter } from "v2/Components/ArtworkFilter"
 import {
   ArtworkFilterContextProvider,
@@ -89,9 +88,11 @@ export const CollectionApp: React.FC<CollectionAppProps> = props => {
           { name: title, path: `/collection/${slug}` },
         ]}
       />
+
       {artworksConnection && (
         <SeoProductsForArtworks artworks={artworksConnection} />
       )}
+
       {artworksConnection && (
         <SeoProductsForCollections
           descending_artworks={descending_artworks}
@@ -101,81 +102,80 @@ export const CollectionApp: React.FC<CollectionAppProps> = props => {
           collectionName={title}
         />
       )}
-      <>
-        <CollectionHeader
-          collection={collection}
-          artworks={artworksConnection}
-        />
 
-        <Box maxWidth={breakpoints.xl} mx="auto" width="100%">
-          <FrameWithRecentlyViewed>
-            {showCollectionHubs && (
-              <CollectionsHubRails
-                linkedCollections={collection.linkedCollections}
-              />
-            )}
-            <Box>
-              <ArtworkFilterContextProvider
-                // Reset state of filter context without calling reset; which would
-                // affect analytics.
-                key={pathname}
-                filters={location.query}
-                sortOptions={[
-                  { text: "Default", value: "-decayed_merch" },
-                  {
-                    text: "Price (desc.)",
-                    value: "sold,-has_price,-prices",
-                  },
-                  {
-                    text: "Price (asc.)",
-                    value: "sold,-has_price,prices",
-                  },
-                  {
-                    text: "Recently updated",
-                    value: "-partner_updated_at",
-                  },
-                  { text: "Recently added", value: "-published_at" },
-                  { text: "Artwork year (desc.)", value: "-year" },
-                  { text: "Artwork year (asc.)", value: "year" },
-                ]}
-                aggregations={
-                  artworksConnection !== null
-                    ? (artworksConnection?.aggregations as SharedArtworkFilterContextProps["aggregations"])
-                    : null
-                }
-                onChange={updateUrl}
-              >
-                <BaseArtworkFilter
-                  relay={relay}
-                  viewer={collection}
-                  relayVariables={{
-                    slug: collection.slug,
-                    aggregations: ["TOTAL"],
-                  }}
-                />
-              </ArtworkFilterContextProvider>
-            </Box>
-            {/* HOTFIX FIXME: This rail was causing an error if included in SSR render
+      <CollectionHeader collection={collection} artworks={artworksConnection} />
+
+      <FrameWithRecentlyViewed>
+        {showCollectionHubs && (
+          <>
+            <Spacer mt={6} />
+
+            <CollectionsHubRails
+              linkedCollections={collection.linkedCollections}
+            />
+          </>
+        )}
+
+        <Spacer mt={6} />
+
+        <ArtworkFilterContextProvider
+          // Reset state of filter context without calling reset; which would
+          // affect analytics.
+          key={pathname}
+          filters={location.query}
+          sortOptions={[
+            { text: "Default", value: "-decayed_merch" },
+            {
+              text: "Price (desc.)",
+              value: "sold,-has_price,-prices",
+            },
+            {
+              text: "Price (asc.)",
+              value: "sold,-has_price,prices",
+            },
+            {
+              text: "Recently updated",
+              value: "-partner_updated_at",
+            },
+            { text: "Recently added", value: "-published_at" },
+            { text: "Artwork year (desc.)", value: "-year" },
+            { text: "Artwork year (asc.)", value: "year" },
+          ]}
+          aggregations={
+            artworksConnection !== null
+              ? (artworksConnection?.aggregations as SharedArtworkFilterContextProps["aggregations"])
+              : null
+          }
+          onChange={updateUrl}
+        >
+          <BaseArtworkFilter
+            relay={relay}
+            viewer={collection}
+            relayVariables={{
+              slug: collection.slug,
+              aggregations: ["TOTAL"],
+            }}
+          />
+        </ArtworkFilterContextProvider>
+
+        {/* HOTFIX FIXME: This rail was causing an error if included in SSR render
               pass and so it was deferred to the client.
 
               See: https://github.com/artsy/force/pull/6137
           */}
-            {collection.linkedCollections.length === 0 &&
-              typeof window !== "undefined" && (
-                <LazyLoadComponent threshold={1000}>
-                  <Separator mt={6} mb={3} />
-                  <Box mt="3">
-                    <RelatedCollectionsRail
-                      collections={collection.relatedCollections}
-                      title={collection.title}
-                      lazyLoadImages
-                    />
-                  </Box>
-                </LazyLoadComponent>
-              )}
-          </FrameWithRecentlyViewed>
-        </Box>
-      </>
+        {collection.linkedCollections.length === 0 &&
+          typeof window !== "undefined" && (
+            <LazyLoadComponent threshold={1000}>
+              <Spacer mt={6} />
+
+              <RelatedCollectionsRail
+                collections={collection.relatedCollections}
+                title={collection.title}
+                lazyLoadImages
+              />
+            </LazyLoadComponent>
+          )}
+      </FrameWithRecentlyViewed>
     </>
   )
 }

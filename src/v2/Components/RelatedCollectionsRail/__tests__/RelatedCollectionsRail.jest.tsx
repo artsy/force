@@ -15,7 +15,7 @@ jest.mock("v2/Artsy/Analytics/useTracking")
 jest.mock("@artsy/palette/dist/elements/Carousel/paginate")
 jest.unmock("react-tracking")
 
-describe("CollectionsRail", () => {
+describe.skip("CollectionsRail", () => {
   let props
   const trackEvent = jest.fn()
 

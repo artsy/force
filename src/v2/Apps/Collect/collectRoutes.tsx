@@ -53,6 +53,7 @@ export const collectRoutes: AppRouteConfig[] = [
     `,
   },
   {
+    theme: "v3",
     path: "/collection/:slug",
     getComponent: () => CollectionApp,
     prepare: () => {

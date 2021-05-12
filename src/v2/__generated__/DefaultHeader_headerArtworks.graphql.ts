@@ -6,19 +6,8 @@ import { FragmentRefs } from "relay-runtime";
 export type DefaultHeader_headerArtworks = {
     readonly edges: ReadonlyArray<{
         readonly node: {
-            readonly id: string;
-            readonly image: {
-                readonly large: {
-                    readonly width: number | null;
-                    readonly height: number | null;
-                } | null;
-                readonly small: {
-                    readonly width: number | null;
-                    readonly height: number | null;
-                } | null;
-            } | null;
+            readonly " $fragmentRefs": FragmentRefs<"DefaultHeaderArtwork_artwork">;
         } | null;
-        readonly " $fragmentRefs": FragmentRefs<"DefaultHeaderArtwork_artwork">;
     } | null> | null;
     readonly " $refType": "DefaultHeader_headerArtworks";
 };
@@ -30,24 +19,7 @@ export type DefaultHeader_headerArtworks$key = {
 
 
 
-const node: ReaderFragment = (function(){
-var v0 = [
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "width",
-    "storageKey": null
-  },
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "height",
-    "storageKey": null
-  }
-];
-return {
+const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
@@ -70,62 +42,12 @@ return {
           "plural": false,
           "selections": [
             {
-              "alias": null,
               "args": null,
-              "kind": "ScalarField",
-              "name": "id",
-              "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "concreteType": "Image",
-              "kind": "LinkedField",
-              "name": "image",
-              "plural": false,
-              "selections": [
-                {
-                  "alias": "large",
-                  "args": [
-                    {
-                      "kind": "Literal",
-                      "name": "height",
-                      "value": 230
-                    }
-                  ],
-                  "concreteType": "ResizedImageUrl",
-                  "kind": "LinkedField",
-                  "name": "resized",
-                  "plural": false,
-                  "selections": (v0/*: any*/),
-                  "storageKey": "resized(height:230)"
-                },
-                {
-                  "alias": "small",
-                  "args": [
-                    {
-                      "kind": "Literal",
-                      "name": "height",
-                      "value": 160
-                    }
-                  ],
-                  "concreteType": "ResizedImageUrl",
-                  "kind": "LinkedField",
-                  "name": "resized",
-                  "plural": false,
-                  "selections": (v0/*: any*/),
-                  "storageKey": "resized(height:160)"
-                }
-              ],
-              "storageKey": null
+              "kind": "FragmentSpread",
+              "name": "DefaultHeaderArtwork_artwork"
             }
           ],
           "storageKey": null
-        },
-        {
-          "args": null,
-          "kind": "FragmentSpread",
-          "name": "DefaultHeaderArtwork_artwork"
         }
       ],
       "storageKey": null
@@ -133,6 +55,5 @@ return {
   ],
   "type": "FilterArtworksConnection"
 };
-})();
-(node as any).hash = 'ae5d379a80797d4438c3da3bbd5c6375';
+(node as any).hash = '0d8bb416e06dcc10ce68c99eba44bb99';
 export default node;

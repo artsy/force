@@ -1,9 +1,7 @@
-import { Box, Text, color } from "@artsy/palette"
+import { Text, Shelf } from "@artsy/palette"
 import { OtherCollectionsRail_collectionGroup } from "v2/__generated__/OtherCollectionsRail_collectionGroup.graphql"
-import { Carousel } from "v2/Components/Carousel"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import styled from "styled-components"
 import { OtherCollectionsRailsContainer as OtherCollectionEntity } from "./OtherCollectionEntity"
 
 interface OtherCollectionsRailProps {
@@ -13,12 +11,12 @@ export const OtherCollectionsRail: React.FC<OtherCollectionsRailProps> = ({
   collectionGroup: { name, members },
 }) => {
   return (
-    <Container mb={4}>
-      <Text variant="subtitle" pt={3} pb={2}>
+    <>
+      <Text variant="lg" mb={4}>
         {name}
       </Text>
 
-      <Carousel>
+      <Shelf>
         {members.map((slide, index) => {
           return (
             <OtherCollectionEntity
@@ -28,14 +26,10 @@ export const OtherCollectionsRail: React.FC<OtherCollectionsRailProps> = ({
             />
           )
         })}
-      </Carousel>
-    </Container>
+      </Shelf>
+    </>
   )
 }
-
-const Container = styled(Box)`
-  border-top: 1px solid ${color("black10")};
-`
 
 export const OtherCollectionsRailsContainer = createFragmentContainer(
   OtherCollectionsRail as React.FC<OtherCollectionsRailProps>,
