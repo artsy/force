@@ -58,14 +58,13 @@ describe("CollectionsRail", () => {
 
     expect(component.text()).toMatch("Other Collections")
     expect(component.text()).toMatch("Artist Posters")
-    expect(component.text()).toMatch("Artist Skateboard Decks")
     expect(component.text()).toMatch("KAWS: Bearbricks")
   })
 
   describe("Tracking", () => {
     it("Tracks link click", () => {
       const component = getWrapper()
-      component.find("a").at(2).simulate("click")
+      component.find("a").at(1).simulate("click")
 
       expect(trackEvent).toBeCalledWith({
         action: "clickedCollectionGroup",

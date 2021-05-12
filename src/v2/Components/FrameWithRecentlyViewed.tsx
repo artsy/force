@@ -8,11 +8,12 @@ export interface Props {
   name?: string
 }
 
-export const FrameWithRecentlyViewed: React.SFC<Props> = ({ children }) => {
+export const FrameWithRecentlyViewed: React.FC<Props> = ({ children }) => {
   return (
     <Flex flexDirection="column">
       {children}
 
+      {/* TODO */}
       {typeof window !== "undefined" && (
         <LazyLoadComponent threshold={1000}>
           <RecentlyViewed />

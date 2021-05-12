@@ -8,7 +8,7 @@ export type RelatedCollectionEntity_collection = {
     readonly slug: string;
     readonly title: string;
     readonly id: string;
-    readonly price_guidance: number | null;
+    readonly priceGuidance: number | null;
     readonly artworksConnection: {
         readonly edges: ReadonlyArray<{
             readonly node: {
@@ -18,7 +18,10 @@ export type RelatedCollectionEntity_collection = {
                 readonly title: string | null;
                 readonly image: {
                     readonly resized: {
-                        readonly url: string;
+                        readonly width: number | null;
+                        readonly height: number | null;
+                        readonly src: string;
+                        readonly srcSet: string;
                     } | null;
                 } | null;
             } | null;
@@ -71,7 +74,7 @@ return {
       "storageKey": null
     },
     {
-      "alias": "price_guidance",
+      "alias": null,
       "args": null,
       "kind": "ScalarField",
       "name": "priceGuidance",
@@ -151,8 +154,13 @@ return {
                       "args": [
                         {
                           "kind": "Literal",
+                          "name": "height",
+                          "value": 150
+                        },
+                        {
+                          "kind": "Literal",
                           "name": "width",
-                          "value": 262
+                          "value": 150
                         }
                       ],
                       "concreteType": "ResizedImageUrl",
@@ -164,11 +172,32 @@ return {
                           "alias": null,
                           "args": null,
                           "kind": "ScalarField",
-                          "name": "url",
+                          "name": "width",
+                          "storageKey": null
+                        },
+                        {
+                          "alias": null,
+                          "args": null,
+                          "kind": "ScalarField",
+                          "name": "height",
+                          "storageKey": null
+                        },
+                        {
+                          "alias": null,
+                          "args": null,
+                          "kind": "ScalarField",
+                          "name": "src",
+                          "storageKey": null
+                        },
+                        {
+                          "alias": null,
+                          "args": null,
+                          "kind": "ScalarField",
+                          "name": "srcSet",
                           "storageKey": null
                         }
                       ],
-                      "storageKey": "resized(width:262)"
+                      "storageKey": "resized(height:150,width:150)"
                     }
                   ],
                   "storageKey": null
@@ -186,5 +215,5 @@ return {
   "type": "MarketingCollection"
 };
 })();
-(node as any).hash = '8c24cf0ae044a86d45d239f94f8cbe8a';
+(node as any).hash = '0fc5ba820c1e40da55e2a3b58d19d657';
 export default node;

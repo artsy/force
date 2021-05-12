@@ -1,13 +1,12 @@
-import { Box, Flex, ResponsiveImage, Text, color } from "@artsy/palette"
+import { Text, Image } from "@artsy/palette"
 import { OtherCollectionEntity_member } from "v2/__generated__/OtherCollectionEntity_member.graphql"
 import { useTracking } from "v2/Artsy/Analytics/useTracking"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import styled from "styled-components"
-import { resize } from "v2/Utils/resizer"
 import { ContextModule, clickedCollectionGroup } from "@artsy/cohesion"
 import { useAnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
+import { cropped } from "v2/Utils/resized"
 
 export interface CollectionProps {
   member: OtherCollectionEntity_member
@@ -39,27 +38,30 @@ export const OtherCollectionEntity: React.FC<CollectionProps> = ({
     )
   }
 
+  if (!thumbnail) return null
+
+  const { src, srcSet } = cropped(thumbnail, {
+    width: 325,
+    height: 244,
+    quality: 75,
+    convert_to: "jpg",
+  })
+
   return (
-    <StyledLink to={`/collection/${slug}`} onClick={handleClick}>
-      <Flex alignItems="center" height="60px">
-        {thumbnail && (
-          <ImageContainer>
-            <ThumbnailImage
-              src={resize(thumbnail, {
-                width: 60,
-                height: 60,
-                convert_to: "jpg",
-              })}
-            />
-          </ImageContainer>
-        )}
-        <Box>
-          <TitleContainer variant="text" px={2}>
-            {title}
-          </TitleContainer>
-        </Box>
-      </Flex>
-    </StyledLink>
+    <RouterLink to={`/collection/${slug}`} onClick={handleClick} noUnderline>
+      <Image
+        src={src}
+        srcSet={srcSet}
+        width={325}
+        height={244}
+        alt=""
+        lazyLoad
+      />
+
+      <Text variant="md" overflowEllipsis maxWidth={300} mt={1}>
+        {title}
+      </Text>
+    </RouterLink>
   )
 }
 
@@ -76,31 +78,3 @@ export const OtherCollectionsRailsContainer = createFragmentContainer(
     `,
   }
 )
-
-export const StyledLink = styled(RouterLink)`
-  display: block;
-  text-decoration: none;
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-  border: 1px solid ${color("black10")};
-  border-radius: 2px;
-
-  &:hover {
-    text-decoration: none;
-    border: 1px solid ${color("black60")};
-  }
-`
-
-export const ImageContainer = styled(Box)`
-  height: 60px;
-  width: 60px;
-`
-
-export const ThumbnailImage = styled(ResponsiveImage)`
-  background-size: cover;
-  border-radius: 2px 1px 1px 2px;
-`
-
-const TitleContainer = styled(Text)`
-  width: max-content;
-  white-space: nowrap;
-`
