@@ -23,7 +23,7 @@ export const FullBleedHeader: React.FC<FullBleedHeaderProps> = ({
   const xl = cropped(src, { width: 2000, height: 600 })
 
   return (
-    <Container bg="black10" height={[320, 600]} position="absolute" {...rest}>
+    <Container bg="black10" height={[320, 600]} position="relative" {...rest}>
       <picture>
         <source srcSet={xl.srcSet} media="(min-width: 1720px)" />
         <source srcSet={lg.srcSet} media="(min-width: 1232px)" />
@@ -46,7 +46,6 @@ export const FullBleedHeader: React.FC<FullBleedHeaderProps> = ({
 }
 
 const Container = styled(FullBleed)`
-  position: relative;
   overflow: hidden;
 `
 
