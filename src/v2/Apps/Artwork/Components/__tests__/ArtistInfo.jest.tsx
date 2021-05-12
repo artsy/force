@@ -6,6 +6,7 @@ import { mount } from "enzyme"
 import React from "react"
 import { RelayProp, graphql } from "react-relay"
 import { ArtistInfo } from "../ArtistInfo"
+import { EntityHeader } from "@artsy/palette"
 
 jest.unmock("react-tracking")
 
@@ -40,7 +41,7 @@ describe("ArtistInfo", () => {
   describe("ArtistInfo for artwork with complete artist info", () => {
     it("renders a correct component tree", () => {
       const component = getWrapper()
-      expect(component.find("EntityHeader").length).toBe(1)
+      expect(component.find(EntityHeader).length).toBe(1)
       expect(component.find("ArtistBio").length).toBe(1)
       expect(component.find("Button").length).toBe(1)
       expect(component.find("Button").text()).toEqual("Show artist insights")

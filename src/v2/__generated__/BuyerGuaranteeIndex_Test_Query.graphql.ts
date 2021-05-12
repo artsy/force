@@ -48,56 +48,56 @@ query BuyerGuaranteeIndex_Test_Query {
 fragment BuyerGuaranteeIndex_authenticityImage on Artwork {
   imageTitle
   imageUrl
+  image {
+    resized(version: "large_rectangle") {
+      srcSet
+    }
+  }
   artist {
     name
     id
-  }
-  image {
-    resized(version: "large_rectangle") {
-      url
-    }
   }
 }
 
 fragment BuyerGuaranteeIndex_headerImage on Artwork {
   imageTitle
   imageUrl
+  image {
+    resized(version: "normalized") {
+      srcSet
+    }
+  }
   artist {
     name
     id
-  }
-  image {
-    resized(version: "normalized") {
-      url
-    }
   }
 }
 
 fragment BuyerGuaranteeIndex_moneyBackGuaranteeImage on Artwork {
   imageTitle
   imageUrl
+  image {
+    resized(version: "large_rectangle") {
+      srcSet
+    }
+  }
   artist {
     name
     id
-  }
-  image {
-    resized(version: "large_rectangle") {
-      url
-    }
   }
 }
 
 fragment BuyerGuaranteeIndex_securePaymentImage on Artwork {
   imageTitle
   imageUrl
+  image {
+    resized(version: "large_rectangle") {
+      srcSet
+    }
+  }
   artist {
     name
     id
-  }
-  image {
-    resized(version: "large_rectangle") {
-      url
-    }
   }
 }
 */
@@ -145,14 +145,23 @@ v5 = {
   "name": "imageUrl",
   "storageKey": null
 },
-v6 = {
+v6 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "srcSet",
+    "storageKey": null
+  }
+],
+v7 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v7 = {
+v8 = {
   "alias": null,
   "args": null,
   "concreteType": "Artist",
@@ -167,23 +176,13 @@ v7 = {
       "name": "name",
       "storageKey": null
     },
-    (v6/*: any*/)
+    (v7/*: any*/)
   ],
   "storageKey": null
 },
-v8 = [
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "url",
-    "storageKey": null
-  }
-],
 v9 = [
   (v4/*: any*/),
   (v5/*: any*/),
-  (v7/*: any*/),
   {
     "alias": null,
     "args": null,
@@ -205,13 +204,14 @@ v9 = [
         "kind": "LinkedField",
         "name": "resized",
         "plural": false,
-        "selections": (v8/*: any*/),
+        "selections": (v6/*: any*/),
         "storageKey": "resized(version:\"large_rectangle\")"
       }
     ],
     "storageKey": null
   },
-  (v6/*: any*/)
+  (v8/*: any*/),
+  (v7/*: any*/)
 ];
 return {
   "fragment": {
@@ -303,7 +303,6 @@ return {
         "selections": [
           (v4/*: any*/),
           (v5/*: any*/),
-          (v7/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -325,13 +324,14 @@ return {
                 "kind": "LinkedField",
                 "name": "resized",
                 "plural": false,
-                "selections": (v8/*: any*/),
+                "selections": (v6/*: any*/),
                 "storageKey": "resized(version:\"normalized\")"
               }
             ],
             "storageKey": null
           },
-          (v6/*: any*/)
+          (v8/*: any*/),
+          (v7/*: any*/)
         ],
         "storageKey": "artwork(id:\"any-id1\")"
       },
@@ -372,7 +372,7 @@ return {
     "metadata": {},
     "name": "BuyerGuaranteeIndex_Test_Query",
     "operationKind": "query",
-    "text": "query BuyerGuaranteeIndex_Test_Query {\n  headerImage: artwork(id: \"any-id1\") {\n    ...BuyerGuaranteeIndex_headerImage\n    id\n  }\n  authenticityImage: artwork(id: \"any-id2\") {\n    ...BuyerGuaranteeIndex_authenticityImage\n    id\n  }\n  moneyBackGuaranteeImage: artwork(id: \"any-id3\") {\n    ...BuyerGuaranteeIndex_moneyBackGuaranteeImage\n    id\n  }\n  securePaymentImage: artwork(id: \"any-id4\") {\n    ...BuyerGuaranteeIndex_securePaymentImage\n    id\n  }\n}\n\nfragment BuyerGuaranteeIndex_authenticityImage on Artwork {\n  imageTitle\n  imageUrl\n  artist {\n    name\n    id\n  }\n  image {\n    resized(version: \"large_rectangle\") {\n      url\n    }\n  }\n}\n\nfragment BuyerGuaranteeIndex_headerImage on Artwork {\n  imageTitle\n  imageUrl\n  artist {\n    name\n    id\n  }\n  image {\n    resized(version: \"normalized\") {\n      url\n    }\n  }\n}\n\nfragment BuyerGuaranteeIndex_moneyBackGuaranteeImage on Artwork {\n  imageTitle\n  imageUrl\n  artist {\n    name\n    id\n  }\n  image {\n    resized(version: \"large_rectangle\") {\n      url\n    }\n  }\n}\n\nfragment BuyerGuaranteeIndex_securePaymentImage on Artwork {\n  imageTitle\n  imageUrl\n  artist {\n    name\n    id\n  }\n  image {\n    resized(version: \"large_rectangle\") {\n      url\n    }\n  }\n}\n"
+    "text": "query BuyerGuaranteeIndex_Test_Query {\n  headerImage: artwork(id: \"any-id1\") {\n    ...BuyerGuaranteeIndex_headerImage\n    id\n  }\n  authenticityImage: artwork(id: \"any-id2\") {\n    ...BuyerGuaranteeIndex_authenticityImage\n    id\n  }\n  moneyBackGuaranteeImage: artwork(id: \"any-id3\") {\n    ...BuyerGuaranteeIndex_moneyBackGuaranteeImage\n    id\n  }\n  securePaymentImage: artwork(id: \"any-id4\") {\n    ...BuyerGuaranteeIndex_securePaymentImage\n    id\n  }\n}\n\nfragment BuyerGuaranteeIndex_authenticityImage on Artwork {\n  imageTitle\n  imageUrl\n  image {\n    resized(version: \"large_rectangle\") {\n      srcSet\n    }\n  }\n  artist {\n    name\n    id\n  }\n}\n\nfragment BuyerGuaranteeIndex_headerImage on Artwork {\n  imageTitle\n  imageUrl\n  image {\n    resized(version: \"normalized\") {\n      srcSet\n    }\n  }\n  artist {\n    name\n    id\n  }\n}\n\nfragment BuyerGuaranteeIndex_moneyBackGuaranteeImage on Artwork {\n  imageTitle\n  imageUrl\n  image {\n    resized(version: \"large_rectangle\") {\n      srcSet\n    }\n  }\n  artist {\n    name\n    id\n  }\n}\n\nfragment BuyerGuaranteeIndex_securePaymentImage on Artwork {\n  imageTitle\n  imageUrl\n  image {\n    resized(version: \"large_rectangle\") {\n      srcSet\n    }\n  }\n  artist {\n    name\n    id\n  }\n}\n"
   }
 };
 })();

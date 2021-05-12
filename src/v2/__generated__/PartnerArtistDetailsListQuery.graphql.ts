@@ -138,10 +138,9 @@ fragment Metadata_artwork on Artwork {
 
 fragment PartnerArtistDetailsList_partner_2HEEH6 on Partner {
   slug
-  artists: artistsConnection(first: $first, after: $after) {
+  artists: artistsConnection(first: $first, after: $after, hasPublishedArtworks: true, displayOnPartnerProfile: true) {
     edges {
       id
-      isDisplayOnPartnerProfile
       representedBy
       counts {
         artworks
@@ -220,61 +219,73 @@ v1 = [
     "variableName": "partnerId"
   }
 ],
-v2 = [
-  {
-    "kind": "Variable",
-    "name": "after",
-    "variableName": "after"
-  },
-  {
-    "kind": "Variable",
-    "name": "first",
-    "variableName": "first"
-  }
-],
+v2 = {
+  "kind": "Variable",
+  "name": "after",
+  "variableName": "after"
+},
 v3 = {
+  "kind": "Variable",
+  "name": "first",
+  "variableName": "first"
+},
+v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "slug",
   "storageKey": null
 },
-v4 = {
+v5 = [
+  (v2/*: any*/),
+  {
+    "kind": "Literal",
+    "name": "displayOnPartnerProfile",
+    "value": true
+  },
+  (v3/*: any*/),
+  {
+    "kind": "Literal",
+    "name": "hasPublishedArtworks",
+    "value": true
+  }
+],
+v6 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v5 = {
+v7 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "name",
   "storageKey": null
 },
-v6 = {
+v8 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "href",
   "storageKey": null
 },
-v7 = {
+v9 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "internalID",
   "storageKey": null
 },
-v8 = [
+v10 = [
   {
     "kind": "Literal",
     "name": "shallow",
     "value": true
   }
 ],
-v9 = [
+v11 = [
   {
     "alias": null,
     "args": null,
@@ -299,7 +310,10 @@ return {
         "plural": false,
         "selections": [
           {
-            "args": (v2/*: any*/),
+            "args": [
+              (v2/*: any*/),
+              (v3/*: any*/)
+            ],
             "kind": "FragmentSpread",
             "name": "PartnerArtistDetailsList_partner"
           }
@@ -323,10 +337,10 @@ return {
         "name": "partner",
         "plural": false,
         "selections": [
-          (v3/*: any*/),
+          (v4/*: any*/),
           {
             "alias": "artists",
-            "args": (v2/*: any*/),
+            "args": (v5/*: any*/),
             "concreteType": "ArtistPartnerConnection",
             "kind": "LinkedField",
             "name": "artistsConnection",
@@ -340,14 +354,7 @@ return {
                 "name": "edges",
                 "plural": true,
                 "selections": [
-                  (v4/*: any*/),
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "isDisplayOnPartnerProfile",
-                    "storageKey": null
-                  },
+                  (v6/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -412,8 +419,8 @@ return {
                     "name": "node",
                     "plural": false,
                     "selections": [
-                      (v5/*: any*/),
-                      (v6/*: any*/),
+                      (v7/*: any*/),
+                      (v8/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -421,9 +428,9 @@ return {
                         "name": "formattedNationalityAndBirthday",
                         "storageKey": null
                       },
+                      (v6/*: any*/),
+                      (v9/*: any*/),
                       (v4/*: any*/),
-                      (v7/*: any*/),
-                      (v3/*: any*/),
                       {
                         "alias": "is_followed",
                         "args": null,
@@ -490,7 +497,7 @@ return {
                                 "name": "node",
                                 "plural": false,
                                 "selections": [
-                                  (v4/*: any*/),
+                                  (v6/*: any*/),
                                   {
                                     "alias": null,
                                     "args": null,
@@ -536,7 +543,7 @@ return {
                                     "name": "title",
                                     "storageKey": null
                                   },
-                                  (v6/*: any*/),
+                                  (v8/*: any*/),
                                   {
                                     "alias": null,
                                     "args": null,
@@ -560,15 +567,15 @@ return {
                                   },
                                   {
                                     "alias": null,
-                                    "args": (v8/*: any*/),
+                                    "args": (v10/*: any*/),
                                     "concreteType": "Artist",
                                     "kind": "LinkedField",
                                     "name": "artists",
                                     "plural": true,
                                     "selections": [
-                                      (v4/*: any*/),
                                       (v6/*: any*/),
-                                      (v5/*: any*/)
+                                      (v8/*: any*/),
+                                      (v7/*: any*/)
                                     ],
                                     "storageKey": "artists(shallow:true)"
                                   },
@@ -581,15 +588,15 @@ return {
                                   },
                                   {
                                     "alias": null,
-                                    "args": (v8/*: any*/),
+                                    "args": (v10/*: any*/),
                                     "concreteType": "Partner",
                                     "kind": "LinkedField",
                                     "name": "partner",
                                     "plural": false,
                                     "selections": [
-                                      (v5/*: any*/),
+                                      (v7/*: any*/),
+                                      (v8/*: any*/),
                                       (v6/*: any*/),
-                                      (v4/*: any*/),
                                       {
                                         "alias": null,
                                         "args": null,
@@ -622,7 +629,7 @@ return {
                                         "name": "isClosed",
                                         "storageKey": null
                                       },
-                                      (v4/*: any*/),
+                                      (v6/*: any*/),
                                       {
                                         "alias": "is_live_open",
                                         "args": null,
@@ -687,7 +694,7 @@ return {
                                         "kind": "LinkedField",
                                         "name": "highestBid",
                                         "plural": false,
-                                        "selections": (v9/*: any*/),
+                                        "selections": (v11/*: any*/),
                                         "storageKey": null
                                       },
                                       {
@@ -697,10 +704,10 @@ return {
                                         "kind": "LinkedField",
                                         "name": "openingBid",
                                         "plural": false,
-                                        "selections": (v9/*: any*/),
+                                        "selections": (v11/*: any*/),
                                         "storageKey": null
                                       },
-                                      (v4/*: any*/)
+                                      (v6/*: any*/)
                                     ],
                                     "storageKey": null
                                   },
@@ -711,8 +718,8 @@ return {
                                     "name": "isInquireable",
                                     "storageKey": null
                                   },
-                                  (v7/*: any*/),
-                                  (v3/*: any*/),
+                                  (v9/*: any*/),
+                                  (v4/*: any*/),
                                   {
                                     "alias": "is_saved",
                                     "args": null,
@@ -733,7 +740,7 @@ return {
                             ],
                             "storageKey": null
                           },
-                          (v4/*: any*/)
+                          (v6/*: any*/)
                         ],
                         "storageKey": null
                       },
@@ -787,14 +794,17 @@ return {
           },
           {
             "alias": "artists",
-            "args": (v2/*: any*/),
-            "filters": null,
+            "args": (v5/*: any*/),
+            "filters": [
+              "hasPublishedArtworks",
+              "displayOnPartnerProfile"
+            ],
             "handle": "connection",
             "key": "PartnerArtistDetailsList_artists",
             "kind": "LinkedHandle",
             "name": "artistsConnection"
           },
-          (v4/*: any*/)
+          (v6/*: any*/)
         ],
         "storageKey": null
       }
@@ -805,7 +815,7 @@ return {
     "metadata": {},
     "name": "PartnerArtistDetailsListQuery",
     "operationKind": "query",
-    "text": "query PartnerArtistDetailsListQuery(\n  $partnerId: String!\n  $first: Int!\n  $after: String\n) {\n  partner(id: $partnerId) @principalField {\n    ...PartnerArtistDetailsList_partner_2HEEH6\n    id\n  }\n}\n\nfragment Badge_artwork on Artwork {\n  is_biddable: isBiddable\n  href\n  sale {\n    is_preview: isPreview\n    display_timely_at: displayTimelyAt\n    id\n  }\n}\n\nfragment Contact_artwork on Artwork {\n  href\n  is_inquireable: isInquireable\n  sale {\n    is_auction: isAuction\n    is_live_open: isLiveOpen\n    is_open: isOpen\n    is_closed: isClosed\n    id\n  }\n  partner(shallow: true) {\n    type\n    id\n  }\n  sale_artwork: saleArtwork {\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    counts {\n      bidder_positions: bidderPositions\n    }\n    id\n  }\n}\n\nfragment Details_artwork on Artwork {\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n}\n\nfragment FillwidthItem_artwork on Artwork {\n  image {\n    url(version: \"larger\")\n    aspectRatio\n  }\n  imageTitle\n  title\n  href\n  ...Metadata_artwork\n  ...SaveButton_artwork\n  ...Badge_artwork\n}\n\nfragment FollowArtistButton_artist on Artist {\n  id\n  internalID\n  name\n  slug\n  is_followed: isFollowed\n  counts {\n    follows\n  }\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  ...Contact_artwork\n  href\n}\n\nfragment PartnerArtistDetailsList_partner_2HEEH6 on Partner {\n  slug\n  artists: artistsConnection(first: $first, after: $after) {\n    edges {\n      id\n      isDisplayOnPartnerProfile\n      representedBy\n      counts {\n        artworks\n      }\n      ...PartnerArtistDetails_partnerArtist\n      cursor\n      node {\n        __typename\n        id\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment PartnerArtistDetails_partnerArtist on ArtistPartnerEdge {\n  biographyBlurb(format: HTML) {\n    text\n    credit\n  }\n  node {\n    name\n    href\n    formattedNationalityAndBirthday\n    ...FollowArtistButton_artist\n    filterArtworksConnection(first: 12, partnerIDs: [$partnerId]) {\n      edges {\n        node {\n          id\n          ...FillwidthItem_artwork\n        }\n      }\n      id\n    }\n    id\n  }\n}\n\nfragment SaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n"
+    "text": "query PartnerArtistDetailsListQuery(\n  $partnerId: String!\n  $first: Int!\n  $after: String\n) {\n  partner(id: $partnerId) @principalField {\n    ...PartnerArtistDetailsList_partner_2HEEH6\n    id\n  }\n}\n\nfragment Badge_artwork on Artwork {\n  is_biddable: isBiddable\n  href\n  sale {\n    is_preview: isPreview\n    display_timely_at: displayTimelyAt\n    id\n  }\n}\n\nfragment Contact_artwork on Artwork {\n  href\n  is_inquireable: isInquireable\n  sale {\n    is_auction: isAuction\n    is_live_open: isLiveOpen\n    is_open: isOpen\n    is_closed: isClosed\n    id\n  }\n  partner(shallow: true) {\n    type\n    id\n  }\n  sale_artwork: saleArtwork {\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    counts {\n      bidder_positions: bidderPositions\n    }\n    id\n  }\n}\n\nfragment Details_artwork on Artwork {\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n}\n\nfragment FillwidthItem_artwork on Artwork {\n  image {\n    url(version: \"larger\")\n    aspectRatio\n  }\n  imageTitle\n  title\n  href\n  ...Metadata_artwork\n  ...SaveButton_artwork\n  ...Badge_artwork\n}\n\nfragment FollowArtistButton_artist on Artist {\n  id\n  internalID\n  name\n  slug\n  is_followed: isFollowed\n  counts {\n    follows\n  }\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  ...Contact_artwork\n  href\n}\n\nfragment PartnerArtistDetailsList_partner_2HEEH6 on Partner {\n  slug\n  artists: artistsConnection(first: $first, after: $after, hasPublishedArtworks: true, displayOnPartnerProfile: true) {\n    edges {\n      id\n      representedBy\n      counts {\n        artworks\n      }\n      ...PartnerArtistDetails_partnerArtist\n      cursor\n      node {\n        __typename\n        id\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment PartnerArtistDetails_partnerArtist on ArtistPartnerEdge {\n  biographyBlurb(format: HTML) {\n    text\n    credit\n  }\n  node {\n    name\n    href\n    formattedNationalityAndBirthday\n    ...FollowArtistButton_artist\n    filterArtworksConnection(first: 12, partnerIDs: [$partnerId]) {\n      edges {\n        node {\n          id\n          ...FillwidthItem_artwork\n        }\n      }\n      id\n    }\n    id\n  }\n}\n\nfragment SaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n"
   }
 };
 })();

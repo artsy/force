@@ -5,9 +5,9 @@ import {
   Column,
   Button,
   ProgressDots,
+  FullBleed,
 } from "@artsy/palette"
 import React from "react"
-import { FullBleed } from "../FullBleed"
 import { Page } from "./Components/Page"
 
 export default {

@@ -7,7 +7,6 @@ export type PartnerArtistsCarousel_partner = {
     readonly slug: string;
     readonly artists: {
         readonly edges: ReadonlyArray<{
-            readonly isDisplayOnPartnerProfile: boolean | null;
             readonly counts: {
                 readonly artworks: number | null;
             } | null;
@@ -37,42 +36,34 @@ var v0 = {
   "storageKey": null
 };
 return {
-  "argumentDefinitions": [
-    {
-      "defaultValue": 19,
-      "kind": "LocalArgument",
-      "name": "first",
-      "type": "Int"
-    },
-    {
-      "defaultValue": null,
-      "kind": "LocalArgument",
-      "name": "after",
-      "type": "String"
-    }
-  ],
+  "argumentDefinitions": [],
   "kind": "Fragment",
-  "metadata": {
-    "connection": [
-      {
-        "count": "first",
-        "cursor": "after",
-        "direction": "forward",
-        "path": [
-          "artists"
-        ]
-      }
-    ]
-  },
+  "metadata": null,
   "name": "PartnerArtistsCarousel_partner",
   "selections": [
     (v0/*: any*/),
     {
       "alias": "artists",
-      "args": null,
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "displayOnPartnerProfile",
+          "value": true
+        },
+        {
+          "kind": "Literal",
+          "name": "first",
+          "value": 19
+        },
+        {
+          "kind": "Literal",
+          "name": "hasPublishedArtworks",
+          "value": true
+        }
+      ],
       "concreteType": "ArtistPartnerConnection",
       "kind": "LinkedField",
-      "name": "__PartnerArtistsCarousel_artists_connection",
+      "name": "artistsConnection",
       "plural": false,
       "selections": [
         {
@@ -83,13 +74,6 @@ return {
           "name": "edges",
           "plural": true,
           "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "isDisplayOnPartnerProfile",
-              "storageKey": null
-            },
             {
               "alias": null,
               "args": null,
@@ -125,61 +109,22 @@ return {
                 },
                 (v0/*: any*/),
                 {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "__typename",
-                  "storageKey": null
-                },
-                {
                   "args": null,
                   "kind": "FragmentSpread",
                   "name": "PartnerArtistsCarouselItem_artist"
                 }
               ],
               "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "cursor",
-              "storageKey": null
-            }
-          ],
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "concreteType": "PageInfo",
-          "kind": "LinkedField",
-          "name": "pageInfo",
-          "plural": false,
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "endCursor",
-              "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "hasNextPage",
-              "storageKey": null
             }
           ],
           "storageKey": null
         }
       ],
-      "storageKey": null
+      "storageKey": "artistsConnection(displayOnPartnerProfile:true,first:19,hasPublishedArtworks:true)"
     }
   ],
   "type": "Partner"
 };
 })();
-(node as any).hash = 'e2eeee0bb9409f729e03572dff23b588';
+(node as any).hash = 'ee2d03ee6c2198412ac82795f342ad54';
 export default node;

@@ -1,8 +1,8 @@
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FairHeaderImage_fair } from "v2/__generated__/FairHeaderImage_fair.graphql"
-import { FullBleed } from "v2/Components/FullBleed"
 import styled from "styled-components"
+import { FullBleed } from "@artsy/palette"
 
 const Container = styled(FullBleed)`
   position: relative;

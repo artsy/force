@@ -1,9 +1,8 @@
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { PartnerHeaderImage_profile } from "v2/__generated__/PartnerHeaderImage_profile.graphql"
-import { FullBleed } from "v2/Components/FullBleed"
 import styled from "styled-components"
-import { Box } from "@artsy/palette"
+import { Box, FullBleed } from "@artsy/palette"
 import { MOBILE_NAV_HEIGHT, NAV_BAR_HEIGHT } from "v2/Components/NavBar"
 
 const Container = styled(FullBleed)`

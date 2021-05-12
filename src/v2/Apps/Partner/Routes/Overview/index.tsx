@@ -6,6 +6,7 @@ import { Overview_partner } from "v2/__generated__/Overview_partner.graphql"
 import { ArtistsRailFragmentContainer } from "../../Components/Overview/ArtistsRail"
 import { ShowsRailFragmentContainer } from "../../Components/Overview/ShowsRail"
 import { ArtworksRailRenderer } from "../../Components/Overview/ArtworksRail"
+import { ShowBannersRailRenderer } from "../../Components/Overview/ShowBannersRail"
 
 interface OverviewProps {
   partner: Overview_partner
@@ -13,28 +14,29 @@ interface OverviewProps {
 
 const Overview: React.FC<OverviewProps> = ({ partner }) => {
   const {
+    slug,
+    profileBannerDisplay,
+    displayArtistsSection,
     // @ts-expect-error STRICT_NULL_CHECK
     articlesConnection: { edges: articles },
-    displayArtistsSection,
-    profileBannerDisplay,
   } = partner
 
   const hasArticles = articles.length > 0
 
   return (
     <Box>
-      {profileBannerDisplay === "Artworks" && (
-        <ArtworksRailRenderer mt={4} mb={[4, 80]} partnerId={partner.slug} />
+      {profileBannerDisplay === "Artworks" ? (
+        <ArtworksRailRenderer mt={4} mb={[4, 80]} partnerId={slug} />
+      ) : (
+        <ShowBannersRailRenderer mt={4} mb={[4, 80]} partnerId={slug} />
       )}
+
       <ShowsRailFragmentContainer mt={4} mb={[4, 80]} partner={partner} />
       {displayArtistsSection && (
         <ArtistsRailFragmentContainer partner={partner} />
       )}
       {hasArticles && (
-        <ArticlesRailFragmentContainer
-          partnerSlug={partner.slug}
-          articles={articles}
-        />
+        <ArticlesRailFragmentContainer partnerSlug={slug} articles={articles} />
       )}
     </Box>
   )

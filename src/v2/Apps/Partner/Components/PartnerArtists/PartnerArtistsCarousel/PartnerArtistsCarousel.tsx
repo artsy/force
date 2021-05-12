@@ -4,7 +4,7 @@ import { flatten } from "lodash"
 import { createFragmentContainer, graphql, QueryRenderer } from "react-relay"
 import { useSystemContext } from "v2/Artsy"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
-import { PartnerArtistsCarouselQuery } from "v2/__generated__/PartnerArtistsCarouselQuery.graphql"
+import { PartnerArtistsCarouselRendererQuery } from "v2/__generated__/PartnerArtistsCarouselRendererQuery.graphql"
 import { PartnerArtistsCarousel_partner } from "v2/__generated__/PartnerArtistsCarousel_partner.graphql"
 import {
   PartnerArtistsCarouselItemFragmentContainer,
@@ -40,21 +40,18 @@ export const PartnerArtistsCarousel: React.FC<PartnerArtistsCarouselProps> = ({
       {/* @ts-expect-error STRICT_NULL_CHECK */}
       {flatten([
         // @ts-expect-error STRICT_NULL_CHECK
-        artists.edges
-          // @ts-expect-error STRICT_NULL_CHECK
-          .filter(e => e.isDisplayOnPartnerProfile && e.counts.artworks > 0)
-          .map(edge => {
-            return (
-              <PartnerArtistsCarouselItemFragmentContainer
-                // @ts-expect-error STRICT_NULL_CHECK
-                key={edge.node.id}
-                // @ts-expect-error STRICT_NULL_CHECK
-                artist={edge.node}
-                // @ts-expect-error STRICT_NULL_CHECK
-                partnerArtistHref={`/partner2/${slug}/artists/${edge.node.slug}`}
-              />
-            )
-          }),
+        artists.edges.map(edge => {
+          return (
+            <PartnerArtistsCarouselItemFragmentContainer
+              // @ts-expect-error STRICT_NULL_CHECK
+              key={edge.node.id}
+              // @ts-expect-error STRICT_NULL_CHECK
+              artist={edge.node}
+              // @ts-expect-error STRICT_NULL_CHECK
+              partnerArtistHref={`/partner2/${slug}/artists/${edge.node.slug}`}
+            />
+          )
+        }),
         isSeeAllAvaliable && (
           <Box key="see-all-button" width={[300, "100%"]}>
             <RouterLink to={`/partner2/${slug}/artists`}>
@@ -79,32 +76,18 @@ export const PartnerArtistsCarousel: React.FC<PartnerArtistsCarouselProps> = ({
   )
 }
 
-export const PARTNER_ARTISTS_CAROUSEL_QUERY = graphql`
-  query PartnerArtistsCarouselQuery(
-    $partnerId: String!
-    $first: Int!
-    $after: String
-  ) {
-    partner(id: $partnerId) @principalField {
-      ...PartnerArtistsCarousel_partner @arguments(first: $first, after: $after)
-    }
-  }
-`
-
 export const PartnerArtistsCarouselFragmentContainer = createFragmentContainer(
   PartnerArtistsCarousel,
   {
     partner: graphql`
-      fragment PartnerArtistsCarousel_partner on Partner
-        @argumentDefinitions(
-          first: { type: "Int", defaultValue: 19 }
-          after: { type: "String" }
-        ) {
+      fragment PartnerArtistsCarousel_partner on Partner {
         slug
-        artists: artistsConnection(first: $first, after: $after)
-          @connection(key: "PartnerArtistsCarousel_artists") {
+        artists: artistsConnection(
+          first: 19
+          hasPublishedArtworks: true
+          displayOnPartnerProfile: true
+        ) {
           edges {
-            isDisplayOnPartnerProfile
             counts {
               artworks
             }
@@ -126,8 +109,8 @@ export const PartnerArtistsCarouselRenderer: React.FC<{
   const { relayEnvironment } = useSystemContext()
 
   return (
-    <QueryRenderer<PartnerArtistsCarouselQuery>
-      //  @ts-expect-error STRICT_NULL_CHECK
+    <QueryRenderer<PartnerArtistsCarouselRendererQuery>
+      // @ts-expect-error STRICT_NULL_CHECK
       environment={relayEnvironment}
       query={graphql`
         query PartnerArtistsCarouselRendererQuery($partnerId: String!) {
@@ -136,7 +119,7 @@ export const PartnerArtistsCarouselRenderer: React.FC<{
           }
         }
       `}
-      variables={{ partnerId, first: PAGE_SIZE, after: undefined }}
+      variables={{ partnerId }}
       render={({ error, props }) => {
         if (error || !props)
           return <PartnerArtistsCarouselPlaceholder count={PAGE_SIZE} />

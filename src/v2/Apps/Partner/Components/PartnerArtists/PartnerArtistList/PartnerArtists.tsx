@@ -1,15 +1,13 @@
 import React, { useEffect } from "react"
 import { Box } from "@artsy/palette"
 import { createFragmentContainer, graphql, QueryRenderer } from "react-relay"
-import {
-  PartnerArtistListFragmentContainer,
-  PartnerArtistListPlaceholder,
-} from "../../Components/PartnerArtists"
 import { PartnerArtists_partner } from "v2/__generated__/PartnerArtists_partner.graphql"
 import { PartnerArtistsQuery } from "v2/__generated__/PartnerArtistsQuery.graphql"
 import { ScrollIntoViewProps } from "v2/Utils/scrollHelpers"
-import { usePartnerArtistsLoadingContext } from "../../Utils/PartnerArtistsLoadingContext"
 import { useSystemContext } from "v2/Artsy"
+import { usePartnerArtistsLoadingContext } from "v2/Apps/Partner/Utils/PartnerArtistsLoadingContext"
+import { PartnerArtistListPlaceholder } from "./PartnerArtistListPlaceholder"
+import { PartnerArtistListFragmentContainer } from "./PartnerArtistList"
 
 export interface PartnerArtistsProps {
   partner: PartnerArtists_partner
