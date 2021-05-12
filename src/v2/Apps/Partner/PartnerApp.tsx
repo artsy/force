@@ -8,6 +8,8 @@ import { PartnerHeaderImageFragmentContainer as PartnerHeaderImage } from "./Com
 import styled from "styled-components"
 import { PartnerMetaFragmentContainer } from "./Components/PartnerMeta"
 import { StickyProvider } from "v2/Components/Sticky"
+import { AppContainer } from "../Components/AppContainer"
+import { HorizontalPadding } from "../Components/HorizontalPadding"
 
 export interface PartnerAppProps {
   partner: PartnerApp_partner
@@ -28,17 +30,21 @@ export const PartnerApp: React.FC<PartnerAppProps> = ({
       <PartnerHeaderImage profile={partner.profile} />
 
       <Foreground>
-        <PartnerMetaFragmentContainer partner={partner} />
+        <AppContainer>
+          <HorizontalPadding>
+            <PartnerMetaFragmentContainer partner={partner} />
 
-        <PartnerHeader partner={partner} />
+            <PartnerHeader partner={partner} />
 
-        <FullBleed mb={[2, 4]}>
-          <Separator />
-        </FullBleed>
+            <FullBleed mb={[2, 4]}>
+              <Separator />
+            </FullBleed>
 
-        <NavigationTabs partner={partner} />
+            <NavigationTabs partner={partner} />
 
-        {children}
+            {children}
+          </HorizontalPadding>
+        </AppContainer>
       </Foreground>
     </StickyProvider>
   )
