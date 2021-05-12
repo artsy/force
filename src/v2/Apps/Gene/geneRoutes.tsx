@@ -6,13 +6,19 @@ import { paramsToCamelCase } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
 import { initialArtworkFilterState } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
 import { AppRouteConfig } from "v2/Artsy/Router/Route"
 
-const GeneApp = loadable(() => import("./GeneApp"), {
-  resolveComponent: component => component.GeneApp,
-})
+const GeneApp = loadable(
+  () => import(/* webpackChunkName: "geneBundle" */ "./GeneApp"),
+  {
+    resolveComponent: component => component.GeneApp,
+  }
+)
 
-const GeneShowRoute = loadable(() => import("./Routes/GeneShow"), {
-  resolveComponent: component => component.GeneShowFragmentContainer,
-})
+const GeneShowRoute = loadable(
+  () => import(/* webpackChunkName: "geneBundle" */ "./Routes/GeneShow"),
+  {
+    resolveComponent: component => component.GeneShowFragmentContainer,
+  }
+)
 
 export const geneRoutes: AppRouteConfig[] = [
   {

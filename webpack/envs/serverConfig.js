@@ -41,7 +41,7 @@ export const serverConfig = {
     __dirname: true,
   },
   optimization: {
-    minimize: env.isProduction && !env.webpackDebug,
+    minimize: env.isProduction && !env.webpackDebug && !env.fastProductionBuild,
     minimizer: standardMinimizer,
   },
   output: {

@@ -117,7 +117,6 @@ export const ArtworkDetailsQueryRenderer = ({
   artworkID: string
 }) => {
   const { relayEnvironment } = useContext(SystemContext)
-
   return (
     <QueryRenderer<ArtworkDetailsQuery>
       environment={relayEnvironment}

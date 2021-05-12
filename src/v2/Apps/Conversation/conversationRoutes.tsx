@@ -8,10 +8,16 @@ export const conversationRoutes: AppRouteConfig[] = [
     displayFullPage: true,
     hideFooter: true,
     getComponent: () =>
-      loadable(() => import("./ConversationApp"), {
-        resolveComponent: component =>
-          component.ConversationAppFragmentContainer,
-      }),
+      loadable(
+        () =>
+          import(
+            /* webpackChunkName: "conversationBundle" */ "./ConversationApp"
+          ),
+        {
+          resolveComponent: component =>
+            component.ConversationAppFragmentContainer,
+        }
+      ),
     query: graphql`
       query conversationRoutes_ConversationQuery {
         me {
@@ -32,7 +38,7 @@ export const conversationRoutes: AppRouteConfig[] = [
     path: "/user/conversations/:conversationID",
     displayFullPage: true,
     hideFooter: true,
-    Component: loadable(() => import("./Routes/Conversation"), {
+    Component: loadable(() => import(/* webpackChunkName: "conversationBundle" */ "./Routes/Conversation"), {
       resolveComponent: component => component.ConversationPaginationContainer,
     }),
     prepareVariables: (params, _props) => {

@@ -2,9 +2,12 @@ import loadable from "@loadable/component"
 import { graphql } from "react-relay"
 import { AppRouteConfig } from "v2/Artsy/Router/Route"
 
-const ArtworkApp = loadable(() => import("./ArtworkApp"), {
-  resolveComponent: component => component.ArtworkAppFragmentContainer,
-})
+const ArtworkApp = loadable(
+  () => import(/* webpackChunkName: "artworkBundle" */ "./ArtworkApp"),
+  {
+    resolveComponent: component => component.ArtworkAppFragmentContainer,
+  }
+)
 
 export const artworkRoutes: AppRouteConfig[] = [
   {

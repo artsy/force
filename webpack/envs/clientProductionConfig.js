@@ -27,7 +27,7 @@ import { clientChunks } from "./clientCommonConfig"
 export const clientProductionConfig = {
   devtool: productionDevtool,
   entry: {
-    "artsy-novo": [path.resolve(process.cwd(), "src/v2/client.tsx")],
+    "artsy-entry": [path.resolve(process.cwd(), "src/v2/client.tsx")],
   },
   externals: clientExternals,
   mode: standardMode,
@@ -36,14 +36,15 @@ export const clientProductionConfig = {
   },
   optimization: {
     concatenateModules: env.webpackConcatenate,
-    minimize: !env.webpackDebug,
+    minimize: !env.webpackDebug && !env.fastProductionBuild,
     minimizer: standardMinimizer,
     // Extract webpack runtime code into it's own file
     runtimeChunk: "single",
     splitChunks: clientChunks,
+    moduleIds: "hashed",
   },
   output: {
-    filename: "novo-[name].22820.[contenthash].js",
+    filename: "novo-[name].[contenthash].js",
     path: path.resolve(basePath, "public/assets-novo"),
     publicPath: "/assets-novo/",
   },

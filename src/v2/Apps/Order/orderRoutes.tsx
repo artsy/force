@@ -18,9 +18,12 @@ import { RejectFragmentContainer as DeclineRoute } from "./Routes/Reject"
 import { StatusFragmentContainer as StatusRoute } from "./Routes/Status"
 import { AppRouteConfig } from "v2/Artsy/Router/Route"
 
-const OrderApp = loadable(() => import("./OrderApp"), {
-  resolveComponent: component => component.OrderApp,
-})
+const OrderApp = loadable(
+  () => import(/* webpackChunkName: "orderBundle" */ "./OrderApp"),
+  {
+    resolveComponent: component => component.OrderApp,
+  }
+)
 
 // FIXME:
 // * `render` functions requires casting

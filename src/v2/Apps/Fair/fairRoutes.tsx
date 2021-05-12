@@ -5,24 +5,42 @@ import { paramsToCamelCase } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
 import { getENV } from "v2/Utils/getENV"
 import { allowedFilters } from "v2/Components/ArtworkFilter/Utils/allowedFilters"
 
-const FairApp = loadable(() => import("./FairApp"), {
-  resolveComponent: component => component.FairAppFragmentContainer,
-})
-const FairSubApp = loadable(() => import("./FairSubApp"), {
-  resolveComponent: component => component.FairSubAppFragmentContainer,
-})
-const FairExhibitorsRoute = loadable(() => import("./Routes/FairExhibitors"), {
-  resolveComponent: component => component.FairExhibitorsFragmentContainer,
-})
-const FairArtworksRoute = loadable(() => import("./Routes/FairArtworks"), {
-  resolveComponent: component => component.FairArtworksRefetchContainer,
-})
-const FairInfoRoute = loadable(() => import("./Routes/FairInfo"), {
-  resolveComponent: component => component.FairInfoFragmentContainer,
-})
-const FairArticlesRoute = loadable(() => import("./Routes/FairArticles"), {
-  resolveComponent: component => component.FairArticlesPaginationContainer,
-})
+const FairApp = loadable(
+  () => import(/* webpackChunkName: "fairBundle" */ "./FairApp"),
+  {
+    resolveComponent: component => component.FairAppFragmentContainer,
+  }
+)
+const FairSubApp = loadable(
+  () => import(/* webpackChunkName: "fairBundle" */ "./FairSubApp"),
+  {
+    resolveComponent: component => component.FairSubAppFragmentContainer,
+  }
+)
+const FairExhibitorsRoute = loadable(
+  () => import(/* webpackChunkName: "fairBundle" */ "./Routes/FairExhibitors"),
+  {
+    resolveComponent: component => component.FairExhibitorsFragmentContainer,
+  }
+)
+const FairArtworksRoute = loadable(
+  () => import(/* webpackChunkName: "fairBundle" */ "./Routes/FairArtworks"),
+  {
+    resolveComponent: component => component.FairArtworksRefetchContainer,
+  }
+)
+const FairInfoRoute = loadable(
+  () => import(/* webpackChunkName: "fairBundle" */ "./Routes/FairInfo"),
+  {
+    resolveComponent: component => component.FairInfoFragmentContainer,
+  }
+)
+const FairArticlesRoute = loadable(
+  () => import(/* webpackChunkName: "fairBundle" */ "./Routes/FairArticles"),
+  {
+    resolveComponent: component => component.FairArticlesPaginationContainer,
+  }
+)
 
 export const fairRoutes: AppRouteConfig[] = [
   {

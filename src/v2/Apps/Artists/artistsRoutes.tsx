@@ -2,16 +2,23 @@ import loadable from "@loadable/component"
 import { graphql } from "react-relay"
 import { AppRouteConfig } from "v2/Artsy/Router/Route"
 
-const ArtistsApp = loadable(() => import("./ArtistsApp"), {
-  resolveComponent: component => component.ArtistsApp,
-})
+const ArtistsApp = loadable(
+  () => import(/* webpackChunkName: "artistBundle" */ "./ArtistsApp"),
+  {
+    resolveComponent: component => component.ArtistsApp,
+  }
+)
 
-const ArtistsIndexRoute = loadable(() => import("./Routes/ArtistsIndex"), {
-  resolveComponent: component => component.ArtistsIndexFragmentContainer,
-})
+const ArtistsIndexRoute = loadable(
+  () => import(/* webpackChunkName: "artistBundle" */ "./Routes/ArtistsIndex"),
+  {
+    resolveComponent: component => component.ArtistsIndexFragmentContainer,
+  }
+)
 
 const ArtistsByLetterRoute = loadable(
-  () => import("./Routes/ArtistsByLetter"),
+  () =>
+    import(/* webpackChunkName: "artistBundle" */ "./Routes/ArtistsByLetter"),
   {
     resolveComponent: component => component.ArtistsByLetterFragmentContainer,
   }

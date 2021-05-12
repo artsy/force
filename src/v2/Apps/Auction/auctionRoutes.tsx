@@ -9,15 +9,25 @@ import { AppRouteConfig } from "v2/Artsy/Router/Route"
 
 const logger = createLogger("Apps/Auction/routes")
 
-const AuctionFAQRoute = loadable(() => import("./Components/AuctionFAQ"), {
-  resolveComponent: component => component.AuctionFAQFragmentContainer,
-})
-const ConfirmBidRoute = loadable(() => import("./Routes/ConfirmBid"), {
-  resolveComponent: component => component.ConfirmBidRouteFragmentContainer,
-})
-const RegisterRoute = loadable(() => import("./Routes/Register"), {
-  resolveComponent: component => component.RegisterRouteFragmentContainer,
-})
+const AuctionFAQRoute = loadable(
+  () =>
+    import(/* webpackChunkName: "auctionBundle" */ "./Components/AuctionFAQ"),
+  {
+    resolveComponent: component => component.AuctionFAQFragmentContainer,
+  }
+)
+const ConfirmBidRoute = loadable(
+  () => import(/* webpackChunkName: "auctionBundle" */ "./Routes/ConfirmBid"),
+  {
+    resolveComponent: component => component.ConfirmBidRouteFragmentContainer,
+  }
+)
+const RegisterRoute = loadable(
+  () => import(/* webpackChunkName: "auctionBundle" */ "./Routes/Register"),
+  {
+    resolveComponent: component => component.RegisterRouteFragmentContainer,
+  }
+)
 
 export const auctionRoutes: AppRouteConfig[] = [
   {

@@ -7,15 +7,24 @@ import { paramsToCamelCase } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
 import { getENV } from "v2/Utils/getENV"
 import { CollectionAppQuery } from "./Routes/Collection/CollectionAppQuery"
 
-const CollectApp = loadable(() => import("./Routes/Collect"), {
-  resolveComponent: component => component.CollectAppFragmentContainer,
-})
-const CollectionsApp = loadable(() => import("./Routes/Collections"), {
-  resolveComponent: component => component.CollectionsAppFragmentContainer,
-})
-const CollectionApp = loadable(() => import("./Routes/Collection"), {
-  resolveComponent: component => component.CollectionRefetchContainer,
-})
+const CollectApp = loadable(
+  () => import(/* webpackChunkName: "collectBundle" */ "./Routes/Collect"),
+  {
+    resolveComponent: component => component.CollectAppFragmentContainer,
+  }
+)
+const CollectionsApp = loadable(
+  () => import(/* webpackChunkName: "collectBundle" */ "./Routes/Collections"),
+  {
+    resolveComponent: component => component.CollectionsAppFragmentContainer,
+  }
+)
+const CollectionApp = loadable(
+  () => import(/* webpackChunkName: "collectBundle" */ "./Routes/Collection"),
+  {
+    resolveComponent: component => component.CollectionRefetchContainer,
+  }
+)
 
 export const collectRoutes: AppRouteConfig[] = [
   {

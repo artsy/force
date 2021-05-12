@@ -21,34 +21,40 @@ if (!NOVO_MANIFEST) {
 }
 
 const app = express()
+
 const routes = getAppRoutes()
 
 /**
  * We can't use a wildcard route because of gallery vanity urls, so iterate
  * over all app routes and return an array that we can explicity match against.
  */
-const flatRoutes = flatten(
-  // @ts-expect-error STRICT_NULL_CHECK
-  routes[0].children.map(app => {
-    // Only supports one level of nesting per app. For instance, these are tabs
-    // on the artist page, etc.
-    const childRoutePaths = app.children
-      ?.map(child => child.path)
-      .filter(route => route !== "/" && route !== "*")
+let flatRoutes
+const appRoutes = routes[0]
+if (appRoutes) {
+  flatRoutes = flatten(
+    appRoutes.children?.map(app => {
+      // Only supports one level of nesting per app. For instance, these are tabs
+      // on the artist page, etc.
+      const childRoutePaths = app.children
+        ?.map(child => child.path)
+        .filter(route => route !== "/" && route !== "*")
 
-    const allRoutes = childRoutePaths
-      ? // @ts-expect-error STRICT_NULL_CHECK
-        childRoutePaths.map(child => app.path + "/" + child).concat(app.path)
-      : app.path
+      const allRoutes = childRoutePaths
+        ? childRoutePaths
+            .map(child => app.path + "/" + child)
+            .concat(app.path + "")
+        : app.path
 
-    return allRoutes
-  })
-)
+      return allRoutes
+    })
+  )
+} else {
+  flatRoutes = []
+}
 
 /**
  * Mount routes that will connect to global SSR router
  */
-// @ts-expect-error STRICT_NULL_CHECK
 app.get(flatRoutes, async (req: Request, res: Response, next: NextFunction) => {
   try {
     const {

@@ -5,9 +5,12 @@ import { CurrentAuctionsPaginationContainer } from "./Routes/CurrentAuctions"
 import { PastAuctionsPaginationContainer } from "./Routes/PastAuctions"
 import { UpcomingAuctionsPaginationContainer } from "./Routes/UpcomingAuctions"
 
-const AuctionsApp = loadable(() => import("./AuctionsApp"), {
-  resolveComponent: component => component.AuctionsAppFragmentContainer,
-})
+const AuctionsApp = loadable(
+  () => import(/* webpackChunkName: "auctionBundle" */ "./AuctionsApp"),
+  {
+    resolveComponent: component => component.AuctionsAppFragmentContainer,
+  }
+)
 
 export const auctionsRoutes: AppRouteConfig[] = [
   {

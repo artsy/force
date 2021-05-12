@@ -2,9 +2,15 @@ import loadable from "@loadable/component"
 import { graphql } from "react-relay"
 import { AppRouteConfig } from "v2/Artsy/Router/Route"
 
-const PaymentApp = loadable(() => import("./Routes/Payment/PaymentApp"), {
-  resolveComponent: component => component.PaymentAppFragmentContainer,
-})
+const PaymentApp = loadable(
+  () =>
+    import(
+      /* webpackChunkName: "paymentBundle" */ "./Routes/Payment/PaymentApp"
+    ),
+  {
+    resolveComponent: component => component.PaymentAppFragmentContainer,
+  }
+)
 
 export const paymentRoutes: AppRouteConfig[] = [
   {
