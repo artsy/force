@@ -40,7 +40,7 @@ export const PartnerArtistDetailsList: React.FC<PartnerArtistDetailsListProps> =
   const maybeLoadMore = () => {
     const el = containerRef.current.getBoundingClientRect()
 
-    if (window.innerHeight >= el.bottom) {
+    if (window.innerHeight >= el.bottom && el.bottom > 0) {
       loadMore()
     }
   }
