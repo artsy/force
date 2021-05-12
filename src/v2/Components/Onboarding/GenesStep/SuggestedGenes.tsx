@@ -126,7 +126,7 @@ class SuggestedGenesContent extends React.Component<Props> {
               id={item.slug}
               name={item.name}
               image_url={imageUrl}
-              onFollow={(e, selected) => this.followedGene(item, selected)}
+              onFollow={selected => this.followedGene(item, selected)}
             />
           </ReplaceTransition>
         </LinkContainer>

@@ -36,7 +36,9 @@ export const GenesStep: React.FC<Props> = props => {
   })
 
   const handleGeneFollow = (follow, gene) => {
-    setFollowCount(state => (follow ? state + 1 : state - 1))
+    setFollowCount(previousCount =>
+      follow ? previousCount + 1 : previousCount - 1
+    )
 
     const event = {
       action_type: follow ? ActionType.followedGene : ActionType.unfollowedGene,

@@ -156,9 +156,7 @@ class PopularArtistsContent extends React.Component<Props, null> {
                 id={artist.id}
                 name={artist.name}
                 image_url={imageUrl}
-                onFollow={(e, selected) =>
-                  this.onFollowedArtist(artist, selected)
-                }
+                onFollow={selected => this.onFollowedArtist(artist, selected)}
               />
             </ReplaceTransition>
           </LinkContainer>

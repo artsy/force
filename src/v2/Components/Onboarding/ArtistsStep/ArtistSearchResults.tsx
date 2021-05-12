@@ -154,9 +154,7 @@ class ArtistSearchResultsContent extends React.Component<Props, null> {
                 id={artist.internalID}
                 name={artist.displayLabel}
                 image_url={artist.imageUrl}
-                onFollow={(e, selected) =>
-                  this.onFollowedArtist(artist, selected)
-                }
+                onFollow={selected => this.onFollowedArtist(artist, selected)}
               />
             </ReplaceTransition>
           </LinkContainer>

@@ -37,7 +37,9 @@ export const ArtistsStep: React.FC<Props> = props => {
   })
 
   const handleArtistFollow = (follow, artist) => {
-    setFollowCount(state => (follow ? state + 1 : state - 1))
+    setFollowCount(previousCount =>
+      follow ? previousCount + 1 : previousCount - 1
+    )
 
     const event = {
       action_type: follow
