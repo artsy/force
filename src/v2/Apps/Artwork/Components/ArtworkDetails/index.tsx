@@ -52,13 +52,13 @@ export class ArtworkDetails extends Component<ArtworkDetailsProps> {
             <AboutTheWorkFromPartner artwork={artwork} />
             <AdditionalInfo artwork={artwork} />
           </Tab>
-          {/* @ts-expect-error STRICT_NULL_CHECK */}
+          {/* @ts-expect-error STRICT_NULL_CHECK */ null}
           {artwork.articles && artwork.articles.length && (
             <Tab name="Articles" data={{ trackingLabel: "articles" }}>
               <Articles artwork={artwork} />
             </Tab>
           )}
-          {/* @ts-expect-error STRICT_NULL_CHECK */}
+          {/* @ts-expect-error STRICT_NULL_CHECK */ null}
           {artwork.exhibition_history && (
             <Tab
               name="Exhibition history"
@@ -69,7 +69,7 @@ export class ArtworkDetails extends Component<ArtworkDetailsProps> {
               />
             </Tab>
           )}
-          {/* @ts-expect-error STRICT_NULL_CHECK */}
+          {/* @ts-expect-error STRICT_NULL_CHECK */ null}
           {artwork.literature && (
             <Tab name="Bibliography" data={{ trackingLabel: "bibliography" }}>
               <Literature
@@ -77,7 +77,7 @@ export class ArtworkDetails extends Component<ArtworkDetailsProps> {
               />
             </Tab>
           )}
-          {/* @ts-expect-error STRICT_NULL_CHECK */}
+          {/* @ts-expect-error STRICT_NULL_CHECK */ null}
           {artwork.provenance && (
             <Tab name="Provenance" data={{ trackingLabel: "provenance" }}>
               <Provenance

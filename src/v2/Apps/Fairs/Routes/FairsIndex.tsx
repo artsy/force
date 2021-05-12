@@ -121,7 +121,7 @@ export const FairsIndex: React.FC<FairsIndexProps> = ({
 
         <Box my={3}>
           <Tabs>
-            {/* @ts-expect-error STRICT_NULL_CHECK */}
+            {/* @ts-expect-error STRICT_NULL_CHECK */ null}
             {currentFairs.length !== 0 && (
               <Tab name="Current">
                 {currentFairs.map(fair => (
@@ -134,7 +134,7 @@ export const FairsIndex: React.FC<FairsIndexProps> = ({
                 ))}
               </Tab>
             )}
-            {/* @ts-expect-error STRICT_NULL_CHECK */}
+            {/* @ts-expect-error STRICT_NULL_CHECK */ null}
             {upcomingFairs.length !== 0 && (
               <Tab name="Upcoming">
                 {upcomingFairs.map(fair => (
@@ -147,7 +147,7 @@ export const FairsIndex: React.FC<FairsIndexProps> = ({
                 ))}
               </Tab>
             )}
-            {/* @ts-expect-error STRICT_NULL_CHECK */}
+            {/* @ts-expect-error STRICT_NULL_CHECK */ null}
             {closedFairs.length !== 0 && (
               <Tab name="Past">
                 {/* @ts-expect-error STRICT_NULL_CHECK */}
