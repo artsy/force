@@ -27,33 +27,53 @@ const ArtistsCarouselCell: React.FC<ArtistsCarouselCellProps> = ({
   const slug = getSlug(featuredLink.href)
 
   return (
-    <RouterLink
-      key={featuredLink.internalID}
-      to={featuredLink.href}
-      style={{ display: "block", textDecoration: "none" }}
-      aria-label={featuredLink.title}
-    >
-      <Image
-        src={image.thumb.src}
-        srcSet={image.thumb.srcSet}
-        width={image.thumb.width}
-        height={image.thumb.height}
-        alt={featuredLink.title}
-        lazyLoad={index > 2}
-      />
+    <>
+      <RouterLink
+        key={featuredLink.internalID}
+        to={featuredLink.href}
+        style={{ display: "block", textDecoration: "none" }}
+      >
+        <Image
+          src={image.thumb.src}
+          srcSet={image.thumb.srcSet}
+          width={image.thumb.width}
+          height={image.thumb.height}
+          alt={featuredLink.title}
+          lazyLoad
+        />
+      </RouterLink>
 
-      <Box my={1} display="flex" justifyContent="space-between">
-        <Box>
-          <Text variant="mediumText">{featuredLink.title}</Text>
-          <Text color="black60">{featuredLink.subtitle}</Text>
-        </Box>
+      <Box
+        my={1}
+        display="flex"
+        justifyContent="space-between"
+        alignItems="center"
+        // TODO: Figure out why the button isn't displaying partially during loading.
+        // Set height to height of button for now to prevent layout-shift.
+        height={50}
+      >
+        <RouterLink
+          key={featuredLink.internalID}
+          to={featuredLink.href}
+          style={{ display: "block", textDecoration: "none" }}
+          aria-label={featuredLink.title}
+        >
+          <Text variant="lg">{featuredLink.title}</Text>
+
+          {featuredLink.subtitle && (
+            <Text variant="md" color="black60">
+              {featuredLink.subtitle}
+            </Text>
+          )}
+        </RouterLink>
 
         <FollowArtistButtonQueryRenderer
           id={slug}
           contextModule={ContextModule.featuredArtistsRail}
+          buttonProps={{ variant: "secondaryOutline" }}
         />
       </Box>
-    </RouterLink>
+    </>
   )
 }
 
@@ -67,7 +87,7 @@ export const ArtistsCarouselCellFragmentContainer = createFragmentContainer(
         subtitle
         href
         image {
-          thumb: cropped(width: 546, height: 410, version: "wide") {
+          thumb: cropped(width: 600, height: 450, version: "wide") {
             width
             height
             src

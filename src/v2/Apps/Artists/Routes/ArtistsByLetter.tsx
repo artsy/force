@@ -1,13 +1,22 @@
-import { Box, Text, media, space } from "@artsy/palette"
+import {
+  Box,
+  Text,
+  media,
+  space,
+  GridColumns,
+  Breadcrumbs,
+  Spacer,
+  Column,
+} from "@artsy/palette"
 import React, { useState } from "react"
 import { graphql, createRefetchContainer, RelayRefetchProp } from "react-relay"
 import styled, { css } from "styled-components"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import { useRouter } from "v2/Artsy/Router/useRouter"
 import { PaginationFragmentContainer } from "v2/Components/Pagination"
-import { ArtistsTopNav } from "../Components/ArtistsTopNav"
 import { ArtistsByLetter_viewer } from "v2/__generated__/ArtistsByLetter_viewer.graphql"
 import { ArtistsByLetterMeta } from "../Components/ArtistsByLetterMeta"
+import { ArtistsLetterNav } from "../Components/ArtistsLetterNav"
 
 const Columns = styled(Box)<{ isLoading: boolean }>`
   column-count: 4;
@@ -80,38 +89,45 @@ export const ArtistsByLetter: React.FC<ArtistsByLetterProps> = ({
     <>
       <ArtistsByLetterMeta />
 
-      <Box>
-        <Text my={3}>
-          <RouterLink to="/artists" noUnderline>
+      <GridColumns mt={4}>
+        <Column span={6}>
+          <Text as="h1" variant="xl" mb={1}>
             Artists
-          </RouterLink>{" "}
-          / Browse over 100,000 artists
-        </Text>
-
-        <ArtistsTopNav my={3}>
-          <Text as="h1" variant="largeTitle">
-            Artists
-            {params.letter && <> – {params.letter.toUpperCase()}</>}
+            {params.letter && <> - {params.letter.toUpperCase()}</>}
           </Text>
-        </ArtistsTopNav>
 
-        <Columns my={3} isLoading={isLoading}>
-          {artists.map(({ artist }) => {
-            return (
-              <Text key={artist.internalID}>
-                <Name to={artist.href}>{artist.name}</Name>
-              </Text>
-            )
-          })}
-        </Columns>
+          <Breadcrumbs>
+            <RouterLink to="/artists" noUnderline>
+              Artists
+            </RouterLink>
 
-        <PaginationFragmentContainer
-          hasNextPage={hasNextPage}
-          pageCursors={pageCursors}
-          onNext={handleNext}
-          onClick={handleClick}
-        />
-      </Box>
+            <RouterLink to="">Browse over 100,000 artists</RouterLink>
+          </Breadcrumbs>
+        </Column>
+
+        <Column span={6}>
+          <ArtistsLetterNav />
+        </Column>
+      </GridColumns>
+
+      <Spacer mt={6} />
+
+      <Columns isLoading={isLoading}>
+        {artists.map(({ artist }) => {
+          return (
+            <Text key={artist.internalID}>
+              <Name to={artist.href}>{artist.name}</Name>
+            </Text>
+          )
+        })}
+      </Columns>
+
+      <PaginationFragmentContainer
+        hasNextPage={hasNextPage}
+        pageCursors={pageCursors}
+        onNext={handleNext}
+        onClick={handleClick}
+      />
     </>
   )
 }
