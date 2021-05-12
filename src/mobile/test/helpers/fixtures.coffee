@@ -5,8 +5,8 @@ moment = require 'moment'
   title: 'Vennice Biennalez'
   description: 'The coolest biennale'
   slug: 'vennice-biennale'
-  partner_logo_url: 'http://gemini.herokuapp.com/123/miaart-banner.jpg'
-  thumbnail_url: 'http://gemini.herokuapp.com/123/miaart-banner.jpg'
+  partner_logo_url: 'http://gemini.example.com/123/miaart-banner.jpg'
+  thumbnail_url: 'http://gemini.example.com/123/miaart-banner.jpg'
   featured_links: [{ title: 'foo', thumbnail_url: 'bar.jpg', url: 'foo.com' }]
 
 @section =
@@ -14,8 +14,8 @@ moment = require 'moment'
   title: 'Vennice Biennalez'
   description: 'The coolest biennale'
   slug: 'vennice-biennale'
-  partner_logo_url: 'http://gemini.herokuapp.com/123/miaart-banner.jpg'
-  thumbnail_url: 'http://gemini.herokuapp.com/123/miaart-banner.jpg'
+  partner_logo_url: 'http://gemini.example.com/123/miaart-banner.jpg'
+  thumbnail_url: 'http://gemini.example.com/123/miaart-banner.jpg'
   featured_links: [{ title: 'foo', thumbnail_url: 'bar.jpg', url: 'foo.com' }]
 
 @article =
@@ -56,7 +56,7 @@ moment = require 'moment'
       images: [
         {
           type: 'image',
-          url: 'http://gemini.herokuapp.com/123/miaart-banner.jpg'
+          url: 'http://gemini.example.com/123/miaart-banner.jpg'
         },
         {
           type: 'artwork'
