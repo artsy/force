@@ -99,6 +99,7 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
   return (
     <>
       <FullBleedHeader
+        {...headerImage.image.resized.srcSet}
         height={[283, 469]}
         src={heroImageURL}
         caption={
@@ -774,9 +775,6 @@ export const BuyerGuaranteeIndexFragmentContainer = createFragmentContainer(
         image {
           resized(version: "normalized") {
             srcSet
-          }
-          cropped(width: 1600, height: 600, version: "wide") {
-            src
           }
         }
       }

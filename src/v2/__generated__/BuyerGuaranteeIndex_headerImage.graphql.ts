@@ -13,9 +13,6 @@ export type BuyerGuaranteeIndex_headerImage = {
         readonly resized: {
             readonly srcSet: string;
         } | null;
-        readonly cropped: {
-            readonly src: string;
-        } | null;
     } | null;
     readonly " $refType": "BuyerGuaranteeIndex_headerImage";
 };
@@ -96,40 +93,6 @@ const node: ReaderFragment = {
             }
           ],
           "storageKey": "resized(version:\"normalized\")"
-        },
-        {
-          "alias": null,
-          "args": [
-            {
-              "kind": "Literal",
-              "name": "height",
-              "value": 600
-            },
-            {
-              "kind": "Literal",
-              "name": "version",
-              "value": "wide"
-            },
-            {
-              "kind": "Literal",
-              "name": "width",
-              "value": 1600
-            }
-          ],
-          "concreteType": "CroppedImageUrl",
-          "kind": "LinkedField",
-          "name": "cropped",
-          "plural": false,
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "src",
-              "storageKey": null
-            }
-          ],
-          "storageKey": "cropped(height:600,version:\"wide\",width:1600)"
         }
       ],
       "storageKey": null
@@ -137,5 +100,5 @@ const node: ReaderFragment = {
   ],
   "type": "Artwork"
 };
-(node as any).hash = 'bea83da4bc0af11bbc94d6b90d65d58b';
+(node as any).hash = 'db01dc82a545e01ab10cb4d9e3aa3356';
 export default node;

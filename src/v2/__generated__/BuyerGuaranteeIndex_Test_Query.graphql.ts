@@ -70,9 +70,6 @@ fragment BuyerGuaranteeIndex_headerImage on Artwork {
     resized(version: "normalized") {
       srcSet
     }
-    cropped(width: 1600, height: 600, version: "wide") {
-      src
-    }
   }
 }
 
@@ -330,40 +327,6 @@ return {
                 "plural": false,
                 "selections": (v8/*: any*/),
                 "storageKey": "resized(version:\"normalized\")"
-              },
-              {
-                "alias": null,
-                "args": [
-                  {
-                    "kind": "Literal",
-                    "name": "height",
-                    "value": 600
-                  },
-                  {
-                    "kind": "Literal",
-                    "name": "version",
-                    "value": "wide"
-                  },
-                  {
-                    "kind": "Literal",
-                    "name": "width",
-                    "value": 1600
-                  }
-                ],
-                "concreteType": "CroppedImageUrl",
-                "kind": "LinkedField",
-                "name": "cropped",
-                "plural": false,
-                "selections": [
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "src",
-                    "storageKey": null
-                  }
-                ],
-                "storageKey": "cropped(height:600,version:\"wide\",width:1600)"
               }
             ],
             "storageKey": null
@@ -409,7 +372,7 @@ return {
     "metadata": {},
     "name": "BuyerGuaranteeIndex_Test_Query",
     "operationKind": "query",
-    "text": "query BuyerGuaranteeIndex_Test_Query {\n  headerImage: artwork(id: \"any-id1\") {\n    ...BuyerGuaranteeIndex_headerImage\n    id\n  }\n  authenticityImage: artwork(id: \"any-id2\") {\n    ...BuyerGuaranteeIndex_authenticityImage\n    id\n  }\n  moneyBackGuaranteeImage: artwork(id: \"any-id3\") {\n    ...BuyerGuaranteeIndex_moneyBackGuaranteeImage\n    id\n  }\n  securePaymentImage: artwork(id: \"any-id4\") {\n    ...BuyerGuaranteeIndex_securePaymentImage\n    id\n  }\n}\n\nfragment BuyerGuaranteeIndex_authenticityImage on Artwork {\n  imageTitle\n  imageUrl\n  image {\n    resized(version: \"large_rectangle\") {\n      srcSet\n    }\n  }\n  artist {\n    name\n    id\n  }\n}\n\nfragment BuyerGuaranteeIndex_headerImage on Artwork {\n  imageTitle\n  imageUrl\n  artist {\n    name\n    id\n  }\n  image {\n    resized(version: \"normalized\") {\n      srcSet\n    }\n    cropped(width: 1600, height: 600, version: \"wide\") {\n      src\n    }\n  }\n}\n\nfragment BuyerGuaranteeIndex_moneyBackGuaranteeImage on Artwork {\n  imageTitle\n  imageUrl\n  image {\n    resized(version: \"large_rectangle\") {\n      srcSet\n    }\n  }\n  artist {\n    name\n    id\n  }\n}\n\nfragment BuyerGuaranteeIndex_securePaymentImage on Artwork {\n  imageTitle\n  imageUrl\n  image {\n    resized(version: \"large_rectangle\") {\n      srcSet\n    }\n  }\n  artist {\n    name\n    id\n  }\n}\n"
+    "text": "query BuyerGuaranteeIndex_Test_Query {\n  headerImage: artwork(id: \"any-id1\") {\n    ...BuyerGuaranteeIndex_headerImage\n    id\n  }\n  authenticityImage: artwork(id: \"any-id2\") {\n    ...BuyerGuaranteeIndex_authenticityImage\n    id\n  }\n  moneyBackGuaranteeImage: artwork(id: \"any-id3\") {\n    ...BuyerGuaranteeIndex_moneyBackGuaranteeImage\n    id\n  }\n  securePaymentImage: artwork(id: \"any-id4\") {\n    ...BuyerGuaranteeIndex_securePaymentImage\n    id\n  }\n}\n\nfragment BuyerGuaranteeIndex_authenticityImage on Artwork {\n  imageTitle\n  imageUrl\n  image {\n    resized(version: \"large_rectangle\") {\n      srcSet\n    }\n  }\n  artist {\n    name\n    id\n  }\n}\n\nfragment BuyerGuaranteeIndex_headerImage on Artwork {\n  imageTitle\n  imageUrl\n  artist {\n    name\n    id\n  }\n  image {\n    resized(version: \"normalized\") {\n      srcSet\n    }\n  }\n}\n\nfragment BuyerGuaranteeIndex_moneyBackGuaranteeImage on Artwork {\n  imageTitle\n  imageUrl\n  image {\n    resized(version: \"large_rectangle\") {\n      srcSet\n    }\n  }\n  artist {\n    name\n    id\n  }\n}\n\nfragment BuyerGuaranteeIndex_securePaymentImage on Artwork {\n  imageTitle\n  imageUrl\n  image {\n    resized(version: \"large_rectangle\") {\n      srcSet\n    }\n  }\n  artist {\n    name\n    id\n  }\n}\n"
   }
 };
 })();
