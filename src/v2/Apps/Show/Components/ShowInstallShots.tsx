@@ -4,10 +4,11 @@ import {
   Image,
   ModalBase,
   ResponsiveBox,
+  Shelf,
   Text,
 } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { Carousel, CarouselProps } from "v2/Components/Carousel"
+import { CarouselProps } from "v2/Components/Carousel"
 import { ShowInstallShots_show } from "v2/__generated__/ShowInstallShots_show.graphql"
 
 // @ts-expect-error STRICT_NULL_CHECK
@@ -36,7 +37,7 @@ export const ShowInstallShots: React.FC<ShowInstallShotsProps> = ({
 
   return (
     <>
-      <Carousel {...rest}>
+      <Shelf showProgress={false} alignItems="flex-end">
         {/* @ts-expect-error STRICT_NULL_CHECK */}
         {show.images.map((image, i) => {
           return (
@@ -53,20 +54,20 @@ export const ShowInstallShots: React.FC<ShowInstallShotsProps> = ({
                 srcSet={image.desktop.srcSet}
                 // @ts-expect-error STRICT_NULL_CHECK
                 width={[image.mobile.width, image.desktop.width]}
-                // @ts-expect-error STRICT_NULL_CHECK
-                height={[image.mobile.height, image.desktop.height]}
+                maxHeight={[300, 480]}
+                style={{ objectFit: "contain" }}
                 alt={`${show.name}, installation view`}
-                lazyLoad={i > 2}
               />
 
               {/* @ts-expect-error STRICT_NULL_CHECK */}
               {image.caption && (
                 <Text
+                  variant="xs"
                   mt={1}
                   color="black60"
                   textAlign="left"
                   // @ts-expect-error STRICT_NULL_CHECK
-                  maxWidth={image.desktop.width}
+                  width={image.desktop.width}
                   // @ts-expect-error STRICT_NULL_CHECK
                   title={image.caption}
                   overflowEllipsis
@@ -78,7 +79,7 @@ export const ShowInstallShots: React.FC<ShowInstallShotsProps> = ({
             </Clickable>
           )
         })}
-      </Carousel>
+      </Shelf>
       {selectedImage !== null && (
         <ModalBase
           onClose={handleClose}
@@ -128,11 +129,11 @@ export const ShowInstallShotsFragmentContainer = createFragmentContainer(
         images(default: false, size: 100) {
           internalID
           caption
-          mobile: resized(height: 300) {
+          mobile: resized(width: 200) {
             width
             height
           }
-          desktop: resized(height: 400, version: ["larger", "large"]) {
+          desktop: resized(width: 325) {
             src
             srcSet
             width

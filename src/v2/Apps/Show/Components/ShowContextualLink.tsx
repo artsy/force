@@ -1,9 +1,9 @@
-import { Box, Link, Text, Separator } from "@artsy/palette"
+import { Box, Text } from "@artsy/palette"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Media } from "v2/Utils/Responsive"
 import { ShowContextualLink_show } from "v2/__generated__/ShowContextualLink_show.graphql"
-import styled from "styled-components"
+import { RouterLink } from "v2/Artsy/Router/RouterLink"
 
 interface Props {
   show: ShowContextualLink_show
@@ -39,12 +39,11 @@ export const ContextualLink: React.FC<Props> = ({ show }) => {
       <>
         {/* @ts-expect-error STRICT_NULL_CHECK */}
         {fair.isActive && (
-          <Box my={2}>
-            <Text variant="caption">
+          <Box>
+            <Text variant="sm">
               {/* @ts-expect-error STRICT_NULL_CHECK */}
-              Part of <Link href={fairHref}>{fairName}</Link>
+              Part of <RouterLink to={fairHref}>{fairName}</RouterLink>
             </Text>
-            <FullScreenSeparator as="hr" my={2} />
           </Box>
         )}
       </>
@@ -52,16 +51,15 @@ export const ContextualLink: React.FC<Props> = ({ show }) => {
   }
 
   return (
-    <Box my={2}>
-      <Text variant="caption">
+    <Box>
+      <Text variant="sm">
         Presented by&nbsp;
         {!!partnerHref ? (
-          <Link href={partnerHref}>{partnerName}</Link>
+          <RouterLink to={partnerHref}>{partnerName}</RouterLink>
         ) : (
           partnerName
         )}
       </Text>
-      <FullScreenSeparator as="hr" my={2} />
     </Box>
   )
 }
@@ -88,13 +86,3 @@ export const ShowContextualLinkFragmentContainer = createFragmentContainer(
     `,
   }
 )
-
-const FullScreenSeparator = styled(Separator)`
-  left: 50%;
-  margin-left: -50vw;
-  margin-right: -50vw;
-  max-width: 100vw;
-  position: relative;
-  right: 50%;
-  width: 100vw;
-`

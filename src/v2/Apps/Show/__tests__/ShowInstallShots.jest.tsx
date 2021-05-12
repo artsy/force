@@ -40,7 +40,7 @@ describe("ShowInstallShots", () => {
       }),
     })
 
-    expect(wrapper.find("button")).toHaveLength(2)
+    expect(wrapper.find("button")).toHaveLength(4)
     expect(wrapper.find("img")).toHaveLength(2)
   })
 
@@ -55,7 +55,8 @@ describe("ShowInstallShots", () => {
     })
 
     expect(wrapper.html()).not.toContain("1_zoomExample1x.jpg")
-    wrapper.find("button").at(1).simulate("click")
+    wrapper.find("button").at(3).simulate("click")
+    wrapper.update()
     expect(wrapper.html()).toContain("1_zoomExample1x.jpg")
   })
 })

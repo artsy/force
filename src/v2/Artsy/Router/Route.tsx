@@ -16,11 +16,14 @@ type RemoveIndex<T> = {
 interface RouteConfigProps extends RouteConfig {
   cacheConfig?: CacheConfig
   displayFullPage?: boolean
+  displayNavigationTabs?: boolean
   fetchIndicator?: FetchIndicator
+  hideFooter?: true
   ignoreScrollBehavior?: boolean
   prepare?: () => void
   prepareVariables?: (params: any, props: any) => object
   query?: GraphQLTaggedNode
+  shouldWarnBeforeLeaving?: boolean
   theme?: 'v2' | 'v3'
 }
 

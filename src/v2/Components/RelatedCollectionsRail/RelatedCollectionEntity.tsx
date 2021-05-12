@@ -1,32 +1,21 @@
-import {
-  Box,
-  Flex,
-  Image,
-  Link,
-  Sans,
-  Serif,
-  WebImageProps,
-  color,
-} from "@artsy/palette"
+import { Box, Flex, Image, Text } from "@artsy/palette"
 import { RelatedCollectionEntity_collection } from "v2/__generated__/RelatedCollectionEntity_collection.graphql"
 import { useTracking } from "v2/Artsy/Analytics"
 import currency from "currency.js"
-import { compact } from "lodash"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { data as sd } from "sharify"
-import styled from "styled-components"
-import { get } from "v2/Utils/get"
 import { ContextModule, clickedCollectionGroup } from "@artsy/cohesion"
 import { useAnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
+import { RouterLink } from "v2/Artsy/Router/RouterLink"
+import { cropped } from "v2/Utils/resized"
 
-export interface CollectionProps {
+export interface RelatedCollectionEntityProps {
   collection: RelatedCollectionEntity_collection
   lazyLoad?: boolean
   slideIndex: number
 }
 
-export const RelatedCollectionEntity: React.FC<CollectionProps> = ({
+export const RelatedCollectionEntity: React.FC<RelatedCollectionEntityProps> = ({
   lazyLoad,
   collection,
   slideIndex,
@@ -34,18 +23,14 @@ export const RelatedCollectionEntity: React.FC<CollectionProps> = ({
   const {
     artworksConnection,
     headerImage,
-    price_guidance,
+    priceGuidance,
     id,
     slug,
     title,
   } = collection
   // @ts-expect-error STRICT_NULL_CHECK
   const artworks = artworksConnection.edges.map(({ node }) => node)
-  const bgImages = compact(
-    artworks.map(({ image }) => image && image.resized && image.resized.url)
-  )
-  const imageSize =
-    bgImages.length === 1 ? 262 : bgImages.length === 2 ? 130 : 86
+
   const { trackEvent } = useTracking()
   const {
     contextPageOwnerId,
@@ -70,100 +55,63 @@ export const RelatedCollectionEntity: React.FC<CollectionProps> = ({
 
   return (
     <Box>
-      <StyledLink
-        href={`${sd.APP_URL}/collection/${slug}`}
-        onClick={onLinkClick}
-      >
-        <ImgWrapper pb={1}>
-          {bgImages.length ? (
-            bgImages.map((url, i) => {
-              const artistName = get(artworks[i].artist, a => a.name)
-              const alt = `${artistName ? artistName + ", " : ""}${
-                artworks[i].title
-              }`
+      <RouterLink to={`/collection/${slug}`} onClick={onLinkClick} noUnderline>
+        <Flex alignItems="flex-end" mb={1}>
+          {artworks.every(artwork => !!artwork.image) ? (
+            artworks.map((artwork, index) => {
+              if (!artwork.image) return null
+
+              const { resized } = artwork.image
+
               return (
-                <SingleImgContainer key={i}>
-                  <ImgOverlay width={imageSize} />
-                  <ArtworkImage
-                    key={i}
-                    src={url}
-                    width={imageSize}
-                    alt={alt}
-                    lazyLoad={lazyLoad}
+                <Box key={index} ml={index === 0 ? 0 : -2}>
+                  <Image
+                    src={resized.src}
+                    srcSet={resized.srcSet}
+                    width={resized.width}
+                    height={resized.height}
+                    alt={artwork.title}
+                    lazyLoad
                   />
-                </SingleImgContainer>
+                </Box>
               )
             })
           ) : (
-            // @ts-expect-error STRICT_NULL_CHECK
-            <ArtworkImage src={headerImage} alt={title} width={262} />
+            <Image
+              // @ts-expect-error STRICT_NULL_CHECK
+              {...cropped(headerImage, { width: 325, height: 150 })}
+              width={325}
+              height={150}
+              alt=""
+              lazyLoad
+            />
           )}
-        </ImgWrapper>
-        <CollectionTitle size="3">{title}</CollectionTitle>
-        {price_guidance && (
-          <Sans size="2" color="black60">
-            From $
-            {currency(price_guidance, {
-              separator: ",",
-              precision: 0,
-            }).format()}
-          </Sans>
-        )}
-      </StyledLink>
+        </Flex>
+
+        <Text variant="md" overflowEllipsis maxWidth={375}>
+          {title}
+        </Text>
+
+        <Text variant="xs" color="black100">
+          {priceGuidance ? (
+            <>
+              From $
+              {currency(priceGuidance, {
+                separator: ",",
+                precision: 0,
+              }).format()}
+            </>
+          ) : (
+            "—"
+          )}
+        </Text>
+      </RouterLink>
     </Box>
   )
 }
 
-const CollectionTitle = styled(Serif)`
-  width: max-content;
-`
-
-export const StyledLink = styled(Link)`
-  text-decoration: none;
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-
-  &:hover {
-    text-decoration: none;
-
-    ${CollectionTitle} {
-      text-decoration: underline;
-    }
-  }
-`
-
-const SingleImgContainer = styled(Box)`
-  position: relative;
-  margin-right: 2px;
-
-  &:last-child {
-    margin-right: 0;
-  }
-`
-
-const ImgOverlay = styled(Box)<{ width: number }>`
-  height: 125px;
-  background-color: ${color("black30")};
-  opacity: 0.1;
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 7;
-`
-
-export const ArtworkImage = styled(Image)<WebImageProps>`
-  height: 125px;
-  background-color: ${color("black10")};
-  object-fit: cover;
-  object-position: center;
-  opacity: 0.9;
-`
-
-const ImgWrapper = styled(Flex)`
-  width: 262px;
-`
-
 export const RelatedCollectionEntityFragmentContainer = createFragmentContainer(
-  RelatedCollectionEntity as React.FC<CollectionProps>,
+  RelatedCollectionEntity,
   {
     collection: graphql`
       fragment RelatedCollectionEntity_collection on MarketingCollection {
@@ -171,7 +119,7 @@ export const RelatedCollectionEntityFragmentContainer = createFragmentContainer(
         slug
         title
         id
-        price_guidance: priceGuidance
+        priceGuidance
         artworksConnection(
           first: 3
           aggregations: [TOTAL]
@@ -184,8 +132,11 @@ export const RelatedCollectionEntityFragmentContainer = createFragmentContainer(
               }
               title
               image {
-                resized(width: 262) {
-                  url
+                resized(width: 150, height: 150) {
+                  width
+                  height
+                  src
+                  srcSet
                 }
               }
             }

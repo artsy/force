@@ -76,7 +76,7 @@ export const ShowContextCard: React.FC<Props> = ({ show }) => {
         {fair.isActive && (
           <Column span={6}>
             {/* @ts-expect-error STRICT_NULL_CHECK */}
-            <Text variant="subtitle">Part of {fair.name}</Text>
+            <Text variant="lg">Part of {fair.name}</Text>
           </Column>
         )}
         <Column span={6}>
@@ -88,7 +88,7 @@ export const ShowContextCard: React.FC<Props> = ({ show }) => {
             <Spacer mb={2} />
             <Box>
               {/* @ts-expect-error STRICT_NULL_CHECK */}
-              <Text variant="largeTitle">{fair.name}</Text>
+              <Text variant="xl">{fair.name}</Text>
 
               {/* @ts-expect-error STRICT_NULL_CHECK */}
               <FairTiming fair={fair} />
@@ -140,7 +140,7 @@ export const ShowContextCard: React.FC<Props> = ({ show }) => {
     return (
       <GridColumns>
         <Column span={6}>
-          <Text variant="subtitle">Presented by {partnerName}</Text>
+          <Text variant="md">Presented by {partnerName}</Text>
         </Column>
         <Column span={6}>
           {/* @ts-expect-error STRICT_NULL_CHECK */}

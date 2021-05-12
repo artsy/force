@@ -1,23 +1,13 @@
-import {
-  Box,
-  Flex,
-  ReadMore,
-  ResponsiveImage,
-  Spacer,
-  Text,
-  color,
-} from "@artsy/palette"
+import { ReadMore, Text, Image, Shelf, Box } from "@artsy/palette"
 import { FeaturedCollectionsRails_collectionGroup } from "v2/__generated__/FeaturedCollectionsRails_collectionGroup.graphql"
 import { useTracking } from "v2/Artsy/Analytics/useTracking"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
-import { Carousel } from "v2/Components/Carousel"
 import currency from "currency.js"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import styled from "styled-components"
-import { resize } from "v2/Utils/resizer"
 import { ContextModule, clickedCollectionGroup } from "@artsy/cohesion"
 import { useAnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
+import { cropped } from "v2/Utils/resized"
 
 interface Props {
   collectionGroup: FeaturedCollectionsRails_collectionGroup
@@ -27,12 +17,12 @@ export const FeaturedCollectionsRails: React.FC<Props> = ({
   collectionGroup: { members, name },
 }) => {
   return (
-    <FeaturedCollectionsContainer>
-      <Text variant="subtitle" pt={3} pb={2}>
+    <>
+      <Text variant="lg" mb={4}>
         {name}
       </Text>
 
-      <Carousel>
+      <Shelf alignItems="flex-start">
         {members.map((slide, slideIndex) => {
           return (
             <FeaturedCollectionEntity
@@ -42,15 +32,13 @@ export const FeaturedCollectionsRails: React.FC<Props> = ({
             />
           )
         })}
-      </Carousel>
-
-      <Spacer pb={2} />
-    </FeaturedCollectionsContainer>
+      </Shelf>
+    </>
   )
 }
 
 interface FeaturedCollectionEntityProps {
-  member: any
+  member: any // TODO
   itemNumber: number
 }
 
@@ -58,8 +46,9 @@ export const FeaturedCollectionEntity: React.FC<FeaturedCollectionEntityProps> =
   itemNumber,
   member,
 }) => {
-  const { description, price_guidance, slug, id, thumbnail, title } = member
-  const formattedPrice = currency(price_guidance, {
+  const { description, priceGuidance, slug, id, thumbnail, title } = member
+
+  const formattedPrice = currency(priceGuidance, {
     separator: ",",
     precision: 0,
   }).format()
@@ -86,41 +75,43 @@ export const FeaturedCollectionEntity: React.FC<FeaturedCollectionEntityProps> =
     )
   }
 
+  const { src, srcSet } = cropped(thumbnail, {
+    // 4:3
+    width: 325,
+    height: 244,
+    quality: 75,
+    convert_to: "jpg",
+  })
+
   return (
-    <Container p={2} width={["261px", "261px", "355px", "355px"]}>
-      <StyledLink to={`/collection/${slug}`} onClick={handleClick}>
-        <Flex height={["190px", "190px", "280px", "280px"]}>
-          <FeaturedImage
-            // @ts-expect-error STRICT_NULL_CHECK
-            src={resize(thumbnail, {
-              width: 500,
-              height: 500,
-              quality: 80,
-              convert_to: "jpg",
-            })}
-          />
-        </Flex>
+    <>
+      <RouterLink to={`/collection/${slug}`} onClick={handleClick} noUnderline>
+        <Image
+          src={src}
+          srcSet={srcSet}
+          width={325}
+          height={244}
+          lazyLoad
+          mb={1}
+        />
 
-        <Text
-          variant="subtitle"
-          mt={1}
-          maxWidth={["246px", "100%"]}
-          overflowEllipsis
-        >
-          {title}
-        </Text>
-
-        {price_guidance && (
-          <Text variant="small" color="black60">
-            {`From $${formattedPrice}`}
+        <Box maxWidth={300}>
+          <Text variant="md" overflowEllipsis>
+            {title}
           </Text>
-        )}
 
-        <Text variant="text" mt={1}>
-          <ReadMore maxChars={100} content={description} disabled />
-        </Text>
-      </StyledLink>
-    </Container>
+          {priceGuidance && (
+            <Text variant="xs" color="black100" mb={1}>
+              {`From $${formattedPrice}`}
+            </Text>
+          )}
+
+          <Text variant="sm" mt={1}>
+            <ReadMore maxChars={100} content={description} disabled />
+          </Text>
+        </Box>
+      </RouterLink>
+    </>
   )
 }
 
@@ -136,37 +127,10 @@ export const FeaturedCollectionsRailsContainer = createFragmentContainer(
           slug
           title
           description
-          price_guidance: priceGuidance
+          priceGuidance
           thumbnail
         }
       }
     `,
   }
 )
-
-const Container = styled(Box)`
-  border: 1px solid ${color("black10")};
-  border-radius: 2px;
-
-  &:hover {
-    text-decoration: none;
-    border: 1px solid ${color("black60")};
-  }
-`
-
-const FeaturedCollectionsContainer = styled(Box)`
-  border-top: 1px solid ${color("black10")};
-`
-
-export const FeaturedImage = styled(ResponsiveImage)`
-  background-position: top;
-`
-
-export const StyledLink = styled(RouterLink)`
-  text-decoration: none;
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-
-  &:hover {
-    text-decoration: none;
-  }
-`

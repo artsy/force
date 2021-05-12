@@ -9,16 +9,22 @@ export type ArtistSeriesEntity_member = {
     readonly headerImage: string | null;
     readonly thumbnail: string | null;
     readonly title: string;
-    readonly price_guidance: number | null;
+    readonly priceGuidance: number | null;
     readonly artworksConnection: {
         readonly edges: ReadonlyArray<{
             readonly node: {
+                readonly internalID: string;
                 readonly artist: {
                     readonly name: string | null;
                 } | null;
                 readonly title: string | null;
                 readonly image: {
-                    readonly url: string | null;
+                    readonly resized: {
+                        readonly width: number | null;
+                        readonly height: number | null;
+                        readonly src: string;
+                        readonly srcSet: string;
+                    } | null;
                 } | null;
             } | null;
         } | null> | null;
@@ -77,7 +83,7 @@ return {
     },
     (v0/*: any*/),
     {
-      "alias": "price_guidance",
+      "alias": null,
       "args": null,
       "kind": "ScalarField",
       "name": "priceGuidance",
@@ -128,6 +134,13 @@ return {
                 {
                   "alias": null,
                   "args": null,
+                  "kind": "ScalarField",
+                  "name": "internalID",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
                   "concreteType": "Artist",
                   "kind": "LinkedField",
                   "name": "artist",
@@ -157,13 +170,50 @@ return {
                       "args": [
                         {
                           "kind": "Literal",
-                          "name": "version",
-                          "value": "small"
+                          "name": "height",
+                          "value": 150
+                        },
+                        {
+                          "kind": "Literal",
+                          "name": "width",
+                          "value": 150
                         }
                       ],
-                      "kind": "ScalarField",
-                      "name": "url",
-                      "storageKey": "url(version:\"small\")"
+                      "concreteType": "ResizedImageUrl",
+                      "kind": "LinkedField",
+                      "name": "resized",
+                      "plural": false,
+                      "selections": [
+                        {
+                          "alias": null,
+                          "args": null,
+                          "kind": "ScalarField",
+                          "name": "width",
+                          "storageKey": null
+                        },
+                        {
+                          "alias": null,
+                          "args": null,
+                          "kind": "ScalarField",
+                          "name": "height",
+                          "storageKey": null
+                        },
+                        {
+                          "alias": null,
+                          "args": null,
+                          "kind": "ScalarField",
+                          "name": "src",
+                          "storageKey": null
+                        },
+                        {
+                          "alias": null,
+                          "args": null,
+                          "kind": "ScalarField",
+                          "name": "srcSet",
+                          "storageKey": null
+                        }
+                      ],
+                      "storageKey": "resized(height:150,width:150)"
                     }
                   ],
                   "storageKey": null
@@ -181,5 +231,5 @@ return {
   "type": "MarketingCollection"
 };
 })();
-(node as any).hash = 'f38ba623e4d7462798c5bc9fde614e47';
+(node as any).hash = '91fea7ae7e932abb5c2a197ca8a00384';
 export default node;

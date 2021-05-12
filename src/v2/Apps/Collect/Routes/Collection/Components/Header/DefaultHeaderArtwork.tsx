@@ -5,33 +5,21 @@ import { useTracking } from "v2/Artsy/Analytics/useTracking"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import styled from "styled-components"
 
-const Link = styled(RouterLink)`
-  display: flex;
-  align-items: flex-end;
-`
-
-export type DefaultHeaderArtworkProps = React.HTMLAttributes<
-  HTMLAnchorElement
-> & {
+export interface DefaultHeaderArtworkProps {
   artwork: DefaultHeaderArtwork_artwork
-  small?: boolean
   collectionId: string
   collectionSlug: string
 }
 
 export const DefaultHeaderArtwork: React.FC<DefaultHeaderArtworkProps> = ({
   artwork,
-  small = false,
   collectionId,
   collectionSlug,
-  ...rest
 }) => {
   const { trackEvent } = useTracking()
 
-  // @ts-expect-error STRICT_NULL_CHECK
-  if (!artwork.node.image) return null
+  if (!artwork.image) return null
 
   const handleClick = () => {
     trackEvent({
@@ -44,32 +32,33 @@ export const DefaultHeaderArtwork: React.FC<DefaultHeaderArtworkProps> = ({
       context_page_owner_id: collectionId,
       context_page_owner_slug: collectionSlug,
       // @ts-expect-error STRICT_NULL_CHECK
-      destination_path: artwork.node.href,
+      destination_path: artwork.href,
     })
   }
 
   return (
-    <Link
+    <RouterLink
       // @ts-expect-error STRICT_NULL_CHECK
-      to={artwork.node.href}
+      to={artwork.href}
       // @ts-expect-error STRICT_NULL_CHECK
-      key={artwork.node.href}
+      key={artwork.href}
       onClick={handleClick}
-      {...rest}
+      style={{ display: "block" }}
     >
       <Image
         // @ts-expect-error STRICT_NULL_CHECK
-        width={artwork.node.image[small ? "small" : "large"].width}
+        width={artwork.image.resized.width}
         // @ts-expect-error STRICT_NULL_CHECK
-        height={artwork.node.image[small ? "small" : "large"].height}
+        height={artwork.image.resized.height}
         // @ts-expect-error STRICT_NULL_CHECK
-        src={artwork.node.image[small ? "small" : "large"].url}
+        src={artwork.image.resized.src}
         // @ts-expect-error STRICT_NULL_CHECK
-        alt={artwork.node.title}
-        preventRightClick
-        mr={1}
+        srcSet={artwork.image.resized.srcSet}
+        // @ts-expect-error STRICT_NULL_CHECK
+        alt={artwork.title}
+        lazyLoad
       />
-    </Link>
+    </RouterLink>
   )
 }
 
@@ -77,23 +66,17 @@ export const DefaultHeaderArtworkFragmentContainer = createFragmentContainer(
   DefaultHeaderArtwork,
   {
     artwork: graphql`
-      fragment DefaultHeaderArtwork_artwork on FilterArtworksEdge {
-        node {
-          id
-          title
-          href
-          slug
-          image {
-            large: resized(height: 230) {
-              url
-              width
-              height
-            }
-            small: resized(height: 160) {
-              url
-              width
-              height
-            }
+      fragment DefaultHeaderArtwork_artwork on Artwork {
+        id
+        title
+        href
+        slug
+        image {
+          resized(width: 300, height: 450) {
+            src
+            srcSet
+            width
+            height
           }
         }
       }

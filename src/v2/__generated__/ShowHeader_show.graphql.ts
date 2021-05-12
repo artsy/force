@@ -7,11 +7,13 @@ export type ShowHeader_show = {
     readonly name: string | null;
     readonly startAt: string | null;
     readonly endAt: string | null;
+    readonly status: string | null;
     readonly formattedStartAt: string | null;
     readonly formattedEndAt: string | null;
     readonly partner: {
         readonly name?: string | null;
     } | null;
+    readonly " $fragmentRefs": FragmentRefs<"ShowContextualLink_show">;
     readonly " $refType": "ShowHeader_show";
 };
 export type ShowHeader_show$data = ShowHeader_show;
@@ -52,6 +54,13 @@ return {
       "args": null,
       "kind": "ScalarField",
       "name": "endAt",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "status",
       "storageKey": null
     },
     {
@@ -100,10 +109,15 @@ return {
         }
       ],
       "storageKey": null
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ShowContextualLink_show"
     }
   ],
   "type": "Show"
 };
 })();
-(node as any).hash = '6c9b0c569a115533b876d48b3d3715ed';
+(node as any).hash = 'e43ae44402dd264c1c959bad52acbb7b';
 export default node;

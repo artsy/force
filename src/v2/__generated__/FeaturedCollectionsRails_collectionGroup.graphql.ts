@@ -12,7 +12,7 @@ export type FeaturedCollectionsRails_collectionGroup = {
         readonly slug: string;
         readonly title: string;
         readonly description: string | null;
-        readonly price_guidance: number | null;
+        readonly priceGuidance: number | null;
         readonly thumbnail: string | null;
     }>;
     readonly " $refType": "FeaturedCollectionsRails_collectionGroup";
@@ -82,7 +82,7 @@ const node: ReaderFragment = {
           "storageKey": null
         },
         {
-          "alias": "price_guidance",
+          "alias": null,
           "args": null,
           "kind": "ScalarField",
           "name": "priceGuidance",
@@ -101,5 +101,5 @@ const node: ReaderFragment = {
   ],
   "type": "MarketingCollectionGroup"
 };
-(node as any).hash = '9d0cecb1e0c3dfbf121f3870b82d55ec';
+(node as any).hash = 'b2af7ee18d4fa1d6393ffea8d8050e51';
 export default node;

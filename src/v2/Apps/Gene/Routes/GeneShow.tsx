@@ -1,4 +1,4 @@
-import { Column, GridColumns, HTML, Text } from "@artsy/palette"
+import { Column, GridColumns, HTML, Spacer, Text } from "@artsy/palette"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
@@ -78,6 +78,8 @@ export const GeneShow: React.FC<GeneShowProps> = ({ gene }) => {
           )}
         </Column>
       </GridColumns>
+
+      <Spacer mt={12} />
 
       <GeneArtworkFilterRefetchContainer gene={gene} />
     </>

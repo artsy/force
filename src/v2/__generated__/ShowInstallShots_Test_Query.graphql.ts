@@ -29,11 +29,11 @@ fragment ShowInstallShots_show on Show {
   images(default: false, size: 100) {
     internalID
     caption
-    mobile: resized(height: 300) {
+    mobile: resized(width: 200) {
       width
       height
     }
-    desktop: resized(height: 400, version: ["larger", "large"]) {
+    desktop: resized(width: 325) {
       src
       srcSet
       width
@@ -71,15 +71,7 @@ v2 = {
   "name": "height",
   "storageKey": null
 },
-v3 = {
-  "kind": "Literal",
-  "name": "version",
-  "value": [
-    "larger",
-    "large"
-  ]
-},
-v4 = [
+v3 = [
   {
     "alias": null,
     "args": null,
@@ -182,8 +174,8 @@ return {
                 "args": [
                   {
                     "kind": "Literal",
-                    "name": "height",
-                    "value": 300
+                    "name": "width",
+                    "value": 200
                   }
                 ],
                 "concreteType": "ResizedImageUrl",
@@ -194,24 +186,23 @@ return {
                   (v1/*: any*/),
                   (v2/*: any*/)
                 ],
-                "storageKey": "resized(height:300)"
+                "storageKey": "resized(width:200)"
               },
               {
                 "alias": "desktop",
                 "args": [
                   {
                     "kind": "Literal",
-                    "name": "height",
-                    "value": 400
-                  },
-                  (v3/*: any*/)
+                    "name": "width",
+                    "value": 325
+                  }
                 ],
                 "concreteType": "ResizedImageUrl",
                 "kind": "LinkedField",
                 "name": "resized",
                 "plural": false,
-                "selections": (v4/*: any*/),
-                "storageKey": "resized(height:400,version:[\"larger\",\"large\"])"
+                "selections": (v3/*: any*/),
+                "storageKey": "resized(width:325)"
               },
               {
                 "alias": "zoom",
@@ -221,7 +212,14 @@ return {
                     "name": "height",
                     "value": 900
                   },
-                  (v3/*: any*/),
+                  {
+                    "kind": "Literal",
+                    "name": "version",
+                    "value": [
+                      "larger",
+                      "large"
+                    ]
+                  },
                   {
                     "kind": "Literal",
                     "name": "width",
@@ -232,7 +230,7 @@ return {
                 "kind": "LinkedField",
                 "name": "resized",
                 "plural": false,
-                "selections": (v4/*: any*/),
+                "selections": (v3/*: any*/),
                 "storageKey": "resized(height:900,version:[\"larger\",\"large\"],width:900)"
               }
             ],
@@ -255,7 +253,7 @@ return {
     "metadata": {},
     "name": "ShowInstallShots_Test_Query",
     "operationKind": "query",
-    "text": "query ShowInstallShots_Test_Query {\n  show(id: \"xxx\") {\n    ...ShowInstallShots_show\n    id\n  }\n}\n\nfragment ShowInstallShots_show on Show {\n  name\n  images(default: false, size: 100) {\n    internalID\n    caption\n    mobile: resized(height: 300) {\n      width\n      height\n    }\n    desktop: resized(height: 400, version: [\"larger\", \"large\"]) {\n      src\n      srcSet\n      width\n      height\n    }\n    zoom: resized(width: 900, height: 900, version: [\"larger\", \"large\"]) {\n      src\n      srcSet\n      width\n      height\n    }\n  }\n}\n"
+    "text": "query ShowInstallShots_Test_Query {\n  show(id: \"xxx\") {\n    ...ShowInstallShots_show\n    id\n  }\n}\n\nfragment ShowInstallShots_show on Show {\n  name\n  images(default: false, size: 100) {\n    internalID\n    caption\n    mobile: resized(width: 200) {\n      width\n      height\n    }\n    desktop: resized(width: 325) {\n      src\n      srcSet\n      width\n      height\n    }\n    zoom: resized(width: 900, height: 900, version: [\"larger\", \"large\"]) {\n      src\n      srcSet\n      width\n      height\n    }\n  }\n}\n"
   }
 };
 })();
