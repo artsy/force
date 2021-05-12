@@ -50,15 +50,7 @@ v1 = {
   "name": "height",
   "storageKey": null
 },
-v2 = {
-  "kind": "Literal",
-  "name": "version",
-  "value": [
-    "larger",
-    "large"
-  ]
-},
-v3 = [
+v2 = [
   {
     "alias": null,
     "args": null,
@@ -127,8 +119,8 @@ return {
           "args": [
             {
               "kind": "Literal",
-              "name": "height",
-              "value": 300
+              "name": "width",
+              "value": 200
             }
           ],
           "concreteType": "ResizedImageUrl",
@@ -139,24 +131,23 @@ return {
             (v0/*: any*/),
             (v1/*: any*/)
           ],
-          "storageKey": "resized(height:300)"
+          "storageKey": "resized(width:200)"
         },
         {
           "alias": "desktop",
           "args": [
             {
               "kind": "Literal",
-              "name": "height",
-              "value": 400
-            },
-            (v2/*: any*/)
+              "name": "width",
+              "value": 325
+            }
           ],
           "concreteType": "ResizedImageUrl",
           "kind": "LinkedField",
           "name": "resized",
           "plural": false,
-          "selections": (v3/*: any*/),
-          "storageKey": "resized(height:400,version:[\"larger\",\"large\"])"
+          "selections": (v2/*: any*/),
+          "storageKey": "resized(width:325)"
         },
         {
           "alias": "zoom",
@@ -166,7 +157,14 @@ return {
               "name": "height",
               "value": 900
             },
-            (v2/*: any*/),
+            {
+              "kind": "Literal",
+              "name": "version",
+              "value": [
+                "larger",
+                "large"
+              ]
+            },
             {
               "kind": "Literal",
               "name": "width",
@@ -177,7 +175,7 @@ return {
           "kind": "LinkedField",
           "name": "resized",
           "plural": false,
-          "selections": (v3/*: any*/),
+          "selections": (v2/*: any*/),
           "storageKey": "resized(height:900,version:[\"larger\",\"large\"],width:900)"
         }
       ],
@@ -187,5 +185,5 @@ return {
   "type": "Show"
 };
 })();
-(node as any).hash = 'f7228839ace1bac8491579a0dae40f48';
+(node as any).hash = '9b1323b9572cd5274d25e926a137c39b';
 export default node;

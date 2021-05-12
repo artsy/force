@@ -1,6 +1,5 @@
 import React from "react"
 import { ShowContextualLinkFragmentContainer } from "../Components/ShowContextualLink"
-import { Link } from "@artsy/palette"
 import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
 import { ShowContextualLink_Test_Query } from "v2/__generated__/ShowContextualLink_Test_Query.graphql"
@@ -55,8 +54,10 @@ describe("ShowContextualLink", () => {
         }),
       })
 
-      expect(wrapper.find(Link).length).toBeTruthy()
-      expect(wrapper.find(Link).first().props().href).toEqual("/catty-partner")
+      expect(wrapper.find("RouterLink").length).toBeTruthy()
+      expect(wrapper.find("RouterLink").first().props().to).toEqual(
+        "/catty-partner"
+      )
       expect(wrapper.text()).toContain("Presented by Catty Partner")
     })
 
@@ -70,7 +71,7 @@ describe("ShowContextualLink", () => {
         }),
       })
 
-      expect(wrapper.find(Link).length).not.toBeTruthy()
+      expect(wrapper.find("RouterLink").length).not.toBeTruthy()
       expect(wrapper.text()).toContain("Presented by Catty Partner")
     })
   })

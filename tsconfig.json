@@ -21,23 +21,11 @@
     "skipLibCheck": true,
     "sourceMap": true,
     "target": "es2016",
-    "typeRoots": [
-      "./src/typings",
-      "./node_modules/@types"
-    ],
-    "types": [
-      "node",
-      "jest",
-      "express",
-      "webpack-env"
-    ],
+    "typeRoots": ["./src/typings", "./node_modules/@types"],
+    "types": ["node", "jest", "express", "webpack-env"],
     "paths": {
-      "package.json": [
-        "./package.json"
-      ],
-      "v2/*": [
-        "./v2/*"
-      ],
+      "package.json": ["./package.json"],
+      "v2/*": ["./v2/*"]
     },
     "plugins": [
       {
@@ -46,12 +34,6 @@
     ],
     "strict": false
   },
-  "include": [
-    "./src",
-  ],
-  "exclude": [
-    "src/**/__generated__/*.ts",
-    "**/node_modules",
-    "**/.*/",
-  ]
+  "include": ["./src"],
+  "exclude": ["src/**/__generated__/*.ts", "**/node_modules", "**/.*/"]
 }

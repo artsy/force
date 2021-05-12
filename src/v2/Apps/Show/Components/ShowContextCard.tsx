@@ -71,7 +71,7 @@ export const ShowContextCard: React.FC<Props> = ({ show }) => {
       <GridColumns>
         {fair.isActive && (
           <Column span={6}>
-            <Text variant="subtitle">Part of {fair.name}</Text>
+            <Text variant="lg">Part of {fair.name}</Text>
           </Column>
         )}
         <Column span={6}>
@@ -80,7 +80,7 @@ export const ShowContextCard: React.FC<Props> = ({ show }) => {
 
             <Spacer mb={2} />
             <Box>
-              <Text variant="largeTitle">{fair.name}</Text>
+              <Text variant="xl">{fair.name}</Text>
 
               <FairTiming fair={fair} />
             </Box>
@@ -126,7 +126,7 @@ export const ShowContextCard: React.FC<Props> = ({ show }) => {
     return (
       <GridColumns>
         <Column span={6}>
-          <Text variant="subtitle">Presented by {partnerName}</Text>
+          <Text variant="md">Presented by {partnerName}</Text>
         </Column>
         <Column span={6}>
           <StyledLink to={partnerHref} noUnderline onClick={handleClick}>
