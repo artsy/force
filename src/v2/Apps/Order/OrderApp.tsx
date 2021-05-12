@@ -18,6 +18,7 @@ import { Mediator } from "lib/mediator"
 import { data as sd } from "sharify"
 import { ZendeskWrapper } from "v2/Components/ZendeskWrapper"
 import { HorizontalPadding } from "../Components/HorizontalPadding"
+import { AppContainer } from "../Components/AppContainer"
 
 export interface OrderAppProps extends RouterState {
   params: {
@@ -196,7 +197,9 @@ class OrderApp extends React.Component<OrderAppProps, {}> {
                   )}
                   <SafeAreaContainer>
                     <Elements stripe={stripePromise}>
-                      <>{children}</>
+                      <AppContainer>
+                        <HorizontalPadding>{children}</HorizontalPadding>
+                      </AppContainer>
                     </Elements>
                   </SafeAreaContainer>
                   <StickyFooter orderType={order.mode} artworkId={artworkId} />
