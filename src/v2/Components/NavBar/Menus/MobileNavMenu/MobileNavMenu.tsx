@@ -191,7 +191,7 @@ export const BackLink: React.FC = () => {
         })
         pop()
       }}
-      width="30px"
+      width="60px"
       height="30px"
       style={{
         cursor: "pointer",
