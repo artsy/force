@@ -62,7 +62,6 @@ describe("FairApp", () => {
 
     const html = wrapper.html()
 
-    expect(html).toContain("Related Reading")
     expect(html).toContain(
       "IFPDA Fine Art Print Fair 2019: Programming and Projects"
     )
@@ -75,7 +74,6 @@ describe("FairApp", () => {
 
     const html = wrapper.html()
 
-    expect(html).not.toContain("Related Reading")
     expect(html).not.toContain(
       "IFPDA Fine Art Print Fair 2019: Programming and Projects"
     )
