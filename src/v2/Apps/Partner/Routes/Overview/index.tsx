@@ -5,6 +5,7 @@ import { ArticlesRailFragmentContainer } from "../../Components/Overview/Article
 import { Overview_partner } from "v2/__generated__/Overview_partner.graphql"
 import { ArtistsRailFragmentContainer } from "../../Components/Overview/ArtistsRail"
 import { ShowsRailFragmentContainer } from "../../Components/Overview/ShowsRail"
+import { AboutPartnerFragmentContainer } from "../../Components/Overview/AboutPartner"
 import { ArtworksRailRenderer } from "../../Components/Overview/ArtworksRail"
 import { ShowBannersRailRenderer } from "../../Components/Overview/ShowBannersRail"
 
@@ -31,6 +32,8 @@ const Overview: React.FC<OverviewProps> = ({ partner }) => {
         <ShowBannersRailRenderer mt={4} mb={[4, 80]} partnerId={slug} />
       )}
 
+      <AboutPartnerFragmentContainer partner={partner} />
+
       <ShowsRailFragmentContainer mt={4} mb={[4, 80]} partner={partner} />
       {displayArtistsSection && (
         <ArtistsRailFragmentContainer partner={partner} />
@@ -48,6 +51,7 @@ export const OverviewFragmentContainer = createFragmentContainer(Overview, {
       slug
       profileBannerDisplay
       displayArtistsSection
+      ...AboutPartner_partner
       ...ShowsRail_partner
       ...ArtistsRail_partner
       articlesConnection(first: 8)
