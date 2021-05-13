@@ -317,6 +317,9 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
               src={authenticityGuaranteeImageURL}
               alt={authenticityImage?.artist?.name!}
               srcSet={authenticityImage?.image?.resized?.srcSet}
+              style={{ objectFit: "cover" }}
+              width="100%"
+              height="100%"
               lazyLoad
               aria-label={authenticityImage?.imageTitle!}
             />
@@ -342,6 +345,9 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
               srcSet={moneyBackGuaranteeImage?.image?.resized?.srcSet}
               lazyLoad
               aria-label={moneyBackGuaranteeImage?.imageTitle!}
+              style={{ objectFit: "cover" }}
+              width="100%"
+              height="100%"
             />
           )}
           {securePaymentImageURL && (
@@ -351,6 +357,9 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
               srcSet={securePaymentImage?.image?.resized?.srcSet}
               aria-label={securePaymentImage?.imageTitle!}
               lazyLoad
+              style={{ objectFit: "cover" }}
+              width="100%"
+              height="100%"
             />
           )}
           <Flex flexDirection="column" px={space(9)} pt={space(9)}>
