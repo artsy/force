@@ -12,6 +12,7 @@ import {
   LockIcon,
   space,
   Text,
+  ResponsiveBox,
   VerifiedIcon,
 } from "@artsy/palette"
 import { BuyerGuaranteeIndex_authenticityImage } from "v2/__generated__/BuyerGuaranteeIndex_authenticityImage.graphql"
@@ -311,13 +312,19 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
       {/*  Artsy Guarantee Sections desktop */}
       <Media greaterThanOrEqual="sm">
         <CSSGrid gridTemplateColumns="repeat(2, 1fr)">
-          <Image
-            src={authenticityGuaranteeImageURL}
-            alt={authenticityImage.artist.name}
-            srcSet={authenticityImage.image.resized.srcSet}
-            lazyLoad
-            aria-label={authenticityImage.imageTitle}
-          />
+          <AspectRatioWrapper
+            aspectWidth={400}
+            aspectHeight={600}
+            maxWidth="100%"
+          >
+            <Image
+              src={authenticityGuaranteeImageURL}
+              alt={authenticityImage.artist.name}
+              srcSet={authenticityImage.image.resized.srcSet}
+              lazyLoad
+              aria-label={authenticityImage.imageTitle}
+            />
+          </AspectRatioWrapper>
           <Flex flexDirection="column" p={space(9)}>
             <Text variant="title">Authenticity Guarantee</Text>
             <Text variant="text" my={2}>
@@ -332,20 +339,32 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
             </Text>
             {learnMoreButton("40%")}
           </Flex>
-          <Image
-            src={moneyBackGuaranteeImageURL}
-            alt={moneyBackGuaranteeImage.artist.name}
-            srcSet={moneyBackGuaranteeImage.image.resized.srcSet}
-            lazyLoad
-            aria-label={moneyBackGuaranteeImage.imageTitle}
-          />
-          <Image
-            src={securePaymentImageURL}
-            alt={securePaymentImage.artist.name}
-            srcSet={securePaymentImage.image.resized.srcSet}
-            aria-label={securePaymentImage.imageTitle}
-            lazyLoad
-          />
+          <AspectRatioWrapper
+            aspectWidth={400}
+            aspectHeight={600}
+            maxWidth="100%"
+          >
+            <Image
+              src={moneyBackGuaranteeImageURL}
+              alt={moneyBackGuaranteeImage.artist.name}
+              srcSet={moneyBackGuaranteeImage.image.resized.srcSet}
+              lazyLoad
+              aria-label={moneyBackGuaranteeImage.imageTitle}
+            />
+          </AspectRatioWrapper>
+          <AspectRatioWrapper
+            aspectWidth={400}
+            aspectHeight={600}
+            maxWidth="100%"
+          >
+            <Image
+              src={securePaymentImageURL}
+              alt={securePaymentImage.artist.name}
+              srcSet={securePaymentImage.image.resized.srcSet}
+              aria-label={securePaymentImage.imageTitle}
+              lazyLoad
+            />
+          </AspectRatioWrapper>
           <Flex flexDirection="column" px={space(9)} pt={space(9)}>
             <Text variant="title">Secure Payment</Text>
             <Text variant="text" my={2}>
@@ -930,3 +949,9 @@ const ChatIcon = ({ h, w }) => (
     </svg>
   </ChatIconContainer>
 )
+
+const AspectRatioWrapper = styled(ResponsiveBox)`
+  &:nth-child(1) > div:first-child {
+    border: solid 5px red;
+  }
+`
