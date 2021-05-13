@@ -65,7 +65,7 @@
   dependencies:
     uuid "^8.3.0"
 
-"@artsy/palette@^14.28.2":
+"@artsy/palette@14.28.2":
   version "14.28.2"
   resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-14.28.2.tgz#356bafe161f64e6ed1c929c5e53125ab814dc16c"
   integrity sha512-idUvei5zxkZbAu1tZlO18X8B98mjEO2Zi8VgmUAzRP6TbeFbLzhERZY+3VuGR7e9r+Qkn9hDe1cojiEz0x7/gg==

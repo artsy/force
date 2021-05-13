@@ -31,6 +31,6 @@ describe("ArtistsByLetter", () => {
     const wrapper = getWrapper()
 
     expect(wrapper.find("h1")).toHaveLength(1)
-    expect(wrapper.find("h1").text()).toEqual("Artists – A")
+    expect(wrapper.find("h1").text()).toEqual("Artists - A")
   })
 })

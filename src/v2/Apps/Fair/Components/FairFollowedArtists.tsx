@@ -70,14 +70,13 @@ export const FairFollowedArtists: React.FC<FairFollowedArtistsProps> = ({
   return (
     <Box {...rest}>
       <Box display="flex" justifyContent="space-between">
-        <Text variant="sm" as="h3" mb={2}>
+        <Text variant="lg" as="h3" mb={2}>
           Works by artists you follow
         </Text>
 
-        <Text variant="sm" color="black60">
+        <Text variant="sm">
           <RouterLink
             to={`/fair/${fair.slug}/artworks?include_artworks_by_followed_artists=true`}
-            noUnderline
             onClick={() => {
               tracking.trackEvent(tappedViewTrackingData)
             }}

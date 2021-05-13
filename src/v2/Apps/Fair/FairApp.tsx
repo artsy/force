@@ -1,7 +1,7 @@
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FairApp_fair } from "v2/__generated__/FairApp_fair.graphql"
-import { Box, CSSGrid, Spacer, Text } from "@artsy/palette"
+import { Box, Spacer, Text } from "@artsy/palette"
 import {
   FairEditorialFragmentContainer,
   FAIR_EDITORIAL_AMOUNT,
@@ -75,34 +75,25 @@ const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
       {hasArticles && (
         <Box my={6} pt={4} borderTop="1px solid" borderColor="black10">
           <Box display="flex" justifyContent="space-between">
-            <Text variant="sm" as="h3" mb={2}>
+            <Text variant="lg" as="h3" mb={2}>
               Related Reading
             </Text>
 
             {/* @ts-expect-error STRICT_NULL_CHECK */}
             {fair.articlesConnection.totalCount > FAIR_EDITORIAL_AMOUNT && (
               <RouterLink to={`${fair.href}/articles`} noUnderline>
-                <Text variant="sm" color="black60">
-                  View all
-                </Text>
+                <Text variant="sm">View all</Text>
               </RouterLink>
             )}
           </Box>
 
-          <CSSGrid
-            gridAutoFlow="row"
-            gridColumnGap={3}
-            gridRowGap={2}
-            gridTemplateColumns={["repeat(1, 1fr)", "repeat(2, 1fr)"]}
-          >
-            <FairEditorialFragmentContainer fair={fair} />
-          </CSSGrid>
+          <FairEditorialFragmentContainer fair={fair} />
         </Box>
       )}
 
       {hasCollections && (
         <Box my={6} pt={4} borderTop="1px solid" borderColor="black10">
-          <Text variant="sm" as="h3" mb={2}>
+          <Text variant="lg" as="h3" mb={2}>
             Curated Highlights
           </Text>
 

@@ -28,41 +28,63 @@ const ArtistsCarouselCell: React.FC<ArtistsCarouselCellProps> = ({
   const slug = getSlug(featuredLink.href)
 
   return (
-    <RouterLink
-      // @ts-expect-error STRICT_NULL_CHECK
-      key={featuredLink.internalID}
-      // @ts-expect-error STRICT_NULL_CHECK
-      to={featuredLink.href}
-      style={{ display: "block", textDecoration: "none" }}
-      // @ts-expect-error STRICT_NULL_CHECK
-      aria-label={featuredLink.title}
-    >
-      <Image
+    <>
+      <RouterLink
         // @ts-expect-error STRICT_NULL_CHECK
-        src={image.thumb.src}
+        key={featuredLink.internalID}
         // @ts-expect-error STRICT_NULL_CHECK
-        srcSet={image.thumb.srcSet}
-        // @ts-expect-error STRICT_NULL_CHECK
-        width={image.thumb.width}
-        // @ts-expect-error STRICT_NULL_CHECK
-        height={image.thumb.height}
-        // @ts-expect-error STRICT_NULL_CHECK
-        alt={featuredLink.title}
-        lazyLoad={index > 2}
-      />
+        to={featuredLink.href}
+        style={{ display: "block", textDecoration: "none" }}
+      >
+        <Image
+          // @ts-expect-error STRICT_NULL_CHECK
+          src={image.thumb.src}
+          // @ts-expect-error STRICT_NULL_CHECK
+          srcSet={image.thumb.srcSet}
+          // @ts-expect-error STRICT_NULL_CHECK
+          width={image.thumb.width}
+          // @ts-expect-error STRICT_NULL_CHECK
+          height={image.thumb.height}
+          // @ts-expect-error STRICT_NULL_CHECK
+          alt={featuredLink.title}
+          lazyLoad
+        />
+      </RouterLink>
 
-      <Box my={1} display="flex" justifyContent="space-between">
-        <Box>
-          <Text variant="mediumText">{featuredLink.title}</Text>
-          <Text color="black60">{featuredLink.subtitle}</Text>
-        </Box>
+      <Box
+        my={1}
+        display="flex"
+        justifyContent="space-between"
+        alignItems="center"
+        // TODO: Figure out why the button isn't displaying partially during loading.
+        // Set height to height of button for now to prevent layout-shift.
+        height={50}
+      >
+        <RouterLink
+          // @ts-expect-error STRICT_NULL_CHECK
+          key={featuredLink.internalID}
+          // @ts-expect-error STRICT_NULL_CHECK
+          to={featuredLink.href}
+          style={{ display: "block", textDecoration: "none" }}
+          // @ts-expect-error STRICT_NULL_CHECK
+          aria-label={featuredLink.title}
+        >
+          <Text variant="lg">{featuredLink.title}</Text>
+
+          {featuredLink.subtitle && (
+            <Text variant="md" color="black60">
+              {featuredLink.subtitle}
+            </Text>
+          )}
+        </RouterLink>
 
         <FollowArtistButtonQueryRenderer
           id={slug}
           contextModule={ContextModule.featuredArtistsRail}
+          buttonProps={{ variant: "secondaryOutline" }}
         />
       </Box>
-    </RouterLink>
+    </>
   )
 }
 
@@ -76,7 +98,7 @@ export const ArtistsCarouselCellFragmentContainer = createFragmentContainer(
         subtitle
         href
         image {
-          thumb: cropped(width: 546, height: 410, version: "wide") {
+          thumb: cropped(width: 600, height: 450, version: "wide") {
             width
             height
             src
