@@ -80,6 +80,7 @@ export const useAuthIntent = () => {
   const { user, relayEnvironment } = useSystemContext()
 
   useEffect(() => {
+    // @ts-expect-error STRICT_NULL_CHECK
     runAuthIntent(user, relayEnvironment)
   }, [relayEnvironment, user])
 }

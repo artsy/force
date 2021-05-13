@@ -137,6 +137,7 @@ const LargeAuctionItem: SFC<Props> = props => {
     salePrice,
   } = getProps(props)
 
+  // @ts-expect-error STRICT_NULL_CHECK
   const imageUrl = get(images, i => i.thumbnail.url, "")
   const dateOfSale = getDisplaySaleDate(saleDate)
 
@@ -214,6 +215,7 @@ const ExtraSmallAuctionItem: SFC<Props> = props => {
     auctionResult: { images, date_text, title, saleDate, boughtIn },
     salePrice,
   } = getProps(props)
+  // @ts-expect-error STRICT_NULL_CHECK
   const imageUrl = get(images, i => i.thumbnail.url, "")
   const dateOfSale = getDisplaySaleDate(saleDate)
 
@@ -309,6 +311,7 @@ const getProps = (props: Props) => {
   } = props
 
   const salePrice = getSalePrice(price_realized)
+  // @ts-expect-error STRICT_NULL_CHECK
   const estimatedPrice = estimate.display
 
   return {
@@ -487,6 +490,7 @@ const renderLargeCollapse = (props, user, mediator, filtersAtDefault) => {
   const dateOfSale = getDisplaySaleDate(saleDate)
 
   return (
+    // @ts-expect-error STRICT_NULL_CHECK
     <Collapse open={expanded}>
       <Separator />
       <Box p={2}>
@@ -578,6 +582,7 @@ const renderSmallCollapse = (props, user, mediator, filtersAtDefault) => {
   const dateOfSale = getDisplaySaleDate(saleDate)
 
   return (
+    // @ts-expect-error STRICT_NULL_CHECK
     <Collapse open={expanded}>
       <Separator />
       <Box p={2}>

@@ -1,9 +1,7 @@
 import React from "react"
-import { AppContainer } from "v2/Apps/Components/AppContainer"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Box } from "@artsy/palette"
 import { ShowSubApp_show } from "v2/__generated__/ShowSubApp_show.graphql"
-import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
 import { BackLink } from "v2/Components/Links/BackLink"
 import { ShowMetaFragmentContainer as ShowMeta } from "./Components/ShowMeta"
 import {
@@ -22,7 +20,7 @@ const ShowApp: React.FC<ShowAppProps> = ({ children, show }) => {
     <>
       <ShowMeta show={show} />
 
-      <AppContainer>
+      <>
         <AnalyticsContext.Provider
           value={{
             contextPageOwnerId: show.internalID,
@@ -30,18 +28,17 @@ const ShowApp: React.FC<ShowAppProps> = ({ children, show }) => {
             contextPageOwnerType,
           }}
         >
-          <HorizontalPadding>
-            <BackLink my={3} to={show.href}>
-              Back to {show.name}
-              {!show.isFairBooth && show.partner?.name && (
-                <> at {show.partner.name}</>
-              )}
-            </BackLink>
+          {/* @ts-expect-error STRICT_NULL_CHECK */}
+          <BackLink my={2} to={show.href}>
+            Back to {show.name}
+            {!show.isFairBooth && show.partner?.name && (
+              <> at {show.partner.name}</>
+            )}
+          </BackLink>
 
-            <Box minHeight="50vh">{children}</Box>
-          </HorizontalPadding>
+          <Box minHeight="50vh">{children}</Box>
         </AnalyticsContext.Provider>
-      </AppContainer>
+      </>
     </>
   )
 }

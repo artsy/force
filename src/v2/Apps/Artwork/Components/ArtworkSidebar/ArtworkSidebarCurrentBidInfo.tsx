@@ -37,6 +37,7 @@ export class ArtworkSidebarCurrentBidInfo extends React.Component<
     mediator &&
       mediator.trigger &&
       mediator.trigger("openAuctionBuyerPremium", {
+        // @ts-expect-error STRICT_NULL_CHECK
         auctionId: artwork.sale.internalID,
       })
   }
@@ -45,8 +46,10 @@ export class ArtworkSidebarCurrentBidInfo extends React.Component<
     const { artwork } = this.props
 
     // We do not have reliable Bid info for artworks in Live sales in progress
+    // @ts-expect-error STRICT_NULL_CHECK
     if (artwork.sale.is_live_open) return null
 
+    // @ts-expect-error STRICT_NULL_CHECK
     if (artwork.sale.is_closed) {
       return (
         <Box>
@@ -62,7 +65,9 @@ export class ArtworkSidebarCurrentBidInfo extends React.Component<
     // Don't display anything if there is no starting bid info
     if (!artwork.sale_artwork || !artwork.sale_artwork.current_bid) return null
 
+    // @ts-expect-error STRICT_NULL_CHECK
     const bidsCount = get(artwork, a => a.sale_artwork.counts.bidder_positions)
+    // @ts-expect-error STRICT_NULL_CHECK
     const bidsPresent = bidsCount > 0
     const bidColor =
       artwork.sale_artwork.is_with_reserve &&
@@ -74,11 +79,13 @@ export class ArtworkSidebarCurrentBidInfo extends React.Component<
     const bidTextParts = []
     let reserveMessage = artwork.sale_artwork.reserve_message
     if (bidsPresent) {
+      // @ts-expect-error STRICT_NULL_CHECK
       bidTextParts.push(bidsCount === 1 ? "1 bid" : bidsCount + " bids")
       if (reserveMessage) reserveMessage = reserveMessage.toLocaleLowerCase()
     }
     if (reserveMessage) {
       reserveMessage = reserveMessage + "."
+      // @ts-expect-error STRICT_NULL_CHECK
       bidTextParts.push(reserveMessage)
     }
     const bidText = bidTextParts.join(", ")
@@ -90,9 +97,12 @@ export class ArtworkSidebarCurrentBidInfo extends React.Component<
      */
     const myLotStanding = artwork.myLotStanding && artwork.myLotStanding[0]
     const myBidPresent = !!(myLotStanding && myLotStanding.most_recent_bid)
+    // @ts-expect-error STRICT_NULL_CHECK
     const myMostRecent = myBidPresent && myLotStanding.most_recent_bid
     const myBidWinning =
+      // @ts-expect-error STRICT_NULL_CHECK
       myBidPresent && get(myLotStanding, s => s.active_bid.is_winning)
+    // @ts-expect-error STRICT_NULL_CHECK
     const myMaxBid = get(myMostRecent, bid => bid.max_bid.display)
     return (
       <SystemContextConsumer>
@@ -122,6 +132,7 @@ export class ArtworkSidebarCurrentBidInfo extends React.Component<
                   </Box>
                 )}
                 <Text variant="subtitle" pl={0.5}>
+                  {/* @ts-expect-error STRICT_NULL_CHECK */}
                   {artwork.sale_artwork.current_bid.display}
                 </Text>
               </Flex>

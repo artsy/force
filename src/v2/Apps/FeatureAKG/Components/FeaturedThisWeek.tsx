@@ -25,6 +25,7 @@ export const FeaturedThisWeek: React.FC<FeaturedThisWeekProps> = props => {
             <FeaturedContentLink
               key={`featured-content-link-1`}
               size="large"
+              // @ts-expect-error STRICT_NULL_CHECK
               contextModule={AnalyticsSchema.ContextModule.FeaturedThisWeek}
               {...featured_item_1}
             />
@@ -35,6 +36,7 @@ export const FeaturedThisWeek: React.FC<FeaturedThisWeekProps> = props => {
             <FeaturedContentLink
               key={`featured-content-link-2`}
               size="large"
+              // @ts-expect-error STRICT_NULL_CHECK
               contextModule={AnalyticsSchema.ContextModule.FeaturedThisWeek}
               {...featured_item_2}
             />

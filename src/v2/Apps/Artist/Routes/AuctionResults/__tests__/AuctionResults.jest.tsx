@@ -137,9 +137,12 @@ describe("AuctionResults", () => {
         wrapper.update()
         const html = wrapper.html()
         const data =
+          // @ts-expect-error STRICT_NULL_CHECK
           AuctionResultsFixture.artist.auctionResultsConnection.edges[0].node
         expect(html).toContain("Artwork Info")
+        // @ts-expect-error STRICT_NULL_CHECK
         expect(html).toContain(data.dimension_text)
+        // @ts-expect-error STRICT_NULL_CHECK
         expect(html).toContain(data.description)
       })
     })

@@ -1,11 +1,10 @@
 import { Box, Link, Text } from "@artsy/palette"
-import { AppContainer } from "v2/Apps/Components/AppContainer"
 import React from "react"
 import { Title as HeadTitle } from "react-head"
 
 export const Error: React.FC = () => {
   return (
-    <AppContainer>
+    <>
       <HeadTitle>Artsy | ID Verification</HeadTitle>
 
       <Box px={[2, 3]} mb={6} mt={4}>
@@ -27,6 +26,6 @@ export const Error: React.FC = () => {
           </Text>
         </Box>
       </Box>
-    </AppContainer>
+    </>
   )
 }

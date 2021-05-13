@@ -32,8 +32,10 @@ export const PartnerArtistsCarouselItem: React.FC<PartnerArtistsCarouselItemProp
   artist,
   partnerArtistHref,
 }) => {
+  // @ts-expect-error STRICT_NULL_CHECK
   if (!artist || artist.filterArtworksConnection.edges.length === 0) return null
 
+  // @ts-expect-error STRICT_NULL_CHECK
   const artwork = artist.filterArtworksConnection.edges[0].node
 
   return (
@@ -41,7 +43,9 @@ export const PartnerArtistsCarouselItem: React.FC<PartnerArtistsCarouselItemProp
       <ResponsiveImage>
         <RouterLink to={partnerArtistHref}>
           <Image
+            // @ts-expect-error STRICT_NULL_CHECK
             src={artwork.image.cropped.src}
+            // @ts-expect-error STRICT_NULL_CHECK
             srcSet={artwork.image.cropped.srcSet}
             width="100%"
             height="100%"
@@ -51,8 +55,11 @@ export const PartnerArtistsCarouselItem: React.FC<PartnerArtistsCarouselItemProp
 
       <Flex mt={1} justifyContent="space-between">
         <EntityHeader
+          // @ts-expect-error STRICT_NULL_CHECK
           imageUrl={artist.image.cropped.url || ""}
+          // @ts-expect-error STRICT_NULL_CHECK
           name={artist.name}
+          // @ts-expect-error STRICT_NULL_CHECK
           meta={artist.formattedNationalityAndBirthday}
           href={partnerArtistHref}
         />

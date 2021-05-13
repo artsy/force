@@ -11,7 +11,7 @@ export type BuyerGuaranteeIndex_headerImage = {
     } | null;
     readonly image: {
         readonly resized: {
-            readonly url: string;
+            readonly srcSet: string;
         } | null;
     } | null;
     readonly " $refType": "BuyerGuaranteeIndex_headerImage";
@@ -88,7 +88,7 @@ const node: ReaderFragment = {
               "alias": null,
               "args": null,
               "kind": "ScalarField",
-              "name": "url",
+              "name": "srcSet",
               "storageKey": null
             }
           ],
@@ -100,5 +100,5 @@ const node: ReaderFragment = {
   ],
   "type": "Artwork"
 };
-(node as any).hash = '452e71128a83f85a09937c23bcbbc413';
+(node as any).hash = 'db01dc82a545e01ab10cb4d9e3aa3356';
 export default node;

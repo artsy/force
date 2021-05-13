@@ -20,6 +20,7 @@ const ExampleArtworkRoute: React.FC<ExampleArtworkRouteProps> = ({
         <Text variant="lg" mb={2}>
           {artwork.title}
         </Text>
+        {/* @ts-expect-error STRICT_NULL_CHECK */}
         <Image src={artwork.imageUrl} alt={artwork.title} />
         <Text fontWeight="bold">{artwork.artistNames}</Text>
         <Text>{artwork.date}</Text>
@@ -28,6 +29,7 @@ const ExampleArtworkRoute: React.FC<ExampleArtworkRouteProps> = ({
       <Box>
         <Text variant="md">Related Artists</Text>
         <Flex my={2}>
+          {/* @ts-expect-error STRICT_NULL_CHECK */}
           {artwork.artist.related.artistsConnection.edges.map(({ node }) => (
             <Box width={["100%", "25%"]} pr={[0, "20px"]}>
               <ArtistCard

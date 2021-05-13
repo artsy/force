@@ -10,6 +10,7 @@ interface AuthenticityCertificateProps
   artwork: AuthenticityCertificate_artwork
 }
 
+// @ts-expect-error STRICT_NULL_CHECK
 export const AuthenticityCertificate: React.FC<AuthenticityCertificateProps> = ({
   artwork,
   ...other

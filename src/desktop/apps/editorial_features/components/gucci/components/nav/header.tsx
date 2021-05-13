@@ -25,6 +25,7 @@ export const Header: React.SFC<HeaderProps> = props => {
 
   return (
     <HeaderMain justifyContent="space-between" alignItems="center">
+      {/* @ts-expect-error STRICT_NULL_CHECK */}
       <PartnerInline
         url={partner_url}
         logo={partner_logo}

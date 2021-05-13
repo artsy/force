@@ -32,12 +32,14 @@ jest.mock("@stripe/stripe-js", () => {
   return {
     loadStripe: () => {
       if (mock === null) {
+        // @ts-expect-error STRICT_NULL_CHECK
         mock = mockStripe()
       }
       return mock
     },
     _mockStripe: () => mock,
-    _mockReset: () => mock = mockStripe(),
+    // @ts-expect-error STRICT_NULL_CHECK
+    _mockReset: () => (mock = mockStripe()),
   }
 })
 
@@ -79,7 +81,6 @@ describe("Routes/Register", () => {
     mockLocation()
   })
 
-
   beforeEach(() => {
     mockPostEvent.mockReset()
     resetMockLocation()
@@ -93,7 +94,9 @@ describe("Routes/Register", () => {
 
     expect(mockPostEvent).toBeCalledWith({
       action_type: Schema.ActionType.RegistrationSubmitFailed,
+      // @ts-expect-error STRICT_NULL_CHECK
       auction_slug: RegisterQueryResponseFixture.sale.slug,
+      // @ts-expect-error STRICT_NULL_CHECK
       auction_state: RegisterQueryResponseFixture.sale.status,
       context_page: Schema.PageName.AuctionRegistrationPage,
       error_messages: [
@@ -105,7 +108,9 @@ describe("Routes/Register", () => {
         "Postal code is required",
         "State is required",
       ],
+      // @ts-expect-error STRICT_NULL_CHECK
       sale_id: RegisterQueryResponseFixture.sale.internalID,
+      // @ts-expect-error STRICT_NULL_CHECK
       user_id: RegisterQueryResponseFixture.me.internalID,
     })
     expect(mockPostEvent).toHaveBeenCalledTimes(1)
@@ -158,15 +163,21 @@ describe("Routes/Register", () => {
     expect(mockPostEvent).toHaveBeenCalledTimes(1)
     expect(mockPostEvent).toBeCalledWith({
       action_type: Schema.ActionType.RegistrationSubmitted,
+      // @ts-expect-error STRICT_NULL_CHECK
       auction_slug: RegisterQueryResponseFixture.sale.slug,
+      // @ts-expect-error STRICT_NULL_CHECK
       auction_state: RegisterQueryResponseFixture.sale.status,
+      // @ts-expect-error STRICT_NULL_CHECK
       bidder_id: createBidderSuccessful.createBidder.bidder.internalID,
       context_page: Schema.PageName.AuctionRegistrationPage,
+      // @ts-expect-error STRICT_NULL_CHECK
       sale_id: RegisterQueryResponseFixture.sale.internalID,
+      // @ts-expect-error STRICT_NULL_CHECK
       user_id: RegisterQueryResponseFixture.me.internalID,
     })
 
     expect(window.location.assign).toHaveBeenCalledWith(
+      // @ts-expect-error STRICT_NULL_CHECK
       `/auction/${RegisterQueryResponseFixture.sale.slug}/confirm-registration`
     )
   })
@@ -187,13 +198,17 @@ describe("Routes/Register", () => {
 
     expect(mockPostEvent).toBeCalledWith({
       action_type: Schema.ActionType.RegistrationSubmitFailed,
+      // @ts-expect-error STRICT_NULL_CHECK
       auction_slug: RegisterQueryResponseFixture.sale.slug,
+      // @ts-expect-error STRICT_NULL_CHECK
       auction_state: RegisterQueryResponseFixture.sale.status,
       context_page: Schema.PageName.AuctionRegistrationPage,
       error_messages: [
         "Your card was declined. Please contact your bank or use a different card.",
       ],
+      // @ts-expect-error STRICT_NULL_CHECK
       sale_id: RegisterQueryResponseFixture.sale.internalID,
+      // @ts-expect-error STRICT_NULL_CHECK
       user_id: RegisterQueryResponseFixture.me.internalID,
     })
     expect(mockPostEvent).toHaveBeenCalledTimes(1)
@@ -222,6 +237,7 @@ describe("Routes/Register", () => {
     const env = setupTestEnv()
     const page = await env.buildPage()
 
+    // @ts-expect-error STRICT_NULL_CHECK
     page
       .find(CreditCardInput)
       .props()
@@ -248,7 +264,9 @@ describe("Routes/Register", () => {
     const env = setupTestEnv()
     const page = await env.buildPage()
 
-    _mockStripe().createToken.mockRejectedValueOnce(new TypeError("Network request failed"))
+    _mockStripe().createToken.mockRejectedValueOnce(
+      new TypeError("Network request failed")
+    )
 
     await page.fillFormWithValidValues()
     await page.submitForm()

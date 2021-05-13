@@ -9,6 +9,7 @@ jest.mock("desktop/lib/global_client_setup", () => ({
 
 describe("bootstrap", () => {
   beforeAll(() => {
+    // @ts-expect-error STRICT_NULL_CHECK
     mediator.on = jest.fn((_e, cb) => cb())
   })
 

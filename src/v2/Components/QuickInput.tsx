@@ -58,6 +58,7 @@ export class QuickInput extends React.Component<
 
   onBlur = e => {
     if (this.props.setTouched) {
+      // @ts-expect-error STRICT_NULL_CHECK
       this.props.setTouched({ [this.props.name]: true })
     }
     this.setState({
@@ -71,6 +72,7 @@ export class QuickInput extends React.Component<
 
   onChange = e => {
     if (this.props.touchedOnChange && this.props.setTouched) {
+      // @ts-expect-error STRICT_NULL_CHECK
       this.props.setTouched({ [this.props.name]: true })
     }
     this.setState({

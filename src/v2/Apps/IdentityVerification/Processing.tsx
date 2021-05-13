@@ -1,12 +1,11 @@
 import { Box, Button, Sans, Serif } from "@artsy/palette"
-import { AppContainer } from "v2/Apps/Components/AppContainer"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import React from "react"
 import { Title as HeadTitle } from "react-head"
 
 export const Processing: React.FC = () => {
   return (
-    <AppContainer>
+    <>
       <HeadTitle>Artsy | ID Verification</HeadTitle>
 
       <Box px={[2, 3]} mb={6} mt={4}>
@@ -29,6 +28,6 @@ export const Processing: React.FC = () => {
           </RouterLink>
         </Box>
       </Box>
-    </AppContainer>
+    </>
   )
 }

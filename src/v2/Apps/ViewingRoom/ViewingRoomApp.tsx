@@ -1,5 +1,4 @@
 import React, { useContext, useEffect } from "react"
-import { AppContainer } from "v2/Apps/Components/AppContainer"
 import { Banner, Box, ClosedEyeIcon, Text } from "@artsy/palette"
 import { ViewingRoomHeaderFragmentContainer as ViewingRoomHeader } from "./Components/ViewingRoomHeader"
 import { ViewingRoomContentNotAccessibleFragmentContainer as ViewingRoomContentNotAccessible } from "./Components/ViewingRoomContentNotAccessible"
@@ -29,6 +28,7 @@ const ViewingRoomApp: React.FC<ViewingRoomAppProps> = ({
   const { router } = useRouter()
   useEffect(() => {
     if (user && user.id) return
+    // @ts-expect-error STRICT_NULL_CHECK
     openAuthModal(mediator, {
       afterClose: () => {
         router.push("/viewing-rooms")
@@ -43,11 +43,13 @@ const ViewingRoomApp: React.FC<ViewingRoomAppProps> = ({
   }, [user, router, mediator])
 
   if (!viewingRoom) {
+    // @ts-expect-error STRICT_NULL_CHECK
     return <ErrorPage code={404} />
   }
 
   const showPreview =
     user &&
+    // @ts-expect-error STRICT_NULL_CHECK
     userHasAccessToPartner(user, viewingRoom.partner.internalID) &&
     (viewingRoom.status === "draft" || viewingRoom.status === "scheduled")
 
@@ -82,10 +84,10 @@ const ViewingRoomApp: React.FC<ViewingRoomAppProps> = ({
         </Box>
       )}
 
-      <AppContainer maxWidth="100%">
+      <>
         <ViewingRoomHeader viewingRoom={viewingRoom} />
         {user && getView()}
-      </AppContainer>
+      </>
     </>
   )
 }

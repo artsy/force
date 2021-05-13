@@ -25,6 +25,7 @@ describe("DownloadAppBadge", () => {
       <DownloadAppBadge contextModule={ContextModule.footer} />
     )
     const downloadLink = badge.find(Link)
+    // @ts-expect-error STRICT_NULL_CHECK
     downloadLink.props().onClick({} as any)
     expect(trackEvent).toHaveBeenCalledWith(
       expect.objectContaining({

@@ -49,6 +49,7 @@ export class SaveButton extends React.Component<
   SaveButtonProps,
   SaveButtonState
 > {
+  // @ts-expect-error STRICT_NULL_CHECK
   state = {
     is_saved: null,
     isHovered: false,
@@ -111,6 +112,7 @@ export class SaveButton extends React.Component<
 
         if (this.props.render) {
           this.setState({
+            // @ts-expect-error STRICT_NULL_CHECK
             is_saved: saveArtwork.artwork.is_saved,
           })
         }
@@ -118,12 +120,14 @@ export class SaveButton extends React.Component<
       } catch (err) {
         if (this.props.render) {
           this.setState({
+            // @ts-expect-error STRICT_NULL_CHECK
             is_saved: this.isSaved,
           })
         }
         console.error("Artwork/Save Error saving artwork: ", err)
       }
     } else {
+      // @ts-expect-error STRICT_NULL_CHECK
       openAuthToFollowSave(mediator, {
         contextModule,
         entity: {
@@ -137,7 +141,10 @@ export class SaveButton extends React.Component<
 
   mixinButtonActions() {
     return {
-      onClick: () => this.handleSave(),
+      onClick: event => {
+        event.preventDefault()
+        this.handleSave()
+      },
       onMouseEnter: () => {
         this.setState({
           isHovered: true,
@@ -158,8 +165,10 @@ export class SaveButton extends React.Component<
       <ClickContainer
         data-test="saveButton"
         {...this.mixinButtonActions()}
+        // @ts-expect-error STRICT_NULL_CHECK
         isSaved={this.isSaved}
       >
+        {/* @ts-expect-error STRICT_NULL_CHECK */}
         <Container isSaved={this.isSaved}>
           {isRemoveable ? (
             <CloseIcon fill="white100" width={ICON_SIZE} height={ICON_SIZE} />
@@ -174,6 +183,7 @@ export class SaveButton extends React.Component<
   renderCustomButton() {
     return (
       <div {...this.mixinButtonActions()} data-test="saveButton">
+        {/* @ts-expect-error STRICT_NULL_CHECK */}
         {this.props.render(this.props, this.state)}
       </div>
     )

@@ -36,7 +36,9 @@ const ArtistArtworkFilter: React.FC<ArtistArtworkFilterProps> = props => {
         { value: "-year", text: "Artwork year (desc.)" },
         { value: "year", text: "Artwork year (asc.)" },
       ]}
+      // @ts-expect-error STRICT_NULL_CHECK
       aggregations={sidebarAggregations.aggregations as any}
+      // @ts-expect-error STRICT_NULL_CHECK
       counts={artist.counts}
       onChange={updateUrl}
     >
@@ -47,6 +49,7 @@ const ArtistArtworkFilter: React.FC<ArtistArtworkFilterProps> = props => {
           aggregations: ["TOTAL"],
         }}
       >
+        {/* @ts-expect-error STRICT_NULL_CHECK */}
         {artist.counts.artworks === 0 && (
           <ZeroState artist={artist} is_followed={artist.is_followed} />
         )}
@@ -56,6 +59,7 @@ const ArtistArtworkFilter: React.FC<ArtistArtworkFilterProps> = props => {
 }
 
 export const ArtistArtworkFilterRefetchContainer = createRefetchContainer(
+  // @ts-expect-error STRICT_NULL_CHECK
   withRouter<ArtistArtworkFilterProps & RouterState>(ArtistArtworkFilter),
   {
     artist: graphql`

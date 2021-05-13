@@ -29,9 +29,13 @@ const populatedGrids = (grids: OtherWorks_artwork["contextGrids"]) => {
   if (grids && grids.length > 0) {
     return grids.filter(grid => {
       return (
+        // @ts-expect-error STRICT_NULL_CHECK
         grid.artworksConnection &&
+        // @ts-expect-error STRICT_NULL_CHECK
         grid.artworksConnection.edges &&
+        // @ts-expect-error STRICT_NULL_CHECK
         grid.artworksConnection.edges.length > 0 &&
+        // @ts-expect-error STRICT_NULL_CHECK
         grid.__typename !== "RelatedArtworkGrid"
       )
     })
@@ -84,12 +88,15 @@ export const OtherWorks = track()(
           <Join separator={<Spacer my={3} />}>
             {gridsToShow.map((grid, index) => {
               const contextModule = contextGridTypeToV2ContextModule(
+                // @ts-expect-error STRICT_NULL_CHECK
                 grid.__typename
               )
               return (
                 <Box key={`Grid-${index}`} data-test={contextModule}>
+                  {/* @ts-expect-error STRICT_NULL_CHECK */}
                   <Header title={grid.title} buttonHref={grid.ctaHref} />
                   <ArtworkGrid
+                    // @ts-expect-error STRICT_NULL_CHECK
                     artworks={grid.artworksConnection}
                     columnCount={[2, 3, 4]}
                     preloadImageCount={0}
@@ -100,6 +107,7 @@ export const OtherWorks = track()(
                         type: Schema.Type.ArtworkBrick,
                         action_type: Schema.ActionType.Click,
                         context_module: contextGridTypeToContextModule(
+                          // @ts-expect-error STRICT_NULL_CHECK
                           grid.__typename
                         ),
                       })

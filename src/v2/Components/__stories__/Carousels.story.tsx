@@ -10,10 +10,10 @@ import {
   CarouselBar,
   splitBoxProps,
   SwiperRail,
+  FullBleed,
 } from "@artsy/palette"
 import { random } from "lodash"
 import React, { useState } from "react"
-import { FullBleed } from "../FullBleed"
 import { ContentHeaderExample } from "./Components/ContentHeaderExample"
 import { Page } from "./Components/Page"
 import { TombstoneExample } from "./Components/TombstoneExample"

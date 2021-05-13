@@ -52,6 +52,7 @@ const ArtistConsignFAQ: React.FC<ArtistConsignFAQProps> = props => {
                     })
                   }}
                   href={getConsignSubmissionUrl({
+                    // @ts-expect-error STRICT_NULL_CHECK
                     contextPath: props.artist.href,
                     subject: AnalyticsSchema.Subject.Here,
                   })}

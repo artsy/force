@@ -14,7 +14,6 @@ import {
 } from "@artsy/palette"
 import { Shipping_order } from "v2/__generated__/Shipping_order.graphql"
 import { CommerceOrderFulfillmentTypeEnum } from "v2/__generated__/SetShippingMutation.graphql"
-import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "v2/Apps/Order/Components/ArtworkSummaryItem"
 import {
   OrderStepper,
@@ -103,9 +102,11 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
     this.props.order.requestedFulfillment.__typename !== "CommerceShip"
       ? "PICKUP"
       : "SHIP") as CommerceOrderFulfillmentTypeEnum,
+    // @ts-expect-error STRICT_NULL_CHECK
     address: startingAddress(this.props.me, this.props.order),
     addressErrors: {},
     addressTouched: {},
+    // @ts-expect-error STRICT_NULL_CHECK
     phoneNumber: startingPhoneNumber(this.props.me, this.props.order),
     phoneNumberError: "",
     phoneNumberTouched: false,
@@ -128,6 +129,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
     }
   }
 
+  // @ts-expect-error STRICT_NULL_CHECK
   getAddressList = () => this.props.me.addressConnection.edges
 
   isCreateNewAddress = () => this.state.selectedSavedAddress === NEW_ADDRESS
@@ -142,6 +144,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
         const { error, hasError } = validatePhoneNumber(this.state.phoneNumber)
         if (hasErrors && hasError) {
           this.setState({
+            // @ts-expect-error STRICT_NULL_CHECK
             addressErrors: errors,
             addressTouched: this.touchedAddress,
             phoneNumberError: error,
@@ -150,6 +153,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
           return
         } else if (hasErrors) {
           this.setState({
+            // @ts-expect-error STRICT_NULL_CHECK
             addressErrors: errors,
             addressTouched: this.touchedAddress,
           })
@@ -178,13 +182,16 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
       const shipToAddress = this.isCreateNewAddress()
         ? address
         : convertShippingAddressForExchange(
+            // @ts-expect-error STRICT_NULL_CHECK
             this.getAddressList()[parseInt(this.state.selectedSavedAddress)]
               .node
           )
       const shipToPhoneNumber = this.isCreateNewAddress()
         ? phoneNumber
-        : this.getAddressList()[parseInt(this.state.selectedSavedAddress)].node
+        : // @ts-expect-error STRICT_NULL_CHECK
+          this.getAddressList()[parseInt(this.state.selectedSavedAddress)].node
             .phoneNumber
+      // @ts-expect-error STRICT_NULL_CHECK
       const orderOrError = (
         await setShipping(this.props.commitMutation, {
           input: {
@@ -204,6 +211,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
       ) {
         const { relayEnvironment } = this.props
         await createUserAddress(
+          // @ts-expect-error STRICT_NULL_CHECK
           relayEnvironment,
           {
             ...address,
@@ -221,6 +229,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
       }
 
       if (orderOrError.error) {
+        // @ts-expect-error STRICT_NULL_CHECK
         this.handleSubmitError(orderOrError.error)
         return
       }
@@ -266,6 +275,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
     const { errors } = validateAddress(address)
     this.setState({
       address,
+      // @ts-expect-error STRICT_NULL_CHECK
       addressErrors: {
         ...this.state.addressErrors,
         ...errors,
@@ -312,17 +322,21 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
     } = this.state
     const artwork = get(
       this.props,
+      // @ts-expect-error STRICT_NULL_CHECK
       props => props.order.lineItems.edges[0].node.artwork
     )
     const addressList = this.getAddressList()
 
     const shippingSelected =
+      // @ts-expect-error STRICT_NULL_CHECK
       !artwork.pickup_available || this.state.shippingOption === "SHIP"
 
     const showAddressForm =
       shippingSelected &&
+      // @ts-expect-error STRICT_NULL_CHECK
       (this.isCreateNewAddress() || addressList.length === 0)
 
+    // @ts-expect-error STRICT_NULL_CHECK
     const showSavedAddresses = shippingSelected && addressList.length > 0
 
     const onSelectSavedAddress = (value: string) => {
@@ -338,6 +352,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
           }}
           show={showModal}
           closeModal={() => this.setState({ showModal: false })}
+          // @ts-expect-error STRICT_NULL_CHECK
           address={addressList[this.state.editAddressIndex]?.node}
           onSuccess={() => {
             // this.setState({ address: updatedAddress })
@@ -349,147 +364,142 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
             })
           }}
         />
-        <HorizontalPadding px={[0, 4]}>
-          <Row>
-            <Col>
-              <OrderStepper
-                currentStep="Shipping"
-                steps={
-                  order.mode === "OFFER" ? offerFlowSteps : buyNowFlowSteps
-                }
-              />
-            </Col>
-          </Row>
-        </HorizontalPadding>
-
-        <HorizontalPadding>
-          <TwoColumnLayout
-            Content={
-              <Flex
-                flexDirection="column"
-                style={isCommittingMutation ? { pointerEvents: "none" } : {}}
-              >
-                {/* TODO: Make RadioGroup generic for the allowed values,
+        <Row>
+          <Col>
+            <OrderStepper
+              currentStep="Shipping"
+              steps={order.mode === "OFFER" ? offerFlowSteps : buyNowFlowSteps}
+            />
+          </Col>
+        </Row>
+        <TwoColumnLayout
+          Content={
+            <Flex
+              flexDirection="column"
+              style={isCommittingMutation ? { pointerEvents: "none" } : {}}
+            >
+              {/* TODO: Make RadioGroup generic for the allowed values,
                   which could also ensure the children only use
                   allowed values. */}
-                {artwork.pickup_available && (
-                  <>
-                    <RadioGroup
-                      onSelect={this.onSelectShippingOption.bind(this)}
-                      defaultValue={this.state.shippingOption}
+              {/* @ts-expect-error STRICT_NULL_CHECK */}
+              {artwork.pickup_available && (
+                <>
+                  <RadioGroup
+                    onSelect={this.onSelectShippingOption.bind(this)}
+                    defaultValue={this.state.shippingOption}
+                  >
+                    <Text variant="mediumText" mb="1">
+                      Delivery Method
+                    </Text>
+                    <BorderedRadio value="SHIP" label="Shipping" />
+
+                    <BorderedRadio
+                      value="PICKUP"
+                      label="Arrange for pickup (free)"
+                      data-test="pickupOption"
                     >
-                      <Text variant="mediumText" mb="1">
-                        Delivery Method
-                      </Text>
-                      <BorderedRadio value="SHIP" label="Shipping" />
-
-                      <BorderedRadio
-                        value="PICKUP"
-                        label="Arrange for pickup (free)"
-                        data-test="pickupOption"
-                      >
-                        <Collapse open={this.state.shippingOption === "PICKUP"}>
-                          <Sans size="2" color="black60">
-                            After your order is confirmed, a specialist will
-                            contact you within 2 business days to coordinate
-                            pickup.
-                          </Sans>
-                        </Collapse>
-                      </BorderedRadio>
-                    </RadioGroup>
-                    <Spacer mb={3} />
-                  </>
-                )}
-                {showSavedAddresses && (
-                  <SavedAddresses
-                    me={this.props.me}
-                    onSelect={value => onSelectSavedAddress(value)}
-                    handleClickEdit={this.handleClickEdit}
-                    inCollectorProfile={false}
-                  />
-                )}
-                <Collapse
-                  data-test="addressFormCollapse"
-                  open={showAddressForm}
-                >
-                  <AddressForm
-                    value={address}
-                    errors={addressErrors}
-                    touched={addressTouched}
-                    onChange={this.onAddressChange}
-                    domesticOnly={artwork.onlyShipsDomestically}
-                    euOrigin={artwork.euShippingOrigin}
-                    shippingCountry={artwork.shippingCountry}
-                    showPhoneNumberInput={false}
-                  />
-                  <Spacer mb={2} />
-                  <PhoneNumberForm
-                    value={phoneNumber}
-                    errors={phoneNumberError}
-                    touched={phoneNumberTouched}
-                    onChange={this.onPhoneNumberChange}
-                    label="Required for shipping logistics"
-                  />
-                  <Checkbox
-                    onSelect={selected =>
-                      this.setState({ saveAddress: selected })
-                    }
-                    selected={this.state.saveAddress}
-                    data-test="save-address-checkbox"
-                  >
-                    Save shipping address for later use
-                  </Checkbox>
-                  <Spacer mt={3} />
-                </Collapse>
-
-                <Collapse
-                  data-test="phoneNumberCollapse"
-                  open={this.state.shippingOption === "PICKUP"}
-                >
-                  <PhoneNumberForm
-                    data-test="pickupPhoneNumberForm"
-                    value={phoneNumber}
-                    errors={phoneNumberError}
-                    touched={phoneNumberTouched}
-                    onChange={this.onPhoneNumberChange}
-                    label="Number to contact you for pickup logistics"
-                  />
-                </Collapse>
-                <Media greaterThan="xs">
-                  <Button
-                    onClick={this.onContinueButtonPressed}
-                    loading={isCommittingMutation}
-                    size="large"
-                    width="100%"
-                  >
-                    Continue
-                  </Button>
-                </Media>
-              </Flex>
-            }
-            Sidebar={
-              <Flex flexDirection="column">
-                <Flex flexDirection="column">
-                  <ArtworkSummaryItem order={order} />
-                  <TransactionDetailsSummaryItem order={order} />
-                </Flex>
-                <BuyerGuarantee />
-                <Spacer mb={[2, 3]} />
-                <Media at="xs">
+                      <Collapse open={this.state.shippingOption === "PICKUP"}>
+                        <Sans size="2" color="black60">
+                          After your order is confirmed, a specialist will
+                          contact you within 2 business days to coordinate
+                          pickup.
+                        </Sans>
+                      </Collapse>
+                    </BorderedRadio>
+                  </RadioGroup>
                   <Spacer mb={3} />
-                  <Button
-                    onClick={this.onContinueButtonPressed}
-                    loading={isCommittingMutation}
-                    size="large"
-                    width="100%"
-                  >
-                    Continue
-                  </Button>
-                </Media>
+                </>
+              )}
+              {showSavedAddresses && (
+                <SavedAddresses
+                  me={this.props.me}
+                  onSelect={value => onSelectSavedAddress(value)}
+                  handleClickEdit={this.handleClickEdit}
+                  inCollectorProfile={false}
+                />
+              )}
+              <Collapse data-test="addressFormCollapse" open={showAddressForm}>
+                {/* @ts-expect-error STRICT_NULL_CHECK */}
+                <AddressForm
+                  value={address}
+                  errors={addressErrors}
+                  touched={addressTouched}
+                  onChange={this.onAddressChange}
+                  // @ts-expect-error STRICT_NULL_CHECK
+                  domesticOnly={artwork.onlyShipsDomestically}
+                  // @ts-expect-error STRICT_NULL_CHECK
+                  euOrigin={artwork.euShippingOrigin}
+                  // @ts-expect-error STRICT_NULL_CHECK
+                  shippingCountry={artwork.shippingCountry}
+                  showPhoneNumberInput={false}
+                />
+                <Spacer mb={2} />
+                <PhoneNumberForm
+                  value={phoneNumber}
+                  errors={phoneNumberError}
+                  touched={phoneNumberTouched}
+                  onChange={this.onPhoneNumberChange}
+                  label="Required for shipping logistics"
+                />
+                <Checkbox
+                  onSelect={selected =>
+                    this.setState({ saveAddress: selected })
+                  }
+                  selected={this.state.saveAddress}
+                  data-test="save-address-checkbox"
+                >
+                  Save shipping address for later use
+                </Checkbox>
+                <Spacer mt={3} />
+              </Collapse>
+
+              <Collapse
+                data-test="phoneNumberCollapse"
+                open={this.state.shippingOption === "PICKUP"}
+              >
+                <PhoneNumberForm
+                  data-test="pickupPhoneNumberForm"
+                  value={phoneNumber}
+                  errors={phoneNumberError}
+                  touched={phoneNumberTouched}
+                  onChange={this.onPhoneNumberChange}
+                  label="Number to contact you for pickup logistics"
+                />
+              </Collapse>
+              <Media greaterThan="xs">
+                <Button
+                  onClick={this.onContinueButtonPressed}
+                  loading={isCommittingMutation}
+                  size="large"
+                  width="100%"
+                >
+                  Continue
+                </Button>
+              </Media>
+            </Flex>
+          }
+          Sidebar={
+            <Flex flexDirection="column">
+              <Flex flexDirection="column">
+                <ArtworkSummaryItem order={order} />
+                <TransactionDetailsSummaryItem order={order} />
               </Flex>
-            }
-          />
-        </HorizontalPadding>
+              <BuyerGuarantee />
+              <Spacer mb={[2, 3]} />
+              <Media at="xs">
+                <Spacer mb={3} />
+                <Button
+                  onClick={this.onContinueButtonPressed}
+                  loading={isCommittingMutation}
+                  size="large"
+                  width="100%"
+                >
+                  Continue
+                </Button>
+              </Media>
+            </Flex>
+          }
+        />
       </Box>
     )
   }

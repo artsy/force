@@ -10,7 +10,6 @@ import {
 } from "@artsy/palette"
 import { Offer_order } from "v2/__generated__/Offer_order.graphql"
 import { OfferMutation } from "v2/__generated__/OfferMutation.graphql"
-import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "v2/Apps/Order/Components/ArtworkSummaryItem"
 import { OfferInput } from "v2/Apps/Order/Components/OfferInput"
 import { OfferNote } from "v2/Apps/Order/Components/OfferNote"
@@ -192,6 +191,7 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
     }
 
     try {
+      // @ts-expect-error STRICT_NULL_CHECK
       const orderOrError = (
         await this.addInitialOfferToOrder({
           input: {
@@ -218,62 +218,93 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
     const { order, isCommittingMutation } = this.props
 
     const offerItem = getOfferItemFromOrder(order.lineItems)
+    // @ts-expect-error STRICT_NULL_CHECK
     const artworkId = order.lineItems.edges[0].node.artwork.slug
     const orderCurrency = order.currencyCode
 
     return (
       <>
-        <HorizontalPadding px={[0, 4]}>
-          <Row>
-            <Col>
-              <OrderStepper currentStep="Offer" steps={offerFlowSteps} />
-            </Col>
-          </Row>
-        </HorizontalPadding>
-
-        <HorizontalPadding>
-          <TwoColumnLayout
-            Content={
-              <Flex
-                flexDirection="column"
-                style={isCommittingMutation ? { pointerEvents: "none" } : {}}
-                id="offer-page-left-column"
-              >
-                <Flex flexDirection="column">
-                  <OfferInput
-                    id="OfferForm_offerValue"
-                    showError={
-                      this.state.formIsDirty && this.state.offerValue <= 0
-                    }
-                    onChange={offerValue => this.setState({ offerValue })}
-                    onFocus={this.onOfferInputFocus.bind(this)}
-                  />
-                </Flex>
-                {Boolean(offerItem?.price) && (
-                  <Sans size="2" color="black60">
-                    List price: {offerItem.price}
-                  </Sans>
-                )}
-                {!order.isInquiryOrder && (
-                  <>
-                    <Spacer mb={[2, 3]} />
-                    <RevealButton align="left" buttonLabel="Add note to seller">
-                      <OfferNote
-                        onChange={offerNoteValue =>
-                          this.setState({ offerNoteValue })
-                        }
-                        artworkId={artworkId}
-                      />
-                    </RevealButton>
-                  </>
-                )}
-                <Spacer mb={[2, 3]} />
-                <Message p={[2, 3]}>
-                  Please note that all offers are binding. If your offer is
-                  accepted, your payment will be processed immediately.
-                </Message>
-                <Spacer mb={[2, 3]} />
-                <Media greaterThan="xs">
+        <Row>
+          <Col>
+            <OrderStepper currentStep="Offer" steps={offerFlowSteps} />
+          </Col>
+        </Row>
+        <TwoColumnLayout
+          Content={
+            <Flex
+              flexDirection="column"
+              style={isCommittingMutation ? { pointerEvents: "none" } : {}}
+              id="offer-page-left-column"
+            >
+              <Flex flexDirection="column">
+                <OfferInput
+                  id="OfferForm_offerValue"
+                  showError={
+                    this.state.formIsDirty && this.state.offerValue <= 0
+                  }
+                  onChange={offerValue => this.setState({ offerValue })}
+                  onFocus={this.onOfferInputFocus.bind(this)}
+                />
+              </Flex>
+              {Boolean(offerItem?.price) && (
+                <Sans size="2" color="black60">
+                  {/* @ts-expect-error STRICT_NULL_CHECK */}
+                  List price: {offerItem.price}
+                </Sans>
+              )}
+              {!order.isInquiryOrder && (
+                <>
+                  <Spacer mb={[2, 3]} />
+                  <RevealButton align="left" buttonLabel="Add note to seller">
+                    <OfferNote
+                      onChange={offerNoteValue =>
+                        this.setState({ offerNoteValue })
+                      }
+                      artworkId={artworkId}
+                    />
+                  </RevealButton>
+                </>
+              )}
+              <Spacer mb={[2, 3]} />
+              <Message p={[2, 3]}>
+                Please note that all offers are binding. If your offer is
+                accepted, your payment will be processed immediately.
+              </Message>
+              <Spacer mb={[2, 3]} />
+              <Media greaterThan="xs">
+                <Button
+                  onClick={this.onContinueButtonPressed}
+                  loading={isCommittingMutation}
+                  size="large"
+                  width="100%"
+                >
+                  Continue
+                </Button>
+              </Media>
+            </Flex>
+          }
+          Sidebar={
+            <Flex flexDirection="column">
+              <Flex flexDirection="column">
+                <ArtworkSummaryItem order={order} />
+                <TransactionDetailsSummaryItem
+                  order={order}
+                  // @ts-expect-error STRICT_NULL_CHECK
+                  offerOverride={
+                    this.state.offerValue &&
+                    this.state.offerValue.toLocaleString("en-US", {
+                      currency: orderCurrency,
+                      minimumFractionDigits: 2,
+                      style: "currency",
+                    })
+                  }
+                />
+              </Flex>
+              <BuyerGuarantee />
+              <Spacer mb={[2, 3]} />
+              <Media at="xs">
+                <>
+                  <Spacer mb={3} />
                   <Button
                     onClick={this.onContinueButtonPressed}
                     loading={isCommittingMutation}
@@ -282,44 +313,11 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
                   >
                     Continue
                   </Button>
-                </Media>
-              </Flex>
-            }
-            Sidebar={
-              <Flex flexDirection="column">
-                <Flex flexDirection="column">
-                  <ArtworkSummaryItem order={order} />
-                  <TransactionDetailsSummaryItem
-                    order={order}
-                    offerOverride={
-                      this.state.offerValue &&
-                      this.state.offerValue.toLocaleString("en-US", {
-                        currency: orderCurrency,
-                        minimumFractionDigits: 2,
-                        style: "currency",
-                      })
-                    }
-                  />
-                </Flex>
-                <BuyerGuarantee />
-                <Spacer mb={[2, 3]} />
-                <Media at="xs">
-                  <>
-                    <Spacer mb={3} />
-                    <Button
-                      onClick={this.onContinueButtonPressed}
-                      loading={isCommittingMutation}
-                      size="large"
-                      width="100%"
-                    >
-                      Continue
-                    </Button>
-                  </>
-                </Media>
-              </Flex>
-            }
-          />
-        </HorizontalPadding>
+                </>
+              </Media>
+            </Flex>
+          }
+        />
       </>
     )
   }

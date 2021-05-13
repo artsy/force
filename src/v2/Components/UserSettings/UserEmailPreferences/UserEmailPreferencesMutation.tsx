@@ -29,6 +29,7 @@ export const UpdateUserEmailPreferencesMutation = (
           updateMyUserProfile: {
             me: {
               id,
+              // @ts-expect-error STRICT_NULL_CHECK
               emailFrequency: input.emailFrequency,
             },
           },

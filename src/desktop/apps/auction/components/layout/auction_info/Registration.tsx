@@ -60,6 +60,7 @@ const Registration: React.FC<RegistrationProps> = props => {
 
   const b = block("auction-Registration")
   const trackClick = desc => e => {
+    // @ts-expect-error STRICT_NULL_CHECK
     window.analytics.track(desc, {
       context_type: "auctions landing",
       auction_slug: auction.id,
@@ -101,6 +102,7 @@ const Registration: React.FC<RegistrationProps> = props => {
                 <div className={b("wrapper")}>
                   <a
                     className={b("idv-link")}
+                    // @ts-expect-error STRICT_NULL_CHECK
                     href={`/identity-verification/${pendingIdentityVerification.internalID}`}
                   >
                     <Button

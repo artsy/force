@@ -18,7 +18,9 @@ export class OfferInput extends React.Component<OfferInputProps> {
         title="Your offer"
         type="text"
         pattern="[0-9]"
+        // @ts-expect-error STRICT_NULL_CHECK
         defaultValue={null}
+        // @ts-expect-error STRICT_NULL_CHECK
         error={showError ? "Offer amount missing or invalid." : null}
         onFocus={onFocus}
         onChange={ev => {

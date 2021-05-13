@@ -35,6 +35,7 @@ describe("ArtistHeader", () => {
   }
 
   it("renders (or doesnt) the appropriate tabs based on the counts", async () => {
+    // @ts-expect-error STRICT_NULL_CHECK
     const wrapper = await getWrapper({
       ...NavigationTabsFixture,
       counts: {
@@ -50,6 +51,7 @@ describe("ArtistHeader", () => {
   })
 
   it("renders the count of forSaleWorks if greater than zero", async () => {
+    // @ts-expect-error STRICT_NULL_CHECK
     const wrapper = await getWrapper({
       ...NavigationTabsFixture,
       counts: {
@@ -61,6 +63,7 @@ describe("ArtistHeader", () => {
   })
 
   it("renders 'Artworks' instead of 'Works for sale' on tab if there are no works for sale", async () => {
+    // @ts-expect-error STRICT_NULL_CHECK
     const wrapper = await getWrapper({
       ...NavigationTabsFixture,
       counts: {
@@ -73,6 +76,7 @@ describe("ArtistHeader", () => {
   })
 
   it("renders no tabs if there is no content", async () => {
+    // @ts-expect-error STRICT_NULL_CHECK
     const wrapper = await getWrapper({
       ...NavigationTabsFixture,
       statuses: {

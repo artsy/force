@@ -20,6 +20,7 @@ const FollowGeneButton: React.FC<FollowGeneButtonProps> = ({
 
   const handleClick = () => {
     if (!user) {
+      // @ts-expect-error STRICT_NULL_CHECK
       openAuthToFollowSave(mediator, {
         entity: gene,
         contextModule: ContextModule.geneHeader,
@@ -29,6 +30,7 @@ const FollowGeneButton: React.FC<FollowGeneButtonProps> = ({
       return
     }
 
+    // @ts-expect-error STRICT_NULL_CHECK
     commitMutation<FollowGeneButtonMutation>(relayEnvironment, {
       mutation: graphql`
         mutation FollowGeneButtonMutation($input: FollowGeneInput!) {
@@ -59,6 +61,7 @@ const FollowGeneButton: React.FC<FollowGeneButtonProps> = ({
 
   return (
     <FollowButton
+      // @ts-expect-error STRICT_NULL_CHECK
       isFollowed={gene.isFollowed}
       handleFollow={handleClick}
       buttonProps={rest}

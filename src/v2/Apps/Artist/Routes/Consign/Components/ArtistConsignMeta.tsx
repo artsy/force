@@ -17,6 +17,7 @@ export const ArtistConsignMeta: React.FC<ArtistConsignMetaProps> = props => {
 
   const imageURL = get(
     targetSupply,
+    // @ts-expect-error STRICT_NULL_CHECK
     p => p.microfunnel.artworksConnection.edges[0].node.image.imageURL
   )
 

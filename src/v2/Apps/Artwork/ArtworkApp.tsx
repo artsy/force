@@ -6,8 +6,6 @@ import { data as sd } from "sharify"
 
 import { ArtworkApp_artwork } from "v2/__generated__/ArtworkApp_artwork.graphql"
 import { ArtworkApp_me } from "v2/__generated__/ArtworkApp_me.graphql"
-import { AppContainer } from "v2/Apps/Components/AppContainer"
-import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
 
 import { ArtistInfoFragmentContainer as ArtistInfo } from "./Components/ArtistInfo"
 import { ArtworkBannerFragmentContainer as ArtworkBanner } from "./Components/ArtworkBanner"
@@ -176,7 +174,9 @@ export class ArtworkApp extends React.Component<Props> {
         action_type: Schema.ActionType.ViewedLot,
         artwork_id: internalID,
         artwork_slug: slug,
+        // @ts-expect-error STRICT_NULL_CHECK
         auction_slug: sale.slug,
+        // @ts-expect-error STRICT_NULL_CHECK
         sale_id: sale.internalID,
       }
       tracking.trackEvent(trackingData)
@@ -197,8 +197,10 @@ export class ArtworkApp extends React.Component<Props> {
           const addSpacer = artists.length > 1 && index < artists.length - 1
           return (
             <React.Fragment key={index}>
+              {/* @ts-expect-error STRICT_NULL_CHECK */}
               <Row key={artist.id}>
                 <Col>
+                  {/* @ts-expect-error STRICT_NULL_CHECK */}
                   <ArtistInfo artist={artist} />
                 </Col>
               </Row>
@@ -213,14 +215,14 @@ export class ArtworkApp extends React.Component<Props> {
   render() {
     const { artwork, me } = this.props
     return (
-      <AppContainer>
+      <>
         <LegacyArtworkDllContainer />
         {/* FIXME: remove once we refactor out legacy backbone code.
             Add place to attach legacy flash message, used in legacy inquiry flow
          */}
         <div id="main-layout-flash" />
         <ReCaptchaContainer />
-        <HorizontalPadding>
+        <>
           {/* NOTE: react-head automatically moves these tags to the <head> element */}
           <ArtworkMeta artwork={artwork} />
 
@@ -302,8 +304,8 @@ export class ArtworkApp extends React.Component<Props> {
               zIndex: 1100, // over top nav
             }}
           />
-        </HorizontalPadding>
-      </AppContainer>
+        </>
+      </>
     )
   }
 }

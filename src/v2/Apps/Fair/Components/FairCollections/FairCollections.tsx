@@ -19,7 +19,9 @@ export const FairCollections: React.FC<FairCollectionsProps> = ({
         {fair.marketingCollections.map((collection, index) => {
           return (
             <FairCollection
+              // @ts-expect-error STRICT_NULL_CHECK
               key={collection.id}
+              // @ts-expect-error STRICT_NULL_CHECK
               collection={collection}
               carouselIndex={index}
             />

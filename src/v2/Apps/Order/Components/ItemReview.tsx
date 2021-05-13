@@ -29,15 +29,23 @@ const dimensionsDisplay = dimensions => (
 export const ItemReview: React.SFC<ItemReviewProps> = ({
   lineItem: {
     artwork: {
+      // @ts-expect-error STRICT_NULL_CHECK
       artist_names,
+      // @ts-expect-error STRICT_NULL_CHECK
       title,
+      // @ts-expect-error STRICT_NULL_CHECK
       date,
+      // @ts-expect-error STRICT_NULL_CHECK
       medium,
+      // @ts-expect-error STRICT_NULL_CHECK
       dimensions: artworkDimensions,
+      // @ts-expect-error STRICT_NULL_CHECK
       attribution_class,
+      // @ts-expect-error STRICT_NULL_CHECK
       image: {
         resized: { url },
       },
+      // @ts-expect-error STRICT_NULL_CHECK
       edition_sets,
     },
     editionSetId,

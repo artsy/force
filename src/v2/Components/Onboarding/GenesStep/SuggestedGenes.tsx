@@ -48,18 +48,23 @@ class SuggestedGenesContent extends React.Component<Props> {
     this.props.onGeneFollow(follow, gene)
 
     const suggestedGene = store.get(
+      // @ts-expect-error STRICT_NULL_CHECK
       data.followGene.gene.similar.edges[0].node.id
     )
+    // @ts-expect-error STRICT_NULL_CHECK
     this.excludedGeneIds.add(suggestedGene.getValue("internalID") as string)
 
     const suggestedGenesRootField = store.get("client:root")
     const suggestedGenes =
+      // @ts-expect-error STRICT_NULL_CHECK
       suggestedGenesRootField.getLinkedRecords("suggested_genes") || []
     const updatedSuggestedGenes = suggestedGenes.map(geneItem =>
       geneItem.getValue("id") === gene.id ? suggestedGene : geneItem
     )
 
+    // @ts-expect-error STRICT_NULL_CHECK
     suggestedGenesRootField.setLinkedRecords(
+      // @ts-expect-error STRICT_NULL_CHECK
       updatedSuggestedGenes,
       "suggested_genes"
     )
@@ -69,6 +74,7 @@ class SuggestedGenesContent extends React.Component<Props> {
     this.excludedGeneIds.add(gene.internalID)
 
     commitMutation<SuggestedGenesFollowGeneMutation>(
+      // @ts-expect-error STRICT_NULL_CHECK
       this.props.relay.environment,
       {
         // TODO: Inputs to the mutation might have changed case of the keys!
@@ -113,6 +119,7 @@ class SuggestedGenesContent extends React.Component<Props> {
 
   render() {
     const items = this.props.suggested_genes.map((item, index) => {
+      // @ts-expect-error STRICT_NULL_CHECK
       const imageUrl = get(item, i => i.image.cropped.url)
       return (
         <LinkContainer key={`suggested-genes-${index}`}>
@@ -125,7 +132,9 @@ class SuggestedGenesContent extends React.Component<Props> {
               item={item}
               key={item.id}
               id={item.slug}
+              // @ts-expect-error STRICT_NULL_CHECK
               name={item.name}
+              // @ts-expect-error STRICT_NULL_CHECK
               image_url={imageUrl}
               onFollow={selected => this.followedGene(item, selected)}
             />

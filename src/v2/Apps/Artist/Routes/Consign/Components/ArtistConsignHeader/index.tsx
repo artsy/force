@@ -56,6 +56,7 @@ export const ArtistConsignHeader: React.FC<ArtistConsignHeaderProps> = ({
         <Box>
           <RouterLink
             to={getConsignSubmissionUrl({
+              // @ts-expect-error STRICT_NULL_CHECK
               contextPath: artist.href,
               subject: AnalyticsSchema.Subject.RequestPriceEstimate,
             })}

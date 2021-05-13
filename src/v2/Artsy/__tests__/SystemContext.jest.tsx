@@ -84,6 +84,7 @@ describe("Artsy context", () => {
     let originalEnv = null
 
     beforeAll(() => {
+      // @ts-expect-error STRICT_NULL_CHECK
       originalEnv = process.env
       process.env = Object.assign({}, originalEnv, {
         USER_ID: "user-id-from-env",
@@ -92,6 +93,7 @@ describe("Artsy context", () => {
     })
 
     afterAll(() => {
+      // @ts-expect-error STRICT_NULL_CHECK
       process.env = originalEnv
     })
 
@@ -115,6 +117,7 @@ describe("Artsy context", () => {
 
     it("does not default to environment variables when explicitly passing null", () => {
       const wrapper = render(
+        // @ts-expect-error STRICT_NULL_CHECK
         <Artsy.SystemContextProvider user={null}>
           <WithCurrentUser />
         </Artsy.SystemContextProvider>

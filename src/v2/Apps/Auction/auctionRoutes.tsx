@@ -1,10 +1,11 @@
 import loadable from "@loadable/component"
 import { ErrorPage } from "v2/Components/ErrorPage"
-import { RedirectException, RouteConfig } from "found"
+import { RedirectException } from "found"
 import React from "react"
 import { graphql } from "react-relay"
 import createLogger from "v2/Utils/logger"
 import { Redirect, confirmBidRedirect, registerRedirect } from "./getRedirect"
+import { AppRouteConfig } from "v2/Artsy/Router/Route"
 
 const logger = createLogger("Apps/Auction/routes")
 
@@ -18,7 +19,7 @@ const RegisterRoute = loadable(() => import("./Routes/Register"), {
   resolveComponent: component => component.RegisterRouteFragmentContainer,
 })
 
-export const auctionRoutes: RouteConfig[] = [
+export const auctionRoutes: AppRouteConfig[] = [
   {
     path: "/auction-faq",
     getComponent: () => AuctionFAQRoute,
@@ -44,9 +45,11 @@ export const auctionRoutes: RouteConfig[] = [
       if (Component && props) {
         const { artwork, me, match } = props as any
         if (!artwork) {
+          // @ts-expect-error STRICT_NULL_CHECK
           return <ErrorPage code={404} />
         }
         handleRedirect(
+          // @ts-expect-error STRICT_NULL_CHECK
           confirmBidRedirect({ artwork, me }, match.location),
           match.location
         )
@@ -99,9 +102,11 @@ export const auctionRoutes: RouteConfig[] = [
         const { match, sale, me } = props as any
 
         if (!sale) {
+          // @ts-expect-error STRICT_NULL_CHECK
           return <ErrorPage code={404} />
         }
 
+        // @ts-expect-error STRICT_NULL_CHECK
         handleRedirect(registerRedirect({ sale, me }), match.location)
 
         return <Component {...props} />

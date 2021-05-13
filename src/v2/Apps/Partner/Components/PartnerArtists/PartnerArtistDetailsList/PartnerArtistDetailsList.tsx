@@ -7,11 +7,10 @@ import {
   QueryRenderer,
   RelayPaginationProp,
 } from "react-relay"
-import { PartnerArtistDetailsFragmentContainer } from "../../Components/PartnerArtists"
 import { PartnerArtistDetailsList_partner } from "v2/__generated__/PartnerArtistDetailsList_partner.graphql"
 import { PartnerArtistDetailsListQuery } from "v2/__generated__/PartnerArtistDetailsListQuery.graphql"
-import { take } from "lodash"
 import { PartnerArtistDetailsListPlaceholder } from "./PartnerArtistDetailsListPlaceholder"
+import { PartnerArtistDetailsFragmentContainer } from "../PartnerArtistDetails"
 
 export interface PartnerArtistDetailsListProps {
   partner: PartnerArtistDetailsList_partner
@@ -39,9 +38,10 @@ export const PartnerArtistDetailsList: React.FC<PartnerArtistDetailsListProps> =
   }, [])
 
   const maybeLoadMore = () => {
+    // @ts-expect-error STRICT_NULL_CHECK
     const el = containerRef.current.getBoundingClientRect()
 
-    if (window.innerHeight >= el.bottom) {
+    if (window.innerHeight >= el.bottom && el.bottom > 0) {
       loadMore()
     }
   }
@@ -57,23 +57,15 @@ export const PartnerArtistDetailsList: React.FC<PartnerArtistDetailsListProps> =
     })
   }
 
-  const filteredArtists = partner.artists.edges.filter(
-    artist => artist.isDisplayOnPartnerProfile && artist.counts.artworks > 0
-  )
-
-  const artists = relay.hasMore()
-    ? take(
-        filteredArtists,
-        filteredArtists.length - (filteredArtists.length % PAGE_SIZE)
-      )
-    : filteredArtists
-
   return (
     <Box ref={ref => ref && (containerRef.current = ref)} mt={4}>
-      {artists.map(edge => {
+      {/* @ts-expect-error STRICT_NULL_CHECK */}
+      {partner.artists.edges.map(edge => {
         return (
           <PartnerArtistDetailsFragmentContainer
+            // @ts-expect-error STRICT_NULL_CHECK
             key={edge.id}
+            // @ts-expect-error STRICT_NULL_CHECK
             partnerArtist={edge}
           />
         )
@@ -107,11 +99,14 @@ export const PartnerArtistDetailsListPaginationContainer = createPaginationConta
           after: { type: "String" }
         ) {
         slug
-        artists: artistsConnection(first: $first, after: $after)
-          @connection(key: "PartnerArtistDetailsList_artists") {
+        artists: artistsConnection(
+          first: $first
+          after: $after
+          hasPublishedArtworks: true
+          displayOnPartnerProfile: true
+        ) @connection(key: "PartnerArtistDetailsList_artists") {
           edges {
             id
-            isDisplayOnPartnerProfile
             representedBy
             counts {
               artworks
@@ -142,6 +137,7 @@ export const PartnerArtistDetailsListRenderer: React.FC<{
 
   return (
     <QueryRenderer<PartnerArtistDetailsListQuery>
+      //  @ts-expect-error STRICT_NULL_CHECK
       environment={relayEnvironment}
       query={graphql`
         query PartnerArtistDetailsListRendererQuery($partnerId: String!) {
@@ -156,6 +152,7 @@ export const PartnerArtistDetailsListRenderer: React.FC<{
           return <PartnerArtistDetailsListPlaceholder count={PAGE_SIZE} />
 
         return (
+          // @ts-expect-error STRICT_NULL_CHECK
           <PartnerArtistDetailsListPaginationContainer {...rest} {...props} />
         )
       }}

@@ -2,6 +2,7 @@ import { filterLocations } from "../filterLocations"
 
 describe("filterLocations", () => {
   it("returns null if no array of locations is given", () => {
+    // @ts-expect-error STRICT_NULL_CHECK
     const filtered = filterLocations(null)
     expect(filtered).toBeNull()
   })

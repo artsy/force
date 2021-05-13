@@ -37,6 +37,7 @@ interface SavedAddressesProps {
   relay: RelayRefetchProp
   addressCount?: number
 }
+// @ts-expect-error STRICT_NULL_CHECK
 type Address = SavedAddresses_me["addressConnection"]["edges"][0]["node"]
 
 const defaultAddressIndex = addressList => {
@@ -48,7 +49,9 @@ const defaultAddressIndex = addressList => {
 
 const SavedAddresses: React.FC<SavedAddressesProps> = props => {
   const [modalDetails, setModalDetails] = useState({
+    // @ts-expect-error STRICT_NULL_CHECK
     addressModalTitle: null as string,
+    // @ts-expect-error STRICT_NULL_CHECK
     addressModalAction: null as AddressModalAction,
   })
   const [showAddressModal, setShowAddressModal] = useState(false)
@@ -77,6 +80,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
   }
 
   const handleDeleteAddress = (addressID: string) => {
+    // @ts-expect-error STRICT_NULL_CHECK
     deleteUserAddress(relayEnvironment, addressID, onSuccess, onError)
   }
 
@@ -90,14 +94,17 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
   }
 
   const handleSetDefaultAddress = (addressID: string) => {
+    // @ts-expect-error STRICT_NULL_CHECK
     updateUserDefaultAddress(relayEnvironment, addressID, onSuccess, onError)
   }
 
   const collectorProfileAddressItems = addressList.map((address, index) => {
+    // @ts-expect-error STRICT_NULL_CHECK
     if (!address.node) {
       return null
     }
 
+    // @ts-expect-error STRICT_NULL_CHECK
     const isDefaultAddress = address.node.isDefault
 
     return (
@@ -109,6 +116,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
       >
         <SavedAddressItem
           index={index}
+          // @ts-expect-error STRICT_NULL_CHECK
           address={address.node}
           handleClickEdit={handleClickEdit}
         />
@@ -117,6 +125,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
           {!isDefaultAddress && (
             <Box mr={[3, 1]}>
               <Text
+                // @ts-expect-error STRICT_NULL_CHECK
                 onClick={() => handleSetDefaultAddress(address.node.internalID)}
                 variant="text"
                 color="black60"
@@ -130,6 +139,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
           )}
           <Box mr={[3, 1]}>
             <Text
+              // @ts-expect-error STRICT_NULL_CHECK
               onClick={() => handleEditAddress(address.node)}
               variant="text"
               color="blue100"
@@ -143,6 +153,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
           </Box>
           <Box>
             <Text
+              // @ts-expect-error STRICT_NULL_CHECK
               onClick={() => handleDeleteAddress(address.node.internalID)}
               variant="text"
               color="red100"
@@ -197,6 +208,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
         >
           <SavedAddressItem
             index={index}
+            // @ts-expect-error STRICT_NULL_CHECK
             address={address.node}
             handleClickEdit={handleClickEdit}
           />

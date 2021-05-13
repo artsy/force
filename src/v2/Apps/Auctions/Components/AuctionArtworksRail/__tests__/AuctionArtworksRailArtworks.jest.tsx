@@ -59,6 +59,16 @@ describe("AuctionArtworksRailArtworks", () => {
     expect(wrapper.find("FillwidthItem")).toBeDefined()
   })
 
+  it("guards against null data", () => {
+    expect(() =>
+      getWrapper({
+        ArtworkConnection: () => ({
+          edges: null,
+        }),
+      })
+    ).not.toThrowError()
+  })
+
   it("returns no artworks if there are no published artworks to return", () => {
     const wrapper = getWrapper({
       Sale: () => ({
@@ -70,7 +80,6 @@ describe("AuctionArtworksRailArtworks", () => {
       }),
     })
 
-    console.log(wrapper.find("Carousel").length)
     expect(wrapper.find("Carousel")).toHaveLength(0)
   })
 

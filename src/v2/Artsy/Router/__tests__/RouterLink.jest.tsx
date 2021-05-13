@@ -22,6 +22,7 @@ describe("RouterLink", () => {
           },
         ]}
       />
+      // @ts-expect-error STRICT_NULL_CHECK
     ).renderUntil(enzyme => {
       try {
         return enzyme.find(Link).length > 0

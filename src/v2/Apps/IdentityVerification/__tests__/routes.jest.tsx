@@ -15,6 +15,7 @@ import { createRender } from "found"
 
 describe("IdentityVerification/routes", () => {
   const idvID =
+    // @ts-expect-error STRICT_NULL_CHECK
     IdentityVerificationAppQueryResponseFixture.me.identityVerification
       .internalID
   async function render(

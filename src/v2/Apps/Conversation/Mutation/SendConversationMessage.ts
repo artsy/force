@@ -18,12 +18,15 @@ export const SendConversationMessage = (
 ) => {
   const storeUpdater = (store: RecordSourceSelectorProxy) => {
     const mutationPayload = store.getRootField("sendConversationMessage")
+    // @ts-expect-error STRICT_NULL_CHECK
     const newMessageEdge = mutationPayload.getLinkedRecord("messageEdge")
     const conversationStore = store.get(conversation.id)
     const connection = ConnectionHandler.getConnection(
+      // @ts-expect-error STRICT_NULL_CHECK
       conversationStore,
       "Messages_messagesConnection"
     )
+    // @ts-expect-error STRICT_NULL_CHECK
     ConnectionHandler.insertEdgeBefore(connection, newMessageEdge)
   }
   return commitMutation<SendConversationMessageMutation>(environment, {
@@ -32,10 +35,12 @@ export const SendConversationMessage = (
     updater: storeUpdater,
     variables: {
       input: {
+        // @ts-expect-error STRICT_NULL_CHECK
         id: conversation.internalID,
         from: conversation.from.email,
         bodyText: text,
         // Reply to the last message
+        // @ts-expect-error STRICT_NULL_CHECK
         replyToMessageID: conversation.lastMessageID,
       },
     },

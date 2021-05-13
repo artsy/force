@@ -67,9 +67,8 @@ fragment PartnerArtistsCarouselItem_artist on Artist {
 
 fragment PartnerArtistsCarousel_partner on Partner {
   slug
-  artists: artistsConnection(first: 19) {
+  artists: artistsConnection(first: 19, hasPublishedArtworks: true, displayOnPartnerProfile: true) {
     edges {
-      isDisplayOnPartnerProfile
       counts {
         artworks
       }
@@ -77,14 +76,8 @@ fragment PartnerArtistsCarousel_partner on Partner {
         id
         slug
         ...PartnerArtistsCarouselItem_artist
-        __typename
       }
-      cursor
       id
-    }
-    pageInfo {
-      endCursor
-      hasNextPage
     }
   }
 }
@@ -113,14 +106,7 @@ v2 = {
   "name": "slug",
   "storageKey": null
 },
-v3 = [
-  {
-    "kind": "Literal",
-    "name": "first",
-    "value": 19
-  }
-],
-v4 = {
+v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -170,7 +156,23 @@ return {
           (v2/*: any*/),
           {
             "alias": "artists",
-            "args": (v3/*: any*/),
+            "args": [
+              {
+                "kind": "Literal",
+                "name": "displayOnPartnerProfile",
+                "value": true
+              },
+              {
+                "kind": "Literal",
+                "name": "first",
+                "value": 19
+              },
+              {
+                "kind": "Literal",
+                "name": "hasPublishedArtworks",
+                "value": true
+              }
+            ],
             "concreteType": "ArtistPartnerConnection",
             "kind": "LinkedField",
             "name": "artistsConnection",
@@ -184,13 +186,6 @@ return {
                 "name": "edges",
                 "plural": true,
                 "selections": [
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "isDisplayOnPartnerProfile",
-                    "storageKey": null
-                  },
                   {
                     "alias": null,
                     "args": null,
@@ -217,7 +212,7 @@ return {
                     "name": "node",
                     "plural": false,
                     "selections": [
-                      (v4/*: any*/),
+                      (v3/*: any*/),
                       (v2/*: any*/),
                       {
                         "alias": null,
@@ -346,7 +341,7 @@ return {
                                 "name": "node",
                                 "plural": false,
                                 "selections": [
-                                  (v4/*: any*/),
+                                  (v3/*: any*/),
                                   {
                                     "alias": null,
                                     "args": null,
@@ -400,69 +395,21 @@ return {
                             ],
                             "storageKey": null
                           },
-                          (v4/*: any*/)
+                          (v3/*: any*/)
                         ],
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "__typename",
                         "storageKey": null
                       }
                     ],
                     "storageKey": null
                   },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "cursor",
-                    "storageKey": null
-                  },
-                  (v4/*: any*/)
-                ],
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "concreteType": "PageInfo",
-                "kind": "LinkedField",
-                "name": "pageInfo",
-                "plural": false,
-                "selections": [
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "endCursor",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "hasNextPage",
-                    "storageKey": null
-                  }
+                  (v3/*: any*/)
                 ],
                 "storageKey": null
               }
             ],
-            "storageKey": "artistsConnection(first:19)"
+            "storageKey": "artistsConnection(displayOnPartnerProfile:true,first:19,hasPublishedArtworks:true)"
           },
-          {
-            "alias": "artists",
-            "args": (v3/*: any*/),
-            "filters": null,
-            "handle": "connection",
-            "key": "PartnerArtistsCarousel_artists",
-            "kind": "LinkedHandle",
-            "name": "artistsConnection"
-          },
-          (v4/*: any*/)
+          (v3/*: any*/)
         ],
         "storageKey": null
       }
@@ -473,7 +420,7 @@ return {
     "metadata": {},
     "name": "PartnerArtistsCarouselRendererQuery",
     "operationKind": "query",
-    "text": "query PartnerArtistsCarouselRendererQuery(\n  $partnerId: String!\n) {\n  partner(id: $partnerId) @principalField {\n    ...PartnerArtistsCarousel_partner\n    id\n  }\n}\n\nfragment FollowArtistButton_artist on Artist {\n  id\n  internalID\n  name\n  slug\n  is_followed: isFollowed\n  counts {\n    follows\n  }\n}\n\nfragment PartnerArtistsCarouselItem_artist on Artist {\n  id\n  name\n  formattedNationalityAndBirthday\n  ...FollowArtistButton_artist\n  image {\n    cropped(width: 100, height: 100) {\n      url\n    }\n  }\n  filterArtworksConnection(first: 1, partnerIDs: [$partnerId]) {\n    edges {\n      node {\n        id\n        image {\n          cropped(height: 200, width: 300) {\n            src\n            srcSet\n          }\n        }\n      }\n    }\n    id\n  }\n}\n\nfragment PartnerArtistsCarousel_partner on Partner {\n  slug\n  artists: artistsConnection(first: 19) {\n    edges {\n      isDisplayOnPartnerProfile\n      counts {\n        artworks\n      }\n      node {\n        id\n        slug\n        ...PartnerArtistsCarouselItem_artist\n        __typename\n      }\n      cursor\n      id\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query PartnerArtistsCarouselRendererQuery(\n  $partnerId: String!\n) {\n  partner(id: $partnerId) @principalField {\n    ...PartnerArtistsCarousel_partner\n    id\n  }\n}\n\nfragment FollowArtistButton_artist on Artist {\n  id\n  internalID\n  name\n  slug\n  is_followed: isFollowed\n  counts {\n    follows\n  }\n}\n\nfragment PartnerArtistsCarouselItem_artist on Artist {\n  id\n  name\n  formattedNationalityAndBirthday\n  ...FollowArtistButton_artist\n  image {\n    cropped(width: 100, height: 100) {\n      url\n    }\n  }\n  filterArtworksConnection(first: 1, partnerIDs: [$partnerId]) {\n    edges {\n      node {\n        id\n        image {\n          cropped(height: 200, width: 300) {\n            src\n            srcSet\n          }\n        }\n      }\n    }\n    id\n  }\n}\n\nfragment PartnerArtistsCarousel_partner on Partner {\n  slug\n  artists: artistsConnection(first: 19, hasPublishedArtworks: true, displayOnPartnerProfile: true) {\n    edges {\n      counts {\n        artworks\n      }\n      node {\n        id\n        slug\n        ...PartnerArtistsCarouselItem_artist\n      }\n      id\n    }\n  }\n}\n"
   }
 };
 })();

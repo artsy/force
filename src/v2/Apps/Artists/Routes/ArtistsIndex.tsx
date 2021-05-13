@@ -1,15 +1,23 @@
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { Box, GridColumns, Column, Text, Image } from "@artsy/palette"
+import {
+  Box,
+  GridColumns,
+  Column,
+  Text,
+  Breadcrumbs,
+  Shelf,
+  Join,
+  Spacer,
+} from "@artsy/palette"
 import { ArtistsIndex_featuredArtists } from "v2/__generated__/ArtistsIndex_featuredArtists.graphql"
 import { ArtistsIndex_featuredGenes } from "v2/__generated__/ArtistsIndex_featuredGenes.graphql"
-import { Media } from "v2/Utils/Responsive"
-import { Carousel } from "v2/Components/Carousel"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import { ArtistsIndexMeta } from "../Components/ArtistsIndexMeta"
-import { ArtistsTopNav } from "../Components/ArtistsTopNav"
 import { ArtistsArtistCardFragmentContainer } from "../Components/ArtistsArtistCard"
 import { ArtistsCarouselCellFragmentContainer } from "../Components/ArtistsCarouselCell"
+import { ArtistsLetterNav } from "../Components/ArtistsLetterNav"
+import { Media } from "v2/Utils/Responsive"
 
 interface ArtistsIndexProps {
   featuredArtists: ArtistsIndex_featuredArtists
@@ -27,99 +35,90 @@ export const ArtistsIndex: React.FC<ArtistsIndexProps> = ({
     <>
       <ArtistsIndexMeta />
 
-      <ArtistsTopNav my={3}>
-        <Text>Browse over 100,000 artists</Text>
-      </ArtistsTopNav>
+      <GridColumns mt={4} gridRowGap={[2, 0]}>
+        <Column span={6}>
+          <Text as="h1" variant="xl" mb={1}>
+            {headline}
+          </Text>
 
-      <Media greaterThanOrEqual="sm">
-        <Text as="h1" variant="largeTitle" my={2}>
-          {headline}
-        </Text>
+          <Breadcrumbs>
+            <RouterLink to="">Browse over 100,000 artists</RouterLink>
+          </Breadcrumbs>
+        </Column>
+
+        <Column span={6}>
+          <ArtistsLetterNav />
+        </Column>
+      </GridColumns>
+
+      <Media greaterThan="xs">
+        <Spacer mt={6} />
 
         {artists && (
-          <Carousel my={2} arrowHeight={410}>
+          <Shelf my={2}>
+            {/*  @ts-expect-error STRICT_NULL_CHECK */}
             {artists.map((featuredLink, index) => {
+              // @ts-expect-error STRICT_NULL_CHECK
               if (!featuredLink.internalID) return null
 
               return (
                 <ArtistsCarouselCellFragmentContainer
+                  // @ts-expect-error STRICT_NULL_CHECK
                   key={featuredLink.internalID}
+                  // @ts-expect-error STRICT_NULL_CHECK
                   featuredLink={featuredLink}
                   index={index}
                 />
               )
             })}
-          </Carousel>
+          </Shelf>
         )}
       </Media>
 
-      <Media lessThan="sm">
-        <Text variant="largeTitle" as="h2" my={3}>
-          Artists by category
-        </Text>
-      </Media>
+      <Spacer mt={6} />
 
-      {genes?.map(gene => {
-        if (gene.trendingArtists?.length === 0) return null
+      {genes && (
+        <Join separator={<Spacer mt={6} />}>
+          {genes?.map(gene => {
+            // @ts-expect-error STRICT_NULL_CHECK
+            if (gene.trendingArtists?.length === 0) return null
 
-        return (
-          <React.Fragment key={gene.name}>
-            <Media greaterThanOrEqual="sm">
-              <Box my={4}>
-                <Box display="flex" justifyContent="space-between" my={2}>
+            return (
+              // @ts-expect-error STRICT_NULL_CHECK
+              <React.Fragment key={gene.name}>
+                <Box display="flex" justifyContent="space-between" mb={2}>
+                  {/* @ts-expect-error STRICT_NULL_CHECK */}
                   <RouterLink to={gene.href} noUnderline>
-                    <Text as="h2" variant="subtitle">
+                    <Text variant="lg" as="h2">
+                      {/* @ts-expect-error STRICT_NULL_CHECK */}
                       {gene.name}
                     </Text>
                   </RouterLink>
-
+                  {/* @ts-expect-error STRICT_NULL_CHECK */}
                   <RouterLink to={gene.href} noUnderline>
-                    <Text variant="subtitle" color="black60">
+                    <Text variant="md" color="black60">
                       View
                     </Text>
                   </RouterLink>
                 </Box>
 
-                <GridColumns>
+                <GridColumns gridRowGap={[2, 0]}>
+                  {/* @ts-expect-error STRICT_NULL_CHECK */}
                   {gene.trendingArtists.map(artist => {
                     return (
-                      <Column key={artist.internalID} span={[12, 6, 6, 3]}>
+                      // @ts-expect-error STRICT_NULL_CHECK
+                      <Column key={artist.internalID} span={[12, 6, 3, 3]}>
+                        {/* @ts-expect-error STRICT_NULL_CHECK */}
                         <ArtistsArtistCardFragmentContainer artist={artist} />
                       </Column>
                     )
                   })}
                 </GridColumns>
-              </Box>
-            </Media>
-
-            <Media lessThan="sm">
-              <RouterLink to={gene.href} noUnderline>
-                <Box
-                  borderTop="1px solid"
-                  borderColor="black10"
-                  py={1}
-                  display="flex"
-                  alignItems="center"
-                >
-                  {gene.image && (
-                    <Image
-                      src={gene.image.thumb.src}
-                      srcSet={gene.image.thumb.srcSet}
-                      width={gene.image.thumb.width}
-                      height={gene.image.thumb.height}
-                      alt={gene.name}
-                    />
-                  )}
-
-                  <Text ml={2} variant="subtitle">
-                    {gene.name}
-                  </Text>
-                </Box>
-              </RouterLink>
-            </Media>
-          </React.Fragment>
-        )
-      })}
+              </React.Fragment>
+            )
+          })}
+        </Join>
+      )}
     </>
   )
 }
@@ -146,14 +145,6 @@ export const ArtistsIndexFragmentContainer = createFragmentContainer(
             internalID
             name
             href
-            image {
-              thumb: cropped(width: 80, height: 80) {
-                width
-                height
-                src
-                srcSet
-              }
-            }
             trendingArtists(sample: 4) {
               internalID
               ...ArtistsArtistCard_artist

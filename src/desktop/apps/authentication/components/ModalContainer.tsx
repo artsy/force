@@ -69,11 +69,13 @@ export class ModalContainer extends React.Component<any> {
 
     let analyticsOptions
     if (mode === "signup") {
+      // @ts-expect-error STRICT_NULL_CHECK
       analyticsOptions = createdAccount({
         onboarding: !redirectTo,
         ...options,
       })
     } else {
+      // @ts-expect-error STRICT_NULL_CHECK
       analyticsOptions = successfullyLoggedIn(options)
     }
 
@@ -84,6 +86,7 @@ export class ModalContainer extends React.Component<any> {
 
   render() {
     return (
+      // @ts-expect-error STRICT_NULL_CHECK
       <ModalManager
         ref={ref => (this.manager = ref)}
         // FIXME: reaction migration

@@ -7,7 +7,6 @@ import {
 } from "v2/__generated__/RegisterCreateBidderMutation.graphql"
 import { createCreditCardAndUpdatePhone } from "v2/Apps/Auction/Operations/CreateCreditCardAndUpdatePhone"
 import { RegistrationForm } from "v2/Apps/Auction/Components/RegistrationForm"
-import { AppContainer } from "v2/Apps/Components/AppContainer"
 import { track } from "v2/Artsy"
 import * as Schema from "v2/Artsy/Analytics/Schema"
 import React, { ComponentProps } from "react"
@@ -112,6 +111,7 @@ export const RegisterRoute: React.FC<RegisterProps> = props => {
       errorMessages = [error.message]
     }
 
+    // @ts-expect-error STRICT_NULL_CHECK
     trackRegistrationFailed(errorMessages)
     helpers.setStatus("submissionFailed")
   }
@@ -121,21 +121,27 @@ export const RegisterRoute: React.FC<RegisterProps> = props => {
     //  `onSubmit` function does not block.
     setTimeout(() => helpers.setSubmitting(true), 0)
 
+    // @ts-expect-error STRICT_NULL_CHECK
     const address = toStripeAddress(values.address)
+    // @ts-expect-error STRICT_NULL_CHECK
     const { phoneNumber } = values.address
     const { setFieldError, setSubmitting } = helpers
     const element = elements.getElement(CardElement)
 
     try {
+      // @ts-expect-error STRICT_NULL_CHECK
       const { error, token } = await stripe.createToken(element, address)
 
       if (error) {
+        // @ts-expect-error STRICT_NULL_CHECK
         setFieldError("creditCard", error.message)
         return
       }
 
+      // @ts-expect-error STRICT_NULL_CHECK
       const { id } = token
       const {
+        // @ts-expect-error STRICT_NULL_CHECK
         createCreditCard: { creditCardOrError },
       } = await createCreditCardAndUpdatePhone(environment, phoneNumber, id)
 
@@ -150,6 +156,7 @@ export const RegisterRoute: React.FC<RegisterProps> = props => {
 
       const data = await createBidder(environment, sale.internalID)
 
+      // @ts-expect-error STRICT_NULL_CHECK
       trackRegistrationSuccess(data.createBidder.bidder.internalID)
       window.location.assign(saleConfirmRegistrationPath(sale.slug))
     } catch (error) {
@@ -160,7 +167,7 @@ export const RegisterRoute: React.FC<RegisterProps> = props => {
   }
 
   return (
-    <AppContainer>
+    <>
       <Title>Auction Registration</Title>
       <Box maxWidth={550} px={[2, 0]} mx="auto" mt={[1, 0]} mb={[1, 100]}>
         <Serif size="10">Register to Bid on Artsy</Serif>
@@ -170,12 +177,14 @@ export const RegisterRoute: React.FC<RegisterProps> = props => {
           onSubmit={createTokenAndSubmit}
           trackSubmissionErrors={trackRegistrationFailed}
           needsIdentityVerification={bidderNeedsIdentityVerification({
+            // @ts-expect-error STRICT_NULL_CHECK
             sale,
+            // @ts-expect-error STRICT_NULL_CHECK
             user: me,
           })}
         />
       </Box>
-    </AppContainer>
+    </>
   )
 }
 

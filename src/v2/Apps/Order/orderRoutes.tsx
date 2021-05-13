@@ -2,7 +2,7 @@ import loadable from "@loadable/component"
 import { getRedirect } from "v2/Apps/Order/getRedirect"
 import { redirects } from "v2/Apps/Order/redirects"
 import { ErrorPage } from "v2/Components/ErrorPage"
-import { Redirect, RedirectException, RouteConfig } from "found"
+import { Redirect, RedirectException } from "found"
 import React from "react"
 import { graphql } from "react-relay"
 
@@ -16,6 +16,7 @@ import { ReviewFragmentContainer as ReviewRoute } from "./Routes/Review"
 import { AcceptFragmentContainer as AcceptRoute } from "./Routes/Accept"
 import { RejectFragmentContainer as DeclineRoute } from "./Routes/Reject"
 import { StatusFragmentContainer as StatusRoute } from "./Routes/Status"
+import { AppRouteConfig } from "v2/Artsy/Router/Route"
 
 const OrderApp = loadable(() => import("./OrderApp"), {
   resolveComponent: component => component.OrderApp,
@@ -23,10 +24,11 @@ const OrderApp = loadable(() => import("./OrderApp"), {
 
 // FIXME:
 // * `render` functions requires casting
-export const orderRoutes: RouteConfig[] = [
+export const orderRoutes: AppRouteConfig[] = [
   {
     // TODO: Still need order2?
     path: "/order(2|s)/:orderID",
+    hideFooter: true,
     Component: OrderApp,
     prepare: () => {
       OrderApp.preload()
@@ -80,6 +82,7 @@ export const orderRoutes: RouteConfig[] = [
         path: "respond",
         Component: RespondRoute,
         shouldWarnBeforeLeaving: true,
+        hideFooter: true,
         query: graphql`
           query orderRoutes_RespondQuery($orderID: ID!) {
             order: commerceOrder(id: $orderID) {
@@ -95,6 +98,7 @@ export const orderRoutes: RouteConfig[] = [
         path: "offer",
         Component: OfferRoute,
         shouldWarnBeforeLeaving: true,
+        hideFooter: true,
         query: graphql`
           query orderRoutes_OfferQuery($orderID: ID!) {
             order: commerceOrder(id: $orderID) {
@@ -110,6 +114,7 @@ export const orderRoutes: RouteConfig[] = [
         path: "shipping",
         Component: ShippingRoute,
         shouldWarnBeforeLeaving: true,
+        hideFooter: true,
         query: graphql`
           query orderRoutes_ShippingQuery($orderID: ID!) {
             order: commerceOrder(id: $orderID) {
@@ -128,6 +133,7 @@ export const orderRoutes: RouteConfig[] = [
         path: "payment",
         Component: PaymentRoute,
         shouldWarnBeforeLeaving: true,
+        hideFooter: true,
         query: graphql`
           query orderRoutes_PaymentQuery($orderID: ID!) {
             me {
@@ -146,6 +152,7 @@ export const orderRoutes: RouteConfig[] = [
         path: "payment/new",
         Component: NewPaymentRoute,
         shouldWarnBeforeLeaving: true,
+        hideFooter: true,
         query: graphql`
           query orderRoutes_NewPaymentQuery($orderID: ID!) {
             me {
@@ -164,6 +171,7 @@ export const orderRoutes: RouteConfig[] = [
         path: "review/counter",
         Component: CounterRoute,
         shouldWarnBeforeLeaving: true,
+        hideFooter: true,
         query: graphql`
           query orderRoutes_CounterQuery($orderID: ID!) {
             order: commerceOrder(id: $orderID) {
@@ -179,6 +187,7 @@ export const orderRoutes: RouteConfig[] = [
         path: "review",
         Component: ReviewRoute,
         shouldWarnBeforeLeaving: true,
+        hideFooter: true,
         query: graphql`
           query orderRoutes_ReviewQuery($orderID: ID!) {
             order: commerceOrder(id: $orderID) {
@@ -193,6 +202,7 @@ export const orderRoutes: RouteConfig[] = [
       {
         path: "review/accept",
         Component: AcceptRoute,
+        hideFooter: true,
         query: graphql`
           query orderRoutes_AcceptQuery($orderID: ID!) {
             order: commerceOrder(id: $orderID) {
@@ -207,6 +217,7 @@ export const orderRoutes: RouteConfig[] = [
       {
         path: "review/decline",
         Component: DeclineRoute,
+        hideFooter: true,
         query: graphql`
           query orderRoutes_RejectQuery($orderID: ID!) {
             order: commerceOrder(id: $orderID) {
@@ -218,6 +229,7 @@ export const orderRoutes: RouteConfig[] = [
       {
         path: "status",
         Component: StatusRoute,
+        hideFooter: true,
         query: graphql`
           query orderRoutes_StatusQuery($orderID: ID!) {
             order: commerceOrder(id: $orderID) {
@@ -237,6 +249,7 @@ export const orderRoutes: RouteConfig[] = [
       {
         path: "*",
         Component: props => {
+          // @ts-expect-error STRICT_NULL_CHECK
           return <ErrorPage code={404} />
         },
       },

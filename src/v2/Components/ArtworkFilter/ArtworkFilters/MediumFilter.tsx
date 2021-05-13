@@ -12,6 +12,7 @@ export interface MediumFilterProps {
 
 export const MediumFilter: FC<MediumFilterProps> = ({ expanded }) => {
   const { aggregations, counts, ...filterContext } = useArtworkFilterContext()
+  // @ts-expect-error STRICT_NULL_CHECK
   const mediums = aggregations.find(agg => agg.slice === "MEDIUM") || {
     slice: "",
     counts: [],
@@ -20,6 +21,7 @@ export const MediumFilter: FC<MediumFilterProps> = ({ expanded }) => {
     mediums && mediums.counts.length ? mediums.counts : hardcodedMediums
 
   const toggleMediumSelection = (selected, slug) => {
+    // @ts-expect-error STRICT_NULL_CHECK
     let geneIDs = filterContext
       .currentlySelectedFilters()
       .additionalGeneIDs.slice()
@@ -31,9 +33,11 @@ export const MediumFilter: FC<MediumFilterProps> = ({ expanded }) => {
     filterContext.setFilter("additionalGeneIDs", geneIDs)
   }
 
+  // @ts-expect-error STRICT_NULL_CHECK
   const currentFilters = filterContext.currentlySelectedFilters()
   const hasBelowTheFoldMediumFilter =
     intersection(
+      // @ts-expect-error STRICT_NULL_CHECK
       currentFilters.additionalGeneIDs,
       allowedMediums.slice(INITIAL_ITEMS_TO_SHOW).map(({ value }) => value)
     ).length > 0
@@ -43,6 +47,7 @@ export const MediumFilter: FC<MediumFilterProps> = ({ expanded }) => {
     v3: { my: 1 },
   })
   const resultsSorted = sortResults(
+    // @ts-expect-error STRICT_NULL_CHECK
     currentFilters.additionalGeneIDs,
     allowedMediums
   )
@@ -50,6 +55,7 @@ export const MediumFilter: FC<MediumFilterProps> = ({ expanded }) => {
   return (
     <FilterExpandable
       label="Medium"
+      // @ts-expect-error STRICT_NULL_CHECK
       expanded={(!counts.artworks || counts.artworks > 0) && expanded}
     >
       <Flex flexDirection="column" alignItems="left">
@@ -58,6 +64,7 @@ export const MediumFilter: FC<MediumFilterProps> = ({ expanded }) => {
             return (
               <Checkbox
                 selected={
+                  // @ts-expect-error STRICT_NULL_CHECK
                   currentFilters.additionalGeneIDs.includes(slug) ||
                   currentFilters.medium === slug
                 }

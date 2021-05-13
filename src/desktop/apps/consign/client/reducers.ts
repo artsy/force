@@ -109,6 +109,7 @@ function submissionFlow(state = initialState, action) {
       }
       return u(
         {
+          // @ts-expect-error STRICT_NULL_CHECK
           uploadedImages: state.uploadedImages.concat(newImage),
         },
         state

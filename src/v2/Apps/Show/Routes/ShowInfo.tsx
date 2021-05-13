@@ -17,15 +17,15 @@ export const ShowInfo: React.FC<ShowInfoProps> = ({
 }) => {
   return (
     <>
-      <Text as="h1" variant="largeTitle" my={3}>
+      <Text as="h1" variant="md" my={2}>
         About
       </Text>
 
       <GridColumns>
         <Column span={8}>
           {partner && partner.__typename === "Partner" && (
-            <Box mb={3}>
-              <Text as="h2" variant="mediumText" mb={1}>
+            <Box mb={2}>
+              <Text as="h2" variant="md" mb={1}>
                 {partner.type}
               </Text>
 
@@ -34,8 +34,8 @@ export const ShowInfo: React.FC<ShowInfoProps> = ({
           )}
 
           {about && (
-            <Box mb={3}>
-              <Text as="h3" variant="mediumText" mb={1}>
+            <Box mb={2}>
+              <Text as="h3" variant="md" mb={1}>
                 Statement
               </Text>
 
@@ -45,11 +45,11 @@ export const ShowInfo: React.FC<ShowInfoProps> = ({
 
           {pressRelease && (
             <Box>
-              <Text as="h3" variant="mediumText" mb={1}>
+              <Text as="h3" variant="md" mb={1}>
                 Press Release
               </Text>
 
-              <HTML variant="text">
+              <HTML>
                 <Media lessThan="sm">
                   <ReadMore content={pressRelease} maxChars={400} />
                 </Media>
@@ -64,7 +64,7 @@ export const ShowInfo: React.FC<ShowInfoProps> = ({
 
         {hasLocation && (
           <Column span={4}>
-            <Text as="h3" variant="mediumText" mb={1}>
+            <Text as="h3" variant="md" mb={1}>
               Location
             </Text>
 

@@ -18,6 +18,7 @@ const CATEGORIES = {
 
 const getHighCategory = (artist: ArtistHeader_artist) => {
   const {
+    // @ts-expect-error STRICT_NULL_CHECK
     artistHighlights: { partnersConnection },
   } = artist
   return highestCategory(partnersConnection?.edges)
@@ -26,6 +27,7 @@ const getHighCategory = (artist: ArtistHeader_artist) => {
 const getTopAuctionResult = (artist: ArtistHeader_artist) => {
   return get(
     artist,
+    // @ts-expect-error STRICT_NULL_CHECK
     () => artist.auctionResultsConnection.edges[0].node.price_realized.display
   )
 }
@@ -129,7 +131,7 @@ export const LargeArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {
               <Text as="dt" color="black60">
                 Followers
               </Text>
-
+              {/* @ts-expect-error STRICT_NULL_CHECK */}
               <Text as="dd">{formatFollowerCount(artist.counts.follows)}</Text>
             </Box>
           </Box>
@@ -155,6 +157,7 @@ export const SmallArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {
       </Text>
 
       {(artist.formattedNationalityAndBirthday ||
+        // @ts-expect-error STRICT_NULL_CHECK
         artist.counts.follows > 0) && (
         <Box>
           <Text as="h2" display="inline">
@@ -162,11 +165,15 @@ export const SmallArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {
           </Text>
 
           {artist.formattedNationalityAndBirthday &&
+            // @ts-expect-error STRICT_NULL_CHECK
             artist.counts.follows > 0 && <Text as="span">{" • "}</Text>}
 
+          {/* @ts-expect-error STRICT_NULL_CHECK */}
           {artist.counts.follows > 0 && (
             <Text as="span">
+              {/* @ts-expect-error STRICT_NULL_CHECK */}
               {formatFollowerCount(artist.counts.follows)} follower
+              {/* @ts-expect-error STRICT_NULL_CHECK */}
               {artist.counts.follows === 1 ? "" : "s"}
             </Text>
           )}

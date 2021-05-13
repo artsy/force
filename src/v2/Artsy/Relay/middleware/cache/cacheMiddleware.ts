@@ -37,6 +37,7 @@ export function cacheMiddleware(opts?: CacheMiddlewareOpts) {
   })
 
   if (isFunction(onInit)) {
+    // @ts-expect-error STRICT_NULL_CHECK
     onInit(cache)
   }
 

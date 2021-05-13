@@ -14,6 +14,7 @@ export const SortFilter: React.FC = () => {
       <Box>
         <SelectSmall
           options={context.sortOptions}
+          // @ts-expect-error STRICT_NULL_CHECK
           selected={context.filters.sort}
           title="Sort"
           onSelect={sort => {

@@ -37,6 +37,7 @@ describe("renderUntil", () => {
       const states = []
       await mount(<Component />).renderUntil(tree => {
         const text = tree.find("div").text()
+        // @ts-expect-error STRICT_NULL_CHECK
         states.push(text)
         return text !== "Loading"
       })
@@ -56,6 +57,7 @@ describe("renderUntil", () => {
       const states = []
       await renderUntil(wrapper => {
         const text = wrapper.find("div").text()
+        // @ts-expect-error STRICT_NULL_CHECK
         states.push(text)
         return text !== "Loading"
       }, <Component />)

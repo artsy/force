@@ -17,6 +17,7 @@ export class ArtworkSidebarPartnerInfo extends React.Component<
     if (sale) {
       return (
         <Text variant="subtitle" display="inline-block">
+          {/* @ts-expect-error STRICT_NULL_CHECK */}
           <a href={sale.href}>{sale.name}</a>
         </Text>
       )
@@ -58,6 +59,7 @@ export class ArtworkSidebarPartnerInfo extends React.Component<
       artwork.partner &&
       artwork.partner.locations &&
       artwork.partner.locations.length > 0 &&
+      // @ts-expect-error STRICT_NULL_CHECK
       filterLocations(artwork.partner.locations)
     return (
       <Box>

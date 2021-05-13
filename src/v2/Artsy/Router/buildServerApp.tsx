@@ -32,7 +32,7 @@ import { ChunkExtractor } from "@loadable/server"
 import { getENV } from "v2/Utils/getENV"
 import RelayServerSSR from "react-relay-network-modern-ssr/lib/server"
 import { buildServerAppContext } from "desktop/lib/buildServerAppContext"
-import { RouteConfig } from "found"
+import { AppRouteConfig } from "v2/Artsy/Router/Route"
 
 export interface ServerAppResolve {
   bodyHTML?: string
@@ -51,7 +51,7 @@ const logger = createLogger("Artsy/Router/buildServerApp.tsx")
 export interface ServerRouterConfig extends RouterConfig {
   req: Request
   res: Response
-  routes: RouteConfig[]
+  routes: AppRouteConfig[]
   context?: {
     injectedData?: any
   }
@@ -110,8 +110,10 @@ export function buildServerApp(
           return (
             <Boot
               context={serverContext}
+              // @ts-expect-error STRICT_NULL_CHECK
               user={user}
               headTags={tags}
+              // @ts-expect-error STRICT_NULL_CHECK
               onlyMatchMediaQueries={matchingMediaQueries}
               relayEnvironment={relayEnvironment}
               routes={routes}
@@ -122,7 +124,7 @@ export function buildServerApp(
         }
 
         // Build up script tags to inject into head
-        const scripts = []
+        const scripts: string[] = []
 
         const sheet = new ServerStyleSheet()
 
@@ -155,6 +157,7 @@ export function buildServerApp(
 
         // Wrap component tree in library contexts to extract usage
         bundleJSX = extractor.collectChunks(
+          // @ts-expect-error STRICT_NULL_CHECK
           sheet.collectStyles(<ServerApp tags={headTags} />)
         )
 
@@ -239,7 +242,7 @@ export function buildServerApp(
 
         // Only exporting this for testing purposes, don't go around using this
         // elsewhere, we’re serious.
-        if (typeof jest !== "undefined") {
+        if (__TEST_INTERNAL_SERVER_APP__) {
           Object.defineProperty(
             result,
 

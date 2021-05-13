@@ -38,6 +38,7 @@ export const ArtistTopWorksRail: React.FC<ArtistTopWorksRailProps> = ({
         contextModule: ContextModule.topWorksRail,
         contextPageOwnerId,
         contextPageOwnerSlug,
+        // @ts-expect-error STRICT_NULL_CHECK
         contextPageOwnerType,
         destinationPageOwnerType: OwnerType.artist,
         destinationPageOwnerId: artist.internalID,
@@ -67,6 +68,7 @@ export const ArtistTopWorksRail: React.FC<ArtistTopWorksRailProps> = ({
         <StyledLink
           data-test="link-to-works-for-sale"
           onClick={() => handleViewWorksClick(onOverviewTab)}
+          // @ts-expect-error STRICT_NULL_CHECK
           to={onOverviewTab ? `/artist/${artist.slug}/works-for-sale` : null} // no need to route if already on Works tab
         >
           <Media at="xs">
@@ -82,6 +84,7 @@ export const ArtistTopWorksRail: React.FC<ArtistTopWorksRailProps> = ({
         </StyledLink>
       </Flex>
       <Carousel arrowHeight={HEIGHT}>
+        {/* @ts-expect-error STRICT_NULL_CHECK */}
         {artworks.map(({ node }, index) => {
           const { slug, internalID } = node
 
@@ -101,6 +104,7 @@ export const ArtistTopWorksRail: React.FC<ArtistTopWorksRailProps> = ({
                     contextModule: ContextModule.topWorksRail,
                     contextPageOwnerId,
                     contextPageOwnerSlug,
+                    // @ts-expect-error STRICT_NULL_CHECK
                     contextPageOwnerType,
                     destinationPageOwnerType: OwnerType.artwork,
                     destinationPageOwnerId: internalID,

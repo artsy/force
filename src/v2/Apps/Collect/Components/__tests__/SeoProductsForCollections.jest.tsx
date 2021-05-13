@@ -48,6 +48,7 @@ describe("Seo Products for Collection Page", () => {
     listPrice
   ): SeoProductsForCollections_descending_artworks {
     return {
+      // @ts-expect-error STRICT_NULL_CHECK
       " $refType": null,
       edges: [
         {
@@ -65,6 +66,7 @@ describe("Seo Products for Collection Page", () => {
     listPrice
   ): SeoProductsForCollections_ascending_artworks {
     return {
+      // @ts-expect-error STRICT_NULL_CHECK
       " $refType": null,
       edges: [
         {

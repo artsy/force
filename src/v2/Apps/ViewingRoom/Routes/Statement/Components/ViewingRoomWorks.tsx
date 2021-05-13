@@ -15,6 +15,7 @@ interface ViewingRoomWorksProps {
 
 const ViewingRoomWorks: React.FC<ViewingRoomWorksProps> = ({
   viewingRoom: {
+    // @ts-expect-error STRICT_NULL_CHECK
     artworksConnection: { totalCount, edges },
   },
 }) => {
@@ -68,6 +69,7 @@ export const ViewingRoomWorksFragmentContainer = createFragmentContainer(
   }
 )
 
+// @ts-expect-error STRICT_NULL_CHECK
 type ArtworkNode = ViewingRoomWorksProps["viewingRoom"]["artworksConnection"]["edges"][0]["node"] & {
   navigateTo: string
 }

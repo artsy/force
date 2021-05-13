@@ -18,7 +18,9 @@ export const FairHeaderIcon: React.FC<FairHeaderIconProps> = ({
   return (
     <Box {...rest}>
       <img
+        // @ts-expect-error STRICT_NULL_CHECK
         src={icon.cropped.src}
+        // @ts-expect-error STRICT_NULL_CHECK
         srcSet={icon.cropped.srcSet}
         alt={`Logo of ${name}`}
         width={100}

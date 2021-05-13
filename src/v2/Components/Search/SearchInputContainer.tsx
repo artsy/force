@@ -38,6 +38,7 @@ export const SearchInputContainer: React.ForwardRefExoticComponent<
         <SearchButton
           type="submit"
           onClick={event => {
+            // @ts-expect-error STRICT_NULL_CHECK
             ;(event.target as HTMLElement).parentElement.blur()
 
             if (isEmpty(props.value)) {

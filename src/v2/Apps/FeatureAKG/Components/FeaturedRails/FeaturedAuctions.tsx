@@ -25,6 +25,7 @@ const FeaturedAuctionsRail: React.FC<FeaturedAuctionsRailProps> = props => {
 
   const itemsForCarousel = auctions.edges.map(auction => {
     const matchingAuctionFromSpreadsheet = items.find(
+      // @ts-expect-error STRICT_NULL_CHECK
       item => item.id === auction.node.slug
     )
 
@@ -33,7 +34,9 @@ const FeaturedAuctionsRail: React.FC<FeaturedAuctionsRailProps> = props => {
         ...auction,
         imageSrc: matchingAuctionFromSpreadsheet.image_src,
         subtitle: "Auction",
+        // @ts-expect-error STRICT_NULL_CHECK
         title: auction.node.name,
+        // @ts-expect-error STRICT_NULL_CHECK
         href: auction.node.href,
       }
     } else {
@@ -45,6 +48,7 @@ const FeaturedAuctionsRail: React.FC<FeaturedAuctionsRailProps> = props => {
     return (
       <FeaturedRail title={title} subtitle={subtitle}>
         <FeaturedRailCarousel
+          // @ts-expect-error STRICT_NULL_CHECK
           itemsForCarousel={compact(itemsForCarousel)}
           contextModule={AnalyticsSchema.ContextModule.BrowseAuctions}
         />

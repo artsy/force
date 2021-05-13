@@ -30,6 +30,7 @@ const ArtistSeriesRail: React.FC<Props> = props => {
         </Sans>
 
         <Carousel>
+          {/* @ts-expect-error STRICT_NULL_CHECK */}
           {edges.map(({ node }, index) => {
             return (
               <ArtistSeriesItem

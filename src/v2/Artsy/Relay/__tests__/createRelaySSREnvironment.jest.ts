@@ -8,6 +8,7 @@ describe("#hydrateCacheFromSSR", () => {
   }) as any) as { _responses: Map<any, any> }
 
   it("does not update cache if no ssr data", () => {
+    // @ts-expect-error STRICT_NULL_CHECK
     window.__RELAY_BOOTSTRAP__ = null
     hydrateCacheFromSSR(relayResponseCache)
     expect(relayResponseCache._responses.size).toBe(0)

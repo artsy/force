@@ -21,22 +21,28 @@ export class ArtworkImageBrowserContainer extends React.Component<
 
   render() {
     const { images, image, image_alt } = this.props.artwork
+    // @ts-expect-error STRICT_NULL_CHECK
     if (!images.length) {
       return null
     }
 
+    // @ts-expect-error STRICT_NULL_CHECK
     const defaultImageIndex = images.findIndex(
+      // @ts-expect-error STRICT_NULL_CHECK
       e => e.internalID === image.internalID
     )
     return (
       <Box data-test={ContextModule.artworkImage}>
         <ArtworkImageBrowser
+          // @ts-expect-error STRICT_NULL_CHECK
           setCarouselRef={f => (this.carousel = f)}
           images={images}
+          // @ts-expect-error STRICT_NULL_CHECK
           imageAlt={image_alt}
         />
         <ArtworkActions
           selectDefaultSlide={() => {
+            // @ts-expect-error STRICT_NULL_CHECK
             this.carousel.select(defaultImageIndex, false, true)
           }}
           artwork={this.props.artwork}

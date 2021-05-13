@@ -34,6 +34,7 @@ const ArtistName = styled(Serif)`
 
 class FollowArtistPopoverRow extends React.Component<Props, State> {
   state: State = {
+    // @ts-expect-error STRICT_NULL_CHECK
     swappedArtist: null,
     followed: false,
   }
@@ -41,6 +42,7 @@ class FollowArtistPopoverRow extends React.Component<Props, State> {
   handleClick(artistID: string) {
     const { user, relay, excludeArtistIdsState } = this.props
     const {
+      // @ts-expect-error STRICT_NULL_CHECK
       state: { excludeArtistIds },
     } = excludeArtistIdsState
     if (user && user.id) {
@@ -84,7 +86,9 @@ class FollowArtistPopoverRow extends React.Component<Props, State> {
         },
         updater: (_store, data) => {
           const {
+            // @ts-expect-error STRICT_NULL_CHECK
             node,
+            // @ts-expect-error STRICT_NULL_CHECK
           } = data.followArtist.artist.related.suggestedConnection.edges[0]
 
           // Add slight delay to make UX seem a bit nicer
@@ -102,6 +106,7 @@ class FollowArtistPopoverRow extends React.Component<Props, State> {
             }
           )
 
+          // @ts-expect-error STRICT_NULL_CHECK
           excludeArtistIdsState.addArtist(node.internalID)
         },
       })
@@ -112,6 +117,7 @@ class FollowArtistPopoverRow extends React.Component<Props, State> {
     const { artist: originalArtist } = this.props
     const { swappedArtist } = this.state
     const artist = swappedArtist || originalArtist
+    // @ts-expect-error STRICT_NULL_CHECK
     const imageUrl = get(artist, a => a.image.cropped.url)
     const { internalID: artistID } = artist
     const key = `avatar-${artistID}`

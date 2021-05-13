@@ -33,6 +33,7 @@ export class SignUpForm extends Component<FormProps, SignUpFormState> {
         ...values,
         recaptcha_token,
       }
+      // @ts-expect-error STRICT_NULL_CHECK
       this.props.handleSubmit(valuesWithToken, formikBag)
     })
   }
@@ -62,6 +63,7 @@ export class SignUpForm extends Component<FormProps, SignUpFormState> {
         }: FormikProps<InputValues>) => {
           const handleChange = e => {
             setStatus(null)
+            // @ts-expect-error STRICT_NULL_CHECK
             this.setState({ error: null })
             formikHandleChange(e)
           }
@@ -70,6 +72,7 @@ export class SignUpForm extends Component<FormProps, SignUpFormState> {
             <Form onSubmit={handleSubmit} data-test="SignUpForm">
               <QuickInput
                 block
+                // @ts-expect-error STRICT_NULL_CHECK
                 error={touched.email && errors.email}
                 placeholder="Enter your email address"
                 name="email"
@@ -82,6 +85,7 @@ export class SignUpForm extends Component<FormProps, SignUpFormState> {
               />
               <PasswordInput
                 block
+                // @ts-expect-error STRICT_NULL_CHECK
                 error={touched.password && errors.password}
                 placeholder="Enter a password"
                 name="password"
@@ -93,6 +97,7 @@ export class SignUpForm extends Component<FormProps, SignUpFormState> {
               />
               <QuickInput
                 block
+                // @ts-expect-error STRICT_NULL_CHECK
                 error={touched.name && errors.name}
                 placeholder="Enter your full name"
                 name="name"
@@ -126,6 +131,7 @@ export class SignUpForm extends Component<FormProps, SignUpFormState> {
               <SubmitButton loading={isSubmitting}>Sign up</SubmitButton>
               <Footer
                 handleTypeChange={() =>
+                  // @ts-expect-error STRICT_NULL_CHECK
                   this.props.handleTypeChange(ModalType.login)
                 }
                 onAppleLogin={e => {
@@ -134,6 +140,7 @@ export class SignUpForm extends Component<FormProps, SignUpFormState> {
                       accepted_terms_of_service: true,
                     })
                   } else {
+                    // @ts-expect-error STRICT_NULL_CHECK
                     this.props.onAppleLogin(e)
                   }
                 }}
@@ -143,6 +150,7 @@ export class SignUpForm extends Component<FormProps, SignUpFormState> {
                       accepted_terms_of_service: true,
                     })
                   } else {
+                    // @ts-expect-error STRICT_NULL_CHECK
                     this.props.onFacebookLogin(e)
                   }
                 }}

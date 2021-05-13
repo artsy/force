@@ -22,6 +22,7 @@ const ShowMeta: React.FC<ShowMetaProps> = ({
   const title = `${name} | Artsy`
   const href = `${getENV("APP_URL")}/show/${slug}`
 
+  // @ts-expect-error STRICT_NULL_CHECK
   const fallbackDescription = `Explore ${name} from ${partner.name} on Artsy. ${formattedStartAt} - ${formattedEndAt}.`
   const description = metaDescription || fallbackDescription
   return (

@@ -24,14 +24,18 @@ const WorksForSaleRail: React.FC<
 > = ({ artist, onArtworkClicked }) => {
   const { user, mediator } = useContext(SystemContext)
 
+  // @ts-expect-error STRICT_NULL_CHECK
   const artistData = get(artist, a => a.artworksConnection.edges, [])
 
   return (
     <Carousel data-test={ContextModule.worksForSaleRail} arrowHeight={HEIGHT}>
+      {/* @ts-expect-error STRICT_NULL_CHECK */}
       {artistData.map(artwork => {
         return (
           <FillwidthItem
+            // @ts-expect-error STRICT_NULL_CHECK
             key={artwork.node.id}
+            // @ts-expect-error STRICT_NULL_CHECK
             artwork={artwork.node}
             contextModule={ContextModule.worksForSaleRail}
             imageHeight={HEIGHT}

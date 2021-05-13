@@ -15,6 +15,7 @@ const CreditCardSummaryItem = ({
 } & StepSummaryItemProps) => {
   return (
     <StepSummaryItem {...others}>
+      {/* @ts-expect-error STRICT_NULL_CHECK */}
       <CreditCardDetails {...creditCard} />
     </StepSummaryItem>
   )

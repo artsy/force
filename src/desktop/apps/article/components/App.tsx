@@ -76,8 +76,10 @@ class EditPortal extends React.Component<ArticleProps> {
         <EditButton
           channelId={article.channel_id}
           slug={article.slug}
+          // @ts-expect-error STRICT_NULL_CHECK
           positionTop={positionTop}
         />,
+        // @ts-expect-error STRICT_NULL_CHECK
         document.getElementById("react-portal")
       )
     } catch (e) {

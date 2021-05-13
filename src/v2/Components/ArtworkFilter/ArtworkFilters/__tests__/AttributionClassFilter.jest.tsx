@@ -32,9 +32,11 @@ describe("AttributionClassFilter", () => {
     const wrapper = getWrapper() as any
 
     await wrapper.find("Checkbox").at(0).simulate("click")
+    // @ts-expect-error STRICT_NULL_CHECK
     expect(context.filters.attributionClass).toEqual(["unique"])
 
     await wrapper.find("Checkbox").at(2).simulate("click")
+    // @ts-expect-error STRICT_NULL_CHECK
     expect(context.filters.attributionClass).toEqual(["unique", "open edition"])
   })
 

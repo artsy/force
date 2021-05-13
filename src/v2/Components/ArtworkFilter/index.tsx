@@ -41,7 +41,7 @@ import { ShowArtworks_show } from "v2/__generated__/ShowArtworks_show.graphql"
 import { useAnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
 import { commercialFilterParamsChanged } from "@artsy/cohesion"
 import { allowedFilters } from "./Utils/allowedFilters"
-import { StickyContainer } from "v2/Components/StickyContainer"
+import { Sticky } from "v2/Components/Sticky"
 
 /**
  * Primary ArtworkFilter which is wrapped with a context and refetch container.
@@ -138,8 +138,10 @@ export const BaseArtworkFilter: React.FC<
    * and trigger a reload.
    */
   useDeepCompareEffect(() => {
+    // @ts-expect-error STRICT_NULL_CHECK
     Object.entries(filterContext.filters).forEach(
       ([filterKey, currentFilter]) => {
+        // @ts-expect-error STRICT_NULL_CHECK
         const previousFilter = previousFilters[filterKey]
         const filtersHaveUpdated = !isEqual(currentFilter, previousFilter)
 
@@ -149,10 +151,12 @@ export const BaseArtworkFilter: React.FC<
           tracking.trackEvent(
             commercialFilterParamsChanged({
               changed: JSON.stringify({
+                // @ts-expect-error STRICT_NULL_CHECK
                 [filterKey]: filterContext.filters[filterKey],
               }),
               contextOwnerId: contextPageOwnerId,
               contextOwnerSlug: contextPageOwnerSlug,
+              // @ts-expect-error STRICT_NULL_CHECK
               contextOwnerType: contextPageOwnerType,
               current: JSON.stringify(filterContext.filters),
             })
@@ -185,6 +189,7 @@ export const BaseArtworkFilter: React.FC<
     const relayRefetchVariables = {
       first: 30,
       ...allowedFilters(filterContext.filters),
+      // @ts-expect-error STRICT_NULL_CHECK
       keyword: filterContext.filters.term,
     }
 
@@ -204,6 +209,7 @@ export const BaseArtworkFilter: React.FC<
   const ArtworkGrid = () => {
     return (
       <ArtworkFilterArtworkGrid
+        // @ts-expect-error STRICT_NULL_CHECK
         filtered_artworks={viewer.filtered_artworks}
         isLoading={isFetching}
         offset={offset}
@@ -227,7 +233,7 @@ export const BaseArtworkFilter: React.FC<
             </ArtworkFilterMobileActionSheet>
           )}
 
-          <StickyContainer>
+          <Sticky>
             {({ stuck }) => {
               return (
                 <Flex
@@ -257,7 +263,7 @@ export const BaseArtworkFilter: React.FC<
                 </Flex>
               )
             }}
-          </StickyContainer>
+          </Sticky>
 
           <Spacer mb={2} />
 

@@ -9,10 +9,7 @@ export const ArtistsTopNav: React.FC<ArtistsTopNavProps> = ({
   ...rest
 }) => {
   return (
-    <Box
-      // Compensate for vertical padding within ArtistsLetterNav items
-      mt={-0.5}
-    >
+    <>
       <Box
         display="flex"
         flexDirection={["column", "row"]}
@@ -24,11 +21,8 @@ export const ArtistsTopNav: React.FC<ArtistsTopNavProps> = ({
           {children}
         </Box>
 
-        <ArtistsLetterNav
-          // Compensate for first-item padding and align flush-left at mobile breakpoint
-          ml={[-1, 0]}
-        />
+        <ArtistsLetterNav />
       </Box>
-    </Box>
+    </>
   )
 }

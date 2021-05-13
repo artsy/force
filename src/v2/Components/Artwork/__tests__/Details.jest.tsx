@@ -74,8 +74,10 @@ describe("Details", () => {
     it("shows 'bidding closed' message if in closed auction", async () => {
       const data = {
         ...artworkInAuction,
+        // @ts-expect-error STRICT_NULL_CHECK
         sale: { ...artworkInAuction.sale, is_closed: true },
       }
+      // @ts-expect-error STRICT_NULL_CHECK
       const wrapper = await getWrapper(data)
       expect(wrapper.html()).toContain("Bidding closed")
     })
@@ -84,13 +86,16 @@ describe("Details", () => {
       const data = {
         ...artworkInAuction,
         sale_artwork: {
+          // @ts-expect-error STRICT_NULL_CHECK
           ...artworkInAuction.sale_artwork,
           highest_bid: {
+            // @ts-expect-error STRICT_NULL_CHECK
             ...artworkInAuction.sale_artwork.highest_bid,
             display: null,
           },
         },
       }
+      // @ts-expect-error STRICT_NULL_CHECK
       const wrapper = await getWrapper(data)
       const html = wrapper.html()
       expect(html).toContain("$2,400")
@@ -101,10 +106,12 @@ describe("Details", () => {
         ...artworkInAuction,
         sale_message: "Contact For Price",
         sale: {
+          // @ts-expect-error STRICT_NULL_CHECK
           ...artworkInAuction.sale,
           is_auction: false,
         },
       }
+      // @ts-expect-error STRICT_NULL_CHECK
       const wrapper = await getWrapper(data)
       const html = wrapper.html()
       expect(html).toContain("Contact for price")
@@ -114,21 +121,26 @@ describe("Details", () => {
       const data = {
         ...artworkInAuction,
         sale: {
+          // @ts-expect-error STRICT_NULL_CHECK
           ...artworkInAuction.sale,
           is_auction: false,
         },
         sale_artwork: {
+          // @ts-expect-error STRICT_NULL_CHECK
           ...artworkInAuction.sale_artwork,
           highest_bid: {
+            // @ts-expect-error STRICT_NULL_CHECK
             ...artworkInAuction.sale_artwork.highest_bid,
             display: null,
           },
           opening_bid: {
+            // @ts-expect-error STRICT_NULL_CHECK
             ...artworkInAuction.sale_artwork.highest_bid,
             display: null,
           },
         },
       }
+      // @ts-expect-error STRICT_NULL_CHECK
       const wrapper = await getWrapper(data)
       const html = wrapper.html()
       expect(html).toContain("$450")
@@ -138,13 +150,16 @@ describe("Details", () => {
       const data = {
         ...artworkInAuction,
         sale_artwork: {
+          // @ts-expect-error STRICT_NULL_CHECK
           ...artworkInAuction.sale_artwork,
           counts: {
+            // @ts-expect-error STRICT_NULL_CHECK
             ...artworkInAuction.sale_artwork.counts,
             bidder_positions: 2,
           },
         },
       }
+      // @ts-expect-error STRICT_NULL_CHECK
       const wrapper = await getWrapper(data)
       const html = wrapper.html()
       expect(html).toContain("$2,600")
@@ -155,17 +170,21 @@ describe("Details", () => {
       const data = {
         ...artworkInAuction,
         sale: {
+          // @ts-expect-error STRICT_NULL_CHECK
           ...artworkInAuction.sale,
           is_closed: true,
         },
         sale_artwork: {
+          // @ts-expect-error STRICT_NULL_CHECK
           ...artworkInAuction.sale_artwork,
           counts: {
+            // @ts-expect-error STRICT_NULL_CHECK
             ...artworkInAuction.sale_artwork.counts,
             bidder_positions: 2,
           },
         },
       }
+      // @ts-expect-error STRICT_NULL_CHECK
       const wrapper = await getWrapper(data)
       const html = wrapper.html()
       expect(html).not.toContain("(2 bids)")
@@ -175,13 +194,16 @@ describe("Details", () => {
       const data = {
         ...artworkInAuction,
         sale_artwork: {
+          // @ts-expect-error STRICT_NULL_CHECK
           ...artworkInAuction.sale_artwork,
           counts: {
+            // @ts-expect-error STRICT_NULL_CHECK
             ...artworkInAuction.sale_artwork.counts,
             bidder_positions: 0,
           },
         },
       }
+      // @ts-expect-error STRICT_NULL_CHECK
       const wrapper = await getWrapper(data)
       const html = wrapper.html()
       expect(html).not.toContain("bid")

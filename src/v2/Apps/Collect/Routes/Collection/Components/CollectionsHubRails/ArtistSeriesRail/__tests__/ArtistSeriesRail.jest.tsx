@@ -15,7 +15,7 @@ jest.mock("found", () => ({
   RouterContext: jest.requireActual("found").RouterContext,
 }))
 
-describe("ArtistSeriesRail", () => {
+describe.skip("ArtistSeriesRail", () => {
   let props
   const trackEvent = jest.fn()
 

@@ -41,7 +41,7 @@ fragment ArtistsArtistCard_artist on Artist {
     forSaleArtworks
   }
   image {
-    thumb: cropped(width: 270, height: 200) {
+    thumb: cropped(width: 445, height: 334) {
       width
       height
       src
@@ -56,7 +56,7 @@ fragment ArtistsCarouselCell_featuredLink on FeaturedLink {
   subtitle
   href
   image {
-    thumb: cropped(width: 546, height: 410, version: "wide") {
+    thumb: cropped(width: 600, height: 450, version: "wide") {
       width
       height
       src
@@ -88,14 +88,6 @@ fragment ArtistsIndex_featuredGenes on OrderedSet {
       internalID
       name
       href
-      image {
-        thumb: cropped(width: 80, height: 80) {
-          width
-          height
-          src
-          srcSet
-        }
-      }
       trendingArtists(sample: 4) {
         internalID
         ...ArtistsArtistCard_artist
@@ -303,7 +295,7 @@ return {
                           {
                             "kind": "Literal",
                             "name": "height",
-                            "value": 410
+                            "value": 450
                           },
                           {
                             "kind": "Literal",
@@ -313,7 +305,7 @@ return {
                           {
                             "kind": "Literal",
                             "name": "width",
-                            "value": 546
+                            "value": 600
                           }
                         ],
                         "concreteType": "CroppedImageUrl",
@@ -321,7 +313,7 @@ return {
                         "name": "cropped",
                         "plural": false,
                         "selections": (v7/*: any*/),
-                        "storageKey": "cropped(height:410,version:\"wide\",width:546)"
+                        "storageKey": "cropped(height:450,version:\"wide\",width:600)"
                       }
                     ],
                     "storageKey": null
@@ -361,38 +353,6 @@ return {
                   (v5/*: any*/),
                   (v2/*: any*/),
                   (v6/*: any*/),
-                  {
-                    "alias": null,
-                    "args": null,
-                    "concreteType": "Image",
-                    "kind": "LinkedField",
-                    "name": "image",
-                    "plural": false,
-                    "selections": [
-                      {
-                        "alias": "thumb",
-                        "args": [
-                          {
-                            "kind": "Literal",
-                            "name": "height",
-                            "value": 80
-                          },
-                          {
-                            "kind": "Literal",
-                            "name": "width",
-                            "value": 80
-                          }
-                        ],
-                        "concreteType": "CroppedImageUrl",
-                        "kind": "LinkedField",
-                        "name": "cropped",
-                        "plural": false,
-                        "selections": (v7/*: any*/),
-                        "storageKey": "cropped(height:80,width:80)"
-                      }
-                    ],
-                    "storageKey": null
-                  },
                   {
                     "alias": null,
                     "args": [
@@ -478,12 +438,12 @@ return {
                               {
                                 "kind": "Literal",
                                 "name": "height",
-                                "value": 200
+                                "value": 334
                               },
                               {
                                 "kind": "Literal",
                                 "name": "width",
-                                "value": 270
+                                "value": 445
                               }
                             ],
                             "concreteType": "CroppedImageUrl",
@@ -491,7 +451,7 @@ return {
                             "name": "cropped",
                             "plural": false,
                             "selections": (v7/*: any*/),
-                            "storageKey": "cropped(height:200,width:270)"
+                            "storageKey": "cropped(height:334,width:445)"
                           }
                         ],
                         "storageKey": null
@@ -516,7 +476,7 @@ return {
     "metadata": {},
     "name": "ArtistsIndexFragmentContainer_Test_Query",
     "operationKind": "query",
-    "text": "query ArtistsIndexFragmentContainer_Test_Query {\n  featuredArtists: orderedSets(key: \"homepage:featured-artists\") {\n    ...ArtistsIndex_featuredArtists\n    id\n  }\n  featuredGenes: orderedSets(key: \"artists:featured-genes\") {\n    ...ArtistsIndex_featuredGenes\n    id\n  }\n}\n\nfragment ArtistsArtistCard_artist on Artist {\n  ...FollowArtistButton_artist\n  name\n  href\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  image {\n    thumb: cropped(width: 270, height: 200) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ArtistsCarouselCell_featuredLink on FeaturedLink {\n  internalID\n  title\n  subtitle\n  href\n  image {\n    thumb: cropped(width: 546, height: 410, version: \"wide\") {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ArtistsIndex_featuredArtists on OrderedSet {\n  name\n  artists: items {\n    __typename\n    ... on FeaturedLink {\n      internalID\n      id\n    }\n    ...ArtistsCarouselCell_featuredLink\n    ... on Node {\n      id\n    }\n  }\n}\n\nfragment ArtistsIndex_featuredGenes on OrderedSet {\n  name\n  genes: items {\n    __typename\n    ... on Gene {\n      internalID\n      name\n      href\n      image {\n        thumb: cropped(width: 80, height: 80) {\n          width\n          height\n          src\n          srcSet\n        }\n      }\n      trendingArtists(sample: 4) {\n        internalID\n        ...ArtistsArtistCard_artist\n        id\n      }\n    }\n    ... on Node {\n      id\n    }\n    ... on FeaturedLink {\n      id\n    }\n  }\n}\n\nfragment FollowArtistButton_artist on Artist {\n  id\n  internalID\n  name\n  slug\n  is_followed: isFollowed\n  counts {\n    follows\n  }\n}\n"
+    "text": "query ArtistsIndexFragmentContainer_Test_Query {\n  featuredArtists: orderedSets(key: \"homepage:featured-artists\") {\n    ...ArtistsIndex_featuredArtists\n    id\n  }\n  featuredGenes: orderedSets(key: \"artists:featured-genes\") {\n    ...ArtistsIndex_featuredGenes\n    id\n  }\n}\n\nfragment ArtistsArtistCard_artist on Artist {\n  ...FollowArtistButton_artist\n  name\n  href\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  image {\n    thumb: cropped(width: 445, height: 334) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ArtistsCarouselCell_featuredLink on FeaturedLink {\n  internalID\n  title\n  subtitle\n  href\n  image {\n    thumb: cropped(width: 600, height: 450, version: \"wide\") {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ArtistsIndex_featuredArtists on OrderedSet {\n  name\n  artists: items {\n    __typename\n    ... on FeaturedLink {\n      internalID\n      id\n    }\n    ...ArtistsCarouselCell_featuredLink\n    ... on Node {\n      id\n    }\n  }\n}\n\nfragment ArtistsIndex_featuredGenes on OrderedSet {\n  name\n  genes: items {\n    __typename\n    ... on Gene {\n      internalID\n      name\n      href\n      trendingArtists(sample: 4) {\n        internalID\n        ...ArtistsArtistCard_artist\n        id\n      }\n    }\n    ... on Node {\n      id\n    }\n    ... on FeaturedLink {\n      id\n    }\n  }\n}\n\nfragment FollowArtistButton_artist on Artist {\n  id\n  internalID\n  name\n  slug\n  is_followed: isFollowed\n  counts {\n    follows\n  }\n}\n"
   }
 };
 })();

@@ -5,6 +5,7 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type Overview_partner = {
     readonly slug: string;
+    readonly fullProfileEligible: boolean | null;
     readonly profileBannerDisplay: string | null;
     readonly displayArtistsSection: boolean | null;
     readonly articlesConnection: {
@@ -13,7 +14,7 @@ export type Overview_partner = {
             readonly " $fragmentRefs": FragmentRefs<"ArticlesRail_articles">;
         } | null> | null;
     } | null;
-    readonly " $fragmentRefs": FragmentRefs<"ShowsRail_partner" | "ArtistsRail_partner">;
+    readonly " $fragmentRefs": FragmentRefs<"AboutPartner_partner" | "ShowsRail_partner" | "ArtistsRail_partner">;
     readonly " $refType": "Overview_partner";
 };
 export type Overview_partner$data = Overview_partner;
@@ -46,6 +47,13 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "ScalarField",
       "name": "slug",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "fullProfileEligible",
       "storageKey": null
     },
     {
@@ -149,6 +157,11 @@ const node: ReaderFragment = {
     {
       "args": null,
       "kind": "FragmentSpread",
+      "name": "AboutPartner_partner"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
       "name": "ShowsRail_partner"
     },
     {
@@ -159,5 +172,5 @@ const node: ReaderFragment = {
   ],
   "type": "Partner"
 };
-(node as any).hash = 'defd689131e06d6a812f29d607e9e5b7';
+(node as any).hash = '7a31761ac332d16d496b785ea68fdc52';
 export default node;

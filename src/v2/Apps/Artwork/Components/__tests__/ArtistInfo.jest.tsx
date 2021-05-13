@@ -6,6 +6,7 @@ import { mount } from "enzyme"
 import React from "react"
 import { RelayProp, graphql } from "react-relay"
 import { ArtistInfo } from "../ArtistInfo"
+import { EntityHeader } from "@artsy/palette"
 
 jest.unmock("react-tracking")
 
@@ -40,7 +41,7 @@ describe("ArtistInfo", () => {
   describe("ArtistInfo for artwork with complete artist info", () => {
     it("renders a correct component tree", () => {
       const component = getWrapper()
-      expect(component.find("EntityHeader").length).toBe(1)
+      expect(component.find(EntityHeader).length).toBe(1)
       expect(component.find("ArtistBio").length).toBe(1)
       expect(component.find("Button").length).toBe(1)
       expect(component.find("Button").text()).toEqual("Show artist insights")
@@ -61,6 +62,7 @@ describe("ArtistInfo", () => {
       const artist = {
         ...ArtistInfoFixture,
         highlights: {
+          // @ts-expect-error STRICT_NULL_CHECK
           ...ArtistInfoFixture.highlights,
           partnersConnection: null,
         },
@@ -76,12 +78,14 @@ describe("ArtistInfo", () => {
       const artist = {
         ...ArtistInfoFixture,
         highlights: {
+          // @ts-expect-error STRICT_NULL_CHECK
           ...ArtistInfoFixture.highlights,
           partnersConnection: null,
         },
         collections: null,
         auctionResultsConnection: null,
         exhibition_highlights: {
+          // @ts-expect-error STRICT_NULL_CHECK
           ...ArtistInfoFixture.exhibition_highlights,
           length: 1,
         },
@@ -94,6 +98,7 @@ describe("ArtistInfo", () => {
       const artist = {
         ...ArtistInfoFixture,
         biographyBlurb: {
+          // @ts-expect-error STRICT_NULL_CHECK
           ...ArtistInfoFixture.biographyBlurb,
           text: null,
         },
@@ -106,6 +111,7 @@ describe("ArtistInfo", () => {
       const artist = {
         ...ArtistInfoFixture,
         highlights: {
+          // @ts-expect-error STRICT_NULL_CHECK
           ...ArtistInfoFixture.highlights,
           partnersConnection: null,
         },

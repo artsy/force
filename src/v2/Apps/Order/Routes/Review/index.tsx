@@ -11,7 +11,6 @@ import {
 import { Review_order } from "v2/__generated__/Review_order.graphql"
 import { ReviewSubmitOfferOrderMutation } from "v2/__generated__/ReviewSubmitOfferOrderMutation.graphql"
 import { ReviewSubmitOrderMutation } from "v2/__generated__/ReviewSubmitOrderMutation.graphql"
-import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "v2/Apps/Order/Components/ArtworkSummaryItem"
 import { ConditionsOfSaleDisclaimer } from "v2/Apps/Order/Components/ConditionsOfSaleDisclaimer"
 import { ItemReviewFragmentContainer as ItemReview } from "v2/Apps/Order/Components/ItemReview"
@@ -66,6 +65,7 @@ export class ReviewRoute extends Component<ReviewProps> {
     order_id: props.order.internalID,
     products: [
       {
+        // @ts-expect-error STRICT_NULL_CHECK
         product_id: props.order.lineItems.edges[0].node.artwork.internalID,
         quantity: 1,
         price: props.order.itemsTotal,
@@ -76,11 +76,14 @@ export class ReviewRoute extends Component<ReviewProps> {
     try {
       const orderOrError =
         this.props.order.mode === "BUY"
-          ? (await this.submitBuyOrder()).commerceSubmitOrder.orderOrError
-          : (await this.submitOffer(setupIntentId)).commerceSubmitOrderWithOffer
+          ? // @ts-expect-error STRICT_NULL_CHECK
+            (await this.submitBuyOrder()).commerceSubmitOrder.orderOrError
+          : // @ts-expect-error STRICT_NULL_CHECK
+            (await this.submitOffer(setupIntentId)).commerceSubmitOrderWithOffer
               .orderOrError
 
       if (orderOrError.error) {
+        // @ts-expect-error STRICT_NULL_CHECK
         this.handleSubmitError(orderOrError.error)
         return
       } else if (
@@ -116,6 +119,7 @@ export class ReviewRoute extends Component<ReviewProps> {
               })
               return
             } else {
+              // @ts-expect-error STRICT_NULL_CHECK
               this.onSubmit(result.setupIntent.id)
             }
           })
@@ -168,6 +172,7 @@ export class ReviewRoute extends Component<ReviewProps> {
     return this.props.commitMutation<ReviewSubmitOfferOrderMutation>({
       variables: {
         input: {
+          // @ts-expect-error STRICT_NULL_CHECK
           offerId: this.props.order.myLastOffer.internalID,
           confirmedSetupIntentId: setupIntentId,
         },
@@ -282,6 +287,7 @@ export class ReviewRoute extends Component<ReviewProps> {
   artistId() {
     return get(
       this.props.order,
+      // @ts-expect-error STRICT_NULL_CHECK
       o => o.lineItems.edges[0].node.artwork.artists[0].slug
     )
   }
@@ -289,6 +295,7 @@ export class ReviewRoute extends Component<ReviewProps> {
   routeToArtworkPage() {
     const artworkId = get(
       this.props.order,
+      // @ts-expect-error STRICT_NULL_CHECK
       o => o.lineItems.edges[0].node.artwork.slug
     )
     // Don't confirm whether or not you want to leave the page
@@ -321,73 +328,45 @@ export class ReviewRoute extends Component<ReviewProps> {
 
     return (
       <Box data-test="orderReview">
-        <HorizontalPadding px={[0, 4]}>
-          <Row>
-            <Col>
-              <OrderStepper
-                currentStep="Review"
-                steps={
-                  order.mode === "OFFER" ? offerFlowSteps : buyNowFlowSteps
-                }
-              />
-            </Col>
-          </Row>
-        </HorizontalPadding>
-
-        <HorizontalPadding>
-          <TwoColumnLayout
-            Content={
-              <>
-                <Join separator={<Spacer mb={3} />}>
-                  <Flex flexDirection="column" mb={[2, 3]}>
-                    <Message p={[2, 3]} mb={[2, 3]}>
-                      Disruptions caused by COVID-19 may cause delays — we
-                      appreciate your understanding.
-                      <Spacer mb={1} />
-                      Please note that all offers are binding.
-                    </Message>
-                    {order.mode === "OFFER" && (
-                      <OfferSummaryItem
-                        order={order}
-                        onChange={this.onChangeOffer}
-                      />
-                    )}
-                    <ShippingSummaryItem
+        <Row>
+          <Col>
+            <OrderStepper
+              currentStep="Review"
+              steps={order.mode === "OFFER" ? offerFlowSteps : buyNowFlowSteps}
+            />
+          </Col>
+        </Row>
+        <TwoColumnLayout
+          Content={
+            <>
+              <Join separator={<Spacer mb={3} />}>
+                <Flex flexDirection="column" mb={[2, 3]}>
+                  <Message p={[2, 3]} mb={[2, 3]}>
+                    Disruptions caused by COVID-19 may cause delays — we
+                    appreciate your understanding.
+                    <Spacer mb={1} />
+                    Please note that all offers are binding.
+                  </Message>
+                  {order.mode === "OFFER" && (
+                    <OfferSummaryItem
                       order={order}
-                      onChange={this.onChangeShipping}
+                      onChange={this.onChangeOffer}
                     />
-                    <CreditCardSummaryItem
-                      order={order}
-                      onChange={this.onChangePayment}
-                      title="Payment method"
-                    />
-                  </Flex>
-                  <Media greaterThan="xs">
-                    <ItemReview lineItem={order.lineItems.edges[0].node} />
-                    <Spacer mb={3} />
-                    <Button
-                      size="large"
-                      width="100%"
-                      loading={isCommittingMutation}
-                      onClick={() => this.onSubmit()}
-                    >
-                      Submit
-                    </Button>
-                    <Spacer mb={2} />
-                    <ConditionsOfSaleDisclaimer textAlign="center" />
-                  </Media>
-                </Join>
-              </>
-            }
-            Sidebar={
-              <Flex flexDirection="column">
-                <Flex flexDirection="column">
-                  <ArtworkSummaryItem order={order} />
-                  <TransactionDetailsSummaryItem order={order} />
+                  )}
+                  <ShippingSummaryItem
+                    order={order}
+                    onChange={this.onChangeShipping}
+                  />
+                  <CreditCardSummaryItem
+                    order={order}
+                    onChange={this.onChangePayment}
+                    title="Payment method"
+                  />
                 </Flex>
-                <BuyerGuarantee />
-                <Spacer mb={[2, 3]} />
-                <Media at="xs">
+                <Media greaterThan="xs">
+                  {/* @ts-expect-error STRICT_NULL_CHECK */}
+                  <ItemReview lineItem={order.lineItems.edges[0].node} />
+                  <Spacer mb={3} />
                   <Button
                     size="large"
                     width="100%"
@@ -397,12 +376,34 @@ export class ReviewRoute extends Component<ReviewProps> {
                     Submit
                   </Button>
                   <Spacer mb={2} />
-                  <ConditionsOfSaleDisclaimer />
+                  <ConditionsOfSaleDisclaimer textAlign="center" />
                 </Media>
+              </Join>
+            </>
+          }
+          Sidebar={
+            <Flex flexDirection="column">
+              <Flex flexDirection="column">
+                <ArtworkSummaryItem order={order} />
+                <TransactionDetailsSummaryItem order={order} />
               </Flex>
-            }
-          />
-        </HorizontalPadding>
+              <BuyerGuarantee />
+              <Spacer mb={[2, 3]} />
+              <Media at="xs">
+                <Button
+                  size="large"
+                  width="100%"
+                  loading={isCommittingMutation}
+                  onClick={() => this.onSubmit()}
+                >
+                  Submit
+                </Button>
+                <Spacer mb={2} />
+                <ConditionsOfSaleDisclaimer />
+              </Media>
+            </Flex>
+          }
+        />
       </Box>
     )
   }

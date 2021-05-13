@@ -24,6 +24,7 @@ export const MobileLink: React.FC<MobileLinkProps> = ({
   const [isPressed, setPressed] = useState(false)
   const bg = isPressed ? "black5" : "white100"
   const { trackEvent } = useTracking()
+  // @ts-expect-error STRICT_NULL_CHECK
   const text = children.toString()
 
   const handleClickTracking = (linkHref: string) => {

@@ -19,12 +19,14 @@ export function matchingMediaQueriesForUserAgent(
 
   const device = findDevice(userAgent)
   if (!device) {
+    // @ts-expect-error STRICT_NULL_CHECK
     return undefined
   } else {
     const supportsHover = device.touch ? "notHover" : "hover"
     const onlyMatch: MatchingMediaQueries = device.resizable
       ? [
           supportsHover,
+          // @ts-expect-error STRICT_NULL_CHECK
           ...findBreakpointsForWidths(device.minWidth, device.maxWidth),
         ]
       : [

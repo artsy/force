@@ -14,6 +14,7 @@ export const SectionsNav: React.SFC<SectionsNavProps> = props => {
 
   return (
     <SectionsNavContainer
+      // @ts-expect-error STRICT_NULL_CHECK
       isAnimated={animated}
       mx="auto"
       mt={[4, 6]}
@@ -26,9 +27,12 @@ export const SectionsNav: React.SFC<SectionsNavProps> = props => {
       {sections.map((section, index) => (
         <SectionItem onClick={() => onClick(index)} key={"nav-" + index}>
           <Title
+            // @ts-expect-error STRICT_NULL_CHECK
             mt={animated && [4, 6]}
+            // @ts-expect-error STRICT_NULL_CHECK
             mb={animated && [2, 5]}
             size={["10", "10", "10", "14"]}
+            // @ts-expect-error STRICT_NULL_CHECK
             mx={animated && [3]}
             color={activeSection === index ? "black" : color("black10")}
           >

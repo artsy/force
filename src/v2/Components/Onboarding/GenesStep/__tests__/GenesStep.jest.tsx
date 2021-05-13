@@ -16,6 +16,7 @@ describe("GenesStep", () => {
 
     const onInput = wrapper.find("input").prop("onInput")
     const event: any = { target: { value: "photo" } }
+    // @ts-expect-error STRICT_NULL_CHECK
     onInput(event)
     wrapper.update()
 

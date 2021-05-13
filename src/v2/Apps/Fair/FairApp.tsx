@@ -1,9 +1,7 @@
 import React from "react"
-import { AppContainer } from "v2/Apps/Components/AppContainer"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FairApp_fair } from "v2/__generated__/FairApp_fair.graphql"
-import { Box, CSSGrid, Text } from "@artsy/palette"
-import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
+import { Box, Spacer, Text } from "@artsy/palette"
 import {
   FairEditorialFragmentContainer,
   FAIR_EDITORIAL_AMOUNT,
@@ -43,6 +41,7 @@ const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
 
   const hasArticles = (fair.articlesConnection?.edges?.length ?? 0) > 0
   const hasCollections = (fair.marketingCollections?.length ?? 0) > 0
+  // @ts-expect-error STRICT_NULL_CHECK
   const artworkCount = fair.counts.artworks
 
   const clickedArtworksTabTrackingData: ClickedNavigationTab = {
@@ -50,6 +49,7 @@ const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
     context_module: ContextModule.exhibitorsTab,
     context_page_owner_id: contextPageOwnerId,
     context_page_owner_slug: contextPageOwnerSlug,
+    // @ts-expect-error STRICT_NULL_CHECK
     context_page_owner_type: contextPageOwnerType,
     destination_path: `${fair.href}/artworks`,
     subject: "Artworks",
@@ -60,6 +60,7 @@ const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
     context_module: ContextModule.artworksTab,
     context_page_owner_id: contextPageOwnerId,
     context_page_owner_slug: contextPageOwnerSlug,
+    // @ts-expect-error STRICT_NULL_CHECK
     context_page_owner_type: contextPageOwnerType,
     destination_path: `${fair.href}`,
     subject: "Exhibitors",
@@ -69,85 +70,70 @@ const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
     <>
       <FairMetaFragmentContainer fair={fair} />
 
-      <AppContainer>
-        <HorizontalPadding>
-          <FairHeaderFragmentContainer fair={fair} />
+      <FairHeaderFragmentContainer fair={fair} />
 
-          {hasArticles && (
-            <Box my={3} pt={3} borderTop="1px solid" borderColor="black10">
-              <Box display="flex" justifyContent="space-between">
-                <Text variant="subtitle" as="h3" mb={2}>
-                  Related Reading
-                </Text>
+      {hasArticles && (
+        <Box my={6} pt={4} borderTop="1px solid" borderColor="black10">
+          <Box display="flex" justifyContent="space-between">
+            <Text variant="lg" as="h3" mb={2}>
+              Related Reading
+            </Text>
 
-                {fair.articlesConnection.totalCount > FAIR_EDITORIAL_AMOUNT && (
-                  <RouterLink to={`${fair.href}/articles`} noUnderline>
-                    <Text variant="subtitle" color="black60">
-                      View all
-                    </Text>
-                  </RouterLink>
-                )}
-              </Box>
+            {/* @ts-expect-error STRICT_NULL_CHECK */}
+            {fair.articlesConnection.totalCount > FAIR_EDITORIAL_AMOUNT && (
+              <RouterLink to={`${fair.href}/articles`} noUnderline>
+                <Text variant="sm">View all</Text>
+              </RouterLink>
+            )}
+          </Box>
 
-              <CSSGrid
-                gridAutoFlow="row"
-                gridColumnGap={3}
-                gridRowGap={2}
-                gridTemplateColumns={["repeat(1, 1fr)", "repeat(2, 1fr)"]}
-              >
-                <FairEditorialFragmentContainer fair={fair} />
-              </CSSGrid>
-            </Box>
-          )}
+          <FairEditorialFragmentContainer fair={fair} />
+        </Box>
+      )}
 
-          {hasCollections && (
-            <Box my={3} pt={3} borderTop="1px solid" borderColor="black10">
-              <Text variant="subtitle" as="h3" mb={2}>
-                Curated Highlights
-              </Text>
+      {hasCollections && (
+        <Box my={6} pt={4} borderTop="1px solid" borderColor="black10">
+          <Text variant="lg" as="h3" mb={2}>
+            Curated Highlights
+          </Text>
 
-              <FairCollectionsFragmentContainer fair={fair} />
-            </Box>
-          )}
+          <FairCollectionsFragmentContainer fair={fair} />
+        </Box>
+      )}
 
-          {!!user && (
-            <FairFollowedArtistsFragmentContainer
-              fair={fair}
-              my={3}
-              pt={3}
-              borderTop="1px solid"
-              borderColor="black10"
-            />
-          )}
+      {!!user && (
+        <FairFollowedArtistsFragmentContainer
+          fair={fair}
+          my={2}
+          pt={2}
+          borderTop="1px solid"
+          borderColor="black10"
+        />
+      )}
 
-          <RouteTabs position="relative">
-            <RouteTab
-              to={fair.href}
-              exact
-              onClick={() =>
-                tracking.trackEvent(clickedExhibitorsTabTrackingData)
-              }
-            >
-              Exhibitors
-            </RouteTab>
+      <Spacer my={[4, 12]} />
 
-            <RouteTab
-              to={`${fair.href}/artworks`}
-              exact
-              onClick={() =>
-                tracking.trackEvent(clickedArtworksTabTrackingData)
-              }
-            >
-              Artworks
-              <Text variant="text" display="inline">
-                &nbsp;({artworkCount})
-              </Text>
-            </RouteTab>
-          </RouteTabs>
+      <RouteTabs mb={2} fill>
+        <RouteTab
+          // @ts-expect-error STRICT_NULL_CHECK
+          to={fair.href}
+          exact
+          onClick={() => tracking.trackEvent(clickedExhibitorsTabTrackingData)}
+        >
+          Exhibitors
+        </RouteTab>
 
-          {children}
-        </HorizontalPadding>
-      </AppContainer>
+        <RouteTab
+          to={`${fair.href}/artworks`}
+          exact
+          onClick={() => tracking.trackEvent(clickedArtworksTabTrackingData)}
+        >
+          Artworks
+          <Text display="inline">&nbsp;({artworkCount})</Text>
+        </RouteTab>
+      </RouteTabs>
+
+      {children}
     </>
   )
 }

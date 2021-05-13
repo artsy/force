@@ -30,11 +30,14 @@ export const ArtistRecommendations: React.FC<ArtistRecommendationsProps> = ({
 }) => {
   const [fetchingNextPage, setFetchingNextPage] = useState(false)
 
+  // @ts-expect-error STRICT_NULL_CHECK
   const relatedArtists = get(
     artist,
+    // @ts-expect-error STRICT_NULL_CHECK
     a => a.related.artistsConnection.edges,
     []
   ).map(edge => (
+    // @ts-expect-error STRICT_NULL_CHECK
     <RecommendedArtist artist={edge.node} key={edge.node.id} fullBleedRail />
   ))
 
@@ -124,6 +127,7 @@ export const ArtistRecommendationsPaginationContainer = createPaginationContaine
   {
     direction: "forward",
     getConnectionFromProps(props) {
+      // @ts-expect-error STRICT_NULL_CHECK
       return props.artist.related.artistsConnection
     },
     getFragmentVariables(prevVars, count) {

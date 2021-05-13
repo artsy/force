@@ -17,6 +17,7 @@ export interface Props extends SystemContextProps {
   forSale?: boolean
 }
 
+// @ts-expect-error STRICT_NULL_CHECK
 @track(null, {
   dispatch: data => Events.postEvent(data),
 })
@@ -29,6 +30,7 @@ export class WorksForYou extends Component<Props> {
   render() {
     const { artistID, forSale } = this.props
     const includeSelectedArtist = !!artistID
+    // @ts-expect-error STRICT_NULL_CHECK
     const filter: ArtistArtworksFilters[] = forSale ? ["IS_FOR_SALE"] : null
 
     return (
@@ -70,6 +72,7 @@ export class WorksForYou extends Component<Props> {
                         <Box pt={3} pb={3}>
                           {includeSelectedArtist ? (
                             <WorksForYouArtistFeed
+                              // @ts-expect-error STRICT_NULL_CHECK
                               artistID={this.props.artistID}
                               viewer={props.viewer}
                               forSale={forSale}

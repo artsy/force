@@ -17,6 +17,7 @@ const SubmissionSummary: React.FC<SubmissionSummaryProps> = ({ offer }) => {
       <Box height="auto">{renderImage(submission)}</Box>
       <Box>
         <TruncatedLine>
+          {/* @ts-expect-error STRICT_NULL_CHECK */}
           <Text variant="mediumText">{submission.artist.name}</Text>
           {renderTitleLine(submission)}
         </TruncatedLine>
@@ -58,6 +59,7 @@ function renderImage(submission: SubmissionSummary_offer["submission"]) {
     return null
   }
 
+  // @ts-expect-error STRICT_NULL_CHECK
   return <Image src={imageURL} alt={submission.title} width={55} mr={1} />
 }
 

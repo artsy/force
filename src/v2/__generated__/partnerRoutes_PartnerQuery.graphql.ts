@@ -8,6 +8,7 @@ export type partnerRoutes_PartnerQueryVariables = {
 };
 export type partnerRoutes_PartnerQueryResponse = {
     readonly partner: {
+        readonly fullProfileEligible: boolean | null;
         readonly " $fragmentRefs": FragmentRefs<"PartnerApp_partner">;
     } | null;
 };
@@ -23,6 +24,7 @@ query partnerRoutes_PartnerQuery(
   $partnerId: String!
 ) {
   partner(id: $partnerId) @principalField {
+    fullProfileEligible
     ...PartnerApp_partner
     id
   }
@@ -45,12 +47,16 @@ fragment NavigationTabs_partner on Partner {
   articles: articlesConnection {
     totalCount
   }
-  artists: artistsConnection(first: 20) {
+  representedArtists: artistsConnection(representedBy: true, displayOnPartnerProfile: true) {
+    totalCount
+  }
+  notRepresentedArtists: artistsConnection(representedBy: false, hasPublishedArtworks: true, displayOnPartnerProfile: true) {
     totalCount
   }
 }
 
 fragment PartnerApp_partner on Partner {
+  fullProfileEligible
   profile {
     ...PartnerHeaderImage_profile
     id
@@ -62,18 +68,7 @@ fragment PartnerApp_partner on Partner {
 
 fragment PartnerHeaderImage_profile on Profile {
   image {
-    sm: cropped(width: 480, height: 280, version: "wide") {
-      src
-      srcSet
-    }
-    md: cropped(width: 900, height: 600, version: "wide") {
-      src
-      srcSet
-    }
-    lg: cropped(width: 1600, height: 600, version: "wide") {
-      src
-      srcSet
-    }
+    url(version: "wide")
   }
 }
 
@@ -129,69 +124,48 @@ v1 = [
   }
 ],
 v2 = {
-  "kind": "Literal",
-  "name": "version",
-  "value": "wide"
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "fullProfileEligible",
+  "storageKey": null
 },
-v3 = [
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "src",
-    "storageKey": null
-  },
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "srcSet",
-    "storageKey": null
-  }
-],
-v4 = {
-  "kind": "Literal",
-  "name": "height",
-  "value": 600
-},
-v5 = {
+v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v6 = {
+v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "slug",
   "storageKey": null
 },
-v7 = {
+v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "name",
   "storageKey": null
 },
-v8 = [
-  {
-    "kind": "Literal",
-    "name": "first",
-    "value": 20
-  }
-],
-v9 = {
+v6 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "totalCount",
   "storageKey": null
 },
-v10 = [
-  (v9/*: any*/)
-];
+v7 = [
+  (v6/*: any*/)
+],
+v8 = {
+  "kind": "Literal",
+  "name": "displayOnPartnerProfile",
+  "value": true
+};
 return {
   "fragment": {
     "argumentDefinitions": (v0/*: any*/),
@@ -207,6 +181,7 @@ return {
         "name": "partner",
         "plural": false,
         "selections": [
+          (v2/*: any*/),
           {
             "args": null,
             "kind": "FragmentSpread",
@@ -232,6 +207,7 @@ return {
         "name": "partner",
         "plural": false,
         "selections": [
+          (v2/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -249,67 +225,22 @@ return {
                 "plural": false,
                 "selections": [
                   {
-                    "alias": "sm",
+                    "alias": null,
                     "args": [
                       {
                         "kind": "Literal",
-                        "name": "height",
-                        "value": 280
-                      },
-                      (v2/*: any*/),
-                      {
-                        "kind": "Literal",
-                        "name": "width",
-                        "value": 480
+                        "name": "version",
+                        "value": "wide"
                       }
                     ],
-                    "concreteType": "CroppedImageUrl",
-                    "kind": "LinkedField",
-                    "name": "cropped",
-                    "plural": false,
-                    "selections": (v3/*: any*/),
-                    "storageKey": "cropped(height:280,version:\"wide\",width:480)"
-                  },
-                  {
-                    "alias": "md",
-                    "args": [
-                      (v4/*: any*/),
-                      (v2/*: any*/),
-                      {
-                        "kind": "Literal",
-                        "name": "width",
-                        "value": 900
-                      }
-                    ],
-                    "concreteType": "CroppedImageUrl",
-                    "kind": "LinkedField",
-                    "name": "cropped",
-                    "plural": false,
-                    "selections": (v3/*: any*/),
-                    "storageKey": "cropped(height:600,version:\"wide\",width:900)"
-                  },
-                  {
-                    "alias": "lg",
-                    "args": [
-                      (v4/*: any*/),
-                      (v2/*: any*/),
-                      {
-                        "kind": "Literal",
-                        "name": "width",
-                        "value": 1600
-                      }
-                    ],
-                    "concreteType": "CroppedImageUrl",
-                    "kind": "LinkedField",
-                    "name": "cropped",
-                    "plural": false,
-                    "selections": (v3/*: any*/),
-                    "storageKey": "cropped(height:600,version:\"wide\",width:1600)"
+                    "kind": "ScalarField",
+                    "name": "url",
+                    "storageKey": "url(version:\"wide\")"
                   }
                 ],
                 "storageKey": null
               },
-              (v5/*: any*/),
+              (v3/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -341,14 +272,29 @@ return {
                     "kind": "LinkedField",
                     "name": "resized",
                     "plural": false,
-                    "selections": (v3/*: any*/),
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "src",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "srcSet",
+                        "storageKey": null
+                      }
+                    ],
                     "storageKey": "resized(height:80,version:\"square140\",width:80)"
                   }
                 ],
                 "storageKey": null
               },
-              (v6/*: any*/),
-              (v7/*: any*/),
+              (v4/*: any*/),
+              (v5/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -366,7 +312,7 @@ return {
             ],
             "storageKey": null
           },
-          (v6/*: any*/),
+          (v4/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -399,7 +345,7 @@ return {
             ],
             "storageKey": null
           },
-          (v7/*: any*/),
+          (v5/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -416,13 +362,19 @@ return {
           },
           {
             "alias": "locations",
-            "args": (v8/*: any*/),
+            "args": [
+              {
+                "kind": "Literal",
+                "name": "first",
+                "value": 20
+              }
+            ],
             "concreteType": "LocationConnection",
             "kind": "LinkedField",
             "name": "locationsConnection",
             "plural": false,
             "selections": [
-              (v9/*: any*/),
+              (v6/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -446,7 +398,7 @@ return {
                         "name": "city",
                         "storageKey": null
                       },
-                      (v5/*: any*/)
+                      (v3/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -470,20 +422,49 @@ return {
             "kind": "LinkedField",
             "name": "articlesConnection",
             "plural": false,
-            "selections": (v10/*: any*/),
+            "selections": (v7/*: any*/),
             "storageKey": null
           },
           {
-            "alias": "artists",
-            "args": (v8/*: any*/),
+            "alias": "representedArtists",
+            "args": [
+              (v8/*: any*/),
+              {
+                "kind": "Literal",
+                "name": "representedBy",
+                "value": true
+              }
+            ],
             "concreteType": "ArtistPartnerConnection",
             "kind": "LinkedField",
             "name": "artistsConnection",
             "plural": false,
-            "selections": (v10/*: any*/),
-            "storageKey": "artistsConnection(first:20)"
+            "selections": (v7/*: any*/),
+            "storageKey": "artistsConnection(displayOnPartnerProfile:true,representedBy:true)"
           },
-          (v5/*: any*/)
+          {
+            "alias": "notRepresentedArtists",
+            "args": [
+              (v8/*: any*/),
+              {
+                "kind": "Literal",
+                "name": "hasPublishedArtworks",
+                "value": true
+              },
+              {
+                "kind": "Literal",
+                "name": "representedBy",
+                "value": false
+              }
+            ],
+            "concreteType": "ArtistPartnerConnection",
+            "kind": "LinkedField",
+            "name": "artistsConnection",
+            "plural": false,
+            "selections": (v7/*: any*/),
+            "storageKey": "artistsConnection(displayOnPartnerProfile:true,hasPublishedArtworks:true,representedBy:false)"
+          },
+          (v3/*: any*/)
         ],
         "storageKey": null
       }
@@ -494,9 +475,9 @@ return {
     "metadata": {},
     "name": "partnerRoutes_PartnerQuery",
     "operationKind": "query",
-    "text": "query partnerRoutes_PartnerQuery(\n  $partnerId: String!\n) {\n  partner(id: $partnerId) @principalField {\n    ...PartnerApp_partner\n    id\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  is_followed: isFollowed\n}\n\nfragment NavigationTabs_partner on Partner {\n  slug\n  displayArtistsSection\n  locations: locationsConnection(first: 20) {\n    totalCount\n  }\n  articles: articlesConnection {\n    totalCount\n  }\n  artists: artistsConnection(first: 20) {\n    totalCount\n  }\n}\n\nfragment PartnerApp_partner on Partner {\n  profile {\n    ...PartnerHeaderImage_profile\n    id\n  }\n  ...PartnerMeta_partner\n  ...PartnerHeader_partner\n  ...NavigationTabs_partner\n}\n\nfragment PartnerHeaderImage_profile on Profile {\n  image {\n    sm: cropped(width: 480, height: 280, version: \"wide\") {\n      src\n      srcSet\n    }\n    md: cropped(width: 900, height: 600, version: \"wide\") {\n      src\n      srcSet\n    }\n    lg: cropped(width: 1600, height: 600, version: \"wide\") {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment PartnerHeader_partner on Partner {\n  name\n  type\n  href\n  profile {\n    icon {\n      resized(width: 80, height: 80, version: \"square140\") {\n        src\n        srcSet\n      }\n    }\n    ...FollowProfileButton_profile\n    id\n  }\n  locations: locationsConnection(first: 20) {\n    totalCount\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n}\n\nfragment PartnerMeta_partner on Partner {\n  slug\n  meta {\n    image\n    title\n    description\n  }\n}\n"
+    "text": "query partnerRoutes_PartnerQuery(\n  $partnerId: String!\n) {\n  partner(id: $partnerId) @principalField {\n    fullProfileEligible\n    ...PartnerApp_partner\n    id\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  is_followed: isFollowed\n}\n\nfragment NavigationTabs_partner on Partner {\n  slug\n  displayArtistsSection\n  locations: locationsConnection(first: 20) {\n    totalCount\n  }\n  articles: articlesConnection {\n    totalCount\n  }\n  representedArtists: artistsConnection(representedBy: true, displayOnPartnerProfile: true) {\n    totalCount\n  }\n  notRepresentedArtists: artistsConnection(representedBy: false, hasPublishedArtworks: true, displayOnPartnerProfile: true) {\n    totalCount\n  }\n}\n\nfragment PartnerApp_partner on Partner {\n  fullProfileEligible\n  profile {\n    ...PartnerHeaderImage_profile\n    id\n  }\n  ...PartnerMeta_partner\n  ...PartnerHeader_partner\n  ...NavigationTabs_partner\n}\n\nfragment PartnerHeaderImage_profile on Profile {\n  image {\n    url(version: \"wide\")\n  }\n}\n\nfragment PartnerHeader_partner on Partner {\n  name\n  type\n  href\n  profile {\n    icon {\n      resized(width: 80, height: 80, version: \"square140\") {\n        src\n        srcSet\n      }\n    }\n    ...FollowProfileButton_profile\n    id\n  }\n  locations: locationsConnection(first: 20) {\n    totalCount\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n}\n\nfragment PartnerMeta_partner on Partner {\n  slug\n  meta {\n    image\n    title\n    description\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'b065b69c18af67164cd46d476357078f';
+(node as any).hash = '2d6be9fb58dcf9ca6a2bcc2093e7438b';
 export default node;

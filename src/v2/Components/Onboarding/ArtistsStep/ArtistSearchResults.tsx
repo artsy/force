@@ -17,6 +17,7 @@ import { RecordSourceSelectorProxy } from "relay-runtime"
 import ReplaceTransition from "../../Animation/ReplaceTransition"
 import ItemLink, { LinkContainer } from "../ItemLink"
 
+// @ts-expect-error STRICT_NULL_CHECK
 type Artist = ArtistSearchResults_viewer["searchConnection"]["edges"][number]["node"]
 
 export interface ContainerProps {
@@ -36,7 +37,9 @@ class ArtistSearchResultsContent extends React.Component<Props, null> {
   constructor(props: Props, context: any) {
     super(props, context)
     this.excludedArtistIds = new Set(
+      // @ts-expect-error STRICT_NULL_CHECK
       this.props.viewer.searchConnection.edges.map(
+        // @ts-expect-error STRICT_NULL_CHECK
         ({ node }) => node.internalID
       )
     )
@@ -51,15 +54,20 @@ class ArtistSearchResultsContent extends React.Component<Props, null> {
     this.props.onArtistFollow(follow, artist)
 
     const suggestedArtistEdge =
+      // @ts-expect-error STRICT_NULL_CHECK
       data.followArtist.artist.related.suggestedConnection.edges[0]
+    // @ts-expect-error STRICT_NULL_CHECK
     const popularArtist = data.followArtist.popular_artists[0]
     const artistToSuggest = store.get(
+      // @ts-expect-error STRICT_NULL_CHECK
       ((suggestedArtistEdge && suggestedArtistEdge.node) || popularArtist).id
     )
+    // @ts-expect-error STRICT_NULL_CHECK
     this.excludedArtistIds.add(artistToSuggest.getValue("internalID") as string)
 
     const popularArtistsRootField = store.get("client:root:viewer")
     const popularArtists =
+      // @ts-expect-error STRICT_NULL_CHECK
       popularArtistsRootField.getLinkedRecords("match_artist", {
         term: this.props.term,
       }) || []
@@ -67,7 +75,9 @@ class ArtistSearchResultsContent extends React.Component<Props, null> {
       artistItem.getDataID() === artist.id ? artistToSuggest : artistItem
     )
 
+    // @ts-expect-error STRICT_NULL_CHECK
     popularArtistsRootField.setLinkedRecords(
+      // @ts-expect-error STRICT_NULL_CHECK
       updatedPopularArtists,
       "match_artist",
       { term: this.props.term }
@@ -76,6 +86,7 @@ class ArtistSearchResultsContent extends React.Component<Props, null> {
 
   onFollowedArtist(artist: Artist, follow: boolean) {
     commitMutation<ArtistSearchResultsArtistMutation>(
+      // @ts-expect-error STRICT_NULL_CHECK
       this.props.relay.environment,
       {
         // TODO: Inputs to the mutation might have changed case of the keys!
@@ -139,7 +150,9 @@ class ArtistSearchResultsContent extends React.Component<Props, null> {
   }
 
   render() {
+    // @ts-expect-error STRICT_NULL_CHECK
     const artistItems = this.props.viewer.searchConnection.edges.map(
+      // @ts-expect-error STRICT_NULL_CHECK
       ({ node: artist }, index) => {
         return (
           <LinkContainer key={`artist-search-results-${index}`}>
@@ -171,6 +184,7 @@ class ArtistSearchResultsContent extends React.Component<Props, null> {
 }
 
 export const ArtistSearchResultsContentContainer = createFragmentContainer(
+  // @ts-expect-error STRICT_NULL_CHECK
   ArtistSearchResultsContent,
   {
     viewer: graphql`

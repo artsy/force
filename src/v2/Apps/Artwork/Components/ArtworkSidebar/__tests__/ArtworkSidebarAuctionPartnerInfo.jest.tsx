@@ -38,7 +38,9 @@ describe("ArtworkSidebarAuctionPartnerInfo", () => {
     xit("displays artwork without premium", async () => {
       const wrapper = await getWrapper({
         ...ArtworkWithEstimateAndPremium,
+        // @ts-expect-error STRICT_NULL_CHECK
         sale: {
+          // @ts-expect-error STRICT_NULL_CHECK
           ...ArtworkWithEstimateAndPremium.sale,
           // FIXME: This selection doesn't seem to exist, is this test obsolete?
           // is_with_buyers_premium: null,
@@ -51,7 +53,9 @@ describe("ArtworkSidebarAuctionPartnerInfo", () => {
     it("displays artwork without estimate", async () => {
       const wrapper = await getWrapper({
         ...ArtworkWithEstimateAndPremium,
+        // @ts-expect-error STRICT_NULL_CHECK
         sale_artwork: {
+          // @ts-expect-error STRICT_NULL_CHECK
           ...ArtworkWithEstimateAndPremium.sale_artwork,
           estimate: null,
         },
@@ -63,7 +67,9 @@ describe("ArtworkSidebarAuctionPartnerInfo", () => {
     it("does not display anything for closed auctions", async () => {
       const wrapper = await getWrapper({
         ...ArtworkWithEstimateAndPremium,
+        // @ts-expect-error STRICT_NULL_CHECK
         sale: {
+          // @ts-expect-error STRICT_NULL_CHECK
           ...ArtworkWithEstimateAndPremium.sale,
           is_closed: true,
         },

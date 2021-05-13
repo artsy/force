@@ -19,6 +19,7 @@ export class OtherAuctions extends React.Component<OtherAuctionsProps> {
       <Box mt={6}>
         <Header title="Other auctions" buttonHref={sd.APP_URL + "/auctions"} />
         <Flex flexWrap="wrap" mr={-2} width="100%">
+          {/* @ts-expect-error STRICT_NULL_CHECK */}
           {this.props.salesConnection.edges.map(({ node: auction }, index) => {
             return (
               <Box pr={2} mb={[1, 4]} width={["100%", "25%"]} key={index}>

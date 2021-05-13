@@ -1,20 +1,7 @@
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FairHeaderImage_fair } from "v2/__generated__/FairHeaderImage_fair.graphql"
-import { FullBleed } from "v2/Components/FullBleed"
-import styled from "styled-components"
-
-const Container = styled(FullBleed)`
-  position: relative;
-  overflow: hidden;
-`
-
-const Image = styled.img`
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-`
+import { FullBleedHeader } from "v2/Components/FullBleedHeader"
 
 interface FairHeaderImageProps {
   fair: FairHeaderImage_fair
@@ -25,16 +12,8 @@ export const FairHeaderImage: React.FC<FairHeaderImageProps> = ({
 }) => {
   if (!image) return null
 
-  return (
-    <Container bg="black10" height={600}>
-      <picture>
-        <source srcSet={image.lg.srcSet} media="(min-width: 1200px)" />
-        <source srcSet={image.md.srcSet} media="(min-width: 700px)" />
-        <source srcSet={image.sm.srcSet} media="(max-width: 700px)" />
-        <Image src={image.sm.src} alt="" loading="lazy" />
-      </picture>
-    </Container>
-  )
+  // @ts-expect-error STRICT_NULL_CHECK
+  return <FullBleedHeader src={image.url} />
 }
 
 export const FairHeaderImageFragmentContainer = createFragmentContainer(
@@ -43,18 +22,7 @@ export const FairHeaderImageFragmentContainer = createFragmentContainer(
     fair: graphql`
       fragment FairHeaderImage_fair on Fair {
         image {
-          sm: cropped(width: 480, height: 600, version: "wide") {
-            src
-            srcSet
-          }
-          md: cropped(width: 900, height: 600, version: "wide") {
-            src
-            srcSet
-          }
-          lg: cropped(width: 1600, height: 600, version: "wide") {
-            src
-            srcSet
-          }
+          url(version: "wide")
         }
       }
     `,

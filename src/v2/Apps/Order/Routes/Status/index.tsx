@@ -9,7 +9,6 @@ import {
   media,
 } from "@artsy/palette"
 import { Status_order } from "v2/__generated__/Status_order.graphql"
-import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
 import { TransactionDetailsSummaryItemFragmentContainer as TransactionDetailsSummaryItem } from "v2/Apps/Order/Components/TransactionDetailsSummaryItem"
 import { TwoColumnLayout } from "v2/Apps/Order/Components/TwoColumnLayout"
 import { Router } from "found"
@@ -48,6 +47,7 @@ export class StatusRoute extends Component<StatusProps> {
       stateExpiresAt,
     } = this.props.order
     const isOfferFlow = mode === "OFFER"
+    // @ts-expect-error STRICT_NULL_CHECK
     const isShip = requestedFulfillment.__typename === "CommerceShip"
 
     switch (state) {
@@ -205,6 +205,7 @@ export class StatusRoute extends Component<StatusProps> {
   getFulfilmentDescription(): React.ReactNode {
     const fulfillment = get(
       this.props.order,
+      // @ts-expect-error STRICT_NULL_CHECK
       o => o.lineItems.edges[0].node.fulfillments.edges[0].node
     )
 
@@ -250,7 +251,7 @@ export class StatusRoute extends Component<StatusProps> {
       <SystemContextConsumer>
         {({ isEigen }) => {
           return (
-            <HorizontalPadding>
+            <>
               <Serif size="6" weight="regular" color="black100">
                 {title}
               </Serif>
@@ -299,7 +300,7 @@ export class StatusRoute extends Component<StatusProps> {
                   )
                 }
               />
-            </HorizontalPadding>
+            </>
           )
         }}
       </SystemContextConsumer>

@@ -39,9 +39,11 @@ export const ArtistMetaCanonicalLink: React.FC<ArtistMetaCanonicalLinkProps> = (
 }) => {
   const { pathname } = useRouter().match.location
   const hasArtistInsights =
+    // @ts-expect-error STRICT_NULL_CHECK
     showMarketInsights(artist) ||
     (artist.insights && artist.insights.length > 0)
 
+  // @ts-expect-error STRICT_NULL_CHECK
   const hasArtistContent = hasOverviewContent(artist)
   const canShowOverview = hasArtistInsights || hasArtistContent
 

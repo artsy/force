@@ -58,18 +58,23 @@ export class FollowProfileButton extends React.Component<Props> {
     } = this.props
 
     const args: FollowedArgs = {
+      // @ts-expect-error STRICT_NULL_CHECK
       ownerId: profile.internalID,
+      // @ts-expect-error STRICT_NULL_CHECK
       ownerSlug: profile.slug,
       contextModule,
       contextOwnerId: contextPageOwnerId,
       contextOwnerSlug: contextPageOwnerSlug,
+      // @ts-expect-error STRICT_NULL_CHECK
       contextOwnerType: contextPageOwnerType,
     }
 
+    // @ts-expect-error STRICT_NULL_CHECK
     const analyticsData = profile.is_followed
       ? unfollowedPartner(args)
       : followedPartner(args)
 
+    // @ts-expect-error STRICT_NULL_CHECK
     tracking.trackEvent(analyticsData)
   }
 
@@ -78,6 +83,7 @@ export class FollowProfileButton extends React.Component<Props> {
     const { contextModule, profile, user, relay, mediator } = this.props
 
     if (user && user.id) {
+      // @ts-expect-error STRICT_NULL_CHECK
       commitMutation<FollowProfileButtonMutation>(relay.environment, {
         // TODO: Inputs to the mutation might have changed case of the keys!
         mutation: graphql`
@@ -92,14 +98,18 @@ export class FollowProfileButton extends React.Component<Props> {
         `,
         variables: {
           input: {
+            // @ts-expect-error STRICT_NULL_CHECK
             profileID: profile.internalID,
+            // @ts-expect-error STRICT_NULL_CHECK
             unfollow: profile.is_followed,
           },
         },
         optimisticResponse: {
           followProfile: {
             profile: {
+              // @ts-expect-error STRICT_NULL_CHECK
               id: profile.id,
+              // @ts-expect-error STRICT_NULL_CHECK
               is_followed: !profile.is_followed,
             },
           },
@@ -107,9 +117,12 @@ export class FollowProfileButton extends React.Component<Props> {
       })
       this.trackFollow()
     } else {
+      // @ts-expect-error STRICT_NULL_CHECK
       openAuthToFollowSave(mediator, {
         entity: {
+          // @ts-expect-error STRICT_NULL_CHECK
           name: profile.name,
+          // @ts-expect-error STRICT_NULL_CHECK
           slug: profile.slug,
         },
         contextModule,
@@ -125,12 +138,14 @@ export class FollowProfileButton extends React.Component<Props> {
     if (render) {
       return (
         <Clickable onClick={this.handleFollow} data-test="followButton">
+          {/* @ts-expect-error STRICT_NULL_CHECK */}
           {render(profile)}
         </Clickable>
       )
     } else {
       return (
         <FollowButton
+          // @ts-expect-error STRICT_NULL_CHECK
           isFollowed={profile && profile.is_followed}
           handleFollow={this.handleFollow}
           buttonProps={buttonProps}

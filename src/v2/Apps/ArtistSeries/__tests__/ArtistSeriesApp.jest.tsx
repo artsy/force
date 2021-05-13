@@ -63,7 +63,6 @@ describe("ArtistSeriesApp", () => {
 
       it("renders the correct components", async () => {
         const wrapper = await getWrapper()
-        expect(wrapper.find("AppContainer").length).toBe(4)
         expect(wrapper.find("ArtistSeriesMeta").length).toBe(1)
         expect(wrapper.find("ArtistSeriesHeader").length).toBe(1)
         expect(wrapper.find("ArtistSeriesArtworksFilter").length).toBe(1)
@@ -399,6 +398,7 @@ const ArtistSeriesAppFixture: ArtistSeriesApp_QueryRawResponse = {
 }
 
 const ArtistSeriesWithoutArtistAppFixture: ArtistSeriesApp_QueryRawResponse = {
+  // @ts-expect-error STRICT_NULL_CHECK
   artistSeries: {
     ...ArtistSeriesAppFixture.artistSeries,
     artists: [],

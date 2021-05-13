@@ -1,11 +1,9 @@
 import React from "react"
-import { AppContainer } from "v2/Apps/Components/AppContainer"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FeatureMetaFragmentContainer as FeatureMeta } from "./Components/FeatureMeta"
 import { FeatureHeaderFragmentContainer as FeatureHeader } from "./Components/FeatureHeader"
 import { FeatureApp_feature } from "v2/__generated__/FeatureApp_feature.graphql"
-import { Col, Grid, HTML, Join, Row, Spacer } from "@artsy/palette"
-import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
+import { Col, FullBleed, Grid, HTML, Join, Row, Spacer } from "@artsy/palette"
 import { FeatureSetFragmentContainer as FeatureSet } from "./Components/FeatureSet"
 
 interface FeatureAppProps {
@@ -19,34 +17,35 @@ const FeatureApp: React.FC<FeatureAppProps> = ({ feature }) => {
     <>
       <FeatureMeta feature={feature} />
 
-      <FeatureHeader feature={feature} />
+      <FullBleed>
+        <FeatureHeader feature={feature} />
+      </FullBleed>
 
-      <AppContainer>
-        <HorizontalPadding>
-          {(feature.description || feature.callout) && (
-            <Grid my={3} px={3}>
-              <Row>
-                <Col sm={8} mx="auto">
-                  <Join separator={<Spacer my={3} />}>
-                    {feature.description && (
-                      <HTML variant="text" html={feature.description} />
-                    )}
+      {(feature.description || feature.callout) && (
+        <Grid my={3} px={3}>
+          <Row>
+            <Col sm={8} mx="auto">
+              <Join separator={<Spacer my={3} />}>
+                {feature.description && (
+                  <HTML variant="text" html={feature.description} />
+                )}
 
-                    {feature.callout && (
-                      <HTML variant="title" html={feature.callout} />
-                    )}
-                  </Join>
-                </Col>
-              </Row>
-            </Grid>
-          )}
+                {feature.callout && (
+                  <HTML variant="title" html={feature.callout} />
+                )}
+              </Join>
+            </Col>
+          </Row>
+        </Grid>
+      )}
 
-          {feature.sets.edges.length > 0 &&
-            feature.sets.edges.map(
-              ({ node: set }) => set && <FeatureSet key={set.id} set={set} />
-            )}
-        </HorizontalPadding>
-      </AppContainer>
+      {/* @ts-expect-error STRICT_NULL_CHECK */}
+      {feature.sets.edges.length > 0 &&
+        // @ts-expect-error STRICT_NULL_CHECK
+        feature.sets.edges.map(
+          // @ts-expect-error STRICT_NULL_CHECK
+          ({ node: set }) => set && <FeatureSet key={set.id} set={set} />
+        )}
     </>
   )
 }

@@ -1,5 +1,4 @@
 import { Box, Col, Flex, Grid, Row } from "@artsy/palette"
-import { AppContainer } from "v2/Apps/Components/AppContainer"
 import React from "react"
 import { FilterSidebar } from "./FilterSidebar"
 import { GridItem } from "./GridItem"
@@ -7,7 +6,7 @@ import { Header } from "./Header"
 
 export const SearchResultsSkeleton: React.FC<any> = props => {
   return (
-    <AppContainer>
+    <>
       <Box style={{ minWidth: 320 }} mx={2}>
         <Header />
         <Flex>
@@ -34,6 +33,6 @@ export const SearchResultsSkeleton: React.FC<any> = props => {
           </Box>
         </Flex>
       </Box>
-    </AppContainer>
+    </>
   )
 }

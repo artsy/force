@@ -14,18 +14,24 @@ export const ShowInfoLocation: React.FC<ShowInfoLocationProps> = ({
   const location = show.location ?? show.fair?.location
 
   const lines = [
+    // @ts-expect-error STRICT_NULL_CHECK
     location.display,
+    // @ts-expect-error STRICT_NULL_CHECK
     location.address,
+    // @ts-expect-error STRICT_NULL_CHECK
     location.address2,
+    // @ts-expect-error STRICT_NULL_CHECK
     [location.city, location.state, location.country]
       .filter(Boolean)
       .join(", "),
+    // @ts-expect-error STRICT_NULL_CHECK
     location.summary,
   ].filter(Boolean)
 
   return (
     <Box {...rest}>
       {lines.map(line => (
+        // @ts-expect-error STRICT_NULL_CHECK
         <Text key={line}>{line}</Text>
       ))}
     </Box>

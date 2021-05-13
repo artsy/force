@@ -20,8 +20,11 @@ export const FairCard: React.FC<FairHeaderImageProps> = ({
     >
       {image && (
         <Image
+          // @ts-expect-error STRICT_NULL_CHECK
           src={image.cropped.src}
+          // @ts-expect-error STRICT_NULL_CHECK
           srcSet={image.cropped.srcSet}
+          // @ts-expect-error STRICT_NULL_CHECK
           alt={name}
           lazyLoad
           borderRadius={4}

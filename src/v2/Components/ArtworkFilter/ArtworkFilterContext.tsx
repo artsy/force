@@ -167,12 +167,18 @@ export const ArtworkFilterContext = React.createContext<
 >({
   filters: initialArtworkFilterState,
   hasFilters: false,
+  // @ts-expect-error STRICT_NULL_CHECK
   isDefaultValue: null,
+  // @ts-expect-error STRICT_NULL_CHECK
   rangeToTuple: null,
+  // @ts-expect-error STRICT_NULL_CHECK
   resetFilters: null,
+  // @ts-expect-error STRICT_NULL_CHECK
   setFilter: null,
   sortOptions: [],
+  // @ts-expect-error STRICT_NULL_CHECK
   unsetFilter: null,
+  // @ts-expect-error STRICT_NULL_CHECK
   ZeroState: null,
   mountedContext: false,
 })
@@ -304,6 +310,7 @@ export const ArtworkFilterContextProvider: React.FC<
     resetFilters: () => {
       const action: ArtworkFiltersAction = {
         type: "RESET",
+        // @ts-expect-error STRICT_NULL_CHECK
         payload: null,
       }
       dispatchOrStage(action)

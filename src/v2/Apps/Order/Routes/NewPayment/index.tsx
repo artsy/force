@@ -1,7 +1,6 @@
 import { NewPayment_me } from "v2/__generated__/NewPayment_me.graphql"
 import { NewPayment_order } from "v2/__generated__/NewPayment_order.graphql"
 import { NewPaymentRouteSetOrderPaymentMutation } from "v2/__generated__/NewPaymentRouteSetOrderPaymentMutation.graphql"
-import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "v2/Apps/Order/Components/ArtworkSummaryItem"
 import { OrderStepper } from "v2/Apps/Order/Components/OrderStepper"
 import { TransactionDetailsSummaryItemFragmentContainer as TransactionDetailsSummaryItem } from "v2/Apps/Order/Components/TransactionDetailsSummaryItem"
@@ -69,6 +68,7 @@ export class NewPaymentRoute extends Component<
   onContinue = async () => {
     try {
       this.setState({ isGettingCreditCardId: true })
+      // @ts-expect-error STRICT_NULL_CHECK
       const result = await this.paymentPicker.current.getCreditCardId()
       this.setState({ isGettingCreditCardId: false })
 
@@ -93,10 +93,12 @@ export class NewPaymentRoute extends Component<
         return
       }
 
+      // @ts-expect-error STRICT_NULL_CHECK
       const orderOrError = (
         await this.fixFailedPayment({
           input: {
             creditCardId: result.creditCardId,
+            // @ts-expect-error STRICT_NULL_CHECK
             offerId: this.props.order.lastOffer.internalID,
           },
         })
@@ -140,70 +142,68 @@ export class NewPaymentRoute extends Component<
 
     return (
       <>
-        <HorizontalPadding px={[0, 4]}>
-          <Row>
-            <Col>
-              <OrderStepper currentStep="Payment" steps={["Payment"]} />
-            </Col>
-          </Row>
-        </HorizontalPadding>
-        <HorizontalPadding>
-          <TwoColumnLayout
-            Content={
-              <Flex
-                flexDirection="column"
-                style={isLoading ? { pointerEvents: "none" } : {}}
-              >
-                {order.mode === "OFFER" && (
-                  <>
-                    <Flex>
-                      <CountdownTimer
-                        action="Submit new payment"
-                        note="Expiration will end negotiations on this offer. Keep in mind the work can be sold to another buyer in the meantime."
-                        countdownStart={order.lastOffer.createdAt}
-                        countdownEnd={order.stateExpiresAt}
-                      />
-                    </Flex>
-                    <Spacer mb={[2, 3]} />
-                  </>
-                )}
-                <Join separator={<Spacer mb={3} />}>
-                  <PaymentPickerFragmentContainer
-                    order={order}
-                    me={this.props.me}
-                    commitMutation={this.props.commitMutation}
-                    innerRef={this.paymentPicker}
+        <Row>
+          <Col>
+            <OrderStepper currentStep="Payment" steps={["Payment"]} />
+          </Col>
+        </Row>
+        <TwoColumnLayout
+          Content={
+            <Flex
+              flexDirection="column"
+              style={isLoading ? { pointerEvents: "none" } : {}}
+            >
+              {order.mode === "OFFER" && (
+                <>
+                  <Flex>
+                    <CountdownTimer
+                      action="Submit new payment"
+                      note="Expiration will end negotiations on this offer. Keep in mind the work can be sold to another buyer in the meantime."
+                      // @ts-expect-error STRICT_NULL_CHECK
+                      countdownStart={order.lastOffer.createdAt}
+                      // @ts-expect-error STRICT_NULL_CHECK
+                      countdownEnd={order.stateExpiresAt}
+                    />
+                  </Flex>
+                  <Spacer mb={[2, 3]} />
+                </>
+              )}
+              <Join separator={<Spacer mb={3} />}>
+                <PaymentPickerFragmentContainer
+                  order={order}
+                  me={this.props.me}
+                  commitMutation={this.props.commitMutation}
+                  innerRef={this.paymentPicker}
+                />
+                <Media greaterThan="xs">
+                  <ContinueButton
+                    onClick={this.onContinue}
+                    loading={isLoading}
                   />
-                  <Media greaterThan="xs">
-                    <ContinueButton
-                      onClick={this.onContinue}
-                      loading={isLoading}
-                    />
-                  </Media>
-                </Join>
-              </Flex>
-            }
-            Sidebar={
-              <Flex flexDirection="column">
-                <Flex flexDirection="column">
-                  <ArtworkSummaryItem order={order} />
-                  <TransactionDetailsSummaryItem order={order} />
-                </Flex>
-                <BuyerGuarantee />
-                <Spacer mb={[2, 3]} />
-                <Media at="xs">
-                  <>
-                    <Spacer mb={3} />
-                    <ContinueButton
-                      onClick={this.onContinue}
-                      loading={isLoading}
-                    />
-                  </>
                 </Media>
+              </Join>
+            </Flex>
+          }
+          Sidebar={
+            <Flex flexDirection="column">
+              <Flex flexDirection="column">
+                <ArtworkSummaryItem order={order} />
+                <TransactionDetailsSummaryItem order={order} />
               </Flex>
-            }
-          />
-        </HorizontalPadding>
+              <BuyerGuarantee />
+              <Spacer mb={[2, 3]} />
+              <Media at="xs">
+                <>
+                  <Spacer mb={3} />
+                  <ContinueButton
+                    onClick={this.onContinue}
+                    loading={isLoading}
+                  />
+                </>
+              </Media>
+            </Flex>
+          }
+        />
       </>
     )
   }
@@ -285,6 +285,7 @@ export class NewPaymentRoute extends Component<
   artistId() {
     return get(
       this.props.order,
+      // @ts-expect-error STRICT_NULL_CHECK
       o => o.lineItems.edges[0].node.artwork.artists[0].slug
     )
   }
@@ -299,7 +300,9 @@ export class NewPaymentRoute extends Component<
 }
 
 export const NewPaymentFragmentContainer = createFragmentContainer(
-  createStripeWrapper(injectCommitMutation(injectDialog(NewPaymentRoute)) as any),
+  createStripeWrapper(
+    injectCommitMutation(injectDialog(NewPaymentRoute)) as any
+  ),
   {
     me: graphql`
       fragment NewPayment_me on Me {

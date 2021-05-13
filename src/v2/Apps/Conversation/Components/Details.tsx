@@ -90,7 +90,9 @@ export const Details: FC<DetailsProps> = ({
     conversation.items?.[0]?.item?.__typename !== "%other" &&
     conversation.items?.[0]?.item
 
+  // @ts-expect-error STRICT_NULL_CHECK
   const attachments = conversation.messagesConnection.edges
+    // @ts-expect-error STRICT_NULL_CHECK
     .map(({ node }) => node.attachments)
     .filter(attachments => attachments.length > 0)
     .reduce((previous, current) => previous.concat(current), [])
@@ -161,6 +163,7 @@ export const Details: FC<DetailsProps> = ({
         px={2}
         py={1}
         name={conversation.to.name}
+        // @ts-expect-error STRICT_NULL_CHECK
         initials={conversation.to.initials}
       />
       {item && (
@@ -171,8 +174,10 @@ export const Details: FC<DetailsProps> = ({
               {item.__typename}
             </Sans>
             <Flex>
+              {/* @ts-expect-error STRICT_NULL_CHECK */}
               <a href={item.href}>
                 <Box height="80px" width="80px">
+                  {/* @ts-expect-error STRICT_NULL_CHECK */}
                   <ResponsiveImage src={item.image.thumbnailUrl} />
                 </Box>
               </a>

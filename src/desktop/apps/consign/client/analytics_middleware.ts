@@ -12,6 +12,7 @@ const analyticsMiddleware = store => next => action => {
     }
 
     case actions.SUBMISSION_CREATED: {
+      // @ts-expect-error STRICT_NULL_CHECK
       window.analytics.track("consignment_submitted", {
         contextPath: nextState.submissionFlow.contextPath,
         submissionId: action.payload.submissionId,
@@ -25,6 +26,7 @@ const analyticsMiddleware = store => next => action => {
     case actions.SUBMISSION_COMPLETED: {
       const submissionId = nextState.submissionFlow.submission.id
       const assetIds = nextState.submissionFlow.assetIds
+      // @ts-expect-error STRICT_NULL_CHECK
       window.analytics.track("consignment_asset_uploaded", {
         submissionId,
         assetIds,
@@ -43,6 +45,7 @@ const analyticsMiddleware = store => next => action => {
         errors = "Error completing submission"
       }
 
+      // @ts-expect-error STRICT_NULL_CHECK
       window.analytics.track("consignment_failed_to_submit", {
         type: errorType,
         errors,
@@ -51,6 +54,7 @@ const analyticsMiddleware = store => next => action => {
     }
     case actions.SUBMIT_ARTIST: {
       const artistId = nextState.submissionFlow.inputs.artist_id
+      // @ts-expect-error STRICT_NULL_CHECK
       window.analytics.track("consignment_artist_confirmed", {
         artist_id: artistId,
       })

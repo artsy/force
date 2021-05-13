@@ -26,6 +26,7 @@ export function useMatchMedia(
 
   useEffect(() => {
     const mediaQueryList = window.matchMedia(mediaQueryString)
+    // @ts-expect-error STRICT_NULL_CHECK
     setMatches(mediaQueryList.matches)
     const handleChange = event => setMatches(event.matches)
 

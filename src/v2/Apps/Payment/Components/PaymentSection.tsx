@@ -18,6 +18,7 @@ interface PaymentSectionProps extends SystemContextProps {
 
 export const PaymentSection: React.FC<PaymentSectionProps> = props => {
   const creditCardEdges = props.me?.creditCards?.edges ?? []
+  // @ts-expect-error STRICT_NULL_CHECK
   const creditCards = creditCardEdges.map(({ node: creditCard }) => {
     return creditCard
   })
@@ -47,6 +48,7 @@ export const PaymentSection: React.FC<PaymentSectionProps> = props => {
           <PaymentModal
             show={showPaymentModal}
             closeModal={() => setShowPatymentModal(false)}
+            // @ts-expect-error STRICT_NULL_CHECK
             relay={props.relay}
             me={props.me}
           />

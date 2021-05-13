@@ -27,6 +27,7 @@ describe("NavBar", () => {
 
   const getWrapper = ({ user = null, isEigen = false } = {}) => {
     return mount(
+      // @ts-expect-error STRICT_NULL_CHECK
       <SystemContextProvider user={user} isEigen={isEigen}>
         <NavBar />
       </SystemContextProvider>
@@ -109,6 +110,7 @@ describe("NavBar", () => {
     })
 
     it("renders logged in items", () => {
+      // @ts-expect-error STRICT_NULL_CHECK
       const wrapper = getWrapper({ user: true })
       expect(wrapper.html()).not.toContain("Log in")
       expect(wrapper.html()).not.toContain("Sign up")
@@ -119,6 +121,7 @@ describe("NavBar", () => {
     describe("lab features", () => {
       it("shows inquiries icon if lab feature enabled", () => {
         const wrapper = getWrapper({
+          // @ts-expect-error STRICT_NULL_CHECK
           user: { type: "NotAdmin", lab_features: ["User Conversations View"] },
         })
         expect(wrapper.find(EnvelopeIcon).length).toEqual(1)
@@ -177,6 +180,7 @@ describe("NavBar", () => {
 
     it("shows InboxNotificationCount when there are conversations", () => {
       const wrapper = getWrapper({
+        // @ts-expect-error STRICT_NULL_CHECK
         user: { type: "NotAdmin", lab_features: ["User Conversations View"] },
       })
       expect(wrapper.find(InboxNotificationCount).length).toBe(1)

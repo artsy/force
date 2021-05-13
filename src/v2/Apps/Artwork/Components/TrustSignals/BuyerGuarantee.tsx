@@ -10,6 +10,7 @@ interface Props {
   artwork: BuyerGuarantee_artwork
 }
 
+// @ts-expect-error STRICT_NULL_CHECK
 const BuyerGuarantee: React.FC<Props> = props => {
   const { artwork } = props
   return (

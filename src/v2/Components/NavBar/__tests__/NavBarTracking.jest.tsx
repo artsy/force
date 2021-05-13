@@ -125,6 +125,7 @@ describe("NavBarTracking", () => {
   describe("Mobile", () => {
     it("tracks show mobile menu hamburger button clicks", () => {
       const wrapper = mount(
+        // @ts-expect-error STRICT_NULL_CHECK
         <Wrapper user={null}>
           <NavBar />
         </Wrapper>

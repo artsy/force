@@ -1,6 +1,7 @@
 import { RelaySSREnvironment } from "v2/Artsy/Relay/createRelaySSREnvironment"
-import { FarceCreateRouterArgs, RouteConfig } from "found"
+import { FarceCreateRouterArgs } from "found"
 import { SystemContextProps } from "../SystemContext"
+import { AppRouteConfig } from "./Route"
 
 export { Link } from "found"
 export { Boot } from "./Boot"
@@ -35,7 +36,7 @@ export interface RouterConfig {
   /**
    * Array of routes to be passed to Found
    */
-  routes: RouteConfig[]
+  routes: AppRouteConfig[]
 
   /**
    * URL passed from server

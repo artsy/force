@@ -26,5 +26,6 @@ it("returns an offset between current time and system time", async () => {
 
   jest.runAllTicks()
 
+  // @ts-expect-error STRICT_NULL_CHECK
   expect(await getOffsetBetweenGravityClock(null)).toEqual(10 * MINUTES)
 })

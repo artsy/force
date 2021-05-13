@@ -41,6 +41,7 @@ const FairArtworksFilter: React.FC<FairArtworksFilterProps> = props => {
   // we still want to render the rest of the page.
   if (!hasFilter) return null
 
+  // @ts-expect-error STRICT_NULL_CHECK
   const { counts } = filtered_artworks
   const showNewFilters = getENV("ENABLE_NEW_ARTWORK_FILTERS")
 
@@ -82,11 +83,12 @@ const FairArtworksFilter: React.FC<FairArtworksFilterProps> = props => {
       ]}
       onChange={updateUrl}
       aggregations={
+        // @ts-expect-error STRICT_NULL_CHECK
         sidebarAggregations.aggregations as SharedArtworkFilterContextProps["aggregations"]
       }
     >
       <BaseArtworkFilter
-        mt={[0, "-1px"]}
+        mt={6}
         relay={relay}
         viewer={fair}
         Filters={Filters}

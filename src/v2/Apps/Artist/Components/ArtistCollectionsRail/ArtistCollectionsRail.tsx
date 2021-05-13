@@ -15,6 +15,7 @@ interface ArtistCollectionsRailProps {
   collections: ArtistCollectionsRail_collections
 }
 
+// @ts-expect-error STRICT_NULL_CHECK
 @track(null, {
   dispatch: data => Events.postEvent(data),
 })

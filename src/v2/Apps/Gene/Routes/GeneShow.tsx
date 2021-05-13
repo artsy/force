@@ -1,4 +1,4 @@
-import { Column, GridColumns, HTML, Text } from "@artsy/palette"
+import { Column, GridColumns, HTML, Spacer, Text } from "@artsy/palette"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
@@ -32,9 +32,9 @@ export const GeneShow: React.FC<GeneShowProps> = ({ gene }) => {
           <Text as="h2" variant="xs" textTransform="uppercase" mb={1}>
             About
           </Text>
-
+          {/* @ts-expect-error STRICT_NULL_CHECK */}
           <HTML variant="sm" mb={2} html={gene.formattedDescription} />
-
+          {/* @ts-expect-error STRICT_NULL_CHECK */}
           {gene.similar?.edges.length > 0 && (
             <>
               <Text as="h2" variant="xs" textTransform="uppercase" mb={1}>
@@ -42,10 +42,12 @@ export const GeneShow: React.FC<GeneShowProps> = ({ gene }) => {
               </Text>
 
               <Text variant="sm" mb={2}>
+                {/* @ts-expect-error STRICT_NULL_CHECK */}
                 {gene.similar.edges.map(({ node }, i) => {
                   return (
                     <React.Fragment key={node.internalID}>
                       <RouterLink to={node.href}>{node.name}</RouterLink>
+                      {/* @ts-expect-error STRICT_NULL_CHECK */}
                       {i !== gene.similar.edges.length - 1 && ", "}
                     </React.Fragment>
                   )
@@ -53,7 +55,7 @@ export const GeneShow: React.FC<GeneShowProps> = ({ gene }) => {
               </Text>
             </>
           )}
-
+          {/* @ts-expect-error STRICT_NULL_CHECK */}
           {gene.artistsConnection?.edges.length > 0 && (
             <>
               <Text as="h2" variant="xs" textTransform="uppercase" mb={1}>
@@ -61,10 +63,12 @@ export const GeneShow: React.FC<GeneShowProps> = ({ gene }) => {
               </Text>
 
               <Text variant="sm">
+                {/* @ts-expect-error STRICT_NULL_CHECK */}
                 {gene.artistsConnection.edges.map(({ node }, i) => {
                   return (
                     <React.Fragment key={node.internalID}>
                       <RouterLink to={node.href}>{node.name}</RouterLink>
+                      {/* @ts-expect-error STRICT_NULL_CHECK */}
                       {i !== gene.artistsConnection.edges.length - 1 && ", "}
                     </React.Fragment>
                   )
@@ -74,6 +78,8 @@ export const GeneShow: React.FC<GeneShowProps> = ({ gene }) => {
           )}
         </Column>
       </GridColumns>
+
+      <Spacer mt={12} />
 
       <GeneArtworkFilterRefetchContainer gene={gene} />
     </>

@@ -79,10 +79,14 @@ export class PricingContext extends React.Component<PricingContextProps> {
     }
 
     const priceCents =
+      // @ts-expect-error STRICT_NULL_CHECK
       artwork.listPrice.__typename === "PriceRange"
-        ? artwork.listPrice.maxPrice.minor || artwork.listPrice.minPrice.minor
-        : artwork.listPrice.__typename === "Money"
-        ? artwork.listPrice.minor
+        ? // @ts-expect-error STRICT_NULL_CHECK
+          artwork.listPrice.maxPrice.minor || artwork.listPrice.minPrice.minor
+        : // @ts-expect-error STRICT_NULL_CHECK
+        artwork.listPrice.__typename === "Money"
+        ? // @ts-expect-error STRICT_NULL_CHECK
+          artwork.listPrice.minor
         : 0
 
     const artworkFallsBeforeFirstBin =
@@ -92,6 +96,7 @@ export class PricingContext extends React.Component<PricingContextProps> {
       artwork.pricingContext.bins[artwork.pricingContext.bins.length - 1]
         .maxPriceCents
 
+    // @ts-expect-error STRICT_NULL_CHECK
     const artistId = artwork.artists[0].slug
     return (
       <BorderBox mb={2} flexDirection="column">
@@ -125,6 +130,7 @@ export class PricingContext extends React.Component<PricingContextProps> {
           bars={artwork.pricingContext.bins.map(
             (bin, index): BarDescriptor => {
               const isFirstBin = index === 0
+              // @ts-expect-error STRICT_NULL_CHECK
               const isLastBin = index === artwork.pricingContext.bins.length - 1
               const title = isLastBin
                 ? `${bin.minPrice}+`

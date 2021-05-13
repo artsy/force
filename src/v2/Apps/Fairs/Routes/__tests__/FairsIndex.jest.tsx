@@ -11,6 +11,7 @@ const { getWrapper } = setupTestWrapper<FairsIndex_Test_Query>({
   Component: props => {
     return (
       <MockBoot>
+        {/* @ts-expect-error STRICT_NULL_CHECK */}
         <FairsIndexFragmentContainer {...props} />
       </MockBoot>
     )

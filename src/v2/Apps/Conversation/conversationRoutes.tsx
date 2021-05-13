@@ -1,11 +1,12 @@
 import loadable from "@loadable/component"
-import { RouteConfig } from "found"
+import { AppRouteConfig } from "v2/Artsy/Router/Route"
 import { graphql } from "react-relay"
 
-export const conversationRoutes: RouteConfig[] = [
+export const conversationRoutes: AppRouteConfig[] = [
   {
     path: "/user/conversations",
     displayFullPage: true,
+    hideFooter: true,
     getComponent: () =>
       loadable(() => import("./ConversationApp"), {
         resolveComponent: component =>
@@ -30,6 +31,7 @@ export const conversationRoutes: RouteConfig[] = [
   {
     path: "/user/conversations/:conversationID",
     displayFullPage: true,
+    hideFooter: true,
     Component: loadable(() => import("./Routes/Conversation"), {
       resolveComponent: component => component.ConversationPaginationContainer,
     }),

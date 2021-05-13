@@ -1,5 +1,4 @@
 import React from "react"
-import { AppContainer } from "v2/Apps/Components/AppContainer"
 import { ConsignMeta } from "./Components/ConsignMeta"
 import { Header } from "./Components/Header"
 import { SellArtDifferently } from "./Components/SellArtDifferently"
@@ -20,7 +19,7 @@ export const MarketingLandingApp = () => {
     <>
       <ConsignMeta />
 
-      <AppContainer maxWidth="100%">
+      <>
         <Header />
         <TemporaryOffer />
         <SellArtDifferently />
@@ -36,7 +35,7 @@ export const MarketingLandingApp = () => {
         <SectionContainer py={0}>
           <Footer mt={0} borderTop={0} />
         </SectionContainer>
-      </AppContainer>
+      </>
     </>
   )
 }

@@ -189,6 +189,7 @@ export const BackLink: React.FC = () => {
           flow: "Header",
           subject: "Back link",
         })
+        // @ts-expect-error STRICT_NULL_CHECK
         pop()
       }}
       width="30px"
@@ -212,8 +213,10 @@ export const BackLink: React.FC = () => {
 const useTrackingContextModule = () => {
   const { path } = useNavigation()
   let contextModule
+  // @ts-expect-error STRICT_NULL_CHECK
   if (path[0] === "Artworks") {
     contextModule = AnalyticsSchema.ContextModule.HeaderArtworksDropdown
+    // @ts-expect-error STRICT_NULL_CHECK
   } else if (path[0] === "Artists") {
     contextModule = AnalyticsSchema.ContextModule.HeaderArtistsDropdown
   } else {
@@ -263,6 +266,7 @@ export const MobileSubmenuLink: React.FC<any> = ({ children, menu }) => {
           cursor: "pointer",
         }}
         onClick={() => {
+          // @ts-expect-error STRICT_NULL_CHECK
           push(menu.title)
           trackEvent({
             action_type: AnalyticsSchema.ActionType.Click,
@@ -285,6 +289,7 @@ export const MobileSubmenuLink: React.FC<any> = ({ children, menu }) => {
         />
       </Flex>
       <Menu
+        // @ts-expect-error STRICT_NULL_CHECK
         isOpen={path.includes(menu.title)}
         title={menu.title}
         links={menu.links}
@@ -327,6 +332,7 @@ export const MobileMenuText: React.FC<MobileMenuTextProps> = ({
   ...props
 }) => {
   return (
+    // @ts-expect-error STRICT_NULL_CHECK
     <Text variant="title" color={color(linkColor)} {...props}>
       {children}
     </Text>

@@ -156,6 +156,7 @@ export class Wizard extends React.Component<WizardProps, WizardState> {
     return (
       <Formik
         initialValues={initialValues}
+        // @ts-expect-error STRICT_NULL_CHECK
         validate={validate}
         validationSchema={validationSchema}
         validateOnChange={false}

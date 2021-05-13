@@ -27,6 +27,7 @@ const render = (
 ) =>
   renderRelayTree({
     Component: (props: OfferHistoryItemTestQueryResponse) => (
+      // @ts-expect-error STRICT_NULL_CHECK
       <OfferHistoryItem {...extraComponentProps} {...props} />
     ),
     mockData: {

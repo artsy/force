@@ -1,5 +1,4 @@
 import { Flex } from "@artsy/palette"
-import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
 import React from "react"
 import { LazyLoadComponent } from "react-lazy-load-image-component"
 
@@ -9,18 +8,17 @@ export interface Props {
   name?: string
 }
 
-export const FrameWithRecentlyViewed: React.SFC<Props> = ({ children }) => {
+export const FrameWithRecentlyViewed: React.FC<Props> = ({ children }) => {
   return (
-    <HorizontalPadding>
-      <Flex flexDirection="column">
-        {children}
+    <Flex flexDirection="column">
+      {children}
 
-        {typeof window !== "undefined" && (
-          <LazyLoadComponent threshold={1000}>
-            <RecentlyViewed />
-          </LazyLoadComponent>
-        )}
-      </Flex>
-    </HorizontalPadding>
+      {/* TODO */}
+      {typeof window !== "undefined" && (
+        <LazyLoadComponent threshold={1000}>
+          <RecentlyViewed />
+        </LazyLoadComponent>
+      )}
+    </Flex>
   )
 }

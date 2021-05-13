@@ -8,12 +8,16 @@ import {
 } from "v2/__generated__/UpdateUserAddressMutation.graphql"
 import { NEW_ADDRESS } from "../Components/SavedAddresses"
 
+// @ts-expect-error STRICT_NULL_CHECK
 export type SavedAddressType = Shipping_me["addressConnection"]["edges"][number]["node"]
 
 export const defaultShippingAddressIndex = (me: Shipping_me): string => {
+  // @ts-expect-error STRICT_NULL_CHECK
   const addressList = me.addressConnection.edges
+  // @ts-expect-error STRICT_NULL_CHECK
   if (addressList.length > 0) {
     const defaultAddressIndex =
+      // @ts-expect-error STRICT_NULL_CHECK
       addressList.findIndex(address => address.node.isDefault) || 0
     return String(defaultAddressIndex)
   } else {
@@ -32,6 +36,7 @@ export const startingPhoneNumber = (me: Shipping_me, order: Shipping_order) => {
 export const startingAddress = (me: Shipping_me, order: Shipping_order) => {
   const initialAddress = {
     ...emptyAddress,
+    // @ts-expect-error STRICT_NULL_CHECK
     country: order.lineItems.edges[0].node.artwork.shippingCountry,
 
     // We need to pull out _only_ the values specified by the Address type,
@@ -42,6 +47,7 @@ export const startingAddress = (me: Shipping_me, order: Shipping_order) => {
   return initialAddress
 }
 
+// @ts-expect-error STRICT_NULL_CHECK
 type MutationAddressResponse = UpdateUserAddressMutationResponse["updateUserAddress"]["userAddressOrErrors"]
 
 // Gravity address has isDefault and addressLine3 but exchange does not

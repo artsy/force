@@ -1,8 +1,10 @@
+import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import { Text } from "@artsy/palette"
 import { ArtistBio_bio } from "v2/__generated__/ArtistBio_bio.graphql"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
+import { data as sd } from "sharify"
 
 export interface ArtistBioProps {
   bio: ArtistBio_bio
@@ -12,15 +14,28 @@ export interface ArtistBioProps {
 
 export class ArtistBio extends React.Component<ArtistBioProps> {
   render() {
-    const { bio } = this.props
+    // @ts-expect-error STRICT_NULL_CHECK
+    const { credit, partnerID, text } = this.props.bio.biographyBlurb
+    const showCredit = Boolean(credit)
+    const partnerHref = `${sd.APP_URL}/${partnerID}`
+
     return (
-      <Text variant="text">
-        <BioSpan
-          dangerouslySetInnerHTML={{
-            __html: bio.biographyBlurb.text,
-          }}
-        />
-      </Text>
+      <>
+        {showCredit && (
+          <Text pb={1} variant="text">
+            <em>
+              <RouterLink to={partnerHref}>{credit}</RouterLink>
+            </em>
+          </Text>
+        )}
+        <Text variant="text">
+          <BioSpan
+            dangerouslySetInnerHTML={{
+              __html: text,
+            }}
+          />
+        </Text>
+      </>
     )
   }
 }
@@ -29,6 +44,8 @@ export const ArtistBioFragmentContainer = createFragmentContainer(ArtistBio, {
   bio: graphql`
     fragment ArtistBio_bio on Artist {
       biographyBlurb: biographyBlurb(format: HTML, partnerBio: true) {
+        credit
+        partnerID
         text
       }
     }

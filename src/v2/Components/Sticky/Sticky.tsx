@@ -1,43 +1,10 @@
-import styled, { css } from "styled-components"
-import { Box, color } from "@artsy/palette"
+import styled from "styled-components"
+import { Box } from "@artsy/palette"
 import React, { useEffect, useRef, useState } from "react"
 import { NAV_BAR_HEIGHT, MOBILE_NAV_HEIGHT } from "v2/Components/NavBar"
+import { useSticky } from "./StickyProvider"
 
-export interface BaseContainerProps {
-  stuck?: boolean
-}
-
-export const Container = styled(Box).attrs({
-  bg: "white100",
-  top: [MOBILE_NAV_HEIGHT, NAV_BAR_HEIGHT],
-})<BaseContainerProps>`
-  z-index: 1;
-  left: 0;
-  right: 0;
-
-  ${({ stuck }) =>
-    stuck
-      ? css`
-          position: fixed;
-          border-bottom-color: ${color("black10")};
-        `
-      : css`
-          position: static;
-          border-bottom-color: transparent;
-        `};
-`
-
-// This <div> is positioned such that when it leaves the top of
-// the browser the <Container> reaches it's `top` value and sticking.
-const Sentinel = styled(Box).attrs({
-  top: [-MOBILE_NAV_HEIGHT, -NAV_BAR_HEIGHT],
-})`
-  position: relative;
-  width: 100%;
-  height: 0;
-`
-
-export const StickyContainer: React.FC = ({ children }) => {
+export const Sticky: React.FC = ({ children }) => {
   const sentinelRef = useRef<HTMLDivElement | null>(null)
   const containerRef = useRef<HTMLDivElement | null>(null)
 
@@ -72,18 +39,46 @@ export const StickyContainer: React.FC = ({ children }) => {
     }
   }, [])
 
+  const { offsetTop, registerSticky } = useSticky()
+
+  useEffect(() => {
+    registerSticky(containerRef.current?.clientHeight)
+  }, [registerSticky])
+
   return (
     <>
-      <Sentinel ref={sentinelRef as any} />
+      <Sentinel
+        ref={sentinelRef as any}
+        top={[-(MOBILE_NAV_HEIGHT + offsetTop), -(NAV_BAR_HEIGHT + offsetTop)]}
+      />
 
-      <Container ref={containerRef as any} stuck={stuck}>
+      <Container
+        ref={containerRef as any}
+        bg="white100"
+        position={stuck ? "fixed" : "static"}
+        top={[MOBILE_NAV_HEIGHT + offsetTop, NAV_BAR_HEIGHT + offsetTop]}
+      >
         {typeof children === "function" ? children({ stuck }) : children}
       </Container>
 
       {stuck && (
         // Insert placeholder the same height as the container to prevent scroll from changing
-        <div style={{ height: containerRef.current?.offsetHeight }} />
+        <div style={{ height: containerRef.current?.clientHeight }} />
       )}
     </>
   )
 }
+
+export const Container = styled(Box)`
+  z-index: 1;
+  left: 0;
+  right: 0;
+`
+
+// This <div> is positioned such that when it leaves the top of
+// the browser the <Container> reaches it's `top` value and sticking.
+const Sentinel = styled(Box)`
+  position: relative;
+  width: 100%;
+  height: 0;
+`

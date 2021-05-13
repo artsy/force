@@ -28,7 +28,7 @@ export type ShowApp_show = {
             } | null> | null;
         } | null> | null;
     } | null;
-    readonly " $fragmentRefs": FragmentRefs<"ShowContextualLink_show" | "ShowHeader_show" | "ShowAbout_show" | "ShowMeta_show" | "ShowInstallShots_show" | "ShowViewingRoom_show" | "ShowArtworksEmptyState_show" | "ShowArtworks_show" | "ShowContextCard_show">;
+    readonly " $fragmentRefs": FragmentRefs<"ShowHeader_show" | "ShowAbout_show" | "ShowMeta_show" | "ShowInstallShots_show" | "ShowViewingRoom_show" | "ShowArtworksEmptyState_show" | "ShowArtworks_show" | "ShowContextCard_show">;
     readonly " $refType": "ShowApp_show";
 };
 export type ShowApp_show$data = ShowApp_show;
@@ -211,11 +211,6 @@ return {
     {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "ShowContextualLink_show"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
       "name": "ShowHeader_show"
     },
     {
@@ -263,5 +258,5 @@ return {
   "type": "Show"
 };
 })();
-(node as any).hash = '4e60b05ef155ee2feffc18782e66b084';
+(node as any).hash = 'd6a71468cc1ef2473f3eb35968b33b4d';
 export default node;

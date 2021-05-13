@@ -6,6 +6,7 @@ export const useRailOverflow = (
   callback: (val: boolean) => void
 ) => {
   const { width: viewportWidth } = useWindowSize()
+  // @ts-expect-error STRICT_NULL_CHECK
   const [showMore, setShowMore] = useState<boolean>(undefined)
 
   useEffect(() => {

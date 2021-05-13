@@ -4,12 +4,14 @@ import {
   Image,
   ModalBase,
   ResponsiveBox,
+  Shelf,
   Text,
 } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { Carousel, CarouselProps } from "v2/Components/Carousel"
+import { CarouselProps } from "v2/Components/Carousel"
 import { ShowInstallShots_show } from "v2/__generated__/ShowInstallShots_show.graphql"
 
+// @ts-expect-error STRICT_NULL_CHECK
 type InstallShot = ShowInstallShots_show["images"][number]
 
 interface ShowInstallShotsProps extends Omit<CarouselProps, "children"> {
@@ -30,43 +32,54 @@ export const ShowInstallShots: React.FC<ShowInstallShotsProps> = ({
     selectImage(null)
   }
 
+  // @ts-expect-error STRICT_NULL_CHECK
   if (show.images.length === 0) return null
 
   return (
     <>
-      <Carousel {...rest}>
+      <Shelf showProgress={false} alignItems="flex-end">
+        {/* @ts-expect-error STRICT_NULL_CHECK */}
         {show.images.map((image, i) => {
           return (
             <Clickable
+              // @ts-expect-error STRICT_NULL_CHECK
               key={image.internalID}
               onClick={handleOpen(image)}
               display="block"
             >
               <Image
+                // @ts-expect-error STRICT_NULL_CHECK
                 src={image.desktop.src}
+                // @ts-expect-error STRICT_NULL_CHECK
                 srcSet={image.desktop.srcSet}
+                // @ts-expect-error STRICT_NULL_CHECK
                 width={[image.mobile.width, image.desktop.width]}
-                height={[image.mobile.height, image.desktop.height]}
+                maxHeight={[300, 480]}
+                style={{ objectFit: "contain" }}
                 alt={`${show.name}, installation view`}
-                lazyLoad={i > 2}
               />
 
+              {/* @ts-expect-error STRICT_NULL_CHECK */}
               {image.caption && (
                 <Text
+                  variant="xs"
                   mt={1}
                   color="black60"
                   textAlign="left"
-                  maxWidth={image.desktop.width}
+                  // @ts-expect-error STRICT_NULL_CHECK
+                  width={image.desktop.width}
+                  // @ts-expect-error STRICT_NULL_CHECK
                   title={image.caption}
                   overflowEllipsis
                 >
+                  {/* @ts-expect-error STRICT_NULL_CHECK */}
                   {image.caption}
                 </Text>
               )}
             </Clickable>
           )
         })}
-      </Carousel>
+      </Shelf>
       {selectedImage !== null && (
         <ModalBase
           onClose={handleClose}
@@ -116,11 +129,11 @@ export const ShowInstallShotsFragmentContainer = createFragmentContainer(
         images(default: false, size: 100) {
           internalID
           caption
-          mobile: resized(height: 300) {
+          mobile: resized(width: 200) {
             width
             height
           }
-          desktop: resized(height: 400, version: ["larger", "large"]) {
+          desktop: resized(width: 325) {
             src
             srcSet
             width

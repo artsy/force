@@ -1,5 +1,5 @@
 import React from "react"
-import { PartnerArtistDetailsPlaceholder } from "./PartnerArtistDetailsPlaceholder"
+import { PartnerArtistDetailsPlaceholder } from "../PartnerArtistDetails"
 
 export interface PartnerArtistDetailsListPlaceholderProps {
   count: number

@@ -120,6 +120,7 @@ export class FormSwitcher extends React.Component<FormSwitcherProps, State> {
 
   getAfterSignupAction = (options: ModalOptions): AfterSignUpAction => {
     const { afterSignUpAction, action, kind, objectId } = options
+    // @ts-expect-error STRICT_NULL_CHECK
     return (
       afterSignUpAction || {
         action,
@@ -139,6 +140,7 @@ export class FormSwitcher extends React.Component<FormSwitcherProps, State> {
       email = qs.parse(searchQuery).email as string
     }
 
+    // @ts-expect-error STRICT_NULL_CHECK
     return email || values.email || ""
   }
 
@@ -186,9 +188,12 @@ export class FormSwitcher extends React.Component<FormSwitcherProps, State> {
     const { handleSubmit, onBackButtonClicked, values } = this.props
 
     const defaultValues = {
+      // @ts-expect-error STRICT_NULL_CHECK
       accepted_terms_of_service: values.accepted_terms_of_service || false,
       email: this.getEmailValue(),
+      // @ts-expect-error STRICT_NULL_CHECK
       name: values.name || "",
+      // @ts-expect-error STRICT_NULL_CHECK
       password: values.password || "",
     }
 

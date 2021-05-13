@@ -10,6 +10,7 @@ export const CreateBackupSecondFactors = (environment: Environment) => {
     async (resolve, reject) => {
       commitMutation<CreateBackupSecondFactorsMutation>(environment, {
         onCompleted: data => {
+          // @ts-expect-error STRICT_NULL_CHECK
           const response = data.createBackupSecondFactors.secondFactorsOrErrors
 
           switch (response.__typename) {

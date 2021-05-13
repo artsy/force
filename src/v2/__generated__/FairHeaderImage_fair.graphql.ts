@@ -5,18 +5,7 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type FairHeaderImage_fair = {
     readonly image: {
-        readonly sm: {
-            readonly src: string;
-            readonly srcSet: string;
-        } | null;
-        readonly md: {
-            readonly src: string;
-            readonly srcSet: string;
-        } | null;
-        readonly lg: {
-            readonly src: string;
-            readonly srcSet: string;
-        } | null;
+        readonly url: string | null;
     } | null;
     readonly " $refType": "FairHeaderImage_fair";
 };
@@ -28,34 +17,7 @@ export type FairHeaderImage_fair$key = {
 
 
 
-const node: ReaderFragment = (function(){
-var v0 = {
-  "kind": "Literal",
-  "name": "height",
-  "value": 600
-},
-v1 = {
-  "kind": "Literal",
-  "name": "version",
-  "value": "wide"
-},
-v2 = [
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "src",
-    "storageKey": null
-  },
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "srcSet",
-    "storageKey": null
-  }
-];
-return {
+const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
@@ -70,58 +32,17 @@ return {
       "plural": false,
       "selections": [
         {
-          "alias": "sm",
+          "alias": null,
           "args": [
-            (v0/*: any*/),
-            (v1/*: any*/),
             {
               "kind": "Literal",
-              "name": "width",
-              "value": 480
+              "name": "version",
+              "value": "wide"
             }
           ],
-          "concreteType": "CroppedImageUrl",
-          "kind": "LinkedField",
-          "name": "cropped",
-          "plural": false,
-          "selections": (v2/*: any*/),
-          "storageKey": "cropped(height:600,version:\"wide\",width:480)"
-        },
-        {
-          "alias": "md",
-          "args": [
-            (v0/*: any*/),
-            (v1/*: any*/),
-            {
-              "kind": "Literal",
-              "name": "width",
-              "value": 900
-            }
-          ],
-          "concreteType": "CroppedImageUrl",
-          "kind": "LinkedField",
-          "name": "cropped",
-          "plural": false,
-          "selections": (v2/*: any*/),
-          "storageKey": "cropped(height:600,version:\"wide\",width:900)"
-        },
-        {
-          "alias": "lg",
-          "args": [
-            (v0/*: any*/),
-            (v1/*: any*/),
-            {
-              "kind": "Literal",
-              "name": "width",
-              "value": 1600
-            }
-          ],
-          "concreteType": "CroppedImageUrl",
-          "kind": "LinkedField",
-          "name": "cropped",
-          "plural": false,
-          "selections": (v2/*: any*/),
-          "storageKey": "cropped(height:600,version:\"wide\",width:1600)"
+          "kind": "ScalarField",
+          "name": "url",
+          "storageKey": "url(version:\"wide\")"
         }
       ],
       "storageKey": null
@@ -129,6 +50,5 @@ return {
   ],
   "type": "Fair"
 };
-})();
-(node as any).hash = '3dc345ccfcbe7c6919d58dd5fd138088';
+(node as any).hash = '40752f782c9a021ce3c61024afab0962';
 export default node;

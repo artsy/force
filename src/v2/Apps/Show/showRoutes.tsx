@@ -1,9 +1,10 @@
 import loadable from "@loadable/component"
 import { graphql } from "react-relay"
-import { RedirectException, RouteConfig } from "found"
+import { RedirectException } from "found"
 import { paramsToCamelCase } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
 import { getENV } from "v2/Utils/getENV"
 import { allowedFilters } from "v2/Components/ArtworkFilter/Utils/allowedFilters"
+import { AppRouteConfig } from "v2/Artsy/Router/Route"
 
 const ShowApp = loadable(() => import("./ShowApp"), {
   resolveComponent: component => component.ShowAppFragmentContainer,
@@ -15,10 +16,11 @@ const ShowInfoRoute = loadable(() => import("./Routes/ShowInfo"), {
   resolveComponent: component => component.ShowInfoFragmentContainer,
 })
 
-export const showRoutes: RouteConfig[] = [
+export const showRoutes: AppRouteConfig[] = [
   {
     getComponent: () => ShowApp,
     path: "/show/:slug",
+    theme: "v3",
     prepare: () => {
       ShowApp.preload()
     },
@@ -42,6 +44,7 @@ export const showRoutes: RouteConfig[] = [
       {
         getComponent: () => ShowInfoRoute,
         path: "info",
+        theme: "v3",
         prepare: () => {
           ShowInfoRoute.preload()
         },
@@ -62,6 +65,7 @@ export const showRoutes: RouteConfig[] = [
     ],
     getComponent: () => ShowSubApp,
     path: "/show/:slug",
+    theme: "v3",
     prepare: () => {
       ShowSubApp.preload()
     },

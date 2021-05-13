@@ -21,12 +21,15 @@ const ShippingSummaryItem = ({
 }: {
   order: ShippingSummaryItem_order
 } & StepSummaryItemProps) => {
+  // @ts-expect-error STRICT_NULL_CHECK
   return requestedFulfillment.__typename === "CommerceShip" ? (
     <StepSummaryItem title="Ship to" {...others}>
+      {/* @ts-expect-error STRICT_NULL_CHECK */}
       <ShippingAddress ship={requestedFulfillment} />
     </StepSummaryItem>
   ) : (
     <StepSummaryItem
+      // @ts-expect-error STRICT_NULL_CHECK
       title={<>Pick up ({lineItems.edges[0].node.artwork.shippingOrigin})</>}
       /* Fixes spacing issues with title when no pickup description copy is present */
       mb={showPickupCopy(state) ? undefined : -1}

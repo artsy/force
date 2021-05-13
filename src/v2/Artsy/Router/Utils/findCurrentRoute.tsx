@@ -1,21 +1,25 @@
-import { Match, RouteConfig } from "found"
+import { Match } from "found"
+import { AppRouteConfig } from "../Route"
 
 export const findCurrentRoute = ({
   route: baseRoute,
   routes,
   routeIndices,
-}: Match & { route?: RouteConfig }) => {
+}: Match & { route?: AppRouteConfig }) => {
   if (!routeIndices || routeIndices.length === 0) {
     return baseRoute
   }
   let remainingRouteIndicies = [...routeIndices]
-  let route: RouteConfig = routes[remainingRouteIndicies.shift()]
+  // @ts-expect-error STRICT_NULL_CHECK
+  let route: AppRouteConfig = routes[remainingRouteIndicies.shift()]
 
   while (remainingRouteIndicies.length > 0) {
+    // @ts-expect-error STRICT_NULL_CHECK
     route = route.children[remainingRouteIndicies.shift()]
   }
 
   if (!route) {
+    // @ts-expect-error STRICT_NULL_CHECK
     route = baseRoute
   }
 

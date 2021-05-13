@@ -62,6 +62,7 @@ export class ArtworkSidebarBidAction extends React.Component<
   ArtworkSidebarBidActionState
 > {
   state: ArtworkSidebarBidActionState = {
+    // @ts-expect-error STRICT_NULL_CHECK
     selectedMaxBidCents: null,
   }
 
@@ -71,6 +72,7 @@ export class ArtworkSidebarBidAction extends React.Component<
 
   redirectToRegister = () => {
     const { sale } = this.props.artwork
+    // @ts-expect-error STRICT_NULL_CHECK
     const href = `/auction-registration/${sale.slug}`
     window.location.href = href
   }
@@ -84,9 +86,11 @@ export class ArtworkSidebarBidAction extends React.Component<
         price:
           props.artwork.myLotStanding &&
           props.artwork.myLotStanding[0] &&
+          // @ts-expect-error STRICT_NULL_CHECK
           props.artwork.myLotStanding[0].most_recent_bid.max_bid.cents / 100,
       },
     ],
+    // @ts-expect-error STRICT_NULL_CHECK
     auction_slug: props.artwork.sale.slug,
     context_page: Schema.PageName.ArtworkPage,
     action_type: Schema.ActionType.ClickedBid,
@@ -94,6 +98,7 @@ export class ArtworkSidebarBidAction extends React.Component<
   redirectToBid(firstIncrement: number) {
     const { slug, sale } = this.props.artwork
     const bid = this.state.selectedMaxBidCents || firstIncrement
+    // @ts-expect-error STRICT_NULL_CHECK
     const href = `/auction/${sale.slug}/bid/${slug}?bid=${bid}`
     window.location.href = href
   }
@@ -106,6 +111,7 @@ export class ArtworkSidebarBidAction extends React.Component<
     action_type: Schema.ActionType.Click,
   })
   redirectToLiveBidding(me: ArtworkSidebarBidAction_me | null) {
+    // @ts-expect-error STRICT_NULL_CHECK
     const { slug } = this.props.artwork.sale
     const liveUrl = `${getENV("PREDICTION_URL")}/${slug}`
     if (me) {
@@ -122,6 +128,7 @@ export class ArtworkSidebarBidAction extends React.Component<
       me,
     } = this.props
 
+    // @ts-expect-error STRICT_NULL_CHECK
     if (sale.is_closed) return null
 
     /**
@@ -139,13 +146,17 @@ export class ArtworkSidebarBidAction extends React.Component<
       pendingIdentityVerification,
       shouldPromptIdVerification,
     } = bidderQualifications(
+      // @ts-expect-error STRICT_NULL_CHECK
       sale,
       me,
+      // @ts-expect-error STRICT_NULL_CHECK
       sale.registrationStatus && {
+        // @ts-expect-error STRICT_NULL_CHECK
         qualifiedForBidding: sale.registrationStatus.qualified_for_bidding,
       }
     )
 
+    // @ts-expect-error STRICT_NULL_CHECK
     if (sale.is_preview) {
       let PreviewAction: React.FC
 
@@ -158,6 +169,7 @@ export class ArtworkSidebarBidAction extends React.Component<
           )
         } else if (shouldPromptIdVerification) {
           PreviewAction = () => (
+            // @ts-expect-error STRICT_NULL_CHECK
             <VerifyIdentityButton id={pendingIdentityVerification.internalID} />
           )
         } else {
@@ -180,8 +192,11 @@ export class ArtworkSidebarBidAction extends React.Component<
       )
     }
 
+    // @ts-expect-error STRICT_NULL_CHECK
     if (sale.is_live_open) {
+      // @ts-expect-error STRICT_NULL_CHECK
       const notApprovedBidderBeforeRegistrationClosed: boolean =
+        // @ts-expect-error STRICT_NULL_CHECK
         sale.is_registration_closed && !qualifiedForBidding
 
       if (notApprovedBidderBeforeRegistrationClosed) {
@@ -217,12 +232,14 @@ export class ArtworkSidebarBidAction extends React.Component<
       }
     }
 
+    // @ts-expect-error STRICT_NULL_CHECK
     if (sale.is_open) {
       if (registrationAttempted && !qualifiedForBidding) {
         return (
           <Box>
             {shouldPromptIdVerification ? (
               <VerifyIdentityButton
+                // @ts-expect-error STRICT_NULL_CHECK
                 id={pendingIdentityVerification.internalID}
               />
             ) : (
@@ -236,6 +253,7 @@ export class ArtworkSidebarBidAction extends React.Component<
           </Box>
         )
       }
+      // @ts-expect-error STRICT_NULL_CHECK
       if (sale.is_registration_closed && !qualifiedForBidding) {
         return (
           <Button width="100%" size="large" disabled>
@@ -245,13 +263,18 @@ export class ArtworkSidebarBidAction extends React.Component<
       }
 
       const myLastMaxBid =
+        // @ts-expect-error STRICT_NULL_CHECK
         hasMyBids && myLotStanding.most_recent_bid.max_bid.cents
+      // @ts-expect-error STRICT_NULL_CHECK
       const increments = artwork.sale_artwork.increments.filter(
+        // @ts-expect-error STRICT_NULL_CHECK
         increment => increment.cents > (myLastMaxBid || 0)
       )
       const firstIncrement = increments[0]
       const selectOptions = increments.map(increment => ({
+        // @ts-expect-error STRICT_NULL_CHECK
         value: increment.cents.toString(),
+        // @ts-expect-error STRICT_NULL_CHECK
         text: increment.display,
       }))
 
@@ -274,12 +297,14 @@ export class ArtworkSidebarBidAction extends React.Component<
                 <HelpIcon />
               </Tooltip>
             </Flex>
+            {/* @ts-expect-error STRICT_NULL_CHECK */}
             <LargeSelect options={selectOptions} onSelect={this.setMaxBid} />
             <Spacer mb={2} />
             <Button
               width="100%"
               size="large"
               data-test="bid"
+              // @ts-expect-error STRICT_NULL_CHECK
               onClick={() => this.redirectToBid(firstIncrement.cents)}
             >
               {hasMyBids ? "Increase max bid" : "Bid"}

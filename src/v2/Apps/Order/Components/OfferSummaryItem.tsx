@@ -15,11 +15,13 @@ const OfferSummaryItem = ({
   order: OfferSummaryItem_order
 } & StepSummaryItemProps) => {
   const offerItem = getOfferItemFromOrder(order.lineItems)
+  // @ts-expect-error STRICT_NULL_CHECK
   const offerNote = order.myLastOffer.note
 
   return (
     <StepSummaryItem title="Your offer" {...others}>
       <Serif size={["2", "3t"]} color="black100">
+        {/* @ts-expect-error STRICT_NULL_CHECK */}
         {order.myLastOffer.amount}
       </Serif>
       {offerItem && (

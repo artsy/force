@@ -66,6 +66,7 @@ describe("AddressModal", () => {
       })
 
       const formik = wrapper.find("Formik").first()
+      // @ts-expect-error STRICT_NULL_CHECK
       formik.props().onSubmit(validAddress as any)
 
       await wrapper.update()
@@ -96,6 +97,7 @@ describe("AddressModal", () => {
       )
 
       const formik = wrapper.find("Formik").first()
+      // @ts-expect-error STRICT_NULL_CHECK
       formik.props().onSubmit(validAddress as any)
 
       await wrapper.update()
@@ -124,6 +126,7 @@ describe("AddressModal", () => {
       )
 
       const formik = wrapper.find("Formik").first()
+      // @ts-expect-error STRICT_NULL_CHECK
       formik.props().onSubmit(validAddress as any)
 
       await wrapper.update()

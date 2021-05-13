@@ -10,6 +10,7 @@ interface SecurePaymentProps
   artwork: SecurePayment_artwork
 }
 
+// @ts-expect-error STRICT_NULL_CHECK
 export const SecurePayment: React.FC<SecurePaymentProps> = ({
   artwork,
   ...other

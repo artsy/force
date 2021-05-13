@@ -87,6 +87,7 @@ export interface SizeFilter2Props {
 
 export const SizeFilter2: React.FC<SizeFilter2Props> = ({ expanded }) => {
   const { currentlySelectedFilters, setFilters } = useArtworkFilterContext()
+  // @ts-expect-error STRICT_NULL_CHECK
   const { height, width, reset } = currentlySelectedFilters()
 
   const initialCustomSize = {
@@ -94,8 +95,10 @@ export const SizeFilter2: React.FC<SizeFilter2Props> = ({ expanded }) => {
     width: parseRange(width),
   }
 
+  // @ts-expect-error STRICT_NULL_CHECK
   const [showCustom, setShowCustom] = useState(!!hasValue(initialCustomSize))
   const [customSize, setCustomSize] = useState<CustomSize>(
+    // @ts-expect-error STRICT_NULL_CHECK
     hasValue(initialCustomSize) ? initialCustomSize : DEFAULT_CUSTOM_SIZE
   )
   const [mode, setMode] = useState<"resting" | "done">("resting")
@@ -125,6 +128,7 @@ export const SizeFilter2: React.FC<SizeFilter2Props> = ({ expanded }) => {
   }
 
   const toggleSizeSelection = (selected: boolean, name: string) => {
+    // @ts-expect-error STRICT_NULL_CHECK
     let sizes = currentlySelectedFilters().sizes.slice()
     if (selected) {
       sizes.push(name)
@@ -133,22 +137,27 @@ export const SizeFilter2: React.FC<SizeFilter2Props> = ({ expanded }) => {
     }
 
     const newFilters = {
+      // @ts-expect-error STRICT_NULL_CHECK
       ...currentlySelectedFilters(),
       sizes,
       height: "*-*",
       width: "*-*",
     }
 
+    // @ts-expect-error STRICT_NULL_CHECK
     setFilters(newFilters, { force: false })
     setCustomSize({ height: ["*", "*"], width: ["*", "*"] })
   }
 
   const handleClick = () => {
     const newFilters = {
+      // @ts-expect-error STRICT_NULL_CHECK
       ...currentlySelectedFilters(),
       sizes: [],
+      // @ts-expect-error STRICT_NULL_CHECK
       ...mapSizeToRange(convertSizeToInches(customSize)),
     }
+    // @ts-expect-error STRICT_NULL_CHECK
     setFilters(newFilters, { force: false })
     setMode("done")
   }
@@ -165,8 +174,11 @@ export const SizeFilter2: React.FC<SizeFilter2Props> = ({ expanded }) => {
     }
   }, [reset])
 
+  // @ts-expect-error STRICT_NULL_CHECK
   const selection = currentlySelectedFilters().sizes
+  // @ts-expect-error STRICT_NULL_CHECK
   const customHeight = currentlySelectedFilters().height
+  // @ts-expect-error STRICT_NULL_CHECK
   const customWidth = currentlySelectedFilters().width
   const hasSelection =
     (selection && selection.length > 0) ||
@@ -193,6 +205,7 @@ export const SizeFilter2: React.FC<SizeFilter2Props> = ({ expanded }) => {
               <Checkbox
                 key={index}
                 onSelect={selected => toggleSizeSelection(selected, name)}
+                // @ts-expect-error STRICT_NULL_CHECK
                 selected={currentlySelectedFilters().sizes.includes(name)}
                 my={tokens.my}
               >

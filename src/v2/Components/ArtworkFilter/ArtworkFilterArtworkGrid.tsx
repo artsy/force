@@ -47,6 +47,7 @@ const ArtworkFilterArtworkGrid: React.FC<ArtworkFilterArtworkGridProps> = props 
    */
   function loadNext() {
     if (hasNextPage) {
+      // @ts-expect-error STRICT_NULL_CHECK
       loadPage(context.filters.page + 1)
     }
   }
@@ -60,6 +61,7 @@ const ArtworkFilterArtworkGrid: React.FC<ArtworkFilterArtworkGridProps> = props 
 
   return (
     <>
+      {/* @ts-expect-error STRICT_NULL_CHECK */}
       <LoadingArea isLoading={props.isLoading}>
         <ArtworkGrid
           artworks={props.filtered_artworks}
@@ -74,12 +76,14 @@ const ArtworkFilterArtworkGrid: React.FC<ArtworkFilterArtworkGridProps> = props 
           onBrickClick={(artwork, artworkIndex) => {
             trackEvent(
               clickedMainArtworkGrid({
+                // @ts-expect-error STRICT_NULL_CHECK
                 contextPageOwnerType,
                 contextPageOwnerSlug,
                 contextPageOwnerId,
                 destinationPageOwnerId: artwork.internalID,
                 destinationPageOwnerSlug: artwork.slug,
                 position: artworkIndex,
+                // @ts-expect-error STRICT_NULL_CHECK
                 sort: context.filters.sort,
               })
             )

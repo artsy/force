@@ -37,6 +37,7 @@ describe("Saved Addresses mutations", () => {
   it("edits the saved addresses after calling edit address mutation", async () => {
     const page = await buildPage()
     const editButton = page.find(`[data-test="editAddress"]`).first()
+    // @ts-expect-error STRICT_NULL_CHECK
     editButton
       .props()
       .onClick(userAddressMutation.me.addressConnection.edges[0].node as any)
@@ -102,6 +103,7 @@ describe("SavedAddress button interactions", () => {
     expect(editAddressComponent).toHaveLength(1)
     const modal = wrapper.find(AddressModal)
     expect(modal.props().show).toBe(false)
+    // @ts-expect-error STRICT_NULL_CHECK
     editAddressComponent.props().onClick({} as any)
     setTimeout(() => {
       expect(modal.props().modalDetails).toBe({

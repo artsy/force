@@ -2,7 +2,7 @@ import React from "react"
 import { PartnerArtistList_artists } from "v2/__generated__/PartnerArtistList_artists.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Box, Column, GridColumns, Text } from "@artsy/palette"
-import { groupArtists } from "./partnerArtistsUtils"
+import { groupArtists } from "../partnerArtistsUtils"
 import { ColumnSpan } from "@artsy/palette/dist/elements/GridColumns/calculateGridColumn"
 import { Media } from "v2/Utils/Responsive"
 import { PartnerArtistItemFragmentContainer as PartnerArtistItem } from "./PartnerArtistItem"
@@ -49,11 +49,14 @@ export const PartnerArtistList: React.FC<PartnerArtistListProps> = ({
                 </Text>
               )}
               <Box style={{ columnCount: group.columnSize }}>
+                {/* @ts-expect-error STRICT_NULL_CHECK */}
                 {group.artists.map(({ node, counts: { artworks } }) => {
                   return (
                     <PartnerArtistItem
                       scrollTo={scrollTo}
+                      // @ts-expect-error STRICT_NULL_CHECK
                       key={node.internalID}
+                      // @ts-expect-error STRICT_NULL_CHECK
                       artist={node}
                       partnerSlug={partnerSlug}
                       hasPublishedArtworks={artworks > 0}

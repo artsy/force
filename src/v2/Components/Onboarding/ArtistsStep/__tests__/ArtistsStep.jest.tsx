@@ -17,6 +17,7 @@ describe("ArtistsStep", () => {
 
     const onInput = wrapper.find("input").prop("onInput")
     const event: any = { target: { value: "andy" } }
+    // @ts-expect-error STRICT_NULL_CHECK
     onInput(event)
     wrapper.update()
 

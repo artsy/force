@@ -117,6 +117,7 @@ describe("FollowProfiles", () => {
         jest.spyOn(followProfiles, "syncFollows")
         followProfiles.maxSyncSize = 10
         times(22, n => {
+          // @ts-expect-error STRICT_NULL_CHECK
           profileIds.push(`profile-${n}`)
         })
         followProfiles.syncFollows(profileIds)

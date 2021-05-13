@@ -5,6 +5,7 @@ export const validatePresence = (value: string): string => {
   if (value == undefined || isEmpty(value.trim())) {
     return "This field is required"
   }
+  // @ts-expect-error STRICT_NULL_CHECK
   return null
 }
 

@@ -32,6 +32,7 @@ export const AttributionClassFilter: React.FC<AttributionClassFilterProps> = ({
   const filterContext = useArtworkFilterContext()
 
   const toggleSelection = (selected, name) => {
+    // @ts-expect-error STRICT_NULL_CHECK
     let attributions = filterContext
       .currentlySelectedFilters()
       .attributionClass.slice()
@@ -57,6 +58,7 @@ export const AttributionClassFilter: React.FC<AttributionClassFilterProps> = ({
               key={index}
               my={tokens.my}
               onSelect={selected => toggleSelection(selected, value)}
+              // @ts-expect-error STRICT_NULL_CHECK
               selected={filterContext
                 .currentlySelectedFilters()
                 .attributionClass.includes(value)}

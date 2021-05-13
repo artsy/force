@@ -23,6 +23,7 @@ const BrowserRouter = createBrowserRouter({
   ),
 })
 
+// @ts-expect-error STRICT_NULL_CHECK
 const Onboarding = track(null, {
   dispatch: Events.postEvent,
 })(() => {

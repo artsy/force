@@ -8,6 +8,7 @@ import {
 
 import { CurrentAuctions_viewer } from "v2/__generated__/CurrentAuctions_viewer.graphql"
 import { AuctionArtworksRailFragmentContainer } from "../Components/AuctionArtworksRail/AuctionArtworksRail"
+import { extractNodes } from "v2/Utils/extractNodes"
 
 export interface CurrentAuctionsProps {
   viewer: CurrentAuctions_viewer
@@ -40,7 +41,9 @@ const CurrentAuctions: React.FC<CurrentAuctionsProps> = ({ viewer, relay }) => {
     })
   }
 
-  if (viewer.salesConnection.edges.length === 0) {
+  const nodes = extractNodes(viewer.salesConnection)
+
+  if (nodes.length === 0) {
     return (
       <Box>
         <Text>No current auctions.</Text>
@@ -51,7 +54,7 @@ const CurrentAuctions: React.FC<CurrentAuctionsProps> = ({ viewer, relay }) => {
   return (
     <>
       <Box>
-        {viewer.salesConnection.edges.map(({ node }, index) => {
+        {nodes.map((node, index) => {
           return (
             <Box my={6} key={index}>
               <AuctionArtworksRailFragmentContainer

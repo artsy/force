@@ -19,6 +19,7 @@ const ViewingRoomSubsections: React.FC<ViewingRoomSubsectionsProps> = ({
   return (
     <Box>
       {subsections.map(({ internalID, title, body, image, caption }) => {
+        // @ts-expect-error STRICT_NULL_CHECK
         const imageURL = resize(image?.imageURLs?.normalized, {
           width: 1200,
           convert_to: "jpg",
@@ -48,6 +49,7 @@ const ViewingRoomSubsections: React.FC<ViewingRoomSubsectionsProps> = ({
                   <Spacer my={4} />
                   <Box>
                     <Box width="100%">
+                      {/* @ts-expect-error STRICT_NULL_CHECK */}
                       <Image width="100%" src={imageURL} alt={title} />
                     </Box>
                     {caption && (

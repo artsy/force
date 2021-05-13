@@ -1,6 +1,5 @@
 import { Box } from "@artsy/palette"
 import { OrderApp_order } from "v2/__generated__/OrderApp_order.graphql"
-import { AppContainer } from "v2/Apps/Components/AppContainer"
 import { StickyFooter } from "v2/Apps/Order/Components/StickyFooter"
 import { SystemContextConsumer, withSystemContext } from "v2/Artsy"
 import { findCurrentRoute } from "v2/Artsy/Router/Utils/findCurrentRoute"
@@ -18,6 +17,8 @@ import { ConnectedModalDialog } from "./Dialogs"
 import { Mediator } from "lib/mediator"
 import { data as sd } from "sharify"
 import { ZendeskWrapper } from "v2/Components/ZendeskWrapper"
+import { HorizontalPadding } from "../Components/HorizontalPadding"
+import { AppContainer } from "../Components/AppContainer"
 
 export interface OrderAppProps extends RouterState {
   params: {
@@ -82,6 +83,7 @@ class OrderApp extends React.Component<OrderAppProps, {}> {
 
     const artworkId = get(
       this.props,
+      // @ts-expect-error STRICT_NULL_CHECK
       props => props.order.lineItems.edges[0].node.artwork.slug
     )
     const artwork = new Artwork({
@@ -116,6 +118,7 @@ class OrderApp extends React.Component<OrderAppProps, {}> {
     if (newLocation === null || !newLocation.pathname.includes("/orders/")) {
       // leaving the order page, closing, or refreshing
       const route = findCurrentRoute(this.props.match)
+      // @ts-expect-error STRICT_NULL_CHECK
       if (route.shouldWarnBeforeLeaving) {
         return "Are you sure you want to leave? Your changes will not be saved."
       }
@@ -126,8 +129,10 @@ class OrderApp extends React.Component<OrderAppProps, {}> {
   renderZendeskScript() {
     const artwork = get(
       this.props,
+      // @ts-expect-error STRICT_NULL_CHECK
       props => props.order.lineItems.edges[0].node.artwork
     )
+    // @ts-expect-error STRICT_NULL_CHECK
     const { listPrice, priceCurrency } = artwork
 
     const BNMO_CURRENCY_THRESHOLDS = {
@@ -157,14 +162,17 @@ class OrderApp extends React.Component<OrderAppProps, {}> {
     let artworkHref
 
     if (!order) {
+      // @ts-expect-error STRICT_NULL_CHECK
       return <ErrorPage code={404} />
     } else {
       artworkId = get(
         this.props,
+        // @ts-expect-error STRICT_NULL_CHECK
         props => order.lineItems.edges[0].node.artwork.slug
       )
       artworkHref = get(
         this.props,
+        // @ts-expect-error STRICT_NULL_CHECK
         props => order.lineItems.edges[0].node.artwork.href
       )
     }
@@ -173,6 +181,7 @@ class OrderApp extends React.Component<OrderAppProps, {}> {
     return (
       <SystemContextConsumer>
         {({ isEigen, mediator }) => {
+          // @ts-expect-error STRICT_NULL_CHECK
           this.mediator = mediator
           return (
             <Box>
@@ -181,7 +190,7 @@ class OrderApp extends React.Component<OrderAppProps, {}> {
               */}
               <div id="main-layout-flash" />
               <MinimalNavBar to={artworkHref}>
-                <AppContainer>
+                <HorizontalPadding>
                   <Title>Checkout | Artsy</Title>
                   {isEigen ? (
                     <Meta
@@ -196,12 +205,14 @@ class OrderApp extends React.Component<OrderAppProps, {}> {
                   )}
                   <SafeAreaContainer>
                     <Elements stripe={stripePromise}>
-                      <>{children}</>
+                      <AppContainer>
+                        <HorizontalPadding>{children}</HorizontalPadding>
+                      </AppContainer>
                     </Elements>
                   </SafeAreaContainer>
                   <StickyFooter orderType={order.mode} artworkId={artworkId} />
                   <ConnectedModalDialog />
-                </AppContainer>
+                </HorizontalPadding>
               </MinimalNavBar>
             </Box>
           )

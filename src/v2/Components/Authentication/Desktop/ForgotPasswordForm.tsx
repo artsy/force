@@ -26,12 +26,14 @@ export class ForgotPasswordForm extends Component<
 
   onSubmit = (values: InputValues, formikBag: FormikProps<InputValues>) => {
     recaptcha("forgot_submit")
+    // @ts-expect-error STRICT_NULL_CHECK
     this.props.handleSubmit(values, formikBag)
   }
 
   render() {
     return (
       <Formik
+        // @ts-expect-error STRICT_NULL_CHECK
         initialValues={this.props.values}
         onSubmit={this.onSubmit}
         validationSchema={ForgotPasswordValidator}
@@ -49,6 +51,7 @@ export class ForgotPasswordForm extends Component<
         }: FormikProps<InputValues>) => {
           const handleChange = e => {
             setStatus(null)
+            // @ts-expect-error STRICT_NULL_CHECK
             this.setState({ error: null })
             formikHandleChange(e)
           }
@@ -61,6 +64,7 @@ export class ForgotPasswordForm extends Component<
             >
               <QuickInput
                 block
+                // @ts-expect-error STRICT_NULL_CHECK
                 error={touched.email && errors.email}
                 placeholder="Enter your email address"
                 name="email"

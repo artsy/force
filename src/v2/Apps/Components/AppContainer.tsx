@@ -14,9 +14,16 @@ export const AppContainer: React.FC<AppContainerProps> = ({
   >()
 
   const maxWidth = useThemeConfig({ v2: breakpoints.xl, v3: breakpoints.lg })
+  const appShellMaxWidth = defaultMaxWidth ?? maxWidth
 
   return (
-    <Box width="100%" m="auto" maxWidth={defaultMaxWidth ?? maxWidth} {...rest}>
+    <Box
+      width="100%"
+      m="auto"
+      minHeight="100vh"
+      maxWidth={appShellMaxWidth}
+      {...rest}
+    >
       {children}
     </Box>
   )

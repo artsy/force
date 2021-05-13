@@ -39,6 +39,7 @@ export async function getOffsetBetweenGravityClock(
     const possibleNetworkLatencyInMilliSeconds =
       (getLocalTimestampInMilliSeconds() - startTime) / 2
     const serverTimestampInMilliSeconds =
+      // @ts-expect-error STRICT_NULL_CHECK
       data.system.time.unix * 1e3 + possibleNetworkLatencyInMilliSeconds
 
     return serverTimestampInMilliSeconds

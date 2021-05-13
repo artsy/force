@@ -70,6 +70,7 @@ export class ArtworkDetailsAboutTheWorkFromPartner extends React.Component<
       <HTML>
         <ReadMore
           maxChars={maxChars}
+          // @ts-expect-error STRICT_NULL_CHECK
           content={additional_information}
           onReadMoreClicked={this.trackReadMoreClick.bind(this)}
         />
@@ -80,8 +81,10 @@ export class ArtworkDetailsAboutTheWorkFromPartner extends React.Component<
   render() {
     const { artwork } = this.props
     const { additional_information, partner } = artwork
+    // @ts-expect-error STRICT_NULL_CHECK
     const locationNames = get(
       partner,
+      // @ts-expect-error STRICT_NULL_CHECK
       p => limitWithCount(filterLocations(p.locations), 2),
       []
     ).join(", ")
@@ -91,7 +94,9 @@ export class ArtworkDetailsAboutTheWorkFromPartner extends React.Component<
       artwork.sale &&
       (artwork.sale.isBenefit || artwork.sale.isGalleryAuction)
     )
+    // @ts-expect-error STRICT_NULL_CHECK
     const imageUrl = showPartnerLogo && get(partner, p => p.profile.icon.url)
+    // @ts-expect-error STRICT_NULL_CHECK
     const partnerInitials = showPartnerLogo && get(partner, p => p.initials)
     const showPartnerFollow =
       partner && partner.type !== "Auction House" && partner.profile
@@ -105,16 +110,23 @@ export class ArtworkDetailsAboutTheWorkFromPartner extends React.Component<
             <StackableBorderBox p={2}>
               <Box data-test="aboutTheWorkPartner">
                 <EntityHeader
+                  // @ts-expect-error STRICT_NULL_CHECK
                   name={partnerName}
+                  // @ts-expect-error STRICT_NULL_CHECK
                   href={
+                    // @ts-expect-error STRICT_NULL_CHECK
                     hasDefaultPublicProfile && `${sd.APP_URL}${partner.href}`
                   }
                   meta={locationNames}
+                  // @ts-expect-error STRICT_NULL_CHECK
                   imageUrl={imageUrl}
+                  // @ts-expect-error STRICT_NULL_CHECK
                   initials={partnerInitials}
+                  // @ts-expect-error STRICT_NULL_CHECK
                   FollowButton={
                     showPartnerFollow && (
                       <FollowProfileButton
+                        // @ts-expect-error STRICT_NULL_CHECK
                         profile={partner.profile}
                         user={user}
                         contextModule={ContextModule.aboutTheWork}

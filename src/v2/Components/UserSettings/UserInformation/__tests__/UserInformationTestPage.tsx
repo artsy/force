@@ -8,6 +8,7 @@ export class UserInformationTestPage extends RootTestPage {
 
   async changeEmailInput() {
     const input = this.find("QuickInput input[name='email']")
+    // @ts-expect-error STRICT_NULL_CHECK
     input.props().onChange({
       // @ts-ignore
       currentTarget: { id: "email", value: "new-email@email.com" },
@@ -18,6 +19,7 @@ export class UserInformationTestPage extends RootTestPage {
 
   async changeNameInput(value = "New name") {
     const input = this.find("QuickInput input[name='name']")
+    // @ts-expect-error STRICT_NULL_CHECK
     input.props().onChange({
       // @ts-ignore
       currentTarget: { id: "name", value },

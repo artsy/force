@@ -7,7 +7,6 @@ import { data as sd } from "sharify"
 
 import { SeoProductsForArtworks } from "v2/Apps/Collect/Components/SeoProductsForArtworks"
 import { buildUrlForCollectApp } from "v2/Apps/Collect/Utils/urlBuilder"
-import { AppContainer } from "v2/Apps/Components/AppContainer"
 
 import { FrameWithRecentlyViewed } from "v2/Components/FrameWithRecentlyViewed"
 import { BreadCrumbList } from "v2/Components/Seo"
@@ -60,7 +59,7 @@ export const CollectApp: React.FC<CollectAppProps> = ({
   }
 
   return (
-    <AppContainer>
+    <>
       <FrameWithRecentlyViewed>
         <Title>{title}</Title>
         <Meta property="og:url" content={`${sd.APP_URL}/collect`} />
@@ -77,32 +76,35 @@ export const CollectApp: React.FC<CollectAppProps> = ({
 
         {filterArtworks && <SeoProductsForArtworks artworks={filterArtworks} />}
 
-        <Box mt={3}>
+        <Box mt={4}>
           <Flex
             justifyContent="space-between"
             alignItems={["left", "center"]}
             flexDirection={["column", "row"]}
           >
-            <Text variant="largeTitle">
+            <Text variant={["lg", "xl"]}>
               <h1>Collect art and design online</h1>
             </Text>
-            <Text variant="mediumText">
+            <Spacer my={1} />
+            <Text variant="md">
               <RouterLink to="/collections">Browse by collection</RouterLink>
             </Text>
           </Flex>
-          <Separator mt={2} mb={[2, 2, 2, 4]} />
+
+          <Separator my={4} />
 
           <CollectionsHubsNav
             marketingHubCollections={marketingHubCollections}
           />
 
-          <Spacer mb={2} mt={[2, 2, 2, 4]} />
+          <Spacer my={6} />
         </Box>
 
         <Box>
           <ArtworkFilter
             viewer={viewer}
             aggregations={
+              // @ts-expect-error STRICT_NULL_CHECK
               viewer.artworksConnection
                 .aggregations as SharedArtworkFilterContextProps["aggregations"]
             }
@@ -141,7 +143,7 @@ export const CollectApp: React.FC<CollectAppProps> = ({
           />
         </Box>
       </FrameWithRecentlyViewed>
-    </AppContainer>
+    </>
   )
 }
 

@@ -19,6 +19,7 @@ export class ArtworkSidebarMetadata extends React.Component<
     const { artwork } = this.props
     const lotLabel = get(
       artwork,
+      // @ts-expect-error STRICT_NULL_CHECK
       a => a.is_biddable && a.sale_artwork.lot_label
     )
     return (
@@ -29,6 +30,7 @@ export class ArtworkSidebarMetadata extends React.Component<
           </Text>
         )}
         <TitleInfo artwork={artwork} />
+        {/* @ts-expect-error STRICT_NULL_CHECK */}
         {artwork.edition_sets.length < 2 && <SizeInfo piece={artwork} />}
         <Classification artwork={artwork} />
       </Box>

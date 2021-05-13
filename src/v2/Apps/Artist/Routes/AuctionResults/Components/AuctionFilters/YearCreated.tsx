@@ -21,10 +21,15 @@ export const YearCreated: React.FC = () => {
   const filterContext = useAuctionResultsFilterContext()
 
   const {
+    // @ts-expect-error STRICT_NULL_CHECK
     earliestCreatedYear,
+    // @ts-expect-error STRICT_NULL_CHECK
     latestCreatedYear,
+    // @ts-expect-error STRICT_NULL_CHECK
     createdAfterYear,
+    // @ts-expect-error STRICT_NULL_CHECK
     createdBeforeYear,
+    // @ts-expect-error STRICT_NULL_CHECK
     allowEmptyCreatedDates,
   } = filterContext?.filters
 

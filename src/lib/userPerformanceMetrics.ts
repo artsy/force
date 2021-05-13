@@ -60,6 +60,7 @@ export function measure(
  */
 export function getUserTiming() {
   if (typeof PerformanceMark === "undefined") return null
+  // @ts-expect-error STRICT_NULL_CHECK
   const marks = perf.getEntriesByType("mark").map(mark => {
     return {
       type: "mark",
@@ -67,6 +68,7 @@ export function getUserTiming() {
       startTime: Math.round(mark.startTime),
     }
   })
+  // @ts-expect-error STRICT_NULL_CHECK
   const measures = perf.getEntriesByType("measure").map(measure => {
     return {
       type: "measure",
@@ -84,6 +86,7 @@ export function getUserTiming() {
  */
 export function getFirstPaint() {
   if (typeof PerformancePaintTiming === "undefined") return null
+  // @ts-expect-error STRICT_NULL_CHECK
   const firstPaint = perf
     .getEntriesByType("paint")
     .find(({ name }) => name === "first-paint")
@@ -95,6 +98,7 @@ export function getFirstPaint() {
  */
 export function getFirstContentfulPaint() {
   if (typeof PerformancePaintTiming === "undefined") return null
+  // @ts-expect-error STRICT_NULL_CHECK
   const firstContentfulPaint = perf
     .getEntriesByType("paint")
     .find(({ name }) => name === "first-contentful-paint")
@@ -108,6 +112,7 @@ export function getFirstContentfulPaint() {
  */
 export function getLoadEventEnd() {
   if (!timingAvailable) return null
+  // @ts-expect-error STRICT_NULL_CHECK
   return sanitizedMetrics(perf.timing.requestStart, perf.timing.loadEventEnd)
 }
 
@@ -119,6 +124,7 @@ export function getLoadEventEnd() {
  */
 export function getDomInteractive() {
   if (!timingAvailable) return null
+  // @ts-expect-error STRICT_NULL_CHECK
   return sanitizedMetrics(perf.timing.requestStart, perf.timing.domInteractive)
 }
 
@@ -132,7 +138,9 @@ export function getDomInteractive() {
 export function getDomContentLoadedStart() {
   if (!timingAvailable) return null
   return sanitizedMetrics(
+    // @ts-expect-error STRICT_NULL_CHECK
     perf.timing.requestStart,
+    // @ts-expect-error STRICT_NULL_CHECK
     perf.timing.domContentLoadedEventStart
   )
 }
@@ -146,7 +154,9 @@ export function getDomContentLoadedStart() {
 export function getDomContentLoadedEnd() {
   if (!timingAvailable) return null
   return sanitizedMetrics(
+    // @ts-expect-error STRICT_NULL_CHECK
     perf.timing.requestStart,
+    // @ts-expect-error STRICT_NULL_CHECK
     perf.timing.domContentLoadedEventEnd
   )
 }
@@ -159,6 +169,7 @@ export function getDomContentLoadedEnd() {
  */
 export function getDomComplete() {
   if (!timingAvailable) return null
+  // @ts-expect-error STRICT_NULL_CHECK
   return sanitizedMetrics(perf.timing.requestStart, perf.timing.domComplete)
 }
 

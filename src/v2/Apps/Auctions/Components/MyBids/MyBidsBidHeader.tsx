@@ -23,6 +23,7 @@ export const MyBidsBidHeader: React.FC<MyBidsBidHeaderProps> = ({ sale }) => {
         trackEvent(
           clickedEntityGroup({
             contextModule: ContextModule.yourActiveBids,
+            // @ts-expect-error STRICT_NULL_CHECK
             contextPageOwnerType,
             destinationPageOwnerType: OwnerType.sale,
             type: "thumbnail",
@@ -36,7 +37,9 @@ export const MyBidsBidHeader: React.FC<MyBidsBidHeaderProps> = ({ sale }) => {
             width="100%"
             height={100}
             style={{ objectFit: "cover" }}
+            // @ts-expect-error STRICT_NULL_CHECK
             src={sale.coverImage.resized.src}
+            // @ts-expect-error STRICT_NULL_CHECK
             srcSet={sale.coverImage.resized.srcSet}
             lazyLoad
           />

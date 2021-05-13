@@ -109,6 +109,7 @@ export class Artwork extends React.Component<ArtworkProps, ArtworkState> {
     return (
       <Container onClick={this.onSelected}>
         <ImageContainer>
+          {/* @ts-expect-error STRICT_NULL_CHECK */}
           <Image src={artwork.image.url} />
           <div className={overlayClasses}>
             {Overlay && <Overlay selected={this.state.isSelected} />}

@@ -1,5 +1,4 @@
 import { Button, Serif, Spacer, color } from "@artsy/palette"
-import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
 import { garamond } from "v2/Assets/Fonts"
 import React from "react"
 import styled from "styled-components"
@@ -25,21 +24,19 @@ export class ErrorPage extends React.Component<ErrorPageProps, null> {
     const detailMessage = message ? `Error Message: ${message}` : detail
 
     return (
-      <HorizontalPadding>
-        <ErrorCodeBackground code={code}>
-          <ErrorDefaultMessage>{defaultMessage}</ErrorDefaultMessage>
-          {code !== 404 && <ErrorInner>{detailMessage}</ErrorInner>}
-          <Serif size="4" color="black60">
-            Please contact{" "}
-            <Link href="mailto:support@artsy.net">support@artsy.net</Link> with
-            any questions.
-          </Serif>
-          <Spacer mb={4} />
-          <Link href="/">
-            <Button size="large">Go to Artsy homepage</Button>
-          </Link>
-        </ErrorCodeBackground>
-      </HorizontalPadding>
+      <ErrorCodeBackground code={code}>
+        <ErrorDefaultMessage>{defaultMessage}</ErrorDefaultMessage>
+        {code !== 404 && <ErrorInner>{detailMessage}</ErrorInner>}
+        <Serif size="4" color="black60">
+          Please contact{" "}
+          <Link href="mailto:support@artsy.net">support@artsy.net</Link> with
+          any questions.
+        </Serif>
+        <Spacer mb={4} />
+        <Link href="/">
+          <Button size="large">Go to Artsy homepage</Button>
+        </Link>
+      </ErrorCodeBackground>
     )
   }
 }

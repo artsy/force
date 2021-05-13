@@ -85,6 +85,7 @@ export class ModalWrapper extends React.Component<
   }
 
   close = () => {
+    // @ts-expect-error STRICT_NULL_CHECK
     this.props.onClose()
     this.removeBlurToContainers()
   }
@@ -140,6 +141,7 @@ export class ModalWrapper extends React.Component<
           <GlobalStyle suppressMultiMountWarning />
           {isShown && (
             <ModalOverlay
+              // @ts-expect-error STRICT_NULL_CHECK
               onClick={
                 this.props.disableCloseOnBackgroundClick ? null : this.close
               }
@@ -219,6 +221,7 @@ export const ModalContainer = styled.div<{
   background: #fff;
   width: ${props => {
     if (props.image) {
+      // @ts-expect-error STRICT_NULL_CHECK
       return props.viewportWidth > 900 ? ModalWidth.Wide : ModalWidth.Medium
     } else {
       return props.width ? props.width : ModalWidth.Normal

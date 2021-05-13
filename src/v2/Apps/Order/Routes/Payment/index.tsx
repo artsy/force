@@ -2,7 +2,6 @@ import { Payment_me } from "v2/__generated__/Payment_me.graphql"
 import { Payment_order } from "v2/__generated__/Payment_order.graphql"
 import { PaymentRouteSetOrderPaymentMutation } from "v2/__generated__/PaymentRouteSetOrderPaymentMutation.graphql"
 
-import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "v2/Apps/Order/Components/ArtworkSummaryItem"
 import {
   OrderStepper,
@@ -63,13 +62,16 @@ const logger = createLogger("Order/Routes/Payment/index.tsx")
       ? AnalyticsSchema.Flow.BuyNow
       : AnalyticsSchema.Flow.MakeOffer,
 }))
-
-export class PaymentRoute extends Component<PaymentProps & StripeProps, PaymentState> {
+export class PaymentRoute extends Component<
+  PaymentProps & StripeProps,
+  PaymentState
+> {
   state: PaymentState = { isGettingCreditCardId: false }
   paymentPicker = React.createRef<PaymentPicker>()
   onContinue = async () => {
     try {
       this.setState({ isGettingCreditCardId: true })
+      // @ts-expect-error STRICT_NULL_CHECK
       const result = await this.paymentPicker.current.getCreditCardId()
       this.setState({ isGettingCreditCardId: false })
 
@@ -94,6 +96,7 @@ export class PaymentRoute extends Component<PaymentProps & StripeProps, PaymentS
         return
       }
 
+      // @ts-expect-error STRICT_NULL_CHECK
       const orderOrError = (
         await this.setOrderPayment({
           input: {
@@ -122,62 +125,52 @@ export class PaymentRoute extends Component<PaymentProps & StripeProps, PaymentS
 
     return (
       <Box data-test="orderPayment">
-        <HorizontalPadding px={[0, 4]}>
-          <Row>
-            <Col>
-              <OrderStepper
-                currentStep="Payment"
-                steps={
-                  order.mode === "OFFER" ? offerFlowSteps : buyNowFlowSteps
-                }
+        <Row>
+          <Col>
+            <OrderStepper
+              currentStep="Payment"
+              steps={order.mode === "OFFER" ? offerFlowSteps : buyNowFlowSteps}
+            />
+          </Col>
+        </Row>
+        <TwoColumnLayout
+          Content={
+            <Flex
+              flexDirection="column"
+              style={isLoading ? { pointerEvents: "none" } : {}}
+            >
+              <PaymentPickerFragmentContainer
+                commitMutation={this.props.commitMutation}
+                me={this.props.me}
+                order={this.props.order}
+                innerRef={this.paymentPicker}
               />
-            </Col>
-          </Row>
-        </HorizontalPadding>
-
-        <HorizontalPadding>
-          <TwoColumnLayout
-            Content={
-              <Flex
-                flexDirection="column"
-                style={isLoading ? { pointerEvents: "none" } : {}}
-              >
-                <PaymentPickerFragmentContainer
-                  commitMutation={this.props.commitMutation}
-                  me={this.props.me}
-                  order={this.props.order}
-                  innerRef={this.paymentPicker}
-                />
-                <Spacer mb={3} />
-                <Media greaterThan="xs">
+              <Spacer mb={3} />
+              <Media greaterThan="xs">
+                <ContinueButton onClick={this.onContinue} loading={isLoading} />
+              </Media>
+            </Flex>
+          }
+          Sidebar={
+            <Flex flexDirection="column">
+              <Flex flexDirection="column">
+                <ArtworkSummaryItem order={order} />
+                <TransactionDetailsSummaryItem order={order} />
+              </Flex>
+              <BuyerGuarantee />
+              <Spacer mb={[2, 3]} />
+              <Media at="xs">
+                <>
+                  <Spacer mb={3} />
                   <ContinueButton
                     onClick={this.onContinue}
                     loading={isLoading}
                   />
-                </Media>
-              </Flex>
-            }
-            Sidebar={
-              <Flex flexDirection="column">
-                <Flex flexDirection="column">
-                  <ArtworkSummaryItem order={order} />
-                  <TransactionDetailsSummaryItem order={order} />
-                </Flex>
-                <BuyerGuarantee />
-                <Spacer mb={[2, 3]} />
-                <Media at="xs">
-                  <>
-                    <Spacer mb={3} />
-                    <ContinueButton
-                      onClick={this.onContinue}
-                      loading={isLoading}
-                    />
-                  </>
-                </Media>
-              </Flex>
-            }
-          />
-        </HorizontalPadding>
+                </>
+              </Media>
+            </Flex>
+          }
+        />
       </Box>
     )
   }

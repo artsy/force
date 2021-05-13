@@ -59,7 +59,9 @@ describe("Artist/routes", () => {
       "/artist/juan-gris/auction-results",
       mockResolver({
         ...overviewArtist,
+        // @ts-expect-error STRICT_NULL_CHECK
         statuses: {
+          // @ts-expect-error STRICT_NULL_CHECK
           ...overviewArtist.statuses,
           auctionLots: true,
         },
@@ -71,6 +73,7 @@ describe("Artist/routes", () => {
   it("redirects from /overview to /", async () => {
     const { redirect } = await render(
       "/artist/juan-gris/overview",
+      // @ts-expect-error STRICT_NULL_CHECK
       mockResolver({
         ...overviewArtist,
       })
@@ -82,6 +85,7 @@ describe("Artist/routes", () => {
   it("renders the /works-for-sale page if there is no data", async () => {
     const { redirect } = await render(
       "/artist/juan-gris/works-for-sale",
+      // @ts-expect-error STRICT_NULL_CHECK
       mockResolver({
         ...overviewArtist,
         biographyBlurb: {
@@ -110,6 +114,7 @@ describe("Artist/routes", () => {
     await expect(
       render(
         "/artist/juan-gris",
+        // @ts-expect-error STRICT_NULL_CHECK
         mockResolver({
           ...overviewArtist,
           biographyBlurb: {
@@ -169,6 +174,7 @@ describe("Artist/routes", () => {
     await expect(
       render(
         "/artist/juan-gris/cv",
+        // @ts-expect-error STRICT_NULL_CHECK
         mockResolver({
           ...overviewArtist,
           biographyBlurb: {

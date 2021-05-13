@@ -14,6 +14,7 @@ const { getWrapper } = setupTestWrapper<TagApp_Test_Query>({
   Component: props => {
     return (
       <MockBoot>
+        {/* @ts-expect-error STRICT_NULL_CHECK */}
         <TagAppFragmentContainer {...props} />
       </MockBoot>
     )

@@ -36,12 +36,14 @@ export function proxyReflectionMiddleware(
 
 const reflectionProxyUrl = function (req: ArtsyRequest) {
   const url = parse(req.url)
+  // @ts-expect-error STRICT_NULL_CHECK
   let dest = REFLECTION_URL + url.pathname
   const query =
     url.query != null
       ? url.query.replace(/&?_escaped_fragment_=/, "")
       : undefined
   if (query != null ? query.length : undefined) {
+    // @ts-expect-error STRICT_NULL_CHECK
     dest += encodeURIComponent("?" + decodeURIComponent(query))
   }
   return dest

@@ -7,6 +7,7 @@ export const shouldAdRender = (
   index: number,
   startIndex: number,
   frequency: number,
+  // @ts-expect-error STRICT_NULL_CHECK
   articleType: string = null
 ): boolean => {
   // for Featured and Standard articles always return true

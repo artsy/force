@@ -1,3 +1,4 @@
+/* eslint-disable jest/no-done-callback */
 /*
  * decaffeinate suggestions:
  * DS102: Remove unnecessary code created because of implicit returns
@@ -36,7 +37,7 @@ describe("Geo", function () {
 
     it("calls out to an external IP geolocation service when low accuracy is requested", function () {
       Geo.locate({ accuracy: "low" })
-      Backbone.sync.args[0][2].url.should.equal("https://freegeoip.net/json/")
+      Backbone.sync.args[0][2].url.should.equal("https://freegeoip.app/json/")
       return _.isNull(Backbone.sync.args[0][2].headers).should.be.ok()
     })
 

@@ -1,8 +1,7 @@
-import { Box, Serif, Spacer } from "@artsy/palette"
+import { Shelf, Text } from "@artsy/palette"
 import { RelatedCollectionsRail_collections } from "v2/__generated__/RelatedCollectionsRail_collections.graphql"
 import { useTracking } from "v2/Artsy/Analytics"
 import * as Schema from "v2/Artsy/Analytics/Schema"
-import { Carousel } from "v2/Components/Carousel"
 import { once } from "lodash"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -38,14 +37,15 @@ export const RelatedCollectionsRail: React.FC<RelatedCollectionsRailProps> = pro
 
   if (collectionsWithArtworks.length > 3) {
     return (
-      <Box>
+      <>
+        {/* FIXME: Must remove this dependency */}
         <Waypoint onEnter={once(trackImpression)} />
-        <Serif size="8" color="black100">
-          More like {title}
-        </Serif>
-        <Spacer pb={4} />
 
-        <Carousel arrowHeight={125}>
+        <Text variant="lg" mb={2}>
+          More like {title}
+        </Text>
+
+        <Shelf showProgress={false}>
           {collectionsWithArtworks.map((slide, i) => {
             return (
               <RelatedCollectionEntity
@@ -56,8 +56,8 @@ export const RelatedCollectionsRail: React.FC<RelatedCollectionsRailProps> = pro
               />
             )
           })}
-        </Carousel>
-      </Box>
+        </Shelf>
+      </>
     )
   } else {
     return null

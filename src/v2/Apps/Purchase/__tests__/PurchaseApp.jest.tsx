@@ -15,6 +15,7 @@ import { Pagination } from "@artsy/palette"
 jest.unmock("react-relay")
 jest.mock("v2/Components/Pagination/useComputeHref")
 
+// @ts-expect-error STRICT_NULL_CHECK
 const pageInfo: PurchaseAppTestQueryRawResponse["me"]["orders"]["pageInfo"] = {
   endCursor: "MQ",
   hasNextPage: true,
@@ -22,6 +23,7 @@ const pageInfo: PurchaseAppTestQueryRawResponse["me"]["orders"]["pageInfo"] = {
   startCursor: "NQ",
 }
 
+// @ts-expect-error STRICT_NULL_CHECK
 const pageCursors: PurchaseAppTestQueryRawResponse["me"]["orders"]["pageCursors"] = {
   around: [
     {
@@ -101,7 +103,7 @@ describe("Purchase app", () => {
         const component = await render(mockMe, userType)
         const text = component.text()
         expect(text).toContain(
-          "pending•Track orderLisa BreslowGramercy Park SouthA Gallery New York, NYOrder No.abcdefgTotal$12,000Payment MethodN/AFulfillmentPickupMore infoNeed Help? Contact Us."
+          "pending•Track orderLisa BreslowGramercy Park SouthAGA Gallery New York, NYOrder No.abcdefgTotal$12,000Payment MethodN/AFulfillmentPickupMore infoNeed Help? Contact Us."
         )
       })
     })

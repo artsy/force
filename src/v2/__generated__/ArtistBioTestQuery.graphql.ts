@@ -12,6 +12,8 @@ export type ArtistBioTestQueryResponse = {
 export type ArtistBioTestQueryRawResponse = {
     readonly bio: ({
         readonly biographyBlurb: ({
+            readonly credit: string | null;
+            readonly partnerID: string | null;
             readonly text: string | null;
         }) | null;
         readonly id: string | null;
@@ -35,6 +37,8 @@ query ArtistBioTestQuery {
 
 fragment ArtistBio_bio on Artist {
   biographyBlurb(format: HTML, partnerBio: true) {
+    credit
+    partnerID
     text
   }
 }
@@ -111,6 +115,20 @@ return {
                 "alias": null,
                 "args": null,
                 "kind": "ScalarField",
+                "name": "credit",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "partnerID",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
                 "name": "text",
                 "storageKey": null
               }
@@ -134,7 +152,7 @@ return {
     "metadata": {},
     "name": "ArtistBioTestQuery",
     "operationKind": "query",
-    "text": "query ArtistBioTestQuery {\n  bio: artist(id: \"unused\") {\n    ...ArtistBio_bio\n    id\n  }\n}\n\nfragment ArtistBio_bio on Artist {\n  biographyBlurb(format: HTML, partnerBio: true) {\n    text\n  }\n}\n"
+    "text": "query ArtistBioTestQuery {\n  bio: artist(id: \"unused\") {\n    ...ArtistBio_bio\n    id\n  }\n}\n\nfragment ArtistBio_bio on Artist {\n  biographyBlurb(format: HTML, partnerBio: true) {\n    credit\n    partnerID\n    text\n  }\n}\n"
   }
 };
 })();

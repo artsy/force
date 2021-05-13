@@ -7,6 +7,7 @@ import { AuthContextModule, clickedArtworkGroup } from "@artsy/cohesion"
 import { tabTypeToContextModuleMap } from "../../Utils/tabTypeToContextModuleMap"
 import { Box, Shelf, Spacer, Text } from "@artsy/palette"
 import { ShelfArtworkFragmentContainer } from "v2/Components/Artwork/ShelfArtwork"
+import { extractNodes } from "v2/Utils/extractNodes"
 
 export interface WorksByArtistsYouFollowRailProps {
   viewer: WorksByArtistsYouFollowRail_viewer
@@ -19,7 +20,9 @@ const WorksByArtistsYouFollowRail: React.FC<WorksByArtistsYouFollowRailProps> = 
   const { contextPageOwnerType } = useAnalyticsContext()
   const contextModule = tabTypeToContextModuleMap.worksByArtistsYouFollow as AuthContextModule
 
-  if (viewer.saleArtworksConnection.edges.length === 0) {
+  const nodes = extractNodes(viewer.saleArtworksConnection)
+
+  if (nodes.length === 0) {
     return null
   }
 
@@ -30,6 +33,7 @@ const WorksByArtistsYouFollowRail: React.FC<WorksByArtistsYouFollowRailProps> = 
           Works for you{" "}
           <sup>
             <Text as="span" variant="xs" color="brand">
+              {/* @ts-expect-error STRICT_NULL_CHECK */}
               {viewer.saleArtworksConnection.edges.length}
             </Text>
           </sup>
@@ -43,17 +47,19 @@ const WorksByArtistsYouFollowRail: React.FC<WorksByArtistsYouFollowRailProps> = 
       <Spacer mb={4} />
 
       <Shelf>
-        {viewer.saleArtworksConnection.edges.map(({ node }, index) => {
+        {nodes.map((node, index) => {
           return (
             <ShelfArtworkFragmentContainer
               artwork={node}
               key={node.slug}
               contextModule={contextModule}
               hidePartnerName
+              lazyLoad
               onClick={() => {
                 trackEvent(
                   clickedArtworkGroup({
                     contextModule,
+                    // @ts-expect-error STRICT_NULL_CHECK
                     contextPageOwnerType,
                     artworkID: node.internalID,
                     artworkSlug: node.slug,

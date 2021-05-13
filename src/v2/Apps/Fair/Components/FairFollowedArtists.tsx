@@ -34,6 +34,7 @@ export const FairFollowedArtists: React.FC<FairFollowedArtistsProps> = ({
 
   const tappedViewTrackingData: ClickedArtworkGroup = {
     context_module: ContextModule.worksByArtistsYouFollowRail,
+    // @ts-expect-error STRICT_NULL_CHECK
     context_page_owner_type: contextPageOwnerType,
     context_page_owner_id: contextPageOwnerId,
     context_page_owner_slug: contextPageOwnerSlug,
@@ -51,6 +52,7 @@ export const FairFollowedArtists: React.FC<FairFollowedArtistsProps> = ({
   }): ClickedArtworkGroup => {
     return {
       context_module: ContextModule.worksByArtistsYouFollowRail,
+      // @ts-expect-error STRICT_NULL_CHECK
       context_page_owner_type: contextPageOwnerType,
       context_page_owner_id: contextPageOwnerId,
       context_page_owner_slug: contextPageOwnerSlug,
@@ -68,14 +70,13 @@ export const FairFollowedArtists: React.FC<FairFollowedArtistsProps> = ({
   return (
     <Box {...rest}>
       <Box display="flex" justifyContent="space-between">
-        <Text variant="subtitle" as="h3" mb={2}>
+        <Text variant="lg" as="h3" mb={2}>
           Works by artists you follow
         </Text>
 
-        <Text variant="subtitle" color="black60">
+        <Text variant="sm">
           <RouterLink
             to={`/fair/${fair.slug}/artworks?include_artworks_by_followed_artists=true`}
-            noUnderline
             onClick={() => {
               tracking.trackEvent(tappedViewTrackingData)
             }}
@@ -86,6 +87,7 @@ export const FairFollowedArtists: React.FC<FairFollowedArtistsProps> = ({
       </Box>
 
       <Carousel arrowHeight={IMAGE_HEIGHT}>
+        {/* @ts-expect-error STRICT_NULL_CHECK */}
         {fair.followedArtistArtworks.edges.map(({ artwork }, index) => {
           return (
             <FillwidthItem

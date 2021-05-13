@@ -17,6 +17,7 @@ const render = (
   renderRelayTree({
     Component: (props: GenesTestQueryResponse) => (
       <Genes
+        // @ts-expect-error STRICT_NULL_CHECK
         artist={{
           ...artist,
         }}

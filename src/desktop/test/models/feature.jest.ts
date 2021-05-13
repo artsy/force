@@ -42,14 +42,17 @@ describe("Feature", () => {
         },
       })
 
+      // @ts-expect-error STRICT_NULL_CHECK
       _.last(Backbone.sync.args)[2].success([
         fabricate("set", { id: "abc", name: "Explore this bidness" }),
       ])
+      // @ts-expect-error STRICT_NULL_CHECK
       _.last(Backbone.sync.args)[2].success([
         fabricate("featured_link", {
           title: "Featured link for this awesome page",
         }),
       ])
+      // @ts-expect-error STRICT_NULL_CHECK
       _.last(Backbone.sync.args)[2].success([])
     })
 
@@ -67,14 +70,17 @@ describe("Feature", () => {
         },
       })
 
+      // @ts-expect-error STRICT_NULL_CHECK
       _.last(Backbone.sync.args)[2].success([
         fabricate("set", { id: "abc", name: "Explore this bidness" }),
       ])
+      // @ts-expect-error STRICT_NULL_CHECK
       _.last(Backbone.sync.args)[2].success([
         fabricate("featured_link", {
           title: "Featured link for this awesome page",
         }),
       ])
+      // @ts-expect-error STRICT_NULL_CHECK
       _.last(Backbone.sync.args)[2].success([])
     })
 
@@ -92,6 +98,7 @@ describe("Feature", () => {
         },
       })
 
+      // @ts-expect-error STRICT_NULL_CHECK
       _.last(Backbone.sync.args)[2].success([
         fabricate("set", {
           id: "abc",
@@ -99,7 +106,9 @@ describe("Feature", () => {
           name: "Explore this bidness",
         }),
       ])
+      // @ts-expect-error STRICT_NULL_CHECK
       _.last(Backbone.sync.args)[2].success([sale])
+      // @ts-expect-error STRICT_NULL_CHECK
       _.last(Backbone.sync.args)[2].success([])
     })
 
@@ -118,6 +127,7 @@ describe("Feature", () => {
         },
       })
 
+      // @ts-expect-error STRICT_NULL_CHECK
       _.last(Backbone.sync.args)[2].success([
         fabricate("set", {
           id: "def",
@@ -126,6 +136,7 @@ describe("Feature", () => {
         }),
       ])
 
+      // @ts-expect-error STRICT_NULL_CHECK
       _.last(Backbone.sync.args)[2].success([
         fabricate("featured_link", {
           title: "Featured link for this awesome page",
@@ -158,6 +169,7 @@ describe("Feature", () => {
           title: "Featured link for this awesome page",
         }),
       ])
+      // @ts-expect-error STRICT_NULL_CHECK
       _.last(Backbone.sync.args)[2].success([
         fabricate("featured_link", {
           title: "Featured link for this awesome page",
@@ -166,6 +178,7 @@ describe("Feature", () => {
           title: "Featured link for this awesome page",
         }),
       ])
+      // @ts-expect-error STRICT_NULL_CHECK
       _.last(Backbone.sync.args)[2].success([])
     })
 

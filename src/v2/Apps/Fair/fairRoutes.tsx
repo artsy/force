@@ -1,6 +1,6 @@
 import loadable from "@loadable/component"
 import { graphql } from "react-relay"
-import { RouteConfig } from "found"
+import { AppRouteConfig } from "v2/Artsy/Router/Route"
 import { paramsToCamelCase } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
 import { getENV } from "v2/Utils/getENV"
 import { allowedFilters } from "v2/Components/ArtworkFilter/Utils/allowedFilters"
@@ -24,9 +24,10 @@ const FairArticlesRoute = loadable(() => import("./Routes/FairArticles"), {
   resolveComponent: component => component.FairArticlesPaginationContainer,
 })
 
-export const fairRoutes: RouteConfig[] = [
+export const fairRoutes: AppRouteConfig[] = [
   {
     path: "/fair/:slug",
+    theme: "v3",
     ignoreScrollBehavior: true,
     getComponent: () => FairApp,
     prepare: () => {
@@ -42,6 +43,7 @@ export const fairRoutes: RouteConfig[] = [
     children: [
       {
         path: "",
+        theme: "v3",
         getComponent: () => FairExhibitorsRoute,
         prepare: () => {
           FairExhibitorsRoute.preload()
@@ -56,6 +58,7 @@ export const fairRoutes: RouteConfig[] = [
       },
       {
         path: "artworks(.*)?",
+        theme: "v3",
         getComponent: () => FairArtworksRoute,
         prepare: () => {
           FairArtworksRoute.preload()
@@ -85,6 +88,7 @@ export const fairRoutes: RouteConfig[] = [
   // The root `path: ""` matches the `FairExhibitorsRoute`.
   {
     path: "/fair/:slug",
+    theme: "v3",
     getComponent: () => FairSubApp,
     prepare: () => {
       FairSubApp.preload()
@@ -99,6 +103,7 @@ export const fairRoutes: RouteConfig[] = [
     children: [
       {
         path: "info",
+        theme: "v3",
         getComponent: () => FairInfoRoute,
         prepare: () => {
           FairInfoRoute.preload()
@@ -113,6 +118,7 @@ export const fairRoutes: RouteConfig[] = [
       },
       {
         path: "articles",
+        theme: "v3",
         getComponent: () => FairArticlesRoute,
         prepare: () => {
           FairArticlesRoute.preload()

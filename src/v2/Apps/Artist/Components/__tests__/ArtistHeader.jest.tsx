@@ -35,6 +35,7 @@ describe("ArtistHeader", () => {
     return renderRelayTree({
       Component: ({ artist }: any) => {
         return (
+          // @ts-expect-error STRICT_NULL_CHECK
           <SystemContextProvider {...context}>
             <ArtistHeader artist={artist} />
           </SystemContextProvider>
@@ -115,6 +116,7 @@ describe("ArtistHeader", () => {
       ...ArtistHeaderFixture,
       auctionResultsConnection: null,
     }
+    // @ts-expect-error STRICT_NULL_CHECK
     const wrapper = await getWrapper(artist)
     const html = wrapper.html()
     expect(html).not.toContain("Auction Record")
@@ -125,6 +127,7 @@ describe("ArtistHeader", () => {
       ...ArtistHeaderFixture,
       artistHighlights: { partnersConnection: null },
     }
+    // @ts-expect-error STRICT_NULL_CHECK
     const wrapper = await getWrapper(artist)
     const html = wrapper.html()
     expect(html).not.toContain("Blue Chip")

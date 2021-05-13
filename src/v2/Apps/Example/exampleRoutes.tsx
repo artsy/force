@@ -1,5 +1,5 @@
 import loadable from "@loadable/component"
-import { RouteConfig } from "found"
+import { AppRouteConfig } from "v2/Artsy/Router/Route"
 import { graphql } from "react-relay"
 import { WelcomeRoute } from "./Routes/Welcome/WelcomeRoute"
 
@@ -28,7 +28,7 @@ const ArtworkFilterRoute = loadable(
   }
 )
 
-export const exampleRoutes: RouteConfig[] = [
+export const exampleRoutes: AppRouteConfig[] = [
   {
     path: "/example",
     getComponent: () => ExampleApp,

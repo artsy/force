@@ -22,7 +22,9 @@ const ShowEvents: React.FC<ShowEventsProps> = ({
       <GridColumns mb={6} gridRowGap={[2, 4]}>
         {edges.map(({ node: show }) => {
           return (
+            // @ts-expect-error STRICT_NULL_CHECK
             <Column key={show.internalID} span={[6, 6, 3, 3]}>
+              {/* @ts-expect-error STRICT_NULL_CHECK */}
               <ShowCardFragmentContainer show={show} />
             </Column>
           )

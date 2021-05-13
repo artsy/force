@@ -43,6 +43,7 @@ describe("RouteTabs", () => {
   it("renders nav items", async () => {
     const wrapper = getWrapper()
 
+    // @ts-expect-error STRICT_NULL_CHECK
     await wrapper.find("MockRouter").instance().componentDidMount()
 
     const html = wrapper.html()

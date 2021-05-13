@@ -10,6 +10,7 @@ interface ZeroStateProps {
 export const ZeroState: FC<ZeroStateProps> = props => {
   const {
     hasFilters,
+    // @ts-expect-error STRICT_NULL_CHECK
     filters: { term = props.term },
   } = useArtworkFilterContext()
 

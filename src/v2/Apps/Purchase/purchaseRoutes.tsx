@@ -1,12 +1,12 @@
 import loadable from "@loadable/component"
 import { graphql } from "react-relay"
-import { RouteConfig } from "found"
+import { AppRouteConfig } from "v2/Artsy/Router/Route"
 
 const PurchasesApp = loadable(() => import("./PurchaseApp"), {
   resolveComponent: component => component.PurchaseAppFragmentContainer,
 })
 
-export const purchaseRoutes: RouteConfig[] = [
+export const purchaseRoutes: AppRouteConfig[] = [
   {
     path: "/user/purchases",
     getComponent: () => PurchasesApp,

@@ -18,6 +18,7 @@ const { getWrapper } = setupTestWrapper<ArtistsByLetterQuery>({
   Component: props => {
     return (
       <MockBoot>
+        {/* @ts-expect-error STRICT_NULL_CHECK */}
         <ArtistsByLetterFragmentContainer {...props} />
       </MockBoot>
     )
@@ -30,6 +31,6 @@ describe("ArtistsByLetter", () => {
     const wrapper = getWrapper()
 
     expect(wrapper.find("h1")).toHaveLength(1)
-    expect(wrapper.find("h1").text()).toEqual("Artists – A")
+    expect(wrapper.find("h1").text()).toEqual("Artists - A")
   })
 })

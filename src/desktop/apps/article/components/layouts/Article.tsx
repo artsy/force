@@ -62,6 +62,8 @@ export class ArticleLayout extends React.Component<AppProps> {
     } = this.props
 
     const isStatic = isSuper || article.seriesArticle || customEditorial
+
+    // @ts-expect-error STRICT_NULL_CHECK
     const renderAd = shouldAdRender(null, null, null, article.layout)
 
     return (

@@ -1,7 +1,6 @@
 import React from "react"
-import { Box, SkeletonBox, SkeletonText } from "@artsy/palette"
-import { Carousel } from "v2/Components/Carousel"
-import { FAIR_EXHIBITOR_IMAGE_HEIGHT } from "./FairExhibitorRail"
+import { Box, Shelf, SkeletonBox, SkeletonText } from "@artsy/palette"
+import { IMG_HEIGHT } from "v2/Components/Artwork/ShelfArtwork"
 
 interface FairExhibitorRailPlaceholderProps {
   done?: boolean
@@ -10,30 +9,26 @@ interface FairExhibitorRailPlaceholderProps {
 export const FairExhibitorRailPlaceholder: React.FC<FairExhibitorRailPlaceholderProps> = ({
   done = true,
 }) => (
-  <Carousel arrowHeight={FAIR_EXHIBITOR_IMAGE_HEIGHT}>
+  <Shelf>
     {[...new Array(10)].map((_, i) => {
       return (
         <Box key={i}>
           <SkeletonBox
-            width={220}
-            height={FAIR_EXHIBITOR_IMAGE_HEIGHT}
+            width={200}
+            height={[IMG_HEIGHT.mobile, IMG_HEIGHT.desktop]}
             mb={1}
             done={done}
           />
 
-          <SkeletonText variant="mediumText" done={done}>
+          <SkeletonText variant="md" done={done}>
             Artist Name
           </SkeletonText>
 
-          <SkeletonText variant="text" done={done}>
-            Artwork Title
-          </SkeletonText>
+          <SkeletonText done={done}>Artwork Title</SkeletonText>
 
-          <SkeletonText variant="text" done={done}>
-            Price
-          </SkeletonText>
+          <SkeletonText done={done}>Price</SkeletonText>
         </Box>
       )
     })}
-  </Carousel>
+  </Shelf>
 )

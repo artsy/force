@@ -1,6 +1,6 @@
 import loadable from "@loadable/component"
 import { graphql } from "react-relay"
-import { RouteConfig } from "found"
+import { AppRouteConfig } from "v2/Artsy/Router/Route"
 
 const BuyerGuaranteeApp = loadable(() => import("./BuyerGuaranteeApp"), {
   resolveComponent: component => component.BuyerGuaranteeApp,
@@ -14,9 +14,10 @@ const BuyerGuaranteeIndexRoute = loadable(
   }
 )
 
-export const buyerGuaranteeRoutes: RouteConfig[] = [
+export const buyerGuaranteeRoutes: AppRouteConfig[] = [
   {
     path: "/buyer-guarantee",
+    theme: "v3",
     getComponent: () => BuyerGuaranteeApp,
     prepare: () => {
       BuyerGuaranteeApp.preload()

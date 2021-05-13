@@ -111,6 +111,7 @@ export const FeaturedArticlesItem = styled(Flex)`
 
 @track()
 export class OverviewRoute extends React.Component<OverviewRouteProps, {}> {
+  // @ts-expect-error STRICT_NULL_CHECK
   @track<OverviewRouteProps>(props => ({
     action_type: Schema.ActionType.Click,
 
@@ -159,29 +160,40 @@ export class OverviewRoute extends React.Component<OverviewRouteProps, {}> {
 
     const { artist } = this.props
     const showArtistInsights =
+      // @ts-expect-error STRICT_NULL_CHECK
       showMarketInsights(this.props.artist) || artist.insights.length > 0
+    // @ts-expect-error STRICT_NULL_CHECK
     const showArtistBio = Boolean(artist.biographyBlurb.text)
     const showRelatedCategories =
+      // @ts-expect-error STRICT_NULL_CHECK
       get(artist, a => a.related.genes.edges.length, 0) > 0
 
     const isClient = typeof window !== "undefined"
     const showRecommendations =
       isClient &&
+      // @ts-expect-error STRICT_NULL_CHECK
       get(artist, a => a.related.artistsConnection.edges.length, 0) > 0
 
     const browseWorksButtonLabel =
+      // @ts-expect-error STRICT_NULL_CHECK
       artist.counts.forSaleArtworks > 0
-        ? `Browse all works for sale (${artist.counts.forSaleArtworks.toLocaleString()})`
+        ? // @ts-expect-error STRICT_NULL_CHECK
+          `Browse all works for sale (${artist.counts.forSaleArtworks.toLocaleString()})`
         : "Browse all works"
 
     const currentShows =
+      // @ts-expect-error STRICT_NULL_CHECK
       get(artist, a => a.showsConnection.edges.length) &&
+      // @ts-expect-error STRICT_NULL_CHECK
       artist.showsConnection.edges.map(({ node }) => node)
 
     const featuredArticles =
+      // @ts-expect-error STRICT_NULL_CHECK
       get(artist, a => a.articlesConnection.edges.length) &&
+      // @ts-expect-error STRICT_NULL_CHECK
       artist.articlesConnection.edges.map(({ node }) => node)
 
+    // @ts-expect-error STRICT_NULL_CHECK
     const titleString = computeTitle(artist.name, artist.counts.artworks)
 
     return (
@@ -224,12 +236,13 @@ export class OverviewRoute extends React.Component<OverviewRouteProps, {}> {
                 <ArtistConsignButton artist={artist} />
               </>
             </Col>
-
+            {/* @ts-expect-error STRICT_NULL_CHECK */}
             {(showArtistInsights || artist.statuses.cv) && (
               <Col sm={4}>
                 <Box pl={2} pt={0}>
                   <Text variant="mediumText">Career Highlights</Text>
                   <SelectedCareerAchievements artist={artist} />
+                  {/* @ts-expect-error STRICT_NULL_CHECK */}
                   {artist.statuses.cv && (
                     <>
                       <Spacer mb={2} />
@@ -244,7 +257,6 @@ export class OverviewRoute extends React.Component<OverviewRouteProps, {}> {
             )}
           </Row>
         </Media>
-
         <Media at="xs">
           <ArtistTopWorksRail artist={artist} onOverviewTab />
 
@@ -265,13 +277,12 @@ export class OverviewRoute extends React.Component<OverviewRouteProps, {}> {
             </>
           )}
         </Media>
-
         <Row>
           <Col>
             <ArtistCollectionsRail artistID={artist.internalID} />
           </Col>
         </Row>
-
+        {/* @ts-expect-error STRICT_NULL_CHECK */}
         {artist.statuses.artworks && (
           <>
             <Media at="xs">{showArtistBio && <Separator my={3} />}</Media>
@@ -283,6 +294,7 @@ export class OverviewRoute extends React.Component<OverviewRouteProps, {}> {
               <Col>
                 <SectionHeader
                   headerString={
+                    // @ts-expect-error STRICT_NULL_CHECK
                     artist.counts.forSaleArtworks > 0
                       ? "Works For Sale"
                       : "Artworks"
@@ -302,7 +314,7 @@ export class OverviewRoute extends React.Component<OverviewRouteProps, {}> {
             </Row>
           </>
         )}
-
+        {/* @ts-expect-error STRICT_NULL_CHECK */}
         {(showArtistInsights || artist.statuses.cv) && (
           <Media at="xs">
             <Separator my={3} />
@@ -312,6 +324,7 @@ export class OverviewRoute extends React.Component<OverviewRouteProps, {}> {
                   Career Highlights
                 </Text>
                 <SelectedCareerAchievements artist={artist} />
+                {/* @ts-expect-error STRICT_NULL_CHECK */}
                 {artist.statuses.cv && (
                   <>
                     <Spacer mb={2} />
@@ -325,7 +338,6 @@ export class OverviewRoute extends React.Component<OverviewRouteProps, {}> {
             </Col>
           </Media>
         )}
-
         {!!currentShows && (
           <>
             <Separator my={3} />
@@ -363,7 +375,6 @@ export class OverviewRoute extends React.Component<OverviewRouteProps, {}> {
             />
           </>
         )}
-
         {!!featuredArticles && (
           <>
             <Separator my={3} />
@@ -404,7 +415,6 @@ export class OverviewRoute extends React.Component<OverviewRouteProps, {}> {
             />
           </>
         )}
-
         {showRelatedCategories && (
           <Media at="xs">
             <Separator my={3} />
@@ -413,7 +423,6 @@ export class OverviewRoute extends React.Component<OverviewRouteProps, {}> {
             <Genes artist={artist} />
           </Media>
         )}
-
         {showRecommendations && (
           <Row>
             <Col>

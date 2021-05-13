@@ -108,11 +108,13 @@ export class ArtworkSharePanel extends React.Component<
     const {
       artwork: {
         href,
+        // @ts-expect-error STRICT_NULL_CHECK
         artworkMeta: { share },
         images,
       },
     } = this.props
 
+    // @ts-expect-error STRICT_NULL_CHECK
     const shareImageUrl = images && images[0].url
     const url = sd.APP_URL + href
 

@@ -25,6 +25,7 @@ const { getWrapper } = setupTestWrapper<
             contextPageOwnerType: OwnerType.artwork,
           }}
         >
+          {/* @ts-expect-error STRICT_NULL_CHECK */}
           <ArtworkDetailsAdditionalInfoFragmentContainer {...props} />
         </AnalyticsContext.Provider>
       </MockBoot>

@@ -26,6 +26,7 @@ const renderPage = async ({ layoutTemplate }, req, res, next) => {
     const layout = await stitch({
       basePath: __dirname,
       blocks: {
+        // @ts-expect-error STRICT_NULL_CHECK
         body: bodyHTML,
         head: () => headTags,
       },

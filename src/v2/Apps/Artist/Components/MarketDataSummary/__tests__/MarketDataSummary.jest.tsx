@@ -10,6 +10,7 @@ describe("MarketDataSummary", () => {
   describe("snapshots", () => {
     it("renders correctly", () => {
       const marketDataSummary = renderer
+        // @ts-expect-error STRICT_NULL_CHECK
         .create(<MarketDataSummary artist={MarketDataSummaryArtists[0]} />)
         .toJSON()
       expect(marketDataSummary).toMatchSnapshot()
@@ -19,6 +20,7 @@ describe("MarketDataSummary", () => {
   describe("unit", () => {
     it("renders market data if present", () => {
       const component = mount(
+        // @ts-expect-error STRICT_NULL_CHECK
         <MarketDataSummary artist={MarketDataSummaryArtists[0]} />
       )
       expect(component.text()).toMatch("$63m auction record")
@@ -30,6 +32,7 @@ describe("MarketDataSummary", () => {
 
     it("renders empty text if props.onEmptyText and no market data", () => {
       const component = mount(
+        // @ts-expect-error STRICT_NULL_CHECK
         <MarketDataSummary
           artist={MarketDataSummaryArtists[1]}
           onEmptyText="United States, Abstract Art"
@@ -40,6 +43,7 @@ describe("MarketDataSummary", () => {
 
     it("renders nothing if no market data or onEmptyText", () => {
       const component = mount(
+        // @ts-expect-error STRICT_NULL_CHECK
         <MarketDataSummary artist={MarketDataSummaryArtists[1]} />
       )
       expect(component.html()).toBe(null)
@@ -48,6 +52,7 @@ describe("MarketDataSummary", () => {
     describe("#renderGalleryCategory", () => {
       it("prints single results", () => {
         const component = mount(
+          // @ts-expect-error STRICT_NULL_CHECK
           <MarketDataSummary artist={MarketDataSummaryArtists[0]} />
         )
         const {
@@ -59,6 +64,7 @@ describe("MarketDataSummary", () => {
 
       it("prints plural results", () => {
         const component = mount(
+          // @ts-expect-error STRICT_NULL_CHECK
           <MarketDataSummary artist={MarketDataSummaryArtists[0]} />
         )
         const {

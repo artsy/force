@@ -44,7 +44,9 @@ export const ResultsFilter: React.FC<ResultsFilterProps> = ({
   const { aggregations, currentlySelectedFilters } = useArtworkFilterContext()
   const { isFiltered, handleFilterChange } = useFacetFilter()
 
+  // @ts-expect-error STRICT_NULL_CHECK
   const selectedValues = currentlySelectedFilters()[facetName]
+  // @ts-expect-error STRICT_NULL_CHECK
   const results = aggregations.find(aggregation => aggregation.slice === slice)
     ?.counts
 
@@ -53,10 +55,12 @@ export const ResultsFilter: React.FC<ResultsFilterProps> = ({
   }
 
   const resultsOrdered = orderBy(results, ["count", "name"], ["desc", "asc"])
+  // @ts-expect-error STRICT_NULL_CHECK
   const resultsSorted = sortResults(selectedValues, resultsOrdered)
 
   const isBelowTheFoldFilterSelected =
     intersection(
+      // @ts-expect-error STRICT_NULL_CHECK
       selectedValues,
       resultsSorted.slice(INITIAL_ITEMS_TO_SHOW).map(({ value }) => value)
     ).length > 0

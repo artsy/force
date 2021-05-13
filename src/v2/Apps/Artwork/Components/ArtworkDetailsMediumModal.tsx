@@ -18,6 +18,7 @@ export const ArtworkDetailsMediumModal: React.FC<ArtworkDetailsMediumModalProps>
     <Modal
       show={show}
       onClose={onClose}
+      // @ts-expect-error STRICT_NULL_CHECK
       title={artwork.mediumType.name}
       FixedButton={
         <Button onClick={onClose} width="100%">
@@ -25,6 +26,7 @@ export const ArtworkDetailsMediumModal: React.FC<ArtworkDetailsMediumModalProps>
         </Button>
       }
     >
+      {/* @ts-expect-error STRICT_NULL_CHECK */}
       <Text color="black100">{artwork.mediumType.longDescription}</Text>
     </Modal>
   )

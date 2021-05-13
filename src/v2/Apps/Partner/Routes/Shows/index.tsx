@@ -18,6 +18,7 @@ export const Shows: React.FC<PartnerShowsProps> = ({
   const {
     currentEvents,
     upcomingEvents,
+    // @ts-expect-error STRICT_NULL_CHECK
     featured: { edges: featuredShows },
   } = partner
 
@@ -27,7 +28,9 @@ export const Shows: React.FC<PartnerShowsProps> = ({
     },
   } = useRouter()
 
+  // @ts-expect-error STRICT_NULL_CHECK
   const isCurrentEventsExist = !!currentEvents.edges.length
+  // @ts-expect-error STRICT_NULL_CHECK
   const isUpcomingEventsExist = !!upcomingEvents.edges.length
   const page = +query.page || 1
 
@@ -40,12 +43,14 @@ export const Shows: React.FC<PartnerShowsProps> = ({
         )}
       {isCurrentEventsExist && (
         <ShowEventsFragmentContainer
+          // @ts-expect-error STRICT_NULL_CHECK
           edges={currentEvents.edges}
           eventTitle="Current Events"
         />
       )}
       {isUpcomingEventsExist && (
         <ShowEventsFragmentContainer
+          // @ts-expect-error STRICT_NULL_CHECK
           edges={upcomingEvents.edges}
           eventTitle="Upcoming Events"
         />

@@ -9,14 +9,6 @@ export type ArtistsIndex_featuredGenes = ReadonlyArray<{
         readonly internalID?: string;
         readonly name?: string | null;
         readonly href?: string | null;
-        readonly image?: {
-            readonly thumb: {
-                readonly width: number;
-                readonly height: number;
-                readonly src: string;
-                readonly srcSet: string;
-            } | null;
-        } | null;
         readonly trendingArtists?: ReadonlyArray<{
             readonly internalID: string;
             readonly " $fragmentRefs": FragmentRefs<"ArtistsArtistCard_artist">;
@@ -78,67 +70,6 @@ return {
             },
             {
               "alias": null,
-              "args": null,
-              "concreteType": "Image",
-              "kind": "LinkedField",
-              "name": "image",
-              "plural": false,
-              "selections": [
-                {
-                  "alias": "thumb",
-                  "args": [
-                    {
-                      "kind": "Literal",
-                      "name": "height",
-                      "value": 80
-                    },
-                    {
-                      "kind": "Literal",
-                      "name": "width",
-                      "value": 80
-                    }
-                  ],
-                  "concreteType": "CroppedImageUrl",
-                  "kind": "LinkedField",
-                  "name": "cropped",
-                  "plural": false,
-                  "selections": [
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "width",
-                      "storageKey": null
-                    },
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "height",
-                      "storageKey": null
-                    },
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "src",
-                      "storageKey": null
-                    },
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "srcSet",
-                      "storageKey": null
-                    }
-                  ],
-                  "storageKey": "cropped(height:80,width:80)"
-                }
-              ],
-              "storageKey": null
-            },
-            {
-              "alias": null,
               "args": [
                 {
                   "kind": "Literal",
@@ -170,5 +101,5 @@ return {
   "type": "OrderedSet"
 };
 })();
-(node as any).hash = '412d57c2dda16f6c10773671737b1715';
+(node as any).hash = '64b07efb8dc9cb2ad5f98213e6216081';
 export default node;

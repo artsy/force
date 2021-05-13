@@ -20,6 +20,7 @@ const defaultData = {
 const setupTestEnv = () => {
   return createTestEnv({
     Component: (props: UserInformationQueryResponse) => (
+      // @ts-expect-error STRICT_NULL_CHECK
       <UserInformationRefetchContainer {...props} />
     ),
     TestPage: UserInformationTestPage,

@@ -1,5 +1,4 @@
 import React from "react"
-import { AppContainer } from "v2/Apps/Components/AppContainer"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Title } from "react-head"
 import { PaymentApp_me } from "v2/__generated__/PaymentApp_me.graphql"
@@ -20,16 +19,17 @@ const PaymentApp: React.FC<PaymentAppProps> = props => {
   // the purchase app. We need to move these to a component when we move all tabs
   // to apps
   return (
-    <AppContainer>
+    <>
       <Title>My payments | Artsy</Title>
       <Box mx={[1, 4]} pb={[2, 4]}>
         <Box mb={2} mt={1}>
+          {/* @ts-expect-error STRICT_NULL_CHECK */}
           <UserSettingsTabs route={sd.CURRENT_PATH} username={me?.name} />
         </Box>
         <UserSettingsAddresses me={me} />
         <PaymentSection me={me} />
       </Box>
-    </AppContainer>
+    </>
   )
 }
 

@@ -35,6 +35,7 @@ const FairsFairRow: React.FC<FairsFairRowProps> = ({ fair, ...rest }) => {
   const href =
     // If fair status is upcoming — link to the organizer profile
     // TODO: Extract this logic to Metaphysics `href`
+    // @ts-expect-error STRICT_NULL_CHECK
     DateTime.local() < DateTime.fromISO(fair.isoStartAt)
       ? fair?.organizer?.profile?.href // possibly null
       : fair.href
@@ -42,8 +43,10 @@ const FairsFairRow: React.FC<FairsFairRowProps> = ({ fair, ...rest }) => {
   const LinkOrBox = href ? RouterLink : Box
 
   return (
+    // @ts-expect-error STRICT_NULL_CHECK
     <LinkOrBox to={href} style={{ display: "block", textDecoration: "none" }}>
       <Container
+        // @ts-expect-error STRICT_NULL_CHECK
         href={href}
         alignItems="center"
         borderBottom="1px solid"
@@ -71,6 +74,7 @@ const FairsFairRow: React.FC<FairsFairRowProps> = ({ fair, ...rest }) => {
                 height={icon.height}
                 src={icon.src}
                 srcSet={icon.srcSet}
+                // @ts-expect-error STRICT_NULL_CHECK
                 alt={fair.name}
               />
             ) : (

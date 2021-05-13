@@ -14,6 +14,7 @@ const logger = createLogger(
 
 export const EmailConfirmationLinkExpired: React.FC = () => {
   const [afterSubmitContent, setAfterSubmitContent] = React.useState<string>(
+    // @ts-expect-error STRICT_NULL_CHECK
     null
   )
   const { relayEnvironment } = useSystemContext()
@@ -24,7 +25,9 @@ export const EmailConfirmationLinkExpired: React.FC = () => {
       action_type: Schema.ActionType.Click,
       subject: Schema.Subject.EmailConfirmationLinkExpired,
     })
+    // @ts-expect-error STRICT_NULL_CHECK
     requestEmailConfirmation(relayEnvironment)
+      // @ts-expect-error STRICT_NULL_CHECK
       .then(({ sendConfirmationEmail: { confirmationOrError } }) => {
         const emailToConfirm = confirmationOrError?.unconfirmedEmail
 

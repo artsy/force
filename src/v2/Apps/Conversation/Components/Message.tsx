@@ -51,6 +51,7 @@ const MessageText = styled(Sans)`
 `
 
 interface AttachmentProps {
+  // @ts-expect-error STRICT_NULL_CHECK
   attachment: Message_message["attachments"][0]
   alignSelf: string
   bgColor: Color
@@ -137,12 +138,16 @@ export const Message: React.FC<MessageProps> = props => {
           <Linkify componentDecorator={linkTargetDecorator}>{body}</Linkify>
         </MessageText>
       </Box>
+      {/* @ts-expect-error STRICT_NULL_CHECK */}
       {message.attachments.length > 0 &&
+        // @ts-expect-error STRICT_NULL_CHECK
         message.attachments.map(attachment => {
           return (
             <Attachment
+              // @ts-expect-error STRICT_NULL_CHECK
               key={attachment.id}
               attachment={attachment}
+              // @ts-expect-error STRICT_NULL_CHECK
               alignSelf={alignSelf}
               textColor={textColor}
               bgColor={bgColor}
@@ -150,6 +155,7 @@ export const Message: React.FC<MessageProps> = props => {
           )
         })}
       {showTimeSince && (
+        // @ts-expect-error STRICT_NULL_CHECK
         <TimeSince time={message.createdAt} style={{ alignSelf }} mt={0.5} />
       )}
     </>

@@ -24,6 +24,7 @@ export const ConsignMeta: React.FC = () => {
       <Meta property="og:url" content={href} />
       <Meta property="og:type" content="website" />
       <Meta property="twitter:card" content="summary" />
+      {/* @ts-expect-error STRICT_NULL_CHECK */}
       {metaImage && <Meta property="og:image" content={metaImage.src} />}
     </>
   )

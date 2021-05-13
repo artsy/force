@@ -8,6 +8,7 @@ import {
 
 import { PastAuctions_viewer } from "v2/__generated__/PastAuctions_viewer.graphql"
 import { AuctionArtworksRailFragmentContainer } from "../Components/AuctionArtworksRail/AuctionArtworksRail"
+import { extractNodes } from "v2/Utils/extractNodes"
 
 export interface PastAuctionsProps {
   viewer: PastAuctions_viewer
@@ -40,7 +41,9 @@ const PastAuctions: React.FC<PastAuctionsProps> = ({ viewer, relay }) => {
     })
   }
 
-  if (viewer.salesConnection.edges.length === 0) {
+  const nodes = extractNodes(viewer.salesConnection)
+
+  if (nodes.length === 0) {
     return (
       <Box>
         <Text>No past auctions.</Text>
@@ -51,7 +54,7 @@ const PastAuctions: React.FC<PastAuctionsProps> = ({ viewer, relay }) => {
   return (
     <>
       <Box>
-        {viewer.salesConnection.edges.map(({ node }, index) => {
+        {nodes.map((node, index) => {
           return (
             <Box my={6} key={index}>
               <AuctionArtworksRailFragmentContainer

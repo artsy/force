@@ -178,6 +178,7 @@ describe("ArtworkSidebarBidAction", () => {
 
               const wrapper = await getWrapper({
                 artwork,
+                // @ts-expect-error STRICT_NULL_CHECK
                 me: {
                   ...NotIDVedUser,
                   pendingIdentityVerification: {
@@ -205,6 +206,7 @@ describe("ArtworkSidebarBidAction", () => {
 
               const wrapper = await getWrapper({
                 artwork,
+                // @ts-expect-error STRICT_NULL_CHECK
                 me: {
                   ...NotIDVedUser,
                   pendingIdentityVerification: null,

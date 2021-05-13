@@ -1,40 +1,50 @@
-import { CollectionsHubRails_linkedCollections } from "v2/__generated__/CollectionsHubRails_linkedCollections.graphql"
+import { Join, Spacer } from "@artsy/palette"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
+import { CollectionsHubRails_linkedCollections } from "v2/__generated__/CollectionsHubRails_linkedCollections.graphql"
 import { ArtistSeriesRailContainer as ArtistSeriesRail } from "./ArtistSeriesRail"
 import { FeaturedCollectionsRailsContainer as FeaturedCollectionsRails } from "./FeaturedCollectionsRails"
 import { OtherCollectionsRailsContainer as OtherCollectionsRail } from "./OtherCollectionsRail"
 
-const railForGroupType = collectionGroup => {
-  const { groupType } = collectionGroup
-  switch (groupType) {
-    case "ArtistSeries":
-      return <ArtistSeriesRail collectionGroup={collectionGroup} />
-    case "FeaturedCollections":
-      return <FeaturedCollectionsRails collectionGroup={collectionGroup} />
-    case "OtherCollections":
-      return <OtherCollectionsRail collectionGroup={collectionGroup} />
-    default:
-      return null
-  }
-}
-
-interface Props {
+interface CollectionsHubRailsProps {
   linkedCollections: CollectionsHubRails_linkedCollections
 }
 
-export const CollectionsHubRails = ({ linkedCollections }: Props) => {
+export const CollectionsHubRails: React.FC<CollectionsHubRailsProps> = ({
+  linkedCollections,
+}) => {
   return (
-    <>
-      {linkedCollections.map((collectionGroup, index) => (
-        <div key={index}>{railForGroupType(collectionGroup)}</div>
-      ))}
-    </>
+    <Join separator={<Spacer mt={6} />}>
+      {linkedCollections.map((collectionGroup, index) => {
+        switch (collectionGroup.groupType) {
+          case "ArtistSeries":
+            return (
+              <ArtistSeriesRail key={index} collectionGroup={collectionGroup} />
+            )
+          case "FeaturedCollections":
+            return (
+              <FeaturedCollectionsRails
+                key={index}
+                collectionGroup={collectionGroup}
+              />
+            )
+          case "OtherCollections":
+            return (
+              <OtherCollectionsRail
+                key={index}
+                collectionGroup={collectionGroup}
+              />
+            )
+          default:
+            return null
+        }
+      })}
+    </Join>
   )
 }
 
 export const CollectionsHubRailsContainer = createFragmentContainer(
-  CollectionsHubRails as React.FC<Props>,
+  CollectionsHubRails,
   {
     linkedCollections: graphql`
       fragment CollectionsHubRails_linkedCollections on MarketingCollectionGroup

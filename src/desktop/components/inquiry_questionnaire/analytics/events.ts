@@ -18,10 +18,12 @@ import { setAnalyticsClientReferrerOptions } from "lib/analytics/setAnalyticsCli
 
   track = function (event, props = {}) {
     event = namespace(" " + event)
+    // @ts-expect-error STRICT_NULL_CHECK
     window.analytics.track(event, props, setAnalyticsClientReferrerOptions())
   }
 
   trackWithoutNamespace = function (event, props = {}) {
+    // @ts-expect-error STRICT_NULL_CHECK
     window.analytics.track(event, props, setAnalyticsClientReferrerOptions())
   }
 

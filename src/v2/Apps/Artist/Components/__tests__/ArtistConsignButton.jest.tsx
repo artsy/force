@@ -126,6 +126,7 @@ describe("ArtistConsignButton", () => {
 
       it("guards against missing imageURL", () => {
         const responseWithoutImage = cloneDeep(response)
+        // @ts-expect-error STRICT_NULL_CHECK
         responseWithoutImage.image = null
         const wrapper = getWrapper({
           breakpoint: "md",
@@ -172,6 +173,7 @@ describe("ArtistConsignButton", () => {
 
       it("guards against missing imageURL", () => {
         const responseWithoutImage = cloneDeep(response)
+        // @ts-expect-error STRICT_NULL_CHECK
         responseWithoutImage.image = null
         const wrapper = getWrapper({
           breakpoint: "md",

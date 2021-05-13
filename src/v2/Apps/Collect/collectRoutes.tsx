@@ -1,5 +1,5 @@
 import loadable from "@loadable/component"
-import { RouteConfig } from "found"
+import { AppRouteConfig } from "v2/Artsy/Router/Route"
 import { graphql } from "react-relay"
 import { allowedFilters } from "v2/Components/ArtworkFilter/Utils/allowedFilters"
 
@@ -17,9 +17,10 @@ const CollectionApp = loadable(() => import("./Routes/Collection"), {
   resolveComponent: component => component.CollectionRefetchContainer,
 })
 
-export const collectRoutes: RouteConfig[] = [
+export const collectRoutes: AppRouteConfig[] = [
   {
     path: "/collect/:medium?",
+    theme: "v3",
     getComponent: () => CollectApp,
     prepare: () => {
       CollectApp.preload()
@@ -29,6 +30,7 @@ export const collectRoutes: RouteConfig[] = [
   },
   {
     path: "/collect/color/:color?",
+    theme: "v3",
     getComponent: () => CollectApp,
     prepare: () => {
       CollectApp.preload()
@@ -51,6 +53,7 @@ export const collectRoutes: RouteConfig[] = [
     `,
   },
   {
+    theme: "v3",
     path: "/collection/:slug",
     getComponent: () => CollectionApp,
     prepare: () => {

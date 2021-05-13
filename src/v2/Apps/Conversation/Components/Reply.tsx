@@ -81,6 +81,7 @@ export const Reply: React.FC<ReplyProps> = props => {
           setLoading(false)
           setButtonDisabled(true)
           if (onScroll) {
+            // @ts-expect-error STRICT_NULL_CHECK
             onScroll()
           }
           const {
@@ -89,6 +90,7 @@ export const Reply: React.FC<ReplyProps> = props => {
 
           trackEvent(
             sentConversationMessage({
+              // @ts-expect-error STRICT_NULL_CHECK
               impulseConversationId: conversation.internalID,
               impulseMessageId: internalID,
             })
@@ -147,11 +149,13 @@ export const Reply: React.FC<ReplyProps> = props => {
             onFocus={() => {
               trackEvent(
                 focusedOnConversationMessageInput({
+                  // @ts-expect-error STRICT_NULL_CHECK
                   impulseConversationId: conversation.internalID,
                 })
               )
             }}
             placeholder="Type your message"
+            // @ts-expect-error STRICT_NULL_CHECK
             ref={textArea}
           />
         </FullWidthFlex>
@@ -161,6 +165,7 @@ export const Reply: React.FC<ReplyProps> = props => {
             disabled={buttonDisabled}
             loading={loading}
             onClick={_event => {
+              // @ts-expect-error STRICT_NULL_CHECK
               setupAndSendMessage(onScroll)
             }}
           >

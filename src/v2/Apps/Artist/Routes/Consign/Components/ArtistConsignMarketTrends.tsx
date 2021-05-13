@@ -19,6 +19,7 @@ export const ArtistConsignMarketTrends: React.FC<ArtistConsignMarketTrendsProps>
     artist: {
       href,
       targetSupply: {
+        // @ts-expect-error STRICT_NULL_CHECK
         microfunnel: {
           metadata: { highestRealized, str, realized },
         },
