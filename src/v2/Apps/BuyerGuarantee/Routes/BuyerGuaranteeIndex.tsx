@@ -446,6 +446,11 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
       </Media>
       {/*  Artsy Guarantee Grid block mobile */}
       <Media lessThan="sm">
+        <Flex justifyContent="center" mb={4}>
+          <Text variant="title" as="h1">
+            The Artsy Guarantee
+          </Text>
+        </Flex>
         <CSSGrid
           backgroundColor={color("black5")}
           gridTemplateColumns="repeat(3, 1fr)"
