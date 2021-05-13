@@ -98,36 +98,36 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
 
   return (
     <>
-      <FullBleedHeader
-        // @ts-expect-error STRICT_NULL_CHECK
-        {...headerImage.image.resized.srcSet}
-        height={[283, 469]}
-        // @ts-expect-error STRICT_NULL_CHECK
-        src={heroImageURL}
-        caption={
-          headerImage.imageTitle +
-          ". Courtesy of the artist and Kenise Barnes Fine Art. "
-        }
-      >
-        <Flex
-          position="absolute"
-          top={0}
-          right={0}
-          bottom={0}
-          left={0}
-          justifyContent="center"
-          alignItems="center"
+      {heroImageURL && (
+        <FullBleedHeader
+          {...headerImage?.image?.resized?.srcSet}
+          height={[283, 469]}
+          src={heroImageURL}
+          caption={
+            headerImage.imageTitle +
+            ". Courtesy of the artist and Kenise Barnes Fine Art. "
+          }
         >
-          <Text
-            fontSize={[34, null, 80]}
-            color={color("white100")}
-            position="relative"
-            as="h1"
+          <Flex
+            position="absolute"
+            top={0}
+            right={0}
+            bottom={0}
+            left={0}
+            justifyContent="center"
+            alignItems="center"
           >
-            The Artsy Guarantee
-          </Text>
-        </Flex>
-      </FullBleedHeader>
+            <Text
+              fontSize={[34, null, 80]}
+              color={color("white100")}
+              position="relative"
+              as="h1"
+            >
+              The Artsy Guarantee
+            </Text>
+          </Flex>
+        </FullBleedHeader>
+      )}
       <Flex justifyContent="center" flexDirection="column">
         <Flex justifyContent="center" mx={["10%", "25%"]} textAlign="center">
           <Text variant="title" mt={5}>
@@ -309,21 +309,18 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
           </Flex>
         </Media>
       </Flex>
-
       {/*  Artsy Guarantee Sections desktop */}
       <Media greaterThanOrEqual="sm">
         <CSSGrid gridTemplateColumns="repeat(2, 1fr)">
-          <Image
-            // @ts-expect-error STRICT_NULL_CHECK
-            src={authenticityGuaranteeImageURL}
-            // @ts-expect-error STRICT_NULL_CHECK
-            alt={authenticityImage.artist.name}
-            // @ts-expect-error STRICT_NULL_CHECK
-            srcSet={authenticityImage.image.resized.srcSet}
-            lazyLoad
-            // @ts-expect-error STRICT_NULL_CHECK
-            aria-label={authenticityImage.imageTitle}
-          />
+          {authenticityGuaranteeImageURL && (
+            <Image
+              src={authenticityGuaranteeImageURL}
+              alt={authenticityImage?.artist?.name!}
+              srcSet={authenticityImage?.image?.resized?.srcSet}
+              lazyLoad
+              aria-label={authenticityImage?.imageTitle!}
+            />
+          )}
           <Flex flexDirection="column" p={space(9)}>
             <Text variant="title">Authenticity Guarantee</Text>
             <Text variant="text" my={2}>
@@ -338,28 +335,24 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
             </Text>
             {learnMoreButton("40%")}
           </Flex>
-          <Image
-            // @ts-expect-error STRICT_NULL_CHECK
-            src={moneyBackGuaranteeImageURL}
-            // @ts-expect-error STRICT_NULL_CHECK
-            alt={moneyBackGuaranteeImage.artist.name}
-            // @ts-expect-error STRICT_NULL_CHECK
-            srcSet={moneyBackGuaranteeImage.image.resized.srcSet}
-            lazyLoad
-            // @ts-expect-error STRICT_NULL_CHECK
-            aria-label={moneyBackGuaranteeImage.imageTitle}
-          />
-          <Image
-            // @ts-expect-error STRICT_NULL_CHECK
-            src={securePaymentImageURL}
-            // @ts-expect-error STRICT_NULL_CHECK
-            alt={securePaymentImage.artist.name}
-            // @ts-expect-error STRICT_NULL_CHECK
-            srcSet={securePaymentImage.image.resized.srcSet}
-            // @ts-expect-error STRICT_NULL_CHECK
-            aria-label={securePaymentImage.imageTitle}
-            lazyLoad
-          />
+          {moneyBackGuaranteeImageURL && (
+            <Image
+              src={moneyBackGuaranteeImageURL}
+              alt={moneyBackGuaranteeImage?.artist?.name!}
+              srcSet={moneyBackGuaranteeImage?.image?.resized?.srcSet}
+              lazyLoad
+              aria-label={moneyBackGuaranteeImage?.imageTitle!}
+            />
+          )}
+          {securePaymentImageURL && (
+            <Image
+              src={securePaymentImageURL}
+              alt={securePaymentImage?.artist?.name!}
+              srcSet={securePaymentImage?.image?.resized?.srcSet}
+              aria-label={securePaymentImage?.imageTitle!}
+              lazyLoad
+            />
+          )}
           <Flex flexDirection="column" px={space(9)} pt={space(9)}>
             <Text variant="title">Secure Payment</Text>
             <Text variant="text" my={2}>
@@ -369,21 +362,18 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
           </Flex>
         </CSSGrid>
       </Media>
-
       {/*  Artsy Guarantee Sections mobile */}
       <Media lessThan="sm">
         <Flex flexDirection="column" mt={5} mx={2} mb={4}>
-          <Image
-            // @ts-expect-error STRICT_NULL_CHECK
-            src={authenticityGuaranteeImageURL}
-            // @ts-expect-error STRICT_NULL_CHECK
-            alt={authenticityImage.artist.name}
-            // @ts-expect-error STRICT_NULL_CHECK
-            srcSet={authenticityImage.image.resized.srcSet}
-            lazyLoad
-            // @ts-expect-error STRICT_NULL_CHECK
-            aria-label={authenticityImage.imageTitle}
-          />
+          {authenticityGuaranteeImageURL && (
+            <Image
+              src={authenticityGuaranteeImageURL}
+              alt={authenticityImage?.artist?.name!}
+              srcSet={authenticityImage?.image?.resized?.srcSet!}
+              lazyLoad
+              aria-label={authenticityImage?.imageTitle!}
+            />
+          )}
           <Text variant="title" mt={4}>
             Authenticity Guarantee
           </Text>
@@ -393,17 +383,15 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
           {learnMoreButton("50%")}
         </Flex>
         <Flex flexDirection="column" mt={5} mx={2} mb={4}>
-          <Image
-            // @ts-expect-error STRICT_NULL_CHECK
-            src={moneyBackGuaranteeImageURL}
-            // @ts-expect-error STRICT_NULL_CHECK
-            alt={moneyBackGuaranteeImage.artist.name}
-            // @ts-expect-error STRICT_NULL_CHECK
-            srcSet={moneyBackGuaranteeImage.image.resized.srcSet}
-            lazyLoad
-            // @ts-expect-error STRICT_NULL_CHECK
-            aria-label={moneyBackGuaranteeImage.imageTitle}
-          />
+          {moneyBackGuaranteeImageURL && (
+            <Image
+              src={moneyBackGuaranteeImageURL}
+              alt={moneyBackGuaranteeImage?.artist?.name!}
+              srcSet={moneyBackGuaranteeImage?.image?.resized?.srcSet}
+              lazyLoad
+              aria-label={moneyBackGuaranteeImage?.imageTitle!}
+            />
+          )}
           <Text variant="title" mt={4}>
             Money-Back Guarantee
           </Text>
@@ -413,17 +401,15 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
           {learnMoreButton("50%")}
         </Flex>
         <Flex flexDirection="column" mt={5} mx={2} mb={4}>
-          <Image
-            // @ts-expect-error STRICT_NULL_CHECK
-            src={securePaymentImageURL}
-            // @ts-expect-error STRICT_NULL_CHECK
-            alt={securePaymentImage.artist.name}
-            // @ts-expect-error STRICT_NULL_CHECK
-            srcSet={securePaymentImage.image.resized.srcSet}
-            lazyLoad
-            // @ts-expect-error STRICT_NULL_CHECK
-            aria-label={securePaymentImage.imageTitle}
-          />
+          {securePaymentImageURL && (
+            <Image
+              src={securePaymentImageURL}
+              alt={securePaymentImage?.artist?.name!}
+              srcSet={securePaymentImage?.image?.resized?.srcSet}
+              lazyLoad
+              aria-label={securePaymentImage?.imageTitle!}
+            />
+          )}
           <Text variant="title" mt={4}>
             Secure Payment
           </Text>
@@ -433,7 +419,6 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
           <PoweredByStripeIcon w={200} ml={"-30px"} mt={0} />
         </Flex>
       </Media>
-
       {/*  Artsy Guarantee Grid block mobile */}
       <Media lessThan="sm">
         <CSSGrid
@@ -606,7 +591,6 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
           {learnMoreButton("100%")}
         </Flex>
       </Media>
-
       {/*  Artsy Guarantee Grid block desktop */}
       <Media greaterThanOrEqual="sm">
         <Flex
