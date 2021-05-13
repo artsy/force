@@ -35,7 +35,9 @@ export const ShowHeader: React.FC<ShowHeaderProps> = ({ show, ...rest }) => {
 
         <Text variant="lg">{formattedTime}</Text>
 
-        <ShowContextualLinkFragmentContainer show={show} />
+        <Box mt={[1, 0]}>
+          <ShowContextualLinkFragmentContainer show={show} />
+        </Box>
       </Join>
     </Box>
   )

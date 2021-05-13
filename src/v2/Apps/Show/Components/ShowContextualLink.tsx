@@ -52,7 +52,7 @@ export const ContextualLink: React.FC<Props> = ({ show }) => {
 
   return (
     <Box>
-      <Text variant="sm">
+      <Text variant="sm" textAlign="left">
         Presented by&nbsp;
         {!!partnerHref ? (
           <RouterLink to={partnerHref}>{partnerName}</RouterLink>
