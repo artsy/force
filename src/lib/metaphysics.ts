@@ -55,6 +55,7 @@ export const metaphysics = function (
 
     if (token) {
       post.set({ "X-ACCESS-TOKEN": token })
+      // @ts-expect-error STRICT_NULL_CHECK
       post.set({ "X-USER-ID": req.user.id })
     }
 

@@ -28,6 +28,7 @@ export const DisableFactorConfirmation: React.FC<DisableFactorConfirmationProps>
     }
 
     try {
+      // @ts-expect-error STRICT_NULL_CHECK
       await DisableSecondFactor(relayEnvironment, {
         password,
         secondFactorID,

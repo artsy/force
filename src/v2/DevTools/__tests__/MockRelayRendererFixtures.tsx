@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/alt-text */
 import { MockRelayRendererFixtures_artist } from "v2/__generated__/MockRelayRendererFixtures_artist.graphql"
 import { MockRelayRendererFixtures_artwork } from "v2/__generated__/MockRelayRendererFixtures_artwork.graphql"
 import { MockRelayRendererFixtures_artworkMetadata } from "v2/__generated__/MockRelayRendererFixtures_artworkMetadata.graphql"
@@ -26,6 +27,7 @@ const Metadata = createFragmentContainer(
 export const Artwork = createFragmentContainer(
   (props: { artwork: MockRelayRendererFixtures_artwork }) => (
     <div>
+      {/* @ts-expect-error STRICT_NULL_CHECK */}
       <img src={props.artwork.image.url} />
       <Metadata artworkMetadata={props.artwork} />
       {props.artwork.artist && (

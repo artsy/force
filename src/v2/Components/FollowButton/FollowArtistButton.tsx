@@ -86,15 +86,20 @@ export class FollowArtistButton extends React.Component<Props, State> {
       contextModule,
       contextOwnerId: contextPageOwnerId,
       contextOwnerSlug: contextPageOwnerSlug,
+      // @ts-expect-error STRICT_NULL_CHECK
       contextOwnerType: contextPageOwnerType,
+      // @ts-expect-error STRICT_NULL_CHECK
       ownerId: artist.internalID,
+      // @ts-expect-error STRICT_NULL_CHECK
       ownerSlug: artist.slug,
     }
 
+    // @ts-expect-error STRICT_NULL_CHECK
     const analyticsData = artist.is_followed
       ? unfollowedArtist(args)
       : followedArtist(args)
 
+    // @ts-expect-error STRICT_NULL_CHECK
     tracking.trackEvent(analyticsData)
   }
 
@@ -105,6 +110,7 @@ export class FollowArtistButton extends React.Component<Props, State> {
     if (user && user.id) {
       this.followArtistForUser()
     } else {
+      // @ts-expect-error STRICT_NULL_CHECK
       openAuthToFollowSave(mediator, {
         contextModule,
         entity: artist,
@@ -116,10 +122,14 @@ export class FollowArtistButton extends React.Component<Props, State> {
   followArtistForUser = () => {
     const { artist, relay, triggerSuggestions } = this.props
 
+    // @ts-expect-error STRICT_NULL_CHECK
     const newFollowCount = artist.is_followed
-      ? artist.counts.follows - 1
-      : artist.counts.follows + 1
+      ? // @ts-expect-error STRICT_NULL_CHECK
+        artist.counts.follows - 1
+      : // @ts-expect-error STRICT_NULL_CHECK
+        artist.counts.follows + 1
 
+    // @ts-expect-error STRICT_NULL_CHECK
     commitMutation<FollowArtistButtonMutation>(relay.environment, {
       mutation: graphql`
         mutation FollowArtistButtonMutation($input: FollowArtistInput!) {
@@ -139,27 +149,35 @@ export class FollowArtistButton extends React.Component<Props, State> {
         followArtist: {
           artist: {
             counts: { follows: newFollowCount },
+            // @ts-expect-error STRICT_NULL_CHECK
             id: artist.id,
+            // @ts-expect-error STRICT_NULL_CHECK
             is_followed: !artist.is_followed,
+            // @ts-expect-error STRICT_NULL_CHECK
             slug: artist.slug,
           },
         },
       },
       updater: (store, data) => {
+        // @ts-expect-error STRICT_NULL_CHECK
         const artistProxy = store.get(data.followArtist.artist.id)
 
+        // @ts-expect-error STRICT_NULL_CHECK
         artistProxy
           .getLinkedRecord("counts")
           .setValue(newFollowCount, "follows")
       },
       variables: {
         input: {
+          // @ts-expect-error STRICT_NULL_CHECK
           artistID: artist.internalID,
+          // @ts-expect-error STRICT_NULL_CHECK
           unfollow: artist.is_followed,
         },
       },
     })
     this.trackFollow()
+    // @ts-expect-error STRICT_NULL_CHECK
     if (triggerSuggestions && !artist.is_followed) {
       this.setState({ openSuggestions: true })
     }
@@ -186,10 +204,12 @@ export class FollowArtistButton extends React.Component<Props, State> {
         onClick={this.handleFollow}
       >
         {" "}
+        {/* @ts-expect-error STRICT_NULL_CHECK */}
         {render(artist)}
       </Container>
     ) : (
       <FollowButton
+        // @ts-expect-error STRICT_NULL_CHECK
         isFollowed={artist && artist.is_followed}
         handleFollow={this.handleFollow}
         buttonProps={buttonProps}
@@ -203,6 +223,7 @@ export class FollowArtistButton extends React.Component<Props, State> {
           <SuggestionsPopoverContainer>
             <SuggestionsPopover
               user={user}
+              // @ts-expect-error STRICT_NULL_CHECK
               artist={artist}
               onClose={() => this.closePopover()}
             />
@@ -257,6 +278,7 @@ export const FollowArtistButtonQueryRenderer: React.FC<
       variables={{ id }}
       render={({ error, props }) => {
         if (error || !props) {
+          // @ts-expect-error STRICT_NULL_CHECK
           return <FollowArtistButtonFragmentContainer {...rest} artist={null} />
         }
 

@@ -39,6 +39,7 @@ export const ForwardLink: React.FC<ForwardLinkProps> = ({
       </Text>
 
       <ChevronIcon
+        // @ts-expect-error STRICT_NULL_CHECK
         title={null}
         direction="right"
         color="black"

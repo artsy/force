@@ -136,6 +136,7 @@ export class MockRelayRenderer<T extends OperationType> extends React.Component<
   MockRelayRendererProps<T>,
   MockRelayRendererState
 > {
+  // @ts-expect-error STRICT_NULL_CHECK
   state = {
     caughtError: undefined,
   }
@@ -197,6 +198,7 @@ export class MockRelayRenderer<T extends OperationType> extends React.Component<
     }
 
     if (this.state.caughtError) {
+      // @ts-expect-error STRICT_NULL_CHECK
       const { error, errorInfo } = this.state.caughtError
       console.error({ error, errorInfo })
       return `Error occurred while rendering Relay component: ${error}`

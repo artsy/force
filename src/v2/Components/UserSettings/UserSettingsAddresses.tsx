@@ -29,6 +29,7 @@ export const UserSettingsAddresses: React.FC<UserSettingsAddressesProps> = props
           Saved Addresses
         </Text>
         <SavedAddresses
+          // @ts-expect-error STRICT_NULL_CHECK
           me={me}
           handleClickEdit={handleClickEdit}
           inCollectorProfile
@@ -61,6 +62,7 @@ export const UserSettingsAddressesQueryRenderer = () => {
 
   return (
     <QueryRenderer<UserSettingsAddressesQuery>
+      // @ts-expect-error STRICT_NULL_CHECK
       environment={relayEnvironment}
       variables={{}}
       query={graphql`

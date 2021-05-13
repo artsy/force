@@ -118,23 +118,36 @@ describe("SearchBar", () => {
 describe("getSearchTerm", () => {
   function buildLocationWithQueryString(queryString: string): Location {
     return {
+      // @ts-expect-error STRICT_NULL_CHECK
       ancestorOrigins: undefined,
+      // @ts-expect-error STRICT_NULL_CHECK
       host: undefined,
+      // @ts-expect-error STRICT_NULL_CHECK
       hostname: undefined,
+      // @ts-expect-error STRICT_NULL_CHECK
       href: undefined,
+      // @ts-expect-error STRICT_NULL_CHECK
       origin: undefined,
+      // @ts-expect-error STRICT_NULL_CHECK
       port: undefined,
+      // @ts-expect-error STRICT_NULL_CHECK
       protocol: undefined,
+      // @ts-expect-error STRICT_NULL_CHECK
       assign: undefined,
+      // @ts-expect-error STRICT_NULL_CHECK
       hash: undefined,
+      // @ts-expect-error STRICT_NULL_CHECK
       pathname: undefined,
+      // @ts-expect-error STRICT_NULL_CHECK
       reload: undefined,
+      // @ts-expect-error STRICT_NULL_CHECK
       replace: undefined,
       search: queryString,
     }
   }
 
   it("returns empty string if there is no term", () => {
+    // @ts-expect-error STRICT_NULL_CHECK
     const location = buildLocationWithQueryString(undefined)
 
     const result = getSearchTerm(location)

@@ -43,10 +43,13 @@ describe("ArtistCard", () => {
         name: "Francesca DiMattio",
         formatted_nationality_and_birthday: "American, b. 1979",
         slug: "percy",
+        // @ts-expect-error STRICT_NULL_CHECK
         " $fragmentRefs": null,
+        // @ts-expect-error STRICT_NULL_CHECK
         " $refType": null,
       },
     }
+    // @ts-expect-error STRICT_NULL_CHECK
     window.matchMedia = undefined // Immediately set matching media query in MockBoot
   })
 

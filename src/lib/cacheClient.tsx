@@ -24,6 +24,7 @@ const safeCacheCommand = async (func, ...args) => {
       // Will reject promise after configured timeout if the
       // cache command has not completed yet.
       let timeoutId = setTimeout(() => {
+        // @ts-expect-error STRICT_NULL_CHECK
         timeoutId = null
         const error = new Error(
           `Timeout of ${cacheAccessTimeoutMs}ms, skipping...`

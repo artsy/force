@@ -74,7 +74,7 @@ export function buildClientApp(config: RouterConfig): Promise<Resolve> {
           excludePaths: [
             // Due to special needs, this page has its own page-view tracking implementation.
             // @see https://github.com/artsy/force/blob/2c0db041fa6cb50e9f747ea95860ad5c38290653/src/v2/Apps/Artwork/ArtworkApp.tsx#L117-L121
-            "/artwork(.*)" 
+            "/artwork(.*)",
           ],
         }),
       ]
@@ -109,6 +109,7 @@ export function buildClientApp(config: RouterConfig): Promise<Resolve> {
         return (
           <Boot
             context={clientContext}
+            // @ts-expect-error STRICT_NULL_CHECK
             user={user}
             relayEnvironment={relayEnvironment}
             routes={routes}

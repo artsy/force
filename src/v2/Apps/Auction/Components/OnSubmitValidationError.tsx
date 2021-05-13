@@ -26,6 +26,7 @@ export const OnSubmitValidationError: React.FC<{
 
   const effect = () => {
     if (
+      // @ts-expect-error STRICT_NULL_CHECK
       formikProps.submitCount > 0 &&
       !formikProps.isSubmitting &&
       !formikProps.isValid
@@ -36,7 +37,9 @@ export const OnSubmitValidationError: React.FC<{
 
       const errors = Object.assign({}, clonedErrors, addressErrors)
 
+      // @ts-expect-error STRICT_NULL_CHECK
       cb(Object.values(errors as string[]))
+      // @ts-expect-error STRICT_NULL_CHECK
       formikProps.setSubmitting(false)
     }
   }

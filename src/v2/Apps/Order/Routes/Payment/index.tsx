@@ -71,6 +71,7 @@ export class PaymentRoute extends Component<
   onContinue = async () => {
     try {
       this.setState({ isGettingCreditCardId: true })
+      // @ts-expect-error STRICT_NULL_CHECK
       const result = await this.paymentPicker.current.getCreditCardId()
       this.setState({ isGettingCreditCardId: false })
 
@@ -95,6 +96,7 @@ export class PaymentRoute extends Component<
         return
       }
 
+      // @ts-expect-error STRICT_NULL_CHECK
       const orderOrError = (
         await this.setOrderPayment({
           input: {

@@ -19,6 +19,7 @@ export const scrollIntoView = (passedProps: ScrollIntoViewProps) => {
   if ($element) {
     const { top } = getElementPosition($element)
     window.scrollTo({
+      // @ts-expect-error STRICT_NULL_CHECK
       top: top - offset,
       ...rest,
     })

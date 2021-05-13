@@ -6,6 +6,7 @@ import { FilterExpandable } from "./FilterExpandable"
 
 export const GalleryFilter: FC = () => {
   const { aggregations, ...filterContext } = useArtworkFilterContext()
+  // @ts-expect-error STRICT_NULL_CHECK
   const items = aggregations.find(agg => agg.slice === "GALLERY")
 
   const tokens = useThemeConfig({
@@ -17,6 +18,7 @@ export const GalleryFilter: FC = () => {
     return null
   }
 
+  // @ts-expect-error STRICT_NULL_CHECK
   const selectedGallery = filterContext.currentlySelectedFilters().partnerID
 
   return (

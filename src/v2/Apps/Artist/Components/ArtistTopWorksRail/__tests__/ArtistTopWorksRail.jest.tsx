@@ -73,6 +73,7 @@ describe("Artist Notable Works Rail Component", () => {
   it("tracks the analytics properties when View All is clicked", () => {
     const component = getWrapper()
     const elem = component.find(StyledLink).first()
+    // @ts-expect-error STRICT_NULL_CHECK
     elem.props().onClick(null)
 
     expect(trackEvent).toHaveBeenCalledWith({
@@ -93,12 +94,14 @@ describe("Artist Notable Works Rail Component", () => {
 const topWorksContent: ArtistTopWorksRail_artist = {
   slug: "artist-slug",
   internalID: "artist-id",
+  // @ts-expect-error STRICT_NULL_CHECK
   " $refType": null,
   filterArtworksConnection: {
     edges: [
       {
         node: {
           slug: "artwork-slug",
+          // @ts-expect-error STRICT_NULL_CHECK
           " $fragmentRefs": null,
           internalID: "artwork-id",
         },

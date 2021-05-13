@@ -26,6 +26,7 @@ export const initialAuctionResultsFilterState: AuctionResultsFilters = {
   organizations: [],
   categories: [],
   sizes: [],
+  // @ts-expect-error STRICT_NULL_CHECK
   pageAndCursor: { page: 1, cursor: null },
   sort: "DATE_DESC",
   allowEmptyCreatedDates: true,
@@ -59,8 +60,11 @@ export const AuctionResultsFilterContext = React.createContext<
   AuctionResultsFilterContextProps
 >({
   filters: initialAuctionResultsFilterState,
+  // @ts-expect-error STRICT_NULL_CHECK
   setFilter: null,
+  // @ts-expect-error STRICT_NULL_CHECK
   resetFilters: null,
+  // @ts-expect-error STRICT_NULL_CHECK
   unsetFilter: null,
 })
 
@@ -128,6 +132,7 @@ export const AuctionResultsFilterContextProvider: React.FC<
     resetFilters: () => {
       dispatch({
         type: "RESET",
+        // @ts-expect-error STRICT_NULL_CHECK
         payload: null,
       })
     },
@@ -160,6 +165,7 @@ const AuctionResultsFilterReducer = (
     case "SET": {
       const { name, value } = action.payload
       const filterState: AuctionResultsFilters = {
+        // @ts-expect-error STRICT_NULL_CHECK
         pageAndCursor: { page: 1, cursor: null },
       }
 
@@ -185,7 +191,9 @@ const AuctionResultsFilterReducer = (
       })
 
       // do not allow a real cursor to be set for page 1. to agree with initial filter state.
+      // @ts-expect-error STRICT_NULL_CHECK
       if (filterState.pageAndCursor.page === 1) {
+        // @ts-expect-error STRICT_NULL_CHECK
         filterState.pageAndCursor.cursor = null
       }
 
@@ -220,6 +228,7 @@ const AuctionResultsFilterReducer = (
       const { name } = action.payload as { name: keyof AuctionResultsFilters }
 
       const filterState: AuctionResultsFilters = {
+        // @ts-expect-error STRICT_NULL_CHECK
         pageAndCursor: { page: 1, cursor: null },
       }
 

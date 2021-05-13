@@ -38,6 +38,7 @@ describe("FollowProfileButton", () => {
   beforeEach(() => {
     mediator = { ready: () => true, trigger: jest.fn() }
     props = {
+      // @ts-expect-error STRICT_NULL_CHECK
       profile: { ...ArtworkDetailsFixture.partner.profile },
       relay: { environment: "" },
       tracking: { trackEvent: jest.fn() },

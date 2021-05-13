@@ -65,6 +65,7 @@ export const ArtistsByLetter: React.FC<ArtistsByLetterProps> = ({
   } = viewer
 
   const handleNext = (page: number) => {
+    // @ts-expect-error STRICT_NULL_CHECK
     handleClick(endCursor, page)
   }
 
@@ -113,6 +114,7 @@ export const ArtistsByLetter: React.FC<ArtistsByLetterProps> = ({
       <Spacer mt={6} />
 
       <Columns isLoading={isLoading}>
+        {/* @ts-expect-error STRICT_NULL_CHECK */}
         {artists.map(({ artist }) => {
           return (
             <Text key={artist.internalID}>

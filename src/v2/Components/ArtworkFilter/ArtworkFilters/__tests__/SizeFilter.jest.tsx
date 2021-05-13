@@ -27,9 +27,11 @@ describe("SizeFilter", () => {
     const wrapper = getWrapper() as any
 
     await wrapper.find("Checkbox").at(0).simulate("click")
+    // @ts-expect-error STRICT_NULL_CHECK
     expect(context.filters.sizes).toEqual(["SMALL"])
 
     await wrapper.find("Checkbox").at(2).simulate("click")
+    // @ts-expect-error STRICT_NULL_CHECK
     expect(context.filters.sizes).toEqual(["SMALL", "LARGE"])
   })
 

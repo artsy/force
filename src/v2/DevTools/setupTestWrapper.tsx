@@ -69,6 +69,7 @@ export const setupTestWrapper = <T extends OperationType>({
         query={query}
         render={({ props, error }) => {
           if (props) {
+            // @ts-expect-error STRICT_NULL_CHECK
             return <Component {...props} />
           } else if (error) {
             console.error(error)

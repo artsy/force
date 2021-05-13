@@ -13,8 +13,10 @@ import { Media, valuesWithBreakpointProps } from "v2/Utils/Responsive"
 import GridItem from "../Artwork/GridItem"
 import { Mediator } from "lib/mediator"
 
+// @ts-expect-error STRICT_NULL_CHECK
 type SectionedArtworks = Array<Array<ArtworkGrid_artworks["edges"][0]["node"]>>
 
+// @ts-expect-error STRICT_NULL_CHECK
 type Artwork = ArtworkGrid_artworks["edges"][0]["node"]
 
 export interface ArtworkGridProps
@@ -56,6 +58,7 @@ export class ArtworkGridContainer extends React.Component<
 
   private get _columnCount(): number[] {
     const columnCount = this.props.columnCount
+    // @ts-expect-error STRICT_NULL_CHECK
     return typeof columnCount === "number" ? [columnCount] : columnCount
   }
 
@@ -70,6 +73,7 @@ export class ArtworkGridContainer extends React.Component<
 
   componentWillUnmount() {
     if (this.state.interval) {
+      // @ts-expect-error STRICT_NULL_CHECK
       clearInterval(this.state.interval)
     }
   }
@@ -95,6 +99,7 @@ export class ArtworkGridContainer extends React.Component<
     const threshold = window.innerHeight + window.scrollY
     const el = ReactDOM.findDOMNode(this) as Element
     if (threshold >= el.clientHeight + el.scrollTop) {
+      // @ts-expect-error STRICT_NULL_CHECK
       this.props.onLoadMore()
     }
   }
@@ -122,11 +127,13 @@ export class ArtworkGridContainer extends React.Component<
         const artwork = sectionedArtworks[column][row]
 
         artworkComponents.push(
+          // @ts-expect-error STRICT_NULL_CHECK
           <GridItem
             contextModule={contextModule}
             artwork={artwork}
             key={artwork.id}
             mediator={this.props.mediator}
+            // @ts-expect-error STRICT_NULL_CHECK
             lazyLoad={artworkIndex >= preloadImageCount}
             onClick={() => {
               if (this.props.onBrickClick) {
@@ -138,6 +145,7 @@ export class ArtworkGridContainer extends React.Component<
         // Setting a marginBottom on the artwork component didn’t work, so using a spacer view instead.
         if (row < sectionedArtworks[column].length - 1) {
           artworkComponents.push(
+            // @ts-expect-error STRICT_NULL_CHECK
             <div style={spacerStyle} key={"spacer-" + row + "-" + artwork.id} />
           )
         }
@@ -150,6 +158,7 @@ export class ArtworkGridContainer extends React.Component<
       }
 
       sections.push(
+        // @ts-expect-error STRICT_NULL_CHECK
         <div style={sectionSpecificStyle} key={column}>
           {artworkComponents}
         </div>
@@ -255,7 +264,9 @@ function areSectionedArtworksEqual(current: any, previous: any) {
     const currentEdges = (current as ArtworkGrid_artworks).edges
     const previousEdges = (previous as ArtworkGrid_artworks).edges
     return (
+      // @ts-expect-error STRICT_NULL_CHECK
       currentEdges.length === previousEdges.length &&
+      // @ts-expect-error STRICT_NULL_CHECK
       currentEdges.every((e, i) => e.node.id === previousEdges[i].node.id)
     )
   }
@@ -271,14 +282,18 @@ export function createSectionedArtworks(
 
   for (let i = 0; i < columnCount; i++) {
     sectionedArtworks.push([])
+    // @ts-expect-error STRICT_NULL_CHECK
     sectionRatioSums.push(0)
   }
 
+  // @ts-expect-error STRICT_NULL_CHECK
   artworks.forEach(artworkEdge => {
+    // @ts-expect-error STRICT_NULL_CHECK
     const artwork = artworkEdge.node
 
     // There are artworks without images and other ‘issues’. Like Force we’re just going to reject those for now.
     // See: https://github.com/artsy/eigen/issues/1667
+    // @ts-expect-error STRICT_NULL_CHECK
     if (artwork.image) {
       // Find section with lowest *inverted* aspect ratio sum, which is the shortest column.
       let lowestRatioSum = Number.MAX_VALUE
@@ -286,6 +301,7 @@ export function createSectionedArtworks(
       for (let j = 0; j < sectionRatioSums.length; j++) {
         const ratioSum = sectionRatioSums[j]
         if (ratioSum < lowestRatioSum) {
+          // @ts-expect-error STRICT_NULL_CHECK
           sectionIndex = j
           lowestRatioSum = ratioSum
         }
@@ -296,8 +312,10 @@ export function createSectionedArtworks(
         section.push(artwork)
 
         // Keep track of total section aspect ratio
+        // @ts-expect-error STRICT_NULL_CHECK
         const aspectRatio = artwork.image.aspect_ratio || 1 // Ensure we never divide by null/0
         // Invert the aspect ratio so that a lower value means a shorter section.
+        // @ts-expect-error STRICT_NULL_CHECK
         sectionRatioSums[sectionIndex] += 1 / aspectRatio
       }
     }

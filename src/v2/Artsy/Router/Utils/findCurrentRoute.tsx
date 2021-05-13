@@ -10,13 +10,16 @@ export const findCurrentRoute = ({
     return baseRoute
   }
   let remainingRouteIndicies = [...routeIndices]
+  // @ts-expect-error STRICT_NULL_CHECK
   let route: AppRouteConfig = routes[remainingRouteIndicies.shift()]
 
   while (remainingRouteIndicies.length > 0) {
+    // @ts-expect-error STRICT_NULL_CHECK
     route = route.children[remainingRouteIndicies.shift()]
   }
 
   if (!route) {
+    // @ts-expect-error STRICT_NULL_CHECK
     route = baseRoute
   }
 

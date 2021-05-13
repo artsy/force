@@ -68,6 +68,7 @@ export class NewPaymentRoute extends Component<
   onContinue = async () => {
     try {
       this.setState({ isGettingCreditCardId: true })
+      // @ts-expect-error STRICT_NULL_CHECK
       const result = await this.paymentPicker.current.getCreditCardId()
       this.setState({ isGettingCreditCardId: false })
 
@@ -92,10 +93,12 @@ export class NewPaymentRoute extends Component<
         return
       }
 
+      // @ts-expect-error STRICT_NULL_CHECK
       const orderOrError = (
         await this.fixFailedPayment({
           input: {
             creditCardId: result.creditCardId,
+            // @ts-expect-error STRICT_NULL_CHECK
             offerId: this.props.order.lastOffer.internalID,
           },
         })
@@ -156,7 +159,9 @@ export class NewPaymentRoute extends Component<
                     <CountdownTimer
                       action="Submit new payment"
                       note="Expiration will end negotiations on this offer. Keep in mind the work can be sold to another buyer in the meantime."
+                      // @ts-expect-error STRICT_NULL_CHECK
                       countdownStart={order.lastOffer.createdAt}
+                      // @ts-expect-error STRICT_NULL_CHECK
                       countdownEnd={order.stateExpiresAt}
                     />
                   </Flex>
@@ -280,6 +285,7 @@ export class NewPaymentRoute extends Component<
   artistId() {
     return get(
       this.props.order,
+      // @ts-expect-error STRICT_NULL_CHECK
       o => o.lineItems.edges[0].node.artwork.artists[0].slug
     )
   }

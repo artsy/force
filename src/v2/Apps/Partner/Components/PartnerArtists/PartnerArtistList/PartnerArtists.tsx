@@ -37,8 +37,11 @@ export const PartnerArtists: React.FC<PartnerArtistsProps> = ({
     <Box mt={4}>
       <PartnerArtistListFragmentContainer
         partnerSlug={slug}
+        // @ts-expect-error STRICT_NULL_CHECK
         scrollTo={scrollTo}
+        // @ts-expect-error STRICT_NULL_CHECK
         artists={artists}
+        // @ts-expect-error STRICT_NULL_CHECK
         distinguishRepresentedArtists={distinguishRepresentedArtists}
       />
     </Box>
@@ -73,6 +76,7 @@ export const PartnerArtistsRenderer: React.FC<{
 
   return (
     <QueryRenderer<PartnerArtistsQuery>
+      //  @ts-expect-error STRICT_NULL_CHECK
       environment={relayEnvironment}
       query={graphql`
         query PartnerArtistsQuery($partnerId: String!) {
@@ -84,6 +88,7 @@ export const PartnerArtistsRenderer: React.FC<{
       variables={{ partnerId }}
       render={({ error, props }) => {
         if (error || !props) return <PartnerArtistListPlaceholder />
+        // @ts-expect-error STRICT_NULL_CHECK
         return <PartnerArtistsFragmentContainer {...rest} {...props} />
       }}
     />

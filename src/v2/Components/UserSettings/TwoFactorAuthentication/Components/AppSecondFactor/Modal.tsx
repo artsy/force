@@ -30,6 +30,7 @@ interface AppSecondFactorModalProps {
   onClose: () => void
   show?: boolean
   onComplete: () => void
+  // @ts-expect-error STRICT_NULL_CHECK
   secondFactor: CreateAppSecondFactorMutationResponse["createAppSecondFactor"]["secondFactorOrErrors"]
 }
 
@@ -73,6 +74,7 @@ export const AppSecondFactorModal: React.FC<AppSecondFactorModalProps> = props =
     actions: FormikActions<FormValues>
   ) => {
     try {
+      // @ts-expect-error STRICT_NULL_CHECK
       await UpdateAppSecondFactor(relayEnvironment, {
         secondFactorID: secondFactor.internalID,
         attributes: {
@@ -80,11 +82,13 @@ export const AppSecondFactorModal: React.FC<AppSecondFactorModalProps> = props =
         },
       })
 
+      // @ts-expect-error STRICT_NULL_CHECK
       const response = await EnableSecondFactor(relayEnvironment, {
         secondFactorID: secondFactor.internalID,
         code: values.code,
       })
 
+      // @ts-expect-error STRICT_NULL_CHECK
       setRecoveryCodes(response.enableSecondFactor.recoveryCodes)
 
       actions.setSubmitting(false)
@@ -131,6 +135,7 @@ export const AppSecondFactorModal: React.FC<AppSecondFactorModalProps> = props =
         }
       >
         <BackupSecondFactorReminder
+          // @ts-expect-error STRICT_NULL_CHECK
           backupSecondFactors={recoveryCodes}
           factorTypeName={secondFactor.__typename}
         />
@@ -140,6 +145,7 @@ export const AppSecondFactorModal: React.FC<AppSecondFactorModalProps> = props =
 }
 
 interface InnerFormProps extends FormikProps<FormValues> {
+  // @ts-expect-error STRICT_NULL_CHECK
   secondFactor: CreateAppSecondFactorMutationResponse["createAppSecondFactor"]["secondFactorOrErrors"]
 }
 

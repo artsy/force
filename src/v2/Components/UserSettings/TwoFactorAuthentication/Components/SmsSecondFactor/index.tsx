@@ -47,6 +47,7 @@ export const SmsSecondFactor: React.FC<SmsSecondFactorProps> = props => {
     }
 
     if (props.me.hasSecondFactorEnabled) {
+      // @ts-expect-error STRICT_NULL_CHECK
       relayRefetch.refetch({}, {}, showCompleteModalCallback)
     } else {
       showCompleteModalCallback()
@@ -79,11 +80,14 @@ export const SmsSecondFactor: React.FC<SmsSecondFactorProps> = props => {
     setCreating(true)
 
     try {
+      // @ts-expect-error STRICT_NULL_CHECK
       const response = await CreateSmsSecondFactor(relayEnvironment, {
         attributes: {},
         password,
       })
+      // @ts-expect-error STRICT_NULL_CHECK
       const factor = response.createSmsSecondFactor.secondFactorOrErrors
+      // @ts-expect-error STRICT_NULL_CHECK
       setStagedSecondFactor(factor)
       setShowConfirmPassword(false)
       setShowSetupModal(true)
@@ -95,6 +99,7 @@ export const SmsSecondFactor: React.FC<SmsSecondFactorProps> = props => {
   }
 
   async function onDisableSecondFactor() {
+    // @ts-expect-error STRICT_NULL_CHECK
     relayRefetch.refetch({}, {}, () => {
       setShowConfirmDisable(false)
     })
@@ -137,10 +142,13 @@ export const SmsSecondFactor: React.FC<SmsSecondFactorProps> = props => {
           </Serif>
         </Flex>
         <Flex mt={[3, 0]} flexDirection={["column", "row"]} alignItems="center">
+          {/* @ts-expect-error STRICT_NULL_CHECK */}
           {me.smsSecondFactors.length &&
+          // @ts-expect-error STRICT_NULL_CHECK
           me.smsSecondFactors[0].__typename === "SmsSecondFactor" ? (
             <>
               <Sans color="black60" size="3" weight="medium">
+                {/* @ts-expect-error STRICT_NULL_CHECK */}
                 {me.smsSecondFactors[0].formattedPhoneNumber}
               </Sans>
               <DisableButton width={["100%", "auto"]} ml={[0, 1]} mt={[1, 0]} />
@@ -178,12 +186,15 @@ export const SmsSecondFactor: React.FC<SmsSecondFactorProps> = props => {
         show={!!apiErrors.length}
         errors={apiErrors}
       />
+      {/* @ts-expect-error STRICT_NULL_CHECK */}
       {me.smsSecondFactors.length > 0 &&
+        // @ts-expect-error STRICT_NULL_CHECK
         me.smsSecondFactors[0].__typename === "SmsSecondFactor" && (
           <DisableFactorConfirmation
             show={showConfirmDisable}
             onConfirm={onDisableSecondFactor}
             onCancel={() => setShowConfirmDisable(false)}
+            // @ts-expect-error STRICT_NULL_CHECK
             secondFactorID={me.smsSecondFactors[0].internalID}
           />
         )}

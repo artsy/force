@@ -38,6 +38,7 @@ export const PartnerArtistDetailsList: React.FC<PartnerArtistDetailsListProps> =
   }, [])
 
   const maybeLoadMore = () => {
+    // @ts-expect-error STRICT_NULL_CHECK
     const el = containerRef.current.getBoundingClientRect()
 
     if (window.innerHeight >= el.bottom && el.bottom > 0) {
@@ -58,10 +59,13 @@ export const PartnerArtistDetailsList: React.FC<PartnerArtistDetailsListProps> =
 
   return (
     <Box ref={ref => ref && (containerRef.current = ref)} mt={4}>
+      {/* @ts-expect-error STRICT_NULL_CHECK */}
       {partner.artists.edges.map(edge => {
         return (
           <PartnerArtistDetailsFragmentContainer
+            // @ts-expect-error STRICT_NULL_CHECK
             key={edge.id}
+            // @ts-expect-error STRICT_NULL_CHECK
             partnerArtist={edge}
           />
         )
@@ -133,6 +137,7 @@ export const PartnerArtistDetailsListRenderer: React.FC<{
 
   return (
     <QueryRenderer<PartnerArtistDetailsListQuery>
+      //  @ts-expect-error STRICT_NULL_CHECK
       environment={relayEnvironment}
       query={graphql`
         query PartnerArtistDetailsListRendererQuery($partnerId: String!) {
@@ -147,6 +152,7 @@ export const PartnerArtistDetailsListRenderer: React.FC<{
           return <PartnerArtistDetailsListPlaceholder count={PAGE_SIZE} />
 
         return (
+          // @ts-expect-error STRICT_NULL_CHECK
           <PartnerArtistDetailsListPaginationContainer {...rest} {...props} />
         )
       }}

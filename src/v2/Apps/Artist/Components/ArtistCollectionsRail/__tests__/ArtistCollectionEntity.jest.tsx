@@ -31,7 +31,9 @@ describe("ArtistCollectionEntity", () => {
         ...collection,
         artworksConnection: {
           edges: [
+            // @ts-expect-error STRICT_NULL_CHECK
             props.collection.artworksConnection.edges[0],
+            // @ts-expect-error STRICT_NULL_CHECK
             props.collection.artworksConnection.edges[1],
           ],
         },
@@ -56,11 +58,14 @@ describe("ArtistCollectionEntity", () => {
           edges: [
             {
               node: {
+                // @ts-expect-error STRICT_NULL_CHECK
                 ...props.collection.artworksConnection.edges[0].node,
                 image: null,
               },
             },
+            // @ts-expect-error STRICT_NULL_CHECK
             props.collection.artworksConnection.edges[1],
+            // @ts-expect-error STRICT_NULL_CHECK
             props.collection.artworksConnection.edges[2],
           ],
         },
@@ -68,6 +73,7 @@ describe("ArtistCollectionEntity", () => {
     }
 
     const component = mount(
+      // @ts-expect-error STRICT_NULL_CHECK
       <ArtistCollectionEntity {...noImageCollectionProps} />
     )
     const artworkImage = component.find(ArtworkImage).at(0).getElement().props
@@ -114,6 +120,7 @@ describe("ArtistCollectionEntity", () => {
 })
 
 const collection: ArtistCollectionEntity_collection = {
+  // @ts-expect-error STRICT_NULL_CHECK
   " $refType": null,
   ...CollectionsRailFixture[0],
 }

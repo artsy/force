@@ -35,12 +35,14 @@ export class AuctionTimer extends React.Component<Props> {
       <Timer
         labelWithTimeRemaining={this.labelWithTimeRemaining()}
         labelWithoutTimeRemaining={this.labelWithoutTimeRemaining()}
+        // @ts-expect-error STRICT_NULL_CHECK
         endDate={this.endDate}
       />
     )
   }
 
   labelWithTimeRemaining() {
+    // @ts-expect-error STRICT_NULL_CHECK
     const dateTime = DateTime.fromISO(this.endDate)
     const amPm = dateTime.hour >= 12 ? "pm" : "am"
     const minutes =

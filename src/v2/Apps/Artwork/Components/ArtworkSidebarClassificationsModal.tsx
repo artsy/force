@@ -46,13 +46,17 @@ const ArtworkSidebarClassificationsModal: React.FC<ArtworkSidebarClassifications
     >
       <Join separator={<Spacer my={1} />}>
         {viewer
-          ? viewer.artworkAttributionClasses.map(classfication => {
+          ? // @ts-expect-error STRICT_NULL_CHECK
+            viewer.artworkAttributionClasses.map(classfication => {
               return (
+                // @ts-expect-error STRICT_NULL_CHECK
                 <Box key={classfication.id} as="dl">
                   <Text as="dt" variant="mediumText">
+                    {/* @ts-expect-error STRICT_NULL_CHECK */}
                     {classfication.name}
                   </Text>
 
+                  {/* @ts-expect-error STRICT_NULL_CHECK */}
                   <Text as="dd">{classfication.longDescription}</Text>
                 </Box>
               )
@@ -106,6 +110,7 @@ export const ArtworkSidebarClassificationsModalQueryRenderer: React.FC<Omit<
           return (
             <ArtworkSidebarClassificationsModalFragmentContainer
               {...rest}
+              // @ts-expect-error STRICT_NULL_CHECK
               viewer={null}
             />
           )

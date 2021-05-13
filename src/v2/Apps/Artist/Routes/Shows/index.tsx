@@ -20,6 +20,7 @@ export const ShowsRoute: SFC<ArtistShowsProps> = props => {
       <Shows
         sort="END_AT_ASC"
         status="running"
+        // @ts-expect-error STRICT_NULL_CHECK
         artist={viewer.artist_currentShows}
         scrollTo="#jumpto-ArtistHeader"
         heading="Currently on view"
@@ -31,6 +32,7 @@ export const ShowsRoute: SFC<ArtistShowsProps> = props => {
       <Shows
         sort="START_AT_ASC"
         status="upcoming"
+        // @ts-expect-error STRICT_NULL_CHECK
         artist={viewer.artist_upcomingShows}
         scrollTo="#jumpto-Shows-Upcoming"
         heading="Upcoming"
@@ -42,6 +44,7 @@ export const ShowsRoute: SFC<ArtistShowsProps> = props => {
       <Shows
         sort="END_AT_DESC"
         status="closed"
+        // @ts-expect-error STRICT_NULL_CHECK
         artist={viewer.artist_pastShows}
         scrollTo="#jumpto-Shows-Past"
         heading="Past"

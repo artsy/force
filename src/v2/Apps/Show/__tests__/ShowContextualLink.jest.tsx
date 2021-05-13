@@ -10,6 +10,7 @@ jest.unmock("react-relay")
 const { getWrapper } = setupTestWrapper<ShowContextualLink_Test_Query>({
   Component: props => (
     <MockBoot breakpoint="lg">
+      {/* @ts-expect-error STRICT_NULL_CHECK */}
       <ShowContextualLinkFragmentContainer {...props} />
     </MockBoot>
   ),

@@ -39,6 +39,7 @@ const ShowPaginatedEvents: React.FC<ShowEventsProps> = ({
   const [isLoading, setIsLoading] = useState(false)
 
   if (!partner.showsList) {
+    // @ts-expect-error STRICT_NULL_CHECK
     return null
   }
 
@@ -84,12 +85,14 @@ const ShowPaginatedEvents: React.FC<ShowEventsProps> = ({
   }
 
   const handleNext = (page: number) => {
+    // @ts-expect-error STRICT_NULL_CHECK
     handleClick(endCursor, page)
   }
 
   return (
     <Box id={scrollTo.substring(1)}>
       <LoadingArea isLoading={isLoading}>
+        {/* @ts-expect-error STRICT_NULL_CHECK */}
         <ShowEventsFragmentContainer edges={shows} eventTitle={eventTitle} />
       </LoadingArea>
 
@@ -189,6 +192,7 @@ export const ShowPaginatedEventsRenderer: React.FC<ShowPaginatedEventsRendererPr
 
   return (
     <QueryRenderer<ShowPaginatedEventsRendererQuery>
+      // @ts-expect-error STRICT_NULL_CHECK
       environment={relayEnvironment}
       query={graphql`
         query ShowPaginatedEventsRendererQuery(
@@ -208,6 +212,7 @@ export const ShowPaginatedEventsRenderer: React.FC<ShowPaginatedEventsRendererPr
         if (error || !props) return null
 
         return (
+          // @ts-expect-error STRICT_NULL_CHECK
           <ShowEventsRefetchContainer {...rest} {...props} paramsPage={page} />
         )
       }}

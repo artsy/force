@@ -48,6 +48,7 @@ describe("InfiniteScrollNewsArticle", () => {
   const getWrapper = (passedProps = props) => {
     return mount(
       <SystemContextProvider
+        // @ts-expect-error STRICT_NULL_CHECK
         user={null}
         // @ts-ignore
         relayEnvironment={{ environment: {} } as Environment}

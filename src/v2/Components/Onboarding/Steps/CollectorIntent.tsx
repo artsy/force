@@ -99,6 +99,7 @@ export const CollectorIntentComponent: React.FC<Props> = props => {
   }
 
   const optionTags = Object.keys(intentEnum).map((text, index) => (
+    // @ts-expect-error STRICT_NULL_CHECK
     <SelectableToggle
       key={index}
       text={text}
@@ -122,7 +123,9 @@ export const CollectorIntentComponent: React.FC<Props> = props => {
 
   return (
     <>
+      {/* @ts-expect-error STRICT_NULL_CHECK */}
       <ProgressIndicator />
+      {/* @ts-expect-error STRICT_NULL_CHECK */}
       <Layout
         buttonState={buttonState}
         onNextButtonPressed={submit}

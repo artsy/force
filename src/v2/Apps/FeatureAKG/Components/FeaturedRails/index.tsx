@@ -28,6 +28,7 @@ const FeaturedRails: React.FC<FeaturedRailsProps> = props => {
       {hasCollectionsRail && (
         <>
           <FeaturedCollections
+            // @ts-expect-error STRICT_NULL_CHECK
             collections={props.viewer.collections}
             railMetadata={props.collections_rail}
           />
@@ -38,6 +39,7 @@ const FeaturedRails: React.FC<FeaturedRailsProps> = props => {
       {hasAuctionsRail && (
         <>
           <FeaturedAuctions
+            // @ts-expect-error STRICT_NULL_CHECK
             auctions={props.viewer.auctions}
             railMetadata={props.auctions_rail}
           />
@@ -48,6 +50,7 @@ const FeaturedRails: React.FC<FeaturedRailsProps> = props => {
       {hasFairsRail && (
         <>
           <FeaturedFairs
+            // @ts-expect-error STRICT_NULL_CHECK
             fairs={props.viewer.fairs}
             railMetadata={props.fairs_rail}
           />
@@ -157,6 +160,7 @@ export const FeaturedRailCarousel: React.FC<FeaturedRailCarouselProps> = props =
             >
               <Image
                 lazyLoad
+                // @ts-expect-error STRICT_NULL_CHECK
                 src={croppedImageUrl}
                 width={imgWidth}
                 height={imgHeight}

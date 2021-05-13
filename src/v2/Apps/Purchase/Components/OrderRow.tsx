@@ -34,6 +34,7 @@ const StyledImage = styled(Image)`
 
 const OrderRow: React.FC<OrderRowProps> = props => {
   const { order } = props
+  // @ts-expect-error STRICT_NULL_CHECK
   const artwork = order.lineItems.edges[0].node.artwork
 
   const orderCreatedAt = DateTime.fromISO(order.createdAt)
@@ -55,6 +56,7 @@ const OrderRow: React.FC<OrderRowProps> = props => {
   const isShip = fulfillment === "CommerceShip"
 
   const artworkImage = artwork ? (
+    // @ts-expect-error STRICT_NULL_CHECK
     <StyledImage src={artwork.image?.resized?.url} alt={artwork.title} />
   ) : (
     <Box width="50px" height="50px" backgroundColor="black10" />
@@ -203,6 +205,7 @@ const OrderRow: React.FC<OrderRowProps> = props => {
           </Flex>
         </Flex>
         <Flex width="50%">
+          {/* @ts-expect-error STRICT_NULL_CHECK */}
           <Avatar size="xs" src={partnerImageUrl} initials={partnerInitials} />
           <Flex flexDirection="column" ml={1}>
             <Link href={partnerURL} underlineBehavior="hover">

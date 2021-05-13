@@ -20,13 +20,19 @@ export const ArtworkDetailsArticles: React.SFC<ArtworkDetailsArticlesProps> = pr
       <Col>
         <Box>
           {articles.map((article, index) => {
+            // @ts-expect-error STRICT_NULL_CHECK
             const imageUrl = get(article, p => p.thumbnail_image.resized.url)
             return (
               <ArticleItem
+                // @ts-expect-error STRICT_NULL_CHECK
                 title={article.thumbnail_title}
+                // @ts-expect-error STRICT_NULL_CHECK
                 imageUrl={imageUrl}
+                // @ts-expect-error STRICT_NULL_CHECK
                 date={article.published_at}
+                // @ts-expect-error STRICT_NULL_CHECK
                 author={article.author.name}
+                // @ts-expect-error STRICT_NULL_CHECK
                 href={article.href}
                 key={index}
                 lastChild={index === articles.length - 1}

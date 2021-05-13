@@ -20,6 +20,7 @@ const setupTestEnv = () => {
   return createTestEnv({
     TestPage: RequestConditionReportTestPage,
     Component: (props: RequestConditionReportQueryResponse) => (
+      // @ts-expect-error STRICT_NULL_CHECK
       <RequestConditionReportFragmentContainer {...props} />
     ),
     query: graphql`

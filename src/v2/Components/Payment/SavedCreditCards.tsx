@@ -39,6 +39,7 @@ export class CreditCard extends React.Component<
       <>
         <BorderBox flexDirection="column" p={2} mb={2}>
           <Flex justifyContent="space-between" alignItems="center">
+            {/* @ts-expect-error STRICT_NULL_CHECK */}
             <CreditCardDetails {...this.props.creditCard} />
             <Sans size="2" color="purple100">
               {this.state.isCommittingMutation ? (
@@ -69,10 +70,12 @@ export class CreditCard extends React.Component<
   private deleteCreditCard() {
     this.setState({ isCommittingMutation: true }, () => {
       commitMutation<SavedCreditCardsDeleteCreditCardMutation>(
+        // @ts-expect-error STRICT_NULL_CHECK
         this.props.relay.environment,
         {
           onCompleted: (data, errors) => {
             const {
+              // @ts-expect-error STRICT_NULL_CHECK
               deleteCreditCard: { creditCardOrError },
             } = data
 
@@ -107,6 +110,7 @@ export class CreditCard extends React.Component<
             }
           `,
           variables: {
+            // @ts-expect-error STRICT_NULL_CHECK
             input: { id: this.props.creditCard.internalID },
           },
           updater: (store, data) => this.onCreditCardDeleted(store, data),
@@ -122,6 +126,7 @@ export class CreditCard extends React.Component<
     data: SavedCreditCardsDeleteCreditCardMutationResponse
   ) {
     const {
+      // @ts-expect-error STRICT_NULL_CHECK
       deleteCreditCard: { creditCardOrError },
     } = data
 
@@ -135,16 +140,21 @@ export class CreditCard extends React.Component<
       const creditCardId = creditCardEdge.getValue("id")
       const meStore = store.get(this.props.me.id)
       let connection = null
+      // @ts-expect-error STRICT_NULL_CHECK
       connection = ConnectionHandler.getConnection(
+        // @ts-expect-error STRICT_NULL_CHECK
         meStore,
         "UserSettingsPayments_creditCards"
       )
       if (!connection) {
+        // @ts-expect-error STRICT_NULL_CHECK
         connection = ConnectionHandler.getConnection(
+          // @ts-expect-error STRICT_NULL_CHECK
           meStore,
           "PaymentSection_creditCards"
         )
       }
+      // @ts-expect-error STRICT_NULL_CHECK
       ConnectionHandler.deleteNode(connection, creditCardId)
     }
   }

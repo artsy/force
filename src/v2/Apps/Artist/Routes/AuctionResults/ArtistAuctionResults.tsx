@@ -43,11 +43,13 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
 }) => {
   const { user, mediator } = useContext(SystemContext)
   const filterContext = useAuctionResultsFilterContext()
+  // @ts-expect-error STRICT_NULL_CHECK
   const { pageInfo } = artist.auctionResultsConnection
   const { hasNextPage, endCursor } = pageInfo
   const artistName = artist.name
 
   const loadNext = () => {
+    // @ts-expect-error STRICT_NULL_CHECK
     const nextPageNum = filterContext.filters.pageAndCursor.page + 1
     if (hasNextPage) {
       loadPage(endCursor, nextPageNum)
@@ -74,8 +76,10 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
 
   // TODO: move this and artwork copy to util?
   useDeepCompareEffect(() => {
+    // @ts-expect-error STRICT_NULL_CHECK
     Object.entries(filterContext.filters).forEach(
       ([filterKey, currentFilter]) => {
+        // @ts-expect-error STRICT_NULL_CHECK
         const previousFilter = previousFilters[filterKey]
         const filtersHaveUpdated = !isEqual(currentFilter, previousFilter)
 
@@ -84,6 +88,7 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
 
           // If user is not logged-in, show auth modal, but only if it was never shown before.
           if (!user && !authShownForFiltering) {
+            // @ts-expect-error STRICT_NULL_CHECK
             openAuthModal(mediator, {
               contextModule: ContextModule.auctionResults,
               copy: `Sign up to see auction results for ${artistName}`,
@@ -98,6 +103,7 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
             action_type:
               AnalyticsSchema.ActionType.AuctionResultFilterParamChanged,
             changed: JSON.stringify({
+              // @ts-expect-error STRICT_NULL_CHECK
               [filterKey]: filterContext.filters[filterKey],
             }),
             context_page: AnalyticsSchema.PageName.ArtistAuctionResults,
@@ -113,6 +119,7 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
     setIsLoading(true)
 
     const relayParams = {
+      // @ts-expect-error STRICT_NULL_CHECK
       after: filterContext.filters.pageAndCursor.cursor,
       artistID: artist.slug,
       before: null,
@@ -134,10 +141,12 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
     })
   }
 
+  // @ts-expect-error STRICT_NULL_CHECK
   const auctionResultsLength = artist.auctionResultsConnection.edges.length
 
   const resultList = (
     <LoadingArea isLoading={isLoading}>
+      {/* @ts-expect-error STRICT_NULL_CHECK */}
       {artist.auctionResultsConnection.edges.map(({ node }, index) => {
         return (
           <React.Fragment key={index}>
@@ -193,6 +202,7 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
             <Pagination
               getHref={() => ""}
               hasNextPage={pageInfo.hasNextPage}
+              // @ts-expect-error STRICT_NULL_CHECK
               pageCursors={artist.auctionResultsConnection.pageCursors}
               onClick={(_cursor, page) => loadPage(_cursor, page)}
               onNext={() => loadNext()}
@@ -208,11 +218,14 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
 export const ArtistAuctionResultsRefetchContainer = createRefetchContainer(
   (props: AuctionResultsProps) => {
     const { startAt, endAt } =
+      // @ts-expect-error STRICT_NULL_CHECK
       props.artist.auctionResultsConnection.createdYearRange ?? {}
     return (
       <AuctionResultsFilterContextProvider
         filters={{
+          // @ts-expect-error STRICT_NULL_CHECK
           earliestCreatedYear: startAt,
+          // @ts-expect-error STRICT_NULL_CHECK
           latestCreatedYear: endAt,
         }}
       >

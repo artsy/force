@@ -28,13 +28,16 @@ export const UserMenu: React.FC = () => {
 
     trackEvent({
       action_type: AnalyticsSchema.ActionType.Click,
+      // @ts-expect-error STRICT_NULL_CHECK
       context_module: AnalyticsSchema.ContextModule.HeaderUserDropdown,
       subject: text,
+      // @ts-expect-error STRICT_NULL_CHECK
       destination_path: href,
     })
   }
 
   const isAdmin = userIsAdmin(user)
+  // @ts-expect-error STRICT_NULL_CHECK
   const hasPartnerAccess = Boolean(user.has_partner_access)
 
   return (
@@ -100,10 +103,12 @@ export const UserMenu: React.FC = () => {
         tabIndex={0}
         onKeyPress={event => {
           if (event.key === "Enter" || event.key === " ") {
+            // @ts-expect-error STRICT_NULL_CHECK
             mediator.trigger("auth:logout")
           }
         }}
         onClick={() => {
+          // @ts-expect-error STRICT_NULL_CHECK
           mediator.trigger("auth:logout")
         }}
       >

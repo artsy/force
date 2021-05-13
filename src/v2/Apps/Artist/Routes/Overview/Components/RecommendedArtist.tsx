@@ -47,15 +47,20 @@ const RecommendedArtist: FC<
   }
 > = ({ artist, onArtworkClicked, fullBleedRail }) => {
   const { user, mediator } = useContext(SystemContext)
+  // @ts-expect-error STRICT_NULL_CHECK
   const artistData = get(artist, a => a.artworks_connection.edges, [])
 
   return (
     <Box data-test={ContextModule.relatedArtistsRail}>
       <EntityHeader
         mt={4}
+        // @ts-expect-error STRICT_NULL_CHECK
         imageUrl={get(artist, a => a.image.cropped.url, "")}
+        // @ts-expect-error STRICT_NULL_CHECK
         name={artist.name}
+        // @ts-expect-error STRICT_NULL_CHECK
         meta={artist.formatted_nationality_and_birthday}
+        // @ts-expect-error STRICT_NULL_CHECK
         href={artist.href}
         FollowButton={
           <FollowArtistButton
@@ -79,10 +84,13 @@ const RecommendedArtist: FC<
       />
 
       <Carousel mt={3} arrowHeight={HEIGHT}>
+        {/* @ts-expect-error STRICT_NULL_CHECK */}
         {artistData.map(artwork => {
           return (
             <FillwidthItem
+              // @ts-expect-error STRICT_NULL_CHECK
               key={artwork.node.id}
+              // @ts-expect-error STRICT_NULL_CHECK
               artwork={artwork.node}
               contextModule={ContextModule.relatedArtistsRail}
               imageHeight={HEIGHT}

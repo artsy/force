@@ -26,6 +26,7 @@ export const FeaturedArtists: React.FC<FeaturedArtistsProps> = props => {
           >
             <FeaturedContentLink
               size="medium"
+              // @ts-expect-error STRICT_NULL_CHECK
               contextModule={AnalyticsSchema.ContextModule.FeaturedArtists}
               {...artist}
             />

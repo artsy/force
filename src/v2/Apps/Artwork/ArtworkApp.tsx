@@ -174,7 +174,9 @@ export class ArtworkApp extends React.Component<Props> {
         action_type: Schema.ActionType.ViewedLot,
         artwork_id: internalID,
         artwork_slug: slug,
+        // @ts-expect-error STRICT_NULL_CHECK
         auction_slug: sale.slug,
+        // @ts-expect-error STRICT_NULL_CHECK
         sale_id: sale.internalID,
       }
       tracking.trackEvent(trackingData)
@@ -195,8 +197,10 @@ export class ArtworkApp extends React.Component<Props> {
           const addSpacer = artists.length > 1 && index < artists.length - 1
           return (
             <React.Fragment key={index}>
+              {/* @ts-expect-error STRICT_NULL_CHECK */}
               <Row key={artist.id}>
                 <Col>
+                  {/* @ts-expect-error STRICT_NULL_CHECK */}
                   <ArtistInfo artist={artist} />
                 </Col>
               </Row>

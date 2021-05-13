@@ -20,20 +20,27 @@ export class Contact extends React.Component<ContactProps, null> {
 
   auctionLine() {
     const { artwork } = this.props
+    // @ts-expect-error STRICT_NULL_CHECK
     const isLiveOpen = get(artwork, p => p.sale.is_live_open)
+    // @ts-expect-error STRICT_NULL_CHECK
     const isOpen = get(artwork, p => p.sale.is_open)
+    // @ts-expect-error STRICT_NULL_CHECK
     const isClosed = get(artwork, p => p.sale.is_closed)
 
     if (isLiveOpen) {
       return (
+        // @ts-expect-error STRICT_NULL_CHECK
         <TextLink href={artwork.href} underline>
           Enter Live Auction
         </TextLink>
       )
     } else if (isOpen) {
       const sa = get(artwork, p => p.sale_artwork)
+      // @ts-expect-error STRICT_NULL_CHECK
       const bidderPositions = get(sa, p => p.counts.bidder_positions)
+      // @ts-expect-error STRICT_NULL_CHECK
       const highestBidDisplay = get(sa, p => p.highest_bid.display)
+      // @ts-expect-error STRICT_NULL_CHECK
       const openingBidDisplay = get(sa, p => p.opening_bid.display)
 
       if (bidderPositions && bidderPositions > 0) {
@@ -56,11 +63,13 @@ export class Contact extends React.Component<ContactProps, null> {
 
   contactPartnerLine() {
     const partner = get(this.props, p =>
+      // @ts-expect-error STRICT_NULL_CHECK
       p.artwork.partner.type.toLocaleLowerCase()
     )
 
     if (partner) {
       return (
+        // @ts-expect-error STRICT_NULL_CHECK
         <TextLink href={this.props.artwork.href} underline>
           Contact {partner}
         </TextLink>
@@ -75,6 +84,7 @@ export class Contact extends React.Component<ContactProps, null> {
   }
 }
 
+// @ts-expect-error STRICT_NULL_CHECK
 export default createFragmentContainer(Contact, {
   artwork: graphql`
     fragment Contact_artwork on Artwork {

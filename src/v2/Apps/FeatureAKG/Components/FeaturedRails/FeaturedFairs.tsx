@@ -40,6 +40,7 @@ const FeaturedFairsRail: React.FC<FeaturedFairsRailProps> = props => {
     return (
       <FeaturedRail title={title} subtitle={subtitle}>
         <FeaturedRailCarousel
+          // @ts-expect-error STRICT_NULL_CHECK
           itemsForCarousel={compact(itemsForCarousel)}
           contextModule={AnalyticsSchema.ContextModule.BrowseFairs}
         />

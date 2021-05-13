@@ -60,7 +60,9 @@ export const MenuItem: React.FC<MenuItemProps> = ({
 }) => {
   return (
     <Container
+      // @ts-expect-error STRICT_NULL_CHECK
       to={href}
+      // @ts-expect-error STRICT_NULL_CHECK
       hasLighterTextColor={hasLighterTextColor}
       px={2}
       py={1}

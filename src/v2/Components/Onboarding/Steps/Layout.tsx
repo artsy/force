@@ -106,6 +106,7 @@ export class Layout extends React.Component<Props, null> {
             <NextButton
               disabled={disabled}
               onClick={this.props.onNextButtonPressed}
+              // @ts-expect-error STRICT_NULL_CHECK
               state={this.props.buttonState}
             >
               {buttonText}

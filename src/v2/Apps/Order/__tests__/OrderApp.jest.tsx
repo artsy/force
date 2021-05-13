@@ -30,11 +30,13 @@ jest.mock("@stripe/stripe-js", () => {
   return {
     loadStripe: () => {
       if (mock === null) {
+        // @ts-expect-error STRICT_NULL_CHECK
         mock = mockStripe()
       }
       return mock
     },
     _mockStripe: () => mock,
+    // @ts-expect-error STRICT_NULL_CHECK
     _mockReset: () => (mock = mockStripe()),
   }
 })
@@ -407,6 +409,7 @@ describe("OrderApp routing redirects", () => {
         "/orders/2939023/review/counter",
         mockResolver({
           ...counterOfferOrder,
+          // @ts-expect-error STRICT_NULL_CHECK
           myLastOffer: {
             ...counterOfferOrder.myLastOffer,
             createdAt: DateTime.local().minus({ days: 2 }).toString(),

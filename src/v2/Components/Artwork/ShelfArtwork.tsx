@@ -45,9 +45,11 @@ const ShelfArtwork: React.FC<ShelfArtworkProps> = ({
   const { mediator, user } = useSystemContext()
 
   const getHeight = (size: keyof typeof IMG_HEIGHT) => {
+    // @ts-expect-error STRICT_NULL_CHECK
     return artwork.image?.resized.height > IMG_HEIGHT[size]
       ? IMG_HEIGHT[size]
-      : artwork.image?.resized.height
+      : // @ts-expect-error STRICT_NULL_CHECK
+        artwork.image?.resized.height
   }
 
   const ResponsiveContainer = ({ children }) => {
@@ -55,6 +57,7 @@ const ShelfArtwork: React.FC<ShelfArtworkProps> = ({
       <>
         <Media at="xs">
           <Container
+            // @ts-expect-error STRICT_NULL_CHECK
             width={artwork.image?.resized.width}
             height={getHeight("mobile")}
           >
@@ -63,6 +66,7 @@ const ShelfArtwork: React.FC<ShelfArtworkProps> = ({
         </Media>
         <Media greaterThan="xs">
           <Container
+            // @ts-expect-error STRICT_NULL_CHECK
             width={artwork.image?.resized.width}
             height={getHeight("desktop")}
           >
@@ -76,6 +80,7 @@ const ShelfArtwork: React.FC<ShelfArtworkProps> = ({
   return (
     <Box>
       <RouterLink
+        // @ts-expect-error STRICT_NULL_CHECK
         to={artwork.href}
         noUnderline
         onClick={() => {
@@ -84,8 +89,11 @@ const ShelfArtwork: React.FC<ShelfArtworkProps> = ({
       >
         <ResponsiveContainer>
           <Image
+            // @ts-expect-error STRICT_NULL_CHECK
             src={artwork.image?.resized.src}
+            // @ts-expect-error STRICT_NULL_CHECK
             srcSet={artwork.image?.resized.srcSet}
+            // @ts-expect-error STRICT_NULL_CHECK
             width={artwork.image?.resized.width}
             maxHeight={[IMG_HEIGHT.mobile, IMG_HEIGHT.desktop]}
             lazyLoad={lazyLoad}

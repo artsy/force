@@ -55,8 +55,10 @@ export class NavigationTabs extends React.Component<Props> {
     const route = path => `/artist/${slug}${path}`
 
     const worksForSaleTabName =
+      // @ts-expect-error STRICT_NULL_CHECK
       counts.forSaleArtworks > 0
-        ? `Works for sale (${counts.forSaleArtworks.toLocaleString()})`
+        ? // @ts-expect-error STRICT_NULL_CHECK
+          `Works for sale (${counts.forSaleArtworks.toLocaleString()})`
         : "Artworks"
 
     return (
@@ -64,8 +66,10 @@ export class NavigationTabs extends React.Component<Props> {
         {this.renderTab("Overview", route(""), {
           exact: true,
         })}
+        {/* @ts-expect-error STRICT_NULL_CHECK */}
         {statuses.artworks &&
           this.renderTab(worksForSaleTabName, route("/works-for-sale"))}
+        {/* @ts-expect-error STRICT_NULL_CHECK */}
         {statuses.auctionLots &&
           this.renderTab("Auction results", route("/auction-results"))}
       </>
@@ -76,8 +80,10 @@ export class NavigationTabs extends React.Component<Props> {
     const artist = this.props.artist
 
     const showArtistInsights =
+      // @ts-expect-error STRICT_NULL_CHECK
       showMarketInsights(artist) ||
       (artist.insights && artist.insights.length > 0)
+    // @ts-expect-error STRICT_NULL_CHECK
     const hasArtistContent = hasOverviewContent(artist)
 
     const showTabs = showArtistInsights || hasArtistContent
@@ -102,6 +108,7 @@ export const hasOverviewContent = ({
   const showArtistBio = biographyBlurb && Boolean(biographyBlurb.text)
   const showRelatedCategories = get(
     related,
+    // @ts-expect-error STRICT_NULL_CHECK
     r => r.genes.edges.length > 0,
     false
   )

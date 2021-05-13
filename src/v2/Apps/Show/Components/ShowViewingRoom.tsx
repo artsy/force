@@ -22,6 +22,7 @@ export const ShowViewingRoom: React.FC<ShowViewingRoomProps> = ({
   show,
   ...rest
 }) => {
+  // @ts-expect-error STRICT_NULL_CHECK
   const [{ node: viewingRoom }] = show.viewingRoomsConnection.edges
 
   const image = cropped(viewingRoom.image?.imageURLs?.normalized, {
@@ -40,6 +41,7 @@ export const ShowViewingRoom: React.FC<ShowViewingRoomProps> = ({
     const payload: ClickedViewingRoomCard = {
       action: ActionType.clickedViewingRoomCard,
       context_module: ContextModule.associatedViewingRoom,
+      // @ts-expect-error STRICT_NULL_CHECK
       context_page_owner_type: contextPageOwnerType,
       context_page_owner_id: contextPageOwnerId,
       context_page_owner_slug: contextPageOwnerSlug,
@@ -65,7 +67,9 @@ export const ShowViewingRoom: React.FC<ShowViewingRoomProps> = ({
             height="100%"
             image={image}
             title={viewingRoom.title}
+            // @ts-expect-error STRICT_NULL_CHECK
             subtitle={show.partner?.name}
+            // @ts-expect-error STRICT_NULL_CHECK
             tag={getTagProps(
               viewingRoom.status,
               viewingRoom.distanceToOpen,

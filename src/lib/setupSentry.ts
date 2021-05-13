@@ -26,7 +26,9 @@ export function setupSentry(sd) {
   }
   init({
     dsn: sd.SENTRY_PUBLIC_DSN,
+    // @ts-expect-error STRICT_NULL_CHECK
     beforeSend(event, hint) {
+      // @ts-expect-error STRICT_NULL_CHECK
       const error = hint.originalException
       if (error && error.message) {
         const sendError = maybeSendErrorToSentry(error)

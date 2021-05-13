@@ -24,13 +24,16 @@ export class CurrentEvent extends Component<CurrentEventProps> {
 
 @track()
 export class LargeCurrentEvent extends Component<CurrentEventProps> {
+  // @ts-expect-error STRICT_NULL_CHECK
   @track<CurrentEventProps>(props => ({
     action_type: Schema.ActionType.Click,
     subject:
+      // @ts-expect-error STRICT_NULL_CHECK
       props.artist.currentEvent.event.__typename === "Sale"
         ? // TODO: These are not action names!
           Schema.ActionName.InSale
         : Schema.ActionName.InShow,
+    // @ts-expect-error STRICT_NULL_CHECK
     destination_path: props.artist.currentEvent.href,
   }))
   handleClick() {
@@ -48,6 +51,7 @@ export class LargeCurrentEvent extends Component<CurrentEventProps> {
 
     return (
       <a
+        // @ts-expect-error STRICT_NULL_CHECK
         href={href}
         className="noUnderline"
         onClick={this.handleClick.bind(this)}
@@ -55,6 +59,7 @@ export class LargeCurrentEvent extends Component<CurrentEventProps> {
         <Flex flexDirection="column">
           {image && (
             <Box width="100%" height="auto">
+              {/* @ts-expect-error STRICT_NULL_CHECK */}
               <Image src={image.resized.url} alt={name} width="100%" mb={1} />
             </Box>
           )}

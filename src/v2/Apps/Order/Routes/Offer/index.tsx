@@ -191,6 +191,7 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
     }
 
     try {
+      // @ts-expect-error STRICT_NULL_CHECK
       const orderOrError = (
         await this.addInitialOfferToOrder({
           input: {
@@ -217,6 +218,7 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
     const { order, isCommittingMutation } = this.props
 
     const offerItem = getOfferItemFromOrder(order.lineItems)
+    // @ts-expect-error STRICT_NULL_CHECK
     const artworkId = order.lineItems.edges[0].node.artwork.slug
     const orderCurrency = order.currencyCode
 
@@ -246,6 +248,7 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
               </Flex>
               {Boolean(offerItem?.price) && (
                 <Sans size="2" color="black60">
+                  {/* @ts-expect-error STRICT_NULL_CHECK */}
                   List price: {offerItem.price}
                 </Sans>
               )}
@@ -286,6 +289,7 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
                 <ArtworkSummaryItem order={order} />
                 <TransactionDetailsSummaryItem
                   order={order}
+                  // @ts-expect-error STRICT_NULL_CHECK
                   offerOverride={
                     this.state.offerValue &&
                     this.state.offerValue.toLocaleString("en-US", {

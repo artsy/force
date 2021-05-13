@@ -30,9 +30,13 @@ describe("MarketingSignupModal", () => {
   })
 
   afterEach(() => {
+    // @ts-expect-error STRICT_NULL_CHECK
     delete sd.CURRENT_USER
+    // @ts-expect-error STRICT_NULL_CHECK
     delete sd.TARGET_CAMPAIGN_URL
+    // @ts-expect-error STRICT_NULL_CHECK
     delete sd.CURRENT_PATH
+    // @ts-expect-error STRICT_NULL_CHECK
     delete sd.IS_MOBILE
     // @ts-ignore
     window.addEventListener.mockClear()

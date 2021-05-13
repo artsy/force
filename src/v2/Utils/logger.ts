@@ -17,6 +17,7 @@ export default function createLogger(namespace = "") {
     error: (...errors) => {
       const error = errors.find(e => e instanceof Error)
 
+      // @ts-expect-error STRICT_NULL_CHECK
       if (error && shouldCaptureError(process.env.NODE_ENV)) {
         sendErrorToService(error)
       }

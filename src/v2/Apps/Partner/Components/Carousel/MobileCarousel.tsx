@@ -13,6 +13,7 @@ export const MobileCarousel: React.FC<CarouselProps> = ({
   const cells = Children.toArray(children)
   const railRef = useRef<HTMLDivElement | null>(null)
 
+  // @ts-expect-error STRICT_NULL_CHECK
   useRailOverflow(railRef, showMore => {
     onRailOverflowChange && onRailOverflowChange(showMore)
   })

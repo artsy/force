@@ -20,7 +20,8 @@ export const ResultOption: React.FC<ResultOptionProps> = ({
   value,
 }) => {
   const { currentlySelectedFilters, setFilter } = useArtworkFilterContext()
-  const results = currentlySelectedFilters()[facetName]
+  // @ts-expect-error STRICT_NULL_CHECK
+  const results = currentlySelectedFilters()[facetName] || []
 
   const handleSelect = (value: string) => (selected: boolean) => {
     setFilter(

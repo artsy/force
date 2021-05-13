@@ -62,13 +62,16 @@ const ArtistLine: React.FC<DetailsProps> = ({
         <Text variant={tokens.variant}>
           {artists
             .reduce((acc, artist, index) => {
+              // @ts-expect-error STRICT_NULL_CHECK
               return acc.concat([
                 ", ",
                 <ConditionalLink
                   includeLinks={includeLinks}
+                  // @ts-expect-error STRICT_NULL_CHECK
                   href={artist.href}
                   key={index}
                 >
+                  {/* @ts-expect-error STRICT_NULL_CHECK */}
                   <Text variant={tokens.variant}>{artist.name}</Text>
                 </ConditionalLink>,
               ])
@@ -96,6 +99,7 @@ const TitleLine: React.FC<DetailsProps> = ({
   })
 
   return (
+    // @ts-expect-error STRICT_NULL_CHECK
     <ConditionalLink includeLinks={includeLinks} href={href}>
       <TruncatedLine>
         <Text variant={tokens.variant} color="black60">
@@ -133,6 +137,7 @@ const PartnerLine: React.FC<DetailsProps> = ({
   if (partner) {
     return (
       <TruncatedLine>
+        {/* @ts-expect-error STRICT_NULL_CHECK */}
         <ConditionalLink includeLinks={includeLinks} href={partner.href}>
           <Text variant={tokens.variant} color="black60">
             {partner.name}
@@ -206,6 +211,7 @@ const BidInfo: React.FC<DetailsProps> = ({
     return null
   }
 
+  // @ts-expect-error STRICT_NULL_CHECK
   const bidderPositionCounts = sale_artwork?.counts.bidder_positions ?? 0
 
   if (bidderPositionCounts === 0) {

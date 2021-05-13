@@ -345,6 +345,7 @@ describe("ViewingRoomApp", () => {
       return renderRelayTree({
         Component: ({ viewingRoom }) => {
           return (
+            // @ts-expect-error STRICT_NULL_CHECK
             <MockBoot breakpoint={breakpoint} user={null}>
               <ViewingRoomAppFragmentContainer viewingRoom={viewingRoom}>
                 some child

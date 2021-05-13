@@ -42,6 +42,7 @@ export const buildUrl = (state: ArtworkFilters, pathname?: string): string => {
 
   const url = queryString ? `${pathname}?${queryString}` : pathname
 
+  // @ts-expect-error STRICT_NULL_CHECK
   return url
 }
 

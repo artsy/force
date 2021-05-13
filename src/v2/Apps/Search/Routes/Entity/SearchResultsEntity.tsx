@@ -24,6 +24,7 @@ interface State extends LoadingAreaState {
 const PAGE_SIZE = 10
 
 export class SearchResultsEntityRoute extends React.Component<Props, State> {
+  // @ts-expect-error STRICT_NULL_CHECK
   state = {
     isLoading: false,
     page: null,
@@ -34,6 +35,7 @@ export class SearchResultsEntityRoute extends React.Component<Props, State> {
     const {
       match: { location },
     } = this.props
+    // @ts-expect-error STRICT_NULL_CHECK
     const { page } = get(location, l => l.query)
 
     this.state = { isLoading: false, page: (page && parseInt(page, 10)) || 1 }
@@ -53,10 +55,12 @@ export class SearchResultsEntityRoute extends React.Component<Props, State> {
     const { searchConnection } = viewer
 
     const {
+      // @ts-expect-error STRICT_NULL_CHECK
       pageInfo: { hasNextPage, endCursor },
     } = searchConnection
 
     if (hasNextPage) {
+      // @ts-expect-error STRICT_NULL_CHECK
       this.loadAfter(endCursor, this.state.page + 1)
     }
   }
@@ -90,6 +94,7 @@ export class SearchResultsEntityRoute extends React.Component<Props, State> {
           match: { location },
           tab,
         } = this.props
+        // @ts-expect-error STRICT_NULL_CHECK
         const { term } = get(location, l => l.query)
         const urlParams = qs.stringify({
           page,
@@ -97,6 +102,7 @@ export class SearchResultsEntityRoute extends React.Component<Props, State> {
         })
         // TODO: Look into using router push w/ query params.
         // this.props.router.replace(`/search/${tab}?${urlParams}`)
+        // @ts-expect-error STRICT_NULL_CHECK
         window.history.pushState({}, null, `/search/${tab}?${urlParams}`)
       }
     )
@@ -107,10 +113,13 @@ export class SearchResultsEntityRoute extends React.Component<Props, State> {
       viewer,
       match: { location },
     } = this.props
+    // @ts-expect-error STRICT_NULL_CHECK
     const { term } = get(location, l => l.query)
     const { searchConnection } = viewer
 
+    // @ts-expect-error STRICT_NULL_CHECK
     const items = get(viewer, v => v.searchConnection.edges, []).map(
+      // @ts-expect-error STRICT_NULL_CHECK
       e => e.node
     )
 
@@ -119,14 +128,21 @@ export class SearchResultsEntityRoute extends React.Component<Props, State> {
         {items.map((searchableItem, index) => {
           return (
             <Box key={index}>
+              {/* @ts-expect-error STRICT_NULL_CHECK */}
               <GenericSearchResultItem
+                // @ts-expect-error STRICT_NULL_CHECK
                 name={searchableItem.displayLabel}
+                // @ts-expect-error STRICT_NULL_CHECK
                 description={searchableItem.description}
+                // @ts-expect-error STRICT_NULL_CHECK
                 href={searchableItem.href}
+                // @ts-expect-error STRICT_NULL_CHECK
                 imageUrl={searchableItem.imageUrl}
+                // @ts-expect-error STRICT_NULL_CHECK
                 entityType={searchableItem.displayType}
                 index={index}
                 term={term}
+                // @ts-expect-error STRICT_NULL_CHECK
                 id={searchableItem.internalID}
               />
               {index < items.length - 1 && <Separator />}
@@ -134,10 +150,12 @@ export class SearchResultsEntityRoute extends React.Component<Props, State> {
           )
         })}
         <Pagination
+          // @ts-expect-error STRICT_NULL_CHECK
           pageCursors={searchConnection.pageCursors}
           onClick={this.loadAfter}
           onNext={this.loadNext}
           scrollTo="#jumpto--searchResultTabs"
+          // @ts-expect-error STRICT_NULL_CHECK
           hasNextPage={searchConnection.pageInfo.hasNextPage}
         />
       </>
@@ -150,9 +168,12 @@ export class SearchResultsEntityRoute extends React.Component<Props, State> {
       match: { location },
     } = this.props
 
+    // @ts-expect-error STRICT_NULL_CHECK
     const { term } = get(location, l => l.query)
 
+    // @ts-expect-error STRICT_NULL_CHECK
     const items = get(viewer, v => v.searchConnection.edges, []).map(
+      // @ts-expect-error STRICT_NULL_CHECK
       e => e.node
     )
     return (

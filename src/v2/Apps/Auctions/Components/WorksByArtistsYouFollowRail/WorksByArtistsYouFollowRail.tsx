@@ -33,6 +33,7 @@ const WorksByArtistsYouFollowRail: React.FC<WorksByArtistsYouFollowRailProps> = 
           Works for you{" "}
           <sup>
             <Text as="span" variant="xs" color="brand">
+              {/* @ts-expect-error STRICT_NULL_CHECK */}
               {viewer.saleArtworksConnection.edges.length}
             </Text>
           </sup>
@@ -58,6 +59,7 @@ const WorksByArtistsYouFollowRail: React.FC<WorksByArtistsYouFollowRailProps> = 
                 trackEvent(
                   clickedArtworkGroup({
                     contextModule,
+                    // @ts-expect-error STRICT_NULL_CHECK
                     contextPageOwnerType,
                     artworkID: node.internalID,
                     artworkSlug: node.slug,

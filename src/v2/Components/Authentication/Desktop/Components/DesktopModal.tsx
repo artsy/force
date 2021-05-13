@@ -17,6 +17,7 @@ export interface DesktopModalProps extends ModalProps {
 @track({}, { dispatch: data => Events.postEvent(data) })
 export class DesktopModal extends Component<DesktopModalProps> {
   onClose = () => {
+    // @ts-expect-error STRICT_NULL_CHECK
     this.props.tracking.trackEvent({
       action: "Click",
       type: "dismiss",

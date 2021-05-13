@@ -65,6 +65,7 @@ export class ReviewRoute extends Component<ReviewProps> {
     order_id: props.order.internalID,
     products: [
       {
+        // @ts-expect-error STRICT_NULL_CHECK
         product_id: props.order.lineItems.edges[0].node.artwork.internalID,
         quantity: 1,
         price: props.order.itemsTotal,
@@ -75,11 +76,14 @@ export class ReviewRoute extends Component<ReviewProps> {
     try {
       const orderOrError =
         this.props.order.mode === "BUY"
-          ? (await this.submitBuyOrder()).commerceSubmitOrder.orderOrError
-          : (await this.submitOffer(setupIntentId)).commerceSubmitOrderWithOffer
+          ? // @ts-expect-error STRICT_NULL_CHECK
+            (await this.submitBuyOrder()).commerceSubmitOrder.orderOrError
+          : // @ts-expect-error STRICT_NULL_CHECK
+            (await this.submitOffer(setupIntentId)).commerceSubmitOrderWithOffer
               .orderOrError
 
       if (orderOrError.error) {
+        // @ts-expect-error STRICT_NULL_CHECK
         this.handleSubmitError(orderOrError.error)
         return
       } else if (
@@ -115,6 +119,7 @@ export class ReviewRoute extends Component<ReviewProps> {
               })
               return
             } else {
+              // @ts-expect-error STRICT_NULL_CHECK
               this.onSubmit(result.setupIntent.id)
             }
           })
@@ -167,6 +172,7 @@ export class ReviewRoute extends Component<ReviewProps> {
     return this.props.commitMutation<ReviewSubmitOfferOrderMutation>({
       variables: {
         input: {
+          // @ts-expect-error STRICT_NULL_CHECK
           offerId: this.props.order.myLastOffer.internalID,
           confirmedSetupIntentId: setupIntentId,
         },
@@ -281,6 +287,7 @@ export class ReviewRoute extends Component<ReviewProps> {
   artistId() {
     return get(
       this.props.order,
+      // @ts-expect-error STRICT_NULL_CHECK
       o => o.lineItems.edges[0].node.artwork.artists[0].slug
     )
   }
@@ -288,6 +295,7 @@ export class ReviewRoute extends Component<ReviewProps> {
   routeToArtworkPage() {
     const artworkId = get(
       this.props.order,
+      // @ts-expect-error STRICT_NULL_CHECK
       o => o.lineItems.edges[0].node.artwork.slug
     )
     // Don't confirm whether or not you want to leave the page
@@ -356,6 +364,7 @@ export class ReviewRoute extends Component<ReviewProps> {
                   />
                 </Flex>
                 <Media greaterThan="xs">
+                  {/* @ts-expect-error STRICT_NULL_CHECK */}
                   <ItemReview lineItem={order.lineItems.edges[0].node} />
                   <Spacer mb={3} />
                   <Button

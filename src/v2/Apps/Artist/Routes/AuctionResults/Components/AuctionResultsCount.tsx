@@ -10,6 +10,7 @@ interface AuctionResultsCountProps {
 export const AuctionResultsCount = ({ results }: AuctionResultsCountProps) => {
   return (
     <Sans size="2" weight="medium">
+      {/* @ts-expect-error STRICT_NULL_CHECK */}
       {`Showing ${results.totalCount.toLocaleString()} results`}
     </Sans>
   )

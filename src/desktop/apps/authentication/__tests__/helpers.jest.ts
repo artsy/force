@@ -126,6 +126,7 @@ describe("Authentication Helpers", () => {
           session_id: "session-id",
         })
         expect(formikBag.setSubmitting).toBeCalledWith(false)
+        // @ts-expect-error STRICT_NULL_CHECK
         expect(window.analytics.track).toBeCalledWith("successfullyLoggedIn", {
           auth_redirect: "/articles",
           context_module: "popUpModal",
@@ -187,6 +188,7 @@ describe("Authentication Helpers", () => {
           agreed_to_receive_emails: true,
         })
         expect(formikBag.setSubmitting).toBeCalledWith(false)
+        // @ts-expect-error STRICT_NULL_CHECK
         expect(window.analytics.track).toBeCalledWith("createdAccount", {
           auth_redirect: "/articles",
           context_module: "popUpModal",
@@ -243,6 +245,7 @@ describe("Authentication Helpers", () => {
           reset_password_redirect_to: "/fairs",
         })
         expect(formikBag.setSubmitting).toBeCalledWith(false)
+        // @ts-expect-error STRICT_NULL_CHECK
         expect(window.analytics.track).toBeCalledWith("resetYourPassword", {
           auth_redirect: "/articles",
           context_module: "popUpModal",

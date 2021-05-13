@@ -18,6 +18,7 @@ const { getWrapper } = setupTestWrapper<ArtistsByLetterQuery>({
   Component: props => {
     return (
       <MockBoot>
+        {/* @ts-expect-error STRICT_NULL_CHECK */}
         <ArtistsByLetterFragmentContainer {...props} />
       </MockBoot>
     )

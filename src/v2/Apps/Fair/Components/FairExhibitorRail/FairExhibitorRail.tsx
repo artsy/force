@@ -34,6 +34,7 @@ export const FairExhibitorRail: React.FC<FairExhibitorRailProps> = ({
 
   const tappedViewTrackingData: ClickedArtworkGroup = {
     context_module: ContextModule.galleryBoothRail,
+    // @ts-expect-error STRICT_NULL_CHECK
     context_page_owner_type: contextPageOwnerType,
     context_page_owner_id: contextPageOwnerId,
     context_page_owner_slug: contextPageOwnerSlug,
@@ -53,15 +54,18 @@ export const FairExhibitorRail: React.FC<FairExhibitorRailProps> = ({
           <Box flex="1">
             <Text as="h3" variant="lg">
               <RouterLink
+                // @ts-expect-error STRICT_NULL_CHECK
                 to={show.href}
                 noUnderline
                 onClick={() => tracking.trackEvent(tappedViewTrackingData)}
               >
+                {/* @ts-expect-error STRICT_NULL_CHECK */}
                 {show.partner.name}
               </RouterLink>
             </Text>
 
             <Text as="h3" variant="lg" color="black60" mb={1}>
+              {/* @ts-expect-error STRICT_NULL_CHECK */}
               {show.counts.artworks} work{show.counts.artworks === 1 ? "" : "s"}
             </Text>
           </Box>

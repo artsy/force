@@ -64,6 +64,7 @@ export default class ItemLink extends React.Component<Props, State> {
   }
 
   onClick(e) {
+    // @ts-expect-error STRICT_NULL_CHECK
     this.props.onClick(e)
     this.setState({ selected: true })
   }

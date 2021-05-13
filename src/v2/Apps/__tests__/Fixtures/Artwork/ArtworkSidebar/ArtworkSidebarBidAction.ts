@@ -82,6 +82,7 @@ export const ArtworkFromTimedAuctionRegistrationClosed: ArtworkSidebarBidAction_
 }
 
 export const SaleRequiringIDV: Partial<
+  // @ts-expect-error STRICT_NULL_CHECK
   ArtworkSidebarBidAction_Test_QueryRawResponse["artwork"]["sale"]
 > = {
   requireIdentityVerification: true,
@@ -90,6 +91,7 @@ export const SaleRequiringIDV: Partial<
 export const NotIDVedUser: ArtworkSidebarBidAction_Test_QueryRawResponse["me"] = {
   id: "user-id",
   identityVerified: false,
+  // @ts-expect-error STRICT_NULL_CHECK
   pendingIdentityVerification: undefined,
 }
 
@@ -102,6 +104,7 @@ export const UserPendingIDV: ArtworkSidebarBidAction_Test_QueryRawResponse["me"]
 export const IDVedUser: ArtworkSidebarBidAction_Test_QueryRawResponse["me"] = {
   id: "user-id",
   identityVerified: true,
+  // @ts-expect-error STRICT_NULL_CHECK
   pendingIdentityVerification: undefined,
 }
 

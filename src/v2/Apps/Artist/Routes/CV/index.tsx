@@ -26,8 +26,11 @@ export class CVRoute extends Component<CVRouteProps> {
           Past Shows and Fair Booths
         </Sans>
         <Spacer mb={3} />
+        {/* @ts-expect-error STRICT_NULL_CHECK */}
         <CVItem category="Solo shows" artist={viewer.artist_soloShows} />
+        {/* @ts-expect-error STRICT_NULL_CHECK */}
         <CVItem category="Group shows" artist={viewer.artist_groupShows} />
+        {/* @ts-expect-error STRICT_NULL_CHECK */}
         <CVItem category="Fair booths" artist={viewer.artist_fairBooths} />
       </Container>
     )

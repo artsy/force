@@ -83,6 +83,7 @@ export async function pageCacheMiddleware(
     await new Promise<void>((resolve, reject) => {
       // Cache timeout handler, will reject if hit.
       let timeoutId = setTimeout(() => {
+        // @ts-expect-error STRICT_NULL_CHECK
         timeoutId = null
         const error = new Error(
           `Timeout of ${PAGE_CACHE_RETRIEVAL_TIMEOUT_MS}ms, skipping...`

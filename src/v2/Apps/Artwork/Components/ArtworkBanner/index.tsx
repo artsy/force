@@ -21,6 +21,7 @@ export const ArtworkBanner: React.SFC<ArtworkBannerProps> = props => {
 
   switch (context.__typename) {
     case "Sale": {
+      // @ts-expect-error STRICT_NULL_CHECK
       const auctionImage = get(sale, s => s.is_auction && s.cover_image.url)
 
       if (!sale) {
@@ -29,35 +30,47 @@ export const ArtworkBanner: React.SFC<ArtworkBannerProps> = props => {
 
       return (
         <Banner
+          // @ts-expect-error STRICT_NULL_CHECK
           imageUrl={auctionImage}
+          // @ts-expect-error STRICT_NULL_CHECK
           initials={partner && partner.initials}
           meta="In auction"
+          // @ts-expect-error STRICT_NULL_CHECK
           name={context.name}
           // Do not display partner name for benefit or gallery auctions
+          // @ts-expect-error STRICT_NULL_CHECK
           subHeadline={
             sale.isBenefit || sale.isGalleryAuction
               ? null
               : partner && partner.name
           }
+          // @ts-expect-error STRICT_NULL_CHECK
           href={context.href}
         />
       )
     }
     case "Fair": {
+      // @ts-expect-error STRICT_NULL_CHECK
       const fairImage = get(context, c => c.profile.icon.img.url)
+      // @ts-expect-error STRICT_NULL_CHECK
       const initials = get(context, c => c.profile.initials)
       return (
         <Banner
           imageUrl={fairImage}
+          // @ts-expect-error STRICT_NULL_CHECK
           initials={initials}
           meta="At fair"
+          // @ts-expect-error STRICT_NULL_CHECK
           name={context.name}
+          // @ts-expect-error STRICT_NULL_CHECK
           subHeadline={partner && partner.name}
+          // @ts-expect-error STRICT_NULL_CHECK
           href={context.href}
         />
       )
     }
     case "Show": {
+      // @ts-expect-error STRICT_NULL_CHECK
       const showImage = get(context, c => c.thumbnail.img.url)
       let showLine = "In current show"
       if (context.status === "upcoming") {
@@ -68,10 +81,14 @@ export const ArtworkBanner: React.SFC<ArtworkBannerProps> = props => {
       return (
         <Banner
           imageUrl={showImage}
+          // @ts-expect-error STRICT_NULL_CHECK
           initials={partner && partner.initials}
           meta={showLine}
+          // @ts-expect-error STRICT_NULL_CHECK
           name={context.name}
+          // @ts-expect-error STRICT_NULL_CHECK
           subHeadline={partner && partner.name}
+          // @ts-expect-error STRICT_NULL_CHECK
           href={context.href}
         />
       )

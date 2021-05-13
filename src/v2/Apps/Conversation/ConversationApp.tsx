@@ -16,6 +16,7 @@ interface ConversationAppProps {
 
 interface InboxProps {
   me: ConversationApp_me
+  // @ts-expect-error STRICT_NULL_CHECK
   selectedConversation: ConversationApp_me["conversationsConnection"]["edges"][0]["node"]
 }
 
@@ -50,6 +51,7 @@ export const ConversationApp: React.FC<ConversationAppProps> = props => {
   const { me, router } = props
   const [width, setWidth] = useState(0)
 
+  // @ts-expect-error STRICT_NULL_CHECK
   const firstConversation = me?.conversationsConnection?.edges[0]?.node
 
   useEffect(() => {

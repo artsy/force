@@ -38,6 +38,7 @@ export class MarketDataSummary extends React.Component<Props, null> {
       auctionResultsConnection,
       collections,
     } = this.props.artist
+    // @ts-expect-error STRICT_NULL_CHECK
     const { partnersConnection } = highlights
 
     // Is there a gallery representation section?
@@ -70,6 +71,7 @@ export class MarketDataSummary extends React.Component<Props, null> {
   // Display the highest category string for all the partners that represent the artist
   renderGalleryRepresentation() {
     const { highlights } = this.props.artist
+    // @ts-expect-error STRICT_NULL_CHECK
     const { partnersConnection } = highlights
     if (
       partnersConnection &&
@@ -110,12 +112,15 @@ export class MarketDataSummary extends React.Component<Props, null> {
   renderAuctionHighlight() {
     if (
       !this.props.artist.auctionResultsConnection ||
+      // @ts-expect-error STRICT_NULL_CHECK
       this.props.artist.auctionResultsConnection.edges.length < 1
     ) {
       return null
     }
+    // @ts-expect-error STRICT_NULL_CHECK
     const topAuctionResult = this.props.artist.auctionResultsConnection.edges[0]
       .node
+    // @ts-expect-error STRICT_NULL_CHECK
     return <div>{topAuctionResult.price_realized.display} auction record</div>
   }
 
@@ -151,6 +156,7 @@ export class MarketDataSummary extends React.Component<Props, null> {
 }
 
 export const MarketDataSummaryFragmentContainer = createFragmentContainer(
+  // @ts-expect-error STRICT_NULL_CHECK
   MarketDataSummary,
   {
     artist: graphql`

@@ -47,6 +47,7 @@ export class CVItem extends Component<CVItemProps, CVItemState> {
   }
 
   loadMore() {
+    // @ts-expect-error STRICT_NULL_CHECK
     const hasMore = this.props.artist.showsConnection.pageInfo.hasNextPage
 
     if (hasMore) {
@@ -67,6 +68,7 @@ export class CVItem extends Component<CVItemProps, CVItemState> {
   }
 
   get hasMore() {
+    // @ts-expect-error STRICT_NULL_CHECK
     const hasMore = this.props.artist.showsConnection.pageInfo.hasNextPage
     return hasMore
   }
@@ -79,6 +81,7 @@ export class CVItem extends Component<CVItemProps, CVItemState> {
   render() {
     if (
       !this.props.artist.showsConnection ||
+      // @ts-expect-error STRICT_NULL_CHECK
       !this.props.artist.showsConnection.edges.length
     ) {
       return null
@@ -86,6 +89,7 @@ export class CVItem extends Component<CVItemProps, CVItemState> {
 
     const groupedByYear = groupBy(
       this.props.artist.showsConnection.edges,
+      // @ts-expect-error STRICT_NULL_CHECK
       ({ node: show }) => {
         return show.start_at
       }
@@ -120,6 +124,7 @@ export class CVItem extends Component<CVItemProps, CVItemState> {
                       <Year size="2" mr={1}>
                         {year}
                       </Year>
+                      {/* @ts-expect-error STRICT_NULL_CHECK */}
                       <Box>{this.renderEntries(yearGroup, "2")}</Box>
                     </Flex>
                   ) : (

@@ -28,6 +28,7 @@ const onCreditCardAdded = (
   data: PaymentModalCreateCreditCardMutation["response"]
 ): void => {
   const {
+    // @ts-expect-error STRICT_NULL_CHECK
     createCreditCard: { creditCardOrError },
   } = data
 
@@ -35,6 +36,7 @@ const onCreditCardAdded = (
   if (creditCardOrError.creditCardEdge) {
     const meStore = store.get(me.id)
     const connection = ConnectionHandler.getConnection(
+      // @ts-expect-error STRICT_NULL_CHECK
       meStore,
       "PaymentSection_creditCards"
     )
@@ -45,6 +47,7 @@ const onCreditCardAdded = (
     const creditCardEdge = creditCardOrErrorEdge.getLinkedRecord(
       "creditCardEdge"
     )
+    // @ts-expect-error STRICT_NULL_CHECK
     ConnectionHandler.insertEdgeAfter(connection, creditCardEdge)
   }
 }
@@ -106,15 +109,19 @@ export const PaymentModal: React.FC<PaymentModalProps> = props => {
       address_country: values.country,
     }
 
+    // @ts-expect-error STRICT_NULL_CHECK
     const cardElement = elements.getElement(CardElement)
+    // @ts-expect-error STRICT_NULL_CHECK
     const stripeResults = await stripe.createToken(cardElement, billingAddress)
     const { token, error } = stripeResults
     if (error) {
+      // @ts-expect-error STRICT_NULL_CHECK
       setCreateError(error.message)
     } else {
       commitMutation<PaymentModalCreateCreditCardMutation>(relay.environment, {
         onCompleted: (data, errors) => {
           const {
+            // @ts-expect-error STRICT_NULL_CHECK
             createCreditCard: { creditCardOrError },
           } = data
           actions?.setSubmitting(false)
@@ -124,12 +131,14 @@ export const PaymentModal: React.FC<PaymentModalProps> = props => {
             if (errors) {
               // TODO: user freindly message?
               setCreateError(
+                // @ts-expect-error STRICT_NULL_CHECK
                 `Failed. ${errors
                   .map((e: PayloadError) => e.message)
                   .join(", ")}`
               )
             } else {
               const mutationError = creditCardOrError.mutationError
+              // @ts-expect-error STRICT_NULL_CHECK
               setCreateError(`Failed. ${mutationError.message}`)
             }
           }
@@ -137,10 +146,12 @@ export const PaymentModal: React.FC<PaymentModalProps> = props => {
         onError: error => {
           actions?.setSubmitting(false)
           logger.error(error)
+          // @ts-expect-error STRICT_NULL_CHECK
           setCreateError("Failed.")
         },
         mutation,
         variables: {
+          // @ts-expect-error STRICT_NULL_CHECK
           input: { token: token.id },
         },
         updater: (store, data) => {

@@ -30,9 +30,11 @@ const IdentityVerificationApp: React.FC<Props> = ({ me, relay }) => {
   const [showErrorModal, setShowErrorModal] = useState(false)
   const { trackEvent } = useTracking()
   if (!identityVerification || identityVerification.userID !== me.internalID) {
+    // @ts-expect-error STRICT_NULL_CHECK
     return <WrongOwner email={me.email} />
   }
 
+  // @ts-expect-error STRICT_NULL_CHECK
   let AlternateComponent: React.FC = null
 
   if (identityVerification.state === "failed") {
@@ -79,6 +81,7 @@ const IdentityVerificationApp: React.FC<Props> = ({ me, relay }) => {
           } else {
             const {
               startIdentityVerification: {
+                // @ts-expect-error STRICT_NULL_CHECK
                 startIdentityVerificationResponseOrError: {
                   identityVerificationFlowUrl,
                   mutationError,
@@ -94,6 +97,7 @@ const IdentityVerificationApp: React.FC<Props> = ({ me, relay }) => {
         },
         onError: reject,
         variables: {
+          // @ts-expect-error STRICT_NULL_CHECK
           input: { identityVerificationId: identityVerification.internalID },
         },
       })

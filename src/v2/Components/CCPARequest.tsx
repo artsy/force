@@ -207,6 +207,7 @@ const sendDataRequest = ({
     },
     onCompleted: data => {
       const {
+        // @ts-expect-error STRICT_NULL_CHECK
         createAccountRequest: { accountRequestOrError },
       } = data
       if (accountRequestOrError.mutationError) {
@@ -235,6 +236,7 @@ export const CCPARequest: React.SFC<Props> = props => {
   const [clickedSubmit, setClickedSubmit] = useState(false)
   const [submitted, setSubmitted] = useState(false)
 
+  // @ts-expect-error STRICT_NULL_CHECK
   const userEmail = get(props, p => p.user.email)
 
   const modalContents = submitted ? (

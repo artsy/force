@@ -53,9 +53,13 @@ export const FeatureHeaderDefault: React.FC<FeatureHeaderDefaultProps> = ({
       {image && (
         <Figure height={["50vh", "auto"]}>
           <picture>
+            {/* @ts-expect-error STRICT_NULL_CHECK */}
             <source srcSet={image.sm.srcSet} media="(max-width: 400px)" />
+            {/* @ts-expect-error STRICT_NULL_CHECK */}
             <source srcSet={image.md.srcSet} media="(max-width: 1200px)" />
+            {/* @ts-expect-error STRICT_NULL_CHECK */}
             <source srcSet={image.lg.srcSet} media="(min-width: 1200px)" />
+            {/* @ts-expect-error STRICT_NULL_CHECK */}
             <Image src={image.sm.src} alt={name} loading="lazy" />
           </picture>
         </Figure>

@@ -41,11 +41,13 @@ export const FairEditorialItem: React.FC<FairEditorialItemProps> = ({
 
   const clickedArticleTrackingData: ClickedArticleGroup = {
     context_module: ContextModule.relatedArticles,
+    // @ts-expect-error STRICT_NULL_CHECK
     context_page_owner_type: contextPageOwnerType,
     context_page_owner_id: contextPageOwnerId,
     context_page_owner_slug: contextPageOwnerSlug,
     destination_page_owner_type: OwnerType.article,
     destination_page_owner_id: article.internalID,
+    // @ts-expect-error STRICT_NULL_CHECK
     destination_page_owner_slug: article.slug,
     type: "thumbnail",
     action: ActionType.clickedArticleGroup,
@@ -53,6 +55,7 @@ export const FairEditorialItem: React.FC<FairEditorialItemProps> = ({
 
   return (
     <Container
+      // @ts-expect-error STRICT_NULL_CHECK
       to={article.href}
       aria-label={`${article.title} (${article.publishedAt})`}
       onClick={() => tracking.trackEvent(clickedArticleTrackingData)}
@@ -76,8 +79,11 @@ export const FairEditorialItem: React.FC<FairEditorialItemProps> = ({
       >
         {article.thumbnailImage && (
           <Thumbnail
+            // @ts-expect-error STRICT_NULL_CHECK
             src={article.thumbnailImage.cropped.src}
+            // @ts-expect-error STRICT_NULL_CHECK
             srcSet={article.thumbnailImage.cropped.srcSet}
+            // @ts-expect-error STRICT_NULL_CHECK
             alt={article.thumbnailTitle}
           />
         )}

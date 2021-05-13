@@ -99,8 +99,10 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
   return (
     <>
       <FullBleedHeader
+        // @ts-expect-error STRICT_NULL_CHECK
         {...headerImage.image.resized.srcSet}
         height={[283, 469]}
+        // @ts-expect-error STRICT_NULL_CHECK
         src={heroImageURL}
         caption={
           headerImage.imageTitle +
@@ -312,10 +314,14 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
       <Media greaterThanOrEqual="sm">
         <CSSGrid gridTemplateColumns="repeat(2, 1fr)">
           <Image
+            // @ts-expect-error STRICT_NULL_CHECK
             src={authenticityGuaranteeImageURL}
+            // @ts-expect-error STRICT_NULL_CHECK
             alt={authenticityImage.artist.name}
+            // @ts-expect-error STRICT_NULL_CHECK
             srcSet={authenticityImage.image.resized.srcSet}
             lazyLoad
+            // @ts-expect-error STRICT_NULL_CHECK
             aria-label={authenticityImage.imageTitle}
           />
           <Flex flexDirection="column" p={space(9)}>
@@ -333,16 +339,24 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
             {learnMoreButton("40%")}
           </Flex>
           <Image
+            // @ts-expect-error STRICT_NULL_CHECK
             src={moneyBackGuaranteeImageURL}
+            // @ts-expect-error STRICT_NULL_CHECK
             alt={moneyBackGuaranteeImage.artist.name}
+            // @ts-expect-error STRICT_NULL_CHECK
             srcSet={moneyBackGuaranteeImage.image.resized.srcSet}
             lazyLoad
+            // @ts-expect-error STRICT_NULL_CHECK
             aria-label={moneyBackGuaranteeImage.imageTitle}
           />
           <Image
+            // @ts-expect-error STRICT_NULL_CHECK
             src={securePaymentImageURL}
+            // @ts-expect-error STRICT_NULL_CHECK
             alt={securePaymentImage.artist.name}
+            // @ts-expect-error STRICT_NULL_CHECK
             srcSet={securePaymentImage.image.resized.srcSet}
+            // @ts-expect-error STRICT_NULL_CHECK
             aria-label={securePaymentImage.imageTitle}
             lazyLoad
           />
@@ -360,10 +374,14 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
       <Media lessThan="sm">
         <Flex flexDirection="column" mt={5} mx={2} mb={4}>
           <Image
+            // @ts-expect-error STRICT_NULL_CHECK
             src={authenticityGuaranteeImageURL}
+            // @ts-expect-error STRICT_NULL_CHECK
             alt={authenticityImage.artist.name}
+            // @ts-expect-error STRICT_NULL_CHECK
             srcSet={authenticityImage.image.resized.srcSet}
             lazyLoad
+            // @ts-expect-error STRICT_NULL_CHECK
             aria-label={authenticityImage.imageTitle}
           />
           <Text variant="title" mt={4}>
@@ -376,10 +394,14 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
         </Flex>
         <Flex flexDirection="column" mt={5} mx={2} mb={4}>
           <Image
+            // @ts-expect-error STRICT_NULL_CHECK
             src={moneyBackGuaranteeImageURL}
+            // @ts-expect-error STRICT_NULL_CHECK
             alt={moneyBackGuaranteeImage.artist.name}
+            // @ts-expect-error STRICT_NULL_CHECK
             srcSet={moneyBackGuaranteeImage.image.resized.srcSet}
             lazyLoad
+            // @ts-expect-error STRICT_NULL_CHECK
             aria-label={moneyBackGuaranteeImage.imageTitle}
           />
           <Text variant="title" mt={4}>
@@ -392,10 +414,14 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
         </Flex>
         <Flex flexDirection="column" mt={5} mx={2} mb={4}>
           <Image
+            // @ts-expect-error STRICT_NULL_CHECK
             src={securePaymentImageURL}
+            // @ts-expect-error STRICT_NULL_CHECK
             alt={securePaymentImage.artist.name}
+            // @ts-expect-error STRICT_NULL_CHECK
             srcSet={securePaymentImage.image.resized.srcSet}
             lazyLoad
+            // @ts-expect-error STRICT_NULL_CHECK
             aria-label={securePaymentImage.imageTitle}
           />
           <Text variant="title" mt={4}>

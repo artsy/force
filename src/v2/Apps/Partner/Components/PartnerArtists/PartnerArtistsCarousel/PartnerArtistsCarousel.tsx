@@ -23,6 +23,7 @@ export interface PartnerArtistsCarouselProps {
 export const PartnerArtistsCarousel: React.FC<PartnerArtistsCarouselProps> = ({
   partner,
 }) => {
+  // @ts-expect-error STRICT_NULL_CHECK
   const [isSeeAllAvaliable, setIsSeeAllAvaliable] = useState<boolean>(undefined)
 
   if (!partner || !partner.artists || !partner.artists.edges) {
@@ -36,12 +37,17 @@ export const PartnerArtistsCarousel: React.FC<PartnerArtistsCarouselProps> = ({
       onRailOverflowChange={setIsSeeAllAvaliable}
       itemsPerViewport={[2, 2, 3, 4]}
     >
+      {/* @ts-expect-error STRICT_NULL_CHECK */}
       {flatten([
+        // @ts-expect-error STRICT_NULL_CHECK
         artists.edges.map(edge => {
           return (
             <PartnerArtistsCarouselItemFragmentContainer
+              // @ts-expect-error STRICT_NULL_CHECK
               key={edge.node.id}
+              // @ts-expect-error STRICT_NULL_CHECK
               artist={edge.node}
+              // @ts-expect-error STRICT_NULL_CHECK
               partnerArtistHref={`/partner2/${slug}/artists/${edge.node.slug}`}
             />
           )
@@ -104,6 +110,7 @@ export const PartnerArtistsCarouselRenderer: React.FC<{
 
   return (
     <QueryRenderer<PartnerArtistsCarouselRendererQuery>
+      // @ts-expect-error STRICT_NULL_CHECK
       environment={relayEnvironment}
       query={graphql`
         query PartnerArtistsCarouselRendererQuery($partnerId: String!) {
@@ -117,6 +124,7 @@ export const PartnerArtistsCarouselRenderer: React.FC<{
         if (error || !props)
           return <PartnerArtistsCarouselPlaceholder count={PAGE_SIZE} />
 
+        // @ts-expect-error STRICT_NULL_CHECK
         return <PartnerArtistsCarouselFragmentContainer {...rest} {...props} />
       }}
     />

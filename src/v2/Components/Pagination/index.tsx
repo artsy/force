@@ -51,6 +51,7 @@ export const Pagination: React.FC<Props> = ({
     if (userIsForcingNavigation(event)) return
     event.preventDefault()
     onClick(cursor, page)
+    // @ts-expect-error STRICT_NULL_CHECK
     scrollIntoView({ selector: scrollTo, offset })
   }
 
@@ -58,6 +59,7 @@ export const Pagination: React.FC<Props> = ({
     if (userIsForcingNavigation(event)) return
     event.preventDefault()
     onNext(page)
+    // @ts-expect-error STRICT_NULL_CHECK
     scrollIntoView({ selector: scrollTo, offset })
   }
 
@@ -67,6 +69,7 @@ export const Pagination: React.FC<Props> = ({
     onClick: handleClick,
     onNext: handleNext,
     pageCursors: pageCursors as any,
+    // @ts-expect-error STRICT_NULL_CHECK
     scrollTo,
   }
 

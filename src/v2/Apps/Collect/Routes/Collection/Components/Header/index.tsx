@@ -42,6 +42,7 @@ export const CollectionHeader: React.FC<CollectionHeaderProps> = ({
       {collection.headerImage && (
         <FullBleedHeader
           src={collection.headerImage}
+          // @ts-expect-error STRICT_NULL_CHECK
           caption={collection.credit}
         />
       )}
@@ -61,6 +62,7 @@ export const CollectionHeader: React.FC<CollectionHeaderProps> = ({
         </Column>
 
         <Column span={6}>
+          {/* @ts-expect-error STRICT_NULL_CHECK */}
           <HTML html={collection.description} variant="sm" />
         </Column>
       </GridColumns>
@@ -89,25 +91,32 @@ export const CollectionHeader: React.FC<CollectionHeaderProps> = ({
           </Column>
 
           {featuredArtists.map(artist => {
+            //  @ts-expect-error STRICT_NULL_CHECK
             const hasArtistMetaData = artist.nationality && artist.birthday
 
             return (
               <Column
                 span={[12, 6, 3, 3]}
+                //  @ts-expect-error STRICT_NULL_CHECK
                 key={artist.internalID}
                 data-test={ContextModule.featuredArtistsRail}
               >
                 <EntityHeader
+                  //  @ts-expect-error STRICT_NULL_CHECK
                   name={artist.name}
+                  //  @ts-expect-error STRICT_NULL_CHECK
                   imageUrl={artist.image.resized.url}
+                  //  @ts-expect-error STRICT_NULL_CHECK
                   href={`/artist/${artist.slug}`}
                   meta={
                     hasArtistMetaData
-                      ? `${artist.nationality}, b. ${artist.birthday}`
+                      ? //  @ts-expect-error STRICT_NULL_CHECK
+                        `${artist.nationality}, b. ${artist.birthday}`
                       : undefined
                   }
                   FollowButton={
                     <FollowArtistButtonFragmentContainer
+                      //  @ts-expect-error STRICT_NULL_CHECK
                       artist={artist}
                       contextModule={ContextModule.featuredArtistsRail}
                       buttonProps={{
@@ -170,14 +179,19 @@ export const getFeaturedArtists = (
   collection: Header_collection,
   merchandisableArtists: Header_artworks["merchandisableArtists"]
 ): Header_artworks["merchandisableArtists"] => {
+  //  @ts-expect-error STRICT_NULL_CHECK
   if (collection.query.artistIDs?.length > 0) {
     return filter(merchandisableArtists, artist =>
+      //  @ts-expect-error STRICT_NULL_CHECK
       collection.query.artistIDs.includes(artist.internalID)
     )
   }
 
+  //  @ts-expect-error STRICT_NULL_CHECK
   if (merchandisableArtists?.length > 0) {
+    //  @ts-expect-error STRICT_NULL_CHECK
     const filteredArtistsIds = merchandisableArtists.filter(artist => {
+      //  @ts-expect-error STRICT_NULL_CHECK
       return !collection.featuredArtistExclusionIds.includes(artist.internalID)
     })
     return take(filteredArtistsIds, artistsCount)

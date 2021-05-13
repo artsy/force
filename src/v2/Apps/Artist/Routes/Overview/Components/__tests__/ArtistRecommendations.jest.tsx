@@ -46,6 +46,7 @@ describe("ArtistRecommendations", () => {
       related: { artistsConnection: null },
     }
 
+    // @ts-expect-error STRICT_NULL_CHECK
     const wrapper = await getWrapper(request)
 
     expect(wrapper.html()).toContain("Related Artists")
@@ -98,6 +99,7 @@ const defaultArtist = {
         {
           node: {
             id: "QXJ0aXN0OnBhYmxvLXBpY2Fzc28",
+            // @ts-expect-error STRICT_NULL_CHECK
             internalID: "QXJ0aXN0OnBhYmxvLXBpY2Fzc28",
             ...artistFields,
           },
@@ -123,6 +125,7 @@ const pagedArtist = {
         {
           node: {
             id: "QXJ0aXN0OnBhYmxvLXBpY2Fzc28",
+            // @ts-expect-error STRICT_NULL_CHECK
             internalID: "QXJ0aXN0OnBhYmxvLXBpY2Fzc28",
             ...artistFields,
           },
@@ -131,6 +134,7 @@ const pagedArtist = {
         {
           node: {
             id: "QXJ0aXN0OnBhYmxvLXBpY2Fzc29",
+            // @ts-expect-error STRICT_NULL_CHECK
             internalID: "QXJ0aXN0OnBhYmxvLXBpY2Fzc29",
             ...artistFields,
           },
@@ -139,6 +143,7 @@ const pagedArtist = {
         {
           node: {
             id: "QXJ0aXN0OnBhYmxvLXBpY2Fzc30",
+            // @ts-expect-error STRICT_NULL_CHECK
             internalID: "QXJ0aXN0OnBhYmxvLXBpY2Fzc30",
             ...artistFields,
           },

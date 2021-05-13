@@ -48,6 +48,7 @@ export const AddressModal: React.FC<Props> = ({
   me,
 }) => {
   const title = modalDetails?.addressModalTitle
+  // @ts-expect-error STRICT_NULL_CHECK
   const createMutation = modalDetails.addressModalAction === "createUserAddress"
   const validator = (values: any) => {
     const validationResult = validateAddress(values)
@@ -59,6 +60,7 @@ export const AddressModal: React.FC<Props> = ({
     return errorsTrimmed
   }
   const { relayEnvironment } = useSystemContext()
+  // @ts-expect-error STRICT_NULL_CHECK
   const [createUpdateError, setCreateUpdateError] = useState<string>(null)
 
   return (
@@ -83,12 +85,14 @@ export const AddressModal: React.FC<Props> = ({
           }
 
           const handleSuccess = address => {
+            // @ts-expect-error STRICT_NULL_CHECK
             setCreateUpdateError(null)
             onSuccess && onSuccess(address)
           }
 
           createMutation
             ? createUserAddress(
+                // @ts-expect-error STRICT_NULL_CHECK
                 relayEnvironment,
                 values,
                 handleSuccess,
@@ -97,6 +101,7 @@ export const AddressModal: React.FC<Props> = ({
                 closeModal
               )
             : updateUserAddress(
+                // @ts-expect-error STRICT_NULL_CHECK
                 relayEnvironment,
                 address.internalID,
                 values,

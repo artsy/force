@@ -16,6 +16,7 @@ interface ArtistConsignRecentlySoldProps {
 export const ArtistConsignRecentlySold: React.FC<ArtistConsignRecentlySoldProps> = ({
   artist,
 }) => {
+  // @ts-expect-error STRICT_NULL_CHECK
   if (artist.targetSupply.microfunnel.artworksConnection.edges.length === 0) {
     return null
   }
@@ -29,7 +30,9 @@ export const ArtistConsignRecentlySold: React.FC<ArtistConsignRecentlySoldProps>
           <Spacer my={4} />
 
           <Flex justifyContent={["center", "center"]} flexWrap="wrap">
+            {/* @ts-expect-error STRICT_NULL_CHECK */}
             {artist.targetSupply.microfunnel.artworksConnection.edges.map(
+              // @ts-expect-error STRICT_NULL_CHECK
               ({ node }, key) => {
                 return (
                   <Flex

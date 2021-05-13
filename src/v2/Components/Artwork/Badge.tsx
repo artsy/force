@@ -21,6 +21,7 @@ class Badge extends React.Component<BadgeProps> {
 
     return get(
       this.props,
+      // @ts-expect-error STRICT_NULL_CHECK
       p => p.width / devicePixelRatio < MIN_IMAGE_SIZE,
       false
     )

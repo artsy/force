@@ -56,6 +56,7 @@ describe("ConfirmPasswordModal", () => {
 
   it("calls ConfirmPassword and onConfirm on submit", async () => {
     const wrapper = getWrapper()
+    // @ts-expect-error STRICT_NULL_CHECK
     wrapper
       .find("input[type='password']")
       .props()
@@ -72,6 +73,7 @@ describe("ConfirmPasswordModal", () => {
   it("displays errors", async () => {
     ConfirmPassword.mockRejectedValue({ error: "Invalid password." })
     const wrapper = getWrapper()
+    // @ts-expect-error STRICT_NULL_CHECK
     wrapper
       .find("input[type='password']")
       .props()

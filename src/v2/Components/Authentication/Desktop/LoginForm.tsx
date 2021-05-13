@@ -22,6 +22,7 @@ interface ConditionalOtpInputProps {
   error: string
 }
 
+// @ts-expect-error STRICT_NULL_CHECK
 const ConditionalOtpInput: React.FC<ConditionalOtpInputProps> = props => {
   const [show, setShow] = useState(false)
   const {
@@ -61,6 +62,7 @@ export interface LoginFormState {
 }
 
 export class LoginForm extends Component<FormProps, LoginFormState> {
+  // @ts-expect-error STRICT_NULL_CHECK
   state = {
     error: this.props.error,
     isSocialSignUp: false,
@@ -73,6 +75,7 @@ export class LoginForm extends Component<FormProps, LoginFormState> {
         isSocialSignUp: false,
       },
       () => {
+        // @ts-expect-error STRICT_NULL_CHECK
         this.props.handleSubmit(values, formikBag)
       }
     )
@@ -101,6 +104,7 @@ export class LoginForm extends Component<FormProps, LoginFormState> {
 
           const handleChange = e => {
             setStatus(null)
+            // @ts-expect-error STRICT_NULL_CHECK
             this.setState({ error: null })
             formikHandleChange(e)
           }
@@ -109,6 +113,7 @@ export class LoginForm extends Component<FormProps, LoginFormState> {
             <Form onSubmit={handleSubmit} data-test="LoginForm">
               <QuickInput
                 block
+                // @ts-expect-error STRICT_NULL_CHECK
                 error={
                   !this.state.isSocialSignUp && touched.email && errors.email
                 }
@@ -123,6 +128,7 @@ export class LoginForm extends Component<FormProps, LoginFormState> {
               />
               <PasswordInput
                 block
+                // @ts-expect-error STRICT_NULL_CHECK
                 error={touched.password && errors.password}
                 placeholder="Enter your password"
                 name="password"
@@ -134,6 +140,7 @@ export class LoginForm extends Component<FormProps, LoginFormState> {
               <ConditionalOtpInput error={globalError} />
               <Flex alignItems="center" justifyContent="flex-end">
                 <ForgotPassword
+                  // @ts-expect-error STRICT_NULL_CHECK
                   onClick={() => this.props.handleTypeChange(ModalType.forgot)}
                 />
               </Flex>
@@ -144,6 +151,7 @@ export class LoginForm extends Component<FormProps, LoginFormState> {
               <SubmitButton loading={isSubmitting}>Log in</SubmitButton>
               <Footer
                 handleTypeChange={() =>
+                  // @ts-expect-error STRICT_NULL_CHECK
                   this.props.handleTypeChange(ModalType.signup)
                 }
                 mode={"login" as ModalType}
@@ -153,6 +161,7 @@ export class LoginForm extends Component<FormProps, LoginFormState> {
                       isSocialSignUp: true,
                     },
                     () => {
+                      // @ts-expect-error STRICT_NULL_CHECK
                       this.props.onAppleLogin(e)
                     }
                   )
@@ -163,6 +172,7 @@ export class LoginForm extends Component<FormProps, LoginFormState> {
                       isSocialSignUp: true,
                     },
                     () => {
+                      // @ts-expect-error STRICT_NULL_CHECK
                       this.props.onFacebookLogin(e)
                     }
                   )

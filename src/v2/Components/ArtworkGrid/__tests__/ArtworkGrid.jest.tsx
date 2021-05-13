@@ -27,6 +27,7 @@ const TestContainer = createFragmentContainer(
     artist,
     ...props
   }: ExtractProps<typeof ArtworkGrid> & { artist: ArtworkGrid_artist }) => {
+    // @ts-expect-error STRICT_NULL_CHECK
     return <ArtworkGrid {...props} artworks={artist.artworks_connection} />
   },
   {
@@ -70,6 +71,7 @@ describe("ArtworkGrid", () => {
         1.36,
       ]
 
+      // @ts-expect-error STRICT_NULL_CHECK
       const artworks = {
         " $refType": null,
         edges: aspectRatios.reduce(
@@ -112,6 +114,7 @@ describe("ArtworkGrid", () => {
       artworks,
       ...componentProps
     }: Omit<ArtworkGridProps, "artworks"> & {
+      // @ts-expect-error STRICT_NULL_CHECK
       artworks: ArtworkGrid_Test_QueryRawResponse["artist"]["artworks_connection"]
     }) => {
       return await renderRelayTree({
@@ -169,6 +172,7 @@ describe("ArtworkGrid", () => {
     it("#componentWillUnmount calls #clearInterval if state.interval exists", async () => {
       props.onLoadMore = jest.fn()
       const wrapper = (await getRelayWrapper(props)).find(ArtworkGridContainer)
+      // @ts-expect-error STRICT_NULL_CHECK
       wrapper.instance().componentWillUnmount()
       expect(global.clearInterval).toBeCalled()
     })

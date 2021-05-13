@@ -38,6 +38,7 @@ export class ArtistCollectionEntity extends React.Component<CollectionProps> {
       artworksConnection,
     } = this.props.collection
     const artworks = get(artworksConnection, ac =>
+      // @ts-expect-error STRICT_NULL_CHECK
       ac.edges.map(({ node }) => node)
     )
 
@@ -81,6 +82,7 @@ export class ArtistCollectionEntity extends React.Component<CollectionProps> {
               })
             ) : (
               <ArtworkImage
+                // @ts-expect-error STRICT_NULL_CHECK
                 src={headerImage}
                 alt={formattedTitle}
                 lazyLoad={this.props.lazyLoad}

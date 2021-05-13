@@ -71,6 +71,7 @@ export class PaymentPicker extends React.Component<
   PaymentPickerProps & SystemContextProps & StripeProps,
   PaymentPickerState
 > {
+  // @ts-expect-error STRICT_NULL_CHECK
   state = {
     hideBillingAddress: true,
     stripeError: null,
@@ -89,9 +90,11 @@ export class PaymentPicker extends React.Component<
         id: this.props.order.creditCard.internalID,
       }
     } else {
+      // @ts-expect-error STRICT_NULL_CHECK
       return this.props.me.creditCards.edges.length
         ? {
             type: "existing",
+            // @ts-expect-error STRICT_NULL_CHECK
             id: this.props.me.creditCards.edges[0].node.internalID,
           }
         : { type: "new" }
@@ -123,6 +126,7 @@ export class PaymentPicker extends React.Component<
       this.setState({ isCreatingStripeToken: true })
       const stripeBillingAddress = this.getStripeBillingAddress()
       const element = this.props.elements.getElement(CardElement)
+      // @ts-expect-error STRICT_NULL_CHECK
       return await this.props.stripe.createToken(element, stripeBillingAddress)
     } finally {
       this.setState({ isCreatingStripeToken: false })
@@ -144,6 +148,7 @@ export class PaymentPicker extends React.Component<
       const { errors, hasErrors } = validateAddress(this.state.address)
       if (hasErrors) {
         this.setState({
+          // @ts-expect-error STRICT_NULL_CHECK
           addressErrors: errors,
           addressTouched: this.touchedAddress,
         })
@@ -159,9 +164,11 @@ export class PaymentPicker extends React.Component<
       return { type: "invalid_form" }
     }
 
+    // @ts-expect-error STRICT_NULL_CHECK
     const creditCardOrError = (
       await this.createCreditCard({
         input: {
+          // @ts-expect-error STRICT_NULL_CHECK
           token: stripeResult.token.id,
           oneTimeUse: !saveNewCreditCard,
         },
@@ -169,28 +176,36 @@ export class PaymentPicker extends React.Component<
     ).createCreditCard.creditCardOrError
 
     if (
+      // @ts-expect-error STRICT_NULL_CHECK
       creditCardOrError.mutationError &&
+      // @ts-expect-error STRICT_NULL_CHECK
       creditCardOrError.mutationError.detail
     ) {
       return {
         type: "error",
+        // @ts-expect-error STRICT_NULL_CHECK
         error: creditCardOrError.mutationError.detail,
       }
     } else if (
+      // @ts-expect-error STRICT_NULL_CHECK
       creditCardOrError.mutationError &&
+      // @ts-expect-error STRICT_NULL_CHECK
       creditCardOrError.mutationError.message
     ) {
       return {
         type: "internal_error",
+        // @ts-expect-error STRICT_NULL_CHECK
         error: creditCardOrError.mutationError.message,
       }
     } else
       return {
         type: "success",
+        // @ts-expect-error STRICT_NULL_CHECK
         creditCardId: creditCardOrError.creditCard.internalID,
       }
   }
 
+  // @ts-expect-error STRICT_NULL_CHECK
   @track((props: PaymentPickerProps, state, args) => {
     const showBillingAddress = !args[0]
     if (showBillingAddress && props.order.state === "PENDING") {
@@ -245,11 +260,13 @@ export class PaymentPicker extends React.Component<
 
     const orderCard = this.props.order.creditCard
 
+    // @ts-expect-error STRICT_NULL_CHECK
     const creditCardsArray = creditCards.edges.map(e => e.node)
 
     // only add the unsaved card to the cards array if it exists and is not already there
     if (
       orderCard != null &&
+      // @ts-expect-error STRICT_NULL_CHECK
       !creditCardsArray.some(card => card.internalID === orderCard.internalID)
     ) {
       creditCardsArray.unshift(orderCard)
@@ -279,6 +296,7 @@ export class PaymentPicker extends React.Component<
             >
               {creditCardsArray
                 .map(e => {
+                  // @ts-expect-error STRICT_NULL_CHECK
                   const { internalID, ...creditCardProps } = e
                   return (
                     <BorderedRadio value={internalID} key={internalID}>
@@ -318,8 +336,10 @@ export class PaymentPicker extends React.Component<
               Credit card
             </Serif>
             <CreditCardInput
+              // @ts-expect-error STRICT_NULL_CHECK
               error={stripeError}
               onChange={response => {
+                // @ts-expect-error STRICT_NULL_CHECK
                 this.setState({ stripeError: response.error })
               }}
             />
@@ -437,6 +457,7 @@ export class PaymentPicker extends React.Component<
   }
 
   private isPickup = () => {
+    // @ts-expect-error STRICT_NULL_CHECK
     return this.props.order.requestedFulfillment.__typename === "CommercePickup"
   }
 

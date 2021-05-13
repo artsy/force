@@ -54,6 +54,7 @@ describe("ArtworkArtistSeries", () => {
 
   it("includes just the series rail if there are no artworks", async () => {
     const noArtworksData: ArtworkArtistSeries_QueryRawResponse = {
+      // @ts-expect-error STRICT_NULL_CHECK
       artwork: {
         ...ArtworkArtistSeriesFixture.artwork,
         seriesForCounts: {
@@ -74,6 +75,7 @@ describe("ArtworkArtistSeries", () => {
 
   it("includes just series if the artist has any", async () => {
     const noSeriesData: ArtworkArtistSeries_QueryRawResponse = {
+      // @ts-expect-error STRICT_NULL_CHECK
       artwork: {
         ...ArtworkArtistSeriesFixture.artwork,
         artistSeriesConnection: null,
@@ -87,6 +89,7 @@ describe("ArtworkArtistSeries", () => {
 
   it("is null if there is no series or artworks", async () => {
     const noSeriesData: ArtworkArtistSeries_QueryRawResponse = {
+      // @ts-expect-error STRICT_NULL_CHECK
       artwork: {
         ...ArtworkArtistSeriesFixture.artwork,
         artistSeriesConnection: null,

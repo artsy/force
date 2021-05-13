@@ -12,6 +12,7 @@ export const FairHeaderImage: React.FC<FairHeaderImageProps> = ({
 }) => {
   if (!image) return null
 
+  // @ts-expect-error STRICT_NULL_CHECK
   return <FullBleedHeader src={image.url} />
 }
 

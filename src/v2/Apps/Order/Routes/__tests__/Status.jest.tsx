@@ -40,6 +40,7 @@ type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends (
 const testOrder: UnionToIntersection<StatusQueryRawResponse["order"]> = {
   ...OfferOrderWithShippingDetailsAndNote,
   ...PaymentDetails,
+  // @ts-expect-error STRICT_NULL_CHECK
   state: "SUBMITTED",
 }
 
@@ -94,6 +95,7 @@ describe("Status", () => {
       it("should not show a note section if none exists", async () => {
         const page = await buildPageWithOrder(
           produce(testOrder, order => {
+            // @ts-expect-error STRICT_NULL_CHECK
             order.lastOffer.note = null
           })
         )

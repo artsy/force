@@ -51,18 +51,22 @@ const MyBids: React.FC<MyBidsProps> = props => {
                   overflow="hidden"
                   p={0}
                 >
+                  {/* @ts-expect-error STRICT_NULL_CHECK */}
                   <MyBidsBidHeaderFragmentContainer sale={activeSale.sale} />
                 </StackableBorderBox>
                 <StackableBorderBox p={2} flexDirection="column">
                   <Join separator={<Separator my={1} />}>
+                    {/* @ts-expect-error STRICT_NULL_CHECK */}
                     {activeSale.saleArtworks.length > 0 ? (
                       <>
+                        {/* @ts-expect-error STRICT_NULL_CHECK */}
                         {activeSale.saleArtworks.map(
                           (saleArtwork, saleArtworkIndex) => {
                             return (
                               <MyBidsBidItemFragmentContainer
                                 horizontalSlidePosition={saleArtworkIndex}
                                 key={saleArtworkIndex}
+                                // @ts-expect-error STRICT_NULL_CHECK
                                 saleArtwork={saleArtwork}
                               />
                             )
@@ -73,6 +77,7 @@ const MyBids: React.FC<MyBidsProps> = props => {
                       // If a user has registered for a sale but hasn't yet followed
                       // or bid on any works, show the Bid Now button.
                       <RouterLink
+                        // @ts-expect-error STRICT_NULL_CHECK
                         to={`/auction/${activeSale.sale.slug}`}
                         noUnderline
                         data-test="registeredOnlyButton"
@@ -80,6 +85,7 @@ const MyBids: React.FC<MyBidsProps> = props => {
                           trackEvent(
                             clickedEntityGroup({
                               contextModule: ContextModule.yourActiveBids,
+                              // @ts-expect-error STRICT_NULL_CHECK
                               contextPageOwnerType,
                               destinationPageOwnerType: OwnerType.sale,
                               type: "thumbnail",

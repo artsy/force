@@ -24,6 +24,7 @@ const getRelayWrapper = async ({
   queryString: search = "",
   props: passedProps = {},
 }) => {
+  // @ts-expect-error STRICT_NULL_CHECK
   delete window.location
   window.location = { search } as any
 
@@ -318,6 +319,7 @@ describe("Email Confirmation CTA", () => {
 
     it("does not request user-specific data from metaphysics if there is no user", () => {
       const wrapper = mount(
+        // @ts-expect-error STRICT_NULL_CHECK
         <SystemContextProvider user={null}>
           <FlashBannerQueryRenderer />
         </SystemContextProvider>

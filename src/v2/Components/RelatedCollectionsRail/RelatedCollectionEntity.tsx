@@ -28,6 +28,7 @@ export const RelatedCollectionEntity: React.FC<RelatedCollectionEntityProps> = (
     slug,
     title,
   } = collection
+  // @ts-expect-error STRICT_NULL_CHECK
   const artworks = artworksConnection.edges.map(({ node }) => node)
 
   const { trackEvent } = useTracking()
@@ -43,6 +44,7 @@ export const RelatedCollectionEntity: React.FC<RelatedCollectionEntityProps> = (
         contextModule: ContextModule.relatedCollectionsRail,
         contextPageOwnerId,
         contextPageOwnerSlug,
+        // @ts-expect-error STRICT_NULL_CHECK
         contextPageOwnerType,
         destinationPageOwnerId: id,
         destinationPageOwnerSlug: slug,
@@ -76,6 +78,7 @@ export const RelatedCollectionEntity: React.FC<RelatedCollectionEntityProps> = (
             })
           ) : (
             <Image
+              // @ts-expect-error STRICT_NULL_CHECK
               {...cropped(headerImage, { width: 325, height: 150 })}
               width={325}
               height={150}

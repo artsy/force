@@ -17,6 +17,7 @@ const Overview: React.FC<OverviewProps> = ({ partner }) => {
     slug,
     profileBannerDisplay,
     displayArtistsSection,
+    // @ts-expect-error STRICT_NULL_CHECK
     articlesConnection: { edges: articles },
   } = partner
 

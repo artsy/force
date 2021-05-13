@@ -2,6 +2,7 @@ import { ArtworkImageBrowser_Test_QueryRawResponse } from "v2/__generated__/Artw
 import { ArtworkActionsFixture } from "./ArtworkActions.fixture"
 
 export const ArtworkImageBrowserFixture: ArtworkImageBrowser_Test_QueryRawResponse = {
+  // @ts-expect-error STRICT_NULL_CHECK
   artwork: {
     ...ArtworkActionsFixture.artwork,
     title: "LENIN FS II.402",

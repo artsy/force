@@ -43,11 +43,14 @@ interface ConversationsProps {
 
 const ConversationList: React.FC<ConversationsProps> = props => {
   const { me, selectedConversationID, relay } = props
+  // @ts-expect-error STRICT_NULL_CHECK
   const conversations = me.conversationsConnection.edges
 
   const [fetchingMore, setFetchingMore] = useState(false)
 
+  // @ts-expect-error STRICT_NULL_CHECK
   const selectedConversationIndex = conversations
+    // @ts-expect-error STRICT_NULL_CHECK
     .map(e => e.node.internalID)
     .indexOf(selectedConversationID)
 
@@ -72,14 +75,21 @@ const ConversationList: React.FC<ConversationsProps> = props => {
       <>
         <ConversationListHeader />
         <ScrollContainer>
+          {/* @ts-expect-error STRICT_NULL_CHECK */}
           {conversations.map(edge => (
             <ConversationSnippet
+              // @ts-expect-error STRICT_NULL_CHECK
               isSelected={edge.node.internalID === selectedConversationID}
+              // @ts-expect-error STRICT_NULL_CHECK
               conversation={edge.node}
+              // @ts-expect-error STRICT_NULL_CHECK
               key={edge.cursor}
               hasDivider={
+                // @ts-expect-error STRICT_NULL_CHECK
                 conversations.indexOf(edge) !== selectedConversationIndex &&
+                // @ts-expect-error STRICT_NULL_CHECK
                 conversations.indexOf(edge) !== selectedConversationIndex - 1 &&
+                // @ts-expect-error STRICT_NULL_CHECK
                 conversations.indexOf(edge) !== conversations.length - 1
               }
             />

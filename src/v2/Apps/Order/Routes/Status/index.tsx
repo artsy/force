@@ -47,6 +47,7 @@ export class StatusRoute extends Component<StatusProps> {
       stateExpiresAt,
     } = this.props.order
     const isOfferFlow = mode === "OFFER"
+    // @ts-expect-error STRICT_NULL_CHECK
     const isShip = requestedFulfillment.__typename === "CommerceShip"
 
     switch (state) {
@@ -204,6 +205,7 @@ export class StatusRoute extends Component<StatusProps> {
   getFulfilmentDescription(): React.ReactNode {
     const fulfillment = get(
       this.props.order,
+      // @ts-expect-error STRICT_NULL_CHECK
       o => o.lineItems.edges[0].node.fulfillments.edges[0].node
     )
 

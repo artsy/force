@@ -20,6 +20,7 @@ const { getWrapper } = setupTestWrapper<ShowViewingRoom_Test_Query>({
           contextPageOwnerType: OwnerType.show,
         }}
       >
+        {/* @ts-expect-error STRICT_NULL_CHECK */}
         <ShowViewingRoom {...props} />
       </AnalyticsContext.Provider>
     )

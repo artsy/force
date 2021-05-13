@@ -6,6 +6,7 @@ import { FilterExpandable } from "./FilterExpandable"
 
 export const InstitutionFilter: FC = () => {
   const { aggregations, ...filterContext } = useArtworkFilterContext()
+  // @ts-expect-error STRICT_NULL_CHECK
   const items = aggregations.find(agg => agg.slice === "INSTITUTION")
 
   const tokens = useThemeConfig({
@@ -17,6 +18,7 @@ export const InstitutionFilter: FC = () => {
     return null
   }
 
+  // @ts-expect-error STRICT_NULL_CHECK
   const selectedItem = filterContext.currentlySelectedFilters().partnerID
 
   return (

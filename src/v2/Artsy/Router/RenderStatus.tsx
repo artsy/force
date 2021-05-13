@@ -22,6 +22,7 @@ export const RenderPending = () => {
    * duration of the fetch.
    */
   if (!isFetching) {
+    // @ts-expect-error STRICT_NULL_CHECK
     setFetching(true)
   }
 
@@ -49,12 +50,14 @@ export const RenderPending = () => {
   }
 }
 
+// @ts-expect-error STRICT_NULL_CHECK
 export const RenderReady: React.FC<{
   elements: React.ReactNode
 }> = props => {
   const { isFetching, setFetching } = useSystemContext()
 
   if (isFetching) {
+    // @ts-expect-error STRICT_NULL_CHECK
     setFetching(false)
   }
 
@@ -75,6 +78,7 @@ export const RenderError: React.FC<{
   const { isFetching, setFetching } = useSystemContext()
 
   if (isFetching) {
+    // @ts-expect-error STRICT_NULL_CHECK
     setFetching(false)
   }
 
@@ -86,6 +90,7 @@ export const RenderError: React.FC<{
   // TODO: Make error code more granular. See:
   // https://artsyproduct.atlassian.net/browse/PLATFORM-1343
   // https://github.com/artsy/reaction/pull/1855
+  // @ts-expect-error STRICT_NULL_CHECK
   return <ErrorPage code={props.error.status || 500} message={message} />
 }
 

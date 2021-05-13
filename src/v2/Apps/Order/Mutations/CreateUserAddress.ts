@@ -23,6 +23,7 @@ const onAddressAdded = (
   if (response) {
     const meStore = store.get(me.id)
     const connection = ConnectionHandler.getConnection(
+      // @ts-expect-error STRICT_NULL_CHECK
       meStore,
       "SavedAddresses_addressConnection"
     )
@@ -31,6 +32,7 @@ const onAddressAdded = (
     const createUserAddressOrError = mutationPayload.getLinkedRecord(
       "userAddressOrErrors"
     )
+    // @ts-expect-error STRICT_NULL_CHECK
     ConnectionHandler.insertEdgeAfter(connection, createUserAddressOrError)
   }
 }
@@ -80,6 +82,7 @@ export const createUserAddress = async (
       onAddressAdded(me, store, data)
     },
     onCompleted: (data, e) => {
+      // @ts-expect-error STRICT_NULL_CHECK
       const errors = data.createUserAddress.userAddressOrErrors.errors
       if (errors) {
         onError(errors.map(error => error.message).join(", "))

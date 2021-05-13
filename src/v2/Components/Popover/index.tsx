@@ -17,6 +17,7 @@ export class Popover extends React.Component<PopoverProps> {
 
     return (
       <PopoverContainer style={style}>
+        {/* @ts-expect-error STRICT_NULL_CHECK */}
         {cloneElement(this.Arrows[placement], {
           arrowOffsetLeft,
           arrowOffsetTop,

@@ -24,20 +24,28 @@ const ArtistsCarouselCell: React.FC<ArtistsCarouselCellProps> = ({
 
   if (!image) return null
 
+  // @ts-expect-error STRICT_NULL_CHECK
   const slug = getSlug(featuredLink.href)
 
   return (
     <>
       <RouterLink
+        // @ts-expect-error STRICT_NULL_CHECK
         key={featuredLink.internalID}
+        // @ts-expect-error STRICT_NULL_CHECK
         to={featuredLink.href}
         style={{ display: "block", textDecoration: "none" }}
       >
         <Image
+          // @ts-expect-error STRICT_NULL_CHECK
           src={image.thumb.src}
+          // @ts-expect-error STRICT_NULL_CHECK
           srcSet={image.thumb.srcSet}
+          // @ts-expect-error STRICT_NULL_CHECK
           width={image.thumb.width}
+          // @ts-expect-error STRICT_NULL_CHECK
           height={image.thumb.height}
+          // @ts-expect-error STRICT_NULL_CHECK
           alt={featuredLink.title}
           lazyLoad
         />
@@ -53,9 +61,12 @@ const ArtistsCarouselCell: React.FC<ArtistsCarouselCellProps> = ({
         height={50}
       >
         <RouterLink
+          // @ts-expect-error STRICT_NULL_CHECK
           key={featuredLink.internalID}
+          // @ts-expect-error STRICT_NULL_CHECK
           to={featuredLink.href}
           style={{ display: "block", textDecoration: "none" }}
+          // @ts-expect-error STRICT_NULL_CHECK
           aria-label={featuredLink.title}
         >
           <Text variant="lg">{featuredLink.title}</Text>

@@ -11,6 +11,7 @@ const { getWrapper } = setupTestWrapper<FeatureApp_Test_Query>({
   Component: props => {
     return (
       <MockBoot>
+        {/* @ts-expect-error STRICT_NULL_CHECK */}
         <FeatureAppFragmentContainer {...props} />
       </MockBoot>
     )

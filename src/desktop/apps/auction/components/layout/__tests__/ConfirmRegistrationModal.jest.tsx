@@ -18,6 +18,7 @@ describe("Confirm Registration Modal", () => {
       window.location.pathname = "/auction/auction-one/confirm-registration"
 
       act(() =>
+        // @ts-expect-error STRICT_NULL_CHECK
         renderTestComponent({
           Component: ConfirmRegistrationModal,
           options: { renderMode: "mount" },

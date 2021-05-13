@@ -20,6 +20,7 @@ const options = [
 
 export const UserEmailPreferences: React.FC<UserEmailPreferencesQueryResponse> = props => {
   const { relayEnvironment } = useSystemContext()
+  // @ts-expect-error STRICT_NULL_CHECK
   const emailFrequency = props.me.emailFrequency || fallbackFrequency
   const [updated, setUpdated] = useState(false)
 
@@ -27,8 +28,10 @@ export const UserEmailPreferences: React.FC<UserEmailPreferencesQueryResponse> =
     setUpdated(false)
     const variables = { emailFrequency: newEmailFrequency }
     await UpdateUserEmailPreferencesMutation(
+      // @ts-expect-error STRICT_NULL_CHECK
       relayEnvironment,
       variables,
+      // @ts-expect-error STRICT_NULL_CHECK
       props.me.id
     )
     setUpdated(true)

@@ -95,6 +95,7 @@ export class ArtworkActions extends React.Component<
     } = this.props
 
     if (is_downloadable || this.isTeam) {
+      // @ts-expect-error STRICT_NULL_CHECK
       const artistNames = artists.map(({ name }) => name).join(", ")
       const filename = slugify(compact([artistNames, title, date]).join(" "))
       const downloadableImageUrl = `${href}/download/${filename}.jpg` // prettier-ignore

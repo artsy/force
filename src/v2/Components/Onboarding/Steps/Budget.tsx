@@ -83,19 +83,23 @@ export const BudgetComponent: React.FC<Props> = props => {
 
   const onOptionSelected = (index: number) => {
     const selection = { selection: Object.values(budgetOptions)[index] }
+    // @ts-expect-error STRICT_NULL_CHECK
     setSelectedOption(selection)
   }
 
   const options = Object.keys(budgetOptions).map((text, index) => (
+    // @ts-expect-error STRICT_NULL_CHECK
     <SelectableToggle
       key={index}
       text={text}
       onSelect={() => onOptionSelected(index)}
+      // @ts-expect-error STRICT_NULL_CHECK
       selected={selectedOption?.selection === budgetOptions[text]}
     />
   ))
 
   const submit = () => {
+    // @ts-expect-error STRICT_NULL_CHECK
     const priceRangeMax = selectedOption?.selection
     if (!priceRangeMax) return
 
@@ -119,7 +123,9 @@ export const BudgetComponent: React.FC<Props> = props => {
 
   return (
     <>
+      {/* @ts-expect-error STRICT_NULL_CHECK */}
       <ProgressIndicator percentComplete={0.75} />
+      {/* @ts-expect-error STRICT_NULL_CHECK */}
       <Layout
         title="What’s your maximum artwork budget?"
         subtitle="Select one"

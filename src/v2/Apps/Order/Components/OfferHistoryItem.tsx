@@ -15,7 +15,9 @@ const OfferHistoryItem: React.SFC<
   } & StepSummaryItemProps
 > = ({ order: { lastOffer, lineItems, offers }, ...others }) => {
   const offerItem = getOfferItemFromOrder(lineItems)
+  // @ts-expect-error STRICT_NULL_CHECK
   const previousOffers = offers.edges.filter(
+    // @ts-expect-error STRICT_NULL_CHECK
     ({ node: { internalID } }) => internalID !== lastOffer.internalID
   )
 
@@ -23,11 +25,13 @@ const OfferHistoryItem: React.SFC<
     <StepSummaryItem {...others}>
       <Row>
         <Serif size={["2", "3"]} color="black100" weight="semibold">
+          {/* @ts-expect-error STRICT_NULL_CHECK */}
           {lastOffer.fromParticipant === "SELLER"
             ? "Seller's offer"
             : "Your offer"}
         </Serif>
         <Serif size={["2", "3"]} color="black100">
+          {/* @ts-expect-error STRICT_NULL_CHECK */}
           {lastOffer.amount}
         </Serif>
       </Row>
@@ -39,15 +43,18 @@ const OfferHistoryItem: React.SFC<
           </Sans>
         </Row>
       )}
+      {/* @ts-expect-error STRICT_NULL_CHECK */}
       {lastOffer.note && (
         <>
           <Spacer mb={2} />
           <Serif size={["2", "3"]} color="black100" weight="semibold">
+            {/* @ts-expect-error STRICT_NULL_CHECK */}
             {lastOffer.fromParticipant === "SELLER"
               ? "Seller's note"
               : "Your note"}
           </Serif>
           <Serif size="2" color="black60">
+            {/* @ts-expect-error STRICT_NULL_CHECK */}
             {lastOffer.note}
           </Serif>
           <Spacer mb={1} />
@@ -61,6 +68,7 @@ const OfferHistoryItem: React.SFC<
               <Serif size={["2", "3"]} color="black100" weight="semibold">
                 Offer history
               </Serif>
+              {/* @ts-expect-error STRICT_NULL_CHECK */}
               {previousOffers.map(({ node: offer }) => (
                 <Row key={offer.internalID}>
                   <Serif size={["2", "3"]} color="black60">

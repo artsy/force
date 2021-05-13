@@ -29,6 +29,7 @@ const SoldRecently: React.FC<SoldRecentlyProps> = ({ targetSupply }) => {
   const recentlySoldArtworks = shuffle(
     flatten(
       targetSupply.microfunnel.map(microfunnel => {
+        // @ts-expect-error STRICT_NULL_CHECK
         const artworks = extractNodes(microfunnel.artworksConnection)
         return artworks.filter(
           artwork => artwork.realizedPrice && artwork.realizedToEstimate
@@ -143,6 +144,7 @@ export const SoldRecentlyQueryRenderer: React.FC = () => {
   const { relayEnvironment } = useSystemContext()
   return (
     <QueryRenderer<SoldRecentlyQuery>
+      //  @ts-expect-error STRICT_NULL_CHECK
       environment={relayEnvironment}
       variables={{}}
       query={graphql`
@@ -162,6 +164,7 @@ export const SoldRecentlyQueryRenderer: React.FC = () => {
           return null
         }
         return (
+          // @ts-expect-error STRICT_NULL_CHECK
           <SoldRecentlyFragmentContainer targetSupply={props.targetSupply} />
         )
       }}

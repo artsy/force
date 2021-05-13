@@ -26,21 +26,28 @@ const ShowPartnerEntityHeader: React.FC<ShowPartnerEntityHeaderProps> = ({
   const canFollow =
     partner && partner.type !== "Auction House" && !!partner.profile
   const locationNames = limitWithCount(
+    // @ts-expect-error STRICT_NULL_CHECK
     filterLocations(partner.locations),
     2
   ).join(", ")
 
   return (
     <EntityHeader
+      // @ts-expect-error STRICT_NULL_CHECK
       name={partner.name}
+      // @ts-expect-error STRICT_NULL_CHECK
       href={partner.isDefaultProfilePublic && partner.href}
       meta={locationNames}
+      // @ts-expect-error STRICT_NULL_CHECK
       imageUrl={imageUrl}
+      // @ts-expect-error STRICT_NULL_CHECK
       initials={partnerInitials}
+      // @ts-expect-error STRICT_NULL_CHECK
       FollowButton={
         canFollow && (
           <FollowProfileButton
             user={user}
+            // @ts-expect-error STRICT_NULL_CHECK
             profile={partner.profile}
             contextModule={ContextModule.partnerHeader}
             render={profile => {

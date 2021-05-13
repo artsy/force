@@ -41,6 +41,7 @@ const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
 
   const hasArticles = (fair.articlesConnection?.edges?.length ?? 0) > 0
   const hasCollections = (fair.marketingCollections?.length ?? 0) > 0
+  // @ts-expect-error STRICT_NULL_CHECK
   const artworkCount = fair.counts.artworks
 
   const clickedArtworksTabTrackingData: ClickedNavigationTab = {
@@ -48,6 +49,7 @@ const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
     context_module: ContextModule.exhibitorsTab,
     context_page_owner_id: contextPageOwnerId,
     context_page_owner_slug: contextPageOwnerSlug,
+    // @ts-expect-error STRICT_NULL_CHECK
     context_page_owner_type: contextPageOwnerType,
     destination_path: `${fair.href}/artworks`,
     subject: "Artworks",
@@ -58,6 +60,7 @@ const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
     context_module: ContextModule.artworksTab,
     context_page_owner_id: contextPageOwnerId,
     context_page_owner_slug: contextPageOwnerSlug,
+    // @ts-expect-error STRICT_NULL_CHECK
     context_page_owner_type: contextPageOwnerType,
     destination_path: `${fair.href}`,
     subject: "Exhibitors",
@@ -76,6 +79,7 @@ const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
               Related Reading
             </Text>
 
+            {/* @ts-expect-error STRICT_NULL_CHECK */}
             {fair.articlesConnection.totalCount > FAIR_EDITORIAL_AMOUNT && (
               <RouterLink to={`${fair.href}/articles`} noUnderline>
                 <Text variant="sm">View all</Text>
@@ -111,6 +115,7 @@ const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
 
       <RouteTabs mb={2} fill>
         <RouteTab
+          // @ts-expect-error STRICT_NULL_CHECK
           to={fair.href}
           exact
           onClick={() => tracking.trackEvent(clickedExhibitorsTabTrackingData)}

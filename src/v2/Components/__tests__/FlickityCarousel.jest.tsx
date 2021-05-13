@@ -5,6 +5,7 @@ import { Carousel, LargeCarousel, SmallCarousel } from "../FlickityCarousel"
 
 describe("Carousel", () => {
   beforeAll(() => {
+    // @ts-expect-error STRICT_NULL_CHECK
     window.matchMedia = undefined // Immediately set matching media query in Boot
   })
 

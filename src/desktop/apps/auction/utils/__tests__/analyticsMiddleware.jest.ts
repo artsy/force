@@ -27,6 +27,7 @@ describe("analytics middleware", () => {
     const store = createStore(auctions, applyMiddleware(analyticsMiddleware))
     store.dispatch(action)
 
+    // @ts-expect-error STRICT_NULL_CHECK
     expect(window.analytics.track).toBeCalledWith(
       "Commercial filter params changed",
       {
@@ -52,6 +53,7 @@ describe("analytics middleware", () => {
     const store = createStore(auctions, applyMiddleware(analyticsMiddleware))
     store.dispatch(action)
 
+    // @ts-expect-error STRICT_NULL_CHECK
     expect(window.analytics.track).toBeCalledWith(
       "Commercial filter params changed",
       {
@@ -77,6 +79,7 @@ describe("analytics middleware", () => {
     const store = createStore(auctions, applyMiddleware(analyticsMiddleware))
     store.dispatch(action)
 
+    // @ts-expect-error STRICT_NULL_CHECK
     expect(window.analytics.track).toBeCalledWith(
       "Commercial filter params changed",
       {
@@ -102,6 +105,7 @@ describe("analytics middleware", () => {
     const store = createStore(auctions, applyMiddleware(analyticsMiddleware))
     store.dispatch(action)
 
+    // @ts-expect-error STRICT_NULL_CHECK
     expect(window.analytics.track).toBeCalledWith(
       "Commercial filter params changed",
       {
@@ -124,6 +128,7 @@ describe("analytics middleware", () => {
     const store = createStore(auctions, applyMiddleware(analyticsMiddleware))
     store.dispatch(action)
 
+    // @ts-expect-error STRICT_NULL_CHECK
     expect(window.analytics.track).toBeCalledWith(
       "Commercial filter params changed",
       {
@@ -145,6 +150,7 @@ describe("analytics middleware", () => {
     const action = { type: "TOGGLE_LIST_VIEW", payload: { isListView: true } }
     const store = createStore(auctions, applyMiddleware(analyticsMiddleware))
     store.dispatch(action)
+    // @ts-expect-error STRICT_NULL_CHECK
     expect(window.analytics.track).not.toBeCalled()
   })
 })

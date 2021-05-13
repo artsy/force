@@ -58,8 +58,10 @@ export class ArtworkSidebar extends Component<ArtworkSidebarProps> {
             <AuctionPartnerInfo artwork={artwork} />
             <CurrentBidInfo artwork={artwork} />
             <BidAction artwork={artwork} me={me} />
+            {/* @ts-expect-error STRICT_NULL_CHECK */}
             {!artwork.sale.is_closed && (
               <Box py={2}>
+                {/* @ts-expect-error STRICT_NULL_CHECK */}
                 <AuctionTimer sale={artwork.sale} />
               </Box>
             )}

@@ -32,6 +32,7 @@ export class Metadata extends React.Component<MetadataProps> {
     } = this.props
 
     return (
+      // @ts-expect-error STRICT_NULL_CHECK
       <RouterLink to={artwork.href} noUnderline>
         <Box textAlign="left" className={className} {...(boxProps as any)}>
           <Details

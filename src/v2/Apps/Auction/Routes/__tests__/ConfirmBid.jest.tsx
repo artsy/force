@@ -52,12 +52,14 @@ jest.mock("@stripe/stripe-js", () => {
   return {
     loadStripe: () => {
       if (mock === null) {
+        // @ts-expect-error STRICT_NULL_CHECK
         mock = mockStripe()
       }
       return mock
     },
     _mockStripe: () => mock,
-    _mockReset: () => mock = mockStripe(),
+    // @ts-expect-error STRICT_NULL_CHECK
+    _mockReset: () => (mock = mockStripe()),
   }
 })
 
@@ -69,6 +71,7 @@ const mockEnablePriceTransparency = jest.fn()
 
 const mockedLocation: Partial<Location> = {
   query: {
+    // @ts-expect-error STRICT_NULL_CHECK
     bid: null,
   },
 }
@@ -83,6 +86,7 @@ const setupTestEnv = ({
     Component: (
       props: auctionRoutes_ConfirmBidQueryResponse & { tracking: TrackingProp }
     ) => (
+      // @ts-expect-error STRICT_NULL_CHECK
       <ConfirmBidRouteFragmentContainer
         match={{ location } as Match}
         {...props}
@@ -130,7 +134,6 @@ const setupTestEnv = ({
 }
 
 describe("Routes/ConfirmBid", () => {
-
   beforeAll(() => {
     mockLocation({ search: "" })
   })
@@ -187,6 +190,7 @@ describe("Routes/ConfirmBid", () => {
         })
 
         expect(window.location.assign).toHaveBeenCalledWith(
+          // @ts-expect-error STRICT_NULL_CHECK
           `/artwork/${ConfirmBidQueryResponseFixture.artwork.slug}`
         )
         done()
@@ -797,6 +801,7 @@ describe("Routes/ConfirmBid", () => {
         bidderPositionID: "positionid",
       })
       expect(window.location.assign).toHaveBeenCalledWith(
+        // @ts-expect-error STRICT_NULL_CHECK
         `/artwork/${ConfirmBidQueryResponseFixture.artwork.slug}`
       )
     })
@@ -827,6 +832,7 @@ describe("Routes/ConfirmBid", () => {
         mockData: FixtureForUnregisteredUserWithoutCreditCard,
       })
 
+      // @ts-expect-error STRICT_NULL_CHECK
       page
         .find(CreditCardInput)
         .props()
@@ -871,7 +877,9 @@ describe("Routes/ConfirmBid", () => {
         mockData: FixtureForUnregisteredUserWithoutCreditCard,
       })
 
-      _mockStripe().createToken.mockRejectedValueOnce(new TypeError("Network request failed"))
+      _mockStripe().createToken.mockRejectedValueOnce(
+        new TypeError("Network request failed")
+      )
 
       await page.fillFormWithValidValues()
       await page.agreeToTerms()

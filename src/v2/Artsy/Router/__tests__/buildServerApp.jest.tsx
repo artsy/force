@@ -39,6 +39,7 @@ describe("buildServerApp", () => {
   let options: Pick<
     ServerRouterConfig,
     Exclude<keyof ServerRouterConfig, "routes">
+    // @ts-expect-error STRICT_NULL_CHECK
   > = { req, res }
 
   beforeEach(() => {
@@ -80,8 +81,10 @@ describe("buildServerApp", () => {
       ],
       ...passedOptions,
     })
+    // @ts-expect-error STRICT_NULL_CHECK
     const ServerApp = Object.getOwnPropertyDescriptor(
       result,
+      // @ts-expect-error STRICT_NULL_CHECK
       __TEST_INTERNAL_SERVER_APP__
     ).value
     return {
@@ -139,7 +142,9 @@ describe("buildServerApp", () => {
     const { headTags } = await getWrapper(component)
     // Enzyme won't render the right results for the title for whatever reason
     // It renders fine with renderToString though. ¯\_(ツ)_/¯
+    // @ts-expect-error STRICT_NULL_CHECK
     expect(headTags[headTags.length - 1].type).toBe("title")
+    // @ts-expect-error STRICT_NULL_CHECK
     expect(headTags[headTags.length - 1].props.children).toBe("test")
   })
 

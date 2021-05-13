@@ -4,6 +4,7 @@ const props: Props = {
   artworkCount: 601,
   term: "whitney",
   searchableConnection: {
+    // @ts-expect-error STRICT_NULL_CHECK
     " $refType": null,
     aggregations: [
       {

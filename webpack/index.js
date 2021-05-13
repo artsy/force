@@ -108,6 +108,7 @@ function generateEnvBasedConfig() {
   // Support configuration dumps for a basic insights into the webpack configuration.
   if (env.enableWebpackDumpConfig) {
     fs.writeFileSync(
+      // @ts-expect-error STRICT_NULL_CHECK
       process.env.WEBPACK_DUMP_CONFIG,
       JSON.stringify(config, null, 2)
     )

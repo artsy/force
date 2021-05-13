@@ -83,15 +83,20 @@ export class ArtistInfo extends Component<ArtistInfoProps, ArtistInfoState> {
   render() {
     const { artist } = this.props
     const { biographyBlurb, image } = this.props.artist
+    // @ts-expect-error STRICT_NULL_CHECK
     const showArtistBio = !!biographyBlurb.text
+    // @ts-expect-error STRICT_NULL_CHECK
     const imageUrl = get(this.props, p => image.cropped.url)
     const showArtistInsightsButton =
       (artist.exhibition_highlights &&
         artist.exhibition_highlights.length >= MIN_EXHIBITIONS) ||
       (artist.auctionResultsConnection &&
+        // @ts-expect-error STRICT_NULL_CHECK
         artist.auctionResultsConnection.edges.length > 0) ||
       (artist.collections && artist.collections.length > 0) ||
+      // @ts-expect-error STRICT_NULL_CHECK
       (artist.highlights.partnersConnection &&
+        // @ts-expect-error STRICT_NULL_CHECK
         artist.highlights.partnersConnection.edges.length > 0)
     const buttonText = this.state.showArtistInsights
       ? "Hide artist insights"
@@ -101,9 +106,12 @@ export class ArtistInfo extends Component<ArtistInfoProps, ArtistInfoState> {
       <>
         <StackableBorderBox p={2} flexDirection="column" data-test="artistInfo">
           <EntityHeader
+            // @ts-expect-error STRICT_NULL_CHECK
             name={artist.name}
+            // @ts-expect-error STRICT_NULL_CHECK
             meta={artist.formatted_nationality_and_birthday}
             imageUrl={imageUrl}
+            // @ts-expect-error STRICT_NULL_CHECK
             href={artist.href}
             FollowButton={
               <FollowArtistButton
@@ -161,7 +169,9 @@ export class ArtistInfo extends Component<ArtistInfoProps, ArtistInfoState> {
             <SelectedExhibitions
               artistID={artist.internalID}
               border={false}
+              // @ts-expect-error STRICT_NULL_CHECK
               totalExhibitions={artist.counts.partner_shows}
+              // @ts-expect-error STRICT_NULL_CHECK
               exhibitions={artist.exhibition_highlights}
               ViewAllLink={
                 <a href={`${sd.APP_URL}/artist/${artist.slug}/cv`}>View all</a>

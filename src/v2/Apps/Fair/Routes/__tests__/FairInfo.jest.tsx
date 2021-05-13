@@ -50,6 +50,7 @@ describe("FairInfo", () => {
         summary: "",
       },
     }
+    // @ts-expect-error STRICT_NULL_CHECK
     const wrapper = await getWrapper(missingInfo)
     expect(wrapper.text()).not.toContain("Location")
     expect(wrapper.text()).not.toContain("Hours")

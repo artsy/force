@@ -81,6 +81,7 @@ describe("ArtworkActions", () => {
           sale: null,
         },
       }
+      // @ts-expect-error STRICT_NULL_CHECK
       const wrapper = await getWrapper("lg", data)
       expect(wrapper.find(HeartFillIcon).length).toBe(1)
       expect(wrapper.find(BellFillIcon).length).toBe(0)
@@ -92,11 +93,13 @@ describe("ArtworkActions", () => {
         artwork: {
           ...ArtworkActionsFixture.artwork,
           sale: {
+            // @ts-expect-error STRICT_NULL_CHECK
             ...ArtworkActionsFixture.artwork.sale,
             is_closed: true,
           },
         },
       }
+      // @ts-expect-error STRICT_NULL_CHECK
       const wrapper = await getWrapper("lg", data)
       expect(wrapper.find(HeartFillIcon).length).toBe(1)
       expect(wrapper.find(BellFillIcon).length).toBe(0)
@@ -108,12 +111,14 @@ describe("ArtworkActions", () => {
         artwork: {
           ...ArtworkActionsFixture.artwork,
           sale: {
+            // @ts-expect-error STRICT_NULL_CHECK
             ...ArtworkActionsFixture.artwork.sale,
             is_auction: true,
             is_closed: false,
           },
         },
       }
+      // @ts-expect-error STRICT_NULL_CHECK
       const wrapper = await getWrapper("lg", data)
       expect(wrapper.find(HeartFillIcon).length).toBe(0)
       expect(wrapper.find(BellFillIcon).length).toBe(1)
@@ -133,6 +138,7 @@ describe("ArtworkActions", () => {
           type: "Admin",
         },
       }
+      // @ts-expect-error STRICT_NULL_CHECK
       const wrapper = await getWrapper("lg", data)
       expect(wrapper.find(OpenEyeIcon).length).toBe(1)
     })
@@ -149,6 +155,7 @@ describe("ArtworkActions", () => {
           type: "Admin",
         },
       }
+      // @ts-expect-error STRICT_NULL_CHECK
       const wrapper = await getWrapper("lg", data)
       expect(wrapper.find(OpenEyeIcon).length).toBe(0)
     })
@@ -168,6 +175,7 @@ describe("ArtworkActions", () => {
             type: "User",
           },
         }
+        // @ts-expect-error STRICT_NULL_CHECK
         const wrapper = await getWrapper("lg", data)
         expect(wrapper.find(DownloadIcon).length).toBe(1)
       })
@@ -184,6 +192,7 @@ describe("ArtworkActions", () => {
             type: "Admin",
           },
         }
+        // @ts-expect-error STRICT_NULL_CHECK
         const wrapper = await getWrapper("lg", data)
         expect(wrapper.find(DownloadIcon).length).toBe(1)
       })
@@ -201,6 +210,7 @@ describe("ArtworkActions", () => {
             roles: [],
           },
         }
+        // @ts-expect-error STRICT_NULL_CHECK
         const wrapper = await getWrapper("lg", data)
         expect(wrapper.find(DownloadIcon).length).toBe(0)
       })
@@ -240,6 +250,7 @@ describe("ArtworkActions", () => {
           roles: [],
         },
       }
+      // @ts-expect-error STRICT_NULL_CHECK
       const wrapper = await getWrapper("xs", data)
       expect(wrapper.find(HeartFillIcon).length).toBe(1)
       expect(wrapper.find(ShareIcon).length).toBe(1)

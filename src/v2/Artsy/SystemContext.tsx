@@ -106,6 +106,7 @@ export const SystemContextProvider: FC<SystemContextProps> = ({
   }
 
   return (
+    // @ts-expect-error STRICT_NULL_CHECK
     <SystemContext.Provider value={providerValues}>
       {children}
     </SystemContext.Provider>

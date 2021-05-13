@@ -34,5 +34,6 @@ export const rangeToTuple: (
     ;[minStr, maxStr] = ["*", "*"]
   }
 
+  // @ts-expect-error STRICT_NULL_CHECK
   return [min, max]
 }

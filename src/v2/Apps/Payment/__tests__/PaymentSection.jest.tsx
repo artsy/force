@@ -12,17 +12,20 @@ jest.mock("@stripe/stripe-js", () => {
   return {
     loadStripe: () => {
       if (mock === null) {
+        // @ts-expect-error STRICT_NULL_CHECK
         mock = mockStripe()
       }
       return mock
     },
     _mockStripe: () => mock,
+    // @ts-expect-error STRICT_NULL_CHECK
     _mockReset: () => (mock = mockStripe()),
   }
 })
 
 const { getWrapper } = setupTestWrapper<PaymentSection_Test_Query>({
   Component: props => {
+    // @ts-expect-error STRICT_NULL_CHECK
     return <PaymentSectionFragmentContainer {...props} />
   },
   query: graphql`

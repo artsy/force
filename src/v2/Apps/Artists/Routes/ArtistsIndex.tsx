@@ -56,12 +56,16 @@ export const ArtistsIndex: React.FC<ArtistsIndexProps> = ({
 
         {artists && (
           <Shelf my={2}>
+            {/*  @ts-expect-error STRICT_NULL_CHECK */}
             {artists.map((featuredLink, index) => {
+              // @ts-expect-error STRICT_NULL_CHECK
               if (!featuredLink.internalID) return null
 
               return (
                 <ArtistsCarouselCellFragmentContainer
+                  // @ts-expect-error STRICT_NULL_CHECK
                   key={featuredLink.internalID}
+                  // @ts-expect-error STRICT_NULL_CHECK
                   featuredLink={featuredLink}
                   index={index}
                 />
@@ -76,17 +80,21 @@ export const ArtistsIndex: React.FC<ArtistsIndexProps> = ({
       {genes && (
         <Join separator={<Spacer mt={6} />}>
           {genes?.map(gene => {
+            // @ts-expect-error STRICT_NULL_CHECK
             if (gene.trendingArtists?.length === 0) return null
 
             return (
+              // @ts-expect-error STRICT_NULL_CHECK
               <React.Fragment key={gene.name}>
                 <Box display="flex" justifyContent="space-between" mb={2}>
+                  {/* @ts-expect-error STRICT_NULL_CHECK */}
                   <RouterLink to={gene.href} noUnderline>
                     <Text variant="lg" as="h2">
+                      {/* @ts-expect-error STRICT_NULL_CHECK */}
                       {gene.name}
                     </Text>
                   </RouterLink>
-
+                  {/* @ts-expect-error STRICT_NULL_CHECK */}
                   <RouterLink to={gene.href} noUnderline>
                     <Text variant="md" color="black60">
                       View
@@ -95,9 +103,12 @@ export const ArtistsIndex: React.FC<ArtistsIndexProps> = ({
                 </Box>
 
                 <GridColumns gridRowGap={[2, 0]}>
+                  {/* @ts-expect-error STRICT_NULL_CHECK */}
                   {gene.trendingArtists.map(artist => {
                     return (
+                      // @ts-expect-error STRICT_NULL_CHECK
                       <Column key={artist.internalID} span={[12, 6, 3, 3]}>
+                        {/* @ts-expect-error STRICT_NULL_CHECK */}
                         <ArtistsArtistCardFragmentContainer artist={artist} />
                       </Column>
                     )

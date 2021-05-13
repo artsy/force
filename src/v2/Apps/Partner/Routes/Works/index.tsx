@@ -38,6 +38,7 @@ export const Artworks: React.FC<PartnerArtworkFilterProps> = ({
 }
 
 export const ArtworksRefetchContainer = createRefetchContainer(
+  // @ts-expect-error STRICT_NULL_CHECK
   withRouter<PartnerArtworkFilterProps & RouterState>(Artworks),
   {
     partner: graphql`

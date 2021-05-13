@@ -44,6 +44,7 @@ describe("getContextPageFromReq", () => {
 
 describe("getContextPageFromClient", () => {
   it("returns correct props", () => {
+    // @ts-expect-error STRICT_NULL_CHECK
     delete window.location
     // @ts-ignore
     window.location = new URL("https://artsy.net/artist/test-artist")
@@ -59,6 +60,7 @@ describe("getContextPageFromClient", () => {
   })
 
   it("handles camelcasing", () => {
+    // @ts-expect-error STRICT_NULL_CHECK
     delete window.location
     // @ts-ignore
     window.location = new URL(

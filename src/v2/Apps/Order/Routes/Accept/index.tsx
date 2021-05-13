@@ -45,6 +45,7 @@ export class Accept extends Component<AcceptProps> {
   acceptOffer() {
     return this.props.commitMutation<AcceptOfferMutation>({
       variables: {
+        // @ts-expect-error STRICT_NULL_CHECK
         input: { offerId: this.props.order.lastOffer.internalID },
       },
       // TODO: Inputs to the mutation might have changed case of the keys!
@@ -77,10 +78,12 @@ export class Accept extends Component<AcceptProps> {
 
   onSubmit = async () => {
     try {
+      // @ts-expect-error STRICT_NULL_CHECK
       const orderOrError = (await this.acceptOffer()).commerceBuyerAcceptOffer
         .orderOrError
 
       if (orderOrError.error) {
+        // @ts-expect-error STRICT_NULL_CHECK
         this.handleAcceptError(orderOrError.error)
         return
       }
@@ -148,6 +151,7 @@ export class Accept extends Component<AcceptProps> {
   artistId() {
     return get(
       this.props.order,
+      // @ts-expect-error STRICT_NULL_CHECK
       o => o.lineItems.edges[0].node.artwork.artists[0].slug
     )
   }
@@ -186,7 +190,9 @@ export class Accept extends Component<AcceptProps> {
                 <CountdownTimer
                   action="Respond"
                   note="Expired offers end the negotiation process permanently."
+                  // @ts-expect-error STRICT_NULL_CHECK
                   countdownStart={order.lastOffer.createdAt}
+                  // @ts-expect-error STRICT_NULL_CHECK
                   countdownEnd={order.stateExpiresAt}
                 />
                 <TransactionDetailsSummaryItem

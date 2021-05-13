@@ -46,13 +46,18 @@ export const UserInformation: React.FC<UserInformationProps> = ({
         phone,
       }
 
+      // @ts-expect-error STRICT_NULL_CHECK
       const response = await UpdateUserInformation(relayEnvironment, variables)
+      // @ts-expect-error STRICT_NULL_CHECK
       const userOrError = response.updateMyUserProfile.userOrError
 
+      // @ts-expect-error STRICT_NULL_CHECK
       if (userOrError.mutationError) {
+        // @ts-expect-error STRICT_NULL_CHECK
         const { message, fieldErrors } = userOrError.mutationError
         if (fieldErrors) {
           // display errors for a specified form field
+          // @ts-expect-error STRICT_NULL_CHECK
           const formattedErrors = formatGravityErrors(userOrError.mutationError)
           formikBag.setErrors(formattedErrors)
         } else if (message) {
@@ -138,6 +143,7 @@ export const UserInformation: React.FC<UserInformationProps> = ({
                 <PasswordInput
                   autoFocus
                   block
+                  // @ts-expect-error STRICT_NULL_CHECK
                   error={
                     !values.password && "Password is required to change email."
                   }
@@ -198,6 +204,7 @@ export const UserInformationQueryRenderer = () => {
 
   return (
     <QueryRenderer<UserInformationQuery>
+      // @ts-expect-error STRICT_NULL_CHECK
       environment={relayEnvironment}
       variables={{}}
       query={graphql`
@@ -212,6 +219,7 @@ export const UserInformationQueryRenderer = () => {
   )
 }
 
+// @ts-expect-error STRICT_NULL_CHECK
 type GravityFieldErrors = UpdateUserInformationMutationResponse["updateMyUserProfile"]["userOrError"]["mutationError"]
 
 const formatGravityErrors = ({ fieldErrors }: GravityFieldErrors) => {

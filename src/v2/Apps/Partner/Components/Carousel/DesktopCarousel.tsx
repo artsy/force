@@ -37,6 +37,7 @@ export const DesktopCarousel: React.FC<CarouselProps> = ({
 }) => {
   const railRef = useRef<HTMLDivElement | null>(null)
 
+  // @ts-expect-error STRICT_NULL_CHECK
   useRailOverflow(railRef, showMore => {
     onRailOverflowChange && onRailOverflowChange(showMore)
   })

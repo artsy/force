@@ -13,16 +13,22 @@ const ShowCard: React.FC<ShowCardProps> = ({ show }): JSX.Element => {
   const showType = isFairBooth ? "fair booth" : "show"
 
   return (
+    // @ts-expect-error STRICT_NULL_CHECK
     <RouterLink to={href} noUnderline>
       {coverImage && (
         <ResponsiveBox
+          // @ts-expect-error STRICT_NULL_CHECK
           aspectWidth={coverImage.medium.width}
+          // @ts-expect-error STRICT_NULL_CHECK
           aspectHeight={coverImage.medium.height}
           maxWidth="100%"
         >
           <Image
+            // @ts-expect-error STRICT_NULL_CHECK
             src={coverImage.medium.src}
+            // @ts-expect-error STRICT_NULL_CHECK
             srcSet={coverImage.medium.srcSet}
+            // @ts-expect-error STRICT_NULL_CHECK
             alt={name}
             width="100%"
             height="100%"

@@ -55,6 +55,7 @@ const ViewingRoomHeaderLarge: React.FC<ViewingRoomHeaderProps> = props => {
     viewingRoom: { image, title },
   } = props
 
+  // @ts-expect-error STRICT_NULL_CHECK
   const heroImageURL = resize(image?.imageURLs?.normalized, {
     width: 1200,
     convert_to: "jpg",
@@ -69,6 +70,7 @@ const ViewingRoomHeaderLarge: React.FC<ViewingRoomHeaderProps> = props => {
     >
       <Box width="50%" style={{ overflow: "hidden" }}>
         <ResponsiveImage
+          // @ts-expect-error STRICT_NULL_CHECK
           src={heroImageURL}
           lazyLoad={false}
           style={{
@@ -104,6 +106,7 @@ const ViewingRoomHeaderSmall: React.FC<ViewingRoomHeaderProps> = props => {
   } = props
 
   const HeaderHeight = `calc(100vh - ${MOBILE_NAV_HEIGHT * 2.8}px)`
+  // @ts-expect-error STRICT_NULL_CHECK
   const heroImageURL = resize(image?.imageURLs?.normalized, {
     width: 1200,
     convert_to: "jpg",
@@ -122,6 +125,7 @@ const ViewingRoomHeaderSmall: React.FC<ViewingRoomHeaderProps> = props => {
       }}
     >
       <ResponsiveImage
+        // @ts-expect-error STRICT_NULL_CHECK
         src={heroImageURL}
         style={{
           backgroundSize: "cover",
@@ -158,6 +162,7 @@ const ViewingRoomHeaderSmall: React.FC<ViewingRoomHeaderProps> = props => {
 const RoomInfo: React.FC<ViewingRoomHeaderProps> = props => {
   const {
     viewingRoom: {
+      // @ts-expect-error STRICT_NULL_CHECK
       partner: { name, href },
       distanceToOpen,
       distanceToClose,

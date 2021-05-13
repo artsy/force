@@ -35,6 +35,7 @@ export interface BootProps {
 
 const { GlobalStyles } = injectGlobalStyles()
 
+// @ts-expect-error STRICT_NULL_CHECK
 export const Boot = track(null, {
   dispatch: Events.postEvent,
 })((props: BootProps) => {

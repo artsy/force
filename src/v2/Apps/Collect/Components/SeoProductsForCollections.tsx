@@ -18,19 +18,24 @@ export const getMaxMinPrice = (
   ascending_artworks: SeoProductsForCollections_ascending_artworks
 ) => {
   const leastExpensive = getPriceRange(
+    // @ts-expect-error STRICT_NULL_CHECK
     ascending_artworks.edges[0]?.node?.listPrice
   )
   const mostExpensive = getPriceRange(
+    // @ts-expect-error STRICT_NULL_CHECK
     descending_artworks.edges[0]?.node?.listPrice
   )
 
   return {
+    // @ts-expect-error STRICT_NULL_CHECK
     min: leastExpensive.min || mostExpensive.min,
+    // @ts-expect-error STRICT_NULL_CHECK
     max: mostExpensive.max || leastExpensive.max,
   }
 }
 
 const getPriceRange = (
+  // @ts-expect-error STRICT_NULL_CHECK
   listPrice: SeoProductsForCollections_ascending_artworks["edges"][0]["node"]["listPrice"]
 ) => {
   if (!listPrice) {

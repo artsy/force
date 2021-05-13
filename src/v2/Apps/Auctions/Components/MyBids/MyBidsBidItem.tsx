@@ -40,6 +40,7 @@ export const MyBidsBidItem: React.FC<MyBidsBidItemProps> = ({
         trackEvent(
           clickedArtworkGroup({
             contextModule,
+            // @ts-expect-error STRICT_NULL_CHECK
             contextPageOwnerType,
             artworkID: saleArtwork.internalID,
             artworkSlug: saleArtwork.slug,
@@ -51,9 +52,12 @@ export const MyBidsBidItem: React.FC<MyBidsBidItemProps> = ({
       <Flex width="100%">
         <Flex alignItems="center" width="100%">
           <Box backgroundColor="black60" width={55} height={55}>
+            {/* @ts-expect-error STRICT_NULL_CHECK */}
             {saleArtwork.artwork.image && (
               <Image
+                // @ts-expect-error STRICT_NULL_CHECK
                 src={saleArtwork.artwork.image.resized.src}
+                // @ts-expect-error STRICT_NULL_CHECK
                 srcSet={saleArtwork.artwork.image.resized.srcSet}
                 width={55}
                 height={55}
@@ -65,6 +69,7 @@ export const MyBidsBidItem: React.FC<MyBidsBidItemProps> = ({
           <Spacer mr={1} />
           <Flex justifyContent="space-between" width="100%">
             <Box>
+              {/* @ts-expect-error STRICT_NULL_CHECK */}
               <Text variant="text">{saleArtwork.artwork.artistNames}</Text>
               <Text variant="caption" color="black60">
                 Lot {saleArtwork.position}
@@ -80,6 +85,7 @@ export const MyBidsBidItem: React.FC<MyBidsBidItemProps> = ({
                     pr={0.3}
                     style={{ whiteSpace: "nowrap" }}
                   >
+                    {/* @ts-expect-error STRICT_NULL_CHECK */}
                     {saleArtwork.highestBid.amount || saleArtwork.estimate}
                   </Text>
                   <Watching />
@@ -88,12 +94,16 @@ export const MyBidsBidItem: React.FC<MyBidsBidItemProps> = ({
                 <>
                   <StatusContainer>
                     <Text variant="text" display="inline-block" pr={0.3}>
+                      {/* @ts-expect-error STRICT_NULL_CHECK */}
                       {saleArtwork.lotState.sellingPrice.display}
                     </Text>
                     <Text color="black60" display="inline-block">
+                      {/* @ts-expect-error STRICT_NULL_CHECK */}
                       {saleArtwork.lotState.bidCount === 1
-                        ? `${saleArtwork.lotState.bidCount} bid`
-                        : `${saleArtwork.lotState.bidCount} bids`}
+                        ? // @ts-expect-error STRICT_NULL_CHECK
+                          `${saleArtwork.lotState.bidCount} bid`
+                        : // @ts-expect-error STRICT_NULL_CHECK
+                          `${saleArtwork.lotState.bidCount} bids`}
                     </Text>
                   </StatusContainer>
 

@@ -23,9 +23,11 @@ export const BackupSecondFactorModalContent: React.FC<BackupSecondFactorModalCon
         one-time codes to access your account.
       </Sans>
       <Flex mt={3} flexDirection="row" flexWrap="wrap">
+        {/* @ts-expect-error STRICT_NULL_CHECK */}
         {me.backupSecondFactors.map((factor, index) => (
           <Box width="50%" key={index}>
             <Sans size="6" color="black60" textAlign="center" py={0.5}>
+              {/* @ts-expect-error STRICT_NULL_CHECK */}
               {factor.code}
             </Sans>
           </Box>

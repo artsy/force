@@ -26,6 +26,7 @@ interface ArtistSeriesHeaderProps {
 }
 
 interface ArtistsInfoProps {
+  // @ts-expect-error STRICT_NULL_CHECK
   artist: ArtistSeriesHeader_artistSeries["artists"][0]
   contextOwnerId: string
   contextOwnerSlug: string
@@ -95,10 +96,12 @@ const ArtistSeriesHeaderLarge: React.FC<ArtistSeriesHeaderProps> = props => {
       <Box m={2}>
         <Flex alignItems="center" justifyContent="center" position="relative">
           <Flex position="absolute" left={0}>
+            {/* @ts-expect-error STRICT_NULL_CHECK */}
             {artists.length && (
               <ArtistInfo
                 contextOwnerId={internalID}
                 contextOwnerSlug={slug}
+                // @ts-expect-error STRICT_NULL_CHECK
                 artist={artists[0]}
               />
             )}
@@ -130,6 +133,7 @@ const ArtistSeriesHeaderLarge: React.FC<ArtistSeriesHeaderProps> = props => {
                 </Box>
 
                 <HTML pr={[0, 2]} variant="text">
+                  {/* @ts-expect-error STRICT_NULL_CHECK */}
                   <ReadMore content={descriptionFormatted} maxChars={320} />
                 </HTML>
               </Flex>
@@ -143,6 +147,7 @@ const ArtistSeriesHeaderLarge: React.FC<ArtistSeriesHeaderProps> = props => {
                 alignItems="center"
               >
                 {/** The max width for the image is ~600px, so we need that */}
+                {/* @ts-expect-error STRICT_NULL_CHECK */}
                 <HeaderImage src={image?.sm?.url} alt={title} />
               </Box>
             </Col>
@@ -173,21 +178,25 @@ const ArtistSeriesHeaderSmall: React.FC<ArtistSeriesHeaderProps> = props => {
       <Separator />
 
       <Box m={3}>
+        {/* @ts-expect-error STRICT_NULL_CHECK */}
         <HeaderImage src={image?.xs?.url} pb={1} alt={title} />
 
         <Text as="h1" variant="largeTitle" my={1}>
           {title}
         </Text>
 
+        {/* @ts-expect-error STRICT_NULL_CHECK */}
         {artists.length && (
           <ArtistInfo
             contextOwnerId={internalID}
             contextOwnerSlug={slug}
+            // @ts-expect-error STRICT_NULL_CHECK
             artist={artists[0]}
           />
         )}
 
         <HTML variant="text" my={1}>
+          {/* @ts-expect-error STRICT_NULL_CHECK */}
           <ReadMore content={descriptionFormatted} maxChars={200} />
         </HTML>
       </Box>

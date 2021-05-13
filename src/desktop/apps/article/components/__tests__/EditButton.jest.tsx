@@ -20,6 +20,7 @@ describe("EditButton", () => {
   let props
   const getWrapper = () => {
     return mount(
+      // @ts-expect-error STRICT_NULL_CHECK
       <SystemContextProvider user={null}>
         <EditButton {...props} />
       </SystemContextProvider>
@@ -39,6 +40,7 @@ describe("EditButton", () => {
     mockPositronql.mockReturnValue(Promise.resolve(data))
     const component = getWrapper()
     const instance = component.find(EditButton).instance()
+    // @ts-expect-error STRICT_NULL_CHECK
     await instance.componentDidMount()
 
     component.update()
@@ -57,6 +59,7 @@ describe("EditButton", () => {
     mockPositronql.mockReturnValue(Promise.resolve(data))
     const component = getWrapper()
     const instance = component.find(EditButton).instance()
+    // @ts-expect-error STRICT_NULL_CHECK
     await instance.componentDidMount()
 
     expect(component.children().length).toBe(1)
@@ -70,6 +73,7 @@ describe("EditButton", () => {
     delete sd.CURRENT_USER
     const component = getWrapper()
     const instance = component.find(EditButton).instance()
+    // @ts-expect-error STRICT_NULL_CHECK
     await instance.componentDidMount()
 
     expect(mockPositronql).not.toBeCalled()

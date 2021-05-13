@@ -13,6 +13,7 @@ export class ArtworkSidebarAuctionPartnerInfo extends React.Component<
 > {
   render() {
     const { partner, sale_artwork, sale } = this.props.artwork
+    // @ts-expect-error STRICT_NULL_CHECK
     if (sale.is_closed) {
       return null
     }

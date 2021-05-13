@@ -53,6 +53,7 @@ export class FillwidthItemContainer extends React.Component<
   get imageWidth() {
     let {
       artwork: {
+        // @ts-expect-error STRICT_NULL_CHECK
         image: { aspectRatio },
       },
     } = this.props
@@ -103,7 +104,9 @@ export class FillwidthItemContainer extends React.Component<
       return null
     }
 
+    // @ts-expect-error STRICT_NULL_CHECK
     const transform = artwork.image.aspectRatio === 1 ? cropped : resized
+    // @ts-expect-error STRICT_NULL_CHECK
     const scaledImage = transform(artwork.image.url, {
       width: this.imageWidth,
       height: this.imageHeight,
@@ -113,6 +116,7 @@ export class FillwidthItemContainer extends React.Component<
       <Box className={className} width={this.imageWidth}>
         <Placeholder style={{ height: imageHeight, width: this.imageWidth }}>
           <RouterLink
+            // @ts-expect-error STRICT_NULL_CHECK
             to={artwork.href}
             onClick={() => {
               if (this.props.onClick) {
@@ -127,6 +131,7 @@ export class FillwidthItemContainer extends React.Component<
               height={imageHeight}
               lazyLoad={lazyLoad}
               preventRightClick={!isTeam}
+              // @ts-expect-error STRICT_NULL_CHECK
               alt={artwork?.imageTitle}
             />
           </RouterLink>

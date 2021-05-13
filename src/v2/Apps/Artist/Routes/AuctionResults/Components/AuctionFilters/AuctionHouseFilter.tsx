@@ -12,6 +12,7 @@ export const AuctionHouseFilter: React.FC = () => {
   const filterContext = useAuctionResultsFilterContext()
 
   const toggleSelection = (selected, name) => {
+    // @ts-expect-error STRICT_NULL_CHECK
     let organizations = filterContext.filters.organizations.slice()
     if (selected) {
       organizations.push(name)
@@ -32,6 +33,7 @@ export const AuctionHouseFilter: React.FC = () => {
               onSelect: selected => {
                 toggleSelection(selected, name)
               },
+              // @ts-expect-error STRICT_NULL_CHECK
               selected: filterContext.filters.organizations.includes(name),
             }
             return <Checkbox {...props}>{name}</Checkbox>

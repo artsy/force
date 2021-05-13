@@ -44,6 +44,7 @@ export const ArtistSeriesEntity: React.FC<ArtistSeriesEntityProps> = ({
         contextModule: ContextModule.artistSeriesRail,
         contextPageOwnerId,
         contextPageOwnerSlug,
+        // @ts-expect-error STRICT_NULL_CHECK
         contextPageOwnerType,
         destinationPageOwnerId: id,
         destinationPageOwnerSlug: slug,
@@ -69,10 +70,15 @@ export const ArtistSeriesEntity: React.FC<ArtistSeriesEntityProps> = ({
               return (
                 <Box key={index} ml={index === 0 ? 0 : -2}>
                   <Image
+                    // @ts-expect-error STRICT_NULL_CHECK
                     src={resized.src}
+                    // @ts-expect-error STRICT_NULL_CHECK
                     srcSet={resized.srcSet}
+                    // @ts-expect-error STRICT_NULL_CHECK
                     width={resized.width}
+                    // @ts-expect-error STRICT_NULL_CHECK
                     height={resized.height}
+                    // @ts-expect-error STRICT_NULL_CHECK
                     alt={artwork.title}
                     lazyLoad
                   />
@@ -81,6 +87,7 @@ export const ArtistSeriesEntity: React.FC<ArtistSeriesEntityProps> = ({
             })
           ) : (
             <Image
+              // @ts-expect-error STRICT_NULL_CHECK
               {...cropped(headerImage, { width: 325, height: 150 })}
               width={325}
               height={150}

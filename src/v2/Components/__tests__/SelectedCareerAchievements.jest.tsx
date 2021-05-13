@@ -49,10 +49,12 @@ describe("SelectedCareerAchievements", () => {
   })
 
   it("renders selected career achievements if no auction results or partner highlights", async () => {
+    // @ts-expect-error STRICT_NULL_CHECK
     wrapper = await getWrapper({
       ...artistResponse,
       auctionResultsConnection: null,
       highlights: {
+        // @ts-expect-error STRICT_NULL_CHECK
         ...artistResponse.highlights,
         partnersConnection: null,
       },
@@ -69,10 +71,12 @@ describe("SelectedCareerAchievements", () => {
 
   // TODO
   it("doesn't render selected career achievements if no auction results, partner highlights, or insights", async () => {
+    // @ts-expect-error STRICT_NULL_CHECK
     wrapper = await getWrapper({
       ...artistResponse,
       auctionResultsConnection: null,
       highlights: {
+        // @ts-expect-error STRICT_NULL_CHECK
         ...artistResponse.highlights,
         partnersConnection: null,
       },
@@ -85,10 +89,12 @@ describe("SelectedCareerAchievements", () => {
 
   // TODO
   it("doesn't render selected career achievements if no auction results or partner highlights and insights is null", async () => {
+    // @ts-expect-error STRICT_NULL_CHECK
     wrapper = await getWrapper({
       ...artistResponse,
       auctionResultsConnection: null,
       highlights: {
+        // @ts-expect-error STRICT_NULL_CHECK
         ...artistResponse.highlights,
         partnersConnection: null,
       },

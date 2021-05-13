@@ -10,23 +10,31 @@ export function registerRedirect({
   me,
   sale,
 }: auctionRoutes_RegisterQueryResponse): Redirect | null {
+  // @ts-expect-error STRICT_NULL_CHECK
   if (me.hasQualifiedCreditCards) {
     return {
+      // @ts-expect-error STRICT_NULL_CHECK
       path: registrationFlowPath(sale),
       reason: "user already has a qualified credit card",
     }
+    // @ts-expect-error STRICT_NULL_CHECK
   } else if (!sale.isAuction) {
     return {
+      // @ts-expect-error STRICT_NULL_CHECK
       path: `/sale/${sale.slug}`,
       reason: "sale must be an auction",
     }
+    // @ts-expect-error STRICT_NULL_CHECK
   } else if (!isRegisterable(sale)) {
     return {
+      // @ts-expect-error STRICT_NULL_CHECK
       path: auctionPath(sale),
       reason: "auction must be registerable",
     }
+    // @ts-expect-error STRICT_NULL_CHECK
   } else if (userRegisteredToBid(sale)) {
     return {
+      // @ts-expect-error STRICT_NULL_CHECK
       path: confirmRegistrationPath(sale),
       reason: "user is already registered to bid",
     }
@@ -40,6 +48,7 @@ export function confirmBidRedirect(
   location: Location
 ): Redirect | null {
   const { artwork, me } = data
+  // @ts-expect-error STRICT_NULL_CHECK
   const { saleArtwork } = artwork
 
   const { sale } = saleArtwork
@@ -54,6 +63,7 @@ export function confirmBidRedirect(
 
   if (!registrationStatus && sale.isRegistrationClosed) {
     return {
+      // @ts-expect-error STRICT_NULL_CHECK
       path: artworkPath(sale, artwork),
       reason: "user is not registered, registration closed",
     }
@@ -66,6 +76,7 @@ export function confirmBidRedirect(
   }
   if (sale.isClosed) {
     return {
+      // @ts-expect-error STRICT_NULL_CHECK
       path: artworkPath(sale, artwork),
       reason: "sale is closed",
     }

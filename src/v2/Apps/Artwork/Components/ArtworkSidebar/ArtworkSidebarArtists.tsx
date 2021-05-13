@@ -13,6 +13,7 @@ export interface ArtistsProps {
   artwork: ArtworkSidebarArtists_artwork
 }
 
+// @ts-expect-error STRICT_NULL_CHECK
 type Artist = ArtworkSidebarArtists_artwork["artists"][0]
 
 export class ArtworkSidebarArtists extends React.Component<ArtistsProps> {
@@ -37,6 +38,7 @@ export class ArtworkSidebarArtists extends React.Component<ArtistsProps> {
           contextModule={ContextModule.artworkSidebar}
           triggerSuggestions
           render={({ is_followed }) => {
+            // @ts-expect-error STRICT_NULL_CHECK
             return <FollowIcon isFollowed={is_followed} />
           }}
         >
@@ -52,10 +54,13 @@ export class ArtworkSidebarArtists extends React.Component<ArtistsProps> {
     } = this.props
     return (
       <Box as="h1">
+        {/* @ts-expect-error STRICT_NULL_CHECK */}
         {artists.map((artist, index) => {
           return (
+            // @ts-expect-error STRICT_NULL_CHECK
             <React.Fragment key={artist.id}>
               {this.renderArtistName(artist, true)}
+              {/* @ts-expect-error STRICT_NULL_CHECK */}
               {index !== artists.length - 1 && ", "}
             </React.Fragment>
           )
@@ -77,9 +82,12 @@ export class ArtworkSidebarArtists extends React.Component<ArtistsProps> {
     } = this.props
     return (
       <Box>
+        {/* @ts-expect-error STRICT_NULL_CHECK */}
         {artists.length === 1
-          ? this.renderSingleArtist(artists[0])
+          ? // @ts-expect-error STRICT_NULL_CHECK
+            this.renderSingleArtist(artists[0])
           : this.renderMultipleArtists()}
+        {/* @ts-expect-error STRICT_NULL_CHECK */}
         {artists.length === 0 &&
           cultural_maker &&
           this.renderCulturalMaker(cultural_maker)}

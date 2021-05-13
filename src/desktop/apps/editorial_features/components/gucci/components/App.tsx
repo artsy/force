@@ -56,6 +56,7 @@ export class App extends Component<GucciProps, GucciState> {
   onChangeSection = index => {
     const section = this.props.curation.sections[index]
     this.setState({ activeSection: index })
+    // @ts-expect-error STRICT_NULL_CHECK
     document.getElementById(section.slug).scrollIntoView()
   }
 

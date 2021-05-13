@@ -35,12 +35,15 @@ export class SelectedCareerAchievements extends React.Component<
   renderAuctionHighlight() {
     if (
       !this.props.artist.auctionResultsConnection ||
+      // @ts-expect-error STRICT_NULL_CHECK
       this.props.artist.auctionResultsConnection.edges.length < 1
     ) {
       return null
     }
+    // @ts-expect-error STRICT_NULL_CHECK
     const topAuctionResult = this.props.artist.auctionResultsConnection.edges[0]
       .node
+    // @ts-expect-error STRICT_NULL_CHECK
     const display = `${topAuctionResult.price_realized.display}, ${topAuctionResult.organization}, ${topAuctionResult.sale_date}`
 
     return (
@@ -54,6 +57,7 @@ export class SelectedCareerAchievements extends React.Component<
   }
   renderGalleryRepresentation() {
     const { highlights } = this.props.artist
+    // @ts-expect-error STRICT_NULL_CHECK
     const { partnersConnection } = highlights
     if (
       partnersConnection &&
@@ -88,6 +92,7 @@ export class SelectedCareerAchievements extends React.Component<
 
   render() {
     if (
+      // @ts-expect-error STRICT_NULL_CHECK
       !hasSections(this.props.artist) &&
       (!this.props.artist.insights || this.props.artist.insights.length === 0)
     ) {
@@ -109,6 +114,7 @@ export class SelectedCareerAchievements extends React.Component<
               {this.renderGalleryRepresentation()}
               {this.renderAuctionHighlight()}
 
+              {/*  @ts-expect-error STRICT_NULL_CHECK */}
               {this.props.artist.insights.map(insight => {
                 return this.renderInsight(insight)
               })}

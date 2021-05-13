@@ -79,13 +79,16 @@ class ArtworkGridItemContainer extends React.Component<Props, State> {
   }
 
   getImageUrl() {
+    // @ts-expect-error STRICT_NULL_CHECK
     const imageURL = this.props.artwork.image.url
     if (!imageURL) {
       return null
     }
 
     const width = 400
+    // @ts-expect-error STRICT_NULL_CHECK
     const height = Math.floor(width / this.props.artwork.image.aspect_ratio)
+    // @ts-expect-error STRICT_NULL_CHECK
     const type = this.props.artwork.image.aspect_ratio ? "fit" : "fill" // Either scale or crop, based on if an aspect ratio is available.
     const geminiUrl =
       sd.GEMINI_CLOUDFRONT_URL || process.env.GEMINI_CLOUDFRONT_URL // fallback, useful if we're yarn linking
@@ -124,8 +127,10 @@ class ArtworkGridItemContainer extends React.Component<Props, State> {
         data-test="artworkGridItem"
         style={style}
       >
+        {/* @ts-expect-error STRICT_NULL_CHECK */}
         <Placeholder style={{ paddingBottom: artwork.image.placeholder }}>
           <Link
+            // @ts-expect-error STRICT_NULL_CHECK
             to={artwork.href}
             onClick={() => {
               if (this.props.onClick) {
@@ -134,8 +139,11 @@ class ArtworkGridItemContainer extends React.Component<Props, State> {
             }}
           >
             <Image
+              // @ts-expect-error STRICT_NULL_CHECK
               title={artwork.title}
+              // @ts-expect-error STRICT_NULL_CHECK
               alt={artwork.image_title}
+              // @ts-expect-error STRICT_NULL_CHECK
               src={this.getImageUrl()}
               lazyLoad={IMAGE_LAZY_LOADING && lazyLoad}
               preventRightClick={!isTeam}

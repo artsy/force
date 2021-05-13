@@ -15,6 +15,7 @@ jest.mock("v2/Artsy/Analytics/useTracking")
 const { getWrapper } = setupTestWrapper<ShowArtworks_Test_Query>({
   Component: props => (
     <MockBoot>
+      {/* @ts-expect-error STRICT_NULL_CHECK */}
       <ShowArtworksRefetchContainer aggregations={[]} {...props} />
     </MockBoot>
   ),

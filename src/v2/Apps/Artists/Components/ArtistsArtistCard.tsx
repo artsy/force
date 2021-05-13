@@ -20,6 +20,7 @@ export const ArtistsArtistCard: React.FC<ArtistsArtistCardProps> = ({
   return (
     <>
       <RouterLink
+        // @ts-expect-error STRICT_NULL_CHECK
         to={artist.href}
         noUnderline
         style={{ display: "block" }}
@@ -27,13 +28,18 @@ export const ArtistsArtistCard: React.FC<ArtistsArtistCardProps> = ({
         tabIndex={-1}
       >
         <ResponsiveBox
+          // @ts-expect-error STRICT_NULL_CHECK
           aspectWidth={image.thumb.width}
+          // @ts-expect-error STRICT_NULL_CHECK
           aspectHeight={image.thumb.height}
           maxWidth="100%"
         >
           <Image
+            // @ts-expect-error STRICT_NULL_CHECK
             src={image.thumb.src}
+            // @ts-expect-error STRICT_NULL_CHECK
             srcSet={image.thumb.srcSet}
+            // @ts-expect-error STRICT_NULL_CHECK
             alt={artist.name}
             width="100%"
             height="100%"
@@ -44,6 +50,7 @@ export const ArtistsArtistCard: React.FC<ArtistsArtistCardProps> = ({
 
       <Flex mt={1} alignItems="center" justifyContent="space-between">
         <Box mr={1}>
+          {/* @ts-expect-error STRICT_NULL_CHECK */}
           <RouterLink to={artist.href} noUnderline style={{ display: "block" }}>
             <Text variant="md">{artist.name}</Text>
 
@@ -53,10 +60,12 @@ export const ArtistsArtistCard: React.FC<ArtistsArtistCardProps> = ({
               </Text>
             )}
 
+            {/* @ts-expect-error STRICT_NULL_CHECK */}
             {counts && counts.artworks > 0 && (
               <Text variant="xs" fontWeight="bold">
                 {counts.artworks} work
                 {counts.artworks === 1 ? "" : "s"}
+                {/* @ts-expect-error STRICT_NULL_CHECK */}
                 {counts.forSaleArtworks > 0 &&
                   counts.forSaleArtworks !== counts.artworks && (
                     <>, {counts.forSaleArtworks} for sale</>

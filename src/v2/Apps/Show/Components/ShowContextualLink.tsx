@@ -37,9 +37,11 @@ export const ContextualLink: React.FC<Props> = ({ show }) => {
   if (isFairBooth) {
     return (
       <>
+        {/* @ts-expect-error STRICT_NULL_CHECK */}
         {fair.isActive && (
           <Box>
             <Text variant="sm">
+              {/* @ts-expect-error STRICT_NULL_CHECK */}
               Part of <RouterLink to={fairHref}>{fairName}</RouterLink>
             </Text>
           </Box>

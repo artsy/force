@@ -36,6 +36,7 @@ const FairsFairBanner: React.FC<FairsFairBannerProps> = ({ fair, ...rest }) => {
   return (
     <Box {...rest}>
       <RouterLink
+        // @ts-expect-error STRICT_NULL_CHECK
         to={fair.href}
         style={{ display: "block", textDecoration: "none" }}
         aria-label={`Go to ${fair.name}`}
@@ -54,6 +55,7 @@ const FairsFairBanner: React.FC<FairsFairBannerProps> = ({ fair, ...rest }) => {
               height="100%"
               src={banner.src}
               srcSet={banner.srcSet}
+              // @ts-expect-error STRICT_NULL_CHECK
               alt={fair.name}
               lazyLoad
             />

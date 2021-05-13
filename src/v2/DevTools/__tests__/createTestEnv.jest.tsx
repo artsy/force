@@ -117,6 +117,7 @@ const Component = createFragmentContainer(
     <div>
       <h1>This is the main heading</h1>
       <p>
+        {/* @ts-expect-error STRICT_NULL_CHECK */}
         The artwork is {artwork.title} by {artwork.artist.name}
       </p>
       <button

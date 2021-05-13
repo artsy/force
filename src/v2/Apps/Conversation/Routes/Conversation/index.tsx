@@ -42,16 +42,19 @@ export const ConversationRoute: React.FC<ConversationRouteProps> = props => {
           <Media greaterThan="sm">
             <ConversationList
               me={me as any}
+              // @ts-expect-error STRICT_NULL_CHECK
               selectedConversationID={me.conversation.internalID}
             />
           </Media>
           <Conversation
+            // @ts-expect-error STRICT_NULL_CHECK
             conversation={me.conversation}
             showDetails={showDetails}
             setShowDetails={setShowDetails}
             refetch={props.relay.refetch}
           />
           <Details
+            // @ts-expect-error STRICT_NULL_CHECK
             conversation={me.conversation}
             showDetails={showDetails}
             setShowDetails={setShowDetails}

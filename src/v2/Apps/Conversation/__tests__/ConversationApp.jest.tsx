@@ -13,6 +13,7 @@ import { ConversationAppFragmentContainer } from "../ConversationApp"
 
 jest.unmock("react-relay")
 
+// @ts-expect-error STRICT_NULL_CHECK
 const pageInfo: ConversationAppTestQueryRawResponse["me"]["conversationsConnection"]["pageInfo"] = {
   startCursor: "NQ",
   endCursor: "MQ",
@@ -24,6 +25,7 @@ const render = (me: ConversationAppTestQueryRawResponse["me"], user: User) =>
   renderRelayTree({
     Component: (props: ConversationAppTestQueryResponse) => (
       <ConversationAppFragmentContainer
+        // @ts-expect-error STRICT_NULL_CHECK
         me={{
           ...me,
         }}

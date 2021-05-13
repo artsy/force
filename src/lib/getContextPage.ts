@@ -26,6 +26,7 @@ export function getContextPageFromReq({
   }
 }
 
+// @ts-expect-error STRICT_NULL_CHECK
 export function getContextPageFromClient(): {
   canonicalUrl: string
   pageParts: string[]

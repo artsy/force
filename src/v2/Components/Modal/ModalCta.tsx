@@ -15,6 +15,7 @@ export const ModalCta: SFC<{
   onClose: () => void
 }> = props => {
   const {
+    // @ts-expect-error STRICT_NULL_CHECK
     cta: { isFixed, onClick, text },
     hasImage,
     onClose,

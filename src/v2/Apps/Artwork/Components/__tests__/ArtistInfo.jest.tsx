@@ -62,6 +62,7 @@ describe("ArtistInfo", () => {
       const artist = {
         ...ArtistInfoFixture,
         highlights: {
+          // @ts-expect-error STRICT_NULL_CHECK
           ...ArtistInfoFixture.highlights,
           partnersConnection: null,
         },
@@ -77,12 +78,14 @@ describe("ArtistInfo", () => {
       const artist = {
         ...ArtistInfoFixture,
         highlights: {
+          // @ts-expect-error STRICT_NULL_CHECK
           ...ArtistInfoFixture.highlights,
           partnersConnection: null,
         },
         collections: null,
         auctionResultsConnection: null,
         exhibition_highlights: {
+          // @ts-expect-error STRICT_NULL_CHECK
           ...ArtistInfoFixture.exhibition_highlights,
           length: 1,
         },
@@ -95,6 +98,7 @@ describe("ArtistInfo", () => {
       const artist = {
         ...ArtistInfoFixture,
         biographyBlurb: {
+          // @ts-expect-error STRICT_NULL_CHECK
           ...ArtistInfoFixture.biographyBlurb,
           text: null,
         },
@@ -107,6 +111,7 @@ describe("ArtistInfo", () => {
       const artist = {
         ...ArtistInfoFixture,
         highlights: {
+          // @ts-expect-error STRICT_NULL_CHECK
           ...ArtistInfoFixture.highlights,
           partnersConnection: null,
         },

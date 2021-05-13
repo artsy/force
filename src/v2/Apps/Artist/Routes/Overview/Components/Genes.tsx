@@ -14,6 +14,7 @@ interface Props {
 export class Genes extends Component<Props> {
   render() {
     const { related } = this.props.artist
+    // @ts-expect-error STRICT_NULL_CHECK
     const { genes } = related
     if (genes.edges.length === 0) {
       return null

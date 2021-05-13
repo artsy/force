@@ -10,6 +10,7 @@ interface VerifiedSellerProps
   artwork: VerifiedSeller_artwork
 }
 
+// @ts-expect-error STRICT_NULL_CHECK
 export const VerifiedSeller: React.FC<VerifiedSellerProps> = ({
   artwork,
   ...other

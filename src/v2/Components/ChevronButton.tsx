@@ -6,6 +6,7 @@ export const ChevronButton: React.FC = ({ children }) => {
     <Text variant="md" fontWeight="bold" py={1}>
       {children}{" "}
       <ChevronIcon
+        // @ts-expect-error STRICT_NULL_CHECK
         title={null}
         direction="right"
         color="black"

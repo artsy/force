@@ -90,11 +90,14 @@ export function injectCommitMutation<Props extends CommitMutationProps>(
   return props => {
     const { relayEnvironment } = useContext(SystemContext)
     return (
+      // @ts-expect-error STRICT_NULL_CHECK
       <ProvideMutationContext relayEnvironment={relayEnvironment}>
         <MutationContext.Consumer>
           {({ isCommittingMutation, commitMutation }) => (
             <Component
+              // @ts-expect-error STRICT_NULL_CHECK
               isCommittingMutation={isCommittingMutation}
+              // @ts-expect-error STRICT_NULL_CHECK
               commitMutation={commitMutation}
               {...(props as Props)}
             />

@@ -31,6 +31,7 @@ export const FlashBanner: React.FC<FlashBannerProps> = props => {
     }
 
     if (!contentCode) {
+      // @ts-expect-error STRICT_NULL_CHECK
       contentCode = props.me?.canRequestEmailConfirmation
         ? "email_confirmation_cta"
         : null

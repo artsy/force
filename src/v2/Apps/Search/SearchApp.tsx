@@ -98,7 +98,9 @@ export class SearchApp extends React.Component<Props> {
     const { query } = location
     const { term } = query
 
+    // @ts-expect-error STRICT_NULL_CHECK
     const { aggregations } = searchConnection
+    // @ts-expect-error STRICT_NULL_CHECK
     const artworkCount = get(artworksConnection, f => f.counts.total, 0)
 
     let countWithoutArtworks: number = 0
@@ -117,6 +119,7 @@ export class SearchApp extends React.Component<Props> {
       <>
         <SearchMeta term={term} />
         {hasResults ? (
+          // @ts-expect-error STRICT_NULL_CHECK
           this.renderResults(countWithoutArtworks + artworkCount, artworkCount)
         ) : (
           <Box mt={3}>

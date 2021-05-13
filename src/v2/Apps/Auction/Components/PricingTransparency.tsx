@@ -16,6 +16,7 @@ const Row = props => (
 )
 
 export const PricingTransparency: React.FC<PricingTransparencyQueryResponse> = props => {
+  // @ts-expect-error STRICT_NULL_CHECK
   const { calculatedCost } = props.artwork.saleArtwork
 
   return (

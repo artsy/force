@@ -22,6 +22,7 @@ export const Truncator: React.SFC<Props> = ({
   let readMoreHTML = null
 
   if (ReadMoreLink) {
+    // @ts-expect-error STRICT_NULL_CHECK
     readMoreHTML = ReactDOM.renderToStaticMarkup(ReadMoreLink())
   }
 

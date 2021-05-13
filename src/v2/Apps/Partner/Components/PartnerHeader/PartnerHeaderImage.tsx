@@ -26,6 +26,7 @@ export const PartnerHeaderImage: React.FC<PartnerHeaderImageProps> = ({
         top={[MOBILE_NAV_HEIGHT, NAV_BAR_HEIGHT]}
         position="fixed"
         zIndex={-1}
+        // @ts-expect-error STRICT_NULL_CHECK
         src={image.url}
       />
     </>

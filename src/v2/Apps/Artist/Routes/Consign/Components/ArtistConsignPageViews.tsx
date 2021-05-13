@@ -16,6 +16,7 @@ export const ArtistConsignPageViews: React.FC<ArtistConsignPageViewsProps> = pro
     artist: {
       name,
       targetSupply: {
+        // @ts-expect-error STRICT_NULL_CHECK
         microfunnel: {
           metadata: { roundedViews, roundedUniqueVisitors },
         },

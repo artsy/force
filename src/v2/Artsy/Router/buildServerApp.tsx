@@ -110,8 +110,10 @@ export function buildServerApp(
           return (
             <Boot
               context={serverContext}
+              // @ts-expect-error STRICT_NULL_CHECK
               user={user}
               headTags={tags}
+              // @ts-expect-error STRICT_NULL_CHECK
               onlyMatchMediaQueries={matchingMediaQueries}
               relayEnvironment={relayEnvironment}
               routes={routes}
@@ -122,7 +124,7 @@ export function buildServerApp(
         }
 
         // Build up script tags to inject into head
-        const scripts = []
+        const scripts: string[] = []
 
         const sheet = new ServerStyleSheet()
 
@@ -155,6 +157,7 @@ export function buildServerApp(
 
         // Wrap component tree in library contexts to extract usage
         bundleJSX = extractor.collectChunks(
+          // @ts-expect-error STRICT_NULL_CHECK
           sheet.collectStyles(<ServerApp tags={headTags} />)
         )
 
@@ -239,7 +242,7 @@ export function buildServerApp(
 
         // Only exporting this for testing purposes, don't go around using this
         // elsewhere, we’re serious.
-        if (typeof jest !== "undefined") {
+        if (__TEST_INTERNAL_SERVER_APP__) {
           Object.defineProperty(
             result,
 

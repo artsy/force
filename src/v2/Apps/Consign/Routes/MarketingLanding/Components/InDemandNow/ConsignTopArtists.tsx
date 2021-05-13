@@ -16,6 +16,7 @@ import {
 } from "@artsy/palette"
 import { formatCentsToDollars } from "v2/Apps/Consign/Routes/MarketingLanding/Utils/formatCentsToDollars"
 
+// @ts-expect-error STRICT_NULL_CHECK
 type ArtworkProps = ConsignTopArtistsQuery["response"]["targetSupply"]["microfunnel"][0]["artworksConnection"]["edges"][0]["node"] & {
   realizedPriceAverage: string
 }
@@ -100,6 +101,7 @@ const TopArtists: React.FC<ConsignTopArtistsQuery["response"]> = props => {
           return null
         }
 
+        // @ts-expect-error STRICT_NULL_CHECK
         const { edges } = artwork.artworksConnection
 
         const realizedPriceAverage = formatCentsToDollars(

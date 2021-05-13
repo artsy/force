@@ -30,6 +30,7 @@ const ResponseForm: React.FC<ResponseFormProps> = ({ offer }) => {
         intendedState: "ACCEPTED",
       }}
       onSubmit={async (values: ResponseFormValues, actions) => {
+        // @ts-expect-error STRICT_NULL_CHECK
         await CreateOfferResponse(relayEnvironment, offer.id, values)
         setResponded(true)
         actions.setSubmitting(false)

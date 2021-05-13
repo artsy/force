@@ -67,6 +67,7 @@ export const AuctionArtworksRail: React.FC<AuctionArtworksRailProps> = ({
           <Box flex="1">
             <Text as="h3" variant="lg" color="black100">
               <RouterLink
+                // @ts-expect-error STRICT_NULL_CHECK
                 to={sale.href}
                 noUnderline
                 onClick={trackViewSaleClick}
@@ -80,6 +81,7 @@ export const AuctionArtworksRail: React.FC<AuctionArtworksRailProps> = ({
           </Box>
 
           <Text variant="sm" color="black100">
+            {/* @ts-expect-error STRICT_NULL_CHECK */}
             <RouterLink to={sale.href} onClick={trackViewSaleClick}>
               View all
             </RouterLink>

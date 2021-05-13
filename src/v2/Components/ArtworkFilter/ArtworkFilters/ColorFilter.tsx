@@ -64,15 +64,19 @@ const ColorFilterOption: React.FC<{ colorOption: ColorOption }> = ({
   const { name, value, hex } = colorOption
 
   const { currentlySelectedFilters, setFilter } = useArtworkFilterContext()
+  // @ts-expect-error STRICT_NULL_CHECK
   const { colors: selectedColorOptions } = currentlySelectedFilters()
 
   const toggleColor = (color: string) => {
+    // @ts-expect-error STRICT_NULL_CHECK
     if (selectedColorOptions.includes(color)) {
       setFilter(
         "colors",
+        // @ts-expect-error STRICT_NULL_CHECK
         selectedColorOptions.filter(selectedColor => color !== selectedColor)
       )
     } else {
+      // @ts-expect-error STRICT_NULL_CHECK
       setFilter("colors", [...selectedColorOptions, color])
     }
   }
@@ -86,6 +90,7 @@ const ColorFilterOption: React.FC<{ colorOption: ColorOption }> = ({
     <Checkbox
       key={name}
       onSelect={() => toggleColor(value)}
+      // @ts-expect-error STRICT_NULL_CHECK
       selected={selectedColorOptions.includes(value)}
       my={tokens.my}
     >
@@ -116,11 +121,14 @@ export const ColorFilter: React.FC<ColorFilterProps> = ({ expanded }) => {
   const { currentlySelectedFilters } = useArtworkFilterContext()
   const hasBelowTheFoldColorFilter =
     intersection(
+      // @ts-expect-error STRICT_NULL_CHECK
       currentlySelectedFilters().colors,
       COLOR_OPTIONS.slice(INITIAL_ITEMS_TO_SHOW).map(({ value }) => value)
     ).length > 0
+  // @ts-expect-error STRICT_NULL_CHECK
   const hasColorFilter = currentlySelectedFilters().colors.length > 0
   const resultsSorted = sortResults(
+    // @ts-expect-error STRICT_NULL_CHECK
     currentlySelectedFilters().colors,
     COLOR_OPTIONS
   )

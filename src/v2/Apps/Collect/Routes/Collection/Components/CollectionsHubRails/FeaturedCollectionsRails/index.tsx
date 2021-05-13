@@ -66,6 +66,7 @@ export const FeaturedCollectionEntity: React.FC<FeaturedCollectionEntityProps> =
         contextModule: ContextModule.featuredCollectionsRail,
         contextPageOwnerId,
         contextPageOwnerSlug,
+        // @ts-expect-error STRICT_NULL_CHECK
         contextPageOwnerType,
         destinationPageOwnerId: id,
         destinationPageOwnerSlug: slug,

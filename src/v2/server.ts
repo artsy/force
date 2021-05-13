@@ -16,6 +16,10 @@ const { CDN_URL, NODE_ENV } = process.env
 const PUBLIC_DIR = path.resolve(__dirname, "../../public")
 const NOVO_MANIFEST = loadAssetManifest("manifest-novo.json")
 
+if (!NOVO_MANIFEST) {
+  throw new Error("manifest-novo.json not found")
+}
+
 const app = express()
 const routes = getAppRoutes()
 
@@ -24,6 +28,7 @@ const routes = getAppRoutes()
  * over all app routes and return an array that we can explicity match against.
  */
 const flatRoutes = flatten(
+  // @ts-expect-error STRICT_NULL_CHECK
   routes[0].children.map(app => {
     // Only supports one level of nesting per app. For instance, these are tabs
     // on the artist page, etc.
@@ -32,7 +37,8 @@ const flatRoutes = flatten(
       .filter(route => route !== "/" && route !== "*")
 
     const allRoutes = childRoutePaths
-      ? childRoutePaths.map(child => app.path + "/" + child).concat(app.path)
+      ? // @ts-expect-error STRICT_NULL_CHECK
+        childRoutePaths.map(child => app.path + "/" + child).concat(app.path)
       : app.path
 
     return allRoutes
@@ -42,6 +48,7 @@ const flatRoutes = flatten(
 /**
  * Mount routes that will connect to global SSR router
  */
+// @ts-expect-error STRICT_NULL_CHECK
 app.get(flatRoutes, async (req: Request, res: Response, next: NextFunction) => {
   try {
     const {

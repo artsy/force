@@ -12,6 +12,7 @@ export const ContactRoute: React.FC<ContactRouteProps> = ({ partner }) => {
   return (
     <Box mt={[4, 6]}>
       <Text variant="title">Locations</Text>
+      {/* @ts-expect-error STRICT_NULL_CHECK */}
       <PartnerContacts edges={partner.locations.edges} />
     </Box>
   )

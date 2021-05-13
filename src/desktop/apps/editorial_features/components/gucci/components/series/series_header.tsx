@@ -28,6 +28,7 @@ export const SeriesHeader: React.SFC<SeriesHeaderProps> = props => {
       </Box>
       <Waypoint onEnter={() => inBody(false)} onLeave={() => inBody(true)} />
       <SectionsNav
+        // @ts-expect-error STRICT_NULL_CHECK
         activeSection={null}
         sections={curation.sections}
         onClick={onChangeSection}

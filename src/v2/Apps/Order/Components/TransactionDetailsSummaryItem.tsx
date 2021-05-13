@@ -106,10 +106,12 @@ export class TransactionDetailsSummaryItem extends React.Component<
           // show last offer
           <SecondaryEntry
             label={
+              // @ts-expect-error STRICT_NULL_CHECK
               order.lastOffer.fromParticipant === "SELLER"
                 ? "Seller's offer"
                 : "Your offer"
             }
+            // @ts-expect-error STRICT_NULL_CHECK
             value={order.lastOffer.amount}
           />
         )}
@@ -120,6 +122,7 @@ export class TransactionDetailsSummaryItem extends React.Component<
   renderNoteEntry = () => {
     const offer = this.getOffer()
 
+    // @ts-expect-error STRICT_NULL_CHECK
     if (offer.note) {
       return (
         <>
@@ -128,6 +131,7 @@ export class TransactionDetailsSummaryItem extends React.Component<
             Your note
           </Serif>
           <Serif size={["2", "3t"]} color="black60">
+            {/* @ts-expect-error STRICT_NULL_CHECK */}
             {offer.note}
           </Serif>
         </>

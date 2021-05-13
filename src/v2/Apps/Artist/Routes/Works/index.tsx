@@ -23,11 +23,14 @@ export const WorksRoute: React.FC<WorksRouteProps> = props => {
   const isClient = typeof window !== "undefined"
   const showRecommendations =
     isClient &&
+    // @ts-expect-error STRICT_NULL_CHECK
     get(artist, a => a.related.artistsConnection.edges.length, 0) > 0
 
   const hasArtistSeries =
+    // @ts-expect-error STRICT_NULL_CHECK
     get(artist, a => a.artistSeriesConnection.edges.length, 0) > 0
 
+  // @ts-expect-error STRICT_NULL_CHECK
   const titleString = computeTitle(artist.name, artist.counts.forSaleArtworks)
 
   return (

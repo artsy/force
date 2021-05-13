@@ -53,6 +53,7 @@ export const Footer = (props: FooterProps) => {
             {"Don’t have an account? "}
             <Link
               color="black60"
+              // @ts-expect-error STRICT_NULL_CHECK
               onClick={() => handleTypeChange("signup" as ModalType)}
               data-test="signup"
             >
@@ -69,6 +70,7 @@ export const Footer = (props: FooterProps) => {
             {"Don’t need to reset? "}
             <Link
               color="black60"
+              // @ts-expect-error STRICT_NULL_CHECK
               onClick={() => handleTypeChange("login" as ModalType)}
               data-test="login"
             >
@@ -77,6 +79,7 @@ export const Footer = (props: FooterProps) => {
             {" or "}
             <Link
               color="black60"
+              // @ts-expect-error STRICT_NULL_CHECK
               onClick={() => handleTypeChange("signup" as ModalType)}
               data-test="signup"
             >
@@ -122,6 +125,7 @@ export const Footer = (props: FooterProps) => {
               {"Already have an account? "}
               <Link
                 color="black60"
+                // @ts-expect-error STRICT_NULL_CHECK
                 onClick={() => handleTypeChange("login" as ModalType)}
                 data-test="login"
               >

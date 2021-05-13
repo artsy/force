@@ -145,6 +145,7 @@ export class SelectedExhibitionsContainer extends React.Component<
   render() {
     if (
       !this.props.exhibitions.length ||
+      // @ts-expect-error STRICT_NULL_CHECK
       this.props.totalExhibitions < MIN_EXHIBITIONS
     ) {
       return null
@@ -165,6 +166,7 @@ export class SelectedExhibitionsContainer extends React.Component<
         <Flex flexDirection="column">
           <ExhibitionsHeadline
             expanded={this.state.expanded}
+            // @ts-expect-error STRICT_NULL_CHECK
             collapsible={this.props.collapsible}
             exhibitionCount={this.props.exhibitions.length}
             onShowClicked={() => this.setState({ expanded: true })}
@@ -174,8 +176,10 @@ export class SelectedExhibitionsContainer extends React.Component<
             ...this.props,
           }) && (
             <FullExhibitionList
+              // @ts-expect-error STRICT_NULL_CHECK
               artistID={this.props.artistID}
               exhibitions={this.props.exhibitions}
+              // @ts-expect-error STRICT_NULL_CHECK
               totalExhibitions={this.props.totalExhibitions}
               ViewAllLink={this.props.ViewAllLink}
             />

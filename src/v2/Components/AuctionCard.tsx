@@ -57,6 +57,7 @@ export const upcomingLabel = (
     } else if (isRegistered || isRegistrationClosed) {
       return `Live in ${relativeTime(liveStartAt, now)}`
     } else {
+      // @ts-expect-error STRICT_NULL_CHECK
       const dateTime = DateTime.fromISO(liveStartAt).setZone("America/New_York")
       return `Register by ${dateTime.monthShort} ${dateTime.day}`
     }
@@ -141,16 +142,20 @@ export const SmallAuctionCard = props => (
 export const AuctionCardFragmentContainer = createFragmentContainer<{
   sale: AuctionCard_sale
 }>(
+  // @ts-expect-error STRICT_NULL_CHECK
   props => {
     const { sale } = props
 
     if (!sale) return
 
     const statusLabel = upcomingLabel(sale)
+    // @ts-expect-error STRICT_NULL_CHECK
     const imageURL = get(sale, s => s.cover_image.cropped.url)
+    // @ts-expect-error STRICT_NULL_CHECK
     const partnerName = get(sale, s => s.partner.name)
 
     return (
+      // @ts-expect-error STRICT_NULL_CHECK
       <AuctionCard
         src={imageURL}
         href={sale.href}

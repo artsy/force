@@ -23,6 +23,7 @@ const { getWrapper } = setupTestWrapper<FairApp_Test_Query>({
           },
         }}
       >
+        {/* @ts-expect-error STRICT_NULL_CHECK */}
         <FairAppFragmentContainer {...props} />
       </MockBoot>
     )

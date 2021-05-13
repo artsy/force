@@ -13,6 +13,7 @@ interface FairEditorialProps {
 export const FairEditorial: React.FC<FairEditorialProps> = ({ fair }) => {
   return (
     <GridColumns gridRowGap={2}>
+      {/* @ts-expect-error STRICT_NULL_CHECK */}
       {fair.articlesConnection.edges.map(({ node: article }) => {
         return (
           <Column key={article.id} span={6}>
