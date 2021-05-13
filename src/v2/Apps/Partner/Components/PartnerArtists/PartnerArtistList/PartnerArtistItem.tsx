@@ -18,17 +18,24 @@ export interface PartnerArtistItemProps {
   hasPublishedArtworks: boolean
   partnerSlug: string
   scrollTo: ScrollIntoViewProps
+  fullProfileEligible: boolean
 }
 
 export const PartnerArtistItem: React.FC<PartnerArtistItemProps> = ({
-  artist: { name, slug },
+  artist: { name, slug, href },
   hasPublishedArtworks,
   partnerSlug,
   scrollTo,
+  fullProfileEligible,
 }) => {
+  const artistHref = fullProfileEligible
+    ? // TODO: Use partner.href instead after page migration
+      `/partner2/${partnerSlug}/artists/${slug}`
+    : href || `/artists/${slug}`
+
   return hasPublishedArtworks ? (
     <ScrollIntoView {...scrollTo}>
-      <RouterLink noUnderline to={`/partner2/${partnerSlug}/artists/${slug}`}>
+      <RouterLink noUnderline to={artistHref}>
         <Name color="black100">{name}</Name>
       </RouterLink>
     </ScrollIntoView>
@@ -44,6 +51,7 @@ export const PartnerArtistItemFragmentContainer = createFragmentContainer(
       fragment PartnerArtistItem_artist on Artist {
         name
         slug
+        href
       }
     `,
   }
