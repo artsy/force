@@ -73,12 +73,8 @@ const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
       <FairHeaderFragmentContainer fair={fair} />
 
       {hasArticles && (
-        <Box my={6} pt={4} borderTop="1px solid" borderColor="black10">
+        <Box my={4} pt={4} borderTop="1px solid" borderColor="black10">
           <Box display="flex" justifyContent="space-between">
-            <Text variant="lg" as="h3" mb={2}>
-              Related Reading
-            </Text>
-
             {/* @ts-expect-error STRICT_NULL_CHECK */}
             {fair.articlesConnection.totalCount > FAIR_EDITORIAL_AMOUNT && (
               <RouterLink to={`${fair.href}/articles`} noUnderline>
@@ -92,7 +88,7 @@ const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
       )}
 
       {hasCollections && (
-        <Box my={6} pt={4} borderTop="1px solid" borderColor="black10">
+        <Box my={4} pt={4} borderTop="1px solid" borderColor="black10">
           <Text variant="lg" as="h3" mb={2}>
             Curated Highlights
           </Text>
