@@ -101,6 +101,7 @@ class SuggestedGenesContent extends React.Component<Props> {
         variables: {
           input: {
             geneID: gene.internalID,
+            unfollow: !follow,
           },
           excludedGeneIds: Array.from(this.excludedGeneIds),
         },

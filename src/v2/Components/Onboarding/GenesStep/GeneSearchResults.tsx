@@ -116,6 +116,7 @@ class GeneSearchResultsContent extends React.Component<Props, null> {
         variables: {
           input: {
             geneID: gene.internalID,
+            unfollow: !follow,
           },
           excludedGeneIds: Array.from(this.excludedGeneIds),
         },
