@@ -60,7 +60,7 @@ module.exports =
   GEMINI_CLOUDFRONT_URL: 'https://d7hftxdivxxvm.cloudfront.net'
   GENOME_URL: 'https://helix.artsy.net'
   GEODATA_URL: 'http://artsy-geodata.s3-website-us-east-1.amazonaws.com'
-  GEOIP_ENDPOINT: 'https://artsy-geoip.herokuapp.com/'
+  GEOIP_ENDPOINT: 'https://freegeoip.app/json/'
   GOOGLE_ADWORDS_ID: null
   GOOGLE_MAPS_API_KEY: null
   IMAGE_LAZY_LOADING: true

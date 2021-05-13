@@ -67,8 +67,8 @@ moment = require 'moment'
   title: 'Vennice Biennalez'
   description: 'The coolest biennale'
   slug: 'vennice-biennale'
-  partner_logo_url: 'http://gemini.herokuapp.com/123/miaart-banner.jpg'
-  thumbnail_url: 'http://gemini.herokuapp.com/123/miaart-banner.jpg'
+  partner_logo_url: 'http://gemini.example.com/123/miaart-banner.jpg'
+  thumbnail_url: 'http://gemini.example.com/123/miaart-banner.jpg'
   featured_links: [{ title: 'foo', thumbnail_url: 'bar.jpg', url: 'foo.com' }]
 
 @channel =
@@ -76,7 +76,7 @@ moment = require 'moment'
   name: 'Life at Artsy'
   tagline: 'Office Culture at Artsy'
   slug: 'life-at-artsy'
-  image_url: 'http://gemini.herokuapp.com/123/miaart-banner.jpg'
+  image_url: 'http://gemini.example.com/123/miaart-banner.jpg'
   links: [
     { text: 'Cool Link', url: 'http://artsy.net' }
     { text: 'Another Link', url: 'http://artsy.net/about' }
@@ -117,7 +117,7 @@ moment = require 'moment'
     }
     {
       type: 'image',
-      url: 'http://gemini.herokuapp.com/123/miaart-banner.jpg'
+      url: 'http://gemini.example.com/123/miaart-banner.jpg'
     }
     {
       type: 'text',
