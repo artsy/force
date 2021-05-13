@@ -107,6 +107,7 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
             headerImage.imageTitle +
             ". Courtesy of the artist and Kenise Barnes Fine Art. "
           }
+          meta="Artsy is the safest place to buy the art you love. Every purchase made exclusively with our Artsy’s secure checkout benefits from our full suite of buyer protections."
         >
           <Flex
             position="absolute"
