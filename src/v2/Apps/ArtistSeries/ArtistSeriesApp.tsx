@@ -12,7 +12,7 @@ import {
 } from "v2/Artsy/Analytics/AnalyticsContext"
 import { SharedArtworkFilterContextProps } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
 import { Spacer } from "@artsy/palette"
-import { HttpError } from "found"
+import { ErrorPage } from "v2/Components/ErrorPage"
 
 interface ArtistSeriesAppProps {
   artistSeries: ArtistSeriesApp_artistSeries
@@ -22,8 +22,10 @@ const ArtistSeriesApp: React.FC<ArtistSeriesAppProps> = ({ artistSeries }) => {
   const { contextPageOwnerType, contextPageOwnerSlug } = useAnalyticsContext()
 
   // The `@principalField` directive doesn't work on `artistSeries` due to stitching
+  // Using `throw new HttpError(404)` fails in the acceptance tests.
+  // Your guess is as good as mine.
   if (!artistSeries) {
-    throw new HttpError(404)
+    return <ErrorPage code={404} />
   }
 
   const { railArtist, internalID, sidebarAggregations } = artistSeries
