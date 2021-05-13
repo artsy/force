@@ -1,4 +1,4 @@
-import { computeRedirectTo, fallbackRedirectTo } from "./helpers"
+import { computeRedirectTo, fallbackRedirectTo } from "../helpers"
 
 describe("computeRedirectTo", () => {
   it("returns the destination and expires the cookie if found", () => {

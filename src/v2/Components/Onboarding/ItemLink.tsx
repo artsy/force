@@ -21,6 +21,7 @@ const Link = styled.a`
     padding: 0 5px;
   `};
 `
+Link.displayName = "Link"
 
 const Avatar = styled.img`
   margin: 10px 15px 10px 10px;

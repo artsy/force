@@ -1,6 +1,6 @@
 import React from "react"
 import { mount } from "enzyme"
-import { ArtistsStep } from "./ArtistsStep"
+import { ArtistsStep } from "../ArtistsStep"
 import { MultiButtonState } from "v2/Components/Buttons/MultiStateButton"
 
 describe("ArtistsStep", () => {
@@ -28,20 +28,5 @@ describe("ArtistsStep", () => {
     const wrapper = mount(<ArtistsStep {...props} />)
     const buttonState = wrapper.find("Layout").prop("buttonState")
     expect(buttonState).toEqual(MultiButtonState.Default)
-  })
-
-  it("renders highlighted next button", () => {
-    const wrapper = mount(<ArtistsStep {...props} />)
-    console.log(wrapper.debug())
-
-    const renderer = wrapper.find("QueryRenderer")
-    console.log(renderer)
-
-    const onClick = wrapper.find("Link").first().prop("onClick")
-    const event: any = {}
-    onClick(event)
-
-    const buttonState = wrapper.find("Layout").prop("buttonState")
-    expect(buttonState).toEqual(MultiButtonState.Highlighted)
   })
 })

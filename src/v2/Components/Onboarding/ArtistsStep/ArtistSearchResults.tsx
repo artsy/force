@@ -170,7 +170,7 @@ class ArtistSearchResultsContent extends React.Component<Props, null> {
   }
 }
 
-const ArtistSearchResultsContentContainer = createFragmentContainer(
+export const ArtistSearchResultsContentContainer = createFragmentContainer(
   ArtistSearchResultsContent,
   {
     viewer: graphql`

@@ -1,6 +1,6 @@
 import React from "react"
 import { mount } from "enzyme"
-import { GenesStep } from "./GenesStep"
+import { GenesStep } from "../GenesStep"
 
 describe("GenesStep", () => {
   it("renders suggested genes to start", () => {

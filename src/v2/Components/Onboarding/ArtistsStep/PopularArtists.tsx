@@ -167,7 +167,7 @@ class PopularArtistsContent extends React.Component<Props, null> {
   }
 }
 
-const PopularArtistContentContainer = createFragmentContainer(
+export const PopularArtistContentContainer = createFragmentContainer(
   PopularArtistsContent,
   {
     popular_artists: graphql`

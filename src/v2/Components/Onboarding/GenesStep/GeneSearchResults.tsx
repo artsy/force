@@ -160,7 +160,7 @@ class GeneSearchResultsContent extends React.Component<Props, null> {
   }
 }
 
-const GeneSearchResultsContentContainer = createFragmentContainer(
+export const GeneSearchResultsContentContainer = createFragmentContainer(
   GeneSearchResultsContent,
   {
     viewer: graphql`
