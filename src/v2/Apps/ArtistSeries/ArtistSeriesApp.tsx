@@ -12,6 +12,7 @@ import {
 } from "v2/Artsy/Analytics/AnalyticsContext"
 import { SharedArtworkFilterContextProps } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
 import { Spacer } from "@artsy/palette"
+import { HttpError } from "found"
 
 interface ArtistSeriesAppProps {
   artistSeries: ArtistSeriesApp_artistSeries
@@ -19,6 +20,12 @@ interface ArtistSeriesAppProps {
 
 const ArtistSeriesApp: React.FC<ArtistSeriesAppProps> = ({ artistSeries }) => {
   const { contextPageOwnerType, contextPageOwnerSlug } = useAnalyticsContext()
+
+  // The `@principalField` directive doesn't work on `artistSeries` due to stitching
+  if (!artistSeries) {
+    throw new HttpError(404)
+  }
+
   const { railArtist, internalID, sidebarAggregations } = artistSeries
 
   return (

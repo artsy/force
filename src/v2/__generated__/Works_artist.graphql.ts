@@ -37,7 +37,7 @@ export type Works_artist = {
             } | null> | null;
         } | null> | null;
     } | null;
-    readonly " $fragmentRefs": FragmentRefs<"ArtistTopWorksRail_artist" | "ArtistSeriesRail_artist" | "ArtistArtworkFilter_artist">;
+    readonly " $fragmentRefs": FragmentRefs<"ArtistTopWorksRail_artist" | "V2ArtistSeriesRail_artist" | "ArtistArtworkFilter_artist">;
     readonly " $refType": "Works_artist";
 };
 export type Works_artist$data = Works_artist;
@@ -304,7 +304,7 @@ return {
     {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "ArtistSeriesRail_artist"
+      "name": "V2ArtistSeriesRail_artist"
     },
     {
       "args": [
@@ -321,5 +321,5 @@ return {
   "type": "Artist"
 };
 })();
-(node as any).hash = '5142fc3ea4590475d4164497231e50f2';
+(node as any).hash = '240b2ffe896032ccd25b70c6b6cce6aa';
 export default node;

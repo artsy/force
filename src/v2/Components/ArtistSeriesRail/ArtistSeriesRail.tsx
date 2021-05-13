@@ -33,7 +33,6 @@ const ArtistSeriesRail: React.FC<Props> = ({
           return (
             <ArtistSeriesItem
               key={node.internalID}
-              lazyLoad={index > 5}
               artistSeries={node}
               index={index}
               contextModule={contextModule}

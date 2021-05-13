@@ -12,7 +12,6 @@ import { RouterLink } from "v2/Artsy/Router/RouterLink"
 
 interface ArtistSeriesItemProps extends AnalyticsContextProps {
   artistSeries: ArtistSeriesItem_artistSeries
-  lazyLoad: boolean
   contextModule: ContextModule
   index: number
 }
@@ -28,7 +27,6 @@ export const ArtistSeriesItem: React.FC<ArtistSeriesItemProps> = ({
     artworksCountMessage,
     featured,
   },
-  lazyLoad,
 }) => {
   const { trackEvent } = useTracking()
 
@@ -64,9 +62,9 @@ export const ArtistSeriesItem: React.FC<ArtistSeriesItemProps> = ({
         <Image
           src={image.cropped.src}
           srcSet={image.cropped.srcSet}
-          lazyLoad={lazyLoad}
           width={image.cropped.width}
           height={image.cropped.height}
+          lazyLoad
           alt=""
         />
       ) : (

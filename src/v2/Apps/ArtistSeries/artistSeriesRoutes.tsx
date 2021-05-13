@@ -24,7 +24,7 @@ export const artistSeriesRoutes: AppRouteConfig[] = [
         $input: FilterArtworksInput
         $aggregations: [ArtworkAggregation]
       ) {
-        artistSeries(id: $slug) @principalField {
+        artistSeries(id: $slug) {
           ...ArtistSeriesApp_artistSeries
             @arguments(input: $input, aggregations: $aggregations)
         }

@@ -126,7 +126,10 @@ const ArtworkArtistSeriesFixture: ArtworkArtistSeries_QueryRawResponse = {
               artworksCountMessage: "12 available",
               image: {
                 cropped: {
-                  url: "pumpkin.jpg",
+                  src: "pumpkin.jpg",
+                  srcSet: "pumpkin.jpg",
+                  width: 100,
+                  height: 100,
                 },
               },
             },

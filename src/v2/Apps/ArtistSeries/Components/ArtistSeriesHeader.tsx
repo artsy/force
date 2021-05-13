@@ -1,10 +1,15 @@
 import React from "react"
 import {
+  ChevronIcon,
+  Clickable,
   Column,
   EntityHeader,
+  Flex,
   GridColumns,
   HTML,
+  Image,
   ReadMore,
+  ResponsiveBox,
   Spacer,
   Text,
 } from "@artsy/palette"
@@ -12,7 +17,8 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { FollowArtistButtonFragmentContainer as FollowArtistButton } from "v2/Components/FollowButton/FollowArtistButton"
 import { ArtistSeriesHeader_artistSeries } from "v2/__generated__/ArtistSeriesHeader_artistSeries.graphql"
 import { ContextModule } from "@artsy/cohesion"
-import { FullBleedHeader } from "v2/Components/FullBleedHeader"
+import { TopContextBar } from "v2/Components/TopContextBar"
+import { RouterLink } from "v2/Artsy/Router/RouterLink"
 
 interface ArtistSeriesHeaderProps {
   artistSeries: ArtistSeriesHeader_artistSeries
@@ -33,21 +39,18 @@ const ArtistSeriesHeader: React.FC<ArtistSeriesHeaderProps> = ({
 
   return (
     <>
-      {image?.url && <FullBleedHeader src={image.url} />}
-
-      <Spacer mt={4} />
-
-      <GridColumns>
-        <Column span={6}>
-          <Text variant="xl" as="h1">
-            {title}
-          </Text>
-
-          <Text variant="xl" mb={1} color="black60">
-            {artworksCountMessage}
-          </Text>
+      <TopContextBar>
+        <Flex alignItems="center">
+          <RouterLink
+            to={artist.href!}
+            style={{ display: "flex", alignItems: "center" }}
+            tabIndex={-1}
+          >
+            <ChevronIcon direction="left" mr={1} />
+          </RouterLink>
 
           <EntityHeader
+            justifyContent="flex-start"
             smallVariant
             name={artist.name!}
             imageUrl={artist.image?.cropped?.src}
@@ -56,17 +59,66 @@ const ArtistSeriesHeader: React.FC<ArtistSeriesHeaderProps> = ({
               <FollowArtistButton
                 artist={artist}
                 contextModule={ContextModule.featuredArtists}
-                buttonProps={{ size: "small", variant: "secondaryOutline" }}
+                render={({ is_followed }) => {
+                  return (
+                    <Clickable
+                      data-test="followArtistButton"
+                      textDecoration="underline"
+                    >
+                      <Text variant="md">
+                        {is_followed ? "Following" : "Follow"}
+                      </Text>
+                    </Clickable>
+                  )
+                }}
               />
             }
           />
+        </Flex>
+      </TopContextBar>
+
+      <Spacer mt={4} />
+
+      <GridColumns gridRowGap={[2, 0]}>
+        <Column span={6}>
+          <Text variant="xs" textTransform="uppercase" mb={1}>
+            Series
+          </Text>
+
+          <Text variant="xl" as="h1" mb={1}>
+            {title}
+          </Text>
+
+          <Text variant="md" mb={1}>
+            {artworksCountMessage}
+          </Text>
+
+          {descriptionFormatted && (
+            <HTML variant="text">
+              <ReadMore content={descriptionFormatted} maxChars={1000} />
+            </HTML>
+          )}
         </Column>
 
-        {descriptionFormatted && (
+        {image?.cropped?.src && (
           <Column span={6}>
-            <HTML variant="text">
-              <ReadMore content={descriptionFormatted} maxChars={900} />
-            </HTML>
+            <ResponsiveBox
+              aspectWidth={image.cropped.width}
+              aspectHeight={image.cropped.height}
+              maxWidth="100%"
+            >
+              <Image
+                // When navigating from series to series, if this isn't keyed
+                // the image will be stale for a moment while the new one loads
+                key={image.cropped.src}
+                src={image.cropped.src}
+                srcSet={image.cropped.srcSet}
+                width="100%"
+                height="100%"
+                alt={`${title} by ${artist.name}`}
+                lazyLoad
+              />
+            </ResponsiveBox>
           </Column>
         )}
       </GridColumns>
@@ -85,18 +137,17 @@ export const ArtistSeriesHeaderFragmentContainer = createFragmentContainer(
         artworksCountMessage
         descriptionFormatted(format: HTML)
         image {
-          xs: cropped(height: 360, width: 360, version: "large") {
-            url
+          cropped(width: 670, height: 500, version: "normalized") {
+            src
+            srcSet
+            width
+            height
           }
-          sm: resized(width: 1200, version: "normalized") {
-            url
-          }
-          url
         }
         artists(size: 1) {
           name
           image {
-            cropped(width: 30, height: 30) {
+            cropped(width: 60, height: 60) {
               src
             }
           }

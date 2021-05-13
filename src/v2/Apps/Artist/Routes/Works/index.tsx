@@ -6,7 +6,7 @@ import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { get } from "v2/Utils/get"
 import { ArtistTopWorksRailFragmentContainer as ArtistTopWorksRail } from "v2/Apps/Artist/Components/ArtistTopWorksRail/ArtistTopWorksRail"
-import { ArtistSeriesRailFragmentContainer as ArtistSeriesRail } from "v2/Components/ArtistSeriesRail/ArtistSeriesRail"
+import { V2ArtistSeriesRailFragmentContainer as ArtistSeriesRail } from "../../Components/ArtistSeriesRail/V2ArtistSeriesRail"
 import { ContextModule } from "@artsy/cohesion"
 import { ArtistCollectionsRailContent as ArtistCollectionsRail } from "v2/Apps/Artist/Components/ArtistCollectionsRail"
 import { Title } from "react-head"
@@ -44,6 +44,7 @@ export const WorksRoute: React.FC<WorksRouteProps> = props => {
           pt={2}
           borderTop="1px solid"
           borderColor="black10"
+          // @ts-expect-error STRICT_NULL_CHECK
           artist={artist}
           contextModule={ContextModule.artistSeriesRail}
         />
@@ -99,7 +100,8 @@ export const WorksRouteFragmentContainer = createFragmentContainer(WorksRoute, {
           }
         }
       }
-      ...ArtistSeriesRail_artist
+
+      ...V2ArtistSeriesRail_artist
 
       related {
         artistsConnection(first: 1) {
