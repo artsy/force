@@ -31,7 +31,6 @@ interface Props extends React.HTMLProps<HTMLAnchorElement>, ContainerProps {
 
 class SuggestedGenesContent extends React.Component<Props> {
   private excludedGeneIds: Set<string>
-  followCount: number = 0
 
   constructor(props: Props, context: any) {
     super(props, context)
@@ -43,10 +42,10 @@ class SuggestedGenesContent extends React.Component<Props> {
   onGeneFollowed(
     gene: Gene,
     store: RecordSourceSelectorProxy,
-    data: SuggestedGenesFollowGeneMutationResponse
+    data: SuggestedGenesFollowGeneMutationResponse,
+    follow: boolean
   ): void {
-    this.followCount += 1
-    this.props.onGeneFollow(this.followCount, gene)
+    this.props.onGeneFollow(follow, gene)
 
     const suggestedGene = store.get(
       // @ts-expect-error STRICT_NULL_CHECK
@@ -71,7 +70,7 @@ class SuggestedGenesContent extends React.Component<Props> {
     )
   }
 
-  followedGene(gene: Gene) {
+  followedGene(gene: Gene, follow: boolean) {
     this.excludedGeneIds.add(gene.internalID)
 
     commitMutation<SuggestedGenesFollowGeneMutation>(
@@ -108,10 +107,12 @@ class SuggestedGenesContent extends React.Component<Props> {
         variables: {
           input: {
             geneID: gene.internalID,
+            unfollow: !follow,
           },
           excludedGeneIds: Array.from(this.excludedGeneIds),
         },
-        updater: (store, data) => this.onGeneFollowed(gene, store, data),
+        updater: (store, data) =>
+          this.onGeneFollowed(gene, store, data, follow),
       }
     )
   }
@@ -135,7 +136,7 @@ class SuggestedGenesContent extends React.Component<Props> {
               name={item.name}
               // @ts-expect-error STRICT_NULL_CHECK
               image_url={imageUrl}
-              onClick={() => this.followedGene(item)}
+              onFollow={selected => this.followedGene(item, selected)}
             />
           </ReplaceTransition>
         </LinkContainer>
@@ -146,21 +147,24 @@ class SuggestedGenesContent extends React.Component<Props> {
   }
 }
 
-const SuggestedGenesContainer = createFragmentContainer(SuggestedGenesContent, {
-  suggested_genes: graphql`
-    fragment SuggestedGenes_suggested_genes on Gene @relay(plural: true) {
-      id
-      slug
-      internalID
-      name
-      image {
-        cropped(width: 100, height: 100) {
-          url
+export const SuggestedGenesContainer = createFragmentContainer(
+  SuggestedGenesContent,
+  {
+    suggested_genes: graphql`
+      fragment SuggestedGenes_suggested_genes on Gene @relay(plural: true) {
+        id
+        slug
+        internalID
+        name
+        image {
+          cropped(width: 100, height: 100) {
+            url
+          }
         }
       }
-    }
-  `,
-})
+    `,
+  }
+)
 
 const SuggestedGenesComponent: React.SFC<
   ContainerProps & SystemContextProps

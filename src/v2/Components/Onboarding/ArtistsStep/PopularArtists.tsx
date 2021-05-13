@@ -31,7 +31,6 @@ interface Props extends React.HTMLProps<HTMLAnchorElement>, ContainerProps {
 
 class PopularArtistsContent extends React.Component<Props, null> {
   private excludedArtistIds: Set<string>
-  followCount: number = 0
 
   constructor(props: Props, context: any) {
     super(props, context)
@@ -43,10 +42,10 @@ class PopularArtistsContent extends React.Component<Props, null> {
   onArtistFollowed(
     artist: Artist,
     store: RecordSourceSelectorProxy,
-    data: PopularArtistsFollowArtistMutationResponse
+    data: PopularArtistsFollowArtistMutationResponse,
+    follow: boolean
   ): void {
-    this.followCount += 1
-    this.props.onArtistFollow(this.followCount, artist)
+    this.props.onArtistFollow(follow, artist)
 
     const suggestedArtistEdge =
       // @ts-expect-error STRICT_NULL_CHECK
@@ -80,7 +79,7 @@ class PopularArtistsContent extends React.Component<Props, null> {
       .setLinkedRecords(updatedPopularArtists, "popular_artists")
   }
 
-  onFollowedArtist(artist: Artist) {
+  onFollowedArtist(artist: Artist, follow: boolean) {
     commitMutation<PopularArtistsFollowArtistMutation>(
       // @ts-expect-error STRICT_NULL_CHECK
       this.props.relay.environment,
@@ -137,11 +136,12 @@ class PopularArtistsContent extends React.Component<Props, null> {
         variables: {
           input: {
             artistID: artist.internalID,
-            unfollow: false,
+            unfollow: !follow,
           },
           excludedArtistIds: Array.from(this.excludedArtistIds),
         },
-        updater: (store, data) => this.onArtistFollowed(artist, store, data),
+        updater: (store, data) =>
+          this.onArtistFollowed(artist, store, data, follow),
       }
     )
   }
@@ -167,7 +167,7 @@ class PopularArtistsContent extends React.Component<Props, null> {
                 name={artist.name}
                 // @ts-expect-error STRICT_NULL_CHECK
                 image_url={imageUrl}
-                onClick={() => this.onFollowedArtist(artist)}
+                onFollow={selected => this.onFollowedArtist(artist, selected)}
               />
             </ReplaceTransition>
           </LinkContainer>
@@ -178,7 +178,7 @@ class PopularArtistsContent extends React.Component<Props, null> {
   }
 }
 
-const PopularArtistContentContainer = createFragmentContainer(
+export const PopularArtistContentContainer = createFragmentContainer(
   // @ts-expect-error STRICT_NULL_CHECK
   PopularArtistsContent,
   {

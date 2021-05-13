@@ -35,11 +35,13 @@ export const GenesStep: React.FC<Props> = props => {
     leading: true,
   })
 
-  const handleGeneFollow = (newCount, gene) => {
-    setFollowCount(newCount)
+  const handleGeneFollow = (follow, gene) => {
+    setFollowCount(previousCount =>
+      follow ? previousCount + 1 : previousCount - 1
+    )
 
     const event = {
-      action_type: ActionType.followedGene,
+      action_type: follow ? ActionType.followedGene : ActionType.unfollowedGene,
       context_module: ContextModule.onboardingGenes,
       context_owner_type: OwnerType.onboarding,
       owner_id: gene.internalID,

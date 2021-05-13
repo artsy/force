@@ -21,6 +21,7 @@ const Link = styled.a`
     padding: 0 5px;
   `};
 `
+Link.displayName = "Link"
 
 const Avatar = styled.img`
   margin: 10px 15px 10px 10px;
@@ -48,6 +49,7 @@ interface Props extends React.HTMLProps<HTMLAnchorElement> {
   id: string
   name: string
   image_url: string
+  onFollow: (selected: boolean) => void
 }
 
 interface State {
@@ -63,10 +65,15 @@ export default class ItemLink extends React.Component<Props, State> {
     }
   }
 
-  onClick(e) {
-    // @ts-expect-error STRICT_NULL_CHECK
-    this.props.onClick(e)
-    this.setState({ selected: true })
+  onClick() {
+    this.setState(
+      state => ({
+        selected: !state.selected,
+      }),
+      () => {
+        this.props.onFollow(this.state.selected)
+      }
+    )
   }
 
   render() {

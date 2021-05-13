@@ -36,11 +36,15 @@ export const ArtistsStep: React.FC<Props> = props => {
     leading: true,
   })
 
-  const handleArtistFollow = (newCount, artist) => {
-    setFollowCount(newCount)
+  const handleArtistFollow = (follow, artist) => {
+    setFollowCount(previousCount =>
+      follow ? previousCount + 1 : previousCount - 1
+    )
 
     const event = {
-      action_type: ActionType.followedArtist,
+      action_type: follow
+        ? ActionType.followedArtist
+        : ActionType.unfollowedArtist,
       context_module: ContextModule.onboardingArtists,
       context_owner_type: OwnerType.onboarding,
       owner_id: artist.internalID,

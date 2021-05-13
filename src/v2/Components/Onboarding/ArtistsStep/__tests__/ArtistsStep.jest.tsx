@@ -1,17 +1,18 @@
 import React from "react"
 import { mount } from "enzyme"
-import { ArtistsStep } from "./ArtistsStep"
+import { ArtistsStep } from "../ArtistsStep"
+import { MultiButtonState } from "v2/Components/Buttons/MultiStateButton"
 
 describe("ArtistsStep", () => {
+  const props = { router: {} }
+
   it("renders popular artists to start", () => {
-    const props = { router: {} }
     const wrapper = mount(<ArtistsStep {...props} />)
     expect(wrapper.find("ArtistSearchResultsComponent")).toHaveLength(0)
     expect(wrapper.find("PopularArtistsComponent")).toHaveLength(1)
   })
 
   it("renders search results with query", () => {
-    const props = { router: {} }
     const wrapper = mount(<ArtistsStep {...props} />)
 
     const onInput = wrapper.find("input").prop("onInput")
@@ -22,5 +23,11 @@ describe("ArtistsStep", () => {
 
     expect(wrapper.find("ArtistSearchResultsComponent")).toHaveLength(1)
     expect(wrapper.find("PopularArtistsComponent")).toHaveLength(0)
+  })
+
+  it("renders default next button", () => {
+    const wrapper = mount(<ArtistsStep {...props} />)
+    const buttonState = wrapper.find("Layout").prop("buttonState")
+    expect(buttonState).toEqual(MultiButtonState.Default)
   })
 })
