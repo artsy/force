@@ -31,6 +31,7 @@ export const PartnerArtists: React.FC<PartnerArtistsProps> = ({
     allArtistsConnection: { edges: artists },
     distinguishRepresentedArtists,
     slug,
+    fullProfileEligible,
   } = partner
 
   return (
@@ -41,8 +42,8 @@ export const PartnerArtists: React.FC<PartnerArtistsProps> = ({
         scrollTo={scrollTo}
         // @ts-expect-error STRICT_NULL_CHECK
         artists={artists}
-        // @ts-expect-error STRICT_NULL_CHECK
-        distinguishRepresentedArtists={distinguishRepresentedArtists}
+        distinguishRepresentedArtists={!!distinguishRepresentedArtists}
+        fullProfileEligible={!!fullProfileEligible}
       />
     </Box>
   )
@@ -55,6 +56,7 @@ export const PartnerArtistsFragmentContainer = createFragmentContainer(
       fragment PartnerArtists_partner on Partner {
         slug
         distinguishRepresentedArtists
+        fullProfileEligible
         allArtistsConnection(
           displayOnPartnerProfile: true
           hasNotRepresentedArtistWithPublishedArtworks: true

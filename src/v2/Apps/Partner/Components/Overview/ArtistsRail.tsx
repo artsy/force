@@ -13,7 +13,11 @@ interface ArtistsRailProps {
 }
 
 const ArtistsRail: React.FC<ArtistsRailProps> = ({ partner }) => {
-  const { slug, profileArtistsLayout } = partner
+  if (!partner) {
+    return null
+  }
+
+  const { slug, profileArtistsLayout, fullProfileEligible } = partner
 
   return (
     <Box mt={4} mb={[4, 80]}>
@@ -22,10 +26,12 @@ const ArtistsRail: React.FC<ArtistsRailProps> = ({ partner }) => {
           {profileArtistsLayout === "Grid" ? "Featured Artists" : "Artists"}
         </Text>
 
-        <ViewAllButton to={`/partner2/${slug}/artists`} />
+        {fullProfileEligible && (
+          <ViewAllButton to={`/partner2/${slug}/artists`} />
+        )}
       </Flex>
 
-      {profileArtistsLayout === "Grid" ? (
+      {profileArtistsLayout === "Grid" && fullProfileEligible ? (
         <PartnerArtistsCarouselRenderer partnerId={slug} />
       ) : (
         <PartnerArtistsRenderer partnerId={slug} />
@@ -41,6 +47,7 @@ export const ArtistsRailFragmentContainer = createFragmentContainer(
       fragment ArtistsRail_partner on Partner {
         slug
         profileArtistsLayout
+        fullProfileEligible
       }
     `,
   }
