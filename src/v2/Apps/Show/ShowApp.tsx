@@ -49,7 +49,7 @@ export const ShowApp: React.FC<ShowAppProps> = ({ show }) => {
             contextPageOwnerType,
           }}
         >
-          <Box mt={4} mb={6}>
+          <Box mt={4} mb={[4, 6]}>
             <ShowInstallShots show={show} mt={4} mb={6} />
           </Box>
 
@@ -87,7 +87,7 @@ export const ShowApp: React.FC<ShowAppProps> = ({ show }) => {
             )}
           </GridColumns>
 
-          <Spacer mt={12} />
+          <Spacer mt={[6, 12]} />
 
           {/* @ts-expect-error STRICT_NULL_CHECK */}
           {show.counts.eligibleArtworks > 0 ? (

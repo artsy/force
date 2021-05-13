@@ -7,7 +7,11 @@ export type FairHeaderIcon_fair = {
     readonly name: string | null;
     readonly profile: {
         readonly icon: {
-            readonly cropped: {
+            readonly desktop: {
+                readonly src: string;
+                readonly srcSet: string;
+            } | null;
+            readonly mobile: {
                 readonly src: string;
                 readonly srcSet: string;
             } | null;
@@ -23,7 +27,29 @@ export type FairHeaderIcon_fair$key = {
 
 
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = {
+  "kind": "Literal",
+  "name": "version",
+  "value": "square140"
+},
+v1 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "src",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "srcSet",
+    "storageKey": null
+  }
+];
+return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
@@ -53,18 +79,14 @@ const node: ReaderFragment = {
           "plural": false,
           "selections": [
             {
-              "alias": null,
+              "alias": "desktop",
               "args": [
                 {
                   "kind": "Literal",
                   "name": "height",
                   "value": 100
                 },
-                {
-                  "kind": "Literal",
-                  "name": "version",
-                  "value": "square140"
-                },
+                (v0/*: any*/),
                 {
                   "kind": "Literal",
                   "name": "width",
@@ -75,23 +97,30 @@ const node: ReaderFragment = {
               "kind": "LinkedField",
               "name": "cropped",
               "plural": false,
-              "selections": [
+              "selections": (v1/*: any*/),
+              "storageKey": "cropped(height:100,version:\"square140\",width:100)"
+            },
+            {
+              "alias": "mobile",
+              "args": [
                 {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "src",
-                  "storageKey": null
+                  "kind": "Literal",
+                  "name": "height",
+                  "value": 60
                 },
+                (v0/*: any*/),
                 {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "srcSet",
-                  "storageKey": null
+                  "kind": "Literal",
+                  "name": "width",
+                  "value": 60
                 }
               ],
-              "storageKey": "cropped(height:100,version:\"square140\",width:100)"
+              "concreteType": "CroppedImageUrl",
+              "kind": "LinkedField",
+              "name": "cropped",
+              "plural": false,
+              "selections": (v1/*: any*/),
+              "storageKey": "cropped(height:60,version:\"square140\",width:60)"
             }
           ],
           "storageKey": null
@@ -102,5 +131,6 @@ const node: ReaderFragment = {
   ],
   "type": "Fair"
 };
-(node as any).hash = '4ffeffd6976b0a735690e9ef9bd7122e';
+})();
+(node as any).hash = 'ae1a1f11cd22e7506a1d8dd5392086c9';
 export default node;
