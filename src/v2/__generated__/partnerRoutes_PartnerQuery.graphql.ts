@@ -8,6 +8,7 @@ export type partnerRoutes_PartnerQueryVariables = {
 };
 export type partnerRoutes_PartnerQueryResponse = {
     readonly partner: {
+        readonly fullProfileEligible: boolean | null;
         readonly " $fragmentRefs": FragmentRefs<"PartnerApp_partner">;
     } | null;
 };
@@ -23,6 +24,7 @@ query partnerRoutes_PartnerQuery(
   $partnerId: String!
 ) {
   partner(id: $partnerId) @principalField {
+    fullProfileEligible
     ...PartnerApp_partner
     id
   }
@@ -54,6 +56,7 @@ fragment NavigationTabs_partner on Partner {
 }
 
 fragment PartnerApp_partner on Partner {
+  fullProfileEligible
   profile {
     ...PartnerHeaderImage_profile
     id
@@ -124,34 +127,41 @@ v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "id",
+  "name": "fullProfileEligible",
   "storageKey": null
 },
 v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "slug",
+  "name": "id",
   "storageKey": null
 },
 v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "name",
+  "name": "slug",
   "storageKey": null
 },
 v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
+  "name": "name",
+  "storageKey": null
+},
+v6 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
   "name": "totalCount",
   "storageKey": null
 },
-v6 = [
-  (v5/*: any*/)
+v7 = [
+  (v6/*: any*/)
 ],
-v7 = {
+v8 = {
   "kind": "Literal",
   "name": "displayOnPartnerProfile",
   "value": true
@@ -171,6 +181,7 @@ return {
         "name": "partner",
         "plural": false,
         "selections": [
+          (v2/*: any*/),
           {
             "args": null,
             "kind": "FragmentSpread",
@@ -196,6 +207,7 @@ return {
         "name": "partner",
         "plural": false,
         "selections": [
+          (v2/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -228,7 +240,7 @@ return {
                 ],
                 "storageKey": null
               },
-              (v2/*: any*/),
+              (v3/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -281,8 +293,8 @@ return {
                 ],
                 "storageKey": null
               },
-              (v3/*: any*/),
               (v4/*: any*/),
+              (v5/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -300,7 +312,7 @@ return {
             ],
             "storageKey": null
           },
-          (v3/*: any*/),
+          (v4/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -333,7 +345,7 @@ return {
             ],
             "storageKey": null
           },
-          (v4/*: any*/),
+          (v5/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -362,7 +374,7 @@ return {
             "name": "locationsConnection",
             "plural": false,
             "selections": [
-              (v5/*: any*/),
+              (v6/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -386,7 +398,7 @@ return {
                         "name": "city",
                         "storageKey": null
                       },
-                      (v2/*: any*/)
+                      (v3/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -410,13 +422,13 @@ return {
             "kind": "LinkedField",
             "name": "articlesConnection",
             "plural": false,
-            "selections": (v6/*: any*/),
+            "selections": (v7/*: any*/),
             "storageKey": null
           },
           {
             "alias": "representedArtists",
             "args": [
-              (v7/*: any*/),
+              (v8/*: any*/),
               {
                 "kind": "Literal",
                 "name": "representedBy",
@@ -427,13 +439,13 @@ return {
             "kind": "LinkedField",
             "name": "artistsConnection",
             "plural": false,
-            "selections": (v6/*: any*/),
+            "selections": (v7/*: any*/),
             "storageKey": "artistsConnection(displayOnPartnerProfile:true,representedBy:true)"
           },
           {
             "alias": "notRepresentedArtists",
             "args": [
-              (v7/*: any*/),
+              (v8/*: any*/),
               {
                 "kind": "Literal",
                 "name": "hasPublishedArtworks",
@@ -449,10 +461,10 @@ return {
             "kind": "LinkedField",
             "name": "artistsConnection",
             "plural": false,
-            "selections": (v6/*: any*/),
+            "selections": (v7/*: any*/),
             "storageKey": "artistsConnection(displayOnPartnerProfile:true,hasPublishedArtworks:true,representedBy:false)"
           },
-          (v2/*: any*/)
+          (v3/*: any*/)
         ],
         "storageKey": null
       }
@@ -463,9 +475,9 @@ return {
     "metadata": {},
     "name": "partnerRoutes_PartnerQuery",
     "operationKind": "query",
-    "text": "query partnerRoutes_PartnerQuery(\n  $partnerId: String!\n) {\n  partner(id: $partnerId) @principalField {\n    ...PartnerApp_partner\n    id\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  is_followed: isFollowed\n}\n\nfragment NavigationTabs_partner on Partner {\n  slug\n  displayArtistsSection\n  locations: locationsConnection(first: 20) {\n    totalCount\n  }\n  articles: articlesConnection {\n    totalCount\n  }\n  representedArtists: artistsConnection(representedBy: true, displayOnPartnerProfile: true) {\n    totalCount\n  }\n  notRepresentedArtists: artistsConnection(representedBy: false, hasPublishedArtworks: true, displayOnPartnerProfile: true) {\n    totalCount\n  }\n}\n\nfragment PartnerApp_partner on Partner {\n  profile {\n    ...PartnerHeaderImage_profile\n    id\n  }\n  ...PartnerMeta_partner\n  ...PartnerHeader_partner\n  ...NavigationTabs_partner\n}\n\nfragment PartnerHeaderImage_profile on Profile {\n  image {\n    url(version: \"wide\")\n  }\n}\n\nfragment PartnerHeader_partner on Partner {\n  name\n  type\n  href\n  profile {\n    icon {\n      resized(width: 80, height: 80, version: \"square140\") {\n        src\n        srcSet\n      }\n    }\n    ...FollowProfileButton_profile\n    id\n  }\n  locations: locationsConnection(first: 20) {\n    totalCount\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n}\n\nfragment PartnerMeta_partner on Partner {\n  slug\n  meta {\n    image\n    title\n    description\n  }\n}\n"
+    "text": "query partnerRoutes_PartnerQuery(\n  $partnerId: String!\n) {\n  partner(id: $partnerId) @principalField {\n    fullProfileEligible\n    ...PartnerApp_partner\n    id\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  is_followed: isFollowed\n}\n\nfragment NavigationTabs_partner on Partner {\n  slug\n  displayArtistsSection\n  locations: locationsConnection(first: 20) {\n    totalCount\n  }\n  articles: articlesConnection {\n    totalCount\n  }\n  representedArtists: artistsConnection(representedBy: true, displayOnPartnerProfile: true) {\n    totalCount\n  }\n  notRepresentedArtists: artistsConnection(representedBy: false, hasPublishedArtworks: true, displayOnPartnerProfile: true) {\n    totalCount\n  }\n}\n\nfragment PartnerApp_partner on Partner {\n  fullProfileEligible\n  profile {\n    ...PartnerHeaderImage_profile\n    id\n  }\n  ...PartnerMeta_partner\n  ...PartnerHeader_partner\n  ...NavigationTabs_partner\n}\n\nfragment PartnerHeaderImage_profile on Profile {\n  image {\n    url(version: \"wide\")\n  }\n}\n\nfragment PartnerHeader_partner on Partner {\n  name\n  type\n  href\n  profile {\n    icon {\n      resized(width: 80, height: 80, version: \"square140\") {\n        src\n        srcSet\n      }\n    }\n    ...FollowProfileButton_profile\n    id\n  }\n  locations: locationsConnection(first: 20) {\n    totalCount\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n}\n\nfragment PartnerMeta_partner on Partner {\n  slug\n  meta {\n    image\n    title\n    description\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'b065b69c18af67164cd46d476357078f';
+(node as any).hash = '2d6be9fb58dcf9ca6a2bcc2093e7438b';
 export default node;

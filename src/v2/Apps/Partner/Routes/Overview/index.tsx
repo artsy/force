@@ -1,5 +1,4 @@
 import React from "react"
-import { Box } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArticlesRailFragmentContainer } from "../../Components/Overview/ArticlesRail"
 import { Overview_partner } from "v2/__generated__/Overview_partner.graphql"
@@ -16,6 +15,7 @@ interface OverviewProps {
 const Overview: React.FC<OverviewProps> = ({ partner }) => {
   const {
     slug,
+    fullProfileEligible,
     profileBannerDisplay,
     displayArtistsSection,
     // @ts-expect-error STRICT_NULL_CHECK
@@ -24,8 +24,8 @@ const Overview: React.FC<OverviewProps> = ({ partner }) => {
 
   const hasArticles = articles.length > 0
 
-  return (
-    <Box>
+  return fullProfileEligible ? (
+    <>
       {profileBannerDisplay === "Artworks" ? (
         <ArtworksRailRenderer mt={4} mb={[4, 80]} partnerId={slug} />
       ) : (
@@ -41,7 +41,9 @@ const Overview: React.FC<OverviewProps> = ({ partner }) => {
       {hasArticles && (
         <ArticlesRailFragmentContainer partnerSlug={slug} articles={articles} />
       )}
-    </Box>
+    </>
+  ) : (
+    <>Overview Non-subscribing</>
   )
 }
 
@@ -49,6 +51,7 @@ export const OverviewFragmentContainer = createFragmentContainer(Overview, {
   partner: graphql`
     fragment Overview_partner on Partner {
       slug
+      fullProfileEligible
       profileBannerDisplay
       displayArtistsSection
       ...AboutPartner_partner

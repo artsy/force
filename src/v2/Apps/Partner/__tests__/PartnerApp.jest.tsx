@@ -42,8 +42,21 @@ const { getWrapper } = setupTestWrapper<PartnerApp_Test_Query>({
 
 describe("PartnerApp", () => {
   it("displays navigation tabs for the partner page", () => {
-    const wrapper = getWrapper()
+    const wrapper = getWrapper({
+      Partner: () => ({
+        fullProfileEligible: true,
+      }),
+    })
     expect(wrapper.find("NavigationTabs").length).toBe(1)
+  })
+
+  it("does not display nav tabs for limited profile", () => {
+    const wrapper = getWrapper({
+      Partner: () => ({
+        fullProfileEligible: false,
+      }),
+    })
+    expect(wrapper.find("NavigationTabs").length).toBe(0)
   })
 
   it("displays header image for the partner page", () => {
