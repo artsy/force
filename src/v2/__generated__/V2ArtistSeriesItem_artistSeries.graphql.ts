@@ -3,7 +3,7 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type ArtistSeriesItem_artistSeries = {
+export type V2ArtistSeriesItem_artistSeries = {
     readonly title: string;
     readonly slug: string;
     readonly featured: boolean;
@@ -11,18 +11,15 @@ export type ArtistSeriesItem_artistSeries = {
     readonly artworksCountMessage: string | null;
     readonly image: {
         readonly cropped: {
-            readonly width: number;
-            readonly height: number;
-            readonly src: string;
-            readonly srcSet: string;
+            readonly url: string;
         } | null;
     } | null;
-    readonly " $refType": "ArtistSeriesItem_artistSeries";
+    readonly " $refType": "V2ArtistSeriesItem_artistSeries";
 };
-export type ArtistSeriesItem_artistSeries$data = ArtistSeriesItem_artistSeries;
-export type ArtistSeriesItem_artistSeries$key = {
-    readonly " $data"?: ArtistSeriesItem_artistSeries$data;
-    readonly " $fragmentRefs": FragmentRefs<"ArtistSeriesItem_artistSeries">;
+export type V2ArtistSeriesItem_artistSeries$data = V2ArtistSeriesItem_artistSeries;
+export type V2ArtistSeriesItem_artistSeries$key = {
+    readonly " $data"?: V2ArtistSeriesItem_artistSeries$data;
+    readonly " $fragmentRefs": FragmentRefs<"V2ArtistSeriesItem_artistSeries">;
 };
 
 
@@ -31,7 +28,7 @@ const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "ArtistSeriesItem_artistSeries",
+  "name": "V2ArtistSeriesItem_artistSeries",
   "selections": [
     {
       "alias": null,
@@ -82,12 +79,12 @@ const node: ReaderFragment = {
             {
               "kind": "Literal",
               "name": "height",
-              "value": 244
+              "value": 320
             },
             {
               "kind": "Literal",
               "name": "width",
-              "value": 325
+              "value": 320
             }
           ],
           "concreteType": "CroppedImageUrl",
@@ -99,32 +96,11 @@ const node: ReaderFragment = {
               "alias": null,
               "args": null,
               "kind": "ScalarField",
-              "name": "width",
-              "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "height",
-              "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "src",
-              "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "srcSet",
+              "name": "url",
               "storageKey": null
             }
           ],
-          "storageKey": "cropped(height:244,width:325)"
+          "storageKey": "cropped(height:320,width:320)"
         }
       ],
       "storageKey": null
@@ -132,5 +108,5 @@ const node: ReaderFragment = {
   ],
   "type": "ArtistSeries"
 };
-(node as any).hash = 'bde51d361add8c28c10076a613811f96';
+(node as any).hash = '4c1d633ae3fe8f37787ccd81e9eee7a6';
 export default node;

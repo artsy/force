@@ -10,13 +10,12 @@ export type ArtistSeriesHeader_artistSeries = {
     readonly artworksCountMessage: string | null;
     readonly descriptionFormatted: string | null;
     readonly image: {
-        readonly xs: {
-            readonly url: string;
+        readonly cropped: {
+            readonly src: string;
+            readonly srcSet: string;
+            readonly width: number;
+            readonly height: number;
         } | null;
-        readonly sm: {
-            readonly url: string;
-        } | null;
-        readonly url: string | null;
     } | null;
     readonly artists: ReadonlyArray<{
         readonly name: string | null;
@@ -59,12 +58,9 @@ v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "url",
+  "name": "src",
   "storageKey": null
-},
-v3 = [
-  (v2/*: any*/)
-];
+};
 return {
   "argumentDefinitions": [],
   "kind": "Fragment",
@@ -109,34 +105,13 @@ return {
       "plural": false,
       "selections": [
         {
-          "alias": "xs",
+          "alias": null,
           "args": [
             {
               "kind": "Literal",
               "name": "height",
-              "value": 360
+              "value": 500
             },
-            {
-              "kind": "Literal",
-              "name": "version",
-              "value": "large"
-            },
-            {
-              "kind": "Literal",
-              "name": "width",
-              "value": 360
-            }
-          ],
-          "concreteType": "CroppedImageUrl",
-          "kind": "LinkedField",
-          "name": "cropped",
-          "plural": false,
-          "selections": (v3/*: any*/),
-          "storageKey": "cropped(height:360,version:\"large\",width:360)"
-        },
-        {
-          "alias": "sm",
-          "args": [
             {
               "kind": "Literal",
               "name": "version",
@@ -145,17 +120,39 @@ return {
             {
               "kind": "Literal",
               "name": "width",
-              "value": 1200
+              "value": 670
             }
           ],
-          "concreteType": "ResizedImageUrl",
+          "concreteType": "CroppedImageUrl",
           "kind": "LinkedField",
-          "name": "resized",
+          "name": "cropped",
           "plural": false,
-          "selections": (v3/*: any*/),
-          "storageKey": "resized(version:\"normalized\",width:1200)"
-        },
-        (v2/*: any*/)
+          "selections": [
+            (v2/*: any*/),
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "srcSet",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "width",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "height",
+              "storageKey": null
+            }
+          ],
+          "storageKey": "cropped(height:500,version:\"normalized\",width:670)"
+        }
       ],
       "storageKey": null
     },
@@ -194,12 +191,12 @@ return {
                 {
                   "kind": "Literal",
                   "name": "height",
-                  "value": 30
+                  "value": 60
                 },
                 {
                   "kind": "Literal",
                   "name": "width",
-                  "value": 30
+                  "value": 60
                 }
               ],
               "concreteType": "CroppedImageUrl",
@@ -207,15 +204,9 @@ return {
               "name": "cropped",
               "plural": false,
               "selections": [
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "src",
-                  "storageKey": null
-                }
+                (v2/*: any*/)
               ],
-              "storageKey": "cropped(height:30,width:30)"
+              "storageKey": "cropped(height:60,width:60)"
             }
           ],
           "storageKey": null
@@ -241,5 +232,5 @@ return {
   "type": "ArtistSeries"
 };
 })();
-(node as any).hash = '5016913354319b0b15f300a51a6bc6b5';
+(node as any).hash = 'f00900bdae79e095ac650f42524691da';
 export default node;

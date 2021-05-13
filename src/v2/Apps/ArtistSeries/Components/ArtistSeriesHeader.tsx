@@ -1,224 +1,130 @@
 import React from "react"
 import {
-  Box,
+  ChevronIcon,
   Clickable,
-  Col,
+  Column,
   EntityHeader,
   Flex,
+  GridColumns,
   HTML,
   Image,
   ReadMore,
-  Row,
-  Separator,
+  ResponsiveBox,
+  Spacer,
   Text,
 } from "@artsy/palette"
-import { Media } from "v2/Utils/Responsive"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FollowArtistButtonFragmentContainer as FollowArtistButton } from "v2/Components/FollowButton/FollowArtistButton"
 import { ArtistSeriesHeader_artistSeries } from "v2/__generated__/ArtistSeriesHeader_artistSeries.graphql"
 import { ContextModule } from "@artsy/cohesion"
-import styled from "styled-components"
-import { unitlessBreakpoints } from "@artsy/palette"
-import { AppContainer } from "v2/Apps/Components/AppContainer"
+import { TopContextBar } from "v2/Components/TopContextBar"
+import { RouterLink } from "v2/Artsy/Router/RouterLink"
 
 interface ArtistSeriesHeaderProps {
   artistSeries: ArtistSeriesHeader_artistSeries
 }
 
-interface ArtistsInfoProps {
-  // @ts-expect-error STRICT_NULL_CHECK
-  artist: ArtistSeriesHeader_artistSeries["artists"][0]
-  contextOwnerId: string
-  contextOwnerSlug: string
-}
+const ArtistSeriesHeader: React.FC<ArtistSeriesHeaderProps> = ({
+  artistSeries: {
+    title,
+    descriptionFormatted,
+    artists,
+    image,
+    artworksCountMessage,
+  },
+}) => {
+  if (artists === null) return null
+  const [artist] = artists
+  if (artist === null) return null
 
-const ArtistInfo: React.FC<ArtistsInfoProps> = props => {
-  /* Displays artist name, avatar and follow button. We currently assume
-     that an artist series will have one artist. */
-  const { artist } = props
-
-  return (
-    <EntityHeader
-      smallVariant
-      name={artist.name}
-      imageUrl={artist.image?.cropped?.src}
-      href={artist.href}
-      FollowButton={
-        <FollowArtistButton
-          artist={artist}
-          contextModule={ContextModule.featuredArtists}
-          render={({ is_followed }) => {
-            return (
-              <Clickable
-                data-test="followArtistButton"
-                textDecoration="underline"
-              >
-                <Text variant="text">
-                  {is_followed ? "Following" : "Follow"}
-                </Text>
-              </Clickable>
-            )
-          }}
-        />
-      }
-    />
-  )
-}
-
-const ArtistSeriesHeader: React.FC<ArtistSeriesHeaderProps> = props => {
   return (
     <>
-      <Media greaterThanOrEqual="sm">
-        <ArtistSeriesHeaderLarge {...props} />
-      </Media>
+      <TopContextBar>
+        <Flex alignItems="center">
+          <RouterLink
+            to={artist.href!}
+            style={{ display: "flex", alignItems: "center" }}
+            tabIndex={-1}
+          >
+            <ChevronIcon direction="left" mr={1} />
+          </RouterLink>
 
-      <Media lessThan="sm">
-        <ArtistSeriesHeaderSmall {...props} />
-      </Media>
-    </>
-  )
-}
-
-const ArtistSeriesHeaderLarge: React.FC<ArtistSeriesHeaderProps> = props => {
-  const {
-    artistSeries: {
-      title,
-      descriptionFormatted,
-      artists,
-      image,
-      artworksCountMessage,
-      internalID,
-      slug,
-    },
-  } = props
-  return (
-    <>
-      <Box m={2}>
-        <Flex alignItems="center" justifyContent="center" position="relative">
-          <Flex position="absolute" left={0}>
-            {/* @ts-expect-error STRICT_NULL_CHECK */}
-            {artists.length && (
-              <ArtistInfo
-                contextOwnerId={internalID}
-                contextOwnerSlug={slug}
-                // @ts-expect-error STRICT_NULL_CHECK
-                artist={artists[0]}
+          <EntityHeader
+            justifyContent="flex-start"
+            smallVariant
+            name={artist.name!}
+            imageUrl={artist.image?.cropped?.src}
+            href={artist.href!}
+            FollowButton={
+              <FollowArtistButton
+                artist={artist}
+                contextModule={ContextModule.featuredArtists}
+                render={({ is_followed }) => {
+                  return (
+                    <Clickable
+                      data-test="followArtistButton"
+                      textDecoration="underline"
+                    >
+                      <Text variant="md">
+                        {is_followed ? "Following" : "Follow"}
+                      </Text>
+                    </Clickable>
+                  )
+                }}
               />
-            )}
-          </Flex>
-
-          <Text variant="text">Series</Text>
-        </Flex>
-      </Box>
-
-      <Separator />
-
-      <Box m={3}>
-        <AppContainer>
-          <Row>
-            <Col sm={6}>
-              <Flex
-                height="100%"
-                flexDirection="column"
-                justifyContent="space-between"
-              >
-                <Box>
-                  <Text as="h1" variant="largeTitle">
-                    {title}
-                  </Text>
-
-                  <Text variant="text" color="black60">
-                    {artworksCountMessage}
-                  </Text>
-                </Box>
-
-                <HTML pr={[0, 2]} variant="text">
-                  {/* @ts-expect-error STRICT_NULL_CHECK */}
-                  <ReadMore content={descriptionFormatted} maxChars={320} />
-                </HTML>
-              </Flex>
-            </Col>
-
-            <Col sm={6}>
-              <Box
-                height={"100%"}
-                display="flex"
-                justifyContent="flex-end"
-                alignItems="center"
-              >
-                {/** The max width for the image is ~600px, so we need that */}
-                {/* @ts-expect-error STRICT_NULL_CHECK */}
-                <HeaderImage src={image?.sm?.url} alt={title} />
-              </Box>
-            </Col>
-          </Row>
-        </AppContainer>
-      </Box>
-    </>
-  )
-}
-
-const ArtistSeriesHeaderSmall: React.FC<ArtistSeriesHeaderProps> = props => {
-  const {
-    artistSeries: {
-      title,
-      descriptionFormatted,
-      artists,
-      image,
-      slug,
-      internalID,
-    },
-  } = props
-  return (
-    <>
-      <Box textAlign="center" p={1}>
-        <Text variant="text">Series</Text>
-      </Box>
-
-      <Separator />
-
-      <Box m={3}>
-        {/* @ts-expect-error STRICT_NULL_CHECK */}
-        <HeaderImage src={image?.xs?.url} pb={1} alt={title} />
-
-        <Text as="h1" variant="largeTitle" my={1}>
-          {title}
-        </Text>
-
-        {/* @ts-expect-error STRICT_NULL_CHECK */}
-        {artists.length && (
-          <ArtistInfo
-            contextOwnerId={internalID}
-            contextOwnerSlug={slug}
-            // @ts-expect-error STRICT_NULL_CHECK
-            artist={artists[0]}
+            }
           />
-        )}
+        </Flex>
+      </TopContextBar>
 
-        <HTML variant="text" my={1}>
-          {/* @ts-expect-error STRICT_NULL_CHECK */}
-          <ReadMore content={descriptionFormatted} maxChars={200} />
-        </HTML>
-      </Box>
+      <Spacer mt={4} />
+
+      <GridColumns gridRowGap={[2, 0]}>
+        <Column span={6}>
+          <Text variant="xs" textTransform="uppercase" mb={1}>
+            Series
+          </Text>
+
+          <Text variant="xl" as="h1" mb={1}>
+            {title}
+          </Text>
+
+          <Text variant="md" mb={1}>
+            {artworksCountMessage}
+          </Text>
+
+          {descriptionFormatted && (
+            <HTML variant="text">
+              <ReadMore content={descriptionFormatted} maxChars={1000} />
+            </HTML>
+          )}
+        </Column>
+
+        {image?.cropped?.src && (
+          <Column span={6}>
+            <ResponsiveBox
+              aspectWidth={image.cropped.width}
+              aspectHeight={image.cropped.height}
+              maxWidth="100%"
+            >
+              <Image
+                // When navigating from series to series, if this isn't keyed
+                // the image will be stale for a moment while the new one loads
+                key={image.cropped.src}
+                src={image.cropped.src}
+                srcSet={image.cropped.srcSet}
+                width="100%"
+                height="100%"
+                alt={`${title} by ${artist.name}`}
+                lazyLoad
+              />
+            </ResponsiveBox>
+          </Column>
+        )}
+      </GridColumns>
     </>
   )
 }
-
-export const HeaderImage = styled(Image)`
-  border-radius: 2px;
-
-  @media (max-width: ${unitlessBreakpoints.sm - 1}px) {
-    max-width: 180px;
-    max-height: 180px;
-    margin: auto;
-  }
-
-  @media (min-width: ${unitlessBreakpoints.sm}px) {
-    max-height: 400px;
-    width: 100%;
-    object-fit: cover;
-  }
-`
 
 export const ArtistSeriesHeaderFragmentContainer = createFragmentContainer(
   ArtistSeriesHeader,
@@ -231,18 +137,17 @@ export const ArtistSeriesHeaderFragmentContainer = createFragmentContainer(
         artworksCountMessage
         descriptionFormatted(format: HTML)
         image {
-          xs: cropped(height: 360, width: 360, version: "large") {
-            url
+          cropped(width: 670, height: 500, version: "normalized") {
+            src
+            srcSet
+            width
+            height
           }
-          sm: resized(width: 1200, version: "normalized") {
-            url
-          }
-          url
         }
         artists(size: 1) {
           name
           image {
-            cropped(width: 30, height: 30) {
+            cropped(width: 60, height: 60) {
               src
             }
           }

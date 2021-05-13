@@ -31,6 +31,7 @@ describe("ArtistSeriesMeta", () => {
       mockData: response,
     })
   }
+
   it("creates search and social meta tags for title", async () => {
     const wrapper = await getWrapper()
     const expectedTitle = "Yayoi Kusama’s Pumpkins - For Sale on Artsy"

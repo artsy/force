@@ -128,8 +128,8 @@ describe("Works Route", () => {
   describe("Artist Series Rail", () => {
     it("Displays artist series rail if data is present", () => {
       const wrapper = getWrapper()
-      expect(wrapper.find("ArtistSeriesRail").length).toBe(1)
-      expect(wrapper.find("ArtistSeriesItem").length).toBe(1)
+      expect(wrapper.find("V2ArtistSeriesRail").length).toBe(1)
+      expect(wrapper.find("V2ArtistSeriesItem").length).toBe(1)
     })
 
     it("Displays collections as a fallback if artist series data is not present", () => {
@@ -139,7 +139,7 @@ describe("Works Route", () => {
         }),
       })
 
-      expect(wrapper.find("ArtistSeriesRail").length).toBe(0)
+      expect(wrapper.find("V2ArtistSeriesRail").length).toBe(0)
       expect(wrapper.html()).toContain("Mock ArtistCollections")
     })
   })

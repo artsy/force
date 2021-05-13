@@ -13,32 +13,33 @@ interface ErrorCodeBackgroundProps extends React.HTMLProps<HTMLDivElement> {
   code: number
 }
 
-export class ErrorPage extends React.Component<ErrorPageProps, null> {
-  render() {
-    const { code, message, detail } = this.props
-    const defaultMessage =
-      code === 404
-        ? "Sorry, the page you were looking for doesn’t exist at this URL."
-        : "Internal Error"
+export const ErrorPage: React.FC<ErrorPageProps> = ({
+  code,
+  message,
+  detail,
+}) => {
+  const defaultMessage =
+    code === 404
+      ? "Sorry, the page you were looking for doesn’t exist at this URL."
+      : "Internal Error"
 
-    const detailMessage = message ? `Error Message: ${message}` : detail
+  const detailMessage = message ? `Error Message: ${message}` : detail
 
-    return (
-      <ErrorCodeBackground code={code}>
-        <ErrorDefaultMessage>{defaultMessage}</ErrorDefaultMessage>
-        {code !== 404 && <ErrorInner>{detailMessage}</ErrorInner>}
-        <Serif size="4" color="black60">
-          Please contact{" "}
-          <Link href="mailto:support@artsy.net">support@artsy.net</Link> with
-          any questions.
-        </Serif>
-        <Spacer mb={4} />
-        <Link href="/">
-          <Button size="large">Go to Artsy homepage</Button>
-        </Link>
-      </ErrorCodeBackground>
-    )
-  }
+  return (
+    <ErrorCodeBackground code={code}>
+      <ErrorDefaultMessage>{defaultMessage}</ErrorDefaultMessage>
+      {code !== 404 && <ErrorInner>{detailMessage}</ErrorInner>}
+      <Serif size="4" color="black60">
+        Please contact{" "}
+        <Link href="mailto:support@artsy.net">support@artsy.net</Link> with any
+        questions.
+      </Serif>
+      <Spacer mb={4} />
+      <Link href="/">
+        <Button size="large">Go to Artsy homepage</Button>
+      </Link>
+    </ErrorCodeBackground>
+  )
 }
 
 const Link = styled.a`

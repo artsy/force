@@ -162,7 +162,6 @@ class OrderApp extends React.Component<OrderAppProps, {}> {
     let artworkHref
 
     if (!order) {
-      // @ts-expect-error STRICT_NULL_CHECK
       return <ErrorPage code={404} />
     } else {
       artworkId = get(

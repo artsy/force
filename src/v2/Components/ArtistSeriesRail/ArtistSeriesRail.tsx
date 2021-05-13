@@ -1,53 +1,47 @@
-import { Box, BoxProps, Sans } from "@artsy/palette"
-import { Carousel } from "v2/Components/Carousel"
+import { Shelf, Text } from "@artsy/palette"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtistSeriesRail_artist } from "v2/__generated__/ArtistSeriesRail_artist.graphql"
 import { ArtistSeriesItemFragmentContainer as ArtistSeriesItem } from "./ArtistSeriesItem"
 import { ContextModule } from "@artsy/cohesion"
+import { extractNodes } from "v2/Utils/extractNodes"
 
-interface Props extends BoxProps {
+interface Props {
   artist: ArtistSeriesRail_artist
   title?: string
   contextModule: ContextModule
 }
 
-const ArtistSeriesRail: React.FC<Props> = props => {
-  const { artist, contextModule, ...rest } = props
-
+const ArtistSeriesRail: React.FC<Props> = ({
+  artist,
+  contextModule,
+  title,
+}) => {
   if (!artist) return null
 
-  const displayTitle = props.title ?? "Artist Series"
-
   const { artistSeriesConnection } = artist
-  const edges = artistSeriesConnection && artistSeriesConnection.edges
+  const series = extractNodes(artistSeriesConnection)
 
-  if (edges && edges.length) {
-    return (
-      <Box mb={3} {...rest}>
-        <Sans size="4" color="black100" my={1}>
-          {displayTitle}
-        </Sans>
+  return (
+    <>
+      <Text variant="lg" as="h3" mb={2}>
+        {title ?? "Artist Series"}
+      </Text>
 
-        <Carousel>
-          {/* @ts-expect-error STRICT_NULL_CHECK */}
-          {edges.map(({ node }, index) => {
-            return (
-              <ArtistSeriesItem
-                key={node.internalID}
-                lazyLoad={index > 5}
-                artistSeries={node}
-                index={index}
-                contextModule={contextModule}
-              />
-            )
-          })}
-        </Carousel>
-      </Box>
-    )
-  } else {
-    return null
-  }
+      <Shelf showProgress={false}>
+        {series.map((node, index) => {
+          return (
+            <ArtistSeriesItem
+              key={node.internalID}
+              artistSeries={node}
+              index={index}
+              contextModule={contextModule}
+            />
+          )
+        })}
+      </Shelf>
+    </>
+  )
 }
 
 export const ArtistSeriesRailFragmentContainer = createFragmentContainer(

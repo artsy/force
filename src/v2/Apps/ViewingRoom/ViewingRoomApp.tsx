@@ -43,7 +43,6 @@ const ViewingRoomApp: React.FC<ViewingRoomAppProps> = ({
   }, [user, router, mediator])
 
   if (!viewingRoom) {
-    // @ts-expect-error STRICT_NULL_CHECK
     return <ErrorPage code={404} />
   }
 
