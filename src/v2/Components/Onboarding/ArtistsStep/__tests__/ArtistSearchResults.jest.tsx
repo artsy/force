@@ -43,9 +43,11 @@ describe("ArtistSearchResults", () => {
 
     const mutationCalls = (commitMutation as any).mock.calls
 
+    // @ts-expect-error STRICT_NULL_CHECK
     onClick({} as any)
     expect(mutationCalls[0][1].variables.input.unfollow).toBe(false)
 
+    // @ts-expect-error STRICT_NULL_CHECK
     onClick({} as any)
     expect(mutationCalls[1][1].variables.input.unfollow).toBe(true)
   })

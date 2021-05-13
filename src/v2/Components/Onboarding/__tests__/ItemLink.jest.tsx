@@ -28,6 +28,7 @@ describe("ArtistSearchResults", () => {
 
     const onClick = wrapper.find("Link").prop("onClick")
     const event: any = {}
+    // @ts-expect-error STRICT_NULL_CHECK
     onClick(event)
     wrapper.update()
 
