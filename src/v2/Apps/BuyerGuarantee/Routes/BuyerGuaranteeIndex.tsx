@@ -138,7 +138,7 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
         </Flex>
 
         <Media lessThan="sm">
-          <Flex justifyContent="space-around" mt={4}>
+          <Flex justifyContent="space-around" mt={4} pl={1}>
             <Flex flexDirection="column" alignItems="center">
               <VerifiedIcon height={50} width={50} />
               <Text
@@ -161,7 +161,7 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
               </Text>
             </Flex>
           </Flex>
-          <Flex justifyContent="space-around" mt={4}>
+          <Flex justifyContent="space-around" mt={2}>
             <Flex flexDirection="column" alignItems="center">
               <CertificateIcon height={50} width={50} />
               <Text
@@ -185,7 +185,7 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
             </Flex>
           </Flex>
 
-          <Flex justifyContent="space-around" mt={4}>
+          <Flex justifyContent="space-around" mt={2}>
             <Flex flexDirection="column" alignItems="center">
               <LockIcon height={50} width={50} />
               <Text
