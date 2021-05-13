@@ -11,6 +11,7 @@ const ArtistSeriesApp = loadable(() => import("./ArtistSeriesApp"), {
 
 export const artistSeriesRoutes: AppRouteConfig[] = [
   {
+    theme: "v3",
     path: "/artist-series/:slug",
     getComponent: () => ArtistSeriesApp,
     prepare: () => {
@@ -23,7 +24,7 @@ export const artistSeriesRoutes: AppRouteConfig[] = [
         $input: FilterArtworksInput
         $aggregations: [ArtworkAggregation]
       ) {
-        artistSeries(id: $slug) {
+        artistSeries(id: $slug) @principalField {
           ...ArtistSeriesApp_artistSeries
             @arguments(input: $input, aggregations: $aggregations)
         }

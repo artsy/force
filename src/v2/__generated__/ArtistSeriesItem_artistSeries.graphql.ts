@@ -11,7 +11,10 @@ export type ArtistSeriesItem_artistSeries = {
     readonly artworksCountMessage: string | null;
     readonly image: {
         readonly cropped: {
-            readonly url: string;
+            readonly width: number;
+            readonly height: number;
+            readonly src: string;
+            readonly srcSet: string;
         } | null;
     } | null;
     readonly " $refType": "ArtistSeriesItem_artistSeries";
@@ -79,12 +82,12 @@ const node: ReaderFragment = {
             {
               "kind": "Literal",
               "name": "height",
-              "value": 320
+              "value": 244
             },
             {
               "kind": "Literal",
               "name": "width",
-              "value": 320
+              "value": 325
             }
           ],
           "concreteType": "CroppedImageUrl",
@@ -96,11 +99,32 @@ const node: ReaderFragment = {
               "alias": null,
               "args": null,
               "kind": "ScalarField",
-              "name": "url",
+              "name": "width",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "height",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "src",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "srcSet",
               "storageKey": null
             }
           ],
-          "storageKey": "cropped(height:320,width:320)"
+          "storageKey": "cropped(height:244,width:325)"
         }
       ],
       "storageKey": null
@@ -108,5 +132,5 @@ const node: ReaderFragment = {
   ],
   "type": "ArtistSeries"
 };
-(node as any).hash = 'c2ed70b2fa374f2ae0e979d4d62157fd';
+(node as any).hash = 'bde51d361add8c28c10076a613811f96';
 export default node;

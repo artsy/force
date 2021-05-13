@@ -1,10 +1,11 @@
 import { mount } from "enzyme"
 import React from "react"
-import { ArtistSeriesItem, StyledLink } from "../ArtistSeriesItem"
+import { ArtistSeriesItem } from "../ArtistSeriesItem"
 import { ArtistSeriesItem_artistSeries } from "v2/__generated__/ArtistSeriesItem_artistSeries.graphql"
 import { useTracking } from "v2/Artsy/Analytics/useTracking"
 import { AnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
 import { OwnerType } from "@artsy/cohesion"
+import { RouterLink } from "v2/Artsy/Router/RouterLink"
 
 jest.mock("v2/Artsy/Analytics/useTracking")
 
@@ -39,8 +40,7 @@ describe("Artist Series Rail Item", () => {
         <ArtistSeriesItem {...props} />
       </AnalyticsContext.Provider>
     )
-    const elem = component.find(StyledLink).first()
-    // @ts-expect-error STRICT_NULL_CHECK
+    const elem = component.find(RouterLink).first()
     elem.props().onClick({} as any)
 
     expect(trackEvent).toHaveBeenCalledWith({
@@ -82,7 +82,10 @@ const itemContent: ArtistSeriesItem_artistSeries = {
   " $refType": null,
   image: {
     cropped: {
-      url: "/path/to/cats.jpg",
+      src: "/path/to/cats.jpg",
+      srcSet: "/path/to/cats.jpg",
+      width: 100,
+      height: 100,
     },
   },
 }

@@ -1,38 +1,37 @@
-import { Box, Image, Sans, color } from "@artsy/palette"
+import { Box, Image, Text } from "@artsy/palette"
 import { ArtistSeriesItem_artistSeries } from "v2/__generated__/ArtistSeriesItem_artistSeries.graphql"
-import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import styled from "styled-components"
 import { ContextModule, clickedArtistSeriesGroup } from "@artsy/cohesion"
 import { useTracking } from "v2/Artsy/Analytics/useTracking"
 import {
   AnalyticsContextProps,
   useAnalyticsContext,
 } from "v2/Artsy/Analytics/AnalyticsContext"
+import { RouterLink } from "v2/Artsy/Router/RouterLink"
 
-interface Props extends AnalyticsContextProps {
+interface ArtistSeriesItemProps extends AnalyticsContextProps {
   artistSeries: ArtistSeriesItem_artistSeries
   lazyLoad: boolean
   contextModule: ContextModule
   index: number
 }
 
-export const ArtistSeriesItem: React.FC<Props> = props => {
-  const {
-    contextModule,
-    index,
-    artistSeries: {
-      internalID,
-      slug,
-      title,
-      image,
-      artworksCountMessage,
-      featured,
-    },
-    lazyLoad,
-  } = props
+export const ArtistSeriesItem: React.FC<ArtistSeriesItemProps> = ({
+  contextModule,
+  index,
+  artistSeries: {
+    internalID,
+    slug,
+    title,
+    image,
+    artworksCountMessage,
+    featured,
+  },
+  lazyLoad,
+}) => {
   const { trackEvent } = useTracking()
+
   const {
     contextPageOwnerId,
     contextPageOwnerSlug,
@@ -55,54 +54,35 @@ export const ArtistSeriesItem: React.FC<Props> = props => {
     )
   }
   return (
-    <Box border="1px solid" borderColor="black10" borderRadius="2px">
-      <StyledLink onClick={onClick} to={`/artist-series/${slug}`}>
-        {!!image ? (
-          <SeriesImage
-            // @ts-expect-error STRICT_NULL_CHECK
-            src={image.cropped.url}
-            alt={title}
-            lazyLoad={lazyLoad}
-            width={160}
-            style={{ objectFit: "cover", objectPosition: "center" }}
-          />
-        ) : (
-          <Box width={160} height={160} bg="black10"></Box>
-        )}
-        <Box my={1} mx={2}>
-          <SeriesTitle size={"3"}>{title}</SeriesTitle>
-          <Sans size={"3"} color={"black60"}>
-            {artworksCountMessage}
-          </Sans>
-        </Box>
-      </StyledLink>
-    </Box>
+    <RouterLink
+      onClick={onClick}
+      to={`/artist-series/${slug}`}
+      noUnderline
+      style={{ display: "block" }}
+    >
+      {image?.cropped?.src ? (
+        <Image
+          src={image.cropped.src}
+          srcSet={image.cropped.srcSet}
+          lazyLoad={lazyLoad}
+          width={image.cropped.width}
+          height={image.cropped.height}
+          alt=""
+        />
+      ) : (
+        <Box width={325} height={244} bg="black10" />
+      )}
+
+      <Text variant="md" mt={1} overflowEllipsis maxWidth={300}>
+        {title}
+      </Text>
+
+      <Text variant="md" color="black60">
+        {artworksCountMessage}
+      </Text>
+    </RouterLink>
   )
 }
-
-const SeriesTitle = styled(Sans)`
-  max-width: 140px;
-  display: block;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
-`
-
-export const StyledLink = styled(RouterLink)`
-  text-decoration: none;
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-
-  &:hover {
-    text-decoration: none;
-  }
-`
-
-export const SeriesImage = styled(Image)<{ width: number }>`
-  width: ${({ width }) => width}px;
-  height: 160px;
-  background-color: ${color("black10")};
-  opacity: 0.9;
-`
 
 export const ArtistSeriesItemFragmentContainer = createFragmentContainer(
   ArtistSeriesItem,
@@ -115,9 +95,11 @@ export const ArtistSeriesItemFragmentContainer = createFragmentContainer(
         internalID
         artworksCountMessage
         image {
-          # Fetch double the px for retina display
-          cropped(width: 320, height: 320) {
-            url
+          cropped(width: 325, height: 244) {
+            width
+            height
+            src
+            srcSet
           }
         }
       }
