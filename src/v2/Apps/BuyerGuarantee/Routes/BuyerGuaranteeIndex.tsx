@@ -447,9 +447,7 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
       {/*  Artsy Guarantee Grid block mobile */}
       <Media lessThan="sm">
         <Flex justifyContent="center" mb={4}>
-          <Text variant="title" as="h1">
-            The Artsy Guarantee
-          </Text>
+          <Text variant="title">The Artsy Guarantee</Text>
         </Flex>
         <CSSGrid
           backgroundColor={color("black5")}
@@ -509,8 +507,11 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
             justifyContent="center"
             flexDirection="column"
             alignItems="center"
-            style={{ outline: `solid 1px ${color("black10")}` }}
-            height="60px"
+            border={`solid 1px ${color("black10")}`}
+            borderLeft="none"
+            mt="-1px"
+            mr="-1px"
+            height="62px"
           >
             <Text textAlign="center" variant="mediumText">
               Dedicated Support
@@ -528,7 +529,7 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
           <Flex
             justifyContent="space-around"
             alignItems="center"
-            height="61px"
+            height="60px"
             borderBottom={`solid 1px ${color("black10")}`}
             backgroundColor={color("white100")}
           >
@@ -536,8 +537,9 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
           </Flex>
           <Flex
             alignItems="center"
-            style={{ outline: `solid 1px ${color("black10")}` }}
-            height="60px"
+            borderRight={`solid 1px ${color("black10")}`}
+            height="61px"
+            mr="-1px"
           >
             <Text textAlign="center" variant="mediumText">
               Authenticity Guarantee
@@ -563,8 +565,11 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
           </Flex>
           <Flex
             alignItems="center"
-            style={{ outline: `solid 1px ${color("black10")}` }}
-            height="60px"
+            height="62px"
+            border={`solid 1px ${color("black10")}`}
+            borderLeft="none"
+            mt="-1px"
+            mr="-1px"
           >
             <Text textAlign="center" variant="mediumText">
               Money-Back Guarantee
@@ -591,11 +596,15 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
           <Flex
             alignItems="center"
             justifyContent="center"
-            style={{ outline: `solid 1px ${color("black10")}` }}
-            height="60px"
+            borderBottom={`solid 1px ${color("black10")}`}
+            borderRight={`solid 1px ${color("black10")}`}
+            height="61px"
+            mr="-1px"
             flexDirection="column"
           >
-            <Text variant="mediumText">Secure Payment</Text>
+            <Text textAlign="center" variant="mediumText">
+              Secure Payment
+            </Text>
           </Flex>
 
           <Flex
