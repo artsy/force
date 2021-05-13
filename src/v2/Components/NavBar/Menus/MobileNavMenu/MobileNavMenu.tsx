@@ -192,7 +192,7 @@ export const BackLink: React.FC = () => {
         // @ts-expect-error STRICT_NULL_CHECK
         pop()
       }}
-      width="30px"
+      width="60px"
       height="30px"
       style={{
         cursor: "pointer",
