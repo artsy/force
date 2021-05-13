@@ -47,7 +47,6 @@ export const CollectionApp: React.FC<CollectionAppProps> = props => {
 
   const { pathname } = usePathnameComplete()
 
-  // @ts-expect-error STRICT_NULL_CHECK
   if (!collection) return <ErrorPage code={404} />
 
   const {

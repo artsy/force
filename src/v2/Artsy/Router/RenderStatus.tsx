@@ -90,7 +90,6 @@ export const RenderError: React.FC<{
   // TODO: Make error code more granular. See:
   // https://artsyproduct.atlassian.net/browse/PLATFORM-1343
   // https://github.com/artsy/reaction/pull/1855
-  // @ts-expect-error STRICT_NULL_CHECK
   return <ErrorPage code={props.error.status || 500} message={message} />
 }
 

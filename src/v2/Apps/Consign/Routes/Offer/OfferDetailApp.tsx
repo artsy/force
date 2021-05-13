@@ -18,7 +18,6 @@ export interface OfferDetailAppProps {
 
 const OfferDetailApp: React.FC<OfferDetailAppProps> = ({ offer }) => {
   // TODO: make sure to account for a 404 page when I'm logged in but the offer ID doesn't belong to me
-  // @ts-expect-error STRICT_NULL_CHECK
   if (!offer) return <ErrorPage code={404} />
 
   return (

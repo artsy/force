@@ -45,7 +45,6 @@ export const auctionRoutes: AppRouteConfig[] = [
       if (Component && props) {
         const { artwork, me, match } = props as any
         if (!artwork) {
-          // @ts-expect-error STRICT_NULL_CHECK
           return <ErrorPage code={404} />
         }
         handleRedirect(
@@ -102,7 +101,6 @@ export const auctionRoutes: AppRouteConfig[] = [
         const { match, sale, me } = props as any
 
         if (!sale) {
-          // @ts-expect-error STRICT_NULL_CHECK
           return <ErrorPage code={404} />
         }
 
