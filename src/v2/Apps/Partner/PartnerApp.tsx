@@ -1,5 +1,5 @@
 import React from "react"
-import { Separator, FullBleed } from "@artsy/palette"
+import { Separator, FullBleed, Box, Flex } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { NavigationTabsFragmentContainer as NavigationTabs } from "v2/Apps/Partner/Components/NavigationTabs"
 import { PartnerHeaderFragmentContainer as PartnerHeader } from "./Components/PartnerHeader"
@@ -8,8 +8,6 @@ import { PartnerHeaderImageFragmentContainer as PartnerHeaderImage } from "./Com
 import styled from "styled-components"
 import { PartnerMetaFragmentContainer } from "./Components/PartnerMeta"
 import { StickyProvider } from "v2/Components/Sticky"
-import { AppContainer } from "../Components/AppContainer"
-import { HorizontalPadding } from "../Components/HorizontalPadding"
 
 export interface PartnerAppProps {
   partner: PartnerApp_partner
@@ -17,8 +15,11 @@ export interface PartnerAppProps {
 
 const Foreground = styled(FullBleed)`
   background-color: white;
-  z-index: 1;
+  z-index: 0;
   display: flex;
+  position: absolute;
+  top: 0;
+  bottom: 0;
 `
 
 export const PartnerApp: React.FC<PartnerAppProps> = ({
@@ -32,23 +33,22 @@ export const PartnerApp: React.FC<PartnerAppProps> = ({
       {/* @ts-expect-error STRICT_NULL_CHECK */}
       <PartnerHeaderImage profile={profile} />
 
-      <Foreground>
-        <AppContainer>
-          <HorizontalPadding>
-            <PartnerMetaFragmentContainer partner={partner} />
+      <Flex position="relative" flexDirection="column">
+        <Foreground />
+        <Box zIndex={1} position="relative">
+          <PartnerMetaFragmentContainer partner={partner} />
 
-            <PartnerHeader partner={partner} />
+          <PartnerHeader partner={partner} />
 
-            <FullBleed mb={[2, 4]}>
-              <Separator />
-            </FullBleed>
+          <FullBleed mb={[2, 4]}>
+            <Separator />
+          </FullBleed>
 
-            {fullProfileEligible && <NavigationTabs partner={partner} />}
+          {fullProfileEligible && <NavigationTabs partner={partner} />}
 
-            {children}
-          </HorizontalPadding>
-        </AppContainer>
-      </Foreground>
+          {children}
+        </Box>
+      </Flex>
     </StickyProvider>
   )
 }
