@@ -82,7 +82,7 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
       <Link href={supportArticleURL} mt="-2px" underlineBehavior="none">
         <Flex>
           <Text variant="mediumText">Learn More</Text>
-          <ArrowRightIcon height="15px" width="15px" mt="2px" ml="2px" />
+          <ArrowRightIcon height="17px" width="17px" mt="2px" ml="2px" />
         </Flex>
       </Link>
     </Flex>
