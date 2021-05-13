@@ -141,60 +141,76 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
           <Flex justifyContent="space-around" mt={4} pl={1}>
             <Flex flexDirection="column" alignItems="center">
               <VerifiedIcon height={50} width={50} />
-              <Text
-                variant="mediumText"
-                my={2}
-                style={{ whiteSpace: "nowrap" }}
-              >
-                Vetted Sellers
-              </Text>
+              <Flex>
+                <Text
+                  variant="mediumText"
+                  my={2}
+                  style={{ whiteSpace: "nowrap" }}
+                >
+                  Vetted Sellers
+                </Text>
+                <ArrowRightIcon height="20px" width="20px" mt={2} />
+              </Flex>
             </Flex>
 
             <Flex flexDirection="column" ml={0} alignItems="center">
               <ChatIcon h={50} w={50} />
-              <Text
-                variant="mediumText"
-                my={2}
-                style={{ whiteSpace: "nowrap" }}
-              >
-                Dedicated Support
-              </Text>
+              <Flex>
+                <Text
+                  variant="mediumText"
+                  my={2}
+                  style={{ whiteSpace: "nowrap" }}
+                >
+                  Dedicated Support
+                </Text>
+                <ArrowRightIcon height="20px" width="20px" mt={2} />
+              </Flex>
             </Flex>
           </Flex>
           <Flex justifyContent="space-around" mt={2}>
             <Flex flexDirection="column" alignItems="center">
               <CertificateIcon height={50} width={50} />
-              <Text
-                variant="mediumText"
-                my={2}
-                style={{ whiteSpace: "nowrap" }}
-              >
-                Authenticity Guarantee
-              </Text>
+              <Flex>
+                <Text
+                  variant="mediumText"
+                  my={2}
+                  style={{ whiteSpace: "nowrap" }}
+                >
+                  Authenticity Guarantee
+                </Text>
+                <ArrowRightIcon height="20px" width="20px" mt={2} />
+              </Flex>
             </Flex>
 
             <Flex flexDirection="column" ml={0} alignItems="center">
               <MoneyBackIcon h={50} w={50} />
-              <Text
-                variant="mediumText"
-                my={2}
-                style={{ whiteSpace: "nowrap" }}
-              >
-                Money-Back Guarantee
-              </Text>
+              <Flex>
+                <Text
+                  variant="mediumText"
+                  my={2}
+                  style={{ whiteSpace: "nowrap" }}
+                >
+                  Money-Back Guarantee
+                </Text>
+                <ArrowRightIcon height="20px" width="20px" mt={2} />
+              </Flex>
             </Flex>
           </Flex>
 
           <Flex justifyContent="space-around" mt={2}>
             <Flex flexDirection="column" alignItems="center">
               <LockIcon height={50} width={50} />
-              <Text
-                variant="mediumText"
-                my={2}
-                style={{ whiteSpace: "nowrap" }}
-              >
-                Secure Payment
-              </Text>
+              <Flex>
+                {" "}
+                <Text
+                  variant="mediumText"
+                  my={2}
+                  style={{ whiteSpace: "nowrap" }}
+                >
+                  Secure Payment
+                </Text>
+                <ArrowRightIcon height="20px" width="20px" mt={2} />
+              </Flex>
             </Flex>
           </Flex>
         </Media>
