@@ -68,8 +68,7 @@ export const FairExhibitorRail: React.FC<FairExhibitorRailProps> = ({
 
           {show.href && (
             <Text
-              variant="sm"
-              color="black60"
+              variant="md"
               onClick={() => tracking.trackEvent(tappedViewTrackingData)}
             >
               <RouterLink to={show.href}>View</RouterLink>

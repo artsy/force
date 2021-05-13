@@ -1,3 +1,4 @@
+import { Column, GridColumns } from "@artsy/palette"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FairEditorial_fair } from "v2/__generated__/FairEditorial_fair.graphql"
@@ -11,11 +12,15 @@ interface FairEditorialProps {
 
 export const FairEditorial: React.FC<FairEditorialProps> = ({ fair }) => {
   return (
-    <>
+    <GridColumns gridRowGap={2}>
       {fair.articlesConnection.edges.map(({ node: article }) => {
-        return <FairEditorialItem key={article.id} article={article} />
+        return (
+          <Column key={article.id} span={6}>
+            <FairEditorialItem article={article} />
+          </Column>
+        )
       })}
-    </>
+    </GridColumns>
   )
 }
 
