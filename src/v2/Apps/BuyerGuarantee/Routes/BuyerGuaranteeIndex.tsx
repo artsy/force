@@ -132,8 +132,8 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
         <Flex justifyContent="center" mx={["10%", "25%"]} textAlign="center">
           <Text variant="title" mt={5}>
             Artsy is the safest place to buy the art you love. Every purchase
-            made exclusively with our Artsy’s secure checkout benefits from our
-            full suite of buyer protections.
+            made exclusively with Artsy’s secure checkout benefits from our full
+            suite of buyer protections.
           </Text>
         </Flex>
 
@@ -300,8 +300,8 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
                   Secure Payment
                 </Text>
                 <Text variant="text">
-                  Payments made through our secure checkout are protected with
-                  trusted, industry-leading technology.
+                  Payments made with our secure checkout are protected with
+                  trusted industry-leading technology.
                 </Text>
               </Box>
               <Box>{learnMoreIcon}</Box>
