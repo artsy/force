@@ -5,7 +5,7 @@ module.exports = {
     "react-hooks",
     "@typescript-eslint",
     "styled-components-a11y",
-    // "jest",
+    "jest",
   ],
   extends: [
     "eslint:recommended",
@@ -14,7 +14,7 @@ module.exports = {
     "plugin:@typescript-eslint/recommended",
     "prettier",
     "plugin:styled-components-a11y/recommended",
-    // "plugin:jest/recommended",
+    "plugin:jest/recommended",
   ],
   parserOptions: {
     ecmaFeatures: {
@@ -83,13 +83,13 @@ module.exports = {
     "@typescript-eslint/no-non-null-assertion": 0,
   },
   overrides: [
-    // {
-    //   files: ["src/**/*.test.js", "src/**/*.test.ts"],
-    //   rules: {
-    //     "jest/expect-expect": "off",
-    //     "jest/valid-describe": "off",
-    //   },
-    // },
+    {
+      files: ["src/**/*.test.js", "src/**/*.test.ts"],
+      rules: {
+        "jest/expect-expect": "off",
+        "jest/valid-describe": "off",
+      },
+    },
     {
       files: ["webpack/**/*"],
       rules: {
