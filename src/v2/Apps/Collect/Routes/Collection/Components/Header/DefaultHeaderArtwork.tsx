@@ -19,7 +19,7 @@ export const DefaultHeaderArtwork: React.FC<DefaultHeaderArtworkProps> = ({
 }) => {
   const { trackEvent } = useTracking()
 
-  if (!artwork.image) return null
+  if (!artwork.image?.resized) return null
 
   const handleClick = () => {
     trackEvent({
@@ -38,24 +38,17 @@ export const DefaultHeaderArtwork: React.FC<DefaultHeaderArtworkProps> = ({
 
   return (
     <RouterLink
-      // @ts-expect-error STRICT_NULL_CHECK
-      to={artwork.href}
-      // @ts-expect-error STRICT_NULL_CHECK
-      key={artwork.href}
+      to={artwork.href!}
+      key={artwork.href!}
       onClick={handleClick}
       style={{ display: "block" }}
     >
       <Image
-        // @ts-expect-error STRICT_NULL_CHECK
         width={artwork.image.resized.width}
-        // @ts-expect-error STRICT_NULL_CHECK
         height={artwork.image.resized.height}
-        // @ts-expect-error STRICT_NULL_CHECK
         src={artwork.image.resized.src}
-        // @ts-expect-error STRICT_NULL_CHECK
         srcSet={artwork.image.resized.srcSet}
-        // @ts-expect-error STRICT_NULL_CHECK
-        alt={artwork.title}
+        alt={artwork.title ?? ""}
         lazyLoad
       />
     </RouterLink>

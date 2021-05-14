@@ -13,7 +13,7 @@ import { Header_collection } from "v2/__generated__/Header_collection.graphql"
 import { CollectionDefaultHeaderFragmentContainer } from "v2/Apps/Collect/Routes/Collection/Components/Header/DefaultHeader"
 import { FollowArtistButtonFragmentContainer } from "v2/Components/FollowButton/FollowArtistButton"
 import { Link } from "found"
-import { filter, take } from "lodash"
+import { compact, filter, take } from "lodash"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { slugify } from "underscore.string"
@@ -42,8 +42,7 @@ export const CollectionHeader: React.FC<CollectionHeaderProps> = ({
       {collection.headerImage && (
         <FullBleedHeader
           src={collection.headerImage}
-          // @ts-expect-error STRICT_NULL_CHECK
-          caption={collection.credit}
+          caption={collection.credit!}
         />
       )}
 
@@ -61,10 +60,11 @@ export const CollectionHeader: React.FC<CollectionHeaderProps> = ({
           </Breadcrumbs>
         </Column>
 
-        <Column span={6}>
-          {/* @ts-expect-error STRICT_NULL_CHECK */}
-          <HTML html={collection.description} variant="sm" />
-        </Column>
+        {collection.description && (
+          <Column span={6}>
+            <HTML html={collection.description} variant="sm" />
+          </Column>
+        )}
       </GridColumns>
 
       {!collection.headerImage && (
@@ -91,32 +91,28 @@ export const CollectionHeader: React.FC<CollectionHeaderProps> = ({
           </Column>
 
           {featuredArtists.map(artist => {
-            //  @ts-expect-error STRICT_NULL_CHECK
-            const hasArtistMetaData = artist.nationality && artist.birthday
+            if (!artist.name) return
 
             return (
               <Column
                 span={[12, 6, 3, 3]}
-                //  @ts-expect-error STRICT_NULL_CHECK
                 key={artist.internalID}
                 data-test={ContextModule.featuredArtistsRail}
+                display="flex"
+                alignItems="center"
               >
                 <EntityHeader
-                  //  @ts-expect-error STRICT_NULL_CHECK
+                  width="100%"
                   name={artist.name}
-                  //  @ts-expect-error STRICT_NULL_CHECK
-                  imageUrl={artist.image.resized.url}
-                  //  @ts-expect-error STRICT_NULL_CHECK
+                  imageUrl={artist?.image?.resized?.url}
                   href={`/artist/${artist.slug}`}
                   meta={
-                    hasArtistMetaData
-                      ? //  @ts-expect-error STRICT_NULL_CHECK
-                        `${artist.nationality}, b. ${artist.birthday}`
+                    artist.nationality && artist.birthday
+                      ? `${artist.nationality}, b. ${artist.birthday}`
                       : undefined
                   }
                   FollowButton={
                     <FollowArtistButtonFragmentContainer
-                      //  @ts-expect-error STRICT_NULL_CHECK
                       artist={artist}
                       contextModule={ContextModule.featuredArtistsRail}
                       buttonProps={{
@@ -178,22 +174,24 @@ export const getFeaturedArtists = (
   artistsCount: number,
   collection: Header_collection,
   merchandisableArtists: Header_artworks["merchandisableArtists"]
-): Header_artworks["merchandisableArtists"] => {
-  //  @ts-expect-error STRICT_NULL_CHECK
-  if (collection.query.artistIDs?.length > 0) {
-    return filter(merchandisableArtists, artist =>
-      //  @ts-expect-error STRICT_NULL_CHECK
-      collection.query.artistIDs.includes(artist.internalID)
+) => {
+  if ((collection?.query?.artistIDs?.length ?? 0) > 0) {
+    return compact(
+      filter(merchandisableArtists, artist =>
+        (collection?.query?.artistIDs ?? []).includes(artist?.internalID!)
+      )
     )
   }
 
-  //  @ts-expect-error STRICT_NULL_CHECK
-  if (merchandisableArtists?.length > 0) {
-    //  @ts-expect-error STRICT_NULL_CHECK
-    const filteredArtistsIds = merchandisableArtists.filter(artist => {
-      //  @ts-expect-error STRICT_NULL_CHECK
-      return !collection.featuredArtistExclusionIds.includes(artist.internalID)
-    })
+  if ((merchandisableArtists?.length ?? 0) > 0) {
+    const filteredArtistsIds = compact(
+      merchandisableArtists?.filter(artist => {
+        return !collection?.featuredArtistExclusionIds?.includes(
+          artist?.internalID!
+        )
+      })
+    )
+
     return take(filteredArtistsIds, artistsCount)
   }
 
