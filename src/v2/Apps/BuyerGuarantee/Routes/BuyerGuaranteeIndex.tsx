@@ -447,189 +447,196 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
       </Media>
       {/*  Artsy Guarantee Grid block mobile */}
       <Media lessThan="sm">
-        <Flex justifyContent="center" mb={4}>
-          <Text variant="title">The Artsy Guarantee</Text>
-        </Flex>
-        <CSSGrid
-          backgroundColor={color("black5")}
-          gridTemplateColumns="repeat(3, 1fr)"
-          mt={2}
-        >
-          <Box borderBottom={`solid 1px ${color("black10")}`}>{""}</Box>
-          <Text
-            border={`solid 1px ${color("black10")}`}
-            borderTop="none"
-            pt={4}
-            px={2}
-            textAlign="center"
-            variant="mediumText"
-          >
-            Making an Inquiry
-          </Text>
-          <Text
-            p={2}
-            textAlign="center"
-            variant="mediumText"
-            borderBottom={`solid 1px ${color("black10")}`}
-            backgroundColor={color("white100")}
-          >
-            Purchasing with Artsy’s secure checkout
-          </Text>
-          <Flex
-            height="60px"
-            borderTop="none"
-            flex-flexDirection="column"
-            alignItems="center"
-            justifyContent="center"
-          >
-            <Text textAlign="center" variant="mediumText">
-              Vetted Sellers
-            </Text>
-          </Flex>
-          <Flex
-            justifyContent="space-around"
-            alignItems="center"
-            border={`solid 1px ${color("black10")}`}
-            borderTop="none"
-            height="60px"
-          >
-            <VerifiedIcon width="40px" height="40px" />
-          </Flex>
-          <Flex
-            justifyContent="space-around"
-            alignItems="center"
-            height="60px"
-            borderBottom={`solid 1px ${color("black10")}`}
-            backgroundColor={color("white100")}
-          >
-            <VerifiedIcon width="40px" height="40px" />
-          </Flex>
+        <Box backgroundColor={color("black5")} mx="-20px">
           <Flex
             justifyContent="center"
-            flexDirection="column"
-            alignItems="center"
-            border={`solid 1px ${color("black10")}`}
-            borderLeft="none"
-            mt="-1px"
-            mr="-1px"
-            height="62px"
+            py={4}
+            mb="-20px"
+            backgroundColor={color("black5")}
           >
-            <Text textAlign="center" variant="mediumText">
-              Dedicated Support
+            <Text variant="title">The Artsy Guarantee</Text>
+          </Flex>
+          <CSSGrid
+            backgroundColor={color("black5")}
+            gridTemplateColumns="repeat(3, 1fr)"
+            mt={2}
+          >
+            <Box borderBottom={`solid 1px ${color("black10")}`}>{""}</Box>
+            <Text
+              border={`solid 1px ${color("black10")}`}
+              borderTop="none"
+              pt={4}
+              px={2}
+              textAlign="center"
+              variant="mediumText"
+            >
+              Making an Inquiry
             </Text>
-          </Flex>
-          <Flex
-            justifyContent="space-around"
-            alignItems="center"
-            height="61px"
-            borderBottom={`solid 1px ${color("black10")}`}
-            borderRight={`solid 1px ${color("black10")}`}
-          >
-            <VerifiedIcon width="40px" height="40px" />
-          </Flex>
-          <Flex
-            justifyContent="space-around"
-            alignItems="center"
-            height="60px"
-            borderBottom={`solid 1px ${color("black10")}`}
-            backgroundColor={color("white100")}
-          >
-            <VerifiedIcon width="40px" height="40px" />
-          </Flex>
-          <Flex
-            alignItems="center"
-            borderRight={`solid 1px ${color("black10")}`}
-            height="61px"
-            mr="-1px"
-          >
-            <Text textAlign="center" variant="mediumText">
-              Authenticity Guarantee
+            <Text
+              p={2}
+              textAlign="center"
+              variant="mediumText"
+              borderBottom={`solid 1px ${color("black10")}`}
+              backgroundColor={color("white100")}
+            >
+              Purchasing with Artsy’s secure checkout
             </Text>
-          </Flex>
-          <Flex
-            justifyContent="space-around"
-            alignItems="center"
-            height="61px"
-            borderBottom={`solid 1px ${color("black10")}`}
-            borderRight={`solid 1px ${color("black10")}`}
-          >
-            {""}
-          </Flex>
-          <Flex
-            justifyContent="space-around"
-            alignItems="center"
-            height="61px"
-            borderBottom={`solid 1px ${color("black10")}`}
-            backgroundColor={color("white100")}
-          >
-            <VerifiedIcon width="40px" height="40px" />
-          </Flex>
-          <Flex
-            alignItems="center"
-            height="62px"
-            border={`solid 1px ${color("black10")}`}
-            borderLeft="none"
-            mt="-1px"
-            mr="-1px"
-          >
-            <Text textAlign="center" variant="mediumText">
-              Money-Back Guarantee
-            </Text>
-          </Flex>
-          <Flex
-            justifyContent="space-around"
-            alignItems="center"
-            height="61px"
-            borderBottom={`solid 1px ${color("black10")}`}
-            borderRight={`solid 1px ${color("black10")}`}
-          >
-            {""}
-          </Flex>
-          <Flex
-            justifyContent="space-around"
-            alignItems="center"
-            height="61px"
-            borderBottom={`solid 1px ${color("black10")}`}
-            backgroundColor={color("white100")}
-          >
-            <VerifiedIcon width="40px" height="40px" />
-          </Flex>
-          <Flex
-            alignItems="center"
-            justifyContent="center"
-            borderBottom={`solid 1px ${color("black10")}`}
-            borderRight={`solid 1px ${color("black10")}`}
-            height="61px"
-            mr="-1px"
-            flexDirection="column"
-          >
-            <Text textAlign="center" variant="mediumText">
-              Secure Payment
-            </Text>
-          </Flex>
+            <Flex
+              height="60px"
+              borderTop="none"
+              flex-flexDirection="column"
+              alignItems="center"
+              justifyContent="center"
+            >
+              <Text textAlign="center" variant="mediumText">
+                Vetted Sellers
+              </Text>
+            </Flex>
+            <Flex
+              justifyContent="space-around"
+              alignItems="center"
+              border={`solid 1px ${color("black10")}`}
+              borderTop="none"
+              height="60px"
+            >
+              <VerifiedIcon width="40px" height="40px" />
+            </Flex>
+            <Flex
+              justifyContent="space-around"
+              alignItems="center"
+              height="60px"
+              borderBottom={`solid 1px ${color("black10")}`}
+              backgroundColor={color("white100")}
+            >
+              <VerifiedIcon width="40px" height="40px" />
+            </Flex>
+            <Flex
+              justifyContent="center"
+              flexDirection="column"
+              alignItems="center"
+              border={`solid 1px ${color("black10")}`}
+              borderLeft="none"
+              mt="-1px"
+              mr="-1px"
+              height="62px"
+            >
+              <Text textAlign="center" variant="mediumText">
+                Dedicated Support
+              </Text>
+            </Flex>
+            <Flex
+              justifyContent="space-around"
+              alignItems="center"
+              height="61px"
+              borderBottom={`solid 1px ${color("black10")}`}
+              borderRight={`solid 1px ${color("black10")}`}
+            >
+              <VerifiedIcon width="40px" height="40px" />
+            </Flex>
+            <Flex
+              justifyContent="space-around"
+              alignItems="center"
+              height="60px"
+              borderBottom={`solid 1px ${color("black10")}`}
+              backgroundColor={color("white100")}
+            >
+              <VerifiedIcon width="40px" height="40px" />
+            </Flex>
+            <Flex
+              alignItems="center"
+              borderRight={`solid 1px ${color("black10")}`}
+              height="61px"
+              mr="-1px"
+            >
+              <Text textAlign="center" variant="mediumText">
+                Authenticity Guarantee
+              </Text>
+            </Flex>
+            <Flex
+              justifyContent="space-around"
+              alignItems="center"
+              height="61px"
+              borderBottom={`solid 1px ${color("black10")}`}
+              borderRight={`solid 1px ${color("black10")}`}
+            >
+              {""}
+            </Flex>
+            <Flex
+              justifyContent="space-around"
+              alignItems="center"
+              height="61px"
+              borderBottom={`solid 1px ${color("black10")}`}
+              backgroundColor={color("white100")}
+            >
+              <VerifiedIcon width="40px" height="40px" />
+            </Flex>
+            <Flex
+              alignItems="center"
+              height="62px"
+              border={`solid 1px ${color("black10")}`}
+              borderLeft="none"
+              mt="-1px"
+              mr="-1px"
+            >
+              <Text textAlign="center" variant="mediumText">
+                Money-Back Guarantee
+              </Text>
+            </Flex>
+            <Flex
+              justifyContent="space-around"
+              alignItems="center"
+              height="61px"
+              borderBottom={`solid 1px ${color("black10")}`}
+              borderRight={`solid 1px ${color("black10")}`}
+            >
+              {""}
+            </Flex>
+            <Flex
+              justifyContent="space-around"
+              alignItems="center"
+              height="61px"
+              borderBottom={`solid 1px ${color("black10")}`}
+              backgroundColor={color("white100")}
+            >
+              <VerifiedIcon width="40px" height="40px" />
+            </Flex>
+            <Flex
+              alignItems="center"
+              justifyContent="center"
+              borderBottom={`solid 1px ${color("black10")}`}
+              borderRight={`solid 1px ${color("black10")}`}
+              height="61px"
+              mr="-1px"
+              flexDirection="column"
+            >
+              <Text textAlign="center" variant="mediumText">
+                Secure Payment
+              </Text>
+            </Flex>
 
-          <Flex
-            justifyContent="space-around"
-            alignItems="center"
-            height="61px"
-            borderBottom={`solid 1px ${color("black10")}`}
-            borderRight={`solid 1px ${color("black10")}`}
-          >
-            {""}
+            <Flex
+              justifyContent="space-around"
+              alignItems="center"
+              height="61px"
+              borderBottom={`solid 1px ${color("black10")}`}
+              borderRight={`solid 1px ${color("black10")}`}
+            >
+              {""}
+            </Flex>
+            <Flex
+              justifyContent="space-around"
+              alignItems="center"
+              height="61px"
+              borderBottom={`solid 1px ${color("black10")}`}
+              backgroundColor={color("white100")}
+            >
+              <VerifiedIcon width="40px" height="40px" />
+            </Flex>
+          </CSSGrid>
+          <Flex backgroundColor={color("black5")} p={4} justifyContent="center">
+            {learnMoreButton("100%")}
           </Flex>
-          <Flex
-            justifyContent="space-around"
-            alignItems="center"
-            height="61px"
-            borderBottom={`solid 1px ${color("black10")}`}
-            backgroundColor={color("white100")}
-          >
-            <VerifiedIcon width="40px" height="40px" />
-          </Flex>
-        </CSSGrid>
-        <Flex backgroundColor={color("black5")} p={4} justifyContent="center">
-          {learnMoreButton("100%")}
-        </Flex>
+        </Box>
       </Media>
       {/*  Artsy Guarantee Grid block desktop */}
       <Media greaterThanOrEqual="sm">
