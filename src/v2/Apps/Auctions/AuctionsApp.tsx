@@ -23,14 +23,14 @@ const AuctionsApp: React.FC<AuctionsAppProps> = props => {
   return (
     <>
       <AuctionsMeta />
-      <GridColumns>
-        <Column span={[12, 6]}>
-          <Text mt={4} mb={1} variant={["xl", "xxl"]} as="h1">
-            Auctions
-          </Text>
+
+      <GridColumns mt={4}>
+        <Column span={6}>
+          <Text variant="xl">Auctions</Text>
         </Column>
-        <Column span={[12, 6]}>
-          <Text variant="md" mt={[0, 4]}>
+
+        <Column span={6}>
+          <Text variant="md">
             Bid on works you love with auctions on Artsy. With bidding opening
             daily, Artsy connects collectors like you to art from leading
             auction houses, nonprofit organizations, and sellers across the
