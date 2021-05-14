@@ -9,6 +9,7 @@ export type AboutPartner_partner = {
     } | null;
     readonly website: string | null;
     readonly vatNumber: string | null;
+    readonly fullProfileEligible: boolean | null;
     readonly " $refType": "AboutPartner_partner";
 };
 export type AboutPartner_partner$data = AboutPartner_partner;
@@ -56,9 +57,16 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "name": "vatNumber",
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "fullProfileEligible",
+      "storageKey": null
     }
   ],
   "type": "Partner"
 };
-(node as any).hash = 'cc2bf3eccf000ed20487bf3b7ce8bc9d';
+(node as any).hash = 'efd0a3b9ab9968bc190276a83bd34ed2';
 export default node;
