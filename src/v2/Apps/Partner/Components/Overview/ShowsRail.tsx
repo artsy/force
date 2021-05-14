@@ -17,9 +17,7 @@ const ShowsRail: React.FC<ShowsRailProps> = ({ partner, ...rest }) => {
   // @ts-expect-error STRICT_NULL_CHECK
   const [isSeeAllAvaliable, setIsSeeAllAvaliable] = useState<boolean>(undefined)
   if (
-    !partner ||
-    !partner.showsConnection ||
-    // @ts-expect-error STRICT_NULL_CHECK
+    !partner?.showsConnection?.edges ||
     partner.showsConnection.edges.length === 0
   ) {
     return null
@@ -27,34 +25,39 @@ const ShowsRail: React.FC<ShowsRailProps> = ({ partner, ...rest }) => {
 
   const {
     slug,
-    showsConnection: { edges: shows },
+    showsConnection: { edges },
+    fullProfileEligible,
   } = partner
+
+  const canShowAll = isSeeAllAvaliable && fullProfileEligible
+  const shows = [...edges]
+
+  if (fullProfileEligible && shows.length === 20) {
+    shows.pop()
+  }
 
   return (
     <Box {...rest}>
       <Flex mb={4} justifyContent="space-between" alignItems="center">
         <Text variant="title">All Events</Text>
 
-        <ViewAllButton to={`/partner2/${slug}/shows`} />
+        {canShowAll && <ViewAllButton to={`/partner2/${slug}/shows`} />}
       </Flex>
-
       <Carousel
         onRailOverflowChange={setIsSeeAllAvaliable}
         itemsPerViewport={[2, 2, 3, 4]}
       >
         {/* @ts-expect-error STRICT_NULL_CHECK */}
         {flatten([
-          // @ts-expect-error STRICT_NULL_CHECK
           shows.map(edge => {
             return (
-              // @ts-expect-error STRICT_NULL_CHECK
-              <Box key={edge.node.id} width={[300, "100%"]}>
+              <Box key={edge?.node?.id} width={[300, "100%"]}>
                 {/* @ts-expect-error STRICT_NULL_CHECK */}
                 <ShowCardFragmentContainer show={edge.node} />
               </Box>
             )
           }),
-          isSeeAllAvaliable && (
+          canShowAll && (
             <Box key="see-all-button" width={[300, "100%"]}>
               <RouterLink to={`/partner2/${slug}/shows`}>
                 <ScrollToPartnerHeader width="100%">
@@ -88,6 +91,7 @@ export const ShowsRailFragmentContainer = createFragmentContainer(ShowsRail, {
   partner: graphql`
     fragment ShowsRail_partner on Partner {
       slug
+      fullProfileEligible
       showsConnection(status: ALL, first: 19, isDisplayable: true) {
         edges {
           node {
