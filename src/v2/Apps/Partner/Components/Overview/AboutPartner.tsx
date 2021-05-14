@@ -29,8 +29,7 @@ export const AboutPartner: React.FC<AboutPartnerProps> = ({
       <Column span={6}>
         {profile?.fullBio && <Text variant="text">{profile.fullBio}</Text>}
         {canRenderWebsite && (
-          /* @ts-expect-error STRICT_NULL_CHECK */
-          <RouterLink to={website}>
+          <RouterLink to={website!}>
             <Text mt={2} variant="text">
               {website}
             </Text>
