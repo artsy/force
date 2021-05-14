@@ -26,7 +26,9 @@ const AuctionsApp: React.FC<AuctionsAppProps> = props => {
 
       <GridColumns mt={4}>
         <Column span={6}>
-          <Text variant="xl">Auctions</Text>
+          <Text variant="xl" as="h1">
+            Auctions
+          </Text>
         </Column>
 
         <Column span={6}>
