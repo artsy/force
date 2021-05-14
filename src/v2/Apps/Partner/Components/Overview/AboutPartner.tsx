@@ -9,13 +9,16 @@ export interface AboutPartnerProps {
 }
 
 export const AboutPartner: React.FC<AboutPartnerProps> = ({
-  partner: { profile, vatNumber, website },
+  partner: { profile, vatNumber, website, fullProfileEligible },
 }) => {
   const isEmpty = !profile?.fullBio && !vatNumber && !website
 
   if (isEmpty) {
     return null
   }
+
+  const canRenderWebsite = website && fullProfileEligible
+  const canRenderVatNumber = vatNumber && fullProfileEligible
 
   return (
     <GridColumns mb={12} gridRowGap={2}>
@@ -25,7 +28,8 @@ export const AboutPartner: React.FC<AboutPartnerProps> = ({
 
       <Column span={6}>
         {profile?.fullBio && <Text variant="text">{profile.fullBio}</Text>}
-        {website && (
+        {canRenderWebsite && (
+          // /* @ts-expect-error STRICT_NULL_CHECK */
           <RouterLink to={website}>
             <Text mt={2} variant="text">
               {website}
@@ -33,7 +37,7 @@ export const AboutPartner: React.FC<AboutPartnerProps> = ({
           </RouterLink>
         )}
 
-        {vatNumber && (
+        {canRenderVatNumber && (
           <Text mt={2} variant="text">{`VAT ID#: ${vatNumber}`}</Text>
         )}
       </Column>
@@ -51,6 +55,7 @@ export const AboutPartnerFragmentContainer = createFragmentContainer(
         }
         website
         vatNumber
+        fullProfileEligible
       }
     `,
   }
