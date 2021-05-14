@@ -82,7 +82,7 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
       <Link href={supportArticleURL} mt="-2px" underlineBehavior="none">
         <Flex>
           <Text variant="mediumText">Learn More</Text>
-          <ArrowRightIcon height="15px" width="15px" mt="2px" ml="2px" />
+          <ArrowRightIcon height="17px" width="17px" mt="2px" ml="2px" />
         </Flex>
       </Link>
     </Flex>
@@ -98,103 +98,120 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
 
   return (
     <>
-      <FullBleedHeader
-        // @ts-expect-error STRICT_NULL_CHECK
-        {...headerImage.image.resized.srcSet}
-        height={[283, 469]}
-        // @ts-expect-error STRICT_NULL_CHECK
-        src={heroImageURL}
-        caption={
-          headerImage.imageTitle +
-          ". Courtesy of the artist and Kenise Barnes Fine Art. "
-        }
-      >
-        <Flex
-          position="absolute"
-          top={0}
-          right={0}
-          bottom={0}
-          left={0}
-          justifyContent="center"
-          alignItems="center"
+      {heroImageURL && (
+        <FullBleedHeader
+          {...headerImage?.image?.resized?.srcSet}
+          height={[283, 469]}
+          src={heroImageURL}
+          caption={
+            headerImage.imageTitle +
+            ". Courtesy of the artist and Kenise Barnes Fine Art. "
+          }
+          meta="Artsy is the safest place to buy the art you love. Every purchase made exclusively with our Artsy’s secure checkout benefits from our full suite of buyer protections."
         >
-          <Text
-            fontSize={[34, null, 80]}
-            color={color("white100")}
-            position="relative"
-            as="h1"
+          <Flex
+            position="absolute"
+            top={0}
+            right={0}
+            bottom={0}
+            left={0}
+            justifyContent="center"
+            alignItems="center"
           >
-            The Artsy Guarantee
-          </Text>
-        </Flex>
-      </FullBleedHeader>
+            <Text
+              fontSize={[34, null, 80]}
+              color={color("white100")}
+              position="relative"
+              as="h1"
+            >
+              The Artsy Guarantee
+            </Text>
+          </Flex>
+        </FullBleedHeader>
+      )}
       <Flex justifyContent="center" flexDirection="column">
         <Flex justifyContent="center" mx={["10%", "25%"]} textAlign="center">
           <Text variant="title" mt={5}>
             Artsy is the safest place to buy the art you love. Every purchase
-            made exclusively with our Artsy’s secure checkout benefits from our
-            full suite of buyer protections.
+            made exclusively with Artsy’s secure checkout benefits from our full
+            suite of buyer protections.
           </Text>
         </Flex>
 
         <Media lessThan="sm">
-          <Flex justifyContent="space-around" mt={4}>
+          <Flex justifyContent="space-around" mt={4} pl={1}>
             <Flex flexDirection="column" alignItems="center">
               <VerifiedIcon height={50} width={50} />
-              <Text
-                variant="mediumText"
-                my={2}
-                style={{ whiteSpace: "nowrap" }}
-              >
-                Vetted Sellers
-              </Text>
+              <Flex>
+                <Text
+                  variant="mediumText"
+                  my={2}
+                  style={{ whiteSpace: "nowrap" }}
+                >
+                  Vetted Sellers
+                </Text>
+                <ArrowRightIcon height="20px" width="20px" mt={2} />
+              </Flex>
             </Flex>
 
             <Flex flexDirection="column" ml={0} alignItems="center">
               <ChatIcon h={50} w={50} />
-              <Text
-                variant="mediumText"
-                my={2}
-                style={{ whiteSpace: "nowrap" }}
-              >
-                Dedicated Support
-              </Text>
+              <Flex>
+                <Text
+                  variant="mediumText"
+                  my={2}
+                  style={{ whiteSpace: "nowrap" }}
+                >
+                  Dedicated Support
+                </Text>
+                <ArrowRightIcon height="20px" width="20px" mt={2} />
+              </Flex>
             </Flex>
           </Flex>
-          <Flex justifyContent="space-around" mt={4}>
+          <Flex justifyContent="space-around" mt={2}>
             <Flex flexDirection="column" alignItems="center">
               <CertificateIcon height={50} width={50} />
-              <Text
-                variant="mediumText"
-                my={2}
-                style={{ whiteSpace: "nowrap" }}
-              >
-                Authenticity Guarantee
-              </Text>
+              <Flex>
+                <Text
+                  variant="mediumText"
+                  my={2}
+                  style={{ whiteSpace: "nowrap" }}
+                >
+                  Authenticity Guarantee
+                </Text>
+                <ArrowRightIcon height="20px" width="20px" mt={2} />
+              </Flex>
             </Flex>
 
             <Flex flexDirection="column" ml={0} alignItems="center">
               <MoneyBackIcon h={50} w={50} />
-              <Text
-                variant="mediumText"
-                my={2}
-                style={{ whiteSpace: "nowrap" }}
-              >
-                Money-Back Guarantee
-              </Text>
+              <Flex>
+                <Text
+                  variant="mediumText"
+                  my={2}
+                  style={{ whiteSpace: "nowrap" }}
+                >
+                  Money-Back Guarantee
+                </Text>
+                <ArrowRightIcon height="20px" width="20px" mt={2} />
+              </Flex>
             </Flex>
           </Flex>
 
-          <Flex justifyContent="space-around" mt={4}>
+          <Flex justifyContent="space-around" mt={2}>
             <Flex flexDirection="column" alignItems="center">
               <LockIcon height={50} width={50} />
-              <Text
-                variant="mediumText"
-                my={2}
-                style={{ whiteSpace: "nowrap" }}
-              >
-                Secure Payment
-              </Text>
+              <Flex>
+                {" "}
+                <Text
+                  variant="mediumText"
+                  my={2}
+                  style={{ whiteSpace: "nowrap" }}
+                >
+                  Secure Payment
+                </Text>
+                <ArrowRightIcon height="20px" width="20px" mt={2} />
+              </Flex>
             </Flex>
           </Flex>
         </Media>
@@ -300,8 +317,8 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
                   Secure Payment
                 </Text>
                 <Text variant="text">
-                  Payments made through our secure checkout are protected with
-                  trusted, industry-leading technology.
+                  Payments made with our secure checkout are protected with
+                  trusted industry-leading technology.
                 </Text>
               </Box>
               <Box>{learnMoreIcon}</Box>
@@ -309,21 +326,21 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
           </Flex>
         </Media>
       </Flex>
-
       {/*  Artsy Guarantee Sections desktop */}
       <Media greaterThanOrEqual="sm">
         <CSSGrid gridTemplateColumns="repeat(2, 1fr)">
-          <Image
-            // @ts-expect-error STRICT_NULL_CHECK
-            src={authenticityGuaranteeImageURL}
-            // @ts-expect-error STRICT_NULL_CHECK
-            alt={authenticityImage.artist.name}
-            // @ts-expect-error STRICT_NULL_CHECK
-            srcSet={authenticityImage.image.resized.srcSet}
-            lazyLoad
-            // @ts-expect-error STRICT_NULL_CHECK
-            aria-label={authenticityImage.imageTitle}
-          />
+          {authenticityGuaranteeImageURL && (
+            <Image
+              src={authenticityGuaranteeImageURL}
+              alt={authenticityImage?.artist?.name!}
+              srcSet={authenticityImage?.image?.resized?.srcSet}
+              style={{ objectFit: "cover" }}
+              width="100%"
+              height="100%"
+              lazyLoad
+              aria-label={authenticityImage?.imageTitle!}
+            />
+          )}
           <Flex flexDirection="column" p={space(9)}>
             <Text variant="title">Authenticity Guarantee</Text>
             <Text variant="text" my={2}>
@@ -338,28 +355,30 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
             </Text>
             {learnMoreButton("40%")}
           </Flex>
-          <Image
-            // @ts-expect-error STRICT_NULL_CHECK
-            src={moneyBackGuaranteeImageURL}
-            // @ts-expect-error STRICT_NULL_CHECK
-            alt={moneyBackGuaranteeImage.artist.name}
-            // @ts-expect-error STRICT_NULL_CHECK
-            srcSet={moneyBackGuaranteeImage.image.resized.srcSet}
-            lazyLoad
-            // @ts-expect-error STRICT_NULL_CHECK
-            aria-label={moneyBackGuaranteeImage.imageTitle}
-          />
-          <Image
-            // @ts-expect-error STRICT_NULL_CHECK
-            src={securePaymentImageURL}
-            // @ts-expect-error STRICT_NULL_CHECK
-            alt={securePaymentImage.artist.name}
-            // @ts-expect-error STRICT_NULL_CHECK
-            srcSet={securePaymentImage.image.resized.srcSet}
-            // @ts-expect-error STRICT_NULL_CHECK
-            aria-label={securePaymentImage.imageTitle}
-            lazyLoad
-          />
+          {moneyBackGuaranteeImageURL && (
+            <Image
+              src={moneyBackGuaranteeImageURL}
+              alt={moneyBackGuaranteeImage?.artist?.name!}
+              srcSet={moneyBackGuaranteeImage?.image?.resized?.srcSet}
+              lazyLoad
+              aria-label={moneyBackGuaranteeImage?.imageTitle!}
+              style={{ objectFit: "cover" }}
+              width="100%"
+              height="100%"
+            />
+          )}
+          {securePaymentImageURL && (
+            <Image
+              src={securePaymentImageURL}
+              alt={securePaymentImage?.artist?.name!}
+              srcSet={securePaymentImage?.image?.resized?.srcSet}
+              aria-label={securePaymentImage?.imageTitle!}
+              lazyLoad
+              style={{ objectFit: "cover" }}
+              width="100%"
+              height="100%"
+            />
+          )}
           <Flex flexDirection="column" px={space(9)} pt={space(9)}>
             <Text variant="title">Secure Payment</Text>
             <Text variant="text" my={2}>
@@ -369,21 +388,18 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
           </Flex>
         </CSSGrid>
       </Media>
-
       {/*  Artsy Guarantee Sections mobile */}
       <Media lessThan="sm">
         <Flex flexDirection="column" mt={5} mx={2} mb={4}>
-          <Image
-            // @ts-expect-error STRICT_NULL_CHECK
-            src={authenticityGuaranteeImageURL}
-            // @ts-expect-error STRICT_NULL_CHECK
-            alt={authenticityImage.artist.name}
-            // @ts-expect-error STRICT_NULL_CHECK
-            srcSet={authenticityImage.image.resized.srcSet}
-            lazyLoad
-            // @ts-expect-error STRICT_NULL_CHECK
-            aria-label={authenticityImage.imageTitle}
-          />
+          {authenticityGuaranteeImageURL && (
+            <Image
+              src={authenticityGuaranteeImageURL}
+              alt={authenticityImage?.artist?.name!}
+              srcSet={authenticityImage?.image?.resized?.srcSet!}
+              lazyLoad
+              aria-label={authenticityImage?.imageTitle!}
+            />
+          )}
           <Text variant="title" mt={4}>
             Authenticity Guarantee
           </Text>
@@ -393,17 +409,15 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
           {learnMoreButton("50%")}
         </Flex>
         <Flex flexDirection="column" mt={5} mx={2} mb={4}>
-          <Image
-            // @ts-expect-error STRICT_NULL_CHECK
-            src={moneyBackGuaranteeImageURL}
-            // @ts-expect-error STRICT_NULL_CHECK
-            alt={moneyBackGuaranteeImage.artist.name}
-            // @ts-expect-error STRICT_NULL_CHECK
-            srcSet={moneyBackGuaranteeImage.image.resized.srcSet}
-            lazyLoad
-            // @ts-expect-error STRICT_NULL_CHECK
-            aria-label={moneyBackGuaranteeImage.imageTitle}
-          />
+          {moneyBackGuaranteeImageURL && (
+            <Image
+              src={moneyBackGuaranteeImageURL}
+              alt={moneyBackGuaranteeImage?.artist?.name!}
+              srcSet={moneyBackGuaranteeImage?.image?.resized?.srcSet}
+              lazyLoad
+              aria-label={moneyBackGuaranteeImage?.imageTitle!}
+            />
+          )}
           <Text variant="title" mt={4}>
             Money-Back Guarantee
           </Text>
@@ -413,17 +427,15 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
           {learnMoreButton("50%")}
         </Flex>
         <Flex flexDirection="column" mt={5} mx={2} mb={4}>
-          <Image
-            // @ts-expect-error STRICT_NULL_CHECK
-            src={securePaymentImageURL}
-            // @ts-expect-error STRICT_NULL_CHECK
-            alt={securePaymentImage.artist.name}
-            // @ts-expect-error STRICT_NULL_CHECK
-            srcSet={securePaymentImage.image.resized.srcSet}
-            lazyLoad
-            // @ts-expect-error STRICT_NULL_CHECK
-            aria-label={securePaymentImage.imageTitle}
-          />
+          {securePaymentImageURL && (
+            <Image
+              src={securePaymentImageURL}
+              alt={securePaymentImage?.artist?.name!}
+              srcSet={securePaymentImage?.image?.resized?.srcSet}
+              lazyLoad
+              aria-label={securePaymentImage?.imageTitle!}
+            />
+          )}
           <Text variant="title" mt={4}>
             Secure Payment
           </Text>
@@ -433,180 +445,199 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
           <PoweredByStripeIcon w={200} ml={"-30px"} mt={0} />
         </Flex>
       </Media>
-
       {/*  Artsy Guarantee Grid block mobile */}
       <Media lessThan="sm">
-        <CSSGrid
-          backgroundColor={color("black5")}
-          gridTemplateColumns="repeat(3, 1fr)"
-          mt={2}
-        >
-          <Box borderBottom={`solid 1px ${color("black10")}`}>{""}</Box>
-          <Text
-            border={`solid 1px ${color("black10")}`}
-            borderTop="none"
-            pt={4}
-            px={2}
-            textAlign="center"
-            variant="mediumText"
-          >
-            Making an Inquiry
-          </Text>
-          <Text
-            p={2}
-            textAlign="center"
-            variant="mediumText"
-            borderBottom={`solid 1px ${color("black10")}`}
-            backgroundColor={color("white100")}
-          >
-            Purchasing with Artsy’s secure checkout
-          </Text>
-          <Flex
-            height="60px"
-            borderTop="none"
-            flex-flexDirection="column"
-            alignItems="center"
-            justifyContent="center"
-          >
-            <Text textAlign="center" variant="mediumText">
-              Vetted Sellers
-            </Text>
-          </Flex>
-          <Flex
-            justifyContent="space-around"
-            alignItems="center"
-            border={`solid 1px ${color("black10")}`}
-            borderTop="none"
-            height="60px"
-          >
-            <VerifiedIcon width="40px" height="40px" />
-          </Flex>
-          <Flex
-            justifyContent="space-around"
-            alignItems="center"
-            height="60px"
-            borderBottom={`solid 1px ${color("black10")}`}
-            backgroundColor={color("white100")}
-          >
-            <VerifiedIcon width="40px" height="40px" />
-          </Flex>
+        <Box backgroundColor={color("black5")} mx="-20px">
           <Flex
             justifyContent="center"
-            flexDirection="column"
-            alignItems="center"
-            style={{ outline: `solid 1px ${color("black10")}` }}
-            height="60px"
+            py={4}
+            mb="-20px"
+            backgroundColor={color("black5")}
           >
-            <Text textAlign="center" variant="mediumText">
-              Dedicated Support
+            <Text variant="title">The Artsy Guarantee</Text>
+          </Flex>
+          <CSSGrid
+            backgroundColor={color("black5")}
+            gridTemplateColumns="repeat(3, 1fr)"
+            mt={2}
+          >
+            <Box borderBottom={`solid 1px ${color("black10")}`}>{""}</Box>
+            <Text
+              border={`solid 1px ${color("black10")}`}
+              borderTop="none"
+              pt={4}
+              px={2}
+              textAlign="center"
+              variant="mediumText"
+            >
+              Making an Inquiry
             </Text>
-          </Flex>
-          <Flex
-            justifyContent="space-around"
-            alignItems="center"
-            height="61px"
-            borderBottom={`solid 1px ${color("black10")}`}
-            borderRight={`solid 1px ${color("black10")}`}
-          >
-            <VerifiedIcon width="40px" height="40px" />
-          </Flex>
-          <Flex
-            justifyContent="space-around"
-            alignItems="center"
-            height="61px"
-            borderBottom={`solid 1px ${color("black10")}`}
-            backgroundColor={color("white100")}
-          >
-            <VerifiedIcon width="40px" height="40px" />
-          </Flex>
-          <Flex
-            alignItems="center"
-            style={{ outline: `solid 1px ${color("black10")}` }}
-            height="60px"
-          >
-            <Text textAlign="center" variant="mediumText">
-              Authenticity Guarantee
+            <Text
+              p={2}
+              textAlign="center"
+              variant="mediumText"
+              borderBottom={`solid 1px ${color("black10")}`}
+              backgroundColor={color("white100")}
+            >
+              Purchasing with Artsy’s secure checkout
             </Text>
-          </Flex>
-          <Flex
-            justifyContent="space-around"
-            alignItems="center"
-            height="61px"
-            borderBottom={`solid 1px ${color("black10")}`}
-            borderRight={`solid 1px ${color("black10")}`}
-          >
-            {""}
-          </Flex>
-          <Flex
-            justifyContent="space-around"
-            alignItems="center"
-            height="61px"
-            borderBottom={`solid 1px ${color("black10")}`}
-            backgroundColor={color("white100")}
-          >
-            <VerifiedIcon width="40px" height="40px" />
-          </Flex>
-          <Flex
-            alignItems="center"
-            style={{ outline: `solid 1px ${color("black10")}` }}
-            height="60px"
-          >
-            <Text textAlign="center" variant="mediumText">
-              Money-Back Guarantee
-            </Text>
-          </Flex>
-          <Flex
-            justifyContent="space-around"
-            alignItems="center"
-            height="61px"
-            borderBottom={`solid 1px ${color("black10")}`}
-            borderRight={`solid 1px ${color("black10")}`}
-          >
-            {""}
-          </Flex>
-          <Flex
-            justifyContent="space-around"
-            alignItems="center"
-            height="61px"
-            borderBottom={`solid 1px ${color("black10")}`}
-            backgroundColor={color("white100")}
-          >
-            <VerifiedIcon width="40px" height="40px" />
-          </Flex>
-          <Flex
-            alignItems="center"
-            justifyContent="center"
-            style={{ outline: `solid 1px ${color("black10")}` }}
-            height="60px"
-            flexDirection="column"
-          >
-            <Text variant="mediumText">Secure Payment</Text>
-          </Flex>
+            <Flex
+              height="60px"
+              borderTop="none"
+              flex-flexDirection="column"
+              alignItems="center"
+              justifyContent="center"
+            >
+              <Text textAlign="center" variant="mediumText">
+                Vetted Sellers
+              </Text>
+            </Flex>
+            <Flex
+              justifyContent="space-around"
+              alignItems="center"
+              border={`solid 1px ${color("black10")}`}
+              borderTop="none"
+              height="60px"
+            >
+              <VerifiedIcon width="40px" height="40px" />
+            </Flex>
+            <Flex
+              justifyContent="space-around"
+              alignItems="center"
+              height="60px"
+              borderBottom={`solid 1px ${color("black10")}`}
+              backgroundColor={color("white100")}
+            >
+              <VerifiedIcon width="40px" height="40px" />
+            </Flex>
+            <Flex
+              justifyContent="center"
+              flexDirection="column"
+              alignItems="center"
+              border={`solid 1px ${color("black10")}`}
+              borderLeft="none"
+              mt="-1px"
+              mr="-1px"
+              height="62px"
+            >
+              <Text textAlign="center" variant="mediumText">
+                Dedicated Support
+              </Text>
+            </Flex>
+            <Flex
+              justifyContent="space-around"
+              alignItems="center"
+              height="61px"
+              borderBottom={`solid 1px ${color("black10")}`}
+              borderRight={`solid 1px ${color("black10")}`}
+            >
+              <VerifiedIcon width="40px" height="40px" />
+            </Flex>
+            <Flex
+              justifyContent="space-around"
+              alignItems="center"
+              height="60px"
+              borderBottom={`solid 1px ${color("black10")}`}
+              backgroundColor={color("white100")}
+            >
+              <VerifiedIcon width="40px" height="40px" />
+            </Flex>
+            <Flex
+              alignItems="center"
+              borderRight={`solid 1px ${color("black10")}`}
+              height="61px"
+              mr="-1px"
+            >
+              <Text textAlign="center" variant="mediumText">
+                Authenticity Guarantee
+              </Text>
+            </Flex>
+            <Flex
+              justifyContent="space-around"
+              alignItems="center"
+              height="61px"
+              borderBottom={`solid 1px ${color("black10")}`}
+              borderRight={`solid 1px ${color("black10")}`}
+            >
+              {""}
+            </Flex>
+            <Flex
+              justifyContent="space-around"
+              alignItems="center"
+              height="61px"
+              borderBottom={`solid 1px ${color("black10")}`}
+              backgroundColor={color("white100")}
+            >
+              <VerifiedIcon width="40px" height="40px" />
+            </Flex>
+            <Flex
+              alignItems="center"
+              height="62px"
+              border={`solid 1px ${color("black10")}`}
+              borderLeft="none"
+              mt="-1px"
+              mr="-1px"
+            >
+              <Text textAlign="center" variant="mediumText">
+                Money-Back Guarantee
+              </Text>
+            </Flex>
+            <Flex
+              justifyContent="space-around"
+              alignItems="center"
+              height="61px"
+              borderBottom={`solid 1px ${color("black10")}`}
+              borderRight={`solid 1px ${color("black10")}`}
+            >
+              {""}
+            </Flex>
+            <Flex
+              justifyContent="space-around"
+              alignItems="center"
+              height="61px"
+              borderBottom={`solid 1px ${color("black10")}`}
+              backgroundColor={color("white100")}
+            >
+              <VerifiedIcon width="40px" height="40px" />
+            </Flex>
+            <Flex
+              alignItems="center"
+              justifyContent="center"
+              borderBottom={`solid 1px ${color("black10")}`}
+              borderRight={`solid 1px ${color("black10")}`}
+              height="61px"
+              mr="-1px"
+              flexDirection="column"
+            >
+              <Text textAlign="center" variant="mediumText">
+                Secure Payment
+              </Text>
+            </Flex>
 
-          <Flex
-            justifyContent="space-around"
-            alignItems="center"
-            height="61px"
-            borderBottom={`solid 1px ${color("black10")}`}
-            borderRight={`solid 1px ${color("black10")}`}
-          >
-            {""}
+            <Flex
+              justifyContent="space-around"
+              alignItems="center"
+              height="61px"
+              borderBottom={`solid 1px ${color("black10")}`}
+              borderRight={`solid 1px ${color("black10")}`}
+            >
+              {""}
+            </Flex>
+            <Flex
+              justifyContent="space-around"
+              alignItems="center"
+              height="61px"
+              borderBottom={`solid 1px ${color("black10")}`}
+              backgroundColor={color("white100")}
+            >
+              <VerifiedIcon width="40px" height="40px" />
+            </Flex>
+          </CSSGrid>
+          <Flex backgroundColor={color("black5")} p={4} justifyContent="center">
+            {learnMoreButton("100%")}
           </Flex>
-          <Flex
-            justifyContent="space-around"
-            alignItems="center"
-            height="61px"
-            borderBottom={`solid 1px ${color("black10")}`}
-            backgroundColor={color("white100")}
-          >
-            <VerifiedIcon width="40px" height="40px" />
-          </Flex>
-        </CSSGrid>
-        <Flex backgroundColor={color("black5")} p={4} justifyContent="center">
-          {learnMoreButton("100%")}
-        </Flex>
+        </Box>
       </Media>
-
       {/*  Artsy Guarantee Grid block desktop */}
       <Media greaterThanOrEqual="sm">
         <Flex
