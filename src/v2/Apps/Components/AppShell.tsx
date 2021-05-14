@@ -72,10 +72,14 @@ export const AppShell: React.FC<AppShellProps> = props => {
   useMaybeReloadAfterInquirySignIn()
 
   return (
-    <Box
+    <Flex
       width="100%"
       // Prevents horizontal scrollbars from `FullBleed` + persistent vertical scrollbars
       overflowX="hidden"
+      // Implements "Sticky footer" pattern
+      // https://philipwalton.github.io/solved-by-flexbox/demos/sticky-footer/
+      minHeight="100vh"
+      flexDirection="column"
     >
       <Box pb={[MOBILE_NAV_HEIGHT, NAV_BAR_HEIGHT]}>
         <Box left={0} position="fixed" width="100%" zIndex={100}>
@@ -85,25 +89,28 @@ export const AppShell: React.FC<AppShellProps> = props => {
 
       <Theme theme={theme}>
         <>
-          <Box as="main" id="main">
+          <Flex
+            as="main"
+            id="main"
+            // Occupies available vertical space
+            flex={1}
+          >
             <AppContainer maxWidth={appContainerMaxWidth}>
               <HorizontalPadding>{children}</HorizontalPadding>
             </AppContainer>
-          </Box>
+          </Flex>
 
           <NetworkOfflineMonitor />
 
           {showFooter && (
-            <Flex backgroundColor="white100">
-              <AppContainer>
-                <HorizontalPadding>
-                  <Footer />
-                </HorizontalPadding>
-              </AppContainer>
-            </Flex>
+            <AppContainer bg="white100">
+              <HorizontalPadding>
+                <Footer />
+              </HorizontalPadding>
+            </AppContainer>
           )}
         </>
       </Theme>
-    </Box>
+    </Flex>
   )
 }
