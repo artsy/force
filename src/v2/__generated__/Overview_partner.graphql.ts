@@ -14,7 +14,7 @@ export type Overview_partner = {
             readonly " $fragmentRefs": FragmentRefs<"ArticlesRail_articles">;
         } | null> | null;
     } | null;
-    readonly " $fragmentRefs": FragmentRefs<"AboutPartner_partner" | "ShowsRail_partner" | "ArtistsRail_partner">;
+    readonly " $fragmentRefs": FragmentRefs<"AboutPartner_partner" | "ShowsRail_partner" | "ArtistsRail_partner" | "SubscriberBanner_partner">;
     readonly " $refType": "Overview_partner";
 };
 export type Overview_partner$data = Overview_partner;
@@ -168,9 +168,14 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "FragmentSpread",
       "name": "ArtistsRail_partner"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "SubscriberBanner_partner"
     }
   ],
   "type": "Partner"
 };
-(node as any).hash = '7a31761ac332d16d496b785ea68fdc52';
+(node as any).hash = '47fa51fc61fef55bf9bc204c7b67d29a';
 export default node;
