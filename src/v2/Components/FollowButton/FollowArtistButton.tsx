@@ -217,7 +217,7 @@ export class FollowArtistButton extends React.Component<Props, State> {
     )
 
     return (
-      <>
+      <Box data-test="followArtistButton">
         {content}
         {openSuggestions && (
           <SuggestionsPopoverContainer>
@@ -229,7 +229,7 @@ export class FollowArtistButton extends React.Component<Props, State> {
             />
           </SuggestionsPopoverContainer>
         )}
-      </>
+      </Box>
     )
   }
 }
