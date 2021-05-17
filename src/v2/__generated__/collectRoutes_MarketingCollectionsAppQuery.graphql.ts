@@ -23,14 +23,20 @@ query collectRoutes_MarketingCollectionsAppQuery {
   }
 }
 
-fragment Collections_marketingCategories on MarketingCollectionCategory {
+fragment CollectionsCategory_category on MarketingCollectionCategory {
   name
   collections {
+    internalID
     slug
-    headerImage
     title
+    headerImage
     id
   }
+}
+
+fragment Collections_marketingCategories on MarketingCollectionCategory {
+  name
+  ...CollectionsCategory_category
 }
 */
 
@@ -93,6 +99,13 @@ const node: ConcreteRequest = {
                 "alias": null,
                 "args": null,
                 "kind": "ScalarField",
+                "name": "internalID",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
                 "name": "slug",
                 "storageKey": null
               },
@@ -100,14 +113,14 @@ const node: ConcreteRequest = {
                 "alias": null,
                 "args": null,
                 "kind": "ScalarField",
-                "name": "headerImage",
+                "name": "title",
                 "storageKey": null
               },
               {
                 "alias": null,
                 "args": null,
                 "kind": "ScalarField",
-                "name": "title",
+                "name": "headerImage",
                 "storageKey": null
               },
               {
@@ -130,7 +143,7 @@ const node: ConcreteRequest = {
     "metadata": {},
     "name": "collectRoutes_MarketingCollectionsAppQuery",
     "operationKind": "query",
-    "text": "query collectRoutes_MarketingCollectionsAppQuery {\n  marketingCategories @principalField {\n    ...Collections_marketingCategories\n  }\n}\n\nfragment Collections_marketingCategories on MarketingCollectionCategory {\n  name\n  collections {\n    slug\n    headerImage\n    title\n    id\n  }\n}\n"
+    "text": "query collectRoutes_MarketingCollectionsAppQuery {\n  marketingCategories @principalField {\n    ...Collections_marketingCategories\n  }\n}\n\nfragment CollectionsCategory_category on MarketingCollectionCategory {\n  name\n  collections {\n    internalID\n    slug\n    title\n    headerImage\n    id\n  }\n}\n\nfragment Collections_marketingCategories on MarketingCollectionCategory {\n  name\n  ...CollectionsCategory_category\n}\n"
   }
 };
 (node as any).hash = 'fef524f8337c800a5308955689bca0b6';
