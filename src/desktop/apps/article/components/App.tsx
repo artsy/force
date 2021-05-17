@@ -9,6 +9,7 @@ import { data as sd } from "sharify"
 import { ArticleProps } from "@artsy/reaction/dist/Components/Publishing/Article"
 import { ClassicArticleLayout } from "desktop/apps/article/components/layouts/Classic"
 import { mediator } from "lib/mediator"
+import { getArticleWithTitle } from "../helpers"
 
 export interface AppProps extends ArticleProps {
   templates?: {
@@ -20,7 +21,7 @@ export interface AppProps extends ArticleProps {
 
 export class App extends React.Component<AppProps> {
   getArticleLayout = () => {
-    const { article } = this.props
+    const article = getArticleWithTitle(this.props.article)
 
     switch (article.layout) {
       case "video": {

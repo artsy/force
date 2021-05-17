@@ -72,3 +72,11 @@ export const getJsonLd = article => {
   const articleModel = new Article(article)
   return stringifyJSONForWeb(articleModel.toJSONLD())
 }
+
+export const getArticleWithTitle = article => {
+  const articleWithTitle = { ...article }
+  if (!articleWithTitle.title || !articleWithTitle.title.trim()) {
+    articleWithTitle.title = articleWithTitle.thumbnail_title
+  }
+  return articleWithTitle
+}

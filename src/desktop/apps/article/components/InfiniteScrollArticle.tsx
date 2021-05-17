@@ -10,7 +10,10 @@ import {
 } from "@artsy/reaction/dist/Components/Publishing/Article"
 import { articlesQuery } from "desktop/apps/article/queries/articles"
 import { ArticleData } from "@artsy/reaction/dist/Components/Publishing/Typings"
-import { shouldAdRender } from "desktop/apps/article/helpers"
+import {
+  getArticleWithTitle,
+  shouldAdRender,
+} from "desktop/apps/article/helpers"
 
 const FETCH_TOP_OFFSET = 200
 
@@ -141,10 +144,12 @@ export class InfiniteScrollArticle extends React.Component<
         // @ts-expect-error STRICT_NULL_CHECK
         const renderAd = shouldAdRender(null, null, null, articleType)
 
+        const articleWithTitle = getArticleWithTitle(article)
+
         return (
           <div key={`article-${i}`}>
             <Article
-              article={article}
+              article={articleWithTitle}
               relatedArticlesForPanel={article.relatedArticlesPanel}
               relatedArticlesForCanvas={article.relatedArticlesCanvas}
               isTruncated={i !== 0}
