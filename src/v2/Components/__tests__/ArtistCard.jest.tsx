@@ -73,7 +73,7 @@ describe("ArtistCard", () => {
 
   it("opens auth modal with expected args when following an artist", () => {
     const wrapper = getWrapper("lg")
-    wrapper.find(FollowArtistButton).first().simulate("click")
+    wrapper.find(FollowArtistButton).find("button").simulate("click")
     expect(mediator.trigger).toBeCalledWith("open:auth", {
       mode: "signup",
       contextModule: "artistsToFollowRail",

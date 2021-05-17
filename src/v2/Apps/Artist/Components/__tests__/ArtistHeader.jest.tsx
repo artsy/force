@@ -71,7 +71,7 @@ describe("ArtistHeader", () => {
 
   it("opens auth modal with expected args when following an artist", async () => {
     const wrapper = await getWrapper()
-    wrapper.find(FollowArtistButton).at(0).simulate("click")
+    wrapper.find(FollowArtistButton).first().find("button").simulate("click")
     expect(mediator.trigger).toBeCalledWith("open:auth", {
       afterSignUpAction: {
         action: "follow",
