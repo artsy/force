@@ -234,7 +234,6 @@ export class Accept extends Component<AcceptProps> {
               </Media>
               <Media at="xs">
                 <>
-                  <Spacer mb={2} />
                   <Button
                     onClick={this.onSubmit}
                     loading={isCommittingMutation}

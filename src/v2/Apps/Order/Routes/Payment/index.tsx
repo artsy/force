@@ -161,7 +161,6 @@ export class PaymentRoute extends Component<
               <Spacer mb={[2, 3]} />
               <Media at="xs">
                 <>
-                  <Spacer mb={3} />
                   <ContinueButton
                     onClick={this.onContinue}
                     loading={isLoading}
