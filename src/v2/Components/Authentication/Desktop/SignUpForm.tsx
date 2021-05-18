@@ -52,16 +52,16 @@ export class SignUpForm extends Component<FormProps, SignUpFormState> {
         validationSchema={SignUpValidator}
       >
         {({
-          values,
           errors,
-          touched,
-          handleChange: formikHandleChange,
           handleBlur,
+          handleChange: formikHandleChange,
           handleSubmit,
           isSubmitting,
-          status,
           setStatus,
           setTouched,
+          status,
+          touched,
+          values,
         }: FormikProps<InputValues>) => {
           const handleChange = e => {
             setStatus(null)
