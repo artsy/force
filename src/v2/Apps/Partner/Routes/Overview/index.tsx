@@ -5,6 +5,7 @@ import { Overview_partner } from "v2/__generated__/Overview_partner.graphql"
 import { ArtistsRailFragmentContainer } from "../../Components/Overview/ArtistsRail"
 import { ShowsRailFragmentContainer } from "../../Components/Overview/ShowsRail"
 import { AboutPartnerFragmentContainer } from "../../Components/Overview/AboutPartner"
+import { SubscriberBannerFragmentContainer } from "../../Components/Overview/SubscriberBanner"
 import { ArtworksRailRenderer } from "../../Components/Overview/ArtworksRail"
 import { ShowBannersRailRenderer } from "../../Components/Overview/ShowBannersRail"
 
@@ -44,6 +45,8 @@ const Overview: React.FC<OverviewProps> = ({ partner }) => {
     </>
   ) : (
     <>
+      <SubscriberBannerFragmentContainer partner={partner} />
+
       <AboutPartnerFragmentContainer partner={partner} />
 
       <ShowsRailFragmentContainer mt={4} mb={[4, 80]} partner={partner} />
@@ -65,6 +68,7 @@ export const OverviewFragmentContainer = createFragmentContainer(Overview, {
       ...AboutPartner_partner
       ...ShowsRail_partner
       ...ArtistsRail_partner
+      ...SubscriberBanner_partner
       articlesConnection(first: 8)
         @connection(key: "ArticlesQuery_articlesConnection") {
         totalCount
