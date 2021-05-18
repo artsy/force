@@ -84,6 +84,8 @@ export const NavBar: React.FC = track(
     }
   }
 
+  const navItemsMargins = ["-2px", "-2px", "0", "0"]
+
   return (
     <>
       <NavBarSkipLink />
@@ -235,17 +237,22 @@ export const NavBar: React.FC = track(
                   Artworks
                 </NavItem>
 
-                <NavItem href="/auctions">Auctions</NavItem>
-                <NavItem href="/viewing-rooms">Viewing&nbsp;Rooms</NavItem>
-                <NavItem href="/galleries">Galleries</NavItem>
-                <NavItem href="/fairs">Fairs</NavItem>
-                <NavItem href="/Shows">Shows</NavItem>
-                <NavItem
-                  // Hide link at smaller viewports — corresponding display inside of `MoreNavMenu`
-                  // If we need to do this again, consider a more abstract solution
-                  display={["none", "none", "flex", "flex"]}
-                  href="/institutions"
-                >
+                <NavItem href="/auctions" marginX={navItemsMargins}>
+                  Auctions
+                </NavItem>
+                <NavItem href="/viewing-rooms" marginX={navItemsMargins}>
+                  Viewing&nbsp;Rooms
+                </NavItem>
+                <NavItem href="/galleries" marginX={navItemsMargins}>
+                  Galleries
+                </NavItem>
+                <NavItem href="/fairs" marginX={navItemsMargins}>
+                  Fairs
+                </NavItem>
+                <NavItem href="/Shows" marginX={navItemsMargins}>
+                  Shows
+                </NavItem>
+                <NavItem href="/institutions" marginX={navItemsMargins}>
                   Museums
                 </NavItem>
               </NavSection>
