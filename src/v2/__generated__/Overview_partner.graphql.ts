@@ -8,6 +8,17 @@ export type Overview_partner = {
     readonly fullProfileEligible: boolean | null;
     readonly profileBannerDisplay: string | null;
     readonly displayArtistsSection: boolean | null;
+    readonly locationsConnection: {
+        readonly edges: ReadonlyArray<{
+            readonly node: {
+                readonly city: string | null;
+                readonly coordinates: {
+                    readonly lat: number | null;
+                    readonly lng: number | null;
+                } | null;
+            } | null;
+        } | null> | null;
+    } | null;
     readonly articlesConnection: {
         readonly totalCount: number | null;
         readonly edges: ReadonlyArray<{
@@ -69,6 +80,77 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "name": "displayArtistsSection",
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "first",
+          "value": 1
+        }
+      ],
+      "concreteType": "LocationConnection",
+      "kind": "LinkedField",
+      "name": "locationsConnection",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "LocationEdge",
+          "kind": "LinkedField",
+          "name": "edges",
+          "plural": true,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": "Location",
+              "kind": "LinkedField",
+              "name": "node",
+              "plural": false,
+              "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "city",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "concreteType": "LatLng",
+                  "kind": "LinkedField",
+                  "name": "coordinates",
+                  "plural": false,
+                  "selections": [
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "lat",
+                      "storageKey": null
+                    },
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "lng",
+                      "storageKey": null
+                    }
+                  ],
+                  "storageKey": null
+                }
+              ],
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        }
+      ],
+      "storageKey": "locationsConnection(first:1)"
     },
     {
       "alias": "articlesConnection",
@@ -177,5 +259,5 @@ const node: ReaderFragment = {
   ],
   "type": "Partner"
 };
-(node as any).hash = '47fa51fc61fef55bf9bc204c7b67d29a';
+(node as any).hash = 'aef0b4e01c9587cad64f528f231e8fb4';
 export default node;
