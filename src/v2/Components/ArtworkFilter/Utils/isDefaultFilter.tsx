@@ -1,4 +1,5 @@
 import { ArtworkFilters } from "../ArtworkFilterContext"
+import { data as sd } from "sharify" // TODO: Remove after AB test
 
 export const isDefaultFilter: (
   name: keyof ArtworkFilters,
@@ -7,6 +8,11 @@ export const isDefaultFilter: (
   if (!value) {
     return false
   }
+
+  const defaultSort =
+    sd["DECAYED_MERCH_V2"] === "experiment"
+      ? "-decayed_merch_v2"
+      : "-decayed_merch"
 
   switch (true) {
     case name === "sizes" ||
@@ -21,7 +27,7 @@ export const isDefaultFilter: (
       name === "materialsTerms":
       return value.length === 0
     case name === "sort":
-      return value === "-decayed_merch"
+      return value === defaultSort
     case name === "medium":
       return value === "*" || !value
     case name === "priceRange" || name === "height" || name === "width":
