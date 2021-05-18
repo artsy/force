@@ -58,13 +58,14 @@ describe("GeneShow", () => {
   it("renders fallback meta description", () => {
     const wrapper = getWrapper({
       Gene: () => ({
+        name: "Design",
         meta: { description: null },
       }),
     })
 
     for (let i = 1; i <= 3; i++) {
       expect(wrapper.find(Meta).at(i).prop("content")).toEqual(
-        "Explore art on Artsy. Browse works by size, price, and medium."
+        "Explore Design art on Artsy. Browse works by size, price, and medium."
       )
     }
   })
