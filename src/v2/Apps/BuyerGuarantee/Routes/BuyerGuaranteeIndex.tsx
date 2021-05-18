@@ -618,7 +618,6 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
                 Secure Payment
               </Text>
             </Flex>
-
             <Flex
               justifyContent="space-around"
               alignItems="center"
@@ -643,7 +642,7 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
           </Flex>
         </Box>
       </Media>
-      {/*  Artsy Guarantee Grid block desktop */}
+      {/*  Artsy Guarantee Grid block iPad & desktop */}
       <Media greaterThanOrEqual="sm">
         <Flex
           justifyContent="center"
@@ -655,30 +654,32 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
         <CSSGrid
           backgroundColor={color("black5")}
           gridTemplateColumns="repeat(6, 1fr)"
-          px={space(18)}
+          px={0}
           pt={0}
           pb={space(9)}
         >
           <Flex borderBottom={`solid 1px ${color("black100")}`}>{""}</Flex>
-          <Text
-            p={1}
-            textAlign="center"
-            variant="mediumText"
-            height="50px"
+          <Flex
+            alignItems="center"
+            justifyContent="center"
             borderBottom={`solid 1px ${color("black100")}`}
             borderLeft={`solid 1px ${color("black100")}`}
+            height="50px"
+            flexDirection="column"
           >
-            Vetted Sellers
-          </Text>
-          <Flex flexDirection="column">
-            <Text
-              p={1}
-              textAlign="center"
-              variant="mediumText"
-              height="50px"
-              borderBottom={`solid 1px ${color("black100")}`}
-              borderLeft={`solid 1px ${color("black100")}`}
-            >
+            <Text p={1} variant="mediumText" textAlign="center">
+              Vetted Sellers
+            </Text>
+          </Flex>
+          <Flex
+            alignItems="center"
+            justifyContent="center"
+            borderBottom={`solid 1px ${color("black100")}`}
+            borderLeft={`solid 1px ${color("black100")}`}
+            height="50px"
+            flexDirection="column"
+          >
+            <Text p={1} variant="mediumText" textAlign="center">
               Dedicated Support
             </Text>
           </Flex>
@@ -712,12 +713,14 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
             height="50px"
             flexDirection="column"
           >
-            <Text p={1} variant="mediumText">
+            <Text p={1} variant="mediumText" textAlign="center">
               Secure Payment
             </Text>
           </Flex>
           <Flex justifyContent="space-around" alignItems="center" height="91px">
-            <Text variant="mediumText">Making an Inquiry</Text>
+            <Text variant="mediumText" textAlign="center" pr={1}>
+              Making an Inquiry
+            </Text>
           </Flex>
           <Flex
             justifyContent="space-around"
@@ -773,7 +776,7 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
             borderTop={`solid 1px ${color("black100")}`}
             backgroundColor={color("white100")}
           >
-            <Text textAlign="center" variant="mediumText">
+            <Text textAlign="center" variant="mediumText" pr={1}>
               Purchasing with Artsy’s secure checkout
             </Text>
           </Flex>
