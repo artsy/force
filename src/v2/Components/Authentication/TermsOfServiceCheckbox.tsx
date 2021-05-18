@@ -3,17 +3,19 @@ import Checkbox from "v2/Components/Checkbox"
 import React from "react"
 import styled from "styled-components"
 
-export const TermsOfServiceCheckbox = ({
-  error,
-  name,
-  onChange,
-  onBlur,
-  value,
-  ...props
-}) => {
-  const color = error && !value ? "red100" : "black60"
+interface TermsOfServiceCheckboxProps {
+  checked
+  error
+  name
+  onBlur
+  onChange
+}
+
+export const TermsOfServiceCheckbox: React.FC<TermsOfServiceCheckboxProps> = props => {
+  const color = props.error ? "red100" : "black60"
+
   return (
-    <StyledCheckbox {...{ checked: value, error, onChange, onBlur, name }}>
+    <StyledCheckbox {...props}>
       <Serif color={color} size="3t" ml={0.5}>
         {"By checking this box, you consent to our "}
         <Link
