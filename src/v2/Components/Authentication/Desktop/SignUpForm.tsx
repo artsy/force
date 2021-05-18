@@ -125,8 +125,6 @@ export class SignUpForm extends Component<FormProps, SignUpFormState> {
                 name="agreed_to_receive_emails"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                type="checkbox"
-                value={values.agreed_to_receive_emails}
               />
               {status && !status.success && <Error show>{status.error}</Error>}
               <SubmitButton loading={isSubmitting}>Sign up</SubmitButton>
