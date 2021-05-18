@@ -4,8 +4,7 @@ import { AuctionsMeta } from "./Components/AuctionsMeta"
 import { MyBidsFragmentContainer } from "./Components/MyBids/MyBids"
 import { Box, Column, GridColumns, Join, Spacer, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { LazyLoadComponent } from "react-lazy-load-image-component"
-import { RecentlyViewedQueryRenderer as RecentlyViewed } from "v2/Components/RecentlyViewed"
+import { RecentlyViewed } from "v2/Components/RecentlyViewed"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import { RouteTabs, RouteTab } from "v2/Components/RouteTabs"
 import { useSystemContext } from "v2/Artsy/useSystemContext"
@@ -77,13 +76,7 @@ const AuctionsApp: React.FC<AuctionsAppProps> = props => {
 
       <Box>{children}</Box>
 
-      {typeof window !== "undefined" && (
-        <>
-          <LazyLoadComponent threshold={1000}>
-            <RecentlyViewed />
-          </LazyLoadComponent>
-        </>
-      )}
+      <RecentlyViewed />
     </>
   )
 }

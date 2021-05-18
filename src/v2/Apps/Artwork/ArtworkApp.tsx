@@ -1,6 +1,5 @@
 import { Box, Col, Row, Spacer } from "@artsy/palette"
 import React, { useContext } from "react"
-import { LazyLoadComponent } from "react-lazy-load-image-component"
 import { createFragmentContainer, graphql } from "react-relay"
 import { data as sd } from "sharify"
 
@@ -20,7 +19,7 @@ import { PricingContextFragmentContainer as PricingContext } from "./Components/
 
 import { withSystemContext } from "v2/Artsy"
 import * as Schema from "v2/Artsy/Analytics/Schema"
-import { RecentlyViewedQueryRenderer as RecentlyViewed } from "v2/Components/RecentlyViewed"
+import { RecentlyViewed } from "v2/Components/RecentlyViewed"
 import { RouterContext } from "found"
 import { TrackingProp } from "react-tracking"
 import { Media } from "v2/Utils/Responsive"
@@ -287,15 +286,12 @@ export class ArtworkApp extends React.Component<Props> {
             </Row>
           )}
 
-          {typeof window !== "undefined" && (
-            <LazyLoadComponent threshold={1000}>
-              <Row>
-                <Col>
-                  <RecentlyViewed />
-                </Col>
-              </Row>
-            </LazyLoadComponent>
-          )}
+          <Row>
+            <Col>
+              <RecentlyViewed />
+            </Col>
+          </Row>
+
           <div
             id="lightbox-container"
             style={{

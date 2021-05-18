@@ -8,14 +8,7 @@ export type RecentlyViewed_me = {
         readonly edges: ReadonlyArray<{
             readonly node: {
                 readonly id: string;
-                readonly image: {
-                    readonly url: string | null;
-                    readonly aspectRatio: number;
-                } | null;
-                readonly imageTitle: string | null;
-                readonly title: string | null;
-                readonly href: string | null;
-                readonly " $fragmentRefs": FragmentRefs<"Metadata_artwork" | "SaveButton_artwork" | "Badge_artwork">;
+                readonly " $fragmentRefs": FragmentRefs<"ShelfArtwork_artwork">;
             } | null;
         } | null> | null;
     } | null;
@@ -73,71 +66,9 @@ const node: ReaderFragment = {
                   "storageKey": null
                 },
                 {
-                  "alias": null,
-                  "args": null,
-                  "concreteType": "Image",
-                  "kind": "LinkedField",
-                  "name": "image",
-                  "plural": false,
-                  "selections": [
-                    {
-                      "alias": null,
-                      "args": [
-                        {
-                          "kind": "Literal",
-                          "name": "version",
-                          "value": "larger"
-                        }
-                      ],
-                      "kind": "ScalarField",
-                      "name": "url",
-                      "storageKey": "url(version:\"larger\")"
-                    },
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "aspectRatio",
-                      "storageKey": null
-                    }
-                  ],
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "imageTitle",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "title",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "href",
-                  "storageKey": null
-                },
-                {
                   "args": null,
                   "kind": "FragmentSpread",
-                  "name": "Metadata_artwork"
-                },
-                {
-                  "args": null,
-                  "kind": "FragmentSpread",
-                  "name": "SaveButton_artwork"
-                },
-                {
-                  "args": null,
-                  "kind": "FragmentSpread",
-                  "name": "Badge_artwork"
+                  "name": "ShelfArtwork_artwork"
                 }
               ],
               "storageKey": null
@@ -151,5 +82,5 @@ const node: ReaderFragment = {
   ],
   "type": "Me"
 };
-(node as any).hash = 'abeef15094294a706fc1c2aaad7c61a2';
+(node as any).hash = '54d03de051db4de38baaf24ffaca7866';
 export default node;
