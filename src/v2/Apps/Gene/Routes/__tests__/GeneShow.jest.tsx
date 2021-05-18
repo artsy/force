@@ -64,7 +64,7 @@ describe("GeneShow", () => {
 
     for (let i = 1; i <= 3; i++) {
       expect(wrapper.find(Meta).at(i).prop("content")).toEqual(
-        "Explore art onArtsy. Browse works by size, price, and medium."
+        "Explore art on Artsy. Browse works by size, price, and medium."
       )
     }
   })

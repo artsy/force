@@ -12,7 +12,7 @@ const TagMeta: React.FC<GeneMetaProps> = ({ tag }) => {
   const title = `${tag.name} | Artsy`
 
   const fallbackDescription =
-    "Explore art onArtsy. Browse works by size, price, and medium."
+    "Explore art on Artsy. Browse works by size, price, and medium."
   const description = tag.description || fallbackDescription
 
   const href = `${getENV("APP_URL")}/${tag.href}`

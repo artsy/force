@@ -12,7 +12,7 @@ const GeneMeta: React.FC<GeneMetaProps> = ({ gene }) => {
   const title = `${gene.name} | Artsy`
 
   const fallbackDescription =
-    "Explore art onArtsy. Browse works by size, price, and medium."
+    "Explore art on Artsy. Browse works by size, price, and medium."
   const description = gene.meta.description || fallbackDescription
 
   const href = `${getENV("APP_URL")}/${gene.href}`
