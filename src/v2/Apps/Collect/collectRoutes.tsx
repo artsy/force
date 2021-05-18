@@ -40,6 +40,7 @@ export const collectRoutes: AppRouteConfig[] = [
   },
   {
     path: "/collections",
+    theme: "v3",
     getComponent: () => CollectionsApp,
     prepare: () => {
       CollectionsApp.preload()

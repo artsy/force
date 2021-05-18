@@ -67,7 +67,12 @@ describe("ArtworkSidebarArtists", () => {
     })
 
     it("Opens auth with expected args when following an artist", () => {
-      wrapper.find(FollowArtistButton).at(0).simulate("click")
+      wrapper
+        .find(FollowArtistButton)
+        .find('[role="button"]')
+        .first()
+        .simulate("click")
+
       expect(mediator.trigger).toBeCalledWith("open:auth", {
         afterSignUpAction: {
           action: "follow",
