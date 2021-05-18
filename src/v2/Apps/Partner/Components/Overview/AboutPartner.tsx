@@ -31,22 +31,30 @@ export const AboutPartner: React.FC<AboutPartnerProps> = ({
 
       <Column span={6}>
         <Media at="xs">
-          {limitedBio && <Text variant="text">{limitedBio}</Text>}
+          {limitedBio && (
+            <Text mb={2} variant="text">
+              {limitedBio}
+            </Text>
+          )}
         </Media>
         <Media greaterThan="xs">
-          {fullBio && <Text variant="text">{fullBio}</Text>}
+          {fullBio && (
+            <Text mb={2} variant="text">
+              {fullBio}
+            </Text>
+          )}
         </Media>
 
         {canRenderWebsite && (
           <RouterLink to={website!} target="_blank">
-            <Text mt={2} variant="text">
+            <Text mb={2} variant="text">
               {website}
             </Text>
           </RouterLink>
         )}
 
         {canRenderVatNumber && (
-          <Text mt={2} variant="text">{`VAT ID#: ${vatNumber}`}</Text>
+          <Text variant="text">{`VAT ID#: ${vatNumber}`}</Text>
         )}
       </Column>
     </GridColumns>
