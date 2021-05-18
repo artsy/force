@@ -39,13 +39,15 @@ export class SignUpForm extends Component<FormProps, SignUpFormState> {
   }
 
   render() {
+    const initialValues = {
+      accepted_terms_of_service: false,
+      agreed_to_receive_emails: false,
+      ...this.props.values,
+    }
+
     return (
       <Formik
-        initialValues={{
-          accepted_terms_of_service: false,
-          agreed_to_receive_emails: false,
-          ...this.props.values,
-        }}
+        initialValues={initialValues}
         onSubmit={this.onSubmit}
         validationSchema={SignUpValidator}
       >
