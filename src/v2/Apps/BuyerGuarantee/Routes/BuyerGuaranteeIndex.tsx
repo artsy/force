@@ -23,7 +23,6 @@ import { graphql, createFragmentContainer } from "react-relay"
 import { Media } from "@artsy/reaction/dist/Utils/Responsive"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import { useSystemContext } from "v2/Artsy"
-import styled from "styled-components"
 import { resize } from "v2/Utils/resizer"
 import { FullBleedHeader } from "v2/Components/FullBleedHeader"
 import {
