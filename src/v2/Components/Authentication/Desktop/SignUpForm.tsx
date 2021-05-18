@@ -80,55 +80,55 @@ export class SignUpForm extends Component<FormProps, SignUpFormState> {
           return (
             <Form onSubmit={handleSubmit} data-test="SignUpForm">
               <QuickInput
+                autoFocus
                 block
                 error={emailErrorMessage}
-                placeholder="Enter your email address"
-                name="email"
                 label="Email"
+                name="email"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                placeholder="Enter your email address"
                 type="email"
                 value={values.email}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                autoFocus
               />
               <PasswordInput
                 block
                 error={passwordErrorMessage}
-                placeholder="Enter a password"
-                name="password"
                 label="Password"
-                value={values.password}
-                onChange={handleChange}
+                name="password"
                 onBlur={handleBlur}
+                onChange={handleChange}
+                placeholder="Enter a password"
                 showPasswordMessage
+                value={values.password}
               />
               <QuickInput
                 block
                 error={nameErrorMessage}
-                placeholder="Enter your full name"
-                name="name"
                 label="Name"
+                name="name"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                placeholder="Enter your full name"
                 type="text"
                 value={values.name}
-                onChange={handleChange}
-                onBlur={handleBlur}
               />
               <TermsOfServiceCheckbox
-                error={termsErrorMessage}
                 checked={values.accepted_terms_of_service}
-                value={values.accepted_terms_of_service}
-                type="checkbox"
+                error={termsErrorMessage}
                 name="accepted_terms_of_service"
-                onChange={handleChange}
                 onBlur={handleBlur}
+                onChange={handleChange}
+                type="checkbox"
+                value={values.accepted_terms_of_service}
               />
               <EmailSubscriptionCheckbox
                 checked={values.agreed_to_receive_emails}
-                value={values.agreed_to_receive_emails}
-                type="checkbox"
                 name="agreed_to_receive_emails"
-                onChange={handleChange}
                 onBlur={handleBlur}
+                onChange={handleChange}
+                type="checkbox"
+                value={values.agreed_to_receive_emails}
               />
               {status && !status.success && <Error show>{status.error}</Error>}
               <SubmitButton loading={isSubmitting}>Sign up</SubmitButton>
