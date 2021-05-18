@@ -70,12 +70,18 @@ export class SignUpForm extends Component<FormProps, SignUpFormState> {
             formikHandleChange(e)
           }
 
+          const emailErrorMessage = touched.email ? errors.email : ""
+          const passwordErrorMessage = touched.password ? errors.password : ""
+          const nameErrorMessage = touched.name ? errors.name : ""
+          const termsErrorMessage = touched.accepted_terms_of_service
+            ? errors.accepted_terms_of_service
+            : ""
+
           return (
             <Form onSubmit={handleSubmit} data-test="SignUpForm">
               <QuickInput
                 block
-                // @ts-expect-error STRICT_NULL_CHECK
-                error={touched.email && errors.email}
+                error={emailErrorMessage}
                 placeholder="Enter your email address"
                 name="email"
                 label="Email"
@@ -87,8 +93,7 @@ export class SignUpForm extends Component<FormProps, SignUpFormState> {
               />
               <PasswordInput
                 block
-                // @ts-expect-error STRICT_NULL_CHECK
-                error={touched.password && errors.password}
+                error={passwordErrorMessage}
                 placeholder="Enter a password"
                 name="password"
                 label="Password"
@@ -99,8 +104,7 @@ export class SignUpForm extends Component<FormProps, SignUpFormState> {
               />
               <QuickInput
                 block
-                // @ts-expect-error STRICT_NULL_CHECK
-                error={touched.name && errors.name}
+                error={nameErrorMessage}
                 placeholder="Enter your full name"
                 name="name"
                 label="Name"
@@ -110,10 +114,7 @@ export class SignUpForm extends Component<FormProps, SignUpFormState> {
                 onBlur={handleBlur}
               />
               <TermsOfServiceCheckbox
-                error={
-                  touched.accepted_terms_of_service &&
-                  errors.accepted_terms_of_service
-                }
+                error={termsErrorMessage}
                 checked={values.accepted_terms_of_service}
                 value={values.accepted_terms_of_service}
                 type="checkbox"
