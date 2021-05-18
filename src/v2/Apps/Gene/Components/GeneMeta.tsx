@@ -11,7 +11,7 @@ interface GeneMetaProps {
 const GeneMeta: React.FC<GeneMetaProps> = ({ gene }) => {
   const title = `${gene.name} | Artsy`
   const description = gene.meta.description
-  const href = `${getENV("APP_URL")}/${gene.href}`
+  const href = `${getENV("APP_URL")}${gene.href}`
   const image = gene.image?.cropped?.src
 
   return (
