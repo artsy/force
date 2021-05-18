@@ -9668,9 +9668,17 @@ type Query {
   partnersConnection(
     after: String
     before: String
+    defaultProfilePublic: Boolean
+
+    # Indicates an active subscription
+    eligibleForListing: Boolean
     first: Int
     ids: [String]
     last: Int
+
+    # Coordinates to find partners closest to
+    near: String
+    sort: PartnersSortType
   ): PartnerConnection
 
   # Get all price insights for an artist.
@@ -12079,9 +12087,17 @@ type Viewer {
   partnersConnection(
     after: String
     before: String
+    defaultProfilePublic: Boolean
+
+    # Indicates an active subscription
+    eligibleForListing: Boolean
     first: Int
     ids: [String]
     last: Int
+
+    # Coordinates to find partners closest to
+    near: String
+    sort: PartnersSortType
   ): PartnerConnection
 
   # A Sale
