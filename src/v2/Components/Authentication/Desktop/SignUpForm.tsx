@@ -119,8 +119,6 @@ export class SignUpForm extends Component<FormProps, SignUpFormState> {
                 name="accepted_terms_of_service"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                type="checkbox"
-                value={values.accepted_terms_of_service}
               />
               <EmailSubscriptionCheckbox
                 checked={values.agreed_to_receive_emails}
