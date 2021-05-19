@@ -6,6 +6,12 @@ import { FragmentRefs } from "relay-runtime";
 export type NavigationTabs_partner = {
     readonly slug: string;
     readonly displayArtistsSection: boolean | null;
+    readonly displayWorksSection: boolean | null;
+    readonly filteredWorks: {
+        readonly counts: {
+            readonly total: number | null;
+        } | null;
+    } | null;
     readonly locations: {
         readonly totalCount: number | null;
     } | null;
@@ -62,6 +68,48 @@ return {
       "kind": "ScalarField",
       "name": "displayArtistsSection",
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "displayWorksSection",
+      "storageKey": null
+    },
+    {
+      "alias": "filteredWorks",
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "first",
+          "value": 0
+        }
+      ],
+      "concreteType": "FilterArtworksConnection",
+      "kind": "LinkedField",
+      "name": "filterArtworksConnection",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "FilterArtworksCounts",
+          "kind": "LinkedField",
+          "name": "counts",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "total",
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        }
+      ],
+      "storageKey": "filterArtworksConnection(first:0)"
     },
     {
       "alias": "locations",
@@ -132,5 +180,5 @@ return {
   "type": "Partner"
 };
 })();
-(node as any).hash = 'c0da37bb93462a41ed058d6d13e51290';
+(node as any).hash = 'e585c7be93a298912dd7a8f5f4444439';
 export default node;

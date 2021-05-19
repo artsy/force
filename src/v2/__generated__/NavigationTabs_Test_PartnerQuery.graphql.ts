@@ -13,6 +13,13 @@ export type NavigationTabs_Test_PartnerQueryRawResponse = {
     readonly partner: ({
         readonly slug: string;
         readonly displayArtistsSection: boolean | null;
+        readonly displayWorksSection: boolean | null;
+        readonly filteredWorks: ({
+            readonly counts: ({
+                readonly total: number | null;
+            }) | null;
+            readonly id: string | null;
+        }) | null;
         readonly locations: ({
             readonly totalCount: number | null;
         }) | null;
@@ -47,6 +54,13 @@ query NavigationTabs_Test_PartnerQuery {
 fragment NavigationTabs_partner on Partner {
   slug
   displayArtistsSection
+  displayWorksSection
+  filteredWorks: filterArtworksConnection(first: 0) {
+    counts {
+      total
+    }
+    id
+  }
   locations: locationsConnection(first: 20) {
     totalCount
   }
@@ -70,7 +84,14 @@ var v0 = [
     "value": "white-cube"
   }
 ],
-v1 = [
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+},
+v2 = [
   {
     "alias": null,
     "args": null,
@@ -79,7 +100,7 @@ v1 = [
     "storageKey": null
   }
 ],
-v2 = {
+v3 = {
   "kind": "Literal",
   "name": "displayOnPartnerProfile",
   "value": true
@@ -139,6 +160,49 @@ return {
             "storageKey": null
           },
           {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "displayWorksSection",
+            "storageKey": null
+          },
+          {
+            "alias": "filteredWorks",
+            "args": [
+              {
+                "kind": "Literal",
+                "name": "first",
+                "value": 0
+              }
+            ],
+            "concreteType": "FilterArtworksConnection",
+            "kind": "LinkedField",
+            "name": "filterArtworksConnection",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "FilterArtworksCounts",
+                "kind": "LinkedField",
+                "name": "counts",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "total",
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              },
+              (v1/*: any*/)
+            ],
+            "storageKey": "filterArtworksConnection(first:0)"
+          },
+          {
             "alias": "locations",
             "args": [
               {
@@ -151,7 +215,7 @@ return {
             "kind": "LinkedField",
             "name": "locationsConnection",
             "plural": false,
-            "selections": (v1/*: any*/),
+            "selections": (v2/*: any*/),
             "storageKey": "locationsConnection(first:20)"
           },
           {
@@ -161,13 +225,13 @@ return {
             "kind": "LinkedField",
             "name": "articlesConnection",
             "plural": false,
-            "selections": (v1/*: any*/),
+            "selections": (v2/*: any*/),
             "storageKey": null
           },
           {
             "alias": "representedArtists",
             "args": [
-              (v2/*: any*/),
+              (v3/*: any*/),
               {
                 "kind": "Literal",
                 "name": "representedBy",
@@ -178,13 +242,13 @@ return {
             "kind": "LinkedField",
             "name": "artistsConnection",
             "plural": false,
-            "selections": (v1/*: any*/),
+            "selections": (v2/*: any*/),
             "storageKey": "artistsConnection(displayOnPartnerProfile:true,representedBy:true)"
           },
           {
             "alias": "notRepresentedArtists",
             "args": [
-              (v2/*: any*/),
+              (v3/*: any*/),
               {
                 "kind": "Literal",
                 "name": "hasPublishedArtworks",
@@ -200,16 +264,10 @@ return {
             "kind": "LinkedField",
             "name": "artistsConnection",
             "plural": false,
-            "selections": (v1/*: any*/),
+            "selections": (v2/*: any*/),
             "storageKey": "artistsConnection(displayOnPartnerProfile:true,hasPublishedArtworks:true,representedBy:false)"
           },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "id",
-            "storageKey": null
-          }
+          (v1/*: any*/)
         ],
         "storageKey": "partner(id:\"white-cube\")"
       }
@@ -220,7 +278,7 @@ return {
     "metadata": {},
     "name": "NavigationTabs_Test_PartnerQuery",
     "operationKind": "query",
-    "text": "query NavigationTabs_Test_PartnerQuery {\n  partner(id: \"white-cube\") {\n    ...NavigationTabs_partner\n    id\n  }\n}\n\nfragment NavigationTabs_partner on Partner {\n  slug\n  displayArtistsSection\n  locations: locationsConnection(first: 20) {\n    totalCount\n  }\n  articles: articlesConnection {\n    totalCount\n  }\n  representedArtists: artistsConnection(representedBy: true, displayOnPartnerProfile: true) {\n    totalCount\n  }\n  notRepresentedArtists: artistsConnection(representedBy: false, hasPublishedArtworks: true, displayOnPartnerProfile: true) {\n    totalCount\n  }\n}\n"
+    "text": "query NavigationTabs_Test_PartnerQuery {\n  partner(id: \"white-cube\") {\n    ...NavigationTabs_partner\n    id\n  }\n}\n\nfragment NavigationTabs_partner on Partner {\n  slug\n  displayArtistsSection\n  displayWorksSection\n  filteredWorks: filterArtworksConnection(first: 0) {\n    counts {\n      total\n    }\n    id\n  }\n  locations: locationsConnection(first: 20) {\n    totalCount\n  }\n  articles: articlesConnection {\n    totalCount\n  }\n  representedArtists: artistsConnection(representedBy: true, displayOnPartnerProfile: true) {\n    totalCount\n  }\n  notRepresentedArtists: artistsConnection(representedBy: false, hasPublishedArtworks: true, displayOnPartnerProfile: true) {\n    totalCount\n  }\n}\n"
   }
 };
 })();
