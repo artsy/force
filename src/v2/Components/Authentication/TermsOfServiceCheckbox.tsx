@@ -13,6 +13,76 @@ interface TermsOfServiceCheckboxProps {
   setFieldValue
 }
 
+const GdprLabel = color => {
+  return (
+    <>
+      {"By checking this box, you consent to our "}
+      <Link
+        href="https://www.artsy.net/terms"
+        target="_blank"
+        color={color}
+        underlineBehavior="hover"
+      >
+        Terms of Use
+      </Link>
+      {", "}
+      <Link
+        href="https://www.artsy.net/privacy"
+        target="_blank"
+        color={color}
+        underlineBehavior="hover"
+      >
+        Privacy Policy
+      </Link>
+      {", and "}
+      <Link
+        href="https://www.artsy.net/conditions-of-sale"
+        target="_blank"
+        color={color}
+        underlineBehavior="hover"
+      >
+        Conditions of Sale
+      </Link>
+      {"."}
+    </>
+  )
+}
+
+const FallbackLabel = color => {
+  return (
+    <>
+      {"I agree to the "}
+      <Link
+        href="https://www.artsy.net/terms"
+        target="_blank"
+        color={color}
+        underlineBehavior="hover"
+      >
+        Terms of Use
+      </Link>
+      {", "}
+      <Link
+        href="https://www.artsy.net/privacy"
+        target="_blank"
+        color={color}
+        underlineBehavior="hover"
+      >
+        Privacy Policy
+      </Link>
+      {", and "}
+      <Link
+        href="https://www.artsy.net/conditions-of-sale"
+        target="_blank"
+        color={color}
+        underlineBehavior="hover"
+      >
+        Conditions of Sale
+      </Link>
+      {"and to receiving emails from Artsy."}
+    </>
+  )
+}
+
 export const TermsOfServiceCheckbox: React.FC<TermsOfServiceCheckboxProps> = props => {
   const { error, onChange, setEmailSubscribe, setFieldValue } = props
 
@@ -27,37 +97,12 @@ export const TermsOfServiceCheckbox: React.FC<TermsOfServiceCheckboxProps> = pro
     onChange(event)
   }
 
+  const Label = setEmailSubscribe ? FallbackLabel : GdprLabel
+
   return (
     <StyledCheckbox {...props} onChange={handleChange}>
       <Serif color={color} size="3t" ml={0.5}>
-        {"By checking this box, you consent to our "}
-        <Link
-          href="https://www.artsy.net/terms"
-          target="_blank"
-          color={color}
-          underlineBehavior="hover"
-        >
-          Terms of Use
-        </Link>
-        {", "}
-        <Link
-          href="https://www.artsy.net/privacy"
-          target="_blank"
-          color={color}
-          underlineBehavior="hover"
-        >
-          Privacy Policy
-        </Link>
-        {", and "}
-        <Link
-          href="https://www.artsy.net/conditions-of-sale"
-          target="_blanks"
-          color={color}
-          underlineBehavior="hover"
-        >
-          Conditions of Sale
-        </Link>
-        {"."}
+        <Label color={color} />
       </Serif>
     </StyledCheckbox>
   )
