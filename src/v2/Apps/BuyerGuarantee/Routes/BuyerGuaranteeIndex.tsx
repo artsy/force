@@ -94,7 +94,7 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
   )
 
   const learnMoreButton = (width: string) => (
-    <RouterLink to={supportArticleURL}>
+    <RouterLink to={supportArticleURL} target="_blank">
       <Button width={width} variant="secondaryOutline">
         Learn More
       </Button>
