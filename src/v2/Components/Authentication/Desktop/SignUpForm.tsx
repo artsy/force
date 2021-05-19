@@ -20,7 +20,7 @@ import QuickInput from "v2/Components/QuickInput"
 import { Formik, FormikProps } from "formik"
 import React, { Component } from "react"
 import { recaptcha } from "v2/Utils/recaptcha"
-
+import { data as sd } from "sharify"
 import { SignUpForm_requestLocation } from "v2/__generated__/SignUpForm_requestLocation.graphql"
 
 const gdprCountries = [
@@ -222,12 +222,7 @@ const SignUpFormFragmentContainer = createFragmentContainer(SignUpForm, {
 
 export const SignUpFormQueryRenderer: React.FC<FormProps> = passedProps => {
   const { relayEnvironment } = useSystemContext()
-
-  // ultimately this will come in from express
-  // US ip address:
-  const variables = { ip: "162.211.217.130" }
-  // GDPR ip address:
-  // const variables = { ip: "213.142.96.69" }
+  const variables = { ip: sd.IP_ADDRESS }
 
   return (
     <QueryRenderer<SignUpFormLocationQuery>

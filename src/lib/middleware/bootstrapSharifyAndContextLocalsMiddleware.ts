@@ -60,6 +60,8 @@ export function bootstrapSharifyAndContextLocalsMiddleware(
 
   updateSharifyAndContext(res, "IS_GOOGLEBOT", Boolean(ua.match(/Googlebot/i)))
 
+  updateSharify(res, "IP_ADDRESS", req.ip)
+
   // Required to know the hashed dll name.try
   updateSharifyAndContext(
     res,
