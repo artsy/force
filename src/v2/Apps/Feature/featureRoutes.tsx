@@ -15,7 +15,7 @@ export const featureRoutes: AppRouteConfig[] = [
     },
     query: graphql`
       query featureRoutes_FeatureQuery($slug: ID!) {
-        feature(id: $slug) {
+        feature(id: $slug) @principalField {
           ...FeatureApp_feature
         }
       }
