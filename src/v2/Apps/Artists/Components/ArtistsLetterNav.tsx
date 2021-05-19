@@ -6,13 +6,17 @@ import { RouterLink, RouterLinkProps } from "v2/Artsy/Router/RouterLink"
 
 export const LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("")
 
-interface ArtistsLetterNavProps extends BoxProps {}
+interface ArtistsLetterNavProps extends BoxProps {
+  inDropDown?: boolean
+}
 
 export const ArtistsLetterNav: React.FC<ArtistsLetterNavProps> = ({
+  inDropDown = false,
   ...rest
 }) => {
+  const justifyContent = inDropDown ? "flex-start" : ["flex-start", "flex-end"]
   return (
-    <Flex flexWrap="wrap" justifyContent={["flex-start", "flex-end"]}>
+    <Flex flexWrap="wrap" justifyContent={justifyContent}>
       {LETTERS.map((letter, i) => {
         return (
           <Text key={letter} variant="md" color="black60">

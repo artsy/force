@@ -1,4 +1,4 @@
-import { Box, Flex, color, breakpoints } from "@artsy/palette"
+import { Box, Flex, color, breakpoints, Text } from "@artsy/palette"
 import { AnalyticsSchema, ContextModule } from "v2/Artsy"
 import { useTracking } from "v2/Artsy/Analytics/useTracking"
 import React from "react"
@@ -6,6 +6,7 @@ import styled from "styled-components"
 import { DropDownSection } from "./DropDownSection"
 import { Menu, MenuItem } from "v2/Components/Menu"
 import { MenuData } from "../../menuData"
+import { ArtistsLetterNav } from "v2/Apps/Artists/Components/ArtistsLetterNav"
 
 interface DropDownNavMenuProps {
   width?: string
@@ -38,6 +39,10 @@ export const DropDownNavMenu: React.FC<DropDownNavMenuProps> = ({
       onClick()
     }
   }
+
+  const isArtistsDropdown =
+    contextModule === AnalyticsSchema.ContextModule.HeaderArtistsDropdown
+
   return (
     <Menu onClick={handleClick} width={width} py={0}>
       <Flex
@@ -75,11 +80,23 @@ export const DropDownNavMenu: React.FC<DropDownNavMenuProps> = ({
             </Box>
           </Links>
 
-          {menu.links.map(subMenu => {
-            if ("menu" in subMenu) {
-              return <DropDownSection key={subMenu.text} section={subMenu} />
-            }
-          })}
+          {isArtistsDropdown && (
+            <Flex flexDirection="column" border="solid 2px red">
+              <Flex>
+                {menu.links.map(subMenu => {
+                  if ("menu" in subMenu) {
+                    return (
+                      <DropDownSection key={subMenu.text} section={subMenu} />
+                    )
+                  }
+                })}
+              </Flex>
+              <LettersWrap>
+                <Text variant="small">Browse by name</Text>
+                <ArtistsLetterNav inDropDown />
+              </LettersWrap>
+            </Flex>
+          )}
         </Flex>
       </Flex>
     </Menu>
@@ -112,3 +129,10 @@ ViewAllMenuItem.displayName = "ViewAllMenuItem"
 const Links = styled(Box)`
   border-right: 1px solid ${color("black10")};
 `
+
+const LettersWrap = styled(Box).attrs({
+  px: 1,
+  py: 0.5,
+})``
+
+LettersWrap.displayName = "LettersWrap"
