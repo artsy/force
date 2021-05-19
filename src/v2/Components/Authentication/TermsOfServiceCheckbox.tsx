@@ -9,13 +9,26 @@ interface TermsOfServiceCheckboxProps {
   name
   onBlur
   onChange
+  setEmailSubscribe
+  setFieldValue
 }
 
 export const TermsOfServiceCheckbox: React.FC<TermsOfServiceCheckboxProps> = props => {
-  const color = props.error ? "red100" : "black60"
+  const { error, onChange, setEmailSubscribe, setFieldValue } = props
+
+  const color = error ? "red100" : "black60"
+
+  const handleChange = event => {
+    if (setEmailSubscribe) {
+      const checked = event.currentTarget.checked
+      setFieldValue("agreed_to_receive_emails", checked)
+    }
+
+    onChange(event)
+  }
 
   return (
-    <StyledCheckbox {...props}>
+    <StyledCheckbox {...props} onChange={handleChange}>
       <Serif color={color} size="3t" ml={0.5}>
         {"By checking this box, you consent to our "}
         <Link

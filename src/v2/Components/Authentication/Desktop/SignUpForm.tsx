@@ -1,3 +1,6 @@
+import { QueryRenderer, createFragmentContainer, graphql } from "react-relay"
+import { SignUpFormLocationQuery } from "v2/__generated__/SignUpFormLocationQuery.graphql"
+import { useSystemContext } from "v2/Artsy"
 import {
   Error,
   Footer,
@@ -18,11 +21,48 @@ import { Formik, FormikProps } from "formik"
 import React, { Component } from "react"
 import { recaptcha } from "v2/Utils/recaptcha"
 
+import { SignUpForm_requestLocation } from "v2/__generated__/SignUpForm_requestLocation.graphql"
+
+const gdprCountries = [
+  "AT",
+  "BE",
+  "BG",
+  "CY",
+  "CZ",
+  "DE",
+  "DK",
+  "EE",
+  "ES",
+  "FI",
+  "FR",
+  "GB",
+  "GR",
+  "HR",
+  "HU",
+  "IE",
+  "IT",
+  "LT",
+  "LU",
+  "LV",
+  "MT",
+  "NL",
+  "PL",
+  "PT",
+  "RO",
+  "SE",
+  "SI",
+  "SK",
+]
+
 export interface SignUpFormState {
   error?: string
 }
 
-export class SignUpForm extends Component<FormProps, SignUpFormState> {
+interface SignUpFormProps extends FormProps {
+  requestLocation?: SignUpForm_requestLocation
+}
+
+export class SignUpForm extends Component<SignUpFormProps, SignUpFormState> {
   state = {
     error: this.props.error,
   }
@@ -45,6 +85,9 @@ export class SignUpForm extends Component<FormProps, SignUpFormState> {
       ...this.props.values,
     }
 
+    const countryCode = this.props.requestLocation?.countryCode || ""
+    const collapseCheckboxes = !gdprCountries.includes(countryCode)
+
     return (
       <Formik
         initialValues={initialValues}
@@ -57,6 +100,7 @@ export class SignUpForm extends Component<FormProps, SignUpFormState> {
           handleChange: formikHandleChange,
           handleSubmit,
           isSubmitting,
+          setFieldValue,
           setStatus,
           setTouched,
           status,
@@ -119,13 +163,17 @@ export class SignUpForm extends Component<FormProps, SignUpFormState> {
                 name="accepted_terms_of_service"
                 onBlur={handleBlur}
                 onChange={handleChange}
+                setEmailSubscribe={collapseCheckboxes}
+                setFieldValue={setFieldValue}
               />
-              <EmailSubscriptionCheckbox
-                checked={values.agreed_to_receive_emails}
-                name="agreed_to_receive_emails"
-                onBlur={handleBlur}
-                onChange={handleChange}
-              />
+              {!collapseCheckboxes && (
+                <EmailSubscriptionCheckbox
+                  checked={values.agreed_to_receive_emails}
+                  name="agreed_to_receive_emails"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                />
+              )}
               {status && !status.success && <Error show>{status.error}</Error>}
               <SubmitButton loading={isSubmitting}>Sign up</SubmitButton>
               <Footer
@@ -162,4 +210,54 @@ export class SignUpForm extends Component<FormProps, SignUpFormState> {
       </Formik>
     )
   }
+}
+
+const SignUpFormFragmentContainer = createFragmentContainer(SignUpForm, {
+  requestLocation: graphql`
+    fragment SignUpForm_requestLocation on RequestLocation {
+      countryCode
+    }
+  `,
+})
+
+export const SignUpFormQueryRenderer: React.FC<FormProps> = passedProps => {
+  const { relayEnvironment } = useSystemContext()
+
+  // ultimately this will come in from express
+  // US ip address:
+  const variables = { ip: "162.211.217.130" }
+  // GDPR ip address:
+  // const variables = { ip: "213.142.96.69" }
+
+  return (
+    <QueryRenderer<SignUpFormLocationQuery>
+      //  @ts-expect-error STRICT_NULL_CHECK
+      environment={relayEnvironment}
+      variables={variables}
+      query={graphql`
+        query SignUpFormLocationQuery($ip: String!) {
+          requestLocation(ip: $ip) {
+            ...SignUpForm_requestLocation
+          }
+        }
+      `}
+      render={({ error, props }) => {
+        // what's the cooler way to do this??
+        if (error || !props || !props.requestLocation) {
+          return <SignUpFormFragmentContainer {...passedProps} />
+        } else {
+          return (
+            <SignUpFormFragmentContainer
+              {...passedProps}
+              requestLocation={props.requestLocation}
+            />
+          )
+        }
+      }}
+    />
+  )
+}
+
+export const tests = {
+  SignUpFormFragmentContainer,
 }
