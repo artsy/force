@@ -13,6 +13,7 @@ import { Footer } from "v2/Components/Footer"
 import { SectionContainer } from "./Components/SectionContainer"
 import { ArtworkCredits } from "./Components/ArtworkCredits"
 import { TemporaryOffer } from "./Components/TemporaryOffer"
+import { BecomePartner } from "./Components/BecomePartner"
 
 export const MarketingLandingApp = () => {
   return (
@@ -29,7 +30,7 @@ export const MarketingLandingApp = () => {
         <ConsignInDemandNow />
         <SoldRecentlyQueryRenderer />
         <ReadMore />
-        <ContactUs darkVariant />
+        <BecomePartner />
         <FAQ />
         <ArtworkCredits />
         <SectionContainer py={0}>
