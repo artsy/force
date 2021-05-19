@@ -3,7 +3,7 @@ import { Link, Meta, Title } from "react-head"
 import { getENV } from "v2/Utils/getENV"
 
 export const AuctionsMeta: React.FC = () => {
-  const title = "Auctions on Artsy | Premium Artworks from In-Demand Artist"
+  const title = "Auctions on Artsy | Premium Artworks from In-Demand Artists"
   const description =
     "Bid in live and online-only sales from the world’s leading auction houses. Browse paintings, sculptures, design, prints & multiples and more."
   const href = `${getENV("APP_URL")}/auctions`
