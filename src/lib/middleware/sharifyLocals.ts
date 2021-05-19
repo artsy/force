@@ -60,6 +60,8 @@ export function sharifyLocalsMiddleware(
 
   updateSharify(res, "IS_GOOGLEBOT", Boolean(ua.match(/Googlebot/i)))
 
+  updateSharify(res, "IP_ADDRESS", req.ip)
+
   // Required to know the hashed dll name.try
   updateSharify(res, "ASSET_LEGACY_ARTWORK_DLL", assetLegacyArtworkDllName())
   updateSharify(
