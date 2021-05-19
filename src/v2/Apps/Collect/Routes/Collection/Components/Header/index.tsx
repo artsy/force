@@ -7,6 +7,7 @@ import {
   Column,
   HTML,
   Spacer,
+  ReadMore,
 } from "@artsy/palette"
 import { Header_artworks } from "v2/__generated__/Header_artworks.graphql"
 import { Header_collection } from "v2/__generated__/Header_collection.graphql"
@@ -65,7 +66,9 @@ export const CollectionHeader: React.FC<CollectionHeaderProps> = ({
 
         {collection.description && (
           <Column span={6}>
-            <HTML html={collection.description} variant="sm" />
+            <HTML variant="sm">
+              <ReadMore maxChars={750} content={collection.description} />
+            </HTML>
           </Column>
         )}
       </GridColumns>
