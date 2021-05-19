@@ -27,10 +27,12 @@ query AboutPartner_Test_Query {
 fragment AboutPartner_partner on Partner {
   profile {
     fullBio
+    bio
     id
   }
   website
   vatNumber
+  fullProfileEligible
 }
 */
 
@@ -104,6 +106,13 @@ return {
                 "name": "fullBio",
                 "storageKey": null
               },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "bio",
+                "storageKey": null
+              },
               (v1/*: any*/)
             ],
             "storageKey": null
@@ -122,6 +131,13 @@ return {
             "name": "vatNumber",
             "storageKey": null
           },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "fullProfileEligible",
+            "storageKey": null
+          },
           (v1/*: any*/)
         ],
         "storageKey": "partner(id:\"unit-london\")"
@@ -133,7 +149,7 @@ return {
     "metadata": {},
     "name": "AboutPartner_Test_Query",
     "operationKind": "query",
-    "text": "query AboutPartner_Test_Query {\n  partner(id: \"unit-london\") @principalField {\n    ...AboutPartner_partner\n    id\n  }\n}\n\nfragment AboutPartner_partner on Partner {\n  profile {\n    fullBio\n    id\n  }\n  website\n  vatNumber\n}\n"
+    "text": "query AboutPartner_Test_Query {\n  partner(id: \"unit-london\") @principalField {\n    ...AboutPartner_partner\n    id\n  }\n}\n\nfragment AboutPartner_partner on Partner {\n  profile {\n    fullBio\n    bio\n    id\n  }\n  website\n  vatNumber\n  fullProfileEligible\n}\n"
   }
 };
 })();
