@@ -351,14 +351,16 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
             <Text variant="text" my={2}>
               {authenticityText}
             </Text>
-            {learnMoreButton("40%")}
+            <Media greaterThanOrEqual="lg">{learnMoreButton("40%")}</Media>
+            <Media lessThan="lg">{learnMoreButton("80%")}</Media>
           </Flex>
           <Flex flexDirection="column" p={space(9)}>
             <Text variant="title">Money-Back Guarantee</Text>
             <Text variant="text" my={2}>
               {moneyBackGuaranteeText}
             </Text>
-            {learnMoreButton("40%")}
+            <Media greaterThanOrEqual="lg">{learnMoreButton("40%")}</Media>
+            <Media lessThan="lg">{learnMoreButton("80%")}</Media>
           </Flex>
           {moneyBackGuaranteeImageURL && (
             <Image
