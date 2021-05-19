@@ -22,7 +22,6 @@ import { BuyerGuaranteeIndex_securePaymentImage } from "v2/__generated__/BuyerGu
 import { graphql, createFragmentContainer } from "react-relay"
 import { Media } from "@artsy/reaction/dist/Utils/Responsive"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
-import { useSystemContext } from "v2/Artsy"
 import { resize } from "v2/Utils/resizer"
 import { FullBleedHeader } from "v2/Components/FullBleedHeader"
 import {
@@ -44,12 +43,6 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
   moneyBackGuaranteeImage,
   securePaymentImage,
 }) => {
-  const { user } = useSystemContext()
-  const isAdmin = Boolean(user?.roles?.includes("admin"))
-  if (!isAdmin) {
-    return null
-  }
-
   const authenticityText = `We are dedicated to being the world’s most trustworthy marketplace
   to buy and sell art. In the rare case that a work purchased
   through Artsy’s secure checkout is found to be inauthentic, report
