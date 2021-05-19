@@ -46,7 +46,7 @@ export const NavigationTabs: React.FC<NavigationTabsProps> = ({ partner }) => {
         name: "Works",
         href: route("/works"),
         exact: true,
-        hidden: !displayWorksSection || !filteredWorks.counts.total,
+        hidden: !displayWorksSection || !filteredWorks?.counts?.total,
       },
       {
         name: "Artists",
