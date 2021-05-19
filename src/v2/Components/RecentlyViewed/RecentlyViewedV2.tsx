@@ -1,27 +1,27 @@
 import { ContextModule } from "@artsy/cohesion"
 import { Separator, Text } from "@artsy/palette"
-import { RecentlyViewed_me } from "v2/__generated__/RecentlyViewed_me.graphql"
-import { RecentlyViewedQuery } from "v2/__generated__/RecentlyViewedQuery.graphql"
+import { RecentlyViewedV2_me } from "v2/__generated__/RecentlyViewedV2_me.graphql"
+import { RecentlyViewedV2Query } from "v2/__generated__/RecentlyViewedV2Query.graphql"
 import { SystemContext, SystemContextConsumer } from "v2/Artsy"
 import { track } from "v2/Artsy/Analytics"
 import * as Schema from "v2/Artsy/Analytics/Schema"
-import { renderWithLoadProgress } from "v2/Artsy/Relay/renderWithLoadProgress"
 import { SystemQueryRenderer as QueryRenderer } from "v2/Artsy/Relay/SystemQueryRenderer"
 import { FillwidthItem } from "v2/Components/Artwork/FillwidthItem"
 import { Carousel } from "v2/Components/Carousel"
 import React, { useContext } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
+import { RecentlyViewedV2Placeholder } from "./RecentlyViewedV2Placeholder"
 
-export interface RecentlyViewedProps {
-  me: RecentlyViewed_me
+export interface RecentlyViewedV2Props {
+  me: RecentlyViewedV2_me
 }
 
-const HEIGHT = 180
+export const HEIGHT = 180
 
 @track({
   context_module: Schema.ContextModule.RecentlyViewedArtworks,
 })
-export class RecentlyViewed extends React.Component<RecentlyViewedProps> {
+export class RecentlyViewedV2 extends React.Component<RecentlyViewedV2Props> {
   @track({
     type: Schema.Type.Thumbnail,
     action_type: Schema.ActionType.Click,
@@ -73,11 +73,11 @@ export class RecentlyViewed extends React.Component<RecentlyViewedProps> {
   }
 }
 
-export const RecentlyViewedFragmentContainer = createFragmentContainer(
-  RecentlyViewed,
+export const RecentlyViewedV2FragmentContainer = createFragmentContainer(
+  RecentlyViewedV2,
   {
     me: graphql`
-      fragment RecentlyViewed_me on Me {
+      fragment RecentlyViewedV2_me on Me {
         recentlyViewedArtworksConnection(first: 20) {
           edges {
             node {
@@ -91,23 +91,33 @@ export const RecentlyViewedFragmentContainer = createFragmentContainer(
   }
 )
 
-export const RecentlyViewedQueryRenderer = () => {
+export const RecentlyViewedV2QueryRenderer = () => {
   const { user, relayEnvironment } = useContext(SystemContext)
-  if (!user) {
-    return null
-  }
+
+  if (!user) return null
+
   return (
-    <QueryRenderer<RecentlyViewedQuery>
+    <QueryRenderer<RecentlyViewedV2Query>
       environment={relayEnvironment}
-      variables={{}}
       query={graphql`
-        query RecentlyViewedQuery {
+        query RecentlyViewedV2Query {
           me {
-            ...RecentlyViewed_me
+            ...RecentlyViewedV2_me
           }
         }
       `}
-      render={renderWithLoadProgress(RecentlyViewedFragmentContainer)}
+      render={({ error, props }) => {
+        if (error) {
+          console.error(error)
+          return null
+        }
+
+        if (!props) {
+          return <RecentlyViewedV2Placeholder />
+        }
+
+        return <RecentlyViewedV2FragmentContainer {...props} />
+      }}
     />
   )
 }

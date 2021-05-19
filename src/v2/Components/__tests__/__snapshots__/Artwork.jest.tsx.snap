@@ -6,13 +6,6 @@ exports[`Artwork renders correctly 1`] = `
   margin-top: 4px;
 }
 
-.c7 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-}
-
 .c5 {
   font-family: sans;
 }
@@ -23,7 +16,7 @@ exports[`Artwork renders correctly 1`] = `
   font-family: sans;
 }
 
-.c8 {
+.c7 {
   color: black60;
   color: black60;
   font-weight: normal;
@@ -154,21 +147,16 @@ exports[`Artwork renders correctly 1`] = `
         </div>
       </div>
       <div
-        className="c7"
-        display="flex"
+        className="c4"
       >
         <div
-          className="c4"
+          className="c7"
+          color="black60"
+          fontFamily="sans"
+          fontWeight="normal"
         >
-          <div
-            className="c8"
-            color="black60"
-            fontFamily="sans"
-            fontWeight="normal"
-          >
-            $875
-             
-          </div>
+          $875
+           
         </div>
       </div>
     </div>

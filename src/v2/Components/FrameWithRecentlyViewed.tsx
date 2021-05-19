@@ -1,24 +1,21 @@
-import { Flex } from "@artsy/palette"
+import { Flex, Spacer } from "@artsy/palette"
 import React from "react"
-import { LazyLoadComponent } from "react-lazy-load-image-component"
+import { RecentlyViewed } from "v2/Components/RecentlyViewed"
 
-import { RecentlyViewedQueryRenderer as RecentlyViewed } from "v2/Components/RecentlyViewed"
-
-export interface Props {
+export interface FrameWithRecentlyViewedProps {
   name?: string
 }
 
-export const FrameWithRecentlyViewed: React.FC<Props> = ({ children }) => {
+export const FrameWithRecentlyViewed: React.FC<FrameWithRecentlyViewedProps> = ({
+  children,
+}) => {
   return (
     <Flex flexDirection="column">
       {children}
 
-      {/* TODO */}
-      {typeof window !== "undefined" && (
-        <LazyLoadComponent threshold={1000}>
-          <RecentlyViewed />
-        </LazyLoadComponent>
-      )}
+      <Spacer mt={6} />
+
+      <RecentlyViewed />
     </Flex>
   )
 }
