@@ -123,11 +123,13 @@ const ShowBannersRail: React.FC<ShowBannersRailProps> = ({
           )
         })}
       </ShowBannersRailContainer>
-      <ProgressDots
-        mt={[2, 6]}
-        activeIndex={currentCarouselPage}
-        amount={shows.length}
-      />
+      {shows.length > 1 && (
+        <ProgressDots
+          mt={[2, 6]}
+          activeIndex={currentCarouselPage}
+          amount={shows.length}
+        />
+      )}
     </Box>
   )
 }
