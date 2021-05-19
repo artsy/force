@@ -8,7 +8,7 @@ import Events from "v2/Utils/Events"
 import { SystemContextProvider } from "v2/Artsy"
 import { ForgotPasswordForm } from "v2/Components/Authentication/Desktop/ForgotPasswordForm"
 import { LoginForm } from "v2/Components/Authentication/Desktop/LoginForm"
-import { SignUpForm } from "v2/Components/Authentication/Desktop/SignUpForm"
+import { SignUpFormQueryRenderer } from "v2/Components/Authentication/Desktop/SignUpForm"
 import {
   AfterSignUpAction,
   FormComponentType,
@@ -176,7 +176,7 @@ export class FormSwitcher extends React.Component<FormSwitcherProps, State> {
         Form = LoginForm
         break
       case ModalType.signup:
-        Form = SignUpForm
+        Form = SignUpFormQueryRenderer
         break
       case ModalType.forgot:
         Form = ForgotPasswordForm
