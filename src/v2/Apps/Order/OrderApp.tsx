@@ -189,29 +189,27 @@ class OrderApp extends React.Component<OrderAppProps, {}> {
               */}
               <div id="main-layout-flash" />
               <MinimalNavBar to={artworkHref}>
-                <HorizontalPadding>
-                  <Title>Checkout | Artsy</Title>
-                  {isEigen ? (
-                    <Meta
-                      name="viewport"
-                      content="width=device-width, user-scalable=no"
-                    />
-                  ) : (
-                    <Meta
-                      name="viewport"
-                      content="width=device-width, initial-scale=1, maximum-scale=5 viewport-fit=cover"
-                    />
-                  )}
-                  <SafeAreaContainer>
-                    <Elements stripe={stripePromise}>
-                      <AppContainer>
-                        <HorizontalPadding>{children}</HorizontalPadding>
-                      </AppContainer>
-                    </Elements>
-                  </SafeAreaContainer>
-                  <StickyFooter orderType={order.mode} artworkId={artworkId} />
-                  <ConnectedModalDialog />
-                </HorizontalPadding>
+                <Title>Checkout | Artsy</Title>
+                {isEigen ? (
+                  <Meta
+                    name="viewport"
+                    content="width=device-width, user-scalable=no"
+                  />
+                ) : (
+                  <Meta
+                    name="viewport"
+                    content="width=device-width, initial-scale=1, maximum-scale=5 viewport-fit=cover"
+                  />
+                )}
+                <SafeAreaContainer>
+                  <Elements stripe={stripePromise}>
+                    <AppContainer>
+                      <HorizontalPadding>{children}</HorizontalPadding>
+                    </AppContainer>
+                  </Elements>
+                </SafeAreaContainer>
+                <StickyFooter orderType={order.mode} artworkId={artworkId} />
+                <ConnectedModalDialog />
               </MinimalNavBar>
             </Box>
           )
