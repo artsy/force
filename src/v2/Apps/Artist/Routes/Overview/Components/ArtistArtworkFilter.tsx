@@ -7,7 +7,6 @@ import { Match, RouterState, withRouter } from "found"
 import React from "react"
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
 import { ZeroState } from "./ZeroState"
-import { data as sd } from "sharify" // TODO: Remove after AB test
 
 interface ArtistArtworkFilterProps {
   artist: ArtistArtworkFilter_artist
@@ -25,31 +24,18 @@ const ArtistArtworkFilter: React.FC<ArtistArtworkFilterProps> = props => {
   // we still want to render the rest of the page.
   if (!hasFilter) return null
 
-  const sortOptions = [
-    { value: "-has_price,-prices", text: "Price (desc.)" },
-    { value: "-has_price,prices", text: "Price (asc.)" },
-    { value: "-partner_updated_at", text: "Recently updated" },
-    { value: "-published_at", text: "Recently added" },
-    { value: "-year", text: "Artwork year (desc.)" },
-    { value: "year", text: "Artwork year (asc.)" },
-  ]
-
-  const defaultSortValue =
-    sd["DECAYED_MERCH_V2"] === "experiment"
-      ? "-decayed_merch_v2"
-      : "-decayed_merch"
-
-  sortOptions.unshift({ value: defaultSortValue, text: "Default" })
-
-  const initialFilters = {
-    ...(match && match.location.query),
-    sort: defaultSortValue,
-  }
-
   return (
     <ArtworkFilterContextProvider
-      filters={initialFilters}
-      sortOptions={sortOptions}
+      filters={match && match.location.query}
+      sortOptions={[
+        { value: "-decayed_merch", text: "Default" },
+        { value: "-has_price,-prices", text: "Price (desc.)" },
+        { value: "-has_price,prices", text: "Price (asc.)" },
+        { value: "-partner_updated_at", text: "Recently updated" },
+        { value: "-published_at", text: "Recently added" },
+        { value: "-year", text: "Artwork year (desc.)" },
+        { value: "year", text: "Artwork year (asc.)" },
+      ]}
       // @ts-expect-error STRICT_NULL_CHECK
       aggregations={sidebarAggregations.aggregations as any}
       // @ts-expect-error STRICT_NULL_CHECK

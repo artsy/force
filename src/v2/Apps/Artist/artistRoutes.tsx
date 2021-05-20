@@ -14,8 +14,6 @@ import { initialArtworkFilterState } from "v2/Components/ArtworkFilter/ArtworkFi
 import { allowedFilters } from "v2/Components/ArtworkFilter/Utils/allowedFilters"
 import { AppRouteConfig } from "v2/Artsy/Router/Route"
 
-import { data as sd } from "sharify" // TODO: Remove after AB test
-
 graphql`
   fragment artistRoutes_Artist on Artist {
     slug
@@ -125,15 +123,9 @@ export const artistRoutes: AppRouteConfig[] = [
           // renders (such as tabbing back to this route in your browser) will not.
           const filterStateFromUrl = props.location ? props.location.query : {}
 
-          const sort =
-            sd["DECAYED_MERCH_V2"] === "experiment"
-              ? "-decayed_merch_v2"
-              : "-decayed_merch"
-
           const filterParams = {
             ...initialArtworkFilterState,
             ...paramsToCamelCase(filterStateFromUrl),
-            sort,
           }
 
           // filterParams.hasFilter = Object.entries(filterParams).some(
