@@ -1,6 +1,7 @@
 import { ReviewTestQueryRawResponse } from "v2/__generated__/ReviewTestQuery.graphql"
 import {
   BuyOrderWithShippingDetails,
+  OfferOrderWithMissingMetadata,
   OfferOrderWithShippingDetails,
   OfferOrderWithShippingDetailsAndNote,
 } from "v2/Apps/__tests__/Fixtures/Order"
@@ -29,6 +30,7 @@ import { OrderAppTestPage } from "./Utils/OrderAppTestPage"
 import { GlobalData } from "sharify"
 import { mockLocation } from "v2/DevTools/mockLocation"
 import { mockStripe } from "v2/DevTools/mockStripe"
+import { TransactionDetailsSummaryItem } from "../../Components/TransactionDetailsSummaryItem"
 
 jest.unmock("react-relay")
 
@@ -284,6 +286,50 @@ describe("Review", () => {
 
       await page.clickSubmit()
       expect(_mockStripe().confirmCardSetup).toBeCalledWith("client-secret")
+    })
+  })
+
+  describe("Inquiry offer orders", () => {
+    let page: ReviewTestPage
+
+    it("shows a placeholder override for inquiry offers with missing metadata", async () => {
+      page = await buildPage({
+        mockData: {
+          order: {
+            ...OfferOrderWithMissingMetadata,
+          },
+        },
+      })
+
+      expect(page.root.find(TransactionDetailsSummaryItem).text()).toMatch(
+        "To be confirmed*"
+      )
+    })
+
+    it("shows message about shipping and tax confirmation for inquiry offers with missing metadata", async () => {
+      page = await buildPage({
+        mockData: {
+          order: {
+            ...OfferOrderWithMissingMetadata,
+          },
+        },
+      })
+      expect(page.text()).toMatch(
+        "*Shipping and taxes to be confirmed by gallery"
+      )
+    })
+
+    it("does not show message about shipping and tax confirmation for buy now orders", async () => {
+      page = await buildPage({
+        mockData: {
+          order: {
+            ...BuyOrderWithShippingDetails,
+          },
+        },
+      })
+      expect(page.text()).not.toMatch(
+        "*Shipping and taxes to be confirmed by gallery"
+      )
     })
   })
 })

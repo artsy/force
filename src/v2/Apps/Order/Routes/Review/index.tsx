@@ -7,6 +7,7 @@ import {
   Message,
   Row,
   Spacer,
+  Text,
 } from "@artsy/palette"
 import { Review_order } from "v2/__generated__/Review_order.graphql"
 import { ReviewSubmitOfferOrderMutation } from "v2/__generated__/ReviewSubmitOfferOrderMutation.graphql"
@@ -385,9 +386,17 @@ export class ReviewRoute extends Component<ReviewProps> {
             <Flex flexDirection="column">
               <Flex flexDirection="column">
                 <ArtworkSummaryItem order={order} />
-                <TransactionDetailsSummaryItem order={order} />
+                <TransactionDetailsSummaryItem
+                  order={order}
+                  placeholderOverride="To be confirmed*"
+                />
               </Flex>
               <BuyerGuarantee />
+              {order.myLastOffer && !order.myLastOffer?.hasDefiniteTotal && (
+                <Text variant="small" color="black60">
+                  *Shipping and taxes to be confirmed by gallery
+                </Text>
+              )}
               <Spacer mb={[2, 3]} />
               <Media at="xs">
                 <Button
@@ -433,6 +442,7 @@ export const ReviewFragmentContainer = createFragmentContainer(
         }
         ... on CommerceOfferOrder {
           myLastOffer {
+            hasDefiniteTotal
             internalID
           }
         }

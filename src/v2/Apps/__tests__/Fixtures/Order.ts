@@ -32,63 +32,86 @@ export const mockResolver = (
   }),
 })
 
+const OrderArtworkNodeWithoutShipping = {
+  artist_names: "Lisa Breslow",
+  artists: [
+    {
+      id: "239084092",
+      internalID: "artistId",
+      slug: "artistId",
+    },
+  ],
+  attribution_class: null,
+  date: "2016",
+  dimensions: {
+    cm: "91.4 × 91.4 cm",
+    in: "36 × 36 in",
+  },
+  edition_sets: [],
+  euShippingOrigin: false,
+  href: "/artwork/artworkID",
+  id: "02393",
+  image: {
+    resized: {
+      url:
+        "https://d7hftxdivxxvm.cloudfront.net?resize_to=fit&width=185&height=184&quality=80&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FtOfWds4sIX_9WpRf3RqaQQ%2Flarge.jpg",
+    },
+    resized_ArtworkSummaryItem: {
+      url:
+        "https://d7hftxdivxxvm.cloudfront.net?resize_to=fit&width=185&height=184&quality=80&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FtOfWds4sIX_9WpRf3RqaQQ%2Flarge.jpg",
+    },
+  },
+  internalID: "artworkId",
+  is_acquireable: true as boolean,
+  is_offerable: true as boolean,
+  listPrice: {
+    __typename: "Money",
+    major: 10000,
+  },
+  medium: "Oil and pencil on panel",
+  onlyShipsDomestically: false,
+  partner: {
+    id: "1234",
+    initials: "AG",
+    name: "A Gallery",
+    profile: {
+      icon: {
+        url: "www.artsy.net",
+      },
+      id: "12345",
+    },
+    slug: "a-g",
+  },
+  pickup_available: true,
+  priceCurrency: "USD",
+  shippingCountry: "US",
+  slug: "artworkId",
+  title: "Gramercy Park South",
+}
+
 const OrderArtworkNode = {
   artwork: {
-    artist_names: "Lisa Breslow",
-    artists: [
-      {
-        id: "239084092",
-        internalID: "artistId",
-        slug: "artistId",
-      },
-    ],
-    attribution_class: null,
-    date: "2016",
-    dimensions: {
-      cm: "91.4 × 91.4 cm",
-      in: "36 × 36 in",
-    },
-    edition_sets: [],
-    euShippingOrigin: false,
-    href: "/artwork/artworkID",
-    id: "02393",
-    image: {
-      resized: {
-        url:
-          "https://d7hftxdivxxvm.cloudfront.net?resize_to=fit&width=185&height=184&quality=80&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FtOfWds4sIX_9WpRf3RqaQQ%2Flarge.jpg",
-      },
-      resized_ArtworkSummaryItem: {
-        url:
-          "https://d7hftxdivxxvm.cloudfront.net?resize_to=fit&width=185&height=184&quality=80&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FtOfWds4sIX_9WpRf3RqaQQ%2Flarge.jpg",
-      },
-    },
-    internalID: "artworkId",
-    is_acquireable: true as boolean,
-    is_offerable: true as boolean,
-    listPrice: {
-      __typename: "Money",
-      major: 10000,
-    },
-    medium: "Oil and pencil on panel",
-    onlyShipsDomestically: false,
-    partner: {
-      id: "1234",
-      initials: "AG",
-      name: "A Gallery",
-      profile: {
-        icon: {
-          url: "www.artsy.net",
-        },
-        id: "12345",
-      },
-      slug: "a-g",
-    },
-    pickup_available: true,
-    priceCurrency: "USD",
-    shippingCountry: "US",
+    ...OrderArtworkNodeWithoutShipping,
     shippingOrigin: "New York, NY",
-    slug: "artworkId",
-    title: "Gramercy Park South",
+    domesticShippingFee: {
+      minor: 10000,
+      major: 100,
+      display: "$100",
+    },
+    internationalShippingFee: {
+      minor: 10000,
+      major: 100,
+      display: "$100",
+    },
+  },
+}
+
+const InquiryOrderArtworkNode = {
+  artwork: {
+    ...OrderArtworkNodeWithoutShipping,
+    shippingOrigin: null,
+    domesticShippingFee: null,
+    internationalShippingFee: null,
   },
 }
 
@@ -128,7 +151,7 @@ const OfferArtworkOrEditionSetkNode_Range = {
   },
 }
 
-const OrderArtworFflfillmentsNode = {
+const OrderArtworkFulfillmentsNode = {
   fulfillments: {
     edges: [
       {
@@ -161,7 +184,7 @@ export const UntouchedOrder = {
           id: "line-item-node-id",
           ...OrderArtworkNode,
           ...OrderArtworkOrEditionSetkNode_Artwork,
-          ...OrderArtworFflfillmentsNode,
+          ...OrderArtworkFulfillmentsNode,
         },
       },
     ],
@@ -220,6 +243,19 @@ export const OfferWithTotals = {
   note: "Another note!",
 } as const
 
+export const OfferWithoutTotals = {
+  amount: "$14,000",
+  amountCents: 1400000,
+  currencyCode: "USD",
+  id: "myoffer-id",
+  internalID: "myoffer-id",
+  buyerTotal: "$14,320",
+  buyerTotalCents: 1432000,
+  createdAt: "2019-08-01T20:34:27.467Z",
+  fromParticipant: "SELLER",
+  note: "Another note!",
+} as const
+
 export const UntouchedOfferOrder = {
   ...UntouchedOrder,
   __typename: "CommerceOfferOrder",
@@ -236,7 +272,7 @@ export const UntouchedOfferOrder = {
           id: "line-item-node-id",
           ...OrderArtworkNode,
           ...OfferArtworkOrEditionSetkNode_Artwork,
-          ...OrderArtworFflfillmentsNode,
+          ...OrderArtworkFulfillmentsNode,
         },
       },
     ],
@@ -248,6 +284,30 @@ export const UntouchedOfferOrder = {
     edges: [{ node: OfferWithTotals }],
   },
   totalListPriceCents: 1600000,
+} as const
+
+export const UntouchedInquiryOfferOrder = {
+  ...UntouchedOfferOrder,
+  lineItems: {
+    offers: {
+      edges: [
+        {
+          node: OfferWithoutTotals,
+        },
+      ],
+    },
+    edges: [
+      {
+        node: {
+          editionSetId: null,
+          id: "line-item-node-id",
+          ...InquiryOrderArtworkNode,
+          ...OfferArtworkOrEditionSetkNode_Artwork,
+          ...OrderArtworkFulfillmentsNode,
+        },
+      },
+    ],
+  },
 } as const
 
 export const UntouchedOfferOrderInPounds = {
@@ -262,7 +322,7 @@ export const UntouchedOfferOrderInPounds = {
           id: "line-item-node-id",
           ...OrderArtworkNode,
           ...OfferArtworkOrEditionSetkNode_ArtworkInPounds,
-          ...OrderArtworFflfillmentsNode,
+          ...OrderArtworkFulfillmentsNode,
         },
       },
     ],
@@ -279,7 +339,7 @@ export const UntouchedOfferOrderWithRange = {
           id: "line-item-node-id",
           ...OrderArtworkNode,
           ...OfferArtworkOrEditionSetkNode_Range,
-          ...OrderArtworFflfillmentsNode,
+          ...OrderArtworkFulfillmentsNode,
         },
       },
     ],
@@ -291,6 +351,7 @@ export const OfferOrderWithOffers = {
   lastOffer: OfferWithTotals,
   myLastOffer: {
     ...OfferWithTotals,
+    hasDefiniteTotal: true,
     fromParticipant: "BUYER",
     id: "my-last-offer-id-no-note",
     internalID: "my-last-offer-id-no-note",
@@ -303,6 +364,7 @@ export const OfferOrderWithOffersAndNote = {
   lastOffer: OfferWithTotals,
   myLastOffer: {
     ...OfferWithTotals,
+    hasDefiniteTotal: true,
     fromParticipant: "BUYER",
     id: "my-last-offer-id-with-note",
     internalID: "my-last-offer-id-with-note",
@@ -434,3 +496,29 @@ export const Offers = [
     },
   },
 ] as const
+
+export const OfferOrderWithMissingMetadata = {
+  ...UntouchedInquiryOfferOrder,
+  ...ShippingDetails,
+  ...PaymentDetails,
+  lastOffer: {
+    ...OfferWithoutTotals,
+    shippingTotalCents: null,
+    shippingTotal: null,
+    taxTotal: null,
+    taxTotalCents: null,
+  },
+  myLastOffer: {
+    ...OfferWithoutTotals,
+    shippingTotalCents: null,
+    shippingTotal: null,
+    taxTotal: null,
+    taxTotalCents: null,
+    fromParticipant: "BUYER",
+    id: "my-last-offer-id-no-note",
+    internalID: "my-last-offer-id-no-note",
+    note: null,
+    hasDefiniteTotal: false,
+  },
+  isInquiryOrder: true,
+} as const
