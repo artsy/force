@@ -15,6 +15,10 @@ type SetupTestWrapper<T extends OperationType> = {
  * `relay-test-tools` package, which will provide automatic fixture data for
  * GraphQL queries.
  *
+ * Note: If wanting to test a QueryRenderer, extract the render code into a
+ * fragment-like container and test that; `QueryRenderer` components aren't
+ * supported.
+ *
  * @see https://relay.dev/docs/en/testing-relay-components
  *
  * @example
