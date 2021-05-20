@@ -6,6 +6,10 @@ import { FragmentRefs } from "relay-runtime";
 export type NavigationTabs_partner = {
     readonly slug: string;
     readonly displayArtistsSection: boolean | null;
+    readonly displayWorksSection: boolean | null;
+    readonly counts: {
+        readonly eligibleArtworks: number | null;
+    } | null;
     readonly locations: {
         readonly totalCount: number | null;
     } | null;
@@ -61,6 +65,31 @@ return {
       "args": null,
       "kind": "ScalarField",
       "name": "displayArtistsSection",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "displayWorksSection",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "PartnerCounts",
+      "kind": "LinkedField",
+      "name": "counts",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "eligibleArtworks",
+          "storageKey": null
+        }
+      ],
       "storageKey": null
     },
     {
@@ -132,5 +161,5 @@ return {
   "type": "Partner"
 };
 })();
-(node as any).hash = 'c0da37bb93462a41ed058d6d13e51290';
+(node as any).hash = '05e78b2944118e955c4923bde262b071';
 export default node;

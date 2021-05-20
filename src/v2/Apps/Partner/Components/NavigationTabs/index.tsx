@@ -22,6 +22,8 @@ export const NavigationTabs: React.FC<NavigationTabsProps> = ({ partner }) => {
       slug,
       locations,
       articles,
+      counts,
+      displayWorksSection,
       displayArtistsSection,
       representedArtists,
       notRepresentedArtists,
@@ -44,6 +46,7 @@ export const NavigationTabs: React.FC<NavigationTabsProps> = ({ partner }) => {
         name: "Works",
         href: route("/works"),
         exact: true,
+        hidden: !displayWorksSection || !counts?.eligibleArtworks,
       },
       {
         name: "Artists",
@@ -114,6 +117,10 @@ export const NavigationTabsFragmentContainer = createFragmentContainer(
       fragment NavigationTabs_partner on Partner {
         slug
         displayArtistsSection
+        displayWorksSection
+        counts {
+          eligibleArtworks
+        }
         locations: locationsConnection(first: 20) {
           totalCount
         }
