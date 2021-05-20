@@ -4,7 +4,8 @@ import { AuthIntentMutation } from "./types"
 
 export const followArtistMutation: AuthIntentMutation = (
   relayEnvironment: Environment,
-  id: string
+  id: string,
+  isFollowed: boolean = false
 ) => {
   return new Promise((resolve, reject) => {
     commitMutation<AuthIntentFollowArtistMutation>(relayEnvironment, {
@@ -30,13 +31,14 @@ export const followArtistMutation: AuthIntentMutation = (
         followArtist: {
           artist: {
             id,
-            isFollowed: true,
+            isFollowed: !isFollowed,
           },
         },
       },
       variables: {
         input: {
           artistID: id,
+          unfollow: isFollowed,
         },
       },
     })

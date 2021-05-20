@@ -1,4 +1,4 @@
-import { BorderBox, Flex, Spacer } from "@artsy/palette"
+import { BorderBox, Flex, Spacer, useThemeConfig } from "@artsy/palette"
 import { SelectedCareerAchievements_artist } from "v2/__generated__/SelectedCareerAchievements_artist.graphql"
 import {
   hasSections,
@@ -12,6 +12,8 @@ import { createFragmentContainer, graphql } from "react-relay"
 
 export interface SelectedCareerAchievementsProps {
   artist: SelectedCareerAchievements_artist
+  themeVersion?: string
+  onlyCareerHighlights?: boolean
 }
 
 const CATEGORIES = {
@@ -30,6 +32,10 @@ export class SelectedCareerAchievements extends React.Component<
 > {
   state = {
     showModal: false,
+  }
+
+  defaultProps: {
+    onlyCareerHighlights: false
   }
 
   renderAuctionHighlight() {
@@ -52,6 +58,7 @@ export class SelectedCareerAchievements extends React.Component<
         type="HIGH_AUCTION"
         label="High auction record"
         value={display}
+        themeVersion={this.props.themeVersion}
       />
     )
   }
@@ -74,6 +81,7 @@ export class SelectedCareerAchievements extends React.Component<
           type={type}
           label={label}
           value={CATEGORY_LABEL_MAP[highCategory]}
+          themeVersion={this.props.themeVersion}
         />
       )
     }
@@ -86,6 +94,7 @@ export class SelectedCareerAchievements extends React.Component<
         type={insight.type}
         label={insight.label}
         entities={insight.entities}
+        themeVersion={this.props.themeVersion}
       />
     )
   }
@@ -99,37 +108,70 @@ export class SelectedCareerAchievements extends React.Component<
       return null
     }
 
+    if (this.props.themeVersion === "v2") {
+      return (
+        <>
+          <ArtistInsightsModal />
+          <Spacer mb={2} />
+
+          <BorderBox pt={1}>
+            <Flex flexDirection="column" alignItems="left" width="100%">
+              <Flex
+                flexDirection="column"
+                flexWrap="wrap"
+                justifyContent="space-between"
+              >
+                {this.renderGalleryRepresentation()}
+                {this.renderAuctionHighlight()}
+
+                {/*  @ts-expect-error STRICT_NULL_CHECK */}
+                {this.props.artist.insights.map(insight => {
+                  return this.renderInsight(insight)
+                })}
+              </Flex>
+            </Flex>
+          </BorderBox>
+
+          {this.props.children}
+        </>
+      )
+    }
+
+    // V3 theme
     return (
       <>
-        <ArtistInsightsModal />
-        <Spacer mb={2} />
-
-        <BorderBox pt={1}>
-          <Flex flexDirection="column" alignItems="left" width="100%">
-            <Flex
-              flexDirection="column"
-              flexWrap="wrap"
-              justifyContent="space-between"
-            >
-              {this.renderGalleryRepresentation()}
-              {this.renderAuctionHighlight()}
-
-              {/*  @ts-expect-error STRICT_NULL_CHECK */}
-              {this.props.artist.insights.map(insight => {
-                return this.renderInsight(insight)
-              })}
-            </Flex>
+        {this.props.onlyCareerHighlights ? (
+          <Flex flexWrap="wrap" pr={2}>
+            {this.props.artist?.insights?.map(insight => {
+              return this.renderInsight(insight)
+            })}
           </Flex>
-        </BorderBox>
-
-        {this.props.children}
+        ) : (
+          <Flex flexDirection="column">
+            {this.renderGalleryRepresentation()}
+            {this.renderAuctionHighlight()}
+          </Flex>
+        )}
       </>
     )
   }
 }
 
 export const SelectedCareerAchievementsFragmentContainer = createFragmentContainer(
-  SelectedCareerAchievements,
+  (props: SelectedCareerAchievementsProps) => {
+    const tokens = useThemeConfig({
+      v2: {
+        version: "v2",
+      },
+      v3: {
+        version: "v3",
+      },
+    })
+
+    return (
+      <SelectedCareerAchievements {...props} themeVersion={tokens.version} />
+    )
+  },
   {
     artist: graphql`
       fragment SelectedCareerAchievements_artist on Artist

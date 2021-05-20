@@ -1,4 +1,4 @@
-import { Box, Flex, Link, Sans } from "@artsy/palette"
+import { Box, Flex, Link, Sans, Text } from "@artsy/palette"
 import { track } from "v2/Artsy/Analytics"
 import * as Schema from "v2/Artsy/Analytics/Schema"
 import React from "react"
@@ -20,6 +20,7 @@ interface ArtistInsightProps {
   label: string
   value?: string
   entities?: ReadonlyArray<string>
+  themeVersion?: any // FIXME
 }
 
 const ICON_MAPPING = {
@@ -52,20 +53,37 @@ export class ArtistInsight extends React.Component<ArtistInsightProps> {
     this.setState({ expanded: true })
   }
 
+  getTextByTheme() {
+    if (this.props.themeVersion === "v3") {
+      return props => (
+        <Text variant="sm" {...props}>
+          {props.children}
+        </Text>
+      )
+    } else {
+      return props => (
+        <Sans size="2" {...props}>
+          {props.children}
+        </Sans>
+      )
+    }
+  }
+
   renderEntities() {
     const { entities } = this.props
+    const TextWrapper = this.getTextByTheme()
 
     if (!entities || entities.length < 1) {
       return null
     } else if (this.state.expanded) {
       return (
-        <Sans size="2" verticalAlign="top" color="black60">
+        <TextWrapper verticalAlign="top" color="black60">
           {entities.join(", ")}.
-        </Sans>
+        </TextWrapper>
       )
     } else {
       return (
-        <Sans size="2" verticalAlign="top" color="black60" textAlign="left">
+        <TextWrapper verticalAlign="top" color="black60" textAlign="left">
           {entities[0]}
 
           {entities.length > 1 && (
@@ -77,7 +95,7 @@ export class ArtistInsight extends React.Component<ArtistInsightProps> {
               </Link>
             </>
           )}
-        </Sans>
+        </TextWrapper>
       )
     }
   }
@@ -90,19 +108,26 @@ export class ArtistInsight extends React.Component<ArtistInsightProps> {
 
   render() {
     const { label, type, value, entities } = this.props
+    const TextWrapper = this.getTextByTheme()
 
     if (value || (entities && entities.length > 0)) {
       return (
-        <Flex mt={1} width={"100%"}>
-          <Flex pr={1}>{this.renderIcon(type)}</Flex>
+        <Flex
+          mt={1}
+          width={this.props.themeVersion === "v3" ? "50%" : "100%"}
+          position="relative"
+        >
+          <Flex
+            pr={1}
+            top={this.props.themeVersion === "v2" ? 0 : "3px"}
+            position="relative"
+          >
+            {this.renderIcon(type)}
+          </Flex>
           <Flex flexDirection="column">
             <Box>
-              <Sans size="2">{label}</Sans>
-              {value && (
-                <Sans size="2" color="black60">
-                  {value}
-                </Sans>
-              )}
+              <TextWrapper>{label}</TextWrapper>
+              {value && <TextWrapper color="black60">{value}</TextWrapper>}
               {this.renderEntities()}
             </Box>
           </Flex>
