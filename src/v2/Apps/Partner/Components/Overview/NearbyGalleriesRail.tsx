@@ -1,13 +1,13 @@
 import React from "react"
 import { Box, BoxProps, Flex, Text } from "@artsy/palette"
-import { createFragmentContainer, graphql, QueryRenderer } from "react-relay"
+import { createFragmentContainer, graphql } from "react-relay"
 import { NearbyGalleriesRail_partners } from "v2/__generated__/NearbyGalleriesRail_partners.graphql"
 import { NearbyGalleriesRailRendererQuery } from "v2/__generated__/NearbyGalleriesRailRendererQuery.graphql"
 import { Carousel } from "../Carousel"
 import { useSystemContext } from "v2/Artsy"
 import { NearbyGalleryCardFragmentContainer } from "./NearbyGalleryCard"
-import { compact } from "lodash"
 import { NearbyGalleriesRailPlaceholder } from "./NearbyGalleriesRailPlaceholder"
+import { SystemQueryRenderer as QueryRenderer } from "v2/Artsy/Relay/SystemQueryRenderer"
 
 interface NearbyGalleriesRailProps extends BoxProps {
   partners: NearbyGalleriesRail_partners
@@ -70,7 +70,6 @@ export const NearbyGalleriesRailRenderer: React.FC<
 
   return (
     <QueryRenderer<NearbyGalleriesRailRendererQuery>
-      //  @ts-expect-error STRICT_NULL_CHECK
       environment={relayEnvironment}
       query={graphql`
         query NearbyGalleriesRailRendererQuery($near: String!) {
@@ -96,7 +95,7 @@ export const NearbyGalleriesRailRenderer: React.FC<
           <NearbyGalleriesRailFragmentContainer
             {...rest}
             {...props}
-            partners={compact(props.partnersConnection?.edges)}
+            partners={props?.partnersConnection?.edges}
           />
         )
       }}
