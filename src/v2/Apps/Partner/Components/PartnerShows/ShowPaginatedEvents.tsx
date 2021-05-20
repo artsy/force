@@ -1,11 +1,6 @@
 import { Box } from "@artsy/palette"
 import React, { useState } from "react"
-import {
-  createRefetchContainer,
-  graphql,
-  QueryRenderer,
-  RelayRefetchProp,
-} from "react-relay"
+import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 import { PaginationFragmentContainer } from "v2/Components/Pagination"
 import { LoadingArea } from "v2/Components/LoadingArea"
 import { ShowEventsFragmentContainer } from "v2/Apps/Partner/Components/PartnerShows/ShowEvents"
@@ -14,6 +9,7 @@ import { useRouter } from "v2/Artsy/Router/useRouter"
 import { ShowPaginatedEventsRendererQuery } from "v2/__generated__/ShowPaginatedEventsRendererQuery.graphql"
 import { ShowPaginatedEvents_partner } from "v2/__generated__/ShowPaginatedEvents_partner.graphql"
 import { EventStatus } from "v2/__generated__/ShowPaginatedEventsRendererQuery.graphql"
+import { SystemQueryRenderer as QueryRenderer } from "v2/Artsy/Relay/SystemQueryRenderer"
 
 interface ShowEventsProps {
   relay: RelayRefetchProp
@@ -192,7 +188,6 @@ export const ShowPaginatedEventsRenderer: React.FC<ShowPaginatedEventsRendererPr
 
   return (
     <QueryRenderer<ShowPaginatedEventsRendererQuery>
-      // @ts-expect-error STRICT_NULL_CHECK
       environment={relayEnvironment}
       query={graphql`
         query ShowPaginatedEventsRendererQuery(
@@ -212,7 +207,6 @@ export const ShowPaginatedEventsRenderer: React.FC<ShowPaginatedEventsRendererPr
         if (error || !props) return null
 
         return (
-          // @ts-expect-error STRICT_NULL_CHECK
           <ShowEventsRefetchContainer {...rest} {...props} paramsPage={page} />
         )
       }}

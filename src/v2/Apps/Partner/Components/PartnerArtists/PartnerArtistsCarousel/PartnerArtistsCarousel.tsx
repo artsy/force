@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import { Box, Text, Flex } from "@artsy/palette"
 import { flatten } from "lodash"
-import { createFragmentContainer, graphql, QueryRenderer } from "react-relay"
+import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "v2/Artsy"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import { PartnerArtistsCarouselRendererQuery } from "v2/__generated__/PartnerArtistsCarouselRendererQuery.graphql"
@@ -13,6 +13,7 @@ import {
 import { PartnerArtistsCarouselPlaceholder } from "./PartnerArtistsCarouselPlaceholder"
 import { ScrollToPartnerHeader } from "../../ScrollToPartnerHeader"
 import { Carousel } from "../../Carousel"
+import { SystemQueryRenderer as QueryRenderer } from "v2/Artsy/Relay/SystemQueryRenderer"
 
 const PAGE_SIZE = 19
 
@@ -110,7 +111,6 @@ export const PartnerArtistsCarouselRenderer: React.FC<{
 
   return (
     <QueryRenderer<PartnerArtistsCarouselRendererQuery>
-      // @ts-expect-error STRICT_NULL_CHECK
       environment={relayEnvironment}
       query={graphql`
         query PartnerArtistsCarouselRendererQuery($partnerId: String!) {
@@ -124,7 +124,6 @@ export const PartnerArtistsCarouselRenderer: React.FC<{
         if (error || !props)
           return <PartnerArtistsCarouselPlaceholder count={PAGE_SIZE} />
 
-        // @ts-expect-error STRICT_NULL_CHECK
         return <PartnerArtistsCarouselFragmentContainer {...rest} {...props} />
       }}
     />
