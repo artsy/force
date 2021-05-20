@@ -7,10 +7,8 @@ export type NavigationTabs_partner = {
     readonly slug: string;
     readonly displayArtistsSection: boolean | null;
     readonly displayWorksSection: boolean | null;
-    readonly filteredWorks: {
-        readonly counts: {
-            readonly total: number | null;
-        } | null;
+    readonly counts: {
+        readonly eligibleArtworks: number | null;
     } | null;
     readonly locations: {
         readonly totalCount: number | null;
@@ -77,39 +75,22 @@ return {
       "storageKey": null
     },
     {
-      "alias": "filteredWorks",
-      "args": [
-        {
-          "kind": "Literal",
-          "name": "first",
-          "value": 0
-        }
-      ],
-      "concreteType": "FilterArtworksConnection",
+      "alias": null,
+      "args": null,
+      "concreteType": "PartnerCounts",
       "kind": "LinkedField",
-      "name": "filterArtworksConnection",
+      "name": "counts",
       "plural": false,
       "selections": [
         {
           "alias": null,
           "args": null,
-          "concreteType": "FilterArtworksCounts",
-          "kind": "LinkedField",
-          "name": "counts",
-          "plural": false,
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "total",
-              "storageKey": null
-            }
-          ],
+          "kind": "ScalarField",
+          "name": "eligibleArtworks",
           "storageKey": null
         }
       ],
-      "storageKey": "filterArtworksConnection(first:0)"
+      "storageKey": null
     },
     {
       "alias": "locations",
@@ -180,5 +161,5 @@ return {
   "type": "Partner"
 };
 })();
-(node as any).hash = 'e585c7be93a298912dd7a8f5f4444439';
+(node as any).hash = '05e78b2944118e955c4923bde262b071';
 export default node;
