@@ -26,7 +26,7 @@ export function OrderStepper<Steps extends string[]>({
   return (
     <>
       <Media between={["xs", "md"]}>
-        <Box pl={2} pr={2}>
+        <Box>
           <Stepper
             initialTabIndex={stepIndex}
             currentStepIndex={stepIndex}
