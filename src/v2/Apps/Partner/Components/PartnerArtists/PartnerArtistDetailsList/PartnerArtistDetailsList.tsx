@@ -4,13 +4,13 @@ import { useSystemContext } from "v2/Artsy"
 import {
   createPaginationContainer,
   graphql,
-  QueryRenderer,
   RelayPaginationProp,
 } from "react-relay"
 import { PartnerArtistDetailsList_partner } from "v2/__generated__/PartnerArtistDetailsList_partner.graphql"
 import { PartnerArtistDetailsListQuery } from "v2/__generated__/PartnerArtistDetailsListQuery.graphql"
 import { PartnerArtistDetailsListPlaceholder } from "./PartnerArtistDetailsListPlaceholder"
 import { PartnerArtistDetailsFragmentContainer } from "../PartnerArtistDetails"
+import { SystemQueryRenderer as QueryRenderer } from "v2/Artsy/Relay/SystemQueryRenderer"
 
 export interface PartnerArtistDetailsListProps {
   partner: PartnerArtistDetailsList_partner
@@ -137,7 +137,6 @@ export const PartnerArtistDetailsListRenderer: React.FC<{
 
   return (
     <QueryRenderer<PartnerArtistDetailsListQuery>
-      //  @ts-expect-error STRICT_NULL_CHECK
       environment={relayEnvironment}
       query={graphql`
         query PartnerArtistDetailsListRendererQuery($partnerId: String!) {
@@ -152,7 +151,6 @@ export const PartnerArtistDetailsListRenderer: React.FC<{
           return <PartnerArtistDetailsListPlaceholder count={PAGE_SIZE} />
 
         return (
-          // @ts-expect-error STRICT_NULL_CHECK
           <PartnerArtistDetailsListPaginationContainer {...rest} {...props} />
         )
       }}
