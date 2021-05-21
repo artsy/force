@@ -1,4 +1,4 @@
-import { sharifyLocalsMiddleware } from "lib/middleware/sharifyLocals"
+import { bootstrapSharifyAndContextLocalsMiddleware } from "lib/middleware/bootstrapSharifyAndContextLocalsMiddleware"
 
 describe("locals middleware", () => {
   let res
@@ -16,7 +16,7 @@ describe("locals middleware", () => {
   })
 
   it("adds a session id", () => {
-    sharifyLocalsMiddleware(req, res, next)
+    bootstrapSharifyAndContextLocalsMiddleware(req, res, next)
     req.session.id.length.should.be.above(0)
     expect(res.locals.sd.SESSION_ID).toEqual(req.session.id)
   })
@@ -24,21 +24,21 @@ describe("locals middleware", () => {
   it("current_path does not include query params", () => {
     req.get.mockReturnValueOnce("foobar")
     req.url = "localhost:3000/foo?bar=baz"
-    sharifyLocalsMiddleware(req, res, next)
+    bootstrapSharifyAndContextLocalsMiddleware(req, res, next)
     expect(res.locals.sd.CURRENT_PATH).toEqual("/foo")
   })
 
   it("flags eigen", () => {
     req.get.mockReturnValueOnce("Something something Artsy-Mobile")
     req.url = "localhost:3000/foo?bar=baz"
-    sharifyLocalsMiddleware(req, res, next)
+    bootstrapSharifyAndContextLocalsMiddleware(req, res, next)
     expect(res.locals.sd.EIGEN).toBeTruthy()
   })
 
   it("works if there is no user agent", () => {
     req.get.mockReturnValueOnce(null)
     req.url = ""
-    sharifyLocalsMiddleware(req, res, next)
+    bootstrapSharifyAndContextLocalsMiddleware(req, res, next)
     expect(res.locals.sd.EIGEN).toEqual(false)
   })
 
@@ -46,7 +46,7 @@ describe("locals middleware", () => {
     req.get.mockReturnValueOnce(
       "Mozilla/5.0 (iPhone; CPU iPhone OS 12_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148"
     )
-    sharifyLocalsMiddleware(req, res, next)
+    bootstrapSharifyAndContextLocalsMiddleware(req, res, next)
     expect(res.locals.sd.IS_MOBILE).toEqual(true)
   })
 
@@ -54,7 +54,7 @@ describe("locals middleware", () => {
     req.get.mockReturnValueOnce(
       "Mozilla/5.0(iPad; U; CPU iPhone OS 3_2 like Mac OS X; en-us) AppleWebKit/531.21.10 (KHTML, like Gecko) Version/4.0.4 Mobile/7B314 Safari/531.21.10"
     )
-    sharifyLocalsMiddleware(req, res, next)
+    bootstrapSharifyAndContextLocalsMiddleware(req, res, next)
     expect(res.locals.sd.IS_TABLET).toEqual(true)
   })
 })
