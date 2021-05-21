@@ -10,14 +10,14 @@ import { NearbyGalleryCard_partner } from "v2/__generated__/NearbyGalleryCard_pa
 
 interface NearbyGalleryCardProps extends BoxProps {
   partner: NearbyGalleryCard_partner
-  city: string | null
+  city?: string | null
 }
 
 function normalizeCityName(city: string) {
   return capitalize(city.trim())
 }
 
-function getLocation(cities: Array<string>, preferredCity: string | null) {
+function getLocation(cities: Array<string>, preferredCity?: string | null) {
   let location
 
   if (cities.length > 0) {
