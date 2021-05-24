@@ -180,9 +180,38 @@ export const partnerRoutes: AppRouteConfig[] = [
           ) {
             partner(id: $partnerId) @principalField {
               ...Works_partner @arguments(input: $input)
+              displayWorksSection
+              counts {
+                eligibleArtworks
+              }
             }
           }
         `,
+        render: ({ Component, props, match }) => {
+          if (!(Component && props)) {
+            return
+          }
+
+          const { partner } = props as any
+
+          if (!partner) {
+            return
+          }
+
+          const {
+            displayWorksSection,
+            counts: { eligibleArtworks },
+          } = partner
+
+          if (!displayWorksSection || eligibleArtworks <= 0) {
+            throw new RedirectException(
+              `/partner2/${match.params.partnerId}`,
+              302
+            )
+          }
+
+          return <Component {...props} />
+        },
       },
       {
         getComponent: () => ArtistsRoute,
