@@ -382,6 +382,8 @@ describe("ViewingRoomApp", () => {
 
 const DraftViewingRoomAppFixture: ViewingRoomApp_DraftTest_QueryRawResponse = {
   viewingRoom: {
+    href: "/viewing-room/example",
+    pullQuote: "Example pull quote",
     distanceToClose: null,
     distanceToOpen: null,
     image: {
@@ -403,6 +405,8 @@ const DraftViewingRoomAppFixture: ViewingRoomApp_DraftTest_QueryRawResponse = {
 
 const ScheduledViewingRoomAppFixture: ViewingRoomApp_ScheduledTest_QueryRawResponse = {
   viewingRoom: {
+    href: "/viewing-room/example",
+    pullQuote: "Example pull quote",
     distanceToClose: null,
     distanceToOpen: "8 days",
     image: {
@@ -424,6 +428,8 @@ const ScheduledViewingRoomAppFixture: ViewingRoomApp_ScheduledTest_QueryRawRespo
 
 const OpenViewingRoomAppFixture: ViewingRoomApp_OpenTest_QueryRawResponse = {
   viewingRoom: {
+    href: "/viewing-room/example",
+    pullQuote: "Example pull quote",
     distanceToClose: "1 month",
     distanceToOpen: null,
     image: {
@@ -445,6 +451,8 @@ const OpenViewingRoomAppFixture: ViewingRoomApp_OpenTest_QueryRawResponse = {
 
 const ClosedViewingRoomAppFixture: ViewingRoomApp_ClosedTest_QueryRawResponse = {
   viewingRoom: {
+    href: "/viewing-room/example",
+    pullQuote: "Example pull quote",
     distanceToClose: null,
     distanceToOpen: null,
     image: {
@@ -470,6 +478,8 @@ const UnfoundViewingRoomAppFixture: ViewingRoomApp_UnfoundTest_QueryRawResponse 
 
 const LoggedOutViewingRoomAppFixture: ViewingRoomApp_LoggedOutTest_QueryRawResponse = {
   viewingRoom: {
+    href: "/viewing-room/example",
+    pullQuote: "Example pull quote",
     distanceToClose: "Closes in 1 month",
     distanceToOpen: null,
     image: {
