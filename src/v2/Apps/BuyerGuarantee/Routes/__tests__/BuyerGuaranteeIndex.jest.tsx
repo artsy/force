@@ -10,6 +10,10 @@ import { MockBoot } from "v2/DevTools"
 
 jest.unmock("react-relay")
 
+jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
+  useMatchMedia: () => false,
+}))
+
 describe("BuyerGuaranteeIndex", () => {
   const { getWrapper } = setupTestWrapper<
     BuyerGuaranteeIndexNonAdmin_Test_Query
@@ -43,7 +47,6 @@ describe("BuyerGuaranteeIndex", () => {
   it("renders correctly", () => {
     const wrapper = getWrapper()
     const comp = wrapper.find(BuyerGuaranteeIndex).html()
-
     expect(wrapper.find("h1")).toHaveLength(1)
     expect(comp).not.toBeNull()
   })
