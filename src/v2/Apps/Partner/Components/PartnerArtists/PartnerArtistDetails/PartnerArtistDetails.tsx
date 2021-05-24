@@ -18,6 +18,7 @@ import { ContextModule } from "@artsy/cohesion"
 import { useSystemContext } from "v2/Artsy"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import { PartnerArtistDetailsPlaceholder } from "./PartnerArtistDetailsPlaceholder"
+import { compact } from "lodash"
 
 export interface PartnerArtistDetailsProps {
   partnerArtist: PartnerArtistDetails_partnerArtist
@@ -29,14 +30,12 @@ export const PartnerArtistDetails: React.FC<PartnerArtistDetailsProps> = ({
   if (!partnerArtist || !partnerArtist.node) return null
 
   const {
-    node: {
-      name,
-      filterArtworksConnection,
-      href,
-      formattedNationalityAndBirthday,
-    },
+    node: { name, href, formattedNationalityAndBirthday },
     biographyBlurb,
+    artworksConnection,
   } = partnerArtist
+
+  const artworks = compact(artworksConnection?.edges?.map(c => c?.node))
 
   return (
     <Box>
@@ -82,14 +81,11 @@ export const PartnerArtistDetails: React.FC<PartnerArtistDetailsProps> = ({
         </Column>
         <Column span={12} maxWidth="100%">
           <Carousel arrowHeight={160}>
-            {/* @ts-expect-error STRICT_NULL_CHECK */}
-            {filterArtworksConnection.edges.map((artwork, i) => {
+            {artworks.map(artwork => {
               return (
                 <FillwidthItem
-                  // @ts-expect-error STRICT_NULL_CHECK
-                  key={artwork.node.id}
-                  // @ts-expect-error STRICT_NULL_CHECK
-                  artwork={artwork.node}
+                  key={artwork.id}
+                  artwork={artwork}
                   imageHeight={160}
                   lazyLoad
                 />
@@ -111,19 +107,19 @@ export const PartnerArtistDetailsFragmentContainer = createFragmentContainer(
           text
           credit
         }
+        artworksConnection(first: 12) {
+          edges {
+            node {
+              id
+              ...FillwidthItem_artwork
+            }
+          }
+        }
         node {
           name
           href
           formattedNationalityAndBirthday
           ...FollowArtistButton_artist
-          filterArtworksConnection(first: 12, partnerIDs: [$partnerId]) {
-            edges {
-              node {
-                id
-                ...FillwidthItem_artwork
-              }
-            }
-          }
         }
       }
     `,

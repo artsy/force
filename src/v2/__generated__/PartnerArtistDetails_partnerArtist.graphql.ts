@@ -8,18 +8,18 @@ export type PartnerArtistDetails_partnerArtist = {
         readonly text: string | null;
         readonly credit: string | null;
     } | null;
+    readonly artworksConnection: {
+        readonly edges: ReadonlyArray<{
+            readonly node: {
+                readonly id: string;
+                readonly " $fragmentRefs": FragmentRefs<"FillwidthItem_artwork">;
+            } | null;
+        } | null> | null;
+    } | null;
     readonly node: {
         readonly name: string | null;
         readonly href: string | null;
         readonly formattedNationalityAndBirthday: string | null;
-        readonly filterArtworksConnection: {
-            readonly edges: ReadonlyArray<{
-                readonly node: {
-                    readonly id: string;
-                    readonly " $fragmentRefs": FragmentRefs<"FillwidthItem_artwork">;
-                } | null;
-            } | null> | null;
-        } | null;
         readonly " $fragmentRefs": FragmentRefs<"FollowArtistButton_artist">;
     } | null;
     readonly " $refType": "PartnerArtistDetails_partnerArtist";
@@ -33,13 +33,7 @@ export type PartnerArtistDetails_partnerArtist$key = {
 
 
 const node: ReaderFragment = {
-  "argumentDefinitions": [
-    {
-      "kind": "RootArgument",
-      "name": "partnerId",
-      "type": "String"
-    }
-  ],
+  "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
   "name": "PartnerArtistDetails_partnerArtist",
@@ -77,6 +71,57 @@ const node: ReaderFragment = {
     },
     {
       "alias": null,
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "first",
+          "value": 12
+        }
+      ],
+      "concreteType": "ArtworkConnection",
+      "kind": "LinkedField",
+      "name": "artworksConnection",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "ArtworkEdge",
+          "kind": "LinkedField",
+          "name": "edges",
+          "plural": true,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": "Artwork",
+              "kind": "LinkedField",
+              "name": "node",
+              "plural": false,
+              "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "id",
+                  "storageKey": null
+                },
+                {
+                  "args": null,
+                  "kind": "FragmentSpread",
+                  "name": "FillwidthItem_artwork"
+                }
+              ],
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        }
+      ],
+      "storageKey": "artworksConnection(first:12)"
+    },
+    {
+      "alias": null,
       "args": null,
       "concreteType": "Artist",
       "kind": "LinkedField",
@@ -105,68 +150,6 @@ const node: ReaderFragment = {
           "storageKey": null
         },
         {
-          "alias": null,
-          "args": [
-            {
-              "kind": "Literal",
-              "name": "first",
-              "value": 12
-            },
-            {
-              "items": [
-                {
-                  "kind": "Variable",
-                  "name": "partnerIDs.0",
-                  "variableName": "partnerId"
-                }
-              ],
-              "kind": "ListValue",
-              "name": "partnerIDs"
-            }
-          ],
-          "concreteType": "FilterArtworksConnection",
-          "kind": "LinkedField",
-          "name": "filterArtworksConnection",
-          "plural": false,
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "concreteType": "FilterArtworksEdge",
-              "kind": "LinkedField",
-              "name": "edges",
-              "plural": true,
-              "selections": [
-                {
-                  "alias": null,
-                  "args": null,
-                  "concreteType": "Artwork",
-                  "kind": "LinkedField",
-                  "name": "node",
-                  "plural": false,
-                  "selections": [
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "id",
-                      "storageKey": null
-                    },
-                    {
-                      "args": null,
-                      "kind": "FragmentSpread",
-                      "name": "FillwidthItem_artwork"
-                    }
-                  ],
-                  "storageKey": null
-                }
-              ],
-              "storageKey": null
-            }
-          ],
-          "storageKey": null
-        },
-        {
           "args": null,
           "kind": "FragmentSpread",
           "name": "FollowArtistButton_artist"
@@ -177,5 +160,5 @@ const node: ReaderFragment = {
   ],
   "type": "ArtistPartnerEdge"
 };
-(node as any).hash = 'ba9c64f322825e146cd87ea5cd3c97ea';
+(node as any).hash = '962a53356d57ae9461a441f9fa9599cf';
 export default node;
