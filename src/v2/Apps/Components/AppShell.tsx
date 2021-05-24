@@ -103,11 +103,13 @@ export const AppShell: React.FC<AppShellProps> = props => {
           <NetworkOfflineMonitor />
 
           {showFooter && (
-            <AppContainer bg="white100">
-              <HorizontalPadding>
-                <Footer />
-              </HorizontalPadding>
-            </AppContainer>
+            <Flex bg="white100">
+              <AppContainer>
+                <HorizontalPadding>
+                  <Footer />
+                </HorizontalPadding>
+              </AppContainer>
+            </Flex>
           )}
         </>
       </Theme>
