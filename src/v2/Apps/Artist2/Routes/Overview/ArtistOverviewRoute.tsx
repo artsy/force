@@ -1,10 +1,10 @@
 import { Box, Column, Flex, GridColumns, Spacer, Text } from "@artsy/palette"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { Genes } from "v2/Apps/Artist/Routes/Overview/Components/Genes"
 import { SelectedCareerAchievementsFragmentContainer } from "v2/Components/SelectedCareerAchievements"
 import { Artist2GenesFragmentContainer } from "../../Components/Artist2Genes"
-import { Artist2NotableWorksFragmentContainer } from "../../Components/Artist2NotableWorks"
+import { Artist2IconicCollectionsRailQueryRenderer } from "../../Components/IconicCollectionsRail/Artist2IconicCollectionsRail"
+import { Artist2NotableWorksRailFragmentContainer } from "../../Components/Artist2NotableWorksRail"
 
 interface ArtistOverviewRouteProps {
   artist: any
@@ -15,7 +15,7 @@ const ArtistOverviewRoute: React.FC<ArtistOverviewRouteProps> = ({
 }) => {
   return (
     <>
-      <Artist2NotableWorksFragmentContainer artist={artist} />
+      <Artist2NotableWorksRailFragmentContainer artist={artist} />
 
       <Flex>
         <Box>
@@ -40,6 +40,10 @@ const ArtistOverviewRoute: React.FC<ArtistOverviewRouteProps> = ({
           </GridColumns>
         </Box>
       </Flex>
+
+      <Spacer my={6} />
+
+      <Artist2IconicCollectionsRailQueryRenderer artistID={artist.internalID} />
     </>
   )
 }
@@ -50,8 +54,10 @@ export const ArtistOverviewRouteFragmentContainer = createFragmentContainer(
     artist: graphql`
       fragment ArtistOverviewRoute_artist on Artist {
         ...Artist2Genes_artist
-        ...Artist2NotableWorks_artist
+        ...Artist2NotableWorksRail_artist
         ...SelectedCareerAchievements_artist
+
+        internalID
       }
     `,
   }

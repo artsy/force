@@ -6,13 +6,13 @@ import { useTracking } from "react-tracking"
 import { useAnalyticsContext } from "v2/Artsy"
 import { ShelfArtworkFragmentContainer } from "v2/Components/Artwork/ShelfArtwork"
 import { extractNodes } from "v2/Utils/extractNodes"
-import { Artist2NotableWorks_artist } from "v2/__generated__/Artist2NotableWorks_artist.graphql"
+import { Artist2NotableWorksRail_artist } from "v2/__generated__/Artist2NotableWorksRail_artist.graphql"
 
-interface Artist2NotableWorksProps {
-  artist: Artist2NotableWorks_artist
+interface Artist2NotableWorksRailProps {
+  artist: Artist2NotableWorksRail_artist
 }
 
-const Artist2NotableWorks: React.FC<Artist2NotableWorksProps> = ({
+const Artist2NotableWorksRail: React.FC<Artist2NotableWorksRailProps> = ({
   artist,
 }) => {
   const tracking = useTracking()
@@ -45,6 +45,7 @@ const Artist2NotableWorks: React.FC<Artist2NotableWorksProps> = ({
               key={index}
               showExtended={false}
               showMetadata
+              lazyLoad
               onClick={() => {
                 tracking.trackEvent(
                   clickedEntityGroup({
@@ -69,11 +70,11 @@ const Artist2NotableWorks: React.FC<Artist2NotableWorksProps> = ({
   )
 }
 
-export const Artist2NotableWorksFragmentContainer = createFragmentContainer(
-  Artist2NotableWorks,
+export const Artist2NotableWorksRailFragmentContainer = createFragmentContainer(
+  Artist2NotableWorksRail,
   {
     artist: graphql`
-      fragment Artist2NotableWorks_artist on Artist {
+      fragment Artist2NotableWorksRail_artist on Artist {
         slug
         internalID
         filterArtworksConnection(sort: "-weighted_iconicity", first: 10) {

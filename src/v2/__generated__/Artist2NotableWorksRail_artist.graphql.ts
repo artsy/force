@@ -3,7 +3,7 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type Artist2NotableWorks_artist = {
+export type Artist2NotableWorksRail_artist = {
     readonly slug: string;
     readonly internalID: string;
     readonly filterArtworksConnection: {
@@ -15,12 +15,12 @@ export type Artist2NotableWorks_artist = {
             } | null;
         } | null> | null;
     } | null;
-    readonly " $refType": "Artist2NotableWorks_artist";
+    readonly " $refType": "Artist2NotableWorksRail_artist";
 };
-export type Artist2NotableWorks_artist$data = Artist2NotableWorks_artist;
-export type Artist2NotableWorks_artist$key = {
-    readonly " $data"?: Artist2NotableWorks_artist$data;
-    readonly " $fragmentRefs": FragmentRefs<"Artist2NotableWorks_artist">;
+export type Artist2NotableWorksRail_artist$data = Artist2NotableWorksRail_artist;
+export type Artist2NotableWorksRail_artist$key = {
+    readonly " $data"?: Artist2NotableWorksRail_artist$data;
+    readonly " $fragmentRefs": FragmentRefs<"Artist2NotableWorksRail_artist">;
 };
 
 
@@ -44,7 +44,7 @@ return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "Artist2NotableWorks_artist",
+  "name": "Artist2NotableWorksRail_artist",
   "selections": [
     (v0/*: any*/),
     (v1/*: any*/),
@@ -109,5 +109,5 @@ return {
   "type": "Artist"
 };
 })();
-(node as any).hash = 'c2e5650c21b401fccbe09e184d8d356f';
+(node as any).hash = '9f286668dcdaac5284772a8754e6a94e';
 export default node;
