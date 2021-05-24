@@ -8,6 +8,14 @@ import { FollowProfileButtonFragmentContainer } from "v2/Components/FollowButton
 
 jest.unmock("react-relay")
 
+const NearbyGalleryCardTestQuery = graphql`
+  query NearbyGalleryCard_Test_Query($partnerId: String!) {
+    partner(id: $partnerId) @principalField {
+      ...NearbyGalleryCard_partner
+    }
+  }
+`
+
 describe("NearbyGalleryCard with London as a preferred city", () => {
   const { getWrapper } = setupTestWrapper({
     Component: ({ partner }: any) => {
@@ -18,13 +26,7 @@ describe("NearbyGalleryCard with London as a preferred city", () => {
     variables: {
       partnerId: "unit-london",
     },
-    query: graphql`
-      query NearbyGalleryCard_Test_Query($partnerId: String!) {
-        partner(id: $partnerId) @principalField {
-          ...NearbyGalleryCard_partner
-        }
-      }
-    `,
+    query: NearbyGalleryCardTestQuery,
   })
 
   it("renders correctly", () => {
@@ -151,13 +153,7 @@ describe("NearbyGalleryCard without a preferred city", () => {
     variables: {
       partnerId: "unit-london",
     },
-    query: graphql`
-      query NearbyGalleryCard_Test_Query($partnerId: String!) {
-        partner(id: $partnerId) @principalField {
-          ...NearbyGalleryCard_partner
-        }
-      }
-    `,
+    query: NearbyGalleryCardTestQuery,
   })
 
   it("renders city", () => {
