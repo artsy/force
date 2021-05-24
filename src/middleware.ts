@@ -48,6 +48,7 @@ import { artistMiddleware } from "lib/middleware/artistMiddleware"
 import { collectionToArtistSeriesRedirect } from "lib/middleware/artistSeriesRedirect"
 import { handleArtworkImageDownload } from "lib/middleware/artworkMiddleware"
 import { searchMiddleware } from "lib/middleware/searchMiddleware"
+import { splitTestMiddleware } from "desktop/components/split_test/splitTestMiddleware"
 
 // FIXME: When deploying new Sentry SDK to prod we quickly start to see errors
 // like "`CURRENT_USER` is undefined". We need more investigation because this
@@ -55,7 +56,6 @@ import { searchMiddleware } from "lib/middleware/searchMiddleware"
 // import * as Sentry from "@sentry/node"
 
 const CurrentUser = require("./lib/current_user.coffee")
-const splitTestMiddleware = require("./desktop/components/split_test/middleware.coffee")
 
 const {
   APP_TIMEOUT,
