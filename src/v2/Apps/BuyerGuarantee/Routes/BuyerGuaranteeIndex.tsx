@@ -1,6 +1,5 @@
 import React from "react"
 import {
-  ArrowRightIcon,
   Box,
   Button,
   CertificateIcon,
@@ -9,10 +8,10 @@ import {
   CSSGrid,
   Flex,
   Image,
-  Link,
   LockIcon,
   space,
   Text,
+  themeProps,
   VerifiedIcon,
 } from "@artsy/palette"
 import { BuyerGuaranteeIndex_authenticityImage } from "v2/__generated__/BuyerGuaranteeIndex_authenticityImage.graphql"
@@ -29,6 +28,10 @@ import {
   MoneyBackIcon,
   PoweredByStripeIcon,
 } from "../Components/Icons"
+import { Feature } from "../Components/Feature"
+import { MOBILE_NAV_HEIGHT, NAV_BAR_HEIGHT } from "v2/Components/NavBar"
+import { scrollIntoView } from "v2/Utils/scrollHelpers"
+import { useMatchMedia } from "v2/Utils/Hooks/useMatchMedia"
 
 interface BuyerGuaranteeIndexProps {
   headerImage: BuyerGuaranteeIndex_headerImage
@@ -43,6 +46,8 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
   moneyBackGuaranteeImage,
   securePaymentImage,
 }) => {
+  const isMobile = useMatchMedia(themeProps.mediaQueries.xs)
+
   const authenticityText = `We are dedicated to being the world’s most trustworthy marketplace
   to buy and sell art. In the rare case that a work purchased
   through Artsy’s secure checkout is found to be inauthentic, report
@@ -75,16 +80,15 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
     { width: 1600, height: 800, convert_to: "jpg" }
   )
 
-  const learnMoreIcon = (
-    <Flex pt={2} justifyContent="center">
-      <Link href={supportArticleURL} mt="-2px" underlineBehavior="none">
-        <Flex>
-          <Text variant="mediumText">Learn More</Text>
-          <ArrowRightIcon height="17px" width="17px" mt="2px" ml="2px" />
-        </Flex>
-      </Link>
-    </Flex>
-  )
+  const scrollTo = (selector: string) => {
+    const offset = (isMobile ? MOBILE_NAV_HEIGHT : NAV_BAR_HEIGHT) + 30
+
+    scrollIntoView({
+      offset: offset,
+      behavior: "smooth",
+      selector: `#jump--${selector}`,
+    })
+  }
 
   const learnMoreButton = (width: string) => (
     <RouterLink to={supportArticleURL} target="_blank">
@@ -138,189 +142,84 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
 
         <Media lessThan="sm">
           <Flex justifyContent="space-around" mt={4} pl={1}>
-            <Flex flexDirection="column" alignItems="center">
-              <VerifiedIcon height={50} width={50} />
-              <Flex>
-                <Text
-                  variant="mediumText"
-                  my={2}
-                  style={{ whiteSpace: "nowrap" }}
-                >
-                  Vetted Sellers
-                </Text>
-                <ArrowRightIcon height="20px" width="20px" mt={2} />
-              </Flex>
-            </Flex>
-
-            <Flex flexDirection="column" ml={0} alignItems="center">
-              <ChatIcon height={50} width={50} />
-              <Flex>
-                <Text
-                  variant="mediumText"
-                  my={2}
-                  style={{ whiteSpace: "nowrap" }}
-                >
-                  Dedicated Support
-                </Text>
-                <ArrowRightIcon height="20px" width="20px" mt={2} />
-              </Flex>
-            </Flex>
+            <Feature title="Vetted Sellers" icon={VerifiedIcon} sm />
+            <Feature title="Dedicated Support" icon={ChatIcon} sm />
           </Flex>
           <Flex justifyContent="space-around" mt={2}>
-            <Flex flexDirection="column" alignItems="center">
-              <CertificateIcon height={50} width={50} />
-              <Flex>
-                <Text
-                  variant="mediumText"
-                  my={2}
-                  style={{ whiteSpace: "nowrap" }}
-                >
-                  Authenticity Guarantee
-                </Text>
-                <ArrowRightIcon height="20px" width="20px" mt={2} />
-              </Flex>
-            </Flex>
-
-            <Flex flexDirection="column" ml={0} alignItems="center">
-              <MoneyBackIcon height={50} width={50} />
-              <Flex>
-                <Text
-                  variant="mediumText"
-                  my={2}
-                  style={{ whiteSpace: "nowrap" }}
-                >
-                  Money-Back Guarantee
-                </Text>
-                <ArrowRightIcon height="20px" width="20px" mt={2} />
-              </Flex>
-            </Flex>
+            <Feature
+              title="Authenticity Guarantee"
+              icon={CertificateIcon}
+              onClick={() => {
+                scrollTo("authenticityMobile")
+              }}
+              sm
+            />
+            <Feature
+              title="Money-Back Guarantee"
+              onClick={() => {
+                scrollTo("moneyBackMobile")
+              }}
+              icon={MoneyBackIcon}
+              sm
+            />
           </Flex>
 
           <Flex justifyContent="space-around" mt={2}>
-            <Flex flexDirection="column" alignItems="center">
-              <LockIcon height={50} width={50} />
-              <Flex>
-                {" "}
-                <Text
-                  variant="mediumText"
-                  my={2}
-                  style={{ whiteSpace: "nowrap" }}
-                >
-                  Secure Payment
-                </Text>
-                <ArrowRightIcon height="20px" width="20px" mt={2} />
-              </Flex>
-            </Flex>
+            <Feature
+              title="Secure Payment"
+              onClick={() => {
+                scrollTo("securePaymentMobile")
+              }}
+              icon={LockIcon}
+              sm
+            />
           </Flex>
         </Media>
 
         <Media greaterThan="xs">
           <Flex justifyContent="center" mt={4} mx="20%">
-            <Flex flexDirection="column" mr={5} alignItems="center">
-              <VerifiedIcon height={60} width={60} />
-
-              <Text
-                variant="mediumText"
-                my={2}
-                style={{ whiteSpace: "nowrap" }}
-              >
-                Vetted Sellers
-              </Text>
-              <Text variant="text" textAlign="center" color={color("black80")}>
-                We partner with leading galleries, institutions, and auction
-                houses around the world in order to maintain the integrity of
-                our listings
-              </Text>
-            </Flex>
-
-            <Flex flexDirection="column" ml={[0, 5]} alignItems="center">
-              <ChatIcon height={60} width={60} />
-              <Text
-                variant="mediumText"
-                my={2}
-                style={{ whiteSpace: "nowrap" }}
-              >
-                Dedicated Support
-              </Text>
-              <Text variant="text" textAlign="center" color={color("black80")}>
-                Our global team of specialists is always here to answer your
-                questions and assist with any purchase-related needs.
-              </Text>
-            </Flex>
+            <Feature
+              title="Vetted Sellers"
+              text="We partner with leading galleries, institutions, and auction houses around the world in order to maintain the integrity of our listings"
+              icon={VerifiedIcon}
+            />
+            <Feature
+              title="Dedicated Support"
+              text="Our global team of specialists is always here to answer your questions and assist with any purchase-related needs."
+              icon={ChatIcon}
+            />
           </Flex>
 
           <Flex
             mb={[0, space(9)]}
             flexWrap={["wrap", "nowrap"]}
             alignItems="flex-start"
+            mt={5}
           >
-            <Flex
-              flexDirection="column"
-              mt={5}
-              height={300}
-              width="100%"
-              textAlign="center"
-              justifyContent="flex-end"
-            >
-              <Box>
-                <CertificateIcon height={60} width={60} />
-              </Box>
-              <Box>
-                <Text my={2} variant="mediumText">
-                  Authenticity Guarantee
-                </Text>
-                <Text variant="text">
-                  In the rare occasion that your artwork is found to be
-                  inauthentic, we'll help facilitate a refund.
-                </Text>
-              </Box>
-              <Box>{learnMoreIcon}</Box>
-            </Flex>
-            <Flex
-              flexDirection="column"
-              mt={5}
-              height={300}
-              width="100%"
-              textAlign="center"
-              justifyContent="flex-end"
-            >
-              <Box>
-                <MoneyBackIcon height={60} width={60} />
-              </Box>
-              <Box>
-                <Text my={2} variant="mediumText">
-                  Money-Back Guarantee
-                </Text>
-                <Text variant="text">
-                  If an item arrives not as described, we’ll work with you to
-                  make it right.
-                </Text>
-              </Box>
-              <Box>{learnMoreIcon}</Box>
-            </Flex>
-            <Flex
-              flexDirection="column"
-              mt={5}
-              height={300}
-              width="100%"
-              textAlign="center"
-              justifyContent="flex-end"
-            >
-              <Box>
-                <LockIcon height={60} width={60} />
-              </Box>
-
-              <Box>
-                <Text my={2} variant="mediumText">
-                  Secure Payment
-                </Text>
-                <Text variant="text">
-                  Payments made with our secure checkout are protected with
-                  trusted industry-leading technology.
-                </Text>
-              </Box>
-              <Box>{learnMoreIcon}</Box>
-            </Flex>
+            <Feature
+              title="Authenticity Guarantee"
+              text="In the rare occasion that your artwork is found to be inauthentic, we'll help facilitate a refund."
+              icon={CertificateIcon}
+              onClick={() => {
+                scrollTo("authenticity")
+              }}
+            />
+            <Feature
+              title="Money-Back Guarantee"
+              text="If an item arrives not as described, we’ll work with you to make it right."
+              icon={MoneyBackIcon}
+              onClick={() => {
+                scrollTo("moneyBack")
+              }}
+            />
+            <Feature
+              title="Secure Payment"
+              text="Payments made with our secure checkout are protected with trusted industry-leading technology."
+              icon={LockIcon}
+              onClick={() => {
+                scrollTo("securePayment")
+              }}
+            />
           </Flex>
         </Media>
       </Flex>
@@ -339,7 +238,7 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
               aria-label={authenticityImage?.imageTitle!}
             />
           )}
-          <Flex flexDirection="column" p={space(9)}>
+          <Flex flexDirection="column" p={space(9)} id="jump--authenticity">
             <Text variant="title">Authenticity Guarantee</Text>
             <Text variant="text" my={2}>
               {authenticityText}
@@ -347,7 +246,7 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
             <Media greaterThanOrEqual="lg">{learnMoreButton("40%")}</Media>
             <Media lessThan="lg">{learnMoreButton("80%")}</Media>
           </Flex>
-          <Flex flexDirection="column" p={space(9)}>
+          <Flex flexDirection="column" p={space(9)} id="jump--moneyBack">
             <Text variant="title">Money-Back Guarantee</Text>
             <Text variant="text" my={2}>
               {moneyBackGuaranteeText}
@@ -379,7 +278,12 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
               height="100%"
             />
           )}
-          <Flex flexDirection="column" px={space(9)} pt={space(9)}>
+          <Flex
+            flexDirection="column"
+            px={space(9)}
+            pt={space(9)}
+            id="jump--securePayment"
+          >
             <Text variant="title">Secure Payment</Text>
             <Text variant="text" my={2}>
               {securePaymentText}
@@ -390,7 +294,13 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
       </Media>
       {/*  Artsy Guarantee Sections mobile */}
       <Media lessThan="sm">
-        <Flex flexDirection="column" mt={5} mx={2} mb={4}>
+        <Flex
+          flexDirection="column"
+          mt={5}
+          mx={2}
+          mb={4}
+          id="jump--authenticityMobile"
+        >
           {authenticityGuaranteeImageURL && (
             <Image
               src={authenticityGuaranteeImageURL}
@@ -408,7 +318,13 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
           </Text>
           {learnMoreButton("50%")}
         </Flex>
-        <Flex flexDirection="column" mt={5} mx={2} mb={4}>
+        <Flex
+          flexDirection="column"
+          mt={5}
+          mx={2}
+          mb={4}
+          id="jump--moneyBackMobile"
+        >
           {moneyBackGuaranteeImageURL && (
             <Image
               src={moneyBackGuaranteeImageURL}
@@ -426,7 +342,13 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
           </Text>
           {learnMoreButton("50%")}
         </Flex>
-        <Flex flexDirection="column" mt={5} mx={2} mb={4}>
+        <Flex
+          flexDirection="column"
+          mt={5}
+          mx={2}
+          mb={4}
+          id="jump--securePaymentMobile"
+        >
           {securePaymentImageURL && (
             <Image
               src={securePaymentImageURL}
