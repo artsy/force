@@ -132,7 +132,7 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
         </FullBleedHeader>
       )}
       <Flex justifyContent="center" flexDirection="column">
-        <Flex justifyContent="center" mx={["10%", "25%"]} textAlign="center">
+        <Flex justifyContent="center" mx={["10%", "20%"]} textAlign="center">
           <Text variant="title" mt={5}>
             Artsy is the safest place to buy the art you love.
             <br />
@@ -195,7 +195,7 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
             mb={[0, space(9)]}
             flexWrap={["wrap", "nowrap"]}
             alignItems="flex-start"
-            mt={5}
+            mt={120}
           >
             <Feature
               title="Authenticity Guarantee"

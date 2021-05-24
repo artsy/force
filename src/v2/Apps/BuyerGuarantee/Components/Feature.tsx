@@ -55,7 +55,7 @@ export const Feature: React.FC<FeatureProps> = ({
       width="100%"
       textAlign="center"
       alignItems="center"
-      mx={2}
+      ml={[0, 2]}
     >
       <Box>
         <Icon height={60} width={60} />
