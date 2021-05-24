@@ -8,6 +8,7 @@ import { useSystemContext } from "v2/Artsy"
 import { NearbyGalleryCardFragmentContainer } from "./NearbyGalleryCard"
 import { NearbyGalleriesRailPlaceholder } from "./NearbyGalleriesRailPlaceholder"
 import { SystemQueryRenderer as QueryRenderer } from "v2/Artsy/Relay/SystemQueryRenderer"
+import { compact } from "underscore"
 
 interface NearbyGalleriesRailProps extends BoxProps {
   partners: NearbyGalleriesRail_partners
@@ -23,6 +24,8 @@ const NearbyGalleriesRail: React.FC<NearbyGalleriesRailProps> = ({
     return null
   }
 
+  const partnerList = compact(partners.map(c => c.node))
+
   return (
     <Box {...rest}>
       <Flex mb={4} justifyContent="space-between" alignItems="center">
@@ -30,12 +33,12 @@ const NearbyGalleriesRail: React.FC<NearbyGalleriesRailProps> = ({
       </Flex>
 
       <Carousel itemsPerViewport={[2, 2, 3]}>
-        {partners.map(({ node }) => {
+        {partnerList.map(node => {
           return (
             <NearbyGalleryCardFragmentContainer
-              key={node?.id}
+              key={node.id}
               width={[300, "100%"]}
-              partner={node!}
+              partner={node}
               city={city}
             />
           )
