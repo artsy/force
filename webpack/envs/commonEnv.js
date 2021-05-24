@@ -52,4 +52,6 @@ export const clientExternals = {
   redis: "redis",
   // TODO: Needs research to determine if if this is still required
   request: "request",
+  // Required because getAsyncStorage isn't using async import()
+  async_hooks: "async_hooks",
 }

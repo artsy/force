@@ -1,10 +1,10 @@
+import { getENV } from "./getENV"
 import { crop, resize } from "./resizer"
-import { data } from "sharify"
 
 export const MOBILE_QUALITY: [number, number] = [80, 50]
 export const DESKTOP_QUALITY: [number, number] = [80, 80]
 export const optimizedQuality = () =>
-  data.IS_MOBILE ? MOBILE_QUALITY : DESKTOP_QUALITY
+  getENV("IS_MOBILE") ? MOBILE_QUALITY : DESKTOP_QUALITY
 
 type Sized = { src: string; srcSet: string }
 type Resize = Parameters<typeof resize>

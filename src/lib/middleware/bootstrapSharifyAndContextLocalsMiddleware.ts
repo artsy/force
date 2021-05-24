@@ -5,24 +5,24 @@ import { parse } from "url"
 import artsyXapp from "@artsy/xapp"
 import uuid from "node-uuid"
 import fs from "fs"
-import { data } from "sharify"
+import { getAsyncLocalStorage } from "lib/asyncLocalWrapper"
 
 /**
  * Contains the subset of sharify locals that are required for all force routes.
  */
-export function sharifyLocalsMiddleware(
+export function bootstrapSharifyAndContextLocalsMiddleware(
   req: ArtsyRequest,
   res: ArtsyResponse,
   next: NextFunction
 ) {
   const ua = req.get("user-agent") || ""
 
-  updateSharify(res, "CURRENT_PATH", parse(req.url).pathname)
-  updateSharify(res, "EIGEN", ua.match("Artsy-Mobile") != null)
+  updateSharifyAndContext(res, "CURRENT_PATH", parse(req.url).pathname)
+  updateSharifyAndContext(res, "EIGEN", ua.match("Artsy-Mobile") != null)
 
   // Inject some project-wide sharify data such as the session id, the current
   // path and the xapp token.
-  updateSharify(
+  updateSharifyAndContext(
     res,
     "SESSION_ID",
     req.session != null
@@ -31,10 +31,10 @@ export function sharifyLocalsMiddleware(
         : (req.session.id = uuid.v1())
       : undefined
   )
-  updateSharify(res, "ARTSY_XAPP_TOKEN", artsyXapp.token)
+  updateSharifyAndContext(res, "ARTSY_XAPP_TOKEN", artsyXapp.token)
 
   // Determines device type for non-responsive pages.
-  updateSharify(
+  updateSharifyAndContext(
     res,
     "IS_MOBILE",
     Boolean(
@@ -46,7 +46,7 @@ export function sharifyLocalsMiddleware(
     )
   )
 
-  updateSharify(
+  updateSharifyAndContext(
     res,
     "IS_TABLET",
     Boolean(
@@ -58,11 +58,15 @@ export function sharifyLocalsMiddleware(
     )
   )
 
-  updateSharify(res, "IS_GOOGLEBOT", Boolean(ua.match(/Googlebot/i)))
+  updateSharifyAndContext(res, "IS_GOOGLEBOT", Boolean(ua.match(/Googlebot/i)))
 
   // Required to know the hashed dll name.try
-  updateSharify(res, "ASSET_LEGACY_ARTWORK_DLL", assetLegacyArtworkDllName())
-  updateSharify(
+  updateSharifyAndContext(
+    res,
+    "ASSET_LEGACY_ARTWORK_DLL",
+    assetLegacyArtworkDllName()
+  )
+  updateSharifyAndContext(
     res,
     "LEGACY_MAIN_CSS",
     res.locals.asset("/assets/main_layout.css")
@@ -72,12 +76,13 @@ export function sharifyLocalsMiddleware(
 }
 
 /**
- * Updates both the sharify locals for template injection along with the sharify
+ * Updates both the sharify locals for template injection along with the context
  * globals for the request.
  */
-function updateSharify(res, key, value) {
+function updateSharifyAndContext(res, key, value) {
   res.locals.sd[key] = value
-  data[key] = value
+  const asyncLocalStorage = getAsyncLocalStorage()
+  asyncLocalStorage.getStore()?.set(key, value)
 }
 
 function assetLegacyArtworkDllName(): string {

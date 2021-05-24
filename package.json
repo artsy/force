@@ -275,7 +275,7 @@
     "@types/lodash": "4.14.111",
     "@types/memoize-one": "3.1.1",
     "@types/morgan": "1.9.2",
-    "@types/node": "10.12.24",
+    "@types/node": "12.20.13",
     "@types/prop-types": "15.7.1",
     "@types/qrcode.react": "1.0.0",
     "@types/qs": "6.5.3",

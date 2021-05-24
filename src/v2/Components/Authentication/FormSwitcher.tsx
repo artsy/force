@@ -108,7 +108,7 @@ export class FormSwitcher extends React.Component<FormSwitcherProps, State> {
 
     if (isStatic) {
       if (typeof window !== "undefined") {
-        window.location.assign(`/${newType}?${qs.stringify(options)}`)
+        window.location.assign(`/${newType}?${qs.stringify(options as any)}`)
       }
     } else {
       this.setState({ type: newType })
