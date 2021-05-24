@@ -153,7 +153,7 @@ export const artist2Routes: AppRouteConfig[] = [
           }
         },
         query: graphql`
-          query artistRoutes_WorksQuery(
+          query artist2Routes_WorksQuery(
             $artistID: String!
             $input: FilterArtworksInput
             $aggregations: [ArtworkAggregation]
@@ -174,7 +174,7 @@ export const artist2Routes: AppRouteConfig[] = [
           AuctionResultsRoute.preload()
         },
         query: graphql`
-          query artistRoutes_AuctionResultsQuery($artistID: String!) {
+          query artist2Routes_AuctionResultsQuery($artistID: String!) {
             artist(id: $artistID) {
               ...AuctionResults_artist
             }
@@ -194,7 +194,7 @@ export const artist2Routes: AppRouteConfig[] = [
           ConsignRoute.preload()
         },
         query: graphql`
-          query artistRoutes_ArtistConsignQuery($artistID: String!) {
+          query artist2Routes_ArtistConsignQuery($artistID: String!) {
             artist(id: $artistID) {
               ...Consign_artist
 
@@ -228,7 +228,7 @@ export const artist2Routes: AppRouteConfig[] = [
           CVRoute.preload()
         },
         query: graphql`
-          query artistRoutes_CVQuery($artistID: String!) {
+          query artist2Routes_CVQuery($artistID: String!) {
             viewer {
               ...CV_viewer
             }
@@ -243,7 +243,7 @@ export const artist2Routes: AppRouteConfig[] = [
           ArticlesRoute.preload()
         },
         query: graphql`
-          query artistRoutes_ArticlesQuery($artistID: String!) {
+          query artist2Routes_ArticlesQuery($artistID: String!) {
             artist(id: $artistID) {
               ...Articles_artist
             }
@@ -258,7 +258,7 @@ export const artist2Routes: AppRouteConfig[] = [
           ShowsRoute.preload()
         },
         query: graphql`
-          query artistRoutes_ShowsQuery($artistID: String!) {
+          query artist2Routes_ShowsQuery($artistID: String!) {
             viewer {
               ...Shows_viewer
             }

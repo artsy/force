@@ -1,13 +1,19 @@
 import { commitMutation, Environment, graphql } from "relay-runtime"
-import { AuthIntentFollowArtistMutation } from "v2/__generated__/AuthIntentFollowArtistMutation.graphql"
-import { AuthIntentMutation } from "./types"
+import { FollowArtistMutation } from "v2/__generated__/FollowArtistMutation.graphql"
 
-export const followArtistMutation: AuthIntentMutation = (
+export type FollowArtistMutationProps = (
   relayEnvironment: Environment,
-  id: string
+  id: string,
+  isFollowed?: boolean
+) => Promise<unknown>
+
+export const followArtistMutation: FollowArtistMutationProps = (
+  relayEnvironment: Environment,
+  id: string,
+  isFollowed: boolean = false
 ) => {
   return new Promise((resolve, reject) => {
-    commitMutation<AuthIntentFollowArtistMutation>(relayEnvironment, {
+    commitMutation<FollowArtistMutation>(relayEnvironment, {
       onCompleted: (res, errors) => {
         if (errors !== null) {
           reject(errors)
@@ -17,7 +23,7 @@ export const followArtistMutation: AuthIntentMutation = (
         resolve(res)
       },
       mutation: graphql`
-        mutation AuthIntentFollowArtistMutation($input: FollowArtistInput!) {
+        mutation FollowArtistMutation($input: FollowArtistInput!) {
           followArtist(input: $input) {
             artist {
               id
@@ -30,13 +36,14 @@ export const followArtistMutation: AuthIntentMutation = (
         followArtist: {
           artist: {
             id,
-            isFollowed: true,
+            isFollowed: !isFollowed,
           },
         },
       },
       variables: {
         input: {
           artistID: id,
+          unfollow: isFollowed,
         },
       },
     })

@@ -3,9 +3,9 @@ import { Button } from "@artsy/palette"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "v2/Artsy"
-import { followArtistMutation } from "v2/Utils/Hooks/useAuthIntent/mutations/AuthIntentFollowArtistMutation"
 import { openAuthToFollowSave } from "v2/Utils/openAuthModal"
 import { FollowArtist2Button_artist } from "v2/__generated__/FollowArtist2Button_artist.graphql"
+import { followArtistMutation } from "../Mutations/followArtistMutation"
 
 interface FollowArtist2ButtonProps {
   artist: FollowArtist2Button_artist
