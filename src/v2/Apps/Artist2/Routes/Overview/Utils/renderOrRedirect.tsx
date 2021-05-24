@@ -1,6 +1,5 @@
 import React from "react"
-import { Match, RedirectException, RouteRenderArgs } from "found"
-import { hasSections as showMarketInsights } from "v2/Apps/Artist/Components/MarketInsights/MarketInsights"
+import { RedirectException, RouteRenderArgs } from "found"
 import { hasOverviewContent } from "./hasOverviewContent"
 
 export function renderOrRedirect({
@@ -21,8 +20,22 @@ export function renderOrRedirect({
     return undefined
   }
 
+  const showMarketInsights = () => {
+    // Is there a gallery representation section? Is there an auction highlights
+    // section? Is there a permanent collections section?
+    if (
+      artist?.artistPartnersConnection?.edges?.length ||
+      artist?.auctionResults?.edges?.length ||
+      artist?.collections?.length
+    ) {
+      return true
+    }
+
+    return false
+  }
+
   const showArtistInsights =
-    showMarketInsights(artist) || artist?.insights?.length > 0
+    showMarketInsights() || artist?.insights?.length > 0
 
   const hasArtistContent = hasOverviewContent(artist)
 
@@ -40,5 +53,6 @@ export function renderOrRedirect({
     throw new RedirectException(`/artist/${artist.slug}/works-for-sale`, 301)
   }
 
+  // @ts-ignore // FIXME
   return <Component {...props} />
 }

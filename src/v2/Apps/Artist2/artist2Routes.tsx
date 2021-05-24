@@ -72,7 +72,8 @@ export const artist2Routes: AppRouteConfig[] = [
             }
           }
           highlights {
-            partnersConnection(
+            # Alias due to obscure Graphql validation warning
+            artistPartnersConnection: partnersConnection(
               first: 10
               displayOnPartnerProfile: true
               representedBy: true
@@ -108,7 +109,7 @@ export const artist2Routes: AppRouteConfig[] = [
         query: graphql`
           query artist2Routes_OverviewQuery($artistID: String!) {
             artist(id: $artistID) {
-              ...Overview_artist
+              ...ArtistOverviewRoute_artist
             }
           }
         `,

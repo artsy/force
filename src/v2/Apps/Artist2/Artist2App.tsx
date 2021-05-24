@@ -42,13 +42,13 @@ const Artist2App: React.FC<Artist2AppProps> = ({ artist, children, match }) => {
       <Spacer my={[4, 12]} />
 
       <RouteTabs mb={2} fill>
-        <RouteTab exact to={`/artist/${artist.slug}`}>
+        <RouteTab exact to={`/artist2/${artist.slug}`}>
           Overview
         </RouteTab>
-        <RouteTab to={`/artist/${artist.slug}/works-for-sale`}>
+        <RouteTab to={`/artist2/${artist.slug}/works-for-sale`}>
           Works for Sale
         </RouteTab>
-        <RouteTab to={`/artist/${artist.slug}/auction-results`}>
+        <RouteTab to={`/artist2/${artist.slug}/auction-results`}>
           Auction Results
         </RouteTab>
       </RouteTabs>
