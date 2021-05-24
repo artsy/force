@@ -58,7 +58,7 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
   Stripe, the leader in online payment processing that’s trusted by
   millions of global businesses.`
 
-  const moneyBackGuaranteeText = `If a work purchased through Artsy’s secure checkout does not arrive, arrives damaged, or is deemed not as described, we will work with you to find the best resolution—including a full refund where applicable.`
+  const moneyBackGuaranteeText = `If a work purchased through Artsy’s secure checkout does not arrive, arrives damaged, or is deemed not as described, we'll work with you to find the best resolution—including a full refund where applicable.`
 
   const supportArticleURL =
     "https://support.artsy.net/hc/en-us/articles/360048946973"
@@ -106,7 +106,7 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
           height={[283, 469]}
           src={heroImageURL}
           caption={
-            headerImage.imageTitle +
+            headerImage.imageTitle?.replace(/‘|’/g, "") +
             ". Courtesy of the artist and Kenise Barnes Fine Art. "
           }
           meta="Artsy is the safest place to buy the art you love. Every purchase made exclusively with our Artsy’s secure checkout benefits from our full suite of buyer protections."
@@ -134,9 +134,10 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
       <Flex justifyContent="center" flexDirection="column">
         <Flex justifyContent="center" mx={["10%", "25%"]} textAlign="center">
           <Text variant="title" mt={5}>
-            Artsy is the safest place to buy the art you love. Every purchase
-            made exclusively with Artsy’s secure checkout benefits from our full
-            suite of buyer protections.
+            Artsy is the safest place to buy the art you love.
+            <br />
+            Every purchase made exclusively with Artsy’s secure checkout
+            benefits from our full suite of buyer protections.
           </Text>
         </Flex>
 
@@ -180,7 +181,7 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
           <Flex justifyContent="center" mt={4} mx="20%">
             <Feature
               title="Vetted Sellers"
-              text="We partner with leading galleries, institutions, and auction houses around the world in order to maintain the integrity of our listings"
+              text="We partner with leading galleries, institutions, and auction houses around the world in order to maintain the integrity of our listings."
               icon={VerifiedIcon}
             />
             <Feature
@@ -401,7 +402,7 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
               borderBottom={`solid 1px ${color("black10")}`}
               backgroundColor={color("white100")}
             >
-              Purchasing with Artsy’s secure checkout
+              Purchasing with Artsy’s Secure Checkout
             </Text>
             <Flex
               height="60px"
@@ -694,7 +695,7 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
             backgroundColor={color("white100")}
           >
             <Text textAlign="center" variant="mediumText" pr={1}>
-              Purchasing with Artsy’s secure checkout
+              Purchasing with Artsy’s Secure Checkout
             </Text>
           </Flex>
           <Flex
