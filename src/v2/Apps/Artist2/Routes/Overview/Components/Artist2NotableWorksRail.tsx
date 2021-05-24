@@ -1,5 +1,5 @@
 import { clickedEntityGroup, ContextModule, OwnerType } from "@artsy/cohesion"
-import { Shelf, Spacer, Text } from "@artsy/palette"
+import { Shelf, Text } from "@artsy/palette"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
