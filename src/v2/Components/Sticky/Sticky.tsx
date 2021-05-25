@@ -39,11 +39,12 @@ export const Sticky: React.FC = ({ children }) => {
     }
   }, [])
 
-  const { offsetTop, registerSticky } = useSticky()
+  const { offsetTop, registerSticky, deregisterSticky } = useSticky()
 
   useEffect(() => {
     registerSticky(containerRef.current?.clientHeight)
-  }, [registerSticky])
+    return deregisterSticky
+  }, [registerSticky, deregisterSticky])
 
   return (
     <>
