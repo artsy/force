@@ -42,6 +42,7 @@ const Letter = styled(RouterLink)<RouterLinkProps>`
   text-align: center;
   text-decoration: none;
   transition: color 250ms;
+  color: ${themeGet("colors.black60")};
 
   &:hover {
     text-decoration: underline;

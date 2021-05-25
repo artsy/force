@@ -33,6 +33,7 @@ import {
   useNavigation,
 } from "./NavigatorContextProvider"
 import { NAV_BAR_BORDER_OFFSET, MOBILE_NAV_HEIGHT } from "v2/Components/NavBar"
+import { ArtistsLetterNav } from "v2/Apps/Artists/Components/ArtistsLetterNav"
 
 const Close = styled(Clickable)`
   position: absolute;
@@ -141,9 +142,13 @@ export const AnimatingMenuWrapper = styled.div<{
     z-index: 0;
     transform: translate3d(100%, 0, 0);
   `}
+`
 
-  ul {
-    margin-bottom: 100px;
+const Letters = styled(ArtistsLetterNav)`
+  max-width: 385px;
+  > div {
+    width: 55px;
+    height: 50px;
   }
 `
 
@@ -160,6 +165,8 @@ const Menu: React.FC<MenuProps> = ({
   links,
   showBacknav = true,
 }) => {
+  const isArtistsMenu = title === "Artists"
+  const lastLinkIndex = links.length - 1
   return (
     <AnimatingMenuWrapper isOpen={isOpen}>
       <Flex position="relative">
@@ -168,7 +175,13 @@ const Menu: React.FC<MenuProps> = ({
           {title}
         </Sans>
       </Flex>
-      <ul>{[...links].map(link => NavLink({ link }))}</ul>
+      <ul>
+        {[...links].map((link, i) => {
+          const isLast = lastLinkIndex === i
+          return NavLink({ link, isLast, isArtistsMenu })
+        })}
+      </ul>
+      {isArtistsMenu && <Letters />}
     </AnimatingMenuWrapper>
   )
 }
@@ -225,7 +238,7 @@ const useTrackingContextModule = () => {
   return contextModule
 }
 
-const NavLink: React.FC<any> = ({ link }) => {
+const NavLink: React.FC<any> = ({ link, isLast, isArtistsMenu }) => {
   const isSubMenu = !!link.menu
   const contextModule = useTrackingContextModule()
 
@@ -245,6 +258,7 @@ const NavLink: React.FC<any> = ({ link }) => {
           onClick={link.onClick}
         >
           {link.text}
+          {isArtistsMenu && isLast && <> A &#8211; Z</>}
         </MobileLink>
         {link.dividerBelow && <Separator my={1} color={color("black10")} />}
       </React.Fragment>
