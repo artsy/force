@@ -84,7 +84,7 @@ export const AppSecondFactor: React.FC<AppSecondFactorProps> = props => {
     if (props.me.hasSecondFactorEnabled) {
       setShowCompleteModal(false)
     } else {
-      setTimeout(() => window.location.assign(redirectTo), 500)
+      window.location.assign(redirectTo)
     }
   }
 

@@ -249,6 +249,7 @@ export const OnCompleteRedirModal: React.FC<OnCompleteRedirModalProps> = props =
       title="Set up with app"
       onClose={onClick}
       show={show}
+      hideCloseButton={true}
       FixedButton={
         <Button onClick={onClick} width="100%">
           OK
