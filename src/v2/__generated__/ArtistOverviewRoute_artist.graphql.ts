@@ -5,7 +5,7 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ArtistOverviewRoute_artist = {
     readonly internalID: string;
-    readonly " $fragmentRefs": FragmentRefs<"Artist2Genes_artist" | "Artist2NotableWorksRail_artist" | "Artist2WorksForSaleRail_artist" | "Artist2CurrentShowsRail_artist" | "Artist2CurrentArticlesRail_artist" | "SelectedCareerAchievements_artist">;
+    readonly " $fragmentRefs": FragmentRefs<"Artist2NotableWorksRail_artist" | "SelectedCareerAchievements_artist" | "Artist2WorksForSaleRail_artist" | "Artist2CurrentShowsRail_artist" | "Artist2CurrentArticlesRail_artist" | "Artist2RelatedArtistsRail_artist">;
     readonly " $refType": "ArtistOverviewRoute_artist";
 };
 export type ArtistOverviewRoute_artist$data = ArtistOverviewRoute_artist;
@@ -32,12 +32,12 @@ const node: ReaderFragment = {
     {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "Artist2Genes_artist"
+      "name": "Artist2NotableWorksRail_artist"
     },
     {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "Artist2NotableWorksRail_artist"
+      "name": "SelectedCareerAchievements_artist"
     },
     {
       "args": null,
@@ -57,10 +57,10 @@ const node: ReaderFragment = {
     {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "SelectedCareerAchievements_artist"
+      "name": "Artist2RelatedArtistsRail_artist"
     }
   ],
   "type": "Artist"
 };
-(node as any).hash = 'b8884bc5f0ba8fe5aecb123d3e9c88cf';
+(node as any).hash = '7fc0cc65acd7b021b19fa83adfa3b96e';
 export default node;

@@ -3,11 +3,11 @@ import loadable from "@loadable/component"
 // import React from "react"
 import { graphql } from "react-relay"
 // import { hasSections as showMarketInsights } from "v2/Apps/Artist/Components/MarketInsights/MarketInsights"
-// import { paramsToCamelCase } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
-// import { getENV } from "v2/Utils/getENV"
+import { paramsToCamelCase } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
+import { getENV } from "v2/Utils/getENV"
 // import { hasOverviewContent } from "./Components/NavigationTabs"
-// import { initialArtworkFilterState } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
-// import { allowedFilters } from "v2/Components/ArtworkFilter/Utils/allowedFilters"
+import { initialArtworkFilterState } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
+import { allowedFilters } from "v2/Components/ArtworkFilter/Utils/allowedFilters"
 import { AppRouteConfig } from "v2/Artsy/Router/Route"
 import { renderOrRedirect } from "./Routes/Overview/Utils/renderOrRedirect"
 // import { data as sd } from "sharify"
@@ -22,9 +22,13 @@ const OverviewRoute = loadable(
       component.ArtistOverviewRouteFragmentContainer,
   }
 )
-// const WorksForSaleRoute = loadable(() => import("./Routes/Works"), {
-//   resolveComponent: component => component.WorksRouteFragmentContainer,
-// })
+const WorksForSaleRoute = loadable(
+  () => import("./Routes/WorksForSale/ArtistWorksForSaleRoute"),
+  {
+    resolveComponent: component =>
+      component.ArtistWorksForSaleRouteFragmentContainer,
+  }
+)
 // const AuctionResultsRoute = loadable(() => import("./Routes/AuctionResults"), {
 //   resolveComponent: component => component.AuctionResultsRouteFragmentContainer,
 // })
@@ -114,7 +118,6 @@ export const artist2Routes: AppRouteConfig[] = [
           }
         `,
       },
-      /*
       {
         path: "works-for-sale",
         theme: "v3",
@@ -128,17 +131,10 @@ export const artist2Routes: AppRouteConfig[] = [
           // renders (such as tabbing back to this route in your browser) will not.
           const filterStateFromUrl = props.location ? props.location.query : {}
 
-          const sort =
-            sd["DECAYED_MERCH_V2"] === "experiment"
-              ? "-decayed_merch_v2"
-              : "-decayed_merch"
-
           const filterParams = {
             ...initialArtworkFilterState,
             ...paramsToCamelCase(filterStateFromUrl),
-            sort,
           }
-
           const aggregations = ["MEDIUM", "TOTAL", "MAJOR_PERIOD"]
           const additionalAggregations = getENV("ENABLE_NEW_ARTWORK_FILTERS")
             ? ["PARTNER", "LOCATION_CITY", "MATERIALS_TERMS"]
@@ -146,26 +142,25 @@ export const artist2Routes: AppRouteConfig[] = [
           const allAggregations = aggregations.concat(additionalAggregations)
 
           return {
-            input: {
-              ...allowedFilters(filterParams),
-            },
+            input: allowedFilters(filterParams),
             aggregations: allAggregations,
             artistID,
           }
         },
         query: graphql`
-          query artist2Routes_WorksQuery(
+          query artist2Routes_WorksForSaleQuery(
             $artistID: String!
             $input: FilterArtworksInput
             $aggregations: [ArtworkAggregation]
           ) @raw_response_type {
             artist(id: $artistID) {
-              ...Works_artist
+              ...ArtistWorksForSaleRoute_artist
                 @arguments(input: $input, aggregations: $aggregations)
             }
           }
         `,
       },
+      /*
       {
         path: "auction-results",
         theme: "v3",

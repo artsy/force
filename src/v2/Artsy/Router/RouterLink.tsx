@@ -73,10 +73,13 @@ export const RouterLink: React.ForwardRefExoticComponent<RouterLinkProps> = Reac
           className={(props as LinkPropsSimple).className}
           style={{ ...styleProps, ...(props as LinkPropsSimple).style }}
           {...omit(props, [
+            "active",
             "activeClassName",
             "alignItems",
             "hasLighterTextColor",
+            "justifyContent",
             "noUnderline",
+            "textAlign",
             "underlineBehavior",
           ])}
         >
