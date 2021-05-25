@@ -1,4 +1,4 @@
-import { Box, Button, Flex, Input, Modal, Sans, Spacer } from "@artsy/palette"
+import { Box, Button, Flex, Input, Modal, Sans, Serif, Spacer } from "@artsy/palette"
 import { FormikHelpers as FormikActions } from "formik"
 import React, { useState } from "react"
 import styled from "styled-components"
@@ -289,5 +289,35 @@ export const SmsSecondFactorModal: React.FC<SmsSecondFactorModalProps> = props =
         />
       </Modal>
     </>
+  )
+}
+
+interface OnCompleteRedirModalProps {
+  onClick: () => void
+  redirectTo: string
+  show: boolean
+}
+
+export const OnCompleteRedirModal: React.FC<OnCompleteRedirModalProps> = props => {
+  const { onClick, redirectTo, show } = props
+
+  return (
+    <Modal
+      title="Set up with text message"
+      onClose={onClick}
+      show={show}
+      FixedButton={
+        <Button onClick={onClick} width="100%">
+          OK
+        </Button>
+      }
+    >
+      <Serif size="3t" color="black60">
+        You’ve successfully set up two-factor authentication!
+      </Serif>
+      <Serif mt={2} size="3t" color="black60">
+        You will be redirected to: {redirectTo}
+      </Serif>
+    </Modal>
   )
 }
