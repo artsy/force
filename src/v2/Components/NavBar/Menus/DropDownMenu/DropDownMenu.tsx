@@ -93,7 +93,7 @@ export const DropDownNavMenu: React.FC<DropDownNavMenuProps> = ({
               </Flex>
               <LettersWrap>
                 <Text variant="small">Browse by name</Text>
-                <ArtistsLetterNav inDropDown />
+                <ArtistsLetterNav justifyContent="flex-start" />
               </LettersWrap>
             </Flex>
           )}
