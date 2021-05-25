@@ -23,10 +23,12 @@ export class SystemQueryRenderer<
   }
 
   render() {
+    const { placeholder, ...rest } = this.props
+
     if (this.state.isMounted) {
-      return <QueryRenderer<T> {...this.props} />
+      return <QueryRenderer<T> {...rest} />
     } else {
-      return null
+      return placeholder ? placeholder : null
     }
   }
 }
