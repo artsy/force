@@ -215,6 +215,7 @@ export const ShowBannersRailRenderer: React.FC<
           }
         }
       `}
+      placeholder={<ShowBannersRailPlaceholder count={10} {...rest} />}
       variables={{ partnerId }}
       render={({ error, props }) => {
         if (error || !props)

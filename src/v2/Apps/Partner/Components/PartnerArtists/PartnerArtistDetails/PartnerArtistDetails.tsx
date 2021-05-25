@@ -154,6 +154,7 @@ export const PartnerArtistDetailsRenderer: React.FC<{
         }
       `}
       variables={{ partnerId, artistId }}
+      placeholder={<PartnerArtistDetailsPlaceholder />}
       render={({ error, props }) => {
         if (error || !props) return <PartnerArtistDetailsPlaceholder />
         return (
