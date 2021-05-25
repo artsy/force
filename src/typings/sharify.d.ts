@@ -39,7 +39,7 @@ declare module "sharify" {
       readonly IMAGE_LAZY_LOADING: boolean
       IS_GOOGLEBOT: boolean
       IS_MOBILE: boolean
-      IP_ADDRESS: string
+      readonly IP_ADDRESS: string
       readonly METAPHYSICS_ENDPOINT: string
       readonly NODE_ENV: string
       readonly NOTIFICATION_COUNT: string
