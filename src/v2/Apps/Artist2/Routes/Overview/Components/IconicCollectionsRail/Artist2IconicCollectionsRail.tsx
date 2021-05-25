@@ -1,4 +1,4 @@
-import { Image, Shelf, Text } from "@artsy/palette"
+import { Image, Shelf, Spacer, Text } from "@artsy/palette"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { AnalyticsSchema, Type, useSystemContext } from "v2/Artsy"
@@ -68,6 +68,7 @@ const Artist2IconicCollectionsRail: React.FC<Artist2IconicCollectionsRailProps> 
                   />
                 </>
               )}
+              <Spacer my={1} />
               <Text variant="md">{formattedTitle}</Text>
               <Text variant="md" color="black60">
                 {formattedPrice}

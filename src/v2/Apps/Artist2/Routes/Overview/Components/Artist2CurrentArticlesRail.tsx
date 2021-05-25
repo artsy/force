@@ -6,13 +6,13 @@ import { useTracking } from "react-tracking"
 import { AnalyticsSchema, useAnalyticsContext } from "v2/Artsy"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import { extractNodes } from "v2/Utils/extractNodes"
-import { Artist2CurrentShowsRail_artist } from "v2/__generated__/Artist2CurrentShowsRail_artist.graphql"
+import { Artist2CurrentArticlesRail_artist } from "v2/__generated__/Artist2CurrentArticlesRail_artist.graphql"
 
-interface Artist2CurrentShowsRailProps {
-  artist: Artist2CurrentShowsRail_artist
+interface Artist2CurrentArticlesRailProps {
+  artist: Artist2CurrentArticlesRail_artist
 }
 
-const Artist2CurrentShowsRail: React.FC<Artist2CurrentShowsRailProps> = ({
+const Artist2CurrentArticlesRail: React.FC<Artist2CurrentArticlesRailProps> = ({
   artist,
 }) => {
   const tracking = useTracking()
@@ -22,7 +22,7 @@ const Artist2CurrentShowsRail: React.FC<Artist2CurrentShowsRailProps> = ({
     contextPageOwnerType,
   } = useAnalyticsContext()
 
-  const nodes = extractNodes(artist.showsConnection)
+  const nodes = extractNodes(artist.articlesConnection)
 
   if (nodes.length === 0) {
     return null
@@ -31,7 +31,7 @@ const Artist2CurrentShowsRail: React.FC<Artist2CurrentShowsRailProps> = ({
   return (
     <>
       <Text variant="lg" my={4}>
-        Shows featuring {artist.name}
+        Articles featuring {artist.name}
       </Text>
 
       <Shelf alignItems="flex-start">
@@ -44,7 +44,7 @@ const Artist2CurrentShowsRail: React.FC<Artist2CurrentShowsRailProps> = ({
               onClick={() => {
                 tracking.trackEvent({
                   action_type: AnalyticsSchema.ActionType.Click,
-                  contextModule: ContextModule.currentShowsRail,
+                  contextModule: ContextModule.relatedArticles,
                   contextPageOwnerId,
                   contextPageOwnerSlug,
                   contextPageOwnerType,
@@ -59,16 +59,16 @@ const Artist2CurrentShowsRail: React.FC<Artist2CurrentShowsRailProps> = ({
               }}
             >
               <Image
-                width={node.coverImage?.cropped?.width}
-                height={node.coverImage?.cropped?.height}
-                src={node.coverImage?.cropped?.src!}
-                srcSet={node.coverImage?.cropped?.srcSet}
+                width={node.thumbnailImage?.cropped?.width}
+                height={node.thumbnailImage?.cropped?.height}
+                src={node.thumbnailImage?.cropped?.src!}
+                srcSet={node.thumbnailImage?.cropped?.srcSet}
                 lazyLoad
               />
               <Spacer my={1} />
-              <Text variant="md">{node.name}</Text>
+              <Text variant="md">{node.thumbnailTitle}</Text>
               <Text variant="md" color="black60">
-                {node.exhibitionPeriod}
+                {node.publishedAt}
               </Text>
             </RouterLink>
           )
@@ -78,28 +78,32 @@ const Artist2CurrentShowsRail: React.FC<Artist2CurrentShowsRailProps> = ({
   )
 }
 
-export const Artist2CurrentShowsRailFragmentContainer = createFragmentContainer(
-  Artist2CurrentShowsRail,
+export const Artist2CurrentArticlesRailFragmentContainer = createFragmentContainer(
+  Artist2CurrentArticlesRail,
   {
     artist: graphql`
-      fragment Artist2CurrentShowsRail_artist on Artist {
+      fragment Artist2CurrentArticlesRail_artist on Artist {
         name
-        showsConnection(first: 5, sort: END_AT_ASC, status: "running") {
+        articlesConnection(
+          first: 10
+          sort: PUBLISHED_AT_DESC
+          inEditorialFeed: true
+        ) {
           edges {
             node {
-              coverImage {
+              internalID
+              slug
+              href
+              thumbnailTitle
+              publishedAt(format: "MMM Do, YYYY")
+              thumbnailImage {
                 cropped(width: 325, height: 330) {
                   width
                   height
-                  srcSet
                   src
+                  srcSet
                 }
               }
-              exhibitionPeriod
-              href
-              internalID
-              name
-              slug
             }
           }
         }
