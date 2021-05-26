@@ -5,6 +5,7 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ShowsRail_partner = {
     readonly slug: string;
+    readonly fullProfileEligible: boolean | null;
     readonly showsConnection: {
         readonly edges: ReadonlyArray<{
             readonly node: {
@@ -34,6 +35,13 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "ScalarField",
       "name": "slug",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "fullProfileEligible",
       "storageKey": null
     },
     {
@@ -100,5 +108,5 @@ const node: ReaderFragment = {
   ],
   "type": "Partner"
 };
-(node as any).hash = 'f0a80d69e4414f0917f68e84d38a37f7';
+(node as any).hash = '976855a94c3199bf906398e93fff7ec8';
 export default node;

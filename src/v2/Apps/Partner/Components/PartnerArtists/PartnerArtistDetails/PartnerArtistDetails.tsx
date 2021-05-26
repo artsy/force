@@ -1,5 +1,6 @@
 import React from "react"
-import { createFragmentContainer, graphql, QueryRenderer } from "react-relay"
+import { createFragmentContainer, graphql } from "react-relay"
+import { SystemQueryRenderer as QueryRenderer } from "v2/Artsy/Relay/SystemQueryRenderer"
 import { PartnerArtistDetails_partnerArtist } from "v2/__generated__/PartnerArtistDetails_partnerArtist.graphql"
 import { PartnerArtistDetailsQuery } from "v2/__generated__/PartnerArtistDetailsQuery.graphql"
 import { Carousel } from "v2/Components/Carousel"
@@ -137,7 +138,6 @@ export const PartnerArtistDetailsRenderer: React.FC<{
 
   return (
     <QueryRenderer<PartnerArtistDetailsQuery>
-      //  @ts-expect-error STRICT_NULL_CHECK
       environment={relayEnvironment}
       query={graphql`
         query PartnerArtistDetailsQuery(
@@ -160,7 +160,6 @@ export const PartnerArtistDetailsRenderer: React.FC<{
           <PartnerArtistDetailsFragmentContainer
             {...rest}
             {...props}
-            // @ts-expect-error STRICT_NULL_CHECK
             partnerArtist={props?.partner?.artistsConnection?.edges[0]}
           />
         )

@@ -7,10 +7,9 @@ import { useTracking } from "v2/Artsy"
 import { track } from "v2/Artsy/Analytics"
 import * as Schema from "v2/Artsy/Analytics/Schema"
 import { findCurrentRoute } from "v2/Artsy/Router/Utils/findCurrentRoute"
-import { RecentlyViewedQueryRenderer as RecentlyViewed } from "v2/Components/RecentlyViewed"
+import { RecentlyViewed } from "v2/Components/RecentlyViewed"
 import { Match } from "found"
 import React from "react"
-import { LazyLoadComponent } from "react-lazy-load-image-component"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtistHeaderFragmentContainer as ArtistHeader } from "./Components/ArtistHeader"
 import { StyledLink } from "./Components/StyledLink"
@@ -106,16 +105,12 @@ export const ArtistApp: React.FC<ArtistAppProps> = props => {
 
         {/* Fullpage is typically a stand-alone marketing page  */}
         {/* @ts-expect-error STRICT_NULL_CHECK */}
-        {!route.displayFullPage && typeof window !== "undefined" && (
-          <>
-            <LazyLoadComponent threshold={1000}>
-              <Row>
-                <Col>
-                  <RecentlyViewed />
-                </Col>
-              </Row>
-            </LazyLoadComponent>
-          </>
+        {!route.displayFullPage && (
+          <Row>
+            <Col>
+              <RecentlyViewed />
+            </Col>
+          </Row>
         )}
       </HorizontalPaddingArea>
     </>

@@ -3,7 +3,7 @@ version: 2.1
 orbs:
   artsy-remote-docker: artsy/remote-docker@0.1.11
   aws-s3: circleci/aws-s3@2.0.0
-  codecov: codecov/codecov@1.2.0
+  codecov: codecov/codecov@1.2.1
   hokusai: artsy/hokusai@0.8.0
   horizon: artsy/release@0.0.1
   node: artsy/node@1.0.0
@@ -145,16 +145,6 @@ jobs:
           aws_secret_access_key: $AWS_SECRET_ACCESS_KEY
     working_directory: /app
     steps:
-      - run: /app/scripts/xvfb-run.sh /usr/local/bin/yarn test:acceptance
-
-  acceptance-cypress:
-    docker:
-      - image: 585031190124.dkr.ecr.us-east-1.amazonaws.com/force:$CIRCLE_SHA1-electron-runner
-        aws_auth:
-          aws_access_key_id: $AWS_ACCESS_KEY_ID
-          aws_secret_access_key: $AWS_SECRET_ACCESS_KEY
-    working_directory: /app
-    steps:
       - run: /app/scripts/xvfb-run.sh /usr/local/bin/yarn test:smoke
 
   upload-docs:
@@ -279,12 +269,6 @@ workflows:
           requires:
             - electron-runner-image-push
 
-      - acceptance-cypress:
-          <<: *not_staging_or_release
-          context: hokusai
-          requires:
-            - electron-runner-image-push
-
       # Staging
       - artsy-remote-docker/buildkit-build:
           <<: *only_master
@@ -304,7 +288,6 @@ workflows:
             - type-check
             - relay-check
             - acceptance
-            - acceptance-cypress
             - production-image-build
 
       - hokusai/deploy-staging:

@@ -1,16 +1,19 @@
-import { Button, Serif, Spacer, color } from "@artsy/palette"
-import { garamond } from "v2/Assets/Fonts"
+import {
+  Spacer,
+  Text,
+  GridColumns,
+  Column,
+  Box,
+  ThemeProviderV3,
+} from "@artsy/palette"
 import React from "react"
 import styled from "styled-components"
+import { RouterLink } from "v2/Artsy/Router/RouterLink"
 
 interface ErrorPageProps {
   code: number
   message?: string
   detail?: string
-}
-
-interface ErrorCodeBackgroundProps extends React.HTMLProps<HTMLDivElement> {
-  code: number
 }
 
 export const ErrorPage: React.FC<ErrorPageProps> = ({
@@ -26,71 +29,53 @@ export const ErrorPage: React.FC<ErrorPageProps> = ({
   const detailMessage = message ? `Error Message: ${message}` : detail
 
   return (
-    <ErrorCodeBackground code={code}>
-      <ErrorDefaultMessage>{defaultMessage}</ErrorDefaultMessage>
-      {code !== 404 && <ErrorInner>{detailMessage}</ErrorInner>}
-      <Serif size="4" color="black60">
-        Please contact{" "}
-        <Link href="mailto:support@artsy.net">support@artsy.net</Link> with any
-        questions.
-      </Serif>
-      <Spacer mb={4} />
-      <Link href="/">
-        <Button size="large">Go to Artsy homepage</Button>
-      </Link>
-    </ErrorCodeBackground>
+    <ThemeProviderV3>
+      <GridColumns my={4} gridRowGap={4}>
+        <Column span={6} wrap>
+          <Text variant="xl">{defaultMessage}</Text>
+
+          <Text variant="xl" color="black60">
+            {code}
+          </Text>
+
+          <Spacer mb={2} />
+
+          <Text variant="md" color="black60">
+            Please contact{" "}
+            <a href="mailto:support@artsy.net">support@artsy.net</a> with any
+            questions.
+            <br />
+            <RouterLink to="/">Go to Artsy homepage</RouterLink>
+          </Text>
+        </Column>
+
+        {code !== 404 && !!detailMessage && (
+          <Column span={12}>
+            <Code
+              border="1px solid"
+              borderColor="black10"
+              color="black60"
+              px={1}
+              py={0.5}
+              mx={-1}
+              maxHeight={600}
+            >
+              {detailMessage}
+            </Code>
+          </Column>
+        )}
+      </GridColumns>
+    </ThemeProviderV3>
   )
 }
 
-const Link = styled.a`
-  color: ${color("black100")};
-`
-
-const ErrorDefaultMessage = styled.div`
-  max-width: 60%;
-  margin: 40px auto;
-  ${garamond("s40")};
-`
-
-const ErrorInner = styled.div`
-  background: ${color("white100")};
-  border: 0;
-  border: 3px solid ${color("black10")};
-  color: ${color("black60")};
+// TODO: Consider extracting a code/monospace font variant in Palette
+const Code = styled(Box)`
   font-size: 13px;
-  line-height: 1.6em;
-  margin: 20px auto;
-  max-height: 115px;
-  max-width: 75%;
   font-family: "Menlo", "Monaco", "Andale Mono", "lucida console", "Courier New",
     monospace;
-  overflow-x: auto;
-  padding: 5px 9px;
+  line-height: 1.6;
   text-align: left;
   word-break: break-word;
-`
-
-const ErrorCodeBackground = styled.div<ErrorCodeBackgroundProps>`
-  position: absolute;
-  text-align: center;
-  width: 100%;
-  margin: 0;
-  padding: 0 20px;
-  top: calc(50% \- 70px);
-  left: 50%;
-  transform: translate(-50%, -50%);
-
-  &::before {
-    content: "${props => `${props.code}`}";
-    display: block;
-    position: absolute;
-    top: calc(50% \+ 30px);
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-    font-size: 535px;
-    line-height: 1;
-    z-index: -1;
-    color: ${color("black5")};
-  }
+  overflow-x: auto;
 `

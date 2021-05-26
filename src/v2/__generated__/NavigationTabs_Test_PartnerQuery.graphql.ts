@@ -13,6 +13,10 @@ export type NavigationTabs_Test_PartnerQueryRawResponse = {
     readonly partner: ({
         readonly slug: string;
         readonly displayArtistsSection: boolean | null;
+        readonly displayWorksSection: boolean | null;
+        readonly counts: ({
+            readonly eligibleArtworks: number | null;
+        }) | null;
         readonly locations: ({
             readonly totalCount: number | null;
         }) | null;
@@ -47,6 +51,10 @@ query NavigationTabs_Test_PartnerQuery {
 fragment NavigationTabs_partner on Partner {
   slug
   displayArtistsSection
+  displayWorksSection
+  counts {
+    eligibleArtworks
+  }
   locations: locationsConnection(first: 20) {
     totalCount
   }
@@ -139,6 +147,31 @@ return {
             "storageKey": null
           },
           {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "displayWorksSection",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "PartnerCounts",
+            "kind": "LinkedField",
+            "name": "counts",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "eligibleArtworks",
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
+          },
+          {
             "alias": "locations",
             "args": [
               {
@@ -220,7 +253,7 @@ return {
     "metadata": {},
     "name": "NavigationTabs_Test_PartnerQuery",
     "operationKind": "query",
-    "text": "query NavigationTabs_Test_PartnerQuery {\n  partner(id: \"white-cube\") {\n    ...NavigationTabs_partner\n    id\n  }\n}\n\nfragment NavigationTabs_partner on Partner {\n  slug\n  displayArtistsSection\n  locations: locationsConnection(first: 20) {\n    totalCount\n  }\n  articles: articlesConnection {\n    totalCount\n  }\n  representedArtists: artistsConnection(representedBy: true, displayOnPartnerProfile: true) {\n    totalCount\n  }\n  notRepresentedArtists: artistsConnection(representedBy: false, hasPublishedArtworks: true, displayOnPartnerProfile: true) {\n    totalCount\n  }\n}\n"
+    "text": "query NavigationTabs_Test_PartnerQuery {\n  partner(id: \"white-cube\") {\n    ...NavigationTabs_partner\n    id\n  }\n}\n\nfragment NavigationTabs_partner on Partner {\n  slug\n  displayArtistsSection\n  displayWorksSection\n  counts {\n    eligibleArtworks\n  }\n  locations: locationsConnection(first: 20) {\n    totalCount\n  }\n  articles: articlesConnection {\n    totalCount\n  }\n  representedArtists: artistsConnection(representedBy: true, displayOnPartnerProfile: true) {\n    totalCount\n  }\n  notRepresentedArtists: artistsConnection(representedBy: false, hasPublishedArtworks: true, displayOnPartnerProfile: true) {\n    totalCount\n  }\n}\n"
   }
 };
 })();

@@ -1,5 +1,4 @@
 import {
-  Flex,
   Link,
   Text,
   LinkProps,
@@ -156,28 +155,24 @@ const SaleInfoLine: React.FC<DetailsProps> = props => {
       variant: "text" as TextVariant,
       color: "black60",
       fontWeight: "normal",
-      mt: undefined,
     },
     v3: {
       variant: "xs" as TextVariant,
       color: "black100",
       fontWeight: "bold",
-      mt: "2px",
     },
   })
 
   return (
-    <Flex mt={tokens.mt}>
-      <TruncatedLine>
-        <Text
-          variant={tokens.variant}
-          color={tokens.color}
-          fontWeight={tokens.fontWeight}
-        >
-          <SaleMessage {...props} /> <BidInfo {...props} />
-        </Text>
-      </TruncatedLine>
-    </Flex>
+    <TruncatedLine>
+      <Text
+        variant={tokens.variant}
+        color={tokens.color}
+        fontWeight={tokens.fontWeight}
+      >
+        <SaleMessage {...props} /> <BidInfo {...props} />
+      </Text>
+    </TruncatedLine>
   )
 }
 

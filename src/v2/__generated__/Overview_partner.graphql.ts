@@ -8,13 +8,24 @@ export type Overview_partner = {
     readonly fullProfileEligible: boolean | null;
     readonly profileBannerDisplay: string | null;
     readonly displayArtistsSection: boolean | null;
+    readonly locationsConnection: {
+        readonly edges: ReadonlyArray<{
+            readonly node: {
+                readonly city: string | null;
+                readonly coordinates: {
+                    readonly lat: number | null;
+                    readonly lng: number | null;
+                } | null;
+            } | null;
+        } | null> | null;
+    } | null;
     readonly articlesConnection: {
         readonly totalCount: number | null;
         readonly edges: ReadonlyArray<{
             readonly " $fragmentRefs": FragmentRefs<"ArticlesRail_articles">;
         } | null> | null;
     } | null;
-    readonly " $fragmentRefs": FragmentRefs<"AboutPartner_partner" | "ShowsRail_partner" | "ArtistsRail_partner">;
+    readonly " $fragmentRefs": FragmentRefs<"AboutPartner_partner" | "ShowsRail_partner" | "ArtistsRail_partner" | "SubscriberBanner_partner">;
     readonly " $refType": "Overview_partner";
 };
 export type Overview_partner$data = Overview_partner;
@@ -69,6 +80,77 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "name": "displayArtistsSection",
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "first",
+          "value": 1
+        }
+      ],
+      "concreteType": "LocationConnection",
+      "kind": "LinkedField",
+      "name": "locationsConnection",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "LocationEdge",
+          "kind": "LinkedField",
+          "name": "edges",
+          "plural": true,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": "Location",
+              "kind": "LinkedField",
+              "name": "node",
+              "plural": false,
+              "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "city",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "concreteType": "LatLng",
+                  "kind": "LinkedField",
+                  "name": "coordinates",
+                  "plural": false,
+                  "selections": [
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "lat",
+                      "storageKey": null
+                    },
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "lng",
+                      "storageKey": null
+                    }
+                  ],
+                  "storageKey": null
+                }
+              ],
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        }
+      ],
+      "storageKey": "locationsConnection(first:1)"
     },
     {
       "alias": "articlesConnection",
@@ -168,9 +250,14 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "FragmentSpread",
       "name": "ArtistsRail_partner"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "SubscriberBanner_partner"
     }
   ],
   "type": "Partner"
 };
-(node as any).hash = '7a31761ac332d16d496b785ea68fdc52';
+(node as any).hash = 'aef0b4e01c9587cad64f528f231e8fb4';
 export default node;

@@ -19,11 +19,11 @@ describe("/collections", () => {
   })
 
   it("renders collection categories", () => {
-    cy.get("a#collectible-sculptures")
+    cy.get("#collectible-sculptures")
       .siblings("div")
       .should("contain", "Collectible Sculptures")
-    cy.get("a#abstract-art").siblings("div").should("contain", "Abstract Art")
-    cy.get("a#contemporary").siblings("div").should("contain", "Contemporary")
+    cy.get("#abstract-art").siblings("div").should("contain", "Abstract Art")
+    cy.get("#contemporary").siblings("div").should("contain", "Contemporary")
   })
 
   it("renders collection links", () => {

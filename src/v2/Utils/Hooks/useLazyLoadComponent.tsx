@@ -20,13 +20,22 @@ export const useLazyLoadComponent = ({
   const [isEnteredView, setIsEnteredView] = useState(false)
 
   const Waypoint = () => (
-    <LazyLoadComponent threshold={threshold} style={{ display: "inline" }}>
-      <Ready
-        onMount={() => {
-          setIsEnteredView(true)
-        }}
-      />
-    </LazyLoadComponent>
+    <>
+      {/*
+       * While although I have no reason to believe this client-side only check is necessary,
+       * it was wrapping every instance of this library, so it's been copied here.
+       * In the future we should replace this library with a simple intersection observer hook.
+       */}
+      {typeof window !== "undefined" && (
+        <LazyLoadComponent threshold={threshold} style={{ display: "inline" }}>
+          <Ready
+            onMount={() => {
+              setIsEnteredView(true)
+            }}
+          />
+        </LazyLoadComponent>
+      )}
+    </>
   )
 
   return { isEnteredView, Waypoint }

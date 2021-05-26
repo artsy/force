@@ -10,7 +10,7 @@ import {
   SwiperCell,
   SwiperRail,
 } from "@artsy/palette"
-import { createFragmentContainer, graphql, QueryRenderer } from "react-relay"
+import { createFragmentContainer, graphql } from "react-relay"
 import { ShowBannersRail_partner } from "v2/__generated__/ShowBannersRail_partner.graphql"
 import { ShowBannersRailRendererQuery } from "v2/__generated__/ShowBannersRailRendererQuery.graphql"
 import { compact, take, uniqBy } from "lodash"
@@ -18,6 +18,7 @@ import { ShowBannerFragmentContainer } from "../PartnerShows"
 import { useSystemContext } from "v2/Artsy"
 import { ShowBannersRailPlaceholder } from "./ShowBannersRailPlaceholder"
 import { Media } from "v2/Utils/Responsive"
+import { SystemQueryRenderer as QueryRenderer } from "v2/Artsy/Relay/SystemQueryRenderer"
 
 interface ShowBannersRailProps extends BoxProps {
   partner: ShowBannersRail_partner
@@ -123,11 +124,13 @@ const ShowBannersRail: React.FC<ShowBannersRailProps> = ({
           )
         })}
       </ShowBannersRailContainer>
-      <ProgressDots
-        mt={[2, 6]}
-        activeIndex={currentCarouselPage}
-        amount={shows.length}
-      />
+      {shows.length > 1 && (
+        <ProgressDots
+          mt={[2, 6]}
+          activeIndex={currentCarouselPage}
+          amount={shows.length}
+        />
+      )}
     </Box>
   )
 }
@@ -204,7 +207,6 @@ export const ShowBannersRailRenderer: React.FC<
 
   return (
     <QueryRenderer<ShowBannersRailRendererQuery>
-      // @ts-expect-error STRICT_NULL_CHECK
       environment={relayEnvironment}
       query={graphql`
         query ShowBannersRailRendererQuery($partnerId: String!) {
@@ -218,7 +220,6 @@ export const ShowBannersRailRenderer: React.FC<
         if (error || !props)
           return <ShowBannersRailPlaceholder count={10} {...rest} />
 
-        // @ts-expect-error STRICT_NULL_CHECK
         return <ShowBannersRailFragmentContainer {...rest} {...props} />
       }}
     />

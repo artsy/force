@@ -109,16 +109,7 @@ fragment RecentlyViewed_me on Me {
     edges {
       node {
         id
-        image {
-          url(version: "larger")
-          aspectRatio
-        }
-        imageTitle
-        title
-        href
-        ...Metadata_artwork
-        ...SaveButton_artwork
-        ...Badge_artwork
+        ...ShelfArtwork_artwork
       }
     }
   }
@@ -130,6 +121,25 @@ fragment SaveButton_artwork on Artwork {
   slug
   is_saved: isSaved
   title
+}
+
+fragment ShelfArtwork_artwork on Artwork {
+  image {
+    resized(width: 200) {
+      src
+      srcSet
+      width
+      height
+    }
+    aspectRatio
+    height
+  }
+  imageTitle
+  title
+  href
+  ...Metadata_artwork
+  ...SaveButton_artwork
+  ...Badge_artwork
 }
 */
 
@@ -145,24 +155,31 @@ v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
+  "name": "height",
+  "storageKey": null
+},
+v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
   "name": "href",
   "storageKey": null
 },
-v2 = [
+v3 = [
   {
     "kind": "Literal",
     "name": "shallow",
     "value": true
   }
 ],
-v3 = {
+v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "name",
   "storageKey": null
 },
-v4 = [
+v5 = [
   {
     "alias": null,
     "args": null,
@@ -255,13 +272,39 @@ return {
                             "args": [
                               {
                                 "kind": "Literal",
-                                "name": "version",
-                                "value": "larger"
+                                "name": "width",
+                                "value": 200
                               }
                             ],
-                            "kind": "ScalarField",
-                            "name": "url",
-                            "storageKey": "url(version:\"larger\")"
+                            "concreteType": "ResizedImageUrl",
+                            "kind": "LinkedField",
+                            "name": "resized",
+                            "plural": false,
+                            "selections": [
+                              {
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "src",
+                                "storageKey": null
+                              },
+                              {
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "srcSet",
+                                "storageKey": null
+                              },
+                              {
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "width",
+                                "storageKey": null
+                              },
+                              (v1/*: any*/)
+                            ],
+                            "storageKey": "resized(width:200)"
                           },
                           {
                             "alias": null,
@@ -269,7 +312,8 @@ return {
                             "kind": "ScalarField",
                             "name": "aspectRatio",
                             "storageKey": null
-                          }
+                          },
+                          (v1/*: any*/)
                         ],
                         "storageKey": null
                       },
@@ -287,7 +331,7 @@ return {
                         "name": "title",
                         "storageKey": null
                       },
-                      (v1/*: any*/),
+                      (v2/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -311,15 +355,15 @@ return {
                       },
                       {
                         "alias": null,
-                        "args": (v2/*: any*/),
+                        "args": (v3/*: any*/),
                         "concreteType": "Artist",
                         "kind": "LinkedField",
                         "name": "artists",
                         "plural": true,
                         "selections": [
                           (v0/*: any*/),
-                          (v1/*: any*/),
-                          (v3/*: any*/)
+                          (v2/*: any*/),
+                          (v4/*: any*/)
                         ],
                         "storageKey": "artists(shallow:true)"
                       },
@@ -332,14 +376,14 @@ return {
                       },
                       {
                         "alias": null,
-                        "args": (v2/*: any*/),
+                        "args": (v3/*: any*/),
                         "concreteType": "Partner",
                         "kind": "LinkedField",
                         "name": "partner",
                         "plural": false,
                         "selections": [
-                          (v3/*: any*/),
-                          (v1/*: any*/),
+                          (v4/*: any*/),
+                          (v2/*: any*/),
                           (v0/*: any*/),
                           {
                             "alias": null,
@@ -438,7 +482,7 @@ return {
                             "kind": "LinkedField",
                             "name": "highestBid",
                             "plural": false,
-                            "selections": (v4/*: any*/),
+                            "selections": (v5/*: any*/),
                             "storageKey": null
                           },
                           {
@@ -448,7 +492,7 @@ return {
                             "kind": "LinkedField",
                             "name": "openingBid",
                             "plural": false,
-                            "selections": (v4/*: any*/),
+                            "selections": (v5/*: any*/),
                             "storageKey": null
                           },
                           (v0/*: any*/)
@@ -510,7 +554,7 @@ return {
     "metadata": {},
     "name": "RecentlyViewedQuery",
     "operationKind": "query",
-    "text": "query RecentlyViewedQuery {\n  me {\n    ...RecentlyViewed_me\n    id\n  }\n}\n\nfragment Badge_artwork on Artwork {\n  is_biddable: isBiddable\n  href\n  sale {\n    is_preview: isPreview\n    display_timely_at: displayTimelyAt\n    id\n  }\n}\n\nfragment Contact_artwork on Artwork {\n  href\n  is_inquireable: isInquireable\n  sale {\n    is_auction: isAuction\n    is_live_open: isLiveOpen\n    is_open: isOpen\n    is_closed: isClosed\n    id\n  }\n  partner(shallow: true) {\n    type\n    id\n  }\n  sale_artwork: saleArtwork {\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    counts {\n      bidder_positions: bidderPositions\n    }\n    id\n  }\n}\n\nfragment Details_artwork on Artwork {\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  ...Contact_artwork\n  href\n}\n\nfragment RecentlyViewed_me on Me {\n  recentlyViewedArtworksConnection(first: 20) {\n    edges {\n      node {\n        id\n        image {\n          url(version: \"larger\")\n          aspectRatio\n        }\n        imageTitle\n        title\n        href\n        ...Metadata_artwork\n        ...SaveButton_artwork\n        ...Badge_artwork\n      }\n    }\n  }\n}\n\nfragment SaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n"
+    "text": "query RecentlyViewedQuery {\n  me {\n    ...RecentlyViewed_me\n    id\n  }\n}\n\nfragment Badge_artwork on Artwork {\n  is_biddable: isBiddable\n  href\n  sale {\n    is_preview: isPreview\n    display_timely_at: displayTimelyAt\n    id\n  }\n}\n\nfragment Contact_artwork on Artwork {\n  href\n  is_inquireable: isInquireable\n  sale {\n    is_auction: isAuction\n    is_live_open: isLiveOpen\n    is_open: isOpen\n    is_closed: isClosed\n    id\n  }\n  partner(shallow: true) {\n    type\n    id\n  }\n  sale_artwork: saleArtwork {\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    counts {\n      bidder_positions: bidderPositions\n    }\n    id\n  }\n}\n\nfragment Details_artwork on Artwork {\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  ...Contact_artwork\n  href\n}\n\nfragment RecentlyViewed_me on Me {\n  recentlyViewedArtworksConnection(first: 20) {\n    edges {\n      node {\n        id\n        ...ShelfArtwork_artwork\n      }\n    }\n  }\n}\n\nfragment SaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n\nfragment ShelfArtwork_artwork on Artwork {\n  image {\n    resized(width: 200) {\n      src\n      srcSet\n      width\n      height\n    }\n    aspectRatio\n    height\n  }\n  imageTitle\n  title\n  href\n  ...Metadata_artwork\n  ...SaveButton_artwork\n  ...Badge_artwork\n}\n"
   }
 };
 })();

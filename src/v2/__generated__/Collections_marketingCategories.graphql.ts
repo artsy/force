@@ -5,11 +5,7 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type Collections_marketingCategories = ReadonlyArray<{
     readonly name: string;
-    readonly collections: ReadonlyArray<{
-        readonly slug: string;
-        readonly headerImage: string | null;
-        readonly title: string;
-    }>;
+    readonly " $fragmentRefs": FragmentRefs<"CollectionsCategory_category">;
     readonly " $refType": "Collections_marketingCategories";
 }>;
 export type Collections_marketingCategories$data = Collections_marketingCategories;
@@ -36,39 +32,12 @@ const node: ReaderFragment = {
       "storageKey": null
     },
     {
-      "alias": null,
       "args": null,
-      "concreteType": "MarketingCollection",
-      "kind": "LinkedField",
-      "name": "collections",
-      "plural": true,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "slug",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "headerImage",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "title",
-          "storageKey": null
-        }
-      ],
-      "storageKey": null
+      "kind": "FragmentSpread",
+      "name": "CollectionsCategory_category"
     }
   ],
   "type": "MarketingCollectionCategory"
 };
-(node as any).hash = '76554c57a5339cf4a60df12cdee4be57';
+(node as any).hash = 'd84d53bcdc86de6624b328eb3553b487';
 export default node;

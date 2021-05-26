@@ -1,5 +1,6 @@
 import React from "react"
 import { Column, GridColumns, Text } from "@artsy/palette"
+import { Media } from "v2/Utils/Responsive"
 import { createFragmentContainer, graphql } from "react-relay"
 import { AboutPartner_partner } from "v2/__generated__/AboutPartner_partner.graphql"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
@@ -9,13 +10,18 @@ export interface AboutPartnerProps {
 }
 
 export const AboutPartner: React.FC<AboutPartnerProps> = ({
-  partner: { profile, vatNumber, website },
+  partner: { profile, vatNumber, website, fullProfileEligible },
 }) => {
   const isEmpty = !profile?.fullBio && !vatNumber && !website
 
   if (isEmpty) {
     return null
   }
+
+  const canRenderWebsite = website && fullProfileEligible
+  const canRenderVatNumber = vatNumber && fullProfileEligible
+  const fullBio = profile?.fullBio
+  const limitedBio = profile?.bio
 
   return (
     <GridColumns mb={12} gridRowGap={2}>
@@ -24,17 +30,31 @@ export const AboutPartner: React.FC<AboutPartnerProps> = ({
       </Column>
 
       <Column span={6}>
-        {profile?.fullBio && <Text variant="text">{profile.fullBio}</Text>}
-        {website && (
-          <RouterLink to={website}>
-            <Text mt={2} variant="text">
+        <Media at="xs">
+          {limitedBio && (
+            <Text mb={2} variant="text">
+              {limitedBio}
+            </Text>
+          )}
+        </Media>
+        <Media greaterThan="xs">
+          {fullBio && (
+            <Text mb={2} variant="text">
+              {fullBio}
+            </Text>
+          )}
+        </Media>
+
+        {canRenderWebsite && (
+          <RouterLink to={website!} target="_blank">
+            <Text mb={2} variant="text">
               {website}
             </Text>
           </RouterLink>
         )}
 
-        {vatNumber && (
-          <Text mt={2} variant="text">{`VAT ID#: ${vatNumber}`}</Text>
+        {canRenderVatNumber && (
+          <Text variant="text">{`VAT ID#: ${vatNumber}`}</Text>
         )}
       </Column>
     </GridColumns>
@@ -48,9 +68,11 @@ export const AboutPartnerFragmentContainer = createFragmentContainer(
       fragment AboutPartner_partner on Partner {
         profile {
           fullBio
+          bio
         }
         website
         vatNumber
+        fullProfileEligible
       }
     `,
   }

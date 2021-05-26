@@ -16,8 +16,7 @@ export const CollectionDefaultHeader: FC<CollectionDefaultHeaderProps> = ({
   collectionId,
   collectionSlug,
 }) => {
-  // @ts-expect-error STRICT_NULL_CHECK
-  if (headerArtworks.edges.length === 0) return null
+  if ((headerArtworks.edges?.length ?? 0) === 0) return null
 
   const artworks = extractNodes(headerArtworks)
 

@@ -6,9 +6,11 @@ import { FragmentRefs } from "relay-runtime";
 export type AboutPartner_partner = {
     readonly profile: {
         readonly fullBio: string | null;
+        readonly bio: string | null;
     } | null;
     readonly website: string | null;
     readonly vatNumber: string | null;
+    readonly fullProfileEligible: boolean | null;
     readonly " $refType": "AboutPartner_partner";
 };
 export type AboutPartner_partner$data = AboutPartner_partner;
@@ -39,6 +41,13 @@ const node: ReaderFragment = {
           "kind": "ScalarField",
           "name": "fullBio",
           "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "bio",
+          "storageKey": null
         }
       ],
       "storageKey": null
@@ -56,9 +65,16 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "name": "vatNumber",
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "fullProfileEligible",
+      "storageKey": null
     }
   ],
   "type": "Partner"
 };
-(node as any).hash = 'cc2bf3eccf000ed20487bf3b7ce8bc9d';
+(node as any).hash = '3da86969bb6bf4f433b6efb09f42fff7';
 export default node;

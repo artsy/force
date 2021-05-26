@@ -6,7 +6,7 @@ import { withSystemContext } from "v2/Artsy"
 import { track } from "v2/Artsy/Analytics"
 import * as Schema from "v2/Artsy/Analytics/Schema"
 
-import { RecentlyViewedQueryRenderer as RecentlyViewed } from "v2/Components/RecentlyViewed"
+import { RecentlyViewed } from "v2/Components/RecentlyViewed"
 
 import { RouterState, withRouter } from "found"
 import React, { useCallback, useEffect, useState } from "react"

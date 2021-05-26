@@ -110,10 +110,10 @@ Avoid aliasing imports:
 
 ```js
 // avoid
-import { FooFragmentContainer as Foo } from './Foo'
+import { FooFragmentContainer as Foo } from "./Foo"
 
 // good
-import { FooFragmentContainer } from './Foo'
+import { FooFragmentContainer } from "./Foo"
 ```
 
 ### Write unit tests for new components
@@ -124,7 +124,7 @@ Some top-level notes:
 
 - We use [`enzyme`](https://enzymejs.github.io/enzyme/)
 - We avoid snapshot tests; they produce too much churn for too little value.
-- We use the `relay-test-utils` package for testing Relay code, and [this helper](https://github.com/artsy/force/blob/0b291f005763e7c2600a5077786c9510bf655079/src/v2/DevTools/setupTestWrapper.tsx) for quickly spinning up tests.
+- We use the `relay-test-utils` package for testing Relay code, and [this helper](https://github.com/artsy/force/blob/0b291f005763e7c2600a5077786c9510bf655079/src/v2/DevTools/setupTestWrapper.tsx) for quickly spinning up tests. Note that this helper can't test `QueryRenderer`s; extract the render code into a fragment-like container and test that. (See the [`SoldRecently` component](https://github.com/artsy/force/blob/daad34183723be649e6031859842d65f4d902c21/src/v2/Apps/Consign/Routes/MarketingLanding/Components/__tests__/SoldRecently.jest.tsx) for an example.)
 
 Here are some great examples of what tests and test coverage should look like.
 

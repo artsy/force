@@ -71,8 +71,7 @@ export const CollectionApp: React.FC<CollectionAppProps> = props => {
   const socialImage =
     headerImage ||
     (fallbackHeaderImage?.edges &&
-      // @ts-expect-error STRICT_NULL_CHECK
-      fallbackHeaderImage?.edges[0]?.node?.image?.resized.url)
+      fallbackHeaderImage?.edges[0]?.node?.image?.resized?.url)
 
   return (
     <>

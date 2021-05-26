@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { Box, BoxProps, Flex, Text } from "@artsy/palette"
-import { createFragmentContainer, graphql, QueryRenderer } from "react-relay"
+import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworksRail_partner } from "v2/__generated__/ArtworksRail_partner.graphql"
 import { flatten } from "lodash"
 import { Carousel } from "../Carousel"
@@ -11,6 +11,7 @@ import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import { ScrollToPartnerHeader } from "../ScrollToPartnerHeader"
 import { ArtworksRailPlaceholder } from "./ArtworkRailPlaceholder"
 import { ViewAllButton } from "./ViewAllButton"
+import { SystemQueryRenderer as QueryRenderer } from "v2/Artsy/Relay/SystemQueryRenderer"
 
 interface ArtworksRailProps extends BoxProps {
   partner: ArtworksRail_partner
@@ -116,7 +117,6 @@ export const ArtworksRailRenderer: React.FC<
 
   return (
     <QueryRenderer<ArtworksRailRendererQuery>
-      //  @ts-expect-error STRICT_NULL_CHECK
       environment={relayEnvironment}
       query={graphql`
         query ArtworksRailRendererQuery($partnerId: String!) {
@@ -130,7 +130,6 @@ export const ArtworksRailRenderer: React.FC<
         if (error || !props)
           return <ArtworksRailPlaceholder {...rest} count={15} />
 
-        // @ts-expect-error STRICT_NULL_CHECK
         return <ArtworksRailFragmentContainer {...rest} {...props} />
       }}
     />
