@@ -19,9 +19,20 @@ const render = (ui: ReactElement, options: RenderOptions = {}) =>
 const Wrapper: React.FC = ({ children }) => {
   return (
     <ArtworkFilterContextProvider>
+      <ClearAllButton />
       {children}
       <ArtworkFilterContextInspector />
     </ArtworkFilterContextProvider>
+  )
+}
+
+const ClearAllButton: React.FC = () => {
+  const artworkFilterContext = useArtworkFilterContext()
+
+  return (
+    <button onClick={() => artworkFilterContext.resetFilters()}>
+      Clear all
+    </button>
   )
 }
 
@@ -98,6 +109,47 @@ describe("SizeFilter", () => {
     expect(currentContext().filters?.sizes).toEqual([])
     expect(currentContext().filters?.height).toEqual("4.72-9.45")
     expect(currentContext().filters?.width).toEqual("*-*")
+  })
+
+  it("clears local input state after Clear All", () => {
+    render(<SizeFilter expanded />)
+
+    // before: filter state and input state are empty
+    expect(currentContext().filters?.height).toEqual("*-*")
+    expect(currentContext().filters?.width).toEqual("*-*")
+    expect(screen.queryByDisplayValue("1")).not.toBeInTheDocument()
+    expect(screen.queryByDisplayValue("2")).not.toBeInTheDocument()
+    expect(screen.queryByDisplayValue("3")).not.toBeInTheDocument()
+    expect(screen.queryByDisplayValue("4")).not.toBeInTheDocument()
+
+    // act: enter custom height and width
+    userEvent.click(screen.getByText("Show custom size"))
+    screen.getAllByRole("spinbutton").map(field => userEvent.clear(field)) // 😭
+    userEvent.type(screen.getAllByRole("spinbutton")[0], "1")
+    userEvent.type(screen.getAllByRole("spinbutton")[1], "2")
+    userEvent.type(screen.getAllByRole("spinbutton")[2], "3")
+    userEvent.type(screen.getAllByRole("spinbutton")[3], "4")
+    userEvent.click(screen.getByText("Set size"))
+
+    // assert: state and ui are updated
+    expect(currentContext().filters?.sizes).toEqual([])
+    expect(currentContext().filters?.width).toEqual("0.39-0.79")
+    expect(currentContext().filters?.height).toEqual("1.18-1.57")
+    expect(screen.queryByDisplayValue("1")).toBeInTheDocument()
+    expect(screen.queryByDisplayValue("2")).toBeInTheDocument()
+    expect(screen.queryByDisplayValue("3")).toBeInTheDocument()
+    expect(screen.queryByDisplayValue("4")).toBeInTheDocument()
+
+    // act: clear all filters
+    userEvent.click(screen.getByText("Clear all"))
+
+    // assert: state and ui are cleared
+    expect(currentContext().filters?.height).toEqual("*-*")
+    expect(currentContext().filters?.width).toEqual("*-*")
+    expect(screen.queryByDisplayValue("1")).not.toBeInTheDocument()
+    expect(screen.queryByDisplayValue("2")).not.toBeInTheDocument()
+    expect(screen.queryByDisplayValue("3")).not.toBeInTheDocument()
+    expect(screen.queryByDisplayValue("4")).not.toBeInTheDocument()
   })
 
   describe("the `expanded` prop", () => {
