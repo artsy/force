@@ -1,4 +1,5 @@
 import React from "react"
+import { Meta } from "react-head"
 import { GeneShowFragmentContainer } from "../GeneShow"
 import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
@@ -38,5 +39,34 @@ describe("GeneShow", () => {
 
     expect(wrapper.find("h1")).toHaveLength(1)
     expect(wrapper.find("h1").text()).toEqual("Example Gene")
+  })
+
+  it("renders meta description from query", () => {
+    const wrapper = getWrapper({
+      Gene: () => ({
+        meta: { description: "Gene Meta Description" },
+      }),
+    })
+
+    for (let i = 1; i <= 3; i++) {
+      expect(wrapper.find(Meta).at(i).prop("content")).toEqual(
+        "Gene Meta Description"
+      )
+    }
+  })
+
+  it("renders fallback meta description", () => {
+    const wrapper = getWrapper({
+      Gene: () => ({
+        name: "Design",
+        meta: { description: null },
+      }),
+    })
+
+    for (let i = 1; i <= 3; i++) {
+      expect(wrapper.find(Meta).at(i).prop("content")).toEqual(
+        "Explore Design art on Artsy. Browse works by size, price, and medium."
+      )
+    }
   })
 })

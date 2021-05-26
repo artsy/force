@@ -10,7 +10,10 @@ interface GeneMetaProps {
 
 const TagMeta: React.FC<GeneMetaProps> = ({ tag }) => {
   const title = `${tag.name} | Artsy`
-  const description = tag.description
+
+  const fallbackDescription = `Browse all artworks with the ${tag.name} tag on Artsy. Artsy has the largest collection of art on the Web; browse art by subject matter, medium, size and price.`
+  const description = tag.description || fallbackDescription
+
   const href = `${getENV("APP_URL")}/${tag.href}`
   const image = tag.image?.cropped?.src
 
@@ -18,13 +21,9 @@ const TagMeta: React.FC<GeneMetaProps> = ({ tag }) => {
     <>
       <Title>{title}</Title>
       <Meta property="og:title" content={title} />
-      {description && (
-        <>
-          <Meta name="description" content={description} />
-          <Meta property="og:description" content={description} />
-          <Meta property="twitter:description" content={description} />
-        </>
-      )}
+      <Meta name="description" content={description} />
+      <Meta property="og:description" content={description} />
+      <Meta property="twitter:description" content={description} />
       <Link rel="canonical" href={href} />
       <Meta property="og:url" content={href} />
       <Meta property="og:type" content="website" />
