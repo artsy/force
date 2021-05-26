@@ -81,7 +81,7 @@ export const SmsSecondFactor: React.FC<SmsSecondFactorProps> = props => {
     }
   }
 
-  async function onCompleteRedirect() {
+  function onCompleteRedirect() {
     if (props.me.hasSecondFactorEnabled) {
       setShowCompleteModal(false)
     } else {

@@ -80,7 +80,7 @@ export const AppSecondFactor: React.FC<AppSecondFactorProps> = props => {
     }
   }
 
-  async function onCompleteRedirect() {
+  function onCompleteRedirect() {
     if (props.me.hasSecondFactorEnabled) {
       setShowCompleteModal(false)
     } else {
