@@ -125,6 +125,7 @@ export const ArtworksRailRenderer: React.FC<
           }
         }
       `}
+      placeholder={<ArtworksRailPlaceholder {...rest} count={15} />}
       variables={{ partnerId }}
       render={({ error, props }) => {
         if (error || !props)

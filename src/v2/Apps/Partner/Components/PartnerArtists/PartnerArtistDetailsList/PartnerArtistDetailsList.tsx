@@ -145,6 +145,7 @@ export const PartnerArtistDetailsListRenderer: React.FC<{
           }
         }
       `}
+      placeholder={<PartnerArtistDetailsListPlaceholder count={PAGE_SIZE} />}
       variables={{ partnerId, first: PAGE_SIZE, after: undefined }}
       render={({ error, props }) => {
         if (error || !props)

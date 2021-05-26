@@ -88,6 +88,7 @@ export const PartnerArtistsRenderer: React.FC<{
         }
       `}
       variables={{ partnerId }}
+      placeholder={<PartnerArtistListPlaceholder />}
       render={({ error, props }) => {
         if (error || !props) return <PartnerArtistListPlaceholder />
 

@@ -120,6 +120,7 @@ export const PartnerArtistsCarouselRenderer: React.FC<{
         }
       `}
       variables={{ partnerId }}
+      placeholder={<PartnerArtistsCarouselPlaceholder count={PAGE_SIZE} />}
       render={({ error, props }) => {
         if (error || !props)
           return <PartnerArtistsCarouselPlaceholder count={PAGE_SIZE} />
