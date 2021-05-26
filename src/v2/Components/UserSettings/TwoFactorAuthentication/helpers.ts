@@ -1,7 +1,7 @@
 import { getClientParam } from "v2/Utils/getClientParam"
 import sanitizeRedirect from "@artsy/passport/sanitize-redirect"
 
-export const afterUpdateRedir = () => {
+export const afterUpdateRedirect = () => {
   const afterUpdateURL = getClientParam("after_update")
 
   if (afterUpdateURL) {

@@ -14,7 +14,7 @@ import request from "superagent"
 import { useSystemContext } from "v2/Artsy"
 
 import { ApiError } from "../../ApiError"
-import { SmsSecondFactorModal, OnCompleteRedirModal } from "./Modal"
+import { SmsSecondFactorModal, OnCompleteRedirectModal } from "./Modal"
 import { CreateSmsSecondFactor } from "./Mutation/CreateSmsSecondFactor"
 import { CreateSmsSecondFactorInput } from "v2/__generated__/CreateSmsSecondFactorMutation.graphql"
 import { SmsSecondFactor_me } from "v2/__generated__/SmsSecondFactor_me.graphql"
@@ -22,7 +22,7 @@ import { ApiErrorModal } from "../ApiErrorModal"
 import { DisableFactorConfirmation } from "../DisableFactorConfirmation"
 import { ConfirmPasswordModal } from "v2/Components/ConfirmPasswordModal"
 
-import { afterUpdateRedir } from "v2/Components/UserSettings/TwoFactorAuthentication/helpers"
+import { afterUpdateRedirect } from "v2/Components/UserSettings/TwoFactorAuthentication/helpers"
 
 interface SmsSecondFactorProps extends BorderBoxProps {
   me: SmsSecondFactor_me
@@ -36,14 +36,14 @@ export const SmsSecondFactor: React.FC<SmsSecondFactorProps> = props => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [showSetupModal, setShowSetupModal] = useState(false)
   const [showCompleteModal, setShowCompleteModal] = useState(false)
-  const [showCompleteRedirModal, setShowCompleteRedirModal] = useState(false)
+  const [showCompleteRedirectModal, setShowCompleteRedirectModal] = useState(false)
   const [apiErrors, setApiErrors] = useState<ApiError[]>([])
   const [isDisabling] = useState(false)
   const [isCreating, setCreating] = useState(false)
 
   const [stagedSecondFactor, setStagedSecondFactor] = useState(null)
 
-  const redirectTo = afterUpdateRedir()
+  const redirectTo = afterUpdateRedirect()
 
   function onComplete() {
     const showCompleteModalCallback = () => {
@@ -51,9 +51,9 @@ export const SmsSecondFactor: React.FC<SmsSecondFactorProps> = props => {
       setShowCompleteModal(true)
     }
 
-    const showCompleteRedirModalCallback = () => {
+    const showCompleteRedirectModalCallback = () => {
       setShowSetupModal(false)
-      setShowCompleteRedirModal(true)
+      setShowCompleteRedirectModal(true)
     }
 
     if (props.me.hasSecondFactorEnabled) {
@@ -62,7 +62,7 @@ export const SmsSecondFactor: React.FC<SmsSecondFactorProps> = props => {
     } else {
       showCompleteModalCallback()
       if (redirectTo) {
-        showCompleteRedirModalCallback()
+        showCompleteRedirectModalCallback()
       } else {
         showCompleteModalCallback()
       }
@@ -81,7 +81,7 @@ export const SmsSecondFactor: React.FC<SmsSecondFactorProps> = props => {
     }
   }
 
-  async function onCompleteRedir() {
+  async function onCompleteRedirect() {
     if (props.me.hasSecondFactorEnabled) {
       setShowCompleteModal(false)
     } else {
@@ -242,10 +242,10 @@ export const SmsSecondFactor: React.FC<SmsSecondFactorProps> = props => {
           </Serif>
         )}
       </Modal>
-      <OnCompleteRedirModal
-        onClick={onCompleteRedir}
+      <OnCompleteRedirectModal
+        onClick={onCompleteRedirect}
         redirectTo={redirectTo}
-        show={showCompleteRedirModal}
+        show={showCompleteRedirectModal}
       />
     </BorderBox>
   )

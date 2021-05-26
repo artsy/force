@@ -292,13 +292,13 @@ export const SmsSecondFactorModal: React.FC<SmsSecondFactorModalProps> = props =
   )
 }
 
-interface OnCompleteRedirModalProps {
+interface OnCompleteRedirectModalProps {
   onClick: () => void
   redirectTo: string
   show: boolean
 }
 
-export const OnCompleteRedirModal: React.FC<OnCompleteRedirModalProps> = props => {
+export const OnCompleteRedirectModal: React.FC<OnCompleteRedirectModalProps> = props => {
   const { onClick, redirectTo, show } = props
 
   return (

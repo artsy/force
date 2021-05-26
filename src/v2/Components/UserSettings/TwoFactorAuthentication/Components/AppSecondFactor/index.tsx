@@ -13,7 +13,7 @@ import { RelayRefetchProp, createFragmentContainer, graphql } from "react-relay"
 import request from "superagent"
 
 import { useSystemContext } from "v2/Artsy"
-import { AppSecondFactorModal, OnCompleteRedirModal } from "./Modal"
+import { AppSecondFactorModal, OnCompleteRedirectModal } from "./Modal"
 import { ApiError } from "../../ApiError"
 import { ApiErrorModal } from "../ApiErrorModal"
 import { CreateAppSecondFactor } from "./Mutation/CreateAppSecondFactor"
@@ -22,7 +22,7 @@ import { AppSecondFactor_me } from "v2/__generated__/AppSecondFactor_me.graphql"
 import { ConfirmPasswordModal } from "v2/Components/ConfirmPasswordModal"
 import { CreateAppSecondFactorInput } from "v2/__generated__/CreateAppSecondFactorMutation.graphql"
 
-import { afterUpdateRedir } from "v2/Components/UserSettings/TwoFactorAuthentication/helpers"
+import { afterUpdateRedirect } from "v2/Components/UserSettings/TwoFactorAuthentication/helpers"
 
 interface AppSecondFactorProps extends BorderBoxProps {
   me: AppSecondFactor_me
@@ -36,14 +36,14 @@ export const AppSecondFactor: React.FC<AppSecondFactorProps> = props => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [showSetupModal, setShowSetupModal] = useState(false)
   const [showCompleteModal, setShowCompleteModal] = useState(false)
-  const [showCompleteRedirModal, setShowCompleteRedirModal] = useState(false)
+  const [showCompleteRedirectModal, setShowCompleteRedirectModal] = useState(false)
   const [stagedSecondFactor, setStagedSecondFactor] = useState(null)
   const [isDisabling] = useState(false)
   const [isCreating, setCreating] = useState(false)
 
   const { relayEnvironment } = useSystemContext()
 
-  const redirectTo = afterUpdateRedir()
+  const redirectTo = afterUpdateRedirect()
 
   function onComplete() {
     const showCompleteModalCallback = () => {
@@ -51,9 +51,9 @@ export const AppSecondFactor: React.FC<AppSecondFactorProps> = props => {
       setShowCompleteModal(true)
     }
 
-    const showCompleteRedirModalCallback = () => {
+    const showCompleteRedirectModalCallback = () => {
       setShowSetupModal(false)
-      setShowCompleteRedirModal(true)
+      setShowCompleteRedirectModal(true)
     }
 
     if (props.me.hasSecondFactorEnabled) {
@@ -61,7 +61,7 @@ export const AppSecondFactor: React.FC<AppSecondFactorProps> = props => {
       relayRefetch.refetch({}, {}, showCompleteModalCallback)
     } else {
       if (redirectTo) {
-        showCompleteRedirModalCallback()
+        showCompleteRedirectModalCallback()
       } else {
         showCompleteModalCallback()
       }
@@ -80,7 +80,7 @@ export const AppSecondFactor: React.FC<AppSecondFactorProps> = props => {
     }
   }
 
-  async function onCompleteRedir() {
+  async function onCompleteRedirect() {
     if (props.me.hasSecondFactorEnabled) {
       setShowCompleteModal(false)
     } else {
@@ -245,10 +245,10 @@ export const AppSecondFactor: React.FC<AppSecondFactorProps> = props => {
           </Serif>
         )}
       </Modal>
-      <OnCompleteRedirModal
-        onClick={onCompleteRedir}
+      <OnCompleteRedirectModal
+        onClick={onCompleteRedirect}
         redirectTo={redirectTo}
-        show={showCompleteRedirModal}
+        show={showCompleteRedirectModal}
       />
     </BorderBox>
   )
