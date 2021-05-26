@@ -291,9 +291,9 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
                 <Text my={2} variant="mediumText">
                   Money-Back Guarantee
                 </Text>
+                <Text variant="text">If an item arrives not as described,</Text>
                 <Text variant="text">
-                  If an item arrives not as described, we’ll work with you to
-                  make it right.
+                  we’ll work with you to make it right.
                 </Text>
               </Box>
               <Box>{learnMoreIcon}</Box>
@@ -460,6 +460,7 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
             backgroundColor={color("black5")}
             gridTemplateColumns="repeat(3, 1fr)"
             mt={2}
+            px={2}
           >
             <Box borderBottom={`solid 1px ${color("black10")}`}>{""}</Box>
             <Text
@@ -649,7 +650,7 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
         <CSSGrid
           backgroundColor={color("black5")}
           gridTemplateColumns="repeat(6, 1fr)"
-          px={0}
+          px={2}
           pt={0}
           pb={space(9)}
         >
