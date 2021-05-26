@@ -7,11 +7,7 @@ export const afterUpdateRedirect = () => {
 
   if (afterUpdateURL) {
     const sanitizedURL = sanitizeRedirect(afterUpdateURL)
-
-    // a '/' means URL is bad
-    if (sanitizedURL !== '/') {
-      return sanitizedURL
-    }
+    return sanitizedURL
   }
 
   return ''
