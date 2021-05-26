@@ -24,6 +24,7 @@ declare module "sharify" {
       readonly CMS_URL: string
       CURRENT_PATH: string
       CURRENT_USER: User
+      readonly DECAYED_MERCH_V3: string // TODO: Remove after A/B test
       readonly DEPLOY_ENV: string
       readonly EIGEN: boolean
       readonly ENABLE_NEW_ARTWORK_FILTERS: boolean

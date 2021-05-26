@@ -38,7 +38,6 @@ import { escapedFragmentMiddleware } from "./lib/middleware/escapedFragment"
 import { hardcodedRedirectsMiddleware } from "./lib/middleware/hardcodedRedirects"
 import { localsMiddleware } from "./lib/middleware/locals"
 import { marketingModalsMiddleware } from "./lib/middleware/marketingModals"
-import { pageCacheMiddleware } from "./lib/middleware/pageCache"
 import { proxyReflectionMiddleware } from "./lib/middleware/proxyReflection"
 import { sameOriginMiddleware } from "./lib/middleware/sameOrigin"
 import { unsupportedBrowserMiddleware } from "./lib/middleware/unsupportedBrowser"
@@ -110,7 +109,6 @@ export function initializeMiddleware(app) {
   app.use(sameOriginMiddleware)
   app.use(escapedFragmentMiddleware)
   app.use(unsupportedBrowserMiddleware)
-  app.use(pageCacheMiddleware)
 
   /**
    * Blank page used by Eigen for caching web views.

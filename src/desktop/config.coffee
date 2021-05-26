@@ -75,7 +75,6 @@ module.exports =
   MOBILE_MEDIA_QUERY: "only screen and (max-width: 640px)"
   NODE_ENV: 'development'
   OPENREDIS_URL: null
-  PAGE_CACHE_ENABLED: false
   PAGE_CACHE_TYPES: 'artist'
   PAGE_CACHE_NAMESPACE: 'page-cache'
   PAGE_CACHE_VERSION: '1'
