@@ -19,6 +19,7 @@ import { useSystemContext } from "v2/Artsy"
 import { ShowBannersRailPlaceholder } from "./ShowBannersRailPlaceholder"
 import { Media } from "v2/Utils/Responsive"
 import { SystemQueryRenderer as QueryRenderer } from "v2/Artsy/Relay/SystemQueryRenderer"
+import { usePrevious } from "v2/Utils/Hooks/usePrevious"
 
 interface ShowBannersRailProps extends BoxProps {
   partner: ShowBannersRail_partner
@@ -82,6 +83,7 @@ const ShowBannersRail: React.FC<ShowBannersRailProps> = ({
   ...rest
 }) => {
   const [currentCarouselPage, setCurrentCarouselPage] = useState(0)
+  const previousCarouselPage = usePrevious(currentCarouselPage)
 
   if (!partner) return null
 
@@ -116,7 +118,7 @@ const ShowBannersRail: React.FC<ShowBannersRailProps> = ({
         {shows.map((edge, i) => {
           return (
             <ShowBannerFragmentContainer
-              withAnimation
+              withAnimation={currentCarouselPage !== previousCarouselPage}
               selected={i === currentCarouselPage}
               key={edge.node.id}
               show={edge.node}
