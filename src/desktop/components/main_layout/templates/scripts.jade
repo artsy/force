@@ -122,6 +122,10 @@ if !sd.THIRD_PARTIES_DISABLED
     analytics.load("#{sd.SEGMENT_WRITE_KEY}");
     }}();
 
+if !sd.THIRD_PARTIES_DISABLED
+  script( type="text/javascript" ).
+    ;(function(z,i,p,c,o,d,e){z[c]||(z[c]=function(){(z[c].q=z[c].q||[]).push(arguments)},z[c].q=z[c].q||[],d=i.createElement(p),d.async=1,d.src=o,e=i.getElementsByTagName(p)[0],e.parentNode.insertBefore(d,e))})(window,document,"script","letterpress","//scripts.postie.com/exxiuhdt/lp.1.js");window.letterpress('trackPageView');
+
 //- Wire up sharify
 if sharify
   != sharify.script()
