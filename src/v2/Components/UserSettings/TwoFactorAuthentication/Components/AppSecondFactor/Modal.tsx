@@ -1,5 +1,4 @@
 import { Box, Button, Flex, Input, Modal, Sans, Serif } from "@artsy/palette"
-import { getURLHost } from "v2/Utils/url"
 import { CreateAppSecondFactorMutationResponse } from "v2/__generated__/CreateAppSecondFactorMutation.graphql"
 import { useSystemContext } from "v2/Artsy"
 import { Formik, FormikHelpers as FormikActions, FormikProps } from "formik"
@@ -10,6 +9,7 @@ import { ApiError } from "../../ApiError"
 import { EnableSecondFactor } from "../Mutation/EnableSecondFactor"
 import { UpdateAppSecondFactor } from "./Mutation/UpdateAppSecondFactor"
 import { BackupSecondFactorReminder } from "../BackupSecondFactorReminder"
+import { redirectMessage } from "v2/Components/UserSettings/TwoFactorAuthentication/helpers"
 
 export interface FormValues {
   name: string
@@ -261,7 +261,7 @@ export const OnCompleteRedirectModal: React.FC<OnCompleteRedirectModalProps> = p
         You’ve successfully set up two-factor authentication!
       </Serif>
       <Serif mt={2} size="3t" color="black60">
-        You will be redirected to: {getURLHost(redirectTo)}
+        {redirectMessage(redirectTo)}
       </Serif>
     </Modal>
   )
