@@ -1,4 +1,4 @@
-// import { trackExperimentViewed } from "v2/Artsy/Analytics/trackExperimentViewed"
+import { trackExperimentViewed } from "v2/Artsy/Analytics/trackExperimentViewed"
 import { ActionTypes } from "farce"
 import { data as sd } from "sharify"
 import { get } from "v2/Utils/get"
@@ -12,13 +12,19 @@ import { match } from "path-to-regexp"
  * @see https://github.com/4Catalyzer/farce/blob/master/src/ActionTypes.js
  */
 
+interface ABTestRouteMap {
+  abTest: string
+  routes: string[]
+}
+
 interface TrackingMiddlewareOptions {
   excludePaths?: string[]
+  abTestRouteMap?: ABTestRouteMap[]
 }
 
 export function trackingMiddleware(options: TrackingMiddlewareOptions = {}) {
   return store => next => action => {
-    const { excludePaths = [] } = options
+    const { excludePaths = [], abTestRouteMap = [] } = options
     const { type, payload } = action
 
     switch (type) {
@@ -109,6 +115,19 @@ export function trackingMiddleware(options: TrackingMiddlewareOptions = {}) {
               }
             })
           }
+
+          // AB Test
+          abTestRouteMap.forEach(({ abTest, routes }) => {
+            routes.some(route => {
+              const matcher = match(route, { decode: decodeURIComponent })
+              const foundMatch = !!matcher(pathname)
+
+              if (foundMatch) {
+                trackExperimentViewed(abTest)
+                return true
+              }
+            })
+          })
         }
 
         return next(action)

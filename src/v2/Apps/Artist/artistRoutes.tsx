@@ -123,9 +123,15 @@ export const artistRoutes: AppRouteConfig[] = [
           // renders (such as tabbing back to this route in your browser) will not.
           const filterStateFromUrl = props.location ? props.location.query : {}
 
+          const sort =
+            getENV("DECAYED_MERCH_V3") === "experiment"
+              ? "-decayed_merch_v2"
+              : "-decayed_merch"
+
           const filterParams = {
             ...initialArtworkFilterState,
             ...paramsToCamelCase(filterStateFromUrl),
+            sort,
           }
 
           // filterParams.hasFilter = Object.entries(filterParams).some(
