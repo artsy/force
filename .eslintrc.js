@@ -6,6 +6,8 @@ module.exports = {
     "@typescript-eslint",
     "styled-components-a11y",
     "jest",
+    "jest-dom",
+    "testing-library"
   ],
   extends: [
     "eslint:recommended",
@@ -15,6 +17,8 @@ module.exports = {
     "prettier",
     "plugin:styled-components-a11y/recommended",
     "plugin:jest/recommended",
+    "plugin:jest-dom/recommended",
+    "plugin:testing-library/react"
   ],
   parserOptions: {
     ecmaFeatures: {
