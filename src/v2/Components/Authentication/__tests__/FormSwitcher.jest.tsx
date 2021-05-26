@@ -5,7 +5,7 @@ import { mount } from "enzyme"
 import React from "react"
 import { ForgotPasswordForm } from "../Desktop/ForgotPasswordForm"
 import { LoginForm } from "../Desktop/LoginForm"
-import { SignUpForm } from "../Desktop/SignUpForm"
+import { SignUpFormQueryRenderer } from "../Desktop/SignUpForm"
 import { FormSwitcher } from "../FormSwitcher"
 import { ModalType } from "../Types"
 import { mockLocation } from "v2/DevTools/mockLocation"
@@ -46,7 +46,7 @@ describe("FormSwitcher", () => {
 
     it("signup form", () => {
       const wrapper = getWrapper({ type: ModalType.signup })
-      expect(wrapper.find(SignUpForm).length).toEqual(1)
+      expect(wrapper.find(SignUpFormQueryRenderer).length).toEqual(1)
     })
 
     it("forgot password form", () => {

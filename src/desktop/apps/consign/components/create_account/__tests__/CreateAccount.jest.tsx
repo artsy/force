@@ -9,12 +9,17 @@ import CreateAccount, {
 import { ModalHeader } from "v2/Components/Modal/ModalHeader"
 import { LoginForm } from "v2/Components/Authentication/Desktop/LoginForm"
 import { ForgotPasswordForm } from "v2/Components/Authentication/Desktop/ForgotPasswordForm"
-import { SignUpForm } from "v2/Components/Authentication/Desktop/SignUpForm"
+import { SignUpFormQueryRenderer } from "v2/Components/Authentication/Desktop/SignUpForm"
 import { ModalType } from "v2/Components/Authentication/Types"
 
 jest.mock("v2/Artsy/SystemContext", () => ({
   SystemContextProvider: ({ children }) => children,
   withSystemContext: Component => Component,
+  useContext: Component => Component,
+}))
+
+jest.mock("v2/Components/Authentication/Desktop/SignUpForm", () => ({
+  SignUpFormQueryRenderer: () => null,
 }))
 
 jest.mock("desktop/apps/authentication/helpers", () => ({
@@ -66,7 +71,7 @@ describe("React components", () => {
       it("the signup form", () => {
         const wrapper = getWrapper()
         expect(wrapper.find(ModalHeader).at(0).text()).toBe("Create an account")
-        expect(wrapper.find(SignUpForm).length).toBe(1)
+        expect(wrapper.find(SignUpFormQueryRenderer).length).toBe(1)
       })
     })
   })

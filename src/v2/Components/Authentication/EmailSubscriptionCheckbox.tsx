@@ -3,20 +3,21 @@ import Checkbox from "v2/Components/Checkbox"
 import React from "react"
 import styled from "styled-components"
 
-export const EmailSubscriptionCheckbox = ({
-  name,
-  onChange,
-  onBlur,
-  value,
-  ...props
-}) => {
-  const color = "black60"
+interface EmailSubscriptionCheckboxProps {
+  checked
+  name
+  onBlur
+  onChange
+}
+
+export const EmailSubscriptionCheckbox: React.FC<EmailSubscriptionCheckboxProps> = props => {
+  const labelText =
+    "Dive deeper into the art market with Artsy emails. Subscribe to hear about our products, services, editorials, and other promotional content. Unsubscribe at any time."
+
   return (
-    <StyledCheckbox {...{ checked: value, onChange, onBlur, name }}>
-      <Serif color={color} size="3t" ml={0.5}>
-        {
-          "Dive deeper into the art market with Artsy emails. Subscribe to hear about our products, services, editorials, and other promotional content. Unsubscribe at any time."
-        }
+    <StyledCheckbox {...props}>
+      <Serif color="black60" size="3t" ml={0.5}>
+        {labelText}
       </Serif>
     </StyledCheckbox>
   )
