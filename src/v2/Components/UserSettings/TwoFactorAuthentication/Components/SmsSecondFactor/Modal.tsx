@@ -2,6 +2,7 @@ import { Box, Button, Flex, Input, Modal, Sans, Serif, Spacer } from "@artsy/pal
 import { FormikHelpers as FormikActions } from "formik"
 import React, { useState } from "react"
 import styled from "styled-components"
+import { getURLHost } from "v2/Utils/url"
 
 import * as Yup from "yup"
 
@@ -317,7 +318,7 @@ export const OnCompleteRedirectModal: React.FC<OnCompleteRedirectModalProps> = p
         You’ve successfully set up two-factor authentication!
       </Serif>
       <Serif mt={2} size="3t" color="black60">
-        You will be redirected to: {redirectTo}
+        You will be redirected to: {getURLHost(redirectTo)}
       </Serif>
     </Modal>
   )
