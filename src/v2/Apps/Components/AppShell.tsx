@@ -14,6 +14,7 @@ import { AppContainer } from "./AppContainer"
 import { useRouteComplete } from "v2/Utils/Hooks/useRouteComplete"
 import { useAuthIntent } from "v2/Utils/Hooks/useAuthIntent"
 import { Banner } from "v2/Components/LoginSignUpBanner"
+import { Media } from "v2/Utils/Responsive"
 
 const logger = createLogger("Apps/Components/AppShell")
 
@@ -27,12 +28,12 @@ export const AppShell: React.FC<AppShellProps> = props => {
 
   const { children, match } = props
   const routeConfig = findCurrentRoute(match)
-  const { isEigen } = useSystemContext()
+  const { user, isEigen } = useSystemContext()
   // @ts-expect-error STRICT_NULL_CHECK
   const showFooter = !isEigen && !routeConfig.hideFooter
   // @ts-expect-error STRICT_NULL_CHECK
   const appContainerMaxWidth = routeConfig.displayFullPage ? "100%" : null
-
+  const isLoggedIn = Boolean(user)
   /**
    * Check to see if a route has a prepare key; if so call it. Used typically to
    * preload bundle-split components (import()) while the route is fetching data
@@ -84,7 +85,7 @@ export const AppShell: React.FC<AppShellProps> = props => {
     >
       <Box pb={[MOBILE_NAV_HEIGHT, NAV_BAR_HEIGHT]}>
         <Box left={0} position="fixed" width="100%" zIndex={100}>
-          <Banner />
+          <Media at="xs">{!isLoggedIn && <Banner />}</Media>
           <NavBar />
         </Box>
       </Box>
