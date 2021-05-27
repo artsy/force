@@ -5,21 +5,28 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type Shows_partner = {
     readonly slug: string;
-    readonly featured: {
+    readonly featuredEvents: {
         readonly edges: ReadonlyArray<{
             readonly node: {
                 readonly isFeatured: boolean | null;
+                readonly internalID: string;
                 readonly " $fragmentRefs": FragmentRefs<"ShowBanner_show">;
             } | null;
         } | null> | null;
     } | null;
     readonly currentEvents: {
         readonly edges: ReadonlyArray<{
+            readonly node: {
+                readonly internalID: string;
+            } | null;
             readonly " $fragmentRefs": FragmentRefs<"ShowEvents_edges">;
         } | null> | null;
     } | null;
     readonly upcomingEvents: {
         readonly edges: ReadonlyArray<{
+            readonly node: {
+                readonly internalID: string;
+            } | null;
             readonly " $fragmentRefs": FragmentRefs<"ShowEvents_edges">;
         } | null> | null;
     } | null;
@@ -40,11 +47,18 @@ var v0 = {
   "value": true
 },
 v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+},
+v2 = {
   "kind": "Literal",
   "name": "first",
   "value": 12
 },
-v2 = [
+v3 = [
   {
     "alias": null,
     "args": null,
@@ -53,6 +67,18 @@ v2 = [
     "name": "edges",
     "plural": true,
     "selections": [
+      {
+        "alias": null,
+        "args": null,
+        "concreteType": "Show",
+        "kind": "LinkedField",
+        "name": "node",
+        "plural": false,
+        "selections": [
+          (v1/*: any*/)
+        ],
+        "storageKey": null
+      },
       {
         "args": null,
         "kind": "FragmentSpread",
@@ -76,7 +102,7 @@ return {
       "storageKey": null
     },
     {
-      "alias": "featured",
+      "alias": "featuredEvents",
       "args": [
         {
           "kind": "Literal",
@@ -123,6 +149,7 @@ return {
                   "name": "isFeatured",
                   "storageKey": null
                 },
+                (v1/*: any*/),
                 {
                   "args": null,
                   "kind": "FragmentSpread",
@@ -140,7 +167,7 @@ return {
     {
       "alias": "currentEvents",
       "args": [
-        (v1/*: any*/),
+        (v2/*: any*/),
         (v0/*: any*/),
         {
           "kind": "Literal",
@@ -152,13 +179,13 @@ return {
       "kind": "LinkedField",
       "name": "showsConnection",
       "plural": false,
-      "selections": (v2/*: any*/),
+      "selections": (v3/*: any*/),
       "storageKey": "showsConnection(first:12,isDisplayable:true,status:\"RUNNING\")"
     },
     {
       "alias": "upcomingEvents",
       "args": [
-        (v1/*: any*/),
+        (v2/*: any*/),
         (v0/*: any*/),
         {
           "kind": "Literal",
@@ -170,12 +197,12 @@ return {
       "kind": "LinkedField",
       "name": "showsConnection",
       "plural": false,
-      "selections": (v2/*: any*/),
+      "selections": (v3/*: any*/),
       "storageKey": "showsConnection(first:12,isDisplayable:true,status:\"UPCOMING\")"
     }
   ],
   "type": "Partner"
 };
 })();
-(node as any).hash = 'bab1be09c87841bf9381c9ff73d914f5';
+(node as any).hash = '0cd7aab15e111539c7884ec4b671d784';
 export default node;
