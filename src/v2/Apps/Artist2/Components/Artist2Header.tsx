@@ -11,7 +11,7 @@ interface Artist2HeaderProps {
 
 const Artist2Header: React.FC<Artist2HeaderProps> = ({ artist }) => {
   return (
-    <GridColumns mt={4}>
+    <GridColumns>
       <Column span={6}>
         <Text variant="xl" as="h1">
           {artist.name}

@@ -1,9 +1,14 @@
 import React from "react"
+import { Spacer } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Artist2ArtworkFilterRefetchContainer } from "./Components/Artist2ArtworkFilter"
+import { ArtistWorksForSaleRoute_artist } from "v2/__generated__/ArtistWorksForSaleRoute_artist.graphql"
+import { SharedArtworkFilterContextProps } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
+import { ArtistSeriesRailFragmentContainer } from "v2/Components/ArtistSeriesRail/ArtistSeriesRail"
+import { ContextModule } from "@artsy/cohesion"
 
 interface ArtistWorksForSaleRouteProps {
-  artist: any
+  artist: ArtistWorksForSaleRoute_artist
 }
 
 const ArtistWorksForSaleRoute: React.FC<ArtistWorksForSaleRouteProps> = ({
@@ -11,7 +16,19 @@ const ArtistWorksForSaleRoute: React.FC<ArtistWorksForSaleRouteProps> = ({
 }) => {
   return (
     <>
-      <Artist2ArtworkFilterRefetchContainer artist={artist} />
+      <ArtistSeriesRailFragmentContainer
+        artist={artist}
+        contextModule={ContextModule.artistSeriesRail}
+        showProgress
+      />
+      <Spacer my={6} />
+      <Artist2ArtworkFilterRefetchContainer
+        artist={artist}
+        aggregations={
+          artist.sidebarAggregations
+            ?.aggregations as SharedArtworkFilterContextProps["aggregations"]
+        }
+      />
     </>
   )
 }
@@ -24,17 +41,22 @@ export const ArtistWorksForSaleRouteFragmentContainer = createFragmentContainer(
         @argumentDefinitions(
           aggregations: { type: "[ArtworkAggregation]" }
           input: { type: "FilterArtworksInput" }
-          page: { type: "Int" }
-          sort: { type: "String" }
         ) {
-        ...Artist2ArtworkFilter_artist
-          @arguments(
-            aggregations: $aggregations
-            input: $input
-            page: $page
-            sort: $sort
-          )
-
+        ...ArtistSeriesRail_artist
+        ...Artist2ArtworkFilter_artist @arguments(input: $input)
+        sidebarAggregations: filterArtworksConnection(
+          aggregations: $aggregations
+          first: 1
+        ) {
+          aggregations {
+            slice
+            counts {
+              name
+              value
+              count
+            }
+          }
+        }
         internalID
         slug
         id

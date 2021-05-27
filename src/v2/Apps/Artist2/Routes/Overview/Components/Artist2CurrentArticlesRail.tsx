@@ -1,5 +1,5 @@
-import { ContextModule, OwnerType } from "@artsy/cohesion"
-import { Image, Shelf, Spacer, Text } from "@artsy/palette"
+import { clickedEntityGroup, ContextModule, OwnerType } from "@artsy/cohesion"
+import { Flex, Image, Shelf, Spacer, Text } from "@artsy/palette"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
@@ -30,10 +30,31 @@ const Artist2CurrentArticlesRail: React.FC<Artist2CurrentArticlesRailProps> = ({
 
   return (
     <>
-      <Text variant="lg" my={4}>
-        Articles featuring {artist.name}
-      </Text>
+      <Flex justifyContent="space-between">
+        <Text variant="lg" mb={4}>
+          Articles featuring {artist.name}
+        </Text>
 
+        <RouterLink
+          to={`/artist2/${artist.slug}/articles`}
+          onClick={() => {
+            tracking.trackEvent(
+              clickedEntityGroup({
+                contextModule: ContextModule.relatedArticles,
+                contextPageOwnerId,
+                contextPageOwnerSlug,
+                contextPageOwnerType: contextPageOwnerType!,
+                destinationPageOwnerType: OwnerType.artist,
+                destinationPageOwnerId: artist.internalID,
+                destinationPageOwnerSlug: artist.slug,
+                type: "viewAll",
+              })
+            )
+          }}
+        >
+          <Text variant="sm">View all articles</Text>
+        </RouterLink>
+      </Flex>
       <Shelf alignItems="flex-start">
         {nodes.map((node, index) => {
           return (
@@ -83,7 +104,6 @@ export const Artist2CurrentArticlesRailFragmentContainer = createFragmentContain
   {
     artist: graphql`
       fragment Artist2CurrentArticlesRail_artist on Artist {
-        name
         articlesConnection(
           first: 10
           sort: PUBLISHED_AT_DESC
@@ -107,6 +127,9 @@ export const Artist2CurrentArticlesRailFragmentContainer = createFragmentContain
             }
           }
         }
+        internalID
+        name
+        slug
       }
     `,
   }

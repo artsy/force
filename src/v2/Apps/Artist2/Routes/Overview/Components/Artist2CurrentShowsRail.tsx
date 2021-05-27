@@ -1,5 +1,5 @@
-import { ContextModule, OwnerType } from "@artsy/cohesion"
-import { Image, Shelf, Spacer, Text } from "@artsy/palette"
+import { clickedEntityGroup, ContextModule, OwnerType } from "@artsy/cohesion"
+import { Flex, Image, Shelf, Spacer, Text } from "@artsy/palette"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
@@ -30,9 +30,31 @@ const Artist2CurrentShowsRail: React.FC<Artist2CurrentShowsRailProps> = ({
 
   return (
     <>
-      <Text variant="lg" my={4}>
-        Shows featuring {artist.name}
-      </Text>
+      <Flex justifyContent="space-between">
+        <Text variant="lg" mb={4}>
+          Shows featuring {artist.name}
+        </Text>
+
+        <RouterLink
+          to={`/artist2/${artist.slug}/shows`}
+          onClick={() => {
+            tracking.trackEvent(
+              clickedEntityGroup({
+                contextModule: ContextModule.currentShowsRail,
+                contextPageOwnerId,
+                contextPageOwnerSlug,
+                contextPageOwnerType: contextPageOwnerType!,
+                destinationPageOwnerType: OwnerType.artist,
+                destinationPageOwnerId: artist.internalID,
+                destinationPageOwnerSlug: artist.slug,
+                type: "viewAll",
+              })
+            )
+          }}
+        >
+          <Text variant="sm">View all shows</Text>
+        </RouterLink>
+      </Flex>
 
       <Shelf alignItems="flex-start">
         {nodes.map((node, index) => {
@@ -83,7 +105,9 @@ export const Artist2CurrentShowsRailFragmentContainer = createFragmentContainer(
   {
     artist: graphql`
       fragment Artist2CurrentShowsRail_artist on Artist {
+        internalID
         name
+        slug
         showsConnection(first: 5, sort: END_AT_ASC, status: "running") {
           edges {
             node {

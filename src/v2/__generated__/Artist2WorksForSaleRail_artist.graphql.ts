@@ -13,6 +13,8 @@ export type Artist2WorksForSaleRail_artist = {
             } | null;
         } | null> | null;
     } | null;
+    readonly internalID: string;
+    readonly slug: string;
     readonly " $refType": "Artist2WorksForSaleRail_artist";
 };
 export type Artist2WorksForSaleRail_artist$data = Artist2WorksForSaleRail_artist;
@@ -23,7 +25,22 @@ export type Artist2WorksForSaleRail_artist$key = {
 
 
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+},
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "slug",
+  "storageKey": null
+};
+return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
@@ -64,20 +81,8 @@ const node: ReaderFragment = {
               "name": "node",
               "plural": false,
               "selections": [
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "internalID",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "slug",
-                  "storageKey": null
-                },
+                (v0/*: any*/),
+                (v1/*: any*/),
                 {
                   "args": [
                     {
@@ -97,9 +102,12 @@ const node: ReaderFragment = {
         }
       ],
       "storageKey": "artworksConnection(first:20,sort:\"AVAILABILITY_ASC\")"
-    }
+    },
+    (v0/*: any*/),
+    (v1/*: any*/)
   ],
   "type": "Artist"
 };
-(node as any).hash = 'fc2ed8ead4ba1c85c085742747a2a4b3';
+})();
+(node as any).hash = '1b32b8a7d5db303a66495fdda0080ec5';
 export default node;

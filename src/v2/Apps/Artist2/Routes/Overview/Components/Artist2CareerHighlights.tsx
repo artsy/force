@@ -14,7 +14,7 @@ const Artist2CareerHighlights: React.FC<Artist2CareerHighlightsProps> = ({
 }) => {
   return (
     <Box>
-      <Text variant="lg" mb={2}>
+      <Text variant="lg" mb={4}>
         Career Highlights
       </Text>
       <GridColumns>

@@ -1,16 +1,10 @@
 import loadable from "@loadable/component"
-// import { RedirectException } from "found"
-// import React from "react"
+import { Redirect } from "found"
 import { graphql } from "react-relay"
-// import { hasSections as showMarketInsights } from "v2/Apps/Artist/Components/MarketInsights/MarketInsights"
-import { paramsToCamelCase } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
-import { getENV } from "v2/Utils/getENV"
-// import { hasOverviewContent } from "./Components/NavigationTabs"
-import { initialArtworkFilterState } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
-import { allowedFilters } from "v2/Components/ArtworkFilter/Utils/allowedFilters"
 import { AppRouteConfig } from "v2/Artsy/Router/Route"
+import { Artist2RoutesTopLevelQuery } from "./Queries/Artist2RoutesTopLevelQuery"
 import { renderOrRedirect } from "./Routes/Overview/Utils/renderOrRedirect"
-// import { data as sd } from "sharify"
+import { getWorksForSaleRouteVariables } from "./Routes/WorksForSale/Utils/getWorksForSaleRouteVariables"
 
 const ArtistApp = loadable(() => import("./Artist2App"), {
   resolveComponent: component => component.Artist2AppFragmentContainer,
@@ -29,20 +23,25 @@ const WorksForSaleRoute = loadable(
       component.ArtistWorksForSaleRouteFragmentContainer,
   }
 )
+const CVRoute = loadable(() => import("./Routes/CV/ArtistCVRoute"), {
+  resolveComponent: component => component.ArtistCVRouteFragmentContainer,
+})
+const ArticlesRoute = loadable(
+  () => import("./Routes/Articles/ArtistArticlesRoute"),
+  {
+    resolveComponent: component =>
+      component.ArtistArticlesRouteFragmentContainer,
+  }
+)
+const ShowsRoute = loadable(() => import("./Routes/Shows/ArtistShowsRoute"), {
+  resolveComponent: component => component.ArtistShowsRouteFragmentContainer,
+})
+
 // const AuctionResultsRoute = loadable(() => import("./Routes/AuctionResults"), {
 //   resolveComponent: component => component.AuctionResultsRouteFragmentContainer,
 // })
 // const ConsignRoute = loadable(() => import("./Routes/Consign"), {
 //   resolveComponent: component => component.ConsignRouteFragmentContainer,
-// })
-// const CVRoute = loadable(() => import("./Routes/CV"), {
-//   resolveComponent: component => component.CVRouteFragmentContainer,
-// })
-// const ArticlesRoute = loadable(() => import("./Routes/Articles"), {
-//   resolveComponent: component => component.ArticlesRouteFragmentContainer,
-// })
-// const ShowsRoute = loadable(() => import("./Routes/Shows"), {
-//   resolveComponent: component => component.ShowsRouteFragmentContainer,
 // })
 
 export const artist2Routes: AppRouteConfig[] = [
@@ -53,54 +52,7 @@ export const artist2Routes: AppRouteConfig[] = [
     prepare: () => {
       ArtistApp.preload()
     },
-    query: graphql`
-      query artist2Routes_ArtistTopLevelQuery($artistID: String!) {
-        artist(id: $artistID) @principalField {
-          ...Artist2App_artist
-          slug
-          statuses {
-            shows
-            cv(minShowCount: 0)
-            articles
-          }
-          counts {
-            forSaleArtworks
-          }
-          related {
-            genes {
-              edges {
-                node {
-                  slug
-                }
-              }
-            }
-          }
-          highlights {
-            # Alias due to obscure Graphql validation warning
-            artistPartnersConnection: partnersConnection(
-              first: 10
-              displayOnPartnerProfile: true
-              representedBy: true
-              partnerCategory: ["blue-chip", "top-established", "top-emerging"]
-            ) {
-              edges {
-                node {
-                  categories {
-                    slug
-                  }
-                }
-              }
-            }
-          }
-          insights {
-            type
-          }
-          biographyBlurb(format: HTML, partnerBio: true) {
-            text
-          }
-        }
-      }
-    `,
+    query: Artist2RoutesTopLevelQuery,
     render: renderOrRedirect,
     children: [
       {
@@ -126,27 +78,7 @@ export const artist2Routes: AppRouteConfig[] = [
         prepare: () => {
           WorksForSaleRoute.preload()
         },
-        prepareVariables: ({ artistID }, props) => {
-          // FIXME: The initial render includes `location` in props, but subsequent
-          // renders (such as tabbing back to this route in your browser) will not.
-          const filterStateFromUrl = props.location ? props.location.query : {}
-
-          const filterParams = {
-            ...initialArtworkFilterState,
-            ...paramsToCamelCase(filterStateFromUrl),
-          }
-          const aggregations = ["MEDIUM", "TOTAL", "MAJOR_PERIOD"]
-          const additionalAggregations = getENV("ENABLE_NEW_ARTWORK_FILTERS")
-            ? ["PARTNER", "LOCATION_CITY", "MATERIALS_TERMS"]
-            : ["GALLERY", "INSTITUTION"]
-          const allAggregations = aggregations.concat(additionalAggregations)
-
-          return {
-            input: allowedFilters(filterParams),
-            aggregations: allAggregations,
-            artistID,
-          }
-        },
+        prepareVariables: getWorksForSaleRouteVariables,
         query: graphql`
           query artist2Routes_WorksForSaleQuery(
             $artistID: String!
@@ -216,8 +148,11 @@ export const artist2Routes: AppRouteConfig[] = [
           }
         },
       },
+
+            */
       {
         path: "cv",
+        theme: "v3",
         hideNavigationTabs: true,
         getComponent: () => CVRoute,
         prepare: () => {
@@ -233,6 +168,7 @@ export const artist2Routes: AppRouteConfig[] = [
       },
       {
         path: "articles",
+        theme: "v3",
         hideNavigationTabs: true,
         getComponent: () => ArticlesRoute,
         prepare: () => {
@@ -241,13 +177,14 @@ export const artist2Routes: AppRouteConfig[] = [
         query: graphql`
           query artist2Routes_ArticlesQuery($artistID: String!) {
             artist(id: $artistID) {
-              ...Articles_artist
+              ...ArtistArticlesRoute_artist
             }
           }
         `,
       },
       {
         path: "shows",
+        theme: "v3",
         hideNavigationTabs: true,
         getComponent: () => ShowsRoute,
         prepare: () => {
@@ -261,7 +198,6 @@ export const artist2Routes: AppRouteConfig[] = [
           }
         `,
       },
-      */
 
       /**
        * Redirect all unhandled tabs to the artist page.
@@ -270,10 +206,10 @@ export const artist2Routes: AppRouteConfig[] = [
        * under /artist/:artistID/auction-result/:id. That app needs to be
        * mounted before this app for that to work and not get caught here.
        */
-      // new Redirect({
-      //   from: "*",
-      //   to: "/artist/:artistID",
-      // }) as any,
+      new Redirect({
+        from: "*",
+        to: "/artist/:artistID",
+      }) as any,
     ],
   },
 ]

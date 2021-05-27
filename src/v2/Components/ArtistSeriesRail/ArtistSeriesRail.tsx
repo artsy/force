@@ -8,6 +8,7 @@ import { extractNodes } from "v2/Utils/extractNodes"
 
 interface Props {
   artist: ArtistSeriesRail_artist
+  showProgress?: boolean
   title?: string
   contextModule: ContextModule
 }
@@ -15,6 +16,7 @@ interface Props {
 const ArtistSeriesRail: React.FC<Props> = ({
   artist,
   contextModule,
+  showProgress = false,
   title,
 }) => {
   if (!artist) return null
@@ -28,7 +30,7 @@ const ArtistSeriesRail: React.FC<Props> = ({
         {title ?? "Artist Series"}
       </Text>
 
-      <Shelf showProgress={false}>
+      <Shelf showProgress={showProgress}>
         {series.map((node, index) => {
           return (
             <ArtistSeriesItem

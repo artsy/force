@@ -31,7 +31,7 @@ const Artist2RelatedArtistsRail: React.FC<Artist2RelatedArtistsRailProps> = ({
 
   return (
     <>
-      <Text variant="lg" my={4}>
+      <Text variant="lg" mb={4}>
         Related Artists
       </Text>
 

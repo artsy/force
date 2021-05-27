@@ -4,7 +4,9 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type Artist2CurrentShowsRail_artist = {
+    readonly internalID: string;
     readonly name: string | null;
+    readonly slug: string;
     readonly showsConnection: {
         readonly edges: ReadonlyArray<{
             readonly node: {
@@ -39,7 +41,21 @@ var v0 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+},
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
   "name": "name",
+  "storageKey": null
+},
+v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "slug",
   "storageKey": null
 };
 return {
@@ -49,6 +65,8 @@ return {
   "name": "Artist2CurrentShowsRail_artist",
   "selections": [
     (v0/*: any*/),
+    (v1/*: any*/),
+    (v2/*: any*/),
     {
       "alias": null,
       "args": [
@@ -164,21 +182,9 @@ return {
                   "name": "href",
                   "storageKey": null
                 },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "internalID",
-                  "storageKey": null
-                },
                 (v0/*: any*/),
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "slug",
-                  "storageKey": null
-                }
+                (v1/*: any*/),
+                (v2/*: any*/)
               ],
               "storageKey": null
             }
@@ -192,5 +198,5 @@ return {
   "type": "Artist"
 };
 })();
-(node as any).hash = '30234d4712cd4673f6c4a4df5c955650';
+(node as any).hash = '743e1d77ea5f819545b0a47f52d59df3';
 export default node;

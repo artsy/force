@@ -31,7 +31,7 @@ import { tagRoutes } from "./Apps/Tag/tagRoutes"
  *
  * When adding a new route to this file, be sure to add route to
  * `src/desktop/lib/webpackPublicPath.ts` as well. This is temporary until the
- * assets paths have stabilized.
+ * asset paths have stabilized.
  */
 export function getAppRoutes(): AppRouteConfig[] {
   return buildAppRoutes([

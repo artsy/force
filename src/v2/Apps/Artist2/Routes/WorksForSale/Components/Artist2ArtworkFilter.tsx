@@ -1,6 +1,9 @@
 import { Artist2ArtworkFilter_artist } from "v2/__generated__/Artist2ArtworkFilter_artist.graphql"
 import { BaseArtworkFilter } from "v2/Components/ArtworkFilter"
-import { ArtworkFilterContextProvider } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
+import {
+  ArtworkFilterContextProvider,
+  SharedArtworkFilterContextProps,
+} from "v2/Components/ArtworkFilter/ArtworkFilterContext"
 import { updateUrl } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
 import { Match } from "found"
 import React from "react"
@@ -9,6 +12,7 @@ import { ZeroState } from "./ZeroState"
 import { useRouter } from "v2/Artsy/Router/useRouter"
 
 interface Artist2ArtworkFilterProps {
+  aggregations: SharedArtworkFilterContextProps["aggregations"]
   artist: Artist2ArtworkFilter_artist
   relay: RelayRefetchProp
   match?: Match
@@ -16,7 +20,7 @@ interface Artist2ArtworkFilterProps {
 
 const Artist2ArtworkFilter: React.FC<Artist2ArtworkFilterProps> = props => {
   const { match } = useRouter()
-  const { relay, artist } = props
+  const { relay, aggregations, artist } = props
   const { filtered_artworks } = artist
   const hasFilter = filtered_artworks && filtered_artworks.id
 
@@ -28,7 +32,10 @@ const Artist2ArtworkFilter: React.FC<Artist2ArtworkFilterProps> = props => {
 
   return (
     <ArtworkFilterContextProvider
-      filters={match && match.location.query}
+      aggregations={aggregations}
+      counts={artist.counts as any} // FIXME
+      filters={match.location.query}
+      onChange={updateUrl}
       sortOptions={[
         { value: "-decayed_merch", text: "Default" },
         { value: "-has_price,-prices", text: "Price (desc.)" },
@@ -38,9 +45,6 @@ const Artist2ArtworkFilter: React.FC<Artist2ArtworkFilterProps> = props => {
         { value: "-year", text: "Artwork year (desc.)" },
         { value: "year", text: "Artwork year (asc.)" },
       ]}
-      aggregations={artist.sidebarAggregations?.aggregations as any} // FIXME
-      counts={artist.counts as any} // FIXME
-      onChange={updateUrl}
     >
       <BaseArtworkFilter
         relay={relay}
@@ -62,12 +66,7 @@ export const Artist2ArtworkFilterRefetchContainer = createRefetchContainer(
   {
     artist: graphql`
       fragment Artist2ArtworkFilter_artist on Artist
-        @argumentDefinitions(
-          aggregations: { type: "[ArtworkAggregation]" }
-          input: { type: "FilterArtworksInput" }
-          page: { type: "Int" }
-          sort: { type: "String" }
-        ) {
+        @argumentDefinitions(input: { type: "FilterArtworksInput" }) {
         counts {
           partner_shows: partnerShows
           for_sale_artworks: forSaleArtworks
@@ -76,25 +75,9 @@ export const Artist2ArtworkFilterRefetchContainer = createRefetchContainer(
           artworks
           has_make_offer_artworks: hasMakeOfferArtworks
         }
-        filtered_artworks: filterArtworksConnection(input: $input, first: 30) {
+        filtered_artworks: filterArtworksConnection(first: 30, input: $input) {
           id
           ...ArtworkFilterArtworkGrid_filtered_artworks
-        }
-        sidebarAggregations: filterArtworksConnection(
-          sort: $sort
-          page: $page
-          aggregations: $aggregations
-          first: 1
-          after: ""
-        ) {
-          aggregations {
-            slice
-            counts {
-              name
-              value
-              count
-            }
-          }
         }
         internalID
         isFollowed

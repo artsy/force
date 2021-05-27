@@ -27,6 +27,7 @@ if (process.env.NODE_ENV === "production") {
     "/art-fairs",
     "/artist-series",
     "/artist/",
+    "/artist2/",
     "/artists",
     "/artwork",
     "/auctions",

@@ -10,7 +10,7 @@ export const ChevronButton: React.FC<ChevronButtonProps> = ({
   direction = "right",
 }) => {
   return (
-    <Text variant="md" fontWeight="bold" py={1}>
+    <Text variant="md" py={1}>
       {direction === "right" ? (
         <>
           {children} <Arrow direction={direction} />

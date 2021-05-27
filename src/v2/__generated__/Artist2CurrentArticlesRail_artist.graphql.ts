@@ -4,7 +4,6 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type Artist2CurrentArticlesRail_artist = {
-    readonly name: string | null;
     readonly articlesConnection: {
         readonly edges: ReadonlyArray<{
             readonly node: {
@@ -24,6 +23,9 @@ export type Artist2CurrentArticlesRail_artist = {
             } | null;
         } | null> | null;
     } | null;
+    readonly internalID: string;
+    readonly name: string | null;
+    readonly slug: string;
     readonly " $refType": "Artist2CurrentArticlesRail_artist";
 };
 export type Artist2CurrentArticlesRail_artist$data = Artist2CurrentArticlesRail_artist;
@@ -34,19 +36,27 @@ export type Artist2CurrentArticlesRail_artist$key = {
 
 
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+},
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "slug",
+  "storageKey": null
+};
+return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
   "name": "Artist2CurrentArticlesRail_artist",
   "selections": [
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "name",
-      "storageKey": null
-    },
     {
       "alias": null,
       "args": [
@@ -87,20 +97,8 @@ const node: ReaderFragment = {
               "name": "node",
               "plural": false,
               "selections": [
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "internalID",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "slug",
-                  "storageKey": null
-                },
+                (v0/*: any*/),
+                (v1/*: any*/),
                 {
                   "alias": null,
                   "args": null,
@@ -197,9 +195,19 @@ const node: ReaderFragment = {
         }
       ],
       "storageKey": "articlesConnection(first:10,inEditorialFeed:true,sort:\"PUBLISHED_AT_DESC\")"
-    }
+    },
+    (v0/*: any*/),
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "name",
+      "storageKey": null
+    },
+    (v1/*: any*/)
   ],
   "type": "Artist"
 };
-(node as any).hash = '695a5bb8981977e13b5b19a9ef4abd9d';
+})();
+(node as any).hash = 'c4029fb269b071f1b451907696b402c7';
 export default node;

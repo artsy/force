@@ -1,4 +1,4 @@
-import { Box, Spacer } from "@artsy/palette"
+import { Box, BoxProps, Spacer } from "@artsy/palette"
 import { Match } from "found"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -29,7 +29,8 @@ const Artist2App: React.FC<Artist2AppProps> = ({ artist, children, match }) => {
     return (
       <PageWrapper>
         <BackLinkFragmentContainer artist={artist} />
-        {children}
+
+        <Box mt={2}>{children}</Box>
       </PageWrapper>
     )
   }
@@ -39,7 +40,7 @@ const Artist2App: React.FC<Artist2AppProps> = ({ artist, children, match }) => {
     <PageWrapper>
       <Artist2HeaderFragmentContainer artist={artist} />
 
-      <Spacer my={[4, 12]} />
+      <Spacer my={[4, 12]} id="scrollTo--artist2ContentArea" />
 
       <RouteTabs mb={2} fill>
         <RouteTab exact to={`/artist2/${artist.slug}`}>
@@ -53,7 +54,7 @@ const Artist2App: React.FC<Artist2AppProps> = ({ artist, children, match }) => {
         </RouteTab>
       </RouteTabs>
 
-      <Box>{children}</Box>
+      <Box pt={4}>{children}</Box>
     </PageWrapper>
   )
 }
@@ -73,7 +74,7 @@ export const Artist2AppFragmentContainer = createFragmentContainer(Artist2App, {
 })
 
 const getPageWrapper = artist => {
-  return ({ children }) => {
+  const PageWrapper: React.FC<BoxProps> = ({ children, ...rest }) => {
     const { contextPageOwnerType, contextPageOwnerSlug } = useAnalyticsContext()
 
     return (
@@ -84,11 +85,13 @@ const getPageWrapper = artist => {
           contextPageOwnerType,
         }}
       >
-        <>
+        <Box mt={4} {...rest}>
           <ArtistMetaFragmentContainer artist={artist} />
           {children}
-        </>
+        </Box>
       </AnalyticsContext.Provider>
     )
   }
+
+  return PageWrapper
 }
