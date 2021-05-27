@@ -1,5 +1,5 @@
 import React from "react"
-import { Box, Flex, Text } from "@artsy/palette"
+import { Box, BoxProps, Flex, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtistsRail_partner } from "v2/__generated__/ArtistsRail_partner.graphql"
 import {
@@ -8,19 +8,42 @@ import {
 } from "../PartnerArtists"
 import { ViewAllButton } from "./ViewAllButton"
 
-interface ArtistsRailProps {
+interface ArtistsRailProps extends BoxProps {
   partner: ArtistsRail_partner
 }
 
-const ArtistsRail: React.FC<ArtistsRailProps> = ({ partner }) => {
+const ArtistsRail: React.FC<ArtistsRailProps> = ({ partner, ...rest }) => {
   if (!partner) {
     return null
   }
 
-  const { slug, profileArtistsLayout, fullProfileEligible } = partner
+  const {
+    slug,
+    profileArtistsLayout,
+    fullProfileEligible,
+    artistsWithPublishedArtworks,
+    representedArtistsWithoutPublishedArtworks,
+  } = partner
+
+  const artistsWithPublishedArtworksTotalCount =
+    artistsWithPublishedArtworks?.totalCount || 0
+  const representedWithoutPublishedArtworksTotalCount =
+    representedArtistsWithoutPublishedArtworks?.totalCount || 0
+
+  const isCarouselRender =
+    profileArtistsLayout === "Grid" && fullProfileEligible
+
+  if (
+    isCarouselRender
+      ? !artistsWithPublishedArtworksTotalCount
+      : !artistsWithPublishedArtworksTotalCount &&
+        !representedWithoutPublishedArtworksTotalCount
+  ) {
+    return null
+  }
 
   return (
-    <Box mt={4} mb={[4, 80]}>
+    <Box {...rest}>
       <Flex mb={6} justifyContent="space-between" alignItems="center">
         <Text variant="title">
           {profileArtistsLayout === "Grid" ? "Featured Artists" : "Artists"}
@@ -31,7 +54,7 @@ const ArtistsRail: React.FC<ArtistsRailProps> = ({ partner }) => {
         )}
       </Flex>
 
-      {profileArtistsLayout === "Grid" && fullProfileEligible ? (
+      {isCarouselRender ? (
         <PartnerArtistsCarouselRenderer partnerId={slug} />
       ) : (
         <PartnerArtistsRenderer partnerId={slug} />
@@ -48,6 +71,19 @@ export const ArtistsRailFragmentContainer = createFragmentContainer(
         slug
         profileArtistsLayout
         fullProfileEligible
+        artistsWithPublishedArtworks: artistsConnection(
+          hasPublishedArtworks: true
+          displayOnPartnerProfile: true
+        ) {
+          totalCount
+        }
+        representedArtistsWithoutPublishedArtworks: artistsConnection(
+          representedBy: true
+          hasPublishedArtworks: false
+          displayOnPartnerProfile: true
+        ) {
+          totalCount
+        }
       }
     `,
   }

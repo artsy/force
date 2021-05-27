@@ -73,6 +73,12 @@ fragment ArtistsRail_partner on Partner {
   slug
   profileArtistsLayout
   fullProfileEligible
+  artistsWithPublishedArtworks: artistsConnection(hasPublishedArtworks: true, displayOnPartnerProfile: true) {
+    totalCount
+  }
+  representedArtistsWithoutPublishedArtworks: artistsConnection(representedBy: true, hasPublishedArtworks: false, displayOnPartnerProfile: true) {
+    totalCount
+  }
 }
 
 fragment Overview_partner on Partner {
@@ -214,14 +220,29 @@ v5 = [
     "storageKey": null
   }
 ],
-v6 = [
+v6 = {
+  "kind": "Literal",
+  "name": "displayOnPartnerProfile",
+  "value": true
+},
+v7 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "totalCount",
+  "storageKey": null
+},
+v8 = [
+  (v7/*: any*/)
+],
+v9 = [
   {
     "kind": "Literal",
     "name": "first",
     "value": 8
   }
 ],
-v7 = [
+v10 = [
   (v4/*: any*/),
   (v2/*: any*/)
 ];
@@ -439,6 +460,45 @@ return {
             "storageKey": null
           },
           {
+            "alias": "artistsWithPublishedArtworks",
+            "args": [
+              (v6/*: any*/),
+              {
+                "kind": "Literal",
+                "name": "hasPublishedArtworks",
+                "value": true
+              }
+            ],
+            "concreteType": "ArtistPartnerConnection",
+            "kind": "LinkedField",
+            "name": "artistsConnection",
+            "plural": false,
+            "selections": (v8/*: any*/),
+            "storageKey": "artistsConnection(displayOnPartnerProfile:true,hasPublishedArtworks:true)"
+          },
+          {
+            "alias": "representedArtistsWithoutPublishedArtworks",
+            "args": [
+              (v6/*: any*/),
+              {
+                "kind": "Literal",
+                "name": "hasPublishedArtworks",
+                "value": false
+              },
+              {
+                "kind": "Literal",
+                "name": "representedBy",
+                "value": true
+              }
+            ],
+            "concreteType": "ArtistPartnerConnection",
+            "kind": "LinkedField",
+            "name": "artistsConnection",
+            "plural": false,
+            "selections": (v8/*: any*/),
+            "storageKey": "artistsConnection(displayOnPartnerProfile:true,hasPublishedArtworks:false,representedBy:true)"
+          },
+          {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
@@ -520,19 +580,13 @@ return {
           },
           {
             "alias": null,
-            "args": (v6/*: any*/),
+            "args": (v9/*: any*/),
             "concreteType": "ArticleConnection",
             "kind": "LinkedField",
             "name": "articlesConnection",
             "plural": false,
             "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "totalCount",
-                "storageKey": null
-              },
+              (v7/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -578,7 +632,7 @@ return {
                         "kind": "LinkedField",
                         "name": "author",
                         "plural": false,
-                        "selections": (v7/*: any*/),
+                        "selections": (v10/*: any*/),
                         "storageKey": null
                       },
                       {
@@ -588,7 +642,7 @@ return {
                         "kind": "LinkedField",
                         "name": "contributingAuthors",
                         "plural": true,
-                        "selections": (v7/*: any*/),
+                        "selections": (v10/*: any*/),
                         "storageKey": null
                       },
                       {
@@ -674,7 +728,7 @@ return {
           },
           {
             "alias": null,
-            "args": (v6/*: any*/),
+            "args": (v9/*: any*/),
             "filters": null,
             "handle": "connection",
             "key": "ArticlesQuery_articlesConnection",
@@ -692,7 +746,7 @@ return {
     "metadata": {},
     "name": "partnerRoutes_OverviewQuery",
     "operationKind": "query",
-    "text": "query partnerRoutes_OverviewQuery(\n  $partnerId: String!\n) {\n  partner(id: $partnerId) @principalField {\n    ...Overview_partner\n    id\n  }\n}\n\nfragment AboutPartner_partner on Partner {\n  profile {\n    fullBio\n    bio\n    id\n  }\n  website\n  vatNumber\n  fullProfileEligible\n}\n\nfragment ArticleCard_article on Article {\n  channelID\n  thumbnailTitle\n  href\n  author {\n    name\n    id\n  }\n  contributingAuthors {\n    name\n    id\n  }\n  thumbnailImage {\n    medium: cropped(width: 400, height: 300) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ArticlesRail_articles on ArticleEdge {\n  node {\n    internalID\n    ...ArticleCard_article\n    id\n  }\n}\n\nfragment ArtistsRail_partner on Partner {\n  slug\n  profileArtistsLayout\n  fullProfileEligible\n}\n\nfragment Overview_partner on Partner {\n  slug\n  fullProfileEligible\n  profileBannerDisplay\n  displayArtistsSection\n  ...AboutPartner_partner\n  ...ShowsRail_partner\n  ...ArtistsRail_partner\n  ...SubscriberBanner_partner\n  locationsConnection(first: 1) {\n    edges {\n      node {\n        city\n        coordinates {\n          lat\n          lng\n        }\n        id\n      }\n    }\n  }\n  articlesConnection(first: 8) {\n    totalCount\n    edges {\n      ...ArticlesRail_articles\n      cursor\n      node {\n        __typename\n        id\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment ShowCard_show on Show {\n  href\n  name\n  isFairBooth\n  exhibitionPeriod\n  coverImage {\n    medium: cropped(width: 263, height: 222) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ShowsRail_partner on Partner {\n  slug\n  fullProfileEligible\n  showsConnection(status: ALL, first: 19, isDisplayable: true) {\n    edges {\n      node {\n        id\n        ...ShowCard_show\n      }\n    }\n  }\n}\n\nfragment SubscriberBanner_partner on Partner {\n  hasFairPartnership\n  name\n}\n"
+    "text": "query partnerRoutes_OverviewQuery(\n  $partnerId: String!\n) {\n  partner(id: $partnerId) @principalField {\n    ...Overview_partner\n    id\n  }\n}\n\nfragment AboutPartner_partner on Partner {\n  profile {\n    fullBio\n    bio\n    id\n  }\n  website\n  vatNumber\n  fullProfileEligible\n}\n\nfragment ArticleCard_article on Article {\n  channelID\n  thumbnailTitle\n  href\n  author {\n    name\n    id\n  }\n  contributingAuthors {\n    name\n    id\n  }\n  thumbnailImage {\n    medium: cropped(width: 400, height: 300) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ArticlesRail_articles on ArticleEdge {\n  node {\n    internalID\n    ...ArticleCard_article\n    id\n  }\n}\n\nfragment ArtistsRail_partner on Partner {\n  slug\n  profileArtistsLayout\n  fullProfileEligible\n  artistsWithPublishedArtworks: artistsConnection(hasPublishedArtworks: true, displayOnPartnerProfile: true) {\n    totalCount\n  }\n  representedArtistsWithoutPublishedArtworks: artistsConnection(representedBy: true, hasPublishedArtworks: false, displayOnPartnerProfile: true) {\n    totalCount\n  }\n}\n\nfragment Overview_partner on Partner {\n  slug\n  fullProfileEligible\n  profileBannerDisplay\n  displayArtistsSection\n  ...AboutPartner_partner\n  ...ShowsRail_partner\n  ...ArtistsRail_partner\n  ...SubscriberBanner_partner\n  locationsConnection(first: 1) {\n    edges {\n      node {\n        city\n        coordinates {\n          lat\n          lng\n        }\n        id\n      }\n    }\n  }\n  articlesConnection(first: 8) {\n    totalCount\n    edges {\n      ...ArticlesRail_articles\n      cursor\n      node {\n        __typename\n        id\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment ShowCard_show on Show {\n  href\n  name\n  isFairBooth\n  exhibitionPeriod\n  coverImage {\n    medium: cropped(width: 263, height: 222) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ShowsRail_partner on Partner {\n  slug\n  fullProfileEligible\n  showsConnection(status: ALL, first: 19, isDisplayable: true) {\n    edges {\n      node {\n        id\n        ...ShowCard_show\n      }\n    }\n  }\n}\n\nfragment SubscriberBanner_partner on Partner {\n  hasFairPartnership\n  name\n}\n"
   }
 };
 })();

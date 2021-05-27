@@ -41,7 +41,7 @@ const Overview: React.FC<OverviewProps> = ({ partner }) => {
 
       <ShowsRailFragmentContainer mt={4} mb={[4, 80]} partner={partner} />
       {displayArtistsSection && (
-        <ArtistsRailFragmentContainer partner={partner} />
+        <ArtistsRailFragmentContainer mt={4} mb={[4, 80]} partner={partner} />
       )}
       {hasArticles && (
         <ArticlesRailFragmentContainer partnerSlug={slug} articles={articles} />
@@ -56,7 +56,7 @@ const Overview: React.FC<OverviewProps> = ({ partner }) => {
       <ShowsRailFragmentContainer mt={4} mb={[4, 80]} partner={partner} />
 
       {displayArtistsSection && (
-        <ArtistsRailFragmentContainer partner={partner} />
+        <ArtistsRailFragmentContainer mt={4} mb={[4, 80]} partner={partner} />
       )}
 
       {location && location.coordinates && (
