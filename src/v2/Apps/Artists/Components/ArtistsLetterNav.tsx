@@ -12,7 +12,7 @@ export const ArtistsLetterNav: React.FC<ArtistsLetterNavProps> = ({
   ...rest
 }) => {
   return (
-    <Flex flexWrap="wrap" justifyContent={["flex-start", "flex-end"]}>
+    <Flex flexWrap="wrap" justifyContent={["flex-start", "flex-end"]} {...rest}>
       {LETTERS.map((letter, i) => {
         return (
           <Text key={letter} variant="md" color="black60">
@@ -42,6 +42,7 @@ const Letter = styled(RouterLink)<RouterLinkProps>`
   text-align: center;
   text-decoration: none;
   transition: color 250ms;
+  color: ${themeGet("colors.black60")};
 
   &:hover {
     text-decoration: underline;

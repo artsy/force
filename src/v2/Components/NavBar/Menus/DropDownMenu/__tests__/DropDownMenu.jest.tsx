@@ -67,6 +67,22 @@ describe("DropDownMenu", () => {
     expect(dropDownSection.length).toBe(4)
   })
 
+  it("doesn't render ArtistsLetterNav inside artworks dropdown", () => {
+    const wrapper = getWrapper()
+    const artistsLetterNav = wrapper.find("StyledArtistsLetterNav")
+
+    expect(artistsLetterNav.exists()).toBeFalsy()
+  })
+
+  it("renders ArtistsLetterNav inside artists dropdown", () => {
+    const wrapper = getWrapper({
+      contextModule: ContextModule.HeaderArtistsDropdown,
+    })
+    const artistsLetterNav = wrapper.find("StyledArtistsLetterNav")
+
+    expect(artistsLetterNav.exists()).toBeTruthy()
+  })
+
   it("tracks analytics click events correctly", () => {
     const wrapper = getWrapper()
     const menuItem = wrapper.find(MenuItem).first()
