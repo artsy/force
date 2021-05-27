@@ -181,6 +181,7 @@ const Menu: React.FC<MenuProps> = ({
           const isLast = lastLinkIndex === i
           return (
             <NavLink
+              key={i}
               link={link}
               isLast={isLast}
               isArtistsMenu={isArtistsMenu}
