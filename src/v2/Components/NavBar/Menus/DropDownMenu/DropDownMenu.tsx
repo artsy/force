@@ -99,7 +99,7 @@ export const DropDownNavMenu: React.FC<DropDownNavMenuProps> = ({
             {isArtistsDropdown && (
               <LettersWrap>
                 <Text variant="small">Browse by name</Text>
-                <Letters />
+                <StyledArtistsLetterNav />
               </LettersWrap>
             )}
           </Flex>
@@ -147,7 +147,7 @@ const LettersWrap = styled(Box).attrs({
 
 LettersWrap.displayName = "LettersWrap"
 
-const Letters = styled(ArtistsLetterNav).attrs({
+const StyledArtistsLetterNav = styled(ArtistsLetterNav).attrs({
   justifyContent: "flex-start",
 })`
   margin-left: -6px;
@@ -156,4 +156,4 @@ const Letters = styled(ArtistsLetterNav).attrs({
   }
 `
 
-Letters.displayName = "Letters"
+StyledArtistsLetterNav.displayName = "StyledArtistsLetterNav"

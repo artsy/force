@@ -144,7 +144,7 @@ export const AnimatingMenuWrapper = styled.div<{
   `}
 `
 
-const Letters = styled(ArtistsLetterNav)`
+const StyledArtistsLetterNav = styled(ArtistsLetterNav)`
   max-width: 385px;
   > div {
     width: 55px;
@@ -178,10 +178,16 @@ const Menu: React.FC<MenuProps> = ({
       <ul>
         {[...links].map((link, i) => {
           const isLast = lastLinkIndex === i
-          return NavLink({ link, isLast, isArtistsMenu })
+          return (
+            <NavLink
+              link={link}
+              isLast={isLast}
+              isArtistsMenu={isArtistsMenu}
+            />
+          )
         })}
       </ul>
-      {isArtistsMenu && <Letters />}
+      {isArtistsMenu && <StyledArtistsLetterNav />}
     </AnimatingMenuWrapper>
   )
 }
