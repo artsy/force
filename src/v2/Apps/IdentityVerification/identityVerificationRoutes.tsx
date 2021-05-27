@@ -3,18 +3,28 @@ import { AppRouteConfig } from "v2/Artsy/Router/Route"
 import { graphql } from "react-relay"
 
 const IdentityVerificationApp = loadable(
-  () => import("./IdentityVerificationApp"),
+  () =>
+    import(
+      /* webpackChunkName: "identityVerificationBundle" */ "./IdentityVerificationApp"
+    ),
   {
     resolveComponent: component =>
       component.IdentityVerificationAppFragmentContainer,
   }
 )
-const Processing = loadable(() => import("./Processing"), {
-  resolveComponent: component => component.Processing,
-})
-const Error = loadable(() => import("./Error"), {
-  resolveComponent: component => component.Error,
-})
+const Processing = loadable(
+  () =>
+    import(/* webpackChunkName: "identityVerificationBundle" */ "./Processing"),
+  {
+    resolveComponent: component => component.Processing,
+  }
+)
+const Error = loadable(
+  () => import(/* webpackChunkName: "identityVerificationBundle" */ "./Error"),
+  {
+    resolveComponent: component => component.Error,
+  }
+)
 
 export const identityVerificationRoutes: AppRouteConfig[] = [
   {

@@ -3,13 +3,19 @@ import { graphql } from "react-relay"
 import { RedirectException } from "found"
 import { AppRouteConfig } from "v2/Artsy/Router/Route"
 
-const FairsApp = loadable(() => import("./FairsApp"), {
-  resolveComponent: component => component.FairsApp,
-})
+const FairsApp = loadable(
+  () => import(/* webpackChunkName: "fairBundle" */ "./FairsApp"),
+  {
+    resolveComponent: component => component.FairsApp,
+  }
+)
 
-const FairsIndexRoute = loadable(() => import("./Routes/FairsIndex"), {
-  resolveComponent: component => component.FairsIndexFragmentContainer,
-})
+const FairsIndexRoute = loadable(
+  () => import(/* webpackChunkName: "fairBundle" */ "./Routes/FairsIndex"),
+  {
+    resolveComponent: component => component.FairsIndexFragmentContainer,
+  }
+)
 
 export const fairsRoutes: AppRouteConfig[] = [
   {

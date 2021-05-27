@@ -3,18 +3,18 @@ import { AppRouteConfig } from "v2/Artsy/Router/Route"
 import { graphql } from "react-relay"
 import { WelcomeRoute } from "./Routes/Welcome/WelcomeRoute"
 
-const ExampleApp = loadable(() => import("./ExampleApp"), {
+const ExampleApp = loadable(() => import(/* webpackChunkName: "exampleBundle" */ "./ExampleApp"), {
   resolveComponent: component => component.ExampleAppFragmentContainer,
 })
 const ArtistRoute = loadable(
-  () => import("./Routes/Artist/ExampleArtistRoute"),
+  () => import/* webpackChunkName: "exampleBundle" */ ("./Routes/Artist/ExampleArtistRoute"),
   {
     resolveComponent: component =>
       component.ExampleArtistRouteFragmentContainer,
   }
 )
 const ArtworkRoute = loadable(
-  () => import("./Routes/Artwork/ExampleArtworkRoute"),
+  () => import(/* webpackChunkName: "exampleBundle" */ "./Routes/Artwork/ExampleArtworkRoute"),
   {
     resolveComponent: component =>
       component.ExampleArtworkRouteFragmentContainer,

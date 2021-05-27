@@ -5,9 +5,12 @@ import { paramsToCamelCase } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
 import { getENV } from "v2/Utils/getENV"
 import { allowedFilters } from "v2/Components/ArtworkFilter/Utils/allowedFilters"
 
-const ArtistSeriesApp = loadable(() => import("./ArtistSeriesApp"), {
-  resolveComponent: component => component.ArtistSeriesAppFragmentContainer,
-})
+const ArtistSeriesApp = loadable(
+  () => import(/* webpackChunkName: "artistBundle" */ "./ArtistSeriesApp"),
+  {
+    resolveComponent: component => component.ArtistSeriesAppFragmentContainer,
+  }
+)
 
 export const artistSeriesRoutes: AppRouteConfig[] = [
   {

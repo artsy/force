@@ -59,30 +59,56 @@ graphql`
   }
 `
 
-const ArtistApp = loadable(() => import("./ArtistApp"), {
-  resolveComponent: component => component.ArtistAppFragmentContainer,
-})
-const OverviewRoute = loadable(() => import("./Routes/Overview"), {
-  resolveComponent: component => component.OverviewRouteFragmentContainer,
-})
-const WorksForSaleRoute = loadable(() => import("./Routes/Works"), {
-  resolveComponent: component => component.WorksRouteFragmentContainer,
-})
-const AuctionResultsRoute = loadable(() => import("./Routes/AuctionResults"), {
-  resolveComponent: component => component.AuctionResultsRouteFragmentContainer,
-})
-const ConsignRoute = loadable(() => import("./Routes/Consign"), {
-  resolveComponent: component => component.ConsignRouteFragmentContainer,
-})
-const CVRoute = loadable(() => import("./Routes/CV"), {
-  resolveComponent: component => component.CVRouteFragmentContainer,
-})
-const ArticlesRoute = loadable(() => import("./Routes/Articles"), {
-  resolveComponent: component => component.ArticlesRouteFragmentContainer,
-})
-const ShowsRoute = loadable(() => import("./Routes/Shows"), {
-  resolveComponent: component => component.ShowsRouteFragmentContainer,
-})
+const ArtistApp = loadable(
+  () => import(/* webpackChunkName: "artistBundle" */ "./ArtistApp"),
+  {
+    resolveComponent: component => component.ArtistAppFragmentContainer,
+  }
+)
+const OverviewRoute = loadable(
+  () => import(/* webpackChunkName: "artistBundle" */ "./Routes/Overview"),
+  {
+    resolveComponent: component => component.OverviewRouteFragmentContainer,
+  }
+)
+const WorksForSaleRoute = loadable(
+  () => import(/* webpackChunkName: "artistBundle" */ "./Routes/Works"),
+  {
+    resolveComponent: component => component.WorksRouteFragmentContainer,
+  }
+)
+const AuctionResultsRoute = loadable(
+  () =>
+    import(/* webpackChunkName: "artistBundle" */ "./Routes/AuctionResults"),
+  {
+    resolveComponent: component =>
+      component.AuctionResultsRouteFragmentContainer,
+  }
+)
+const ConsignRoute = loadable(
+  () => import(/* webpackChunkName: "artistBundle" */ "./Routes/Consign"),
+  {
+    resolveComponent: component => component.ConsignRouteFragmentContainer,
+  }
+)
+const CVRoute = loadable(
+  () => import(/* webpackChunkName: "artistBundle" */ "./Routes/CV"),
+  {
+    resolveComponent: component => component.CVRouteFragmentContainer,
+  }
+)
+const ArticlesRoute = loadable(
+  () => import(/* webpackChunkName: "artistBundle" */ "./Routes/Articles"),
+  {
+    resolveComponent: component => component.ArticlesRouteFragmentContainer,
+  }
+)
+const ShowsRoute = loadable(
+  () => import(/* webpackChunkName: "artistBundle" */ "./Routes/Shows"),
+  {
+    resolveComponent: component => component.ShowsRouteFragmentContainer,
+  }
+)
 
 // Artist pages tend to load almost instantly, so just preload it up front
 if (typeof window !== "undefined") {

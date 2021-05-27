@@ -2,12 +2,18 @@ import loadable from "@loadable/component"
 import { graphql } from "react-relay"
 import { AppRouteConfig } from "v2/Artsy/Router/Route"
 
-const BuyerGuaranteeApp = loadable(() => import("./BuyerGuaranteeApp"), {
-  resolveComponent: component => component.BuyerGuaranteeApp,
-})
+const BuyerGuaranteeApp = loadable(
+  () => import(/* webpackChunkName: "buyerBundle" */ "./BuyerGuaranteeApp"),
+  {
+    resolveComponent: component => component.BuyerGuaranteeApp,
+  }
+)
 
 const BuyerGuaranteeIndexRoute = loadable(
-  () => import("./Routes/BuyerGuaranteeIndex"),
+  () =>
+    import(
+      /* webpackChunkName: "buyerBundle" */ "./Routes/BuyerGuaranteeIndex"
+    ),
   {
     resolveComponent: component =>
       component.BuyerGuaranteeIndexFragmentContainer,

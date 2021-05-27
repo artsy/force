@@ -54,7 +54,7 @@
     "test:ci:mocha": "NODE_ENV=test yarn mocha src/**/*.test.js src/**/*.test.ts",
     "type-check": "tsc",
     "unlink-all": "yalc remove --all && yarn --check-files",
-    "stats": "NODE_ENV=production BUILD_CLIENT=true node --max_old_space_size=4096 -r dotenv/config -r @babel/register node_modules/.bin/webpack --profile --json --config ./webpack > stats.json",
+    "stats:assets": "WEBPACK_STATS=normal NODE_ENV=production BUILD_CLIENT=true node --max_old_space_size=4096 -r dotenv/config -r @babel/register node_modules/.bin/webpack --profile --json --config ./webpack > stats.json",
     "storybook": "start-storybook -p 6006",
     "webpack": "node --max_old_space_size=4096 -r dotenv/config -r @babel/register node_modules/.bin/webpack --config ./webpack"
   },
@@ -110,7 +110,6 @@
     "cheerio": "0.22.0",
     "classnames": "2.2.6",
     "compression": "1.7.2",
-    "concurrently": "3.5.1",
     "connect-timeout": "1.9.0",
     "cookie-parser": "1.4.3",
     "cookie-session": "2.0.0-beta.3",

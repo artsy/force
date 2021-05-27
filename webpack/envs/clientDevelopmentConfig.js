@@ -28,7 +28,7 @@ import { clientChunks } from "./clientCommonConfig"
 export const clientDevelopmentConfig = {
   devtool: standardDevtool,
   entry: {
-    "artsy-novo": [
+    "artsy-entry": [
       "webpack-hot-middleware/client?name=novo&reload=true",
       path.resolve(process.cwd(), "src/v2/client.tsx"),
     ],

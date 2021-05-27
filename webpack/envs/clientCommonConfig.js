@@ -1,54 +1,90 @@
 // @ts-check
+const crypto = require("crypto")
+
+const FRAMEWORK_BUNDLES = ["react", "react-dom", "lodash", "luxon"]
+
+const TOTAL_PAGES = 12
 
 export const clientChunks = {
+  chunks: "all",
+  automaticNameDelimiter: "-",
   cacheGroups: {
+    default: false,
     vendors: false,
-    artsy: {
+    "artsy-framework": {
+      name: "artsy-framework",
       chunks: "all",
-      enforce: true,
-      minChunks: 1,
-      minSize: 0,
-      name: "artsy",
-      reuseExistingChunk: true,
       test: /.*node_modules[\\/](@artsy)[\\/]/,
-    },
-    "arsty-common": {
-      chunks: "all",
+      priority: 40,
       enforce: true,
-      minChunks: 5,
-      minSize: 0,
-      name: "artsy-common",
-      reuseExistingChunk: true,
-      test: /.*src[\\/]/,
     },
-    "common-react": {
+    framework: {
+      name: "framework",
       chunks: "all",
+      // This regex ignores nested copies of framework libraries so they're bundled with their issuer.
+      test: new RegExp(
+        `(?<!node_modules.*)[\\\\/]node_modules[\\\\/](${FRAMEWORK_BUNDLES.join(
+          `|`
+        )})[\\\\/]`
+      ),
+      priority: 50,
+      // Don't let webpack eliminate this chunk (prevents this chunk from becoming a part of the commons chunk)
       enforce: true,
+    },
+    lib: {
+      // if a module is bigger than 160kb from node_modules we make a separate chunk for it
+      test(module) {
+        return (
+          module.size() > 160000 &&
+          /node_modules[/\\]/.test(module.identifier())
+        )
+      },
+      name(module) {
+        const rawRequest =
+          module.rawRequest && module.rawRequest.replace(/^@(\w+)[/\\]/, "$1-")
+        if (rawRequest) return `${rawRequest}-lib`
+
+        const identifier = module.identifier()
+        const trimmedIdentifier = /(?:^|[/\\])node_modules[/\\](.*)/.exec(
+          identifier
+        )
+        const processedIdentifier =
+          trimmedIdentifier &&
+          trimmedIdentifier[1].replace(/^@(\w+)[/\\]/, "$1-")
+
+        return `${processedIdentifier || identifier}-lib`
+      },
+      priority: 30,
       minChunks: 1,
-      minSize: 0,
-      name: "common-react",
       reuseExistingChunk: true,
-      test: /.*node_modules[\\/](react|react-dom)[\\/]/,
-    },
-    "common-utility": {
-      chunks: "all",
-      enforce: true,
-      minChunks: 1,
-      minSize: 0,
-      name: "common-utility",
-      reuseExistingChunk: true,
-      test: /.*node_modules[\\/](lodash.*|luxon.*)[\\/]/,
     },
     commons: {
+      name: "commons",
       chunks: "all",
-      enforce: true,
-      minChunks: 2,
-      minSize: 0,
-      name: "common",
+      minChunks: TOTAL_PAGES,
+      priority: 20,
+    },
+    shared: {
+      name(module, chunks) {
+        const cryptoName = crypto
+          .createHash("sha1")
+          .update(
+            chunks.reduce((acc, chunk) => {
+              return acc + chunk.name
+            }, "")
+          )
+          .digest("base64")
+          .replace(/[\/=+]/g, "")
+
+        return `shared-${cryptoName}`
+      },
       priority: 10,
+      minChunks: 2,
       reuseExistingChunk: true,
-      test: /.*node_modules[\\/](?!(@artsy[\\/]|react[\\/]|react-dom[\\/]|backbone.*[\\/]|lodash.*[\\/]|moment.*[\\/]|luxon.*[\\/]|jquery.*[\\/]))/,
     },
   },
-  maxInitialRequests: Infinity,
+  maxInitialRequests: 25,
+  maxSize: 245760, // 240kb
+  // A chunk should be at least 20kb before using splitChunks
+  minSize: 20000,
 }

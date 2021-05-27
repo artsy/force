@@ -47,10 +47,25 @@ class OrderApp extends React.Component<OrderAppProps, {}> {
     }
 
     if (this.mediator) {
-      this.mediator.on(
-        "openOrdersContactArtsyModal",
-        this.openAskSpecialistInquireableModal
+      const artworkId = get(
+        this.props,
+        // @ts-expect-error STRICT_NULL_CHECK
+        props => props.order.lineItems.edges[0].node.artwork.slug
       )
+
+      if (!document.getElementById("legacy-assets-dll")) {
+        import(
+          /* webpackChunkName: 'legacy-assets-dll' */ "./Utils/openAskSpecialistInquireableModal"
+        ).then(({ openAskSpecialistInquireableModal }) => {
+          this.mediator?.on("openOrdersContactArtsyModal", () =>
+            openAskSpecialistInquireableModal(artworkId, sd)
+          )
+        })
+        document.body.insertAdjacentHTML(
+          "beforeend",
+          `<div id='legacy-assets-dll' />`
+        )
+      }
     }
   }
 
@@ -69,39 +84,6 @@ class OrderApp extends React.Component<OrderAppProps, {}> {
     if (this.mediator) {
       this.mediator.off("openOrdersContactArtsyModal")
     }
-  }
-
-  openAskSpecialistInquireableModal = () => {
-    const User = require("desktop/models/user.coffee")
-    const Artwork = require("desktop/models/artwork.coffee")
-    const ArtworkInquiry = require("desktop/models/artwork_inquiry.coffee")
-    const openInquiryQuestionnaireFor = require("desktop/components/inquiry_questionnaire/index.coffee")
-    const $ = require("jquery")
-
-    const user = User.instantiate()
-    const inquiry = new ArtworkInquiry({ notification_delay: 600 })
-
-    const artworkId = get(
-      this.props,
-      // @ts-expect-error STRICT_NULL_CHECK
-      props => props.order.lineItems.edges[0].node.artwork.slug
-    )
-    const artwork = new Artwork({
-      id: artworkId,
-    })
-
-    // Set token to be able to load user's collector profile later
-    $.ajaxSettings.headers = {
-      "X-ACCESS-TOKEN":
-        sd.CURRENT_USER != null ? sd.CURRENT_USER.accessToken : undefined,
-      "X-XAPP-TOKEN": sd.ARTSY_XAPP_TOKEN,
-    }
-    openInquiryQuestionnaireFor({
-      artwork,
-      ask_specialist: true,
-      inquiry,
-      user,
-    })
   }
 
   preventHardReload = event => {

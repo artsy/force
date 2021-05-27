@@ -2,9 +2,12 @@ import loadable from "@loadable/component"
 import { graphql } from "react-relay"
 import { AppRouteConfig } from "v2/Artsy/Router/Route"
 
-const FeatureApp = loadable(() => import("./FeatureApp"), {
-  resolveComponent: component => component.FeatureAppFragmentContainer,
-})
+const FeatureApp = loadable(
+  () => import(/* webpackChunkName: "featureBundle" */ "./FeatureApp"),
+  {
+    resolveComponent: component => component.FeatureAppFragmentContainer,
+  }
+)
 
 export const featureRoutes: AppRouteConfig[] = [
   {
