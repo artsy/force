@@ -1,10 +1,9 @@
 import React from "react"
+import compact from "lodash/compact"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Shows_partner } from "v2/__generated__/Shows_partner.graphql"
-
 import { ShowEventsFragmentContainer } from "../../Components/PartnerShows/ShowEvents"
 import { ShowPaginatedEventsRenderer } from "../../Components/PartnerShows/ShowPaginatedEvents"
-
 import { ShowBannerFragmentContainer } from "../../Components/PartnerShows"
 import { useRouter } from "v2/Artsy/Router/useRouter"
 
@@ -15,12 +14,7 @@ interface PartnerShowsProps {
 export const Shows: React.FC<PartnerShowsProps> = ({
   partner,
 }): JSX.Element => {
-  const {
-    currentEvents,
-    upcomingEvents,
-    // @ts-expect-error STRICT_NULL_CHECK
-    featured: { edges: featuredShows },
-  } = partner
+  const { currentEvents, upcomingEvents, featuredEvents } = partner
 
   const {
     match: {
@@ -28,30 +22,33 @@ export const Shows: React.FC<PartnerShowsProps> = ({
     },
   } = useRouter()
 
-  // @ts-expect-error STRICT_NULL_CHECK
-  const isCurrentEventsExist = !!currentEvents.edges.length
-  // @ts-expect-error STRICT_NULL_CHECK
-  const isUpcomingEventsExist = !!upcomingEvents.edges.length
+  const firstFeaturedEvent = compact(featuredEvents?.edges)[0].node
+  const isEventFeatured = firstFeaturedEvent && firstFeaturedEvent.isFeatured
+  const filteredUpcomingEvents = compact(upcomingEvents?.edges).filter(
+    ({ node }) => node?.internalID !== firstFeaturedEvent?.internalID
+  )
+  const filteredCurrentEvents = compact(currentEvents?.edges).filter(
+    ({ node }) => node?.internalID !== firstFeaturedEvent?.internalID
+  )
+  const isUpcomingEventsExist = !!filteredUpcomingEvents.length
+  const isCurrentEventsExist = !!filteredCurrentEvents.length
+
   const page = +query.page || 1
 
   return (
     <>
-      {featuredShows.length > 0 &&
-        featuredShows[0].node &&
-        featuredShows[0].node.isFeatured && (
-          <ShowBannerFragmentContainer my={4} show={featuredShows[0].node} />
-        )}
+      {isEventFeatured && (
+        <ShowBannerFragmentContainer my={4} show={firstFeaturedEvent!} />
+      )}
       {isCurrentEventsExist && (
         <ShowEventsFragmentContainer
-          // @ts-expect-error STRICT_NULL_CHECK
-          edges={currentEvents.edges}
+          edges={filteredCurrentEvents}
           eventTitle="Current Events"
         />
       )}
       {isUpcomingEventsExist && (
         <ShowEventsFragmentContainer
-          // @ts-expect-error STRICT_NULL_CHECK
-          edges={upcomingEvents.edges}
+          edges={compact(upcomingEvents?.edges)}
           eventTitle="Upcoming Events"
         />
       )}
@@ -72,7 +69,7 @@ export const ShowsFragmentContainer = createFragmentContainer(Shows, {
   partner: graphql`
     fragment Shows_partner on Partner {
       slug
-      featured: showsConnection(
+      featuredEvents: showsConnection(
         first: 1
         status: ALL
         sort: FEATURED_DESC_END_AT_DESC
@@ -81,6 +78,7 @@ export const ShowsFragmentContainer = createFragmentContainer(Shows, {
         edges {
           node {
             isFeatured
+            internalID
             ...ShowBanner_show
           }
         }
@@ -91,6 +89,9 @@ export const ShowsFragmentContainer = createFragmentContainer(Shows, {
         isDisplayable: true
       ) {
         edges {
+          node {
+            internalID
+          }
           ...ShowEvents_edges
         }
       }
@@ -100,6 +101,9 @@ export const ShowsFragmentContainer = createFragmentContainer(Shows, {
         isDisplayable: true
       ) {
         edges {
+          node {
+            internalID
+          }
           ...ShowEvents_edges
         }
       }
