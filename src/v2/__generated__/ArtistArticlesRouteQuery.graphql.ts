@@ -3,33 +3,41 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type artist2Routes_ArticlesQueryVariables = {
+export type ArtistArticlesRouteQueryVariables = {
+    first?: number | null;
+    last?: number | null;
+    after?: string | null;
+    before?: string | null;
     artistID: string;
 };
-export type artist2Routes_ArticlesQueryResponse = {
+export type ArtistArticlesRouteQueryResponse = {
     readonly artist: {
         readonly " $fragmentRefs": FragmentRefs<"ArtistArticlesRoute_artist">;
     } | null;
 };
-export type artist2Routes_ArticlesQuery = {
-    readonly response: artist2Routes_ArticlesQueryResponse;
-    readonly variables: artist2Routes_ArticlesQueryVariables;
+export type ArtistArticlesRouteQuery = {
+    readonly response: ArtistArticlesRouteQueryResponse;
+    readonly variables: ArtistArticlesRouteQueryVariables;
 };
 
 
 
 /*
-query artist2Routes_ArticlesQuery(
+query ArtistArticlesRouteQuery(
+  $first: Int
+  $last: Int
+  $after: String
+  $before: String
   $artistID: String!
 ) {
   artist(id: $artistID) {
-    ...ArtistArticlesRoute_artist
+    ...ArtistArticlesRoute_artist_pbnwq
     id
   }
 }
 
-fragment ArtistArticlesRoute_artist on Artist {
-  articlesConnection(first: 10, sort: PUBLISHED_AT_DESC, inEditorialFeed: true) {
+fragment ArtistArticlesRoute_artist_pbnwq on Artist {
+  articlesConnection(first: $first, after: $after, before: $before, last: $last, sort: PUBLISHED_AT_DESC, inEditorialFeed: true) {
     pageInfo {
       hasNextPage
       endCursor
@@ -90,6 +98,30 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
+    "name": "first",
+    "type": "Int"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "last",
+    "type": "Int"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "after",
+    "type": "String"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "before",
+    "type": "String"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
     "name": "artistID",
     "type": "String!"
   }
@@ -102,22 +134,42 @@ v1 = [
   }
 ],
 v2 = {
+  "kind": "Variable",
+  "name": "after",
+  "variableName": "after"
+},
+v3 = {
+  "kind": "Variable",
+  "name": "before",
+  "variableName": "before"
+},
+v4 = {
+  "kind": "Variable",
+  "name": "first",
+  "variableName": "first"
+},
+v5 = {
+  "kind": "Variable",
+  "name": "last",
+  "variableName": "last"
+},
+v6 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "cursor",
   "storageKey": null
 },
-v3 = {
+v7 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "page",
   "storageKey": null
 },
-v4 = [
-  (v2/*: any*/),
-  (v3/*: any*/),
+v8 = [
+  (v6/*: any*/),
+  (v7/*: any*/),
   {
     "alias": null,
     "args": null,
@@ -126,14 +178,14 @@ v4 = [
     "storageKey": null
   }
 ],
-v5 = {
+v9 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "name",
   "storageKey": null
 },
-v6 = {
+v10 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -145,7 +197,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "artist2Routes_ArticlesQuery",
+    "name": "ArtistArticlesRouteQuery",
     "selections": [
       {
         "alias": null,
@@ -156,7 +208,12 @@ return {
         "plural": false,
         "selections": [
           {
-            "args": null,
+            "args": [
+              (v2/*: any*/),
+              (v3/*: any*/),
+              (v4/*: any*/),
+              (v5/*: any*/)
+            ],
             "kind": "FragmentSpread",
             "name": "ArtistArticlesRoute_artist"
           }
@@ -170,7 +227,7 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "artist2Routes_ArticlesQuery",
+    "name": "ArtistArticlesRouteQuery",
     "selections": [
       {
         "alias": null,
@@ -183,16 +240,15 @@ return {
           {
             "alias": null,
             "args": [
-              {
-                "kind": "Literal",
-                "name": "first",
-                "value": 10
-              },
+              (v2/*: any*/),
+              (v3/*: any*/),
+              (v4/*: any*/),
               {
                 "kind": "Literal",
                 "name": "inEditorialFeed",
                 "value": true
               },
+              (v5/*: any*/),
               {
                 "kind": "Literal",
                 "name": "sort",
@@ -244,7 +300,7 @@ return {
                     "kind": "LinkedField",
                     "name": "around",
                     "plural": true,
-                    "selections": (v4/*: any*/),
+                    "selections": (v8/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -254,7 +310,7 @@ return {
                     "kind": "LinkedField",
                     "name": "first",
                     "plural": false,
-                    "selections": (v4/*: any*/),
+                    "selections": (v8/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -264,7 +320,7 @@ return {
                     "kind": "LinkedField",
                     "name": "last",
                     "plural": false,
-                    "selections": (v4/*: any*/),
+                    "selections": (v8/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -275,8 +331,8 @@ return {
                     "name": "previous",
                     "plural": false,
                     "selections": [
-                      (v2/*: any*/),
-                      (v3/*: any*/)
+                      (v6/*: any*/),
+                      (v7/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -321,8 +377,8 @@ return {
                         "name": "author",
                         "plural": false,
                         "selections": [
-                          (v5/*: any*/),
-                          (v6/*: any*/)
+                          (v9/*: any*/),
+                          (v10/*: any*/)
                         ],
                         "storageKey": null
                       },
@@ -400,7 +456,7 @@ return {
                         ],
                         "storageKey": null
                       },
-                      (v6/*: any*/)
+                      (v10/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -408,9 +464,9 @@ return {
                 "storageKey": null
               }
             ],
-            "storageKey": "articlesConnection(first:10,inEditorialFeed:true,sort:\"PUBLISHED_AT_DESC\")"
+            "storageKey": null
           },
-          (v5/*: any*/),
+          (v9/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -418,7 +474,7 @@ return {
             "name": "slug",
             "storageKey": null
           },
-          (v6/*: any*/)
+          (v10/*: any*/)
         ],
         "storageKey": null
       }
@@ -427,11 +483,11 @@ return {
   "params": {
     "id": null,
     "metadata": {},
-    "name": "artist2Routes_ArticlesQuery",
+    "name": "ArtistArticlesRouteQuery",
     "operationKind": "query",
-    "text": "query artist2Routes_ArticlesQuery(\n  $artistID: String!\n) {\n  artist(id: $artistID) {\n    ...ArtistArticlesRoute_artist\n    id\n  }\n}\n\nfragment ArtistArticlesRoute_artist on Artist {\n  articlesConnection(first: 10, sort: PUBLISHED_AT_DESC, inEditorialFeed: true) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        href\n        thumbnailTitle\n        author {\n          name\n          id\n        }\n        publishedAt(format: \"MMM Do, YYYY\")\n        thumbnailImage {\n          resized(width: 210, height: 150) {\n            src\n            srcSet\n            width\n            height\n          }\n        }\n        id\n      }\n    }\n  }\n  name\n  slug\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n"
+    "text": "query ArtistArticlesRouteQuery(\n  $first: Int\n  $last: Int\n  $after: String\n  $before: String\n  $artistID: String!\n) {\n  artist(id: $artistID) {\n    ...ArtistArticlesRoute_artist_pbnwq\n    id\n  }\n}\n\nfragment ArtistArticlesRoute_artist_pbnwq on Artist {\n  articlesConnection(first: $first, after: $after, before: $before, last: $last, sort: PUBLISHED_AT_DESC, inEditorialFeed: true) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        href\n        thumbnailTitle\n        author {\n          name\n          id\n        }\n        publishedAt(format: \"MMM Do, YYYY\")\n        thumbnailImage {\n          resized(width: 210, height: 150) {\n            src\n            srcSet\n            width\n            height\n          }\n        }\n        id\n      }\n    }\n  }\n  name\n  slug\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '82fc9b5474cb98fa7f306d5f9ae71a7d';
+(node as any).hash = 'eec4bd5713935eb05add0802879ad55b';
 export default node;

@@ -85,7 +85,7 @@ const getPageWrapper = artist => {
           contextPageOwnerType,
         }}
       >
-        <Box mt={4} {...rest}>
+        <Box mt={[2, 4]} {...rest}>
           <ArtistMetaFragmentContainer artist={artist} />
           {children}
         </Box>
