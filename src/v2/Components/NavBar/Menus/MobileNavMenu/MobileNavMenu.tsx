@@ -146,6 +146,7 @@ export const AnimatingMenuWrapper = styled.div<{
 
 const StyledArtistsLetterNav = styled(ArtistsLetterNav)`
   max-width: 385px;
+  margin-top: 10px;
   > div {
     width: 55px;
     height: 50px;
