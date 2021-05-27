@@ -32,6 +32,7 @@ import { Feature } from "../Components/Feature"
 import { MOBILE_NAV_HEIGHT, NAV_BAR_HEIGHT } from "v2/Components/NavBar"
 import { scrollIntoView } from "v2/Utils/scrollHelpers"
 import { useMatchMedia } from "v2/Utils/Hooks/useMatchMedia"
+import { BuyerGuaranteeMeta } from "../Components/BuyerGuaranteeMeta"
 
 interface BuyerGuaranteeIndexProps {
   headerImage: BuyerGuaranteeIndex_headerImage
@@ -75,6 +76,7 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
     "http://files.artsy.net/moneybackguaranteeartwork.jpg",
     { width: 400, height: 600, convert_to: "jpg" }
   )
+
   const heroImageURL = resize(
     "http://files.artsy.net/buyerGuaranteeHeroImage.jpg",
     { width: 1600, height: 800, convert_to: "jpg" }
@@ -100,6 +102,7 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
 
   return (
     <>
+      <BuyerGuaranteeMeta />
       {heroImageURL && (
         <FullBleedHeader
           {...headerImage?.image?.resized?.srcSet}
@@ -109,7 +112,6 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
             headerImage.imageTitle?.replace(/‘|’/g, "") +
             ". Courtesy of the artist and Kenise Barnes Fine Art. "
           }
-          meta="Artsy is the safest place to buy the art you love. Every purchase made exclusively with our Artsy’s secure checkout benefits from our full suite of buyer protections."
         >
           <Flex
             position="absolute"
