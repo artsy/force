@@ -2,7 +2,12 @@ import { Box, Flex, Theme } from "@artsy/palette"
 import { NetworkOfflineMonitor } from "v2/Artsy/Router/NetworkOfflineMonitor"
 import { findCurrentRoute } from "v2/Artsy/Router/Utils/findCurrentRoute"
 import { useMaybeReloadAfterInquirySignIn } from "v2/Artsy/Router/Utils/useMaybeReloadAfterInquirySignIn"
-import { NAV_BAR_HEIGHT, NavBar, MOBILE_NAV_HEIGHT } from "v2/Components/NavBar"
+import {
+  NAV_BAR_HEIGHT,
+  NavBar,
+  MOBILE_NAV_HEIGHT,
+  MOBILE_LOGGED_IN_NAV_HEIGHT,
+} from "v2/Components/NavBar"
 import { Match } from "found"
 import { isFunction } from "lodash"
 import { Footer } from "v2/Components/Footer"
@@ -83,7 +88,12 @@ export const AppShell: React.FC<AppShellProps> = props => {
       minHeight="100vh"
       flexDirection="column"
     >
-      <Box pb={[MOBILE_NAV_HEIGHT, NAV_BAR_HEIGHT]}>
+      <Box
+        pb={[
+          isLoggedIn ? MOBILE_LOGGED_IN_NAV_HEIGHT : MOBILE_NAV_HEIGHT,
+          NAV_BAR_HEIGHT,
+        ]}
+      >
         <Box left={0} position="fixed" width="100%" zIndex={100}>
           <Media at="xs">{!isLoggedIn && <Banner />}</Media>
           <NavBar />
