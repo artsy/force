@@ -140,7 +140,7 @@ describe("PartnerHeader", () => {
     const wrapper = getWrapper({
       Partner: () => ({
         name: "White cube",
-        href: "/white-cube",
+        slug: "white-cube",
         profile: {
           icon: {
             resized: {
