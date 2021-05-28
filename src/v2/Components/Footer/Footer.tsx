@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import styled from "styled-components"
 import { Media } from "v2/Utils/Responsive"
 import {
@@ -18,7 +18,7 @@ import {
   useThemeConfig,
   WeChatIcon,
 } from "@artsy/palette"
-import { DownloadAppBadge } from "v2/Components/DownloadAppBadge"
+import { Device, DownloadAppBadge } from "v2/Components/DownloadAppBadge"
 import { ContextModule } from "@artsy/cohesion"
 import { CCPARequest } from "../CCPARequest"
 import { FooterDownloadAppBanner } from "./FooterDownloadAppBanner"
@@ -27,6 +27,17 @@ import { RouterLink, RouterLinkProps } from "v2/Artsy/Router/RouterLink"
 interface FooterProps extends BoxProps {}
 
 export const Footer: React.FC<FooterProps> = props => {
+  // @ts-expect-error STRICT_NULL_CHECK
+  const [device, setDevice] = useState<Device>(undefined)
+
+  useEffect(() => {
+    if (window.navigator.userAgent.match(/Android/)) {
+      setDevice(Device.Android)
+    } else if (window.navigator.userAgent.match(/iPhone/)) {
+      setDevice(Device.iPhone)
+    }
+  }, [])
+
   const tokens = useThemeConfig({
     v2: {
       header: "mediumText" as TextVariant,
@@ -53,10 +64,12 @@ export const Footer: React.FC<FooterProps> = props => {
         <GridColumns pt={tokens.pt} pb={tokens.pb} gridRowGap={[4, 0]}>
           <Column span={12} display={["block", "none"]}>
             <Text variant={tokens.header} fontWeight="bold" mb={2}>
-              Get the iOS app
+              Get the App
             </Text>
-
-            <DownloadAppBadge contextModule={ContextModule.footer} />
+            <DownloadAppBadge
+              contextModule={ContextModule.footer}
+              device={device}
+            />
           </Column>
 
           <Column span={3}>
@@ -150,7 +163,10 @@ export const Footer: React.FC<FooterProps> = props => {
                 Get the iOS app
               </Text>
 
-              <DownloadAppBadge contextModule={ContextModule.footer} />
+              <DownloadAppBadge
+                contextModule={ContextModule.footer}
+                device={Device.iPhone}
+              />
             </Media>
           </Column>
 
