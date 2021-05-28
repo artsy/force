@@ -1,8 +1,10 @@
 import { afterUpdateRedirect, redirectMessage } from "../helpers"
+
 const { location: originalLocation } = window
 
 describe("afterUpdateRedirect", () => {
   beforeEach(() => {
+    // @ts-expect-error STRICT_NULL_CHECK
     delete window.location
   })
   afterEach(() => {
