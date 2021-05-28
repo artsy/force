@@ -46,10 +46,13 @@ describe("MobileNavMenu", () => {
 
   it("calls logout auth action on logout menu click", () => {
     const wrapper = getWrapper({ user: { type: "NotAdmin" } })
+
+    const MobileLink = wrapper.find("MobileLink")
+    const length = MobileLink.length
     // @ts-expect-error STRICT_NULL_CHECK
     wrapper
       .find("MobileLink")
-      .last()
+      .at(length - 2)
       .props()
       .onClick({
         preventDefault: () => {},
@@ -115,9 +118,7 @@ describe("MobileNavMenu", () => {
       const linkContainer = getMobileMenuLinkContainer("notAdmin")
       const mobileSubmenuLinks = linkContainer.children()
       let linkText = mobileSubmenuLinks.last().text()
-      expect(linkText).toContain("Account")
-
-      expect(linkText).toContain("Works for you")
+      expect(linkText).toContain("Get the app")
     })
   })
 

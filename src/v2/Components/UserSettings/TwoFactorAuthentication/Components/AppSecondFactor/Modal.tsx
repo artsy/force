@@ -1,4 +1,4 @@
-import { Box, Button, Flex, Input, Modal, Sans } from "@artsy/palette"
+import { Box, Button, Flex, Input, Modal, Sans, Serif } from "@artsy/palette"
 import { CreateAppSecondFactorMutationResponse } from "v2/__generated__/CreateAppSecondFactorMutation.graphql"
 import { useSystemContext } from "v2/Artsy"
 import { Formik, FormikHelpers as FormikActions, FormikProps } from "formik"
@@ -9,6 +9,7 @@ import { ApiError } from "../../ApiError"
 import { EnableSecondFactor } from "../Mutation/EnableSecondFactor"
 import { UpdateAppSecondFactor } from "./Mutation/UpdateAppSecondFactor"
 import { BackupSecondFactorReminder } from "../BackupSecondFactorReminder"
+import { redirectMessage } from "v2/Components/UserSettings/TwoFactorAuthentication/helpers"
 
 export interface FormValues {
   name: string
@@ -232,5 +233,36 @@ const InnerForm: React.FC<InnerFormProps> = ({
         </Button>
       </Flex>
     </Box>
+  )
+}
+
+interface OnCompleteRedirectModalProps {
+  onClick: () => void
+  redirectTo: string
+  show: boolean
+}
+
+export const OnCompleteRedirectModal: React.FC<OnCompleteRedirectModalProps> = props => {
+  const { onClick, redirectTo, show } = props
+
+  return (
+    <Modal
+      title="Set up with app"
+      onClose={onClick}
+      show={show}
+      hideCloseButton={true}
+      FixedButton={
+        <Button onClick={onClick} width="100%">
+          OK
+        </Button>
+      }
+    >
+      <Serif size="3t" color="black60">
+        You’ve successfully set up two-factor authentication!
+      </Serif>
+      <Serif mt={2} size="3t" color="black60">
+        {redirectMessage(redirectTo)}
+      </Serif>
+    </Modal>
   )
 }

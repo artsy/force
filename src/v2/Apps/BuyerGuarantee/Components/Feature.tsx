@@ -11,6 +11,7 @@ import {
 interface FeatureProps {
   title: string
   text?: string
+  forcedSecondLine?: string
   icon: React.FC<IconProps>
   sm?: boolean
   onClick?: () => void
@@ -19,6 +20,7 @@ interface FeatureProps {
 export const Feature: React.FC<FeatureProps> = ({
   title,
   text,
+  forcedSecondLine,
   icon,
   sm,
   onClick,
@@ -65,6 +67,7 @@ export const Feature: React.FC<FeatureProps> = ({
           {title}
         </Text>
         <Text variant="text">{text}</Text>
+        {forcedSecondLine && <Text variant="text">{forcedSecondLine}</Text>}
       </Box>
       {!!onClick && <Box>{learnMore}</Box>}
     </Flex>
