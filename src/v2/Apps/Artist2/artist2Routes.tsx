@@ -36,10 +36,14 @@ const ArticlesRoute = loadable(
 const ShowsRoute = loadable(() => import("./Routes/Shows/ArtistShowsRoute"), {
   resolveComponent: component => component.ArtistShowsRouteFragmentContainer,
 })
+const AuctionResultsRoute = loadable(
+  () => import("./Routes/AuctionResults/Artist2AuctionResultsRoute"),
+  {
+    resolveComponent: component =>
+      component.AuctionResultsRouteFragmentContainer,
+  }
+)
 
-// const AuctionResultsRoute = loadable(() => import("./Routes/AuctionResults"), {
-//   resolveComponent: component => component.AuctionResultsRouteFragmentContainer,
-// })
 // const ConsignRoute = loadable(() => import("./Routes/Consign"), {
 //   resolveComponent: component => component.ConsignRouteFragmentContainer,
 // })
@@ -140,8 +144,6 @@ export const artist2Routes: AppRouteConfig[] = [
           }
         `,
       },
-
-      /*
       {
         path: "auction-results",
         theme: "v3",
@@ -153,11 +155,14 @@ export const artist2Routes: AppRouteConfig[] = [
         query: graphql`
           query artist2Routes_AuctionResultsQuery($artistID: String!) {
             artist(id: $artistID) {
-              ...AuctionResults_artist
+              ...Artist2AuctionResultsRoute_artist
             }
           }
         `,
       },
+
+      /*
+
 
       // Routes not in tabs
 

@@ -7,7 +7,6 @@ import { useAnalyticsContext } from "v2/Artsy"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import { ShelfArtworkFragmentContainer } from "v2/Components/Artwork/ShelfArtwork"
 import { extractNodes } from "v2/Utils/extractNodes"
-import { scrollIntoView } from "v2/Utils/scrollHelpers"
 import { Artist2WorksForSaleRail_artist } from "v2/__generated__/Artist2WorksForSaleRail_artist.graphql"
 import { scrollToTop } from "../Utils/scrollToTop"
 

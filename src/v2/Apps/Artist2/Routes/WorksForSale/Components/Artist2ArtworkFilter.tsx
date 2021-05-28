@@ -24,8 +24,6 @@ const Artist2ArtworkFilter: React.FC<Artist2ArtworkFilterProps> = props => {
   const { filtered_artworks } = artist
   const hasFilter = filtered_artworks && filtered_artworks.id
 
-  // If there was an error fetching the filter,
-  // we still want to render the rest of the page.
   if (!hasFilter) {
     return null
   }
