@@ -9,8 +9,6 @@ import { SoldRecentlyQueryRenderer } from "./Components/SoldRecently"
 import { ReadMore } from "./Components/ReadMore"
 import { ContactUs } from "./Components/ContactUs"
 import { FAQ } from "./Components/FAQ"
-import { Footer } from "v2/Components/Footer"
-import { SectionContainer } from "./Components/SectionContainer"
 import { ArtworkCredits } from "./Components/ArtworkCredits"
 import { TemporaryOffer } from "./Components/TemporaryOffer"
 import { BecomePartner } from "./Components/BecomePartner"
@@ -33,9 +31,6 @@ export const MarketingLandingApp = () => {
         <BecomePartner />
         <FAQ />
         <ArtworkCredits />
-        <SectionContainer py={0}>
-          <Footer mt={0} borderTop={0} />
-        </SectionContainer>
       </>
     </>
   )
