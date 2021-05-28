@@ -2,8 +2,9 @@ import React from "react"
 import { mount } from "enzyme"
 import { useTracking } from "react-tracking"
 import { Link } from "@artsy/palette"
-import { Device, DownloadAppBadge } from "v2/Components/DownloadAppBadge"
+import { DownloadAppBadge } from "v2/Components/DownloadAppBadge"
 import { ContextModule } from "@artsy/cohesion"
+import { Device } from "v2/Utils/Hooks/useDeviceDetection"
 
 describe("DownloadAppBadge", () => {
   const trackEvent = jest.fn()

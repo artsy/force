@@ -4,11 +4,7 @@ import { clickedAppDownload, ContextModule } from "@artsy/cohesion"
 import { useAnalyticsContext } from "v2/Artsy"
 import Events from "v2/Utils/Events"
 import { Box, Link } from "@artsy/palette"
-
-export enum Device {
-  iPhone,
-  Android,
-}
+import { Device } from "v2/Utils/Hooks/useDeviceDetection"
 
 interface DownloadAppBadgeProps {
   contextModule: ContextModule

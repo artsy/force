@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React from "react"
 import styled from "styled-components"
 import { Media } from "v2/Utils/Responsive"
 import {
@@ -18,25 +18,17 @@ import {
   useThemeConfig,
   WeChatIcon,
 } from "@artsy/palette"
-import { Device, DownloadAppBadge } from "v2/Components/DownloadAppBadge"
+import { DownloadAppBadge } from "v2/Components/DownloadAppBadge"
 import { ContextModule } from "@artsy/cohesion"
 import { CCPARequest } from "../CCPARequest"
 import { FooterDownloadAppBanner } from "./FooterDownloadAppBanner"
 import { RouterLink, RouterLinkProps } from "v2/Artsy/Router/RouterLink"
+import { Device, useDeviceDetection } from "v2/Utils/Hooks/useDeviceDetection"
 
 interface FooterProps extends BoxProps {}
 
 export const Footer: React.FC<FooterProps> = props => {
-  // @ts-expect-error STRICT_NULL_CHECK
-  const [device, setDevice] = useState<Device>(undefined)
-
-  useEffect(() => {
-    if (window.navigator.userAgent.match(/Android/)) {
-      setDevice(Device.Android)
-    } else if (window.navigator.userAgent.match(/iPhone/)) {
-      setDevice(Device.iPhone)
-    }
-  }, [])
+  const device = useDeviceDetection()
 
   const tokens = useThemeConfig({
     v2: {
