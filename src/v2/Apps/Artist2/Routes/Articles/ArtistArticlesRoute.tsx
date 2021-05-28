@@ -60,9 +60,9 @@ const ArtistArticlesRoute: React.FC<ArtistArticlesRouteProps> = ({
 
   return (
     <>
-      <Text variant="xl">{artist.name} Articles</Text>
-
-      <Spacer mb={6} />
+      <Text variant="xl" mb={6}>
+        {artist.name} Articles
+      </Text>
 
       <Join separator={<Spacer py={2} />}>
         {nodes.map(article => {

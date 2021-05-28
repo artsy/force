@@ -8,7 +8,7 @@ export type artist2Routes_ShowsQueryVariables = {
 };
 export type artist2Routes_ShowsQueryResponse = {
     readonly viewer: {
-        readonly " $fragmentRefs": FragmentRefs<"Shows_viewer">;
+        readonly " $fragmentRefs": FragmentRefs<"ArtistShowsRoute_viewer">;
     } | null;
 };
 export type artist2Routes_ShowsQuery = {
@@ -23,13 +23,13 @@ query artist2Routes_ShowsQuery(
   $artistID: String!
 ) {
   viewer {
-    ...Shows_viewer
+    ...ArtistShowsRoute_viewer
   }
 }
 
-fragment ArtistShows_artist_12Fjro on Artist {
+fragment ArtistShowsGroup_artist_12Fjro on Artist {
   slug
-  showsConnection(first: 4, sort: START_AT_ASC, status: "upcoming") {
+  showsConnection(first: 10, sort: START_AT_ASC, status: "upcoming") {
     pageInfo {
       hasNextPage
       endCursor
@@ -54,10 +54,11 @@ fragment ArtistShows_artist_12Fjro on Artist {
         }
         name
         href
-        exhibition_period: exhibitionPeriod
-        cover_image: coverImage {
-          cropped(width: 800, height: 600) {
-            url
+        exhibitionPeriod
+        coverImage {
+          cropped(width: 440, height: 315) {
+            src
+            srcSet
           }
         }
         city
@@ -67,9 +68,9 @@ fragment ArtistShows_artist_12Fjro on Artist {
   }
 }
 
-fragment ArtistShows_artist_3dp4w3 on Artist {
+fragment ArtistShowsGroup_artist_43oec1 on Artist {
   slug
-  showsConnection(first: 4, sort: END_AT_DESC, status: "closed") {
+  showsConnection(first: 10, sort: END_AT_ASC, status: "running") {
     pageInfo {
       hasNextPage
       endCursor
@@ -94,10 +95,11 @@ fragment ArtistShows_artist_3dp4w3 on Artist {
         }
         name
         href
-        exhibition_period: exhibitionPeriod
-        cover_image: coverImage {
-          cropped(width: 800, height: 600) {
-            url
+        exhibitionPeriod
+        coverImage {
+          cropped(width: 440, height: 315) {
+            src
+            srcSet
           }
         }
         city
@@ -107,43 +109,14 @@ fragment ArtistShows_artist_3dp4w3 on Artist {
   }
 }
 
-fragment ArtistShows_artist_43oec1 on Artist {
-  slug
-  showsConnection(first: 4, sort: END_AT_ASC, status: "running") {
-    pageInfo {
-      hasNextPage
-      endCursor
-    }
-    pageCursors {
-      ...Pagination_pageCursors
-    }
-    edges {
-      node {
-        partner {
-          __typename
-          ... on ExternalPartner {
-            name
-            id
-          }
-          ... on Partner {
-            name
-          }
-          ... on Node {
-            id
-          }
-        }
-        name
-        href
-        exhibition_period: exhibitionPeriod
-        cover_image: coverImage {
-          cropped(width: 800, height: 600) {
-            url
-          }
-        }
-        city
-        id
-      }
-    }
+fragment ArtistShowsRoute_viewer on Viewer {
+  currentShows: artist(id: $artistID) {
+    ...ArtistShowsGroup_artist_43oec1
+    id
+  }
+  upcomingShows: artist(id: $artistID) {
+    ...ArtistShowsGroup_artist_12Fjro
+    id
   }
 }
 
@@ -166,21 +139,6 @@ fragment Pagination_pageCursors on PageCursors {
   previous {
     cursor
     page
-  }
-}
-
-fragment Shows_viewer on Viewer {
-  artist_currentShows: artist(id: $artistID) {
-    ...ArtistShows_artist_43oec1
-    id
-  }
-  artist_upcomingShows: artist(id: $artistID) {
-    ...ArtistShows_artist_12Fjro
-    id
-  }
-  artist_pastShows: artist(id: $artistID) {
-    ...ArtistShows_artist_3dp4w3
-    id
   }
 }
 */
@@ -211,7 +169,7 @@ v2 = {
 v3 = {
   "kind": "Literal",
   "name": "first",
-  "value": 4
+  "value": 10
 },
 v4 = {
   "alias": null,
@@ -389,14 +347,14 @@ v10 = [
             "storageKey": null
           },
           {
-            "alias": "exhibition_period",
+            "alias": null,
             "args": null,
             "kind": "ScalarField",
             "name": "exhibitionPeriod",
             "storageKey": null
           },
           {
-            "alias": "cover_image",
+            "alias": null,
             "args": null,
             "concreteType": "Image",
             "kind": "LinkedField",
@@ -409,12 +367,12 @@ v10 = [
                   {
                     "kind": "Literal",
                     "name": "height",
-                    "value": 600
+                    "value": 315
                   },
                   {
                     "kind": "Literal",
                     "name": "width",
-                    "value": 800
+                    "value": 440
                   }
                 ],
                 "concreteType": "CroppedImageUrl",
@@ -426,11 +384,18 @@ v10 = [
                     "alias": null,
                     "args": null,
                     "kind": "ScalarField",
-                    "name": "url",
+                    "name": "src",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "srcSet",
                     "storageKey": null
                   }
                 ],
-                "storageKey": "cropped(height:600,width:800)"
+                "storageKey": "cropped(height:315,width:440)"
               }
             ],
             "storageKey": null
@@ -468,7 +433,7 @@ return {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "Shows_viewer"
+            "name": "ArtistShowsRoute_viewer"
           }
         ],
         "storageKey": null
@@ -491,7 +456,7 @@ return {
         "plural": false,
         "selections": [
           {
-            "alias": "artist_currentShows",
+            "alias": "currentShows",
             "args": (v1/*: any*/),
             "concreteType": "Artist",
             "kind": "LinkedField",
@@ -519,14 +484,14 @@ return {
                 "name": "showsConnection",
                 "plural": false,
                 "selections": (v10/*: any*/),
-                "storageKey": "showsConnection(first:4,sort:\"END_AT_ASC\",status:\"running\")"
+                "storageKey": "showsConnection(first:10,sort:\"END_AT_ASC\",status:\"running\")"
               },
               (v7/*: any*/)
             ],
             "storageKey": null
           },
           {
-            "alias": "artist_upcomingShows",
+            "alias": "upcomingShows",
             "args": (v1/*: any*/),
             "concreteType": "Artist",
             "kind": "LinkedField",
@@ -554,42 +519,7 @@ return {
                 "name": "showsConnection",
                 "plural": false,
                 "selections": (v10/*: any*/),
-                "storageKey": "showsConnection(first:4,sort:\"START_AT_ASC\",status:\"upcoming\")"
-              },
-              (v7/*: any*/)
-            ],
-            "storageKey": null
-          },
-          {
-            "alias": "artist_pastShows",
-            "args": (v1/*: any*/),
-            "concreteType": "Artist",
-            "kind": "LinkedField",
-            "name": "artist",
-            "plural": false,
-            "selections": [
-              (v2/*: any*/),
-              {
-                "alias": null,
-                "args": [
-                  (v3/*: any*/),
-                  {
-                    "kind": "Literal",
-                    "name": "sort",
-                    "value": "END_AT_DESC"
-                  },
-                  {
-                    "kind": "Literal",
-                    "name": "status",
-                    "value": "closed"
-                  }
-                ],
-                "concreteType": "ShowConnection",
-                "kind": "LinkedField",
-                "name": "showsConnection",
-                "plural": false,
-                "selections": (v10/*: any*/),
-                "storageKey": "showsConnection(first:4,sort:\"END_AT_DESC\",status:\"closed\")"
+                "storageKey": "showsConnection(first:10,sort:\"START_AT_ASC\",status:\"upcoming\")"
               },
               (v7/*: any*/)
             ],
@@ -605,9 +535,9 @@ return {
     "metadata": {},
     "name": "artist2Routes_ShowsQuery",
     "operationKind": "query",
-    "text": "query artist2Routes_ShowsQuery(\n  $artistID: String!\n) {\n  viewer {\n    ...Shows_viewer\n  }\n}\n\nfragment ArtistShows_artist_12Fjro on Artist {\n  slug\n  showsConnection(first: 4, sort: START_AT_ASC, status: \"upcoming\") {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        partner {\n          __typename\n          ... on ExternalPartner {\n            name\n            id\n          }\n          ... on Partner {\n            name\n          }\n          ... on Node {\n            id\n          }\n        }\n        name\n        href\n        exhibition_period: exhibitionPeriod\n        cover_image: coverImage {\n          cropped(width: 800, height: 600) {\n            url\n          }\n        }\n        city\n        id\n      }\n    }\n  }\n}\n\nfragment ArtistShows_artist_3dp4w3 on Artist {\n  slug\n  showsConnection(first: 4, sort: END_AT_DESC, status: \"closed\") {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        partner {\n          __typename\n          ... on ExternalPartner {\n            name\n            id\n          }\n          ... on Partner {\n            name\n          }\n          ... on Node {\n            id\n          }\n        }\n        name\n        href\n        exhibition_period: exhibitionPeriod\n        cover_image: coverImage {\n          cropped(width: 800, height: 600) {\n            url\n          }\n        }\n        city\n        id\n      }\n    }\n  }\n}\n\nfragment ArtistShows_artist_43oec1 on Artist {\n  slug\n  showsConnection(first: 4, sort: END_AT_ASC, status: \"running\") {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        partner {\n          __typename\n          ... on ExternalPartner {\n            name\n            id\n          }\n          ... on Partner {\n            name\n          }\n          ... on Node {\n            id\n          }\n        }\n        name\n        href\n        exhibition_period: exhibitionPeriod\n        cover_image: coverImage {\n          cropped(width: 800, height: 600) {\n            url\n          }\n        }\n        city\n        id\n      }\n    }\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n\nfragment Shows_viewer on Viewer {\n  artist_currentShows: artist(id: $artistID) {\n    ...ArtistShows_artist_43oec1\n    id\n  }\n  artist_upcomingShows: artist(id: $artistID) {\n    ...ArtistShows_artist_12Fjro\n    id\n  }\n  artist_pastShows: artist(id: $artistID) {\n    ...ArtistShows_artist_3dp4w3\n    id\n  }\n}\n"
+    "text": "query artist2Routes_ShowsQuery(\n  $artistID: String!\n) {\n  viewer {\n    ...ArtistShowsRoute_viewer\n  }\n}\n\nfragment ArtistShowsGroup_artist_12Fjro on Artist {\n  slug\n  showsConnection(first: 10, sort: START_AT_ASC, status: \"upcoming\") {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        partner {\n          __typename\n          ... on ExternalPartner {\n            name\n            id\n          }\n          ... on Partner {\n            name\n          }\n          ... on Node {\n            id\n          }\n        }\n        name\n        href\n        exhibitionPeriod\n        coverImage {\n          cropped(width: 440, height: 315) {\n            src\n            srcSet\n          }\n        }\n        city\n        id\n      }\n    }\n  }\n}\n\nfragment ArtistShowsGroup_artist_43oec1 on Artist {\n  slug\n  showsConnection(first: 10, sort: END_AT_ASC, status: \"running\") {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        partner {\n          __typename\n          ... on ExternalPartner {\n            name\n            id\n          }\n          ... on Partner {\n            name\n          }\n          ... on Node {\n            id\n          }\n        }\n        name\n        href\n        exhibitionPeriod\n        coverImage {\n          cropped(width: 440, height: 315) {\n            src\n            srcSet\n          }\n        }\n        city\n        id\n      }\n    }\n  }\n}\n\nfragment ArtistShowsRoute_viewer on Viewer {\n  currentShows: artist(id: $artistID) {\n    ...ArtistShowsGroup_artist_43oec1\n    id\n  }\n  upcomingShows: artist(id: $artistID) {\n    ...ArtistShowsGroup_artist_12Fjro\n    id\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'c803b98326af55765cb1755717b0eaf6';
+(node as any).hash = '5a27da8e4a04ff2f293b4ceb324e74ae';
 export default node;

@@ -92,6 +92,55 @@ export const artist2Routes: AppRouteConfig[] = [
           }
         `,
       },
+      {
+        path: "articles",
+        theme: "v3",
+        hideNavigationTabs: true,
+        getComponent: () => ArticlesRoute,
+        prepare: () => {
+          ArticlesRoute.preload()
+        },
+        query: graphql`
+          query artist2Routes_ArticlesQuery($artistID: String!) {
+            artist(id: $artistID) {
+              ...ArtistArticlesRoute_artist
+            }
+          }
+        `,
+      },
+      {
+        path: "cv",
+        theme: "v3",
+        hideNavigationTabs: true,
+        getComponent: () => CVRoute,
+        prepare: () => {
+          CVRoute.preload()
+        },
+        query: graphql`
+          query artist2Routes_CVQuery($artistID: String!) {
+            viewer {
+              ...ArtistCVRoute_viewer
+            }
+          }
+        `,
+      },
+      {
+        path: "shows",
+        theme: "v3",
+        hideNavigationTabs: true,
+        getComponent: () => ShowsRoute,
+        prepare: () => {
+          ShowsRoute.preload()
+        },
+        query: graphql`
+          query artist2Routes_ShowsQuery($artistID: String!) {
+            viewer {
+              ...ArtistShowsRoute_viewer
+            }
+          }
+        `,
+      },
+
       /*
       {
         path: "auction-results",
@@ -150,54 +199,6 @@ export const artist2Routes: AppRouteConfig[] = [
       },
 
             */
-      {
-        path: "cv",
-        theme: "v3",
-        hideNavigationTabs: true,
-        getComponent: () => CVRoute,
-        prepare: () => {
-          CVRoute.preload()
-        },
-        query: graphql`
-          query artist2Routes_CVQuery($artistID: String!) {
-            viewer {
-              ...CV_viewer
-            }
-          }
-        `,
-      },
-      {
-        path: "articles",
-        theme: "v3",
-        hideNavigationTabs: true,
-        getComponent: () => ArticlesRoute,
-        prepare: () => {
-          ArticlesRoute.preload()
-        },
-        query: graphql`
-          query artist2Routes_ArticlesQuery($artistID: String!) {
-            artist(id: $artistID) {
-              ...ArtistArticlesRoute_artist
-            }
-          }
-        `,
-      },
-      {
-        path: "shows",
-        theme: "v3",
-        hideNavigationTabs: true,
-        getComponent: () => ShowsRoute,
-        prepare: () => {
-          ShowsRoute.preload()
-        },
-        query: graphql`
-          query artist2Routes_ShowsQuery($artistID: String!) {
-            viewer {
-              ...Shows_viewer
-            }
-          }
-        `,
-      },
 
       /**
        * Redirect all unhandled tabs to the artist page.
