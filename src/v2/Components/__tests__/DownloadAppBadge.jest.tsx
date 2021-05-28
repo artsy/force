@@ -4,9 +4,23 @@ import { useTracking } from "react-tracking"
 import { Link } from "@artsy/palette"
 import { DownloadAppBadge } from "v2/Components/DownloadAppBadge"
 import { ContextModule } from "@artsy/cohesion"
+import { Device } from "v2/Utils/Hooks/useDeviceDetection"
 
 describe("DownloadAppBadge", () => {
   const trackEvent = jest.fn()
+  const event = {
+    context_module: "footer",
+    subject: "Download on the App Store",
+    destination_path:
+      "https://apps.apple.com/us/app/artsy-buy-sell-original-art/id703796080",
+  }
+  const props = {
+    contextModule: ContextModule.footer,
+    device: Device.iPhone,
+    downloadAppUrl:
+      "https://apps.apple.com/us/app/artsy-buy-sell-original-art/id703796080",
+  }
+
   beforeEach(() => {
     const mockTracking = useTracking as jest.Mock
     mockTracking.mockImplementation(() => {
@@ -21,19 +35,10 @@ describe("DownloadAppBadge", () => {
   })
 
   it("tracks clicks on the app download badge", () => {
-    const badge = mount(
-      <DownloadAppBadge contextModule={ContextModule.footer} />
-    )
+    const badge = mount(<DownloadAppBadge {...props} />)
     const downloadLink = badge.find(Link)
     // @ts-expect-error STRICT_NULL_CHECK
     downloadLink.props().onClick({} as any)
-    expect(trackEvent).toHaveBeenCalledWith(
-      expect.objectContaining({
-        context_module: "footer",
-        destination_path:
-          "https://apps.apple.com/us/app/artsy-buy-sell-original-art/id703796080",
-        subject: "Download on the App Store",
-      })
-    )
+    expect(trackEvent).toHaveBeenCalledWith(expect.objectContaining(event))
   })
 })

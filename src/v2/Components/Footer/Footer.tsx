@@ -23,10 +23,13 @@ import { ContextModule } from "@artsy/cohesion"
 import { CCPARequest } from "../CCPARequest"
 import { FooterDownloadAppBanner } from "./FooterDownloadAppBanner"
 import { RouterLink, RouterLinkProps } from "v2/Artsy/Router/RouterLink"
+import { Device, useDeviceDetection } from "v2/Utils/Hooks/useDeviceDetection"
 
 interface FooterProps extends BoxProps {}
 
 export const Footer: React.FC<FooterProps> = props => {
+  const { device, downloadAppUrl } = useDeviceDetection()
+
   const tokens = useThemeConfig({
     v2: {
       header: "mediumText" as TextVariant,
@@ -53,10 +56,13 @@ export const Footer: React.FC<FooterProps> = props => {
         <GridColumns pt={tokens.pt} pb={tokens.pb} gridRowGap={[4, 0]}>
           <Column span={12} display={["block", "none"]}>
             <Text variant={tokens.header} fontWeight="bold" mb={2}>
-              Get the iOS app
+              Get the App
             </Text>
-
-            <DownloadAppBadge contextModule={ContextModule.footer} />
+            <DownloadAppBadge
+              contextModule={ContextModule.footer}
+              device={device}
+              downloadAppUrl={downloadAppUrl}
+            />
           </Column>
 
           <Column span={3}>
@@ -150,7 +156,11 @@ export const Footer: React.FC<FooterProps> = props => {
                 Get the iOS app
               </Text>
 
-              <DownloadAppBadge contextModule={ContextModule.footer} />
+              <DownloadAppBadge
+                contextModule={ContextModule.footer}
+                device={Device.iPhone}
+                downloadAppUrl={downloadAppUrl}
+              />
             </Media>
           </Column>
 
