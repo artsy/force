@@ -21,16 +21,14 @@ const Button = styled(Box).attrs({
   font-size: 15px;
 `
 
-export class BannerButton extends React.Component<Props> {
-  render() {
-    const { href, children, ...rest } = this.props
+export const BannerButton: React.FC<Props> = props => {
+  const { href, children, ...rest } = props
 
-    return (
-      <Button {...rest}>
-        <RouterLink to={href} noUnderline>
-          {children}
-        </RouterLink>
-      </Button>
-    )
-  }
+  return (
+    <Button {...rest}>
+      <RouterLink to={href} noUnderline>
+        {children}
+      </RouterLink>
+    </Button>
+  )
 }
