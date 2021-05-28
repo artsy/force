@@ -34,6 +34,7 @@ import {
 } from "./NavigatorContextProvider"
 import { NAV_BAR_BORDER_OFFSET, MOBILE_NAV_HEIGHT } from "v2/Components/NavBar"
 import { ArtistsLetterNav } from "v2/Apps/Artists/Components/ArtistsLetterNav"
+import { useDeviceDetection } from "v2/Utils/Hooks/useDeviceDetection"
 
 const Close = styled(Clickable)`
   position: absolute;
@@ -59,6 +60,7 @@ export const MobileNavMenu: React.FC<Props> = ({
   onClose,
 }) => {
   const { user } = useSystemContext()
+  const { downloadAppUrl } = useDeviceDetection()
 
   return (
     <NavigatorContextProvider>
@@ -101,6 +103,7 @@ export const MobileNavMenu: React.FC<Props> = ({
                 Editorial
               </MobileLink>
               {user ? <LoggedInLinks /> : <AuthenticateLinks />}
+              <MobileLink href={downloadAppUrl}>Get the app</MobileLink>
             </ul>
           </AnimatingMenuWrapper>
         </MenuViewport>

@@ -28,7 +28,7 @@ import { Device, useDeviceDetection } from "v2/Utils/Hooks/useDeviceDetection"
 interface FooterProps extends BoxProps {}
 
 export const Footer: React.FC<FooterProps> = props => {
-  const device = useDeviceDetection()
+  const { device, downloadAppUrl } = useDeviceDetection()
 
   const tokens = useThemeConfig({
     v2: {
@@ -61,6 +61,7 @@ export const Footer: React.FC<FooterProps> = props => {
             <DownloadAppBadge
               contextModule={ContextModule.footer}
               device={device}
+              downloadAppUrl={downloadAppUrl}
             />
           </Column>
 
@@ -158,6 +159,7 @@ export const Footer: React.FC<FooterProps> = props => {
               <DownloadAppBadge
                 contextModule={ContextModule.footer}
                 device={Device.iPhone}
+                downloadAppUrl={downloadAppUrl}
               />
             </Media>
           </Column>

@@ -9,22 +9,14 @@ import { Device } from "v2/Utils/Hooks/useDeviceDetection"
 interface DownloadAppBadgeProps {
   contextModule: ContextModule
   device: Device
+  downloadAppUrl: string
 }
 
 // @ts-expect-error STRICT_NULL_CHECK
 export const DownloadAppBadge: React.FC<DownloadAppBadgeProps> = track(null, {
   dispatch: data => Events.postEvent(data),
-})(({ contextModule, device }) => {
+})(({ contextModule, device, downloadAppUrl }) => {
   const tracking = useTracking()
-
-  let downloadAppUrl: string = ""
-  if (device === Device.iPhone) {
-    downloadAppUrl =
-      "https://apps.apple.com/us/app/artsy-buy-sell-original-art/id703796080"
-  } else if (device === Device.Android) {
-    downloadAppUrl =
-      "https://play.google.com/store/apps/details?id=net.artsy.app"
-  }
 
   const {
     contextPageOwnerId,

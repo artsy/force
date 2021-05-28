@@ -17,6 +17,8 @@ describe("DownloadAppBadge", () => {
   const props = {
     contextModule: ContextModule.footer,
     device: Device.iPhone,
+    downloadAppUrl:
+      "https://apps.apple.com/us/app/artsy-buy-sell-original-art/id703796080",
   }
 
   beforeEach(() => {
@@ -32,25 +34,11 @@ describe("DownloadAppBadge", () => {
     jest.resetAllMocks()
   })
 
-  it("tracks clicks on the iPhone app download badge", () => {
+  it("tracks clicks on the app download badge", () => {
     const badge = mount(<DownloadAppBadge {...props} />)
     const downloadLink = badge.find(Link)
     // @ts-expect-error STRICT_NULL_CHECK
     downloadLink.props().onClick({} as any)
     expect(trackEvent).toHaveBeenCalledWith(expect.objectContaining(event))
-  })
-
-  it("tracks clicks on the Android app download badge", () => {
-    const badge = mount(<DownloadAppBadge {...props} device={Device.Android} />)
-    const downloadLink = badge.find(Link)
-    // @ts-expect-error STRICT_NULL_CHECK
-    downloadLink.props().onClick({} as any)
-    expect(trackEvent).toHaveBeenCalledWith(
-      expect.objectContaining({
-        ...event,
-        destination_path:
-          "https://play.google.com/store/apps/details?id=net.artsy.app",
-      })
-    )
   })
 })
