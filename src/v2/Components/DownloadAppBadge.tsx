@@ -3,10 +3,10 @@ import track, { useTracking } from "react-tracking"
 import { clickedAppDownload, ContextModule } from "@artsy/cohesion"
 import { useAnalyticsContext } from "v2/Artsy"
 import Events from "v2/Utils/Events"
-import { Box, Link } from "@artsy/palette"
+import { Box, BoxProps, Link } from "@artsy/palette"
 import { Device } from "v2/Utils/Hooks/useDeviceDetection"
 
-interface DownloadAppBadgeProps {
+interface DownloadAppBadgeProps extends BoxProps {
   contextModule: ContextModule
   device: Device
   downloadAppUrl: string
@@ -15,7 +15,7 @@ interface DownloadAppBadgeProps {
 // @ts-expect-error STRICT_NULL_CHECK
 export const DownloadAppBadge: React.FC<DownloadAppBadgeProps> = track(null, {
   dispatch: data => Events.postEvent(data),
-})(({ contextModule, device, downloadAppUrl }) => {
+})(({ contextModule, device, downloadAppUrl, ...rest }) => {
   const tracking = useTracking()
 
   const {
@@ -37,7 +37,7 @@ export const DownloadAppBadge: React.FC<DownloadAppBadgeProps> = track(null, {
     )
   }
   return (
-    <Box width={120} height={40}>
+    <Box width={120} height={40} {...rest}>
       <Link
         padding={0}
         href={downloadAppUrl}

@@ -11,9 +11,11 @@ import {
   useThemeConfig,
 } from "@artsy/palette"
 import { resized } from "v2/Utils/resized"
+import { DownloadAppBadge } from "../DownloadAppBadge"
+import { ContextModule } from "@artsy/cohesion"
+import { Device } from "v2/Utils/Hooks/useDeviceDetection"
 
 const BANNER_IMAGE_SRC = "https://files.artsy.net/consign/banner-large.jpg"
-const QR_CODE_SRC = "https://files.artsy.net/images/artsy-qr-code.svg"
 
 export const FooterDownloadAppBanner = () => {
   const resizedImg = resized(BANNER_IMAGE_SRC, {
@@ -47,30 +49,31 @@ export const FooterDownloadAppBanner = () => {
         flexDirection="column"
       >
         <Box mb={2}>
-          <Text variant={tokens.title} mb={1}>
-            Get the Artsy iOS app
+          <Text variant={tokens.title} textAlign="center" mb={1}>
+            Get the App
           </Text>
 
-          <Text variant={tokens.subtitle} color="black60">
+          <Text variant={tokens.subtitle} textAlign="center" color="black60">
             Discover, buy, and sell art by the world’s leading artists
           </Text>
         </Box>
 
-        <Flex alignItems="center">
-          <Flex flexShrink={0}>
-            <Image
-              src={QR_CODE_SRC}
-              lazyLoad
-              width={100}
-              height={100}
-              mr={2}
-              alt="QR code link to download Artsy app on App Store"
-            />
-          </Flex>
-
-          <Text variant={tokens.body} color="black60" maxWidth={200}>
-            To download, scan this code with your phone’s camera
-          </Text>
+        <Flex justifyContent="center">
+          <DownloadAppBadge
+            mr={1}
+            contextModule={ContextModule.footer}
+            device={Device.iPhone}
+            downloadAppUrl={
+              "https://apps.apple.com/us/app/artsy-buy-sell-original-art/id703796080"
+            }
+          />
+          <DownloadAppBadge
+            contextModule={ContextModule.footer}
+            device={Device.Android}
+            downloadAppUrl={
+              "https://play.google.com/store/apps/details?id=net.artsy.app"
+            }
+          />
         </Flex>
       </Column>
 
