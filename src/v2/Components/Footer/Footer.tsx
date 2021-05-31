@@ -286,3 +286,5 @@ export const FooterLink = styled(RouterLink)<RouterLinkProps & BoxProps>`
   white-space: nowrap;
   ${boxMixin}
 `
+
+FooterLink.displayName = "FooterLink"

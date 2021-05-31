@@ -18,7 +18,22 @@ describe("Footer", () => {
     it("renders prompts to download the app", () => {
       const wrapper = getWrapper("lg")
       expect(wrapper.find("FooterDownloadAppBanner").length).toEqual(1)
-      expect(wrapper.find(DownloadAppBadge).length).toEqual(2) // One of these is hidden using display: none
+      expect(wrapper.find(DownloadAppBadge).length).toEqual(1)
+    })
+
+    it("renders links to download the app", () => {
+      const wrapper = getWrapper("lg")
+      const links = wrapper.find("FooterLink")
+
+      expect(links.at(13).text()).toBe("iOS App")
+      expect(links.at(13).prop("to")).toBe(
+        "https://apps.apple.com/us/app/artsy-buy-sell-original-art/id703796080"
+      )
+
+      expect(links.at(14).text()).toBe("Android App")
+      expect(links.at(14).prop("to")).toBe(
+        "https://play.google.com/store/apps/details?id=net.artsy.app"
+      )
     })
 
     it("renders the CCPA request link", () => {
