@@ -15,6 +15,7 @@ import { DownloadAppBadge } from "../DownloadAppBadge"
 import { ContextModule } from "@artsy/cohesion"
 import { Device, useDeviceDetection } from "v2/Utils/Hooks/useDeviceDetection"
 import { Media } from "v2/Utils/Responsive"
+import { getRandomElement } from "v2/Utils/getRandom"
 
 interface Tokens {
   title: TextVariant
@@ -24,15 +25,26 @@ interface Tokens {
   imageSpan: ColumnSpan
 }
 
-const BANNER_LARGE_IMAGE_SRC =
-  "https://files.artsy.net/consign/banner-large.jpg"
-const BANNER_SMALL_IMAGE_SRC =
-  "https://files.artsy.net/consign/banner-small.jpg"
-
-const borderParams = {
-  borderBottom: "1px solid",
-  borderColor: "black10",
-}
+const SMALL_IMG_URL = "https://files.artsy.net/consign/banner-small-"
+const LARGE_IMG_URL = "https://files.artsy.net/consign/banner-large-"
+const PHONE_IMG_URL = "https://files.artsy.net/consign/banner-phone-"
+const images = [
+  {
+    small: `${SMALL_IMG_URL}1.jpg`,
+    large: `${LARGE_IMG_URL}1.jpg`,
+    phone: `${PHONE_IMG_URL}1.png`,
+  },
+  {
+    small: `${SMALL_IMG_URL}2.jpg`,
+    large: `${LARGE_IMG_URL}2.jpg`,
+    phone: `${PHONE_IMG_URL}2.png`,
+  },
+  {
+    small: `${SMALL_IMG_URL}3.jpg`,
+    large: `${LARGE_IMG_URL}3.jpg`,
+    phone: `${PHONE_IMG_URL}3.png`,
+  },
+]
 
 const imageProps = {
   mr: 2,
@@ -43,15 +55,19 @@ const imageProps = {
   style: { objectFit: "cover" },
 }
 
-const resizedLargeImg = resized(BANNER_LARGE_IMAGE_SRC, {
+const imageParams = {
   height: 320,
   quality: 85,
-})
+}
 
-const resizedSmallImg = resized(BANNER_SMALL_IMAGE_SRC, {
-  height: 320,
-  quality: 85,
-})
+const image = getRandomElement(images)
+const resizedLargeImg = resized(image.large, imageParams)
+const resizedSmallImg = resized(image.small, imageParams)
+
+const borderParams = {
+  borderBottom: "1px solid",
+  borderColor: "black10",
+}
 
 export const FooterDownloadAppBanner = () => {
   const tokens = useThemeConfig({
@@ -90,11 +106,16 @@ export const FooterDownloadAppBanner = () => {
         <GridColumns {...borderParams}>
           <BannerTextBlock tokens={tokens} />
           <Column span={tokens.imageSpan}>
-            <Image
-              {...imageProps}
-              src={resizedLargeImg.src}
-              srcSet={resizedLargeImg.srcSet}
-            />
+            <Box position="relative">
+              <Image
+                {...imageProps}
+                src={resizedLargeImg.src}
+                srcSet={resizedLargeImg.srcSet}
+              />
+              <Flex position="absolute" bottom={0} right={45}>
+                <Image src={image.phone} />
+              </Flex>
+            </Box>
           </Column>
         </GridColumns>
       </Media>
