@@ -47,10 +47,8 @@ export const Footer: React.FC<FooterProps> = props => {
 
   return (
     <Box mt={6} borderTop="1px solid" borderColor="black10" {...props}>
-      <Media greaterThan="xs">
-        <Box id="download-app-banner"></Box>
-        <FooterDownloadAppBanner />
-      </Media>
+      <Box id="download-app-banner"></Box>
+      <FooterDownloadAppBanner />
 
       <footer>
         <GridColumns pt={tokens.pt} pb={tokens.pb} gridRowGap={[4, 0]}>
