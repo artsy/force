@@ -100,7 +100,6 @@ export const partnerRoutes: AppRouteConfig[] = [
         prepare: () => {
           OverviewRoute.preload()
         },
-        ignoreScrollBehavior: true,
         query: graphql`
           query partnerRoutes_OverviewQuery($partnerId: String!) {
             partner(id: $partnerId) @principalField {
