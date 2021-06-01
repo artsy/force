@@ -11,8 +11,15 @@ export const partnerRedirectionMiddleware = (
   const href: string | null = `/partner${req.path}`
 
   // /:id/overview -> /partner/:id
-  if (req.route.path === "/:id/overview") {
+  // /:id/about -> /partner/:id
+  if (req.route.path === "/:id/overview" || req.route.path === "/:id/about") {
     return res.redirect(301, `/partner/${req.params.id}`)
+  }
+
+  // /:id/collection -> /partner/:id/works
+  // /:id/shop -> /partner/:id/works
+  if (req.route.path === "/:id/collection" || req.route.path === "/:id/shop") {
+    return res.redirect(301, `/partner/${req.params.id}/works`)
   }
 
   // /:id/artist/:artistId -> /partner/:id/artists/:artistId

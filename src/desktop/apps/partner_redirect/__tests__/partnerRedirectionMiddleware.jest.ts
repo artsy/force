@@ -68,6 +68,19 @@ describe("partnerRedirectionMiddleware", () => {
       "/white-cube/contact",
       { id: "white-cube" },
     ],
+    ["/:id/about", "/partner/white-cube", "/white-cube", { id: "white-cube" }],
+    [
+      "/:id/collection",
+      "/partner/white-cube/works",
+      "/white-cube/collection",
+      { id: "white-cube" },
+    ],
+    [
+      "/:id/shop",
+      "/partner/white-cube/works",
+      "/white-cube/shop",
+      { id: "white-cube" },
+    ],
   ])(
     "redirects %s to %s",
     (route: string, result: string, path: string, params: any) => {
