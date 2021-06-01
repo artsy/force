@@ -6,7 +6,6 @@ declare const global: any
 jest.mock("sharify", () => ({
   data: {
     APP_URL: "http://testing.com",
-    ALL_ARTWORKS_AS_CATS: "experiment",
   },
 }))
 
@@ -20,7 +19,7 @@ describe("trackingMiddleware", () => {
   beforeEach(() => {
     // FIXME: reaction migration
     // @ts-ignore
-    window.analytics = { track: jest.fn(), page: jest.fn() }
+    window.analytics = { page: jest.fn() }
   })
 
   afterEach(() => {
@@ -144,32 +143,6 @@ describe("trackingMiddleware", () => {
           "http://testing.com/referrer?with=queryparams"
         )
       })
-    })
-  })
-
-  describe("triggering AB test experiment viewed events", () => {
-    it("triggers for a given route", () => {
-      trackingMiddleware({
-        abTestRouteMap: [
-          { abTest: "all_artworks_as_cats", routes: ["/artwork(.*)"] },
-        ],
-      })(store)(noop)({
-        type: ActionTypes.UPDATE_LOCATION,
-        payload: {
-          pathname: "/artwork/some-id",
-        },
-      })
-      expect(global.analytics.track).toBeCalledWith(
-        "Experiment Viewed",
-        {
-          experiment_id: "all_artworks_as_cats",
-          experiment_name: "all_artworks_as_cats",
-          variation_id: "experiment",
-          variation_name: "experiment",
-          nonInteraction: 1,
-        },
-        { page: {} }
-      )
     })
   })
 })
