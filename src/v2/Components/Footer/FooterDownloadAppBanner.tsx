@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import {
   Box,
   Column,
@@ -25,24 +25,46 @@ interface Tokens {
   imageSpan: ColumnSpan
 }
 
+interface ImageKit {
+  small: string
+  large: string
+  phone: string
+  title: string
+  text: string
+}
+
+interface ResizedImage {
+  src: string
+  srcSet: string
+}
+
+const TITLE_1 = "Get the App"
+const TITLE_2 = "Get more from Artsy—on the app"
 const SMALL_IMG_URL = "https://files.artsy.net/consign/banner-small-"
 const LARGE_IMG_URL = "https://files.artsy.net/consign/banner-large-"
 const PHONE_IMG_URL = "https://files.artsy.net/consign/banner-phone-"
-const images = [
+
+const images: ImageKit[] = [
   {
     small: `${SMALL_IMG_URL}1.jpg`,
     large: `${LARGE_IMG_URL}1.jpg`,
     phone: `${PHONE_IMG_URL}1.png`,
+    title: TITLE_2,
+    text: "",
   },
   {
     small: `${SMALL_IMG_URL}2.jpg`,
     large: `${LARGE_IMG_URL}2.jpg`,
     phone: `${PHONE_IMG_URL}2.png`,
+    title: TITLE_1,
+    text: "Discover, buy, and sell art by the world’s leading artists",
   },
   {
     small: `${SMALL_IMG_URL}3.jpg`,
     large: `${LARGE_IMG_URL}3.jpg`,
     phone: `${PHONE_IMG_URL}3.png`,
+    title: TITLE_2,
+    text: "",
   },
 ]
 
@@ -60,16 +82,29 @@ const imageParams = {
   quality: 85,
 }
 
-const image = getRandomElement(images)
-const resizedLargeImg = resized(image.large, imageParams)
-const resizedSmallImg = resized(image.small, imageParams)
-
 const borderParams = {
   borderBottom: "1px solid",
   borderColor: "black10",
 }
 
 export const FooterDownloadAppBanner = () => {
+  const [imageKit, setImageKit] = useState<ImageKit>({} as ImageKit)
+  const [resizedLargeImg, setResizedLargeImg] = useState<ResizedImage>(
+    {} as ResizedImage
+  )
+  const [resizedSmallImg, setResizedSmallImg] = useState<ResizedImage>(
+    {} as ResizedImage
+  )
+
+  useEffect(() => {
+    setImageKit(getRandomElement(images))
+  }, [])
+
+  useEffect(() => {
+    setResizedLargeImg(resized(imageKit.large, imageParams))
+    setResizedSmallImg(resized(imageKit.small, imageParams))
+  }, [imageKit])
+
   const tokens = useThemeConfig({
     v2: {
       title: "largeTitle" as TextVariant,
@@ -98,13 +133,22 @@ export const FooterDownloadAppBanner = () => {
               srcSet={resizedSmallImg.srcSet}
             />
           </Column>
-          <BannerTextBlock xs tokens={tokens} />
+          <BannerTextBlock
+            xs
+            title={imageKit.title}
+            text={imageKit.text}
+            tokens={tokens}
+          />
         </GridColumns>
       </Media>
 
       <Media greaterThan="xs">
         <GridColumns {...borderParams}>
-          <BannerTextBlock tokens={tokens} />
+          <BannerTextBlock
+            title={imageKit.title}
+            text={imageKit.text}
+            tokens={tokens}
+          />
           <Column span={tokens.imageSpan}>
             <Box position="relative">
               <Image
@@ -113,7 +157,7 @@ export const FooterDownloadAppBanner = () => {
                 srcSet={resizedLargeImg.srcSet}
               />
               <Flex position="absolute" bottom={0} right={45}>
-                <Image src={image.phone} />
+                <Image src={imageKit.phone} />
               </Flex>
             </Box>
           </Column>
@@ -123,7 +167,17 @@ export const FooterDownloadAppBanner = () => {
   )
 }
 
-const BannerTextBlock = ({ xs, tokens }: { xs?: boolean; tokens: Tokens }) => {
+const BannerTextBlock = ({
+  xs,
+  title,
+  text,
+  tokens,
+}: {
+  xs?: boolean
+  title: string
+  text: string
+  tokens: Tokens
+}) => {
   const { device, downloadAppUrl } = useDeviceDetection()
 
   return (
@@ -136,11 +190,11 @@ const BannerTextBlock = ({ xs, tokens }: { xs?: boolean; tokens: Tokens }) => {
     >
       <Box mb={2}>
         <Text variant={tokens.title} textAlign="center" mb={1}>
-          Get the App
+          {title}
         </Text>
 
         <Text variant={tokens.subtitle} textAlign="center" color="black60">
-          Discover, buy, and sell art by the world’s leading artists
+          {text}
         </Text>
       </Box>
 
