@@ -78,7 +78,7 @@ const FallbackLabel = color => {
       >
         Conditions of Sale
       </Link>
-      {"and to receiving emails from Artsy."}
+      {" and to receiving emails from Artsy."}
     </>
   )
 }
