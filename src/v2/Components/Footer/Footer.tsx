@@ -23,7 +23,7 @@ import { ContextModule } from "@artsy/cohesion"
 import { CCPARequest } from "../CCPARequest"
 import { FooterDownloadAppBanner } from "./FooterDownloadAppBanner"
 import { RouterLink, RouterLinkProps } from "v2/Artsy/Router/RouterLink"
-import { Device, useDeviceDetection } from "v2/Utils/Hooks/useDeviceDetection"
+import { useDeviceDetection } from "v2/Utils/Hooks/useDeviceDetection"
 
 interface FooterProps extends BoxProps {}
 
@@ -52,16 +52,18 @@ export const Footer: React.FC<FooterProps> = props => {
 
       <footer>
         <GridColumns pt={tokens.pt} pb={tokens.pb} gridRowGap={[4, 0]}>
-          <Column span={12} display={["block", "none"]}>
-            <Text variant={tokens.header} fontWeight="bold" mb={2}>
-              Get the App
-            </Text>
-            <DownloadAppBadge
-              contextModule={ContextModule.footer}
-              device={device}
-              downloadAppUrl={downloadAppUrl}
-            />
-          </Column>
+          <Media at="xs">
+            <Column span={12}>
+              <Text variant={tokens.header} fontWeight="bold" mb={2}>
+                Get the App
+              </Text>
+              <DownloadAppBadge
+                contextModule={ContextModule.footer}
+                device={device}
+                downloadAppUrl={downloadAppUrl}
+              />
+            </Column>
+          </Media>
 
           <Column span={3}>
             <Text variant={tokens.header} fontWeight="bold" mb={2}>
