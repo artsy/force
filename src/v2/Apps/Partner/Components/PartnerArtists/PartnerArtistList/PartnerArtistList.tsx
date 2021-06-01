@@ -44,7 +44,7 @@ export const PartnerArtistList: React.FC<PartnerArtistListProps> = ({
 
   return (
     <PartnerArtistListContainer>
-      <GridColumns minWidth={[1100, "auto"]} pr={[2, 0]} gridColumnGap={1}>
+      <GridColumns minWidth={["270vw", "auto"]} pr={[2, 0]} gridColumnGap={1}>
         {groups.map((group, i) => {
           return (
             <Column key={i} span={[(group.columnSize * 2) as ColumnSpan]}>
