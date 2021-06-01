@@ -26,12 +26,4 @@
 # this should export empty Object
 # module.exports = {}
 
-module.exports = {
-  decayed_merch_v3:
-    key: "decayed_merch_v3"
-    outcomes: [
-      'control'
-      'experiment'
-    ]
-    weighting: 'equal'
-}
+module.exports = {}
