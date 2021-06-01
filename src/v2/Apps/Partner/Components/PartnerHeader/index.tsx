@@ -31,7 +31,7 @@ export const PartnerHeader: React.FC<PartnerHeaderProps> = ({ partner }) => {
   // @ts-expect-error STRICT_NULL_CHECK
   const hasLocations = partner.locations?.totalCount > 0
   // TODO: Remove after page migration.
-  const partnerUrl = `/partner2${partner.href}`
+  const partnerUrl = `/partner2/${partner.slug}`
   const canFollow =
     partner && partner.type !== "Auction House" && !!partner.profile
 
@@ -103,7 +103,7 @@ export const PartnerHeaderFragmentContainer = createFragmentContainer(
       fragment PartnerHeader_partner on Partner {
         name
         type
-        href
+        slug
         profile {
           icon {
             resized(width: 80, height: 80, version: "square140") {

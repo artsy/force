@@ -49,9 +49,6 @@ jest.mock("../Components/SellWithArtsy", () => ({
 jest.mock("../Components/ArtworkCredits", () => ({
   ArtworkCredits: () => <div />,
 }))
-jest.mock("v2/Components/Footer", () => ({
-  Footer: () => <div />,
-}))
 
 describe("MarketingLandingApp", () => {
   it("renders correct components", () => {
@@ -68,7 +65,6 @@ describe("MarketingLandingApp", () => {
     expect(wrapper.find("BecomePartner").length).toBe(1)
     expect(wrapper.find("FAQ").length).toBe(1)
     expect(wrapper.find("ArtworkCredits").length).toBe(1)
-    expect(wrapper.find("Footer").length).toBe(1)
   })
 
   it("shows temporary discount banner", () => {

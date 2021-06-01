@@ -13,7 +13,7 @@ import { RelayRefetchProp, createFragmentContainer, graphql } from "react-relay"
 import request from "superagent"
 
 import { useSystemContext } from "v2/Artsy"
-import { AppSecondFactorModal } from "./Modal"
+import { AppSecondFactorModal, OnCompleteRedirectModal } from "./Modal"
 import { ApiError } from "../../ApiError"
 import { ApiErrorModal } from "../ApiErrorModal"
 import { CreateAppSecondFactor } from "./Mutation/CreateAppSecondFactor"
@@ -21,6 +21,8 @@ import { DisableFactorConfirmation } from "../DisableFactorConfirmation"
 import { AppSecondFactor_me } from "v2/__generated__/AppSecondFactor_me.graphql"
 import { ConfirmPasswordModal } from "v2/Components/ConfirmPasswordModal"
 import { CreateAppSecondFactorInput } from "v2/__generated__/CreateAppSecondFactorMutation.graphql"
+
+import { afterUpdateRedirect } from "v2/Components/UserSettings/TwoFactorAuthentication/helpers"
 
 interface AppSecondFactorProps extends BorderBoxProps {
   me: AppSecondFactor_me
@@ -34,11 +36,14 @@ export const AppSecondFactor: React.FC<AppSecondFactorProps> = props => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [showSetupModal, setShowSetupModal] = useState(false)
   const [showCompleteModal, setShowCompleteModal] = useState(false)
+  const [showCompleteRedirectModal, setShowCompleteRedirectModal] = useState(false)
   const [stagedSecondFactor, setStagedSecondFactor] = useState(null)
   const [isDisabling] = useState(false)
   const [isCreating, setCreating] = useState(false)
 
   const { relayEnvironment } = useSystemContext()
+
+  const redirectTo = afterUpdateRedirect()
 
   function onComplete() {
     const showCompleteModalCallback = () => {
@@ -46,11 +51,20 @@ export const AppSecondFactor: React.FC<AppSecondFactorProps> = props => {
       setShowCompleteModal(true)
     }
 
+    const showCompleteRedirectModalCallback = () => {
+      setShowSetupModal(false)
+      setShowCompleteRedirectModal(true)
+    }
+
     if (props.me.hasSecondFactorEnabled) {
       // @ts-expect-error STRICT_NULL_CHECK
       relayRefetch.refetch({}, {}, showCompleteModalCallback)
     } else {
-      showCompleteModalCallback()
+      if (redirectTo) {
+        showCompleteRedirectModalCallback()
+      } else {
+        showCompleteModalCallback()
+      }
     }
   }
 
@@ -63,6 +77,14 @@ export const AppSecondFactor: React.FC<AppSecondFactorProps> = props => {
         .set("X-Requested-With", "XMLHttpRequest")
 
       location.reload()
+    }
+  }
+
+  function onCompleteRedirect() {
+    if (props.me.hasSecondFactorEnabled) {
+      setShowCompleteModal(false)
+    } else {
+      window.location.assign(redirectTo)
     }
   }
 
@@ -223,6 +245,11 @@ export const AppSecondFactor: React.FC<AppSecondFactorProps> = props => {
           </Serif>
         )}
       </Modal>
+      <OnCompleteRedirectModal
+        onClick={onCompleteRedirect}
+        redirectTo={redirectTo}
+        show={showCompleteRedirectModal}
+      />
     </BorderBox>
   )
 }

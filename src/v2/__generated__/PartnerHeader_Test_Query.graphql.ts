@@ -13,7 +13,7 @@ export type PartnerHeader_Test_QueryRawResponse = {
     readonly partner: ({
         readonly name: string | null;
         readonly type: string | null;
-        readonly href: string | null;
+        readonly slug: string;
         readonly profile: ({
             readonly icon: ({
                 readonly resized: ({
@@ -66,7 +66,7 @@ fragment FollowProfileButton_profile on Profile {
 fragment PartnerHeader_partner on Partner {
   name
   type
-  href
+  slug
   profile {
     icon {
       resized(width: 80, height: 80, version: "square140") {
@@ -105,6 +105,13 @@ v1 = {
   "storageKey": null
 },
 v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "slug",
+  "storageKey": null
+},
+v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -159,13 +166,7 @@ return {
             "name": "type",
             "storageKey": null
           },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "href",
-            "storageKey": null
-          },
+          (v2/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -226,14 +227,8 @@ return {
                 ],
                 "storageKey": null
               },
+              (v3/*: any*/),
               (v2/*: any*/),
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "slug",
-                "storageKey": null
-              },
               (v1/*: any*/),
               {
                 "alias": null,
@@ -296,7 +291,7 @@ return {
                         "name": "city",
                         "storageKey": null
                       },
-                      (v2/*: any*/)
+                      (v3/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -306,7 +301,7 @@ return {
             ],
             "storageKey": "locationsConnection(first:20)"
           },
-          (v2/*: any*/)
+          (v3/*: any*/)
         ],
         "storageKey": "partner(id:\"white-cube\")"
       }
@@ -317,7 +312,7 @@ return {
     "metadata": {},
     "name": "PartnerHeader_Test_Query",
     "operationKind": "query",
-    "text": "query PartnerHeader_Test_Query {\n  partner(id: \"white-cube\") {\n    ...PartnerHeader_partner\n    id\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  is_followed: isFollowed\n}\n\nfragment PartnerHeader_partner on Partner {\n  name\n  type\n  href\n  profile {\n    icon {\n      resized(width: 80, height: 80, version: \"square140\") {\n        src\n        srcSet\n      }\n    }\n    ...FollowProfileButton_profile\n    id\n  }\n  locations: locationsConnection(first: 20) {\n    totalCount\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query PartnerHeader_Test_Query {\n  partner(id: \"white-cube\") {\n    ...PartnerHeader_partner\n    id\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  is_followed: isFollowed\n}\n\nfragment PartnerHeader_partner on Partner {\n  name\n  type\n  slug\n  profile {\n    icon {\n      resized(width: 80, height: 80, version: \"square140\") {\n        src\n        srcSet\n      }\n    }\n    ...FollowProfileButton_profile\n    id\n  }\n  locations: locationsConnection(first: 20) {\n    totalCount\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();

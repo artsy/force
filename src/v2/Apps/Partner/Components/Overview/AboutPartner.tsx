@@ -12,7 +12,9 @@ export interface AboutPartnerProps {
 export const AboutPartner: React.FC<AboutPartnerProps> = ({
   partner: { profile, vatNumber, website, fullProfileEligible },
 }) => {
-  const isEmpty = !profile?.fullBio && !vatNumber && !website
+  const fullBio = profile?.fullBio
+  const limitedBio = profile?.bio
+  const isEmpty = !fullBio && !limitedBio && !vatNumber && !website
 
   if (isEmpty) {
     return null
@@ -20,8 +22,7 @@ export const AboutPartner: React.FC<AboutPartnerProps> = ({
 
   const canRenderWebsite = website && fullProfileEligible
   const canRenderVatNumber = vatNumber && fullProfileEligible
-  const fullBio = profile?.fullBio
-  const limitedBio = profile?.bio
+  const bioDisplayable = fullBio || limitedBio
 
   return (
     <GridColumns mb={12} gridRowGap={2}>
@@ -31,16 +32,16 @@ export const AboutPartner: React.FC<AboutPartnerProps> = ({
 
       <Column span={6}>
         <Media at="xs">
-          {limitedBio && (
+          {bioDisplayable && (
             <Text mb={2} variant="text">
-              {limitedBio}
+              {limitedBio ? limitedBio : fullBio}
             </Text>
           )}
         </Media>
         <Media greaterThan="xs">
-          {fullBio && (
+          {bioDisplayable && (
             <Text mb={2} variant="text">
-              {fullBio}
+              {fullBio ? fullBio : limitedBio}
             </Text>
           )}
         </Media>
