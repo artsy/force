@@ -151,14 +151,24 @@ export const Footer: React.FC<FooterProps> = props => {
 
             <Media greaterThan="xs">
               <Text variant={tokens.header} fontWeight="bold" mt={4} mb={1}>
-                Get the iOS app
+                Get the App
               </Text>
 
-              <DownloadAppBadge
-                contextModule={ContextModule.footer}
-                device={Device.iPhone}
-                downloadAppUrl={downloadAppUrl}
-              />
+              <Text variant={tokens.body}>
+                <FooterLink
+                  mt={2}
+                  to="https://apps.apple.com/us/app/artsy-buy-sell-original-art/id703796080"
+                >
+                  iOS App
+                </FooterLink>
+
+                <FooterLink
+                  mt={2}
+                  to="https://play.google.com/store/apps/details?id=net.artsy.app"
+                >
+                  Android App
+                </FooterLink>
+              </Text>
             </Media>
           </Column>
 
@@ -280,3 +290,5 @@ export const FooterLink = styled(RouterLink)<RouterLinkProps & BoxProps>`
   white-space: nowrap;
   ${boxMixin}
 `
+
+FooterLink.displayName = "FooterLink"
