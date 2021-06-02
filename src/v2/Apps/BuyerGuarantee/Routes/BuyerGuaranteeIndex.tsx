@@ -14,11 +14,6 @@ import {
   themeProps,
   VerifiedIcon,
 } from "@artsy/palette"
-import { BuyerGuaranteeIndex_authenticityImage } from "v2/__generated__/BuyerGuaranteeIndex_authenticityImage.graphql"
-import { BuyerGuaranteeIndex_headerImage } from "v2/__generated__/BuyerGuaranteeIndex_headerImage.graphql"
-import { BuyerGuaranteeIndex_moneyBackGuaranteeImage } from "v2/__generated__/BuyerGuaranteeIndex_moneyBackGuaranteeImage.graphql"
-import { BuyerGuaranteeIndex_securePaymentImage } from "v2/__generated__/BuyerGuaranteeIndex_securePaymentImage.graphql"
-import { graphql, createFragmentContainer } from "react-relay"
 import { Media } from "@artsy/reaction/dist/Utils/Responsive"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import { resize } from "v2/Utils/resizer"
@@ -34,19 +29,8 @@ import { scrollIntoView } from "v2/Utils/scrollHelpers"
 import { useMatchMedia } from "v2/Utils/Hooks/useMatchMedia"
 import { BuyerGuaranteeMeta } from "../Components/BuyerGuaranteeMeta"
 
-interface BuyerGuaranteeIndexProps {
-  headerImage: BuyerGuaranteeIndex_headerImage
-  authenticityImage: BuyerGuaranteeIndex_authenticityImage
-  moneyBackGuaranteeImage: BuyerGuaranteeIndex_moneyBackGuaranteeImage
-  securePaymentImage: BuyerGuaranteeIndex_securePaymentImage
-}
 
-export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
-  headerImage,
-  authenticityImage,
-  moneyBackGuaranteeImage,
-  securePaymentImage,
-}) => {
+export const BuyerGuaranteeIndex: React.FC = () => {
   const isMobile = useMatchMedia(themeProps.mediaQueries.xs)
 
   const authenticityText = `We are dedicated to being the world’s most trustworthy marketplace
@@ -100,6 +84,50 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
     </RouterLink>
   )
 
+  const headerImage = {
+    imageTitle: "Sophie Treppendahl, ‘Swimming Hole’, 2019",
+    image: {
+      resized: {
+        srcSet: "http://files.artsy.net/images/normalizedheaderimage.jpeg 1x",
+      },
+    },
+  }
+
+  const authenticityImage = {
+    imageTitle: "Paul Wackers, ‘Constructing Planets’, 2018",
+    image: {
+      resized: {
+        srcSet: "http://files.artsy.net/authenticityguaranteeartwork.jpg 1x",
+      },
+    },
+    artist: {
+      name: "Paul Wackers",
+    },
+  }
+
+  const moneyBackGuaranteeImage = {
+    imageTitle: "Alex Katz, ‘Blue Umbrella 2’, 2020",
+    image: {
+      resized: {
+        srcSet: "http://files.artsy.net/moneybackguaranteeartwork.jpg 1x",
+      },
+    },
+    artist: {
+      name: "Alex Katz",
+    },
+  }
+
+  const securePaymentImage = {
+    imageTitle: "Louise Belcourt, ‘Mound #26’, 2014-2015",
+    image: {
+      resized: {
+        srcSet: "http://files.artsy.net/securepaymentartwork.jpg 1x",
+      },
+    },
+    artist: {
+      name: "Louise Belcourt",
+    },
+  }
   return (
     <>
       <BuyerGuaranteeMeta />
@@ -762,65 +790,3 @@ export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = ({
     </>
   )
 }
-
-export const BuyerGuaranteeIndexFragmentContainer = createFragmentContainer(
-  BuyerGuaranteeIndex,
-  {
-    headerImage: graphql`
-      fragment BuyerGuaranteeIndex_headerImage on Artwork {
-        imageTitle
-        imageUrl
-        artist {
-          name
-        }
-        image {
-          resized(version: "normalized") {
-            srcSet
-          }
-        }
-      }
-    `,
-    authenticityImage: graphql`
-      fragment BuyerGuaranteeIndex_authenticityImage on Artwork {
-        imageTitle
-        imageUrl
-        image {
-          resized(version: "large_rectangle") {
-            srcSet
-          }
-        }
-        artist {
-          name
-        }
-      }
-    `,
-    moneyBackGuaranteeImage: graphql`
-      fragment BuyerGuaranteeIndex_moneyBackGuaranteeImage on Artwork {
-        imageTitle
-        imageUrl
-        image {
-          resized(version: "large_rectangle") {
-            srcSet
-          }
-        }
-        artist {
-          name
-        }
-      }
-    `,
-    securePaymentImage: graphql`
-      fragment BuyerGuaranteeIndex_securePaymentImage on Artwork {
-        imageTitle
-        imageUrl
-        image {
-          resized(version: "large_rectangle") {
-            srcSet
-          }
-        }
-        artist {
-          name
-        }
-      }
-    `,
-  }
-)
