@@ -304,7 +304,6 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
               <Spacer mb={[2, 3]} />
               <Media at="xs">
                 <>
-                  <Spacer mb={3} />
                   <Button
                     onClick={this.onContinueButtonPressed}
                     loading={isCommittingMutation}
