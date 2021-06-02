@@ -55,7 +55,7 @@ describe("PriceRangeFilter", () => {
     wrapper.update()
 
     expect(wrapper.find(Input)).toHaveLength(2)
-    expect(wrapper.find("Button").last().text()).toEqual("Set price")
+    expect(wrapper.find("FilterLink").text()).toEqual("Set price")
   })
 
   it("updates the input values when the radio selected option updates", async () => {
@@ -104,7 +104,7 @@ describe("PriceRangeFilter", () => {
     } as any)
 
     wrapper.update()
-    wrapper.find("Button").last().simulate("click")
+    wrapper.find("FilterLink").simulate("click")
 
     // @ts-expect-error STRICT_NULL_CHECK
     expect(context.filters.priceRange).toEqual("400-7500")
@@ -124,7 +124,7 @@ describe("PriceRangeFilter", () => {
 
     wrapper.update()
     // @ts-expect-error STRICT_NULL_CHECK
-    wrapper.find("Button").last().prop("onClick")({} as any)
+    wrapper.find("FilterLink").prop("onClick")()
 
     // @ts-expect-error STRICT_NULL_CHECK
     expect(context.filters.priceRange).toEqual("400-*")
@@ -136,7 +136,7 @@ describe("PriceRangeFilter", () => {
 
     wrapper.update()
     // @ts-expect-error STRICT_NULL_CHECK
-    wrapper.find("Button").last().prop("onClick")({} as any)
+    wrapper.find("FilterLink").prop("onClick")()
 
     // @ts-expect-error STRICT_NULL_CHECK
     expect(context.filters.priceRange).toEqual("*-*")
