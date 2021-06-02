@@ -9,13 +9,14 @@ export type ArtworkDetailsArticles_artwork = {
             readonly name: string | null;
         } | null;
         readonly href: string | null;
-        readonly published_at: string | null;
-        readonly thumbnail_image: {
-            readonly resized: {
-                readonly url: string;
+        readonly publishedAt: string | null;
+        readonly thumbnailImage: {
+            readonly cropped: {
+                readonly src: string;
+                readonly srcSet: string;
             } | null;
         } | null;
-        readonly thumbnail_title: string | null;
+        readonly thumbnailTitle: string | null;
     } | null> | null;
     readonly " $refType": "ArtworkDetailsArticles_artwork";
 };
@@ -73,7 +74,7 @@ const node: ReaderFragment = {
           "storageKey": null
         },
         {
-          "alias": "published_at",
+          "alias": null,
           "args": [
             {
               "kind": "Literal",
@@ -86,7 +87,7 @@ const node: ReaderFragment = {
           "storageKey": "publishedAt(format:\"MMM Do, YYYY\")"
         },
         {
-          "alias": "thumbnail_image",
+          "alias": null,
           "args": null,
           "concreteType": "Image",
           "kind": "LinkedField",
@@ -98,30 +99,42 @@ const node: ReaderFragment = {
               "args": [
                 {
                   "kind": "Literal",
+                  "name": "height",
+                  "value": 150
+                },
+                {
+                  "kind": "Literal",
                   "name": "width",
-                  "value": 300
+                  "value": 200
                 }
               ],
-              "concreteType": "ResizedImageUrl",
+              "concreteType": "CroppedImageUrl",
               "kind": "LinkedField",
-              "name": "resized",
+              "name": "cropped",
               "plural": false,
               "selections": [
                 {
                   "alias": null,
                   "args": null,
                   "kind": "ScalarField",
-                  "name": "url",
+                  "name": "src",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "srcSet",
                   "storageKey": null
                 }
               ],
-              "storageKey": "resized(width:300)"
+              "storageKey": "cropped(height:150,width:200)"
             }
           ],
           "storageKey": null
         },
         {
-          "alias": "thumbnail_title",
+          "alias": null,
           "args": null,
           "kind": "ScalarField",
           "name": "thumbnailTitle",
@@ -133,5 +146,5 @@ const node: ReaderFragment = {
   ],
   "type": "Artwork"
 };
-(node as any).hash = '07fa06d932146874a0ac580620a5cdf9';
+(node as any).hash = '84820200ab3d4b9e9cd76ca883049875';
 export default node;

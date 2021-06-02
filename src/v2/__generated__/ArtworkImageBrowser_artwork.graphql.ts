@@ -5,9 +5,6 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkImageBrowser_artwork = {
     readonly image_alt: string | null;
-    readonly image: {
-        readonly internalID: string | null;
-    } | null;
     readonly images: ReadonlyArray<{
         readonly internalID: string | null;
         readonly uri: string | null;
@@ -42,15 +39,7 @@ export type ArtworkImageBrowser_artwork$key = {
 
 
 
-const node: ReaderFragment = (function(){
-var v0 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "internalID",
-  "storageKey": null
-};
-return {
+const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
@@ -68,22 +57,16 @@ return {
       "args": null,
       "concreteType": "Image",
       "kind": "LinkedField",
-      "name": "image",
-      "plural": false,
-      "selections": [
-        (v0/*: any*/)
-      ],
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "concreteType": "Image",
-      "kind": "LinkedField",
       "name": "images",
       "plural": true,
       "selections": [
-        (v0/*: any*/),
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "internalID",
+          "storageKey": null
+        },
         {
           "alias": "uri",
           "args": [
@@ -247,6 +230,5 @@ return {
   ],
   "type": "Artwork"
 };
-})();
-(node as any).hash = '20fbbc2e9bc8fb1c04cab4d72db8d396';
+(node as any).hash = '975ac178652f4030c27130af5d4328ed';
 export default node;

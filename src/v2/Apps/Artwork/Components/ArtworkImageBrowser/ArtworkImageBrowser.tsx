@@ -1,21 +1,28 @@
 import { ArtworkImageBrowser_artwork } from "v2/__generated__/ArtworkImageBrowser_artwork.graphql"
-import { BaseCarousel as Carousel } from "v2/Components/FlickityCarousel"
 import { Lightbox } from "v2/Components/Lightbox"
-import FlickityType from "flickity"
-import React from "react"
-import styled from "styled-components"
+import React, { useState } from "react"
 import { Media } from "v2/Utils/Responsive"
-
-import { Box, ChevronIcon, Col, Flex, color, space } from "@artsy/palette"
+import {
+  Box,
+  ChevronIcon,
+  Clickable,
+  ProgressDots,
+  Swiper,
+  SwiperCell,
+  SwiperCellProps,
+  SwiperRail,
+  SwiperRailProps,
+  VisuallyHidden,
+} from "@artsy/palette"
+import { useCursor } from "use-cursor"
+import styled from "styled-components"
+import { themeGet } from "@styled-system/theme-get"
+import { compact } from "lodash"
 
 interface ArtworkBrowserProps {
-  imageAlt: string
+  imageAlt?: string | null
   images: ArtworkImageBrowser_artwork["images"]
-  setCarouselRef: (carouselRef: FlickityType) => void
 }
-
-// @ts-expect-error STRICT_NULL_CHECK
-type Image = ArtworkBrowserProps["images"][number]
 
 export const ArtworkImageBrowser = (props: ArtworkBrowserProps) => {
   return (
@@ -23,6 +30,7 @@ export const ArtworkImageBrowser = (props: ArtworkBrowserProps) => {
       <Media at="xs">
         <SmallArtworkImageBrowser {...props} />
       </Media>
+
       <Media greaterThan="xs">
         <LargeArtworkImageBrowser {...props} />
       </Media>
@@ -30,210 +38,160 @@ export const ArtworkImageBrowser = (props: ArtworkBrowserProps) => {
   )
 }
 
-export class LargeArtworkImageBrowser extends React.Component<
-  ArtworkBrowserProps
-> {
-  render() {
-    // @ts-expect-error STRICT_NULL_CHECK
-    const hasMultipleImages = this.props.images.length > 1
-    const { imageAlt, images, setCarouselRef } = this.props
+export const LargeArtworkImageBrowser: React.FC<ArtworkBrowserProps> = ({
+  imageAlt,
+  images: _images,
+}) => {
+  const images = compact(_images)
 
-    // FIXME: During SSR pass want to hide other images. Work around for lack
-    // of SSR support in Flickity.
-    // @ts-expect-error STRICT_NULL_CHECK
-    const carouselImages = typeof window === "undefined" ? [images[0]] : images
+  const { index, handleNext, handlePrev } = useCursor({ max: images.length })
 
-    const options = {
-      prevNextButtons: false,
-      wrapAround: true,
-      pageDots: hasMultipleImages,
-      cellAlign: "left",
-      draggable: false,
-      lazyLoad: true,
-    }
-
-    // The maxHeight was added in order to fix how Google bot renders the page
-    return (
-      <Container key={Math.random()}>
-        <Carousel
-          showArrows={hasMultipleImages}
-          options={options}
-          oneSlideVisible
-          height="auto"
-          setCarouselRef={setCarouselRef}
-          // @ts-expect-error STRICT_NULL_CHECK
-          data={carouselImages}
-          renderLeftArrow={({ flickity }) => (
-            <Col sm={1}>
-              <ArrowButton
-                direction="left"
-                onClick={() => {
-                  // FIXME: Flickity.prototype.previous typing is missing second
-                  // `isInstant` method.
-                  // @ts-ignore
-                  flickity.previous(false, true)
-                }}
-              />
-            </Col>
-          )}
-          renderRightArrow={({ flickity }) => (
-            <Col sm={1}>
-              <ArrowButton
-                direction="right"
-                onClick={() => {
-                  // FIXME: Flickity.prototype.next typing is missing second
-                  // `isInstant` method.
-                  // @ts-ignore
-                  flickity.next(false, true)
-                }}
-              />
-            </Col>
-          )}
-          // maxHeight is needed for google search indexing
-          render={(image: Image) => {
-            return (
-              <Flex
-                flexDirection="column"
-                justifyContent="center"
-                width="100%"
-                px={hasMultipleImages ? [2, 2, 0] : 0}
-                height="60vh"
-                maxHeight="2000px"
-              >
-                <Lightbox
-                  imageAlt={imageAlt}
-                  deepZoom={image.deepZoom}
-                  enabled={image.is_zoomable}
-                  isDefault={image.is_default}
-                  src={image.uri}
-                  initialHeight="60vh"
-                  maxHeight="2000px"
-                />
-              </Flex>
-            )
-          }}
-        />
-      </Container>
-    )
+  if (images.length === 0) {
+    return null
   }
-}
 
-export class SmallArtworkImageBrowser extends React.Component<
-  ArtworkBrowserProps
-> {
-  render() {
-    const { images, imageAlt, setCarouselRef } = this.props
-    // FIXME: During SSR pass want to hide other images. Work around for lack
-    // of SSR support in Flickity.
-    // @ts-expect-error STRICT_NULL_CHECK
-    const carouselImages = typeof window === "undefined" ? [images[0]] : images
-    // @ts-expect-error STRICT_NULL_CHECK
-    const hasMultipleImages = this.props.images.length > 1
-    const options = {
-      prevNextButtons: false,
-      wrapAround: true,
-      draggable: hasMultipleImages,
-      groupCells: 1,
-      pageDots: hasMultipleImages,
-    }
+  const image = images[index]
 
-    // The maxHeight was added in order to fix how Google bot renders the page
-    return (
-      <Container key={Math.random()}>
-        <Carousel
-          options={options}
-          // @ts-expect-error STRICT_NULL_CHECK
-          data={carouselImages}
-          oneSlideVisible
-          setCarouselRef={setCarouselRef}
-          render={(image: Image) => {
-            return (
-              <Flex
-                flexDirection="column"
-                justifyContent="center"
-                px={1}
-                width="100%"
-              >
-                <Lightbox
-                  imageAlt={imageAlt}
-                  deepZoom={image.deepZoom}
-                  enabled={image.is_zoomable}
-                  isDefault={image.is_default}
-                  src={image.uri}
-                  maxHeight="2000px"
-                  initialHeight="45vh"
-                />
-              </Flex>
-            )
-          }}
-        />
-      </Container>
-    )
-  }
-}
-
-const ArrowButton = ({ direction, onClick }) => {
   return (
-    <ArrowButtonContainer
-      flexDirection="column"
-      justifyContent="center"
-      height="100%"
-      alignItems={direction === "left" ? "flex-start" : "flex-end"}
-      onClick={onClick}
-    >
-      <ChevronIcon direction={direction} width={30} height={30} />
-    </ArrowButtonContainer>
+    <Box position="relative">
+      {images.length > 1 && (
+        <nav>
+          <NextPrevious
+            onClick={handlePrev}
+            aria-label="Previous image"
+            left={0}
+            p={2}
+          >
+            <ChevronIcon
+              direction="left"
+              // @ts-ignore
+              fill="currentColor"
+              width={30}
+              height={30}
+              aria-hidden
+            />
+          </NextPrevious>
+
+          <NextPrevious
+            onClick={handleNext}
+            aria-label="Next image"
+            right={0}
+            p={2}
+          >
+            <ChevronIcon
+              direction="right"
+              // @ts-ignore
+              fill="currentColor"
+              width={30}
+              height={30}
+              aria-hidden
+            />
+          </NextPrevious>
+        </nav>
+      )}
+
+      <Box m={2}>
+        <Lightbox
+          imageAlt={imageAlt}
+          deepZoom={image.deepZoom}
+          enabled={image.is_zoomable}
+          isDefault={image.is_default}
+          src={image.uri}
+          maxHeight="2000px"
+          initialHeight="60vh"
+        />
+      </Box>
+
+      {images.length > 1 && (
+        <>
+          <VisuallyHidden aria-live="polite" aria-atomic="true">
+            Page {index + 1} of {images.length}
+          </VisuallyHidden>
+
+          <ProgressDots
+            activeIndex={index}
+            amount={images.length}
+            variant="dash"
+          />
+        </>
+      )}
+    </Box>
   )
 }
 
-const ArrowButtonContainer = styled(Flex)`
-  cursor: pointer;
-  opacity: 0.1;
-  transition: opacity 0.25s;
+const NextPrevious = styled(Clickable)`
+  position: absolute;
+  top: 0;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: ${themeGet("colors.black30")};
+  transition: color 250ms;
 
   &:hover {
-    opacity: 1;
+    color: ${themeGet("colors.black100")};
   }
 `
 
-const Container = styled(Box)`
-  user-select: none;
+const SmallArtworkImageBrowser: React.FC<ArtworkBrowserProps> = ({
+  imageAlt,
+  images: _images,
+}) => {
+  const [index, setIndex] = useState(0)
+  const images = compact(_images)
 
-  .flickity-viewport {
-    overflow: hidden;
+  if (images.length === 0) {
+    return null
   }
 
-  .flickity-slider > div {
-    margin-left: 5px;
-    margin-right: 5px;
-    width: 100%;
+  return (
+    <>
+      <Swiper snap="center" onChange={setIndex} Cell={Cell} Rail={Rail}>
+        {images.map((image, i) => {
+          return (
+            <Lightbox
+              key={i}
+              imageAlt={imageAlt}
+              deepZoom={image.deepZoom}
+              enabled={image.is_zoomable}
+              isDefault={image.is_default}
+              src={image.uri}
+              maxHeight="2000px"
+              initialHeight="45vh"
+            />
+          )
+        })}
+      </Swiper>
+
+      {images.length > 1 && (
+        <ProgressDots
+          variant="dash"
+          amount={images.length}
+          activeIndex={index}
+        />
+      )}
+    </>
+  )
+}
+
+const Cell: React.ForwardRefExoticComponent<SwiperCellProps> = React.forwardRef(
+  (props, ref) => {
+    return (
+      <SwiperCell
+        {...props}
+        ref={ref as any}
+        display="inline-flex"
+        width="100%"
+        verticalAlign="top"
+        justifyContent="center"
+        pr={0}
+        p={2}
+      />
+    )
   }
+)
 
-  .flickity-page-dots {
-    text-align: center;
-    height: 0;
-    padding-top: ${space(1)}px;
-
-    .dot {
-      width: 4px;
-      height: 4px;
-      border-radius: 100%;
-      display: inline-block;
-      margin: ${space(0.5)}px;
-      background-color: ${color("black10")};
-    }
-
-    .dot.is-selected {
-      background-color: ${color("black100")};
-    }
-  }
-`
-
-const PageIndicator = styled.span`
-  &::after {
-    content: "•";
-  }
-`
-
-// @ts-ignore
-PageIndicator.displayName = "PageIndicator"
+const Rail: React.FC<SwiperRailProps> = props => {
+  return <SwiperRail {...props} display="block" />
+}

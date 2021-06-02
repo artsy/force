@@ -1,47 +1,64 @@
-import { Box, Col, Row } from "@artsy/palette"
-import { ArticleItem } from "v2/Apps/Artist/Routes/Articles/ArtistArticle"
+import { BorderBox, Box, Flex, Image, Join, Spacer, Text } from "@artsy/palette"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { get } from "v2/Utils/get"
-
+import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import { ArtworkDetailsArticles_artwork } from "v2/__generated__/ArtworkDetailsArticles_artwork.graphql"
 
 export interface ArtworkDetailsArticlesProps {
   artwork: ArtworkDetailsArticles_artwork
 }
 
-export const ArtworkDetailsArticles: React.SFC<ArtworkDetailsArticlesProps> = props => {
-  const { articles } = props.artwork
+export const ArtworkDetailsArticles: React.FC<ArtworkDetailsArticlesProps> = ({
+  artwork: { articles },
+}) => {
   if (!articles || articles.length < 1) {
     return null
   }
+
   return (
-    <Row>
-      <Col>
-        <Box>
-          {articles.map((article, index) => {
-            // @ts-expect-error STRICT_NULL_CHECK
-            const imageUrl = get(article, p => p.thumbnail_image.resized.url)
-            return (
-              <ArticleItem
-                // @ts-expect-error STRICT_NULL_CHECK
-                title={article.thumbnail_title}
-                // @ts-expect-error STRICT_NULL_CHECK
-                imageUrl={imageUrl}
-                // @ts-expect-error STRICT_NULL_CHECK
-                date={article.published_at}
-                // @ts-expect-error STRICT_NULL_CHECK
-                author={article.author.name}
-                // @ts-expect-error STRICT_NULL_CHECK
-                href={article.href}
-                key={index}
-                lastChild={index === articles.length - 1}
-              />
-            )
-          })}
-        </Box>
-      </Col>
-    </Row>
+    <BorderBox flexDirection="column">
+      <Join separator={<Spacer mt={2} />}>
+        {articles.map((article, index) => {
+          if (!article) return null
+
+          const image = article.thumbnailImage?.cropped
+
+          return (
+            <RouterLink
+              key={article.href ?? index}
+              to={article.href ?? ""}
+              style={{ display: "block", textDecoration: "none" }}
+            >
+              <Flex>
+                {image ? (
+                  <Image
+                    src={image.src}
+                    srcSet={image.srcSet}
+                    width={200}
+                    height={150}
+                    alt=""
+                  />
+                ) : (
+                  <Box width={200} height={150} bg="black5" />
+                )}
+
+                <Box ml={2}>
+                  <Text variant="xs" textTransform="uppercase">
+                    {article.author?.name ?? "Artsy Editorial"}
+                  </Text>
+
+                  <Text variant="lg" my={0.5}>
+                    {article.thumbnailTitle}
+                  </Text>
+
+                  <Text variant="md">{article.publishedAt}</Text>
+                </Box>
+              </Flex>
+            </RouterLink>
+          )
+        })}
+      </Join>
+    </BorderBox>
   )
 }
 
@@ -55,13 +72,15 @@ export const ArtworkDetailsArticlesFragmentContainer = createFragmentContainer(
             name
           }
           href
-          published_at: publishedAt(format: "MMM Do, YYYY")
-          thumbnail_image: thumbnailImage {
-            resized(width: 300) {
-              url
+          publishedAt(format: "MMM Do, YYYY")
+          thumbnailImage {
+            # 4:3
+            cropped(width: 200, height: 150) {
+              src
+              srcSet
             }
           }
-          thumbnail_title: thumbnailTitle
+          thumbnailTitle
         }
       }
     `,

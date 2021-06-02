@@ -1,10 +1,9 @@
 import {
   Clickable,
-  Col,
-  Grid,
   HTML,
+  Join,
   ReadMore,
-  Row,
+  Spacer,
   StackableBorderBox,
   Text,
 } from "@artsy/palette"
@@ -19,6 +18,7 @@ import {
   AnalyticsSchema,
 } from "v2/Artsy/Analytics"
 import { ContextModule } from "@artsy/cohesion"
+import { ArtworkDefinitionList } from "../ArtworkDefinitionList"
 
 export interface ArtworkDetailsAdditionalInfoProps {
   artwork: ArtworkDetailsAdditionalInfo_artwork
@@ -123,31 +123,21 @@ export const ArtworkDetailsAdditionalInfo: React.FC<ArtworkDetailsAdditionalInfo
   }
 
   return (
-    <StackableBorderBox p={2}>
-      <Grid>
+    <StackableBorderBox flexDirection="column">
+      <Join separator={<Spacer mt={1} />}>
         {displayItems.map(({ title, value }, index) => (
-          <Row
-            key={`artwork-details-${index}`}
-            pb={index === displayItems.length - 1 ? 0 : 1}
-          >
-            <Col xs={12} sm={6} md={6} lg={3}>
-              <Text variant="mediumText" pr={2}>
-                {title}
-              </Text>
-            </Col>
-
-            <Col xs={12} sm={6} md={6} lg={9}>
-              <HTML variant="text" color="black60">
-                {React.isValidElement(value) ? (
-                  value
-                ) : (
-                  <ReadMore maxChars={140} content={value as string} />
-                )}
-              </HTML>
-            </Col>
-          </Row>
+          <ArtworkDefinitionList key={title + index} term={title}>
+            <HTML variant="xs" color="black60">
+              {/* TODO: not sure why this check is here */}
+              {React.isValidElement(value) ? (
+                value
+              ) : (
+                <ReadMore maxChars={140} content={value as string} />
+              )}
+            </HTML>
+          </ArtworkDefinitionList>
         ))}
-      </Grid>
+      </Join>
     </StackableBorderBox>
   )
 }

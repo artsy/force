@@ -1,4 +1,11 @@
-import { CertificateIcon, Flex, Modal, Text, Link } from "@artsy/palette"
+import {
+  CertificateIcon,
+  Flex,
+  Modal,
+  Text,
+  Link,
+  Spacer,
+} from "@artsy/palette"
 import { AuthenticityCertificate_artwork } from "v2/__generated__/AuthenticityCertificate_artwork.graphql"
 import React, { useState } from "react"
 import { createFragmentContainer } from "react-relay"
@@ -10,68 +17,70 @@ interface AuthenticityCertificateProps
   artwork: AuthenticityCertificate_artwork
 }
 
-// @ts-expect-error STRICT_NULL_CHECK
 export const AuthenticityCertificate: React.FC<AuthenticityCertificateProps> = ({
   artwork,
-  ...other
+  ...rest
 }) => {
   const [isShowingModal, setIsShowingModal] = useState(false)
 
-  const onDismissModal = () => {
+  const handleClose = () => {
     setIsShowingModal(false)
   }
 
-  const onOpenModal = () => {
+  const handleClick = () => {
     setIsShowingModal(true)
   }
 
-  return (
-    artwork.hasCertificateOfAuthenticity &&
-    !artwork.is_biddable && (
-      <>
-        <TrustSignal
-          onClick={onOpenModal.bind(this)}
-          Icon={<CertificateIcon />}
-          label="Certificate of authenticity"
-          description={"This work includes a certificate of authenticity."}
-          {...other}
-        />
+  return artwork.hasCertificateOfAuthenticity && !artwork.is_biddable ? (
+    <>
+      <TrustSignal
+        onClick={handleClick}
+        Icon={<CertificateIcon />}
+        label="Certificate of authenticity"
+        description="This work includes a certificate of authenticity."
+        {...rest}
+      />
 
-        <Modal
-          show={isShowingModal}
-          onClose={onDismissModal}
-          title="Certificate of Authenticity"
-        >
-          <Flex flexGrow={1} flexDirection="column">
-            <Text variant="text" pb={2}>
-              A certificate of authenticity (COA) is a document from an
-              authoritative source that verifies the artwork’s authenticity.
-              While many COAs are signed by the artist, others will be signed by
-              the representing gallery or the printmaker who collaborated with
-              the artist on the work. For secondary market works, authorized
-              estates or foundations are often the issuing party.
-            </Text>
-            <Text variant="text" pb={2}>
-              COAs typically include the name of the artist, the details (title,
-              date, medium, dimensions) of the work in question, and whenever
-              possible an image of the work.
-            </Text>
-            <Text variant="text" pb={2}>
-              Read more about artwork authenticity in our{" "}
-              <Link
-                href="https://support.artsy.net/hc/en-us/articles/360058123933-What-Counts-as-an-Artwork-s-Proof-of-Authenticity-"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Help Center
-              </Link>
-              .
-            </Text>
-          </Flex>
-        </Modal>
-      </>
-    )
-  )
+      <Modal
+        show={isShowingModal}
+        onClose={handleClose}
+        title="Certificate of Authenticity"
+      >
+        <Flex flexGrow={1} flexDirection="column">
+          <Text variant="sm">
+            A certificate of authenticity (COA) is a document from an
+            authoritative source that verifies the artwork’s authenticity. While
+            many COAs are signed by the artist, others will be signed by the
+            representing gallery or the printmaker who collaborated with the
+            artist on the work. For secondary market works, authorized estates
+            or foundations are often the issuing party.
+          </Text>
+
+          <Spacer mt={2} />
+
+          <Text variant="sm">
+            COAs typically include the name of the artist, the details (title,
+            date, medium, dimensions) of the work in question, and whenever
+            possible an image of the work.
+          </Text>
+
+          <Spacer mt={2} />
+
+          <Text variant="sm">
+            Read more about artwork authenticity in our{" "}
+            <Link
+              href="https://support.artsy.net/hc/en-us/articles/360058123933-What-Counts-as-an-Artwork-s-Proof-of-Authenticity-"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Help Center
+            </Link>
+            .
+          </Text>
+        </Flex>
+      </Modal>
+    </>
+  ) : null
 }
 
 export const AuthenticityCertificateFragmentContainer = createFragmentContainer(

@@ -1,20 +1,18 @@
-import { Box, Tab, Tabs } from "@artsy/palette"
+import { BorderBox, Box, HTML, Tab, Tabs } from "@artsy/palette"
 import { renderWithLoadProgress } from "v2/Artsy/Relay/renderWithLoadProgress"
 import React, { Component, useContext } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
-import { ArtworkDetailsAboutTheWorkFromArtsyFragmentContainer as AboutTheWorkFromArtsy } from "./ArtworkDetailsAboutTheWorkFromArtsy"
-import { ArtworkDetailsAboutTheWorkFromPartnerFragmentContainer as AboutTheWorkFromPartner } from "./ArtworkDetailsAboutTheWorkFromPartner"
-import { ArtworkDetailsAdditionalInfoFragmentContainer as AdditionalInfo } from "./ArtworkDetailsAdditionalInfo"
-import { ArtworkDetailsArticlesFragmentContainer as Articles } from "./ArtworkDetailsArticles"
-
+import { ArtworkDetailsAboutTheWorkFromArtsyFragmentContainer } from "./ArtworkDetailsAboutTheWorkFromArtsy"
+import { ArtworkDetailsAboutTheWorkFromPartnerFragmentContainer } from "./ArtworkDetailsAboutTheWorkFromPartner"
+import { ArtworkDetailsAdditionalInfoFragmentContainer } from "./ArtworkDetailsAdditionalInfo"
+import { ArtworkDetailsArticlesFragmentContainer } from "./ArtworkDetailsArticles"
 import { ArtworkDetails_artwork } from "v2/__generated__/ArtworkDetails_artwork.graphql"
 import { ArtworkDetailsQuery } from "v2/__generated__/ArtworkDetailsQuery.graphql"
-
 import { SystemContext } from "v2/Artsy"
 import { track } from "v2/Artsy/Analytics"
 import * as Schema from "v2/Artsy/Analytics/Schema"
-import { SystemQueryRenderer as QueryRenderer } from "v2/Artsy/Relay/SystemQueryRenderer"
+import { SystemQueryRenderer } from "v2/Artsy/Relay/SystemQueryRenderer"
 import Events from "v2/Utils/Events"
 
 export interface ArtworkDetailsProps {
@@ -44,45 +42,60 @@ export class ArtworkDetails extends Component<ArtworkDetailsProps> {
 
   render() {
     const { artwork } = this.props
+
     return (
-      <ArtworkDetailsContainer mt={[4, 0]} mb={2} data-test="artworkDetails">
+      <ArtworkDetailsContainer data-test="artworkDetails">
         <Tabs onChange={this.trackTabChange.bind(this)}>
           <Tab name="About the work" data={{ trackingLabel: "about_the_work" }}>
-            <AboutTheWorkFromArtsy artwork={artwork} />
-            <AboutTheWorkFromPartner artwork={artwork} />
-            <AdditionalInfo artwork={artwork} />
+            <ArtworkDetailsAboutTheWorkFromArtsyFragmentContainer
+              artwork={artwork}
+            />
+            <ArtworkDetailsAboutTheWorkFromPartnerFragmentContainer
+              artwork={artwork}
+            />
+            <ArtworkDetailsAdditionalInfoFragmentContainer artwork={artwork} />
           </Tab>
+
           {/* @ts-expect-error STRICT_NULL_CHECK */ null}
           {artwork.articles && artwork.articles.length && (
             <Tab name="Articles" data={{ trackingLabel: "articles" }}>
-              <Articles artwork={artwork} />
+              <ArtworkDetailsArticlesFragmentContainer artwork={artwork} />
             </Tab>
           )}
+
           {/* @ts-expect-error STRICT_NULL_CHECK */ null}
           {artwork.exhibition_history && (
             <Tab
               name="Exhibition history"
               data={{ trackingLabel: "exhibition_history" }}
             >
-              <ExhibitionHistory
-                dangerouslySetInnerHTML={{ __html: artwork.exhibition_history }}
-              />
+              <ExhibitionHistory>
+                <BorderBox>
+                  <HTML variant="sm" html={artwork.exhibition_history} />
+                </BorderBox>
+              </ExhibitionHistory>
             </Tab>
           )}
+
           {/* @ts-expect-error STRICT_NULL_CHECK */ null}
           {artwork.literature && (
             <Tab name="Bibliography" data={{ trackingLabel: "bibliography" }}>
-              <Literature
-                dangerouslySetInnerHTML={{ __html: artwork.literature }}
-              />
+              <Literature>
+                <BorderBox>
+                  <HTML variant="sm" html={artwork.literature} />
+                </BorderBox>
+              </Literature>
             </Tab>
           )}
+
           {/* @ts-expect-error STRICT_NULL_CHECK */ null}
           {artwork.provenance && (
             <Tab name="Provenance" data={{ trackingLabel: "provenance" }}>
-              <Provenance
-                dangerouslySetInnerHTML={{ __html: artwork.provenance }}
-              />
+              <Provenance>
+                <BorderBox>
+                  <HTML variant="sm" html={artwork.provenance} />
+                </BorderBox>
+              </Provenance>
             </Tab>
           )}
         </Tabs>
@@ -118,7 +131,7 @@ export const ArtworkDetailsQueryRenderer = ({
 }) => {
   const { relayEnvironment } = useContext(SystemContext)
   return (
-    <QueryRenderer<ArtworkDetailsQuery>
+    <SystemQueryRenderer<ArtworkDetailsQuery>
       environment={relayEnvironment}
       variables={{ artworkID }}
       query={graphql`
@@ -133,15 +146,7 @@ export const ArtworkDetailsQueryRenderer = ({
   )
 }
 
-// For block-level HTML (CMS) tab content collapse the first element's top margin
-// so that content properly aligns to the top of the container.
-const TabContainer = styled(Box)`
-  > * {
-    margin-block-start: 0;
-    white-space: pre-wrap;
-  }
-`
-
+const TabContainer = styled(Box)``
 const ArtworkDetailsContainer = TabContainer
 const ExhibitionHistory = TabContainer
 const Literature = TabContainer

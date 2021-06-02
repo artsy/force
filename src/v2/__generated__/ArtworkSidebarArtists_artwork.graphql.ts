@@ -10,7 +10,13 @@ export type ArtworkSidebarArtists_artwork = {
         readonly internalID: string;
         readonly slug: string;
         readonly name: string | null;
+        readonly formattedNationalityAndBirthday: string | null;
         readonly href: string | null;
+        readonly avatar: {
+            readonly cropped: {
+                readonly src: string;
+            } | null;
+        } | null;
         readonly " $fragmentRefs": FragmentRefs<"FollowArtistButton_artist">;
     } | null> | null;
     readonly " $refType": "ArtworkSidebarArtists_artwork";
@@ -83,7 +89,54 @@ const node: ReaderFragment = {
           "alias": null,
           "args": null,
           "kind": "ScalarField",
+          "name": "formattedNationalityAndBirthday",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
           "name": "href",
+          "storageKey": null
+        },
+        {
+          "alias": "avatar",
+          "args": null,
+          "concreteType": "Image",
+          "kind": "LinkedField",
+          "name": "image",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": [
+                {
+                  "kind": "Literal",
+                  "name": "height",
+                  "value": 300
+                },
+                {
+                  "kind": "Literal",
+                  "name": "width",
+                  "value": 300
+                }
+              ],
+              "concreteType": "CroppedImageUrl",
+              "kind": "LinkedField",
+              "name": "cropped",
+              "plural": false,
+              "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "src",
+                  "storageKey": null
+                }
+              ],
+              "storageKey": "cropped(height:300,width:300)"
+            }
+          ],
           "storageKey": null
         },
         {
@@ -103,5 +156,5 @@ const node: ReaderFragment = {
   ],
   "type": "Artwork"
 };
-(node as any).hash = '961d703b4bbc396cc6aaf106c649a11d';
+(node as any).hash = '072bbede5100199180b1b913f242fd11';
 export default node;

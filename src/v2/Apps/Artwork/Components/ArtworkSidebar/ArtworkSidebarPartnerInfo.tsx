@@ -1,9 +1,9 @@
-import { Box, Flex, LocationIcon, Spacer, Text } from "@artsy/palette"
+import { Flex, LocationIcon, Spacer, Text } from "@artsy/palette"
 import { filterLocations } from "v2/Apps/Artwork/Utils/filterLocations"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-
 import { ArtworkSidebarPartnerInfo_artwork } from "v2/__generated__/ArtworkSidebarPartnerInfo_artwork.graphql"
+import { RouterLink } from "v2/Artsy/Router/RouterLink"
 
 export interface ArtworkSidebarPartnerInfoProps {
   artwork: ArtworkSidebarPartnerInfo_artwork
@@ -14,39 +14,32 @@ export class ArtworkSidebarPartnerInfo extends React.Component<
 > {
   renderPartnerName() {
     const sale = this.props.artwork.sale
+
     if (sale) {
       return (
-        <Text variant="subtitle" display="inline-block">
-          {/* @ts-expect-error STRICT_NULL_CHECK */}
-          <a href={sale.href}>{sale.name}</a>
+        <Text variant="md">
+          <RouterLink to={sale.href ?? ""}>{sale.name}</RouterLink>
         </Text>
       )
     }
 
     const partner = this.props.artwork.partner
+
     if (!partner) {
       return null
     }
 
     return partner.href ? (
-      <Text variant="subtitle" display="inline-block">
-        <a href={partner.href}>{partner.name}</a>
+      <Text variant="md">
+        <RouterLink to={partner.href}>{partner.name}</RouterLink>
       </Text>
     ) : (
-      <Text variant="subtitle" display="inline-block">
-        {partner.name}
-      </Text>
+      <Text variant="md">{partner.name}</Text>
     )
   }
   renderLocations(locationNames) {
     return (
-      <Text
-        variant="caption"
-        color="black60"
-        display="inline-block"
-        pl={1}
-        pt={0.3}
-      >
+      <Text variant="xs" color="black60" pl={1}>
         {locationNames.join(", ")}
       </Text>
     )
@@ -61,24 +54,25 @@ export class ArtworkSidebarPartnerInfo extends React.Component<
       artwork.partner.locations.length > 0 &&
       // @ts-expect-error STRICT_NULL_CHECK
       filterLocations(artwork.partner.locations)
+
     return (
-      <Box>
-        <Spacer mb={3} />
+      <>
+        <Spacer mt={2} />
+
         {this.renderPartnerName()}
+
         {locationNames && locationNames.length > 0 && (
-          <Box>
-            <Flex width="100%">
-              <Flex flexDirection="column" pt={0.3}>
-                <LocationIcon />
-              </Flex>
-              <Flex flexDirection="column">
-                {this.renderLocations(locationNames)}
-              </Flex>
+          <Flex mt={1}>
+            <LocationIcon />
+
+            <Flex flexDirection="column">
+              {this.renderLocations(locationNames)}
             </Flex>
-          </Box>
+          </Flex>
         )}
-        <Spacer mb={3} />
-      </Box>
+
+        <Spacer mt={2} />
+      </>
     )
   }
 }

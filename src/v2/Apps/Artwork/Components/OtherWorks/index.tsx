@@ -1,9 +1,9 @@
 import { ContextModule } from "@artsy/cohesion"
 import { Box, Join, Spacer } from "@artsy/palette"
 import { OtherWorks_artwork } from "v2/__generated__/OtherWorks_artwork.graphql"
-import { OtherAuctionsQueryRenderer as OtherAuctions } from "v2/Apps/Artwork/Components/OtherAuctions"
+import { OtherAuctionsQueryRenderer } from "v2/Apps/Artwork/Components/OtherAuctions"
 import { Header } from "v2/Apps/Artwork/Components/OtherWorks/Header"
-import { RelatedWorksArtworkGridRefetchContainer as RelatedWorksArtworkGrid } from "v2/Apps/Artwork/Components/OtherWorks/RelatedWorksArtworkGrid"
+import { RelatedWorksArtworkGridRefetchContainer } from "v2/Apps/Artwork/Components/OtherWorks/RelatedWorksArtworkGrid"
 import { SystemContextProps, withSystemContext } from "v2/Artsy"
 import { track, useTracking } from "v2/Artsy/Analytics"
 import * as Schema from "v2/Artsy/Analytics/Schema"
@@ -85,20 +85,24 @@ export const OtherWorks = track()(
     return (
       <>
         {gridsToShow && gridsToShow.length > 0 && (
-          <Join separator={<Spacer my={3} />}>
+          <Join separator={<Spacer mt={6} />}>
             {gridsToShow.map((grid, index) => {
               const contextModule = contextGridTypeToV2ContextModule(
                 // @ts-expect-error STRICT_NULL_CHECK
                 grid.__typename
               )
+
               return (
                 <Box key={`Grid-${index}`} data-test={contextModule}>
                   {/* @ts-expect-error STRICT_NULL_CHECK */}
                   <Header title={grid.title} buttonHref={grid.ctaHref} />
+
+                  <Spacer mt={4} />
+
                   <ArtworkGrid
                     // @ts-expect-error STRICT_NULL_CHECK
                     artworks={grid.artworksConnection}
-                    columnCount={[2, 3, 4]}
+                    columnCount={[2, 3, 4, 4]}
                     preloadImageCount={0}
                     mediator={props.mediator}
                     contextModule={contextModule}
@@ -118,17 +122,23 @@ export const OtherWorks = track()(
             })}
           </Join>
         )}
+
         {!(
           context &&
           context.__typename === "ArtworkContextAuction" &&
           !(sale && sale.is_closed)
         ) && (
-          <Box mt={3}>
-            <RelatedWorksArtworkGrid artwork={props.artwork} />
-          </Box>
+          <>
+            <Spacer mt={6} />
+            <RelatedWorksArtworkGridRefetchContainer artwork={props.artwork} />
+          </>
         )}
+
         {context && context.__typename === "ArtworkContextAuction" && (
-          <OtherAuctions />
+          <>
+            <Spacer mt={6} />
+            <OtherAuctionsQueryRenderer />
+          </>
         )}
       </>
     )

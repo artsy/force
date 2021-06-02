@@ -1,5 +1,4 @@
-import * as qs from "qs"
-import { data as sd } from "sharify"
+import { stringify } from "qs"
 
 export const createCollectUrl = ({
   dimension,
@@ -24,7 +23,7 @@ export const createCollectUrl = ({
     dimensionRange = "*-*"
   }
 
-  const query = qs.stringify({
+  const query = stringify({
     page: 1,
     sort: "-decayed_merch",
     acquireable: "true",
@@ -34,7 +33,7 @@ export const createCollectUrl = ({
     artist_id: artistId,
   })
 
-  const path = [sd.APP_URL, "collect", filterCategories[category]]
+  const path = ["/collect", filterCategories[category]]
     .filter(Boolean)
     .join("/")
 

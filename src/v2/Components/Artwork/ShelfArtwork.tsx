@@ -80,8 +80,7 @@ const ShelfArtwork: React.FC<ShelfArtworkProps> = ({
   return (
     <Box>
       <RouterLink
-        // @ts-expect-error STRICT_NULL_CHECK
-        to={artwork.href}
+        to={artwork?.href ?? ""}
         noUnderline
         onClick={() => {
           onClick && onClick()
@@ -89,12 +88,9 @@ const ShelfArtwork: React.FC<ShelfArtworkProps> = ({
       >
         <ResponsiveContainer>
           <Image
-            // @ts-expect-error STRICT_NULL_CHECK
-            src={artwork.image?.resized.src}
-            // @ts-expect-error STRICT_NULL_CHECK
-            srcSet={artwork.image?.resized.srcSet}
-            // @ts-expect-error STRICT_NULL_CHECK
-            width={artwork.image?.resized.width}
+            src={artwork.image?.resized?.src!}
+            srcSet={artwork.image?.resized?.srcSet}
+            width={artwork.image?.resized?.width}
             maxHeight={[IMG_HEIGHT.mobile, IMG_HEIGHT.desktop]}
             lazyLoad={lazyLoad}
             style={{ objectFit: "contain" }}
@@ -118,6 +114,7 @@ const ShelfArtwork: React.FC<ShelfArtworkProps> = ({
           hidePartnerName={hidePartnerName}
           hideArtistName={hideArtistName}
           hideSaleInfo={hideSaleInfo}
+          maxWidth={artwork.image?.resized?.width}
         />
       )}
     </Box>

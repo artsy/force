@@ -16,7 +16,7 @@ export type ArtistSeriesArtworkRail_artwork = {
                         readonly node: {
                             readonly slug: string;
                             readonly internalID: string;
-                            readonly " $fragmentRefs": FragmentRefs<"FillwidthItem_artwork">;
+                            readonly " $fragmentRefs": FragmentRefs<"ShelfArtwork_artwork">;
                         } | null;
                     } | null> | null;
                 } | null;
@@ -128,7 +128,7 @@ return {
                             {
                               "args": null,
                               "kind": "FragmentSpread",
-                              "name": "FillwidthItem_artwork"
+                              "name": "ShelfArtwork_artwork"
                             }
                           ],
                           "storageKey": null
@@ -152,5 +152,5 @@ return {
   "type": "Artwork"
 };
 })();
-(node as any).hash = '8b15bbaacf09d0707448e986c263cd76';
+(node as any).hash = 'cfb241b354625af4e82f02523ff0b0a0';
 export default node;

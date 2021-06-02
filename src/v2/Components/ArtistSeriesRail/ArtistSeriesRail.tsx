@@ -1,4 +1,4 @@
-import { Shelf, Text } from "@artsy/palette"
+import { Shelf, Spacer, Text } from "@artsy/palette"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtistSeriesRail_artist } from "v2/__generated__/ArtistSeriesRail_artist.graphql"
@@ -26,9 +26,11 @@ const ArtistSeriesRail: React.FC<Props> = ({
 
   return (
     <>
-      <Text variant="lg" as="h3" mb={2}>
+      <Text variant="lg" as="h3">
         {title ?? "Artist Series"}
       </Text>
+
+      <Spacer mt={4} />
 
       <Shelf showProgress={showProgress}>
         {series.map((node, index) => {

@@ -1,20 +1,9 @@
-import {
-  BorderBox,
-  Box,
-  Flex,
-  Image,
-  Link,
-  ResponsiveImage,
-  Sans,
-  Serif,
-} from "@artsy/palette"
+import { Image, ResponsiveBox, Spacer, Text } from "@artsy/palette"
 import { AuctionCard_sale } from "v2/__generated__/AuctionCard_sale.graphql"
-import { Truncator } from "v2/Components/Truncator"
 import { DateTime } from "luxon"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { get } from "v2/Utils/get"
-import { Media } from "v2/Utils/Responsive"
+import { RouterLink } from "v2/Artsy/Router/RouterLink"
 
 export const relativeTime = (timeIn, now) => {
   const time = DateTime.fromISO(timeIn)
@@ -35,14 +24,14 @@ export const upcomingLabel = (
   now = DateTime.local()
 ) => {
   const {
-    start_at: startAt,
-    end_at: endAt,
-    live_start_at: liveStartAt,
-    is_closed: isClosed,
-    is_live_open: isLiveOpen,
-    is_preview: isPreview,
+    startAt,
+    endAt,
+    liveStartAt,
+    isClosed,
+    isLiveOpen,
+    isPreview,
     registrationStatus,
-    is_registration_closed: isRegistrationClosed,
+    isRegistrationClosed,
   } = sale
 
   const isRegistered = !!registrationStatus
@@ -57,8 +46,9 @@ export const upcomingLabel = (
     } else if (isRegistered || isRegistrationClosed) {
       return `Live in ${relativeTime(liveStartAt, now)}`
     } else {
-      // @ts-expect-error STRICT_NULL_CHECK
-      const dateTime = DateTime.fromISO(liveStartAt).setZone("America/New_York")
+      const dateTime = DateTime.fromISO(liveStartAt ?? "").setZone(
+        "America/New_York"
+      )
       return `Register by ${dateTime.monthShort} ${dateTime.day}`
     }
   } else {
@@ -67,129 +57,91 @@ export const upcomingLabel = (
 }
 
 export interface AuctionCardProps {
-  src: string
-  href: string
-  headline: string
-  subHeadline: string
-  badge: string
-  isGalleryAuction: boolean
-  isBenefit: boolean
-}
-
-export class AuctionCard extends React.Component<AuctionCardProps> {
-  render() {
-    return (
-      <Link href={this.props.href} noUnderline>
-        <Media at="xs">
-          <SmallAuctionCard {...this.props} />
-        </Media>
-        <Media greaterThan="xs">
-          <LargeAuctionCard {...this.props} />
-        </Media>
-      </Link>
-    )
-  }
-}
-
-export const LargeAuctionCard = props => (
-  <BorderBox hover flexDirection="column" height="300px">
-    <Serif size="3t" weight="semibold">
-      <Truncator maxLineCount={1}>{props.headline}</Truncator>
-    </Serif>
-    <Serif size="3t">
-      <Truncator maxLineCount={1}>
-        {!props.isGalleryAuction && !props.isBenefit ? (
-          props.subHeadline
-        ) : (
-          <>&nbsp;</>
-        )}
-      </Truncator>
-    </Serif>
-    {props.src && (
-      <Box height="200px">
-        <ResponsiveImage src={props.src} my={2} pb="160px" />
-      </Box>
-    )}
-    <Sans size="2" weight="medium">
-      <Truncator maxLineCount={1}>{props.badge}</Truncator>
-    </Sans>
-  </BorderBox>
-)
-
-export const SmallAuctionCard = props => (
-  <BorderBox hover width="100%" justifyContent="space-between">
-    <Flex flexDirection="column" justifyContent="space-between">
-      <Box>
-        <Serif size="3t" weight="semibold">
-          <Truncator maxLineCount={1}>{props.headline}</Truncator>
-        </Serif>
-        {props.subHeadline && !props.isGalleryAuction && !props.isBenefit && (
-          <Serif size="3t">
-            <Truncator maxLineCount={2}>{props.subHeadline}</Truncator>
-          </Serif>
-        )}
-      </Box>
-      <Sans size="2" weight="medium">
-        <Truncator maxLineCount={1}>{props.badge}</Truncator>
-      </Sans>
-    </Flex>
-    {props.src && (
-      <Image src={props.src} alt={props.headline} height="82px" ml={2} />
-    )}
-  </BorderBox>
-)
-
-export const AuctionCardFragmentContainer = createFragmentContainer<{
   sale: AuctionCard_sale
-}>(
-  // @ts-expect-error STRICT_NULL_CHECK
-  props => {
-    const { sale } = props
+}
 
-    if (!sale) return
+export const AuctionCard: React.FC<AuctionCardProps> = ({ sale }) => {
+  if (!sale) return null
 
-    const statusLabel = upcomingLabel(sale)
-    // @ts-expect-error STRICT_NULL_CHECK
-    const imageURL = get(sale, s => s.cover_image.cropped.url)
-    // @ts-expect-error STRICT_NULL_CHECK
-    const partnerName = get(sale, s => s.partner.name)
+  const statusLabel = upcomingLabel(sale)
+  const image = sale.coverImage?.cropped
 
-    return (
-      // @ts-expect-error STRICT_NULL_CHECK
-      <AuctionCard
-        src={imageURL}
-        href={sale.href}
-        headline={partnerName}
-        subHeadline={sale.name}
-        badge={statusLabel}
-        isGalleryAuction={sale.isGalleryAuction}
-        isBenefit={sale.isBenefit}
-      />
-    )
-  },
+  return (
+    <RouterLink
+      to={sale.href ?? ""}
+      style={{ display: "block", textDecoration: "none" }}
+    >
+      <ResponsiveBox
+        aspectWidth={4}
+        aspectHeight={3}
+        maxWidth="100%"
+        bg="black10"
+      >
+        {image && (
+          <Image
+            src={image.src}
+            srcSet={image.srcSet}
+            width="100%"
+            height="100%"
+            alt=""
+            lazyLoad
+          />
+        )}
+      </ResponsiveBox>
+
+      <Spacer mt={2} />
+
+      {!sale.isGalleryAuction && !sale.isBenefit && (
+        <>
+          <Text variant="xs" textTransform="uppercase" overflowEllipsis>
+            {sale.name}
+          </Text>
+
+          <Spacer mt={1} />
+        </>
+      )}
+
+      {sale.partner?.name && (
+        <>
+          <Text variant="lg" overflowEllipsis>
+            {sale.partner?.name}
+          </Text>
+        </>
+      )}
+
+      <Text variant="lg" color="black60" overflowEllipsis>
+        {statusLabel}
+      </Text>
+    </RouterLink>
+  )
+}
+
+export const AuctionCardFragmentContainer = createFragmentContainer(
+  AuctionCard,
   {
     sale: graphql`
       fragment AuctionCard_sale on Sale {
-        cover_image: coverImage {
-          cropped(width: 200, height: 180) {
-            url
+        coverImage {
+          cropped(width: 445, height: 334) {
+            src
+            srcSet
           }
         }
         isBenefit
         isGalleryAuction
-        end_at: endAt
+        endAt
         href
         slug
-        is_live_open: isLiveOpen
-        is_preview: isPreview
-        live_start_at: liveStartAt
+        isLiveOpen
+        isPreview
+        liveStartAt
         registrationStatus {
           internalID
         }
-        is_registration_closed: isRegistrationClosed
+        isRegistrationClosed
         name
-        start_at: startAt
-        is_closed: isClosed
+        startAt
+        isClosed
         partner {
           name
         }

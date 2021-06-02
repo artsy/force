@@ -4,26 +4,27 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type AuctionCard_sale = {
-    readonly cover_image: {
+    readonly coverImage: {
         readonly cropped: {
-            readonly url: string;
+            readonly src: string;
+            readonly srcSet: string;
         } | null;
     } | null;
     readonly isBenefit: boolean | null;
     readonly isGalleryAuction: boolean | null;
-    readonly end_at: string | null;
+    readonly endAt: string | null;
     readonly href: string | null;
     readonly slug: string;
-    readonly is_live_open: boolean | null;
-    readonly is_preview: boolean | null;
-    readonly live_start_at: string | null;
+    readonly isLiveOpen: boolean | null;
+    readonly isPreview: boolean | null;
+    readonly liveStartAt: string | null;
     readonly registrationStatus: {
         readonly internalID: string;
     } | null;
-    readonly is_registration_closed: boolean | null;
+    readonly isRegistrationClosed: boolean | null;
     readonly name: string | null;
-    readonly start_at: string | null;
-    readonly is_closed: boolean | null;
+    readonly startAt: string | null;
+    readonly isClosed: boolean | null;
     readonly partner: {
         readonly name: string | null;
     } | null;
@@ -52,7 +53,7 @@ return {
   "name": "AuctionCard_sale",
   "selections": [
     {
-      "alias": "cover_image",
+      "alias": null,
       "args": null,
       "concreteType": "Image",
       "kind": "LinkedField",
@@ -65,12 +66,12 @@ return {
             {
               "kind": "Literal",
               "name": "height",
-              "value": 180
+              "value": 334
             },
             {
               "kind": "Literal",
               "name": "width",
-              "value": 200
+              "value": 445
             }
           ],
           "concreteType": "CroppedImageUrl",
@@ -82,11 +83,18 @@ return {
               "alias": null,
               "args": null,
               "kind": "ScalarField",
-              "name": "url",
+              "name": "src",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "srcSet",
               "storageKey": null
             }
           ],
-          "storageKey": "cropped(height:180,width:200)"
+          "storageKey": "cropped(height:334,width:445)"
         }
       ],
       "storageKey": null
@@ -106,7 +114,7 @@ return {
       "storageKey": null
     },
     {
-      "alias": "end_at",
+      "alias": null,
       "args": null,
       "kind": "ScalarField",
       "name": "endAt",
@@ -127,21 +135,21 @@ return {
       "storageKey": null
     },
     {
-      "alias": "is_live_open",
+      "alias": null,
       "args": null,
       "kind": "ScalarField",
       "name": "isLiveOpen",
       "storageKey": null
     },
     {
-      "alias": "is_preview",
+      "alias": null,
       "args": null,
       "kind": "ScalarField",
       "name": "isPreview",
       "storageKey": null
     },
     {
-      "alias": "live_start_at",
+      "alias": null,
       "args": null,
       "kind": "ScalarField",
       "name": "liveStartAt",
@@ -166,7 +174,7 @@ return {
       "storageKey": null
     },
     {
-      "alias": "is_registration_closed",
+      "alias": null,
       "args": null,
       "kind": "ScalarField",
       "name": "isRegistrationClosed",
@@ -174,14 +182,14 @@ return {
     },
     (v0/*: any*/),
     {
-      "alias": "start_at",
+      "alias": null,
       "args": null,
       "kind": "ScalarField",
       "name": "startAt",
       "storageKey": null
     },
     {
-      "alias": "is_closed",
+      "alias": null,
       "args": null,
       "kind": "ScalarField",
       "name": "isClosed",
@@ -203,5 +211,5 @@ return {
   "type": "Sale"
 };
 })();
-(node as any).hash = '8f37c0394eff3ea1633cd5d360966414';
+(node as any).hash = '3d9169e9254f7d481544277d0bb6dba3';
 export default node;

@@ -1,4 +1,4 @@
-import { Link } from "@artsy/palette"
+import { Clickable, Spacer } from "@artsy/palette"
 import { ArtworkSidebarCurrentBidInfo_artwork } from "v2/__generated__/ArtworkSidebarCurrentBidInfo_artwork.graphql"
 import { SystemContextConsumer } from "v2/Artsy"
 import React from "react"
@@ -11,7 +11,6 @@ import {
   Flex,
   LosingBidIcon,
   Separator,
-  Spacer,
   Text,
   WinningBidIcon,
 } from "@artsy/palette"
@@ -37,8 +36,7 @@ export class ArtworkSidebarCurrentBidInfo extends React.Component<
     mediator &&
       mediator.trigger &&
       mediator.trigger("openAuctionBuyerPremium", {
-        // @ts-expect-error STRICT_NULL_CHECK
-        auctionId: artwork.sale.internalID,
+        auctionId: artwork.sale?.internalID,
       })
   }
 
@@ -46,28 +44,26 @@ export class ArtworkSidebarCurrentBidInfo extends React.Component<
     const { artwork } = this.props
 
     // We do not have reliable Bid info for artworks in Live sales in progress
-    // @ts-expect-error STRICT_NULL_CHECK
-    if (artwork.sale.is_live_open) return null
+    if (artwork.sale?.is_live_open) {
+      return null
+    }
 
-    // @ts-expect-error STRICT_NULL_CHECK
-    if (artwork.sale.is_closed) {
+    if (artwork.sale?.is_closed) {
       return (
-        <Box>
-          <Separator mb={3} />
+        <>
+          <Separator my={2} />
+
           <Text variant="subtitle" color="black100">
             Bidding closed
           </Text>
-          <Spacer mb={3} />
-        </Box>
+        </>
       )
     }
 
     // Don't display anything if there is no starting bid info
     if (!artwork.sale_artwork || !artwork.sale_artwork.current_bid) return null
 
-    // @ts-expect-error STRICT_NULL_CHECK
-    const bidsCount = get(artwork, a => a.sale_artwork.counts.bidder_positions)
-    // @ts-expect-error STRICT_NULL_CHECK
+    const bidsCount = artwork.sale_artwork?.counts?.bidder_positions ?? 0
     const bidsPresent = bidsCount > 0
     const bidColor =
       artwork.sale_artwork.is_with_reserve &&
@@ -76,47 +72,50 @@ export class ArtworkSidebarCurrentBidInfo extends React.Component<
         ? "red100"
         : "black60"
 
-    const bidTextParts = []
+    const bidTextParts: string[] = []
     let reserveMessage = artwork.sale_artwork.reserve_message
+
     if (bidsPresent) {
-      // @ts-expect-error STRICT_NULL_CHECK
       bidTextParts.push(bidsCount === 1 ? "1 bid" : bidsCount + " bids")
       if (reserveMessage) reserveMessage = reserveMessage.toLocaleLowerCase()
     }
+
     if (reserveMessage) {
       reserveMessage = reserveMessage + "."
-      // @ts-expect-error STRICT_NULL_CHECK
       bidTextParts.push(reserveMessage)
     }
+
     const bidText = bidTextParts.join(", ")
 
     /**
      * NOTE: This is making an incorrect assumption that there could only ever
-     *       be 1 live sale with this work. When we run into that case, there is
-     *       likely design work to be done too, so we can adjust this then.
+     * be 1 live sale with this work. When we run into that case, there is
+     * likely design work to be done too, so we can adjust this then.
      */
     const myLotStanding = artwork.myLotStanding && artwork.myLotStanding[0]
     const myBidPresent = !!(myLotStanding && myLotStanding.most_recent_bid)
-    // @ts-expect-error STRICT_NULL_CHECK
-    const myMostRecent = myBidPresent && myLotStanding.most_recent_bid
+    const myMostRecent = myBidPresent && myLotStanding?.most_recent_bid
     const myBidWinning =
       // @ts-expect-error STRICT_NULL_CHECK
       myBidPresent && get(myLotStanding, s => s.active_bid.is_winning)
     // @ts-expect-error STRICT_NULL_CHECK
     const myMaxBid = get(myMostRecent, bid => bid.max_bid.display)
+
     return (
       <SystemContextConsumer>
         {({ mediator }) => (
-          <Box>
-            <Separator mb={3} />
+          <>
+            <Separator my={2} />
+
             <Flex
               width="100%"
               flexDirection="row"
               justifyContent="space-between"
             >
-              <Text variant="subtitle" pr={1}>
+              <Text variant="lg" pr={1}>
                 {bidsPresent ? "Current bid" : "Starting bid"}
               </Text>
+
               <Flex
                 flexDirection="row"
                 justifyContent="right"
@@ -131,40 +130,51 @@ export class ArtworkSidebarCurrentBidInfo extends React.Component<
                     )}
                   </Box>
                 )}
-                <Text variant="subtitle" pl={0.5}>
-                  {/* @ts-expect-error STRICT_NULL_CHECK */}
-                  {artwork.sale_artwork.current_bid.display}
+
+                <Text variant="lg" pl={0.5}>
+                  {artwork.sale_artwork?.current_bid?.display}
                 </Text>
               </Flex>
             </Flex>
-            <Flex
-              width="100%"
-              flexDirection="row"
-              justifyContent="space-between"
-            >
-              <Text variant="caption" color={bidColor} pr={1}>
-                {bidText}
-              </Text>
-              {myMaxBid && (
-                <Text variant="caption" color="black60" pl={1}>
-                  Your max: {myMaxBid}
-                </Text>
-              )}
-            </Flex>
-            {artwork.sale && artwork.sale.is_with_buyers_premium && (
-              <Text variant="caption" color="black60">
-                <br />
-                This auction has a {/* FIXME: Remove this lint ignore */}
-                {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-                <Link onClick={() => this.handleClickBuyerPremium(mediator)}>
-                  buyer's premium
-                </Link>
-                .<br />
-                Shipping, taxes, and additional fees may apply.
-              </Text>
+
+            {(bidText || myMaxBid) && (
+              <Flex
+                width="100%"
+                flexDirection="row"
+                justifyContent="space-between"
+              >
+                {bidText && (
+                  <Text variant="xs" color={bidColor} pr={1}>
+                    {bidText}
+                  </Text>
+                )}
+
+                {myMaxBid && (
+                  <Text variant="xs" color="black60" pl={1}>
+                    Your max: {myMaxBid}
+                  </Text>
+                )}
+              </Flex>
             )}
-            <Spacer mb={3} />
-          </Box>
+
+            {artwork.sale && artwork.sale.is_with_buyers_premium && (
+              <>
+                <Spacer mt={1} />
+
+                <Text variant="xs" color="black60">
+                  This auction has a{" "}
+                  <Clickable
+                    onClick={() => this.handleClickBuyerPremium(mediator)}
+                    textDecoration="underline"
+                  >
+                    buyer's premium
+                  </Clickable>
+                  .<br />
+                  Shipping, taxes, and additional fees may apply.
+                </Text>
+              </>
+            )}
+          </>
         )}
       </SystemContextConsumer>
     )

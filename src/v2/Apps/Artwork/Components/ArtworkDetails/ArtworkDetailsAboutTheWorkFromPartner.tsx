@@ -7,17 +7,13 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { get } from "v2/Utils/get"
 import { Media } from "v2/Utils/Responsive"
 import { READ_MORE_MAX_CHARS } from "./ArtworkDetailsAboutTheWorkFromArtsy"
-
 import { ArtworkDetailsAboutTheWorkFromPartner_artwork } from "v2/__generated__/ArtworkDetailsAboutTheWorkFromPartner_artwork.graphql"
 import { data as sd } from "sharify"
-
 import { track } from "v2/Artsy/Analytics"
 import * as Schema from "v2/Artsy/Analytics/Schema"
 import Events from "v2/Utils/Events"
-
 import { ContextModule, Intent } from "@artsy/cohesion"
 import {
-  Box,
   EntityHeader,
   HTML,
   ReadMore,
@@ -25,7 +21,6 @@ import {
   StackableBorderBox,
   Text,
 } from "@artsy/palette"
-import { FollowProfileButton_profile } from "v2/__generated__/FollowProfileButton_profile.graphql"
 import { openAuthToFollowSave } from "v2/Utils/openAuthModal"
 
 export interface ArtworkDetailsAboutTheWorkFromPartnerProps {
@@ -33,12 +28,8 @@ export interface ArtworkDetailsAboutTheWorkFromPartnerProps {
 }
 
 @track(
-  {
-    context_module: Schema.ContextModule.AboutTheWorkPartner,
-  },
-  {
-    dispatch: data => Events.postEvent(data),
-  }
+  { context_module: Schema.ContextModule.AboutTheWorkPartner },
+  { dispatch: data => Events.postEvent(data) }
 )
 export class ArtworkDetailsAboutTheWorkFromPartner extends React.Component<
   ArtworkDetailsAboutTheWorkFromPartnerProps
@@ -66,11 +57,12 @@ export class ArtworkDetailsAboutTheWorkFromPartner extends React.Component<
     const xs = breakpoint === "xs"
     const maxChars = xs ? READ_MORE_MAX_CHARS.xs : READ_MORE_MAX_CHARS.default
 
+    if (!additional_information) return null
+
     return (
-      <HTML>
+      <HTML variant="sm">
         <ReadMore
           maxChars={maxChars}
-          // @ts-expect-error STRICT_NULL_CHECK
           content={additional_information}
           onReadMoreClicked={this.trackReadMoreClick.bind(this)}
         />
@@ -94,10 +86,8 @@ export class ArtworkDetailsAboutTheWorkFromPartner extends React.Component<
       artwork.sale &&
       (artwork.sale.isBenefit || artwork.sale.isGalleryAuction)
     )
-    // @ts-expect-error STRICT_NULL_CHECK
-    const imageUrl = showPartnerLogo && get(partner, p => p.profile.icon.url)
-    // @ts-expect-error STRICT_NULL_CHECK
-    const partnerInitials = showPartnerLogo && get(partner, p => p.initials)
+    const imageUrl = showPartnerLogo && partner?.profile?.icon?.url
+    const partnerInitials = showPartnerLogo && partner?.initials
     const showPartnerFollow =
       partner && partner.type !== "Auction House" && partner.profile
     const hasDefaultPublicProfile = partner && partner.is_default_profile_public
@@ -105,59 +95,48 @@ export class ArtworkDetailsAboutTheWorkFromPartner extends React.Component<
 
     return (
       <SystemContextConsumer>
-        {({ user, mediator }) => {
+        {({ user }) => {
           return (
-            <StackableBorderBox p={2}>
-              <Box data-test="aboutTheWorkPartner">
-                <EntityHeader
-                  // @ts-expect-error STRICT_NULL_CHECK
-                  name={partnerName}
-                  // @ts-expect-error STRICT_NULL_CHECK
-                  href={
-                    // @ts-expect-error STRICT_NULL_CHECK
-                    hasDefaultPublicProfile && `${sd.APP_URL}${partner.href}`
-                  }
-                  meta={locationNames}
-                  // @ts-expect-error STRICT_NULL_CHECK
-                  imageUrl={imageUrl}
-                  // @ts-expect-error STRICT_NULL_CHECK
-                  initials={partnerInitials}
-                  // @ts-expect-error STRICT_NULL_CHECK
-                  FollowButton={
-                    showPartnerFollow && (
-                      <FollowProfileButton
-                        // @ts-expect-error STRICT_NULL_CHECK
-                        profile={partner.profile}
-                        user={user}
-                        contextModule={ContextModule.aboutTheWork}
-                        render={(profile: FollowProfileButton_profile) => {
-                          const is_followed = profile.is_followed || false
-                          return (
-                            <Text
-                              data-test="followButton"
-                              style={{
-                                cursor: "pointer",
-                                textDecoration: "underline",
-                              }}
-                            >
-                              {is_followed ? "Following" : "Follow"}
-                            </Text>
-                          )
-                        }}
-                      />
-                    )
-                  }
-                />
-                {additional_information && (
-                  <React.Fragment>
-                    <Spacer mb={1} />
-                    <Text variant="text">
-                      <Media at="xs">{this.renderReadMore("xs")}</Media>
-                      <Media greaterThan="xs">{this.renderReadMore()}</Media>
-                    </Text>
-                  </React.Fragment>
-                )}
-              </Box>
+            <StackableBorderBox
+              flexDirection="column"
+              data-test="aboutTheWorkPartner"
+            >
+              <EntityHeader
+                // @ts-expect-error STRICT_NULL_CHECK
+                name={partnerName}
+                href={
+                  hasDefaultPublicProfile ? `${sd.APP_URL}${partner?.href}` : ""
+                }
+                meta={locationNames}
+                // @ts-expect-error STRICT_NULL_CHECK
+                imageUrl={imageUrl}
+                // @ts-expect-error STRICT_NULL_CHECK
+                initials={partnerInitials}
+                FollowButton={
+                  showPartnerFollow && partner?.profile ? (
+                    <FollowProfileButton
+                      profile={partner.profile}
+                      user={user}
+                      contextModule={ContextModule.aboutTheWork}
+                      buttonProps={{
+                        size: "small",
+                        variant: "secondaryOutline",
+                      }}
+                    />
+                  ) : undefined
+                }
+              />
+
+              {additional_information && (
+                <>
+                  <Spacer mt={2} />
+
+                  <Text variant="text">
+                    <Media at="xs">{this.renderReadMore("xs")}</Media>
+                    <Media greaterThan="xs">{this.renderReadMore()}</Media>
+                  </Text>
+                </>
+              )}
             </StackableBorderBox>
           )
         }}

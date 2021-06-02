@@ -5,19 +5,18 @@ import { ContextModule } from "@artsy/cohesion"
 import { ArtistSeriesArtworkRailFragmentContainer as ArtistSeriesArtworkRail } from "v2/Apps/Artwork/Components/ArtworkArtistSeries/ArtistSeriesArtworkRail"
 import { ArtistSeriesRailFragmentContainer as ArtistSeriesRail } from "v2/Components/ArtistSeriesRail/ArtistSeriesRail"
 import { ArtworkArtistSeries_artwork } from "v2/__generated__/ArtworkArtistSeries_artwork.graphql"
-import { Separator, Spacer } from "@artsy/palette"
+import { Spacer } from "@artsy/palette"
 
 interface ArtworkArtistSeriesProps {
   artwork: ArtworkArtistSeries_artwork
 }
 
-const ArtworkArtistSeries: React.FC<ArtworkArtistSeriesProps> = props => {
-  const { artwork } = props
-  // @ts-expect-error STRICT_NULL_CHECK
-  const artworkArtistSeries = artwork?.seriesForCounts?.edges[0]?.node
-  const artistArtistSeries =
-    // @ts-expect-error STRICT_NULL_CHECK
-    artwork?.seriesArtist?.artistSeriesConnection?.edges[0]?.node
+const ArtworkArtistSeries: React.FC<ArtworkArtistSeriesProps> = ({
+  artwork,
+}) => {
+  const artworkArtistSeries = (artwork?.seriesForCounts?.edges ?? [])[0]?.node
+  const artistArtistSeries = (artwork?.seriesArtist?.artistSeriesConnection
+    ?.edges ?? [])[0]?.node
 
   if (!artworkArtistSeries && !artistArtistSeries) {
     return null
@@ -30,25 +29,23 @@ const ArtworkArtistSeries: React.FC<ArtworkArtistSeriesProps> = props => {
     <>
       {hasArtistSeriesArtworks && (
         <>
-          <Separator my={3} />
-          <ArtistSeriesArtworkRail artwork={props.artwork} />
+          <ArtistSeriesArtworkRail artwork={artwork} />
         </>
       )}
+
+      {hasArtistSeriesArtworks && !!artistArtistSeries && <Spacer mt={6} />}
 
       {!!artistArtistSeries && (
         <>
-          {!hasArtistSeriesArtworks && <Separator mt={3} />}
-          <Spacer my={3} />
-          <ArtistSeriesRail
-            // @ts-expect-error STRICT_NULL_CHECK
-            artist={artwork.seriesArtist}
-            title="Series by this artist"
-            contextModule={ContextModule.moreSeriesByThisArtist}
-          />
+          {artwork.seriesArtist && (
+            <ArtistSeriesRail
+              artist={artwork.seriesArtist}
+              title="Series by this artist"
+              contextModule={ContextModule.moreSeriesByThisArtist}
+            />
+          )}
         </>
       )}
-
-      {(hasArtistSeriesArtworks || !!artistArtistSeries) && <Spacer my={6} />}
     </>
   )
 }

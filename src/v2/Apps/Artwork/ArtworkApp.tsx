@@ -1,28 +1,24 @@
-import { Box, Col, Row, Spacer } from "@artsy/palette"
+import { Column, GridColumns, Join, Spacer } from "@artsy/palette"
 import React, { useContext } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { data as sd } from "sharify"
-
 import { ArtworkApp_artwork } from "v2/__generated__/ArtworkApp_artwork.graphql"
 import { ArtworkApp_me } from "v2/__generated__/ArtworkApp_me.graphql"
-
-import { ArtistInfoFragmentContainer as ArtistInfo } from "./Components/ArtistInfo"
-import { ArtworkBannerFragmentContainer as ArtworkBanner } from "./Components/ArtworkBanner"
-import { ArtworkDetailsFragmentContainer as ArtworkDetails } from "./Components/ArtworkDetails"
-import { ArtworkImageBrowserFragmentContainer as ArtworkImageBrowser } from "./Components/ArtworkImageBrowser"
-import { ArtworkMetaFragmentContainer as ArtworkMeta } from "./Components/ArtworkMeta"
-import { ArtworkRelatedArtistsPaginationContainer as RelatedArtists } from "./Components/ArtworkRelatedArtists"
-import { ArtworkSidebarFragmentContainer as ArtworkSidebar } from "./Components/ArtworkSidebar"
-import { OtherWorksFragmentContainer as OtherWorks } from "./Components/OtherWorks"
-import { ArtworkArtistSeriesFragmentContainer as ArtworkArtistSeries } from "./Components/ArtworkArtistSeries"
-import { PricingContextFragmentContainer as PricingContext } from "./Components/PricingContext"
-
+import { ArtistInfoFragmentContainer } from "./Components/ArtistInfo"
+import { ArtworkBannerFragmentContainer } from "./Components/ArtworkBanner"
+import { ArtworkDetailsFragmentContainer } from "./Components/ArtworkDetails"
+import { ArtworkImageBrowserFragmentContainer } from "./Components/ArtworkImageBrowser"
+import { ArtworkMetaFragmentContainer } from "./Components/ArtworkMeta"
+import { ArtworkRelatedArtistsPaginationContainer } from "./Components/ArtworkRelatedArtists"
+import { ArtworkSidebarFragmentContainer } from "./Components/ArtworkSidebar"
+import { OtherWorksFragmentContainer } from "./Components/OtherWorks"
+import { ArtworkArtistSeriesFragmentContainer } from "./Components/ArtworkArtistSeries"
+import { PricingContextFragmentContainer } from "./Components/PricingContext"
 import { withSystemContext } from "v2/Artsy"
 import * as Schema from "v2/Artsy/Analytics/Schema"
 import { RecentlyViewed } from "v2/Components/RecentlyViewed"
 import { RouterContext } from "found"
 import { TrackingProp } from "react-tracking"
-import { Media } from "v2/Utils/Responsive"
 import {
   AnalyticsContext,
   useAnalyticsContext,
@@ -182,115 +178,79 @@ export class ArtworkApp extends React.Component<Props> {
     }
   }
 
-  renderArtists() {
-    const { artwork } = this.props
-    const artists = artwork?.artists
-
-    if (!artists?.length) {
-      return null
-    }
-
-    return (
-      <>
-        {artists.map((artist, index) => {
-          const addSpacer = artists.length > 1 && index < artists.length - 1
-          return (
-            <React.Fragment key={index}>
-              {/* @ts-expect-error STRICT_NULL_CHECK */}
-              <Row key={artist.id}>
-                <Col>
-                  {/* @ts-expect-error STRICT_NULL_CHECK */}
-                  <ArtistInfo artist={artist} />
-                </Col>
-              </Row>
-              {addSpacer && <Spacer mb={2} />}
-            </React.Fragment>
-          )
-        })}
-      </>
-    )
-  }
-
   render() {
     const { artwork, me } = this.props
+
     return (
       <>
         <LegacyArtworkDllContainer />
-        {/* FIXME: remove once we refactor out legacy backbone code.
-            Add place to attach legacy flash message, used in legacy inquiry flow
+
+        {/**
+         * FIXME: remove once we refactor out legacy backbone code.
+         * Add place to attach legacy flash message, used in legacy inquiry flow
          */}
         <div id="main-layout-flash" />
+
         <ReCaptchaContainer />
+
         <>
-          {/* NOTE: react-head automatically moves these tags to the <head> element */}
-          <ArtworkMeta artwork={artwork} />
+          <ArtworkMetaFragmentContainer artwork={artwork} />
 
-          <Row>
-            <Col sm={8}>
-              <ArtworkBanner artwork={artwork} />
-              <Spacer mb={2} />
-            </Col>
-          </Row>
+          <ArtworkBannerFragmentContainer artwork={artwork} />
 
-          {/* Mobile */}
-          <Media at="xs">
-            <Row>
-              <Col>
-                <ArtworkImageBrowser artwork={artwork} />
-                <ArtworkSidebar artwork={artwork} me={me} />
-                <ArtworkDetails artwork={artwork} />
-                <PricingContext artwork={artwork} />
-                {this.renderArtists()}
-              </Col>
-            </Row>
-          </Media>
+          <GridColumns>
+            <Column span={8}>
+              <ArtworkImageBrowserFragmentContainer artwork={artwork} />
+            </Column>
 
-          {/* Desktop */}
-          <Media greaterThan="xs">
-            <Row>
-              <Col sm={8}>
-                <Box pr={4}>
-                  <ArtworkImageBrowser artwork={artwork} />
-                  <ArtworkDetails artwork={artwork} />
-                  <PricingContext artwork={artwork} />
-                  {this.renderArtists()}
-                </Box>
-              </Col>
-              <Col sm={4}>
-                <ArtworkSidebar artwork={artwork} me={me} />
-              </Col>
-            </Row>
-          </Media>
+            <Column span={4} pt={[0, 2]}>
+              <ArtworkSidebarFragmentContainer artwork={artwork} me={me} />
+            </Column>
+          </GridColumns>
 
-          <Row>
-            <Col>
-              <Box mt={3}>
-                <ArtworkArtistSeries artwork={artwork} />
-              </Box>
-            </Col>
-          </Row>
+          <Spacer mt={6} />
 
-          <Row>
-            <Col>
-              <Box mt={3}>
-                <OtherWorks artwork={artwork} />
-              </Box>
-            </Col>
-          </Row>
+          <GridColumns>
+            <Column span={8}>
+              <Join separator={<Spacer mt={2} />}>
+                <ArtworkDetailsFragmentContainer artwork={artwork} />
+
+                <PricingContextFragmentContainer artwork={artwork} />
+
+                {artwork.artists &&
+                  artwork.artists.map(artist => {
+                    if (!artist) return null
+
+                    return (
+                      <ArtistInfoFragmentContainer
+                        key={artist.id}
+                        artist={artist}
+                      />
+                    )
+                  })}
+              </Join>
+            </Column>
+          </GridColumns>
+
+          <Spacer mt={6} />
+
+          <ArtworkArtistSeriesFragmentContainer artwork={artwork} />
+
+          <Spacer mt={6} />
+
+          <OtherWorksFragmentContainer artwork={artwork} />
 
           {artwork.artist && (
-            <Row>
-              <Col>
-                <RelatedArtists artwork={artwork} />
-              </Col>
-            </Row>
+            <>
+              <Spacer mt={6} />
+
+              <ArtworkRelatedArtistsPaginationContainer artwork={artwork} />
+            </>
           )}
 
-          <Row>
-            <Col>
-              <RecentlyViewed />
-            </Col>
-          </Row>
+          <Spacer mt={6} />
+
+          <RecentlyViewed />
 
           <div
             id="lightbox-container"

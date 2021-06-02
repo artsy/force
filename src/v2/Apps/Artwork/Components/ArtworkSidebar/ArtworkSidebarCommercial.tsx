@@ -85,7 +85,7 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
 
   renderSaleMessage(saleMessage: string) {
     return (
-      <Text variant="subtitle" data-test="SaleMessage">
+      <Text variant="lg" data-test="SaleMessage">
         {saleMessage}
       </Text>
     )
@@ -98,7 +98,7 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
     const editionFragment = (
       <>
         <SizeInfo piece={editionSet} />
-        <Text ml="auto" variant="caption" data-test="SaleMessage">
+        <Text ml="auto" variant="xs" data-test="SaleMessage">
           {editionSet.sale_message}
         </Text>
       </>
@@ -130,7 +130,7 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
       return (
         // @ts-expect-error STRICT_NULL_CHECK
         <React.Fragment key={editionSet.id}>
-          <Box py={3}>
+          <Box py={2}>
             {this.renderEditionSet(editionSet, includeSelectOption)}
           </Box>
           {/* @ts-expect-error STRICT_NULL_CHECK */}
@@ -356,13 +356,16 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
 
   render() {
     const { artwork } = this.props
+
     const {
       isCommittingCreateOrderMutation,
       isCommittingCreateOfferOrderMutation,
       selectedEditionSet,
     } = this.state
-    const artworkEcommerceAvailable =
+
+    const artworkEcommerceAvailable = !!(
       artwork.is_acquireable || artwork.is_offerable
+    )
 
     if (!artwork.sale_message && !artwork.is_inquireable) {
       return <Separator />
@@ -372,21 +375,20 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
       <Box textAlign="left">
         {artwork.sale_message && <Separator />}
 
-        {/* @ts-expect-error STRICT_NULL_CHECK */}
-        {artwork.edition_sets.length < 2 ? (
+        {(artwork.edition_sets?.length ?? 0) < 2 ? (
           artwork.sale_message && (
             <>
-              <Spacer mb={3} />
+              <Spacer mt={2} />
               {this.renderSaleMessage(artwork.sale_message)}
             </>
           )
         ) : (
           <>
-            {/* @ts-expect-error STRICT_NULL_CHECK */}
             {this.renderEditionSets(artworkEcommerceAvailable)}
+
             {selectedEditionSet && (
               <>
-                <Separator mb={3} />
+                <Separator mb={2} />
                 {this.renderSaleMessage(selectedEditionSet.sale_message)}
               </>
             )}
@@ -395,18 +397,21 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
 
         {artworkEcommerceAvailable &&
           (artwork.shippingOrigin || artwork.shippingInfo) && <Spacer mt={1} />}
+
         {artworkEcommerceAvailable && artwork.shippingOrigin && (
-          <Text variant="caption" color="black60">
+          <Text variant="xs" color="black60">
             Ships from {artwork.shippingOrigin}
           </Text>
         )}
+
         {artworkEcommerceAvailable && artwork.shippingInfo && (
-          <Text variant="caption" color="black60">
+          <Text variant="xs" color="black60">
             {artwork.shippingInfo}
           </Text>
         )}
+
         {artworkEcommerceAvailable && artwork.priceIncludesTaxDisplay && (
-          <Text variant="caption" color="black60">
+          <Text variant="xs" color="black60">
             {artwork.priceIncludesTaxDisplay}
           </Text>
         )}
@@ -414,14 +419,15 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
         {artwork.is_inquireable ||
         artwork.is_acquireable ||
         artwork.is_offerable ? (
-          artwork.sale_message && <Spacer mb={3} />
+          artwork.sale_message && <Spacer mt={2} />
         ) : (
-          <Separator mb={3} mt={3} />
+          <Separator my={2} />
         )}
+
         {artwork.is_acquireable && (
           <Button
             width="100%"
-            size="large"
+            size="medium"
             loading={isCommittingCreateOrderMutation}
             onClick={this.handleCreateOrder.bind(this)}
           >
@@ -430,13 +436,13 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
         )}
         {artwork.is_offerable && (
           <>
-            <Spacer mb={2} />
+            <Spacer mt={2} />
             <Button
               variant={
                 artwork.is_acquireable ? "secondaryOutline" : "primaryBlack"
               }
               width="100%"
-              size="large"
+              size="medium"
               loading={isCommittingCreateOfferOrderMutation}
               onClick={this.handleCreateOfferOrder.bind(this)}
             >
@@ -449,7 +455,7 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
           !artwork.is_offerable && (
             <Button
               width="100%"
-              size="large"
+              size="medium"
               onClick={this.handleInquiry.bind(this)}
             >
               Contact gallery
