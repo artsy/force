@@ -49,13 +49,13 @@ export const PartnerArtistsCarousel: React.FC<PartnerArtistsCarouselProps> = ({
               // @ts-expect-error STRICT_NULL_CHECK
               artist={edge.node}
               // @ts-expect-error STRICT_NULL_CHECK
-              partnerArtistHref={`/partner2/${slug}/artists/${edge.node.slug}`}
+              partnerArtistHref={`/partner/${slug}/artists/${edge.node.slug}`}
             />
           )
         }),
         isSeeAllAvaliable && (
           <Box key="see-all-button" width={[300, "100%"]}>
-            <RouterLink to={`/partner2/${slug}/artists`}>
+            <RouterLink to={`/partner/${slug}/artists`}>
               <ScrollToPartnerHeader width="100%">
                 <ResponsiveImage>
                   <Flex

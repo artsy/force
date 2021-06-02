@@ -30,7 +30,7 @@ export const PartnerArtistItem: React.FC<PartnerArtistItemProps> = ({
 }) => {
   const artistHref = fullProfileEligible
     ? // TODO: Use partner.href instead after page migration
-      `/partner2/${partnerSlug}/artists/${slug}`
+      `/partner/${partnerSlug}/artists/${slug}`
     : href || `/artists/${slug}`
 
   return hasPublishedArtworks ? (

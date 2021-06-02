@@ -29,7 +29,7 @@ export const NavigationTabs: React.FC<NavigationTabsProps> = ({ partner }) => {
       notRepresentedArtists,
     } = partner
 
-    const route = (path?: string) => `/partner2/${slug}${path ? path : ""}`
+    const route = (path?: string) => `/partner/${slug}${path ? path : ""}`
 
     const routes = [
       {

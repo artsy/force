@@ -56,7 +56,7 @@ const NearbyGalleryCard: React.FC<NearbyGalleryCardProps> = ({
   const { name, slug, profile, type, locationsConnection } = partner
   const canFollow = type !== "Auction House"
   const image = partner?.profile?.image?.cropped
-  const partnerHref = `/partner2/${slug}`
+  const partnerHref = `/partner/${slug}`
   const cities = uniq(
     compact(
       locationsConnection?.edges?.map(location =>

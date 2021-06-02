@@ -25,7 +25,7 @@ const ArticlesRail: React.FC<ArticlesRailProps> = ({
       <Flex justifyContent="space-between" alignItems="center" mb={4}>
         <Text variant="title">Articles</Text>
 
-        <ViewAllButton to={`/partner2/${partnerSlug}/articles`} />
+        <ViewAllButton to={`/partner/${partnerSlug}/articles`} />
       </Flex>
 
       <Carousel
@@ -45,7 +45,7 @@ const ArticlesRail: React.FC<ArticlesRailProps> = ({
           }),
           isSeeAllAvaliable && (
             <Box key="see-all-button" width={[300, "100%"]}>
-              <RouterLink to={`/partner2/${partnerSlug}/articles`}>
+              <RouterLink to={`/partner/${partnerSlug}/articles`}>
                 <ScrollToPartnerHeader width="100%">
                   <ResponsiveBox
                     aspectWidth={4}

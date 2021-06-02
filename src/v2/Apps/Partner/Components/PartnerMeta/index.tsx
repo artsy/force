@@ -25,8 +25,8 @@ const PartnerMeta: React.FC<PartnerMetaProps> = ({
 
   const href = `${getENV("APP_URL")}${pathname}`
   const canonicalHref = artistId
-    ? `${getENV("APP_URL")}/partner2/${slug}/artists/${artistId}`
-    : `${getENV("APP_URL")}/partner2/${slug}`
+    ? `${getENV("APP_URL")}/partner/${slug}/artists/${artistId}`
+    : `${getENV("APP_URL")}/partner/${slug}`
 
   return (
     <>

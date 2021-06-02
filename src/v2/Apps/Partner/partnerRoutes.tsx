@@ -59,7 +59,7 @@ const ContactRoute = loadable(
 export const partnerRoutes: AppRouteConfig[] = [
   {
     getComponent: () => PartnerApp,
-    path: "/partner2/:partnerId",
+    path: "/partner/:partnerId",
     prepare: () => {
       PartnerApp.preload()
     },
@@ -82,7 +82,7 @@ export const partnerRoutes: AppRouteConfig[] = [
         return undefined
       }
 
-      const overviewPath = `/partner2/${match.params.partnerId}`
+      const overviewPath = `/partner/${match.params.partnerId}`
 
       if (
         !partner.fullProfileEligible &&
@@ -148,7 +148,7 @@ export const partnerRoutes: AppRouteConfig[] = [
 
           if (!totalCount) {
             throw new RedirectException(
-              `/partner2/${match.params.partnerId}`,
+              `/partner/${match.params.partnerId}`,
               302
             )
           }
@@ -225,7 +225,7 @@ export const partnerRoutes: AppRouteConfig[] = [
 
           if (!displayWorksSection || eligibleArtworks <= 0) {
             throw new RedirectException(
-              `/partner2/${match.params.partnerId}`,
+              `/partner/${match.params.partnerId}`,
               302
             )
           }
@@ -267,7 +267,7 @@ export const partnerRoutes: AppRouteConfig[] = [
 
           if (!(displayArtistsSection && artists && artists.totalCount > 0)) {
             throw new RedirectException(
-              `/partner2/${match.params.partnerId}`,
+              `/partner/${match.params.partnerId}`,
               302
             )
           }
@@ -305,7 +305,7 @@ export const partnerRoutes: AppRouteConfig[] = [
 
           if (partner.locations.totalCount === 0) {
             throw new RedirectException(
-              `/partner2/${match.params.partnerId}`,
+              `/partner/${match.params.partnerId}`,
               302
             )
           }
@@ -317,7 +317,7 @@ export const partnerRoutes: AppRouteConfig[] = [
         path: "overview",
         render: props => {
           throw new RedirectException(
-            `/partner2/${props.match.params.partnerId}`,
+            `/partner/${props.match.params.partnerId}`,
             302
           )
         },

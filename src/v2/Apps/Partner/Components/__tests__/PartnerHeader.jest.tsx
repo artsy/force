@@ -164,9 +164,9 @@ describe("PartnerHeader", () => {
       )
 
     expect(PartnerNameLink.length).toEqual(1)
-    expect(PartnerNameLink.first().prop("to")).toEqual("/partner2/white-cube")
+    expect(PartnerNameLink.first().prop("to")).toEqual("/partner/white-cube")
     expect(PartnerIconLink.length).toEqual(1)
-    expect(PartnerIconLink.first().prop("to")).toEqual("/partner2/white-cube")
+    expect(PartnerIconLink.first().prop("to")).toEqual("/partner/white-cube")
   })
 
   it("doesn't display profile address if there is no info", () => {
