@@ -139,7 +139,12 @@ const ApplyButton: React.SFC<ApplyButtonProps> = ({
   onClick,
 }) => {
   return (
-    <Button variant="primaryBlack" width="100%" onClick={onClick}>
+    <Button
+      variant="primaryBlack"
+      width="100%"
+      disabled={!changedFilterCount}
+      onClick={onClick}
+    >
       Apply ({changedFilterCount})
     </Button>
   )
