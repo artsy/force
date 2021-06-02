@@ -30,7 +30,7 @@ import { useMatchMedia } from "v2/Utils/Hooks/useMatchMedia"
 import { BuyerGuaranteeMeta } from "../Components/BuyerGuaranteeMeta"
 
 
-export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = () => {
+export const BuyerGuaranteeIndex: React.FC = () => {
   const isMobile = useMatchMedia(themeProps.mediaQueries.xs)
 
   const authenticityText = `We are dedicated to being the world’s most trustworthy marketplace
