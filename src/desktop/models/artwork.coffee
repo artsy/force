@@ -211,7 +211,7 @@ module.exports = class Artwork extends Backbone.Model
     partner = @get 'partner'
     return unless partner and partner.type isnt 'Auction'
     if partner.default_profile_public and partner.default_profile_id
-      return "/#{partner.default_profile_id}"
+      return "/partner/#{partner.default_profile_id}"
 
   partnerLinkTarget: ->
     if @get('partner').linkType() is 'external' then '_blank' else '_self'
