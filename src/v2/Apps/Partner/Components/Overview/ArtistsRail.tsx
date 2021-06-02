@@ -50,7 +50,7 @@ const ArtistsRail: React.FC<ArtistsRailProps> = ({ partner, ...rest }) => {
         </Text>
 
         {fullProfileEligible && (
-          <ViewAllButton to={`/partner2/${slug}/artists`} />
+          <ViewAllButton to={`/partner/${slug}/artists`} />
         )}
       </Flex>
 

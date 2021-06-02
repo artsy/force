@@ -40,7 +40,7 @@ const ArtworksRail: React.FC<ArtworksRailProps> = ({ partner, ...rest }) => {
       <Flex mb={4} justifyContent="space-between" alignItems="center">
         <Text variant="title">Featured Artworks</Text>
 
-        <ViewAllButton to={`/partner2/${slug}/works`} />
+        <ViewAllButton to={`/partner/${slug}/works`} />
       </Flex>
 
       <Carousel onRailOverflowChange={setIsSeeAllAvaliable}>
@@ -61,7 +61,7 @@ const ArtworksRail: React.FC<ArtworksRailProps> = ({ partner, ...rest }) => {
           }),
           isSeeAllAvaliable && (
             <Box key="see-all-button" width={[300, "100%"]}>
-              <RouterLink to={`/partner2/${slug}/works`}>
+              <RouterLink to={`/partner/${slug}/works`}>
                 <ScrollToPartnerHeader width="100%">
                   <Box
                     bg="black10"

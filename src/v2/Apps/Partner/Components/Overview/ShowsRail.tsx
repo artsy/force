@@ -41,7 +41,7 @@ const ShowsRail: React.FC<ShowsRailProps> = ({ partner, ...rest }) => {
       <Flex mb={4} justifyContent="space-between" alignItems="center">
         <Text variant="title">All Events</Text>
 
-        {canShowAll && <ViewAllButton to={`/partner2/${slug}/shows`} />}
+        {canShowAll && <ViewAllButton to={`/partner/${slug}/shows`} />}
       </Flex>
       <Carousel
         onRailOverflowChange={setIsSeeAllAvaliable}
@@ -59,7 +59,7 @@ const ShowsRail: React.FC<ShowsRailProps> = ({ partner, ...rest }) => {
           }),
           canShowAll && (
             <Box key="see-all-button" width={[300, "100%"]}>
-              <RouterLink to={`/partner2/${slug}/shows`}>
+              <RouterLink to={`/partner/${slug}/shows`}>
                 <ScrollToPartnerHeader width="100%">
                   <ResponsiveBox
                     aspectWidth={263}

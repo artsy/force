@@ -31,7 +31,7 @@ export const PartnerHeader: React.FC<PartnerHeaderProps> = ({ partner }) => {
   // @ts-expect-error STRICT_NULL_CHECK
   const hasLocations = partner.locations?.totalCount > 0
   // TODO: Remove after page migration.
-  const partnerUrl = `/partner2/${partner.slug}`
+  const partnerUrl = `/partner/${partner.slug}`
   const canFollow =
     partner && partner.type !== "Auction House" && !!partner.profile
 
