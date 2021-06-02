@@ -67,7 +67,7 @@ const Artist2RelatedArtistsRail: React.FC<Artist2RelatedArtistsRailProps> = ({
                   height={230}
                   src={artworkImage?.resized?.src!}
                   srcSet={artworkImage?.resized?.srcSet}
-                  style={{ objectFit: "contain" }}
+                  style={{ objectFit: "cover" }}
                 />
                 <Spacer my={1} />
 

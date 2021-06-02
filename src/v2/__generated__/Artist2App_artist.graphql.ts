@@ -7,7 +7,7 @@ export type Artist2App_artist = {
     readonly internalID: string;
     readonly name: string | null;
     readonly slug: string;
-    readonly " $fragmentRefs": FragmentRefs<"ArtistMeta_artist" | "Artist2Header_artist" | "BackLink_artist">;
+    readonly " $fragmentRefs": FragmentRefs<"Artist2Meta_artist" | "Artist2Header_artist" | "BackLink_artist">;
     readonly " $refType": "Artist2App_artist";
 };
 export type Artist2App_artist$data = Artist2App_artist;
@@ -48,7 +48,7 @@ const node: ReaderFragment = {
     {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "ArtistMeta_artist"
+      "name": "Artist2Meta_artist"
     },
     {
       "args": null,
@@ -63,5 +63,5 @@ const node: ReaderFragment = {
   ],
   "type": "Artist"
 };
-(node as any).hash = 'e64604c83caa41426aecc2495d617414';
+(node as any).hash = 'c63140cf5d39d5154d8780bfa2c15a46';
 export default node;

@@ -15,6 +15,10 @@ export type ArtistWorksForSaleRoute_artist = {
             } | null> | null;
         } | null> | null;
     } | null;
+    readonly counts: {
+        readonly forSaleArtworks: number | null;
+    } | null;
+    readonly name: string | null;
     readonly internalID: string;
     readonly slug: string;
     readonly id: string;
@@ -29,7 +33,15 @@ export type ArtistWorksForSaleRoute_artist$key = {
 
 
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "name",
+  "storageKey": null
+};
+return {
   "argumentDefinitions": [
     {
       "defaultValue": null,
@@ -90,13 +102,7 @@ const node: ReaderFragment = {
               "name": "counts",
               "plural": true,
               "selections": [
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "name",
-                  "storageKey": null
-                },
+                (v0/*: any*/),
                 {
                   "alias": null,
                   "args": null,
@@ -120,6 +126,25 @@ const node: ReaderFragment = {
       ],
       "storageKey": null
     },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "ArtistCounts",
+      "kind": "LinkedField",
+      "name": "counts",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "forSaleArtworks",
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
+    },
+    (v0/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -160,5 +185,6 @@ const node: ReaderFragment = {
   ],
   "type": "Artist"
 };
-(node as any).hash = '4ef730ff5136225ce8b14b4db2d07116';
+})();
+(node as any).hash = 'ebefe334a7a2c372653705a0e30136c9';
 export default node;

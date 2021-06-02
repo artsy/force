@@ -10,6 +10,10 @@ interface Artist2HeaderProps {
 }
 
 const Artist2Header: React.FC<Artist2HeaderProps> = ({ artist }) => {
+  const hideBioInHeaderIfPartnerSupplied = Boolean(
+    artist.biographyBlurb!.credit
+  )
+
   return (
     <GridColumns>
       <Column span={6}>
@@ -37,17 +41,18 @@ const Artist2Header: React.FC<Artist2HeaderProps> = ({ artist }) => {
       </Column>
 
       <Column span={6}>
-        <Text variant="xs" textTransform="uppercase" mb={1}>
-          Bio
-        </Text>
-
-        <Text variant="sm" mb={2}>
-          <HTML variant="sm">
-            {/* TODO:
-                Need to addPartner suppplied bios logic */}
-            <ReadMore maxChars={550} content={artist.biographyBlurb!.text!} />
-          </HTML>
-        </Text>
+        {!hideBioInHeaderIfPartnerSupplied && artist.biographyBlurb?.text && (
+          <>
+            <Text variant="xs" textTransform="uppercase" mb={1}>
+              Bio
+            </Text>
+            <Text variant="sm" mb={2}>
+              <HTML variant="sm">
+                <ReadMore maxChars={550} content={artist.biographyBlurb.text} />
+              </HTML>
+            </Text>
+          </>
+        )}
 
         <SelectedCareerAchievementsFragmentContainer artist={artist} />
       </Column>

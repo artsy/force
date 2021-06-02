@@ -8,7 +8,7 @@ import { AnalyticsContext, useAnalyticsContext } from "v2/Artsy"
 import { BackLinkFragmentContainer } from "./Components/BackLink"
 import { Artist2HeaderFragmentContainer } from "./Components/Artist2Header"
 import { RouteTab, RouteTabs } from "v2/Components/RouteTabs"
-import { ArtistMetaFragmentContainer } from "../Artist/Components/ArtistMeta"
+import { Artist2MetaFragmentContainer } from "./Components/Artist2Meta"
 
 interface Artist2AppProps {
   artist: Artist2App_artist
@@ -62,7 +62,7 @@ const Artist2App: React.FC<Artist2AppProps> = ({ artist, children, match }) => {
 export const Artist2AppFragmentContainer = createFragmentContainer(Artist2App, {
   artist: graphql`
     fragment Artist2App_artist on Artist {
-      ...ArtistMeta_artist
+      ...Artist2Meta_artist
       ...Artist2Header_artist
       ...BackLink_artist
 
@@ -86,7 +86,7 @@ const getPageWrapper = artist => {
         }}
       >
         <Box mt={[2, 4]} {...rest}>
-          <ArtistMetaFragmentContainer artist={artist} />
+          <Artist2MetaFragmentContainer artist={artist} />
           {children}
         </Box>
       </AnalyticsContext.Provider>

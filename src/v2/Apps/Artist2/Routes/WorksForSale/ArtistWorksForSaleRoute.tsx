@@ -6,6 +6,8 @@ import { ArtistWorksForSaleRoute_artist } from "v2/__generated__/ArtistWorksForS
 import { SharedArtworkFilterContextProps } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
 import { ArtistSeriesRailFragmentContainer } from "v2/Components/ArtistSeriesRail/ArtistSeriesRail"
 import { ContextModule } from "@artsy/cohesion"
+import { computeTitle } from "v2/Apps/Artist2/Utils/computeTitle"
+import { Title } from "react-head"
 
 interface ArtistWorksForSaleRouteProps {
   artist: ArtistWorksForSaleRoute_artist
@@ -14,8 +16,12 @@ interface ArtistWorksForSaleRouteProps {
 const ArtistWorksForSaleRoute: React.FC<ArtistWorksForSaleRouteProps> = ({
   artist,
 }) => {
+  const title = computeTitle(artist.name!, artist?.counts?.forSaleArtworks!)
+
   return (
     <>
+      <Title>{title}</Title>
+
       <ArtistSeriesRailFragmentContainer
         artist={artist}
         contextModule={ContextModule.artistSeriesRail}
@@ -57,6 +63,10 @@ export const ArtistWorksForSaleRouteFragmentContainer = createFragmentContainer(
             }
           }
         }
+        counts {
+          forSaleArtworks
+        }
+        name
         internalID
         slug
         id
