@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react"
 import {
-  Button,
   Text,
   Checkbox,
-  Clickable,
   Flex,
   Spacer,
   Message,
@@ -14,6 +12,7 @@ import { useArtworkFilterContext } from "../ArtworkFilterContext"
 import { NumericInput } from "./PriceRangeFilter"
 import { Media } from "v2/Utils/Responsive"
 import { FilterExpandable } from "./FilterExpandable"
+import { FilterLink } from "./FilterLink"
 
 const SIZES = [
   { displayName: "Small (under 40cm)", name: "SMALL" },
@@ -218,14 +217,11 @@ export const SizeFilter2: React.FC<SizeFilter2Props> = ({ expanded }) => {
 
       <Text></Text>
 
-      <Clickable
-        mt={1}
-        textDecoration="underline"
-        textAlign="left"
+      <FilterLink
         onClick={() => setShowCustom(prevShowCustom => !prevShowCustom)}
       >
-        <Text variant="small">{showCustom ? "Hide" : "Show"} custom size</Text>
-      </Clickable>
+        {showCustom ? "Hide" : "Show"} custom size
+      </FilterLink>
 
       {showCustom && (
         <>
@@ -289,14 +285,9 @@ export const SizeFilter2: React.FC<SizeFilter2Props> = ({ expanded }) => {
             />
           </Flex>
 
-          <Button
-            mt={1}
-            variant="secondaryGray"
-            onClick={handleClick}
-            width="100%"
-          >
+          <FilterLink mt={1.5} onClick={handleClick}>
             Set size
-          </Button>
+          </FilterLink>
         </>
       )}
     </FilterExpandable>
