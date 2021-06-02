@@ -55,7 +55,7 @@ module.exports = class Artwork extends Backbone.Model
   partnerHref: ->
     (
       if @get('partner').has_full_profile
-        '/' + @get('partner').default_profile_id
+        '/partner/' + @get('partner').default_profile_id
       else
         @get('partner').website
     ) or ''
