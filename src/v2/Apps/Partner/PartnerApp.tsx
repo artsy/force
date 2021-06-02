@@ -8,6 +8,7 @@ import { PartnerHeaderImageFragmentContainer as PartnerHeaderImage } from "./Com
 import styled from "styled-components"
 import { PartnerMetaFragmentContainer } from "./Components/PartnerMeta"
 import { StickyProvider } from "v2/Components/Sticky"
+import { PartnerArtistsLoadingContextProvider } from "./Utils/PartnerArtistsLoadingContext"
 
 export interface PartnerAppProps {
   partner: PartnerApp_partner
@@ -29,27 +30,28 @@ export const PartnerApp: React.FC<PartnerAppProps> = ({
   const { profile, fullProfileEligible } = partner
 
   return (
-    <StickyProvider>
-      {/* @ts-expect-error STRICT_NULL_CHECK */}
-      <PartnerHeaderImage profile={profile} />
+    <PartnerArtistsLoadingContextProvider>
+      <StickyProvider>
+        {profile && <PartnerHeaderImage profile={profile} />}
 
-      <Flex position="relative" flexDirection="column">
-        <Foreground />
-        <Box zIndex={1} position="relative">
-          <PartnerMetaFragmentContainer partner={partner} />
+        <Flex position="relative" flexDirection="column">
+          <Foreground />
+          <Box zIndex={1} position="relative">
+            <PartnerMetaFragmentContainer partner={partner} />
 
-          <PartnerHeader partner={partner} />
+            <PartnerHeader partner={partner} />
 
-          <FullBleed mb={[2, 4]}>
-            <Separator />
-          </FullBleed>
+            <FullBleed mb={[2, 4]}>
+              <Separator />
+            </FullBleed>
 
-          {fullProfileEligible && <NavigationTabs partner={partner} />}
+            {fullProfileEligible && <NavigationTabs partner={partner} />}
 
-          {children}
-        </Box>
-      </Flex>
-    </StickyProvider>
+            {children}
+          </Box>
+        </Flex>
+      </StickyProvider>
+    </PartnerArtistsLoadingContextProvider>
   )
 }
 

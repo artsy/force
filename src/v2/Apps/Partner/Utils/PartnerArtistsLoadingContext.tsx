@@ -3,34 +3,20 @@ import React, { useContext, useState } from "react"
 export interface PartnerArtistsLoadingContextProps {
   isLoaded?: boolean
   setIsLoaded?: (val: boolean) => void
-  onArtistsLoaded?: () => void
 }
-
-export type SharedPartnerArtistsLoadingContextProps = Pick<
-  PartnerArtistsLoadingContextProps,
-  "onArtistsLoaded"
->
 
 export const PartnerArtistsLoadingContext = React.createContext<
   PartnerArtistsLoadingContextProps
 >({})
 
-export const PartnerArtistsLoadingContextProvider: React.FC<SharedPartnerArtistsLoadingContextProps> = ({
+export const PartnerArtistsLoadingContextProvider: React.FC<PartnerArtistsLoadingContextProps> = ({
   children,
-  onArtistsLoaded,
 }) => {
-  const [isLoaded, setIsLoadedValue] = useState(false)
-
-  const setIsLoaded = (val: boolean) => {
-    setIsLoadedValue(val)
-
-    onArtistsLoaded && onArtistsLoaded()
-  }
+  const [isLoaded, setIsLoaded] = useState(false)
 
   const partnerArtistsLoadingContext: PartnerArtistsLoadingContextProps = {
     isLoaded,
     setIsLoaded,
-    onArtistsLoaded,
   }
 
   return (
