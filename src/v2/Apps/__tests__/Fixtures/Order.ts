@@ -80,7 +80,7 @@ const OrderArtworkNodeWithoutShipping = {
       },
       id: "12345",
     },
-    slug: "a-g",
+    href: "/partner/a-g",
   },
   pickup_available: true,
   priceCurrency: "USD",

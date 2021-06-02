@@ -37,7 +37,7 @@ export type OrderRow_order = {
                         } | null;
                     } | null;
                     readonly partner: {
-                        readonly slug: string;
+                        readonly href: string | null;
                         readonly initials: string | null;
                         readonly name: string | null;
                         readonly profile: {
@@ -269,7 +269,13 @@ return {
                       "name": "partner",
                       "plural": false,
                       "selections": [
-                        (v2/*: any*/),
+                        {
+                          "alias": null,
+                          "args": null,
+                          "kind": "ScalarField",
+                          "name": "href",
+                          "storageKey": null
+                        },
                         {
                           "alias": null,
                           "args": null,
@@ -418,5 +424,5 @@ return {
   "type": "CommerceOrder"
 };
 })();
-(node as any).hash = 'caf31ec76a2a0380704c38617ee2d129';
+(node as any).hash = 'd1853d9bb002c67703e18648a78e5a7f';
 export default node;
