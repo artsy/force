@@ -1,4 +1,4 @@
-import { Button, Flex, Text } from "@artsy/palette"
+import { Box, Flex, Text } from "@artsy/palette"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import React from "react"
 
@@ -8,21 +8,23 @@ interface HeaderProps {
   title: string
 }
 
-export const Header: React.SFC<HeaderProps> = props => {
+export const Header: React.FC<HeaderProps> = props => {
   const { buttonHref, children, title } = props
 
   return (
-    <Flex flexDirection="column" alignItems="center">
-      <Text variant="title" color="black100" mb={2} textAlign="center">
+    <Flex flexDirection="row" justifyContent="space-between">
+      <Text variant="lg" color="black100">
         {title}
       </Text>
+
       {buttonHref && (
-        <RouterLink to={buttonHref}>
-          <Button variant="secondaryOutline" mb={3}>
-            View all
-          </Button>
-        </RouterLink>
+        <Box ml={2} flexShrink={0}>
+          <RouterLink to={buttonHref}>
+            <Text variant="md">View all</Text>
+          </RouterLink>
+        </Box>
       )}
+
       {children}
     </Flex>
   )

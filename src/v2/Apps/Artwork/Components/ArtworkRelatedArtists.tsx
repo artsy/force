@@ -1,5 +1,13 @@
 import { ContextModule } from "@artsy/cohesion"
-import { Box, Button, Flex, Text } from "@artsy/palette"
+import {
+  Box,
+  Button,
+  Column,
+  Flex,
+  GridColumns,
+  Spacer,
+  Text,
+} from "@artsy/palette"
 import { ArtworkRelatedArtists_artwork } from "v2/__generated__/ArtworkRelatedArtists_artwork.graphql"
 import { hideGrid } from "v2/Apps/Artwork/Components/OtherWorks"
 import { track, useTracking } from "v2/Artsy/Analytics"
@@ -12,6 +20,7 @@ import {
   graphql,
 } from "react-relay"
 import createLogger from "v2/Utils/logger"
+import { extractNodes } from "v2/Utils/extractNodes"
 
 const logger = createLogger("ArtworkRelatedArtists.tsx")
 
@@ -25,12 +34,14 @@ const PAGE_SIZE = 4
 export const ArtworkRelatedArtists: React.FC<ArtworkRelatedArtistsProps> = track()(
   props => {
     const { trackEvent } = useTracking()
+
     const [fetchingNextPage, setFetchingNextPage] = useState(false)
 
     const {
       artwork: { artist },
       relay,
     } = props
+
     // @ts-expect-error STRICT_NULL_CHECK
     if (hideGrid(artist.related.artistsConnection)) {
       return null
@@ -40,7 +51,9 @@ export const ArtworkRelatedArtists: React.FC<ArtworkRelatedArtistsProps> = track
       if (!relay.hasMore() || relay.isLoading()) {
         return
       }
+
       setFetchingNextPage(true)
+
       relay.loadMore(PAGE_SIZE, error => {
         if (error) {
           logger.error(error)
@@ -49,20 +62,19 @@ export const ArtworkRelatedArtists: React.FC<ArtworkRelatedArtistsProps> = track
       })
     }
 
+    const artists = extractNodes(artist?.related?.artistsConnection)
+
     return (
-      <Box mt={6} data-test={ContextModule.relatedArtistsRail}>
-        <Flex flexDirection="column" alignItems="center">
-          <Text variant="title" color="black100" mb={2} textAlign="center">
-            Related artists
-          </Text>
-        </Flex>
-        <Flex flexWrap="wrap" mr={-2} width="100%">
-          {/* @ts-expect-error STRICT_NULL_CHECK */}
-          {artist.related.artistsConnection.edges.map(({ node }, index) => {
+      <Box data-test={ContextModule.relatedArtistsRail}>
+        <Text variant="lg">Related artists</Text>
+
+        <Spacer mt={4} />
+
+        <GridColumns>
+          {artists.map((node, index) => {
             return (
-              <Box pr={2} mb={[1, 4]} width={["100%", "25%"]} key={index}>
+              <Column key={index} span={[12, 6, 3, 3]}>
                 <ArtistCard
-                  lazyLoad
                   artist={node}
                   contextModule={ContextModule.relatedArtistsRail}
                   onClick={() => {
@@ -73,10 +85,12 @@ export const ArtworkRelatedArtists: React.FC<ArtworkRelatedArtistsProps> = track
                     })
                   }}
                 />
-              </Box>
+              </Column>
             )
           })}
-        </Flex>
+        </GridColumns>
+
+        <Spacer mt={4} />
 
         {relay.hasMore() && (
           <ShowMoreButton onClick={fetchData} loading={fetchingNextPage} />
@@ -91,10 +105,10 @@ const ShowMoreButton: React.FC<{ onClick: () => void; loading: boolean }> = ({
   loading,
 }) => {
   return (
-    <Flex flexDirection="column" alignItems="center">
+    <Flex justifyContent="center">
       <Button
         variant="secondaryOutline"
-        mb={3}
+        size="small"
         onClick={onClick}
         loading={loading}
       >

@@ -9,6 +9,7 @@ describe("SelectedExhibitions", () => {
     exhibitions: exhibitions as any,
     artistID: "andy-warhol",
     totalExhibitions: 100,
+    // eslint-disable-next-line jsx-a11y/anchor-is-valid
     ViewAllLink: <a href="#">hi</a>,
   }
 
@@ -56,7 +57,7 @@ describe("SelectedExhibitions", () => {
     )
 
     expect(wrapper.html()).toContain("Selected exhibitions (3)")
-    wrapper.find(".showLink").simulate("click")
+    wrapper.find("button").simulate("click")
     expect(wrapper.html()).toContain("Sculpture on the Move 1946–2016")
     expect(wrapper.html()).not.toContain("Selected exhibitions (3)")
   })

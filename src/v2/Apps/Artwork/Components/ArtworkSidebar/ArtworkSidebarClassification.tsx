@@ -1,10 +1,13 @@
-import { Box, Clickable, Text } from "@artsy/palette"
+import { Clickable, Text } from "@artsy/palette"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworkSidebarClassification_artwork } from "v2/__generated__/ArtworkSidebarClassification_artwork.graphql"
 import * as Schema from "v2/Artsy/Analytics/Schema"
 import track from "react-tracking"
 import { ArtworkSidebarClassificationsModalQueryRenderer } from "v2/Apps/Artwork/Components/ArtworkSidebarClassificationsModal"
+
+// TODO:
+// - Check classification modal
 
 export interface ArtworkSidebarClassificationProps {
   artwork: ArtworkSidebarClassification_artwork
@@ -45,13 +48,13 @@ export class ArtworkSidebarClassification extends React.Component<
     }
 
     return (
-      <Box>
+      <>
         <ArtworkSidebarClassificationsModalQueryRenderer
           onClose={this.closeModal}
           show={this.state.isModalOpen}
         />
 
-        <Text variant="caption" mt={2}>
+        <Text variant="xs" mt={2}>
           <Clickable
             onClick={this.openModal.bind(this)}
             textDecoration="underline"
@@ -61,7 +64,7 @@ export class ArtworkSidebarClassification extends React.Component<
           </Clickable>
           .
         </Text>
-      </Box>
+      </>
     )
   }
 }

@@ -1,6 +1,7 @@
 import {
-  Box,
   Button,
+  Clickable,
+  Flex,
   Link,
   Modal,
   QuestionCircleIcon,
@@ -12,7 +13,6 @@ import { track } from "v2/Artsy/Analytics"
 import * as Schema from "v2/Artsy/Analytics/Schema"
 import React from "react"
 import { data as sd } from "sharify"
-import styled from "styled-components"
 import Events from "v2/Utils/Events"
 
 interface State {
@@ -47,7 +47,19 @@ export class PricingContextModal extends React.Component<State> {
 
   render() {
     return (
-      <Box height="15px">
+      <>
+        <Tooltip width={90} size="sm" content="Learn more">
+          <Flex alignItems="center">
+            <Clickable
+              onClick={this.openModal.bind(this)}
+              ml={1}
+              style={{ lineHeight: 0 }}
+            >
+              <QuestionCircleIcon />
+            </Clickable>
+          </Flex>
+        </Tooltip>
+
         <Modal
           onClose={this.closeModal}
           show={this.state.isModalOpen}
@@ -59,19 +71,24 @@ export class PricingContextModal extends React.Component<State> {
           }
         >
           <Spacer mt={2} />
-          <Text variant="text" color="black80">
+
+          <Text variant="sm" color="black80">
             This feature aims to provide insight into the range of prices for an
             artist's works and allow buyers to discover other available works by
             the artist at different price points.
           </Text>
+
           <Spacer mt={2} />
-          <Text variant="text" color="black80">
+
+          <Text variant="sm" color="black80">
             The graph displays current and past list prices for works that are
             similar in size and category to the work you're viewing. The prices
             included in the graph are only from galleries and dealers on Artsy.
           </Text>
+
           <Spacer mt={2} />
-          <Text variant="text" color="black80">
+
+          <Text variant="sm" color="black80">
             Artwork prices are affected by{" "}
             <Link
               href={sd.APP_URL + "/article/artsy-editorial-artworks-prices"}
@@ -85,20 +102,8 @@ export class PricingContextModal extends React.Component<State> {
             have feedback or questions{" "}
             <Link href="mailto:support@artsy.net">let us know</Link>.
           </Text>
-          <Spacer mt={2} />
         </Modal>
-        <Tooltip width={73} size="sm" content="Learn more">
-          <StyledQuestionCircleIcon
-            ml="5px"
-            width="15px"
-            onClick={this.openModal.bind(this)}
-          />
-        </Tooltip>
-      </Box>
+      </>
     )
   }
 }
-
-const StyledQuestionCircleIcon = styled(QuestionCircleIcon)`
-  cursor: pointer;
-`

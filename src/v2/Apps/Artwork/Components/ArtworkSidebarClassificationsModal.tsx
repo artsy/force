@@ -10,11 +10,11 @@ import { Text } from "@artsy/palette"
 const ARTWORK_CLASSIFICATIONS_PLACEHOLDER = [...new Array(6)].map((_, i) => {
   return (
     <Box key={i}>
-      <SkeletonText variant="mediumText" borderRadius={2}>
+      <SkeletonText variant="md" borderRadius={2}>
         Pending Name
       </SkeletonText>
 
-      <SkeletonText borderRadius={4}>
+      <SkeletonText variant="md" borderRadius={4}>
         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Debitis
         laboriosam perspiciatis natus veniam, tenetur ad cupiditate autem.
       </SkeletonText>
@@ -47,23 +47,24 @@ const ArtworkSidebarClassificationsModal: React.FC<ArtworkSidebarClassifications
       <Join separator={<Spacer my={1} />}>
         {viewer
           ? // @ts-expect-error STRICT_NULL_CHECK
-            viewer.artworkAttributionClasses.map(classfication => {
+            viewer.artworkAttributionClasses.map(classification => {
+              if (!classification) return null
+
               return (
-                // @ts-expect-error STRICT_NULL_CHECK
-                <Box key={classfication.id} as="dl">
-                  <Text as="dt" variant="mediumText">
-                    {/* @ts-expect-error STRICT_NULL_CHECK */}
-                    {classfication.name}
+                <Box key={classification.id} as="dl">
+                  <Text as="dt" variant="xs" textTransform="uppercase">
+                    {classification.name}
                   </Text>
 
-                  {/* @ts-expect-error STRICT_NULL_CHECK */}
-                  <Text as="dd">{classfication.longDescription}</Text>
+                  <Text as="dd" variant="md">
+                    {classification.longDescription}
+                  </Text>
                 </Box>
               )
             })
           : ARTWORK_CLASSIFICATIONS_PLACEHOLDER}
 
-        <Text variant="small" color="black60">
+        <Text variant="xs" color="black60">
           Our partners are responsible for providing accurate classification
           information for all works.
         </Text>

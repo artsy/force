@@ -1,4 +1,4 @@
-import { BorderBox, Box, Flex, Sans } from "@artsy/palette"
+import { BorderBox, Box, Join, Spacer } from "@artsy/palette"
 import { ArtistMarketInsights_artist } from "v2/__generated__/ArtistMarketInsights_artist.graphql"
 import {
   hasSections,
@@ -6,7 +6,7 @@ import {
 } from "v2/Apps/Artist/Components/MarketInsights/MarketInsights"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { Media } from "v2/Utils/Responsive"
+import { ArtworkDefinitionList } from "v2/Apps/Artwork/Components/ArtworkDefinitionList"
 
 export interface MarketInsightsProps {
   artist: ArtistMarketInsights_artist
@@ -33,67 +33,60 @@ export class MarketInsights extends React.Component<MarketInsightsProps> {
   renderAuctionHighlight() {
     if (
       !this.props.artist.auctionResultsConnection ||
-      // @ts-expect-error STRICT_NULL_CHECK
-      this.props.artist.auctionResultsConnection.edges.length < 1
+      (this.props.artist.auctionResultsConnection.edges?.length ?? 0) < 1
     ) {
       return null
     }
-    // @ts-expect-error STRICT_NULL_CHECK
-    const topAuctionResult = this.props.artist.auctionResultsConnection.edges[0]
-      .node
-    // @ts-expect-error STRICT_NULL_CHECK
-    const display = `${topAuctionResult.price_realized.display}, ${topAuctionResult.organization}, ${topAuctionResult.sale_date}`
+
+    const topAuctionResult =
+      this.props.artist.auctionResultsConnection?.edges !== null
+        ? this.props.artist.auctionResultsConnection.edges[0]?.node
+        : null
+
+    const display = [
+      topAuctionResult?.price_realized?.display,
+      topAuctionResult?.organization,
+      topAuctionResult?.sale_date,
+    ]
+      .filter(Boolean)
+      .join(", ")
+
     return (
-      <TextWrap>
-        <Sans size="2" weight="medium" display="inline" mr={1}>
-          High auction record
-        </Sans>
-        <Sans size="2" display="inline" color="black60">
-          {display}
-        </Sans>
-      </TextWrap>
+      <ArtworkDefinitionList term="High auction record">
+        {display}
+      </ArtworkDefinitionList>
     )
   }
   renderGalleryRepresentation() {
     const { highlights } = this.props.artist
-    // @ts-expect-error STRICT_NULL_CHECK
-    const { partnersConnection } = highlights
-    if (
-      partnersConnection &&
-      partnersConnection.edges &&
-      partnersConnection.edges.length > 0
-    ) {
+    const partnersConnection = highlights?.partnersConnection
+
+    if (partnersConnection && (partnersConnection?.edges?.length ?? 0) > 0) {
       const highCategory = highestCategory(partnersConnection.edges)
+
       return (
-        <TextWrap>
-          <Sans size="2" weight="medium" display="inline" mr={1}>
-            {CATEGORIES[highCategory]}
-          </Sans>
-          <Sans size="2" display="inline" color="black60">
-            {CATEGORY_LABEL_MAP[highCategory]}
-          </Sans>
-        </TextWrap>
+        <ArtworkDefinitionList term={CATEGORIES[highCategory]}>
+          {CATEGORY_LABEL_MAP[highCategory]}
+        </ArtworkDefinitionList>
       )
     }
   }
   renderPermanentCollection() {
     const { collections } = this.props.artist
+
     if (!collections || collections.length === 0) {
       return null
     }
+
     const label =
       collections.length === 1
         ? "Collected by a major museum"
         : "Collected by major museums"
+
     return (
-      <TextWrap>
-        <Sans size="2" weight="medium" display="inline" mr={1}>
-          {label}
-        </Sans>
-        <Sans size="2" display="inline" color="black60">
-          {collections.join(", ")}
-        </Sans>
-      </TextWrap>
+      <ArtworkDefinitionList term={label}>
+        {collections.join(", ")}
+      </ArtworkDefinitionList>
     )
   }
 
@@ -117,9 +110,11 @@ export class MarketInsights extends React.Component<MarketInsightsProps> {
       <>
         <Container flexDirection="column">
           <div>
-            {this.renderAuctionHighlight()}
-            {this.renderGalleryRepresentation()}
-            {this.renderPermanentCollection()}
+            <Join separator={<Spacer mt={1} />}>
+              {this.renderAuctionHighlight()}
+              {this.renderGalleryRepresentation()}
+              {this.renderPermanentCollection()}
+            </Join>
           </div>
         </Container>
 
@@ -175,15 +170,4 @@ export const ArtistMarketInsightsFragmentContainer = createFragmentContainer(
       }
     `,
   }
-)
-
-const TextWrap = props => (
-  <>
-    <Media at="xs">
-      <Flex flexDirection="column" mb={1} {...props} />
-    </Media>
-    <Media greaterThan="xs">
-      <Box {...props} />
-    </Media>
-  </>
 )

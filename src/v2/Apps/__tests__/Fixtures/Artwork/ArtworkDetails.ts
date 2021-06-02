@@ -1,6 +1,4 @@
-import { ArtworkDetails_Test_QueryRawResponse } from "v2/__generated__/ArtworkDetails_Test_Query.graphql"
-
-export const ArtworkDetailsFixture: ArtworkDetails_Test_QueryRawResponse["artwork"] = {
+export const ArtworkDetailsFixture = {
   id: "richard-prince-untitled-fashion",
   description: "Artist designed towel for WOW. --*Courtesy of EHC Fine Art*",
   additional_information: "<p>Here is some addition info for this work</p>\n",

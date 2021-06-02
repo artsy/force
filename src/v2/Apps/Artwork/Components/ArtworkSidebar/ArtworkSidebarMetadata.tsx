@@ -1,11 +1,9 @@
-import { Box, Text } from "@artsy/palette"
+import { Text } from "@artsy/palette"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { get } from "v2/Utils/get"
-import { ArtworkSidebarClassificationFragmentContainer as Classification } from "./ArtworkSidebarClassification"
-import { ArtworkSidebarSizeInfoFragmentContainer as SizeInfo } from "./ArtworkSidebarSizeInfo"
-import { ArtworkSidebarTitleInfoFragmentContainer as TitleInfo } from "./ArtworkSidebarTitleInfo"
-
+import { ArtworkSidebarClassificationFragmentContainer } from "./ArtworkSidebarClassification"
+import { ArtworkSidebarSizeInfoFragmentContainer } from "./ArtworkSidebarSizeInfo"
+import { ArtworkSidebarTitleInfoFragmentContainer } from "./ArtworkSidebarTitleInfo"
 import { ArtworkSidebarMetadata_artwork } from "v2/__generated__/ArtworkSidebarMetadata_artwork.graphql"
 
 export interface ArtworkSidebarMetadataProps {
@@ -17,23 +15,32 @@ export class ArtworkSidebarMetadata extends React.Component<
 > {
   render() {
     const { artwork } = this.props
-    const lotLabel = get(
-      artwork,
-      // @ts-expect-error STRICT_NULL_CHECK
-      a => a.is_biddable && a.sale_artwork.lot_label
-    )
+
+    const lotLabel = artwork.is_biddable
+      ? artwork.sale_artwork?.lot_label
+      : null
+
     return (
-      <Box>
+      <>
         {lotLabel && (
-          <Text variant="mediumText" color="black100">
+          <Text
+            variant="xs"
+            textTransform="uppercase"
+            color="black100"
+            mb={0.5}
+          >
             Lot {lotLabel}
           </Text>
         )}
-        <TitleInfo artwork={artwork} />
-        {/* @ts-expect-error STRICT_NULL_CHECK */}
-        {artwork.edition_sets.length < 2 && <SizeInfo piece={artwork} />}
-        <Classification artwork={artwork} />
-      </Box>
+
+        <ArtworkSidebarTitleInfoFragmentContainer artwork={artwork} />
+
+        {(artwork.edition_sets?.length ?? 0) < 2 && (
+          <ArtworkSidebarSizeInfoFragmentContainer piece={artwork} />
+        )}
+
+        <ArtworkSidebarClassificationFragmentContainer artwork={artwork} />
+      </>
     )
   }
 }

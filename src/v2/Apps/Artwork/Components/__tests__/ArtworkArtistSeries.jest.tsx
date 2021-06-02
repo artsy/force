@@ -162,8 +162,14 @@ const ArtworkArtistSeriesFixture: ArtworkArtistSeries_QueryRawResponse = {
                     href: "/artwork/yayoi-kusama-pumpkin-2222222222222222",
                     internalID: "zzz123",
                     image: {
-                      url: "pumpkins.jpg",
-                      aspectRatio: 12,
+                      resized: {
+                        src: "pumpkins.jpg",
+                        srcSet: "pumpkins.jpg",
+                        width: 100,
+                        height: 100,
+                      },
+                      aspectRatio: 1,
+                      height: 100,
                     },
                     imageTitle: "Pumpkin",
                     title: "Pumpkin",

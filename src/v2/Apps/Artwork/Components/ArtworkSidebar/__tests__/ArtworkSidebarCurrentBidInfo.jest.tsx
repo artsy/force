@@ -43,12 +43,14 @@ describe("ArtworkSidebarCurrentBidInfo", () => {
       } as ArtworkSidebarCurrentBidInfo_Test_QueryRawResponse,
     })
   }
+
   describe("analytics", () => {
     it("tracks a click on the buyers premium link", async () => {
       const component = await getWrapper(OpenAuctionReserveMetWithMyWinningBid)
+
       // @ts-expect-error STRICT_NULL_CHECK
-      await component
-        .find("Link")
+      component
+        .find("button")
         .filterWhere(l => l.text() === "buyer's premium")
         .first()
         .props()

@@ -33,7 +33,6 @@ const ExampleArtworkRoute: React.FC<ExampleArtworkRouteProps> = ({
           {artwork.artist.related.artistsConnection.edges.map(({ node }) => (
             <Box width={["100%", "25%"]} pr={[0, "20px"]}>
               <ArtistCard
-                lazyLoad
                 artist={node}
                 contextModule={ContextModule.relatedArtistsRail}
               />

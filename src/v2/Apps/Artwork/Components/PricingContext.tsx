@@ -15,7 +15,7 @@ import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import Waypoint from "react-waypoint"
 import Events from "v2/Utils/Events"
-import { FilterCategory, createCollectUrl } from "./../Utils/createCollectUrl"
+import { createCollectUrl } from "./../Utils/createCollectUrl"
 import { PricingContextModal } from "./PricingContextModal"
 
 interface PricingContextProps {
@@ -38,7 +38,7 @@ export class PricingContext extends React.Component<PricingContextProps> {
     type: Schema.Type.Chart,
   })
   trackImpression() {
-    // noop
+    // Tracking
   }
 
   @track({
@@ -48,7 +48,7 @@ export class PricingContext extends React.Component<PricingContextProps> {
     type: Schema.Type.Chart,
   })
   barchartHover() {
-    // I'm just for tracking!
+    // Tracking
   }
 
   @track({
@@ -57,69 +57,67 @@ export class PricingContext extends React.Component<PricingContextProps> {
     subject: Schema.Subject.BrowseWorks,
     type: Schema.Type.Chart,
   })
-  collectPageLinkClick({
-    dimension,
-    category,
-    artistId,
-  }: {
-    dimension: "SMALL" | "MEDIUM" | "LARGE" | null
-    category: FilterCategory
-    artistId: string
-  }) {
-    const url = createCollectUrl({ dimension, category, artistId })
-    if (typeof window !== "undefined") {
-      window.open(url)
-    }
+  collectPageLinkClick() {
+    // Tracking
   }
 
   render() {
     const { artwork } = this.props
+
     if (!artwork.pricingContext) {
       return null
     }
 
     const priceCents =
-      // @ts-expect-error STRICT_NULL_CHECK
-      artwork.listPrice.__typename === "PriceRange"
-        ? // @ts-expect-error STRICT_NULL_CHECK
-          artwork.listPrice.maxPrice.minor || artwork.listPrice.minPrice.minor
-        : // @ts-expect-error STRICT_NULL_CHECK
-        artwork.listPrice.__typename === "Money"
-        ? // @ts-expect-error STRICT_NULL_CHECK
-          artwork.listPrice.minor
-        : 0
+      (artwork.listPrice?.__typename === "PriceRange"
+        ? artwork.listPrice?.maxPrice?.minor ||
+          artwork.listPrice?.minPrice?.minor
+        : artwork.listPrice?.__typename === "Money"
+        ? artwork.listPrice?.minor
+        : 0) ?? 0
 
     const artworkFallsBeforeFirstBin =
       priceCents < artwork.pricingContext.bins[0].minPriceCents
+
     const artworkFallsAfterLastBin =
       priceCents >=
       artwork.pricingContext.bins[artwork.pricingContext.bins.length - 1]
         .maxPriceCents
 
-    // @ts-expect-error STRICT_NULL_CHECK
-    const artistId = artwork.artists[0].slug
+    if (artwork.artists === null) return null
+
+    const artistId = artwork.artists[0]?.slug
+
     return (
       <BorderBox mb={2} flexDirection="column">
+        {/* TODO: remove this library */}
         <Waypoint onEnter={once(this.trackImpression.bind(this))} />
-        <Flex>
-          <Text variant="caption">
+
+        <Flex alignItems="center">
+          <Text variant="xs" lineHeight={1}>
             {artwork.pricingContext.appliedFiltersDisplay}
           </Text>
+
           <PricingContextModal />
         </Flex>
-        {/* FIXME: Remove this lint ignore */}
-        {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+
         <Link
-          onClick={this.collectPageLinkClick.bind(this, {
+          href={createCollectUrl({
+            // @ts-ignore
             dimension: artwork.pricingContext.appliedFilters.dimension,
+            // @ts-ignore
             category: artwork.category,
-            artistId,
+            // @ts-ignore
+            artistId: artistId,
           })}
+          onClick={this.collectPageLinkClick.bind(this)}
           color="black60"
         >
-          <Text variant="caption">Browse works in this category</Text>
+          <Text variant="xs">Browse works in this category</Text>
         </Link>
-        <Spacer mb={[2, 3]} />
+
+        <Spacer mt={2} />
+
         <BarChart
           // TODO: use artwork's currency
           minLabel="$0"

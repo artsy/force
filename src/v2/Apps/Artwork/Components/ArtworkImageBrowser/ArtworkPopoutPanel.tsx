@@ -1,46 +1,71 @@
-import { Box, Flex, Text, color, space } from "@artsy/palette"
-import Icon from "v2/Components/Icon"
+import {
+  Box,
+  Flex,
+  Text,
+  DROP_SHADOW,
+  Clickable,
+  CloseIcon,
+  Spacer,
+  BoxProps,
+} from "@artsy/palette"
+import { themeGet } from "@styled-system/theme-get"
 import React from "react"
 import styled from "styled-components"
 
-interface ArtworkPopoutPanelProps {
-  onClose: () => void
+interface ArtworkPopoutPanelProps extends BoxProps {
   title: string
+  onClose: () => void
 }
 
-export class ArtworkPopoutPanel extends React.Component<
-  ArtworkPopoutPanelProps
-> {
-  render() {
-    return (
-      <Container>
-        <Box position="absolute" top={space(1)} right={space(1)}>
-          <CloseIcon name="close" onClick={this.props.onClose} />
-        </Box>
-        <Flex flexDirection="column" p={2}>
-          <Flex flexDirection="row" mb={2}>
-            <Text variant="mediumText" color="black100">
-              {this.props.title}
-            </Text>
-          </Flex>
-          {this.props.children}
-        </Flex>
-      </Container>
-    )
+export const ArtworkPopoutPanel: React.FC<ArtworkPopoutPanelProps> = ({
+  onClose,
+  title,
+  children,
+  ...rest
+}) => {
+  return (
+    <Container bg="white100" minWidth={300} {...rest}>
+      <Flex justifyContent="space-between" alignItems="center">
+        <Text
+          mt={1}
+          mx={1}
+          variant="xs"
+          textTransform="uppercase"
+          lineHeight={1}
+        >
+          {title}
+        </Text>
+
+        <CloseButton pt={1} px={1} onClick={onClose}>
+          <CloseIcon
+            width={14}
+            height={14}
+            // @ts-ignore
+            fill="currentColor"
+          />
+        </CloseButton>
+      </Flex>
+
+      <Spacer mt={1} />
+
+      {children}
+    </Container>
+  )
+}
+
+const CloseButton = styled(Clickable)`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: ${themeGet("colors.black60")};
+  transition: color 250ms;
+
+  &:hover {
+    color: ${themeGet("colors.black100")};
   }
-}
-
-const Container = styled.div`
-  position: absolute;
-  width: 300px;
-  bottom: 40px;
-  border-radius: 2px;
-  background-color: #ffffff;
-  box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.2);
 `
 
-const CloseIcon = styled(Icon)`
-  color: ${color("black30")};
-  cursor: pointer;
-  font-size: 12px;
+const Container = styled(Box)`
+  border-radius: 2px;
+  box-shadow: ${DROP_SHADOW};
 `

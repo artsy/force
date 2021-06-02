@@ -31,27 +31,28 @@ query OtherAuctionsQuery(
 }
 
 fragment AuctionCard_sale on Sale {
-  cover_image: coverImage {
-    cropped(width: 200, height: 180) {
-      url
+  coverImage {
+    cropped(width: 445, height: 334) {
+      src
+      srcSet
     }
   }
   isBenefit
   isGalleryAuction
-  end_at: endAt
+  endAt
   href
   slug
-  is_live_open: isLiveOpen
-  is_preview: isPreview
-  live_start_at: liveStartAt
+  isLiveOpen
+  isPreview
+  liveStartAt
   registrationStatus {
     internalID
     id
   }
-  is_registration_closed: isRegistrationClosed
+  isRegistrationClosed
   name
-  start_at: startAt
-  is_closed: isClosed
+  startAt
+  isClosed
   partner {
     name
     id
@@ -61,6 +62,7 @@ fragment AuctionCard_sale on Sale {
 fragment OtherAuctions_salesConnection on SaleConnection {
   edges {
     node {
+      internalID
       ...AuctionCard_sale
       id
     }
@@ -99,10 +101,17 @@ v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "id",
+  "name": "internalID",
   "storageKey": null
 },
 v3 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+},
+v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -165,8 +174,9 @@ return {
                 "name": "node",
                 "plural": false,
                 "selections": [
+                  (v2/*: any*/),
                   {
-                    "alias": "cover_image",
+                    "alias": null,
                     "args": null,
                     "concreteType": "Image",
                     "kind": "LinkedField",
@@ -179,12 +189,12 @@ return {
                           {
                             "kind": "Literal",
                             "name": "height",
-                            "value": 180
+                            "value": 334
                           },
                           {
                             "kind": "Literal",
                             "name": "width",
-                            "value": 200
+                            "value": 445
                           }
                         ],
                         "concreteType": "CroppedImageUrl",
@@ -196,11 +206,18 @@ return {
                             "alias": null,
                             "args": null,
                             "kind": "ScalarField",
-                            "name": "url",
+                            "name": "src",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "srcSet",
                             "storageKey": null
                           }
                         ],
-                        "storageKey": "cropped(height:180,width:200)"
+                        "storageKey": "cropped(height:334,width:445)"
                       }
                     ],
                     "storageKey": null
@@ -220,7 +237,7 @@ return {
                     "storageKey": null
                   },
                   {
-                    "alias": "end_at",
+                    "alias": null,
                     "args": null,
                     "kind": "ScalarField",
                     "name": "endAt",
@@ -241,21 +258,21 @@ return {
                     "storageKey": null
                   },
                   {
-                    "alias": "is_live_open",
+                    "alias": null,
                     "args": null,
                     "kind": "ScalarField",
                     "name": "isLiveOpen",
                     "storageKey": null
                   },
                   {
-                    "alias": "is_preview",
+                    "alias": null,
                     "args": null,
                     "kind": "ScalarField",
                     "name": "isPreview",
                     "storageKey": null
                   },
                   {
-                    "alias": "live_start_at",
+                    "alias": null,
                     "args": null,
                     "kind": "ScalarField",
                     "name": "liveStartAt",
@@ -269,34 +286,28 @@ return {
                     "name": "registrationStatus",
                     "plural": false,
                     "selections": [
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "internalID",
-                        "storageKey": null
-                      },
-                      (v2/*: any*/)
+                      (v2/*: any*/),
+                      (v3/*: any*/)
                     ],
                     "storageKey": null
                   },
                   {
-                    "alias": "is_registration_closed",
+                    "alias": null,
                     "args": null,
                     "kind": "ScalarField",
                     "name": "isRegistrationClosed",
                     "storageKey": null
                   },
-                  (v3/*: any*/),
+                  (v4/*: any*/),
                   {
-                    "alias": "start_at",
+                    "alias": null,
                     "args": null,
                     "kind": "ScalarField",
                     "name": "startAt",
                     "storageKey": null
                   },
                   {
-                    "alias": "is_closed",
+                    "alias": null,
                     "args": null,
                     "kind": "ScalarField",
                     "name": "isClosed",
@@ -310,12 +321,12 @@ return {
                     "name": "partner",
                     "plural": false,
                     "selections": [
-                      (v3/*: any*/),
-                      (v2/*: any*/)
+                      (v4/*: any*/),
+                      (v3/*: any*/)
                     ],
                     "storageKey": null
                   },
-                  (v2/*: any*/)
+                  (v3/*: any*/)
                 ],
                 "storageKey": null
               }
@@ -332,7 +343,7 @@ return {
     "metadata": {},
     "name": "OtherAuctionsQuery",
     "operationKind": "query",
-    "text": "query OtherAuctionsQuery(\n  $first: Int\n  $sort: SaleSorts\n) {\n  salesConnection(first: $first, sort: $sort) {\n    ...OtherAuctions_salesConnection\n  }\n}\n\nfragment AuctionCard_sale on Sale {\n  cover_image: coverImage {\n    cropped(width: 200, height: 180) {\n      url\n    }\n  }\n  isBenefit\n  isGalleryAuction\n  end_at: endAt\n  href\n  slug\n  is_live_open: isLiveOpen\n  is_preview: isPreview\n  live_start_at: liveStartAt\n  registrationStatus {\n    internalID\n    id\n  }\n  is_registration_closed: isRegistrationClosed\n  name\n  start_at: startAt\n  is_closed: isClosed\n  partner {\n    name\n    id\n  }\n}\n\nfragment OtherAuctions_salesConnection on SaleConnection {\n  edges {\n    node {\n      ...AuctionCard_sale\n      id\n    }\n  }\n}\n"
+    "text": "query OtherAuctionsQuery(\n  $first: Int\n  $sort: SaleSorts\n) {\n  salesConnection(first: $first, sort: $sort) {\n    ...OtherAuctions_salesConnection\n  }\n}\n\nfragment AuctionCard_sale on Sale {\n  coverImage {\n    cropped(width: 445, height: 334) {\n      src\n      srcSet\n    }\n  }\n  isBenefit\n  isGalleryAuction\n  endAt\n  href\n  slug\n  isLiveOpen\n  isPreview\n  liveStartAt\n  registrationStatus {\n    internalID\n    id\n  }\n  isRegistrationClosed\n  name\n  startAt\n  isClosed\n  partner {\n    name\n    id\n  }\n}\n\nfragment OtherAuctions_salesConnection on SaleConnection {\n  edges {\n    node {\n      internalID\n      ...AuctionCard_sale\n      id\n    }\n  }\n}\n"
   }
 };
 })();

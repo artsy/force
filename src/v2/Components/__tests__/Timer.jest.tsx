@@ -1,4 +1,4 @@
-import { Sans } from "@artsy/palette"
+import { Text } from "@artsy/palette"
 import React from "react"
 import * as renderer from "react-test-renderer"
 import { Timer } from "../Timer"
@@ -12,7 +12,7 @@ require("v2/Utils/getCurrentTimeAsIsoString").__setCurrentTime(
 )
 
 const getTimerText = timerComponent =>
-  timerComponent.root.findAllByType(Sans)[0].props.children.join("")
+  timerComponent.root.findAllByType(Text)[0].props.children.join("")
 
 it("formats the remaining time in '00d  00h  00m  00s'", () => {
   let timer

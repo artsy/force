@@ -1,10 +1,8 @@
-import { Flex, Text } from "@artsy/palette"
+import { Flex, Link, Shelf, Spacer, Text } from "@artsy/palette"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtistSeriesArtworkRail_artwork } from "v2/__generated__/ArtistSeriesArtworkRail_artwork.graphql"
-import { Carousel } from "v2/Components/Carousel"
-import FillwidthItem from "v2/Components/Artwork/FillwidthItem"
-import { StyledLink } from "v2/Apps/Artist/Components/StyledLink"
+import { ShelfArtworkFragmentContainer } from "v2/Components/Artwork/ShelfArtwork"
 import { useTracking } from "react-tracking"
 import {
   ActionType,
@@ -12,8 +10,6 @@ import {
   ContextModule,
   OwnerType,
 } from "@artsy/cohesion"
-
-const HEIGHT = 200
 
 interface Props {
   artwork: ArtistSeriesArtworkRail_artwork
@@ -73,35 +69,33 @@ export const ArtistSeriesArtworkRail: React.FC<Props> = ({ artwork }) => {
 
   return artworks.length > 0 ? (
     <>
-      <Flex mb={1} justifyContent="space-between">
-        <Text variant="subtitle" color="black100">
-          More from this series
-        </Text>
+      <Flex justifyContent="space-between">
+        <Text variant="lg">More from this series</Text>
 
-        <StyledLink
-          to={`/artist-series/${slug}`}
+        <Link
+          href={`/artist-series/${slug}`}
           onClick={() => trackViewSeriesClick()}
         >
-          <Text variant="text" color="black60">
-            View series
-          </Text>
-        </StyledLink>
+          <Text variant="md">View series</Text>
+        </Link>
       </Flex>
-      <Carousel>
+
+      <Spacer mt={4} />
+
+      <Shelf>
         {artworks.map((artwork, index) => {
           return (
-            <FillwidthItem
+            <ShelfArtworkFragmentContainer
               key={artwork.internalID}
               contextModule={ContextModule.artistSeriesRail}
               artwork={artwork}
-              imageHeight={HEIGHT}
               onClick={() =>
                 trackArtworkClick(artwork.slug, artwork.internalID, index)
               }
             />
           )
         })}
-      </Carousel>
+      </Shelf>
     </>
   ) : null
 }
@@ -123,7 +117,7 @@ export const ArtistSeriesArtworkRailFragmentContainer = createFragmentContainer(
                   node {
                     slug
                     internalID
-                    ...FillwidthItem_artwork
+                    ...ShelfArtwork_artwork
                   }
                 }
               }

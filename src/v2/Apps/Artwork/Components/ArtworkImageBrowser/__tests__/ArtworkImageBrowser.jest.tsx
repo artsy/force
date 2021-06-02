@@ -47,11 +47,12 @@ describe("ArtworkImageBrowser", () => {
     })
 
     it("renders correct number of images", () => {
-      expect(wrapper.find("Image").length).toBe(4)
+      expect(wrapper.find("Image").length).toBe(1)
     })
 
     it("renders directional arrows", () => {
-      expect(wrapper.find("ArrowButton").length).toBe(2)
+      expect(wrapper.find('button[aria-label="Previous image"]').length).toBe(1)
+      expect(wrapper.find('button[aria-label="Next image"]').length).toBe(1)
     })
 
     it("returns null if missing images", async () => {

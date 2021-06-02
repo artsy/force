@@ -1,10 +1,8 @@
-import { Box, HTML, ReadMore, Text } from "@artsy/palette"
+import { HTML, ReadMore, Spacer } from "@artsy/palette"
 import React, { Component } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Media } from "v2/Utils/Responsive"
-
 import { ArtworkDetailsAboutTheWorkFromArtsy_artwork } from "v2/__generated__/ArtworkDetailsAboutTheWorkFromArtsy_artwork.graphql"
-
 import { track } from "v2/Artsy/Analytics"
 import * as Schema from "v2/Artsy/Analytics/Schema"
 
@@ -39,7 +37,7 @@ export class ArtworkDetailsAboutTheWorkFromArtsy extends Component<
     const maxChars = xs ? READ_MORE_MAX_CHARS.xs : READ_MORE_MAX_CHARS.default
 
     return (
-      <HTML>
+      <HTML variant="sm">
         <ReadMore
           maxChars={maxChars}
           // @ts-expect-error STRICT_NULL_CHECK
@@ -54,13 +52,13 @@ export class ArtworkDetailsAboutTheWorkFromArtsy extends Component<
     if (!this.props.artwork.description) {
       return null
     }
+
     return (
-      <Box pb={2}>
-        <Text variant="text">
-          <Media at="xs">{this.renderReadMore("xs")}</Media>
-          <Media greaterThan="xs">{this.renderReadMore()}</Media>
-        </Text>
-      </Box>
+      <>
+        <Media at="xs">{this.renderReadMore("xs")}</Media>
+        <Media greaterThan="xs">{this.renderReadMore()}</Media>
+        <Spacer mt={2} />
+      </>
     )
   }
 }

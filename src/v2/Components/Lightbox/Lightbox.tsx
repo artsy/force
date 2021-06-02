@@ -317,6 +317,7 @@ class LightboxComponent extends React.Component<LightboxProps, LightboxState> {
             alt={imageAlt}
             src={src}
             preventRightClick
+            lazyLoad
           />
         </Flex>
       )
@@ -332,6 +333,7 @@ class LightboxComponent extends React.Component<LightboxProps, LightboxState> {
           onClick={enabled ? this.show.bind(this) : null}
         >
           <StyledImage
+            key={src}
             style={{ cursor: enabled ? "zoom-in" : "auto" }}
             src={src}
             alt={imageAlt}

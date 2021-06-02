@@ -14,8 +14,7 @@ describe("/artwork/:id", () => {
   })
 
   it("renders page content", () => {
-    cy.get("h1").should("contain", "Pablo Picasso")
-    cy.get("h2").should("contain", "Guernica, 1937")
+    cy.get("h1").should("contain", "Guernica, 1937")
     cy.contains("Museo Reina Sofía")
   })
 })

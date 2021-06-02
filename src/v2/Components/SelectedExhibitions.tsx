@@ -1,10 +1,19 @@
-import { BorderBox, Box, Flex, Sans } from "@artsy/palette"
+import {
+  BorderBox,
+  Box,
+  Clickable,
+  Flex,
+  Join,
+  Spacer,
+  Text,
+} from "@artsy/palette"
 import { SelectedExhibitions_exhibitions } from "v2/__generated__/SelectedExhibitions_exhibitions.graphql"
 import { Link } from "found"
 import { groupBy, toPairs } from "lodash"
-import React, { SFC } from "react"
+import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Media } from "v2/Utils/Responsive"
+import { ArtworkDefinitionList } from "v2/Apps/Artwork/Components/ArtworkDefinitionList"
 
 const MIN_FOR_SELECTED_EXHIBITIONS = 3
 export const MIN_EXHIBITIONS = 2
@@ -20,12 +29,14 @@ export interface SelectedExhibitionsProps {
   ViewAllLink?: JSX.Element
   Container?: (props: { children: JSX.Element }) => JSX.Element
 }
-export const SelectedExhibitions: SFC<SelectedExhibitionsProps> = props => {
+
+export const SelectedExhibitions: React.FC<SelectedExhibitionsProps> = props => {
   return props.exhibitions.length === 0 ? null : (
     <>
       <Media at="xs">
         <SelectedExhibitionsContainer collapsible {...props} />
       </Media>
+
       <Media greaterThan="xs">
         <SelectedExhibitionsContainer {...props} />
       </Media>
@@ -41,24 +52,23 @@ export interface ExhibitionsHeadlineProps {
   collapsible: boolean
   onShowClicked: (event: React.MouseEvent<HTMLElement>) => void
 }
-export const ExhibitionsHeadline: SFC<ExhibitionsHeadlineProps> = props => (
+
+export const ExhibitionsHeadline: React.FC<ExhibitionsHeadlineProps> = props => (
   <Flex justifyContent="space-between" mb={isCollapsed(props) ? 0 : 1}>
-    <Sans size="2" weight="medium">
+    <Text variant="xs" fontWeight="bold">
       {props.exhibitionCount < MIN_FOR_SELECTED_EXHIBITIONS
         ? "Exhibitions"
         : "Selected exhibitions"}
+
       {isCollapsed(props) ? ` (${props.exhibitionCount})` : ""}
-    </Sans>
+    </Text>
+
     {isCollapsed(props) && (
-      <div
-        onClick={props.onShowClicked}
-        style={{ cursor: "pointer" }}
-        className="showLink"
-      >
-        <Sans size="2" color="black60" ml={2}>
+      <Clickable onClick={props.onShowClicked}>
+        <Text variant="xs" color="black60" ml={2}>
           Show
-        </Sans>
-      </div>
+        </Text>
+      </Clickable>
     )}
   </Flex>
 )
@@ -67,31 +77,29 @@ export interface ExhibitionYearListProps {
   year: Year
   exhibitions: SelectedExhibitions_exhibitions
 }
-export const ExhibitionYearList: SFC<ExhibitionYearListProps> = props => {
+
+export const ExhibitionYearList: React.FC<ExhibitionYearListProps> = ({
+  year,
+  exhibitions,
+}) => {
   return (
-    <Flex>
-      <Sans size="2">{props.year}</Sans>
-      <Flex flexDirection="column">
-        {props.exhibitions.map((exhibition, index) => (
-          <Box key={exhibition.name + "-" + index} display="inline" ml={1}>
-            <Sans size="2" display="inline" verticalAlign="top">
-              {exhibition.name}
-              {", "}
-            </Sans>
+    <ArtworkDefinitionList term={year}>
+      {exhibitions.map((exhibition, index) => (
+        <React.Fragment key={exhibition.name + "-" + index}>
+          <Text variant="xs">
+            {exhibition.name}
             {exhibition.partner && (
-              <Sans
-                size="2"
-                display="inline"
-                verticalAlign="top"
-                color="black60"
-              >
-                {exhibition.partner.name}
-              </Sans>
+              <>
+                ,&nbsp;
+                <Box as="span" color="black60">
+                  {exhibition.partner.name}
+                </Box>
+              </>
             )}
-          </Box>
-        ))}
-      </Flex>
-    </Flex>
+          </Text>
+        </React.Fragment>
+      ))}
+    </ArtworkDefinitionList>
   )
 }
 
@@ -101,12 +109,14 @@ interface FullExhibitionListProps {
   totalExhibitions: number
   ViewAllLink?: JSX.Element
 }
-const FullExhibitionList: SFC<FullExhibitionListProps> = props => {
+
+const FullExhibitionList: React.FC<FullExhibitionListProps> = props => {
   const {
     ViewAllLink = <Link to={`/artist/${props.artistID}/cv`}>View all</Link>,
   } = props
+
   return (
-    <React.Fragment>
+    <Join separator={<Spacer mt={1} />}>
       {toPairs(groupBy(props.exhibitions, ({ start_at }) => start_at))
         .reverse()
         .map(([year, exhibitions]) => (
@@ -116,12 +126,11 @@ const FullExhibitionList: SFC<FullExhibitionListProps> = props => {
             exhibitions={exhibitions.reverse()}
           />
         ))}
+
       {props.totalExhibitions > MIN_FOR_SELECTED_EXHIBITIONS && (
-        <Sans size="2" color="black60">
-          {ViewAllLink}
-        </Sans>
+        <ArtworkDefinitionList term="">{ViewAllLink}</ArtworkDefinitionList>
       )}
-    </React.Fragment>
+    </Join>
   )
 }
 
@@ -145,8 +154,7 @@ export class SelectedExhibitionsContainer extends React.Component<
   render() {
     if (
       !this.props.exhibitions.length ||
-      // @ts-expect-error STRICT_NULL_CHECK
-      this.props.totalExhibitions < MIN_EXHIBITIONS
+      (this.props.totalExhibitions ?? 0) < MIN_EXHIBITIONS
     ) {
       return null
     }
@@ -166,15 +174,12 @@ export class SelectedExhibitionsContainer extends React.Component<
         <Flex flexDirection="column">
           <ExhibitionsHeadline
             expanded={this.state.expanded}
-            // @ts-expect-error STRICT_NULL_CHECK
-            collapsible={this.props.collapsible}
+            collapsible={this.props.collapsible ?? false}
             exhibitionCount={this.props.exhibitions.length}
             onShowClicked={() => this.setState({ expanded: true })}
           />
-          {!isCollapsed({
-            expanded: this.state.expanded,
-            ...this.props,
-          }) && (
+
+          {!isCollapsed({ expanded: this.state.expanded, ...this.props }) && (
             <FullExhibitionList
               // @ts-expect-error STRICT_NULL_CHECK
               artistID={this.props.artistID}
