@@ -29,7 +29,6 @@ import { scrollIntoView } from "v2/Utils/scrollHelpers"
 import { useMatchMedia } from "v2/Utils/Hooks/useMatchMedia"
 import { BuyerGuaranteeMeta } from "../Components/BuyerGuaranteeMeta"
 
-interface BuyerGuaranteeIndexProps {}
 
 export const BuyerGuaranteeIndex: React.FC<BuyerGuaranteeIndexProps> = () => {
   const isMobile = useMatchMedia(themeProps.mediaQueries.xs)
