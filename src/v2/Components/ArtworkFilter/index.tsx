@@ -63,7 +63,6 @@ export const ArtworkFilter: React.FC<
   sortOptions,
   onFilterClick,
   onChange,
-  ZeroState,
   ...rest
 }) => {
   return (
@@ -74,7 +73,6 @@ export const ArtworkFilter: React.FC<
       sortOptions={sortOptions}
       onFilterClick={onFilterClick}
       onChange={onChange}
-      ZeroState={ZeroState}
     >
       <ArtworkFilterRefetchContainer viewer={viewer} {...rest} />
     </ArtworkFilterContextProvider>

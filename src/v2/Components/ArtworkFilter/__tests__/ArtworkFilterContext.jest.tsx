@@ -28,12 +28,6 @@ describe("ArtworkFilterContext", () => {
     expect(context.filters).toEqual(initialArtworkFilterState)
   })
 
-  it("takes a custom ZeroState", () => {
-    const ZeroState = () => <div />
-    getWrapper({ ZeroState })
-    expect(context.ZeroState).toEqual(ZeroState)
-  })
-
   describe("behaviors", () => {
     it("#onFilterClick", () => {
       const spy = jest.fn()

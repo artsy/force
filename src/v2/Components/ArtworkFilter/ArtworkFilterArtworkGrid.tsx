@@ -72,7 +72,6 @@ const ArtworkFilterArtworkGrid: React.FC<ArtworkFilterArtworkGridProps> = props 
           user={user}
           mediator={mediator}
           onClearFilters={context.resetFilters}
-          emptyStateComponent={context.ZeroState && <context.ZeroState />}
           onBrickClick={(artwork, artworkIndex) => {
             trackEvent(
               clickedMainArtworkGrid({

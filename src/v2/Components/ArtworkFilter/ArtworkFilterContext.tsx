@@ -190,12 +190,7 @@ export type SortOptions = Array<{
 
 export type SharedArtworkFilterContextProps = Pick<
   ArtworkFilterContextProps,
-  | "aggregations"
-  | "counts"
-  | "filters"
-  | "sortOptions"
-  | "onFilterClick"
-  | "ZeroState"
+  "aggregations" | "counts" | "filters" | "sortOptions" | "onFilterClick"
 > & {
   onChange?: (filterState) => void
 }
@@ -212,7 +207,6 @@ export const ArtworkFilterContextProvider: React.FC<
   onChange,
   onFilterClick,
   sortOptions,
-  ZeroState,
 }) => {
   const initialFilterState = {
     ...initialArtworkFilterState,
@@ -269,9 +263,6 @@ export const ArtworkFilterContextProvider: React.FC<
     setAggregations,
     counts: artworkCounts,
     setCounts,
-
-    // Components
-    ZeroState,
 
     // Filter manipulation
     isDefaultValue: field => {

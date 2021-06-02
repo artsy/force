@@ -4,7 +4,7 @@ import { ArtworkGrid_artworks } from "v2/__generated__/ArtworkGrid_artworks.grap
 import { ArtworkGridEmptyState } from "v2/Components/ArtworkGrid/ArtworkGridEmptyState"
 import { isEqual } from "lodash"
 import memoizeOnce from "memoize-one"
-import React, { ReactNode } from "react"
+import React from "react"
 import ReactDOM from "react-dom"
 // @ts-ignore
 import { ComponentRef, createFragmentContainer, graphql } from "react-relay"
@@ -32,7 +32,6 @@ export interface ArtworkGridProps
   onLoadMore?: () => any
   sectionMargin?: number
   user?: User
-  emptyStateComponent?: ReactNode | boolean
 }
 
 export interface ArtworkGridContainerState {
@@ -204,18 +203,11 @@ export class ArtworkGridContainer extends React.Component<
   }
 
   render() {
-    const {
-      artworks,
-      className,
-      onClearFilters,
-      emptyStateComponent,
-    } = this.props
+    const { artworks, className, onClearFilters } = this.props
 
     const hasArtworks = artworks && artworks.edges && artworks.edges.length > 0
     const artworkGrids = this.renderSectionsForAllBreakpoints()
-    const emptyState = emptyStateComponent || (
-      <ArtworkGridEmptyState onClearFilters={onClearFilters} />
-    )
+    const emptyState = <ArtworkGridEmptyState onClearFilters={onClearFilters} />
 
     return (
       <div className={className} data-test={ContextModule.artworkGrid}>
