@@ -8,6 +8,7 @@ import {
   Collapse,
   Row,
   Sans,
+  Text,
 } from "@artsy/palette"
 import { Box, Button, Flex, Separator, Spacer } from "@artsy/palette"
 import { Artist2AuctionResultItem_auctionResult } from "v2/__generated__/Artist2AuctionResultItem_auctionResult.graphql"
@@ -161,30 +162,35 @@ const LargeAuctionItem: SFC<Props> = props => {
         </Flex>
       </Col>
       <Col sm={4}>
-        <Flex alignItems="center" height="100%" pl={1} pr={6}>
-          <div>
-            <Sans size="3t" weight="medium">
+        <Flex
+          flexDirection="row"
+          alignItems="center"
+          height="100%"
+          pl={1}
+          pr={6}
+        >
+          <Box>
+            <Text variant="md" fontWeight="bold">
               {title}
               {title && date_text && ", "}
               {date_text}
-            </Sans>
-            <Sans size="2" color="black60">
+            </Text>
+            <Text variant="xs" color="black60">
               <Capitalize>{mediumText}</Capitalize>
-            </Sans>
-            <Spacer pt={1} />
-          </div>
+            </Text>
+          </Box>
         </Flex>
       </Col>
       <Col sm={2}>
         <Flex alignItems="center" height="100%" pr={2}>
-          <div>
-            <Sans size="3t" weight="medium">
+          <Box>
+            <Text variant="md" fontWeight="bold">
               {dateOfSale}
-            </Sans>
-            <Sans size="2" color="black60">
+            </Text>
+            <Text variant="xs" color="black60">
               {organization}
-            </Sans>
-          </div>
+            </Text>
+          </Box>
         </Flex>
       </Col>
       <Col sm={4}>
@@ -336,8 +342,6 @@ const renderPricing = (
   filtersAtDefault,
   boughtIn
 ) => {
-  const textSize = size === "xs" ? "2" : "3t"
-
   // If user is logged in we show prices. Otherwise we show prices only when filters at default.
   if (user || filtersAtDefault) {
     const textAlign = size === "xs" ? "left" : "right"
@@ -350,35 +354,35 @@ const renderPricing = (
       <Box textAlign={textAlign} mb="5px">
         {salePrice && (
           <>
-            <Sans size={textSize} weight="medium" mb="2px">
+            <Text variant="md" fontWeight="bold">
               {salePrice}
-            </Sans>
+            </Text>
             {size !== "xs" && (
-              <Sans size="2" color="black60">
+              <Text variant="xs" color="black60">
                 Realized price
-              </Sans>
+              </Text>
             )}
           </>
         )}
         {!salePrice && boughtIn && (
           <Box textAlign={textAlign}>
-            <Sans mb="2px" size={textSize} weight="medium">
+            <Text variant="md" fontWeight="bold">
               Bought in
-            </Sans>
+            </Text>
           </Box>
         )}
         {!salePrice && awaitingResults && (
           <Box textAlign={textAlign}>
-            <Sans mb="2px" size={textSize} weight="medium">
+            <Text variant="md" fontWeight="bold">
               Awaiting results
-            </Sans>
+            </Text>
           </Box>
         )}
         {!salePrice && !awaitingResults && !boughtIn && (
           <Box textAlign={textAlign}>
-            <Sans mb="2px" size={textSize} weight="medium">
+            <Text variant="md" fontWeight="bold">
               Price not available
-            </Sans>
+            </Text>
           </Box>
         )}
       </Box>
@@ -465,7 +469,7 @@ const renderRealizedPrice = (
         }}
         textDecoration="underline"
       >
-        <Sans size="2">Sign up to see realized price</Sans>
+        <Text variant="sm">Sign up to see realized price</Text>
       </Clickable>
     )
   }
@@ -496,22 +500,21 @@ const renderLargeCollapse = (props, user, mediator, filtersAtDefault) => {
       <Box p={2}>
         <Row>
           <Col sm={2}>
-            <Sans size="2" weight="medium">
+            <Text variant="xs" fontWeight="bold">
               Artwork Info
-            </Sans>
+            </Text>
           </Col>
           <Col sm={4}>
             <Box pl={1} pr={6}>
-              <Sans size="2">{categoryText}</Sans>
-              <Sans size="2">{dimension_text}</Sans>
-              <Spacer pt={1} />
+              <Text variant="xs">{categoryText}</Text>
+              <Text variant="xs">{dimension_text}</Text>
             </Box>
           </Col>
           <Col sm={2}>
             <Box pr={2}>
-              <Sans size="2" weight="medium">
+              <Text variant="xs" fontWeight="bold">
                 Estimate
-              </Sans>
+              </Text>
             </Box>
           </Col>
           <Col sm={4} pr="4.5%">
@@ -521,23 +524,22 @@ const renderLargeCollapse = (props, user, mediator, filtersAtDefault) => {
 
         <Row>
           <Col sm={2}>
-            <Sans size="2" weight="medium">
+            <Text variant="xs" fontWeight="bold">
               Auction Sale
-            </Sans>
+            </Text>
           </Col>
           <Col sm={4}>
             <Box pl={1} pr={6}>
-              <Sans size="2">{dateOfSale}</Sans>
-              <Sans size="2">{organization}</Sans>
-              <Spacer pt={1} />
+              <Text variant="xs">{dateOfSale}</Text>
+              <Text variant="xs">{organization}</Text>
             </Box>
           </Col>
 
           <Col sm={2}>
             <Box pr={2}>
-              <Sans size="2" weight="medium">
+              <Text variant="xs" fontWeight="bold">
                 Realized Price
-              </Sans>
+              </Text>
             </Box>
           </Col>
           <Col sm={4} pr="4.5%">
@@ -548,13 +550,13 @@ const renderLargeCollapse = (props, user, mediator, filtersAtDefault) => {
         {description && (
           <Row>
             <Col sm={2}>
-              <Sans size="2" weight="medium">
+              <Text variant="xs" fontWeight="bold">
                 Description
-              </Sans>
+              </Text>
             </Col>
             <Col sm={10} pr="4.5%">
               <Box pl={1}>
-                <Sans size="2">{description}</Sans>
+                <Text variant="xs">{description}</Text>
               </Box>
             </Col>
           </Row>
@@ -588,34 +590,34 @@ const renderSmallCollapse = (props, user, mediator, filtersAtDefault) => {
       <Box p={2}>
         <Row mb={2}>
           <Col xs={4}>
-            <Sans size="2" weight="medium">
+            <Text variant="xs" fontWeight="bold">
               Artwork Info
-            </Sans>
+            </Text>
           </Col>
           <Col xs={8}>
             <Box>
-              <Sans size="2">{categoryText}</Sans>
-              <Sans size="2">
+              <Text variant="xs">{categoryText}</Text>
+              <Text variant="xs">
                 <Capitalize>{mediumText}</Capitalize>
-              </Sans>
-              <Sans size="2">{dimension_text}</Sans>
+              </Text>
+              <Text variant="xs">{dimension_text}</Text>
             </Box>
           </Col>
         </Row>
         <Row mb={2}>
           <Col xs={4}>
-            <Sans size="2" weight="medium">
+            <Text variant="xs" fontWeight="bold">
               Estimate
-            </Sans>
+            </Text>
           </Col>
           <Col xs={8}>{renderEstimate(estimatedPrice, user, mediator)}</Col>
         </Row>
 
         <Row mb={2}>
           <Col xs={4}>
-            <Sans size="2" weight="medium">
+            <Text variant="xs" fontWeight="bold">
               Realized Price
-            </Sans>
+            </Text>
           </Col>
           <Col xs={8}>
             {renderRealizedPrice(salePrice, user, mediator, filtersAtDefault)}
@@ -624,24 +626,24 @@ const renderSmallCollapse = (props, user, mediator, filtersAtDefault) => {
 
         <Row mb={2}>
           <Col xs={4}>
-            <Sans size="2" weight="medium">
+            <Text variant="xs" fontWeight="bold">
               Auction Sale
-            </Sans>
+            </Text>
           </Col>
           <Col xs={8}>
-            <Sans size="2">{dateOfSale}</Sans>
-            <Sans size="2">{organization}</Sans>
+            <Text variant="xs">{dateOfSale}</Text>
+            <Text variant="xs">{organization}</Text>
           </Col>
         </Row>
 
         <Row mb={2}>
           <Col xs={4}>
-            <Sans size="2" weight="medium">
+            <Text variant="xs" fontWeight="bold">
               Description
-            </Sans>
+            </Text>
           </Col>
           <Col xs={8}>
-            <Sans size="2">{description}</Sans>
+            <Text variant="xs">{description}</Text>
           </Col>
         </Row>
       </Box>

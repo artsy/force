@@ -1,4 +1,4 @@
-import { Col, Row } from "@artsy/palette"
+import { Col, Row, Flex, Text } from "@artsy/palette"
 import { Artist2AuctionResults_artist } from "v2/__generated__/Artist2AuctionResults_artist.graphql"
 import { PaginationFragmentContainer as Pagination } from "v2/Components/Pagination"
 import React, { useContext, useState } from "react"
@@ -26,6 +26,7 @@ import { auctionResultsFilterResetState } from "./AuctionResultsFilterContext"
 import { openAuthModal } from "v2/Utils/openAuthModal"
 import { ModalType } from "v2/Components/Authentication/Types"
 import { Title } from "react-head"
+import { SortSelect } from "./Components/SortSelect"
 
 const logger = createLogger("Artist2AuctionResults.tsx")
 
@@ -173,6 +174,14 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
           <AuctionFilters />
         </AuctionFilterMobileActionSheet>
       )}
+      <Media greaterThan="xs">
+        <Flex justifyContent="space-between" alignItems="flex-start" pb={4}>
+          <Text variant="xs" textTransform="uppercase">
+            Filter by
+          </Text>
+          <SortSelect />
+        </Flex>
+      </Media>
       <Row>
         <Col sm={3} pr={[0, 2]}>
           <Media greaterThan="xs">

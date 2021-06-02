@@ -88,7 +88,7 @@ export const YearCreated: React.FC = () => {
               <FilterResetLink onReset={resetFilter} hasChanges={hasChanges} />
             </Box>
           )}
-          <Spacer mt={0.5} />
+          <Spacer mt={1} />
           <Checkbox
             selected={allowEmptyCreatedDates}
             onSelect={(allowEmpty: boolean) => {

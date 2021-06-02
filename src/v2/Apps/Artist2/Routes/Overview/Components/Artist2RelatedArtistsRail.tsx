@@ -61,17 +61,13 @@ const Artist2RelatedArtistsRail: React.FC<Artist2RelatedArtistsRailProps> = ({
                 })
               }}
             >
-              <Box
-                minWidth={artworkImage?.resized?.width}
-                minHeight={artworkImage?.resized?.height}
-              >
+              <Box>
                 <Image
-                  width={artworkImage?.resized?.width}
-                  height={artworkImage?.resized?.height}
+                  width={325}
+                  height={230}
                   src={artworkImage?.resized?.src!}
                   srcSet={artworkImage?.resized?.srcSet}
                   style={{ objectFit: "contain" }}
-                  lazyLoad
                 />
                 <Spacer my={1} />
 
@@ -79,7 +75,7 @@ const Artist2RelatedArtistsRail: React.FC<Artist2RelatedArtistsRailProps> = ({
                   width={325}
                   name={node.name!}
                   imageUrl={node?.image?.resized?.url}
-                  href={`/artist/${node.slug}`}
+                  href={`/artist2/${node.slug}`}
                   meta={
                     node.nationality && node.birthday
                       ? `${node.nationality}, b. ${node.birthday}`

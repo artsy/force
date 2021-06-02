@@ -1,4 +1,4 @@
-import { Box, Checkbox, Flex, Toggle } from "@artsy/palette"
+import { Checkbox, Flex } from "@artsy/palette"
 import React from "react"
 import { useAuctionResultsFilterContext } from "../../AuctionResultsFilterContext"
 import { FilterExpandable } from "v2/Components/ArtworkFilter/ArtworkFilters/FilterExpandable"

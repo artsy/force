@@ -1,4 +1,4 @@
-import { Select } from "@artsy/palette"
+import { Select, Flex } from "@artsy/palette"
 import React from "react"
 import { useAuctionResultsFilterContext } from "../AuctionResultsFilterContext"
 
@@ -22,15 +22,18 @@ export const SortSelect = () => {
   const filterContext = useAuctionResultsFilterContext()
 
   return (
-    <Select
-      width="auto"
-      variant="inline"
-      options={SORTS}
-      // @ts-expect-error STRICT_NULL_CHECK
-      selected={filterContext.filters.sort}
-      onSelect={sort => {
-        filterContext.setFilter("sort", sort)
-      }}
-    />
+    <Flex>
+      <Select
+        width="auto"
+        variant="inline"
+        title="Sort"
+        options={SORTS}
+        // @ts-expect-error STRICT_NULL_CHECK
+        selected={filterContext.filters.sort}
+        onSelect={sort => {
+          filterContext.setFilter("sort", sort)
+        }}
+      />
+    </Flex>
   )
 }
