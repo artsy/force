@@ -29,7 +29,7 @@ module.exports = class Partner extends Backbone.Model
   urlRoot: "#{sd.API_URL}/api/v1/partner"
 
   href: ->
-    "/#{@get('default_profile_id')}"
+    "/partner/#{@get('default_profile_id')}"
 
   displayName: ->
     @get('name')
