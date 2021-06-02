@@ -61,11 +61,10 @@ describe("ArtworkFilterMobileActionSheet", () => {
     })
   })
 
-  it("calls onClose callback on `Apply` button click", () => {
+  it("doesn't call onClose callback on `Apply` button click because it's disabled", () => {
     const wrapper = getWrapper()
     wrapper.find("Button").last().simulate("click")
-
-    expect(spy).toHaveBeenCalled()
+    expect(spy).not.toHaveBeenCalled()
   })
 
   it("renders children content", () => {
@@ -125,6 +124,19 @@ describe("ArtworkFilterMobileActionSheet", () => {
     await flushPromiseQueue()
 
     expect(wrapper.find("ApplyButton").text()).toEqual("Apply (2)")
+  })
+
+  describe("`Apply` button", () => {
+    it("is disabled before selecting filter and enabled after that", () => {
+      const wrapper = getWrapper()
+
+      expect(wrapper.find("Button").last().prop("disabled")).toBeTruthy()
+
+      wrapper.find("SizeFilter").find("ChevronIcon").simulate("click")
+      wrapper.find("SizeFilter").find("Checkbox").first().simulate("click")
+
+      expect(wrapper.find("Button").last().prop("disabled")).toBeFalsy()
+    })
   })
 
   describe("the count on the `Apply` button", () => {

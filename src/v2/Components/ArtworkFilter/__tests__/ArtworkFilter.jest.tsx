@@ -220,7 +220,11 @@ describe("ArtworkFilter", () => {
       const actionSheet = wrapper.find("ArtworkFilterMobileActionSheet")
       expect(actionSheet.length).toEqual(1)
       expect(document.body.style.overflowY).toEqual("hidden")
+
+      wrapper.find("WaysToBuyFilter").find("ChevronIcon").simulate("click")
+      wrapper.find("WaysToBuyFilter").find("Checkbox").first().simulate("click")
       actionSheet.find("Button").last().simulate("click")
+
       expect(wrapper.find("ArtworkFilterMobileActionSheet").length).toEqual(0)
       expect(document.body.style.overflowY).toEqual("visible")
     })
