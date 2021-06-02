@@ -665,6 +665,7 @@ type Article implements Node {
     # A tz database time zone, otherwise falls back to `X-TIMEZONE` header
     timezone: String
   ): String
+  vertical: String
 }
 
 # A connection to a list of items.
@@ -698,6 +699,8 @@ type Artist implements EntityWithFilterArtworksConnectionInterface & Node & Sear
     after: String
     before: String
     first: Int
+
+    # Articles that are ready to be publicly viewed in the feed by everyone.
     inEditorialFeed: Boolean
     last: Int
     limit: Int
@@ -9307,6 +9310,9 @@ type Query {
     after: String
     before: String
     first: Int
+
+    # Articles that are ready to be publicly viewed in the feed by everyone.
+    inEditorialFeed: Boolean
     last: Int
     page: Int
     sort: ArticleSorts
@@ -11921,6 +11927,9 @@ type Viewer {
     after: String
     before: String
     first: Int
+
+    # Articles that are ready to be publicly viewed in the feed by everyone.
+    inEditorialFeed: Boolean
     last: Int
     page: Int
     sort: ArticleSorts
