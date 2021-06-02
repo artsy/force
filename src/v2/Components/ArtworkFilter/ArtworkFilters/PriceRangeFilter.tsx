@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react"
 import {
-  Button,
   Flex,
   LabeledInput,
   Message,
@@ -14,6 +13,7 @@ import styled from "styled-components"
 import { Media } from "v2/Utils/Responsive"
 import { themeGet } from "@styled-system/theme-get"
 import { FilterExpandable } from "./FilterExpandable"
+import { FilterLink } from "./FilterLink"
 
 // Disables arrows in numeric inputs
 export const NumericInput = styled(LabeledInput).attrs({ type: "number" })`
@@ -203,14 +203,9 @@ export const PriceRangeFilter: React.FC<PriceRangeFilterProps> = ({
             />
           </Flex>
 
-          <Button
-            mt={1}
-            variant="secondaryGray"
-            onClick={handleClick}
-            width="100%"
-          >
+          <FilterLink mt={1.5} onClick={handleClick}>
             Set price
-          </Button>
+          </FilterLink>
         </>
       )}
     </FilterExpandable>
