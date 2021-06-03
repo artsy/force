@@ -16,6 +16,9 @@ describe("partnerRedirectionMiddleware", () => {
           isPartner: jest.fn(() => {
             return true
           }),
+          get: jest.fn(attr => {
+            if (attr === "owner") return { id: "white-cube" }
+          }),
         },
       },
       redirect: jest.fn(),
@@ -80,6 +83,18 @@ describe("partnerRedirectionMiddleware", () => {
       "/partner/white-cube/works",
       "/white-cube/shop",
       { id: "white-cube" },
+    ],
+    [
+      "/:id/contact",
+      "/partner/white-cube/contact",
+      "/white-cube-gallery/contact",
+      { id: "white-cube-gallery" },
+    ],
+    [
+      "/:id/artist/:artistId",
+      "/partner/white-cube/artists/artist_slug",
+      "/white-cube-gallery/artist/artist_slug",
+      { artistId: "artist_slug", id: "white-cube-gallery" },
     ],
   ])(
     "redirects %s to %s",

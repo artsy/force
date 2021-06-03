@@ -8,25 +8,29 @@ export const partnerRedirectionMiddleware = (
 ) => {
   if (!res.locals?.profile?.isPartner() || !res.redirect) return next()
 
-  const href: string | null = `/partner${req.path}`
+  const partnerSlug: string | null = res.locals.profile.get("owner")?.id
+
+  if (!partnerSlug || !req.path) return next()
+
+  const href: string = `/partner${req.path.replace(req.params.id, partnerSlug)}`
 
   // /:id/overview -> /partner/:id
   // /:id/about -> /partner/:id
   if (req.route.path === "/:id/overview" || req.route.path === "/:id/about") {
-    return res.redirect(301, `/partner/${req.params.id}`)
+    return res.redirect(301, `/partner/${partnerSlug}`)
   }
 
   // /:id/collection -> /partner/:id/works
   // /:id/shop -> /partner/:id/works
   if (req.route.path === "/:id/collection" || req.route.path === "/:id/shop") {
-    return res.redirect(301, `/partner/${req.params.id}/works`)
+    return res.redirect(301, `/partner/${partnerSlug}/works`)
   }
 
   // /:id/artist/:artistId -> /partner/:id/artists/:artistId
   if (req.route.path === "/:id/artist/:artistId" && req.params?.artistId) {
     return res.redirect(
       301,
-      `/partner/${req.params.id}/artists/${req.params.artistId}`
+      `/partner/${partnerSlug}/artists/${req.params.artistId}`
     )
   }
 
