@@ -47,9 +47,9 @@ export const clientDevelopmentConfig = {
     splitChunks: clientChunks,
   },
   output: {
-    filename: "novo-[name].js",
-    path: path.resolve(basePath, "public/assets-novo"),
-    publicPath: "/assets-novo/",
+    filename: "[name].js",
+    path: path.resolve(basePath, "public/assets"),
+    publicPath: "/assets/",
   },
   plugins: [
     ...standardPlugins,
@@ -62,11 +62,11 @@ export const clientDevelopmentConfig = {
     }),
     new LoadablePlugin({
       filename: "loadable-novo-stats.json",
-      path: path.resolve(basePath, "public", "assets-novo"),
+      path: path.resolve(basePath, "public", "assets"),
     }),
     new HashedModuleIdsPlugin(),
     new WebpackManifestPlugin({
-      basePath: "/assets-novo/",
+      basePath: "/assets/",
       fileName: path.resolve(basePath, "manifest-novo.json"),
     }),
     new HtmlWebpackPlugin({

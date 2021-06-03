@@ -26,13 +26,6 @@ import { showRoutes } from "v2/Apps/Show/showRoutes"
 import { viewingRoomRoutes } from "v2/Apps/ViewingRoom/viewingRoomRoutes"
 import { tagRoutes } from "./Apps/Tag/tagRoutes"
 
-/**
- * **WARNING***
- *
- * When adding a new route to this file, be sure to add route to
- * `src/desktop/lib/webpackPublicPath.ts` as well. This is temporary until the
- * asset paths have stabilized.
- */
 export function getAppRoutes(): AppRouteConfig[] {
   return buildAppRoutes([
     {
