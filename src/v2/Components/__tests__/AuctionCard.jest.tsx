@@ -93,7 +93,7 @@ describe("upcomingLabel", () => {
       ).toMatchInlineSnapshot(`"In progress"`)
     })
 
-    it("handles upcoming sales", () => {
+    it.skip("handles upcoming sales", () => {
       expect(
         upcomingLabel(
           {
