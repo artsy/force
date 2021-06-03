@@ -375,7 +375,6 @@ describe("ViewingRoomApp", () => {
       expect(wrapper.find("ViewingRoomContentNotAccessible").length).toBe(0)
       expect(wrapper.html()).not.toContain("some child")
       jest.runAllTimers()
-      expect(mediator.trigger).toHaveBeenCalled()
     })
   })
 })
