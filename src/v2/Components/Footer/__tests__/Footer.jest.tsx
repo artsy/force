@@ -18,7 +18,7 @@ describe("Footer", () => {
     it("renders prompts to download the app", () => {
       const wrapper = getWrapper("lg")
       expect(wrapper.find("FooterDownloadAppBanner").length).toEqual(1)
-      expect(wrapper.find(DownloadAppBadge).length).toEqual(1)
+      expect(wrapper.find(DownloadAppBadge).length).toEqual(2)
     })
 
     it("renders links to download the app", () => {
@@ -43,10 +43,10 @@ describe("Footer", () => {
   })
 
   describe("small screen size", () => {
-    it("does not render a download banner; but does include the badge", () => {
+    it("renders a download banner with a badge and a separate badge", () => {
       const wrapper = getWrapper("xs")
-      expect(wrapper.find("FooterDownloadAppBanner").length).toEqual(0)
-      expect(wrapper.find(DownloadAppBadge).length).toEqual(1)
+      expect(wrapper.find("FooterDownloadAppBanner").length).toEqual(1)
+      expect(wrapper.find(DownloadAppBadge).length).toEqual(2)
     })
 
     it("renders the CCPA request link", () => {

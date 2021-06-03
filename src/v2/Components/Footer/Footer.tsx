@@ -47,22 +47,22 @@ export const Footer: React.FC<FooterProps> = props => {
 
   return (
     <Box mt={6} borderTop="1px solid" borderColor="black10" {...props}>
-      <Media greaterThan="xs">
-        <Box id="download-app-banner"></Box>
-        <FooterDownloadAppBanner />
-      </Media>
+      <Box id="download-app-banner"></Box>
+      <FooterDownloadAppBanner />
 
       <footer>
         <GridColumns pt={tokens.pt} pb={tokens.pb} gridRowGap={[4, 0]}>
-          <Column span={12} display={["block", "none"]}>
-            <Text variant={tokens.header} fontWeight="bold" mb={2}>
-              Get the App
-            </Text>
-            <DownloadAppBadge
-              contextModule={ContextModule.footer}
-              device={device}
-              downloadAppUrl={downloadAppUrl}
-            />
+          <Column span={12}>
+            <Media at="xs">
+              <Text variant={tokens.header} fontWeight="bold" mb={2}>
+                Get the App
+              </Text>
+              <DownloadAppBadge
+                contextModule={ContextModule.footer}
+                device={device}
+                downloadAppUrl={downloadAppUrl}
+              />
+            </Media>
           </Column>
 
           <Column span={3}>
