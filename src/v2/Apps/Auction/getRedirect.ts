@@ -56,7 +56,7 @@ export function confirmBidRedirect(
 
   if (!me) {
     return {
-      path: "/log_in?redirect_uri=" + encodeURIComponent(location.pathname),
+      path: "/login?redirectTo=" + encodeURIComponent(location.pathname),
       reason: "user is not signed in",
     }
   }

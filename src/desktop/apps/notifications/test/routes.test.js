@@ -33,7 +33,7 @@ describe("Notification Routing", function () {
     it("redirect to login without a user", function () {
       routes.worksForYou(this.req, this.res)
       return this.res.redirect.args[0][0].should.equal(
-        "/log_in?redirect_uri=/works-for-you"
+        "/login?redirectTo=%2Fworks-for-you"
       )
     })
 
@@ -55,7 +55,7 @@ describe("Notification Routing", function () {
       }
       routes.worksForYou(this.req, this.res)
       return this.res.redirect.args[0][0].should.equal(
-        "/log_in?redirect_uri=/works-for-you"
+        "/login?redirectTo=%2Fworks-for-you"
       )
     })
 

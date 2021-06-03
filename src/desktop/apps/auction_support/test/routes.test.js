@@ -67,7 +67,7 @@ describe("#modalAuctionRegistration", function () {
   it("redirects to login without user", function () {
     routes.modalAuctionRegistration(this.req, this.res)
     return this.res.redirect.args[0][0].should.equal(
-      "/log_in?redirect_uri=/auction-registration/awesome-sale"
+      "/login?redirectTo=/auction-registration/awesome-sale"
     )
   })
 

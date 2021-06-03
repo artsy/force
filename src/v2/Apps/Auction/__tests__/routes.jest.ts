@@ -109,7 +109,7 @@ describe("Auction/routes", () => {
       )
     })
 
-    it("redirects to the login (plus redirect_uri of sale artwork bid page) if user is not signed in", async () => {
+    it("redirects to the login (plus redirectTo of sale artwork bid page) if user is not signed in", async () => {
       const fixture = mockConfirmBidResolver({
         me: null,
       })
@@ -121,7 +121,7 @@ describe("Auction/routes", () => {
       )
       // @ts-expect-error STRICT_NULL_CHECK
       expect(redirect.url).toBe(
-        "/log_in?redirect_uri=%2Fauction%2Fsaleslug%2Fbid%2Fartworkslug"
+        "/login?redirectTo=%2Fauction%2Fsaleslug%2Fbid%2Fartworkslug"
       )
     })
 

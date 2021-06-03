@@ -72,8 +72,8 @@ describe("MobileNavMenu", () => {
         ["/institutions", "Museums"],
         ["/consign", "Sell"],
         ["/articles", "Editorial"],
-        ["/sign_up?intent=signup&contextModule=header", "Sign up"],
-        ["/log_in?intent=login&contextModule=header", "Log in"],
+        ["/signup?intent=signup&contextModule=header", "Sign up"],
+        ["/login?intent=login&contextModule=header", "Log in"],
       ].map(link => link.join(""))
 
       const linkContainer = getMobileMenuLinkContainer()

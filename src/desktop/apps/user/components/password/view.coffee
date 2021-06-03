@@ -30,7 +30,7 @@ module.exports = class SettingsPasswordView extends GenericFormView
       method: "DELETE"
       url: "/users/sign_out",
       complete: ->
-        return location.assign '/log_in?redirect_uri=/user/edit'
+        return location.assign '/login?redirectTo=/user/edit'
   , 300
 
   render: ->
