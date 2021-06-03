@@ -65,7 +65,7 @@ const ViewingRoomApp: React.FC<ViewingRoomAppProps> = ({
 
       <>
         <ViewingRoomHeader viewingRoom={viewingRoom} />
-        {user && getView()}
+        {getView()}
       </>
     </>
   )
