@@ -104,9 +104,6 @@ export const BaseArtworkFilter: React.FC<
   offset,
   ...rest
 }) => {
-  const { filtered_artworks } = viewer
-  const hasFilter = filtered_artworks && filtered_artworks.id
-
   const tracking = useTracking()
   const {
     contextPageOwnerId,
@@ -117,6 +114,9 @@ export const BaseArtworkFilter: React.FC<
   const [showMobileActionSheet, toggleMobileActionSheet] = useState(false)
   const filterContext = useArtworkFilterContext()
   const previousFilters = usePrevious(filterContext.filters)
+
+  const { filtered_artworks } = viewer
+  const hasFilter = filtered_artworks && filtered_artworks.id
 
   /**
    * Check to see if the mobile action sheet is present and prevent scrolling
@@ -189,21 +189,21 @@ export const BaseArtworkFilter: React.FC<
     const relayRefetchVariables = {
       first: 30,
       ...allowedFilters(filterContext.filters),
-      // @ts-expect-error STRICT_NULL_CHECK
-      keyword: filterContext.filters.term,
+      keyword: filterContext.filters!.term,
     }
 
-    relay.refetch(
-      { input: relayRefetchVariables, ...relayVariables },
-      null,
-      error => {
-        if (error) {
-          console.error(error)
-        }
+    const refetchVariables = {
+      input: relayRefetchVariables,
+      ...relayVariables,
+    }
 
-        toggleFetching(false)
+    relay.refetch(refetchVariables, null, error => {
+      if (error) {
+        console.error(error)
       }
-    )
+
+      toggleFetching(false)
+    })
   }
 
   const ArtworkGrid = () => {

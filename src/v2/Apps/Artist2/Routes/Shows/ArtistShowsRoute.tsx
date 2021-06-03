@@ -1,0 +1,54 @@
+import { Join, Spacer } from "@artsy/palette"
+import React from "react"
+import { createFragmentContainer, graphql } from "react-relay"
+import { ArtistShowsRoute_viewer } from "v2/__generated__/ArtistShowsRoute_viewer.graphql"
+import { ArtistShowsGroupRefetchContainer } from "./Components/ArtistShowsGroup"
+
+interface ArtistShowsRouteProps {
+  viewer: ArtistShowsRoute_viewer
+}
+
+const ArtistShowsRoute: React.FC<ArtistShowsRouteProps> = ({ viewer }) => {
+  return (
+    <>
+      <Join separator={<Spacer mb={4} />}>
+        <ArtistShowsGroupRefetchContainer
+          artist={viewer.currentShows!}
+          title="Current Shows"
+          sort="END_AT_ASC"
+          status="running"
+        />
+        <ArtistShowsGroupRefetchContainer
+          artist={viewer.upcomingShows!}
+          title="Upcoming Shows"
+          sort="START_AT_ASC"
+          status="upcoming"
+        />
+      </Join>
+    </>
+  )
+}
+
+export const ArtistShowsRouteFragmentContainer = createFragmentContainer(
+  ArtistShowsRoute,
+  {
+    viewer: graphql`
+      fragment ArtistShowsRoute_viewer on Viewer
+        @argumentDefinitions(
+          currentShowsStatus: { type: "String", defaultValue: "running" }
+          currentShowsSort: { type: "ShowSorts", defaultValue: END_AT_ASC }
+          upcomingShowsStatus: { type: "String", defaultValue: "upcoming" }
+          upcomingShowsSort: { type: "ShowSorts", defaultValue: START_AT_ASC }
+        ) {
+        currentShows: artist(id: $artistID) {
+          ...ArtistShowsGroup_artist
+            @arguments(sort: $currentShowsSort, status: $currentShowsStatus)
+        }
+        upcomingShows: artist(id: $artistID) {
+          ...ArtistShowsGroup_artist
+            @arguments(sort: $upcomingShowsSort, status: $upcomingShowsStatus)
+        }
+      }
+    `,
+  }
+)

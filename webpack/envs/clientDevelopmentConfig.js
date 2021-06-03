@@ -5,6 +5,7 @@ import HtmlWebpackPlugin from "html-webpack-plugin"
 import LoadablePlugin from "@loadable/webpack-plugin"
 import ReactRefreshWebpackPlugin from "@pmmmwh/react-refresh-webpack-plugin"
 import WebpackManifestPlugin from "webpack-manifest-plugin"
+import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin"
 import path from "path"
 import webpack from "webpack"
 import { basePath, env } from "../utils/env"
@@ -53,6 +54,12 @@ export const clientDevelopmentConfig = {
   plugins: [
     ...standardPlugins,
     new webpack.HotModuleReplacementPlugin(),
+    new ForkTsCheckerWebpackPlugin({
+      checkSyntacticErrors: true,
+      formatter: "codeframe",
+      formatterOptions: "highlightCode",
+      watch: ["./src/v2"],
+    }),
     new LoadablePlugin({
       filename: "loadable-novo-stats.json",
       path: path.resolve(basePath, "public", "assets-novo"),

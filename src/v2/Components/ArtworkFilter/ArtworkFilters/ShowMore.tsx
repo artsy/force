@@ -4,7 +4,6 @@ import React, { Children, isValidElement, useState } from "react"
 interface ShowMoreProps {
   initial?: number
   expanded?: boolean
-  children: JSX.Element[]
 }
 
 export const INITIAL_ITEMS_TO_SHOW = 6
