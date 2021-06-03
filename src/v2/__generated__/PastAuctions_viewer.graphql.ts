@@ -29,7 +29,7 @@ export type PastAuctions_viewer$key = {
 const node: ReaderFragment = {
   "argumentDefinitions": [
     {
-      "defaultValue": 30,
+      "defaultValue": 10,
       "kind": "LocalArgument",
       "name": "first",
       "type": "Int"
@@ -187,5 +187,5 @@ const node: ReaderFragment = {
   ],
   "type": "Viewer"
 };
-(node as any).hash = '897dce522364c5ce7cb8ee56f7dfaee3';
+(node as any).hash = 'e488ae430e93d48cda1a365fdd145a14';
 export default node;

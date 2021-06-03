@@ -32,7 +32,7 @@ fragment AuctionArtworksRail_sale on Sale {
 }
 
 fragment CurrentAuctions_viewer on Viewer {
-  salesConnection(first: 30, live: true, published: true, sort: TIMELY_AT_NAME_ASC, auctionState: OPEN) {
+  salesConnection(first: 10, live: true, published: true, sort: TIMELY_AT_NAME_ASC, auctionState: OPEN) {
     totalCount
     edges {
       node {
@@ -65,7 +65,7 @@ var v0 = [
   {
     "kind": "Literal",
     "name": "first",
-    "value": 30
+    "value": 10
   },
   {
     "kind": "Literal",
@@ -256,7 +256,7 @@ return {
                 "storageKey": null
               }
             ],
-            "storageKey": "salesConnection(auctionState:\"OPEN\",first:30,live:true,published:true,sort:\"TIMELY_AT_NAME_ASC\")"
+            "storageKey": "salesConnection(auctionState:\"OPEN\",first:10,live:true,published:true,sort:\"TIMELY_AT_NAME_ASC\")"
           },
           {
             "alias": null,
@@ -282,7 +282,7 @@ return {
     "metadata": {},
     "name": "CurrentAuctions_Test_Query",
     "operationKind": "query",
-    "text": "query CurrentAuctions_Test_Query {\n  viewer {\n    ...CurrentAuctions_viewer\n  }\n}\n\nfragment AuctionArtworksRail_sale on Sale {\n  internalID\n  slug\n  href\n  name\n  formattedStartDateTime\n}\n\nfragment CurrentAuctions_viewer on Viewer {\n  salesConnection(first: 30, live: true, published: true, sort: TIMELY_AT_NAME_ASC, auctionState: OPEN) {\n    totalCount\n    edges {\n      node {\n        slug\n        name\n        href\n        liveStartAt\n        isLiveOpen\n        ...AuctionArtworksRail_sale\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query CurrentAuctions_Test_Query {\n  viewer {\n    ...CurrentAuctions_viewer\n  }\n}\n\nfragment AuctionArtworksRail_sale on Sale {\n  internalID\n  slug\n  href\n  name\n  formattedStartDateTime\n}\n\nfragment CurrentAuctions_viewer on Viewer {\n  salesConnection(first: 10, live: true, published: true, sort: TIMELY_AT_NAME_ASC, auctionState: OPEN) {\n    totalCount\n    edges {\n      node {\n        slug\n        name\n        href\n        liveStartAt\n        isLiveOpen\n        ...AuctionArtworksRail_sale\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
