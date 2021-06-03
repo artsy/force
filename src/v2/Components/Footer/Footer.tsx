@@ -52,8 +52,8 @@ export const Footer: React.FC<FooterProps> = props => {
 
       <footer>
         <GridColumns pt={tokens.pt} pb={tokens.pb} gridRowGap={[4, 0]}>
-          <Media at="xs">
-            <Column span={12}>
+          <Column span={12}>
+            <Media at="xs">
               <Text variant={tokens.header} fontWeight="bold" mb={2}>
                 Get the App
               </Text>
@@ -62,8 +62,8 @@ export const Footer: React.FC<FooterProps> = props => {
                 device={device}
                 downloadAppUrl={downloadAppUrl}
               />
-            </Column>
-          </Media>
+            </Media>
+          </Column>
 
           <Column span={3}>
             <Text variant={tokens.header} fontWeight="bold" mb={2}>
