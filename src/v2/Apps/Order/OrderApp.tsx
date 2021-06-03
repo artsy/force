@@ -109,30 +109,6 @@ class OrderApp extends React.Component<OrderAppProps, {}> {
   }
 
   renderZendeskScript() {
-    const artwork = get(
-      this.props,
-      // @ts-expect-error STRICT_NULL_CHECK
-      props => props.order.lineItems.edges[0].node.artwork
-    )
-    // @ts-expect-error STRICT_NULL_CHECK
-    const { listPrice, priceCurrency } = artwork
-
-    const BNMO_CURRENCY_THRESHOLDS = {
-      USD: 10000,
-      EUR: 8000,
-      HKD: 77000,
-      GBP: 7000,
-    }
-
-    // This accounts for exact price and price ranges
-    const artworkPrice = listPrice?.major
-      ? listPrice.major
-      : listPrice.minPrice?.major
-
-    if (!BNMO_CURRENCY_THRESHOLDS[priceCurrency]) return
-    if (!artworkPrice || artworkPrice < BNMO_CURRENCY_THRESHOLDS[priceCurrency])
-      return
-
     if (typeof window !== "undefined" && window.zEmbed) return
 
     return <ZendeskWrapper />
@@ -183,6 +159,7 @@ class OrderApp extends React.Component<OrderAppProps, {}> {
                     content="width=device-width, initial-scale=1, maximum-scale=5 viewport-fit=cover"
                   />
                 )}
+                {!isEigen && this.renderZendeskScript()}
                 <SafeAreaContainer>
                   <Elements stripe={stripePromise}>
                     <AppContainer>
@@ -222,17 +199,6 @@ graphql`
             slug
             is_acquireable: isAcquireable
             is_offerable: isOfferable
-            priceCurrency
-            listPrice {
-              ... on Money {
-                major
-              }
-              ... on PriceRange {
-                minPrice {
-                  major
-                }
-              }
-            }
           }
         }
       }
