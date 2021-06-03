@@ -25,7 +25,7 @@ const PastAuctions: React.FC<PastAuctionsProps> = ({ viewer, relay }) => {
 
     const previousScrollY = window.scrollY
 
-    relay.loadMore(15, err => {
+    relay.loadMore(10, err => {
       setIsLoading(false)
 
       if (window.scrollY > previousScrollY) {
@@ -91,7 +91,7 @@ export const PastAuctionsPaginationContainer = createPaginationContainer(
     viewer: graphql`
       fragment PastAuctions_viewer on Viewer
         @argumentDefinitions(
-          first: { type: "Int", defaultValue: 30 }
+          first: { type: "Int", defaultValue: 10 }
           after: { type: "String" }
         ) {
         salesConnection(
