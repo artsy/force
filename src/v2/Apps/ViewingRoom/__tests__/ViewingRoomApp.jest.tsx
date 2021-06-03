@@ -11,7 +11,6 @@ import { ViewingRoomApp_UnfoundTest_QueryRawResponse } from "v2/__generated__/Vi
 import { ViewingRoomApp_LoggedOutTest_QueryRawResponse } from "v2/__generated__/ViewingRoomApp_LoggedOutTest_Query.graphql"
 import { Breakpoint } from "@artsy/palette"
 import { mockLocation } from "v2/DevTools/mockLocation"
-import { mediator } from "lib/mediator"
 
 jest.useFakeTimers()
 jest.unmock("react-relay")
@@ -30,12 +29,7 @@ describe("ViewingRoomApp", () => {
   let user
   const slug = "subscription-demo-gg-guy-yanai"
 
-  beforeAll(() => {
-    mediator.on("open:auth", () => {})
-  })
-
   beforeEach(() => {
-    jest.spyOn(mediator, "trigger")
     mockLocation()
     user = { id: "blah" }
     window.history.pushState({}, "Viewing Room Title", slug)
@@ -367,13 +361,13 @@ describe("ViewingRoomApp", () => {
         },
       })
     }
-    it("shows sign up modal", async () => {
+    it("shows viewing room content", async () => {
       const wrapper = await getWrapper()
       expect(wrapper.find("ViewingRoomMeta").length).toBe(1)
       expect(wrapper.find("ViewingRoomHeader").length).toBe(1)
-      expect(wrapper.find("ViewingRoomTabBar").length).toBe(0)
+      expect(wrapper.find("ViewingRoomTabBar").length).toBe(1)
       expect(wrapper.find("ViewingRoomContentNotAccessible").length).toBe(0)
-      expect(wrapper.html()).not.toContain("some child")
+      expect(wrapper.html()).toContain("some child")
       jest.runAllTimers()
     })
   })
