@@ -1,4 +1,4 @@
-import { CertificateIcon, Flex, Modal, Text } from "@artsy/palette"
+import { CertificateIcon, Flex, Modal, Text, Link } from "@artsy/palette"
 import { AuthenticityCertificate_artwork } from "v2/__generated__/AuthenticityCertificate_artwork.graphql"
 import React, { useState } from "react"
 import { createFragmentContainer } from "react-relay"
@@ -55,6 +55,17 @@ export const AuthenticityCertificate: React.FC<AuthenticityCertificateProps> = (
               COAs typically include the name of the artist, the details (title,
               date, medium, dimensions) of the work in question, and whenever
               possible an image of the work.
+            </Text>
+            <Text variant="text" pb={2}>
+              Read more about artwork authenticity in our{" "}
+              <Link
+                href="https://support.artsy.net/hc/en-us/articles/360058123933-What-Counts-as-an-Artwork-s-Proof-of-Authenticity-"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Help Center
+              </Link>
+              .
             </Text>
           </Flex>
         </Modal>
