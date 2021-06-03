@@ -67,7 +67,7 @@ export const Feature: React.FC<FeatureProps> = ({
           {title}
         </Text>
         <Text variant="text">{text}</Text>
-        {forcedSecondLine && <Text variant="text">{forcedSecondLine}</Text>}
+        {!!forcedSecondLine && <Text variant="text">{forcedSecondLine}</Text>}
       </Box>
       {!!onClick && <Box>{learnMore}</Box>}
     </Flex>
