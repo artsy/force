@@ -29,7 +29,6 @@ import { scrollIntoView } from "v2/Utils/scrollHelpers"
 import { useMatchMedia } from "v2/Utils/Hooks/useMatchMedia"
 import { BuyerGuaranteeMeta } from "../Components/BuyerGuaranteeMeta"
 
-
 export const BuyerGuaranteeIndex: React.FC = () => {
   const isMobile = useMatchMedia(themeProps.mediaQueries.xs)
 
@@ -49,20 +48,20 @@ export const BuyerGuaranteeIndex: React.FC = () => {
     "https://support.artsy.net/hc/en-us/articles/360048946973"
 
   const authenticityGuaranteeImageURL = resize(
-    "http://files.artsy.net/authenticityguaranteeartwork.jpg",
+    "https://files.artsy.net/authenticityguaranteeartwork.jpg",
     { width: 400, height: 600, convert_to: "jpg" }
   )
   const securePaymentImageURL = resize(
-    "http://files.artsy.net/securepaymentartwork.jpg",
+    "https://files.artsy.net/securepaymentartwork.jpg",
     { width: 400, height: 600, convert_to: "jpg" }
   )
   const moneyBackGuaranteeImageURL = resize(
-    "http://files.artsy.net/moneybackguaranteeartwork.jpg",
+    "https://files.artsy.net/moneybackguaranteeartwork.jpg",
     { width: 400, height: 600, convert_to: "jpg" }
   )
 
   const heroImageURL = resize(
-    "http://files.artsy.net/buyerGuaranteeHeroImage.jpg",
+    "https://files.artsy.net/buyerGuaranteeHeroImage.jpg",
     { width: 1600, height: 800, convert_to: "jpg" }
   )
 
@@ -88,7 +87,7 @@ export const BuyerGuaranteeIndex: React.FC = () => {
     imageTitle: "Sophie Treppendahl, ‘Swimming Hole’, 2019",
     image: {
       resized: {
-        srcSet: "http://files.artsy.net/images/normalizedheaderimage.jpeg 1x",
+        srcSet: "https://files.artsy.net/images/normalizedheaderimage.jpeg 1x",
       },
     },
   }
@@ -97,7 +96,7 @@ export const BuyerGuaranteeIndex: React.FC = () => {
     imageTitle: "Paul Wackers, ‘Constructing Planets’, 2018",
     image: {
       resized: {
-        srcSet: "http://files.artsy.net/authenticityguaranteeartwork.jpg 1x",
+        srcSet: "https://files.artsy.net/authenticityguaranteeartwork.jpg 1x",
       },
     },
     artist: {
@@ -109,7 +108,7 @@ export const BuyerGuaranteeIndex: React.FC = () => {
     imageTitle: "Alex Katz, ‘Blue Umbrella 2’, 2020",
     image: {
       resized: {
-        srcSet: "http://files.artsy.net/moneybackguaranteeartwork.jpg 1x",
+        srcSet: "https://files.artsy.net/moneybackguaranteeartwork.jpg 1x",
       },
     },
     artist: {
@@ -121,7 +120,7 @@ export const BuyerGuaranteeIndex: React.FC = () => {
     imageTitle: "Louise Belcourt, ‘Mound #26’, 2014-2015",
     image: {
       resized: {
-        srcSet: "http://files.artsy.net/securepaymentartwork.jpg 1x",
+        srcSet: "https://files.artsy.net/securepaymentartwork.jpg 1x",
       },
     },
     artist: {
