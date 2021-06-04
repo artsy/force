@@ -9,49 +9,49 @@
 #                        |
 #              +---------+--------+
 #              |                  |
-#              |  yarn-base       +<------------------------+
-#              |                  |                         |
-#              +---------+--------+                         |
-#                        ^                                  |
-#                        |                                  |
-#                        |                                  |
-#              +---------+--------+              +----------+-------+
-#              |                  |              |                  |
-#              |  yarn-deps       |              |  yarn-deps-prod  |
-#              |                  |              |                  |
-#              +---------+--------+              +----------+-------+
-#                        ^                                  ^
-#                        |                                  |
-#                        |                                  |
-#              +---------+--------+                         |
-#              |                  |                         |
-#              |  builder-src     |                         |
-#              |                  |                         |
-#              +---+-----------+--+                         |
-#                  ^           ^                            |
-#                  |           |                            |
-#                  |           |                            |
-#  +---------------+--+    +---+--------------+             |
-#  |                  |    |                  |             |
-#  |  builder-assets  |    |  builder-server  |             |
-#  |                  |    |                  |             |
-#  +---------------+--+    +---+--------------+             |
-#                  ^           ^                            |
-#                  |           |                            |
-#                  |           |                            |
-#              +---+-----------+--+                         |
-#              |                  |                         |
-#              |  builder         +<------------------+     |
-#              |                  |                   |     |
-#              +--------+---------+                   |     |
-#                       ^                             |     |
-#                       |                             |     |
-#                       |                             |     |
-#              +--------+---------+               +---+-----+--------+
-#              |                  |               |                  |
-#              |  electron-runner |               |  production      |
-#              |                  |               |                  |
-#              +------------------+               +------------------+
+#              |  yarn-base       +<------------------------------------------------+
+#              |                  |                                                 |
+#              +---------+--------+                                                 |
+#                        ^                                                          |
+#                        |                                                          |
+#                        |                                                          |
+#              +---------+--------+                                      +----------+-------+
+#              |                  |                                      |                  |
+#              |  yarn-deps       |                                      |  yarn-deps-prod  |
+#              |                  |                                      |                  |
+#              +---------+--------+                                      +----------+-------+
+#                        ^                                                          ^
+#                        |                                                          |
+#                        |                                                          |
+#              +---------+--------+                                                 |
+#              |                  |                                                 |
+#              |  builder-src     |<------------------------------+                 |
+#              |                  |                               |                 |
+#              +---+-----------+--+                               |                 |
+#                  ^           ^                                  |                 |
+#                  |           |                                  |                 |
+#                  |           |                                  |                 |
+#  +---------------+--+    +---+--------------+    +-------------------------+      |
+#  |                  |    |                  |    |                         |      |
+#  |  builder-assets  |    |  builder-server  |    |  builder-assets-legacy  |      |
+#  |                  |    |                  |    |                         |      |
+#  +---------------+--+    +---+--------------+    +------------------------ +      |
+#                  ^           ^                                  ^                 |
+#                  |           |                                  |                 |
+#                  |           |                                  |                 |
+#              +---+-----------+--+                               |                 |
+#              |                  |-------------------------------+                 |
+#              |  builder         +<------------------------------------------+     |
+#              |                  |                                           |     |
+#              +--------+---------+                                           |     |
+#                       ^                                                     |     |
+#                       |                                                     |     |
+#                       |                                                     |     |
+#              +--------+---------+                                       +---+-----+--------+
+#              |                  |                                       |                  |
+#              |  electron-runner |                                       |  production      |
+#              |                  |                                       |                  |
+#              +------------------+                                       +------------------+
 
 # ---------------------------------------------------------
 # Base build dependencies
@@ -129,9 +129,9 @@ COPY .env.oss \
   ./
 
 # ---------------------------------------------------------
-# Compile assets
+# Compile legacy assets
 # ---------------------------------------------------------
-FROM builder-src as builder-assets
+FROM builder-src as builder-assets-legacy
 
 # Build legacy application
 RUN yarn build:assets:legacy
@@ -139,7 +139,7 @@ RUN yarn build:assets:legacy
 # ---------------------------------------------------------
 # Compile assets
 # ---------------------------------------------------------
-FROM builder-src as builder-assets-novo
+FROM builder-src as builder-assets
 
 RUN yarn build:assets
 
@@ -160,13 +160,13 @@ FROM builder-src as builder
 COPY ./scripts ./scripts
 
 # Client assets
-COPY --from=builder-assets /app/manifest.json .
-COPY --from=builder-assets /app/public ./public
-COPY --from=builder-assets /app/src ./src
+COPY --from=builder-assets-legacy /app/manifest.json .
+COPY --from=builder-assets-legacy /app/public ./public
+COPY --from=builder-assets-legacy /app/src ./src
 
 # Client (Novo) assets
-COPY --from=builder-assets-novo /app/manifest-novo.json .
-COPY --from=builder-assets-novo /app/public ./public
+COPY --from=builder-assets /app/manifest-novo.json .
+COPY --from=builder-assets /app/public ./public
 
 # Server assets
 COPY --from=builder-server /app/server.dist.js .
