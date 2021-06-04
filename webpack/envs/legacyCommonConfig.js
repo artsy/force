@@ -100,7 +100,7 @@ export const legacyCommonConfig = {
     },
   },
   output: {
-    filename: "[name].js",
+    filename: "legacy-[name].js",
     path: path.resolve(basePath, "public/assets"),
     publicPath: "/assets/",
   },

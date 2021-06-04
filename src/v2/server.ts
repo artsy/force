@@ -71,8 +71,8 @@ app.get(flatRoutes, async (req: Request, res: Response, next: NextFunction) => {
         routes,
       },
       "loadable-novo-stats.json",
-      "public/assets-novo",
-      "/assets-novo"
+      "public/assets",
+      "/assets"
     )
 
     if (redirect) {
@@ -111,15 +111,8 @@ app.get(flatRoutes, async (req: Request, res: Response, next: NextFunction) => {
         icon76: res.locals.asset("/images/icon-76.png"),
       },
       manifest: {
-        artsy: NOVO_MANIFEST.lookup("/assets-novo/artsy.js"),
-        artsyCommon: NOVO_MANIFEST.lookup("/assets-novo/artsy-common.js"),
-        artsyNovo: NOVO_MANIFEST.lookup("/assets-novo/artsy-novo.js"),
         browserConfig: NOVO_MANIFEST.lookup("/images/browserconfig.xml"),
-        common: NOVO_MANIFEST.lookup("/assets-novo/common.js"),
-        commonReact: NOVO_MANIFEST.lookup("/assets-novo/common-react.js"),
-        commonUtility: NOVO_MANIFEST.lookup("/assets-novo/common-utility.js"),
         openSearch: NOVO_MANIFEST.lookup("/images/opensearch.xml"),
-        runtime: NOVO_MANIFEST.lookup("/assets-novo/runtime.js"),
       },
       meta: {
         appleItunesApp: `${APP_URL}${CURRENT_PATH}`,
