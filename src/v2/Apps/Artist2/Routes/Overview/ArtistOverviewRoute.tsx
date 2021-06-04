@@ -24,7 +24,7 @@ const ArtistOverviewRoute: React.FC<ArtistOverviewRouteProps> = ({
     <>
       <Title>{title}</Title>
 
-      <Join separator={<Spacer py={4} />}>
+      <Join separator={<Spacer mt={6} />}>
         <Artist2NotableWorksRailFragmentContainer artist={artist} />
         <Artist2CareerHighlightsFragmentContainer artist={artist} />
         <Artist2IconicCollectionsRailQueryRenderer

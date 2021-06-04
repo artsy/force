@@ -1,5 +1,4 @@
 import React from "react"
-import { Spacer } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Artist2ArtworkFilterRefetchContainer } from "./Components/Artist2ArtworkFilter"
 import { ArtistWorksForSaleRoute_artist } from "v2/__generated__/ArtistWorksForSaleRoute_artist.graphql"
@@ -26,8 +25,8 @@ const ArtistWorksForSaleRoute: React.FC<ArtistWorksForSaleRouteProps> = ({
         artist={artist}
         contextModule={ContextModule.artistSeriesRail}
         showProgress
+        mb={6}
       />
-      <Spacer my={6} />
       <Artist2ArtworkFilterRefetchContainer
         artist={artist}
         aggregations={

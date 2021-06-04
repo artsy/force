@@ -21,7 +21,7 @@ const Artist2CareerHighlights: React.FC<Artist2CareerHighlightsProps> = ({
   const partnerHref = `${sd.APP_URL}/${partnerID}`
 
   return (
-    <Box>
+    <>
       <Text variant="lg" mb={4}>
         Career Highlights
       </Text>
@@ -64,7 +64,7 @@ const Artist2CareerHighlights: React.FC<Artist2CareerHighlightsProps> = ({
           </Box>
         </Column>
       </GridColumns>
-    </Box>
+    </>
   )
 }
 
