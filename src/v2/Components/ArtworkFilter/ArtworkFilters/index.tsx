@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useRef } from "react"
 import { ColorFilter } from "./ColorFilter"
 import { GalleryFilter } from "./GalleryFilter"
 import { InstitutionFilter } from "./InstitutionFilter"
@@ -14,30 +14,36 @@ import { ArtworkLocationFilter } from "./ArtworkLocationFilter"
 import { ArtistNationalityFilter } from "./ArtistNationalityFilter"
 import { MaterialsFilter } from "./MaterialsFilter"
 import { PartnersFilter } from "./PartnersFilter"
+import { Box } from "@artsy/palette"
+import { ScrollRefContext } from "./useScrollContext"
 
 export const ArtworkFilters: React.FC = () => {
   const showNewFilters = getENV("ENABLE_NEW_ARTWORK_FILTERS")
 
+  const scrollRef = useRef(null)
+
   return (
-    <>
-      <MediumFilter expanded />
-      {showNewFilters && <MaterialsFilter expanded />}
-      <PriceRangeFilter />
-      <AttributionClassFilter expanded />
-      {showNewFilters ? <SizeFilter2 /> : <SizeFilter />}
-      <WaysToBuyFilter />
-      {showNewFilters && <ArtworkLocationFilter expanded />}
-      {showNewFilters && <ArtistNationalityFilter expanded />}
-      <TimePeriodFilter />
-      <ColorFilter />
-      {showNewFilters ? (
-        <PartnersFilter />
-      ) : (
-        <>
-          <GalleryFilter />
-          <InstitutionFilter />
-        </>
-      )}
-    </>
+    <Box ref={scrollRef} overflowY="scroll" height="100%">
+      <ScrollRefContext.Provider value={{ scrollRef }}>
+        <MediumFilter expanded />
+        {showNewFilters && <MaterialsFilter expanded />}
+        <PriceRangeFilter />
+        <AttributionClassFilter expanded />
+        {showNewFilters ? <SizeFilter2 /> : <SizeFilter />}
+        <WaysToBuyFilter />
+        {showNewFilters && <ArtworkLocationFilter expanded />}
+        {showNewFilters && <ArtistNationalityFilter expanded />}
+        <TimePeriodFilter />
+        <ColorFilter />
+        {showNewFilters ? (
+          <PartnersFilter />
+        ) : (
+          <>
+            <GalleryFilter />
+            <InstitutionFilter />
+          </>
+        )}
+      </ScrollRefContext.Provider>
+    </Box>
   )
 }

@@ -108,7 +108,7 @@ export const ArtworkFilterMobileActionSheet: React.FC<{
       </Header>
 
       <Content ref={contentRef as any}>
-        <Box width="100%" p={2}>
+        <Box width="100%" p={2} pb={0}>
           {children}
         </Box>
       </Content>
