@@ -14,7 +14,7 @@ module.exports.following = (req, res, next) ->
   if (route = req.params.type) in _.keys(typeMap)
     kind = res.locals.sd.KIND = typeMap[route] or 'artist'
     if _.contains implemented, kind
-      return res.redirect "/log_in?redirect-to=#{encodeURIComponent(req.url)}" unless req.user
+      return res.redirect "/login?redirectTo=#{encodeURIComponent(req.url)}" unless req.user
       res.render 'index', type: route
     else
       res.render 'placeholder'

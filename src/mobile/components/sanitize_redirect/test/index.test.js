@@ -40,8 +40,8 @@ describe("sanitizeRedirect", function () {
     ).should.equal("http://localhost:3003/artwork/joe-piccillo-a-riposo"))
 
   it("lets internal paths through", () =>
-    sanitizeRedirect("/log_in?redirect-to=/foo/bar").should.equal(
-      "/log_in?redirect-to=/foo/bar"
+    sanitizeRedirect("/login?redirectTo=/foo/bar").should.equal(
+      "/login?redirectTo=/foo/bar"
     ))
 
   it("blocks data urls", () =>
@@ -55,10 +55,10 @@ describe("sanitizeRedirect", function () {
   it("blocks external links that lack protocol; redirects to root", () =>
     sanitizeRedirect("//google.com").should.equal("/"))
 
-  it("blocks other protocols; redirects to root", () =>
+  it("blocks other protocols (ftp); redirects to root", () =>
     sanitizeRedirect("ftp://google.com").should.equal("/"))
 
-  it("blocks other protocols; redirects to root", () =>
+  it("blocks other protocols (javascript); redirects to root", () =>
     sanitizeRedirect("javascript:alert(1);").should.equal("/"))
 
   it("blocks malformed URLs (1)", () =>

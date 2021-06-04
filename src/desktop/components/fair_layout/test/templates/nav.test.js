@@ -91,7 +91,7 @@ describe("Header template", function () {
     return it("works with out user", function () {
       const user = undefined
 
-      return this.$template.html().should.containEql("/log_in")
+      return this.$template.html().should.containEql("/login")
     })
   })
 })

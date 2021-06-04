@@ -50,7 +50,7 @@ describe("/user", function () {
     it("redirects to the home page without a current user", function () {
       routes.settings(this.req, this.res)
       return this.res.redirect.args[0][0].should.equal(
-        "/log_in?redirect_uri=/user/edit"
+        "/login?redirectTo=%2Fuser%2Fedit"
       )
     }))
 })

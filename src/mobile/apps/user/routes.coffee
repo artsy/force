@@ -14,7 +14,7 @@ module.exports.refresh = (req, res, next) ->
           res.json req.user.attributes
 
 module.exports.settings = (req, res) ->
-  return res.redirect("/log_in?redirect_uri=#{req.url}") unless req.user
+  return res.redirect("/login?redirectTo=#{encodeURIComponent(req.url)}") unless req.user
 
   user = new CurrentUser req.user.attributes
 

@@ -111,6 +111,6 @@ function getDesktopIntent(options: AuthModalOptions): ModalOptions {
 }
 
 export const getMobileAuthLink = (mode: ModalType, options: ModalOptions) => {
-  const path = mode === "login" ? "log_in" : "sign_up"
+  const path = mode === "login" ? "login" : "signup"
   return `/${path}?${qs.stringify(options)}`
 }

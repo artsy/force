@@ -33,7 +33,7 @@ describe("favorites_following", function () {
           )
           this.renderStub.called.should.be.false()
           return this.redirectStub.args[0][0].should.equal(
-            "/log_in?redirect-to=%2Ffollowing%2Fgalleries"
+            "/login?redirectTo=%2Ffollowing%2Fgalleries"
           )
         }))
 

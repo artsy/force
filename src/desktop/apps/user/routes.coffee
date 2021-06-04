@@ -15,7 +15,7 @@
 @settings = (req, res, next) ->
   user = req.user
 
-  return res.redirect "/log_in?redirect_uri=#{req.url}" unless user
+  return res.redirect "/login?redirectTo=#{encodeURIComponent(req.url)}" unless user
   return res.redirect '/' if req.url is '/user/delete' and user.isAdmin()
 
   user.fetch()

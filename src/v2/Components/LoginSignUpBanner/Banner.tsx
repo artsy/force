@@ -12,10 +12,10 @@ const Container = styled(Flex)`
 export const Banner: React.FC<{}> = () => {
   return (
     <Container>
-      <BannerButton href="/sign_up" marginRight="12px">
+      <BannerButton href="/signup" marginRight="12px">
         Sign up
       </BannerButton>
-      <BannerButton href="/log_in">Log in</BannerButton>
+      <BannerButton href="/login">Log in</BannerButton>
     </Container>
   )
 }

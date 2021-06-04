@@ -3,11 +3,11 @@ sd = require('sharify').data
 qs = require 'qs'
 
 @worksForYou = (req, res) ->
-  # If the user is logged-out, redirect to /log_in unless they are coming from email.
+  # If the user is logged-out, redirect to /login unless they are coming from email.
   # If they are coming from email, redirect to artist works page.
   unless req.user
     { artist_id, from_email } = req.query
-    return res.redirect("/log_in?redirect_uri=#{req.url}") unless artist_id and from_email
+    return res.redirect("/login?redirectTo=#{encodeURIComponent(req.url)}") unless artist_id and from_email
     params = _.extend sort: '-published_at', _.pick req.query, 'utm_content', 'utm_medium', 'utm_source', 'utm_campaign'
     queryString = qs.stringify params
     return res.redirect("/artist/#{artist_id}/works-for-sale?#{queryString}")

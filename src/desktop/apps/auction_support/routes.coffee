@@ -38,7 +38,7 @@ registerAndRedirect = (sale, req, res, next) ->
 
 @modalAuctionRegistration = (req, res, next) ->
   unless req.user
-    return res.redirect "/log_in?redirect_uri=/auction-registration/#{req.params.id}"
+    return res.redirect "/login?redirectTo=/auction-registration/#{req.params.id}"
 
   new Sale(id: req.params.id).fetch
     error: res.backboneError
