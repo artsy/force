@@ -1,12 +1,13 @@
-import { Shelf, Text } from "@artsy/palette"
+import { Box, Shelf, Text } from "@artsy/palette"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtistSeriesRail_artist } from "v2/__generated__/ArtistSeriesRail_artist.graphql"
 import { ArtistSeriesItemFragmentContainer as ArtistSeriesItem } from "./ArtistSeriesItem"
 import { ContextModule } from "@artsy/cohesion"
 import { extractNodes } from "v2/Utils/extractNodes"
+import { SpaceProps } from "styled-system"
 
-interface Props {
+interface Props extends SpaceProps {
   artist: ArtistSeriesRail_artist
   showProgress?: boolean
   title?: string
@@ -18,14 +19,19 @@ const ArtistSeriesRail: React.FC<Props> = ({
   contextModule,
   showProgress = false,
   title,
+  ...rest
 }) => {
   if (!artist) return null
 
   const { artistSeriesConnection } = artist
   const series = extractNodes(artistSeriesConnection)
 
+  if (series.length === 0) {
+    return null
+  }
+
   return (
-    <>
+    <Box {...rest}>
       <Text variant="lg" as="h3" mb={2}>
         {title ?? "Artist Series"}
       </Text>
@@ -42,7 +48,7 @@ const ArtistSeriesRail: React.FC<Props> = ({
           )
         })}
       </Shelf>
-    </>
+    </Box>
   )
 }
 

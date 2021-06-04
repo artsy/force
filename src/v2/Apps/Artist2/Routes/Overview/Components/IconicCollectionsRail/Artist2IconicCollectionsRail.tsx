@@ -20,7 +20,11 @@ const Artist2IconicCollectionsRail: React.FC<Artist2IconicCollectionsRailProps> 
 }) => {
   const tracking = useTracking()
 
-  if (marketingCollections.length === 0) {
+  const hasContent = marketingCollections.every(
+    collection => collection?.artworksConnection?.edges?.length! > 0
+  )
+
+  if (marketingCollections.length === 0 || !hasContent) {
     return null
   }
 
