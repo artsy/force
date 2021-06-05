@@ -110,29 +110,31 @@ export class ArtistInsight extends React.Component<ArtistInsightProps> {
     const { label, type, value, entities } = this.props
     const TextWrapper = this.getTextByTheme()
 
-    if (value || (entities && entities.length > 0)) {
-      return (
+    if (!(value || (entities && entities.length > 0))) {
+      return null
+    }
+
+    return (
+      <Flex
+        mt={1}
+        width={this.props.themeVersion === "v3" ? ["100%", "50%"] : "100%"}
+        position="relative"
+      >
         <Flex
-          mt={1}
-          width={this.props.themeVersion === "v3" ? "50%" : "100%"}
+          pr={1}
+          top={this.props.themeVersion === "v2" ? 0 : "3px"}
           position="relative"
         >
-          <Flex
-            pr={1}
-            top={this.props.themeVersion === "v2" ? 0 : "3px"}
-            position="relative"
-          >
-            {this.renderIcon(type)}
-          </Flex>
-          <Flex flexDirection="column">
-            <Box>
-              <TextWrapper>{label}</TextWrapper>
-              {value && <TextWrapper color="black60">{value}</TextWrapper>}
-              {this.renderEntities()}
-            </Box>
-          </Flex>
+          {this.renderIcon(type)}
         </Flex>
-      )
-    }
+        <Flex flexDirection="column" pr={2}>
+          <Box>
+            <TextWrapper>{label}</TextWrapper>
+            {value && <TextWrapper color="black60">{value}</TextWrapper>}
+            {this.renderEntities()}
+          </Box>
+        </Flex>
+      </Flex>
+    )
   }
 }

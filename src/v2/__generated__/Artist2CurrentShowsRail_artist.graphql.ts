@@ -121,7 +121,7 @@ return {
                         {
                           "kind": "Literal",
                           "name": "height",
-                          "value": 330
+                          "value": 230
                         },
                         {
                           "kind": "Literal",
@@ -163,7 +163,7 @@ return {
                           "storageKey": null
                         }
                       ],
-                      "storageKey": "cropped(height:330,width:325)"
+                      "storageKey": "cropped(height:230,width:325)"
                     }
                   ],
                   "storageKey": null
@@ -198,5 +198,5 @@ return {
   "type": "Artist"
 };
 })();
-(node as any).hash = '743e1d77ea5f819545b0a47f52d59df3';
+(node as any).hash = 'da8c04b1b53087128c4dc9f173a413ae';
 export default node;

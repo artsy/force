@@ -26,6 +26,7 @@ export type Artist2Header_artist = {
             } | null;
         } | null> | null;
     } | null;
+    readonly imageUrl: string | null;
     readonly internalID: string;
     readonly slug: string;
     readonly name: string | null;
@@ -249,6 +250,13 @@ return {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
+      "name": "imageUrl",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "internalID",
       "storageKey": null
     },
@@ -349,5 +357,5 @@ return {
   "type": "Artist"
 };
 })();
-(node as any).hash = 'e09dbce72fd5f4e3da91780830747f37';
+(node as any).hash = 'cfae57153f8c741a176629f762a99528';
 export default node;

@@ -1,5 +1,5 @@
 import { clickedEntityGroup, ContextModule, OwnerType } from "@artsy/cohesion"
-import { Flex, Image, Shelf, Spacer, Text } from "@artsy/palette"
+import { Box, Flex, Image, Shelf, Spacer, Text } from "@artsy/palette"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
@@ -58,40 +58,42 @@ const Artist2CurrentArticlesRail: React.FC<Artist2CurrentArticlesRailProps> = ({
       <Shelf alignItems="flex-start">
         {nodes.map((node, index) => {
           return (
-            <RouterLink
-              to={node.href!}
-              key={index}
-              noUnderline
-              onClick={() => {
-                tracking.trackEvent({
-                  action_type: AnalyticsSchema.ActionType.Click,
-                  contextModule: ContextModule.relatedArticles,
-                  contextPageOwnerId,
-                  contextPageOwnerSlug,
-                  contextPageOwnerType,
-                  destination_path: node.href,
-                  destinationPageOwnerId: node.internalID,
-                  destinationPageOwnerSlug: node.slug,
-                  destinationPageOwnerType: OwnerType.artwork,
-                  horizontalSlidePosition: index + 1,
-                  subject: "showCarouselSlide",
-                  type: "thumbnail",
-                })
-              }}
-            >
-              <Image
-                width={node.thumbnailImage?.cropped?.width}
-                height={node.thumbnailImage?.cropped?.height}
-                src={node.thumbnailImage?.cropped?.src!}
-                srcSet={node.thumbnailImage?.cropped?.srcSet}
-                lazyLoad
-              />
-              <Spacer my={1} />
-              <Text variant="md">{node.thumbnailTitle}</Text>
-              <Text variant="md" color="black60">
-                {node.publishedAt}
-              </Text>
-            </RouterLink>
+            <Box maxWidth={node.thumbnailImage?.cropped?.width}>
+              <RouterLink
+                to={node.href!}
+                key={index}
+                noUnderline
+                onClick={() => {
+                  tracking.trackEvent({
+                    action_type: AnalyticsSchema.ActionType.Click,
+                    contextModule: ContextModule.relatedArticles,
+                    contextPageOwnerId,
+                    contextPageOwnerSlug,
+                    contextPageOwnerType,
+                    destination_path: node.href,
+                    destinationPageOwnerId: node.internalID,
+                    destinationPageOwnerSlug: node.slug,
+                    destinationPageOwnerType: OwnerType.artwork,
+                    horizontalSlidePosition: index + 1,
+                    subject: "showCarouselSlide",
+                    type: "thumbnail",
+                  })
+                }}
+              >
+                <Image
+                  width={node.thumbnailImage?.cropped?.width}
+                  height={node.thumbnailImage?.cropped?.height}
+                  src={node.thumbnailImage?.cropped?.src!}
+                  srcSet={node.thumbnailImage?.cropped?.srcSet}
+                  lazyLoad
+                />
+                <Spacer my={1} />
+                <Text variant="md">{node.thumbnailTitle}</Text>
+                <Text variant="md" color="black60">
+                  {node.publishedAt}
+                </Text>
+              </RouterLink>
+            </Box>
           )
         })}
       </Shelf>
@@ -117,7 +119,7 @@ export const Artist2CurrentArticlesRailFragmentContainer = createFragmentContain
               thumbnailTitle
               publishedAt(format: "MMM Do, YYYY")
               thumbnailImage {
-                cropped(width: 325, height: 330) {
+                cropped(width: 325, height: 230) {
                   width
                   height
                   src
