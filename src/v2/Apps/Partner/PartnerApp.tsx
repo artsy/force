@@ -28,9 +28,14 @@ export const PartnerApp: React.FC<PartnerAppProps> = ({
   partner,
   children,
 }) => {
-  const { profile, fullProfileEligible, isDefaultProfilePublic } = partner
+  const {
+    profile,
+    fullProfileEligible,
+    isDefaultProfilePublic,
+    partnerPageEligible,
+  } = partner
 
-  if (!isDefaultProfilePublic) {
+  if (!isDefaultProfilePublic || !partnerPageEligible) {
     throw new HttpError(404)
   }
 
@@ -66,6 +71,7 @@ export const PartnerAppFragmentContainer = createFragmentContainer(PartnerApp, {
   partner: graphql`
     fragment PartnerApp_partner on Partner {
       fullProfileEligible
+      partnerPageEligible
       isDefaultProfilePublic
       profile {
         ...PartnerHeaderImage_profile

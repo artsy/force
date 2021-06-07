@@ -5,6 +5,7 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type PartnerApp_partner = {
     readonly fullProfileEligible: boolean | null;
+    readonly partnerPageEligible: boolean | null;
     readonly isDefaultProfilePublic: boolean | null;
     readonly profile: {
         readonly " $fragmentRefs": FragmentRefs<"PartnerHeaderImage_profile">;
@@ -31,6 +32,13 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "ScalarField",
       "name": "fullProfileEligible",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "partnerPageEligible",
       "storageKey": null
     },
     {
@@ -74,5 +82,5 @@ const node: ReaderFragment = {
   ],
   "type": "Partner"
 };
-(node as any).hash = '25c3c2099b6dd918eb6f1b16ab41ff31';
+(node as any).hash = '53ef93da201c08f1149a38f66ef9ddaa';
 export default node;
