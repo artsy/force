@@ -55,6 +55,8 @@ export const artist2Routes: AppRouteConfig[] = [
     getComponent: () => ArtistApp,
     prepare: () => {
       ArtistApp.preload()
+      OverviewRoute.preload()
+      WorksForSaleRoute.preload()
     },
     query: Artist2RoutesTopLevelQuery,
     render: renderOrRedirect,

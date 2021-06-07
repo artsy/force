@@ -26,11 +26,6 @@ query ArtistCTAQuery($artistID: String!) {
 }
 `
 
-const send = {
-  method: "post",
-  query,
-  variables: { artistID: sd.ARTIST_PAGE_CTA_ARTIST_ID },
-}
 export const setCookie = () => {
   Cookies.set("artist-page-signup-dismissed", 1, { expires: 3600 })
 }
@@ -44,7 +39,11 @@ export const setupArtistSignUpModal = () => {
     sd.ARTIST_PAGE_CTA_ARTIST_ID &&
     !artistPageAuthDismissedCookie
   ) {
-    return metaphysics2(send).then(({ artist: artistData }) => {
+    return metaphysics2({
+      method: "post",
+      query,
+      variables: { artistID: sd.ARTIST_PAGE_CTA_ARTIST_ID },
+    }).then(({ artist: artistData }) => {
       const image = get(
         artistData,
         "filterArtworksConnection.edges[0].node.image.cropped.url"

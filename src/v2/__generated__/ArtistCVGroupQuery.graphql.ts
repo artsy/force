@@ -16,7 +16,7 @@ export type ArtistCVGroupQueryVariables = {
 };
 export type ArtistCVGroupQueryResponse = {
     readonly artist: {
-        readonly " $fragmentRefs": FragmentRefs<"CVItem_artist">;
+        readonly " $fragmentRefs": FragmentRefs<"ArtistCVGroup_artist">;
     } | null;
 };
 export type ArtistCVGroupQuery = {
@@ -38,12 +38,12 @@ query ArtistCVGroupQuery(
   $visibleToPublic: Boolean
 ) {
   artist(id: $slug) {
-    ...CVItem_artist_4A66pF
+    ...ArtistCVGroup_artist_4A66pF
     id
   }
 }
 
-fragment CVItem_artist_4A66pF on Artist {
+fragment ArtistCVGroup_artist_4A66pF on Artist {
   slug
   showsConnection(first: $count, after: $cursor, sort: $sort, atAFair: $atAFair, soloShow: $soloShow, isReference: $isReference, visibleToPublic: $visibleToPublic) {
     pageInfo {
@@ -68,7 +68,7 @@ fragment CVItem_artist_4A66pF on Artist {
           }
         }
         name
-        start_at: startAt(format: "YYYY")
+        startAt(format: "YYYY")
         city
         href
         __typename
@@ -241,7 +241,7 @@ return {
               (v6/*: any*/)
             ],
             "kind": "FragmentSpread",
-            "name": "CVItem_artist"
+            "name": "ArtistCVGroup_artist"
           }
         ],
         "storageKey": null
@@ -350,7 +350,7 @@ return {
                       },
                       (v10/*: any*/),
                       {
-                        "alias": "start_at",
+                        "alias": null,
                         "args": [
                           {
                             "kind": "Literal",
@@ -398,7 +398,7 @@ return {
               "visibleToPublic"
             ],
             "handle": "connection",
-            "key": "Artist_showsConnection",
+            "key": "ArtistCVGroup_showsConnection",
             "kind": "LinkedHandle",
             "name": "showsConnection"
           },
@@ -413,9 +413,9 @@ return {
     "metadata": {},
     "name": "ArtistCVGroupQuery",
     "operationKind": "query",
-    "text": "query ArtistCVGroupQuery(\n  $count: Int\n  $cursor: String\n  $slug: String!\n  $sort: ShowSorts\n  $atAFair: Boolean\n  $soloShow: Boolean\n  $isReference: Boolean\n  $visibleToPublic: Boolean\n) {\n  artist(id: $slug) {\n    ...CVItem_artist_4A66pF\n    id\n  }\n}\n\nfragment CVItem_artist_4A66pF on Artist {\n  slug\n  showsConnection(first: $count, after: $cursor, sort: $sort, atAFair: $atAFair, soloShow: $soloShow, isReference: $isReference, visibleToPublic: $visibleToPublic) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    edges {\n      node {\n        id\n        partner {\n          __typename\n          ... on ExternalPartner {\n            name\n            id\n          }\n          ... on Partner {\n            name\n            href\n          }\n          ... on Node {\n            id\n          }\n        }\n        name\n        start_at: startAt(format: \"YYYY\")\n        city\n        href\n        __typename\n      }\n      cursor\n    }\n  }\n}\n"
+    "text": "query ArtistCVGroupQuery(\n  $count: Int\n  $cursor: String\n  $slug: String!\n  $sort: ShowSorts\n  $atAFair: Boolean\n  $soloShow: Boolean\n  $isReference: Boolean\n  $visibleToPublic: Boolean\n) {\n  artist(id: $slug) {\n    ...ArtistCVGroup_artist_4A66pF\n    id\n  }\n}\n\nfragment ArtistCVGroup_artist_4A66pF on Artist {\n  slug\n  showsConnection(first: $count, after: $cursor, sort: $sort, atAFair: $atAFair, soloShow: $soloShow, isReference: $isReference, visibleToPublic: $visibleToPublic) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    edges {\n      node {\n        id\n        partner {\n          __typename\n          ... on ExternalPartner {\n            name\n            id\n          }\n          ... on Partner {\n            name\n            href\n          }\n          ... on Node {\n            id\n          }\n        }\n        name\n        startAt(format: \"YYYY\")\n        city\n        href\n        __typename\n      }\n      cursor\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '615bd85ce0e755f5b54b4d354a4d993f';
+(node as any).hash = 'b012177f363645de584b40b4e16627cf';
 export default node;

@@ -4,6 +4,7 @@ import { extractNodes } from "v2/Utils/extractNodes"
 import { ArtistArticlesRoute_artist } from "v2/__generated__/ArtistArticlesRoute_artist.graphql"
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 import { PaginationFragmentContainer } from "v2/Components/Pagination"
+import { Title } from "react-head"
 
 const REFETCH_PAGE_SIZE = 10
 
@@ -60,6 +61,8 @@ const ArtistArticlesRoute: React.FC<ArtistArticlesRouteProps> = ({
 
   return (
     <>
+      <Title>{`${artist.name} - Articles`}</Title>
+
       <Text variant="xl" mb={6}>
         {artist.name} Articles
       </Text>

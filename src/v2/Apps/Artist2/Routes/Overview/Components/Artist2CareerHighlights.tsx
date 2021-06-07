@@ -24,11 +24,13 @@ const Artist2CareerHighlights: React.FC<Artist2CareerHighlightsProps> = ({
     <>
       <GridColumns>
         <Column span={8}>
-          <SelectedCareerAchievementsFragmentContainer
-            artist={artist}
-            onlyCareerHighlights
-            mb={4}
-          />
+          <>
+            <SelectedCareerAchievementsFragmentContainer
+              artist={artist}
+              onlyCareerHighlights
+              mb={4}
+            />
+          </>
           {showCredit && text && (
             <>
               <Text variant="xs" textTransform="uppercase" mt={[2, 0]} mb={1}>
@@ -82,6 +84,8 @@ export const Artist2CareerHighlightsFragmentContainer = createFragmentContainer(
           partnerID
           text
         }
+        name
+        slug
       }
     `,
   }

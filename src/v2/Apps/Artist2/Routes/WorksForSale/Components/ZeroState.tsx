@@ -1,16 +1,16 @@
 import { ContextModule } from "@artsy/cohesion"
-import { Clickable, Message, Text } from "@artsy/palette"
+import { Clickable, Flex, Message, Text } from "@artsy/palette"
 import { FollowArtistButtonFragmentContainer as FollowArtistButton } from "v2/Components/FollowButton/FollowArtistButton"
 import React from "react"
 
 export const ZeroState = props => {
-  const { is_followed, artist } = props
+  const { isFollowed, artist } = props
 
   return (
     <Message>
       There aren’t any works available by the artist at this time.{" "}
-      {!is_followed && (
-        <>
+      {!isFollowed && (
+        <Flex>
           <FollowArtistButton
             artist={artist}
             contextModule={ContextModule.worksForSaleRail}
@@ -22,8 +22,10 @@ export const ZeroState = props => {
               )
             }}
           />{" "}
-          to receive notifications when new works are added.
-        </>
+          <Text pl={0.5}>
+            to receive notifications when new works are added.
+          </Text>
+        </Flex>
       )}
     </Message>
   )

@@ -10,6 +10,12 @@ import { Artist2HeaderFragmentContainer } from "./Components/Artist2Header"
 import { RouteTab, RouteTabs } from "v2/Components/RouteTabs"
 import { Artist2MetaFragmentContainer } from "./Components/Artist2Meta"
 
+/**
+ * For logged-out users, the sign-up modal is triggered via a global listener.
+ * @see https://github.com/artsy/force/blob/136e7087233b5e482fa69fd00d4f1050e492c17c/src/v2/client.tsx#L22-L25
+ * @see https://github.com/artsy/force/blob/136e7087233b5e482fa69fd00d4f1050e492c17c/src/middleware.ts#L150
+ */
+
 interface Artist2AppProps {
   artist: Artist2App_artist
   match: Match
@@ -35,6 +41,9 @@ const Artist2App: React.FC<Artist2AppProps> = ({ artist, children, match }) => {
     )
   }
 
+  const showArtworksTab = artist?.statuses?.artworks
+  const showAuctionLotsTab = artist?.statuses?.auctionLots
+
   // Default page
   return (
     <PageWrapper>
@@ -46,12 +55,20 @@ const Artist2App: React.FC<Artist2AppProps> = ({ artist, children, match }) => {
         <RouteTab exact to={`/artist2/${artist.slug}`}>
           Overview
         </RouteTab>
-        <RouteTab to={`/artist2/${artist.slug}/works-for-sale`}>
-          Works for Sale
-        </RouteTab>
-        <RouteTab to={`/artist2/${artist.slug}/auction-results`}>
-          Auction Results
-        </RouteTab>
+
+        {showArtworksTab && (
+          <RouteTab to={`/artist2/${artist.slug}/works-for-sale`}>
+            {artist?.counts?.forSaleArtworks! > 0
+              ? `Works for sale (${artist?.counts?.forSaleArtworks?.toLocaleString()})`
+              : "Artworks"}
+          </RouteTab>
+        )}
+
+        {showAuctionLotsTab && (
+          <RouteTab to={`/artist2/${artist.slug}/auction-results`}>
+            Auction Results
+          </RouteTab>
+        )}
       </RouteTabs>
 
       <Box pt={4}>{children}</Box>
@@ -66,9 +83,16 @@ export const Artist2AppFragmentContainer = createFragmentContainer(Artist2App, {
       ...Artist2Header_artist
       ...BackLink_artist
 
+      counts {
+        forSaleArtworks
+      }
       internalID
       name
       slug
+      statuses {
+        artworks
+        auctionLots
+      }
     }
   `,
 })

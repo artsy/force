@@ -5,6 +5,7 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ArtistShowsRoute_viewer = {
     readonly currentShows: {
+        readonly name: string | null;
         readonly " $fragmentRefs": FragmentRefs<"ArtistShowsGroup_artist">;
     } | null;
     readonly upcomingShows: {
@@ -73,6 +74,13 @@ return {
       "plural": false,
       "selections": [
         {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "name",
+          "storageKey": null
+        },
+        {
           "args": [
             {
               "kind": "Variable",
@@ -122,5 +130,5 @@ return {
   "type": "Viewer"
 };
 })();
-(node as any).hash = 'b876664295bf8e117e8f6f1902362355';
+(node as any).hash = '1e6a77e86f2c4e6e2bb445bd5cdb34fe';
 export default node;

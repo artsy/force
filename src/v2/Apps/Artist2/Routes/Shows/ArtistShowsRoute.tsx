@@ -3,6 +3,7 @@ import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtistShowsRoute_viewer } from "v2/__generated__/ArtistShowsRoute_viewer.graphql"
 import { ArtistShowsGroupRefetchContainer } from "./Components/ArtistShowsGroup"
+import { Title } from "react-head"
 
 interface ArtistShowsRouteProps {
   viewer: ArtistShowsRoute_viewer
@@ -11,6 +12,8 @@ interface ArtistShowsRouteProps {
 const ArtistShowsRoute: React.FC<ArtistShowsRouteProps> = ({ viewer }) => {
   return (
     <>
+      <Title>{`${viewer?.currentShows?.name} - Shows`}</Title>
+
       <Join separator={<Spacer mb={4} />}>
         <ArtistShowsGroupRefetchContainer
           artist={viewer.currentShows!}
@@ -43,6 +46,7 @@ export const ArtistShowsRouteFragmentContainer = createFragmentContainer(
         currentShows: artist(id: $artistID) {
           ...ArtistShowsGroup_artist
             @arguments(sort: $currentShowsSort, status: $currentShowsStatus)
+          name
         }
         upcomingShows: artist(id: $artistID) {
           ...ArtistShowsGroup_artist

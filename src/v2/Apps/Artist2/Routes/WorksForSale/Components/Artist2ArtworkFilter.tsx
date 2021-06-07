@@ -65,6 +65,7 @@ export const Artist2ArtworkFilterRefetchContainer = createRefetchContainer(
     artist: graphql`
       fragment Artist2ArtworkFilter_artist on Artist
         @argumentDefinitions(input: { type: "FilterArtworksInput" }) {
+        ...FollowArtistButton_artist
         counts {
           partner_shows: partnerShows
           for_sale_artworks: forSaleArtworks

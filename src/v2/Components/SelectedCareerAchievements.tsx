@@ -17,6 +17,8 @@ import { ArtistInsightsModal } from "v2/Components/ArtistInsightsModal"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { SpaceProps } from "styled-system"
+import { RouterLink } from "v2/Artsy/Router/RouterLink"
+import { ChevronButton } from "./ChevronButton"
 
 export interface SelectedCareerAchievementsProps extends SpaceProps {
   artist: SelectedCareerAchievements_artist
@@ -158,6 +160,12 @@ export class SelectedCareerAchievements extends React.Component<
                 return this.renderInsight(insight)
               })}
             </Flex>
+
+            <Spacer my={2} />
+
+            <RouterLink to={`/artist2/${this.props.artist.slug}/cv`}>
+              <ChevronButton>See all past shows and fair booths</ChevronButton>
+            </RouterLink>
           </>
         ) : (
           <Flex flexDirection="column">
@@ -230,6 +238,7 @@ export const SelectedCareerAchievementsFragmentContainer = createFragmentContain
             }
           }
         }
+        slug
       }
     `,
   }

@@ -5,6 +5,7 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ArtistCVRoute_viewer = {
     readonly soloShows: {
+        readonly name: string | null;
         readonly " $fragmentRefs": FragmentRefs<"ArtistCVGroup_artist">;
     } | null;
     readonly groupShows: {
@@ -76,6 +77,13 @@ return {
       "plural": false,
       "selections": [
         {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "name",
+          "storageKey": null
+        },
+        {
           "args": [
             {
               "kind": "Variable",
@@ -142,5 +150,5 @@ return {
   "type": "Viewer"
 };
 })();
-(node as any).hash = 'e19738245ac9d567cc4ee7e62aad1097';
+(node as any).hash = '9779a6baedba0adc1ed197819481ce40';
 export default node;

@@ -3,6 +3,7 @@ import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtistCVGroupRefetchContainer } from "./Components/ArtistCVGroup"
 import { ArtistCVRoute_viewer } from "v2/__generated__/ArtistCVRoute_viewer.graphql"
+import { Title } from "react-head"
 
 interface ArtistCVRouteProps {
   viewer: ArtistCVRoute_viewer
@@ -11,6 +12,7 @@ interface ArtistCVRouteProps {
 const ArtistCVRoute: React.FC<ArtistCVRouteProps> = ({ viewer }) => {
   return (
     <>
+      <Title>{`${viewer?.soloShows?.name} - CV`}</Title>
       <Join separator={<Spacer mb={4} />}>
         <ArtistCVGroupRefetchContainer
           artist={viewer.soloShows!}
@@ -43,6 +45,7 @@ export const ArtistCVRouteFragmentContainer = createFragmentContainer(
         soloShows: artist(id: $artistID) {
           ...ArtistCVGroup_artist
             @arguments(atAFair: $soloShowsAtAFair, soloShow: $soloShowsSoloShow)
+          name
         }
         groupShows: artist(id: $artistID) {
           ...ArtistCVGroup_artist @arguments(atAFair: $groupShowsAtAFair)

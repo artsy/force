@@ -1,4 +1,4 @@
-import { Col, Row, Flex, Text } from "@artsy/palette"
+import { Col, Row, Flex, Text, Message } from "@artsy/palette"
 import { Artist2AuctionResults_artist } from "v2/__generated__/Artist2AuctionResults_artist.graphql"
 import { PaginationFragmentContainer as Pagination } from "v2/Components/Pagination"
 import React, { useContext, useState } from "react"
@@ -27,6 +27,7 @@ import { openAuthModal } from "v2/Utils/openAuthModal"
 import { ModalType } from "v2/Components/Authentication/Types"
 import { Title } from "react-head"
 import { SortSelect } from "./Components/SortSelect"
+import { scrollIntoView } from "v2/Utils/scrollHelpers"
 
 const logger = createLogger("Artist2AuctionResults.tsx")
 
@@ -57,6 +58,11 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
   }
 
   const loadPage = (cursor, pageNum) => {
+    scrollIntoView({
+      selector: "#scrollTo--artist2AuctionResultsTop",
+      behavior: "smooth",
+      offset: 150,
+    })
     filterContext.setFilter("pageAndCursor", { cursor: cursor, page: pageNum })
   }
 
@@ -144,29 +150,14 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
   // @ts-expect-error STRICT_NULL_CHECK
   const auctionResultsLength = artist.auctionResultsConnection.edges.length
 
-  const resultList = (
-    <LoadingArea isLoading={isLoading}>
-      {/* @ts-expect-error STRICT_NULL_CHECK */}
-      {artist.auctionResultsConnection.edges.map(({ node }, index) => {
-        return (
-          <React.Fragment key={index}>
-            <AuctionResultItem
-              index={index}
-              auctionResult={node}
-              lastChild={index === auctionResultsLength - 1}
-              filtersAtDefault={filtersAtDefault}
-            />
-          </React.Fragment>
-        )
-      })}
-    </LoadingArea>
-  )
-
   const titleString = `${artist.name} - Auction Results on Artsy`
 
   return (
     <>
       <Title>{titleString}</Title>
+
+      <Box id="scrollTo--artist2AuctionResultsTop" />
+
       {showMobileActionSheet && (
         <AuctionFilterMobileActionSheet
           onClose={() => toggleMobileActionSheet(false)}
@@ -197,23 +188,44 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
 
           <Spacer mt={3} />
 
-          {resultList}
+          {auctionResultsLength > 0 ? (
+            <LoadingArea isLoading={isLoading}>
+              {/* @ts-expect-error STRICT_NULL_CHECK */}
+              {artist.auctionResultsConnection.edges.map(({ node }, index) => {
+                return (
+                  <React.Fragment key={index}>
+                    <AuctionResultItem
+                      index={index}
+                      auctionResult={node}
+                      lastChild={index === auctionResultsLength - 1}
+                      filtersAtDefault={filtersAtDefault}
+                    />
+                  </React.Fragment>
+                )
+              })}
+            </LoadingArea>
+          ) : (
+            <Message>
+              There aren’t any auction results available by the artist at this
+              time.
+            </Message>
+          )}
+
+          <Pagination
+            getHref={() => ""}
+            hasNextPage={pageInfo.hasNextPage}
+            // @ts-expect-error STRICT_NULL_CHECK
+            pageCursors={artist.auctionResultsConnection.pageCursors}
+            onClick={(_cursor, page) => loadPage(_cursor, page)}
+            onNext={() => loadNext()}
+            scrollTo="#jumpto-ArtistHeader"
+          />
         </Col>
       </Row>
 
       <Row>
         <Col>
-          <Box>
-            <Pagination
-              getHref={() => ""}
-              hasNextPage={pageInfo.hasNextPage}
-              // @ts-expect-error STRICT_NULL_CHECK
-              pageCursors={artist.auctionResultsConnection.pageCursors}
-              onClick={(_cursor, page) => loadPage(_cursor, page)}
-              onNext={() => loadNext()}
-              scrollTo="#jumpto-ArtistHeader"
-            />
-          </Box>
+          <Box></Box>
         </Col>
       </Row>
     </>
