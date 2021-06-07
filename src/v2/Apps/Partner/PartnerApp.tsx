@@ -37,7 +37,9 @@ export const PartnerApp: React.FC<PartnerAppProps> = ({
   return (
     <PartnerArtistsLoadingContextProvider>
       <StickyProvider>
-        {profile && <PartnerHeaderImage profile={profile} />}
+        {profile && fullProfileEligible && (
+          <PartnerHeaderImage profile={profile} />
+        )}
 
         <Flex position="relative" flexDirection="column">
           <Foreground />
