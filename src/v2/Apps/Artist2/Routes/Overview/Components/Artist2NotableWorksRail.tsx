@@ -71,7 +71,10 @@ const Artist2NotableWorksRail: React.FC<Artist2NotableWorksRailProps> = ({
               key={index}
               showExtended={false}
               showMetadata
-              lazyLoad
+              // FIXME: Reenable once we've figured out the router transition
+              // image load flash when clicking between routes. As this rail
+              // occupies an above-the-fold place on artist/id its too glaring.
+              // lazyLoad
               onClick={() => {
                 tracking.trackEvent(
                   clickedEntityGroup({

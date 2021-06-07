@@ -31,6 +31,7 @@ export type SelectedCareerAchievements_artist = {
             } | null;
         } | null> | null;
     } | null;
+    readonly slug: string;
     readonly " $refType": "SelectedCareerAchievements_artist";
 };
 export type SelectedCareerAchievements_artist$data = SelectedCareerAchievements_artist;
@@ -41,7 +42,15 @@ export type SelectedCareerAchievements_artist$key = {
 
 
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "slug",
+  "storageKey": null
+};
+return {
   "argumentDefinitions": [
     {
       "defaultValue": [
@@ -119,13 +128,7 @@ const node: ReaderFragment = {
                       "name": "categories",
                       "plural": true,
                       "selections": [
-                        {
-                          "alias": null,
-                          "args": null,
-                          "kind": "ScalarField",
-                          "name": "slug",
-                          "storageKey": null
-                        }
+                        (v0/*: any*/)
                       ],
                       "storageKey": null
                     }
@@ -265,9 +268,11 @@ const node: ReaderFragment = {
         }
       ],
       "storageKey": "auctionResultsConnection(first:1,recordsTrusted:true,sort:\"PRICE_AND_DATE_DESC\")"
-    }
+    },
+    (v0/*: any*/)
   ],
   "type": "Artist"
 };
-(node as any).hash = 'ffa173c15393ae3db55a26e0bf6416ab';
+})();
+(node as any).hash = '8fd9637427f0bb614196375ccec08b63';
 export default node;

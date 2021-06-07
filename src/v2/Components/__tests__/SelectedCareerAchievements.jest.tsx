@@ -108,6 +108,7 @@ describe("SelectedCareerAchievements", () => {
 
 const artistResponse: SelectedCareerAchievementsTestQueryRawResponse["artist"] = {
   id: "opaque-artist-id",
+  slug: "foo",
   insights: [
     {
       type: "COLLECTED",

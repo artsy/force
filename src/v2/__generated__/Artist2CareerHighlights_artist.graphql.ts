@@ -9,6 +9,8 @@ export type Artist2CareerHighlights_artist = {
         readonly partnerID: string | null;
         readonly text: string | null;
     } | null;
+    readonly name: string | null;
+    readonly slug: string;
     readonly " $fragmentRefs": FragmentRefs<"SelectedCareerAchievements_artist" | "Artist2ConsignButton_artist" | "Artist2Genes_artist">;
     readonly " $refType": "Artist2CareerHighlights_artist";
 };
@@ -70,6 +72,20 @@ const node: ReaderFragment = {
       "storageKey": "biographyBlurb(format:\"HTML\",partnerBio:true)"
     },
     {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "name",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "slug",
+      "storageKey": null
+    },
+    {
       "args": null,
       "kind": "FragmentSpread",
       "name": "SelectedCareerAchievements_artist"
@@ -87,5 +103,5 @@ const node: ReaderFragment = {
   ],
   "type": "Artist"
 };
-(node as any).hash = 'f8e7fc73c4da75828f233590c06831d5';
+(node as any).hash = 'eaa37fbcdf4aa4ba8732bae6d16539c8';
 export default node;

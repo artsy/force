@@ -57,7 +57,7 @@ const ArtistCVGroup: React.FC<ArtistCVGroupProps> = ({
 
   return (
     <>
-      <Join separator={<Spacer my={4} />}>
+      <Join separator={<Spacer my={[1, 4]} />}>
         {Object.keys(groupedByYear)
           .sort()
           .reverse()
@@ -68,12 +68,16 @@ const ArtistCVGroup: React.FC<ArtistCVGroupProps> = ({
             return (
               <>
                 <GridColumns key={index}>
-                  <Column span={2}>
+                  <Column span={2} mb={[2, 0]}>
                     {isFirst && <Text variant="lg">{title}</Text>}
                   </Column>
 
                   <Column span={2}>
-                    <Text variant="md" textAlign="right" pr={4}>
+                    <Text
+                      variant="md"
+                      textAlign={["left", "right"]}
+                      pr={[2, 4]}
+                    >
                       {year}
                     </Text>
                   </Column>
@@ -204,7 +208,7 @@ export const ArtistCVGroupRefetchContainer = createPaginationContainer(
         $visibleToPublic: Boolean
       ) {
         artist(id: $slug) {
-          ...CVItem_artist
+          ...ArtistCVGroup_artist
             @arguments(
               sort: $sort
               count: $count

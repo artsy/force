@@ -19,6 +19,7 @@ export type Artist2ArtworkFilter_artist = {
     readonly internalID: string;
     readonly isFollowed: boolean | null;
     readonly slug: string;
+    readonly " $fragmentRefs": FragmentRefs<"FollowArtistButton_artist">;
     readonly " $refType": "Artist2ArtworkFilter_artist";
 };
 export type Artist2ArtworkFilter_artist$data = Artist2ArtworkFilter_artist;
@@ -149,9 +150,14 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "name": "slug",
       "storageKey": null
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "FollowArtistButton_artist"
     }
   ],
   "type": "Artist"
 };
-(node as any).hash = '4e0d069e5bef5bda15fd2e01cd4fa898';
+(node as any).hash = '6116ee2738164fb8a9df07dc1247fe10';
 export default node;
