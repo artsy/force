@@ -6,6 +6,7 @@ import {
   Row,
   Sans,
   Spacer,
+  Text,
   TextAreaChange,
 } from "@artsy/palette"
 import { Offer_order } from "v2/__generated__/Offer_order.graphql"
@@ -269,6 +270,10 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
               <Message p={[2, 3]}>
                 Please note that all offers are binding. If your offer is
                 accepted, your payment will be processed immediately.
+                <Text mt={1}>
+                  Keep in mind making an offer doesn’t guarantee you the work,
+                  as the seller might be receiving competing offers.
+                </Text>
               </Message>
               <Spacer mb={[2, 3]} />
               <Media greaterThan="xs">
