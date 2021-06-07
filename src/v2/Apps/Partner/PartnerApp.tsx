@@ -9,6 +9,7 @@ import styled from "styled-components"
 import { PartnerMetaFragmentContainer } from "./Components/PartnerMeta"
 import { StickyProvider } from "v2/Components/Sticky"
 import { PartnerArtistsLoadingContextProvider } from "./Utils/PartnerArtistsLoadingContext"
+import { HttpError } from "found"
 
 export interface PartnerAppProps {
   partner: PartnerApp_partner
@@ -27,7 +28,11 @@ export const PartnerApp: React.FC<PartnerAppProps> = ({
   partner,
   children,
 }) => {
-  const { profile, fullProfileEligible } = partner
+  const { profile, fullProfileEligible, isDefaultProfilePublic } = partner
+
+  if (!isDefaultProfilePublic) {
+    throw new HttpError(404)
+  }
 
   return (
     <PartnerArtistsLoadingContextProvider>
@@ -59,6 +64,7 @@ export const PartnerAppFragmentContainer = createFragmentContainer(PartnerApp, {
   partner: graphql`
     fragment PartnerApp_partner on Partner {
       fullProfileEligible
+      isDefaultProfilePublic
       profile {
         ...PartnerHeaderImage_profile
       }
