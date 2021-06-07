@@ -88,4 +88,14 @@ describe("PartnerApp", () => {
 
     expect(profileImageHtml).toBe("")
   })
+
+  it("doesn't display profile image if the partner isn't eligible for a full profile", () => {
+    const wrapper = getWrapper({
+      Partner: () => ({
+        fullProfileEligible: false,
+      }),
+    })
+
+    expect(wrapper.find(PartnerHeaderImage)).toHaveLength(0)
+  })
 })
