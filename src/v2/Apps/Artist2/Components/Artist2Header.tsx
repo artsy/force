@@ -1,4 +1,12 @@
-import { Column, GridColumns, HTML, ReadMore, Text } from "@artsy/palette"
+import {
+  Avatar,
+  Column,
+  Flex,
+  GridColumns,
+  HTML,
+  ReadMore,
+  Text,
+} from "@artsy/palette"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { SelectedCareerAchievementsFragmentContainer } from "v2/Components/SelectedCareerAchievements"
@@ -16,24 +24,41 @@ const Artist2Header: React.FC<Artist2HeaderProps> = ({ artist }) => {
 
   return (
     <GridColumns>
-      <Column span={6}>
-        <Text variant="xl" as="h1">
+      {artist.imageUrl && (
+        <Column span={1}>
+          <Flex justifyContent={["center", "left"]}>
+            <Avatar src={artist.imageUrl} size="md" />
+          </Flex>
+        </Column>
+      )}
+      <Column span={5}>
+        <Text variant="xl" as="h1" textAlign={["center", "left"]}>
           {artist.name}
         </Text>
 
         {artist.formattedNationalityAndBirthday && (
-          <Text variant="xl" as="h2" color="black60" mb={2}>
+          <Text
+            variant="xl"
+            as="h2"
+            color="black60"
+            mb={2}
+            textAlign={["center", "left"]}
+          >
             {artist.formattedNationalityAndBirthday}
           </Text>
         )}
 
         <GridColumns>
-          <Column span={[6, 6, 3]}>
+          <Column span={[12, 6, 3]}>
             <FollowArtist2ButtonFragmentContainer artist={artist} />
           </Column>
 
-          <Column span={[6, 6, 9]} display="flex" alignItems="center">
-            <Text variant="xs" color="black60">
+          <Column
+            span={[12, 6, 9]}
+            display={["block", "flex"]}
+            alignItems="center"
+          >
+            <Text variant="xs" color="black60" textAlign={["center", "left"]}>
               {formatFollowerCount(artist.counts?.follows!)} Following
             </Text>
           </Column>
@@ -43,12 +68,12 @@ const Artist2Header: React.FC<Artist2HeaderProps> = ({ artist }) => {
       <Column span={6}>
         {!hideBioInHeaderIfPartnerSupplied && artist.biographyBlurb?.text && (
           <>
-            <Text variant="xs" textTransform="uppercase" mb={1}>
+            <Text variant="xs" textTransform="uppercase" mt={[2, 0]} mb={1}>
               Bio
             </Text>
             <Text variant="sm" mb={2}>
               <HTML variant="sm">
-                <ReadMore maxChars={550} content={artist.biographyBlurb.text} />
+                <ReadMore maxChars={250} content={artist.biographyBlurb.text} />
               </HTML>
             </Text>
           </>
@@ -105,6 +130,7 @@ export const Artist2HeaderFragmentContainer = createFragmentContainer(
             }
           }
         }
+        imageUrl
         internalID
         slug
         name

@@ -112,7 +112,7 @@ export const Artist2CurrentShowsRailFragmentContainer = createFragmentContainer(
           edges {
             node {
               coverImage {
-                cropped(width: 325, height: 330) {
+                cropped(width: 325, height: 230) {
                   width
                   height
                   srcSet

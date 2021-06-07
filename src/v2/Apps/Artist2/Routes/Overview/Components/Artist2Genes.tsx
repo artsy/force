@@ -3,7 +3,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { extractNodes } from "v2/Utils/extractNodes"
 import { data as sd } from "sharify"
 import { Artist2Genes_artist } from "v2/__generated__/Artist2Genes_artist.graphql"
-import { Tags } from "@artsy/palette"
+import { Flex, Pill } from "@artsy/palette"
 
 interface Artist2GenesProps {
   artist: Artist2Genes_artist
@@ -16,15 +16,21 @@ const Artist2Genes: React.FC<Artist2GenesProps> = ({ artist }) => {
     return null
   }
 
-  const tags = nodes.map(edge => ({
+  const pills = nodes.map(edge => ({
     href: sd.APP_URL + edge.href!,
     name: edge.name!,
   }))
 
   return (
-    <>
-      <Tags tags={tags} displayNum={8} />
-    </>
+    <Flex flexWrap="wrap">
+      {pills.map((pill, index) => {
+        return (
+          <Pill src={pill.href} key={index} mr={1} mb={1}>
+            {pill.name}
+          </Pill>
+        )
+      })}
+    </Flex>
   )
 }
 

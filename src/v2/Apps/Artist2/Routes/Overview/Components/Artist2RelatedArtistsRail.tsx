@@ -64,6 +64,7 @@ const Artist2RelatedArtistsRail: React.FC<Artist2RelatedArtistsRailProps> = ({
               <Box>
                 <Image
                   width={325}
+                  maxHeight={230}
                   height={230}
                   src={artworkImage?.resized?.src!}
                   srcSet={artworkImage?.resized?.srcSet}
