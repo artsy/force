@@ -16,7 +16,8 @@ export const FilterExpandable: React.FC<ExpandableProps> = props => {
 
   // @ts-expect-error STRICT_NULL_CHECK
   const { scrollRef } = useContext(ScrollRefContext)
-  const ref = useRef(null)
+  const filterRef = useRef(null)
+  const anchorRef = useRef(null)
 
   const [open, setOpen] = useState(!!props.expanded)
 
@@ -25,27 +26,26 @@ export const FilterExpandable: React.FC<ExpandableProps> = props => {
       const { height: containerHeight, top: containerTop } = getElementParams(
         scrollRef.current
       )
-      const { height: elementHeight, top: elementTop } = getElementParams(
-        ref.current
+      const { height: filterHeight, top: filterTop } = getElementParams(
+        filterRef.current
       )
-      const visiblePartHeight = containerHeight - elementTop + containerTop
+      const visiblePartHeight = containerHeight - filterTop + containerTop
 
-      if (visiblePartHeight < elementHeight) {
-        const currentPosition = scrollRef.current.scrollTop
-        scrollRef.current.scrollTo({
-          top: currentPosition - visiblePartHeight + elementHeight,
-        })
+      if (visiblePartHeight < filterHeight) {
+        // @ts-expect-error STRICT_NULL_CHECK
+        anchorRef.current.scrollIntoView({ block: "end" })
       }
     }
-  }, [open, ref])
+  }, [open, filterRef])
 
   const onClick = () => {
     setOpen(open => !open)
   }
 
   return (
-    <Box ref={ref}>
+    <Box ref={filterRef}>
       <Expandable mb={tokens.mb} onClick={onClick} {...props} />
+      <div ref={anchorRef}></div>
     </Box>
   )
 }
