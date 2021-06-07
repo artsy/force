@@ -1,14 +1,16 @@
 import styled from "styled-components"
 import { Box } from "@artsy/palette"
 import React, { useEffect, useRef, useState } from "react"
-import { NAV_BAR_HEIGHT, MOBILE_NAV_HEIGHT } from "v2/Components/NavBar"
 import { useSticky } from "./StickyProvider"
+import { useNavBarHeight } from "../NavBar/useNavBarHeight"
 
 export const Sticky: React.FC = ({ children }) => {
   const sentinelRef = useRef<HTMLDivElement | null>(null)
   const containerRef = useRef<HTMLDivElement | null>(null)
 
   const [stuck, setStuck] = useState(false)
+
+  const { mobile, desktop } = useNavBarHeight()
 
   useEffect(() => {
     if (sentinelRef.current === null) return
@@ -50,14 +52,14 @@ export const Sticky: React.FC = ({ children }) => {
     <>
       <Sentinel
         ref={sentinelRef as any}
-        top={[-(MOBILE_NAV_HEIGHT + offsetTop), -(NAV_BAR_HEIGHT + offsetTop)]}
+        top={[-(mobile + offsetTop), -(desktop + offsetTop)]}
       />
 
       <Container
         ref={containerRef as any}
         bg="white100"
         position={stuck ? "fixed" : "static"}
-        top={[MOBILE_NAV_HEIGHT + offsetTop, NAV_BAR_HEIGHT + offsetTop]}
+        top={[mobile + offsetTop, desktop + offsetTop]}
       >
         {typeof children === "function" ? children({ stuck }) : children}
       </Container>
