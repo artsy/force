@@ -18,8 +18,6 @@ import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
 import { AppContainer } from "./AppContainer"
 import { useRouteComplete } from "v2/Utils/Hooks/useRouteComplete"
 import { useAuthIntent } from "v2/Utils/Hooks/useAuthIntent"
-import { Banner } from "v2/Components/LoginSignUpBanner"
-import { Media } from "v2/Utils/Responsive"
 
 const logger = createLogger("Apps/Components/AppShell")
 
@@ -95,7 +93,6 @@ export const AppShell: React.FC<AppShellProps> = props => {
         ]}
       >
         <Box left={0} position="fixed" width="100%" zIndex={100}>
-          <Media at="xs">{!isLoggedIn && <Banner />}</Media>
           <NavBar />
         </Box>
       </Box>
