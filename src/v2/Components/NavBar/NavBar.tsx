@@ -25,8 +25,6 @@ import {
   NAV_BAR_BOTTOM_TIER_HEIGHT,
 } from "./constants"
 import { ScrollIntoView } from "v2/Utils"
-import { Media } from "v2/Utils/Responsive"
-import { NavBarAuthBanner } from "./NavBarAuthBanner"
 
 /**
  * Old Force pages have the navbar height hardcoded in several places. If
@@ -91,8 +89,6 @@ export const NavBar: React.FC = track(
       <NavBarSkipLink />
 
       <header>
-        <Media at="xs">{!isLoggedIn && <NavBarAuthBanner />}</Media>
-
         <NavBarContainer as="nav">
           <NavBarTier height={NAV_BAR_TOP_TIER_HEIGHT}>
             <NavSection ml={[0.5, 2]} mr={0.5}>

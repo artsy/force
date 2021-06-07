@@ -138,7 +138,7 @@ describe("NavBar", () => {
   describe("mediator actions", () => {
     it("calls login auth action on login button click", () => {
       const wrapper = getWrapper()
-      wrapper.find("Button").at(2).simulate("click")
+      wrapper.find("Button").at(0).simulate("click")
       expect(mediator.trigger).toBeCalledWith("open:auth", {
         contextModule: "header",
         intent: "login",
@@ -148,7 +148,7 @@ describe("NavBar", () => {
 
     it("calls signup auth action on signup button click", () => {
       const wrapper = getWrapper()
-      wrapper.find("Button").at(3).simulate("click")
+      wrapper.find("Button").at(1).simulate("click")
       expect(mediator.trigger).toBeCalledWith("open:auth", {
         contextModule: "header",
         intent: "signup",
