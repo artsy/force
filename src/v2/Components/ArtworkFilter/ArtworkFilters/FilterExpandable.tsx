@@ -5,6 +5,7 @@ import {
   useThemeConfig,
 } from "@artsy/palette"
 import React, { useContext, useEffect, useRef, useState } from "react"
+import { getElementParams } from "./helpers"
 import { ScrollRefContext } from "./useScrollContext"
 
 export const FilterExpandable: React.FC<ExpandableProps> = props => {
@@ -21,12 +22,20 @@ export const FilterExpandable: React.FC<ExpandableProps> = props => {
 
   useEffect(() => {
     if (open) {
-      // @ts-expect-error STRICT_NULL_CHECK
-      const height = ref.current.clientHeight
+      const { height: containerHeight, top: containerTop } = getElementParams(
+        scrollRef.current
+      )
+      const { height: elementHeight, top: elementTop } = getElementParams(
+        ref.current
+      )
+      const visiblePartHeight = containerHeight - elementTop + containerTop
 
-      scrollRef.current.scrollTo({
-        top: height,
-      })
+      if (visiblePartHeight < elementHeight) {
+        const currentPosition = scrollRef.current.scrollTop
+        scrollRef.current.scrollTo({
+          top: currentPosition - visiblePartHeight + elementHeight,
+        })
+      }
     }
   }, [open, ref])
 
