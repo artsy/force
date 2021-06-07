@@ -3,53 +3,45 @@ import { ArtworkImageBrowserQuery } from "v2/__generated__/ArtworkImageBrowserQu
 import { SystemContext } from "v2/Artsy"
 import { renderWithLoadProgress } from "v2/Artsy/Relay/renderWithLoadProgress"
 import { SystemQueryRenderer as QueryRenderer } from "v2/Artsy/Relay/SystemQueryRenderer"
-import React, { useContext } from "react"
+import React, { useContext, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworkActionsFragmentContainer as ArtworkActions } from "./ArtworkActions"
 import { ArtworkImageBrowser } from "./ArtworkImageBrowser"
-import { Box } from "@artsy/palette"
+import { Box, Spacer } from "@artsy/palette"
 import { ContextModule } from "@artsy/cohesion"
 
 export interface ImageBrowserProps {
   artwork: ArtworkImageBrowser_artwork
 }
 
-export class ArtworkImageBrowserContainer extends React.Component<
-  ImageBrowserProps
-> {
-  carousel = null
+export const ArtworkImageBrowserContainer: React.FC<ImageBrowserProps> = ({
+  artwork,
+}) => {
+  const { images, image_alt } = artwork
 
-  render() {
-    const { images, image, image_alt } = this.props.artwork
-    // @ts-expect-error STRICT_NULL_CHECK
-    if (!images.length) {
-      return null
-    }
-
-    // @ts-expect-error STRICT_NULL_CHECK
-    const defaultImageIndex = images.findIndex(
-      // @ts-expect-error STRICT_NULL_CHECK
-      e => e.internalID === image.internalID
-    )
-    return (
-      <Box data-test={ContextModule.artworkImage}>
-        <ArtworkImageBrowser
-          // @ts-expect-error STRICT_NULL_CHECK
-          setCarouselRef={f => (this.carousel = f)}
-          images={images}
-          // @ts-expect-error STRICT_NULL_CHECK
-          imageAlt={image_alt}
-        />
-        <ArtworkActions
-          selectDefaultSlide={() => {
-            // @ts-expect-error STRICT_NULL_CHECK
-            this.carousel.select(defaultImageIndex, false, true)
-          }}
-          artwork={this.props.artwork}
-        />
-      </Box>
-    )
+  // Rather than lift state up to reset the carousel to the first slide, just
+  // re-render it to reset the state.
+  const [key, setKey] = useState(0)
+  const handleSelectDefaultSlide = () => {
+    return setKey(prevKey => prevKey + 1)
   }
+
+  if ((images ?? []).length === 0) {
+    return null
+  }
+
+  return (
+    <Box data-test={ContextModule.artworkImage}>
+      <ArtworkImageBrowser key={key} images={images} imageAlt={image_alt} />
+
+      <Spacer mt={2} />
+
+      <ArtworkActions
+        artwork={artwork}
+        selectDefaultSlide={handleSelectDefaultSlide}
+      />
+    </Box>
+  )
 }
 
 export const ArtworkImageBrowserFragmentContainer = createFragmentContainer<
@@ -59,9 +51,6 @@ export const ArtworkImageBrowserFragmentContainer = createFragmentContainer<
     fragment ArtworkImageBrowser_artwork on Artwork {
       image_alt: formattedMetadata
       ...ArtworkActions_artwork
-      image {
-        internalID
-      }
       images {
         internalID
         uri: url(version: ["large"])

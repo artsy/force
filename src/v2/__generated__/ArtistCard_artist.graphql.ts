@@ -9,7 +9,7 @@ export type ArtistCard_artist = {
     readonly href: string | null;
     readonly image: {
         readonly cropped: {
-            readonly url: string;
+            readonly src: string;
         } | null;
     } | null;
     readonly formatted_nationality_and_birthday: string | null;
@@ -70,7 +70,7 @@ const node: ReaderFragment = {
             {
               "kind": "Literal",
               "name": "width",
-              "value": 400
+              "value": 300
             }
           ],
           "concreteType": "CroppedImageUrl",
@@ -82,11 +82,11 @@ const node: ReaderFragment = {
               "alias": null,
               "args": null,
               "kind": "ScalarField",
-              "name": "url",
+              "name": "src",
               "storageKey": null
             }
           ],
-          "storageKey": "cropped(height:300,width:400)"
+          "storageKey": "cropped(height:300,width:300)"
         }
       ],
       "storageKey": null
@@ -106,5 +106,5 @@ const node: ReaderFragment = {
   ],
   "type": "Artist"
 };
-(node as any).hash = 'ecffdabd44e8c5cd2c3ffa2fe9662349';
+(node as any).hash = 'fd43ed0e06dd2fc454fc3e147664ba06';
 export default node;

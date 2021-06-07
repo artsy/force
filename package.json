@@ -229,6 +229,7 @@
     "underscore": "1.12.1",
     "underscore.string": "3.3.5",
     "updeep": "1.0.0",
+    "use-cursor": "^1.2.3",
     "useragent": "2.3.0",
     "uuid": "3.3.2",
     "validator": "7.0.0",

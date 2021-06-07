@@ -3,8 +3,8 @@ import {
   Button,
   Flex,
   HelpIcon,
-  LargeSelect,
   Link,
+  Select,
   Separator,
   Spacer,
   Text,
@@ -12,13 +12,13 @@ import {
 } from "@artsy/palette"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-
 import { ArtworkSidebarBidAction_artwork } from "v2/__generated__/ArtworkSidebarBidAction_artwork.graphql"
 import { ArtworkSidebarBidAction_me } from "v2/__generated__/ArtworkSidebarBidAction_me.graphql"
 import * as Schema from "v2/Artsy/Analytics/Schema"
 import track from "react-tracking"
 import { getENV } from "v2/Utils/getENV"
 import { bidderQualifications } from "v2/Utils/identityVerificationRequirements"
+import { compact } from "lodash"
 
 export interface ArtworkSidebarBidActionProps {
   artwork: ArtworkSidebarBidAction_artwork
@@ -33,7 +33,7 @@ const RegisterToBidButton: React.FC<{ onClick: () => void }> = ({
   onClick,
 }) => {
   return (
-    <Button width="100%" size="large" mt={1} onClick={onClick} data-test="bid">
+    <Button width="100%" size="medium" mt={1} onClick={onClick} data-test="bid">
       Register to bid
     </Button>
   )
@@ -41,7 +41,7 @@ const RegisterToBidButton: React.FC<{ onClick: () => void }> = ({
 
 const VerifyIdentityButton: React.FC<{ id: string }> = ({ id }) => (
   <a href={`/identity-verification/${id}`}>
-    <Button width="100%" size="large">
+    <Button width="100%" size="medium">
       Verify identity
     </Button>
   </a>
@@ -49,7 +49,7 @@ const VerifyIdentityButton: React.FC<{ id: string }> = ({ id }) => (
 
 const IdentityVerificationDisclaimer: React.FC = () => {
   return (
-    <Text mt="1" variant="text" color="black60" pb={1} textAlign="center">
+    <Text variant="md" color="black60" textAlign="center">
       Identity verification required to bid.{" "}
       <Link href="/identity-verification-faq">FAQ</Link>
     </Text>
@@ -72,8 +72,7 @@ export class ArtworkSidebarBidAction extends React.Component<
 
   redirectToRegister = () => {
     const { sale } = this.props.artwork
-    // @ts-expect-error STRICT_NULL_CHECK
-    const href = `/auction-registration/${sale.slug}`
+    const href = `/auction-registration/${sale?.slug}`
     window.location.href = href
   }
 
@@ -86,20 +85,18 @@ export class ArtworkSidebarBidAction extends React.Component<
         price:
           props.artwork.myLotStanding &&
           props.artwork.myLotStanding[0] &&
-          // @ts-expect-error STRICT_NULL_CHECK
-          props.artwork.myLotStanding[0].most_recent_bid.max_bid.cents / 100,
+          (props.artwork.myLotStanding[0].most_recent_bid?.max_bid?.cents ??
+            0) / 100,
       },
     ],
-    // @ts-expect-error STRICT_NULL_CHECK
-    auction_slug: props.artwork.sale.slug,
+    auction_slug: props.artwork.sale?.slug,
     context_page: Schema.PageName.ArtworkPage,
     action_type: Schema.ActionType.ClickedBid,
   }))
   redirectToBid(firstIncrement: number) {
     const { slug, sale } = this.props.artwork
     const bid = this.state.selectedMaxBidCents || firstIncrement
-    // @ts-expect-error STRICT_NULL_CHECK
-    const href = `/auction/${sale.slug}/bid/${slug}?bid=${bid}`
+    const href = `/auction/${sale?.slug}/bid/${slug}?bid=${bid}`
     window.location.href = href
   }
 
@@ -111,8 +108,7 @@ export class ArtworkSidebarBidAction extends React.Component<
     action_type: Schema.ActionType.Click,
   })
   redirectToLiveBidding(me: ArtworkSidebarBidAction_me | null) {
-    // @ts-expect-error STRICT_NULL_CHECK
-    const { slug } = this.props.artwork.sale
+    const slug = this.props.artwork.sale?.slug
     const liveUrl = `${getENV("PREDICTION_URL")}/${slug}`
     if (me) {
       window.location.href = `${liveUrl}/login`
@@ -128,13 +124,12 @@ export class ArtworkSidebarBidAction extends React.Component<
       me,
     } = this.props
 
-    // @ts-expect-error STRICT_NULL_CHECK
-    if (sale.is_closed) return null
+    if (!sale || sale.is_closed) return null
 
     /**
      * NOTE: This is making an incorrect assumption that there could only ever
-     *       be 1 live sale with this work. When we run into that case, there is
-     *       likely design work to be done too, so we can adjust this then.
+     * be 1 live sale with this work. When we run into that case, there is
+     * likely design work to be done too, so we can adjust this then.
      */
     const myLotStanding = artwork.myLotStanding && artwork.myLotStanding[0]
     const hasMyBids = !!(myLotStanding && myLotStanding.most_recent_bid)
@@ -149,21 +144,18 @@ export class ArtworkSidebarBidAction extends React.Component<
       // @ts-expect-error STRICT_NULL_CHECK
       sale,
       me,
-      // @ts-expect-error STRICT_NULL_CHECK
       sale.registrationStatus && {
-        // @ts-expect-error STRICT_NULL_CHECK
         qualifiedForBidding: sale.registrationStatus.qualified_for_bidding,
       }
     )
 
-    // @ts-expect-error STRICT_NULL_CHECK
     if (sale.is_preview) {
       let PreviewAction: React.FC
 
       if (registrationAttempted) {
         if (qualifiedForBidding) {
           PreviewAction = () => (
-            <Button width="100%" size="large" mt={1} disabled>
+            <Button width="100%" size="medium" mt={1} disabled>
               Registration complete
             </Button>
           )
@@ -174,7 +166,7 @@ export class ArtworkSidebarBidAction extends React.Component<
           )
         } else {
           PreviewAction = () => (
-            <Button width="100%" size="large" mt={1} disabled>
+            <Button width="100%" size="medium" mt={1} disabled>
               Registration pending
             </Button>
           )
@@ -185,131 +177,147 @@ export class ArtworkSidebarBidAction extends React.Component<
         )
       }
       return (
-        <Box>
+        <>
           <PreviewAction />
           {userLacksIdentityVerification && <IdentityVerificationDisclaimer />}
-        </Box>
+        </>
       )
     }
 
-    // @ts-expect-error STRICT_NULL_CHECK
     if (sale.is_live_open) {
-      // @ts-expect-error STRICT_NULL_CHECK
       const notApprovedBidderBeforeRegistrationClosed: boolean =
-        // @ts-expect-error STRICT_NULL_CHECK
-        sale.is_registration_closed && !qualifiedForBidding
+        !!sale.is_registration_closed && !qualifiedForBidding
 
       if (notApprovedBidderBeforeRegistrationClosed) {
         return (
-          <Box>
-            <Text variant="caption" color="black60" pb={1} textAlign="center">
+          <>
+            <Text variant="xs" color="black60" pb={1} textAlign="center">
               Registration closed
             </Text>
+
             <Button
               width="100%"
-              size="large"
+              size="medium"
               onClick={() => this.redirectToLiveBidding(me)}
             >
               Watch live bidding
             </Button>
-          </Box>
+          </>
         )
       } else {
         return (
-          <Box>
+          <>
             <Button
               width="100%"
-              size="large"
+              size="medium"
               onClick={() => this.redirectToLiveBidding(me)}
             >
               Enter live bidding
             </Button>
+
             {userLacksIdentityVerification && (
               <IdentityVerificationDisclaimer />
             )}
-          </Box>
+          </>
         )
       }
     }
 
-    // @ts-expect-error STRICT_NULL_CHECK
     if (sale.is_open) {
       if (registrationAttempted && !qualifiedForBidding) {
         return (
-          <Box>
+          <>
             {shouldPromptIdVerification ? (
               <VerifyIdentityButton
                 // @ts-expect-error STRICT_NULL_CHECK
                 id={pendingIdentityVerification.internalID}
               />
             ) : (
-              <Button width="100%" size="large" disabled>
+              <Button width="100%" size="medium" disabled>
                 Registration pending
               </Button>
             )}
             {userLacksIdentityVerification && (
               <IdentityVerificationDisclaimer />
             )}
-          </Box>
+          </>
         )
       }
-      // @ts-expect-error STRICT_NULL_CHECK
+
       if (sale.is_registration_closed && !qualifiedForBidding) {
         return (
-          <Button width="100%" size="large" disabled>
+          <Button width="100%" size="medium" disabled>
             Registration closed
           </Button>
         )
       }
 
       const myLastMaxBid =
-        // @ts-expect-error STRICT_NULL_CHECK
-        hasMyBids && myLotStanding.most_recent_bid.max_bid.cents
-      // @ts-expect-error STRICT_NULL_CHECK
-      const increments = artwork.sale_artwork.increments.filter(
-        // @ts-expect-error STRICT_NULL_CHECK
-        increment => increment.cents > (myLastMaxBid || 0)
+        hasMyBids && myLotStanding?.most_recent_bid?.max_bid?.cents
+
+      const increments = compact(
+        artwork.sale_artwork?.increments?.filter(
+          increment => (increment?.cents ?? 0) > (myLastMaxBid || 0)
+        )
       )
+
       const firstIncrement = increments[0]
+
       const selectOptions = increments.map(increment => ({
-        // @ts-expect-error STRICT_NULL_CHECK
-        value: increment.cents.toString(),
-        // @ts-expect-error STRICT_NULL_CHECK
+        value: increment.cents?.toString(),
         text: increment.display,
       }))
 
       if (!qualifiedForBidding && userLacksIdentityVerification) {
         return (
-          <Box>
+          <>
             <RegisterToBidButton onClick={this.redirectToRegister} />
             <IdentityVerificationDisclaimer />
-          </Box>
+          </>
         )
       } else {
         return (
-          <Box>
-            <Separator mb={2} />
-            <Flex width="100%" flexDirection="row">
-              <Text variant="text" color="black100" mr={1}>
+          <>
+            <Separator my={2} />
+
+            <Flex width="100%" flexDirection="row" alignItems="center">
+              <Text variant="md" color="black100" mr={1}>
                 Place max bid
               </Text>
+
               <Tooltip content="Set the maximum amount you would like Artsy to bid up to on your behalf">
-                <HelpIcon />
+                <Box
+                  style={{
+                    // Vertically center
+                    lineHeight: 0,
+                  }}
+                >
+                  <HelpIcon />
+                </Box>
               </Tooltip>
             </Flex>
-            {/* @ts-expect-error STRICT_NULL_CHECK */}
-            <LargeSelect options={selectOptions} onSelect={this.setMaxBid} />
-            <Spacer mb={2} />
+
+            <Spacer mt={1} />
+
+            <Select
+              variant="default"
+              // @ts-expect-error STRICT_NULL_CHECK
+              options={selectOptions}
+              onSelect={this.setMaxBid}
+            />
+
+            <Spacer mt={1} />
+
             <Button
               width="100%"
-              size="large"
+              size="medium"
               data-test="bid"
               // @ts-expect-error STRICT_NULL_CHECK
               onClick={() => this.redirectToBid(firstIncrement.cents)}
             >
               {hasMyBids ? "Increase max bid" : "Bid"}
             </Button>
-          </Box>
+          </>
         )
       }
     }

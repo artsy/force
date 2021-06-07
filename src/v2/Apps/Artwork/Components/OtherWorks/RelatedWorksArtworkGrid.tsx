@@ -1,4 +1,4 @@
-import { Box, Spinner, Tab, Tabs } from "@artsy/palette"
+import { Box, Spacer, Spinner, Tab, Tabs } from "@artsy/palette"
 import { RelatedWorksArtworkGrid_artwork } from "v2/__generated__/RelatedWorksArtworkGrid_artwork.graphql"
 import { hideGrid } from "v2/Apps/Artwork/Components/OtherWorks"
 import { Header } from "v2/Apps/Artwork/Components/OtherWorks/Header"
@@ -10,7 +10,6 @@ import { take } from "lodash"
 import React from "react"
 import styled from "styled-components"
 import createLogger from "v2/Utils/logger"
-
 import { ContextModule } from "@artsy/cohesion"
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
 import { get } from "v2/Utils/get"
@@ -98,21 +97,24 @@ class RelatedWorksArtworkGrid extends React.Component<
     return (
       <Box data-test={ContextModule.relatedWorksRail}>
         <Header title="Related works" />
+
+        <Spacer mt={4} />
+
         {/* @ts-expect-error STRICT_NULL_CHECK */}
-        <Tabs justifyContent="center" onChange={this.handleTabClick}>
+        <Tabs onChange={this.handleTabClick}>
           {/* @ts-expect-error STRICT_NULL_CHECK */}
           {names.map(({ name, internalID }, key) => {
             return (
               <Tab name={name} key={key} data={{ layerId: internalID }}>
                 <ArtworksContainer>
                   {this.state.isLoading ? (
-                    <Spinner />
+                    <Spinner /> // Should be a placeholder
                   ) : (
                     <ArtworkGrid
                       contextModule={ContextModule.relatedWorksRail}
                       // @ts-expect-error STRICT_NULL_CHECK
                       artworks={artworksConnection}
-                      columnCount={[2, 3, 4]}
+                      columnCount={[2, 3, 4, 4]}
                       preloadImageCount={0}
                       mediator={mediator}
                       onBrickClick={this.trackBrickClick.bind(this)}

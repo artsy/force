@@ -34,8 +34,8 @@ fragment ArtistCard_artist on Artist {
   slug
   href
   image {
-    cropped(width: 400, height: 300) {
-      url
+    cropped(width: 300, height: 300) {
+      src
     }
   }
   formatted_nationality_and_birthday: formattedNationalityAndBirthday
@@ -285,7 +285,7 @@ return {
                                       {
                                         "kind": "Literal",
                                         "name": "width",
-                                        "value": 400
+                                        "value": 300
                                       }
                                     ],
                                     "concreteType": "CroppedImageUrl",
@@ -297,11 +297,11 @@ return {
                                         "alias": null,
                                         "args": null,
                                         "kind": "ScalarField",
-                                        "name": "url",
+                                        "name": "src",
                                         "storageKey": null
                                       }
                                     ],
-                                    "storageKey": "cropped(height:300,width:400)"
+                                    "storageKey": "cropped(height:300,width:300)"
                                   }
                                 ],
                                 "storageKey": null
@@ -416,7 +416,7 @@ return {
     "metadata": {},
     "name": "exampleRoutes_ArtworkQuery",
     "operationKind": "query",
-    "text": "query exampleRoutes_ArtworkQuery(\n  $slug: String!\n) {\n  artwork(id: $slug) {\n    id\n    ...ExampleArtworkRoute_artwork\n  }\n}\n\nfragment ArtistCard_artist on Artist {\n  name\n  slug\n  href\n  image {\n    cropped(width: 400, height: 300) {\n      url\n    }\n  }\n  formatted_nationality_and_birthday: formattedNationalityAndBirthday\n  ...FollowArtistButton_artist\n}\n\nfragment ExampleArtworkRoute_artwork on Artwork {\n  title\n  artistNames\n  medium\n  imageUrl\n  date\n  internalID\n  slug\n  artist {\n    related {\n      artistsConnection(kind: MAIN, first: 4) {\n        edges {\n          node {\n            ...ArtistCard_artist\n            id\n            __typename\n          }\n          cursor\n        }\n        pageInfo {\n          endCursor\n          hasNextPage\n        }\n      }\n    }\n    id\n  }\n}\n\nfragment FollowArtistButton_artist on Artist {\n  id\n  internalID\n  name\n  slug\n  is_followed: isFollowed\n  counts {\n    follows\n  }\n}\n"
+    "text": "query exampleRoutes_ArtworkQuery(\n  $slug: String!\n) {\n  artwork(id: $slug) {\n    id\n    ...ExampleArtworkRoute_artwork\n  }\n}\n\nfragment ArtistCard_artist on Artist {\n  name\n  slug\n  href\n  image {\n    cropped(width: 300, height: 300) {\n      src\n    }\n  }\n  formatted_nationality_and_birthday: formattedNationalityAndBirthday\n  ...FollowArtistButton_artist\n}\n\nfragment ExampleArtworkRoute_artwork on Artwork {\n  title\n  artistNames\n  medium\n  imageUrl\n  date\n  internalID\n  slug\n  artist {\n    related {\n      artistsConnection(kind: MAIN, first: 4) {\n        edges {\n          node {\n            ...ArtistCard_artist\n            id\n            __typename\n          }\n          cursor\n        }\n        pageInfo {\n          endCursor\n          hasNextPage\n        }\n      }\n    }\n    id\n  }\n}\n\nfragment FollowArtistButton_artist on Artist {\n  id\n  internalID\n  name\n  slug\n  is_followed: isFollowed\n  counts {\n    follows\n  }\n}\n"
   }
 };
 })();

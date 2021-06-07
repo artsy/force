@@ -1,6 +1,5 @@
 import { ArtistInfoFixture } from "v2/Apps/__tests__/Fixtures/Artwork/ArtistInfo"
 import { SystemContextProvider } from "v2/Artsy"
-import { mockTracking } from "v2/Artsy/Analytics"
 import { FollowArtistButtonFragmentContainer as FollowArtistButton } from "v2/Components/FollowButton/FollowArtistButton"
 import { mount } from "enzyme"
 import React from "react"
@@ -43,37 +42,12 @@ describe("ArtistInfo", () => {
       const component = getWrapper()
       expect(component.find(EntityHeader).length).toBe(1)
       expect(component.find("ArtistBio").length).toBe(1)
-      expect(component.find("Button").length).toBe(1)
-      expect(component.find("Button").text()).toEqual("Show artist insights")
-      expect(component.find("MarketInsights").length).toBe(0)
-      expect(component.find("SelectedExhibitions").length).toBe(0)
-    })
-
-    it("shows artist insights when the 'Show artist insights' button is clicked", () => {
-      const component = getWrapper()
-      component.find("Button").simulate("click")
       expect(component.find("MarketInsights").length).toBe(1)
       expect(component.find("SelectedExhibitions").length).toBe(1)
     })
   })
 
   describe("ArtistInfo for artwork with incomplete artist info", () => {
-    it("Hides 'Show artist insights' button if no market insights or selected exhibitions data", async () => {
-      const artist = {
-        ...ArtistInfoFixture,
-        highlights: {
-          // @ts-expect-error STRICT_NULL_CHECK
-          ...ArtistInfoFixture.highlights,
-          partnersConnection: null,
-        },
-        collections: null,
-        auctionResultsConnection: null,
-        exhibition_highlights: null,
-      }
-      const component = getWrapper({ artist })
-      expect(component.find("Button").length).toBe(0)
-    })
-
     it("Hides 'Show artist insights' button if exhibition count does not meet minimum", async () => {
       const artist = {
         ...ArtistInfoFixture,
@@ -91,7 +65,7 @@ describe("ArtistInfo", () => {
         },
       }
       const component = getWrapper({ artist })
-      expect(component.find("Button").length).toBe(0)
+      expect(component.find("Button").length).toBe(1)
     })
 
     it("hides ArtistBio if no data", async () => {
@@ -119,7 +93,6 @@ describe("ArtistInfo", () => {
         auctionResultsConnection: null,
       }
       const component = getWrapper({ artist })
-      component.find("Button").simulate("click")
       expect(component.find("MarketInsights").html()).toBe(null)
     })
 
@@ -129,18 +102,13 @@ describe("ArtistInfo", () => {
         exhibition_highlights: [],
       }
       const component = getWrapper({ artist })
-      component.find("Button").simulate("click")
       expect(component.find("SelectedExhibitions").html()).toBe(null)
     })
   })
 
   it("opens auth modal with expected args when following an artist", () => {
     const component = getWrapper()
-    component
-      .find(FollowArtistButton)
-      .find('[role="button"]')
-      .first()
-      .simulate("click")
+    component.find(FollowArtistButton).find("button").first().simulate("click")
     expect(context.mediator.trigger).toBeCalledWith("open:auth", {
       mode: "signup",
       contextModule: "aboutTheWork",
@@ -151,22 +119,6 @@ describe("ArtistInfo", () => {
         kind: "artist",
         objectId: "pablo-picasso",
       },
-    })
-  })
-
-  describe("Analytics", () => {
-    it("tracks click on 'Show artist insights' button", () => {
-      const { Component, dispatch } = mockTracking(ArtistInfo)
-      const component = mount(<Component artist={ArtistInfoFixture as any} />)
-      const button = component.find("Button")
-      button.simulate("click")
-      expect(dispatch).toBeCalledWith({
-        action_type: "Click",
-        context_module: "Biography",
-        subject: "Show artist insights",
-        flow: "Artwork about the artist",
-        type: "Button",
-      })
     })
   })
 })

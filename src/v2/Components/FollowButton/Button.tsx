@@ -42,6 +42,7 @@ export class FollowButton extends React.Component<Props, State> {
       <Button
         variant={isFollowed ? "secondaryOutline" : "primaryBlack"}
         {...props}
+        data-follow={isFollowed}
         data-test="followButton"
       >
         {/*

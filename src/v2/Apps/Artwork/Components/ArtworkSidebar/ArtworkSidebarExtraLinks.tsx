@@ -1,13 +1,9 @@
-// FIXME -- Remove this lint disable
-/* eslint-disable jsx-a11y/anchor-is-valid */
-import { Box, Link, Separator, Spacer, Text } from "@artsy/palette"
+import { Clickable, Link, Separator, Spacer, Text } from "@artsy/palette"
 import { SystemContext } from "v2/Artsy"
 import { track } from "v2/Artsy/Analytics"
 import * as Schema from "v2/Artsy/Analytics/Schema"
-import React, { SFC, useContext } from "react"
+import React, { useContext } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { data as sd } from "sharify"
-
 import { ArtworkSidebarExtraLinks_artwork } from "v2/__generated__/ArtworkSidebarExtraLinks_artwork.graphql"
 import { Mediator } from "lib/mediator"
 
@@ -21,7 +17,7 @@ export interface ArtworkSidebarExtraLinksContainerProps
 }
 
 const Container = ({ children }) => (
-  <Text variant="caption" color="black60">
+  <Text variant="xs" color="black60">
     {children}
   </Text>
 )
@@ -38,7 +34,7 @@ class ArtworkSidebarExtraLinksContainer extends React.Component<
     type: Schema.Type.Link,
   }))
   onClickConditionsOfSale() {
-    window.open(sd.APP_URL + "/conditions-of-sale", "_blank")
+    // Tracking
   }
 
   @track(() => ({
@@ -58,10 +54,7 @@ class ArtworkSidebarExtraLinksContainer extends React.Component<
     type: Schema.Type.Link,
   }))
   onClickBuyNowFAQ() {
-    window.open(
-      "https://support.artsy.net/hc/en-us/sections/360008203114-Buy-Now-and-Make-Offer",
-      "_blank"
-    )
+    // Tracking
   }
 
   @track(() => ({
@@ -70,10 +63,7 @@ class ArtworkSidebarExtraLinksContainer extends React.Component<
     type: Schema.Type.Link,
   }))
   onClickCollectorFAQ() {
-    window.open(
-      "https://support.artsy.net/hc/en-us/sections/360008203054-Contact-a-gallery",
-      "_blank"
-    )
+    // Tracking
   }
 
   @track(() => ({
@@ -108,7 +98,7 @@ class ArtworkSidebarExtraLinksContainer extends React.Component<
     type: Schema.Type.Link,
   }))
   onClickConsign() {
-    window.open(sd.APP_URL + "/consign", "_blank")
+    // Tracking
   }
 
   conditionsOfSaleText() {
@@ -135,7 +125,11 @@ class ArtworkSidebarExtraLinksContainer extends React.Component<
     return (
       <Container>
         {this.conditionsOfSaleText()}
-        <Link onClick={this.onClickConditionsOfSale.bind(this)}>
+        <Link
+          href="/conditions-of-sale"
+          target="_blank"
+          onClick={this.onClickConditionsOfSale.bind(this)}
+        >
           Conditions of Sale
         </Link>
         .<Spacer mb={1} />
@@ -145,11 +139,24 @@ class ArtworkSidebarExtraLinksContainer extends React.Component<
   renderAuctionQuestionsLine() {
     return (
       <Container>
-        Have a question? Read our{" "}
-        <Link onClick={this.onClickAuctionFAQ.bind(this)}>auction FAQs</Link> or{" "}
-        <Link onClick={this.onClickAuctionAskSpecialist.bind(this)}>
-          ask a specialist
-        </Link>
+        {/* FIXME: */}
+        {/* Have a question? Read our{" "}
+        <Clickable
+          onClick={this.onClickAuctionFAQ.bind(this)}
+          textDecoration="underline"
+          color="black100"
+        >
+          auction FAQs
+        </Clickable>{" "}
+        or{" "} */}
+        Have a question?{" "}
+        <Clickable
+          onClick={this.onClickAuctionAskSpecialist.bind(this)}
+          textDecoration="underline"
+          color="black100"
+        >
+          Ask a specialist
+        </Clickable>
         .
       </Container>
     )
@@ -161,13 +168,22 @@ class ArtworkSidebarExtraLinksContainer extends React.Component<
       return (
         <Container>
           Have a question?{" "}
-          <Link onClick={this.onClickBuyNowFAQ.bind(this)}>
+          <Link
+            href="https://support.artsy.net/hc/en-us/sections/360008203114-Buy-Now-and-Make-Offer"
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={this.onClickBuyNowFAQ.bind(this)}
+          >
             Visit our help center
           </Link>{" "}
           or{" "}
-          <Link onClick={this.onClickBuyNowAskSpecialist.bind(this)}>
+          <Clickable
+            onClick={this.onClickBuyNowAskSpecialist.bind(this)}
+            textDecoration="underline"
+            color="black100"
+          >
             ask a specialist
-          </Link>
+          </Clickable>
           .
         </Container>
       )
@@ -176,7 +192,12 @@ class ArtworkSidebarExtraLinksContainer extends React.Component<
       return (
         <Container>
           Have a question?{" "}
-          <Link onClick={this.onClickCollectorFAQ.bind(this)}>
+          <Link
+            href="https://support.artsy.net/hc/en-us/sections/360008203054-Contact-a-gallery"
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={this.onClickCollectorFAQ.bind(this)}
+          >
             Visit our help center
           </Link>
           .
@@ -189,7 +210,13 @@ class ArtworkSidebarExtraLinksContainer extends React.Component<
       <Container>
         Want to sell a work by{" "}
         {artistsCount === 1 ? "this artist" : "these artists"}?{" "}
-        <Link onClick={this.onClickConsign.bind(this)}>Consign with Artsy</Link>
+        <Link
+          href="/consign"
+          target="_blank"
+          onClick={this.onClickConsign.bind(this)}
+        >
+          Consign with Artsy
+        </Link>
         .
       </Container>
     )
@@ -197,32 +224,35 @@ class ArtworkSidebarExtraLinksContainer extends React.Component<
 
   render() {
     const { artwork } = this.props
-    // @ts-expect-error STRICT_NULL_CHECK
-    const consignableArtistsCount = artwork.artists.filter(
-      // @ts-expect-error STRICT_NULL_CHECK
-      artist => artist.is_consignable
+
+    const consignableArtistsCount = artwork.artists?.filter(
+      artist => artist?.is_consignable
     ).length
+
     const isInOpenAuction =
       artwork.is_in_auction && artwork.sale && !artwork.sale.is_closed
     const renderQuestionsLine = artwork.is_for_sale || isInOpenAuction
     if (!renderQuestionsLine && !!!consignableArtistsCount) return null
 
     return (
-      <Box>
-        <Separator mb={3} />
+      <>
+        <Separator my={2} />
+
         {isInOpenAuction && this.renderAuctionTerms()}
+
         {renderQuestionsLine &&
           (artwork.is_in_auction
             ? this.renderAuctionQuestionsLine()
             : this.renderForSaleQuestionsLine())}
+
         {!!consignableArtistsCount &&
           this.renderConsignmentsLine(consignableArtistsCount)}
-      </Box>
+      </>
     )
   }
 }
 
-export const ArtworkSidebarExtraLinks: SFC<ArtworkSidebarExtraLinksProps> = props => {
+export const ArtworkSidebarExtraLinks: React.FC<ArtworkSidebarExtraLinksProps> = props => {
   const { mediator } = useContext(SystemContext)
   // @ts-expect-error STRICT_NULL_CHECK
   return <ArtworkSidebarExtraLinksContainer {...props} mediator={mediator} />

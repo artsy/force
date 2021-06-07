@@ -16,11 +16,11 @@ import styled from "styled-components"
 import { slugify } from "underscore.string"
 import { Media } from "v2/Utils/Responsive"
 import { ArtworkSharePanelFragmentContainer as ArtworkSharePanel } from "./ArtworkSharePanel"
-
 import { ContextModule } from "@artsy/cohesion"
 import {
   BellFillIcon,
   BellIcon,
+  Clickable,
   DownloadIcon,
   EditIcon,
   Flex,
@@ -34,11 +34,12 @@ import {
   ShareIcon,
   Spacer,
   Text,
-  color,
 } from "@artsy/palette"
 import { userIsAdmin, userIsTeam } from "v2/Utils/user"
 import { ArtworkPopoutPanel } from "./ArtworkPopoutPanel"
 import { Mediator } from "lib/mediator"
+import { themeGet } from "@styled-system/theme-get"
+import { MediocrePopover } from "./MediocrePopover"
 
 interface ArtworkActionsProps {
   artwork: ArtworkActions_artwork
@@ -47,21 +48,8 @@ interface ArtworkActionsProps {
   selectDefaultSlide(): void
 }
 
-interface ArtworkActionsState {
-  showSharePanel: boolean
-  showMorePanel: boolean
-}
-
 @track()
-export class ArtworkActions extends React.Component<
-  ArtworkActionsProps,
-  ArtworkActionsState
-> {
-  state = {
-    showSharePanel: false,
-    showMorePanel: false,
-  }
-
+export class ArtworkActions extends React.Component<ArtworkActionsProps> {
   @track({
     flow: Schema.Flow.ArtworkShare,
     action_type: Schema.ActionType.Click,
@@ -69,16 +57,7 @@ export class ArtworkActions extends React.Component<
     type: Schema.Type.Button,
   })
   toggleSharePanel() {
-    const showSharePanel = !this.state.showSharePanel
-    this.setState({
-      showSharePanel,
-      showMorePanel: false,
-    })
-  }
-
-  toggleMorePanel() {
-    const showMorePanel = !this.state.showMorePanel
-    this.setState({ showMorePanel, showSharePanel: false })
+    // noop
   }
 
   get isAdmin() {
@@ -149,11 +128,33 @@ export class ArtworkActions extends React.Component<
 
   renderShareButton() {
     return (
-      <UtilButton
-        name="share"
-        onClick={this.toggleSharePanel.bind(this)}
-        label="Share"
-      />
+      <MediocrePopover
+        popover={({ onHide }) => {
+          return (
+            <ArtworkSharePanel
+              ml={[-100, 0]}
+              artwork={this.props.artwork}
+              onClose={() => {
+                onHide()
+                this.toggleSharePanel() // Tracking
+              }}
+            />
+          )
+        }}
+      >
+        {({ onVisible }) => {
+          return (
+            <UtilButton
+              name="share"
+              onClick={() => {
+                onVisible()
+                this.toggleSharePanel() // Tracking
+              }}
+              label="Share"
+            />
+          )
+        }}
+      </MediocrePopover>
     )
   }
 
@@ -170,14 +171,14 @@ export class ArtworkActions extends React.Component<
   renderEditButton() {
     const { artwork } = this.props
     if (artwork.partner) {
-      const editUrl = `${sd.CMS_URL}/artworks/${artwork.slug}/edit?current_partner_id=${artwork.partner.slug}` // prettier-ignore
+      const editUrl = `${sd.CMS_URL}/artworks/${artwork.slug}/edit?current_partner_id=${artwork.partner.slug}`
       return <UtilButton name="edit" href={editUrl} label="Edit" />
     }
   }
 
   renderGenomeButton() {
     const { artwork } = this.props
-    const genomeUrl = `${sd.GENOME_URL}/genome/artworks?artwork_ids=${artwork.slug}` // prettier-ignore
+    const genomeUrl = `${sd.GENOME_URL}/genome/artworks?artwork_ids=${artwork.slug}`
 
     return <UtilButton name="genome" href={genomeUrl} label="Genome" />
   }
@@ -223,10 +224,12 @@ export class ArtworkActions extends React.Component<
         <Container>
           <Join separator={<Spacer mx={0} />}>
             <Media greaterThan="xs">
-              <Flex>
+              <Flex flexWrap="wrap" alignItems="center" justifyContent="center">
                 {showableActions.map(action => {
                   return (
-                    <div key={action.name}>{action.renderer.bind(this)()}</div>
+                    <React.Fragment key={action.name}>
+                      {action.renderer.bind(this)()}
+                    </React.Fragment>
                   )
                 })}
               </Flex>
@@ -236,43 +239,41 @@ export class ArtworkActions extends React.Component<
               <Flex>
                 {initialActions.map(action => {
                   return (
-                    <div key={action.name}>{action.renderer.bind(this)()}</div>
+                    <React.Fragment key={action.name}>
+                      {action.renderer.bind(this)()}
+                    </React.Fragment>
                   )
                 })}
 
                 {moreActions && moreActions.length > 0 && (
-                  <UtilButton
-                    name="more"
-                    onClick={this.toggleMorePanel.bind(this)}
-                  />
+                  <MediocrePopover
+                    popover={({ onHide }) => {
+                      return (
+                        <ArtworkPopoutPanel
+                          minWidth={200}
+                          title="More actions"
+                          onClose={onHide}
+                          ml={-100}
+                        >
+                          {moreActions.map(action => {
+                            return (
+                              <Flex key={action.name}>
+                                {action.renderer.bind(this)()}
+                              </Flex>
+                            )
+                          })}
+                        </ArtworkPopoutPanel>
+                      )
+                    }}
+                  >
+                    {({ onVisible }) => {
+                      return <UtilButton name="more" onClick={onVisible} />
+                    }}
+                  </MediocrePopover>
                 )}
               </Flex>
             </Media>
           </Join>
-
-          {this.state.showSharePanel && (
-            <ArtworkSharePanel
-              artwork={this.props.artwork}
-              onClose={this.toggleSharePanel.bind(this)}
-            />
-          )}
-
-          {this.state.showMorePanel && (
-            <ArtworkPopoutPanel
-              title="More actions"
-              onClose={this.toggleMorePanel.bind(this)}
-            >
-              <Flex flexDirection="row" flexWrap="wrap">
-                {moreActions.map(action => {
-                  return (
-                    <Flex flexDirection="row" flexBasis="50%" key={action.name}>
-                      {action.renderer.bind(this)()}
-                    </Flex>
-                  )
-                })}
-              </Flex>
-            </ArtworkPopoutPanel>
-          )}
         </Container>
       </>
     )
@@ -330,117 +331,101 @@ interface UtilButtonProps {
     | "share"
     | "viewInRoom"
   href?: string
-  onClick?: () => void
   selected?: boolean
   label?: string
   Icon?: React.ReactNode
+  onClick?: () => void
 }
 
-export class UtilButton extends React.Component<
-  UtilButtonProps,
-  { hovered: boolean }
-> {
-  state = {
-    hovered: false,
+export const UtilButton: React.FC<UtilButtonProps> = ({
+  href,
+  label,
+  name,
+  onClick,
+  Icon,
+  ...rest
+}) => {
+  const getIcon = () => {
+    switch (name) {
+      case "bell":
+        return BellIcon
+      case "download":
+        return DownloadIcon
+      case "edit":
+        return EditIcon
+      case "genome":
+        return GenomeIcon
+      case "heart":
+        return HeartIcon
+      case "more":
+        return MoreIcon
+      case "share":
+        return ShareIcon
+      case "viewInRoom":
+        return OpenEyeIcon
+    }
   }
 
-  render() {
-    const { href, label, name, onClick, Icon, ...props } = this.props
+  // If we're passing in an `Icon`, override
+  const ActionIcon = Icon ? Icon : getIcon()
+  const Component = href ? UtilButtonLink : UtilButtonButton
 
-    const getIcon = () => {
-      switch (name) {
-        case "bell":
-          return BellIcon
-        case "download":
-          return DownloadIcon
-        case "edit":
-          return EditIcon
-        case "genome":
-          return GenomeIcon
-        case "heart":
-          return HeartIcon
-        case "more":
-          return MoreIcon
-        case "share":
-          return ShareIcon
-        case "viewInRoom":
-          return OpenEyeIcon
-      }
-    }
-
-    // If we're passing in an `Icon`, override
-    let ActionIcon
-    if (Icon) {
-      ActionIcon = Icon
-    } else {
-      ActionIcon = getIcon()
-    }
-
-    const defaultFill = name === "more" ? null : "black100"
-    const fill = this.state.hovered ? "purple100" : defaultFill
-
-    return (
-      <UtilButtonContainer
-        p={1}
-        pt={0}
-        onMouseOver={() => this.setState({ hovered: true })}
-        onMouseOut={() =>
-          this.setState({
-            hovered: false,
-          })
-        }
-        onClick={onClick}
+  return (
+    <Component
+      p={1}
+      onClick={onClick}
+      {...(href ? { href, target: "_blank" } : {})}
+    >
+      <Flex
+        alignItems="center"
+        justifyContent="center"
+        width={20}
+        height={20}
+        mr={0.5}
       >
-        {href ? (
-          <UtilButtonLink className="noUnderline" href={href} target="_blank">
-            <ActionIcon {...props} fill={"black100"} />
-            {label && (
-              <Text variant="caption" pl={0.5} pt="1px">
-                {label}
-              </Text>
-            )}
-          </UtilButtonLink>
-        ) : (
-          <>
-            <ActionIcon {...props} fill={fill} />
-            {label && (
-              <Text variant="caption" pl={0.5} pt="1px">
-                {label}
-              </Text>
-            )}
-          </>
-        )}
-      </UtilButtonContainer>
-    )
-  }
+        {/* TODO: Fix types */}
+        {/* @ts-ignore */}
+
+        <ActionIcon {...rest} fill="currentColor" />
+      </Flex>
+
+      {label && (
+        <Text variant="xs" lineHeight={1}>
+          {label}
+        </Text>
+      )}
+    </Component>
+  )
 }
 
 const UtilButtonLink = styled(Link)`
   display: flex;
-
-  &:hover {
-    color: ${color("purple100")} !important;
-    text-decoration: none !important;
-  }
-`
-
-const UtilButtonContainer = styled(Flex)`
-  cursor: pointer;
+  align-items: center;
   justify-content: center;
+  text-decoration: none;
+  color: ${themeGet("colors.black100")};
 
   &:hover {
-    color: ${color("purple100")};
+    color: ${themeGet("colors.blue100")};
   }
 `
 
-const Container = styled(Flex).attrs({
-  justifyContent: "center",
-  mb: 2,
-  ml: 0.5,
-  pt: 3,
-})`
-  position: relative;
+const UtilButtonButton = styled(Clickable)`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: ${themeGet("colors.black100")};
+
+  &:hover {
+    color: ${themeGet("colors.blue100")};
+    text-decoration: underline;
+  }
+`
+
+const Container = styled(Flex)`
   user-select: none;
+  justify-content: center;
+  align-items: center;
 `
 
 /**
@@ -461,7 +446,7 @@ const Save = (actionProps: ArtworkActionsProps) => (
 
   // If an Auction, use Bell (for notifications); if a standard artwork use Heart
   if (isOpenSale) {
-    const FilledIcon = () => <BellFillIcon fill="purple100" />
+    const FilledIcon = () => <BellFillIcon fill="blue100" />
     return (
       <UtilButton
         name="bell"
@@ -470,7 +455,7 @@ const Save = (actionProps: ArtworkActionsProps) => (
       />
     )
   } else {
-    const FilledIcon = () => <HeartFillIcon fill="purple100" />
+    const FilledIcon = () => <HeartFillIcon fill="blue100" />
     return (
       <UtilButton
         name="heart"

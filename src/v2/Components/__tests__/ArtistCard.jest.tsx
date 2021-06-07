@@ -5,12 +5,7 @@ import { mount } from "enzyme"
 import { set } from "lodash/fp"
 import React from "react"
 import { Breakpoint } from "v2/Utils/Responsive"
-import {
-  ArtistCard,
-  ArtistCardProps,
-  LargeArtistCard,
-  SmallArtistCard,
-} from "../ArtistCard"
+import { ArtistCard, ArtistCardProps } from "../ArtistCard"
 import { SystemContextProvider } from "v2/Artsy"
 
 describe("ArtistCard", () => {
@@ -36,7 +31,7 @@ describe("ArtistCard", () => {
       artist: {
         image: {
           cropped: {
-            url: "https://picsum.photos/110/110/?random",
+            src: "https://picsum.photos/110/110/?random",
           },
         },
         href: "/artist/francesca-dimattio",
@@ -51,14 +46,6 @@ describe("ArtistCard", () => {
     }
     // @ts-expect-error STRICT_NULL_CHECK
     window.matchMedia = undefined // Immediately set matching media query in MockBoot
-  })
-
-  it("is responsive", () => {
-    const small = getWrapper("xs")
-    expect(small.find(SmallArtistCard).length).toEqual(1)
-
-    const large = getWrapper("lg")
-    expect(large.find(LargeArtistCard).length).toEqual(1)
   })
 
   it("hides avatar if no image is provided", () => {

@@ -58,20 +58,18 @@ describe("ArtworkSidebarArtists", () => {
 
     it("displays artist name for single artist", () => {
       expect(wrapper.html()).toContain("Josef Albers")
-      expect(wrapper.find({ href: "/artist/josef-albers" }).length).toBe(1)
+      expect(
+        wrapper.find({ href: "/artist/josef-albers" }).hostNodes().length
+      ).toBe(1)
     })
 
     it("renders artist follow button for single artist", () => {
       expect(wrapper.find(FollowArtistButton)).toHaveLength(1)
-      expect(wrapper.find(FollowArtistButton).text()).not.toMatch("Following")
+      expect(wrapper.find("button").prop("data-follow")).toBe(false)
     })
 
     it("Opens auth with expected args when following an artist", () => {
-      wrapper
-        .find(FollowArtistButton)
-        .find('[role="button"]')
-        .first()
-        .simulate("click")
+      wrapper.find(FollowArtistButton).find("button").first().simulate("click")
 
       expect(mediator.trigger).toBeCalledWith("open:auth", {
         afterSignUpAction: {
@@ -95,24 +93,24 @@ describe("ArtworkSidebarArtists", () => {
     it("displays artist names for multiople artists", () => {
       expect(wrapper.html()).toContain("Josef Albers")
       expect(
-        wrapper.find({
-          href: "/artist/josef-albers",
-        }).length
+        wrapper
+          .find({
+            href: "/artist/josef-albers",
+          })
+          .hostNodes().length
       ).toBe(1)
       expect(wrapper.html()).toContain("Ed Ruscha")
       expect(
-        wrapper.find({
-          href: "/artist/ed-ruscha",
-        }).length
+        wrapper
+          .find({
+            href: "/artist/ed-ruscha",
+          })
+          .hostNodes().length
       ).toBe(1)
     })
 
     it("does not display follow buttons", () => {
       expect(wrapper.html()).not.toContain(FollowArtistButton)
-    })
-
-    it("separates artist names by comma", () => {
-      expect(wrapper.text()).toBe("Josef Albers, Ed Ruscha")
     })
   })
 

@@ -9,11 +9,15 @@ module.exports = (key, defaultPageId = null, cb = null) ->
     className: 'modalize multi-page-modal'
 
   modal.load (done) ->
-    $.when.apply(null, view.collection.invoke 'fetch')
-      .then ->
-        cb(modal) if cb
-      .then done
-      .catch ->
-        modal.close()
+    if (view.collection.url)
+      view.collection.fetch()
+        .then ->
+          cb(modal) if cb
+        .then done
+        .catch ->
+          modal.close()
+    else
+      cb(modal) if cb
+      done()
 
   modal

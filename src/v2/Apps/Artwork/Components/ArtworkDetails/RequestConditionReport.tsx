@@ -1,7 +1,6 @@
-import { Button, Col, Link, Modal, Row, Spinner, Text } from "@artsy/palette"
+import { Button, Link, Modal, Text } from "@artsy/palette"
 import React, { useState } from "react"
 import { commitMutation, createFragmentContainer, graphql } from "react-relay"
-
 import {
   AnalyticsSchema as Schema,
   track,
@@ -124,29 +123,24 @@ export const RequestConditionReport: React.FC<RequestConditionReportProps> = pro
   }
 
   const UnauthenticatedContent: React.FC = () => (
-    <>
-      <Button
-        size="small"
-        variant="secondaryGray"
-        onClick={handleLoginClick}
-        data-test="requestConditionReport"
-      >
-        Log in
-      </Button>
-      <Text variant="caption" display="inline" ml={1}>
-        to request
-      </Text>
-    </>
+    <Button
+      size="small"
+      variant="secondaryGray"
+      onClick={handleLoginClick}
+      data-test="requestConditionReport"
+    >
+      Log in to request
+    </Button>
   )
 
   const AuthenticatedContent: React.FC = () => (
     <Button
       size="small"
-      width={180}
       variant="secondaryGray"
       onClick={handleRequestConditionReportClick}
+      loading={requesting}
     >
-      {requesting ? <Spinner size="small" /> : "Request condition report"}
+      Request condition report
     </Button>
   )
 
@@ -158,12 +152,12 @@ export const RequestConditionReport: React.FC<RequestConditionReportProps> = pro
       }}
       show={showRequestedModal}
     >
-      <Text variant="text" mt={1} color="black100" textAlign="center">
+      <Text variant="sm" mt={1} color="black100" textAlign="center">
         We have received your request. The condition report will be sent to{" "}
         {me && me.email}.
       </Text>
 
-      <Text variant="text" mt={2} textAlign="center" color="black100">
+      <Text variant="sm" mt={2} textAlign="center" color="black100">
         For questions, contact{" "}
         <Link href="mailto:specialist@artsy.net">specialist@artsy.net</Link>.
       </Text>
@@ -176,12 +170,10 @@ export const RequestConditionReport: React.FC<RequestConditionReportProps> = pro
 
   return (
     <>
-      <Row>
-        <Col>
-          {isLoggedIn ? <AuthenticatedContent /> : <UnauthenticatedContent />}
-        </Col>
-      </Row>
+      {isLoggedIn ? <AuthenticatedContent /> : <UnauthenticatedContent />}
+
       <RequestedConditionReportModal />
+
       <ErrorModal
         show={showErrorModal}
         onClose={() => {

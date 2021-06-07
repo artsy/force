@@ -8,158 +8,13 @@ export type ArtworkSidebar_Test_QueryResponse = {
     readonly artwork: {
         readonly " $fragmentRefs": FragmentRefs<"ArtworkSidebar_artwork">;
     } | null;
-};
-export type ArtworkSidebar_Test_QueryRawResponse = {
-    readonly artwork: ({
-        readonly is_in_auction: boolean | null;
-        readonly cultural_maker: string | null;
-        readonly artists: ReadonlyArray<({
-            readonly id: string;
-            readonly internalID: string;
-            readonly slug: string;
-            readonly name: string | null;
-            readonly href: string | null;
-            readonly is_followed: boolean | null;
-            readonly counts: ({
-                readonly follows: number | null;
-            }) | null;
-            readonly related: ({
-                readonly suggestedConnection: ({
-                    readonly edges: ReadonlyArray<({
-                        readonly node: ({
-                            readonly id: string;
-                            readonly internalID: string;
-                            readonly name: string | null;
-                            readonly image: ({
-                                readonly cropped: ({
-                                    readonly url: string;
-                                }) | null;
-                            }) | null;
-                        }) | null;
-                    }) | null> | null;
-                }) | null;
-            }) | null;
-            readonly is_consignable: boolean | null;
-        }) | null> | null;
-        readonly is_biddable: boolean | null;
-        readonly edition_sets: ReadonlyArray<({
-            readonly __typename: string;
-            readonly id: string | null;
-            readonly internalID: string;
-            readonly is_acquireable: boolean | null;
-            readonly is_offerable: boolean | null;
-            readonly sale_message: string | null;
-            readonly dimensions: ({
-                readonly in: string | null;
-                readonly cm: string | null;
-            }) | null;
-            readonly edition_of: string | null;
-        }) | null> | null;
-        readonly sale_artwork: ({
-            readonly lot_label: string | null;
-            readonly id: string | null;
-            readonly estimate: string | null;
-            readonly is_with_reserve: boolean | null;
-            readonly reserve_message: string | null;
-            readonly reserve_status: string | null;
-            readonly current_bid: ({
-                readonly display: string | null;
-            }) | null;
-            readonly counts: ({
-                readonly bidder_positions: number | null;
-            }) | null;
-            readonly increments: ReadonlyArray<({
-                readonly cents: number | null;
-                readonly display: string | null;
-            }) | null> | null;
-        }) | null;
-        readonly title: string | null;
-        readonly date: string | null;
-        readonly medium: string | null;
-        readonly dimensions: ({
-            readonly in: string | null;
-            readonly cm: string | null;
-        }) | null;
-        readonly edition_of: string | null;
-        readonly attributionClass: ({
-            readonly shortDescription: string | null;
-            readonly id: string | null;
-        }) | null;
-        readonly partner: ({
-            readonly name: string | null;
-            readonly id: string | null;
-            readonly href: string | null;
-            readonly locations: ReadonlyArray<({
-                readonly city: string | null;
-                readonly id: string | null;
-            }) | null> | null;
-            readonly isVerifiedSeller: boolean | null;
-        }) | null;
-        readonly sale: ({
-            readonly internalID: string;
-            readonly is_closed: boolean | null;
-            readonly id: string | null;
-            readonly is_live_open: boolean | null;
-            readonly is_with_buyers_premium: boolean | null;
-            readonly slug: string;
-            readonly registrationStatus: ({
-                readonly qualified_for_bidding: boolean | null;
-                readonly id: string | null;
-            }) | null;
-            readonly is_preview: boolean | null;
-            readonly is_open: boolean | null;
-            readonly is_registration_closed: boolean | null;
-            readonly requireIdentityVerification: boolean | null;
-            readonly name: string | null;
-            readonly href: string | null;
-            readonly isBenefit: boolean | null;
-            readonly partner: ({
-                readonly name: string | null;
-                readonly id: string | null;
-            }) | null;
-            readonly live_start_at: string | null;
-            readonly end_at: string | null;
-        }) | null;
-        readonly myLotStanding: ReadonlyArray<{
-            readonly active_bid: ({
-                readonly is_winning: boolean | null;
-                readonly id: string | null;
-            }) | null;
-            readonly most_recent_bid: ({
-                readonly max_bid: ({
-                    readonly display: string | null;
-                    readonly cents: number | null;
-                }) | null;
-                readonly id: string | null;
-            }) | null;
-        }> | null;
-        readonly slug: string;
-        readonly internalID: string;
-        readonly is_for_sale: boolean | null;
-        readonly is_acquireable: boolean | null;
-        readonly is_inquireable: boolean | null;
-        readonly is_offerable: boolean | null;
-        readonly listPrice: ({
-            readonly __typename: "PriceRange";
-            readonly display: string | null;
-        } | {
-            readonly __typename: "Money";
-            readonly display: string | null;
-        } | {
-            readonly __typename: string | null;
-        }) | null;
-        readonly priceIncludesTaxDisplay: string | null;
-        readonly sale_message: string | null;
-        readonly shippingInfo: string | null;
-        readonly shippingOrigin: string | null;
-        readonly hasCertificateOfAuthenticity: boolean | null;
-        readonly id: string | null;
-    }) | null;
+    readonly me: {
+        readonly " $fragmentRefs": FragmentRefs<"ArtworkSidebar_me">;
+    } | null;
 };
 export type ArtworkSidebar_Test_Query = {
     readonly response: ArtworkSidebar_Test_QueryResponse;
     readonly variables: ArtworkSidebar_Test_QueryVariables;
-    readonly rawResponse: ArtworkSidebar_Test_QueryRawResponse;
 };
 
 
@@ -168,6 +23,10 @@ export type ArtworkSidebar_Test_Query = {
 query ArtworkSidebar_Test_Query {
   artwork(id: "josef-albers-homage-to-the-square-85") {
     ...ArtworkSidebar_artwork
+    id
+  }
+  me {
+    ...ArtworkSidebar_me
     id
   }
 }
@@ -179,7 +38,13 @@ fragment ArtworkSidebarArtists_artwork on Artwork {
     internalID
     slug
     name
+    formattedNationalityAndBirthday
     href
+    avatar: image {
+      cropped(width: 300, height: 300) {
+        src
+      }
+    }
     ...FollowArtistButton_artist_2eN9lh
   }
 }
@@ -230,6 +95,14 @@ fragment ArtworkSidebarBidAction_artwork on Artwork {
       cents
       display
     }
+    id
+  }
+}
+
+fragment ArtworkSidebarBidAction_me on Me {
+  identityVerified
+  pendingIdentityVerification {
+    internalID
     id
   }
 }
@@ -391,6 +264,10 @@ fragment ArtworkSidebar_artwork on Artwork {
     ...AuctionTimer_sale
     id
   }
+}
+
+fragment ArtworkSidebar_me on Me {
+  ...ArtworkSidebarBidAction_me
 }
 
 fragment AuctionTimer_sale on Sale {
@@ -601,6 +478,22 @@ return {
           }
         ],
         "storageKey": "artwork(id:\"josef-albers-homage-to-the-square-85\")"
+      },
+      {
+        "alias": null,
+        "args": null,
+        "concreteType": "Me",
+        "kind": "LinkedField",
+        "name": "me",
+        "plural": false,
+        "selections": [
+          {
+            "args": null,
+            "kind": "FragmentSpread",
+            "name": "ArtworkSidebar_me"
+          }
+        ],
+        "storageKey": null
       }
     ],
     "type": "Query"
@@ -645,7 +538,54 @@ return {
               (v2/*: any*/),
               (v3/*: any*/),
               (v4/*: any*/),
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "formattedNationalityAndBirthday",
+                "storageKey": null
+              },
               (v5/*: any*/),
+              {
+                "alias": "avatar",
+                "args": null,
+                "concreteType": "Image",
+                "kind": "LinkedField",
+                "name": "image",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": [
+                      {
+                        "kind": "Literal",
+                        "name": "height",
+                        "value": 300
+                      },
+                      {
+                        "kind": "Literal",
+                        "name": "width",
+                        "value": 300
+                      }
+                    ],
+                    "concreteType": "CroppedImageUrl",
+                    "kind": "LinkedField",
+                    "name": "cropped",
+                    "plural": false,
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "src",
+                        "storageKey": null
+                      }
+                    ],
+                    "storageKey": "cropped(height:300,width:300)"
+                  }
+                ],
+                "storageKey": null
+              },
               {
                 "alias": "is_followed",
                 "args": null,
@@ -1226,6 +1166,38 @@ return {
           (v1/*: any*/)
         ],
         "storageKey": "artwork(id:\"josef-albers-homage-to-the-square-85\")"
+      },
+      {
+        "alias": null,
+        "args": null,
+        "concreteType": "Me",
+        "kind": "LinkedField",
+        "name": "me",
+        "plural": false,
+        "selections": [
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "identityVerified",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "IdentityVerification",
+            "kind": "LinkedField",
+            "name": "pendingIdentityVerification",
+            "plural": false,
+            "selections": [
+              (v2/*: any*/),
+              (v1/*: any*/)
+            ],
+            "storageKey": null
+          },
+          (v1/*: any*/)
+        ],
+        "storageKey": null
       }
     ]
   },
@@ -1234,9 +1206,9 @@ return {
     "metadata": {},
     "name": "ArtworkSidebar_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkSidebar_Test_Query {\n  artwork(id: \"josef-albers-homage-to-the-square-85\") {\n    ...ArtworkSidebar_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarArtists_artwork on Artwork {\n  cultural_maker: culturalMaker\n  artists {\n    id\n    internalID\n    slug\n    name\n    href\n    ...FollowArtistButton_artist_2eN9lh\n  }\n}\n\nfragment ArtworkSidebarAuctionPartnerInfo_artwork on Artwork {\n  partner {\n    name\n    id\n  }\n  sale_artwork: saleArtwork {\n    estimate\n    id\n  }\n  sale {\n    internalID\n    is_closed: isClosed\n    id\n  }\n}\n\nfragment ArtworkSidebarBidAction_artwork on Artwork {\n  myLotStanding(live: true) {\n    most_recent_bid: mostRecentBid {\n      max_bid: maxBid {\n        cents\n      }\n      id\n    }\n  }\n  slug\n  internalID\n  sale {\n    slug\n    registrationStatus {\n      qualified_for_bidding: qualifiedForBidding\n      id\n    }\n    is_preview: isPreview\n    is_open: isOpen\n    is_live_open: isLiveOpen\n    is_closed: isClosed\n    is_registration_closed: isRegistrationClosed\n    requireIdentityVerification\n    id\n  }\n  sale_artwork: saleArtwork {\n    increments {\n      cents\n      display\n    }\n    id\n  }\n}\n\nfragment ArtworkSidebarClassification_artwork on Artwork {\n  attributionClass {\n    shortDescription\n    id\n  }\n}\n\nfragment ArtworkSidebarCommercial_artwork on Artwork {\n  slug\n  internalID\n  is_for_sale: isForSale\n  is_acquireable: isAcquireable\n  is_inquireable: isInquireable\n  is_offerable: isOfferable\n  listPrice {\n    __typename\n    ... on PriceRange {\n      display\n    }\n    ... on Money {\n      display\n    }\n  }\n  priceIncludesTaxDisplay\n  sale_message: saleMessage\n  shippingInfo\n  shippingOrigin\n  edition_sets: editionSets {\n    internalID\n    id\n    is_acquireable: isAcquireable\n    is_offerable: isOfferable\n    sale_message: saleMessage\n    ...ArtworkSidebarSizeInfo_piece\n  }\n}\n\nfragment ArtworkSidebarCurrentBidInfo_artwork on Artwork {\n  sale {\n    is_closed: isClosed\n    is_live_open: isLiveOpen\n    internalID\n    is_with_buyers_premium: isWithBuyersPremium\n    id\n  }\n  sale_artwork: saleArtwork {\n    is_with_reserve: isWithReserve\n    reserve_message: reserveMessage\n    reserve_status: reserveStatus\n    current_bid: currentBid {\n      display\n    }\n    counts {\n      bidder_positions: bidderPositions\n    }\n    id\n  }\n  myLotStanding(live: true) {\n    active_bid: activeBid {\n      is_winning: isWinning\n      id\n    }\n    most_recent_bid: mostRecentBid {\n      max_bid: maxBid {\n        display\n      }\n      id\n    }\n  }\n}\n\nfragment ArtworkSidebarExtraLinks_artwork on Artwork {\n  internalID\n  is_in_auction: isInAuction\n  is_for_sale: isForSale\n  is_acquireable: isAcquireable\n  is_inquireable: isInquireable\n  artists {\n    is_consignable: isConsignable\n    id\n  }\n  sale {\n    is_closed: isClosed\n    isBenefit\n    partner {\n      name\n      id\n    }\n    id\n  }\n}\n\nfragment ArtworkSidebarMetadata_artwork on Artwork {\n  is_biddable: isBiddable\n  edition_sets: editionSets {\n    __typename\n    id\n  }\n  sale_artwork: saleArtwork {\n    lot_label: lotLabel\n    id\n  }\n  ...ArtworkSidebarTitleInfo_artwork\n  ...ArtworkSidebarSizeInfo_piece\n  ...ArtworkSidebarClassification_artwork\n}\n\nfragment ArtworkSidebarPartnerInfo_artwork on Artwork {\n  partner {\n    name\n    href\n    locations {\n      city\n      id\n    }\n    id\n  }\n  sale {\n    name\n    href\n    id\n  }\n}\n\nfragment ArtworkSidebarSizeInfo_piece on Sellable {\n  dimensions {\n    in\n    cm\n  }\n  edition_of: editionOf\n}\n\nfragment ArtworkSidebarTitleInfo_artwork on Artwork {\n  title\n  date\n  medium\n}\n\nfragment ArtworkSidebar_artwork on Artwork {\n  is_in_auction: isInAuction\n  ...ArtworkSidebarArtists_artwork\n  ...ArtworkSidebarMetadata_artwork\n  ...ArtworkSidebarAuctionPartnerInfo_artwork\n  ...ArtworkSidebarCurrentBidInfo_artwork\n  ...ArtworkSidebarBidAction_artwork\n  ...ArtworkSidebarCommercial_artwork\n  ...ArtworkSidebarPartnerInfo_artwork\n  ...ArtworkSidebarExtraLinks_artwork\n  ...SecurePayment_artwork\n  ...VerifiedSeller_artwork\n  ...AuthenticityCertificate_artwork\n  ...BuyerGuarantee_artwork\n  sale {\n    is_closed: isClosed\n    ...AuctionTimer_sale\n    id\n  }\n}\n\nfragment AuctionTimer_sale on Sale {\n  live_start_at: liveStartAt\n  end_at: endAt\n}\n\nfragment AuthenticityCertificate_artwork on Artwork {\n  hasCertificateOfAuthenticity\n  is_biddable: isBiddable\n}\n\nfragment BuyerGuarantee_artwork on Artwork {\n  is_acquireable: isAcquireable\n  is_offerable: isOfferable\n}\n\nfragment FollowArtistButton_artist_2eN9lh on Artist {\n  id\n  internalID\n  name\n  slug\n  is_followed: isFollowed\n  counts {\n    follows\n  }\n  ...FollowArtistPopover_artist\n}\n\nfragment FollowArtistPopoverRow_artist on Artist {\n  internalID\n  name\n  image {\n    cropped(width: 45, height: 45) {\n      url\n    }\n  }\n}\n\nfragment FollowArtistPopover_artist on Artist {\n  related {\n    suggestedConnection(first: 3, excludeFollowedArtists: true) {\n      edges {\n        node {\n          id\n          internalID\n          ...FollowArtistPopoverRow_artist\n        }\n      }\n    }\n  }\n}\n\nfragment SecurePayment_artwork on Artwork {\n  is_acquireable: isAcquireable\n  is_offerable: isOfferable\n}\n\nfragment VerifiedSeller_artwork on Artwork {\n  is_biddable: isBiddable\n  partner {\n    isVerifiedSeller\n    name\n    id\n  }\n}\n"
+    "text": "query ArtworkSidebar_Test_Query {\n  artwork(id: \"josef-albers-homage-to-the-square-85\") {\n    ...ArtworkSidebar_artwork\n    id\n  }\n  me {\n    ...ArtworkSidebar_me\n    id\n  }\n}\n\nfragment ArtworkSidebarArtists_artwork on Artwork {\n  cultural_maker: culturalMaker\n  artists {\n    id\n    internalID\n    slug\n    name\n    formattedNationalityAndBirthday\n    href\n    avatar: image {\n      cropped(width: 300, height: 300) {\n        src\n      }\n    }\n    ...FollowArtistButton_artist_2eN9lh\n  }\n}\n\nfragment ArtworkSidebarAuctionPartnerInfo_artwork on Artwork {\n  partner {\n    name\n    id\n  }\n  sale_artwork: saleArtwork {\n    estimate\n    id\n  }\n  sale {\n    internalID\n    is_closed: isClosed\n    id\n  }\n}\n\nfragment ArtworkSidebarBidAction_artwork on Artwork {\n  myLotStanding(live: true) {\n    most_recent_bid: mostRecentBid {\n      max_bid: maxBid {\n        cents\n      }\n      id\n    }\n  }\n  slug\n  internalID\n  sale {\n    slug\n    registrationStatus {\n      qualified_for_bidding: qualifiedForBidding\n      id\n    }\n    is_preview: isPreview\n    is_open: isOpen\n    is_live_open: isLiveOpen\n    is_closed: isClosed\n    is_registration_closed: isRegistrationClosed\n    requireIdentityVerification\n    id\n  }\n  sale_artwork: saleArtwork {\n    increments {\n      cents\n      display\n    }\n    id\n  }\n}\n\nfragment ArtworkSidebarBidAction_me on Me {\n  identityVerified\n  pendingIdentityVerification {\n    internalID\n    id\n  }\n}\n\nfragment ArtworkSidebarClassification_artwork on Artwork {\n  attributionClass {\n    shortDescription\n    id\n  }\n}\n\nfragment ArtworkSidebarCommercial_artwork on Artwork {\n  slug\n  internalID\n  is_for_sale: isForSale\n  is_acquireable: isAcquireable\n  is_inquireable: isInquireable\n  is_offerable: isOfferable\n  listPrice {\n    __typename\n    ... on PriceRange {\n      display\n    }\n    ... on Money {\n      display\n    }\n  }\n  priceIncludesTaxDisplay\n  sale_message: saleMessage\n  shippingInfo\n  shippingOrigin\n  edition_sets: editionSets {\n    internalID\n    id\n    is_acquireable: isAcquireable\n    is_offerable: isOfferable\n    sale_message: saleMessage\n    ...ArtworkSidebarSizeInfo_piece\n  }\n}\n\nfragment ArtworkSidebarCurrentBidInfo_artwork on Artwork {\n  sale {\n    is_closed: isClosed\n    is_live_open: isLiveOpen\n    internalID\n    is_with_buyers_premium: isWithBuyersPremium\n    id\n  }\n  sale_artwork: saleArtwork {\n    is_with_reserve: isWithReserve\n    reserve_message: reserveMessage\n    reserve_status: reserveStatus\n    current_bid: currentBid {\n      display\n    }\n    counts {\n      bidder_positions: bidderPositions\n    }\n    id\n  }\n  myLotStanding(live: true) {\n    active_bid: activeBid {\n      is_winning: isWinning\n      id\n    }\n    most_recent_bid: mostRecentBid {\n      max_bid: maxBid {\n        display\n      }\n      id\n    }\n  }\n}\n\nfragment ArtworkSidebarExtraLinks_artwork on Artwork {\n  internalID\n  is_in_auction: isInAuction\n  is_for_sale: isForSale\n  is_acquireable: isAcquireable\n  is_inquireable: isInquireable\n  artists {\n    is_consignable: isConsignable\n    id\n  }\n  sale {\n    is_closed: isClosed\n    isBenefit\n    partner {\n      name\n      id\n    }\n    id\n  }\n}\n\nfragment ArtworkSidebarMetadata_artwork on Artwork {\n  is_biddable: isBiddable\n  edition_sets: editionSets {\n    __typename\n    id\n  }\n  sale_artwork: saleArtwork {\n    lot_label: lotLabel\n    id\n  }\n  ...ArtworkSidebarTitleInfo_artwork\n  ...ArtworkSidebarSizeInfo_piece\n  ...ArtworkSidebarClassification_artwork\n}\n\nfragment ArtworkSidebarPartnerInfo_artwork on Artwork {\n  partner {\n    name\n    href\n    locations {\n      city\n      id\n    }\n    id\n  }\n  sale {\n    name\n    href\n    id\n  }\n}\n\nfragment ArtworkSidebarSizeInfo_piece on Sellable {\n  dimensions {\n    in\n    cm\n  }\n  edition_of: editionOf\n}\n\nfragment ArtworkSidebarTitleInfo_artwork on Artwork {\n  title\n  date\n  medium\n}\n\nfragment ArtworkSidebar_artwork on Artwork {\n  is_in_auction: isInAuction\n  ...ArtworkSidebarArtists_artwork\n  ...ArtworkSidebarMetadata_artwork\n  ...ArtworkSidebarAuctionPartnerInfo_artwork\n  ...ArtworkSidebarCurrentBidInfo_artwork\n  ...ArtworkSidebarBidAction_artwork\n  ...ArtworkSidebarCommercial_artwork\n  ...ArtworkSidebarPartnerInfo_artwork\n  ...ArtworkSidebarExtraLinks_artwork\n  ...SecurePayment_artwork\n  ...VerifiedSeller_artwork\n  ...AuthenticityCertificate_artwork\n  ...BuyerGuarantee_artwork\n  sale {\n    is_closed: isClosed\n    ...AuctionTimer_sale\n    id\n  }\n}\n\nfragment ArtworkSidebar_me on Me {\n  ...ArtworkSidebarBidAction_me\n}\n\nfragment AuctionTimer_sale on Sale {\n  live_start_at: liveStartAt\n  end_at: endAt\n}\n\nfragment AuthenticityCertificate_artwork on Artwork {\n  hasCertificateOfAuthenticity\n  is_biddable: isBiddable\n}\n\nfragment BuyerGuarantee_artwork on Artwork {\n  is_acquireable: isAcquireable\n  is_offerable: isOfferable\n}\n\nfragment FollowArtistButton_artist_2eN9lh on Artist {\n  id\n  internalID\n  name\n  slug\n  is_followed: isFollowed\n  counts {\n    follows\n  }\n  ...FollowArtistPopover_artist\n}\n\nfragment FollowArtistPopoverRow_artist on Artist {\n  internalID\n  name\n  image {\n    cropped(width: 45, height: 45) {\n      url\n    }\n  }\n}\n\nfragment FollowArtistPopover_artist on Artist {\n  related {\n    suggestedConnection(first: 3, excludeFollowedArtists: true) {\n      edges {\n        node {\n          id\n          internalID\n          ...FollowArtistPopoverRow_artist\n        }\n      }\n    }\n  }\n}\n\nfragment SecurePayment_artwork on Artwork {\n  is_acquireable: isAcquireable\n  is_offerable: isOfferable\n}\n\nfragment VerifiedSeller_artwork on Artwork {\n  is_biddable: isBiddable\n  partner {\n    isVerifiedSeller\n    name\n    id\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '4808a8663af43e392b5a6d0e2457dcd2';
+(node as any).hash = 'fad5ba810315c1a8fbefa02ef6047c5b';
 export default node;
