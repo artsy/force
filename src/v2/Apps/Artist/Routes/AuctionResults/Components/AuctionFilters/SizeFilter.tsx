@@ -1,5 +1,7 @@
-import { Box, Checkbox, Flex, Sans, Toggle } from "@artsy/palette"
+import { Checkbox, Flex, Text } from "@artsy/palette"
 import React from "react"
+import { FilterExpandable } from "v2/Components/ArtworkFilter/ArtworkFilters/FilterExpandable"
+import { ShowMore } from "v2/Components/ArtworkFilter/ArtworkFilters/ShowMore"
 
 const sizeMap = [
   { displayName: "Small (under 40cm)", name: "SMALL" },
@@ -32,12 +34,12 @@ export const SizeFilter: React.FC<{
   }
 
   return (
-    <Toggle label="Size" expanded>
+    <FilterExpandable label="Size" expanded>
       <Flex flexDirection="column" alignItems="left">
-        <Sans size="2" color="black60">
+        <Text variant="sm">
           This is based on the artwork’s average dimension.
-        </Sans>
-        <Box mt={0.25}>
+        </Text>
+        <ShowMore>
           {sizeMap.map((checkbox, index) => {
             const { name, displayName } = checkbox
             const props = {
@@ -45,12 +47,13 @@ export const SizeFilter: React.FC<{
               onSelect: selected => {
                 toggleSelection(selected, name)
               },
+              my: 1,
               selected: filterContext.filters.sizes.includes(name),
             }
             return <Checkbox {...props}>{displayName}</Checkbox>
           })}
-        </Box>
+        </ShowMore>
       </Flex>
-    </Toggle>
+    </FilterExpandable>
   )
 }

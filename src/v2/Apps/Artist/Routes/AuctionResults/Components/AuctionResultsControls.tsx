@@ -1,14 +1,6 @@
-import {
-  Button,
-  FilterIcon,
-  Flex,
-  Row,
-  Separator,
-  Spacer,
-} from "@artsy/palette"
+import { Button, FilterIcon, Flex, Row, Spacer } from "@artsy/palette"
 import React from "react"
 import { Media } from "v2/Utils/Responsive"
-import { AuctionResultsCount } from "./AuctionResultsCount"
 import { SortSelect } from "./SortSelect"
 
 const RowContainer: React.FC = ({ children }) => (
@@ -34,18 +26,6 @@ export const AuctionResultsControls = ({ artist, toggleMobileActionSheet }) => {
             <SortSelect />
           </RowContainer>
         </Row>
-        <Row>
-          <AuctionResultsCount results={artist.auctionResultsConnection} />
-        </Row>
-      </Media>
-      <Media greaterThan="xs">
-        <Row pb={2}>
-          <Separator />
-        </Row>
-        <RowContainer>
-          <AuctionResultsCount results={artist.auctionResultsConnection} />
-          <SortSelect />
-        </RowContainer>
       </Media>
     </>
   )

@@ -1,6 +1,6 @@
 import { Box, Image, Sans, Spacer } from "@artsy/palette"
 import { FeaturedRails_viewer } from "v2/__generated__/FeaturedRails_viewer.graphql"
-import { StyledLink } from "v2/Apps/Artist/Components/StyledLink"
+import { StyledLink } from "../StyledLink"
 import { FeaturedAuctionsRailFragmentContainer as FeaturedAuctions } from "v2/Apps/FeatureAKG/Components/FeaturedRails/FeaturedAuctions"
 import { FeaturedCollectionsRailFragmentContainer as FeaturedCollections } from "v2/Apps/FeatureAKG/Components/FeaturedRails/FeaturedCollections"
 import { FeaturedFairsRailFragmentContainer as FeaturedFairs } from "v2/Apps/FeatureAKG/Components/FeaturedRails/FeaturedFairs"

@@ -4,7 +4,6 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ArtistArtworkFilter_artist = {
-    readonly is_followed: boolean | null;
     readonly counts: {
         readonly partner_shows: number | null;
         readonly for_sale_artworks: number | null;
@@ -13,12 +12,14 @@ export type ArtistArtworkFilter_artist = {
         readonly artworks: number | null;
         readonly has_make_offer_artworks: boolean | null;
     } | null;
-    readonly slug: string;
-    readonly internalID: string;
     readonly filtered_artworks: {
         readonly id: string;
         readonly " $fragmentRefs": FragmentRefs<"ArtworkFilterArtworkGrid_filtered_artworks">;
     } | null;
+    readonly internalID: string;
+    readonly isFollowed: boolean | null;
+    readonly slug: string;
+    readonly " $fragmentRefs": FragmentRefs<"FollowArtist2Button_artist">;
     readonly " $refType": "ArtistArtworkFilter_artist";
 };
 export type ArtistArtworkFilter_artist$data = ArtistArtworkFilter_artist;
@@ -42,13 +43,6 @@ const node: ReaderFragment = {
   "metadata": null,
   "name": "ArtistArtworkFilter_artist",
   "selections": [
-    {
-      "alias": "is_followed",
-      "args": null,
-      "kind": "ScalarField",
-      "name": "isFollowed",
-      "storageKey": null
-    },
     {
       "alias": null,
       "args": null,
@@ -103,20 +97,6 @@ const node: ReaderFragment = {
       "storageKey": null
     },
     {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "slug",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "internalID",
-      "storageKey": null
-    },
-    {
       "alias": "filtered_artworks",
       "args": [
         {
@@ -149,9 +129,35 @@ const node: ReaderFragment = {
         }
       ],
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "internalID",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "isFollowed",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "slug",
+      "storageKey": null
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "FollowArtist2Button_artist"
     }
   ],
   "type": "Artist"
 };
-(node as any).hash = 'cc1da2911ea5b2f3ddca422272e32bd4';
+(node as any).hash = '163c852845cecd32359b9e0edf92105d';
 export default node;

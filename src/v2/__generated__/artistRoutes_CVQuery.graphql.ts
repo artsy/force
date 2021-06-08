@@ -8,7 +8,7 @@ export type artistRoutes_CVQueryVariables = {
 };
 export type artistRoutes_CVQueryResponse = {
     readonly viewer: {
-        readonly " $fragmentRefs": FragmentRefs<"CV_viewer">;
+        readonly " $fragmentRefs": FragmentRefs<"ArtistCVRoute_viewer">;
     } | null;
 };
 export type artistRoutes_CVQuery = {
@@ -23,11 +23,11 @@ query artistRoutes_CVQuery(
   $artistID: String!
 ) {
   viewer {
-    ...CV_viewer
+    ...ArtistCVRoute_viewer
   }
 }
 
-fragment CVItem_artist_47e96d on Artist {
+fragment ArtistCVGroup_artist_47e96d on Artist {
   slug
   showsConnection(first: 10, sort: START_AT_DESC, atAFair: true, soloShow: false, isReference: true, visibleToPublic: false) {
     pageInfo {
@@ -52,7 +52,7 @@ fragment CVItem_artist_47e96d on Artist {
           }
         }
         name
-        start_at: startAt(format: "YYYY")
+        startAt(format: "YYYY")
         city
         href
         __typename
@@ -62,7 +62,7 @@ fragment CVItem_artist_47e96d on Artist {
   }
 }
 
-fragment CVItem_artist_4DszuY on Artist {
+fragment ArtistCVGroup_artist_4DszuY on Artist {
   slug
   showsConnection(first: 10, sort: START_AT_DESC, atAFair: false, soloShow: false, isReference: true, visibleToPublic: false) {
     pageInfo {
@@ -87,7 +87,7 @@ fragment CVItem_artist_4DszuY on Artist {
           }
         }
         name
-        start_at: startAt(format: "YYYY")
+        startAt(format: "YYYY")
         city
         href
         __typename
@@ -97,7 +97,7 @@ fragment CVItem_artist_4DszuY on Artist {
   }
 }
 
-fragment CVItem_artist_ieWPx on Artist {
+fragment ArtistCVGroup_artist_ieWPx on Artist {
   slug
   showsConnection(first: 10, sort: START_AT_DESC, atAFair: false, soloShow: true, isReference: true, visibleToPublic: false) {
     pageInfo {
@@ -122,7 +122,7 @@ fragment CVItem_artist_ieWPx on Artist {
           }
         }
         name
-        start_at: startAt(format: "YYYY")
+        startAt(format: "YYYY")
         city
         href
         __typename
@@ -132,17 +132,18 @@ fragment CVItem_artist_ieWPx on Artist {
   }
 }
 
-fragment CV_viewer on Viewer {
-  artist_soloShows: artist(id: $artistID) {
-    ...CVItem_artist_ieWPx
+fragment ArtistCVRoute_viewer on Viewer {
+  soloShows: artist(id: $artistID) {
+    ...ArtistCVGroup_artist_ieWPx
+    name
     id
   }
-  artist_groupShows: artist(id: $artistID) {
-    ...CVItem_artist_4DszuY
+  groupShows: artist(id: $artistID) {
+    ...ArtistCVGroup_artist_4DszuY
     id
   }
-  artist_fairBooths: artist(id: $artistID) {
-    ...CVItem_artist_47e96d
+  fairBooths: artist(id: $artistID) {
+    ...ArtistCVGroup_artist_47e96d
     id
   }
 }
@@ -309,7 +310,7 @@ v13 = [
           },
           (v11/*: any*/),
           {
-            "alias": "start_at",
+            "alias": null,
             "args": [
               {
                 "kind": "Literal",
@@ -394,7 +395,7 @@ return {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "CV_viewer"
+            "name": "ArtistCVRoute_viewer"
           }
         ],
         "storageKey": null
@@ -417,7 +418,7 @@ return {
         "plural": false,
         "selections": [
           {
-            "alias": "artist_soloShows",
+            "alias": "soloShows",
             "args": (v1/*: any*/),
             "concreteType": "Artist",
             "kind": "LinkedField",
@@ -440,16 +441,17 @@ return {
                 "args": (v8/*: any*/),
                 "filters": (v14/*: any*/),
                 "handle": "connection",
-                "key": "Artist_showsConnection",
+                "key": "ArtistCVGroup_showsConnection",
                 "kind": "LinkedHandle",
                 "name": "showsConnection"
               },
+              (v11/*: any*/),
               (v9/*: any*/)
             ],
             "storageKey": null
           },
           {
-            "alias": "artist_groupShows",
+            "alias": "groupShows",
             "args": (v1/*: any*/),
             "concreteType": "Artist",
             "kind": "LinkedField",
@@ -472,7 +474,7 @@ return {
                 "args": (v16/*: any*/),
                 "filters": (v14/*: any*/),
                 "handle": "connection",
-                "key": "Artist_showsConnection",
+                "key": "ArtistCVGroup_showsConnection",
                 "kind": "LinkedHandle",
                 "name": "showsConnection"
               },
@@ -481,7 +483,7 @@ return {
             "storageKey": null
           },
           {
-            "alias": "artist_fairBooths",
+            "alias": "fairBooths",
             "args": (v1/*: any*/),
             "concreteType": "Artist",
             "kind": "LinkedField",
@@ -504,7 +506,7 @@ return {
                 "args": (v17/*: any*/),
                 "filters": (v14/*: any*/),
                 "handle": "connection",
-                "key": "Artist_showsConnection",
+                "key": "ArtistCVGroup_showsConnection",
                 "kind": "LinkedHandle",
                 "name": "showsConnection"
               },
@@ -522,9 +524,9 @@ return {
     "metadata": {},
     "name": "artistRoutes_CVQuery",
     "operationKind": "query",
-    "text": "query artistRoutes_CVQuery(\n  $artistID: String!\n) {\n  viewer {\n    ...CV_viewer\n  }\n}\n\nfragment CVItem_artist_47e96d on Artist {\n  slug\n  showsConnection(first: 10, sort: START_AT_DESC, atAFair: true, soloShow: false, isReference: true, visibleToPublic: false) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    edges {\n      node {\n        id\n        partner {\n          __typename\n          ... on ExternalPartner {\n            name\n            id\n          }\n          ... on Partner {\n            name\n            href\n          }\n          ... on Node {\n            id\n          }\n        }\n        name\n        start_at: startAt(format: \"YYYY\")\n        city\n        href\n        __typename\n      }\n      cursor\n    }\n  }\n}\n\nfragment CVItem_artist_4DszuY on Artist {\n  slug\n  showsConnection(first: 10, sort: START_AT_DESC, atAFair: false, soloShow: false, isReference: true, visibleToPublic: false) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    edges {\n      node {\n        id\n        partner {\n          __typename\n          ... on ExternalPartner {\n            name\n            id\n          }\n          ... on Partner {\n            name\n            href\n          }\n          ... on Node {\n            id\n          }\n        }\n        name\n        start_at: startAt(format: \"YYYY\")\n        city\n        href\n        __typename\n      }\n      cursor\n    }\n  }\n}\n\nfragment CVItem_artist_ieWPx on Artist {\n  slug\n  showsConnection(first: 10, sort: START_AT_DESC, atAFair: false, soloShow: true, isReference: true, visibleToPublic: false) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    edges {\n      node {\n        id\n        partner {\n          __typename\n          ... on ExternalPartner {\n            name\n            id\n          }\n          ... on Partner {\n            name\n            href\n          }\n          ... on Node {\n            id\n          }\n        }\n        name\n        start_at: startAt(format: \"YYYY\")\n        city\n        href\n        __typename\n      }\n      cursor\n    }\n  }\n}\n\nfragment CV_viewer on Viewer {\n  artist_soloShows: artist(id: $artistID) {\n    ...CVItem_artist_ieWPx\n    id\n  }\n  artist_groupShows: artist(id: $artistID) {\n    ...CVItem_artist_4DszuY\n    id\n  }\n  artist_fairBooths: artist(id: $artistID) {\n    ...CVItem_artist_47e96d\n    id\n  }\n}\n"
+    "text": "query artistRoutes_CVQuery(\n  $artistID: String!\n) {\n  viewer {\n    ...ArtistCVRoute_viewer\n  }\n}\n\nfragment ArtistCVGroup_artist_47e96d on Artist {\n  slug\n  showsConnection(first: 10, sort: START_AT_DESC, atAFair: true, soloShow: false, isReference: true, visibleToPublic: false) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    edges {\n      node {\n        id\n        partner {\n          __typename\n          ... on ExternalPartner {\n            name\n            id\n          }\n          ... on Partner {\n            name\n            href\n          }\n          ... on Node {\n            id\n          }\n        }\n        name\n        startAt(format: \"YYYY\")\n        city\n        href\n        __typename\n      }\n      cursor\n    }\n  }\n}\n\nfragment ArtistCVGroup_artist_4DszuY on Artist {\n  slug\n  showsConnection(first: 10, sort: START_AT_DESC, atAFair: false, soloShow: false, isReference: true, visibleToPublic: false) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    edges {\n      node {\n        id\n        partner {\n          __typename\n          ... on ExternalPartner {\n            name\n            id\n          }\n          ... on Partner {\n            name\n            href\n          }\n          ... on Node {\n            id\n          }\n        }\n        name\n        startAt(format: \"YYYY\")\n        city\n        href\n        __typename\n      }\n      cursor\n    }\n  }\n}\n\nfragment ArtistCVGroup_artist_ieWPx on Artist {\n  slug\n  showsConnection(first: 10, sort: START_AT_DESC, atAFair: false, soloShow: true, isReference: true, visibleToPublic: false) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    edges {\n      node {\n        id\n        partner {\n          __typename\n          ... on ExternalPartner {\n            name\n            id\n          }\n          ... on Partner {\n            name\n            href\n          }\n          ... on Node {\n            id\n          }\n        }\n        name\n        startAt(format: \"YYYY\")\n        city\n        href\n        __typename\n      }\n      cursor\n    }\n  }\n}\n\nfragment ArtistCVRoute_viewer on Viewer {\n  soloShows: artist(id: $artistID) {\n    ...ArtistCVGroup_artist_ieWPx\n    name\n    id\n  }\n  groupShows: artist(id: $artistID) {\n    ...ArtistCVGroup_artist_4DszuY\n    id\n  }\n  fairBooths: artist(id: $artistID) {\n    ...ArtistCVGroup_artist_47e96d\n    id\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '64122f996208675bcd42252873a144d9';
+(node as any).hash = '4f3a0aedd2dd82534771cf6b8a277208';
 export default node;

@@ -58,11 +58,11 @@ export const ExampleArtistRouteFragmentContainer = createFragmentContainer(
   {
     artist: graphql`
       fragment ExampleArtistRoute_artist on Artist {
+        ...FollowArtistButton_artist
         name
         bio
         internalID
         slug
-        ...FollowArtistButton_artist
       }
     `,
   }

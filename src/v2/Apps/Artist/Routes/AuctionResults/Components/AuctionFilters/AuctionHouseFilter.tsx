@@ -1,6 +1,8 @@
-import { Box, Checkbox, Flex, Toggle } from "@artsy/palette"
+import { Checkbox, Flex } from "@artsy/palette"
 import React from "react"
 import { useAuctionResultsFilterContext } from "../../AuctionResultsFilterContext"
+import { FilterExpandable } from "v2/Components/ArtworkFilter/ArtworkFilters/FilterExpandable"
+import { ShowMore } from "v2/Components/ArtworkFilter/ArtworkFilters/ShowMore"
 
 const auctionHouses = [
   { name: "Sotheby's" },
@@ -23,9 +25,9 @@ export const AuctionHouseFilter: React.FC = () => {
   }
 
   return (
-    <Toggle label="Auction house" expanded>
+    <FilterExpandable label="Medium" expanded>
       <Flex flexDirection="column" alignItems="left">
-        <Box>
+        <ShowMore>
           {auctionHouses.map((checkbox, index) => {
             const { name } = checkbox
             const props = {
@@ -33,13 +35,14 @@ export const AuctionHouseFilter: React.FC = () => {
               onSelect: selected => {
                 toggleSelection(selected, name)
               },
+              my: 1,
               // @ts-expect-error STRICT_NULL_CHECK
               selected: filterContext.filters.organizations.includes(name),
             }
             return <Checkbox {...props}>{name}</Checkbox>
           })}
-        </Box>
+        </ShowMore>
       </Flex>
-    </Toggle>
+    </FilterExpandable>
   )
 }

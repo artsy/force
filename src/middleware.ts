@@ -148,8 +148,6 @@ export function initializeMiddleware(app) {
    * global router.
    */
   app.get("/artist/*", artistMiddleware)
-  // FIXME: Remove once we merge artist2 into 1
-  app.get("/artist2/*", artistMiddleware)
   app.get("/search*", searchMiddleware)
 
   // TODO: Artwork download, does this belong here.

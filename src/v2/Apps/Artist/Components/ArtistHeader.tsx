@@ -1,214 +1,92 @@
-import { ContextModule } from "@artsy/cohesion"
-import { Box, Text } from "@artsy/palette"
-import { ArtistHeader_artist } from "v2/__generated__/ArtistHeader_artist.graphql"
-import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
-import { FollowArtistButtonFragmentContainer as FollowArtistButton } from "v2/Components/FollowButton/FollowArtistButton"
+import {
+  Avatar,
+  Column,
+  Flex,
+  GridColumns,
+  HTML,
+  ReadMore,
+  Text,
+} from "@artsy/palette"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { get } from "v2/Utils/get"
-import { Media } from "v2/Utils/Responsive"
-import { highestCategory } from "./MarketInsights/MarketInsights"
-import { RouterLink } from "v2/Artsy/Router/RouterLink"
-
-const CATEGORIES = {
-  "blue-chip": "Blue Chip Representation",
-  "top-established": "Established Representation",
-  "top-emerging": "Emerging Representation",
-}
-
-const getHighCategory = (artist: ArtistHeader_artist) => {
-  const {
-    // @ts-expect-error STRICT_NULL_CHECK
-    artistHighlights: { partnersConnection },
-  } = artist
-  return highestCategory(partnersConnection?.edges)
-}
-
-const getTopAuctionResult = (artist: ArtistHeader_artist) => {
-  return get(
-    artist,
-    // @ts-expect-error STRICT_NULL_CHECK
-    () => artist.auctionResultsConnection.edges[0].node.price_realized.display
-  )
-}
-
-const formatFollowerCount = (n: number) => {
-  try {
-    const formatter = Intl.NumberFormat("en-US", {
-      // https://github.com/microsoft/TypeScript/issues/36533
-      // @ts-ignore
-      notation: "compact",
-      compactDisplay: "short",
-    })
-
-    return formatter.format(n).toLocaleLowerCase()
-  } catch (error) {
-    return n
-  }
-}
+import { SelectedCareerAchievementsFragmentContainer } from "v2/Components/SelectedCareerAchievements"
+import { ArtistHeader_artist } from "v2/__generated__/ArtistHeader_artist.graphql"
+import { FollowArtist2ButtonFragmentContainer } from "./FollowArtist2Button"
 
 interface ArtistHeaderProps {
   artist: ArtistHeader_artist
 }
 
-export const ArtistHeader: React.FC<ArtistHeaderProps> = props => {
-  return (
-    <>
-      <span id="jumpto-ArtistHeader" />
-
-      <Media at="xs">
-        <SmallArtistHeader {...props} />
-      </Media>
-
-      <Media greaterThan="xs">
-        <LargeArtistHeader {...props} />
-      </Media>
-    </>
+const ArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {
+  const hideBioInHeaderIfPartnerSupplied = Boolean(
+    artist.biographyBlurb!.credit
   )
-}
-
-export const LargeArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {
-  const topAuctionResult = getTopAuctionResult(artist)
-  const highCategory = getHighCategory(artist)
 
   return (
-    <HorizontalPadding data-test={ContextModule.artistHeader}>
-      <Box pt={3}>
-        <Text as="h1" variant="largeTitle">
+    <GridColumns>
+      {artist.imageUrl && (
+        <Column span={1}>
+          <Flex justifyContent={["center", "left"]}>
+            <Avatar src={artist.imageUrl} size="md" />
+          </Flex>
+        </Column>
+      )}
+      <Column span={5}>
+        <Text variant="xl" as="h1" textAlign={["center", "left"]}>
           {artist.name}
         </Text>
 
-        <Box display="flex" mt={1} justifyContent="space-between">
-          <Box display="flex" as="dl">
-            {artist.formattedNationalityAndBirthday && (
-              <Box mr={3}>
-                <Text as="dt" color="black60">
-                  Bio
-                </Text>
-
-                <Box as="dd">
-                  <Text as="h2" mr={2}>
-                    {artist.formattedNationalityAndBirthday}
-                  </Text>
-                </Box>
-              </Box>
-            )}
-
-            {(topAuctionResult || highCategory) && (
-              <Box mr={3}>
-                <Text as="dt" color="black60">
-                  Status
-                </Text>
-
-                <Text as="dd">
-                  {topAuctionResult && (
-                    <div>
-                      <RouterLink
-                        to={`/artist/${artist.slug}/auction-results`}
-                        noUnderline
-                      >
-                        {topAuctionResult} Auction Record
-                      </RouterLink>
-                    </div>
-                  )}
-
-                  {highCategory && (
-                    <div>
-                      <RouterLink to={`/artist/${artist.slug}/cv`} noUnderline>
-                        {CATEGORIES[highCategory]}
-                      </RouterLink>
-                    </div>
-                  )}
-                </Text>
-              </Box>
-            )}
-
-            {/**
-             * 0 followers is still displayed in this case:
-             * "displaying 0 helps the layout stay together"
-             */}
-            <Box mr={3}>
-              <Text as="dt" color="black60">
-                Followers
-              </Text>
-              {/* @ts-expect-error STRICT_NULL_CHECK */}
-              <Text as="dd">{formatFollowerCount(artist.counts.follows)}</Text>
-            </Box>
-          </Box>
-
-          <FollowArtistButton
-            artist={artist}
-            contextModule={ContextModule.artistHeader}
-          />
-        </Box>
-      </Box>
-    </HorizontalPadding>
-  )
-}
-
-export const SmallArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {
-  const topAuctionResult = getTopAuctionResult(artist)
-  const highCategory = getHighCategory(artist)
-
-  return (
-    <Box data-test={ContextModule.artistHeader} textAlign="center">
-      <Text as="h1" variant="largeTitle" mt={3} mb={1}>
-        {artist.name}
-      </Text>
-
-      {(artist.formattedNationalityAndBirthday ||
-        // @ts-expect-error STRICT_NULL_CHECK
-        artist.counts.follows > 0) && (
-        <Box>
-          <Text as="h2" display="inline">
+        {artist.formattedNationalityAndBirthday && (
+          <Text
+            variant="xl"
+            as="h2"
+            color="black60"
+            mb={2}
+            textAlign={["center", "left"]}
+          >
             {artist.formattedNationalityAndBirthday}
           </Text>
+        )}
 
-          {artist.formattedNationalityAndBirthday &&
-            // @ts-expect-error STRICT_NULL_CHECK
-            artist.counts.follows > 0 && <Text as="span">{" • "}</Text>}
+        <GridColumns>
+          <Column span={[12, 6, 3]}>
+            <FollowArtist2ButtonFragmentContainer artist={artist} />
+          </Column>
 
-          {/* @ts-expect-error STRICT_NULL_CHECK */}
-          {artist.counts.follows > 0 && (
-            <Text as="span">
-              {/* @ts-expect-error STRICT_NULL_CHECK */}
-              {formatFollowerCount(artist.counts.follows)} follower
-              {/* @ts-expect-error STRICT_NULL_CHECK */}
-              {artist.counts.follows === 1 ? "" : "s"}
+          <Column
+            span={[12, 6, 9]}
+            display={["block", "flex"]}
+            alignItems="center"
+          >
+            <Text variant="xs" color="black60" textAlign={["center", "left"]}>
+              {formatFollowerCount(artist.counts?.follows!)} Following
             </Text>
-          )}
-        </Box>
-      )}
+          </Column>
+        </GridColumns>
+      </Column>
 
-      {topAuctionResult && (
-        <Text>
-          <RouterLink to={`/artist/${artist.slug}/auction-results`} noUnderline>
-            {topAuctionResult} Auction Record
-          </RouterLink>
-        </Text>
-      )}
+      <Column span={6}>
+        {!hideBioInHeaderIfPartnerSupplied && artist.biographyBlurb?.text && (
+          <>
+            <Text variant="xs" textTransform="uppercase" mt={[2, 0]} mb={1}>
+              Bio
+            </Text>
+            <Text variant="sm" mb={2}>
+              <HTML variant="sm">
+                <ReadMore maxChars={250} content={artist.biographyBlurb.text} />
+              </HTML>
+            </Text>
+          </>
+        )}
 
-      {highCategory && (
-        <Text>
-          <RouterLink to={`/artist/${artist.slug}/cv`} noUnderline>
-            {CATEGORIES[highCategory]}
-          </RouterLink>
-        </Text>
-      )}
-
-      <Box mt={1.5}>
-        <FollowArtistButton
-          artist={artist}
-          contextModule={ContextModule.artistHeader}
-          buttonProps={{ size: "small" }}
-        />
-      </Box>
-    </Box>
+        <SelectedCareerAchievementsFragmentContainer artist={artist} />
+      </Column>
+    </GridColumns>
   )
 }
 
 export const ArtistHeaderFragmentContainer = createFragmentContainer(
-  ArtistHeader as React.FC<ArtistHeaderProps>,
+  ArtistHeader,
   {
     artist: graphql`
       fragment ArtistHeader_artist on Artist
@@ -218,6 +96,9 @@ export const ArtistHeaderFragmentContainer = createFragmentContainer(
             defaultValue: ["blue-chip", "top-established", "top-emerging"]
           }
         ) {
+        ...FollowArtist2Button_artist
+        ...SelectedCareerAchievements_artist
+
         artistHighlights: highlights {
           partnersConnection(
             first: 10
@@ -249,6 +130,7 @@ export const ArtistHeaderFragmentContainer = createFragmentContainer(
             }
           }
         }
+        imageUrl
         internalID
         slug
         name
@@ -257,8 +139,25 @@ export const ArtistHeaderFragmentContainer = createFragmentContainer(
           follows
           forSaleArtworks
         }
-        ...FollowArtistButton_artist
+        biographyBlurb: biographyBlurb(format: HTML, partnerBio: true) {
+          credit
+          partnerID
+          text
+        }
       }
     `,
   }
 )
+
+const formatFollowerCount = (n: number) => {
+  try {
+    const formatter = Intl.NumberFormat("en-US", {
+      notation: "compact",
+      compactDisplay: "short",
+    })
+
+    return formatter.format(n).toLocaleLowerCase()
+  } catch (error) {
+    return n
+  }
+}

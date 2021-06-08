@@ -22,7 +22,7 @@ export type ArtistWorksForSaleRoute_artist = {
     readonly internalID: string;
     readonly slug: string;
     readonly id: string;
-    readonly " $fragmentRefs": FragmentRefs<"ArtistSeriesRail_artist" | "Artist2ArtworkFilter_artist">;
+    readonly " $fragmentRefs": FragmentRefs<"ArtistSeriesRail_artist" | "ArtistArtworkFilter_artist">;
     readonly " $refType": "ArtistWorksForSaleRoute_artist";
 };
 export type ArtistWorksForSaleRoute_artist$data = ArtistWorksForSaleRoute_artist;
@@ -180,11 +180,11 @@ return {
         }
       ],
       "kind": "FragmentSpread",
-      "name": "Artist2ArtworkFilter_artist"
+      "name": "ArtistArtworkFilter_artist"
     }
   ],
   "type": "Artist"
 };
 })();
-(node as any).hash = 'ebefe334a7a2c372653705a0e30136c9';
+(node as any).hash = '1caba76af2e780b916149edcbf4e9b64';
 export default node;

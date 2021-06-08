@@ -7,10 +7,6 @@ import {
   Text,
 } from "@artsy/palette"
 import { SelectedCareerAchievements_artist } from "v2/__generated__/SelectedCareerAchievements_artist.graphql"
-import {
-  hasSections,
-  highestCategory,
-} from "v2/Apps/Artist/Components/MarketInsights/MarketInsights"
 
 import { ArtistInsight } from "v2/Components/ArtistInsight"
 import { ArtistInsightsModal } from "v2/Components/ArtistInsightsModal"
@@ -19,6 +15,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { SpaceProps } from "styled-system"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import { ChevronButton } from "./ChevronButton"
+import { highestCategory, hasSections } from "./ArtistMarketInsights"
 
 export interface SelectedCareerAchievementsProps extends SpaceProps {
   artist: SelectedCareerAchievements_artist
@@ -163,7 +160,7 @@ export class SelectedCareerAchievements extends React.Component<
 
             <Spacer my={2} />
 
-            <RouterLink to={`/artist2/${this.props.artist.slug}/cv`}>
+            <RouterLink to={`${this.props.artist.slug}/cv`}>
               <ChevronButton>See all past shows and fair booths</ChevronButton>
             </RouterLink>
           </>

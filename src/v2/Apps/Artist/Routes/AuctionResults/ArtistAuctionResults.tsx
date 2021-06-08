@@ -1,10 +1,10 @@
-import { Col, Row } from "@artsy/palette"
+import { Col, Row, Flex, Text, Message } from "@artsy/palette"
 import { ArtistAuctionResults_artist } from "v2/__generated__/ArtistAuctionResults_artist.graphql"
 import { PaginationFragmentContainer as Pagination } from "v2/Components/Pagination"
 import React, { useContext, useState } from "react"
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
 import useDeepCompareEffect from "use-deep-compare-effect"
-import { AuctionResultItemFragmentContainer as AuctionResultItem } from "./ArtistAuctionResultItem"
+import { ArtistAuctionResultItemFragmentContainer as AuctionResultItem } from "./ArtistAuctionResultItem"
 import { TableSidebar } from "./Components/TableSidebar"
 import { ContextModule, Intent } from "@artsy/cohesion"
 import { Box, Spacer } from "@artsy/palette"
@@ -21,12 +21,13 @@ import {
 } from "./AuctionResultsFilterContext"
 import { AuctionFilterMobileActionSheet } from "./Components/AuctionFilterMobileActionSheet"
 import { AuctionFilters } from "./Components/AuctionFilters"
-import { AuctionResultHeaderFragmentContainer as AuctionResultHeader } from "./Components/AuctionResultHeader"
 import { AuctionResultsControls } from "./Components/AuctionResultsControls"
 import { auctionResultsFilterResetState } from "./AuctionResultsFilterContext"
 import { openAuthModal } from "v2/Utils/openAuthModal"
 import { ModalType } from "v2/Components/Authentication/Types"
 import { Title } from "react-head"
+import { SortSelect } from "./Components/SortSelect"
+import { scrollIntoView } from "v2/Utils/scrollHelpers"
 
 const logger = createLogger("ArtistAuctionResults.tsx")
 
@@ -57,6 +58,11 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
   }
 
   const loadPage = (cursor, pageNum) => {
+    scrollIntoView({
+      selector: "#scrollTo--artistAuctionResultsTop",
+      behavior: "smooth",
+      offset: 150,
+    })
     filterContext.setFilter("pageAndCursor", { cursor: cursor, page: pageNum })
   }
 
@@ -144,29 +150,14 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
   // @ts-expect-error STRICT_NULL_CHECK
   const auctionResultsLength = artist.auctionResultsConnection.edges.length
 
-  const resultList = (
-    <LoadingArea isLoading={isLoading}>
-      {/* @ts-expect-error STRICT_NULL_CHECK */}
-      {artist.auctionResultsConnection.edges.map(({ node }, index) => {
-        return (
-          <React.Fragment key={index}>
-            <AuctionResultItem
-              index={index}
-              auctionResult={node}
-              lastChild={index === auctionResultsLength - 1}
-              filtersAtDefault={filtersAtDefault}
-            />
-          </React.Fragment>
-        )
-      })}
-    </LoadingArea>
-  )
-
   const titleString = `${artist.name} - Auction Results on Artsy`
 
   return (
     <>
       <Title>{titleString}</Title>
+
+      <Box id="scrollTo--artistAuctionResultsTop" />
+
       {showMobileActionSheet && (
         <AuctionFilterMobileActionSheet
           onClose={() => toggleMobileActionSheet(false)}
@@ -174,9 +165,14 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
           <AuctionFilters />
         </AuctionFilterMobileActionSheet>
       )}
-      <Row>
-        <AuctionResultHeader artist={artist} />
-      </Row>
+      <Media greaterThan="xs">
+        <Flex justifyContent="space-between" alignItems="flex-start" pb={4}>
+          <Text variant="xs" textTransform="uppercase">
+            Filter by
+          </Text>
+          <SortSelect />
+        </Flex>
+      </Media>
       <Row>
         <Col sm={3} pr={[0, 2]}>
           <Media greaterThan="xs">
@@ -192,23 +188,44 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
 
           <Spacer mt={3} />
 
-          {resultList}
+          {auctionResultsLength > 0 ? (
+            <LoadingArea isLoading={isLoading}>
+              {/* @ts-expect-error STRICT_NULL_CHECK */}
+              {artist.auctionResultsConnection.edges.map(({ node }, index) => {
+                return (
+                  <React.Fragment key={index}>
+                    <AuctionResultItem
+                      index={index}
+                      auctionResult={node}
+                      lastChild={index === auctionResultsLength - 1}
+                      filtersAtDefault={filtersAtDefault}
+                    />
+                  </React.Fragment>
+                )
+              })}
+            </LoadingArea>
+          ) : (
+            <Message>
+              There aren’t any auction results available by the artist at this
+              time.
+            </Message>
+          )}
+
+          <Pagination
+            getHref={() => ""}
+            hasNextPage={pageInfo.hasNextPage}
+            // @ts-expect-error STRICT_NULL_CHECK
+            pageCursors={artist.auctionResultsConnection.pageCursors}
+            onClick={(_cursor, page) => loadPage(_cursor, page)}
+            onNext={() => loadNext()}
+            scrollTo="#jumpto-ArtistHeader"
+          />
         </Col>
       </Row>
 
       <Row>
         <Col>
-          <Box>
-            <Pagination
-              getHref={() => ""}
-              hasNextPage={pageInfo.hasNextPage}
-              // @ts-expect-error STRICT_NULL_CHECK
-              pageCursors={artist.auctionResultsConnection.pageCursors}
-              onClick={(_cursor, page) => loadPage(_cursor, page)}
-              onNext={() => loadNext()}
-              scrollTo="#jumpto-ArtistHeader"
-            />
-          </Box>
+          <Box></Box>
         </Col>
       </Row>
     </>
@@ -251,7 +268,6 @@ export const ArtistAuctionResultsRefetchContainer = createRefetchContainer(
         ) {
         slug
         name
-        ...AuctionResultHeader_artist
         auctionResultsConnection(
           first: $first
           after: $after
@@ -265,7 +281,7 @@ export const ArtistAuctionResultsRefetchContainer = createRefetchContainer(
           latestCreatedYear: $createdBeforeYear
           allowEmptyCreatedDates: $allowEmptyCreatedDates
         ) {
-          ...AuctionResultsCount_results
+          ...ArtistAuctionResultsCount_results
           createdYearRange {
             startAt
             endAt

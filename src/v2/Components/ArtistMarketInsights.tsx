@@ -1,12 +1,9 @@
 import { BorderBox, Box, Join, Spacer } from "@artsy/palette"
 import { ArtistMarketInsights_artist } from "v2/__generated__/ArtistMarketInsights_artist.graphql"
-import {
-  hasSections,
-  highestCategory,
-} from "v2/Apps/Artist/Components/MarketInsights/MarketInsights"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworkDefinitionList } from "v2/Apps/Artwork/Components/ArtworkDefinitionList"
+import { groupBy } from "lodash"
 
 export interface MarketInsightsProps {
   artist: ArtistMarketInsights_artist
@@ -171,3 +168,63 @@ export const ArtistMarketInsightsFragmentContainer = createFragmentContainer(
     `,
   }
 )
+
+export const hasSections = ({
+  highlights,
+  auctionResults,
+  collections,
+}: {
+  highlights: { partnersConnection?: { edges: ReadonlyArray<any> } }
+  auctionResults?: { edges: ReadonlyArray<any> }
+  collections?: ReadonlyArray<any>
+}) => {
+  const { partnersConnection } = highlights
+
+  // Is there a gallery representation section?
+  if (
+    partnersConnection &&
+    partnersConnection.edges &&
+    partnersConnection.edges.length > 0
+  ) {
+    return true
+  }
+
+  // Is there an auction highlights section?
+  if (
+    auctionResults &&
+    auctionResults.edges &&
+    auctionResults.edges.length > 0
+  ) {
+    return true
+  }
+
+  // Is there a permanent collections section?
+  if (collections && collections.length > 0) {
+    return true
+  }
+
+  return false
+}
+
+const orderedCategories = ["blue-chip", "top-established", "top-emerging"]
+
+export const highestCategory = edges => {
+  const groups = groupedByCategories(edges)
+  return orderedCategories.filter(
+    category => groups[category] && groups[category].length > 0
+  )[0]
+}
+
+const groupedByCategories = edges => {
+  return groupBy(edges, ({ node: partner }) => {
+    let category
+    Object.keys(CATEGORIES).forEach(key => {
+      partner.categories.forEach(partnerCategory => {
+        if (partnerCategory.slug === key) {
+          category = key
+        }
+      })
+    })
+    return category
+  })
+}

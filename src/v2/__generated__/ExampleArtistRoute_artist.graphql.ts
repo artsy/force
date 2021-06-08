@@ -61,5 +61,5 @@ const node: ReaderFragment = {
   ],
   "type": "Artist"
 };
-(node as any).hash = 'feb5bf31bb5822979e66bc3ba8770815';
+(node as any).hash = '5c3a5b92ce4c697e1a50a88e461491a2';
 export default node;

@@ -1,8 +1,10 @@
-import { Checkbox, Flex, LargeSelect, Spacer, Toggle } from "@artsy/palette"
+import { Box, Checkbox, Flex, Select, Spacer } from "@artsy/palette"
 import { FilterResetLink } from "v2/Components/FilterResetLink"
 import React, { useMemo } from "react"
 import createLogger from "v2/Utils/logger"
 import { useAuctionResultsFilterContext } from "../../AuctionResultsFilterContext"
+import { FilterExpandable } from "v2/Components/ArtworkFilter/ArtworkFilters/FilterExpandable"
+import { ShowMore } from "v2/Components/ArtworkFilter/ArtworkFilters/ShowMore"
 
 const log = createLogger(
   "Artist/Routes/AuctionResults/Components/AuctionFilters/YearCreated.tsx"
@@ -59,41 +61,44 @@ export const YearCreated: React.FC = () => {
   }
 
   return (
-    <Toggle
-      label="Year Created"
-      expanded
-      renderSecondaryAction={() => (
-        <FilterResetLink onReset={resetFilter} hasChanges={hasChanges} />
-      )}
-    >
-      <Flex>
-        <LargeSelect
-          title="Earliest"
-          options={fullDateRange}
-          onSelect={(year: string) => {
-            filterContext.setFilter("createdAfterYear", parseInt(year))
-          }}
-          selected={`${createdAfterYear}`}
-        />
-        <Spacer mr={1} />
-        <LargeSelect
-          title="Latest"
-          options={fullDateRange}
-          onSelect={(year: string) => {
-            filterContext.setFilter("createdBeforeYear", parseInt(year))
-          }}
-          selected={`${createdBeforeYear}`}
-        />
+    <FilterExpandable label="Year Created" expanded>
+      <Flex flexDirection="column" alignItems="left">
+        <ShowMore>
+          <Flex>
+            <Select
+              title="Earliest"
+              options={fullDateRange}
+              onSelect={(year: string) => {
+                filterContext.setFilter("createdAfterYear", parseInt(year))
+              }}
+              selected={`${createdAfterYear}`}
+            />
+            <Spacer mr={1} />
+            <Select
+              title="Latest"
+              options={fullDateRange}
+              onSelect={(year: string) => {
+                filterContext.setFilter("createdBeforeYear", parseInt(year))
+              }}
+              selected={`${createdBeforeYear}`}
+            />
+          </Flex>
+          {hasChanges && (
+            <Box my={0.5}>
+              <FilterResetLink onReset={resetFilter} hasChanges={hasChanges} />
+            </Box>
+          )}
+          <Spacer mt={1} />
+          <Checkbox
+            selected={allowEmptyCreatedDates}
+            onSelect={(allowEmpty: boolean) => {
+              filterContext.setFilter("allowEmptyCreatedDates", allowEmpty)
+            }}
+          >
+            Include unspecified dates
+          </Checkbox>
+        </ShowMore>
       </Flex>
-      <Spacer mt={0.5} />
-      <Checkbox
-        selected={allowEmptyCreatedDates}
-        onSelect={(allowEmpty: boolean) => {
-          filterContext.setFilter("allowEmptyCreatedDates", allowEmpty)
-        }}
-      >
-        Include unspecified dates
-      </Checkbox>
-    </Toggle>
+    </FilterExpandable>
   )
 }
