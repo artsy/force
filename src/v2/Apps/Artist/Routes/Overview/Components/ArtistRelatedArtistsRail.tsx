@@ -3,9 +3,9 @@ import { Box, EntityHeader, Image, Shelf, Spacer, Text } from "@artsy/palette"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
+import { BaseFollowArtistButton } from "v2/Apps/Artist/Components/FollowArtist2Button"
 import { AnalyticsSchema, useAnalyticsContext } from "v2/Artsy"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
-import { FollowArtistButtonFragmentContainer } from "v2/Components/FollowButton/FollowArtistButton"
 import { extractNodes } from "v2/Utils/extractNodes"
 import { ArtistRelatedArtistsRail_artist } from "v2/__generated__/ArtistRelatedArtistsRail_artist.graphql"
 
@@ -37,8 +37,12 @@ const ArtistRelatedArtistsRail: React.FC<ArtistRelatedArtistsRailProps> = ({
 
       <Shelf alignItems="flex-start">
         {nodes.map((node, index) => {
-          const artworkImage = extractNodes(node.filterArtworksConnection)[0]
-            .image
+          const artworkImage = extractNodes(node.filterArtworksConnection)?.[0]
+            ?.image
+
+          if (!artworkImage) {
+            return null as any
+          }
 
           return (
             <RouterLink
@@ -83,12 +87,19 @@ const ArtistRelatedArtistsRail: React.FC<ArtistRelatedArtistsRailProps> = ({
                       : undefined
                   }
                   FollowButton={
-                    <FollowArtistButtonFragmentContainer
-                      artist={artist}
+                    <BaseFollowArtistButton
+                      artist={{
+                        internalID: node.internalID,
+                        slug: node.slug,
+                        name: node.name,
+                        isFollowed: node.isFollowed,
+                        " $refType": "FollowArtist2Button_artist",
+                      }}
                       contextModule={ContextModule.featuredArtistsRail}
                       buttonProps={{
                         size: "small",
                         variant: "secondaryOutline",
+                        width: null,
                       }}
                     />
                   }
@@ -107,7 +118,7 @@ export const ArtistRelatedArtistsRailFragmentContainer = createFragmentContainer
   {
     artist: graphql`
       fragment ArtistRelatedArtistsRail_artist on Artist {
-        ...FollowArtistButton_artist
+        ...FollowArtist2Button_artist
         name
         href
         related {
@@ -117,6 +128,7 @@ export const ArtistRelatedArtistsRailFragmentContainer = createFragmentContainer
                 name
                 href
                 internalID
+                isFollowed
                 slug
                 nationality
                 birthday

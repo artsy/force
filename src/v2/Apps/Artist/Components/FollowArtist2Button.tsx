@@ -1,5 +1,5 @@
-import { ContextModule, Intent } from "@artsy/cohesion"
-import { Button } from "@artsy/palette"
+import { AuthContextModule, ContextModule, Intent } from "@artsy/cohesion"
+import { Button, ButtonProps } from "@artsy/palette"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "v2/Artsy"
@@ -9,9 +9,15 @@ import { followArtistMutation } from "../Mutations/FollowArtistMutation"
 
 interface FollowArtistButtonProps {
   artist: FollowArtist2Button_artist
+  contextModule?: AuthContextModule
+  buttonProps?: Partial<ButtonProps> // Pass palette props to button
 }
 
-const FollowArtistButton: React.FC<FollowArtistButtonProps> = ({ artist }) => {
+export const BaseFollowArtistButton: React.FC<FollowArtistButtonProps> = ({
+  artist,
+  contextModule = ContextModule.artistHeader,
+  buttonProps = {},
+}) => {
   const { mediator, relayEnvironment, user } = useSystemContext()
 
   const isAuthenticated = () => {
@@ -19,7 +25,7 @@ const FollowArtistButton: React.FC<FollowArtistButtonProps> = ({ artist }) => {
       return true
     } else {
       openAuthToFollowSave(mediator!, {
-        contextModule: ContextModule.artistHeader,
+        contextModule,
         entity: {
           slug: artist.slug!,
           name: artist.name!,
@@ -29,7 +35,9 @@ const FollowArtistButton: React.FC<FollowArtistButtonProps> = ({ artist }) => {
     }
   }
 
-  const handleClick = async () => {
+  const handleClick = async event => {
+    event.preventDefault()
+
     if (isAuthenticated()) {
       await followArtistMutation(
         relayEnvironment!,
@@ -40,14 +48,19 @@ const FollowArtistButton: React.FC<FollowArtistButtonProps> = ({ artist }) => {
   }
 
   return (
-    <Button variant="secondaryOutline" width="100%" onClick={handleClick}>
+    <Button
+      variant="secondaryOutline"
+      width="100%"
+      onClick={handleClick}
+      {...buttonProps}
+    >
       {artist.isFollowed ? "Following" : "Follow"}
     </Button>
   )
 }
 
 export const FollowArtist2ButtonFragmentContainer = createFragmentContainer(
-  FollowArtistButton,
+  BaseFollowArtistButton,
   {
     artist: graphql`
       fragment FollowArtist2Button_artist on Artist {

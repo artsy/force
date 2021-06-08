@@ -13,6 +13,7 @@ export type ArtistRelatedArtistsRail_artist = {
                     readonly name: string | null;
                     readonly href: string | null;
                     readonly internalID: string;
+                    readonly isFollowed: boolean | null;
                     readonly slug: string;
                     readonly nationality: string | null;
                     readonly birthday: string | null;
@@ -41,7 +42,7 @@ export type ArtistRelatedArtistsRail_artist = {
             } | null> | null;
         } | null;
     } | null;
-    readonly " $fragmentRefs": FragmentRefs<"FollowArtistButton_artist">;
+    readonly " $fragmentRefs": FragmentRefs<"FollowArtist2Button_artist">;
     readonly " $refType": "ArtistRelatedArtistsRail_artist";
 };
 export type ArtistRelatedArtistsRail_artist$data = ArtistRelatedArtistsRail_artist;
@@ -135,6 +136,13 @@ return {
                     (v0/*: any*/),
                     (v1/*: any*/),
                     (v2/*: any*/),
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "isFollowed",
+                      "storageKey": null
+                    },
                     (v3/*: any*/),
                     {
                       "alias": null,
@@ -312,11 +320,11 @@ return {
     {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "FollowArtistButton_artist"
+      "name": "FollowArtist2Button_artist"
     }
   ],
   "type": "Artist"
 };
 })();
-(node as any).hash = '11ee821b665afecda7dfee695f548334';
+(node as any).hash = 'efe33e8eab38f741aaa708450fe747e1';
 export default node;
