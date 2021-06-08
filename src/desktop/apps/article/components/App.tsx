@@ -27,16 +27,20 @@ export class App extends React.Component<AppProps> {
       case "video": {
         return (
           <Article
+            hideAuthModal={isEigen}
             relatedArticles={article.relatedArticles}
             seriesArticle={article.seriesArticle}
-            hidePartnerName={isEigen}
             {...this.props}
           />
         )
       }
       case "series": {
         return (
-          <Article {...this.props} relatedArticles={article.relatedArticles} />
+          <Article
+            {...this.props}
+            hideAuthModal={isEigen}
+            relatedArticles={article.relatedArticles}
+          />
         )
       }
       case "news": {
