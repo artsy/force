@@ -10,6 +10,7 @@ interface Props {
   article: ArticleData
   isActive: boolean
   isMobile: boolean
+  isEigen?: boolean
   isTruncated: boolean
   nextArticle: ArticleData
   onActiveArticleChange: (id: string) => void
@@ -104,6 +105,7 @@ export class NewsArticle extends Component<Props, State> {
       article,
       isActive,
       isMobile,
+      isEigen,
       isTruncated,
       relatedArticlesForCanvas,
       shouldAdRender,
@@ -124,6 +126,7 @@ export class NewsArticle extends Component<Props, State> {
               article={article}
               isTruncated={isTruncated}
               isMobile={isMobile}
+              hideAuthModal={isEigen}
               onExpand={this.onExpand}
               isHovered={isMobile && isActive}
               relatedArticlesForCanvas={relatedArticlesForCanvas}

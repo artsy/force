@@ -21,7 +21,7 @@ export interface AppProps extends ArticleProps {
 
 export class App extends React.Component<AppProps> {
   getArticleLayout = () => {
-    const { article } = this.props
+    const { article, isEigen } = this.props
 
     switch (article.layout) {
       case "video": {
@@ -29,6 +29,7 @@ export class App extends React.Component<AppProps> {
           <Article
             relatedArticles={article.relatedArticles}
             seriesArticle={article.seriesArticle}
+            hidePartnerName={isEigen}
             {...this.props}
           />
         )

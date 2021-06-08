@@ -199,7 +199,7 @@ export class InfiniteScrollNewsArticle extends Component<Props, State> {
         const isTruncated = !this.props.article || i !== 0
         const hasDateDivider = i !== 0 && this.hasNewDate(article, i)
         const relatedArticlesCanvas = hasMetaContent && related
-
+        const { isEigen } = this.props
         // render ads on News Landing the 3rd and then every 6 news articles thereafter
         const adPosition = {
           index: i + 1, // article index + 1
@@ -212,7 +212,7 @@ export class InfiniteScrollNewsArticle extends Component<Props, State> {
           adPosition.startIndex,
           adPosition.frequency,
           null,
-          this.props.isEigen
+          isEigen
         )
 
         return (
@@ -220,6 +220,7 @@ export class InfiniteScrollNewsArticle extends Component<Props, State> {
             {hasDateDivider && <NewsDateDivider date={article.published_at} />}
             <NewsArticle
               isMobile={isMobile || false}
+              isEigen={isEigen}
               article={article}
               isTruncated={isTruncated}
               onDateChange={this.throttledDateChange}

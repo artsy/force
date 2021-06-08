@@ -150,6 +150,7 @@ export class InfiniteScrollArticle extends React.Component<
               relatedArticlesForCanvas={article.relatedArticlesCanvas}
               isTruncated={i !== 0}
               isMobile={isMobile}
+              hideAuthModal={isEigen}
               showTooltips={showTooltips}
               infiniteScrollEntrySlug={slug}
               shouldAdRender={renderAd}
