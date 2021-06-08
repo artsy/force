@@ -4,6 +4,7 @@ import { extractNodes } from "v2/Utils/extractNodes"
 import { data as sd } from "sharify"
 import { ArtistGenes_artist } from "v2/__generated__/ArtistGenes_artist.graphql"
 import { Flex, Pill } from "@artsy/palette"
+import { RouterLink } from "v2/Artsy/Router/RouterLink"
 
 interface ArtistGenesProps {
   artist: ArtistGenes_artist
@@ -25,7 +26,14 @@ const ArtistGenes: React.FC<ArtistGenesProps> = ({ artist }) => {
     <Flex flexWrap="wrap">
       {pills.map((pill, index) => {
         return (
-          <Pill src={pill.href} key={index} mr={1} mb={1}>
+          <Pill
+            as={RouterLink}
+            // @ts-ignore
+            to={pill.href}
+            key={index}
+            mr={1}
+            mb={1}
+          >
             {pill.name}
           </Pill>
         )
