@@ -1,6 +1,7 @@
 import React from "react"
 import { RouteTab, RouteTabs } from "v2/Components/RouteTabs"
 import { Box, Text } from "@artsy/palette"
+import { SystemContextProvider } from "v2/Artsy"
 
 interface UserSettingsTabsProps {
   route?: string
@@ -46,24 +47,26 @@ export const UserSettingsTabs: React.FC<UserSettingsTabsProps> = ({
   username,
 }) => {
   return (
-    <Box pt={1} px={[2, 0]}>
-      <Box>
-        <Text variant="title" my={2}>
-          {username}
-        </Text>
-      </Box>
+    <SystemContextProvider>
+      <Box pt={1} px={[2, 0]}>
+        <Box>
+          <Text variant="title" my={2}>
+            {username}
+          </Text>
+        </Box>
 
-      <RouteTabs>
-        {routes.map((route, index) => (
-          <RouteTab
-            key={index}
-            className={tabClass(route.url, route)}
-            to={route.url}
-          >
-            {route.name}
-          </RouteTab>
-        ))}
-      </RouteTabs>
-    </Box>
+        <RouteTabs>
+          {routes.map((route, index) => (
+            <RouteTab
+              key={index}
+              className={tabClass(route.url, route)}
+              to={route.url}
+            >
+              {route.name}
+            </RouteTab>
+          ))}
+        </RouteTabs>
+      </Box>
+    </SystemContextProvider>
   )
 }
