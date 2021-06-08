@@ -2,14 +2,14 @@
 - options = options ? Object.assign({}, defaultOptions, options) : defaultOptions
 
 //- Common bundle
-script( src=asset("/assets/runtime.js") )
-script( src=asset("/assets/common.js") )
-script( src=asset("/assets/artsy-common.js") )
-script( src=asset("/assets/common-backbone.js") )
-script( src=asset("/assets/common-jquery.js") )
-script( src=asset("/assets/common-react.js") )
-script( src=asset("/assets/common-utility.js") )
-script( src=asset("/assets/artsy.js") )
+script( src=asset("/assets/legacy-runtime.js") )
+script( src=asset("/assets/legacy-common.js") )
+script( src=asset("/assets/legacy-artsy-common.js") )
+script( src=asset("/assets/legacy-common-backbone.js") )
+script( src=asset("/assets/legacy-common-jquery.js") )
+script( src=asset("/assets/legacy-common-react.js") )
+script( src=asset("/assets/legacy-common-utility.js") )
+script( src=asset("/assets/legacy-artsy.js") )
 
 //- Marketo Tracking
 if options.marketo && !sd.THIRD_PARTIES_DISABLED
@@ -139,7 +139,7 @@ if !sd.THIRD_PARTIES_DISABLED
 
 //- Analytics & common asset package
 if sd.BROWSER && sd.BROWSER.family != 'Other' && !sd.THIRD_PARTIES_DISABLED
-  script( src=asset('/assets/analytics.js') )
+  script( src=asset('/assets/legacy-analytics.js') )
 
 //- Sailthru Horizon JS - user interest data, personalization
 if options.sailthru && sd.SAILTHRU_CUSTOMER_ID && !sd.THIRD_PARTIES_DISABLED

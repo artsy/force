@@ -27,7 +27,7 @@ describe("Main layout template", function () {
       asset(p) {
         return p
       },
-    }).should.containEql("/assets/analytics.js"))
+    }).should.containEql("/assets/legacy-analytics.js"))
 
   it("excludes analytics for headless browsers", () =>
     render("../templates/index.jade")({
@@ -40,7 +40,7 @@ describe("Main layout template", function () {
       asset(p) {
         return p
       },
-    }).should.not.containEql("/assets/analytics.js"))
+    }).should.not.containEql("/assets/legacy-analytics.js"))
 
   it("renders user agent, user type, and lab features as a data attribute", function () {
     const html = render("../templates/index.jade")({

@@ -15,7 +15,7 @@ export const legacyProductionConfig = {
     minimizer: standardMinimizer,
   },
   output: {
-    filename: "legacy-[name].[contenthash].js",
+    filename: "[name].[contenthash].js",
     // NOTE: On the client, we're setting `publicPath` during runtime in order to
     // ensure that dynamically loaded split chunks are being pulled from CDN.
     // @see: https://github.com/artsy/force/blob/master/src/desktop/lib/global_client_setup.tsx#L7

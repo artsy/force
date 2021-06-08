@@ -30,13 +30,15 @@ function findAssets(folder) {
   const assets = files.filter(validAssets).reduce((assetMap, file) => {
     const fileName = path.basename(file, path.extname(file))
     const asset = {
-      [fileName]: [path.join(basePath, folder, file)],
+      [`legacy-${fileName}`]: [path.join(basePath, folder, file)],
     }
 
     // Load old global module dependencies
-    asset[fileName].unshift(path.join(basePath, "./src/lib/global_modules"))
+    asset[`legacy-${fileName}`].unshift(
+      path.join(basePath, "./src/lib/global_modules")
+    )
     if (env.isDevelopment) {
-      asset[fileName].unshift(
+      asset[`legacy-${fileName}`].unshift(
         "webpack-hot-middleware/client?name=force&reload=true"
       )
     }
