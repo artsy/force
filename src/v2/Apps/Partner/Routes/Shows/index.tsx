@@ -22,12 +22,12 @@ export const Shows: React.FC<PartnerShowsProps> = ({
     },
   } = useRouter()
 
-  const firstFeaturedEvent = compact(featuredEvents?.edges)[0].node
+  const firstFeaturedEvent = compact(featuredEvents?.edges)[0]?.node
   const isEventFeatured = firstFeaturedEvent && firstFeaturedEvent.isFeatured
-  const filteredUpcomingEvents = compact(upcomingEvents?.edges).filter(
+  const filteredUpcomingEvents = compact(upcomingEvents?.edges)?.filter(
     ({ node }) => node?.internalID !== firstFeaturedEvent?.internalID
   )
-  const filteredCurrentEvents = compact(currentEvents?.edges).filter(
+  const filteredCurrentEvents = compact(currentEvents?.edges)?.filter(
     ({ node }) => node?.internalID !== firstFeaturedEvent?.internalID
   )
   const isUpcomingEventsExist = !!filteredUpcomingEvents.length
