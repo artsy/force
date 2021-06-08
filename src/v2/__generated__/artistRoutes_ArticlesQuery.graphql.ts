@@ -8,7 +8,7 @@ export type artistRoutes_ArticlesQueryVariables = {
 };
 export type artistRoutes_ArticlesQueryResponse = {
     readonly artist: {
-        readonly " $fragmentRefs": FragmentRefs<"Articles_artist">;
+        readonly " $fragmentRefs": FragmentRefs<"ArtistArticlesRoute_artist">;
     } | null;
 };
 export type artistRoutes_ArticlesQuery = {
@@ -23,17 +23,12 @@ query artistRoutes_ArticlesQuery(
   $artistID: String!
 ) {
   artist(id: $artistID) {
-    ...Articles_artist
+    ...ArtistArticlesRoute_artist
     id
   }
 }
 
-fragment Articles_artist on Artist {
-  ...ArtistArticles_artist
-}
-
-fragment ArtistArticles_artist on Artist {
-  slug
+fragment ArtistArticlesRoute_artist on Artist {
   articlesConnection(first: 10, sort: PUBLISHED_AT_DESC, inEditorialFeed: true) {
     pageInfo {
       hasNextPage
@@ -45,21 +40,26 @@ fragment ArtistArticles_artist on Artist {
     edges {
       node {
         href
-        thumbnail_title: thumbnailTitle
+        thumbnailTitle
         author {
           name
           id
         }
-        published_at: publishedAt(format: "MMM Do, YYYY")
-        thumbnail_image: thumbnailImage {
-          resized(width: 300) {
-            url
+        publishedAt(format: "MMM Do, YYYY")
+        thumbnailImage {
+          resized(width: 210, height: 150) {
+            src
+            srcSet
+            width
+            height
           }
         }
         id
       }
     }
   }
+  name
+  slug
 }
 
 fragment Pagination_pageCursors on PageCursors {
@@ -130,6 +130,13 @@ v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
+  "name": "name",
+  "storageKey": null
+},
+v6 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 };
@@ -151,7 +158,7 @@ return {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "Articles_artist"
+            "name": "ArtistArticlesRoute_artist"
           }
         ],
         "storageKey": null
@@ -173,13 +180,6 @@ return {
         "name": "artist",
         "plural": false,
         "selections": [
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "slug",
-            "storageKey": null
-          },
           {
             "alias": null,
             "args": [
@@ -307,7 +307,7 @@ return {
                         "storageKey": null
                       },
                       {
-                        "alias": "thumbnail_title",
+                        "alias": null,
                         "args": null,
                         "kind": "ScalarField",
                         "name": "thumbnailTitle",
@@ -321,19 +321,13 @@ return {
                         "name": "author",
                         "plural": false,
                         "selections": [
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "name",
-                            "storageKey": null
-                          },
-                          (v5/*: any*/)
+                          (v5/*: any*/),
+                          (v6/*: any*/)
                         ],
                         "storageKey": null
                       },
                       {
-                        "alias": "published_at",
+                        "alias": null,
                         "args": [
                           {
                             "kind": "Literal",
@@ -346,7 +340,7 @@ return {
                         "storageKey": "publishedAt(format:\"MMM Do, YYYY\")"
                       },
                       {
-                        "alias": "thumbnail_image",
+                        "alias": null,
                         "args": null,
                         "concreteType": "Image",
                         "kind": "LinkedField",
@@ -358,8 +352,13 @@ return {
                             "args": [
                               {
                                 "kind": "Literal",
+                                "name": "height",
+                                "value": 150
+                              },
+                              {
+                                "kind": "Literal",
                                 "name": "width",
-                                "value": 300
+                                "value": 210
                               }
                             ],
                             "concreteType": "ResizedImageUrl",
@@ -371,16 +370,37 @@ return {
                                 "alias": null,
                                 "args": null,
                                 "kind": "ScalarField",
-                                "name": "url",
+                                "name": "src",
+                                "storageKey": null
+                              },
+                              {
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "srcSet",
+                                "storageKey": null
+                              },
+                              {
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "width",
+                                "storageKey": null
+                              },
+                              {
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "height",
                                 "storageKey": null
                               }
                             ],
-                            "storageKey": "resized(width:300)"
+                            "storageKey": "resized(height:150,width:210)"
                           }
                         ],
                         "storageKey": null
                       },
-                      (v5/*: any*/)
+                      (v6/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -390,7 +410,15 @@ return {
             ],
             "storageKey": "articlesConnection(first:10,inEditorialFeed:true,sort:\"PUBLISHED_AT_DESC\")"
           },
-          (v5/*: any*/)
+          (v5/*: any*/),
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "slug",
+            "storageKey": null
+          },
+          (v6/*: any*/)
         ],
         "storageKey": null
       }
@@ -401,9 +429,9 @@ return {
     "metadata": {},
     "name": "artistRoutes_ArticlesQuery",
     "operationKind": "query",
-    "text": "query artistRoutes_ArticlesQuery(\n  $artistID: String!\n) {\n  artist(id: $artistID) {\n    ...Articles_artist\n    id\n  }\n}\n\nfragment Articles_artist on Artist {\n  ...ArtistArticles_artist\n}\n\nfragment ArtistArticles_artist on Artist {\n  slug\n  articlesConnection(first: 10, sort: PUBLISHED_AT_DESC, inEditorialFeed: true) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        href\n        thumbnail_title: thumbnailTitle\n        author {\n          name\n          id\n        }\n        published_at: publishedAt(format: \"MMM Do, YYYY\")\n        thumbnail_image: thumbnailImage {\n          resized(width: 300) {\n            url\n          }\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n"
+    "text": "query artistRoutes_ArticlesQuery(\n  $artistID: String!\n) {\n  artist(id: $artistID) {\n    ...ArtistArticlesRoute_artist\n    id\n  }\n}\n\nfragment ArtistArticlesRoute_artist on Artist {\n  articlesConnection(first: 10, sort: PUBLISHED_AT_DESC, inEditorialFeed: true) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        href\n        thumbnailTitle\n        author {\n          name\n          id\n        }\n        publishedAt(format: \"MMM Do, YYYY\")\n        thumbnailImage {\n          resized(width: 210, height: 150) {\n            src\n            srcSet\n            width\n            height\n          }\n        }\n        id\n      }\n    }\n  }\n  name\n  slug\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '5c29fc73109cd11b05e9ff1b0f7ace21';
+(node as any).hash = '25e11d3d06186ba39f3e6fd032a39d73';
 export default node;

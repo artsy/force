@@ -8,7 +8,7 @@ export type artistRoutes_AuctionResultsQueryVariables = {
 };
 export type artistRoutes_AuctionResultsQueryResponse = {
     readonly artist: {
-        readonly " $fragmentRefs": FragmentRefs<"AuctionResults_artist">;
+        readonly " $fragmentRefs": FragmentRefs<"ArtistAuctionResultsRoute_artist">;
     } | null;
 };
 export type artistRoutes_AuctionResultsQuery = {
@@ -23,7 +23,7 @@ query artistRoutes_AuctionResultsQuery(
   $artistID: String!
 ) {
   artist(id: $artistID) {
-    ...AuctionResults_artist
+    ...ArtistAuctionResultsRoute_artist
     id
   }
 }
@@ -52,12 +52,19 @@ fragment ArtistAuctionResultItem_auctionResult on AuctionResult {
   }
 }
 
+fragment ArtistAuctionResultsCount_results on AuctionResultConnection {
+  totalCount
+}
+
+fragment ArtistAuctionResultsRoute_artist on Artist {
+  ...ArtistAuctionResults_artist
+}
+
 fragment ArtistAuctionResults_artist on Artist {
   slug
   name
-  ...AuctionResultHeader_artist
   auctionResultsConnection(first: 10, sort: DATE_DESC) {
-    ...AuctionResultsCount_results
+    ...ArtistAuctionResultsCount_results
     createdYearRange {
       startAt
       endAt
@@ -86,18 +93,6 @@ fragment ArtistAuctionResults_artist on Artist {
       }
     }
   }
-}
-
-fragment AuctionResultHeader_artist on Artist {
-  slug
-}
-
-fragment AuctionResultsCount_results on AuctionResultConnection {
-  totalCount
-}
-
-fragment AuctionResults_artist on Artist {
-  ...ArtistAuctionResults_artist
 }
 
 fragment Pagination_pageCursors on PageCursors {
@@ -196,7 +191,7 @@ return {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "AuctionResults_artist"
+            "name": "ArtistAuctionResultsRoute_artist"
           }
         ],
         "storageKey": null
@@ -522,9 +517,9 @@ return {
     "metadata": {},
     "name": "artistRoutes_AuctionResultsQuery",
     "operationKind": "query",
-    "text": "query artistRoutes_AuctionResultsQuery(\n  $artistID: String!\n) {\n  artist(id: $artistID) {\n    ...AuctionResults_artist\n    id\n  }\n}\n\nfragment ArtistAuctionResultItem_auctionResult on AuctionResult {\n  title\n  dimension_text: dimensionText\n  organization\n  images {\n    thumbnail {\n      url\n    }\n  }\n  mediumText\n  categoryText\n  description\n  date_text: dateText\n  saleDate\n  boughtIn\n  price_realized: priceRealized {\n    display\n    cents_usd: centsUSD\n  }\n  estimate {\n    display\n  }\n}\n\nfragment ArtistAuctionResults_artist on Artist {\n  slug\n  name\n  ...AuctionResultHeader_artist\n  auctionResultsConnection(first: 10, sort: DATE_DESC) {\n    ...AuctionResultsCount_results\n    createdYearRange {\n      startAt\n      endAt\n    }\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    totalCount\n    edges {\n      node {\n        title\n        dimension_text: dimensionText\n        images {\n          thumbnail {\n            url\n          }\n        }\n        description\n        date_text: dateText\n        ...ArtistAuctionResultItem_auctionResult\n        id\n      }\n    }\n  }\n}\n\nfragment AuctionResultHeader_artist on Artist {\n  slug\n}\n\nfragment AuctionResultsCount_results on AuctionResultConnection {\n  totalCount\n}\n\nfragment AuctionResults_artist on Artist {\n  ...ArtistAuctionResults_artist\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n"
+    "text": "query artistRoutes_AuctionResultsQuery(\n  $artistID: String!\n) {\n  artist(id: $artistID) {\n    ...ArtistAuctionResultsRoute_artist\n    id\n  }\n}\n\nfragment ArtistAuctionResultItem_auctionResult on AuctionResult {\n  title\n  dimension_text: dimensionText\n  organization\n  images {\n    thumbnail {\n      url\n    }\n  }\n  mediumText\n  categoryText\n  description\n  date_text: dateText\n  saleDate\n  boughtIn\n  price_realized: priceRealized {\n    display\n    cents_usd: centsUSD\n  }\n  estimate {\n    display\n  }\n}\n\nfragment ArtistAuctionResultsCount_results on AuctionResultConnection {\n  totalCount\n}\n\nfragment ArtistAuctionResultsRoute_artist on Artist {\n  ...ArtistAuctionResults_artist\n}\n\nfragment ArtistAuctionResults_artist on Artist {\n  slug\n  name\n  auctionResultsConnection(first: 10, sort: DATE_DESC) {\n    ...ArtistAuctionResultsCount_results\n    createdYearRange {\n      startAt\n      endAt\n    }\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    totalCount\n    edges {\n      node {\n        title\n        dimension_text: dimensionText\n        images {\n          thumbnail {\n            url\n          }\n        }\n        description\n        date_text: dateText\n        ...ArtistAuctionResultItem_auctionResult\n        id\n      }\n    }\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'd16da0cd73fbe3f17e8feb1004c73826';
+(node as any).hash = '30e0dbfd492d1ddaf7b972ff935b6c02';
 export default node;

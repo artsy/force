@@ -9,7 +9,7 @@ export type ArtistOverviewRoute_artist = {
         readonly artworks: number | null;
     } | null;
     readonly internalID: string;
-    readonly " $fragmentRefs": FragmentRefs<"Artist2NotableWorksRail_artist" | "Artist2CareerHighlights_artist" | "Artist2WorksForSaleRail_artist" | "Artist2CurrentShowsRail_artist" | "Artist2CurrentArticlesRail_artist" | "Artist2RelatedArtistsRail_artist">;
+    readonly " $fragmentRefs": FragmentRefs<"ArtistNotableWorksRail_artist" | "ArtistCareerHighlights_artist" | "ArtistWorksForSaleRail_artist" | "ArtistCurrentShowsRail_artist" | "ArtistCurrentArticlesRail_artist" | "ArtistRelatedArtistsRail_artist">;
     readonly " $refType": "ArtistOverviewRoute_artist";
 };
 export type ArtistOverviewRoute_artist$data = ArtistOverviewRoute_artist;
@@ -61,35 +61,35 @@ const node: ReaderFragment = {
     {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "Artist2NotableWorksRail_artist"
+      "name": "ArtistNotableWorksRail_artist"
     },
     {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "Artist2CareerHighlights_artist"
+      "name": "ArtistCareerHighlights_artist"
     },
     {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "Artist2WorksForSaleRail_artist"
+      "name": "ArtistWorksForSaleRail_artist"
     },
     {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "Artist2CurrentShowsRail_artist"
+      "name": "ArtistCurrentShowsRail_artist"
     },
     {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "Artist2CurrentArticlesRail_artist"
+      "name": "ArtistCurrentArticlesRail_artist"
     },
     {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "Artist2RelatedArtistsRail_artist"
+      "name": "ArtistRelatedArtistsRail_artist"
     }
   ],
   "type": "Artist"
 };
-(node as any).hash = 'acb69b0db9802b3f3455a462feee7046';
+(node as any).hash = '751e99d3d16a87d5df8db9fe06d72e83';
 export default node;

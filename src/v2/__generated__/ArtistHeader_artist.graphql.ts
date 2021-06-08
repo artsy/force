@@ -26,6 +26,7 @@ export type ArtistHeader_artist = {
             } | null;
         } | null> | null;
     } | null;
+    readonly imageUrl: string | null;
     readonly internalID: string;
     readonly slug: string;
     readonly name: string | null;
@@ -34,7 +35,12 @@ export type ArtistHeader_artist = {
         readonly follows: number | null;
         readonly forSaleArtworks: number | null;
     } | null;
-    readonly " $fragmentRefs": FragmentRefs<"FollowArtistButton_artist">;
+    readonly biographyBlurb: {
+        readonly credit: string | null;
+        readonly partnerID: string | null;
+        readonly text: string | null;
+    } | null;
+    readonly " $fragmentRefs": FragmentRefs<"FollowArtist2Button_artist" | "SelectedCareerAchievements_artist">;
     readonly " $refType": "ArtistHeader_artist";
 };
 export type ArtistHeader_artist$data = ArtistHeader_artist;
@@ -244,6 +250,13 @@ return {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
+      "name": "imageUrl",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "internalID",
       "storageKey": null
     },
@@ -288,13 +301,61 @@ return {
       "storageKey": null
     },
     {
+      "alias": null,
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "format",
+          "value": "HTML"
+        },
+        {
+          "kind": "Literal",
+          "name": "partnerBio",
+          "value": true
+        }
+      ],
+      "concreteType": "ArtistBlurb",
+      "kind": "LinkedField",
+      "name": "biographyBlurb",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "credit",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "partnerID",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "text",
+          "storageKey": null
+        }
+      ],
+      "storageKey": "biographyBlurb(format:\"HTML\",partnerBio:true)"
+    },
+    {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "FollowArtistButton_artist"
+      "name": "FollowArtist2Button_artist"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "SelectedCareerAchievements_artist"
     }
   ],
   "type": "Artist"
 };
 })();
-(node as any).hash = '3d3ffa84a63a8d9f030e520a302dcd3a';
+(node as any).hash = '6d4e919c1ba93e68137c68af34e512f7';
 export default node;

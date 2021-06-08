@@ -1,4 +1,4 @@
-import { artist2Routes } from "v2/Apps/Artist2/artist2Routes"
+import { artistRoutes } from "v2/Apps/Artist/artistRoutes"
 import { artistSeriesRoutes } from "v2/Apps/ArtistSeries/artistSeriesRoutes"
 import { artistsRoutes } from "v2/Apps/Artists/artistsRoutes"
 import { artworkRoutes } from "v2/Apps/Artwork/artworkRoutes"
@@ -28,7 +28,7 @@ import { tagRoutes } from "./Apps/Tag/tagRoutes"
 export function getAppRoutes(): AppRouteConfig[] {
   return buildAppRoutes([
     {
-      routes: artist2Routes,
+      routes: artistRoutes,
     },
     {
       routes: artistsRoutes,

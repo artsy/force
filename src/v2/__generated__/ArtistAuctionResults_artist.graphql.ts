@@ -33,9 +33,8 @@ export type ArtistAuctionResults_artist = {
                 readonly " $fragmentRefs": FragmentRefs<"ArtistAuctionResultItem_auctionResult">;
             } | null;
         } | null> | null;
-        readonly " $fragmentRefs": FragmentRefs<"AuctionResultsCount_results">;
+        readonly " $fragmentRefs": FragmentRefs<"ArtistAuctionResultsCount_results">;
     } | null;
-    readonly " $fragmentRefs": FragmentRefs<"AuctionResultHeader_artist">;
     readonly " $refType": "ArtistAuctionResults_artist";
 };
 export type ArtistAuctionResults_artist$data = ArtistAuctionResults_artist;
@@ -357,18 +356,13 @@ const node: ReaderFragment = {
         {
           "args": null,
           "kind": "FragmentSpread",
-          "name": "AuctionResultsCount_results"
+          "name": "ArtistAuctionResultsCount_results"
         }
       ],
       "storageKey": null
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "AuctionResultHeader_artist"
     }
   ],
   "type": "Artist"
 };
-(node as any).hash = '5aff1d33dbcf125bff6a53cf3f8a8a6f';
+(node as any).hash = 'c22f570e5624e20944154cc34f0a9b43';
 export default node;
