@@ -1,3 +1,4 @@
+/* eslint-disable jest/no-done-callback */
 import { data as sd } from "sharify"
 import { getCurrentUnixTimestamp } from "@artsy/reaction/dist/Components/Publishing/Constants"
 import * as fixtures from "@artsy/reaction/dist/Components/Publishing/Fixtures/Articles"
@@ -8,6 +9,9 @@ const Article = require("desktop/models/article.coffee")
 
 jest.mock("desktop/lib/positronql", () => ({
   positronql: jest.fn(),
+}))
+jest.mock("desktop/lib/buildServerAppContext", () => ({
+  buildServerAppContext: jest.fn(),
 }))
 
 jest.mock("lib/metaphysics2.coffee", () => jest.fn())
@@ -28,6 +32,8 @@ jest.mock("@artsy/stitch", () => ({
 }))
 
 const positronql = require("desktop/lib/positronql").positronql as jest.Mock
+const buildServerAppContext = require("desktop/lib/buildServerAppContext")
+  .buildServerAppContext as jest.Mock
 const stitch = require("@artsy/stitch").stitch as jest.Mock
 const metaphysics = require("lib/metaphysics2.coffee") as jest.Mock
 
@@ -63,13 +69,14 @@ describe("Article Routes", () => {
 
     positronql.mockReturnValue(Promise.resolve({ article }))
     stitch.mockReturnValue(Promise.resolve())
-
+    buildServerAppContext.mockReturnValue({ isEigen: false })
     Article.prototype.fetchWithRelated = jest.fn(options => {
       options.success({ article: new Article(article) })
     })
   })
 
   afterEach(() => {
+    buildServerAppContext.mockClear()
     positronql.mockClear()
     stitch.mockClear()
     metaphysics.mockClear()
