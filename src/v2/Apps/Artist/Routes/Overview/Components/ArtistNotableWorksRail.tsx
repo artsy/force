@@ -33,7 +33,7 @@ const ArtistNotableWorksRail: React.FC<ArtistNotableWorksRailProps> = ({
   return (
     <>
       <Flex justifyContent="space-between">
-        <Text variant="lg" mb={2}>
+        <Text variant="lg" mb={2} as="h2">
           Notable Works
         </Text>
 

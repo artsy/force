@@ -31,7 +31,7 @@ const ArtistCurrentShowsRail: React.FC<ArtistCurrentShowsRailProps> = ({
   return (
     <>
       <Flex justifyContent="space-between">
-        <Text variant="lg" mb={4}>
+        <Text variant="lg" mb={4} as="h2">
           Shows featuring {artist.name}
         </Text>
 
