@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-  artsy-remote-docker: artsy/remote-docker@0.1.11
+  artsy-remote-docker: artsy/remote-docker@0.1.12
   aws-s3: circleci/aws-s3@2.0.0
   codecov: codecov/codecov@1.2.3
   hokusai: artsy/hokusai@0.8.0
