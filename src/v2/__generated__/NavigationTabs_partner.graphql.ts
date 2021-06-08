@@ -9,6 +9,7 @@ export type NavigationTabs_partner = {
     readonly displayWorksSection: boolean | null;
     readonly counts: {
         readonly eligibleArtworks: number | null;
+        readonly currentDisplayableShows: number | null;
     } | null;
     readonly locations: {
         readonly totalCount: number | null;
@@ -88,6 +89,13 @@ return {
           "kind": "ScalarField",
           "name": "eligibleArtworks",
           "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "currentDisplayableShows",
+          "storageKey": null
         }
       ],
       "storageKey": null
@@ -161,5 +169,5 @@ return {
   "type": "Partner"
 };
 })();
-(node as any).hash = '05e78b2944118e955c4923bde262b071';
+(node as any).hash = '15c4322e84bcf93bf29574a572603e77';
 export default node;

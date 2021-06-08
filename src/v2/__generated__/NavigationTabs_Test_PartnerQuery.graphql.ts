@@ -16,6 +16,7 @@ export type NavigationTabs_Test_PartnerQueryRawResponse = {
         readonly displayWorksSection: boolean | null;
         readonly counts: ({
             readonly eligibleArtworks: number | null;
+            readonly currentDisplayableShows: number | null;
         }) | null;
         readonly locations: ({
             readonly totalCount: number | null;
@@ -54,6 +55,7 @@ fragment NavigationTabs_partner on Partner {
   displayWorksSection
   counts {
     eligibleArtworks
+    currentDisplayableShows
   }
   locations: locationsConnection(first: 20) {
     totalCount
@@ -167,6 +169,13 @@ return {
                 "kind": "ScalarField",
                 "name": "eligibleArtworks",
                 "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "currentDisplayableShows",
+                "storageKey": null
               }
             ],
             "storageKey": null
@@ -253,7 +262,7 @@ return {
     "metadata": {},
     "name": "NavigationTabs_Test_PartnerQuery",
     "operationKind": "query",
-    "text": "query NavigationTabs_Test_PartnerQuery {\n  partner(id: \"white-cube\") {\n    ...NavigationTabs_partner\n    id\n  }\n}\n\nfragment NavigationTabs_partner on Partner {\n  slug\n  displayArtistsSection\n  displayWorksSection\n  counts {\n    eligibleArtworks\n  }\n  locations: locationsConnection(first: 20) {\n    totalCount\n  }\n  articles: articlesConnection {\n    totalCount\n  }\n  representedArtists: artistsConnection(representedBy: true, displayOnPartnerProfile: true) {\n    totalCount\n  }\n  notRepresentedArtists: artistsConnection(representedBy: false, hasPublishedArtworks: true, displayOnPartnerProfile: true) {\n    totalCount\n  }\n}\n"
+    "text": "query NavigationTabs_Test_PartnerQuery {\n  partner(id: \"white-cube\") {\n    ...NavigationTabs_partner\n    id\n  }\n}\n\nfragment NavigationTabs_partner on Partner {\n  slug\n  displayArtistsSection\n  displayWorksSection\n  counts {\n    eligibleArtworks\n    currentDisplayableShows\n  }\n  locations: locationsConnection(first: 20) {\n    totalCount\n  }\n  articles: articlesConnection {\n    totalCount\n  }\n  representedArtists: artistsConnection(representedBy: true, displayOnPartnerProfile: true) {\n    totalCount\n  }\n  notRepresentedArtists: artistsConnection(representedBy: false, hasPublishedArtworks: true, displayOnPartnerProfile: true) {\n    totalCount\n  }\n}\n"
   }
 };
 })();
