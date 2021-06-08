@@ -29,7 +29,9 @@ export const legacyCommonConfig = {
   optimization: {
     // Extract webpack runtime code into it's own file
     concatenateModules: env.webpackConcatenate,
-    runtimeChunk: "single",
+    runtimeChunk: {
+      name: "legacy-runtime",
+    },
     splitChunks: {
       maxInitialRequests: Infinity,
       cacheGroups: {
@@ -38,7 +40,7 @@ export const legacyCommonConfig = {
           enforce: true,
           minChunks: 1,
           minSize: 0,
-          name: "artsy",
+          name: "legacy-artsy",
           reuseExistingChunk: true,
           test: /.*node_modules[\\/](@artsy)[\\/]/,
         },
@@ -47,13 +49,13 @@ export const legacyCommonConfig = {
           enforce: true,
           minChunks: 5,
           minSize: 0,
-          name: "artsy-common",
+          name: "legacy-artsy-common",
           reuseExistingChunk: true,
           test: /.*src[\\/]/,
         },
         "common-backbone": {
           test: /.*node_modules[\\/](backbone.*)[\\/]/,
-          name: "common-backbone",
+          name: "legacy-common-backbone",
           chunks: "all",
           minSize: 0,
           minChunks: 1,
@@ -62,7 +64,7 @@ export const legacyCommonConfig = {
         },
         "common-jquery": {
           test: /.*node_modules[\\/](jquery.*)[\\/]/,
-          name: "common-jquery",
+          name: "legacy-common-jquery",
           chunks: "all",
           minSize: 0,
           minChunks: 1,
@@ -74,7 +76,7 @@ export const legacyCommonConfig = {
           enforce: true,
           minChunks: 1,
           minSize: 0,
-          name: "common-react",
+          name: "legacy-common-react",
           reuseExistingChunk: true,
           test: /.*node_modules[\\/](react|react-dom)[\\/]/,
         },
@@ -83,7 +85,7 @@ export const legacyCommonConfig = {
           enforce: true,
           minChunks: 1,
           minSize: 0,
-          name: "common-utility",
+          name: "legacy-common-utility",
           reuseExistingChunk: true,
           test: /.*node_modules[\\/](lodash.*|moment.*)[\\/]/,
         },
@@ -92,7 +94,7 @@ export const legacyCommonConfig = {
           enforce: true,
           minChunks: 2,
           minSize: 0,
-          name: "common",
+          name: "legacy-common",
           reuseExistingChunk: true,
           test: /.*node_modules[\\/](?!(@artsy[\\/]|react[\\/]|react-dom[\\/]|backbone.*[\\/]|lodash.*[\\/]|moment.*[\\/]|jquery.*[\\/]))/,
         },
@@ -100,7 +102,7 @@ export const legacyCommonConfig = {
     },
   },
   output: {
-    filename: "legacy-[name].js",
+    filename: "[name].js",
     path: path.resolve(basePath, "public/assets"),
     publicPath: "/assets/",
   },
