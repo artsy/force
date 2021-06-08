@@ -107,11 +107,6 @@ describe("OrderApp routing redirects", () => {
                   id: "artwork-id",
                   is_acquireable: true,
                   is_offerable: true,
-                  listPrice: {
-                    __typename: "Money",
-                    major: 12000,
-                  },
-                  priceCurrency: "USD",
                   slug: "artwork-id",
                 },
                 id: "node id",
@@ -545,6 +540,12 @@ describe("OrderApp", () => {
     expect(subject.text()).toMatch(
       "Need help? Visit our help center or ask a question."
     )
+  })
+
+  it("shows the Zendesk chat integration button", () => {
+    const props = getProps() as any
+    const subject = getWrapper({ props }) as any
+    expect(subject.find("ZendeskWrapper")).toHaveLength(1)
   })
 
   it("opens inquiry questionaire modal when user clicks on 'ask a question'", () => {
