@@ -24,6 +24,7 @@ import { searchRoutes } from "v2/Apps/Search/searchRoutes"
 import { showRoutes } from "v2/Apps/Show/showRoutes"
 import { viewingRoomRoutes } from "v2/Apps/ViewingRoom/viewingRoomRoutes"
 import { tagRoutes } from "./Apps/Tag/tagRoutes"
+import { unsubscribeRoutes } from "./Apps/Unsubscribe/unsubscribeRoutes"
 
 export function getAppRoutes(): AppRouteConfig[] {
   return buildAppRoutes([
@@ -92,6 +93,9 @@ export function getAppRoutes(): AppRouteConfig[] {
     },
     {
       routes: tagRoutes,
+    },
+    {
+      routes: unsubscribeRoutes,
     },
     {
       routes: viewingRoomRoutes,
