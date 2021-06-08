@@ -8,6 +8,9 @@ export type partnerRoutes_ShowsQueryVariables = {
 };
 export type partnerRoutes_ShowsQueryResponse = {
     readonly partner: {
+        readonly counts: {
+            readonly currentDisplayableShows: number | null;
+        } | null;
         readonly " $fragmentRefs": FragmentRefs<"Shows_partner">;
     } | null;
 };
@@ -23,6 +26,9 @@ query partnerRoutes_ShowsQuery(
   $partnerId: String!
 ) {
   partner(id: $partnerId) @principalField {
+    counts {
+      currentDisplayableShows
+    }
     ...Shows_partner
     id
   }
@@ -123,77 +129,95 @@ v1 = [
 v2 = {
   "alias": null,
   "args": null,
+  "concreteType": "PartnerCounts",
+  "kind": "LinkedField",
+  "name": "counts",
+  "plural": false,
+  "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "currentDisplayableShows",
+      "storageKey": null
+    }
+  ],
+  "storageKey": null
+},
+v3 = {
+  "alias": null,
+  "args": null,
   "kind": "ScalarField",
   "name": "slug",
   "storageKey": null
 },
-v3 = {
+v4 = {
   "kind": "Literal",
   "name": "isDisplayable",
   "value": true
 },
-v4 = {
+v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "internalID",
   "storageKey": null
 },
-v5 = {
+v6 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "name",
   "storageKey": null
 },
-v6 = {
+v7 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "href",
   "storageKey": null
 },
-v7 = {
+v8 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "isFairBooth",
   "storageKey": null
 },
-v8 = {
+v9 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "exhibitionPeriod",
   "storageKey": null
 },
-v9 = {
+v10 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v10 = {
+v11 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "src",
   "storageKey": null
 },
-v11 = {
+v12 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "srcSet",
   "storageKey": null
 },
-v12 = {
+v13 = {
   "kind": "Literal",
   "name": "first",
   "value": 12
 },
-v13 = [
+v14 = [
   {
     "alias": null,
     "args": null,
@@ -210,12 +234,12 @@ v13 = [
         "name": "node",
         "plural": false,
         "selections": [
-          (v4/*: any*/),
-          (v9/*: any*/),
-          (v6/*: any*/),
           (v5/*: any*/),
+          (v10/*: any*/),
           (v7/*: any*/),
+          (v6/*: any*/),
           (v8/*: any*/),
+          (v9/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -257,8 +281,8 @@ v13 = [
                     "name": "height",
                     "storageKey": null
                   },
-                  (v10/*: any*/),
-                  (v11/*: any*/)
+                  (v11/*: any*/),
+                  (v12/*: any*/)
                 ],
                 "storageKey": "cropped(height:222,width:263)"
               }
@@ -287,6 +311,7 @@ return {
         "name": "partner",
         "plural": false,
         "selections": [
+          (v2/*: any*/),
           {
             "args": null,
             "kind": "FragmentSpread",
@@ -313,6 +338,7 @@ return {
         "plural": false,
         "selections": [
           (v2/*: any*/),
+          (v3/*: any*/),
           {
             "alias": "featuredEvents",
             "args": [
@@ -321,7 +347,7 @@ return {
                 "name": "first",
                 "value": 1
               },
-              (v3/*: any*/),
+              (v4/*: any*/),
               {
                 "kind": "Literal",
                 "name": "sort",
@@ -361,12 +387,12 @@ return {
                         "name": "isFeatured",
                         "storageKey": null
                       },
-                      (v4/*: any*/),
-                      (v2/*: any*/),
                       (v5/*: any*/),
+                      (v3/*: any*/),
                       (v6/*: any*/),
                       (v7/*: any*/),
                       (v8/*: any*/),
+                      (v9/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -396,7 +422,7 @@ return {
                             "name": "city",
                             "storageKey": null
                           },
-                          (v9/*: any*/)
+                          (v10/*: any*/)
                         ],
                         "storageKey": null
                       },
@@ -427,15 +453,15 @@ return {
                             "name": "cropped",
                             "plural": false,
                             "selections": [
-                              (v10/*: any*/),
-                              (v11/*: any*/)
+                              (v11/*: any*/),
+                              (v12/*: any*/)
                             ],
                             "storageKey": "cropped(height:480,width:600)"
                           }
                         ],
                         "storageKey": null
                       },
-                      (v9/*: any*/)
+                      (v10/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -448,8 +474,8 @@ return {
           {
             "alias": "currentEvents",
             "args": [
-              (v12/*: any*/),
-              (v3/*: any*/),
+              (v13/*: any*/),
+              (v4/*: any*/),
               {
                 "kind": "Literal",
                 "name": "status",
@@ -460,14 +486,14 @@ return {
             "kind": "LinkedField",
             "name": "showsConnection",
             "plural": false,
-            "selections": (v13/*: any*/),
+            "selections": (v14/*: any*/),
             "storageKey": "showsConnection(first:12,isDisplayable:true,status:\"RUNNING\")"
           },
           {
             "alias": "upcomingEvents",
             "args": [
-              (v12/*: any*/),
-              (v3/*: any*/),
+              (v13/*: any*/),
+              (v4/*: any*/),
               {
                 "kind": "Literal",
                 "name": "status",
@@ -478,10 +504,10 @@ return {
             "kind": "LinkedField",
             "name": "showsConnection",
             "plural": false,
-            "selections": (v13/*: any*/),
+            "selections": (v14/*: any*/),
             "storageKey": "showsConnection(first:12,isDisplayable:true,status:\"UPCOMING\")"
           },
-          (v9/*: any*/)
+          (v10/*: any*/)
         ],
         "storageKey": null
       }
@@ -492,9 +518,9 @@ return {
     "metadata": {},
     "name": "partnerRoutes_ShowsQuery",
     "operationKind": "query",
-    "text": "query partnerRoutes_ShowsQuery(\n  $partnerId: String!\n) {\n  partner(id: $partnerId) @principalField {\n    ...Shows_partner\n    id\n  }\n}\n\nfragment ShowBanner_show on Show {\n  slug\n  name\n  href\n  isFairBooth\n  exhibitionPeriod\n  status\n  description\n  location {\n    city\n    id\n  }\n  coverImage {\n    medium: cropped(width: 600, height: 480) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ShowCard_show on Show {\n  href\n  name\n  isFairBooth\n  exhibitionPeriod\n  coverImage {\n    medium: cropped(width: 263, height: 222) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ShowEvents_edges on ShowEdge {\n  node {\n    internalID\n    ...ShowCard_show\n    id\n  }\n}\n\nfragment Shows_partner on Partner {\n  slug\n  featuredEvents: showsConnection(first: 1, status: ALL, sort: FEATURED_DESC_END_AT_DESC, isDisplayable: true) {\n    edges {\n      node {\n        isFeatured\n        internalID\n        ...ShowBanner_show\n        id\n      }\n    }\n  }\n  currentEvents: showsConnection(first: 12, status: RUNNING, isDisplayable: true) {\n    edges {\n      node {\n        internalID\n        id\n      }\n      ...ShowEvents_edges\n    }\n  }\n  upcomingEvents: showsConnection(first: 12, status: UPCOMING, isDisplayable: true) {\n    edges {\n      node {\n        internalID\n        id\n      }\n      ...ShowEvents_edges\n    }\n  }\n}\n"
+    "text": "query partnerRoutes_ShowsQuery(\n  $partnerId: String!\n) {\n  partner(id: $partnerId) @principalField {\n    counts {\n      currentDisplayableShows\n    }\n    ...Shows_partner\n    id\n  }\n}\n\nfragment ShowBanner_show on Show {\n  slug\n  name\n  href\n  isFairBooth\n  exhibitionPeriod\n  status\n  description\n  location {\n    city\n    id\n  }\n  coverImage {\n    medium: cropped(width: 600, height: 480) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ShowCard_show on Show {\n  href\n  name\n  isFairBooth\n  exhibitionPeriod\n  coverImage {\n    medium: cropped(width: 263, height: 222) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ShowEvents_edges on ShowEdge {\n  node {\n    internalID\n    ...ShowCard_show\n    id\n  }\n}\n\nfragment Shows_partner on Partner {\n  slug\n  featuredEvents: showsConnection(first: 1, status: ALL, sort: FEATURED_DESC_END_AT_DESC, isDisplayable: true) {\n    edges {\n      node {\n        isFeatured\n        internalID\n        ...ShowBanner_show\n        id\n      }\n    }\n  }\n  currentEvents: showsConnection(first: 12, status: RUNNING, isDisplayable: true) {\n    edges {\n      node {\n        internalID\n        id\n      }\n      ...ShowEvents_edges\n    }\n  }\n  upcomingEvents: showsConnection(first: 12, status: UPCOMING, isDisplayable: true) {\n    edges {\n      node {\n        internalID\n        id\n      }\n      ...ShowEvents_edges\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'e1e42444e8c83b5a84a65fe0d9745764';
+(node as any).hash = 'ff7b0a519f65c6624048573c83600f13';
 export default node;
