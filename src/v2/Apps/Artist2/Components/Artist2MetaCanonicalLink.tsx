@@ -3,9 +3,9 @@ import { Link } from "react-head"
 import { data as sd } from "sharify"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Artist2MetaCanonicalLink_artist } from "v2/__generated__/Artist2MetaCanonicalLink_artist.graphql"
-import { hasSections as showMarketInsights } from "v2/Apps/Artist2/Components/MarketInsights/MarketInsights"
 import { useRouter } from "v2/Artsy/Router/useRouter"
 import { hasOverviewContent } from "../Routes/Overview/Utils/hasOverviewContent"
+import { hasSections } from "v2/Components/ArtistMarketInsights"
 
 export const computeCanonicalPath = (
   appUrl: string,
@@ -40,8 +40,7 @@ export const Artist2MetaCanonicalLink: React.FC<Artist2MetaCanonicalLinkProps> =
   const { pathname } = useRouter().match.location
   const hasArtistInsights =
     // @ts-expect-error STRICT_NULL_CHECK
-    showMarketInsights(artist) ||
-    (artist.insights && artist.insights.length > 0)
+    hasSections(artist) || (artist.insights && artist.insights.length > 0)
 
   // @ts-expect-error STRICT_NULL_CHECK
   const hasArtistContent = hasOverviewContent(artist)
