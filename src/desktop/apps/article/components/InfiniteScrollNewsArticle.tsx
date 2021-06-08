@@ -24,6 +24,7 @@ export interface Props {
   article?: ArticleData
   articles: ArticleData[]
   isMobile?: boolean
+  isEigen?: boolean
   shouldAdRender?: boolean
 }
 
@@ -209,7 +210,9 @@ export class InfiniteScrollNewsArticle extends Component<Props, State> {
         const renderAd = shouldAdRender(
           adPosition.index,
           adPosition.startIndex,
-          adPosition.frequency
+          adPosition.frequency,
+          null,
+          this.props.isEigen
         )
 
         return (

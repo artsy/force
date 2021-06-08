@@ -11,6 +11,7 @@ import { ClassicArticleLayout } from "desktop/apps/article/components/layouts/Cl
 import { mediator } from "lib/mediator"
 
 export interface AppProps extends ArticleProps {
+  isEigen?: boolean
   templates?: {
     SuperArticleFooter: string
     SuperArticleHeader: string

@@ -23,7 +23,7 @@ interface InfiniteScrollArticleState {
 }
 
 export class InfiniteScrollArticle extends React.Component<
-  ArticleProps,
+  ArticleProps & { isEigen?: boolean },
   InfiniteScrollArticleState
 > {
   constructor(props) {
@@ -131,6 +131,7 @@ export class InfiniteScrollArticle extends React.Component<
       article: { slug },
       isMobile,
       showTooltips,
+      isEigen,
     } = this.props
     const { articles } = this.state
 
@@ -139,7 +140,7 @@ export class InfiniteScrollArticle extends React.Component<
         const articleType = article.layout
         // Feature articles and Standard articles should return true
         // @ts-expect-error STRICT_NULL_CHECK
-        const renderAd = shouldAdRender(null, null, null, articleType)
+        const renderAd = shouldAdRender(null, null, null, articleType, isEigen)
 
         return (
           <div key={`article-${i}`}>
