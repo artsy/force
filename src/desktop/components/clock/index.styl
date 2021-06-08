@@ -15,9 +15,14 @@
   list-style none
   text-transform capitalize
 
+  :first-child
+    margin-left: 0
+
   li
     display inline-block
+    text-align center
     vertical-align top
+    margin getSpace(0, 0.5)
 
     small
       text('mediumText')
