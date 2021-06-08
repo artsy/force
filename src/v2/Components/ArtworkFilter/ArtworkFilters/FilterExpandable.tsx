@@ -4,25 +4,24 @@ import {
   ExpandableProps,
   useThemeConfig,
 } from "@artsy/palette"
-import React, { useContext, useEffect, useRef, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
+import { Media } from "v2/Utils/Responsive"
 import { getElementParams } from "./helpers"
-import { ScrollRefContext } from "./useScrollContext"
+import { ScrollRefContextValue, useScrollRefContext } from "./useScrollContext"
 
-export const FilterExpandable: React.FC<ExpandableProps> = props => {
-  const tokens = useThemeConfig({
-    v2: { mb: 1 },
-    v3: { mb: 6 },
-  })
+const FilterExpandableWithScroll: React.FC<
+  ExpandableProps & { tokens: { mb: number } }
+> = ({ tokens, ...props }) => {
+  const ctx = useScrollRefContext()
+  const { scrollRef } = ctx as ScrollRefContextValue
 
-  // @ts-expect-error STRICT_NULL_CHECK
-  const { scrollRef } = useContext(ScrollRefContext)
-  const filterRef = useRef(null)
-  const anchorRef = useRef(null)
+  const filterRef = useRef<HTMLDivElement | null>(null)
+  const anchorRef = useRef<HTMLDivElement | null>(null)
 
   const [open, setOpen] = useState(!!props.expanded)
 
   useEffect(() => {
-    if (open) {
+    if (open && scrollRef?.current) {
       const { height: containerHeight, top: containerTop } = getElementParams(
         scrollRef.current
       )
@@ -32,8 +31,7 @@ export const FilterExpandable: React.FC<ExpandableProps> = props => {
       const visiblePartHeight = containerHeight - filterTop + containerTop
 
       if (visiblePartHeight < filterHeight) {
-        // @ts-expect-error STRICT_NULL_CHECK
-        anchorRef.current.scrollIntoView({ block: "end" })
+        anchorRef.current?.scrollIntoView({ block: "end" })
       }
     }
   }, [open, filterRef])
@@ -43,9 +41,27 @@ export const FilterExpandable: React.FC<ExpandableProps> = props => {
   }
 
   return (
-    <Box ref={filterRef}>
+    <Box ref={filterRef as any}>
       <Expandable mb={tokens.mb} onClick={onClick} {...props} />
       <div ref={anchorRef}></div>
     </Box>
+  )
+}
+
+export const FilterExpandable: React.FC<ExpandableProps> = props => {
+  const tokens = useThemeConfig({
+    v2: { mb: 1 },
+    v3: { mb: 6 },
+  })
+
+  return (
+    <>
+      <Media at="xs">
+        <FilterExpandableWithScroll tokens={tokens} {...props} />
+      </Media>
+      <Media greaterThan="xs">
+        <Expandable mb={tokens.mb} {...props} />
+      </Media>
+    </>
   )
 }

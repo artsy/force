@@ -1,7 +1,7 @@
 import { createContext, RefObject, useContext } from "react"
 
 export interface ScrollRefContextValue {
-  scrollRef: RefObject<any>
+  scrollRef: RefObject<HTMLDivElement | null>
 }
 
 export const ScrollRefContext = createContext<ScrollRefContextValue | null>(
@@ -9,6 +9,5 @@ export const ScrollRefContext = createContext<ScrollRefContextValue | null>(
 )
 
 export const useScrollRefContext = () => {
-  const ctx = useContext(ScrollRefContext)
-  return ctx
+  return useContext(ScrollRefContext)
 }
