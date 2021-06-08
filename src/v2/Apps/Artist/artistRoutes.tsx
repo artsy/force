@@ -1,5 +1,6 @@
+import React from "react"
 import loadable from "@loadable/component"
-import { Redirect } from "found"
+import { Redirect, RedirectException } from "found"
 import { graphql } from "react-relay"
 import { AppRouteConfig } from "v2/Artsy/Router/Route"
 import { ArtistRoutesTopLevelQuery } from "./Queries/ArtistRoutesTopLevelQuery"
@@ -43,10 +44,13 @@ const AuctionResultsRoute = loadable(
       component.AuctionResultsRouteFragmentContainer,
   }
 )
-
-// const ConsignRoute = loadable(() => import("./Routes/Consign"), {
-//   resolveComponent: component => component.ConsignRouteFragmentContainer,
-// })
+const ConsignRoute = loadable(
+  () => import("./Routes/Consign/ArtistConsignRoute"),
+  {
+    resolveComponent: component =>
+      component.ArtistConsignRouteFragmentContainer,
+  }
+)
 
 export const artistRoutes: AppRouteConfig[] = [
   {
@@ -163,9 +167,6 @@ export const artistRoutes: AppRouteConfig[] = [
         `,
       },
 
-      /*
-
-
       // Routes not in tabs
 
       {
@@ -180,7 +181,7 @@ export const artistRoutes: AppRouteConfig[] = [
         query: graphql`
           query artistRoutes_ArtistConsignQuery($artistID: String!) {
             artist(id: $artistID) {
-              ...Consign_artist
+              ...ArtistConsignRoute_artist
 
               targetSupply {
                 isInMicrofunnel
@@ -204,8 +205,6 @@ export const artistRoutes: AppRouteConfig[] = [
           }
         },
       },
-
-            */
 
       /**
        * Redirect all unhandled tabs to the artist page.

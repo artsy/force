@@ -8,7 +8,7 @@ export type ArtistAuctionResults_Test_QueryVariables = {
 };
 export type ArtistAuctionResults_Test_QueryResponse = {
     readonly artist: {
-        readonly " $fragmentRefs": FragmentRefs<"ArtistAuctionResults_artist">;
+        readonly " $fragmentRefs": FragmentRefs<"ArtistAuctionResultsRoute_artist">;
     } | null;
 };
 export type ArtistAuctionResults_Test_QueryRawResponse = {
@@ -89,7 +89,7 @@ query ArtistAuctionResults_Test_Query(
   $artistID: String!
 ) {
   artist(id: $artistID) {
-    ...ArtistAuctionResults_artist
+    ...ArtistAuctionResultsRoute_artist
     id
   }
 }
@@ -120,6 +120,10 @@ fragment ArtistAuctionResultItem_auctionResult on AuctionResult {
 
 fragment ArtistAuctionResultsCount_results on AuctionResultConnection {
   totalCount
+}
+
+fragment ArtistAuctionResultsRoute_artist on Artist {
+  ...ArtistAuctionResults_artist
 }
 
 fragment ArtistAuctionResults_artist on Artist {
@@ -253,7 +257,7 @@ return {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "ArtistAuctionResults_artist"
+            "name": "ArtistAuctionResultsRoute_artist"
           }
         ],
         "storageKey": null
@@ -579,9 +583,9 @@ return {
     "metadata": {},
     "name": "ArtistAuctionResults_Test_Query",
     "operationKind": "query",
-    "text": "query ArtistAuctionResults_Test_Query(\n  $artistID: String!\n) {\n  artist(id: $artistID) {\n    ...ArtistAuctionResults_artist\n    id\n  }\n}\n\nfragment ArtistAuctionResultItem_auctionResult on AuctionResult {\n  title\n  dimension_text: dimensionText\n  organization\n  images {\n    thumbnail {\n      url\n    }\n  }\n  mediumText\n  categoryText\n  description\n  date_text: dateText\n  saleDate\n  boughtIn\n  price_realized: priceRealized {\n    display\n    cents_usd: centsUSD\n  }\n  estimate {\n    display\n  }\n}\n\nfragment ArtistAuctionResultsCount_results on AuctionResultConnection {\n  totalCount\n}\n\nfragment ArtistAuctionResults_artist on Artist {\n  slug\n  name\n  auctionResultsConnection(first: 10, sort: DATE_DESC) {\n    ...ArtistAuctionResultsCount_results\n    createdYearRange {\n      startAt\n      endAt\n    }\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    totalCount\n    edges {\n      node {\n        title\n        dimension_text: dimensionText\n        images {\n          thumbnail {\n            url\n          }\n        }\n        description\n        date_text: dateText\n        ...ArtistAuctionResultItem_auctionResult\n        id\n      }\n    }\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n"
+    "text": "query ArtistAuctionResults_Test_Query(\n  $artistID: String!\n) {\n  artist(id: $artistID) {\n    ...ArtistAuctionResultsRoute_artist\n    id\n  }\n}\n\nfragment ArtistAuctionResultItem_auctionResult on AuctionResult {\n  title\n  dimension_text: dimensionText\n  organization\n  images {\n    thumbnail {\n      url\n    }\n  }\n  mediumText\n  categoryText\n  description\n  date_text: dateText\n  saleDate\n  boughtIn\n  price_realized: priceRealized {\n    display\n    cents_usd: centsUSD\n  }\n  estimate {\n    display\n  }\n}\n\nfragment ArtistAuctionResultsCount_results on AuctionResultConnection {\n  totalCount\n}\n\nfragment ArtistAuctionResultsRoute_artist on Artist {\n  ...ArtistAuctionResults_artist\n}\n\nfragment ArtistAuctionResults_artist on Artist {\n  slug\n  name\n  auctionResultsConnection(first: 10, sort: DATE_DESC) {\n    ...ArtistAuctionResultsCount_results\n    createdYearRange {\n      startAt\n      endAt\n    }\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    totalCount\n    edges {\n      node {\n        title\n        dimension_text: dimensionText\n        images {\n          thumbnail {\n            url\n          }\n        }\n        description\n        date_text: dateText\n        ...ArtistAuctionResultItem_auctionResult\n        id\n      }\n    }\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '86fbe886c95d24159e5f0080cd5b559b';
+(node as any).hash = 'f37953207066d6911cab94087269c6b8';
 export default node;

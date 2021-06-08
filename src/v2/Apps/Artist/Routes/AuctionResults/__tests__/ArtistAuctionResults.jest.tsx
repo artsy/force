@@ -29,7 +29,7 @@ describe("AuctionResults", () => {
         query ArtistAuctionResults_Test_Query($artistID: String!)
           @raw_response_type {
           artist(id: $artistID) {
-            ...ArtistAuctionResults_artist
+            ...ArtistAuctionResultsRoute_artist
           }
         }
       `,
@@ -114,10 +114,6 @@ describe("AuctionResults", () => {
       expect(wrapper.find("ArtistAuctionResultItem").length).toBe(10)
     })
 
-    it("renders the proper count", () => {
-      expect(wrapper.html()).toContain("Showing 830 results")
-    })
-
     it("renders either realized price, bought in, or price not avail", () => {
       expect(wrapper.html()).toContain("Price not available")
       expect(wrapper.html()).toContain("Bought in")
@@ -125,7 +121,7 @@ describe("AuctionResults", () => {
     })
 
     it("renders proper select options", () => {
-      const html = wrapper.find("select").last().html()
+      const html = wrapper.find("select").first().html()
       expect(html).toContain("Most recent")
       expect(html).toContain("Estimate")
       expect(html).toContain("Sale price")

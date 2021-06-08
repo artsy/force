@@ -4,7 +4,7 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ArtistConsignRoute_artist = {
-    readonly id: string;
+    readonly " $fragmentRefs": FragmentRefs<"ArtistConsignMeta_artist" | "ArtistConsignHeader_artist" | "ArtistConsignRecentlySold_artist" | "ArtistConsignPageViews_artist" | "ArtistConsignMarketTrends_artist" | "ArtistConsignHowToSell_artist" | "ArtistConsignFAQ_artist" | "ArtistConsignSellArt_artist">;
     readonly " $refType": "ArtistConsignRoute_artist";
 };
 export type ArtistConsignRoute_artist$data = ArtistConsignRoute_artist;
@@ -22,14 +22,47 @@ const node: ReaderFragment = {
   "name": "ArtistConsignRoute_artist",
   "selections": [
     {
-      "alias": null,
       "args": null,
-      "kind": "ScalarField",
-      "name": "id",
-      "storageKey": null
+      "kind": "FragmentSpread",
+      "name": "ArtistConsignMeta_artist"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ArtistConsignHeader_artist"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ArtistConsignRecentlySold_artist"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ArtistConsignPageViews_artist"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ArtistConsignMarketTrends_artist"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ArtistConsignHowToSell_artist"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ArtistConsignFAQ_artist"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ArtistConsignSellArt_artist"
     }
   ],
   "type": "Artist"
 };
-(node as any).hash = '811841dded19e67c883db4a44088a0b5';
+(node as any).hash = 'e0df512f5a669dee1be76335fb97ecaf';
 export default node;
