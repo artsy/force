@@ -28,6 +28,7 @@ import {
   renderFallbackImage,
 } from "./Components/ImageWithFallback"
 import { Mediator } from "lib/mediator"
+import { AuctionResultPerformance } from "v2/Components/AuctionResultPerformance"
 
 export interface Props extends SystemContextProps {
   expanded?: boolean
@@ -134,6 +135,7 @@ const LargeAuctionItem: SFC<Props> = props => {
       mediumText,
       saleDate,
       boughtIn,
+      performance,
     },
     salePrice,
   } = getProps(props)
@@ -203,7 +205,8 @@ const LargeAuctionItem: SFC<Props> = props => {
               props.mediator,
               "lg",
               props.filtersAtDefault,
-              boughtIn
+              boughtIn,
+              performance?.mid ?? null
             )}
           </Flex>
           <Flex width="10%" justifyContent="flex-end">
@@ -218,7 +221,14 @@ const LargeAuctionItem: SFC<Props> = props => {
 const ExtraSmallAuctionItem: SFC<Props> = props => {
   const {
     expanded,
-    auctionResult: { images, date_text, title, saleDate, boughtIn },
+    auctionResult: {
+      images,
+      date_text,
+      title,
+      saleDate,
+      boughtIn,
+      performance,
+    },
     salePrice,
   } = getProps(props)
   // @ts-expect-error STRICT_NULL_CHECK
@@ -247,7 +257,8 @@ const ExtraSmallAuctionItem: SFC<Props> = props => {
           props.mediator,
           "xs",
           props.filtersAtDefault,
-          boughtIn
+          boughtIn,
+          performance?.mid ?? null
         )}
         <Sans size="2" weight="medium" color="black60">
           {title}
@@ -287,6 +298,9 @@ export const ArtistAuctionResultItemFragmentContainer = createFragmentContainer(
         price_realized: priceRealized {
           display
           cents_usd: centsUSD
+        }
+        performance {
+          mid
         }
         estimate {
           display
@@ -340,7 +354,8 @@ const renderPricing = (
   mediator,
   size,
   filtersAtDefault,
-  boughtIn
+  boughtIn,
+  performance: string | null
 ) => {
   // If user is logged in we show prices. Otherwise we show prices only when filters at default.
   if (user || filtersAtDefault) {
@@ -362,6 +377,7 @@ const renderPricing = (
                 Realized price
               </Text>
             )}
+            <AuctionResultPerformance value={performance} />
           </>
         )}
         {!salePrice && boughtIn && (
