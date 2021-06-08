@@ -12,7 +12,7 @@ import { ConversationSnippet_conversation } from "v2/__generated__/ConversationS
 import {
   ImageWithFallback,
   renderFallbackImage,
-} from "v2/Apps/Artist/Routes/AuctionResults/Components/ImageWithFallback"
+} from "v2/Apps/Artist2/Routes/AuctionResults/Components/ImageWithFallback"
 import React from "react"
 import { createFragmentContainer } from "react-relay"
 import { graphql } from "relay-runtime"

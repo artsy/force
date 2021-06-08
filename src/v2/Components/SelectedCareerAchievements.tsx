@@ -10,7 +10,7 @@ import { SelectedCareerAchievements_artist } from "v2/__generated__/SelectedCare
 import {
   hasSections,
   highestCategory,
-} from "v2/Apps/Artist/Components/MarketInsights/MarketInsights"
+} from "v2/Apps/Artist2/Components/MarketInsights/MarketInsights"
 
 import { ArtistInsight } from "v2/Components/ArtistInsight"
 import { ArtistInsightsModal } from "v2/Components/ArtistInsightsModal"
@@ -163,7 +163,7 @@ export class SelectedCareerAchievements extends React.Component<
 
             <Spacer my={2} />
 
-            <RouterLink to={`/artist2/${this.props.artist.slug}/cv`}>
+            <RouterLink to={`${this.props.artist.slug}/cv`}>
               <ChevronButton>See all past shows and fair booths</ChevronButton>
             </RouterLink>
           </>

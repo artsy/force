@@ -3,7 +3,7 @@ import { ArtistMarketInsights_artist } from "v2/__generated__/ArtistMarketInsigh
 import {
   hasSections,
   highestCategory,
-} from "v2/Apps/Artist/Components/MarketInsights/MarketInsights"
+} from "v2/Apps/Artist2/Components/MarketInsights/MarketInsights"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworkDefinitionList } from "v2/Apps/Artwork/Components/ArtworkDefinitionList"

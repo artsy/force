@@ -3,7 +3,7 @@ import { AuctionHouseFilter } from "./AuctionHouseFilter"
 import { MediumFilter } from "./MediumFilter"
 import { SizeFilter } from "./SizeFilter"
 import { YearCreated } from "./YearCreated"
-import { useAuctionResultsFilterContext } from "v2/Apps/Artist/Routes/AuctionResults/AuctionResultsFilterContext"
+import { useAuctionResultsFilterContext } from "v2/Apps/Artist2/Routes/AuctionResults/AuctionResultsFilterContext"
 
 export const AuctionFilters: React.FC = () => {
   return (

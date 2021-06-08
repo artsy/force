@@ -1,7 +1,7 @@
 /* eslint-disable jest/no-done-callback */
 import { AuctionResults_Test_QueryRawResponse } from "v2/__generated__/AuctionResults_Test_Query.graphql"
 import { AuctionResultsFixture } from "v2/Apps/__tests__/Fixtures/Artist/Routes/AuctionResultsFixture"
-import { AuctionResultsRouteFragmentContainer as AuctionResultsRoute } from "v2/Apps/Artist/Routes/AuctionResults"
+import { AuctionResultsRouteFragmentContainer as AuctionResultsRoute } from "v2/Apps/Artist2/Routes/AuctionResults/Artist2AuctionResultsRoute"
 import { MockBoot, renderRelayTree } from "v2/DevTools"
 import { ReactWrapper } from "enzyme"
 import React from "react"

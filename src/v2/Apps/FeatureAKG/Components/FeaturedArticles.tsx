@@ -9,7 +9,7 @@ import {
   Sans,
 } from "@artsy/palette"
 import { FeaturedArticles_articles } from "v2/__generated__/FeaturedArticles_articles.graphql"
-import { StyledLink } from "v2/Apps/Artist/Components/StyledLink"
+import { StyledLink } from "./StyledLink"
 import { AnalyticsSchema } from "v2/Artsy"
 import { useTracking } from "v2/Artsy/Analytics/useTracking"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"

@@ -3,9 +3,9 @@ import { Link } from "react-head"
 import { data as sd } from "sharify"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Artist2MetaCanonicalLink_artist } from "v2/__generated__/Artist2MetaCanonicalLink_artist.graphql"
-import { hasSections as showMarketInsights } from "v2/Apps/Artist/Components/MarketInsights/MarketInsights"
-import { hasOverviewContent } from "v2/Apps/Artist/Components/NavigationTabs"
+import { hasSections as showMarketInsights } from "v2/Apps/Artist2/Components/MarketInsights/MarketInsights"
 import { useRouter } from "v2/Artsy/Router/useRouter"
+import { hasOverviewContent } from "../Routes/Overview/Utils/hasOverviewContent"
 
 export const computeCanonicalPath = (
   appUrl: string,
