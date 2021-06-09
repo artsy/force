@@ -7,13 +7,13 @@ import {
 import React, { useEffect, useRef, useState } from "react"
 import { Media } from "v2/Utils/Responsive"
 import { getElementParams } from "./helpers"
-import { ScrollRefContextValue, useScrollRefContext } from "./useScrollContext"
+import { useScrollRefContext } from "./useScrollContext"
 
 const FilterExpandableWithScrollIntoView: React.FC<
   ExpandableProps & { tokens: { mb: number } }
 > = ({ tokens, ...props }) => {
   const ctx = useScrollRefContext()
-  const { scrollRef } = ctx as ScrollRefContextValue
+  const scrollRef = ctx?.scrollRef
 
   const filterRef = useRef<HTMLDivElement | null>(null)
   const anchorRef = useRef<HTMLDivElement | null>(null)
