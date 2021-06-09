@@ -256,7 +256,6 @@ const ExtraSmallAuctionItem: FC<Props> = props => {
           {title && date_text && ", "}
           {date_text}
         </Text>
-        {/* <Sans size="2" color="black60" mt="5px"> */}
         <Text variant="xs" color="black60">
           Sold on {dateOfSale}
         </Text>
