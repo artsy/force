@@ -11,7 +11,7 @@ import { userIsTeam } from "v2/Utils/user"
 import Badge from "./Badge"
 import Metadata from "./Metadata"
 import {
-  ClickContainer,
+  Container,
   SaveButtonFragmentContainer as SaveButton,
 } from "./SaveButton"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
@@ -81,7 +81,6 @@ export class FillwidthItemContainer extends React.Component<
       contextModule,
       imageHeight,
       lazyLoad,
-      mediator,
       showExtended,
       showMetadata,
       user,
@@ -90,10 +89,6 @@ export class FillwidthItemContainer extends React.Component<
       hideSaleInfo,
     } = this.props
 
-    let userSpread = {}
-    if (user) {
-      userSpread = { user }
-    }
     const isTeam = userIsTeam(user)
 
     const image = get(this.props, p => p.artwork.image)
@@ -138,12 +133,7 @@ export class FillwidthItemContainer extends React.Component<
 
           {showExtended && <Badge artwork={artwork} width={this.imageWidth} />}
 
-          <SaveButton
-            {...userSpread}
-            mediator={mediator}
-            contextModule={contextModule}
-            artwork={artwork}
-          />
+          <SaveButton contextModule={contextModule} artwork={artwork} />
         </Placeholder>
 
         {showMetadata && (
@@ -170,7 +160,7 @@ export const FillwidthItem = styled(FillwidthItemContainer)<
   margin-left: ${props => props.marginLeft || 0}px;
 
   &:hover {
-    ${ClickContainer} {
+    ${Container} {
       opacity: 1;
     }
   }

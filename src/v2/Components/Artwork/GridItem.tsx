@@ -12,7 +12,7 @@ import Badge from "./Badge"
 import Metadata from "./Metadata"
 import {
   SaveButtonFragmentContainer as SaveButton,
-  ClickContainer,
+  Container,
 } from "./SaveButton"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import { Mediator } from "lib/mediator"
@@ -107,11 +107,6 @@ class ArtworkGridItemContainer extends React.Component<Props, State> {
 
   render() {
     const { style, className, artwork, user, lazyLoad = true } = this.props
-
-    let userSpread = {}
-    if (user) {
-      userSpread = { user }
-    }
     const isTeam = userIsTeam(user)
 
     // the 'artwork-item' className and data-id={artwork._id} are required to
@@ -158,8 +153,6 @@ class ArtworkGridItemContainer extends React.Component<Props, State> {
                 this.props.contextModule || ContextModule.artworkGrid
               }
               artwork={artwork}
-              {...userSpread}
-              mediator={this.props.mediator}
             />
           )}
         </Placeholder>
@@ -172,7 +165,7 @@ class ArtworkGridItemContainer extends React.Component<Props, State> {
 
 export const ArtworkGridItem = styled(ArtworkGridItemContainer)`
   &:hover {
-    ${ClickContainer} {
+    ${Container} {
       opacity: 1;
     }
   }
