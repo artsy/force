@@ -51,7 +51,7 @@ const ArtistApp: React.FC<ArtistAppProps> = ({ artist, children, match }) => {
 
       <Spacer my={[4, 12]} id="scrollTo--artistContentArea" />
 
-      <RouteTabs mb={2} fill>
+      <RouteTabs mb={2} fill data-test="navigationTabs">
         <RouteTab exact to={`/artist/${artist.slug}`}>
           Overview
         </RouteTab>
@@ -66,7 +66,7 @@ const ArtistApp: React.FC<ArtistAppProps> = ({ artist, children, match }) => {
 
         {showAuctionLotsTab && (
           <RouteTab to={`/artist/${artist.slug}/auction-results`}>
-            Auction Results
+            Auction results
           </RouteTab>
         )}
       </RouteTabs>

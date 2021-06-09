@@ -52,6 +52,7 @@ export const BaseFollowArtistButton: React.FC<FollowArtistButtonProps> = ({
       variant="secondaryOutline"
       width="100%"
       onClick={handleClick}
+      data-test="followButton"
       {...buttonProps}
     >
       {artist.isFollowed ? "Following" : "Follow"}

@@ -1,5 +1,6 @@
 import {
   Avatar,
+  Box,
   Column,
   Flex,
   GridColumns,
@@ -23,65 +24,70 @@ const ArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {
   )
 
   return (
-    <GridColumns>
-      {artist.imageUrl && (
-        <Column span={1}>
-          <Flex justifyContent={["center", "left"]}>
-            <Avatar src={artist.imageUrl} size="md" />
-          </Flex>
-        </Column>
-      )}
-      <Column span={5}>
-        <Text variant="xl" as="h1" textAlign={["center", "left"]}>
-          {artist.name}
-        </Text>
-
-        {artist.formattedNationalityAndBirthday && (
-          <Text
-            variant="xl"
-            as="h2"
-            color="black60"
-            mb={2}
-            textAlign={["center", "left"]}
-          >
-            {artist.formattedNationalityAndBirthday}
+    <Box data-test="artistHeader">
+      <GridColumns>
+        {artist.imageUrl && (
+          <Column span={1}>
+            <Flex justifyContent={["center", "left"]}>
+              <Avatar src={artist.imageUrl} size="md" />
+            </Flex>
+          </Column>
+        )}
+        <Column span={5}>
+          <Text variant="xl" as="h1" textAlign={["center", "left"]}>
+            {artist.name}
           </Text>
-        )}
 
-        <GridColumns>
-          <Column span={[12, 6, 3]}>
-            <FollowArtist2ButtonFragmentContainer artist={artist} />
-          </Column>
-
-          <Column
-            span={[12, 6, 9]}
-            display={["block", "flex"]}
-            alignItems="center"
-          >
-            <Text variant="xs" color="black60" textAlign={["center", "left"]}>
-              {formatFollowerCount(artist.counts?.follows!)} Following
+          {artist.formattedNationalityAndBirthday && (
+            <Text
+              variant="xl"
+              as="h2"
+              color="black60"
+              mb={2}
+              textAlign={["center", "left"]}
+            >
+              {artist.formattedNationalityAndBirthday}
             </Text>
-          </Column>
-        </GridColumns>
-      </Column>
+          )}
 
-      <Column span={6}>
-        {!hideBioInHeaderIfPartnerSupplied && artist.biographyBlurb?.text && (
-          <>
-            <Text variant="xs" textTransform="uppercase" mt={[2, 0]} mb={1}>
-              Bio
-            </Text>
-            <Text variant="sm" mb={2}>
-              <HTML variant="sm">
-                <ReadMore maxChars={250} content={artist.biographyBlurb.text} />
-              </HTML>
-            </Text>
-          </>
-        )}
+          <GridColumns>
+            <Column span={[12, 6, 3]}>
+              <FollowArtist2ButtonFragmentContainer artist={artist} />
+            </Column>
 
-        <SelectedCareerAchievementsFragmentContainer artist={artist} />
-      </Column>
-    </GridColumns>
+            <Column
+              span={[12, 6, 9]}
+              display={["block", "flex"]}
+              alignItems="center"
+            >
+              <Text variant="xs" color="black60" textAlign={["center", "left"]}>
+                {formatFollowerCount(artist.counts?.follows!)} Following
+              </Text>
+            </Column>
+          </GridColumns>
+        </Column>
+
+        <Column span={6}>
+          {!hideBioInHeaderIfPartnerSupplied && artist.biographyBlurb?.text && (
+            <>
+              <Text variant="xs" textTransform="uppercase" mt={[2, 0]} mb={1}>
+                Bio
+              </Text>
+              <Text variant="sm" mb={2}>
+                <HTML variant="sm">
+                  <ReadMore
+                    maxChars={250}
+                    content={artist.biographyBlurb.text}
+                  />
+                </HTML>
+              </Text>
+            </>
+          )}
+
+          <SelectedCareerAchievementsFragmentContainer artist={artist} />
+        </Column>
+      </GridColumns>
+    </Box>
   )
 }
 
