@@ -1,5 +1,6 @@
 import { mount } from "enzyme"
 import React from "react"
+import { MockBoot } from "v2/DevTools"
 import {
   Aggregations,
   ArtworkFilterContextProps,
@@ -33,7 +34,9 @@ describe("MaterialsTermFilter", () => {
   ) => {
     return mount(
       <ArtworkFilterContextProvider {...contextProps}>
-        <MaterialsFilterTest {...filterProps} />
+        <MockBoot>
+          <MaterialsFilterTest {...filterProps} />
+        </MockBoot>
       </ArtworkFilterContextProvider>
     )
   }

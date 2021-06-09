@@ -1,5 +1,6 @@
 import { mount } from "enzyme"
 import React from "react"
+import { MockBoot } from "v2/DevTools"
 import {
   ArtworkFilterContextProvider,
   useArtworkFilterContext,
@@ -12,7 +13,9 @@ describe("ColorFilter", () => {
   const getWrapper = (filterProps: ColorFilterProps = { expanded: true }) => {
     return mount(
       <ArtworkFilterContextProvider>
-        <ColorFilterTest {...filterProps} />
+        <MockBoot>
+          <ColorFilterTest {...filterProps} />
+        </MockBoot>
       </ArtworkFilterContextProvider>
     )
   }

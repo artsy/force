@@ -1,5 +1,6 @@
 import { mount } from "enzyme"
 import React from "react"
+import { MockBoot } from "v2/DevTools"
 import { ArtworkFilterContextProvider } from "../../ArtworkFilterContext"
 import { ResultsFilter, sortResults } from "../ResultsFilter"
 
@@ -7,13 +8,15 @@ describe("ArtworkLocationFilter", () => {
   const getWrapper = (contextProps = {}) => {
     return mount(
       <ArtworkFilterContextProvider {...contextProps}>
-        <ResultsFilter
-          facetName="locationCities"
-          slice="LOCATION_CITY"
-          placeholder="Enter a city"
-          label="Artwork location"
-          expanded
-        />
+        <MockBoot>
+          <ResultsFilter
+            facetName="locationCities"
+            slice="LOCATION_CITY"
+            placeholder="Enter a city"
+            label="Artwork location"
+            expanded
+          />
+        </MockBoot>
       </ArtworkFilterContextProvider>
     )
   }
@@ -53,7 +56,9 @@ describe("ArtworkLocationFilter", () => {
         },
       ],
     })
-    expect(wrapper.html()).not.toBeTruthy()
+
+    expect(wrapper.text()).toBeFalsy()
+    expect(wrapper.find("input").exists()).toBeFalsy()
   })
 })
 

@@ -7,7 +7,7 @@ import {
 } from "../ArtworkFilterContext"
 import { ArtworkFilterMobileActionSheet } from "../ArtworkFilterMobileActionSheet"
 import { ArtworkFilters } from "../ArtworkFilters"
-import { flushPromiseQueue } from "v2/DevTools"
+import { flushPromiseQueue, MockBoot } from "v2/DevTools"
 
 describe("ArtworkFilterMobileActionSheet", () => {
   let context
@@ -16,7 +16,9 @@ describe("ArtworkFilterMobileActionSheet", () => {
   const getWrapper = (props = {}) => {
     return mount(
       <ArtworkFilterContextProvider {...props}>
-        <ArtworkFilterMobileActionSheetTest />
+        <MockBoot>
+          <ArtworkFilterMobileActionSheetTest />
+        </MockBoot>
       </ArtworkFilterContextProvider>
     )
   }
@@ -37,7 +39,7 @@ describe("ArtworkFilterMobileActionSheet", () => {
 
     expect(wrapper.find("Button").first().text()).toEqual("Cancel")
 
-    expect(wrapper.html()).toContain("Filter")
+    expect(wrapper.find("FilterTitle").text()).toEqual("Filter")
 
     expect(wrapper.find("Button").last().text()).toEqual("Apply (0)")
   })

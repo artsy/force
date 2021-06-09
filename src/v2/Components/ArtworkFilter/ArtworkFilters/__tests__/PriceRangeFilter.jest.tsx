@@ -1,7 +1,7 @@
 import { Input } from "@artsy/palette"
 import { mount } from "enzyme"
 import React from "react"
-import { flushPromiseQueue } from "v2/DevTools"
+import { flushPromiseQueue, MockBoot } from "v2/DevTools"
 import {
   ArtworkFilterContextProps,
   ArtworkFilterContextProvider,
@@ -15,7 +15,9 @@ describe("PriceRangeFilter", () => {
   const getWrapper = (props: PriceRangeFilterProps = { expanded: true }) => {
     return mount(
       <ArtworkFilterContextProvider>
-        <PriceRangeFilterTest {...props} />
+        <MockBoot>
+          <PriceRangeFilterTest {...props} />
+        </MockBoot>
       </ArtworkFilterContextProvider>
     )
   }

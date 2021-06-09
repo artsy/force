@@ -216,9 +216,11 @@ describe("ArtworkFilter", () => {
 
     it("toggles mobile action sheet", async () => {
       const wrapper = await getWrapper("xs")
+      expect(wrapper.find("FiltersWithScrollIntoView").length).toEqual(0)
       wrapper.find("Button").simulate("click")
       const actionSheet = wrapper.find("ArtworkFilterMobileActionSheet")
       expect(actionSheet.length).toEqual(1)
+      expect(wrapper.find("FiltersWithScrollIntoView").length).toEqual(1)
       expect(document.body.style.overflowY).toEqual("hidden")
 
       wrapper.find("WaysToBuyFilter").find("ChevronIcon").simulate("click")

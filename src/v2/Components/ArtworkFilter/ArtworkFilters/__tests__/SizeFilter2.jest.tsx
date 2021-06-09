@@ -6,6 +6,7 @@ import {
   ArtworkFilterContextProvider,
   useArtworkFilterContext,
 } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
+import { MockBoot } from "v2/DevTools"
 import { SizeFilter2, SizeFilter2Props } from "../SizeFilter2"
 
 describe("SizeFilter2", () => {
@@ -14,7 +15,9 @@ describe("SizeFilter2", () => {
   const getWrapper = (props: SizeFilter2Props = { expanded: true }) => {
     return mount(
       <ArtworkFilterContextProvider>
-        <SizeFilterTest {...props} />
+        <MockBoot>
+          <SizeFilterTest {...props} />
+        </MockBoot>
       </ArtworkFilterContextProvider>
     )
   }
