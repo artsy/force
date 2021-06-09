@@ -82,7 +82,7 @@ export const ArtworkFilter: React.FC<
   )
 }
 
-const FiltersWithScroll: React.FC<{ Filters?: JSX.Element }> = ({
+const FiltersWithScrollIntoView: React.FC<{ Filters?: JSX.Element }> = ({
   Filters,
 }) => {
   const scrollRef = useRef<HTMLDivElement | null>(null)
@@ -244,7 +244,7 @@ export const BaseArtworkFilter: React.FC<
             <ArtworkFilterMobileActionSheet
               onClose={() => toggleMobileActionSheet(false)}
             >
-              <FiltersWithScroll Filters={Filters} />
+              <FiltersWithScrollIntoView Filters={Filters} />
             </ArtworkFilterMobileActionSheet>
           )}
 

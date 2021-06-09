@@ -9,7 +9,7 @@ import { Media } from "v2/Utils/Responsive"
 import { getElementParams } from "./helpers"
 import { ScrollRefContextValue, useScrollRefContext } from "./useScrollContext"
 
-const FilterExpandableWithScroll: React.FC<
+const FilterExpandableWithScrollIntoView: React.FC<
   ExpandableProps & { tokens: { mb: number } }
 > = ({ tokens, ...props }) => {
   const ctx = useScrollRefContext()
@@ -57,7 +57,7 @@ export const FilterExpandable: React.FC<ExpandableProps> = props => {
   return (
     <>
       <Media at="xs">
-        <FilterExpandableWithScroll tokens={tokens} {...props} />
+        <FilterExpandableWithScrollIntoView tokens={tokens} {...props} />
       </Media>
       <Media greaterThan="xs">
         <Expandable mb={tokens.mb} {...props} />
