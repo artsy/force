@@ -2,7 +2,7 @@ import React from "react"
 import { Text } from "@artsy/palette"
 import { SectionContainer } from "./SectionContainer"
 
-export const TemporaryOffer: React.FC = () => {
+export const PromoSpace: React.FC = () => {
   const now = new Date(Date.now())
   const expirationDate = new Date(2021, 0, 1)
   if (now > expirationDate) {
