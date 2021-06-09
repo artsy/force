@@ -66,6 +66,7 @@ export const partnerRoutes: AppRouteConfig[] = [
     query: graphql`
       query partnerRoutes_PartnerQuery($partnerId: String!) {
         partner(id: $partnerId) @principalField {
+          partnerType
           fullProfileEligible
           ...PartnerApp_partner
         }
@@ -86,6 +87,7 @@ export const partnerRoutes: AppRouteConfig[] = [
 
       if (
         !partner.fullProfileEligible &&
+        partner.partnerType !== "Brand" &&
         match.location.pathname !== overviewPath
       ) {
         throw new RedirectException(overviewPath, 302)

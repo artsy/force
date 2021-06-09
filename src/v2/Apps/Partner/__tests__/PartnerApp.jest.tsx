@@ -59,6 +59,16 @@ describe("PartnerApp", () => {
     expect(wrapper.find("NavigationTabs").length).toBe(0)
   })
 
+  it("displays navigation tabs for brand partner", () => {
+    const wrapper = getWrapper({
+      Partner: () => ({
+        fullProfileEligible: false,
+        partnerType: "Brand",
+      }),
+    })
+    expect(wrapper.find("NavigationTabs").length).toBe(1)
+  })
+
   it("displays header image for the partner page", () => {
     const wrapper = getWrapper({
       Partner: () => ({

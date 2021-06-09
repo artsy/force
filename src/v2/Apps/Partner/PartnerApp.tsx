@@ -30,6 +30,7 @@ export const PartnerApp: React.FC<PartnerAppProps> = ({
 }) => {
   const {
     profile,
+    partnerType,
     fullProfileEligible,
     isDefaultProfilePublic,
     partnerPageEligible,
@@ -57,7 +58,9 @@ export const PartnerApp: React.FC<PartnerAppProps> = ({
               <Separator />
             </FullBleed>
 
-            {fullProfileEligible && <NavigationTabs partner={partner} />}
+            {(fullProfileEligible || partnerType === "Brand") && (
+              <NavigationTabs partner={partner} />
+            )}
 
             {children}
           </Box>
@@ -70,6 +73,7 @@ export const PartnerApp: React.FC<PartnerAppProps> = ({
 export const PartnerAppFragmentContainer = createFragmentContainer(PartnerApp, {
   partner: graphql`
     fragment PartnerApp_partner on Partner {
+      partnerType
       fullProfileEligible
       partnerPageEligible
       isDefaultProfilePublic

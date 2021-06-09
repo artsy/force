@@ -17,6 +17,7 @@ interface OverviewProps {
 const Overview: React.FC<OverviewProps> = ({ partner }) => {
   const {
     slug,
+    partnerType,
     fullProfileEligible,
     profileBannerDisplay,
     displayArtistsSection,
@@ -49,7 +50,9 @@ const Overview: React.FC<OverviewProps> = ({ partner }) => {
     </>
   ) : (
     <>
-      <SubscriberBannerFragmentContainer partner={partner} />
+      {partnerType !== "Brand" && (
+        <SubscriberBannerFragmentContainer partner={partner} />
+      )}
 
       <AboutPartnerFragmentContainer partner={partner} />
 
@@ -74,6 +77,7 @@ export const OverviewFragmentContainer = createFragmentContainer(Overview, {
   partner: graphql`
     fragment Overview_partner on Partner {
       slug
+      partnerType
       fullProfileEligible
       profileBannerDisplay
       displayArtistsSection

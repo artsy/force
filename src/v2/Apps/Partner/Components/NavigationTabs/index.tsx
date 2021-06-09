@@ -23,6 +23,7 @@ export const NavigationTabs: React.FC<NavigationTabsProps> = ({ partner }) => {
       locations,
       articles,
       counts,
+      partnerType,
       displayWorksSection,
       displayArtistsSection,
       representedArtists,
@@ -44,7 +45,7 @@ export const NavigationTabs: React.FC<NavigationTabsProps> = ({ partner }) => {
         hidden: !counts?.currentDisplayableShows,
       },
       {
-        name: "Works",
+        name: partnerType === "Brand" ? "Shop" : "Works",
         href: route("/works"),
         exact: true,
         hidden: !displayWorksSection || !counts?.eligibleArtworks,
@@ -117,6 +118,7 @@ export const NavigationTabsFragmentContainer = createFragmentContainer(
     partner: graphql`
       fragment NavigationTabs_partner on Partner {
         slug
+        partnerType
         displayArtistsSection
         displayWorksSection
         counts {
