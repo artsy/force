@@ -389,7 +389,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
                     defaultValue={this.state.shippingOption}
                   >
                     <Text variant="mediumText" mb="1">
-                      Delivery Method
+                      Delivery method
                     </Text>
                     <BorderedRadio value="SHIP" label="Shipping" />
 
@@ -411,12 +411,17 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
                 </>
               )}
               {showSavedAddresses && (
-                <SavedAddresses
-                  me={this.props.me}
-                  onSelect={value => onSelectSavedAddress(value)}
-                  handleClickEdit={this.handleClickEdit}
-                  inCollectorProfile={false}
-                />
+                <>
+                  <Text variant="mediumText" mb="1">
+                    Delivery address
+                  </Text>
+                  <SavedAddresses
+                    me={this.props.me}
+                    onSelect={value => onSelectSavedAddress(value)}
+                    handleClickEdit={this.handleClickEdit}
+                    inCollectorProfile={false}
+                  />
+                </>
               )}
               <Collapse data-test="addressFormCollapse" open={showAddressForm}>
                 {/* @ts-expect-error STRICT_NULL_CHECK */}
@@ -479,7 +484,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
             </Flex>
           }
           Sidebar={
-            <Flex flexDirection="column">
+            <Flex flexDirection="column" mt={3}>
               <Flex flexDirection="column">
                 <ArtworkSummaryItem order={order} />
                 <TransactionDetailsSummaryItem order={order} />

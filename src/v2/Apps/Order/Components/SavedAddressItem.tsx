@@ -1,4 +1,4 @@
-import { Flex, Text, RadioProps } from "@artsy/palette"
+import { Flex, Text, RadioProps, Banner } from "@artsy/palette"
 import React from "react"
 import styled from "styled-components"
 import { SavedAddresses_me } from "v2/__generated__/SavedAddresses_me.graphql"
@@ -39,13 +39,32 @@ export const SavedAddressItem: React.FC<SavedAddressItemProps> = (
           nameAndAddressLine.map(
             (line: string, index: number) =>
               line && (
-                <Text
-                  style={{ textTransform: "capitalize" }}
-                  variant="text"
-                  key={index}
-                >
-                  {line}
-                </Text>
+                <Flex key={index} justifyContent="row" alignItems="center">
+                  <Text
+                    style={{ textTransform: "capitalize" }}
+                    textColor={index === 0 ? "black100" : "black60"}
+                    variant="text"
+                  >
+                    {line}
+                  </Text>
+                  {address?.isDefault && index === 0 && (
+                    <Banner
+                      ml={0.5}
+                      variant="defaultLight"
+                      px={0.5}
+                      py={0.2}
+                      borderRadius={2}
+                    >
+                      <Text
+                        textColor="black60"
+                        variant="caption"
+                        display="inline"
+                      >
+                        Default
+                      </Text>
+                    </Banner>
+                  )}
+                </Flex>
               )
           )}
         <Text textColor="black60" style={{ textTransform: "capitalize" }}>
