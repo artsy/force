@@ -64,10 +64,7 @@ export const ArtistSeriesItem: React.FC<ArtistSeriesItemProps> = ({
           srcSet={image.cropped.srcSet}
           width={image.cropped.width}
           height={image.cropped.height}
-          // FIXME: Reenable once we've figured out the router transition
-          // image load flash when clicking between routes. As this rail
-          // occupies an above-the-fold place on artist/id its too glaring.
-          // lazyLoad
+          lazyLoad
           alt=""
         />
       ) : (
