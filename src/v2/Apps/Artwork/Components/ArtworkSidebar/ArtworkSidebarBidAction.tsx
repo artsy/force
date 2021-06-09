@@ -179,6 +179,9 @@ export class ArtworkSidebarBidAction extends React.Component<
       return (
         <>
           <PreviewAction />
+
+          <Spacer mt={1} />
+
           {userLacksIdentityVerification && <IdentityVerificationDisclaimer />}
         </>
       )
@@ -215,6 +218,8 @@ export class ArtworkSidebarBidAction extends React.Component<
               Enter live bidding
             </Button>
 
+            <Spacer mt={1} />
+
             {userLacksIdentityVerification && (
               <IdentityVerificationDisclaimer />
             )}
@@ -237,6 +242,9 @@ export class ArtworkSidebarBidAction extends React.Component<
                 Registration pending
               </Button>
             )}
+
+            <Spacer mt={1} />
+
             {userLacksIdentityVerification && (
               <IdentityVerificationDisclaimer />
             )}
@@ -272,6 +280,9 @@ export class ArtworkSidebarBidAction extends React.Component<
         return (
           <>
             <RegisterToBidButton onClick={this.redirectToRegister} />
+
+            <Spacer mt={1} />
+
             <IdentityVerificationDisclaimer />
           </>
         )
