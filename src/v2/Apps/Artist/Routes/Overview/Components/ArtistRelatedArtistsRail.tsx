@@ -35,7 +35,7 @@ const ArtistRelatedArtistsRail: React.FC<ArtistRelatedArtistsRailProps> = ({
         Related Artists
       </Text>
 
-      <Shelf alignItems="flex-start">
+      <Shelf alignItems="flex-start" data-test="relatedArtistsRail">
         {nodes.map((node, index) => {
           const artworkImage = extractNodes(node.filterArtworksConnection)?.[0]
             ?.image

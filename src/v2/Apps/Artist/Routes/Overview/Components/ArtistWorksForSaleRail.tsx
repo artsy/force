@@ -60,7 +60,7 @@ const ArtistWorksForSaleRail: React.FC<ArtistWorksForSaleRailProps> = ({
         </RouterLink>
       </Flex>
 
-      <Shelf>
+      <Shelf data-test="worksForSaleRail">
         {nodes.map((node, index) => {
           return (
             <ShelfArtworkFragmentContainer
