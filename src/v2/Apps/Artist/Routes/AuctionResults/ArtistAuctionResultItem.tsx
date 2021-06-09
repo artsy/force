@@ -16,7 +16,7 @@ import { AnalyticsSchema, SystemContextProps } from "v2/Artsy"
 import { SystemContext } from "v2/Artsy"
 import { ModalType } from "v2/Components/Authentication/Types"
 import { DateTime, LocaleOptions } from "luxon"
-import React, { SFC, useContext, useState } from "react"
+import React, { FC, useContext, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import styled from "styled-components"
@@ -55,7 +55,7 @@ const Capitalize = styled.span`
 `
 
 // TODO: This whole component should be refactored to use less `Media` decisions
-export const ArtistAuctionResultItem: SFC<Props> = props => {
+export const ArtistAuctionResultItem: FC<Props> = props => {
   const { user, mediator } = useContext(SystemContext)
 
   const tracking = useTracking()
@@ -124,7 +124,7 @@ export const ArtistAuctionResultItem: SFC<Props> = props => {
   )
 }
 
-const LargeAuctionItem: SFC<Props> = props => {
+const LargeAuctionItem: FC<Props> = props => {
   const {
     expanded,
     auctionResult: {
@@ -218,13 +218,14 @@ const LargeAuctionItem: SFC<Props> = props => {
   )
 }
 
-const ExtraSmallAuctionItem: SFC<Props> = props => {
+const ExtraSmallAuctionItem: FC<Props> = props => {
   const {
     expanded,
     auctionResult: {
       images,
       date_text,
       title,
+
       saleDate,
       boughtIn,
       performance,
@@ -250,6 +251,16 @@ const ExtraSmallAuctionItem: SFC<Props> = props => {
         )}
       </Flex>
       <Flex ml={2} flexDirection="column" justifyContent="center" width="100%">
+        <Text variant="xs" color="black100">
+          {title}
+          {title && date_text && ", "}
+          {date_text}
+        </Text>
+        {/* <Sans size="2" color="black60" mt="5px"> */}
+        <Text variant="xs" color="black60">
+          Sold on {dateOfSale}
+        </Text>
+        <Spacer size="10px" />
         {renderPricing(
           salePrice,
           saleDate,
@@ -260,14 +271,6 @@ const ExtraSmallAuctionItem: SFC<Props> = props => {
           boughtIn,
           performance?.mid ?? null
         )}
-        <Sans size="2" weight="medium" color="black60">
-          {title}
-          {title && date_text && ", "}
-          {date_text}
-        </Sans>
-        <Sans size="2" color="black60" mt="5px">
-          Sold on {dateOfSale}
-        </Sans>
       </Flex>
       <Flex justifyContent="flex-end" alignItems="center" height="100%">
         <div>{expanded ? <ArrowUpIcon /> : <ArrowDownIcon />}</div>
@@ -372,12 +375,13 @@ const renderPricing = (
             <Text variant="md" fontWeight="bold">
               {salePrice}
             </Text>
-            {size !== "xs" && (
-              <Text variant="xs" color="black60">
-                Realized price
-              </Text>
-            )}
-            <AuctionResultPerformance value={performance} />
+            <Text variant="xs" color="black60">
+              Realized price
+            </Text>
+            <AuctionResultPerformance
+              value={performance}
+              align={size === "xs" ? "left" : "right"}
+            />
           </>
         )}
         {!salePrice && boughtIn && (

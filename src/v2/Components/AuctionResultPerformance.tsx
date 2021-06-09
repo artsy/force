@@ -5,12 +5,15 @@ import {
   IncreaseIcon,
   Flex,
   DecreaseIcon,
+  Spacer,
 } from "@artsy/palette"
 
 export const AuctionResultPerformance = ({
   value,
+  align,
 }: {
   value: string | null
+  align: "left" | "right"
 }) => {
   if (value === null) {
     return null
@@ -24,12 +27,12 @@ export const AuctionResultPerformance = ({
   return (
     <ThemeProviderV3>
       <Flex
-        flex={0}
         flexDirection="row"
-        justifyContent="flex-end"
+        justifyContent={align === "right" ? "flex-end" : undefined}
         alignItems="baseline"
       >
-        <Arrow fill={color} height={10} mr="0.3" />
+        <Arrow fill={color} width={10} height={10} />
+        <Spacer mr="3px" />
         <Text variant="xs" fontWeight={400} color={color}>
           {text} est
         </Text>
