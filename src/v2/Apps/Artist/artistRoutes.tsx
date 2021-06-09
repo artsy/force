@@ -7,45 +7,73 @@ import { ArtistRoutesTopLevelQuery } from "./Queries/ArtistRoutesTopLevelQuery"
 import { renderOrRedirect } from "./Routes/Overview/Utils/renderOrRedirect"
 import { getWorksForSaleRouteVariables } from "./Routes/WorksForSale/Utils/getWorksForSaleRouteVariables"
 
-const ArtistApp = loadable(() => import("./ArtistApp"), {
-  resolveComponent: component => component.ArtistAppFragmentContainer,
-})
+const ArtistApp = loadable(
+  () => import(/* webpackChunkName: "artistBundle" */ "./ArtistApp"),
+  {
+    resolveComponent: component => component.ArtistAppFragmentContainer,
+  }
+)
 const OverviewRoute = loadable(
-  () => import("./Routes/Overview/ArtistOverviewRoute"),
+  () =>
+    import(
+      /* webpackChunkName: "artistBundle" */ "./Routes/Overview/ArtistOverviewRoute"
+    ),
   {
     resolveComponent: component =>
       component.ArtistOverviewRouteFragmentContainer,
   }
 )
 const WorksForSaleRoute = loadable(
-  () => import("./Routes/WorksForSale/ArtistWorksForSaleRoute"),
+  () =>
+    import(
+      /* webpackChunkName: "artistBundle" */ "./Routes/WorksForSale/ArtistWorksForSaleRoute"
+    ),
   {
     resolveComponent: component =>
       component.ArtistWorksForSaleRouteFragmentContainer,
   }
 )
-const CVRoute = loadable(() => import("./Routes/CV/ArtistCVRoute"), {
-  resolveComponent: component => component.ArtistCVRouteFragmentContainer,
-})
+const CVRoute = loadable(
+  () =>
+    import(/* webpackChunkName: "artistBundle" */ "./Routes/CV/ArtistCVRoute"),
+  {
+    resolveComponent: component => component.ArtistCVRouteFragmentContainer,
+  }
+)
 const ArticlesRoute = loadable(
-  () => import("./Routes/Articles/ArtistArticlesRoute"),
+  () =>
+    import(
+      /* webpackChunkName: "artistBundle" */ "./Routes/Articles/ArtistArticlesRoute"
+    ),
   {
     resolveComponent: component =>
       component.ArtistArticlesRouteFragmentContainer,
   }
 )
-const ShowsRoute = loadable(() => import("./Routes/Shows/ArtistShowsRoute"), {
-  resolveComponent: component => component.ArtistShowsRouteFragmentContainer,
-})
+const ShowsRoute = loadable(
+  () =>
+    import(
+      /* webpackChunkName: "artistBundle" */ "./Routes/Shows/ArtistShowsRoute"
+    ),
+  {
+    resolveComponent: component => component.ArtistShowsRouteFragmentContainer,
+  }
+)
 const AuctionResultsRoute = loadable(
-  () => import("./Routes/AuctionResults/ArtistAuctionResultsRoute"),
+  () =>
+    import(
+      /* webpackChunkName: "artistBundle" */ "./Routes/AuctionResults/ArtistAuctionResultsRoute"
+    ),
   {
     resolveComponent: component =>
       component.AuctionResultsRouteFragmentContainer,
   }
 )
 const ConsignRoute = loadable(
-  () => import("./Routes/Consign/ArtistConsignRoute"),
+  () =>
+    import(
+      /* webpackChunkName: "artistBundle" */ "./Routes/Consign/ArtistConsignRoute"
+    ),
   {
     resolveComponent: component =>
       component.ArtistConsignRouteFragmentContainer,

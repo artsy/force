@@ -1,7 +1,7 @@
 // @ts-check
 const crypto = require("crypto")
 
-const FRAMEWORK_BUNDLES = ["react", "react-dom", "lodash", "luxon"]
+const FRAMEWORK_BUNDLES = ["react", "react-dom"]
 
 const TOTAL_PAGES = 12
 
@@ -83,8 +83,8 @@ export const clientChunks = {
       reuseExistingChunk: true,
     },
   },
-  maxInitialRequests: 25,
-  maxSize: 245760, // 240kb
-  // A chunk should be at least 20kb before using splitChunks
-  minSize: 20000,
+  maxInitialRequests: 20,
+  maxSize: 307200, // 300 KiB
+  // A chunk should be at least 100KiB before using splitChunks
+  minSize: 102400,
 }
