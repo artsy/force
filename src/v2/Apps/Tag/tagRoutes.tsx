@@ -5,9 +5,12 @@ import { initialArtworkFilterState } from "v2/Components/ArtworkFilter/ArtworkFi
 import { allowedFilters } from "v2/Components/ArtworkFilter/Utils/allowedFilters"
 import { paramsToCamelCase } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
 
-const TagApp = loadable(() => import("./TagApp"), {
-  resolveComponent: component => component.TagAppFragmentContainer,
-})
+const TagApp = loadable(
+  () => import(/* webpackChunkName: "tagBundle" */ "./TagApp"),
+  {
+    resolveComponent: component => component.TagAppFragmentContainer,
+  }
+)
 
 export const tagRoutes: AppRouteConfig[] = [
   {

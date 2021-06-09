@@ -6,15 +6,24 @@ import { getENV } from "v2/Utils/getENV"
 import { allowedFilters } from "v2/Components/ArtworkFilter/Utils/allowedFilters"
 import { AppRouteConfig } from "v2/Artsy/Router/Route"
 
-const ShowApp = loadable(() => import("./ShowApp"), {
-  resolveComponent: component => component.ShowAppFragmentContainer,
-})
-const ShowSubApp = loadable(() => import("./ShowSubApp"), {
-  resolveComponent: component => component.ShowSubAppFragmentContainer,
-})
-const ShowInfoRoute = loadable(() => import("./Routes/ShowInfo"), {
-  resolveComponent: component => component.ShowInfoFragmentContainer,
-})
+const ShowApp = loadable(
+  () => import(/* webpackChunkName: "showBundle" */ "./ShowApp"),
+  {
+    resolveComponent: component => component.ShowAppFragmentContainer,
+  }
+)
+const ShowSubApp = loadable(
+  () => import(/* webpackChunkName: "showBundle" */ "./ShowSubApp"),
+  {
+    resolveComponent: component => component.ShowSubAppFragmentContainer,
+  }
+)
+const ShowInfoRoute = loadable(
+  () => import(/* webpackChunkName: "showBundle" */ "./Routes/ShowInfo"),
+  {
+    resolveComponent: component => component.ShowInfoFragmentContainer,
+  }
+)
 
 export const showRoutes: AppRouteConfig[] = [
   {
