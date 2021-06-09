@@ -5,7 +5,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "v2/Artsy"
 import { openAuthToFollowSave } from "v2/Utils/openAuthModal"
 import { FollowArtist2Button_artist } from "v2/__generated__/FollowArtist2Button_artist.graphql"
-import { followArtistMutation } from "../Mutations/FollowArtistMutation"
+import { followArtistMutation } from "./Mutations/FollowArtistMutation"
 
 interface FollowArtistButtonProps {
   artist: FollowArtist2Button_artist

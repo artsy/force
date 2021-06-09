@@ -6,7 +6,7 @@ import { findCurrentRoute } from "v2/Artsy/Router/Utils/findCurrentRoute"
 import { ArtistApp_artist } from "v2/__generated__/ArtistApp_artist.graphql"
 import { AnalyticsContext, useAnalyticsContext } from "v2/Artsy"
 import { BackLinkFragmentContainer } from "./Components/BackLink"
-import { ArtistHeaderFragmentContainer } from "./Components/ArtistHeader"
+import { ArtistHeaderFragmentContainer } from "./Components/ArtistHeader/ArtistHeader"
 import { RouteTab, RouteTabs } from "v2/Components/RouteTabs"
 import { ArtistMetaFragmentContainer } from "./Components/ArtistMeta"
 

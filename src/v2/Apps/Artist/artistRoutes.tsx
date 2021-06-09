@@ -3,7 +3,6 @@ import loadable from "@loadable/component"
 import { Redirect, RedirectException } from "found"
 import { graphql } from "react-relay"
 import { AppRouteConfig } from "v2/Artsy/Router/Route"
-import { ArtistRoutesTopLevelQuery } from "./Queries/ArtistRoutesTopLevelQuery"
 import { renderOrRedirect } from "./Routes/Overview/Utils/renderOrRedirect"
 import { getWorksForSaleRouteVariables } from "./Routes/WorksForSale/Utils/getWorksForSaleRouteVariables"
 
@@ -90,7 +89,54 @@ export const artistRoutes: AppRouteConfig[] = [
       OverviewRoute.preload()
       WorksForSaleRoute.preload()
     },
-    query: ArtistRoutesTopLevelQuery,
+    query: graphql`
+      query artistRoutes_TopLevelQuery($artistID: String!) {
+        artist(id: $artistID) @principalField {
+          ...ArtistApp_artist
+          slug
+          statuses {
+            shows
+            cv(minShowCount: 0)
+            articles
+          }
+          counts {
+            forSaleArtworks
+          }
+          related {
+            genes {
+              edges {
+                node {
+                  slug
+                }
+              }
+            }
+          }
+          highlights {
+            # Alias due to obscure Graphql validation warning
+            artistPartnersConnection: partnersConnection(
+              first: 10
+              displayOnPartnerProfile: true
+              representedBy: true
+              partnerCategory: ["blue-chip", "top-established", "top-emerging"]
+            ) {
+              edges {
+                node {
+                  categories {
+                    slug
+                  }
+                }
+              }
+            }
+          }
+          insights {
+            type
+          }
+          biographyBlurb(format: HTML, partnerBio: true) {
+            text
+          }
+        }
+      }
+    `,
     render: renderOrRedirect,
     children: [
       {
@@ -131,54 +177,6 @@ export const artistRoutes: AppRouteConfig[] = [
         `,
       },
       {
-        path: "articles",
-        theme: "v3",
-        hideNavigationTabs: true,
-        getComponent: () => ArticlesRoute,
-        prepare: () => {
-          ArticlesRoute.preload()
-        },
-        query: graphql`
-          query artistRoutes_ArticlesQuery($artistID: String!) {
-            artist(id: $artistID) {
-              ...ArtistArticlesRoute_artist
-            }
-          }
-        `,
-      },
-      {
-        path: "cv",
-        theme: "v3",
-        hideNavigationTabs: true,
-        getComponent: () => CVRoute,
-        prepare: () => {
-          CVRoute.preload()
-        },
-        query: graphql`
-          query artistRoutes_CVQuery($artistID: String!) {
-            viewer {
-              ...ArtistCVRoute_viewer
-            }
-          }
-        `,
-      },
-      {
-        path: "shows",
-        theme: "v3",
-        hideNavigationTabs: true,
-        getComponent: () => ShowsRoute,
-        prepare: () => {
-          ShowsRoute.preload()
-        },
-        query: graphql`
-          query artistRoutes_ShowsQuery($artistID: String!) {
-            viewer {
-              ...ArtistShowsRoute_viewer
-            }
-          }
-        `,
-      },
-      {
         path: "auction-results",
         theme: "v3",
         ignoreScrollBehavior: false,
@@ -197,6 +195,22 @@ export const artistRoutes: AppRouteConfig[] = [
 
       // Routes not in tabs
 
+      {
+        path: "articles",
+        theme: "v3",
+        hideNavigationTabs: true,
+        getComponent: () => ArticlesRoute,
+        prepare: () => {
+          ArticlesRoute.preload()
+        },
+        query: graphql`
+          query artistRoutes_ArticlesQuery($artistID: String!) {
+            artist(id: $artistID) {
+              ...ArtistArticlesRoute_artist
+            }
+          }
+        `,
+      },
       {
         path: "consign",
         theme: "v2",
@@ -232,6 +246,38 @@ export const artistRoutes: AppRouteConfig[] = [
             throw new RedirectException(artistPathName)
           }
         },
+      },
+      {
+        path: "cv",
+        theme: "v3",
+        hideNavigationTabs: true,
+        getComponent: () => CVRoute,
+        prepare: () => {
+          CVRoute.preload()
+        },
+        query: graphql`
+          query artistRoutes_CVQuery($artistID: String!) {
+            viewer {
+              ...ArtistCVRoute_viewer
+            }
+          }
+        `,
+      },
+      {
+        path: "shows",
+        theme: "v3",
+        hideNavigationTabs: true,
+        getComponent: () => ShowsRoute,
+        prepare: () => {
+          ShowsRoute.preload()
+        },
+        query: graphql`
+          query artistRoutes_ShowsQuery($artistID: String!) {
+            viewer {
+              ...ArtistShowsRoute_viewer
+            }
+          }
+        `,
       },
 
       /**
