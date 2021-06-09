@@ -3,17 +3,17 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type FollowArtist2Button_artist = {
+export type ArtistFollowArtistButton_artist = {
     readonly internalID: string;
     readonly slug: string;
     readonly name: string | null;
     readonly isFollowed: boolean | null;
-    readonly " $refType": "FollowArtist2Button_artist";
+    readonly " $refType": "ArtistFollowArtistButton_artist";
 };
-export type FollowArtist2Button_artist$data = FollowArtist2Button_artist;
-export type FollowArtist2Button_artist$key = {
-    readonly " $data"?: FollowArtist2Button_artist$data;
-    readonly " $fragmentRefs": FragmentRefs<"FollowArtist2Button_artist">;
+export type ArtistFollowArtistButton_artist$data = ArtistFollowArtistButton_artist;
+export type ArtistFollowArtistButton_artist$key = {
+    readonly " $data"?: ArtistFollowArtistButton_artist$data;
+    readonly " $fragmentRefs": FragmentRefs<"ArtistFollowArtistButton_artist">;
 };
 
 
@@ -22,7 +22,7 @@ const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "FollowArtist2Button_artist",
+  "name": "ArtistFollowArtistButton_artist",
   "selections": [
     {
       "alias": null,
@@ -55,5 +55,5 @@ const node: ReaderFragment = {
   ],
   "type": "Artist"
 };
-(node as any).hash = 'aa58eb033e9579cb71e0dc8b2e067e3e';
+(node as any).hash = 'adc4f2ad3e3bcab32b69bba50307d539';
 export default node;

@@ -1,0 +1,77 @@
+import { graphql } from "react-relay"
+import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
+import { ArtistHeaderFragmentContainer } from "../ArtistHeader"
+import { ArtistHeader_Test_Query } from "v2/__generated__/ArtistHeader_Test_Query.graphql"
+import { useTracking } from "react-tracking"
+
+jest.unmock("react-relay")
+jest.mock("react-tracking")
+
+jest.mock("v2/Components/SelectedCareerAchievements", () => ({
+  SelectedCareerAchievementsFragmentContainer: () => null,
+}))
+jest.mock(
+  "v2/Apps/Artist/Components/ArtistHeader/ArtistFollowArtistButton.tsx",
+  () => ({
+    ArtistFollowArtistButtonFragmentContainer: () => null,
+  })
+)
+
+describe("ArtistHeader", () => {
+  const { getWrapper } = setupTestWrapper<ArtistHeader_Test_Query>({
+    Component: ArtistHeaderFragmentContainer,
+    query: graphql`
+      query ArtistHeader_Test_Query {
+        artist(id: "example") {
+          ...ArtistHeader_artist
+        }
+      }
+    `,
+  })
+
+  const mockuseTracking = useTracking as jest.Mock
+  const trackingSpy = jest.fn()
+
+  beforeEach(() => {
+    mockuseTracking.mockImplementation(() => ({
+      trackEvent: trackingSpy,
+    }))
+  })
+
+  afterEach(() => {
+    jest.resetAllMocks()
+  })
+
+  it("renders correctly", () => {
+    const wrapper = getWrapper({
+      Artist: () => ({
+        name: "artistName",
+        slug: "artistSlug",
+        counts: { follows: 111 },
+        biographyBlurb: { text: "biographyBlurbText", credit: false },
+      }),
+    })
+
+    expect(wrapper.find("Avatar").length).toBe(1)
+    expect(wrapper.text()).toContain("artistName")
+    expect(wrapper.text()).toContain("formattedNationalityAndBirthday")
+    expect(
+      wrapper.find("ArtistFollowArtistButtonFragmentContainer").length
+    ).toBe(1)
+    expect(wrapper.text()).toContain("111 Following")
+    expect(wrapper.text()).toContain("biographyBlurbText")
+    expect(
+      wrapper.find("SelectedCareerAchievementsFragmentContainer").length
+    ).toBe(1)
+  })
+
+  it("hides bio section if partner supplied bio", () => {
+    const wrapper = getWrapper({
+      Artist: () => ({
+        biographyBlurb: { text: "biographyBlurbText", credit: true },
+      }),
+    })
+
+    expect(wrapper.text()).not.toContain("biographyBlurbText")
+  })
+})

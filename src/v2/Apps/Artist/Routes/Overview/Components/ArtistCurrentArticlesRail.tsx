@@ -58,7 +58,7 @@ const ArtistCurrentArticlesRail: React.FC<ArtistCurrentArticlesRailProps> = ({
       <Shelf alignItems="flex-start">
         {nodes.map((node, index) => {
           return (
-            <Box maxWidth={node.thumbnailImage?.cropped?.width}>
+            <Box maxWidth={345} key={index}>
               <RouterLink
                 to={node.href!}
                 key={index}
@@ -80,13 +80,17 @@ const ArtistCurrentArticlesRail: React.FC<ArtistCurrentArticlesRailProps> = ({
                   })
                 }}
               >
-                <Image
-                  width={node.thumbnailImage?.cropped?.width}
-                  height={node.thumbnailImage?.cropped?.height}
-                  src={node.thumbnailImage?.cropped?.src!}
-                  srcSet={node.thumbnailImage?.cropped?.srcSet}
-                  lazyLoad
-                />
+                {node?.thumbnailImage?.cropped?.src ? (
+                  <Image
+                    width={node.thumbnailImage.cropped.width}
+                    height={node.thumbnailImage.cropped.height}
+                    src={node.thumbnailImage.cropped.src}
+                    srcSet={node.thumbnailImage.cropped.srcSet}
+                    lazyLoad
+                  />
+                ) : (
+                  <Box width={325} height={230} bg="black10" />
+                )}
                 <Spacer my={1} />
                 <Text variant="md">{node.thumbnailTitle}</Text>
                 <Text variant="md" color="black60">

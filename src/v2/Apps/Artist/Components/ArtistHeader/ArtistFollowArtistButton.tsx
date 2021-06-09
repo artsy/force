@@ -1,24 +1,38 @@
-import { AuthContextModule, ContextModule, Intent } from "@artsy/cohesion"
+import {
+  AuthContextModule,
+  ContextModule,
+  FollowedArgs,
+  followedArtist,
+  Intent,
+  unfollowedArtist,
+} from "@artsy/cohesion"
 import { Button, ButtonProps } from "@artsy/palette"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { useSystemContext } from "v2/Artsy"
+import { useTracking } from "react-tracking"
+import { useAnalyticsContext, useSystemContext } from "v2/Artsy"
 import { openAuthToFollowSave } from "v2/Utils/openAuthModal"
-import { FollowArtist2Button_artist } from "v2/__generated__/FollowArtist2Button_artist.graphql"
+import { ArtistFollowArtistButton_artist } from "v2/__generated__/ArtistFollowArtistButton_artist.graphql"
 import { followArtistMutation } from "./Mutations/FollowArtistMutation"
 
 interface FollowArtistButtonProps {
-  artist: FollowArtist2Button_artist
+  artist: ArtistFollowArtistButton_artist
   contextModule?: AuthContextModule
   buttonProps?: Partial<ButtonProps> // Pass palette props to button
 }
 
-export const BaseFollowArtistButton: React.FC<FollowArtistButtonProps> = ({
+export const ArtistFollowArtistButton: React.FC<FollowArtistButtonProps> = ({
   artist,
   contextModule = ContextModule.artistHeader,
   buttonProps = {},
 }) => {
+  const tracking = useTracking()
   const { mediator, relayEnvironment, user } = useSystemContext()
+  const {
+    contextPageOwnerId,
+    contextPageOwnerSlug,
+    contextPageOwnerType,
+  } = useAnalyticsContext()
 
   const isAuthenticated = () => {
     if (user) {
@@ -39,12 +53,31 @@ export const BaseFollowArtistButton: React.FC<FollowArtistButtonProps> = ({
     event.preventDefault()
 
     if (isAuthenticated()) {
+      trackEvent()
+
       await followArtistMutation(
         relayEnvironment!,
         artist.internalID,
         artist.isFollowed!
       )
     }
+  }
+
+  const trackEvent = () => {
+    const args: FollowedArgs = {
+      contextModule,
+      contextOwnerId: contextPageOwnerId,
+      contextOwnerSlug: contextPageOwnerSlug,
+      contextOwnerType: contextPageOwnerType!,
+      ownerId: artist.internalID,
+      ownerSlug: artist.slug,
+    }
+
+    const trackingData = artist.isFollowed
+      ? unfollowedArtist(args)
+      : followedArtist(args)
+
+    tracking.trackEvent(trackingData)
   }
 
   return (
@@ -60,11 +93,11 @@ export const BaseFollowArtistButton: React.FC<FollowArtistButtonProps> = ({
   )
 }
 
-export const FollowArtist2ButtonFragmentContainer = createFragmentContainer(
-  BaseFollowArtistButton,
+export const ArtistFollowArtistButtonFragmentContainer = createFragmentContainer(
+  ArtistFollowArtistButton,
   {
     artist: graphql`
-      fragment FollowArtist2Button_artist on Artist {
+      fragment ArtistFollowArtistButton_artist on Artist {
         internalID
         slug
         name

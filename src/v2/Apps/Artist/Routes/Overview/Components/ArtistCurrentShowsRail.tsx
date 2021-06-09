@@ -1,5 +1,5 @@
 import { clickedEntityGroup, ContextModule, OwnerType } from "@artsy/cohesion"
-import { Flex, Image, Shelf, Spacer, Text } from "@artsy/palette"
+import { Box, Flex, Image, Shelf, Spacer, Text } from "@artsy/palette"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
@@ -80,13 +80,18 @@ const ArtistCurrentShowsRail: React.FC<ArtistCurrentShowsRailProps> = ({
                 })
               }}
             >
-              <Image
-                width={node.coverImage?.cropped?.width}
-                height={node.coverImage?.cropped?.height}
-                src={node.coverImage?.cropped?.src!}
-                srcSet={node.coverImage?.cropped?.srcSet}
-                lazyLoad
-              />
+              {node.coverImage?.cropped?.src ? (
+                <Image
+                  width={node.coverImage.cropped.width}
+                  height={node.coverImage.cropped.height}
+                  src={node.coverImage.cropped.src}
+                  srcSet={node.coverImage.cropped.srcSet}
+                  lazyLoad
+                />
+              ) : (
+                <Box width={325} height={230} bg="black10" />
+              )}
+
               <Spacer my={1} />
               <Text variant="md">{node.name}</Text>
               <Text variant="md" color="black60">

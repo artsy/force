@@ -12,7 +12,7 @@ import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { SelectedCareerAchievementsFragmentContainer } from "v2/Components/SelectedCareerAchievements"
 import { ArtistHeader_artist } from "v2/__generated__/ArtistHeader_artist.graphql"
-import { FollowArtist2ButtonFragmentContainer } from "./FollowArtist2Button"
+import { ArtistFollowArtistButtonFragmentContainer } from "./ArtistFollowArtistButton"
 
 interface ArtistHeaderProps {
   artist: ArtistHeader_artist
@@ -52,18 +52,24 @@ const ArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {
 
           <GridColumns>
             <Column span={[12, 6, 3]}>
-              <FollowArtist2ButtonFragmentContainer artist={artist} />
+              <ArtistFollowArtistButtonFragmentContainer artist={artist} />
             </Column>
 
-            <Column
-              span={[12, 6, 9]}
-              display={["block", "flex"]}
-              alignItems="center"
-            >
-              <Text variant="xs" color="black60" textAlign={["center", "left"]}>
-                {formatFollowerCount(artist.counts?.follows!)} Following
-              </Text>
-            </Column>
+            {artist.counts?.follows && (
+              <Column
+                span={[12, 6, 9]}
+                display={["block", "flex"]}
+                alignItems="center"
+              >
+                <Text
+                  variant="xs"
+                  color="black60"
+                  textAlign={["center", "left"]}
+                >
+                  {formatFollowerCount(artist.counts.follows)} Following
+                </Text>
+              </Column>
+            )}
           </GridColumns>
         </Column>
 
@@ -102,7 +108,7 @@ export const ArtistHeaderFragmentContainer = createFragmentContainer(
             defaultValue: ["blue-chip", "top-established", "top-emerging"]
           }
         ) {
-        ...FollowArtist2Button_artist
+        ...ArtistFollowArtistButton_artist
         ...SelectedCareerAchievements_artist
 
         artistHighlights: highlights {

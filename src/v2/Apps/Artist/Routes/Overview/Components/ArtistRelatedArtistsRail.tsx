@@ -3,7 +3,7 @@ import { Box, EntityHeader, Image, Shelf, Spacer, Text } from "@artsy/palette"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
-import { BaseFollowArtistButton } from "v2/Apps/Artist/Components/ArtistHeader/FollowArtist2Button"
+import { ArtistFollowArtistButton } from "v2/Apps/Artist/Components/ArtistHeader/ArtistFollowArtistButton"
 import { AnalyticsSchema, useAnalyticsContext } from "v2/Artsy"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import { extractNodes } from "v2/Utils/extractNodes"
@@ -87,13 +87,13 @@ const ArtistRelatedArtistsRail: React.FC<ArtistRelatedArtistsRailProps> = ({
                       : undefined
                   }
                   FollowButton={
-                    <BaseFollowArtistButton
+                    <ArtistFollowArtistButton
                       artist={{
                         internalID: node.internalID,
                         slug: node.slug,
                         name: node.name,
                         isFollowed: node.isFollowed,
-                        " $refType": "FollowArtist2Button_artist",
+                        " $refType": "ArtistFollowArtistButton_artist",
                       }}
                       contextModule={ContextModule.featuredArtistsRail}
                       buttonProps={{
@@ -118,7 +118,7 @@ export const ArtistRelatedArtistsRailFragmentContainer = createFragmentContainer
   {
     artist: graphql`
       fragment ArtistRelatedArtistsRail_artist on Artist {
-        ...FollowArtist2Button_artist
+        ...ArtistFollowArtistButton_artist
         name
         href
         related {
