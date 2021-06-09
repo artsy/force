@@ -206,18 +206,6 @@ export const BaseArtworkFilter: React.FC<
     })
   }
 
-  const ArtworkGrid = () => {
-    return (
-      <ArtworkFilterArtworkGrid
-        // @ts-expect-error STRICT_NULL_CHECK
-        filtered_artworks={viewer.filtered_artworks}
-        isLoading={isFetching}
-        offset={offset}
-        columnCount={[2, 2, 2, 3]}
-      />
-    )
-  }
-
   return (
     <Box mt={tokens.mt} {...rest}>
       <Box id="jump--artworkFilter" />
@@ -267,7 +255,13 @@ export const BaseArtworkFilter: React.FC<
 
           <Spacer mb={2} />
 
-          <ArtworkGrid />
+          <ArtworkFilterArtworkGrid
+            // @ts-expect-error STRICT_NULL_CHECK
+            filtered_artworks={viewer.filtered_artworks}
+            isLoading={isFetching}
+            offset={offset}
+            columnCount={[2, 2, 2, 3]}
+          />
         </Box>
       </Media>
 
@@ -295,7 +289,15 @@ export const BaseArtworkFilter: React.FC<
               </Box>
             )}
 
-            {children || <ArtworkGrid />}
+            {children || (
+              <ArtworkFilterArtworkGrid
+                // @ts-expect-error STRICT_NULL_CHECK
+                filtered_artworks={viewer.filtered_artworks}
+                isLoading={isFetching}
+                offset={offset}
+                columnCount={[2, 2, 2, 3]}
+              />
+            )}
           </Column>
         </GridColumns>
       </Media>

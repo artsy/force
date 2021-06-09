@@ -12,7 +12,7 @@ import { isNull } from "lodash"
 import React, { useContext } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { data as sd } from "sharify"
-import styled from "styled-components"
+import styled, { css } from "styled-components"
 import { slugify } from "underscore.string"
 import { Media } from "v2/Utils/Responsive"
 import { ArtworkSharePanelFragmentContainer as ArtworkSharePanel } from "./ArtworkSharePanel"
@@ -20,6 +20,7 @@ import { ContextModule } from "@artsy/cohesion"
 import {
   BellFillIcon,
   BellIcon,
+  Box,
   Clickable,
   DownloadIcon,
   EditIcon,
@@ -164,6 +165,7 @@ export class ArtworkActions extends React.Component<ArtworkActionsProps> {
         name="download"
         href={this.getDownloadableImageUrl()}
         label="Download"
+        Component={UtilButtonLink}
       />
     )
   }
@@ -172,7 +174,14 @@ export class ArtworkActions extends React.Component<ArtworkActionsProps> {
     const { artwork } = this.props
     if (artwork.partner) {
       const editUrl = `${sd.CMS_URL}/artworks/${artwork.slug}/edit?current_partner_id=${artwork.partner.slug}`
-      return <UtilButton name="edit" href={editUrl} label="Edit" />
+      return (
+        <UtilButton
+          name="edit"
+          href={editUrl}
+          label="Edit"
+          Component={UtilButtonLink}
+        />
+      )
     }
   }
 
@@ -180,7 +189,14 @@ export class ArtworkActions extends React.Component<ArtworkActionsProps> {
     const { artwork } = this.props
     const genomeUrl = `${sd.GENOME_URL}/genome/artworks?artwork_ids=${artwork.slug}`
 
-    return <UtilButton name="genome" href={genomeUrl} label="Genome" />
+    return (
+      <UtilButton
+        name="genome"
+        href={genomeUrl}
+        label="Genome"
+        Component={UtilButtonLink}
+      />
+    )
   }
 
   render() {
@@ -334,6 +350,10 @@ interface UtilButtonProps {
   selected?: boolean
   label?: string
   Icon?: React.ReactNode
+  Component?:
+    | typeof UtilButtonButton
+    | typeof UtilButtonLink
+    | typeof UtilButtonBox
   onClick?: () => void
 }
 
@@ -343,6 +363,7 @@ export const UtilButton: React.FC<UtilButtonProps> = ({
   name,
   onClick,
   Icon,
+  Component = UtilButtonButton,
   ...rest
 }) => {
   const getIcon = () => {
@@ -368,7 +389,6 @@ export const UtilButton: React.FC<UtilButtonProps> = ({
 
   // If we're passing in an `Icon`, override
   const ActionIcon = Icon ? Icon : getIcon()
-  const Component = href ? UtilButtonLink : UtilButtonButton
 
   return (
     <Component
@@ -385,7 +405,6 @@ export const UtilButton: React.FC<UtilButtonProps> = ({
       >
         {/* TODO: Fix types */}
         {/* @ts-ignore */}
-
         <ActionIcon {...rest} fill="currentColor" />
       </Flex>
 
@@ -398,19 +417,7 @@ export const UtilButton: React.FC<UtilButtonProps> = ({
   )
 }
 
-const UtilButtonLink = styled(Link)`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-decoration: none;
-  color: ${themeGet("colors.black100")};
-
-  &:hover {
-    color: ${themeGet("colors.blue100")};
-  }
-`
-
-const UtilButtonButton = styled(Clickable)`
+const utilButtonMixin = css`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -420,6 +427,19 @@ const UtilButtonButton = styled(Clickable)`
     color: ${themeGet("colors.blue100")};
     text-decoration: underline;
   }
+`
+
+const UtilButtonLink = styled(Link)`
+  ${utilButtonMixin}
+  text-decoration: none;
+`
+
+const UtilButtonButton = styled(Clickable)`
+  ${utilButtonMixin}
+`
+
+const UtilButtonBox = styled(Box)`
+  ${utilButtonMixin}
 `
 
 const Container = styled(Flex)`
@@ -452,6 +472,7 @@ const Save = (actionProps: ArtworkActionsProps) => (
         name="bell"
         Icon={isSaved ? FilledIcon : BellIcon}
         label="Watch lot"
+        Component={UtilButtonBox}
       />
     )
   } else {
@@ -461,6 +482,7 @@ const Save = (actionProps: ArtworkActionsProps) => (
         name="heart"
         Icon={isSaved ? FilledIcon : HeartIcon}
         label="Save"
+        Component={UtilButtonBox}
       />
     )
   }

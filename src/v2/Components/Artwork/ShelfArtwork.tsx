@@ -1,10 +1,12 @@
 import { Box, Image } from "@artsy/palette"
-import { useSystemContext } from "v2/Artsy"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import { ShelfArtwork_artwork } from "v2/__generated__/ShelfArtwork_artwork.graphql"
-import { ClickContainer, SaveButtonFragmentContainer } from "./SaveButton"
+import {
+  Container as SaveButtonContainer,
+  SaveButtonFragmentContainer,
+} from "./SaveButton"
 import Metadata from "./Metadata"
 import { AuthContextModule } from "@artsy/cohesion"
 import styled from "styled-components"
@@ -42,8 +44,6 @@ const ShelfArtwork: React.FC<ShelfArtworkProps> = ({
   showExtended,
   showMetadata = true,
 }) => {
-  const { mediator, user } = useSystemContext()
-
   const getHeight = (size: keyof typeof IMG_HEIGHT) => {
     // @ts-expect-error STRICT_NULL_CHECK
     return artwork.image?.resized.height > IMG_HEIGHT[size]
@@ -98,8 +98,6 @@ const ShelfArtwork: React.FC<ShelfArtworkProps> = ({
 
           <Media greaterThan="sm">
             <SaveButtonFragmentContainer
-              mediator={mediator}
-              user={user}
               contextModule={contextModule}
               artwork={artwork}
             />
@@ -125,7 +123,7 @@ const Container = styled(Flex)`
   position: relative;
 
   &:hover {
-    ${ClickContainer} {
+    ${SaveButtonContainer} {
       opacity: 1;
     }
   }
