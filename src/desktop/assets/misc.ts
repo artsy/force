@@ -15,8 +15,6 @@ const routes = {
 
   "/jobs": require("../apps/jobs/client/index.coffee").init,
 
-  "/unsubscribe": require("../apps/unsubscribe/client/index.coffee").init,
-
   "/consign/submission": require("../apps/consign/client/submission").init,
 
   "/consign": require("../apps/consign/client").init,
