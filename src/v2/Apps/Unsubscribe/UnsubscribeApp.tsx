@@ -35,10 +35,10 @@ export const UnsubscribeApp: React.FC<UnsubscribeAppProps> = ({ me }) => {
 
           <Spacer mt={6} />
 
-          {!me ? (
-            <UnsubscribeLoggedOut authenticationToken={authenticationToken} />
-          ) : (
+          {me ? (
             <UnsubscribeLoggedInFragmentContainer me={me} />
+          ) : (
+            <UnsubscribeLoggedOut authenticationToken={authenticationToken} />
           )}
         </Column>
       </GridColumns>
