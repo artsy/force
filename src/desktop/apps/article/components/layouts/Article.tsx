@@ -88,7 +88,7 @@ export class ArticleLayout extends React.Component<AppProps> {
             relatedArticlesForCanvas={article.relatedArticlesCanvas}
             showTooltips={showTooltips}
             hideAuthModal={isEigen}
-            shouldAdRender={!isEigen} // always render ads on super, series, and custom editorial articles
+            shouldAdRender={!isEigen} // always render ads on super, series, and custom editorial articles if not on Eigen
           />
         ) : (
           <InfiniteScrollArticle
