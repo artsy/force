@@ -18,6 +18,9 @@ export type ShowApp_show = {
     readonly counts: {
         readonly eligibleArtworks: number | null;
     } | null;
+    readonly fair: {
+        readonly hasFullFeature: boolean | null;
+    } | null;
     readonly sidebarAggregations: {
         readonly aggregations: ReadonlyArray<{
             readonly slice: ArtworkAggregation | null;
@@ -143,6 +146,24 @@ return {
       "storageKey": null
     },
     {
+      "alias": null,
+      "args": null,
+      "concreteType": "Fair",
+      "kind": "LinkedField",
+      "name": "fair",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "hasFullFeature",
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
+    },
+    {
       "alias": "sidebarAggregations",
       "args": [
         {
@@ -258,5 +279,5 @@ return {
   "type": "Show"
 };
 })();
-(node as any).hash = 'd6a71468cc1ef2473f3eb35968b33b4d';
+(node as any).hash = '7f54f9a73e16b80d49b03dc5a9e713f4';
 export default node;

@@ -104,8 +104,12 @@ export const ShowApp: React.FC<ShowAppProps> = ({ show }) => {
               <ShowArtworksEmptyState show={show} />
             </>
           )}
-          <Separator as="hr" my={6} />
-          <ShowContextCard show={show} />
+          {show.fair?.hasFullFeature !== false && (
+            <>
+              <Separator as="hr" my={6} />
+              <ShowContextCard show={show} />
+            </>
+          )}
         </AnalyticsContext.Provider>
       </>
     </>
@@ -132,6 +136,9 @@ export const ShowAppFragmentContainer = createFragmentContainer(ShowApp, {
       }
       counts {
         eligibleArtworks
+      }
+      fair {
+        hasFullFeature
       }
       sidebarAggregations: filterArtworksConnection(
         aggregations: $aggregations
