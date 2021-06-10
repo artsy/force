@@ -10,8 +10,8 @@ exports[`QuickInput renders a focused QuickInput as a snapshot 1`] = `
   color: #E82F1D;
   -webkit-transition: visibility 0.2s linear;
   transition: visibility 0.2s linear;
-  -webkit-animation: eBtoLo 0.25s linear;
-  animation: eBtoLo 0.25s linear;
+  -webkit-animation: hqnQVQ 0.25s linear;
+  animation: hqnQVQ 0.25s linear;
   height: 16px;
 }
 
@@ -122,8 +122,8 @@ exports[`QuickInput renders a focused QuickInput as a snapshot 1`] = `
   left: 10px;
   top: 10px;
   visibility: visible;
-  -webkit-animation: eMLfYp 0.2s linear;
-  animation: eMLfYp 0.2s linear;
+  -webkit-animation: jBcSpD 0.2s linear;
+  animation: jBcSpD 0.2s linear;
   -webkit-transition: visibility 0.2s linear;
   transition: visibility 0.2s linear;
   z-index: 1;
@@ -143,7 +143,7 @@ exports[`QuickInput renders a focused QuickInput as a snapshot 1`] = `
   className="c0"
 >
   <div
-    className="focused c1"
+    className="c1 focused"
   >
     <label
       className="c2"
@@ -184,8 +184,8 @@ exports[`QuickInput renders an unfocused QuickInput as a snapshot 1`] = `
   color: #E82F1D;
   -webkit-transition: visibility 0.2s linear;
   transition: visibility 0.2s linear;
-  -webkit-animation: eBtoLo 0.25s linear;
-  animation: eBtoLo 0.25s linear;
+  -webkit-animation: hqnQVQ 0.25s linear;
+  animation: hqnQVQ 0.25s linear;
   height: 16px;
 }
 
@@ -295,8 +295,8 @@ exports[`QuickInput renders an unfocused QuickInput as a snapshot 1`] = `
   left: 10px;
   top: 10px;
   visibility: hidden;
-  -webkit-animation: hSsjZP 0.2s linear;
-  animation: hSsjZP 0.2s linear;
+  -webkit-animation: jiroXv 0.2s linear;
+  animation: jiroXv 0.2s linear;
   -webkit-transition: visibility 0.2s linear;
   transition: visibility 0.2s linear;
   z-index: 1;
