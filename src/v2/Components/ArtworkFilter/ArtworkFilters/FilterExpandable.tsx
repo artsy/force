@@ -2,16 +2,22 @@ import {
   Box,
   Expandable,
   ExpandableProps,
+  themeProps,
   useThemeConfig,
 } from "@artsy/palette"
 import React, { useEffect, useRef, useState } from "react"
-import { Media } from "v2/Utils/Responsive"
+import { useMatchMedia } from "v2/Utils/Hooks/useMatchMedia"
 import { getElementParams } from "./helpers"
 import { useScrollRefContext } from "./useScrollContext"
 
-const FilterExpandableWithScrollIntoView: React.FC<
-  ExpandableProps & { tokens: { mb: number } }
-> = ({ tokens, ...props }) => {
+export const FilterExpandable: React.FC<ExpandableProps> = props => {
+  const tokens = useThemeConfig({
+    v2: { mb: 1 },
+    v3: { mb: 6 },
+  })
+
+  const isScrollIntoViewEnabled = useMatchMedia(themeProps.mediaQueries.xs)
+
   const ctx = useScrollRefContext()
   const scrollRef = ctx?.scrollRef
 
@@ -34,10 +40,10 @@ const FilterExpandableWithScrollIntoView: React.FC<
         anchorRef.current?.scrollIntoView({ block: "end" })
       }
     }
-  }, [open, filterRef])
+  }, [open])
 
   const onClick = () => {
-    setOpen(open => !open)
+    isScrollIntoViewEnabled && setOpen(open => !open)
   }
 
   return (
@@ -45,23 +51,5 @@ const FilterExpandableWithScrollIntoView: React.FC<
       <Expandable mb={tokens.mb} onClick={onClick} {...props} />
       <div ref={anchorRef}></div>
     </Box>
-  )
-}
-
-export const FilterExpandable: React.FC<ExpandableProps> = props => {
-  const tokens = useThemeConfig({
-    v2: { mb: 1 },
-    v3: { mb: 6 },
-  })
-
-  return (
-    <>
-      <Media at="xs">
-        <FilterExpandableWithScrollIntoView tokens={tokens} {...props} />
-      </Media>
-      <Media greaterThan="xs">
-        <Expandable mb={tokens.mb} {...props} />
-      </Media>
-    </>
   )
 }
