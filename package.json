@@ -339,7 +339,7 @@
     "jest": "24.9.0",
     "jest-coffee-preprocessor": "1.0.0",
     "jest-junit": "6.4.0",
-    "jest-styled-components": "7.0.0-2",
+    "jest-styled-components": "7.0.4",
     "jest-transform-graphql": "2.1.0",
     "jsdom-global": "3.0.2",
     "json-loader": "0.5.7",
