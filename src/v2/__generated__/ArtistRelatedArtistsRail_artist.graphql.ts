@@ -42,7 +42,7 @@ export type ArtistRelatedArtistsRail_artist = {
             } | null> | null;
         } | null;
     } | null;
-    readonly " $fragmentRefs": FragmentRefs<"FollowArtist2Button_artist">;
+    readonly " $fragmentRefs": FragmentRefs<"ArtistFollowArtistButton_artist">;
     readonly " $refType": "ArtistRelatedArtistsRail_artist";
 };
 export type ArtistRelatedArtistsRail_artist$data = ArtistRelatedArtistsRail_artist;
@@ -320,11 +320,11 @@ return {
     {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "FollowArtist2Button_artist"
+      "name": "ArtistFollowArtistButton_artist"
     }
   ],
   "type": "Artist"
 };
 })();
-(node as any).hash = 'efe33e8eab38f741aaa708450fe747e1';
+(node as any).hash = 'eaddcfb0dd8087050cbae7f7ee974f81';
 export default node;

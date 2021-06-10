@@ -6,7 +6,7 @@ import { findCurrentRoute } from "v2/Artsy/Router/Utils/findCurrentRoute"
 import { ArtistApp_artist } from "v2/__generated__/ArtistApp_artist.graphql"
 import { AnalyticsContext, useAnalyticsContext } from "v2/Artsy"
 import { BackLinkFragmentContainer } from "./Components/BackLink"
-import { ArtistHeaderFragmentContainer } from "./Components/ArtistHeader"
+import { ArtistHeaderFragmentContainer } from "./Components/ArtistHeader/ArtistHeader"
 import { RouteTab, RouteTabs } from "v2/Components/RouteTabs"
 import { ArtistMetaFragmentContainer } from "./Components/ArtistMeta"
 
@@ -23,17 +23,16 @@ interface ArtistAppProps {
 
 const ArtistApp: React.FC<ArtistAppProps> = ({ artist, children, match }) => {
   const route = findCurrentRoute(match)!
-  const PageWrapper = getPageWrapper(artist)
 
   // A stand-alone page under the /artist route path
   if (route.displayFullPage) {
-    return <PageWrapper>{children}</PageWrapper>
+    return <PageWrapper artist={artist}>{children}</PageWrapper>
   }
 
   // Sub-page with a back button
   if (route.hideNavigationTabs) {
     return (
-      <PageWrapper>
+      <PageWrapper artist={artist}>
         <BackLinkFragmentContainer artist={artist} />
 
         <Box mt={2}>{children}</Box>
@@ -46,7 +45,7 @@ const ArtistApp: React.FC<ArtistAppProps> = ({ artist, children, match }) => {
 
   // Default page
   return (
-    <PageWrapper>
+    <PageWrapper artist={artist}>
       <ArtistHeaderFragmentContainer artist={artist} />
 
       <Spacer my={[4, 12]} id="scrollTo--artistContentArea" />
@@ -76,6 +75,29 @@ const ArtistApp: React.FC<ArtistAppProps> = ({ artist, children, match }) => {
   )
 }
 
+const PageWrapper: React.FC<Omit<ArtistAppProps, "match"> & BoxProps> = ({
+  children,
+  artist,
+  ...rest
+}) => {
+  const { contextPageOwnerType, contextPageOwnerSlug } = useAnalyticsContext()
+
+  return (
+    <AnalyticsContext.Provider
+      value={{
+        contextPageOwnerId: artist.internalID,
+        contextPageOwnerSlug,
+        contextPageOwnerType,
+      }}
+    >
+      <Box mt={[2, 4]} {...rest}>
+        <ArtistMetaFragmentContainer artist={artist} />
+        {children}
+      </Box>
+    </AnalyticsContext.Provider>
+  )
+}
+
 export const ArtistAppFragmentContainer = createFragmentContainer(ArtistApp, {
   artist: graphql`
     fragment ArtistApp_artist on Artist {
@@ -96,26 +118,3 @@ export const ArtistAppFragmentContainer = createFragmentContainer(ArtistApp, {
     }
   `,
 })
-
-const getPageWrapper = artist => {
-  const PageWrapper: React.FC<BoxProps> = ({ children, ...rest }) => {
-    const { contextPageOwnerType, contextPageOwnerSlug } = useAnalyticsContext()
-
-    return (
-      <AnalyticsContext.Provider
-        value={{
-          contextPageOwnerId: artist.internalID,
-          contextPageOwnerSlug,
-          contextPageOwnerType,
-        }}
-      >
-        <Box mt={[2, 4]} {...rest}>
-          <ArtistMetaFragmentContainer artist={artist} />
-          {children}
-        </Box>
-      </AnalyticsContext.Provider>
-    )
-  }
-
-  return PageWrapper
-}

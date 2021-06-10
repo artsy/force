@@ -10,6 +10,15 @@ export type ArtistCareerHighlights_artist = {
         readonly text: string | null;
     } | null;
     readonly name: string | null;
+    readonly related: {
+        readonly genes: {
+            readonly edges: ReadonlyArray<{
+                readonly node: {
+                    readonly id: string;
+                } | null;
+            } | null> | null;
+        } | null;
+    } | null;
     readonly slug: string;
     readonly " $fragmentRefs": FragmentRefs<"SelectedCareerAchievements_artist" | "ArtistConsignButton_artist" | "ArtistGenes_artist">;
     readonly " $refType": "ArtistCareerHighlights_artist";
@@ -81,6 +90,57 @@ const node: ReaderFragment = {
     {
       "alias": null,
       "args": null,
+      "concreteType": "ArtistRelatedData",
+      "kind": "LinkedField",
+      "name": "related",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "GeneConnection",
+          "kind": "LinkedField",
+          "name": "genes",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": "GeneEdge",
+              "kind": "LinkedField",
+              "name": "edges",
+              "plural": true,
+              "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "concreteType": "Gene",
+                  "kind": "LinkedField",
+                  "name": "node",
+                  "plural": false,
+                  "selections": [
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "id",
+                      "storageKey": null
+                    }
+                  ],
+                  "storageKey": null
+                }
+              ],
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
       "kind": "ScalarField",
       "name": "slug",
       "storageKey": null
@@ -103,5 +163,5 @@ const node: ReaderFragment = {
   ],
   "type": "Artist"
 };
-(node as any).hash = '93c49e66bdab53077715ee30d955a9a2';
+(node as any).hash = 'e260e2017118f7e26dd225bba4df0abc';
 export default node;

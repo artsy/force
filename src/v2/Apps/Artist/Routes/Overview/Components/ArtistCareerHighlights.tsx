@@ -19,6 +19,7 @@ const ArtistCareerHighlights: React.FC<ArtistCareerHighlightsProps> = ({
   const { credit, partnerID, text } = artist.biographyBlurb!
   const showCredit = Boolean(credit)
   const partnerHref = `${sd.APP_URL}/${partnerID}`
+  const hasCategories = Boolean(artist.related?.genes?.edges?.length)
 
   return (
     <>
@@ -57,14 +58,17 @@ const ArtistCareerHighlights: React.FC<ArtistCareerHighlightsProps> = ({
             <ArtistConsignButtonFragmentContainer artist={artist} />
           </Box>
         </Column>
-        <Column span={4}>
-          <Box>
-            <Text variant="md" mb={2}>
-              Related categories
-            </Text>
-            <ArtistGenesFragmentContainer artist={artist} />
-          </Box>
-        </Column>
+
+        {hasCategories && (
+          <Column span={4}>
+            <Box>
+              <Text variant="md" mb={2}>
+                Related categories
+              </Text>
+              <ArtistGenesFragmentContainer artist={artist} />
+            </Box>
+          </Column>
+        )}
       </GridColumns>
     </>
   )
@@ -85,6 +89,15 @@ export const ArtistCareerHighlightsFragmentContainer = createFragmentContainer(
           text
         }
         name
+        related {
+          genes {
+            edges {
+              node {
+                id
+              }
+            }
+          }
+        }
         slug
       }
     `,

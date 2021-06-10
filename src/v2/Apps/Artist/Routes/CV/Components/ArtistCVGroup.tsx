@@ -57,7 +57,7 @@ const ArtistCVGroup: React.FC<ArtistCVGroupProps> = ({
 
   return (
     <>
-      <Join separator={<Spacer my={[1, 4]} />}>
+      <Join separator={<Spacer my={[1, 4]} />} data-test="artistCVGroup">
         {Object.keys(groupedByYear)
           .sort()
           .reverse()
@@ -66,54 +66,46 @@ const ArtistCVGroup: React.FC<ArtistCVGroupProps> = ({
             const yearGroup = groupedByYear[year]
 
             return (
-              <>
-                <GridColumns key={index}>
-                  <Column span={2} mb={[2, 0]}>
-                    {isFirst && <Text variant="lg">{title}</Text>}
-                  </Column>
+              <GridColumns key={index}>
+                <Column span={2} mb={[2, 0]}>
+                  {isFirst && <Text variant="lg">{title}</Text>}
+                </Column>
 
-                  <Column span={2}>
-                    <Text
-                      variant="md"
-                      textAlign={["left", "right"]}
-                      pr={[2, 4]}
-                    >
-                      {year}
-                    </Text>
-                  </Column>
+                <Column span={2}>
+                  <Text variant="md" textAlign={["left", "right"]} pr={[2, 4]}>
+                    {year}
+                  </Text>
+                </Column>
 
-                  <Column span={5}>
-                    {yearGroup.map(show => {
-                      return (
-                        <Box mb={1}>
-                          <Text variant="md" display="inline">
-                            {show.href ? (
-                              <RouterLink to={show.href}>
-                                {show.name}
-                              </RouterLink>
-                            ) : (
-                              <>{show.name}</>
-                            )}
+                <Column span={5}>
+                  {yearGroup.map((show, yearKey) => {
+                    return (
+                      <Box mb={1} key={yearKey}>
+                        <Text variant="md" display="inline">
+                          {show.href ? (
+                            <RouterLink to={show.href}>{show.name}</RouterLink>
+                          ) : (
+                            <>{show.name}</>
+                          )}
 
-                            {show.partner && (
-                              <>
-                                ,{" "}
-                                {show.partner.href ? (
-                                  <RouterLink to={show.partner.href}>
-                                    {show.partner.name}
-                                  </RouterLink>
-                                ) : (
-                                  <span>{show.partner.name}</span>
-                                )}
-                              </>
-                            )}
-                          </Text>
-                        </Box>
-                      )
-                    })}
-                  </Column>
-                </GridColumns>
-              </>
+                          {show.partner && (
+                            <>
+                              ,{" "}
+                              {show.partner.href ? (
+                                <RouterLink to={show.partner.href}>
+                                  {show.partner.name}
+                                </RouterLink>
+                              ) : (
+                                <span>{show.partner.name}</span>
+                              )}
+                            </>
+                          )}
+                        </Text>
+                      </Box>
+                    )
+                  })}
+                </Column>
+              </GridColumns>
             )
           })}
       </Join>

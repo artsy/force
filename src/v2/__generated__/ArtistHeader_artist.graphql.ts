@@ -40,7 +40,7 @@ export type ArtistHeader_artist = {
         readonly partnerID: string | null;
         readonly text: string | null;
     } | null;
-    readonly " $fragmentRefs": FragmentRefs<"FollowArtist2Button_artist" | "SelectedCareerAchievements_artist">;
+    readonly " $fragmentRefs": FragmentRefs<"ArtistFollowArtistButton_artist" | "SelectedCareerAchievements_artist">;
     readonly " $refType": "ArtistHeader_artist";
 };
 export type ArtistHeader_artist$data = ArtistHeader_artist;
@@ -346,7 +346,7 @@ return {
     {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "FollowArtist2Button_artist"
+      "name": "ArtistFollowArtistButton_artist"
     },
     {
       "args": null,
@@ -357,5 +357,5 @@ return {
   "type": "Artist"
 };
 })();
-(node as any).hash = '6d4e919c1ba93e68137c68af34e512f7';
+(node as any).hash = '24de828133e18fb4dd1017f9cf09aff3';
 export default node;

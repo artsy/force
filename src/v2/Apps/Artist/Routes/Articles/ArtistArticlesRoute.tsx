@@ -68,9 +68,9 @@ const ArtistArticlesRoute: React.FC<ArtistArticlesRouteProps> = ({
       </Text>
 
       <Join separator={<Spacer py={2} />}>
-        {nodes.map(article => {
+        {nodes.map((article, key) => {
           return (
-            <Flex justifyContent="space-between" width="100%">
+            <Flex justifyContent="space-between" width="100%" key={key}>
               <Flex width="100%" flexDirection={["column", "column", "row"]}>
                 <Box width={["100%", "100%", "20%"]}>
                   <Text variant="md">{article.publishedAt}</Text>
@@ -81,22 +81,28 @@ const ArtistArticlesRoute: React.FC<ArtistArticlesRouteProps> = ({
                     {article.thumbnailTitle}
                   </Text>
                   <Spacer mb={1} />
-                  <Text variant="md" color="black60">
-                    {article.author?.name}
-                  </Text>
+                  {article.author?.name && (
+                    <Text variant="md" color="black60">
+                      {article.author.name}
+                    </Text>
+                  )}
                 </Box>
               </Flex>
-              <Box>
-                <Image
-                  key={article.thumbnailImage?.resized?.src!}
-                  src={article.thumbnailImage?.resized?.src!}
-                  srcSet={article.thumbnailImage?.resized?.srcSet}
-                  width={[105, 210]}
-                  height={[75, 150]}
-                  style={{ objectFit: "cover" }}
-                  lazyLoad
-                />
-              </Box>
+              {article.thumbnailImage?.resized ? (
+                <Box>
+                  <Image
+                    key={article.thumbnailImage.resized.src}
+                    src={article.thumbnailImage.resized.src}
+                    srcSet={article.thumbnailImage.resized.srcSet}
+                    width={[105, 210]}
+                    height={[75, 150]}
+                    style={{ objectFit: "cover" }}
+                    lazyLoad
+                  />
+                </Box>
+              ) : (
+                <Box width={210} height={150} bg="black10" />
+              )}
             </Flex>
           )
         })}
@@ -159,7 +165,6 @@ export const ArtistArticlesRouteFragmentContainer = createRefetchContainer(
             }
           }
         }
-
         name
         slug
       }

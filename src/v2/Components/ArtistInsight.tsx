@@ -117,7 +117,11 @@ export class ArtistInsight extends React.Component<ArtistInsightProps> {
     return (
       <Flex
         mt={1}
-        width={this.props.themeVersion === "v3" ? ["100%", "50%"] : "100%"}
+        width={
+          this.props.themeVersion === "v3"
+            ? ["100%", "100%", "100%", "100%", "50%"]
+            : "100%"
+        }
         position="relative"
       >
         <Flex

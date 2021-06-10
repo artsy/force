@@ -32,6 +32,7 @@ export const followArtistMutation: FollowArtistMutationProps = (
           }
         }
       `,
+      // FIXME: Why is optimistic response not working in UI?
       optimisticResponse: {
         followArtist: {
           artist: {
