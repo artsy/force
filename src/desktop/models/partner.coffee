@@ -28,7 +28,7 @@ module.exports = class Partner extends Backbone.Model
     @get('sortable_id')
 
   href: ->
-    "/partner/#{@get('default_profile_id')}"
+    "/partner/#{@get('id')}"
 
   displayName: ->
     @get('name')
