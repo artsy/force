@@ -36,7 +36,7 @@ const node: ReaderFragment = {
         {
           "kind": "Literal",
           "name": "partnerBio",
-          "value": true
+          "value": false
         }
       ],
       "concreteType": "ArtistBlurb",
@@ -66,10 +66,10 @@ const node: ReaderFragment = {
           "storageKey": null
         }
       ],
-      "storageKey": "biographyBlurb(format:\"HTML\",partnerBio:true)"
+      "storageKey": "biographyBlurb(format:\"HTML\",partnerBio:false)"
     }
   ],
   "type": "Artist"
 };
-(node as any).hash = '4addcc903e5cb13537a9a17269aba5e1';
+(node as any).hash = 'ed3e96658bfe75ed22574c19e19d0634';
 export default node;

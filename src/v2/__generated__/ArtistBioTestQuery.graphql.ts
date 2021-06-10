@@ -36,7 +36,7 @@ query ArtistBioTestQuery {
 }
 
 fragment ArtistBio_bio on Artist {
-  biographyBlurb(format: HTML, partnerBio: true) {
+  biographyBlurb(format: HTML, partnerBio: false) {
     credit
     partnerID
     text
@@ -103,7 +103,7 @@ return {
               {
                 "kind": "Literal",
                 "name": "partnerBio",
-                "value": true
+                "value": false
               }
             ],
             "concreteType": "ArtistBlurb",
@@ -133,7 +133,7 @@ return {
                 "storageKey": null
               }
             ],
-            "storageKey": "biographyBlurb(format:\"HTML\",partnerBio:true)"
+            "storageKey": "biographyBlurb(format:\"HTML\",partnerBio:false)"
           },
           {
             "alias": null,
@@ -152,7 +152,7 @@ return {
     "metadata": {},
     "name": "ArtistBioTestQuery",
     "operationKind": "query",
-    "text": "query ArtistBioTestQuery {\n  bio: artist(id: \"unused\") {\n    ...ArtistBio_bio\n    id\n  }\n}\n\nfragment ArtistBio_bio on Artist {\n  biographyBlurb(format: HTML, partnerBio: true) {\n    credit\n    partnerID\n    text\n  }\n}\n"
+    "text": "query ArtistBioTestQuery {\n  bio: artist(id: \"unused\") {\n    ...ArtistBio_bio\n    id\n  }\n}\n\nfragment ArtistBio_bio on Artist {\n  biographyBlurb(format: HTML, partnerBio: false) {\n    credit\n    partnerID\n    text\n  }\n}\n"
   }
 };
 })();

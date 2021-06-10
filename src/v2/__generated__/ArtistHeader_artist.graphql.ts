@@ -311,7 +311,7 @@ return {
         {
           "kind": "Literal",
           "name": "partnerBio",
-          "value": true
+          "value": false
         }
       ],
       "concreteType": "ArtistBlurb",
@@ -341,7 +341,7 @@ return {
           "storageKey": null
         }
       ],
-      "storageKey": "biographyBlurb(format:\"HTML\",partnerBio:true)"
+      "storageKey": "biographyBlurb(format:\"HTML\",partnerBio:false)"
     },
     {
       "args": null,
@@ -357,5 +357,5 @@ return {
   "type": "Artist"
 };
 })();
-(node as any).hash = 'd686a968000c40edd92f5bfc0ab795e2';
+(node as any).hash = 'c562dc68706e9a135fabb644294a87b6';
 export default node;

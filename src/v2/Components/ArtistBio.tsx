@@ -31,7 +31,7 @@ export const ArtistBio: React.FC<ArtistBioProps> = ({ bio }) => {
 export const ArtistBioFragmentContainer = createFragmentContainer(ArtistBio, {
   bio: graphql`
     fragment ArtistBio_bio on Artist {
-      biographyBlurb: biographyBlurb(format: HTML, partnerBio: true) {
+      biographyBlurb: biographyBlurb(format: HTML, partnerBio: false) {
         credit
         partnerID
         text

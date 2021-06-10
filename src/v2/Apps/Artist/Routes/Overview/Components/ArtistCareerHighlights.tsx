@@ -83,7 +83,7 @@ export const ArtistCareerHighlightsFragmentContainer = createFragmentContainer(
         ...ArtistConsignButton_artist
         ...ArtistGenes_artist
 
-        biographyBlurb(format: HTML, partnerBio: true) {
+        biographyBlurb(format: HTML, partnerBio: false) {
           credit
           partnerID
           text

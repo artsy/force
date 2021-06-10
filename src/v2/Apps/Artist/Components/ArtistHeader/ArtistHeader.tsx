@@ -151,7 +151,7 @@ export const ArtistHeaderFragmentContainer = createFragmentContainer(
           follows
           forSaleArtworks
         }
-        biographyBlurb: biographyBlurb(format: HTML, partnerBio: true) {
+        biographyBlurb: biographyBlurb(format: HTML, partnerBio: false) {
           credit
           partnerID
           text
