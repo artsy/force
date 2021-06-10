@@ -11,6 +11,9 @@ import { Pagination } from "v2/Components/Pagination"
 jest.unmock("react-relay")
 jest.mock("v2/Artsy/Analytics/useTracking")
 jest.mock("v2/Components/Pagination/useComputeHref")
+jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
+  useMatchMedia: () => ({}),
+}))
 
 describe("ArtworkFilter", () => {
   const getWrapper = async (

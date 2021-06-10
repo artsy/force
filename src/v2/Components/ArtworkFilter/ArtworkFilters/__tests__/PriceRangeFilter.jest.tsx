@@ -1,7 +1,7 @@
 import { Input } from "@artsy/palette"
 import { mount } from "enzyme"
 import React from "react"
-import { flushPromiseQueue, MockBoot } from "v2/DevTools"
+import { flushPromiseQueue } from "v2/DevTools"
 import {
   ArtworkFilterContextProps,
   ArtworkFilterContextProvider,
@@ -9,15 +9,17 @@ import {
 } from "../../ArtworkFilterContext"
 import { PriceRangeFilter, PriceRangeFilterProps } from "../PriceRangeFilter"
 
+jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
+  useMatchMedia: () => ({}),
+}))
+
 describe("PriceRangeFilter", () => {
   let context: ArtworkFilterContextProps
 
   const getWrapper = (props: PriceRangeFilterProps = { expanded: true }) => {
     return mount(
       <ArtworkFilterContextProvider>
-        <MockBoot>
-          <PriceRangeFilterTest {...props} />
-        </MockBoot>
+        <PriceRangeFilterTest {...props} />
       </ArtworkFilterContextProvider>
     )
   }

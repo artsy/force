@@ -10,6 +10,10 @@ import {
   AttributionClassFilterProps,
 } from "../AttributionClassFilter"
 
+jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
+  useMatchMedia: () => ({}),
+}))
+
 describe("AttributionClassFilter", () => {
   let context: ArtworkFilterContextProps
 

@@ -7,7 +7,11 @@ import {
 } from "../ArtworkFilterContext"
 import { ArtworkFilterMobileActionSheet } from "../ArtworkFilterMobileActionSheet"
 import { ArtworkFilters } from "../ArtworkFilters"
-import { flushPromiseQueue, MockBoot } from "v2/DevTools"
+import { flushPromiseQueue } from "v2/DevTools"
+
+jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
+  useMatchMedia: () => ({ sm: true }),
+}))
 
 describe("ArtworkFilterMobileActionSheet", () => {
   let context
@@ -16,9 +20,7 @@ describe("ArtworkFilterMobileActionSheet", () => {
   const getWrapper = (props = {}) => {
     return mount(
       <ArtworkFilterContextProvider {...props}>
-        <MockBoot>
-          <ArtworkFilterMobileActionSheetTest />
-        </MockBoot>
+        <ArtworkFilterMobileActionSheetTest />
       </ArtworkFilterContextProvider>
     )
   }

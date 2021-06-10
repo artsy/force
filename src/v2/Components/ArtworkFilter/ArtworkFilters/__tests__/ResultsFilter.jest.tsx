@@ -1,22 +1,23 @@
 import { mount } from "enzyme"
 import React from "react"
-import { MockBoot } from "v2/DevTools"
 import { ArtworkFilterContextProvider } from "../../ArtworkFilterContext"
 import { ResultsFilter, sortResults } from "../ResultsFilter"
+
+jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
+  useMatchMedia: () => ({}),
+}))
 
 describe("ArtworkLocationFilter", () => {
   const getWrapper = (contextProps = {}) => {
     return mount(
       <ArtworkFilterContextProvider {...contextProps}>
-        <MockBoot>
-          <ResultsFilter
-            facetName="locationCities"
-            slice="LOCATION_CITY"
-            placeholder="Enter a city"
-            label="Artwork location"
-            expanded
-          />
-        </MockBoot>
+        <ResultsFilter
+          facetName="locationCities"
+          slice="LOCATION_CITY"
+          placeholder="Enter a city"
+          label="Artwork location"
+          expanded
+        />
       </ArtworkFilterContextProvider>
     )
   }

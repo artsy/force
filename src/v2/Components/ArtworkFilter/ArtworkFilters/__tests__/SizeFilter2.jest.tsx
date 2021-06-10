@@ -6,8 +6,11 @@ import {
   ArtworkFilterContextProvider,
   useArtworkFilterContext,
 } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
-import { MockBoot } from "v2/DevTools"
 import { SizeFilter2, SizeFilter2Props } from "../SizeFilter2"
+
+jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
+  useMatchMedia: () => ({}),
+}))
 
 describe("SizeFilter2", () => {
   let context: ArtworkFilterContextProps
@@ -15,9 +18,7 @@ describe("SizeFilter2", () => {
   const getWrapper = (props: SizeFilter2Props = { expanded: true }) => {
     return mount(
       <ArtworkFilterContextProvider>
-        <MockBoot>
-          <SizeFilterTest {...props} />
-        </MockBoot>
+        <SizeFilterTest {...props} />
       </ArtworkFilterContextProvider>
     )
   }
