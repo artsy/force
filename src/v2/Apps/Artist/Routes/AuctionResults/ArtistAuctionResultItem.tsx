@@ -234,7 +234,11 @@ const ExtraSmallAuctionItem: SFC<Props> = props => {
         width="80px"
       >
         {imageUrl ? (
-          <StyledImage src={imageUrl} Fallback={() => renderFallbackImage()} />
+          <StyledImage
+            src={imageUrl}
+            Fallback={() => renderFallbackImage()}
+            key={imageUrl}
+          />
         ) : (
           renderFallbackImage()
         )}
