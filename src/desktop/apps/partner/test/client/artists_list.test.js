@@ -181,6 +181,7 @@ describe("PartnerArtistsListView", function () {
               ["template"]
             )
             this.partner = fabricate("partner", {
+              id: "taipei-fine-art-museum",
               default_profile_id: "taipei-fine-art-museum",
             })
             this.pas = new PartnerArtists([
@@ -213,7 +214,7 @@ describe("PartnerArtistsListView", function () {
         return _.each(this.view.$(".artists-column > li > a"), a => {
           return $(a)
             .attr("href")
-            .should.startWith(`/${this.partner.default_profile_id}/artist/`)
+            .should.startWith(`partner/${this.partner.id}/artists/`)
         })
       })
 

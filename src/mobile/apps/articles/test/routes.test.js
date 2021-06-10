@@ -39,13 +39,16 @@ describe("Article routes", function () {
         partner_channel_id: "123",
         slug: "foobar",
       })
+      const partner = fabricate("partner")
       routes.article(this.req, this.res, this.next)
       Backbone.sync.args[0][1].url().should.containEql("api/articles/foobar")
       Backbone.sync.args[0][2].success(article)
-      Backbone.sync.args[2][2].success(fabricate("partner"))
+      Backbone.sync.args[2][2].success(partner)
       return _.defer(() =>
         _.defer(() => {
-          this.res.redirect.args[0][0].should.equal("/gagosian/article/foobar")
+          this.res.redirect.args[0][0].should.equal(
+            `/partner/${partner.id}/article/foobar`
+          )
           return done()
         })
       )
