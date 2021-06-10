@@ -214,7 +214,7 @@ describe("PartnerArtistsListView", function () {
         return _.each(this.view.$(".artists-column > li > a"), a => {
           return $(a)
             .attr("href")
-            .should.startWith(`partner/${this.partner.id}/artists/`)
+            .should.startWith(`/partner/${this.partner.id}/artists/`)
         })
       })
 
