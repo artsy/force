@@ -7,6 +7,10 @@ import {
 } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
 import { SizeFilter } from "../Components/AuctionFilters/SizeFilter"
 
+jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
+  useMatchMedia: () => ({}),
+}))
+
 describe("SizeFilter", () => {
   let context: ArtworkFilterContextProps
 

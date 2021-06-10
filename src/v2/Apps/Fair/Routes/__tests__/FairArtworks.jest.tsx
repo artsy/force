@@ -14,6 +14,9 @@ jest.mock("v2/Artsy/Router/useRouter", () => ({
   }),
 }))
 jest.mock("v2/Artsy/Analytics/useTracking")
+jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
+  useMatchMedia: () => ({}),
+}))
 
 describe("FairArtworks", () => {
   const trackEvent = jest.fn()
