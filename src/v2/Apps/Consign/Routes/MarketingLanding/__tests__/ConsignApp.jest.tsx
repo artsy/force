@@ -13,8 +13,8 @@ jest.mock("../Components/ConsignMeta", () => ({
 jest.mock("../Components/Header", () => ({
   Header: () => <div />,
 }))
-jest.mock("../Components/TemporaryOffer", () => ({
-  TemporaryOffer: () => <div />,
+jest.mock("../Components/PromoSpace", () => ({
+  PromoSpace: () => <div />,
 }))
 jest.mock("../Components/SellArtDifferently", () => ({
   SellArtDifferently: () => <div />,
@@ -55,6 +55,7 @@ describe("MarketingLandingApp", () => {
     const wrapper = mount(<MarketingLandingApp />)
     expect(wrapper.find("ConsignMeta").length).toBe(1)
     expect(wrapper.find("Header").length).toBe(1)
+    expect(wrapper.find("PromoSpace").length).toBe(1)
     expect(wrapper.find("SellArtDifferently").length).toBe(1)
     expect(wrapper.find("GetPriceEstimate").length).toBe(1)
     expect(wrapper.find("HowToSell").length).toBe(1)
@@ -65,10 +66,5 @@ describe("MarketingLandingApp", () => {
     expect(wrapper.find("BecomePartner").length).toBe(1)
     expect(wrapper.find("FAQ").length).toBe(1)
     expect(wrapper.find("ArtworkCredits").length).toBe(1)
-  })
-
-  it("shows temporary discount banner", () => {
-    const wrapper = mount(<MarketingLandingApp />)
-    expect(wrapper.find("TemporaryOffer").length).toBe(1)
   })
 })
