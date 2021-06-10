@@ -155,7 +155,7 @@ export const ArtistInfoFragmentContainer = createFragmentContainer(
         ...FollowArtistButton_artist
         # The below data is only used to determine whether a section
         # should be rendered
-        biographyBlurb: biographyBlurb(format: HTML, partnerBio: true) {
+        biographyBlurb: biographyBlurb(format: HTML, partnerBio: false) {
           text
         }
       }

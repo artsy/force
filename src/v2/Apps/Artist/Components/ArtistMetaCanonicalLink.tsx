@@ -87,7 +87,7 @@ export const ArtistMetaCanonicalLinkFragmentContainer = createFragmentContainer(
             }
           }
         }
-        biographyBlurb(format: HTML, partnerBio: true) {
+        biographyBlurb(format: HTML, partnerBio: false) {
           text
         }
         related {

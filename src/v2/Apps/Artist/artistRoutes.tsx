@@ -131,7 +131,7 @@ export const artistRoutes: AppRouteConfig[] = [
           insights {
             type
           }
-          biographyBlurb(format: HTML, partnerBio: true) {
+          biographyBlurb(format: HTML, partnerBio: false) {
             text
           }
         }
