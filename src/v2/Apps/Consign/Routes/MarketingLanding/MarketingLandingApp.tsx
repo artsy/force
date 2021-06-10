@@ -10,7 +10,7 @@ import { ReadMore } from "./Components/ReadMore"
 import { ContactUs } from "./Components/ContactUs"
 import { FAQ } from "./Components/FAQ"
 import { ArtworkCredits } from "./Components/ArtworkCredits"
-import { TemporaryOffer } from "./Components/TemporaryOffer"
+import { PromoSpace } from "./Components/PromoSpace"
 import { BecomePartner } from "./Components/BecomePartner"
 
 export const MarketingLandingApp = () => {
@@ -20,7 +20,7 @@ export const MarketingLandingApp = () => {
 
       <>
         <Header />
-        <TemporaryOffer />
+        <PromoSpace />
         <SellArtDifferently />
         <GetPriceEstimate />
         <HowToSell />
