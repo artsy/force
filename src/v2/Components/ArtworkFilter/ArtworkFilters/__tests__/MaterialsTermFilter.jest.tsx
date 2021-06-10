@@ -8,6 +8,10 @@ import {
 } from "../../ArtworkFilterContext"
 import { MaterialsFilter, MaterialsFilterProps } from "../MaterialsFilter"
 
+jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
+  useMatchMedia: () => ({}),
+}))
+
 describe("MaterialsTermFilter", () => {
   let context: ArtworkFilterContextProps
 

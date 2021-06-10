@@ -6,6 +6,10 @@ import {
 } from "../../ArtworkFilterContext"
 import { ColorFilter, ColorFilterProps } from "../ColorFilter"
 
+jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
+  useMatchMedia: () => ({}),
+}))
+
 describe("ColorFilter", () => {
   let context
 

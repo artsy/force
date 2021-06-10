@@ -6,6 +6,10 @@ import {
 } from "../../ArtworkFilterContext"
 import { MediumFilter, MediumFilterProps } from "../MediumFilter"
 
+jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
+  useMatchMedia: () => ({}),
+}))
+
 describe("MediumFilter", () => {
   let context
 

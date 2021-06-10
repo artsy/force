@@ -11,6 +11,9 @@ import { Pagination } from "v2/Components/Pagination"
 jest.unmock("react-relay")
 jest.mock("v2/Artsy/Analytics/useTracking")
 jest.mock("v2/Components/Pagination/useComputeHref")
+jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
+  useMatchMedia: () => ({}),
+}))
 
 describe("ArtworkFilter", () => {
   const getWrapper = async (
@@ -216,9 +219,11 @@ describe("ArtworkFilter", () => {
 
     it("toggles mobile action sheet", async () => {
       const wrapper = await getWrapper("xs")
+      expect(wrapper.find("FiltersWithScrollIntoView").length).toEqual(0)
       wrapper.find("Button").simulate("click")
       const actionSheet = wrapper.find("ArtworkFilterMobileActionSheet")
       expect(actionSheet.length).toEqual(1)
+      expect(wrapper.find("FiltersWithScrollIntoView").length).toEqual(1)
       expect(document.body.style.overflowY).toEqual("hidden")
 
       wrapper.find("WaysToBuyFilter").find("ChevronIcon").simulate("click")

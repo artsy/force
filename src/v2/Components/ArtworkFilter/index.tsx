@@ -1,5 +1,5 @@
 import { isEqual } from "lodash"
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import useDeepCompareEffect from "use-deep-compare-effect"
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
 import { useSystemContext } from "v2/Artsy"
@@ -42,6 +42,7 @@ import { useAnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
 import { commercialFilterParamsChanged } from "@artsy/cohesion"
 import { allowedFilters } from "./Utils/allowedFilters"
 import { Sticky } from "v2/Components/Sticky"
+import { ScrollRefContext } from "./ArtworkFilters/useScrollContext"
 
 /**
  * Primary ArtworkFilter which is wrapped with a context and refetch container.
@@ -78,6 +79,20 @@ export const ArtworkFilter: React.FC<
     >
       <ArtworkFilterRefetchContainer viewer={viewer} {...rest} />
     </ArtworkFilterContextProvider>
+  )
+}
+
+const FiltersWithScrollIntoView: React.FC<{ Filters?: JSX.Element }> = ({
+  Filters,
+}) => {
+  const scrollRef = useRef<HTMLDivElement | null>(null)
+
+  return (
+    <Box ref={scrollRef as any} overflowY="scroll" height="100%">
+      <ScrollRefContext.Provider value={{ scrollRef }}>
+        {Filters ? Filters : <ArtworkFilters />}
+      </ScrollRefContext.Provider>
+    </Box>
   )
 }
 
@@ -217,7 +232,7 @@ export const BaseArtworkFilter: React.FC<
             <ArtworkFilterMobileActionSheet
               onClose={() => toggleMobileActionSheet(false)}
             >
-              {Filters ? Filters : <ArtworkFilters />}
+              <FiltersWithScrollIntoView Filters={Filters} />
             </ArtworkFilterMobileActionSheet>
           )}
 

@@ -3,6 +3,10 @@ import React from "react"
 import { ArtworkFilterContextProvider } from "../../ArtworkFilterContext"
 import { ResultsFilter, sortResults } from "../ResultsFilter"
 
+jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
+  useMatchMedia: () => ({}),
+}))
+
 describe("ArtworkLocationFilter", () => {
   const getWrapper = (contextProps = {}) => {
     return mount(
@@ -53,7 +57,9 @@ describe("ArtworkLocationFilter", () => {
         },
       ],
     })
-    expect(wrapper.html()).not.toBeTruthy()
+
+    expect(wrapper.text()).toBeFalsy()
+    expect(wrapper.find("input").exists()).toBeFalsy()
   })
 })
 

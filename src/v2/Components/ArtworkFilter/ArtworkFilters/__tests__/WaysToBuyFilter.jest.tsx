@@ -6,6 +6,10 @@ import {
 } from "../../ArtworkFilterContext"
 import { WaysToBuyFilter, WaysToBuyFilterProps } from "../WaysToBuyFilter"
 
+jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
+  useMatchMedia: () => ({}),
+}))
+
 describe("WaysToBuyFilter", () => {
   let context
 

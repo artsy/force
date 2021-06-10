@@ -11,6 +11,10 @@ jest.mock("sharify", () => ({
   },
 }))
 
+jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
+  useMatchMedia: () => ({ sm: true }),
+}))
+
 describe("the new artwork filters", () => {
   const getWrapper = (props = {}) => {
     return mount(

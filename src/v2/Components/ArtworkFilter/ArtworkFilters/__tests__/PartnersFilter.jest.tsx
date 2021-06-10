@@ -6,6 +6,10 @@ import {
 } from "../../ArtworkFilterContext"
 import { PartnersFilter, PartnersFilterProps } from "../PartnersFilter"
 
+jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
+  useMatchMedia: () => ({}),
+}))
+
 describe("PartnersFilter", () => {
   const aggregations: Aggregations = [
     {

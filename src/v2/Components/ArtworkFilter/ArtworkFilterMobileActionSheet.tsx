@@ -88,9 +88,9 @@ export const ArtworkFilterMobileActionSheet: React.FC<{
         {/* TODO: This extraneous Flex is not necessary, Clickable (and Box) should have Flex props*/}
         <Flex flex="1">
           <Clickable width="100%" onClick={handleScrollToTop}>
-            <Title size="3" weight="medium" textAlign="center">
+            <FilterTitle size="3" weight="medium" textAlign="center">
               Filter
-            </Title>
+            </FilterTitle>
           </Clickable>
         </Flex>
 
@@ -108,7 +108,7 @@ export const ArtworkFilterMobileActionSheet: React.FC<{
       </Header>
 
       <Content ref={contentRef as any}>
-        <Box width="100%" p={2}>
+        <Box width="100%" px={2} pt={2}>
           {children}
         </Box>
       </Content>
@@ -167,6 +167,8 @@ const Content = styled(Flex)`
   -webkit-overflow-scrolling: touch;
 `
 
-const Title = styled(Sans)`
+const FilterTitle = styled(Sans)`
   flex: 1;
 `
+
+FilterTitle.displayName = "FilterTitle"

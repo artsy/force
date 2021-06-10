@@ -7,6 +7,10 @@ import {
 } from "../../ArtworkFilterContext"
 import { ArtistsFilter, ArtistsFilterProps } from "../ArtistsFilter"
 
+jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
+  useMatchMedia: () => ({}),
+}))
+
 describe("ArtistsFilter", () => {
   let context
 

@@ -11,6 +11,9 @@ jest.mock("v2/Artsy/Router/useRouter", () => ({
   useRouter: () => ({ match: { location: { query: {} } } }),
 }))
 jest.mock("v2/Artsy/Analytics/useTracking")
+jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
+  useMatchMedia: () => ({}),
+}))
 
 const { getWrapper } = setupTestWrapper<ShowArtworks_Test_Query>({
   Component: props => (

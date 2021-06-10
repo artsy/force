@@ -9,6 +9,10 @@ import { ArtworkFilterMobileActionSheet } from "../ArtworkFilterMobileActionShee
 import { ArtworkFilters } from "../ArtworkFilters"
 import { flushPromiseQueue } from "v2/DevTools"
 
+jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
+  useMatchMedia: () => ({ sm: true }),
+}))
+
 describe("ArtworkFilterMobileActionSheet", () => {
   let context
   let spy
@@ -37,7 +41,7 @@ describe("ArtworkFilterMobileActionSheet", () => {
 
     expect(wrapper.find("Button").first().text()).toEqual("Cancel")
 
-    expect(wrapper.html()).toContain("Filter")
+    expect(wrapper.find("FilterTitle").text()).toEqual("Filter")
 
     expect(wrapper.find("Button").last().text()).toEqual("Apply (0)")
   })
