@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { Button, Input, Modal, Spacer, Text } from "@artsy/palette"
+import { Button, Input, Modal, ModalWidth, Spacer, Text } from "@artsy/palette"
 import { SavedAddressType } from "../Utils/shippingAddressUtils"
 import { Formik, FormikHelpers, FormikProps } from "formik"
 import {
@@ -64,7 +64,12 @@ export const AddressModal: React.FC<Props> = ({
   const [createUpdateError, setCreateUpdateError] = useState<string>(null)
 
   return (
-    <Modal title={title} show={show} onClose={closeModal}>
+    <Modal
+      title={title}
+      show={show}
+      onClose={closeModal}
+      modalWidth={ModalWidth.Wide}
+    >
       <Formik
         initialValues={createMutation ? { country: "US" } : address}
         validate={validator}
@@ -116,13 +121,12 @@ export const AddressModal: React.FC<Props> = ({
             <Text data-test="credit-card-error" color="red" my={2}>
               {createUpdateError}
             </Text>
-            <Text color="black60" mb={1}>
-              All fields marked * are mandatory
-            </Text>
             <AddressModalFields />
-            <Spacer mb={1} />
+            <Spacer mb={2} />
             <Input
-              title="Phone number *"
+              title="Phone number"
+              description="Required for shipping logistics"
+              placeholder="Add phone number"
               name="phoneNumber"
               type="tel"
               onChange={formik.handleChange}
@@ -138,7 +142,7 @@ export const AddressModal: React.FC<Props> = ({
               width="100%"
               mt={2}
             >
-              Save changes
+              Save
             </Button>
           </form>
         )}
