@@ -76,7 +76,7 @@ export const ImageLink: FC<ImageLinkProps> = ({
     <OuterLink to={to} onClick={onClick}>
       <ImageContainer>
         <ImageOverlay>
-          <HubImage src={src} width="100%" ratio={ratio} />
+          <HubImage src={src} width="100%" ratio={ratio} lazyLoad />
         </ImageOverlay>
       </ImageContainer>
       {React.cloneElement(title, {
