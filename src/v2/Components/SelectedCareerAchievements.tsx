@@ -228,7 +228,7 @@ export const SelectedCareerAchievementsFragmentContainer = createFragmentContain
           edges {
             node {
               price_realized: priceRealized {
-                display(format: "0a")
+                display(format: "0.0a")
               }
               organization
               sale_date: saleDate(format: "YYYY")
