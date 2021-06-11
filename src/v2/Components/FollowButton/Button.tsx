@@ -1,29 +1,17 @@
 import { Box, Button, ButtonProps } from "@artsy/palette"
-import React from "react"
+import React, { useState } from "react"
 
-interface Props {
-  handleFollow?: any
+interface FollowButtonProps {
   isFollowed?: boolean
   buttonProps?: Partial<ButtonProps>
+  handleFollow?: React.MouseEventHandler<HTMLButtonElement>
 }
 
-interface State {
-  showUnfollow: boolean
-}
-
-export class FollowButton extends React.Component<Props, State> {
-  static defaultProps = {
-    isFollowed: false,
-    buttonProps: {},
-  }
-
-  state = {
-    showUnfollow: false,
-  }
-
-  render() {
-    const { showUnfollow } = this.state
-    const { buttonProps, handleFollow, isFollowed } = this.props
+export const FollowButton: React.ForwardRefExoticComponent<
+  FollowButtonProps & { ref?: React.Ref<HTMLElement> }
+> = React.forwardRef(
+  ({ isFollowed = false, buttonProps = {}, handleFollow }, forwardedRef) => {
+    const [showUnfollow, setShowUnfollow] = useState(false)
 
     const text = isFollowed
       ? showUnfollow
@@ -31,19 +19,16 @@ export class FollowButton extends React.Component<Props, State> {
         : "Following"
       : "Follow"
 
-    const props = {
-      ...buttonProps,
-      onClick: handleFollow,
-      onMouseEnter: () => this.setState({ showUnfollow: true }),
-      onMouseLeave: () => this.setState({ showUnfollow: false }),
-    }
-
     return (
       <Button
+        ref={forwardedRef}
         variant={isFollowed ? "secondaryOutline" : "primaryBlack"}
-        {...props}
+        onClick={handleFollow}
+        onMouseEnter={() => setShowUnfollow(true)}
+        onMouseLeave={() => setShowUnfollow(false)}
         data-follow={isFollowed}
         data-test="followButton"
+        {...buttonProps}
       >
         {/*
           To prevent layout shift: the longest string this
@@ -65,4 +50,4 @@ export class FollowButton extends React.Component<Props, State> {
       </Button>
     )
   }
-}
+)

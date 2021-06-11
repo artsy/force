@@ -296,14 +296,17 @@ export class ArtworkSidebarBidAction extends React.Component<
                 Place max bid
               </Text>
 
-              <Tooltip content="Set the maximum amount you would like Artsy to bid up to on your behalf">
+              <Tooltip
+                content="Set the maximum amount you would like Artsy to bid up to on your behalf"
+                placement="top"
+              >
                 <Box
                   style={{
                     // Vertically center
                     lineHeight: 0,
                   }}
                 >
-                  <HelpIcon />
+                  <HelpIcon aria-hidden title="" />
                 </Box>
               </Tooltip>
             </Flex>

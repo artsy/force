@@ -1,7 +1,6 @@
 import {
   Button,
   Clickable,
-  Flex,
   Link,
   Modal,
   QuestionCircleIcon,
@@ -48,16 +47,14 @@ export class PricingContextModal extends React.Component<State> {
   render() {
     return (
       <>
-        <Tooltip width={90} size="sm" content="Learn more">
-          <Flex alignItems="center">
-            <Clickable
-              onClick={this.openModal.bind(this)}
-              ml={1}
-              style={{ lineHeight: 0 }}
-            >
-              <QuestionCircleIcon />
-            </Clickable>
-          </Flex>
+        <Tooltip width={null} size="sm" content="Learn more" placement="top">
+          <Clickable
+            onClick={this.openModal.bind(this)}
+            ml={1}
+            style={{ lineHeight: 0 }}
+          >
+            <QuestionCircleIcon aria-hidden title="" />
+          </Clickable>
         </Tooltip>
 
         <Modal

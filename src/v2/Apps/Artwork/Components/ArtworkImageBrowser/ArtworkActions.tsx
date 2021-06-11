@@ -35,12 +35,11 @@ import {
   ShareIcon,
   Spacer,
   Text,
+  Popover,
 } from "@artsy/palette"
 import { userIsAdmin, userIsTeam } from "v2/Utils/user"
-import { ArtworkPopoutPanel } from "./ArtworkPopoutPanel"
 import { Mediator } from "lib/mediator"
 import { themeGet } from "@styled-system/theme-get"
-import { MediocrePopover } from "./MediocrePopover"
 
 interface ArtworkActionsProps {
   artwork: ArtworkActions_artwork
@@ -129,23 +128,17 @@ export class ArtworkActions extends React.Component<ArtworkActionsProps> {
 
   renderShareButton() {
     return (
-      <MediocrePopover
-        popover={({ onHide }) => {
-          return (
-            <ArtworkSharePanel
-              ml={[-100, 0]}
-              artwork={this.props.artwork}
-              onClose={() => {
-                onHide()
-                this.toggleSharePanel() // Tracking
-              }}
-            />
-          )
-        }}
+      <Popover
+        placement="top"
+        title="Share"
+        popover={
+          <ArtworkSharePanel width={300} pt={1} artwork={this.props.artwork} />
+        }
       >
-        {({ onVisible }) => {
+        {({ anchorRef, onVisible }) => {
           return (
             <UtilButton
+              ref={anchorRef}
               name="share"
               onClick={() => {
                 onVisible()
@@ -155,7 +148,7 @@ export class ArtworkActions extends React.Component<ArtworkActionsProps> {
             />
           )
         }}
-      </MediocrePopover>
+      </Popover>
     )
   }
 
@@ -262,30 +255,30 @@ export class ArtworkActions extends React.Component<ArtworkActionsProps> {
                 })}
 
                 {moreActions && moreActions.length > 0 && (
-                  <MediocrePopover
-                    popover={({ onHide }) => {
+                  <Popover
+                    placement="top"
+                    popover={
+                      <Box width={300}>
+                        {moreActions.map(action => {
+                          return (
+                            <Flex key={action.name}>
+                              {action.renderer.bind(this)()}
+                            </Flex>
+                          )
+                        })}
+                      </Box>
+                    }
+                  >
+                    {({ anchorRef, onVisible }) => {
                       return (
-                        <ArtworkPopoutPanel
-                          minWidth={200}
-                          title="More actions"
-                          onClose={onHide}
-                          ml={-100}
-                        >
-                          {moreActions.map(action => {
-                            return (
-                              <Flex key={action.name}>
-                                {action.renderer.bind(this)()}
-                              </Flex>
-                            )
-                          })}
-                        </ArtworkPopoutPanel>
+                        <UtilButton
+                          ref={anchorRef as any}
+                          name="more"
+                          onClick={onVisible}
+                        />
                       )
                     }}
-                  >
-                    {({ onVisible }) => {
-                      return <UtilButton name="more" onClick={onVisible} />
-                    }}
-                  </MediocrePopover>
+                  </Popover>
                 )}
               </Flex>
             </Media>
@@ -357,65 +350,67 @@ interface UtilButtonProps {
   onClick?: () => void
 }
 
-export const UtilButton: React.FC<UtilButtonProps> = ({
-  href,
-  label,
-  name,
-  onClick,
-  Icon,
-  Component = UtilButtonButton,
-  ...rest
-}) => {
-  const getIcon = () => {
-    switch (name) {
-      case "bell":
-        return BellIcon
-      case "download":
-        return DownloadIcon
-      case "edit":
-        return EditIcon
-      case "genome":
-        return GenomeIcon
-      case "heart":
-        return HeartIcon
-      case "more":
-        return MoreIcon
-      case "share":
-        return ShareIcon
-      case "viewInRoom":
-        return OpenEyeIcon
-    }
+export const UtilButton: React.ForwardRefExoticComponent<
+  UtilButtonProps & {
+    ref?: React.Ref<HTMLElement>
   }
+> = React.forwardRef(
+  (
+    { href, label, name, onClick, Icon, Component = UtilButtonButton, ...rest },
+    forwardedRef
+  ) => {
+    const getIcon = () => {
+      switch (name) {
+        case "bell":
+          return BellIcon
+        case "download":
+          return DownloadIcon
+        case "edit":
+          return EditIcon
+        case "genome":
+          return GenomeIcon
+        case "heart":
+          return HeartIcon
+        case "more":
+          return MoreIcon
+        case "share":
+          return ShareIcon
+        case "viewInRoom":
+          return OpenEyeIcon
+      }
+    }
 
-  // If we're passing in an `Icon`, override
-  const ActionIcon = Icon ? Icon : getIcon()
+    // If we're passing in an `Icon`, override
+    const ActionIcon = Icon ? Icon : getIcon()
 
-  return (
-    <Component
-      p={1}
-      onClick={onClick}
-      {...(href ? { href, target: "_blank" } : {})}
-    >
-      <Flex
-        alignItems="center"
-        justifyContent="center"
-        width={20}
-        height={20}
-        mr={0.5}
+    return (
+      <Component
+        ref={forwardedRef as any}
+        p={1}
+        onClick={onClick}
+        {...(href ? { href, target: "_blank" } : {})}
       >
-        {/* TODO: Fix types */}
-        {/* @ts-ignore */}
-        <ActionIcon {...rest} fill="currentColor" />
-      </Flex>
+        <Flex
+          alignItems="center"
+          justifyContent="center"
+          width={20}
+          height={20}
+          mr={0.5}
+        >
+          {/* TODO: Fix types */}
+          {/* @ts-ignore */}
+          <ActionIcon {...rest} fill="currentColor" />
+        </Flex>
 
-      {label && (
-        <Text variant="xs" lineHeight={1}>
-          {label}
-        </Text>
-      )}
-    </Component>
-  )
-}
+        {label && (
+          <Text variant="xs" lineHeight={1}>
+            {label}
+          </Text>
+        )}
+      </Component>
+    )
+  }
+)
 
 const utilButtonMixin = css`
   display: flex;

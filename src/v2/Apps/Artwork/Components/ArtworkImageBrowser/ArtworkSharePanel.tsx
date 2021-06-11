@@ -10,22 +10,20 @@ import {
   EnvelopeIcon,
   Link,
   BoxProps,
+  Box,
 } from "@artsy/palette"
 import { ArtworkSharePanel_artwork } from "v2/__generated__/ArtworkSharePanel_artwork.graphql"
 import Icon from "v2/Components/Icon"
 import React, { useRef, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { data as sd } from "sharify"
-import { ArtworkPopoutPanel } from "./ArtworkPopoutPanel"
 
 interface ArtworkSharePanelProps extends BoxProps {
   artwork: ArtworkSharePanel_artwork
-  onClose: () => void
 }
 
 export const ArtworkSharePanel: React.FC<ArtworkSharePanelProps> = ({
   artwork: { href, artworkMeta, images },
-  onClose,
   ...rest
 }) => {
   const [copyState, setCopyState] = useState({
@@ -83,8 +81,8 @@ export const ArtworkSharePanel: React.FC<ArtworkSharePanelProps> = ({
   const url = sd.APP_URL + href
 
   return (
-    <ArtworkPopoutPanel title="Share" onClose={onClose} {...rest}>
-      <Flex alignItems="center" mx={1}>
+    <Box {...rest}>
+      <Flex alignItems="center">
         <Input
           ref={inputRef}
           readOnly
@@ -105,7 +103,7 @@ export const ArtworkSharePanel: React.FC<ArtworkSharePanelProps> = ({
 
       <Separator my={2} />
 
-      <Flex flexDirection="row" flexWrap="wrap" mx={1} pb={2}>
+      <Flex flexDirection="row" flexWrap="wrap">
         <ShareButton
           onClick={openShareModal}
           service="facebook"
@@ -161,7 +159,7 @@ export const ArtworkSharePanel: React.FC<ArtworkSharePanelProps> = ({
           url={`https://www.tumblr.com/share/photo?source=${shareImageUrl}&caption=${share}&clickthru=${url}`}
         />
       </Flex>
-    </ArtworkPopoutPanel>
+    </Box>
   )
 }
 

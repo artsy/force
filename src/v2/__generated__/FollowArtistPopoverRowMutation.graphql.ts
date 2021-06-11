@@ -22,6 +22,7 @@ export type FollowArtistPopoverRowMutationResponse = {
                             readonly id: string;
                             readonly internalID: string;
                             readonly name: string | null;
+                            readonly formattedNationalityAndBirthday: string | null;
                             readonly image: {
                                 readonly cropped: {
                                     readonly url: string;
@@ -56,6 +57,7 @@ mutation FollowArtistPopoverRowMutation(
               id
               internalID
               name
+              formattedNationalityAndBirthday
               image {
                 cropped(width: 45, height: 45) {
                   url
@@ -182,6 +184,13 @@ v2 = [
                           {
                             "alias": null,
                             "args": null,
+                            "kind": "ScalarField",
+                            "name": "formattedNationalityAndBirthday",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
                             "concreteType": "Image",
                             "kind": "LinkedField",
                             "name": "image",
@@ -259,7 +268,7 @@ return {
     "metadata": {},
     "name": "FollowArtistPopoverRowMutation",
     "operationKind": "mutation",
-    "text": "mutation FollowArtistPopoverRowMutation(\n  $input: FollowArtistInput!\n  $excludeArtistIds: [String]!\n) {\n  followArtist(input: $input) {\n    artist {\n      id\n      related {\n        suggestedConnection(first: 1, excludeFollowedArtists: true, excludeArtistIDs: $excludeArtistIds) {\n          edges {\n            node {\n              id\n              internalID\n              name\n              image {\n                cropped(width: 45, height: 45) {\n                  url\n                }\n              }\n            }\n          }\n        }\n      }\n    }\n  }\n}\n"
+    "text": "mutation FollowArtistPopoverRowMutation(\n  $input: FollowArtistInput!\n  $excludeArtistIds: [String]!\n) {\n  followArtist(input: $input) {\n    artist {\n      id\n      related {\n        suggestedConnection(first: 1, excludeFollowedArtists: true, excludeArtistIDs: $excludeArtistIds) {\n          edges {\n            node {\n              id\n              internalID\n              name\n              formattedNationalityAndBirthday\n              image {\n                cropped(width: 45, height: 45) {\n                  url\n                }\n              }\n            }\n          }\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
