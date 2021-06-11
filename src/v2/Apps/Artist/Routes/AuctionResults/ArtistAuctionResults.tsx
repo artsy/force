@@ -1,4 +1,4 @@
-import { Col, Row, Flex, Text, Message } from "@artsy/palette"
+import { Col, Row, Flex, Text, Message, ThemeProviderV3 } from "@artsy/palette"
 import { ArtistAuctionResults_artist } from "v2/__generated__/ArtistAuctionResults_artist.graphql"
 import { PaginationFragmentContainer as Pagination } from "v2/Components/Pagination"
 import React, { useContext, useState } from "react"
@@ -28,6 +28,7 @@ import { ModalType } from "v2/Components/Authentication/Types"
 import { Title } from "react-head"
 import { SortSelect } from "./Components/SortSelect"
 import { scrollIntoView } from "v2/Utils/scrollHelpers"
+import { MarketStatsQueryRenderer } from "../../Components/MarketStats"
 
 const logger = createLogger("ArtistAuctionResults.tsx")
 
@@ -49,6 +50,7 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
   const { hasNextPage, endCursor } = pageInfo
   const artistName = artist.name
 
+  console.log("INTERNAL ID:", artist.internalID)
   const loadNext = () => {
     // @ts-expect-error STRICT_NULL_CHECK
     const nextPageNum = filterContext.filters.pageAndCursor.page + 1
@@ -128,6 +130,7 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
       // @ts-expect-error STRICT_NULL_CHECK
       after: filterContext.filters.pageAndCursor.cursor,
       artistID: artist.slug,
+      artistInternalID: artist.internalID,
       before: null,
       first: PAGE_SIZE,
       last: null,
@@ -157,6 +160,13 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
       <Title>{titleString}</Title>
 
       <Box id="scrollTo--artistAuctionResultsTop" />
+
+      <ThemeProviderV3>
+        <MarketStatsQueryRenderer
+          artistInternalID={artist.internalID}
+          environment={relay.environment}
+        />
+      </ThemeProviderV3>
 
       {showMobileActionSheet && (
         <AuctionFilterMobileActionSheet
@@ -267,6 +277,7 @@ export const ArtistAuctionResultsRefetchContainer = createRefetchContainer(
           allowEmptyCreatedDates: { type: "Boolean" }
         ) {
         slug
+        internalID
         name
         auctionResultsConnection(
           first: $first
