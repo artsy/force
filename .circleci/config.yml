@@ -116,8 +116,7 @@ jobs:
     steps:
       - run: yarn type-check
 
-  # For strict type checking
-  strict-migration-check:
+  check-pr:
     docker:
       - image: 585031190124.dkr.ecr.us-east-1.amazonaws.com/force:$CIRCLE_SHA1-builder
         aws_auth:
@@ -126,6 +125,12 @@ jobs:
     working_directory: /app
     steps:
       - run: node scripts/strictness-migration.js check-pr
+      - run:
+          name: Danger
+          command: yarn danger ci --verbose
+      - run:
+          name: Prevent Strictness Regressions
+          command: node scripts/strictness-migration.js check-pr
 
   relay-check:
     docker:
@@ -251,7 +256,7 @@ workflows:
           requires:
             - builder-image-push
 
-      - strict-migration-check:
+      - check-pr:
           <<: *not_staging_or_release
           context: hokusai
           requires:
