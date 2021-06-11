@@ -1,4 +1,5 @@
 import React from "react"
+import { track } from "v2/System"
 import { RouteTab, RouteTabs } from "v2/Components/RouteTabs"
 import { Box, Text } from "@artsy/palette"
 
@@ -41,29 +42,30 @@ const tabClass = (tabUrl, route) => {
   return currentRoute === tabUrl ? "active" : undefined
 }
 
-export const UserSettingsTabs: React.FC<UserSettingsTabsProps> = ({
-  route,
-  username,
-}) => {
-  return (
-    <Box pt={1} px={[2, 0]}>
-      <Box>
-        <Text variant="title" my={2}>
-          {username}
-        </Text>
-      </Box>
+export const UserSettingsTabs: React.FC<UserSettingsTabsProps> = track()(
+  ({ username }) => {
+    return (
+      <Box pt={1} px={[2, 0]}>
+        <Box>
+          <Text variant="title" my={2}>
+            {username}
+          </Text>
+        </Box>
 
-      <RouteTabs>
-        {routes.map((route, index) => (
-          <RouteTab
-            key={index}
-            className={tabClass(route.url, route)}
-            to={route.url}
-          >
-            {route.name}
-          </RouteTab>
-        ))}
-      </RouteTabs>
-    </Box>
-  )
-}
+        <RouteTabs>
+          {routes.map((route, index) => (
+            <RouteTab
+              key={index}
+              className={tabClass(route.url, route)}
+              to={route.url}
+            >
+              {route.name}
+            </RouteTab>
+          ))}
+        </RouteTabs>
+      </Box>
+    )
+  }
+)
+
+UserSettingsTabs.displayName = "UserSettingsTabs"
