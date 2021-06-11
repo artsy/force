@@ -25,7 +25,6 @@ const SelectedWorks: React.FC<SelectedWorksProps> = props => {
       <ArtworkGrid
         artworks={props.selectedWorks.itemsConnection}
         columnCount={[2, 3]}
-        preloadImageCount={0}
         mediator={mediator}
         onBrickClick={artwork => {
           tracking.trackEvent({

@@ -103,7 +103,6 @@ export const OtherWorks = track()(
                     // @ts-expect-error STRICT_NULL_CHECK
                     artworks={grid.artworksConnection}
                     columnCount={[2, 3, 4, 4]}
-                    preloadImageCount={0}
                     mediator={props.mediator}
                     contextModule={contextModule}
                     onBrickClick={() =>

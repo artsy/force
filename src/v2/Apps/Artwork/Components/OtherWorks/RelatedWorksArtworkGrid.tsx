@@ -115,7 +115,6 @@ class RelatedWorksArtworkGrid extends React.Component<
                       // @ts-expect-error STRICT_NULL_CHECK
                       artworks={artworksConnection}
                       columnCount={[2, 3, 4, 4]}
-                      preloadImageCount={0}
                       mediator={mediator}
                       onBrickClick={this.trackBrickClick.bind(this)}
                     />

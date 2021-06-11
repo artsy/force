@@ -106,7 +106,6 @@ export class WorksForYouFeed extends Component<Props, State> {
                 <ArtworkGrid
                   artworks={node.artworksConnection}
                   columnCount={3}
-                  preloadImageCount={9}
                   itemMargin={40}
                   user={this.props.user}
                 />
