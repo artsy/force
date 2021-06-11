@@ -1,68 +1,48 @@
 import { Box, Button, ButtonProps } from "@artsy/palette"
-import React from "react"
+import React, { useState } from "react"
 
-interface Props {
+interface FollowButtonProps {
   handleFollow?: any
   isFollowed?: boolean
   buttonProps?: Partial<ButtonProps>
 }
 
-interface State {
-  showUnfollow: boolean
-}
+export const FollowButton: React.FC<FollowButtonProps> = ({
+  isFollowed = false,
+  buttonProps = {},
+  handleFollow,
+}) => {
+  const [showUnfollow, setShowUnfollow] = useState(false)
 
-export class FollowButton extends React.Component<Props, State> {
-  static defaultProps = {
-    isFollowed: false,
-    buttonProps: {},
-  }
+  const text = isFollowed ? (showUnfollow ? "Unfollow" : "Following") : "Follow"
 
-  state = {
-    showUnfollow: false,
-  }
-
-  render() {
-    const { showUnfollow } = this.state
-    const { buttonProps, handleFollow, isFollowed } = this.props
-
-    const text = isFollowed
-      ? showUnfollow
-        ? "Unfollow"
-        : "Following"
-      : "Follow"
-
-    const props = {
-      ...buttonProps,
-      onClick: handleFollow,
-      onMouseEnter: () => this.setState({ showUnfollow: true }),
-      onMouseLeave: () => this.setState({ showUnfollow: false }),
-    }
-
-    return (
-      <Button
-        variant={isFollowed ? "secondaryOutline" : "primaryBlack"}
-        {...props}
-        data-follow={isFollowed}
-        data-test="followButton"
-      >
-        {/*
+  return (
+    <Button
+      variant={isFollowed ? "secondaryOutline" : "primaryBlack"}
+      onClick={handleFollow}
+      onMouseEnter={() => setShowUnfollow(true)}
+      onMouseLeave={() => setShowUnfollow(false)}
+      data-follow={isFollowed}
+      data-test="followButton"
+      {...buttonProps}
+    >
+      {/*
           To prevent layout shift: the longest string this
           contains is "Following": position that, hide it,
           then overlay the normal labels.
         */}
-        <Box opacity={0} style={{ pointerEvents: "none" }} aria-hidden="true">
-          Following
-        </Box>
+      <Box opacity={0} style={{ pointerEvents: "none" }} aria-hidden="true">
+        Following
+      </Box>
 
-        <Box
-          position="absolute"
-          top="50%"
-          left="50%"
-          style={{ transform: "translate(-50%, -50%)" }}
-        >
-          {text}
-        </Box>
-      </Button>
-    )
-  }
+      <Box
+        position="absolute"
+        top="50%"
+        left="50%"
+        style={{ transform: "translate(-50%, -50%)" }}
+      >
+        {text}
+      </Box>
+    </Button>
+  )
 }
