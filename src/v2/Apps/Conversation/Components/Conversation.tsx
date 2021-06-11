@@ -1,4 +1,13 @@
-import { Box, Flex, Spacer, Spinner } from "@artsy/palette"
+import {
+  Box,
+  color,
+  CheckCircleIcon,
+  Flex,
+  Spacer,
+  Spinner,
+  Link,
+  Text,
+} from "@artsy/palette"
 import { Conversation_conversation } from "v2/__generated__/Conversation_conversation.graphql"
 import React, { useEffect, useRef, useState } from "react"
 import {
@@ -15,6 +24,9 @@ import { UpdateConversation } from "../Mutation/UpdateConversationMutation"
 import styled from "styled-components"
 import { ConversationHeader } from "./ConversationHeader"
 import { ConfirmArtworkModalQueryRenderer } from "./ConfirmArtworkModal"
+import { userHasLabFeature } from "v2/Utils/user"
+import { useSystemContext } from "v2/System/SystemContext"
+import { BuyerGuaranteeMessage } from "./BuyerGuaranteeMessage"
 
 export interface ConversationProps {
   conversation: Conversation_conversation
@@ -28,9 +40,19 @@ export const PAGE_SIZE: number = 15
 
 const Conversation: React.FC<ConversationProps> = props => {
   const { conversation, relay, showDetails, setShowDetails } = props
+  const { user } = useSystemContext()
 
   const bottomOfPage = useRef(null)
   const initialMount = useRef(true)
+
+  const isMakeOfferArtwork =
+    conversation.items?.[0]?.item?.__typename === "Artwork" &&
+    conversation.items?.[0]?.item?.isOfferableFromInquiry
+
+  const showBuyerGuaranteeMessage =
+    user &&
+    userHasLabFeature(user, "Web Inquiry Checkout") &&
+    isMakeOfferArtwork
 
   // Keeping track of this for scroll on send
   const [lastMessageID, setLastMessageID] = useState("")
@@ -113,6 +135,7 @@ const Conversation: React.FC<ConversationProps> = props => {
           <Box pb={[6, 6, 6, 0]}>
             <Spacer mt={["75px", "75px", 2]} />
             <Flex flexDirection="column" width="100%" px={1}>
+              {showBuyerGuaranteeMessage && <BuyerGuaranteeMessage />}
               {inquiryItemBox}
               <Waypoint onEnter={loadMore} />
               {fetchingMore ? (
@@ -128,6 +151,19 @@ const Conversation: React.FC<ConversationProps> = props => {
             </Flex>
           </Box>
         </MessageContainer>
+        {showBuyerGuaranteeMessage && (
+          <Flex
+            borderTop={`1px solid ${color("black10")}`}
+            color="black60"
+            p={2}
+          >
+            <CheckCircleIcon fill="black60" marginRight={0.5} />
+            <Text variant="mediumText" color="black60">
+              Only purchases completed with our secure checkout are protected by{" "}
+              <Link href="/buyer-guarantee">The Artsy Guarantee</Link>.
+            </Text>
+          </Flex>
+        )}
         <Reply
           onScroll={scrollToBottom}
           conversation={conversation}
@@ -210,6 +246,7 @@ export const ConversationPaginationContainer = createPaginationContainer(
               title
               artistNames
               href
+              isOfferableFromInquiry
               image {
                 url(version: ["large"])
               }
