@@ -1,5 +1,13 @@
 import React, { useState } from "react"
-import { Button, Input, Modal, ModalWidth, Spacer, Text } from "@artsy/palette"
+import {
+  Button,
+  Flex,
+  Input,
+  Modal,
+  ModalWidth,
+  Spacer,
+  Text,
+} from "@artsy/palette"
 import { SavedAddressType } from "../Utils/shippingAddressUtils"
 import { Formik, FormikHelpers, FormikProps } from "formik"
 import {
@@ -11,8 +19,9 @@ import { updateUserAddress } from "../Mutations/UpdateUserAddress"
 import { createUserAddress } from "v2/Apps/Order/Mutations/CreateUserAddress"
 import { SavedAddresses_me } from "v2/__generated__/SavedAddresses_me.graphql"
 import { AddressModalFields } from "v2/Components/Address/AddressModalFields"
-import { useSystemContext } from "v2/System/SystemContext"
-
+import { useSystemContext } from "v2/Artsy/SystemContext"
+import { ConfirmModal } from "./ConfirmModal"
+import { deleteUserAddress } from "v2/Apps/Order/Mutations/DeleteUserAddress"
 export interface Props {
   show: boolean
   closeModal: () => void
@@ -62,91 +71,120 @@ export const AddressModal: React.FC<Props> = ({
   const { relayEnvironment } = useSystemContext()
   // @ts-expect-error STRICT_NULL_CHECK
   const [createUpdateError, setCreateUpdateError] = useState<string>(null)
+  const [showConfirmModal, setShowConfirmModal] = useState<boolean>(false)
+
+  const handleDeleteAddress = (addressID: string) => {
+    // @ts-expect-error STRICT_NULL_CHECK
+    deleteUserAddress(relayEnvironment, addressID, onSuccess, onError)
+    closeModal()
+  }
 
   return (
-    <Modal
-      title={title}
-      show={show}
-      onClose={closeModal}
-      modalWidth={ModalWidth.Wide}
-    >
-      <Formik
-        initialValues={createMutation ? { country: "US" } : address}
-        validate={validator}
-        onSubmit={(
-          values: SavedAddressType,
-          actions: FormikHelpers<SavedAddressType>
-        ) => {
-          const handleError = message => {
-            const userMessage: Record<string, string> | null =
-              SERVER_ERROR_MAP[message]
-            if (userMessage) {
-              actions.setFieldError(userMessage.field, userMessage.message)
-            } else {
-              setCreateUpdateError(GENERIC_FAIL_MESSAGE)
-            }
-            actions?.setSubmitting(false)
-            onError && onError(message)
-          }
-
-          const handleSuccess = address => {
-            // @ts-expect-error STRICT_NULL_CHECK
-            setCreateUpdateError(null)
-            onSuccess && onSuccess(address)
-          }
-
-          createMutation
-            ? createUserAddress(
-                // @ts-expect-error STRICT_NULL_CHECK
-                relayEnvironment,
-                values,
-                handleSuccess,
-                handleError,
-                me,
-                closeModal
-              )
-            : updateUserAddress(
-                // @ts-expect-error STRICT_NULL_CHECK
-                relayEnvironment,
-                address.internalID,
-                values,
-                closeModal,
-                handleSuccess,
-                handleError
-              )
-        }}
+    <>
+      <Modal
+        title={title}
+        show={show}
+        onClose={closeModal}
+        modalWidth={ModalWidth.Wide}
       >
-        {(formik: FormikProps<SavedAddressType>) => (
-          <form onSubmit={formik.handleSubmit}>
-            <Text data-test="credit-card-error" color="red" my={2}>
-              {createUpdateError}
-            </Text>
-            <AddressModalFields />
-            <Spacer mb={2} />
-            <Input
-              title="Phone number"
-              description="Required for shipping logistics"
-              placeholder="Add phone number"
-              name="phoneNumber"
-              type="tel"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              error={formik.touched.phoneNumber && formik.errors.phoneNumber}
-              value={formik.values?.phoneNumber}
-            />
-            <Button
-              type="submit"
-              size="large"
-              loading={formik.isSubmitting}
-              disabled={Object.keys(formik.errors).length > 0}
-              width="100%"
-              mt={2}
-            >
-              Save
-            </Button>
-          </form>
-        )}
-      </Formik>
-    </Modal>
+        <Formik
+          initialValues={createMutation ? { country: "US" } : address}
+          validate={validator}
+          onSubmit={(
+            values: SavedAddressType,
+            actions: FormikHelpers<SavedAddressType>
+          ) => {
+            const handleError = message => {
+              const userMessage: Record<string, string> | null =
+                SERVER_ERROR_MAP[message]
+              if (userMessage) {
+                actions.setFieldError(userMessage.field, userMessage.message)
+              } else {
+                setCreateUpdateError(GENERIC_FAIL_MESSAGE)
+              }
+              actions?.setSubmitting(false)
+              onError && onError(message)
+            }
+
+            const handleSuccess = address => {
+              // @ts-expect-error STRICT_NULL_CHECK
+              setCreateUpdateError(null)
+              onSuccess && onSuccess(address)
+            }
+
+            createMutation
+              ? createUserAddress(
+                  // @ts-expect-error STRICT_NULL_CHECK
+                  relayEnvironment,
+                  values,
+                  handleSuccess,
+                  handleError,
+                  me,
+                  closeModal
+                )
+              : updateUserAddress(
+                  // @ts-expect-error STRICT_NULL_CHECK
+                  relayEnvironment,
+                  address.internalID,
+                  values,
+                  closeModal,
+                  handleSuccess,
+                  handleError
+                )
+          }}
+        >
+          {(formik: FormikProps<SavedAddressType>) => (
+            <form onSubmit={formik.handleSubmit}>
+              <Text data-test="credit-card-error" color="red" my={2}>
+                {createUpdateError}
+              </Text>
+              <AddressModalFields />
+              <Spacer mb={2} />
+              <Input
+                title="Phone number"
+                description="Required for shipping logistics"
+                placeholder="Add phone number"
+                name="phoneNumber"
+                type="tel"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={formik.touched.phoneNumber && formik.errors.phoneNumber}
+                value={formik.values?.phoneNumber}
+              />
+              <Flex mt={2} flexDirection="column" alignItems="center">
+                <Text
+                  onClick={() => setShowConfirmModal(true)}
+                  variant="text"
+                  color="red100"
+                  style={{
+                    cursor: "pointer",
+                  }}
+                >
+                  Delete address
+                </Text>
+              </Flex>
+
+              <Button
+                type="submit"
+                size="large"
+                loading={formik.isSubmitting}
+                disabled={Object.keys(formik.errors).length > 0}
+                width="100%"
+                mt={2}
+              >
+                Save
+              </Button>
+            </form>
+          )}
+        </Formik>
+      </Modal>
+      <ConfirmModal
+        title="Delete addres?"
+        subTitle="This will remove this address from your saved addresses."
+        show={showConfirmModal}
+        onClose={() => setShowConfirmModal(false)}
+        onConfirm={() => handleDeleteAddress(address.internalID)}
+      />
+    </>
   )
 }
