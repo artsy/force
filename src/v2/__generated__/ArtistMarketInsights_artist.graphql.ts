@@ -198,12 +198,12 @@ const node: ReaderFragment = {
                         {
                           "kind": "Literal",
                           "name": "format",
-                          "value": "0a"
+                          "value": "0.0a"
                         }
                       ],
                       "kind": "ScalarField",
                       "name": "display",
-                      "storageKey": "display(format:\"0a\")"
+                      "storageKey": "display(format:\"0.0a\")"
                     }
                   ],
                   "storageKey": null
@@ -240,5 +240,5 @@ const node: ReaderFragment = {
   ],
   "type": "Artist"
 };
-(node as any).hash = 'afa3604eeb859595d8fb9bb9c0586772';
+(node as any).hash = 'de8439137b5b5c48594e4ade9203b026';
 export default node;
