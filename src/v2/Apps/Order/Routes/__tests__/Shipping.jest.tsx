@@ -631,10 +631,10 @@ describe("Shipping", () => {
         ).toMatchInlineSnapshot(`
           Array [
             "Test Name",
-            "28001",
             "1 Main St",
-            "",
             "Madrid",
+            "28001",
+            "",
             "",
             "555-555-5555",
           ]
