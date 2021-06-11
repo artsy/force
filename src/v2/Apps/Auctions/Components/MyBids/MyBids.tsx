@@ -14,9 +14,9 @@ import {
   ThemeProviderV2,
 } from "@artsy/palette"
 import styled from "styled-components"
-import { RouterLink } from "v2/Artsy/Router/RouterLink"
+import { RouterLink } from "v2/System/Router/RouterLink"
 import { useTracking } from "react-tracking"
-import { useAnalyticsContext } from "v2/Artsy"
+import { useAnalyticsContext } from "v2/System"
 import { clickedEntityGroup, ContextModule, OwnerType } from "@artsy/cohesion"
 
 interface MyBidsProps {

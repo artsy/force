@@ -15,8 +15,8 @@ import qs from "qs"
 import { Request, Response } from "express"
 import { createQueryMiddleware } from "farce"
 
-import { createRelaySSREnvironment } from "v2/Artsy/Relay/createRelaySSREnvironment"
-import { Boot } from "v2/Artsy/Router/Boot"
+import { createRelaySSREnvironment } from "v2/System/Relay/createRelaySSREnvironment"
+import { Boot } from "v2/System/Router/Boot"
 
 import createLogger from "v2/Utils/logger"
 import { createMediaStyle } from "v2/Utils/Responsive"
@@ -32,7 +32,7 @@ import { ChunkExtractor } from "@loadable/server"
 import { getENV } from "v2/Utils/getENV"
 import RelayServerSSR from "react-relay-network-modern-ssr/lib/server"
 import { buildServerAppContext } from "desktop/lib/buildServerAppContext"
-import { AppRouteConfig } from "v2/Artsy/Router/Route"
+import { AppRouteConfig } from "v2/System/Router/Route"
 
 export interface ServerAppResolve {
   bodyHTML?: string

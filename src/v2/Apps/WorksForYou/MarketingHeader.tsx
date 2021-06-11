@@ -2,8 +2,8 @@ import React, { Component } from "react"
 import { data as sd } from "sharify"
 import styled from "styled-components"
 
-import { track } from "v2/Artsy"
-import * as Schema from "v2/Artsy/Analytics/Schema"
+import { track } from "v2/System"
+import * as Schema from "v2/System/Analytics/Schema"
 
 import { Box, Button, Flex, Sans, Separator, Spacer } from "@artsy/palette"
 

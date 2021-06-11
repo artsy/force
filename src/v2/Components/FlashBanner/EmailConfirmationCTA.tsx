@@ -4,7 +4,7 @@ import {
   AnalyticsSchema as Schema,
   useSystemContext,
   useTracking,
-} from "v2/Artsy"
+} from "v2/System"
 import { requestEmailConfirmation } from "./requestEmailConfirmationMutation"
 import createLogger from "v2/Utils/logger"
 

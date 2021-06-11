@@ -1,7 +1,7 @@
 import { Spacer, Button, Select, Banner } from "@artsy/palette"
 import React, { useRef, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { useSystemContext } from "v2/Artsy"
+import { useSystemContext } from "v2/System"
 import { UpdateUserEmailPreferencesMutation } from "v2/Components/UserSettings/UserEmailPreferences/UserEmailPreferencesMutation"
 import { UnsubscribeLoggedIn_me } from "v2/__generated__/UnsubscribeLoggedIn_me.graphql"
 

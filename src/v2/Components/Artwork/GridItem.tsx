@@ -1,7 +1,7 @@
 import { AuthContextModule, ContextModule } from "@artsy/cohesion"
 import { Image as BaseImage, color } from "@artsy/palette"
 import { GridItem_artwork } from "v2/__generated__/GridItem_artwork.graphql"
-import { withSystemContext } from "v2/Artsy"
+import { withSystemContext } from "v2/System"
 import { isFunction } from "lodash"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -14,7 +14,7 @@ import {
   SaveButtonFragmentContainer as SaveButton,
   Container,
 } from "./SaveButton"
-import { RouterLink } from "v2/Artsy/Router/RouterLink"
+import { RouterLink } from "v2/System/Router/RouterLink"
 import { Mediator } from "lib/mediator"
 
 let IMAGE_LAZY_LOADING = true

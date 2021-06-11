@@ -13,7 +13,7 @@ import { ArtistConsignPageViewsFragmentContainer as ArtistConsignPageViews } fro
 import { ArtistConsignRecentlySoldFragmentContainer as ArtistConsignRecentlySold } from "./Components/ArtistConsignRecentlySold"
 import { ArtistConsignSellArtFragmentContainer as ArtistConsignSellArt } from "./Components/ArtistConsignSellArt"
 
-import { track } from "v2/Artsy"
+import { track } from "v2/System"
 
 export interface ConsignRouteProps {
   artist: ArtistConsignRoute_artist

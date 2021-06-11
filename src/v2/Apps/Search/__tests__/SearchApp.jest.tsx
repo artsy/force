@@ -1,4 +1,4 @@
-import { SystemContextProvider } from "v2/Artsy"
+import { SystemContextProvider } from "v2/System"
 import { MockBoot } from "v2/DevTools"
 import { mount } from "enzyme"
 import React from "react"

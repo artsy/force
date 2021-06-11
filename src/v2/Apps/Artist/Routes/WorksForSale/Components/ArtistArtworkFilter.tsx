@@ -9,7 +9,7 @@ import { Match } from "found"
 import React from "react"
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
 import { ZeroState } from "./ZeroState"
-import { useRouter } from "v2/Artsy/Router/useRouter"
+import { useRouter } from "v2/System/Router/useRouter"
 
 interface ArtistArtworkFilterProps {
   aggregations: SharedArtworkFilterContextProps["aggregations"]

@@ -2,9 +2,9 @@ import { Box, Col, Row, Spacer, Text } from "@artsy/palette"
 import { SearchApp_viewer } from "v2/__generated__/SearchApp_viewer.graphql"
 import { NavigationTabsFragmentContainer as NavigationTabs } from "v2/Apps/Search/Components/NavigationTabs"
 import { SearchMeta } from "v2/Apps/Search/Components/SearchMeta"
-import { withSystemContext } from "v2/Artsy"
-import { track } from "v2/Artsy/Analytics"
-import * as Schema from "v2/Artsy/Analytics/Schema"
+import { withSystemContext } from "v2/System"
+import { track } from "v2/System/Analytics"
+import * as Schema from "v2/System/Analytics/Schema"
 
 import { RecentlyViewed } from "v2/Components/RecentlyViewed"
 

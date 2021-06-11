@@ -1,4 +1,7 @@
-import { SystemContextProvider, useSystemContext } from "v2/Artsy/SystemContext"
+import {
+  SystemContextProvider,
+  useSystemContext,
+} from "v2/System/SystemContext"
 import { mount } from "enzyme"
 import React from "react"
 import { buildAppRoutes } from "../buildAppRoutes"
@@ -8,11 +11,11 @@ jest.mock("v2/Components/NavBar/NavBar", () => ({
   NavBar: () => <div />,
 }))
 
-jest.mock("v2/Artsy/Router/Boot", () => ({
+jest.mock("v2/System/Router/Boot", () => ({
   Boot: ({ children }) => children,
 }))
 
-jest.mock("v2/Artsy/Analytics/useTracking", () => ({
+jest.mock("v2/System/Analytics/useTracking", () => ({
   useTracking: () => ({
     trackEvent: x => x,
   }),

@@ -1,4 +1,4 @@
-import { RouterLink } from "v2/Artsy/Router/RouterLink"
+import { RouterLink } from "v2/System/Router/RouterLink"
 
 import styled from "styled-components"
 

@@ -1,5 +1,5 @@
 import { Box, Button, Sans, Serif } from "@artsy/palette"
-import { RouterLink } from "v2/Artsy/Router/RouterLink"
+import { RouterLink } from "v2/System/Router/RouterLink"
 import React from "react"
 import { Title as HeadTitle } from "react-head"
 

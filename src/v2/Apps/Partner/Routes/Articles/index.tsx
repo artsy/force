@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import { Column, GridColumns, Box } from "@artsy/palette"
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
-import { useRouter } from "v2/Artsy/Router/useRouter"
+import { useRouter } from "v2/System/Router/useRouter"
 import { Articles_partner } from "v2/__generated__/Articles_partner.graphql"
 import { ArticleCardFragmentContainer } from "../../Components/PartnerArticles/ArticleCard"
 import { PaginationFragmentContainer } from "v2/Components/Pagination"

@@ -10,10 +10,10 @@ import { graphql } from "react-relay"
 import { mediator } from "lib/mediator"
 import { mockLocation } from "v2/DevTools/mockLocation"
 import { ContextModule } from "@artsy/cohesion"
-import { useSystemContext } from "v2/Artsy/useSystemContext"
+import { useSystemContext } from "v2/System/useSystemContext"
 
 jest.unmock("react-relay")
-jest.mock("v2/Artsy/useSystemContext")
+jest.mock("v2/System/useSystemContext")
 
 class SaveButtonTestPage extends RootTestPage {
   async clickSaveButton() {

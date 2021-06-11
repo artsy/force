@@ -13,7 +13,7 @@ import { Trackables } from "./Schema"
  * @example
  *
  *      ```ts
- *      import { track } from "v2/Artsy/Analytics"
+ *      import { track } from "v2/System/Analytics"
  *
  *      interface Props {
  *        artist: {
@@ -58,7 +58,7 @@ import { Trackables } from "./Schema"
  * @example
  *
  *      ```ts
- *      import { track as _track, Track } from "v2/Artsy/Analytics"
+ *      import { track as _track, Track } from "v2/System/Analytics"
  *
  *      interface Props {
  *        artist: {
@@ -120,7 +120,7 @@ export interface Track<PP = {}, SS = null, AA extends Array<any> = Array<any>> {
  *
  *     ```ts
  *     import React from "react"
- *     import { track } from "v2/Artsy/Analytics"
+ *     import { track } from "v2/System/Analytics"
  *
  *     // This is what enables tracking for further use inside the component.
  *     @track()
@@ -150,7 +150,7 @@ export const track: Track = _track
  *     ```ts
  *     import { mount } from "enzyme"
  *     import React from "react"
- *     import { mockTracking } from "v2/Artsy/Analytics"
+ *     import { mockTracking } from "v2/System/Analytics"
  *     import { DateSource } from "../DateSource"
  *
  *     jest.unmock("react-tracking")

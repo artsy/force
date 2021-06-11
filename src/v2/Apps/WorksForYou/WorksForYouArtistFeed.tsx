@@ -1,6 +1,6 @@
 import { EntityHeader, Spacer, Spinner } from "@artsy/palette"
 import { WorksForYouArtistFeed_viewer } from "v2/__generated__/WorksForYouArtistFeed_viewer.graphql"
-import { SystemContextProps } from "v2/Artsy"
+import { SystemContextProps } from "v2/System"
 import ArtworkGrid from "v2/Components/ArtworkGrid"
 import React from "react"
 import styled from "styled-components"

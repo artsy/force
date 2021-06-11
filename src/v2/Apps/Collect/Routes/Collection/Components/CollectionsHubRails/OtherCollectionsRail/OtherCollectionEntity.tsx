@@ -1,11 +1,11 @@
 import { Text, Image } from "@artsy/palette"
 import { OtherCollectionEntity_member } from "v2/__generated__/OtherCollectionEntity_member.graphql"
-import { useTracking } from "v2/Artsy/Analytics/useTracking"
-import { RouterLink } from "v2/Artsy/Router/RouterLink"
+import { useTracking } from "v2/System/Analytics/useTracking"
+import { RouterLink } from "v2/System/Router/RouterLink"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ContextModule, clickedCollectionGroup } from "@artsy/cohesion"
-import { useAnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
+import { useAnalyticsContext } from "v2/System/Analytics/AnalyticsContext"
 import { cropped } from "v2/Utils/resized"
 
 export interface CollectionProps {

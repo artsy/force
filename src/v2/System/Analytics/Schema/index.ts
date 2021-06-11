@@ -18,7 +18,7 @@ import { Label } from "./Label"
 import { Failure, Success } from "./Result"
 import { Type } from "./Type"
 import { Event } from "@artsy/cohesion"
-import { ActionType } from "v2/Artsy/Analytics/Schema/Values"
+import { ActionType } from "v2/System/Analytics/Schema/Values"
 
 interface Uncategorized {
   changed: any
@@ -56,7 +56,7 @@ export type Trackables =
  * @example
  *
  *     ```ts
- *     import * as Schema from "v2/Artsy/Analytics/Schema"
+ *     import * as Schema from "v2/System/Analytics/Schema"
  *
  *     @track({ … } as Schema.Old)
  */

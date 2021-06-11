@@ -1,7 +1,7 @@
 import React from "react"
 import track, { useTracking } from "react-tracking"
 import { clickedAppDownload, ContextModule } from "@artsy/cohesion"
-import { useAnalyticsContext } from "v2/Artsy"
+import { useAnalyticsContext } from "v2/System"
 import Events from "v2/Utils/Events"
 import { Box, BoxProps, Link } from "@artsy/palette"
 import { Device } from "v2/Utils/Hooks/useDeviceDetection"

@@ -2,10 +2,10 @@ import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { MyBidsBidHeader_sale } from "v2/__generated__/MyBidsBidHeader_sale.graphql"
 import { Box, CalendarIcon, Flex, Image, Text } from "@artsy/palette"
-import { RouterLink } from "v2/Artsy/Router/RouterLink"
+import { RouterLink } from "v2/System/Router/RouterLink"
 import { useTracking } from "react-tracking"
 import { ContextModule, clickedEntityGroup, OwnerType } from "@artsy/cohesion"
-import { useAnalyticsContext } from "v2/Artsy"
+import { useAnalyticsContext } from "v2/System"
 
 interface MyBidsBidHeaderProps {
   sale: MyBidsBidHeader_sale

@@ -2,7 +2,7 @@ import React from "react"
 import loadable from "@loadable/component"
 import { Redirect, RedirectException } from "found"
 import { graphql } from "react-relay"
-import { AppRouteConfig } from "v2/Artsy/Router/Route"
+import { AppRouteConfig } from "v2/System/Router/Route"
 import { renderOrRedirect } from "./Routes/Overview/Utils/renderOrRedirect"
 import { getWorksForSaleRouteVariables } from "./Routes/WorksForSale/Utils/getWorksForSaleRouteVariables"
 

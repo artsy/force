@@ -1,6 +1,6 @@
 import { mount } from "enzyme"
 import React from "react"
-import { SystemContextProvider } from "v2/Artsy"
+import { SystemContextProvider } from "v2/System"
 import { flushPromiseQueue } from "v2/DevTools"
 import { ConfirmPasswordModal } from "../"
 

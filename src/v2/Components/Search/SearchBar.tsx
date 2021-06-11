@@ -1,10 +1,10 @@
 import { Box, BoxProps, Flex } from "@artsy/palette"
 import { SearchBar_viewer } from "v2/__generated__/SearchBar_viewer.graphql"
 import { SearchBarSuggestQuery } from "v2/__generated__/SearchBarSuggestQuery.graphql"
-import { SystemContext, SystemContextProps, withSystemContext } from "v2/Artsy"
-import { track } from "v2/Artsy/Analytics"
-import * as Schema from "v2/Artsy/Analytics/Schema"
-import { SystemQueryRenderer as QueryRenderer } from "v2/Artsy/Relay/SystemQueryRenderer"
+import { SystemContext, SystemContextProps, withSystemContext } from "v2/System"
+import { track } from "v2/System/Analytics"
+import * as Schema from "v2/System/Analytics/Schema"
+import { SystemQueryRenderer as QueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import colors from "v2/Assets/Colors"
 import {
   FirstSuggestionItem,

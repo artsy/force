@@ -3,9 +3,9 @@ import { DropDownSection } from "../DropDownSection"
 import { MenuItem } from "v2/Components/Menu"
 import { ARTWORKS_SUBMENU_DATA } from "v2/Components/NavBar/menuData"
 import { mount } from "enzyme"
-import { useTracking } from "v2/Artsy/Analytics/useTracking"
+import { useTracking } from "v2/System/Analytics/useTracking"
 
-jest.mock("v2/Artsy/Analytics/useTracking")
+jest.mock("v2/System/Analytics/useTracking")
 
 describe("DropDownSection", () => {
   const trackEvent = jest.fn()

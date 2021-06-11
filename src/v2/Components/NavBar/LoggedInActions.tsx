@@ -1,10 +1,10 @@
 import React, { useContext } from "react"
 import { NavItem } from "./NavItem"
 import { NotificationsMenu, UserMenu } from "./Menus"
-import { AnalyticsSchema, SystemContext, useTracking } from "v2/Artsy"
+import { AnalyticsSchema, SystemContext, useTracking } from "v2/System"
 import { BellIcon, EnvelopeIcon, SoloIcon } from "@artsy/palette"
 import { graphql } from "relay-runtime"
-import { SystemQueryRenderer as QueryRenderer } from "v2/Artsy/Relay/SystemQueryRenderer"
+import { SystemQueryRenderer as QueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import {
   LoggedInActionsQuery,
   LoggedInActionsQueryResponse,

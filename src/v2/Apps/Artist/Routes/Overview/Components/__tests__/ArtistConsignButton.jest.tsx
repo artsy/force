@@ -1,7 +1,7 @@
 import { Breakpoint } from "@artsy/palette"
 import { ArtistConsignButton_Test_Query } from "v2/__generated__/ArtistConsignButton_Test_Query.graphql"
 
-import { useTracking } from "v2/Artsy/Analytics/useTracking"
+import { useTracking } from "v2/System/Analytics/useTracking"
 import { MockBoot } from "v2/DevTools"
 import { cloneDeep } from "lodash"
 import React from "react"
@@ -11,7 +11,7 @@ import { MockPayloadGenerator, createMockEnvironment } from "relay-test-utils"
 import { mount } from "enzyme"
 
 jest.unmock("react-relay")
-jest.mock("v2/Artsy/Analytics/useTracking")
+jest.mock("v2/System/Analytics/useTracking")
 
 describe("ArtistConsignButton", () => {
   const trackEvent = jest.fn()

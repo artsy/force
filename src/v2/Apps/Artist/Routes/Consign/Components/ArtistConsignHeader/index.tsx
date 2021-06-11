@@ -4,8 +4,8 @@ import {
   LightPurpleColor,
   SectionContainer,
 } from "v2/Apps/Artist/Routes/Consign/Components/SectionContainer"
-import { AnalyticsSchema, useTracking } from "v2/Artsy"
-import { RouterLink } from "v2/Artsy/Router/RouterLink"
+import { AnalyticsSchema, useTracking } from "v2/System"
+import { RouterLink } from "v2/System/Router/RouterLink"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Media } from "v2/Utils/Responsive"

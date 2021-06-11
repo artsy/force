@@ -2,7 +2,7 @@ import React from "react"
 import ReactDOM from "react-dom"
 import { WorksForYou } from "v2/Apps/WorksForYou"
 
-import { SystemContextProvider } from "v2/Artsy"
+import { SystemContextProvider } from "v2/System"
 
 import CurrentUser from "../../../models/current_user"
 

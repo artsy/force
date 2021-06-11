@@ -4,13 +4,13 @@ import { graphql } from "react-relay"
 import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
 import { ShowArtworks_Test_Query } from "v2/__generated__/ShowArtworks_Test_Query.graphql"
 import { MockBoot } from "v2/DevTools"
-import { useTracking } from "v2/Artsy/Analytics/useTracking"
+import { useTracking } from "v2/System/Analytics/useTracking"
 
 jest.unmock("react-relay")
-jest.mock("v2/Artsy/Router/useRouter", () => ({
+jest.mock("v2/System/Router/useRouter", () => ({
   useRouter: () => ({ match: { location: { query: {} } } }),
 }))
-jest.mock("v2/Artsy/Analytics/useTracking")
+jest.mock("v2/System/Analytics/useTracking")
 jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
   useMatchMedia: () => ({}),
 }))

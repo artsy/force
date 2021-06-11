@@ -6,8 +6,8 @@ import {
   createRefetchContainer,
   graphql,
 } from "react-relay"
-import { useSystemContext } from "v2/Artsy/SystemContext"
-import { renderWithLoadProgress } from "v2/Artsy/Relay/renderWithLoadProgress"
+import { useSystemContext } from "v2/System/SystemContext"
+import { renderWithLoadProgress } from "v2/System/Relay/renderWithLoadProgress"
 import { Form, Formik, FormikProps } from "formik"
 import { Error } from "v2/Components/Authentication/commonElements"
 import { UserInformation_me } from "v2/__generated__/UserInformation_me.graphql"

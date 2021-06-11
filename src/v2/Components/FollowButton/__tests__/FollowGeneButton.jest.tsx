@@ -13,7 +13,7 @@ jest.mock("react-relay", () => ({
 }))
 
 import { commitMutation } from "react-relay"
-import { SystemContextProvider } from "v2/Artsy"
+import { SystemContextProvider } from "v2/System"
 
 let user = {}
 

@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import { Form, Formik } from "formik"
 import { BorderedRadio, Button, RadioGroup, Text } from "@artsy/palette"
-import { useSystemContext } from "v2/Artsy"
+import { useSystemContext } from "v2/System"
 import { CreateOfferResponse } from "../Operations/CreateOfferResponse"
 import { ResponseForm_offer } from "v2/__generated__/ResponseForm_offer.graphql"
 import { createFragmentContainer, graphql } from "react-relay"

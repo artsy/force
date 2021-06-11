@@ -4,8 +4,8 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { ArtistConsignSellArt_artist } from "v2/__generated__/ArtistConsignSellArt_artist.graphql"
 
 import { Box, Button, Sans, Serif } from "@artsy/palette"
-import { AnalyticsSchema, useTracking } from "v2/Artsy"
-import { RouterLink } from "v2/Artsy/Router/RouterLink"
+import { AnalyticsSchema, useTracking } from "v2/System"
+import { RouterLink } from "v2/System/Router/RouterLink"
 import { LightPurpleColor, SectionContainer } from "./SectionContainer"
 import { getConsignSubmissionUrl } from "./Utils/getConsignSubmissionUrl"
 

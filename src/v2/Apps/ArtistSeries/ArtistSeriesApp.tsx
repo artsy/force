@@ -9,7 +9,7 @@ import { ContextModule } from "@artsy/cohesion"
 import {
   AnalyticsContext,
   useAnalyticsContext,
-} from "v2/Artsy/Analytics/AnalyticsContext"
+} from "v2/System/Analytics/AnalyticsContext"
 import { SharedArtworkFilterContextProps } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
 import { Spacer } from "@artsy/palette"
 

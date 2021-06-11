@@ -10,7 +10,7 @@ import {
   useThemeConfig,
 } from "@artsy/palette"
 import { useComputeHref } from "./useComputeHref"
-import { userIsForcingNavigation } from "v2/Artsy/Router/Utils/catchLinks"
+import { userIsForcingNavigation } from "v2/System/Router/Utils/catchLinks"
 import { scrollIntoView } from "v2/Utils/scrollHelpers"
 
 interface Props {

@@ -12,7 +12,7 @@ import {
 import React, { useEffect, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
-import { RouterLink } from "v2/Artsy/Router/RouterLink"
+import { RouterLink } from "v2/System/Router/RouterLink"
 import { ShowBanner_show } from "v2/__generated__/ShowBanner_show.graphql"
 
 const statusLabelsMap = {

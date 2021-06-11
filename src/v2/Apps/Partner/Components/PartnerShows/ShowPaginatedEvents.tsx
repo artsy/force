@@ -4,12 +4,12 @@ import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 import { PaginationFragmentContainer } from "v2/Components/Pagination"
 import { LoadingArea } from "v2/Components/LoadingArea"
 import { ShowEventsFragmentContainer } from "v2/Apps/Partner/Components/PartnerShows/ShowEvents"
-import { useSystemContext } from "v2/Artsy"
-import { useRouter } from "v2/Artsy/Router/useRouter"
+import { useSystemContext } from "v2/System"
+import { useRouter } from "v2/System/Router/useRouter"
 import { ShowPaginatedEventsRendererQuery } from "v2/__generated__/ShowPaginatedEventsRendererQuery.graphql"
 import { ShowPaginatedEvents_partner } from "v2/__generated__/ShowPaginatedEvents_partner.graphql"
 import { EventStatus } from "v2/__generated__/ShowPaginatedEventsRendererQuery.graphql"
-import { SystemQueryRenderer as QueryRenderer } from "v2/Artsy/Relay/SystemQueryRenderer"
+import { SystemQueryRenderer as QueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 
 interface ShowEventsProps {
   relay: RelayRefetchProp

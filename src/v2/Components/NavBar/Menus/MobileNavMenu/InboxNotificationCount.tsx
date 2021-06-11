@@ -7,8 +7,8 @@ import {
   InboxNotificationCountQuery,
   InboxNotificationCountQueryResponse,
 } from "v2/__generated__/InboxNotificationCountQuery.graphql"
-import { SystemContext } from "v2/Artsy/SystemContext"
-import { SystemQueryRenderer as QueryRenderer } from "v2/Artsy/Relay/SystemQueryRenderer"
+import { SystemContext } from "v2/System/SystemContext"
+import { SystemQueryRenderer as QueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { getConversationCount, updateConversationCache } from "../../helpers"
 
 import { Flex, Sans, color } from "@artsy/palette"

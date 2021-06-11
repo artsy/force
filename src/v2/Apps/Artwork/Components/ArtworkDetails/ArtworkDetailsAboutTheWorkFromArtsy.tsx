@@ -3,8 +3,8 @@ import React, { Component } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Media } from "v2/Utils/Responsive"
 import { ArtworkDetailsAboutTheWorkFromArtsy_artwork } from "v2/__generated__/ArtworkDetailsAboutTheWorkFromArtsy_artwork.graphql"
-import { track } from "v2/Artsy/Analytics"
-import * as Schema from "v2/Artsy/Analytics/Schema"
+import { track } from "v2/System/Analytics"
+import * as Schema from "v2/System/Analytics/Schema"
 
 export const READ_MORE_MAX_CHARS = {
   xs: 100,

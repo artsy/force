@@ -38,8 +38,8 @@ import {
   validateAddress,
   validatePhoneNumber,
 } from "v2/Apps/Order/Utils/formValidators"
-import { track } from "v2/Artsy/Analytics"
-import * as Schema from "v2/Artsy/Analytics/Schema"
+import { track } from "v2/System/Analytics"
+import * as Schema from "v2/System/Analytics/Schema"
 import {
   Address,
   AddressChangeHandler,
@@ -68,7 +68,7 @@ import {
 import { AddressModal } from "../../Components/AddressModal"
 import { createUserAddress } from "../../Mutations/CreateUserAddress"
 import { setShipping } from "../../Mutations/SetShipping"
-import { SystemContextProps, withSystemContext } from "v2/Artsy/SystemContext"
+import { SystemContextProps, withSystemContext } from "v2/System/SystemContext"
 
 export interface ShippingProps extends SystemContextProps {
   order: Shipping_order

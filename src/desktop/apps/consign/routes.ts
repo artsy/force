@@ -2,7 +2,7 @@ import request from "superagent"
 import { extend } from "underscore"
 import { fetchToken } from "./helpers"
 import Analytics from "analytics-node"
-import { AnalyticsSchema } from "v2/Artsy"
+import { AnalyticsSchema } from "v2/System"
 import { metaphysics } from "lib/metaphysics"
 
 const Items = require("../../collections/items")

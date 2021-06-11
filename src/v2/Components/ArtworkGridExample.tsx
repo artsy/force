@@ -2,7 +2,7 @@ import React from "react"
 import { graphql } from "react-relay"
 
 import { ArtworkGridExampleQuery } from "v2/__generated__/ArtworkGridExampleQuery.graphql"
-import { RootQueryRenderer } from "v2/Artsy/Relay/RootQueryRenderer"
+import { RootQueryRenderer } from "v2/System/Relay/RootQueryRenderer"
 import ArtworkGrid from "v2/Components/ArtworkGrid"
 
 export function ArtworkGridExample(props: {

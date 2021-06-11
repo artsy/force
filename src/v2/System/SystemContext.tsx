@@ -3,7 +3,7 @@ import React, { FC, useState } from "react"
 import { data as sd } from "sharify"
 import { Environment } from "relay-runtime"
 
-import { createRelaySSREnvironment } from "v2/Artsy/Relay/createRelaySSREnvironment"
+import { createRelaySSREnvironment } from "v2/System/Relay/createRelaySSREnvironment"
 import { getUser } from "v2/Utils/user"
 import { Mediator, mediator } from "lib/mediator"
 

@@ -13,7 +13,7 @@ import { LargeSelect } from "@artsy/palette"
 import { auctionRoutes_ConfirmBidQueryResponse } from "v2/__generated__/auctionRoutes_ConfirmBidQuery.graphql"
 import { ConfirmBidQueryResponseFixture } from "v2/Apps/Auction/__fixtures__/routes_ConfirmBidQuery"
 import { bidderPositionQuery } from "v2/Apps/Auction/Operations/BidderPositionQuery"
-import { AnalyticsSchema } from "v2/Artsy/Analytics"
+import { AnalyticsSchema } from "v2/System/Analytics"
 import { createMockFetchQuery } from "v2/DevTools/createMockNetworkLayer"
 import { TrackingProp } from "react-tracking"
 import {

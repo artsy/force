@@ -2,8 +2,8 @@ import React from "react"
 import { Box, Button, Sans, Serif } from "@artsy/palette"
 import { ViewingRoomArtworkDetails_artwork } from "v2/__generated__/ViewingRoomArtworkDetails_artwork.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
-import { RouterLink } from "v2/Artsy/Router/RouterLink"
-import { AnalyticsSchema, useTracking } from "v2/Artsy"
+import { RouterLink } from "v2/System/Router/RouterLink"
+import { AnalyticsSchema, useTracking } from "v2/System"
 
 interface ViewingRoomArtworkDetailsProps {
   artwork: ViewingRoomArtworkDetails_artwork

@@ -1,5 +1,5 @@
 import { Box, Col, Grid, Row } from "@artsy/palette"
-import { AnalyticsSchema } from "v2/Artsy"
+import { AnalyticsSchema } from "v2/System"
 import React from "react"
 import { FeaturedContentLink, FeaturedLinkType } from "./Feature"
 

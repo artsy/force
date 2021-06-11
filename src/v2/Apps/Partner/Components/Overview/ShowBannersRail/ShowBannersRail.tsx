@@ -4,10 +4,10 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { ShowBannersRail_partner } from "v2/__generated__/ShowBannersRail_partner.graphql"
 import { ShowBannersRailRendererQuery } from "v2/__generated__/ShowBannersRailRendererQuery.graphql"
 import { compact, take, uniqBy } from "lodash"
-import { useSystemContext } from "v2/Artsy"
+import { useSystemContext } from "v2/System"
 import { ShowBannersRailPlaceholder } from "./ShowBannersRailPlaceholder"
 import { Media } from "v2/Utils/Responsive"
-import { SystemQueryRenderer as QueryRenderer } from "v2/Artsy/Relay/SystemQueryRenderer"
+import { SystemQueryRenderer as QueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import {
   PartnerShowBannersContextProvider,
   usePartnerShowBannersContext,

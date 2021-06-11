@@ -3,7 +3,7 @@ import {
   ConversationAppTestQueryResponse,
 } from "v2/__generated__/ConversationAppTestQuery.graphql"
 import { MockedConversation } from "v2/Apps/__tests__/Fixtures/Conversation"
-import { SystemContextProvider } from "v2/Artsy"
+import { SystemContextProvider } from "v2/System"
 import { MockBoot, renderRelayTree } from "v2/DevTools"
 import { Match } from "found"
 import React from "react"

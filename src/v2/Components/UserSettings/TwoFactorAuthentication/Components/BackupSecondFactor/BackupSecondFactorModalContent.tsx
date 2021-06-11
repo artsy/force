@@ -1,13 +1,13 @@
 import { BorderBoxProps, Box, Flex, Sans } from "@artsy/palette"
-import { SystemQueryRenderer as QueryRenderer } from "v2/Artsy/Relay/SystemQueryRenderer"
+import { SystemQueryRenderer as QueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 
 import { BackupSecondFactorModalContent_me } from "v2/__generated__/BackupSecondFactorModalContent_me.graphql"
 import { BackupSecondFactorModalContentQuery } from "v2/__generated__/BackupSecondFactorModalContentQuery.graphql"
 
-import { useSystemContext } from "v2/Artsy"
-import { renderWithLoadProgress } from "v2/Artsy/Relay/renderWithLoadProgress"
+import { useSystemContext } from "v2/System"
+import { renderWithLoadProgress } from "v2/System/Relay/renderWithLoadProgress"
 
 interface BackupSecondFactorModalContentProps extends BorderBoxProps {
   me: BackupSecondFactorModalContent_me

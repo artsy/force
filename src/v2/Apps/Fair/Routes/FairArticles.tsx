@@ -15,7 +15,7 @@ import {
   RelayPaginationProp,
 } from "react-relay"
 import { FairArticles_fair } from "v2/__generated__/FairArticles_fair.graphql"
-import { RouterLink } from "v2/Artsy/Router/RouterLink"
+import { RouterLink } from "v2/System/Router/RouterLink"
 import { FairEditorialShare } from "../Components/FairEditorialShare"
 
 interface FairArticlesProps {

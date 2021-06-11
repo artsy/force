@@ -14,8 +14,8 @@ import {
 
 import { ArtistConsignHowToSell_artist } from "v2/__generated__/ArtistConsignHowToSell_artist.graphql"
 
-import { AnalyticsSchema, useTracking } from "v2/Artsy"
-import { RouterLink } from "v2/Artsy/Router/RouterLink"
+import { AnalyticsSchema, useTracking } from "v2/System"
+import { RouterLink } from "v2/System/Router/RouterLink"
 import { createFragmentContainer, graphql } from "react-relay"
 import { SectionContainer } from "./SectionContainer"
 import { Subheader } from "./Subheader"

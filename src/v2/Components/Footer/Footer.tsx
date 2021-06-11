@@ -22,7 +22,7 @@ import { DownloadAppBadge } from "v2/Components/DownloadAppBadge"
 import { ContextModule } from "@artsy/cohesion"
 import { CCPARequest } from "../CCPARequest"
 import { FooterDownloadAppBanner } from "./FooterDownloadAppBanner"
-import { RouterLink, RouterLinkProps } from "v2/Artsy/Router/RouterLink"
+import { RouterLink, RouterLinkProps } from "v2/System/Router/RouterLink"
 import { useDeviceDetection } from "v2/Utils/Hooks/useDeviceDetection"
 
 interface FooterProps extends BoxProps {}

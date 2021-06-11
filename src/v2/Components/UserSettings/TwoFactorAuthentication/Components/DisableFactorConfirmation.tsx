@@ -1,5 +1,5 @@
 import React from "react"
-import { useSystemContext } from "v2/Artsy"
+import { useSystemContext } from "v2/System"
 import { DisableSecondFactor } from "./Mutation/DisableSecondFactor"
 import { FormikProps } from "formik"
 import { DisableSecondFactorInput } from "v2/__generated__/DisableSecondFactorMutation.graphql"

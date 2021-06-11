@@ -9,7 +9,7 @@ import { media } from "../../Helpers"
 import { Layout } from "../Steps/Layout"
 import { GeneSearchResults } from "./GeneSearchResults"
 import { SuggestedGenes } from "./SuggestedGenes"
-import { useTracking } from "v2/Artsy/Analytics/useTracking"
+import { useTracking } from "v2/System/Analytics/useTracking"
 import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
 
 const OnboardingSearchBox = styled.div`

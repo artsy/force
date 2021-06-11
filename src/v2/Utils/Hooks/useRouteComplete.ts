@@ -1,4 +1,4 @@
-import { useSystemContext } from "v2/Artsy/SystemContext"
+import { useSystemContext } from "v2/System/SystemContext"
 import { useEffect, useState } from "react"
 import { usePrevious } from "v2/Utils/Hooks/usePrevious"
 

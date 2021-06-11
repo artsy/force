@@ -1,5 +1,5 @@
 import { BorderBox, Box, HTML, Tab, Tabs } from "@artsy/palette"
-import { renderWithLoadProgress } from "v2/Artsy/Relay/renderWithLoadProgress"
+import { renderWithLoadProgress } from "v2/System/Relay/renderWithLoadProgress"
 import React, { Component, useContext } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
@@ -9,10 +9,10 @@ import { ArtworkDetailsAdditionalInfoFragmentContainer } from "./ArtworkDetailsA
 import { ArtworkDetailsArticlesFragmentContainer } from "./ArtworkDetailsArticles"
 import { ArtworkDetails_artwork } from "v2/__generated__/ArtworkDetails_artwork.graphql"
 import { ArtworkDetailsQuery } from "v2/__generated__/ArtworkDetailsQuery.graphql"
-import { SystemContext } from "v2/Artsy"
-import { track } from "v2/Artsy/Analytics"
-import * as Schema from "v2/Artsy/Analytics/Schema"
-import { SystemQueryRenderer } from "v2/Artsy/Relay/SystemQueryRenderer"
+import { SystemContext } from "v2/System"
+import { track } from "v2/System/Analytics"
+import * as Schema from "v2/System/Analytics/Schema"
+import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import Events from "v2/Utils/Events"
 
 export interface ArtworkDetailsProps {

@@ -1,5 +1,5 @@
 import { Box, Button, Theme } from "@artsy/palette"
-import { SystemContextProps } from "v2/Artsy"
+import { SystemContextProps } from "v2/System"
 
 import React, { useState } from "react"
 import { RelayProp, createFragmentContainer, graphql } from "react-relay"

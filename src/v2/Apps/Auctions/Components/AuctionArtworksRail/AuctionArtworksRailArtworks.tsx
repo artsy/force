@@ -1,7 +1,7 @@
 import React from "react"
 import { Shelf } from "@artsy/palette"
 import { QueryRenderer, createFragmentContainer, graphql } from "react-relay"
-import { useAnalyticsContext, useSystemContext } from "v2/Artsy"
+import { useAnalyticsContext, useSystemContext } from "v2/System"
 import { AuctionArtworksRailArtworksQuery } from "v2/__generated__/AuctionArtworksRailArtworksQuery.graphql"
 import { AuctionArtworksRailArtworks_sale } from "v2/__generated__/AuctionArtworksRailArtworks_sale.graphql"
 import { TabType } from "./AuctionArtworksRail"

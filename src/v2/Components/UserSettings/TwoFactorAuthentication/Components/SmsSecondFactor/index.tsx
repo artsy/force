@@ -11,7 +11,7 @@ import React, { useState } from "react"
 import { RelayRefetchProp, createFragmentContainer, graphql } from "react-relay"
 import request from "superagent"
 
-import { useSystemContext } from "v2/Artsy"
+import { useSystemContext } from "v2/System"
 
 import { ApiError } from "../../ApiError"
 import { SmsSecondFactorModal, OnCompleteRedirectModal } from "./Modal"
@@ -36,7 +36,9 @@ export const SmsSecondFactor: React.FC<SmsSecondFactorProps> = props => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [showSetupModal, setShowSetupModal] = useState(false)
   const [showCompleteModal, setShowCompleteModal] = useState(false)
-  const [showCompleteRedirectModal, setShowCompleteRedirectModal] = useState(false)
+  const [showCompleteRedirectModal, setShowCompleteRedirectModal] = useState(
+    false
+  )
   const [apiErrors, setApiErrors] = useState<ApiError[]>([])
   const [isDisabling] = useState(false)
   const [isCreating, setCreating] = useState(false)

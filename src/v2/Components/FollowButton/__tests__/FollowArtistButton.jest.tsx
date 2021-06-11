@@ -1,4 +1,4 @@
-import { SystemContextProvider } from "v2/Artsy"
+import { SystemContextProvider } from "v2/System"
 import { mount } from "enzyme"
 import "jest-styled-components"
 import React from "react"
@@ -7,7 +7,7 @@ import { FollowButton } from "../Button"
 import { FollowArtistButtonFragmentContainer as FollowArtistButton } from "../FollowArtistButton"
 import { ContextModule, OwnerType } from "@artsy/cohesion"
 import * as openAuthModal from "v2/Utils/openAuthModal"
-import { AnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
+import { AnalyticsContext } from "v2/System/Analytics/AnalyticsContext"
 import { mockLocation } from "v2/DevTools/mockLocation"
 
 const openAuthToFollowSave = jest.spyOn(openAuthModal, "openAuthToFollowSave")

@@ -2,7 +2,7 @@ import React from "react"
 import StaticContainer from "react-static-container"
 
 import { Box } from "@artsy/palette"
-import { useSystemContext } from "v2/Artsy"
+import { useSystemContext } from "v2/System"
 import { ErrorPage } from "v2/Components/ErrorPage"
 import ElementsRenderer from "found/ElementsRenderer"
 import { data as sd } from "sharify"

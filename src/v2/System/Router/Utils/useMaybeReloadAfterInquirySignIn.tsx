@@ -1,4 +1,4 @@
-import { useSystemContext } from "v2/Artsy/SystemContext"
+import { useSystemContext } from "v2/System/SystemContext"
 import { useEffect } from "react"
 
 /**

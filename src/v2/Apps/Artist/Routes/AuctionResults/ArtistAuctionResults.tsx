@@ -8,7 +8,7 @@ import { ArtistAuctionResultItemFragmentContainer as AuctionResultItem } from ".
 import { TableSidebar } from "./Components/TableSidebar"
 import { ContextModule, Intent } from "@artsy/cohesion"
 import { Box, Spacer } from "@artsy/palette"
-import { AnalyticsSchema, SystemContext } from "v2/Artsy"
+import { AnalyticsSchema, SystemContext } from "v2/System"
 import { LoadingArea } from "v2/Components/LoadingArea"
 import { isEqual } from "lodash"
 import { useTracking } from "react-tracking"

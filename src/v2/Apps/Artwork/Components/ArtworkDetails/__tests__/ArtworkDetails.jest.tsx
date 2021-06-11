@@ -1,12 +1,12 @@
 import { ArtworkDetails_Test_Query } from "v2/__generated__/ArtworkDetails_Test_Query.graphql"
 import { ArtworkDetailsFragmentContainer } from "v2/Apps/Artwork/Components/ArtworkDetails"
-import { useTracking } from "v2/Artsy/Analytics/useTracking"
+import { useTracking } from "v2/System/Analytics/useTracking"
 import { MockBoot } from "v2/DevTools"
 import React from "react"
 import { graphql } from "react-relay"
 import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
 
-jest.mock("v2/Artsy/Analytics/useTracking")
+jest.mock("v2/System/Analytics/useTracking")
 jest.unmock("react-relay")
 ;(useTracking as jest.Mock).mockImplementation(() => {
   return {}

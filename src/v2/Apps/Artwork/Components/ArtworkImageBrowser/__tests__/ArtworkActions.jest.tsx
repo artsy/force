@@ -16,7 +16,7 @@ import {
   OpenEyeIcon,
   ShareIcon,
 } from "@artsy/palette"
-import { SystemContextProvider } from "v2/Artsy"
+import { SystemContextProvider } from "v2/System"
 import { graphql } from "react-relay"
 
 jest.unmock("react-relay")

@@ -1,13 +1,13 @@
 import { MenuItem } from "v2/Components/Menu"
-import { ContextModule } from "v2/Artsy"
-import { useTracking } from "v2/Artsy/Analytics/useTracking"
+import { ContextModule } from "v2/System"
+import { useTracking } from "v2/System/Analytics/useTracking"
 import { ARTWORKS_SUBMENU_DATA } from "v2/Components/NavBar/menuData"
 import { mount } from "enzyme"
 import React from "react"
 import { DropDownNavMenu } from "../DropDownMenu"
 import { DropDownSection } from "../DropDownSection"
 
-jest.mock("v2/Artsy/Analytics/useTracking")
+jest.mock("v2/System/Analytics/useTracking")
 
 describe("DropDownMenu", () => {
   const trackEvent = jest.fn()

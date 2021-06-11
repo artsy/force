@@ -16,7 +16,7 @@ import {
   useTracking,
   useAnalyticsContext,
   AnalyticsSchema,
-} from "v2/Artsy/Analytics"
+} from "v2/System/Analytics"
 import { ContextModule } from "@artsy/cohesion"
 import { ArtworkDefinitionList } from "../ArtworkDefinitionList"
 

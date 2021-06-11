@@ -13,7 +13,7 @@ import { ArtistInsightsModal } from "v2/Components/ArtistInsightsModal"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { SpaceProps } from "styled-system"
-import { RouterLink } from "v2/Artsy/Router/RouterLink"
+import { RouterLink } from "v2/System/Router/RouterLink"
 import { ChevronButton } from "./ChevronButton"
 import { highestCategory, hasSections } from "./ArtistMarketInsights"
 

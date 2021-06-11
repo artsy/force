@@ -19,12 +19,12 @@ import { getUser } from "v2/Utils/user"
 import { createRouteConfig } from "./Utils/createRouteConfig"
 import { queryStringParsing } from "./Utils/queryStringParsing"
 
-import { createRelaySSREnvironment } from "v2/Artsy/Relay/createRelaySSREnvironment"
-import { Boot } from "v2/Artsy/Router/Boot"
+import { createRelaySSREnvironment } from "v2/System/Relay/createRelaySSREnvironment"
+import { Boot } from "v2/System/Router/Boot"
 
 import { RouterConfig } from "./"
 
-import { trackingMiddleware } from "v2/Artsy/Analytics/trackingMiddleware"
+import { trackingMiddleware } from "v2/System/Analytics/trackingMiddleware"
 import { RenderError, RenderPending, RenderReady } from "./RenderStatus"
 import { shouldUpdateScroll } from "./Utils/shouldUpdateScroll"
 import { buildClientAppContext } from "desktop/lib/buildClientAppContext"

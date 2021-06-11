@@ -4,7 +4,7 @@ import { extractNodes } from "v2/Utils/extractNodes"
 import { data as sd } from "sharify"
 import { ArtistGenes_artist } from "v2/__generated__/ArtistGenes_artist.graphql"
 import { Flex, Pill } from "@artsy/palette"
-import { RouterLink } from "v2/Artsy/Router/RouterLink"
+import { RouterLink } from "v2/System/Router/RouterLink"
 
 interface ArtistGenesProps {
   artist: ArtistGenes_artist

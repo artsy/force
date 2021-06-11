@@ -21,7 +21,7 @@ import createLogger from "v2/Utils/logger"
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "../../Components/ArtworkSummaryItem"
 import { CreditCardSummaryItemFragmentContainer as CreditCardSummaryItem } from "../../Components/CreditCardSummaryItem"
 import { ShippingSummaryItemFragmentContainer as ShippingSummaryItem } from "../../Components/ShippingSummaryItem"
-import { SystemContextConsumer } from "v2/Artsy/SystemContext"
+import { SystemContextConsumer } from "v2/System/SystemContext"
 
 const logger = createLogger("Order/Routes/Status/index.tsx")
 

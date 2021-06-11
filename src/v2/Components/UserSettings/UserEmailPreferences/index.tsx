@@ -1,14 +1,14 @@
 import React, { useState } from "react"
 import { Banner, Box, Flex, SelectSmall, Serif } from "@artsy/palette"
-import { useSystemContext } from "v2/Artsy/SystemContext"
+import { useSystemContext } from "v2/System/SystemContext"
 import { graphql } from "react-relay"
-import { SystemQueryRenderer as QueryRenderer } from "v2/Artsy/Relay/SystemQueryRenderer"
+import { SystemQueryRenderer as QueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import {
   UserEmailPreferencesQuery,
   UserEmailPreferencesQueryResponse,
 } from "v2/__generated__/UserEmailPreferencesQuery.graphql"
 import { UpdateUserEmailPreferencesMutation } from "./UserEmailPreferencesMutation"
-import { renderWithLoadProgress } from "v2/Artsy/Relay/renderWithLoadProgress"
+import { renderWithLoadProgress } from "v2/System/Relay/renderWithLoadProgress"
 
 const fallbackFrequency = "weekly"
 

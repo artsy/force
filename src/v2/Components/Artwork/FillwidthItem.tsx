@@ -1,7 +1,7 @@
 import { AuthContextModule } from "@artsy/cohesion"
 import { Box, Image } from "@artsy/palette"
 import { FillwidthItem_artwork } from "v2/__generated__/FillwidthItem_artwork.graphql"
-import { SystemContextProps, withSystemContext } from "v2/Artsy"
+import { SystemContextProps, withSystemContext } from "v2/System"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
@@ -14,7 +14,7 @@ import {
   Container,
   SaveButtonFragmentContainer as SaveButton,
 } from "./SaveButton"
-import { RouterLink } from "v2/Artsy/Router/RouterLink"
+import { RouterLink } from "v2/System/Router/RouterLink"
 import { Mediator } from "lib/mediator"
 import { cropped, resized } from "v2/Utils/resized"
 

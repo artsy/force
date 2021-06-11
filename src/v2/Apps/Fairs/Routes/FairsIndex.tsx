@@ -12,7 +12,7 @@ import {
 } from "@artsy/palette"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { RouterLink } from "v2/Artsy/Router/RouterLink"
+import { RouterLink } from "v2/System/Router/RouterLink"
 import { ModalType } from "v2/Components/Authentication/Types"
 import { openAuthModal } from "v2/Utils/openAuthModal"
 import { Media } from "v2/Utils/Responsive"
@@ -25,7 +25,7 @@ import { FairsPromoCarousel } from "../Components/FairsPromoCarousel"
 import { FairsMeta } from "../Components/FairsMeta"
 import { FairsPastFairsPaginationContainer } from "../Components/FairsPastFairs"
 import { mediator } from "lib/mediator"
-import { useSystemContext } from "v2/Artsy"
+import { useSystemContext } from "v2/System"
 
 interface FairsIndexProps {
   featuredFairs: FairsIndex_featuredFairs

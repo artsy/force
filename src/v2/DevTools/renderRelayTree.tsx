@@ -1,4 +1,4 @@
-import { LoadingClassName } from "v2/Artsy/Relay/renderWithLoadProgress"
+import { LoadingClassName } from "v2/System/Relay/renderWithLoadProgress"
 import "v2/DevTools/renderUntil"
 import { RenderUntilPredicate, mount } from "enzyme"
 import React from "react"

@@ -1,5 +1,5 @@
-import { SystemContextConsumer } from "v2/Artsy"
-import { buildClientApp } from "v2/Artsy/Router/buildClientApp"
+import { SystemContextConsumer } from "v2/System"
+import { buildClientApp } from "v2/System/Router/buildClientApp"
 import { createMockNetworkLayer } from "v2/DevTools"
 import { mount } from "enzyme"
 import React from "react"
@@ -135,11 +135,11 @@ describe("buildClientApp", () => {
 
   describe("concerning GraphQL errors", () => {
     const consoleError = console.error
-    jest.mock("v2/Artsy/Relay/createRelaySSREnvironment", () => ({
+    jest.mock("v2/System/Relay/createRelaySSREnvironment", () => ({
       createRelaySSREnvironment: jest.fn(),
     }))
 
-    const createRelaySSREnvironment = require("v2/Artsy/Relay/createRelaySSREnvironment")
+    const createRelaySSREnvironment = require("v2/System/Relay/createRelaySSREnvironment")
       .createRelaySSREnvironment as jest.Mock
 
     beforeAll(() => {

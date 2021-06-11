@@ -1,9 +1,9 @@
-import { useTracking } from "v2/Artsy/Analytics/useTracking"
+import { useTracking } from "v2/System/Analytics/useTracking"
 import { mount } from "enzyme"
 import React from "react"
 import { NotificationMenuItems } from "../NotificationsMenu"
 
-jest.mock("v2/Artsy/Analytics/useTracking")
+jest.mock("v2/System/Analytics/useTracking")
 
 describe("NotificationsMenu", () => {
   const trackEvent = jest.fn()

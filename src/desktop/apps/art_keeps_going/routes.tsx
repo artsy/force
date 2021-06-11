@@ -1,4 +1,4 @@
-import { buildServerApp } from "v2/Artsy/Router/server"
+import { buildServerApp } from "v2/System/Router/server"
 import { stitch } from "@artsy/stitch"
 import { featureAKGRoutes } from "v2/Apps/FeatureAKG/featureAKGRoutes"
 // @ts-ignore

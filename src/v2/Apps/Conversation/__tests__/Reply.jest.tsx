@@ -1,12 +1,12 @@
 import React from "react"
-import { useTracking } from "v2/Artsy/Analytics/useTracking"
+import { useTracking } from "v2/System/Analytics/useTracking"
 import { MockedConversation } from "v2/Apps/__tests__/Fixtures/Conversation"
 import { Conversation_conversation } from "v2/__generated__/Conversation_conversation.graphql"
 import { Reply } from "../Components/Reply"
 import { mount } from "enzyme"
 import { Environment } from "react-relay"
 
-jest.mock("v2/Artsy/Analytics/useTracking")
+jest.mock("v2/System/Analytics/useTracking")
 
 describe("Reply", () => {
   describe("tracking", () => {

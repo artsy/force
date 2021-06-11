@@ -1,11 +1,11 @@
 import React, { useContext } from "react"
 import { Box, Flex, Sans, Separator, color } from "@artsy/palette"
 import { isServer } from "lib/isServer"
-import { SystemContext, useSystemContext } from "v2/Artsy"
+import { SystemContext, useSystemContext } from "v2/System"
 import { MobileLink } from "./MobileLink"
 import { MobileSubmenuLink } from "./MobileNavMenu"
 import { graphql } from "relay-runtime"
-import { SystemQueryRenderer as QueryRenderer } from "v2/Artsy/Relay/SystemQueryRenderer"
+import { SystemQueryRenderer as QueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import {
   LoggedInLinksQuery,
   LoggedInLinksQueryResponse,

@@ -3,7 +3,7 @@ import createLogger from "v2/Utils/logger"
 import { Cache, CacheConfig } from "./Cache"
 import { isFunction } from "lodash"
 
-const logger = createLogger("v2/Artsy/middleware/cache/cacheMiddleware")
+const logger = createLogger("v2/System/middleware/cache/cacheMiddleware")
 
 interface CacheMiddlewareOpts extends CacheConfig {
   onInit?: (cache: QueryResponseCache) => any

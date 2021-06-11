@@ -1,5 +1,5 @@
 import loadable from "@loadable/component"
-import { AppRouteConfig } from "v2/Artsy/Router/Route"
+import { AppRouteConfig } from "v2/System/Router/Route"
 import { graphql } from "react-relay"
 
 export const conversationRoutes: AppRouteConfig[] = [
@@ -38,9 +38,16 @@ export const conversationRoutes: AppRouteConfig[] = [
     path: "/user/conversations/:conversationID",
     displayFullPage: true,
     hideFooter: true,
-    Component: loadable(() => import(/* webpackChunkName: "conversationBundle" */ "./Routes/Conversation"), {
-      resolveComponent: component => component.ConversationPaginationContainer,
-    }),
+    Component: loadable(
+      () =>
+        import(
+          /* webpackChunkName: "conversationBundle" */ "./Routes/Conversation"
+        ),
+      {
+        resolveComponent: component =>
+          component.ConversationPaginationContainer,
+      }
+    ),
     prepareVariables: (params, _props) => {
       return {
         conversationID: params.conversationID,

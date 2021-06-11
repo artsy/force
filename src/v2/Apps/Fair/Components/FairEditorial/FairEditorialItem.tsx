@@ -2,7 +2,7 @@ import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FairEditorialItem_article } from "v2/__generated__/FairEditorialItem_article.graphql"
 import { Box, Text } from "@artsy/palette"
-import { RouterLink } from "v2/Artsy/Router/RouterLink"
+import { RouterLink } from "v2/System/Router/RouterLink"
 import styled from "styled-components"
 import { useTracking } from "react-tracking"
 import {
@@ -11,7 +11,7 @@ import {
   ContextModule,
   OwnerType,
 } from "@artsy/cohesion"
-import { useAnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
+import { useAnalyticsContext } from "v2/System/Analytics/AnalyticsContext"
 
 const Container = styled(RouterLink)`
   display: flex;

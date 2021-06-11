@@ -1,5 +1,5 @@
 import React from "react"
-import { RouterLink } from "v2/Artsy/Router/RouterLink"
+import { RouterLink } from "v2/System/Router/RouterLink"
 import { ScrollToPartnerHeader } from "../ScrollToPartnerHeader"
 import { Text } from "@artsy/palette"
 

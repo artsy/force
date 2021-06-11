@@ -4,11 +4,11 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { PartnerArtists_partner } from "v2/__generated__/PartnerArtists_partner.graphql"
 import { PartnerArtistsQuery } from "v2/__generated__/PartnerArtistsQuery.graphql"
 import { ScrollIntoViewProps } from "v2/Utils/scrollHelpers"
-import { useSystemContext } from "v2/Artsy"
+import { useSystemContext } from "v2/System"
 import { usePartnerArtistsLoadingContext } from "v2/Apps/Partner/Utils/PartnerArtistsLoadingContext"
 import { PartnerArtistListPlaceholder } from "./PartnerArtistListPlaceholder"
 import { PartnerArtistListFragmentContainer } from "./PartnerArtistList"
-import { SystemQueryRenderer as QueryRenderer } from "v2/Artsy/Relay/SystemQueryRenderer"
+import { SystemQueryRenderer as QueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 
 export interface PartnerArtistsProps {
   partner: PartnerArtists_partner

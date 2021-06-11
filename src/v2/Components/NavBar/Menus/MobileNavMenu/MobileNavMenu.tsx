@@ -15,8 +15,8 @@ import {
   space,
   TextProps,
 } from "@artsy/palette"
-import { AnalyticsSchema, useSystemContext } from "v2/Artsy"
-import { useTracking } from "v2/Artsy/Analytics"
+import { AnalyticsSchema, useSystemContext } from "v2/System"
+import { useTracking } from "v2/System/Analytics"
 import { ModalType } from "v2/Components/Authentication/Types"
 import {
   ARTISTS_SUBMENU_DATA,

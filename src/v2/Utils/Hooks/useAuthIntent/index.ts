@@ -1,7 +1,7 @@
 import Cookies from "cookies-js"
 import { useEffect } from "react"
 import { Environment } from "react-relay"
-import { useSystemContext } from "v2/Artsy"
+import { useSystemContext } from "v2/System"
 import { followArtistMutation } from "./mutations/AuthIntentFollowArtistMutation"
 import { followGeneMutation } from "./mutations/AuthIntentFollowGeneMutation"
 import { followProfileMutation } from "./mutations/AuthIntentFollowProfileMutation"

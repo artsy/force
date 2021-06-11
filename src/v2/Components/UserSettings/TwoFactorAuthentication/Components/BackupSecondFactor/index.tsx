@@ -10,7 +10,7 @@ import {
 import React, { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 
-import { useSystemContext } from "v2/Artsy"
+import { useSystemContext } from "v2/System"
 import { BackupSecondFactorModalContentQueryRenderer as ModalContent } from "./BackupSecondFactorModalContent"
 import { CreateBackupSecondFactors } from "./Mutation/CreateBackupSecondFactors"
 

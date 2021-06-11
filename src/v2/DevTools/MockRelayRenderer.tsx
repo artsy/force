@@ -1,7 +1,7 @@
-import { SystemContextProvider } from "v2/Artsy"
-import { SystemContextConsumer } from "v2/Artsy"
-import { renderWithLoadProgress } from "v2/Artsy/Relay/renderWithLoadProgress"
-import { SystemQueryRenderer } from "v2/Artsy/Relay/SystemQueryRenderer"
+import { SystemContextProvider } from "v2/System"
+import { SystemContextConsumer } from "v2/System"
+import { renderWithLoadProgress } from "v2/System/Relay/renderWithLoadProgress"
+import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { IMocks } from "graphql-tools/dist/Interfaces"
 import React from "react"
 /* tslint:disable-next-line:no-query-renderer-import */

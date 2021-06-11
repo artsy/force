@@ -1,11 +1,11 @@
 import { Clickable, Spacer } from "@artsy/palette"
 import { ArtworkSidebarCurrentBidInfo_artwork } from "v2/__generated__/ArtworkSidebarCurrentBidInfo_artwork.graphql"
-import { SystemContextConsumer } from "v2/Artsy"
+import { SystemContextConsumer } from "v2/System"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { get } from "v2/Utils/get"
-import { track } from "v2/Artsy/Analytics"
-import { AnalyticsSchema } from "v2/Artsy/Analytics"
+import { track } from "v2/System/Analytics"
+import { AnalyticsSchema } from "v2/System/Analytics"
 import {
   Box,
   Flex,

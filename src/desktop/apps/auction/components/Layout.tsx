@@ -13,7 +13,7 @@ import React from "react"
 import block from "bem-cn-lite"
 import { connect } from "react-redux"
 import { showModal } from "../actions/app"
-import { AnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
+import { AnalyticsContext } from "v2/System/Analytics/AnalyticsContext"
 import { OwnerType } from "@artsy/cohesion"
 
 // FIXME: Rewire

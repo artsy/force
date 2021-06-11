@@ -1,6 +1,6 @@
 import React from "react"
 import { commitMutation, createFragmentContainer, graphql } from "react-relay"
-import { useSystemContext } from "v2/Artsy"
+import { useSystemContext } from "v2/System"
 import { FollowButton } from "./Button"
 import { FollowGeneButton_gene } from "v2/__generated__/FollowGeneButton_gene.graphql"
 import { FollowGeneButtonMutation } from "v2/__generated__/FollowGeneButtonMutation.graphql"

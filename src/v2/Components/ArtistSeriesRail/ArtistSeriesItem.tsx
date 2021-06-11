@@ -3,12 +3,12 @@ import { ArtistSeriesItem_artistSeries } from "v2/__generated__/ArtistSeriesItem
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ContextModule, clickedArtistSeriesGroup } from "@artsy/cohesion"
-import { useTracking } from "v2/Artsy/Analytics/useTracking"
+import { useTracking } from "v2/System/Analytics/useTracking"
 import {
   AnalyticsContextProps,
   useAnalyticsContext,
-} from "v2/Artsy/Analytics/AnalyticsContext"
-import { RouterLink } from "v2/Artsy/Router/RouterLink"
+} from "v2/System/Analytics/AnalyticsContext"
+import { RouterLink } from "v2/System/Router/RouterLink"
 
 interface ArtistSeriesItemProps extends AnalyticsContextProps {
   artistSeries: ArtistSeriesItem_artistSeries

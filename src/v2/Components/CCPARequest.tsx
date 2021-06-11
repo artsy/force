@@ -12,7 +12,7 @@ import {
   Clickable,
 } from "@artsy/palette"
 import { CCPARequestMutation } from "v2/__generated__/CCPARequestMutation.graphql"
-import { useSystemContext } from "v2/Artsy"
+import { useSystemContext } from "v2/System"
 import React, { useEffect, useState } from "react"
 import { commitMutation, graphql } from "react-relay"
 import styled from "styled-components"

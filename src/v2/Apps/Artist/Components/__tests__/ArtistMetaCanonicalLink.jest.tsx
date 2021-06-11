@@ -7,7 +7,7 @@ import {
   computeCanonicalPath,
 } from "../ArtistMetaCanonicalLink"
 
-jest.mock("v2/Artsy/Router/useRouter", () => ({
+jest.mock("v2/System/Router/useRouter", () => ({
   useRouter: () => ({
     match: {
       location: {

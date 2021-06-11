@@ -1,8 +1,8 @@
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
-import { AnalyticsSchema } from "v2/Artsy"
-import { RouterLink } from "v2/Artsy/Router/RouterLink"
+import { AnalyticsSchema } from "v2/System"
+import { RouterLink } from "v2/System/Router/RouterLink"
 import { ChevronButton } from "v2/Components/ChevronButton"
 import { BackLink_artist } from "v2/__generated__/BackLink_artist.graphql"
 

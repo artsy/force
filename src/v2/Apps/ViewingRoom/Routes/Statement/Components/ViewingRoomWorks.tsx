@@ -1,11 +1,11 @@
 import React from "react"
 import { Box, Flex, Image, Sans, Spacer } from "@artsy/palette"
-import { useRouter } from "v2/Artsy/Router/useRouter"
+import { useRouter } from "v2/System/Router/useRouter"
 import { createFragmentContainer, graphql } from "react-relay"
 
 import { ViewingRoomWorks_viewingRoom } from "v2/__generated__/ViewingRoomWorks_viewingRoom.graphql"
-import { RouterLink } from "v2/Artsy/Router/RouterLink"
-import { AnalyticsSchema, useTracking } from "v2/Artsy"
+import { RouterLink } from "v2/System/Router/RouterLink"
+import { AnalyticsSchema, useTracking } from "v2/System"
 import { scrollToId } from "../Utils/scrollToId"
 import { ViewWorksButton } from "./ViewWorksButton"
 

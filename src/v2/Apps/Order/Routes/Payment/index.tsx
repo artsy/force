@@ -27,7 +27,7 @@ import {
   CommitMutation,
   injectCommitMutation,
 } from "v2/Apps/Order/Utils/commitMutation"
-import { AnalyticsSchema, track } from "v2/Artsy"
+import { AnalyticsSchema, track } from "v2/System"
 import { BuyerGuarantee } from "../../Components/BuyerGuarantee"
 
 export const ContinueButton = props => (

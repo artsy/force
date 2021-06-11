@@ -1,7 +1,7 @@
 import React from "react"
 import { FairFollowedArtists } from "../FairFollowedArtists"
 import { useTracking } from "react-tracking"
-import { AnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
+import { AnalyticsContext } from "v2/System/Analytics/AnalyticsContext"
 import { mount } from "enzyme"
 import { OwnerType } from "@artsy/cohesion"
 

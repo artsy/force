@@ -1,4 +1,4 @@
-import { AppRouteConfig } from "v2/Artsy/Router/Route"
+import { AppRouteConfig } from "v2/System/Router/Route"
 import { Route } from "../Route"
 
 export function createRouteConfig(routes): AppRouteConfig[] {

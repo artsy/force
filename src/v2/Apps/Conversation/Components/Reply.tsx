@@ -13,7 +13,7 @@ import React, { useRef, useState } from "react"
 import { Environment, RelayRefetchProp } from "react-relay"
 import styled from "styled-components"
 import { SendConversationMessage } from "../Mutation/SendConversationMessage"
-import { useTracking } from "v2/Artsy/Analytics"
+import { useTracking } from "v2/System/Analytics"
 import {
   focusedOnConversationMessageInput,
   sentConversationMessage,

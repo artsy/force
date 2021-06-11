@@ -7,8 +7,8 @@ import {
 } from "v2/__generated__/RegisterCreateBidderMutation.graphql"
 import { createCreditCardAndUpdatePhone } from "v2/Apps/Auction/Operations/CreateCreditCardAndUpdatePhone"
 import { RegistrationForm } from "v2/Apps/Auction/Components/RegistrationForm"
-import { track } from "v2/Artsy"
-import * as Schema from "v2/Artsy/Analytics/Schema"
+import { track } from "v2/System"
+import * as Schema from "v2/System/Analytics/Schema"
 import React, { ComponentProps } from "react"
 import { Title } from "react-head"
 import {

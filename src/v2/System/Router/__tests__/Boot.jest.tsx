@@ -1,5 +1,5 @@
-import { SystemContextConsumer } from "v2/Artsy"
-import { Boot } from "v2/Artsy/Router"
+import { SystemContextConsumer } from "v2/System"
+import { Boot } from "v2/System/Router"
 import { mount } from "enzyme"
 import React from "react"
 

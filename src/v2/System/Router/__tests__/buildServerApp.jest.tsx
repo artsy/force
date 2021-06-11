@@ -2,12 +2,12 @@
  * @jest-environment node
  */
 
-import { SystemContextConsumer } from "v2/Artsy"
+import { SystemContextConsumer } from "v2/System"
 import {
   ServerRouterConfig,
   __TEST_INTERNAL_SERVER_APP__,
   buildServerApp,
-} from "v2/Artsy/Router/buildServerApp"
+} from "v2/System/Router/buildServerApp"
 import { render } from "enzyme"
 import React from "react"
 import ReactDOMServer from "react-dom/server"
@@ -240,11 +240,11 @@ describe("buildServerApp", () => {
 
   describe("concerning GraphQL errors", () => {
     const consoleError = console.error
-    jest.mock("v2/Artsy/Relay/createRelaySSREnvironment", () => ({
+    jest.mock("v2/System/Relay/createRelaySSREnvironment", () => ({
       createRelaySSREnvironment: jest.fn(),
     }))
 
-    const createRelaySSREnvironment = require("v2/Artsy/Relay/createRelaySSREnvironment")
+    const createRelaySSREnvironment = require("v2/System/Relay/createRelaySSREnvironment")
       .createRelaySSREnvironment as jest.Mock
 
     beforeAll(() => {

@@ -1,7 +1,7 @@
 import { Box, Button, Link, Sans, Serif } from "@artsy/palette"
 import { IdentityVerificationApp_me } from "v2/__generated__/IdentityVerificationApp_me.graphql"
 import { IdentityVerificationAppStartMutation } from "v2/__generated__/IdentityVerificationAppStartMutation.graphql"
-import * as Schema from "v2/Artsy/Analytics/Schema"
+import * as Schema from "v2/System/Analytics/Schema"
 import { ErrorModal } from "v2/Components/Modal/ErrorModal"
 import React, { useState } from "react"
 import { Title as HeadTitle } from "react-head"

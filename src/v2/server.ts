@@ -1,6 +1,6 @@
 import sharify from "sharify"
 import type { NextFunction, Request, Response } from "express"
-import { buildServerApp } from "v2/Artsy/Router/server"
+import { buildServerApp } from "v2/System/Router/server"
 import { getAppRoutes } from "v2/routes"
 import { flatten } from "lodash"
 import ReactDOM from "react-dom/server"

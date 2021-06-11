@@ -1,7 +1,7 @@
 import React from "react"
 import styled from "styled-components"
 import { createFragmentContainer, graphql } from "react-relay"
-import { RouterLink } from "v2/Artsy/Router/RouterLink"
+import { RouterLink } from "v2/System/Router/RouterLink"
 import { PartnerArtistItem_artist } from "v2/__generated__/PartnerArtistItem_artist.graphql"
 import { Text } from "@artsy/palette"
 import { ScrollIntoViewProps } from "v2/Utils/scrollHelpers"

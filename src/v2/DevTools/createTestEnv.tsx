@@ -1,5 +1,5 @@
 import { ConnectedModalDialog } from "v2/Apps/Order/Dialogs"
-import { SystemContext, SystemContextProps } from "v2/Artsy"
+import { SystemContext, SystemContextProps } from "v2/System"
 import { MockBoot, createMockFetchQuery, renderRelayTree } from "v2/DevTools"
 import { merge } from "lodash"
 import React, { ReactElement, useContext } from "react"

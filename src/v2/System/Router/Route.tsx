@@ -3,7 +3,7 @@
  * have default setup for each route.
  */
 
-import { RouteSpinner } from "v2/Artsy/Relay/renderWithLoadProgress"
+import { RouteSpinner } from "v2/System/Relay/renderWithLoadProgress"
 import { RouteConfig, HttpError } from "found"
 import BaseRoute from "found/Route"
 import React from "react"

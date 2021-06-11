@@ -1,6 +1,6 @@
 import { Box, Sans, Serif, Spacer } from "@artsy/palette"
 import { ArtistConsignFAQ_artist } from "v2/__generated__/ArtistConsignFAQ_artist.graphql"
-import { AnalyticsSchema, useTracking } from "v2/Artsy"
+import { AnalyticsSchema, useTracking } from "v2/System"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { SectionContainer } from "./SectionContainer"

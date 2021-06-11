@@ -2,7 +2,7 @@ import React from "react"
 import { MarketingLandingApp } from "../MarketingLandingApp"
 import { mount } from "enzyme"
 
-jest.mock("v2/Artsy/Analytics/AnalyticsContext", () => ({
+jest.mock("v2/System/Analytics/AnalyticsContext", () => ({
   AnalyticsContext: {
     Provider: ({ children }) => children,
   },

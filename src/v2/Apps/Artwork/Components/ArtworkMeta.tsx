@@ -5,7 +5,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { data as sd } from "sharify"
 import { get } from "v2/Utils/get"
 
-import { withSystemContext } from "v2/Artsy"
+import { withSystemContext } from "v2/System"
 import { SeoDataForArtworkFragmentContainer as SeoDataForArtwork } from "./Seo/SeoDataForArtwork"
 import { ZendeskWrapper } from "v2/Components/ZendeskWrapper"
 

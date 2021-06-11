@@ -1,7 +1,7 @@
 import { Avatar, Box, Button, Flex, Serif } from "@artsy/palette"
 import { FollowArtistPopoverRow_artist } from "v2/__generated__/FollowArtistPopoverRow_artist.graphql"
 import { FollowArtistPopoverRowMutation } from "v2/__generated__/FollowArtistPopoverRowMutation.graphql"
-import { SystemContextProps } from "v2/Artsy"
+import { SystemContextProps } from "v2/System"
 import React from "react"
 import {
   RelayProp,

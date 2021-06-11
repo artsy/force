@@ -1,5 +1,5 @@
 import loadable from "@loadable/component"
-import { AppRouteConfig } from "v2/Artsy/Router/Route"
+import { AppRouteConfig } from "v2/System/Router/Route"
 
 const BuyerGuaranteeApp = loadable(
   () => import(/* webpackChunkName: "buyerBundle" */ "./BuyerGuaranteeApp"),

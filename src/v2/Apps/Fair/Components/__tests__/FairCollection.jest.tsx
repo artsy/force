@@ -4,9 +4,9 @@ import { graphql } from "react-relay"
 import { FairCollectionFragmentContainer } from "../FairCollections"
 import { FairCollection_QueryRawResponse } from "v2/__generated__/FairCollection_Query.graphql"
 import { useTracking } from "react-tracking"
-import { RouterLink } from "v2/Artsy/Router/RouterLink"
+import { RouterLink } from "v2/System/Router/RouterLink"
 import { OwnerType } from "@artsy/cohesion"
-import { AnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
+import { AnalyticsContext } from "v2/System/Analytics/AnalyticsContext"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")

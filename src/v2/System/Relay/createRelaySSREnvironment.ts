@@ -23,7 +23,7 @@ import { searchBarImmediateResolveMiddleware } from "./middleware/searchBarImmed
 
 import createLogger from "v2/Utils/logger"
 
-const logger = createLogger("v2/Artsy/Relay/createRelaySSREnvironment")
+const logger = createLogger("v2/System/Relay/createRelaySSREnvironment")
 
 const isServer = typeof window === "undefined"
 const isDevelopment =

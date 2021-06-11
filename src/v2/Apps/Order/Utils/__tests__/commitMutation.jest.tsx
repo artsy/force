@@ -1,6 +1,6 @@
 import { commitMutationTest1Mutation } from "v2/__generated__/commitMutationTest1Mutation.graphql"
 import { settingOrderPaymentFailed } from "v2/Apps/Order/Routes/__fixtures__/MutationResults"
-import { SystemContextProvider } from "v2/Artsy"
+import { SystemContextProvider } from "v2/System"
 import { createMockNetworkLayer2 } from "v2/DevTools"
 import { mount } from "enzyme"
 import React from "react"

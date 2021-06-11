@@ -15,7 +15,7 @@ jest.unmock("react-relay")
 jest.mock("react-tracking")
 jest.mock("v2/Utils/openAuthModal")
 jest.mock("v2/Components/Pagination/useComputeHref")
-jest.mock("v2/Artsy/Router/Utils/catchLinks", () => ({
+jest.mock("v2/System/Router/Utils/catchLinks", () => ({
   userIsForcingNavigation: () => false,
 }))
 jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({

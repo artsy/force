@@ -1,4 +1,4 @@
-import { useSystemContext } from "v2/Artsy"
+import { useSystemContext } from "v2/System"
 import {
   MOBILE_LOGGED_IN_NAV_HEIGHT,
   MOBILE_NAV_HEIGHT,

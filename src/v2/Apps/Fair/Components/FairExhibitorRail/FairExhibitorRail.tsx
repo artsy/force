@@ -5,7 +5,7 @@ import { FairExhibitorRail_show } from "v2/__generated__/FairExhibitorRail_show.
 import { useLazyLoadComponent } from "v2/Utils/Hooks/useLazyLoadComponent"
 import { FairExhibitorRailArtworksQueryRenderer as FairExhibitorRailArtworks } from "./FairExhibitorRailArtworks"
 import { FairExhibitorRailPlaceholder } from "./FairExhibitorRailPlaceholder"
-import { RouterLink } from "v2/Artsy/Router/RouterLink"
+import { RouterLink } from "v2/System/Router/RouterLink"
 import { useTracking } from "react-tracking"
 import {
   ActionType,
@@ -13,7 +13,7 @@ import {
   ContextModule,
   OwnerType,
 } from "@artsy/cohesion"
-import { useAnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
+import { useAnalyticsContext } from "v2/System/Analytics/AnalyticsContext"
 
 interface FairExhibitorRailProps extends BoxProps {
   show: FairExhibitorRail_show

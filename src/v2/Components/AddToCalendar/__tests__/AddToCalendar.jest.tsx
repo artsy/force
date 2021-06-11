@@ -3,7 +3,7 @@ import { mount } from "enzyme"
 import { AddToCalendar, CalendarEventProps } from "../AddToCalendar"
 import { MenuItem } from "@artsy/palette"
 import { ContextModule, OwnerType } from "@artsy/cohesion"
-import { AnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
+import { AnalyticsContext } from "v2/System/Analytics/AnalyticsContext"
 import { useTracking } from "react-tracking"
 
 describe("AddToCalendar", () => {

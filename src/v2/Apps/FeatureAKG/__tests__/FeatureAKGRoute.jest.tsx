@@ -1,4 +1,4 @@
-import { useTracking } from "v2/Artsy/Analytics/useTracking"
+import { useTracking } from "v2/System/Analytics/useTracking"
 import { MockBoot, renderRelayTree } from "v2/DevTools"
 import React from "react"
 import { graphql } from "relay-runtime"
@@ -8,7 +8,7 @@ import { FeatureAKGRoute_Test_QueryRawResponse } from "v2/__generated__/FeatureA
 import { FeatureAKGAppFragmentContainer } from "../FeatureAKGApp"
 
 jest.unmock("react-relay")
-jest.mock("v2/Artsy/Analytics/useTracking")
+jest.mock("v2/System/Analytics/useTracking")
 
 describe("FeatureAKG", () => {
   const trackEvent = jest.fn()

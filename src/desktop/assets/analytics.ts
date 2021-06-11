@@ -3,7 +3,7 @@ import { trackPageView } from "lib/analytics/trackPageView"
 window.Cookies = require("cookies-js")
 
 // We exclude these routes from analytics.page calls because
-// they're already tracked in v2/Artsy/Analytics/trackingMiddleware
+// they're already tracked in v2/System/Analytics/trackingMiddleware
 const excludedRoutes = [
   "/art-fairs",
   "/artist(.*)",

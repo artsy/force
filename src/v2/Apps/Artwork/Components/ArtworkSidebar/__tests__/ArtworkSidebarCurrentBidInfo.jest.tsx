@@ -17,7 +17,7 @@ import {
 import { ArtworkSidebarCurrentBidInfoFragmentContainer } from "v2/Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarCurrentBidInfo"
 import { renderRelayTree } from "v2/DevTools"
 import { graphql } from "react-relay"
-import { mockTracking } from "v2/Artsy/Analytics"
+import { mockTracking } from "v2/System/Analytics"
 
 jest.unmock("react-relay")
 jest.unmock("react-tracking")

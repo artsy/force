@@ -14,15 +14,15 @@ import { ArtworkSidebarFragmentContainer } from "./Components/ArtworkSidebar"
 import { OtherWorksFragmentContainer } from "./Components/OtherWorks"
 import { ArtworkArtistSeriesFragmentContainer } from "./Components/ArtworkArtistSeries"
 import { PricingContextFragmentContainer } from "./Components/PricingContext"
-import { withSystemContext } from "v2/Artsy"
-import * as Schema from "v2/Artsy/Analytics/Schema"
+import { withSystemContext } from "v2/System"
+import * as Schema from "v2/System/Analytics/Schema"
 import { RecentlyViewed } from "v2/Components/RecentlyViewed"
 import { RouterContext } from "found"
 import { TrackingProp } from "react-tracking"
 import {
   AnalyticsContext,
   useAnalyticsContext,
-} from "v2/Artsy/Analytics/AnalyticsContext"
+} from "v2/System/Analytics/AnalyticsContext"
 import { Mediator } from "lib/mediator"
 import { data } from "sharify"
 import { ReCaptchaContainer } from "v2/Utils/ReCaptchaContainer"

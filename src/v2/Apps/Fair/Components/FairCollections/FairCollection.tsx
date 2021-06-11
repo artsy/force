@@ -3,7 +3,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { FairCollection_collection } from "v2/__generated__/FairCollection_collection.graphql"
 import { SmallCard } from "@artsy/palette"
 import { crop } from "v2/Utils/resizer"
-import { RouterLink } from "v2/Artsy/Router/RouterLink"
+import { RouterLink } from "v2/System/Router/RouterLink"
 import { compact } from "lodash"
 import { useTracking } from "react-tracking"
 import {
@@ -12,7 +12,7 @@ import {
   ContextModule,
   OwnerType,
 } from "@artsy/cohesion"
-import { useAnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
+import { useAnalyticsContext } from "v2/System/Analytics/AnalyticsContext"
 
 const CARD_WIDTH = 263
 const CARD_LARGE_IMAGE_SIZE = 170

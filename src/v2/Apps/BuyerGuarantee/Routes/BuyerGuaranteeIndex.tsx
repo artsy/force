@@ -15,7 +15,7 @@ import {
   VerifiedIcon,
 } from "@artsy/palette"
 import { Media } from "@artsy/reaction/dist/Utils/Responsive"
-import { RouterLink } from "v2/Artsy/Router/RouterLink"
+import { RouterLink } from "v2/System/Router/RouterLink"
 import { resize } from "v2/Utils/resizer"
 import { FullBleedHeader } from "v2/Components/FullBleedHeader"
 import {

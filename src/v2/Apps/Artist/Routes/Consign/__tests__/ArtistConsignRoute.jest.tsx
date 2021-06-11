@@ -1,6 +1,6 @@
 import { ArtistConsignRoute_Test_QueryRawResponse } from "v2/__generated__/ArtistConsignRoute_Test_Query.graphql"
-import { SystemContextProvider } from "v2/Artsy"
-import { useTracking } from "v2/Artsy/Analytics/useTracking"
+import { SystemContextProvider } from "v2/System"
+import { useTracking } from "v2/System/Analytics/useTracking"
 import { MockBoot, renderRelayTree } from "v2/DevTools"
 import { cloneDeep } from "lodash"
 import React from "react"
@@ -8,7 +8,7 @@ import { graphql } from "relay-runtime"
 import { ArtistConsignRouteFragmentContainer } from "../ArtistConsignRoute"
 
 jest.unmock("react-relay")
-jest.mock("v2/Artsy/Analytics/useTracking")
+jest.mock("v2/System/Analytics/useTracking")
 
 describe("ConsignRoute", () => {
   const trackEvent = jest.fn()

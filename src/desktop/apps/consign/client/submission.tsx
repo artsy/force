@@ -23,7 +23,7 @@ import {
 } from "./actions"
 import { render } from "react-dom"
 import { routerMiddleware } from "react-router-redux"
-import { SystemContextProvider } from "v2/Artsy"
+import { SystemContextProvider } from "v2/System"
 import queryString from "query-string"
 
 const geo = require("../../../components/geo/index.coffee")

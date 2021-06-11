@@ -5,7 +5,7 @@ import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "v2/Ap
 import { OrderStepper } from "v2/Apps/Order/Components/OrderStepper"
 import { TransactionDetailsSummaryItemFragmentContainer as TransactionDetailsSummaryItem } from "v2/Apps/Order/Components/TransactionDetailsSummaryItem"
 import { TwoColumnLayout } from "v2/Apps/Order/Components/TwoColumnLayout"
-import { track } from "v2/Artsy/Analytics"
+import { track } from "v2/System/Analytics"
 import { CountdownTimer } from "v2/Components/CountdownTimer"
 import { RouteConfig, Router } from "found"
 import React, { Component } from "react"

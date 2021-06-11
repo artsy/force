@@ -5,7 +5,7 @@ import { mount } from "enzyme"
 import React from "react"
 import { SearchResultsEntityRoute as SearchResultsEntity } from "../SearchResultsEntity"
 
-jest.mock("v2/Artsy/Router/useRouter", () => ({
+jest.mock("v2/System/Router/useRouter", () => ({
   useRouter: () => ({
     match: {
       location: {

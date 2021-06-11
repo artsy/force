@@ -3,7 +3,7 @@ import { flatten } from "lodash"
 import React, { useEffect } from "react"
 
 import { AppShell } from "v2/Apps/Components/AppShell"
-import { useSystemContext } from "v2/Artsy/SystemContext"
+import { useSystemContext } from "v2/System/SystemContext"
 import { interceptLinks } from "./interceptLinks"
 import { AppRouteConfig } from "./Route"
 

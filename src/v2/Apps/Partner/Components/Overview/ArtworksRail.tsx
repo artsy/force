@@ -4,14 +4,14 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworksRail_partner } from "v2/__generated__/ArtworksRail_partner.graphql"
 import { flatten } from "lodash"
 import { Carousel } from "../Carousel"
-import { useSystemContext } from "v2/Artsy"
+import { useSystemContext } from "v2/System"
 import { ArtworksRailRendererQuery } from "v2/__generated__/ArtworksRailRendererQuery.graphql"
 import FillwidthItem from "v2/Components/Artwork/FillwidthItem"
-import { RouterLink } from "v2/Artsy/Router/RouterLink"
+import { RouterLink } from "v2/System/Router/RouterLink"
 import { ScrollToPartnerHeader } from "../ScrollToPartnerHeader"
 import { ArtworksRailPlaceholder } from "./ArtworkRailPlaceholder"
 import { ViewAllButton } from "./ViewAllButton"
-import { SystemQueryRenderer as QueryRenderer } from "v2/Artsy/Relay/SystemQueryRenderer"
+import { SystemQueryRenderer as QueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 
 interface ArtworksRailProps extends BoxProps {
   partner: ArtworksRail_partner

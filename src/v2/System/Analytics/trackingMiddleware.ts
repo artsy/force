@@ -1,4 +1,4 @@
-// import { trackExperimentViewed } from "v2/Artsy/Analytics/trackExperimentViewed"
+// import { trackExperimentViewed } from "v2/System/Analytics/trackExperimentViewed"
 import { ActionTypes } from "farce"
 import { data as sd } from "sharify"
 import { get } from "v2/Utils/get"

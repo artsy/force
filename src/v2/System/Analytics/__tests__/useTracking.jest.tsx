@@ -1,4 +1,4 @@
-import { AnalyticsSchema } from "v2/Artsy/Analytics"
+import { AnalyticsSchema } from "v2/System/Analytics"
 import { mount } from "enzyme"
 import React from "react"
 import { renderToString } from "react-dom/server"

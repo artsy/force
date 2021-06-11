@@ -22,8 +22,8 @@ import {
   CommitMutation,
   injectCommitMutation,
 } from "v2/Apps/Order/Utils/commitMutation"
-import { track } from "v2/Artsy"
-import * as Schema from "v2/Artsy/Analytics/Schema"
+import { track } from "v2/System"
+import * as Schema from "v2/System/Analytics/Schema"
 import { CountdownTimer } from "v2/Components/CountdownTimer"
 import { Router } from "found"
 import React, { Component } from "react"

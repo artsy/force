@@ -3,7 +3,7 @@ import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Media } from "v2/Utils/Responsive"
 import { ShowContextualLink_show } from "v2/__generated__/ShowContextualLink_show.graphql"
-import { RouterLink } from "v2/Artsy/Router/RouterLink"
+import { RouterLink } from "v2/System/Router/RouterLink"
 
 interface Props {
   show: ShowContextualLink_show

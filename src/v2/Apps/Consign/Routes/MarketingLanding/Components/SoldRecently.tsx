@@ -1,7 +1,7 @@
 import React from "react"
 import { Flex, Spacer, Text } from "@artsy/palette"
 import { QueryRenderer, createFragmentContainer, graphql } from "react-relay"
-import { useSystemContext } from "v2/Artsy"
+import { useSystemContext } from "v2/System"
 import { SoldRecentlyQuery } from "v2/__generated__/SoldRecentlyQuery.graphql"
 import { SoldRecently_targetSupply } from "v2/__generated__/SoldRecently_targetSupply.graphql"
 import { extractNodes } from "v2/Utils/extractNodes"

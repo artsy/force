@@ -1,6 +1,6 @@
 import { Box, Button, Flex, Input, Modal, Sans, Serif } from "@artsy/palette"
 import { CreateAppSecondFactorMutationResponse } from "v2/__generated__/CreateAppSecondFactorMutation.graphql"
-import { useSystemContext } from "v2/Artsy"
+import { useSystemContext } from "v2/System"
 import { Formik, FormikHelpers as FormikActions, FormikProps } from "formik"
 import QRCode from "qrcode.react"
 import React, { useState } from "react"

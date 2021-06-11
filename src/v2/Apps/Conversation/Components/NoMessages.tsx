@@ -1,5 +1,5 @@
 import { Box, Button, Flex, Sans } from "@artsy/palette"
-import { RouterLink } from "v2/Artsy/Router/RouterLink"
+import { RouterLink } from "v2/System/Router/RouterLink"
 import { EmptyInboxHeader } from "./EmptyInboxHeader"
 import React from "react"
 

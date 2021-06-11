@@ -1,5 +1,5 @@
-import { AnalyticsSchema } from "v2/Artsy"
-import { useTracking } from "v2/Artsy/Analytics"
+import { AnalyticsSchema } from "v2/System"
+import { useTracking } from "v2/System/Analytics"
 import React, { useState } from "react"
 import styled from "styled-components"
 import { MobileMenuText } from "./MobileNavMenu"

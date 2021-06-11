@@ -2,12 +2,12 @@ import { CollectionsRailFixture } from "v2/Apps/__tests__/Fixtures/Collections"
 import { mount } from "enzyme"
 import React from "react"
 import { RelatedCollectionEntity } from "../RelatedCollectionEntity"
-import { useTracking } from "v2/Artsy/Analytics/useTracking"
+import { useTracking } from "v2/System/Analytics/useTracking"
 import { OwnerType } from "@artsy/cohesion"
-import { AnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
-import { RouterLink } from "v2/Artsy/Router/RouterLink"
+import { AnalyticsContext } from "v2/System/Analytics/AnalyticsContext"
+import { RouterLink } from "v2/System/Router/RouterLink"
 
-jest.mock("v2/Artsy/Analytics/useTracking")
+jest.mock("v2/System/Analytics/useTracking")
 
 describe.skip("RelatedCollectionEntity", () => {
   let props

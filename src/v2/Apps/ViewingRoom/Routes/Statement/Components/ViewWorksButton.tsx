@@ -1,9 +1,9 @@
 import React from "react"
-import { RouterLink } from "v2/Artsy/Router/RouterLink"
+import { RouterLink } from "v2/System/Router/RouterLink"
 import { scrollToId } from "../Utils/scrollToId"
-import { AnalyticsSchema, useTracking } from "v2/Artsy"
+import { AnalyticsSchema, useTracking } from "v2/System"
 import { Button } from "@artsy/palette"
-import { useRouter } from "v2/Artsy/Router/useRouter"
+import { useRouter } from "v2/System/Router/useRouter"
 
 interface ViewWorksButtonProps {
   artworksCount: number

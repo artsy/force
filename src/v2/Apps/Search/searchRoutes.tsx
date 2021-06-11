@@ -1,9 +1,9 @@
-import { AppRouteConfig } from "v2/Artsy/Router/Route"
+import { AppRouteConfig } from "v2/System/Router/Route"
 import { omit } from "lodash"
 import React from "react"
 import { graphql } from "react-relay"
 
-import { RouteSpinner } from "v2/Artsy/Relay/renderWithLoadProgress"
+import { RouteSpinner } from "v2/System/Relay/renderWithLoadProgress"
 import { ArtworkQueryFilter } from "v2/Components/ArtworkFilter/ArtworkQueryFilter"
 import { allowedFilters } from "v2/Components/ArtworkFilter/Utils/allowedFilters"
 import { paramsToCamelCase } from "v2/Components/ArtworkFilter/Utils/urlBuilder"

@@ -11,7 +11,7 @@ import {
 } from "relay-runtime"
 import { getENV } from "v2/Utils/getENV"
 
-const logger = createLogger("v2/Artsy/middleware/cache/Cache")
+const logger = createLogger("v2/System/middleware/cache/Cache")
 
 export interface CacheConfig {
   size: number

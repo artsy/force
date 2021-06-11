@@ -6,7 +6,7 @@ import { set } from "lodash/fp"
 import React from "react"
 import { Breakpoint } from "v2/Utils/Responsive"
 import { ArtistCard, ArtistCardProps } from "../ArtistCard"
-import { SystemContextProvider } from "v2/Artsy"
+import { SystemContextProvider } from "v2/System"
 
 describe("ArtistCard", () => {
   let props: ArtistCardProps

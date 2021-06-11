@@ -14,7 +14,7 @@ import { FairHeader_fair } from "v2/__generated__/FairHeader_fair.graphql"
 import { FairTimingFragmentContainer as FairTiming } from "./FairTiming"
 import { FairHeaderImageFragmentContainer as FairHeaderImage } from "./FairHeaderImage"
 import { FairHeaderIconFragmentContainer } from "./FairHeaderIcon"
-import { RouterLink } from "v2/Artsy/Router/RouterLink"
+import { RouterLink } from "v2/System/Router/RouterLink"
 
 interface FairHeaderProps extends BoxProps {
   fair: FairHeader_fair

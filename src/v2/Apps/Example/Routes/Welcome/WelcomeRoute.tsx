@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { Box, Button, Dialog, Text } from "@artsy/palette"
-import { useAnalyticsContext, useTracking } from "v2/Artsy"
+import { useAnalyticsContext, useTracking } from "v2/System"
 import { ContextModule, clickedShowMore } from "@artsy/cohesion"
 
 export const WelcomeRoute: React.FC = () => {

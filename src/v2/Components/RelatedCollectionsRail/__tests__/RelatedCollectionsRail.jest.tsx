@@ -8,10 +8,10 @@ import { RelatedCollectionEntity } from "../RelatedCollectionEntity"
 import { RelatedCollectionsRail } from "../RelatedCollectionsRail"
 import { paginateCarousel } from "@artsy/palette"
 import { OwnerType } from "@artsy/cohesion"
-import { useTracking } from "v2/Artsy/Analytics/useTracking"
-import { AnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
+import { useTracking } from "v2/System/Analytics/useTracking"
+import { AnalyticsContext } from "v2/System/Analytics/AnalyticsContext"
 
-jest.mock("v2/Artsy/Analytics/useTracking")
+jest.mock("v2/System/Analytics/useTracking")
 jest.mock("@artsy/palette/dist/elements/Carousel/paginate")
 jest.unmock("react-tracking")
 

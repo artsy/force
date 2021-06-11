@@ -1,5 +1,5 @@
 import { Box, Flex, Text } from "@artsy/palette"
-import { RouterLink } from "v2/Artsy/Router/RouterLink"
+import { RouterLink } from "v2/System/Router/RouterLink"
 import React from "react"
 
 interface HeaderProps {

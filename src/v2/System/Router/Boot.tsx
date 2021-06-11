@@ -1,6 +1,6 @@
 import { Grid, Theme, injectGlobalStyles, themeProps } from "@artsy/palette"
-import { SystemContextProvider, track } from "v2/Artsy"
-import { AppRouteConfig } from "v2/Artsy/Router/Route"
+import { SystemContextProvider, track } from "v2/System"
+import { AppRouteConfig } from "v2/System/Router/Route"
 import React, { useEffect } from "react"
 import { HeadProvider } from "react-head"
 import { Environment } from "relay-runtime"

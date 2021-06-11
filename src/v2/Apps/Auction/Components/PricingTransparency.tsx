@@ -7,8 +7,8 @@ import {
   PricingTransparencyQueryResponse,
   PricingTransparencyQueryVariables,
 } from "v2/__generated__/PricingTransparencyQuery.graphql"
-import { SystemContextProps, withSystemContext } from "v2/Artsy"
-import { SystemQueryRenderer as QueryRenderer } from "v2/Artsy/Relay/SystemQueryRenderer"
+import { SystemContextProps, withSystemContext } from "v2/System"
+import { SystemQueryRenderer as QueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 
 const Text = props => <Serif size="3t" color="black100" {...props} />
 const Row = props => (

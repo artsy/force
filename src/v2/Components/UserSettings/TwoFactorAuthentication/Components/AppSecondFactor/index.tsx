@@ -12,7 +12,7 @@ import React, { useState } from "react"
 import { RelayRefetchProp, createFragmentContainer, graphql } from "react-relay"
 import request from "superagent"
 
-import { useSystemContext } from "v2/Artsy"
+import { useSystemContext } from "v2/System"
 import { AppSecondFactorModal, OnCompleteRedirectModal } from "./Modal"
 import { ApiError } from "../../ApiError"
 import { ApiErrorModal } from "../ApiErrorModal"
@@ -36,7 +36,9 @@ export const AppSecondFactor: React.FC<AppSecondFactorProps> = props => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [showSetupModal, setShowSetupModal] = useState(false)
   const [showCompleteModal, setShowCompleteModal] = useState(false)
-  const [showCompleteRedirectModal, setShowCompleteRedirectModal] = useState(false)
+  const [showCompleteRedirectModal, setShowCompleteRedirectModal] = useState(
+    false
+  )
   const [stagedSecondFactor, setStagedSecondFactor] = useState(null)
   const [isDisabling] = useState(false)
   const [isCreating, setCreating] = useState(false)

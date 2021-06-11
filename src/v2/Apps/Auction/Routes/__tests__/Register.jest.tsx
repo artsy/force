@@ -1,5 +1,5 @@
 import { graphql } from "react-relay"
-import * as Schema from "v2/Artsy/Analytics/Schema"
+import * as Schema from "v2/System/Analytics/Schema"
 import { createTestEnv } from "v2/DevTools/createTestEnv"
 
 import { auctionRoutes_RegisterQueryRawResponse } from "v2/__generated__/auctionRoutes_RegisterQuery.graphql"

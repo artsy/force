@@ -1,5 +1,5 @@
 import React from "react"
-import { useTracking } from "v2/Artsy/Analytics/useTracking"
+import { useTracking } from "v2/System/Analytics/useTracking"
 import { MockBoot, renderRelayTree } from "v2/DevTools"
 import { graphql } from "react-relay"
 import { ViewingRoomWorksRoute_Test_QueryRawResponse } from "v2/__generated__/ViewingRoomWorksRoute_Test_Query.graphql"
@@ -7,8 +7,8 @@ import { Breakpoint } from "@artsy/palette"
 import { ViewingRoomWorksRouteFragmentContainer } from "../../Works/ViewingRoomWorksRoute"
 
 jest.unmock("react-relay")
-jest.mock("v2/Artsy/Analytics/useTracking")
-jest.mock("v2/Artsy/Router/useRouter", () => ({
+jest.mock("v2/System/Analytics/useTracking")
+jest.mock("v2/System/Router/useRouter", () => ({
   useRouter: () => ({
     match: {
       params: {

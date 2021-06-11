@@ -7,7 +7,7 @@ import {
 } from "react-relay"
 import { scrollIntoView } from "v2/Utils/scrollHelpers"
 import { ViewingRoomsLatestGrid_viewingRooms } from "v2/__generated__/ViewingRoomsLatestGrid_viewingRooms.graphql"
-import { RouterLink } from "v2/Artsy/Router/RouterLink"
+import { RouterLink } from "v2/System/Router/RouterLink"
 import { getTagProps } from "v2/Components/ViewingRoomCard"
 import { cropped } from "v2/Utils/resized"
 

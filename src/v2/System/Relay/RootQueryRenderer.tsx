@@ -2,7 +2,7 @@ import {
   SystemContextProps,
   SystemContextProvider,
   withSystemContext,
-} from "v2/Artsy"
+} from "v2/System"
 import React from "react"
 // FIXME: https://github.com/DefinitelyTyped/DefinitelyTyped/issues/37950
 // @ts-ignore

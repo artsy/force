@@ -3,7 +3,7 @@ import { Link, Meta, Title } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
 import { PartnerMeta_partner } from "v2/__generated__/PartnerMeta_partner.graphql"
 import { getENV } from "v2/Utils/getENV"
-import { useRouter } from "v2/Artsy/Router/useRouter"
+import { useRouter } from "v2/System/Router/useRouter"
 
 interface PartnerMetaProps {
   partner: PartnerMeta_partner
