@@ -86,7 +86,7 @@ fragment SelectedCareerAchievements_artist on Artist {
     edges {
       node {
         price_realized: priceRealized {
-          display(format: "0a")
+          display(format: "0.0a")
         }
         organization
         sale_date: saleDate(format: "YYYY")
@@ -330,12 +330,12 @@ return {
                               {
                                 "kind": "Literal",
                                 "name": "format",
-                                "value": "0a"
+                                "value": "0.0a"
                               }
                             ],
                             "kind": "ScalarField",
                             "name": "display",
-                            "storageKey": "display(format:\"0a\")"
+                            "storageKey": "display(format:\"0.0a\")"
                           }
                         ],
                         "storageKey": null
@@ -382,7 +382,7 @@ return {
     "metadata": {},
     "name": "SelectedCareerAchievementsTestQuery",
     "operationKind": "query",
-    "text": "query SelectedCareerAchievementsTestQuery {\n  artist(id: \"pablo-picasso\") {\n    ...SelectedCareerAchievements_artist\n    id\n  }\n}\n\nfragment SelectedCareerAchievements_artist on Artist {\n  highlights {\n    partnersConnection(first: 10, displayOnPartnerProfile: true, representedBy: true, partnerCategory: [\"blue-chip\", \"top-established\", \"top-emerging\"]) {\n      edges {\n        node {\n          categories {\n            slug\n            id\n          }\n          id\n        }\n        id\n      }\n    }\n  }\n  insights {\n    type\n    label\n    entities\n  }\n  auctionResultsConnection(recordsTrusted: true, first: 1, sort: PRICE_AND_DATE_DESC) {\n    edges {\n      node {\n        price_realized: priceRealized {\n          display(format: \"0a\")\n        }\n        organization\n        sale_date: saleDate(format: \"YYYY\")\n        id\n      }\n    }\n  }\n  slug\n}\n"
+    "text": "query SelectedCareerAchievementsTestQuery {\n  artist(id: \"pablo-picasso\") {\n    ...SelectedCareerAchievements_artist\n    id\n  }\n}\n\nfragment SelectedCareerAchievements_artist on Artist {\n  highlights {\n    partnersConnection(first: 10, displayOnPartnerProfile: true, representedBy: true, partnerCategory: [\"blue-chip\", \"top-established\", \"top-emerging\"]) {\n      edges {\n        node {\n          categories {\n            slug\n            id\n          }\n          id\n        }\n        id\n      }\n    }\n  }\n  insights {\n    type\n    label\n    entities\n  }\n  auctionResultsConnection(recordsTrusted: true, first: 1, sort: PRICE_AND_DATE_DESC) {\n    edges {\n      node {\n        price_realized: priceRealized {\n          display(format: \"0.0a\")\n        }\n        organization\n        sale_date: saleDate(format: \"YYYY\")\n        id\n      }\n    }\n  }\n  slug\n}\n"
   }
 };
 })();

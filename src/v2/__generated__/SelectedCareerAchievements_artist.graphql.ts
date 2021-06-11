@@ -230,12 +230,12 @@ return {
                         {
                           "kind": "Literal",
                           "name": "format",
-                          "value": "0a"
+                          "value": "0.0a"
                         }
                       ],
                       "kind": "ScalarField",
                       "name": "display",
-                      "storageKey": "display(format:\"0a\")"
+                      "storageKey": "display(format:\"0.0a\")"
                     }
                   ],
                   "storageKey": null
@@ -274,5 +274,5 @@ return {
   "type": "Artist"
 };
 })();
-(node as any).hash = '8fd9637427f0bb614196375ccec08b63';
+(node as any).hash = '8e829ce6cc9df224ffb965345017b4a0';
 export default node;
