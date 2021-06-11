@@ -48,7 +48,7 @@ export class ArtworkGridContainer extends React.Component<
     columnCount: [3],
     sectionMargin: 20,
     itemMargin: 20,
-    preloadImageCount: 6,
+    preloadImageCount: 0,
   }
 
   state = {

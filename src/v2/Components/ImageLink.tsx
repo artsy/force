@@ -1,49 +1,8 @@
-import { Box, ResponsiveImage, SerifProps } from "@artsy/palette"
+import { Box, Image, SerifProps } from "@artsy/palette"
 import { RouterLink } from "v2/Artsy/Router/RouterLink"
 import React, { FC } from "react"
 import styled from "styled-components"
-import { space } from "styled-system"
 import { Media } from "v2/Utils/Responsive"
-
-const ImageContainer = styled(Box)`
-  position: relative;
-`
-
-const HubImage = styled(ResponsiveImage)`
-  vertical-align: middle;
-`
-
-const ImageOverlay = styled(Box)`
-  &::before {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: none;
-    color: #fff;
-    content: "";
-    background: rgba(0, 0, 0, 0.3);
-  }
-`
-
-const OuterLink = styled(RouterLink)`
-  text-decoration: none;
-
-  &:hover {
-    .title {
-      text-decoration: underline;
-    }
-
-    ${ImageOverlay} {
-      &::before {
-        display: block;
-      }
-    }
-  }
-
-  ${space}
-`
 
 interface ImageLinkProps {
   /** Source url for the image */
@@ -64,6 +23,12 @@ interface ImageLinkProps {
   onClick?: () => void
 }
 
+const ImageContainer = styled(Box)`
+  &:hover {
+    opacity: 0.9;
+  }
+`
+
 export const ImageLink: FC<ImageLinkProps> = ({
   to,
   src,
@@ -73,11 +38,9 @@ export const ImageLink: FC<ImageLinkProps> = ({
   onClick,
 }) => {
   return (
-    <OuterLink to={to} onClick={onClick}>
-      <ImageContainer>
-        <ImageOverlay>
-          <HubImage src={src} width="100%" ratio={ratio} lazyLoad />
-        </ImageOverlay>
+    <RouterLink to={to} onClick={onClick}>
+      <ImageContainer height={130}>
+        <Image src={src} height={130} lazyLoad style={{ objectFit: "cover" }} />
       </ImageContainer>
       {React.cloneElement(title, {
         // kind of like "default props" for a cloned element.
@@ -95,6 +58,6 @@ export const ImageLink: FC<ImageLinkProps> = ({
             textAlign: "center",
           })}
       </Media>
-    </OuterLink>
+    </RouterLink>
   )
 }
