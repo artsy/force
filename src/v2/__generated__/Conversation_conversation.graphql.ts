@@ -76,6 +76,7 @@ export type Conversation_conversation = {
             readonly __typename: "%other";
         }) | null;
     } | null> | null;
+    readonly " $fragmentRefs": FragmentRefs<"ConversationCTA_conversation">;
     readonly " $refType": "Conversation_conversation";
 };
 export type Conversation_conversation$data = Conversation_conversation;
@@ -479,10 +480,15 @@ return {
         }
       ],
       "storageKey": null
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ConversationCTA_conversation"
     }
   ],
   "type": "Conversation"
 };
 })();
-(node as any).hash = 'b0bfdcad55abf5b9c9953c47da9fd37a';
+(node as any).hash = '62c9a8c2bb10cd0b2bd37a60633f4685';
 export default node;

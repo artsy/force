@@ -16,7 +16,7 @@ interface ConversationRouteProps {
 }
 
 const ConstrainedHeightContainer = styled(Box)`
-  height: calc(100vh - 60px);
+  height: calc(100vh - 103px);
 `
 
 const ConversationContainer = styled(Flex)`
@@ -75,6 +75,7 @@ export const ConversationPaginationContainer = createRefetchContainer(
         conversation(id: $conversationID) {
           internalID
           ...Conversation_conversation
+          ...ConversationCTA_conversation
           ...Details_conversation
         }
       }
