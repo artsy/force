@@ -6,18 +6,20 @@ exports[`Artwork renders correctly 1`] = `
   margin-top: 4px;
 }
 
-.c5 {
-  font-family: sans;
-}
-
 .c6 {
   color: black60;
-  color: black60;
+}
+
+.c5 {
   font-family: sans;
 }
 
 .c7 {
   color: black60;
+  font-family: sans;
+}
+
+.c8 {
   color: black60;
   font-weight: normal;
   font-family: sans;
@@ -110,11 +112,11 @@ exports[`Artwork renders correctly 1`] = `
         className="c4"
       >
         <div
-          className="c5"
+          className=" c5"
           fontFamily="sans"
         >
           <div
-            className="c5"
+            className=" c5"
             fontFamily="sans"
           >
             Mikael Olson
@@ -125,7 +127,7 @@ exports[`Artwork renders correctly 1`] = `
         className="c4"
       >
         <div
-          className="c6"
+          className="c6 c7"
           color="black60"
           fontFamily="sans"
         >
@@ -139,7 +141,7 @@ exports[`Artwork renders correctly 1`] = `
         className="c4"
       >
         <div
-          className="c6"
+          className="c6 c7"
           color="black60"
           fontFamily="sans"
         >
@@ -150,7 +152,7 @@ exports[`Artwork renders correctly 1`] = `
         className="c4"
       >
         <div
-          className="c7"
+          className="c6 c8"
           color="black60"
           fontFamily="sans"
           fontWeight="normal"

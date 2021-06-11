@@ -83,13 +83,13 @@ exports[`Input renders as a snapshot 1`] = `
   color: #E82F1D;
   -webkit-transition: visibility 0.2s linear;
   transition: visibility 0.2s linear;
-  -webkit-animation: eBtoLo 0.25s linear;
-  animation: eBtoLo 0.25s linear;
+  -webkit-animation: hqnQVQ 0.25s linear;
+  animation: hqnQVQ 0.25s linear;
   height: 16px;
 }
 
 <div
-  className=""
+  className="Box-sc-15se88d-0"
 >
   <div
     className="c0"

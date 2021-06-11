@@ -113,6 +113,10 @@ if (process.env.ALLOW_CONSOLE_LOGS !== "true") {
             !args[0].includes("Warning: componentWillMount has been renamed") &&
             !args[0].includes(
               "Warning: unstable_flushDiscreteUpdates: Cannot flush updates when React is already rendering"
+            ) &&
+            !args[0].includes(
+              // Styled-components 5 warning
+              "You may see this warning because you've called styled inside another component"
             )
           ) {
             done.fail(logToError(type, args, handler))
