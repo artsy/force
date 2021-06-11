@@ -52,7 +52,7 @@ describe("ad display logic in Feature and Standard Articles", () => {
   })
 
   // FIXME:  System Context React hook is causing these tests to fail
-  xit("renders new ad component in a Standard article", () => {
+  it.skip("renders new ad component in a Standard article", () => {
     props.shouldAdRender = true
     props.article = StandardArticle
     const component = getWrapper()
@@ -60,7 +60,7 @@ describe("ad display logic in Feature and Standard Articles", () => {
   })
 
   // FIXME:  System Context React hook is causing these tests to fail
-  xit("renders new ad component in a Feature article", () => {
+  it.skip("renders new ad component in a Feature article", () => {
     props.article = FeatureArticle
     const component = getWrapper()
     expect(component.find(DisplayAd).length).toBe(2)
@@ -115,9 +115,22 @@ describe("ad display frequency logic in News Articles", () => {
   })
 
   // FIXME:  System Context React hook is causing these tests to fail
-  xit("checks that NewsArticle renders with the new ads", () => {
+  it.skip("checks that NewsArticle renders with the new ads", () => {
     const component = getWrapper()
     expect(component.find(DisplayAd).length).toBe(1)
+  })
+
+  it("doesn't render ads on Eigen", () => {
+    const articleIndex = 3
+    const isEigen = true
+    const shouldRender = shouldAdRender(
+      articleIndex,
+      startingIndex,
+      frequency,
+      null,
+      isEigen
+    )
+    expect(shouldRender).toBe(false)
   })
 
   it("checks that News Articles receive the correct prop to render ads after the 3rd article", () => {

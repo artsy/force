@@ -33,6 +33,7 @@ import {
 } from "desktop/apps/article/queries/promotedContent"
 import { ArticleMeta } from "@artsy/reaction/dist/Components/Publishing/ArticleMeta"
 import { GalleryInsightsRedirects } from "./gallery_insights_redirects"
+import { buildServerAppContext } from "desktop/lib/buildServerAppContext"
 const Articles = require("desktop/collections/articles.coffee")
 const markdown = require("desktop/components/util/markdown.coffee")
 const { crop, resize } = require("desktop/components/resizer/index.coffee")
@@ -157,6 +158,7 @@ export const index = async (req, res, next) => {
     const { CURRENT_USER, IS_MOBILE, IS_TABLET } = res.locals.sd
     const isMobile = IS_MOBILE
     const isTablet = IS_TABLET
+    const { isEigen } = buildServerAppContext(req, res)
     const showTooltips = !isMobile && !isTablet
     const isLoggedIn = typeof CURRENT_USER !== "undefined"
 
@@ -183,6 +185,7 @@ export const index = async (req, res, next) => {
         isSuper,
         isLoggedIn,
         isMobile,
+        isEigen,
         jsonLD: getJsonLd(article),
         renderTime: getCurrentUnixTimestamp(),
         showTooltips,

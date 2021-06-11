@@ -40,6 +40,7 @@ export class ClassicArticleLayout extends React.Component<AppProps> {
       article,
       isLoggedIn,
       isMobile,
+      isEigen,
       templates: { ArticlesGridView } = {} as any,
     } = this.props
 
@@ -49,6 +50,7 @@ export class ClassicArticleLayout extends React.Component<AppProps> {
           article={article}
           isMobile={isMobile}
           isLoggedIn={isLoggedIn}
+          hideAuthModal={isEigen}
         />
 
         {article.channel_id && (

@@ -53,6 +53,7 @@ export class ArticleLayout extends React.Component<AppProps> {
     const {
       article,
       customEditorial,
+      isEigen,
       isSuper,
       isLoggedIn,
       isMobile,
@@ -64,7 +65,7 @@ export class ArticleLayout extends React.Component<AppProps> {
     const isStatic = isSuper || article.seriesArticle || customEditorial
 
     // @ts-expect-error STRICT_NULL_CHECK
-    const renderAd = shouldAdRender(null, null, null, article.layout)
+    const renderAd = shouldAdRender(null, null, null, article.layout, isEigen)
 
     return (
       <div>
@@ -86,7 +87,8 @@ export class ArticleLayout extends React.Component<AppProps> {
             relatedArticlesForPanel={article.relatedArticlesPanel}
             relatedArticlesForCanvas={article.relatedArticlesCanvas}
             showTooltips={showTooltips}
-            shouldAdRender={true} // always render ads on super, series, and custom editorial articles
+            hideAuthModal={isEigen}
+            shouldAdRender={!isEigen} // always render ads on super, series, and custom editorial articles if not on Eigen
           />
         ) : (
           <InfiniteScrollArticle
@@ -95,6 +97,7 @@ export class ArticleLayout extends React.Component<AppProps> {
             showTooltips={showTooltips}
             shouldAdRender={renderAd}
             articleSerial={articleSerial}
+            isEigen={isEigen}
           />
         )}
 

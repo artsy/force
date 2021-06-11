@@ -11,6 +11,7 @@ import { ClassicArticleLayout } from "desktop/apps/article/components/layouts/Cl
 import { mediator } from "lib/mediator"
 
 export interface AppProps extends ArticleProps {
+  isEigen?: boolean
   templates?: {
     SuperArticleFooter: string
     SuperArticleHeader: string
@@ -20,12 +21,13 @@ export interface AppProps extends ArticleProps {
 
 export class App extends React.Component<AppProps> {
   getArticleLayout = () => {
-    const { article } = this.props
+    const { article, isEigen } = this.props
 
     switch (article.layout) {
       case "video": {
         return (
           <Article
+            hideAuthModal={isEigen}
             relatedArticles={article.relatedArticles}
             seriesArticle={article.seriesArticle}
             {...this.props}
@@ -34,7 +36,11 @@ export class App extends React.Component<AppProps> {
       }
       case "series": {
         return (
-          <Article {...this.props} relatedArticles={article.relatedArticles} />
+          <Article
+            {...this.props}
+            hideAuthModal={isEigen}
+            relatedArticles={article.relatedArticles}
+          />
         )
       }
       case "news": {
