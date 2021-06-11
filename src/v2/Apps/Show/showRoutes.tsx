@@ -4,7 +4,7 @@ import { RedirectException } from "found"
 import { paramsToCamelCase } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
 import { getENV } from "v2/Utils/getENV"
 import { allowedFilters } from "v2/Components/ArtworkFilter/Utils/allowedFilters"
-import { AppRouteConfig } from "v2/Artsy/Router/Route"
+import { AppRouteConfig } from "v2/System/Router/Route"
 
 const ShowApp = loadable(
   () => import(/* webpackChunkName: "showBundle" */ "./ShowApp"),

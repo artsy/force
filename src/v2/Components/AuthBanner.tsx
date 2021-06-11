@@ -1,6 +1,6 @@
 import React from "react"
 import { Flex, Button, Separator, Spacer } from "@artsy/palette"
-import { RouterLink } from "v2/Artsy/Router/RouterLink"
+import { RouterLink } from "v2/System/Router/RouterLink"
 
 export const AuthBanner: React.FC = () => {
   return (

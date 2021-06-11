@@ -1,6 +1,6 @@
 import React from "react"
 import { Title } from "react-head"
-import { AppRouteConfig } from "v2/Artsy/Router/Route"
+import { AppRouteConfig } from "v2/System/Router/Route"
 
 /**
  * This route is just for testing baseline page shell stuff -- Lighthouse,

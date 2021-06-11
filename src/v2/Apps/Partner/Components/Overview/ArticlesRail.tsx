@@ -5,7 +5,7 @@ import { Carousel } from "../Carousel"
 import { ArticleCardFragmentContainer as ArticleCard } from "v2/Apps/Partner/Components/PartnerArticles/ArticleCard"
 import { ArticlesRail_articles } from "v2/__generated__/ArticlesRail_articles.graphql"
 import { ViewAllButton } from "./ViewAllButton"
-import { RouterLink } from "v2/Artsy/Router/RouterLink"
+import { RouterLink } from "v2/System/Router/RouterLink"
 import { ScrollToPartnerHeader } from "v2/Apps/Partner/Components/ScrollToPartnerHeader"
 import { flatten } from "lodash"
 

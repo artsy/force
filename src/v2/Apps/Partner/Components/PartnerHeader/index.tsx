@@ -12,9 +12,9 @@ import {
 import { PartnerHeaderAddress } from "./PartnerHeaderAddress"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FollowProfileButtonFragmentContainer as FollowProfileButton } from "v2/Components/FollowButton/FollowProfileButton"
-import { useSystemContext } from "v2/Artsy"
+import { useSystemContext } from "v2/System"
 import { ContextModule } from "@artsy/cohesion"
-import { RouterLink } from "v2/Artsy/Router/RouterLink"
+import { RouterLink } from "v2/System/Router/RouterLink"
 import { PartnerHeader_partner } from "v2/__generated__/PartnerHeader_partner.graphql"
 
 export interface PartnerHeaderProps {

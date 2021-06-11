@@ -1,10 +1,10 @@
 import { ArtworkRelatedArtistsFixture } from "v2/Apps/__tests__/Fixtures/Artwork/ArtworkRelatedArtists.fixture"
-import { useTracking } from "v2/Artsy/Analytics/useTracking"
+import { useTracking } from "v2/System/Analytics/useTracking"
 import { mount } from "enzyme"
 import React from "react"
 import { ArtworkRelatedArtists } from "../ArtworkRelatedArtists"
 
-jest.mock("v2/Artsy/Analytics/useTracking")
+jest.mock("v2/System/Analytics/useTracking")
 
 describe("ArtworkRelatedArtists", () => {
   const getWrapper = props => {

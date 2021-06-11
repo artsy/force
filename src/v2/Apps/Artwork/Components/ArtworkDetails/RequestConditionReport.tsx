@@ -6,8 +6,8 @@ import {
   track,
   useSystemContext,
   useTracking,
-} from "v2/Artsy"
-import { SystemQueryRenderer as QueryRenderer } from "v2/Artsy/Relay/SystemQueryRenderer"
+} from "v2/System"
+import { SystemQueryRenderer as QueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { ErrorModal } from "v2/Components/Modal/ErrorModal"
 import createLogger from "v2/Utils/logger"
 import { openAuthModal } from "v2/Utils/openAuthModal"

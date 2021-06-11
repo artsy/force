@@ -7,13 +7,13 @@ import {
   CollectorIntentUpdateCollectorProfileMutation,
   Intents,
 } from "v2/__generated__/CollectorIntentUpdateCollectorProfileMutation.graphql"
-import { withSystemContext } from "v2/Artsy"
+import { withSystemContext } from "v2/System"
 import Colors from "../../../Assets/Colors"
 import { MultiButtonState } from "../../Buttons/MultiStateButton"
 import { media } from "../../Helpers"
 import SelectableToggle from "../SelectableToggle"
 import { Layout } from "./Layout"
-import { useTracking } from "v2/Artsy/Analytics/useTracking"
+import { useTracking } from "v2/System/Analytics/useTracking"
 import { Environment } from "relay-runtime"
 import { routerShape } from "found/PropTypes"
 

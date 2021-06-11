@@ -3,7 +3,7 @@ import { graphql } from "react-relay"
 import { ShowViewingRoomFragmentContainer as ShowViewingRoom } from "../Components/ShowViewingRoom"
 import { ShowViewingRoom_Test_Query } from "v2/__generated__/ShowViewingRoom_Test_Query.graphql"
 import { useTracking } from "react-tracking"
-import { AnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
+import { AnalyticsContext } from "v2/System/Analytics/AnalyticsContext"
 import { OwnerType } from "@artsy/cohesion"
 import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
 

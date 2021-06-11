@@ -9,7 +9,7 @@ import {
   boxMixin,
   color,
 } from "@artsy/palette"
-import { RouterLink } from "v2/Artsy/Router/RouterLink"
+import { RouterLink } from "v2/System/Router/RouterLink"
 
 const MENU_ITEM_DEFAULT_PROPS = {
   display: "flex",

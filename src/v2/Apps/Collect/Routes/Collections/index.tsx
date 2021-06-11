@@ -7,7 +7,7 @@ import { Meta, Title } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
 import { data as sd } from "sharify"
 import { CollectionsCategoryFragmentContainer } from "./Components/CollectionsCategory"
-import { RouterLink } from "v2/Artsy/Router/RouterLink"
+import { RouterLink } from "v2/System/Router/RouterLink"
 
 interface CollectionsAppProps {
   marketingCategories: Collections_marketingCategories

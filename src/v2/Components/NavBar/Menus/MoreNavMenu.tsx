@@ -1,6 +1,6 @@
 import { Menu, MenuItem } from "v2/Components/Menu"
-import { AnalyticsSchema } from "v2/Artsy"
-import { useTracking } from "v2/Artsy/Analytics/useTracking"
+import { AnalyticsSchema } from "v2/System"
+import { useTracking } from "v2/System/Analytics/useTracking"
 import React from "react"
 
 export const MoreNavMenu: React.FC<{ width?: number }> = ({ width = 160 }) => {

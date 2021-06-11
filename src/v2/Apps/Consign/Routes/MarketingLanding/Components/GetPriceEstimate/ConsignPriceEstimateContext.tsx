@@ -1,7 +1,7 @@
 import React, { Dispatch, useContext, useReducer } from "react"
 import { createContext } from "react"
 import { Environment, fetchQuery, graphql } from "react-relay"
-import { useSystemContext } from "v2/Artsy"
+import { useSystemContext } from "v2/System"
 
 import { ConsignPriceEstimateContext_SearchConnection_Query } from "v2/__generated__/ConsignPriceEstimateContext_SearchConnection_Query.graphql"
 import { ConsignPriceEstimateContext_ArtistInsights_Query } from "v2/__generated__/ConsignPriceEstimateContext_ArtistInsights_Query.graphql"

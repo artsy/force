@@ -10,7 +10,7 @@ import { MockBoot } from "v2/DevTools"
 jest.unmock("react-relay")
 jest.mock("v2/Components/Pagination/useComputeHref")
 
-jest.mock("v2/Artsy/Router/useRouter", () => ({
+jest.mock("v2/System/Router/useRouter", () => ({
   useRouter: () => ({ match: { params: { letter: "a" } } }),
 }))
 

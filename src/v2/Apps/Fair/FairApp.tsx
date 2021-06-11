@@ -11,12 +11,12 @@ import { RouteTab, RouteTabs } from "v2/Components/RouteTabs"
 import { FairMetaFragmentContainer } from "./Components/FairMeta"
 import { FairCollectionsFragmentContainer } from "./Components/FairCollections"
 import { FairFollowedArtistsFragmentContainer } from "./Components/FairFollowedArtists"
-import { useSystemContext } from "v2/Artsy"
+import { useSystemContext } from "v2/System"
 import { useTracking } from "react-tracking"
 import {
   AnalyticsContext,
   useAnalyticsContext,
-} from "v2/Artsy/Analytics/AnalyticsContext"
+} from "v2/System/Analytics/AnalyticsContext"
 import {
   ActionType,
   ClickedNavigationTab,
@@ -24,7 +24,7 @@ import {
 } from "@artsy/cohesion"
 import { HttpError } from "found"
 import { userIsAdmin } from "v2/Utils/user"
-import { RouterLink } from "v2/Artsy/Router/RouterLink"
+import { RouterLink } from "v2/System/Router/RouterLink"
 
 interface FairAppProps {
   fair: FairApp_fair

@@ -1,9 +1,9 @@
 import React from "react"
-import { RouterLink, RouterLinkProps } from "v2/Artsy/Router/RouterLink"
+import { RouterLink, RouterLinkProps } from "v2/System/Router/RouterLink"
 import { BaseTab, BaseTabs, BaseTabProps, BaseTabsProps } from "@artsy/palette"
-import { useIsRouteActive } from "v2/Artsy/Router/useRouter"
+import { useIsRouteActive } from "v2/System/Router/useRouter"
 // import { useTracking } from "react-tracking"
-// import { AnalyticsSchema } from "v2/Artsy"
+// import { AnalyticsSchema } from "v2/System"
 
 export const RouteTab: React.FC<BaseTabProps & RouterLinkProps> = ({
   children,

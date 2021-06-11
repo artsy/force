@@ -16,7 +16,7 @@ import { ReviewFragmentContainer as ReviewRoute } from "./Routes/Review"
 import { AcceptFragmentContainer as AcceptRoute } from "./Routes/Accept"
 import { RejectFragmentContainer as DeclineRoute } from "./Routes/Reject"
 import { StatusFragmentContainer as StatusRoute } from "./Routes/Status"
-import { AppRouteConfig } from "v2/Artsy/Router/Route"
+import { AppRouteConfig } from "v2/System/Router/Route"
 
 const OrderApp = loadable(
   () => import(/* webpackChunkName: "orderBundle" */ "./OrderApp"),

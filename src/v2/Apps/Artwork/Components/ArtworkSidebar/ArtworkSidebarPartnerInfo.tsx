@@ -3,7 +3,7 @@ import { filterLocations } from "v2/Apps/Artwork/Utils/filterLocations"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworkSidebarPartnerInfo_artwork } from "v2/__generated__/ArtworkSidebarPartnerInfo_artwork.graphql"
-import { RouterLink } from "v2/Artsy/Router/RouterLink"
+import { RouterLink } from "v2/System/Router/RouterLink"
 
 export interface ArtworkSidebarPartnerInfoProps {
   artwork: ArtworkSidebarPartnerInfo_artwork

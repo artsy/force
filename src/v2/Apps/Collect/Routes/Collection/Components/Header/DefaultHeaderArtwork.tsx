@@ -1,8 +1,8 @@
 import { Image } from "@artsy/palette"
 import { DefaultHeaderArtwork_artwork } from "v2/__generated__/DefaultHeaderArtwork_artwork.graphql"
-import { AnalyticsSchema } from "v2/Artsy/Analytics"
-import { useTracking } from "v2/Artsy/Analytics/useTracking"
-import { RouterLink } from "v2/Artsy/Router/RouterLink"
+import { AnalyticsSchema } from "v2/System/Analytics"
+import { useTracking } from "v2/System/Analytics/useTracking"
+import { RouterLink } from "v2/System/Router/RouterLink"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 

@@ -4,8 +4,8 @@ import {
   GeneSearchResultsFollowGeneMutationResponse,
 } from "v2/__generated__/GeneSearchResultsFollowGeneMutation.graphql"
 import { GeneSearchResultsQuery } from "v2/__generated__/GeneSearchResultsQuery.graphql"
-import { SystemContextProps, withSystemContext } from "v2/Artsy"
-import { SystemQueryRenderer as QueryRenderer } from "v2/Artsy/Relay/SystemQueryRenderer"
+import { SystemContextProps, withSystemContext } from "v2/System"
+import { SystemQueryRenderer as QueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { garamond } from "v2/Assets/Fonts"
 import React from "react"
 import {

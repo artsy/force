@@ -1,5 +1,5 @@
 import { FollowProfileButtonMutation } from "v2/__generated__/FollowProfileButtonMutation.graphql"
-import * as Artsy from "v2/Artsy"
+import * as Artsy from "v2/System"
 import React from "react"
 import track, { TrackingProp } from "react-tracking"
 import { FollowProfileButton_profile } from "../../__generated__/FollowProfileButton_profile.graphql"
@@ -15,7 +15,7 @@ import {
 import {
   AnalyticsContextProps,
   withAnalyticsContext,
-} from "v2/Artsy/Analytics/AnalyticsContext"
+} from "v2/System/Analytics/AnalyticsContext"
 import { ButtonProps, Clickable } from "@artsy/palette"
 import {
   RelayProp,

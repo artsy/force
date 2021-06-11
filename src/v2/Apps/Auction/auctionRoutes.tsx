@@ -5,7 +5,7 @@ import React from "react"
 import { graphql } from "react-relay"
 import createLogger from "v2/Utils/logger"
 import { Redirect, confirmBidRedirect, registerRedirect } from "./getRedirect"
-import { AppRouteConfig } from "v2/Artsy/Router/Route"
+import { AppRouteConfig } from "v2/System/Router/Route"
 
 const logger = createLogger("Apps/Auction/routes")
 

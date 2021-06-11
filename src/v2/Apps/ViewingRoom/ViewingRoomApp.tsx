@@ -8,7 +8,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { ViewingRoomApp_viewingRoom } from "v2/__generated__/ViewingRoomApp_viewingRoom.graphql"
 import { ViewingRoomMetaFragmentContainer as ViewingRoomMeta } from "./Components/ViewingRoomMeta"
 import { ErrorPage } from "v2/Components/ErrorPage"
-import { SystemContext } from "v2/Artsy"
+import { SystemContext } from "v2/System"
 import { userHasAccessToPartner } from "v2/Utils/user"
 
 interface ViewingRoomAppProps {

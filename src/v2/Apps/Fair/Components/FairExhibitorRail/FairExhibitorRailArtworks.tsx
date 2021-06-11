@@ -1,6 +1,6 @@
 import React from "react"
 import { QueryRenderer, createFragmentContainer, graphql } from "react-relay"
-import { useSystemContext } from "v2/Artsy"
+import { useSystemContext } from "v2/System"
 import { FairExhibitorRailArtworksQuery } from "v2/__generated__/FairExhibitorRailArtworksQuery.graphql"
 import { FairExhibitorRailArtworks_show } from "v2/__generated__/FairExhibitorRailArtworks_show.graphql"
 import { FairExhibitorRailPlaceholder } from "./FairExhibitorRailPlaceholder"
@@ -11,7 +11,7 @@ import {
   OwnerType,
 } from "@artsy/cohesion"
 import { useTracking } from "react-tracking"
-import { useAnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
+import { useAnalyticsContext } from "v2/System/Analytics/AnalyticsContext"
 import { Shelf } from "@artsy/palette"
 import { ShelfArtworkFragmentContainer } from "v2/Components/Artwork/ShelfArtwork"
 

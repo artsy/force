@@ -1,7 +1,7 @@
 import { Box, Flex, Theme } from "@artsy/palette"
-import { NetworkOfflineMonitor } from "v2/Artsy/Router/NetworkOfflineMonitor"
-import { findCurrentRoute } from "v2/Artsy/Router/Utils/findCurrentRoute"
-import { useMaybeReloadAfterInquirySignIn } from "v2/Artsy/Router/Utils/useMaybeReloadAfterInquirySignIn"
+import { NetworkOfflineMonitor } from "v2/System/Router/NetworkOfflineMonitor"
+import { findCurrentRoute } from "v2/System/Router/Utils/findCurrentRoute"
+import { useMaybeReloadAfterInquirySignIn } from "v2/System/Router/Utils/useMaybeReloadAfterInquirySignIn"
 import {
   NAV_BAR_HEIGHT,
   NavBar,
@@ -13,7 +13,7 @@ import { isFunction } from "lodash"
 import { Footer } from "v2/Components/Footer"
 import React, { useEffect, useState } from "react"
 import createLogger from "v2/Utils/logger"
-import { useSystemContext } from "v2/Artsy"
+import { useSystemContext } from "v2/System"
 import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
 import { AppContainer } from "./AppContainer"
 import { useRouteComplete } from "v2/Utils/Hooks/useRouteComplete"

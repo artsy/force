@@ -1,9 +1,9 @@
 import React from "react"
 import { mount } from "enzyme"
 import Budget from "./Budget"
-import { useTracking } from "v2/Artsy/Analytics/useTracking"
+import { useTracking } from "v2/System/Analytics/useTracking"
 
-jest.mock("v2/Artsy/Analytics/useTracking")
+jest.mock("v2/System/Analytics/useTracking")
 
 jest.useFakeTimers()
 

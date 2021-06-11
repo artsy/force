@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { useSystemContext } from "v2/Artsy/useSystemContext"
+import { useSystemContext } from "v2/System/useSystemContext"
 import { ErrorModal, ErrorModalProps } from "./ErrorModal"
 
 export interface FlashMessageProps {

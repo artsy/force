@@ -13,7 +13,7 @@ async function setupClient() {
   const clientImports = await Promise.all([
     import(
       /* webpackChunkName: "clientAppMain" */
-      "v2/Artsy/Router/client"
+      "v2/System/Router/client"
     ),
     import(
       /* webpackChunkName: "clientAppModals" */

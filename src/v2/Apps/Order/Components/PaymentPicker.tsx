@@ -12,8 +12,8 @@ import {
 
 import { CreditCardInput } from "v2/Apps/Order/Components/CreditCardInput"
 import { validateAddress } from "v2/Apps/Order/Utils/formValidators"
-import { track } from "v2/Artsy/Analytics"
-import * as Schema from "v2/Artsy/Analytics/Schema"
+import { track } from "v2/System/Analytics"
+import * as Schema from "v2/System/Analytics/Schema"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import type {
@@ -40,7 +40,7 @@ import { CreditCardDetails } from "./CreditCardDetails"
 import {
   SystemContextConsumer,
   SystemContextProps,
-} from "v2/Artsy/SystemContext"
+} from "v2/System/SystemContext"
 import { createStripeWrapper } from "v2/Utils/createStripeWrapper"
 import { isNull, mergeWith } from "lodash"
 

@@ -7,13 +7,13 @@ import {
   Text,
   color,
 } from "@artsy/palette"
-import { AnalyticsSchema } from "v2/Artsy"
-import { useTracking } from "v2/Artsy/Analytics/useTracking"
+import { AnalyticsSchema } from "v2/System"
+import { useTracking } from "v2/System/Analytics/useTracking"
 import { isFunction, isString } from "lodash"
 import React, { useEffect, useRef, useState } from "react"
 import styled from "styled-components"
 import { position } from "styled-system"
-import { RouterLink } from "v2/Artsy/Router/RouterLink"
+import { RouterLink } from "v2/System/Router/RouterLink"
 import { MenuAnchor, NavItemPanel } from "v2/Components/NavBar/NavItemPanel"
 
 const Container = styled(Flex)`

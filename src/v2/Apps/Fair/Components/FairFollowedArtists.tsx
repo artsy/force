@@ -10,9 +10,9 @@ import {
   OwnerType,
 } from "@artsy/cohesion"
 import { Box, BoxProps, Text } from "@artsy/palette"
-import { RouterLink } from "v2/Artsy/Router/RouterLink"
-import { useTracking } from "v2/Artsy/Analytics/useTracking"
-import { useAnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
+import { RouterLink } from "v2/System/Router/RouterLink"
+import { useTracking } from "v2/System/Analytics/useTracking"
+import { useAnalyticsContext } from "v2/System/Analytics/AnalyticsContext"
 
 const IMAGE_HEIGHT = 160
 

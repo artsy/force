@@ -2,7 +2,7 @@ import React, { useRef } from "react"
 import { Box, BoxProps, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { AuctionArtworksRail_sale } from "v2/__generated__/AuctionArtworksRail_sale.graphql"
-import { RouterLink } from "v2/Artsy/Router/RouterLink"
+import { RouterLink } from "v2/System/Router/RouterLink"
 import { useLazyLoadComponent } from "v2/Utils/Hooks/useLazyLoadComponent"
 import { AuctionArtworksRailArtworksQueryRenderer } from "./AuctionArtworksRailArtworks"
 import { AuctionArtworksRailPlaceholder } from "../AuctionArtworksRailPlaceholder"
@@ -13,7 +13,7 @@ import {
   ClickedArtworkGroupHeaderArgs,
   OwnerType,
 } from "@artsy/cohesion"
-import { useAnalyticsContext } from "v2/Artsy"
+import { useAnalyticsContext } from "v2/System"
 
 export type TabType =
   | "current"

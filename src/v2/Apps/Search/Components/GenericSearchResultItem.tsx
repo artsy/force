@@ -8,8 +8,8 @@ import {
   Spacer,
   color,
 } from "@artsy/palette"
-import { track } from "v2/Artsy/Analytics"
-import * as Schema from "v2/Artsy/Analytics/Schema"
+import { track } from "v2/System/Analytics"
+import * as Schema from "v2/System/Analytics/Schema"
 import { Truncator } from "v2/Components/Truncator"
 import React from "react"
 import styled from "styled-components"

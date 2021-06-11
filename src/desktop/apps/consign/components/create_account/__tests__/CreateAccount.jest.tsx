@@ -12,7 +12,7 @@ import { ForgotPasswordForm } from "v2/Components/Authentication/Desktop/ForgotP
 import { SignUpFormQueryRenderer } from "v2/Components/Authentication/Desktop/SignUpForm"
 import { ModalType } from "v2/Components/Authentication/Types"
 
-jest.mock("v2/Artsy/SystemContext", () => ({
+jest.mock("v2/System/SystemContext", () => ({
   SystemContextProvider: ({ children }) => children,
   withSystemContext: Component => Component,
   useContext: Component => Component,

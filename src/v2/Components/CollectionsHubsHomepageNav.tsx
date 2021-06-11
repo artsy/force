@@ -1,6 +1,6 @@
 import { CSSGrid, Text } from "@artsy/palette"
 import { CollectionsHubsHomepageNav_marketingHubCollections } from "v2/__generated__/CollectionsHubsHomepageNav_marketingHubCollections.graphql"
-import { AnalyticsSchema } from "v2/Artsy/Analytics"
+import { AnalyticsSchema } from "v2/System/Analytics"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import track, { useTracking } from "react-tracking"

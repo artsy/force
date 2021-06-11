@@ -13,7 +13,7 @@ import {
   SelectSmall,
 } from "@artsy/palette"
 import styled from "styled-components"
-import { RouterLink } from "v2/Artsy/Router/RouterLink"
+import { RouterLink } from "v2/System/Router/RouterLink"
 import { Media } from "v2/Utils/Responsive"
 
 export const ArtistInsightResult: React.FC = () => {

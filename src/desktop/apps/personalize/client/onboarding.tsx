@@ -1,13 +1,13 @@
 import React from "react"
 import ReactDOM from "react-dom"
-import { SystemContextProvider } from "v2/Artsy"
+import { SystemContextProvider } from "v2/System"
 import CollectorIntent from "v2/Components/Onboarding/Steps/CollectorIntent"
 import { ArtistsStep } from "v2/Components/Onboarding/ArtistsStep"
 import { GenesStep } from "v2/Components/Onboarding/GenesStep"
 import Budget from "v2/Components/Onboarding/Steps/Budget"
 import { data as sd } from "sharify"
 import { createBrowserRouter, makeRouteConfig, Route } from "found"
-import { track } from "v2/Artsy"
+import { track } from "v2/System"
 import Events from "v2/Utils/Events"
 
 const bootstrapData = window.__BOOTSTRAP__

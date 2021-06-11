@@ -1,6 +1,6 @@
 import loadable from "@loadable/component"
 import { graphql } from "relay-runtime"
-import { AppRouteConfig } from "v2/Artsy/Router/Route"
+import { AppRouteConfig } from "v2/System/Router/Route"
 
 const UnsubscribeApp = loadable(
   () => import(/* webpackChunkName: "unsubscribeBundle" */ "./UnsubscribeApp"),

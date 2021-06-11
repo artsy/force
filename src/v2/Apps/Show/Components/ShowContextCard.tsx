@@ -16,8 +16,8 @@ import { compact } from "lodash"
 import { limitWithCount } from "v2/Apps/Artwork/Utils/limitWithCount"
 import { filterLocations } from "v2/Apps/Artwork/Utils/filterLocations"
 import { cropped } from "v2/Utils/resized"
-import { useTracking } from "v2/Artsy"
-import { useAnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
+import { useTracking } from "v2/System"
+import { useAnalyticsContext } from "v2/System/Analytics/AnalyticsContext"
 import {
   ActionType,
   ClickedFairCard,

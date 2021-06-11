@@ -1,15 +1,15 @@
 import { mount } from "enzyme"
 import React from "react"
 
-import { AnalyticsSchema, SystemContextProvider } from "v2/Artsy"
+import { AnalyticsSchema, SystemContextProvider } from "v2/System"
 
-import { useTracking } from "v2/Artsy/Analytics/useTracking"
+import { useTracking } from "v2/System/Analytics/useTracking"
 import { QueryRenderer as _QueryRenderer } from "react-relay"
 import { MoreNavMenu, UserMenu } from "../Menus"
 import { NavBar } from "../NavBar"
 import { NavItem } from "../NavItem"
 
-jest.mock("v2/Artsy/Analytics/useTracking")
+jest.mock("v2/System/Analytics/useTracking")
 jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
   useMatchMedia: () => ({ sm: false }),
 }))

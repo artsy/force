@@ -1,7 +1,7 @@
 import React from "react"
 import ReactDOM from "react-dom"
 import { App } from "./App"
-import { buildClientApp } from "v2/Artsy/Router/client"
+import { buildClientApp } from "v2/System/Router/client"
 import { routes } from "./routes"
 
 const { pathname } = window.location

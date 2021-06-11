@@ -2,11 +2,11 @@ import React from "react"
 import { Box, BoxProps, MediumCard, ResponsiveBox, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ShowViewingRoom_show } from "v2/__generated__/ShowViewingRoom_show.graphql"
-import { RouterLink } from "v2/Artsy/Router/RouterLink"
+import { RouterLink } from "v2/System/Router/RouterLink"
 import { getTagProps } from "v2/Components/ViewingRoomCard"
 import { cropped } from "v2/Utils/resized"
-import { useTracking } from "v2/Artsy"
-import { useAnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
+import { useTracking } from "v2/System"
+import { useAnalyticsContext } from "v2/System/Analytics/AnalyticsContext"
 import {
   ActionType,
   ClickedViewingRoomCard,

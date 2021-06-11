@@ -5,7 +5,7 @@ import {
   SingleFollowedArtist,
 } from "v2/Apps/__tests__/Fixtures/Artwork/ArtworkSidebar/ArtworkSidebarArtists"
 import { ArtworkSidebarArtistsFragmentContainer } from "v2/Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarArtists"
-import { SystemContextProvider } from "v2/Artsy"
+import { SystemContextProvider } from "v2/System"
 import { FollowArtistButton } from "v2/Components/FollowButton/FollowArtistButton"
 import { renderRelayTree } from "v2/DevTools"
 import React from "react"

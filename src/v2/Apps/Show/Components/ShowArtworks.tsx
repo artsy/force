@@ -14,7 +14,7 @@ import { SizeFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/SizeFilte
 import { TimePeriodFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/TimePeriodFilter"
 import { ColorFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/ColorFilter"
 import { BoxProps } from "@artsy/palette"
-import { useRouter } from "v2/Artsy/Router/useRouter"
+import { useRouter } from "v2/System/Router/useRouter"
 import { getENV } from "v2/Utils/getENV"
 import { MaterialsFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/MaterialsFilter"
 import { omit } from "lodash"

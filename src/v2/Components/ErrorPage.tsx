@@ -8,7 +8,7 @@ import {
 } from "@artsy/palette"
 import React from "react"
 import styled from "styled-components"
-import { RouterLink } from "v2/Artsy/Router/RouterLink"
+import { RouterLink } from "v2/System/Router/RouterLink"
 
 interface ErrorPageProps {
   code: number

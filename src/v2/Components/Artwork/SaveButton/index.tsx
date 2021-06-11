@@ -9,7 +9,7 @@ import { openAuthToFollowSave } from "v2/Utils/openAuthModal"
 import { CloseIcon, Flex, HeartIcon, Clickable } from "@artsy/palette"
 import { SaveArtwork } from "./SaveArtworkMutation"
 import { themeGet } from "@styled-system/theme-get"
-import { useSystemContext } from "v2/Artsy"
+import { useSystemContext } from "v2/System"
 
 export interface SaveTrackingProps {
   context_page?: string

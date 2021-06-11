@@ -2,7 +2,7 @@ import React from "react"
 import styled from "styled-components"
 import { Media } from "v2/Utils/Responsive"
 import { SectionContainer } from "./SectionContainer"
-import { RouterLink } from "v2/Artsy/Router/RouterLink"
+import { RouterLink } from "v2/System/Router/RouterLink"
 
 import {
   Box,

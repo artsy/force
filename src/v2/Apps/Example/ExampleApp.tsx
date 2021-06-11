@@ -13,7 +13,7 @@ import {
 import {
   RouterLink as BaseRouteLink,
   RouterLinkProps,
-} from "v2/Artsy/Router/RouterLink"
+} from "v2/System/Router/RouterLink"
 import { ExampleAppMeta } from "./Components/ExampleAppMeta"
 import styled from "styled-components"
 

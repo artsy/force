@@ -22,8 +22,8 @@ import {
   CommitMutation,
   injectCommitMutation,
 } from "v2/Apps/Order/Utils/commitMutation"
-import { track } from "v2/Artsy/Analytics"
-import * as Schema from "v2/Artsy/Analytics"
+import { track } from "v2/System/Analytics"
+import * as Schema from "v2/System/Analytics"
 import { Router } from "found"
 import React, { Component } from "react"
 import { RelayProp, createFragmentContainer, graphql } from "react-relay"

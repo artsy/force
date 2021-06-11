@@ -1,6 +1,6 @@
 import { Box, Flex, color, breakpoints, Text } from "@artsy/palette"
-import { AnalyticsSchema, ContextModule } from "v2/Artsy"
-import { useTracking } from "v2/Artsy/Analytics/useTracking"
+import { AnalyticsSchema, ContextModule } from "v2/System"
+import { useTracking } from "v2/System/Analytics/useTracking"
 import React from "react"
 import styled from "styled-components"
 import { DropDownSection } from "./DropDownSection"

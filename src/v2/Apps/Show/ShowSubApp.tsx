@@ -7,7 +7,7 @@ import { ShowMetaFragmentContainer as ShowMeta } from "./Components/ShowMeta"
 import {
   AnalyticsContext,
   useAnalyticsContext,
-} from "v2/Artsy/Analytics/AnalyticsContext"
+} from "v2/System/Analytics/AnalyticsContext"
 
 interface ShowAppProps {
   show: ShowSubApp_show

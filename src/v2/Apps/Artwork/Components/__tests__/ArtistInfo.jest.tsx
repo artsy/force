@@ -1,5 +1,5 @@
 import { ArtistInfoFixture } from "v2/Apps/__tests__/Fixtures/Artwork/ArtistInfo"
-import { SystemContextProvider } from "v2/Artsy"
+import { SystemContextProvider } from "v2/System"
 import { FollowArtistButtonFragmentContainer as FollowArtistButton } from "v2/Components/FollowButton/FollowArtistButton"
 import { mount } from "enzyme"
 import React from "react"

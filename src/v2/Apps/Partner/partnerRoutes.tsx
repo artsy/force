@@ -5,7 +5,7 @@ import { graphql } from "react-relay"
 import { initialArtworkFilterState } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
 import { paramsToCamelCase } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
 import { allowedFilters } from "v2/Components/ArtworkFilter/Utils/allowedFilters"
-import { AppRouteConfig } from "v2/Artsy/Router/Route"
+import { AppRouteConfig } from "v2/System/Router/Route"
 
 const PartnerApp = loadable(
   () => import(/* webpackChunkName: "partnerBundle" */ "./PartnerApp"),

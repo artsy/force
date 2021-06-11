@@ -9,7 +9,7 @@ import {
   Separator,
   color,
 } from "@artsy/palette"
-import { RouterLink } from "v2/Artsy/Router/RouterLink"
+import { RouterLink } from "v2/System/Router/RouterLink"
 import { Media } from "v2/Utils/Responsive"
 import { DetailIcon, DetailsProps } from "./DetailsHeader"
 

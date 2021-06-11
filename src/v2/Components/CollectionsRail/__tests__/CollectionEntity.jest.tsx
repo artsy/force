@@ -1,5 +1,5 @@
 import { CollectionsRailFixture } from "v2/Apps/__tests__/Fixtures/Collections"
-import { mockTracking } from "v2/Artsy/Analytics"
+import { mockTracking } from "v2/System/Analytics"
 import { mount } from "enzyme"
 import React from "react"
 import { Background, CollectionEntity, StyledLink } from "../CollectionEntity"

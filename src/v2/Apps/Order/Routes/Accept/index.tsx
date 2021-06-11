@@ -1,7 +1,7 @@
 import { Button, Col, Flex, Row, Spacer } from "@artsy/palette"
 import { Accept_order } from "v2/__generated__/Accept_order.graphql"
 import { TwoColumnLayout } from "v2/Apps/Order/Components/TwoColumnLayout"
-import { track } from "v2/Artsy/Analytics"
+import { track } from "v2/System/Analytics"
 import { RouteConfig, Router } from "found"
 import React, { Component } from "react"
 import { Media } from "v2/Utils/Responsive"

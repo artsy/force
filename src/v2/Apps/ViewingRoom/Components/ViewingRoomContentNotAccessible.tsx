@@ -1,7 +1,7 @@
 import React from "react"
 import { Box, Button, Flex, Sans } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { RouterLink } from "v2/Artsy/Router/RouterLink"
+import { RouterLink } from "v2/System/Router/RouterLink"
 
 import { ViewingRoomContentNotAccessible_viewingRoom } from "v2/__generated__/ViewingRoomContentNotAccessible_viewingRoom.graphql"
 

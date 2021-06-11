@@ -3,7 +3,7 @@ import { Collection_collection } from "v2/__generated__/Collection_collection.gr
 import { SeoProductsForArtworks } from "v2/Apps/Collect/Components/SeoProductsForArtworks"
 import { SeoProductsForCollections } from "v2/Apps/Collect/Components/SeoProductsForCollections"
 import { CollectionFilterFragmentContainer as CollectionHeader } from "v2/Apps/Collect/Routes/Collection/Components/Header"
-import { SystemContextProps, withSystemContext } from "v2/Artsy/SystemContext"
+import { SystemContextProps, withSystemContext } from "v2/System/SystemContext"
 import { FrameWithRecentlyViewed } from "v2/Components/FrameWithRecentlyViewed"
 import { RelatedCollectionsRailFragmentContainer as RelatedCollectionsRail } from "v2/Components/RelatedCollectionsRail/RelatedCollectionsRail"
 import { BreadCrumbList } from "v2/Components/Seo"
@@ -20,7 +20,7 @@ import {
   AnalyticsContext,
   AnalyticsContextProps,
   useAnalyticsContext,
-} from "v2/Artsy/Analytics/AnalyticsContext"
+} from "v2/System/Analytics/AnalyticsContext"
 import { BaseArtworkFilter } from "v2/Components/ArtworkFilter"
 import {
   ArtworkFilterContextProvider,

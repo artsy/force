@@ -2,8 +2,8 @@ import React, { useState } from "react"
 import { Box, Text, Flex } from "@artsy/palette"
 import { flatten } from "lodash"
 import { createFragmentContainer, graphql } from "react-relay"
-import { useSystemContext } from "v2/Artsy"
-import { RouterLink } from "v2/Artsy/Router/RouterLink"
+import { useSystemContext } from "v2/System"
+import { RouterLink } from "v2/System/Router/RouterLink"
 import { PartnerArtistsCarouselRendererQuery } from "v2/__generated__/PartnerArtistsCarouselRendererQuery.graphql"
 import { PartnerArtistsCarousel_partner } from "v2/__generated__/PartnerArtistsCarousel_partner.graphql"
 import {
@@ -13,7 +13,7 @@ import {
 import { PartnerArtistsCarouselPlaceholder } from "./PartnerArtistsCarouselPlaceholder"
 import { ScrollToPartnerHeader } from "../../ScrollToPartnerHeader"
 import { Carousel } from "../../Carousel"
-import { SystemQueryRenderer as QueryRenderer } from "v2/Artsy/Relay/SystemQueryRenderer"
+import { SystemQueryRenderer as QueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 
 const PAGE_SIZE = 19
 

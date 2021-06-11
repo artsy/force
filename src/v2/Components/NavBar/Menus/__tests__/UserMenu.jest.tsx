@@ -1,10 +1,10 @@
-import { SystemContextProvider } from "v2/Artsy"
+import { SystemContextProvider } from "v2/System"
 import { mount } from "enzyme"
 import React from "react"
 import { UserMenu } from "../UserMenu"
 import { mediator } from "lib/mediator"
 
-jest.mock("v2/Artsy/Analytics/useTracking", () => {
+jest.mock("v2/System/Analytics/useTracking", () => {
   return {
     useTracking: () => ({
       trackEvent: jest.fn(),

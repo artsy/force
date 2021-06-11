@@ -2,7 +2,7 @@ import { ContextModule } from "@artsy/cohesion"
 import { Box, Image, Text } from "@artsy/palette"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { RouterLink } from "v2/Artsy/Router/RouterLink"
+import { RouterLink } from "v2/System/Router/RouterLink"
 import { FollowArtistButtonQueryRenderer } from "v2/Components/FollowButton/FollowArtistButton"
 import { ArtistsCarouselCell_featuredLink } from "v2/__generated__/ArtistsCarouselCell_featuredLink.graphql"
 

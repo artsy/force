@@ -1,12 +1,12 @@
 import { ReadMore, Text, Image, Shelf, Box } from "@artsy/palette"
 import { FeaturedCollectionsRails_collectionGroup } from "v2/__generated__/FeaturedCollectionsRails_collectionGroup.graphql"
-import { useTracking } from "v2/Artsy/Analytics/useTracking"
-import { RouterLink } from "v2/Artsy/Router/RouterLink"
+import { useTracking } from "v2/System/Analytics/useTracking"
+import { RouterLink } from "v2/System/Router/RouterLink"
 import currency from "currency.js"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ContextModule, clickedCollectionGroup } from "@artsy/cohesion"
-import { useAnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
+import { useAnalyticsContext } from "v2/System/Analytics/AnalyticsContext"
 import { cropped } from "v2/Utils/resized"
 
 interface Props {

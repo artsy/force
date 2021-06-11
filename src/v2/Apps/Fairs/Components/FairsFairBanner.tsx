@@ -2,7 +2,7 @@ import { Box, BoxProps, Image, ResponsiveBox, Text } from "@artsy/palette"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
-import { RouterLink } from "v2/Artsy/Router/RouterLink"
+import { RouterLink } from "v2/System/Router/RouterLink"
 import { FairsFairBanner_fair } from "v2/__generated__/FairsFairBanner_fair.graphql"
 
 const Overlay = styled(Box)`

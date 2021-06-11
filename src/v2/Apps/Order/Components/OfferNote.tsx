@@ -1,5 +1,5 @@
 import { Link, TextArea, TextAreaChange } from "@artsy/palette"
-import { SystemContext } from "v2/Artsy"
+import { SystemContext } from "v2/System"
 import React, { useContext } from "react"
 
 export const OfferNote: React.FC<{

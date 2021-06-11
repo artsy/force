@@ -10,7 +10,7 @@ import { media } from "../../Helpers"
 import { Layout } from "../Steps/Layout"
 import { ArtistSearchResults } from "./ArtistSearchResults"
 import { PopularArtists } from "./PopularArtists"
-import { useTracking } from "v2/Artsy/Analytics/useTracking"
+import { useTracking } from "v2/System/Analytics/useTracking"
 import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
 
 const OnboardingSearchBox = styled.div`

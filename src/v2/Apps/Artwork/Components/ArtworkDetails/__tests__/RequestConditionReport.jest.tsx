@@ -4,7 +4,7 @@ import { graphql } from "react-relay"
 import { createTestEnv } from "v2/DevTools/createTestEnv"
 
 import { RequestConditionReportQueryResponse } from "v2/__generated__/RequestConditionReportQuery.graphql"
-import { AnalyticsSchema as Schema } from "v2/Artsy"
+import { AnalyticsSchema as Schema } from "v2/System"
 import { RequestConditionReportFragmentContainer } from "../RequestConditionReport"
 import { RequestConditionReportTestPage } from "./Utils/RequestConditionReportTestPage"
 import { mediator } from "lib/mediator"

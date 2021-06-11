@@ -18,7 +18,7 @@ import { FollowArtistButtonFragmentContainer as FollowArtistButton } from "v2/Co
 import { ArtistSeriesHeader_artistSeries } from "v2/__generated__/ArtistSeriesHeader_artistSeries.graphql"
 import { ContextModule } from "@artsy/cohesion"
 import { TopContextBar } from "v2/Components/TopContextBar"
-import { RouterLink } from "v2/Artsy/Router/RouterLink"
+import { RouterLink } from "v2/System/Router/RouterLink"
 
 interface ArtistSeriesHeaderProps {
   artistSeries: ArtistSeriesHeader_artistSeries

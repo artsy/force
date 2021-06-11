@@ -7,7 +7,7 @@ import {
   graphql,
 } from "react-relay"
 import { useTracking } from "react-tracking"
-import { useAnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
+import { useAnalyticsContext } from "v2/System/Analytics/AnalyticsContext"
 import { FairExhibitors_fair } from "v2/__generated__/FairExhibitors_fair.graphql"
 import { FairExhibitorRailFragmentContainer as FairExhibitorRail } from "../Components/FairExhibitorRail"
 

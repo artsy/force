@@ -5,7 +5,7 @@ import { Shows_partner } from "v2/__generated__/Shows_partner.graphql"
 import { ShowEventsFragmentContainer } from "../../Components/PartnerShows/ShowEvents"
 import { ShowPaginatedEventsRenderer } from "../../Components/PartnerShows/ShowPaginatedEvents"
 import { ShowBannerFragmentContainer } from "../../Components/PartnerShows"
-import { useRouter } from "v2/Artsy/Router/useRouter"
+import { useRouter } from "v2/System/Router/useRouter"
 
 interface PartnerShowsProps {
   partner: Shows_partner

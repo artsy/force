@@ -5,7 +5,7 @@ import { RecentlyViewedQueryRenderer } from "./RecentlyViewed"
 import { useLazyLoadComponent } from "v2/Utils/Hooks/useLazyLoadComponent"
 import { RecentlyViewedV2Placeholder } from "./RecentlyViewedV2Placeholder"
 import { RecentlyViewedPlaceholder } from "./RecentlyViewedPlaceholder"
-import { useSystemContext } from "v2/Artsy"
+import { useSystemContext } from "v2/System"
 
 export const RecentlyViewed: React.FC = () => {
   const { user } = useSystemContext()

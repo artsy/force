@@ -2,9 +2,9 @@ import React, { useContext } from "react"
 import { graphql } from "react-relay"
 
 import { CollectionsRailQuery } from "v2/__generated__/CollectionsRailQuery.graphql"
-import { SystemContext } from "v2/Artsy"
-import { renderWithLoadProgress } from "v2/Artsy/Relay/renderWithLoadProgress"
-import { SystemQueryRenderer as QueryRenderer } from "v2/Artsy/Relay/SystemQueryRenderer"
+import { SystemContext } from "v2/System"
+import { renderWithLoadProgress } from "v2/System/Relay/renderWithLoadProgress"
+import { SystemQueryRenderer as QueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { CollectionsRailFragmentContainer as CollectionsRail } from "./CollectionsRail"
 
 interface Props {

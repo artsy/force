@@ -4,13 +4,13 @@ import { ArtistFollowArtistButton_Test_Query } from "v2/__generated__/ArtistFoll
 import { useTracking } from "react-tracking"
 import { ArtistFollowArtistButtonFragmentContainer } from "../ArtistFollowArtistButton"
 import { openAuthToFollowSave } from "v2/Utils/openAuthModal"
-import { useSystemContext } from "v2/Artsy/useSystemContext"
+import { useSystemContext } from "v2/System/useSystemContext"
 import { followArtistMutation } from "../Mutations/FollowArtistMutation"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
 jest.mock("v2/Utils/openAuthModal")
-jest.mock("v2/Artsy/useSystemContext")
+jest.mock("v2/System/useSystemContext")
 jest.mock(
   "v2/Apps/Artist/Components/ArtistHeader/Mutations/FollowArtistMutation"
 )

@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { useRouter } from "v2/Artsy/Router/useRouter"
+import { useRouter } from "v2/System/Router/useRouter"
 import { useRouteComplete } from "./useRouteComplete"
 
 /**

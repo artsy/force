@@ -1,5 +1,5 @@
 import { Button, Link, QuestionCircleIcon } from "@artsy/palette"
-import { mockTracking } from "v2/Artsy/Analytics"
+import { mockTracking } from "v2/System/Analytics"
 import { mount } from "enzyme"
 import React from "react"
 import { PricingContextModal } from "../PricingContextModal"

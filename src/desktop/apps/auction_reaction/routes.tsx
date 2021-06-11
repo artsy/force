@@ -1,4 +1,4 @@
-import { buildServerApp } from "v2/Artsy/Router/server"
+import { buildServerApp } from "v2/System/Router/server"
 import { auctionRoutes } from "v2/Apps/Auction/auctionRoutes"
 import { stitch } from "@artsy/stitch"
 

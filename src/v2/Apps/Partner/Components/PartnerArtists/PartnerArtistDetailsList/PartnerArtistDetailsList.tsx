@@ -1,6 +1,6 @@
 import { Box } from "@artsy/palette"
 import React, { useEffect, useRef, useState } from "react"
-import { useSystemContext } from "v2/Artsy"
+import { useSystemContext } from "v2/System"
 import {
   createPaginationContainer,
   graphql,
@@ -10,7 +10,7 @@ import { PartnerArtistDetailsList_partner } from "v2/__generated__/PartnerArtist
 import { PartnerArtistDetailsListQuery } from "v2/__generated__/PartnerArtistDetailsListQuery.graphql"
 import { PartnerArtistDetailsListPlaceholder } from "./PartnerArtistDetailsListPlaceholder"
 import { PartnerArtistDetailsFragmentContainer } from "../PartnerArtistDetails"
-import { SystemQueryRenderer as QueryRenderer } from "v2/Artsy/Relay/SystemQueryRenderer"
+import { SystemQueryRenderer as QueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 
 export interface PartnerArtistDetailsListProps {
   partner: PartnerArtistDetailsList_partner

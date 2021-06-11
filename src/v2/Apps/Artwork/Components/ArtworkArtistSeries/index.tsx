@@ -1,5 +1,5 @@
 import React from "react"
-import { withSystemContext } from "v2/Artsy"
+import { withSystemContext } from "v2/System"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ContextModule } from "@artsy/cohesion"
 import { ArtistSeriesArtworkRailFragmentContainer as ArtistSeriesArtworkRail } from "v2/Apps/Artwork/Components/ArtworkArtistSeries/ArtistSeriesArtworkRail"

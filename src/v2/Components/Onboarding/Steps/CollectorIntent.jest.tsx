@@ -2,9 +2,9 @@ import React from "react"
 import { mount } from "enzyme"
 import CollectorIntent from "./CollectorIntent"
 import { MultiButtonState } from "../../Buttons/MultiStateButton"
-import { useTracking } from "v2/Artsy/Analytics/useTracking"
+import { useTracking } from "v2/System/Analytics/useTracking"
 
-jest.mock("v2/Artsy/Analytics/useTracking")
+jest.mock("v2/System/Analytics/useTracking")
 
 describe("CollectorIntent", () => {
   const mockRelay = {}

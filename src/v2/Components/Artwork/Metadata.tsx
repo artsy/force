@@ -3,7 +3,7 @@ import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { DetailsFragmentContainer as Details } from "./Details"
 import { Box, BoxProps } from "@artsy/palette"
-import { RouterLink } from "v2/Artsy/Router/RouterLink"
+import { RouterLink } from "v2/System/Router/RouterLink"
 
 export interface MetadataProps extends BoxProps {
   artwork: Metadata_artwork

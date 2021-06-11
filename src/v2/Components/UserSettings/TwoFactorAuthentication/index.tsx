@@ -2,9 +2,9 @@ import { Box, Flex, Sans, Serif } from "@artsy/palette"
 import React from "react"
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
 
-import { SystemContextProps, useSystemContext } from "v2/Artsy"
-import { renderWithLoadProgress } from "v2/Artsy/Relay/renderWithLoadProgress"
-import { SystemQueryRenderer as QueryRenderer } from "v2/Artsy/Relay/SystemQueryRenderer"
+import { SystemContextProps, useSystemContext } from "v2/System"
+import { renderWithLoadProgress } from "v2/System/Relay/renderWithLoadProgress"
+import { SystemQueryRenderer as QueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 
 import { AppSecondFactorFragmentContainer as AppSecondFactor } from "./Components/AppSecondFactor"
 import { BackupSecondFactorFragmentContainer as BackupSecondFactor } from "./Components/BackupSecondFactor"

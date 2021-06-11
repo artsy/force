@@ -1,5 +1,5 @@
 import { Link } from "@artsy/palette"
-import { SystemContextProvider } from "v2/Artsy"
+import { SystemContextProvider } from "v2/System"
 import { ReactWrapper, mount } from "enzyme"
 import React from "react"
 import { ExtractProps } from "v2/Utils/ExtractProps"

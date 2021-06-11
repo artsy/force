@@ -1,5 +1,5 @@
 import { Breakpoint } from "@artsy/palette"
-import { useTracking } from "v2/Artsy/Analytics/useTracking"
+import { useTracking } from "v2/System/Analytics/useTracking"
 import { ArtworkFilter, BaseArtworkFilter } from "v2/Components/ArtworkFilter"
 import { MockBoot, renderRelayTree } from "v2/DevTools"
 import { renderToString } from "v2/DevTools/__tests__/MockRelayRendererFixtures"
@@ -9,7 +9,7 @@ import { ArtworkFilterFixture } from "./fixtures/ArtworkFilter.fixture"
 import { Pagination } from "v2/Components/Pagination"
 
 jest.unmock("react-relay")
-jest.mock("v2/Artsy/Analytics/useTracking")
+jest.mock("v2/System/Analytics/useTracking")
 jest.mock("v2/Components/Pagination/useComputeHref")
 jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
   useMatchMedia: () => ({}),

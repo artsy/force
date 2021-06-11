@@ -1,7 +1,7 @@
 import { Column, GridColumns, HTML, Spacer, Text } from "@artsy/palette"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { RouterLink } from "v2/Artsy/Router/RouterLink"
+import { RouterLink } from "v2/System/Router/RouterLink"
 import { FollowGeneButtonFragmentContainer } from "v2/Components/FollowButton/FollowGeneButton"
 import { GeneShow_gene } from "v2/__generated__/GeneShow_gene.graphql"
 import { GeneArtworkFilterRefetchContainer } from "../Components/GeneArtworkFilter"

@@ -6,7 +6,7 @@ import {
   HeaderImage,
   PartnerHeaderFragmentContainer as PartnerHeader,
 } from "v2/Apps/Partner/Components/PartnerHeader"
-import { RouterLink } from "v2/Artsy/Router/RouterLink"
+import { RouterLink } from "v2/System/Router/RouterLink"
 import { PartnerHeaderAddress } from "../PartnerHeader/PartnerHeaderAddress"
 import { FollowProfileButtonFragmentContainer as FollowProfileButton } from "v2/Components/FollowButton/FollowProfileButton"
 

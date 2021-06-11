@@ -1,6 +1,6 @@
 import { Box, Flex, Link, Sans, Text } from "@artsy/palette"
-import { track } from "v2/Artsy/Analytics"
-import * as Schema from "v2/Artsy/Analytics/Schema"
+import { track } from "v2/System/Analytics"
+import * as Schema from "v2/System/Analytics/Schema"
 import React from "react"
 
 import {

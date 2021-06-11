@@ -1,6 +1,6 @@
 import React from "react"
-import { SystemQueryRenderer as QueryRenderer } from "v2/Artsy/Relay/SystemQueryRenderer"
-import { useSystemContext } from "v2/Artsy"
+import { SystemQueryRenderer as QueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
+import { useSystemContext } from "v2/System"
 import { graphql } from "react-relay"
 import { chunk, shuffle } from "lodash"
 import { ConsignTopArtistsQuery } from "v2/__generated__/ConsignTopArtistsQuery.graphql"

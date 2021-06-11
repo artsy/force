@@ -23,7 +23,7 @@ import { ArtworkSidebarCommercialContainer } from "v2/Apps/Artwork/Components/Ar
 import { ErrorModal } from "v2/Components/Modal/ErrorModal"
 import { ModalButton } from "v2/Components/Modal/ModalDialog"
 import { mockLocation } from "v2/DevTools/mockLocation"
-import { SystemContextProvider } from "v2/Artsy"
+import { SystemContextProvider } from "v2/System"
 import { mediator } from "lib/mediator"
 
 const commitMutation = _commitMutation as jest.Mock<any>

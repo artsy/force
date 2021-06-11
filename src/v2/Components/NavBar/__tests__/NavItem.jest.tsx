@@ -2,7 +2,7 @@ import { mount } from "enzyme"
 import React from "react"
 import { NavItem } from "../NavItem"
 
-jest.mock("v2/Artsy/Analytics/useTracking", () => {
+jest.mock("v2/System/Analytics/useTracking", () => {
   return {
     useTracking: () => ({
       trackEvent: jest.fn(),

@@ -1,6 +1,6 @@
 import React from "react"
 import { MockBoot, renderRelayTree } from "v2/DevTools"
-import { SystemContextProvider } from "v2/Artsy"
+import { SystemContextProvider } from "v2/System"
 import { ViewingRoomAppFragmentContainer } from "../ViewingRoomApp"
 import { graphql } from "react-relay"
 import { ViewingRoomApp_DraftTest_QueryRawResponse } from "v2/__generated__/ViewingRoomApp_DraftTest_Query.graphql"
@@ -14,7 +14,7 @@ import { mockLocation } from "v2/DevTools/mockLocation"
 
 jest.useFakeTimers()
 jest.unmock("react-relay")
-jest.mock("v2/Artsy/Router/useRouter", () => ({
+jest.mock("v2/System/Router/useRouter", () => ({
   useIsRouteActive: () => false,
   useRouter: () => ({
     match: {

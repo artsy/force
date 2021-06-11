@@ -9,8 +9,8 @@ import {
   color,
 } from "@artsy/palette"
 import { SendFeedbackSearchResultsMutation } from "v2/__generated__/SendFeedbackSearchResultsMutation.graphql"
-import { SystemContextProps } from "v2/Artsy"
-import { withSystemContext } from "v2/Artsy"
+import { SystemContextProps } from "v2/System"
+import { withSystemContext } from "v2/System"
 import React from "react"
 import { commitMutation, graphql } from "react-relay"
 import styled from "styled-components"

@@ -1,6 +1,6 @@
 import { getContextPageFromClient } from "lib/getContextPage"
 import { data as sd } from "sharify"
-import { AnalyticsContextProps } from "v2/Artsy/Analytics/AnalyticsContext"
+import { AnalyticsContextProps } from "v2/System/Analytics/AnalyticsContext"
 import { Mediator, mediator } from "lib/mediator"
 
 export interface ClientContext {

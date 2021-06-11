@@ -4,8 +4,8 @@ import {
   ArtistSearchResultsArtistMutationResponse,
 } from "v2/__generated__/ArtistSearchResultsArtistMutation.graphql"
 import { ArtistSearchResultsQuery } from "v2/__generated__/ArtistSearchResultsQuery.graphql"
-import { SystemContextProps, withSystemContext } from "v2/Artsy"
-import { SystemQueryRenderer as QueryRenderer } from "v2/Artsy/Relay/SystemQueryRenderer"
+import { SystemContextProps, withSystemContext } from "v2/System"
+import { SystemQueryRenderer as QueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import React from "react"
 import {
   RelayProp,

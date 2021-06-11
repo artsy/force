@@ -1,6 +1,6 @@
 import { Link } from "@artsy/palette"
-import { SystemContextProvider } from "v2/Artsy"
-import { mockTracking } from "v2/Artsy/Analytics"
+import { SystemContextProvider } from "v2/System"
+import { mockTracking } from "v2/System/Analytics"
 import { mount } from "enzyme"
 import React from "react"
 import { StickyFooter } from "../StickyFooter"

@@ -4,7 +4,7 @@ import {
   FeaturedRailCarousel,
   RailMetadata,
 } from "v2/Apps/FeatureAKG/Components/FeaturedRails"
-import { AnalyticsSchema } from "v2/Artsy"
+import { AnalyticsSchema } from "v2/System"
 import { compact } from "lodash"
 import React from "react"
 import { createFragmentContainer } from "react-relay"

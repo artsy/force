@@ -7,7 +7,7 @@ import {
 } from "@artsy/cohesion"
 import { Box, ButtonProps } from "@artsy/palette"
 import { FollowArtistButtonMutation } from "v2/__generated__/FollowArtistButtonMutation.graphql"
-import * as Artsy from "v2/Artsy"
+import * as Artsy from "v2/System"
 import { FollowArtistPopoverFragmentContainer as SuggestionsPopover } from "v2/Components/FollowArtistPopover"
 import React from "react"
 import track, { TrackingProp } from "react-tracking"
@@ -25,10 +25,10 @@ import { openAuthToFollowSave } from "v2/Utils/openAuthModal"
 import {
   AnalyticsContextProps,
   withAnalyticsContext,
-} from "v2/Artsy/Analytics/AnalyticsContext"
+} from "v2/System/Analytics/AnalyticsContext"
 import { Mediator } from "lib/mediator"
-import { useSystemContext } from "v2/Artsy"
-import { SystemQueryRenderer } from "v2/Artsy/Relay/SystemQueryRenderer"
+import { useSystemContext } from "v2/System"
+import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 
 interface Props
   extends React.HTMLProps<FollowArtistButton>,

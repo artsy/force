@@ -1,12 +1,12 @@
 import { Box, Flex, Image, Text } from "@artsy/palette"
 import { RelatedCollectionEntity_collection } from "v2/__generated__/RelatedCollectionEntity_collection.graphql"
-import { useTracking } from "v2/Artsy/Analytics"
+import { useTracking } from "v2/System/Analytics"
 import currency from "currency.js"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ContextModule, clickedCollectionGroup } from "@artsy/cohesion"
-import { useAnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
-import { RouterLink } from "v2/Artsy/Router/RouterLink"
+import { useAnalyticsContext } from "v2/System/Analytics/AnalyticsContext"
+import { RouterLink } from "v2/System/Router/RouterLink"
 import { cropped } from "v2/Utils/resized"
 
 export interface RelatedCollectionEntityProps {

@@ -9,8 +9,8 @@ import {
   addToCalendar,
   ContextModule,
 } from "@artsy/cohesion"
-import { useTracking } from "v2/Artsy"
-import { useAnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
+import { useTracking } from "v2/System"
+import { useAnalyticsContext } from "v2/System/Analytics/AnalyticsContext"
 
 export interface CalendarEventProps {
   title: string

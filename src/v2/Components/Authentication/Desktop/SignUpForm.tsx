@@ -1,6 +1,6 @@
 import { QueryRenderer, createFragmentContainer, graphql } from "react-relay"
 import { SignUpFormLocationQuery } from "v2/__generated__/SignUpFormLocationQuery.graphql"
-import { useSystemContext } from "v2/Artsy"
+import { useSystemContext } from "v2/System"
 import {
   Error,
   Footer,

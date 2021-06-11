@@ -9,8 +9,8 @@ import {
   SoloIcon,
 } from "@artsy/palette"
 import { Menu, MenuItem } from "v2/Components/Menu"
-import { AnalyticsSchema, SystemContext } from "v2/Artsy"
-import { useTracking } from "v2/Artsy/Analytics/useTracking"
+import { AnalyticsSchema, SystemContext } from "v2/System"
+import { useTracking } from "v2/System/Analytics/useTracking"
 import { data as sd } from "sharify"
 import { userIsAdmin } from "v2/Utils/user"
 

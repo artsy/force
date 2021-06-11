@@ -1,15 +1,15 @@
 import { CollectionsHubLinkedCollections } from "v2/Apps/__tests__/Fixtures/Collections"
-import { useTracking } from "v2/Artsy/Analytics/useTracking"
+import { useTracking } from "v2/System/Analytics/useTracking"
 import { mount } from "enzyme"
 import "jest-styled-components"
 import React from "react"
 import { ArtistSeriesRail } from "../index"
 import { paginateCarousel } from "@artsy/palette"
 import { OwnerType } from "@artsy/cohesion"
-import { AnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
+import { AnalyticsContext } from "v2/System/Analytics/AnalyticsContext"
 
 jest.mock("@artsy/palette/dist/elements/Carousel/paginate")
-jest.mock("v2/Artsy/Analytics/useTracking")
+jest.mock("v2/System/Analytics/useTracking")
 jest.mock("found", () => ({
   Link: props => <div>{props.children}</div>,
   RouterContext: jest.requireActual("found").RouterContext,

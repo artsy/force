@@ -11,7 +11,7 @@ import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled, { css } from "styled-components"
 import { DateTime } from "luxon"
-import { RouterLink } from "v2/Artsy/Router/RouterLink"
+import { RouterLink } from "v2/System/Router/RouterLink"
 import { FairsFairRow_fair } from "v2/__generated__/FairsFairRow_fair.graphql"
 
 const Container = styled(Flex)<{ href?: string }>`

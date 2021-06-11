@@ -1,6 +1,6 @@
 import { Box, Flex, Image, color, space } from "@artsy/palette"
-import { withSystemContext } from "v2/Artsy"
-import * as Schema from "v2/Artsy/Analytics/Schema"
+import { withSystemContext } from "v2/System"
+import * as Schema from "v2/System/Analytics/Schema"
 import FadeTransition from "v2/Components/Animation/FadeTransition"
 import { bind, once, throttle } from "lodash"
 import React from "react"

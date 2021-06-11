@@ -1,4 +1,4 @@
-import { SystemContext } from "v2/Artsy"
+import { SystemContext } from "v2/System"
 import React, { useContext } from "react"
 import { commitMutation as relayCommitMutation } from "react-relay"
 import { Environment, MutationConfig, MutationParameters } from "relay-runtime"

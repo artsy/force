@@ -1,10 +1,10 @@
-import { AnalyticsSchema } from "v2/Artsy/Analytics"
-import { useTracking } from "v2/Artsy/Analytics/useTracking"
+import { AnalyticsSchema } from "v2/System/Analytics"
+import { useTracking } from "v2/System/Analytics/useTracking"
 import React, { useContext } from "react"
 import { graphql } from "react-relay"
-import { SystemContext } from "v2/Artsy"
+import { SystemContext } from "v2/System"
 import { get } from "v2/Utils/get"
-import { LoadProgressRenderer } from "v2/Artsy/Relay/renderWithLoadProgress"
+import { LoadProgressRenderer } from "v2/System/Relay/renderWithLoadProgress"
 import {
   NotificationsMenuQuery,
   NotificationsMenuQueryResponse,
@@ -19,7 +19,7 @@ import {
   Text,
 } from "@artsy/palette"
 import { Menu, MenuItem, MenuItemPlaceholder } from "v2/Components/Menu"
-import { SystemQueryRenderer as QueryRenderer } from "v2/Artsy/Relay/SystemQueryRenderer"
+import { SystemQueryRenderer as QueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 
 interface NotificationMenuItemContentProps {
   image: JSX.Element

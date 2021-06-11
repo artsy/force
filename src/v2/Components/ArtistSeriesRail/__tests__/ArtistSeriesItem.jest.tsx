@@ -2,12 +2,12 @@ import { mount } from "enzyme"
 import React from "react"
 import { ArtistSeriesItem } from "../ArtistSeriesItem"
 import { ArtistSeriesItem_artistSeries } from "v2/__generated__/ArtistSeriesItem_artistSeries.graphql"
-import { useTracking } from "v2/Artsy/Analytics/useTracking"
-import { AnalyticsContext } from "v2/Artsy/Analytics/AnalyticsContext"
+import { useTracking } from "v2/System/Analytics/useTracking"
+import { AnalyticsContext } from "v2/System/Analytics/AnalyticsContext"
 import { OwnerType } from "@artsy/cohesion"
-import { RouterLink } from "v2/Artsy/Router/RouterLink"
+import { RouterLink } from "v2/System/Router/RouterLink"
 
-jest.mock("v2/Artsy/Analytics/useTracking")
+jest.mock("v2/System/Analytics/useTracking")
 
 describe("Artist Series Rail Item", () => {
   let props

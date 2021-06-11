@@ -10,7 +10,7 @@ import {
 } from "@artsy/palette"
 import { ContextModule } from "@artsy/cohesion"
 import { createFragmentContainer, graphql } from "react-relay"
-import { RouterLink } from "v2/Artsy/Router/RouterLink"
+import { RouterLink } from "v2/System/Router/RouterLink"
 import { FollowArtistButtonFragmentContainer } from "v2/Components/FollowButton/FollowArtistButton"
 import { PartnerArtistsCarouselItem_artist } from "v2/__generated__/PartnerArtistsCarouselItem_artist.graphql"
 

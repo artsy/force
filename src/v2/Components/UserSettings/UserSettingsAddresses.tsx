@@ -1,7 +1,7 @@
 import { Box, Theme, Text } from "@artsy/palette"
 import { SavedAddressesFragmentContainer as SavedAddresses } from "v2/Apps/Order/Components/SavedAddresses"
-import { renderWithLoadProgress } from "v2/Artsy/Relay/renderWithLoadProgress"
-import { SystemContextProps } from "v2/Artsy"
+import { renderWithLoadProgress } from "v2/System/Relay/renderWithLoadProgress"
+import { SystemContextProps } from "v2/System"
 import React from "react"
 import { createFragmentContainer, graphql, QueryRenderer } from "react-relay"
 import { UserSettingsAddressesQuery } from "v2/__generated__/UserSettingsAddressesQuery.graphql"
@@ -10,7 +10,7 @@ import {
   CommitMutation,
   injectCommitMutation,
 } from "v2/Apps/Order/Utils/commitMutation"
-import { useSystemContext } from "v2/Artsy"
+import { useSystemContext } from "v2/System"
 
 interface UserSettingsAddressesProps extends SystemContextProps {
   me: UserSettingsAddresses_me

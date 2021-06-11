@@ -1,12 +1,12 @@
 import { Text } from "@artsy/palette"
 import { NavigationTabs_searchableConnection } from "v2/__generated__/NavigationTabs_searchableConnection.graphql"
-import { track } from "v2/Artsy/Analytics"
-import * as Schema from "v2/Artsy/Analytics/Schema"
+import { track } from "v2/System/Analytics"
+import * as Schema from "v2/System/Analytics/Schema"
 import { RouteTab, RouteTabs } from "v2/Components/RouteTabs"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { get } from "v2/Utils/get"
-import { SystemContextProps, withSystemContext } from "v2/Artsy"
+import { SystemContextProps, withSystemContext } from "v2/System"
 
 export interface Props extends SystemContextProps {
   searchableConnection: NavigationTabs_searchableConnection

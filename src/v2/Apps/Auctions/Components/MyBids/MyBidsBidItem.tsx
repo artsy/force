@@ -12,9 +12,9 @@ import {
   Text,
   WatchingIcon,
 } from "@artsy/palette"
-import { RouterLink } from "v2/Artsy/Router/RouterLink"
+import { RouterLink } from "v2/System/Router/RouterLink"
 import { useTracking } from "react-tracking"
-import { useAnalyticsContext } from "v2/Artsy"
+import { useAnalyticsContext } from "v2/System"
 import { clickedArtworkGroup } from "@artsy/cohesion"
 import { tabTypeToContextModuleMap } from "../../Utils/tabTypeToContextModuleMap"
 import styled from "styled-components"

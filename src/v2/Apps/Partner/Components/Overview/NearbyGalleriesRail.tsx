@@ -4,10 +4,10 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { NearbyGalleriesRail_partners } from "v2/__generated__/NearbyGalleriesRail_partners.graphql"
 import { NearbyGalleriesRailRendererQuery } from "v2/__generated__/NearbyGalleriesRailRendererQuery.graphql"
 import { Carousel } from "../Carousel"
-import { useSystemContext } from "v2/Artsy"
+import { useSystemContext } from "v2/System"
 import { NearbyGalleryCardFragmentContainer } from "./NearbyGalleryCard"
 import { NearbyGalleriesRailPlaceholder } from "./NearbyGalleriesRailPlaceholder"
-import { SystemQueryRenderer as QueryRenderer } from "v2/Artsy/Relay/SystemQueryRenderer"
+import { SystemQueryRenderer as QueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { compact } from "underscore"
 
 interface NearbyGalleriesRailProps extends BoxProps {
