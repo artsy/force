@@ -65,11 +65,12 @@
   dependencies:
     uuid "^8.3.0"
 
-"@artsy/palette@14.34.0":
-  version "14.34.0"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-14.34.0.tgz#c1b4a74b7496c5c26ca766f665e791b7cd14b0dd"
-  integrity sha512-fuRaffdKaOBU8B7l0pqtceDyxibxiJNva1MUYQrHCiMUokZmwKCDXyrQLpEbjSWYZadcQWyhTOgII+vtc41b0w==
+"@artsy/palette@14.35.0":
+  version "14.35.0"
+  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-14.35.0.tgz#223ff1338c9418b0a4716db973ee4dac85fad83f"
+  integrity sha512-vGsW/ekkCri58BgwOxApW3ZXiFuaD8PqhiHdTtjjWq1lrQC17mpxyM5PJ9nVBUuBw7znBjUtVKuF0ooO3x/PcA==
   dependencies:
+    "@seznam/compose-react-refs" "^1.0.6"
     "@styled-system/theme-get" "^5.1.2"
     d3-interpolate "^1.3.2"
     d3-shape "^1.3.5"
@@ -2193,6 +2194,11 @@
   dependencies:
     "@sentry/types" "4.5.3"
     tslib "^1.9.3"
+
+"@seznam/compose-react-refs@^1.0.6":
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/@seznam/compose-react-refs/-/compose-react-refs-1.0.6.tgz#6ec4e70bdd6e32f8e70b4100f27267cf306bd8df"
+  integrity sha512-izzOXQfeQLonzrIQb8u6LQ8dk+ymz3WXTIXjvOlTXHq6sbzROg3NWU+9TTAOpEoK9Bth24/6F/XrfHJ5yR5n6Q==
 
 "@sindresorhus/is@^0.14.0":
   version "0.14.0"
