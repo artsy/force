@@ -1,4 +1,4 @@
-import { Avatar, Box, Button, Flex, Serif } from "@artsy/palette"
+import { EntityHeader } from "@artsy/palette"
 import { FollowArtistPopoverRow_artist } from "v2/__generated__/FollowArtistPopoverRow_artist.graphql"
 import { FollowArtistPopoverRowMutation } from "v2/__generated__/FollowArtistPopoverRowMutation.graphql"
 import { SystemContextProps } from "v2/System"
@@ -9,10 +9,9 @@ import {
   createFragmentContainer,
   graphql,
 } from "react-relay"
-import styled from "styled-components"
 import { Subscribe } from "unstated"
-import { get } from "v2/Utils/get"
 import { FollowArtistPopoverState } from "./state"
+import { FollowButton } from "../FollowButton/Button"
 
 interface Props extends SystemContextProps {
   artist: FollowArtistPopoverRow_artist
@@ -24,13 +23,6 @@ interface State {
   swappedArtist: FollowArtistPopoverRow_artist
   followed: boolean
 }
-
-const ArtistName = styled(Serif)`
-  width: 125px;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
-`
 
 class FollowArtistPopoverRow extends React.Component<Props, State> {
   state: State = {
@@ -117,27 +109,22 @@ class FollowArtistPopoverRow extends React.Component<Props, State> {
     const { artist: originalArtist } = this.props
     const { swappedArtist } = this.state
     const artist = swappedArtist || originalArtist
-    // @ts-expect-error STRICT_NULL_CHECK
-    const imageUrl = get(artist, a => a.image.cropped.url)
+    const imageUrl = artist.image?.cropped?.url
     const { internalID: artistID } = artist
-    const key = `avatar-${artistID}`
+
     return (
-      <Flex alignItems="center" mb={1} mt={1}>
-        <Avatar size="xs" src={imageUrl} key={key} />
-        <ArtistName size="3t" color="black100" ml={1} mr={1}>
-          {artist.name}
-        </ArtistName>
-        <Box>
-          <Button
-            onClick={() => this.handleClick(artistID)}
-            variant="secondaryOutline"
-            size="small"
-            width="70px"
-          >
-            {this.state.followed ? "Followed" : "Follow"}
-          </Button>
-        </Box>
-      </Flex>
+      <EntityHeader
+        name={artist.name!}
+        meta={artist.formattedNationalityAndBirthday!}
+        imageUrl={imageUrl}
+        FollowButton={
+          <FollowButton
+            isFollowed={this.state.followed}
+            handleFollow={() => this.handleClick(artistID)}
+            buttonProps={{ size: "small", variant: "secondaryOutline" }}
+          />
+        }
+      />
     )
   }
 }
@@ -162,6 +149,7 @@ export const FollowArtistPopoverRowFragmentContainer = createFragmentContainer(
       fragment FollowArtistPopoverRow_artist on Artist {
         internalID
         name
+        formattedNationalityAndBirthday
         image {
           cropped(width: 45, height: 45) {
             url

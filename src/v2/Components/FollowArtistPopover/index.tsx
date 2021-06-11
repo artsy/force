@@ -1,85 +1,48 @@
-import {
-  BorderBox,
-  Box,
-  CloseIcon,
-  Flex,
-  Link,
-  Sans,
-  Separator,
-  space,
-} from "@artsy/palette"
+import { Join, Separator, Spacer } from "@artsy/palette"
 import { FollowArtistPopover_artist } from "v2/__generated__/FollowArtistPopover_artist.graphql"
 import { FollowArtistPopoverQuery } from "v2/__generated__/FollowArtistPopoverQuery.graphql"
 import { SystemContext, SystemContextProps } from "v2/System"
 import { SystemQueryRenderer as QueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
-import React, { SFC, useContext } from "react"
+import React, { useContext } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import styled from "styled-components"
 import { Provider } from "unstated"
-import { FollowArtistPopoverRowFragmentContainer as FollowArtistPopoverRow } from "./FollowArtistPopoverRow"
+import { FollowArtistPopoverRowFragmentContainer } from "./FollowArtistPopoverRow"
 import { FollowArtistPopoverState } from "./state"
-
-// TODO: Revisit possibility of creating an Artsy popover for it.
-const BorderedContainer = styled(BorderBox)`
-  background-color: white;
-  border-radius: 2px;
-  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.2);
-`
-
-const Container = Box
-const TitleContainer = Box
+import { extractNodes } from "v2/Utils/extractNodes"
 
 interface Props extends SystemContextProps {
   artist: FollowArtistPopover_artist
-  onClose?: () => void
 }
 
-const FollowArtistPopover: SFC<Props> = props => {
-  const { artist: suggested, user } = props
-  const { related } = suggested
-  // @ts-expect-error STRICT_NULL_CHECK
-  const suggetionsCount = related.suggestedConnection.edges.length
+const FollowArtistPopover: React.FC<Props> = props => {
+  const {
+    artist: { related },
+    user,
+  } = props
+
+  const suggestedArtists = extractNodes(related?.suggestedConnection)
+
+  const suggetionsCount = suggestedArtists.length
   if (suggetionsCount === 0) return null
-  // @ts-expect-error STRICT_NULL_CHECK
-  const excludeArtistIds = related.suggestedConnection.edges.map(
-    // @ts-expect-error STRICT_NULL_CHECK
-    ({ node: { internalID } }) => {
-      return internalID
-    }
-  )
+
+  const excludeArtistIds = suggestedArtists.map(({ internalID }) => internalID)
+
   return (
-    <BorderedContainer>
-      <Container>
-        <TitleContainer mb={1}>
-          <Sans size="3" weight="medium" color="black100">
-            Other artists you might like
-          </Sans>
-          <Box position="absolute" top={space(1)} right={space(1)}>
-            <Link onClick={props.onClose}>
-              <CloseIcon fill={"black30"} />
-            </Link>
-          </Box>
-        </TitleContainer>
-        <Flex flexDirection="column">
-          <Provider
-            inject={[new FollowArtistPopoverState({ excludeArtistIds })]}
-          >
-            {/* @ts-expect-error STRICT_NULL_CHECK */}
-            {related.suggestedConnection.edges.map(
-              // @ts-expect-error STRICT_NULL_CHECK
-              ({ node: artist }, index) => {
-                return (
-                  <React.Fragment key={artist.id}>
-                    <FollowArtistPopoverRow user={user} artist={artist} />
-                    {index < suggetionsCount - 1 && <Separator />}
-                  </React.Fragment>
-                )
-              }
-            )}
-          </Provider>
-        </Flex>
-      </Container>
-    </BorderedContainer>
+    <Provider inject={[new FollowArtistPopoverState({ excludeArtistIds })]}>
+      <Spacer mt={1} />
+
+      <Join separator={<Separator my={1} />}>
+        {suggestedArtists.map(artist => {
+          return (
+            <FollowArtistPopoverRowFragmentContainer
+              key={artist.id}
+              user={user}
+              artist={artist}
+            />
+          )
+        })}
+      </Join>
+    </Provider>
   )
 }
 

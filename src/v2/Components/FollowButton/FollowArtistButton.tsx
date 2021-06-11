@@ -5,10 +5,10 @@ import {
   followedArtist,
   unfollowedArtist,
 } from "@artsy/cohesion"
-import { Box, ButtonProps } from "@artsy/palette"
+import { Box, ButtonProps, Popover } from "@artsy/palette"
 import { FollowArtistButtonMutation } from "v2/__generated__/FollowArtistButtonMutation.graphql"
 import * as Artsy from "v2/System"
-import { FollowArtistPopoverFragmentContainer as SuggestionsPopover } from "v2/Components/FollowArtistPopover"
+import { FollowArtistPopoverFragmentContainer } from "v2/Components/FollowArtistPopover"
 import React from "react"
 import track, { TrackingProp } from "react-tracking"
 import styled from "styled-components"
@@ -50,27 +50,16 @@ interface Props
   triggerSuggestions?: boolean
 }
 
-interface State {
-  openSuggestions: boolean
-}
-
-const SuggestionsPopoverContainer = styled(Box)`
-  position: absolute;
-  z-index: 1;
-`
-
 const Container = styled.span`
   display: inline-block;
 `
 
 @track()
-export class FollowArtistButton extends React.Component<Props, State> {
+export class FollowArtistButton extends React.Component<Props> {
   static defaultProps = {
     buttonProps: {},
     triggerSuggestions: false,
   }
-
-  state = { openSuggestions: false }
 
   trackFollow = () => {
     const {
@@ -82,19 +71,18 @@ export class FollowArtistButton extends React.Component<Props, State> {
       contextPageOwnerType,
     } = this.props
 
+    if (!artist) return
+
     const args: FollowedArgs = {
       contextModule,
       contextOwnerId: contextPageOwnerId,
       contextOwnerSlug: contextPageOwnerSlug,
       // @ts-expect-error STRICT_NULL_CHECK
       contextOwnerType: contextPageOwnerType,
-      // @ts-expect-error STRICT_NULL_CHECK
       ownerId: artist.internalID,
-      // @ts-expect-error STRICT_NULL_CHECK
       ownerSlug: artist.slug,
     }
 
-    // @ts-expect-error STRICT_NULL_CHECK
     const analyticsData = artist.is_followed
       ? unfollowedArtist(args)
       : followedArtist(args)
@@ -103,7 +91,11 @@ export class FollowArtistButton extends React.Component<Props, State> {
     tracking.trackEvent(analyticsData)
   }
 
-  handleFollow = e => {
+  handleFollow = (
+    e:
+      | React.MouseEvent<HTMLSpanElement, MouseEvent>
+      | React.KeyboardEvent<HTMLSpanElement>
+  ) => {
     e.preventDefault() // If this button is part of a link, we _probably_ dont want to actually follow the link.
     const { artist, user, mediator, contextModule } = this.props
 
@@ -120,14 +112,13 @@ export class FollowArtistButton extends React.Component<Props, State> {
   }
 
   followArtistForUser = () => {
-    const { artist, relay, triggerSuggestions } = this.props
+    const { artist, relay } = this.props
 
-    // @ts-expect-error STRICT_NULL_CHECK
+    if (!artist) return
+
     const newFollowCount = artist.is_followed
-      ? // @ts-expect-error STRICT_NULL_CHECK
-        artist.counts.follows - 1
-      : // @ts-expect-error STRICT_NULL_CHECK
-        artist.counts.follows + 1
+      ? (artist.counts?.follows ?? 0) - 1
+      : (artist.counts?.follows ?? 0) + 1
 
     // @ts-expect-error STRICT_NULL_CHECK
     commitMutation<FollowArtistButtonMutation>(relay.environment, {
@@ -149,11 +140,8 @@ export class FollowArtistButton extends React.Component<Props, State> {
         followArtist: {
           artist: {
             counts: { follows: newFollowCount },
-            // @ts-expect-error STRICT_NULL_CHECK
             id: artist.id,
-            // @ts-expect-error STRICT_NULL_CHECK
             is_followed: !artist.is_followed,
-            // @ts-expect-error STRICT_NULL_CHECK
             slug: artist.slug,
           },
         },
@@ -169,66 +157,69 @@ export class FollowArtistButton extends React.Component<Props, State> {
       },
       variables: {
         input: {
-          // @ts-expect-error STRICT_NULL_CHECK
           artistID: artist.internalID,
-          // @ts-expect-error STRICT_NULL_CHECK
           unfollow: artist.is_followed,
         },
       },
     })
     this.trackFollow()
-    // @ts-expect-error STRICT_NULL_CHECK
-    if (triggerSuggestions && !artist.is_followed) {
-      this.setState({ openSuggestions: true })
-    }
-  }
-
-  closePopover() {
-    this.setState({ openSuggestions: false })
   }
 
   render() {
-    const { artist, buttonProps, render, user } = this.props
-    const { openSuggestions } = this.state
-
-    // Custom button renderer
-    const content = render ? (
-      <Container
-        tabIndex={0}
-        role="button"
-        onKeyPress={event => {
-          if (event.key === "Enter" || event.key === " ") {
-            this.handleFollow(event)
-          }
-        }}
-        onClick={this.handleFollow}
-      >
-        {" "}
-        {/* @ts-expect-error STRICT_NULL_CHECK */}
-        {render(artist)}
-      </Container>
-    ) : (
-      <FollowButton
-        // @ts-expect-error STRICT_NULL_CHECK
-        isFollowed={artist && artist.is_followed}
-        handleFollow={this.handleFollow}
-        buttonProps={buttonProps}
-      />
-    )
+    const { artist, buttonProps, render, user, triggerSuggestions } = this.props
 
     return (
       <Box data-test="followArtistButton">
-        {content}
-        {openSuggestions && (
-          <SuggestionsPopoverContainer>
-            <SuggestionsPopover
+        <Popover
+          title="Other artists you might like"
+          placement="bottom"
+          popover={
+            <FollowArtistPopoverFragmentContainer
               user={user}
-              // @ts-expect-error STRICT_NULL_CHECK
-              artist={artist}
-              onClose={() => this.closePopover()}
+              artist={artist!}
             />
-          </SuggestionsPopoverContainer>
-        )}
+          }
+        >
+          {({ anchorRef, onVisible }) => {
+            const openSuggestions = () => {
+              if (triggerSuggestions && !artist?.is_followed) {
+                onVisible()
+              }
+            }
+
+            return render ? (
+              <Container
+                ref={anchorRef as any}
+                tabIndex={0}
+                role="button"
+                onKeyPress={event => {
+                  if (event.key === "Enter" || event.key === " ") {
+                    this.handleFollow(event)
+                    openSuggestions()
+                  }
+                }}
+                onClick={e => {
+                  this.handleFollow(e)
+                  openSuggestions()
+                }}
+              >
+                {" "}
+                {/* @ts-expect-error STRICT_NULL_CHECK */}
+                {render(artist)}
+              </Container>
+            ) : (
+              <FollowButton
+                ref={anchorRef}
+                isFollowed={!!artist?.is_followed}
+                handleFollow={e => {
+                  this.handleFollow(e)
+                  openSuggestions()
+                }}
+                buttonProps={buttonProps}
+              />
+            )
+          }}
+        </Popover>
       </Box>
     )
   }

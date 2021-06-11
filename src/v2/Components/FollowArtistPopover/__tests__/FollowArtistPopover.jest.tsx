@@ -22,6 +22,7 @@ describe("Follow Artist Popover", () => {
                 id: "francesca-dimattio",
                 name: "Francesca DiMattio",
                 internalID: "mongo-id",
+                formattedNationalityAndBirthday: "example",
                 image: {
                   cropped: {
                     url: "/path/to/image.jpg",

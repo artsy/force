@@ -6,6 +6,7 @@ import { FragmentRefs } from "relay-runtime";
 export type FollowArtistPopoverRow_artist = {
     readonly internalID: string;
     readonly name: string | null;
+    readonly formattedNationalityAndBirthday: string | null;
     readonly image: {
         readonly cropped: {
             readonly url: string;
@@ -39,6 +40,13 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "ScalarField",
       "name": "name",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "formattedNationalityAndBirthday",
       "storageKey": null
     },
     {
@@ -84,5 +92,5 @@ const node: ReaderFragment = {
   ],
   "type": "Artist"
 };
-(node as any).hash = 'd84437134bc4bd985ba4e09cb554e080';
+(node as any).hash = '322f208e4150a3d560065e9e8c26cfba';
 export default node;
