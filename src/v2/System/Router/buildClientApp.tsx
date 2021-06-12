@@ -20,7 +20,7 @@ import { createRouteConfig } from "./Utils/createRouteConfig"
 import { queryStringParsing } from "./Utils/queryStringParsing"
 
 import { createRelaySSREnvironment } from "v2/System/Relay/createRelaySSREnvironment"
-import { Boot } from "v2/System/Router/Boot"
+import { Boot } from "v2/System/Boot"
 
 import { RouterConfig } from "./"
 

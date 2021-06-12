@@ -9,7 +9,7 @@ import { Provider as StateProvider } from "unstated"
 import { BreakpointVisualizer } from "v2/Utils/BreakpointVisualizer"
 import Events from "v2/Utils/Events"
 import { getENV } from "v2/Utils/getENV"
-import { ErrorBoundary } from "./ErrorBoundary"
+import { ErrorBoundary } from "./Router/ErrorBoundary"
 import { FocusVisible } from "v2/Components/FocusVisible"
 
 import {
@@ -17,11 +17,13 @@ import {
   MediaContextProvider,
   ResponsiveProvider,
 } from "v2/Utils/Responsive"
-import { AnalyticsContext } from "../Analytics/AnalyticsContext"
+import { AnalyticsContext } from "v2/System/Analytics/AnalyticsContext"
 import { ClientContext } from "desktop/lib/buildClientAppContext"
 import { FlashMessage } from "v2/Components/Modal/FlashModal"
 import { SiftContainer } from "v2/Utils/SiftContainer"
 import { setupSentry } from "lib/setupSentry"
+import { StoreProvider } from "easy-peasy"
+import { store } from "v2/System/store"
 
 export interface BootProps {
   children: React.ReactNode
@@ -68,29 +70,31 @@ export const Boot = track(null, {
     <Theme>
       <HeadProvider headTags={headTags}>
         <StateProvider>
-          <SystemContextProvider {...contextProps}>
-            <AnalyticsContext.Provider value={context?.analytics}>
-              <ErrorBoundary>
-                <MediaContextProvider onlyMatch={onlyMatchMediaQueries}>
-                  <ResponsiveProvider
-                    mediaQueries={themeProps.mediaQueries}
-                    initialMatchingMediaQueries={onlyMatchMediaQueries as any}
-                  >
-                    <Grid fluid maxWidth="100%">
-                      <GlobalStyles />
-                      <FlashMessage />
-                      <FocusVisible />
-                      <SiftContainer />
-                      {children}
-                      {process.env.NODE_ENV === "development" && (
-                        <BreakpointVisualizer />
-                      )}
-                    </Grid>
-                  </ResponsiveProvider>
-                </MediaContextProvider>
-              </ErrorBoundary>
-            </AnalyticsContext.Provider>
-          </SystemContextProvider>
+          <StoreProvider store={store}>
+            <SystemContextProvider {...contextProps}>
+              <AnalyticsContext.Provider value={context?.analytics}>
+                <ErrorBoundary>
+                  <MediaContextProvider onlyMatch={onlyMatchMediaQueries}>
+                    <ResponsiveProvider
+                      mediaQueries={themeProps.mediaQueries}
+                      initialMatchingMediaQueries={onlyMatchMediaQueries as any}
+                    >
+                      <Grid fluid maxWidth="100%">
+                        <GlobalStyles />
+                        <FlashMessage />
+                        <FocusVisible />
+                        <SiftContainer />
+                        {children}
+                        {process.env.NODE_ENV === "development" && (
+                          <BreakpointVisualizer />
+                        )}
+                      </Grid>
+                    </ResponsiveProvider>
+                  </MediaContextProvider>
+                </ErrorBoundary>
+              </AnalyticsContext.Provider>
+            </SystemContextProvider>
+          </StoreProvider>
         </StateProvider>
       </HeadProvider>
     </Theme>

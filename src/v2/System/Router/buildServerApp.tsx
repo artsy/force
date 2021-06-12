@@ -16,7 +16,7 @@ import { Request, Response } from "express"
 import { createQueryMiddleware } from "farce"
 
 import { createRelaySSREnvironment } from "v2/System/Relay/createRelaySSREnvironment"
-import { Boot } from "v2/System/Router/Boot"
+import { Boot } from "v2/System/Boot"
 
 import createLogger from "v2/Utils/logger"
 import { createMediaStyle } from "v2/Utils/Responsive"

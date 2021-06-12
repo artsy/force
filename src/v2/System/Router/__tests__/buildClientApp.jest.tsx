@@ -4,7 +4,7 @@ import { createMockNetworkLayer } from "v2/DevTools"
 import { mount } from "enzyme"
 import React from "react"
 import { graphql } from "react-relay"
-import { Boot } from "../Boot"
+import { Boot } from "v2/System/Boot"
 
 jest.mock("v2/Components/NavBar", () => ({
   NavBar: () => <div />,
