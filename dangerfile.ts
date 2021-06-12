@@ -1,5 +1,5 @@
 /* eslint-disable jest/no-jasmine-globals */
-import { danger } from "danger"
+import { danger, warn } from "danger"
 import * as fs from "fs"
 
 /**
@@ -29,6 +29,18 @@ function preventDefaultQueryRenderImport() {
   }
 }
 
+function warnCreateSmokeTestIfRoutesFileChanged() {
+  const modified = danger.git.modified_files
+  console.log(modified)
+
+  if (modified.includes("src/v2/routes.tsx")) {
+    warn(
+      "Routes added to `routes.tsx` should have a corresponding cypress.js smoke test. See the `cypress/integration` folder for examples."
+    )
+  }
+}
+
 ;(async function () {
   preventDefaultQueryRenderImport()
+  warnCreateSmokeTestIfRoutesFileChanged()
 })()
