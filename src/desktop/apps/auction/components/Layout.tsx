@@ -15,6 +15,7 @@ import { connect } from "react-redux"
 import { showModal } from "../actions/app"
 import { AnalyticsContext } from "v2/System/Analytics/AnalyticsContext"
 import { OwnerType } from "@artsy/cohesion"
+import { ZendeskWrapper } from "v2/Components/ZendeskWrapper"
 
 // FIXME: Rewire
 let Banner = _Banner
@@ -45,6 +46,12 @@ function Layout(props) {
     case "ConfirmRegistration":
       Modal = ConfirmRegistrationModal
       break
+  }
+
+  function renderZendeskScript() {
+    if (typeof window !== "undefined" && window.zEmbed) return
+
+    return <ZendeskWrapper />
   }
 
   return (
@@ -87,6 +94,7 @@ function Layout(props) {
           {showFooter && <Footer />}
         </div>
       </div>
+      {renderZendeskScript()}
     </AnalyticsContext.Provider>
   )
 }

@@ -3,6 +3,7 @@ import block from "bem-cn-lite"
 import { connect } from "react-redux"
 import { Button, Sans } from "@artsy/palette"
 import { bidderQualifications } from "v2/Utils/identityVerificationRequirements"
+import { ZendeskWrapper } from "v2/Components/ZendeskWrapper"
 
 const RegistrationMessage: React.FC<{ color?: string }> = ({
   color = "black60",
@@ -80,6 +81,12 @@ const Registration: React.FC<RegistrationProps> = props => {
     pendingIdentityVerification,
     shouldPromptIdVerification,
   } = bidderQualifications(auction, user, userRegistration)
+
+  const renderZendeskScript = () => {
+    if (typeof window !== "undefined" && window.zEmbed) return
+
+    return <ZendeskWrapper />
+  }
 
   return (
     <div className={b()}>
@@ -186,6 +193,7 @@ const Registration: React.FC<RegistrationProps> = props => {
           </div>
         </div>
       )}
+      {renderZendeskScript()}
     </div>
   )
 }
