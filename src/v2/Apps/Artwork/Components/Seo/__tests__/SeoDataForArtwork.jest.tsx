@@ -76,7 +76,7 @@ describe("SeoDataForArtwork", () => {
       })
     })
 
-    it("Renders a Product for a non-institution ", async () => {
+    it("Renders a Product for a non-institution", async () => {
       // @ts-expect-error STRICT_NULL_CHECK
       const wrapper = await getWrapper({
         ...SeoDataForArtworkFixture,
@@ -151,7 +151,7 @@ describe("SeoDataForArtwork", () => {
     })
 
     describe("Artwork price", () => {
-      it("Doesn't render offer when price is hidden", async () => {
+      it("renders CreativeWork when price is hidden", async () => {
         // @ts-expect-error STRICT_NULL_CHECK
         const wrapper = await getWrapper({
           ...SeoDataForArtworkFixture,
@@ -159,7 +159,8 @@ describe("SeoDataForArtwork", () => {
           is_price_hidden: true,
         })
 
-        expect(getProductData(wrapper).offers).toBeFalsy()
+        expect(wrapper.find(CreativeWork).length).toEqual(1)
+        expect(wrapper.find(Product).length).toEqual(0)
       })
 
       it("Renders AggregateOffer when price range", async () => {
@@ -255,7 +256,7 @@ describe("SeoDataForArtwork", () => {
         })
       })
 
-      it("Doesn't render offer when price range and no low bound", async () => {
+      it("renders CreativeWork when price range and no low bound", async () => {
         // @ts-expect-error STRICT_NULL_CHECK
         const wrapper = await getWrapper({
           ...SeoDataForArtworkFixture,
@@ -270,7 +271,8 @@ describe("SeoDataForArtwork", () => {
           },
         })
 
-        expect(getProductData(wrapper).offers).toBeFalsy()
+        expect(wrapper.find(CreativeWork).length).toEqual(1)
+        expect(wrapper.find(Product).length).toEqual(0)
       })
 
       it("Does not render seller within offer when profile image (required) is not present", async () => {
@@ -302,10 +304,22 @@ describe("SeoDataForArtwork", () => {
       })
     })
     describe("Artwork dimensions", () => {
+      const listPrice = {
+        __typename: "PriceRange",
+        maxPrice: {
+          major: 1000,
+        },
+        minPrice: {
+          major: 100,
+          currencyCode: "USD",
+        },
+      }
+
       it("renders no dimensions when dimensions aren't parseable", async () => {
         // @ts-expect-error STRICT_NULL_CHECK
         const wrapper = await getWrapper({
           ...SeoDataForArtworkFixture,
+          listPrice,
           dimensions: {
             in: "one point twenty one gigawatts",
           },
@@ -320,6 +334,7 @@ describe("SeoDataForArtwork", () => {
         // @ts-expect-error STRICT_NULL_CHECK
         const wrapper = await getWrapper({
           ...SeoDataForArtworkFixture,
+          listPrice,
           dimensions: {
             in: "2 × 4 in",
           },
@@ -334,6 +349,7 @@ describe("SeoDataForArtwork", () => {
         // @ts-expect-error STRICT_NULL_CHECK
         const wrapper = await getWrapper({
           ...SeoDataForArtworkFixture,
+          listPrice,
           dimensions: {
             in: "2 × 4 × 6 in",
           },
@@ -348,6 +364,7 @@ describe("SeoDataForArtwork", () => {
         // @ts-expect-error STRICT_NULL_CHECK
         const wrapper = await getWrapper({
           ...SeoDataForArtworkFixture,
+          listPrice,
           dimensions: {
             in: "2×4×6 in",
           },
@@ -362,6 +379,7 @@ describe("SeoDataForArtwork", () => {
         // @ts-expect-error STRICT_NULL_CHECK
         const wrapper = await getWrapper({
           ...SeoDataForArtworkFixture,
+          listPrice,
           dimensions: {
             in: "2 × 4",
           },
@@ -372,7 +390,7 @@ describe("SeoDataForArtwork", () => {
         expect(getProductData(wrapper).depth).toBeUndefined()
       })
 
-      it("successfully handles case when no dimensions a present", async () => {
+      it("successfully handles case when no dimensions are present", async () => {
         expect(() =>
           // @ts-expect-error STRICT_NULL_CHECK
           getWrapper({ ...SeoDataForArtworkFixture, dimensions: undefined })

@@ -44,11 +44,12 @@ export const SeoDataForArtwork: React.FC<SeoDataForArtworkProps> = ({
 
   // @ts-expect-error STRICT_NULL_CHECK
   const partnerType = get(artwork, a => a.partner.type)
-  if (partnerType === "Institution") {
+  const offers = offerAttributes(artwork)
+
+  if (partnerType === "Institution" || offers === null) {
     return <CreativeWork data={artworkMetaData} />
   }
 
-  const offers = offerAttributes(artwork)
   const ecommerceData = {
     category: artwork.category,
     productionDate: artwork.date,
