@@ -34,6 +34,7 @@ export type Conversation_conversation = {
     readonly items: ReadonlyArray<{
         readonly item: ({
             readonly __typename: "Artwork";
+            readonly internalID: string;
             readonly id: string;
             readonly date: string | null;
             readonly title: string | null;
@@ -96,24 +97,31 @@ v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "name",
+  "name": "internalID",
   "storageKey": null
 },
 v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "__typename",
+  "name": "name",
   "storageKey": null
 },
 v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
+  "name": "__typename",
+  "storageKey": null
+},
+v4 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
   "name": "href",
   "storageKey": null
 },
-v4 = [
+v5 = [
   {
     "alias": null,
     "args": null,
@@ -153,13 +161,7 @@ return {
   "name": "Conversation_conversation",
   "selections": [
     (v0/*: any*/),
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "internalID",
-      "storageKey": null
-    },
+    (v1/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -168,7 +170,7 @@ return {
       "name": "from",
       "plural": false,
       "selections": [
-        (v1/*: any*/),
+        (v2/*: any*/),
         {
           "alias": null,
           "args": null,
@@ -187,7 +189,7 @@ return {
       "name": "to",
       "plural": false,
       "selections": [
-        (v1/*: any*/),
+        (v2/*: any*/),
         {
           "alias": null,
           "args": null,
@@ -283,7 +285,7 @@ return {
               "plural": false,
               "selections": [
                 (v0/*: any*/),
-                (v2/*: any*/)
+                (v3/*: any*/)
               ],
               "storageKey": null
             },
@@ -321,10 +323,11 @@ return {
           "name": "item",
           "plural": false,
           "selections": [
-            (v2/*: any*/),
+            (v3/*: any*/),
             {
               "kind": "InlineFragment",
               "selections": [
+                (v1/*: any*/),
                 (v0/*: any*/),
                 {
                   "alias": null,
@@ -347,7 +350,7 @@ return {
                   "name": "artistNames",
                   "storageKey": null
                 },
-                (v3/*: any*/),
+                (v4/*: any*/),
                 {
                   "alias": null,
                   "args": null,
@@ -382,15 +385,15 @@ return {
                   "name": "listPrice",
                   "plural": false,
                   "selections": [
-                    (v2/*: any*/),
+                    (v3/*: any*/),
                     {
                       "kind": "InlineFragment",
-                      "selections": (v4/*: any*/),
+                      "selections": (v5/*: any*/),
                       "type": "Money"
                     },
                     {
                       "kind": "InlineFragment",
-                      "selections": (v4/*: any*/),
+                      "selections": (v5/*: any*/),
                       "type": "PriceRange"
                     }
                   ],
@@ -411,7 +414,7 @@ return {
                   "name": "fair",
                   "plural": false,
                   "selections": [
-                    (v1/*: any*/),
+                    (v2/*: any*/),
                     {
                       "alias": null,
                       "args": null,
@@ -440,8 +443,8 @@ return {
                   ],
                   "storageKey": null
                 },
-                (v3/*: any*/),
-                (v1/*: any*/),
+                (v4/*: any*/),
+                (v2/*: any*/),
                 {
                   "alias": null,
                   "args": null,
@@ -473,5 +476,5 @@ return {
   "type": "Conversation"
 };
 })();
-(node as any).hash = '9eaaa6e185f2b5ea255966af0c2edef5';
+(node as any).hash = 'be0d0a4506917a5823fff806295aa10f';
 export default node;

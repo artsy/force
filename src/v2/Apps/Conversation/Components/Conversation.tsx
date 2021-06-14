@@ -14,6 +14,7 @@ import { ConversationMessagesFragmentContainer as ConversationMessages } from ".
 import { UpdateConversation } from "../Mutation/UpdateConversationMutation"
 import styled from "styled-components"
 import { ConversationHeader } from "./ConversationHeader"
+import { ConfirmArtworkModalQueryRenderer } from "./ConfirmArtworkModal"
 
 export interface ConversationProps {
   conversation: Conversation_conversation
@@ -68,6 +69,11 @@ const Conversation: React.FC<ConversationProps> = props => {
       }
     />
   ))
+
+  const [showConfirmArtworkModal, setShowConfirmArtworkModal] = useState(false)
+  const artwork =
+    conversation.items?.[0]?.item?.__typename === "Artwork" &&
+    conversation.items?.[0]?.item
 
   // Pagination Scroll Logic
   const [fetchingMore, setFetchingMore] = useState(false)
@@ -129,6 +135,14 @@ const Conversation: React.FC<ConversationProps> = props => {
           environment={relay.environment}
         />
       </NoScrollFlex>
+      {artwork && (
+        <ConfirmArtworkModalQueryRenderer
+          artworkID={artwork?.internalID!}
+          conversationID={conversation.internalID!}
+          show={showConfirmArtworkModal}
+          closeModal={() => setShowConfirmArtworkModal(false)}
+        />
+      )}
     </Flex>
   )
 }
@@ -190,6 +204,7 @@ export const ConversationPaginationContainer = createPaginationContainer(
           item {
             __typename
             ... on Artwork {
+              internalID
               id
               date
               title
