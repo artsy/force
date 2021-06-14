@@ -182,7 +182,7 @@ export class FollowArtistButton extends React.Component<Props> {
         >
           {({ anchorRef, onVisible }) => {
             const openSuggestions = () => {
-              if (triggerSuggestions && !artist?.is_followed) {
+              if (!!user && triggerSuggestions && !artist?.is_followed) {
                 onVisible()
               }
             }
