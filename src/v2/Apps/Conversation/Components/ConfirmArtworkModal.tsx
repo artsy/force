@@ -9,9 +9,9 @@ import {
 } from "@artsy/palette"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { useSystemContext } from "v2/Artsy"
-import { renderWithLoadProgress } from "v2/Artsy/Relay/renderWithLoadProgress"
-import { SystemQueryRenderer } from "v2/Artsy/Relay/SystemQueryRenderer"
+import { useSystemContext } from "v2/System"
+import { renderWithLoadProgress } from "v2/System/Relay/renderWithLoadProgress"
+import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import {
   ConfirmArtworkModalQuery,
   ConfirmArtworkModalQueryResponse,
