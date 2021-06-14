@@ -19,7 +19,6 @@ const ArtistCareerHighlights: React.FC<ArtistCareerHighlightsProps> = ({
   const { credit, partner, text } = artist.biographyBlurb!
   const showCredit = Boolean(credit) && partner?.profile?.href
   const partnerHref = `${sd.APP_URL}${partner?.profile?.href}`
-  console.log(partnerHref)
   const hasCategories = Boolean(artist.related?.genes?.edges?.length)
 
   return (
