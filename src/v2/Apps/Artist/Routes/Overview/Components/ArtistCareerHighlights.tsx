@@ -16,9 +16,10 @@ interface ArtistCareerHighlightsProps {
 const ArtistCareerHighlights: React.FC<ArtistCareerHighlightsProps> = ({
   artist,
 }) => {
-  const { credit, partnerID, text } = artist.biographyBlurb!
-  const showCredit = Boolean(credit)
-  const partnerHref = `${sd.APP_URL}/${partnerID}`
+  const { credit, partner, text } = artist.biographyBlurb!
+  const showCredit = Boolean(credit) && partner?.profile?.href
+  const partnerHref = `${sd.APP_URL}${partner?.profile?.href}`
+  console.log(partnerHref)
   const hasCategories = Boolean(artist.related?.genes?.edges?.length)
 
   return (
@@ -82,10 +83,13 @@ export const ArtistCareerHighlightsFragmentContainer = createFragmentContainer(
         ...SelectedCareerAchievements_artist
         ...ArtistConsignButton_artist
         ...ArtistGenes_artist
-
         biographyBlurb(format: HTML, partnerBio: false) {
+          partner {
+            profile {
+              href
+            }
+          }
           credit
-          partnerID
           text
         }
         name

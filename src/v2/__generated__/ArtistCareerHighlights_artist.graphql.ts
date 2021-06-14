@@ -5,8 +5,12 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ArtistCareerHighlights_artist = {
     readonly biographyBlurb: {
+        readonly partner: {
+            readonly profile: {
+                readonly href: string | null;
+            } | null;
+        } | null;
         readonly credit: string | null;
-        readonly partnerID: string | null;
         readonly text: string | null;
     } | null;
     readonly name: string | null;
@@ -59,15 +63,37 @@ const node: ReaderFragment = {
         {
           "alias": null,
           "args": null,
-          "kind": "ScalarField",
-          "name": "credit",
+          "concreteType": "Partner",
+          "kind": "LinkedField",
+          "name": "partner",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": "Profile",
+              "kind": "LinkedField",
+              "name": "profile",
+              "plural": false,
+              "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "href",
+                  "storageKey": null
+                }
+              ],
+              "storageKey": null
+            }
+          ],
           "storageKey": null
         },
         {
           "alias": null,
           "args": null,
           "kind": "ScalarField",
-          "name": "partnerID",
+          "name": "credit",
           "storageKey": null
         },
         {
@@ -163,5 +189,5 @@ const node: ReaderFragment = {
   ],
   "type": "Artist"
 };
-(node as any).hash = '55e5929534e4a71156a331700c124f22';
+(node as any).hash = '25f588a8a62aacf54bb076b92934ceac';
 export default node;
