@@ -159,7 +159,12 @@ function initializeVariablesWithFilterState({ slug }, props) {
     initialFilterStateFromUrl
   )
 
-  let aggregations: string[] = ["TOTAL", "MAJOR_PERIOD", "ARTIST"]
+  let aggregations: string[] = [
+    "TOTAL",
+    "MAJOR_PERIOD",
+    "ARTIST",
+    "LOCATION_CITY",
+  ]
   const additionalAggregations = getENV("ENABLE_NEW_ARTWORK_FILTERS")
     ? ["ARTIST_NATIONALITY", "MATERIALS_TERMS", "PARTNER"]
     : ["GALLERY"]

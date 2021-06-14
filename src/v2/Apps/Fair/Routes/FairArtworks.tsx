@@ -23,6 +23,7 @@ import { PartnersFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/Partn
 import { ArtistNationalityFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/ArtistNationalityFilter"
 import { MaterialsFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/MaterialsFilter"
 import { SizeFilter2 } from "v2/Components/ArtworkFilter/ArtworkFilters/SizeFilter2"
+import { ArtworkLocationFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/ArtworkLocationFilter"
 
 interface FairArtworksFilterProps {
   fair: FairArtworks_fair
@@ -62,6 +63,7 @@ const FairArtworksFilter: React.FC<FairArtworksFilterProps> = props => {
       {showNewFilters ? <SizeFilter2 /> : <SizeFilter />}
       <WaysToBuyFilter />
       {showNewFilters && <ArtistNationalityFilter expanded />}
+      <ArtworkLocationFilter expanded />
       <TimePeriodFilter />
       <ColorFilter />
       {showNewFilters ? <PartnersFilter /> : <GalleryFilter />}
