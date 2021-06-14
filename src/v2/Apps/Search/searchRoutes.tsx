@@ -7,7 +7,6 @@ import { RouteSpinner } from "v2/System/Relay/renderWithLoadProgress"
 import { ArtworkQueryFilter } from "v2/Components/ArtworkFilter/ArtworkQueryFilter"
 import { allowedFilters } from "v2/Components/ArtworkFilter/Utils/allowedFilters"
 import { paramsToCamelCase } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
-import { getENV } from "v2/Utils/getENV"
 
 import { SearchResultsArtistsRouteFragmentContainer } from "./Routes/Artists/SearchResultsArtists"
 import { SearchResultsArtworksRoute } from "./Routes/Artworks"
@@ -15,14 +14,18 @@ import { SearchResultsEntityRouteFragmentContainer } from "./Routes/Entity/Searc
 import { SearchAppFragmentContainer } from "./SearchApp"
 
 const prepareVariables = (_params, { location }) => {
-  const aggregations = ["TOTAL"]
-  const additionalAggregations = getENV("ENABLE_NEW_ARTWORK_FILTERS")
-    ? ["ARTIST_NATIONALITY", "LOCATION_CITY", "MATERIALS_TERMS", "PARTNER"]
-    : []
+  const aggregations = [
+    "TOTAL",
+    "ARTIST_NATIONALITY",
+    "LOCATION_CITY",
+    "MATERIALS_TERMS",
+    "PARTNER",
+  ]
+
   return {
     ...paramsToCamelCase(omit(location.query, "term")),
     keyword: location.query.term.toString(),
-    aggregations: aggregations.concat(additionalAggregations),
+    aggregations,
   }
 }
 

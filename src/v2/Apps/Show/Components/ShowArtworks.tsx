@@ -10,15 +10,13 @@ import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
 import { MediumFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/MediumFilter"
 import { PriceRangeFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/PriceRangeFilter"
 import { WaysToBuyFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/WaysToBuyFilter"
-import { SizeFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/SizeFilter"
 import { TimePeriodFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/TimePeriodFilter"
 import { ColorFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/ColorFilter"
 import { BoxProps } from "@artsy/palette"
 import { useRouter } from "v2/System/Router/useRouter"
-import { getENV } from "v2/Utils/getENV"
 import { MaterialsFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/MaterialsFilter"
 import { omit } from "lodash"
-import { SizeFilter2 } from "v2/Components/ArtworkFilter/ArtworkFilters/SizeFilter2"
+import { SizeFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/SizeFilter"
 
 interface ShowArtworksFilterProps extends BoxProps {
   show: ShowArtworks_show
@@ -39,13 +37,12 @@ const ShowArtworksFilter: React.FC<ShowArtworksFilterProps> = ({
 
   if (!hasFilter) return null
 
-  const showNewFilters = getENV("ENABLE_NEW_ARTWORK_FILTERS")
   const Filters = (
     <>
       <MediumFilter expanded />
-      {showNewFilters && <MaterialsFilter expanded />}
+      <MaterialsFilter expanded />
       <PriceRangeFilter expanded />
-      {showNewFilters ? <SizeFilter2 expanded /> : <SizeFilter expanded />}
+      <SizeFilter expanded />
       <WaysToBuyFilter />
       <TimePeriodFilter />
       <ColorFilter />

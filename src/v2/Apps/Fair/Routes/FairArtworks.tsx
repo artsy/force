@@ -10,20 +10,17 @@ import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
 import { MediumFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/MediumFilter"
 import { PriceRangeFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/PriceRangeFilter"
 import { WaysToBuyFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/WaysToBuyFilter"
-import { GalleryFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/GalleryFilter"
-import { SizeFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/SizeFilter"
 import { TimePeriodFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/TimePeriodFilter"
 import { ColorFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/ColorFilter"
 import { ArtistsFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/ArtistsFilter"
 import { useSystemContext } from "v2/System"
 import { useRouter } from "v2/System/Router/useRouter"
 import { AttributionClassFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/AttributionClassFilter"
-import { getENV } from "v2/Utils/getENV"
 import { PartnersFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/PartnersFilter"
 import { ArtistNationalityFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/ArtistNationalityFilter"
 import { MaterialsFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/MaterialsFilter"
-import { SizeFilter2 } from "v2/Components/ArtworkFilter/ArtworkFilters/SizeFilter2"
 import { ArtworkLocationFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/ArtworkLocationFilter"
+import { SizeFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/SizeFilter"
 
 interface FairArtworksFilterProps {
   fair: FairArtworks_fair
@@ -44,7 +41,6 @@ const FairArtworksFilter: React.FC<FairArtworksFilterProps> = props => {
 
   // @ts-expect-error STRICT_NULL_CHECK
   const { counts } = filtered_artworks
-  const showNewFilters = getENV("ENABLE_NEW_ARTWORK_FILTERS")
 
   // TODO: You shouldn't have to pass `relayEnvironment` and `user` through below.
   // For some reason, they are undefined when `useSystemContext()` is referenced
@@ -57,16 +53,16 @@ const FairArtworksFilter: React.FC<FairArtworksFilterProps> = props => {
         user={user}
       />
       <MediumFilter expanded />
-      {showNewFilters && <MaterialsFilter expanded />}
+      <MaterialsFilter expanded />
       <PriceRangeFilter />
       <AttributionClassFilter expanded />
-      {showNewFilters ? <SizeFilter2 /> : <SizeFilter />}
+      <SizeFilter />
       <WaysToBuyFilter />
-      {showNewFilters && <ArtistNationalityFilter expanded />}
       <ArtworkLocationFilter expanded />
+      <ArtistNationalityFilter expanded />
       <TimePeriodFilter />
       <ColorFilter />
-      {showNewFilters ? <PartnersFilter /> : <GalleryFilter />}
+      <PartnersFilter />
     </>
   )
 

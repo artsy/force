@@ -4,7 +4,6 @@ import { graphql } from "react-relay"
 import { allowedFilters } from "v2/Components/ArtworkFilter/Utils/allowedFilters"
 
 import { paramsToCamelCase } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
-import { getENV } from "v2/Utils/getENV"
 import { CollectionAppQuery } from "./Routes/Collection/CollectionAppQuery"
 
 const CollectApp = loadable(
@@ -96,15 +95,16 @@ function initializeVariablesWithFilterState(params, props) {
   const collectionSlug = params.slug
 
   // TODO: Do these aggregations accomplish much on /collect?
-  const additionalAggregations = getENV("ENABLE_NEW_ARTWORK_FILTERS")
-    ? ["ARTIST_NATIONALITY", "LOCATION_CITY", "MATERIALS_TERMS", "PARTNER"]
-    : []
   const collectionOnlyAggregations = collectionSlug
     ? ["MERCHANDISABLE_ARTISTS", "MEDIUM", "MAJOR_PERIOD"]
     : []
-  const aggregations = ["TOTAL"]
-    .concat(additionalAggregations)
-    .concat(collectionOnlyAggregations)
+  const aggregations = [
+    "TOTAL",
+    "ARTIST_NATIONALITY",
+    "LOCATION_CITY",
+    "MATERIALS_TERMS",
+    "PARTNER",
+  ].concat(collectionOnlyAggregations)
 
   const input = {
     sort: "-decayed_merch",

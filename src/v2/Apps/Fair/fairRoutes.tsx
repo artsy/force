@@ -2,7 +2,6 @@ import loadable from "@loadable/component"
 import { graphql } from "react-relay"
 import { AppRouteConfig } from "v2/System/Router/Route"
 import { paramsToCamelCase } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
-import { getENV } from "v2/Utils/getENV"
 import { allowedFilters } from "v2/Components/ArtworkFilter/Utils/allowedFilters"
 
 const FairApp = loadable(
@@ -164,11 +163,11 @@ function initializeVariablesWithFilterState({ slug }, props) {
     "MAJOR_PERIOD",
     "ARTIST",
     "LOCATION_CITY",
+    "ARTIST_NATIONALITY",
+    "MATERIALS_TERMS",
+    "PARTNER",
   ]
-  const additionalAggregations = getENV("ENABLE_NEW_ARTWORK_FILTERS")
-    ? ["ARTIST_NATIONALITY", "MATERIALS_TERMS", "PARTNER"]
-    : ["GALLERY"]
-  const allAggregations = aggregations.concat(additionalAggregations)
+
   const input = {
     sort: "-decayed_merch",
     ...allowedFilters(camelCasedFilterStateFromUrl),
@@ -182,6 +181,6 @@ function initializeVariablesWithFilterState({ slug }, props) {
     slug,
     input,
     shouldFetchCounts: !!props.context.user,
-    aggregations: allAggregations,
+    aggregations,
   }
 }

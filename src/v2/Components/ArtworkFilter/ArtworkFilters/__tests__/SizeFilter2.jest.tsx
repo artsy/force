@@ -6,7 +6,7 @@ import {
   ArtworkFilterContextProvider,
   useArtworkFilterContext,
 } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
-import { SizeFilter2, SizeFilter2Props } from "../SizeFilter2"
+import { SizeFilter2, SizeFilter2Props } from "../SizeFilter"
 
 jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
   useMatchMedia: () => ({}),
