@@ -75,7 +75,13 @@ export const CollapsibleArtworkDetails: React.FC<CollapsibleArtworkDetailsProps>
           </Flex>
         }
       >
-        <Flex flexDirection="column" mx="20px">
+        <Flex
+          flexDirection="column"
+          ml="20px"
+          pr="20px"
+          maxHeight="230px"
+          overflowY="scroll"
+        >
           {detailItems.map(({ title, value }, index) => (
             <Field key={index.toString()} title={title}>
               {value}
