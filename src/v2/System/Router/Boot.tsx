@@ -1,4 +1,4 @@
-import { Grid, Theme, injectGlobalStyles, themeProps } from "@artsy/palette"
+import { Theme, injectGlobalStyles, themeProps } from "@artsy/palette"
 import { SystemContextProvider, track } from "v2/System"
 import { AppRouteConfig } from "v2/System/Router/Route"
 import React, { useEffect } from "react"
@@ -6,12 +6,10 @@ import { HeadProvider } from "react-head"
 import { Environment } from "relay-runtime"
 import { data as sd } from "sharify"
 import { Provider as StateProvider } from "unstated"
-import { BreakpointVisualizer } from "v2/Utils/BreakpointVisualizer"
 import Events from "v2/Utils/Events"
 import { getENV } from "v2/Utils/getENV"
 import { ErrorBoundary } from "./ErrorBoundary"
 import { FocusVisible } from "v2/Components/FocusVisible"
-
 import {
   MatchingMediaQueries,
   MediaContextProvider,
@@ -22,6 +20,7 @@ import { ClientContext } from "desktop/lib/buildClientAppContext"
 import { FlashMessage } from "v2/Components/Modal/FlashModal"
 import { SiftContainer } from "v2/Utils/SiftContainer"
 import { setupSentry } from "lib/setupSentry"
+import { StickyProvider } from "v2/Components/Sticky"
 
 export interface BootProps {
   children: React.ReactNode
@@ -76,16 +75,13 @@ export const Boot = track(null, {
                     mediaQueries={themeProps.mediaQueries}
                     initialMatchingMediaQueries={onlyMatchMediaQueries as any}
                   >
-                    <Grid fluid maxWidth="100%">
+                    <StickyProvider>
                       <GlobalStyles />
                       <FlashMessage />
                       <FocusVisible />
                       <SiftContainer />
                       {children}
-                      {process.env.NODE_ENV === "development" && (
-                        <BreakpointVisualizer />
-                      )}
-                    </Grid>
+                    </StickyProvider>
                   </ResponsiveProvider>
                 </MediaContextProvider>
               </ErrorBoundary>

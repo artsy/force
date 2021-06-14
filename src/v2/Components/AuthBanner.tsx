@@ -9,11 +9,11 @@ export const AuthBanner: React.FC = () => {
         <Button
           // @ts-ignore
           as={RouterLink}
-          to="/signup"
+          to="/login"
           variant="secondaryOutline"
           flex={1}
         >
-          Sign up
+          Log in
         </Button>
 
         <Spacer ml={1} />
@@ -21,10 +21,10 @@ export const AuthBanner: React.FC = () => {
         <Button
           // @ts-ignore
           as={RouterLink}
-          to="/login"
+          to="/signup"
           flex={1}
         >
-          Log in
+          Sign up
         </Button>
       </Flex>
 

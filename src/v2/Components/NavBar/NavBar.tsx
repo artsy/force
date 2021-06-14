@@ -18,13 +18,13 @@ import { track, useTracking } from "v2/System/Analytics"
 import Events from "v2/Utils/Events"
 import { useMatchMedia } from "v2/Utils/Hooks/useMatchMedia"
 import { NavBarPrimaryLogo } from "./NavBarPrimaryLogo"
-import { NavBarSkipLink } from "./NavBarSkipLink"
 import { LoggedInActionsQueryRenderer as LoggedInActions } from "./LoggedInActions"
 import {
   NAV_BAR_TOP_TIER_HEIGHT,
   NAV_BAR_BOTTOM_TIER_HEIGHT,
 } from "./constants"
 import { ScrollIntoView } from "v2/Utils"
+import { Sticky } from "v2/Components/Sticky"
 
 /**
  * Old Force pages have the navbar height hardcoded in several places. If
@@ -85,9 +85,7 @@ export const NavBar: React.FC = track(
   }
 
   return (
-    <>
-      <NavBarSkipLink />
-
+    <Sticky zIndex={2}>
       <header>
         <NavBarContainer as="nav">
           <NavBarTier height={NAV_BAR_TOP_TIER_HEIGHT}>
@@ -277,7 +275,7 @@ export const NavBar: React.FC = track(
           )}
         </NavBarContainer>
       </header>
-    </>
+    </Sticky>
   )
 })
 

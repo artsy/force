@@ -1,13 +1,8 @@
-import { Box, Flex, Theme } from "@artsy/palette"
+import { Flex, Theme } from "@artsy/palette"
 import { NetworkOfflineMonitor } from "v2/System/Router/NetworkOfflineMonitor"
 import { findCurrentRoute } from "v2/System/Router/Utils/findCurrentRoute"
 import { useMaybeReloadAfterInquirySignIn } from "v2/System/Router/Utils/useMaybeReloadAfterInquirySignIn"
-import {
-  NAV_BAR_HEIGHT,
-  NavBar,
-  MOBILE_NAV_HEIGHT,
-  MOBILE_LOGGED_IN_NAV_HEIGHT,
-} from "v2/Components/NavBar"
+import { NavBar } from "v2/Components/NavBar"
 import { Match } from "found"
 import { isFunction } from "lodash"
 import { Footer } from "v2/Components/Footer"
@@ -20,6 +15,7 @@ import { useRouteComplete } from "v2/Utils/Hooks/useRouteComplete"
 import { useAuthIntent } from "v2/Utils/Hooks/useAuthIntent"
 import { AuthBanner } from "v2/Components/AuthBanner"
 import { Media } from "v2/Utils/Responsive"
+import { SkipLink } from "v2/Components/SkipLink"
 
 const logger = createLogger("Apps/Components/AppShell")
 
@@ -79,53 +75,49 @@ export const AppShell: React.FC<AppShellProps> = props => {
   useMaybeReloadAfterInquirySignIn()
 
   return (
-    <Flex
-      width="100%"
-      // Prevents horizontal scrollbars from `FullBleed` + persistent vertical scrollbars
-      overflowX="hidden"
-      // Implements "Sticky footer" pattern
-      // https://philipwalton.github.io/solved-by-flexbox/demos/sticky-footer/
-      minHeight="100vh"
-      flexDirection="column"
-    >
-      <Box
-        pb={[
-          isLoggedIn ? MOBILE_LOGGED_IN_NAV_HEIGHT : MOBILE_NAV_HEIGHT,
-          NAV_BAR_HEIGHT,
-        ]}
+    <>
+      <Flex
+        width="100%"
+        // Prevents horizontal scrollbars from `FullBleed` + persistent vertical scrollbars
+        overflowX="hidden"
+        // Implements "Sticky footer" pattern
+        // https://philipwalton.github.io/solved-by-flexbox/demos/sticky-footer/
+        minHeight="100vh"
+        flexDirection="column"
       >
-        <Box left={0} position="fixed" width="100%" zIndex={100}>
-          <Media at="xs">{!isLoggedIn && <AuthBanner />}</Media>
-          <NavBar />
-        </Box>
-      </Box>
+        <SkipLink />
 
-      <Theme theme={theme}>
-        <>
-          <Flex
-            as="main"
-            id="main"
-            // Occupies available vertical space
-            flex={1}
-          >
-            <AppContainer maxWidth={appContainerMaxWidth}>
-              <HorizontalPadding>{children}</HorizontalPadding>
-            </AppContainer>
-          </Flex>
+        <Media at="xs">{!isLoggedIn && <AuthBanner />}</Media>
 
-          <NetworkOfflineMonitor />
+        <NavBar />
 
-          {showFooter && (
-            <Flex bg="white100">
-              <AppContainer>
-                <HorizontalPadding>
-                  <Footer />
-                </HorizontalPadding>
+        <Theme theme={theme}>
+          <>
+            <Flex
+              as="main"
+              id="main"
+              // Occupies available vertical space
+              flex={1}
+            >
+              <AppContainer maxWidth={appContainerMaxWidth}>
+                <HorizontalPadding>{children}</HorizontalPadding>
               </AppContainer>
             </Flex>
-          )}
-        </>
-      </Theme>
-    </Flex>
+
+            <NetworkOfflineMonitor />
+
+            {showFooter && (
+              <Flex bg="white100">
+                <AppContainer>
+                  <HorizontalPadding>
+                    <Footer />
+                  </HorizontalPadding>
+                </AppContainer>
+              </Flex>
+            )}
+          </>
+        </Theme>
+      </Flex>
+    </>
   )
 }

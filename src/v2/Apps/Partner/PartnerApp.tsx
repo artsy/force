@@ -7,7 +7,6 @@ import { PartnerApp_partner } from "v2/__generated__/PartnerApp_partner.graphql"
 import { PartnerHeaderImageFragmentContainer as PartnerHeaderImage } from "./Components/PartnerHeader/PartnerHeaderImage"
 import styled from "styled-components"
 import { PartnerMetaFragmentContainer } from "./Components/PartnerMeta"
-import { StickyProvider } from "v2/Components/Sticky"
 import { PartnerArtistsLoadingContextProvider } from "./Utils/PartnerArtistsLoadingContext"
 
 export interface PartnerAppProps {
@@ -31,26 +30,24 @@ export const PartnerApp: React.FC<PartnerAppProps> = ({
 
   return (
     <PartnerArtistsLoadingContextProvider>
-      <StickyProvider>
-        {profile && <PartnerHeaderImage profile={profile} />}
+      {profile && <PartnerHeaderImage profile={profile} />}
 
-        <Flex position="relative" flexDirection="column">
-          <Foreground />
-          <Box zIndex={1} position="relative">
-            <PartnerMetaFragmentContainer partner={partner} />
+      <Flex position="relative" flexDirection="column">
+        <Foreground />
+        <Box zIndex={1} position="relative">
+          <PartnerMetaFragmentContainer partner={partner} />
 
-            <PartnerHeader partner={partner} />
+          <PartnerHeader partner={partner} />
 
-            <FullBleed mb={[2, 4]}>
-              <Separator />
-            </FullBleed>
+          <FullBleed mb={[2, 4]}>
+            <Separator />
+          </FullBleed>
 
-            {fullProfileEligible && <NavigationTabs partner={partner} />}
+          {fullProfileEligible && <NavigationTabs partner={partner} />}
 
-            {children}
-          </Box>
-        </Flex>
-      </StickyProvider>
+          {children}
+        </Box>
+      </Flex>
     </PartnerArtistsLoadingContextProvider>
   )
 }
