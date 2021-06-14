@@ -20,13 +20,12 @@ import { useEffect, useState } from "react"
  */
 export function useMatchMedia(
   mediaQueryString: string,
-  { initialMatches = null } = {}
+  { initialMatches = false } = {}
 ) {
-  const [matches, setMatches] = useState(initialMatches)
+  const [matches, setMatches] = useState<boolean>(initialMatches)
 
   useEffect(() => {
     const mediaQueryList = window.matchMedia(mediaQueryString)
-    // @ts-expect-error STRICT_NULL_CHECK
     setMatches(mediaQueryList.matches)
     const handleChange = event => setMatches(event.matches)
 
