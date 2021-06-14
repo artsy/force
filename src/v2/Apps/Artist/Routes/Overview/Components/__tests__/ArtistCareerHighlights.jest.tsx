@@ -53,7 +53,11 @@ describe("ArtistCareerHighlights", () => {
         slug: "artistSlug",
         biographyBlurb: {
           credit: true,
-          partnerID: "partnerID",
+          partner: {
+            profile: {
+              href: "/partnerID",
+            },
+          },
           text: "partnerBioText",
         },
       }),
