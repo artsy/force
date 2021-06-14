@@ -2,7 +2,7 @@
 /* eslint-disable */
 
 import { ConcreteRequest } from "relay-runtime";
-export type CommerceOrderFulfillmentTypeEnum = "PICKUP" | "SHIP" | "%future added value";
+export type CommerceOrderFulfillmentTypeEnum = "PICKUP" | "SHIP" | "SHIP_ARTA" | "%future added value";
 export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "PENDING" | "REFUNDED" | "SUBMITTED" | "%future added value";
 export type CommerceSetShippingInput = {
     clientMutationId?: string | null;
