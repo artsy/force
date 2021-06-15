@@ -15,6 +15,7 @@ import { fairRoutes } from "v2/Apps/Fair/fairRoutes"
 import { fairsRoutes } from "v2/Apps/Fairs/fairsRoutes"
 import { featureRoutes } from "v2/Apps/Feature/featureRoutes"
 import { geneRoutes } from "v2/Apps/Gene/geneRoutes"
+import { homeRoutes } from "v2/Apps/Home/homeRoutes"
 import { identityVerificationRoutes } from "v2/Apps/IdentityVerification/identityVerificationRoutes"
 import { orderRoutes } from "v2/Apps/Order/orderRoutes"
 import { partnerRoutes } from "v2/Apps/Partner/partnerRoutes"
@@ -42,6 +43,7 @@ export function getAppRoutes(): AppRouteConfig[] {
     { routes: fairsRoutes },
     { routes: featureRoutes },
     { routes: geneRoutes },
+    { routes: homeRoutes },
     { routes: identityVerificationRoutes },
     { routes: orderRoutes },
     { routes: partnerRoutes },
