@@ -31,7 +31,7 @@ export const PartnerApp: React.FC<PartnerAppProps> = ({
   const {
     profile,
     partnerType,
-    fullProfileEligible,
+    displayFullPartnerPage,
     isDefaultProfilePublic,
     partnerPageEligible,
   } = partner
@@ -43,7 +43,7 @@ export const PartnerApp: React.FC<PartnerAppProps> = ({
   return (
     <PartnerArtistsLoadingContextProvider>
       <StickyProvider>
-        {profile && fullProfileEligible && (
+        {profile && displayFullPartnerPage && (
           <PartnerHeaderImage profile={profile} />
         )}
 
@@ -58,7 +58,7 @@ export const PartnerApp: React.FC<PartnerAppProps> = ({
               <Separator />
             </FullBleed>
 
-            {(fullProfileEligible || partnerType === "Brand") && (
+            {(displayFullPartnerPage || partnerType === "Brand") && (
               <NavigationTabs partner={partner} />
             )}
 
@@ -74,7 +74,7 @@ export const PartnerAppFragmentContainer = createFragmentContainer(PartnerApp, {
   partner: graphql`
     fragment PartnerApp_partner on Partner {
       partnerType
-      fullProfileEligible
+      displayFullPartnerPage
       partnerPageEligible
       isDefaultProfilePublic
       profile {

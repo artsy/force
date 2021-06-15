@@ -10,7 +10,7 @@ export type AboutPartner_partner = {
     } | null;
     readonly website: string | null;
     readonly vatNumber: string | null;
-    readonly fullProfileEligible: boolean | null;
+    readonly displayFullPartnerPage: boolean | null;
     readonly " $refType": "AboutPartner_partner";
 };
 export type AboutPartner_partner$data = AboutPartner_partner;
@@ -70,11 +70,11 @@ const node: ReaderFragment = {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "fullProfileEligible",
+      "name": "displayFullPartnerPage",
       "storageKey": null
     }
   ],
   "type": "Partner"
 };
-(node as any).hash = '3da86969bb6bf4f433b6efb09f42fff7';
+(node as any).hash = 'f4275bcda7bfe647ae27ca92d8475c3d';
 export default node;

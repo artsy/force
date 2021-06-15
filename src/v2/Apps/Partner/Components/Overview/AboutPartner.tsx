@@ -10,7 +10,7 @@ export interface AboutPartnerProps {
 }
 
 export const AboutPartner: React.FC<AboutPartnerProps> = ({
-  partner: { profile, vatNumber, website, fullProfileEligible },
+  partner: { profile, vatNumber, website, displayFullPartnerPage },
 }) => {
   const fullBio = profile?.fullBio
   const limitedBio = profile?.bio
@@ -20,8 +20,8 @@ export const AboutPartner: React.FC<AboutPartnerProps> = ({
     return null
   }
 
-  const canRenderWebsite = website && fullProfileEligible
-  const canRenderVatNumber = vatNumber && fullProfileEligible
+  const canRenderWebsite = website && displayFullPartnerPage
+  const canRenderVatNumber = vatNumber && displayFullPartnerPage
   const bioDisplayable = fullBio || limitedBio
 
   return (
@@ -73,7 +73,7 @@ export const AboutPartnerFragmentContainer = createFragmentContainer(
         }
         website
         vatNumber
-        fullProfileEligible
+        displayFullPartnerPage
       }
     `,
   }

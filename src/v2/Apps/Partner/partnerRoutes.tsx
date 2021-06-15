@@ -67,7 +67,7 @@ export const partnerRoutes: AppRouteConfig[] = [
       query partnerRoutes_PartnerQuery($partnerId: String!) {
         partner(id: $partnerId) @principalField {
           partnerType
-          fullProfileEligible
+          displayFullPartnerPage
           ...PartnerApp_partner
         }
       }
@@ -86,7 +86,7 @@ export const partnerRoutes: AppRouteConfig[] = [
       const overviewPath = `/partner/${match.params.partnerId}`
 
       if (
-        !partner.fullProfileEligible &&
+        !partner.displayFullPartnerPage &&
         partner.partnerType !== "Brand" &&
         match.location.pathname !== overviewPath
       ) {

@@ -6,7 +6,7 @@ import { FragmentRefs } from "relay-runtime";
 export type PartnerArtists_partner = {
     readonly slug: string;
     readonly distinguishRepresentedArtists: boolean | null;
-    readonly fullProfileEligible: boolean | null;
+    readonly displayFullPartnerPage: boolean | null;
     readonly allArtistsConnection: {
         readonly edges: ReadonlyArray<{
             readonly " $fragmentRefs": FragmentRefs<"PartnerArtistList_artists">;
@@ -46,7 +46,7 @@ const node: ReaderFragment = {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "fullProfileEligible",
+      "name": "displayFullPartnerPage",
       "storageKey": null
     },
     {
@@ -90,5 +90,5 @@ const node: ReaderFragment = {
   ],
   "type": "Partner"
 };
-(node as any).hash = '7f1d85721ed9b99c88c19b4e71d7b144';
+(node as any).hash = '97f0c19fd11767d96b88ed011f8ebf9d';
 export default node;

@@ -44,7 +44,7 @@ describe("PartnerApp", () => {
   it("displays navigation tabs for the partner page", () => {
     const wrapper = getWrapper({
       Partner: () => ({
-        fullProfileEligible: true,
+        displayFullPartnerPage: true,
       }),
     })
     expect(wrapper.find("NavigationTabs").length).toBe(1)
@@ -53,7 +53,7 @@ describe("PartnerApp", () => {
   it("does not display nav tabs for limited profile", () => {
     const wrapper = getWrapper({
       Partner: () => ({
-        fullProfileEligible: false,
+        displayFullPartnerPage: false,
       }),
     })
     expect(wrapper.find("NavigationTabs").length).toBe(0)
@@ -62,7 +62,7 @@ describe("PartnerApp", () => {
   it("displays navigation tabs for brand partner", () => {
     const wrapper = getWrapper({
       Partner: () => ({
-        fullProfileEligible: false,
+        displayFullPartnerPage: false,
         partnerType: "Brand",
       }),
     })
@@ -102,7 +102,7 @@ describe("PartnerApp", () => {
   it("doesn't display profile image if the partner isn't eligible for a full profile", () => {
     const wrapper = getWrapper({
       Partner: () => ({
-        fullProfileEligible: false,
+        displayFullPartnerPage: false,
       }),
     })
 

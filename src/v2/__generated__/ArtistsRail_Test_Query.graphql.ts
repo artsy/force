@@ -31,7 +31,7 @@ query ArtistsRail_Test_Query(
 fragment ArtistsRail_partner on Partner {
   slug
   profileArtistsLayout
-  fullProfileEligible
+  displayFullPartnerPage
   artistsWithPublishedArtworks: artistsConnection(hasPublishedArtworks: true, displayOnPartnerProfile: true) {
     totalCount
   }
@@ -129,7 +129,7 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "fullProfileEligible",
+            "name": "displayFullPartnerPage",
             "storageKey": null
           },
           {
@@ -188,7 +188,7 @@ return {
     "metadata": {},
     "name": "ArtistsRail_Test_Query",
     "operationKind": "query",
-    "text": "query ArtistsRail_Test_Query(\n  $partnerId: String!\n) {\n  partner(id: $partnerId) @principalField {\n    ...ArtistsRail_partner\n    id\n  }\n}\n\nfragment ArtistsRail_partner on Partner {\n  slug\n  profileArtistsLayout\n  fullProfileEligible\n  artistsWithPublishedArtworks: artistsConnection(hasPublishedArtworks: true, displayOnPartnerProfile: true) {\n    totalCount\n  }\n  representedArtistsWithoutPublishedArtworks: artistsConnection(representedBy: true, hasPublishedArtworks: false, displayOnPartnerProfile: true) {\n    totalCount\n  }\n}\n"
+    "text": "query ArtistsRail_Test_Query(\n  $partnerId: String!\n) {\n  partner(id: $partnerId) @principalField {\n    ...ArtistsRail_partner\n    id\n  }\n}\n\nfragment ArtistsRail_partner on Partner {\n  slug\n  profileArtistsLayout\n  displayFullPartnerPage\n  artistsWithPublishedArtworks: artistsConnection(hasPublishedArtworks: true, displayOnPartnerProfile: true) {\n    totalCount\n  }\n  representedArtistsWithoutPublishedArtworks: artistsConnection(representedBy: true, hasPublishedArtworks: false, displayOnPartnerProfile: true) {\n    totalCount\n  }\n}\n"
   }
 };
 })();
