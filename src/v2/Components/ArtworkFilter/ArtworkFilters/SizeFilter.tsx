@@ -10,7 +10,10 @@ import {
   TextVariant,
   useThemeConfig,
 } from "@artsy/palette"
-import { useArtworkFilterContext } from "../ArtworkFilterContext"
+import {
+  ArtworkFiltersState,
+  useArtworkFilterContext,
+} from "../ArtworkFilterContext"
 import { NumericInput } from "./PriceRangeFilter"
 import { Media } from "v2/Utils/Responsive"
 import { FilterExpandable } from "./FilterExpandable"
@@ -87,18 +90,19 @@ export interface SizeFilterProps {
 
 export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
   const { currentlySelectedFilters, setFilters } = useArtworkFilterContext()
-  // @ts-expect-error STRICT_NULL_CHECK
-  const { height, width, reset } = currentlySelectedFilters()
+  const {
+    height,
+    width,
+    reset,
+  } = currentlySelectedFilters?.() as ArtworkFiltersState
 
   const initialCustomSize = {
-    height: parseRange(height),
-    width: parseRange(width),
+    height: parseRange(height) as CustomRange,
+    width: parseRange(width) as CustomRange,
   }
 
-  // @ts-expect-error STRICT_NULL_CHECK
   const [showCustom, setShowCustom] = useState(!!hasValue(initialCustomSize))
   const [customSize, setCustomSize] = useState<CustomSize>(
-    // @ts-expect-error STRICT_NULL_CHECK
     hasValue(initialCustomSize) ? initialCustomSize : DEFAULT_CUSTOM_SIZE
   )
   const [mode, setMode] = useState<"resting" | "done">("resting")
@@ -128,37 +132,33 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
   }
 
   const toggleSizeSelection = (selected: boolean, name: string) => {
-    // @ts-expect-error STRICT_NULL_CHECK
-    let sizes = currentlySelectedFilters().sizes.slice()
-    if (selected) {
-      sizes.push(name)
-    } else {
-      sizes = sizes.filter(item => item !== name)
+    let sizes = currentlySelectedFilters?.().sizes?.slice()
+    if (sizes) {
+      if (selected) {
+        sizes.push(name)
+      } else {
+        sizes = sizes.filter(item => item !== name)
+      }
     }
 
     const newFilters = {
-      // @ts-expect-error STRICT_NULL_CHECK
-      ...currentlySelectedFilters(),
+      ...currentlySelectedFilters?.(),
       sizes,
       height: "*-*",
       width: "*-*",
     }
 
-    // @ts-expect-error STRICT_NULL_CHECK
-    setFilters(newFilters, { force: false })
+    setFilters?.(newFilters, { force: false })
     setCustomSize({ height: ["*", "*"], width: ["*", "*"] })
   }
 
   const handleClick = () => {
     const newFilters = {
-      // @ts-expect-error STRICT_NULL_CHECK
-      ...currentlySelectedFilters(),
+      ...currentlySelectedFilters?.(),
       sizes: [],
-      // @ts-expect-error STRICT_NULL_CHECK
-      ...mapSizeToRange(convertSizeToInches(customSize)),
+      ...mapSizeToRange(convertSizeToInches(customSize) as CustomSize),
     }
-    // @ts-expect-error STRICT_NULL_CHECK
-    setFilters(newFilters, { force: false })
+    setFilters?.(newFilters, { force: false })
     setMode("done")
   }
 
@@ -174,12 +174,9 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
     }
   }, [reset])
 
-  // @ts-expect-error STRICT_NULL_CHECK
-  const selection = currentlySelectedFilters().sizes
-  // @ts-expect-error STRICT_NULL_CHECK
-  const customHeight = currentlySelectedFilters().height
-  // @ts-expect-error STRICT_NULL_CHECK
-  const customWidth = currentlySelectedFilters().width
+  const selection = currentlySelectedFilters?.().sizes
+  const customHeight = currentlySelectedFilters?.().height
+  const customWidth = currentlySelectedFilters?.().width
   const hasSelection =
     (selection && selection.length > 0) ||
     (customHeight && customHeight !== "*-*") ||
@@ -205,8 +202,7 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
               <Checkbox
                 key={index}
                 onSelect={selected => toggleSizeSelection(selected, name)}
-                // @ts-expect-error STRICT_NULL_CHECK
-                selected={currentlySelectedFilters().sizes.includes(name)}
+                selected={currentlySelectedFilters?.().sizes?.includes(name)}
                 my={tokens.my}
               >
                 {displayName}
