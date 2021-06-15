@@ -1,12 +1,5 @@
 import React from "react"
-import {
-  Text,
-  ThemeProviderV3,
-  IncreaseIcon,
-  Flex,
-  DecreaseIcon,
-  Spacer,
-} from "@artsy/palette"
+import { Text, IncreaseIcon, Flex, DecreaseIcon, Spacer } from "@artsy/palette"
 
 export const AuctionResultPerformance = ({
   value,
@@ -25,18 +18,16 @@ export const AuctionResultPerformance = ({
   const Arrow = sign === "up" ? IncreaseIcon : DecreaseIcon
 
   return (
-    <ThemeProviderV3>
-      <Flex
-        flexDirection="row"
-        justifyContent={align === "right" ? "flex-end" : undefined}
-        alignItems="baseline"
-      >
-        <Arrow fill={color} width={10} height={10} />
-        <Spacer mr="3px" />
-        <Text variant="xs" fontWeight={400} color={color}>
-          {text} est
-        </Text>
-      </Flex>
-    </ThemeProviderV3>
+    <Flex
+      flexDirection="row"
+      justifyContent={align === "right" ? "flex-end" : undefined}
+      alignItems="baseline"
+    >
+      <Arrow fill={color} width={10} height={10} />
+      <Spacer mr="3px" />
+      <Text variant="xs" fontWeight="medium" color={color}>
+        {text} est
+      </Text>
+    </Flex>
   )
 }
