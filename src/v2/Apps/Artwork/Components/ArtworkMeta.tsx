@@ -131,8 +131,11 @@ export class ArtworkMeta extends Component<ArtworkMetaProps> {
 
   renderZendeskScript() {
     if (typeof window !== "undefined" && window.zEmbed) return
+    const zdKey = this.props.artwork.is_in_auction
+      ? sd.AUCTION_ZENDESK_KEY
+      : sd.ZENDESK_KEY
 
-    return <ZendeskWrapper />
+    return <ZendeskWrapper zdKey={zdKey} />
   }
 
   render() {

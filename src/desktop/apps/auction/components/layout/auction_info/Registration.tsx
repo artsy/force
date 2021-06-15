@@ -4,6 +4,7 @@ import { connect } from "react-redux"
 import { Button, Sans } from "@artsy/palette"
 import { bidderQualifications } from "v2/Utils/identityVerificationRequirements"
 import { ZendeskWrapper } from "v2/Components/ZendeskWrapper"
+import { data as sd } from "sharify"
 
 const RegistrationMessage: React.FC<{ color?: string }> = ({
   color = "black60",
@@ -85,7 +86,7 @@ const Registration: React.FC<RegistrationProps> = props => {
   const renderZendeskScript = () => {
     if (typeof window !== "undefined" && window.zEmbed) return
 
-    return <ZendeskWrapper />
+    return <ZendeskWrapper zdKey={sd.AUCTION_ZENDESK_KEY} />
   }
 
   return (

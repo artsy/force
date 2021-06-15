@@ -16,6 +16,7 @@ import { showModal } from "../actions/app"
 import { AnalyticsContext } from "v2/System/Analytics/AnalyticsContext"
 import { OwnerType } from "@artsy/cohesion"
 import { ZendeskWrapper } from "v2/Components/ZendeskWrapper"
+import { data as sd } from "sharify"
 
 // FIXME: Rewire
 let Banner = _Banner
@@ -51,7 +52,7 @@ function Layout(props) {
   function renderZendeskScript() {
     if (typeof window !== "undefined" && window.zEmbed) return
 
-    return <ZendeskWrapper />
+    return <ZendeskWrapper zdKey={sd.AUCTION_ZENDESK_KEY} />
   }
 
   return (
