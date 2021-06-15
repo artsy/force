@@ -11,7 +11,6 @@ jest.unmock("react-relay")
 jest.mock("sharify", () => ({
   data: {
     RECAPTCHA_KEY: "recaptcha-api-key",
-    ENABLE_SIGN_IN_WITH_APPLE: true,
   },
 }))
 
