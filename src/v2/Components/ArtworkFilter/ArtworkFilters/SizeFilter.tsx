@@ -212,8 +212,6 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
         </Flex>
       </Flex>
 
-      <Text></Text>
-
       <Clickable
         mt={1}
         textDecoration="underline"
