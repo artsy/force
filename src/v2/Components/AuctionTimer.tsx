@@ -1,10 +1,10 @@
 import { AuctionTimer_sale } from "v2/__generated__/AuctionTimer_sale.graphql"
 import { AuctionTimerQuery } from "v2/__generated__/AuctionTimerQuery.graphql"
-import { SystemContext } from "v2/System"
+import { useSystemContext } from "v2/System"
 import { SystemQueryRenderer as QueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { Timer } from "v2/Components/Timer"
 import { DateTime } from "luxon"
-import React, { useContext } from "react"
+import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 
 export interface Props {
@@ -85,7 +85,7 @@ export const AuctionTimerFragmentContainer = createFragmentContainer(
 )
 
 export const AuctionTimerQueryRenderer = ({ saleID }: { saleID: string }) => {
-  const { relayEnvironment } = useContext(SystemContext)
+  const { relayEnvironment } = useSystemContext()
   return (
     <QueryRenderer<AuctionTimerQuery>
       environment={relayEnvironment}

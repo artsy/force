@@ -1,7 +1,7 @@
 import { AuthContextModule } from "@artsy/cohesion"
 import { Box, Image } from "@artsy/palette"
 import { FillwidthItem_artwork } from "v2/__generated__/FillwidthItem_artwork.graphql"
-import { SystemContextProps, withSystemContext } from "v2/System"
+import { withSystemContext } from "v2/System"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
@@ -26,8 +26,7 @@ const Placeholder = styled(Box).attrs({ bg: "gray10" })`
 `
 
 export interface FillwidthItemContainerProps
-  extends SystemContextProps,
-    React.HTMLProps<FillwidthItemContainer> {
+  extends React.HTMLProps<FillwidthItemContainer> {
   artwork: FillwidthItem_artwork
   contextModule: AuthContextModule
   hideArtistName?: boolean
@@ -41,6 +40,7 @@ export interface FillwidthItemContainerProps
   showExtended?: boolean
   showMetadata?: boolean
   onClick?: () => void
+  user?: User | null
 }
 
 export class FillwidthItemContainer extends React.Component<
@@ -89,7 +89,7 @@ export class FillwidthItemContainer extends React.Component<
       hideSaleInfo,
     } = this.props
 
-    const isTeam = userIsTeam(user)
+    const isTeam = userIsTeam(user!)
 
     const image = get(this.props, p => p.artwork.image)
 

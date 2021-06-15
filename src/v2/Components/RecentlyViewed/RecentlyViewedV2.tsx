@@ -2,13 +2,13 @@ import { ContextModule } from "@artsy/cohesion"
 import { Separator, Text } from "@artsy/palette"
 import { RecentlyViewedV2_me } from "v2/__generated__/RecentlyViewedV2_me.graphql"
 import { RecentlyViewedV2Query } from "v2/__generated__/RecentlyViewedV2Query.graphql"
-import { SystemContext, SystemContextConsumer } from "v2/System"
+import { useSystemContext, SystemContextConsumer } from "v2/System"
 import { track } from "v2/System/Analytics"
 import * as Schema from "v2/System/Analytics/Schema"
 import { SystemQueryRenderer as QueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { FillwidthItem } from "v2/Components/Artwork/FillwidthItem"
 import { Carousel } from "v2/Components/Carousel"
-import React, { useContext } from "react"
+import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RecentlyViewedV2Placeholder } from "./RecentlyViewedV2Placeholder"
 
@@ -57,7 +57,7 @@ export class RecentlyViewedV2 extends React.Component<RecentlyViewedV2Props> {
                         artwork={artwork.node}
                         imageHeight={HEIGHT}
                         user={user}
-                        mediator={mediator}
+                        mediator={mediator!}
                         onClick={this.trackClick.bind(this)}
                         contextModule={ContextModule.recentlyViewedRail}
                       />
@@ -92,7 +92,7 @@ export const RecentlyViewedV2FragmentContainer = createFragmentContainer(
 )
 
 export const RecentlyViewedV2QueryRenderer = () => {
-  const { user, relayEnvironment } = useContext(SystemContext)
+  const { user, relayEnvironment } = useSystemContext()
 
   if (!user) return null
 

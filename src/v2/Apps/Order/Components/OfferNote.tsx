@@ -1,13 +1,13 @@
 import { Link, TextArea, TextAreaChange } from "@artsy/palette"
-import { SystemContext } from "v2/System"
-import React, { useContext } from "react"
+import { useSystemContext } from "v2/System"
+import React from "react"
 
 export const OfferNote: React.FC<{
   onChange(change: TextAreaChange): void
   artworkId: string
   counteroffer?: boolean
 }> = ({ onChange, artworkId, counteroffer }) => {
-  const { mediator } = useContext(SystemContext)
+  const { mediator } = useSystemContext()
   return (
     <TextArea
       title="Note (optional)"

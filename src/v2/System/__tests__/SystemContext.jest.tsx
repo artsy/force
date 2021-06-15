@@ -117,7 +117,6 @@ describe("Artsy context", () => {
 
     it("does not default to environment variables when explicitly passing null", () => {
       const wrapper = render(
-        // @ts-expect-error STRICT_NULL_CHECK
         <Artsy.SystemContextProvider user={null}>
           <WithCurrentUser />
         </Artsy.SystemContextProvider>

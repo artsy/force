@@ -1,4 +1,4 @@
-import React, { useContext } from "react"
+import React from "react"
 import {
   Box,
   HeartIcon,
@@ -9,14 +9,14 @@ import {
   SoloIcon,
 } from "@artsy/palette"
 import { Menu, MenuItem } from "v2/Components/Menu"
-import { AnalyticsSchema, SystemContext } from "v2/System"
+import { AnalyticsSchema, useSystemContext } from "v2/System"
 import { useTracking } from "v2/System/Analytics/useTracking"
 import { data as sd } from "sharify"
 import { userIsAdmin } from "v2/Utils/user"
 
 export const UserMenu: React.FC = () => {
   const { trackEvent } = useTracking()
-  const { mediator, user } = useContext(SystemContext)
+  const { mediator, user } = useSystemContext()
 
   const trackClick = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
     const link = event.currentTarget
@@ -36,7 +36,7 @@ export const UserMenu: React.FC = () => {
     })
   }
 
-  const isAdmin = userIsAdmin(user)
+  const isAdmin = userIsAdmin(user!)
   // @ts-expect-error STRICT_NULL_CHECK
   const hasPartnerAccess = Boolean(user.has_partner_access)
 

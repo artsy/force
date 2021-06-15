@@ -1,7 +1,7 @@
-import React, { useContext } from "react"
+import React from "react"
 import { Box, Flex, Sans, Separator, color } from "@artsy/palette"
 import { isServer } from "lib/isServer"
-import { SystemContext, useSystemContext } from "v2/System"
+import { useSystemContext } from "v2/System"
 import { MobileLink } from "./MobileLink"
 import { MobileSubmenuLink } from "./MobileNavMenu"
 import { graphql } from "relay-runtime"
@@ -79,7 +79,7 @@ export const LoggedInLinks: React.FC<
 }
 
 export const LoggedInLinksQueryRenderer: React.FC<{}> = () => {
-  const { relayEnvironment } = useContext(SystemContext)
+  const { relayEnvironment } = useSystemContext()
 
   return isServer ? (
     <LoggedInLinks />

@@ -2,11 +2,11 @@ import { ContextModule } from "@artsy/cohesion"
 import { Shelf, Text } from "@artsy/palette"
 import { RecentlyViewed_me } from "v2/__generated__/RecentlyViewed_me.graphql"
 import { RecentlyViewedQuery } from "v2/__generated__/RecentlyViewedQuery.graphql"
-import { SystemContext } from "v2/System"
+import { useSystemContext } from "v2/System"
 import { useTracking } from "v2/System/Analytics"
 import * as Schema from "v2/System/Analytics/Schema"
 import { SystemQueryRenderer as QueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
-import React, { useContext } from "react"
+import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { extractNodes } from "v2/Utils/extractNodes"
 import { ShelfArtworkFragmentContainer } from "../Artwork/ShelfArtwork"
@@ -75,7 +75,7 @@ export const RecentlyViewedFragmentContainer = createFragmentContainer(
 )
 
 export const RecentlyViewedQueryRenderer = () => {
-  const { user, relayEnvironment } = useContext(SystemContext)
+  const { user, relayEnvironment } = useSystemContext()
 
   if (!user) return null
 

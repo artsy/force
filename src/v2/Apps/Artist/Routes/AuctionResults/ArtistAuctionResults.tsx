@@ -1,14 +1,14 @@
 import { Col, Row, Flex, Text, Message } from "@artsy/palette"
 import { ArtistAuctionResults_artist } from "v2/__generated__/ArtistAuctionResults_artist.graphql"
 import { PaginationFragmentContainer as Pagination } from "v2/Components/Pagination"
-import React, { useContext, useState } from "react"
+import React, { useState } from "react"
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
 import useDeepCompareEffect from "use-deep-compare-effect"
 import { ArtistAuctionResultItemFragmentContainer as AuctionResultItem } from "./ArtistAuctionResultItem"
 import { TableSidebar } from "./Components/TableSidebar"
 import { ContextModule, Intent } from "@artsy/cohesion"
 import { Box, Spacer } from "@artsy/palette"
-import { AnalyticsSchema, SystemContext } from "v2/System"
+import { AnalyticsSchema, useSystemContext } from "v2/System"
 import { LoadingArea } from "v2/Components/LoadingArea"
 import { isEqual } from "lodash"
 import { useTracking } from "react-tracking"
@@ -42,7 +42,7 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
   artist,
   relay,
 }) => {
-  const { user, mediator } = useContext(SystemContext)
+  const { user, mediator } = useSystemContext()
   const filterContext = useAuctionResultsFilterContext()
   // @ts-expect-error STRICT_NULL_CHECK
   const { pageInfo } = artist.auctionResultsConnection

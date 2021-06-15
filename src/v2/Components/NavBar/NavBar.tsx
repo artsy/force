@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import styled from "styled-components"
 import { Box, Button, Flex, FlexProps, color, themeProps } from "@artsy/palette"
-import { useSystemContext } from "v2/System/SystemContext"
+import { useSystemContext } from "v2/System"
 import { SearchBarQueryRenderer as SearchBar } from "v2/Components/Search/SearchBar"
 import { DropDownNavMenu, MobileNavMenu, MobileToggleIcon } from "./Menus"
 import { InboxNotificationCountQueryRenderer as InboxNotificationCount } from "./Menus/MobileNavMenu/InboxNotificationCount"

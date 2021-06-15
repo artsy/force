@@ -1,5 +1,5 @@
 import { ArtworkActions_artwork } from "v2/__generated__/ArtworkActions_artwork.graphql"
-import { SystemContext } from "v2/System"
+import { useSystemContext } from "v2/System"
 import { track } from "v2/System/Analytics"
 import * as Schema from "v2/System/Analytics/Schema"
 import {
@@ -9,7 +9,7 @@ import {
 } from "v2/Components/Artwork/SaveButton"
 import { compact } from "lodash"
 import { isNull } from "lodash"
-import React, { useContext } from "react"
+import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { data as sd } from "sharify"
 import styled, { css } from "styled-components"
@@ -291,8 +291,8 @@ export class ArtworkActions extends React.Component<ArtworkActionsProps> {
 
 export const ArtworkActionsFragmentContainer = createFragmentContainer(
   (props: ArtworkActionsProps) => {
-    const { user, mediator } = useContext(SystemContext)
-    return <ArtworkActions user={user} mediator={mediator} {...props} />
+    const { user, mediator } = useSystemContext()
+    return <ArtworkActions user={user!} mediator={mediator!} {...props} />
   },
   {
     artwork: graphql`

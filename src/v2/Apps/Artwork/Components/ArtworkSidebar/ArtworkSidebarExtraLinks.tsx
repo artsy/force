@@ -1,8 +1,8 @@
 import { Clickable, Link, Separator, Spacer, Text } from "@artsy/palette"
-import { SystemContext } from "v2/System"
+import { useSystemContext } from "v2/System"
 import { track } from "v2/System/Analytics"
 import * as Schema from "v2/System/Analytics/Schema"
-import React, { useContext } from "react"
+import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworkSidebarExtraLinks_artwork } from "v2/__generated__/ArtworkSidebarExtraLinks_artwork.graphql"
 import { Mediator } from "lib/mediator"
@@ -253,7 +253,7 @@ class ArtworkSidebarExtraLinksContainer extends React.Component<
 }
 
 export const ArtworkSidebarExtraLinks: React.FC<ArtworkSidebarExtraLinksProps> = props => {
-  const { mediator } = useContext(SystemContext)
+  const { mediator } = useSystemContext()
   // @ts-expect-error STRICT_NULL_CHECK
   return <ArtworkSidebarExtraLinksContainer {...props} mediator={mediator} />
 }

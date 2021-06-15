@@ -1,7 +1,7 @@
 import { Box, BoxProps, Flex } from "@artsy/palette"
 import { SearchBar_viewer } from "v2/__generated__/SearchBar_viewer.graphql"
 import { SearchBarSuggestQuery } from "v2/__generated__/SearchBarSuggestQuery.graphql"
-import { SystemContext, SystemContextProps, withSystemContext } from "v2/System"
+import { useSystemContext, withSystemContext } from "v2/System"
 import { track } from "v2/System/Analytics"
 import * as Schema from "v2/System/Analytics/Schema"
 import { SystemQueryRenderer as QueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
@@ -16,7 +16,7 @@ import { Router } from "found"
 import { isEmpty } from "lodash"
 import { throttle } from "lodash"
 import qs from "qs"
-import React, { Component, useContext } from "react"
+import React, { Component } from "react"
 import Autosuggest from "react-autosuggest"
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
 import { data as sd } from "sharify"
@@ -31,7 +31,7 @@ import { SearchInputContainer } from "./SearchInputContainer"
 
 const logger = createLogger("Components/Search/SearchBar")
 
-export interface Props extends SystemContextProps {
+export interface Props {
   relay: RelayRefetchProp
   router?: Router
   viewer: SearchBar_viewer
@@ -520,7 +520,7 @@ const StaticSearchContainer: React.FC<{ searchQuery: string } & BoxProps> = ({
 }
 
 export const SearchBarQueryRenderer: React.FC<BoxProps> = props => {
-  const { relayEnvironment, searchQuery = "" } = useContext(SystemContext)
+  const { relayEnvironment, searchQuery = "" } = useSystemContext()
   const isMounted = useDidMount(typeof window !== "undefined")
 
   if (!isMounted) {

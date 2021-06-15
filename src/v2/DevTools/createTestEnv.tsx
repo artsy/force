@@ -1,8 +1,12 @@
 import { ConnectedModalDialog } from "v2/Apps/Order/Dialogs"
-import { SystemContext, SystemContextProps } from "v2/System"
+import {
+  useSystemContext,
+  SystemContextProps,
+  _SystemContextProvider,
+} from "v2/System"
 import { MockBoot, createMockFetchQuery, renderRelayTree } from "v2/DevTools"
 import { merge } from "lodash"
-import React, { ReactElement, useContext } from "react"
+import React, { ReactElement } from "react"
 import { GraphQLTaggedNode } from "react-relay"
 import { Network } from "relay-runtime"
 import { Breakpoint } from "v2/Utils/Responsive"
@@ -61,7 +65,7 @@ class TestEnv<MutationNames extends string, TestPage extends RootTestPage> {
       defaultData: object
       defaultMutationResults?: Record<MutationNames, any>
       defaultBreakpoint?: Breakpoint
-      systemContextProps?: SystemContextProps
+      systemContextProps?: Partial<SystemContextProps>
       TestPage: { new (): TestPage }
     }
   ) {
@@ -167,7 +171,7 @@ class TestEnv<MutationNames extends string, TestPage extends RootTestPage> {
       Component: (props: any) => {
         // MockBoot overwrites system context, but we want to preserve the
         // context set higher in the tree by MockQueryRenderer
-        let contextBypass = useContext(SystemContext)
+        let contextBypass = useSystemContext()
 
         if (systemContextProps) {
           contextBypass = merge(contextBypass, systemContextProps)
@@ -178,14 +182,14 @@ class TestEnv<MutationNames extends string, TestPage extends RootTestPage> {
             breakpoint={breakpoint || defaultBreakpoint}
             headTags={this.headTags}
           >
-            <SystemContext.Provider value={contextBypass}>
+            <_SystemContextProvider injections={contextBypass}>
               <Component
                 {...props}
                 router={{ push: this.routes.mockPushRoute }}
                 route={{ onTransition: this.routes.mockOnTransition }}
               />
               <ConnectedModalDialog />
-            </SystemContext.Provider>
+            </_SystemContextProvider>
           </MockBoot>
         )
       },

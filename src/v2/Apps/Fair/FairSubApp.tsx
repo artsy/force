@@ -15,7 +15,7 @@ const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
   // If a fair's profile is inaccessible, that means it's private, which in turn means
   // the fair is only visible to admins.
   const { user } = useSystemContext()
-  if (!fair.profile && !userIsAdmin(user)) {
+  if (!fair.profile && !userIsAdmin(user!)) {
     throw new HttpError(404)
   }
 

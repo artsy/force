@@ -1,9 +1,9 @@
 import { ArtworkImageBrowser_artwork } from "v2/__generated__/ArtworkImageBrowser_artwork.graphql"
 import { ArtworkImageBrowserQuery } from "v2/__generated__/ArtworkImageBrowserQuery.graphql"
-import { SystemContext } from "v2/System"
+import { useSystemContext } from "v2/System"
 import { renderWithLoadProgress } from "v2/System/Relay/renderWithLoadProgress"
 import { SystemQueryRenderer as QueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
-import React, { useContext, useState } from "react"
+import React, { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworkActionsFragmentContainer as ArtworkActions } from "./ArtworkActions"
 import { ArtworkImageBrowser } from "./ArtworkImageBrowser"
@@ -83,7 +83,7 @@ export const ArtworkImageBrowserQueryRenderer = ({
 }: {
   artworkID: string
 }) => {
-  const { relayEnvironment } = useContext(SystemContext)
+  const { relayEnvironment } = useSystemContext()
 
   return (
     <QueryRenderer<ArtworkImageBrowserQuery>

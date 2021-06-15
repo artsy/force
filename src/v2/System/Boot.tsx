@@ -22,8 +22,6 @@ import { ClientContext } from "desktop/lib/buildClientAppContext"
 import { FlashMessage } from "v2/Components/Modal/FlashModal"
 import { SiftContainer } from "v2/Utils/SiftContainer"
 import { setupSentry } from "lib/setupSentry"
-import { StoreProvider } from "easy-peasy"
-import { store } from "v2/System/store"
 
 export interface BootProps {
   children: React.ReactNode
@@ -70,31 +68,29 @@ export const Boot = track(null, {
     <Theme>
       <HeadProvider headTags={headTags}>
         <StateProvider>
-          <StoreProvider store={store}>
-            <SystemContextProvider {...contextProps}>
-              <AnalyticsContext.Provider value={context?.analytics}>
-                <ErrorBoundary>
-                  <MediaContextProvider onlyMatch={onlyMatchMediaQueries}>
-                    <ResponsiveProvider
-                      mediaQueries={themeProps.mediaQueries}
-                      initialMatchingMediaQueries={onlyMatchMediaQueries as any}
-                    >
-                      <Grid fluid maxWidth="100%">
-                        <GlobalStyles />
-                        <FlashMessage />
-                        <FocusVisible />
-                        <SiftContainer />
-                        {children}
-                        {process.env.NODE_ENV === "development" && (
-                          <BreakpointVisualizer />
-                        )}
-                      </Grid>
-                    </ResponsiveProvider>
-                  </MediaContextProvider>
-                </ErrorBoundary>
-              </AnalyticsContext.Provider>
-            </SystemContextProvider>
-          </StoreProvider>
+          <SystemContextProvider {...contextProps}>
+            <AnalyticsContext.Provider value={context?.analytics}>
+              <ErrorBoundary>
+                <MediaContextProvider onlyMatch={onlyMatchMediaQueries}>
+                  <ResponsiveProvider
+                    mediaQueries={themeProps.mediaQueries}
+                    initialMatchingMediaQueries={onlyMatchMediaQueries as any}
+                  >
+                    <Grid fluid maxWidth="100%">
+                      <GlobalStyles />
+                      <FlashMessage />
+                      <FocusVisible />
+                      <SiftContainer />
+                      {children}
+                      {process.env.NODE_ENV === "development" && (
+                        <BreakpointVisualizer />
+                      )}
+                    </Grid>
+                  </ResponsiveProvider>
+                </MediaContextProvider>
+              </ErrorBoundary>
+            </AnalyticsContext.Provider>
+          </SystemContextProvider>
         </StateProvider>
       </HeadProvider>
     </Theme>

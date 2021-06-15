@@ -9,7 +9,9 @@ export { SystemContextProvider, SystemContextConsumer } from "v2/System"
 
 export interface RouterConfig {
   /** Context values to be passed to SystemContext */
-  context?: SystemContextProps & { relayEnvironment?: RelaySSREnvironment }
+  context?: Partial<SystemContextProps> & {
+    relayEnvironment?: RelaySSREnvironment
+  }
 
   /** Configuration options to be passed to Found router */
   history?: {

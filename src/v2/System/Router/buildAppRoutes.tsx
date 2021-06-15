@@ -3,7 +3,7 @@ import { flatten } from "lodash"
 import React, { useEffect } from "react"
 
 import { AppShell } from "v2/Apps/Components/AppShell"
-import { useSystemContext } from "v2/System/SystemContext"
+import { useSystemContext } from "v2/System"
 import { interceptLinks } from "./interceptLinks"
 import { AppRouteConfig } from "./Route"
 
@@ -29,7 +29,6 @@ export function buildAppRoutes(routeList: RouteList[]): AppRouteConfig[] {
     // Store global reference to router instance
     useEffect(() => {
       if (props.router !== router) {
-        // @ts-expect-error STRICT_NULL_CHECK
         setRouter(props.router)
       }
 

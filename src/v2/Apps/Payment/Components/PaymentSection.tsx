@@ -1,5 +1,4 @@
 import { Box, Button, Theme } from "@artsy/palette"
-import { SystemContextProps } from "v2/System"
 
 import React, { useState } from "react"
 import { RelayProp, createFragmentContainer, graphql } from "react-relay"
@@ -11,7 +10,7 @@ import { loadStripe } from "@stripe/stripe-js"
 import { Elements } from "@stripe/react-stripe-js"
 import { data as sd } from "sharify"
 
-interface PaymentSectionProps extends SystemContextProps {
+interface PaymentSectionProps {
   relay?: RelayProp
   me: PaymentSection_me
 }

@@ -22,7 +22,6 @@ export const RenderPending = () => {
    * duration of the fetch.
    */
   if (!isFetching) {
-    // @ts-expect-error STRICT_NULL_CHECK
     setFetching(true)
   }
 
@@ -57,7 +56,6 @@ export const RenderReady: React.FC<{
   const { isFetching, setFetching } = useSystemContext()
 
   if (isFetching) {
-    // @ts-expect-error STRICT_NULL_CHECK
     setFetching(false)
   }
 
@@ -78,7 +76,6 @@ export const RenderError: React.FC<{
   const { isFetching, setFetching } = useSystemContext()
 
   if (isFetching) {
-    // @ts-expect-error STRICT_NULL_CHECK
     setFetching(false)
   }
 

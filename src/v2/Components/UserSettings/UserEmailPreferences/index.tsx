@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { Banner, Box, Flex, SelectSmall, Serif } from "@artsy/palette"
-import { useSystemContext } from "v2/System/SystemContext"
+import { useSystemContext } from "v2/System"
 import { graphql } from "react-relay"
 import { SystemQueryRenderer as QueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import {

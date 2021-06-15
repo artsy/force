@@ -20,21 +20,15 @@ const NavBarContainer = styled.div`
 
 interface NavBarProps {
   user: SystemContextProps["user"]
-  notificationCount: number
   searchQuery?: string
 }
 
-export const NavBar: React.FC<NavBarProps> = ({
-  notificationCount,
-  searchQuery,
-  user,
-}) => {
+export const NavBar: React.FC<NavBarProps> = ({ searchQuery, user }) => {
   const showStagingBanner = sd.APPLICATION_NAME === "force-staging"
 
   return (
     <SystemContextProvider
       mediator={mediator}
-      notificationCount={notificationCount}
       searchQuery={searchQuery}
       user={user}
     >

@@ -26,12 +26,12 @@ export interface ArtworkGridProps
   columnCount?: number | number[]
   preloadImageCount?: number
   itemMargin?: number
-  mediator?: Mediator
+  mediator?: Mediator | null
   onBrickClick?: (artwork: Artwork, artworkIndex: number) => void
   onClearFilters?: () => any
   onLoadMore?: () => any
   sectionMargin?: number
-  user?: User
+  user?: User | null
   emptyStateComponent?: ReactNode | boolean
 }
 

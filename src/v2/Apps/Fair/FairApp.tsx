@@ -144,7 +144,7 @@ const TrackingWrappedFairApp: React.FC<FairAppProps> = props => {
   // If a fair's profile is inaccessible, that means it's private, which in turn means
   // the fair is only visible to admins.
   const { user } = useSystemContext()
-  if (!profile && !userIsAdmin(user)) {
+  if (!profile && !userIsAdmin(user!)) {
     throw new HttpError(404)
   }
 

@@ -1,11 +1,9 @@
-import {
-  SystemContextProvider,
-  useSystemContext,
-} from "v2/System/SystemContext"
+import { SystemContextProvider } from "v2/System/SystemContext"
 import { mount } from "enzyme"
 import React from "react"
 import { buildAppRoutes } from "../buildAppRoutes"
 import { buildClientApp } from "../buildClientApp"
+import { useSystemContext } from "v2/System/useSystemContext"
 
 jest.mock("v2/Components/NavBar/NavBar", () => ({
   NavBar: () => <div />,

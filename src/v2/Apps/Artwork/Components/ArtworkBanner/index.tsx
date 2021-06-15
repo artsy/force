@@ -1,9 +1,9 @@
 import { ArtworkBanner_artwork } from "v2/__generated__/ArtworkBanner_artwork.graphql"
 import { ArtworkBannerQuery } from "v2/__generated__/ArtworkBannerQuery.graphql"
-import { SystemContext } from "v2/System"
+import { useSystemContext } from "v2/System"
 import { renderWithLoadProgress } from "v2/System/Relay/renderWithLoadProgress"
 import { SystemQueryRenderer as QueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
-import React, { useContext } from "react"
+import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { get } from "v2/Utils/get"
 import { Banner } from "./Banner"
@@ -155,7 +155,7 @@ export const ArtworkBannerQueryRenderer = ({
 }: {
   artworkID: string
 }) => {
-  const { relayEnvironment } = useContext(SystemContext)
+  const { relayEnvironment } = useSystemContext()
 
   return (
     <QueryRenderer<ArtworkBannerQuery>

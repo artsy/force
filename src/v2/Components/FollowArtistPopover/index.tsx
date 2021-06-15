@@ -1,17 +1,18 @@
 import { Join, Separator, Spacer } from "@artsy/palette"
 import { FollowArtistPopover_artist } from "v2/__generated__/FollowArtistPopover_artist.graphql"
 import { FollowArtistPopoverQuery } from "v2/__generated__/FollowArtistPopoverQuery.graphql"
-import { SystemContext, SystemContextProps } from "v2/System"
+import { useSystemContext } from "v2/System"
 import { SystemQueryRenderer as QueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
-import React, { useContext } from "react"
+import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Provider } from "unstated"
 import { FollowArtistPopoverRowFragmentContainer } from "./FollowArtistPopoverRow"
 import { FollowArtistPopoverState } from "./state"
 import { extractNodes } from "v2/Utils/extractNodes"
 
-interface Props extends SystemContextProps {
+interface Props {
   artist: FollowArtistPopover_artist
+  user: User | null
 }
 
 const FollowArtistPopover: React.FC<Props> = props => {
@@ -34,9 +35,10 @@ const FollowArtistPopover: React.FC<Props> = props => {
       <Join separator={<Separator my={1} />}>
         {suggestedArtists.map(artist => {
           return (
+            // @ts-ignore
             <FollowArtistPopoverRowFragmentContainer
               key={artist.id}
-              user={user}
+              user={user!}
               artist={artist}
             />
           )
@@ -72,7 +74,7 @@ export const FollowArtistPopoverQueryRenderer = ({
 }: {
   artistID: string
 }) => {
-  const { relayEnvironment, user } = useContext(SystemContext)
+  const { relayEnvironment, user } = useSystemContext()
   return (
     <QueryRenderer<FollowArtistPopoverQuery>
       environment={relayEnvironment}

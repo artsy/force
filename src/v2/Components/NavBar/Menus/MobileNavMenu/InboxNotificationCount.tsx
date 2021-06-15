@@ -1,4 +1,4 @@
-import React, { useContext } from "react"
+import React from "react"
 import { graphql } from "relay-runtime"
 import { isServer } from "lib/isServer"
 import styled from "styled-components"
@@ -7,7 +7,7 @@ import {
   InboxNotificationCountQuery,
   InboxNotificationCountQueryResponse,
 } from "v2/__generated__/InboxNotificationCountQuery.graphql"
-import { SystemContext } from "v2/System/SystemContext"
+import { useSystemContext } from "v2/System"
 import { SystemQueryRenderer as QueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { getConversationCount, updateConversationCache } from "../../helpers"
 
@@ -44,7 +44,7 @@ export const InboxNotificationCount: React.FC<
 }
 
 export const InboxNotificationCountQueryRenderer: React.FC<{}> = () => {
-  const { relayEnvironment } = useContext(SystemContext)
+  const { relayEnvironment } = useSystemContext()
 
   return isServer ? (
     <InboxNotificationCount />

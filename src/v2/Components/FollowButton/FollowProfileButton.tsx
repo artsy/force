@@ -17,6 +17,7 @@ import {
   withAnalyticsContext,
 } from "v2/System/Analytics/AnalyticsContext"
 import { ButtonProps, Clickable } from "@artsy/palette"
+import { Mediator } from "lib/mediator"
 import {
   RelayProp,
   commitMutation,
@@ -26,12 +27,13 @@ import {
 
 interface Props
   extends React.HTMLProps<FollowProfileButton>,
-    Artsy.SystemContextProps,
     AnalyticsContextProps {
   relay?: RelayProp
   profile?: FollowProfileButton_profile
   tracking?: TrackingProp
   contextModule: AuthContextModule
+  user?: User | null
+  mediator?: Mediator | null
   /**
    * Pass palette props to button
    */

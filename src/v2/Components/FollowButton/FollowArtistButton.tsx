@@ -32,13 +32,13 @@ import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 
 interface Props
   extends React.HTMLProps<FollowArtistButton>,
-    Artsy.SystemContextProps,
     AnalyticsContextProps {
   relay?: RelayProp
   mediator?: Mediator
   artist?: FollowArtistButton_artist
   tracking?: TrackingProp
   contextModule: AuthContextModule
+  user?: User | null
   /**
    * Pass palette props to button
    */
@@ -175,7 +175,7 @@ export class FollowArtistButton extends React.Component<Props> {
           placement="bottom"
           popover={
             <FollowArtistPopoverFragmentContainer
-              user={user}
+              user={user!}
               artist={artist!}
             />
           }

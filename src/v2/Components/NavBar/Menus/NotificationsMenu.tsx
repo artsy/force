@@ -1,8 +1,8 @@
 import { AnalyticsSchema } from "v2/System/Analytics"
 import { useTracking } from "v2/System/Analytics/useTracking"
-import React, { useContext } from "react"
+import React from "react"
 import { graphql } from "react-relay"
-import { SystemContext } from "v2/System"
+import { useSystemContext } from "v2/System"
 import { get } from "v2/Utils/get"
 import { LoadProgressRenderer } from "v2/System/Relay/renderWithLoadProgress"
 import {
@@ -202,7 +202,7 @@ export const NotificationsMenu: React.FC = () => {
 export const NotificationsQueryRenderer: React.FC<{
   render: LoadProgressRenderer<any>
 }> = ({ render }) => {
-  const { relayEnvironment } = useContext(SystemContext)
+  const { relayEnvironment } = useSystemContext()
 
   return (
     <QueryRenderer<NotificationsMenuQuery>

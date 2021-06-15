@@ -1,123 +1,127 @@
+import { Action, action, createContextStore } from "easy-peasy"
 import { Router } from "found"
-import React, { FC, useState } from "react"
-import { data as sd } from "sharify"
+import { Mediator, mediator as baseMediator } from "lib/mediator"
 import { Environment } from "relay-runtime"
+import { createRelaySSREnvironment } from "./Relay/createRelaySSREnvironment"
+import { data as sd } from "sharify"
+import React from "react"
+import { useSystemContext } from "./useSystemContext"
+import createLogger from "redux-logger"
 
-import { createRelaySSREnvironment } from "v2/System/Relay/createRelaySSREnvironment"
-import { getUser } from "v2/Utils/user"
-import { Mediator, mediator } from "lib/mediator"
-
-export * from "./useSystemContext"
-
-/**
- * FIXME: Use a proper state management library. Ran into problems with useReducer
- * leading to an infinite loop.
- */
-export type SystemContextState = Partial<{
-  /**
-   * Toggle for setting global fetch state, typically set in RenderStatus
-   */
-  isFetching: boolean
-  setFetching: (isFetching: boolean) => void
-
-  /**
-   * The current router instance
-   */
-  router: Router
-  setRouter: (router: Router) => void
-
-  /**
-   * The currently signed-in user.
-   *
-   * Unless explicitely set to `null`, this will default to use the `USER_ID`
-   * and `USER_ACCESS_TOKEN` environment variables if available.
-   */
-  user: User
-  setUser: (user: User) => void
-}>
-
-/**
- * Globally accessible SystemContext values for use in Artsy apps
- */
-export interface SystemContextProps extends SystemContextState {
-  /**
-   * Is the user opening a Reaction page from the mobile app
-   */
-  isEigen?: boolean
-
-  /**
-   * A PubSub hub, which should only be used for communicating with Force.
-   */
-  mediator?: Mediator
-
-  /**
-   * FIXME: Ask alloy how to pass one-off props like this in from force
-   */
-  notificationCount?: number
-
-  /**
-   * A configured environment object that can be used for any Relay operations
-   * that need an environment object.
-   *
-   * If none is provided to the `SystemContextProvider` then one is created,
-   * using the `user` if available.
-   */
-  relayEnvironment?: Environment
-
-  /**
-   * The current search query.
-   * FIXME: Move this to a more appropriate place
-   */
-  searchQuery?: string
-
-  /**
-   * Useful for passing arbitrary data from Force.
-   */
-  injectedData?: any
+export interface FixMeOneOffProps {
+  /** Used to hydrate search queries in Apps/Search */
+  searchQuery: string
 }
 
-export const SystemContext = React.createContext<SystemContextProps>({})
+export interface SystemContextProps extends FixMeOneOffProps {
+  /** Useful for passing arbitrary data from Force. */
+  injectedData: any
 
-/**
- * Creates a new Context.Provider with a user and Relay environment, or defaults
- * if not passed in as props.
- */
-export const SystemContextProvider: FC<SystemContextProps> = ({
+  /** Is user viewing site from mobile webview */
+  isEigen: boolean
+
+  /** Toggle network request status */
+  isFetching: boolean
+
+  /** PubSub hub for communicating with wider force. Avoid if possible! */
+  mediator: Mediator | null
+
+  /** Relay environment  */
+  relayEnvironment: Environment | null
+
+  /** Current app router instance  */
+  router: Router | null
+
+  /** Current logged in user  */
+  user: User | null
+
+  setIsEigen: Action<SystemContextProps, boolean>
+  setFetching: Action<SystemContextProps, boolean>
+  setRouter: Action<SystemContextProps, Router>
+  setUser: Action<SystemContextProps, User>
+}
+
+const SystemContextStore = createContextStore<SystemContextProps>(
+  runtimeModel => ({
+    injectedData: null,
+    isEigen: runtimeModel!.isEigen,
+    isFetching: false,
+    mediator: runtimeModel!.mediator,
+    relayEnvironment: runtimeModel!.relayEnvironment,
+    router: null,
+    searchQuery: "",
+    user: runtimeModel!.user,
+
+    setIsEigen: action((state, isEigen) => {
+      state.isEigen = isEigen
+    }),
+
+    setFetching: action((state, isFetching) => {
+      state.isFetching = isFetching
+    }),
+
+    setRouter: action((state, router) => {
+      state.router = router
+    }),
+
+    setUser: action((state, user) => {
+      state.user = user
+    }),
+  }),
+  {
+    middleware: [
+      createLogger({
+        collapsed: true,
+      }),
+    ],
+  }
+)
+
+type SystemContextProviderProps = Partial<
+  Pick<
+    SystemContextProps,
+    "isEigen" | "mediator" | "relayEnvironment" | "searchQuery" | "user"
+  >
+>
+
+export const SystemContextProvider: React.FC<SystemContextProviderProps> = ({
   children,
   ...props
 }) => {
-  const [isFetching, setFetching] = useState(false)
-  const [router, setRouter] = useState(null)
-  const [user, setUser] = useState(getUser(props.user))
-
+  const isEigen = props.isEigen || sd.EIGEN
+  const mediator = props.mediator || baseMediator
   const relayEnvironment =
-    props.relayEnvironment || createRelaySSREnvironment({ user })
-  const providerValues = {
-    ...props,
-    isFetching,
-    mediator: props.mediator || mediator,
-    setFetching,
-    router,
-    setRouter,
-    relayEnvironment,
-    user,
-    setUser,
-    isEigen: sd.EIGEN || props.isEigen,
-  }
+    props.relayEnvironment ?? createRelaySSREnvironment({ user: props.user })
 
   return (
-    // @ts-expect-error STRICT_NULL_CHECK
-    <SystemContext.Provider value={providerValues}>
+    <SystemContextStore.Provider
+      runtimeModel={
+        {
+          isEigen,
+          mediator,
+          relayEnvironment,
+        } as SystemContextProps
+      }
+    >
       {children}
-    </SystemContext.Provider>
+    </SystemContextStore.Provider>
   )
 }
 
-export const SystemContextConsumer = SystemContext.Consumer
-
 /**
- * A HOC utility function for injecting renderProps into a component.
+ * WARNING: Deprecated.
+ *
+ * The following components are *deprecated* and are only here for backwards
+ * compatability with older class-based react components.
  */
+
+export const SystemContextConsumer: React.FC<{
+  children: (systemContext: SystemContextProviderProps) => JSX.Element | null
+}> = ({ children }) => {
+  const systemContext = useSystemContext()
+  return children(systemContext)
+}
+
 export const withSystemContext = Component => {
   return props => {
     return (
@@ -129,3 +133,6 @@ export const withSystemContext = Component => {
     )
   }
 }
+
+export const { useStoreActions, useStoreState } = SystemContextStore
+export const _SystemContextProvider = SystemContextStore.Provider

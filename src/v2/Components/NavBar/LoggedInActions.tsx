@@ -1,7 +1,7 @@
-import React, { useContext } from "react"
+import React from "react"
 import { NavItem } from "./NavItem"
 import { NotificationsMenu, UserMenu } from "./Menus"
-import { AnalyticsSchema, SystemContext, useTracking } from "v2/System"
+import { AnalyticsSchema, useSystemContext, useTracking } from "v2/System"
 import { BellIcon, EnvelopeIcon, SoloIcon } from "@artsy/palette"
 import { graphql } from "relay-runtime"
 import { SystemQueryRenderer as QueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
@@ -86,7 +86,7 @@ export const LoggedInActions: React.FC<
 }
 
 export const LoggedInActionsQueryRenderer: React.FC<{}> = () => {
-  const { relayEnvironment } = useContext(SystemContext)
+  const { relayEnvironment } = useSystemContext()
 
   return isServer ? (
     <LoggedInActions />

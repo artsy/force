@@ -1,11 +1,11 @@
 import { Column, GridColumns, Spacer } from "@artsy/palette"
 import { OtherAuctions_salesConnection } from "v2/__generated__/OtherAuctions_salesConnection.graphql"
 import { OtherAuctionsQuery } from "v2/__generated__/OtherAuctionsQuery.graphql"
-import { SystemContext } from "v2/System"
+import { useSystemContext } from "v2/System"
 import { renderWithLoadProgress } from "v2/System/Relay/renderWithLoadProgress"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { AuctionCardFragmentContainer } from "v2/Components/AuctionCard"
-import React, { useContext } from "react"
+import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { data as sd } from "sharify"
 import { Header } from "./OtherWorks/Header"
@@ -55,7 +55,7 @@ export const OtherAuctionsFragmentContainer = createFragmentContainer(
 )
 
 export const OtherAuctionsQueryRenderer = () => {
-  const { relayEnvironment } = useContext(SystemContext)
+  const { relayEnvironment } = useSystemContext()
 
   return (
     <SystemQueryRenderer<OtherAuctionsQuery>

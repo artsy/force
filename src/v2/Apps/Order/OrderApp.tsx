@@ -138,7 +138,6 @@ class OrderApp extends React.Component<OrderAppProps, {}> {
     return (
       <SystemContextConsumer>
         {({ isEigen, mediator }) => {
-          // @ts-expect-error STRICT_NULL_CHECK
           this.mediator = mediator
           return (
             <Box>

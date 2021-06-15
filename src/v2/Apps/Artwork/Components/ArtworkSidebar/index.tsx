@@ -1,7 +1,7 @@
 import { Box, Spacer, Join } from "@artsy/palette"
 import { renderWithLoadProgress } from "v2/System/Relay/renderWithLoadProgress"
 import { AuctionTimerFragmentContainer } from "v2/Components/AuctionTimer"
-import React, { useContext } from "react"
+import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworkSidebarArtistsFragmentContainer } from "./ArtworkSidebarArtists"
 import { ArtworkSidebarAuctionPartnerInfoFragmentContainer } from "./ArtworkSidebarAuctionPartnerInfo"
@@ -14,7 +14,7 @@ import { ContextModule } from "@artsy/cohesion"
 import { ArtworkSidebar_artwork } from "v2/__generated__/ArtworkSidebar_artwork.graphql"
 import { ArtworkSidebar_me } from "v2/__generated__/ArtworkSidebar_me.graphql"
 import { ArtworkSidebarQuery } from "v2/__generated__/ArtworkSidebarQuery.graphql"
-import { SystemContext } from "v2/System"
+import { useSystemContext } from "v2/System"
 import { SystemQueryRenderer as QueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { AuthenticityCertificateFragmentContainer } from "../TrustSignals/AuthenticityCertificate"
 import { SecurePaymentFragmentContainer } from "../TrustSignals/SecurePayment"
@@ -115,7 +115,7 @@ export const ArtworkSidebarQueryRenderer = ({
 }: {
   artworkID: string
 }) => {
-  const { relayEnvironment } = useContext(SystemContext)
+  const { relayEnvironment } = useSystemContext()
 
   return (
     <QueryRenderer<ArtworkSidebarQuery>

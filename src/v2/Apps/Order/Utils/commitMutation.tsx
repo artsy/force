@@ -1,5 +1,5 @@
-import { SystemContext } from "v2/System"
-import React, { useContext } from "react"
+import { useSystemContext } from "v2/System"
+import React from "react"
 import { commitMutation as relayCommitMutation } from "react-relay"
 import { Environment, MutationConfig, MutationParameters } from "relay-runtime"
 
@@ -88,7 +88,7 @@ export function injectCommitMutation<Props extends CommitMutationProps>(
   Component: React.ComponentType<Props>
 ): React.ComponentType<Omit<Props, keyof CommitMutationProps>> {
   return props => {
-    const { relayEnvironment } = useContext(SystemContext)
+    const { relayEnvironment } = useSystemContext()
     return (
       // @ts-expect-error STRICT_NULL_CHECK
       <ProvideMutationContext relayEnvironment={relayEnvironment}>

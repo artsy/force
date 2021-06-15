@@ -8,7 +8,7 @@ import { SelectedWorksFragmentContainer as SelectedWorks } from "v2/Apps/Feature
 import { AnalyticsSchema, ContextModule } from "v2/System"
 import { useTracking } from "v2/System/Analytics/useTracking"
 import { RouterLink } from "v2/System/Router/RouterLink"
-import { useSystemContext } from "v2/System/SystemContext"
+import { useSystemContext } from "v2/System"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"

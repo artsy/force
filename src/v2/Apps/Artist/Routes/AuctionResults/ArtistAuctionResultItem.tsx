@@ -12,11 +12,11 @@ import {
 } from "@artsy/palette"
 import { Box, Button, Flex, Separator, Spacer } from "@artsy/palette"
 import { ArtistAuctionResultItem_auctionResult } from "v2/__generated__/ArtistAuctionResultItem_auctionResult.graphql"
-import { AnalyticsSchema, SystemContextProps } from "v2/System"
-import { SystemContext } from "v2/System"
+import { AnalyticsSchema } from "v2/System"
+import { useSystemContext } from "v2/System"
 import { ModalType } from "v2/Components/Authentication/Types"
 import { DateTime, LocaleOptions } from "luxon"
-import React, { SFC, useContext, useState } from "react"
+import React, { SFC, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import styled from "styled-components"
@@ -29,11 +29,12 @@ import {
 } from "./Components/ImageWithFallback"
 import { Mediator } from "lib/mediator"
 
-export interface Props extends SystemContextProps {
+export interface Props {
   expanded?: boolean
   auctionResult: ArtistAuctionResultItem_auctionResult
   index: number
-  mediator?: Mediator
+  mediator?: Mediator | null
+  user?: User | null
   lastChild: boolean
   filtersAtDefault: boolean
 }
@@ -55,7 +56,7 @@ const Capitalize = styled.span`
 
 // TODO: This whole component should be refactored to use less `Media` decisions
 export const ArtistAuctionResultItem: SFC<Props> = props => {
-  const { user, mediator } = useContext(SystemContext)
+  const { user, mediator } = useSystemContext()
 
   const tracking = useTracking()
   const [expanded, setExpanded] = useState(false)

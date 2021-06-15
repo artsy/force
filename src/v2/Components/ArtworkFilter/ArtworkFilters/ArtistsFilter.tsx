@@ -13,7 +13,7 @@ export interface ArtistsFilterProps {
   expanded?: boolean
   relayEnvironment?: any
   fairID?: string
-  user?: User
+  user?: User | null
 }
 
 const ArtistItem: React.FC<{

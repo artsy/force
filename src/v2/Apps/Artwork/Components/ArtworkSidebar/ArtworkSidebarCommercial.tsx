@@ -13,14 +13,14 @@ import {
 import { ArtworkSidebarCommercial_artwork } from "v2/__generated__/ArtworkSidebarCommercial_artwork.graphql"
 import { ArtworkSidebarCommercialOfferOrderMutation } from "v2/__generated__/ArtworkSidebarCommercialOfferOrderMutation.graphql"
 import { ArtworkSidebarCommercialOrderMutation } from "v2/__generated__/ArtworkSidebarCommercialOrderMutation.graphql"
-import { SystemContext } from "v2/System"
+import { useSystemContext } from "v2/System"
 import { track } from "v2/System/Analytics"
 import * as Schema from "v2/System/Analytics/Schema"
 import { ModalType } from "v2/Components/Authentication/Types"
 import { ErrorModal } from "v2/Components/Modal/ErrorModal"
 import currency from "currency.js"
 import { Router } from "found"
-import React, { FC, useContext } from "react"
+import React, { FC } from "react"
 import {
   RelayProp,
   commitMutation,
@@ -479,7 +479,7 @@ interface ArtworkSidebarCommercialProps {
 }
 
 export const ArtworkSidebarCommercial: FC<ArtworkSidebarCommercialProps> = props => {
-  const { mediator, router, user } = useContext(SystemContext)
+  const { mediator, router, user } = useSystemContext()
 
   return (
     // @ts-expect-error STRICT_NULL_CHECK

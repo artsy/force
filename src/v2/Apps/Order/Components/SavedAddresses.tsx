@@ -23,7 +23,7 @@ import createLogger from "v2/Utils/logger"
 import { SavedAddressItem } from "v2/Apps/Order/Components/SavedAddressItem"
 import { deleteUserAddress } from "v2/Apps/Order/Mutations/DeleteUserAddress"
 import { updateUserDefaultAddress } from "v2/Apps/Order/Mutations/UpdateUserDefaultAddress"
-import { useSystemContext } from "v2/System/SystemContext"
+import { useSystemContext } from "v2/System"
 
 export const NEW_ADDRESS = "NEW_ADDRESS"
 const PAGE_SIZE = 30
