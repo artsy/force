@@ -250,12 +250,16 @@ export class InfiniteScrollNewsArticle extends Component<Props, State> {
   }
 
   render() {
-    const { isMobile } = this.props
+    const { isEigen, isMobile } = this.props
     const { date } = this.state
 
     return (
-      <NewsContainer isMobile={isMobile || false} id="article-root">
-        <NewsNav date={date} positionTop={56} />
+      <NewsContainer
+        isEigen={isEigen || false}
+        isMobile={isMobile || false}
+        id="article-root"
+      >
+        {!isEigen && <NewsNav date={date} positionTop={56} />}
         {this.renderContent()}
         {this.renderWaypoint()}
       </NewsContainer>
@@ -263,6 +267,7 @@ export class InfiniteScrollNewsArticle extends Component<Props, State> {
   }
 }
 
-const NewsContainer = styled.div<{ isMobile: boolean }>`
-  margin-top: ${props => (props.isMobile ? "100" : "200")}px;
+const NewsContainer = styled.div<{ isMobile: boolean; isEigen: boolean }>`
+  margin-top: ${props =>
+    props.isEigen ? "0" : props.isMobile ? "100" : "200"}px;
 `
