@@ -259,7 +259,7 @@ const ExtraSmallAuctionItem: FC<Props> = props => {
         <Text variant="xs" color="black60">
           Sold on {dateOfSale}
         </Text>
-        <Spacer size="10px" />
+        <Spacer mt="1" />
         {renderPricing(
           salePrice,
           saleDate,
