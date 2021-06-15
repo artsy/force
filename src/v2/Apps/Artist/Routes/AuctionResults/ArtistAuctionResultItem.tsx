@@ -16,7 +16,7 @@ import { AnalyticsSchema, SystemContextProps } from "v2/System"
 import { SystemContext } from "v2/System"
 import { ModalType } from "v2/Components/Authentication/Types"
 import { DateTime, LocaleOptions } from "luxon"
-import React, { SFC, useContext, useState } from "react"
+import React, { FC, useContext, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import styled from "styled-components"
@@ -28,6 +28,7 @@ import {
   renderFallbackImage,
 } from "./Components/ImageWithFallback"
 import { Mediator } from "lib/mediator"
+import { AuctionResultPerformance } from "v2/Components/AuctionResultPerformance"
 
 export interface Props extends SystemContextProps {
   expanded?: boolean
@@ -54,7 +55,7 @@ const Capitalize = styled.span`
 `
 
 // TODO: This whole component should be refactored to use less `Media` decisions
-export const ArtistAuctionResultItem: SFC<Props> = props => {
+export const ArtistAuctionResultItem: FC<Props> = props => {
   const { user, mediator } = useContext(SystemContext)
 
   const tracking = useTracking()
@@ -123,7 +124,7 @@ export const ArtistAuctionResultItem: SFC<Props> = props => {
   )
 }
 
-const LargeAuctionItem: SFC<Props> = props => {
+const LargeAuctionItem: FC<Props> = props => {
   const {
     expanded,
     auctionResult: {
@@ -134,6 +135,7 @@ const LargeAuctionItem: SFC<Props> = props => {
       mediumText,
       saleDate,
       boughtIn,
+      performance,
     },
     salePrice,
   } = getProps(props)
@@ -203,7 +205,8 @@ const LargeAuctionItem: SFC<Props> = props => {
               props.mediator,
               "lg",
               props.filtersAtDefault,
-              boughtIn
+              boughtIn,
+              performance?.mid ?? null
             )}
           </Flex>
           <Flex width="10%" justifyContent="flex-end">
@@ -215,10 +218,18 @@ const LargeAuctionItem: SFC<Props> = props => {
   )
 }
 
-const ExtraSmallAuctionItem: SFC<Props> = props => {
+const ExtraSmallAuctionItem: FC<Props> = props => {
   const {
     expanded,
-    auctionResult: { images, date_text, title, saleDate, boughtIn },
+    auctionResult: {
+      images,
+      date_text,
+      title,
+
+      saleDate,
+      boughtIn,
+      performance,
+    },
     salePrice,
   } = getProps(props)
   // @ts-expect-error STRICT_NULL_CHECK
@@ -244,6 +255,15 @@ const ExtraSmallAuctionItem: SFC<Props> = props => {
         )}
       </Flex>
       <Flex ml={2} flexDirection="column" justifyContent="center" width="100%">
+        <Text variant="xs" color="black100">
+          {title}
+          {title && date_text && ", "}
+          {date_text}
+        </Text>
+        <Text variant="xs" color="black60">
+          Sold on {dateOfSale}
+        </Text>
+        <Spacer mt="1" />
         {renderPricing(
           salePrice,
           saleDate,
@@ -251,16 +271,9 @@ const ExtraSmallAuctionItem: SFC<Props> = props => {
           props.mediator,
           "xs",
           props.filtersAtDefault,
-          boughtIn
+          boughtIn,
+          performance?.mid ?? null
         )}
-        <Sans size="2" weight="medium" color="black60">
-          {title}
-          {title && date_text && ", "}
-          {date_text}
-        </Sans>
-        <Sans size="2" color="black60" mt="5px">
-          Sold on {dateOfSale}
-        </Sans>
       </Flex>
       <Flex justifyContent="flex-end" alignItems="center" height="100%">
         <div>{expanded ? <ArrowUpIcon /> : <ArrowDownIcon />}</div>
@@ -291,6 +304,9 @@ export const ArtistAuctionResultItemFragmentContainer = createFragmentContainer(
         price_realized: priceRealized {
           display
           cents_usd: centsUSD
+        }
+        performance {
+          mid
         }
         estimate {
           display
@@ -344,7 +360,8 @@ const renderPricing = (
   mediator,
   size,
   filtersAtDefault,
-  boughtIn
+  boughtIn,
+  performance: string | null
 ) => {
   // If user is logged in we show prices. Otherwise we show prices only when filters at default.
   if (user || filtersAtDefault) {
@@ -361,11 +378,13 @@ const renderPricing = (
             <Text variant="md" fontWeight="bold">
               {salePrice}
             </Text>
-            {size !== "xs" && (
-              <Text variant="xs" color="black60">
-                Realized price
-              </Text>
-            )}
+            <Text variant="xs" color="black60">
+              Realized price
+            </Text>
+            <AuctionResultPerformance
+              value={performance}
+              align={size === "xs" ? "left" : "right"}
+            />
           </>
         )}
         {!salePrice && boughtIn && (
