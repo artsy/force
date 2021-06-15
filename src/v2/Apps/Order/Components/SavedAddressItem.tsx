@@ -41,7 +41,7 @@ export const SavedAddressItem: React.FC<SavedAddressItemProps> = (
               line && (
                 <Flex key={index} justifyContent="row" alignItems="center">
                   <Text
-                    style={{ textTransform: "capitalize" }}
+                    textTransform="capitalize"
                     textColor={index === 0 ? "black100" : "black60"}
                     variant="text"
                   >
@@ -67,7 +67,7 @@ export const SavedAddressItem: React.FC<SavedAddressItemProps> = (
                 </Flex>
               )
           )}
-        <Text textColor="black60" style={{ textTransform: "capitalize" }}>
+        <Text textColor="black60" textTransform="capitalize">
           {formattedAddressLine}
         </Text>
         <Text textColor="black60">{phoneNumber}</Text>
