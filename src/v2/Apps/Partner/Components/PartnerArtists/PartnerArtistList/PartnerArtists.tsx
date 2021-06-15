@@ -32,7 +32,7 @@ export const PartnerArtists: React.FC<PartnerArtistsProps> = ({
     allArtistsConnection: { edges: artists },
     distinguishRepresentedArtists,
     slug,
-    fullProfileEligible,
+    displayFullPartnerPage,
   } = partner
 
   return (
@@ -44,7 +44,7 @@ export const PartnerArtists: React.FC<PartnerArtistsProps> = ({
         // @ts-expect-error STRICT_NULL_CHECK
         artists={artists}
         distinguishRepresentedArtists={!!distinguishRepresentedArtists}
-        fullProfileEligible={!!fullProfileEligible}
+        displayFullPartnerPage={!!displayFullPartnerPage}
       />
     </Box>
   )
@@ -57,7 +57,7 @@ export const PartnerArtistsFragmentContainer = createFragmentContainer(
       fragment PartnerArtists_partner on Partner {
         slug
         distinguishRepresentedArtists
-        fullProfileEligible
+        displayFullPartnerPage
         allArtistsConnection(
           displayOnPartnerProfile: true
           hasNotRepresentedArtistWithPublishedArtworks: true

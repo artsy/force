@@ -18,7 +18,7 @@ export interface PartnerArtistItemProps {
   hasPublishedArtworks: boolean
   partnerSlug: string
   scrollTo: ScrollIntoViewProps
-  fullProfileEligible: boolean
+  displayFullPartnerPage: boolean
 }
 
 export const PartnerArtistItem: React.FC<PartnerArtistItemProps> = ({
@@ -26,9 +26,9 @@ export const PartnerArtistItem: React.FC<PartnerArtistItemProps> = ({
   hasPublishedArtworks,
   partnerSlug,
   scrollTo,
-  fullProfileEligible,
+  displayFullPartnerPage,
 }) => {
-  const artistHref = fullProfileEligible
+  const artistHref = displayFullPartnerPage
     ? // TODO: Use partner.href instead after page migration
       `/partner/${partnerSlug}/artists/${slug}`
     : href || `/artists/${slug}`

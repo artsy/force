@@ -17,7 +17,8 @@ interface OverviewProps {
 const Overview: React.FC<OverviewProps> = ({ partner }) => {
   const {
     slug,
-    fullProfileEligible,
+    partnerType,
+    displayFullPartnerPage,
     profileBannerDisplay,
     displayArtistsSection,
     // @ts-expect-error STRICT_NULL_CHECK
@@ -29,7 +30,7 @@ const Overview: React.FC<OverviewProps> = ({ partner }) => {
 
   const hasArticles = articles.length > 0
 
-  return fullProfileEligible ? (
+  return displayFullPartnerPage ? (
     <>
       {profileBannerDisplay === "Artworks" ? (
         <ArtworksRailRenderer mt={4} mb={[4, 80]} partnerId={slug} />
@@ -49,7 +50,9 @@ const Overview: React.FC<OverviewProps> = ({ partner }) => {
     </>
   ) : (
     <>
-      <SubscriberBannerFragmentContainer partner={partner} />
+      {partnerType !== "Brand" && (
+        <SubscriberBannerFragmentContainer partner={partner} />
+      )}
 
       <AboutPartnerFragmentContainer partner={partner} />
 
@@ -74,7 +77,8 @@ export const OverviewFragmentContainer = createFragmentContainer(Overview, {
   partner: graphql`
     fragment Overview_partner on Partner {
       slug
-      fullProfileEligible
+      partnerType
+      displayFullPartnerPage
       profileBannerDisplay
       displayArtistsSection
       ...AboutPartner_partner

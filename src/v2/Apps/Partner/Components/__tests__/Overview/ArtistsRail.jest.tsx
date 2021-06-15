@@ -35,7 +35,7 @@ describe("ArtistsRail", () => {
       Partner: () => ({
         slug: "unit-london",
         profileArtistsLayout: "Grid",
-        fullProfileEligible: false,
+        displayFullPartnerPage: false,
         artistsWithPublishedArtworks: {
           totalCount: 10,
         },
@@ -55,7 +55,7 @@ describe("ArtistsRail", () => {
         Partner: () => ({
           slug: "unit-london",
           profileArtistsLayout: "Grid",
-          fullProfileEligible: true,
+          displayFullPartnerPage: true,
           artistsWithPublishedArtworks: {
             totalCount: 10,
           },
@@ -73,7 +73,7 @@ describe("ArtistsRail", () => {
         Partner: () => ({
           slug: "unit-london",
           profileArtistsLayout: "Grid",
-          fullProfileEligible: true,
+          displayFullPartnerPage: true,
           artistsWithPublishedArtworks: {
             totalCount: 0,
           },
@@ -93,7 +93,7 @@ describe("ArtistsRail", () => {
         Partner: () => ({
           slug: "unit-london",
           profileArtistsLayout: "List",
-          fullProfileEligible: true,
+          displayFullPartnerPage: true,
           artistsWithPublishedArtworks: {
             totalCount: 10,
           },
@@ -111,7 +111,7 @@ describe("ArtistsRail", () => {
         Partner: () => ({
           slug: "unit-london",
           profileArtistsLayout: "List",
-          fullProfileEligible: true,
+          displayFullPartnerPage: true,
           artistsWithPublishedArtworks: {
             totalCount: 0,
           },
