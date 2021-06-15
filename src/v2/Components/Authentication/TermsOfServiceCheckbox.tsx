@@ -21,7 +21,7 @@ const GdprLabel = color => {
         href="https://www.artsy.net/terms"
         target="_blank"
         color={color}
-        underlineBehavior="hover"
+        underlineBehavior="default"
       >
         Terms of Use
       </Link>
@@ -30,7 +30,7 @@ const GdprLabel = color => {
         href="https://www.artsy.net/privacy"
         target="_blank"
         color={color}
-        underlineBehavior="hover"
+        underlineBehavior="default"
       >
         Privacy Policy
       </Link>
@@ -39,7 +39,7 @@ const GdprLabel = color => {
         href="https://www.artsy.net/conditions-of-sale"
         target="_blank"
         color={color}
-        underlineBehavior="hover"
+        underlineBehavior="default"
       >
         Conditions of Sale
       </Link>
@@ -56,7 +56,7 @@ const FallbackLabel = color => {
         href="https://www.artsy.net/terms"
         target="_blank"
         color={color}
-        underlineBehavior="hover"
+        underlineBehavior="default"
       >
         Terms of Use
       </Link>
@@ -65,7 +65,7 @@ const FallbackLabel = color => {
         href="https://www.artsy.net/privacy"
         target="_blank"
         color={color}
-        underlineBehavior="hover"
+        underlineBehavior="default"
       >
         Privacy Policy
       </Link>
@@ -74,7 +74,7 @@ const FallbackLabel = color => {
         href="https://www.artsy.net/conditions-of-sale"
         target="_blank"
         color={color}
-        underlineBehavior="hover"
+        underlineBehavior="default"
       >
         Conditions of Sale
       </Link>
