@@ -136,6 +136,7 @@ module.exports =
   APPLE_KEY_ID: null
   APPLE_PRIVATE_KEY: null
   ZENDESK_KEY: null
+  AUCTION_ZENDESK_KEY: null
 
 # Override any values with env variables if they exist.
 # You can set JSON-y values for env variables as well such as "true" or

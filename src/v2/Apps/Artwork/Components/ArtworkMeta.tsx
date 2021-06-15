@@ -130,37 +130,12 @@ export class ArtworkMeta extends Component<ArtworkMetaProps> {
   }
 
   renderZendeskScript() {
-    const {
-      is_acquireable,
-      is_in_auction,
-      isInquireable,
-      isOfferable,
-      listPrice,
-      priceCurrency,
-    } = this.props.artwork
-
-    const BNMO_CURRENCY_THRESHOLDS = {
-      USD: 10000,
-      EUR: 8000,
-      HKD: 77000,
-      GBP: 7000,
-    }
-
-    // This accounts for exact price and price ranges
-    const artworkPrice = listPrice?.major
-      ? listPrice.major
-      : listPrice?.minPrice?.major
-
-    if (is_in_auction) return
-    if (!is_acquireable && !isOfferable && !isInquireable) return
-    // @ts-expect-error STRICT_NULL_CHECK
-    if (!BNMO_CURRENCY_THRESHOLDS[priceCurrency]) return
-    // @ts-expect-error STRICT_NULL_CHECK
-    if (!artworkPrice || artworkPrice < BNMO_CURRENCY_THRESHOLDS[priceCurrency])
-      return
     if (typeof window !== "undefined" && window.zEmbed) return
+    const zdKey = this.props.artwork.is_in_auction
+      ? sd.AUCTION_ZENDESK_KEY
+      : sd.ZENDESK_KEY
 
-    return <ZendeskWrapper />
+    return <ZendeskWrapper zdKey={zdKey} />
   }
 
   render() {
@@ -229,17 +204,6 @@ export const ArtworkMetaFragmentContainer = createFragmentContainer(
             width
             height
             url
-          }
-        }
-        priceCurrency
-        listPrice {
-          ... on Money {
-            major
-          }
-          ... on PriceRange {
-            minPrice {
-              major
-            }
           }
         }
         meta {

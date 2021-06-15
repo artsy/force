@@ -111,7 +111,7 @@ class OrderApp extends React.Component<OrderAppProps, {}> {
   renderZendeskScript() {
     if (typeof window !== "undefined" && window.zEmbed) return
 
-    return <ZendeskWrapper />
+    return <ZendeskWrapper zdKey={sd.ZENDESK_KEY} />
   }
 
   render() {
