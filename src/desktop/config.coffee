@@ -131,7 +131,6 @@ module.exports =
   ALLOWED_VANITY_ASSETS: 'videos/*|vrview/*|hls-videos/*'
   VERBOSE_LOGGING: false
   ENABLE_SIGN_IN_WITH_APPLE: false
-  ENABLE_NEW_ARTWORK_FILTERS: false
   APPLE_CLIENT_ID: null
   APPLE_TEAM_ID: null
   APPLE_KEY_ID: null

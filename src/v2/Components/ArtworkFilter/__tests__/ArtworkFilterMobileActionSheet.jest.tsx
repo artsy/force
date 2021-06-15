@@ -144,6 +144,42 @@ describe("ArtworkFilterMobileActionSheet", () => {
   })
 
   describe("the count on the `Apply` button", () => {
+    const aggregationsWithArtworkLocation = [
+      {
+        slice: "LOCATION_CITY",
+        counts: [
+          {
+            name: "Glens Falls, NY, USA",
+            count: 1,
+            value: "glens-falls",
+          },
+          {
+            name: "Schenectady, NY, USA",
+            count: 1,
+            value: "schenectady",
+          },
+        ],
+      },
+    ]
+
+    const aggregationsWithArtistNationality = [
+      {
+        slice: "ARTIST_NATIONALITY",
+        counts: [
+          {
+            name: "Glens Fallsian",
+            count: 1,
+            value: "glens-fallsian",
+          },
+          {
+            name: "Schenectadian",
+            count: 1,
+            value: "schenectadian",
+          },
+        ],
+      },
+    ]
+
     it("is 1 when 1 medium is selected", async () => {
       const wrapper = getWrapper()
 
@@ -265,6 +301,90 @@ describe("ArtworkFilterMobileActionSheet", () => {
         .find("ColorFilter")
         .find("Checkbox")
         .findWhere(label => label.text() === "Black and white")
+        .first()
+        .simulate("click")
+      await flushPromiseQueue()
+
+      expect(wrapper.find("ApplyButton").text()).toEqual("Apply (1)")
+    })
+
+    it("is 1 when 1 artwork location is selected", async () => {
+      const wrapper = getWrapper({
+        aggregations: aggregationsWithArtworkLocation,
+      })
+
+      wrapper
+        .find("ArtworkLocationFilter")
+        .find("div")
+        .findWhere(label => label.text() === "Glens Falls, NY, USA")
+        .first()
+        .simulate("click")
+      await flushPromiseQueue()
+
+      expect(wrapper.find("ApplyButton").text()).toEqual("Apply (1)")
+    })
+
+    it("is 1 when 2 artwork locations are selected", async () => {
+      const wrapper = getWrapper({
+        aggregations: aggregationsWithArtworkLocation,
+      })
+
+      wrapper
+        .find("ArtworkLocationFilter")
+        .find("div")
+        .findWhere(label => label.text() === "Glens Falls, NY, USA")
+        .first()
+        .simulate("click")
+      await flushPromiseQueue()
+
+      expect(wrapper.find("ApplyButton").text()).toEqual("Apply (1)")
+
+      wrapper
+        .find("ArtworkLocationFilter")
+        .find("div")
+        .findWhere(label => label.text() === "Schenectady, NY, USA")
+        .first()
+        .simulate("click")
+      await flushPromiseQueue()
+
+      expect(wrapper.find("ApplyButton").text()).toEqual("Apply (1)")
+    })
+
+    it("is 1 when 1 artist nationality is selected", async () => {
+      const wrapper = getWrapper({
+        aggregations: aggregationsWithArtistNationality,
+      })
+
+      wrapper
+        .find("ArtistNationalityFilter")
+        .find("div")
+        .findWhere(label => label.text() === "Glens Fallsian")
+        .first()
+        .simulate("click")
+      await flushPromiseQueue()
+
+      expect(wrapper.find("ApplyButton").text()).toEqual("Apply (1)")
+    })
+
+    it("is 1 when 2 artist nationalities are selected", async () => {
+      const wrapper = getWrapper({
+        aggregations: aggregationsWithArtistNationality,
+      })
+
+      wrapper
+        .find("ArtistNationalityFilter")
+        .find("div")
+        .findWhere(label => label.text() === "Glens Fallsian")
+        .first()
+        .simulate("click")
+      await flushPromiseQueue()
+
+      expect(wrapper.find("ApplyButton").text()).toEqual("Apply (1)")
+
+      wrapper
+        .find("ArtistNationalityFilter")
+        .find("div")
+        .findWhere(label => label.text() === "Schenectadian")
         .first()
         .simulate("click")
       await flushPromiseQueue()

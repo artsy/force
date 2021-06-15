@@ -2,7 +2,6 @@ import loadable from "@loadable/component"
 import { graphql } from "react-relay"
 import { RedirectException } from "found"
 import { paramsToCamelCase } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
-import { getENV } from "v2/Utils/getENV"
 import { allowedFilters } from "v2/Components/ArtworkFilter/Utils/allowedFilters"
 import { AppRouteConfig } from "v2/System/Router/Route"
 
@@ -90,15 +89,19 @@ export const showRoutes: AppRouteConfig[] = [
 
 function initializeVariablesWithFilterState({ slug }, props) {
   const initialFilterState = props.location ? props.location.query : {}
-  const aggregations = ["MEDIUM", "TOTAL", "MAJOR_PERIOD"]
-  const additionalAggregations = getENV("ENABLE_NEW_ARTWORK_FILTERS")
-    ? ["ARTIST_NATIONALITY", "MATERIALS_TERMS"]
-    : []
-  const allAggregations = aggregations.concat(additionalAggregations)
+
+  const aggregations = [
+    "MEDIUM",
+    "TOTAL",
+    "MAJOR_PERIOD",
+    "ARTIST_NATIONALITY",
+    "MATERIALS_TERMS",
+  ]
+
   const input = {
     sort: "partner_show_position",
     ...allowedFilters(paramsToCamelCase(initialFilterState)),
   }
 
-  return { slug, input, aggregations: allAggregations }
+  return { slug, input, aggregations }
 }
