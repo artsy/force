@@ -54,23 +54,4 @@ describe("Footer", () => {
       expect(wrapper.find(CCPARequest).length).toEqual(1)
     })
   })
-
-  describe("renders proper badge for downloading the app", () => {
-    let userAgentGetter
-    beforeEach(() => {
-      userAgentGetter = jest.spyOn(window.navigator, "userAgent", "get")
-    })
-
-    it("to iPhone", () => {
-      userAgentGetter.mockReturnValue("iPhone")
-      const wrapper = getWrapper("xs")
-      expect(wrapper.find("DownloadIPhoneAppBadgeSVG").exists()).toBeTruthy()
-    })
-
-    it("to Android", () => {
-      userAgentGetter.mockReturnValue("Android")
-      const wrapper = getWrapper("xs")
-      expect(wrapper.find("DownloadAndroidAppBadgeSVG").exists()).toBeTruthy()
-    })
-  })
 })

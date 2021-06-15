@@ -18,18 +18,13 @@ import {
   useThemeConfig,
   WeChatIcon,
 } from "@artsy/palette"
-import { DownloadAppBadge } from "v2/Components/DownloadAppBadge"
-import { ContextModule } from "@artsy/cohesion"
 import { CCPARequest } from "../CCPARequest"
 import { FooterDownloadAppBanner } from "./FooterDownloadAppBanner"
 import { RouterLink, RouterLinkProps } from "v2/System/Router/RouterLink"
-import { useDeviceDetection } from "v2/Utils/Hooks/useDeviceDetection"
 
 interface FooterProps extends BoxProps {}
 
 export const Footer: React.FC<FooterProps> = props => {
-  const { device, downloadAppUrl } = useDeviceDetection()
-
   const tokens = useThemeConfig({
     v2: {
       header: "mediumText" as TextVariant,
@@ -46,25 +41,17 @@ export const Footer: React.FC<FooterProps> = props => {
   })
 
   return (
-    <Box mt={6} borderTop="1px solid" borderColor="black10" {...props}>
-      <Box id="download-app-banner"></Box>
+    <Box
+      id="download-app-banner"
+      mt={6}
+      borderTop="1px solid"
+      borderColor="black10"
+      {...props}
+    >
       <FooterDownloadAppBanner />
 
       <footer>
         <GridColumns pt={tokens.pt} pb={tokens.pb} gridRowGap={[4, 0]}>
-          <Column span={12}>
-            <Media at="xs">
-              <Text variant={tokens.header} fontWeight="bold" mb={2}>
-                Get the App
-              </Text>
-              <DownloadAppBadge
-                contextModule={ContextModule.footer}
-                device={device}
-                downloadAppUrl={downloadAppUrl}
-              />
-            </Media>
-          </Column>
-
           <Column span={3}>
             <Text variant={tokens.header} fontWeight="bold" mb={2}>
               About us
