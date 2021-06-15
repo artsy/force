@@ -3,12 +3,10 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type HomePageHeroUnitMode = "CENTERED_DARK" | "CENTERED_LIGHT" | "LEFT_DARK" | "LEFT_LIGHT" | "RIGHT_DARK" | "RIGHT_LIGHT" | "%future added value";
 export type HomeApp_homePage = {
     readonly heroUnits: ReadonlyArray<{
-        readonly mode: HomePageHeroUnitMode | null;
-        readonly heading: string | null;
-        readonly title: string | null;
+        readonly internalID: string;
+        readonly " $fragmentRefs": FragmentRefs<"HomeHeroUnit_heroUnit">;
     } | null> | null;
     readonly " $refType": "HomeApp_homePage";
 };
@@ -44,22 +42,13 @@ const node: ReaderFragment = {
           "alias": null,
           "args": null,
           "kind": "ScalarField",
-          "name": "mode",
+          "name": "internalID",
           "storageKey": null
         },
         {
-          "alias": null,
           "args": null,
-          "kind": "ScalarField",
-          "name": "heading",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "title",
-          "storageKey": null
+          "kind": "FragmentSpread",
+          "name": "HomeHeroUnit_heroUnit"
         }
       ],
       "storageKey": "heroUnits(platform:\"DESKTOP\")"
@@ -67,5 +56,5 @@ const node: ReaderFragment = {
   ],
   "type": "HomePage"
 };
-(node as any).hash = 'e4c074bf2be22c2784666c5f568cabbb';
+(node as any).hash = '0e3bf7e8c8be3fbc6ddb48bac59c5d9b';
 export default node;

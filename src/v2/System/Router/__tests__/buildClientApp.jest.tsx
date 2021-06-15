@@ -92,6 +92,7 @@ describe("buildClientApp", () => {
     ).toContain("found window cache")
   })
 
+  // eslint-disable-next-line jest/no-done-callback
   it("passes along initial context values", async done => {
     const HomeApp = () => {
       return (
@@ -101,6 +102,7 @@ describe("buildClientApp", () => {
               "analytics",
               "isEigen",
               "isFetching",
+              "isLoggedIn",
               "mediator",
               "relayEnvironment",
               "router",
@@ -185,6 +187,7 @@ describe("buildClientApp", () => {
 
         mount(<ClientApp />)
       } catch (error) {
+        // eslint-disable-next-line jest/no-conditional-expect, jest/no-try-expect
         expect(error.message).toMatch(/Oh noes/)
       }
     })
