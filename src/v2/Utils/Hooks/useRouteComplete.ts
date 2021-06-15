@@ -19,9 +19,9 @@ export const useRouteComplete = ({
 
       // Wait till after the next tick to set to false, to give react tree
       // ability to execute related tracking handlers
-      setImmediate(() => {
+      setTimeout(() => {
         setIsComplete(false)
-      })
+      }, 0)
     }
   }, [isFetching, onComplete, prevFetching])
 
