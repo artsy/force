@@ -94,8 +94,8 @@ export const AddressModalFields: React.FC = props => {
                 value={values?.addressLine2}
               />
               <Input
-                title="State, provence, or region"
-                placeholder="Add state, provence, or region"
+                title="State, province, or region"
+                placeholder="Add state, province, or region"
                 name="region"
                 onChange={handleChange}
                 onBlur={handleBlur}
