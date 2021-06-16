@@ -49,10 +49,13 @@ export const legacyDevelopmentConfig = {
       format: "compact",
     }),
     new ForkTsCheckerWebpackPlugin({
-      checkSyntacticErrors: true,
-      formatter: "codeframe",
-      formatterOptions: "highlightCode",
-      watch: ["./src"],
+      typescript: {
+        diagnosticOptions: {
+          semantic: true,
+          syntactic: true,
+        },
+      },
+      formatter: { type: "codeframe", options: { highlightCode: true } },
     }),
     new ForkTsCheckerNotifierWebpackPlugin({
       excludeWarnings: true,

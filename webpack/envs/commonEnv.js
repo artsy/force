@@ -15,9 +15,7 @@ export const standardStats = env.webpackStats || "errors-only"
 // The standard minimization config to production.
 export const standardMinimizer = [
   new TerserPlugin({
-    cache: false,
     parallel: env.onCi ? env.webpackCiCpuLimit : true, // Only use 4 cpus (default) in CircleCI, by default it will try using 36 and OOM
-    sourceMap: true, // Must be set to true if using source-maps in production
   }),
 ]
 
@@ -42,6 +40,11 @@ export const standardResolve = {
     ".jade",
     ".coffee",
   ],
+  fallback: {
+    buffer: require.resolve("buffer/"),
+    os: require.resolve("os-browserify/browser"),
+    path: false,
+  },
   // Symlink issues should be fixed via `yarn --pnp`
   modules: [path.resolve(basePath, "src"), "node_modules"],
   symlinks: false,
