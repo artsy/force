@@ -1,10 +1,11 @@
-import { Column, GridColumns, Spacer } from "@artsy/palette"
+import { Column, GridColumns, Spacer, Join } from "@artsy/palette"
 import { compact } from "lodash"
 import React from "react"
 import { Title } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "v2/System/useSystemContext"
 import { HomeApp_homePage } from "v2/__generated__/HomeApp_homePage.graphql"
+import { HomeFeaturedCategoriesRailQueryRenderer } from "./Components/HomeFeaturedCategoriesRail"
 import { HomeHeroUnitFragmentContainer } from "./Components/HomeHeroUnit"
 import { HomeInfoBlurb } from "./Components/HomeInfoBlurb"
 
@@ -13,9 +14,9 @@ interface HomeAppProps {
 }
 
 export const HomeApp: React.FC<HomeAppProps> = ({ homePage }) => {
-  const heroUnits = compact(homePage.heroUnits?.slice(0, 2)) ?? []
-
   const { isLoggedIn } = useSystemContext()
+
+  const heroUnits = compact(homePage.heroUnits?.slice(0, 2)) ?? []
 
   return (
     <>
@@ -23,25 +24,21 @@ export const HomeApp: React.FC<HomeAppProps> = ({ homePage }) => {
 
       <Spacer mt={4} />
 
-      {!isLoggedIn && (
-        <>
-          <HomeInfoBlurb />
+      <Join separator={<Spacer mt={6} />}>
+        {!isLoggedIn && <HomeInfoBlurb />}
 
-          <Spacer mt={6} />
-        </>
-      )}
+        <GridColumns gridRowGap={6}>
+          {heroUnits.map(heroUnit => {
+            return (
+              <Column key={heroUnit.internalID} span={6}>
+                <HomeHeroUnitFragmentContainer heroUnit={heroUnit} />
+              </Column>
+            )
+          })}
+        </GridColumns>
 
-      <GridColumns gridRowGap={6}>
-        {heroUnits.map(heroUnit => {
-          return (
-            <Column key={heroUnit.internalID} span={6}>
-              <HomeHeroUnitFragmentContainer heroUnit={heroUnit} />
-            </Column>
-          )
-        })}
-      </GridColumns>
-
-      <Spacer mt={6} />
+        {!isLoggedIn && <HomeFeaturedCategoriesRailQueryRenderer />}
+      </Join>
     </>
   )
 }
