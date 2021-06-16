@@ -10,7 +10,7 @@ export const clientChunks = {
   automaticNameDelimiter: "-",
   cacheGroups: {
     default: false,
-    defaultVendors: false,
+    vendors: false,
     "artsy-framework": {
       name: "artsy-framework",
       chunks: "all",

@@ -1,9 +1,10 @@
 // @ts-check
 
+import { HashedModuleIdsPlugin } from "webpack"
 import HtmlWebpackPlugin from "html-webpack-plugin"
 import LoadablePlugin from "@loadable/webpack-plugin"
 import ReactRefreshWebpackPlugin from "@pmmmwh/react-refresh-webpack-plugin"
-import { WebpackManifestPlugin } from "webpack-manifest-plugin"
+import WebpackManifestPlugin from "webpack-manifest-plugin"
 import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin"
 import path from "path"
 import webpack from "webpack"
@@ -54,18 +55,16 @@ export const clientDevelopmentConfig = {
     ...standardPlugins,
     new webpack.HotModuleReplacementPlugin(),
     new ForkTsCheckerWebpackPlugin({
-      typescript: {
-        diagnosticOptions: {
-          semantic: true,
-          syntactic: true,
-        },
-      },
-      formatter: { type: "codeframe", options: { highlightCode: true } },
+      checkSyntacticErrors: true,
+      formatter: "codeframe",
+      formatterOptions: "highlightCode",
+      watch: ["./src/v2"],
     }),
     new LoadablePlugin({
       filename: "loadable-novo-stats.json",
       path: path.resolve(basePath, "public", "assets"),
     }),
+    new HashedModuleIdsPlugin(),
     new WebpackManifestPlugin({
       basePath: "/assets/",
       fileName: path.resolve(basePath, "manifest-novo.json"),

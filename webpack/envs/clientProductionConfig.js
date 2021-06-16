@@ -1,9 +1,10 @@
 // @ts-check
 
+import { HashedModuleIdsPlugin } from "webpack"
 import HtmlWebpackPlugin from "html-webpack-plugin"
 import LoadablePlugin from "@loadable/webpack-plugin"
 import path from "path"
-import { WebpackManifestPlugin } from "webpack-manifest-plugin"
+import WebpackManifestPlugin from "webpack-manifest-plugin"
 import { basePath, env } from "../utils/env"
 import {
   babelLoader,
@@ -40,6 +41,7 @@ export const clientProductionConfig = {
     // Extract webpack runtime code into it's own file
     runtimeChunk: "single",
     splitChunks: clientChunks,
+    moduleIds: "hashed",
   },
   output: {
     filename: "[name].[contenthash].js",
@@ -52,6 +54,7 @@ export const clientProductionConfig = {
       filename: "loadable-novo-stats.json",
       path: path.resolve(basePath, "public", "assets"),
     }),
+    new HashedModuleIdsPlugin(),
     new WebpackManifestPlugin({
       basePath: "/assets/",
       fileName: path.resolve(basePath, "manifest-novo.json"),
