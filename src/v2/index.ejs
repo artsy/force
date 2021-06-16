@@ -42,7 +42,7 @@
   <div id="react-root"><%%- content.body %></div>
 
   <!-- String concatenation is needed allow outputting a template tag -->
-  <%- htmlWebpackPlugin.tags.bodyTags.map((originalTag) => { const tag = { ...originalTag, attributes: { ...originalTag.attributes } }; tag.attributes['src'] = "<" + "%= cdnUrl %" + ">" + originalTag.attributes['src']; tag.attributes['async'] = true; return tag; }) %>
+  <%- htmlWebpackPlugin.tags.headTags.map((originalTag) => { const tag = { ...originalTag, attributes: { ...originalTag.attributes } }; tag.attributes['src'] = "<" + "%= cdnUrl %" + ">" + originalTag.attributes['src']; return tag; }) %>
 
   <%% if (!disable.segment && !sd.THIRD_PARTIES_DISABLED && sd.SEGMENT_WRITE_KEY) { %>
   <script type="text/javascript" defer>
