@@ -39,7 +39,7 @@ export const ConversationHeader: FC<ConversationHeaderProps> = props => {
   const { partnerName, showDetails, setShowDetails } = props
   return (
     <>
-      <Media between={["xs", "md"]}>
+      <Media between={["xs", "sm"]}>
         <SmallConversationHeader
           showDetails={showDetails}
           setShowDetails={setShowDetails}

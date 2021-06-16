@@ -1,4 +1,4 @@
-import { Box, Flex, Title } from "@artsy/palette"
+import { Box, Flex, FullBleed, Title } from "@artsy/palette"
 import { Conversation_me } from "v2/__generated__/Conversation_me.graphql"
 import { ConversationPaginationContainer as Conversation } from "v2/Apps/Conversation/Components/Conversation"
 import { ConversationListPaginationContainer as ConversationList } from "v2/Apps/Conversation/Components/ConversationList"
@@ -16,7 +16,7 @@ interface ConversationRouteProps {
 }
 
 const ConstrainedHeightContainer = styled(Box)`
-  height: calc(100vh - 60px);
+  height: calc(100vh - 103px);
 `
 
 const ConversationContainer = styled(Flex)`
@@ -36,31 +36,33 @@ export const ConversationRoute: React.FC<ConversationRouteProps> = props => {
 
   return (
     <>
-      <Title>Inbox | Artsy</Title>
-      <ConstrainedHeightContainer>
-        <ConversationContainer>
-          <Media greaterThan="sm">
-            <ConversationList
-              me={me as any}
+      <FullBleed>
+        <Title>Inbox | Artsy</Title>
+        <ConstrainedHeightContainer>
+          <ConversationContainer>
+            <Media greaterThan="sm">
+              <ConversationList
+                me={me as any}
+                // @ts-expect-error STRICT_NULL_CHECK
+                selectedConversationID={me.conversation.internalID}
+              />
+            </Media>
+            <Conversation
               // @ts-expect-error STRICT_NULL_CHECK
-              selectedConversationID={me.conversation.internalID}
+              conversation={me.conversation}
+              showDetails={showDetails}
+              setShowDetails={setShowDetails}
+              refetch={props.relay.refetch}
             />
-          </Media>
-          <Conversation
-            // @ts-expect-error STRICT_NULL_CHECK
-            conversation={me.conversation}
-            showDetails={showDetails}
-            setShowDetails={setShowDetails}
-            refetch={props.relay.refetch}
-          />
-          <Details
-            // @ts-expect-error STRICT_NULL_CHECK
-            conversation={me.conversation}
-            showDetails={showDetails}
-            setShowDetails={setShowDetails}
-          />
-        </ConversationContainer>
-      </ConstrainedHeightContainer>
+            <Details
+              // @ts-expect-error STRICT_NULL_CHECK
+              conversation={me.conversation}
+              showDetails={showDetails}
+              setShowDetails={setShowDetails}
+            />
+          </ConversationContainer>
+        </ConstrainedHeightContainer>
+      </FullBleed>
     </>
   )
 }
