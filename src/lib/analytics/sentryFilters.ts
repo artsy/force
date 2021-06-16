@@ -2,7 +2,7 @@ export const IGNORED_ERRORS = [
   "AbortError: Fetch is aborted",
   "AbortError: Request signal is aborted",
   "AbortError: The operation was aborted",
-  'Blocked a frame with origin "https://www.artsy.net" from accessing a cross-origin frame',
+  'Blocked a frame with origin "https://www.artsy.net" from accessing a cross-origin frame. Protocols, domains, and ports must match.',
   "cancelled",
   "Failed to fetch",
   "Origin is not allowed by Access-Control-Allow-Origin",
@@ -15,10 +15,10 @@ export const IGNORED_ERRORS = [
 ]
 
 export const DENIED_URLS = [
-  /t\.dca0\.com/i,
-  /api\.sail-personalize\.com/i,
-  /securepubads\.g\.doubleclick\.net/i,
-  /googletagservices\.com/i,
-  /t\.getletterpress\.com/i,
-  /sdk\.iad-06\.braze\.com/i,
+  /(.*).?dca0.com/i,
+  /(.*).?sail-personalize.com/i,
+  /(.*).?doubleclick.net/i,
+  /(.*).?googletagservices.com/i,
+  /(.*).?getletterpress.com/i,
+  /(.*).?braze.com/i,
 ]
