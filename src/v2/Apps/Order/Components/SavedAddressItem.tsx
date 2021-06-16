@@ -1,4 +1,4 @@
-import { Flex, Text, RadioProps, Banner } from "@artsy/palette"
+import { Flex, Text, RadioProps, Pill } from "@artsy/palette"
 import React from "react"
 import styled from "styled-components"
 import { SavedAddresses_me } from "v2/__generated__/SavedAddresses_me.graphql"
@@ -48,13 +48,7 @@ export const SavedAddressItem: React.FC<SavedAddressItemProps> = (
                     {line}
                   </Text>
                   {address?.isDefault && index === 0 && (
-                    <Banner
-                      ml={0.5}
-                      variant="defaultLight"
-                      px={0.5}
-                      py={0.2}
-                      borderRadius={2}
-                    >
+                    <Pill ml={0.5} variant="textSquare" hover focus>
                       <Text
                         textColor="black60"
                         variant="caption"
@@ -62,7 +56,7 @@ export const SavedAddressItem: React.FC<SavedAddressItemProps> = (
                       >
                         Default
                       </Text>
-                    </Banner>
+                    </Pill>
                   )}
                 </Flex>
               )
