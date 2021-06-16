@@ -3,7 +3,7 @@
 require("dotenv/config")
 require("coffeescript/register")
 require("@babel/register")({
-  extensions: [".ts", ".js", ".tsx", ".jsx"],
+  extensions: [".ts", ".js", ".tsx", ".jsx", ".ejs"],
   plugins: ["babel-plugin-dynamic-import-node"],
 })
 
@@ -42,7 +42,6 @@ const app = express()
 
 const wdm = webpackDevMiddleware(compiler, {
   publicPath: clientLegacyConfig.output.publicPath,
-  quiet: true,
   serverSideRender: true,
   stats: clientLegacyConfig.stats,
   writeToDisk(filePath) {
