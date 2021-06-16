@@ -1,12 +1,12 @@
 FairHeaderView = require './header.coffee'
-{ globalClientSetup } = require '../../../lib/global_client_setup'
+{ deprecatedGlobalClientSetup } = require '../../../lib/deprecated_global_client_setup'
 lightDetector = require '../../light_detector/index.coffee'
 FairNavView = require './nav.coffee'
 { triggerMarketingModal } = require '../../marketing_signup_modal/triggerMarketingModal.ts'
 { Intent } = require "@artsy/cohesion"
 
 module.exports = (options) ->
-  globalClientSetup()
+  deprecatedGlobalClientSetup()
   { fair, model } = options
 
   new FairHeaderView el: $('.fair-layout-header'), model: model, fair: fair

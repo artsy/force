@@ -200,7 +200,7 @@ export async function redirectLive(req, res, next) {
 /**
  * Ensure user model is in sync as updates to it during bidder registration
  * route transitions will incidentally trigger a client-side reload.
- * See: https://github.com/artsy/force/blob/master/desktop/lib/global_client_setup.coffee#L37
+ * See: https://github.com/artsy/force/blob/master/desktop/lib/deprecated_global_client_setup.coffee#L37
  */
 async function fetchUser(req, res) {
   if (req.user) {

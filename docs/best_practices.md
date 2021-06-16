@@ -9,6 +9,20 @@ This document is a map. Not of Force at a specific time, but a map of how we got
 
 Links should point to specific commits, and not a branch (in case the branch or file is deleted, these links should always work). But it's possible that a file is outdated, that our understanding has moved on since it was linked to; in that case, please update this document.
 
+# Table of Contents
+
+- [Current Preferred Practices](#current-preferred-practices)
+- [When writing UI, use Palette](#when-writing-ui-use-palette)
+- [For routing, use our framework](#for-routing-use-our-framework)
+- [Leverage TypeScript to prevent runtime bugs](#leverage-typescript-to-prevent-runtime-bugs)
+- [Use Relay for network requests](#use-relay-for-network-requests)
+- [Prefer Relay containers (higher order components) over relay-hooks](#prefer-relay-containers-higher-order-components-over-relay-hooks)
+- [Keep file structure organized](#keep-file-structure-organized)
+- [Naming, imports and exports](#naming-imports-and-exports)
+- [Write unit tests for new components](#write-unit-tests-for-new-components)
+- [Add smoke tests for new routes](#add-smoke-tests-for-new-routes)
+- [Adding global script tags](#adding-global-script-tags)
+
 ## Current Preferred Practices
 
 The app is currently written responsively in React, with an ever-increasing amount of legacy code written in Backbone and Coffeescript. As of Nov 2020, most of our main pages have been migrated, and those [that remain become fewer](https://github.com/artsy/force/pull/6682) with time. Server-side code is built on top of Express.js; however, most server-side needs have been abstracted away by our framework (see below).
@@ -136,3 +150,7 @@ Here are some great examples of what tests and test coverage should look like.
 We use [Cypress.io](https://docs.cypress.io/guides/overview/why-cypress.html#In-a-nutshell) to ensure that whole sections of the app (e.g., a route like `/artist/:id`) work as expected. If adding a new route or feature that might benefit benefit from a higher level of testing, check out [this folder](https://github.com/artsy/force/tree/master/cypress/integration) for some patterns. We generally add a simple check just to ensure the route doesn't error out.
 
 > Related: For more comprehensive end-to-end testing we use [Integrity](https://github.com/artsy/integrity), also built on Cypress. Check out [the repo](https://github.com/artsy/integrity) for more information.
+
+### Adding global script tags
+
+When adding global script tags (for, say, marketing-related needs), we need to add it to two places: our old app template and our new. See [this PR](https://github.com/artsy/force/pull/7640) for an implementation example.

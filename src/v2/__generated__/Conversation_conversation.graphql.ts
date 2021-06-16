@@ -40,6 +40,7 @@ export type Conversation_conversation = {
             readonly title: string | null;
             readonly artistNames: string | null;
             readonly href: string | null;
+            readonly isOfferableFromInquiry: boolean | null;
             readonly image: {
                 readonly url: string | null;
             } | null;
@@ -354,6 +355,13 @@ return {
                 {
                   "alias": null,
                   "args": null,
+                  "kind": "ScalarField",
+                  "name": "isOfferableFromInquiry",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
                   "concreteType": "Image",
                   "kind": "LinkedField",
                   "name": "image",
@@ -476,5 +484,5 @@ return {
   "type": "Conversation"
 };
 })();
-(node as any).hash = 'be0d0a4506917a5823fff806295aa10f';
+(node as any).hash = 'b0bfdcad55abf5b9c9953c47da9fd37a';
 export default node;

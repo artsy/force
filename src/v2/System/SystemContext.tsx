@@ -74,6 +74,9 @@ export interface SystemContextProps extends SystemContextState {
    * Useful for passing arbitrary data from Force.
    */
   injectedData?: any
+
+  /** Is there a logged in user? */
+  isLoggedIn?: boolean
 }
 
 export const SystemContext = React.createContext<SystemContextProps>({})
@@ -103,6 +106,7 @@ export const SystemContextProvider: FC<SystemContextProps> = ({
     user,
     setUser,
     isEigen: sd.EIGEN || props.isEigen,
+    isLoggedIn: !!user,
   }
 
   return (

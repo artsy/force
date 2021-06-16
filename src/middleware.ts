@@ -19,8 +19,12 @@ import sharify from "sharify"
 import siteAssociation from "artsy-eigen-web-association"
 import timeout from "connect-timeout"
 import bodyParser from "body-parser"
-import RavenServer from "raven"
 import config from "./config"
+
+// NOTE: Previoiusly, when deploying new Sentry SDK to prod we quickly start to
+// see errors like "`CURRENT_USER` is undefined". We need more investigation
+// because this only appears in prod, under load, and seems fine on staging.
+import * as Sentry from "@sentry/node"
 
 import { morganMiddleware } from "./lib/middleware/morgan"
 import { ensureSslMiddleware } from "./lib/middleware/ensureSsl"
@@ -50,11 +54,7 @@ import { collectionToArtistSeriesRedirect } from "lib/middleware/artistSeriesRed
 import { handleArtworkImageDownload } from "lib/middleware/artworkMiddleware"
 import { searchMiddleware } from "lib/middleware/searchMiddleware"
 import { splitTestMiddleware } from "desktop/components/split_test/splitTestMiddleware"
-
-// FIXME: When deploying new Sentry SDK to prod we quickly start to see errors
-// like "`CURRENT_USER` is undefined". We need more investigation because this
-// only appears in prod, under load, and seems fine on staging.
-// import * as Sentry from "@sentry/node"
+import { IGNORED_ERRORS } from "lib/analytics/sentryFilters"
 
 const CurrentUser = require("./lib/current_user.coffee")
 
@@ -73,10 +73,13 @@ export function initializeMiddleware(app) {
   app.set("trust proxy", true)
 
   // Setup error handling
-  // TODO: This is a deprecated lib; replace with @sentry/node
   if (SENTRY_PRIVATE_DSN) {
-    RavenServer.config(SENTRY_PRIVATE_DSN).install()
-    app.use(RavenServer.requestHandler())
+    Sentry.init({
+      dsn: SENTRY_PRIVATE_DSN,
+      ignoreErrors: IGNORED_ERRORS,
+    })
+
+    app.use(Sentry.Handlers.requestHandler())
   }
 
   // Cookie parser

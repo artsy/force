@@ -20,7 +20,7 @@ globalReactModules = require('../../../desktop/lib/global_react_modules.tsx')
 hydrateStitch = require('@artsy/stitch/dist/internal/hydrate').hydrate
 { mediator } = require('../../../lib/mediator')
 syncAuth = require('../../../lib/syncAuth.ts').default
-{ logoutEventHandler } = require('../../../desktop/lib/global_client_setup.tsx')
+{ logoutEventHandler } = require('../../../desktop/lib/deprecated_global_client_setup.tsx')
 
 module.exports = ->
   # Add the Gravity XAPP or access token to all ajax requests
