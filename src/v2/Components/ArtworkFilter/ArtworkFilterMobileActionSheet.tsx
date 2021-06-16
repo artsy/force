@@ -61,6 +61,14 @@ export const ArtworkFilterMobileActionSheet: React.FC<{
     filterContext.stagedFilters
   )
 
+  const applyFilters = () => {
+    // On apply, replace the actual filter state with the
+    // hitherto staged filters
+    // @ts-expect-error STRICT_NULL_CHECK
+    filterContext.setFilters(filterContext.stagedFilters)
+    onClose()
+  }
+
   return (
     <ModalBase
       onClose={onClose}
@@ -114,39 +122,16 @@ export const ArtworkFilterMobileActionSheet: React.FC<{
       </Content>
 
       <Footer p={1}>
-        <ApplyButton
-          onClick={() => {
-            // On apply, replace the actual filter state with the
-            // hitherto staged filters
-            // @ts-expect-error STRICT_NULL_CHECK
-            filterContext.setFilters(filterContext.stagedFilters)
-            onClose()
-          }}
-          changedFilterCount={changedFilterCount}
-        />
+        <Button
+          variant="primaryBlack"
+          width="100%"
+          disabled={!changedFilterCount}
+          onClick={applyFilters}
+        >
+          Show Results
+        </Button>
       </Footer>
     </ModalBase>
-  )
-}
-
-interface ApplyButtonProps {
-  changedFilterCount: number
-  onClick: () => void
-}
-
-const ApplyButton: React.SFC<ApplyButtonProps> = ({
-  changedFilterCount,
-  onClick,
-}) => {
-  return (
-    <Button
-      variant="primaryBlack"
-      width="100%"
-      disabled={!changedFilterCount}
-      onClick={onClick}
-    >
-      Apply ({changedFilterCount})
-    </Button>
   )
 }
 
