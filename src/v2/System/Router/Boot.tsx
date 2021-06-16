@@ -21,7 +21,7 @@ import { AnalyticsContext } from "../Analytics/AnalyticsContext"
 import { ClientContext } from "desktop/lib/buildClientAppContext"
 import { FlashMessage } from "v2/Components/Modal/FlashModal"
 import { SiftContainer } from "v2/Utils/SiftContainer"
-import { setupSentry } from "lib/setupSentry"
+import { setupSentryClient } from "lib/setupSentryClient"
 
 export interface BootProps {
   children: React.ReactNode
@@ -47,7 +47,7 @@ export const Boot = track(null, {
     document.body.setAttribute("data-test", "AppReady") //
 
     if (getENV("NODE_ENV") === "production") {
-      setupSentry(sd)
+      setupSentryClient(sd)
     }
   }, [])
 

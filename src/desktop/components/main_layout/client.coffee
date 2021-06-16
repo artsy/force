@@ -1,4 +1,4 @@
-{ globalClientSetup } = require '../../lib/global_client_setup'
+{ deprecatedGlobalClientSetup } = require '../../lib/deprecated_global_client_setup'
 CurrentUser = require '../../models/current_user'
 FlashMessage = require '../flash/index.coffee'
 Cookies = require 'cookies-js'
@@ -6,7 +6,7 @@ Cookies = require 'cookies-js'
 { Intent } = require "@artsy/cohesion"
 
 module.exports = ->
-  globalClientSetup()
+  deprecatedGlobalClientSetup()
   checkForAfterSignUpAction()
   checkForPersonalizeFlash()
 
