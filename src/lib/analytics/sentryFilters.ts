@@ -14,6 +14,8 @@ export const IGNORED_ERRORS = [
   "TypeError Qg.m(gpt/pubads_impl_2021052601)",
 ]
 
+export const ALLOWED_URLS = [/(.*).?artsy.net/i, /(.*).?cloudfront.com/i]
+
 export const DENIED_URLS = [
   /(.*).?dca0.com/i,
   /(.*).?sail-personalize.com/i,
