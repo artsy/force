@@ -15,7 +15,7 @@ import { LoginValidator } from "v2/Components/Authentication/Validators"
 import { PasswordInput } from "v2/Components/PasswordInput"
 import QuickInput from "v2/Components/QuickInput"
 import { Formik, FormikProps, useFormikContext } from "formik"
-import React, { Component, useState } from "react"
+import React, { Component, useEffect, useState } from "react"
 import { recaptcha } from "v2/Utils/recaptcha"
 
 interface ConditionalOtpInputProps {
@@ -59,6 +59,7 @@ const ConditionalOtpInput: React.FC<ConditionalOtpInputProps> = props => {
 export interface LoginFormState {
   error: string
   isSocialSignUp: boolean
+  isLoading: boolean
 }
 
 export class LoginForm extends Component<FormProps, LoginFormState> {
@@ -66,6 +67,7 @@ export class LoginForm extends Component<FormProps, LoginFormState> {
   state = {
     error: this.props.error,
     isSocialSignUp: false,
+    isLoading: false,
   }
 
   onSubmit = (values: InputValues, formikBag: FormikProps<InputValues>) => {
@@ -73,6 +75,7 @@ export class LoginForm extends Component<FormProps, LoginFormState> {
     this.setState(
       {
         isSocialSignUp: false,
+        isLoading: true,
       },
       () => {
         // @ts-expect-error STRICT_NULL_CHECK
@@ -101,6 +104,12 @@ export class LoginForm extends Component<FormProps, LoginFormState> {
         }: FormikProps<InputValues>) => {
           const globalError =
             this.state.error || (status && !status.success && status.error)
+
+          useEffect(() => {
+            if (globalError) {
+              this.setState({ isLoading: false })
+            }
+          }, [globalError])
 
           const handleChange = e => {
             setStatus(null)
@@ -148,7 +157,9 @@ export class LoginForm extends Component<FormProps, LoginFormState> {
                 globalError !== "missing two-factor authentication code" && (
                   <Error show>{globalError}</Error>
                 )}
-              <SubmitButton loading={isSubmitting}>Log in</SubmitButton>
+              <SubmitButton loading={isSubmitting || this.state.isLoading}>
+                Log in
+              </SubmitButton>
               <Footer
                 handleTypeChange={() =>
                   // @ts-expect-error STRICT_NULL_CHECK
