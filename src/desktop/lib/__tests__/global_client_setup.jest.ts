@@ -1,4 +1,4 @@
-import { trackAuthenticationEvents } from "../global_client_setup"
+import { trackAuthenticationEvents } from "../deprecated_global_client_setup"
 import Cookies from "cookies-js"
 
 jest.mock("sharify", () => {
@@ -8,7 +8,7 @@ jest.mock("sharify", () => {
 })
 const sd = require("sharify").data
 
-describe("globalClientSetup", () => {
+describe("deprecatedGlobalClientSetup", () => {
   describe("#trackAuthenticationEvents", () => {
     beforeEach(() => {
       sd.CURRENT_USER = { id: "123", email: "user@email.com" }

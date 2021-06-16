@@ -1,11 +1,11 @@
 import Backbone from "backbone"
 import $ from "jquery"
 import { fabricate } from "@artsy/antigravity"
-import { logoutEventHandler } from "desktop/lib/global_client_setup"
+import { logoutEventHandler } from "desktop/lib/deprecated_global_client_setup"
 
 const CurrentUser = require("../../../models/current_user")
 const { UserSettingsView } = require("../client/view.coffee")
-jest.mock("desktop/lib/global_client_setup", () => ({
+jest.mock("desktop/lib/deprecated_global_client_setup", () => ({
   logoutEventHandler: jest.fn(),
 }))
 

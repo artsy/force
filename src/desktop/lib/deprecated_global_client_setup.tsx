@@ -1,3 +1,7 @@
+/**
+ * NOTE: This file has been deprecated as all new JS code lives in `src/v2`.
+ * The following only applies to older apps in src/desktop.
+ */
 import "./webpackPublicPath"
 import $ from "jquery"
 import Backbone from "backbone"
@@ -14,7 +18,7 @@ import syncAuth from "lib/syncAuth"
 import { mediator } from "lib/mediator"
 import type { LogoutEventOptions } from "lib/mediator"
 import * as templateModules from "./template_modules"
-import { setupSentry } from "lib/setupSentry"
+import { setupSentryClient } from "lib/setupSentryClient"
 
 const FlashMessage = require("../components/flash/index.coffee")
 const listenForInvert = require("../components/eggs/invert/index.coffee")
@@ -25,7 +29,7 @@ Backbone.$ = $
 
 require("es7-object-polyfill")
 
-export function globalClientSetup() {
+export function deprecatedGlobalClientSetup() {
   setupErrorReporting()
   setupJquery()
   setupReferrerTracking()
@@ -107,7 +111,7 @@ function setupJquery() {
 
 function setupErrorReporting() {
   if (sd.NODE_ENV === "production") {
-    setupSentry(sd)
+    setupSentryClient(sd)
 
     const user = sd && sd.CURRENT_USER
 
