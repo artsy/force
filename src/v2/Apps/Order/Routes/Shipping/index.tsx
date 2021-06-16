@@ -128,12 +128,8 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
     }
   }
 
-  handleAddressDelete() {
-    this.setState({
-      ...this.state,
-      address: startingAddress(this.props.me, this.props.order),
-      // addressTouched
-    } as ShippingState)
+  onLastAddressDelete = () => {
+    this.setState({ selectedSavedAddress: NEW_ADDRESS })
   }
 
   // @ts-expect-error STRICT_NULL_CHECK
@@ -142,13 +138,19 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
   isCreateNewAddress = () => this.state.selectedSavedAddress === NEW_ADDRESS
 
   onContinueButtonPressed = async () => {
-    const { address, shippingOption, phoneNumber } = this.state
+    const {
+      address,
+      shippingOption,
+      phoneNumber,
+      selectedSavedAddress,
+      saveAddress,
+    } = this.state
 
     if (shippingOption === "SHIP") {
       if (this.isCreateNewAddress()) {
         // validate when order is not pickup and the address is new
-        const { errors, hasErrors } = validateAddress(this.state.address)
-        const { error, hasError } = validatePhoneNumber(this.state.phoneNumber)
+        const { errors, hasErrors } = validateAddress(address)
+        const { error, hasError } = validatePhoneNumber(phoneNumber)
         if (hasErrors && hasError) {
           this.setState({
             // @ts-expect-error STRICT_NULL_CHECK
@@ -174,7 +176,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
         }
       }
     } else {
-      const { error, hasError } = validatePhoneNumber(this.state.phoneNumber)
+      const { error, hasError } = validatePhoneNumber(phoneNumber)
       if (hasError) {
         this.setState({
           phoneNumberError: error,
@@ -190,14 +192,12 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
         ? address
         : convertShippingAddressForExchange(
             // @ts-expect-error STRICT_NULL_CHECK
-            this.getAddressList()[parseInt(this.state.selectedSavedAddress)]
-              .node
+            this.getAddressList()[parseInt(selectedSavedAddress)].node
           )
       const shipToPhoneNumber = this.isCreateNewAddress()
         ? phoneNumber
         : // @ts-expect-error STRICT_NULL_CHECK
-          this.getAddressList()[parseInt(this.state.selectedSavedAddress)].node
-            .phoneNumber
+          this.getAddressList()[parseInt(selectedSavedAddress)].node.phoneNumber
       // @ts-expect-error STRICT_NULL_CHECK
       const orderOrError = (
         await setShipping(this.props.commitMutation, {
@@ -212,9 +212,9 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
 
       // save address when user is entering new address AND save checkbox is selected
       if (
-        this.state.shippingOption === "SHIP" &&
+        shippingOption === "SHIP" &&
         this.isCreateNewAddress() &&
-        this.state.saveAddress
+        saveAddress
       ) {
         const { relayEnvironment } = this.props
         await createUserAddress(
@@ -409,7 +409,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
                     handleClickEdit={this.handleClickEdit}
                     inCollectorProfile={false}
                     showModal={showModal}
-                    onAddressDelete={this.handleAddressDelete}
+                    onLastAddressDelete={this.onLastAddressDelete}
                   />
                 </>
               )}
@@ -474,7 +474,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
             </Flex>
           }
           Sidebar={
-            <Flex flexDirection="column" mt={3}>
+            <Flex flexDirection="column" mt={[0, 3]}>
               <Flex flexDirection="column">
                 <ArtworkSummaryItem order={order} />
                 <TransactionDetailsSummaryItem order={order} />

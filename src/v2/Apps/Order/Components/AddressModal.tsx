@@ -21,12 +21,12 @@ import { createUserAddress } from "v2/Apps/Order/Mutations/CreateUserAddress"
 import { SavedAddresses_me } from "v2/__generated__/SavedAddresses_me.graphql"
 import { AddressModalFields } from "v2/Components/Address/AddressModalFields"
 import { useSystemContext } from "v2/System/SystemContext"
-import { deleteUserAddress } from "v2/Apps/Order/Mutations/DeleteUserAddress"
 export interface Props {
   show: boolean
   closeModal: () => void
   address?: SavedAddressType
   onSuccess: (address) => void
+  onDeleteAddress: (address) => void
   onError: (message: string) => void
   modalDetails?: {
     addressModalTitle: string
@@ -52,6 +52,7 @@ export const AddressModal: React.FC<Props> = ({
   closeModal,
   address,
   onSuccess,
+  onDeleteAddress,
   onError,
   modalDetails,
   me,
@@ -71,13 +72,7 @@ export const AddressModal: React.FC<Props> = ({
   const { relayEnvironment } = useSystemContext()
   // @ts-expect-error STRICT_NULL_CHECK
   const [createUpdateError, setCreateUpdateError] = useState<string>(null)
-  const [showConfirmModal, setShowConfirmModal] = useState<boolean>(false)
-
-  const handleDeleteAddress = (addressID: string) => {
-    // @ts-expect-error STRICT_NULL_CHECK
-    deleteUserAddress(relayEnvironment, addressID, onSuccess, onError)
-    closeModal()
-  }
+  const [showDialog, setShowDialog] = useState<boolean>(false)
 
   return (
     <>
@@ -154,7 +149,7 @@ export const AddressModal: React.FC<Props> = ({
               {!createMutation && (
                 <Flex mt={2} flexDirection="column" alignItems="center">
                   <Text
-                    onClick={() => setShowConfirmModal(true)}
+                    onClick={() => setShowDialog(true)}
                     variant="text"
                     color="red100"
                     style={{
@@ -182,21 +177,22 @@ export const AddressModal: React.FC<Props> = ({
       <Dialog
         title="Delete address?"
         detail="This will remove this address from your saved addresses."
-        show={showConfirmModal}
+        show={showDialog}
         primaryCta={{
           action: () => {
-            setShowConfirmModal(false)
-            handleDeleteAddress(address.internalID)
+            setShowDialog(false)
+            closeModal()
+            onDeleteAddress(address.internalID)
           },
           text: "Delete",
         }}
         secondaryCta={{
           action: () => {
-            setShowConfirmModal(false)
+            setShowDialog(false)
           },
           text: "Cancel",
         }}
-        onClose={() => setShowConfirmModal(false)}
+        onClose={() => setShowDialog(false)}
       />
     </>
   )

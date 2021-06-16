@@ -37,7 +37,7 @@ interface SavedAddressesProps {
   relay: RelayRefetchProp
   addressCount?: number
   showModal?: boolean
-  onAddressDelete: () => void
+  onLastAddressDelete: () => void
 }
 // @ts-expect-error STRICT_NULL_CHECK
 type Address = SavedAddresses_me["addressConnection"]["edges"][0]["node"]
@@ -56,10 +56,10 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
     // @ts-expect-error STRICT_NULL_CHECK
     addressModalAction: null as AddressModalAction,
   })
-  const [showAddressModal, setShowAddressModal] = useState(false)
+  const [showAddressModal, setShowAddressModal] = useState<boolean>(false)
   const [address, setAddress] = useState(null as Address)
   const logger = createLogger("SavedAddresses.tsx")
-  const { onSelect, me, inCollectorProfile, relay, onAddressDelete } = props
+  const { onSelect, me, inCollectorProfile, relay, onLastAddressDelete } = props
   const addressList = me?.addressConnection?.edges ?? []
   const { relayEnvironment } = useSystemContext()
 
@@ -82,14 +82,12 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
   }
 
   const handleDeleteAddress = (addressID: string) => {
-    setShowAddressModal(true),
-      setModalDetails({
-        addressModalTitle: "Add address",
-        addressModalAction: "createUserAddress",
-      })
     // @ts-expect-error STRICT_NULL_CHECK
     deleteUserAddress(relayEnvironment, addressID, onSuccess, onError)
-    onAddressDelete()
+
+    if (addressList.length === 1) {
+      onLastAddressDelete()
+    }
   }
 
   const handleEditAddress = (address: Address) => {
@@ -214,6 +212,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
         closeModal={() => setShowAddressModal(false)}
         address={address}
         onSuccess={onSuccess}
+        onDeleteAddress={handleDeleteAddress}
         // onSuccess={() => handleDeleteAddress(address.internalID)}
         onError={onError}
         me={me}
