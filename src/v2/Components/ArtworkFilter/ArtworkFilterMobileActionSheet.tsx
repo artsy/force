@@ -128,7 +128,7 @@ export const ArtworkFilterMobileActionSheet: React.FC<{
           disabled={!changedFilterCount}
           onClick={applyFilters}
         >
-          Show Results
+          Show results
         </Button>
       </Footer>
     </ModalBase>
