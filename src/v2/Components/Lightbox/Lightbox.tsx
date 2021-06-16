@@ -1,4 +1,5 @@
 import { Box, Flex, Image, color, space } from "@artsy/palette"
+import { Link } from "react-head"
 import { withSystemContext } from "v2/System"
 import * as Schema from "v2/System/Analytics/Schema"
 import FadeTransition from "v2/Components/Animation/FadeTransition"
@@ -312,6 +313,7 @@ class LightboxComponent extends React.Component<LightboxProps, LightboxState> {
     if (!this.state.element) {
       return (
         <Flex justifyContent="center" height={height} alignItems="center">
+          {isDefault && <Link rel="preload" as="image" href={src} />}
           <StyledImage
             style={{ cursor: enabled ? "zoom-in" : "auto" }}
             alt={imageAlt}
@@ -332,6 +334,7 @@ class LightboxComponent extends React.Component<LightboxProps, LightboxState> {
           height={height}
           onClick={enabled ? this.show.bind(this) : null}
         >
+          {isDefault && <Link rel="preload" as="image" href={src} />}
           <StyledImage
             key={src}
             style={{ cursor: enabled ? "zoom-in" : "auto" }}
