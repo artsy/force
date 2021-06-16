@@ -1,7 +1,8 @@
 // @ts-check
 
 import path from "path"
-import { WebpackManifestPlugin } from "webpack-manifest-plugin"
+import WebpackManifestPlugin from "webpack-manifest-plugin"
+import { HashedModuleIdsPlugin } from "webpack"
 import { getCSSManifest } from "../utils/getCSSManifest"
 import { basePath, env } from "../utils/env"
 import { getEntrypoints } from "../utils/getEntrypoints"
@@ -20,6 +21,7 @@ export const legacyProductionConfig = {
     // @see: https://github.com/artsy/force/blob/master/src/desktop/lib/global_client_setup.tsx#L7
   },
   plugins: [
+    new HashedModuleIdsPlugin(),
     new WebpackManifestPlugin({
       fileName: path.resolve(basePath, "manifest.json"),
       basePath: "/assets/",

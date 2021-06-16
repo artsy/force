@@ -64,11 +64,9 @@ export const jadeLoader = {
   ],
 }
 
-// Required for webpack 5 to allow interop with with non-ESM modules is handled.
 // TODO: This may be removed once all dependant references to @babel/runtime-corejs3 are removed.
 export const mjsLoader = {
-  resolve: {
-    fullySpecified: false,
-  },
-  test: /\.m?js/,
+  test: /\.mjs$/,
+  type: "javascript/auto",
+  use: [],
 }

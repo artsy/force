@@ -18,6 +18,7 @@ export const standardPlugins = [
   // Remove server-only modules from client bundles
   // TODO: Why would these end up in the client bundle?
   new webpack.IgnorePlugin({ resourceRegExp: /^graphql(\/.*)?$/ }),
+  new webpack.NamedModulesPlugin(),
   new webpack.ProvidePlugin({
     $: "jquery",
     jQuery: "jquery",
