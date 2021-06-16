@@ -29,6 +29,7 @@ const testAddressModalProps: Props = {
   address: savedAddress,
   onSuccess: jest.fn(),
   onError: jest.fn(),
+  onDeleteAddress: jest.fn(),
   modalDetails: {
     addressModalTitle: "Modal title",
     addressModalAction: "editUserAddress",

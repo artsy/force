@@ -128,8 +128,10 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
     }
   }
 
-  onLastAddressDelete = () => {
-    this.setState({ selectedSavedAddress: NEW_ADDRESS })
+  handleAddressDelete = (isLast: boolean) => {
+    if (isLast) {
+      this.setState({ selectedSavedAddress: NEW_ADDRESS })
+    }
   }
 
   // @ts-expect-error STRICT_NULL_CHECK
@@ -409,7 +411,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
                     handleClickEdit={this.handleClickEdit}
                     inCollectorProfile={false}
                     showModal={showModal}
-                    onLastAddressDelete={this.onLastAddressDelete}
+                    onAddressDelete={this.handleAddressDelete}
                   />
                 </>
               )}
