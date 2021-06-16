@@ -37,7 +37,6 @@ export class ArtworkMeta extends Component<ArtworkMetaProps> {
     if (is_shareable && imageURL) {
       return (
         <>
-          <Link rel="preload" as="image" href={imageURL} />
           <Meta property="twitter:card" content="summary_large_image" />
           <Meta property="og:image" content={imageURL} />
           {/* @ts-expect-error STRICT_NULL_CHECK */}
