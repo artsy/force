@@ -1,6 +1,7 @@
 import React, { useState } from "react"
 import {
   Button,
+  Dialog,
   Flex,
   Input,
   Modal,
@@ -19,8 +20,7 @@ import { updateUserAddress } from "../Mutations/UpdateUserAddress"
 import { createUserAddress } from "v2/Apps/Order/Mutations/CreateUserAddress"
 import { SavedAddresses_me } from "v2/__generated__/SavedAddresses_me.graphql"
 import { AddressModalFields } from "v2/Components/Address/AddressModalFields"
-import { useSystemContext } from "v2/Artsy/SystemContext"
-import { ConfirmModal } from "./ConfirmModal"
+import { useSystemContext } from "v2/System/SystemContext"
 import { deleteUserAddress } from "v2/Apps/Order/Mutations/DeleteUserAddress"
 export interface Props {
   show: boolean
@@ -151,19 +151,20 @@ export const AddressModal: React.FC<Props> = ({
                 error={formik.touched.phoneNumber && formik.errors.phoneNumber}
                 value={formik.values?.phoneNumber}
               />
-              <Flex mt={2} flexDirection="column" alignItems="center">
-                <Text
-                  onClick={() => setShowConfirmModal(true)}
-                  variant="text"
-                  color="red100"
-                  style={{
-                    cursor: "pointer",
-                  }}
-                >
-                  Delete address
-                </Text>
-              </Flex>
-
+              {!createMutation && (
+                <Flex mt={2} flexDirection="column" alignItems="center">
+                  <Text
+                    onClick={() => setShowConfirmModal(true)}
+                    variant="text"
+                    color="red100"
+                    style={{
+                      cursor: "pointer",
+                    }}
+                  >
+                    Delete address
+                  </Text>
+                </Flex>
+              )}
               <Button
                 type="submit"
                 size="large"
@@ -178,12 +179,24 @@ export const AddressModal: React.FC<Props> = ({
           )}
         </Formik>
       </Modal>
-      <ConfirmModal
-        title="Delete addres?"
-        subTitle="This will remove this address from your saved addresses."
+      <Dialog
+        title="Delete address?"
+        detail="This will remove this address from your saved addresses."
         show={showConfirmModal}
+        primaryCta={{
+          action: () => {
+            setShowConfirmModal(false)
+            handleDeleteAddress(address.internalID)
+          },
+          text: "Delete",
+        }}
+        secondaryCta={{
+          action: () => {
+            setShowConfirmModal(false)
+          },
+          text: "Cancel",
+        }}
         onClose={() => setShowConfirmModal(false)}
-        onConfirm={() => handleDeleteAddress(address.internalID)}
       />
     </>
   )

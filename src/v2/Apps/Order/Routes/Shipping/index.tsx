@@ -65,7 +65,6 @@ import {
   NEW_ADDRESS,
   SavedAddressesFragmentContainer as SavedAddresses,
 } from "../../Components/SavedAddresses"
-import { AddressModal } from "../../Components/AddressModal"
 import { createUserAddress } from "../../Mutations/CreateUserAddress"
 import { setShipping } from "../../Mutations/SetShipping"
 import { SystemContextProps, withSystemContext } from "v2/System/SystemContext"
@@ -127,6 +126,14 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
       region: true,
       phoneNumber: true,
     }
+  }
+
+  handleAddressDelete() {
+    this.setState({
+      ...this.state,
+      address: startingAddress(this.props.me, this.props.order),
+      // addressTouched
+    } as ShippingState)
   }
 
   // @ts-expect-error STRICT_NULL_CHECK
@@ -323,7 +330,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
     const artwork = get(
       this.props,
       // @ts-expect-error STRICT_NULL_CHECK
-      props => props.order.lineItems.edges[0].node.artwork
+      props => props.order.lineItems.edges[0]?.node.artwork
     )
     const addressList = this.getAddressList()
 
@@ -345,25 +352,6 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
 
     return (
       <Box data-test="orderShipping">
-        <AddressModal
-          modalDetails={{
-            addressModalTitle: "Edit address",
-            addressModalAction: "editUserAddress",
-          }}
-          show={showModal}
-          closeModal={() => this.setState({ showModal: false })}
-          // @ts-expect-error STRICT_NULL_CHECK
-          address={addressList[this.state.editAddressIndex]?.node}
-          onSuccess={() => {
-            // this.setState({ address: updatedAddress })
-          }}
-          onError={message => {
-            this.props.dialog.showErrorDialog({
-              title: "Address cannot be updated",
-              message: message,
-            })
-          }}
-        />
         <Row>
           <Col>
             <OrderStepper
@@ -420,6 +408,8 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
                     onSelect={value => onSelectSavedAddress(value)}
                     handleClickEdit={this.handleClickEdit}
                     inCollectorProfile={false}
+                    showModal={showModal}
+                    onAddressDelete={this.handleAddressDelete}
                   />
                 </>
               )}

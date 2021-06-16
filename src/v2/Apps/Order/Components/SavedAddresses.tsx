@@ -36,6 +36,8 @@ interface SavedAddressesProps {
   commitMutation?: CommitMutation
   relay: RelayRefetchProp
   addressCount?: number
+  showModal?: boolean
+  onAddressDelete: () => void
 }
 // @ts-expect-error STRICT_NULL_CHECK
 type Address = SavedAddresses_me["addressConnection"]["edges"][0]["node"]
@@ -57,7 +59,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
   const [showAddressModal, setShowAddressModal] = useState(false)
   const [address, setAddress] = useState(null as Address)
   const logger = createLogger("SavedAddresses.tsx")
-  const { onSelect, handleClickEdit, me, inCollectorProfile, relay } = props
+  const { onSelect, me, inCollectorProfile, relay, onAddressDelete } = props
   const addressList = me?.addressConnection?.edges ?? []
   const { relayEnvironment } = useSystemContext()
 
@@ -80,8 +82,14 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
   }
 
   const handleDeleteAddress = (addressID: string) => {
+    setShowAddressModal(true),
+      setModalDetails({
+        addressModalTitle: "Add address",
+        addressModalAction: "createUserAddress",
+      })
     // @ts-expect-error STRICT_NULL_CHECK
     deleteUserAddress(relayEnvironment, addressID, onSuccess, onError)
+    onAddressDelete()
   }
 
   const handleEditAddress = (address: Address) => {
@@ -118,7 +126,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
           index={index}
           // @ts-expect-error STRICT_NULL_CHECK
           address={address.node}
-          handleClickEdit={handleClickEdit}
+          handleClickEdit={() => handleEditAddress(address?.node)}
         />
         <Separator my={1} />
         <ModifyAddressWrapper>
@@ -139,8 +147,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
           )}
           <Box mr={[3, 1]}>
             <Text
-              // @ts-expect-error STRICT_NULL_CHECK
-              onClick={() => handleEditAddress(address.node)}
+              onClick={() => handleEditAddress(address?.node)}
               variant="text"
               color="blue100"
               style={{
@@ -206,7 +213,8 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
         modalDetails={modalDetails}
         closeModal={() => setShowAddressModal(false)}
         address={address}
-        onSuccess={() => onSuccess()}
+        onSuccess={onSuccess}
+        // onSuccess={() => handleDeleteAddress(address.internalID)}
         onError={onError}
         me={me}
       />
@@ -225,7 +233,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
           index={index}
           // @ts-expect-error STRICT_NULL_CHECK
           address={address.node}
-          handleClickEdit={handleClickEdit}
+          handleClickEdit={() => handleEditAddress(address?.node)}
         />
       </BorderedRadio>
     )
