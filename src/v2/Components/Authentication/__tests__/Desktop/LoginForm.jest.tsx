@@ -146,7 +146,7 @@ describe("LoginForm", () => {
 
     it("does not render email errors for social sign ups", done => {
       const wrapper = getWrapper()
-      const socialLink = wrapper.find("Clickable").at(0)
+      const socialLink = wrapper.find("Link").at(1)
       socialLink.simulate("click")
       wrapper.update()
 
