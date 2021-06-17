@@ -18,7 +18,7 @@ export const MarketStatsPlaceholder: React.FC<MarketStatsPlaceholderProps> = ({
     </SkeletonText>
 
     {/* Market Stats Values */}
-    <GridColumns gridRowGap={[2, 2]}>
+    <GridColumns gridRowGap={[2, 2]} gridColumnGap={[0, 2]}>
       <Column
         span={2}
         justifyContent="flex-end"
@@ -34,14 +34,14 @@ export const MarketStatsPlaceholder: React.FC<MarketStatsPlaceholderProps> = ({
         </SkeletonText>
       </Column>
       <Column span={10}>
-        <GridColumns gridRowGap={[2, 2]}>
+        <GridColumns gridRowGap={[2, 2]} gridColumnGap={[0, 2]}>
           <Column
             span={6}
             justifyContent="flex-end"
             display="flex"
             flexDirection="column"
           >
-            <GridColumns gridRowGap={[2, 2]}>
+            <GridColumns gridRowGap={[2, 2]} gridColumnGap={[0, 2]}>
               <Column span={[6]}>
                 <SkeletonText done={done} variant={["xs", "sm"]} pb={[0.5, 1]}>
                   Yearly lots sold
@@ -67,7 +67,7 @@ export const MarketStatsPlaceholder: React.FC<MarketStatsPlaceholderProps> = ({
           </Column>
 
           <Column span={6}>
-            <GridColumns gridRowGap={[2, 2]}>
+            <GridColumns gridRowGap={[2, 2]} gridColumnGap={[0, 2]}>
               <Column
                 span={[6]}
                 justifyContent="flex-end"
