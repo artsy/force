@@ -51,9 +51,11 @@ describe("MarketStats", () => {
     const wrapper = getWrapper({
       PriceInsightConnection: () => priceInsightsConnectionFixture,
     })
-    expect(wrapper.text()).toContain(
-      "Market SignalsMore infoAverages over the last 36 monthsMediumPaintingWork on PaperYearly lots sold6Sell-through rate90.9%Sale price$492kSale price over estimate↑400%"
-    )
+    expect(wrapper.text()).toContain("Market Signals")
+    expect(wrapper.text()).toContain("Yearly lots sold6")
+    expect(wrapper.text()).toContain("Sell-through rate90.9%")
+    expect(wrapper.text()).toContain("Sale price$492k")
+    expect(wrapper.text()).toContain("Price over estimate↑ 400%")
   })
 
   it("tracks correctly", () => {
