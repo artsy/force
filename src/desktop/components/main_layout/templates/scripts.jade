@@ -11,10 +11,6 @@ script( src=asset("/assets/legacy-common-react.js") )
 script( src=asset("/assets/legacy-common-utility.js") )
 script( src=asset("/assets/legacy-artsy.js") )
 
-if sd.CURRENT_PATH && sd.CURRENT_PATH.includes("/auction/") || sd.CURRENT_PATH && sd.CURRENT_PATH.includes("/auction-registration/")
-  script( id='ze-snippet' src='https://static.zdassets.com/ekr/snippet.js?key=#{sd.ZENDESK_KEY}')
-
-
 //- Marketo Tracking
 if options.marketo && !sd.THIRD_PARTIES_DISABLED
   script(type='text/javascript', src='https://d1s2w0upia4e9w.cloudfront.net/assets/conversionpath-0.3.8.min.js').
