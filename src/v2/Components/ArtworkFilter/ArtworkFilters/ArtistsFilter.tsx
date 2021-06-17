@@ -16,18 +16,19 @@ export interface ArtistsFilterProps {
   user?: User
 }
 
-const ArtistItem: React.FC<{
-  slug: string
-  name: string
-  followedArtistSlugs: string[]
-  isFollowedArtistCheckboxSelected: boolean
-  CheckboxProps: CheckboxProps
-}> = ({
+const ArtistItem: React.FC<
+  {
+    slug: string
+    name: string
+    followedArtistSlugs: string[]
+    isFollowedArtistCheckboxSelected: boolean
+  } & CheckboxProps
+> = ({
   slug,
   name,
   followedArtistSlugs,
   isFollowedArtistCheckboxSelected,
-  CheckboxProps,
+  ...checkboxProps
 }) => {
   const { currentlySelectedFilters, setFilter } = useArtworkFilterContext()
   const toggleArtistSelection = (selected, slug) => {
@@ -53,7 +54,7 @@ const ArtistItem: React.FC<{
 
   return (
     <Checkbox
-      {...CheckboxProps}
+      {...checkboxProps}
       selected={
         // @ts-expect-error STRICT_NULL_CHECK
         currentlySelectedFilters().artistIDs.includes(slug) ||
@@ -140,7 +141,7 @@ export const ArtistsFilter: FC<ArtistsFilterProps> = ({
                 isFollowedArtistCheckboxSelected={
                   isFollowedArtistCheckboxSelected
                 }
-                CheckboxProps={{ my: tokens.my }}
+                my={tokens.my}
               />
             )
           })}
