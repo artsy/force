@@ -74,4 +74,14 @@ describe("ArtistHeader", () => {
 
     expect(wrapper.text()).not.toContain("biographyBlurbText")
   })
+
+  it("hides follows if count is zero", () => {
+    const wrapper = getWrapper({
+      Artist: () => ({
+        counts: { follows: 0 },
+      }),
+    })
+
+    expect(wrapper.text()).not.toContain("0 Following")
+  })
 })
