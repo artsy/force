@@ -1,20 +1,19 @@
-import {
-  Box,
-  Column,
-  DecreaseIcon,
-  GridColumns,
-  IncreaseIcon,
-  Join,
-  Select,
-  Spacer,
-  Text,
-} from "@artsy/palette"
+import { ContextModule, OwnerType } from "@artsy/cohesion"
+import { Box, Column, GridColumns, Select, Text } from "@artsy/palette"
+import { rest } from "lodash"
 import React, { useRef, useState } from "react"
-import { createFragmentContainer, graphql, QueryRenderer } from "react-relay"
+import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import RelayModernEnvironment from "relay-runtime/lib/store/RelayModernEnvironment"
+import { gridRowGap } from "styled-system"
+import { AnalyticsSchema, Type } from "v2/System"
+import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { extractNodes } from "v2/Utils/extractNodes"
+import { formatLargeNumber } from "v2/Utils/formatLargeNumber"
+import { MarketStatsQuery } from "v2/__generated__/MarketStatsQuery.graphql"
 import { MarketStats_priceInsightsConnection } from "v2/__generated__/MarketStats_priceInsightsConnection.graphql"
+import { MarketStatsInfoButton } from "./MarketStatsInfoButton"
+import { MarketStatsPlaceholder } from "./MarketStatsPlaceholder"
 
 interface MarketStatsProps {
   priceInsightsConnection: MarketStats_priceInsightsConnection
@@ -23,14 +22,9 @@ interface MarketStatsProps {
 export const MarketStats: React.FC<MarketStatsProps> = ({
   priceInsightsConnection,
 }) => {
-  console.log("CONNECTION:", priceInsightsConnection)
   const { trackEvent } = useTracking()
 
   const priceInsights = extractNodes(priceInsightsConnection)
-
-  if (priceInsights.length === 0) {
-    return <div></div>
-  }
 
   const [selectedPriceInsight, setSelectedPriceInsight] = useState(
     priceInsights[0]
@@ -45,6 +39,10 @@ export const MarketStats: React.FC<MarketStatsProps> = ({
       }))
   )
 
+  if (priceInsights.length === 0) {
+    return <></>
+  }
+
   const averageValueSold =
     (selectedPriceInsight.annualValueSoldCents as number) /
     100 /
@@ -52,12 +50,15 @@ export const MarketStats: React.FC<MarketStatsProps> = ({
   const formattedAverageValueSold = formatLargeNumber(averageValueSold)
 
   let deltaIcon: React.ReactNode
+  let deltaColor = "black"
   const actualMedianSaleOverEstimatePercentage =
     selectedPriceInsight?.medianSaleOverEstimatePercentage || 0
   if (actualMedianSaleOverEstimatePercentage < 0) {
-    deltaIcon = <DecreaseIcon />
+    deltaIcon = "↓"
+    deltaColor = "red100"
   } else if (actualMedianSaleOverEstimatePercentage > 0) {
-    deltaIcon = <IncreaseIcon />
+    deltaIcon = "↑"
+    deltaColor = "green100"
   }
   const formattedMedianSaleOverEstimatePercentage = Math.abs(
     actualMedianSaleOverEstimatePercentage
@@ -70,20 +71,33 @@ export const MarketStats: React.FC<MarketStatsProps> = ({
     Math.round(sellThroughRatePercentage * 100) / 100
 
   return (
-    <>
-      <Box mb={4}>
-        <Text variant="lg">Market Signals</Text>
-        <Text variant="lg" color="black60">
-          Averages over last 36 months
-        </Text>
-      </Box>
+    <Box mb={[4, 12]} mt={[0, 6]}>
+      <Text variant={["md", "lg"]}>
+        Market Signals{" "}
+        <MarketStatsInfoButton
+          onClick={() => {
+            trackEvent(tracks.clickMarketStatsInfo())
+          }}
+        />
+      </Text>
+
+      <Text variant={["md", "lg"]} color="black60" mb={[2, 4]}>
+        Averages over the last 36 months
+      </Text>
 
       {/* Market Stats Values */}
-      <GridColumns gridRowGap={[2, 0]}>
-        <Column span={2}>
+      <GridColumns gridRowGap={[2, 2]} gridColumnGap={[0, 1]}>
+        <Column
+          span={2}
+          justifyContent="flex-end"
+          display="flex"
+          flexDirection="column"
+          pt={0.5}
+        >
           <Select
             selected={selectedPriceInsight.medium || undefined}
             options={mediumOptions.current}
+            mb={0.5}
             title="Medium"
             onSelect={selectedMedium => {
               const priceInsight = priceInsights.find(
@@ -96,39 +110,79 @@ export const MarketStats: React.FC<MarketStatsProps> = ({
           />
         </Column>
         <Column span={10}>
-          <GridColumns gridRowGap={[2, 0]}>
-            <Column span={6}>
-              <GridColumns gridRowGap={[2, 0]}>
+          <GridColumns gridRowGap={[2, 2]} gridColumnGap={[0, 1]}>
+            <Column
+              span={6}
+              justifyContent="flex-end"
+              display="flex"
+              flexDirection="column"
+            >
+              <GridColumns gridRowGap={[2, 2]} gridColumnGap={[0, 1]}>
                 <Column span={[6]}>
-                  <Text variant="text">Yearly lots sold</Text>
-                  <Text variant="xxl" data-test-id="annualLotsSold">
+                  <Text variant={["xs", "sm"]} pb={[0.5, 1]}>
+                    Yearly lots sold
+                  </Text>
+                  <Text
+                    variant={["xxl", "xxl"]}
+                    style={{ whiteSpace: "nowrap" }}
+                    data-test-id="annualLotsSold"
+                  >
                     {selectedPriceInsight.annualLotsSold}
                   </Text>
                 </Column>
 
                 <Column span={[6]}>
-                  <Text variant="text">Sell-through rate</Text>
-                  <Text variant="xxl">{formattedSellThroughRate}%</Text>
+                  <Text variant={["xs", "sm"]} pb={[0.5, 1]}>
+                    Sell-through rate
+                  </Text>
+                  <Text
+                    variant={["xxl", "xxl"]}
+                    style={{ whiteSpace: "nowrap" }}
+                  >
+                    {formattedSellThroughRate}%
+                  </Text>
                 </Column>
               </GridColumns>
             </Column>
 
             <Column span={6}>
-              <GridColumns gridRowGap={[2, 0]}>
-                <Column span={[6]}>
-                  <Text variant="text">Sale price</Text>
+              <GridColumns gridRowGap={[2, 2]} gridColumnGap={[0, 1]}>
+                <Column
+                  span={[6]}
+                  justifyContent="flex-end"
+                  display="flex"
+                  flexDirection="column"
+                >
+                  <Text variant={["xs", "sm"]} pb={[0.5, 1]}>
+                    Sale price
+                  </Text>
 
-                  <Text variant="xxl">${formattedAverageValueSold}</Text>
+                  <Text
+                    variant={["xxl", "xxl"]}
+                    style={{ whiteSpace: "nowrap" }}
+                  >
+                    ${formattedAverageValueSold}
+                  </Text>
                 </Column>
 
-                <Column span={[6]}>
-                  <Text variant="text">Sale price over estimate</Text>
+                <Column
+                  span={[6]}
+                  justifyContent="flex-end"
+                  display="flex"
+                  flexDirection="column"
+                >
+                  <Text variant={["xs", "sm"]} pb={[0.5, 1]}>
+                    Price over estimate
+                  </Text>
 
-                  <Text variant="xxl">
-                    <Join separator={<Spacer mr={0.5} />}>
-                      {deltaIcon}
-                      {formattedMedianSaleOverEstimatePercentage}%
-                    </Join>
+                  <Text
+                    variant={["xxl", "xxl"]}
+                    color={deltaColor}
+                    style={{ whiteSpace: "nowrap" }}
+                  >
+                    {deltaIcon}
+                    &#8202;
+                    {formattedMedianSaleOverEstimatePercentage}%
                   </Text>
                 </Column>
               </GridColumns>
@@ -136,8 +190,7 @@ export const MarketStats: React.FC<MarketStatsProps> = ({
           </GridColumns>
         </Column>
       </GridColumns>
-      <Spacer mt={12} />
-    </>
+    </Box>
   )
 }
 
@@ -165,10 +218,10 @@ export const MarketStatsQueryRenderer: React.FC<{
   environment: RelayModernEnvironment
 }> = ({ artistInternalID, environment }) => {
   return (
-    // <QueryRenderer<MarketStatsQuery>
-    <QueryRenderer<any>
+    <SystemQueryRenderer<MarketStatsQuery>
       environment={environment}
       variables={{ artistInternalID }}
+      placeholder={<MarketStatsPlaceholder {...rest} />}
       query={graphql`
         query MarketStatsQuery($artistInternalID: ID!) {
           priceInsightsConnection: priceInsights(
@@ -180,9 +233,13 @@ export const MarketStatsQueryRenderer: React.FC<{
         }
       `}
       render={({ props, error }) => {
-        if (!props?.priceInsightsConnection) {
+        if (error) {
           console.error(error)
-          return <></>
+          return null
+        }
+
+        if (!props) {
+          return <MarketStatsPlaceholder {...rest} />
         }
 
         return (
@@ -196,22 +253,10 @@ export const MarketStatsQueryRenderer: React.FC<{
 }
 
 export const tracks = {
-  tapMarketStatsInfo: () => {},
-  // tapMarketStatsInfo: (): TappedInfoBubbleArgs => ({
-  //   contextModule: ContextModule.auctionResults,
-  //   contextScreenOwnerType: OwnerType.artistAuctionResults,
-  //   subject: "artistMarketStatistics",
-  // }),
-}
-
-export function formatLargeNumber(number: number, decimalPlaces: number = 0) {
-  if (number < 1000) {
-    return number.toString()
-  } else if (number < 1000000) {
-    return `${(number / 1000).toFixed(decimalPlaces)}k`
-  } else if (number < 1000000000) {
-    return `${(number / 1000000).toFixed(decimalPlaces)}M`
-  } else {
-    return `${(number / 1000000000).toFixed(decimalPlaces)}B`
-  }
+  clickMarketStatsInfo: () => ({
+    action_type: AnalyticsSchema.ActionType.Click,
+    context_module: ContextModule.marketInsights,
+    context_page_owner_type: OwnerType.artist,
+    type: Type.Button,
+  }),
 }

@@ -1,34 +1,33 @@
-import { Col, Row, Flex, Text, Message, ThemeProviderV3 } from "@artsy/palette"
-import { ArtistAuctionResults_artist } from "v2/__generated__/ArtistAuctionResults_artist.graphql"
-import { PaginationFragmentContainer as Pagination } from "v2/Components/Pagination"
-import React, { useContext, useState } from "react"
-import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
-import useDeepCompareEffect from "use-deep-compare-effect"
-import { ArtistAuctionResultItemFragmentContainer as AuctionResultItem } from "./ArtistAuctionResultItem"
-import { TableSidebar } from "./Components/TableSidebar"
 import { ContextModule, Intent } from "@artsy/cohesion"
-import { Box, Spacer } from "@artsy/palette"
-import { AnalyticsSchema, SystemContext } from "v2/System"
-import { LoadingArea } from "v2/Components/LoadingArea"
+import { Box, Col, Flex, Message, Row, Spacer, Text } from "@artsy/palette"
 import { isEqual } from "lodash"
+import React, { useContext, useState } from "react"
+import { Title } from "react-head"
+import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 import { useTracking } from "react-tracking"
+import useDeepCompareEffect from "use-deep-compare-effect"
+import { ModalType } from "v2/Components/Authentication/Types"
+import { LoadingArea } from "v2/Components/LoadingArea"
+import { PaginationFragmentContainer as Pagination } from "v2/Components/Pagination"
+import { AnalyticsSchema, SystemContext } from "v2/System"
 import { usePrevious } from "v2/Utils/Hooks/usePrevious"
 import createLogger from "v2/Utils/logger"
+import { openAuthModal } from "v2/Utils/openAuthModal"
 import { Media } from "v2/Utils/Responsive"
+import { scrollIntoView } from "v2/Utils/scrollHelpers"
+import { ArtistAuctionResults_artist } from "v2/__generated__/ArtistAuctionResults_artist.graphql"
+import { ArtistAuctionResultItemFragmentContainer as AuctionResultItem } from "./ArtistAuctionResultItem"
 import {
   AuctionResultsFilterContextProvider,
+  auctionResultsFilterResetState,
   useAuctionResultsFilterContext,
 } from "./AuctionResultsFilterContext"
 import { AuctionFilterMobileActionSheet } from "./Components/AuctionFilterMobileActionSheet"
 import { AuctionFilters } from "./Components/AuctionFilters"
 import { AuctionResultsControls } from "./Components/AuctionResultsControls"
-import { auctionResultsFilterResetState } from "./AuctionResultsFilterContext"
-import { openAuthModal } from "v2/Utils/openAuthModal"
-import { ModalType } from "v2/Components/Authentication/Types"
-import { Title } from "react-head"
+import { MarketStatsQueryRenderer } from "./Components/MarketStats"
 import { SortSelect } from "./Components/SortSelect"
-import { scrollIntoView } from "v2/Utils/scrollHelpers"
-import { MarketStatsQueryRenderer } from "../../Components/MarketStats"
+import { TableSidebar } from "./Components/TableSidebar"
 
 const logger = createLogger("ArtistAuctionResults.tsx")
 
@@ -50,7 +49,6 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
   const { hasNextPage, endCursor } = pageInfo
   const artistName = artist.name
 
-  console.log("INTERNAL ID:", artist.internalID)
   const loadNext = () => {
     // @ts-expect-error STRICT_NULL_CHECK
     const nextPageNum = filterContext.filters.pageAndCursor.page + 1
@@ -161,12 +159,10 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
 
       <Box id="scrollTo--artistAuctionResultsTop" />
 
-      <ThemeProviderV3>
-        <MarketStatsQueryRenderer
-          artistInternalID={artist.internalID}
-          environment={relay.environment}
-        />
-      </ThemeProviderV3>
+      <MarketStatsQueryRenderer
+        artistInternalID={artist.internalID}
+        environment={relay.environment}
+      />
 
       {showMobileActionSheet && (
         <AuctionFilterMobileActionSheet
