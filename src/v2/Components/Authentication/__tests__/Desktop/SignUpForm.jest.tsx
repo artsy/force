@@ -11,7 +11,6 @@ jest.unmock("react-relay")
 jest.mock("sharify", () => ({
   data: {
     RECAPTCHA_KEY: "recaptcha-api-key",
-    ENABLE_SIGN_IN_WITH_APPLE: true,
   },
 }))
 
@@ -102,11 +101,11 @@ describe("SignUpForm", () => {
   })
 
   describe("signup with Apple", () => {
-    it("calls apple callback on tapping link", done => {
+    it("calls apple callback on tapping the button", done => {
       passedProps.values.accepted_terms_of_service = true
       const wrapper = getWrapper()
 
-      const appleLink = wrapper.find("Link").at(3)
+      const appleLink = wrapper.find("Clickable").at(0)
       expect(appleLink.text()).toEqual("Apple")
       appleLink.simulate("click")
 
@@ -116,11 +115,25 @@ describe("SignUpForm", () => {
       })
     })
 
+    it("calls facebook callback on tapping the button", done => {
+      passedProps.values.accepted_terms_of_service = true
+      const wrapper = getWrapper()
+
+      const appleLink = wrapper.find("Clickable").at(1)
+      expect(appleLink.text()).toEqual("Facebook")
+      appleLink.simulate("click")
+
+      setTimeout(() => {
+        expect(passedProps.onFacebookLogin).toHaveBeenCalled()
+        done()
+      })
+    })
+
     it("does not call apple callback without accepting terms", done => {
       passedProps.values.accepted_terms_of_service = false
       const wrapper = getWrapper()
 
-      const appleLink = wrapper.find("Link").at(3)
+      const appleLink = wrapper.find("Clickable").at(0)
       expect(appleLink.text()).toEqual("Apple")
       appleLink.simulate("click")
 
@@ -134,7 +147,7 @@ describe("SignUpForm", () => {
       passedProps.values.accepted_terms_of_service = false
       const wrapper = getWrapper()
 
-      const appleLink = wrapper.find("Link").at(3)
+      const appleLink = wrapper.find("Clickable").at(0)
       expect(appleLink.text()).toEqual("Apple")
       appleLink.simulate("click")
 

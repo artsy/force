@@ -1,5 +1,5 @@
 import { ContextModule, Intent } from "@artsy/cohesion"
-import { Link } from "@artsy/palette"
+import { Clickable } from "@artsy/palette"
 import QuickInput from "v2/Components/QuickInput"
 import { mount } from "enzyme"
 import React from "react"
@@ -9,12 +9,6 @@ import { SignUpFormQueryRenderer } from "../Desktop/SignUpForm"
 import { FormSwitcher } from "../FormSwitcher"
 import { ModalType } from "../Types"
 import { mockLocation } from "v2/DevTools/mockLocation"
-
-jest.mock("sharify", () => ({
-  data: {
-    ENABLE_SIGN_IN_WITH_APPLE: true,
-  },
-}))
 
 describe("FormSwitcher", () => {
   const getWrapper = (props: any = {}) =>
@@ -80,7 +74,7 @@ describe("FormSwitcher", () => {
         type: ModalType.login,
       })
 
-      wrapper.find(Link).at(3).simulate("click")
+      wrapper.find(Clickable).at(2).simulate("click")
 
       expect(window.location.assign).toHaveBeenCalledWith(
         "/signup?contextModule=header&copy=Foo%20Bar&destination=%2Fcollect&intent=followArtist&redirectTo=%2Ffoo&triggerSeconds=1"
@@ -92,7 +86,7 @@ describe("FormSwitcher", () => {
         type: ModalType.login,
       })
 
-      wrapper.find(Link).at(3).simulate("click")
+      wrapper.find(Clickable).at(2).simulate("click")
 
       expect((wrapper.state() as any).type).toMatch("signup")
       expect(wrapper.props().handleTypeChange).toBeCalled()
@@ -113,12 +107,11 @@ describe("FormSwitcher", () => {
           forgot: "/forgot",
           login: "/login",
           signup: "/signup",
-          twitter: "/users/auth/twitter",
         },
         type: ModalType.login,
       })
 
-      wrapper.find(Link).at(1).simulate("click")
+      wrapper.find(Clickable).at(0).simulate("click")
 
       expect(wrapper.props().onSocialAuthEvent).toHaveBeenCalledWith(
         expect.objectContaining({

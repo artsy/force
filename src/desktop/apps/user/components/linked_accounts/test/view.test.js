@@ -41,23 +41,6 @@ describe("LinkedAccountsView", function () {
 
   afterEach(() => Backbone.sync.restore())
 
-  describe("apple feature flag", function () {
-    it("does not render apple by default", function () {
-      return this.view.$("#apple-svg-icon").length.should.eql(0)
-    })
-
-    return it("renders apple when feature flag is enabled", function () {
-      const sd = LinkedAccountsView.__get__("sd")
-      LinkedAccountsView.__set__(
-        "sd",
-        extend({}, sd, { ENABLE_SIGN_IN_WITH_APPLE: true })
-      )
-      const enabled_view = new LinkedAccountsView({ user: this.user })
-      enabled_view.render()
-      return enabled_view.$("#apple-svg-icon").length.should.eql(1)
-    })
-  })
-
   return describe("#toggleService", () =>
     ["apple", "facebook"].map(provider =>
       describe(`unlink ${provider}`, function () {

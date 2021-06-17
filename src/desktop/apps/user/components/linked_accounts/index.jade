@@ -5,12 +5,7 @@ include ./mixin
   if sd.ERROR
     != sd.ERROR
 
-if sd.ENABLE_SIGN_IN_WITH_APPLE
-  - services = ['Facebook', 'Apple']
-else
-  - services = ['Facebook']
-
-for service in services
+for service in ['Facebook', 'Apple']
   .settings-linked-accounts__service.settings-split
     .settings-split__left
       .settings-linked-accounts__service__name
