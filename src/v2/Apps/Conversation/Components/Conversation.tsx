@@ -15,6 +15,9 @@ import { UpdateConversation } from "../Mutation/UpdateConversationMutation"
 import styled from "styled-components"
 import { ConversationHeader } from "./ConversationHeader"
 import { ConfirmArtworkModalQueryRenderer } from "./ConfirmArtworkModal"
+import { userHasLabFeature } from "v2/Utils/user"
+import { useSystemContext } from "v2/System/SystemContext"
+import { BuyerGuaranteeMessage } from "./BuyerGuaranteeMessage"
 
 export interface ConversationProps {
   conversation: Conversation_conversation
@@ -28,9 +31,19 @@ export const PAGE_SIZE: number = 15
 
 const Conversation: React.FC<ConversationProps> = props => {
   const { conversation, relay, showDetails, setShowDetails } = props
+  const { user } = useSystemContext()
 
   const bottomOfPage = useRef(null)
   const initialMount = useRef(true)
+
+  const isMakeOfferArtwork =
+    conversation.items?.[0]?.item?.__typename === "Artwork" &&
+    conversation.items?.[0]?.item?.isOfferableFromInquiry
+
+  const showBuyerGuaranteeMessage =
+    user &&
+    userHasLabFeature(user, "Web Inquiry Checkout") &&
+    isMakeOfferArtwork
 
   // Keeping track of this for scroll on send
   const [lastMessageID, setLastMessageID] = useState("")
@@ -113,6 +126,7 @@ const Conversation: React.FC<ConversationProps> = props => {
           <Box pb={[6, 6, 6, 0]}>
             <Spacer mt={["75px", "75px", 2]} />
             <Flex flexDirection="column" width="100%" px={1}>
+              {showBuyerGuaranteeMessage && <BuyerGuaranteeMessage />}
               {inquiryItemBox}
               <Waypoint onEnter={loadMore} />
               {fetchingMore ? (
@@ -133,6 +147,7 @@ const Conversation: React.FC<ConversationProps> = props => {
           conversation={conversation}
           refetch={props.refetch}
           environment={relay.environment}
+          openInquiryModal={() => setShowConfirmArtworkModal(true)}
         />
       </NoScrollFlex>
       {artwork && (
@@ -210,6 +225,7 @@ export const ConversationPaginationContainer = createPaginationContainer(
               title
               artistNames
               href
+              isOfferableFromInquiry
               image {
                 url(version: ["large"])
               }
@@ -240,6 +256,7 @@ export const ConversationPaginationContainer = createPaginationContainer(
             }
           }
         }
+        ...ConversationCTA_conversation
       }
     `,
   },

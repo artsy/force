@@ -1,10 +1,10 @@
 import http from "http"
 import withGracefulShutdown from "http-shutdown"
-import RavenServer from "raven"
 import { once } from "lodash"
 import { initializeArtsyXapp } from "./artsyXapp"
 import { initializeCache } from "./cacheClient"
 import { errorHandlerMiddleware } from "./middleware/errorHandler"
+import * as Sentry from "@sentry/node"
 
 const {
   APP_URL,
@@ -63,8 +63,7 @@ export async function startServer(app) {
 
 function setupErrorHandling(app) {
   // Setup exception reporting
-  // TODO: This is a deprecated lib; replace with @sentry/node
-  app.use(RavenServer.errorHandler())
+  app.use(Sentry.Handlers.errorHandler())
 
   // And error handling
   app.get("*", (req, res, next) => {

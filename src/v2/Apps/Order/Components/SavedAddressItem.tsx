@@ -1,4 +1,4 @@
-import { Flex, Text, RadioProps } from "@artsy/palette"
+import { Flex, Text, RadioProps, Pill } from "@artsy/palette"
 import React from "react"
 import styled from "styled-components"
 import { SavedAddresses_me } from "v2/__generated__/SavedAddresses_me.graphql"
@@ -39,16 +39,29 @@ export const SavedAddressItem: React.FC<SavedAddressItemProps> = (
           nameAndAddressLine.map(
             (line: string, index: number) =>
               line && (
-                <Text
-                  style={{ textTransform: "capitalize" }}
-                  variant="text"
-                  key={index}
-                >
-                  {line}
-                </Text>
+                <Flex key={index} justifyContent="row" alignItems="center">
+                  <Text
+                    textTransform="capitalize"
+                    textColor={index === 0 ? "black100" : "black60"}
+                    variant="text"
+                  >
+                    {line}
+                  </Text>
+                  {address?.isDefault && index === 0 && (
+                    <Pill ml={0.5} variant="textSquare" hover focus>
+                      <Text
+                        textColor="black60"
+                        variant="caption"
+                        display="inline"
+                      >
+                        Default
+                      </Text>
+                    </Pill>
+                  )}
+                </Flex>
               )
           )}
-        <Text textColor="black60" style={{ textTransform: "capitalize" }}>
+        <Text textColor="black60" textTransform="capitalize">
           {formattedAddressLine}
         </Text>
         <Text textColor="black60">{phoneNumber}</Text>

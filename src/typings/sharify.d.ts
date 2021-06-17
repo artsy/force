@@ -26,7 +26,6 @@ declare module "sharify" {
       CURRENT_USER: User
       readonly DEPLOY_ENV: string
       readonly EIGEN: boolean
-      readonly ENABLE_NEW_ARTWORK_FILTERS: boolean
       readonly ENABLE_SERVER_SIDE_CACHE: string
       readonly ENABLE_SIGN_IN_WITH_APPLE: string // TODO: Remove once sign in with apple is rolled out.
       readonly ENABLE_QUERY_BATCHING: boolean
@@ -55,6 +54,7 @@ declare module "sharify" {
       readonly XAPP_TOKEN: string
       readonly GOOGLE_MAPS_API_KEY: string
       readonly ZENDESK_KEY: string
+      readonly AUCTION_ZENDESK_KEY: string
 
       // FORCE Tokens
       AP: {

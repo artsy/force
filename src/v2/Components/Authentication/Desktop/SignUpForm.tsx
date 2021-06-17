@@ -126,6 +126,17 @@ export class SignUpForm extends Component<SignUpFormProps, SignUpFormState> {
               <QuickInput
                 autoFocus
                 block
+                error={nameErrorMessage}
+                label="Name"
+                name="name"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                placeholder="Enter your full name"
+                type="text"
+                value={values.name}
+              />
+              <QuickInput
+                block
                 error={emailErrorMessage}
                 label="Email"
                 name="email"
@@ -145,17 +156,6 @@ export class SignUpForm extends Component<SignUpFormProps, SignUpFormState> {
                 placeholder="Enter a password"
                 showPasswordMessage
                 value={values.password}
-              />
-              <QuickInput
-                block
-                error={nameErrorMessage}
-                label="Name"
-                name="name"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                placeholder="Enter your full name"
-                type="text"
-                value={values.name}
               />
               <TermsOfServiceCheckbox
                 checked={values.accepted_terms_of_service}

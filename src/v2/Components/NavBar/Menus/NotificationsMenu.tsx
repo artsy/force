@@ -102,6 +102,7 @@ export const NotificationMenuItems: React.FC<NotificationsMenuQueryResponse> = p
                     width={40}
                     height={40}
                     alt={summary}
+                    lazyLoad
                   />
                 }
                 summary={<Text variant="small">{summary}</Text>}

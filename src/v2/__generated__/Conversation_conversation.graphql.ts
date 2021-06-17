@@ -40,6 +40,7 @@ export type Conversation_conversation = {
             readonly title: string | null;
             readonly artistNames: string | null;
             readonly href: string | null;
+            readonly isOfferableFromInquiry: boolean | null;
             readonly image: {
                 readonly url: string | null;
             } | null;
@@ -75,6 +76,7 @@ export type Conversation_conversation = {
             readonly __typename: "%other";
         }) | null;
     } | null> | null;
+    readonly " $fragmentRefs": FragmentRefs<"ConversationCTA_conversation">;
     readonly " $refType": "Conversation_conversation";
 };
 export type Conversation_conversation$data = Conversation_conversation;
@@ -354,6 +356,13 @@ return {
                 {
                   "alias": null,
                   "args": null,
+                  "kind": "ScalarField",
+                  "name": "isOfferableFromInquiry",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
                   "concreteType": "Image",
                   "kind": "LinkedField",
                   "name": "image",
@@ -471,10 +480,15 @@ return {
         }
       ],
       "storageKey": null
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ConversationCTA_conversation"
     }
   ],
   "type": "Conversation"
 };
 })();
-(node as any).hash = 'be0d0a4506917a5823fff806295aa10f';
+(node as any).hash = '62c9a8c2bb10cd0b2bd37a60633f4685';
 export default node;

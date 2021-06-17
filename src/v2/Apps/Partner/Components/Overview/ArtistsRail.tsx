@@ -20,7 +20,7 @@ const ArtistsRail: React.FC<ArtistsRailProps> = ({ partner, ...rest }) => {
   const {
     slug,
     profileArtistsLayout,
-    fullProfileEligible,
+    displayFullPartnerPage,
     artistsWithPublishedArtworks,
     representedArtistsWithoutPublishedArtworks,
   } = partner
@@ -31,7 +31,7 @@ const ArtistsRail: React.FC<ArtistsRailProps> = ({ partner, ...rest }) => {
     representedArtistsWithoutPublishedArtworks?.totalCount || 0
 
   const isCarouselRender =
-    profileArtistsLayout === "Grid" && fullProfileEligible
+    profileArtistsLayout === "Grid" && displayFullPartnerPage
 
   if (
     isCarouselRender
@@ -49,7 +49,7 @@ const ArtistsRail: React.FC<ArtistsRailProps> = ({ partner, ...rest }) => {
           {profileArtistsLayout === "Grid" ? "Featured Artists" : "Artists"}
         </Text>
 
-        {fullProfileEligible && (
+        {displayFullPartnerPage && (
           <ViewAllButton to={`/partner/${slug}/artists`} />
         )}
       </Flex>
@@ -70,7 +70,7 @@ export const ArtistsRailFragmentContainer = createFragmentContainer(
       fragment ArtistsRail_partner on Partner {
         slug
         profileArtistsLayout
-        fullProfileEligible
+        displayFullPartnerPage
         artistsWithPublishedArtworks: artistsConnection(
           hasPublishedArtworks: true
           displayOnPartnerProfile: true

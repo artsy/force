@@ -17,21 +17,11 @@ const GdprLabel = color => {
   return (
     <>
       {"By checking this box, you consent to our "}
-      <Link
-        href="https://www.artsy.net/terms"
-        target="_blank"
-        color={color}
-        underlineBehavior="hover"
-      >
+      <Link href="https://www.artsy.net/terms" target="_blank" color={color}>
         Terms of Use
       </Link>
       {", "}
-      <Link
-        href="https://www.artsy.net/privacy"
-        target="_blank"
-        color={color}
-        underlineBehavior="hover"
-      >
+      <Link href="https://www.artsy.net/privacy" target="_blank" color={color}>
         Privacy Policy
       </Link>
       {", and "}
@@ -39,7 +29,6 @@ const GdprLabel = color => {
         href="https://www.artsy.net/conditions-of-sale"
         target="_blank"
         color={color}
-        underlineBehavior="hover"
       >
         Conditions of Sale
       </Link>
@@ -52,21 +41,11 @@ const FallbackLabel = color => {
   return (
     <>
       {"I agree to the "}
-      <Link
-        href="https://www.artsy.net/terms"
-        target="_blank"
-        color={color}
-        underlineBehavior="hover"
-      >
+      <Link href="https://www.artsy.net/terms" target="_blank" color={color}>
         Terms of Use
       </Link>
       {", "}
-      <Link
-        href="https://www.artsy.net/privacy"
-        target="_blank"
-        color={color}
-        underlineBehavior="hover"
-      >
+      <Link href="https://www.artsy.net/privacy" target="_blank" color={color}>
         Privacy Policy
       </Link>
       {", and "}
@@ -74,7 +53,6 @@ const FallbackLabel = color => {
         href="https://www.artsy.net/conditions-of-sale"
         target="_blank"
         color={color}
-        underlineBehavior="hover"
       >
         Conditions of Sale
       </Link>

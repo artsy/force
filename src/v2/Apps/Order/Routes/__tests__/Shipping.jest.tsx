@@ -537,15 +537,14 @@ describe("Shipping", () => {
         "Shipping",
         "Arrange for pickup (free)After your order is confirmed, a specialist will contact you within 2 business days to coordinate pickup.",
         "Test Name1 Main StMadrid, Spain, 28001555-555-5555Edit",
-        "Test Name401 BroadwayFloor 25New York, NY, USA, 10013422-424-4242Edit",
-        "Add a new shipping address",
+        "Test NameDefault401 BroadwayFloor 25New York, NY, USA, 10013422-424-4242Edit",
       ])
 
       expect(page.text()).toContain(
-        "Test Name1 Main StMadrid, Spain, 28001555-555-5555"
+        "Test Name1 Main StMadrid, Spain, 28001555-555-5555Edit"
       )
       expect(page.text()).toContain(
-        "Test Name401 BroadwayFloor 25New York, NY, USA, 10013422-424-4242"
+        "Test NameDefault401 BroadwayFloor 25New York, NY, USA, 10013422-424-4242Edit"
       )
     })
 
@@ -610,7 +609,9 @@ describe("Shipping", () => {
       it("opens modal with correct title and action properties", async () => {
         await page.find(`[data-test="edit-address"]`).first().simulate("click")
         expect(page.find(ShippingRoute).state().editAddressIndex).toBe(0)
-        expect(page.find("AddressModal").props().modalDetails).toStrictEqual({
+        expect(
+          page.find("AddressModal").at(0).props().modalDetails
+        ).toStrictEqual({
           addressModalTitle: "Edit address",
           addressModalAction: "editUserAddress",
         })
@@ -621,7 +622,7 @@ describe("Shipping", () => {
         await page.find(`[data-test="edit-address"]`).first().simulate("click")
         expect(page.find(ShippingRoute).state().editAddressIndex).toBe(0)
 
-        expect(page.find("AddressModal").length).toBe(1)
+        expect(page.find("AddressModal").length).toBe(2)
         expect(
           page
             .find("AddressModal")
@@ -630,10 +631,10 @@ describe("Shipping", () => {
         ).toMatchInlineSnapshot(`
           Array [
             "Test Name",
-            "28001",
             "1 Main St",
-            "",
             "Madrid",
+            "28001",
+            "",
             "",
             "555-555-5555",
           ]

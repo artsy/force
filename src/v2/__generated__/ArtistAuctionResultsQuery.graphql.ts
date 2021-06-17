@@ -71,6 +71,9 @@ fragment ArtistAuctionResultItem_auctionResult on AuctionResult {
     display
     cents_usd: centsUSD
   }
+  performance {
+    mid
+  }
   estimate {
     display
   }
@@ -647,6 +650,24 @@ return {
                             "args": null,
                             "kind": "ScalarField",
                             "name": "centsUSD",
+                            "storageKey": null
+                          }
+                        ],
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": "AuctionLotPerformance",
+                        "kind": "LinkedField",
+                        "name": "performance",
+                        "plural": false,
+                        "selections": [
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "mid",
                             "storageKey": null
                           }
                         ],

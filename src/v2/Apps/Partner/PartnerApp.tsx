@@ -9,6 +9,7 @@ import styled from "styled-components"
 import { PartnerMetaFragmentContainer } from "./Components/PartnerMeta"
 import { StickyProvider } from "v2/Components/Sticky"
 import { PartnerArtistsLoadingContextProvider } from "./Utils/PartnerArtistsLoadingContext"
+import { HttpError } from "found"
 
 export interface PartnerAppProps {
   partner: PartnerApp_partner
@@ -27,12 +28,24 @@ export const PartnerApp: React.FC<PartnerAppProps> = ({
   partner,
   children,
 }) => {
-  const { profile, fullProfileEligible } = partner
+  const {
+    profile,
+    partnerType,
+    displayFullPartnerPage,
+    isDefaultProfilePublic,
+    partnerPageEligible,
+  } = partner
+
+  if (!isDefaultProfilePublic || !partnerPageEligible) {
+    throw new HttpError(404)
+  }
 
   return (
     <PartnerArtistsLoadingContextProvider>
       <StickyProvider>
-        {profile && <PartnerHeaderImage profile={profile} />}
+        {profile && displayFullPartnerPage && (
+          <PartnerHeaderImage profile={profile} />
+        )}
 
         <Flex position="relative" flexDirection="column">
           <Foreground />
@@ -45,7 +58,9 @@ export const PartnerApp: React.FC<PartnerAppProps> = ({
               <Separator />
             </FullBleed>
 
-            {fullProfileEligible && <NavigationTabs partner={partner} />}
+            {(displayFullPartnerPage || partnerType === "Brand") && (
+              <NavigationTabs partner={partner} />
+            )}
 
             {children}
           </Box>
@@ -58,7 +73,10 @@ export const PartnerApp: React.FC<PartnerAppProps> = ({
 export const PartnerAppFragmentContainer = createFragmentContainer(PartnerApp, {
   partner: graphql`
     fragment PartnerApp_partner on Partner {
-      fullProfileEligible
+      partnerType
+      displayFullPartnerPage
+      partnerPageEligible
+      isDefaultProfilePublic
       profile {
         ...PartnerHeaderImage_profile
       }

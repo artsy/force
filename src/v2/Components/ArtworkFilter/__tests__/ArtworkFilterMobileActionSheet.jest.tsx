@@ -7,7 +7,6 @@ import {
 } from "../ArtworkFilterContext"
 import { ArtworkFilterMobileActionSheet } from "../ArtworkFilterMobileActionSheet"
 import { ArtworkFilters } from "../ArtworkFilters"
-import { flushPromiseQueue } from "v2/DevTools"
 
 jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
   useMatchMedia: () => ({ sm: true }),
@@ -43,7 +42,7 @@ describe("ArtworkFilterMobileActionSheet", () => {
 
     expect(wrapper.find("FilterTitle").text()).toEqual("Filter")
 
-    expect(wrapper.find("Button").last().text()).toEqual("Apply (0)")
+    expect(wrapper.find("Button").last().text()).toEqual("Show Results")
   })
 
   it("resets staged filters to defaults on `Reset` button click", () => {
@@ -96,40 +95,6 @@ describe("ArtworkFilterMobileActionSheet", () => {
     })
   })
 
-  it("counts the number of changing filters", async () => {
-    // Zero state: a medium and a way to buy are *already* selected
-    const wrapper = getWrapper({
-      filters: { medium: "painting", acquireable: true },
-    })
-
-    expect(wrapper.find("ApplyButton").text()).toEqual("Apply (0)")
-
-    // Select another way to buy
-    wrapper
-      .find("WaysToBuyFilter")
-      .find("div")
-      .findWhere(label => label.text() === "Make offer")
-      .first()
-      .simulate("click")
-    await flushPromiseQueue()
-
-    expect(wrapper.find("ApplyButton").text()).toEqual("Apply (1)")
-
-    // Expand the collapsed filters we want to make assertions about
-    wrapper.find("PriceRangeFilter").find("ChevronIcon").simulate("click")
-
-    // Select a price range
-    wrapper
-      .find("PriceRangeFilter")
-      .find("label")
-      .findWhere(label => label.text() === "$10K – $25K")
-      .first()
-      .simulate("click")
-    await flushPromiseQueue()
-
-    expect(wrapper.find("ApplyButton").text()).toEqual("Apply (2)")
-  })
-
   describe("`Apply` button", () => {
     it("is disabled before selecting filter and enabled after that", () => {
       const wrapper = getWrapper()
@@ -140,136 +105,6 @@ describe("ArtworkFilterMobileActionSheet", () => {
       wrapper.find("SizeFilter").find("Checkbox").first().simulate("click")
 
       expect(wrapper.find("Button").last().prop("disabled")).toBeFalsy()
-    })
-  })
-
-  describe("the count on the `Apply` button", () => {
-    it("is 1 when 1 medium is selected", async () => {
-      const wrapper = getWrapper()
-
-      wrapper
-        .find("MediumFilter")
-        .find("div")
-        .findWhere(label => label.text() === "Painting")
-        .first()
-        .simulate("click")
-      await flushPromiseQueue()
-
-      expect(wrapper.find("ApplyButton").text()).toEqual("Apply (1)")
-    })
-
-    it("is 1 when 2 mediums are selected", async () => {
-      const wrapper = getWrapper()
-
-      wrapper
-        .find("MediumFilter")
-        .find("div")
-        .findWhere(label => label.text() === "Painting")
-        .first()
-        .simulate("click")
-      await flushPromiseQueue()
-
-      expect(wrapper.find("ApplyButton").text()).toEqual("Apply (1)")
-
-      wrapper
-        .find("MediumFilter")
-        .find("div")
-        .findWhere(label => label.text() === "Photography")
-        .first()
-        .simulate("click")
-      await flushPromiseQueue()
-
-      expect(wrapper.find("ApplyButton").text()).toEqual("Apply (1)")
-    })
-
-    it("is 1 when 1 rarity is selected", async () => {
-      const wrapper = getWrapper()
-
-      wrapper
-        .find("AttributionClassFilter")
-        .find("div")
-        .findWhere(label => label.text() === "Unique")
-        .first()
-        .simulate("click")
-      await flushPromiseQueue()
-
-      expect(wrapper.find("ApplyButton").text()).toEqual("Apply (1)")
-    })
-
-    it("is 1 when 2 rarities are selected", async () => {
-      const wrapper = getWrapper()
-
-      wrapper
-        .find("AttributionClassFilter")
-        .find("div")
-        .findWhere(label => label.text() === "Unique")
-        .first()
-        .simulate("click")
-      await flushPromiseQueue()
-
-      expect(wrapper.find("ApplyButton").text()).toEqual("Apply (1)")
-
-      wrapper
-        .find("AttributionClassFilter")
-        .find("div")
-        .findWhere(label => label.text() === "Limited Edition")
-        .first()
-        .simulate("click")
-      await flushPromiseQueue()
-
-      expect(wrapper.find("ApplyButton").text()).toEqual("Apply (1)")
-    })
-
-    it("is 1 when 1 color is selected", async () => {
-      const wrapper = getWrapper()
-
-      wrapper
-        .find("button")
-        .findWhere(label => label.text() === "Color")
-        .first()
-        .simulate("click")
-      await flushPromiseQueue()
-
-      wrapper
-        .find("ColorFilter")
-        .find("Checkbox")
-        .findWhere(label => label.text() === "Red")
-        .first()
-        .simulate("click")
-      await flushPromiseQueue()
-
-      expect(wrapper.find("ApplyButton").text()).toEqual("Apply (1)")
-    })
-
-    it("is 1 when 2 colors are selected", async () => {
-      const wrapper = getWrapper()
-
-      wrapper
-        .find("button")
-        .findWhere(label => label.text() === "Color")
-        .first()
-        .simulate("click")
-      await flushPromiseQueue()
-
-      wrapper
-        .find("ColorFilter")
-        .find("Checkbox")
-        .findWhere(label => label.text() === "Red")
-        .first()
-        .simulate("click")
-      await flushPromiseQueue()
-
-      expect(wrapper.find("ApplyButton").text()).toEqual("Apply (1)")
-
-      wrapper
-        .find("ColorFilter")
-        .find("Checkbox")
-        .findWhere(label => label.text() === "Black and white")
-        .first()
-        .simulate("click")
-      await flushPromiseQueue()
-
-      expect(wrapper.find("ApplyButton").text()).toEqual("Apply (1)")
     })
   })
 })

@@ -26,13 +26,13 @@ const ShowsRail: React.FC<ShowsRailProps> = ({ partner, ...rest }) => {
   const {
     slug,
     showsConnection: { edges },
-    fullProfileEligible,
+    displayFullPartnerPage,
   } = partner
 
-  const canShowAll = isSeeAllAvaliable && fullProfileEligible
+  const canShowAll = isSeeAllAvaliable && displayFullPartnerPage
   const shows = [...edges]
 
-  if (fullProfileEligible && shows.length === 20) {
+  if (displayFullPartnerPage && shows.length === 20) {
     shows.pop()
   }
 
@@ -91,7 +91,7 @@ export const ShowsRailFragmentContainer = createFragmentContainer(ShowsRail, {
   partner: graphql`
     fragment ShowsRail_partner on Partner {
       slug
-      fullProfileEligible
+      displayFullPartnerPage
       showsConnection(status: ALL, first: 19, isDisplayable: true) {
         edges {
           node {

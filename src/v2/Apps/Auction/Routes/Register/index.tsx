@@ -28,6 +28,8 @@ import {
 import { createStripeWrapper } from "v2/Utils/createStripeWrapper"
 import type { Stripe, StripeElements } from "@stripe/stripe-js"
 import { CardElement } from "@stripe/react-stripe-js"
+import { ZendeskWrapper } from "v2/Components/ZendeskWrapper"
+import { data as sd } from "sharify"
 
 const logger = createLogger("Apps/Auction/Routes/Register")
 
@@ -81,6 +83,11 @@ export const RegisterRoute: React.FC<RegisterProps> = props => {
     auction_state: sale.status,
     sale_id: sale.internalID,
     user_id: me.internalID,
+  }
+
+  function renderZendeskScript() {
+    if (typeof window !== "undefined" && window.zEmbed) return
+    return <ZendeskWrapper zdKey={sd.AUCTION_ZENDESK_KEY} />
   }
 
   function trackRegistrationFailed(errors: string[]) {
@@ -184,6 +191,7 @@ export const RegisterRoute: React.FC<RegisterProps> = props => {
           })}
         />
       </Box>
+      {renderZendeskScript()}
     </>
   )
 }

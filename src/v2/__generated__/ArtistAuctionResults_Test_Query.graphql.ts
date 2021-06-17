@@ -67,6 +67,9 @@ export type ArtistAuctionResults_Test_QueryRawResponse = {
                         readonly display: string | null;
                         readonly cents_usd: number | null;
                     }) | null;
+                    readonly performance: ({
+                        readonly mid: string | null;
+                    }) | null;
                     readonly estimate: ({
                         readonly display: string | null;
                     }) | null;
@@ -113,6 +116,9 @@ fragment ArtistAuctionResultItem_auctionResult on AuctionResult {
   price_realized: priceRealized {
     display
     cents_usd: centsUSD
+  }
+  performance {
+    mid
   }
   estimate {
     display
@@ -554,6 +560,24 @@ return {
                             "args": null,
                             "kind": "ScalarField",
                             "name": "centsUSD",
+                            "storageKey": null
+                          }
+                        ],
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": "AuctionLotPerformance",
+                        "kind": "LinkedField",
+                        "name": "performance",
+                        "plural": false,
+                        "selections": [
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "mid",
                             "storageKey": null
                           }
                         ],

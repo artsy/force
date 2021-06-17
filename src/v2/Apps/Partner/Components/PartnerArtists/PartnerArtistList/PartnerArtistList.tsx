@@ -14,7 +14,7 @@ export interface PartnerArtistListProps {
   distinguishRepresentedArtists: boolean
   partnerSlug: string
   scrollTo: ScrollIntoViewProps
-  fullProfileEligible: boolean
+  displayFullPartnerPage: boolean
 }
 
 export const PartnerArtistListContainer: React.FC = ({ children }) => {
@@ -33,13 +33,13 @@ export const PartnerArtistList: React.FC<PartnerArtistListProps> = ({
   distinguishRepresentedArtists,
   partnerSlug,
   scrollTo,
-  fullProfileEligible,
+  displayFullPartnerPage,
 }) => {
   if (!artists) return null
 
   const groups = groupArtists(
     artists,
-    distinguishRepresentedArtists && fullProfileEligible
+    distinguishRepresentedArtists && displayFullPartnerPage
   )
 
   return (
@@ -65,7 +65,7 @@ export const PartnerArtistList: React.FC<PartnerArtistListProps> = ({
                       artist={node}
                       partnerSlug={partnerSlug}
                       hasPublishedArtworks={artworks > 0}
-                      fullProfileEligible={fullProfileEligible}
+                      displayFullPartnerPage={displayFullPartnerPage}
                     />
                   )
                 })}

@@ -37,6 +37,7 @@ describe("Artsy context", () => {
     accessToken: "secret",
   }
 
+  // eslint-disable-next-line jest/no-done-callback
   it("injects default renderProps", done => {
     render(
       <Artsy.SystemContextProvider>
@@ -45,6 +46,7 @@ describe("Artsy context", () => {
             expect(Object.keys(props).sort()).toEqual([
               "isEigen",
               "isFetching",
+              "isLoggedIn",
               "mediator",
               "relayEnvironment",
               "router",

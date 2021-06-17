@@ -1,3 +1,4 @@
+import { AppRouteConfig } from "v2/System/Router/Route"
 import { artistRoutes } from "v2/Apps/Artist/artistRoutes"
 import { artistSeriesRoutes } from "v2/Apps/ArtistSeries/artistSeriesRoutes"
 import { artistsRoutes } from "v2/Apps/Artists/artistsRoutes"
@@ -14,96 +15,47 @@ import { fairRoutes } from "v2/Apps/Fair/fairRoutes"
 import { fairsRoutes } from "v2/Apps/Fairs/fairsRoutes"
 import { featureRoutes } from "v2/Apps/Feature/featureRoutes"
 import { geneRoutes } from "v2/Apps/Gene/geneRoutes"
+import { homeRoutes } from "v2/Apps/Home/homeRoutes"
 import { identityVerificationRoutes } from "v2/Apps/IdentityVerification/identityVerificationRoutes"
 import { orderRoutes } from "v2/Apps/Order/orderRoutes"
 import { partnerRoutes } from "v2/Apps/Partner/partnerRoutes"
 import { paymentRoutes } from "v2/Apps/Payment/paymentRoutes"
 import { purchaseRoutes } from "v2/Apps/Purchase/purchaseRoutes"
-import { AppRouteConfig } from "v2/System/Router/Route"
 import { searchRoutes } from "v2/Apps/Search/searchRoutes"
 import { showRoutes } from "v2/Apps/Show/showRoutes"
-import { viewingRoomRoutes } from "v2/Apps/ViewingRoom/viewingRoomRoutes"
 import { tagRoutes } from "./Apps/Tag/tagRoutes"
 import { unsubscribeRoutes } from "./Apps/Unsubscribe/unsubscribeRoutes"
+import { viewingRoomRoutes } from "v2/Apps/ViewingRoom/viewingRoomRoutes"
 
 export function getAppRoutes(): AppRouteConfig[] {
   return buildAppRoutes([
-    {
-      routes: artistRoutes,
-    },
-    {
-      routes: artistsRoutes,
-    },
-    {
-      routes: artistSeriesRoutes,
-    },
-    {
-      routes: artworkRoutes,
-    },
-    {
-      routes: auctionsRoutes,
-    },
-    {
-      routes: buyerGuaranteeRoutes,
-    },
-    {
-      routes: collectRoutes,
-    },
-    {
-      routes: consignRoutes,
-    },
-    {
-      routes: conversationRoutes,
-    },
-    {
-      routes: exampleRoutes,
-    },
-    {
-      routes: fairRoutes,
-    },
-    {
-      routes: fairsRoutes,
-    },
-    {
-      routes: featureRoutes,
-    },
-    {
-      routes: geneRoutes,
-    },
-    {
-      routes: identityVerificationRoutes,
-    },
-    {
-      routes: orderRoutes,
-    },
-    {
-      routes: paymentRoutes,
-    },
-    {
-      routes: partnerRoutes,
-    },
-    {
-      routes: purchaseRoutes,
-    },
-    {
-      routes: searchRoutes,
-    },
-    {
-      routes: showRoutes,
-    },
-    {
-      routes: tagRoutes,
-    },
-    {
-      routes: unsubscribeRoutes,
-    },
-    {
-      routes: viewingRoomRoutes,
-    },
+    { routes: artistRoutes },
+    { routes: artistSeriesRoutes },
+    { routes: artistsRoutes },
+    { routes: artworkRoutes },
+    { routes: auctionsRoutes },
+    { routes: buyerGuaranteeRoutes },
+    { routes: collectRoutes },
+    { routes: consignRoutes },
+    { routes: conversationRoutes },
+    { routes: exampleRoutes },
+    { routes: fairRoutes },
+    { routes: fairsRoutes },
+    { routes: featureRoutes },
+    { routes: geneRoutes },
+    { routes: homeRoutes },
+    { routes: identityVerificationRoutes },
+    { routes: orderRoutes },
+    { routes: partnerRoutes },
+    { routes: paymentRoutes },
+    { routes: purchaseRoutes },
+    { routes: searchRoutes },
+    { routes: showRoutes },
+    { routes: tagRoutes },
+    { routes: unsubscribeRoutes },
+    { routes: viewingRoomRoutes },
 
     // For debugging baseline app shell stuff
-    {
-      routes: debugRoutes,
-    },
+    { routes: debugRoutes },
   ])
 }

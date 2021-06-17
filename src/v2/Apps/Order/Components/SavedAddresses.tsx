@@ -171,20 +171,36 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
 
   const addAddressButton = (
     <>
-      <Button
-        mt={addressList.length > 0 ? 3 : 0}
-        variant="primaryBlack"
-        size="large"
-        onClick={() => {
-          setShowAddressModal(true),
-            setModalDetails({
-              addressModalTitle: "Add new address",
-              addressModalAction: "createUserAddress",
-            })
-        }}
-      >
-        Add new address
-      </Button>
+      {addressList.length > 0 ? (
+        <Button
+          variant="secondaryOutline"
+          width={159}
+          onClick={() => {
+            setShowAddressModal(true),
+              setModalDetails({
+                addressModalTitle: "Add address",
+                addressModalAction: "createUserAddress",
+              })
+          }}
+        >
+          Add a new address
+        </Button>
+      ) : (
+        <Button
+          mt={3}
+          variant="primaryBlack"
+          size="large"
+          onClick={() => {
+            setShowAddressModal(true),
+              setModalDetails({
+                addressModalTitle: "Add new address",
+                addressModalAction: "createUserAddress",
+              })
+          }}
+        >
+          Add a new address
+        </Button>
+      )}
       <AddressModal
         show={showAddressModal}
         modalDetails={modalDetails}
@@ -197,29 +213,23 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
     </>
   )
 
-  const addressItems = addressList
-    .map((address, index) => {
-      return (
-        <BorderedRadio
-          value={`${index}`}
-          key={index}
-          position="relative"
-          data-test="savedAddress"
-        >
-          <SavedAddressItem
-            index={index}
-            // @ts-expect-error STRICT_NULL_CHECK
-            address={address.node}
-            handleClickEdit={handleClickEdit}
-          />
-        </BorderedRadio>
-      )
-    })
-    .concat([
-      <BorderedRadio value={NEW_ADDRESS} key="new-address">
-        <Text variant="text">Add a new shipping address</Text>
-      </BorderedRadio>,
-    ])
+  const addressItems = addressList.map((address, index) => {
+    return (
+      <BorderedRadio
+        value={`${index}`}
+        key={index}
+        position="relative"
+        data-test="savedAddress"
+      >
+        <SavedAddressItem
+          index={index}
+          // @ts-expect-error STRICT_NULL_CHECK
+          address={address.node}
+          handleClickEdit={handleClickEdit}
+        />
+      </BorderedRadio>
+    )
+  })
 
   return inCollectorProfile ? (
     <>
@@ -238,7 +248,9 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
       >
         {addressItems}
       </RadioGroup>
-      <Spacer p="2" />
+      <Spacer mb={14} />
+      {addAddressButton}
+      <Spacer mb={3} />
     </>
   )
 }

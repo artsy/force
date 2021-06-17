@@ -58,14 +58,14 @@ export const Item: React.FC<ItemProps> = props => {
       <Link
         href={item.href}
         underlineBehavior="none"
-        style={{ alignSelf: "flex-end" }}
+        style={{ alignSelf: "flex-end", maxWidth: "100%" }}
         mb={1}
       >
         <Flex flexDirection="column">
           <Image
             src={getImage(item)}
             alt={item.__typename === "Artwork" ? item.title : item.name}
-            width="350px"
+            style={{ maxWidth: "350px" }}
             borderRadius="15px 15px 0 0"
           />
           <Flex

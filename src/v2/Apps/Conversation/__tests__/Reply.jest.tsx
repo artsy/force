@@ -31,6 +31,9 @@ describe("Reply", () => {
           conversation={
             (MockedConversation as unknown) as Conversation_conversation
           }
+          openInquiryModal={() => {
+            jest.fn
+          }}
           environment={{} as Environment}
           refetch={() => ({ dispose: jest.fn })}
         />

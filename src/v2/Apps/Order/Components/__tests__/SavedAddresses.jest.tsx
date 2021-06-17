@@ -1,7 +1,7 @@
 import { graphql } from "react-relay"
 import { SavedAddressesFragmentContainer } from "../SavedAddresses"
 import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
-import { Button } from "@artsy/palette"
+import { Button, BorderBox } from "@artsy/palette"
 import { AddressModal } from "v2/Apps/Order/Components/AddressModal"
 import React from "react"
 import { createTestEnv } from "v2/DevTools/createTestEnv"
@@ -53,13 +53,13 @@ describe("Saved Addresses mutations", () => {
   })
 })
 
-describe("SavedAddress button interactions", () => {
+describe("SavedAddresses in collector profile", () => {
   const { getWrapper } = setupTestWrapper({
     Component: (props: any) => (
       <SavedAddressesFragmentContainer inCollectorProfile {...props} />
     ),
     query: graphql`
-      query SavedAddressesCollectorProfile_Test_Query {
+      query SavedAddressesInCollectorProfile_Test_Query {
         me {
           ...SavedAddresses_me
         }
@@ -67,28 +67,33 @@ describe("SavedAddress button interactions", () => {
     `,
   })
 
-  const wrapper = getWrapper({
-    Me: () => ({
-      addressConnection: mockAddressConnection,
-    }),
-  })
-
   it("renders modal when button is clicked", () => {
+    const wrapper = getWrapper({
+      Me: () => ({
+        addressConnection: mockAddressConnection,
+      }),
+    })
     const button = wrapper.find(Button)
     const modal = wrapper.find(AddressModal)
     expect(modal.props().show).toBe(false)
-    button.props().onClick({} as any)
+    button.props().onClick()
 
     setTimeout(() => {
       expect(modal).toHaveLength(1)
     }, 0)
   })
 
-  it("opens address modal in create mode with expected props", () => {
+  it("add address modal with expected props", () => {
+    const wrapper = getWrapper({
+      Me: () => ({
+        addressConnection: mockAddressConnection,
+      }),
+    })
+
     const button = wrapper.find(Button)
     const modal = wrapper.find(AddressModal)
     expect(modal.props().show).toBe(false)
-    button.props().onClick({} as any)
+    button.props().onClick()
 
     setTimeout(() => {
       expect(modal.props().modalDetails).toBe({
@@ -98,13 +103,18 @@ describe("SavedAddress button interactions", () => {
     }, 0)
   })
 
-  it("opens address modal in edit mode with expected props", () => {
+  it("edit address modal with expected props", () => {
+    const wrapper = getWrapper({
+      Me: () => ({
+        addressConnection: mockAddressConnection,
+      }),
+    })
     const editAddressComponent = wrapper.find("[data-test='editAddress']").at(0)
     expect(editAddressComponent).toHaveLength(1)
     const modal = wrapper.find(AddressModal)
     expect(modal.props().show).toBe(false)
     // @ts-expect-error STRICT_NULL_CHECK
-    editAddressComponent.props().onClick({} as any)
+    editAddressComponent.props().onClick()
     setTimeout(() => {
       expect(modal.props().modalDetails).toBe({
         addressModalTitle: "Edit address",
@@ -112,13 +122,39 @@ describe("SavedAddress button interactions", () => {
       })
     }, 0)
   })
+
+  it("render an add address button", () => {
+    const wrapper = getWrapper({
+      Me: () => ({
+        addressConnection: mockAddressConnection,
+      }),
+    })
+    expect(wrapper.find(Button)).toHaveLength(1)
+  })
+
+  it("renders addresses", () => {
+    const wrapper = getWrapper({
+      Me: () => ({
+        addressConnection: mockAddressConnection,
+      }),
+    })
+    const addresses = wrapper.find(BorderBox)
+
+    expect(addresses).toHaveLength(2)
+    expect(addresses.map(address => address.text())).toEqual([
+      "Test Name1 Main StMadrid, Spain, 28001555-555-5555EditSet as DefaultEditDelete",
+      "Test NameDefault401 BroadwayFloor 25New York, NY, USA, 10013422-424-4242EditEditDelete",
+    ])
+  })
 })
 
-describe("SavedAddress", () => {
+describe("SavedAddresses outside collector profile", () => {
   const { getWrapper } = setupTestWrapper({
-    Component: (props: any) => <SavedAddressesFragmentContainer {...props} />,
+    Component: (props: any) => (
+      <SavedAddressesFragmentContainer inCollectorProfile={false} {...props} />
+    ),
     query: graphql`
-      query SavedAddresses_Test_Query {
+      query SavedAddressesOutsiseCollectorProfile_Test_Query {
         me {
           ...SavedAddresses_me
         }
@@ -126,14 +162,48 @@ describe("SavedAddress", () => {
     `,
   })
 
-  it("does not render an add address button outside the collector profile", () => {
+  it("renders modal when button is clicked", () => {
     const wrapper = getWrapper({
       Me: () => ({
         addressConnection: mockAddressConnection,
       }),
     })
     const button = wrapper.find(Button)
-    expect(button).toHaveLength(0)
+    const modal = wrapper.find(AddressModal)
+    expect(modal.props().show).toBe(false)
+    button.props().onClick()
+
+    setTimeout(() => {
+      expect(modal).toHaveLength(1)
+    }, 0)
+  })
+
+  it("add address modal with expected props", () => {
+    const wrapper = getWrapper({
+      Me: () => ({
+        addressConnection: mockAddressConnection,
+      }),
+    })
+    const button = wrapper.find(Button)
+    const modal = wrapper.find(AddressModal)
+    expect(modal.props().show).toBe(false)
+    button.props().onClick()
+
+    setTimeout(() => {
+      expect(modal.props().modalDetails).toBe({
+        addressModalTitle: "Add address",
+        addressModalAction: "createUserAddress",
+      })
+    }, 0)
+  })
+
+  it("render an add address button", () => {
+    const wrapper = getWrapper({
+      Me: () => ({
+        addressConnection: mockAddressConnection,
+      }),
+    })
+    expect(wrapper.find(Button)).toHaveLength(1)
   })
 
   it("renders radio buttons with addresses", () => {
@@ -144,21 +214,12 @@ describe("SavedAddress", () => {
     })
     const radios = wrapper.find("Radio")
 
-    expect(radios.length).toBe(3)
-    expect(radios.map(radio => radio.props().value)).toEqual([
-      "0",
-      "1",
-      "NEW_ADDRESS",
-    ])
-    expect(radios.map(radio => radio.props().selected)).toEqual([
-      false,
-      true,
-      false,
-    ])
+    expect(radios.length).toBe(2)
+    expect(radios.map(radio => radio.props().value)).toEqual(["0", "1"])
+    expect(radios.map(radio => radio.props().selected)).toEqual([false, true])
     expect(radios.map(radio => radio.text())).toEqual([
       "Test Name1 Main StMadrid, Spain, 28001555-555-5555Edit",
-      "Test Name401 BroadwayFloor 25New York, NY, USA, 10013422-424-4242Edit",
-      "Add a new shipping address",
+      "Test NameDefault401 BroadwayFloor 25New York, NY, USA, 10013422-424-4242Edit",
     ])
   })
 })

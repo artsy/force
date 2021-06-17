@@ -148,6 +148,7 @@ describe("buildServerApp", () => {
     expect(headTags[headTags.length - 1].props.children).toBe("test")
   })
 
+  // eslint-disable-next-line jest/no-done-callback
   it("passes items along in context option", async done => {
     const HomeApp = () => {
       return (
@@ -158,6 +159,7 @@ describe("buildServerApp", () => {
               "initialMatchingMediaQueries",
               "isEigen",
               "isFetching",
+              "isLoggedIn",
               "mediator",
               "relayEnvironment",
               "router",
@@ -278,6 +280,7 @@ describe("buildServerApp", () => {
       try {
         await getWrapper(defaultComponent, options)
       } catch (error) {
+        // eslint-disable-next-line jest/no-conditional-expect, jest/no-try-expect
         expect(error.message).toMatch(/Oh noes/)
       }
     })

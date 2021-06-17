@@ -41,6 +41,18 @@ describe("PartnerNavigationTabs", () => {
     expect(html).toContain("Contact")
   })
 
+  it("display Shop instead of Works for Brand partner", () => {
+    const wrapper = getWrapper({
+      Partner: () => ({
+        id: "white-cube",
+        partnerType: "Brand",
+      }),
+    })
+    const html = wrapper.html()
+
+    expect(html).toContain("Shop")
+  })
+
   it("doesn't display contact tab if no locations", () => {
     const wrapper = getWrapper({
       Partner: () => ({ locations: { totalCount: null } }),

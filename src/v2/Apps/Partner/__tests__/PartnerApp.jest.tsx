@@ -44,7 +44,7 @@ describe("PartnerApp", () => {
   it("displays navigation tabs for the partner page", () => {
     const wrapper = getWrapper({
       Partner: () => ({
-        fullProfileEligible: true,
+        displayFullPartnerPage: true,
       }),
     })
     expect(wrapper.find("NavigationTabs").length).toBe(1)
@@ -53,10 +53,20 @@ describe("PartnerApp", () => {
   it("does not display nav tabs for limited profile", () => {
     const wrapper = getWrapper({
       Partner: () => ({
-        fullProfileEligible: false,
+        displayFullPartnerPage: false,
       }),
     })
     expect(wrapper.find("NavigationTabs").length).toBe(0)
+  })
+
+  it("displays navigation tabs for brand partner", () => {
+    const wrapper = getWrapper({
+      Partner: () => ({
+        displayFullPartnerPage: false,
+        partnerType: "Brand",
+      }),
+    })
+    expect(wrapper.find("NavigationTabs").length).toBe(1)
   })
 
   it("displays header image for the partner page", () => {
@@ -87,5 +97,15 @@ describe("PartnerApp", () => {
     const profileImageHtml = wrapper.find(PartnerHeaderImage).html()
 
     expect(profileImageHtml).toBe("")
+  })
+
+  it("doesn't display profile image if the partner isn't eligible for a full profile", () => {
+    const wrapper = getWrapper({
+      Partner: () => ({
+        displayFullPartnerPage: false,
+      }),
+    })
+
+    expect(wrapper.find(PartnerHeaderImage)).toHaveLength(0)
   })
 })

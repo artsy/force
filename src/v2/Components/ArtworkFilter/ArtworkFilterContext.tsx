@@ -68,7 +68,7 @@ export interface ArtworkFilters extends MultiSelectArtworkFilters {
   width?: string
 }
 
-interface ArtworkFiltersState extends ArtworkFilters {
+export interface ArtworkFiltersState extends ArtworkFilters {
   reset?: boolean
 }
 
