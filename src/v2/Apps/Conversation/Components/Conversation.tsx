@@ -1,13 +1,4 @@
-import {
-  Box,
-  color,
-  CheckCircleIcon,
-  Flex,
-  Spacer,
-  Spinner,
-  Link,
-  Text,
-} from "@artsy/palette"
+import { Box, Flex, Spacer, Spinner } from "@artsy/palette"
 import { Conversation_conversation } from "v2/__generated__/Conversation_conversation.graphql"
 import React, { useEffect, useRef, useState } from "react"
 import {
@@ -151,24 +142,12 @@ const Conversation: React.FC<ConversationProps> = props => {
             </Flex>
           </Box>
         </MessageContainer>
-        {showBuyerGuaranteeMessage && (
-          <Flex
-            borderTop={`1px solid ${color("black10")}`}
-            color="black60"
-            p={2}
-          >
-            <CheckCircleIcon fill="black60" marginRight={0.5} />
-            <Text variant="mediumText" color="black60">
-              Only purchases completed with our secure checkout are protected by{" "}
-              <Link href="/buyer-guarantee">The Artsy Guarantee</Link>.
-            </Text>
-          </Flex>
-        )}
         <Reply
           onScroll={scrollToBottom}
           conversation={conversation}
           refetch={props.refetch}
           environment={relay.environment}
+          openInquiryModal={() => setShowConfirmArtworkModal(true)}
         />
       </NoScrollFlex>
       {artwork && (
@@ -277,6 +256,7 @@ export const ConversationPaginationContainer = createPaginationContainer(
             }
           }
         }
+        ...ConversationCTA_conversation
       }
     `,
   },

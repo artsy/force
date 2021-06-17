@@ -6,7 +6,7 @@ import { FragmentRefs } from "relay-runtime";
 export type Conversation_me = {
     readonly conversation: {
         readonly internalID: string | null;
-        readonly " $fragmentRefs": FragmentRefs<"Conversation_conversation" | "Details_conversation">;
+        readonly " $fragmentRefs": FragmentRefs<"Conversation_conversation" | "ConversationCTA_conversation" | "Details_conversation">;
     } | null;
     readonly " $fragmentRefs": FragmentRefs<"ConversationList_me">;
     readonly " $refType": "Conversation_me";
@@ -61,6 +61,11 @@ const node: ReaderFragment = {
         {
           "args": null,
           "kind": "FragmentSpread",
+          "name": "ConversationCTA_conversation"
+        },
+        {
+          "args": null,
+          "kind": "FragmentSpread",
           "name": "Details_conversation"
         }
       ],
@@ -74,5 +79,5 @@ const node: ReaderFragment = {
   ],
   "type": "Me"
 };
-(node as any).hash = '769cd74107f8f254704a013eb41dbcae';
+(node as any).hash = '17825cd6e2eb83e2f6d08d8de9561b39';
 export default node;
