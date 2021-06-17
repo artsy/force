@@ -5,7 +5,6 @@ import React, { useRef, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import RelayModernEnvironment from "relay-runtime/lib/store/RelayModernEnvironment"
-import { gridRowGap } from "styled-system"
 import { AnalyticsSchema, Type } from "v2/System"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { extractNodes } from "v2/Utils/extractNodes"
@@ -86,7 +85,7 @@ export const MarketStats: React.FC<MarketStatsProps> = ({
       </Text>
 
       {/* Market Stats Values */}
-      <GridColumns gridRowGap={[2, 2]} gridColumnGap={[0, 1]}>
+      <GridColumns gridRowGap={[2, 2]} gridColumnGap={[0, 2]}>
         <Column
           span={2}
           justifyContent="flex-end"
@@ -110,14 +109,14 @@ export const MarketStats: React.FC<MarketStatsProps> = ({
           />
         </Column>
         <Column span={10}>
-          <GridColumns gridRowGap={[2, 2]} gridColumnGap={[0, 1]}>
+          <GridColumns gridRowGap={[2, 2]} gridColumnGap={[0, 2]}>
             <Column
               span={6}
               justifyContent="flex-end"
               display="flex"
               flexDirection="column"
             >
-              <GridColumns gridRowGap={[2, 2]} gridColumnGap={[0, 1]}>
+              <GridColumns gridRowGap={[2, 2]} gridColumnGap={[0, 2]}>
                 <Column span={[6]}>
                   <Text variant={["xs", "sm"]} pb={[0.5, 1]}>
                     Yearly lots sold
@@ -146,7 +145,7 @@ export const MarketStats: React.FC<MarketStatsProps> = ({
             </Column>
 
             <Column span={6}>
-              <GridColumns gridRowGap={[2, 2]} gridColumnGap={[0, 1]}>
+              <GridColumns gridRowGap={[2, 2]} gridColumnGap={[0, 2]}>
                 <Column
                   span={[6]}
                   justifyContent="flex-end"
