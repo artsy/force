@@ -7,6 +7,7 @@ import {
   media,
   space,
   themeProps,
+  Separator,
 } from "@artsy/palette"
 import { Conversation_conversation } from "v2/__generated__/Conversation_conversation.graphql"
 import React, { useRef, useState } from "react"
@@ -19,6 +20,13 @@ import {
   sentConversationMessage,
 } from "@artsy/cohesion"
 import { RightProps } from "styled-system"
+import { ConversationCTAFragmentContainer } from "./ConversationCTA"
+
+export const ShadowSeparator = styled(Separator)`
+  box-shadow: 0 -1px 1px rgba(50, 50, 50, 0.1);
+  width: 100%;
+  height: 0;
+`
 
 const StyledFlex = styled(Flex)<FlexProps & RightProps>`
   border-top: 1px solid ${color("black10")};
@@ -55,10 +63,11 @@ interface ReplyProps {
   environment: Environment
   onScroll?: () => void
   refetch: RelayRefetchProp["refetch"]
+  openInquiryModal: () => void
 }
 
 export const Reply: React.FC<ReplyProps> = props => {
-  const { environment, conversation, onScroll } = props
+  const { environment, conversation, onScroll, openInquiryModal } = props
   const [buttonDisabled, setButtonDisabled] = useState(true)
   const [loading, setLoading] = useState(false)
   const [showModal, setShowModal] = useState(false)
@@ -123,56 +132,64 @@ export const Reply: React.FC<ReplyProps> = props => {
           text: "Discard message",
         }}
       />
-      <StyledFlex
-        p={1}
+      <Flex
         right={[0, null]}
         zIndex={[null, 2]}
         position={["fixed", "fixed", "fixed", "static"]}
         bottom={0}
         left={0}
         flexShrink={0}
+        flexDirection="column"
+        background="white"
       >
-        <FullWidthFlex width="100%">
-          <StyledTextArea
-            onInput={event => {
-              const field = event.target as HTMLTextAreaElement
-              field.style.height = "inherit"
-              if (buttonDisabled && field.value.length > 2) {
-                setButtonDisabled(false)
-              }
-              if (!buttonDisabled && field.value.length <= 2) {
-                setButtonDisabled(true)
-              }
-              const height = field.scrollHeight
-              field.style.height = height + "px"
-            }}
-            onFocus={() => {
-              trackEvent(
-                focusedOnConversationMessageInput({
-                  // @ts-expect-error STRICT_NULL_CHECK
-                  impulseConversationId: conversation.internalID,
-                })
-              )
-            }}
-            placeholder="Type your message"
-            // @ts-expect-error STRICT_NULL_CHECK
-            ref={textArea}
-          />
-        </FullWidthFlex>
-        <Flex alignItems="flex-end" height="100%">
-          <Button
-            ml={1}
-            disabled={buttonDisabled}
-            loading={loading}
-            onClick={_event => {
+        <ShadowSeparator />
+        <ConversationCTAFragmentContainer
+          conversation={conversation}
+          openInquiryModal={() => openInquiryModal()}
+        />
+        <StyledFlex p={1}>
+          <FullWidthFlex width="100%">
+            <StyledTextArea
+              onInput={event => {
+                const field = event.target as HTMLTextAreaElement
+                field.style.height = "inherit"
+                if (buttonDisabled && field.value.length > 2) {
+                  setButtonDisabled(false)
+                }
+                if (!buttonDisabled && field.value.length <= 2) {
+                  setButtonDisabled(true)
+                }
+                const height = field.scrollHeight
+                field.style.height = height + "px"
+              }}
+              onFocus={() => {
+                trackEvent(
+                  focusedOnConversationMessageInput({
+                    // @ts-expect-error STRICT_NULL_CHECK
+                    impulseConversationId: conversation.internalID,
+                  })
+                )
+              }}
+              placeholder="Type your message"
               // @ts-expect-error STRICT_NULL_CHECK
-              setupAndSendMessage(onScroll)
-            }}
-          >
-            Send
-          </Button>
-        </Flex>
-      </StyledFlex>
+              ref={textArea}
+            />
+          </FullWidthFlex>
+          <Flex alignItems="flex-end" height="100%">
+            <Button
+              ml={1}
+              disabled={buttonDisabled}
+              loading={loading}
+              onClick={_event => {
+                // @ts-expect-error STRICT_NULL_CHECK
+                setupAndSendMessage(onScroll)
+              }}
+            >
+              Send
+            </Button>
+          </Flex>
+        </StyledFlex>
+      </Flex>
     </>
   )
 }
