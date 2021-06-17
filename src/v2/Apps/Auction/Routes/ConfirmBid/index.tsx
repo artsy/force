@@ -37,6 +37,8 @@ import {
   toStripeAddress,
 } from "v2/Apps/Auction/Components/Form"
 import { createStripeWrapper } from "v2/Utils/createStripeWrapper"
+import { ZendeskWrapper } from "v2/Components/ZendeskWrapper"
+import { data as sd } from "sharify"
 
 const logger = createLogger("Apps/Auction/Routes/ConfirmBid")
 
@@ -315,6 +317,12 @@ export const ConfirmBidRoute: React.FC<
     }
   }
 
+  function renderZendeskScript() {
+    if (typeof window !== "undefined" && window.zEmbed) return
+
+    return <ZendeskWrapper zdKey={sd.AUCTION_ZENDESK_KEY} />
+  }
+
   return (
     <>
       <Title>Confirm Bid | Artsy</Title>
@@ -337,6 +345,7 @@ export const ConfirmBidRoute: React.FC<
             !isEmpty(errors) && trackConfirmBidFailed(errors)
           }
         />
+        {renderZendeskScript()}
       </Box>
     </>
   )
