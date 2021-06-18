@@ -75,7 +75,7 @@ export const SavedAddressItem: React.FC<SavedAddressItemProps> = (
         }}
         textColor="blue100"
         size="2"
-        data-test="edit-address"
+        data-test="editAddressInShipping"
       >
         Edit
       </EditButton>

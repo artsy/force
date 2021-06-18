@@ -59,7 +59,14 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
   const [showAddressModal, setShowAddressModal] = useState<boolean>(false)
   const [address, setAddress] = useState(null as Address)
   const logger = createLogger("SavedAddresses.tsx")
-  const { onSelect, me, inCollectorProfile, relay, onAddressDelete } = props
+  const {
+    onSelect,
+    me,
+    inCollectorProfile,
+    relay,
+    onAddressDelete,
+    handleClickEdit,
+  } = props
   const addressList = me?.addressConnection?.edges ?? []
   const { relayEnvironment } = useSystemContext()
 
@@ -87,7 +94,8 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
     onAddressDelete && onAddressDelete(addressList.length === 1)
   }
 
-  const handleEditAddress = (address: Address) => {
+  const handleEditAddress = (address: Address, index: number) => {
+    handleClickEdit(index)
     setShowAddressModal(true)
     setModalDetails({
       addressModalTitle: "Edit address",
@@ -121,7 +129,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
           index={index}
           // @ts-expect-error STRICT_NULL_CHECK
           address={address.node}
-          handleClickEdit={() => handleEditAddress(address?.node)}
+          handleClickEdit={() => handleEditAddress(address?.node, index)}
         />
         <Separator my={1} />
         <ModifyAddressWrapper>
@@ -142,13 +150,13 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
           )}
           <Box mr={[3, 1]}>
             <Text
-              onClick={() => handleEditAddress(address?.node)}
+              onClick={() => handleEditAddress(address?.node, index)}
               variant="text"
               color="blue100"
               style={{
                 cursor: "pointer",
               }}
-              data-test="editAddress"
+              data-test="editAddressInProfile"
             >
               Edit
             </Text>
@@ -173,23 +181,9 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
 
   const addAddressButton = (
     <>
-      {addressList.length > 0 ? (
+      {inCollectorProfile ? (
         <Button
-          variant="secondaryOutline"
-          width={159}
-          onClick={() => {
-            setShowAddressModal(true),
-              setModalDetails({
-                addressModalTitle: "Add address",
-                addressModalAction: "createUserAddress",
-              })
-          }}
-        >
-          Add a new address
-        </Button>
-      ) : (
-        <Button
-          mt={3}
+          mt={2}
           variant="primaryBlack"
           size="large"
           onClick={() => {
@@ -202,6 +196,22 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
         >
           Add a new address
         </Button>
+      ) : (
+        addressList.length > 0 && (
+          <Button
+            variant="secondaryOutline"
+            width={159}
+            onClick={() => {
+              setShowAddressModal(true),
+                setModalDetails({
+                  addressModalTitle: "Add address",
+                  addressModalAction: "createUserAddress",
+                })
+            }}
+          >
+            Add a new address
+          </Button>
+        )
       )}
       <AddressModal
         show={showAddressModal}
@@ -229,7 +239,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
           index={index}
           // @ts-expect-error STRICT_NULL_CHECK
           address={address.node}
-          handleClickEdit={() => handleEditAddress(address?.node)}
+          handleClickEdit={() => handleEditAddress(address?.node, index)}
         />
       </BorderedRadio>
     )

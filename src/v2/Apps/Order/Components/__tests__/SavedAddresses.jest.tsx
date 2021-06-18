@@ -21,7 +21,11 @@ class SavedAddressesTestPage extends RootTestPage {
 describe("Saved Addresses mutations", () => {
   const { mutations, buildPage } = createTestEnv({
     Component: (props: any) => (
-      <SavedAddressesFragmentContainer inCollectorProfile {...props} />
+      <SavedAddressesFragmentContainer
+        inCollectorProfile
+        handleClickEdit={() => {}}
+        {...props}
+      />
     ),
     defaultData: userAddressMutation,
     TestPage: SavedAddressesTestPage,
@@ -36,7 +40,7 @@ describe("Saved Addresses mutations", () => {
 
   it("edits the saved addresses after calling edit address mutation", async () => {
     const page = await buildPage()
-    const editButton = page.find(`[data-test="editAddress"]`).first()
+    const editButton = page.find(`[data-test="editAddressInProfile"]`).first()
     // @ts-expect-error STRICT_NULL_CHECK
     editButton
       .props()
@@ -109,12 +113,11 @@ describe("SavedAddresses in collector profile", () => {
         addressConnection: mockAddressConnection,
       }),
     })
-    const editAddressComponent = wrapper.find("[data-test='editAddress']").at(0)
-    expect(editAddressComponent).toHaveLength(1)
+    const button = wrapper.find(Button)
+    expect(button).toHaveLength(1)
     const modal = wrapper.find(AddressModal)
     expect(modal.props().show).toBe(false)
-    // @ts-expect-error STRICT_NULL_CHECK
-    editAddressComponent.props().onClick()
+    button.props().onClick()
     setTimeout(() => {
       expect(modal.props().modalDetails).toBe({
         addressModalTitle: "Edit address",
