@@ -2,10 +2,6 @@ import React from "react"
 import { Box, Column, GridColumns, SkeletonText } from "@artsy/palette"
 import { PartnerArtistListContainer } from "./PartnerArtistList"
 
-interface PartnerArtistListPlaceholderProps {
-  done?: boolean
-}
-
 const names = [
   "xxxxxxxxxxxxxxx",
   "xxxxxxxxxx",
@@ -27,19 +23,16 @@ function getName(i: number) {
   return names[i % names.length]
 }
 
-export const PartnerArtistListPlaceholder: React.FC<PartnerArtistListPlaceholderProps> = ({
-  done = true,
-}) => (
+export const PartnerArtistListPlaceholder: React.FC = () => (
   <PartnerArtistListContainer>
     <GridColumns minWidth={[1100, "auto"]} pr={[2, 0]} gridColumnGap={1}>
       <Column span={12}>
-        <SkeletonText variant="mediumText" done={done}>
-          Represented Artists
-        </SkeletonText>
+        <SkeletonText variant="mediumText">Represented Artists</SkeletonText>
+
         <Box style={{ columnCount: 6 }} mt={2}>
           {[...new Array(60)].map((_, i) => {
             return (
-              <SkeletonText key={i} mb={1} done={done}>
+              <SkeletonText key={i} mb={1}>
                 {getName(i)}
               </SkeletonText>
             )

@@ -2,13 +2,7 @@ import React from "react"
 import { Box, Shelf, SkeletonBox, SkeletonText } from "@artsy/palette"
 import { IMG_HEIGHT } from "v2/Components/Artwork/ShelfArtwork"
 
-interface FairExhibitorRailPlaceholderProps {
-  done?: boolean
-}
-
-export const FairExhibitorRailPlaceholder: React.FC<FairExhibitorRailPlaceholderProps> = ({
-  done = true,
-}) => (
+export const FairExhibitorRailPlaceholder: React.FC = () => (
   <Shelf>
     {[...new Array(10)].map((_, i) => {
       return (
@@ -17,16 +11,13 @@ export const FairExhibitorRailPlaceholder: React.FC<FairExhibitorRailPlaceholder
             width={200}
             height={[IMG_HEIGHT.mobile, IMG_HEIGHT.desktop]}
             mb={1}
-            done={done}
           />
 
-          <SkeletonText variant="md" done={done}>
-            Artist Name
-          </SkeletonText>
+          <SkeletonText variant="md">Artist Name</SkeletonText>
 
-          <SkeletonText done={done}>Artwork Title</SkeletonText>
+          <SkeletonText>Artwork Title</SkeletonText>
 
-          <SkeletonText done={done}>Price</SkeletonText>
+          <SkeletonText>Price</SkeletonText>
         </Box>
       )
     })}
