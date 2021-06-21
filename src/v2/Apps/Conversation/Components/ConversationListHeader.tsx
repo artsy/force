@@ -7,6 +7,7 @@ export const ConversationListHeader: FC = props => {
     <Flex
       justifyContent="flex-end"
       flexDirection="column"
+      mt="1px"
       height={LARGE_SCREEN_HEADER_HEIGHT}
       {...props}
     >
