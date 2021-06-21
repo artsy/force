@@ -18,6 +18,9 @@ import { ConfirmArtworkModalQueryRenderer } from "./ConfirmArtworkModal"
 import { userHasLabFeature } from "v2/Utils/user"
 import { useSystemContext } from "v2/System/SystemContext"
 import { BuyerGuaranteeMessage } from "./BuyerGuaranteeMessage"
+import { extractNodes } from "v2/Utils/extractNodes"
+import { returnOrderModalDetails } from "../Utils/returnOrderModalDetails"
+import { OrderModal } from "./OrderModal"
 
 export interface ConversationProps {
   conversation: Conversation_conversation
@@ -40,7 +43,7 @@ const Conversation: React.FC<ConversationProps> = props => {
     conversation.items?.[0]?.item?.__typename === "Artwork" &&
     conversation.items?.[0]?.item?.isOfferableFromInquiry
 
-  const showBuyerGuaranteeMessage =
+  const isOfferable =
     user &&
     userHasLabFeature(user, "Web Inquiry Checkout") &&
     isMakeOfferArtwork
@@ -84,6 +87,8 @@ const Conversation: React.FC<ConversationProps> = props => {
   ))
 
   const [showConfirmArtworkModal, setShowConfirmArtworkModal] = useState(false)
+  const [showOrderModal, setShowOrderModal] = useState(false)
+
   const artwork =
     conversation.items?.[0]?.item?.__typename === "Artwork" &&
     conversation.items?.[0]?.item
@@ -114,6 +119,21 @@ const Conversation: React.FC<ConversationProps> = props => {
     })
   }
 
+  const activeOrder = extractNodes(conversation.orderConnection)[0]
+
+  let orderID
+  let kind
+
+  if (activeOrder) {
+    kind = activeOrder.buyerAction
+    orderID = activeOrder.internalID
+  }
+
+  const { url, modalTitle } = returnOrderModalDetails({
+    kind: kind!,
+    orderID: orderID,
+  })
+
   return (
     <Flex flexDirection="column" flexGrow={1}>
       <ConversationHeader
@@ -126,7 +146,7 @@ const Conversation: React.FC<ConversationProps> = props => {
           <Box pb={[6, 6, 6, 0]} pr={1}>
             <Spacer mt={["75px", "75px", 2]} />
             <Flex flexDirection="column" width="100%" px={1}>
-              {showBuyerGuaranteeMessage && <BuyerGuaranteeMessage />}
+              {isOfferable && <BuyerGuaranteeMessage />}
               {inquiryItemBox}
               <Waypoint onEnter={loadMore} />
               {fetchingMore ? (
@@ -148,14 +168,24 @@ const Conversation: React.FC<ConversationProps> = props => {
           refetch={props.refetch}
           environment={relay.environment}
           openInquiryModal={() => setShowConfirmArtworkModal(true)}
+          openOrderModal={() => setShowOrderModal(true)}
         />
       </NoScrollFlex>
-      {artwork && (
+      {artwork && isOfferable && (
         <ConfirmArtworkModalQueryRenderer
           artworkID={artwork?.internalID!}
           conversationID={conversation.internalID!}
           show={showConfirmArtworkModal}
           closeModal={() => setShowConfirmArtworkModal(false)}
+        />
+      )}
+      {isOfferable && (
+        <OrderModal
+          path={url!}
+          orderID={orderID}
+          title={modalTitle!}
+          show={showOrderModal}
+          closeModal={() => setShowOrderModal(false)}
         />
       )}
     </Flex>
@@ -200,6 +230,19 @@ export const ConversationPaginationContainer = createPaginationContainer(
         initialMessage
         lastMessageID
         unread
+        orderConnection(
+          first: 10
+          states: [APPROVED, FULFILLED, SUBMITTED, REFUNDED]
+        ) {
+          edges {
+            node {
+              internalID
+              ... on CommerceOfferOrder {
+                buyerAction
+              }
+            }
+          }
+        }
         messagesConnection(first: $count, after: $after, sort: DESC)
           @connection(key: "Messages_messagesConnection", filters: []) {
           pageInfo {

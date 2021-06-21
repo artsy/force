@@ -64,10 +64,17 @@ interface ReplyProps {
   onScroll?: () => void
   refetch: RelayRefetchProp["refetch"]
   openInquiryModal: () => void
+  openOrderModal: () => void
 }
 
 export const Reply: React.FC<ReplyProps> = props => {
-  const { environment, conversation, onScroll, openInquiryModal } = props
+  const {
+    environment,
+    conversation,
+    onScroll,
+    openInquiryModal,
+    openOrderModal,
+  } = props
   const [buttonDisabled, setButtonDisabled] = useState(true)
   const [loading, setLoading] = useState(false)
   const [showModal, setShowModal] = useState(false)
@@ -146,6 +153,7 @@ export const Reply: React.FC<ReplyProps> = props => {
         <ConversationCTAFragmentContainer
           conversation={conversation}
           openInquiryModal={() => openInquiryModal()}
+          openOrderModal={() => openOrderModal()}
         />
         <StyledFlex p={1}>
           <FullWidthFlex width="100%">
