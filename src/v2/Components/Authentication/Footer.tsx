@@ -1,8 +1,9 @@
-import { Box, Flex, Link } from "@artsy/palette"
+import { Box, Flex, Clickable, Sans } from "@artsy/palette"
 import React from "react"
-import { data as sd } from "sharify"
+import styled from "styled-components"
 import { CaptchaTerms, FooterText } from "./commonElements"
 import { ModalType } from "./Types"
+import { themeGet } from "@styled-system/theme-get"
 
 interface FooterProps {
   handleTypeChange?: (modalType: ModalType) => void
@@ -12,6 +13,12 @@ interface FooterProps {
   onFacebookLogin?: (e: any) => void
   showRecaptchaDisclaimer?: boolean
 }
+
+const ClickableText = styled(Sans)`
+  &:hover {
+    color: ${themeGet("colors.black100")};
+  }
+`
 
 export const Footer = (props: FooterProps) => {
   const {
@@ -25,40 +32,36 @@ export const Footer = (props: FooterProps) => {
 
   switch (mode) {
     case "login": {
-      const thirdPartyLogin = sd.ENABLE_SIGN_IN_WITH_APPLE ? (
-        <FooterText>
-          {"Log in using "}
-          <Link color="black60" onClick={onAppleLogin}>
-            Apple
-          </Link>{" "}
-          {" or "}
-          <Link color="black60" onClick={onFacebookLogin}>
-            Facebook
-          </Link>{" "}
-          {". "}
-        </FooterText>
-      ) : (
-        <FooterText>
-          {"Log in using "}
-          <Link color="black60" onClick={onFacebookLogin}>
-            Facebook
-          </Link>
-          {". "}
-        </FooterText>
-      )
       return (
         <Flex flexDirection={inline ? "row" : "column"} justifyContent="center">
-          {thirdPartyLogin}
           <FooterText>
-            {"Don’t have an account? "}
-            <Link
+            {"Log in using "}
+            <Clickable
               color="black60"
+              textDecoration="underline"
+              onClick={onAppleLogin}
+            >
+              <ClickableText size="2">Apple</ClickableText>
+            </Clickable>{" "}
+            {" or "}
+            <Clickable
+              color="black60"
+              textDecoration="underline"
+              onClick={onFacebookLogin}
+            >
+              <ClickableText size="2">Facebook</ClickableText>
+            </Clickable>
+            {". "}
+            {"Don’t have an account? "}
+            <Clickable
+              color="black60"
+              textDecoration="underline"
               // @ts-expect-error STRICT_NULL_CHECK
               onClick={() => handleTypeChange("signup" as ModalType)}
               data-test="signup"
             >
-              Sign up.
-            </Link>
+              <ClickableText size="2">Sign up.</ClickableText>
+            </Clickable>
           </FooterText>
         </Flex>
       )
@@ -68,54 +71,55 @@ export const Footer = (props: FooterProps) => {
         <Box textAlign="center">
           <FooterText>
             {"Don’t need to reset? "}
-            <Link
+            <Clickable
               color="black60"
+              textDecoration="underline"
               // @ts-expect-error STRICT_NULL_CHECK
               onClick={() => handleTypeChange("login" as ModalType)}
               data-test="login"
             >
-              Log in
-            </Link>
+              <ClickableText size="2">Log in</ClickableText>
+            </Clickable>
             {" or "}
-            <Link
+            <Clickable
               color="black60"
+              textDecoration="underline"
               // @ts-expect-error STRICT_NULL_CHECK
               onClick={() => handleTypeChange("signup" as ModalType)}
               data-test="signup"
             >
-              sign up.
-            </Link>
+              <ClickableText size="2">sign up.</ClickableText>
+            </Clickable>
           </FooterText>
         </Box>
       )
     }
     default: {
-      const thirdPartySignUp = sd.ENABLE_SIGN_IN_WITH_APPLE ? (
-        <FooterText>
-          {"Sign up using "}
-          <Link color="black60" onClick={onAppleLogin}>
-            Apple
-          </Link>{" "}
-          {" or "}
-          <Link color="black60" onClick={onFacebookLogin}>
-            Facebook
-          </Link>{" "}
-          {". "}
-        </FooterText>
-      ) : (
-        <FooterText>
-          <Link color="black60" onClick={onFacebookLogin}>
-            Sign up using Facebook.
-          </Link>{" "}
-        </FooterText>
-      )
       return (
         <Box>
           <Flex
             flexDirection={inline ? "row" : "column"}
             justifyContent="center"
           >
-            {thirdPartySignUp}
+            <FooterText>
+              {"Sign up using "}
+              <Clickable
+                color="black60"
+                textDecoration="underline"
+                onClick={onAppleLogin}
+              >
+                <ClickableText size="2">Apple</ClickableText>
+              </Clickable>{" "}
+              {" or "}
+              <Clickable
+                color="black60"
+                textDecoration="underline"
+                onClick={onFacebookLogin}
+              >
+                <ClickableText size="2">Facebook</ClickableText>
+              </Clickable>
+              {". "}
+            </FooterText>
           </Flex>
           <Flex
             flexDirection={inline ? "row" : "column"}
@@ -123,14 +127,15 @@ export const Footer = (props: FooterProps) => {
           >
             <FooterText>
               {"Already have an account? "}
-              <Link
+              <Clickable
                 color="black60"
+                textDecoration="underline"
                 // @ts-expect-error STRICT_NULL_CHECK
                 onClick={() => handleTypeChange("login" as ModalType)}
                 data-test="login"
               >
-                Log in.
-              </Link>
+                <ClickableText size="2">Log in.</ClickableText>
+              </Clickable>
             </FooterText>
           </Flex>
           {showRecaptchaDisclaimer && <CaptchaTerms />}
