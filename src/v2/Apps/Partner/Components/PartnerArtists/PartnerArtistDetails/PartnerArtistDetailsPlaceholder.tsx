@@ -9,13 +9,7 @@ import {
 } from "@artsy/palette"
 import { Carousel } from "v2/Components/Carousel"
 
-export interface PartnerArtistDetailsPlaceholderProps {
-  done?: boolean
-}
-
-export const PartnerArtistDetailsPlaceholder: React.FC<PartnerArtistDetailsPlaceholderProps> = ({
-  done = true,
-}) => {
+export const PartnerArtistDetailsPlaceholder: React.FC = () => {
   return (
     <Box>
       <Separator id="jump--PartnerArtistDetails" mt={4} />
@@ -23,15 +17,11 @@ export const PartnerArtistDetailsPlaceholder: React.FC<PartnerArtistDetailsPlace
         <Column span={6}>
           <GridColumns gridRowGap={2}>
             <Column span={12}>
-              <SkeletonText done={done} variant="largeTitle">
-                Artist name
-              </SkeletonText>
-              <SkeletonText done={done} variant="title">
-                Artist brief info
-              </SkeletonText>
+              <SkeletonText variant="largeTitle">Artist name</SkeletonText>
+              <SkeletonText variant="title">Artist brief info</SkeletonText>
             </Column>
             <Column span={[12, 6]}>
-              <SkeletonBox width="100%" height={40} done={done} />
+              <SkeletonBox width="100%" height={40} />
             </Column>
           </GridColumns>
         </Column>
@@ -50,23 +40,15 @@ export const PartnerArtistDetailsPlaceholder: React.FC<PartnerArtistDetailsPlace
             {[...new Array(10)].map((_, i) => {
               return (
                 <Box key={i}>
-                  <SkeletonBox width={220} height={160} mb={1} done={done} />
+                  <SkeletonBox width={220} height={160} mb={1} />
 
-                  <SkeletonText variant="mediumText" done={done}>
-                    Artist name
-                  </SkeletonText>
+                  <SkeletonText variant="mediumText">Artist name</SkeletonText>
 
-                  <SkeletonText variant="text" done={done}>
-                    Artwork name
-                  </SkeletonText>
+                  <SkeletonText variant="text">Artwork name</SkeletonText>
 
-                  <SkeletonText variant="text" done={done}>
-                    Partner name
-                  </SkeletonText>
+                  <SkeletonText variant="text">Partner name</SkeletonText>
 
-                  <SkeletonText variant="text" done={done}>
-                    Contact For Price
-                  </SkeletonText>
+                  <SkeletonText variant="text">Contact For Price</SkeletonText>
                 </Box>
               )
             })}

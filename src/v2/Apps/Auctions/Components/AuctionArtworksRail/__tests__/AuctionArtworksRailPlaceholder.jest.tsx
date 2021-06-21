@@ -5,7 +5,7 @@ import { AuctionArtworksRailPlaceholder } from "../../AuctionArtworksRailPlaceho
 jest.unmock("react-relay")
 
 describe("AuctionArtworksRailPlaceholder", () => {
-  const wrapper = mount(<AuctionArtworksRailPlaceholder done={false} />)
+  const wrapper = mount(<AuctionArtworksRailPlaceholder />)
 
   it("renders the correct components and data", () => {
     expect(wrapper.find("Carousel")).toBeDefined()
