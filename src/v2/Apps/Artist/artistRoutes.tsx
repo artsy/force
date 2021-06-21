@@ -93,47 +93,7 @@ export const artistRoutes: AppRouteConfig[] = [
       query artistRoutes_TopLevelQuery($artistID: String!) {
         artist(id: $artistID) @principalField {
           ...ArtistApp_artist
-          slug
-          statuses {
-            shows
-            cv(minShowCount: 0)
-            articles
-          }
-          counts {
-            forSaleArtworks
-          }
-          related {
-            genes {
-              edges {
-                node {
-                  slug
-                }
-              }
-            }
-          }
-          highlights {
-            # Alias due to obscure Graphql validation warning
-            artistPartnersConnection: partnersConnection(
-              first: 10
-              displayOnPartnerProfile: true
-              representedBy: true
-              partnerCategory: ["blue-chip", "top-established", "top-emerging"]
-            ) {
-              edges {
-                node {
-                  categories {
-                    slug
-                  }
-                }
-              }
-            }
-          }
-          insights {
-            type
-          }
-          biographyBlurb(format: HTML, partnerBio: false) {
-            text
-          }
+          ...ArtistApp_sharedMetadata @relay(mask: false) # used to determine redirects and renderability
         }
       }
     `,
@@ -168,7 +128,7 @@ export const artistRoutes: AppRouteConfig[] = [
             $artistID: String!
             $input: FilterArtworksInput
             $aggregations: [ArtworkAggregation]
-          ) @raw_response_type {
+          ) {
             artist(id: $artistID) {
               ...ArtistWorksForSaleRoute_artist
                 @arguments(input: $input, aggregations: $aggregations)

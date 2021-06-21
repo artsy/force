@@ -65,6 +65,51 @@ describe("ArtistApp", () => {
       )
     })
 
+    describe("hiding main tabs", () => {
+      it("hides tabs overview tab when appropriate", () => {
+        mockfindCurrentRoute.mockImplementation(() => ({}))
+        const wrapper = getWrapper({
+          Artist: () => ({
+            biographyBlurb: null,
+            related: null,
+            statuses: {
+              articles: false,
+              cv: false,
+              shows: false,
+            },
+          }),
+        })
+        expect(wrapper.find("RouteTab").at(0).text()).toBe("Artworks")
+        expect(wrapper.find("RouteTab").at(1).text()).toBe("Auction results")
+      })
+
+      it("hides works-for-sale tab when appropriate", () => {
+        mockfindCurrentRoute.mockImplementation(() => ({}))
+        const wrapper = getWrapper({
+          Artist: () => ({
+            statuses: {
+              artworks: false,
+            },
+          }),
+        })
+        expect(wrapper.find("RouteTab").at(0).text()).toBe("Overview")
+        expect(wrapper.find("RouteTab").at(1).text()).toBe("Auction results")
+      })
+
+      it("hides auction results tab when appropriate", () => {
+        mockfindCurrentRoute.mockImplementation(() => ({}))
+        const wrapper = getWrapper({
+          Artist: () => ({
+            statuses: {
+              auctionLots: false,
+            },
+          }),
+        })
+        expect(wrapper.find("RouteTab").at(0).text()).toBe("Overview")
+        expect(wrapper.find("RouteTab").at(1).text()).toBe("Artworks")
+      })
+    })
+
     it("renders the correct for sale artwork tab count", () => {
       mockfindCurrentRoute.mockImplementation(() => ({}))
       const wrapper = getWrapper({

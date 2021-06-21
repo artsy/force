@@ -3,14 +3,12 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type ArtistApp_artist = {
+export type ArtistApp_sharedMetadata = {
     readonly slug: string;
     readonly statuses: {
         readonly shows: boolean | null;
         readonly cv: boolean | null;
         readonly articles: boolean | null;
-        readonly artworks: boolean | null;
-        readonly auctionLots: boolean | null;
     } | null;
     readonly counts: {
         readonly forSaleArtworks: number | null;
@@ -41,15 +39,12 @@ export type ArtistApp_artist = {
     readonly biographyBlurb: {
         readonly text: string | null;
     } | null;
-    readonly internalID: string;
-    readonly name: string | null;
-    readonly " $fragmentRefs": FragmentRefs<"ArtistMeta_artist" | "ArtistHeader_artist" | "BackLink_artist">;
-    readonly " $refType": "ArtistApp_artist";
+    readonly " $refType": "ArtistApp_sharedMetadata";
 };
-export type ArtistApp_artist$data = ArtistApp_artist;
-export type ArtistApp_artist$key = {
-    readonly " $data"?: ArtistApp_artist$data;
-    readonly " $fragmentRefs": FragmentRefs<"ArtistApp_artist">;
+export type ArtistApp_sharedMetadata$data = ArtistApp_sharedMetadata;
+export type ArtistApp_sharedMetadata$key = {
+    readonly " $data"?: ArtistApp_sharedMetadata$data;
+    readonly " $fragmentRefs": FragmentRefs<"ArtistApp_sharedMetadata">;
 };
 
 
@@ -69,7 +64,7 @@ return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "ArtistApp_artist",
+  "name": "ArtistApp_sharedMetadata",
   "selections": [
     (v0/*: any*/),
     {
@@ -105,20 +100,6 @@ return {
           "args": null,
           "kind": "ScalarField",
           "name": "articles",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "artworks",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "auctionLots",
           "storageKey": null
         }
       ],
@@ -310,39 +291,10 @@ return {
         }
       ],
       "storageKey": "biographyBlurb(format:\"HTML\",partnerBio:false)"
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "internalID",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "name",
-      "storageKey": null
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "ArtistMeta_artist"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "ArtistHeader_artist"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "BackLink_artist"
     }
   ],
   "type": "Artist"
 };
 })();
-(node as any).hash = 'a21c7efae92fa9bb9dffb510abc41558';
+(node as any).hash = '7f0b4ccb7b8d65fb7eab207aab721621';
 export default node;

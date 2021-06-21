@@ -9,6 +9,7 @@ import { BackLinkFragmentContainer } from "./Components/BackLink"
 import { ArtistHeaderFragmentContainer } from "./Components/ArtistHeader/ArtistHeader"
 import { RouteTab, RouteTabs } from "v2/Components/RouteTabs"
 import { ArtistMetaFragmentContainer } from "./Components/ArtistMeta"
+import { hasOverviewContent } from "./Routes/Overview/Utils/hasOverviewContent"
 
 /**
  * For logged-out users, the sign-up modal is triggered via a global listener.
@@ -40,6 +41,7 @@ const ArtistApp: React.FC<ArtistAppProps> = ({ artist, children, match }) => {
     )
   }
 
+  const showOverviewTab = hasOverviewContent(artist)
   const showArtworksTab = artist?.statuses?.artworks
   const showAuctionLotsTab = artist?.statuses?.auctionLots
 
@@ -51,9 +53,11 @@ const ArtistApp: React.FC<ArtistAppProps> = ({ artist, children, match }) => {
       <Spacer my={[4, 12]} id="scrollTo--artistContentArea" />
 
       <RouteTabs mb={2} fill data-test="navigationTabs">
-        <RouteTab exact to={`/artist/${artist.slug}`}>
-          Overview
-        </RouteTab>
+        {showOverviewTab && (
+          <RouteTab exact to={`/artist/${artist.slug}`}>
+            Overview
+          </RouteTab>
+        )}
 
         {showArtworksTab && (
           <RouteTab to={`/artist/${artist.slug}/works-for-sale`}>
@@ -101,6 +105,7 @@ const PageWrapper: React.FC<Omit<ArtistAppProps, "match"> & BoxProps> = ({
 export const ArtistAppFragmentContainer = createFragmentContainer(ArtistApp, {
   artist: graphql`
     fragment ArtistApp_artist on Artist {
+      ...ArtistApp_sharedMetadata @relay(mask: false)
       ...ArtistMeta_artist
       ...ArtistHeader_artist
       ...BackLink_artist
@@ -118,3 +123,53 @@ export const ArtistAppFragmentContainer = createFragmentContainer(ArtistApp, {
     }
   `,
 })
+
+/**
+ * Shared fragment between main artist routes and overview, used to determine
+ * if we redirect to works-for sale and hide `Overview` tab.
+ */
+export const sharedMetaDataQuery = graphql`
+  fragment ArtistApp_sharedMetadata on Artist {
+    slug
+    statuses {
+      shows
+      cv(minShowCount: 0)
+      articles
+    }
+    counts {
+      forSaleArtworks
+    }
+    related {
+      genes {
+        edges {
+          node {
+            slug
+          }
+        }
+      }
+    }
+    highlights {
+      # Alias due to obscure Graphql validation warning
+      artistPartnersConnection: partnersConnection(
+        first: 10
+        displayOnPartnerProfile: true
+        representedBy: true
+        partnerCategory: ["blue-chip", "top-established", "top-emerging"]
+      ) {
+        edges {
+          node {
+            categories {
+              slug
+            }
+          }
+        }
+      }
+    }
+    insights {
+      type
+    }
+    biographyBlurb(format: HTML, partnerBio: false) {
+      text
+    }
+  }
+`
