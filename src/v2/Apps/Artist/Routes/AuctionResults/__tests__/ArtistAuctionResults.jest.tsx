@@ -422,6 +422,7 @@ describe("AuctionResults", () => {
 
 const AuctionResultsFixture: ArtistAuctionResults_Test_QueryRawResponse = {
   artist: {
+    internalID: "QXJ0aXN0OnBhYmxvLXBpY2Fzc28",
     id: "QXJ0aXN0OnBhYmxvLXBpY2Fzc28=",
     slug: "pablo-picasso",
     name: "Pablo Picasso",
