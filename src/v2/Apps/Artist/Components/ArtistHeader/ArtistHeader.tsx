@@ -55,7 +55,7 @@ const ArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {
               <ArtistFollowArtistButtonFragmentContainer artist={artist} />
             </Column>
 
-            {artist.counts?.follows && (
+            {!!artist.counts?.follows && (
               <Column
                 span={[12, 6, 9]}
                 display={["block", "flex"]}
