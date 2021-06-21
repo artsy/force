@@ -222,7 +222,8 @@ const SignUpFormFragmentContainer = createFragmentContainer(SignUpForm, {
 
 export const SignUpFormQueryRenderer: React.FC<FormProps> = passedProps => {
   const { relayEnvironment } = useSystemContext()
-  const variables = { ip: sd.IP_ADDRESS }
+  const ipAddress = sd.IP_ADDRESS || "0.0.0.0"
+  const variables = { ip: ipAddress }
 
   return (
     <QueryRenderer<SignUpFormLocationQuery>
