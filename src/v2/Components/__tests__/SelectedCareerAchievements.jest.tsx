@@ -104,6 +104,21 @@ describe("SelectedCareerAchievements", () => {
 
     expect(text.length).toEqual(0)
   })
+
+  it("renders the Artists CV RouterLink regardless of career achievements", async () => {
+    // @ts-expect-error STRICT_NULL_CHECK
+    wrapper = await getWrapper({
+      ...artistResponse,
+      auctionResultsConnection: null,
+      highlights: {
+        // @ts-expect-error STRICT_NULL_CHECK
+        ...artistResponse.highlights,
+        partnersConnection: null,
+      },
+      insights: null,
+    })
+    expect(wrapper.find("RouterLink").length).toBe(1)
+  })
 })
 
 const artistResponse: SelectedCareerAchievementsTestQueryRawResponse["artist"] = {
