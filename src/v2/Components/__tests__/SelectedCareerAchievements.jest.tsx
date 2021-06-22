@@ -69,7 +69,7 @@ describe("SelectedCareerAchievements", () => {
     expect(text).toContain("Included in a major biennial")
   })
 
-  // TODO
+  // TODO https://artsyproduct.atlassian.net/browse/GRO-393
   it("doesn't render selected career achievements if no auction results, partner highlights, or insights", async () => {
     // @ts-expect-error STRICT_NULL_CHECK
     wrapper = await getWrapper({
@@ -87,7 +87,7 @@ describe("SelectedCareerAchievements", () => {
     expect(text.length).toEqual(0)
   })
 
-  // TODO
+  // TODO https://artsyproduct.atlassian.net/browse/GRO-393
   it("doesn't render selected career achievements if no auction results or partner highlights and insights is null", async () => {
     // @ts-expect-error STRICT_NULL_CHECK
     wrapper = await getWrapper({
@@ -105,7 +105,8 @@ describe("SelectedCareerAchievements", () => {
     expect(text.length).toEqual(0)
   })
 
-  it("renders the Artists CV RouterLink regardless of career achievements", async () => {
+  // TODO https://artsyproduct.atlassian.net/browse/GRO-393
+  it("renders the Artists CV link regardless of career achievements", async () => {
     // @ts-expect-error STRICT_NULL_CHECK
     wrapper = await getWrapper({
       ...artistResponse,
@@ -118,6 +119,7 @@ describe("SelectedCareerAchievements", () => {
       insights: null,
     })
     expect(wrapper.find("RouterLink").length).toBe(1)
+    expect(wrapper.find("RouterLink").props().to).toBe(`foo/cv`)
   })
 })
 
