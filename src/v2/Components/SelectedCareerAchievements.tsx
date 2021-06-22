@@ -112,7 +112,14 @@ export class SelectedCareerAchievements extends React.Component<
       !hasSections(this.props.artist) &&
       (!this.props.artist.insights || this.props.artist.insights.length === 0)
     ) {
-      return null
+      return (
+        <>
+          <RouterLink to={`${this.props.artist.slug}/cv`}>
+            <ChevronButton>See all past shows and fair booths</ChevronButton>
+          </RouterLink>
+          <Spacer my={4} />
+        </>
+      )
     }
 
     if (this.props.themeVersion === "v2") {
