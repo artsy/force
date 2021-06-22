@@ -82,7 +82,6 @@ export class ReviewRoute extends Component<ReviewProps> {
           : // @ts-expect-error STRICT_NULL_CHECK
             (await this.submitOffer(setupIntentId)).commerceSubmitOrderWithOffer
               .orderOrError
-
       if (orderOrError.error) {
         // @ts-expect-error STRICT_NULL_CHECK
         this.handleSubmitError(orderOrError.error)
@@ -125,7 +124,10 @@ export class ReviewRoute extends Component<ReviewProps> {
             }
           })
       } else {
-        this.props.router.push(`/orders/${this.props.order.internalID}/status`)
+        this.props.order.conversation &&
+          this.props.router.push(
+            `/user/conversations/${this.props.order.conversation.internalID}`
+          )
       }
     } catch (error) {
       logger.error(error)
@@ -441,6 +443,9 @@ export const ReviewFragmentContainer = createFragmentContainer(
           }
         }
         ... on CommerceOfferOrder {
+          conversation {
+            internalID
+          }
           myLastOffer {
             hasDefiniteTotal
             internalID
