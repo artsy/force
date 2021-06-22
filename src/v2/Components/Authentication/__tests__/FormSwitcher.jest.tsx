@@ -10,12 +10,6 @@ import { FormSwitcher } from "../FormSwitcher"
 import { ModalType } from "../Types"
 import { mockLocation } from "v2/DevTools/mockLocation"
 
-jest.mock("sharify", () => ({
-  data: {
-    ENABLE_SIGN_IN_WITH_APPLE: true,
-  },
-}))
-
 describe("FormSwitcher", () => {
   const getWrapper = (props: any = {}) =>
     mount(
