@@ -43,6 +43,8 @@ To learn how to create a new sub-app, see [the docs](https://github.com/artsy/fo
 
 We use [TypeScript](https://www.typescriptlang.org/docs) to maximize runtime code safety.
 
+> NOTE: Around mid-2021 we migrated to strict type checking for **all new code**. What this meant in practice was that all _old code_ that failed strict type checking was silenced with a special flag inserted by a script `// @ts-expect-error STRICT_NULL_CHECK` with all _new code_ being expected to adhere to best practices. Going forward, this flag should never be used, and if encounted while working on old code it should be removed and the type error fixed. 
+
 ### Use Relay for network requests
 
 Data should be loaded from [Metaphysics](https://github.com/artsy/metaphysics), Artsy's GraphQL server. Requests to Metaphysics should be made through [Relay](https://relay.dev).
