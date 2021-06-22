@@ -1,6 +1,6 @@
 Since 2014 when Force was first open sourced, Artsy.net's underlying [technology choices have evolved](https://artsy.github.io/blog/2018/10/04/artsy-frontend-history/). As our understanding grows, newer code uses newer techniques. Older code is often left un-updated. It can be difficult to orient oneself around what the current preferred practices are.
 
-This document is a map. Not of Force at a specific time, but a map of how we got here and where we want to go next. This is a living document, expected to be updated regularly, of links to:
+This document is a map. Not of Force at a specific time, but a map of how we got here and where we want to go next. This is a living document, expected to be updated regularly, with links to:
 
 - Example code.
 - Pull requests with interesting discussions.
@@ -43,7 +43,7 @@ To learn how to create a new sub-app, see [the docs](https://github.com/artsy/fo
 
 We use [TypeScript](https://www.typescriptlang.org/docs) to maximize runtime code safety.
 
-> NOTE: Around mid-2021 we migrated to strict type checking for **all new code**. What this meant in practice was that all _old code_ that failed strict type checking was silenced with a special flag inserted by a script `// @ts-expect-error STRICT_NULL_CHECK` with all _new code_ being expected to adhere to best practices. Going forward, this flag should never be used, and if encounted while working on old code it should be removed and the type error fixed. 
+> NOTE: Around mid-2021 we migrated to strict type checking for **all new code**. What this meant in practice was that all _old code_ that failed strict type checking was silenced via a special flag inserted by a script (`// @ts-expect-error STRICT_NULL_CHECK`) with all _new code_ expected to adhere to best practices. Going forward, this flag should never be used, and if encounted while working on old code it should be removed and the type error fixed. 
 
 ### Use Relay for network requests
 
