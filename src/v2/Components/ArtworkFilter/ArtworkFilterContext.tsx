@@ -1,5 +1,5 @@
 import { omit } from "lodash"
-import React, { useContext, useReducer, useState } from "react"
+import React, { useContext, useEffect, useReducer, useState } from "react"
 import useDeepCompareEffect from "use-deep-compare-effect"
 import { hasFilters } from "./Utils/hasFilters"
 import { isDefaultFilter } from "./Utils/isDefaultFilter"
@@ -232,6 +232,10 @@ export const ArtworkFilterContextProvider: React.FC<
   const [shouldStageFilterChanges, setShouldStageFilterChanges] = useState(
     false
   )
+
+  useEffect(() => {
+    setAggregations(aggregations)
+  }, [aggregations])
 
   useDeepCompareEffect(() => {
     if (onChange) {
