@@ -170,10 +170,10 @@
     url "^0.11.0"
     use-deep-compare-effect "^1.2.0"
 
-"@artsy/stitch@6.2.0":
-  version "6.2.0"
-  resolved "https://registry.yarnpkg.com/@artsy/stitch/-/stitch-6.2.0.tgz#125ec81aca8ef7ea3e88347aa877445b44abbb20"
-  integrity sha512-X9G+crRFE8x8deYWu91YHrujoao5i7LWfANzX5699s29BxOhTMTzosIOlSrYVFVu5C10g8AkT+sbr7skZJaZIw==
+"@artsy/stitch@6.3.0":
+  version "6.3.0"
+  resolved "https://registry.yarnpkg.com/@artsy/stitch/-/stitch-6.3.0.tgz#3f62ec67e75f276b57121d3c7014d4f4bfd796a4"
+  integrity sha512-/KZxtauhVyh5gBGJOrdP6vWkW4kZG2cNgt6VFeG4HAU5iKvMK8bfzXEfOvCuRWoXzuiUOhuMj4rB1CGVMbUpQA==
   dependencies:
     consolidate "^0.14.5"
     lodash "^4.17.11"
