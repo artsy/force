@@ -5,6 +5,7 @@ import { Title } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "v2/System/useSystemContext"
 import { HomeApp_homePage } from "v2/__generated__/HomeApp_homePage.graphql"
+import { HomeArtworkModulesFragmentContainer } from "./Components/HomeArtworkModules"
 import { HomeFeaturedCategoriesRailQueryRenderer } from "./Components/HomeFeaturedCategoriesRail"
 import { HomeHeroUnitFragmentContainer } from "./Components/HomeHeroUnit"
 import { HomeInfoBlurb } from "./Components/HomeInfoBlurb"
@@ -38,6 +39,8 @@ export const HomeApp: React.FC<HomeAppProps> = ({ homePage }) => {
         </GridColumns>
 
         {!isLoggedIn && <HomeFeaturedCategoriesRailQueryRenderer />}
+
+        <HomeArtworkModulesFragmentContainer homePage={homePage} />
       </Join>
     </>
   )
@@ -50,6 +53,7 @@ export const HomeAppFragmentContainer = createFragmentContainer(HomeApp, {
         internalID
         ...HomeHeroUnit_heroUnit
       }
+      ...HomeArtworkModules_homePage
     }
   `,
 })
