@@ -8,6 +8,7 @@ export type HomeApp_homePage = {
         readonly internalID: string;
         readonly " $fragmentRefs": FragmentRefs<"HomeHeroUnit_heroUnit">;
     } | null> | null;
+    readonly " $fragmentRefs": FragmentRefs<"HomeArtworkModules_homePage">;
     readonly " $refType": "HomeApp_homePage";
 };
 export type HomeApp_homePage$data = HomeApp_homePage;
@@ -52,9 +53,14 @@ const node: ReaderFragment = {
         }
       ],
       "storageKey": "heroUnits(platform:\"DESKTOP\")"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "HomeArtworkModules_homePage"
     }
   ],
   "type": "HomePage"
 };
-(node as any).hash = '0e3bf7e8c8be3fbc6ddb48bac59c5d9b';
+(node as any).hash = '4afef225f829c8e9e1bff45e92cc35d4';
 export default node;
