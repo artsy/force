@@ -87,7 +87,7 @@ export const MarketStats: React.FC<MarketStatsProps> = ({
       {/* Market Stats Values */}
       <GridColumns gridRowGap={[2, 2]} gridColumnGap={[0, 2]}>
         <Column
-          span={2}
+          span={3}
           justifyContent="flex-end"
           display="flex"
           flexDirection="column"
@@ -108,7 +108,7 @@ export const MarketStats: React.FC<MarketStatsProps> = ({
             }}
           />
         </Column>
-        <Column span={10}>
+        <Column span={9}>
           <GridColumns gridRowGap={[2, 2]} gridColumnGap={[0, 2]}>
             <Column
               span={6}
@@ -117,20 +117,29 @@ export const MarketStats: React.FC<MarketStatsProps> = ({
               flexDirection="column"
             >
               <GridColumns gridRowGap={[2, 2]} gridColumnGap={[0, 2]}>
-                <Column span={[6]}>
+                <Column
+                  span={[6]}
+                  justifyContent="flex-end"
+                  display="flex"
+                  flexDirection="column"
+                >
                   <Text variant={["xs", "sm"]} pb={[0.5, 1]}>
                     Yearly lots sold
                   </Text>
                   <Text
                     variant={["xxl", "xxl"]}
                     style={{ whiteSpace: "nowrap" }}
-                    data-test-id="annualLotsSold"
                   >
                     {selectedPriceInsight.annualLotsSold}
                   </Text>
                 </Column>
 
-                <Column span={[6]}>
+                <Column
+                  span={[6]}
+                  justifyContent="flex-end"
+                  display="flex"
+                  flexDirection="column"
+                >
                   <Text variant={["xs", "sm"]} pb={[0.5, 1]}>
                     Sell-through rate
                   </Text>
