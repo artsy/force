@@ -20,10 +20,4 @@ describe("locals middleware", () => {
     localsMiddleware(req, res, next)
     expect(res.locals.userAgent).toEqual("foobar%3Cscript%3Eomg%3C/script%3E")
   })
-
-  it("flags reflection", () => {
-    req.get.mockReturnValueOnce("Artsy/Reflection")
-    localsMiddleware(req, res, next)
-    expect(res.locals.sd.REFLECTION).toBeTruthy()
-  })
 })

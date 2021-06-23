@@ -1,5 +1,5 @@
 _ = require 'lodash'
-{ CURRENT_USER, REFLECTION } = require('sharify').data
+{ CURRENT_USER } = require('sharify').data
 IS_TEST_ENV = require('sharify').data.NODE_ENV not in ['production', 'staging', 'development']
 
 # These need to be set up individually before using. Read this non-sense:
@@ -44,9 +44,6 @@ module.exports = class SplitTest
   admin: ->
     CURRENT_USER?.type is 'Admin'
 
-  reflection: ->
-    REFLECTION is true
-
   toss: ->
     if @weighting is 'equal'
       @outcomes[Math.floor(Math.random() * @outcomes.length)]
@@ -63,8 +60,6 @@ module.exports = class SplitTest
     outcome =
       if (@admin() and @edge?)
         @edge
-      else if @reflection()
-        if @control_group then @control_group else 'control'
       else @get()
 
     if outcome?

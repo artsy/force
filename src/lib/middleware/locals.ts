@@ -42,7 +42,6 @@ export function localsMiddleware(
     res.locals.htmlClass += " layout-logged-in"
   }
 
-  res.locals.sd.REFLECTION = ua.match("Artsy/Reflection") != null
   // TOOD: Determine where/if this is used.
   res.locals.sd.REQUEST_TIMESTAMP = Date.now()
   res.locals.sd.NOTIFICATION_COUNT =
