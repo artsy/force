@@ -4,6 +4,7 @@ import {
   Image,
   Shelf,
   Spacer,
+  Skeleton,
   SkeletonBox,
   SkeletonText,
   Text,
@@ -109,25 +110,27 @@ const HomeFeaturedCategories: React.FC = ({ children }) => {
 
 const HomeFeaturedCategoriesRailPlaceholder: React.FC = () => {
   return (
-    <Shelf>
-      {[...new Array(8)].map((_, i) => {
-        return (
-          <React.Fragment key={i}>
-            <SkeletonBox width={325} height={244} />
+    <Skeleton>
+      <Shelf>
+        {[...new Array(8)].map((_, i) => {
+          return (
+            <React.Fragment key={i}>
+              <SkeletonBox width={325} height={244} />
 
-            <Spacer mt={2} />
+              <Spacer mt={2} />
 
-            <SkeletonText variant="lg">Collection Title</SkeletonText>
+              <SkeletonText variant="lg">Collection Title</SkeletonText>
 
-            <Spacer mt={0.5} />
+              <Spacer mt={0.5} />
 
-            <SkeletonText variant="md" overflowEllipsis width={325}>
-              Collection description which happens to be longer.
-            </SkeletonText>
-          </React.Fragment>
-        )
-      })}
-    </Shelf>
+              <SkeletonText variant="md" overflowEllipsis width={325}>
+                Collection description which happens to be longer.
+              </SkeletonText>
+            </React.Fragment>
+          )
+        })}
+      </Shelf>
+    </Skeleton>
   )
 }
 
