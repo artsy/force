@@ -45,39 +45,6 @@ describe("Partner header", () =>
       )
     })
 
-    it("has meta fragment", function () {
-      this.template = render("index")({
-        profile: this.profile,
-        sd: {
-          APP_URL: "http://localhost:3004",
-          CURRENT_PATH: "/pace-gallery",
-          INCLUDE_ESCAPED_FRAGMENT: true,
-        },
-        asset() {},
-        params: { id: "pace-gallery" },
-      })
-      return this.template.should.containEql(
-        '<meta name="fragment" content="!">'
-      )
-    })
-
-    it("does not have meta fragment if tab is included", function () {
-      this.template = render("index")({
-        profile: this.profile,
-        tab: "overview",
-        sd: {
-          APP_URL: "http://localhost:3004",
-          CURRENT_PATH: "/pace-gallery",
-          INCLUDE_ESCAPED_FRAGMENT: true,
-        },
-        asset() {},
-        params: { id: "pace-gallery" },
-      })
-      return this.template.should.not.containEql(
-        '<meta name="fragment" content="!">'
-      )
-    })
-
     return describe("followers", function () {
       describe("galleries", () =>
         it("does not display follower count", function () {

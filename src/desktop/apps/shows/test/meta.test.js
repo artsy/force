@@ -96,10 +96,9 @@ describe("Meta tags", function () {
       this.html.should.containEql(
         '<meta property="og:type" content="website"/>'
       )
-      this.html.should.containEql(
+      return this.html.should.containEql(
         '<meta property="twitter:card" content="summary"/>'
       )
-      return this.html.should.containEql('<meta name="fragment" content="!"/>')
     })
   })
 })

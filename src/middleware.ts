@@ -38,7 +38,6 @@ import { bootstrapSharifyAndContextLocalsMiddleware } from "./lib/middleware/boo
 import { userRequiredMiddleware } from "lib/middleware/userRequiredMiddleware"
 import { backboneErrorHandlerMiddleware } from "./lib/middleware/backboneErrorHandler"
 import { downcaseMiddleware } from "./lib/middleware/downcase"
-import { escapedFragmentMiddleware } from "./lib/middleware/escapedFragment"
 import { hardcodedRedirectsMiddleware } from "./lib/middleware/hardcodedRedirects"
 import { localsMiddleware } from "./lib/middleware/locals"
 import { marketingModalsMiddleware } from "./lib/middleware/marketingModals"
@@ -111,7 +110,6 @@ export function initializeMiddleware(app) {
   app.use(localsMiddleware)
   app.use(backboneErrorHandlerMiddleware)
   app.use(sameOriginMiddleware)
-  app.use(escapedFragmentMiddleware)
   app.use(unsupportedBrowserMiddleware)
   app.use(pageCacheMiddleware)
 
