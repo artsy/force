@@ -182,6 +182,7 @@ export const UntouchedOrder = {
         node: {
           editionSetId: null,
           id: "line-item-node-id",
+          shippingQuoteOptions: null,
           ...OrderArtworkNode,
           ...OrderArtworkOrEditionSetkNode_Artwork,
           ...OrderArtworkFulfillmentsNode,
