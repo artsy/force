@@ -124,7 +124,7 @@ export const convertShippingAddressToMutationInput = (
   return omit(
     {
       ...address,
-      name: address?.name ? address?.name : "",
+      name: address?.name || "",
     },
     ["isDefault", "internalID", "id", "__typename"]
   )
