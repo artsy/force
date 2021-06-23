@@ -10,7 +10,7 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { SavedAddressType } from "../Utils/shippingAddressUtils"
+import { SavedAddressType } from "../Utils/shippingUtils"
 import { Formik, FormikHelpers, FormikProps } from "formik"
 import {
   removeEmptyKeys,

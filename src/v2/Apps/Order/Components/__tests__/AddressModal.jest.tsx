@@ -7,8 +7,8 @@ import {
   updateAddressSuccess,
   updateAddressFailure,
 } from "v2/Apps/Order/Routes/__fixtures__/MutationResults"
-import { SavedAddressType } from "../../Utils/shippingAddressUtils"
 import { Dialog } from "@artsy/palette"
+import { SavedAddressType } from "../../Utils/shippingUtils"
 
 const errorBoxQuery = "Text[data-test='credit-card-error']"
 

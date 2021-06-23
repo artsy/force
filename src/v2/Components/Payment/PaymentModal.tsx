@@ -5,7 +5,7 @@ import {
   validateAddress,
   removeEmptyKeys,
 } from "v2/Apps/Order/Utils/formValidators"
-import { SavedAddressType } from "v2/Apps/Order/Utils/shippingAddressUtils"
+import { SavedAddressType } from "v2/Apps/Order/Utils/shippingUtils"
 import { CreditCardInput } from "v2/Apps/Order/Components/CreditCardInput"
 import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js"
 import { commitMutation, graphql, RelayProp } from "react-relay"

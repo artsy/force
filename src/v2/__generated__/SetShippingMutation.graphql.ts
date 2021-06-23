@@ -2,6 +2,7 @@
 /* eslint-disable */
 
 import { ConcreteRequest } from "relay-runtime";
+import { FragmentRefs } from "relay-runtime";
 export type CommerceOrderFulfillmentTypeEnum = "PICKUP" | "SHIP" | "SHIP_ARTA" | "%future added value";
 export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "PENDING" | "REFUNDED" | "SUBMITTED" | "%future added value";
 export type CommerceSetShippingInput = {
@@ -25,7 +26,7 @@ export type SetShippingMutationVariables = {
     input: CommerceSetShippingInput;
 };
 export type SetShippingMutationResponse = {
-    readonly commerceSetShipping: {
+    readonly setShipping: {
         readonly orderOrError: {
             readonly __typename: "CommerceOrderWithMutationSuccess";
             readonly order?: {
@@ -42,10 +43,31 @@ export type SetShippingMutationResponse = {
                     readonly postalCode: string | null;
                     readonly phoneNumber: string | null;
                 } | {
+                    readonly __typename: "CommerceShipArta";
+                    readonly name: string | null;
+                    readonly addressLine1: string | null;
+                    readonly addressLine2: string | null;
+                    readonly city: string | null;
+                    readonly region: string | null;
+                    readonly country: string | null;
+                    readonly postalCode: string | null;
+                    readonly phoneNumber: string | null;
+                } | {
                     /*This will never be '%other', but we need some
                     value in case none of the concrete values match.*/
                     readonly __typename: "%other";
                 }) | null;
+                readonly lineItems: {
+                    readonly edges: ReadonlyArray<{
+                        readonly node: {
+                            readonly shippingQuoteOptions: {
+                                readonly edges: ReadonlyArray<{
+                                    readonly " $fragmentRefs": FragmentRefs<"ShippingQuotes_shippingQuotes">;
+                                } | null> | null;
+                            } | null;
+                        } | null;
+                    } | null> | null;
+                } | null;
             };
             readonly error?: {
                 readonly type: string;
@@ -66,7 +88,7 @@ export type SetShippingMutation = {
 mutation SetShippingMutation(
   $input: CommerceSetShippingInput!
 ) {
-  commerceSetShipping(input: $input) {
+  setShipping(input: $input) {
     orderOrError {
       __typename
       ... on CommerceOrderWithMutationSuccess {
@@ -87,6 +109,28 @@ mutation SetShippingMutation(
               postalCode
               phoneNumber
             }
+            ... on CommerceShipArta {
+              name
+              addressLine1
+              addressLine2
+              city
+              region
+              country
+              postalCode
+              phoneNumber
+            }
+          }
+          lineItems {
+            edges {
+              node {
+                shippingQuoteOptions {
+                  edges {
+                    ...ShippingQuotes_shippingQuotes
+                  }
+                }
+                id
+              }
+            }
           }
           id
         }
@@ -99,6 +143,17 @@ mutation SetShippingMutation(
         }
       }
     }
+  }
+}
+
+fragment ShippingQuotes_shippingQuotes on CommerceShippingQuoteEdge {
+  node {
+    id
+    tier
+    name
+    isSelected
+    priceCents
+    priceCurrency
   }
 }
 */
@@ -143,6 +198,65 @@ v4 = {
 v5 = {
   "alias": null,
   "args": null,
+  "kind": "ScalarField",
+  "name": "name",
+  "storageKey": null
+},
+v6 = [
+  (v5/*: any*/),
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "addressLine1",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "addressLine2",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "city",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "region",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "country",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "postalCode",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "phoneNumber",
+    "storageKey": null
+  }
+],
+v7 = {
+  "alias": null,
+  "args": null,
   "concreteType": null,
   "kind": "LinkedField",
   "name": "requestedFulfillment",
@@ -151,70 +265,18 @@ v5 = {
     (v2/*: any*/),
     {
       "kind": "InlineFragment",
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "name",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "addressLine1",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "addressLine2",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "city",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "region",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "country",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "postalCode",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "phoneNumber",
-          "storageKey": null
-        }
-      ],
+      "selections": (v6/*: any*/),
       "type": "CommerceShip"
+    },
+    {
+      "kind": "InlineFragment",
+      "selections": (v6/*: any*/),
+      "type": "CommerceShipArta"
     }
   ],
   "storageKey": null
 },
-v6 = {
+v8 = {
   "kind": "InlineFragment",
   "selections": [
     {
@@ -251,6 +313,13 @@ v6 = {
     }
   ],
   "type": "CommerceOrderWithMutationFailure"
+},
+v9 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
 };
 return {
   "fragment": {
@@ -264,7 +333,7 @@ return {
         "args": (v1/*: any*/),
         "concreteType": "CommerceSetShippingPayload",
         "kind": "LinkedField",
-        "name": "commerceSetShipping",
+        "name": "setShipping",
         "plural": false,
         "selections": [
           {
@@ -289,14 +358,74 @@ return {
                     "selections": [
                       (v3/*: any*/),
                       (v4/*: any*/),
-                      (v5/*: any*/)
+                      (v7/*: any*/),
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": "CommerceLineItemConnection",
+                        "kind": "LinkedField",
+                        "name": "lineItems",
+                        "plural": false,
+                        "selections": [
+                          {
+                            "alias": null,
+                            "args": null,
+                            "concreteType": "CommerceLineItemEdge",
+                            "kind": "LinkedField",
+                            "name": "edges",
+                            "plural": true,
+                            "selections": [
+                              {
+                                "alias": null,
+                                "args": null,
+                                "concreteType": "CommerceLineItem",
+                                "kind": "LinkedField",
+                                "name": "node",
+                                "plural": false,
+                                "selections": [
+                                  {
+                                    "alias": null,
+                                    "args": null,
+                                    "concreteType": "CommerceShippingQuoteConnection",
+                                    "kind": "LinkedField",
+                                    "name": "shippingQuoteOptions",
+                                    "plural": false,
+                                    "selections": [
+                                      {
+                                        "alias": null,
+                                        "args": null,
+                                        "concreteType": "CommerceShippingQuoteEdge",
+                                        "kind": "LinkedField",
+                                        "name": "edges",
+                                        "plural": true,
+                                        "selections": [
+                                          {
+                                            "args": null,
+                                            "kind": "FragmentSpread",
+                                            "name": "ShippingQuotes_shippingQuotes"
+                                          }
+                                        ],
+                                        "storageKey": null
+                                      }
+                                    ],
+                                    "storageKey": null
+                                  }
+                                ],
+                                "storageKey": null
+                              }
+                            ],
+                            "storageKey": null
+                          }
+                        ],
+                        "storageKey": null
+                      }
                     ],
                     "storageKey": null
                   }
                 ],
                 "type": "CommerceOrderWithMutationSuccess"
               },
-              (v6/*: any*/)
+              (v8/*: any*/)
             ],
             "storageKey": null
           }
@@ -317,7 +446,7 @@ return {
         "args": (v1/*: any*/),
         "concreteType": "CommerceSetShippingPayload",
         "kind": "LinkedField",
-        "name": "commerceSetShipping",
+        "name": "setShipping",
         "plural": false,
         "selections": [
           {
@@ -344,21 +473,112 @@ return {
                       (v2/*: any*/),
                       (v3/*: any*/),
                       (v4/*: any*/),
-                      (v5/*: any*/),
+                      (v7/*: any*/),
                       {
                         "alias": null,
                         "args": null,
-                        "kind": "ScalarField",
-                        "name": "id",
+                        "concreteType": "CommerceLineItemConnection",
+                        "kind": "LinkedField",
+                        "name": "lineItems",
+                        "plural": false,
+                        "selections": [
+                          {
+                            "alias": null,
+                            "args": null,
+                            "concreteType": "CommerceLineItemEdge",
+                            "kind": "LinkedField",
+                            "name": "edges",
+                            "plural": true,
+                            "selections": [
+                              {
+                                "alias": null,
+                                "args": null,
+                                "concreteType": "CommerceLineItem",
+                                "kind": "LinkedField",
+                                "name": "node",
+                                "plural": false,
+                                "selections": [
+                                  {
+                                    "alias": null,
+                                    "args": null,
+                                    "concreteType": "CommerceShippingQuoteConnection",
+                                    "kind": "LinkedField",
+                                    "name": "shippingQuoteOptions",
+                                    "plural": false,
+                                    "selections": [
+                                      {
+                                        "alias": null,
+                                        "args": null,
+                                        "concreteType": "CommerceShippingQuoteEdge",
+                                        "kind": "LinkedField",
+                                        "name": "edges",
+                                        "plural": true,
+                                        "selections": [
+                                          {
+                                            "alias": null,
+                                            "args": null,
+                                            "concreteType": "CommerceShippingQuote",
+                                            "kind": "LinkedField",
+                                            "name": "node",
+                                            "plural": false,
+                                            "selections": [
+                                              (v9/*: any*/),
+                                              {
+                                                "alias": null,
+                                                "args": null,
+                                                "kind": "ScalarField",
+                                                "name": "tier",
+                                                "storageKey": null
+                                              },
+                                              (v5/*: any*/),
+                                              {
+                                                "alias": null,
+                                                "args": null,
+                                                "kind": "ScalarField",
+                                                "name": "isSelected",
+                                                "storageKey": null
+                                              },
+                                              {
+                                                "alias": null,
+                                                "args": null,
+                                                "kind": "ScalarField",
+                                                "name": "priceCents",
+                                                "storageKey": null
+                                              },
+                                              {
+                                                "alias": null,
+                                                "args": null,
+                                                "kind": "ScalarField",
+                                                "name": "priceCurrency",
+                                                "storageKey": null
+                                              }
+                                            ],
+                                            "storageKey": null
+                                          }
+                                        ],
+                                        "storageKey": null
+                                      }
+                                    ],
+                                    "storageKey": null
+                                  },
+                                  (v9/*: any*/)
+                                ],
+                                "storageKey": null
+                              }
+                            ],
+                            "storageKey": null
+                          }
+                        ],
                         "storageKey": null
-                      }
+                      },
+                      (v9/*: any*/)
                     ],
                     "storageKey": null
                   }
                 ],
                 "type": "CommerceOrderWithMutationSuccess"
               },
-              (v6/*: any*/)
+              (v8/*: any*/)
             ],
             "storageKey": null
           }
@@ -372,9 +592,9 @@ return {
     "metadata": {},
     "name": "SetShippingMutation",
     "operationKind": "mutation",
-    "text": "mutation SetShippingMutation(\n  $input: CommerceSetShippingInput!\n) {\n  commerceSetShipping(input: $input) {\n    orderOrError {\n      __typename\n      ... on CommerceOrderWithMutationSuccess {\n        __typename\n        order {\n          __typename\n          internalID\n          state\n          requestedFulfillment {\n            __typename\n            ... on CommerceShip {\n              name\n              addressLine1\n              addressLine2\n              city\n              region\n              country\n              postalCode\n              phoneNumber\n            }\n          }\n          id\n        }\n      }\n      ... on CommerceOrderWithMutationFailure {\n        error {\n          type\n          code\n          data\n        }\n      }\n    }\n  }\n}\n"
+    "text": "mutation SetShippingMutation(\n  $input: CommerceSetShippingInput!\n) {\n  setShipping(input: $input) {\n    orderOrError {\n      __typename\n      ... on CommerceOrderWithMutationSuccess {\n        __typename\n        order {\n          __typename\n          internalID\n          state\n          requestedFulfillment {\n            __typename\n            ... on CommerceShip {\n              name\n              addressLine1\n              addressLine2\n              city\n              region\n              country\n              postalCode\n              phoneNumber\n            }\n            ... on CommerceShipArta {\n              name\n              addressLine1\n              addressLine2\n              city\n              region\n              country\n              postalCode\n              phoneNumber\n            }\n          }\n          lineItems {\n            edges {\n              node {\n                shippingQuoteOptions {\n                  edges {\n                    ...ShippingQuotes_shippingQuotes\n                  }\n                }\n                id\n              }\n            }\n          }\n          id\n        }\n      }\n      ... on CommerceOrderWithMutationFailure {\n        error {\n          type\n          code\n          data\n        }\n      }\n    }\n  }\n}\n\nfragment ShippingQuotes_shippingQuotes on CommerceShippingQuoteEdge {\n  node {\n    id\n    tier\n    name\n    isSelected\n    priceCents\n    priceCurrency\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '402fccfd9aeebd5393b111281e478735';
+(node as any).hash = 'cf4f4a369565351bf17f3a057815ad50';
 export default node;

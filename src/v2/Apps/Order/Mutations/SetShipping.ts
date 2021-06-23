@@ -11,7 +11,7 @@ export const setShipping = (
     // TODO: Inputs to the mutation might have changed case of the keys!
     mutation: graphql`
       mutation SetShippingMutation($input: CommerceSetShippingInput!) {
-        commerceSetShipping(input: $input) {
+        setShipping(input: $input) {
           orderOrError {
             ... on CommerceOrderWithMutationSuccess {
               __typename
@@ -29,6 +29,27 @@ export const setShipping = (
                     country
                     postalCode
                     phoneNumber
+                  }
+                  ... on CommerceShipArta {
+                    name
+                    addressLine1
+                    addressLine2
+                    city
+                    region
+                    country
+                    postalCode
+                    phoneNumber
+                  }
+                }
+                lineItems {
+                  edges {
+                    node {
+                      shippingQuoteOptions {
+                        edges {
+                          ...ShippingQuotes_shippingQuotes
+                        }
+                      }
+                    }
                   }
                 }
               }
