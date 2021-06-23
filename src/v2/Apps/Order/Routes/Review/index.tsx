@@ -124,10 +124,13 @@ export class ReviewRoute extends Component<ReviewProps> {
             }
           })
       } else {
-        this.props.order.conversation &&
-          this.props.router.push(
-            `/user/conversations/${this.props.order.conversation.internalID}`
-          )
+        this.props.order.conversation
+          ? this.props.router.push(
+              `/user/conversations/${this.props.order.conversation.internalID}`
+            )
+          : this.props.router.push(
+              `/orders/${this.props.order.internalID}/status`
+            )
       }
     } catch (error) {
       logger.error(error)

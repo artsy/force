@@ -229,12 +229,10 @@ describe("Review", () => {
       expect(page.offerSummary.text()).toMatch("Your noteThis is a note!")
     })
 
-    it("enables the button and routes to the payoff page", async () => {
+    it("enables the button and routes to the conversation", async () => {
       await page.clickSubmit()
       expect(mutations.mockFetch).toHaveBeenCalledTimes(1)
-      expect(routes.mockPushRoute).toBeCalledWith(
-        "/orders/offer-order-id/status"
-      )
+      expect(routes.mockPushRoute).toBeCalledWith("/user/conversations/5665")
     })
 
     it("shows an error modal when there is an error in submitOrderPayload", async () => {
