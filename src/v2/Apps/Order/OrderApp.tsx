@@ -46,26 +46,16 @@ class OrderApp extends React.Component<OrderAppProps, {}> {
       window.zEmbed.show()
     }
 
-    if (this.mediator) {
-      const artworkId = get(
-        this.props,
-        // @ts-expect-error STRICT_NULL_CHECK
-        props => props.order.lineItems.edges[0].node.artwork.slug
+    if (!document.getElementById("legacy-assets-dll")) {
+      import(
+        /* webpackChunkName: 'legacy-assets-dll' */ "../../Utils/legacyAssetDll"
+      ).then(({ legacyAssetDll }) => {
+        legacyAssetDll()
+      })
+      document.body.insertAdjacentHTML(
+        "beforeend",
+        `<div id='legacy-assets-dll' />`
       )
-
-      if (!document.getElementById("legacy-assets-dll")) {
-        import(
-          /* webpackChunkName: 'legacy-assets-dll' */ "./Utils/openAskSpecialistInquireableModal"
-        ).then(({ openAskSpecialistInquireableModal }) => {
-          this.mediator?.on("openOrdersContactArtsyModal", () =>
-            openAskSpecialistInquireableModal(artworkId, sd)
-          )
-        })
-        document.body.insertAdjacentHTML(
-          "beforeend",
-          `<div id='legacy-assets-dll' />`
-        )
-      }
     }
   }
 

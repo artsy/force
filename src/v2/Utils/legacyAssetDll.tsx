@@ -9,7 +9,7 @@ import type {
   ViewInRoomEventOptions,
 } from "lib/mediator"
 
-export const legacyArtworkClient = () => {
+export const legacyAssetDll = () => {
   const User = require("desktop/models/user.coffee")
   const Artwork = require("desktop/models/artwork.coffee")
   const ArtworkInquiry = require("desktop/models/artwork_inquiry.coffee")
@@ -81,6 +81,10 @@ export const legacyArtworkClient = () => {
       )
     }
   )
+
+  mediator.on("openOrdersContactArtsyModal", (options: ArtworkEventOptions) => {
+    openInquireableModal(options.artworkId, { ask_specialist: true })
+  })
 
   mediator.on("openCollectorFAQModal", () => {
     openMultiPageModal("collector-faqs")
