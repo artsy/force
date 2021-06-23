@@ -1,4 +1,3 @@
-import { Box, Image } from "@artsy/palette"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "v2/System/Router/RouterLink"
@@ -10,7 +9,7 @@ import {
 import Metadata from "./Metadata"
 import { AuthContextModule } from "@artsy/cohesion"
 import styled from "styled-components"
-import { Flex } from "@artsy/palette"
+import { Image, Flex } from "@artsy/palette"
 import { Media } from "v2/Utils/Responsive"
 
 /**
@@ -44,41 +43,8 @@ const ShelfArtwork: React.FC<ShelfArtworkProps> = ({
   showExtended,
   showMetadata = true,
 }) => {
-  const getHeight = (size: keyof typeof IMG_HEIGHT) => {
-    // @ts-expect-error STRICT_NULL_CHECK
-    return artwork.image?.resized.height > IMG_HEIGHT[size]
-      ? IMG_HEIGHT[size]
-      : // @ts-expect-error STRICT_NULL_CHECK
-        artwork.image?.resized.height
-  }
-
-  const ResponsiveContainer = ({ children }) => {
-    return (
-      <>
-        <Media at="xs">
-          <Container
-            // @ts-expect-error STRICT_NULL_CHECK
-            width={artwork.image?.resized.width}
-            height={getHeight("mobile")}
-          >
-            {children}
-          </Container>
-        </Media>
-        <Media greaterThan="xs">
-          <Container
-            // @ts-expect-error STRICT_NULL_CHECK
-            width={artwork.image?.resized.width}
-            height={getHeight("desktop")}
-          >
-            {children}
-          </Container>
-        </Media>
-      </>
-    )
-  }
-
   return (
-    <Box>
+    <>
       <RouterLink
         to={artwork?.href ?? ""}
         noUnderline
@@ -86,14 +52,14 @@ const ShelfArtwork: React.FC<ShelfArtworkProps> = ({
           onClick && onClick()
         }}
       >
-        <ResponsiveContainer>
+        <ResponsiveContainer artwork={artwork}>
           <Image
             src={artwork.image?.resized?.src!}
             srcSet={artwork.image?.resized?.srcSet}
             width={artwork.image?.resized?.width}
             maxHeight={[IMG_HEIGHT.mobile, IMG_HEIGHT.desktop]}
             lazyLoad={lazyLoad}
-            style={{ objectFit: "contain" }}
+            style={{ objectFit: "contain", display: "block" }}
           />
 
           <Media greaterThan="sm">
@@ -115,7 +81,44 @@ const ShelfArtwork: React.FC<ShelfArtworkProps> = ({
           maxWidth={artwork.image?.resized?.width}
         />
       )}
-    </Box>
+    </>
+  )
+}
+
+const getHeight = (
+  artwork: ShelfArtwork_artwork,
+  size: keyof typeof IMG_HEIGHT
+) => {
+  return (artwork.image?.resized?.height ?? 0) > IMG_HEIGHT[size]
+    ? IMG_HEIGHT[size]
+    : artwork?.image?.resized?.height
+}
+
+const ResponsiveContainer: React.FC<{ artwork: ShelfArtwork_artwork }> = ({
+  artwork,
+  children,
+}) => {
+  // FIXME: Replace with <picture> and specific sizes for different platforms
+  return (
+    <>
+      <Media at="xs">
+        <Container
+          width={artwork.image?.resized?.width}
+          height={getHeight(artwork, "mobile")}
+        >
+          {children}
+        </Container>
+      </Media>
+
+      <Media greaterThan="xs">
+        <Container
+          width={artwork.image?.resized?.width}
+          height={getHeight(artwork, "desktop")}
+        >
+          {children}
+        </Container>
+      </Media>
+    </>
   )
 }
 
@@ -128,6 +131,7 @@ const Container = styled(Flex)`
     }
   }
 `
+
 export const ShelfArtworkFragmentContainer = createFragmentContainer(
   ShelfArtwork,
   {
