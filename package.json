@@ -89,6 +89,7 @@
     "@loadable/component": "5.14.1",
     "@loadable/server": "5.14.0",
     "@sentry/browser": "6.7.1",
+    "@sentry/integrations": "^6.7.2",
     "@sentry/node": "^6.7.1",
     "@sentry/tracing": "^6.7.1",
     "@stripe/react-stripe-js": "1.1.2",

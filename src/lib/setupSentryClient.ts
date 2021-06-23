@@ -1,5 +1,6 @@
 import * as Sentry from "@sentry/browser"
 import { Integrations } from "@sentry/tracing"
+import { Dedupe } from "@sentry/integrations"
 import {
   ALLOWED_URLS,
   DENIED_URLS,
@@ -12,6 +13,6 @@ export function setupSentryClient(sd) {
     denyUrls: DENIED_URLS,
     dsn: sd.SENTRY_PUBLIC_DSN,
     ignoreErrors: IGNORED_ERRORS,
-    integrations: [new Integrations.BrowserTracing()],
+    integrations: [new Integrations.BrowserTracing(), new Dedupe()],
   })
 }
