@@ -13,15 +13,18 @@ const mockuseSystemContext = useSystemContext as jest.Mock
 
 describe("HomeApp", () => {
   const { getWrapper } = setupTestWrapper<HomeApp_Test_Query>({
-    Component: ({ homePage }) => (
+    Component: props => (
       <MockBoot>
-        <HomeAppFragmentContainer homePage={homePage!} />
+        <HomeAppFragmentContainer {...props} />
       </MockBoot>
     ),
     query: graphql`
       query HomeApp_Test_Query {
         homePage {
           ...HomeApp_homePage
+        }
+        orderedSet(id: "example") {
+          ...HomeApp_orderedSet
         }
       }
     `,
@@ -45,6 +48,19 @@ describe("HomeApp", () => {
       expect(wrapper.text()).toContain(
         "Sign up to get updates about your favorite artists"
       )
+    })
+
+    it("renders the events", () => {
+      const wrapper = getWrapper({
+        FeaturedLink: () => ({
+          title: "Exclusively on Artsy",
+          subtitle: "Example Event",
+        }),
+      })
+
+      expect(wrapper.text()).toContain("Featured events")
+      expect(wrapper.text()).toContain("Exclusively on Artsy")
+      expect(wrapper.text()).toContain("Example Event")
     })
   })
 

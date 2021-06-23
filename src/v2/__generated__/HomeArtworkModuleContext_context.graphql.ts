@@ -37,10 +37,14 @@ export type HomeArtworkModuleContext_context = {
     } | null;
     readonly " $refType": "HomeArtworkModuleContext_context";
 } | {
+    readonly __typename: "TrendingArtists";
+    readonly artists: ReadonlyArray<{
+        readonly href: string | null;
+        readonly name: string | null;
+    } | null> | null;
+    readonly " $refType": "HomeArtworkModuleContext_context";
+} | {
     readonly __typename: "FollowArtists";
-    readonly counts: {
-        readonly artists: number | null;
-    } | null;
     readonly artists: ReadonlyArray<{
         readonly href: string | null;
         readonly name: string | null;
@@ -88,6 +92,21 @@ v3 = {
 v4 = [
   (v3/*: any*/),
   (v0/*: any*/)
+],
+v5 = [
+  {
+    "alias": null,
+    "args": null,
+    "concreteType": "Artist",
+    "kind": "LinkedField",
+    "name": "artists",
+    "plural": true,
+    "selections": [
+      (v0/*: any*/),
+      (v3/*: any*/)
+    ],
+    "storageKey": null
+  }
 ];
 return {
   "argumentDefinitions": [],
@@ -193,44 +212,17 @@ return {
     },
     {
       "kind": "InlineFragment",
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "concreteType": "FollowArtistCounts",
-          "kind": "LinkedField",
-          "name": "counts",
-          "plural": false,
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "artists",
-              "storageKey": null
-            }
-          ],
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "concreteType": "Artist",
-          "kind": "LinkedField",
-          "name": "artists",
-          "plural": true,
-          "selections": [
-            (v0/*: any*/),
-            (v3/*: any*/)
-          ],
-          "storageKey": null
-        }
-      ],
+      "selections": (v5/*: any*/),
+      "type": "TrendingArtists"
+    },
+    {
+      "kind": "InlineFragment",
+      "selections": (v5/*: any*/),
       "type": "FollowArtists"
     }
   ],
   "type": "HomePageArtworkModuleContext"
 };
 })();
-(node as any).hash = '66f17120f8df3a09aa6bdde2eca3e82e';
+(node as any).hash = 'aaf7af84cacea3d163e3d9309d4f2d48';
 export default node;

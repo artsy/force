@@ -18,11 +18,15 @@ import { useSystemContext } from "v2/System"
 import { HomeArtworkModuleContextFragmentContainer } from "./HomeArtworkModuleContext"
 
 const ARTWORK_MODULES = [
+  "active_bids",
   "current_fairs",
   "followed_artist",
+  "followed_artists",
+  "followed_galleries",
   "generic_gene", // GENERIC_GENES
   "genes", // FOLLOWED_GENES
   "live_auctions",
+  "popular_artists",
   "recently_viewed_works",
   "recommended_works",
   "related_artists",
@@ -31,22 +35,22 @@ const ARTWORK_MODULES = [
   "similar_to_saved_works",
 ] as const
 
-const UNIMPLEMENTED_MODULES = [
-  "active_bids",
-  "followed_artists",
-  "followed_galleries",
-  "popular_artists",
-] as const
-
 const CONTEXT_MODULES: Record<
   typeof ARTWORK_MODULES[number],
   AuthContextModule
 > = {
+  // @ts-ignore TODO: Add to AuthContextModule union
+  active_bids: ContextModule.yourActiveBids,
   current_fairs: ContextModule.fairRail,
   followed_artist: ContextModule.otherWorksByArtistRail,
+  // @ts-ignore TODO: Add to AuthContextModule union
+  followed_artists: ContextModule.newWorksByArtistsYouFollowRail,
+  // @ts-ignore TODO: Add to AuthContextModule union
+  followed_galleries: ContextModule.newWorksByGalleriesYouFollowRail,
   generic_gene: ContextModule.categoryRail,
   genes: ContextModule.categoryRail,
   live_auctions: ContextModule.liveAuctionsRail,
+  popular_artists: ContextModule.popularArtistsRail,
   recently_viewed_works: ContextModule.recentlyViewedRail,
   related_artists: ContextModule.relatedArtistsRail,
   // @ts-ignore TODO: Add to AuthContextModule union
@@ -66,17 +70,6 @@ interface HomeArtworkModuleRailProps {
 const HomeArtworkModuleRail: React.FC<HomeArtworkModuleRailProps> = ({
   artworkModule,
 }) => {
-  if (
-    UNIMPLEMENTED_MODULES.includes(
-      artworkModule.key as typeof UNIMPLEMENTED_MODULES[number]
-    )
-  ) {
-    console.warn(
-      `TODO: ${artworkModule.key}:${artworkModule.context?.__typename}`
-    )
-    return null
-  }
-
   const artworks = compact(artworkModule.results)
 
   if (artworks.length === 0) {
