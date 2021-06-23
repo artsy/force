@@ -10,6 +10,7 @@ import { RouteTabs, RouteTab } from "v2/Components/RouteTabs"
 import { useSystemContext } from "v2/System/useSystemContext"
 import { WorksByArtistsYouFollowRailFragmentContainer } from "./Components/WorksByArtistsYouFollowRail/WorksByArtistsYouFollowRail"
 import { ChevronButton } from "v2/Components/ChevronButton"
+import { getENV } from "v2/Utils/getENV"
 
 export interface AuctionsAppProps {
   viewer: AuctionsApp_viewer
@@ -18,6 +19,9 @@ export interface AuctionsAppProps {
 const AuctionsApp: React.FC<AuctionsAppProps> = props => {
   const { children, viewer } = props
   const { user } = useSystemContext()
+
+  // FIXME: Remove once new filter launches
+  const enableNewAuctionsFilter = getENV("ENABLE_NEW_AUCTIONS_FILTER")
 
   return (
     <>
@@ -72,6 +76,12 @@ const AuctionsApp: React.FC<AuctionsAppProps> = props => {
         </RouteTab>
         <RouteTab to="/auctions/upcoming">Upcoming</RouteTab>
         <RouteTab to="/auctions/past">Past</RouteTab>
+        {enableNewAuctionsFilter && (
+          <>
+            <RouteTab to="/auctions/auctions">Auctions</RouteTab>
+            <RouteTab to="/auctions/artworks">Artworks</RouteTab>
+          </>
+        )}
       </RouteTabs>
 
       <Box>{children}</Box>
