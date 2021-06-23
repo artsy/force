@@ -25,7 +25,7 @@ Links should point to specific commits, and not a branch (in case the branch or 
 
 ## Current Preferred Practices
 
-The app is currently written responsively in React, with an ever-increasing amount of legacy code written in Backbone and Coffeescript. As of Nov 2020, most of our main pages have been migrated, and those [that remain become fewer](https://github.com/artsy/force/pull/6682) with time. Server-side code is built on top of Express.js; however, most server-side needs have been abstracted away by our framework (see below).
+The app is currently written responsively in React, with an ever-decreasing amount of legacy code written in Backbone and Coffeescript. As of Nov 2020, most of our main pages have been migrated, and those [that remain become fewer](https://github.com/artsy/force/pull/6682) with time. Server-side code is built on top of Express.js; however, most server-side needs have been abstracted away by our framework (see below).
 
 ### When writing UI, use Palette
 
