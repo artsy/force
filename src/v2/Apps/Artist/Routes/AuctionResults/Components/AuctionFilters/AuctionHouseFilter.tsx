@@ -25,7 +25,7 @@ export const AuctionHouseFilter: React.FC = () => {
   }
 
   return (
-    <FilterExpandable label="Auction house" expanded>
+    <FilterExpandable label="Auction House" expanded>
       <Flex flexDirection="column" alignItems="left">
         <ShowMore>
           {auctionHouses.map((checkbox, index) => {
