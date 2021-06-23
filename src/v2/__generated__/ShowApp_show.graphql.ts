@@ -20,6 +20,8 @@ export type ShowApp_show = {
     } | null;
     readonly fair: {
         readonly hasFullFeature: boolean | null;
+        readonly isPublished: boolean | null;
+        readonly startAt: string | null;
     } | null;
     readonly sidebarAggregations: {
         readonly aggregations: ReadonlyArray<{
@@ -159,6 +161,20 @@ return {
           "kind": "ScalarField",
           "name": "hasFullFeature",
           "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "isPublished",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "startAt",
+          "storageKey": null
         }
       ],
       "storageKey": null
@@ -279,5 +295,5 @@ return {
   "type": "Show"
 };
 })();
-(node as any).hash = '7f54f9a73e16b80d49b03dc5a9e713f4';
+(node as any).hash = '6fc7931f558f8305a72ad8ed8f994f41';
 export default node;

@@ -23,6 +23,7 @@ import {
 import { ShowArtworksEmptyStateFragmentContainer as ShowArtworksEmptyState } from "./Components/ShowArtworksEmptyState"
 import { SharedArtworkFilterContextProps } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
 import { RouterLink } from "v2/System/Router/RouterLink"
+import { moment } from "desktop/lib/template_modules"
 
 interface ShowAppProps {
   show: ShowApp_show
@@ -37,6 +38,15 @@ export const ShowApp: React.FC<ShowAppProps> = ({ show }) => {
   const hasWideHeader =
     (hasAbout && hasViewingRoom) || (!hasAbout && !hasViewingRoom)
   const { sidebarAggregations } = show
+
+  const startAt = moment(new Date(show.fair?.startAt!))
+
+  const showFairBooth =
+    !show.fair ||
+    (!!show.fair.hasFullFeature &&
+      !!show.fair.isPublished &&
+      (moment().isAfter(startAt, "day") || moment().isSame(startAt, "day")))
+
   return (
     <>
       <ShowMeta show={show} />
@@ -104,7 +114,7 @@ export const ShowApp: React.FC<ShowAppProps> = ({ show }) => {
               <ShowArtworksEmptyState show={show} />
             </>
           )}
-          {show.fair?.hasFullFeature !== false && (
+          {showFairBooth && (
             <>
               <Separator as="hr" my={6} />
               <ShowContextCard show={show} />
@@ -139,6 +149,8 @@ export const ShowAppFragmentContainer = createFragmentContainer(ShowApp, {
       }
       fair {
         hasFullFeature
+        isPublished
+        startAt
       }
       sidebarAggregations: filterArtworksConnection(
         aggregations: $aggregations
