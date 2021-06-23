@@ -9,6 +9,7 @@ import { HomeArtworkModulesFragmentContainer } from "./Components/HomeArtworkMod
 import { HomeFeaturedCategoriesRailQueryRenderer } from "./Components/HomeFeaturedCategoriesRail"
 import { HomeHeroUnitFragmentContainer } from "./Components/HomeHeroUnit"
 import { HomeInfoBlurb } from "./Components/HomeInfoBlurb"
+import { HomeFeaturedShowsLazyQueryRenderer } from "./Components/HomeFeaturedShows"
 
 interface HomeAppProps {
   homePage: HomeApp_homePage
@@ -41,6 +42,8 @@ export const HomeApp: React.FC<HomeAppProps> = ({ homePage }) => {
         {!isLoggedIn && <HomeFeaturedCategoriesRailQueryRenderer />}
 
         <HomeArtworkModulesFragmentContainer homePage={homePage} />
+
+        <HomeFeaturedShowsLazyQueryRenderer />
       </Join>
     </>
   )
