@@ -69,10 +69,14 @@ fragment HomeArtworkModuleContext_context on HomePageArtworkModuleContext {
       id
     }
   }
-  ... on FollowArtists {
-    counts {
-      artists
+  ... on TrendingArtists {
+    artists {
+      href
+      name
+      id
     }
+  }
+  ... on FollowArtists {
     artists {
       href
       name
@@ -115,6 +119,22 @@ v4 = [
   (v3/*: any*/),
   (v1/*: any*/),
   (v0/*: any*/)
+],
+v5 = [
+  {
+    "alias": null,
+    "args": null,
+    "concreteType": "Artist",
+    "kind": "LinkedField",
+    "name": "artists",
+    "plural": true,
+    "selections": [
+      (v1/*: any*/),
+      (v3/*: any*/),
+      (v0/*: any*/)
+    ],
+    "storageKey": null
+  }
 ];
 return {
   "fragment": {
@@ -298,40 +318,12 @@ return {
                   },
                   {
                     "kind": "InlineFragment",
-                    "selections": [
-                      {
-                        "alias": null,
-                        "args": null,
-                        "concreteType": "FollowArtistCounts",
-                        "kind": "LinkedField",
-                        "name": "counts",
-                        "plural": false,
-                        "selections": [
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "artists",
-                            "storageKey": null
-                          }
-                        ],
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "concreteType": "Artist",
-                        "kind": "LinkedField",
-                        "name": "artists",
-                        "plural": true,
-                        "selections": [
-                          (v1/*: any*/),
-                          (v3/*: any*/),
-                          (v0/*: any*/)
-                        ],
-                        "storageKey": null
-                      }
-                    ],
+                    "selections": (v5/*: any*/),
+                    "type": "TrendingArtists"
+                  },
+                  {
+                    "kind": "InlineFragment",
+                    "selections": (v5/*: any*/),
                     "type": "FollowArtists"
                   }
                 ],
@@ -351,7 +343,7 @@ return {
     "metadata": {},
     "name": "HomeArtworkModuleContext_Test_Query",
     "operationKind": "query",
-    "text": "query HomeArtworkModuleContext_Test_Query {\n  homePage {\n    artworkModules {\n      context {\n        __typename\n        ...HomeArtworkModuleContext_context\n        ... on Node {\n          id\n        }\n      }\n      id\n    }\n  }\n}\n\nfragment HomeArtworkModuleContext_context on HomePageArtworkModuleContext {\n  __typename\n  ... on Sale {\n    href\n    liveStartAt(format: \"MMM D\")\n    startAt(format: \"MMM D\")\n    endAt(format: \"MMM D\")\n  }\n  ... on Fair {\n    href\n    exhibitionPeriod\n  }\n  ... on Gene {\n    href\n  }\n  ... on HomePageRelatedArtistArtworkModule {\n    artist {\n      name\n      href\n      id\n    }\n    basedOn {\n      name\n      href\n      id\n    }\n  }\n  ... on HomePageFollowedArtistArtworkModule {\n    artist {\n      href\n      id\n    }\n  }\n  ... on FollowArtists {\n    counts {\n      artists\n    }\n    artists {\n      href\n      name\n      id\n    }\n  }\n}\n"
+    "text": "query HomeArtworkModuleContext_Test_Query {\n  homePage {\n    artworkModules {\n      context {\n        __typename\n        ...HomeArtworkModuleContext_context\n        ... on Node {\n          id\n        }\n      }\n      id\n    }\n  }\n}\n\nfragment HomeArtworkModuleContext_context on HomePageArtworkModuleContext {\n  __typename\n  ... on Sale {\n    href\n    liveStartAt(format: \"MMM D\")\n    startAt(format: \"MMM D\")\n    endAt(format: \"MMM D\")\n  }\n  ... on Fair {\n    href\n    exhibitionPeriod\n  }\n  ... on Gene {\n    href\n  }\n  ... on HomePageRelatedArtistArtworkModule {\n    artist {\n      name\n      href\n      id\n    }\n    basedOn {\n      name\n      href\n      id\n    }\n  }\n  ... on HomePageFollowedArtistArtworkModule {\n    artist {\n      href\n      id\n    }\n  }\n  ... on TrendingArtists {\n    artists {\n      href\n      name\n      id\n    }\n  }\n  ... on FollowArtists {\n    artists {\n      href\n      name\n      id\n    }\n  }\n}\n"
   }
 };
 })();

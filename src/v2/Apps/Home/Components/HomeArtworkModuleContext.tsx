@@ -51,6 +51,7 @@ const HomeArtworkModuleContext: React.FC<HomeArtworkModuleContextProps> = ({
         </Flex>
       )
     }
+
     case "Sale": {
       return (
         <Flex justifyContent="space-between">
@@ -84,6 +85,7 @@ const HomeArtworkModuleContext: React.FC<HomeArtworkModuleContextProps> = ({
         </Flex>
       )
     }
+
     case "Gene": {
       return (
         <Flex justifyContent="space-between">
@@ -149,7 +151,8 @@ const HomeArtworkModuleContext: React.FC<HomeArtworkModuleContextProps> = ({
       )
     }
 
-    case "FollowArtists": {
+    case "FollowArtists":
+    case "TrendingArtists": {
       return (
         <>
           <Flex justifyContent="space-between">
@@ -195,6 +198,7 @@ const HomeArtworkModuleContext: React.FC<HomeArtworkModuleContextProps> = ({
         </>
       )
     }
+
     default:
       return <Text variant="lg">{title}</Text>
   }
@@ -234,10 +238,13 @@ export const HomeArtworkModuleContextFragmentContainer = createFragmentContainer
             href
           }
         }
-        ... on FollowArtists {
-          counts {
-            artists
+        ... on TrendingArtists {
+          artists {
+            href
+            name
           }
+        }
+        ... on FollowArtists {
           artists {
             href
             name

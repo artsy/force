@@ -20,9 +20,11 @@ import { HomeArtworkModuleContextFragmentContainer } from "./HomeArtworkModuleCo
 const ARTWORK_MODULES = [
   "current_fairs",
   "followed_artist",
+  "followed_artists",
   "generic_gene", // GENERIC_GENES
   "genes", // FOLLOWED_GENES
   "live_auctions",
+  "popular_artists",
   "recently_viewed_works",
   "recommended_works",
   "related_artists",
@@ -31,12 +33,7 @@ const ARTWORK_MODULES = [
   "similar_to_saved_works",
 ] as const
 
-const UNIMPLEMENTED_MODULES = [
-  "active_bids",
-  "followed_artists",
-  "followed_galleries",
-  "popular_artists",
-] as const
+const UNIMPLEMENTED_MODULES = ["active_bids", "followed_galleries"] as const
 
 const CONTEXT_MODULES: Record<
   typeof ARTWORK_MODULES[number],
