@@ -14,6 +14,18 @@ Tell us when we can remove this hack.
 
 > 👀 When adding a new item, see comment on top of file for template.
 
+## patches/react-spring+8.0.27.patch
+
+#### Explanation/Context:
+
+The `react-spring` library leaks locally due to a cleanup routine that only executes in `componentWillUnmount`, this patches the controller cache `Set` to be a `WeakSet` so that references are no longer held onto when the components have been garbage collected.
+
+Slack: https://artsy.slack.com/archives/CA8SANW3W/p1624453974296000
+
+#### When can we remove this:
+
+When we have removed the references to `react-spring` from `@artsy/palette`
+
 ## patches/relay-mock-network-layer+2.0.0.patch
 
 #### Explanation/Context:

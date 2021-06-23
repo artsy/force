@@ -1,0 +1,13 @@
+diff --git a/node_modules/react-spring/web.cjs.js b/node_modules/react-spring/web.cjs.js
+index bb958d1..8e3ce85 100644
+--- a/node_modules/react-spring/web.cjs.js
++++ b/node_modules/react-spring/web.cjs.js
+@@ -424,7 +424,7 @@ var createAnimatedComponent = function createAnimatedComponent(Component) {
+ };
+ 
+ var active = false;
+-var controllers = new Set();
++var controllers = new WeakSet();
+ 
+ var update = function update() {
+   if (!active) return false;
