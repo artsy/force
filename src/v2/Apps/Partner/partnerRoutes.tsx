@@ -169,7 +169,7 @@ export const partnerRoutes: AppRouteConfig[] = [
           query partnerRoutes_ShowsQuery($partnerId: String!) {
             partner(id: $partnerId) @principalField {
               counts {
-                currentDisplayableShows
+                displayableShows
               }
               ...Shows_partner
             }
@@ -187,10 +187,10 @@ export const partnerRoutes: AppRouteConfig[] = [
           }
 
           const {
-            counts: { currentDisplayableShows },
+            counts: { displayableShows },
           } = partner
 
-          if (!currentDisplayableShows) {
+          if (!displayableShows) {
             throw new RedirectException(
               `/partner/${match.params.partnerId}`,
               302

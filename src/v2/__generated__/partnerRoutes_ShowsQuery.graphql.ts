@@ -9,7 +9,7 @@ export type partnerRoutes_ShowsQueryVariables = {
 export type partnerRoutes_ShowsQueryResponse = {
     readonly partner: {
         readonly counts: {
-            readonly currentDisplayableShows: number | null;
+            readonly displayableShows: number | null;
         } | null;
         readonly " $fragmentRefs": FragmentRefs<"Shows_partner">;
     } | null;
@@ -27,7 +27,7 @@ query partnerRoutes_ShowsQuery(
 ) {
   partner(id: $partnerId) @principalField {
     counts {
-      currentDisplayableShows
+      displayableShows
     }
     ...Shows_partner
     id
@@ -138,7 +138,7 @@ v2 = {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "currentDisplayableShows",
+      "name": "displayableShows",
       "storageKey": null
     }
   ],
@@ -518,9 +518,9 @@ return {
     "metadata": {},
     "name": "partnerRoutes_ShowsQuery",
     "operationKind": "query",
-    "text": "query partnerRoutes_ShowsQuery(\n  $partnerId: String!\n) {\n  partner(id: $partnerId) @principalField {\n    counts {\n      currentDisplayableShows\n    }\n    ...Shows_partner\n    id\n  }\n}\n\nfragment ShowBanner_show on Show {\n  slug\n  name\n  href\n  isFairBooth\n  exhibitionPeriod\n  status\n  description\n  location {\n    city\n    id\n  }\n  coverImage {\n    medium: cropped(width: 600, height: 480) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ShowCard_show on Show {\n  href\n  name\n  isFairBooth\n  exhibitionPeriod\n  coverImage {\n    medium: cropped(width: 263, height: 222) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ShowEvents_edges on ShowEdge {\n  node {\n    internalID\n    ...ShowCard_show\n    id\n  }\n}\n\nfragment Shows_partner on Partner {\n  slug\n  featuredEvents: showsConnection(first: 1, status: ALL, sort: FEATURED_DESC_END_AT_DESC, isDisplayable: true) {\n    edges {\n      node {\n        isFeatured\n        internalID\n        ...ShowBanner_show\n        id\n      }\n    }\n  }\n  currentEvents: showsConnection(first: 12, status: RUNNING, isDisplayable: true) {\n    edges {\n      node {\n        internalID\n        id\n      }\n      ...ShowEvents_edges\n    }\n  }\n  upcomingEvents: showsConnection(first: 12, status: UPCOMING, isDisplayable: true) {\n    edges {\n      node {\n        internalID\n        id\n      }\n      ...ShowEvents_edges\n    }\n  }\n}\n"
+    "text": "query partnerRoutes_ShowsQuery(\n  $partnerId: String!\n) {\n  partner(id: $partnerId) @principalField {\n    counts {\n      displayableShows\n    }\n    ...Shows_partner\n    id\n  }\n}\n\nfragment ShowBanner_show on Show {\n  slug\n  name\n  href\n  isFairBooth\n  exhibitionPeriod\n  status\n  description\n  location {\n    city\n    id\n  }\n  coverImage {\n    medium: cropped(width: 600, height: 480) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ShowCard_show on Show {\n  href\n  name\n  isFairBooth\n  exhibitionPeriod\n  coverImage {\n    medium: cropped(width: 263, height: 222) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ShowEvents_edges on ShowEdge {\n  node {\n    internalID\n    ...ShowCard_show\n    id\n  }\n}\n\nfragment Shows_partner on Partner {\n  slug\n  featuredEvents: showsConnection(first: 1, status: ALL, sort: FEATURED_DESC_END_AT_DESC, isDisplayable: true) {\n    edges {\n      node {\n        isFeatured\n        internalID\n        ...ShowBanner_show\n        id\n      }\n    }\n  }\n  currentEvents: showsConnection(first: 12, status: RUNNING, isDisplayable: true) {\n    edges {\n      node {\n        internalID\n        id\n      }\n      ...ShowEvents_edges\n    }\n  }\n  upcomingEvents: showsConnection(first: 12, status: UPCOMING, isDisplayable: true) {\n    edges {\n      node {\n        internalID\n        id\n      }\n      ...ShowEvents_edges\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'ff7b0a519f65c6624048573c83600f13';
+(node as any).hash = '1b9e1e09f499c2691cedced5d59664ec';
 export default node;
