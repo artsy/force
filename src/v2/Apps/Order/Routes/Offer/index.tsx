@@ -268,7 +268,7 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
               )}
               <Spacer mb={[2, 3]} />
               <Message p={[2, 3]}>
-                Please note that all offers are binding. If your offer is
+                Please note that all final offers are binding. If your offer is
                 accepted, your payment will be processed immediately.
                 <Text mt={1}>
                   Keep in mind making an offer doesn’t guarantee you the work,
