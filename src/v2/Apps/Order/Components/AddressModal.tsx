@@ -23,6 +23,7 @@ import { createUserAddress } from "v2/Apps/Order/Mutations/CreateUserAddress"
 import { SavedAddresses_me } from "v2/__generated__/SavedAddresses_me.graphql"
 import { AddressModalFields } from "v2/Components/Address/AddressModalFields"
 import { useSystemContext } from "v2/System/SystemContext"
+import { updateUserDefaultAddress } from "../Mutations/UpdateUserDefaultAddress"
 export interface Props {
   show: boolean
   closeModal: () => void
@@ -75,7 +76,7 @@ export const AddressModal: React.FC<Props> = ({
   // @ts-expect-error STRICT_NULL_CHECK
   const [createUpdateError, setCreateUpdateError] = useState<string>(null)
   const [showDialog, setShowDialog] = useState<boolean>(false)
-
+  const [isDefault, setIsDefault] = useState<boolean>(false)
   return (
     <>
       <Modal
@@ -128,6 +129,14 @@ export const AddressModal: React.FC<Props> = ({
                   handleSuccess,
                   handleError
                 )
+            isDefault &&
+              updateUserDefaultAddress(
+                // @ts-expect-error STRICT_NULL_CHECK
+                relayEnvironment,
+                address.internalID,
+                onSuccess,
+                onError
+              )
           }}
         >
           {(formik: FormikProps<SavedAddressType>) => (
@@ -152,6 +161,7 @@ export const AddressModal: React.FC<Props> = ({
                 <Checkbox
                   onSelect={selected => {
                     formik.setFieldValue("isDefault", selected)
+                    setIsDefault(selected)
                   }}
                   selected={formik.values?.isDefault}
                   data-test="set-as-default-checkbox"
