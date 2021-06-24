@@ -5,6 +5,7 @@ export const IGNORED_ERRORS = [
   'Blocked a frame with origin "https://www.artsy.net" from accessing a cross-origin frame. Protocols, domains, and ports must match.',
   "cancelled",
   "Failed to fetch",
+  "gpt/pubads_impl",
   "Non-Error exception captured",
   "Non-Error promise rejection captured",
   "Origin is not allowed by Access-Control-Allow-Origin",
