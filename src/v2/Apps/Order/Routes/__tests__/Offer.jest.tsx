@@ -75,6 +75,12 @@ describe("Offer InitialMutation", () => {
       page.setOfferAmount(1023)
       expect(page.transactionSummary.text()).toContain("Your offer$1,023.00")
     })
+
+    it("shows final offer binding notice", () => {
+      expect(page.text()).toContain(
+        "Please note that all final offers are binding"
+      )
+    })
   })
 
   describe("a non-usd currency", () => {
