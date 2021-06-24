@@ -4774,6 +4774,18 @@ enum ConsignmentSubmissionSort {
   # sort by category in descending order
   CATEGORY_DESC
 
+  # sort by coa_by_authenticating_body in ascending order
+  COA_BY_AUTHENTICATING_BODY_ASC
+
+  # sort by coa_by_authenticating_body in descending order
+  COA_BY_AUTHENTICATING_BODY_DESC
+
+  # sort by coa_by_gallery in ascending order
+  COA_BY_GALLERY_ASC
+
+  # sort by coa_by_gallery in descending order
+  COA_BY_GALLERY_DESC
+
   # sort by condition_report in ascending order
   CONDITION_REPORT_ASC
 
