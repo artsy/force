@@ -44,7 +44,7 @@ describe("Details", () => {
       const wrapper = await getWrapper(artworkInAuction, props)
       const html = wrapper.html()
 
-      expect(html).not.toContain("Contact for price")
+      expect(html).not.toContain("Contact for Price")
       expect(html).not.toContain("Gerhard Richter")
       expect(html).not.toContain("This Really Great Gallery")
       expect(html).toContain("$2,600")
@@ -114,7 +114,7 @@ describe("Details", () => {
       // @ts-expect-error STRICT_NULL_CHECK
       const wrapper = await getWrapper(data)
       const html = wrapper.html()
-      expect(html).toContain("Contact for price")
+      expect(html).toContain("Contact for Price")
     })
 
     it("shows sale message if sale open and no bids", async () => {
