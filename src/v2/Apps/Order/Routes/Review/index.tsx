@@ -41,6 +41,7 @@ import { TwoColumnLayout } from "../../Components/TwoColumnLayout"
 import { BuyerGuarantee } from "../../Components/BuyerGuarantee"
 import { createStripeWrapper } from "v2/Utils/createStripeWrapper"
 import type { Stripe, StripeElements } from "@stripe/stripe-js"
+import { withSystemContext } from "v2/System"
 
 export interface ReviewProps {
   stripe: Stripe
@@ -52,6 +53,7 @@ export interface ReviewProps {
   dialog: Dialog
   commitMutation: CommitMutation
   isCommittingMutation: boolean
+  isEigen: boolean | undefined
 }
 
 const logger = createLogger("Order/Routes/Review/index.tsx")
@@ -325,8 +327,9 @@ export class ReviewRoute extends Component<ReviewProps> {
   }
 
   render() {
-    const { order, isCommittingMutation } = this.props
-
+    const { order, isCommittingMutation, isEigen } = this.props
+    // const { isEigen } = useSystemContext()
+    console.log(this.props, "props")
     return (
       <Box data-test="orderReview">
         <Row>
@@ -348,12 +351,27 @@ export class ReviewRoute extends Component<ReviewProps> {
                     <Spacer mb={1} />
                     Please note that all offers are binding.
                   </Message>
-                  {order.mode === "OFFER" && (
-                    <OfferSummaryItem
-                      order={order}
-                      onChange={this.onChangeOffer}
-                    />
+                  {isEigen && (
+                    <>
+                      <Button
+                        size="large"
+                        width="100%"
+                        loading={isCommittingMutation}
+                        onClick={() => this.onSubmit()}
+                      >
+                        Submit
+                      </Button>
+                      <ConditionsOfSaleDisclaimer
+                        paddingY={2}
+                        textAlign="start"
+                      />
+                    </>
                   )}
+                  <OfferSummaryItem
+                    order={order}
+                    onChange={this.onChangeOffer}
+                  />
+
                   <ShippingSummaryItem
                     order={order}
                     onChange={this.onChangeShipping}
@@ -368,14 +386,16 @@ export class ReviewRoute extends Component<ReviewProps> {
                   {/* @ts-expect-error STRICT_NULL_CHECK */}
                   <ItemReview lineItem={order.lineItems.edges[0].node} />
                   <Spacer mb={3} />
-                  <Button
-                    size="large"
-                    width="100%"
-                    loading={isCommittingMutation}
-                    onClick={() => this.onSubmit()}
-                  >
-                    Submit
-                  </Button>
+                  {!isEigen && (
+                    <Button
+                      size="large"
+                      width="100%"
+                      loading={isCommittingMutation}
+                      onClick={() => this.onSubmit()}
+                    >
+                      Submit
+                    </Button>
+                  )}
                   <Spacer mb={2} />
                   <ConditionsOfSaleDisclaimer textAlign="center" />
                 </Media>
@@ -399,14 +419,16 @@ export class ReviewRoute extends Component<ReviewProps> {
               )}
               <Spacer mb={[2, 3]} />
               <Media at="xs">
-                <Button
-                  size="large"
-                  width="100%"
-                  loading={isCommittingMutation}
-                  onClick={() => this.onSubmit()}
-                >
-                  Submit
-                </Button>
+                {isEigen && (
+                  <Button
+                    size="large"
+                    width="100%"
+                    loading={isCommittingMutation}
+                    onClick={() => this.onSubmit()}
+                  >
+                    Submit
+                  </Button>
+                )}
                 <Spacer mb={2} />
                 <ConditionsOfSaleDisclaimer />
               </Media>
@@ -418,8 +440,11 @@ export class ReviewRoute extends Component<ReviewProps> {
   }
 }
 
+// export const
 export const ReviewFragmentContainer = createFragmentContainer(
-  createStripeWrapper(injectCommitMutation(injectDialog(ReviewRoute)) as any),
+  withSystemContext(
+    createStripeWrapper(injectCommitMutation(injectDialog(ReviewRoute)) as any)
+  ),
   {
     order: graphql`
       fragment Review_order on CommerceOrder {

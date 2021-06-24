@@ -18,7 +18,7 @@ export const MinimalNavBar: React.FC<MinimalNavBarProps> = props => {
       left={0}
       top={0}
       width="100%"
-      pt={4}
+      pt={isEigen ? 2 : 4}
     >
       {!isEigen && (
         <Box height={70} px={[2, 4]}>
