@@ -42,7 +42,7 @@ export const NavigationTabs: React.FC<NavigationTabsProps> = ({ partner }) => {
         name: "Shows",
         href: route("/shows"),
         exact: true,
-        hidden: !counts?.currentDisplayableShows,
+        hidden: !counts?.displayableShows,
       },
       {
         name: partnerType === "Brand" ? "Shop" : "Works",
@@ -123,7 +123,7 @@ export const NavigationTabsFragmentContainer = createFragmentContainer(
         displayWorksSection
         counts {
           eligibleArtworks
-          currentDisplayableShows
+          displayableShows
         }
         locations: locationsConnection(first: 20) {
           totalCount
