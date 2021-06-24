@@ -2,6 +2,7 @@ import React, { useState } from "react"
 import {
   Button,
   Clickable,
+  Checkbox,
   Dialog,
   Flex,
   Input,
@@ -147,6 +148,17 @@ export const AddressModal: React.FC<Props> = ({
                 error={formik.touched.phoneNumber && formik.errors.phoneNumber}
                 value={formik.values?.phoneNumber || ""}
               />
+              {!address?.isDefault && (
+                <Checkbox
+                  onSelect={selected => {
+                    formik.setFieldValue("isDefault", selected)
+                  }}
+                  selected={formik.values?.isDefault}
+                  data-test="set-as-default-checkbox"
+                >
+                  Set as default
+                </Checkbox>
+              )}
               {!createMutation && (
                 <Flex mt={2} flexDirection="column" alignItems="center">
                   <Clickable onClick={() => setShowDialog(true)}>
