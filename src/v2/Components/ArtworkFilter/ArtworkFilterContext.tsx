@@ -1,5 +1,11 @@
 import { omit } from "lodash"
-import React, { useContext, useEffect, useReducer, useState } from "react"
+import React, {
+  useContext,
+  useEffect,
+  useReducer,
+  useRef,
+  useState,
+} from "react"
 import useDeepCompareEffect from "use-deep-compare-effect"
 import { hasFilters } from "./Utils/hasFilters"
 import { isDefaultFilter } from "./Utils/isDefaultFilter"
@@ -226,6 +232,8 @@ export const ArtworkFilterContextProvider: React.FC<
 
   const [stagedArtworkFilterState, stage] = useReducer(artworkFilterReducer, {})
 
+  const didMountRef = useRef(false)
+
   // TODO: Consolidate this into additional reducer
   const [filterAggregations, setAggregations] = useState(aggregations)
   const [artworkCounts, setCounts] = useState(counts)
@@ -234,7 +242,10 @@ export const ArtworkFilterContextProvider: React.FC<
   )
 
   useEffect(() => {
-    setAggregations(aggregations)
+    if (didMountRef.current) {
+      setAggregations(aggregations)
+    }
+    didMountRef.current = true
   }, [aggregations])
 
   useDeepCompareEffect(() => {
