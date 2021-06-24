@@ -34,7 +34,7 @@ const ArtistWorksForSaleRail: React.FC<ArtistWorksForSaleRailProps> = ({
     <>
       <Flex justifyContent="space-between">
         <Text variant="lg" mb={4} as="h2">
-          Works for Sale
+          Works for sale
         </Text>
 
         <RouterLink
