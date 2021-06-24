@@ -1,3 +1,4 @@
+/* eslint-disable jest/expect-expect */
 import { artworkGridRenders } from "../helpers/artworkGridRenders"
 
 describe("/collect", () => {

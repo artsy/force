@@ -1,5 +1,4 @@
-import { artworkGridRenders } from "../helpers/artworkGridRenders"
-
+/* eslint-disable jest/expect-expect */
 describe("/artist/:id", () => {
   before(() => {
     cy.visit("/artist/pablo-picasso")
