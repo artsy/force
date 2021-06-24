@@ -197,7 +197,7 @@ const BioExample = () => {
       <Text variant="sm">
         £549k Auction Record
         <br />
-        Blue Chip Representation
+        Blue-Chip Representation
       </Text>
     </>
   )

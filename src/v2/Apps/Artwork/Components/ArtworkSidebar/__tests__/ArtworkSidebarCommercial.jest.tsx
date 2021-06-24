@@ -118,7 +118,7 @@ describe("ArtworkSidebarCommercial", () => {
 
     expect(wrapper.text()).not.toContain("20 × 24 in")
     expect(wrapper.text()).not.toContain("50.8 × 61 cm")
-    expect(wrapper.text()).toContain("Contact gallery")
+    expect(wrapper.text()).toContain("Contact Gallery")
   })
 
   it("displays artwork enrolled in Buy Now", async () => {
@@ -151,7 +151,7 @@ describe("ArtworkSidebarCommercial", () => {
     const wrapper = getWrapper(artwork)
 
     expect(wrapper.text()).toContain("Make offer")
-    expect(wrapper.text()).not.toContain("Contact gallery")
+    expect(wrapper.text()).not.toContain("Contact Gallery")
   })
 
   it("displays artwork enrolled in both Buy Now and Make Offer", async () => {

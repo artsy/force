@@ -172,7 +172,7 @@ const InDemandNowLarge: React.FC<
         </Text>
         <Flex>
           <BlueChipIcon width={15} height={15} fill="white100" mr={0.3} />{" "}
-          <Text variant="small">Blue Chip Representation</Text>
+          <Text variant="small">Blue-Chip Representation</Text>
         </Flex>
 
         <Spacer mt={4} />
@@ -291,7 +291,7 @@ const InDemandNowSmall: React.FC<
         </Text>
         <Flex>
           <BlueChipIcon width={15} height={15} fill="white100" mr={0.3} />{" "}
-          <Text variant="small">Blue Chip Representation</Text>
+          <Text variant="small">Blue-Chip Representation</Text>
         </Flex>
 
         <Spacer mt={3} />

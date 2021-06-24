@@ -12,7 +12,7 @@ export interface MarketInsightsProps {
 }
 
 export const CATEGORIES = {
-  "blue-chip": "Blue chip",
+  "blue-chip": "Blue-chip",
   "top-established": "Established",
   "top-emerging": "Emerging",
 }

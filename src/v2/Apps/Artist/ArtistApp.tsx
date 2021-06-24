@@ -62,7 +62,7 @@ const ArtistApp: React.FC<ArtistAppProps> = ({ artist, children, match }) => {
         {showArtworksTab && (
           <RouteTab to={`/artist/${artist.slug}/works-for-sale`}>
             {artist?.counts?.forSaleArtworks! > 0
-              ? `Works for sale (${artist?.counts?.forSaleArtworks?.toLocaleString()})`
+              ? `Works for Sale (${artist?.counts?.forSaleArtworks?.toLocaleString()})`
               : "Artworks"}
           </RouteTab>
         )}

@@ -66,7 +66,7 @@ const ArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {
                   color="black60"
                   textAlign={["center", "left"]}
                 >
-                  {formatFollowerCount(artist.counts.follows)} Following
+                  {formatFollowerCount(artist.counts.follows)} Followers
                 </Text>
               </Column>
             )}

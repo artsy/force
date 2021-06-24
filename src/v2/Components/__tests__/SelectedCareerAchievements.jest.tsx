@@ -39,7 +39,7 @@ describe("SelectedCareerAchievements", () => {
 
     const text = careerHighlightsText(wrapper)
 
-    expect(text).toContain("Blue chip representation")
+    expect(text).toContain("Blue-chip representation")
     expect(text).toContain("High auction record")
     expect(text).toContain("Collected by a major institution")
     expect(text).toContain("Solo show at a major institution")

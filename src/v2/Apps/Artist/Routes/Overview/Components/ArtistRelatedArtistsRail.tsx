@@ -32,7 +32,7 @@ const ArtistRelatedArtistsRail: React.FC<ArtistRelatedArtistsRailProps> = ({
   return (
     <>
       <Text variant="lg" mb={4} as="h2">
-        Related Artists
+        Related artists
       </Text>
 
       <Shelf alignItems="flex-start" data-test="relatedArtistsRail">

@@ -24,7 +24,7 @@ export interface SelectedCareerAchievementsProps extends SpaceProps {
 }
 
 const CATEGORIES = {
-  "blue-chip": "Blue chip representation",
+  "blue-chip": "Blue-chip representation",
   "top-established": "Established representation",
   "top-emerging": "Emerging representation",
 }
@@ -157,7 +157,7 @@ export class SelectedCareerAchievements extends React.Component<
         {this.props.onlyCareerHighlights ? (
           <>
             <Text variant="lg" mb={4}>
-              Career Highlights
+              Career highlights
             </Text>
             <Flex flexWrap="wrap" pr={2}>
               {this.props.artist?.insights?.map(insight => {

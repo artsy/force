@@ -28,7 +28,7 @@ describe("Artist Series Rail Item", () => {
     jest.clearAllMocks()
   })
 
-  it("tracks the analytics properties when an artwork is clicked on the Notable Works rail", () => {
+  it("tracks the analytics properties when an artwork is clicked on the Notable works rail", () => {
     const component = mount(
       <AnalyticsContext.Provider
         value={{
