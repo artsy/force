@@ -1,3 +1,4 @@
+/* eslint-disable jest/no-done-callback */
 /*
  * decaffeinate suggestions:
  * DS102: Remove unnecessary code created because of implicit returns
@@ -107,37 +108,6 @@ describe("SplitTest", function () {
       })
       adminTest.admin().should.be.true()
       return adminTest.outcome().should.equal("baz")
-    })
-  })
-
-  return describe("reflection", function () {
-    beforeEach(function () {
-      return (this.reflectionStub = sinon
-        .stub(this.SplitTest.prototype, "reflection")
-        .returns(true))
-    })
-
-    afterEach(function () {
-      return this.reflectionStub.restore()
-    })
-
-    it("outcome is set to control group if request comes from Reflection", function () {
-      const test = new this.SplitTest({
-        key: "foobar",
-        edge: "baz",
-        outcomes: { control: 10, qux: 90 },
-      })
-      return test.outcome().should.equal("control")
-    })
-
-    return it("outcome should be set to specified control group key", function () {
-      const test = new this.SplitTest({
-        key: "foobar",
-        edge: "baz",
-        control_group: "old",
-        outcomes: { old: 10, qux: 90 },
-      })
-      return test.outcome().should.equal("old")
     })
   })
 })

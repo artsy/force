@@ -18,7 +18,7 @@
 #   edge: 'new'
 #   dimension: 'dimension1' # Optional GA dimension
 #   scope: 'local' # Optionally disable global initialization
-#   control_group: 'old'  #Defaults to `control`, Reflection sees this.
+#   control_group: 'old'  #Defaults to `control`
 #
 # For equal weighting, add `weighting: 'equal'` and `outcomes` as an array.
 #

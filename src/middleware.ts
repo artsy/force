@@ -42,7 +42,6 @@ import { hardcodedRedirectsMiddleware } from "./lib/middleware/hardcodedRedirect
 import { localsMiddleware } from "./lib/middleware/locals"
 import { marketingModalsMiddleware } from "./lib/middleware/marketingModals"
 import { pageCacheMiddleware } from "./lib/middleware/pageCache"
-import { proxyReflectionMiddleware } from "./lib/middleware/proxyReflection"
 import { sameOriginMiddleware } from "./lib/middleware/sameOrigin"
 import { unsupportedBrowserMiddleware } from "./lib/middleware/unsupportedBrowser"
 import { backboneSync } from "lib/backboneSync"
@@ -92,8 +91,6 @@ export function initializeMiddleware(app) {
 
   // Sharify and async locals
   app.use(bootstrapSharifyAndContextLocalsMiddleware)
-
-  app.use(proxyReflectionMiddleware)
 
   app.use(
     morganMiddleware({

@@ -52,7 +52,7 @@ Once this step is complete, an `sd` variable will be present for all users ident
 
 - `scope` in some cases you may only want to initialize a test once a certain action is triggered (ie: landing on a specific page), if that's the case passing `scope: 'local'` will not globally intialize the test.
 
-- `control_group` is what Reflection and other crawlers will see. Defaults to 'control'.
+- `control_group` is what crawlers will see. Defaults to 'control'.
 
 - `weighting` when specified as 'equal', will equally weight `outcomes`.
 
