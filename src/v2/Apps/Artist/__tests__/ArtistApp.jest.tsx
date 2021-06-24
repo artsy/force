@@ -119,7 +119,7 @@ describe("ArtistApp", () => {
           },
         }),
       })
-      expect(wrapper.find("RouteTab").at(1).text()).toBe("Works for sale (20)")
+      expect(wrapper.find("RouteTab").at(1).text()).toBe("Works for Sale (20)")
     })
   })
 

@@ -58,7 +58,7 @@ describe("ArtistHeader", () => {
     expect(
       wrapper.find("ArtistFollowArtistButtonFragmentContainer").length
     ).toBe(1)
-    expect(wrapper.text()).toContain("111 Following")
+    expect(wrapper.text()).toContain("111 Followers")
     expect(wrapper.text()).toContain("biographyBlurbText")
     expect(
       wrapper.find("SelectedCareerAchievementsFragmentContainer").length
@@ -82,6 +82,6 @@ describe("ArtistHeader", () => {
       }),
     })
 
-    expect(wrapper.text()).not.toContain("0 Following")
+    expect(wrapper.text()).not.toContain("0 Followers")
   })
 })
