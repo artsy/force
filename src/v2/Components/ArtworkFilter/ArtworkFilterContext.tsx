@@ -1,11 +1,5 @@
 import { omit } from "lodash"
-import React, {
-  useContext,
-  useEffect,
-  useReducer,
-  useRef,
-  useState,
-} from "react"
+import React, { useContext, useReducer, useState } from "react"
 import useDeepCompareEffect from "use-deep-compare-effect"
 import { hasFilters } from "./Utils/hasFilters"
 import { isDefaultFilter } from "./Utils/isDefaultFilter"
@@ -136,7 +130,6 @@ export interface ArtworkFilterContextProps {
   // Sorting
   sortOptions?: SortOptions
   aggregations?: Aggregations
-  setAggregations?: (aggregations: Aggregations) => void
   counts?: Counts
   setCounts?: (counts: Counts) => void
 
@@ -232,21 +225,11 @@ export const ArtworkFilterContextProvider: React.FC<
 
   const [stagedArtworkFilterState, stage] = useReducer(artworkFilterReducer, {})
 
-  const didMountRef = useRef(false)
-
   // TODO: Consolidate this into additional reducer
-  const [filterAggregations, setAggregations] = useState(aggregations)
   const [artworkCounts, setCounts] = useState(counts)
   const [shouldStageFilterChanges, setShouldStageFilterChanges] = useState(
     false
   )
-
-  useEffect(() => {
-    if (didMountRef.current) {
-      setAggregations(aggregations)
-    }
-    didMountRef.current = true
-  }, [aggregations])
 
   useDeepCompareEffect(() => {
     if (onChange) {
@@ -280,8 +263,7 @@ export const ArtworkFilterContextProvider: React.FC<
 
     // Sorting
     sortOptions,
-    aggregations: filterAggregations,
-    setAggregations,
+    aggregations,
     counts: artworkCounts,
     setCounts,
 
