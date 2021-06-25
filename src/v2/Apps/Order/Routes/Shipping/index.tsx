@@ -331,8 +331,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
     } = this.state
     const artwork = get(
       this.props,
-      // @ts-expect-error STRICT_NULL_CHECK
-      props => props.order.lineItems.edges[0]?.node.artwork
+      props => props.order.lineItems?.edges?.[0]?.node?.artwork
     )
     const addressList = this.getAddressList()
 

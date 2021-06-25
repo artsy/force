@@ -220,7 +220,6 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
         address={address}
         onSuccess={onSuccess}
         onDeleteAddress={handleDeleteAddress}
-        // onSuccess={() => handleDeleteAddress(address.internalID)}
         onError={onError}
         me={me}
       />
