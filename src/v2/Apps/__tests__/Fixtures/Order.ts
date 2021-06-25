@@ -280,6 +280,7 @@ export const UntouchedOfferOrder = {
   isInquiryOrder: false,
   mode: "OFFER",
   myLastOffer: null,
+  conversation: null,
   offers: {
     edges: [{ node: OfferWithTotals }],
   },
@@ -349,6 +350,9 @@ export const UntouchedOfferOrderWithRange = {
 export const OfferOrderWithOffers = {
   ...UntouchedOfferOrder,
   lastOffer: OfferWithTotals,
+  conversation: {
+    internalID: "5665",
+  },
   myLastOffer: {
     ...OfferWithTotals,
     hasDefiniteTotal: true,
@@ -362,6 +366,9 @@ export const OfferOrderWithOffers = {
 export const OfferOrderWithOffersAndNote = {
   ...UntouchedOfferOrder,
   lastOffer: OfferWithTotals,
+  conversation: {
+    internalID: "5665",
+  },
   myLastOffer: {
     ...OfferWithTotals,
     hasDefiniteTotal: true,
@@ -507,6 +514,9 @@ export const OfferOrderWithMissingMetadata = {
     shippingTotal: null,
     taxTotal: null,
     taxTotalCents: null,
+  },
+  conversation: {
+    internalID: "5665",
   },
   myLastOffer: {
     ...OfferWithoutTotals,
