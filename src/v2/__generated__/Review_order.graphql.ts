@@ -22,6 +22,9 @@ export type Review_order = {
             } | null;
         } | null> | null;
     } | null;
+    readonly conversation?: {
+        readonly internalID: string | null;
+    } | null;
     readonly myLastOffer?: {
         readonly hasDefiniteTotal: boolean;
         readonly internalID: string;
@@ -148,6 +151,18 @@ return {
         {
           "alias": null,
           "args": null,
+          "concreteType": "Conversation",
+          "kind": "LinkedField",
+          "name": "conversation",
+          "plural": false,
+          "selections": [
+            (v0/*: any*/)
+          ],
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
           "concreteType": "CommerceOffer",
           "kind": "LinkedField",
           "name": "myLastOffer",
@@ -196,5 +211,5 @@ return {
   "type": "CommerceOrder"
 };
 })();
-(node as any).hash = '18e203a8f4bcd919bd1c8690df82043d';
+(node as any).hash = 'ce7f4c4cb962ff0aaf28261f0faf13a1';
 export default node;
