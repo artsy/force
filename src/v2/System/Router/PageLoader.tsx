@@ -1,7 +1,6 @@
 import { Box, ProgressBar } from "@artsy/palette"
 import { random } from "lodash"
 import React from "react"
-import { Spring } from "react-spring/renderprops.cjs"
 
 interface PageLoaderProps {
   className?: string
@@ -69,34 +68,14 @@ export class PageLoader extends React.Component<
   render() {
     const { showBackground, style, className } = this.props
     const { progress } = this.state
-    const isComplete = progress === 100
-
-    const animation = {
-      from: {
-        opacity: 0,
-        top: 0,
-      },
-      to: {
-        opacity: 1,
-        top: 0,
-      },
-    }
 
     return (
       <Box width="100%" style={style} className={className}>
-        <Spring from={animation.from} to={animation.to} reverse={isComplete}>
-          {animationProps => {
-            return (
-              <Box style={animationProps} position="relative">
-                <ProgressBar
-                  percentComplete={progress}
-                  highlight="purple100"
-                  showBackground={showBackground}
-                />
-              </Box>
-            )
-          }}
-        </Spring>
+        <ProgressBar
+          percentComplete={progress}
+          highlight="purple100"
+          showBackground={showBackground}
+        />
       </Box>
     )
   }

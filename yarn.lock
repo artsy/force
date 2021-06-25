@@ -65,10 +65,10 @@
   dependencies:
     uuid "^8.3.0"
 
-"@artsy/palette@14.37.0":
-  version "14.37.0"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-14.37.0.tgz#422bb9c9d3173b90d86b80b1d04d22c736d01c1a"
-  integrity sha512-cV1+2RBDB07cc9BzkOyP8zfvz8gwTe0h+mbqNEJ7chpRjU69GleYqMt92LyhvGqdO9Jo8V3OXzklCtMVvUG6wg==
+"@artsy/palette@14.38.0":
+  version "14.38.0"
+  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-14.38.0.tgz#d762916fa271ca28c8f770855e58f48f56981018"
+  integrity sha512-nxK7BL75yOm9x4gMIpKsrjSkaYltI3tH7QF+2S3EF8ZBJLN5BafPH1rjFX7qppq3cK6eHrdZwR5/wnsipojtug==
   dependencies:
     "@seznam/compose-react-refs" "^1.0.6"
     "@styled-system/theme-get" "^5.1.2"
@@ -80,7 +80,6 @@
     rc-slider "^8.6.2"
     react-lazy-load-image-component "1.5.0"
     react-remove-scroll "^2.3.0"
-    react-spring "^8.0.27"
     styled-bootstrap-grid "3.1.0"
     styled-system "^5.1.5"
     trunc-html "^1.1.2"
@@ -108,7 +107,7 @@
     ip "1.1.5"
     mailcheck "1.1.1"
     passport "0.3.2"
-    passport-apple "git+https://github.com/artsy/passport-apple.git#f41adb7822c8344b72bc36a7d68312f6592cb14f"
+    passport-apple "https://github.com/artsy/passport-apple#f41adb7822c8344b72bc36a7d68312f6592cb14f"
     passport-facebook "2.1.1"
     superagent "1.8.4"
     underscore.string "3.3.4"
@@ -15316,7 +15315,6 @@ pascalcase@^0.1.1:
 
 "passport-apple@git+https://github.com/artsy/passport-apple.git#f41adb7822c8344b72bc36a7d68312f6592cb14f":
   version "1.1.2"
-  uid f41adb7822c8344b72bc36a7d68312f6592cb14f
   resolved "git+https://github.com/artsy/passport-apple.git#f41adb7822c8344b72bc36a7d68312f6592cb14f"
   dependencies:
     jsonwebtoken "^8.5.1"
@@ -16831,14 +16829,6 @@ react-slick@^0.23.2:
     lodash.debounce "^4.0.8"
     prettier "^1.14.3"
     resize-observer-polyfill "^1.5.0"
-
-react-spring@^8.0.27:
-  version "8.0.27"
-  resolved "https://registry.yarnpkg.com/react-spring/-/react-spring-8.0.27.tgz#97d4dee677f41e0b2adcb696f3839680a3aa356a"
-  integrity sha512-nDpWBe3ZVezukNRandTeLSPcwwTMjNVu1IDq9qA/AMiUqHuRN4BeSWvKr3eIxxg1vtiYiOLy4FqdfCP5IoP77g==
-  dependencies:
-    "@babel/runtime" "^7.3.1"
-    prop-types "^15.5.8"
 
 react-static-container@^1.0.2:
   version "1.0.2"
