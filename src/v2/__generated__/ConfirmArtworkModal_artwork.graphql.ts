@@ -8,15 +8,7 @@ export type ConfirmArtworkModal_artwork = {
     readonly isEdition: boolean | null;
     readonly editionSets: ReadonlyArray<{
         readonly internalID: string;
-        readonly editionOf: string | null;
-        readonly isOfferableFromInquiry: boolean | null;
-        readonly listPrice: {
-            readonly display?: string | null;
-        } | null;
-        readonly dimensions: {
-            readonly cm: string | null;
-            readonly in: string | null;
-        } | null;
+        readonly " $fragmentRefs": FragmentRefs<"EditionSelectBox_edition">;
     } | null> | null;
     readonly " $fragmentRefs": FragmentRefs<"CollapsibleArtworkDetails_artwork" | "ConfirmArtworkButton_artwork">;
     readonly " $refType": "ConfirmArtworkModal_artwork";
@@ -36,16 +28,7 @@ var v0 = {
   "kind": "ScalarField",
   "name": "internalID",
   "storageKey": null
-},
-v1 = [
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "display",
-    "storageKey": null
-  }
-];
+};
 return {
   "argumentDefinitions": [],
   "kind": "Fragment",
@@ -70,64 +53,9 @@ return {
       "selections": [
         (v0/*: any*/),
         {
-          "alias": null,
           "args": null,
-          "kind": "ScalarField",
-          "name": "editionOf",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "isOfferableFromInquiry",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "concreteType": null,
-          "kind": "LinkedField",
-          "name": "listPrice",
-          "plural": false,
-          "selections": [
-            {
-              "kind": "InlineFragment",
-              "selections": (v1/*: any*/),
-              "type": "Money"
-            },
-            {
-              "kind": "InlineFragment",
-              "selections": (v1/*: any*/),
-              "type": "PriceRange"
-            }
-          ],
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "concreteType": "dimensions",
-          "kind": "LinkedField",
-          "name": "dimensions",
-          "plural": false,
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "cm",
-              "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "in",
-              "storageKey": null
-            }
-          ],
-          "storageKey": null
+          "kind": "FragmentSpread",
+          "name": "EditionSelectBox_edition"
         }
       ],
       "storageKey": null
@@ -146,5 +74,5 @@ return {
   "type": "Artwork"
 };
 })();
-(node as any).hash = '8d9646495e546189524d9e579463a5e8';
+(node as any).hash = 'c0d50a29df5a5234fd379374324d3f3b';
 export default node;
