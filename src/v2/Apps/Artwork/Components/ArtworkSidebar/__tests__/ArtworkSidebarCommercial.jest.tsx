@@ -5,6 +5,7 @@ import {
   ArtworkOfferableAndInquireable,
   ArtworkSingleEditionHiddenAvailability,
   ArtworkSold,
+  ContactForPriceWork,
 } from "v2/Apps/__tests__/Fixtures/Artwork/ArtworkSidebar/ArtworkSidebarCommercial"
 
 import {
@@ -161,6 +162,14 @@ describe("ArtworkSidebarCommercial", () => {
 
     expect(wrapper.text()).toContain("Buy now")
     expect(wrapper.text()).toContain("Make offer")
+  })
+
+  it("displays artwork enrolled in contact for price", async () => {
+    const artwork = Object.assign({}, ContactForPriceWork)
+
+    const wrapper = getWrapper(artwork)
+
+    expect(wrapper.text()).toContain("Contact for Price")
   })
 
   it("creates a Buy Now order and redirects to the order page", () => {
