@@ -1,7 +1,6 @@
 import { Box, ProgressBar } from "@artsy/palette"
 import { random } from "lodash"
 import React from "react"
-import styled, { css, keyframes } from "styled-components"
 
 interface PageLoaderProps {
   className?: string
@@ -69,57 +68,15 @@ export class PageLoader extends React.Component<
   render() {
     const { showBackground, style, className } = this.props
     const { progress } = this.state
-    const isComplete = progress === 100
-
-    const animation = isComplete
-      ? ANIMATION_STATES.hidden
-      : ANIMATION_STATES.visible
 
     return (
       <Box width="100%" style={style} className={className}>
-        <AnimatedBox animation={animation} position="relative">
-          <ProgressBar
-            percentComplete={progress}
-            highlight="purple100"
-            showBackground={showBackground}
-          />
-        </AnimatedBox>
+        <ProgressBar
+          percentComplete={progress}
+          highlight="purple100"
+          showBackground={showBackground}
+        />
       </Box>
     )
   }
 }
-
-const fadein = keyframes`
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-`
-
-const fadeout = keyframes`
-0% {
-  opacity: 1;
-}
-100% {
-  opacity: 0;
-}
-`
-
-const ANIMATION_STATES = {
-  hidden: css`
-    ${fadeout} 0.1s linear;
-  `,
-  visible: css`
-    ${fadein} 0.1s linear;
-  `,
-}
-
-const AnimatedBox = styled(Box)<{
-  animation: any
-}>`
-  ${({ ...props }) => css`
-    animation: ${props.animation};
-  `}
-`
