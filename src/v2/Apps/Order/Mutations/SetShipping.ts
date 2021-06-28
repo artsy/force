@@ -11,7 +11,7 @@ export const setShipping = (
     // TODO: Inputs to the mutation might have changed case of the keys!
     mutation: graphql`
       mutation SetShippingMutation($input: CommerceSetShippingInput!) {
-        setShipping(input: $input) {
+        commerceSetShipping(input: $input) {
           orderOrError {
             ... on CommerceOrderWithMutationSuccess {
               __typename

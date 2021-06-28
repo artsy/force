@@ -12,8 +12,11 @@ import {
   SetShippingMutationResponse,
 } from "v2/__generated__/SetShippingMutation.graphql"
 
-// @ts-expect-error STRICT_NULL_CHECK
-export type SavedAddressType = Shipping_me["addressConnection"]["edges"][number]["node"]
+export type SavedAddressType = NonNullable<
+  NonNullable<
+    NonNullable<NonNullable<Shipping_me["addressConnection"]>["edges"]>[number]
+  >["node"]
+>
 
 export type ShippingQuotesType = NonNullable<
   NonNullable<
@@ -22,7 +25,7 @@ export type ShippingQuotesType = NonNullable<
         NonNullable<
           NonNullable<
             NonNullable<
-              SetShippingMutationResponse["setShipping"]
+              SetShippingMutationResponse["commerceSetShipping"]
             >["orderOrError"]["order"]
           >["lineItems"]
         >["edges"]
@@ -118,7 +121,13 @@ export const convertShippingAddressForExchange = (
 export const convertShippingAddressToMutationInput = (
   address: SavedAddressType
 ): UserAddressAttributes => {
-  return omit(address, ["isDefault", "internalID", "id", "__typename"])
+  return omit(
+    {
+      ...address,
+      name: address?.name ? address?.name : "",
+    },
+    ["isDefault", "internalID", "id", "__typename"]
+  )
 }
 
 export const getShippingOption = (requestedFulfillmentType?: string) => {
@@ -137,10 +146,6 @@ export const getShippingOption = (requestedFulfillmentType?: string) => {
   return result
 }
 
-export const isShippingArta = (requestedFulfillmentType?: string) => {
-  return requestedFulfillmentType === "CommerceShipArta"
-}
-
 export const getSelectedShippingQuoteId = (order: Shipping_order) => {
   const shippingQuotes =
     order.lineItems?.edges &&
@@ -154,7 +159,7 @@ export const getShippingQuotes = (
   order:
     | Shipping_order
     | NonNullable<
-        SetShippingMutationResponse["setShipping"]
+        SetShippingMutationResponse["commerceSetShipping"]
       >["orderOrError"]["order"]
 ) => {
   const shippingQuotes =

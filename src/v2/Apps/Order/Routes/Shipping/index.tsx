@@ -62,7 +62,6 @@ import {
   defaultShippingAddressIndex,
   getSelectedShippingQuoteId,
   getShippingQuotes,
-  isShippingArta,
   getShippingOption,
   ShippingQuotesType,
 } from "../../Utils/shippingUtils"
@@ -149,22 +148,43 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
   componentDidMount() {
     if (
       this.state.shippingOption === "SHIP" &&
+      this.isArtaShipping() &&
       !this.isCreateNewAddress() &&
       !this.state.shippingQuoteId
     ) {
-      this.selectShipping(false)
+      this.selectShipping()
     }
   }
 
   // @ts-expect-error STRICT_NULL_CHECK
   getAddressList = () => this.props.me.addressConnection.edges
 
+  getOrderArtwork = () =>
+    this.props.order.lineItems?.edges &&
+    this.props.order.lineItems?.edges[0]?.node?.artwork
+
   isCreateNewAddress = () => this.state.selectedSavedAddress === NEW_ADDRESS
+
+  isArtaShipping = () => {
+    const addresses = this.getAddressList()
+    const artaShippingEnabled = !!this.getOrderArtwork()?.artaShippingEnabled
+
+    const shippingCountry = this.isCreateNewAddress()
+      ? this.state.address.country
+      : addresses &&
+        addresses[parseInt(this.state.selectedSavedAddress)]?.node?.country
+
+    return (
+      this.state.shippingOption === "SHIP" &&
+      artaShippingEnabled &&
+      shippingCountry === "US"
+    )
+  }
 
   onContinueButtonPressed = async () => {
     if (
       this.state.shippingOption === "SHIP" &&
-      isShippingArta(this.props.order?.requestedFulfillment?.__typename) &&
+      this.isArtaShipping() &&
       !!this.state.shippingQuoteId
     ) {
       this.selectShippingQuote()
@@ -173,7 +193,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
     }
   }
 
-  selectShipping = async (redirectToPayment = true) => {
+  selectShipping = async () => {
     const {
       address,
       shippingOption,
@@ -239,24 +259,22 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
         shippingQuoteId: undefined,
       })
 
+      const isArtaShipping = this.isArtaShipping()
+
       // @ts-expect-error STRICT_NULL_CHECK
       const orderOrError = (
         await setShipping(this.props.commitMutation, {
           input: {
             id: this.props.order.internalID,
-            fulfillmentType: shippingOption,
+            fulfillmentType: isArtaShipping ? "SHIP_ARTA" : shippingOption,
             shipping: shipToAddress,
             phoneNumber: shipToPhoneNumber,
           },
         })
-      ).setShipping.orderOrError
+      ).commerceSetShipping.orderOrError
 
       // save address when user is entering new address AND save checkbox is selected
       await this.saveAddress()
-
-      const isArtaShipping = isShippingArta(
-        orderOrError.order?.requestedFulfillment?.__typename
-      )
 
       if (orderOrError.error) {
         this.handleSubmitError(orderOrError.error)
@@ -268,11 +286,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
           shippingQuotes: getShippingQuotes(orderOrError?.order),
         })
       } else {
-        if (redirectToPayment) {
-          this.props.router.push(
-            `/orders/${this.props.order.internalID}/payment`
-          )
-        }
+        this.props.router.push(`/orders/${this.props.order.internalID}/payment`)
       }
     } catch (error) {
       logger.error(error)
@@ -408,9 +422,10 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
         if (
           this.state.shippingOption === "SHIP" &&
           addressList &&
-          addressList.length > 0
+          addressList.length > 0 &&
+          this.isArtaShipping()
         ) {
-          this.selectShipping(false)
+          this.selectShipping()
         }
       })
     }
@@ -423,8 +438,8 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
   onSelectSavedAddress = (value: string) => {
     if (this.state.selectedSavedAddress !== value) {
       this.setState({ selectedSavedAddress: value }, () => {
-        if (this.state.shippingOption === "SHIP") {
-          this.selectShipping(false)
+        if (this.state.shippingOption === "SHIP" && this.isArtaShipping()) {
+          this.selectShipping()
         }
       })
     }
@@ -461,10 +476,11 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
 
     // @ts-expect-error STRICT_NULL_CHECK
     const showSavedAddresses = shippingSelected && addressList.length > 0
+    const isArtaShipping = this.isArtaShipping()
     const isContinueButtonDisabled = isCommittingMutation
       ? false
       : shippingOption === "SHIP" &&
-        isShippingArta(order?.requestedFulfillment?.__typename) &&
+        isArtaShipping &&
         !shippingQuoteId &&
         !this.isCreateNewAddress()
 
@@ -583,7 +599,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
               <Collapse
                 open={
                   this.state.shippingOption === "SHIP" &&
-                  isShippingArta(order?.requestedFulfillment?.__typename) &&
+                  isArtaShipping &&
                   !!shippingQuotes
                 }
               >
@@ -674,6 +690,7 @@ export const ShippingFragmentContainer = createFragmentContainer(
             node {
               artwork {
                 slug
+                artaShippingEnabled
                 pickup_available: pickupAvailable
                 onlyShipsDomestically
                 euShippingOrigin

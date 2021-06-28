@@ -26,7 +26,7 @@ export type SetShippingMutationVariables = {
     input: CommerceSetShippingInput;
 };
 export type SetShippingMutationResponse = {
-    readonly setShipping: {
+    readonly commerceSetShipping: {
         readonly orderOrError: {
             readonly __typename: "CommerceOrderWithMutationSuccess";
             readonly order?: {
@@ -88,7 +88,7 @@ export type SetShippingMutation = {
 mutation SetShippingMutation(
   $input: CommerceSetShippingInput!
 ) {
-  setShipping(input: $input) {
+  commerceSetShipping(input: $input) {
     orderOrError {
       __typename
       ... on CommerceOrderWithMutationSuccess {
@@ -333,7 +333,7 @@ return {
         "args": (v1/*: any*/),
         "concreteType": "CommerceSetShippingPayload",
         "kind": "LinkedField",
-        "name": "setShipping",
+        "name": "commerceSetShipping",
         "plural": false,
         "selections": [
           {
@@ -446,7 +446,7 @@ return {
         "args": (v1/*: any*/),
         "concreteType": "CommerceSetShippingPayload",
         "kind": "LinkedField",
-        "name": "setShipping",
+        "name": "commerceSetShipping",
         "plural": false,
         "selections": [
           {
@@ -592,9 +592,9 @@ return {
     "metadata": {},
     "name": "SetShippingMutation",
     "operationKind": "mutation",
-    "text": "mutation SetShippingMutation(\n  $input: CommerceSetShippingInput!\n) {\n  setShipping(input: $input) {\n    orderOrError {\n      __typename\n      ... on CommerceOrderWithMutationSuccess {\n        __typename\n        order {\n          __typename\n          internalID\n          state\n          requestedFulfillment {\n            __typename\n            ... on CommerceShip {\n              name\n              addressLine1\n              addressLine2\n              city\n              region\n              country\n              postalCode\n              phoneNumber\n            }\n            ... on CommerceShipArta {\n              name\n              addressLine1\n              addressLine2\n              city\n              region\n              country\n              postalCode\n              phoneNumber\n            }\n          }\n          lineItems {\n            edges {\n              node {\n                shippingQuoteOptions {\n                  edges {\n                    ...ShippingQuotes_shippingQuotes\n                  }\n                }\n                id\n              }\n            }\n          }\n          id\n        }\n      }\n      ... on CommerceOrderWithMutationFailure {\n        error {\n          type\n          code\n          data\n        }\n      }\n    }\n  }\n}\n\nfragment ShippingQuotes_shippingQuotes on CommerceShippingQuoteEdge {\n  node {\n    id\n    tier\n    name\n    isSelected\n    priceCents\n    priceCurrency\n  }\n}\n"
+    "text": "mutation SetShippingMutation(\n  $input: CommerceSetShippingInput!\n) {\n  commerceSetShipping(input: $input) {\n    orderOrError {\n      __typename\n      ... on CommerceOrderWithMutationSuccess {\n        __typename\n        order {\n          __typename\n          internalID\n          state\n          requestedFulfillment {\n            __typename\n            ... on CommerceShip {\n              name\n              addressLine1\n              addressLine2\n              city\n              region\n              country\n              postalCode\n              phoneNumber\n            }\n            ... on CommerceShipArta {\n              name\n              addressLine1\n              addressLine2\n              city\n              region\n              country\n              postalCode\n              phoneNumber\n            }\n          }\n          lineItems {\n            edges {\n              node {\n                shippingQuoteOptions {\n                  edges {\n                    ...ShippingQuotes_shippingQuotes\n                  }\n                }\n                id\n              }\n            }\n          }\n          id\n        }\n      }\n      ... on CommerceOrderWithMutationFailure {\n        error {\n          type\n          code\n          data\n        }\n      }\n    }\n  }\n}\n\nfragment ShippingQuotes_shippingQuotes on CommerceShippingQuoteEdge {\n  node {\n    id\n    tier\n    name\n    isSelected\n    priceCents\n    priceCurrency\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'cf4f4a369565351bf17f3a057815ad50';
+(node as any).hash = '7278954f3f024afafd026b74cb1fa65e';
 export default node;
