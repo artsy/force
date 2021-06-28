@@ -107,7 +107,7 @@ const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
         />
       )}
 
-      <Spacer my={[4, 12]} />
+      <Spacer my={[4, 80]} />
 
       <RouteTabs mb={2} fill>
         <RouteTab
