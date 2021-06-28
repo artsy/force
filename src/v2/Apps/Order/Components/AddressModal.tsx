@@ -104,10 +104,22 @@ export const AddressModal: React.FC<Props> = ({
               onError && onError(message)
             }
 
-            const handleSuccess = address => {
+            const handleSuccess = savedAddress => {
+              console.log(savedAddress)
+              if (isDefault) {
+                updateUserDefaultAddress(
+                  // @ts-expect-error STRICT_NULL_CHECK
+                  relayEnvironment,
+                  savedAddress?.createUserAddress?.userAddressOrErrors
+                    ?.internalID || address.internalID,
+                  onSuccess,
+                  onError
+                )
+              } else {
+                onSuccess && onSuccess(savedAddress)
+              }
               // @ts-expect-error STRICT_NULL_CHECK
               setCreateUpdateError(null)
-              onSuccess && onSuccess(address)
             }
 
             createMutation
@@ -129,14 +141,6 @@ export const AddressModal: React.FC<Props> = ({
                   handleSuccess,
                   handleError
                 )
-            isDefault &&
-              updateUserDefaultAddress(
-                // @ts-expect-error STRICT_NULL_CHECK
-                relayEnvironment,
-                address.internalID,
-                onSuccess,
-                onError
-              )
           }}
         >
           {(formik: FormikProps<SavedAddressType>) => (
@@ -157,7 +161,8 @@ export const AddressModal: React.FC<Props> = ({
                 error={formik.touched.phoneNumber && formik.errors.phoneNumber}
                 value={formik.values?.phoneNumber || ""}
               />
-              {!address?.isDefault && (
+              <Spacer mb={2} />
+              {(!address?.isDefault || createMutation) && (
                 <Checkbox
                   onSelect={selected => {
                     formik.setFieldValue("isDefault", selected)
