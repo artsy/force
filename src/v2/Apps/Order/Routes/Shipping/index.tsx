@@ -159,9 +159,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
   // @ts-expect-error STRICT_NULL_CHECK
   getAddressList = () => this.props.me.addressConnection.edges
 
-  getOrderArtwork = () =>
-    this.props.order.lineItems?.edges &&
-    this.props.order.lineItems?.edges[0]?.node?.artwork
+  getOrderArtwork = () => this.props.order.lineItems?.edges?.[0]?.node?.artwork
 
   isCreateNewAddress = () => this.state.selectedSavedAddress === NEW_ADDRESS
 
@@ -459,23 +457,18 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
       shippingQuoteId,
       selectedSavedAddress,
     } = this.state
-    const artwork = get(
-      this.props,
-      props => props.order.lineItems?.edges?.[0]?.node?.artwork
-    )
+    const artwork = this.getOrderArtwork()
     const addressList = this.getAddressList()
 
     const shippingSelected =
-      // @ts-expect-error STRICT_NULL_CHECK
-      !artwork.pickup_available || shippingOption === "SHIP"
+      !artwork?.pickup_available || shippingOption === "SHIP"
 
     const showAddressForm =
       shippingSelected &&
-      // @ts-expect-error STRICT_NULL_CHECK
-      (this.isCreateNewAddress() || addressList.length === 0)
+      (this.isCreateNewAddress() || addressList?.length === 0)
 
-    // @ts-expect-error STRICT_NULL_CHECK
-    const showSavedAddresses = shippingSelected && addressList.length > 0
+    const showSavedAddresses =
+      shippingSelected && addressList && addressList.length > 0
     const isArtaShipping = this.isArtaShipping()
     const isContinueButtonDisabled = isCommittingMutation
       ? false
