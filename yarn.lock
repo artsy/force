@@ -4544,7 +4544,7 @@ arrify@^2.0.1:
 
 "artsy-eigen-web-association@git://github.com/artsy/artsy-eigen-web-association.git":
   version "1.0.7"
-  resolved "git://github.com/artsy/artsy-eigen-web-association.git#1f51cad192bde40ce64464ac3d4890e226f97cc2"
+  resolved "git://github.com/artsy/artsy-eigen-web-association.git#1bde49b776fd7367ae47f903873942cb70f3bb71"
   dependencies:
     express "*"
 
