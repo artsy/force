@@ -34,7 +34,7 @@ export const AddressModalFields: React.FC = props => {
           onChange={handleChange}
           onBlur={handleBlur}
           error={touched.name && errors.name}
-          value={values?.name}
+          value={values?.name ? values?.name : undefined}
         />
       </Flex>
       <GridColumns mt={2}>
@@ -48,7 +48,11 @@ export const AddressModalFields: React.FC = props => {
                   onSelect={countryCode => {
                     setFieldValue("country", countryCode)
                   }}
-                  error={touched.country && errors.country}
+                  error={
+                    touched.country && errors.country
+                      ? errors.country
+                      : undefined
+                  }
                 />
               </Box>
               <Input
@@ -82,7 +86,7 @@ export const AddressModalFields: React.FC = props => {
                 onChange={handleChange}
                 onBlur={handleBlur}
                 error={touched.postalCode && errors.postalCode}
-                value={values?.postalCode}
+                value={values?.postalCode ? values?.postalCode : undefined}
               />
               <Input
                 title="Address Line 2 (optional)"
@@ -91,7 +95,7 @@ export const AddressModalFields: React.FC = props => {
                 onChange={handleChange}
                 onBlur={handleBlur}
                 error={touched.addressLine2 && errors.addressLine2}
-                value={values?.addressLine2}
+                value={values?.addressLine2 ? values?.addressLine2 : undefined}
               />
               <Input
                 title="State, province, or region"
@@ -100,7 +104,7 @@ export const AddressModalFields: React.FC = props => {
                 onChange={handleChange}
                 onBlur={handleBlur}
                 error={touched.region && errors.region}
-                value={values?.region}
+                value={values?.region ? values?.region : undefined}
               />
             </Join>
           </Flex>

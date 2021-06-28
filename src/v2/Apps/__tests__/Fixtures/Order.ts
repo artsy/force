@@ -93,6 +93,7 @@ const OrderArtworkNode = {
   artwork: {
     ...OrderArtworkNodeWithoutShipping,
     shippingOrigin: "New York, NY",
+    artaShippingEnabled: false,
     domesticShippingFee: {
       minor: 10000,
       major: 100,

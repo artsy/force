@@ -121,7 +121,7 @@ export const AddressModal: React.FC<Props> = ({
               : updateUserAddress(
                   // @ts-expect-error STRICT_NULL_CHECK
                   relayEnvironment,
-                  address.internalID,
+                  address?.internalID,
                   values,
                   closeModal,
                   handleSuccess,
@@ -145,7 +145,11 @@ export const AddressModal: React.FC<Props> = ({
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 error={formik.touched.phoneNumber && formik.errors.phoneNumber}
-                value={formik.values?.phoneNumber}
+                value={
+                  formik.values?.phoneNumber
+                    ? formik.values?.phoneNumber
+                    : undefined
+                }
               />
               {!createMutation && (
                 <Flex mt={2} flexDirection="column" alignItems="center">
@@ -183,7 +187,7 @@ export const AddressModal: React.FC<Props> = ({
           action: () => {
             setShowDialog(false)
             closeModal()
-            onDeleteAddress(address.internalID)
+            onDeleteAddress(address?.internalID)
           },
           text: "Delete",
         }}

@@ -100,12 +100,12 @@ export const PaymentModal: React.FC<PaymentModalProps> = props => {
     actions: FormikHelpers<SavedAddressType>
   ) => {
     const billingAddress: CreateTokenCardData = {
-      name: values.name,
+      name: values.name ? values.name : undefined,
       address_line1: values.addressLine1,
-      address_line2: values.addressLine2,
+      address_line2: values.addressLine2 ? values.addressLine2 : undefined,
       address_city: values.city,
-      address_state: values.region,
-      address_zip: values.postalCode,
+      address_state: values.region ? values.region : undefined,
+      address_zip: values.postalCode ? values.postalCode : undefined,
       address_country: values.country,
     }
 
