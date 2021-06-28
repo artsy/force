@@ -18,8 +18,8 @@ export const FairEditorial: React.FC<FairEditorialProps> = ({ fair }) => {
         Explore Further
       </Text>
       <Carousel>
-        {/* @ts-expect-error STRICT_NULL_CHECK */}
-        {fair.articlesConnection.edges.map(({ node: article }) => {
+        {fair.articlesConnection!.edges!.map(edge => {
+          const article = edge?.node!
           return <FairEditorialItem article={article} key={article.id} />
         })}
       </Carousel>
