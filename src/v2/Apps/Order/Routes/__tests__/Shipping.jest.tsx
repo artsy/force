@@ -1,7 +1,6 @@
 import { ShippingTestQueryRawResponse } from "v2/__generated__/ShippingTestQuery.graphql"
 import { cloneDeep } from "lodash"
 
-import { RadioGroup } from "@artsy/palette"
 import {
   UntouchedBuyOrder,
   UntouchedOfferOrder,
@@ -137,7 +136,7 @@ describe("Shipping", () => {
       const page = await buildPage({
         mockData: { order: pickupAvailableOrder },
       })
-      expect(page.find(RadioGroup).length).toEqual(0)
+      expect(page.find(`[data-test="shipping-options"]`).length).toEqual(0)
     })
 
     it("disables country select when onlyShipsDomestically is true and artwork is not in EU local zone", async () => {

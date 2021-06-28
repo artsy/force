@@ -146,9 +146,7 @@ export const AddressModal: React.FC<Props> = ({
                 onBlur={formik.handleBlur}
                 error={formik.touched.phoneNumber && formik.errors.phoneNumber}
                 value={
-                  formik.values?.phoneNumber
-                    ? formik.values?.phoneNumber
-                    : undefined
+                  formik.values?.phoneNumber ? formik.values?.phoneNumber : ""
                 }
               />
               {!createMutation && (

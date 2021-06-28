@@ -49,9 +49,7 @@ export const AddressModalFields: React.FC = props => {
                     setFieldValue("country", countryCode)
                   }}
                   error={
-                    touched.country && errors.country
-                      ? errors.country
-                      : undefined
+                    touched.country && errors.country ? errors.country : ""
                   }
                 />
               </Box>
@@ -86,7 +84,7 @@ export const AddressModalFields: React.FC = props => {
                 onChange={handleChange}
                 onBlur={handleBlur}
                 error={touched.postalCode && errors.postalCode}
-                value={values?.postalCode ? values?.postalCode : undefined}
+                value={values?.postalCode ? values?.postalCode : ""}
               />
               <Input
                 title="Address Line 2 (optional)"
@@ -95,7 +93,7 @@ export const AddressModalFields: React.FC = props => {
                 onChange={handleChange}
                 onBlur={handleBlur}
                 error={touched.addressLine2 && errors.addressLine2}
-                value={values?.addressLine2 ? values?.addressLine2 : undefined}
+                value={values?.addressLine2 ? values?.addressLine2 : ""}
               />
               <Input
                 title="State, province, or region"
@@ -104,7 +102,7 @@ export const AddressModalFields: React.FC = props => {
                 onChange={handleChange}
                 onBlur={handleBlur}
                 error={touched.region && errors.region}
-                value={values?.region ? values?.region : undefined}
+                value={values?.region ? values?.region : ""}
               />
             </Join>
           </Flex>

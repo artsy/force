@@ -500,6 +500,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
               {artwork.pickup_available && (
                 <>
                   <RadioGroup
+                    data-test="shipping-options"
                     onSelect={this.onSelectShippingOption.bind(this)}
                     defaultValue={shippingOption}
                   >
