@@ -1,7 +1,7 @@
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FairEditorialItem_article } from "v2/__generated__/FairEditorialItem_article.graphql"
-import { Box, Text, Image } from "@artsy/palette"
+import { Box, Text, Image, Spacer } from "@artsy/palette"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { useTracking } from "react-tracking"
 import {
@@ -55,10 +55,15 @@ export const FairEditorialItem: React.FC<FairEditorialItemProps> = ({
           lazyLoad={true}
           alt={article.thumbnailTitle!}
         />
+
+        <Spacer mt={1} />
+
         <Box pr={10}>
-          <Text variant="xl" as="h4" my={5}>
+          <Text variant="xl" as="h4">
             {article.title}
           </Text>
+
+          <Spacer mt={5} />
 
           <Text variant="md" color="black60">
             {article.publishedAt}
