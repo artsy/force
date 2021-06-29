@@ -84,6 +84,8 @@ const getValue = (value: CustomRange[number]) => {
   return value === "*" || value === 0 ? "" : value
 }
 
+const isEmptyRange = value => value === undefined || value === "*-*"
+
 export interface SizeFilterProps {
   expanded?: boolean
 }
@@ -144,9 +146,8 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
     const newFilters = {
       ...currentlySelectedFilters?.(),
       sizes,
-      height: "*-*",
-      width: "*-*",
-      reset: false,
+      height: isEmptyRange(height) ? height : "*-*",
+      width: isEmptyRange(width) ? width : "*-*",
     }
 
     setFilters?.(newFilters, { force: false })
@@ -154,12 +155,21 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
   }
 
   const handleClick = () => {
+    const { height: heightRange, width: widthRange } = mapSizeToRange(
+      convertSizeToInches(customSize) as CustomSize
+    )
+
     const newFilters = {
       ...currentlySelectedFilters?.(),
       sizes: [],
-      reset: false,
-      ...mapSizeToRange(convertSizeToInches(customSize) as CustomSize),
+      width:
+        isEmptyRange(width) && isEmptyRange(widthRange) ? width : widthRange,
+      height:
+        isEmptyRange(heightRange) && isEmptyRange(heightRange)
+          ? height
+          : heightRange,
     }
+
     setFilters?.(newFilters, { force: false })
     setMode("done")
   }
@@ -173,8 +183,11 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
     // if filter state is being reset, then also clear local input state
     if (reset) {
       setCustomSize({ height: ["*", "*"], width: ["*", "*"] })
+
+      const newF = { ...currentlySelectedFilters?.(), reset: false }
+      setFilters?.(newF, { force: false })
     }
-  }, [reset])
+  }, [currentlySelectedFilters, reset, setFilters])
 
   const selection = currentlySelectedFilters?.().sizes
   const customHeight = currentlySelectedFilters?.().height
