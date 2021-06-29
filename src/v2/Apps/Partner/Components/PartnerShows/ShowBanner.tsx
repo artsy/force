@@ -117,7 +117,11 @@ const ShowBanner: React.FC<ShowBannerProps> = ({
       </Column>
       {coverImage && coverImage.medium && (
         <Column height={[280, 480]} position="relative" span={6}>
-          <SlideBox opacity={active ? 1 : 0} right={active ? 0 : "-100%"}>
+          <SlideBox
+            width="100%"
+            opacity={active ? 1 : 0}
+            right={active ? 0 : "-100%"}
+          >
             {/* @ts-expect-error STRICT_NULL_CHECK */}
             <RouterLink to={href}>
               <Image
