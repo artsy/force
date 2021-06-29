@@ -402,7 +402,7 @@ export const PaymentDetails = {
   creditCard: {
     brand: "Visa",
     city: "New York",
-    country: "USA",
+    country: "US",
     expirationMonth: 3,
     expirationYear: 21,
     id: "relay-node-id",

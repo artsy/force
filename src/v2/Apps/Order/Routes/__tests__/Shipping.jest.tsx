@@ -68,7 +68,7 @@ const testMe: ShippingTestQueryRawResponse["me"] = {
           addressLine2: "",
           addressLine3: "",
           city: "Madrid",
-          country: "Spain",
+          country: "ES",
           isDefault: false,
           name: "Test Name",
           phoneNumber: "555-555-5555",
@@ -86,7 +86,7 @@ const testMe: ShippingTestQueryRawResponse["me"] = {
           addressLine2: "Floor 25",
           addressLine3: "",
           city: "New York",
-          country: "USA",
+          country: "US",
           isDefault: true,
           name: "Test Name",
           phoneNumber: "422-424-4242",
@@ -535,15 +535,15 @@ describe("Shipping", () => {
       ).toEqual([
         "Shipping",
         "Arrange for pickup (free)After your order is confirmed, a specialist will contact you within 2 business days to coordinate pickup.",
-        "Test Name1 Main StMadrid, Spain, 28001555-555-5555Edit",
-        "Test NameDefault401 BroadwayFloor 25New York, NY, USA, 10013422-424-4242Edit",
+        "Test Name1 Main StMadrid, ES, 28001555-555-5555Edit",
+        "Test NameDefault401 BroadwayFloor 25New York, NY, US, 10013422-424-4242Edit",
       ])
 
       expect(page.text()).toContain(
-        "Test Name1 Main StMadrid, Spain, 28001555-555-5555Edit"
+        "Test Name1 Main StMadrid, ES, 28001555-555-5555Edit"
       )
       expect(page.text()).toContain(
-        "Test NameDefault401 BroadwayFloor 25New York, NY, USA, 10013422-424-4242Edit"
+        "Test NameDefault401 BroadwayFloor 25New York, NY, US, 10013422-424-4242Edit"
       )
     })
 
@@ -564,7 +564,7 @@ describe("Shipping", () => {
               "addressLine1": "401 Broadway",
               "addressLine2": "Floor 25",
               "city": "New York",
-              "country": "USA",
+              "country": "US",
               "name": "Test Name",
               "phoneNumber": "422-424-4242",
               "postalCode": "10013",
@@ -594,7 +594,7 @@ describe("Shipping", () => {
               "addressLine1": "1 Main St",
               "addressLine2": "",
               "city": "Madrid",
-              "country": "Spain",
+              "country": "ES",
               "name": "Test Name",
               "phoneNumber": "555-555-5555",
               "postalCode": "28001",
