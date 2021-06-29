@@ -92,7 +92,7 @@ describe("SizeFilter", () => {
         .filterWhere(n => n.text() === "Set size")
         .simulate("click")
 
-      expect(context.filters?.sizes).toEqual([])
+      expect(context.filters?.sizes).toEqual(["SMALL"])
       // assert conversion from centimeters to inches
       expect(context.filters?.height).toEqual("4.72-6.3")
       expect(context.filters?.width).toEqual("4.72-6.3")
@@ -108,6 +108,8 @@ describe("SizeFilter", () => {
 
       simulateTyping(wrapper, "height_min", "12")
       simulateTyping(wrapper, "height_max", "24")
+      simulateTyping(wrapper, "width_min", "")
+      simulateTyping(wrapper, "width_max", "")
 
       await wrapper
         .find("button")
