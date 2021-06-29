@@ -2,7 +2,16 @@ import React from "react"
 import { AuctionsApp_viewer } from "v2/__generated__/AuctionsApp_viewer.graphql"
 import { AuctionsMeta } from "./Components/AuctionsMeta"
 import { MyBidsFragmentContainer } from "./Components/MyBids/MyBids"
-import { Box, Column, GridColumns, Join, Spacer, Text } from "@artsy/palette"
+import {
+  Box,
+  Column,
+  GridColumns,
+  Join,
+  Spacer,
+  Tab,
+  Tabs,
+  Text,
+} from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RecentlyViewed } from "v2/Components/RecentlyViewed"
 import { RouterLink } from "v2/System/Router/RouterLink"
@@ -52,21 +61,27 @@ const AuctionsApp: React.FC<AuctionsAppProps> = props => {
         </Column>
       </GridColumns>
 
-      {user && (
-        <>
-          <Spacer py={2} />
-          <Join separator={<Spacer my={[2, 6]} />}>
-            <Box>
-              {/* @ts-expect-error STRICT_NULL_CHECK */}
-              <MyBidsFragmentContainer me={viewer.me} />
-            </Box>
+      <Spacer mt={4} />
+      <Tabs>
+        {user && (
+          <>
+            <Tab name="Works For You">
+              <Spacer py={2} />
+              <Box>
+                {/* @ts-expect-error STRICT_NULL_CHECK */}
+                <MyBidsFragmentContainer me={viewer.me} />
+              </Box>
 
-            <Box>
-              <WorksByArtistsYouFollowRailFragmentContainer viewer={viewer} />
-            </Box>
-          </Join>
-        </>
-      )}
+              <Box>
+                <WorksByArtistsYouFollowRailFragmentContainer viewer={viewer} />
+              </Box>
+            </Tab>
+          </>
+        )}
+        <Tab name="Trending Lots">Trending Lots</Tab>
+        <Tab name="Standout lots">Standout Lots By Trending Artists</Tab>
+        <Tab name="Featured Auctions">Featured Auctions</Tab>
+      </Tabs>
 
       <Spacer my={[4, 12]} />
 
