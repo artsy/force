@@ -1,8 +1,10 @@
 import {
   Box,
+  Column,
   Flex,
   Image,
-  Shelf,
+  GridColumns,
+  ResponsiveBox,
   Spacer,
   Skeleton,
   SkeletonBox,
@@ -28,51 +30,54 @@ export const HomeFeaturedCategoriesRail: React.FC<HomeFeaturedCategoriesRailProp
   if (marketingCollections.length === 0) return null
 
   return (
-    <Shelf>
+    <GridColumns gridRowGap={4}>
       {marketingCollections.map(collection => {
         const image = collection.thumbnail
           ? cropped(collection.thumbnail, {
-              width: 325,
-              height: 244,
+              width: 290,
+              height: 193,
             })
           : null
 
         return (
-          <RouterLink
-            key={collection.slug}
-            to={`/gene/${collection.slug}`}
-            style={{
-              display: "block",
-              textDecoration: "none",
-            }}
-          >
-            {image ? (
-              <Image
-                src={image.src}
-                srcSet={image.srcSet}
-                width={325}
-                height={244}
-                lazyLoad
-                alt=""
-                style={{ display: "block" }}
-              />
-            ) : (
-              <Box width={325} height={244} bg="black10" />
-            )}
+          <Column key={collection.slug} span={[6, 4, 2]}>
+            <RouterLink
+              to={`/gene/${collection.slug}`}
+              style={{
+                display: "block",
+                textDecoration: "none",
+              }}
+            >
+              <ResponsiveBox aspectWidth={3} aspectHeight={2} maxWidth="100%">
+                {image ? (
+                  <Image
+                    src={image.src}
+                    srcSet={image.srcSet}
+                    width="100%"
+                    height="100%"
+                    lazyLoad
+                    alt=""
+                    style={{ display: "block" }}
+                  />
+                ) : (
+                  <Box width="100%" height="100%" bg="black10" />
+                )}
+              </ResponsiveBox>
 
-            <Spacer mt={2} />
+              <Spacer mt={2} />
 
-            <Text variant="lg">{collection.title}</Text>
+              <Text variant="lg">{collection.title}</Text>
 
-            <Spacer mt={0.5} />
+              <Spacer mt={0.5} />
 
-            <Text variant="md" overflowEllipsis width={325}>
-              {SUBTITLES[collection.slug]}
-            </Text>
-          </RouterLink>
+              <Text variant="md" overflowEllipsis width="100%">
+                {SUBTITLES[collection.slug]}
+              </Text>
+            </RouterLink>
+          </Column>
         )
       })}
-    </Shelf>
+    </GridColumns>
   )
 }
 
@@ -111,11 +116,13 @@ const HomeFeaturedCategories: React.FC = ({ children }) => {
 const HomeFeaturedCategoriesRailPlaceholder: React.FC = () => {
   return (
     <Skeleton>
-      <Shelf>
-        {[...new Array(8)].map((_, i) => {
+      <GridColumns gridRowGap={4}>
+        {[...new Array(6)].map((_, i) => {
           return (
-            <React.Fragment key={i}>
-              <SkeletonBox width={325} height={244} />
+            <Column key={i} span={[6, 4, 2]}>
+              <ResponsiveBox aspectWidth={3} aspectHeight={2} maxWidth="100%">
+                <SkeletonBox width="100%" height="100%" />
+              </ResponsiveBox>
 
               <Spacer mt={2} />
 
@@ -126,10 +133,10 @@ const HomeFeaturedCategoriesRailPlaceholder: React.FC = () => {
               <SkeletonText variant="md" overflowEllipsis width={325}>
                 Collection description which happens to be longer.
               </SkeletonText>
-            </React.Fragment>
+            </Column>
           )
         })}
-      </Shelf>
+      </GridColumns>
     </Skeleton>
   )
 }

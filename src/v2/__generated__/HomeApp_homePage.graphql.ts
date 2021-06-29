@@ -4,11 +4,7 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type HomeApp_homePage = {
-    readonly heroUnits: ReadonlyArray<{
-        readonly internalID: string;
-        readonly " $fragmentRefs": FragmentRefs<"HomeHeroUnit_heroUnit">;
-    } | null> | null;
-    readonly " $fragmentRefs": FragmentRefs<"HomeArtworkModules_homePage">;
+    readonly " $fragmentRefs": FragmentRefs<"HomeHeroUnits_homePage" | "HomeArtworkModules_homePage">;
     readonly " $refType": "HomeApp_homePage";
 };
 export type HomeApp_homePage$data = HomeApp_homePage;
@@ -26,33 +22,9 @@ const node: ReaderFragment = {
   "name": "HomeApp_homePage",
   "selections": [
     {
-      "alias": null,
-      "args": [
-        {
-          "kind": "Literal",
-          "name": "platform",
-          "value": "DESKTOP"
-        }
-      ],
-      "concreteType": "HomePageHeroUnit",
-      "kind": "LinkedField",
-      "name": "heroUnits",
-      "plural": true,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "internalID",
-          "storageKey": null
-        },
-        {
-          "args": null,
-          "kind": "FragmentSpread",
-          "name": "HomeHeroUnit_heroUnit"
-        }
-      ],
-      "storageKey": "heroUnits(platform:\"DESKTOP\")"
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "HomeHeroUnits_homePage"
     },
     {
       "args": null,
@@ -62,5 +34,5 @@ const node: ReaderFragment = {
   ],
   "type": "HomePage"
 };
-(node as any).hash = '4afef225f829c8e9e1bff45e92cc35d4';
+(node as any).hash = 'cfc9f14cd03ccee65151e3b92f835d84';
 export default node;
