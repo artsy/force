@@ -327,7 +327,6 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
       phoneNumber,
       phoneNumberError,
       phoneNumberTouched,
-      showModal,
     } = this.state
     const artwork = get(
       this.props,
@@ -409,7 +408,6 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
                     onSelect={value => onSelectSavedAddress(value)}
                     handleClickEdit={this.handleClickEdit}
                     inCollectorProfile={false}
-                    showModal={showModal}
                     onAddressDelete={this.handleAddressDelete}
                   />
                 </>

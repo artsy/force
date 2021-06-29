@@ -36,7 +36,6 @@ interface SavedAddressesProps {
   commitMutation?: CommitMutation
   relay: RelayRefetchProp
   addressCount?: number
-  showModal?: boolean
   onAddressDelete?: (isLast: boolean) => void
 }
 // @ts-expect-error STRICT_NULL_CHECK
