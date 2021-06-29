@@ -19,7 +19,6 @@ interface UserSettingsAddressesProps extends SystemContextProps {
 }
 
 export const UserSettingsAddresses: React.FC<UserSettingsAddressesProps> = props => {
-  const handleClickEdit = () => {}
   const { me } = props
 
   return (
@@ -31,7 +30,6 @@ export const UserSettingsAddresses: React.FC<UserSettingsAddressesProps> = props
         <SavedAddresses
           // @ts-expect-error STRICT_NULL_CHECK
           me={me}
-          handleClickEdit={handleClickEdit}
           inCollectorProfile
           {...props}
         />
