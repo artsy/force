@@ -101,6 +101,18 @@ fragment Conversation_conversation_2QE1um on Conversation {
   initialMessage
   lastMessageID
   unread
+  orderConnection(first: 10, states: [APPROVED, FULFILLED, SUBMITTED, REFUNDED]) {
+    edges {
+      node {
+        __typename
+        internalID
+        ... on CommerceOfferOrder {
+          buyerAction
+        }
+        id
+      }
+    }
+  }
   messagesConnection(first: $count, after: $after, sort: DESC) {
     pageInfo {
       startCursor
@@ -253,6 +265,30 @@ v7 = {
   "storageKey": null
 },
 v8 = [
+  {
+    "kind": "Literal",
+    "name": "first",
+    "value": 10
+  },
+  {
+    "kind": "Literal",
+    "name": "states",
+    "value": [
+      "APPROVED",
+      "FULFILLED",
+      "SUBMITTED",
+      "REFUNDED"
+    ]
+  }
+],
+v9 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "buyerAction",
+  "storageKey": null
+},
+v10 = [
   (v2/*: any*/),
   {
     "kind": "Variable",
@@ -265,14 +301,14 @@ v8 = [
     "value": "DESC"
   }
 ],
-v9 = {
+v11 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "href",
   "storageKey": null
 },
-v10 = [
+v12 = [
   {
     "alias": null,
     "args": null,
@@ -392,6 +428,49 @@ return {
               {
                 "alias": null,
                 "args": (v8/*: any*/),
+                "concreteType": "CommerceOrderConnectionWithTotalCount",
+                "kind": "LinkedField",
+                "name": "orderConnection",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "CommerceOrderEdge",
+                    "kind": "LinkedField",
+                    "name": "edges",
+                    "plural": true,
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": null,
+                        "kind": "LinkedField",
+                        "name": "node",
+                        "plural": false,
+                        "selections": [
+                          (v3/*: any*/),
+                          (v5/*: any*/),
+                          (v4/*: any*/),
+                          {
+                            "kind": "InlineFragment",
+                            "selections": [
+                              (v9/*: any*/)
+                            ],
+                            "type": "CommerceOfferOrder"
+                          }
+                        ],
+                        "storageKey": null
+                      }
+                    ],
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": "orderConnection(first:10,states:[\"APPROVED\",\"FULFILLED\",\"SUBMITTED\",\"REFUNDED\"])"
+              },
+              {
+                "alias": null,
+                "args": (v10/*: any*/),
                 "concreteType": "MessageConnection",
                 "kind": "LinkedField",
                 "name": "messagesConnection",
@@ -540,7 +619,7 @@ return {
               },
               {
                 "alias": null,
-                "args": (v8/*: any*/),
+                "args": (v10/*: any*/),
                 "filters": [],
                 "handle": "connection",
                 "key": "Messages_messagesConnection",
@@ -590,7 +669,7 @@ return {
                             "name": "artistNames",
                             "storageKey": null
                           },
-                          (v9/*: any*/),
+                          (v11/*: any*/),
                           {
                             "alias": null,
                             "args": null,
@@ -635,12 +714,12 @@ return {
                               (v3/*: any*/),
                               {
                                 "kind": "InlineFragment",
-                                "selections": (v10/*: any*/),
+                                "selections": (v12/*: any*/),
                                 "type": "Money"
                               },
                               {
                                 "kind": "InlineFragment",
-                                "selections": (v10/*: any*/),
+                                "selections": (v12/*: any*/),
                                 "type": "PriceRange"
                               }
                             ],
@@ -691,7 +770,7 @@ return {
                             ],
                             "storageKey": null
                           },
-                          (v9/*: any*/),
+                          (v11/*: any*/),
                           (v6/*: any*/),
                           {
                             "alias": null,
@@ -722,23 +801,7 @@ return {
               },
               {
                 "alias": "activeOrders",
-                "args": [
-                  {
-                    "kind": "Literal",
-                    "name": "first",
-                    "value": 10
-                  },
-                  {
-                    "kind": "Literal",
-                    "name": "states",
-                    "value": [
-                      "APPROVED",
-                      "FULFILLED",
-                      "SUBMITTED",
-                      "REFUNDED"
-                    ]
-                  }
-                ],
+                "args": (v8/*: any*/),
                 "concreteType": "CommerceOrderConnectionWithTotalCount",
                 "kind": "LinkedField",
                 "name": "orderConnection",
@@ -787,13 +850,7 @@ return {
                           {
                             "kind": "InlineFragment",
                             "selections": [
-                              {
-                                "alias": null,
-                                "args": null,
-                                "kind": "ScalarField",
-                                "name": "buyerAction",
-                                "storageKey": null
-                              },
+                              (v9/*: any*/),
                               {
                                 "alias": null,
                                 "args": [
@@ -860,7 +917,7 @@ return {
     "metadata": {},
     "name": "ConversationPaginationQuery",
     "operationKind": "query",
-    "text": "query ConversationPaginationQuery(\n  $count: Int\n  $after: String\n  $conversationID: ID!\n) {\n  node(id: $conversationID) {\n    __typename\n    ...Conversation_conversation_2QE1um\n    id\n  }\n}\n\nfragment ConversationCTA_conversation on Conversation {\n  internalID\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        internalID\n        isOfferableFromInquiry\n      }\n      ... on Node {\n        id\n      }\n    }\n  }\n  activeOrders: orderConnection(first: 10, states: [APPROVED, FULFILLED, SUBMITTED, REFUNDED]) {\n    edges {\n      node {\n        __typename\n        internalID\n        state\n        stateReason\n        stateExpiresAt\n        ... on CommerceOfferOrder {\n          buyerAction\n          offers(first: 5) {\n            edges {\n              node {\n                internalID\n                id\n              }\n            }\n          }\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment ConversationMessages_messages on MessageConnection {\n  edges {\n    node {\n      id\n      internalID\n      createdAt\n      isFromUser\n      body\n      ...Message_message\n    }\n  }\n}\n\nfragment Conversation_conversation_2QE1um on Conversation {\n  id\n  internalID\n  from {\n    name\n    email\n    id\n  }\n  to {\n    name\n    initials\n    id\n  }\n  initialMessage\n  lastMessageID\n  unread\n  messagesConnection(first: $count, after: $after, sort: DESC) {\n    pageInfo {\n      startCursor\n      endCursor\n      hasPreviousPage\n      hasNextPage\n    }\n    edges {\n      node {\n        id\n        __typename\n      }\n      cursor\n    }\n    ...ConversationMessages_messages\n  }\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        internalID\n        id\n        date\n        title\n        artistNames\n        href\n        isOfferableFromInquiry\n        image {\n          url(version: [\"large\"])\n        }\n        listPrice {\n          __typename\n          ... on Money {\n            display\n          }\n          ... on PriceRange {\n            display\n          }\n        }\n      }\n      ... on Show {\n        id\n        fair {\n          name\n          exhibitionPeriod\n          location {\n            city\n            id\n          }\n          id\n        }\n        href\n        name\n        coverImage {\n          url\n        }\n      }\n      ... on Node {\n        id\n      }\n    }\n  }\n  ...ConversationCTA_conversation\n}\n\nfragment Message_message on Message {\n  internalID\n  body\n  createdAt\n  isFromUser\n  from {\n    name\n    email\n  }\n  attachments {\n    id\n    contentType\n    fileName\n    downloadURL\n  }\n}\n"
+    "text": "query ConversationPaginationQuery(\n  $count: Int\n  $after: String\n  $conversationID: ID!\n) {\n  node(id: $conversationID) {\n    __typename\n    ...Conversation_conversation_2QE1um\n    id\n  }\n}\n\nfragment ConversationCTA_conversation on Conversation {\n  internalID\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        internalID\n        isOfferableFromInquiry\n      }\n      ... on Node {\n        id\n      }\n    }\n  }\n  activeOrders: orderConnection(first: 10, states: [APPROVED, FULFILLED, SUBMITTED, REFUNDED]) {\n    edges {\n      node {\n        __typename\n        internalID\n        state\n        stateReason\n        stateExpiresAt\n        ... on CommerceOfferOrder {\n          buyerAction\n          offers(first: 5) {\n            edges {\n              node {\n                internalID\n                id\n              }\n            }\n          }\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment ConversationMessages_messages on MessageConnection {\n  edges {\n    node {\n      id\n      internalID\n      createdAt\n      isFromUser\n      body\n      ...Message_message\n    }\n  }\n}\n\nfragment Conversation_conversation_2QE1um on Conversation {\n  id\n  internalID\n  from {\n    name\n    email\n    id\n  }\n  to {\n    name\n    initials\n    id\n  }\n  initialMessage\n  lastMessageID\n  unread\n  orderConnection(first: 10, states: [APPROVED, FULFILLED, SUBMITTED, REFUNDED]) {\n    edges {\n      node {\n        __typename\n        internalID\n        ... on CommerceOfferOrder {\n          buyerAction\n        }\n        id\n      }\n    }\n  }\n  messagesConnection(first: $count, after: $after, sort: DESC) {\n    pageInfo {\n      startCursor\n      endCursor\n      hasPreviousPage\n      hasNextPage\n    }\n    edges {\n      node {\n        id\n        __typename\n      }\n      cursor\n    }\n    ...ConversationMessages_messages\n  }\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        internalID\n        id\n        date\n        title\n        artistNames\n        href\n        isOfferableFromInquiry\n        image {\n          url(version: [\"large\"])\n        }\n        listPrice {\n          __typename\n          ... on Money {\n            display\n          }\n          ... on PriceRange {\n            display\n          }\n        }\n      }\n      ... on Show {\n        id\n        fair {\n          name\n          exhibitionPeriod\n          location {\n            city\n            id\n          }\n          id\n        }\n        href\n        name\n        coverImage {\n          url\n        }\n      }\n      ... on Node {\n        id\n      }\n    }\n  }\n  ...ConversationCTA_conversation\n}\n\nfragment Message_message on Message {\n  internalID\n  body\n  createdAt\n  isFromUser\n  from {\n    name\n    email\n  }\n  attachments {\n    id\n    contentType\n    fileName\n    downloadURL\n  }\n}\n"
   }
 };
 })();

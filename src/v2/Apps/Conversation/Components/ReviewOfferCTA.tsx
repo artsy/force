@@ -14,7 +14,6 @@ import React from "react"
 import styled from "styled-components"
 import { useTracking } from "react-tracking"
 import { CommerceBuyerOfferActionEnum } from "v2/__generated__/ConversationCTA_conversation.graphql"
-import { useRouter } from "v2/System/Router/useRouter"
 
 export const ClickableFlex = styled(Flex)`
   cursor: pointer;
@@ -24,19 +23,20 @@ export interface ReviewOfferCTAProps {
   conversationID: string
   kind: CommerceBuyerOfferActionEnum
   activeOrder: {
-    internalID: string
     stateExpiresAt: string | null
     lastOffer?: { createdAt: string } | null
     offers?: { edges: { length: number } | null } | null
   }
+  openOrderModal: () => void
 }
 
 export const ReviewOfferCTA: React.FC<ReviewOfferCTAProps> = ({
   conversationID,
   activeOrder,
   kind,
+  openOrderModal,
 }) => {
-  const { internalID: orderID, offers } = activeOrder
+  const { offers } = activeOrder
   const { trackEvent } = useTracking()
 
   const { hoursTillEnd, minutes } = useEventTiming({
@@ -54,8 +54,6 @@ export const ReviewOfferCTA: React.FC<ReviewOfferCTAProps> = ({
     message: string
     subMessage: string
     Icon: React.FC<IconProps>
-    url: string
-    modalTitle: string
   }
 
   switch (kind) {
@@ -66,8 +64,6 @@ export const ReviewOfferCTA: React.FC<ReviewOfferCTAProps> = ({
         subMessage:
           "Unable to process payment for accepted offer. Update payment method.",
         Icon: AlertCircleFillIcon,
-        url: `/orders/${orderID}/payment/new`,
-        modalTitle: "Update Payment Details",
       }
       break
     }
@@ -77,8 +73,6 @@ export const ReviewOfferCTA: React.FC<ReviewOfferCTAProps> = ({
         message: `${offerType} Received`,
         subMessage: `The offer expires in ${expiresIn}`,
         Icon: AlertCircleFillIcon,
-        url: `/orders/${orderID}`,
-        modalTitle: "Review Offer",
       }
       break
     }
@@ -88,8 +82,6 @@ export const ReviewOfferCTA: React.FC<ReviewOfferCTAProps> = ({
         message: `Congratulations! ${offerType} Accepted`,
         subMessage: "Tap to view",
         Icon: MoneyFillIcon,
-        url: `/orders/${orderID}`,
-        modalTitle: "Offer Accepted",
       }
       break
     }
@@ -99,8 +91,6 @@ export const ReviewOfferCTA: React.FC<ReviewOfferCTAProps> = ({
         message: `Offer Accepted - Confirm total`,
         subMessage: `The offer expires in ${expiresIn}`,
         Icon: AlertCircleFillIcon,
-        url: `/orders/${orderID}`,
-        modalTitle: "Review Offer",
       }
       break
     }
@@ -110,8 +100,6 @@ export const ReviewOfferCTA: React.FC<ReviewOfferCTAProps> = ({
         message: `Counteroffer Received - Confirm Total`,
         subMessage: `The offer expires in ${expiresIn}`,
         Icon: AlertCircleFillIcon,
-        url: `/orders/${orderID}`,
-        modalTitle: "Review Offer",
       }
       break
     }
@@ -121,8 +109,6 @@ export const ReviewOfferCTA: React.FC<ReviewOfferCTAProps> = ({
         message: `Offer Accepted`,
         subMessage: "Tap to view",
         Icon: MoneyFillIcon,
-        url: `/orders/${orderID}`,
-        modalTitle: "Offer Accepted",
       }
       break
     }
@@ -132,54 +118,47 @@ export const ReviewOfferCTA: React.FC<ReviewOfferCTAProps> = ({
     }
   }
 
-  const {
-    message,
-    subMessage,
-    backgroundColor,
-    Icon,
-    url,
-    modalTitle,
-  } = ctaAttributes
+  const { message, subMessage, backgroundColor, Icon } = ctaAttributes
 
-  const navigateToConversation = (path: string, title: string) => {
+  const openModal = () => {
     trackEvent(
       tappedViewOffer({
         impulse_conversation_id: conversationID,
         cta: message,
       })
     )
-
-    const { router } = useRouter()
-    router.push(`${path}?orderID=foo&title=bar`)
+    openOrderModal()
   }
 
   return (
-    <ClickableFlex
-      px={2}
-      py={1}
-      justifyContent="space-between"
-      alignItems="center"
-      bg={backgroundColor}
-      flexDirection="row"
-      minHeight={60}
-      onClick={() => {
-        navigateToConversation(url, modalTitle)
-      }}
-    >
-      <Flex flexDirection="row">
-        <Icon mt="3px" fill="white100" />
-        <Flex flexDirection="column" pl={1}>
-          <Text color="white100" variant="mediumText">
-            {message}
-          </Text>
-          <Text color="white100" variant="caption">
-            {subMessage}
-          </Text>
+    <>
+      <ClickableFlex
+        px={2}
+        py={1}
+        justifyContent="space-between"
+        alignItems="center"
+        bg={backgroundColor}
+        flexDirection="row"
+        minHeight={60}
+        onClick={() => {
+          openModal()
+        }}
+      >
+        <Flex flexDirection="row">
+          <Icon mt="3px" fill="white100" />
+          <Flex flexDirection="column" pl={1}>
+            <Text color="white100" variant="mediumText">
+              {message}
+            </Text>
+            <Text color="white100" variant="caption">
+              {subMessage}
+            </Text>
+          </Flex>
         </Flex>
-      </Flex>
-      <Flex>
-        <ArrowRightIcon fill="white100" />
-      </Flex>
-    </ClickableFlex>
+        <Flex>
+          <ArrowRightIcon fill="white100" />
+        </Flex>
+      </ClickableFlex>
+    </>
   )
 }
