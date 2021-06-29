@@ -149,6 +149,7 @@ export const AddressModal: React.FC<Props> = ({
               {!createMutation && (
                 <Flex mt={2} flexDirection="column" alignItems="center">
                   <Text
+                    data-test="deleteButton"
                     onClick={() => setShowDialog(true)}
                     variant="text"
                     color="red100"
@@ -161,6 +162,7 @@ export const AddressModal: React.FC<Props> = ({
                 </Flex>
               )}
               <Button
+                data-test="saveButton"
                 type="submit"
                 size="large"
                 loading={formik.isSubmitting}

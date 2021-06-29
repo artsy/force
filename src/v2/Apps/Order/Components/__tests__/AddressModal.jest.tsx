@@ -8,6 +8,7 @@ import {
   updateAddressFailure,
 } from "v2/Apps/Order/Routes/__fixtures__/MutationResults"
 import { SavedAddressType } from "../../Utils/shippingAddressUtils"
+import { Dialog } from "@artsy/palette"
 
 const errorBoxQuery = "Text[data-test='credit-card-error']"
 
@@ -24,25 +25,7 @@ const savedAddress: SavedAddressType = {
   isDefault: false,
 }
 
-const testAddressModalProps: Props = {
-  show: true,
-  address: savedAddress,
-  onSuccess: jest.fn(),
-  onError: jest.fn(),
-  onDeleteAddress: jest.fn(),
-  modalDetails: {
-    addressModalTitle: "Modal title",
-    addressModalAction: "editUserAddress",
-  },
-  me: {
-    id: "1234",
-    addressConnection: {
-      edges: [],
-    },
-    " $refType": "SavedAddresses_me",
-  },
-  closeModal: jest.fn(),
-}
+let testAddressModalProps: Props
 
 function getWrapper(props: Props) {
   return mount(<AddressModal {...props} />)
@@ -50,14 +33,104 @@ function getWrapper(props: Props) {
 
 describe("AddressModal", () => {
   beforeEach(() => {
+    testAddressModalProps = {
+      show: true,
+      address: savedAddress,
+      onSuccess: jest.fn(),
+      onError: jest.fn(),
+      onDeleteAddress: jest.fn(),
+      modalDetails: {
+        addressModalTitle: "Edit address",
+        addressModalAction: "editUserAddress",
+      },
+      me: {
+        id: "1234",
+        addressConnection: {
+          edges: [],
+        },
+        " $refType": "SavedAddresses_me",
+      },
+      closeModal: jest.fn(),
+    }
     commitMutation.mockReset()
   })
-  it("renders Modal with the title and input fields", () => {
+  it("renders EditModal with the title, input fields and buttons", () => {
     const wrapper = getWrapper(testAddressModalProps)
-    expect(wrapper.text()).toContain("Modal title")
+    expect(wrapper.text()).toContain("Edit address")
     expect(wrapper.find("input").length).toBe(7)
     expect(wrapper.find("select").length).toBe(1)
+    expect(wrapper.find("Text[data-test='deleteButton']").length).toBe(1)
+    expect(wrapper.find("Button[data-test='saveButton']").length).toBe(1)
   })
+
+  it("renders AddModal with the title, input fields and button", () => {
+    const wrapper = getWrapper({
+      ...testAddressModalProps,
+      modalDetails: {
+        addressModalTitle: "Add address",
+        addressModalAction: "createUserAddress",
+      },
+    })
+    expect(wrapper.text()).toContain("Add address")
+    expect(wrapper.find("input").length).toBe(7)
+    expect(wrapper.find("select").length).toBe(1)
+    expect(wrapper.find("Text[data-test='deleteButton']").length).toBe(0)
+    expect(wrapper.find("Button[data-test='saveButton']").length).toBe(1)
+  })
+
+  it("clicking the delete button spawns a correct dialog", () => {
+    const wrapper = getWrapper(testAddressModalProps)
+    const deleteButton = wrapper.find("Text[data-test='deleteButton']")
+    const dialog = wrapper.find(Dialog)
+    expect(dialog.props().show).toBe(false)
+    deleteButton.simulate("click")
+
+    setTimeout(() => {
+      expect(dialog).toHaveLength(1)
+      expect(dialog.props().title).toBe("Delete address?")
+      expect(dialog.props().detail).toBe(
+        "This will remove this address from your saved addresses."
+      )
+      expect(dialog.props().primaryCta.text).toContain("Delete")
+      expect(dialog.props().secondaryCta.text).toContain("Cancel")
+    }, 0)
+  })
+
+  it("when the dialog is confirmed, the delete action happens", () => {
+    const wrapper = getWrapper(testAddressModalProps)
+    const deleteButton = wrapper.find("Text[data-test='deleteButton']")
+    deleteButton.simulate("click")
+    const dialog = wrapper.find(Dialog)
+    const dialogDelete = dialog
+      .findWhere(node => node.text() === "Delete")
+      .first()
+    dialogDelete.simulate("click")
+
+    setTimeout(() => {
+      expect(wrapper.find(AddressModal).props().onDeleteAddress).toBeCalled()
+      expect(wrapper.find(AddressModal).props().closeModal).toBeCalled()
+    }, 0)
+  })
+
+  it("when the dialog is cancelled, the delete action doesn't happen", () => {
+    const wrapper = getWrapper(testAddressModalProps)
+    const deleteButton = wrapper.find("Text[data-test='deleteButton']")
+    deleteButton.simulate("click")
+    const dialog = wrapper.find(Dialog)
+    const dialogCancel = dialog
+      .findWhere(node => node.text() === "Cancel")
+      .first()
+    console.log(dialogCancel.length)
+    dialogCancel.simulate("click")
+
+    setTimeout(() => {
+      expect(
+        wrapper.find(AddressModal).props().onDeleteAddress
+      ).not.toBeCalled()
+      expect(wrapper.find(AddressModal).props().closeModal).not.toBeCalled()
+    }, 0)
+  })
+
   describe("update mode", () => {
     it("creates address when form is submitted with valid values", async () => {
       const wrapper = getWrapper(testAddressModalProps)
@@ -137,6 +210,7 @@ describe("AddressModal", () => {
       expect(wrapper.find(errorBoxQuery).text()).toContain(GENERIC_FAIL_MESSAGE)
     })
   })
+
   it("sets formik error when mutation returns phone validation error", async () => {
     let wrapper = getWrapper(testAddressModalProps)
 
