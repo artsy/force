@@ -146,6 +146,7 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
       sizes,
       height: "*-*",
       width: "*-*",
+      reset: false,
     }
 
     setFilters?.(newFilters, { force: false })
@@ -156,6 +157,7 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
     const newFilters = {
       ...currentlySelectedFilters?.(),
       sizes: [],
+      reset: false,
       ...mapSizeToRange(convertSizeToInches(customSize) as CustomSize),
     }
     setFilters?.(newFilters, { force: false })
