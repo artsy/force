@@ -49,9 +49,6 @@ export type ConversationAppTestQueryRawResponse = {
                             readonly id: string | null;
                         }) | null;
                     }) | null> | null;
-                    readonly messagesConnection: ({
-                        readonly totalCount: number | null;
-                    }) | null;
                     readonly __typename: "Conversation";
                 }) | null;
                 readonly cursor: string;
@@ -153,9 +150,6 @@ fragment ConversationSnippet_conversation on Conversation {
         id
       }
     }
-  }
-  messagesConnection {
-    totalCount
   }
 }
 */
@@ -393,24 +387,6 @@ return {
                         ],
                         "storageKey": null
                       },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "concreteType": "MessageConnection",
-                        "kind": "LinkedField",
-                        "name": "messagesConnection",
-                        "plural": false,
-                        "selections": [
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "totalCount",
-                            "storageKey": null
-                          }
-                        ],
-                        "storageKey": null
-                      },
                       (v4/*: any*/)
                     ],
                     "storageKey": null
@@ -487,7 +463,7 @@ return {
     "metadata": {},
     "name": "ConversationAppTestQuery",
     "operationKind": "query",
-    "text": "query ConversationAppTestQuery {\n  me {\n    ...ConversationApp_me\n    id\n  }\n}\n\nfragment ConversationApp_me on Me {\n  conversationsConnection(first: 25) {\n    edges {\n      node {\n        internalID\n        to {\n          name\n          id\n        }\n        id\n      }\n    }\n  }\n  ...ConversationList_me\n}\n\nfragment ConversationList_me on Me {\n  conversationsConnection(first: 25) {\n    edges {\n      cursor\n      node {\n        id\n        internalID\n        lastMessage\n        ...ConversationSnippet_conversation\n        __typename\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n\nfragment ConversationSnippet_conversation on Conversation {\n  internalID\n  to {\n    name\n    id\n  }\n  lastMessage\n  lastMessageAt\n  unread\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        date\n        title\n        artistNames\n        image {\n          url\n        }\n      }\n      ... on Show {\n        fair {\n          name\n          id\n        }\n        name\n        coverImage {\n          url\n        }\n      }\n      ... on Node {\n        id\n      }\n    }\n  }\n  messagesConnection {\n    totalCount\n  }\n}\n"
+    "text": "query ConversationAppTestQuery {\n  me {\n    ...ConversationApp_me\n    id\n  }\n}\n\nfragment ConversationApp_me on Me {\n  conversationsConnection(first: 25) {\n    edges {\n      node {\n        internalID\n        to {\n          name\n          id\n        }\n        id\n      }\n    }\n  }\n  ...ConversationList_me\n}\n\nfragment ConversationList_me on Me {\n  conversationsConnection(first: 25) {\n    edges {\n      cursor\n      node {\n        id\n        internalID\n        lastMessage\n        ...ConversationSnippet_conversation\n        __typename\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n\nfragment ConversationSnippet_conversation on Conversation {\n  internalID\n  to {\n    name\n    id\n  }\n  lastMessage\n  lastMessageAt\n  unread\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        date\n        title\n        artistNames\n        image {\n          url\n        }\n      }\n      ... on Show {\n        fair {\n          name\n          id\n        }\n        name\n        coverImage {\n          url\n        }\n      }\n      ... on Node {\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();
