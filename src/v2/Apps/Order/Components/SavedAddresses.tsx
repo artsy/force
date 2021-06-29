@@ -183,6 +183,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
     <>
       {inCollectorProfile ? (
         <Button
+          data-test="profileButton"
           mt={2}
           variant="primaryBlack"
           size="large"
@@ -199,6 +200,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
       ) : (
         addressList.length > 0 && (
           <Button
+            data-test="shippingButton"
             variant="secondaryOutline"
             width={159}
             onClick={() => {
