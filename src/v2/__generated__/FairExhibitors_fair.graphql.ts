@@ -54,6 +54,12 @@ return {
       "kind": "LocalArgument",
       "name": "after",
       "type": "String"
+    },
+    {
+      "defaultValue": "FEATURED_DESC",
+      "kind": "LocalArgument",
+      "name": "sort",
+      "type": "ShowSorts"
     }
   ],
   "kind": "Fragment",
@@ -89,9 +95,9 @@ return {
       "alias": "exhibitors",
       "args": [
         {
-          "kind": "Literal",
+          "kind": "Variable",
           "name": "sort",
-          "value": "FEATURED_DESC"
+          "variableName": "sort"
         },
         {
           "kind": "Literal",
@@ -211,11 +217,11 @@ return {
           "storageKey": null
         }
       ],
-      "storageKey": "__FairExhibitorsQuery_exhibitors_connection(sort:\"FEATURED_DESC\",totalCount:true)"
+      "storageKey": null
     }
   ],
   "type": "Fair"
 };
 })();
-(node as any).hash = '25b654a42281e69fef43b63319eb3b10';
+(node as any).hash = '9e2fbb34da2985bb49b16dc13b26a4bd';
 export default node;

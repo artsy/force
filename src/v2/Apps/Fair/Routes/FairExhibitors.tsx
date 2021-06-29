@@ -7,9 +7,12 @@ import {
   graphql,
 } from "react-relay"
 import { useTracking } from "react-tracking"
+import { updateUrl } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
 import { useAnalyticsContext } from "v2/System/Analytics/AnalyticsContext"
 import { FairExhibitors_fair } from "v2/__generated__/FairExhibitors_fair.graphql"
 import { FairExhibitorRailFragmentContainer as FairExhibitorRail } from "../Components/FairExhibitorRail"
+import { FairExhibitorSortFilter } from "../Components/FairExhibitorSortFilter"
+import { ExhibitorFilterContextProvider } from "./ExhibitorFilterContext"
 
 interface FairExhibitorsProps {
   fair: FairExhibitors_fair
@@ -62,6 +65,15 @@ const FairExhibitors: React.FC<FairExhibitorsProps> = ({ fair, relay }) => {
 
   return (
     <>
+      <ExhibitorFilterContextProvider
+        sortOptions={[
+          { text: "Relevance", value: "featured" },
+          { text: "Alphabetical (A-Z)", value: "sortable_name" },
+        ]}
+        onChange={updateUrl}
+      >
+        <FairExhibitorSortFilter />
+      </ExhibitorFilterContextProvider>
       {/* @ts-expect-error STRICT_NULL_CHECK */}
       {fair.exhibitors?.edges.map(({ node: show }, index) => {
         if (show.counts.artworks === 0 || !show.partner) {
@@ -103,13 +115,14 @@ export const FairExhibitorsFragmentContainer = createPaginationContainer(
         @argumentDefinitions(
           first: { type: "Int", defaultValue: 15 }
           after: { type: "String" }
+          sort: { type: "ShowSorts", defaultValue: FEATURED_DESC }
         ) {
         slug
         internalID
         exhibitors: showsConnection(
           first: $first
           after: $after
-          sort: FEATURED_DESC
+          sort: $sort
           totalCount: true
         ) @connection(key: "FairExhibitorsQuery_exhibitors") {
           edges {
@@ -139,9 +152,15 @@ export const FairExhibitorsFragmentContainer = createPaginationContainer(
       return { after, first, id }
     },
     query: graphql`
-      query FairExhibitorsQuery($id: String!, $first: Int!, $after: String) {
+      query FairExhibitorsQuery(
+        $id: String!
+        $first: Int!
+        $after: String
+        $sort: ShowSorts
+      ) {
         fair(id: $id) {
-          ...FairExhibitors_fair @arguments(first: $first, after: $after)
+          ...FairExhibitors_fair
+            @arguments(first: $first, after: $after, sort: $sort)
         }
       }
     `,
