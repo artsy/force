@@ -76,12 +76,12 @@ const node: ReaderFragment = {
         {
           "kind": "Literal",
           "name": "format",
-          "value": "MMM Do, YYYY"
+          "value": "MMMM D, YYYY"
         }
       ],
       "kind": "ScalarField",
       "name": "publishedAt",
-      "storageKey": "publishedAt(format:\"MMM Do, YYYY\")"
+      "storageKey": "publishedAt(format:\"MMMM D, YYYY\")"
     },
     {
       "alias": null,
@@ -104,12 +104,12 @@ const node: ReaderFragment = {
             {
               "kind": "Literal",
               "name": "height",
-              "value": 80
+              "value": 240
             },
             {
               "kind": "Literal",
               "name": "width",
-              "value": 140
+              "value": 325
             }
           ],
           "concreteType": "CroppedImageUrl",
@@ -146,7 +146,7 @@ const node: ReaderFragment = {
               "storageKey": null
             }
           ],
-          "storageKey": "cropped(height:80,width:140)"
+          "storageKey": "cropped(height:240,width:325)"
         }
       ],
       "storageKey": null
@@ -154,5 +154,5 @@ const node: ReaderFragment = {
   ],
   "type": "Article"
 };
-(node as any).hash = '5a3e99f3ff34c8e398ad1323b78b838a';
+(node as any).hash = 'fa625cedb99ad48022d14033b6a2f7ba';
 export default node;
