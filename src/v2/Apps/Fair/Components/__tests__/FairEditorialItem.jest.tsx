@@ -1,0 +1,102 @@
+import React from "react"
+import { graphql } from "relay-runtime"
+import { useTracking as baseUseTracking } from "react-tracking"
+import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
+import { FairEditorialItemFragmentContainer } from "../FairEditorial/FairEditorialItem"
+import { AnalyticsContext } from "v2/System/Analytics/AnalyticsContext"
+import { OwnerType } from "@artsy/cohesion"
+
+jest.mock("react-tracking")
+jest.unmock("react-relay")
+
+describe("FairEditorialItem", () => {
+  const useTracking = baseUseTracking as jest.Mock
+  const trackEvent = jest.fn()
+
+  let wrapper
+
+  const { getWrapper } = setupTestWrapper({
+    Component: (props: any) => {
+      return (
+        <AnalyticsContext.Provider
+          value={{
+            contextPageOwnerId: "example-article-id",
+            contextPageOwnerSlug: "example-article-slug",
+            contextPageOwnerType: OwnerType.article,
+          }}
+        >
+          <FairEditorialItemFragmentContainer article={props.article} />
+        </AnalyticsContext.Provider>
+      )
+    },
+    query: graphql`
+      query FairEditorialItem_Test_Query {
+        article(id: "test") {
+          ...FairEditorialItem_article
+        }
+      }
+    `,
+  })
+
+  beforeEach(() => {
+    wrapper = getWrapper({
+      Article: () => ({
+        internalID: "test-id",
+        slug: "test slug",
+        title: "Test Title",
+        href: "/test",
+        publishedAt: "May 25, 2021",
+        thumbnailImage: {
+          cropped: {
+            width: 320,
+            height: 220,
+            src: "articleImageSrc",
+            srcSet: "articleImageSrcSet",
+          },
+        },
+      }),
+    })
+
+    useTracking.mockImplementation(() => {
+      return {
+        trackEvent,
+      }
+    })
+  })
+
+  afterEach(() => {
+    jest.clearAllMocks()
+  })
+
+  it("renders correct components and data", () => {
+    expect(wrapper.find("RouterLink")).toBeDefined()
+    expect(wrapper.find("RouterLink").props().to).toBe("/test")
+
+    expect(wrapper.find("Image")).toBeDefined()
+    expect(wrapper.find("Image").props().src).toEqual("articleImageSrc")
+    expect(wrapper.find("Image").props().srcSet).toEqual("articleImageSrcSet")
+
+    const text = wrapper.text()
+    expect(text).toContain("Test Title")
+    expect(text).toContain("May 25, 2021")
+  })
+
+  it("tracks clicks", () => {
+    wrapper.find("RouterLink").first().simulate("click")
+
+    expect(trackEvent).toHaveBeenCalledWith({
+      action: "clickedArticleGroup",
+      context_module: "relatedArticles",
+      context_page_owner_type: "article",
+      context_page_owner_id: "example-article-id",
+      context_page_owner_slug: "example-article-slug",
+      destination_page_owner_id: "test-id",
+      destination_page_owner_slug: "test slug",
+      destination_page_owner_type: "article",
+      type: "thumbnail",
+    })
+
+    wrapper.find("RouterLink").first().simulate("click")
+    expect(trackEvent).toHaveBeenCalledTimes(2)
+  })
+})
