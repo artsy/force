@@ -5,9 +5,11 @@ import {
   FlexProps,
   color,
   media,
+  Text,
   space,
   themeProps,
   Separator,
+  Box,
 } from "@artsy/palette"
 import { Conversation_conversation } from "v2/__generated__/Conversation_conversation.graphql"
 import React, { useRef, useState } from "react"
@@ -19,6 +21,7 @@ import {
   focusedOnConversationMessageInput,
   sentConversationMessage,
 } from "@artsy/cohesion"
+import OfferStatus from "./OfferStatus"
 import { RightProps } from "styled-system"
 import { ConversationCTAFragmentContainer } from "./ConversationCTA"
 
@@ -149,6 +152,7 @@ export const Reply: React.FC<ReplyProps> = props => {
         flexDirection="column"
         background="white"
       >
+        <OfferStatus color="#A85F00" />
         <ShadowSeparator />
         <ConversationCTAFragmentContainer
           conversation={conversation}
