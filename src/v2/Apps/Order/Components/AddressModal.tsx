@@ -105,7 +105,6 @@ export const AddressModal: React.FC<Props> = ({
             }
 
             const handleSuccess = savedAddress => {
-              console.log(savedAddress)
               if (isDefault) {
                 updateUserDefaultAddress(
                   // @ts-expect-error STRICT_NULL_CHECK
@@ -169,7 +168,7 @@ export const AddressModal: React.FC<Props> = ({
                     setIsDefault(selected)
                   }}
                   selected={formik.values?.isDefault}
-                  data-test="set-as-default-checkbox"
+                  data-test="setAsDefault"
                 >
                   Set as default
                 </Checkbox>
