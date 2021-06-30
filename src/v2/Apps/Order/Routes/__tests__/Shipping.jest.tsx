@@ -3,6 +3,7 @@ import { cloneDeep } from "lodash"
 
 import {
   UntouchedBuyOrder,
+  UntouchedBuyOrderWithArtaEnabled,
   UntouchedOfferOrder,
 } from "v2/Apps/__tests__/Fixtures/Order"
 import {
@@ -17,6 +18,8 @@ import { Input as paletteInput } from "@artsy/palette"
 import { createTestEnv } from "v2/DevTools/createTestEnv"
 import { commitMutation as _commitMutation, graphql } from "react-relay"
 import {
+  selectShippingQuoteSuccess,
+  settingOrderArtaShipmentSuccess,
   settingOrderShipmentFailure,
   settingOrderShipmentMissingCountryFailure,
   settingOrderShipmentMissingRegionFailure,
@@ -33,6 +36,14 @@ jest.unmock("react-relay")
 
 const testOrder: ShippingTestQueryRawResponse["order"] = {
   ...UntouchedBuyOrder,
+  internalID: "1234",
+  id: "1234",
+}
+
+const ArtaEnabledTestOrder: ShippingTestQueryRawResponse["order"] = {
+  ...UntouchedBuyOrderWithArtaEnabled,
+  __typename: "CommerceBuyOrder",
+  mode: "BUY",
   internalID: "1234",
   id: "1234",
 }
@@ -116,6 +127,7 @@ describe("Shipping", () => {
       ...settingOrderShipmentSuccess,
       ...saveAddressSuccess,
       ...updateAddressSuccess,
+      ...selectShippingQuoteSuccess,
     },
     query: graphql`
       query ShippingTestQuery @raw_response_type {
@@ -316,6 +328,129 @@ describe("Shipping", () => {
           "Invalid address",
           "There was an error processing your address. Please review and try again."
         )
+      })
+    })
+
+    describe("ARTA shipping", () => {
+      let page
+
+      beforeEach(async () => {
+        page = await buildPage({
+          mockData: {
+            order: {
+              ...ArtaEnabledTestOrder,
+            },
+          },
+        })
+      })
+
+      it("commits set shipping mutation and save address", async () => {
+        fillAddressForm(page.root, {
+          ...validAddress,
+          region: "New Brunswick",
+          country: "US",
+        })
+
+        await page.clickSubmit()
+
+        expect(mutations.mockFetch).toHaveBeenCalledTimes(2)
+        expect(mutations.mockFetch.mock.calls[0][0].name).toEqual(
+          "SetShippingMutation",
+          "CreateUserAddressMutation"
+        )
+
+        expect(mutations.mockFetch.mock.calls.map(call => call[1].input))
+          .toMatchInlineSnapshot(`
+          Array [
+            Object {
+              "fulfillmentType": "SHIP_ARTA",
+              "id": "1234",
+              "phoneNumber": "8475937743",
+              "shipping": Object {
+                "addressLine1": "14 Gower's Walk",
+                "addressLine2": "Suite 2.5, The Loom",
+                "city": "Whitechapel",
+                "country": "US",
+                "name": "Artsy UK Ltd",
+                "phoneNumber": "",
+                "postalCode": "E1 8PY",
+                "region": "New Brunswick",
+              },
+            },
+            Object {
+              "attributes": Object {
+                "addressLine1": "14 Gower's Walk",
+                "addressLine2": "Suite 2.5, The Loom",
+                "city": "Whitechapel",
+                "country": "US",
+                "name": "Artsy UK Ltd",
+                "phoneNumber": "8475937743",
+                "postalCode": "E1 8PY",
+                "region": "New Brunswick",
+              },
+            },
+          ]
+        `)
+      })
+
+      it("commits selectShippingOption mutation and save address", async () => {
+        fillAddressForm(page.root, {
+          ...validAddress,
+          region: "New Brunswick",
+          country: "US",
+        })
+
+        page
+          .find(`[data-test="save-address-checkbox"]`)
+          .first()
+          .simulate("click")
+
+        mutations.useResultsOnce(settingOrderArtaShipmentSuccess)
+
+        await page.clickSubmit()
+
+        expect(mutations.mockFetch).toHaveBeenCalledTimes(1)
+        expect(mutations.mockFetch.mock.calls[0][0].name).toEqual(
+          "SetShippingMutation"
+        )
+
+        page.find(`[data-test="shipping-quotes"]`).last().simulate("click")
+        page
+          .find(`[data-test="save-address-checkbox"]`)
+          .first()
+          .simulate("click")
+
+        await page.clickSubmit()
+
+        expect(mutations.mockFetch).toHaveBeenCalledTimes(3)
+        expect(mutations.mockFetch.mock.calls[1][0].name).toEqual(
+          "SelectShippingOptionMutation",
+          "CreateUserAddressMutation"
+        )
+
+        expect(mutations.mockFetch.mock.calls[1][1].input)
+          .toMatchInlineSnapshot(`
+            Object {
+              "id": "1234",
+              "selectedShippingQuoteId": "278ba0c4-f815-4197-8a8d-b97f1883db21",
+            }
+        `)
+
+        expect(mutations.mockFetch.mock.calls[2][1].input)
+          .toMatchInlineSnapshot(`
+            Object {
+              "attributes": Object {
+                "addressLine1": "14 Gower's Walk",
+                "addressLine2": "Suite 2.5, The Loom",
+                "city": "Whitechapel",
+                "country": "US",
+                "name": "Artsy UK Ltd",
+                "phoneNumber": "8475937743",
+                "postalCode": "E1 8PY",
+                "region": "New Brunswick",
+              },
+            }
+        `)
       })
     })
 
@@ -604,6 +739,139 @@ describe("Shipping", () => {
         }
       `)
     })
+
+    it("does not commit set shipping mutation if address in Europe", async () => {
+      const collectorWithDefaultAddressInEurope = cloneDeep(testMe) as any
+      collectorWithDefaultAddressInEurope.addressConnection.edges[0].node.isDefault = true
+      collectorWithDefaultAddressInEurope.addressConnection.edges[1].node.isDefault = false
+
+      page = await buildPage({
+        mockData: {
+          me: collectorWithDefaultAddressInEurope,
+          order: {
+            ...ArtaEnabledTestOrder,
+          },
+        },
+      })
+      await page.update()
+
+      expect(mutations.mockFetch).not.toHaveBeenCalled()
+    })
+
+    describe("ARTA shipping", () => {
+      beforeEach(async () => {
+        mutations.useResultsOnce(settingOrderArtaShipmentSuccess)
+
+        page = await buildPage({
+          mockData: {
+            me: testMe,
+            order: {
+              ...ArtaEnabledTestOrder,
+            },
+          },
+        })
+      })
+
+      it("commits set shipping mutation if default collector address in USA", async () => {
+        expect(mutations.mockFetch).toHaveBeenCalledTimes(1)
+        expect(mutations.mockFetch.mock.calls[0][0].name).toEqual(
+          "SetShippingMutation"
+        )
+
+        expect(mutations.lastFetchVariables).toMatchInlineSnapshot(`
+          Object {
+            "input": Object {
+              "fulfillmentType": "SHIP_ARTA",
+              "id": "1234",
+              "phoneNumber": "422-424-4242",
+              "shipping": Object {
+                "addressLine1": "401 Broadway",
+                "addressLine2": "Floor 25",
+                "city": "New York",
+                "country": "US",
+                "name": "Test Name",
+                "phoneNumber": "422-424-4242",
+                "postalCode": "10013",
+                "region": "NY",
+              },
+            },
+          }
+        `)
+      })
+
+      it("shows shipping quotes after set shipping mutation commited", async () => {
+        expect(mutations.mockFetch).toHaveBeenCalledTimes(1)
+        expect(mutations.mockFetch.mock.calls[0][0].name).toEqual(
+          "SetShippingMutation"
+        )
+
+        expect(page.find(ShippingRoute).state().shippingQuotes).toHaveLength(5)
+      })
+
+      it("submit button disabled if shipping quote is not selected", async () => {
+        expect(page.submitButton.props().disabled).toBeTruthy()
+      })
+
+      it("submit button enabled if shipping quote is selected", async () => {
+        page.find(`[data-test="shipping-quotes"]`).last().simulate("click")
+
+        expect(page.find(ShippingRoute).state().shippingQuoteId).toEqual(
+          "278ba0c4-f815-4197-8a8d-b97f1883db21"
+        )
+
+        expect(page.submitButton.props().disabled).toBeFalsy()
+      })
+
+      it("does not show shipping quotes if address in Europe", async () => {
+        const collectorWithDefaultAddressInEurope = cloneDeep(testMe) as any
+        collectorWithDefaultAddressInEurope.addressConnection.edges[0].node.isDefault = true
+        collectorWithDefaultAddressInEurope.addressConnection.edges[1].node.isDefault = false
+
+        page = await buildPage({
+          mockData: {
+            me: collectorWithDefaultAddressInEurope,
+            order: {
+              ...ArtaEnabledTestOrder,
+            },
+          },
+        })
+        await page.update()
+
+        expect(page.find(`[data-test="shipping-quotes"]`)).toHaveLength(0)
+      })
+
+      it("commites selectShippingOption mutation with correct input", async () => {
+        page.find(`[data-test="shipping-quotes"]`).last().simulate("click")
+
+        await page.clickSubmit()
+
+        expect(mutations.lastFetchVariables).toMatchInlineSnapshot(`
+          Object {
+            "input": Object {
+              "id": "1234",
+              "selectedShippingQuoteId": "278ba0c4-f815-4197-8a8d-b97f1883db21",
+            },
+          }
+        `)
+      })
+
+      it("routes to payment screen after selectShippingOption mutation completes", async () => {
+        page.find(`[data-test="shipping-quotes"]`).last().simulate("click")
+
+        await page.clickSubmit()
+
+        expect(mutations.mockFetch).toHaveBeenCalledTimes(2)
+        expect(mutations.mockFetch.mock.calls[0][0].name).toEqual(
+          "SetShippingMutation",
+          "SelectShippingOptionMutation"
+        )
+
+        expect(routes.mockPushRoute).toHaveBeenCalledWith(
+          "/orders/1234/payment"
+        )
+      })
+    })
+
     describe("editing address", () => {
       it("opens modal with correct title and action properties", async () => {
         await page

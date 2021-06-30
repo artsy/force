@@ -50,7 +50,6 @@ import {
 import { Router } from "found"
 import React, { Component } from "react"
 import { RelayProp, createFragmentContainer, graphql } from "react-relay"
-import { get } from "v2/Utils/get"
 import createLogger from "v2/Utils/logger"
 import { Media } from "v2/Utils/Responsive"
 import { BuyerGuarantee } from "../../Components/BuyerGuarantee"

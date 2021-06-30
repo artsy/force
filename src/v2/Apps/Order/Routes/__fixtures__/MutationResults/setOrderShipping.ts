@@ -1,4 +1,7 @@
-import { BuyOrderWithShippingDetails } from "v2/Apps/__tests__/Fixtures/Order"
+import {
+  BuyOrderWithArtaShippingDetails,
+  BuyOrderWithShippingDetails,
+} from "v2/Apps/__tests__/Fixtures/Order"
 
 export const settingOrderShipmentFailure = {
   commerceSetShipping: {
@@ -41,6 +44,26 @@ export const settingOrderShipmentSuccess = {
     orderOrError: {
       order: {
         ...BuyOrderWithShippingDetails,
+      },
+    },
+  },
+}
+
+export const settingOrderArtaShipmentSuccess = {
+  commerceSetShipping: {
+    orderOrError: {
+      order: {
+        ...BuyOrderWithArtaShippingDetails,
+      },
+    },
+  },
+}
+
+export const selectShippingQuoteSuccess = {
+  commerceSelectShippingOption: {
+    orderOrError: {
+      order: {
+        __typename: "CommerceBuyOrder",
       },
     },
   },

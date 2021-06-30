@@ -15,7 +15,7 @@ const shippingQuoteDescriptions = {
 }
 
 export interface ShippingQuotesProps extends BoxProps {
-  onSelect: (shippingOptionId: string) => void
+  onSelect: (shippingQuoteId: string) => void
   shippingQuotes: ShippingQuotes_shippingQuotes
   selectedShippingQuoteId?: string
 }
@@ -45,7 +45,12 @@ export const ShippingQuotes: React.FC<ShippingQuotesProps> = ({
           shippingQuoteDescriptions[shippingQuoteName.toLowerCase()]
 
         return (
-          <BorderedRadio value={id} key={id} position="relative">
+          <BorderedRadio
+            data-test="shipping-quotes"
+            value={id}
+            key={id}
+            position="relative"
+          >
             <Flex flexDirection="column">
               <Text textTransform="capitalize">
                 {shippingQuoteName} ({priceCurrency}
