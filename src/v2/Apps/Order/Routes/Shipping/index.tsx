@@ -65,7 +65,6 @@ import {
   NEW_ADDRESS,
   SavedAddressesFragmentContainer as SavedAddresses,
 } from "../../Components/SavedAddresses"
-import { AddressModal } from "../../Components/AddressModal"
 import { createUserAddress } from "../../Mutations/CreateUserAddress"
 import { setShipping } from "../../Mutations/SetShipping"
 import { SystemContextProps, withSystemContext } from "v2/System/SystemContext"
@@ -129,19 +128,31 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
     }
   }
 
+  handleAddressDelete = (isLast: boolean) => {
+    if (isLast) {
+      this.setState({ selectedSavedAddress: NEW_ADDRESS })
+    }
+  }
+
   // @ts-expect-error STRICT_NULL_CHECK
   getAddressList = () => this.props.me.addressConnection.edges
 
   isCreateNewAddress = () => this.state.selectedSavedAddress === NEW_ADDRESS
 
   onContinueButtonPressed = async () => {
-    const { address, shippingOption, phoneNumber } = this.state
+    const {
+      address,
+      shippingOption,
+      phoneNumber,
+      selectedSavedAddress,
+      saveAddress,
+    } = this.state
 
     if (shippingOption === "SHIP") {
       if (this.isCreateNewAddress()) {
         // validate when order is not pickup and the address is new
-        const { errors, hasErrors } = validateAddress(this.state.address)
-        const { error, hasError } = validatePhoneNumber(this.state.phoneNumber)
+        const { errors, hasErrors } = validateAddress(address)
+        const { error, hasError } = validatePhoneNumber(phoneNumber)
         if (hasErrors && hasError) {
           this.setState({
             // @ts-expect-error STRICT_NULL_CHECK
@@ -167,7 +178,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
         }
       }
     } else {
-      const { error, hasError } = validatePhoneNumber(this.state.phoneNumber)
+      const { error, hasError } = validatePhoneNumber(phoneNumber)
       if (hasError) {
         this.setState({
           phoneNumberError: error,
@@ -183,14 +194,12 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
         ? address
         : convertShippingAddressForExchange(
             // @ts-expect-error STRICT_NULL_CHECK
-            this.getAddressList()[parseInt(this.state.selectedSavedAddress)]
-              .node
+            this.getAddressList()[parseInt(selectedSavedAddress)].node
           )
       const shipToPhoneNumber = this.isCreateNewAddress()
         ? phoneNumber
         : // @ts-expect-error STRICT_NULL_CHECK
-          this.getAddressList()[parseInt(this.state.selectedSavedAddress)].node
-            .phoneNumber
+          this.getAddressList()[parseInt(selectedSavedAddress)].node.phoneNumber
       // @ts-expect-error STRICT_NULL_CHECK
       const orderOrError = (
         await setShipping(this.props.commitMutation, {
@@ -205,9 +214,9 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
 
       // save address when user is entering new address AND save checkbox is selected
       if (
-        this.state.shippingOption === "SHIP" &&
+        shippingOption === "SHIP" &&
         this.isCreateNewAddress() &&
-        this.state.saveAddress
+        saveAddress
       ) {
         const { relayEnvironment } = this.props
         await createUserAddress(
@@ -318,12 +327,10 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
       phoneNumber,
       phoneNumberError,
       phoneNumberTouched,
-      showModal,
     } = this.state
     const artwork = get(
       this.props,
-      // @ts-expect-error STRICT_NULL_CHECK
-      props => props.order.lineItems.edges[0].node.artwork
+      props => props.order.lineItems?.edges?.[0]?.node?.artwork
     )
     const addressList = this.getAddressList()
 
@@ -345,25 +352,6 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
 
     return (
       <Box data-test="orderShipping">
-        <AddressModal
-          modalDetails={{
-            addressModalTitle: "Edit address",
-            addressModalAction: "editUserAddress",
-          }}
-          show={showModal}
-          closeModal={() => this.setState({ showModal: false })}
-          // @ts-expect-error STRICT_NULL_CHECK
-          address={addressList[this.state.editAddressIndex]?.node}
-          onSuccess={() => {
-            // this.setState({ address: updatedAddress })
-          }}
-          onError={message => {
-            this.props.dialog.showErrorDialog({
-              title: "Address cannot be updated",
-              message: message,
-            })
-          }}
-        />
         <Row>
           <Col>
             <OrderStepper
@@ -420,6 +408,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
                     onSelect={value => onSelectSavedAddress(value)}
                     handleClickEdit={this.handleClickEdit}
                     inCollectorProfile={false}
+                    onAddressDelete={this.handleAddressDelete}
                   />
                 </>
               )}
@@ -484,7 +473,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
             </Flex>
           }
           Sidebar={
-            <Flex flexDirection="column" mt={3}>
+            <Flex flexDirection="column" mt={[0, 3]}>
               <Flex flexDirection="column">
                 <ArtworkSummaryItem order={order} />
                 <TransactionDetailsSummaryItem order={order} />
