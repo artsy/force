@@ -2,7 +2,6 @@ import {
   GridColumns,
   Column,
   ResponsiveBox,
-  Image,
   Text,
   Spacer,
   Flex,
@@ -19,6 +18,7 @@ import { RouterLink } from "v2/System/Router/RouterLink"
 import { useLazyLoadComponent } from "v2/Utils/Hooks/useLazyLoadComponent"
 import { HomeFeaturedShowsQuery } from "v2/__generated__/HomeFeaturedShowsQuery.graphql"
 import { HomeFeaturedShows_orderedSet } from "v2/__generated__/HomeFeaturedShows_orderedSet.graphql"
+import { HomeFeaturedShowFragmentContainer } from "./HomeFeaturedShow"
 
 const SHOWS_LIMIT = 6
 
@@ -42,47 +42,9 @@ const HomeFeaturedShows: React.FC<HomeFeaturedShowsProps> = ({
     <HomeFeaturedShowsContainer>
       <GridColumns gridRowGap={6}>
         {shows.map(show => {
-          const image = show.coverImage?.cropped
-
           return (
             <Column key={show.internalID} span={4}>
-              <RouterLink
-                to={show.href ?? ""}
-                style={{ display: "block", textDecoration: "none" }}
-              >
-                <ResponsiveBox
-                  aspectWidth={4}
-                  aspectHeight={3}
-                  maxWidth="100%"
-                  bg="black10"
-                >
-                  {image && (
-                    <Image
-                      src={image.src}
-                      srcSet={image.srcSet}
-                      width="100%"
-                      height="100%"
-                      alt=""
-                    />
-                  )}
-                </ResponsiveBox>
-
-                <Spacer mt={2} />
-
-                <Text variant="xl" mr={1}>
-                  {show.name}
-                </Text>
-
-                <Text variant="xl" color="black60">
-                  {show.partner?.name}
-                </Text>
-
-                <Spacer mt={1} />
-
-                <Text variant="sm">
-                  {[show.startAt, show.endAt].filter(Boolean).join("–")}
-                </Text>
-              </RouterLink>
+              <HomeFeaturedShowFragmentContainer show={show} />
             </Column>
           )
         })}
@@ -123,24 +85,7 @@ export const HomeFeaturedShowsFragmentContainer = createFragmentContainer(
           __typename
           ... on Show {
             internalID
-            name
-            href
-            startAt(format: "MMM D")
-            endAt(format: "D")
-            partner {
-              ... on Partner {
-                name
-              }
-              ... on ExternalPartner {
-                name
-              }
-            }
-            coverImage {
-              cropped(width: 600, height: 450) {
-                src
-                srcSet
-              }
-            }
+            ...HomeFeaturedShow_show
           }
         }
       }
