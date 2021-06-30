@@ -41,7 +41,7 @@ import { TwoColumnLayout } from "../../Components/TwoColumnLayout"
 import { BuyerGuarantee } from "../../Components/BuyerGuarantee"
 import { createStripeWrapper } from "v2/Utils/createStripeWrapper"
 import type { Stripe, StripeElements } from "@stripe/stripe-js"
-
+import { withSystemContext } from "v2/System"
 export interface ReviewProps {
   stripe: Stripe
   elements: StripeElements
@@ -52,6 +52,7 @@ export interface ReviewProps {
   dialog: Dialog
   commitMutation: CommitMutation
   isCommittingMutation: boolean
+  isEigen: boolean | undefined
 }
 
 const logger = createLogger("Order/Routes/Review/index.tsx")
@@ -330,7 +331,7 @@ export class ReviewRoute extends Component<ReviewProps> {
   }
 
   render() {
-    const { order, isCommittingMutation } = this.props
+    const { order, isCommittingMutation, isEigen } = this.props
 
     return (
       <Box data-test="orderReview">
@@ -353,6 +354,22 @@ export class ReviewRoute extends Component<ReviewProps> {
                     <Spacer mb={1} />
                     Please note that all offers are binding.
                   </Message>
+                  {isEigen && (
+                    <>
+                      <Button
+                        size="large"
+                        width="100%"
+                        loading={isCommittingMutation}
+                        onClick={() => this.onSubmit()}
+                      >
+                        Submit
+                      </Button>
+                      <ConditionsOfSaleDisclaimer
+                        paddingY={2}
+                        textAlign="start"
+                      />
+                    </>
+                  )}
                   {order.mode === "OFFER" && (
                     <OfferSummaryItem
                       order={order}
@@ -424,7 +441,9 @@ export class ReviewRoute extends Component<ReviewProps> {
 }
 
 export const ReviewFragmentContainer = createFragmentContainer(
-  createStripeWrapper(injectCommitMutation(injectDialog(ReviewRoute)) as any),
+  withSystemContext(
+    createStripeWrapper(injectCommitMutation(injectDialog(ReviewRoute)) as any)
+  ),
   {
     order: graphql`
       fragment Review_order on CommerceOrder {
