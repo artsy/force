@@ -6,7 +6,6 @@ import {
   Box,
   Column,
   GridColumns,
-  Join,
   Spacer,
   Tab,
   Tabs,
