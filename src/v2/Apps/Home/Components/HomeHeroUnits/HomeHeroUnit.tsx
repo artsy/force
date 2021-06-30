@@ -10,6 +10,7 @@ import {
   Column,
   HTML,
 } from "@artsy/palette"
+import { Link } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
 import { HomeHeroUnit_heroUnit } from "v2/__generated__/HomeHeroUnit_heroUnit.graphql"
 import { cropped } from "v2/Utils/resized"
@@ -84,7 +85,6 @@ export const HomeHeroUnit: React.FC<HomeHeroUnitProps> = ({
                 maxWidth="100%"
                 bg="black10"
               >
-                {/* TODO: Include preload tag */}
                 <Image
                   src={image.src}
                   srcSet={image.srcSet}
@@ -104,6 +104,7 @@ export const HomeHeroUnit: React.FC<HomeHeroUnitProps> = ({
                     width="100%"
                     height="100%"
                     style={{ objectFit: "cover" }}
+                    lazyLoad={index > 0}
                   />
                 </Box>
               )}
@@ -203,19 +204,30 @@ export const HomeHeroUnit: React.FC<HomeHeroUnitProps> = ({
   )
 
   return (
-    <GridColumns bg={bg} width="100%">
-      {layout === "a" ? (
-        <>
-          {figure}
-          {description}
-        </>
-      ) : (
-        <>
-          {description}
-          {figure}
-        </>
+    <>
+      {image && index === 0 && (
+        <Link
+          rel="preload"
+          as="image"
+          href={image.src}
+          imagesrcset={image.srcSet}
+        />
       )}
-    </GridColumns>
+
+      <GridColumns bg={bg} width="100%">
+        {layout === "a" ? (
+          <>
+            {figure}
+            {description}
+          </>
+        ) : (
+          <>
+            {description}
+            {figure}
+          </>
+        )}
+      </GridColumns>
+    </>
   )
 }
 
