@@ -58,7 +58,6 @@ describe("HomeApp", () => {
         }),
       })
 
-      expect(wrapper.text()).toContain("Featured events")
       expect(wrapper.text()).toContain("Exclusively on Artsy")
       expect(wrapper.text()).toContain("Example Event")
     })
