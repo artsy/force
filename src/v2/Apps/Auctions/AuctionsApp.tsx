@@ -80,7 +80,6 @@ const AuctionsApp: React.FC<AuctionsAppProps> = props => {
         )}
         <Tab name="Trending Lots">Trending Lots</Tab>
         <Tab name="Standout lots">Standout Lots By Trending Artists</Tab>
-        <Tab name="Featured Auctions">Featured Auctions</Tab>
       </Tabs>
 
       <Spacer my={[4, 12]} />
