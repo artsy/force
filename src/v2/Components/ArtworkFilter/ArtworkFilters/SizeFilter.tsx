@@ -184,8 +184,8 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
     if (reset) {
       setCustomSize({ height: ["*", "*"], width: ["*", "*"] })
 
-      const newF = { ...currentlySelectedFilters?.(), reset: false }
-      setFilters?.(newF, { force: false })
+      const newFilters = { ...currentlySelectedFilters?.(), reset: false }
+      setFilters?.(newFilters, { force: false })
     }
   }, [currentlySelectedFilters, reset, setFilters])
 
