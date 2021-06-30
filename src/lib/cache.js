@@ -8,7 +8,7 @@
  * without redis when necessary.
  */
 
-const _ = require("underscore")
+const _ = require("lodash")
 const { NODE_ENV, OPENREDIS_URL, DEFAULT_CACHE_TIME } = process.env
 
 class Cache {
