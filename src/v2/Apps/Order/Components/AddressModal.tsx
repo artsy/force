@@ -1,6 +1,7 @@
 import React, { useState } from "react"
 import {
   Button,
+  Clickable,
   Dialog,
   Flex,
   Input,
@@ -148,17 +149,15 @@ export const AddressModal: React.FC<Props> = ({
               />
               {!createMutation && (
                 <Flex mt={2} flexDirection="column" alignItems="center">
-                  <Text
-                    data-test="deleteButton"
-                    onClick={() => setShowDialog(true)}
-                    variant="text"
-                    color="red100"
-                    style={{
-                      cursor: "pointer",
-                    }}
-                  >
-                    Delete address
-                  </Text>
+                  <Clickable onClick={() => setShowDialog(true)}>
+                    <Text
+                      data-test="deleteButton"
+                      variant="text"
+                      color="red100"
+                    >
+                      Delete address
+                    </Text>
+                  </Clickable>
                 </Flex>
               )}
               <Button

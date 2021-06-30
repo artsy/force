@@ -120,7 +120,6 @@ describe("AddressModal", () => {
     const dialogCancel = dialog
       .findWhere(node => node.text() === "Cancel")
       .first()
-    console.log(dialogCancel.length)
     dialogCancel.simulate("click")
 
     setTimeout(() => {
