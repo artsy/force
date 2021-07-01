@@ -35,6 +35,13 @@ describe("ConversationMessages", () => {
             ],
           } as any
         }
+        ordersEvents={{
+          edges: [
+            {
+              node: null,
+            },
+          ],
+        }}
       />
     )
     expect(wrapper.find("Message").length).toBe(1)

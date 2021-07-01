@@ -4,6 +4,7 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type CommerceBuyerOfferActionEnum = "OFFER_ACCEPTED" | "OFFER_ACCEPTED_CONFIRM_NEEDED" | "OFFER_RECEIVED" | "OFFER_RECEIVED_CONFIRM_NEEDED" | "PAYMENT_FAILED" | "PROVISIONAL_OFFER_ACCEPTED" | "%future added value";
+export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "PENDING" | "REFUNDED" | "SUBMITTED" | "%future added value";
 export type Conversation_conversation = {
     readonly id: string;
     readonly internalID: string | null;
@@ -22,6 +23,13 @@ export type Conversation_conversation = {
         readonly edges: ReadonlyArray<{
             readonly node: {
                 readonly internalID: string;
+                readonly orderHistory: ReadonlyArray<{
+                    readonly __typename: string;
+                    readonly createdAt?: string;
+                    readonly state?: CommerceOrderStateEnum;
+                    readonly stateReason?: string | null;
+                    readonly " $fragmentRefs": FragmentRefs<"OrderUpdate_event">;
+                }>;
                 readonly buyerAction?: CommerceBuyerOfferActionEnum | null;
             } | null;
         } | null> | null;
@@ -35,7 +43,9 @@ export type Conversation_conversation = {
         };
         readonly edges: ReadonlyArray<{
             readonly node: {
+                readonly __typename: string;
                 readonly id: string;
+                readonly createdAt: string | null;
             } | null;
         } | null> | null;
         readonly " $fragmentRefs": FragmentRefs<"ConversationMessages_messages">;
@@ -129,10 +139,17 @@ v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
+  "name": "createdAt",
+  "storageKey": null
+},
+v5 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
   "name": "href",
   "storageKey": null
 },
-v5 = [
+v6 = [
   {
     "alias": null,
     "args": null,
@@ -242,6 +259,11 @@ return {
         },
         {
           "kind": "Literal",
+          "name": "participantType",
+          "value": "BUYER"
+        },
+        {
+          "kind": "Literal",
           "name": "states",
           "value": [
             "APPROVED",
@@ -274,6 +296,51 @@ return {
               "selections": [
                 (v1/*: any*/),
                 {
+                  "alias": null,
+                  "args": null,
+                  "concreteType": null,
+                  "kind": "LinkedField",
+                  "name": "orderHistory",
+                  "plural": true,
+                  "selections": [
+                    (v3/*: any*/),
+                    {
+                      "args": null,
+                      "kind": "FragmentSpread",
+                      "name": "OrderUpdate_event"
+                    },
+                    {
+                      "kind": "InlineFragment",
+                      "selections": [
+                        (v4/*: any*/),
+                        {
+                          "alias": null,
+                          "args": null,
+                          "kind": "ScalarField",
+                          "name": "state",
+                          "storageKey": null
+                        },
+                        {
+                          "alias": null,
+                          "args": null,
+                          "kind": "ScalarField",
+                          "name": "stateReason",
+                          "storageKey": null
+                        }
+                      ],
+                      "type": "CommerceOrderStateChangedEvent"
+                    },
+                    {
+                      "kind": "InlineFragment",
+                      "selections": [
+                        (v4/*: any*/)
+                      ],
+                      "type": "CommerceOfferSubmittedEvent"
+                    }
+                  ],
+                  "storageKey": null
+                },
+                {
                   "kind": "InlineFragment",
                   "selections": [
                     {
@@ -293,7 +360,7 @@ return {
           "storageKey": null
         }
       ],
-      "storageKey": "orderConnection(first:10,states:[\"APPROVED\",\"FULFILLED\",\"SUBMITTED\",\"REFUNDED\"])"
+      "storageKey": "orderConnection(first:10,participantType:\"BUYER\",states:[\"APPROVED\",\"FULFILLED\",\"SUBMITTED\",\"REFUNDED\"])"
     },
     {
       "alias": "messagesConnection",
@@ -358,8 +425,9 @@ return {
               "name": "node",
               "plural": false,
               "selections": [
+                (v3/*: any*/),
                 (v0/*: any*/),
-                (v3/*: any*/)
+                (v4/*: any*/)
               ],
               "storageKey": null
             },
@@ -424,7 +492,7 @@ return {
                   "name": "artistNames",
                   "storageKey": null
                 },
-                (v4/*: any*/),
+                (v5/*: any*/),
                 {
                   "alias": null,
                   "args": null,
@@ -469,12 +537,12 @@ return {
                     (v3/*: any*/),
                     {
                       "kind": "InlineFragment",
-                      "selections": (v5/*: any*/),
+                      "selections": (v6/*: any*/),
                       "type": "Money"
                     },
                     {
                       "kind": "InlineFragment",
-                      "selections": (v5/*: any*/),
+                      "selections": (v6/*: any*/),
                       "type": "PriceRange"
                     }
                   ],
@@ -524,7 +592,7 @@ return {
                   ],
                   "storageKey": null
                 },
-                (v4/*: any*/),
+                (v5/*: any*/),
                 (v2/*: any*/),
                 {
                   "alias": null,
@@ -562,5 +630,5 @@ return {
   "type": "Conversation"
 };
 })();
-(node as any).hash = '16294fcf61d677540f345ac2050d4728';
+(node as any).hash = '8453b3f5f97666c6dd01dbfdf6816216';
 export default node;

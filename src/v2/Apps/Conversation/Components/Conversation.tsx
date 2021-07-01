@@ -157,6 +157,7 @@ const Conversation: React.FC<ConversationProps> = props => {
               <ConversationMessages
                 // @ts-expect-error STRICT_NULL_CHECK
                 messages={conversation.messagesConnection}
+                ordersEvents={conversation.orderConnection}
               />
               <Box ref={bottomOfPage}></Box>
             </Flex>
@@ -233,6 +234,7 @@ export const ConversationPaginationContainer = createPaginationContainer(
         orderConnection(
           first: 10
           states: [APPROVED, FULFILLED, SUBMITTED, REFUNDED]
+          participantType: BUYER
         ) {
           edges {
             node {
@@ -240,9 +242,23 @@ export const ConversationPaginationContainer = createPaginationContainer(
               ... on CommerceOfferOrder {
                 buyerAction
               }
+              orderHistory {
+                ...OrderUpdate_event
+                __typename
+                ... on CommerceOrderStateChangedEvent {
+                  createdAt
+                  state
+                  stateReason
+                }
+                ... on CommerceOfferSubmittedEvent {
+                  createdAt
+                }
+              }
             }
           }
         }
+        unread
+
         messagesConnection(first: $count, after: $after, sort: DESC)
           @connection(key: "Messages_messagesConnection", filters: []) {
           pageInfo {
@@ -253,7 +269,9 @@ export const ConversationPaginationContainer = createPaginationContainer(
           }
           edges {
             node {
+              __typename
               id
+              createdAt
             }
           }
           ...ConversationMessages_messages
