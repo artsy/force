@@ -25,6 +25,7 @@ interface RouteConfigProps extends RouteConfig {
   query?: GraphQLTaggedNode
   shouldWarnBeforeLeaving?: boolean
   theme?: 'v2' | 'v3'
+  scrollToTop?: boolean
 }
 
 export type AppRouteConfig = RemoveIndex<RouteConfigProps>
