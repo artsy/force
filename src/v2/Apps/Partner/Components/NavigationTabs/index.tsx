@@ -39,7 +39,7 @@ export const NavigationTabs: React.FC<NavigationTabsProps> = ({ partner }) => {
         exact: true,
       },
       {
-        name: "Shows",
+        name: "Events",
         href: route("/shows"),
         exact: true,
         hidden: !counts?.displayableShows,

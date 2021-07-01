@@ -34,7 +34,7 @@ describe("PartnerNavigationTabs", () => {
     const html = wrapper.html()
 
     expect(html).toContain("Overview")
-    expect(html).toContain("Shows")
+    expect(html).toContain("Events")
     expect(html).toContain("Works")
     expect(html).toContain("Artists")
     expect(html).toContain("Articles")
