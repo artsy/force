@@ -58,6 +58,7 @@ const ContactRoute = loadable(
 
 export const partnerRoutes: AppRouteConfig[] = [
   {
+    scrollToTop: true,
     getComponent: () => PartnerApp,
     path: "/partner/:partnerId",
     prepare: () => {
