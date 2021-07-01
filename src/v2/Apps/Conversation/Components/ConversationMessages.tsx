@@ -26,14 +26,12 @@ type Order = NonNullable<
   >["node"]
 >
 type OrderEvent = Order["orderHistory"][number]
-// type OrderEventWithKey = OrderEvent & { key: string }
 
 export const ConversationMessages = ({
   messages,
   ordersEvents,
 }: ConversationMessageProps) => {
   let [messagesAndEvents, setMessagesAndEvents] = useState<MessageType[][]>([])
-  console.log(messagesAndEvents, "point messagesAndEvents")
 
   useEffect(() => {
     const allMessages = extractNodes(messages)
@@ -60,7 +58,7 @@ export const ConversationMessages = ({
     )
     const groupAllMessages = groupMessages(sortedMessages)
     setMessagesAndEvents(groupAllMessages.reverse())
-  }, [])
+  }, [messages, ordersEvents])
 
   const relevantEvents = [
     "CommerceOfferSubmittedEvent",
@@ -85,13 +83,18 @@ export const ConversationMessages = ({
           <React.Fragment
             key={`group-${groupIndex}-${messageGroup[0]?.internalID}`}
           >
-            <TimeSince
-              style={{ alignSelf: "center" }}
-              time={messageGroup[0].createdAt ? messageGroup[0].createdAt : ""}
-              exact
-              mb={1}
-            />
-            {messageGroup.map((message, messageIndex) => {
+            {messageGroup[0].__typename === "Message" && (
+              <TimeSince
+                style={{ alignSelf: "center" }}
+                time={
+                  messageGroup[0].createdAt ? messageGroup[0].createdAt : ""
+                }
+                exact
+                mb={1}
+              />
+            )}
+
+            {messageGroup.reverse().map((message, messageIndex) => {
               if (isRelevantEvent(message)) {
                 return <OrderUpdateFragmentContainer event={message as any} />
               }

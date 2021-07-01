@@ -35,7 +35,6 @@ export const PAGE_SIZE: number = 15
 const Conversation: React.FC<ConversationProps> = props => {
   const { conversation, relay, showDetails, setShowDetails } = props
   const { user } = useSystemContext()
-
   const bottomOfPage = useRef(null)
   const initialMount = useRef(true)
 
@@ -233,7 +232,7 @@ export const ConversationPaginationContainer = createPaginationContainer(
         unread
         orderConnection(
           first: 10
-          states: [APPROVED, FULFILLED, SUBMITTED, REFUNDED]
+          states: [APPROVED, FULFILLED, SUBMITTED, REFUNDED, CANCELED]
           participantType: BUYER
         ) {
           edges {
@@ -269,9 +268,7 @@ export const ConversationPaginationContainer = createPaginationContainer(
           }
           edges {
             node {
-              __typename
               id
-              createdAt
             }
           }
           ...ConversationMessages_messages

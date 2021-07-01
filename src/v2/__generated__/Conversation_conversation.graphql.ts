@@ -43,9 +43,7 @@ export type Conversation_conversation = {
         };
         readonly edges: ReadonlyArray<{
             readonly node: {
-                readonly __typename: string;
                 readonly id: string;
-                readonly createdAt: string | null;
             } | null;
         } | null> | null;
         readonly " $fragmentRefs": FragmentRefs<"ConversationMessages_messages">;
@@ -269,7 +267,8 @@ return {
             "APPROVED",
             "FULFILLED",
             "SUBMITTED",
-            "REFUNDED"
+            "REFUNDED",
+            "CANCELED"
           ]
         }
       ],
@@ -360,7 +359,7 @@ return {
           "storageKey": null
         }
       ],
-      "storageKey": "orderConnection(first:10,participantType:\"BUYER\",states:[\"APPROVED\",\"FULFILLED\",\"SUBMITTED\",\"REFUNDED\"])"
+      "storageKey": "orderConnection(first:10,participantType:\"BUYER\",states:[\"APPROVED\",\"FULFILLED\",\"SUBMITTED\",\"REFUNDED\",\"CANCELED\"])"
     },
     {
       "alias": "messagesConnection",
@@ -425,9 +424,8 @@ return {
               "name": "node",
               "plural": false,
               "selections": [
-                (v3/*: any*/),
                 (v0/*: any*/),
-                (v4/*: any*/)
+                (v3/*: any*/)
               ],
               "storageKey": null
             },
@@ -630,5 +628,5 @@ return {
   "type": "Conversation"
 };
 })();
-(node as any).hash = '8453b3f5f97666c6dd01dbfdf6816216';
+(node as any).hash = '3af86c5067238dab4723c7a0ed16096e';
 export default node;
