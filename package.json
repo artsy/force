@@ -228,7 +228,7 @@
     "superagent": "3.8.3",
     "tti-polyfill": "0.2.2",
     "typeahead.js": "0.10.5",
-    "ua-parser-js": "0.7.19",
+    "ua-parser-js": "0.7.24",
     "underscore": "1.12.1",
     "underscore.string": "3.3.5",
     "updeep": "1.0.0",
