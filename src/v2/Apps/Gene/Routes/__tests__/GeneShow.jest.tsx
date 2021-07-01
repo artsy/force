@@ -1,5 +1,4 @@
 import React from "react"
-import { Meta } from "react-head"
 import { GeneShowFragmentContainer } from "../GeneShow"
 import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
@@ -48,11 +47,9 @@ describe("GeneShow", () => {
       }),
     })
 
-    for (let i = 1; i <= 3; i++) {
-      expect(wrapper.find(Meta).at(i).prop("content")).toEqual(
-        "Gene Meta Description"
-      )
-    }
+    expect(wrapper.find('Meta[name="description"]').first().html()).toEqual(
+      '<meta name="description" content="Gene Meta Description">'
+    )
   })
 
   it("renders fallback meta description", () => {
@@ -63,10 +60,8 @@ describe("GeneShow", () => {
       }),
     })
 
-    for (let i = 1; i <= 3; i++) {
-      expect(wrapper.find(Meta).at(i).prop("content")).toEqual(
-        "Explore Design art on Artsy. Browse works by size, price, and medium."
-      )
-    }
+    expect(wrapper.find('Meta[name="description"]').first().html()).toEqual(
+      '<meta name="description" content="Explore Design art on Artsy. Browse works by size, price, and medium.">'
+    )
   })
 })

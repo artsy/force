@@ -1,6 +1,5 @@
 import { Spacer, Join, Separator } from "@artsy/palette"
 import React from "react"
-import { Title } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "v2/System/useSystemContext"
 import { HomeApp_homePage } from "v2/__generated__/HomeApp_homePage.graphql"
@@ -11,6 +10,7 @@ import { HomeHeroUnitsFragmentContainer } from "./Components/HomeHeroUnits/HomeH
 import { HomeFeaturedShowsLazyQueryRenderer } from "./Components/HomeFeaturedShows"
 import { HomeFeaturedArticlesLazyQueryRenderer } from "./Components/HomeFeaturedArticles"
 import { HomeFeaturedEventsRailFragmentContainer } from "./Components/HomeFeaturedEventsRail"
+import { HomeMeta } from "./Components/HomeMeta"
 
 interface HomeAppProps {
   homePage: HomeApp_homePage | null
@@ -22,7 +22,7 @@ export const HomeApp: React.FC<HomeAppProps> = ({ homePage, orderedSet }) => {
 
   return (
     <>
-      <Title>Artsy - Discover & Buy Art</Title>
+      <HomeMeta />
 
       <Spacer mt={[2, 0]} />
 
