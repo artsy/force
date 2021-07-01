@@ -39,7 +39,7 @@ export const ShippingQuotes: React.FC<ShippingQuotesProps> = ({
       defaultValue={selectedShippingQuoteId}
     >
       {quotes.map(shippingQuote => {
-        const { id, name, priceCents, priceCurrency, tier } = shippingQuote
+        const { id, name, price, tier } = shippingQuote
         const shippingQuoteName = name || tier
         const description =
           shippingQuoteDescriptions[shippingQuoteName.toLowerCase()]
@@ -53,8 +53,7 @@ export const ShippingQuotes: React.FC<ShippingQuotesProps> = ({
           >
             <Flex flexDirection="column">
               <Text textTransform="capitalize">
-                {shippingQuoteName} ({priceCurrency}
-                {priceCents})
+                {shippingQuoteName} ({price})
               </Text>
               <Text textColor="black60">{description}</Text>
             </Flex>
@@ -76,8 +75,7 @@ export const ShippingQuotesFragmentContainer = createFragmentContainer(
           tier
           name
           isSelected
-          priceCents
-          priceCurrency
+          price(precision: 2)
         }
       }
     `,

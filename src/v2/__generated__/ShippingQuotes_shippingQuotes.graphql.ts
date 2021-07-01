@@ -9,8 +9,7 @@ export type ShippingQuotes_shippingQuotes = ReadonlyArray<{
         readonly tier: string;
         readonly name: string | null;
         readonly isSelected: boolean;
-        readonly priceCents: number;
-        readonly priceCurrency: string;
+        readonly price: string | null;
     } | null;
     readonly " $refType": "ShippingQuotes_shippingQuotes";
 }>;
@@ -68,17 +67,16 @@ const node: ReaderFragment = {
         },
         {
           "alias": null,
-          "args": null,
+          "args": [
+            {
+              "kind": "Literal",
+              "name": "precision",
+              "value": 2
+            }
+          ],
           "kind": "ScalarField",
-          "name": "priceCents",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "priceCurrency",
-          "storageKey": null
+          "name": "price",
+          "storageKey": "price(precision:2)"
         }
       ],
       "storageKey": null
@@ -86,5 +84,5 @@ const node: ReaderFragment = {
   ],
   "type": "CommerceShippingQuoteEdge"
 };
-(node as any).hash = 'bccebb5c7ddf1154f30807e034b08230';
+(node as any).hash = 'db2ae75c385b129391e4f9864f8986d1';
 export default node;

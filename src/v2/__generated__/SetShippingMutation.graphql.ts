@@ -152,8 +152,7 @@ fragment ShippingQuotes_shippingQuotes on CommerceShippingQuoteEdge {
     tier
     name
     isSelected
-    priceCents
-    priceCurrency
+    price(precision: 2)
   }
 }
 */
@@ -540,17 +539,16 @@ return {
                                               },
                                               {
                                                 "alias": null,
-                                                "args": null,
+                                                "args": [
+                                                  {
+                                                    "kind": "Literal",
+                                                    "name": "precision",
+                                                    "value": 2
+                                                  }
+                                                ],
                                                 "kind": "ScalarField",
-                                                "name": "priceCents",
-                                                "storageKey": null
-                                              },
-                                              {
-                                                "alias": null,
-                                                "args": null,
-                                                "kind": "ScalarField",
-                                                "name": "priceCurrency",
-                                                "storageKey": null
+                                                "name": "price",
+                                                "storageKey": "price(precision:2)"
                                               }
                                             ],
                                             "storageKey": null
@@ -592,7 +590,7 @@ return {
     "metadata": {},
     "name": "SetShippingMutation",
     "operationKind": "mutation",
-    "text": "mutation SetShippingMutation(\n  $input: CommerceSetShippingInput!\n) {\n  commerceSetShipping(input: $input) {\n    orderOrError {\n      __typename\n      ... on CommerceOrderWithMutationSuccess {\n        __typename\n        order {\n          __typename\n          internalID\n          state\n          requestedFulfillment {\n            __typename\n            ... on CommerceShip {\n              name\n              addressLine1\n              addressLine2\n              city\n              region\n              country\n              postalCode\n              phoneNumber\n            }\n            ... on CommerceShipArta {\n              name\n              addressLine1\n              addressLine2\n              city\n              region\n              country\n              postalCode\n              phoneNumber\n            }\n          }\n          lineItems {\n            edges {\n              node {\n                shippingQuoteOptions {\n                  edges {\n                    ...ShippingQuotes_shippingQuotes\n                  }\n                }\n                id\n              }\n            }\n          }\n          id\n        }\n      }\n      ... on CommerceOrderWithMutationFailure {\n        error {\n          type\n          code\n          data\n        }\n      }\n    }\n  }\n}\n\nfragment ShippingQuotes_shippingQuotes on CommerceShippingQuoteEdge {\n  node {\n    id\n    tier\n    name\n    isSelected\n    priceCents\n    priceCurrency\n  }\n}\n"
+    "text": "mutation SetShippingMutation(\n  $input: CommerceSetShippingInput!\n) {\n  commerceSetShipping(input: $input) {\n    orderOrError {\n      __typename\n      ... on CommerceOrderWithMutationSuccess {\n        __typename\n        order {\n          __typename\n          internalID\n          state\n          requestedFulfillment {\n            __typename\n            ... on CommerceShip {\n              name\n              addressLine1\n              addressLine2\n              city\n              region\n              country\n              postalCode\n              phoneNumber\n            }\n            ... on CommerceShipArta {\n              name\n              addressLine1\n              addressLine2\n              city\n              region\n              country\n              postalCode\n              phoneNumber\n            }\n          }\n          lineItems {\n            edges {\n              node {\n                shippingQuoteOptions {\n                  edges {\n                    ...ShippingQuotes_shippingQuotes\n                  }\n                }\n                id\n              }\n            }\n          }\n          id\n        }\n      }\n      ... on CommerceOrderWithMutationFailure {\n        error {\n          type\n          code\n          data\n        }\n      }\n    }\n  }\n}\n\nfragment ShippingQuotes_shippingQuotes on CommerceShippingQuoteEdge {\n  node {\n    id\n    tier\n    name\n    isSelected\n    price(precision: 2)\n  }\n}\n"
   }
 };
 })();
