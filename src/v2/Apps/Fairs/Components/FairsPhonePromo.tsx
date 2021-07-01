@@ -13,7 +13,7 @@ export const FairsPhonePromo: React.FC<BoxProps> = props => {
         <Image
           width={155}
           height={223}
-          src="http://files.artsy.net/images/fair-iphone-promo-large.jpg"
+          src="https://files.artsy.net/images/fair-iphone-promo-large.jpg"
           alt="Artsy for iPhone"
         />
 

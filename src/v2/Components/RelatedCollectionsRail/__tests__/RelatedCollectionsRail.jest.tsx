@@ -60,7 +60,7 @@ describe.skip("CollectionsRail", () => {
     const collectionsCopy = clone(props.collections)
     collectionsCopy.push({
       slug: "jasper-johns-flags2",
-      headerImage: "http://files.artsy.net/images/jasperjohnsflag.png",
+      headerImage: "https://files.artsy.net/images/jasperjohnsflag.png",
       title: "Jasper Johns: Flags Part 2",
       price_guidance: 1000,
       artworksConnection: null,
@@ -95,7 +95,7 @@ describe.skip("CollectionsRail", () => {
       const collectionsCopy = clone(props.collections)
       collectionsCopy.push({
         slug: "jasper-johns-flags2",
-        headerImage: "http://files.artsy.net/images/jasperjohnsflag.png",
+        headerImage: "https://files.artsy.net/images/jasperjohnsflag.png",
         title: "Jasper Johns: Flags Part 2",
         price_guidance: 1000,
         artworksConnection: {
