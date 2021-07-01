@@ -2,7 +2,7 @@ import { breakpoints, DROP_SHADOW, FullBleed } from "@artsy/palette"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
-import { MOBILE_NAV_HEIGHT, NAV_BAR_HEIGHT } from "v2/Components/NavBar"
+import { useNavBarHeight } from "v2/Components/NavBar/useNavBarHeight"
 import { RouteTab, RouteTabs } from "v2/Components/RouteTabs"
 import { Sticky } from "v2/Components/Sticky"
 import { ScrollIntoView } from "v2/Utils"
@@ -17,6 +17,8 @@ interface NavigationTabsProps {
 }
 
 export const NavigationTabs: React.FC<NavigationTabsProps> = ({ partner }) => {
+  const { mobile, desktop } = useNavBarHeight()
+
   const renderTabs = (scrollOffset: number) => {
     const {
       slug,
@@ -99,10 +101,10 @@ export const NavigationTabs: React.FC<NavigationTabsProps> = ({ partner }) => {
           >
             <HorizontalPadding maxWidth={breakpoints.xl}>
               <Media greaterThan="xs">
-                <RouteTabs fill>{renderTabs(NAV_BAR_HEIGHT)}</RouteTabs>
+                <RouteTabs fill>{renderTabs(desktop)}</RouteTabs>
               </Media>
               <Media at="xs">
-                <RouteTabs fill>{renderTabs(MOBILE_NAV_HEIGHT)}</RouteTabs>
+                <RouteTabs fill>{renderTabs(mobile)}</RouteTabs>
               </Media>
             </HorizontalPadding>
           </FullBleed>

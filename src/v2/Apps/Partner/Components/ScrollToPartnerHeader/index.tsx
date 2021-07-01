@@ -1,13 +1,14 @@
 import React from "react"
-import { MOBILE_NAV_HEIGHT, NAV_BAR_HEIGHT } from "v2/Components/NavBar"
 import { Clickable, BoxProps, themeProps } from "@artsy/palette"
 import { useMatchMedia } from "v2/Utils/Hooks/useMatchMedia"
 import { scrollIntoView } from "v2/Utils/scrollHelpers"
+import { useNavBarHeight } from "v2/Components/NavBar/useNavBarHeight"
 
 export const ScrollToPartnerHeader: React.FC<BoxProps> = ({
   children,
   ...rest
 }) => {
+  const { mobile, desktop } = useNavBarHeight()
   const isMobile = useMatchMedia(themeProps.mediaQueries.xs)
 
   return (
@@ -15,7 +16,7 @@ export const ScrollToPartnerHeader: React.FC<BoxProps> = ({
       onClick={() => {
         scrollIntoView({
           selector: "#jumpto--PartnerHeader",
-          offset: isMobile ? MOBILE_NAV_HEIGHT : NAV_BAR_HEIGHT,
+          offset: isMobile ? mobile : desktop,
         })
       }}
       {...rest}
