@@ -157,7 +157,7 @@ const HomeArtworkModuleContext: React.FC<HomeArtworkModuleContextProps> = ({
         <>
           <Flex justifyContent="space-between">
             <Text
-              variant="lg"
+              variant="xl"
               as={RouterLink}
               // @ts-ignore
               to="/works-for-you"
