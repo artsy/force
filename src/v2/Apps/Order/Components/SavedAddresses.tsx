@@ -31,7 +31,6 @@ const PAGE_SIZE = 30
 interface SavedAddressesProps {
   me: SavedAddresses_me
   onSelect?: (string) => void
-  handleClickEdit: (number) => void
   inCollectorProfile: boolean
   commitMutation?: CommitMutation
   relay: RelayRefetchProp
@@ -58,14 +57,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
   const [showAddressModal, setShowAddressModal] = useState<boolean>(false)
   const [address, setAddress] = useState(null as Address)
   const logger = createLogger("SavedAddresses.tsx")
-  const {
-    onSelect,
-    me,
-    inCollectorProfile,
-    relay,
-    onAddressDelete,
-    handleClickEdit,
-  } = props
+  const { onSelect, me, inCollectorProfile, relay, onAddressDelete } = props
   const addressList = me?.addressConnection?.edges ?? []
   const { relayEnvironment } = useSystemContext()
 
@@ -94,7 +86,6 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
   }
 
   const handleEditAddress = (address: Address, index: number) => {
-    handleClickEdit(index)
     setShowAddressModal(true)
     setModalDetails({
       addressModalTitle: "Edit address",

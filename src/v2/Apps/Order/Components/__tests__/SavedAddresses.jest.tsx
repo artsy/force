@@ -21,11 +21,7 @@ class SavedAddressesTestPage extends RootTestPage {
 describe("Saved Addresses mutations", () => {
   const { mutations, buildPage } = createTestEnv({
     Component: (props: any) => (
-      <SavedAddressesFragmentContainer
-        inCollectorProfile
-        handleClickEdit={() => {}}
-        {...props}
-      />
+      <SavedAddressesFragmentContainer inCollectorProfile {...props} />
     ),
     defaultData: userAddressMutation,
     TestPage: SavedAddressesTestPage,

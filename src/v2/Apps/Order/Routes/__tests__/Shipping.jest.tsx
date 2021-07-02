@@ -611,7 +611,6 @@ describe("Shipping", () => {
           .find(`[data-test="editAddressInShipping"]`)
           .first()
           .simulate("click")
-        expect(page.find(ShippingRoute).state().editAddressIndex).toBe(0)
         expect(
           page.find("AddressModal").at(0).props().modalDetails
         ).toStrictEqual({
@@ -621,12 +620,10 @@ describe("Shipping", () => {
       })
 
       it("opens modal with current address values", async () => {
-        expect(page.find(ShippingRoute).state().editAddressIndex).toBe(-1)
         await page
           .find(`[data-test="editAddressInShipping"]`)
           .first()
           .simulate("click")
-        expect(page.find(ShippingRoute).state().editAddressIndex).toBe(0)
 
         expect(page.find("AddressModal").length).toBe(1)
         expect(
