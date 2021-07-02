@@ -27,6 +27,7 @@ export const ArtworksGridEdges: ArtworkGrid_Test_QueryRawResponse["artist"]["art
           name: "KAWS",
         },
       ],
+      artistNames: "KAWS",
       collecting_institution: null,
       partner: {
         name: "IDEA",
@@ -67,6 +68,7 @@ export const ArtworksGridEdges: ArtworkGrid_Test_QueryRawResponse["artist"]["art
           name: "KAWS",
         },
       ],
+      artistNames: "KAWS",
       collecting_institution: null,
       partner: {
         name: "Alpha 137 Gallery",
@@ -107,6 +109,7 @@ export const ArtworksGridEdges: ArtworkGrid_Test_QueryRawResponse["artist"]["art
           name: "KAWS",
         },
       ],
+      artistNames: "KAWS",
       collecting_institution: null,
       partner: {
         name: "Alpha 137 Gallery",
@@ -155,6 +158,7 @@ export const ArtworksGridEdges: ArtworkGrid_Test_QueryRawResponse["artist"]["art
       slug: "kaws-passing-through-brown-open-edition",
 
       artists: null,
+      artistNames: "",
     },
   },
 ]

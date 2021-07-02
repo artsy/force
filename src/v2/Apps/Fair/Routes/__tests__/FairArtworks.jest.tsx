@@ -123,6 +123,7 @@ const FAIR_ARTWORKS_FIXTURE: FairArtworks_QueryRawResponse = {
                 name: "Yayoi Kusama",
               },
             ],
+            artistNames: "Yayoi Kusama",
             collecting_institution: null,
             partner: {
               name: "Important Auction House",
@@ -180,6 +181,7 @@ const FAIR_ARTWORKS_FIXTURE: FairArtworks_QueryRawResponse = {
                 name: "Yayoi Kusama",
               },
             ],
+            artistNames: "Yayoi Kusama",
             collecting_institution: null,
             partner: {
               name: "Important Gallery",

@@ -1036,6 +1036,7 @@ const ArtKeepsGoingFixture: FeatureAKGRoute_Test_QueryRawResponse = {
                   name: "Andy Warhol",
                 },
               ],
+              artistNames: "Andy Warhol",
               collecting_institution: null,
               partner: {
                 name: "Hamilton-Selway Fine Art",
@@ -1076,6 +1077,7 @@ const ArtKeepsGoingFixture: FeatureAKGRoute_Test_QueryRawResponse = {
                   name: "Andy Warhol",
                 },
               ],
+              artistNames: "Andy Warhol",
               collecting_institution: null,
               partner: {
                 name: "Hamilton-Selway Fine Art",
