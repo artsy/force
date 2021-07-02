@@ -1,130 +1,105 @@
-import { ActionType, ClickedShowMore, ContextModule } from "@artsy/cohesion"
-import { Box, Button, Col, Grid, Row } from "@artsy/palette"
 import React, { useState } from "react"
-import {
-  RelayPaginationProp,
-  createPaginationContainer,
-  graphql,
-} from "react-relay"
-import { useTracking } from "react-tracking"
+import { graphql, createRefetchContainer, RelayRefetchProp } from "react-relay"
 import { updateUrl } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
-import { useAnalyticsContext } from "v2/System/Analytics/AnalyticsContext"
+import { Box } from "@artsy/palette"
 import { FairExhibitors_fair } from "v2/__generated__/FairExhibitors_fair.graphql"
-import { FairExhibitorRailFragmentContainer as FairExhibitorRail } from "../Components/FairExhibitorRail"
+import {
+  ExhibitorFilterContextProvider,
+  useExhibitorsFilterContext,
+} from "./ExhibitorFilterContext"
+import { FairExhibitorsQuery } from "./FairExhibitorsQuery"
+import { FairExhibitorRail } from "../Components/FairExhibitorRail"
+import { PaginationFragmentContainer as Pagination } from "v2/Components/Pagination"
+import { LoadingArea } from "v2/Components/LoadingArea"
 import { FairExhibitorSortFilter } from "../Components/FairExhibitorSortFilter"
-import { ExhibitorFilterContextProvider } from "./ExhibitorFilterContext"
 
 interface FairExhibitorsProps {
   fair: FairExhibitors_fair
-  relay: RelayPaginationProp
+  relay: RelayRefetchProp
 }
 
 const FairExhibitors: React.FC<FairExhibitorsProps> = ({ fair, relay }) => {
-  const [isLoading, setIsLoading] = useState(false)
-  const tracking = useTracking()
-  const {
-    contextPageOwnerId,
-    contextPageOwnerSlug,
-    contextPageOwnerType,
-  } = useAnalyticsContext()
+  const context = useExhibitorsFilterContext()
 
-  const clickShowMoreTrackingData: ClickedShowMore = {
-    action: ActionType.clickedShowMore,
-    context_module: ContextModule.exhibitorsTab,
-    context_page_owner_id: contextPageOwnerId,
-    context_page_owner_slug: contextPageOwnerSlug,
-    // @ts-expect-error STRICT_NULL_CHECK
-    context_page_owner_type: contextPageOwnerType,
-    subject: "Show More",
+  const {
+    pageInfo: { hasNextPage },
+    pageCursors,
+  } = fair.exhibitors!
+
+  function loadPage(page) {
+    context.setFilter("page", page)
   }
 
-  const handleClick = () => {
-    if (!relay.hasMore() || relay.isLoading()) return
-
-    tracking.trackEvent(clickShowMoreTrackingData)
-
-    setIsLoading(true)
-
-    const previousScrollY = window.scrollY
-
-    relay.loadMore(15, err => {
-      setIsLoading(false)
-
-      if (window.scrollY > previousScrollY) {
-        window.scrollTo({
-          behavior: "auto",
-          top: previousScrollY,
-        })
-      }
-
-      if (err) {
-        console.error(err)
-      }
-    })
+  function loadNext() {
+    if (fair.exhibitors?.pageInfo.hasNextPage) {
+      loadPage(context.filters.page + 1)
+    }
   }
 
   return (
-    <>
-      <ExhibitorFilterContextProvider
-        sortOptions={[
-          { text: "Relevance", value: "featured" },
-          { text: "Alphabetical (A-Z)", value: "sortable_name" },
-        ]}
-        onChange={updateUrl}
-      >
-        <FairExhibitorSortFilter />
-      </ExhibitorFilterContextProvider>
-      {/* @ts-expect-error STRICT_NULL_CHECK */}
-      {fair.exhibitors?.edges.map(({ node: show }, index) => {
-        if (show.counts.artworks === 0 || !show.partner) {
+    <LoadingArea isLoading={false}>
+      <FairExhibitorSortFilter />
+
+      {fair.exhibitors!.edges!.map((edge, index) => {
+        const show = edge?.node!
+        if (show?.counts?.artworks === 0 || !show?.partner) {
           // Skip rendering of booths without artworks
           return null
         }
 
         return (
           <Box my={6} key={index}>
-            <FairExhibitorRail key={show.id} show={show} />
+            <FairExhibitorRail key={show.id} show={show as any} />
           </Box>
         )
       })}
 
-      <Grid my={6}>
-        <Row>
-          <Col sm={6} mx="auto">
-            <Button
-              width="100%"
-              variant="secondaryGray"
-              onClick={handleClick}
-              loading={isLoading}
-              disabled={!relay.hasMore()}
-            >
-              Show more
-            </Button>
-          </Col>
-        </Row>
-      </Grid>
-    </>
+      <Pagination
+        hasNextPage={hasNextPage}
+        pageCursors={pageCursors}
+        onClick={(_cursor, page) => loadPage(page)}
+        onNext={() => loadNext()}
+      />
+    </LoadingArea>
   )
 }
 
-export const FairExhibitorsFragmentContainer = createPaginationContainer(
-  FairExhibitors,
+const FairExhibitorsWithContext: React.FC<any> = props => {
+  return (
+    <ExhibitorFilterContextProvider
+      sortOptions={[
+        { text: "Relevance", value: "featured" },
+        { text: "Alphabetical (A-Z)", value: "sortable_name" },
+      ]}
+      onChange={updateUrl}
+    >
+      <FairExhibitors {...props} />
+    </ExhibitorFilterContextProvider>
+  )
+}
+
+export const FairExhibitorsFragmentContainer = createRefetchContainer(
+  FairExhibitorsWithContext,
   {
     fair: graphql`
       fragment FairExhibitors_fair on Fair
         @argumentDefinitions(
-          first: { type: "Int", defaultValue: 15 }
+          first: { type: "Int", defaultValue: 5 }
           after: { type: "String" }
-          sort: { type: "ShowSorts", defaultValue: FEATURED_DESC }
         ) {
-        slug
-        internalID
         exhibitors: showsConnection(
           first: $first
           after: $after
-          sort: $sort
+          sort: FEATURED_DESC
           totalCount: true
-        ) @connection(key: "FairExhibitorsQuery_exhibitors") {
+        ) {
+          pageInfo {
+            hasNextPage
+            endCursor
+          }
+          pageCursors {
+            ...Pagination_pageCursors
+          }
           edges {
             node {
               id
@@ -146,23 +121,5 @@ export const FairExhibitorsFragmentContainer = createPaginationContainer(
       }
     `,
   },
-  {
-    direction: "forward",
-    getVariables({ fair: { slug: id } }, { cursor: after }, { first }) {
-      return { after, first, id }
-    },
-    query: graphql`
-      query FairExhibitorsQuery(
-        $id: String!
-        $first: Int!
-        $after: String
-        $sort: ShowSorts
-      ) {
-        fair(id: $id) {
-          ...FairExhibitors_fair
-            @arguments(first: $first, after: $after, sort: $sort)
-        }
-      }
-    `,
-  }
+  FairExhibitorsQuery
 )
