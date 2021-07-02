@@ -79,6 +79,10 @@ export const ConversationMessages = ({
         if (messageGroup[0].createdAt) {
           today = fromToday(messageGroup[0].createdAt)
         }
+        console.log(
+          `group-${groupIndex}-${messageGroup[0]?.internalID}`,
+          groupIndex
+        )
         return (
           <React.Fragment
             key={`group-${groupIndex}-${messageGroup[0]?.internalID}`}
@@ -96,7 +100,12 @@ export const ConversationMessages = ({
 
             {messageGroup.reverse().map((message, messageIndex) => {
               if (isRelevantEvent(message)) {
-                return <OrderUpdateFragmentContainer event={message as any} />
+                return (
+                  <OrderUpdateFragmentContainer
+                    key={`event-${messageIndex}`}
+                    event={message as any}
+                  />
+                )
               }
               if (message.__typename === "Message") {
                 const nextMessage = messageGroup[messageIndex + 1]
