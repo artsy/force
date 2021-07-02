@@ -596,8 +596,12 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
                   !!shippingQuotes
                 }
               >
+                <Text variant="mediumText" mb="1">
+                  Shipping options
+                </Text>
+
                 <ShippingQuotesFragmentContainer
-                  mb={4}
+                  mb={3}
                   selectedShippingQuoteId={shippingQuoteId}
                   shippingQuotes={compact(shippingQuotes)}
                   onSelect={this.handleShippingQuoteSelected}

@@ -276,6 +276,7 @@ export const UntouchedBuyOrderWithShippingQuotes = {
                   isSelected: false,
                   priceCents: 400,
                   priceCurrency: "USD",
+                  price: "$4.00",
                 },
               },
               {
@@ -286,6 +287,7 @@ export const UntouchedBuyOrderWithShippingQuotes = {
                   isSelected: false,
                   priceCents: 400,
                   priceCurrency: "USD",
+                  price: "$4.00",
                 },
               },
               {
@@ -296,6 +298,7 @@ export const UntouchedBuyOrderWithShippingQuotes = {
                   isSelected: false,
                   priceCents: 400,
                   priceCurrency: "USD",
+                  price: "$4.00",
                 },
               },
               {
@@ -306,6 +309,7 @@ export const UntouchedBuyOrderWithShippingQuotes = {
                   isSelected: false,
                   priceCents: 400,
                   priceCurrency: "USD",
+                  price: "$4.00",
                 },
               },
               {
@@ -316,6 +320,7 @@ export const UntouchedBuyOrderWithShippingQuotes = {
                   isSelected: false,
                   priceCents: 200,
                   priceCurrency: "USD",
+                  price: "$2.00",
                 },
               },
             ],

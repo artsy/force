@@ -4,7 +4,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { ShippingQuotes_shippingQuotes } from "v2/__generated__/ShippingQuotes_shippingQuotes.graphql"
 import { compact } from "lodash"
 
-const shippingQuoteDescriptions = {
+export const shippingQuoteDescriptions = {
   ground: "Delivers in 3-5 days once shipped.",
   "second day air": "Delivers in 2 business days once shipped.",
   "next day air": "Delivers the following business day once shipped. ",
@@ -26,11 +26,11 @@ export const ShippingQuotes: React.FC<ShippingQuotesProps> = ({
   selectedShippingQuoteId,
   ...rest
 }) => {
-  if (!shippingQuotes) {
+  const quotes = compact(shippingQuotes?.map(quote => quote.node))
+
+  if (!quotes || !quotes.length) {
     return null
   }
-
-  const quotes = compact(shippingQuotes.map(quote => quote.node))
 
   return (
     <RadioGroup
