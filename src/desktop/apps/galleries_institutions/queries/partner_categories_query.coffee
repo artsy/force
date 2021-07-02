@@ -1,14 +1,14 @@
 module.exports =
 
   """
-  query GalleriesInstitutionsPartnerCategoriesQuery($category_type: CategoryType, $type: [PartnerClassification]){
-    partner_categories(category_type: $category_type, size: 50, internal: false){
+  query GalleriesInstitutionsPartnerCategoriesQuery($categoryType: PartnerCategoryType, $type: [PartnerClassification]){
+    partner_categories: partnerCategories(categoryType: $categoryType, size: 50, internal: false){
       name
-      id
-      primary: partners(eligible_for_listing: true, eligible_for_primary_bucket: true, type: $type, sort: RANDOM_SCORE_DESC, default_profile_public: true) {
+      id: slug
+      primary: partners(eligibleForListing: true, eligibleForPrimaryBucket: true, type: $type, sort: RANDOM_SCORE_DESC, defaultProfilePublic: true) {
         ... partner
       }
-      secondary: partners(eligible_for_listing: true, eligible_for_secondary_bucket: true, type: $type, sort: RANDOM_SCORE_DESC, default_profile_public: true){
+      secondary: partners(eligibleForListing: true, eligibleForSecondaryBucket: true, type: $type, sort: RANDOM_SCORE_DESC, defaultProfilePublic: true){
         ... partner
       }
     }

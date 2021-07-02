@@ -87,9 +87,11 @@ describe("FetchFilterPartners", function () {
       return this.filterPartners.allFetched.should.be.false()
     })
 
-    return it("emits reset event", function (done) {
-      this.filterPartners.on("reset", () => done())
-      return this.filterPartners.reset()
+    it("emits reset event", function () {
+      return new Promise(done => {
+        this.filterPartners.on("reset", () => done())
+        return this.filterPartners.reset()
+      })
     })
   })
 
@@ -279,10 +281,10 @@ describe("FetchFilterPartners", function () {
         it("includes correct default parameters in query", function () {
           return this.filterPartners.fetch().then(() => {
             this.stub.args[0][0].query.should.containEql(
-              "eligible_for_listing:true"
+              "eligibleForListing:true"
             )
             return this.stub.args[0][0].query.should.containEql(
-              "default_profile_public:true"
+              "defaultProfilePublic:true"
             )
           })
         })
