@@ -100,6 +100,8 @@ fragment Conversation_conversation_2QE1um on Conversation {
   }
   initialMessage
   lastMessageID
+  fromLastViewedMessageID
+  isLastMessageToUser
   unread
   orderConnection(first: 10, states: [APPROVED, FULFILLED, SUBMITTED, REFUNDED]) {
     edges {
@@ -127,6 +129,7 @@ fragment Conversation_conversation_2QE1um on Conversation {
       }
       cursor
     }
+    totalCount
     ...ConversationMessages_messages
   }
   items {
@@ -422,6 +425,20 @@ return {
                 "alias": null,
                 "args": null,
                 "kind": "ScalarField",
+                "name": "fromLastViewedMessageID",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "isLastMessageToUser",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
                 "name": "unread",
                 "storageKey": null
               },
@@ -612,6 +629,13 @@ return {
                         "storageKey": null
                       }
                     ],
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "totalCount",
                     "storageKey": null
                   }
                 ],
@@ -917,7 +941,7 @@ return {
     "metadata": {},
     "name": "ConversationPaginationQuery",
     "operationKind": "query",
-    "text": "query ConversationPaginationQuery(\n  $count: Int\n  $after: String\n  $conversationID: ID!\n) {\n  node(id: $conversationID) {\n    __typename\n    ...Conversation_conversation_2QE1um\n    id\n  }\n}\n\nfragment ConversationCTA_conversation on Conversation {\n  internalID\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        internalID\n        isOfferableFromInquiry\n      }\n      ... on Node {\n        id\n      }\n    }\n  }\n  activeOrders: orderConnection(first: 10, states: [APPROVED, FULFILLED, SUBMITTED, REFUNDED]) {\n    edges {\n      node {\n        __typename\n        internalID\n        state\n        stateReason\n        stateExpiresAt\n        ... on CommerceOfferOrder {\n          buyerAction\n          offers(first: 5) {\n            edges {\n              node {\n                internalID\n                id\n              }\n            }\n          }\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment ConversationMessages_messages on MessageConnection {\n  edges {\n    node {\n      id\n      internalID\n      createdAt\n      isFromUser\n      body\n      ...Message_message\n    }\n  }\n}\n\nfragment Conversation_conversation_2QE1um on Conversation {\n  id\n  internalID\n  from {\n    name\n    email\n    id\n  }\n  to {\n    name\n    initials\n    id\n  }\n  initialMessage\n  lastMessageID\n  unread\n  orderConnection(first: 10, states: [APPROVED, FULFILLED, SUBMITTED, REFUNDED]) {\n    edges {\n      node {\n        __typename\n        internalID\n        ... on CommerceOfferOrder {\n          buyerAction\n        }\n        id\n      }\n    }\n  }\n  messagesConnection(first: $count, after: $after, sort: DESC) {\n    pageInfo {\n      startCursor\n      endCursor\n      hasPreviousPage\n      hasNextPage\n    }\n    edges {\n      node {\n        id\n        __typename\n      }\n      cursor\n    }\n    ...ConversationMessages_messages\n  }\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        internalID\n        id\n        date\n        title\n        artistNames\n        href\n        isOfferableFromInquiry\n        image {\n          url(version: [\"large\"])\n        }\n        listPrice {\n          __typename\n          ... on Money {\n            display\n          }\n          ... on PriceRange {\n            display\n          }\n        }\n      }\n      ... on Show {\n        id\n        fair {\n          name\n          exhibitionPeriod\n          location {\n            city\n            id\n          }\n          id\n        }\n        href\n        name\n        coverImage {\n          url\n        }\n      }\n      ... on Node {\n        id\n      }\n    }\n  }\n  ...ConversationCTA_conversation\n}\n\nfragment Message_message on Message {\n  internalID\n  body\n  createdAt\n  isFromUser\n  from {\n    name\n    email\n  }\n  attachments {\n    id\n    contentType\n    fileName\n    downloadURL\n  }\n}\n"
+    "text": "query ConversationPaginationQuery(\n  $count: Int\n  $after: String\n  $conversationID: ID!\n) {\n  node(id: $conversationID) {\n    __typename\n    ...Conversation_conversation_2QE1um\n    id\n  }\n}\n\nfragment ConversationCTA_conversation on Conversation {\n  internalID\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        internalID\n        isOfferableFromInquiry\n      }\n      ... on Node {\n        id\n      }\n    }\n  }\n  activeOrders: orderConnection(first: 10, states: [APPROVED, FULFILLED, SUBMITTED, REFUNDED]) {\n    edges {\n      node {\n        __typename\n        internalID\n        state\n        stateReason\n        stateExpiresAt\n        ... on CommerceOfferOrder {\n          buyerAction\n          offers(first: 5) {\n            edges {\n              node {\n                internalID\n                id\n              }\n            }\n          }\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment ConversationMessages_messages on MessageConnection {\n  edges {\n    node {\n      id\n      internalID\n      createdAt\n      isFromUser\n      body\n      ...Message_message\n    }\n  }\n}\n\nfragment Conversation_conversation_2QE1um on Conversation {\n  id\n  internalID\n  from {\n    name\n    email\n    id\n  }\n  to {\n    name\n    initials\n    id\n  }\n  initialMessage\n  lastMessageID\n  fromLastViewedMessageID\n  isLastMessageToUser\n  unread\n  orderConnection(first: 10, states: [APPROVED, FULFILLED, SUBMITTED, REFUNDED]) {\n    edges {\n      node {\n        __typename\n        internalID\n        ... on CommerceOfferOrder {\n          buyerAction\n        }\n        id\n      }\n    }\n  }\n  messagesConnection(first: $count, after: $after, sort: DESC) {\n    pageInfo {\n      startCursor\n      endCursor\n      hasPreviousPage\n      hasNextPage\n    }\n    edges {\n      node {\n        id\n        __typename\n      }\n      cursor\n    }\n    totalCount\n    ...ConversationMessages_messages\n  }\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        internalID\n        id\n        date\n        title\n        artistNames\n        href\n        isOfferableFromInquiry\n        image {\n          url(version: [\"large\"])\n        }\n        listPrice {\n          __typename\n          ... on Money {\n            display\n          }\n          ... on PriceRange {\n            display\n          }\n        }\n      }\n      ... on Show {\n        id\n        fair {\n          name\n          exhibitionPeriod\n          location {\n            city\n            id\n          }\n          id\n        }\n        href\n        name\n        coverImage {\n          url\n        }\n      }\n      ... on Node {\n        id\n      }\n    }\n  }\n  ...ConversationCTA_conversation\n}\n\nfragment Message_message on Message {\n  internalID\n  body\n  createdAt\n  isFromUser\n  from {\n    name\n    email\n  }\n  attachments {\n    id\n    contentType\n    fileName\n    downloadURL\n  }\n}\n"
   }
 };
 })();

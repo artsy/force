@@ -33,7 +33,7 @@ export const ConfirmArtworkModal: React.FC<ConfirmArtworkModalProps> = ({
   show,
   closeModal,
 }) => {
-  const { editionSets, isEdition } = artwork
+  const { editionSets, isEdition } = { ...artwork }
 
   const initialSelectedEdition =
     editionSets?.length === 1 ? editionSets[0]!.internalID : null

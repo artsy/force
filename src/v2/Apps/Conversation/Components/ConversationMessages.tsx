@@ -7,12 +7,16 @@ import { graphql } from "relay-runtime"
 import { createFragmentContainer } from "react-relay"
 import { ConversationMessages_messages } from "v2/__generated__/ConversationMessages_messages.graphql"
 
+import { NewMessageMarker } from "./NewMessageMarker"
+
 interface ConversationMessageProps {
   messages: ConversationMessages_messages
+  lastViewedMessageID?: number | null
 }
 
 export const ConversationMessages = ({
   messages,
+  lastViewedMessageID,
 }: ConversationMessageProps) => {
   return (
     <>
@@ -24,6 +28,7 @@ export const ConversationMessages = ({
           .filter(node => node?.body?.length > 0)
       ).map((messageGroup, groupIndex) => {
         const today = fromToday(messageGroup[0].createdAt)
+        let newFlagShown = false
         return (
           <React.Fragment
             key={`group-${groupIndex}-${messageGroup[0].internalID}`}
@@ -42,8 +47,22 @@ export const ConversationMessages = ({
                 messageIndex === messageGroup.length - 1
               const spaceAfter = senderChanges || lastMessageInGroup ? 2 : 0.5
 
+              let showNewFlag = false
+              if (
+                !newFlagShown &&
+                !!lastViewedMessageID &&
+                message.internalID > lastViewedMessageID &&
+                !message.isFromUser
+              ) {
+                // This marks visibility
+                showNewFlag = true
+                // This makes sure that it appears only on the first new message
+                newFlagShown = true
+              }
+
               return (
                 <React.Fragment key={`message-${message.internalID}`}>
+                  {showNewFlag && <NewMessageMarker />}
                   <Message
                     message={message}
                     key={message.internalID}

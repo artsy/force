@@ -17,6 +17,8 @@ export type Conversation_conversation = {
     };
     readonly initialMessage: string;
     readonly lastMessageID: string | null;
+    readonly fromLastViewedMessageID: string | null;
+    readonly isLastMessageToUser: boolean | null;
     readonly unread: boolean | null;
     readonly orderConnection: {
         readonly edges: ReadonlyArray<{
@@ -38,6 +40,7 @@ export type Conversation_conversation = {
                 readonly id: string;
             } | null;
         } | null> | null;
+        readonly totalCount: number | null;
         readonly " $fragmentRefs": FragmentRefs<"ConversationMessages_messages">;
     } | null;
     readonly items: ReadonlyArray<{
@@ -229,6 +232,20 @@ return {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
+      "name": "fromLastViewedMessageID",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "isLastMessageToUser",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "unread",
       "storageKey": null
     },
@@ -371,6 +388,13 @@ return {
               "storageKey": null
             }
           ],
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "totalCount",
           "storageKey": null
         },
         {
@@ -562,5 +586,5 @@ return {
   "type": "Conversation"
 };
 })();
-(node as any).hash = '16294fcf61d677540f345ac2050d4728';
+(node as any).hash = '11313ec9e122dd2ebf5cc6b25966e037';
 export default node;

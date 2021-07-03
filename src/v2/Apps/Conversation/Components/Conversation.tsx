@@ -22,6 +22,9 @@ import { extractNodes } from "v2/Utils/extractNodes"
 import { returnOrderModalDetails } from "../Utils/returnOrderModalDetails"
 import { OrderModal } from "./OrderModal"
 
+import { UnreadMessagesToastQueryRenderer } from "./UnreadMessagesToast"
+import useOnScreen from "../Utils/useOnScreen"
+
 export interface ConversationProps {
   conversation: Conversation_conversation
   showDetails: boolean
@@ -31,6 +34,12 @@ export interface ConversationProps {
 }
 
 export const PAGE_SIZE: number = 15
+
+const Loading: React.FC = () => (
+  <SpinnerContainer>
+    <Spinner />
+  </SpinnerContainer>
+)
 
 const Conversation: React.FC<ConversationProps> = props => {
   const { conversation, relay, showDetails, setShowDetails } = props
@@ -49,27 +58,39 @@ const Conversation: React.FC<ConversationProps> = props => {
     isMakeOfferArtwork
 
   // Keeping track of this for scroll on send
-  const [lastMessageID, setLastMessageID] = useState("")
+  const [lastMessageID, setLastMessageID] = useState<string | null>()
 
   const scrollToBottom = () => {
     if (
-      bottomOfPage.current !== null &&
-      (initialMount.current || lastMessageID !== conversation?.lastMessageID)
+      (bottomOfPage.current !== null && initialMount.current) ||
+      lastMessageID !== conversation?.lastMessageID
     ) {
       const scrollOptions = initialMount.current ? {} : { behavior: "smooth" }
       // @ts-expect-error STRICT_NULL_CHECK
       bottomOfPage.current.scrollIntoView(scrollOptions)
       initialMount.current = false
-      // @ts-expect-error STRICT_NULL_CHECK
-      setLastMessageID(conversation?.lastMessageID)
     }
   }
 
-  useEffect(scrollToBottom, [conversation, lastMessageID])
+  // Navigation behaviour
+  useEffect(() => {
+    setLastMessageID(conversation?.fromLastViewedMessageID)
+    scrollToBottom()
+  }, [conversation?.internalID])
+
+  // User sends message behaviour
+  useEffect(() => {
+    if (
+      conversation?.lastMessageID !== lastMessageID &&
+      !conversation.isLastMessageToUser
+    ) {
+      scrollToBottom()
+    }
+  }, [conversation?.lastMessageID])
 
   useEffect(() => {
-    UpdateConversation(relay.environment, conversation)
-  }, [conversation, relay.environment, conversation.lastMessageID])
+    markRead(!conversation.isLastMessageToUser)
+  }, [lastMessageID])
 
   // @ts-expect-error STRICT_NULL_CHECK
   const inquiryItemBox = conversation.items.map((i, idx) => (
@@ -98,7 +119,13 @@ const Conversation: React.FC<ConversationProps> = props => {
   const scrollContainer = useRef(null)
 
   const loadMore = (): void => {
-    if (relay.isLoading() || !relay.hasMore() || initialMount.current) return
+    if (
+      relay.isLoading() ||
+      !relay.hasMore() ||
+      initialMount.current ||
+      fetchingMore
+    )
+      return
     setFetchingMore(true)
     const scrollCursor = scrollContainer.current
       ? // @ts-expect-error STRICT_NULL_CHECK
@@ -134,6 +161,33 @@ const Conversation: React.FC<ConversationProps> = props => {
     orderID: orderID,
   })
 
+  // New Messages
+  const isBottomVisible = useOnScreen(bottomOfPage)
+  useEffect(() => {
+    if (isBottomVisible) refreshData()
+  }, [isBottomVisible])
+
+  const refreshData = () => {
+    scrollToBottom()
+    props.refetch({ conversationID: conversation.internalID }, null, () => {
+      scrollToBottom()
+      markRead(!!conversation.isLastMessageToUser)
+    })
+  }
+  const markRead = (delayed?: boolean) => {
+    // Set on a timeout so the user sees the "new" flag
+    setTimeout(
+      () => {
+        setLastMessageID(conversation?.lastMessageID)
+        UpdateConversation(relay.environment, conversation)
+      },
+      delayed ? 3000 : 0
+    )
+  }
+  const viewUnreadMessages = () => {
+    refreshData()
+  }
+
   return (
     <Flex flexDirection="column" flexGrow={1}>
       <ConversationHeader
@@ -149,18 +203,21 @@ const Conversation: React.FC<ConversationProps> = props => {
               {isOfferable && <BuyerGuaranteeMessage />}
               {inquiryItemBox}
               <Waypoint onEnter={loadMore} />
-              {fetchingMore ? (
-                <SpinnerContainer>
-                  <Spinner />
-                </SpinnerContainer>
-              ) : null}
+              {fetchingMore ? <Loading /> : null}
               <ConversationMessages
                 // @ts-expect-error STRICT_NULL_CHECK
                 messages={conversation.messagesConnection}
+                lastViewedMessageID={+(lastMessageID || -1)}
               />
               <Box ref={bottomOfPage}></Box>
             </Flex>
           </Box>
+          <UnreadMessagesToastQueryRenderer
+            conversationID={conversation?.internalID!}
+            onOfferable={!!(artwork && isOfferable)}
+            hasScrolled={!isBottomVisible}
+            onClick={viewUnreadMessages}
+          />
         </MessageContainer>
         <Reply
           onScroll={scrollToBottom}
@@ -229,6 +286,8 @@ export const ConversationPaginationContainer = createPaginationContainer(
         }
         initialMessage
         lastMessageID
+        fromLastViewedMessageID
+        isLastMessageToUser
         unread
         orderConnection(
           first: 10
@@ -256,6 +315,7 @@ export const ConversationPaginationContainer = createPaginationContainer(
               id
             }
           }
+          totalCount
           ...ConversationMessages_messages
         }
         items {
