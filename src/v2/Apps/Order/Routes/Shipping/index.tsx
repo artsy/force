@@ -95,7 +95,6 @@ export interface ShippingState {
   addressTouched: AddressTouched
   selectedSavedAddress: string
   saveAddress: boolean
-  showModal: boolean
   shippingQuotes: ShippingQuotesType
   shippingQuoteId?: string
 }
@@ -119,7 +118,6 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
       this.props.me,
       this.props.order
     ),
-    editAddressIndex: -1,
     shippingQuotes: getShippingQuotes(this.props.order),
     shippingQuoteId: getSelectedShippingQuoteId(this.props.order),
     saveAddress: true,
@@ -347,7 +345,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
           }
         }, // onError
         this.props.me, // me
-        () => this.setState({ showModal: false }) // closeModal
+        () => {}
       )
     }
   }
