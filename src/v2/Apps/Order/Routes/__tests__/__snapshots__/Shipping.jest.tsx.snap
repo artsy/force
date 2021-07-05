@@ -75,8 +75,7 @@ fragment ShippingQuotes_shippingQuotes on CommerceShippingQuoteEdge {
     tier
     name
     isSelected
-    priceCents
-    priceCurrency
+    price(precision: 2)
   }
 }
 ",
