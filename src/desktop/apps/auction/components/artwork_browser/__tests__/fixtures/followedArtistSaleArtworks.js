@@ -2,9 +2,6 @@ export const followedArtistSaleArtworks = [
   {
     id: "svend-aage-larsen-surrealism",
     lot_label: "1",
-    counts: {
-      bidder_positions: 0,
-    },
     current_bid: {
       display: "CHF 550",
     },
@@ -13,8 +10,11 @@ export const followedArtistSaleArtworks = [
       title: "Surrealism",
       date: "",
       sale_message: "Contact For Price",
-      is_in_auction: true,
       is_sold: false,
+      sale: {
+        is_auction: true,
+        is_closed: false,
+      },
       artists: [
         {
           id: "svend-aage-larsen",
@@ -54,14 +54,22 @@ export const followedArtistSaleArtworks = [
       },
       href: "/artwork/svend-aage-larsen-surrealism",
       is_acquireable: false,
+      sale_artwork: {
+        counts: {
+          bidder_positions: 0,
+        },
+        highest_bid: {
+          display: "$750",
+        },
+        opening_bid: {
+          display: "$300",
+        },
+      },
     },
   },
   {
     id: "emile-gsell-untitled",
     lot_label: "2",
-    counts: {
-      bidder_positions: 0,
-    },
     current_bid: {
       display: "CHF 5,000",
     },
@@ -70,8 +78,11 @@ export const followedArtistSaleArtworks = [
       title: "Untitled",
       date: "",
       sale_message: "Contact For Price",
-      is_in_auction: true,
       is_sold: false,
+      sale: {
+        is_auction: true,
+        is_closed: false,
+      },
       artists: [
         {
           id: "emile-gsell",
@@ -111,6 +122,17 @@ export const followedArtistSaleArtworks = [
       },
       href: "/artwork/emile-gsell-untitled",
       is_acquireable: false,
+      sale_artwork: {
+        counts: {
+          bidder_positions: 0,
+        },
+        highest_bid: {
+          display: "$700",
+        },
+        opening_bid: {
+          display: "$500",
+        },
+      },
     },
   },
 ]

@@ -17,9 +17,6 @@ export const worksByFollowedArtists = `
       hits {
         id
         lot_label
-        counts {
-          bidder_positions
-        }
         current_bid {
           display
         }
@@ -28,8 +25,11 @@ export const worksByFollowedArtists = `
           title
           date
           sale_message
-          is_in_auction
           is_sold
+          sale {
+            is_auction
+            is_closed
+          }
           artists {
             id
             name
@@ -56,6 +56,17 @@ export const worksByFollowedArtists = `
           }
           href
           is_acquireable
+          sale_artwork {
+            counts {
+              bidder_positions
+            }
+            highest_bid {
+              display
+            }
+            opening_bid {
+              display
+            }
+          }
         }
       }
     }
