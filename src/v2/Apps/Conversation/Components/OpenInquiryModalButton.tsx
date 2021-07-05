@@ -21,7 +21,10 @@ export const OpenInquiryModalButton: React.FC<OpenInquiryModalButtonProps> = ({
           <Flex flexShrink={1}>
             <Text color="black60" variant="small" mb={1}>
               Only purchases completed with our secure checkout are protected by{" "}
-              <Link href="/buyer-guarantee">The Artsy Guarantee</Link>.
+              <Link target="_blank" href="/buyer-guarantee">
+                The Artsy Guarantee
+              </Link>
+              .
             </Text>
           </Flex>
         </Flex>
