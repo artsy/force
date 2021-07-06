@@ -41,49 +41,13 @@ export type Conversation_conversation = {
         readonly " $fragmentRefs": FragmentRefs<"ConversationMessages_messages">;
     } | null;
     readonly items: ReadonlyArray<{
-        readonly item: ({
-            readonly __typename: "Artwork";
-            readonly internalID: string;
-            readonly id: string;
-            readonly date: string | null;
-            readonly title: string | null;
-            readonly artistNames: string | null;
-            readonly href: string | null;
-            readonly isOfferableFromInquiry: boolean | null;
-            readonly image: {
-                readonly url: string | null;
-            } | null;
-            readonly listPrice: ({
-                readonly __typename: "Money";
-                readonly display: string | null;
-            } | {
-                readonly __typename: "PriceRange";
-                readonly display: string | null;
-            } | {
-                /*This will never be '%other', but we need some
-                value in case none of the concrete values match.*/
-                readonly __typename: "%other";
-            }) | null;
-        } | {
-            readonly __typename: "Show";
-            readonly id: string;
-            readonly fair: {
-                readonly name: string | null;
-                readonly exhibitionPeriod: string | null;
-                readonly location: {
-                    readonly city: string | null;
-                } | null;
-            } | null;
-            readonly href: string | null;
-            readonly name: string | null;
-            readonly coverImage: {
-                readonly url: string | null;
-            } | null;
-        } | {
-            /*This will never be '%other', but we need some
-            value in case none of the concrete values match.*/
-            readonly __typename: "%other";
-        }) | null;
+        readonly item: {
+            readonly __typename: string;
+            readonly id?: string;
+            readonly isOfferableFromInquiry?: boolean | null;
+            readonly internalID?: string;
+            readonly " $fragmentRefs": FragmentRefs<"Item_item">;
+        } | null;
     } | null> | null;
     readonly " $fragmentRefs": FragmentRefs<"ConversationCTA_conversation">;
     readonly " $refType": "Conversation_conversation";
@@ -124,23 +88,7 @@ v3 = {
   "kind": "ScalarField",
   "name": "__typename",
   "storageKey": null
-},
-v4 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "href",
-  "storageKey": null
-},
-v5 = [
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "display",
-    "storageKey": null
-  }
-];
+};
 return {
   "argumentDefinitions": [
     {
@@ -401,30 +349,7 @@ return {
             {
               "kind": "InlineFragment",
               "selections": [
-                (v1/*: any*/),
                 (v0/*: any*/),
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "date",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "title",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "artistNames",
-                  "storageKey": null
-                },
-                (v4/*: any*/),
                 {
                   "alias": null,
                   "args": null,
@@ -432,120 +357,14 @@ return {
                   "name": "isOfferableFromInquiry",
                   "storageKey": null
                 },
-                {
-                  "alias": null,
-                  "args": null,
-                  "concreteType": "Image",
-                  "kind": "LinkedField",
-                  "name": "image",
-                  "plural": false,
-                  "selections": [
-                    {
-                      "alias": null,
-                      "args": [
-                        {
-                          "kind": "Literal",
-                          "name": "version",
-                          "value": [
-                            "large"
-                          ]
-                        }
-                      ],
-                      "kind": "ScalarField",
-                      "name": "url",
-                      "storageKey": "url(version:[\"large\"])"
-                    }
-                  ],
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "concreteType": null,
-                  "kind": "LinkedField",
-                  "name": "listPrice",
-                  "plural": false,
-                  "selections": [
-                    (v3/*: any*/),
-                    {
-                      "kind": "InlineFragment",
-                      "selections": (v5/*: any*/),
-                      "type": "Money"
-                    },
-                    {
-                      "kind": "InlineFragment",
-                      "selections": (v5/*: any*/),
-                      "type": "PriceRange"
-                    }
-                  ],
-                  "storageKey": null
-                }
+                (v1/*: any*/)
               ],
               "type": "Artwork"
             },
             {
-              "kind": "InlineFragment",
-              "selections": [
-                (v0/*: any*/),
-                {
-                  "alias": null,
-                  "args": null,
-                  "concreteType": "Fair",
-                  "kind": "LinkedField",
-                  "name": "fair",
-                  "plural": false,
-                  "selections": [
-                    (v2/*: any*/),
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "exhibitionPeriod",
-                      "storageKey": null
-                    },
-                    {
-                      "alias": null,
-                      "args": null,
-                      "concreteType": "Location",
-                      "kind": "LinkedField",
-                      "name": "location",
-                      "plural": false,
-                      "selections": [
-                        {
-                          "alias": null,
-                          "args": null,
-                          "kind": "ScalarField",
-                          "name": "city",
-                          "storageKey": null
-                        }
-                      ],
-                      "storageKey": null
-                    }
-                  ],
-                  "storageKey": null
-                },
-                (v4/*: any*/),
-                (v2/*: any*/),
-                {
-                  "alias": null,
-                  "args": null,
-                  "concreteType": "Image",
-                  "kind": "LinkedField",
-                  "name": "coverImage",
-                  "plural": false,
-                  "selections": [
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "url",
-                      "storageKey": null
-                    }
-                  ],
-                  "storageKey": null
-                }
-              ],
-              "type": "Show"
+              "args": null,
+              "kind": "FragmentSpread",
+              "name": "Item_item"
             }
           ],
           "storageKey": null
@@ -562,5 +381,5 @@ return {
   "type": "Conversation"
 };
 })();
-(node as any).hash = '16294fcf61d677540f345ac2050d4728';
+(node as any).hash = '0fc3d6e84e79af306daa0062e625a898';
 export default node;
