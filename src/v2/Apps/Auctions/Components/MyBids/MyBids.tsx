@@ -5,6 +5,7 @@ import { MyBidsBidHeaderFragmentContainer } from "./MyBidsBidHeader"
 import { MyBidsBidItemFragmentContainer } from "./MyBidsBidItem"
 import {
   Box,
+  Flex,
   Button,
   Join,
   Separator,
@@ -12,11 +13,16 @@ import {
   Spacer,
   StackableBorderBox,
   Text,
+  Skeleton,
+  SkeletonText,
+  SkeletonBox,
 } from "@artsy/palette"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { useTracking } from "react-tracking"
-import { useAnalyticsContext } from "v2/System"
+import { useAnalyticsContext, useSystemContext } from "v2/System"
 import { clickedEntityGroup, ContextModule, OwnerType } from "@artsy/cohesion"
+import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
+import { MyBidsQuery } from "v2/__generated__/MyBidsQuery.graphql"
 
 interface MyBidsProps {
   me: MyBids_me
@@ -35,10 +41,6 @@ const MyBids: React.FC<MyBidsProps> = props => {
 
   return (
     <>
-      <Separator />
-
-      <Spacer mt={6} />
-
       <Text variant="lg">Your Auctions and Bids</Text>
 
       <Spacer mt={4} />
@@ -54,12 +56,7 @@ const MyBids: React.FC<MyBidsProps> = props => {
           return (
             // TODO: Re-assess width
             <Box width={330} key={index}>
-              <StackableBorderBox
-                flexDirection="column"
-                overflow="hidden"
-                p={0}
-                pb={1}
-              >
+              <StackableBorderBox flexDirection="column" p={0} pb={1}>
                 <MyBidsBidHeaderFragmentContainer sale={sale} />
               </StackableBorderBox>
 
@@ -133,3 +130,106 @@ export const MyBidsFragmentContainer = createFragmentContainer(MyBids, {
     }
   `,
 })
+
+const MyBidsPlaceholder: React.FC = () => {
+  return (
+    <>
+      <Text variant="lg">Your Auctions and Bids</Text>
+
+      <Spacer mt={4} />
+
+      <Skeleton>
+        <Shelf alignItems="flex-start">
+          {[...new Array(3)].map((_, i) => {
+            return (
+              <React.Fragment key={i}>
+                <StackableBorderBox
+                  width={330}
+                  flexDirection="column"
+                  p={0}
+                  pb={1}
+                >
+                  <SkeletonBox width="100%" height={100} />
+
+                  <Spacer mt={1} />
+
+                  <Box px={2}>
+                    <SkeletonText variant="xs" textTransform="uppercase">
+                      Partner Name
+                    </SkeletonText>
+
+                    <Spacer mt={1} />
+
+                    <SkeletonText variant="lg">Sale Name</SkeletonText>
+
+                    <SkeletonText variant="lg">Starts at Mon 0</SkeletonText>
+                  </Box>
+                </StackableBorderBox>
+
+                <StackableBorderBox p={0} flexDirection="column">
+                  <Join separator={<Separator />}>
+                    <Flex py={1} px={2}>
+                      <SkeletonBox size={55} mr={1} />
+
+                      <Flex flex={1}>
+                        <Box>
+                          <SkeletonText variant="xs">Artist Name</SkeletonText>
+
+                          <SkeletonText variant="xs">Lot 0</SkeletonText>
+                        </Box>
+
+                        <Flex
+                          flex={1}
+                          flexDirection="column"
+                          alignItems="flex-end"
+                        >
+                          <SkeletonText variant="xs">
+                            $0,000 (0 bids)
+                          </SkeletonText>
+
+                          <SkeletonText variant="xs">Highest Bid</SkeletonText>
+                        </Flex>
+                      </Flex>
+                    </Flex>
+                  </Join>
+                </StackableBorderBox>
+              </React.Fragment>
+            )
+          })}
+        </Shelf>
+      </Skeleton>
+    </>
+  )
+}
+
+export const MyBidsQueryRenderer: React.FC = () => {
+  const { relayEnvironment } = useSystemContext()
+
+  return (
+    <SystemQueryRenderer<MyBidsQuery>
+      environment={relayEnvironment}
+      query={graphql`
+        query MyBidsQuery {
+          me {
+            ...MyBids_me
+          }
+        }
+      `}
+      placeholder={<MyBidsPlaceholder />}
+      render={({ error, props }) => {
+        if (error) {
+          console.error(error)
+          return null
+        }
+
+        if (!props) {
+          return <MyBidsPlaceholder />
+        }
+
+        if (props.me) {
+          return <MyBidsFragmentContainer me={props.me} />
+        }
+      }}
+    />
+  )
+}

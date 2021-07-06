@@ -2,7 +2,14 @@ import React from "react"
 import { AuctionsApp_viewer } from "v2/__generated__/AuctionsApp_viewer.graphql"
 import { AuctionsMeta } from "./Components/AuctionsMeta"
 import { MyBidsFragmentContainer } from "./Components/MyBids/MyBids"
-import { Column, GridColumns, Join, Spacer, Text } from "@artsy/palette"
+import {
+  Column,
+  GridColumns,
+  Join,
+  Spacer,
+  Text,
+  Separator,
+} from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RecentlyViewed } from "v2/Components/RecentlyViewed"
 import { RouterLink } from "v2/System/Router/RouterLink"
@@ -54,7 +61,7 @@ const AuctionsApp: React.FC<AuctionsAppProps> = props => {
 
       {user && (
         <>
-          <Spacer mt={6} />
+          <Separator my={6} />
 
           <Join separator={<Spacer mt={6} />}>
             {viewer.me && <MyBidsFragmentContainer me={viewer.me} />}
