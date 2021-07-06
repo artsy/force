@@ -8,7 +8,7 @@ import {
 } from "react-relay"
 import { graphql } from "relay-runtime"
 import Waypoint from "react-waypoint"
-import { Item } from "./Item"
+import { ItemFragmentContainer } from "./Item"
 import { Reply } from "./Reply"
 import { ConversationMessagesFragmentContainer as ConversationMessages } from "./ConversationMessages"
 import { UpdateConversation } from "../Mutation/UpdateConversationMutation"
@@ -21,6 +21,7 @@ import { BuyerGuaranteeMessage } from "./BuyerGuaranteeMessage"
 import { extractNodes } from "v2/Utils/extractNodes"
 import { returnOrderModalDetails } from "../Utils/returnOrderModalDetails"
 import { OrderModal } from "./OrderModal"
+import compact from "lodash/compact"
 
 export interface ConversationProps {
   conversation: Conversation_conversation
@@ -36,86 +37,82 @@ const Conversation: React.FC<ConversationProps> = props => {
   const { conversation, relay, showDetails, setShowDetails } = props
   const { user } = useSystemContext()
 
-  const bottomOfPage = useRef(null)
-  const initialMount = useRef(true)
+  const messageContainer = useRef<HTMLElement>(null)
 
-  const isMakeOfferArtwork =
-    conversation.items?.[0]?.item?.__typename === "Artwork" &&
-    conversation.items?.[0]?.item?.isOfferableFromInquiry
+  const firstItem = conversation?.items?.[0]?.item
+  const artwork = firstItem?.__typename === "Artwork" && firstItem
+  const isArtworkOfferable = !!artwork && !!firstItem?.isOfferableFromInquiry
 
   const isOfferable =
     user &&
     userHasLabFeature(user, "Web Inquiry Checkout") &&
-    isMakeOfferArtwork
+    isArtworkOfferable
 
   // Keeping track of this for scroll on send
-  const [lastMessageID, setLastMessageID] = useState("")
+  const [lastMessageID, setLastMessageID] = useState<string | null>("")
+  const [isOfferButtonMounted, setOfferButtonMountStatus] = useState<boolean>(
+    false
+  )
+  const [isItemMounted, setItemMountStatus] = useState<boolean>(false)
+  const [isMessagesMounted, setMessagesStatus] = useState<boolean>(false)
+  const [showConfirmArtworkModal, setShowConfirmArtworkModal] = useState<
+    boolean
+  >(false)
+  const [showOrderModal, setShowOrderModal] = useState<boolean>(false)
+  const [fetchingMore, setFetchingMore] = useState<boolean>(false)
 
   const scrollToBottom = () => {
+    const isLastMessageIDMatched = lastMessageID === conversation?.lastMessageID
+    const areChildrenMounted =
+      isOfferButtonMounted || isItemMounted || isMessagesMounted
     if (
-      bottomOfPage.current !== null &&
-      (initialMount.current || lastMessageID !== conversation?.lastMessageID)
+      messageContainer.current &&
+      (!isLastMessageIDMatched || areChildrenMounted)
     ) {
-      const scrollOptions = initialMount.current ? {} : { behavior: "smooth" }
-      // @ts-expect-error STRICT_NULL_CHECK
-      bottomOfPage.current.scrollIntoView(scrollOptions)
-      initialMount.current = false
-      // @ts-expect-error STRICT_NULL_CHECK
       setLastMessageID(conversation?.lastMessageID)
+      setTimeout(() => {
+        messageContainer!.current!.scrollTo({
+          top: messageContainer!.current!.scrollHeight,
+          behavior: "smooth",
+        })
+      })
     }
   }
 
-  useEffect(scrollToBottom, [conversation, lastMessageID])
+  useEffect(scrollToBottom, [
+    conversation,
+    lastMessageID,
+    isOfferButtonMounted,
+    isItemMounted,
+    isMessagesMounted,
+  ])
 
   useEffect(() => {
     UpdateConversation(relay.environment, conversation)
   }, [conversation, relay.environment, conversation.lastMessageID])
 
-  // @ts-expect-error STRICT_NULL_CHECK
-  const inquiryItemBox = conversation.items.map((i, idx) => (
-    <Item
-      // @ts-expect-error STRICT_NULL_CHECK
-      item={i.item}
-      key={
-        // @ts-expect-error STRICT_NULL_CHECK
-        i.item.__typename === "Artwork" || i.item.__typename === "Show"
-          ? // @ts-expect-error STRICT_NULL_CHECK
-            i.item.id
-          : idx
-      }
-    />
-  ))
+  const inquiryItemBox = compact(conversation.items).map((i, idx) => {
+    const isValidType =
+      i.item?.__typename === "Artwork" || i.item?.__typename === "Show"
 
-  const [showConfirmArtworkModal, setShowConfirmArtworkModal] = useState(false)
-  const [showOrderModal, setShowOrderModal] = useState(false)
-
-  const artwork =
-    conversation.items?.[0]?.item?.__typename === "Artwork" &&
-    conversation.items?.[0]?.item
-
-  // Pagination Scroll Logic
-  const [fetchingMore, setFetchingMore] = useState(false)
-  const scrollContainer = useRef(null)
+    return (
+      <ItemFragmentContainer
+        item={i.item!}
+        key={isValidType ? i.item?.id : idx}
+        setMountedStatus={flag => setItemMountStatus(flag)}
+      />
+    )
+  })
 
   const loadMore = (): void => {
-    if (relay.isLoading() || !relay.hasMore() || initialMount.current) return
+    if (relay.isLoading() || !relay.hasMore()) return
     setFetchingMore(true)
-    const scrollCursor = scrollContainer.current
-      ? // @ts-expect-error STRICT_NULL_CHECK
-        scrollContainer.current.scrollHeight - scrollContainer.current.scrollTop
-      : 0
+
     relay.loadMore(PAGE_SIZE, error => {
       if (error) console.error(error)
       setFetchingMore(false)
-      if (scrollContainer.current) {
-        // Scrolling to former position
-        // @ts-expect-error STRICT_NULL_CHECK
-        scrollContainer.current.scrollTo({
-          // @ts-expect-error STRICT_NULL_CHECK
-          top: scrollContainer.current.scrollHeight - scrollCursor,
-          behavior: "smooth",
-        })
-      }
+
+      scrollToBottom()
     })
   }
 
@@ -142,7 +139,7 @@ const Conversation: React.FC<ConversationProps> = props => {
         setShowDetails={setShowDetails}
       />
       <NoScrollFlex flexDirection="column" width="100%">
-        <MessageContainer ref={scrollContainer}>
+        <MessageContainer ref={messageContainer as any}>
           <Box pb={[6, 6, 6, 0]} pr={1}>
             <Spacer mt={["75px", "75px", 2]} />
             <Flex flexDirection="column" width="100%" px={1}>
@@ -155,10 +152,9 @@ const Conversation: React.FC<ConversationProps> = props => {
                 </SpinnerContainer>
               ) : null}
               <ConversationMessages
-                // @ts-expect-error STRICT_NULL_CHECK
-                messages={conversation.messagesConnection}
+                messages={conversation.messagesConnection!}
+                setMountedStatus={flag => setMessagesStatus(flag)}
               />
-              <Box ref={bottomOfPage}></Box>
             </Flex>
           </Box>
         </MessageContainer>
@@ -177,6 +173,7 @@ const Conversation: React.FC<ConversationProps> = props => {
           conversationID={conversation.internalID!}
           show={showConfirmArtworkModal}
           closeModal={() => setShowConfirmArtworkModal(false)}
+          setMountedStatus={flag => setOfferButtonMountStatus(flag)}
         />
       )}
       {isOfferable && (
@@ -262,41 +259,11 @@ export const ConversationPaginationContainer = createPaginationContainer(
           item {
             __typename
             ... on Artwork {
-              internalID
               id
-              date
-              title
-              artistNames
-              href
               isOfferableFromInquiry
-              image {
-                url(version: ["large"])
-              }
-              listPrice {
-                __typename
-                ... on Money {
-                  display
-                }
-                ... on PriceRange {
-                  display
-                }
-              }
+              internalID
             }
-            ... on Show {
-              id
-              fair {
-                name
-                exhibitionPeriod
-                location {
-                  city
-                }
-              }
-              href
-              name
-              coverImage {
-                url
-              }
-            }
+            ...Item_item
           }
         }
         ...ConversationCTA_conversation
