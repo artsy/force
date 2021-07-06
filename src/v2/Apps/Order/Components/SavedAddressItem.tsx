@@ -70,7 +70,10 @@ export const SavedAddressItem: React.FC<SavedAddressItemProps> = (
         position="absolute"
         top={2}
         right={2}
-        onClick={() => {
+        onClick={event => {
+          event.preventDefault()
+          event.stopPropagation()
+
           handleClickEdit(index)
         }}
         textColor="blue100"
