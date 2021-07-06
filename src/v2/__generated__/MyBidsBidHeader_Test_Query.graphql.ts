@@ -26,7 +26,7 @@ query MyBidsBidHeader_Test_Query {
 
 fragment MyBidsBidHeader_sale on Sale {
   coverImage {
-    resized(width: 300, height: 100) {
+    cropped(width: 330, height: 100) {
       src
       srcSet
     }
@@ -122,12 +122,12 @@ return {
                   {
                     "kind": "Literal",
                     "name": "width",
-                    "value": 300
+                    "value": 330
                   }
                 ],
-                "concreteType": "ResizedImageUrl",
+                "concreteType": "CroppedImageUrl",
                 "kind": "LinkedField",
-                "name": "resized",
+                "name": "cropped",
                 "plural": false,
                 "selections": [
                   {
@@ -145,7 +145,7 @@ return {
                     "storageKey": null
                   }
                 ],
-                "storageKey": "resized(height:100,width:300)"
+                "storageKey": "cropped(height:100,width:330)"
               }
             ],
             "storageKey": null
@@ -189,7 +189,7 @@ return {
     "metadata": {},
     "name": "MyBidsBidHeader_Test_Query",
     "operationKind": "query",
-    "text": "query MyBidsBidHeader_Test_Query {\n  sale(id: \"foo\") {\n    ...MyBidsBidHeader_sale\n    id\n  }\n}\n\nfragment MyBidsBidHeader_sale on Sale {\n  coverImage {\n    resized(width: 300, height: 100) {\n      src\n      srcSet\n    }\n  }\n  formattedStartDateTime\n  name\n  partner {\n    name\n    id\n  }\n  slug\n}\n"
+    "text": "query MyBidsBidHeader_Test_Query {\n  sale(id: \"foo\") {\n    ...MyBidsBidHeader_sale\n    id\n  }\n}\n\nfragment MyBidsBidHeader_sale on Sale {\n  coverImage {\n    cropped(width: 330, height: 100) {\n      src\n      srcSet\n    }\n  }\n  formattedStartDateTime\n  name\n  partner {\n    name\n    id\n  }\n  slug\n}\n"
   }
 };
 })();

@@ -5,7 +5,7 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type MyBidsBidHeader_sale = {
     readonly coverImage: {
-        readonly resized: {
+        readonly cropped: {
             readonly src: string;
             readonly srcSet: string;
         } | null;
@@ -59,12 +59,12 @@ return {
             {
               "kind": "Literal",
               "name": "width",
-              "value": 300
+              "value": 330
             }
           ],
-          "concreteType": "ResizedImageUrl",
+          "concreteType": "CroppedImageUrl",
           "kind": "LinkedField",
-          "name": "resized",
+          "name": "cropped",
           "plural": false,
           "selections": [
             {
@@ -82,7 +82,7 @@ return {
               "storageKey": null
             }
           ],
-          "storageKey": "resized(height:100,width:300)"
+          "storageKey": "cropped(height:100,width:330)"
         }
       ],
       "storageKey": null
@@ -118,5 +118,5 @@ return {
   "type": "Sale"
 };
 })();
-(node as any).hash = '83f241014bcbaf8de7ee1c8a25f4e9cd';
+(node as any).hash = 'ada6931ad7031b33e1ad737101b8ecdd';
 export default node;

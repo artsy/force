@@ -17,7 +17,7 @@ import { HomeArtworkModuleRailQuery } from "v2/__generated__/HomeArtworkModuleRa
 import { useSystemContext } from "v2/System"
 import { HomeArtworkModuleContextFragmentContainer } from "./HomeArtworkModuleContext"
 
-const ARTWORK_MODULES = [
+const HOME_ARTWORK_MODULES = [
   "active_bids",
   "current_fairs",
   "followed_artist",
@@ -35,10 +35,9 @@ const ARTWORK_MODULES = [
   "similar_to_saved_works",
 ] as const
 
-const CONTEXT_MODULES: Record<
-  typeof ARTWORK_MODULES[number],
-  AuthContextModule
-> = {
+export type HomeArtworkModuleKey = typeof HOME_ARTWORK_MODULES[number]
+
+const CONTEXT_MODULES: Record<HomeArtworkModuleKey, AuthContextModule> = {
   // @ts-ignore TODO: Add to AuthContextModule union
   active_bids: ContextModule.yourActiveBids,
   current_fairs: ContextModule.fairRail,
@@ -207,7 +206,12 @@ export const HomeArtworkModuleRailQueryRenderer: React.FC<HomeArtworkModuleRailQ
           }
         }
       `}
-      variables={{ key, id, relatedArtistID, followedArtistID }}
+      variables={{
+        key,
+        id,
+        relatedArtistID,
+        followedArtistID,
+      }}
       placeholder={<HomeArtworkModulePlaceholder title={title} />}
       render={({ error, props }) => {
         if (error) {
