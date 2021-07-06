@@ -1,3 +1,4 @@
+/* eslint-disable jest/no-done-callback */
 /*
  * decaffeinate suggestions:
  * DS102: Remove unnecessary code created because of implicit returns
@@ -204,7 +205,7 @@ const itShouldBehaveLikeSubscriptions1_0 = function (partnerRoutes) {
   })
 }
 
-describe("partner2 index", function () {
+describe.skip("partner2 index", function () {
   _.each(newLayoutPartnerProfiles, profile =>
     context(
       `with partner profile layout ${profile.get("owner").profile_layout}`,

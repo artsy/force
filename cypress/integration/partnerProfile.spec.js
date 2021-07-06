@@ -1,6 +1,6 @@
-describe("/:partner_id", () => {
+describe("partner/:partner_id", () => {
   before(() => {
-    cy.visit("gagosian-gallery")
+    cy.visit("partner/gagosian")
   })
 
   it("renders metadata", () => {
@@ -20,48 +20,31 @@ describe("/:partner_id", () => {
     cy.get("h1").should("contain", "Gagosian")
   })
 
-  context("mobile", () => {
-    before(() => {
-      cy.viewport("iphone-x")
-      cy.visit("gagosian-gallery")
-    })
+  it("shows the list of shows", () => {
+    cy.visit("partner/gagosian/shows")
+    cy.contains("Current Events")
+  })
 
-    it("renders metadata 1", () => {
-      cy.title().should(
-        "eq",
-        "Gagosian | Artists, Art for Sale, and Contact Info | Artsy"
-      )
-      cy.get("meta[name='description']")
-        .should("have.attr", "content")
-        .and(
-          "eq",
-          "Gagosian is a global gallery specializing in modern and contemporary art with seventeen locations worldwide."
-        )
-    })
+  it("shows partner artists", () => {
+    cy.visit("partner/gagosian/artists")
+    cy.contains("Artists")
+  })
 
-    it("renders page content 1", () => {
-      cy.get("h1").should("contain", "Gagosian")
-    })
+  it("shows partner articles", () => {
+    cy.visit("partner/gagosian/articles")
+    cy.contains("Articles")
+  })
 
-    it("shows the list of shows", () => {
-      cy.visit("gagosian-gallery/shows")
-      cy.contains("Current Shows")
-    })
-    it("shows partner articles", () => {
-      cy.visit("gagosian-gallery/articles")
-      cy.wait(2000)
-      cy.contains("Articles")
-    })
+  it.skip("does not show contact information for non-active partner", () => {
+    // TODO: cy.visit(":partner_id/contact")
+    cy.contains(
+      "Sorry, the page you were looking for doesn&#x2019;t exist at this URL."
+    )
+  })
 
-    it.skip("does not show contact information for non-active partner", () => {
-      // TODO: cy.visit(":partner_id/contact")
-      cy.contains(
-        "Sorry, the page you were looking for doesn&#x2019;t exist at this URL."
-      )
-    })
-    it("show contact information for active partner", () => {
-      cy.visit("gagosian-gallery/contact")
-      cy.contains("New York")
-    })
+  it("show contact information for active partner", () => {
+    cy.visit("partner/gagosian/contact")
+    cy.contains("New York")
+    cy.contains("Locations")
   })
 })

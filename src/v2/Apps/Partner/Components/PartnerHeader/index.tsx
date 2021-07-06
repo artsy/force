@@ -59,7 +59,7 @@ export const PartnerHeader: React.FC<PartnerHeaderProps> = ({ partner }) => {
             </Flex>
           )}
           <Box>
-            <Text variant="largeTitle">
+            <Text as="h1" variant="largeTitle">
               <RouterLink
                 style={{
                   textDecoration: "none",
