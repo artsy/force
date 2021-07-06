@@ -9,11 +9,10 @@ import {
   Join,
   Separator,
   Shelf,
+  Spacer,
   StackableBorderBox,
   Text,
-  ThemeProviderV2,
 } from "@artsy/palette"
-import styled from "styled-components"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { useTracking } from "react-tracking"
 import { useAnalyticsContext } from "v2/System"
@@ -35,50 +34,58 @@ const MyBids: React.FC<MyBidsProps> = props => {
   }
 
   return (
-    <ThemeProviderV2>
-      <>
-        <Separator />
-        <Text variant="title" mt={6} mb={4}>
-          Your Auctions and Bids
-        </Text>
+    <>
+      <Separator />
 
-        <Shelf alignItems="flex-start">
-          {active.map((activeSale, index) => {
-            return (
-              <SaleContainer key={index}>
-                <StackableBorderBox
-                  flexDirection="column"
-                  overflow="hidden"
-                  p={0}
-                >
-                  {/* @ts-expect-error STRICT_NULL_CHECK */}
-                  <MyBidsBidHeaderFragmentContainer sale={activeSale.sale} />
-                </StackableBorderBox>
-                <StackableBorderBox p={2} flexDirection="column">
-                  <Join separator={<Separator my={1} />}>
-                    {/* @ts-expect-error STRICT_NULL_CHECK */}
-                    {activeSale.saleArtworks.length > 0 ? (
-                      <>
-                        {/* @ts-expect-error STRICT_NULL_CHECK */}
-                        {activeSale.saleArtworks.map(
-                          (saleArtwork, saleArtworkIndex) => {
-                            return (
-                              <MyBidsBidItemFragmentContainer
-                                horizontalSlidePosition={saleArtworkIndex}
-                                key={saleArtworkIndex}
-                                // @ts-expect-error STRICT_NULL_CHECK
-                                saleArtwork={saleArtwork}
-                              />
-                            )
-                          }
-                        )}
-                      </>
-                    ) : (
-                      // If a user has registered for a sale but hasn't yet followed
-                      // or bid on any works, show the Bid Now button.
+      <Spacer mt={6} />
+
+      <Text variant="lg">Your Auctions and Bids</Text>
+
+      <Spacer mt={4} />
+
+      <Shelf alignItems="flex-start">
+        {active.map((activeSale, index) => {
+          if (!activeSale) return <></>
+
+          const { saleArtworks, sale } = activeSale
+
+          if (!sale || !saleArtworks) return <></>
+
+          return (
+            // TODO: Re-assess width
+            <Box width={330} key={index}>
+              <StackableBorderBox
+                flexDirection="column"
+                overflow="hidden"
+                p={0}
+                pb={1}
+              >
+                <MyBidsBidHeaderFragmentContainer sale={sale} />
+              </StackableBorderBox>
+
+              <StackableBorderBox p={0} flexDirection="column">
+                <Join separator={<Separator />}>
+                  {saleArtworks.length > 0 ? (
+                    <>
+                      {saleArtworks.map((saleArtwork, saleArtworkIndex) => {
+                        if (!saleArtwork) return null
+
+                        return (
+                          <Box py={1} px={2} key={saleArtworkIndex}>
+                            <MyBidsBidItemFragmentContainer
+                              horizontalSlidePosition={saleArtworkIndex}
+                              saleArtwork={saleArtwork}
+                            />
+                          </Box>
+                        )
+                      })}
+                    </>
+                  ) : (
+                    // If a user has registered for a sale but hasn't yet
+                    // followed or bid on any works, show the Bid Now button.
+                    <Box py={1} px={2}>
                       <RouterLink
-                        // @ts-expect-error STRICT_NULL_CHECK
-                        to={`/auction/${activeSale.sale.slug}`}
+                        to={`/auction/${sale.slug}`}
                         noUnderline
                         data-test="registeredOnlyButton"
                         onClick={() => {
@@ -97,21 +104,17 @@ const MyBids: React.FC<MyBidsProps> = props => {
                           Bid now
                         </Button>
                       </RouterLink>
-                    )}
-                  </Join>
-                </StackableBorderBox>
-              </SaleContainer>
-            )
-          })}
-        </Shelf>
-      </>
-    </ThemeProviderV2>
+                    </Box>
+                  )}
+                </Join>
+              </StackableBorderBox>
+            </Box>
+          )
+        })}
+      </Shelf>
+    </>
   )
 }
-
-const SaleContainer = styled(Box).attrs({
-  width: 330,
-})``
 
 export const MyBidsFragmentContainer = createFragmentContainer(MyBids, {
   me: graphql`

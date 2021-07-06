@@ -40,7 +40,7 @@ describe("MyBidsBidHeaderFragmentContainer", () => {
     const wrapper = getWrapper({
       Sale: () => ({
         coverImage: {
-          resized: {
+          cropped: {
             src: "coverImageResizedSrc",
             srcSet: "coverImageResizedSrcSet",
           },
