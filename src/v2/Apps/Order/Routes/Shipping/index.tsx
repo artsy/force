@@ -144,7 +144,6 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
 
   componentDidMount() {
     if (
-      this.state.shippingOption === "SHIP" &&
       this.isArtaShipping() &&
       !this.isCreateNewAddress() &&
       !this.state.shippingQuoteId
@@ -177,11 +176,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
   }
 
   onContinueButtonPressed = async () => {
-    if (
-      this.state.shippingOption === "SHIP" &&
-      this.isArtaShipping() &&
-      !!this.state.shippingQuoteId
-    ) {
+    if (this.isArtaShipping() && !!this.state.shippingQuoteId) {
       this.selectShippingQuote()
     } else {
       this.selectShipping()
@@ -414,12 +409,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
     if (this.state.shippingOption !== shippingOption) {
       this.setState({ shippingOption }, () => {
         const addressList = this.getAddressList()
-        if (
-          this.state.shippingOption === "SHIP" &&
-          addressList &&
-          addressList.length > 0 &&
-          this.isArtaShipping()
-        ) {
+        if (addressList && addressList.length > 0 && this.isArtaShipping()) {
           this.selectShipping()
         }
       })
@@ -433,7 +423,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
   onSelectSavedAddress = (value: string) => {
     if (this.state.selectedSavedAddress !== value) {
       this.setState({ selectedSavedAddress: value }, () => {
-        if (this.state.shippingOption === "SHIP" && this.isArtaShipping()) {
+        if (this.isArtaShipping()) {
           this.selectShipping()
         }
       })
@@ -469,10 +459,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
     const isArtaShipping = this.isArtaShipping()
     const isContinueButtonDisabled = isCommittingMutation
       ? false
-      : shippingOption === "SHIP" &&
-        isArtaShipping &&
-        !shippingQuoteId &&
-        !this.isCreateNewAddress()
+      : isArtaShipping && !shippingQuoteId && !this.isCreateNewAddress()
 
     return (
       <Box data-test="orderShipping">
@@ -587,13 +574,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
                 />
               </Collapse>
 
-              <Collapse
-                open={
-                  this.state.shippingOption === "SHIP" &&
-                  isArtaShipping &&
-                  !!shippingQuotes
-                }
-              >
+              <Collapse open={isArtaShipping && !!shippingQuotes}>
                 <Text variant="mediumText" mb="1">
                   Shipping options
                 </Text>
