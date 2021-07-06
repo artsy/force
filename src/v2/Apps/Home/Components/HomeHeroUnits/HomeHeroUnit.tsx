@@ -27,6 +27,7 @@ export interface HomeHeroUnitProps {
         title: string
         subtitle: string
         linkText?: string
+        creditLine?: string
       }
   bg?: "black5" | "black100"
   layout: "a" | "b"
@@ -97,7 +98,11 @@ export const HomeHeroUnit: React.FC<HomeHeroUnitProps> = ({
 
             <Media greaterThan="xs">
               {className => (
-                <Box className={className} height={[300, 400, 500]}>
+                <Box
+                  className={className}
+                  height={[300, 400, 500]}
+                  position="relative"
+                >
                   <Image
                     src={image.src}
                     srcSet={image.srcSet}
@@ -106,6 +111,24 @@ export const HomeHeroUnit: React.FC<HomeHeroUnitProps> = ({
                     style={{ objectFit: "cover" }}
                     lazyLoad={index > 0}
                   />
+
+                  {heroUnit.creditLine && (
+                    <Text
+                      variant="xs"
+                      color="rgba(255, 255, 255, 0.7)"
+                      position="absolute"
+                      px={2}
+                      pb={1}
+                      pt={6}
+                      width="100%"
+                      background="linear-gradient(rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.1) 100%);"
+                      style={{ textShadow: "0 0 3px rgba(0, 0, 0, 0.25)" }}
+                      bottom={0}
+                      {...(layout === "a" ? { left: 0 } : { right: 0 })}
+                    >
+                      {heroUnit.creditLine}
+                    </Text>
+                  )}
                 </Box>
               )}
             </Media>
