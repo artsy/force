@@ -5,18 +5,77 @@ import { ErrorPage } from "v2/Components/ErrorPage"
 import { Redirect, RedirectException } from "found"
 import React from "react"
 import { graphql } from "react-relay"
-
-import { RespondFragmentContainer as RespondRoute } from "./Routes/Respond"
-import { OfferFragmentContainer as OfferRoute } from "./Routes/Offer"
-import { ShippingFragmentContainer as ShippingRoute } from "./Routes/Shipping"
-import { PaymentFragmentContainer as PaymentRoute } from "./Routes/Payment"
-import { NewPaymentFragmentContainer as NewPaymentRoute } from "./Routes/NewPayment"
-import { CounterFragmentContainer as CounterRoute } from "./Routes/Counter"
-import { ReviewFragmentContainer as ReviewRoute } from "./Routes/Review"
-import { AcceptFragmentContainer as AcceptRoute } from "./Routes/Accept"
-import { RejectFragmentContainer as DeclineRoute } from "./Routes/Reject"
-import { StatusFragmentContainer as StatusRoute } from "./Routes/Status"
 import { AppRouteConfig } from "v2/System/Router/Route"
+
+const RespondRoute = loadable(
+  () => import(/* webpackChunkName: "orderBundle" */ "./Routes/Respond"),
+  {
+    resolveComponent: component => component.RespondFragmentContainer,
+  }
+)
+
+const OfferRoute = loadable(
+  () => import(/* webpackChunkName: "orderBundle" */ "./Routes/Offer"),
+  {
+    resolveComponent: component => component.OfferFragmentContainer,
+  }
+)
+
+const ShippingRoute = loadable(
+  () => import(/* webpackChunkName: "orderBundle" */ "./Routes/Shipping"),
+  {
+    resolveComponent: component => component.ShippingFragmentContainer,
+  }
+)
+
+const PaymentRoute = loadable(
+  () => import(/* webpackChunkName: "orderBundle" */ "./Routes/Payment"),
+  {
+    resolveComponent: component => component.PaymentFragmentContainer,
+  }
+)
+
+const NewPaymentRoute = loadable(
+  () => import(/* webpackChunkName: "orderBundle" */ "./Routes/NewPayment"),
+  {
+    resolveComponent: component => component.NewPaymentFragmentContainer,
+  }
+)
+
+const CounterRoute = loadable(
+  () => import(/* webpackChunkName: "orderBundle" */ "./Routes/Counter"),
+  {
+    resolveComponent: component => component.CounterFragmentContainer,
+  }
+)
+
+const ReviewRoute = loadable(
+  () => import(/* webpackChunkName: "orderBundle" */ "./Routes/Review"),
+  {
+    resolveComponent: component => component.ReviewFragmentContainer,
+  }
+)
+
+const AcceptRoute = loadable(
+  () => import(/* webpackChunkName: "orderBundle" */ "./Routes/Accept"),
+  {
+    resolveComponent: component => component.AcceptFragmentContainer,
+  }
+)
+
+const DeclineRoute = loadable(
+  () => import(/* webpackChunkName: "orderBundle" */ "./Routes/Reject"),
+  {
+    resolveComponent: component => component.RejectFragmentContainer,
+  }
+)
+
+const StatusRoute = loadable(
+  () => import(/* webpackChunkName: "orderBundle" */ "./Routes/Status"),
+  {
+    resolveComponent: component => component.StatusFragmentContainer,
+  }
+)
 
 const OrderApp = loadable(
   () => import(/* webpackChunkName: "orderBundle" */ "./OrderApp"),
