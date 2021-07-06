@@ -24,7 +24,9 @@ describe("Conversation", () => {
       }
 
       it("renders the artwork item", () => {
-        const wrapper = mount(<Item item={artworkItemProps} />)
+        const wrapper = mount(
+          <Item setMountedStatus={() => {}} item={artworkItemProps} />
+        )
         const imageSrc = wrapper.find("Image").first().prop("src")
         const linkHref = wrapper.find("Link").first().prop("href")
         const name = wrapper.find("Sans").first()
@@ -59,7 +61,9 @@ describe("Conversation", () => {
       }
 
       it("renders the show item", () => {
-        const wrapper = mount(<Item item={showItemProps} />)
+        const wrapper = mount(
+          <Item setMountedStatus={() => {}} item={showItemProps} />
+        )
         const imageSrc = wrapper.find("Image").first().prop("src")
         const linkHref = wrapper.find("Link").first().prop("href")
         const name = wrapper.find("Sans").first()
@@ -80,7 +84,9 @@ describe("Conversation", () => {
     }
 
     it("renders the show item", () => {
-      const wrapper = mount(<Item item={otherItemProps} />)
+      const wrapper = mount(
+        <Item setMountedStatus={() => {}} item={otherItemProps} />
+      )
 
       expect(wrapper.find("Link")).toHaveLength(0)
       expect(wrapper.children()).toHaveLength(0)

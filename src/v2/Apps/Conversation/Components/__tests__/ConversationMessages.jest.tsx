@@ -6,6 +6,7 @@ describe("ConversationMessages", () => {
   it("filters out empty and null messages", () => {
     const wrapper = mount(
       <ConversationMessages
+        setMountedStatus={() => {}}
         messages={
           {
             edges: [
