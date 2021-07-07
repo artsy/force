@@ -65,7 +65,7 @@ const OrderRow: React.FC<OrderRowProps> = props => {
   const orderURL = `/orders/${order.internalID}/status`
   const artworkURL = `/artwork/${artwork?.slug}`
   const artistURL = `/artist/${artwork?.artists?.[0]?.slug}`
-  const partnerURL = `/${artwork?.partner?.slug}`
+  const partnerURL = artwork?.partner?.href!
   const trackingURL = `https://google.com/search?q=${trackingId}`
 
   const XSOrderRow = (
@@ -318,7 +318,7 @@ export const OrderRowFragmentContainer = createFragmentContainer(
                   }
                 }
                 partner {
-                  slug
+                  href
                   initials
                   name
                   profile {

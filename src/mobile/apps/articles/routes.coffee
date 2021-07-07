@@ -17,7 +17,7 @@ module.exports.article = (req, res, next) ->
       article.fetchRelated
         success: (data) ->
           if data.partner
-            return res.redirect "/#{data.partner.get('default_profile_id')}/article/#{article.get('slug')}"
+            return res.redirect "/partner/#{data.partner.get('id')}/article/#{article.get('slug')}"
           else if data.fair
             return res.redirect "/#{data.fair.get('default_profile_id')}/article/#{article.get('slug')}"
           else return next()
