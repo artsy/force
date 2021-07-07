@@ -9597,6 +9597,7 @@ type Query {
   # A list of Articles
   articles(
     auctionID: String
+    featured: Boolean
 
     #
     #         Only return articles matching specified ids.
@@ -12290,6 +12291,7 @@ type Viewer {
   # A list of Articles
   articles(
     auctionID: String
+    featured: Boolean
 
     #
     #         Only return articles matching specified ids.
