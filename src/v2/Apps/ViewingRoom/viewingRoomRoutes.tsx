@@ -2,9 +2,26 @@ import loadable from "@loadable/component"
 import { graphql } from "react-relay"
 import { AppRouteConfig } from "v2/System/Router/Route"
 
-import { ViewingRoomStatementRouteFragmentContainer as StatementRoute } from "./Routes/Statement/ViewingRoomStatementRoute"
-import { ViewingRoomWorksRouteFragmentContainer as WorksRoute } from "./Routes/Works/ViewingRoomWorksRoute"
-
+const StatementRoute = loadable(
+  () =>
+    import(
+      /* webpackChunkName: "viewingRoomBundle" */ "./Routes/Statement/ViewingRoomStatementRoute"
+    ),
+  {
+    resolveComponent: component =>
+      component.ViewingRoomStatementRouteFragmentContainer,
+  }
+)
+const WorksRoute = loadable(
+  () =>
+    import(
+      /* webpackChunkName: "viewingRoomBundle" */ "./Routes/Works/ViewingRoomWorksRoute"
+    ),
+  {
+    resolveComponent: component =>
+      component.ViewingRoomWorksRouteFragmentContainer,
+  }
+)
 const ViewingRoomApp = loadable(
   () => import(/* webpackChunkName: "viewingRoomBundle" */ "./ViewingRoomApp"),
   {

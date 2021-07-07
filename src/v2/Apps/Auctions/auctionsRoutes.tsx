@@ -1,10 +1,28 @@
 import loadable from "@loadable/component"
 import { graphql } from "react-relay"
 import { AppRouteConfig } from "v2/System/Router/Route"
-import { CurrentAuctionsPaginationContainer } from "./Routes/CurrentAuctions"
-import { PastAuctionsPaginationContainer } from "./Routes/PastAuctions"
-import { UpcomingAuctionsPaginationContainer } from "./Routes/UpcomingAuctions"
 
+const CurrentAuctionsPaginationContainer = loadable(
+  () =>
+    import(/* webpackChunkName: "auctionBundle" */ "./Routes/CurrentAuctions"),
+  {
+    resolveComponent: component => component.CurrentAuctionsPaginationContainer,
+  }
+)
+const PastAuctionsPaginationContainer = loadable(
+  () => import(/* webpackChunkName: "auctionBundle" */ "./Routes/PastAuctions"),
+  {
+    resolveComponent: component => component.PastAuctionsPaginationContainer,
+  }
+)
+const UpcomingAuctionsPaginationContainer = loadable(
+  () =>
+    import(/* webpackChunkName: "auctionBundle" */ "./Routes/UpcomingAuctions"),
+  {
+    resolveComponent: component =>
+      component.UpcomingAuctionsPaginationContainer,
+  }
+)
 const AuctionsApp = loadable(
   () => import(/* webpackChunkName: "auctionBundle" */ "./AuctionsApp"),
   {
