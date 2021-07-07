@@ -80,15 +80,6 @@ const onClickedReadMore = data => {
       url: href,
     })
   }
-  if (window.Sailthru && window.Sailthru.track) {
-    window.Sailthru.track({
-      domain: "horizon.artsy.net",
-      spider: true,
-      track_url: true,
-      url: href,
-      use_stored_tags: true,
-    })
-  }
   // Return early because we don't want to make a Segment call for read more
   return
 }

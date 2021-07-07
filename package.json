@@ -215,7 +215,6 @@
     "relay-mock-network-layer": "2.0.0",
     "relay-runtime": "9.1.0",
     "require-control": "2.1.1",
-    "sailthru-client": "3.0.2",
     "scroll-frame": "1.0.0",
     "serialize-javascript": "5.0.1",
     "serve-favicon": "2.4.3",

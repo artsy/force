@@ -1,12 +1,10 @@
 { toSentence } = require 'underscore.string'
-{ SAILTHRU_KEY, SAILTHRU_SECRET, SAILTHRU_MASTER_LIST } = require '../../config'
 sd = require('sharify').data
 request = require 'superagent'
 Article = require '../../models/article'
 Articles = require '../../collections/articles'
 Section = require '../../models/section'
 { stringifyJSONForWeb } = require '../../components/util/json.coffee'
-sailthru = require('sailthru-client').createSailthruClient(SAILTHRU_KEY,SAILTHRU_SECRET)
 
 module.exports.article = (req, res, next) ->
   # Handles fair and partner articles
@@ -72,24 +70,3 @@ module.exports.articles = (req, res, next) ->
       email = res.locals.sd.CURRENT_USER?.email
       res.locals.sd.ARTICLES = articles
       res.render 'articles', articles: articles
-
-subscribedToEditorial = (email, cb) ->
-  sailthru.apiGet 'user', { id: email }, (err, response) ->
-    return cb err, false if err
-    cb null, response.vars?.receive_editorial_email
-
-module.exports.editorialForm = (req, res, next) ->
-  sailthru.apiPost 'user',
-    id: req.body.email
-    lists:
-      "#{SAILTHRU_MASTER_LIST}": 1
-    name: req.body.name
-    vars:
-      source: 'editorial'
-      receive_editorial_email: true
-      email_frequency: 'daily'
-  , (err, response) ->
-    if response.ok
-      res.send req.body
-    else
-      res.status(500).send(response.errormsg)

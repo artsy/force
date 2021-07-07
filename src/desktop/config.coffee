@@ -103,11 +103,6 @@ module.exports =
   S3_KEY: null
   S3_SECRET: null
   S3_BUCKET: null
-  SAILTHRU_AUCTION_NOTIFICATION_LIST: 'Auction Notifications'
-  SAILTHRU_CUSTOMER_ID: null
-  SAILTHRU_KEY: null
-  SAILTHRU_MASTER_LIST: 'Master List'
-  SAILTHRU_SECRET: null
   SECURE_IMAGES_URL: null
   SEGMENT_AMP_WRITE_KEY: null
   SEGMENT_WRITE_KEY: null
