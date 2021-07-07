@@ -47,7 +47,7 @@ describe("GeneArtworkFilter", () => {
           }
         }
       `,
-      variables: { slug: "architecture" },
+      variables: { slug: "representations-of-architecture" },
       mockData: response,
     })
   }
@@ -60,11 +60,55 @@ describe("GeneArtworkFilter", () => {
 
   it("includes the artist filter", async () => {
     const wrapper = await getWrapper()
-    expect(wrapper.find("ArtistsFilter").length).toBe(1)
-    wrapper.find("ArtistsFilter").find("ChevronIcon").simulate("click")
-    expect(wrapper.find("ArtistsFilter").text()).toMatch(
-      "Artists I follow (15)"
-    )
+    const ArtistFilterWrapper = wrapper.find("ArtistsFilter")
+
+    expect(ArtistFilterWrapper.length).toBe(1)
+
+    ArtistFilterWrapper.find("ChevronIcon").simulate("click")
+
+    expect(ArtistFilterWrapper.text()).toMatch("Artists I follow (15)")
+  })
+
+  it("includes the medium filter", async () => {
+    const wrapper = await getWrapper()
+
+    expect(wrapper.find("MediumFilter").length).toBe(1)
+  })
+
+  it("includes the price range filter", async () => {
+    const wrapper = await getWrapper()
+
+    expect(wrapper.find("PriceRangeFilter").length).toBe(1)
+  })
+
+  it("includes the rarity filter", async () => {
+    const wrapper = await getWrapper()
+
+    expect(wrapper.find("AttributionClassFilter").length).toBe(1)
+  })
+
+  it("includes the size filter", async () => {
+    const wrapper = await getWrapper()
+
+    expect(wrapper.find("SizeFilter").length).toBe(1)
+  })
+
+  it("includes the ways to buy filter", async () => {
+    const wrapper = await getWrapper()
+
+    expect(wrapper.find("WaysToBuyFilter").length).toBe(1)
+  })
+
+  it("includes the time period filter", async () => {
+    const wrapper = await getWrapper()
+
+    expect(wrapper.find("TimePeriodFilter").length).toBe(1)
+  })
+
+  it("includes the color filter", async () => {
+    const wrapper = await getWrapper()
+
+    expect(wrapper.find("ColorFilter").length).toBe(1)
   })
 })
 
