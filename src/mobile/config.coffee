@@ -43,10 +43,6 @@ module.exports =
   S3_BUCKET: null
   S3_KEY: null
   S3_SECRET: null
-  SAILTHRU_CUSTOMER_ID: null
-  SAILTHRU_KEY: ''
-  SAILTHRU_MASTER_LIST: 'Master List'
-  SAILTHRU_SECRET: ''
   SECURE_IMAGES_URL: 'https://d1ycxz9plii3tb.cloudfront.net'
   SEGMENT_WRITE_KEY: null
   SEGMENT_WRITE_KEY_SERVER: null

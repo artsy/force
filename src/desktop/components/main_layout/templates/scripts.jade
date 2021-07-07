@@ -1,4 +1,4 @@
-- defaultOptions = {grecaptcha: true, stripev3: false, sailthru: true, marketo: true}
+- defaultOptions = {grecaptcha: true, stripev3: false, marketo: true}
 - options = options ? Object.assign({}, defaultOptions, options) : defaultOptions
 
 //- Common bundle
@@ -140,36 +140,6 @@ if !sd.THIRD_PARTIES_DISABLED
 //- Analytics & common asset package
 if sd.BROWSER && sd.BROWSER.family != 'Other' && !sd.THIRD_PARTIES_DISABLED
   script( src=asset('/assets/legacy-analytics.js') )
-
-//- Sailthru Horizon JS - user interest data, personalization
-if options.sailthru && sd.SAILTHRU_CUSTOMER_ID && !sd.THIRD_PARTIES_DISABLED
-  script( type="text/javascript" ).
-    (function() {
-      function loadHorizon() {
-        var s = document.createElement('script');
-        s.type = 'text/javascript';
-        s.async = true;
-        s.src = location.protocol + '//ak.sail-horizon.com/spm/spm.v1.min.js';
-        var x = document.getElementsByTagName('script')[0];
-        x.parentNode.insertBefore(s, x);
-      }
-      loadHorizon();
-      function loadSailthru() {
-        if(typeof Sailthru !== "undefined" && typeof Sailthru.init === "function"){
-          Sailthru.init({ customerId: sd.SAILTHRU_CUSTOMER_ID });
-        }
-        else{
-          setTimeout(loadSailthru, 250);
-        }
-      }
-      var oldOnLoad = window.onload;
-      window.onload = function() {
-        if (typeof oldOnLoad === 'function') {
-          oldOnLoad();
-        }
-        loadSailthru();
-      };
-    })();
 
 //- Prefetch links on hover. See: https://instant.page/
 if sd.ENABLE_INSTANT_PAGE && !sd.THIRD_PARTIES_DISABLED
