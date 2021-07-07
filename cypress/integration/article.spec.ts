@@ -75,7 +75,14 @@ describe("Article", () => {
         visitWithStatusRetries(
           "v_and_a/article/victoria-and-albert-museum-sky-arts-ignition-memory-palace-at-the"
         )
-        cy.get("h1").should("contain", "Victoria and Albert Museum (V&A)")
+        cy.get("h1").should(
+          "contain",
+          `"Sky Arts Ignition: Memory Palace" at the V&A`
+        )
+        cy.get(".article-author").should(
+          "contain",
+          "Victoria and Albert Museum (V&A)"
+        )
         // FIXME: Wait for embedded article
         // cy.get("h1").should(
         //   "contain",
