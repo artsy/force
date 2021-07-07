@@ -30,50 +30,50 @@ const ArtistItem: React.FC<
   isFollowedArtistCheckboxSelected,
   ...checkboxProps
 }) => {
-    const { currentlySelectedFilters, setFilter } = useArtworkFilterContext()
-    const toggleArtistSelection = (selected, slug) => {
-      // @ts-expect-error STRICT_NULL_CHECK
-      let artistIDs = currentlySelectedFilters().artistIDs.slice()
-      if (selected) {
-        artistIDs.push(slug)
-      } else {
-        // When an artist is de-selected, if it is a followed artist _and_ that filter
-        // is also checked, we want to de-select it as well, and move remaining followed
-        // artists to the explicit `artistIDs` list.
+  const { currentlySelectedFilters, setFilter } = useArtworkFilterContext()
+  const toggleArtistSelection = (selected, slug) => {
+    // @ts-expect-error STRICT_NULL_CHECK
+    let artistIDs = currentlySelectedFilters().artistIDs.slice()
+    if (selected) {
+      artistIDs.push(slug)
+    } else {
+      // When an artist is de-selected, if it is a followed artist _and_ that filter
+      // is also checked, we want to de-select it as well, and move remaining followed
+      // artists to the explicit `artistIDs` list.
+      artistIDs = artistIDs.filter(item => item !== slug)
+      if (followedArtistSlugs.includes(slug)) {
+        setFilter("includeArtworksByFollowedArtists", false)
+        artistIDs = artistIDs.concat(followedArtistSlugs)
         artistIDs = artistIDs.filter(item => item !== slug)
-        if (followedArtistSlugs.includes(slug)) {
-          setFilter("includeArtworksByFollowedArtists", false)
-          artistIDs = artistIDs.concat(followedArtistSlugs)
-          artistIDs = artistIDs.filter(item => item !== slug)
-        }
       }
-      setFilter("artistIDs", artistIDs)
     }
-
-    const tokens = useThemeConfig({
-      v2: { my: 0.5 },
-      v3: { my: 1 },
-    })
-
-    const isFollowedArtist = followedArtistSlugs.includes(slug)
-
-    return (
-      <Checkbox
-        {...checkboxProps}
-        selected={
-          // @ts-expect-error STRICT_NULL_CHECK
-          currentlySelectedFilters().artistIDs.includes(slug) ||
-          (isFollowedArtistCheckboxSelected && isFollowedArtist)
-        }
-        onSelect={selected => {
-          return toggleArtistSelection(selected, slug)
-        }}
-        my={tokens.my}
-      >
-        {name}
-      </Checkbox>
-    )
+    setFilter("artistIDs", artistIDs)
   }
+
+  const tokens = useThemeConfig({
+    v2: { my: 0.5 },
+    v3: { my: 1 },
+  })
+
+  const isFollowedArtist = followedArtistSlugs.includes(slug)
+
+  return (
+    <Checkbox
+      {...checkboxProps}
+      selected={
+        // @ts-expect-error STRICT_NULL_CHECK
+        currentlySelectedFilters().artistIDs.includes(slug) ||
+        (isFollowedArtistCheckboxSelected && isFollowedArtist)
+      }
+      onSelect={selected => {
+        return toggleArtistSelection(selected, slug)
+      }}
+      my={tokens.my}
+    >
+      {name}
+    </Checkbox>
+  )
+}
 
 export const ArtistsFilter: FC<ArtistsFilterProps> = ({
   expanded,
@@ -95,7 +95,6 @@ export const ArtistsFilter: FC<ArtistsFilterProps> = ({
 
   useEffect(() => {
     if (relayEnvironment && user) {
-      // @ts-expect-error STRICT_NULL_CHECK
       fetchFollowedArtists({ relayEnvironment, fairID }).then(data => {
         setFollowedArtists(data)
       })

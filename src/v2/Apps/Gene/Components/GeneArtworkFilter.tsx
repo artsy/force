@@ -5,6 +5,7 @@ import { BaseArtworkFilter } from "v2/Components/ArtworkFilter"
 import { updateUrl } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
 import {
   ArtworkFilterContextProvider,
+  Counts,
   SharedArtworkFilterContextProps,
 } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
 import { MediumFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/MediumFilter"
@@ -15,11 +16,7 @@ import { TimePeriodFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/Tim
 import { ColorFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/ColorFilter"
 import { ArtistsFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/ArtistsFilter"
 import { GeneArtworkFilter_gene } from "v2/__generated__/GeneArtworkFilter_gene.graphql"
-import { MaterialsFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/MaterialsFilter"
-import { ArtworkLocationFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/ArtworkLocationFilter"
-import { ArtistNationalityFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/ArtistNationalityFilter"
 import { AttributionClassFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/AttributionClassFilter"
-import { PartnersFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/PartnersFilter"
 import { useSystemContext } from "v2/System"
 
 interface GeneArtworkFilterProps {
@@ -32,35 +29,27 @@ const GeneArtworkFilter: React.FC<GeneArtworkFilterProps> = ({
   relay,
 }) => {
   const { match } = useRouter()
-  const {
-    filtered_artworks: { counts },
-    sidebarAggregations,
-  } = gene
+  const { filtered_artworks, sidebarAggregations } = gene
 
   const { relayEnvironment, user } = useSystemContext()
 
-  // TODO: fix me - the ArtistsFilter will fetch followed artists only for fairs
   const Filters = (
     <>
       <ArtistsFilter relayEnvironment={relayEnvironment} user={user} />
       <MediumFilter expanded />
-      <MaterialsFilter expanded />
       <PriceRangeFilter />
       <AttributionClassFilter expanded />
       <SizeFilter />
       <WaysToBuyFilter />
-      <ArtworkLocationFilter expanded />
-      <ArtistNationalityFilter expanded />
       <TimePeriodFilter />
       <ColorFilter />
-      <PartnersFilter />
     </>
   )
 
   return (
     <ArtworkFilterContextProvider
-      onChange={updateUrl}
       filters={match && match.location.query}
+      onChange={updateUrl}
       sortOptions={[
         { text: "Default", value: "-decayed_merch" },
         { text: "Price (desc.)", value: "-has_price,-prices" },
@@ -71,9 +60,9 @@ const GeneArtworkFilter: React.FC<GeneArtworkFilterProps> = ({
         { text: "Artwork year (asc.)", value: "year" },
       ]}
       aggregations={
-        sidebarAggregations.aggregations as SharedArtworkFilterContextProps["aggregations"]
+        sidebarAggregations?.aggregations as SharedArtworkFilterContextProps["aggregations"]
       }
-      counts={counts}
+      counts={filtered_artworks?.counts as Counts}
     >
       <BaseArtworkFilter
         relay={relay}

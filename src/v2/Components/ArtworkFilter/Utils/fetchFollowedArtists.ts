@@ -10,7 +10,7 @@ export type FollowedArtistList = Array<{
 // Expand support (in Gravity/MP as well), if needed
 // to further narrow down followed artists.
 export interface FetchFollowedArtistsArgs {
-  fairID: string
+  fairID?: string
 }
 
 interface Args extends FetchFollowedArtistsArgs {

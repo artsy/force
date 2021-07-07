@@ -102,7 +102,7 @@ export type Aggregations = Array<{
   }>
 }>
 
-interface Counts {
+export interface Counts {
   for_sale_artworks?: number
   ecommerce_artworks?: number
   auction_artworks?: number
