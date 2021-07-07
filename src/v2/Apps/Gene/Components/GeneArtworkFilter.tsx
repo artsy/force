@@ -64,11 +64,7 @@ const GeneArtworkFilter: React.FC<GeneArtworkFilterProps> = ({
       }
       counts={filtered_artworks?.counts as Counts}
     >
-      <BaseArtworkFilter
-        relay={relay}
-        viewer={gene as any} // TODO
-        Filters={Filters}
-      />
+      <BaseArtworkFilter relay={relay} viewer={gene} Filters={Filters} />
     </ArtworkFilterContextProvider>
   )
 }
