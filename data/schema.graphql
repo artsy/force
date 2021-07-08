@@ -10292,6 +10292,7 @@ type Query {
     ids: [String]
     last: Int
     sort: ShowSorts
+    status: EventStatus
   ): ShowConnection
 
   # Content for a specific page or view
@@ -12790,6 +12791,7 @@ type Viewer {
     ids: [String]
     last: Int
     sort: ShowSorts
+    status: EventStatus
   ): ShowConnection
 
   # Content for a specific page or view
