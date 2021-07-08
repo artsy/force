@@ -50,6 +50,11 @@ const ArtistItem: React.FC<
     setFilter("artistIDs", artistIDs)
   }
 
+  const tokens = useThemeConfig({
+    v2: { my: 0.5 },
+    v3: { my: 1 },
+  })
+
   const isFollowedArtist = followedArtistSlugs.includes(slug)
 
   return (
@@ -63,6 +68,7 @@ const ArtistItem: React.FC<
       onSelect={selected => {
         return toggleArtistSelection(selected, slug)
       }}
+      my={tokens.my}
     >
       {name}
     </Checkbox>
@@ -89,7 +95,6 @@ export const ArtistsFilter: FC<ArtistsFilterProps> = ({
 
   useEffect(() => {
     if (relayEnvironment && user) {
-      // @ts-expect-error STRICT_NULL_CHECK
       fetchFollowedArtists({ relayEnvironment, fairID }).then(data => {
         setFollowedArtists(data)
       })
