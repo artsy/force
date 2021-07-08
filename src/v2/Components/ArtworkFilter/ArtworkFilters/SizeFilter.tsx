@@ -176,6 +176,9 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
     if (isCustomSize(newHeightValue) || isCustomSize(height)) {
       newFilters.height = newHeightValue
     }
+    if (reset) {
+      delete newFilters.reset
+    }
 
     setFilters?.(newFilters, { force: false })
     setMode("done")
@@ -190,11 +193,8 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
     // if filter state is being reset, then also clear local input state
     if (reset) {
       setCustomSize({ height: ["*", "*"], width: ["*", "*"] })
-
-      const newFilters = { ...currentlySelectedFilters?.(), reset: false }
-      setFilters?.(newFilters, { force: false })
     }
-  }, [currentlySelectedFilters, reset, setFilters])
+  }, [reset])
 
   const selection = currentlySelectedFilters?.().sizes
   const customHeight = currentlySelectedFilters?.().height

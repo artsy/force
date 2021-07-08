@@ -60,7 +60,7 @@ describe("ArtworkFilterMobileActionSheet", () => {
 
     expect(context.stagedFilters).toEqual({
       ...initialArtworkFilterState,
-      reset: false,
+      reset: true,
     })
   })
 
