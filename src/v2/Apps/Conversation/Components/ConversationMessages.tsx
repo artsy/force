@@ -6,6 +6,7 @@ import { Spacer } from "@artsy/palette"
 import { graphql } from "relay-runtime"
 import { createFragmentContainer } from "react-relay"
 import { ConversationMessages_messages } from "v2/__generated__/ConversationMessages_messages.graphql"
+import compact from "lodash/compact"
 
 interface ConversationMessageProps {
   messages: ConversationMessages_messages
@@ -17,11 +18,9 @@ export const ConversationMessages = ({
   return (
     <>
       {groupMessages(
-        // @ts-expect-error STRICT_NULL_CHECK
-        messages.edges
-          .map(edge => edge?.node)
-          // @ts-expect-error STRICT_NULL_CHECK
-          .filter(node => node?.body?.length > 0)
+        compact(messages.edges)
+          .map(edge => edge.node)
+          .filter(node => node && node.body && node.body.length > 0)
       ).map((messageGroup, groupIndex) => {
         const today = fromToday(messageGroup[0].createdAt)
         return (
