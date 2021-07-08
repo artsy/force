@@ -4,14 +4,8 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type FairExhibitors_fair = {
+    readonly slug: string;
     readonly exhibitors: {
-        readonly pageInfo: {
-            readonly hasNextPage: boolean;
-            readonly endCursor: string | null;
-        };
-        readonly pageCursors: {
-            readonly " $fragmentRefs": FragmentRefs<"Pagination_pageCursors">;
-        };
         readonly edges: ReadonlyArray<{
             readonly node: {
                 readonly id: string;
@@ -49,6 +43,12 @@ v1 = [
 return {
   "argumentDefinitions": [
     {
+      "defaultValue": "FEATURED_DESC",
+      "kind": "LocalArgument",
+      "name": "sort",
+      "type": "ShowSorts"
+    },
+    {
       "defaultValue": 5,
       "kind": "LocalArgument",
       "name": "first",
@@ -66,6 +66,13 @@ return {
   "name": "FairExhibitors_fair",
   "selections": [
     {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "slug",
+      "storageKey": null
+    },
+    {
       "alias": "exhibitors",
       "args": [
         {
@@ -79,9 +86,9 @@ return {
           "variableName": "first"
         },
         {
-          "kind": "Literal",
+          "kind": "Variable",
           "name": "sort",
-          "value": "FEATURED_DESC"
+          "variableName": "sort"
         },
         {
           "kind": "Literal",
@@ -94,47 +101,6 @@ return {
       "name": "showsConnection",
       "plural": false,
       "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "concreteType": "PageInfo",
-          "kind": "LinkedField",
-          "name": "pageInfo",
-          "plural": false,
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "hasNextPage",
-              "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "endCursor",
-              "storageKey": null
-            }
-          ],
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "concreteType": "PageCursors",
-          "kind": "LinkedField",
-          "name": "pageCursors",
-          "plural": false,
-          "selections": [
-            {
-              "args": null,
-              "kind": "FragmentSpread",
-              "name": "Pagination_pageCursors"
-            }
-          ],
-          "storageKey": null
-        },
         {
           "alias": null,
           "args": null,
@@ -209,5 +175,5 @@ return {
   "type": "Fair"
 };
 })();
-(node as any).hash = 'adff19db0623eb37e77e8d652bc42686';
+(node as any).hash = 'd74ebc4a78a1cd85fec3c76b851c0dea';
 export default node;
