@@ -1,7 +1,7 @@
 import { groupMessages } from "../Utils/groupMessages"
 import { TimeSince, fromToday } from "./TimeSince"
 import { MessageFragmentContainer as Message } from "./Message"
-import React, { useEffect } from "react"
+import React from "react"
 import { Spacer } from "@artsy/palette"
 import { graphql } from "relay-runtime"
 import { createFragmentContainer } from "react-relay"
@@ -10,23 +10,17 @@ import compact from "lodash/compact"
 
 interface ConversationMessageProps {
   messages: ConversationMessages_messages
-  setMountedStatus: (flag: boolean) => void
 }
 
 export const ConversationMessages = ({
   messages,
-  setMountedStatus,
 }: ConversationMessageProps) => {
-  useEffect(() => {
-    setMountedStatus(true)
-    return () => setMountedStatus(false)
-  })
   return (
     <>
       {groupMessages(
         compact(messages.edges)
           .map(edge => edge.node)
-          .filter(node => node!.body!.length > 0)
+          .filter(node => node && node.body && node.body.length > 0)
       ).map((messageGroup, groupIndex) => {
         const today = fromToday(messageGroup[0].createdAt)
         return (

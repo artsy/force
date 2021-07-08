@@ -7,7 +7,7 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import React, { useState, useEffect } from "react"
+import React, { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "v2/System"
 import { renderWithLoadProgress } from "v2/System/Relay/renderWithLoadProgress"
@@ -25,7 +25,6 @@ export interface ConfirmArtworkModalProps {
   conversationID: string
   show: boolean
   closeModal: () => void
-  setMountedStatus: (flag: boolean) => void
 }
 
 export const ConfirmArtworkModal: React.FC<ConfirmArtworkModalProps> = ({
@@ -33,7 +32,6 @@ export const ConfirmArtworkModal: React.FC<ConfirmArtworkModalProps> = ({
   conversationID,
   show,
   closeModal,
-  setMountedStatus,
 }) => {
   if (!artwork) {
     return null
@@ -52,11 +50,6 @@ export const ConfirmArtworkModal: React.FC<ConfirmArtworkModalProps> = ({
       setSelectedEdition(editionSetID)
     }
   }
-
-  useEffect(() => {
-    setMountedStatus(true)
-    return () => setMountedStatus(false)
-  })
 
   return (
     <Modal
@@ -130,7 +123,6 @@ export const ConfirmArtworkModalQueryRenderer: React.FC<{
   conversationID: string
   show: boolean
   closeModal: () => void
-  setMountedStatus: (flag: boolean) => void
 }> = ({ artworkID, ...rest }) => {
   const { relayEnvironment } = useSystemContext()
   if (!artworkID) return null

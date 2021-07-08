@@ -1,25 +1,16 @@
 import { Flex, Image, Link, Sans, color } from "@artsy/palette"
 import { Item_item } from "v2/__generated__/Item_item.graphql"
-import React, { useEffect } from "react"
+import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 
 interface ItemProps {
   item: Item_item
-  setMountedStatus: (flag: boolean) => void
 }
 
 export type ItemType = "Artwork" | "Show"
 
 export const Item: React.FC<ItemProps> = props => {
-  const { item, setMountedStatus } = props
-
-  useEffect(() => {
-    setMountedStatus(true)
-
-    return () => {
-      setMountedStatus(false)
-    }
-  })
+  const { item } = props
 
   if (item.__typename === "%other") return null
   const itemType = item.__typename as ItemType

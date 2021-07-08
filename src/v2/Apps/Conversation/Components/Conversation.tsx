@@ -50,11 +50,6 @@ const Conversation: React.FC<ConversationProps> = props => {
 
   // Keeping track of this for scroll on send
   const [lastMessageID, setLastMessageID] = useState<string | null>("")
-  const [isOfferButtonMounted, setOfferButtonMountStatus] = useState<boolean>(
-    false
-  )
-  const [isItemMounted, setItemMountStatus] = useState<boolean>(false)
-  const [isMessagesMounted, setMessagesStatus] = useState<boolean>(false)
   const [showConfirmArtworkModal, setShowConfirmArtworkModal] = useState<
     boolean
   >(false)
@@ -62,13 +57,7 @@ const Conversation: React.FC<ConversationProps> = props => {
   const [fetchingMore, setFetchingMore] = useState<boolean>(false)
 
   const scrollToBottom = () => {
-    const isLastMessageIDMatched = lastMessageID === conversation?.lastMessageID
-    const areChildrenMounted =
-      isOfferButtonMounted || isItemMounted || isMessagesMounted
-    if (
-      messageContainer.current &&
-      (!isLastMessageIDMatched || areChildrenMounted)
-    ) {
+    if (messageContainer.current) {
       setLastMessageID(conversation?.lastMessageID)
       setTimeout(() => {
         messageContainer!.current!.scrollTo({
@@ -79,13 +68,7 @@ const Conversation: React.FC<ConversationProps> = props => {
     }
   }
 
-  useEffect(scrollToBottom, [
-    conversation,
-    lastMessageID,
-    isOfferButtonMounted,
-    isItemMounted,
-    isMessagesMounted,
-  ])
+  useEffect(scrollToBottom, [conversation, lastMessageID])
 
   useEffect(() => {
     UpdateConversation(relay.environment, conversation)
@@ -99,7 +82,6 @@ const Conversation: React.FC<ConversationProps> = props => {
       <ItemFragmentContainer
         item={i.item!}
         key={isValidType ? i.item?.id : idx}
-        setMountedStatus={flag => setItemMountStatus(flag)}
       />
     )
   })
@@ -153,7 +135,6 @@ const Conversation: React.FC<ConversationProps> = props => {
               ) : null}
               <ConversationMessages
                 messages={conversation.messagesConnection!}
-                setMountedStatus={flag => setMessagesStatus(flag)}
               />
             </Flex>
           </Box>
@@ -173,7 +154,6 @@ const Conversation: React.FC<ConversationProps> = props => {
           conversationID={conversation.internalID!}
           show={showConfirmArtworkModal}
           closeModal={() => setShowConfirmArtworkModal(false)}
-          setMountedStatus={flag => setOfferButtonMountStatus(flag)}
         />
       )}
       {isOfferable && (
