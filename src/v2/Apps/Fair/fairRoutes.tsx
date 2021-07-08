@@ -65,10 +65,17 @@ export const fairRoutes: AppRouteConfig[] = [
         prepare: () => {
           FairExhibitorsRoute.preload()
         },
+        prepareVariables: ({ slug }, props) => {
+          const sort = props.location?.query.sort ?? "FEATURED_DESC"
+          return { sort, slug }
+        },
         query: graphql`
-          query fairRoutes_FairExhibitorsQuery($slug: String!) {
+          query fairRoutes_FairExhibitorsQuery(
+            $slug: String!
+            $sort: ShowSorts
+          ) {
             fair(id: $slug) @principalField {
-              ...FairExhibitors_fair
+              ...FairExhibitors_fair @arguments(sort: $sort)
             }
           }
         `,
