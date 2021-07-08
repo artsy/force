@@ -37,7 +37,7 @@ const Conversation: React.FC<ConversationProps> = props => {
   const { conversation, relay, showDetails, setShowDetails } = props
   const { user } = useSystemContext()
 
-  const messageContainer = useRef<HTMLElement>(null)
+  const bottomOfMessageContainer = useRef<HTMLElement>(null)
 
   const firstItem = conversation?.items?.[0]?.item
   const artwork = firstItem?.__typename === "Artwork" && firstItem
@@ -57,14 +57,13 @@ const Conversation: React.FC<ConversationProps> = props => {
   const [fetchingMore, setFetchingMore] = useState<boolean>(false)
 
   const scrollToBottom = () => {
-    if (messageContainer.current) {
+    if (bottomOfMessageContainer.current) {
       setLastMessageID(conversation?.lastMessageID)
       setTimeout(() => {
-        messageContainer!.current!.scrollTo({
-          top: messageContainer!.current!.scrollHeight,
+        bottomOfMessageContainer!.current!.scrollIntoView({
           behavior: "smooth",
         })
-      })
+      }, 0)
     }
   }
 
@@ -121,7 +120,7 @@ const Conversation: React.FC<ConversationProps> = props => {
         setShowDetails={setShowDetails}
       />
       <NoScrollFlex flexDirection="column" width="100%">
-        <MessageContainer ref={messageContainer as any}>
+        <MessageContainer>
           <Box pb={[6, 6, 6, 0]} pr={1}>
             <Spacer mt={["75px", "75px", 2]} />
             <Flex flexDirection="column" width="100%" px={1}>
@@ -136,6 +135,7 @@ const Conversation: React.FC<ConversationProps> = props => {
               <ConversationMessages
                 messages={conversation.messagesConnection!}
               />
+              <Box ref={bottomOfMessageContainer as any} />
             </Flex>
           </Box>
         </MessageContainer>
