@@ -47,6 +47,7 @@ fragment ArtistArticlesRoute_artist_pbnwq on Artist {
     }
     edges {
       node {
+        internalID
         href
         thumbnailTitle
         author {
@@ -55,7 +56,7 @@ fragment ArtistArticlesRoute_artist_pbnwq on Artist {
         }
         publishedAt(format: "MMM Do, YYYY")
         thumbnailImage {
-          resized(width: 210, height: 150) {
+          cropped(width: 210, height: 150) {
             src
             srcSet
             width
@@ -359,6 +360,13 @@ return {
                         "alias": null,
                         "args": null,
                         "kind": "ScalarField",
+                        "name": "internalID",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
                         "name": "href",
                         "storageKey": null
                       },
@@ -417,9 +425,9 @@ return {
                                 "value": 210
                               }
                             ],
-                            "concreteType": "ResizedImageUrl",
+                            "concreteType": "CroppedImageUrl",
                             "kind": "LinkedField",
-                            "name": "resized",
+                            "name": "cropped",
                             "plural": false,
                             "selections": [
                               {
@@ -451,7 +459,7 @@ return {
                                 "storageKey": null
                               }
                             ],
-                            "storageKey": "resized(height:150,width:210)"
+                            "storageKey": "cropped(height:150,width:210)"
                           }
                         ],
                         "storageKey": null
@@ -485,7 +493,7 @@ return {
     "metadata": {},
     "name": "ArtistArticlesRouteQuery",
     "operationKind": "query",
-    "text": "query ArtistArticlesRouteQuery(\n  $first: Int\n  $last: Int\n  $after: String\n  $before: String\n  $artistID: String!\n) {\n  artist(id: $artistID) {\n    ...ArtistArticlesRoute_artist_pbnwq\n    id\n  }\n}\n\nfragment ArtistArticlesRoute_artist_pbnwq on Artist {\n  articlesConnection(first: $first, after: $after, before: $before, last: $last, sort: PUBLISHED_AT_DESC, inEditorialFeed: true) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        href\n        thumbnailTitle\n        author {\n          name\n          id\n        }\n        publishedAt(format: \"MMM Do, YYYY\")\n        thumbnailImage {\n          resized(width: 210, height: 150) {\n            src\n            srcSet\n            width\n            height\n          }\n        }\n        id\n      }\n    }\n  }\n  name\n  slug\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n"
+    "text": "query ArtistArticlesRouteQuery(\n  $first: Int\n  $last: Int\n  $after: String\n  $before: String\n  $artistID: String!\n) {\n  artist(id: $artistID) {\n    ...ArtistArticlesRoute_artist_pbnwq\n    id\n  }\n}\n\nfragment ArtistArticlesRoute_artist_pbnwq on Artist {\n  articlesConnection(first: $first, after: $after, before: $before, last: $last, sort: PUBLISHED_AT_DESC, inEditorialFeed: true) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        internalID\n        href\n        thumbnailTitle\n        author {\n          name\n          id\n        }\n        publishedAt(format: \"MMM Do, YYYY\")\n        thumbnailImage {\n          cropped(width: 210, height: 150) {\n            src\n            srcSet\n            width\n            height\n          }\n        }\n        id\n      }\n    }\n  }\n  name\n  slug\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n"
   }
 };
 })();

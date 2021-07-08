@@ -14,6 +14,7 @@ export type ArtistArticlesRoute_artist = {
         };
         readonly edges: ReadonlyArray<{
             readonly node: {
+                readonly internalID: string;
                 readonly href: string | null;
                 readonly thumbnailTitle: string | null;
                 readonly author: {
@@ -21,11 +22,11 @@ export type ArtistArticlesRoute_artist = {
                 } | null;
                 readonly publishedAt: string | null;
                 readonly thumbnailImage: {
-                    readonly resized: {
+                    readonly cropped: {
                         readonly src: string;
                         readonly srcSet: string;
-                        readonly width: number | null;
-                        readonly height: number | null;
+                        readonly width: number;
+                        readonly height: number;
                     } | null;
                 } | null;
             } | null;
@@ -182,6 +183,13 @@ return {
                   "alias": null,
                   "args": null,
                   "kind": "ScalarField",
+                  "name": "internalID",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
                   "name": "href",
                   "storageKey": null
                 },
@@ -239,9 +247,9 @@ return {
                           "value": 210
                         }
                       ],
-                      "concreteType": "ResizedImageUrl",
+                      "concreteType": "CroppedImageUrl",
                       "kind": "LinkedField",
-                      "name": "resized",
+                      "name": "cropped",
                       "plural": false,
                       "selections": [
                         {
@@ -273,7 +281,7 @@ return {
                           "storageKey": null
                         }
                       ],
-                      "storageKey": "resized(height:150,width:210)"
+                      "storageKey": "cropped(height:150,width:210)"
                     }
                   ],
                   "storageKey": null
@@ -299,5 +307,5 @@ return {
   "type": "Artist"
 };
 })();
-(node as any).hash = '1b63cdc4e2f000c2e7a01ced65a2bb98';
+(node as any).hash = '7605561e31fc8001b7412d5eebef9ff5';
 export default node;
