@@ -14,7 +14,6 @@ import { FairExhibitorsQuery } from "./FairExhibitorsQuery"
 import { FairExhibitorRailFragmentContainer as FairExhibitorRail } from "../Components/FairExhibitorRail"
 import { LoadingArea } from "v2/Components/LoadingArea"
 import { FairExhibitorSortFilter } from "../Components/FairExhibitorSortFilter"
-import { usePathnameComplete } from "v2/Utils/Hooks/usePathnameComplete"
 import { usePrevious } from "v2/Utils/Hooks/usePrevious"
 import createLogger from "v2/Utils/logger"
 
@@ -95,11 +94,8 @@ const FairExhibitorsWithContext: React.FC<any> = ({
   match: { location },
   ...props
 }) => {
-  const { pathname } = usePathnameComplete()
-
   return (
     <ExhibitorFilterContextProvider
-      key={pathname}
       filters={location.query}
       sortOptions={[
         { text: "Relevance", value: "FEATURED_DESC" },
