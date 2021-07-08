@@ -37,6 +37,7 @@ describe("Reply", () => {
           openOrderModal={() => {
             jest.fn
           }}
+          onScroll={jest.fn()}
           environment={{} as Environment}
           refetch={() => ({ dispose: jest.fn })}
         />

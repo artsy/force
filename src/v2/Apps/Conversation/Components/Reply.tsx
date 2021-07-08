@@ -61,7 +61,7 @@ const StyledTextArea = styled.textarea<{ height?: string }>`
 interface ReplyProps {
   conversation: Conversation_conversation
   environment: Environment
-  onScroll?: () => void
+  onScroll: () => void
   refetch: RelayRefetchProp["refetch"]
   openInquiryModal: () => void
   openOrderModal: () => void
@@ -154,6 +154,7 @@ export const Reply: React.FC<ReplyProps> = props => {
           conversation={conversation}
           openInquiryModal={() => openInquiryModal()}
           openOrderModal={() => openOrderModal()}
+          scrollMessageContainer={onScroll}
         />
         <StyledFlex p={1}>
           <FullWidthFlex width="100%">

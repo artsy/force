@@ -1,6 +1,6 @@
 import { OpenInquiryModalButtonQuery } from "v2/__generated__/OpenInquiryModalButtonQuery.graphql"
 import { Button, CheckCircleIcon, Flex, Text } from "@artsy/palette"
-import React from "react"
+import React, { useEffect } from "react"
 import { graphql } from "react-relay"
 import { Link } from "@artsy/palette"
 import { useSystemContext } from "v2/System"
@@ -8,11 +8,14 @@ import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 
 export interface OpenInquiryModalButtonProps {
   openInquiryModal: () => void
+  scrollMessageContainer: () => void
 }
 
 export const OpenInquiryModalButton: React.FC<OpenInquiryModalButtonProps> = ({
   openInquiryModal,
+  scrollMessageContainer,
 }) => {
+  useEffect(scrollMessageContainer, [])
   return (
     <>
       <Flex flexDirection="column" p={1}>
@@ -44,7 +47,8 @@ export const OpenInquiryModalButton: React.FC<OpenInquiryModalButtonProps> = ({
 export const OpenInquiryModalButtonQueryRenderer: React.FC<{
   artworkID: string
   openInquiryModal: () => void
-}> = ({ artworkID, openInquiryModal }) => {
+  scrollMessageContainer: () => void
+}> = ({ artworkID, openInquiryModal, scrollMessageContainer }) => {
   const { relayEnvironment } = useSystemContext()
   return (
     <SystemQueryRenderer<OpenInquiryModalButtonQuery>
@@ -69,6 +73,7 @@ export const OpenInquiryModalButtonQueryRenderer: React.FC<{
           return (
             <OpenInquiryModalButton
               openInquiryModal={() => openInquiryModal()}
+              scrollMessageContainer={scrollMessageContainer}
             />
           )
         } else {
