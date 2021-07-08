@@ -34,7 +34,7 @@ describe("ConversationMessages", () => {
             ],
           } as any
         }
-        ordersEvents={
+        events={
           {
             edges: [
               {

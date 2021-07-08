@@ -6,42 +6,42 @@ import { Spacer } from "@artsy/palette"
 import { graphql } from "relay-runtime"
 import { createFragmentContainer } from "react-relay"
 import { ConversationMessages_messages } from "v2/__generated__/ConversationMessages_messages.graphql"
+import { ConversationMessages_events } from "v2/__generated__/ConversationMessages_events.graphql"
+
 import { extractNodes } from "v2/Utils/extractNodes"
 import { DateTime } from "luxon"
 import { sortBy } from "lodash"
-import { ConversationProps } from "./Conversation"
 import { OrderUpdateFragmentContainer } from "./OrderUpdate"
 import { OrderUpdate_event } from "v2/__generated__/OrderUpdate_event.graphql"
 import { Message_message } from "v2/__generated__/Message_message.graphql"
 
 interface ConversationMessageProps {
   messages: ConversationMessages_messages
-  ordersEvents: ConversationProps["conversation"]["orderConnection"]
+  events: ConversationMessages_events | null
 }
 type Order = NonNullable<
   NonNullable<
-    NonNullable<
-      NonNullable<ConversationProps["conversation"]["orderConnection"]>["edges"]
-    >[number]
+    NonNullable<NonNullable<ConversationMessages_events>["edges"]>[number]
   >["node"]
 >
 type OrderEvent = Order["orderHistory"][number]
 
 export const ConversationMessages = ({
   messages,
-  ordersEvents,
+  events,
 }: ConversationMessageProps) => {
   let [messagesAndEvents, setMessagesAndEvents] = useState<MessageType[][]>([])
 
   useEffect(() => {
     const allMessages = extractNodes(messages)
-    const allOrderEvents = extractNodes(ordersEvents).reduce<OrderEvent[]>(
+    const allOrderEvents = extractNodes(events).reduce<OrderEvent[]>(
       (prev, order) => prev.concat(order.orderHistory),
       []
     )
     const orderEventsWithoutFailedPayment = allOrderEvents.filter(
       (event, index) => {
         if (
+          !!event &&
           !(
             event.state === "APPROVED" &&
             allOrderEvents[index + 1] &&
@@ -58,7 +58,7 @@ export const ConversationMessages = ({
     )
     const groupAllMessages = groupMessages(sortedMessages)
     setMessagesAndEvents(groupAllMessages.reverse())
-  }, [messages, ordersEvents])
+  }, [messages, events])
 
   const relevantEvents = [
     "CommerceOfferSubmittedEvent",
@@ -79,10 +79,6 @@ export const ConversationMessages = ({
         if (messageGroup[0].createdAt) {
           today = fromToday(messageGroup[0].createdAt)
         }
-        console.log(
-          `group-${groupIndex}-${messageGroup[0]?.internalID}`,
-          groupIndex
-        )
         return (
           <React.Fragment
             key={`group-${groupIndex}-${messageGroup[0]?.internalID}`}
@@ -152,6 +148,26 @@ export const ConversationMessagesFragmentContainer = createFragmentContainer(
             isFromUser
             body
             ...Message_message
+          }
+        }
+      }
+    `,
+    events: graphql`
+      fragment ConversationMessages_events on CommerceOrderConnectionWithTotalCount {
+        edges {
+          node {
+            orderHistory {
+              ...OrderUpdate_event
+              __typename
+              ... on CommerceOrderStateChangedEvent {
+                state
+                stateReason
+                createdAt
+              }
+              ... on CommerceOfferSubmittedEvent {
+                createdAt
+              }
+            }
           }
         }
       }

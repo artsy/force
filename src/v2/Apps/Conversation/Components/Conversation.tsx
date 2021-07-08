@@ -156,7 +156,7 @@ const Conversation: React.FC<ConversationProps> = props => {
               <ConversationMessages
                 // @ts-expect-error STRICT_NULL_CHECK
                 messages={conversation.messagesConnection}
-                ordersEvents={conversation.orderConnection}
+                events={conversation.orderConnection}
               />
               <Box ref={bottomOfPage}></Box>
             </Flex>
@@ -241,21 +241,11 @@ export const ConversationPaginationContainer = createPaginationContainer(
               ... on CommerceOfferOrder {
                 buyerAction
               }
-              orderHistory {
-                ...OrderUpdate_event
-                __typename
-                ... on CommerceOrderStateChangedEvent {
-                  createdAt
-                  state
-                  stateReason
-                }
-                ... on CommerceOfferSubmittedEvent {
-                  createdAt
-                }
-              }
             }
           }
+          ...ConversationMessages_events
         }
+
         unread
 
         messagesConnection(first: $count, after: $after, sort: DESC)
