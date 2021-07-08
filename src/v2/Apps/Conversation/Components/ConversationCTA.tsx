@@ -11,14 +11,14 @@ interface ConversationCTAProps {
   conversation: ConversationCTA_conversation
   openInquiryModal: () => void
   openOrderModal: () => void
-  scrollMessageContainer: () => void
+  onMount: () => void
 }
 
 export const ConversationCTA: React.FC<ConversationCTAProps> = ({
   conversation,
   openInquiryModal,
   openOrderModal,
-  scrollMessageContainer,
+  onMount,
 }) => {
   // Determine whether we have a conversation about an artwork
 
@@ -44,7 +44,7 @@ export const ConversationCTA: React.FC<ConversationCTAProps> = ({
         <OpenInquiryModalButtonQueryRenderer
           artworkID={artworkID!}
           openInquiryModal={() => openInquiryModal()}
-          scrollMessageContainer={scrollMessageContainer}
+          onMount={onMount}
         />
       )
     } else {

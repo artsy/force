@@ -8,14 +8,14 @@ import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 
 export interface OpenInquiryModalButtonProps {
   openInquiryModal: () => void
-  scrollMessageContainer: () => void
+  onMount: () => void
 }
 
 export const OpenInquiryModalButton: React.FC<OpenInquiryModalButtonProps> = ({
   openInquiryModal,
-  scrollMessageContainer,
+  onMount,
 }) => {
-  useEffect(scrollMessageContainer, [])
+  useEffect(onMount, [])
   return (
     <>
       <Flex flexDirection="column" p={1}>
@@ -47,8 +47,8 @@ export const OpenInquiryModalButton: React.FC<OpenInquiryModalButtonProps> = ({
 export const OpenInquiryModalButtonQueryRenderer: React.FC<{
   artworkID: string
   openInquiryModal: () => void
-  scrollMessageContainer: () => void
-}> = ({ artworkID, openInquiryModal, scrollMessageContainer }) => {
+  onMount: () => void
+}> = ({ artworkID, openInquiryModal, onMount }) => {
   const { relayEnvironment } = useSystemContext()
   return (
     <SystemQueryRenderer<OpenInquiryModalButtonQuery>
@@ -73,7 +73,7 @@ export const OpenInquiryModalButtonQueryRenderer: React.FC<{
           return (
             <OpenInquiryModalButton
               openInquiryModal={() => openInquiryModal()}
-              scrollMessageContainer={scrollMessageContainer}
+              onMount={onMount}
             />
           )
         } else {

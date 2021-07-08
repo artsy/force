@@ -141,6 +141,7 @@ const Conversation: React.FC<ConversationProps> = props => {
         </MessageContainer>
         <Reply
           onScroll={scrollToBottom}
+          onMount={scrollToBottom}
           conversation={conversation}
           refetch={props.refetch}
           environment={relay.environment}
