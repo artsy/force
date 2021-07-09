@@ -1,92 +1,155 @@
 import React, { useState } from "react"
-import { graphql, createRefetchContainer, RelayRefetchProp } from "react-relay"
+import { useTracking } from "react-tracking"
+import {
+  graphql,
+  createPaginationContainer,
+  RelayPaginationProp,
+} from "react-relay"
 import useDeepCompareEffect from "use-deep-compare-effect"
 import { isEqual } from "lodash"
 import { Match } from "found"
-import { Box } from "@artsy/palette"
+import { Box, Button, Col, Grid, Row } from "@artsy/palette"
+import { ActionType, ClickedShowMore, ContextModule } from "@artsy/cohesion"
 import { FairExhibitors_fair } from "v2/__generated__/FairExhibitors_fair.graphql"
+import { useAnalyticsContext } from "v2/System/Analytics/AnalyticsContext"
 import { updateUrl } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
 import {
   ExhibitorFilterContextProvider,
   useExhibitorsFilterContext,
 } from "./ExhibitorFilterContext"
 import { FairExhibitorsQuery } from "./FairExhibitorsQuery"
-import { FairExhibitorRailFragmentContainer as FairExhibitorRail } from "../Components/FairExhibitorRail"
 import { LoadingArea } from "v2/Components/LoadingArea"
-import { FairExhibitorSortFilter } from "../Components/FairExhibitorSortFilter"
 import { usePrevious } from "v2/Utils/Hooks/usePrevious"
 import createLogger from "v2/Utils/logger"
+import { FairExhibitorRailFragmentContainer as FairExhibitorRail } from "../Components/FairExhibitorRail"
+import { FairExhibitorSortFilter } from "../Components/FairExhibitorSortFilter"
 
 const logger = createLogger("FairExhibitors.tsx")
 
-const PAGE_SIZE = 5
+const PAGE_SIZE = 3
 
 interface FairExhibitorsProps {
   fair: FairExhibitors_fair
   match: Match
-  relay: RelayRefetchProp
+  relay: RelayPaginationProp
 }
 
 const FairExhibitors: React.FC<FairExhibitorsProps> = ({ fair, relay }) => {
+  const tracking = useTracking()
+  const {
+    contextPageOwnerId,
+    contextPageOwnerSlug,
+    contextPageOwnerType,
+  } = useAnalyticsContext()
+
+  const clickShowMoreTrackingData: ClickedShowMore = {
+    action: ActionType.clickedShowMore,
+    context_module: ContextModule.exhibitorsTab,
+    context_page_owner_id: contextPageOwnerId,
+    context_page_owner_slug: contextPageOwnerSlug,
+    context_page_owner_type: contextPageOwnerType!,
+    subject: "Show More",
+  }
+
   const context = useExhibitorsFilterContext()
 
-  const [isLoading, setIsLoading] = useState(false)
+  const [isGridLoading, setIsGridLoading] = useState(false)
+  const [isButtonLoading, setIsButtonLoading] = useState(false)
 
   const previousFilters = usePrevious(context.filters)
 
   useDeepCompareEffect(() => {
+    let filtersHaveUpdated = false
+
     Object.entries(context.filters).forEach(([filterKey, currentFilter]) => {
       const previousFilter = previousFilters[filterKey]
-      const filtersHaveUpdated = !isEqual(currentFilter, previousFilter)
-
-      if (filtersHaveUpdated) {
-        fetchResults()
-      }
+      filtersHaveUpdated = !isEqual(currentFilter, previousFilter)
     })
+
+    if (filtersHaveUpdated) {
+      fetchResults()
+    }
   }, [context.filters])
 
   function fetchResults() {
-    setIsLoading(true)
+    setIsGridLoading(true)
 
-    const relayParams = {
-      id: fair.slug,
-      first: PAGE_SIZE,
-      after: "",
-      sort: context.filters.sort,
-    }
+    relay.refetchConnection(
+      PAGE_SIZE,
+      err => {
+        setIsGridLoading(false)
+        if (err) {
+          logger.error(err)
+        }
+      },
+      {
+        first: PAGE_SIZE,
+        ...context.filters,
+      }
+    )
+  }
 
-    const relayRefetchVariables = {
-      ...relayParams,
-      ...context.filters,
-    }
+  const handleClick = () => {
+    if (!relay.hasMore() || relay.isLoading()) return
 
-    relay.refetch(relayRefetchVariables, null, error => {
-      if (error) {
-        logger.error(error)
+    tracking.trackEvent(clickShowMoreTrackingData)
+
+    setIsButtonLoading(true)
+
+    const previousScrollY = window.scrollY
+
+    relay.loadMore(PAGE_SIZE, err => {
+      setIsButtonLoading(false)
+
+      if (window.scrollY > previousScrollY) {
+        window.scrollTo({
+          behavior: "auto",
+          top: previousScrollY,
+        })
       }
 
-      setIsLoading(false)
+      if (err) {
+        logger.error(err)
+      }
     })
   }
 
   return (
-    <LoadingArea isLoading={isLoading}>
-      <FairExhibitorSortFilter />
+    <>
+      <LoadingArea isLoading={isGridLoading}>
+        <FairExhibitorSortFilter />
 
-      {fair.exhibitors?.edges!.map((edge, index) => {
-        const show = edge?.node!
-        if (show?.counts?.artworks === 0 || !show?.partner) {
-          // Skip rendering of booths without artworks
-          return null
-        }
+        {fair.exhibitors?.edges!.map((edge, index) => {
+          const show = edge?.node!
+          if (show?.counts?.artworks === 0 || !show?.partner) {
+            // Skip rendering of booths without artworks
+            return null
+          }
 
-        return (
-          <Box my={6} key={index}>
-            <FairExhibitorRail key={show.id} show={show as any} />
-          </Box>
-        )
-      })}
-    </LoadingArea>
+          return (
+            <Box my={6} key={index}>
+              <FairExhibitorRail key={show.id} show={show as any} />
+            </Box>
+          )
+        })}
+      </LoadingArea>
+
+      <Grid my={6}>
+        <Row>
+          <Col sm={6} mx="auto">
+            <Button
+              width="100%"
+              variant="secondaryGray"
+              onClick={handleClick}
+              loading={isButtonLoading}
+              disabled={!relay.hasMore()}
+            >
+              Show more
+            </Button>
+          </Col>
+        </Row>
+      </Grid>
+    </>
   )
 }
 
@@ -108,23 +171,24 @@ const FairExhibitorsWithContext: React.FC<any> = ({
   )
 }
 
-export const FairExhibitorsFragmentContainer = createRefetchContainer(
+export const FairExhibitorsFragmentContainer = createPaginationContainer(
   FairExhibitorsWithContext,
   {
     fair: graphql`
       fragment FairExhibitors_fair on Fair
         @argumentDefinitions(
           sort: { type: "ShowSorts", defaultValue: FEATURED_DESC }
-          first: { type: "Int", defaultValue: 5 }
+          first: { type: "Int", defaultValue: 3 }
           after: { type: "String" }
         ) {
         slug
+        internalID
         exhibitors: showsConnection(
           sort: $sort
           first: $first
           after: $after
           totalCount: true
-        ) {
+        ) @connection(key: "FairExhibitorsQuery_exhibitors") {
           edges {
             node {
               id
@@ -146,5 +210,11 @@ export const FairExhibitorsFragmentContainer = createRefetchContainer(
       }
     `,
   },
-  FairExhibitorsQuery
+  {
+    direction: "forward",
+    getVariables({ fair: { slug: id } }, { cursor: after }, { first, sort }) {
+      return { after, first, sort, id }
+    },
+    query: FairExhibitorsQuery,
+  }
 )
