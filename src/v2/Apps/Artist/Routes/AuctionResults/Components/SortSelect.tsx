@@ -1,4 +1,4 @@
-import { Select, Flex, SelectProps } from "@artsy/palette"
+import { Select, SelectProps } from "@artsy/palette"
 import React from "react"
 import { Media } from "v2/Utils/Responsive"
 import { useAuctionResultsFilterContext } from "../AuctionResultsFilterContext"
@@ -28,7 +28,7 @@ export const SortSelect = () => {
     options: SORTS,
     selected: filterContext?.filters?.sort,
     onSelect: sort => {
-      filterContext.setFilter("sort", sort)
+      filterContext.setFilter?.("sort", sort)
     },
   }
   return (
@@ -40,21 +40,5 @@ export const SortSelect = () => {
         <Select {...props} title="Sort:" />
       </Media>
     </>
-  )
-
-  return (
-    <Flex>
-      <Select
-        width="auto"
-        variant="inline"
-        title="Sort"
-        options={SORTS}
-        // @ts-expect-error STRICT_NULL_CHECK
-        selected={filterContext.filters.sort}
-        onSelect={sort => {
-          filterContext.setFilter("sort", sort)
-        }}
-      />
-    </Flex>
   )
 }
