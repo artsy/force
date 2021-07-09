@@ -48,7 +48,14 @@ export const SavedAddressItem: React.FC<SavedAddressItemProps> = (
                     {line}
                   </Text>
                   {address?.isDefault && index === 0 && (
-                    <Pill ml={0.5} variant="textSquare" hover focus>
+                    <Pill
+                      ml={0.5}
+                      variant="textSquare"
+                      hover
+                      focus
+                      width={53}
+                      maxHeight={24}
+                    >
                       <Text
                         textColor="black60"
                         variant="caption"
