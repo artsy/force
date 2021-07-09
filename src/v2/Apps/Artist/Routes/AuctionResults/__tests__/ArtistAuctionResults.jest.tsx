@@ -21,6 +21,10 @@ jest.mock("v2/System/Router/Utils/catchLinks", () => ({
 jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
   useMatchMedia: () => ({}),
 }))
+jest.mock("lodash", () => ({
+  ...jest.requireActual("lodash"),
+  debounce: jest.fn(),
+}))
 
 describe("AuctionResults", () => {
   let wrapper: ReactWrapper
@@ -244,6 +248,48 @@ describe("AuctionResults", () => {
                 createdAfterYear: 1880,
                 createdBeforeYear: 1973,
               })
+
+              wrapper.update()
+              const html = wrapper.html()
+              expect(html).toContain("Sign up to see price")
+
+              done()
+            })
+          })
+        })
+        describe("keyword filter", () => {
+          it("triggers relay refetch with keyword filter, and re-shows sign up to see price", done => {
+            const filter = wrapper.find("KeywordFilter")
+
+            const input = filter.find("input")
+
+            // debugger
+
+            const setInputValue = (
+              inputWrapper: ReactWrapper,
+              value: string,
+              setSelectionRangeMock = jest.fn()
+            ) => {
+              ;(inputWrapper.getDOMNode() as any).value = value
+              ;(inputWrapper.getDOMNode() as any).setSelectionRange = setSelectionRangeMock
+              inputWrapper.simulate("change")
+            }
+
+            setInputValue(input, "test-keyword")
+
+            // input.simulate("change", {
+            //   target: { name: "value", value: "test-keyword" },
+            // })
+
+            setTimeout(() => {
+              expect(refetchSpy).toHaveBeenCalledTimes(1)
+
+              expect(refetchSpy.mock.calls[0][0]).toEqual(
+                expect.objectContaining({
+                  ...defaultRelayParams,
+                  keyword: "test-keyword",
+                })
+              )
 
               wrapper.update()
               const html = wrapper.html()
