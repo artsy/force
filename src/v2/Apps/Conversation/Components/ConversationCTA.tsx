@@ -45,6 +45,7 @@ export const ConversationCTA: React.FC<ConversationCTAProps> = ({
           artworkID={artworkID!}
           openInquiryModal={() => openInquiryModal()}
           onMount={onMount}
+          conversationID={conversationID}
         />
       )
     } else {
