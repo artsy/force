@@ -125,7 +125,6 @@ class ArtworkGridItemContainer extends React.Component<Props, State> {
         {/* @ts-expect-error STRICT_NULL_CHECK */}
         <Placeholder style={{ paddingBottom: artwork.image.placeholder }}>
           <Link
-            // @ts-expect-error STRICT_NULL_CHECK
             to={artwork.href}
             onClick={() => {
               if (this.props.onClick) {

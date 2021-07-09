@@ -1,4 +1,4 @@
-import { Link, LinkProps, RouterContext } from "found"
+import { Link, LinkPropsSimple, RouterContext } from "found"
 import React, { useContext } from "react"
 import { BoxProps, boxMixin } from "@artsy/palette"
 import styled from "styled-components"
@@ -13,7 +13,7 @@ export type RouterLinkProps = Omit<
   React.AnchorHTMLAttributes<HTMLAnchorElement>,
   "href"
 > &
-  Omit<LinkProps, "to"> &
+  Omit<LinkPropsSimple, "to"> &
   BoxProps & {
     /**
      * Simplifies `LinkProps#to` to just be a string and handle nulls, which are common

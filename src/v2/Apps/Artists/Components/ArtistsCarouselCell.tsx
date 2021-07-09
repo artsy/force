@@ -32,9 +32,9 @@ const ArtistsCarouselCell: React.FC<ArtistsCarouselCellProps> = ({
       <RouterLink
         // @ts-expect-error STRICT_NULL_CHECK
         key={featuredLink.internalID}
-        // @ts-expect-error STRICT_NULL_CHECK
         to={featuredLink.href}
-        style={{ display: "block", textDecoration: "none" }}
+        display="block"
+        textDecoration="none"
       >
         <Image
           // @ts-expect-error STRICT_NULL_CHECK
@@ -63,9 +63,9 @@ const ArtistsCarouselCell: React.FC<ArtistsCarouselCellProps> = ({
         <RouterLink
           // @ts-expect-error STRICT_NULL_CHECK
           key={featuredLink.internalID}
-          // @ts-expect-error STRICT_NULL_CHECK
           to={featuredLink.href}
-          style={{ display: "block", textDecoration: "none" }}
+          dispaly="block"
+          textDecoration="none"
           // @ts-expect-error STRICT_NULL_CHECK
           aria-label={featuredLink.title}
         >

@@ -54,7 +54,6 @@ export const FairExhibitorRail: React.FC<FairExhibitorRailProps> = ({
           <Box flex="1">
             <Text as="h3" variant="lg">
               <RouterLink
-                // @ts-expect-error STRICT_NULL_CHECK
                 to={show.href}
                 noUnderline
                 onClick={() => tracking.trackEvent(tappedViewTrackingData)}
