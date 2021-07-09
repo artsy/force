@@ -14,7 +14,6 @@ export type FairExhibitors_QueryResponse = {
 export type FairExhibitors_QueryRawResponse = {
     readonly fair: ({
         readonly slug: string;
-        readonly internalID: string;
         readonly exhibitors: ({
             readonly edges: ReadonlyArray<({
                 readonly node: ({
@@ -91,7 +90,6 @@ fragment FairExhibitorRail_show on Show {
 
 fragment FairExhibitors_fair on Fair {
   slug
-  internalID
   exhibitors: showsConnection(sort: FEATURED_DESC, first: 3, totalCount: true) {
     edges {
       node {
@@ -147,14 +145,7 @@ v2 = {
   "name": "slug",
   "storageKey": null
 },
-v3 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "internalID",
-  "storageKey": null
-},
-v4 = [
+v3 = [
   {
     "kind": "Literal",
     "name": "first",
@@ -171,21 +162,21 @@ v4 = [
     "value": true
   }
 ],
-v5 = {
+v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v6 = {
+v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "__typename",
   "storageKey": null
 },
-v7 = [
+v6 = [
   {
     "alias": null,
     "args": null,
@@ -235,10 +226,9 @@ return {
         "plural": false,
         "selections": [
           (v2/*: any*/),
-          (v3/*: any*/),
           {
             "alias": "exhibitors",
-            "args": (v4/*: any*/),
+            "args": (v3/*: any*/),
             "concreteType": "ShowConnection",
             "kind": "LinkedField",
             "name": "showsConnection",
@@ -260,7 +250,7 @@ return {
                     "name": "node",
                     "plural": false,
                     "selections": [
-                      (v5/*: any*/),
+                      (v4/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -287,22 +277,28 @@ return {
                         "name": "partner",
                         "plural": false,
                         "selections": [
-                          (v6/*: any*/),
                           (v5/*: any*/),
+                          (v4/*: any*/),
                           {
                             "kind": "InlineFragment",
-                            "selections": (v7/*: any*/),
+                            "selections": (v6/*: any*/),
                             "type": "Partner"
                           },
                           {
                             "kind": "InlineFragment",
-                            "selections": (v7/*: any*/),
+                            "selections": (v6/*: any*/),
                             "type": "ExternalPartner"
                           }
                         ],
                         "storageKey": null
                       },
-                      (v3/*: any*/),
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "internalID",
+                        "storageKey": null
+                      },
                       (v2/*: any*/),
                       {
                         "alias": null,
@@ -311,7 +307,7 @@ return {
                         "name": "href",
                         "storageKey": null
                       },
-                      (v6/*: any*/)
+                      (v5/*: any*/)
                     ],
                     "storageKey": null
                   },
@@ -355,7 +351,7 @@ return {
           },
           {
             "alias": "exhibitors",
-            "args": (v4/*: any*/),
+            "args": (v3/*: any*/),
             "filters": [
               "sort",
               "totalCount"
@@ -365,7 +361,7 @@ return {
             "kind": "LinkedHandle",
             "name": "showsConnection"
           },
-          (v5/*: any*/)
+          (v4/*: any*/)
         ],
         "storageKey": null
       }
@@ -376,7 +372,7 @@ return {
     "metadata": {},
     "name": "FairExhibitors_Query",
     "operationKind": "query",
-    "text": "query FairExhibitors_Query(\n  $slug: String!\n) {\n  fair(id: $slug) {\n    ...FairExhibitors_fair\n    id\n  }\n}\n\nfragment FairExhibitorRail_show on Show {\n  internalID\n  slug\n  href\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on ExternalPartner {\n      name\n      id\n    }\n    ... on Node {\n      id\n    }\n  }\n  counts {\n    artworks\n  }\n}\n\nfragment FairExhibitors_fair on Fair {\n  slug\n  internalID\n  exhibitors: showsConnection(sort: FEATURED_DESC, first: 3, totalCount: true) {\n    edges {\n      node {\n        id\n        counts {\n          artworks\n        }\n        partner {\n          __typename\n          ... on Partner {\n            id\n          }\n          ... on ExternalPartner {\n            id\n          }\n          ... on Node {\n            id\n          }\n        }\n        ...FairExhibitorRail_show\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query FairExhibitors_Query(\n  $slug: String!\n) {\n  fair(id: $slug) {\n    ...FairExhibitors_fair\n    id\n  }\n}\n\nfragment FairExhibitorRail_show on Show {\n  internalID\n  slug\n  href\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on ExternalPartner {\n      name\n      id\n    }\n    ... on Node {\n      id\n    }\n  }\n  counts {\n    artworks\n  }\n}\n\nfragment FairExhibitors_fair on Fair {\n  slug\n  exhibitors: showsConnection(sort: FEATURED_DESC, first: 3, totalCount: true) {\n    edges {\n      node {\n        id\n        counts {\n          artworks\n        }\n        partner {\n          __typename\n          ... on Partner {\n            id\n          }\n          ... on ExternalPartner {\n            id\n          }\n          ... on Node {\n            id\n          }\n        }\n        ...FairExhibitorRail_show\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();

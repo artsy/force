@@ -8,7 +8,7 @@ import {
 import useDeepCompareEffect from "use-deep-compare-effect"
 import { isEqual } from "lodash"
 import { Match } from "found"
-import { Box, Button, Col, Grid, Row } from "@artsy/palette"
+import { Box, Button, Column, Flex, GridColumns, Spacer } from "@artsy/palette"
 import { ActionType, ClickedShowMore, ContextModule } from "@artsy/cohesion"
 import { FairExhibitors_fair } from "v2/__generated__/FairExhibitors_fair.graphql"
 import { useAnalyticsContext } from "v2/System/Analytics/AnalyticsContext"
@@ -19,6 +19,8 @@ import {
 } from "./ExhibitorFilterContext"
 import { FairExhibitorsQuery } from "./FairExhibitorsQuery"
 import { LoadingArea } from "v2/Components/LoadingArea"
+import { Sticky } from "v2/Components/Sticky"
+import { Media } from "v2/Utils/Responsive"
 import { usePrevious } from "v2/Utils/Hooks/usePrevious"
 import createLogger from "v2/Utils/logger"
 import { FairExhibitorRailFragmentContainer as FairExhibitorRail } from "../Components/FairExhibitorRail"
@@ -116,9 +118,37 @@ const FairExhibitors: React.FC<FairExhibitorsProps> = ({ fair, relay }) => {
 
   return (
     <>
-      <LoadingArea isLoading={isGridLoading}>
-        <FairExhibitorSortFilter />
+      <Media at="xs">
+        <Sticky>
+          {({ stuck }) => {
+            return (
+              <Flex
+                justifyContent="flex-end"
+                py={1}
+                {...(stuck
+                  ? {
+                      px: 2,
+                      borderBottom: "1px solid",
+                      borderColor: "black10",
+                    }
+                  : {})}
+              >
+                <FairExhibitorSortFilter />
+              </Flex>
+            )
+          }}
+        </Sticky>
+      </Media>
 
+      <Media greaterThan="xs">
+        <Flex justifyContent="flex-end">
+          <FairExhibitorSortFilter />
+        </Flex>
+      </Media>
+
+      <Spacer mt={4} />
+
+      <LoadingArea isLoading={isGridLoading}>
         {fair.exhibitors?.edges!.map((edge, index) => {
           const show = edge?.node!
           if (show?.counts?.artworks === 0 || !show?.partner) {
@@ -134,21 +164,21 @@ const FairExhibitors: React.FC<FairExhibitorsProps> = ({ fair, relay }) => {
         })}
       </LoadingArea>
 
-      <Grid my={6}>
-        <Row>
-          <Col sm={6} mx="auto">
-            <Button
-              width="100%"
-              variant="secondaryGray"
-              onClick={handleClick}
-              loading={isButtonLoading}
-              disabled={!relay.hasMore()}
-            >
-              Show more
-            </Button>
-          </Col>
-        </Row>
-      </Grid>
+      <Spacer mt={4} />
+
+      <GridColumns>
+        <Column span={6} start={4}>
+          <Button
+            width="100%"
+            variant="secondaryGray"
+            onClick={handleClick}
+            loading={isButtonLoading}
+            disabled={!relay.hasMore()}
+          >
+            Show more
+          </Button>
+        </Column>
+      </GridColumns>
     </>
   )
 }
@@ -182,7 +212,6 @@ export const FairExhibitorsFragmentContainer = createPaginationContainer(
           after: { type: "String" }
         ) {
         slug
-        internalID
         exhibitors: showsConnection(
           sort: $sort
           first: $first
