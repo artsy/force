@@ -2,7 +2,7 @@
  * NOTE: This file has been deprecated as all new JS code lives in `src/v2`.
  * The following only applies to older apps in src/desktop.
  */
-import "./webpackPublicPath"
+import "lib/webpackPublicPath"
 import $ from "jquery"
 import Backbone from "backbone"
 import _ from "underscore"
