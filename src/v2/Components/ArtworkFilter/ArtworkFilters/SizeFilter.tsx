@@ -17,6 +17,7 @@ import {
 import { NumericInput } from "./PriceRangeFilter"
 import { Media } from "v2/Utils/Responsive"
 import { FilterExpandable } from "./FilterExpandable"
+import { isString } from "lodash"
 
 const SIZES = [
   { displayName: "Small (under 40cm)", name: "SMALL" },
@@ -84,6 +85,8 @@ const getValue = (value: CustomRange[number]) => {
   return value === "*" || value === 0 ? "" : value
 }
 
+const isCustomSize = (value?: string) => isString(value) && value !== "*-*"
+
 export interface SizeFilterProps {
   expanded?: boolean
 }
@@ -144,9 +147,13 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
     const newFilters = {
       ...currentlySelectedFilters?.(),
       sizes,
-      height: "*-*",
-      width: "*-*",
-      reset: false,
+    }
+
+    if (isCustomSize(height)) {
+      newFilters.height = "*-*"
+    }
+    if (isCustomSize(width)) {
+      newFilters.width = "*-*"
     }
 
     setFilters?.(newFilters, { force: false })
@@ -154,12 +161,25 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
   }
 
   const handleClick = () => {
+    const { height: newHeightValue, width: newWidthValue } = mapSizeToRange(
+      convertSizeToInches(customSize) as CustomSize
+    )
+
     const newFilters = {
       ...currentlySelectedFilters?.(),
       sizes: [],
-      reset: false,
-      ...mapSizeToRange(convertSizeToInches(customSize) as CustomSize),
     }
+
+    if (isCustomSize(newWidthValue) || isCustomSize(width)) {
+      newFilters.width = newWidthValue
+    }
+    if (isCustomSize(newHeightValue) || isCustomSize(height)) {
+      newFilters.height = newHeightValue
+    }
+    if (reset) {
+      delete newFilters.reset
+    }
+
     setFilters?.(newFilters, { force: false })
     setMode("done")
   }
