@@ -6,8 +6,10 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "v2/System"
 import { HomeHeroUnitsSmall_homePage } from "v2/__generated__/HomeHeroUnitsSmall_homePage.graphql"
 import { HomeSwiper } from "../HomeSwiper"
-import { HomeHeroUnitFragmentContainer } from "./HomeHeroUnit"
-import { HomeHeroUnitLoggedOut } from "./HomeHeroUnitLoggedOut"
+import {
+  HomeHeroUnitFragmentContainer,
+  LOGGED_OUT_HERO_UNIT,
+} from "./HomeHeroUnit"
 
 interface HomeHeroUnitsSmallProps {
   homePage: HomeHeroUnitsSmall_homePage
@@ -19,19 +21,22 @@ const HomeHeroUnitsSmall: React.FC<HomeHeroUnitsSmallProps> = ({
   const { isLoggedIn } = useSystemContext()
   const [index, setIndex] = useState(0)
 
-  const heroUnits = compact(homePage.heroUnits)
+  const heroUnits = [
+    ...(isLoggedIn ? [] : [LOGGED_OUT_HERO_UNIT]),
+    ...compact(homePage.heroUnits),
+  ]
+
   return (
     <>
       <HomeSwiper onChange={setIndex}>
-        {!isLoggedIn && <HomeHeroUnitLoggedOut index={0} layout="a" />}
-
         {heroUnits.map((heroUnit, i) => {
           return (
             <HomeHeroUnitFragmentContainer
               key={i}
-              index={i + (isLoggedIn ? 0 : 1)}
+              index={i}
               heroUnit={heroUnit}
               layout="a"
+              bg={!isLoggedIn && i === 0 ? "black100" : "black5"}
             />
           )
         })}

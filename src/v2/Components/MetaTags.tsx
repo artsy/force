@@ -3,7 +3,7 @@ import { Title, Meta, Link } from "react-head"
 import { getENV } from "v2/Utils/getENV"
 import { cropped } from "v2/Utils/resized"
 
-const DEFAULT_TITLE = "Artsy - Discover & Buy Art"
+const DEFAULT_TITLE = "Artsy — Discover, Buy, and Sell Fine Art"
 const DEFAULT_DESCRIPTION =
   "Artsy is the world’s largest online art marketplace. Browse over 1 million artworks by iconic and emerging artists from 4000+ galleries and top auction houses."
 const DEFAULT_IMAGE_URL = "https://files.artsy.net/images/og_image.jpeg"

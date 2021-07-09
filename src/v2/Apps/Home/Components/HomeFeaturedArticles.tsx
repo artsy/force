@@ -53,9 +53,15 @@ const HomeFeaturedArticles: React.FC<HomeFeaturedArticlesProps> = ({
 
               <Spacer mt={2} />
 
-              <Text variant="lg" width={325}>
+              <Text variant="lg" width={325} pr={1}>
                 {article.title}
               </Text>
+
+              {article.author?.name && (
+                <Text variant="lg" width={325} pr={1} color="black60">
+                  {article.author?.name}
+                </Text>
+              )}
 
               <Spacer mt={0.5} />
 
@@ -74,7 +80,7 @@ const HomeFeaturedArticlesContainer: React.FC = ({ children }) => {
   return (
     <>
       <Flex justifyContent="space-between">
-        <Text variant="xl">Artsy editorial</Text>
+        <Text variant="xl">Artsy Editorial</Text>
 
         <Text
           variant="sm"
@@ -82,7 +88,7 @@ const HomeFeaturedArticlesContainer: React.FC = ({ children }) => {
           // @ts-ignore
           to="/articles"
         >
-          Explore editorial
+          Explore Editorial
         </Text>
       </Flex>
 
@@ -107,6 +113,9 @@ export const HomeFeaturedArticlesFragmentContainer = createFragmentContainer(
             src
             srcSet
           }
+        }
+        author {
+          name
         }
       }
     `,

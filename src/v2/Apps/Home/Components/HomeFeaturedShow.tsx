@@ -77,7 +77,7 @@ export const HomeFeaturedShowFragmentContainer = createFragmentContainer(
         startAt
         endAt
         formattedStartAt: startAt(format: "MMM D")
-        formattedEndAt: endAt(format: "D")
+        formattedEndAt: endAt(format: "MMM D")
         partner {
           ... on Partner {
             name

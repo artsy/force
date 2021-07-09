@@ -42,7 +42,7 @@ export const HomeFeaturedCategoriesRail: React.FC<HomeFeaturedCategoriesRailProp
         return (
           <Column key={collection.slug} span={[6, 4, 2]}>
             <RouterLink
-              to={`/gene/${collection.slug}`}
+              to={`/collection/${collection.slug}`}
               style={{
                 display: "block",
                 textDecoration: "none",
@@ -66,11 +66,13 @@ export const HomeFeaturedCategoriesRail: React.FC<HomeFeaturedCategoriesRailProp
 
               <Spacer mt={2} />
 
-              <Text variant="lg">{collection.title}</Text>
+              <Text variant="lg" mr={1}>
+                {collection.title}
+              </Text>
 
               <Spacer mt={0.5} />
 
-              <Text variant="md" overflowEllipsis width="100%">
+              <Text variant="md" lineClamp={2} mr={1}>
                 {SUBTITLES[collection.slug]}
               </Text>
             </RouterLink>
@@ -102,7 +104,7 @@ const HomeFeaturedCategories: React.FC = ({ children }) => {
         <Text variant="xl">Featured Categories</Text>
 
         <Text variant="md">
-          <RouterLink to="/categories">View all categories</RouterLink>
+          <RouterLink to="/categories">View All Categories</RouterLink>
         </Text>
       </Flex>
 
@@ -130,7 +132,7 @@ const HomeFeaturedCategoriesRailPlaceholder: React.FC = () => {
 
               <Spacer mt={0.5} />
 
-              <SkeletonText variant="md" overflowEllipsis width={325}>
+              <SkeletonText variant="md" lineClamp={2} mr={1}>
                 Collection description which happens to be longer.
               </SkeletonText>
             </Column>
