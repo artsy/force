@@ -3,7 +3,7 @@ import { MetaTags } from "v2/Components/MetaTags"
 
 const TITLE = "Art Gallery Shows and Museum Exhibitions | Artsy"
 const DESCRIPTION =
-  "'Explore Artsy’s comprehensive listing of current gallery shows and museum exhibitions from around the world.'"
+  "Explore Artsy’s comprehensive listing of current gallery shows and museum exhibitions from around the world."
 
 interface ShowsMetaProps {
   cityName?: string
