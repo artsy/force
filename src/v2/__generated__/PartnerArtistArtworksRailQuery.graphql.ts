@@ -3,35 +3,39 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type PartnerArtistDetailsQueryVariables = {
+export type PartnerArtistArtworksRailQueryVariables = {
     partnerId: string;
     artistId: string;
+    first?: number | null;
+    after?: string | null;
 };
-export type PartnerArtistDetailsQueryResponse = {
+export type PartnerArtistArtworksRailQueryResponse = {
     readonly partner: {
         readonly artistsConnection: {
             readonly edges: ReadonlyArray<{
-                readonly " $fragmentRefs": FragmentRefs<"PartnerArtistDetails_partnerArtist">;
+                readonly " $fragmentRefs": FragmentRefs<"PartnerArtistArtworksRail_partnerArtist">;
             } | null> | null;
         } | null;
     } | null;
 };
-export type PartnerArtistDetailsQuery = {
-    readonly response: PartnerArtistDetailsQueryResponse;
-    readonly variables: PartnerArtistDetailsQueryVariables;
+export type PartnerArtistArtworksRailQuery = {
+    readonly response: PartnerArtistArtworksRailQueryResponse;
+    readonly variables: PartnerArtistArtworksRailQueryVariables;
 };
 
 
 
 /*
-query PartnerArtistDetailsQuery(
+query PartnerArtistArtworksRailQuery(
   $partnerId: String!
   $artistId: String!
+  $first: Int
+  $after: String
 ) {
   partner(id: $partnerId) {
     artistsConnection(artistIDs: [$artistId], first: 1) {
       edges {
-        ...PartnerArtistDetails_partnerArtist
+        ...PartnerArtistArtworksRail_partnerArtist_2HEEH6
         id
       }
     }
@@ -126,25 +130,14 @@ fragment FillwidthItem_artwork on Artwork {
   ...Badge_artwork
 }
 
-fragment FollowArtistButton_artist on Artist {
-  id
-  internalID
-  name
-  slug
-  is_followed: isFollowed
-  counts {
-    follows
-  }
-}
-
 fragment Metadata_artwork on Artwork {
   ...Details_artwork
   ...Contact_artwork
   href
 }
 
-fragment PartnerArtistArtworksRail_partnerArtist on ArtistPartnerEdge {
-  artworksConnection(first: 12) {
+fragment PartnerArtistArtworksRail_partnerArtist_2HEEH6 on ArtistPartnerEdge {
+  artworksConnection(first: $first, after: $after) {
     edges {
       node {
         id
@@ -157,22 +150,6 @@ fragment PartnerArtistArtworksRail_partnerArtist on ArtistPartnerEdge {
       endCursor
       hasNextPage
     }
-  }
-}
-
-fragment PartnerArtistDetails_partnerArtist on ArtistPartnerEdge {
-  biographyBlurb(format: HTML) {
-    text
-    credit
-  }
-  ...PartnerArtistArtworksRail_partnerArtist
-  node {
-    slug
-    name
-    href
-    formattedNationalityAndBirthday
-    ...FollowArtistButton_artist
-    id
   }
 }
 
@@ -198,6 +175,18 @@ var v0 = [
     "kind": "LocalArgument",
     "name": "artistId",
     "type": "String!"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "first",
+    "type": "Int"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "after",
+    "type": "String"
   }
 ],
 v1 = [
@@ -227,9 +216,14 @@ v2 = [
 ],
 v3 = [
   {
-    "kind": "Literal",
+    "kind": "Variable",
+    "name": "after",
+    "variableName": "after"
+  },
+  {
+    "kind": "Variable",
     "name": "first",
-    "value": 12
+    "variableName": "first"
   }
 ],
 v4 = {
@@ -268,27 +262,13 @@ v8 = [
     "name": "display",
     "storageKey": null
   }
-],
-v9 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "internalID",
-  "storageKey": null
-},
-v10 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "slug",
-  "storageKey": null
-};
+];
 return {
   "fragment": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "PartnerArtistDetailsQuery",
+    "name": "PartnerArtistArtworksRailQuery",
     "selections": [
       {
         "alias": null,
@@ -315,9 +295,9 @@ return {
                 "plural": true,
                 "selections": [
                   {
-                    "args": null,
+                    "args": (v3/*: any*/),
                     "kind": "FragmentSpread",
-                    "name": "PartnerArtistDetails_partnerArtist"
+                    "name": "PartnerArtistArtworksRail_partnerArtist"
                   }
                 ],
                 "storageKey": null
@@ -335,7 +315,7 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "PartnerArtistDetailsQuery",
+    "name": "PartnerArtistArtworksRailQuery",
     "selections": [
       {
         "alias": null,
@@ -361,37 +341,6 @@ return {
                 "name": "edges",
                 "plural": true,
                 "selections": [
-                  {
-                    "alias": null,
-                    "args": [
-                      {
-                        "kind": "Literal",
-                        "name": "format",
-                        "value": "HTML"
-                      }
-                    ],
-                    "concreteType": "PartnerArtistBlurb",
-                    "kind": "LinkedField",
-                    "name": "biographyBlurb",
-                    "plural": false,
-                    "selections": [
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "text",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "credit",
-                        "storageKey": null
-                      }
-                    ],
-                    "storageKey": "biographyBlurb(format:\"HTML\")"
-                  },
                   {
                     "alias": null,
                     "args": (v3/*: any*/),
@@ -637,8 +586,20 @@ return {
                                 "name": "isInquireable",
                                 "storageKey": null
                               },
-                              (v9/*: any*/),
-                              (v10/*: any*/),
+                              {
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "internalID",
+                                "storageKey": null
+                              },
+                              {
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "slug",
+                                "storageKey": null
+                              },
                               {
                                 "alias": "is_saved",
                                 "args": null,
@@ -699,7 +660,7 @@ return {
                         "storageKey": null
                       }
                     ],
-                    "storageKey": "artworksConnection(first:12)"
+                    "storageKey": null
                   },
                   {
                     "alias": null,
@@ -709,54 +670,6 @@ return {
                     "key": "PartnerArtistArtworksRail_artworksConnection",
                     "kind": "LinkedHandle",
                     "name": "artworksConnection"
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "concreteType": "Artist",
-                    "kind": "LinkedField",
-                    "name": "node",
-                    "plural": false,
-                    "selections": [
-                      (v10/*: any*/),
-                      (v7/*: any*/),
-                      (v5/*: any*/),
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "formattedNationalityAndBirthday",
-                        "storageKey": null
-                      },
-                      (v4/*: any*/),
-                      (v9/*: any*/),
-                      {
-                        "alias": "is_followed",
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "isFollowed",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "concreteType": "ArtistCounts",
-                        "kind": "LinkedField",
-                        "name": "counts",
-                        "plural": false,
-                        "selections": [
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "follows",
-                            "storageKey": null
-                          }
-                        ],
-                        "storageKey": null
-                      }
-                    ],
-                    "storageKey": null
                   },
                   (v4/*: any*/)
                 ],
@@ -774,11 +687,11 @@ return {
   "params": {
     "id": null,
     "metadata": {},
-    "name": "PartnerArtistDetailsQuery",
+    "name": "PartnerArtistArtworksRailQuery",
     "operationKind": "query",
-    "text": "query PartnerArtistDetailsQuery(\n  $partnerId: String!\n  $artistId: String!\n) {\n  partner(id: $partnerId) {\n    artistsConnection(artistIDs: [$artistId], first: 1) {\n      edges {\n        ...PartnerArtistDetails_partnerArtist\n        id\n      }\n    }\n    id\n  }\n}\n\nfragment Badge_artwork on Artwork {\n  is_biddable: isBiddable\n  href\n  sale {\n    is_preview: isPreview\n    display_timely_at: displayTimelyAt\n    id\n  }\n}\n\nfragment Contact_artwork on Artwork {\n  href\n  is_inquireable: isInquireable\n  sale {\n    is_auction: isAuction\n    is_live_open: isLiveOpen\n    is_open: isOpen\n    is_closed: isClosed\n    id\n  }\n  partner(shallow: true) {\n    type\n    id\n  }\n  sale_artwork: saleArtwork {\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    counts {\n      bidder_positions: bidderPositions\n    }\n    id\n  }\n}\n\nfragment Details_artwork on Artwork {\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n}\n\nfragment FillwidthItem_artwork on Artwork {\n  image {\n    url(version: \"larger\")\n    aspectRatio\n  }\n  imageTitle\n  title\n  href\n  ...Metadata_artwork\n  ...SaveButton_artwork\n  ...Badge_artwork\n}\n\nfragment FollowArtistButton_artist on Artist {\n  id\n  internalID\n  name\n  slug\n  is_followed: isFollowed\n  counts {\n    follows\n  }\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  ...Contact_artwork\n  href\n}\n\nfragment PartnerArtistArtworksRail_partnerArtist on ArtistPartnerEdge {\n  artworksConnection(first: 12) {\n    edges {\n      node {\n        id\n        ...FillwidthItem_artwork\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment PartnerArtistDetails_partnerArtist on ArtistPartnerEdge {\n  biographyBlurb(format: HTML) {\n    text\n    credit\n  }\n  ...PartnerArtistArtworksRail_partnerArtist\n  node {\n    slug\n    name\n    href\n    formattedNationalityAndBirthday\n    ...FollowArtistButton_artist\n    id\n  }\n}\n\nfragment SaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n"
+    "text": "query PartnerArtistArtworksRailQuery(\n  $partnerId: String!\n  $artistId: String!\n  $first: Int\n  $after: String\n) {\n  partner(id: $partnerId) {\n    artistsConnection(artistIDs: [$artistId], first: 1) {\n      edges {\n        ...PartnerArtistArtworksRail_partnerArtist_2HEEH6\n        id\n      }\n    }\n    id\n  }\n}\n\nfragment Badge_artwork on Artwork {\n  is_biddable: isBiddable\n  href\n  sale {\n    is_preview: isPreview\n    display_timely_at: displayTimelyAt\n    id\n  }\n}\n\nfragment Contact_artwork on Artwork {\n  href\n  is_inquireable: isInquireable\n  sale {\n    is_auction: isAuction\n    is_live_open: isLiveOpen\n    is_open: isOpen\n    is_closed: isClosed\n    id\n  }\n  partner(shallow: true) {\n    type\n    id\n  }\n  sale_artwork: saleArtwork {\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    counts {\n      bidder_positions: bidderPositions\n    }\n    id\n  }\n}\n\nfragment Details_artwork on Artwork {\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n}\n\nfragment FillwidthItem_artwork on Artwork {\n  image {\n    url(version: \"larger\")\n    aspectRatio\n  }\n  imageTitle\n  title\n  href\n  ...Metadata_artwork\n  ...SaveButton_artwork\n  ...Badge_artwork\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  ...Contact_artwork\n  href\n}\n\nfragment PartnerArtistArtworksRail_partnerArtist_2HEEH6 on ArtistPartnerEdge {\n  artworksConnection(first: $first, after: $after) {\n    edges {\n      node {\n        id\n        ...FillwidthItem_artwork\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment SaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n"
   }
 };
 })();
-(node as any).hash = '5a80939f691834224eccaafe4b18f20b';
+(node as any).hash = '735356f4a3e33fc0bbe8490b51775127';
 export default node;
