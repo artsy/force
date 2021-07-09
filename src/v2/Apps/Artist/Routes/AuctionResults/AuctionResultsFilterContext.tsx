@@ -1,20 +1,23 @@
-import React, { useContext, useReducer } from "react"
+import React, { useContext, useReducer, useState } from "react"
+import { omit } from "lodash"
+import useDeepCompareEffect from "use-deep-compare-effect"
+import { StringifyOptions } from "querystring"
 
 export interface AuctionResultsFilters {
   organizations?: string[]
   categories?: string[]
   sizes?: string[]
-  keyword?: string
-  pageAndCursor?: { page: number; cursor: string }
+  keyword?: StringifyOptions
+  pageAndCursor?: { page: number; cursor: string | null }
   sort?: string
-  createdAfterYear?: number
-  createdBeforeYear?: number
+  createdAfterYear?: number | null
+  createdBeforeYear?: number | null
   allowEmptyCreatedDates?: boolean
 
   /** Used to get the overall earliest created year for all lots of given artist */
-  readonly earliestCreatedYear?: number
+  readonly earliestCreatedYear?: number | null
   /** Used to get the overall latest created year for all lots of given artist */
-  readonly latestCreatedYear?: number
+  readonly latestCreatedYear?: number | null
 }
 
 interface AuctionResultsFiltersState extends AuctionResultsFilters {
@@ -27,8 +30,7 @@ export const initialAuctionResultsFilterState: AuctionResultsFilters = {
   organizations: [],
   categories: [],
   sizes: [],
-  keyword: "",
-  // @ts-expect-error STRICT_NULL_CHECK
+  keyword: undefined,
   pageAndCursor: { page: 1, cursor: null },
   sort: "DATE_DESC",
   allowEmptyCreatedDates: true,
@@ -42,17 +44,34 @@ type ChangableFilter = keyof Omit<
   "earliestCreatedYear" | "latestCreatedYear"
 >
 
+interface AuctionResultsFiltersActionPayload {
+  name: keyof AuctionResultsFilters
+  value?: any
+}
+
+interface AuctionResultsFiltersAction {
+  type: "SET" | "UNSET" | "RESET" | "SET_FILTERS" | "SET_STAGED_FILTERS"
+  payload: AuctionResultsFiltersActionPayload | null
+}
+
 export interface AuctionResultsFilterContextProps {
   filters?: AuctionResultsFilters
+  stagedFilters?: AuctionResultsFiltersState
+  currentlySelectedFilters?: () => AuctionResultsFiltersState
+  ZeroState?: React.FC | null
   onChange?: (filterState) => void
-  resetFilters: () => void
-  setFilter: (name: ChangableFilter, value: any) => void
-  unsetFilter: (name: ChangableFilter) => void
+  resetFilters?: (() => void) | null
+  setFilter?: ((name: ChangableFilter, value: any) => void) | null
+  unsetFilter?: ((name: ChangableFilter) => void) | null
   onFilterClick?: (
     key: ChangableFilter,
     value: string,
     filterState: AuctionResultsFilters
   ) => void
+  shouldStageFilterChanges?: boolean
+  setShouldStageFilterChanges?: (value: boolean) => void
+  setStagedFilters?: (state: AuctionResultsFilters) => void
+  setFilters?: (state: AuctionResultsFilters, opts?: { force: boolean }) => void
 }
 
 /**
@@ -62,17 +81,15 @@ export const AuctionResultsFilterContext = React.createContext<
   AuctionResultsFilterContextProps
 >({
   filters: initialAuctionResultsFilterState,
-  // @ts-expect-error STRICT_NULL_CHECK
   setFilter: null,
-  // @ts-expect-error STRICT_NULL_CHECK
   resetFilters: null,
-  // @ts-expect-error STRICT_NULL_CHECK
   unsetFilter: null,
+  ZeroState: null,
 })
 
 export type SharedAuctionResultsFilterContextProps = Pick<
   AuctionResultsFilterContextProps,
-  "filters" | "onFilterClick"
+  "filters" | "onFilterClick" | "filters" | "onFilterClick" | "ZeroState"
 > & {
   onChange?: (filterState) => void
 }
@@ -83,12 +100,11 @@ export const AuctionResultsFilterContextProvider: React.FC<
   SharedAuctionResultsFilterContextProps & {
     children: React.ReactNode
   }
-> = ({ children, filters = {}, onFilterClick }) => {
+> = ({ children, filters = {}, onFilterClick, onChange, ZeroState }) => {
   const initialFilterState = {
     ...initialAuctionResultsFilterState,
     ...filters,
   }
-
   if (filters.earliestCreatedYear) {
     initialFilterState.createdAfterYear = filters.earliestCreatedYear
   }
@@ -96,47 +112,100 @@ export const AuctionResultsFilterContextProvider: React.FC<
     initialFilterState.createdBeforeYear = filters.latestCreatedYear
   }
 
-  auctionResultsFilterResetState = initialFilterState
-
   const [auctionResultsFilterState, dispatch] = useReducer(
     AuctionResultsFilterReducer,
     initialFilterState
   )
+  const [stagedAuctionResultsFilterState, stage] = useReducer(
+    AuctionResultsFilterReducer,
+    {}
+  )
+  const [shouldStageFilterChanges, setShouldStageFilterChanges] = useState(
+    false
+  )
+
+  useDeepCompareEffect(() => {
+    if (onChange) {
+      onChange(omit(auctionResultsFilterState, ["reset"]))
+    }
+  }, [auctionResultsFilterState])
+
+  const currentlySelectedFilters = () => {
+    return shouldStageFilterChanges
+      ? stagedAuctionResultsFilterState
+      : auctionResultsFilterState
+  }
+
+  const dispatchOrStage = (action: AuctionResultsFiltersAction) => {
+    shouldStageFilterChanges ? stage(action) : dispatch(action)
+  }
 
   const auctionResultsFilterContext: AuctionResultsFilterContextProps = {
     filters: auctionResultsFilterState,
 
+    stagedFilters: stagedAuctionResultsFilterState,
+    currentlySelectedFilters: currentlySelectedFilters,
+
     // Handlers
     onFilterClick,
 
+    // Components
+    ZeroState,
+
+    // Filter manipulation
     setFilter: (name, val) => {
       if (onFilterClick) {
-        onFilterClick(name, val, { ...auctionResultsFilterState, [name]: val })
+        onFilterClick(name, val, { ...currentlySelectedFilters(), [name]: val })
       }
-      dispatch({
+
+      const action: AuctionResultsFiltersAction = {
         type: "SET",
         payload: {
           name,
           value: val,
         },
-      })
+      }
+
+      dispatchOrStage(action)
     },
 
     unsetFilter: name => {
-      dispatch({
+      const action: AuctionResultsFiltersAction = {
         type: "UNSET",
         payload: {
           name,
         },
-      })
+      }
+      dispatchOrStage(action)
     },
 
     resetFilters: () => {
-      dispatch({
+      const action: AuctionResultsFiltersAction = {
         type: "RESET",
-        // @ts-expect-error STRICT_NULL_CHECK
         payload: null,
-      })
+      }
+      dispatchOrStage(action)
+    },
+
+    // Staging & applying filter changes
+    shouldStageFilterChanges,
+    setShouldStageFilterChanges,
+
+    setStagedFilters: currentState => {
+      const action: AuctionResultsFiltersAction = {
+        type: "SET_STAGED_FILTERS",
+        payload: currentState as AuctionResultsFiltersActionPayload,
+      }
+      stage(action)
+    },
+
+    setFilters: (newState, options = { force: true }) => {
+      const action: AuctionResultsFiltersAction = {
+        type: "SET_FILTERS",
+        payload: newState as AuctionResultsFiltersActionPayload,
+      }
+      const { force } = options
+      force ? dispatch(action) : dispatchOrStage(action)
     },
   }
 
@@ -149,10 +218,7 @@ export const AuctionResultsFilterContextProvider: React.FC<
 
 const AuctionResultsFilterReducer = (
   state: AuctionResultsFiltersState,
-  action: {
-    type: "SET" | "UNSET" | "RESET"
-    payload: { name: keyof AuctionResultsFilters; value?: any }
-  }
+  action: AuctionResultsFiltersAction
 ): AuctionResultsFiltersState => {
   const arrayFilterTypes: Array<keyof AuctionResultsFilters> = [
     "organizations",
@@ -165,9 +231,8 @@ const AuctionResultsFilterReducer = (
      * Setting  and updating filters
      */
     case "SET": {
-      const { name, value } = action.payload
+      const { name, value } = action.payload || {}
       const filterState: AuctionResultsFilters = {
-        // @ts-expect-error STRICT_NULL_CHECK
         pageAndCursor: { page: 1, cursor: null },
       }
 
@@ -193,10 +258,9 @@ const AuctionResultsFilterReducer = (
         }
       })
 
-      // do not allow a real cursor to be set for page 1. to agree with initial filter state.
-      // @ts-expect-error STRICT_NULL_CHECK
-      if (filterState.pageAndCursor.page === 1) {
-        // @ts-expect-error STRICT_NULL_CHECK
+      // do not allow a real cursor to be set for page 1. to agree with initial
+      // filter state.
+      if (filterState.pageAndCursor && filterState.pageAndCursor.page === 1) {
         filterState.pageAndCursor.cursor = null
       }
 
@@ -228,10 +292,9 @@ const AuctionResultsFilterReducer = (
      * Unsetting a filter
      */
     case "UNSET": {
-      const { name } = action.payload as { name: keyof AuctionResultsFilters }
+      const { name } = action.payload || {}
 
       const filterState: AuctionResultsFilters = {
-        // @ts-expect-error STRICT_NULL_CHECK
         pageAndCursor: { page: 1, cursor: null },
       }
 
@@ -260,8 +323,26 @@ const AuctionResultsFilterReducer = (
     case "RESET": {
       return {
         ...auctionResultsFilterResetState,
+        earliestCreatedYear: state.earliestCreatedYear,
+        latestCreatedYear: state.latestCreatedYear,
+        createdAfterYear: state.earliestCreatedYear,
+        createdBeforeYear: state.latestCreatedYear,
         reset: true,
       }
+    }
+
+    /**
+     * Initializing a staged filter state from current choices (mobile)
+     */
+    case "SET_STAGED_FILTERS": {
+      return action.payload as AuctionResultsFiltersState
+    }
+
+    /**
+     * Replacing current filters eventually with staged filter choices (mobile)
+     */
+    case "SET_FILTERS": {
+      return action.payload as AuctionResultsFiltersState
     }
 
     default:
