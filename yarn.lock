@@ -65,10 +65,10 @@
   dependencies:
     uuid "^8.3.0"
 
-"@artsy/palette@14.42.0":
-  version "14.42.0"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-14.42.0.tgz#f075eb227a90836bf77722fe31d01856195261f7"
-  integrity sha512-kIu6tXQ3Wg/H7uqezTpb5u0QQbw14TwWQRw8c3D4qF2Q16lhy5hxeJwBmHpUOeII4Zctp0a6BsMh45vUsfaXlg==
+"@artsy/palette@14.43.0":
+  version "14.43.0"
+  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-14.43.0.tgz#6c98abfbe8a633280529ed69495eb3c6daf30c1e"
+  integrity sha512-amj1xfubgGQU0oH6xw30e6usFyDcgP2sbr1XaFG2jvwfkwe1V/mTJePDI7LgTrszbebrWlHcc7equlBeHUTNmA==
   dependencies:
     "@seznam/compose-react-refs" "^1.0.6"
     "@styled-system/theme-get" "^5.1.2"
