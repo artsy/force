@@ -8,8 +8,6 @@ const DEBOUNCE_DELAY = 300
 export const KeywordFilter: React.FC = () => {
   const filterContext = useAuctionResultsFilterContext()
 
-  const inputRef = useRef(null)
-
   const updateKeywordFilter = (text: string) => {
     filterContext.setFilter("keyword", text)
   }
@@ -28,7 +26,6 @@ export const KeywordFilter: React.FC = () => {
     <LabeledInput
       placeholder="Search by artwork title, series, or description"
       onChange={event => handleChangeText(event.currentTarget.value)}
-      ref={inputRef}
       type="text"
       label={<MagnifyingGlassIcon />}
     />
