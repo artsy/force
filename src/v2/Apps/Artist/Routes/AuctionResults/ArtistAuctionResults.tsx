@@ -204,7 +204,7 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
             toggleMobileActionSheet={toggleMobileActionSheet}
           />
 
-          <Spacer mt="2" />
+          <Spacer mt={["2", "0"]} />
 
           {auctionResultsLength > 0 ? (
             <LoadingArea isLoading={isLoading}>

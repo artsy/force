@@ -27,7 +27,7 @@ export const KeywordFilter: React.FC = () => {
   return (
     <LabeledInput
       placeholder="Search by artwork title, series, or description"
-      onChange={event => updateKeywordFilter(event.currentTarget.value)}
+      onChange={event => handleChangeText(event.currentTarget.value)}
       ref={inputRef}
       type="text"
       label={<MagnifyingGlassIcon />}

@@ -13,6 +13,7 @@ import { Pagination } from "v2/Components/Pagination"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
+jest.mock("lodash/debounce", () => jest.fn(e => e))
 jest.mock("v2/Utils/openAuthModal")
 jest.mock("v2/Components/Pagination/useComputeHref")
 jest.mock("v2/System/Router/Utils/catchLinks", () => ({
@@ -20,10 +21,6 @@ jest.mock("v2/System/Router/Utils/catchLinks", () => ({
 }))
 jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
   useMatchMedia: () => ({}),
-}))
-jest.mock("lodash", () => ({
-  ...jest.requireActual("lodash"),
-  debounce: jest.fn(),
 }))
 
 describe("AuctionResults", () => {
@@ -263,8 +260,6 @@ describe("AuctionResults", () => {
 
             const input = filter.find("input")
 
-            // debugger
-
             const setInputValue = (
               inputWrapper: ReactWrapper,
               value: string,
@@ -276,10 +271,6 @@ describe("AuctionResults", () => {
             }
 
             setInputValue(input, "test-keyword")
-
-            // input.simulate("change", {
-            //   target: { name: "value", value: "test-keyword" },
-            // })
 
             setTimeout(() => {
               expect(refetchSpy).toHaveBeenCalledTimes(1)
