@@ -48,8 +48,6 @@ const Conversation: React.FC<ConversationProps> = props => {
     userHasLabFeature(user, "Web Inquiry Checkout") &&
     isArtworkOfferable
 
-  // Keeping track of this for scroll on send
-  const [lastMessageID, setLastMessageID] = useState<string | null>("")
   const [showConfirmArtworkModal, setShowConfirmArtworkModal] = useState<
     boolean
   >(false)
@@ -58,7 +56,6 @@ const Conversation: React.FC<ConversationProps> = props => {
 
   const scrollToBottom = () => {
     if (bottomOfMessageContainer.current) {
-      setLastMessageID(conversation?.lastMessageID)
       setTimeout(() => {
         bottomOfMessageContainer!.current!.scrollIntoView({
           behavior: "smooth",
@@ -67,7 +64,7 @@ const Conversation: React.FC<ConversationProps> = props => {
     }
   }
 
-  useEffect(scrollToBottom, [conversation, lastMessageID])
+  useEffect(scrollToBottom, [conversation])
 
   useEffect(() => {
     UpdateConversation(relay.environment, conversation)
