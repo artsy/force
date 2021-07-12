@@ -94,6 +94,7 @@ app.use(require("./apps/ssr-experiments/server").app)
 // it's best to keep them last. Otherwise it's easy for these to unexpectedly
 // catch conventional app routes.
 app.use(require("./apps/profile"))
+app.use(require("./apps/partner_redirect").app)
 app.use(require("./apps/partner2"))
 app.use(require("./apps/partner"))
 app.use(require("./apps/fair_redirect").app)

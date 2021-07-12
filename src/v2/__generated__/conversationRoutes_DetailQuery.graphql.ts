@@ -237,43 +237,11 @@ fragment Conversation_conversation on Conversation {
     item {
       __typename
       ... on Artwork {
-        internalID
         id
-        date
-        title
-        artistNames
-        href
         isOfferableFromInquiry
-        image {
-          url(version: ["large"])
-        }
-        listPrice {
-          __typename
-          ... on Money {
-            display
-          }
-          ... on PriceRange {
-            display
-          }
-        }
+        internalID
       }
-      ... on Show {
-        id
-        fair {
-          name
-          exhibitionPeriod
-          location {
-            city
-            id
-          }
-          id
-        }
-        href
-        name
-        coverImage {
-          url
-        }
-      }
+      ...Item_item
       ... on Node {
         id
       }
@@ -373,6 +341,48 @@ fragment Details_conversation on Conversation {
       ... on Node {
         id
       }
+    }
+  }
+}
+
+fragment Item_item on ConversationItemType {
+  __typename
+  ... on Artwork {
+    internalID
+    id
+    date
+    title
+    artistNames
+    href
+    isOfferableFromInquiry
+    image {
+      url(version: ["large"])
+    }
+    listPrice {
+      __typename
+      ... on Money {
+        display
+      }
+      ... on PriceRange {
+        display
+      }
+    }
+  }
+  ... on Show {
+    id
+    fair {
+      name
+      exhibitionPeriod
+      location {
+        city
+        id
+      }
+      id
+    }
+    href
+    name
+    coverImage {
+      url
     }
   }
 }
@@ -1199,6 +1209,11 @@ return {
                             "name": "isOfferableFromInquiry",
                             "storageKey": null
                           },
+                          (v4/*: any*/),
+                          (v9/*: any*/),
+                          (v10/*: any*/),
+                          (v11/*: any*/),
+                          (v22/*: any*/),
                           {
                             "alias": null,
                             "args": null,

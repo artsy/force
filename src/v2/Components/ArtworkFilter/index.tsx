@@ -43,6 +43,7 @@ import { commercialFilterParamsChanged } from "@artsy/cohesion"
 import { allowedFilters } from "./Utils/allowedFilters"
 import { Sticky } from "v2/Components/Sticky"
 import { ScrollRefContext } from "./ArtworkFilters/useScrollContext"
+import { GeneArtworkFilter_gene } from "v2/__generated__/GeneArtworkFilter_gene.graphql"
 
 /**
  * Primary ArtworkFilter which is wrapped with a context and refetch container.
@@ -107,6 +108,7 @@ export const BaseArtworkFilter: React.FC<
       | ArtistSeriesArtworksFilter_artistSeries
       | FairArtworks_fair
       | ShowArtworks_show
+      | GeneArtworkFilter_gene
     Filters?: JSX.Element
     offset?: number
   }

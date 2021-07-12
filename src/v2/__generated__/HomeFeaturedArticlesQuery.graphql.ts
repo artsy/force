@@ -18,7 +18,7 @@ export type HomeFeaturedArticlesQuery = {
 
 /*
 query HomeFeaturedArticlesQuery {
-  articles(published: true, sort: PUBLISHED_AT_DESC) {
+  articles(featured: true, published: true, sort: PUBLISHED_AT_DESC) {
     ...HomeFeaturedArticles_articles
     id
   }
@@ -40,6 +40,11 @@ fragment HomeFeaturedArticles_articles on Article {
 
 const node: ConcreteRequest = (function(){
 var v0 = [
+  {
+    "kind": "Literal",
+    "name": "featured",
+    "value": true
+  },
   {
     "kind": "Literal",
     "name": "published",
@@ -72,7 +77,7 @@ return {
             "name": "HomeFeaturedArticles_articles"
           }
         ],
-        "storageKey": "articles(published:true,sort:\"PUBLISHED_AT_DESC\")"
+        "storageKey": "articles(featured:true,published:true,sort:\"PUBLISHED_AT_DESC\")"
       }
     ],
     "type": "Query"
@@ -180,7 +185,7 @@ return {
             "storageKey": null
           }
         ],
-        "storageKey": "articles(published:true,sort:\"PUBLISHED_AT_DESC\")"
+        "storageKey": "articles(featured:true,published:true,sort:\"PUBLISHED_AT_DESC\")"
       }
     ]
   },
@@ -189,9 +194,9 @@ return {
     "metadata": {},
     "name": "HomeFeaturedArticlesQuery",
     "operationKind": "query",
-    "text": "query HomeFeaturedArticlesQuery {\n  articles(published: true, sort: PUBLISHED_AT_DESC) {\n    ...HomeFeaturedArticles_articles\n    id\n  }\n}\n\nfragment HomeFeaturedArticles_articles on Article {\n  internalID\n  href\n  title\n  publishedAt(format: \"MMM D YYYY\")\n  thumbnailImage {\n    cropped(width: 325, height: 244) {\n      src\n      srcSet\n    }\n  }\n}\n"
+    "text": "query HomeFeaturedArticlesQuery {\n  articles(featured: true, published: true, sort: PUBLISHED_AT_DESC) {\n    ...HomeFeaturedArticles_articles\n    id\n  }\n}\n\nfragment HomeFeaturedArticles_articles on Article {\n  internalID\n  href\n  title\n  publishedAt(format: \"MMM D YYYY\")\n  thumbnailImage {\n    cropped(width: 325, height: 244) {\n      src\n      srcSet\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '1e1b7f0f910bec7b06b57986d08f15b9';
+(node as any).hash = '1f3bf55b1a5fc5c758b6fccefdabf628';
 export default node;

@@ -83,7 +83,7 @@ spec:
                       - foreground
 
 ---
-apiVersion: autoscaling/v1
+apiVersion: autoscaling/v2beta2
 kind: HorizontalPodAutoscaler
 metadata:
   name: force-web
@@ -95,7 +95,16 @@ spec:
     name: force-web
   minReplicas: 2
   maxReplicas: 3
-  targetCPUUtilizationPercentage: 70
+  behavior:
+    scaleDown:
+      stabilizationWindowSeconds: 1800
+  metrics:
+  - resource:
+      name: cpu
+      target:
+        averageUtilization: 70
+        type: Utilization
+    type: Resource
 
 ---
 apiVersion: v1

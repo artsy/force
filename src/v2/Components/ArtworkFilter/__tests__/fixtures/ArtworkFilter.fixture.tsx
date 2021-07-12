@@ -47,6 +47,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
                 name: "Andy Warhol",
               },
             ],
+            artistNames: "Andy Warhol",
             collecting_institution: null,
             partner: {
               name: "Ambleside Gallery",
@@ -86,6 +87,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
                 name: "Andy Warhol",
               },
             ],
+            artistNames: "Andy Warhol",
             collecting_institution: null,
             partner: {
               name: "Gallery Art",
@@ -125,6 +127,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
                 name: "Andy Warhol",
               },
             ],
+            artistNames: "Andy Warhol",
             collecting_institution: null,
             partner: {
               name: "DTR Modern Galleries",
@@ -168,6 +171,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
                 name: "Andy Warhol",
               },
             ],
+            artistNames: "Andy Warhol",
             collecting_institution: null,
             partner: {
               name: "VINCE fine arts/ephemera",
@@ -207,6 +211,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
                 name: "Andy Warhol",
               },
             ],
+            artistNames: "Andy Warhol",
             collecting_institution: null,
             partner: {
               name: "Gallery Art",
@@ -246,6 +251,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
                 name: "Andy Warhol",
               },
             ],
+            artistNames: "Andy Warhol",
             collecting_institution: null,
             partner: {
               name: "Robert Fontaine Gallery",
@@ -285,6 +291,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
                 name: "Andy Warhol",
               },
             ],
+            artistNames: "Andy Warhol",
             collecting_institution: null,
             partner: {
               name: "McClain Gallery",
@@ -324,6 +331,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
                 name: "Andy Warhol",
               },
             ],
+            artistNames: "Andy Warhol",
             collecting_institution: null,
             partner: {
               name: "Joseph K. Levene Fine Art, Ltd.",
@@ -363,6 +371,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
                 name: "Andy Warhol",
               },
             ],
+            artistNames: "Andy Warhol",
             collecting_institution: null,
             partner: {
               name: "David Benrimon Fine Art",
@@ -402,6 +411,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
                 name: "Andy Warhol",
               },
             ],
+            artistNames: "Andy Warhol",
             collecting_institution: null,
             partner: {
               name: "Graves International Art",
@@ -443,6 +453,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
                 name: "Andy Warhol",
               },
             ],
+            artistNames: "Andy Warhol",
             collecting_institution: null,
             partner: {
               name: "Gallery Art",
@@ -485,6 +496,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
                 name: "Andy Warhol",
               },
             ],
+            artistNames: "Andy Warhol",
             collecting_institution: null,
             partner: {
               name: "Lot 180",
@@ -528,6 +540,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
                 name: "Andy Warhol",
               },
             ],
+            artistNames: "Andy Warhol",
             collecting_institution: null,
             partner: {
               name: "Joseph K. Levene Fine Art, Ltd.",
@@ -571,6 +584,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
                 name: "Andy Warhol",
               },
             ],
+            artistNames: "Andy Warhol",
             collecting_institution: null,
             partner: {
               name: "Hedges Projects",
@@ -614,6 +628,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
                 name: "Andy Warhol",
               },
             ],
+            artistNames: "Andy Warhol",
             collecting_institution: null,
             partner: {
               name: "Hedges Projects",
@@ -653,6 +668,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
                 name: "Andy Warhol",
               },
             ],
+            artistNames: "Andy Warhol",
             collecting_institution: null,
             partner: {
               name: "Samuel Owen Gallery",
@@ -692,6 +708,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
                 name: "Andy Warhol",
               },
             ],
+            artistNames: "Andy Warhol",
             collecting_institution: null,
             partner: {
               name: "Gallery Art",
@@ -731,6 +748,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
                 name: "Andy Warhol",
               },
             ],
+            artistNames: "Andy Warhol",
             collecting_institution: null,
             partner: {
               name: "Gallery Art",
@@ -770,6 +788,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
                 name: "Andy Warhol",
               },
             ],
+            artistNames: "Andy Warhol",
             collecting_institution: null,
             partner: {
               name: "Alpha 137 Gallery",
@@ -811,6 +830,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
                 name: "Andy Warhol",
               },
             ],
+            artistNames: "Andy Warhol",
             collecting_institution: null,
             partner: {
               name: "Gallery Art",
@@ -852,6 +872,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
                 name: "Andy Warhol",
               },
             ],
+            artistNames: "Andy Warhol",
             collecting_institution: null,
             partner: {
               name: "Gallery Art",
@@ -891,6 +912,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
                 name: "Andy Warhol",
               },
             ],
+            artistNames: "Andy Warhol",
             collecting_institution: null,
             partner: {
               name: "DTR Modern Galleries",
@@ -932,6 +954,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
                 name: "Andy Warhol",
               },
             ],
+            artistNames: "Andy Warhol",
             collecting_institution: null,
             partner: {
               name: "Gallery Art",
@@ -971,6 +994,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
                 name: "Andy Warhol",
               },
             ],
+            artistNames: "Andy Warhol",
             collecting_institution: null,
             partner: {
               name: "HG Contemporary",
@@ -1010,6 +1034,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
                 name: "Andy Warhol",
               },
             ],
+            artistNames: "Andy Warhol",
             collecting_institution: null,
             partner: {
               name: "Alpha 137 Gallery",
@@ -1051,6 +1076,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
                 name: "Andy Warhol",
               },
             ],
+            artistNames: "Andy Warhol",
             collecting_institution: null,
             partner: {
               name: "Gallery Art",
@@ -1090,6 +1116,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
                 name: "Andy Warhol",
               },
             ],
+            artistNames: "Andy Warhol",
             collecting_institution: null,
             partner: {
               name: "Long-Sharp Gallery",
@@ -1129,6 +1156,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
                 name: "Andy Warhol",
               },
             ],
+            artistNames: "Andy Warhol",
             collecting_institution: null,
             partner: {
               name: "Gallery Art",
@@ -1168,6 +1196,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
                 name: "Andy Warhol",
               },
             ],
+            artistNames: "Andy Warhol",
             collecting_institution: null,
             partner: {
               name: "Long-Sharp Gallery",
@@ -1209,6 +1238,7 @@ export const ArtworkFilterFixture: ArtworkQueryFilterQueryRawResponse = {
                 name: "Andy Warhol",
               },
             ],
+            artistNames: "Andy Warhol",
             collecting_institution: null,
             partner: {
               name: "Gallery Art",

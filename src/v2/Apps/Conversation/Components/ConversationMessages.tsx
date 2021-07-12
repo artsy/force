@@ -15,6 +15,7 @@ import { OrderUpdateFragmentContainer } from "./OrderUpdate"
 import { OrderUpdate_event } from "v2/__generated__/OrderUpdate_event.graphql"
 import { Message_message } from "v2/__generated__/Message_message.graphql"
 
+
 interface ConversationMessageProps {
   messages: ConversationMessages_messages
   events: ConversationMessages_events | null
@@ -79,6 +80,7 @@ export const ConversationMessages = ({
         if (messageGroup[0].createdAt) {
           today = fromToday(messageGroup[0].createdAt)
         }
+
         return (
           <React.Fragment
             key={`group-${groupIndex}-${messageGroup[0]?.internalID}`}

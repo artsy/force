@@ -3,7 +3,14 @@ import React from "react"
 
 export const BuyerGuaranteeMessage: React.FC = () => {
   return (
-    <Flex bg="black5" p={2} m={1} mb={3} flexDirection="column">
+    <Flex
+      maxWidth="415px"
+      bg="black5"
+      p={2}
+      m={1}
+      mb={3}
+      flexDirection="column"
+    >
       <Text color="black60" variant="mediumText">
         Be Protected by The Artsy Guarantee
       </Text>

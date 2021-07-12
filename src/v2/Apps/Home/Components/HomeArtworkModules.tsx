@@ -2,7 +2,11 @@ import React from "react"
 import { Join, Spacer } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { HomeArtworkModules_homePage } from "v2/__generated__/HomeArtworkModules_homePage.graphql"
-import { HomeArtworkModuleRailQueryRenderer } from "./HomeArtworkModuleRail"
+import {
+  HomeArtworkModuleRailQueryRenderer,
+  HomeArtworkModuleKey,
+} from "./HomeArtworkModuleRail"
+import { MyBidsQueryRenderer } from "v2/Apps/Auctions/Components/MyBids/MyBids"
 
 interface HomeArtworkModulesProps {
   homePage: HomeArtworkModules_homePage
@@ -23,15 +27,19 @@ const HomeArtworkModules: React.FC<HomeArtworkModulesProps> = ({
 
         return (
           <React.Fragment key={artworkModule.title ?? i}>
-            <HomeArtworkModuleRailQueryRenderer
-              title={artworkModule.title}
-              params={{
-                key: artworkModule.key,
-                id: artworkModule.params?.internalID,
-                relatedArtistID: artworkModule.params?.relatedArtistID,
-                followedArtistID: artworkModule.params?.followedArtistID,
-              }}
-            />
+            {(artworkModule.key as HomeArtworkModuleKey) === "active_bids" ? (
+              <MyBidsQueryRenderer />
+            ) : (
+              <HomeArtworkModuleRailQueryRenderer
+                title={artworkModule.title}
+                params={{
+                  key: artworkModule.key,
+                  id: artworkModule.params?.internalID,
+                  relatedArtistID: artworkModule.params?.relatedArtistID,
+                  followedArtistID: artworkModule.params?.followedArtistID,
+                }}
+              />
+            )}
           </React.Fragment>
         )
       })}

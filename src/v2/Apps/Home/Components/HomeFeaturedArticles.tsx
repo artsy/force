@@ -147,7 +147,7 @@ export const HomeFeaturedArticlesQueryRenderer: React.FC = () => {
       environment={relayEnvironment}
       query={graphql`
         query HomeFeaturedArticlesQuery {
-          articles(published: true, sort: PUBLISHED_AT_DESC) {
+          articles(featured: true, published: true, sort: PUBLISHED_AT_DESC) {
             ...HomeFeaturedArticles_articles
           }
         }

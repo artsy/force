@@ -11,10 +11,10 @@ import { PARTNER_NAV_BAR_HEIGHT } from "../../Components/NavigationTabs"
 import { graphql } from "lib/graphql"
 import { createFragmentContainer } from "react-relay"
 import { Media } from "v2/Utils/Responsive"
-import { MOBILE_NAV_HEIGHT, NAV_BAR_HEIGHT } from "v2/Components/NavBar"
 import { usePartnerArtistsLoadingContext } from "../../Utils/PartnerArtistsLoadingContext"
 import { scrollIntoView } from "v2/Utils/scrollHelpers"
 import { useMatchMedia } from "v2/Utils/Hooks/useMatchMedia"
+import { useNavBarHeight } from "v2/Components/NavBar/useNavBarHeight"
 
 export interface ArtistsRouteProps {
   partner: ArtistsRoute_partner
@@ -25,6 +25,7 @@ export const ArtistsRoute: React.FC<ArtistsRouteProps> = ({
   partner,
   match,
 }) => {
+  const { mobile, desktop } = useNavBarHeight()
   const isMobile = useMatchMedia(themeProps.mediaQueries.xs)
   const { isLoaded } = usePartnerArtistsLoadingContext()
 
@@ -35,10 +36,7 @@ export const ArtistsRoute: React.FC<ArtistsRouteProps> = ({
   }, [isLoaded, isMobile])
 
   const scrollIntoArtistDetails = () => {
-    const offset =
-      PARTNER_NAV_BAR_HEIGHT +
-      (isMobile ? MOBILE_NAV_HEIGHT : NAV_BAR_HEIGHT) +
-      20
+    const offset = PARTNER_NAV_BAR_HEIGHT + (isMobile ? mobile : desktop) + 20
 
     scrollIntoView({
       offset: offset,
@@ -55,7 +53,7 @@ export const ArtistsRoute: React.FC<ArtistsRouteProps> = ({
         <PartnerArtistsFragmentContainer
           scrollTo={{
             selector: "#jump--PartnerArtistDetails",
-            offset: PARTNER_NAV_BAR_HEIGHT + NAV_BAR_HEIGHT + 20,
+            offset: PARTNER_NAV_BAR_HEIGHT + desktop + 20,
           }}
           partner={partner}
         />
@@ -64,7 +62,7 @@ export const ArtistsRoute: React.FC<ArtistsRouteProps> = ({
         <PartnerArtistsFragmentContainer
           scrollTo={{
             selector: "#jump--PartnerArtistDetails",
-            offset: PARTNER_NAV_BAR_HEIGHT + MOBILE_NAV_HEIGHT + 20,
+            offset: PARTNER_NAV_BAR_HEIGHT + mobile + 20,
           }}
           partner={partner}
         />

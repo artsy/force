@@ -70,6 +70,36 @@ describe("SizeFilter", () => {
     expect(wrapper.text()).toContain("Width")
   })
 
+  it("size selection don't change empty custom size", async () => {
+    const wrapper = getWrapper()
+
+    await wrapper.find("Checkbox").at(0).simulate("click")
+    expect(context.filters?.sizes).toEqual(["SMALL"])
+
+    expect(context.filters?.height).toEqual(undefined)
+    expect(context.filters?.width).toEqual(undefined)
+  })
+
+  it("width changes don't fire height changes", async () => {
+    const wrapper = getWrapper()
+
+    wrapper
+      .find("button")
+      .filterWhere(n => n.text() === "Show custom size")
+      .simulate("click")
+
+    simulateTyping(wrapper, "width_min", "12")
+    simulateTyping(wrapper, "width_max", "16")
+
+    await wrapper
+      .find("button")
+      .filterWhere(n => n.text() === "Set size")
+      .simulate("click")
+
+    expect(context.filters?.width).toEqual("4.72-6.3")
+    expect(context.filters?.height).toEqual(undefined)
+  })
+
   describe("filter values", () => {
     it("are updated", async () => {
       const wrapper = getWrapper()
@@ -117,7 +147,6 @@ describe("SizeFilter", () => {
       expect(context.filters?.sizes).toEqual([])
       // assert conversion centimeters to inches
       expect(context.filters?.height).toEqual("4.72-9.45")
-      expect(context.filters?.width).toEqual("*-*")
     })
   })
 

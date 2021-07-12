@@ -57,37 +57,6 @@ export class ArtworkMeta extends Component<ArtworkMetaProps> {
     )
   }
 
-  renderSailthruTags() {
-    const { artwork } = this.props
-    // @ts-expect-error STRICT_NULL_CHECK
-    const imageURL = get(artwork, a => a.meta_image.resized.url)
-
-    if (artwork.context && artwork.context.__typename === "Fair") {
-      return (
-        <>
-          <Meta name="artwork_type" content="fair" />
-          <Meta name="artwork_date" content={artwork.date} />
-          {artwork.artist_names && (
-            <Meta name="artist_name" content={artwork.artist_names} />
-          )}
-          {artwork.sale_message && (
-            <Meta name="price" content={artwork.sale_message} />
-          )}
-          <Meta name="sailthru_fair_slug" content={artwork.context.slug} />
-          <Meta name="sailthru_fair_name" content={artwork.context.name} />
-          <Meta name="sailthru_fair_page" content="artwork" />
-          {artwork.partner && (
-            <Meta name="sailthru_partner_name" content={artwork.partner.name} />
-          )}
-          {artwork.image_rights && (
-            <Meta name="sailthru_credit" content={artwork.image_rights} />
-          )}
-          {imageURL && <Meta name="image" content={imageURL} />}
-        </>
-      )
-    }
-  }
-
   renderGoogleAdSnippet() {
     const { artwork, googleAdId: fromPropsGoogleAdId } = this.props
     const { GOOGLE_ADWORDS_ID: fromSharifyGoogleAdId } = sd
@@ -168,7 +137,6 @@ export class ArtworkMeta extends Component<ArtworkMetaProps> {
 
         <SeoDataForArtwork artwork={artwork} />
         {this.renderImageMetaTags()}
-        {this.renderSailthruTags()}
         {this.renderGoogleAdSnippet()}
         {this.renderZendeskScript()}
       </>

@@ -1,3 +1,5 @@
+/* eslint-disable jest/no-disabled-tests */
+/* eslint-disable jest/no-done-callback */
 /*
  * decaffeinate suggestions:
  * DS102: Remove unnecessary code created because of implicit returns
@@ -27,7 +29,6 @@ describe("Article routes", function () {
     }
     this.next = sinon.stub()
     sinon.stub(Backbone, "sync")
-    return routes.__set__("sailthru", { apiGet: sinon.stub().yields("error") })
   })
 
   afterEach(() => Backbone.sync.restore())
@@ -39,13 +40,16 @@ describe("Article routes", function () {
         partner_channel_id: "123",
         slug: "foobar",
       })
+      const partner = fabricate("partner")
       routes.article(this.req, this.res, this.next)
       Backbone.sync.args[0][1].url().should.containEql("api/articles/foobar")
       Backbone.sync.args[0][2].success(article)
-      Backbone.sync.args[2][2].success(fabricate("partner"))
+      Backbone.sync.args[2][2].success(partner)
       return _.defer(() =>
         _.defer(() => {
-          this.res.redirect.args[0][0].should.equal("/gagosian/article/foobar")
+          this.res.redirect.args[0][0].should.equal(
+            `/partner/${partner.id}/article/foobar`
+          )
           return done()
         })
       )
@@ -111,7 +115,6 @@ describe("Article routes", function () {
 
 describe("#articles", function () {
   beforeEach(function () {
-    routes.__set__("sailthru", { apiGet: sinon.stub().yields("error") })
     const end = sinon
       .stub()
       .yields(null, { body: { data: { articles: [fixtures.article] } } })
@@ -136,7 +139,7 @@ describe("#articles", function () {
 
   afterEach(() => request.post.restore())
 
-  xit("fetches a collection of articles and renders the list", function (done) {
+  it.skip("fetches a collection of articles and renders the list", function (done) {
     routes.articles(this.req, this.res, this.next)
     this.res.render.args[0][0].should.equal("articles")
     this.res.render.args[0][1].articles[0].thumbnail_title.should.containEql(

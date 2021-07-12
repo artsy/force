@@ -8,7 +8,7 @@ export const BuyerGuaranteeMeta: React.FC = () => {
   const href = `${getENV("APP_URL")}/buyer-guarantee`
   const description =
     "Artsy is the safest place to buy the art you love. Every purchase made exclusively with Artsy’s secure checkout benefits from our full suite of buyer protections."
-  const src = cropped("http://files.artsy.net/buyerGuaranteeHeroImage.jpg", {
+  const src = cropped("https://files.artsy.net/buyerGuaranteeHeroImage.jpg", {
     width: 1600,
     height: 800,
   })

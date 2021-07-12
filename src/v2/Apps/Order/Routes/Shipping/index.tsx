@@ -88,9 +88,7 @@ export interface ShippingState {
   addressErrors: AddressErrors
   addressTouched: AddressTouched
   selectedSavedAddress: string
-  editAddressIndex: number
   saveAddress: boolean
-  showModal: boolean
 }
 
 const logger = createLogger("Order/Routes/Shipping/index.tsx")
@@ -110,9 +108,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
     phoneNumberError: "",
     phoneNumberTouched: false,
     selectedSavedAddress: defaultShippingAddressIndex(this.props.me),
-    editAddressIndex: -1,
     saveAddress: true,
-    showModal: false,
   }
 
   get touchedAddress() {
@@ -233,7 +229,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
             }
           }, // onError
           this.props.me, // me
-          () => this.setState({ showModal: false }) // closeModal
+          () => {} // closeModal
         )
       }
 
@@ -274,10 +270,6 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
     } else {
       this.props.dialog.showErrorDialog()
     }
-  }
-
-  handleClickEdit = (value: number) => {
-    this.setState({ editAddressIndex: value, showModal: true })
   }
 
   onAddressChange: AddressChangeHandler = (address, key) => {
@@ -406,7 +398,6 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
                   <SavedAddresses
                     me={this.props.me}
                     onSelect={value => onSelectSavedAddress(value)}
-                    handleClickEdit={this.handleClickEdit}
                     inCollectorProfile={false}
                     onAddressDelete={this.handleAddressDelete}
                   />

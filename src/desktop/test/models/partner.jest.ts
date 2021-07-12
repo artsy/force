@@ -42,7 +42,7 @@ describe("Partner", () => {
     it("returns the client link to this partner profile slug", () => {
       testContext.partner
         .href()
-        .should.equal(`/${testContext.partner.get("default_profile_id")}`)
+        .should.equal(`/partner/${testContext.partner.get("id")}`)
     })
   })
 

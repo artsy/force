@@ -9,7 +9,7 @@ jest.mock("sharify", () => ({
       {
         slug: "ca3",
         copy: "Discover and Buy Works from Art Fairs",
-        image: "http://files.artsy.net/images/art-fair.jpg",
+        image: "https://files.artsy.net/images/art-fair.jpg",
       },
     ],
   },
@@ -42,7 +42,7 @@ describe("BannerPopUp", () => {
     expect(mediator.trigger).toBeCalledWith("open:auth", {
       copy: "Discover and Buy Works from Art Fairs",
       destination: "https://artsy.net/",
-      image: "http://files.artsy.net/images/art-fair.jpg",
+      image: "https://files.artsy.net/images/art-fair.jpg",
       intent: "viewFair",
       mode: "signup",
       contextModule: "bannerPopUp",

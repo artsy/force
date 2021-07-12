@@ -36,7 +36,7 @@ mixin artwork(artwork)
       if artwork.partner && artwork.partner.name
         p.artwork-item-partner
           if artwork.partner.slug
-            a(href='/' + artwork.partner.slug)= artwork.partner.name
+            a(href='/partner/' + artwork.partner.slug)= artwork.partner.name
           else
             = artwork.partner.name
 

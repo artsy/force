@@ -88,9 +88,18 @@ export const GeneShow: React.FC<GeneShowProps> = ({ gene }) => {
 export const GeneShowFragmentContainer = createFragmentContainer(GeneShow, {
   gene: graphql`
     fragment GeneShow_gene on Gene
-      @argumentDefinitions(input: { type: "FilterArtworksInput" }) {
+      @argumentDefinitions(
+        input: { type: "FilterArtworksInput" }
+        aggregations: { type: "[ArtworkAggregation]" }
+        shouldFetchCounts: { type: "Boolean!", defaultValue: false }
+      ) {
       ...GeneMeta_gene
-      ...GeneArtworkFilter_gene @arguments(input: $input)
+      ...GeneArtworkFilter_gene
+        @arguments(
+          input: $input
+          aggregations: $aggregations
+          shouldFetchCounts: $shouldFetchCounts
+        )
       ...FollowGeneButton_gene
       name
       formattedDescription: description(format: HTML)
