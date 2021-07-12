@@ -64,7 +64,6 @@ module.exports =
   GEOIP_ENDPOINT: 'https://freegeoip.app/json/'
   GOOGLE_ADWORDS_ID: null
   GOOGLE_MAPS_API_KEY: null
-  IMAGE_LAZY_LOADING: true
   IMAGE_PROXY: 'GEMINI'
   IP_DENYLIST: ''
   LINKEDIN_KEY: null

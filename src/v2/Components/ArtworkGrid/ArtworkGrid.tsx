@@ -11,7 +11,6 @@ import { ComponentRef, createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { Media, valuesWithBreakpointProps } from "v2/Utils/Responsive"
 import GridItem from "../Artwork/GridItem"
-import { Mediator } from "lib/mediator"
 
 // @ts-expect-error STRICT_NULL_CHECK
 type SectionedArtworks = Array<Array<ArtworkGrid_artworks["edges"][0]["node"]>>
@@ -26,7 +25,6 @@ export interface ArtworkGridProps
   columnCount?: number | number[]
   preloadImageCount?: number
   itemMargin?: number
-  mediator?: Mediator
   onBrickClick?: (artwork: Artwork, artworkIndex: number) => void
   onClearFilters?: () => any
   onLoadMore?: () => any
@@ -132,7 +130,6 @@ export class ArtworkGridContainer extends React.Component<
             contextModule={contextModule}
             artwork={artwork}
             key={artwork.id}
-            mediator={this.props.mediator}
             // @ts-expect-error STRICT_NULL_CHECK
             lazyLoad={artworkIndex >= preloadImageCount}
             onClick={() => {

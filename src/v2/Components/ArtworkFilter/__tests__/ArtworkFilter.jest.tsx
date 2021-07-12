@@ -88,7 +88,7 @@ describe("ArtworkFilter", () => {
 
     it("triggers #onBrickClick on brick click", async () => {
       const wrapper = await getWrapper()
-      wrapper.find("ArtworkGridItemContainer a").first().simulate("click")
+      wrapper.find("ArtworkGridItem a").first().simulate("click")
 
       expect(trackEvent).toHaveBeenCalledWith({
         action: "clickedMainArtworkGrid",

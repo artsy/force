@@ -5,46 +5,39 @@ import { DetailsFragmentContainer as Details } from "./Details"
 import { Box, BoxProps } from "@artsy/palette"
 import { RouterLink } from "v2/System/Router/RouterLink"
 
-export interface MetadataProps extends BoxProps {
+export interface MetadataProps
+  extends BoxProps,
+    React.HTMLAttributes<HTMLDivElement> {
   artwork: Metadata_artwork
   extended?: boolean
   hidePartnerName?: boolean
   hideArtistName?: boolean
   hideSaleInfo?: boolean
-  className?: string
 }
 
-export class Metadata extends React.Component<MetadataProps> {
-  static defaultProps = {
-    extended: true,
-    mt: 1,
-  }
-
-  render() {
-    const {
-      artwork,
-      className,
-      extended,
-      hidePartnerName,
-      hideArtistName,
-      hideSaleInfo,
-      ...boxProps
-    } = this.props
-
-    return (
-      <RouterLink to={artwork.href} textDecoration="none">
-        <Box textAlign="left" className={className} {...(boxProps as any)}>
-          <Details
-            includeLinks={false}
-            artwork={artwork}
-            hideSaleInfo={hideSaleInfo}
-            hidePartnerName={hidePartnerName}
-            hideArtistName={hideArtistName}
-          />
-        </Box>
-      </RouterLink>
-    )
-  }
+export const Metadata: React.FC<MetadataProps> = ({
+  extended = true,
+  mt = 1,
+  artwork,
+  hidePartnerName,
+  hideArtistName,
+  hideSaleInfo,
+  ...rest
+}) => {
+  return (
+    <RouterLink to={artwork.href} textDecoration="none">
+      {/* FIXME: Remove this wrapper */}
+      <Box mt={mt} textAlign="left" {...rest}>
+        <Details
+          includeLinks={false}
+          artwork={artwork}
+          hideSaleInfo={hideSaleInfo}
+          hidePartnerName={hidePartnerName}
+          hideArtistName={hideArtistName}
+        />
+      </Box>
+    </RouterLink>
+  )
 }
 
 export default createFragmentContainer(Metadata, {
