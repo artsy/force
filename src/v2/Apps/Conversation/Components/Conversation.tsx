@@ -36,8 +36,6 @@ export const PAGE_SIZE: number = 15
 const Conversation: React.FC<ConversationProps> = props => {
   const { conversation, relay, showDetails, setShowDetails } = props
   const { user } = useSystemContext()
-  const bottomOfPage = useRef(null)
-  const initialMount = useRef(true)
 
   const bottomOfMessageContainer = useRef<HTMLElement>(null)
 
@@ -87,8 +85,7 @@ const Conversation: React.FC<ConversationProps> = props => {
     )
   })
 
-  const 
-  = (): void => {
+  const loadMore = (): void => {
     if (relay.isLoading() || !relay.hasMore()) return
     setFetchingMore(true)
 
@@ -136,7 +133,6 @@ const Conversation: React.FC<ConversationProps> = props => {
                 </SpinnerContainer>
               ) : null}
               <ConversationMessages
-
                 messages={conversation.messagesConnection!}
                 events={conversation.orderConnection}
               />
