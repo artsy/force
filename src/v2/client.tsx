@@ -1,4 +1,4 @@
-import "desktop/lib/webpackPublicPath"
+import "lib/webpackPublicPath"
 
 import React from "react"
 import ReactDOM from "react-dom"
@@ -8,28 +8,36 @@ import { logoutEventHandler } from "desktop/lib/logoutHandler"
 import { mediator } from "lib/mediator"
 import { beforeAnalyticsReady, onAnalyticsReady } from "lib/analytics/helpers"
 import { getClientParam } from "./Utils/getClientParam"
+import { buildClientApp } from "v2/System/Router/client"
 
 async function setupClient() {
-  const clientImports = await Promise.all([
+  Promise.all([
     import(
-      /* webpackChunkName: "clientAppMain" */
-      "v2/System/Router/client"
-    ),
-    import(
-      /* webpackChunkName: "clientAppModals" */
+      /* webpackChunkName: "clientAppModals", webpackPrefetch: true */
       "desktop/apps/authentication/client/initModalManager"
     ),
     import(
-      /* webpackChunkName: "clientAppModals" */
+      /* webpackChunkName: "clientAppModals", webpackPrefetch: true */
       "desktop/components/artistSignupModal/artistSignupModal"
     ),
-  ])
+  ]).then(clientImports => {
+    const [{ initModalManager }, { setupArtistSignUpModal }] = clientImports
 
-  const [
-    { buildClientApp },
-    { initModalManager },
-    { setupArtistSignUpModal },
-  ] = clientImports
+    // Attach analytics
+    if (getClientParam("disableAnalytics") !== "true") {
+      beforeAnalyticsReady()
+      // @ts-expect-error STRICT_NULL_CHECK
+      window.analytics.ready(() => {
+        onAnalyticsReady()
+      })
+    }
+
+    initModalManager()
+    setupArtistSignUpModal()
+
+    // Logout handler
+    mediator.on("auth:logout", logoutEventHandler)
+  })
 
   const { ClientApp } = await buildClientApp({
     routes: getAppRoutes(),
@@ -39,21 +47,6 @@ async function setupClient() {
   await loadableReady(() => {
     ReactDOM.hydrate(<ClientApp />, document.getElementById("react-root"))
   })
-
-  // Attach analytics
-  if (getClientParam("disableAnalytics") !== "true") {
-    beforeAnalyticsReady()
-    // @ts-expect-error STRICT_NULL_CHECK
-    window.analytics.ready(() => {
-      onAnalyticsReady()
-    })
-  }
-
-  initModalManager()
-  setupArtistSignUpModal()
-
-  // Logout handler
-  mediator.on("auth:logout", logoutEventHandler)
 }
 
 // Initialze clent
