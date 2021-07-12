@@ -59,14 +59,16 @@ export const PartnerArtistDetailsList: React.FC<PartnerArtistDetailsListProps> =
 
   return (
     <Box ref={ref => ref && (containerRef.current = ref)} mt={4}>
-      {/* @ts-expect-error STRICT_NULL_CHECK */}
-      {partner.artists.edges.map(edge => {
+      {partner.artists?.edges?.map(edge => {
+        if (!edge) {
+          return null
+        }
+
         return (
           <PartnerArtistDetailsFragmentContainer
-            // @ts-expect-error STRICT_NULL_CHECK
             key={edge.id}
-            // @ts-expect-error STRICT_NULL_CHECK
             partnerArtist={edge}
+            partnerId={partner.slug}
           />
         )
       })}
