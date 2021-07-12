@@ -12,10 +12,31 @@ export interface ExhibitorFilters {
   sort?: string
 }
 
+export interface ExhibitorFiltersState extends ExhibitorFilters {
+  reset?: boolean
+}
+
 export interface ExhibitorFilterContextProps {
-  filters?: any
+  filters?: ExhibitorFiltersState
   sortOptions?: SortOptions
-  setFilter: any
+  setFilter: (name: keyof ExhibitorFilters, value: any) => void
+  onFilterClick?: (
+    key: keyof ExhibitorFilters,
+    value: string,
+    filterState: ExhibitorFilters
+  ) => void
+}
+
+export type SharedExhibitorFilterContextProps = Pick<
+  ExhibitorFilterContextProps,
+  "filters" | "sortOptions" | "onFilterClick"
+> & {
+  onChange?: (filterState) => void
+}
+
+interface ExhibitorFiltersAction {
+  type: "SET"
+  payload: { name: keyof ExhibitorFilters; value?: any }
 }
 
 export const initialExhibitorFilterState: ExhibitorFilters = {
@@ -27,10 +48,10 @@ export const ExhibitorFilterContext = createContext<
 >({
   filters: initialExhibitorFilterState,
   sortOptions: [],
-  setFilter: null,
+  setFilter: () => {},
 })
 
-export const ExhibitorFilterContextProvider: React.FC<any> = ({
+export const ExhibitorFilterContextProvider: React.FC<SharedExhibitorFilterContextProps> = ({
   children,
   filters = {},
   sortOptions,
@@ -59,7 +80,7 @@ export const ExhibitorFilterContextProvider: React.FC<any> = ({
         })
       }
 
-      const action: any = {
+      const action: ExhibitorFiltersAction = {
         type: "SET",
         payload: {
           name,
@@ -84,14 +105,17 @@ export const ExhibitorFilterContextProvider: React.FC<any> = ({
   )
 }
 
-const exhibitorFilterReducer = (state: any, action: any): any => {
+const exhibitorFilterReducer = (
+  state: ExhibitorFiltersState,
+  action: ExhibitorFiltersAction
+): ExhibitorFiltersState => {
   switch (action.type) {
     case "SET": {
       const { name, value } = action.payload
 
-      let filterState: any = {}
+      let filterState: ExhibitorFilters = {}
 
-      const primitiveFilterTypes: Array<keyof any> = ["sort"]
+      const primitiveFilterTypes: Array<keyof ExhibitorFilters> = ["sort"]
       primitiveFilterTypes.forEach(filter => {
         if (name === filter) {
           filterState[name as string] = value

@@ -58,12 +58,12 @@ const FairExhibitors: React.FC<FairExhibitorsProps> = ({ fair, relay }) => {
   const [isGridLoading, setIsGridLoading] = useState(false)
   const [isButtonLoading, setIsButtonLoading] = useState(false)
 
-  const previousFilters = usePrevious(context.filters)
+  const previousFilters = usePrevious(context.filters!)
 
   useDeepCompareEffect(() => {
     let filtersHaveUpdated = false
 
-    Object.entries(context.filters).forEach(([filterKey, currentFilter]) => {
+    Object.entries(context.filters!).forEach(([filterKey, currentFilter]) => {
       const previousFilter = previousFilters[filterKey]
       filtersHaveUpdated = !isEqual(currentFilter, previousFilter)
     })
