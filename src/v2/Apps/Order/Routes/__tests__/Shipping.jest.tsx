@@ -28,6 +28,7 @@ import {
 import { ShippingFragmentContainer, ShippingRoute } from "../Shipping"
 import { OrderAppTestPage } from "./Utils/OrderAppTestPage"
 import {
+  deleteAddressSuccess,
   saveAddressSuccess,
   updateAddressSuccess,
 } from "../__fixtures__/MutationResults/saveAddress"
@@ -127,6 +128,7 @@ describe("Shipping", () => {
       ...settingOrderShipmentSuccess,
       ...saveAddressSuccess,
       ...updateAddressSuccess,
+      ...deleteAddressSuccess,
       ...selectShippingQuoteSuccess,
     },
     query: graphql`
@@ -424,7 +426,9 @@ describe("Shipping", () => {
 
         expect(mutations.mockFetch).toHaveBeenCalledTimes(3)
         expect(mutations.mockFetch.mock.calls[1][0].name).toEqual(
-          "SelectShippingOptionMutation",
+          "SelectShippingOptionMutation"
+        )
+        expect(mutations.mockFetch.mock.calls[2][0].name).toEqual(
           "CreateUserAddressMutation"
         )
 
@@ -451,6 +455,75 @@ describe("Shipping", () => {
               },
             }
         `)
+      })
+
+      it("save address only once", async () => {
+        fillAddressForm(page.root, {
+          ...validAddress,
+          region: "New Brunswick",
+          country: "US",
+        })
+
+        mutations.useResultsOnce(settingOrderArtaShipmentSuccess)
+
+        await page.clickSubmit()
+
+        expect(mutations.mockFetch).toHaveBeenCalledTimes(2)
+        expect(mutations.mockFetch.mock.calls[0][0].name).toEqual(
+          "SetShippingMutation"
+        )
+
+        expect(mutations.mockFetch.mock.calls[1][0].name).toEqual(
+          "CreateUserAddressMutation"
+        )
+
+        page.find(`[data-test="shipping-quotes"]`).last().simulate("click")
+
+        await page.clickSubmit()
+
+        expect(mutations.mockFetch).toHaveBeenCalledTimes(4)
+        expect(mutations.mockFetch.mock.calls[2][0].name).toEqual(
+          "SelectShippingOptionMutation"
+        )
+        expect(mutations.mockFetch.mock.calls[3][0].name).toEqual(
+          "UpdateUserAddressMutation"
+        )
+      })
+
+      it("remove previously saved address if save address is not selected", async () => {
+        fillAddressForm(page.root, {
+          ...validAddress,
+          region: "New Brunswick",
+          country: "US",
+        })
+
+        mutations.useResultsOnce(settingOrderArtaShipmentSuccess)
+
+        await page.clickSubmit()
+
+        expect(mutations.mockFetch).toHaveBeenCalledTimes(2)
+        expect(mutations.mockFetch.mock.calls[0][0].name).toEqual(
+          "SetShippingMutation"
+        )
+        expect(mutations.mockFetch.mock.calls[1][0].name).toEqual(
+          "CreateUserAddressMutation"
+        )
+
+        page.find(`[data-test="shipping-quotes"]`).last().simulate("click")
+        page
+          .find(`[data-test="save-address-checkbox"]`)
+          .first()
+          .simulate("click")
+
+        await page.clickSubmit()
+
+        expect(mutations.mockFetch).toHaveBeenCalledTimes(4)
+        expect(mutations.mockFetch.mock.calls[2][0].name).toEqual(
+          "SelectShippingOptionMutation"
+        )
+        expect(mutations.mockFetch.mock.calls[3][0].name).toEqual(
+          "DeleteUserAddressMutation"
+        )
       })
     })
 
@@ -683,7 +756,7 @@ describe("Shipping", () => {
     })
 
     it("saves the default address selection into state", async () => {
-      expect(page.find(ShippingRoute).state().selectedSavedAddress).toEqual("1")
+      expect(page.find(ShippingRoute).state().selectedAddressID).toEqual("2")
     })
     it("commits the mutation with selected address and phone number", async () => {
       await page.clickSubmit()
@@ -712,7 +785,7 @@ describe("Shipping", () => {
     it("when another saved address is selected commits mutation with selected address and phone number", async () => {
       page.find(`[data-test="savedAddress"]`).first().simulate("click")
       await page.update()
-      expect(page.find(ShippingRoute).state().selectedSavedAddress).toEqual("0")
+      expect(page.find(ShippingRoute).state().selectedAddressID).toEqual("1")
       await page.clickSubmit()
 
       expect(mutations.mockFetch).toHaveBeenCalledTimes(1)
@@ -869,6 +942,137 @@ describe("Shipping", () => {
         expect(routes.mockPushRoute).toHaveBeenCalledWith(
           "/orders/1234/payment"
         )
+      })
+
+      it("reload shipping quotes after selected address edited", async () => {
+        page
+          .find(`[data-test="editAddressInShipping"]`)
+          .last()
+          .simulate("click")
+        const inputs = page.find("AddressModal").find("input")
+        inputs.forEach(input => {
+          input.instance().value = `Test input '${input.props().name}'`
+          input.simulate("change")
+        })
+        const countrySelect = page.find("AddressModal").find("select")
+        countrySelect.instance().value = `US`
+        countrySelect.simulate("change")
+
+        mutations.useResultsOnce({
+          updateUserAddress: {
+            userAddressOrErrors: {
+              internalID: "2",
+              id: "addressID2",
+              isDefault: true,
+              addressLine1: "Test input 'addressLine1'",
+              addressLine2: "Test input 'addressLine2'",
+              city: "Test input 'city'",
+              country: "US",
+              name: "Test input 'name'",
+              phoneNumber: "Test input 'phoneNumber'",
+              postalCode: "Test input 'postalCode'",
+              region: "Test input 'region'",
+            },
+          },
+        })
+
+        const form = page.find("form").first()
+        form.props().onSubmit()
+
+        await page.update()
+
+        expect(mutations.mockFetch.mock.calls[1][0].name).toEqual(
+          "UpdateUserAddressMutation"
+        )
+        expect(mutations.mockFetch.mock.calls[2][0].name).toEqual(
+          "SetShippingMutation"
+        )
+
+        expect(mutations.mockFetch).toHaveBeenCalledTimes(3)
+        expect(mutations.mockFetch.mock.calls[1][1]).toMatchInlineSnapshot(`
+              Object {
+                "input": Object {
+                  "attributes": Object {
+                    "addressLine1": "Test input 'addressLine1'",
+                    "addressLine2": "Test input 'addressLine2'",
+                    "addressLine3": "",
+                    "city": "Test input 'city'",
+                    "country": "US",
+                    "name": "Test input 'name'",
+                    "phoneNumber": "Test input 'phoneNumber'",
+                    "postalCode": "Test input 'postalCode'",
+                    "region": "Test input 'region'",
+                  },
+                  "userAddressID": "2",
+                },
+              }
+            `)
+      })
+
+      it("does not reload shipping quotes after edit not selected address", async () => {
+        expect(mutations.mockFetch.mock.calls[0][0].name).toEqual(
+          "SetShippingMutation"
+        )
+
+        page
+          .find(`[data-test="editAddressInShipping"]`)
+          .first()
+          .simulate("click")
+        const inputs = page.find("AddressModal").find("input")
+        inputs.forEach(input => {
+          input.instance().value = `Test input '${input.props().name}'`
+          input.simulate("change")
+        })
+        const countrySelect = page.find("AddressModal").find("select")
+        countrySelect.instance().value = `US`
+        countrySelect.simulate("change")
+
+        mutations.useResultsOnce({
+          updateUserAddress: {
+            userAddressOrErrors: {
+              internalID: "1",
+              id: "addressID1",
+              isDefault: false,
+              addressLine1: "Test input 'addressLine1'",
+              addressLine2: "Test input 'addressLine2'",
+              city: "Test input 'city'",
+              country: "US",
+              name: "Test input 'name'",
+              phoneNumber: "Test input 'phoneNumber'",
+              postalCode: "Test input 'postalCode'",
+              region: "Test input 'region'",
+            },
+          },
+        })
+
+        const form = page.find("form").first()
+        form.props().onSubmit()
+
+        await page.update()
+
+        expect(mutations.mockFetch.mock.calls[1][0].name).toEqual(
+          "UpdateUserAddressMutation"
+        )
+
+        expect(mutations.mockFetch).toHaveBeenCalledTimes(2)
+        expect(mutations.mockFetch.mock.calls[1][1]).toMatchInlineSnapshot(`
+              Object {
+                "input": Object {
+                  "attributes": Object {
+                    "addressLine1": "Test input 'addressLine1'",
+                    "addressLine2": "Test input 'addressLine2'",
+                    "addressLine3": "",
+                    "city": "Test input 'city'",
+                    "country": "US",
+                    "name": "Test input 'name'",
+                    "phoneNumber": "Test input 'phoneNumber'",
+                    "postalCode": "Test input 'postalCode'",
+                    "region": "Test input 'region'",
+                  },
+                  "userAddressID": "1",
+                },
+              }
+            `)
       })
     })
 

@@ -41,7 +41,7 @@ export const defaultShippingAddressIndex = (
   const addressList = me.addressConnection?.edges
 
   if (addressList && addressList.length > 0) {
-    let defaultAddressIndex: number
+    let defaultAddressID: string
 
     if (
       order.requestedFulfillment &&
@@ -58,7 +58,7 @@ export const defaultShippingAddressIndex = (
         postalCode,
         region,
       } = order.requestedFulfillment
-      defaultAddressIndex = addressList?.findIndex(
+      defaultAddressID = addressList?.find(
         address =>
           address?.node?.addressLine1 == addressLine1 &&
           address?.node?.addressLine2 == addressLine2 &&
@@ -68,14 +68,15 @@ export const defaultShippingAddressIndex = (
           address?.node?.postalCode == postalCode &&
           address?.node?.region == region &&
           address?.node?.phoneNumber == phoneNumber
-      )
+      )?.node?.internalID!
     } else {
-      defaultAddressIndex = addressList.findIndex(
-        address => address?.node?.isDefault
-      )
+      defaultAddressID = addressList.find(address => address?.node?.isDefault)
+        ?.node?.internalID!
     }
 
-    return String(defaultAddressIndex > -1 ? defaultAddressIndex : 0)
+    return defaultAddressID
+      ? defaultAddressID
+      : addressList[0]?.node?.internalID!
   } else {
     return NEW_ADDRESS
   }

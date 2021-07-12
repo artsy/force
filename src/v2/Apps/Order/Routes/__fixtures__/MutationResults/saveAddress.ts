@@ -1,5 +1,6 @@
 import { UpdateUserAddressMutationResponse } from "v2/__generated__/UpdateUserAddressMutation.graphql"
 import { CreateUserAddressMutationResponse } from "v2/__generated__/CreateUserAddressMutation.graphql"
+import { DeleteUserAddressMutationResponse } from "v2/__generated__/DeleteUserAddressMutation.graphql"
 
 export const saveAddressSuccess: CreateUserAddressMutationResponse = {
   createUserAddress: {
@@ -34,6 +35,24 @@ export const updateAddressSuccess: UpdateUserAddressMutationResponse = {
       region: "NY",
       postalCode: "10012",
       country: "USA",
+    },
+  },
+}
+
+export const deleteAddressSuccess: DeleteUserAddressMutationResponse = {
+  deleteUserAddress: {
+    userAddressOrErrors: {
+      internalID: "1",
+      addressLine1: "1 Main St",
+      addressLine2: "",
+      city: "New York",
+      country: "US",
+      isDefault: false,
+      name: "Test Name",
+      phoneNumber: "555-555-5555",
+      postalCode: "28001",
+      region: "",
+      id: "addressID1",
     },
   },
 }
