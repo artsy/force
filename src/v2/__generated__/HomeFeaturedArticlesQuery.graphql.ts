@@ -35,6 +35,10 @@ fragment HomeFeaturedArticles_articles on Article {
       srcSet
     }
   }
+  author {
+    name
+    id
+  }
 }
 */
 
@@ -55,7 +59,14 @@ var v0 = [
     "name": "sort",
     "value": "PUBLISHED_AT_DESC"
   }
-];
+],
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+};
 return {
   "fragment": {
     "argumentDefinitions": [],
@@ -180,10 +191,23 @@ return {
           {
             "alias": null,
             "args": null,
-            "kind": "ScalarField",
-            "name": "id",
+            "concreteType": "Author",
+            "kind": "LinkedField",
+            "name": "author",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "name",
+                "storageKey": null
+              },
+              (v1/*: any*/)
+            ],
             "storageKey": null
-          }
+          },
+          (v1/*: any*/)
         ],
         "storageKey": "articles(featured:true,published:true,sort:\"PUBLISHED_AT_DESC\")"
       }
@@ -194,7 +218,7 @@ return {
     "metadata": {},
     "name": "HomeFeaturedArticlesQuery",
     "operationKind": "query",
-    "text": "query HomeFeaturedArticlesQuery {\n  articles(featured: true, published: true, sort: PUBLISHED_AT_DESC) {\n    ...HomeFeaturedArticles_articles\n    id\n  }\n}\n\nfragment HomeFeaturedArticles_articles on Article {\n  internalID\n  href\n  title\n  publishedAt(format: \"MMM D YYYY\")\n  thumbnailImage {\n    cropped(width: 325, height: 244) {\n      src\n      srcSet\n    }\n  }\n}\n"
+    "text": "query HomeFeaturedArticlesQuery {\n  articles(featured: true, published: true, sort: PUBLISHED_AT_DESC) {\n    ...HomeFeaturedArticles_articles\n    id\n  }\n}\n\nfragment HomeFeaturedArticles_articles on Article {\n  internalID\n  href\n  title\n  publishedAt(format: \"MMM D YYYY\")\n  thumbnailImage {\n    cropped(width: 325, height: 244) {\n      src\n      srcSet\n    }\n  }\n  author {\n    name\n    id\n  }\n}\n"
   }
 };
 })();

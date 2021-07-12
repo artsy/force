@@ -46,7 +46,7 @@ const HomeArtworkModuleContext: React.FC<HomeArtworkModuleContextProps> = ({
             to={context.href}
             ml={1}
           >
-            View all
+            View All
           </Text>
         </Flex>
       )
@@ -80,7 +80,7 @@ const HomeArtworkModuleContext: React.FC<HomeArtworkModuleContextProps> = ({
             to={context.href}
             ml={1}
           >
-            View all
+            View All
           </Text>
         </Flex>
       )
@@ -106,7 +106,7 @@ const HomeArtworkModuleContext: React.FC<HomeArtworkModuleContextProps> = ({
             to={context.href}
             ml={1}
           >
-            View all
+            View All
           </Text>
         </Flex>
       )
@@ -173,7 +173,7 @@ const HomeArtworkModuleContext: React.FC<HomeArtworkModuleContextProps> = ({
               to="/works-for-you"
               ml={1}
             >
-              View all
+              View All
             </Text>
           </Flex>
 

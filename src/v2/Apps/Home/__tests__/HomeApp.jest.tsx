@@ -30,7 +30,7 @@ describe("HomeApp", () => {
     `,
   })
 
-  describe("logged out", () => {
+  describe.skip("logged out", () => {
     beforeAll(() => {
       mockuseSystemContext.mockImplementation(() => ({
         mediator: { on: jest.fn() },

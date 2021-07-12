@@ -14,6 +14,9 @@ export type HomeFeaturedArticles_articles = ReadonlyArray<{
             readonly srcSet: string;
         } | null;
     } | null;
+    readonly author: {
+        readonly name: string | null;
+    } | null;
     readonly " $refType": "HomeFeaturedArticles_articles";
 }>;
 export type HomeFeaturedArticles_articles$data = HomeFeaturedArticles_articles;
@@ -112,9 +115,27 @@ const node: ReaderFragment = {
         }
       ],
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "Author",
+      "kind": "LinkedField",
+      "name": "author",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "name",
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
     }
   ],
   "type": "Article"
 };
-(node as any).hash = '7e0c47cdf84ffed696b39dfe5c18cd95';
+(node as any).hash = '08b0601c1ab13cebbf496a329d986cc0';
 export default node;
