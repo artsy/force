@@ -1,5 +1,13 @@
 import { ContextModule, Intent } from "@artsy/cohesion"
-import { Box, Col, Flex, Message, Row, Spacer, Text } from "@artsy/palette"
+import {
+  Box,
+  Column,
+  Flex,
+  GridColumns,
+  Message,
+  Spacer,
+  Text,
+} from "@artsy/palette"
 import { isEqual } from "lodash"
 import React, { useContext, useState } from "react"
 import { Title } from "react-head"
@@ -173,13 +181,13 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
         </AuctionFilterMobileActionSheet>
       )}
       <Media greaterThan="xs">
-        <Row>
-          <Col sm={3} pr={[0, 2]}>
+        <GridColumns>
+          <Column span={3} pr={[0, 2]}>
             <Text variant="xs" textTransform="uppercase">
               Filter by
             </Text>
-          </Col>
-          <Col sm={9}>
+          </Column>
+          <Column span={9}>
             <Flex justifyContent="space-between" alignItems="flex-start" pb={4}>
               <Flex flex={1} pr={1} style={{ flexFlow: "column" }}>
                 <KeywordFilter />
@@ -188,23 +196,23 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
                 <SortSelect />
               </Flex>
             </Flex>
-          </Col>
-        </Row>
+          </Column>
+        </GridColumns>
       </Media>
-      <Row>
-        <Col sm={3} pr={[0, 2]}>
+      <GridColumns>
+        <Column span={3} pr={[0, 2]}>
           <Media greaterThan="xs">
             <TableSidebar />
           </Media>
-        </Col>
+        </Column>
 
-        <Col sm={9} data-test={ContextModule.auctionResults}>
+        <Column span={9} data-test={ContextModule.auctionResults}>
           <AuctionResultsControls
             artist={artist}
             toggleMobileActionSheet={toggleMobileActionSheet}
           />
 
-          <Spacer mt={["2", "0"]} />
+          <Spacer mt={[2, 0]} />
 
           {auctionResultsLength > 0 ? (
             <LoadingArea isLoading={isLoading}>
@@ -238,14 +246,14 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
             onNext={() => loadNext()}
             scrollTo="#jumpto-ArtistHeader"
           />
-        </Col>
-      </Row>
+        </Column>
+      </GridColumns>
 
-      <Row>
-        <Col>
+      <GridColumns>
+        <Column>
           <Box></Box>
-        </Col>
-      </Row>
+        </Column>
+      </GridColumns>
     </>
   )
 }
