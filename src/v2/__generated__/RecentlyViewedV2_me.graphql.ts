@@ -15,6 +15,7 @@ export type RecentlyViewedV2_me = {
                 readonly imageTitle: string | null;
                 readonly title: string | null;
                 readonly href: string | null;
+                readonly is_saved: boolean | null;
                 readonly " $fragmentRefs": FragmentRefs<"Metadata_artwork" | "SaveButton_artwork" | "Badge_artwork">;
             } | null;
         } | null> | null;
@@ -122,6 +123,13 @@ const node: ReaderFragment = {
                   "args": null,
                   "kind": "ScalarField",
                   "name": "href",
+                  "storageKey": null
+                },
+                {
+                  "alias": "is_saved",
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "isSaved",
                   "storageKey": null
                 },
                 {

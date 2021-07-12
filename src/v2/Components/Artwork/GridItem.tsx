@@ -2,26 +2,24 @@ import { AuthContextModule, ContextModule } from "@artsy/cohesion"
 import { Image as BaseImage, Box } from "@artsy/palette"
 import { GridItem_artwork } from "v2/__generated__/GridItem_artwork.graphql"
 import { useSystemContext } from "v2/System"
-import { isFunction } from "lodash"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { userIsTeam } from "v2/Utils/user"
 import Badge from "./Badge"
 import Metadata from "./Metadata"
-import { SaveButtonFragmentContainer, Container } from "./SaveButton"
+import { SaveButtonFragmentContainer, useSaveButton } from "./SaveButton"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { cropped, resized } from "v2/Utils/resized"
 
-interface ArtworkGridItemContainerProps
-  extends React.HTMLAttributes<HTMLDivElement> {
+interface ArtworkGridItemProps extends React.HTMLAttributes<HTMLDivElement> {
   artwork: GridItem_artwork
   contextModule?: AuthContextModule
   lazyLoad?: boolean
   onClick?: () => void
 }
 
-const ArtworkGridItemContainer: React.FC<ArtworkGridItemContainerProps> = ({
+export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
   artwork,
   lazyLoad = true,
   contextModule,
@@ -30,8 +28,10 @@ const ArtworkGridItemContainer: React.FC<ArtworkGridItemContainerProps> = ({
 }) => {
   const { user } = useSystemContext()
   const isTeam = userIsTeam(user)
-  const isHoverable =
-    isFunction(window.matchMedia) && !window.matchMedia("(hover: none)").matches
+
+  const { containerProps, isSaveButtonVisible } = useSaveButton({
+    isSaved: !!artwork.is_saved,
+  })
 
   const aspectRatio = artwork.image?.aspect_ratio ?? 1
   const width = 400
@@ -49,7 +49,12 @@ const ArtworkGridItemContainer: React.FC<ArtworkGridItemContainerProps> = ({
   }
 
   return (
-    <div data-id={artwork.internalID} data-test="artworkGridItem" {...rest}>
+    <div
+      data-id={artwork.internalID}
+      data-test="artworkGridItem"
+      {...containerProps}
+      {...rest}
+    >
       <Box
         position="relative"
         width="100%"
@@ -72,7 +77,7 @@ const ArtworkGridItemContainer: React.FC<ArtworkGridItemContainerProps> = ({
 
         <Badge artwork={artwork} />
 
-        {isHoverable && (
+        {isSaveButtonVisible && (
           <SaveButtonFragmentContainer
             contextModule={contextModule || ContextModule.artworkGrid}
             artwork={artwork}
@@ -85,14 +90,7 @@ const ArtworkGridItemContainer: React.FC<ArtworkGridItemContainerProps> = ({
   )
 }
 
-// TODO: Remove indirection
-export const ArtworkGridItem = styled(ArtworkGridItemContainer)`
-  &:hover {
-    ${Container} {
-      opacity: 1;
-    }
-  }
-`
+ArtworkGridItem.displayName = "ArtworkGridItem"
 
 const Link = styled(RouterLink)`
   display: block;
@@ -124,6 +122,7 @@ export default createFragmentContainer(ArtworkGridItem, {
       }
       artistNames
       href
+      is_saved: isSaved
       ...Metadata_artwork
       ...SaveButton_artwork
       ...Badge_artwork

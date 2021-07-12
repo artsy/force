@@ -61,6 +61,8 @@ export const PartnerArtistArtworksRail: React.FC<PartnerArtistArtworksRailProps>
               artwork={artwork}
               imageHeight={160}
               lazyLoad
+              // @ts-ignore TODO: Add relevant contextModule
+              contextModule={null}
             />
           )
         })
