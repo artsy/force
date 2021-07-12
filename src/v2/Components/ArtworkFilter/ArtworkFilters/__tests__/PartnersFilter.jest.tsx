@@ -52,4 +52,23 @@ describe("PartnersFilter", () => {
       expect(wrapper.find("Checkbox").length).not.toBe(0)
     })
   })
+
+  it("renders custom label", () => {
+    const wrapper = getWrapper({ aggregations }, { label: "Custom label" })
+    const header = wrapper.find("Clickable").at(0)
+    const headerLabel = header.find("Text")
+
+    expect(headerLabel.text()).toEqual("Custom label")
+  })
+
+  it("renders custom placeholder", () => {
+    const wrapper = getWrapper(
+      { aggregations },
+      { expanded: true, placeholder: "Custom placeholder" }
+    )
+
+    expect(wrapper.find("input").prop("placeholder")).toEqual(
+      "Custom placeholder"
+    )
+  })
 })

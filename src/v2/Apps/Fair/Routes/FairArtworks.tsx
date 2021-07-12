@@ -47,22 +47,23 @@ const FairArtworksFilter: React.FC<FairArtworksFilterProps> = props => {
   // in <ArtistsFilter />. So, pass as props for now.
   const Filters = (
     <>
+      <PartnersFilter label="Exhibitors" placeholder="Search" expanded />
       <ArtistsFilter
         fairID={fair.internalID}
         relayEnvironment={relayEnvironment}
         user={user}
+        expanded
       />
-      <MediumFilter expanded />
-      <MaterialsFilter expanded />
-      <PriceRangeFilter />
       <AttributionClassFilter expanded />
-      <SizeFilter />
-      <WaysToBuyFilter />
-      <ArtworkLocationFilter expanded />
-      <ArtistNationalityFilter expanded />
+      <MediumFilter expanded />
+      <PriceRangeFilter expanded />
+      <SizeFilter expanded />
+      <WaysToBuyFilter expanded />
+      <MaterialsFilter />
+      <ArtistNationalityFilter />
+      <ArtworkLocationFilter />
       <TimePeriodFilter />
       <ColorFilter />
-      <PartnersFilter />
     </>
   )
 
@@ -85,12 +86,7 @@ const FairArtworksFilter: React.FC<FairArtworksFilterProps> = props => {
         sidebarAggregations.aggregations as SharedArtworkFilterContextProps["aggregations"]
       }
     >
-      <BaseArtworkFilter
-        mt={6}
-        relay={relay}
-        viewer={fair}
-        Filters={Filters}
-      ></BaseArtworkFilter>
+      <BaseArtworkFilter mt={6} relay={relay} viewer={fair} Filters={Filters} />
     </ArtworkFilterContextProvider>
   )
 }
