@@ -8,6 +8,16 @@ import { updateUrl } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
 import { Match, RouterState, withRouter } from "found"
 import React from "react"
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
+import { MediumFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/MediumFilter"
+import { PriceRangeFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/PriceRangeFilter"
+import { WaysToBuyFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/WaysToBuyFilter"
+import { TimePeriodFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/TimePeriodFilter"
+import { ColorFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/ColorFilter"
+import { AttributionClassFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/AttributionClassFilter"
+import { PartnersFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/PartnersFilter"
+import { MaterialsFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/MaterialsFilter"
+import { ArtworkLocationFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/ArtworkLocationFilter"
+import { SizeFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/SizeFilter"
 
 interface ArtistSeriesArtworksFilterProps {
   artistSeries: ArtistSeriesArtworksFilter_artistSeries
@@ -25,6 +35,21 @@ const ArtistSeriesArtworksFilter: React.FC<ArtistSeriesArtworksFilterProps> = pr
   // If there was an error fetching the filter,
   // we still want to render the rest of the page.
   if (!hasFilter) return null
+
+  const Filters = (
+    <>
+      <AttributionClassFilter expanded />
+      <MediumFilter expanded />
+      <PriceRangeFilter expanded />
+      <SizeFilter expanded />
+      <WaysToBuyFilter expanded />
+      <MaterialsFilter />
+      <ArtworkLocationFilter />
+      <TimePeriodFilter />
+      <ColorFilter />
+      <PartnersFilter />
+    </>
+  )
 
   return (
     <ArtworkFilterContextProvider
@@ -48,6 +73,7 @@ const ArtistSeriesArtworksFilter: React.FC<ArtistSeriesArtworksFilterProps> = pr
           aggregations: ["TOTAL"],
           first: 20,
         }}
+        Filters={Filters}
       />
     </ArtworkFilterContextProvider>
   )
