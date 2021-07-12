@@ -5,17 +5,29 @@ import { graphql } from "react-relay"
 import { Link } from "@artsy/palette"
 import { useSystemContext } from "v2/System"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
+import { useTracking } from "react-tracking"
+import { tappedMakeOffer } from "@artsy/cohesion"
 
 export interface OpenInquiryModalButtonProps {
   openInquiryModal: () => void
   onMount: () => void
+  conversationID: string
 }
 
 export const OpenInquiryModalButton: React.FC<OpenInquiryModalButtonProps> = ({
   openInquiryModal,
   onMount,
+  conversationID,
 }) => {
+  const tracking = useTracking()
+
+  const handleOpenModal = () => {
+    tracking.trackEvent(tappedMakeOffer(conversationID))
+    openInquiryModal()
+  }
+
   useEffect(onMount, [])
+
   return (
     <>
       <Flex flexDirection="column" p={1}>
@@ -35,7 +47,7 @@ export const OpenInquiryModalButton: React.FC<OpenInquiryModalButtonProps> = ({
           size="large"
           variant="primaryBlack"
           width="100%"
-          onClick={() => openInquiryModal()}
+          onClick={() => handleOpenModal()}
         >
           Make Offer
         </Button>
@@ -48,7 +60,8 @@ export const OpenInquiryModalButtonQueryRenderer: React.FC<{
   artworkID: string
   openInquiryModal: () => void
   onMount: () => void
-}> = ({ artworkID, openInquiryModal, onMount }) => {
+  conversationID: string
+}> = ({ artworkID, openInquiryModal, onMount, conversationID }) => {
   const { relayEnvironment } = useSystemContext()
   return (
     <SystemQueryRenderer<OpenInquiryModalButtonQuery>
@@ -74,6 +87,7 @@ export const OpenInquiryModalButtonQueryRenderer: React.FC<{
             <OpenInquiryModalButton
               openInquiryModal={() => openInquiryModal()}
               onMount={onMount}
+              conversationID={conversationID}
             />
           )
         } else {
