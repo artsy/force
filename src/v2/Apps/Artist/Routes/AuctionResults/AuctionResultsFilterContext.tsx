@@ -4,6 +4,7 @@ export interface AuctionResultsFilters {
   organizations?: string[]
   categories?: string[]
   sizes?: string[]
+  keyword?: string
   pageAndCursor?: { page: number; cursor: string }
   sort?: string
   createdAfterYear?: number
@@ -26,6 +27,7 @@ export const initialAuctionResultsFilterState: AuctionResultsFilters = {
   organizations: [],
   categories: [],
   sizes: [],
+  keyword: "",
   // @ts-expect-error STRICT_NULL_CHECK
   pageAndCursor: { page: 1, cursor: null },
   sort: "DATE_DESC",
@@ -178,6 +180,7 @@ const AuctionResultsFilterReducer = (
       // primitive filter types
       const primitiveFilterTypes: Array<keyof AuctionResultsFilters> = [
         "sort",
+        "keyword",
         "pageAndCursor",
         "createdAfterYear",
         "createdBeforeYear",

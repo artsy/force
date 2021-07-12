@@ -37,7 +37,7 @@ export const SortSelect = () => {
         <Select {...props} />
       </Media>
       <Media greaterThan="xs">
-        <Select {...props} title="Sort" />
+        <Select {...props} title="Sort:" />
       </Media>
     </>
   )

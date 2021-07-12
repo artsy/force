@@ -13,6 +13,7 @@ import { Pagination } from "v2/Components/Pagination"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
+jest.mock("lodash/debounce", () => jest.fn(e => e))
 jest.mock("v2/Utils/openAuthModal")
 jest.mock("v2/Components/Pagination/useComputeHref")
 jest.mock("v2/System/Router/Utils/catchLinks", () => ({
@@ -244,6 +245,42 @@ describe("AuctionResults", () => {
                 createdAfterYear: 1880,
                 createdBeforeYear: 1973,
               })
+
+              wrapper.update()
+              const html = wrapper.html()
+              expect(html).toContain("Sign up to see price")
+
+              done()
+            })
+          })
+        })
+        describe("keyword filter", () => {
+          it("triggers relay refetch with keyword filter, and re-shows sign up to see price", done => {
+            const filter = wrapper.find("KeywordFilter")
+
+            const input = filter.find("input")
+
+            const setInputValue = (
+              inputWrapper: ReactWrapper,
+              value: string,
+              setSelectionRangeMock = jest.fn()
+            ) => {
+              ;(inputWrapper.getDOMNode() as any).value = value
+              ;(inputWrapper.getDOMNode() as any).setSelectionRange = setSelectionRangeMock
+              inputWrapper.simulate("change")
+            }
+
+            setInputValue(input, "test-keyword")
+
+            setTimeout(() => {
+              expect(refetchSpy).toHaveBeenCalledTimes(1)
+
+              expect(refetchSpy.mock.calls[0][0]).toEqual(
+                expect.objectContaining({
+                  ...defaultRelayParams,
+                  keyword: "test-keyword",
+                })
+              )
 
               wrapper.update()
               const html = wrapper.html()
