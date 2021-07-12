@@ -1,7 +1,13 @@
+import React from "react"
 import loadable from "@loadable/component"
 import { graphql } from "react-relay"
+import { RedirectException } from "found"
 import { AppRouteConfig } from "v2/System/Router/Route"
-import { paramsToCamelCase } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
+import {
+  buildUrl,
+  paramsToCamelCase,
+} from "v2/Components/ArtworkFilter/Utils/urlBuilder"
+import { defaultSort, checkSort } from "./Utils/CheckSort"
 import { allowedFilters } from "v2/Components/ArtworkFilter/Utils/allowedFilters"
 
 const FairApp = loadable(
@@ -65,8 +71,11 @@ export const fairRoutes: AppRouteConfig[] = [
         prepare: () => {
           FairExhibitorsRoute.preload()
         },
-        prepareVariables: ({ slug }, props) => {
-          const sort = props.location?.query.sort ?? "FEATURED_DESC"
+        prepareVariables: ({ slug }, { location }) => {
+          let { sort } = location.query
+          if (!checkSort(sort)) {
+            sort = defaultSort
+          }
           return { sort, slug }
         },
         query: graphql`
@@ -79,6 +88,25 @@ export const fairRoutes: AppRouteConfig[] = [
             }
           }
         `,
+        render: ({ Component, props, match }) => {
+          if (!(Component && props)) {
+            return undefined
+          }
+
+          const {
+            location: {
+              query: { sort, ...otherQuery },
+              pathname,
+            },
+          } = match
+
+          if (!checkSort(sort)) {
+            const url = buildUrl(otherQuery, pathname)
+            throw new RedirectException(url)
+          }
+
+          return <Component {...props} />
+        },
       },
       {
         path: "artworks(.*)?",
