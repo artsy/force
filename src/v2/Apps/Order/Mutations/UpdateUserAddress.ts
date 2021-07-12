@@ -1,17 +1,16 @@
 import { commitMutation, Environment, graphql } from "react-relay"
-import { Address } from "v2/Components/AddressForm"
 import {
   UpdateUserAddressMutation,
+  UpdateUserAddressMutationResponse,
   UserAddressAttributes,
 } from "v2/__generated__/UpdateUserAddressMutation.graphql"
-import { convertShippingAddressForExchange } from "../Utils/shippingUtils"
 
 export const updateUserAddress = async (
   environment: Environment,
   userAddressID: string,
   values: UserAddressAttributes,
   closeModal: () => void,
-  onSuccess: (address: Address) => void,
+  onSuccess: (address: UpdateUserAddressMutationResponse) => void,
   onError: (message: string) => void
 ) => {
   commitMutation<UpdateUserAddressMutation>(environment, {
@@ -49,16 +48,11 @@ export const updateUserAddress = async (
       }
     `,
     onCompleted: (data, e) => {
-      // @ts-expect-error STRICT_NULL_CHECK
-      const errors = data.updateUserAddress.userAddressOrErrors.errors
+      const errors = data?.updateUserAddress?.userAddressOrErrors.errors
       if (errors) {
         onError(errors.map(error => error.message).join(", "))
       } else {
-        const address = convertShippingAddressForExchange(
-          // @ts-expect-error STRICT_NULL_CHECK
-          data.updateUserAddress.userAddressOrErrors
-        )
-        onSuccess(address)
+        onSuccess(data)
         closeModal()
       }
     },

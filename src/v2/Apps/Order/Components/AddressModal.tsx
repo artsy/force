@@ -27,11 +27,17 @@ import { SavedAddresses_me } from "v2/__generated__/SavedAddresses_me.graphql"
 import { AddressModalFields } from "v2/Components/Address/AddressModalFields"
 import { useSystemContext } from "v2/System/SystemContext"
 import { updateUserDefaultAddress } from "../Mutations/UpdateUserDefaultAddress"
+import { UpdateUserAddressMutationResponse } from "v2/__generated__/UpdateUserAddressMutation.graphql"
+import { CreateUserAddressMutationResponse } from "v2/__generated__/CreateUserAddressMutation.graphql"
+
 export interface Props {
   show: boolean
   closeModal: () => void
   address: SavedAddressType
-  onSuccess: () => void
+  onSuccess: (
+    address?: UpdateUserAddressMutationResponse &
+      CreateUserAddressMutationResponse
+  ) => void
   onDeleteAddress: (addressID: string) => void
   onError: (message: string) => void
   modalDetails: {
