@@ -47,7 +47,7 @@ const FairArtworksFilter: React.FC<FairArtworksFilterProps> = props => {
   // in <ArtistsFilter />. So, pass as props for now.
   const Filters = (
     <>
-      <PartnersFilter label="Exhibitors" placeholder="Search" expanded />
+      <PartnersFilter label="Exhibitors" expanded />
       <ArtistsFilter
         fairID={fair.internalID}
         relayEnvironment={relayEnvironment}

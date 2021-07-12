@@ -60,15 +60,4 @@ describe("PartnersFilter", () => {
 
     expect(headerLabel.text()).toEqual("Custom label")
   })
-
-  it("renders custom placeholder", () => {
-    const wrapper = getWrapper(
-      { aggregations },
-      { expanded: true, placeholder: "Custom placeholder" }
-    )
-
-    expect(wrapper.find("input").prop("placeholder")).toEqual(
-      "Custom placeholder"
-    )
-  })
 })
