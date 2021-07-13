@@ -7,7 +7,7 @@ import {
   buildUrl,
   paramsToCamelCase,
 } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
-import { defaultSort, checkSort } from "./Utils/CheckSort"
+import { defaultSort, isValidSort } from "./Utils/IsValidSort"
 import { allowedFilters } from "v2/Components/ArtworkFilter/Utils/allowedFilters"
 
 const FairApp = loadable(
@@ -73,7 +73,7 @@ export const fairRoutes: AppRouteConfig[] = [
         },
         prepareVariables: ({ slug }, { location }) => {
           let { sort } = location.query
-          if (!checkSort(sort)) {
+          if (!isValidSort(sort)) {
             sort = defaultSort
           }
           return { sort, slug }
@@ -100,7 +100,7 @@ export const fairRoutes: AppRouteConfig[] = [
             },
           } = match
 
-          if (!checkSort(sort)) {
+          if (!isValidSort(sort)) {
             const url = buildUrl(otherQuery, pathname)
             throw new RedirectException(url)
           }

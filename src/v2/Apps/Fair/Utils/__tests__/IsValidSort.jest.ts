@@ -1,18 +1,18 @@
-import { checkSort } from "../CheckSort"
+import { isValidSort } from "../IsValidSort"
 
-describe("checkSort", () => {
+describe("isValidSort", () => {
   it("returns true when sort is not passed", () => {
-    const result = checkSort()
+    const result = isValidSort()
     expect(result).toEqual(true)
   })
 
   it("returns true when valid sort is passed", () => {
-    const result = checkSort("NAME_ASC")
+    const result = isValidSort("NAME_ASC")
     expect(result).toEqual(true)
   })
 
   it("returns false when invalid sort is passed", () => {
-    const result = checkSort("some")
+    const result = isValidSort("some")
     expect(result).toEqual(false)
   })
 })
