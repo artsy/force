@@ -27,7 +27,7 @@ export interface Props {
   closeModal: () => void
   address?: SavedAddressType
   onSuccess: (address) => void
-  onDeleteAddress: (address) => void
+  onDeleteAddress: (addressID: string) => void
   onError: (message: string) => void
   modalDetails?: {
     addressModalTitle: string
@@ -183,7 +183,10 @@ export const AddressModal: React.FC<Props> = ({
           action: () => {
             setShowDialog(false)
             closeModal()
-            onDeleteAddress(address?.internalID)
+
+            if (address?.internalID) {
+              onDeleteAddress(address.internalID)
+            }
           },
           text: "Delete",
         }}
