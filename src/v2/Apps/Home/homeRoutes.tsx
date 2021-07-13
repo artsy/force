@@ -10,7 +10,7 @@ const HomeApp = loadable(
 export const homeRoutes: AppRouteConfig[] = [
   {
     theme: "v3",
-    path: "/home",
+    path: "//",
     getComponent: () => HomeApp,
     prepare: () => {
       HomeApp.preload()

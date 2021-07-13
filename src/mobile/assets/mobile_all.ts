@@ -49,7 +49,6 @@ const routes = {
       return require("../components/layout/bootstrap.coffee")()
     }
   },
-  "^$": require("../apps/home/client/index"),
 }
 
 for (let path in routes) {
