@@ -49,7 +49,7 @@ return {
       "type": "ShowSorts"
     },
     {
-      "defaultValue": 3,
+      "defaultValue": 15,
       "kind": "LocalArgument",
       "name": "first",
       "type": "Int"
@@ -215,5 +215,5 @@ return {
   "type": "Fair"
 };
 })();
-(node as any).hash = 'cc8fc0e8bcadb9358f06787039f68571';
+(node as any).hash = '6cbe334b06fc8fe681ee99d67114931c';
 export default node;

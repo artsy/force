@@ -28,7 +28,7 @@ import { FairExhibitorSortFilter } from "../Components/FairExhibitorSortFilter"
 
 const logger = createLogger("FairExhibitors.tsx")
 
-const PAGE_SIZE = 3
+const PAGE_SIZE = 15
 
 interface FairExhibitorsProps {
   fair: FairExhibitors_fair
@@ -209,7 +209,7 @@ export const FairExhibitorsFragmentContainer = createPaginationContainer(
       fragment FairExhibitors_fair on Fair
         @argumentDefinitions(
           sort: { type: "ShowSorts", defaultValue: FEATURED_DESC }
-          first: { type: "Int", defaultValue: 3 }
+          first: { type: "Int", defaultValue: 15 }
           after: { type: "String" }
         ) {
         slug

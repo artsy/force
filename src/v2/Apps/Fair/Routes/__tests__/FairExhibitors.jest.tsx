@@ -108,10 +108,10 @@ describe("FairExhibitors", () => {
       const sort = wrapper.find(SortFilter)
       sort.find("option").at(1).simulate("change")
       expect(refetchSpy).toHaveBeenCalledTimes(1)
-      expect(refetchSpy.mock.calls[0][0]).toEqual(3)
+      expect(refetchSpy.mock.calls[0][0]).toEqual(15)
       expect(refetchSpy.mock.calls[0][2]).toEqual(
         expect.objectContaining({
-          first: 3,
+          first: 15,
           sort: "NAME_ASC",
         })
       )
