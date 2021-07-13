@@ -48,16 +48,20 @@ const Conversation: React.FC<ConversationProps> = props => {
     userHasLabFeature(user, "Web Inquiry Checkout") &&
     isArtworkOfferable
 
-  // Keeping track of this for scroll on send
-  const [lastMessageID, setLastMessageID] = useState<string | null>("")
   const [showConfirmArtworkModal, setShowConfirmArtworkModal] = useState<
     boolean
   >(false)
   const [showOrderModal, setShowOrderModal] = useState<boolean>(false)
   const [fetchingMore, setFetchingMore] = useState<boolean>(false)
 
+  // Keeping track of this for scroll on send
+  const [lastMessageID, setLastMessageID] = useState<string | null>("")
+
   const scrollToBottom = () => {
-    if (bottomOfMessageContainer.current) {
+    if (
+      bottomOfMessageContainer.current ||
+      lastMessageID !== conversation?.lastMessageID
+    ) {
       setLastMessageID(conversation?.lastMessageID)
       setTimeout(() => {
         bottomOfMessageContainer!.current!.scrollIntoView({

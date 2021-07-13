@@ -141,16 +141,7 @@ export const Reply: React.FC<ReplyProps> = props => {
           text: "Discard message",
         }}
       />
-      <Flex
-        right={[0, null]}
-        zIndex={[null, 2]}
-        position={["fixed", "fixed", "static", "static"]}
-        bottom={0}
-        left={0}
-        flexShrink={0}
-        flexDirection="column"
-        background="white"
-      >
+      <Flex zIndex={[null, 2]} flexDirection="column" background="white">
         <ShadowSeparator />
         <ConversationCTAFragmentContainer
           conversation={conversation}

@@ -8,6 +8,7 @@ import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
 import { Media } from "v2/Utils/Responsive"
 import { DetailsFragmentContainer as Details } from "../../Components/Details"
 import styled from "styled-components"
+import { themeGet } from "@styled-system/theme-get"
 interface ConversationRouteProps {
   me: Conversation_me
   conversationID: string
@@ -17,6 +18,9 @@ interface ConversationRouteProps {
 
 const ConstrainedHeightContainer = styled(Box)`
   height: calc(100vh - 103px);
+  @media ${themeGet("mediaQueries.xs")} {
+    height: calc(100vh - 60px);
+  }
 `
 
 const ConversationContainer = styled(Flex)`
