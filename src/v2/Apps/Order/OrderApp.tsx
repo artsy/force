@@ -87,15 +87,19 @@ class OrderApp extends React.Component<OrderAppProps, {}> {
   }
 
   onTransition = newLocation => {
-    if (newLocation === null || !newLocation.pathname.includes("/orders/")) {
-      // leaving the order page, closing, or refreshing
-      const route = findCurrentRoute(this.props.match)
-      // @ts-expect-error STRICT_NULL_CHECK
-      if (route.shouldWarnBeforeLeaving) {
-        return "Are you sure you want to leave? Your changes will not be saved."
-      }
+    const isToTheSameApp = newLocation?.pathname?.includes("/orders/")
+    const isRedirect = newLocation?.action === "PUSH"
+
+    if (isToTheSameApp || isRedirect) {
+      return true
     }
-    return true
+
+    // leaving the order page, closing, or refreshing
+    const route = findCurrentRoute(this.props.match)
+
+    if (route?.shouldWarnBeforeLeaving) {
+      return "Are you sure you want to leave? Your changes will not be saved."
+    }
   }
 
   renderZendeskScript() {
