@@ -50,6 +50,7 @@ const ShelfArtwork: React.FC<ShelfArtworkProps> = ({
         to={artwork?.href ?? ""}
         noUnderline
         onClick={onClick}
+        data-test="artworkShelfArtwork"
         {...containerProps}
       >
         <ResponsiveContainer artwork={artwork}>
