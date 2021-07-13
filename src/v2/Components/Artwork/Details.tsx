@@ -8,15 +8,6 @@ import {
 import { Details_artwork } from "v2/__generated__/Details_artwork.graphql"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import styled from "styled-components"
-
-const TruncatedLine = styled.div`
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 1;
-  -webkit-box-orient: vertical;
-`
 
 interface DetailsProps {
   artwork: Details_artwork
@@ -49,35 +40,33 @@ const ArtistLine: React.FC<DetailsProps> = ({
 
   if (cultural_maker) {
     return (
-      <TruncatedLine>
-        <Text variant={tokens.variant}>{cultural_maker}</Text>
-      </TruncatedLine>
+      <Text variant={tokens.variant} overflowEllipsis>
+        {cultural_maker}
+      </Text>
     )
   }
 
   if (artists && artists.length) {
     return (
-      <TruncatedLine>
-        <Text variant={tokens.variant}>
-          {artists
-            .reduce((acc, artist, index) => {
-              // @ts-expect-error STRICT_NULL_CHECK
-              return acc.concat([
-                ", ",
-                <ConditionalLink
-                  includeLinks={includeLinks}
-                  // @ts-expect-error STRICT_NULL_CHECK
-                  href={artist.href}
-                  key={index}
-                >
-                  {/* @ts-expect-error STRICT_NULL_CHECK */}
-                  <Text variant={tokens.variant}>{artist.name}</Text>
-                </ConditionalLink>,
-              ])
-            }, [])
-            .slice(1)}
-        </Text>
-      </TruncatedLine>
+      <Text variant={tokens.variant} overflowEllipsis>
+        {artists
+          .reduce((acc, artist, index) => {
+            // @ts-expect-error STRICT_NULL_CHECK
+            return acc.concat([
+              ", ",
+              <ConditionalLink
+                includeLinks={includeLinks}
+                // @ts-expect-error STRICT_NULL_CHECK
+                href={artist.href}
+                key={index}
+              >
+                {/* @ts-expect-error STRICT_NULL_CHECK */}
+                <Text variant={tokens.variant}>{artist.name}</Text>
+              </ConditionalLink>,
+            ])
+          }, [])
+          .slice(1)}
+      </Text>
     )
   }
 
@@ -100,12 +89,10 @@ const TitleLine: React.FC<DetailsProps> = ({
   return (
     // @ts-expect-error STRICT_NULL_CHECK
     <ConditionalLink includeLinks={includeLinks} href={href}>
-      <TruncatedLine>
-        <Text variant={tokens.variant} color="black60">
-          <i>{title}</i>
-          {date && `, ${date}`}
-        </Text>
-      </TruncatedLine>
+      <Text variant={tokens.variant} color="black60" overflowEllipsis>
+        <i>{title}</i>
+        {date && `, ${date}`}
+      </Text>
     </ConditionalLink>
   )
 }
@@ -125,24 +112,20 @@ const PartnerLine: React.FC<DetailsProps> = ({
 
   if (collecting_institution) {
     return (
-      <TruncatedLine>
-        <Text variant={tokens.variant} color="black60">
-          {collecting_institution}
-        </Text>
-      </TruncatedLine>
+      <Text variant={tokens.variant} color="black60" overflowEllipsis>
+        {collecting_institution}
+      </Text>
     )
   }
 
   if (partner) {
     return (
-      <TruncatedLine>
-        {/* @ts-expect-error STRICT_NULL_CHECK */}
-        <ConditionalLink includeLinks={includeLinks} href={partner.href}>
-          <Text variant={tokens.variant} color="black60">
-            {partner.name}
-          </Text>
-        </ConditionalLink>
-      </TruncatedLine>
+      //  @ts-expect-error STRICT_NULL_CHECK
+      <ConditionalLink includeLinks={includeLinks} href={partner.href}>
+        <Text variant={tokens.variant} color="black60" overflowEllipsis>
+          {partner.name}
+        </Text>
+      </ConditionalLink>
     )
   }
 
@@ -164,15 +147,14 @@ const SaleInfoLine: React.FC<DetailsProps> = props => {
   })
 
   return (
-    <TruncatedLine>
-      <Text
-        variant={tokens.variant}
-        color={tokens.color}
-        fontWeight={tokens.fontWeight}
-      >
-        <SaleMessage {...props} /> <BidInfo {...props} />
-      </Text>
-    </TruncatedLine>
+    <Text
+      variant={tokens.variant}
+      color={tokens.color}
+      fontWeight={tokens.fontWeight}
+      overflowEllipsis
+    >
+      <SaleMessage {...props} /> <BidInfo {...props} />
+    </Text>
   )
 }
 

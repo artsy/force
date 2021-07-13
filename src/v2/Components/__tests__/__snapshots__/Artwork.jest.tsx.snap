@@ -2,12 +2,19 @@
 
 exports[`Artwork renders correctly 1`] = `
 .c4 {
-  text-align: left;
   margin-top: 4px;
+  text-align: left;
 }
 
 .c7 {
   color: black60;
+}
+
+.c5 {
+  font-family: sans;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .c6 {
@@ -17,20 +24,18 @@ exports[`Artwork renders correctly 1`] = `
 .c8 {
   color: black60;
   font-family: sans;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .c9 {
   color: black60;
   font-weight: normal;
   font-family: sans;
-}
-
-.c5 {
   overflow: hidden;
+  white-space: nowrap;
   text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 1;
-  -webkit-box-orient: vertical;
 }
 
 .c3 {
@@ -111,57 +116,41 @@ exports[`Artwork renders correctly 1`] = `
       className="c4"
     >
       <div
-        className="c5"
+        className=" c5"
+        fontFamily="sans"
       >
         <div
           className=" c6"
           fontFamily="sans"
         >
-          <div
-            className=" c6"
-            fontFamily="sans"
-          >
-            Mikael Olson
-          </div>
+          Mikael Olson
         </div>
       </div>
       <div
-        className="c5"
+        className="c7 c8"
+        color="black60"
+        fontFamily="sans"
       >
-        <div
-          className="c7 c8"
-          color="black60"
-          fontFamily="sans"
-        >
-          <i>
-            Some Kind of Dinosaur
-          </i>
-          , 2015
-        </div>
+        <i>
+          Some Kind of Dinosaur
+        </i>
+        , 2015
       </div>
       <div
-        className="c5"
+        className="c7 c8"
+        color="black60"
+        fontFamily="sans"
       >
-        <div
-          className="c7 c8"
-          color="black60"
-          fontFamily="sans"
-        >
-          Gallery 1261
-        </div>
+        Gallery 1261
       </div>
       <div
-        className="c5"
+        className="c7 c9"
+        color="black60"
+        fontFamily="sans"
+        fontWeight="normal"
       >
-        <div
-          className="c7 c9"
-          color="black60"
-          fontFamily="sans"
-          fontWeight="normal"
-        >
-          $875
-           
-        </div>
+        $875
+         
       </div>
     </div>
   </a>

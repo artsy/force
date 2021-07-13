@@ -55,6 +55,8 @@ export const ArtworkActionsFixture: ArtworkActions_Test_QueryRawResponse & {
       id: "sdfdsf",
       is_closed: true,
       is_auction: false,
+      isClosed: true,
+      isAuction: false,
     },
     partner: {
       id: "foo",

@@ -46,6 +46,6 @@ describe("ShowArtworks", () => {
     const wrapper = getWrapper()
 
     expect(wrapper.find("ArtworkFilterArtworkGrid").length).toBe(1)
-    expect(wrapper.find("GridItem__ArtworkGridItem").length).toBe(1)
+    expect(wrapper.find("ArtworkGridItem").length).toBe(1)
   })
 })

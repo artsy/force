@@ -35,7 +35,6 @@ declare module "sharify" {
       readonly GEMINI_CLOUDFRONT_URL: string
       readonly GENOME_URL: string
       readonly GOOGLE_ADWORDS_ID: string
-      readonly IMAGE_LAZY_LOADING: boolean
       IS_GOOGLEBOT: boolean
       IS_MOBILE: boolean
       readonly IP_ADDRESS: string

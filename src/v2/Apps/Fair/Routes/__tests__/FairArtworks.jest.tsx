@@ -55,7 +55,7 @@ describe("FairArtworks", () => {
   it("renders correctly", async () => {
     const wrapper = await getWrapper()
     expect(wrapper.find("ArtworkFilterArtworkGrid").length).toBe(1)
-    expect(wrapper.find("GridItem__ArtworkGridItem").length).toBe(2)
+    expect(wrapper.find("ArtworkGridItem").length).toBe(2)
   })
 
   it("includes the artist filter", async () => {
