@@ -119,9 +119,10 @@ describe("AuctionResults", () => {
     })
 
     it("renders either realized price, bought in, or price not avail", () => {
-      expect(wrapper.html()).toContain("Price not available")
-      expect(wrapper.html()).toContain("Bought in")
-      expect(wrapper.html()).toContain("Realized Price")
+      const html = wrapper.html()
+      expect(html).toContain("Price not available")
+      expect(html).toContain("Bought in")
+      expect(html).toContain("Realized Price")
     })
 
     it("renders proper select options", () => {
@@ -137,13 +138,11 @@ describe("AuctionResults", () => {
         wrapper.update()
         const html = wrapper.html()
         const data =
-          // @ts-expect-error STRICT_NULL_CHECK
-          AuctionResultsFixture.artist.auctionResultsConnection.edges[0].node
+          AuctionResultsFixture.artist?.auctionResultsConnection?.edges?.[0]
+            ?.node
         expect(html).toContain("Artwork Info")
-        // @ts-expect-error STRICT_NULL_CHECK
-        expect(html).toContain(data.dimension_text)
-        // @ts-expect-error STRICT_NULL_CHECK
-        expect(html).toContain(data.description)
+        expect(html).toContain(data?.dimension_text)
+        expect(html).toContain(data?.description)
       })
     })
 
@@ -240,8 +239,6 @@ describe("AuctionResults", () => {
                 pageAndCursor: { page: 1, cursor: null },
                 sort: "DATE_DESC",
                 allowEmptyCreatedDates: true,
-                earliestCreatedYear: 1880,
-                latestCreatedYear: 1973,
                 createdAfterYear: 1880,
                 createdBeforeYear: 1973,
               })
@@ -387,8 +384,6 @@ describe("AuctionResults", () => {
                 categories: [],
                 createdAfterYear: 1880,
                 createdBeforeYear: 1973,
-                earliestCreatedYear: 1880,
-                latestCreatedYear: 1973,
                 allowEmptyCreatedDates: true,
               })
 
@@ -418,8 +413,6 @@ describe("AuctionResults", () => {
                 ...defaultRelayParams,
                 createdAfterYear: 1900,
                 createdBeforeYear: 1960,
-                earliestCreatedYear: 1880,
-                latestCreatedYear: 1973,
               })
             )
 
