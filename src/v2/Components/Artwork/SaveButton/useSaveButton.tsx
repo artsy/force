@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { isTouch } from "v2/Utils/device"
 
 interface UseSaveButton {
   isSaved: boolean
@@ -13,18 +14,18 @@ export const useSaveButton = ({
 }: UseSaveButton) => {
   const [isHovered, setIsHovered] = useState(isSaved)
 
-  // Handle touch...
-
   const containerProps = {
     onMouseEnter: (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
+      if (isTouch) return
       setIsHovered(true)
       onMouseEnter?.(event)
     },
     onMouseLeave: (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
+      if (isTouch) return
       !isSaved && setIsHovered(false)
       onMouseLeave?.(event)
     },
   }
 
-  return { isSaveButtonVisible: isHovered, containerProps }
+  return { isSaveButtonVisible: isHovered && !isTouch, containerProps }
 }
