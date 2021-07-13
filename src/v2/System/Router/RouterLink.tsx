@@ -1,93 +1,73 @@
-import { Link, LinkProps, LinkPropsSimple, RouterContext } from "found"
-import { omit, pick } from "lodash"
+import { Link, LinkPropsSimple, RouterContext } from "found"
 import React, { useContext } from "react"
-import { get } from "v2/Utils/get"
+import { BoxProps, boxMixin } from "@artsy/palette"
+import styled from "styled-components"
+import { compose, ResponsiveValue, system } from "styled-system"
+import { useMemo } from "react"
 
 /**
  * Wrapper component around found's <Link> component with a fallback to a normal
  * <a> tag if ouside of a routing context.
- *
- * NOTE: If using styled-components, <RouterLink> can be easily styled like so:
- *
- * const StyledLink = styled(RouterLink)`
- *   ...
- * `
  */
-export type RouterLinkProps = LinkProps &
-  React.HTMLAttributes<HTMLAnchorElement> & {
+export type RouterLinkProps = Omit<
+  React.AnchorHTMLAttributes<HTMLAnchorElement>,
+  "href"
+> &
+  Omit<LinkPropsSimple, "to"> &
+  BoxProps & {
+    /**
+     * Simplifies `LinkProps#to` to just be a string and handle nulls, which are common
+     */
+    to: string | null
+    textDecoration?: ResponsiveValue<string>
+    /** @deprecated Use `textDecoration` */
     noUnderline?: boolean
   }
 
 export const RouterLink: React.ForwardRefExoticComponent<RouterLinkProps> = React.forwardRef(
-  ({ to, children, ...props }, ref) => {
-    const styleProps = props.noUnderline ? { textDecoration: "none" } : {}
+  ({ to, noUnderline, ...rest }, forwardedRef) => {
     const context = useContext(RouterContext)
-    const routes = get(context, c => c?.router?.matcher?.routeConfig, [])
-    const isSupportedInRouter = !!get(context, c =>
-      c?.router?.matcher?.matchRoutes(routes, to)
+    const routes = context?.router?.matcher?.routeConfig ?? []
+    const matcher = context?.router?.matcher
+    const isSupportedInRouter = useMemo(
+      () => !!matcher?.matchRoutes(routes, to),
+      [matcher, routes, to]
     )
 
-    /**
-     * Only pass found-router specific props across, props that conform to the
-     * link API found here: https://github.com/4Catalyzer/found#links
-     */
-    const handlers = Object.keys(props).reduce((acc, prop) => {
-      if (prop.startsWith("on")) {
-        // @ts-expect-error STRICT_NULL_CHECK
-        acc.push(prop)
-      }
-      return acc
-    }, [])
+    // TODO: Bulk replace
+    const deprecated = noUnderline ? { textDecoration: "none" } : {}
 
     if (isSupportedInRouter) {
-      const allowedProps = pick(props, [
-        "aria-label",
-        "Component",
-        "activeClassName",
-        "className",
-        "data-test",
-        "exact",
-        "replace",
-        "role",
-        "style",
-        "tabIndex",
-        ...handlers,
-      ])
-
       return (
-        <Link
-          ref={ref as any}
-          to={to}
-          {...allowedProps}
-          // @ts-expect-error STRICT_NULL_CHECK
-          style={{ ...styleProps, ...(props as LinkPropsSimple).style }}
-        >
-          {children}
-        </Link>
-      )
-    } else {
-      return (
-        <a
-          ref={ref}
-          href={to as string}
-          className={(props as LinkPropsSimple).className}
-          style={{ ...styleProps, ...(props as LinkPropsSimple).style }}
-          {...omit(props, [
-            "active",
-            "activeClassName",
-            "alignItems",
-            "hasLighterTextColor",
-            "justifyContent",
-            "noUnderline",
-            "textAlign",
-            "underlineBehavior",
-          ])}
-        >
-          {children}
-        </a>
+        <RouterAwareLink
+          ref={forwardedRef as any}
+          to={to ?? ""}
+          {...deprecated}
+          {...rest}
+        />
       )
     }
+
+    return (
+      <RouterUnawareLink
+        ref={forwardedRef as any}
+        href={to ?? ""}
+        {...deprecated}
+        {...rest}
+      />
+    )
   }
 )
 
 RouterLink.displayName = "RouterLink"
+
+const textDecoration = system({ textDecoration: true })
+const routerLinkMixin = compose(boxMixin, textDecoration)
+
+const RouterAwareLink = styled(Link)`
+  ${routerLinkMixin}
+`
+
+const RouterUnawareLink = styled.a`
+  ${routerLinkMixin}
+`

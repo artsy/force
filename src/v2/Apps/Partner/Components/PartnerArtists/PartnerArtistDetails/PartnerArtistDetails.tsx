@@ -41,8 +41,7 @@ export const PartnerArtistDetails: React.FC<PartnerArtistDetailsProps> = ({
         <Column span={6}>
           <GridColumns gridRowGap={2}>
             <Column span={12}>
-              {/* @ts-expect-error STRICT_NULL_CHECK */}
-              <RouterLink to={href} noUnderline>
+              <RouterLink to={href} textDecoration="none">
                 <Text variant="largeTitle">{name}</Text>
               </RouterLink>
               <Text color="black60" variant="title">

@@ -1,14 +1,11 @@
 import React from "react"
 import { ArtsyMarkIcon, color, space } from "@artsy/palette"
 import styled from "styled-components"
-import { RouterLink, RouterLinkProps } from "v2/System/Router/RouterLink"
+import { RouterLink } from "v2/System/Router/RouterLink"
 
-export const NavBarPrimaryLogo: React.FC<Omit<
-  Partial<RouterLinkProps>,
-  "children"
->> = props => {
+export const NavBarPrimaryLogo: React.FC = () => {
   return (
-    <HitArea to="/" {...props}>
+    <HitArea to="/">
       <ArtsyMarkIcon height={40} width={40} name="Artsy" />
     </HitArea>
   )

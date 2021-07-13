@@ -85,7 +85,6 @@ const FeaturedArticles: React.FC<FeaturedArticlesProps> = props => {
             return (
               <Box ml={[0, 0, 1]} key={`article-${index}`}>
                 <StyledLink
-                  // @ts-expect-error STRICT_NULL_CHECK
                   to={article.href}
                   // @ts-expect-error STRICT_NULL_CHECK
                   onClick={() => trackClick(article.href)}

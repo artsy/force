@@ -111,7 +111,6 @@ export class FillwidthItemContainer extends React.Component<
       <Box className={className} width={this.imageWidth}>
         <Placeholder style={{ height: imageHeight, width: this.imageWidth }}>
           <RouterLink
-            // @ts-expect-error STRICT_NULL_CHECK
             to={artwork.href}
             onClick={() => {
               if (this.props.onClick) {

@@ -1,36 +1,41 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Artwork renders correctly 1`] = `
-.c3 {
+.c4 {
   text-align: left;
   margin-top: 4px;
 }
 
-.c6 {
-  color: black60;
-}
-
-.c5 {
-  font-family: sans;
-}
-
 .c7 {
   color: black60;
+}
+
+.c6 {
   font-family: sans;
 }
 
 .c8 {
   color: black60;
+  font-family: sans;
+}
+
+.c9 {
+  color: black60;
   font-weight: normal;
   font-family: sans;
 }
 
-.c4 {
+.c5 {
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
+}
+
+.c3 {
+  -webkit-text-decoration: none;
+  text-decoration: none;
 }
 
 .c0 {
@@ -98,25 +103,22 @@ exports[`Artwork renders correctly 1`] = `
     />
   </div>
   <a
+    className="c3"
     href="/artwork/mikael-olson-some-kind-of-dinosaur"
-    style={
-      Object {
-        "textDecoration": "none",
-      }
-    }
+    textDecoration="none"
   >
     <div
-      className="c3"
+      className="c4"
     >
       <div
-        className="c4"
+        className="c5"
       >
         <div
-          className=" c5"
+          className=" c6"
           fontFamily="sans"
         >
           <div
-            className=" c5"
+            className=" c6"
             fontFamily="sans"
           >
             Mikael Olson
@@ -124,10 +126,10 @@ exports[`Artwork renders correctly 1`] = `
         </div>
       </div>
       <div
-        className="c4"
+        className="c5"
       >
         <div
-          className="c6 c7"
+          className="c7 c8"
           color="black60"
           fontFamily="sans"
         >
@@ -138,10 +140,10 @@ exports[`Artwork renders correctly 1`] = `
         </div>
       </div>
       <div
-        className="c4"
+        className="c5"
       >
         <div
-          className="c6 c7"
+          className="c7 c8"
           color="black60"
           fontFamily="sans"
         >
@@ -149,10 +151,10 @@ exports[`Artwork renders correctly 1`] = `
         </div>
       </div>
       <div
-        className="c4"
+        className="c5"
       >
         <div
-          className="c6 c8"
+          className="c7 c9"
           color="black60"
           fontFamily="sans"
           fontWeight="normal"

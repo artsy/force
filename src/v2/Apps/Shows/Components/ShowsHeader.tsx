@@ -51,7 +51,7 @@ export const ShowsHeader: React.FC<ShowsHeaderProps> = ({
                       <City
                         key={city.value}
                         to={`/shows2/${city.value}`}
-                        noUnderline
+                        textDecoration="none"
                         exact
                         activeClassName="active"
                       >
