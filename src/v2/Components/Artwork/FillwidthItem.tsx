@@ -74,6 +74,7 @@ export const FillwidthItem: React.FC<FillwidthItemProps> = ({
       display="inline-block"
       width={imageWidth}
       verticalAlign="top"
+      data-test="artworkFillwidthItem"
       {...containerProps}
       {...rest}
     >
