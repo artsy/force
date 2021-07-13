@@ -12,7 +12,7 @@ import { ShowsCurrentShowsQuery } from "v2/__generated__/ShowsCurrentShowsQuery.
 import { ShowsCurrentShows_viewer } from "v2/__generated__/ShowsCurrentShows_viewer.graphql"
 import {
   ShowsCurrentShowFragmentContainer,
-  SHOWS_CURRENT_SHOW_PLACEHOLDER,
+  ShowsCurrentShowPlaceholder,
 } from "./ShowsCurrentShow"
 
 interface ShowsCurrentShowsProps {
@@ -93,9 +93,9 @@ const ShowsCurrentShowsPaginationContainer = createPaginationContainer(
 
 const SHOWS_CURRENT_SHOWS_PLACEHOLDER = (
   <Join separator={<Separator my={6} />}>
-    {SHOWS_CURRENT_SHOW_PLACEHOLDER}
-    {SHOWS_CURRENT_SHOW_PLACEHOLDER}
-    {SHOWS_CURRENT_SHOW_PLACEHOLDER}
+    <ShowsCurrentShowPlaceholder />
+    <ShowsCurrentShowPlaceholder />
+    <ShowsCurrentShowPlaceholder />
   </Join>
 )
 

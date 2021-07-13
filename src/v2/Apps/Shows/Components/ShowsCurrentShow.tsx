@@ -25,6 +25,8 @@ const ShowsCurrentShow: React.FC<ShowsCurrentShowProps> = ({ show }) => {
   const artworks = extractNodes(show.artworksConnection)
   const count = show.artworksConnection?.totalCount ?? 0
   const remaining = count - 15
+  const dateRange = [show.startAt, show.endAt].filter(Boolean).join(" – ")
+  const subtitle = [dateRange, show.location?.city].filter(Boolean).join(", ")
 
   return (
     <>
@@ -37,14 +39,7 @@ const ShowsCurrentShow: React.FC<ShowsCurrentShowProps> = ({ show }) => {
 
         <Spacer mt={1} />
 
-        <Text variant="md">
-          {[
-            [show.startAt, show.endAt].filter(Boolean).join(" – "),
-            show.location?.city,
-          ]
-            .filter(Boolean)
-            .join(", ")}
-        </Text>
+        <Text variant="md">{subtitle}</Text>
       </RouterLink>
 
       <Spacer mt={4} />
@@ -114,7 +109,7 @@ export const ShowsCurrentShowFragmentContainer = createFragmentContainer(
   }
 )
 
-export const SHOWS_CURRENT_SHOW_PLACEHOLDER = (
+export const ShowsCurrentShowPlaceholder: React.FC = () => (
   <Skeleton>
     <SkeletonText variant="lg">Partner Name</SkeletonText>
 
