@@ -20,6 +20,7 @@ import {
 import { FairExhibitorsQuery } from "./FairExhibitorsQuery"
 import { LoadingArea } from "v2/Components/LoadingArea"
 import { Sticky } from "v2/Components/Sticky"
+import { useRouter } from "v2/System/Router/useRouter"
 import { Media } from "v2/Utils/Responsive"
 import { usePrevious } from "v2/Utils/Hooks/usePrevious"
 import createLogger from "v2/Utils/logger"
@@ -183,10 +184,10 @@ const FairExhibitors: React.FC<FairExhibitorsProps> = ({ fair, relay }) => {
   )
 }
 
-const FairExhibitorsWithContext: React.FC<any> = ({
-  match: { location },
-  ...props
-}) => {
+const FairExhibitorsWithContext: React.FC<any> = ({ ...props }) => {
+  const {
+    match: { location },
+  } = useRouter()
   return (
     <ExhibitorFilterContextProvider
       filters={location.query}

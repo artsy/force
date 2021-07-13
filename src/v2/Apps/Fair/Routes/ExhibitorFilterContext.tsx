@@ -72,6 +72,8 @@ export const ExhibitorFilterContextProvider: React.FC<SharedExhibitorFilterConte
     filters: exhibitorFilterState,
     sortOptions,
 
+    onFilterClick,
+
     setFilter: (name, value) => {
       if (onFilterClick) {
         onFilterClick(name, value, {
