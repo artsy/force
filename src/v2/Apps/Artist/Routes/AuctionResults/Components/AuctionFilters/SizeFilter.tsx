@@ -22,11 +22,11 @@ export const SizeFilter: React.FC = () => {
   const filters = currentlySelectedFilters?.()
 
   const toggleSelection = (selected: boolean, name: string) => {
-    let sizes = filters?.sizes?.slice()
+    let sizes = filters?.sizes?.slice() ?? []
     if (selected) {
-      sizes?.push(name)
+      sizes.push(name)
     } else {
-      sizes = sizes?.filter(item => item !== name)
+      sizes = sizes.filter(item => item !== name)
     }
     setFilter?.("sizes", sizes)
   }

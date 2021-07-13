@@ -18,11 +18,11 @@ export const AuctionHouseFilter: React.FC = () => {
   const { organizations } = currentlySelectedFilters?.() || {}
 
   const toggleSelection = (selected: boolean, name: string) => {
-    let selectedOrganizations = organizations?.slice()
+    let selectedOrganizations = organizations?.slice() ?? []
     if (selected) {
-      selectedOrganizations?.push(name)
+      selectedOrganizations.push(name)
     } else {
-      selectedOrganizations = selectedOrganizations?.filter(
+      selectedOrganizations = selectedOrganizations.filter(
         item => item !== name
       )
     }

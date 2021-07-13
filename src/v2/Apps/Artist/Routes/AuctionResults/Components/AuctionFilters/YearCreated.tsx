@@ -40,7 +40,9 @@ export const YearCreated: React.FC = () => {
   const fullDateRange = useMemo(() => {
     if (earliestCreatedYear && latestCreatedYear) {
       return buildDateRange(earliestCreatedYear, latestCreatedYear)
-    } else return []
+    } else {
+      return []
+    }
   }, [earliestCreatedYear, latestCreatedYear])
 
   const resetFilter = useMemo(

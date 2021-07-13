@@ -260,7 +260,7 @@ const AuctionResultsFilterReducer = (
 
       // do not allow a real cursor to be set for page 1. to agree with initial
       // filter state.
-      if (filterState.pageAndCursor && filterState.pageAndCursor.page === 1) {
+      if (filterState.pageAndCursor?.page === 1) {
         filterState.pageAndCursor.cursor = null
       }
 

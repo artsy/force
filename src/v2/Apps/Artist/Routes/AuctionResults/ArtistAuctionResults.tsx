@@ -58,7 +58,8 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
   const artistName = artist.name
 
   const loadNext = () => {
-    const nextPageNum = Number(filterContext.filters?.pageAndCursor?.page) + 1
+    const currentPageNumber = filterContext.filters?.pageAndCursor?.page ?? 0
+    const nextPageNum = currentPageNumber + 1
     if (hasNextPage) {
       loadPage(endCursor, nextPageNum)
     }
@@ -154,9 +155,8 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
     })
   }
 
-  const auctionResultsLength = Number(
-    artist.auctionResultsConnection?.edges?.length
-  )
+  const auctionResultsLength =
+    artist.auctionResultsConnection?.edges?.length ?? 0
 
   const titleString = `${artist.name} - Auction Results on Artsy`
 

@@ -12,7 +12,7 @@ export const ArtistAuctionResultsCount = ({
 }: ArtistAuctionResultsCountProps) => {
   return (
     <Sans size="2" weight="medium">
-      {`Showing ${results.totalCount?.toLocaleString() || ""} results`}
+      {`Showing ${results.totalCount?.toLocaleString() ?? 0} results`}
     </Sans>
   )
 }
