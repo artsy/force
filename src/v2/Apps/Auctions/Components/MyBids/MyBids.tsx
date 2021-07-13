@@ -5,19 +5,24 @@ import { MyBidsBidHeaderFragmentContainer } from "./MyBidsBidHeader"
 import { MyBidsBidItemFragmentContainer } from "./MyBidsBidItem"
 import {
   Box,
+  Flex,
   Button,
   Join,
   Separator,
   Shelf,
+  Spacer,
   StackableBorderBox,
   Text,
-  ThemeProviderV2,
+  Skeleton,
+  SkeletonText,
+  SkeletonBox,
 } from "@artsy/palette"
-import styled from "styled-components"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { useTracking } from "react-tracking"
-import { useAnalyticsContext } from "v2/System"
+import { useAnalyticsContext, useSystemContext } from "v2/System"
 import { clickedEntityGroup, ContextModule, OwnerType } from "@artsy/cohesion"
+import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
+import { MyBidsQuery } from "v2/__generated__/MyBidsQuery.graphql"
 
 interface MyBidsProps {
   me: MyBids_me
@@ -35,50 +40,49 @@ const MyBids: React.FC<MyBidsProps> = props => {
   }
 
   return (
-    <ThemeProviderV2>
-      <>
-        <Separator />
-        <Text variant="title" mt={6} mb={4}>
-          Your Auctions and Bids
-        </Text>
+    <>
+      <Text variant="lg">Your Auctions and Bids</Text>
 
-        <Shelf alignItems="flex-start">
-          {active.map((activeSale, index) => {
-            return (
-              <SaleContainer key={index}>
-                <StackableBorderBox
-                  flexDirection="column"
-                  overflow="hidden"
-                  p={0}
-                >
-                  {/* @ts-expect-error STRICT_NULL_CHECK */}
-                  <MyBidsBidHeaderFragmentContainer sale={activeSale.sale} />
-                </StackableBorderBox>
-                <StackableBorderBox p={2} flexDirection="column">
-                  <Join separator={<Separator my={1} />}>
-                    {/* @ts-expect-error STRICT_NULL_CHECK */}
-                    {activeSale.saleArtworks.length > 0 ? (
-                      <>
-                        {/* @ts-expect-error STRICT_NULL_CHECK */}
-                        {activeSale.saleArtworks.map(
-                          (saleArtwork, saleArtworkIndex) => {
-                            return (
-                              <MyBidsBidItemFragmentContainer
-                                horizontalSlidePosition={saleArtworkIndex}
-                                key={saleArtworkIndex}
-                                // @ts-expect-error STRICT_NULL_CHECK
-                                saleArtwork={saleArtwork}
-                              />
-                            )
-                          }
-                        )}
-                      </>
-                    ) : (
-                      // If a user has registered for a sale but hasn't yet followed
-                      // or bid on any works, show the Bid Now button.
+      <Spacer mt={4} />
+
+      <Shelf alignItems="flex-start">
+        {active.map((activeSale, index) => {
+          if (!activeSale) return <></>
+
+          const { saleArtworks, sale } = activeSale
+
+          if (!sale || !saleArtworks) return <></>
+
+          return (
+            // TODO: Re-assess width
+            <Box width={330} key={index}>
+              <StackableBorderBox flexDirection="column" p={0} pb={1}>
+                <MyBidsBidHeaderFragmentContainer sale={sale} />
+              </StackableBorderBox>
+
+              <StackableBorderBox p={0} flexDirection="column">
+                <Join separator={<Separator />}>
+                  {saleArtworks.length > 0 ? (
+                    <>
+                      {saleArtworks.map((saleArtwork, saleArtworkIndex) => {
+                        if (!saleArtwork) return null
+
+                        return (
+                          <Box py={1} px={2} key={saleArtworkIndex}>
+                            <MyBidsBidItemFragmentContainer
+                              horizontalSlidePosition={saleArtworkIndex}
+                              saleArtwork={saleArtwork}
+                            />
+                          </Box>
+                        )
+                      })}
+                    </>
+                  ) : (
+                    // If a user has registered for a sale but hasn't yet
+                    // followed or bid on any works, show the Bid Now button.
+                    <Box py={1} px={2}>
                       <RouterLink
-                        // @ts-expect-error STRICT_NULL_CHECK
-                        to={`/auction/${activeSale.sale.slug}`}
+                        to={`/auction/${sale.slug}`}
                         noUnderline
                         data-test="registeredOnlyButton"
                         onClick={() => {
@@ -97,21 +101,17 @@ const MyBids: React.FC<MyBidsProps> = props => {
                           Bid now
                         </Button>
                       </RouterLink>
-                    )}
-                  </Join>
-                </StackableBorderBox>
-              </SaleContainer>
-            )
-          })}
-        </Shelf>
-      </>
-    </ThemeProviderV2>
+                    </Box>
+                  )}
+                </Join>
+              </StackableBorderBox>
+            </Box>
+          )
+        })}
+      </Shelf>
+    </>
   )
 }
-
-const SaleContainer = styled(Box).attrs({
-  width: 330,
-})``
 
 export const MyBidsFragmentContainer = createFragmentContainer(MyBids, {
   me: graphql`
@@ -130,3 +130,106 @@ export const MyBidsFragmentContainer = createFragmentContainer(MyBids, {
     }
   `,
 })
+
+const MyBidsPlaceholder: React.FC = () => {
+  return (
+    <>
+      <Text variant="lg">Your Auctions and Bids</Text>
+
+      <Spacer mt={4} />
+
+      <Skeleton>
+        <Shelf alignItems="flex-start">
+          {[...new Array(3)].map((_, i) => {
+            return (
+              <React.Fragment key={i}>
+                <StackableBorderBox
+                  width={330}
+                  flexDirection="column"
+                  p={0}
+                  pb={1}
+                >
+                  <SkeletonBox width="100%" height={100} />
+
+                  <Spacer mt={1} />
+
+                  <Box px={2}>
+                    <SkeletonText variant="xs" textTransform="uppercase">
+                      Partner Name
+                    </SkeletonText>
+
+                    <Spacer mt={1} />
+
+                    <SkeletonText variant="lg">Sale Name</SkeletonText>
+
+                    <SkeletonText variant="lg">Starts at Mon 0</SkeletonText>
+                  </Box>
+                </StackableBorderBox>
+
+                <StackableBorderBox p={0} flexDirection="column">
+                  <Join separator={<Separator />}>
+                    <Flex py={1} px={2}>
+                      <SkeletonBox size={55} mr={1} />
+
+                      <Flex flex={1}>
+                        <Box>
+                          <SkeletonText variant="xs">Artist Name</SkeletonText>
+
+                          <SkeletonText variant="xs">Lot 0</SkeletonText>
+                        </Box>
+
+                        <Flex
+                          flex={1}
+                          flexDirection="column"
+                          alignItems="flex-end"
+                        >
+                          <SkeletonText variant="xs">
+                            $0,000 (0 bids)
+                          </SkeletonText>
+
+                          <SkeletonText variant="xs">Highest Bid</SkeletonText>
+                        </Flex>
+                      </Flex>
+                    </Flex>
+                  </Join>
+                </StackableBorderBox>
+              </React.Fragment>
+            )
+          })}
+        </Shelf>
+      </Skeleton>
+    </>
+  )
+}
+
+export const MyBidsQueryRenderer: React.FC = () => {
+  const { relayEnvironment } = useSystemContext()
+
+  return (
+    <SystemQueryRenderer<MyBidsQuery>
+      environment={relayEnvironment}
+      query={graphql`
+        query MyBidsQuery {
+          me {
+            ...MyBids_me
+          }
+        }
+      `}
+      placeholder={<MyBidsPlaceholder />}
+      render={({ error, props }) => {
+        if (error) {
+          console.error(error)
+          return null
+        }
+
+        if (!props) {
+          return <MyBidsPlaceholder />
+        }
+
+        if (props.me) {
+          return <MyBidsFragmentContainer me={props.me} />
+        }
+      }}
+    />
+  )
+}

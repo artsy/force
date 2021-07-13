@@ -5,7 +5,7 @@ import { WorksByArtistsYouFollowRail_viewer } from "v2/__generated__/WorksByArti
 import { useTracking } from "react-tracking"
 import { AuthContextModule, clickedArtworkGroup } from "@artsy/cohesion"
 import { tabTypeToContextModuleMap } from "../../Utils/tabTypeToContextModuleMap"
-import { Box, Shelf, Spacer, Text } from "@artsy/palette"
+import { Shelf, Spacer, Text, Sup } from "@artsy/palette"
 import { ShelfArtworkFragmentContainer } from "v2/Components/Artwork/ShelfArtwork"
 import { extractNodes } from "v2/Utils/extractNodes"
 
@@ -28,23 +28,16 @@ const WorksByArtistsYouFollowRail: React.FC<WorksByArtistsYouFollowRailProps> = 
 
   return (
     <>
-      <Box>
-        <Text as="h3" variant="lg" color="black100">
-          Works for you{" "}
-          <sup>
-            <Text as="span" variant="xs" color="brand">
-              {/* @ts-expect-error STRICT_NULL_CHECK */}
-              {viewer.saleArtworksConnection.edges.length}
-            </Text>
-          </sup>
-        </Text>
+      <Text as="h3" variant="lg" color="black100">
+        Works for you{" "}
+        <Sup color="brand">{viewer.saleArtworksConnection?.edges?.length}</Sup>
+      </Text>
 
-        <Text as="h3" variant="lg" color="black60" mb={2}>
-          Works at auction by artists you follow
-        </Text>
-      </Box>
+      <Text as="h3" variant="lg" color="black60">
+        Works at auction by artists you follow
+      </Text>
 
-      <Spacer mb={4} />
+      <Spacer mt={4} />
 
       <Shelf>
         {nodes.map((node, index) => {

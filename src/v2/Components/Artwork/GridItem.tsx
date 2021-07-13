@@ -132,6 +132,7 @@ class ArtworkGridItemContainer extends React.Component<Props, State> {
                 this.props.onClick()
               }
             }}
+            aria-label={`${artwork.title} by ${artwork.artistNames}`}
           >
             <Image
               // @ts-expect-error STRICT_NULL_CHECK
@@ -182,6 +183,7 @@ export default createFragmentContainer(withSystemContext(ArtworkGridItem), {
         url(version: "large")
         aspect_ratio: aspectRatio
       }
+      artistNames
       href
       ...Metadata_artwork
       ...SaveButton_artwork

@@ -61,7 +61,7 @@ export const artistsRoutes: AppRouteConfig[] = [
           return {
             ...params,
             ...props,
-            page: props.location.query.page ?? 1,
+            page: parseInt(props.location.query.page, 10) || 1,
             size: 100,
           }
         },

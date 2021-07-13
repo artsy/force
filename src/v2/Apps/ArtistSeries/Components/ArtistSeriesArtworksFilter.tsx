@@ -48,7 +48,7 @@ const ArtistSeriesArtworksFilter: React.FC<ArtistSeriesArtworksFilterProps> = pr
           aggregations: ["TOTAL"],
           first: 20,
         }}
-      ></BaseArtworkFilter>
+      />
     </ArtworkFilterContextProvider>
   )
 }

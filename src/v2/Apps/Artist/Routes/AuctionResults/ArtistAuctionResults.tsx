@@ -1,5 +1,13 @@
 import { ContextModule, Intent } from "@artsy/cohesion"
-import { Box, Col, Flex, Message, Row, Spacer, Text } from "@artsy/palette"
+import {
+  Box,
+  Column,
+  Flex,
+  GridColumns,
+  Message,
+  Spacer,
+  Text,
+} from "@artsy/palette"
 import { isEqual } from "lodash"
 import React, { useContext, useState } from "react"
 import { Title } from "react-head"
@@ -24,6 +32,7 @@ import {
 } from "./AuctionResultsFilterContext"
 import { AuctionFilterMobileActionSheet } from "./Components/AuctionFilterMobileActionSheet"
 import { AuctionFilters } from "./Components/AuctionFilters"
+import { KeywordFilter } from "./Components/KeywordFilter"
 import { AuctionResultsControls } from "./Components/AuctionResultsControls"
 import { MarketStatsQueryRenderer } from "./Components/MarketStats"
 import { SortSelect } from "./Components/SortSelect"
@@ -172,27 +181,38 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
         </AuctionFilterMobileActionSheet>
       )}
       <Media greaterThan="xs">
-        <Flex justifyContent="space-between" alignItems="flex-start" pb={4}>
-          <Text variant="xs" textTransform="uppercase">
-            Filter by
-          </Text>
-          <SortSelect />
-        </Flex>
+        <GridColumns>
+          <Column span={3} pr={[0, 2]}>
+            <Text variant="xs" textTransform="uppercase">
+              Filter by
+            </Text>
+          </Column>
+          <Column span={9}>
+            <Flex justifyContent="space-between" alignItems="flex-start" pb={4}>
+              <Flex flex={1} pr={1} style={{ flexFlow: "column" }}>
+                <KeywordFilter />
+              </Flex>
+              <Flex>
+                <SortSelect />
+              </Flex>
+            </Flex>
+          </Column>
+        </GridColumns>
       </Media>
-      <Row>
-        <Col sm={3} pr={[0, 2]}>
+      <GridColumns>
+        <Column span={3} pr={[0, 2]}>
           <Media greaterThan="xs">
             <TableSidebar />
           </Media>
-        </Col>
+        </Column>
 
-        <Col sm={9} data-test={ContextModule.auctionResults}>
+        <Column span={9} data-test={ContextModule.auctionResults}>
           <AuctionResultsControls
             artist={artist}
             toggleMobileActionSheet={toggleMobileActionSheet}
           />
 
-          <Spacer mt={3} />
+          <Spacer mt={[2, 0]} />
 
           {auctionResultsLength > 0 ? (
             <LoadingArea isLoading={isLoading}>
@@ -226,14 +246,14 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
             onNext={() => loadNext()}
             scrollTo="#jumpto-ArtistHeader"
           />
-        </Col>
-      </Row>
+        </Column>
+      </GridColumns>
 
-      <Row>
-        <Col>
+      <GridColumns>
+        <Column>
           <Box></Box>
-        </Col>
-      </Row>
+        </Column>
+      </GridColumns>
     </>
   )
 }
@@ -266,6 +286,7 @@ export const ArtistAuctionResultsRefetchContainer = createRefetchContainer(
           after: { type: "String" }
           before: { type: "String" }
           organizations: { type: "[String]" }
+          keyword: { type: "String" }
           categories: { type: "[String]" }
           sizes: { type: "[ArtworkSizes]" }
           createdAfterYear: { type: "Int" }
@@ -282,6 +303,7 @@ export const ArtistAuctionResultsRefetchContainer = createRefetchContainer(
           last: $last
           sort: $sort
           organizations: $organizations
+          keyword: $keyword
           categories: $categories
           sizes: $sizes
           earliestCreatedYear: $createdAfterYear
@@ -328,6 +350,7 @@ export const ArtistAuctionResultsRefetchContainer = createRefetchContainer(
       $sort: AuctionResultSorts
       $artistID: String!
       $organizations: [String]
+      $keyword: String
       $categories: [String]
       $sizes: [ArtworkSizes]
       $createdBeforeYear: Int
@@ -343,6 +366,7 @@ export const ArtistAuctionResultsRefetchContainer = createRefetchContainer(
             before: $before
             sort: $sort
             organizations: $organizations
+            keyword: $keyword
             categories: $categories
             sizes: $sizes
             createdAfterYear: $createdAfterYear

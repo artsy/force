@@ -2,6 +2,7 @@ import PropTypes from "prop-types"
 import React from "react"
 import block from "bem-cn-lite"
 import { connect } from "react-redux"
+import { get } from "lodash"
 
 function BidStatus(props) {
   const { isSold, currentBidDisplay, bidLabel } = props
@@ -30,16 +31,15 @@ BidStatus.propTypes = {
 
 const mapStateToProps = (state, props) => {
   const {
-    artworkItem: { artwork, counts = {}, current_bid },
+    artworkItem: { artwork, counts, current_bid },
   } = props
-
-  const { bidder_positions } = counts
-
   let bidLabel
+  const bidCounts = get(artwork, "sale_artwork.counts") || counts
+  const bidderPositions = get(bidCounts, "bidder_positions")
 
-  if (counts && bidder_positions) {
-    const bidOrBids = bidder_positions > 1 ? "Bids" : "Bid"
-    bidLabel = `(${bidder_positions} ${bidOrBids})`
+  if (bidderPositions) {
+    const bidOrBids = bidderPositions > 1 ? "Bids" : "Bid"
+    bidLabel = `(${bidderPositions} ${bidOrBids})`
   } else {
     bidLabel = ""
   }

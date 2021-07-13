@@ -7,7 +7,7 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import React from "react"
+import React, { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "v2/System"
 import { renderWithLoadProgress } from "v2/System/Relay/renderWithLoadProgress"
@@ -19,7 +19,7 @@ import {
 import { ConfirmArtworkModal_artwork } from "v2/__generated__/ConfirmArtworkModal_artwork.graphql"
 import { ConfirmArtworkButtonFragmentContainer } from "./ConfirmArtworkButton"
 import { CollapsibleArtworkDetailsFragmentContainer } from "./CollapsibleArtworkDetails"
-
+import { EditionSelectBoxFragmentContainer } from "./EditionSelectBox"
 export interface ConfirmArtworkModalProps {
   artwork: ConfirmArtworkModal_artwork
   conversationID: string
@@ -32,39 +32,73 @@ export const ConfirmArtworkModal: React.FC<ConfirmArtworkModalProps> = ({
   conversationID,
   show,
   closeModal,
-}) => (
-  <Modal
-    show={show}
-    onClose={closeModal}
-    title="Confirm Artwork"
-    FixedButton={
-      <Flex flexGrow={1}>
-        <Button variant="secondaryOutline" flexGrow={1} onClick={closeModal}>
-          Cancel
-        </Button>
-        <Spacer m="20px" />
-        <ConfirmArtworkButtonFragmentContainer
-          artwork={artwork}
-          conversationID={conversationID}
-          editionSetID={null}
-        />
-      </Flex>
+}) => {
+  if (!artwork) {
+    return null
+  }
+  const { editionSets, isEdition } = artwork
+
+  const initialSelectedEdition =
+    editionSets?.length === 1 ? editionSets[0]!.internalID : null
+
+  const [selectedEdition, setSelectedEdition] = useState<string | null>(
+    initialSelectedEdition
+  )
+
+  const selectEdition = (editionSetID: string, isAvailable?: boolean) => {
+    if (isAvailable) {
+      setSelectedEdition(editionSetID)
     }
-  >
-    <Text color="black60" variant="subtitle" mb="30px">
-      Make sure the artwork below matches the intended work you’re making an
-      offer on.
-    </Text>
+  }
 
-    <CollapsibleArtworkDetailsFragmentContainer artwork={artwork} />
-    <Separator />
-
-    <Message mt="20px" mx="20px">
-      Making an offer doesn’t guarantee you the work, as the seller might be
-      receiving competing offers.
-    </Message>
-  </Modal>
-)
+  return (
+    <Modal
+      show={show}
+      onClose={closeModal}
+      title="Confirm Artwork"
+      FixedButton={
+        <Flex flexGrow={1}>
+          <Button variant="secondaryOutline" flexGrow={1} onClick={closeModal}>
+            Cancel
+          </Button>
+          <Spacer m="20px" />
+          <ConfirmArtworkButtonFragmentContainer
+            artwork={artwork}
+            disabled={!!isEdition && !selectedEdition}
+            conversationID={conversationID}
+            editionSetID={selectedEdition || null}
+          />
+        </Flex>
+      }
+    >
+      <Text color="black60" variant="subtitle" mb="30px">
+        Make sure the artwork below matches the intended work you’re making an
+        offer on.
+      </Text>
+      <CollapsibleArtworkDetailsFragmentContainer artwork={artwork} />
+      <Separator />
+      {!!isEdition && editionSets?.length && (
+        <Flex flexDirection="column">
+          <Text mx={2} mt={2} mb={1}>
+            Which edition are you interested in?
+          </Text>
+          {editionSets?.map(edition => (
+            <EditionSelectBoxFragmentContainer
+              edition={edition!}
+              selected={edition!.internalID === selectedEdition}
+              onSelect={selectEdition}
+              key={`edition-set-${edition?.internalID}`}
+            />
+          ))}
+        </Flex>
+      )}
+      <Message mt="20px" mx="20px">
+        Making an offer doesn’t guarantee you the work, as the seller might be
+        receiving competing offers.
+      </Message>
+    </Modal>
+  )
+}
 
 export const ConfirmArtworkModalFragmentContainer = createFragmentContainer(
   ConfirmArtworkModal,
@@ -77,20 +111,7 @@ export const ConfirmArtworkModalFragmentContainer = createFragmentContainer(
         isEdition
         editionSets {
           internalID
-          editionOf
-          isOfferableFromInquiry
-          listPrice {
-            ... on Money {
-              display
-            }
-            ... on PriceRange {
-              display
-            }
-          }
-          dimensions {
-            cm
-            in
-          }
+          ...EditionSelectBox_edition
         }
       }
     `,

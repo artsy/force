@@ -8,7 +8,7 @@ import { useSystemContext } from "v2/System"
 import { NearbyGalleryCardFragmentContainer } from "./NearbyGalleryCard"
 import { NearbyGalleriesRailPlaceholder } from "./NearbyGalleriesRailPlaceholder"
 import { SystemQueryRenderer as QueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
-import { compact } from "underscore"
+import { compact } from "lodash"
 
 interface NearbyGalleriesRailProps extends BoxProps {
   partners: NearbyGalleriesRail_partners

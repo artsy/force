@@ -125,18 +125,22 @@ class OrderApp extends React.Component<OrderAppProps, {}> {
     }
 
     const stripePromise = loadStripe(sd.STRIPE_PUBLISHABLE_KEY)
+
+    const isModal = this.props.match?.location.query.isModal ? true : false
+
     return (
       <SystemContextConsumer>
         {({ isEigen, mediator }) => {
           // @ts-expect-error STRICT_NULL_CHECK
           this.mediator = mediator
+
           return (
             <Box>
               {/* FIXME: remove once we refactor out legacy backbone code.
-                  Add place to attach legacy flash message, used in legacy inquiry flow
-              */}
+                    Add place to attach legacy flash message, used in legacy inquiry flow
+                */}
               <div id="main-layout-flash" />
-              <MinimalNavBar to={artworkHref}>
+              <MinimalNavBar to={artworkHref} isBlank={isModal}>
                 <Title>Checkout | Artsy</Title>
                 {isEigen ? (
                   <Meta
@@ -157,7 +161,9 @@ class OrderApp extends React.Component<OrderAppProps, {}> {
                     </AppContainer>
                   </Elements>
                 </SafeAreaContainer>
-                <StickyFooter orderType={order.mode} artworkId={artworkId} />
+                {!isModal && (
+                  <StickyFooter orderType={order.mode} artworkId={artworkId} />
+                )}
                 <ConnectedModalDialog />
               </MinimalNavBar>
             </Box>

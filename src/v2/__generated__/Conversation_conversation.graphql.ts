@@ -3,6 +3,7 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
+export type CommerceBuyerOfferActionEnum = "OFFER_ACCEPTED" | "OFFER_ACCEPTED_CONFIRM_NEEDED" | "OFFER_RECEIVED" | "OFFER_RECEIVED_CONFIRM_NEEDED" | "PAYMENT_FAILED" | "PROVISIONAL_OFFER_ACCEPTED" | "%future added value";
 export type Conversation_conversation = {
     readonly id: string;
     readonly internalID: string | null;
@@ -17,6 +18,14 @@ export type Conversation_conversation = {
     readonly initialMessage: string;
     readonly lastMessageID: string | null;
     readonly unread: boolean | null;
+    readonly orderConnection: {
+        readonly edges: ReadonlyArray<{
+            readonly node: {
+                readonly internalID: string;
+                readonly buyerAction?: CommerceBuyerOfferActionEnum | null;
+            } | null;
+        } | null> | null;
+    } | null;
     readonly messagesConnection: {
         readonly pageInfo: {
             readonly startCursor: string | null;
@@ -32,49 +41,13 @@ export type Conversation_conversation = {
         readonly " $fragmentRefs": FragmentRefs<"ConversationMessages_messages">;
     } | null;
     readonly items: ReadonlyArray<{
-        readonly item: ({
-            readonly __typename: "Artwork";
-            readonly internalID: string;
-            readonly id: string;
-            readonly date: string | null;
-            readonly title: string | null;
-            readonly artistNames: string | null;
-            readonly href: string | null;
-            readonly isOfferableFromInquiry: boolean | null;
-            readonly image: {
-                readonly url: string | null;
-            } | null;
-            readonly listPrice: ({
-                readonly __typename: "Money";
-                readonly display: string | null;
-            } | {
-                readonly __typename: "PriceRange";
-                readonly display: string | null;
-            } | {
-                /*This will never be '%other', but we need some
-                value in case none of the concrete values match.*/
-                readonly __typename: "%other";
-            }) | null;
-        } | {
-            readonly __typename: "Show";
-            readonly id: string;
-            readonly fair: {
-                readonly name: string | null;
-                readonly exhibitionPeriod: string | null;
-                readonly location: {
-                    readonly city: string | null;
-                } | null;
-            } | null;
-            readonly href: string | null;
-            readonly name: string | null;
-            readonly coverImage: {
-                readonly url: string | null;
-            } | null;
-        } | {
-            /*This will never be '%other', but we need some
-            value in case none of the concrete values match.*/
-            readonly __typename: "%other";
-        }) | null;
+        readonly item: {
+            readonly __typename: string;
+            readonly id?: string;
+            readonly isOfferableFromInquiry?: boolean | null;
+            readonly internalID?: string;
+            readonly " $fragmentRefs": FragmentRefs<"Item_item">;
+        } | null;
     } | null> | null;
     readonly " $fragmentRefs": FragmentRefs<"ConversationCTA_conversation">;
     readonly " $refType": "Conversation_conversation";
@@ -115,23 +88,7 @@ v3 = {
   "kind": "ScalarField",
   "name": "__typename",
   "storageKey": null
-},
-v4 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "href",
-  "storageKey": null
-},
-v5 = [
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "display",
-    "storageKey": null
-  }
-];
+};
 return {
   "argumentDefinitions": [
     {
@@ -222,6 +179,69 @@ return {
       "kind": "ScalarField",
       "name": "unread",
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "first",
+          "value": 10
+        },
+        {
+          "kind": "Literal",
+          "name": "states",
+          "value": [
+            "APPROVED",
+            "FULFILLED",
+            "SUBMITTED",
+            "REFUNDED"
+          ]
+        }
+      ],
+      "concreteType": "CommerceOrderConnectionWithTotalCount",
+      "kind": "LinkedField",
+      "name": "orderConnection",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "CommerceOrderEdge",
+          "kind": "LinkedField",
+          "name": "edges",
+          "plural": true,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": null,
+              "kind": "LinkedField",
+              "name": "node",
+              "plural": false,
+              "selections": [
+                (v1/*: any*/),
+                {
+                  "kind": "InlineFragment",
+                  "selections": [
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "buyerAction",
+                      "storageKey": null
+                    }
+                  ],
+                  "type": "CommerceOfferOrder"
+                }
+              ],
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        }
+      ],
+      "storageKey": "orderConnection(first:10,states:[\"APPROVED\",\"FULFILLED\",\"SUBMITTED\",\"REFUNDED\"])"
     },
     {
       "alias": "messagesConnection",
@@ -329,30 +349,7 @@ return {
             {
               "kind": "InlineFragment",
               "selections": [
-                (v1/*: any*/),
                 (v0/*: any*/),
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "date",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "title",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "artistNames",
-                  "storageKey": null
-                },
-                (v4/*: any*/),
                 {
                   "alias": null,
                   "args": null,
@@ -360,120 +357,14 @@ return {
                   "name": "isOfferableFromInquiry",
                   "storageKey": null
                 },
-                {
-                  "alias": null,
-                  "args": null,
-                  "concreteType": "Image",
-                  "kind": "LinkedField",
-                  "name": "image",
-                  "plural": false,
-                  "selections": [
-                    {
-                      "alias": null,
-                      "args": [
-                        {
-                          "kind": "Literal",
-                          "name": "version",
-                          "value": [
-                            "large"
-                          ]
-                        }
-                      ],
-                      "kind": "ScalarField",
-                      "name": "url",
-                      "storageKey": "url(version:[\"large\"])"
-                    }
-                  ],
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "concreteType": null,
-                  "kind": "LinkedField",
-                  "name": "listPrice",
-                  "plural": false,
-                  "selections": [
-                    (v3/*: any*/),
-                    {
-                      "kind": "InlineFragment",
-                      "selections": (v5/*: any*/),
-                      "type": "Money"
-                    },
-                    {
-                      "kind": "InlineFragment",
-                      "selections": (v5/*: any*/),
-                      "type": "PriceRange"
-                    }
-                  ],
-                  "storageKey": null
-                }
+                (v1/*: any*/)
               ],
               "type": "Artwork"
             },
             {
-              "kind": "InlineFragment",
-              "selections": [
-                (v0/*: any*/),
-                {
-                  "alias": null,
-                  "args": null,
-                  "concreteType": "Fair",
-                  "kind": "LinkedField",
-                  "name": "fair",
-                  "plural": false,
-                  "selections": [
-                    (v2/*: any*/),
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "exhibitionPeriod",
-                      "storageKey": null
-                    },
-                    {
-                      "alias": null,
-                      "args": null,
-                      "concreteType": "Location",
-                      "kind": "LinkedField",
-                      "name": "location",
-                      "plural": false,
-                      "selections": [
-                        {
-                          "alias": null,
-                          "args": null,
-                          "kind": "ScalarField",
-                          "name": "city",
-                          "storageKey": null
-                        }
-                      ],
-                      "storageKey": null
-                    }
-                  ],
-                  "storageKey": null
-                },
-                (v4/*: any*/),
-                (v2/*: any*/),
-                {
-                  "alias": null,
-                  "args": null,
-                  "concreteType": "Image",
-                  "kind": "LinkedField",
-                  "name": "coverImage",
-                  "plural": false,
-                  "selections": [
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "url",
-                      "storageKey": null
-                    }
-                  ],
-                  "storageKey": null
-                }
-              ],
-              "type": "Show"
+              "args": null,
+              "kind": "FragmentSpread",
+              "name": "Item_item"
             }
           ],
           "storageKey": null
@@ -490,5 +381,5 @@ return {
   "type": "Conversation"
 };
 })();
-(node as any).hash = '62c9a8c2bb10cd0b2bd37a60633f4685';
+(node as any).hash = '0fc3d6e84e79af306daa0062e625a898';
 export default node;

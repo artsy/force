@@ -3,8 +3,6 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { SystemQueryRenderer as QueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { PartnerArtistDetails_partnerArtist } from "v2/__generated__/PartnerArtistDetails_partnerArtist.graphql"
 import { PartnerArtistDetailsQuery } from "v2/__generated__/PartnerArtistDetailsQuery.graphql"
-import { Carousel } from "v2/Components/Carousel"
-import FillwidthItem from "v2/Components/Artwork/FillwidthItem"
 import {
   Box,
   Column,
@@ -18,24 +16,23 @@ import { ContextModule } from "@artsy/cohesion"
 import { useSystemContext } from "v2/System"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { PartnerArtistDetailsPlaceholder } from "./PartnerArtistDetailsPlaceholder"
-import { compact } from "lodash"
+import { PartnerArtistArtworksRailPaginationContainer } from "./PartnerArtistArtworksRail"
 
 export interface PartnerArtistDetailsProps {
   partnerArtist: PartnerArtistDetails_partnerArtist
+  partnerId: string
 }
 
 export const PartnerArtistDetails: React.FC<PartnerArtistDetailsProps> = ({
   partnerArtist,
+  partnerId,
 }) => {
   if (!partnerArtist || !partnerArtist.node) return null
 
   const {
     node: { name, href, formattedNationalityAndBirthday },
     biographyBlurb,
-    artworksConnection,
   } = partnerArtist
-
-  const artworks = compact(artworksConnection?.edges?.map(c => c?.node))
 
   return (
     <Box>
@@ -80,18 +77,11 @@ export const PartnerArtistDetails: React.FC<PartnerArtistDetailsProps> = ({
           )}
         </Column>
         <Column span={12} maxWidth="100%">
-          <Carousel arrowHeight={160}>
-            {artworks.map(artwork => {
-              return (
-                <FillwidthItem
-                  key={artwork.id}
-                  artwork={artwork}
-                  imageHeight={160}
-                  lazyLoad
-                />
-              )
-            })}
-          </Carousel>
+          <PartnerArtistArtworksRailPaginationContainer
+            partnerId={partnerId}
+            artistId={partnerArtist.node.slug}
+            partnerArtist={partnerArtist}
+          ></PartnerArtistArtworksRailPaginationContainer>
         </Column>
       </GridColumns>
     </Box>
@@ -107,15 +97,9 @@ export const PartnerArtistDetailsFragmentContainer = createFragmentContainer(
           text
           credit
         }
-        artworksConnection(first: 12) {
-          edges {
-            node {
-              id
-              ...FillwidthItem_artwork
-            }
-          }
-        }
+        ...PartnerArtistArtworksRail_partnerArtist
         node {
+          slug
           name
           href
           formattedNationalityAndBirthday
@@ -153,10 +137,12 @@ export const PartnerArtistDetailsRenderer: React.FC<{
       placeholder={<PartnerArtistDetailsPlaceholder />}
       render={({ error, props }) => {
         if (error || !props) return <PartnerArtistDetailsPlaceholder />
+
         return (
           <PartnerArtistDetailsFragmentContainer
             {...rest}
             {...props}
+            partnerId={partnerId}
             partnerArtist={props?.partner?.artistsConnection?.edges[0]}
           />
         )

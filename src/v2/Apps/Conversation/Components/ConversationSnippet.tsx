@@ -143,10 +143,6 @@ const ConversationSnippet: React.FC<ConversationSnippetProps> = props => {
                     >
                       {partnerName}
                     </TruncatedTitle>
-                    <Sans size="3t" color={"black30"}>
-                      {/* @ts-expect-error STRICT_NULL_CHECK */}
-                      {conversation.messagesConnection.totalCount}
-                    </Sans>
                   </Flex>
                   <TimeSinceFlex>
                     <TimeSince
@@ -209,9 +205,6 @@ export const ConversationSnippetFragmentContainer = createFragmentContainer(
               }
             }
           }
-        }
-        messagesConnection {
-          totalCount
         }
       }
     `,

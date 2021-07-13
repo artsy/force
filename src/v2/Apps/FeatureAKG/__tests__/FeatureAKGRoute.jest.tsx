@@ -909,16 +909,16 @@ const defaultData = {
     title: "Selected Works",
   },
   video_1: {
-    small_src: "http://files.artsy.net/video_1_small.mp4",
-    large_src: "http://files.artsy.net/video_1_large.mp4",
+    small_src: "https://files.artsy.net/video_1_small.mp4",
+    large_src: "https://files.artsy.net/video_1_large.mp4",
   },
   video_2: {
-    small_src: "http://files.artsy.net/video_2_small.mp4",
-    large_src: "http://files.artsy.net/video_2_large.mp4",
+    small_src: "https://files.artsy.net/video_2_small.mp4",
+    large_src: "https://files.artsy.net/video_2_large.mp4",
   },
   hero_video: {
-    small_src: "http://files.artsy.net/hero_video_small.mp4",
-    large_src: "http://files.artsy.net/hero_video_large.mp4",
+    small_src: "https://files.artsy.net/hero_video_small.mp4",
+    large_src: "https://files.artsy.net/hero_video_large.mp4",
   },
 }
 
@@ -1036,6 +1036,7 @@ const ArtKeepsGoingFixture: FeatureAKGRoute_Test_QueryRawResponse = {
                   name: "Andy Warhol",
                 },
               ],
+              artistNames: "Andy Warhol",
               collecting_institution: null,
               partner: {
                 name: "Hamilton-Selway Fine Art",
@@ -1076,6 +1077,7 @@ const ArtKeepsGoingFixture: FeatureAKGRoute_Test_QueryRawResponse = {
                   name: "Andy Warhol",
                 },
               ],
+              artistNames: "Andy Warhol",
               collecting_institution: null,
               partner: {
                 name: "Hamilton-Selway Fine Art",

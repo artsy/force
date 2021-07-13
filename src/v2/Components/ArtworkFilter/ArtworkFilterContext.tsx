@@ -103,7 +103,7 @@ export type Aggregations = Array<{
   }>
 }>
 
-interface Counts {
+export interface Counts {
   for_sale_artworks?: number
   ecommerce_artworks?: number
   auction_artworks?: number
@@ -131,7 +131,6 @@ export interface ArtworkFilterContextProps {
   // Sorting
   sortOptions?: SortOptions
   aggregations?: Aggregations
-  setAggregations?: (aggregations: Aggregations) => void
   counts?: Counts
   setCounts?: (counts: Counts) => void
 
@@ -223,7 +222,6 @@ export const ArtworkFilterContextProvider: React.FC<
   const [stagedArtworkFilterState, stage] = useReducer(artworkFilterReducer, {})
 
   // TODO: Consolidate this into additional reducer
-  const [filterAggregations, setAggregations] = useState(aggregations)
   const [artworkCounts, setCounts] = useState(counts)
   const [shouldStageFilterChanges, setShouldStageFilterChanges] = useState(
     false
@@ -261,8 +259,7 @@ export const ArtworkFilterContextProvider: React.FC<
 
     // Sorting
     sortOptions,
-    aggregations: filterAggregations,
-    setAggregations,
+    aggregations,
     counts: artworkCounts,
     setCounts,
 

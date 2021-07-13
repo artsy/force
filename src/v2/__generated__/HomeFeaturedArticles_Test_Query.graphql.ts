@@ -35,10 +35,22 @@ fragment HomeFeaturedArticles_articles on Article {
       srcSet
     }
   }
+  author {
+    name
+    id
+  }
 }
 */
 
-const node: ConcreteRequest = {
+const node: ConcreteRequest = (function(){
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+};
+return {
   "fragment": {
     "argumentDefinitions": [],
     "kind": "Fragment",
@@ -162,10 +174,23 @@ const node: ConcreteRequest = {
           {
             "alias": null,
             "args": null,
-            "kind": "ScalarField",
-            "name": "id",
+            "concreteType": "Author",
+            "kind": "LinkedField",
+            "name": "author",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "name",
+                "storageKey": null
+              },
+              (v0/*: any*/)
+            ],
             "storageKey": null
-          }
+          },
+          (v0/*: any*/)
         ],
         "storageKey": null
       }
@@ -176,8 +201,9 @@ const node: ConcreteRequest = {
     "metadata": {},
     "name": "HomeFeaturedArticles_Test_Query",
     "operationKind": "query",
-    "text": "query HomeFeaturedArticles_Test_Query {\n  articles {\n    ...HomeFeaturedArticles_articles\n    id\n  }\n}\n\nfragment HomeFeaturedArticles_articles on Article {\n  internalID\n  href\n  title\n  publishedAt(format: \"MMM D YYYY\")\n  thumbnailImage {\n    cropped(width: 325, height: 244) {\n      src\n      srcSet\n    }\n  }\n}\n"
+    "text": "query HomeFeaturedArticles_Test_Query {\n  articles {\n    ...HomeFeaturedArticles_articles\n    id\n  }\n}\n\nfragment HomeFeaturedArticles_articles on Article {\n  internalID\n  href\n  title\n  publishedAt(format: \"MMM D YYYY\")\n  thumbnailImage {\n    cropped(width: 325, height: 244) {\n      src\n      srcSet\n    }\n  }\n  author {\n    name\n    id\n  }\n}\n"
   }
 };
+})();
 (node as any).hash = '7557499b993fbf4e016df8e0f0e952f6';
 export default node;

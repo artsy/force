@@ -607,8 +607,10 @@ describe("Shipping", () => {
     })
     describe("editing address", () => {
       it("opens modal with correct title and action properties", async () => {
-        await page.find(`[data-test="edit-address"]`).first().simulate("click")
-        expect(page.find(ShippingRoute).state().editAddressIndex).toBe(0)
+        await page
+          .find(`[data-test="editAddressInShipping"]`)
+          .first()
+          .simulate("click")
         expect(
           page.find("AddressModal").at(0).props().modalDetails
         ).toStrictEqual({
@@ -618,11 +620,12 @@ describe("Shipping", () => {
       })
 
       it("opens modal with current address values", async () => {
-        expect(page.find(ShippingRoute).state().editAddressIndex).toBe(-1)
-        await page.find(`[data-test="edit-address"]`).first().simulate("click")
-        expect(page.find(ShippingRoute).state().editAddressIndex).toBe(0)
+        await page
+          .find(`[data-test="editAddressInShipping"]`)
+          .first()
+          .simulate("click")
 
-        expect(page.find("AddressModal").length).toBe(2)
+        expect(page.find("AddressModal").length).toBe(1)
         expect(
           page
             .find("AddressModal")
@@ -641,7 +644,10 @@ describe("Shipping", () => {
         `)
       })
       it("sends mutation with updated values when modal form is submitted", async () => {
-        page.find(`[data-test="edit-address"]`).first().simulate("click")
+        page
+          .find(`[data-test="editAddressInShipping"]`)
+          .first()
+          .simulate("click")
         const inputs = page.find("AddressModal").find("input")
         inputs.forEach(input => {
           input.instance().value = `Test input '${input.props().name}'`

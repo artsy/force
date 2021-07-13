@@ -2,16 +2,45 @@ import { AppRouteConfig } from "v2/System/Router/Route"
 import { omit } from "lodash"
 import React from "react"
 import { graphql } from "react-relay"
+import loadable from "@loadable/component"
 
 import { RouteSpinner } from "v2/System/Relay/renderWithLoadProgress"
 import { ArtworkQueryFilter } from "v2/Components/ArtworkFilter/ArtworkQueryFilter"
 import { allowedFilters } from "v2/Components/ArtworkFilter/Utils/allowedFilters"
 import { paramsToCamelCase } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
 
-import { SearchResultsArtistsRouteFragmentContainer } from "./Routes/Artists/SearchResultsArtists"
-import { SearchResultsArtworksRoute } from "./Routes/Artworks"
-import { SearchResultsEntityRouteFragmentContainer } from "./Routes/Entity/SearchResultsEntity"
-import { SearchAppFragmentContainer } from "./SearchApp"
+const SearchResultsArtistsRouteFragmentContainer = loadable(
+  () =>
+    import(
+      /* webpackChunkName: "searchBundle" */ "./Routes/Artists/SearchResultsArtists"
+    ),
+  {
+    resolveComponent: component =>
+      component.SearchResultsArtistsRouteFragmentContainer,
+  }
+)
+const SearchResultsArtworksRoute = loadable(
+  () => import(/* webpackChunkName: "searchBundle" */ "./Routes/Artworks"),
+  {
+    resolveComponent: component => component.SearchResultsArtworksRoute,
+  }
+)
+const SearchResultsEntityRouteFragmentContainer = loadable(
+  () =>
+    import(
+      /* webpackChunkName: "searchBundle" */ "./Routes/Entity/SearchResultsEntity"
+    ),
+  {
+    resolveComponent: component =>
+      component.SearchResultsEntityRouteFragmentContainer,
+  }
+)
+const SearchAppFragmentContainer = loadable(
+  () => import(/* webpackChunkName: "searchBundle" */ "./SearchApp"),
+  {
+    resolveComponent: component => component.SearchAppFragmentContainer,
+  }
+)
 
 const prepareVariables = (_params, { location }) => {
   const aggregations = [

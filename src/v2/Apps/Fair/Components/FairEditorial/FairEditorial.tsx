@@ -1,6 +1,7 @@
-import { Column, GridColumns } from "@artsy/palette"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
+import { Text } from "@artsy/palette"
+import { Carousel } from "v2/Components/Carousel"
 import { FairEditorial_fair } from "v2/__generated__/FairEditorial_fair.graphql"
 import { FairEditorialItemFragmentContainer as FairEditorialItem } from "./FairEditorialItem"
 
@@ -12,16 +13,17 @@ interface FairEditorialProps {
 
 export const FairEditorial: React.FC<FairEditorialProps> = ({ fair }) => {
   return (
-    <GridColumns gridRowGap={2}>
-      {/* @ts-expect-error STRICT_NULL_CHECK */}
-      {fair.articlesConnection.edges.map(({ node: article }) => {
-        return (
-          <Column key={article.id} span={6}>
-            <FairEditorialItem article={article} />
-          </Column>
-        )
-      })}
-    </GridColumns>
+    <>
+      <Text variant="lg" as="h3" mb={4}>
+        Explore Further
+      </Text>
+      <Carousel>
+        {fair.articlesConnection!.edges!.map(edge => {
+          const article = edge?.node!
+          return <FairEditorialItem article={article} key={article.id} />
+        })}
+      </Carousel>
+    </>
   )
 }
 

@@ -1,18 +1,33 @@
 import { OpenInquiryModalButtonQuery } from "v2/__generated__/OpenInquiryModalButtonQuery.graphql"
 import { Button, CheckCircleIcon, Flex, Text } from "@artsy/palette"
-import React from "react"
+import React, { useEffect } from "react"
 import { graphql } from "react-relay"
 import { Link } from "@artsy/palette"
 import { useSystemContext } from "v2/System"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
+import { useTracking } from "react-tracking"
+import { tappedMakeOffer } from "@artsy/cohesion"
 
 export interface OpenInquiryModalButtonProps {
   openInquiryModal: () => void
+  onMount: () => void
+  conversationID: string
 }
 
 export const OpenInquiryModalButton: React.FC<OpenInquiryModalButtonProps> = ({
   openInquiryModal,
+  onMount,
+  conversationID,
 }) => {
+  const tracking = useTracking()
+
+  const handleOpenModal = () => {
+    tracking.trackEvent(tappedMakeOffer(conversationID))
+    openInquiryModal()
+  }
+
+  useEffect(onMount, [])
+
   return (
     <>
       <Flex flexDirection="column" p={1}>
@@ -21,7 +36,10 @@ export const OpenInquiryModalButton: React.FC<OpenInquiryModalButtonProps> = ({
           <Flex flexShrink={1}>
             <Text color="black60" variant="small" mb={1}>
               Only purchases completed with our secure checkout are protected by{" "}
-              <Link href="/buyer-guarantee">The Artsy Guarantee</Link>.
+              <Link target="_blank" href="/buyer-guarantee">
+                The Artsy Guarantee
+              </Link>
+              .
             </Text>
           </Flex>
         </Flex>
@@ -29,7 +47,7 @@ export const OpenInquiryModalButton: React.FC<OpenInquiryModalButtonProps> = ({
           size="large"
           variant="primaryBlack"
           width="100%"
-          onClick={() => openInquiryModal()}
+          onClick={() => handleOpenModal()}
         >
           Make Offer
         </Button>
@@ -41,7 +59,9 @@ export const OpenInquiryModalButton: React.FC<OpenInquiryModalButtonProps> = ({
 export const OpenInquiryModalButtonQueryRenderer: React.FC<{
   artworkID: string
   openInquiryModal: () => void
-}> = ({ artworkID, openInquiryModal }) => {
+  onMount: () => void
+  conversationID: string
+}> = ({ artworkID, openInquiryModal, onMount, conversationID }) => {
   const { relayEnvironment } = useSystemContext()
   return (
     <SystemQueryRenderer<OpenInquiryModalButtonQuery>
@@ -66,6 +86,8 @@ export const OpenInquiryModalButtonQueryRenderer: React.FC<{
           return (
             <OpenInquiryModalButton
               openInquiryModal={() => openInquiryModal()}
+              onMount={onMount}
+              conversationID={conversationID}
             />
           )
         } else {
