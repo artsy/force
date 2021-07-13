@@ -44,6 +44,7 @@ import { allowedFilters } from "./Utils/allowedFilters"
 import { Sticky } from "v2/Components/Sticky"
 import { ScrollRefContext } from "./ArtworkFilters/useScrollContext"
 import { GeneArtworkFilter_gene } from "v2/__generated__/GeneArtworkFilter_gene.graphql"
+import { TagArtworkFilter_tag } from "v2/__generated__/TagArtworkFilter_tag.graphql"
 
 /**
  * Primary ArtworkFilter which is wrapped with a context and refetch container.
@@ -109,6 +110,7 @@ export const BaseArtworkFilter: React.FC<
       | FairArtworks_fair
       | ShowArtworks_show
       | GeneArtworkFilter_gene
+      | TagArtworkFilter_tag
     Filters?: JSX.Element
     offset?: number
   }
