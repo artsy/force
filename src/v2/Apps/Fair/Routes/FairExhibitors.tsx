@@ -60,12 +60,12 @@ const FairExhibitors: React.FC<FairExhibitorsProps> = ({ fair, relay }) => {
   const previousFilters = usePrevious(context.filters!)
 
   useDeepCompareEffect(() => {
-    let filtersHaveUpdated = false
-
-    Object.entries(context.filters!).forEach(([filterKey, currentFilter]) => {
-      const previousFilter = previousFilters[filterKey]
-      filtersHaveUpdated = !isEqual(currentFilter, previousFilter)
-    })
+    const filtersHaveUpdated = Object.entries(context.filters!).some(
+      ([filterKey, currentFilter]) => {
+        const previousFilter = previousFilters[filterKey]
+        return !isEqual(currentFilter, previousFilter)
+      }
+    )
 
     if (filtersHaveUpdated) {
       fetchResults()
