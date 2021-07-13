@@ -54,8 +54,15 @@ const Conversation: React.FC<ConversationProps> = props => {
   const [showOrderModal, setShowOrderModal] = useState<boolean>(false)
   const [fetchingMore, setFetchingMore] = useState<boolean>(false)
 
+  // Keeping track of this for scroll on send
+  const [lastMessageID, setLastMessageID] = useState<string | null>("")
+
   const scrollToBottom = () => {
-    if (bottomOfMessageContainer.current) {
+    if (
+      bottomOfMessageContainer.current ||
+      lastMessageID !== conversation?.lastMessageID
+    ) {
+      setLastMessageID(conversation?.lastMessageID)
       setTimeout(() => {
         bottomOfMessageContainer!.current!.scrollIntoView({
           behavior: "smooth",
@@ -64,7 +71,7 @@ const Conversation: React.FC<ConversationProps> = props => {
     }
   }
 
-  useEffect(scrollToBottom, [conversation])
+  useEffect(scrollToBottom, [conversation, lastMessageID])
 
   useEffect(() => {
     UpdateConversation(relay.environment, conversation)
