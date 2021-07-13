@@ -93,6 +93,25 @@ const OrderArtworkNode = {
   artwork: {
     ...OrderArtworkNodeWithoutShipping,
     shippingOrigin: "New York, NY",
+    artaShippingEnabled: false,
+    domesticShippingFee: {
+      minor: 10000,
+      major: 100,
+      display: "$100",
+    },
+    internationalShippingFee: {
+      minor: 10000,
+      major: 100,
+      display: "$100",
+    },
+  },
+}
+
+const ArtaEnabledOrderArtworkNode = {
+  artwork: {
+    ...OrderArtworkNodeWithoutShipping,
+    shippingOrigin: "New York, NY",
+    artaShippingEnabled: true,
     domesticShippingFee: {
       minor: 10000,
       major: 100,
@@ -182,6 +201,7 @@ export const UntouchedOrder = {
         node: {
           editionSetId: null,
           id: "line-item-node-id",
+          shippingQuoteOptions: null,
           ...OrderArtworkNode,
           ...OrderArtworkOrEditionSetkNode_Artwork,
           ...OrderArtworkFulfillmentsNode,
@@ -216,6 +236,102 @@ export const UntouchedBuyOrder = {
   ...UntouchedOrder,
   __typename: "CommerceBuyOrder",
   mode: "BUY",
+} as const
+
+export const UntouchedBuyOrderWithArtaEnabled = {
+  ...UntouchedBuyOrder,
+  __typename: "CommerceBuyOrder",
+  lineItems: {
+    edges: [
+      {
+        node: {
+          editionSetId: null,
+          id: "line-item-node-id",
+          shippingQuoteOptions: null,
+          ...ArtaEnabledOrderArtworkNode,
+          ...OrderArtworkOrEditionSetkNode_Artwork,
+          ...OrderArtworkFulfillmentsNode,
+        },
+      },
+    ],
+  },
+} as const
+
+export const UntouchedBuyOrderWithShippingQuotes = {
+  ...UntouchedBuyOrder,
+  __typename: "CommerceBuyOrder",
+  lineItems: {
+    edges: [
+      {
+        node: {
+          editionSetId: null,
+          id: "line-item-node-id",
+          shippingQuoteOptions: {
+            edges: [
+              {
+                node: {
+                  id: "1eb3ba19-643b-4101-b113-2eb4ef7e30b6",
+                  tier: "select",
+                  name: "",
+                  isSelected: false,
+                  priceCents: 400,
+                  priceCurrency: "USD",
+                  price: "$4.00",
+                },
+              },
+              {
+                node: {
+                  id: "d8cfee28-8139-4391-8a8d-3010633e885b",
+                  tier: "parcel",
+                  name: "Next Day Air",
+                  isSelected: false,
+                  priceCents: 400,
+                  priceCurrency: "USD",
+                  price: "$4.00",
+                },
+              },
+              {
+                node: {
+                  id: "1cbfad12-a90d-4e79-9753-02bf4fcc7f80",
+                  tier: "parcel",
+                  name: "Second Day Air",
+                  isSelected: false,
+                  priceCents: 400,
+                  priceCurrency: "USD",
+                  price: "$4.00",
+                },
+              },
+              {
+                node: {
+                  id: "4a8f8080-23d3-4c0e-9811-7a41a9df6933",
+                  tier: "parcel",
+                  name: "Ground",
+                  isSelected: false,
+                  priceCents: 400,
+                  priceCurrency: "USD",
+                  price: "$4.00",
+                },
+              },
+              {
+                node: {
+                  id: "278ba0c4-f815-4197-8a8d-b97f1883db21",
+                  tier: "premium",
+                  name: "",
+                  isSelected: false,
+                  priceCents: 200,
+                  priceCurrency: "USD",
+                  price: "$2.00",
+                },
+              },
+            ],
+          },
+          ...ArtaEnabledOrderArtworkNode,
+          ...OrderArtworkOrEditionSetkNode_Artwork,
+          ...OrderArtworkFulfillmentsNode,
+        },
+      },
+    ],
+  },
 } as const
 
 export const TaxTotals = {
@@ -270,6 +386,7 @@ export const UntouchedOfferOrder = {
         node: {
           editionSetId: null,
           id: "line-item-node-id",
+          shippingQuoteOptions: null,
           ...OrderArtworkNode,
           ...OfferArtworkOrEditionSetkNode_Artwork,
           ...OrderArtworkFulfillmentsNode,
@@ -395,11 +512,27 @@ export const ShippingDetails = {
   },
 } as const
 
+export const ArtaShippingDetails = {
+  buyerPhoneNumber: "120938120983",
+  requestedFulfillment: {
+    __typename: "CommerceShipArta",
+    addressLine1: "401 Broadway",
+    addressLine2: "Suite 25",
+    city: "New York",
+    country: "US",
+    fulfillmentType: "SHIP_ARTA",
+    name: "Joelle Van Dyne",
+    phoneNumber: "120938120983",
+    postalCode: "10013",
+    region: "NY",
+  },
+} as const
+
 export const PaymentDetails = {
   creditCard: {
     brand: "Visa",
     city: "New York",
-    country: "USA",
+    country: "US",
     expirationMonth: 3,
     expirationYear: 21,
     id: "relay-node-id",
@@ -428,6 +561,12 @@ export const OfferOrderWithShippingDetails = {
 export const OfferOrderWithShippingDetailsAndNote = {
   ...OfferOrderWithOffersAndNote,
   ...ShippingDetails,
+  ...PaymentDetails,
+} as const
+
+export const BuyOrderWithArtaShippingDetails = {
+  ...UntouchedBuyOrderWithShippingQuotes,
+  ...ArtaShippingDetails,
   ...PaymentDetails,
 } as const
 

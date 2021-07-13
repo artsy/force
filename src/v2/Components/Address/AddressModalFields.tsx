@@ -10,7 +10,7 @@ import {
   Text,
 } from "@artsy/palette"
 import { useFormikContext } from "formik"
-import { SavedAddressType } from "v2/Apps/Order/Utils/shippingAddressUtils"
+import { SavedAddressType } from "v2/Apps/Order/Utils/shippingUtils"
 import { CountrySelect } from "../CountrySelect"
 
 export const AddressModalFields: React.FC = props => {
@@ -34,7 +34,7 @@ export const AddressModalFields: React.FC = props => {
           onChange={handleChange}
           onBlur={handleBlur}
           error={touched.name && errors.name}
-          value={values?.name}
+          value={values?.name || undefined}
         />
       </Flex>
       <GridColumns mt={2}>
@@ -48,7 +48,9 @@ export const AddressModalFields: React.FC = props => {
                   onSelect={countryCode => {
                     setFieldValue("country", countryCode)
                   }}
-                  error={touched.country && errors.country}
+                  error={
+                    touched.country && errors.country ? errors.country : ""
+                  }
                 />
               </Box>
               <Input
@@ -82,7 +84,7 @@ export const AddressModalFields: React.FC = props => {
                 onChange={handleChange}
                 onBlur={handleBlur}
                 error={touched.postalCode && errors.postalCode}
-                value={values?.postalCode}
+                value={values?.postalCode || ""}
               />
               <Input
                 title="Address Line 2 (optional)"
@@ -91,7 +93,7 @@ export const AddressModalFields: React.FC = props => {
                 onChange={handleChange}
                 onBlur={handleBlur}
                 error={touched.addressLine2 && errors.addressLine2}
-                value={values?.addressLine2}
+                value={values?.addressLine2 || ""}
               />
               <Input
                 title="State, province, or region"
@@ -100,7 +102,7 @@ export const AddressModalFields: React.FC = props => {
                 onChange={handleChange}
                 onBlur={handleBlur}
                 error={touched.region && errors.region}
-                value={values?.region}
+                value={values?.region || ""}
               />
             </Join>
           </Flex>

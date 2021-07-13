@@ -10,7 +10,7 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { SavedAddressType } from "../Utils/shippingAddressUtils"
+import { SavedAddressType } from "../Utils/shippingUtils"
 import { Formik, FormikHelpers, FormikProps } from "formik"
 import {
   removeEmptyKeys,
@@ -27,7 +27,7 @@ export interface Props {
   closeModal: () => void
   address?: SavedAddressType
   onSuccess: (address) => void
-  onDeleteAddress: (address) => void
+  onDeleteAddress: (addressID: string) => void
   onError: (message: string) => void
   modalDetails?: {
     addressModalTitle: string
@@ -121,7 +121,7 @@ export const AddressModal: React.FC<Props> = ({
               : updateUserAddress(
                   // @ts-expect-error STRICT_NULL_CHECK
                   relayEnvironment,
-                  address.internalID,
+                  address?.internalID,
                   values,
                   closeModal,
                   handleSuccess,
@@ -145,7 +145,7 @@ export const AddressModal: React.FC<Props> = ({
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 error={formik.touched.phoneNumber && formik.errors.phoneNumber}
-                value={formik.values?.phoneNumber}
+                value={formik.values?.phoneNumber || ""}
               />
               {!createMutation && (
                 <Flex mt={2} flexDirection="column" alignItems="center">
@@ -183,7 +183,10 @@ export const AddressModal: React.FC<Props> = ({
           action: () => {
             setShowDialog(false)
             closeModal()
-            onDeleteAddress(address.internalID)
+
+            if (address?.internalID) {
+              onDeleteAddress(address.internalID)
+            }
           },
           text: "Delete",
         }}

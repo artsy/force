@@ -5,7 +5,7 @@ import {
   convertShippingAddressToMutationInput,
   convertShippingAddressForExchange,
   SavedAddressType,
-} from "../Utils/shippingAddressUtils"
+} from "../Utils/shippingUtils"
 
 export const updateUserAddress = async (
   environment: Environment,

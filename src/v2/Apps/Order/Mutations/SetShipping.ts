@@ -30,6 +30,27 @@ export const setShipping = (
                     postalCode
                     phoneNumber
                   }
+                  ... on CommerceShipArta {
+                    name
+                    addressLine1
+                    addressLine2
+                    city
+                    region
+                    country
+                    postalCode
+                    phoneNumber
+                  }
+                }
+                lineItems {
+                  edges {
+                    node {
+                      shippingQuoteOptions {
+                        edges {
+                          ...ShippingQuotes_shippingQuotes
+                        }
+                      }
+                    }
+                  }
                 }
               }
             }

@@ -50,7 +50,6 @@ import {
 import { Router } from "found"
 import React, { Component } from "react"
 import { RelayProp, createFragmentContainer, graphql } from "react-relay"
-import { get } from "v2/Utils/get"
 import createLogger from "v2/Utils/logger"
 import { Media } from "v2/Utils/Responsive"
 import { BuyerGuarantee } from "../../Components/BuyerGuarantee"
@@ -60,7 +59,11 @@ import {
   startingAddress,
   convertShippingAddressForExchange,
   defaultShippingAddressIndex,
-} from "../../Utils/shippingAddressUtils"
+  getSelectedShippingQuoteId,
+  getShippingQuotes,
+  getShippingOption,
+  ShippingQuotesType,
+} from "../../Utils/shippingUtils"
 import {
   NEW_ADDRESS,
   SavedAddressesFragmentContainer as SavedAddresses,
@@ -68,6 +71,9 @@ import {
 import { createUserAddress } from "../../Mutations/CreateUserAddress"
 import { setShipping } from "../../Mutations/SetShipping"
 import { SystemContextProps, withSystemContext } from "v2/System/SystemContext"
+import { ShippingQuotesFragmentContainer } from "../../Components/ShippingQuotes"
+import { compact } from "lodash"
+import { selectShippingOption } from "../../Mutations/SelectShippingOption"
 
 export interface ShippingProps extends SystemContextProps {
   order: Shipping_order
@@ -89,16 +95,17 @@ export interface ShippingState {
   addressTouched: AddressTouched
   selectedSavedAddress: string
   saveAddress: boolean
+  shippingQuotes: ShippingQuotesType
+  shippingQuoteId?: string
 }
 
 const logger = createLogger("Order/Routes/Shipping/index.tsx")
 @track()
 export class ShippingRoute extends Component<ShippingProps, ShippingState> {
   state: ShippingState = {
-    shippingOption: (this.props.order.requestedFulfillment &&
-    this.props.order.requestedFulfillment.__typename !== "CommerceShip"
-      ? "PICKUP"
-      : "SHIP") as CommerceOrderFulfillmentTypeEnum,
+    shippingOption: getShippingOption(
+      this.props.order.requestedFulfillment?.__typename
+    ),
     // @ts-expect-error STRICT_NULL_CHECK
     address: startingAddress(this.props.me, this.props.order),
     addressErrors: {},
@@ -107,7 +114,12 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
     phoneNumber: startingPhoneNumber(this.props.me, this.props.order),
     phoneNumberError: "",
     phoneNumberTouched: false,
-    selectedSavedAddress: defaultShippingAddressIndex(this.props.me),
+    selectedSavedAddress: defaultShippingAddressIndex(
+      this.props.me,
+      this.props.order
+    ),
+    shippingQuotes: getShippingQuotes(this.props.order),
+    shippingQuoteId: getSelectedShippingQuoteId(this.props.order),
     saveAddress: true,
   }
 
@@ -130,18 +142,53 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
     }
   }
 
+  componentDidMount() {
+    if (
+      this.isArtaShipping() &&
+      !this.isCreateNewAddress() &&
+      !this.state.shippingQuoteId
+    ) {
+      this.selectShipping()
+    }
+  }
+
   // @ts-expect-error STRICT_NULL_CHECK
   getAddressList = () => this.props.me.addressConnection.edges
 
+  getOrderArtwork = () => this.props.order.lineItems?.edges?.[0]?.node?.artwork
+
   isCreateNewAddress = () => this.state.selectedSavedAddress === NEW_ADDRESS
 
+  isArtaShipping = () => {
+    const addresses = this.getAddressList()
+    const artaShippingEnabled = !!this.getOrderArtwork()?.artaShippingEnabled
+
+    const shippingCountry = this.isCreateNewAddress()
+      ? this.state.address.country
+      : addresses &&
+        addresses[parseInt(this.state.selectedSavedAddress)]?.node?.country
+
+    return (
+      this.state.shippingOption === "SHIP" &&
+      artaShippingEnabled &&
+      shippingCountry === "US"
+    )
+  }
+
   onContinueButtonPressed = async () => {
+    if (this.isArtaShipping() && !!this.state.shippingQuoteId) {
+      this.selectShippingQuote()
+    } else {
+      this.selectShipping()
+    }
+  }
+
+  selectShipping = async () => {
     const {
       address,
       shippingOption,
       phoneNumber,
       selectedSavedAddress,
-      saveAddress,
     } = this.state
 
     if (shippingOption === "SHIP") {
@@ -196,12 +243,20 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
         ? phoneNumber
         : // @ts-expect-error STRICT_NULL_CHECK
           this.getAddressList()[parseInt(selectedSavedAddress)].node.phoneNumber
+
+      this.setState({
+        shippingQuotes: null,
+        shippingQuoteId: undefined,
+      })
+
+      const isArtaShipping = this.isArtaShipping()
+
       // @ts-expect-error STRICT_NULL_CHECK
       const orderOrError = (
         await setShipping(this.props.commitMutation, {
           input: {
             id: this.props.order.internalID,
-            fulfillmentType: shippingOption,
+            fulfillmentType: isArtaShipping ? "SHIP_ARTA" : shippingOption,
             shipping: shipToAddress,
             phoneNumber: shipToPhoneNumber,
           },
@@ -209,46 +264,90 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
       ).commerceSetShipping.orderOrError
 
       // save address when user is entering new address AND save checkbox is selected
-      if (
-        shippingOption === "SHIP" &&
-        this.isCreateNewAddress() &&
-        saveAddress
-      ) {
-        const { relayEnvironment } = this.props
-        await createUserAddress(
-          // @ts-expect-error STRICT_NULL_CHECK
-          relayEnvironment,
-          {
-            ...address,
-            phoneNumber: phoneNumber,
-          }, // address
-          () => {}, // onSuccess
-          () => {
-            message => {
-              logger.error(message)
-            }
-          }, // onError
-          this.props.me, // me
-          () => {} // closeModal
-        )
-      }
+      await this.saveAddress()
 
       if (orderOrError.error) {
-        // @ts-expect-error STRICT_NULL_CHECK
         this.handleSubmitError(orderOrError.error)
         return
       }
 
-      this.props.router.push(`/orders/${this.props.order.internalID}/payment`)
+      if (isArtaShipping) {
+        this.setState({
+          shippingQuotes: getShippingQuotes(orderOrError?.order),
+        })
+      } else {
+        this.props.router.push(`/orders/${this.props.order.internalID}/payment`)
+      }
     } catch (error) {
       logger.error(error)
       this.props.dialog.showErrorDialog()
     }
   }
 
-  handleSubmitError(error: { code: string; data: string }) {
+  selectShippingQuote = async () => {
+    const { shippingQuoteId } = this.state
+    const { order } = this.props
+
+    if (shippingQuoteId && order.internalID) {
+      try {
+        const orderOrError = (
+          await selectShippingOption(this.props.commitMutation, {
+            input: {
+              id: order.internalID,
+              selectedShippingQuoteId: shippingQuoteId,
+            },
+          })
+        ).commerceSelectShippingOption?.orderOrError
+
+        await this.saveAddress()
+
+        if (orderOrError?.error) {
+          this.handleSubmitError(orderOrError.error)
+          return
+        }
+
+        this.props.router.push(`/orders/${this.props.order.internalID}/payment`)
+      } catch (error) {
+        logger.error(error)
+        this.props.dialog.showErrorDialog()
+      }
+    }
+  }
+
+  saveAddress = async () => {
+    const { address, phoneNumber, shippingOption, saveAddress } = this.state
+    const { relayEnvironment } = this.props
+    const isCreateNewAddress = this.isCreateNewAddress()
+
+    if (
+      shippingOption === "SHIP" &&
+      isCreateNewAddress &&
+      saveAddress &&
+      relayEnvironment
+    ) {
+      await createUserAddress(
+        relayEnvironment,
+        {
+          ...address,
+          phoneNumber: phoneNumber,
+        }, // address
+        () => {
+          // TODO: refetch delivery addresses
+        }, // onSuccess
+        () => {
+          message => {
+            logger.error(message)
+          }
+        }, // onError
+        this.props.me, // me
+        () => {}
+      )
+    }
+  }
+
+  handleSubmitError(error: { code: string; data: string | null }) {
     logger.error(error)
-    const parsedData = get(error, e => JSON.parse(e.data), {})
+    const parsedData = error.data ? JSON.parse(error.data) : {}
     if (
       error.code === "missing_region" ||
       error.code === "missing_country" ||
@@ -307,7 +406,28 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
     type: "button",
   }))
   onSelectShippingOption(shippingOption: CommerceOrderFulfillmentTypeEnum) {
-    this.setState({ shippingOption })
+    if (this.state.shippingOption !== shippingOption) {
+      this.setState({ shippingOption }, () => {
+        const addressList = this.getAddressList()
+        if (addressList && addressList.length > 0 && this.isArtaShipping()) {
+          this.selectShipping()
+        }
+      })
+    }
+  }
+
+  handleShippingQuoteSelected = (shippingQuoteId: string) => {
+    this.setState({ shippingQuoteId: shippingQuoteId })
+  }
+
+  onSelectSavedAddress = (value: string) => {
+    if (this.state.selectedSavedAddress !== value) {
+      this.setState({ selectedSavedAddress: value }, () => {
+        if (this.isArtaShipping()) {
+          this.selectShipping()
+        }
+      })
+    }
   }
 
   render() {
@@ -319,28 +439,27 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
       phoneNumber,
       phoneNumberError,
       phoneNumberTouched,
+      shippingQuotes,
+      shippingOption,
+      shippingQuoteId,
+      selectedSavedAddress,
     } = this.state
-    const artwork = get(
-      this.props,
-      props => props.order.lineItems?.edges?.[0]?.node?.artwork
-    )
+    const artwork = this.getOrderArtwork()
     const addressList = this.getAddressList()
 
     const shippingSelected =
-      // @ts-expect-error STRICT_NULL_CHECK
-      !artwork.pickup_available || this.state.shippingOption === "SHIP"
+      !artwork?.pickup_available || shippingOption === "SHIP"
 
     const showAddressForm =
       shippingSelected &&
-      // @ts-expect-error STRICT_NULL_CHECK
-      (this.isCreateNewAddress() || addressList.length === 0)
+      (this.isCreateNewAddress() || addressList?.length === 0)
 
-    // @ts-expect-error STRICT_NULL_CHECK
-    const showSavedAddresses = shippingSelected && addressList.length > 0
-
-    const onSelectSavedAddress = (value: string) => {
-      this.setState({ selectedSavedAddress: value })
-    }
+    const showSavedAddresses =
+      shippingSelected && addressList && addressList.length > 0
+    const isArtaShipping = this.isArtaShipping()
+    const isContinueButtonDisabled = isCommittingMutation
+      ? false
+      : isArtaShipping && !shippingQuoteId && !this.isCreateNewAddress()
 
     return (
       <Box data-test="orderShipping">
@@ -365,8 +484,9 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
               {artwork.pickup_available && (
                 <>
                   <RadioGroup
+                    data-test="shipping-options"
                     onSelect={this.onSelectShippingOption.bind(this)}
-                    defaultValue={this.state.shippingOption}
+                    defaultValue={shippingOption}
                   >
                     <Text variant="mediumText" mb="1">
                       Delivery method
@@ -378,7 +498,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
                       label="Arrange for pickup (free)"
                       data-test="pickupOption"
                     >
-                      <Collapse open={this.state.shippingOption === "PICKUP"}>
+                      <Collapse open={shippingOption === "PICKUP"}>
                         <Sans size="2" color="black60">
                           After your order is confirmed, a specialist will
                           contact you within 2 business days to coordinate
@@ -397,12 +517,14 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
                   </Text>
                   <SavedAddresses
                     me={this.props.me}
-                    onSelect={value => onSelectSavedAddress(value)}
+                    selectedAddress={selectedSavedAddress}
+                    onSelect={this.onSelectSavedAddress}
                     inCollectorProfile={false}
                     onAddressDelete={this.handleAddressDelete}
                   />
                 </>
               )}
+
               <Collapse data-test="addressFormCollapse" open={showAddressForm}>
                 {/* @ts-expect-error STRICT_NULL_CHECK */}
                 <AddressForm
@@ -440,7 +562,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
 
               <Collapse
                 data-test="phoneNumberCollapse"
-                open={this.state.shippingOption === "PICKUP"}
+                open={shippingOption === "PICKUP"}
               >
                 <PhoneNumberForm
                   data-test="pickupPhoneNumberForm"
@@ -451,10 +573,25 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
                   label="Number to contact you for pickup logistics"
                 />
               </Collapse>
+
+              <Collapse open={isArtaShipping && !!shippingQuotes}>
+                <Text variant="mediumText" mb="1">
+                  Shipping options
+                </Text>
+
+                <ShippingQuotesFragmentContainer
+                  mb={3}
+                  selectedShippingQuoteId={shippingQuoteId}
+                  shippingQuotes={compact(shippingQuotes)}
+                  onSelect={this.handleShippingQuoteSelected}
+                />
+              </Collapse>
+
               <Media greaterThan="xs">
                 <Button
                   onClick={this.onContinueButtonPressed}
                   loading={isCommittingMutation}
+                  disabled={isContinueButtonDisabled}
                   size="large"
                   width="100%"
                 >
@@ -475,6 +612,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
                 <Button
                   onClick={this.onContinueButtonPressed}
                   loading={isCommittingMutation}
+                  disabled={isContinueButtonDisabled}
                   size="large"
                   width="100%"
                 >
@@ -512,16 +650,36 @@ export const ShippingFragmentContainer = createFragmentContainer(
             postalCode
             phoneNumber
           }
+          ... on CommerceShipArta {
+            name
+            addressLine1
+            addressLine2
+            city
+            region
+            country
+            postalCode
+            phoneNumber
+          }
         }
         lineItems {
           edges {
             node {
               artwork {
                 slug
+                artaShippingEnabled
                 pickup_available: pickupAvailable
                 onlyShipsDomestically
                 euShippingOrigin
                 shippingCountry
+              }
+              shippingQuoteOptions {
+                edges {
+                  ...ShippingQuotes_shippingQuotes
+                  node {
+                    id
+                    isSelected
+                  }
+                }
               }
             }
           }

@@ -32,6 +32,28 @@ Array [
               postalCode
               phoneNumber
             }
+            ... on CommerceShipArta {
+              name
+              addressLine1
+              addressLine2
+              city
+              region
+              country
+              postalCode
+              phoneNumber
+            }
+          }
+          lineItems {
+            edges {
+              node {
+                shippingQuoteOptions {
+                  edges {
+                    ...ShippingQuotes_shippingQuotes
+                  }
+                }
+                id
+              }
+            }
           }
           id
         }
@@ -44,6 +66,16 @@ Array [
         }
       }
     }
+  }
+}
+
+fragment ShippingQuotes_shippingQuotes on CommerceShippingQuoteEdge {
+  node {
+    id
+    tier
+    name
+    isSelected
+    price(precision: 2)
   }
 }
 ",
