@@ -2,11 +2,7 @@ import { omit } from "lodash"
 import React, { createContext, useReducer, useContext } from "react"
 import useDeepCompareEffect from "use-deep-compare-effect"
 import { paramsToCamelCase } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
-
-export type SortOptions = Array<{
-  value: string
-  text: string
-}>
+import { SortOptions } from "v2/Components/SortFilter"
 
 export interface ExhibitorFilters {
   sort?: string

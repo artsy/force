@@ -8,8 +8,8 @@ export const ArtworkSortFilter: React.FC = () => {
 
   return (
     <SortFilter
-      sortOptions={sortOptions}
-      selected={filters?.sort}
+      sortOptions={sortOptions!}
+      selected={filters?.sort!}
       onSort={sort => {
         context.setFilter("sort", sort)
       }}

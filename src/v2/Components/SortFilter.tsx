@@ -1,7 +1,18 @@
 import { Box, Flex, Select } from "@artsy/palette"
 import React from "react"
 
-export const SortFilter: React.FC<any> = ({
+export type SortOptions = Array<{
+  value: string
+  text: string
+}>
+
+interface SortFilterProps {
+  sortOptions: SortOptions
+  selected: string
+  onSort: (sort: string) => void
+}
+
+export const SortFilter: React.FC<SortFilterProps> = ({
   sortOptions,
   selected,
   onSort,

@@ -7,7 +7,6 @@ import {
 } from "react-relay"
 import useDeepCompareEffect from "use-deep-compare-effect"
 import { isEqual } from "lodash"
-import { Match } from "found"
 import { Box, Button, Column, Flex, GridColumns, Spacer } from "@artsy/palette"
 import { ActionType, ClickedShowMore, ContextModule } from "@artsy/cohesion"
 import { FairExhibitors_fair } from "v2/__generated__/FairExhibitors_fair.graphql"
@@ -33,7 +32,6 @@ const PAGE_SIZE = 3
 
 interface FairExhibitorsProps {
   fair: FairExhibitors_fair
-  match: Match
   relay: RelayPaginationProp
 }
 
@@ -159,7 +157,7 @@ const FairExhibitors: React.FC<FairExhibitorsProps> = ({ fair, relay }) => {
 
           return (
             <Box my={6} key={index}>
-              <FairExhibitorRail key={show.id} show={show as any} />
+              <FairExhibitorRail key={show.id} show={show} />
             </Box>
           )
         })}
@@ -184,7 +182,9 @@ const FairExhibitors: React.FC<FairExhibitorsProps> = ({ fair, relay }) => {
   )
 }
 
-const FairExhibitorsWithContext: React.FC<any> = ({ ...props }) => {
+const FairExhibitorsWithContext: React.FC<FairExhibitorsProps> = ({
+  ...props
+}) => {
   const {
     match: { location },
   } = useRouter()

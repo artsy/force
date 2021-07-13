@@ -8,8 +8,8 @@ export const FairExhibitorSortFilter: React.FC = () => {
 
   return (
     <SortFilter
-      sortOptions={sortOptions}
-      selected={filters?.sort}
+      sortOptions={sortOptions!}
+      selected={filters?.sort!}
       onSort={sort => {
         setFilter("sort", sort)
       }}
