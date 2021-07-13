@@ -145,9 +145,7 @@ export const AddressModal: React.FC<Props> = ({
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 error={formik.touched.phoneNumber && formik.errors.phoneNumber}
-                value={
-                  formik.values?.phoneNumber ? formik.values?.phoneNumber : ""
-                }
+                value={formik.values?.phoneNumber || ""}
               />
               {!createMutation && (
                 <Flex mt={2} flexDirection="column" alignItems="center">
