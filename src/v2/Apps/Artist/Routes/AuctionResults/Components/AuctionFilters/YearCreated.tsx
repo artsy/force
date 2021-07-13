@@ -23,15 +23,12 @@ export const YearCreated: React.FC = () => {
   const {
     currentlySelectedFilters,
     setFilter,
-  } = useAuctionResultsFilterContext()
-
-  const {
     earliestCreatedYear,
     latestCreatedYear,
-    createdAfterYear,
-    createdBeforeYear,
-    allowEmptyCreatedDates,
-  } = currentlySelectedFilters?.() || {}
+  } = useAuctionResultsFilterContext()
+
+  const { createdAfterYear, createdBeforeYear, allowEmptyCreatedDates } =
+    currentlySelectedFilters?.() || {}
 
   const hasChanges =
     earliestCreatedYear !== createdAfterYear ||

@@ -13,11 +13,6 @@ export interface AuctionResultsFilters {
   createdAfterYear?: number | null
   createdBeforeYear?: number | null
   allowEmptyCreatedDates?: boolean
-
-  /** Used to get the overall earliest created year for all lots of given artist */
-  readonly earliestCreatedYear?: number | null
-  /** Used to get the overall latest created year for all lots of given artist */
-  readonly latestCreatedYear?: number | null
 }
 
 interface AuctionResultsFiltersState extends AuctionResultsFilters {
@@ -26,15 +21,20 @@ interface AuctionResultsFiltersState extends AuctionResultsFilters {
 /**
  * Initial filter state
  */
-export const initialAuctionResultsFilterState: AuctionResultsFilters = {
+export const initialAuctionResultsFilterState = (
+  createdBeforeYear: number | null = null,
+  createdAfterYear: number | null = null
+): AuctionResultsFilters => ({
   organizations: [],
   categories: [],
   sizes: [],
   keyword: undefined,
   pageAndCursor: { page: 1, cursor: null },
   sort: "DATE_DESC",
+  createdAfterYear,
+  createdBeforeYear,
   allowEmptyCreatedDates: true,
-}
+})
 
 /**
  * The names of all filters which can be changed by the user
@@ -72,6 +72,10 @@ export interface AuctionResultsFilterContextProps {
   setShouldStageFilterChanges?: (value: boolean) => void
   setStagedFilters?: (state: AuctionResultsFilters) => void
   setFilters?: (state: AuctionResultsFilters, opts?: { force: boolean }) => void
+  /** Used to get the overall earliest created year for all lots of given artist */
+  earliestCreatedYear?: number | null
+  /** Used to get the overall latest created year for all lots of given artist */
+  latestCreatedYear?: number | null
 }
 
 /**
@@ -80,7 +84,7 @@ export interface AuctionResultsFilterContextProps {
 export const AuctionResultsFilterContext = React.createContext<
   AuctionResultsFilterContextProps
 >({
-  filters: initialAuctionResultsFilterState,
+  filters: initialAuctionResultsFilterState(null, null),
   setFilter: null,
   resetFilters: null,
   unsetFilter: null,
@@ -89,27 +93,31 @@ export const AuctionResultsFilterContext = React.createContext<
 
 export type SharedAuctionResultsFilterContextProps = Pick<
   AuctionResultsFilterContextProps,
-  "filters" | "onFilterClick" | "filters" | "onFilterClick" | "ZeroState"
+  | "filters"
+  | "onFilterClick"
+  | "ZeroState"
+  | "earliestCreatedYear"
+  | "latestCreatedYear"
 > & {
   onChange?: (filterState) => void
 }
-
-export let auctionResultsFilterResetState: AuctionResultsFilters = initialAuctionResultsFilterState
 
 export const AuctionResultsFilterContextProvider: React.FC<
   SharedAuctionResultsFilterContextProps & {
     children: React.ReactNode
   }
-> = ({ children, filters = {}, onFilterClick, onChange, ZeroState }) => {
+> = ({
+  children,
+  filters = {},
+  onFilterClick,
+  onChange,
+  ZeroState,
+  earliestCreatedYear = null,
+  latestCreatedYear = null,
+}) => {
   const initialFilterState = {
-    ...initialAuctionResultsFilterState,
+    ...initialAuctionResultsFilterState(latestCreatedYear, earliestCreatedYear),
     ...filters,
-  }
-  if (filters.earliestCreatedYear) {
-    initialFilterState.createdAfterYear = filters.earliestCreatedYear
-  }
-  if (filters.latestCreatedYear) {
-    initialFilterState.createdBeforeYear = filters.latestCreatedYear
   }
 
   const [auctionResultsFilterState, dispatch] = useReducer(
@@ -142,6 +150,8 @@ export const AuctionResultsFilterContextProvider: React.FC<
 
   const auctionResultsFilterContext: AuctionResultsFilterContextProps = {
     filters: auctionResultsFilterState,
+    earliestCreatedYear,
+    latestCreatedYear,
 
     stagedFilters: stagedAuctionResultsFilterState,
     currentlySelectedFilters: currentlySelectedFilters,
@@ -182,7 +192,7 @@ export const AuctionResultsFilterContextProvider: React.FC<
     resetFilters: () => {
       const action: AuctionResultsFiltersAction = {
         type: "RESET",
-        payload: null,
+        payload: { earliestCreatedYear, latestCreatedYear } as any,
       }
       dispatchOrStage(action)
     },
@@ -264,20 +274,20 @@ const AuctionResultsFilterReducer = (
         filterState.pageAndCursor.cursor = null
       }
 
-      if (name === "createdBeforeYear" && value) {
-        if (!state.createdAfterYear) {
-          filterState.createdAfterYear = state.earliestCreatedYear
-        } else if (state.createdAfterYear > value) {
-          filterState.createdAfterYear = value
-        }
+      if (
+        name === "createdBeforeYear" &&
+        value &&
+        (!state.createdAfterYear || state.createdAfterYear > value)
+      ) {
+        filterState.createdAfterYear = value
       }
 
-      if (name === "createdAfterYear" && value) {
-        if (!state.createdBeforeYear) {
-          filterState.createdBeforeYear = state.latestCreatedYear
-        } else if (state.createdBeforeYear < value) {
-          filterState.createdBeforeYear = value
-        }
+      if (
+        name === "createdAfterYear" &&
+        value &&
+        (!state.createdBeforeYear || state.createdBeforeYear < value)
+      ) {
+        filterState.createdBeforeYear = value
       }
 
       delete state.reset
@@ -321,12 +331,12 @@ const AuctionResultsFilterReducer = (
      * Resetting filters back to their initial state
      */
     case "RESET": {
+      const { earliestCreatedYear, latestCreatedYear } = action.payload as any
       return {
-        ...auctionResultsFilterResetState,
-        earliestCreatedYear: state.earliestCreatedYear,
-        latestCreatedYear: state.latestCreatedYear,
-        createdAfterYear: state.earliestCreatedYear,
-        createdBeforeYear: state.latestCreatedYear,
+        ...initialAuctionResultsFilterState(
+          latestCreatedYear,
+          earliestCreatedYear
+        ),
         reset: true,
       }
     }

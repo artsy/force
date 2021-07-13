@@ -27,7 +27,7 @@ import { ArtistAuctionResults_artist } from "v2/__generated__/ArtistAuctionResul
 import { ArtistAuctionResultItemFragmentContainer as AuctionResultItem } from "./ArtistAuctionResultItem"
 import {
   AuctionResultsFilterContextProvider,
-  auctionResultsFilterResetState,
+  initialAuctionResultsFilterState,
   useAuctionResultsFilterContext,
 } from "./AuctionResultsFilterContext"
 import { AuctionFilterMobileActionSheet } from "./Components/AuctionFilterMobileActionSheet"
@@ -52,13 +52,17 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
   relay,
 }) => {
   const { user, mediator } = useContext(SystemContext)
-  const filterContext = useAuctionResultsFilterContext()
+  const {
+    filters,
+    setFilter,
+    currentlySelectedFilters,
+  } = useAuctionResultsFilterContext()
   const { pageInfo } = artist.auctionResultsConnection ?? {}
   const { hasNextPage, endCursor } = pageInfo ?? {}
   const artistName = artist.name
 
   const loadNext = () => {
-    const currentPageNumber = filterContext.filters?.pageAndCursor?.page ?? 0
+    const currentPageNumber = filters?.pageAndCursor?.page ?? 0
     const nextPageNum = currentPageNumber + 1
     if (hasNextPage) {
       loadPage(endCursor, nextPageNum)
@@ -71,7 +75,7 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
       behavior: "smooth",
       offset: 150,
     })
-    filterContext.setFilter?.("pageAndCursor", {
+    setFilter?.("pageAndCursor", {
       cursor: cursor,
       page: pageNum,
     })
@@ -83,57 +87,62 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
 
   const tracking = useTracking()
 
+  const { startAt, endAt } =
+    artist.auctionResultsConnection?.createdYearRange ?? {}
+  const auctionResultsFilterResetState = initialAuctionResultsFilterState(
+    endAt,
+    startAt
+  )
+
   // Is current filter state different from the default (reset) state?
   const filtersAtDefault = isEqual(
-    filterContext.filters,
+    currentlySelectedFilters?.(),
     auctionResultsFilterResetState
   )
 
-  const previousFilters = usePrevious(filterContext.filters) ?? {}
+  const previousFilters = usePrevious(filters) ?? {}
 
   // TODO: move this and artwork copy to util?
   useDeepCompareEffect(() => {
-    Object.entries(filterContext.filters ?? {}).forEach(
-      ([filterKey, currentFilter]) => {
-        const previousFilter = previousFilters[filterKey]
-        const filtersHaveUpdated = !isEqual(currentFilter, previousFilter)
+    Object.entries(filters ?? {}).forEach(([filterKey, currentFilter]) => {
+      const previousFilter = previousFilters[filterKey]
+      const filtersHaveUpdated = !isEqual(currentFilter, previousFilter)
 
-        if (filtersHaveUpdated) {
-          fetchResults()
+      if (filtersHaveUpdated) {
+        fetchResults()
 
-          // If user is not logged-in, show auth modal, but only if it was never shown before.
-          if (!user && !authShownForFiltering) {
-            // @ts-expect-error STRICT_NULL_CHECK
-            openAuthModal(mediator, {
-              contextModule: ContextModule.auctionResults,
-              copy: `Sign up to see auction results for ${artistName}`,
-              intent: Intent.viewAuctionResults,
-              mode: ModalType.signup,
-            })
-            // Remember to not show auth modal again for this activity.
-            toggleAuthShowForFiltering(true)
-          }
-
-          tracking.trackEvent({
-            action_type:
-              AnalyticsSchema.ActionType.AuctionResultFilterParamChanged,
-            changed: JSON.stringify({
-              [filterKey]: filterContext.filters?.[filterKey],
-            }),
-            context_page: AnalyticsSchema.PageName.ArtistAuctionResults,
-            current: JSON.stringify(filterContext.filters),
+        // If user is not logged-in, show auth modal, but only if it was never shown before.
+        if (!user && !authShownForFiltering) {
+          // @ts-expect-error STRICT_NULL_CHECK
+          openAuthModal(mediator, {
+            contextModule: ContextModule.auctionResults,
+            copy: `Sign up to see auction results for ${artistName}`,
+            intent: Intent.viewAuctionResults,
+            mode: ModalType.signup,
           })
+          // Remember to not show auth modal again for this activity.
+          toggleAuthShowForFiltering(true)
         }
+
+        tracking.trackEvent({
+          action_type:
+            AnalyticsSchema.ActionType.AuctionResultFilterParamChanged,
+          changed: JSON.stringify({
+            [filterKey]: filters?.[filterKey],
+          }),
+          context_page: AnalyticsSchema.PageName.ArtistAuctionResults,
+          current: JSON.stringify(filters),
+        })
       }
-    )
-  }, [filterContext.filters])
+    })
+  }, [filters])
 
   // TODO: move this and artwork copy to util? (pass loading state setter)
   function fetchResults() {
     setIsLoading(true)
 
     const relayParams = {
-      after: filterContext.filters?.pageAndCursor?.cursor,
+      after: filters?.pageAndCursor?.cursor,
       artistID: artist.slug,
       artistInternalID: artist.internalID,
       before: null,
@@ -143,7 +152,7 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
 
     const relayRefetchVariables = {
       ...relayParams,
-      ...filterContext.filters,
+      ...filters,
     }
 
     relay.refetch(relayRefetchVariables, null, error => {
@@ -263,10 +272,8 @@ export const ArtistAuctionResultsRefetchContainer = createRefetchContainer(
 
     return (
       <AuctionResultsFilterContextProvider
-        filters={{
-          earliestCreatedYear: startAt,
-          latestCreatedYear: endAt,
-        }}
+        earliestCreatedYear={startAt}
+        latestCreatedYear={endAt}
       >
         <AuctionResultsContainer {...props} />
       </AuctionResultsFilterContextProvider>
