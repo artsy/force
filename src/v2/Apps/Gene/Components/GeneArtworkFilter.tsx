@@ -13,10 +13,14 @@ import { PriceRangeFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/Pri
 import { WaysToBuyFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/WaysToBuyFilter"
 import { SizeFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/SizeFilter"
 import { TimePeriodFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/TimePeriodFilter"
+import { MaterialsFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/MaterialsFilter"
 import { ColorFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/ColorFilter"
 import { ArtistsFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/ArtistsFilter"
 import { GeneArtworkFilter_gene } from "v2/__generated__/GeneArtworkFilter_gene.graphql"
 import { AttributionClassFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/AttributionClassFilter"
+import { ArtistNationalityFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/ArtistNationalityFilter"
+import { ArtworkLocationFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/ArtworkLocationFilter"
+import { PartnersFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/PartnersFilter"
 import { useSystemContext } from "v2/System"
 
 interface GeneArtworkFilterProps {
@@ -35,14 +39,18 @@ const GeneArtworkFilter: React.FC<GeneArtworkFilterProps> = ({
 
   const Filters = (
     <>
-      <ArtistsFilter relayEnvironment={relayEnvironment} user={user} />
-      <MediumFilter expanded />
-      <PriceRangeFilter />
+      <ArtistsFilter relayEnvironment={relayEnvironment} user={user} expanded />
       <AttributionClassFilter expanded />
-      <SizeFilter />
-      <WaysToBuyFilter />
+      <MediumFilter expanded />
+      <PriceRangeFilter expanded />
+      <SizeFilter expanded />
+      <WaysToBuyFilter expanded />
+      <MaterialsFilter />
+      <ArtistNationalityFilter />
+      <ArtworkLocationFilter />
       <TimePeriodFilter />
       <ColorFilter />
+      <PartnersFilter />
     </>
   )
 
