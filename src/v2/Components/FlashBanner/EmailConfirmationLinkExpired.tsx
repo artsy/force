@@ -1,10 +1,6 @@
 import React from "react"
-import { Button, Sans } from "@artsy/palette"
-import {
-  AnalyticsSchema as Schema,
-  useSystemContext,
-  useTracking,
-} from "v2/System"
+import { Button } from "@artsy/palette"
+import { AnalyticsSchema, useSystemContext, useTracking } from "v2/System"
 import { requestEmailConfirmation } from "./requestEmailConfirmationMutation"
 import createLogger from "v2/Utils/logger"
 
@@ -13,28 +9,31 @@ const logger = createLogger(
 )
 
 export const EmailConfirmationLinkExpired: React.FC = () => {
-  const [afterSubmitContent, setAfterSubmitContent] = React.useState<string>(
-    // @ts-expect-error STRICT_NULL_CHECK
-    null
-  )
+  const [afterSubmitContent, setAfterSubmitContent] = React.useState<
+    string | null
+  >(null)
+
   const { relayEnvironment } = useSystemContext()
   const { trackEvent } = useTracking()
 
   const handleSubmit = () => {
     trackEvent({
-      action_type: Schema.ActionType.Click,
-      subject: Schema.Subject.EmailConfirmationLinkExpired,
+      action_type: AnalyticsSchema.ActionType.Click,
+      subject: AnalyticsSchema.Subject.EmailConfirmationLinkExpired,
     })
-    // @ts-expect-error STRICT_NULL_CHECK
+
+    if (!relayEnvironment) return
+
     requestEmailConfirmation(relayEnvironment)
-      // @ts-expect-error STRICT_NULL_CHECK
-      .then(({ sendConfirmationEmail: { confirmationOrError } }) => {
-        const emailToConfirm = confirmationOrError?.unconfirmedEmail
+      .then(({ sendConfirmationEmail }) => {
+        const emailToConfirm =
+          sendConfirmationEmail?.confirmationOrError?.unconfirmedEmail
 
         if (emailToConfirm) {
           setAfterSubmitContent(`An email has been sent to ${emailToConfirm}`)
         } else {
-          const mutationError = confirmationOrError?.mutationError
+          const mutationError =
+            sendConfirmationEmail?.confirmationOrError?.mutationError
 
           switch (mutationError?.message || mutationError?.error) {
             case "email is already confirmed":
@@ -52,11 +51,14 @@ export const EmailConfirmationLinkExpired: React.FC = () => {
   if (!afterSubmitContent) {
     return (
       <>
-        Link expired.{" "}
-        <Button variant="primaryWhite" mx={1} inline onClick={handleSubmit}>
-          <Sans size="3" py={0.5} px={2} lineHeight={0.2}>
-            Resend verification email
-          </Sans>
+        Link expired.
+        <Button
+          variant="primaryWhite"
+          size="small"
+          ml={1}
+          onClick={handleSubmit}
+        >
+          Resend verification email
         </Button>
       </>
     )

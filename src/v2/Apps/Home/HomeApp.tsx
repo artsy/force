@@ -1,4 +1,4 @@
-import { Spacer, Join, Separator } from "@artsy/palette"
+import { Spacer, Join, Separator, FullBleed } from "@artsy/palette"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "v2/System/useSystemContext"
@@ -11,6 +11,7 @@ import { HomeFeaturedShowsLazyQueryRenderer } from "./Components/HomeFeaturedSho
 import { HomeFeaturedArticlesLazyQueryRenderer } from "./Components/HomeFeaturedArticles"
 import { HomeFeaturedEventsRailFragmentContainer } from "./Components/HomeFeaturedEventsRail"
 import { HomeMeta } from "./Components/HomeMeta"
+import { FlashBannerQueryRenderer } from "v2/Components/FlashBanner"
 
 interface HomeAppProps {
   homePage: HomeApp_homePage | null
@@ -23,6 +24,10 @@ export const HomeApp: React.FC<HomeAppProps> = ({ homePage, orderedSet }) => {
   return (
     <>
       <HomeMeta />
+
+      <FullBleed>
+        <FlashBannerQueryRenderer />
+      </FullBleed>
 
       <Spacer mt={[2, 0]} />
 
