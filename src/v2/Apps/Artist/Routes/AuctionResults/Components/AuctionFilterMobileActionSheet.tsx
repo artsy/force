@@ -47,7 +47,7 @@ export const AuctionFilterMobileActionSheet: FC<{
     // On mount, enter staged mode, and initialize a set of staged filter
     // changes from the current filter choices.
     filterContext.setShouldStageFilterChanges?.(true)
-    filterContext.setStagedFilters?.(filterContext.filters || {})
+    filterContext.setStagedFilters?.(filterContext.filters ?? {})
 
     // On unmount, exit staged mode.
     return () => {
@@ -59,7 +59,7 @@ export const AuctionFilterMobileActionSheet: FC<{
   const applyFilters = () => {
     // On apply, replace the actual filter state with the
     // hitherto staged filters
-    filterContext.setFilters?.(filterContext.stagedFilters || {}, {
+    filterContext.setFilters?.(filterContext.stagedFilters ?? {}, {
       force: true,
     })
     onClose()

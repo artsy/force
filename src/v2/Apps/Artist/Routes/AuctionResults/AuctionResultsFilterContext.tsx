@@ -1,13 +1,12 @@
 import React, { useContext, useReducer, useState } from "react"
 import { omit } from "lodash"
 import useDeepCompareEffect from "use-deep-compare-effect"
-import { StringifyOptions } from "querystring"
 
 export interface AuctionResultsFilters {
   organizations?: string[]
   categories?: string[]
   sizes?: string[]
-  keyword?: StringifyOptions
+  keyword?: string
   pageAndCursor?: { page: number; cursor: string | null }
   sort?: string
   createdAfterYear?: number | null
@@ -28,7 +27,7 @@ export const initialAuctionResultsFilterState = (
   organizations: [],
   categories: [],
   sizes: [],
-  keyword: undefined,
+  keyword: "",
   pageAndCursor: { page: 1, cursor: null },
   sort: "DATE_DESC",
   createdAfterYear,
