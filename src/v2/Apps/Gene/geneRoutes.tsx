@@ -46,7 +46,15 @@ export const geneRoutes: AppRouteConfig[] = [
           return GeneShowRoute.preload()
         },
         prepareVariables: ({ slug }, props) => {
-          const aggregations = ["TOTAL", "ARTIST"]
+          const aggregations = [
+            "TOTAL",
+            "ARTIST",
+            "MEDIUM",
+            "LOCATION_CITY",
+            "MATERIALS_TERMS",
+            "PARTNER",
+            "ARTIST_NATIONALITY",
+          ]
 
           const urlFilterState = props.location ? props.location.query : {}
 
