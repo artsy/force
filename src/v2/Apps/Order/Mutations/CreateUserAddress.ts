@@ -12,7 +12,6 @@ import {
 import { SavedAddresses_me } from "v2/__generated__/SavedAddresses_me.graphql"
 import { Shipping_me } from "v2/__generated__/Shipping_me.graphql"
 import { commitMutation } from "relay-runtime"
-import { convertShippingAddressToMutationInput } from "../Utils/shippingAddressUtils"
 
 const onAddressAdded = (
   me: SavedAddresses_me | Shipping_me,
@@ -46,11 +45,10 @@ export const createUserAddress = async (
   me: SavedAddresses_me | Shipping_me,
   closeModal: () => void
 ) => {
-  const useAttributes = convertShippingAddressToMutationInput(address)
   commitMutation<CreateUserAddressMutation>(environment, {
     variables: {
       input: {
-        attributes: useAttributes,
+        attributes: address,
       },
     },
     mutation: graphql`

@@ -1,5 +1,4 @@
 import React, { useState } from "react"
-import { Environment } from "react-relay"
 import {
   Button,
   Clickable,
@@ -12,7 +11,10 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { SavedAddressType } from "../Utils/shippingUtils"
+import {
+  SavedAddressType,
+  convertShippingAddressToMutationInput,
+} from "../Utils/shippingUtils"
 import { Formik, FormikHelpers, FormikProps } from "formik"
 import {
   removeEmptyKeys,
@@ -78,6 +80,7 @@ export const AddressModal: React.FC<Props> = ({
   )
   const [showDialog, setShowDialog] = useState<boolean>(false)
   const [isDefault, setIsDefault] = useState<boolean>(false)
+  if (!relayEnvironment) return null
   return (
     <>
       <Modal
@@ -108,7 +111,7 @@ export const AddressModal: React.FC<Props> = ({
             const handleSuccess = savedAddress => {
               if (isDefault) {
                 updateUserDefaultAddress(
-                  relayEnvironment as Environment,
+                  relayEnvironment,
                   savedAddress?.createUserAddress?.userAddressOrErrors
                     ?.internalID || address.internalID,
                   onSuccess,
@@ -119,20 +122,20 @@ export const AddressModal: React.FC<Props> = ({
               }
               setCreateUpdateError(null)
             }
-
+            const addressInput = convertShippingAddressToMutationInput(values)
             createMutation
               ? createUserAddress(
-                  relayEnvironment as Environment,
-                  values,
+                  relayEnvironment,
+                  addressInput,
                   handleSuccess,
                   handleError,
                   me,
                   closeModal
                 )
               : updateUserAddress(
-                  relayEnvironment as Environment,
+                  relayEnvironment,
                   address?.internalID,
-                  values,
+                  addressInput,
                   closeModal,
                   handleSuccess,
                   handleError
