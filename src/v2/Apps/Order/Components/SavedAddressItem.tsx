@@ -39,7 +39,12 @@ export const SavedAddressItem: React.FC<SavedAddressItemProps> = (
           nameAndAddressLine.map(
             (line: string, index: number) =>
               line && (
-                <Flex key={index} justifyContent="row" alignItems="center">
+                <Flex
+                  key={index}
+                  justifyContent="row"
+                  alignItems="center"
+                  mb={index === 0 ? 1 : 0}
+                >
                   <Text
                     textTransform="capitalize"
                     textColor={index === 0 ? "black100" : "black60"}
@@ -54,7 +59,7 @@ export const SavedAddressItem: React.FC<SavedAddressItemProps> = (
                       disabled
                       hover
                       width={53}
-                      maxHeight={24}
+                      maxHeight={21}
                     >
                       <Text
                         textColor="black60"
