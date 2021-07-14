@@ -25,6 +25,7 @@ export type Conversation_conversation = {
                 readonly buyerAction?: CommerceBuyerOfferActionEnum | null;
             } | null;
         } | null> | null;
+        readonly " $fragmentRefs": FragmentRefs<"ConversationMessages_events">;
     } | null;
     readonly messagesConnection: {
         readonly pageInfo: {
@@ -190,12 +191,18 @@ return {
         },
         {
           "kind": "Literal",
+          "name": "participantType",
+          "value": "BUYER"
+        },
+        {
+          "kind": "Literal",
           "name": "states",
           "value": [
             "APPROVED",
             "FULFILLED",
             "SUBMITTED",
-            "REFUNDED"
+            "REFUNDED",
+            "CANCELED"
           ]
         }
       ],
@@ -239,9 +246,14 @@ return {
             }
           ],
           "storageKey": null
+        },
+        {
+          "args": null,
+          "kind": "FragmentSpread",
+          "name": "ConversationMessages_events"
         }
       ],
-      "storageKey": "orderConnection(first:10,states:[\"APPROVED\",\"FULFILLED\",\"SUBMITTED\",\"REFUNDED\"])"
+      "storageKey": "orderConnection(first:10,participantType:\"BUYER\",states:[\"APPROVED\",\"FULFILLED\",\"SUBMITTED\",\"REFUNDED\",\"CANCELED\"])"
     },
     {
       "alias": "messagesConnection",
@@ -381,5 +393,5 @@ return {
   "type": "Conversation"
 };
 })();
-(node as any).hash = '0fc3d6e84e79af306daa0062e625a898';
+(node as any).hash = 'e28cfbeeb297ac855abe47b712e3bf8b';
 export default node;

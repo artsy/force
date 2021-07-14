@@ -1,4 +1,4 @@
-import { Box, BoxProps, Sans, SansSize } from "@artsy/palette"
+import { Box, BoxProps, Text, SansSize } from "@artsy/palette"
 import { DateTime } from "luxon"
 import React from "react"
 
@@ -74,7 +74,7 @@ export const relativeDate = (time: string) => {
 
 interface TimeSinceProps extends Omit<BoxProps, "color"> {
   size?: SansSize
-  time: string
+  time: string | null
   exact?: boolean
   style?: any // FIXME: React.CSSProperties
 }
@@ -85,12 +85,15 @@ export const TimeSince: React.FC<TimeSinceProps> = ({
   exact,
   ...props
 }) => {
+  if (!time) {
+    return
+  }
   return (
     time && (
       <Box {...props}>
-        <Sans size={size} color="black30">
+        <Text variant="small" color="black30">
           {exact ? exactDate(time) : relativeDate(time)}
-        </Sans>
+        </Text>
       </Box>
     )
   )
