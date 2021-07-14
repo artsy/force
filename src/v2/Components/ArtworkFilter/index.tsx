@@ -10,6 +10,7 @@ import { Media } from "v2/Utils/Responsive"
 import { ArtworkFilter_viewer } from "v2/__generated__/ArtworkFilter_viewer.graphql"
 import { ArtworkQueryFilterQuery as ArtworkFilterQueryType } from "v2/__generated__/ArtworkQueryFilterQuery.graphql"
 import { ArtworkFilterArtworkGridRefetchContainer as ArtworkFilterArtworkGrid } from "./ArtworkFilterArtworkGrid"
+import { TagArtworkFilter_tag } from "v2/__generated__/TagArtworkFilter_tag.graphql"
 import { SortFilter } from "./ArtworkFilters/SortFilter"
 import {
   ArtworkFilterContextProvider,
@@ -116,6 +117,7 @@ export const BaseArtworkFilter: React.FC<
       | FairArtworks_fair
       | ShowArtworks_show
       | GeneArtworkFilter_gene
+      | TagArtworkFilter_tag
     Filters?: JSX.Element
     offset?: number
   }
