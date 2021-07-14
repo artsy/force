@@ -41,11 +41,13 @@ export const HomeApp: React.FC<HomeAppProps> = ({ homePage, orderedSet }) => {
 
         {!isLoggedIn && <HomeFeaturedCategoriesRailQueryRenderer />}
 
+        <HomeFeaturedShowsLazyQueryRenderer />
+
+        <Separator />
+
         {homePage && (
           <HomeArtworkModulesFragmentContainer homePage={homePage} />
         )}
-
-        <HomeFeaturedShowsLazyQueryRenderer />
 
         <HomeFeaturedArticlesLazyQueryRenderer />
       </Join>

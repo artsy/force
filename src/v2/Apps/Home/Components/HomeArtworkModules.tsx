@@ -3,8 +3,8 @@ import { Join, Spacer } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { HomeArtworkModules_homePage } from "v2/__generated__/HomeArtworkModules_homePage.graphql"
 import {
-  HomeArtworkModuleRailQueryRenderer,
   HomeArtworkModuleKey,
+  HomeArtworkModuleRailLazyQueryRenderer,
 } from "./HomeArtworkModuleRail"
 import { MyBidsQueryRenderer } from "v2/Apps/Auctions/Components/MyBids/MyBids"
 
@@ -30,7 +30,7 @@ const HomeArtworkModules: React.FC<HomeArtworkModulesProps> = ({
             {(artworkModule.key as HomeArtworkModuleKey) === "active_bids" ? (
               <MyBidsQueryRenderer />
             ) : (
-              <HomeArtworkModuleRailQueryRenderer
+              <HomeArtworkModuleRailLazyQueryRenderer
                 title={artworkModule.title}
                 params={{
                   key: artworkModule.key,
