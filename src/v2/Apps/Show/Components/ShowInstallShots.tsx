@@ -10,9 +10,9 @@ import {
 import { createFragmentContainer, graphql } from "react-relay"
 import { CarouselProps } from "v2/Components/Carousel"
 import { ShowInstallShots_show } from "v2/__generated__/ShowInstallShots_show.graphql"
+import { compact } from "lodash"
 
-// @ts-expect-error STRICT_NULL_CHECK
-type InstallShot = ShowInstallShots_show["images"][number]
+type InstallShot = NonNullable<ShowInstallShots_show["images"]>[number]
 
 interface ShowInstallShotsProps extends Omit<CarouselProps, "children"> {
   show: ShowInstallShots_show
@@ -32,47 +32,41 @@ export const ShowInstallShots: React.FC<ShowInstallShotsProps> = ({
     selectImage(null)
   }
 
-  // @ts-expect-error STRICT_NULL_CHECK
-  if (show.images.length === 0) return null
+  if (show.images?.length === 0) return null
+
+  const images = compact(show.images)
 
   return (
     <>
-      <Shelf showProgress={false} alignItems="flex-end">
-        {/* @ts-expect-error STRICT_NULL_CHECK */}
-        {show.images.map((image, i) => {
+      <Shelf alignItems="flex-end">
+        {images.map((image, i) => {
+          if (!image.desktop || !image.mobile) return <></>
+
           return (
             <Clickable
-              // @ts-expect-error STRICT_NULL_CHECK
-              key={image.internalID}
+              key={image.internalID ?? i}
               onClick={handleOpen(image)}
               display="block"
             >
               <Image
-                // @ts-expect-error STRICT_NULL_CHECK
                 src={image.desktop.src}
-                // @ts-expect-error STRICT_NULL_CHECK
                 srcSet={image.desktop.srcSet}
-                // @ts-expect-error STRICT_NULL_CHECK
                 width={[image.mobile.width, image.desktop.width]}
                 maxHeight={[300, 480]}
-                style={{ objectFit: "contain" }}
+                style={{ display: "block", objectFit: "contain" }}
                 alt={`${show.name}, installation view`}
               />
 
-              {/* @ts-expect-error STRICT_NULL_CHECK */}
               {image.caption && (
                 <Text
                   variant="xs"
                   mt={1}
                   color="black60"
                   textAlign="left"
-                  // @ts-expect-error STRICT_NULL_CHECK
                   width={image.desktop.width}
-                  // @ts-expect-error STRICT_NULL_CHECK
                   title={image.caption}
                   overflowEllipsis
                 >
-                  {/* @ts-expect-error STRICT_NULL_CHECK */}
                   {image.caption}
                 </Text>
               )}
@@ -80,7 +74,8 @@ export const ShowInstallShots: React.FC<ShowInstallShotsProps> = ({
           )
         })}
       </Shelf>
-      {selectedImage !== null && (
+
+      {selectedImage !== null && !!selectedImage.zoom && (
         <ModalBase
           onClose={handleClose}
           dialogProps={{
@@ -99,10 +94,10 @@ export const ShowInstallShots: React.FC<ShowInstallShotsProps> = ({
             onClick={handleClose}
           >
             <ResponsiveBox
-              maxWidth={selectedImage.zoom.width}
-              maxHeight={selectedImage.zoom.width}
-              aspectWidth={selectedImage.zoom.width}
-              aspectHeight={selectedImage.zoom.height}
+              maxWidth={selectedImage.zoom.width!}
+              maxHeight={selectedImage.zoom.height!}
+              aspectWidth={selectedImage.zoom.width!}
+              aspectHeight={selectedImage.zoom.height!}
             >
               <Image
                 src={selectedImage.zoom.src}
@@ -110,7 +105,7 @@ export const ShowInstallShots: React.FC<ShowInstallShotsProps> = ({
                 width="100%"
                 height="100%"
                 alt={`${show.name}, installation view`}
-                style={{ position: "absolute", top: 0, left: 0 }}
+                lazyLoad
               />
             </ResponsiveBox>
           </Clickable>
