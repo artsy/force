@@ -66,7 +66,6 @@ describe("ArtworkFilter", () => {
         onFilterClick,
       })
 
-      wrapper.find("WaysToBuyFilter").find("ChevronIcon").simulate("click")
       wrapper.find("WaysToBuyFilter").find("Checkbox").first().simulate("click")
 
       expect(onFilterClick).toHaveBeenCalledWith("acquireable", true, {
@@ -111,7 +110,6 @@ describe("ArtworkFilter", () => {
         onChange,
       })
 
-      wrapper.find("WaysToBuyFilter").find("ChevronIcon").simulate("click")
       wrapper.find("WaysToBuyFilter").find("Checkbox").first().simulate("click")
 
       expect(onChange).toHaveBeenCalledWith({
@@ -170,7 +168,6 @@ describe("ArtworkFilter", () => {
         onFilterClick,
       })
 
-      wrapper.find("WaysToBuyFilter").find("ChevronIcon").simulate("click")
       wrapper.find("WaysToBuyFilter").find("Checkbox").first().simulate("click")
 
       expect(trackEvent).toHaveBeenCalledWith(
@@ -226,7 +223,6 @@ describe("ArtworkFilter", () => {
       expect(wrapper.find("FiltersWithScrollIntoView").length).toEqual(1)
       expect(document.body.style.overflowY).toEqual("hidden")
 
-      wrapper.find("WaysToBuyFilter").find("ChevronIcon").simulate("click")
       wrapper.find("WaysToBuyFilter").find("Checkbox").first().simulate("click")
       actionSheet.find("Button").last().simulate("click")
 
