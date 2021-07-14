@@ -1,7 +1,7 @@
-import { Sans } from "@artsy/palette"
-import { ArtistAuctionResultsCount_results } from "v2/__generated__/ArtistAuctionResultsCount_results.graphql"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
+import { Sans } from "@artsy/palette"
+import { ArtistAuctionResultsCount_results } from "v2/__generated__/ArtistAuctionResultsCount_results.graphql"
 
 interface ArtistAuctionResultsCountProps {
   results: ArtistAuctionResultsCount_results
@@ -12,8 +12,7 @@ export const ArtistAuctionResultsCount = ({
 }: ArtistAuctionResultsCountProps) => {
   return (
     <Sans size="2" weight="medium">
-      {/* @ts-expect-error STRICT_NULL_CHECK */}
-      {`Showing ${results.totalCount.toLocaleString()} results`}
+      {`Showing ${results.totalCount?.toLocaleString() ?? 0} results`}
     </Sans>
   )
 }

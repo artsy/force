@@ -9,7 +9,7 @@ export const KeywordFilter: React.FC = () => {
   const filterContext = useAuctionResultsFilterContext()
 
   const updateKeywordFilter = (text: string) => {
-    filterContext.setFilter("keyword", text)
+    filterContext.setFilter?.("keyword", text)
   }
 
   const handleChangeText = useMemo(
