@@ -79,7 +79,6 @@ export const AddressModal: React.FC<Props> = ({
     null
   )
   const [showDialog, setShowDialog] = useState<boolean>(false)
-  const [isDefault, setIsDefault] = useState<boolean>(false)
   if (!relayEnvironment) return null
   return (
     <>
@@ -109,7 +108,7 @@ export const AddressModal: React.FC<Props> = ({
             }
 
             const handleSuccess = savedAddress => {
-              if (isDefault) {
+              if (values?.isDefault) {
                 updateUserDefaultAddress(
                   relayEnvironment,
                   savedAddress?.createUserAddress?.userAddressOrErrors
@@ -165,7 +164,6 @@ export const AddressModal: React.FC<Props> = ({
                 <Checkbox
                   onSelect={selected => {
                     formik.setFieldValue("isDefault", selected)
-                    setIsDefault(selected)
                   }}
                   selected={formik.values?.isDefault}
                   data-test="setAsDefault"
