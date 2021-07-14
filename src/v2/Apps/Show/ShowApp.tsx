@@ -31,12 +31,12 @@ interface ShowAppProps {
 export const ShowApp: React.FC<ShowAppProps> = ({ show }) => {
   const { contextPageOwnerSlug, contextPageOwnerType } = useAnalyticsContext()
 
-  // @ts-expect-error STRICT_NULL_CHECK
-  const hasViewingRoom = show.viewingRoomsConnection?.edges.length > 0
+  const hasViewingRoom = (show.viewingRoomsConnection?.edges?.length ?? 0) > 0
   const hasAbout = !!show.about
   const hasWideHeader =
     (hasAbout && hasViewingRoom) || (!hasAbout && !hasViewingRoom)
   const { sidebarAggregations } = show
+
   return (
     <>
       <ShowMeta show={show} />
@@ -89,12 +89,10 @@ export const ShowApp: React.FC<ShowAppProps> = ({ show }) => {
 
           <Spacer mt={[6, 12]} />
 
-          {/* @ts-expect-error STRICT_NULL_CHECK */}
-          {show.counts.eligibleArtworks > 0 ? (
+          {(show.counts?.eligibleArtworks ?? 0) > 0 ? (
             <ShowArtworksFilter
               aggregations={
-                // @ts-expect-error STRICT_NULL_CHECK
-                sidebarAggregations.aggregations as SharedArtworkFilterContextProps["aggregations"]
+                sidebarAggregations?.aggregations as SharedArtworkFilterContextProps["aggregations"]
               }
               show={show}
             />
@@ -104,6 +102,7 @@ export const ShowApp: React.FC<ShowAppProps> = ({ show }) => {
               <ShowArtworksEmptyState show={show} />
             </>
           )}
+
           {show.fair?.hasFullFeature !== false && (
             <>
               <Separator as="hr" my={6} />

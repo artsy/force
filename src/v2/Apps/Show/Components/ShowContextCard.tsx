@@ -140,7 +140,7 @@ export const ShowContextCard: React.FC<Props> = ({ show }) => {
     return (
       <GridColumns>
         <Column span={6}>
-          <Text variant="md">Presented by {partnerName}</Text>
+          <Text variant="lg">Presented by {partnerName}</Text>
         </Column>
         <Column span={6}>
           {/* @ts-expect-error STRICT_NULL_CHECK */}
