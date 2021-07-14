@@ -66,7 +66,9 @@ describe("GeneArtworkFilter", () => {
 
     ArtistFilterWrapper.find("ChevronIcon").simulate("click")
 
-    expect(ArtistFilterWrapper.text()).toMatch("Artists I follow (15)")
+    expect(ArtistFilterWrapper.find("Checkbox").at(0).text()).toMatch(
+      "Artists I follow (15)"
+    )
   })
 
   it("includes the medium filter", async () => {
@@ -109,6 +111,30 @@ describe("GeneArtworkFilter", () => {
     const wrapper = await getWrapper()
 
     expect(wrapper.find("ColorFilter").length).toBe(1)
+  })
+
+  it("includes the galleries and institutions filter", async () => {
+    const wrapper = await getWrapper()
+
+    expect(wrapper.find("PartnersFilter").length).toBe(1)
+  })
+
+  it("includes the artwork location filter", async () => {
+    const wrapper = await getWrapper()
+
+    expect(wrapper.find("ArtworkLocationFilter").length).toBe(1)
+  })
+
+  it("includes the artist nationality and ethnicity filter", async () => {
+    const wrapper = await getWrapper()
+
+    expect(wrapper.find("ArtistNationalityFilter").length).toBe(1)
+  })
+
+  it("includes the materials filter", async () => {
+    const wrapper = await getWrapper()
+
+    expect(wrapper.find("MaterialsFilter").length).toBe(1)
   })
 })
 
@@ -236,6 +262,56 @@ const GENE_ARTWORK_FILTER: GeneArtworkFilter_QueryRawResponse = {
               count: 483,
               name: "Massimo Listri",
               value: "massimo-listri",
+            },
+          ],
+        },
+        {
+          slice: "PARTNER",
+          counts: [
+            {
+              name: "Rago/Wright",
+              value: "rago-slash-wright",
+              count: 2,
+            },
+          ],
+        },
+        {
+          slice: "LOCATION_CITY",
+          counts: [
+            {
+              name: "New York, NY, USA",
+              value: "New York, NY, USA",
+              count: 10,
+            },
+          ],
+        },
+        {
+          slice: "MEDIUM",
+          counts: [
+            {
+              name: "Painting",
+              value: "painting",
+              count: 472023,
+            },
+          ],
+        },
+        {
+          slice: "MATERIALS_TERMS",
+          counts: [
+            {
+              name: "Canvas",
+              value: "canvas",
+              count: 17,
+            },
+          ],
+        },
+        {
+          slice: "ARTIST_NATIONALITY",
+          counts: [
+            {
+              name: "American",
+              value: "American",
+              count: 21,
             },
           ],
         },
