@@ -7,16 +7,9 @@ import {
 import { updateUrl } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
 import React from "react"
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
-import { MediumFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/MediumFilter"
-import { PriceRangeFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/PriceRangeFilter"
-import { WaysToBuyFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/WaysToBuyFilter"
-import { TimePeriodFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/TimePeriodFilter"
-import { ColorFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/ColorFilter"
 import { BoxProps } from "@artsy/palette"
 import { useRouter } from "v2/System/Router/useRouter"
-import { MaterialsFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/MaterialsFilter"
 import { omit } from "lodash"
-import { SizeFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/SizeFilter"
 
 interface ShowArtworksFilterProps extends BoxProps {
   show: ShowArtworks_show
@@ -36,18 +29,6 @@ const ShowArtworksFilter: React.FC<ShowArtworksFilterProps> = ({
   const hasFilter = filtered_artworks && filtered_artworks.id
 
   if (!hasFilter) return null
-
-  const Filters = (
-    <>
-      <MediumFilter expanded />
-      <MaterialsFilter expanded />
-      <PriceRangeFilter expanded />
-      <SizeFilter expanded />
-      <WaysToBuyFilter />
-      <TimePeriodFilter />
-      <ColorFilter />
-    </>
-  )
 
   // Inject custom default sort into artwork filter.
   const filters = omit(
@@ -81,7 +62,6 @@ const ShowArtworksFilter: React.FC<ShowArtworksFilterProps> = ({
         relayVariables={{
           aggregations: ["TOTAL"],
         }}
-        Filters={Filters}
         {...rest}
       />
     </ArtworkFilterContextProvider>
