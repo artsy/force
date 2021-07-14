@@ -53,11 +53,11 @@ const HomeArtworkModules: React.FC<HomeArtworkModulesProps> = ({
         // HACK: Insert featured shows
         if (artworkModule.key === "featured_shows") {
           return (
-            <>
+            <React.Fragment key={artworkModule.key}>
               <HomeFeaturedShowsLazyQueryRenderer />
 
               <Separator />
-            </>
+            </React.Fragment>
           )
         }
 
