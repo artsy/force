@@ -1,6 +1,6 @@
 _ = require 'underscore'
 { cache } = require('../../lib/cache')
-{ metaphysics } = require '../../../lib/metaphysics'
+metaphysics = require '../../../lib/metaphysics2.coffee'
 { API_URL } = require('sharify').data
 PartnerCities = require '../../collections/partner_cities'
 PartnerFeaturedCities = require '../../collections/partner_featured_cities'
@@ -36,7 +36,7 @@ fetchPartnerCategories = (type) ->
 
       metaphysics(
         query: query
-        variables: _.extend category_type: type.toUpperCase(), type: partnerTypes[type]
+        variables: _.extend categoryType: type.toUpperCase(), type: partnerTypes[type]
       ).then (data) ->
         categories = filterPartnerCategories data
         cache.set "partner_categories:#{type}", JSON.stringify(categories)
