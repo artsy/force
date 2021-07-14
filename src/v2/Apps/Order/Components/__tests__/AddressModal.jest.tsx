@@ -9,7 +9,8 @@ import {
 } from "v2/Apps/Order/Routes/__fixtures__/MutationResults"
 import { Dialog } from "@artsy/palette"
 import { SavedAddressType } from "../../Utils/shippingUtils"
-
+import { useSystemContext } from "v2/System/useSystemContext"
+jest.mock("v2/System/useSystemContext")
 const errorBoxQuery = "Text[data-test='credit-card-error']"
 
 // needed for modal contentAnimation
@@ -53,17 +54,42 @@ describe("AddressModal", () => {
       closeModal: jest.fn(),
     }
     commitMutation.mockReset()
+    ;(useSystemContext as jest.Mock).mockImplementation(() => {
+      return {
+        isLoggedIn: true,
+        relayEnvironment: {},
+        mediator: {
+          on: jest.fn(),
+          off: jest.fn(),
+          ready: jest.fn(),
+          trigger: jest.fn(),
+        },
+      }
+    })
   })
   it("renders EditModal with the title, input fields and buttons", () => {
     const wrapper = getWrapper(testAddressModalProps)
     expect(wrapper.text()).toContain("Edit address")
     expect(wrapper.find("input").length).toBe(7)
     expect(wrapper.find("select").length).toBe(1)
+    expect(wrapper.find("Checkbox[data-test='setAsDefault']").length).toBe(1)
     expect(wrapper.find("Text[data-test='deleteButton']").length).toBe(1)
     expect(wrapper.find("Button[data-test='saveButton']").length).toBe(1)
   })
 
-  it("renders AddModal with the title, input fields and button", () => {
+  it("renders EditModal without checkbox when address is default", () => {
+    const wrapper = getWrapper({
+      ...testAddressModalProps,
+      address: {
+        ...savedAddress,
+        isDefault: true,
+      },
+    })
+    expect(wrapper.text()).toContain("Edit address")
+    expect(wrapper.find("Checkbox[data-test='setAsDefault']").length).toBe(0)
+  })
+
+  it("renders AddModal with the title, input fields, checkbox and button", () => {
     const wrapper = getWrapper({
       ...testAddressModalProps,
       modalDetails: {
@@ -74,6 +100,7 @@ describe("AddressModal", () => {
     expect(wrapper.text()).toContain("Add address")
     expect(wrapper.find("input").length).toBe(7)
     expect(wrapper.find("select").length).toBe(1)
+    expect(wrapper.find("Checkbox[data-test='setAsDefault']").length).toBe(1)
     expect(wrapper.find("Text[data-test='deleteButton']").length).toBe(0)
     expect(wrapper.find("Button[data-test='saveButton']").length).toBe(1)
   })

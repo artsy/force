@@ -2,6 +2,7 @@ import React, { useState } from "react"
 import {
   Button,
   Clickable,
+  Checkbox,
   Dialog,
   Flex,
   Input,
@@ -10,7 +11,10 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { SavedAddressType } from "../Utils/shippingUtils"
+import {
+  SavedAddressType,
+  convertShippingAddressToMutationInput,
+} from "../Utils/shippingUtils"
 import { Formik, FormikHelpers, FormikProps } from "formik"
 import {
   removeEmptyKeys,
@@ -22,18 +26,19 @@ import { createUserAddress } from "v2/Apps/Order/Mutations/CreateUserAddress"
 import { SavedAddresses_me } from "v2/__generated__/SavedAddresses_me.graphql"
 import { AddressModalFields } from "v2/Components/Address/AddressModalFields"
 import { useSystemContext } from "v2/System/SystemContext"
+import { updateUserDefaultAddress } from "../Mutations/UpdateUserDefaultAddress"
 export interface Props {
   show: boolean
   closeModal: () => void
-  address?: SavedAddressType
-  onSuccess: (address) => void
+  address: SavedAddressType
+  onSuccess: () => void
   onDeleteAddress: (addressID: string) => void
   onError: (message: string) => void
-  modalDetails?: {
+  modalDetails: {
     addressModalTitle: string
     addressModalAction: AddressModalAction
   }
-  me?: SavedAddresses_me
+  me: SavedAddresses_me
 }
 
 const SERVER_ERROR_MAP: Record<string, Record<string, string>> = {
@@ -59,7 +64,6 @@ export const AddressModal: React.FC<Props> = ({
   me,
 }) => {
   const title = modalDetails?.addressModalTitle
-  // @ts-expect-error STRICT_NULL_CHECK
   const createMutation = modalDetails.addressModalAction === "createUserAddress"
   const validator = (values: any) => {
     const validationResult = validateAddress(values)
@@ -71,10 +75,11 @@ export const AddressModal: React.FC<Props> = ({
     return errorsTrimmed
   }
   const { relayEnvironment } = useSystemContext()
-  // @ts-expect-error STRICT_NULL_CHECK
-  const [createUpdateError, setCreateUpdateError] = useState<string>(null)
+  const [createUpdateError, setCreateUpdateError] = useState<string | null>(
+    null
+  )
   const [showDialog, setShowDialog] = useState<boolean>(false)
-
+  if (!relayEnvironment) return null
   return (
     <>
       <Modal
@@ -102,27 +107,34 @@ export const AddressModal: React.FC<Props> = ({
               onError && onError(message)
             }
 
-            const handleSuccess = address => {
-              // @ts-expect-error STRICT_NULL_CHECK
+            const handleSuccess = savedAddress => {
+              if (values?.isDefault) {
+                updateUserDefaultAddress(
+                  relayEnvironment,
+                  savedAddress?.createUserAddress?.userAddressOrErrors
+                    ?.internalID || address.internalID,
+                  onSuccess,
+                  onError
+                )
+              } else {
+                onSuccess && onSuccess()
+              }
               setCreateUpdateError(null)
-              onSuccess && onSuccess(address)
             }
-
+            const addressInput = convertShippingAddressToMutationInput(values)
             createMutation
               ? createUserAddress(
-                  // @ts-expect-error STRICT_NULL_CHECK
                   relayEnvironment,
-                  values,
+                  addressInput,
                   handleSuccess,
                   handleError,
                   me,
                   closeModal
                 )
               : updateUserAddress(
-                  // @ts-expect-error STRICT_NULL_CHECK
                   relayEnvironment,
                   address?.internalID,
-                  values,
+                  addressInput,
                   closeModal,
                   handleSuccess,
                   handleError
@@ -147,6 +159,18 @@ export const AddressModal: React.FC<Props> = ({
                 error={formik.touched.phoneNumber && formik.errors.phoneNumber}
                 value={formik.values?.phoneNumber || ""}
               />
+              <Spacer mb={2} />
+              {(!address?.isDefault || createMutation) && (
+                <Checkbox
+                  onSelect={selected => {
+                    formik.setFieldValue("isDefault", selected)
+                  }}
+                  selected={formik.values?.isDefault}
+                  data-test="setAsDefault"
+                >
+                  Set as default
+                </Checkbox>
+              )}
               {!createMutation && (
                 <Flex mt={2} flexDirection="column" alignItems="center">
                   <Clickable onClick={() => setShowDialog(true)}>

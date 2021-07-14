@@ -1,4 +1,4 @@
-import { Flex, Text, RadioProps, Pill } from "@artsy/palette"
+import { Flex, Text, RadioProps, Pill, color } from "@artsy/palette"
 import React from "react"
 import styled from "styled-components"
 import { SavedAddresses_me } from "v2/__generated__/SavedAddresses_me.graphql"
@@ -39,7 +39,12 @@ export const SavedAddressItem: React.FC<SavedAddressItemProps> = (
           nameAndAddressLine.map(
             (line: string, index: number) =>
               line && (
-                <Flex key={index} justifyContent="row" alignItems="center">
+                <Flex
+                  key={index}
+                  justifyContent="row"
+                  alignItems="center"
+                  mb={index === 0 ? 1 : 0}
+                >
                   <Text
                     textTransform="capitalize"
                     textColor={index === 0 ? "black100" : "black60"}
@@ -48,7 +53,14 @@ export const SavedAddressItem: React.FC<SavedAddressItemProps> = (
                     {line}
                   </Text>
                   {address?.isDefault && index === 0 && (
-                    <Pill ml={0.5} variant="textSquare" hover focus>
+                    <StyledPill
+                      ml={0.5}
+                      variant="textSquare"
+                      disabled
+                      hover
+                      width={53}
+                      maxHeight={21}
+                    >
                       <Text
                         textColor="black60"
                         variant="caption"
@@ -56,7 +68,7 @@ export const SavedAddressItem: React.FC<SavedAddressItemProps> = (
                       >
                         Default
                       </Text>
-                    </Pill>
+                    </StyledPill>
                   )}
                 </Flex>
               )
@@ -90,4 +102,9 @@ const EditButton = styled(Text)`
   &:hover {
     text-decoration: underline;
   }
+`
+
+const StyledPill = styled(Pill)`
+  background-color: ${color("black10")} !important;
+  pointer-events: none;
 `

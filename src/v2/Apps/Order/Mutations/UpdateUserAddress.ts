@@ -1,27 +1,24 @@
 import { commitMutation, Environment, graphql } from "react-relay"
 import { Address } from "v2/Components/AddressForm"
-import { UpdateUserAddressMutation } from "v2/__generated__/UpdateUserAddressMutation.graphql"
 import {
-  convertShippingAddressToMutationInput,
-  convertShippingAddressForExchange,
-  SavedAddressType,
-} from "../Utils/shippingUtils"
+  UpdateUserAddressMutation,
+  UserAddressAttributes,
+} from "v2/__generated__/UpdateUserAddressMutation.graphql"
+import { convertShippingAddressForExchange } from "../Utils/shippingUtils"
 
 export const updateUserAddress = async (
   environment: Environment,
   userAddressID: string,
-  values: SavedAddressType,
+  values: UserAddressAttributes,
   closeModal: () => void,
   onSuccess: (address: Address) => void,
   onError: (message: string) => void
 ) => {
-  const useAttributes = convertShippingAddressToMutationInput(values)
-
   commitMutation<UpdateUserAddressMutation>(environment, {
     variables: {
       input: {
         userAddressID: userAddressID,
-        attributes: useAttributes,
+        attributes: values,
       },
     },
     mutation: graphql`
