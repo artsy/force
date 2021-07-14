@@ -6,6 +6,7 @@ import {
   Col,
   Collapse,
   Flex,
+  Link,
   RadioGroup,
   Row,
   Sans,
@@ -430,6 +431,27 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
     }
   }
 
+  renderSupportedShippingAreaErrorMessage() {
+    return (
+      <Text
+        py={1}
+        px={2}
+        mb={2}
+        bg="red10"
+        color="red100"
+        data-test="supportedShippingAreaErrorMessage"
+      >
+        Address is outside our supported shipping area. Select a different
+        address or reach out to{" "}
+        <Link color="red100" hoverColor="red100" href="mailto:orders@artsy.net">
+          orders@artsy.net
+        </Link>{" "}
+        and our team will reach out to the gallery on your behalf to request a
+        custom shipping quote
+      </Text>
+    )
+  }
+
   render() {
     const { order, isCommittingMutation } = this.props
     const {
@@ -515,6 +537,10 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
                   <Text variant="mediumText" mb="1">
                     Delivery address
                   </Text>
+                  {isArtaShipping &&
+                    shippingQuotes &&
+                    shippingQuotes.length === 0 &&
+                    this.renderSupportedShippingAreaErrorMessage()}
                   <SavedAddresses
                     me={this.props.me}
                     selectedAddress={selectedSavedAddress}
@@ -526,6 +552,10 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
               )}
 
               <Collapse data-test="addressFormCollapse" open={showAddressForm}>
+                {isArtaShipping &&
+                  shippingQuotes &&
+                  shippingQuotes.length === 0 &&
+                  this.renderSupportedShippingAreaErrorMessage()}
                 {/* @ts-expect-error STRICT_NULL_CHECK */}
                 <AddressForm
                   value={address}
@@ -574,7 +604,13 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
                 />
               </Collapse>
 
-              <Collapse open={isArtaShipping && !!shippingQuotes}>
+              <Collapse
+                open={
+                  isArtaShipping &&
+                  !!shippingQuotes &&
+                  shippingQuotes.length > 0
+                }
+              >
                 <Text variant="mediumText" mb="1">
                   Shipping options
                 </Text>
