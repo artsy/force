@@ -1,4 +1,5 @@
 import React, { useState } from "react"
+import { Environment } from "react-relay"
 import {
   Button,
   Clickable,
@@ -27,15 +28,15 @@ import { updateUserDefaultAddress } from "../Mutations/UpdateUserDefaultAddress"
 export interface Props {
   show: boolean
   closeModal: () => void
-  address?: SavedAddressType
-  onSuccess: (address) => void
+  address: SavedAddressType
+  onSuccess: () => void
   onDeleteAddress: (addressID: string) => void
   onError: (message: string) => void
-  modalDetails?: {
+  modalDetails: {
     addressModalTitle: string
     addressModalAction: AddressModalAction
   }
-  me?: SavedAddresses_me
+  me: SavedAddresses_me
 }
 
 const SERVER_ERROR_MAP: Record<string, Record<string, string>> = {
@@ -61,7 +62,6 @@ export const AddressModal: React.FC<Props> = ({
   me,
 }) => {
   const title = modalDetails?.addressModalTitle
-  // @ts-expect-error STRICT_NULL_CHECK
   const createMutation = modalDetails.addressModalAction === "createUserAddress"
   const validator = (values: any) => {
     const validationResult = validateAddress(values)
@@ -73,8 +73,9 @@ export const AddressModal: React.FC<Props> = ({
     return errorsTrimmed
   }
   const { relayEnvironment } = useSystemContext()
-  // @ts-expect-error STRICT_NULL_CHECK
-  const [createUpdateError, setCreateUpdateError] = useState<string>(null)
+  const [createUpdateError, setCreateUpdateError] = useState<string | null>(
+    null
+  )
   const [showDialog, setShowDialog] = useState<boolean>(false)
   const [isDefault, setIsDefault] = useState<boolean>(false)
   return (
@@ -107,24 +108,21 @@ export const AddressModal: React.FC<Props> = ({
             const handleSuccess = savedAddress => {
               if (isDefault) {
                 updateUserDefaultAddress(
-                  // @ts-expect-error STRICT_NULL_CHECK
-                  relayEnvironment,
+                  relayEnvironment as Environment,
                   savedAddress?.createUserAddress?.userAddressOrErrors
                     ?.internalID || address.internalID,
                   onSuccess,
                   onError
                 )
               } else {
-                onSuccess && onSuccess(savedAddress)
+                onSuccess && onSuccess()
               }
-              // @ts-expect-error STRICT_NULL_CHECK
               setCreateUpdateError(null)
             }
 
             createMutation
               ? createUserAddress(
-                  // @ts-expect-error STRICT_NULL_CHECK
-                  relayEnvironment,
+                  relayEnvironment as Environment,
                   values,
                   handleSuccess,
                   handleError,
@@ -132,8 +130,7 @@ export const AddressModal: React.FC<Props> = ({
                   closeModal
                 )
               : updateUserAddress(
-                  // @ts-expect-error STRICT_NULL_CHECK
-                  relayEnvironment,
+                  relayEnvironment as Environment,
                   address?.internalID,
                   values,
                   closeModal,
