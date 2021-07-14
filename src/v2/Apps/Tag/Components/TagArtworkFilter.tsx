@@ -2,7 +2,11 @@ import React from "react"
 import { createRefetchContainer, RelayRefetchProp, graphql } from "react-relay"
 import { useRouter } from "v2/System/Router/useRouter"
 import { BaseArtworkFilter } from "v2/Components/ArtworkFilter"
-import { ArtworkFilterContextProvider } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
+import {
+  ArtworkFilterContextProvider,
+  Counts,
+  SharedArtworkFilterContextProps,
+} from "v2/Components/ArtworkFilter/ArtworkFilterContext"
 import { updateUrl } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
 import { TagArtworkFilter_tag } from "v2/__generated__/TagArtworkFilter_tag.graphql"
 
@@ -13,6 +17,7 @@ interface TagArtworkFilterProps {
 
 const TagArtworkFilter: React.FC<TagArtworkFilterProps> = ({ tag, relay }) => {
   const { match } = useRouter()
+  const { filtered_artworks, sidebarAggregations } = tag
 
   return (
     <ArtworkFilterContextProvider
@@ -27,11 +32,12 @@ const TagArtworkFilter: React.FC<TagArtworkFilterProps> = ({ tag, relay }) => {
         { text: "Artwork year (desc.)", value: "-year" },
         { text: "Artwork year (asc.)", value: "year" },
       ]}
+      counts={filtered_artworks?.counts as Counts}
+      aggregations={
+        sidebarAggregations?.aggregations as SharedArtworkFilterContextProps["aggregations"]
+      }
     >
-      <BaseArtworkFilter
-        relay={relay}
-        viewer={tag as any} // TODO
-      />
+      <BaseArtworkFilter relay={relay} viewer={tag} />
     </ArtworkFilterContextProvider>
   )
 }
@@ -41,11 +47,31 @@ export const TagArtworkFilterRefetchContainer = createRefetchContainer(
   {
     tag: graphql`
       fragment TagArtworkFilter_tag on Tag
-        @argumentDefinitions(input: { type: "FilterArtworksInput" }) {
+        @argumentDefinitions(
+          input: { type: "FilterArtworksInput" }
+          aggregations: { type: "[ArtworkAggregation]" }
+          shouldFetchCounts: { type: "Boolean!", defaultValue: false }
+        ) {
         slug
         internalID
+        sidebarAggregations: filterArtworksConnection(
+          aggregations: $aggregations
+          first: 1
+        ) {
+          aggregations {
+            slice
+            counts {
+              name
+              value
+              count
+            }
+          }
+        }
         filtered_artworks: filterArtworksConnection(first: 30, input: $input) {
           id
+          counts @include(if: $shouldFetchCounts) {
+            followedArtists
+          }
           ...ArtworkFilterArtworkGrid_filtered_artworks
         }
       }
