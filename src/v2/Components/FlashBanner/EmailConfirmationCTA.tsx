@@ -1,38 +1,37 @@
 import React from "react"
-import { Button, Sans } from "@artsy/palette"
-import {
-  AnalyticsSchema as Schema,
-  useSystemContext,
-  useTracking,
-} from "v2/System"
+import { Button } from "@artsy/palette"
+import { AnalyticsSchema, useSystemContext, useTracking } from "v2/System"
 import { requestEmailConfirmation } from "./requestEmailConfirmationMutation"
 import createLogger from "v2/Utils/logger"
 
 const logger = createLogger("v2/Components/FlashBanner/EmailConfirmationCTA")
 
 export const EmailConfirmationCTA: React.FC = () => {
-  const [afterSubmitContent, setAfterSubmitContent] = React.useState<string>(
-    // @ts-expect-error STRICT_NULL_CHECK
-    null
-  )
+  const [afterSubmitContent, setAfterSubmitContent] = React.useState<
+    string | null
+  >(null)
+
   const { relayEnvironment } = useSystemContext()
   const { trackEvent } = useTracking()
 
   const handleSubmit = () => {
     trackEvent({
-      action_type: Schema.ActionType.Click,
-      subject: Schema.Subject.EmailConfirmationCTA,
+      action_type: AnalyticsSchema.ActionType.Click,
+      subject: AnalyticsSchema.Subject.EmailConfirmationCTA,
     })
-    // @ts-expect-error STRICT_NULL_CHECK
+
+    if (!relayEnvironment) return
+
     requestEmailConfirmation(relayEnvironment)
-      // @ts-expect-error STRICT_NULL_CHECK
-      .then(({ sendConfirmationEmail: { confirmationOrError } }) => {
-        const emailToConfirm = confirmationOrError?.unconfirmedEmail
+      .then(({ sendConfirmationEmail }) => {
+        const emailToConfirm =
+          sendConfirmationEmail?.confirmationOrError?.unconfirmedEmail
 
         if (emailToConfirm) {
           setAfterSubmitContent(`An email has been sent to ${emailToConfirm}`)
         } else {
-          const mutationError = confirmationOrError?.mutationError
+          const mutationError =
+            sendConfirmationEmail?.confirmationOrError?.mutationError
 
           switch (mutationError?.message || mutationError?.error) {
             case "email is already confirmed":
@@ -50,11 +49,14 @@ export const EmailConfirmationCTA: React.FC = () => {
   if (!afterSubmitContent) {
     return (
       <>
-        Please verify your email address{" "}
-        <Button variant="primaryWhite" mx={1} inline onClick={handleSubmit}>
-          <Sans size="3" py={0.5} px={2} lineHeight={0.2}>
-            Send email
-          </Sans>
+        Please verify your email address
+        <Button
+          variant="primaryWhite"
+          onClick={handleSubmit}
+          size="small"
+          ml={1}
+        >
+          Send email
         </Button>
       </>
     )

@@ -8,6 +8,7 @@ import { AnalyticsSchema as Schema, track } from "v2/System/Analytics"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { isServer } from "lib/isServer"
 import { EmailConfirmationLinkExpired } from "./EmailConfirmationLinkExpired"
+import { useMemo } from "react"
 
 interface FlashBannerProps {
   contentCode?: string
@@ -19,20 +20,22 @@ interface FlashBannerProps {
 /**
  * The component responsible for selecting a determining and displaying a flash message
  */
-export const FlashBanner: React.FC<FlashBannerProps> = props => {
-  /**
-   * Choose which flash message should be shown in the banner, if any
-   */
-  const selectContent = (): string | JSX.Element | null | undefined => {
-    let contentCode = props.contentCode
+export const FlashBanner: React.FC<FlashBannerProps> = ({
+  me,
+  contentCode: _contentCode,
+}) => {
+  const canRequestEmailConfirmation = me?.canRequestEmailConfirmation
+
+  // Choose which flash message should be shown in the banner, if any
+  const content = useMemo(() => {
+    let contentCode: string | undefined | null = _contentCode
 
     if (!contentCode) {
       contentCode = qs.parse(window.location.search.slice(1))["flash_message"]
     }
 
     if (!contentCode) {
-      // @ts-expect-error STRICT_NULL_CHECK
-      contentCode = props.me?.canRequestEmailConfirmation
+      contentCode = canRequestEmailConfirmation
         ? "email_confirmation_cta"
         : null
     }
@@ -51,6 +54,7 @@ export const FlashBanner: React.FC<FlashBannerProps> = props => {
       invalid_token: "An error has occurred. Please contact support@artsy.net.",
       blank_token: "An error has occurred. Please contact support@artsy.net.",
     }
+
     switch (contentCode) {
       case "email_confirmation_cta":
         return <EmailConfirmationCTA />
@@ -59,9 +63,7 @@ export const FlashBanner: React.FC<FlashBannerProps> = props => {
       default:
         return contentMap[contentCode]
     }
-  }
-
-  const content = selectContent()
+  }, [_contentCode, canRequestEmailConfirmation])
 
   if (!content) {
     return null
@@ -80,6 +82,7 @@ const TrackedFlashBanner = track({
 
 export const FlashBannerQueryRenderer: React.FC = () => {
   const { relayEnvironment, user } = useSystemContext()
+
   if (isServer) return null
 
   return user ? (
@@ -94,6 +97,7 @@ export const FlashBannerQueryRenderer: React.FC = () => {
       `}
       render={({ props, error }) => {
         if (error) console.error(error)
+
         return <TrackedFlashBanner {...props} />
       }}
     />
