@@ -125,7 +125,7 @@ export class ReviewRoute extends Component<ReviewProps> {
             }
           })
       } else {
-        this.props.order.conversation
+        this.props.order.conversation && !this.props.isEigen
           ? this.props.router.push(
               `/user/conversations/${this.props.order.conversation.internalID}`
             )
