@@ -7,7 +7,6 @@ import { HomeApp_orderedSet } from "v2/__generated__/HomeApp_orderedSet.graphql"
 import { HomeArtworkModulesFragmentContainer } from "./Components/HomeArtworkModules"
 import { HomeFeaturedCategoriesRailQueryRenderer } from "./Components/HomeFeaturedCategoriesRail"
 import { HomeHeroUnitsFragmentContainer } from "./Components/HomeHeroUnits/HomeHeroUnits"
-import { HomeFeaturedShowsLazyQueryRenderer } from "./Components/HomeFeaturedShows"
 import { HomeFeaturedArticlesLazyQueryRenderer } from "./Components/HomeFeaturedArticles"
 import { HomeFeaturedEventsRailFragmentContainer } from "./Components/HomeFeaturedEventsRail"
 import { HomeMeta } from "./Components/HomeMeta"
@@ -40,10 +39,6 @@ export const HomeApp: React.FC<HomeAppProps> = ({ homePage, orderedSet }) => {
         )}
 
         {!isLoggedIn && <HomeFeaturedCategoriesRailQueryRenderer />}
-
-        <HomeFeaturedShowsLazyQueryRenderer />
-
-        <Separator />
 
         {homePage && (
           <HomeArtworkModulesFragmentContainer homePage={homePage} />
