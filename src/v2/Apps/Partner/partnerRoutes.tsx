@@ -208,6 +208,11 @@ export const partnerRoutes: AppRouteConfig[] = [
           WorksRoute.preload()
         },
         prepareVariables: (data, props) => {
+          const aggregations = [
+            // "ARTIST"
+            "ARTIST_NATIONALITY",
+            "MATERIALS_TERMS",
+          ]
           const filterStateFromUrl = props.location ? props.location.query : {}
 
           const filterParams = {
@@ -216,6 +221,7 @@ export const partnerRoutes: AppRouteConfig[] = [
           }
 
           return {
+            aggregations,
             input: {
               ...allowedFilters(filterParams),
             },
@@ -227,9 +233,11 @@ export const partnerRoutes: AppRouteConfig[] = [
           query partnerRoutes_WorksQuery(
             $partnerId: String!
             $input: FilterArtworksInput
+            $aggregations: [ArtworkAggregation]
           ) {
             partner(id: $partnerId) @principalField {
-              ...Works_partner @arguments(input: $input)
+              ...Works_partner
+                @arguments(input: $input, aggregations: $aggregations)
               displayWorksSection
               counts {
                 eligibleArtworks
