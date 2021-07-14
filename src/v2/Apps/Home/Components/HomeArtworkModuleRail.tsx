@@ -16,6 +16,7 @@ import { HomeArtworkModuleRail_artworkModule } from "v2/__generated__/HomeArtwor
 import { HomeArtworkModuleRailQuery } from "v2/__generated__/HomeArtworkModuleRailQuery.graphql"
 import { useSystemContext } from "v2/System"
 import { HomeArtworkModuleContextFragmentContainer } from "./HomeArtworkModuleContext"
+import { useLazyLoadComponent } from "v2/Utils/Hooks/useLazyLoadComponent"
 
 const HOME_ARTWORK_MODULES = [
   "active_bids",
@@ -232,5 +233,21 @@ export const HomeArtworkModuleRailQueryRenderer: React.FC<HomeArtworkModuleRailQ
         }
       }}
     />
+  )
+}
+
+export const HomeArtworkModuleRailLazyQueryRenderer: React.FC<HomeArtworkModuleRailQueryRendererProps> = props => {
+  const { Waypoint, isEnteredView } = useLazyLoadComponent()
+
+  return (
+    <>
+      <Waypoint />
+
+      {isEnteredView ? (
+        <HomeArtworkModuleRailQueryRenderer {...props} />
+      ) : (
+        <HomeArtworkModulePlaceholder title={props.title} />
+      )}
+    </>
   )
 }
