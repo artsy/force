@@ -12,9 +12,7 @@ import { extractNodes } from "v2/Utils/extractNodes"
 import { DateTime } from "luxon"
 import { sortBy } from "lodash"
 import { OrderUpdateFragmentContainer } from "./OrderUpdate"
-import { OrderUpdate_event } from "v2/__generated__/OrderUpdate_event.graphql"
 import { Message_message } from "v2/__generated__/Message_message.graphql"
-
 
 interface ConversationMessageProps {
   messages: ConversationMessages_messages
@@ -65,10 +63,7 @@ export const ConversationMessages = ({
     "CommerceOfferSubmittedEvent",
     "CommerceOrderStateChangedEvent",
   ]
-  type DisplayableMessage = OrderUpdate_event | Message_message
-  const isRelevantEvent = (
-    item: DisplayableMessage
-  ): item is OrderUpdate_event => {
+  const isRelevantEvent = (item: Message_message): item is Message_message => {
     return (
       item?.__typename !== "Message" && relevantEvents.includes(item.__typename)
     )
