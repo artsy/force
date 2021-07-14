@@ -2,10 +2,10 @@
 /* eslint-disable */
 
 import { ConcreteRequest } from "relay-runtime";
-export type fetchFollowedArtistsQueryVariables = {
+export type fetchFollowedArtistsByFairIdQueryVariables = {
     fairID?: string | null;
 };
-export type fetchFollowedArtistsQueryResponse = {
+export type fetchFollowedArtistsByFairIdQueryResponse = {
     readonly me: {
         readonly followsAndSaves: {
             readonly artistsConnection: {
@@ -21,15 +21,15 @@ export type fetchFollowedArtistsQueryResponse = {
         } | null;
     } | null;
 };
-export type fetchFollowedArtistsQuery = {
-    readonly response: fetchFollowedArtistsQueryResponse;
-    readonly variables: fetchFollowedArtistsQueryVariables;
+export type fetchFollowedArtistsByFairIdQuery = {
+    readonly response: fetchFollowedArtistsByFairIdQueryResponse;
+    readonly variables: fetchFollowedArtistsByFairIdQueryVariables;
 };
 
 
 
 /*
-query fetchFollowedArtistsQuery(
+query fetchFollowedArtistsByFairIdQuery(
   $fairID: String
 ) {
   me {
@@ -99,7 +99,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "fetchFollowedArtistsQuery",
+    "name": "fetchFollowedArtistsByFairIdQuery",
     "selections": [
       {
         "alias": null,
@@ -176,7 +176,7 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "fetchFollowedArtistsQuery",
+    "name": "fetchFollowedArtistsByFairIdQuery",
     "selections": [
       {
         "alias": null,
@@ -254,11 +254,11 @@ return {
   "params": {
     "id": null,
     "metadata": {},
-    "name": "fetchFollowedArtistsQuery",
+    "name": "fetchFollowedArtistsByFairIdQuery",
     "operationKind": "query",
-    "text": "query fetchFollowedArtistsQuery(\n  $fairID: String\n) {\n  me {\n    followsAndSaves {\n      artistsConnection(first: 99, fairID: $fairID) {\n        edges {\n          node {\n            artist {\n              slug\n              internalID\n              id\n            }\n            id\n          }\n        }\n      }\n    }\n    id\n  }\n}\n"
+    "text": "query fetchFollowedArtistsByFairIdQuery(\n  $fairID: String\n) {\n  me {\n    followsAndSaves {\n      artistsConnection(first: 99, fairID: $fairID) {\n        edges {\n          node {\n            artist {\n              slug\n              internalID\n              id\n            }\n            id\n          }\n        }\n      }\n    }\n    id\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '7d77bec8b2b55e8392884c9c418b8215';
+(node as any).hash = '63bdf78c94b12552b8e8b40fd2e4efdd';
 export default node;
