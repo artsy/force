@@ -29,6 +29,7 @@ export const tagRoutes: AppRouteConfig[] = [
         "PARTNER",
         "ARTIST_NATIONALITY",
         "MAJOR_PERIOD",
+        "ARTIST",
       ]
 
       const urlFilterState = props.location ? props.location.query : {}
