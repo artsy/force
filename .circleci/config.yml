@@ -151,6 +151,10 @@ jobs:
     working_directory: /app
     steps:
       - run: /app/scripts/xvfb-run.sh /usr/local/bin/yarn test:smoke
+      - store_artifacts:
+          path: cypress/videos
+      - store_artifacts:
+          path: cypress/screenshots
 
   upload-docs:
     docker:
