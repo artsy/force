@@ -334,6 +334,83 @@ export const UntouchedBuyOrderWithShippingQuotes = {
   },
 } as const
 
+export const UntouchedBuyOrderWithSelectedShippingQuote = {
+  ...UntouchedBuyOrder,
+  __typename: "CommerceBuyOrder",
+  lineItems: {
+    edges: [
+      {
+        node: {
+          editionSetId: null,
+          id: "line-item-node-id",
+          shippingQuoteOptions: {
+            edges: [
+              {
+                node: {
+                  id: "1eb3ba19-643b-4101-b113-2eb4ef7e30b6",
+                  tier: "select",
+                  name: "",
+                  isSelected: true,
+                  priceCents: 400,
+                  priceCurrency: "USD",
+                  price: "$4.00",
+                },
+              },
+              {
+                node: {
+                  id: "d8cfee28-8139-4391-8a8d-3010633e885b",
+                  tier: "parcel",
+                  name: "Next Day Air",
+                  isSelected: false,
+                  priceCents: 400,
+                  priceCurrency: "USD",
+                  price: "$4.00",
+                },
+              },
+              {
+                node: {
+                  id: "1cbfad12-a90d-4e79-9753-02bf4fcc7f80",
+                  tier: "parcel",
+                  name: "Second Day Air",
+                  isSelected: false,
+                  priceCents: 400,
+                  priceCurrency: "USD",
+                  price: "$4.00",
+                },
+              },
+              {
+                node: {
+                  id: "4a8f8080-23d3-4c0e-9811-7a41a9df6933",
+                  tier: "parcel",
+                  name: "Ground",
+                  isSelected: false,
+                  priceCents: 400,
+                  priceCurrency: "USD",
+                  price: "$4.00",
+                },
+              },
+              {
+                node: {
+                  id: "278ba0c4-f815-4197-8a8d-b97f1883db21",
+                  tier: "premium",
+                  name: "",
+                  isSelected: false,
+                  priceCents: 200,
+                  priceCurrency: "USD",
+                  price: "$2.00",
+                },
+              },
+            ],
+          },
+          ...ArtaEnabledOrderArtworkNode,
+          ...OrderArtworkOrEditionSetkNode_Artwork,
+          ...OrderArtworkFulfillmentsNode,
+        },
+      },
+    ],
+  },
+} as const
+
 export const TaxTotals = {
   taxTotal: "$120",
   taxTotalCents: 12000,
@@ -566,6 +643,12 @@ export const OfferOrderWithShippingDetailsAndNote = {
 
 export const BuyOrderWithArtaShippingDetails = {
   ...UntouchedBuyOrderWithShippingQuotes,
+  ...ArtaShippingDetails,
+  ...PaymentDetails,
+} as const
+
+export const BuyOrderWithSelectedShippingQuote = {
+  ...UntouchedBuyOrderWithSelectedShippingQuote,
   ...ArtaShippingDetails,
   ...PaymentDetails,
 } as const
