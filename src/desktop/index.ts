@@ -35,7 +35,6 @@ app.use(
  * of subapps. Apps with hardcoded routes or "RESTful" routes.
  */
 
-app.use(require("./apps/home"))
 app.use(require("./apps/editorial_features"))
 app.use(require("./apps/apply"))
 app.use(require("./apps/auction_reaction/server").app)

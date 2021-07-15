@@ -70,7 +70,7 @@ export const FlashBanner: React.FC<FlashBannerProps> = ({
   }
 
   return (
-    <Banner dismissable variant="defaultDark">
+    <Banner dismissable variant="defaultDark" data-test="flashMessage">
       {content}
     </Banner>
   )
