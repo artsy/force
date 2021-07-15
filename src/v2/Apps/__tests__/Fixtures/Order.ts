@@ -496,6 +496,7 @@ export const UntouchedInquiryOfferOrder = {
         node: {
           editionSetId: null,
           id: "line-item-node-id",
+          shippingQuoteOptions: null,
           ...InquiryOrderArtworkNode,
           ...OfferArtworkOrEditionSetkNode_Artwork,
           ...OrderArtworkFulfillmentsNode,
@@ -515,6 +516,7 @@ export const UntouchedOfferOrderInPounds = {
         node: {
           editionSetId: null,
           id: "line-item-node-id",
+          shippingQuoteOptions: null,
           ...OrderArtworkNode,
           ...OfferArtworkOrEditionSetkNode_ArtworkInPounds,
           ...OrderArtworkFulfillmentsNode,
@@ -532,6 +534,7 @@ export const UntouchedOfferOrderWithRange = {
         node: {
           editionSetId: null,
           id: "line-item-node-id",
+          shippingQuoteOptions: null,
           ...OrderArtworkNode,
           ...OfferArtworkOrEditionSetkNode_Range,
           ...OrderArtworkFulfillmentsNode,
