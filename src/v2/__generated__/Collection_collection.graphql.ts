@@ -50,6 +50,9 @@ export type Collection_collection = {
     } | null;
     readonly filtered_artworks: {
         readonly id: string;
+        readonly counts?: {
+            readonly followedArtists: number | null;
+        } | null;
         readonly " $fragmentRefs": FragmentRefs<"ArtworkFilterArtworkGrid_filtered_artworks">;
     } | null;
     readonly " $fragmentRefs": FragmentRefs<"Header_collection">;
@@ -99,6 +102,12 @@ return {
       "kind": "LocalArgument",
       "name": "input",
       "type": "FilterArtworksInput"
+    },
+    {
+      "defaultValue": false,
+      "kind": "LocalArgument",
+      "name": "shouldFetchCounts",
+      "type": "Boolean!"
     }
   ],
   "kind": "Fragment",
@@ -417,6 +426,31 @@ return {
       "selections": [
         (v0/*: any*/),
         {
+          "condition": "shouldFetchCounts",
+          "kind": "Condition",
+          "passingValue": true,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": "FilterArtworksCounts",
+              "kind": "LinkedField",
+              "name": "counts",
+              "plural": false,
+              "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "followedArtists",
+                  "storageKey": null
+                }
+              ],
+              "storageKey": null
+            }
+          ]
+        },
+        {
           "args": null,
           "kind": "FragmentSpread",
           "name": "ArtworkFilterArtworkGrid_filtered_artworks"
@@ -433,5 +467,5 @@ return {
   "type": "MarketingCollection"
 };
 })();
-(node as any).hash = '360adf1045a85a674a06328896cb0140';
+(node as any).hash = '7a4da42669d743e4bc071a485fabc7bb';
 export default node;
