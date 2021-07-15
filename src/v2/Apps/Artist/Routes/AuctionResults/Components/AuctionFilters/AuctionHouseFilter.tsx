@@ -30,7 +30,7 @@ export const AuctionHouseFilter: React.FC = () => {
   }
 
   return (
-    <FilterExpandable label="Auction House" expanded>
+    <FilterExpandable label="Auction House">
       <Flex flexDirection="column" alignItems="left">
         <ShowMore>
           {auctionHouses.map((checkbox, index) => {
