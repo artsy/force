@@ -117,11 +117,16 @@ export const AddressModal: React.FC<Props> = ({
             }
 
             const handleSuccess = savedAddress => {
-              if (values?.isDefault && address?.internalID) {
+              // update default address only if isDefault changed or new
+              // address marked ad default
+              if (
+                values?.isDefault &&
+                values?.isDefault !== address?.isDefault
+              ) {
                 updateUserDefaultAddress(
                   relayEnvironment,
                   savedAddress?.createUserAddress?.userAddressOrErrors
-                    ?.internalID || address.internalID,
+                    ?.internalID || address?.internalID,
                   () => {
                     onSuccess(savedAddress)
                   },
