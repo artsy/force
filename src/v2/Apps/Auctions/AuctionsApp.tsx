@@ -19,6 +19,7 @@ import { useSystemContext } from "v2/System/useSystemContext"
 import { WorksByArtistsYouFollowRailFragmentContainer } from "./Components/WorksByArtistsYouFollowRail/WorksByArtistsYouFollowRail"
 import { ChevronButton } from "v2/Components/ChevronButton"
 import { getENV } from "v2/Utils/getENV"
+import { TrendingLotsFragmentContainer } from "./Components/TrendingLots/TrendingLots"
 
 export interface AuctionsAppProps {
   viewer: AuctionsApp_viewer
@@ -77,7 +78,9 @@ const AuctionsApp: React.FC<AuctionsAppProps> = props => {
             </Tab>
           </>
         )}
-        <Tab name="Trending Lots">Trending Lots</Tab>
+        <Tab name="Trending Lots">
+          <TrendingLotsFragmentContainer viewer={viewer} />
+        </Tab>
         <Tab name="Standout lots">Standout Lots By Trending Artists</Tab>
       </Tabs>
 
@@ -110,7 +113,7 @@ export const AuctionsAppFragmentContainer = createFragmentContainer(
     viewer: graphql`
       fragment AuctionsApp_viewer on Viewer {
         ...WorksByArtistsYouFollowRail_viewer
-
+        ...TrendingLots_viewer
         me {
           ...MyBids_me
         }

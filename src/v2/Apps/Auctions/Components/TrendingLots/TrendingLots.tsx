@@ -1,118 +1,76 @@
-import React, { useState } from "react"
-import {
-  createPaginationContainer,
-  graphql,
-  RelayPaginationProp,
-} from "react-relay"
+import React from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 
-import { Box, Button, Col, Grid, Row, Text } from "@artsy/palette"
+import { Box, Spacer, Text } from "@artsy/palette"
 
-import { extractNodes } from "v2/Utils/extractNodes"
+// import { extractNodes } from "v2/Utils/extractNodes"
 import { TrendingLots_viewer } from "v2/__generated__/TrendingLots_viewer.graphql"
+import { extractNodes } from "v2/Utils/extractNodes"
+// import { ShelfArtworkFragmentContainer } from "v2/Components/Artwork/ShelfArtwork"
+// import { useTracking } from "react-tracking"
+// import { useAnalyticsContext } from "v2/System"
+// import { tabTypeToContextModuleMap } from "../../Utils/tabTypeToContextModuleMap"
+// import { AuthContextModule, clickedArtworkGroup } from "@artsy/cohesion"
 
 export interface TrendingLotsProps {
   viewer: TrendingLots_viewer
-  relay: RelayPaginationProp
 }
 
-const TrendingLots: React.FC<TrendingLotsProps> = ({ viewer, relay }) => {
-  const [isLoading, setIsLoading] = useState(false)
+const TrendingLots: React.FC<TrendingLotsProps> = ({ viewer }) => {
+  // const { trackEvent } = useTracking()
+  // const { contextPageOwnerType } = useAnalyticsContext()
+  // const contextModule = tabTypeToContextModuleMap.worksByArtistsYouFollow as AuthContextModule
 
-  const handleClick = () => {
-    if (!relay.hasMore() || relay.isLoading()) return
-
-    setIsLoading(true)
-
-    const previousScrollY = window.scrollY
-
-    relay.loadMore(10, err => {
-      setIsLoading(false)
-
-      if (window.scrollY > previousScrollY) {
-        window.scrollTo({
-          behavior: "auto",
-          top: previousScrollY,
-        })
-      }
-
-      if (err) {
-        console.error(err)
-      }
-    })
-  }
-
-  const nodes = extractNodes(viewer.saleArtworksConnection)
+  const nodes = extractNodes(viewer.trendingLotsConnection)
 
   if (nodes.length === 0) {
-    return (
-      <Box>
-        <Text>No current lots.</Text>
-      </Box>
-    )
+    return null
   }
 
   return (
     <>
-      <Box>HOLDING</Box>
+      <Box>
+        <Text as="h3" variant="lg" color="black100">
+          Trending lots{" "}
+          <sup>
+            <Text as="span" variant="xs" color="brand">
+              {/* @ts-expect-error STRICT_NULL_CHECK */}
+              {viewer.trendingLotsConnection.edges.length}
+            </Text>
+          </sup>
+        </Text>
 
-      <Grid my={6}>
-        <Row>
-          <Col sm={6} mx="auto">
-            <Button
-              width="100%"
-              variant="secondaryGray"
-              onClick={handleClick}
-              loading={isLoading}
-              disabled={!relay.hasMore()}
-            >
-              Show more
-            </Button>
-          </Col>
-        </Row>
-      </Grid>
+        <Text as="h3" variant="lg" color="black60" mb={2}>
+          Works with the most bids today
+        </Text>
+      </Box>
+
+      <Spacer mb={4} />
+
+      {/* <Shelf>
+        {nodes.map((node, index) => {
+          return <>{testText}</>
+        })}
+      </Shelf> */}
     </>
   )
 }
 
-export const TrendingLotsPaginationContainer = createPaginationContainer(
+export const TrendingLotsFragmentContainer = createFragmentContainer(
   TrendingLots,
   {
     viewer: graphql`
-      fragment TrendingLots_viewer on Viewer
-        @argumentDefinitions(
-          first: { type: "Int", defaultValue: 10 }
-          after: { type: "String" }
-        ) {
-        saleArtworksConnection(first: $first, after: $after)
-          @connection(key: "TrendingLots_saleArtworksConnection") {
+      fragment TrendingLots_viewer on Viewer {
+        trendingLotsConnection: saleArtworksConnection(first: 50) {
           edges {
-            counts {
-              bidderPositions
+            node {
+              saleArtwork {
+                counts {
+                  bidderPositions
+                }
+              }
             }
           }
-        }
-      }
-    `,
-  },
-  {
-    direction: "forward",
-    getFragmentVariables(prevVars, totalCount) {
-      return {
-        ...prevVars,
-        count: totalCount,
-      }
-    },
-    getVariables(props, { count, cursor }, fragmentVariables) {
-      return {
-        ...fragmentVariables,
-        count,
-        after: cursor,
-      }
-    },
-    query: graphql`
-      query TrendingLotsQuery($first: Int!, $after: String) {
-        viewer {
-          ...TrendingLots_viewer @arguments(first: $first, after: $after)
         }
       }
     `,
