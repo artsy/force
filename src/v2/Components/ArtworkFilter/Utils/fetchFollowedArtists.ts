@@ -1,11 +1,50 @@
 import { Environment, fetchQuery } from "relay-runtime"
 import { graphql } from "react-relay"
-import { fetchFollowedArtistsQuery } from "v2/__generated__/fetchFollowedArtistsQuery.graphql"
+import { fetchFollowedArtistsByFairIdQuery } from "v2/__generated__/fetchFollowedArtistsByFairIdQuery.graphql"
+import { fetchFollowedArtistsRawQuery } from "v2/__generated__/fetchFollowedArtistsRawQuery.graphql"
+import { compact, isString } from "lodash"
 
 export type FollowedArtistList = Array<{
   slug: string
   internalID: string
 }>
+
+graphql`
+  fragment fetchFollowedArtists_response on FollowArtistConnection {
+    edges {
+      node {
+        artist {
+          slug
+          internalID
+        }
+      }
+    }
+  }
+`
+
+const queryByFairId = graphql`
+  query fetchFollowedArtistsByFairIdQuery($fairID: String) {
+    me {
+      followsAndSaves {
+        artistsConnection(first: 99, fairID: $fairID) {
+          ...fetchFollowedArtists_response @relay(mask: false)
+        }
+      }
+    }
+  }
+`
+
+const rawQuery = graphql`
+  query fetchFollowedArtistsRawQuery {
+    me {
+      followsAndSaves {
+        artistsConnection(first: 99) {
+          ...fetchFollowedArtists_response @relay(mask: false)
+        }
+      }
+    }
+  }
+`
 
 // Expand support (in Gravity/MP as well), if needed
 // to further narrow down followed artists.
@@ -22,37 +61,17 @@ export async function fetchFollowedArtists(
 ): Promise<FollowedArtistList> {
   const { relayEnvironment, ...props } = args
 
-  const query = graphql`
-    query fetchFollowedArtistsQuery($fairID: String) {
-      me {
-        followsAndSaves {
-          artistsConnection(first: 99, fairID: $fairID) {
-            edges {
-              node {
-                artist {
-                  slug
-                  internalID
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  `
+  const query = isString(props.fairID) ? queryByFairId : rawQuery
 
   try {
-    const data = await fetchQuery<fetchFollowedArtistsQuery>(
-      relayEnvironment,
-      query,
-      props
-    )
+    const data = await fetchQuery<
+      fetchFollowedArtistsByFairIdQuery | fetchFollowedArtistsRawQuery
+    >(relayEnvironment, query, props)
 
-    // @ts-expect-error STRICT_NULL_CHECK
-    return data.me.followsAndSaves.artistsConnection.edges.map(
-      // @ts-expect-error STRICT_NULL_CHECK
-      ({ node: { artist } }) => artist
-    )
+    const edges = data.me?.followsAndSaves?.artistsConnection?.edges ?? []
+    const artists = edges.map(edge => edge?.node?.artist)
+
+    return compact(artists)
   } catch (error) {
     console.error(error)
     return []
