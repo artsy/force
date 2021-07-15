@@ -155,7 +155,6 @@ export const Message: React.FC<MessageProps> = props => {
           )
         })}
       {showTimeSince && (
-        // @ts-expect-error STRICT_NULL_CHECK
         <TimeSince time={message.createdAt} style={{ alignSelf }} mt={0.5} />
       )}
     </>
@@ -165,6 +164,7 @@ export const Message: React.FC<MessageProps> = props => {
 export const MessageFragmentContainer = createFragmentContainer(Message, {
   message: graphql`
     fragment Message_message on Message {
+      __typename
       internalID
       body
       createdAt

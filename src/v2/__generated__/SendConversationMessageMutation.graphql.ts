@@ -53,6 +53,7 @@ mutation SendConversationMessageMutation(
 }
 
 fragment Message_message on Message {
+  __typename
   internalID
   body
   createdAt
@@ -213,6 +214,13 @@ return {
                     "alias": null,
                     "args": null,
                     "kind": "ScalarField",
+                    "name": "__typename",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
                     "name": "createdAt",
                     "storageKey": null
                   },
@@ -290,7 +298,7 @@ return {
     "metadata": {},
     "name": "SendConversationMessageMutation",
     "operationKind": "mutation",
-    "text": "mutation SendConversationMessageMutation(\n  $input: SendConversationMessageMutationInput!\n) {\n  sendConversationMessage(input: $input) {\n    messageEdge {\n      node {\n        impulseID\n        isFromUser\n        body\n        id\n        internalID\n        ...Message_message\n      }\n    }\n  }\n}\n\nfragment Message_message on Message {\n  internalID\n  body\n  createdAt\n  isFromUser\n  from {\n    name\n    email\n  }\n  attachments {\n    id\n    contentType\n    fileName\n    downloadURL\n  }\n}\n"
+    "text": "mutation SendConversationMessageMutation(\n  $input: SendConversationMessageMutationInput!\n) {\n  sendConversationMessage(input: $input) {\n    messageEdge {\n      node {\n        impulseID\n        isFromUser\n        body\n        id\n        internalID\n        ...Message_message\n      }\n    }\n  }\n}\n\nfragment Message_message on Message {\n  __typename\n  internalID\n  body\n  createdAt\n  isFromUser\n  from {\n    name\n    email\n  }\n  attachments {\n    id\n    contentType\n    fileName\n    downloadURL\n  }\n}\n"
   }
 };
 })();

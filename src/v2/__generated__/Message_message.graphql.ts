@@ -18,6 +18,7 @@ export type Message_message = {
         readonly fileName: string;
         readonly downloadURL: string;
     } | null> | null;
+    readonly __typename: "Message";
     readonly " $refType": "Message_message";
 };
 export type Message_message$data = Message_message;
@@ -34,6 +35,13 @@ const node: ReaderFragment = {
   "metadata": null,
   "name": "Message_message",
   "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "__typename",
+      "storageKey": null
+    },
     {
       "alias": null,
       "args": null,
@@ -129,5 +137,5 @@ const node: ReaderFragment = {
   ],
   "type": "Message"
 };
-(node as any).hash = 'ca8c0d1402d6fa269ac0c6573884d489';
+(node as any).hash = '8df1d4b1072ff92b143baf0a307c977b';
 export default node;

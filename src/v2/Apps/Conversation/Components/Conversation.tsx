@@ -138,6 +138,7 @@ const Conversation: React.FC<ConversationProps> = props => {
               ) : null}
               <ConversationMessages
                 messages={conversation.messagesConnection!}
+                events={conversation.orderConnection}
               />
               <Box ref={bottomOfMessageContainer as any} />
             </Flex>
@@ -214,7 +215,8 @@ export const ConversationPaginationContainer = createPaginationContainer(
         unread
         orderConnection(
           first: 10
-          states: [APPROVED, FULFILLED, SUBMITTED, REFUNDED]
+          states: [APPROVED, FULFILLED, SUBMITTED, REFUNDED, CANCELED]
+          participantType: BUYER
         ) {
           edges {
             node {
@@ -224,7 +226,11 @@ export const ConversationPaginationContainer = createPaginationContainer(
               }
             }
           }
+          ...ConversationMessages_events
         }
+
+        unread
+
         messagesConnection(first: $count, after: $after, sort: DESC)
           @connection(key: "Messages_messagesConnection", filters: []) {
           pageInfo {

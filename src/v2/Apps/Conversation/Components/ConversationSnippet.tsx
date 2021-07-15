@@ -146,7 +146,6 @@ const ConversationSnippet: React.FC<ConversationSnippetProps> = props => {
                   </Flex>
                   <TimeSinceFlex>
                     <TimeSince
-                      // @ts-expect-error STRICT_NULL_CHECK
                       time={conversation.lastMessageAt}
                       size="3t"
                       mr="15px"
