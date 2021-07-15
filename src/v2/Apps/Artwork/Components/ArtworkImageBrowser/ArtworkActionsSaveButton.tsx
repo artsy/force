@@ -36,6 +36,7 @@ const ArtworkActionsSaveButton: React.FC<ArtworkActionsSaveButtonProps> = ({
         name="bell"
         Icon={isSaved ? FilledIcon : BellIcon}
         label="Watch lot"
+        onClick={handleSave}
       />
     )
   } else {
