@@ -49,23 +49,20 @@ const ArtistLine: React.FC<DetailsProps> = ({
   if (artists && artists.length) {
     return (
       <Text variant={tokens.variant} overflowEllipsis>
-        {artists
-          .reduce((acc, artist, index) => {
-            // @ts-expect-error STRICT_NULL_CHECK
-            return acc.concat([
-              ", ",
-              <ConditionalLink
-                includeLinks={includeLinks}
-                // @ts-expect-error STRICT_NULL_CHECK
-                href={artist.href}
-                key={index}
-              >
-                {/* @ts-expect-error STRICT_NULL_CHECK */}
-                <Text variant={tokens.variant}>{artist.name}</Text>
-              </ConditionalLink>,
-            ])
-          }, [])
-          .slice(1)}
+        {artists.map((artist, i) => {
+          if (!artist || !artist.href || !artist.name) return null
+
+          return (
+            <ConditionalLink
+              includeLinks={includeLinks}
+              href={artist.href}
+              key={i}
+            >
+              {artist.name}
+              {i !== artists.length - 1 && ", "}
+            </ConditionalLink>
+          )
+        })}
       </Text>
     )
   }
