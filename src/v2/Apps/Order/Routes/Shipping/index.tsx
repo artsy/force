@@ -310,7 +310,9 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
         this.props.router.push(`/orders/${this.props.order.internalID}/payment`)
       } catch (error) {
         logger.error(error)
-        this.props.dialog.showErrorDialog()
+        this.props.dialog.showErrorDialog({
+          message: this.getArtaErrorMessage(),
+        })
       }
     }
   }
@@ -367,10 +369,22 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
         title: "Can't ship to that address",
         message: "This work can only be shipped domestically.",
       })
+    } else if (this.isArtaShipping() && this.state.shippingQuoteId) {
+      this.props.dialog.showErrorDialog({
+        message: this.getArtaErrorMessage(),
+      })
     } else {
       this.props.dialog.showErrorDialog()
     }
   }
+
+  getArtaErrorMessage = () => (
+    <>
+      There was a problem getting shipping quotes. <br />
+      Please contact{" "}
+      <Link href={`mailto:orders@artsy.net`}>orders@artsy.net</Link>.
+    </>
+  )
 
   onAddressChange: AddressChangeHandler = (address, key) => {
     const { errors } = validateAddress(address)
