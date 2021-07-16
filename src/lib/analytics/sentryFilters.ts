@@ -8,6 +8,7 @@ export const IGNORED_ERRORS = [
   "cancelled",
   "Failed to fetch",
   "gpt/pubads_impl",
+  "Illegal invocation", // From   "gpt/pubads_impl", script (3rd party)
   "Non-Error exception captured",
   "Non-Error promise rejection captured",
   "Origin is not allowed by Access-Control-Allow-Origin",
