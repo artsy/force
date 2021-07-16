@@ -30,4 +30,5 @@ if [ ! -e ".env" ]; then
   cat .env.example > .env
 fi
 
-echo "Setup complete! Remember to execute 'nvm use' in your shell."
+echo "Setup complete!
+To run the project execute: yarn start"
