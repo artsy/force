@@ -1,10 +1,11 @@
 import { MockBoot } from "v2/DevTools"
 import React from "react"
-import { TagArtworkFilterRefetchContainer } from "../Components/TagArtworkFilter"
+import { ArtistSeriesArtworksFilterRefetchContainer } from "../Components/ArtistSeriesArtworksFilter"
 import { graphql } from "react-relay"
-import { TagArtworkFilter_Query } from "v2/__generated__/TagArtworkFilter_Query.graphql"
+import { ArtistSeriesArtworksFilter_Query } from "v2/__generated__/ArtistSeriesArtworksFilter_Query.graphql"
 import { useTracking } from "v2/System/Analytics/useTracking"
 import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
+import { SharedArtworkFilterContextProps } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
 
 jest.unmock("react-relay")
 jest.mock("v2/System/Router/useRouter", () => ({
@@ -19,23 +20,26 @@ jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
   useMatchMedia: () => ({}),
 }))
 
-const { getWrapper } = setupTestWrapper<TagArtworkFilter_Query>({
-  Component: ({ tag }) => (
+const { getWrapper } = setupTestWrapper<ArtistSeriesArtworksFilter_Query>({
+  Component: ({ artistSeries }) => (
     <MockBoot user={{ id: "percy-z" }}>
-      <TagArtworkFilterRefetchContainer tag={tag!} />
+      <ArtistSeriesArtworksFilterRefetchContainer
+        aggregations={AGGREGATIONS}
+        artistSeries={artistSeries!}
+      />
     </MockBoot>
   ),
   query: graphql`
-    query TagArtworkFilter_Query($slug: String!) {
-      tag(id: $slug) {
-        ...TagArtworkFilter_tag @arguments(shouldFetchCounts: true)
+    query ArtistSeriesArtworksFilter_Query($slug: ID!) {
+      artistSeries(id: $slug) {
+        ...ArtistSeriesArtworksFilter_artistSeries
       }
     }
   `,
-  variables: { slug: "tag" },
+  variables: { slug: "kaws-spongebob" },
 })
 
-describe("TagArtworkFilter", () => {
+describe("ArtistSeriesArtworksFilter", () => {
   const trackEvent = jest.fn()
 
   beforeEach(() => {
@@ -58,76 +62,10 @@ describe("TagArtworkFilter", () => {
         counts: {
           followedArtists: 10,
         },
-        aggregations: [
-          {
-            slice: "ARTIST",
-            counts: [
-              {
-                count: 483,
-                name: "Massimo Listri",
-                value: "massimo-listri",
-              },
-            ],
-          },
-          {
-            slice: "PARTNER",
-            counts: [
-              {
-                name: "Rago/Wright",
-                value: "rago-slash-wright",
-                count: 2,
-              },
-            ],
-          },
-          {
-            slice: "LOCATION_CITY",
-            counts: [
-              {
-                name: "New York, NY, USA",
-                value: "New York, NY, USA",
-                count: 10,
-              },
-            ],
-          },
-          {
-            slice: "MEDIUM",
-            counts: [
-              {
-                name: "Painting",
-                value: "painting",
-                count: 472023,
-              },
-            ],
-          },
-          {
-            slice: "MATERIALS_TERMS",
-            counts: [
-              {
-                name: "Canvas",
-                value: "canvas",
-                count: 17,
-              },
-            ],
-          },
-          {
-            slice: "ARTIST_NATIONALITY",
-            counts: [
-              {
-                name: "American",
-                value: "American",
-                count: 21,
-              },
-            ],
-          },
-        ],
       }),
     })
     const filterWrappers = wrapper.find("FilterExpandable")
     const filters = [
-      {
-        label: "Artists",
-        expanded: true,
-      },
       {
         label: "Rarity",
         expanded: true,
@@ -152,9 +90,6 @@ describe("TagArtworkFilter", () => {
         label: "Material",
       },
       {
-        label: "Artist nationality or ethnicity",
-      },
-      {
         label: "Artwork location",
       },
       {
@@ -176,3 +111,46 @@ describe("TagArtworkFilter", () => {
     })
   })
 })
+
+const AGGREGATIONS: SharedArtworkFilterContextProps["aggregations"] = [
+  {
+    slice: "PARTNER",
+    counts: [
+      {
+        name: "Rago/Wright",
+        value: "rago-slash-wright",
+        count: 2,
+      },
+    ],
+  },
+  {
+    slice: "LOCATION_CITY",
+    counts: [
+      {
+        name: "New York, NY, USA",
+        value: "New York, NY, USA",
+        count: 10,
+      },
+    ],
+  },
+  {
+    slice: "MEDIUM",
+    counts: [
+      {
+        name: "Painting",
+        value: "painting",
+        count: 472023,
+      },
+    ],
+  },
+  {
+    slice: "MATERIALS_TERMS",
+    counts: [
+      {
+        name: "Canvas",
+        value: "canvas",
+        count: 17,
+      },
+    ],
+  },
+]

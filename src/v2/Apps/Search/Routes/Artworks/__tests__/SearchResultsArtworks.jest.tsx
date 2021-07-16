@@ -1,9 +1,10 @@
-import { MockBoot, renderRelayTree } from "v2/DevTools"
+import { MockBoot } from "v2/DevTools"
 import React from "react"
 import { SearchResultsArtworksRouteFragmentContainer as SearchResultsArtworks } from "../SearchResultsArtworks"
 import { graphql } from "react-relay"
-import { SearchResultsArtworks_QueryRawResponse } from "v2/__generated__/SearchResultsArtworks_Query.graphql"
+import { SearchResultsArtworks_Query } from "v2/__generated__/SearchResultsArtworks_Query.graphql"
 import { useTracking } from "v2/System/Analytics/useTracking"
+import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
 
 jest.unmock("react-relay")
 jest.mock("v2/System/Router/useRouter", () => ({
@@ -14,6 +15,21 @@ jest.mock("v2/System/Router/useRouter", () => ({
   }),
 }))
 jest.mock("v2/System/Analytics/useTracking")
+
+const { getWrapper } = setupTestWrapper<SearchResultsArtworks_Query>({
+  Component: ({ viewer }) => (
+    <MockBoot user={{ id: "percy-z" }}>
+      <SearchResultsArtworks viewer={viewer!} />
+    </MockBoot>
+  ),
+  query: graphql`
+    query SearchResultsArtworks_Query {
+      viewer {
+        ...SearchResultsArtworks_viewer @arguments(shouldFetchCounts: true)
+      }
+    }
+  `,
+})
 
 describe("SearchResultsArtworks", () => {
   const trackEvent = jest.fn()
@@ -26,36 +42,82 @@ describe("SearchResultsArtworks", () => {
     })
   })
 
-  const getWrapper = async (
-    response: SearchResultsArtworks_QueryRawResponse = VIEWER
-  ) => {
-    return renderRelayTree({
-      Component: ({ viewer }) => {
-        return (
-          <MockBoot user={{ id: "percy-z" }}>
-            <SearchResultsArtworks viewer={viewer} />
-          </MockBoot>
-        )
-      },
-      query: graphql`
-        query SearchResultsArtworks_Query @raw_response_type {
-          viewer {
-            ...SearchResultsArtworks_viewer @arguments(shouldFetchCounts: true)
-          }
-        }
-      `,
-      mockData: response,
-    })
-  }
-
-  it("renders correctly", async () => {
-    const wrapper = await getWrapper()
+  it("renders correctly", () => {
+    const wrapper = getWrapper()
     expect(wrapper.find("ArtworkFilterArtworkGrid").length).toBe(1)
-    expect(wrapper.find("ArtworkGridItem").length).toBe(2)
+    expect(wrapper.find("ArtworkGridItem").length).toBe(1)
   })
 
-  it("renders filters in correct order", async () => {
-    const wrapper = await getWrapper()
+  it("renders filters in correct order", () => {
+    const wrapper = getWrapper({
+      FilterArtworksConnection: () => ({
+        counts: {
+          followedArtists: 10,
+        },
+        aggregations: [
+          {
+            slice: "ARTIST",
+            counts: [
+              {
+                count: 483,
+                name: "Massimo Listri",
+                value: "massimo-listri",
+              },
+            ],
+          },
+          {
+            slice: "PARTNER",
+            counts: [
+              {
+                name: "Rago/Wright",
+                value: "rago-slash-wright",
+                count: 2,
+              },
+            ],
+          },
+          {
+            slice: "LOCATION_CITY",
+            counts: [
+              {
+                name: "New York, NY, USA",
+                value: "New York, NY, USA",
+                count: 10,
+              },
+            ],
+          },
+          {
+            slice: "MEDIUM",
+            counts: [
+              {
+                name: "Painting",
+                value: "painting",
+                count: 472023,
+              },
+            ],
+          },
+          {
+            slice: "MATERIALS_TERMS",
+            counts: [
+              {
+                name: "Canvas",
+                value: "canvas",
+                count: 17,
+              },
+            ],
+          },
+          {
+            slice: "ARTIST_NATIONALITY",
+            counts: [
+              {
+                name: "American",
+                value: "American",
+                count: 21,
+              },
+            ],
+          },
+        ],
+      }),
+    })
     const filterWrappers = wrapper.find("FilterExpandable")
     const filters = [
       {
@@ -110,182 +172,3 @@ describe("SearchResultsArtworks", () => {
     })
   })
 })
-
-const VIEWER: SearchResultsArtworks_QueryRawResponse = {
-  viewer: {
-    filtered_artworks: {
-      id: "some-unique-id",
-      pageInfo: {
-        hasNextPage: true,
-        endCursor: "endCursor",
-      },
-      pageCursors: {
-        around: [
-          {
-            cursor: "pageCursorsOne",
-            page: 1,
-            isCurrent: true,
-          },
-          {
-            cursor: "pageCursorsTwo",
-            page: 2,
-            isCurrent: false,
-          },
-        ],
-        first: null,
-        last: null,
-        previous: null,
-      },
-      edges: [
-        {
-          id: "edge-id-one",
-          node: {
-            id: "edge-one",
-            slug: "edge-slug-one",
-            href: "/artwork/edge-href-one",
-            internalID: "edge-internal-id-one",
-            image: {
-              aspect_ratio: 1,
-              placeholder: "100.1027397260274%",
-              url:
-                "https://d32dm0rphc51dk.cloudfront.net/eFuQAUcV2SBmcL-sRkSI5w/large.jpg",
-            },
-            title: "EL SOL NO ES PARA TODOS",
-            image_title: "Antonio Seguí, 'EL SOL NO ES PARA TODOS', 2003",
-            artistNames: "Antonio Seguí",
-            date: "2003",
-            sale_message: "$85,000",
-            cultural_maker: null,
-            artists: [
-              {
-                id: "author-one-id",
-                href: "/artist/antonio-segui",
-                name: "Antonio Seguí",
-              },
-            ],
-            collecting_institution: null,
-            partner: {
-              name: "Gallery Art",
-              href: "/gallery-art",
-              id: "edge-partner-id",
-              type: "Gallery",
-            },
-            sale: null,
-            sale_artwork: null,
-            is_inquireable: false,
-            is_saved: false,
-            is_biddable: false,
-          },
-        },
-        {
-          id: "edge-id-two",
-          node: {
-            id: "edge-two",
-            slug: "edge-slug-two",
-            href: "/artwork/edge-href-one",
-            internalID: "edge-internal-id-one",
-            image: {
-              aspect_ratio: 0.75,
-              placeholder: "133.31702544031313%",
-              url:
-                "https://d32dm0rphc51dk.cloudfront.net/KkmXba7qtNYh2AiMY3O2Yw/large.jpg",
-            },
-            title: "One more sleep",
-            image_title: "Yves Scherer, 'One more sleep', 2020",
-            artistNames: "Yves Scherer",
-            date: "2020",
-            sale_message: "$20,000",
-            cultural_maker: null,
-            artists: [
-              {
-                id: "author-two-id",
-                href: "/artist/yves-scherer",
-                name: "Yves Scherer",
-              },
-            ],
-            collecting_institution: null,
-            partner: {
-              name: "Cassina Projects",
-              href: "/cassina-projects",
-              id: "UGFydG5lcjo1YTY2MWQzOGEwOWE2NzE3YzllODkzMjM=",
-              type: "Gallery",
-            },
-            sale: null,
-            sale_artwork: null,
-            is_inquireable: false,
-            is_saved: false,
-            is_biddable: false,
-          },
-        },
-      ],
-    },
-    sidebar: {
-      id: "sidebar-id",
-      counts: {
-        followedArtists: 15,
-      },
-      aggregations: [
-        {
-          slice: "ARTIST",
-          counts: [
-            {
-              count: 483,
-              name: "Massimo Listri",
-              value: "massimo-listri",
-            },
-          ],
-        },
-        {
-          slice: "PARTNER",
-          counts: [
-            {
-              name: "Rago/Wright",
-              value: "rago-slash-wright",
-              count: 2,
-            },
-          ],
-        },
-        {
-          slice: "LOCATION_CITY",
-          counts: [
-            {
-              name: "New York, NY, USA",
-              value: "New York, NY, USA",
-              count: 10,
-            },
-          ],
-        },
-        {
-          slice: "MEDIUM",
-          counts: [
-            {
-              name: "Painting",
-              value: "painting",
-              count: 472023,
-            },
-          ],
-        },
-        {
-          slice: "MATERIALS_TERMS",
-          counts: [
-            {
-              name: "Canvas",
-              value: "canvas",
-              count: 17,
-            },
-          ],
-        },
-        {
-          slice: "ARTIST_NATIONALITY",
-          counts: [
-            {
-              name: "American",
-              value: "American",
-              count: 21,
-            },
-          ],
-        },
-      ],
-    },
-  },
-}

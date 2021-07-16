@@ -1,37 +1,45 @@
-import React from "react"
-import { ShowArtworksRefetchContainer } from "../Components/ShowArtworks"
-import { graphql } from "react-relay"
-import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
-import { ShowArtworks_Test_Query } from "v2/__generated__/ShowArtworks_Test_Query.graphql"
 import { MockBoot } from "v2/DevTools"
+import React from "react"
+import { ArtistArtworkFilterRefetchContainer } from "../Components/ArtistArtworkFilter"
+import { graphql } from "react-relay"
+import { ArtistArtworkFilter_Query } from "v2/__generated__/ArtistArtworkFilter_Query.graphql"
 import { useTracking } from "v2/System/Analytics/useTracking"
+import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
 import { SharedArtworkFilterContextProps } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
 
 jest.unmock("react-relay")
 jest.mock("v2/System/Router/useRouter", () => ({
-  useRouter: () => ({ match: { location: { query: {} } } }),
+  useRouter: () => ({
+    match: {
+      location: { query: {} },
+    },
+  }),
 }))
 jest.mock("v2/System/Analytics/useTracking")
 jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
   useMatchMedia: () => ({}),
 }))
 
-const { getWrapper } = setupTestWrapper<ShowArtworks_Test_Query>({
-  Component: ({ show }) => (
-    <MockBoot>
-      <ShowArtworksRefetchContainer aggregations={AGGREGATIONS} show={show!} />
+const { getWrapper } = setupTestWrapper<ArtistArtworkFilter_Query>({
+  Component: ({ artist }) => (
+    <MockBoot user={{ id: "percy-z" }}>
+      <ArtistArtworkFilterRefetchContainer
+        aggregations={AGGREGATIONS}
+        artist={artist!}
+      />
     </MockBoot>
   ),
   query: graphql`
-    query ShowArtworks_Test_Query {
-      show(id: "catty-show") {
-        ...ShowArtworks_show
+    query ArtistArtworkFilter_Query($artistID: String!) {
+      artist(id: $artistID) {
+        ...ArtistArtworkFilter_artist
       }
     }
   `,
+  variables: { artistID: "amoako-boafo" },
 })
 
-describe("ShowArtworks", () => {
+describe("ArtistArtworkFilter", () => {
   const trackEvent = jest.fn()
 
   beforeEach(() => {
@@ -44,25 +52,18 @@ describe("ShowArtworks", () => {
 
   it("renders correctly", () => {
     const wrapper = getWrapper()
-
     expect(wrapper.find("ArtworkFilterArtworkGrid").length).toBe(1)
     expect(wrapper.find("ArtworkGridItem").length).toBe(1)
   })
 
   it("renders filters in correct order", () => {
     const wrapper = getWrapper({
-      FilterArtworksConnection: () => ({
-        counts: {
-          followedArtists: 10,
-        },
+      ArtistCounts: () => ({
+        artworks: 1,
       }),
     })
     const filterWrappers = wrapper.find("FilterExpandable")
     const filters = [
-      {
-        label: "Artists",
-        expanded: true,
-      },
       {
         label: "Rarity",
         expanded: true,
@@ -87,7 +88,7 @@ describe("ShowArtworks", () => {
         label: "Material",
       },
       {
-        label: "Artist nationality or ethnicity",
+        label: "Artwork location",
       },
       {
         label: "Time period",
@@ -111,22 +112,22 @@ describe("ShowArtworks", () => {
 
 const AGGREGATIONS: SharedArtworkFilterContextProps["aggregations"] = [
   {
-    slice: "ARTIST",
-    counts: [
-      {
-        count: 483,
-        name: "Massimo Listri",
-        value: "massimo-listri",
-      },
-    ],
-  },
-  {
     slice: "PARTNER",
     counts: [
       {
         name: "Rago/Wright",
         value: "rago-slash-wright",
         count: 2,
+      },
+    ],
+  },
+  {
+    slice: "LOCATION_CITY",
+    counts: [
+      {
+        name: "New York, NY, USA",
+        value: "New York, NY, USA",
+        count: 10,
       },
     ],
   },
@@ -147,16 +148,6 @@ const AGGREGATIONS: SharedArtworkFilterContextProps["aggregations"] = [
         name: "Canvas",
         value: "canvas",
         count: 17,
-      },
-    ],
-  },
-  {
-    slice: "ARTIST_NATIONALITY",
-    counts: [
-      {
-        name: "American",
-        value: "American",
-        count: 21,
       },
     ],
   },
