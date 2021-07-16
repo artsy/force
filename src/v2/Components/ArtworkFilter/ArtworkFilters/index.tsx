@@ -21,9 +21,6 @@ interface ArtworkFiltersProps {
 export const ArtworkFilters: React.FC<ArtworkFiltersProps> = props => {
   const { user, relayEnvironment } = props
 
-  console.log("[filters] user", user)
-  console.log("[filters] relayEnvironment", relayEnvironment)
-
   return (
     <>
       <ArtistsFilter relayEnvironment={relayEnvironment} user={user} expanded />
