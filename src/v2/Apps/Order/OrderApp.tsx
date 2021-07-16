@@ -100,6 +100,8 @@ class OrderApp extends React.Component<OrderAppProps, {}> {
     if (route?.shouldWarnBeforeLeaving) {
       return "Are you sure you want to leave? Your changes will not be saved."
     }
+
+    return true
   }
 
   renderZendeskScript() {
