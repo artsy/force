@@ -155,7 +155,9 @@ export const NavBar: React.FC = track(
                 ml={1}
                 tabIndex={0}
                 role="button"
-                onClick={() => {
+                onClick={e => {
+                  e.preventDefault()
+
                   const showMenu = !showMobileMenu
                   if (showMenu) {
                     trackEvent({
