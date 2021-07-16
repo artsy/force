@@ -30,8 +30,12 @@ const routes: Record<"name" | "url", string>[] = [
     url: "/user/edit",
   },
   {
-    name: "Payments & Shipping",
+    name: "Payments",
     url: "/user/payments",
+  },
+  {
+    name: "Shipping",
+    url: "/user/shipping",
   },
 ]
 
