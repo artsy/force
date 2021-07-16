@@ -53,9 +53,8 @@ export type Collection_collection = {
         readonly counts?: {
             readonly followedArtists: number | null;
         } | null;
-        readonly " $fragmentRefs": FragmentRefs<"ArtworkFilterArtworkGrid_filtered_artworks">;
     } | null;
-    readonly " $fragmentRefs": FragmentRefs<"Header_collection">;
+    readonly " $fragmentRefs": FragmentRefs<"Header_collection" | "CollectionArtworksFilter_collection">;
     readonly " $refType": "Collection_collection";
 };
 export type Collection_collection$data = Collection_collection;
@@ -88,7 +87,14 @@ v3 = {
   "kind": "Literal",
   "name": "sort",
   "value": "-decayed_merch"
-};
+},
+v4 = [
+  {
+    "kind": "Variable",
+    "name": "input",
+    "variableName": "input"
+  }
+];
 return {
   "argumentDefinitions": [
     {
@@ -412,13 +418,7 @@ return {
     },
     {
       "alias": "filtered_artworks",
-      "args": [
-        {
-          "kind": "Variable",
-          "name": "input",
-          "variableName": "input"
-        }
-      ],
+      "args": (v4/*: any*/),
       "concreteType": "FilterArtworksConnection",
       "kind": "LinkedField",
       "name": "artworksConnection",
@@ -449,11 +449,6 @@ return {
               "storageKey": null
             }
           ]
-        },
-        {
-          "args": null,
-          "kind": "FragmentSpread",
-          "name": "ArtworkFilterArtworkGrid_filtered_artworks"
         }
       ],
       "storageKey": null
@@ -462,10 +457,15 @@ return {
       "args": null,
       "kind": "FragmentSpread",
       "name": "Header_collection"
+    },
+    {
+      "args": (v4/*: any*/),
+      "kind": "FragmentSpread",
+      "name": "CollectionArtworksFilter_collection"
     }
   ],
   "type": "MarketingCollection"
 };
 })();
-(node as any).hash = '7a4da42669d743e4bc071a485fabc7bb';
+(node as any).hash = '48fbf21b0aae114b8fd6410864e046d2';
 export default node;

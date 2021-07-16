@@ -20,7 +20,7 @@ const CollectionsApp = loadable(
 const CollectionApp = loadable(
   () => import(/* webpackChunkName: "collectBundle" */ "./Routes/Collection"),
   {
-    resolveComponent: component => component.CollectionRefetchContainer,
+    resolveComponent: component => component.CollectionFragmentContainer,
   }
 )
 
@@ -111,7 +111,7 @@ function initializeVariablesWithFilterState(params, props) {
 
   // TODO: Do these aggregations accomplish much on /collect?
   const collectionOnlyAggregations = collectionSlug
-    ? ["MERCHANDISABLE_ARTISTS", "MEDIUM", "MAJOR_PERIOD"]
+    ? ["MERCHANDISABLE_ARTISTS", "MEDIUM", "MAJOR_PERIOD", "ARTIST"]
     : []
   const aggregations = [
     "TOTAL",
