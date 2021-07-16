@@ -10,7 +10,7 @@ const cheerio = require("cheerio")
 const moment = require("moment")
 const {
   getLiveAuctionUrl,
-} = require("../../../../desktop/apps/auctions/utils/urls")
+} = require("../../../../desktop/apps/auction/utils/urls")
 
 const fixture = () => [
   {

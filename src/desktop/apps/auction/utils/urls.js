@@ -17,20 +17,3 @@ export const getLiveAuctionUrl = (id, options = {}) => {
     return url
   }
 }
-
-/**
- * For `/artwork/:slug` routes that are a part of an auction, determine the
- * correct url to redirect to when clicking the "Bid" button.
- *
- * @param  {String} bidderStatus
- * @param  {Object} artwork
- * @param  {Object} auction
- * @return {String}
- */
-export function getBidRedirectActionUrl(bidderStatus, artwork, auction) {
-  if (bidderStatus === "logged-out" || bidderStatus === "qualified-to-bid") {
-    return `/auction/${auction.id}/bid/${artwork.id}`
-  } else {
-    return `/artwork/${artwork.id}`
-  }
-}

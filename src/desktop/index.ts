@@ -85,9 +85,6 @@ app.use(require("./apps/shortcuts"))
 // User profiles
 app.use(require("./apps/user"))
 
-// Used to test various SSR configurations
-app.use(require("./apps/ssr-experiments/server").app)
-
 // Apps that need to fetch a profile.
 // Because profile routes are usually top-level and use wild-card matchers in their routers,
 // it's best to keep them last. Otherwise it's easy for these to unexpectedly
