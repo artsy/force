@@ -15,7 +15,7 @@ describe("ArtworkLocationFilter", () => {
           facetName="locationCities"
           slice="LOCATION_CITY"
           placeholder="Enter a city"
-          label="Artwork location"
+          label="Artwork Location"
           expanded
         />
       </ArtworkFilterContextProvider>
@@ -39,7 +39,7 @@ describe("ArtworkLocationFilter", () => {
     })
 
     // Expandable title
-    expect(wrapper.text()).toContain("Artwork location")
+    expect(wrapper.text()).toContain("Artwork Location")
 
     // Input placeholder
     expect(wrapper.find("input").prop("placeholder")).toContain("Enter a city")

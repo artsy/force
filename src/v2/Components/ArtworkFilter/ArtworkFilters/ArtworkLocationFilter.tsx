@@ -12,7 +12,7 @@ export const ArtworkLocationFilter: React.FC<ArtworkLocationFilterProps> = ({
     <ResultsFilter
       facetName="locationCities"
       slice="LOCATION_CITY"
-      label="Artwork location"
+      label="Artwork Location"
       placeholder="Enter a city"
       expanded={expanded}
     />

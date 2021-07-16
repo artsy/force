@@ -60,7 +60,7 @@ export const TimePeriodFilter: FC<TimePeriodFilterProps> = ({ expanded }) => {
 
   return (
     <FilterExpandable
-      label="Time period"
+      label="Time Period"
       expanded={hasMajorPeriodFilter || expanded}
     >
       <Flex flexDirection="column">

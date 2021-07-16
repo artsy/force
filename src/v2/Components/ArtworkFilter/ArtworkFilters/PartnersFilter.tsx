@@ -8,7 +8,7 @@ export interface PartnersFilterProps {
 
 export const PartnersFilter: React.FC<PartnersFilterProps> = ({
   expanded,
-  label = "Galleries and institutions",
+  label = "Galleries and Institutions",
 }) => {
   return (
     <ResultsFilter

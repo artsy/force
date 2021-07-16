@@ -12,7 +12,7 @@ export const ArtistNationalityFilter: React.FC<ArtistNationalityFilterProps> = (
     <ResultsFilter
       facetName="artistNationalities"
       slice="ARTIST_NATIONALITY"
-      label="Artist nationality or ethnicity"
+      label="Artist Nationality or Ethnicity"
       placeholder="Enter a nationality or ethnicity"
       expanded={expanded}
     />

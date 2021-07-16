@@ -72,7 +72,7 @@ export const WaysToBuyFilter: FC<WaysToBuyFilterProps> = ({ expanded }) => {
     !!selection.inquireableOnly
 
   return (
-    <FilterExpandable label="Ways to buy" expanded={hasSelection || expanded}>
+    <FilterExpandable label="Ways to Buy" expanded={hasSelection || expanded}>
       <Flex flexDirection="column">
         {checkboxes.map((checkbox, index) => {
           return (
