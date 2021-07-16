@@ -35,6 +35,7 @@ module.exports =
   MAX_SOCKETS: -1
   METAPHYSICS_ENDPOINT: 'https://metaphysics-production.artsy.net'
   NODE_ENV: 'development'
+  ONETRUST_SCRIPT_ID: null
   OPENREDIS_URL: null
   PORT: 3003
   POSITRON_URL: 'http://writer.artsy.net'
