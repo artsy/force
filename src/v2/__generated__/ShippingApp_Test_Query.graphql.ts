@@ -3,44 +3,44 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type paymentRoutes_PaymentQueryVariables = {};
-export type paymentRoutes_PaymentQueryResponse = {
+export type ShippingApp_Test_QueryVariables = {};
+export type ShippingApp_Test_QueryResponse = {
     readonly me: {
-        readonly " $fragmentRefs": FragmentRefs<"PaymentApp_me">;
+        readonly " $fragmentRefs": FragmentRefs<"ShippingApp_me">;
     } | null;
 };
-export type paymentRoutes_PaymentQuery = {
-    readonly response: paymentRoutes_PaymentQueryResponse;
-    readonly variables: paymentRoutes_PaymentQueryVariables;
+export type ShippingApp_Test_Query = {
+    readonly response: ShippingApp_Test_QueryResponse;
+    readonly variables: ShippingApp_Test_QueryVariables;
 };
 
 
 
 /*
-query paymentRoutes_PaymentQuery {
+query ShippingApp_Test_Query {
   me {
-    ...PaymentApp_me
+    ...ShippingApp_me
     id
   }
 }
 
-fragment PaymentApp_me on Me {
-  name
-  ...PaymentSection_me
-}
-
-fragment PaymentSection_me on Me {
+fragment SavedAddresses_me on Me {
   id
-  internalID
-  creditCards(first: 100) {
+  addressConnection(first: 30) {
     edges {
       node {
         id
         internalID
-        brand
-        lastDigits
-        expirationYear
-        expirationMonth
+        addressLine1
+        addressLine2
+        addressLine3
+        city
+        country
+        isDefault
+        name
+        phoneNumber
+        postalCode
+        region
         __typename
       }
       cursor
@@ -48,8 +48,21 @@ fragment PaymentSection_me on Me {
     pageInfo {
       endCursor
       hasNextPage
+      hasPreviousPage
+      startCursor
     }
   }
+}
+
+fragment ShippingApp_me on Me {
+  name
+  ...UserSettingsAddresses_me
+}
+
+fragment UserSettingsAddresses_me on Me {
+  ...SavedAddresses_me
+  id
+  internalID
 }
 */
 
@@ -58,29 +71,36 @@ var v0 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "id",
+  "name": "name",
   "storageKey": null
 },
 v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "internalID",
+  "name": "id",
   "storageKey": null
 },
 v2 = [
   {
     "kind": "Literal",
     "name": "first",
-    "value": 100
+    "value": 30
   }
-];
+],
+v3 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+};
 return {
   "fragment": {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "paymentRoutes_PaymentQuery",
+    "name": "ShippingApp_Test_Query",
     "selections": [
       {
         "alias": null,
@@ -93,7 +113,7 @@ return {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "PaymentApp_me"
+            "name": "ShippingApp_me"
           }
         ],
         "storageKey": null
@@ -105,7 +125,7 @@ return {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "paymentRoutes_PaymentQuery",
+    "name": "ShippingApp_Test_Query",
     "selections": [
       {
         "alias": null,
@@ -115,27 +135,20 @@ return {
         "name": "me",
         "plural": false,
         "selections": [
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "name",
-            "storageKey": null
-          },
           (v0/*: any*/),
           (v1/*: any*/),
           {
             "alias": null,
             "args": (v2/*: any*/),
-            "concreteType": "CreditCardConnection",
+            "concreteType": "UserAddressConnection",
             "kind": "LinkedField",
-            "name": "creditCards",
+            "name": "addressConnection",
             "plural": false,
             "selections": [
               {
                 "alias": null,
                 "args": null,
-                "concreteType": "CreditCardEdge",
+                "concreteType": "UserAddressEdge",
                 "kind": "LinkedField",
                 "name": "edges",
                 "plural": true,
@@ -143,39 +156,75 @@ return {
                   {
                     "alias": null,
                     "args": null,
-                    "concreteType": "CreditCard",
+                    "concreteType": "UserAddress",
                     "kind": "LinkedField",
                     "name": "node",
                     "plural": false,
                     "selections": [
-                      (v0/*: any*/),
                       (v1/*: any*/),
+                      (v3/*: any*/),
                       {
                         "alias": null,
                         "args": null,
                         "kind": "ScalarField",
-                        "name": "brand",
+                        "name": "addressLine1",
                         "storageKey": null
                       },
                       {
                         "alias": null,
                         "args": null,
                         "kind": "ScalarField",
-                        "name": "lastDigits",
+                        "name": "addressLine2",
                         "storageKey": null
                       },
                       {
                         "alias": null,
                         "args": null,
                         "kind": "ScalarField",
-                        "name": "expirationYear",
+                        "name": "addressLine3",
                         "storageKey": null
                       },
                       {
                         "alias": null,
                         "args": null,
                         "kind": "ScalarField",
-                        "name": "expirationMonth",
+                        "name": "city",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "country",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "isDefault",
+                        "storageKey": null
+                      },
+                      (v0/*: any*/),
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "phoneNumber",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "postalCode",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "region",
                         "storageKey": null
                       },
                       {
@@ -219,22 +268,37 @@ return {
                     "kind": "ScalarField",
                     "name": "hasNextPage",
                     "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "hasPreviousPage",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "startCursor",
+                    "storageKey": null
                   }
                 ],
                 "storageKey": null
               }
             ],
-            "storageKey": "creditCards(first:100)"
+            "storageKey": "addressConnection(first:30)"
           },
           {
             "alias": null,
             "args": (v2/*: any*/),
-            "filters": [],
+            "filters": null,
             "handle": "connection",
-            "key": "PaymentSection_creditCards",
+            "key": "SavedAddresses_addressConnection",
             "kind": "LinkedHandle",
-            "name": "creditCards"
-          }
+            "name": "addressConnection"
+          },
+          (v3/*: any*/)
         ],
         "storageKey": null
       }
@@ -243,11 +307,11 @@ return {
   "params": {
     "id": null,
     "metadata": {},
-    "name": "paymentRoutes_PaymentQuery",
+    "name": "ShippingApp_Test_Query",
     "operationKind": "query",
-    "text": "query paymentRoutes_PaymentQuery {\n  me {\n    ...PaymentApp_me\n    id\n  }\n}\n\nfragment PaymentApp_me on Me {\n  name\n  ...PaymentSection_me\n}\n\nfragment PaymentSection_me on Me {\n  id\n  internalID\n  creditCards(first: 100) {\n    edges {\n      node {\n        id\n        internalID\n        brand\n        lastDigits\n        expirationYear\n        expirationMonth\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query ShippingApp_Test_Query {\n  me {\n    ...ShippingApp_me\n    id\n  }\n}\n\nfragment SavedAddresses_me on Me {\n  id\n  addressConnection(first: 30) {\n    edges {\n      node {\n        id\n        internalID\n        addressLine1\n        addressLine2\n        addressLine3\n        city\n        country\n        isDefault\n        name\n        phoneNumber\n        postalCode\n        region\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n\nfragment ShippingApp_me on Me {\n  name\n  ...UserSettingsAddresses_me\n}\n\nfragment UserSettingsAddresses_me on Me {\n  ...SavedAddresses_me\n  id\n  internalID\n}\n"
   }
 };
 })();
-(node as any).hash = '991f781fb3d67ffa1c1094f5f2c98875';
+(node as any).hash = 'ecc54611d7bb89d7f0a8d15e1bd76609';
 export default node;
