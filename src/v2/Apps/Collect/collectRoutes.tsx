@@ -111,7 +111,7 @@ function initializeVariablesWithFilterState(params, props) {
 
   // TODO: Do these aggregations accomplish much on /collect?
   const collectionOnlyAggregations = collectionSlug
-    ? ["MERCHANDISABLE_ARTISTS", "MEDIUM", "MAJOR_PERIOD", "ARTIST"]
+    ? ["MERCHANDISABLE_ARTISTS", "MEDIUM", "MAJOR_PERIOD"]
     : []
   const aggregations = [
     "TOTAL",
