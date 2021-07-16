@@ -5,6 +5,7 @@ import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
 import { ShowArtworks_Test_Query } from "v2/__generated__/ShowArtworks_Test_Query.graphql"
 import { MockBoot } from "v2/DevTools"
 import { useTracking } from "v2/System/Analytics/useTracking"
+import { SharedArtworkFilterContextProps } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
 
 jest.unmock("react-relay")
 jest.mock("v2/System/Router/useRouter", () => ({
@@ -16,10 +17,9 @@ jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
 }))
 
 const { getWrapper } = setupTestWrapper<ShowArtworks_Test_Query>({
-  Component: props => (
+  Component: ({ show }) => (
     <MockBoot>
-      {/* @ts-expect-error STRICT_NULL_CHECK */}
-      <ShowArtworksRefetchContainer aggregations={[]} {...props} />
+      <ShowArtworksRefetchContainer aggregations={AGGREGATIONS} show={show!} />
     </MockBoot>
   ),
   query: graphql`
@@ -48,4 +48,110 @@ describe("ShowArtworks", () => {
     expect(wrapper.find("ArtworkFilterArtworkGrid").length).toBe(1)
     expect(wrapper.find("ArtworkGridItem").length).toBe(1)
   })
+
+  it("renders filters in correct order", () => {
+    const wrapper = getWrapper({})
+    const filterWrappers = wrapper.find("FilterExpandable")
+    const filters = [
+      {
+        label: "Artists",
+        expanded: true,
+      },
+      {
+        label: "Rarity",
+        expanded: true,
+      },
+      {
+        label: "Medium",
+        expanded: true,
+      },
+      {
+        label: "Price",
+        expanded: true,
+      },
+      {
+        label: "Size",
+        expanded: true,
+      },
+      {
+        label: "Ways to buy",
+        expanded: true,
+      },
+      {
+        label: "Material",
+      },
+      {
+        label: "Artist nationality or ethnicity",
+      },
+      {
+        label: "Time period",
+      },
+      {
+        label: "Color",
+      },
+      {
+        label: "Galleries and institutions",
+      },
+    ]
+
+    filters.forEach((filter, filterIndex) => {
+      const { label, expanded } = filter
+
+      expect(filterWrappers.at(filterIndex).prop("label")).toEqual(label)
+      expect(filterWrappers.at(filterIndex).prop("expanded")).toEqual(expanded)
+    })
+  })
 })
+
+const AGGREGATIONS: SharedArtworkFilterContextProps["aggregations"] = [
+  {
+    slice: "ARTIST",
+    counts: [
+      {
+        count: 483,
+        name: "Massimo Listri",
+        value: "massimo-listri",
+      },
+    ],
+  },
+  {
+    slice: "PARTNER",
+    counts: [
+      {
+        name: "Rago/Wright",
+        value: "rago-slash-wright",
+        count: 2,
+      },
+    ],
+  },
+  {
+    slice: "MEDIUM",
+    counts: [
+      {
+        name: "Painting",
+        value: "painting",
+        count: 472023,
+      },
+    ],
+  },
+  {
+    slice: "MATERIALS_TERMS",
+    counts: [
+      {
+        name: "Canvas",
+        value: "canvas",
+        count: 17,
+      },
+    ],
+  },
+  {
+    slice: "ARTIST_NATIONALITY",
+    counts: [
+      {
+        name: "American",
+        value: "American",
+        count: 21,
+      },
+    ],
+  },
+]
