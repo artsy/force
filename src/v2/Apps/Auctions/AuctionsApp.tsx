@@ -20,6 +20,7 @@ import { WorksByArtistsYouFollowRailFragmentContainer } from "./Components/Works
 import { ChevronButton } from "v2/Components/ChevronButton"
 import { getENV } from "v2/Utils/getENV"
 import { TrendingLotsFragmentContainer } from "./Components/TrendingLots/TrendingLots"
+import { StandoutLotsFragmentContainer } from "./Components/StandoutLots/StandoutLots"
 
 export interface AuctionsAppProps {
   viewer: AuctionsApp_viewer
@@ -81,7 +82,9 @@ const AuctionsApp: React.FC<AuctionsAppProps> = props => {
         <Tab name="Trending Lots">
           <TrendingLotsFragmentContainer viewer={viewer} />
         </Tab>
-        <Tab name="Standout lots">Standout Lots By Trending Artists</Tab>
+        <Tab name="Standout lots">
+          <StandoutLotsFragmentContainer viewer={viewer} />
+        </Tab>
       </Tabs>
 
       <Spacer my={[4, 12]} />
@@ -114,6 +117,7 @@ export const AuctionsAppFragmentContainer = createFragmentContainer(
       fragment AuctionsApp_viewer on Viewer {
         ...WorksByArtistsYouFollowRail_viewer
         ...TrendingLots_viewer
+        ...StandoutLots_viewer
         me {
           ...MyBids_me
         }

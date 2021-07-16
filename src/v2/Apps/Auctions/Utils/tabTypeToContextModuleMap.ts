@@ -7,4 +7,5 @@ export const tabTypeToContextModuleMap = {
   upcoming: ContextModule.upcomingAuctions,
   worksByArtistsYouFollow: ContextModule.worksByArtistsYouFollowRail,
   trendingLots: ContextModule.trendingLots,
+  standoutLots: ContextModule.standoutLots,
 }
