@@ -79,6 +79,7 @@ sharify.data = _.extend(
     "PARSELY_KEY",
     "PC_ARTSY_CHANNEL",
     "PC_AUCTION_CHANNEL",
+    "ONETRUST_SCRIPT_ID",
     "POSITRON_URL",
     "PREDICTION_URL",
     "RECAPTCHA_KEY",
