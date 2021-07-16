@@ -52,9 +52,14 @@ export const ShowInstallShots: React.FC<ShowInstallShotsProps> = ({
                 src={image.desktop.src}
                 srcSet={image.desktop.srcSet}
                 width={[image.mobile.width, image.desktop.width]}
-                maxHeight={[300, 480]}
-                style={{ display: "block", objectFit: "contain" }}
+                height={[image.mobile.height, image.desktop.height]}
+                style={{
+                  display: "block",
+                  objectFit: "contain",
+                  backgroundColor: "rgba(0, 0, 0, 0.1)",
+                }}
                 alt={`${show.name}, installation view`}
+                lazyLoad={i > 2}
               />
 
               {image.caption && (
@@ -63,7 +68,7 @@ export const ShowInstallShots: React.FC<ShowInstallShotsProps> = ({
                   mt={1}
                   color="black60"
                   textAlign="left"
-                  width={image.desktop.width}
+                  width={[image.mobile.width, image.desktop.width]}
                   title={image.caption}
                   overflowEllipsis
                 >
