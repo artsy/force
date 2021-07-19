@@ -15,7 +15,7 @@ import { updateUrl } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
 import {
   ExhibitorFilterContextProvider,
   useExhibitorsFilterContext,
-} from "./ExhibitorFilterContext"
+} from "../Components/ExhibitorFilterContext"
 import { FairExhibitorsQuery } from "./FairExhibitorsQuery"
 import { LoadingArea } from "v2/Components/LoadingArea"
 import { Sticky } from "v2/Components/Sticky"

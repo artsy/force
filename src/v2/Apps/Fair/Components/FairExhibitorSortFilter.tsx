@@ -1,6 +1,6 @@
 import React from "react"
 import { SortFilter } from "v2/Components/SortFilter"
-import { useExhibitorsFilterContext } from "../Routes/ExhibitorFilterContext"
+import { useExhibitorsFilterContext } from "./ExhibitorFilterContext"
 
 export const FairExhibitorSortFilter: React.FC = () => {
   const context = useExhibitorsFilterContext()
