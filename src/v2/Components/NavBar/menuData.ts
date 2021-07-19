@@ -29,7 +29,7 @@ export const ARTISTS_SUBMENU_DATA: MenuLinkData = {
         href: "/collection/in-demand-artists",
       },
       {
-        text: "Artist's We're Eyeing",
+        text: "Artists We're Eyeing",
         href: "/collection/artists-we-are-eyeing",
       },
       {
@@ -270,7 +270,7 @@ export const ARTWORKS_SUBMENU_DATA: MenuLinkData = {
               href: "/collection/sculpture",
             },
             {
-              text: "Work on Paper",
+              text: "Works on Paper",
               href: "/collection/works-on-paper",
             },
             {
