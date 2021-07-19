@@ -7,6 +7,7 @@ import React from "react"
 import { act } from "react-dom/test-utils"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
+import { Expandable } from "@artsy/palette"
 import { Breakpoint } from "v2/Utils/Responsive"
 import { openAuthModal } from "v2/Utils/openAuthModal"
 import { Pagination } from "v2/Components/Pagination"
@@ -290,13 +291,14 @@ describe("AuctionResults", () => {
         describe("auction house filter", () => {
           it("triggers relay refetch with organization list, and re-shows sign up to see price", done => {
             const filter = wrapper.find("AuctionHouseFilter")
+            filter.find(Expandable).find("button").simulate("click")
 
-            const checkboxes = filter.find("Checkbox")
+            const checkboxes = wrapper
+              .find("AuctionHouseFilter")
+              .find("Checkbox")
 
             checkboxes.at(1).simulate("click")
-
             checkboxes.at(2).simulate("click")
-
             checkboxes.at(1).simulate("click")
 
             setTimeout(() => {
@@ -327,6 +329,11 @@ describe("AuctionResults", () => {
 
               done()
             })
+          })
+
+          it("is not expanded by default", () => {
+            const filter = wrapper.find("AuctionHouseFilter")
+            expect(filter.find(Expandable).prop("expanded")).toEqual(false)
           })
         })
         describe("size filter", () => {
