@@ -14,8 +14,6 @@
     "module": "commonjs",
     "moduleResolution": "node",
     "noUnusedLocals": true,
-    // "noUnusedParameters": true,
-    // Need output directory for incremental type-checking
     "outDir": ".cache/tsc",
     "pretty": true,
     "skipLibCheck": true,

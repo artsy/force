@@ -20,6 +20,7 @@ import siteAssociation from "artsy-eigen-web-association"
 import timeout from "connect-timeout"
 import bodyParser from "body-parser"
 import config from "./config"
+import { flatten } from "lodash"
 
 // NOTE: Previoiusly, when deploying new Sentry SDK to prod we quickly start to
 // see errors like "`CURRENT_USER` is undefined". We need more investigation
@@ -45,6 +46,8 @@ import { pageCacheMiddleware } from "./lib/middleware/pageCache"
 import { sameOriginMiddleware } from "./lib/middleware/sameOrigin"
 import { unsupportedBrowserMiddleware } from "./lib/middleware/unsupportedBrowser"
 import { backboneSync } from "lib/backboneSync"
+import { memCacheMiddleware } from "lib/middleware/memPageCache"
+import { timingHeadersMiddleware } from "lib/middleware/timingHeaders"
 
 // App-specific V2 server-side functionality
 import { artistMiddleware } from "lib/middleware/artistMiddleware"
@@ -53,6 +56,38 @@ import { handleArtworkImageDownload } from "lib/middleware/artworkMiddleware"
 import { searchMiddleware } from "lib/middleware/searchMiddleware"
 import { splitTestMiddleware } from "desktop/components/split_test/splitTestMiddleware"
 import { IGNORED_ERRORS } from "lib/analytics/sentryFilters"
+
+import { getAppRoutes } from "v2/routes"
+
+const routes = getAppRoutes()
+
+/**
+ * We can't use a wildcard route because of gallery vanity urls, so iterate
+ * over all app routes and return an array that we can explicity match against.
+ */
+let modernRoutes
+const appRoutes = routes[0]
+if (appRoutes) {
+  modernRoutes = flatten(
+    appRoutes.children?.map(app => {
+      // Only supports one level of nesting per app. For instance, these are tabs
+      // on the artist page, etc.
+      const childRoutePaths = app.children
+        ?.map(child => child.path)
+        .filter(route => route !== "/" && route !== "*")
+
+      const allRoutes = childRoutePaths
+        ? childRoutePaths
+            .map(child => app.path + "/" + child)
+            .concat(app.path + "")
+        : app.path
+
+      return allRoutes
+    })
+  )
+} else {
+  modernRoutes = []
+}
 
 const CurrentUser = require("./lib/current_user.coffee")
 
@@ -68,6 +103,8 @@ const {
 } = config
 
 export function initializeMiddleware(app) {
+  app.use(timingHeadersMiddleware)
+
   app.set("trust proxy", true)
 
   // Setup error handling
@@ -227,6 +264,8 @@ function applySecurityMiddleware(app) {
   // Add CSRF to the cookie and remove it from the page. This will allows the
   // caching on the html and is used by the Login Modal to make secure requests.
   app.use(csrfTokenMiddleware)
+
+  app.use(modernRoutes, memCacheMiddleware)
 
   // Require a user for these routes
   app.use(userRequiredMiddleware)

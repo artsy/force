@@ -130,6 +130,9 @@ module.exports =
   APPLE_PRIVATE_KEY: null
   ZENDESK_KEY: null
   AUCTION_ZENDESK_KEY: null
+  ENABLE_MEMORY_PAGE_CACHE: false
+  MEMORY_PAGE_CACHE_TTL_MINUTES: 10 * 60
+  MEMORY_PAGE_CACHE_LIMIT: 100000
 
 # Override any values with env variables if they exist.
 # You can set JSON-y values for env variables as well such as "true" or

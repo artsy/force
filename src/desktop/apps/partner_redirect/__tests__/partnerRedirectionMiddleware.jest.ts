@@ -3,14 +3,14 @@ import { ArtsyRequest, ArtsyResponse } from "lib/middleware/artsyExpress"
 import { partnerRedirectionMiddleware } from "../partnerRedirectionMiddleware"
 
 describe("partnerRedirectionMiddleware", () => {
-  let req: Partial<ArtsyRequest>
-  let res: Partial<ArtsyResponse>
+  let req: ArtsyRequest
+  let res: ArtsyResponse
   let next: jest.Mock<NextFunction>
 
   beforeEach(() => {
     jest.resetModules()
 
-    res = {
+    res = ({
       locals: {
         profile: {
           isPartner: jest.fn(() => {
@@ -22,7 +22,7 @@ describe("partnerRedirectionMiddleware", () => {
         },
       },
       redirect: jest.fn(),
-    }
+    } as unknown) as ArtsyResponse
 
     next = jest.fn()
   })
@@ -99,7 +99,11 @@ describe("partnerRedirectionMiddleware", () => {
   ])(
     "redirects %s to %s",
     (route: string, result: string, path: string, params: any) => {
-      req = { route: { path: route }, path, params }
+      req = ({
+        route: { path: route },
+        path,
+        params,
+      } as unknown) as ArtsyRequest
 
       partnerRedirectionMiddleware(req, res, next)
 
@@ -108,7 +112,7 @@ describe("partnerRedirectionMiddleware", () => {
   )
 
   it("does not redirect is not a partner", () => {
-    res = {
+    res = ({
       locals: {
         profile: {
           isPartner: jest.fn(() => {
@@ -117,7 +121,7 @@ describe("partnerRedirectionMiddleware", () => {
         },
       },
       redirect: jest.fn(),
-    }
+    } as unknown) as ArtsyResponse
 
     partnerRedirectionMiddleware(req, res, next)
 
