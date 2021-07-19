@@ -80,17 +80,17 @@ describe("ShowArtworks", () => {
         expanded: true,
       },
       {
-        label: "Ways to buy",
+        label: "Ways to Buy",
         expanded: true,
       },
       {
         label: "Material",
       },
       {
-        label: "Artist nationality or ethnicity",
+        label: "Artist Nationality or Ethnicity",
       },
       {
-        label: "Time period",
+        label: "Time Period",
       },
       {
         label: "Color",

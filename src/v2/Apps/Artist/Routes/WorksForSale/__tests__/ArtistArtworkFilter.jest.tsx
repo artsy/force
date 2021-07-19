@@ -81,23 +81,23 @@ describe("ArtistArtworkFilter", () => {
         expanded: true,
       },
       {
-        label: "Ways to buy",
+        label: "Ways to Buy",
         expanded: true,
       },
       {
         label: "Material",
       },
       {
-        label: "Artwork location",
+        label: "Artwork Location",
       },
       {
-        label: "Time period",
+        label: "Time Period",
       },
       {
         label: "Color",
       },
       {
-        label: "Galleries and institutions",
+        label: "Galleries and Institutions",
       },
     ]
 
