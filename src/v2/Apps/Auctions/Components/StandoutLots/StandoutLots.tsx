@@ -1,5 +1,5 @@
 import { AuthContextModule, clickedArtworkGroup } from "@artsy/cohesion"
-import { Shelf, Spacer, Text } from "@artsy/palette"
+import { Shelf, Spacer, Sup, Text } from "@artsy/palette"
 import { graphql } from "lib/graphql"
 import React from "react"
 import { createFragmentContainer } from "react-relay"
@@ -29,11 +29,7 @@ const StandoutLots: React.FC<StandoutLotsProps> = ({ viewer }) => {
     <>
       <Text as="h3" variant="lg" color="black100">
         Standout Lots{" "}
-        <sup>
-          <Text as="span" variant="xs" color="brand">
-            {viewer.standoutLotsConnection?.edges?.length}
-          </Text>
-        </sup>
+        <Sup color="brand">{viewer.standoutLotsConnection?.edges?.length}</Sup>
       </Text>
 
       <Text as="h3" variant="lg" color="black60">

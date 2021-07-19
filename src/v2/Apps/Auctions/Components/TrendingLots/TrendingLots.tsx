@@ -2,7 +2,7 @@ import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 
-import { Shelf, Spacer, Text } from "@artsy/palette"
+import { Shelf, Spacer, Sup, Text } from "@artsy/palette"
 import { AuthContextModule, clickedArtworkGroup } from "@artsy/cohesion"
 
 import { extractNodes } from "v2/Utils/extractNodes"
@@ -29,11 +29,7 @@ const TrendingLots: React.FC<TrendingLotsProps> = ({ viewer }) => {
     <>
       <Text as="h3" variant="lg" color="black100">
         Trending lots{" "}
-        <sup>
-          <Text as="span" variant="xs" color="brand">
-            {viewer.trendingLotsConnection?.edges?.length}
-          </Text>
-        </sup>
+        <Sup color="brand">{viewer.trendingLotsConnection?.edges?.length}</Sup>
       </Text>
 
       <Text as="h3" variant="lg" color="black60">
