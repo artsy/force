@@ -5,7 +5,12 @@ import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
 import { ShowArtworks_Test_Query } from "v2/__generated__/ShowArtworks_Test_Query.graphql"
 import { MockBoot } from "v2/DevTools"
 import { useTracking } from "v2/System/Analytics/useTracking"
-import { SharedArtworkFilterContextProps } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
+import {
+  artistAggregation,
+  artistNationalityAggregation,
+  materialsTermsAggregation,
+  mediumAggregation,
+} from "test/fixtures/aggregations"
 
 jest.unmock("react-relay")
 jest.mock("v2/System/Router/useRouter", () => ({
@@ -19,7 +24,15 @@ jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
 const { getWrapper } = setupTestWrapper<ShowArtworks_Test_Query>({
   Component: ({ show }) => (
     <MockBoot>
-      <ShowArtworksRefetchContainer aggregations={AGGREGATIONS} show={show!} />
+      <ShowArtworksRefetchContainer
+        aggregations={[
+          artistAggregation,
+          mediumAggregation,
+          materialsTermsAggregation,
+          artistNationalityAggregation,
+        ]}
+        show={show!}
+      />
     </MockBoot>
   ),
   query: graphql`
@@ -105,46 +118,3 @@ describe("ShowArtworks", () => {
     })
   })
 })
-
-const AGGREGATIONS: SharedArtworkFilterContextProps["aggregations"] = [
-  {
-    slice: "ARTIST",
-    counts: [
-      {
-        count: 483,
-        name: "Massimo Listri",
-        value: "massimo-listri",
-      },
-    ],
-  },
-  {
-    slice: "MEDIUM",
-    counts: [
-      {
-        name: "Painting",
-        value: "painting",
-        count: 472023,
-      },
-    ],
-  },
-  {
-    slice: "MATERIALS_TERMS",
-    counts: [
-      {
-        name: "Canvas",
-        value: "canvas",
-        count: 17,
-      },
-    ],
-  },
-  {
-    slice: "ARTIST_NATIONALITY",
-    counts: [
-      {
-        name: "American",
-        value: "American",
-        count: 21,
-      },
-    ],
-  },
-]

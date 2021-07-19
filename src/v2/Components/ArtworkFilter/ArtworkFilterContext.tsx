@@ -90,17 +90,19 @@ export type Slice =
   | "ARTIST_NATIONALITY"
   | "MATERIALS_TERMS"
 
-/**
- * Possible aggregations that can be passed
- */
-export type Aggregations = Array<{
+export type Aggregation = {
   slice: Slice
   counts: Array<{
     count: number
     value: string
     name: string
   }>
-}>
+}
+
+/**
+ * Possible aggregations that can be passed
+ */
+export type Aggregations = Array<Aggregation>
 
 export interface Counts {
   for_sale_artworks?: number

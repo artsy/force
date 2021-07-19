@@ -5,7 +5,12 @@ import { graphql } from "react-relay"
 import { ArtistSeriesArtworksFilter_Query } from "v2/__generated__/ArtistSeriesArtworksFilter_Query.graphql"
 import { useTracking } from "v2/System/Analytics/useTracking"
 import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
-import { SharedArtworkFilterContextProps } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
+import {
+  locationCityAggregation,
+  materialsTermsAggregation,
+  mediumAggregation,
+  partnerAggregation,
+} from "test/fixtures/aggregations"
 
 jest.unmock("react-relay")
 jest.mock("v2/System/Router/useRouter", () => ({
@@ -24,7 +29,12 @@ const { getWrapper } = setupTestWrapper<ArtistSeriesArtworksFilter_Query>({
   Component: ({ artistSeries }) => (
     <MockBoot user={{ id: "percy-z" }}>
       <ArtistSeriesArtworksFilterRefetchContainer
-        aggregations={AGGREGATIONS}
+        aggregations={[
+          partnerAggregation,
+          locationCityAggregation,
+          mediumAggregation,
+          materialsTermsAggregation,
+        ]}
         artistSeries={artistSeries!}
       />
     </MockBoot>
@@ -111,46 +121,3 @@ describe("ArtistSeriesArtworksFilter", () => {
     })
   })
 })
-
-const AGGREGATIONS: SharedArtworkFilterContextProps["aggregations"] = [
-  {
-    slice: "PARTNER",
-    counts: [
-      {
-        name: "Rago/Wright",
-        value: "rago-slash-wright",
-        count: 2,
-      },
-    ],
-  },
-  {
-    slice: "LOCATION_CITY",
-    counts: [
-      {
-        name: "New York, NY, USA",
-        value: "New York, NY, USA",
-        count: 10,
-      },
-    ],
-  },
-  {
-    slice: "MEDIUM",
-    counts: [
-      {
-        name: "Painting",
-        value: "painting",
-        count: 472023,
-      },
-    ],
-  },
-  {
-    slice: "MATERIALS_TERMS",
-    counts: [
-      {
-        name: "Canvas",
-        value: "canvas",
-        count: 17,
-      },
-    ],
-  },
-]

@@ -5,6 +5,14 @@ import { graphql } from "react-relay"
 import { SearchResultsArtworks_Query } from "v2/__generated__/SearchResultsArtworks_Query.graphql"
 import { useTracking } from "v2/System/Analytics/useTracking"
 import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
+import {
+  artistAggregation,
+  artistNationalityAggregation,
+  locationCityAggregation,
+  materialsTermsAggregation,
+  mediumAggregation,
+  partnerAggregation,
+} from "test/fixtures/aggregations"
 
 jest.unmock("react-relay")
 jest.mock("v2/System/Router/useRouter", () => ({
@@ -55,66 +63,12 @@ describe("SearchResultsArtworks", () => {
           followedArtists: 10,
         },
         aggregations: [
-          {
-            slice: "ARTIST",
-            counts: [
-              {
-                count: 483,
-                name: "Massimo Listri",
-                value: "massimo-listri",
-              },
-            ],
-          },
-          {
-            slice: "PARTNER",
-            counts: [
-              {
-                name: "Rago/Wright",
-                value: "rago-slash-wright",
-                count: 2,
-              },
-            ],
-          },
-          {
-            slice: "LOCATION_CITY",
-            counts: [
-              {
-                name: "New York, NY, USA",
-                value: "New York, NY, USA",
-                count: 10,
-              },
-            ],
-          },
-          {
-            slice: "MEDIUM",
-            counts: [
-              {
-                name: "Painting",
-                value: "painting",
-                count: 472023,
-              },
-            ],
-          },
-          {
-            slice: "MATERIALS_TERMS",
-            counts: [
-              {
-                name: "Canvas",
-                value: "canvas",
-                count: 17,
-              },
-            ],
-          },
-          {
-            slice: "ARTIST_NATIONALITY",
-            counts: [
-              {
-                name: "American",
-                value: "American",
-                count: 21,
-              },
-            ],
-          },
+          artistAggregation,
+          partnerAggregation,
+          locationCityAggregation,
+          mediumAggregation,
+          materialsTermsAggregation,
+          artistNationalityAggregation,
         ],
       }),
     })
