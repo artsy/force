@@ -34,12 +34,12 @@ describe("ExhibitorFilterContext", () => {
       getWrapper({ onFilterClick: spy })
       context.onFilterClick!(
         "sort",
-        "FAETURED_DESC",
+        "FEATURED_DESC",
         initialExhibitorFilterState
       )
       expect(spy).toHaveBeenCalledWith(
         "sort",
-        "FAETURED_DESC",
+        "FEATURED_DESC",
         initialExhibitorFilterState
       )
     })
