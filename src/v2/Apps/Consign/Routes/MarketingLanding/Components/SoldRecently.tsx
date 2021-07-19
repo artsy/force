@@ -71,6 +71,8 @@ const SoldRecently: React.FC<SoldRecentlyProps> = ({ targetSupply }) => {
                   imageHeight={HEIGHT}
                   showExtended={false}
                   onClick={trackArtworkItemClick(artwork, index)}
+                  // @ts-ignore TODO: Add to AuthContextModule
+                  contextModule={ContextModule.artworkRecentlySoldGrid}
                 />
                 <>
                   <Media greaterThanOrEqual="sm">

@@ -31,25 +31,6 @@ if article.get('keywords') && article.get('keywords').length
   meta( name="keywords", content=(article.get('keywords')).join(', ') )
   meta( property="article:tag", content=(article.get('keywords')).join(', ') )
 
-//- Sailthru Metatags
-if article.get('published')
-  if article.get('email_metadata')
-    if article.get('email_metadata').headline
-      meta( name="sailthru.title", content=article.get('email_metadata').headline)
-    if article.get('email_metadata').author
-      meta( name="sailthru.author" content=article.get('email_metadata').author)
-    if article.get('email_metadata').image_url
-      - var src = article.get('email_metadata').image_url
-      meta( name="sailthru.image.full" content=crop(src, { width: 1200, height: 800 } ))
-      meta( name="sailthru.image.thumb" content=crop(src, { width: 600, height: 400 } ))
-  - var keywords = ['article']
-  if article.get('featured') === true
-    - keywords = keywords.concat(['magazine'])
-  if article.get('keywords') && article.get('keywords').length
-    - keywords = keywords.concat(article.get('keywords'))
-  meta( name="sailthru.tags" content=keywords.join(','))
-  meta( name="sailthru.date" content=article.get('published_at'))
-
 if article.get('contributing_authors') && article.get('contributing_authors').length
   - for author in article.get('contributing_authors')
       if author.name

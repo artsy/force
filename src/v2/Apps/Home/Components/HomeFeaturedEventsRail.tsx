@@ -1,5 +1,13 @@
-import { Box, Image, Text, Spacer, Shelf } from "@artsy/palette"
-import { compact } from "lodash"
+import {
+  Flex,
+  Box,
+  Image,
+  Text,
+  Spacer,
+  GridColumns,
+  Column,
+} from "@artsy/palette"
+import { compact, take } from "lodash"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "v2/System/Router/RouterLink"
@@ -12,55 +20,57 @@ interface HomeFeaturedEventsRailProps {
 const HomeFeaturedEventsRail: React.FC<HomeFeaturedEventsRailProps> = ({
   orderedSet,
 }) => {
-  const events = compact(orderedSet.items).flatMap(item =>
-    item.__typename === "FeaturedLink" ? [item] : []
+  const events = take(
+    compact(orderedSet.items).flatMap(item =>
+      item.__typename === "FeaturedLink" ? [item] : []
+    ),
+    4
   )
 
   if (events.length === 0) return null
 
   return (
-    <>
-      <Text variant="xl">Featured events</Text>
+    <GridColumns>
+      {events.map((event, i) => {
+        const image = event.image?.cropped
 
-      <Spacer mt={4} />
-
-      <Shelf>
-        {events.map((event, i) => {
-          const image = event.image?.cropped
-
-          return (
+        return (
+          <Column key={event.internalID ?? i} span={3}>
             <RouterLink
-              key={event.internalID ?? i}
               to={event.href ?? ""}
               style={{ display: "block", textDecoration: "none" }}
             >
-              {image ? (
-                <Image
-                  src={image.src}
-                  srcSet={image.srcSet}
-                  width={325}
-                  height={244}
-                  alt=""
-                  lazyLoad
-                />
-              ) : (
-                <Box bg="black10" width={325} height={244} />
-              )}
+              <Flex alignItems="center">
+                <Box flexShrink={0}>
+                  {image ? (
+                    <Image
+                      src={image.src}
+                      srcSet={image.srcSet}
+                      width={95}
+                      height={63}
+                      alt=""
+                      lazyLoad
+                    />
+                  ) : (
+                    <Box bg="black10" width={95} height={63} />
+                  )}
+                </Box>
 
-              <Spacer mt={1} />
+                <Spacer ml={2} />
 
-              <Text variant="xs" textTransform="uppercase">
-                {event.title}
-              </Text>
+                <Flex flexDirection="column" justifyContent="center">
+                  <Text variant="xs" color="black60">
+                    {event.title}
+                  </Text>
 
-              <Text variant="lg" mr={1} width={325}>
-                {event.subtitle}
-              </Text>
+                  <Text variant="md">{event.subtitle}</Text>
+                </Flex>
+              </Flex>
             </RouterLink>
-          )
-        })}
-      </Shelf>
-    </>
+          </Column>
+        )
+      })}
+    </GridColumns>
   )
 }
 
@@ -77,7 +87,8 @@ export const HomeFeaturedEventsRailFragmentContainer = createFragmentContainer(
             subtitle
             href
             image {
-              cropped(width: 325, height: 244) {
+              # 3:2
+              cropped(width: 95, height: 63) {
                 src
                 srcSet
               }

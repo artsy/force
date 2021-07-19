@@ -1,7 +1,7 @@
 import { graphql } from "react-relay"
 import { SavedAddressesFragmentContainer } from "../SavedAddresses"
 import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
-import { Button, BorderBox } from "@artsy/palette"
+import { BorderBox } from "@artsy/palette"
 import { AddressModal } from "v2/Apps/Order/Components/AddressModal"
 import React from "react"
 import { createTestEnv } from "v2/DevTools/createTestEnv"
@@ -36,7 +36,7 @@ describe("Saved Addresses mutations", () => {
 
   it("edits the saved addresses after calling edit address mutation", async () => {
     const page = await buildPage()
-    const editButton = page.find(`[data-test="editAddress"]`).first()
+    const editButton = page.find(`[data-test="editAddressInProfile"]`).first()
     // @ts-expect-error STRICT_NULL_CHECK
     editButton
       .props()
@@ -73,10 +73,10 @@ describe("SavedAddresses in collector profile", () => {
         addressConnection: mockAddressConnection,
       }),
     })
-    const button = wrapper.find(Button)
+    const button = wrapper.find("Button[data-test='profileButton']")
     const modal = wrapper.find(AddressModal)
     expect(modal.props().show).toBe(false)
-    button.props().onClick()
+    button.simulate("click")
 
     setTimeout(() => {
       expect(modal).toHaveLength(1)
@@ -90,10 +90,10 @@ describe("SavedAddresses in collector profile", () => {
       }),
     })
 
-    const button = wrapper.find(Button)
+    const button = wrapper.find("Button[data-test='profileButton']")
     const modal = wrapper.find(AddressModal)
     expect(modal.props().show).toBe(false)
-    button.props().onClick()
+    button.simulate("click")
 
     setTimeout(() => {
       expect(modal.props().modalDetails).toBe({
@@ -109,12 +109,10 @@ describe("SavedAddresses in collector profile", () => {
         addressConnection: mockAddressConnection,
       }),
     })
-    const editAddressComponent = wrapper.find("[data-test='editAddress']").at(0)
-    expect(editAddressComponent).toHaveLength(1)
+    const button = wrapper.find("Button[data-test='profileButton']")
     const modal = wrapper.find(AddressModal)
     expect(modal.props().show).toBe(false)
-    // @ts-expect-error STRICT_NULL_CHECK
-    editAddressComponent.props().onClick()
+    button.simulate("click")
     setTimeout(() => {
       expect(modal.props().modalDetails).toBe({
         addressModalTitle: "Edit address",
@@ -129,7 +127,7 @@ describe("SavedAddresses in collector profile", () => {
         addressConnection: mockAddressConnection,
       }),
     })
-    expect(wrapper.find(Button)).toHaveLength(1)
+    expect(wrapper.find("Button[data-test='profileButton']")).toHaveLength(1)
   })
 
   it("renders addresses", () => {
@@ -168,10 +166,10 @@ describe("SavedAddresses outside collector profile", () => {
         addressConnection: mockAddressConnection,
       }),
     })
-    const button = wrapper.find(Button)
+    const button = wrapper.find("Button[data-test='shippingButton']")
     const modal = wrapper.find(AddressModal)
     expect(modal.props().show).toBe(false)
-    button.props().onClick()
+    button.simulate("click")
 
     setTimeout(() => {
       expect(modal).toHaveLength(1)
@@ -184,10 +182,10 @@ describe("SavedAddresses outside collector profile", () => {
         addressConnection: mockAddressConnection,
       }),
     })
-    const button = wrapper.find(Button)
+    const button = wrapper.find("Button[data-test='shippingButton']")
     const modal = wrapper.find(AddressModal)
     expect(modal.props().show).toBe(false)
-    button.props().onClick()
+    button.simulate("click")
 
     setTimeout(() => {
       expect(modal.props().modalDetails).toBe({
@@ -203,7 +201,7 @@ describe("SavedAddresses outside collector profile", () => {
         addressConnection: mockAddressConnection,
       }),
     })
-    expect(wrapper.find(Button)).toHaveLength(1)
+    expect(wrapper.find("Button[data-test='shippingButton']")).toHaveLength(1)
   })
 
   it("renders radio buttons with addresses", () => {

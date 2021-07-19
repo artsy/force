@@ -87,14 +87,20 @@ class OrderApp extends React.Component<OrderAppProps, {}> {
   }
 
   onTransition = newLocation => {
-    if (newLocation === null || !newLocation.pathname.includes("/orders/")) {
-      // leaving the order page, closing, or refreshing
-      const route = findCurrentRoute(this.props.match)
-      // @ts-expect-error STRICT_NULL_CHECK
-      if (route.shouldWarnBeforeLeaving) {
-        return "Are you sure you want to leave? Your changes will not be saved."
-      }
+    const isToTheSameApp = newLocation?.pathname?.includes("/orders/")
+    const isRedirect = newLocation?.action === "PUSH"
+
+    if (isToTheSameApp || isRedirect) {
+      return true
     }
+
+    // leaving the order page, closing, or refreshing
+    const route = findCurrentRoute(this.props.match)
+
+    if (route?.shouldWarnBeforeLeaving) {
+      return "Are you sure you want to leave? Your changes will not be saved."
+    }
+
     return true
   }
 
@@ -125,18 +131,22 @@ class OrderApp extends React.Component<OrderAppProps, {}> {
     }
 
     const stripePromise = loadStripe(sd.STRIPE_PUBLISHABLE_KEY)
+
+    const isModal = this.props.match?.location.query.isModal ? true : false
+
     return (
       <SystemContextConsumer>
         {({ isEigen, mediator }) => {
           // @ts-expect-error STRICT_NULL_CHECK
           this.mediator = mediator
+
           return (
             <Box>
               {/* FIXME: remove once we refactor out legacy backbone code.
-                  Add place to attach legacy flash message, used in legacy inquiry flow
-              */}
+                    Add place to attach legacy flash message, used in legacy inquiry flow
+                */}
               <div id="main-layout-flash" />
-              <MinimalNavBar to={artworkHref}>
+              <MinimalNavBar to={artworkHref} isBlank={isModal}>
                 <Title>Checkout | Artsy</Title>
                 {isEigen ? (
                   <Meta
@@ -157,7 +167,9 @@ class OrderApp extends React.Component<OrderAppProps, {}> {
                     </AppContainer>
                   </Elements>
                 </SafeAreaContainer>
-                <StickyFooter orderType={order.mode} artworkId={artworkId} />
+                {!isModal && (
+                  <StickyFooter orderType={order.mode} artworkId={artworkId} />
+                )}
                 <ConnectedModalDialog />
               </MinimalNavBar>
             </Box>

@@ -33,6 +33,9 @@ export const ConfirmArtworkModal: React.FC<ConfirmArtworkModalProps> = ({
   show,
   closeModal,
 }) => {
+  if (!artwork) {
+    return null
+  }
   const { editionSets, isEdition } = artwork
 
   const initialSelectedEdition =

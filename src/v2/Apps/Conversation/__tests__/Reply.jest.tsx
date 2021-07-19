@@ -34,6 +34,11 @@ describe("Reply", () => {
           openInquiryModal={() => {
             jest.fn
           }}
+          openOrderModal={() => {
+            jest.fn
+          }}
+          onScroll={jest.fn()}
+          onMount={jest.fn()}
           environment={{} as Environment}
           refetch={() => ({ dispose: jest.fn })}
         />

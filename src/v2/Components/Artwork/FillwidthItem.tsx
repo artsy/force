@@ -1,33 +1,21 @@
 import { AuthContextModule } from "@artsy/cohesion"
-import { Box, Image } from "@artsy/palette"
+import { Box, BoxProps, Image } from "@artsy/palette"
 import { FillwidthItem_artwork } from "v2/__generated__/FillwidthItem_artwork.graphql"
-import { SystemContextProps, withSystemContext } from "v2/System"
+import { useSystemContext } from "v2/System"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import styled from "styled-components"
-import { get } from "v2/Utils/get"
 import createLogger from "v2/Utils/logger"
 import { userIsTeam } from "v2/Utils/user"
 import Badge from "./Badge"
 import Metadata from "./Metadata"
-import {
-  Container,
-  SaveButtonFragmentContainer as SaveButton,
-} from "./SaveButton"
+import { SaveButtonFragmentContainer, useSaveButton } from "./SaveButton"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { Mediator } from "lib/mediator"
 import { cropped, resized } from "v2/Utils/resized"
 
 const logger = createLogger("FillwidthItem.tsx")
 
-const Placeholder = styled(Box).attrs({ bg: "gray10" })`
-  position: relative;
-  width: 100%;
-`
-
-export interface FillwidthItemContainerProps
-  extends SystemContextProps,
-    React.HTMLProps<FillwidthItemContainer> {
+export interface FillwidthItemProps extends BoxProps {
   artwork: FillwidthItem_artwork
   contextModule: AuthContextModule
   hideArtistName?: boolean
@@ -43,130 +31,95 @@ export interface FillwidthItemContainerProps
   onClick?: () => void
 }
 
-export class FillwidthItemContainer extends React.Component<
-  FillwidthItemContainerProps
-> {
-  static defaultProps = {
-    showMetadata: true,
+export const FillwidthItem: React.FC<FillwidthItemProps> = ({
+  artwork,
+  contextModule,
+  imageHeight,
+  lazyLoad,
+  showExtended,
+  showMetadata = true,
+  hidePartnerName,
+  hideArtistName,
+  hideSaleInfo,
+  onClick,
+  ...rest
+}) => {
+  const { user } = useSystemContext()
+  const isTeam = userIsTeam(user)
+
+  const { containerProps, isSaveButtonVisible } = useSaveButton({
+    isSaved: false,
+  })
+
+  const aspectRatio = artwork.image?.aspectRatio ?? 1
+  const imageWidth = Math.floor(imageHeight * aspectRatio)
+
+  if (!artwork.image) {
+    const href = artwork.href
+    logger.error(`Artwork at ${href} does not have an image!`)
+    return null
   }
 
-  get imageWidth() {
-    let {
-      artwork: {
-        // @ts-expect-error STRICT_NULL_CHECK
-        image: { aspectRatio },
-      },
-    } = this.props
+  const transform = aspectRatio === 1 ? cropped : resized
+  const imageURL = artwork.image?.url
+  const { src, srcSet } = imageURL
+    ? transform(imageURL, {
+        width: imageWidth,
+        height: imageHeight,
+      })
+    : { src: "", srcSet: "" }
 
-    // Our relay testing layer often mocks props with strings; this makes it a
-    // little safer and less confusing when that happens.
-    if (typeof aspectRatio !== "number") {
-      aspectRatio = 1
-    }
+  return (
+    <Box
+      display="inline-block"
+      width={imageWidth}
+      verticalAlign="top"
+      data-test="artworkFillwidthItem"
+      {...containerProps}
+      {...rest}
+    >
+      <Box
+        position="relative"
+        bg="black10"
+        // Pass dimensions through style tag to prevent too many classes
+        style={{ height: imageHeight, width: imageWidth }}
+      >
+        <RouterLink to={artwork.href} onClick={onClick}>
+          <Image
+            src={src}
+            srcSet={srcSet}
+            width="100%"
+            height={imageHeight}
+            lazyLoad={lazyLoad}
+            preventRightClick={!isTeam}
+            alt={artwork?.imageTitle ?? ""}
+          />
+        </RouterLink>
 
-    // NOTE: `aspectRatio` will default to `1` if image geometry is missing.
-    // Given that `imageHeight` is required, this means that any missing geometry
-    // will default to a square thumbnail.
-    return Math.floor(this.props.imageHeight * aspectRatio)
-  }
+        {showExtended && <Badge artwork={artwork} width={imageWidth} />}
 
-  get imageHeight() {
-    return this.props.imageHeight
-  }
-
-  render() {
-    const {
-      artwork,
-      className,
-      contextModule,
-      imageHeight,
-      lazyLoad,
-      showExtended,
-      showMetadata,
-      user,
-      hidePartnerName,
-      hideArtistName,
-      hideSaleInfo,
-    } = this.props
-
-    const isTeam = userIsTeam(user)
-
-    const image = get(this.props, p => p.artwork.image)
-
-    if (!image) {
-      const href = get(this.props, p => p.artwork.href, "(unknown href)")
-      logger.error(`Artwork at ${href} does not have an image!`)
-      return null
-    }
-
-    // @ts-expect-error STRICT_NULL_CHECK
-    const transform = artwork.image.aspectRatio === 1 ? cropped : resized
-    // @ts-expect-error STRICT_NULL_CHECK
-    const scaledImage = transform(artwork.image.url, {
-      width: this.imageWidth,
-      height: this.imageHeight,
-    })
-
-    return (
-      <Box className={className} width={this.imageWidth}>
-        <Placeholder style={{ height: imageHeight, width: this.imageWidth }}>
-          <RouterLink
-            // @ts-expect-error STRICT_NULL_CHECK
-            to={artwork.href}
-            onClick={() => {
-              if (this.props.onClick) {
-                this.props.onClick()
-              }
-            }}
-          >
-            <Image
-              src={scaledImage.src}
-              srcSet={scaledImage.srcSet}
-              width="100%"
-              height={imageHeight}
-              lazyLoad={lazyLoad}
-              preventRightClick={!isTeam}
-              // @ts-expect-error STRICT_NULL_CHECK
-              alt={artwork?.imageTitle}
-            />
-          </RouterLink>
-
-          {showExtended && <Badge artwork={artwork} width={this.imageWidth} />}
-
-          <SaveButton contextModule={contextModule} artwork={artwork} />
-        </Placeholder>
-
-        {showMetadata && (
-          <Metadata
+        {isSaveButtonVisible && (
+          <SaveButtonFragmentContainer
+            contextModule={contextModule}
             artwork={artwork}
-            extended={showExtended}
-            hidePartnerName={hidePartnerName}
-            hideArtistName={hideArtistName}
-            hideSaleInfo={hideSaleInfo}
           />
         )}
       </Box>
-    )
-  }
+
+      {showMetadata && (
+        <Metadata
+          artwork={artwork}
+          extended={showExtended}
+          hidePartnerName={hidePartnerName}
+          hideArtistName={hideArtistName}
+          hideSaleInfo={hideSaleInfo}
+        />
+      )}
+    </Box>
+  )
 }
 
-export const FillwidthItem = styled(FillwidthItemContainer)<
-  FillwidthItemContainerProps
->`
-  display: inline-block;
-  width: ${props => props.width}px;
-  vertical-align: top;
-  margin-right: ${props => props.marginRight || 0}px;
-  margin-left: ${props => props.marginLeft || 0}px;
-
-  &:hover {
-    ${Container} {
-      opacity: 1;
-    }
-  }
-`
-
-export default createFragmentContainer(withSystemContext(FillwidthItem), {
+export default createFragmentContainer(FillwidthItem, {
   artwork: graphql`
     fragment FillwidthItem_artwork on Artwork {
       image {
@@ -176,6 +129,7 @@ export default createFragmentContainer(withSystemContext(FillwidthItem), {
       imageTitle
       title
       href
+      is_saved: isSaved
       ...Metadata_artwork
       ...SaveButton_artwork
       ...Badge_artwork

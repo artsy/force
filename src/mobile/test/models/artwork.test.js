@@ -82,10 +82,10 @@ describe("Artwork", function () {
         collecting_institution: null,
         partner: {
           has_full_profile: true,
-          default_profile_id: "foobaz",
+          id: "foobaz",
         },
       })
-      return this.artwork.partnerHref().should.equal("/foobaz")
+      return this.artwork.partnerHref().should.equal("/partner/foobaz")
     })
 
     it("links to website last", function () {

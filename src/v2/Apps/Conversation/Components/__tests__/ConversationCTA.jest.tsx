@@ -16,6 +16,8 @@ describe("ConversationCTA", () => {
         <ConversationCTAFragmentContainer
           conversation={props.me.conversation}
           openInquiryModal={jest.fn()}
+          openOrderModal={jest.fn()}
+          onMount={jest.fn()}
         />
       )
     },
@@ -158,5 +160,20 @@ describe("ConversationCTA", () => {
     })
 
     expect(wrapper.find("ReviewOfferCTA").length).toBe(0)
+  })
+
+  it("clicking the review offer CTA opens the order modal", () => {
+    const wrapper = getWrapper({
+      Conversation: () => ({
+        activeOrders: {
+          edges: [{ node: { buyerAction: "OFFER_RECEIVED" } }],
+        },
+      }),
+    })
+    wrapper.find("ReviewOfferCTA").simulate("click")
+
+    setTimeout(() => {
+      expect(wrapper.find("StyledIframe").length).toBe(1)
+    }, 0)
   })
 })

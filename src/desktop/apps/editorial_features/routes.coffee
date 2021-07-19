@@ -6,8 +6,7 @@ Article = require '../../models/article.coffee'
 Channel = require '../../models/channel.coffee'
 Articles = require '../../collections/articles.coffee'
 { stringifyJSONForWeb } = require '../../components/util/json.coffee'
-{ ALLOWED_VANITY_ASSETS, VANITY_BUCKET, SAILTHRU_KEY, SAILTHRU_SECRET } = require '../../config.coffee'
-sailthru = require('sailthru-client').createSailthruClient(SAILTHRU_KEY,SAILTHRU_SECRET)
+{ ALLOWED_VANITY_ASSETS, VANITY_BUCKET } = require '../../config.coffee'
 proxy = httpProxy.createProxyServer(changeOrigin: true, ignorePath: true)
 { createMediaStyle } = require "../../../v2/Utils/Responsive"
 
@@ -31,7 +30,6 @@ mediaStyles = createMediaStyle()
       res.locals.sd.CURATION = @curation.toJSON()
       @article.set 'channel', new Channel name: 'Artsy Editorial'
       res.locals.jsonLD = stringifyJSONForWeb(@article.toJSONLD())
-      res.locals.sd.INCLUDE_SAILTHRU = true
       res.render 'components/eoy/templates/index',
         curation: @curation,
         article: @article,
@@ -49,7 +47,6 @@ mediaStyles = createMediaStyle()
       res.locals.sd.CURATION = curation.toJSON()
       res.locals.sd.VIDEO_INDEX = videoIndex
       res.locals.sd.IS_NESTED_PATH = slug?
-      res.locals.sd.INCLUDE_SAILTHRU = true
       res.locals.sd.RESPONSIVE_CSS = mediaStyles
 
       if res.locals.sd.IS_NESTED_PATH
@@ -86,7 +83,6 @@ mediaStyles = createMediaStyle()
     error: next
     success: (curation) =>
       promises = [
-        if req.user then subscribedToEditorial(req.user.get('email')) else Promise.resolve()
         @videoGuide.fetch(
           cache: true
           headers: 'X-Access-Token': req.user?.get('accessToken') or ''
@@ -102,7 +98,6 @@ mediaStyles = createMediaStyle()
         res.locals.sd.CURATION = curation.toJSON()
         res.locals.sd.VIDEO_GUIDE = @videoGuide.toJSON()
         res.locals.sd.VIDEO_INDEX = videoIndex
-        res.locals.sd.INCLUDE_SAILTHRU = true
         section = curation.get('sections')[videoIndex]
         jsonLD = {
           "@context": "http://schema.org"
@@ -140,10 +135,3 @@ setGucciVideoIndex = (slug) ->
     when 'past' then 0
     when 'present' then 1
     when 'future' then 2
-
-subscribedToEditorial = (email) ->
-  new Promise (resolve, reject) =>
-    sailthru.apiGet 'user', { id: email }, (err, response) ->
-      if response.vars?.receive_editorial_email
-        @isSubscribed = true
-      resolve()

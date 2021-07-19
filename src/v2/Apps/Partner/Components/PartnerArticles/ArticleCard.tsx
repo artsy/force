@@ -27,8 +27,7 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ article }): JSX.Element => {
 
   return (
     <>
-      {/* @ts-expect-error STRICT_NULL_CHECK */}
-      <RouterLink to={href} style={{ textDecoration: "none" }}>
+      <RouterLink to={href} textDecoration="none">
         {thumbnailImage && (
           <ResponsiveBox aspectWidth={4} aspectHeight={3} maxWidth="100%">
             <Image
@@ -56,8 +55,7 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ article }): JSX.Element => {
         </Text>
       )}
 
-      {/* @ts-expect-error STRICT_NULL_CHECK */}
-      <RouterLink to={href} style={{ textDecoration: "none" }}>
+      <RouterLink to={href} textDecoration="none">
         <Text as="h3" variant="title" color="black" mt={1}>
           {thumbnailTitle}
         </Text>

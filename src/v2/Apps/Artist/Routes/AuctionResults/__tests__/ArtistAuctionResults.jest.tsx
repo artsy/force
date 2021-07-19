@@ -7,12 +7,14 @@ import React from "react"
 import { act } from "react-dom/test-utils"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
+import { Expandable } from "@artsy/palette"
 import { Breakpoint } from "v2/Utils/Responsive"
 import { openAuthModal } from "v2/Utils/openAuthModal"
 import { Pagination } from "v2/Components/Pagination"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
+jest.mock("lodash/debounce", () => jest.fn(e => e))
 jest.mock("v2/Utils/openAuthModal")
 jest.mock("v2/Components/Pagination/useComputeHref")
 jest.mock("v2/System/Router/Utils/catchLinks", () => ({
@@ -118,9 +120,10 @@ describe("AuctionResults", () => {
     })
 
     it("renders either realized price, bought in, or price not avail", () => {
-      expect(wrapper.html()).toContain("Price not available")
-      expect(wrapper.html()).toContain("Bought in")
-      expect(wrapper.html()).toContain("Realized Price")
+      const html = wrapper.html()
+      expect(html).toContain("Price not available")
+      expect(html).toContain("Bought in")
+      expect(html).toContain("Realized Price")
     })
 
     it("renders proper select options", () => {
@@ -136,13 +139,11 @@ describe("AuctionResults", () => {
         wrapper.update()
         const html = wrapper.html()
         const data =
-          // @ts-expect-error STRICT_NULL_CHECK
-          AuctionResultsFixture.artist.auctionResultsConnection.edges[0].node
+          AuctionResultsFixture.artist?.auctionResultsConnection?.edges?.[0]
+            ?.node
         expect(html).toContain("Artwork Info")
-        // @ts-expect-error STRICT_NULL_CHECK
-        expect(html).toContain(data.dimension_text)
-        // @ts-expect-error STRICT_NULL_CHECK
-        expect(html).toContain(data.description)
+        expect(html).toContain(data?.dimension_text)
+        expect(html).toContain(data?.description)
       })
     })
 
@@ -239,8 +240,6 @@ describe("AuctionResults", () => {
                 pageAndCursor: { page: 1, cursor: null },
                 sort: "DATE_DESC",
                 allowEmptyCreatedDates: true,
-                earliestCreatedYear: 1880,
-                latestCreatedYear: 1973,
                 createdAfterYear: 1880,
                 createdBeforeYear: 1973,
               })
@@ -253,16 +252,53 @@ describe("AuctionResults", () => {
             })
           })
         })
+        describe("keyword filter", () => {
+          it("triggers relay refetch with keyword filter, and re-shows sign up to see price", done => {
+            const filter = wrapper.find("KeywordFilter")
+
+            const input = filter.find("input")
+
+            const setInputValue = (
+              inputWrapper: ReactWrapper,
+              value: string,
+              setSelectionRangeMock = jest.fn()
+            ) => {
+              ;(inputWrapper.getDOMNode() as any).value = value
+              ;(inputWrapper.getDOMNode() as any).setSelectionRange = setSelectionRangeMock
+              inputWrapper.simulate("change")
+            }
+
+            setInputValue(input, "test-keyword")
+
+            setTimeout(() => {
+              expect(refetchSpy).toHaveBeenCalledTimes(1)
+
+              expect(refetchSpy.mock.calls[0][0]).toEqual(
+                expect.objectContaining({
+                  ...defaultRelayParams,
+                  keyword: "test-keyword",
+                })
+              )
+
+              wrapper.update()
+              const html = wrapper.html()
+              expect(html).toContain("Sign up to see price")
+
+              done()
+            })
+          })
+        })
         describe("auction house filter", () => {
           it("triggers relay refetch with organization list, and re-shows sign up to see price", done => {
             const filter = wrapper.find("AuctionHouseFilter")
+            filter.find(Expandable).find("button").simulate("click")
 
-            const checkboxes = filter.find("Checkbox")
+            const checkboxes = wrapper
+              .find("AuctionHouseFilter")
+              .find("Checkbox")
 
             checkboxes.at(1).simulate("click")
-
             checkboxes.at(2).simulate("click")
-
             checkboxes.at(1).simulate("click")
 
             setTimeout(() => {
@@ -293,6 +329,11 @@ describe("AuctionResults", () => {
 
               done()
             })
+          })
+
+          it("is not expanded by default", () => {
+            const filter = wrapper.find("AuctionHouseFilter")
+            expect(filter.find(Expandable).prop("expanded")).toEqual(false)
           })
         })
         describe("size filter", () => {
@@ -350,8 +391,6 @@ describe("AuctionResults", () => {
                 categories: [],
                 createdAfterYear: 1880,
                 createdBeforeYear: 1973,
-                earliestCreatedYear: 1880,
-                latestCreatedYear: 1973,
                 allowEmptyCreatedDates: true,
               })
 
@@ -381,8 +420,6 @@ describe("AuctionResults", () => {
                 ...defaultRelayParams,
                 createdAfterYear: 1900,
                 createdBeforeYear: 1960,
-                earliestCreatedYear: 1880,
-                latestCreatedYear: 1973,
               })
             )
 

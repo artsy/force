@@ -22,12 +22,19 @@ describe("fetchLocationCarousel", function () {
 
   beforeEach(function () {
     const data = {
-      primary: [
-        fabricate("partner", { id: "primary", default_profile_public: true }),
-      ],
-      secondary: [
-        fabricate("partner", { id: "secondary", default_profile_public: true }),
-      ],
+      primary: {
+        hits: [
+          fabricate("partner", { id: "primary", default_profile_public: true }),
+        ],
+      },
+      secondary: {
+        hits: [
+          fabricate("partner", {
+            id: "secondary",
+            default_profile_public: true,
+          }),
+        ],
+      },
     }
     sinon.stub($, "get").yields({
       name: "Providence",
@@ -49,10 +56,10 @@ describe("fetchLocationCarousel", function () {
       return fetchLocationCarousel("gallery").then(() => {
         $.get.args[0][0].should.equal("/geo/nearest")
         this.metaphysics.args[0][0].query.should.containEql(
-          "primary: partners(eligible_for_listing: true, eligible_for_primary_bucket: true, sort: RANDOM_SCORE_DESC, default_profile_public: true, near: $near, type: $type)"
+          "primary: filterPartners(eligibleForListing: true, aggregations:[TOTAL], eligibleForPrimaryBucket: true, sort: RANDOM_SCORE_DESC, defaultProfilePublic: true, near: $near, type: $type)"
         )
         return this.metaphysics.args[0][0].query.should.containEql(
-          "secondary: partners(eligible_for_listing: true, eligible_for_secondary_bucket: true, sort: RANDOM_SCORE_DESC, default_profile_public: true, near: $near, type: $type)"
+          "secondary: filterPartners(eligibleForListing: true, aggregations:[TOTAL], eligibleForSecondaryBucket: true, sort: RANDOM_SCORE_DESC, defaultProfilePublic: true, near: $near, type: $type)"
         )
       })
     })
@@ -80,10 +87,10 @@ describe("fetchLocationCarousel", function () {
       return fetchLocationCarousel("gallery").then(() => {
         $.get.args[0][0].should.equal("/geo/nearest")
         this.metaphysics.args[0][0].query.should.containEql(
-          "primary: partners(eligible_for_listing: true, eligible_for_primary_bucket: true, sort: RANDOM_SCORE_DESC, default_profile_public: true, near: $near, type: $type)"
+          "primary: filterPartners(eligibleForListing: true, aggregations:[TOTAL], eligibleForPrimaryBucket: true, sort: RANDOM_SCORE_DESC, defaultProfilePublic: true, near: $near, type: $type)"
         )
         return this.metaphysics.args[0][0].query.should.containEql(
-          "secondary: partners(eligible_for_listing: true, eligible_for_secondary_bucket: true, sort: RANDOM_SCORE_DESC, default_profile_public: true, near: $near, type: $type)"
+          "secondary: filterPartners(eligibleForListing: true, aggregations:[TOTAL], eligibleForSecondaryBucket: true, sort: RANDOM_SCORE_DESC, defaultProfilePublic: true, near: $near, type: $type)"
         )
       })
     })

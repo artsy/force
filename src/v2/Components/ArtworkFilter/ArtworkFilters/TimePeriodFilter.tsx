@@ -1,6 +1,6 @@
 import { Checkbox, Flex, useThemeConfig } from "@artsy/palette"
 import React, { FC } from "react"
-import { intersection } from "underscore"
+import { intersection } from "lodash"
 import { useArtworkFilterContext } from "../ArtworkFilterContext"
 import { FilterExpandable } from "./FilterExpandable"
 import { INITIAL_ITEMS_TO_SHOW, ShowMore } from "./ShowMore"
@@ -60,7 +60,7 @@ export const TimePeriodFilter: FC<TimePeriodFilterProps> = ({ expanded }) => {
 
   return (
     <FilterExpandable
-      label="Time period"
+      label="Time Period"
       expanded={hasMajorPeriodFilter || expanded}
     >
       <Flex flexDirection="column">

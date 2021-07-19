@@ -52,37 +52,6 @@
   </script>
   <%% } %>
 
-  <%% if (!disable.sailthru && !sd.THIRD_PARTIES_DISABLED && sd.SAILTHRU_CUSTOMER_ID) { %>
-  <script type="text/javascript" defer>
-    (function() {
-      function loadHorizon() {
-        var s = document.createElement('script');
-        s.type = 'text/javascript';
-        s.async = true;
-        s.src = location.protocol + '//ak.sail-horizon.com/spm/spm.v1.min.js';
-        var x = document.getElementsByTagName('script')[0];
-        x.parentNode.insertBefore(s, x);
-      }
-      loadHorizon();
-      function loadSailthru() {
-        if(typeof Sailthru !== "undefined" && typeof Sailthru.init === "function"){
-          Sailthru.init({ customerId: "<%%= sd.SAILTHRU_CUSTOMER_ID %>"});
-        }
-        else{
-          setTimeout(loadSailthru, 250);
-        }
-      }
-      var oldOnLoad = window.onload;
-      window.onload = function() {
-        if (typeof oldOnLoad === 'function') {
-          oldOnLoad();
-        }
-        loadSailthru();
-      };
-    })();
-  </script>
-  <%% } %>
-
   <%% if (!disable.postie && !sd.THIRD_PARTIES_DISABLED) { %>
   <script>
     (function(z,i,p,c,o,d,e){z[c]||(z[c]=function(){(z[c].q=z[c].q||[]).

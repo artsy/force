@@ -1,6 +1,6 @@
 import { Box } from "@artsy/palette"
 import { SelectedWorks_selectedWorks } from "v2/__generated__/SelectedWorks_selectedWorks.graphql"
-import { AnalyticsSchema, useSystemContext } from "v2/System"
+import { AnalyticsSchema } from "v2/System"
 import { useTracking } from "v2/System/Analytics/useTracking"
 import ArtworkGrid from "v2/Components/ArtworkGrid"
 import React from "react"
@@ -12,8 +12,6 @@ interface SelectedWorksProps {
 }
 
 const SelectedWorks: React.FC<SelectedWorksProps> = props => {
-  const { mediator } = useSystemContext()
-
   const tracking = useTracking()
 
   if (!props.selectedWorks?.itemsConnection?.edges?.length) {
@@ -25,7 +23,6 @@ const SelectedWorks: React.FC<SelectedWorksProps> = props => {
       <ArtworkGrid
         artworks={props.selectedWorks.itemsConnection}
         columnCount={[2, 3]}
-        mediator={mediator}
         onBrickClick={artwork => {
           tracking.trackEvent({
             action_type: AnalyticsSchema.ActionType.Click,

@@ -1,5 +1,5 @@
 _ = require 'underscore'
-{ metaphysics } = require '../../../../../lib/metaphysics'
+metaphysics = require '../../../../../lib/metaphysics2.coffee'
 partnerTypes = require '../../queries/partner_types'
 query = require '../../queries/location_carousel_query.coffee'
 mergeBuckets = require '../partner_cell_carousel/merge_buckets.coffee'
@@ -15,6 +15,6 @@ module.exports = (type) ->
         variables: _.extend near: "#{latitude},#{longitude}", type: partnerTypes[type]
       ).then (data) ->
         resolve _.extend category,
-          partners: mergeBuckets data.primary, data.secondary
+          partners: mergeBuckets data.primary.hits, data.secondary.hits
       .catch reject
       .done()

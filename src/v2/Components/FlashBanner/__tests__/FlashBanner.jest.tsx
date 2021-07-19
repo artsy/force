@@ -134,7 +134,7 @@ describe("Email confirmation link expired", () => {
       queryString: "?flash_message=expired_token",
     })
 
-    expect(wrapper.text()).toContain("Link expired. Resend verification email")
+    expect(wrapper.text()).toContain("Link expired.Resend verification email")
   })
 
   it("user seeing banner can click to re-trigger email confirmation message", async () => {

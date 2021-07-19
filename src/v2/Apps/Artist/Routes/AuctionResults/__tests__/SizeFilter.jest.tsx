@@ -1,10 +1,10 @@
 import { mount } from "enzyme"
 import React from "react"
 import {
-  ArtworkFilterContextProps,
-  ArtworkFilterContextProvider,
-  useArtworkFilterContext,
-} from "v2/Components/ArtworkFilter/ArtworkFilterContext"
+  AuctionResultsFilterContextProps,
+  AuctionResultsFilterContextProvider,
+  useAuctionResultsFilterContext,
+} from "../AuctionResultsFilterContext"
 import { SizeFilter } from "../Components/AuctionFilters/SizeFilter"
 
 jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
@@ -12,30 +12,28 @@ jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
 }))
 
 describe("SizeFilter", () => {
-  let context: ArtworkFilterContextProps
+  let context: AuctionResultsFilterContextProps
 
   const getWrapper = () => {
     return mount(
-      <ArtworkFilterContextProvider>
+      <AuctionResultsFilterContextProvider>
         <SizeFilterTest />
-      </ArtworkFilterContextProvider>
+      </AuctionResultsFilterContextProvider>
     )
   }
 
   const SizeFilterTest = () => {
-    context = useArtworkFilterContext()
-    return <SizeFilter useFilterContext={useArtworkFilterContext} />
+    context = useAuctionResultsFilterContext()
+    return <SizeFilter />
   }
 
   it("updates context on filter change", async () => {
     const wrapper = getWrapper() as any
 
     await wrapper.find("Checkbox").at(0).simulate("click")
-    // @ts-expect-error STRICT_NULL_CHECK
-    expect(context.filters.sizes).toEqual(["SMALL"])
+    expect(context.filters?.sizes).toEqual(["SMALL"])
 
     await wrapper.find("Checkbox").at(2).simulate("click")
-    // @ts-expect-error STRICT_NULL_CHECK
-    expect(context.filters.sizes).toEqual(["SMALL", "LARGE"])
+    expect(context.filters?.sizes).toEqual(["SMALL", "LARGE"])
   })
 })

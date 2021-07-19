@@ -1,11 +1,14 @@
 export const IGNORED_ERRORS = [
+  "AbortError: Failed to execute 'fetch' on 'Window': The user aborted a request.",
   "AbortError: Fetch is aborted",
   "AbortError: Request signal is aborted",
   "AbortError: The operation was aborted",
+  "AbortError: The user aborted a request.",
   'Blocked a frame with origin "https://www.artsy.net" from accessing a cross-origin frame. Protocols, domains, and ports must match.',
   "cancelled",
   "Failed to fetch",
   "gpt/pubads_impl",
+  "Illegal invocation", // From   "gpt/pubads_impl", script (3rd party)
   "Non-Error exception captured",
   "Non-Error promise rejection captured",
   "Origin is not allowed by Access-Control-Allow-Origin",

@@ -61,13 +61,22 @@ const StyledTextArea = styled.textarea<{ height?: string }>`
 interface ReplyProps {
   conversation: Conversation_conversation
   environment: Environment
-  onScroll?: () => void
+  onScroll: () => void
+  onMount: () => void
   refetch: RelayRefetchProp["refetch"]
   openInquiryModal: () => void
+  openOrderModal: () => void
 }
 
 export const Reply: React.FC<ReplyProps> = props => {
-  const { environment, conversation, onScroll, openInquiryModal } = props
+  const {
+    environment,
+    conversation,
+    onScroll,
+    onMount,
+    openInquiryModal,
+    openOrderModal,
+  } = props
   const [buttonDisabled, setButtonDisabled] = useState(true)
   const [loading, setLoading] = useState(false)
   const [showModal, setShowModal] = useState(false)
@@ -132,20 +141,13 @@ export const Reply: React.FC<ReplyProps> = props => {
           text: "Discard message",
         }}
       />
-      <Flex
-        right={[0, null]}
-        zIndex={[null, 2]}
-        position={["fixed", "fixed", "fixed", "static"]}
-        bottom={0}
-        left={0}
-        flexShrink={0}
-        flexDirection="column"
-        background="white"
-      >
+      <Flex zIndex={[null, 2]} flexDirection="column" background="white">
         <ShadowSeparator />
         <ConversationCTAFragmentContainer
           conversation={conversation}
           openInquiryModal={() => openInquiryModal()}
+          openOrderModal={() => openOrderModal()}
+          onMount={onMount}
         />
         <StyledFlex p={1}>
           <FullWidthFlex width="100%">

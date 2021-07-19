@@ -6,6 +6,7 @@ import { useSystemContext } from "v2/System"
 interface MinimalNavBarProps {
   to: string
   children: React.ReactNode
+  isBlank?: boolean
 }
 
 export const MinimalNavBar: React.FC<MinimalNavBarProps> = props => {
@@ -20,7 +21,7 @@ export const MinimalNavBar: React.FC<MinimalNavBarProps> = props => {
       width="100%"
       pt={4}
     >
-      {!isEigen && (
+      {!props.isBlank && !isEigen && (
         <Box height={70} px={[2, 4]}>
           <RouterLink
             to={props.to}

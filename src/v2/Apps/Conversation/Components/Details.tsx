@@ -178,7 +178,7 @@ export const Details: FC<DetailsProps> = ({
               <a href={item.href}>
                 <Box height="80px" width="80px">
                   {/* @ts-expect-error STRICT_NULL_CHECK */}
-                  <ResponsiveImage src={item.image.thumbnailUrl} />
+                  <ResponsiveImage src={item.image?.thumbnailUrl} />
                 </Box>
               </a>
               <Flex flexDirection="column" ml={1}>

@@ -42,7 +42,6 @@ export const ViewingRoomArtworkDetails: React.FC<ViewingRoomArtworkDetailsProps>
       )}
 
       <RouterLink
-        // @ts-expect-error STRICT_NULL_CHECK
         to={href}
         onClick={() => {
           tracking.trackEvent({

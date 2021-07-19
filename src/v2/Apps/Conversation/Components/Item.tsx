@@ -1,16 +1,17 @@
 import { Flex, Image, Link, Sans, color } from "@artsy/palette"
-import { Conversation_conversation } from "v2/__generated__/Conversation_conversation.graphql"
+import { Item_item } from "v2/__generated__/Item_item.graphql"
 import React from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 
 interface ItemProps {
-  // @ts-expect-error STRICT_NULL_CHECK
-  item: Conversation_conversation["items"][0]["item"]
+  item: Item_item
 }
 
 export type ItemType = "Artwork" | "Show"
 
 export const Item: React.FC<ItemProps> = props => {
   const { item } = props
+
   if (item.__typename === "%other") return null
   const itemType = item.__typename as ItemType
 
@@ -54,9 +55,11 @@ export const Item: React.FC<ItemProps> = props => {
   }
 
   if (itemType === "Artwork" || itemType === "Show") {
+    const imageName =
+      (item.__typename === "Artwork" ? item.title : item.name) || undefined
     return (
       <Link
-        href={item.href}
+        href={item.href || undefined}
         underlineBehavior="none"
         style={{ alignSelf: "flex-end", maxWidth: "100%" }}
         mb={1}
@@ -64,10 +67,11 @@ export const Item: React.FC<ItemProps> = props => {
         <Flex flexDirection="column">
           <Image
             src={getImage(item)}
-            alt={item.__typename === "Artwork" ? item.title : item.name}
+            alt={imageName}
             style={{ maxWidth: "350px" }}
             borderRadius="15px 15px 0 0"
           />
+
           <Flex
             p={1}
             flexDirection="column"
@@ -84,3 +88,47 @@ export const Item: React.FC<ItemProps> = props => {
     return null
   }
 }
+
+export const ItemFragmentContainer = createFragmentContainer(Item, {
+  item: graphql`
+    fragment Item_item on ConversationItemType {
+      __typename
+      ... on Artwork {
+        internalID
+        id
+        date
+        title
+        artistNames
+        href
+        isOfferableFromInquiry
+        image {
+          url(version: ["large"])
+        }
+        listPrice {
+          __typename
+          ... on Money {
+            display
+          }
+          ... on PriceRange {
+            display
+          }
+        }
+      }
+      ... on Show {
+        id
+        fair {
+          name
+          exhibitionPeriod
+          location {
+            city
+          }
+        }
+        href
+        name
+        coverImage {
+          url
+        }
+      }
+    }
+  `,
+})

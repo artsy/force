@@ -21,8 +21,8 @@ describe("HomeFeaturedShows", () => {
     const wrapper = getWrapper({
       Show: () => ({
         name: "Example Show",
-        startAt: "Jun 9",
-        endAt: "25",
+        formattedStartAt: "Jun 9",
+        formattedEndAt: "25",
         href: "/show/partner-show",
       }),
       Partner: () => ({
@@ -31,7 +31,7 @@ describe("HomeFeaturedShows", () => {
     })
 
     expect(wrapper.text()).toContain("Featured shows")
-    expect(wrapper.text()).toContain("Explore all shows")
+    expect(wrapper.text()).toContain("Explore All Shows")
     expect(wrapper.text()).toContain("Example Show")
     expect(wrapper.text()).toContain("Example Partner")
     expect(wrapper.text()).toContain("Jun 9–25")

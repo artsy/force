@@ -43,6 +43,7 @@ import { commercialFilterParamsChanged } from "@artsy/cohesion"
 import { allowedFilters } from "./Utils/allowedFilters"
 import { Sticky } from "v2/Components/Sticky"
 import { ScrollRefContext } from "./ArtworkFilters/useScrollContext"
+import { GeneArtworkFilter_gene } from "v2/__generated__/GeneArtworkFilter_gene.graphql"
 
 /**
  * Primary ArtworkFilter which is wrapped with a context and refetch container.
@@ -107,6 +108,7 @@ export const BaseArtworkFilter: React.FC<
       | ArtistSeriesArtworksFilter_artistSeries
       | FairArtworks_fair
       | ShowArtworks_show
+      | GeneArtworkFilter_gene
     Filters?: JSX.Element
     offset?: number
   }
@@ -297,7 +299,12 @@ export const BaseArtworkFilter: React.FC<
             {Filters ? Filters : <ArtworkFilters />}
           </Column>
 
-          <Column span={9}>
+          <Column
+            span={9}
+            // Fix for issue in Firefox where contents overflow container.
+            // Safe to remove once artwork masonry uses CSS grid.
+            width="100%"
+          >
             {tokens.version === "v2" && (
               <Box mb={2} pt={2} borderTop="1px solid" borderTopColor="black10">
                 <SortFilter />

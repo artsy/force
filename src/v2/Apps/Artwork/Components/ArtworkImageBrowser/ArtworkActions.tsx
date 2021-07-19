@@ -1,24 +1,15 @@
 import { ArtworkActions_artwork } from "v2/__generated__/ArtworkActions_artwork.graphql"
-import { SystemContext } from "v2/System"
-import { track } from "v2/System/Analytics"
-import * as Schema from "v2/System/Analytics/Schema"
-import {
-  SaveButtonFragmentContainer as SaveButton,
-  SaveButtonProps,
-  SaveButtonState,
-} from "v2/Components/Artwork/SaveButton"
+import { useSystemContext } from "v2/System"
+import { AnalyticsSchema, useTracking } from "v2/System/Analytics"
 import { compact } from "lodash"
-import { isNull } from "lodash"
-import React, { useContext } from "react"
+import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { data as sd } from "sharify"
 import styled, { css } from "styled-components"
 import { slugify } from "underscore.string"
 import { Media } from "v2/Utils/Responsive"
-import { ArtworkSharePanelFragmentContainer as ArtworkSharePanel } from "./ArtworkSharePanel"
-import { ContextModule } from "@artsy/cohesion"
+import { ArtworkSharePanelFragmentContainer } from "./ArtworkSharePanel"
 import {
-  BellFillIcon,
   BellIcon,
   Box,
   Clickable,
@@ -26,7 +17,6 @@ import {
   EditIcon,
   Flex,
   GenomeIcon,
-  HeartFillIcon,
   HeartIcon,
   Join,
   Link,
@@ -38,101 +28,73 @@ import {
   Popover,
 } from "@artsy/palette"
 import { userIsAdmin, userIsTeam } from "v2/Utils/user"
-import { Mediator } from "lib/mediator"
 import { themeGet } from "@styled-system/theme-get"
+import { ArtworkActionsSaveButtonFragmentContainer } from "./ArtworkActionsSaveButton"
 
 interface ArtworkActionsProps {
   artwork: ArtworkActions_artwork
-  user?: User
-  mediator?: Mediator
   selectDefaultSlide(): void
 }
 
-@track()
-export class ArtworkActions extends React.Component<ArtworkActionsProps> {
-  @track({
-    flow: Schema.Flow.ArtworkShare,
-    action_type: Schema.ActionType.Click,
-    context_module: Schema.ContextModule.ShareButton,
-    type: Schema.Type.Button,
-  })
-  toggleSharePanel() {
-    // noop
+export const ArtworkActions: React.FC<ArtworkActionsProps> = ({
+  artwork,
+  selectDefaultSlide,
+}) => {
+  const { user, mediator } = useSystemContext()
+  const isAdmin = userIsAdmin(user)
+  const isTeam = userIsTeam(user)
+
+  const tracking = useTracking()
+
+  const toggleSharePanel = () => {
+    tracking.trackEvent({
+      flow: AnalyticsSchema.Flow.ArtworkShare,
+      action_type: AnalyticsSchema.ActionType.Click,
+      context_module: AnalyticsSchema.ContextModule.ShareButton,
+      type: AnalyticsSchema.Type.Button,
+    })
   }
 
-  get isAdmin() {
-    return userIsAdmin(this.props.user)
-  }
+  const openViewInRoom = () => {
+    selectDefaultSlide()
 
-  get isTeam() {
-    return userIsTeam(this.props.user)
-  }
-
-  getDownloadableImageUrl() {
-    const {
-      artwork: { is_downloadable, href, artists, title, date },
-    } = this.props
-
-    if (is_downloadable || this.isTeam) {
-      // @ts-expect-error STRICT_NULL_CHECK
-      const artistNames = artists.map(({ name }) => name).join(", ")
-      const filename = slugify(compact([artistNames, title, date]).join(" "))
-      const downloadableImageUrl = `${href}/download/${filename}.jpg` // prettier-ignore
-      return downloadableImageUrl
-    }
-  }
-
-  @track({
-    flow: Schema.Flow.ArtworkViewInRoom,
-    action_type: Schema.ActionType.Click,
-    context_module: Schema.ContextModule.ViewInRoom,
-    type: Schema.Type.Button,
-  })
-  openViewInRoom() {
-    this.props.selectDefaultSlide()
+    const { dimensions, image } = artwork
 
     setTimeout(() => {
-      const {
-        artwork: { dimensions, image },
-        mediator,
-      } = this.props
+      mediator?.trigger("openViewInRoom", { dimensions, image })
 
-      mediator &&
-        mediator.trigger &&
-        mediator.trigger("openViewInRoom", {
-          dimensions,
-          image,
-        })
+      tracking.trackEvent({
+        flow: AnalyticsSchema.Flow.ArtworkViewInRoom,
+        action_type: AnalyticsSchema.ActionType.Click,
+        context_module: AnalyticsSchema.ContextModule.ViewInRoom,
+        type: AnalyticsSchema.Type.Button,
+      })
     }, 300)
   }
 
-  renderSaveButton() {
-    return (
-      <SaveButton
-        contextModule={ContextModule.artworkImage}
-        artwork={this.props.artwork}
-        render={Save(this.props)}
-      />
-    )
-  }
+  const { is_downloadable, href, artists, title, date } = artwork
 
-  renderViewInRoomButton() {
+  const ViewInRoomButton = () => {
     return (
       <UtilButton
         name="viewInRoom"
-        onClick={() => this.openViewInRoom()}
+        onClick={openViewInRoom}
         label="View in room"
       />
     )
   }
 
-  renderShareButton() {
+  const ShareButton = () => {
     return (
       <Popover
         placement="top"
         title="Share"
         popover={
-          <ArtworkSharePanel width={300} pt={1} artwork={this.props.artwork} />
+          <ArtworkSharePanelFragmentContainer
+            width={300}
+            pt={1}
+            artwork={artwork}
+          />
         }
       >
         {({ anchorRef, onVisible }) => {
@@ -142,7 +104,7 @@ export class ArtworkActions extends React.Component<ArtworkActionsProps> {
               name="share"
               onClick={() => {
                 onVisible()
-                this.toggleSharePanel() // Tracking
+                toggleSharePanel() // Tracking
               }}
               label="Share"
             />
@@ -152,152 +114,149 @@ export class ArtworkActions extends React.Component<ArtworkActionsProps> {
     )
   }
 
-  renderDownloadButton() {
+  const DownloadButton = () => {
+    const artistNames = (artists ?? []).map(artist => artist?.name).join(", ")
+    const filename = slugify(compact([artistNames, title, date]).join(" "))
+
     return (
       <UtilButton
         name="download"
-        href={this.getDownloadableImageUrl()}
+        href={`${href}/download/${filename}.jpg`}
         label="Download"
         Component={UtilButtonLink}
       />
     )
   }
 
-  renderEditButton() {
-    const { artwork } = this.props
-    if (artwork.partner) {
-      const editUrl = `${sd.CMS_URL}/artworks/${artwork.slug}/edit?current_partner_id=${artwork.partner.slug}`
-      return (
-        <UtilButton
-          name="edit"
-          href={editUrl}
-          label="Edit"
-          Component={UtilButtonLink}
-        />
-      )
-    }
+  const EditButton = () => {
+    return (
+      <UtilButton
+        name="edit"
+        href={`${sd.CMS_URL}/artworks/${artwork.slug}/edit?current_partner_id=${artwork.partner?.slug}`}
+        label="Edit"
+        Component={UtilButtonLink}
+      />
+    )
   }
 
-  renderGenomeButton() {
-    const { artwork } = this.props
-    const genomeUrl = `${sd.GENOME_URL}/genome/artworks?artwork_ids=${artwork.slug}`
-
+  const GenomeButton = () => {
     return (
       <UtilButton
         name="genome"
-        href={genomeUrl}
+        href={`${sd.GENOME_URL}/genome/artworks?artwork_ids=${artwork.slug}`}
         label="Genome"
         Component={UtilButtonLink}
       />
     )
   }
 
-  render() {
-    const { artwork } = this.props
-    const downloadableImageUrl = this.getDownloadableImageUrl()
-
-    const actionsToShow = [
-      { name: "save", condition: true, renderer: this.renderSaveButton },
-      {
-        name: "viewInRoom",
-        condition: artwork.is_hangable,
-        renderer: this.renderViewInRoomButton,
-      },
-      { name: "share", condition: true, renderer: this.renderShareButton },
-      {
-        name: "download",
-        condition: !!downloadableImageUrl,
-        renderer: this.renderDownloadButton,
-      },
-      {
-        name: "edit",
-        condition: this.isAdmin,
-        renderer: this.renderEditButton,
-      },
-      {
-        name: "genome",
-        condition: this.isAdmin,
-        renderer: this.renderGenomeButton,
-      },
-    ]
-
-    const showableActions = actionsToShow.filter(action => {
-      return action.condition
-    })
-
-    const initialActions = showableActions.slice(0, 3)
-    const moreActions = showableActions.slice(3)
-
-    return (
-      <>
-        <Container>
-          <Join separator={<Spacer mx={0} />}>
-            <Media greaterThan="xs">
-              <Flex flexWrap="wrap" alignItems="center" justifyContent="center">
-                {showableActions.map(action => {
-                  return (
-                    <React.Fragment key={action.name}>
-                      {action.renderer.bind(this)()}
-                    </React.Fragment>
-                  )
-                })}
-              </Flex>
-            </Media>
-
-            <Media at="xs">
-              <Flex>
-                {initialActions.map(action => {
-                  return (
-                    <React.Fragment key={action.name}>
-                      {action.renderer.bind(this)()}
-                    </React.Fragment>
-                  )
-                })}
-
-                {moreActions && moreActions.length > 0 && (
-                  <Popover
-                    placement="top"
-                    popover={
-                      <Box width={300}>
-                        {moreActions.map(action => {
-                          return (
-                            <Flex key={action.name}>
-                              {action.renderer.bind(this)()}
-                            </Flex>
-                          )
-                        })}
-                      </Box>
-                    }
-                  >
-                    {({ anchorRef, onVisible }) => {
-                      return (
-                        <UtilButton
-                          ref={anchorRef as any}
-                          name="more"
-                          onClick={onVisible}
-                        />
-                      )
-                    }}
-                  </Popover>
-                )}
-              </Flex>
-            </Media>
-          </Join>
-        </Container>
-      </>
-    )
+  const SaveButton = () => {
+    return <ArtworkActionsSaveButtonFragmentContainer artwork={artwork} />
   }
+
+  const actions = [
+    {
+      name: "save",
+      condition: true,
+      Component: SaveButton,
+    },
+    {
+      name: "viewInRoom",
+      condition: artwork.is_hangable,
+      Component: ViewInRoomButton,
+    },
+    {
+      name: "share",
+      condition: true,
+      Component: ShareButton,
+    },
+    {
+      name: "download",
+      condition: !!is_downloadable || isTeam,
+      Component: DownloadButton,
+    },
+    {
+      name: "edit",
+      condition: isAdmin && !!artwork.partner,
+      Component: EditButton,
+    },
+    {
+      name: "genome",
+      condition: isAdmin,
+      Component: GenomeButton,
+    },
+  ]
+
+  const displayableActions = actions.filter(({ condition }) => condition)
+  const initialActions = displayableActions.slice(0, 3)
+  const moreActions = displayableActions.slice(3)
+
+  return (
+    <>
+      <Container>
+        <Join separator={<Spacer mx={0} />}>
+          <Media greaterThan="xs">
+            <Flex flexWrap="wrap" alignItems="center" justifyContent="center">
+              {displayableActions.map(action => {
+                return (
+                  <React.Fragment key={action.name}>
+                    <action.Component />
+                  </React.Fragment>
+                )
+              })}
+            </Flex>
+          </Media>
+
+          <Media at="xs">
+            <Flex>
+              {initialActions.map(action => {
+                return (
+                  <React.Fragment key={action.name}>
+                    <action.Component />
+                  </React.Fragment>
+                )
+              })}
+
+              {moreActions && moreActions.length > 0 && (
+                <Popover
+                  placement="top"
+                  popover={
+                    <Box width={300}>
+                      {moreActions.map(action => {
+                        return (
+                          <Flex key={action.name}>
+                            <action.Component />
+                          </Flex>
+                        )
+                      })}
+                    </Box>
+                  }
+                >
+                  {({ anchorRef, onVisible }) => {
+                    return (
+                      <UtilButton
+                        ref={anchorRef as any}
+                        name="more"
+                        onClick={onVisible}
+                      />
+                    )
+                  }}
+                </Popover>
+              )}
+            </Flex>
+          </Media>
+        </Join>
+      </Container>
+    </>
+  )
 }
 
 export const ArtworkActionsFragmentContainer = createFragmentContainer(
-  (props: ArtworkActionsProps) => {
-    const { user, mediator } = useContext(SystemContext)
-    return <ArtworkActions user={user} mediator={mediator} {...props} />
-  },
+  ArtworkActions,
   {
     artwork: graphql`
       fragment ArtworkActions_artwork on Artwork {
-        ...SaveButton_artwork
+        ...ArtworkActionsSaveButton_artwork
         ...ArtworkSharePanel_artwork
         artists {
           name
@@ -324,6 +283,7 @@ export const ArtworkActionsFragmentContainer = createFragmentContainer(
           is_closed: isClosed
           is_auction: isAuction
         }
+        is_saved: isSaved
       }
     `,
   }
@@ -343,10 +303,7 @@ interface UtilButtonProps {
   selected?: boolean
   label?: string
   Icon?: React.ReactNode
-  Component?:
-    | typeof UtilButtonButton
-    | typeof UtilButtonLink
-    | typeof UtilButtonBox
+  Component?: typeof UtilButtonButton | typeof UtilButtonLink
   onClick?: () => void
 }
 
@@ -433,54 +390,10 @@ const UtilButtonButton = styled(Clickable)`
   ${utilButtonMixin}
 `
 
-const UtilButtonBox = styled(Box)`
-  ${utilButtonMixin}
-`
-
 const Container = styled(Flex)`
   user-select: none;
   justify-content: center;
   align-items: center;
 `
-
-/**
- * Custom renderer for SaveButton
- */
-const Save = (actionProps: ArtworkActionsProps) => (
-  props: SaveButtonProps,
-  state: SaveButtonState
-) => {
-  // Grab props from ArtworkActions to check if sale is open
-  const { sale } = actionProps.artwork
-  const isOpenSale = sale && sale.is_auction && !sale.is_closed
-
-  // Check if saved by evaluating props from SaveButton
-  const isSaved = isNull(state.is_saved)
-    ? props.artwork.is_saved
-    : state.is_saved
-
-  // If an Auction, use Bell (for notifications); if a standard artwork use Heart
-  if (isOpenSale) {
-    const FilledIcon = () => <BellFillIcon fill="blue100" />
-    return (
-      <UtilButton
-        name="bell"
-        Icon={isSaved ? FilledIcon : BellIcon}
-        label="Watch lot"
-        Component={UtilButtonBox}
-      />
-    )
-  } else {
-    const FilledIcon = () => <HeartFillIcon fill="blue100" />
-    return (
-      <UtilButton
-        name="heart"
-        Icon={isSaved ? FilledIcon : HeartIcon}
-        label="Save"
-        Component={UtilButtonBox}
-      />
-    )
-  }
-}
 
 ArtworkActionsFragmentContainer.displayName = "ArtworkActions"

@@ -5,6 +5,7 @@ import { ArtistArticlesRoute_artist } from "v2/__generated__/ArtistArticlesRoute
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 import { PaginationFragmentContainer } from "v2/Components/Pagination"
 import { Title } from "react-head"
+import { RouterLink } from "v2/System/Router/RouterLink"
 
 const REFETCH_PAGE_SIZE = 10
 
@@ -32,15 +33,15 @@ const ArtistArticlesRoute: React.FC<ArtistArticlesRouteProps> = ({
   }
 
   const loadNext = () => {
-    const { hasNextPage, endCursor } = artist.articlesConnection?.pageInfo!
+    const { hasNextPage, endCursor } = artist.articlesConnection?.pageInfo ?? {}
 
-    if (hasNextPage) {
+    if (hasNextPage && endCursor) {
       scrollToTop()
       loadAfter(endCursor)
     }
   }
 
-  const loadAfter = cursor => {
+  const loadAfter = (cursor: string) => {
     scrollToTop()
     relay.refetch(
       {
@@ -63,47 +64,58 @@ const ArtistArticlesRoute: React.FC<ArtistArticlesRouteProps> = ({
     <>
       <Title>{`${artist.name} - Articles`}</Title>
 
-      <Text variant="xl" mb={6}>
-        {artist.name} Articles
-      </Text>
+      <Text variant="xl">{artist.name} Articles</Text>
 
-      <Join separator={<Spacer py={2} />}>
-        {nodes.map((article, key) => {
+      <Spacer mt={6} />
+
+      <Join separator={<Spacer mt={4} />}>
+        {nodes.map(article => {
           return (
-            <Flex justifyContent="space-between" width="100%" key={key}>
-              <Flex width="100%" flexDirection={["column", "column", "row"]}>
-                <Box width={["100%", "100%", "20%"]}>
-                  <Text variant="md">{article.publishedAt}</Text>
-                </Box>
-                <Spacer mb={1} />
-                <Box width={["100%", "100%", "60%"]} pr={2}>
-                  <Text variant={["md", "lg", "lg"]}>
-                    {article.thumbnailTitle}
-                  </Text>
+            <RouterLink
+              key={article.internalID}
+              to={article.href ?? ""}
+              style={{ display: "block", textDecoration: "none" }}
+            >
+              <Flex justifyContent="space-between" width="100%">
+                <Flex width="100%" flexDirection={["column", "column", "row"]}>
+                  <Box width={["100%", "100%", "20%"]}>
+                    <Text variant="md">{article.publishedAt}</Text>
+                  </Box>
+
                   <Spacer mb={1} />
-                  {article.author?.name && (
-                    <Text variant="md" color="black60">
-                      {article.author.name}
+
+                  <Box width={["100%", "100%", "60%"]} pr={2}>
+                    <Text variant={["md", "lg", "lg"]}>
+                      {article.thumbnailTitle}
                     </Text>
-                  )}
-                </Box>
+
+                    <Spacer mb={1} />
+
+                    {article.author?.name && (
+                      <Text variant="md" color="black60">
+                        {article.author.name}
+                      </Text>
+                    )}
+                  </Box>
+                </Flex>
+
+                {article.thumbnailImage?.cropped ? (
+                  <Box>
+                    <Image
+                      key={article.thumbnailImage.cropped.src}
+                      src={article.thumbnailImage.cropped.src}
+                      srcSet={article.thumbnailImage.cropped.srcSet}
+                      width={[105, 210]}
+                      height={[75, 150]}
+                      lazyLoad
+                      alt=""
+                    />
+                  </Box>
+                ) : (
+                  <Box width={210} height={150} bg="black10" />
+                )}
               </Flex>
-              {article.thumbnailImage?.resized ? (
-                <Box>
-                  <Image
-                    key={article.thumbnailImage.resized.src}
-                    src={article.thumbnailImage.resized.src}
-                    srcSet={article.thumbnailImage.resized.srcSet}
-                    width={[105, 210]}
-                    height={[75, 150]}
-                    style={{ objectFit: "cover" }}
-                    lazyLoad
-                  />
-                </Box>
-              ) : (
-                <Box width={210} height={150} bg="black10" />
-              )}
-            </Flex>
+            </RouterLink>
           )
         })}
       </Join>
@@ -147,6 +159,7 @@ export const ArtistArticlesRouteFragmentContainer = createRefetchContainer(
           }
           edges {
             node {
+              internalID
               href
               thumbnailTitle
               author {
@@ -154,7 +167,7 @@ export const ArtistArticlesRouteFragmentContainer = createRefetchContainer(
               }
               publishedAt(format: "MMM Do, YYYY")
               thumbnailImage {
-                resized(width: 210, height: 150) {
+                cropped(width: 210, height: 150) {
                   src
                   srcSet
                   width

@@ -3,7 +3,7 @@ version: 2.1
 orbs:
   artsy-remote-docker: artsy/remote-docker@0.1.12
   aws-s3: circleci/aws-s3@2.0.0
-  codecov: codecov/codecov@1.2.3
+  codecov: codecov/codecov@1.2.5
   hokusai: artsy/hokusai@0.8.0
   horizon: artsy/release@0.0.1
   node: artsy/node@1.0.0
@@ -151,6 +151,10 @@ jobs:
     working_directory: /app
     steps:
       - run: /app/scripts/xvfb-run.sh /usr/local/bin/yarn test:smoke
+      - store_artifacts:
+          path: cypress/videos
+      - store_artifacts:
+          path: cypress/screenshots
 
   upload-docs:
     docker:

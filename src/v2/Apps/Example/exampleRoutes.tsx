@@ -1,7 +1,6 @@
 import loadable from "@loadable/component"
 import { AppRouteConfig } from "v2/System/Router/Route"
 import { graphql } from "react-relay"
-import { WelcomeRoute } from "./Routes/Welcome/WelcomeRoute"
 
 const ExampleApp = loadable(
   () => import(/* webpackChunkName: "exampleBundle" */ "./ExampleApp"),
@@ -37,6 +36,15 @@ const ArtworkFilterRoute = loadable(
   {
     resolveComponent: component =>
       component.ExampleArtworkFilterFragmentContainer,
+  }
+)
+const WelcomeRoute = loadable(
+  () =>
+    import(
+      /* webpackChunkName: "exampleBundle" */ "./Routes/Welcome/WelcomeRoute"
+    ),
+  {
+    resolveComponent: component => component.WelcomeRoute,
   }
 )
 

@@ -3,13 +3,14 @@ import { AuctionsApp_viewer } from "v2/__generated__/AuctionsApp_viewer.graphql"
 import { AuctionsMeta } from "./Components/AuctionsMeta"
 import { MyBidsFragmentContainer } from "./Components/MyBids/MyBids"
 import {
-  Box,
   Column,
   GridColumns,
+  Join,
   Spacer,
-  Tab,
-  Tabs,
   Text,
+  Separator,
+  Tabs,
+  Tab,
 } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RecentlyViewed } from "v2/Components/RecentlyViewed"
@@ -67,15 +68,12 @@ const AuctionsApp: React.FC<AuctionsAppProps> = props => {
         {user && (
           <>
             <Tab name="Works For You">
-              <Spacer py={2} />
-              <Box>
-                {/* @ts-expect-error STRICT_NULL_CHECK */}
-                <MyBidsFragmentContainer me={viewer.me} />
-              </Box>
+              <Separator my={6} />
+              <Join separator={<Spacer mt={6} />}>
+                {viewer.me && <MyBidsFragmentContainer me={viewer.me} />}
 
-              <Box>
                 <WorksByArtistsYouFollowRailFragmentContainer viewer={viewer} />
-              </Box>
+              </Join>
             </Tab>
           </>
         )}
@@ -87,14 +85,17 @@ const AuctionsApp: React.FC<AuctionsAppProps> = props => {
         </Tab>
       </Tabs>
 
-      <Spacer my={[4, 12]} />
+      <Spacer mt={6} />
 
-      <RouteTabs mb={2} fill>
+      <RouteTabs fill>
         <RouteTab exact to="/auctions">
           Current Auctions
         </RouteTab>
+
         <RouteTab to="/auctions/upcoming">Upcoming</RouteTab>
+
         <RouteTab to="/auctions/past">Past</RouteTab>
+
         {enableNewAuctionsFilter && (
           <>
             <RouteTab to="/auctions/auctions">Auctions</RouteTab>
@@ -103,7 +104,7 @@ const AuctionsApp: React.FC<AuctionsAppProps> = props => {
         )}
       </RouteTabs>
 
-      <Box>{children}</Box>
+      {children}
 
       <RecentlyViewed />
     </>

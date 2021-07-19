@@ -25,7 +25,7 @@ describe("RouterLink", () => {
       // @ts-expect-error STRICT_NULL_CHECK
     ).renderUntil(enzyme => {
       try {
-        return enzyme.find(Link).length > 0
+        return enzyme.html().length > 0
       } catch {
         // Guard against enzyme == null, which is the first render pass
       }
@@ -41,10 +41,5 @@ describe("RouterLink", () => {
     const wrapper = mount(<RouterLink to="/foo">Foo</RouterLink>)
     expect(wrapper.find(Link).length).toEqual(0)
     expect(wrapper.find("a").length).toEqual(1)
-  })
-
-  it("prunes invalid props from being passed to dom", async () => {
-    const wrapper = await getWrapper({ hey: true, you: true })
-    expect(Object.keys(wrapper.find("a").props())).not.toContain(["hey", "you"])
   })
 })

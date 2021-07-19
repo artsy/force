@@ -20,13 +20,13 @@ describe("PartnerArtist", () => {
   })
 
   describe("#href", () => {
-    it("uses partners default profile id instead of id", () => {
+    it("uses partners id instead of default profile id", () => {
       testContext.partnerArtist
         .href()
         .should.equal(
-          `/${
-            testContext.partnerArtist.get("partner").default_profile_id
-          }/artist/${testContext.partnerArtist.get("artist").id}`
+          `/partner/${testContext.partnerArtist.get("partner").id}/artists/${
+            testContext.partnerArtist.get("artist").id
+          }`
         )
     })
   })

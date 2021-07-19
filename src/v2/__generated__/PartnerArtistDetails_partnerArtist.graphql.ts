@@ -8,20 +8,14 @@ export type PartnerArtistDetails_partnerArtist = {
         readonly text: string | null;
         readonly credit: string | null;
     } | null;
-    readonly artworksConnection: {
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly id: string;
-                readonly " $fragmentRefs": FragmentRefs<"FillwidthItem_artwork">;
-            } | null;
-        } | null> | null;
-    } | null;
     readonly node: {
+        readonly slug: string;
         readonly name: string | null;
         readonly href: string | null;
         readonly formattedNationalityAndBirthday: string | null;
         readonly " $fragmentRefs": FragmentRefs<"FollowArtistButton_artist">;
     } | null;
+    readonly " $fragmentRefs": FragmentRefs<"PartnerArtistArtworksRail_partnerArtist">;
     readonly " $refType": "PartnerArtistDetails_partnerArtist";
 };
 export type PartnerArtistDetails_partnerArtist$data = PartnerArtistDetails_partnerArtist;
@@ -71,63 +65,19 @@ const node: ReaderFragment = {
     },
     {
       "alias": null,
-      "args": [
-        {
-          "kind": "Literal",
-          "name": "first",
-          "value": 12
-        }
-      ],
-      "concreteType": "ArtworkConnection",
-      "kind": "LinkedField",
-      "name": "artworksConnection",
-      "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "concreteType": "ArtworkEdge",
-          "kind": "LinkedField",
-          "name": "edges",
-          "plural": true,
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "concreteType": "Artwork",
-              "kind": "LinkedField",
-              "name": "node",
-              "plural": false,
-              "selections": [
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "id",
-                  "storageKey": null
-                },
-                {
-                  "args": null,
-                  "kind": "FragmentSpread",
-                  "name": "FillwidthItem_artwork"
-                }
-              ],
-              "storageKey": null
-            }
-          ],
-          "storageKey": null
-        }
-      ],
-      "storageKey": "artworksConnection(first:12)"
-    },
-    {
-      "alias": null,
       "args": null,
       "concreteType": "Artist",
       "kind": "LinkedField",
       "name": "node",
       "plural": false,
       "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "slug",
+          "storageKey": null
+        },
         {
           "alias": null,
           "args": null,
@@ -156,9 +106,14 @@ const node: ReaderFragment = {
         }
       ],
       "storageKey": null
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "PartnerArtistArtworksRail_partnerArtist"
     }
   ],
   "type": "ArtistPartnerEdge"
 };
-(node as any).hash = '962a53356d57ae9461a441f9fa9599cf';
+(node as any).hash = 'f070ad2ab63ddc54cae550761f2cde60';
 export default node;

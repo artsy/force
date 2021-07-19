@@ -1,7 +1,8 @@
 // @ts-check
-const crypto = require("crypto")
+import crypto from 'crypto'
+import { env } from "../utils/env"
 
-const FRAMEWORK_BUNDLES = ["react", "react-dom"]
+const FRAMEWORK_BUNDLES = ["react", "react-dom", "@sentry"]
 
 const TOTAL_PAGES = 12
 
@@ -84,7 +85,7 @@ export const clientChunks = {
     },
   },
   maxInitialRequests: 20,
-  maxSize: 307200, // 300 KiB
+  maxSize: env.webpackBundleSplit ? 307200 : undefined, // 300 KiB
   // A chunk should be at least 100KiB before using splitChunks
-  minSize: 102400,
+  minSize: env.webpackBundleSplit ? 102400 : undefined,
 }

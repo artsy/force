@@ -1,7 +1,6 @@
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { MyBidsBidItem_saleArtwork } from "v2/__generated__/MyBidsBidItem_saleArtwork.graphql"
-
 import {
   ArrowDownCircleIcon,
   ArrowUpCircleIcon,
@@ -17,7 +16,6 @@ import { useTracking } from "react-tracking"
 import { useAnalyticsContext } from "v2/System"
 import { clickedArtworkGroup } from "@artsy/cohesion"
 import { tabTypeToContextModuleMap } from "../../Utils/tabTypeToContextModuleMap"
-import styled from "styled-components"
 
 interface MyBidsBidItemProps {
   horizontalSlidePosition: number
@@ -30,7 +28,9 @@ export const MyBidsBidItem: React.FC<MyBidsBidItemProps> = ({
 }) => {
   const { trackEvent } = useTracking()
   const { contextPageOwnerType } = useAnalyticsContext()
+
   const contextModule = tabTypeToContextModuleMap.myBids
+  const image = saleArtwork.artwork?.image?.resized
 
   return (
     <RouterLink
@@ -49,68 +49,86 @@ export const MyBidsBidItem: React.FC<MyBidsBidItemProps> = ({
         )
       }}
     >
-      <Flex width="100%">
-        <Flex alignItems="center" width="100%">
-          <Box backgroundColor="black60" width={55} height={55}>
-            {/* @ts-expect-error STRICT_NULL_CHECK */}
-            {saleArtwork.artwork.image && (
-              <Image
-                // @ts-expect-error STRICT_NULL_CHECK
-                src={saleArtwork.artwork.image.resized.src}
-                // @ts-expect-error STRICT_NULL_CHECK
-                srcSet={saleArtwork.artwork.image.resized.srcSet}
-                width={55}
-                height={55}
-                style={{ objectFit: "cover" }}
-                lazyLoad
-              />
-            )}
+      <Flex alignItems="center" width="100%">
+        <Box backgroundColor="black60" flexShrink={0}>
+          {image && (
+            <Image
+              src={image.src}
+              srcSet={image.srcSet}
+              width={55}
+              height={55}
+              lazyLoad
+            />
+          )}
+        </Box>
+
+        <Spacer mr={1} />
+
+        <Flex flex={1} minWidth={0}>
+          <Box overflow="hidden" pr={1}>
+            <Text variant="xs" overflowEllipsis>
+              {saleArtwork.artwork?.artistNames}
+            </Text>
+
+            <Text variant="xs" color="black60">
+              Lot {saleArtwork.position}
+            </Text>
           </Box>
-          <Spacer mr={1} />
-          <Flex justifyContent="space-between" width="100%">
-            <Box>
-              {/* @ts-expect-error STRICT_NULL_CHECK */}
-              <Text variant="text">{saleArtwork.artwork.artistNames}</Text>
-              <Text variant="caption" color="black60">
-                Lot {saleArtwork.position}
-              </Text>
-            </Box>
 
-            <Box>
-              {saleArtwork.isWatching ? (
-                <>
+          <Flex flex={1} flexDirection="column" alignItems="flex-end">
+            {saleArtwork.isWatching ? (
+              <>
+                <Text variant="xs" overflowEllipsis>
+                  {saleArtwork.highestBid?.amount || saleArtwork.estimate}
+                </Text>
+
+                <Text
+                  variant="xs"
+                  color="black60"
+                  overflowEllipsis
+                  display="flex"
+                  alignItems="center"
+                >
+                  <WatchingIcon height={12} width={10} />
+                  &nbsp; Watching
+                </Text>
+              </>
+            ) : (
+              <>
+                <Text variant="xs" overflowEllipsis>
+                  {saleArtwork.lotState?.sellingPrice?.display}{" "}
+                  <Box as="span" color="black60">
+                    (
+                    {saleArtwork.lotState?.bidCount === 1
+                      ? `${saleArtwork.lotState.bidCount} bid`
+                      : `${saleArtwork.lotState?.bidCount} bids`}
+                    )
+                  </Box>
+                </Text>
+
+                {saleArtwork.isHighestBidder ? (
                   <Text
-                    variant="text"
-                    display="inline-block"
-                    pr={0.3}
-                    style={{ whiteSpace: "nowrap" }}
+                    variant="xs"
+                    color="green100"
+                    overflowEllipsis
+                    display="flex"
                   >
-                    {/* @ts-expect-error STRICT_NULL_CHECK */}
-                    {saleArtwork.highestBid.amount || saleArtwork.estimate}
+                    <ArrowUpCircleIcon height={15} width={15} fill="green100" />
+                    &nbsp; Highest bid
                   </Text>
-                  <Watching />
-                </>
-              ) : (
-                <>
-                  <StatusContainer>
-                    <Text variant="text" display="inline-block" pr={0.3}>
-                      {/* @ts-expect-error STRICT_NULL_CHECK */}
-                      {saleArtwork.lotState.sellingPrice.display}
-                    </Text>
-                    <Text color="black60" display="inline-block">
-                      {/* @ts-expect-error STRICT_NULL_CHECK */}
-                      {saleArtwork.lotState.bidCount === 1
-                        ? // @ts-expect-error STRICT_NULL_CHECK
-                          `${saleArtwork.lotState.bidCount} bid`
-                        : // @ts-expect-error STRICT_NULL_CHECK
-                          `${saleArtwork.lotState.bidCount} bids`}
-                    </Text>
-                  </StatusContainer>
-
-                  {saleArtwork.isHighestBidder ? <HighestBid /> : <Outbid />}
-                </>
-              )}
-            </Box>
+                ) : (
+                  <Text
+                    variant="xs"
+                    color="red100"
+                    overflowEllipsis
+                    alignItems="center"
+                  >
+                    <ArrowDownCircleIcon height={15} width={15} fill="red100" />
+                    &nbsp; Outbid
+                  </Text>
+                )}
+              </>
+            )}
           </Flex>
         </Flex>
       </Flex>
@@ -151,42 +169,3 @@ export const MyBidsBidItemFragmentContainer = createFragmentContainer(
     `,
   }
 )
-
-const HighestBid: React.FC = () => (
-  <StatusContainer>
-    <Box pr={0.3}>
-      <ArrowUpCircleIcon fill="green100" />
-    </Box>
-    <Text variant="text" color="green100">
-      Highest bid
-    </Text>
-  </StatusContainer>
-)
-
-const Outbid: React.FC = () => (
-  <StatusContainer>
-    <Box pr={0.3}>
-      <ArrowDownCircleIcon fill="red100" />
-    </Box>
-    <Text variant="text" color="red100">
-      Outbid
-    </Text>
-  </StatusContainer>
-)
-
-const Watching: React.FC = () => (
-  <StatusContainer>
-    <Box pr={0.3}>
-      <WatchingIcon width={12} height={12} top="1px" />
-    </Box>
-    <Text variant="text" color="black60">
-      Watching
-    </Text>
-  </StatusContainer>
-)
-
-const StatusContainer = styled(Flex).attrs({
-  justifyContent: "flex-end",
-})`
-  white-space: nowrap;
-`

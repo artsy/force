@@ -46,7 +46,7 @@ describe("HomeArtworkModuleContext", () => {
       })
 
       expect(wrapper.text()).toContain("Example Gene")
-      expect(wrapper.text()).toContain("View all")
+      expect(wrapper.text()).toContain("View All")
       expect(wrapper.html()).toContain("/gene/example-gene")
     })
   })
@@ -67,7 +67,7 @@ describe("HomeArtworkModuleContext", () => {
 
       expect(wrapper.text()).toContain("Example Fair")
       expect(wrapper.text()).toContain("June 9–12")
-      expect(wrapper.text()).toContain("View all")
+      expect(wrapper.text()).toContain("View All")
       expect(wrapper.html()).toContain("/fair/example-fair")
     })
   })
@@ -87,7 +87,7 @@ describe("HomeArtworkModuleContext", () => {
 
       expect(wrapper.text()).toContain("Example Sale")
       expect(wrapper.text()).toContain("Live bidding starts")
-      expect(wrapper.text()).toContain("View all")
+      expect(wrapper.text()).toContain("View All")
       expect(wrapper.html()).toContain("/sale/example-sale")
     })
   })

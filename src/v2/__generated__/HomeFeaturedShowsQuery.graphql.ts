@@ -24,34 +24,40 @@ query HomeFeaturedShowsQuery {
   }
 }
 
+fragment HomeFeaturedShow_show on Show {
+  name
+  href
+  startAt
+  endAt
+  formattedStartAt: startAt(format: "MMM D")
+  formattedEndAt: endAt(format: "MMM D")
+  partner {
+    __typename
+    ... on Partner {
+      name
+    }
+    ... on ExternalPartner {
+      name
+      id
+    }
+    ... on Node {
+      id
+    }
+  }
+  coverImage {
+    cropped(width: 600, height: 450) {
+      src
+      srcSet
+    }
+  }
+}
+
 fragment HomeFeaturedShows_orderedSet on OrderedSet {
   items {
     __typename
     ... on Show {
       internalID
-      name
-      href
-      startAt(format: "MMM D")
-      endAt(format: "D")
-      partner {
-        __typename
-        ... on Partner {
-          name
-        }
-        ... on ExternalPartner {
-          name
-          id
-        }
-        ... on Node {
-          id
-        }
-      }
-      coverImage {
-        cropped(width: 600, height: 450) {
-          src
-          srcSet
-        }
-      }
+      ...HomeFeaturedShow_show
     }
     ... on Node {
       id
@@ -93,6 +99,13 @@ v3 = {
   "storageKey": null
 },
 v4 = [
+  {
+    "kind": "Literal",
+    "name": "format",
+    "value": "MMM D"
+  }
+],
+v5 = [
   (v3/*: any*/)
 ];
 return {
@@ -165,29 +178,31 @@ return {
                   },
                   {
                     "alias": null,
-                    "args": [
-                      {
-                        "kind": "Literal",
-                        "name": "format",
-                        "value": "MMM D"
-                      }
-                    ],
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "startAt",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "endAt",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": "formattedStartAt",
+                    "args": (v4/*: any*/),
                     "kind": "ScalarField",
                     "name": "startAt",
                     "storageKey": "startAt(format:\"MMM D\")"
                   },
                   {
-                    "alias": null,
-                    "args": [
-                      {
-                        "kind": "Literal",
-                        "name": "format",
-                        "value": "D"
-                      }
-                    ],
+                    "alias": "formattedEndAt",
+                    "args": (v4/*: any*/),
                     "kind": "ScalarField",
                     "name": "endAt",
-                    "storageKey": "endAt(format:\"D\")"
+                    "storageKey": "endAt(format:\"MMM D\")"
                   },
                   {
                     "alias": null,
@@ -201,12 +216,12 @@ return {
                       (v2/*: any*/),
                       {
                         "kind": "InlineFragment",
-                        "selections": (v4/*: any*/),
+                        "selections": (v5/*: any*/),
                         "type": "Partner"
                       },
                       {
                         "kind": "InlineFragment",
-                        "selections": (v4/*: any*/),
+                        "selections": (v5/*: any*/),
                         "type": "ExternalPartner"
                       }
                     ],
@@ -276,7 +291,7 @@ return {
     "metadata": {},
     "name": "HomeFeaturedShowsQuery",
     "operationKind": "query",
-    "text": "query HomeFeaturedShowsQuery {\n  orderedSet(id: \"530ebe92139b21efd6000071\") {\n    ...HomeFeaturedShows_orderedSet\n    id\n  }\n}\n\nfragment HomeFeaturedShows_orderedSet on OrderedSet {\n  items {\n    __typename\n    ... on Show {\n      internalID\n      name\n      href\n      startAt(format: \"MMM D\")\n      endAt(format: \"D\")\n      partner {\n        __typename\n        ... on Partner {\n          name\n        }\n        ... on ExternalPartner {\n          name\n          id\n        }\n        ... on Node {\n          id\n        }\n      }\n      coverImage {\n        cropped(width: 600, height: 450) {\n          src\n          srcSet\n        }\n      }\n    }\n    ... on Node {\n      id\n    }\n    ... on FeaturedLink {\n      id\n    }\n  }\n}\n"
+    "text": "query HomeFeaturedShowsQuery {\n  orderedSet(id: \"530ebe92139b21efd6000071\") {\n    ...HomeFeaturedShows_orderedSet\n    id\n  }\n}\n\nfragment HomeFeaturedShow_show on Show {\n  name\n  href\n  startAt\n  endAt\n  formattedStartAt: startAt(format: \"MMM D\")\n  formattedEndAt: endAt(format: \"MMM D\")\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on ExternalPartner {\n      name\n      id\n    }\n    ... on Node {\n      id\n    }\n  }\n  coverImage {\n    cropped(width: 600, height: 450) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment HomeFeaturedShows_orderedSet on OrderedSet {\n  items {\n    __typename\n    ... on Show {\n      internalID\n      ...HomeFeaturedShow_show\n    }\n    ... on Node {\n      id\n    }\n    ... on FeaturedLink {\n      id\n    }\n  }\n}\n"
   }
 };
 })();

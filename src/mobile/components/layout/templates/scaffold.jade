@@ -49,36 +49,6 @@ html( class=htmlClass )
       if !sd.THIRD_PARTIES_DISABLED
         script( type="text/javascript", src="https://js.stripe.com/v3/" )
 
-      //- Sailthru Horizon JS - user interest data, personalization
-      if sd.SAILTHRU_CUSTOMER_ID && !sd.THIRD_PARTIES_DISABLED
-        script( type="text/javascript" ).
-          (function() {
-            function loadHorizon() {
-              var s = document.createElement('script');
-              s.type = 'text/javascript';
-              s.async = true;
-              s.src = location.protocol + '//ak.sail-horizon.com/spm/spm.v1.min.js';
-              var x = document.getElementsByTagName('script')[0];
-              x.parentNode.insertBefore(s, x);
-            }
-            loadHorizon();
-            function loadSailthru() {
-              if(typeof Sailthru !== "undefined" && typeof Sailthru.init === "function"){
-                Sailthru.init({ customerId: sd.SAILTHRU_CUSTOMER_ID });
-              }
-              else{
-                setTimeout(loadSailthru, 250);
-              }
-            }
-            var oldOnLoad = window.onload;
-            window.onload = function() {
-              if (typeof oldOnLoad === 'function') {
-                oldOnLoad();
-              }
-              loadSailthru();
-            };
-          })();
-
       if !sd.THIRD_PARTIES_DISABLED && sd.SIFT_BEACON_KEY
         script( type="text/javascript" ).
           var _sift = window._sift = window._sift || [];

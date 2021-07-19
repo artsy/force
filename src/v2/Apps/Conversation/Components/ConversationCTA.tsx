@@ -10,11 +10,15 @@ import { useSystemContext } from "v2/System/useSystemContext"
 interface ConversationCTAProps {
   conversation: ConversationCTA_conversation
   openInquiryModal: () => void
+  openOrderModal: () => void
+  onMount: () => void
 }
 
 export const ConversationCTA: React.FC<ConversationCTAProps> = ({
   conversation,
   openInquiryModal,
+  openOrderModal,
+  onMount,
 }) => {
   // Determine whether we have a conversation about an artwork
 
@@ -40,6 +44,8 @@ export const ConversationCTA: React.FC<ConversationCTAProps> = ({
         <OpenInquiryModalButtonQueryRenderer
           artworkID={artworkID!}
           openInquiryModal={() => openInquiryModal()}
+          onMount={onMount}
+          conversationID={conversationID}
         />
       )
     } else {
@@ -51,6 +57,7 @@ export const ConversationCTA: React.FC<ConversationCTAProps> = ({
           kind={kind}
           activeOrder={activeOrder}
           conversationID={conversationID}
+          openOrderModal={() => openOrderModal()}
         />
       )
     }

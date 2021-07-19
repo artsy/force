@@ -35,7 +35,6 @@ app.use(
  * of subapps. Apps with hardcoded routes or "RESTful" routes.
  */
 
-app.use(require("./apps/home"))
 app.use(require("./apps/editorial_features"))
 app.use(require("./apps/apply"))
 app.use(require("./apps/auction_reaction/server").app)
@@ -86,14 +85,12 @@ app.use(require("./apps/shortcuts"))
 // User profiles
 app.use(require("./apps/user"))
 
-// Used to test various SSR configurations
-app.use(require("./apps/ssr-experiments/server").app)
-
 // Apps that need to fetch a profile.
 // Because profile routes are usually top-level and use wild-card matchers in their routers,
 // it's best to keep them last. Otherwise it's easy for these to unexpectedly
 // catch conventional app routes.
 app.use(require("./apps/profile"))
+app.use(require("./apps/partner_redirect").app)
 app.use(require("./apps/partner2"))
 app.use(require("./apps/partner"))
 app.use(require("./apps/fair_redirect").app)

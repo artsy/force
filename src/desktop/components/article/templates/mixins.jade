@@ -106,6 +106,6 @@ mixin artwork_caption(artwork)
     if artwork.partner && artwork.partner.name
       p.artwork-item-partner.artwork-item-overflow
         if artwork.partner.slug
-          a(href='/' + artwork.partner.slug)= artwork.partner.name
+          a(href='/partner/' + artwork.partner.slug)= artwork.partner.name
         else
           = artwork.partner.name

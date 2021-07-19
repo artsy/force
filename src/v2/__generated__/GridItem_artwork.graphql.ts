@@ -12,7 +12,9 @@ export type GridItem_artwork = {
         readonly url: string | null;
         readonly aspect_ratio: number;
     } | null;
+    readonly artistNames: string | null;
     readonly href: string | null;
+    readonly is_saved: boolean | null;
     readonly " $fragmentRefs": FragmentRefs<"Metadata_artwork" | "SaveButton_artwork" | "Badge_artwork">;
     readonly " $refType": "GridItem_artwork";
 };
@@ -93,7 +95,21 @@ const node: ReaderFragment = {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
+      "name": "artistNames",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "href",
+      "storageKey": null
+    },
+    {
+      "alias": "is_saved",
+      "args": null,
+      "kind": "ScalarField",
+      "name": "isSaved",
       "storageKey": null
     },
     {
@@ -114,5 +130,5 @@ const node: ReaderFragment = {
   ],
   "type": "Artwork"
 };
-(node as any).hash = 'eb6308000a22022c07e5d4c85aeeddb7';
+(node as any).hash = '6926380fdd2818f29e6823875fb75862';
 export default node;

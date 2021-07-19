@@ -10,6 +10,10 @@ export function shouldUpdateScroll(_prevRenderArgs, { routes }) {
     if (routes?.some(route => route.ignoreScrollBehavior)) {
       return false
     }
+
+    if (routes.some(route => route.scrollToTop)) {
+      return [0, 0]
+    }
   } catch (error) {
     console.error("[Router/Utils/shouldUpdateScroll] Error:", error)
   }

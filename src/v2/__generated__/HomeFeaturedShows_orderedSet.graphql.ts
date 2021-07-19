@@ -7,19 +7,7 @@ export type HomeFeaturedShows_orderedSet = {
     readonly items: ReadonlyArray<({
         readonly __typename: "Show";
         readonly internalID: string;
-        readonly name: string | null;
-        readonly href: string | null;
-        readonly startAt: string | null;
-        readonly endAt: string | null;
-        readonly partner: {
-            readonly name?: string | null;
-        } | null;
-        readonly coverImage: {
-            readonly cropped: {
-                readonly src: string;
-                readonly srcSet: string;
-            } | null;
-        } | null;
+        readonly " $fragmentRefs": FragmentRefs<"HomeFeaturedShow_show">;
     } | {
         /*This will never be '%other', but we need some
         value in case none of the concrete values match.*/
@@ -35,18 +23,7 @@ export type HomeFeaturedShows_orderedSet$key = {
 
 
 
-const node: ReaderFragment = (function(){
-var v0 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "name",
-  "storageKey": null
-},
-v1 = [
-  (v0/*: any*/)
-];
-return {
+const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
@@ -77,107 +54,10 @@ return {
               "name": "internalID",
               "storageKey": null
             },
-            (v0/*: any*/),
             {
-              "alias": null,
               "args": null,
-              "kind": "ScalarField",
-              "name": "href",
-              "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": [
-                {
-                  "kind": "Literal",
-                  "name": "format",
-                  "value": "MMM D"
-                }
-              ],
-              "kind": "ScalarField",
-              "name": "startAt",
-              "storageKey": "startAt(format:\"MMM D\")"
-            },
-            {
-              "alias": null,
-              "args": [
-                {
-                  "kind": "Literal",
-                  "name": "format",
-                  "value": "D"
-                }
-              ],
-              "kind": "ScalarField",
-              "name": "endAt",
-              "storageKey": "endAt(format:\"D\")"
-            },
-            {
-              "alias": null,
-              "args": null,
-              "concreteType": null,
-              "kind": "LinkedField",
-              "name": "partner",
-              "plural": false,
-              "selections": [
-                {
-                  "kind": "InlineFragment",
-                  "selections": (v1/*: any*/),
-                  "type": "Partner"
-                },
-                {
-                  "kind": "InlineFragment",
-                  "selections": (v1/*: any*/),
-                  "type": "ExternalPartner"
-                }
-              ],
-              "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "concreteType": "Image",
-              "kind": "LinkedField",
-              "name": "coverImage",
-              "plural": false,
-              "selections": [
-                {
-                  "alias": null,
-                  "args": [
-                    {
-                      "kind": "Literal",
-                      "name": "height",
-                      "value": 450
-                    },
-                    {
-                      "kind": "Literal",
-                      "name": "width",
-                      "value": 600
-                    }
-                  ],
-                  "concreteType": "CroppedImageUrl",
-                  "kind": "LinkedField",
-                  "name": "cropped",
-                  "plural": false,
-                  "selections": [
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "src",
-                      "storageKey": null
-                    },
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "srcSet",
-                      "storageKey": null
-                    }
-                  ],
-                  "storageKey": "cropped(height:450,width:600)"
-                }
-              ],
-              "storageKey": null
+              "kind": "FragmentSpread",
+              "name": "HomeFeaturedShow_show"
             }
           ],
           "type": "Show"
@@ -188,6 +68,5 @@ return {
   ],
   "type": "OrderedSet"
 };
-})();
-(node as any).hash = 'f580b20e43b2f26b8e624efed1d6c154';
+(node as any).hash = '66447453f7810a7b6676ae408f7cb764';
 export default node;
