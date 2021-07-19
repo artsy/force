@@ -1,11 +1,11 @@
 // @ts-check
 
-require("dotenv/config")
 require("coffeescript/register")
 require("@babel/register")({
   extensions: [".ts", ".js", ".tsx", ".jsx"],
   plugins: ["babel-plugin-dynamic-import-node"],
 })
+require("./loadenv")
 
 const express = require("express")
 const path = require("path")
