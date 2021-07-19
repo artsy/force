@@ -25,20 +25,16 @@ export const ARTISTS_SUBMENU_DATA: MenuLinkData = {
     title: "Artists",
     links: [
       {
-        text: "Portrayals of Queer Love",
-        href: "/collection/queer-love-pride-month-2020",
+        text: "In-Demand Artists",
+        href: "/collection/in-demand-artists",
       },
       {
-        text: "Contemporary Women Surrealists",
-        href: "/collection/contemporary-women-surrealists",
+        text: "Artists We're Eyeing",
+        href: "/collection/artists-we-are-eyeing",
       },
       {
-        text: "Black Figurative Painters on the Rise",
-        href: "/collection/black-figurative-painters",
-      },
-      {
-        text: "Modern & Contemporary Masters",
-        href: "/collection/master-works",
+        text: "Artsy Vanguard Artists",
+        href: "/collection/artsy-vanguard-artists",
         dividerBelow: true,
       },
       {
@@ -66,10 +62,43 @@ export const ARTISTS_SUBMENU_DATA: MenuLinkData = {
         },
       },
       {
-        text: "Artist Nationality & Region",
+        text: "Popular Categories",
         menu: {
-          title: "Artist Nationality & Region",
+          title: "Popular Categories",
           links: [
+            {
+              text: "New From Emerging Artists",
+              href: "/collection/new-from-emerging-artists",
+            },
+            {
+              text: "Modern & Contemporary Masters",
+              href: "/collection/master-works",
+            },
+            {
+              text: "Limited-Edition Prints by Leading Artists",
+              href: "/collection/limited-edition-prints-trending-artists",
+            },
+            {
+              text: "Black Figurative Painters",
+              href: "/collection/black-figurative-painters",
+            },
+            {
+              text: "Women Artists to Watch",
+              href: "/collection/women-painters-on-the-rise",
+            },
+          ],
+        },
+        dividerBelow: true,
+      },
+      {
+        text: "Artist Nationality or Ethicity",
+        menu: {
+          title: "Artist Nationality or Ethicity",
+          links: [
+            {
+              text: "American",
+              href: "/collect?artist_nationalities%5B0%5D=American",
+            },
             {
               text: "African",
               href: "/collection/african-artists",
@@ -79,8 +108,8 @@ export const ARTISTS_SUBMENU_DATA: MenuLinkData = {
               href: "/collection/asian-artists",
             },
             {
-              text: "Australian & Oceanian",
-              href: "/collection/oceanian-artists",
+              text: "British",
+              href: "/collect?artist_nationalities%5B0%5D=British",
             },
             {
               text: "European",
@@ -94,10 +123,6 @@ export const ARTISTS_SUBMENU_DATA: MenuLinkData = {
               text: "Middle Eastern",
               href: "/collection/middle-eastern-artists",
             },
-            {
-              text: "North American",
-              href: "/collection/north-american-artists",
-            },
           ],
         },
       },
@@ -107,64 +132,35 @@ export const ARTISTS_SUBMENU_DATA: MenuLinkData = {
           title: "Featured Artists",
           links: [
             {
-              text: "Agnes Martin",
-              href: "/artist/agnes-martin/works-for-sale",
+              text: "Derrick Adams",
+              href: "/artist/derrick-adams/works-for-sale",
             },
             {
-              text: "Julie Mehretu",
-              href: "/artist/julie-mehretu/works-for-sale",
+              text: "Bridget Riley",
+              href: "/artist/bridget-riley/works-for-sale",
             },
             {
-              text: "Eddie Martinez",
-              href: "/artist/eddie-martinez/works-for-sale",
+              text: "Frank Stella",
+              href: "/artist/frank-stella/works-for-sale",
             },
             {
-              text: "Otis Kwame Kye Quaicoe",
-              href: "/artist/otis-kwame-kye-quaicoe/works-for-sale",
+              text: "Julian Opie",
+              href: "/artist/julian-opie/works-for-sale",
             },
             {
-              text: "Zanele Muholi",
-              href: "/artist/zanele-muholi/works-for-sale",
+              text: "Judy Chicago",
+              href: "/artist/judy-chicago/works-for-sale",
             },
             {
-              text: "Lee Ufan",
-              href: "/artist/lee-ufan/works-for-sale",
+              text: "Etel Adnan",
+              href: "/artist/etel-adnan/works-for-sale",
             },
             {
-              text: "Massimo Vitali",
-              href: "/artist/massimo-vitali/works-for-sale",
+              text: "Mickalene Thomas",
+              href: "/artist/mickalene-thomas/works-for-sale",
             },
           ],
         },
-      },
-      {
-        text: "Top Categories",
-        menu: {
-          title: "Top Categories",
-          links: [
-            {
-              text: "In-Demand Artists",
-              href: "/collection/in-demand-artists",
-            },
-            {
-              text: "Emerging Painters",
-              href: "/collection/emerging-painters",
-            },
-            {
-              text: "Critically Acclaimed Photographers",
-              href: "/collection/critically-acclaimed-photographers",
-            },
-            {
-              text: "Notable Street Artists",
-              href: "/collection/notable-street-artists",
-            },
-            {
-              text: "Limited-Edition Prints by Leading Artists",
-              href: "/collection/limited-edition-prints-trending-artists",
-            },
-          ],
-        },
-        dividerBelow: true,
       },
       {
         text: "View all artists",
@@ -180,11 +176,15 @@ export const ARTWORKS_SUBMENU_DATA: MenuLinkData = {
     title: "Artworks",
     links: [
       {
+        text: "Trove",
+        href: "/gene/trove",
+      },
+      {
         text: "New This Week",
         href: "/collection/new-this-week",
       },
       {
-        text: "What’s Trending",
+        text: "Trending on Artsy",
         href: "/collection/highlights-this-month",
       },
       {
@@ -214,7 +214,7 @@ export const ARTWORKS_SUBMENU_DATA: MenuLinkData = {
               href: "/collection/gallery-show-highlights",
             },
             {
-              text: "Nonprofit Shops",
+              text: "Non-profit Shops",
               href: "/collection/nonprofit-shops",
             },
           ],
@@ -270,8 +270,8 @@ export const ARTWORKS_SUBMENU_DATA: MenuLinkData = {
               href: "/collection/sculpture",
             },
             {
-              text: "Drawing",
-              href: "/collection/drawing",
+              text: "Works on Paper",
+              href: "/collection/works-on-paper",
             },
             {
               text: "Mixed Media",
@@ -320,6 +320,30 @@ export const ARTWORKS_SUBMENU_DATA: MenuLinkData = {
           ],
         },
         dividerBelow: true,
+      },
+      {
+        text: "Subject Matter",
+        menu: {
+          title: "Subject Matter",
+          links: [
+            {
+              text: "Abstract Art",
+              href: "/gene/abstract-art",
+            },
+            {
+              text: "Figurative Art",
+              href: "/gene/figurative-art",
+            },
+            {
+              text: "Landscapes",
+              href: "/gene/landscapes",
+            },
+            {
+              text: "Still Life",
+              href: "/gene/still-life",
+            },
+          ],
+        },
       },
       { text: "View all artworks", href: "/collect" },
     ],
