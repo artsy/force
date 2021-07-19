@@ -23,7 +23,9 @@ yarn install
 
 # Download the shared .env
 echo "Download .env.shared (for common local dev config)..."
-aws s3 cp s3://artsy-citadel/dev/.env.force .env.shared
+if [[ $(aws s3 ls s3://artsy-citadel/dev/ > /dev/null 2>&1 && echo $?) == 0 ]]; then
+  aws s3 cp s3://artsy-citadel/dev/.env.force .env.shared
+fi
 
 if [ ! -e ".env" ]; then
   echo "Initialize .env from from .env.example (for any custom configuration)..."
