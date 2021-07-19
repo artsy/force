@@ -136,6 +136,26 @@ describe("PartnerHeader", () => {
     )
   })
 
+  it("does not display address", () => {
+    const wrapper = getWrapper({
+      Partner: () => ({
+        name: "White cube",
+        locations: {
+          totalCount: 1,
+          edges: [
+            {
+              node: {
+                city: null,
+              },
+            },
+          ],
+        },
+      }),
+    })
+
+    expect(wrapper.find(PartnerHeaderAddress).text()).toContain("")
+  })
+
   it("displays links to partner profile page", () => {
     const wrapper = getWrapper({
       Partner: () => ({
