@@ -110,7 +110,7 @@ export const CollectApp: React.FC<CollectAppProps> = ({
               viewer?.artworksConnection
                 ?.aggregations as SharedArtworkFilterContextProps["aggregations"]
             }
-            counts={filterArtworks?.counts as Counts}
+            counts={viewer?.artworksConnection?.counts as Counts}
             filters={location.query as any}
             sortOptions={[
               { text: "Default", value: "-decayed_merch" },

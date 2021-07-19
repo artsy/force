@@ -149,13 +149,13 @@ function getArtworkFilterQuery() {
       }
       filterArtworks: artworksConnection(sort: $sort, first: 30) {
         ...SeoProductsForArtworks_artworks
-        counts @include(if: $shouldFetchCounts) {
-          followedArtists
-        }
       }
       viewer {
         ...ArtworkFilter_viewer @arguments(input: $input)
         artworksConnection(aggregations: $aggregations, input: $input) {
+          counts @include(if: $shouldFetchCounts) {
+            followedArtists
+          }
           aggregations {
             slice
             counts {
