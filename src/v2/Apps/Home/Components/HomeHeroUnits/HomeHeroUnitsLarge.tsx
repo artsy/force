@@ -21,6 +21,7 @@ import { useRef, useEffect } from "react"
 import { HomeCarousel } from "../HomeCarousel"
 import { useSystemContext } from "v2/System"
 import { useCallback } from "react"
+import { useNextPrevious } from "v2/Utils/Hooks/useNextPrevious"
 
 interface HomeHeroUnitsLargeProps {
   homePage: HomeHeroUnitsLarge_homePage
@@ -73,35 +74,10 @@ const HomeHeroUnitsLarge: React.FC<HomeHeroUnitsLargeProps> = ({
     stopAutoPlay()
   }
 
-  const containerRef = useRef<HTMLElement | null>(null)
-
-  useEffect(() => {
-    const handleKeydown = ({ key }: KeyboardEvent) => {
-      if (!containerRef.current) return
-
-      // Only triggers keyboard navigation if component is in focus
-      if (!containerRef.current.contains(document.activeElement)) {
-        return
-      }
-
-      switch (key) {
-        case "ArrowRight":
-          handleNext()
-          break
-        case "ArrowLeft":
-          handlePrev()
-          break
-        default:
-          break
-      }
-    }
-
-    document.addEventListener("keydown", handleKeydown)
-
-    return () => {
-      document.removeEventListener("keydown", handleKeydown)
-    }
-  }, [containerRef, handleNext, handlePrev])
+  const { containerRef } = useNextPrevious({
+    onNext: handleNext,
+    onPrevious: handlePrev,
+  })
 
   if (!homePage.heroUnits) return null
 

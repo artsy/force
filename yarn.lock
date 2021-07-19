@@ -48,10 +48,10 @@
     chokidar "^3.0.0"
     decache "^4.4.0"
 
-"@artsy/fresnel@1.7.0":
-  version "1.7.0"
-  resolved "https://registry.yarnpkg.com/@artsy/fresnel/-/fresnel-1.7.0.tgz#665f803cb9561c7c5d8f4a884803c2813ba9197a"
-  integrity sha512-TXIFVwMXE8GHe2c6NEJ6FFhB8+6gCIfU6lwd/MeSIwYw7QzpyYrcaOjvLh33ZmuD7HWSnQ0kdK9TErj7l9BrUQ==
+"@artsy/fresnel@1.8.0":
+  version "1.8.0"
+  resolved "https://registry.yarnpkg.com/@artsy/fresnel/-/fresnel-1.8.0.tgz#6e0a9e3dd6283ce6469642f41d568a5de6530a4c"
+  integrity sha512-Gu1ijNkNNtrj5xk0bxd1nAX1khaQd/omPlVvd38jWQpwyJn6KnsNZo/TotAFROw7PuDOFzOXu3EXMNO7cpj5LQ==
 
 "@artsy/fresnel@^1.0.13":
   version "1.3.1"

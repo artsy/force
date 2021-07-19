@@ -1,6 +1,6 @@
 import React from "react"
 import styled from "styled-components"
-import { uniq } from "lodash"
+import { compact, uniq } from "lodash"
 import { media } from "@artsy/palette"
 import { PartnerHeader_partner } from "v2/__generated__/PartnerHeader_partner.graphql"
 
@@ -14,10 +14,12 @@ export const TextWithNoWrap = styled.span`
 export const PartnerHeaderAddress: React.FC<
   PartnerHeader_partner["locations"]
 > = ({ edges }) => {
+  const cities = uniq(compact(edges?.map(edge => edge?.node?.city?.trim())))
+  if (!cities || cities.length === 0) return null
+
   return (
     <>
-      {/* @ts-expect-error STRICT_NULL_CHECK */}
-      {uniq(edges.map(edge => edge.node.city?.trim()))
+      {cities
         .filter(city => !!city)
         .map<React.ReactNode>((city, index) => (
           <TextWithNoWrap key={`${city}${index}`}>{city}</TextWithNoWrap>
