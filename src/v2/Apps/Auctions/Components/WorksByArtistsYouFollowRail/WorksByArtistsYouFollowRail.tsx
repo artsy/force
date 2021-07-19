@@ -52,7 +52,7 @@ const WorksByArtistsYouFollowRail: React.FC<WorksByArtistsYouFollowRailProps> = 
                 trackEvent(
                   clickedArtworkGroup({
                     contextModule,
-                    contextPageOwnerType,
+                    contextPageOwnerType: contextPageOwnerType!,
                     artworkID: node.internalID,
                     artworkSlug: node.slug,
                     horizontalSlidePosition: index,
