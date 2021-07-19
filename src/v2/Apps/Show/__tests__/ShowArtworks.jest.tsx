@@ -95,9 +95,6 @@ describe("ShowArtworks", () => {
       {
         label: "Color",
       },
-      {
-        label: "Galleries and institutions",
-      },
     ]
 
     filters.forEach((filter, filterIndex) => {
@@ -117,16 +114,6 @@ const AGGREGATIONS: SharedArtworkFilterContextProps["aggregations"] = [
         count: 483,
         name: "Massimo Listri",
         value: "massimo-listri",
-      },
-    ],
-  },
-  {
-    slice: "PARTNER",
-    counts: [
-      {
-        name: "Rago/Wright",
-        value: "rago-slash-wright",
-        count: 2,
       },
     ],
   },
