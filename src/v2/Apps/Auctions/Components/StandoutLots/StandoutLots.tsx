@@ -1,5 +1,5 @@
 import { AuthContextModule, clickedArtworkGroup } from "@artsy/cohesion"
-import { Box, Shelf, Spacer, Text } from "@artsy/palette"
+import { Shelf, Spacer, Text } from "@artsy/palette"
 import { graphql } from "lib/graphql"
 import React from "react"
 import { createFragmentContainer } from "react-relay"
@@ -27,20 +27,18 @@ const StandoutLots: React.FC<StandoutLotsProps> = ({ viewer }) => {
 
   return (
     <>
-      <Box>
-        <Text as="h3" variant="lg" color="black100">
-          Standout Lots{" "}
-          <sup>
-            <Text as="span" variant="xs" color="brand">
-              {viewer.standoutLotsConnection?.edges?.length}
-            </Text>
-          </sup>
-        </Text>
+      <Text as="h3" variant="lg" color="black100">
+        Standout Lots{" "}
+        <sup>
+          <Text as="span" variant="xs" color="brand">
+            {viewer.standoutLotsConnection?.edges?.length}
+          </Text>
+        </sup>
+      </Text>
 
-        <Text as="h3" variant="lg" color="black60" mb={2}>
-          Works that Artsy curators love
-        </Text>
-      </Box>
+      <Text as="h3" variant="lg" color="black60">
+        Works that Artsy curators love
+      </Text>
 
       <Spacer mb={4} />
 
@@ -57,7 +55,6 @@ const StandoutLots: React.FC<StandoutLotsProps> = ({ viewer }) => {
                 trackEvent(
                   clickedArtworkGroup({
                     contextModule,
-                    // @ts-expect-error STRICT_NULL_CHECK
                     contextPageOwnerType,
                     artworkID: node.internalID,
                     artworkSlug: node.slug,

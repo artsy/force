@@ -66,16 +66,13 @@ const AuctionsApp: React.FC<AuctionsAppProps> = props => {
       <Spacer mt={4} />
       <Tabs>
         {user && (
-          <>
-            <Tab name="Works For You">
-              <Separator my={6} />
-              <Join separator={<Spacer mt={6} />}>
-                {viewer.me && <MyBidsFragmentContainer me={viewer.me} />}
+          <Tab name="Works For You">
+            <Join separator={<Spacer mt={2} />}>
+              {viewer.me && <MyBidsFragmentContainer me={viewer.me} />}
 
-                <WorksByArtistsYouFollowRailFragmentContainer viewer={viewer} />
-              </Join>
-            </Tab>
-          </>
+              <WorksByArtistsYouFollowRailFragmentContainer viewer={viewer} />
+            </Join>
+          </Tab>
         )}
         <Tab name="Trending Lots">
           <TrendingLotsFragmentContainer viewer={viewer} />

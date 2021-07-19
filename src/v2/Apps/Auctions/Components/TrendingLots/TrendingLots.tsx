@@ -2,7 +2,7 @@ import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 
-import { Box, Shelf, Spacer, Text } from "@artsy/palette"
+import { Shelf, Spacer, Text } from "@artsy/palette"
 import { AuthContextModule, clickedArtworkGroup } from "@artsy/cohesion"
 
 import { extractNodes } from "v2/Utils/extractNodes"
@@ -27,21 +27,18 @@ const TrendingLots: React.FC<TrendingLotsProps> = ({ viewer }) => {
 
   return (
     <>
-      <Box>
-        <Text as="h3" variant="lg" color="black100">
-          Trending lots{" "}
-          <sup>
-            <Text as="span" variant="xs" color="brand">
-              {/* @ts-expect-error STRICT_NULL_CHECK */}
-              {viewer.trendingLotsConnection.edges.length}
-            </Text>
-          </sup>
-        </Text>
+      <Text as="h3" variant="lg" color="black100">
+        Trending lots{" "}
+        <sup>
+          <Text as="span" variant="xs" color="brand">
+            {viewer.trendingLotsConnection?.edges?.length}
+          </Text>
+        </sup>
+      </Text>
 
-        <Text as="h3" variant="lg" color="black60" mb={2}>
-          Works with the most bids today
-        </Text>
-      </Box>
+      <Text as="h3" variant="lg" color="black60">
+        Works with the most bids today
+      </Text>
 
       <Spacer mb={4} />
 
@@ -58,7 +55,6 @@ const TrendingLots: React.FC<TrendingLotsProps> = ({ viewer }) => {
                 trackEvent(
                   clickedArtworkGroup({
                     contextModule,
-                    // @ts-expect-error STRICT_NULL_CHECK
                     contextPageOwnerType,
                     artworkID: node.internalID,
                     artworkSlug: node.slug,
