@@ -10,10 +10,9 @@ import { BreadCrumbList } from "v2/Components/Seo"
 import { Match } from "found"
 import React from "react"
 import { Link, Meta, Title } from "react-head"
-import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
+import { RelayRefetchProp, graphql, createFragmentContainer } from "react-relay"
 import { data as sd } from "sharify"
 import truncate from "trunc-html"
-import { CollectionAppQuery } from "./CollectionAppQuery"
 import { CollectionsHubRailsContainer as CollectionsHubRails } from "./Components/CollectionsHubRails"
 import { LazyLoadComponent } from "react-lazy-load-image-component"
 import {
@@ -21,15 +20,13 @@ import {
   AnalyticsContextProps,
   useAnalyticsContext,
 } from "v2/System/Analytics/AnalyticsContext"
-import { BaseArtworkFilter } from "v2/Components/ArtworkFilter"
 import {
-  ArtworkFilterContextProvider,
-  SharedArtworkFilterContextProps,
+  Aggregations,
+  Counts,
 } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
-import { updateUrl } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
 import { TrackingProp } from "react-tracking"
 import { ErrorPage } from "v2/Components/ErrorPage"
-import { usePathnameComplete } from "v2/Utils/Hooks/usePathnameComplete"
+import { CollectionArtworksFilterRefetchContainer as CollectionArtworksFilter } from "./Components/CollectionArtworksFilter"
 
 interface CollectionAppProps extends SystemContextProps, AnalyticsContextProps {
   collection: Collection_collection
@@ -39,13 +36,7 @@ interface CollectionAppProps extends SystemContextProps, AnalyticsContextProps {
 }
 
 export const CollectionApp: React.FC<CollectionAppProps> = props => {
-  const {
-    collection,
-    match: { location },
-    relay,
-  } = props
-
-  const { pathname } = usePathnameComplete()
+  const { collection } = props
 
   if (!collection) return <ErrorPage code={404} />
 
@@ -58,6 +49,7 @@ export const CollectionApp: React.FC<CollectionAppProps> = props => {
     artworksConnection,
     descending_artworks,
     ascending_artworks,
+    filtered_artworks,
   } = collection
   const collectionHref = `${sd.APP_URL}/collection/${slug}`
 
@@ -122,46 +114,14 @@ export const CollectionApp: React.FC<CollectionAppProps> = props => {
 
         <Spacer mt={6} />
 
-        <ArtworkFilterContextProvider
-          // Reset state of filter context without calling reset; which would
-          // affect analytics.
-          key={pathname}
-          filters={location.query}
-          sortOptions={[
-            { text: "Default", value: "-decayed_merch" },
-            {
-              text: "Price (desc.)",
-              value: "sold,-has_price,-prices",
-            },
-            {
-              text: "Price (asc.)",
-              value: "sold,-has_price,prices",
-            },
-            {
-              text: "Recently updated",
-              value: "-partner_updated_at",
-            },
-            { text: "Recently added", value: "-published_at" },
-            { text: "Artwork year (desc.)", value: "-year" },
-            { text: "Artwork year (asc.)", value: "year" },
-          ]}
-          // @ts-expect-error STRICT_NULL_CHECK
+        <CollectionArtworksFilter
+          collection={collection}
           aggregations={
-            artworksConnection !== null
-              ? (artworksConnection?.aggregations as SharedArtworkFilterContextProps["aggregations"])
-              : null
+            (collection.artworksConnection?.aggregations as Aggregations) ??
+            undefined
           }
-          onChange={updateUrl}
-        >
-          <BaseArtworkFilter
-            relay={relay}
-            viewer={collection}
-            relayVariables={{
-              slug: collection.slug,
-              aggregations: ["TOTAL"],
-            }}
-          />
-        </ArtworkFilterContextProvider>
+          counts={(filtered_artworks?.counts as Counts) ?? undefined}
+        />
 
         {/* HOTFIX FIXME: This rail was causing an error if included in SSR render
               pass and so it was deferred to the client.
@@ -203,7 +163,7 @@ const TrackingWrappedCollectionApp: React.FC<CollectionAppProps> = props => {
   )
 }
 
-export const CollectionRefetchContainer = createRefetchContainer(
+export const CollectionFragmentContainer = createFragmentContainer(
   withSystemContext(TrackingWrappedCollectionApp),
   {
     collection: graphql`
@@ -211,6 +171,7 @@ export const CollectionRefetchContainer = createRefetchContainer(
         @argumentDefinitions(
           aggregations: { type: "[ArtworkAggregation]" }
           input: { type: "FilterArtworksInput" }
+          shouldFetchCounts: { type: "Boolean!", defaultValue: false }
         ) {
         ...Header_collection
         description
@@ -280,10 +241,13 @@ export const CollectionRefetchContainer = createRefetchContainer(
 
         filtered_artworks: artworksConnection(input: $input) {
           id
-          ...ArtworkFilterArtworkGrid_filtered_artworks
+          counts @include(if: $shouldFetchCounts) {
+            followedArtists
+          }
         }
+
+        ...CollectionArtworksFilter_collection @arguments(input: $input)
       }
     `,
-  },
-  CollectionAppQuery
+  }
 )

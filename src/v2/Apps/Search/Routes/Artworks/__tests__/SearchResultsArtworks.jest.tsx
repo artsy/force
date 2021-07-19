@@ -1,8 +1,8 @@
 import { MockBoot } from "v2/DevTools"
 import React from "react"
-import { GeneArtworkFilterRefetchContainer } from "../GeneArtworkFilter"
+import { SearchResultsArtworksRouteFragmentContainer as SearchResultsArtworks } from "../SearchResultsArtworks"
 import { graphql } from "react-relay"
-import { GeneArtworkFilter_Query } from "v2/__generated__/GeneArtworkFilter_Query.graphql"
+import { SearchResultsArtworks_Query } from "v2/__generated__/SearchResultsArtworks_Query.graphql"
 import { useTracking } from "v2/System/Analytics/useTracking"
 import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
 
@@ -15,27 +15,23 @@ jest.mock("v2/System/Router/useRouter", () => ({
   }),
 }))
 jest.mock("v2/System/Analytics/useTracking")
-jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
-  useMatchMedia: () => ({}),
-}))
 
-const { getWrapper } = setupTestWrapper<GeneArtworkFilter_Query>({
-  Component: ({ gene }) => (
+const { getWrapper } = setupTestWrapper<SearchResultsArtworks_Query>({
+  Component: ({ viewer }) => (
     <MockBoot user={{ id: "percy-z" }}>
-      <GeneArtworkFilterRefetchContainer gene={gene!} />
+      <SearchResultsArtworks viewer={viewer!} />
     </MockBoot>
   ),
   query: graphql`
-    query GeneArtworkFilter_Query($slug: String!) {
-      gene(id: $slug) {
-        ...GeneArtworkFilter_gene @arguments(shouldFetchCounts: true)
+    query SearchResultsArtworks_Query {
+      viewer {
+        ...SearchResultsArtworks_viewer @arguments(shouldFetchCounts: true)
       }
     }
   `,
-  variables: { slug: "representations-of-architecture" },
 })
 
-describe("GeneArtworkFilter", () => {
+describe("SearchResultsArtworks", () => {
   const trackEvent = jest.fn()
 
   beforeEach(() => {

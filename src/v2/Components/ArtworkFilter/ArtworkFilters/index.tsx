@@ -10,18 +10,28 @@ import { ArtworkLocationFilter } from "./ArtworkLocationFilter"
 import { ArtistNationalityFilter } from "./ArtistNationalityFilter"
 import { MaterialsFilter } from "./MaterialsFilter"
 import { PartnersFilter } from "./PartnersFilter"
+import { ArtistsFilter } from "./ArtistsFilter"
+import RelayModernEnvironment from "relay-runtime/lib/store/RelayModernEnvironment"
 
-export const ArtworkFilters: React.FC = () => {
+interface ArtworkFiltersProps {
+  user?: User
+  relayEnvironment?: RelayModernEnvironment
+}
+
+export const ArtworkFilters: React.FC<ArtworkFiltersProps> = props => {
+  const { user, relayEnvironment } = props
+
   return (
     <>
-      <MediumFilter expanded />
-      <MaterialsFilter expanded />
-      <PriceRangeFilter />
+      <ArtistsFilter relayEnvironment={relayEnvironment} user={user} expanded />
       <AttributionClassFilter expanded />
-      <SizeFilter />
-      <WaysToBuyFilter />
-      <ArtworkLocationFilter expanded />
-      <ArtistNationalityFilter expanded />
+      <MediumFilter expanded />
+      <PriceRangeFilter expanded />
+      <SizeFilter expanded />
+      <WaysToBuyFilter expanded />
+      <MaterialsFilter />
+      <ArtistNationalityFilter />
+      <ArtworkLocationFilter />
       <TimePeriodFilter />
       <ColorFilter />
       <PartnersFilter />

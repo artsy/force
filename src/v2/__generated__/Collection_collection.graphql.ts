@@ -50,9 +50,11 @@ export type Collection_collection = {
     } | null;
     readonly filtered_artworks: {
         readonly id: string;
-        readonly " $fragmentRefs": FragmentRefs<"ArtworkFilterArtworkGrid_filtered_artworks">;
+        readonly counts?: {
+            readonly followedArtists: number | null;
+        } | null;
     } | null;
-    readonly " $fragmentRefs": FragmentRefs<"Header_collection">;
+    readonly " $fragmentRefs": FragmentRefs<"Header_collection" | "CollectionArtworksFilter_collection">;
     readonly " $refType": "Collection_collection";
 };
 export type Collection_collection$data = Collection_collection;
@@ -85,7 +87,14 @@ v3 = {
   "kind": "Literal",
   "name": "sort",
   "value": "-decayed_merch"
-};
+},
+v4 = [
+  {
+    "kind": "Variable",
+    "name": "input",
+    "variableName": "input"
+  }
+];
 return {
   "argumentDefinitions": [
     {
@@ -99,6 +108,12 @@ return {
       "kind": "LocalArgument",
       "name": "input",
       "type": "FilterArtworksInput"
+    },
+    {
+      "defaultValue": false,
+      "kind": "LocalArgument",
+      "name": "shouldFetchCounts",
+      "type": "Boolean!"
     }
   ],
   "kind": "Fragment",
@@ -403,13 +418,7 @@ return {
     },
     {
       "alias": "filtered_artworks",
-      "args": [
-        {
-          "kind": "Variable",
-          "name": "input",
-          "variableName": "input"
-        }
-      ],
+      "args": (v4/*: any*/),
       "concreteType": "FilterArtworksConnection",
       "kind": "LinkedField",
       "name": "artworksConnection",
@@ -417,9 +426,29 @@ return {
       "selections": [
         (v0/*: any*/),
         {
-          "args": null,
-          "kind": "FragmentSpread",
-          "name": "ArtworkFilterArtworkGrid_filtered_artworks"
+          "condition": "shouldFetchCounts",
+          "kind": "Condition",
+          "passingValue": true,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": "FilterArtworksCounts",
+              "kind": "LinkedField",
+              "name": "counts",
+              "plural": false,
+              "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "followedArtists",
+                  "storageKey": null
+                }
+              ],
+              "storageKey": null
+            }
+          ]
         }
       ],
       "storageKey": null
@@ -428,10 +457,15 @@ return {
       "args": null,
       "kind": "FragmentSpread",
       "name": "Header_collection"
+    },
+    {
+      "args": (v4/*: any*/),
+      "kind": "FragmentSpread",
+      "name": "CollectionArtworksFilter_collection"
     }
   ],
   "type": "MarketingCollection"
 };
 })();
-(node as any).hash = '360adf1045a85a674a06328896cb0140';
+(node as any).hash = '48fbf21b0aae114b8fd6410864e046d2';
 export default node;

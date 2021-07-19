@@ -4,7 +4,6 @@ import { graphql } from "react-relay"
 import { allowedFilters } from "v2/Components/ArtworkFilter/Utils/allowedFilters"
 
 import { paramsToCamelCase } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
-import { CollectionAppQuery } from "./Routes/Collection/CollectionAppQuery"
 
 const CollectApp = loadable(
   () => import(/* webpackChunkName: "collectBundle" */ "./Routes/Collect"),
@@ -21,7 +20,7 @@ const CollectionsApp = loadable(
 const CollectionApp = loadable(
   () => import(/* webpackChunkName: "collectBundle" */ "./Routes/Collection"),
   {
-    resolveComponent: component => component.CollectionRefetchContainer,
+    resolveComponent: component => component.CollectionFragmentContainer,
   }
 )
 
@@ -69,7 +68,23 @@ export const collectRoutes: AppRouteConfig[] = [
       CollectionApp.preload()
     },
     prepareVariables: initializeVariablesWithFilterState,
-    query: CollectionAppQuery,
+    query: graphql`
+      query collectRoutes_CollectionQuery(
+        $input: FilterArtworksInput
+        $slug: String!
+        $aggregations: [ArtworkAggregation]
+        $shouldFetchCounts: Boolean!
+      ) {
+        collection: marketingCollection(slug: $slug) @principalField {
+          ...Collection_collection
+            @arguments(
+              input: $input
+              aggregations: $aggregations
+              shouldFetchCounts: $shouldFetchCounts
+            )
+        }
+      }
+    `,
   },
 ]
 
@@ -96,7 +111,7 @@ function initializeVariablesWithFilterState(params, props) {
 
   // TODO: Do these aggregations accomplish much on /collect?
   const collectionOnlyAggregations = collectionSlug
-    ? ["MERCHANDISABLE_ARTISTS", "MEDIUM", "MAJOR_PERIOD"]
+    ? ["MERCHANDISABLE_ARTISTS", "MEDIUM", "MAJOR_PERIOD", "ARTIST"]
     : []
   const aggregations = [
     "TOTAL",
@@ -117,6 +132,7 @@ function initializeVariablesWithFilterState(params, props) {
     aggregations,
     slug: collectionSlug,
     sort: "-decayed_merch",
+    shouldFetchCounts: !!props.context.user,
   }
 }
 
@@ -126,12 +142,16 @@ function getArtworkFilterQuery() {
       $sort: String
       $input: FilterArtworksInput
       $aggregations: [ArtworkAggregation]
+      $shouldFetchCounts: Boolean!
     ) {
       marketingHubCollections {
         ...Collect_marketingHubCollections
       }
       filterArtworks: artworksConnection(sort: $sort, first: 30) {
         ...SeoProductsForArtworks_artworks
+        counts @include(if: $shouldFetchCounts) {
+          followedArtists
+        }
       }
       viewer {
         ...ArtworkFilter_viewer @arguments(input: $input)

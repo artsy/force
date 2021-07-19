@@ -17,6 +17,7 @@ export const MediumFilter: FC<MediumFilterProps> = ({ expanded }) => {
     slice: "",
     counts: [],
   }
+
   const allowedMediums =
     mediums && mediums.counts.length ? mediums.counts : hardcodedMediums
 

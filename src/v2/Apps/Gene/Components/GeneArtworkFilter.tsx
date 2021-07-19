@@ -8,16 +8,7 @@ import {
   Counts,
   SharedArtworkFilterContextProps,
 } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
-import { MediumFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/MediumFilter"
-import { PriceRangeFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/PriceRangeFilter"
-import { WaysToBuyFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/WaysToBuyFilter"
-import { SizeFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/SizeFilter"
-import { TimePeriodFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/TimePeriodFilter"
-import { ColorFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/ColorFilter"
-import { ArtistsFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/ArtistsFilter"
 import { GeneArtworkFilter_gene } from "v2/__generated__/GeneArtworkFilter_gene.graphql"
-import { AttributionClassFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/AttributionClassFilter"
-import { useSystemContext } from "v2/System"
 
 interface GeneArtworkFilterProps {
   gene: GeneArtworkFilter_gene
@@ -30,21 +21,6 @@ const GeneArtworkFilter: React.FC<GeneArtworkFilterProps> = ({
 }) => {
   const { match } = useRouter()
   const { filtered_artworks, sidebarAggregations } = gene
-
-  const { relayEnvironment, user } = useSystemContext()
-
-  const Filters = (
-    <>
-      <ArtistsFilter relayEnvironment={relayEnvironment} user={user} />
-      <MediumFilter expanded />
-      <PriceRangeFilter />
-      <AttributionClassFilter expanded />
-      <SizeFilter />
-      <WaysToBuyFilter />
-      <TimePeriodFilter />
-      <ColorFilter />
-    </>
-  )
 
   return (
     <ArtworkFilterContextProvider
@@ -64,7 +40,7 @@ const GeneArtworkFilter: React.FC<GeneArtworkFilterProps> = ({
       }
       counts={filtered_artworks?.counts as Counts}
     >
-      <BaseArtworkFilter relay={relay} viewer={gene} Filters={Filters} />
+      <BaseArtworkFilter relay={relay} viewer={gene} />
     </ArtworkFilterContextProvider>
   )
 }

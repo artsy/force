@@ -1,8 +1,8 @@
 import { MockBoot } from "v2/DevTools"
 import React from "react"
-import { GeneArtworkFilterRefetchContainer } from "../GeneArtworkFilter"
+import { TagArtworkFilterRefetchContainer } from "../Components/TagArtworkFilter"
 import { graphql } from "react-relay"
-import { GeneArtworkFilter_Query } from "v2/__generated__/GeneArtworkFilter_Query.graphql"
+import { TagArtworkFilter_Query } from "v2/__generated__/TagArtworkFilter_Query.graphql"
 import { useTracking } from "v2/System/Analytics/useTracking"
 import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
 
@@ -19,23 +19,23 @@ jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
   useMatchMedia: () => ({}),
 }))
 
-const { getWrapper } = setupTestWrapper<GeneArtworkFilter_Query>({
-  Component: ({ gene }) => (
+const { getWrapper } = setupTestWrapper<TagArtworkFilter_Query>({
+  Component: ({ tag }) => (
     <MockBoot user={{ id: "percy-z" }}>
-      <GeneArtworkFilterRefetchContainer gene={gene!} />
+      <TagArtworkFilterRefetchContainer tag={tag!} />
     </MockBoot>
   ),
   query: graphql`
-    query GeneArtworkFilter_Query($slug: String!) {
-      gene(id: $slug) {
-        ...GeneArtworkFilter_gene @arguments(shouldFetchCounts: true)
+    query TagArtworkFilter_Query($slug: String!) {
+      tag(id: $slug) {
+        ...TagArtworkFilter_tag @arguments(shouldFetchCounts: true)
       }
     }
   `,
-  variables: { slug: "representations-of-architecture" },
+  variables: { slug: "tag" },
 })
 
-describe("GeneArtworkFilter", () => {
+describe("TagArtworkFilter", () => {
   const trackEvent = jest.fn()
 
   beforeEach(() => {

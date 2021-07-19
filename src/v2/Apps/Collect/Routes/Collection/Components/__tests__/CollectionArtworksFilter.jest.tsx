@@ -1,10 +1,14 @@
 import { MockBoot } from "v2/DevTools"
 import React from "react"
-import { GeneArtworkFilterRefetchContainer } from "../GeneArtworkFilter"
+import { CollectionArtworksFilterRefetchContainer as CollectionArtworksFilter } from "../CollectionArtworksFilter"
 import { graphql } from "react-relay"
-import { GeneArtworkFilter_Query } from "v2/__generated__/GeneArtworkFilter_Query.graphql"
+import { CollectionArtworksFilter_Query } from "v2/__generated__/CollectionArtworksFilter_Query.graphql"
 import { useTracking } from "v2/System/Analytics/useTracking"
 import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
+import {
+  Aggregations,
+  Counts,
+} from "v2/Components/ArtworkFilter/ArtworkFilterContext"
 
 jest.unmock("react-relay")
 jest.mock("v2/System/Router/useRouter", () => ({
@@ -19,23 +23,30 @@ jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
   useMatchMedia: () => ({}),
 }))
 
-const { getWrapper } = setupTestWrapper<GeneArtworkFilter_Query>({
-  Component: ({ gene }) => (
+const { getWrapper } = setupTestWrapper<CollectionArtworksFilter_Query>({
+  Component: ({ collection }) => (
     <MockBoot user={{ id: "percy-z" }}>
-      <GeneArtworkFilterRefetchContainer gene={gene!} />
+      <CollectionArtworksFilter
+        counts={COUNTS}
+        aggregations={AGGREGATIONS}
+        collection={collection!}
+      />
     </MockBoot>
   ),
   query: graphql`
-    query GeneArtworkFilter_Query($slug: String!) {
-      gene(id: $slug) {
-        ...GeneArtworkFilter_gene @arguments(shouldFetchCounts: true)
+    query CollectionArtworksFilter_Query(
+      $input: FilterArtworksInput
+      $slug: String!
+    ) {
+      collection: marketingCollection(slug: $slug) {
+        ...CollectionArtworksFilter_collection @arguments(input: $input)
       }
     }
   `,
   variables: { slug: "representations-of-architecture" },
 })
 
-describe("GeneArtworkFilter", () => {
+describe("CollectionArtworksFilter", () => {
   const trackEvent = jest.fn()
 
   beforeEach(() => {
@@ -53,75 +64,7 @@ describe("GeneArtworkFilter", () => {
   })
 
   it("renders filters in correct order", () => {
-    const wrapper = getWrapper({
-      FilterArtworksConnection: () => ({
-        counts: {
-          followedArtists: 10,
-        },
-        aggregations: [
-          {
-            slice: "ARTIST",
-            counts: [
-              {
-                count: 483,
-                name: "Massimo Listri",
-                value: "massimo-listri",
-              },
-            ],
-          },
-          {
-            slice: "PARTNER",
-            counts: [
-              {
-                name: "Rago/Wright",
-                value: "rago-slash-wright",
-                count: 2,
-              },
-            ],
-          },
-          {
-            slice: "LOCATION_CITY",
-            counts: [
-              {
-                name: "New York, NY, USA",
-                value: "New York, NY, USA",
-                count: 10,
-              },
-            ],
-          },
-          {
-            slice: "MEDIUM",
-            counts: [
-              {
-                name: "Painting",
-                value: "painting",
-                count: 472023,
-              },
-            ],
-          },
-          {
-            slice: "MATERIALS_TERMS",
-            counts: [
-              {
-                name: "Canvas",
-                value: "canvas",
-                count: 17,
-              },
-            ],
-          },
-          {
-            slice: "ARTIST_NATIONALITY",
-            counts: [
-              {
-                name: "American",
-                value: "American",
-                count: 21,
-              },
-            ],
-          },
-        ],
-      }),
-    })
+    const wrapper = getWrapper()
     const filterWrappers = wrapper.find("FilterExpandable")
     const filters = [
       {
@@ -176,3 +119,70 @@ describe("GeneArtworkFilter", () => {
     })
   })
 })
+
+const COUNTS: Counts = {
+  followedArtists: 10,
+}
+
+const AGGREGATIONS: Aggregations = [
+  {
+    slice: "ARTIST",
+    counts: [
+      {
+        count: 483,
+        name: "Massimo Listri",
+        value: "massimo-listri",
+      },
+    ],
+  },
+  {
+    slice: "PARTNER",
+    counts: [
+      {
+        name: "Rago/Wright",
+        value: "rago-slash-wright",
+        count: 2,
+      },
+    ],
+  },
+  {
+    slice: "LOCATION_CITY",
+    counts: [
+      {
+        name: "New York, NY, USA",
+        value: "New York, NY, USA",
+        count: 10,
+      },
+    ],
+  },
+  {
+    slice: "MEDIUM",
+    counts: [
+      {
+        name: "Painting",
+        value: "painting",
+        count: 472023,
+      },
+    ],
+  },
+  {
+    slice: "MATERIALS_TERMS",
+    counts: [
+      {
+        name: "Canvas",
+        value: "canvas",
+        count: 17,
+      },
+    ],
+  },
+  {
+    slice: "ARTIST_NATIONALITY",
+    counts: [
+      {
+        name: "American",
+        value: "American",
+        count: 21,
+      },
+    ],
+  },
+]

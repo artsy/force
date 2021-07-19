@@ -4,10 +4,11 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkAggregation = "ARTIST" | "ARTIST_NATIONALITY" | "ATTRIBUTION_CLASS" | "COLOR" | "DIMENSION_RANGE" | "FOLLOWED_ARTISTS" | "GALLERY" | "INSTITUTION" | "LOCATION_CITY" | "MAJOR_PERIOD" | "MATERIALS_TERMS" | "MEDIUM" | "MERCHANDISABLE_ARTISTS" | "PARTNER" | "PARTNER_CITY" | "PERIOD" | "PRICE_RANGE" | "TOTAL" | "%future added value";
-export type TagArtworkFilter_tag = {
-    readonly slug: string;
-    readonly internalID: string;
-    readonly sidebarAggregations: {
+export type SearchResultsArtworks_viewer = {
+    readonly sidebar: {
+        readonly counts?: {
+            readonly followedArtists: number | null;
+        } | null;
         readonly aggregations: ReadonlyArray<{
             readonly slice: ArtworkAggregation | null;
             readonly counts: ReadonlyArray<{
@@ -17,19 +18,13 @@ export type TagArtworkFilter_tag = {
             } | null> | null;
         } | null> | null;
     } | null;
-    readonly filtered_artworks: {
-        readonly id: string;
-        readonly counts?: {
-            readonly followedArtists: number | null;
-        } | null;
-        readonly " $fragmentRefs": FragmentRefs<"ArtworkFilterArtworkGrid_filtered_artworks">;
-    } | null;
-    readonly " $refType": "TagArtworkFilter_tag";
+    readonly " $fragmentRefs": FragmentRefs<"ArtworkFilter_viewer">;
+    readonly " $refType": "SearchResultsArtworks_viewer";
 };
-export type TagArtworkFilter_tag$data = TagArtworkFilter_tag;
-export type TagArtworkFilter_tag$key = {
-    readonly " $data"?: TagArtworkFilter_tag$data;
-    readonly " $fragmentRefs": FragmentRefs<"TagArtworkFilter_tag">;
+export type SearchResultsArtworks_viewer$data = SearchResultsArtworks_viewer;
+export type SearchResultsArtworks_viewer$key = {
+    readonly " $data"?: SearchResultsArtworks_viewer$data;
+    readonly " $fragmentRefs": FragmentRefs<"SearchResultsArtworks_viewer">;
 };
 
 
@@ -57,24 +52,10 @@ const node: ReaderFragment = {
   ],
   "kind": "Fragment",
   "metadata": null,
-  "name": "TagArtworkFilter_tag",
+  "name": "SearchResultsArtworks_viewer",
   "selections": [
     {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "slug",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "internalID",
-      "storageKey": null
-    },
-    {
-      "alias": "sidebarAggregations",
+      "alias": "sidebar",
       "args": [
         {
           "kind": "Variable",
@@ -89,7 +70,7 @@ const node: ReaderFragment = {
       ],
       "concreteType": "FilterArtworksConnection",
       "kind": "LinkedField",
-      "name": "filterArtworksConnection",
+      "name": "artworksConnection",
       "plural": false,
       "selections": [
         {
@@ -141,35 +122,6 @@ const node: ReaderFragment = {
             }
           ],
           "storageKey": null
-        }
-      ],
-      "storageKey": null
-    },
-    {
-      "alias": "filtered_artworks",
-      "args": [
-        {
-          "kind": "Literal",
-          "name": "first",
-          "value": 30
-        },
-        {
-          "kind": "Variable",
-          "name": "input",
-          "variableName": "input"
-        }
-      ],
-      "concreteType": "FilterArtworksConnection",
-      "kind": "LinkedField",
-      "name": "filterArtworksConnection",
-      "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "id",
-          "storageKey": null
         },
         {
           "condition": "shouldFetchCounts",
@@ -195,17 +147,23 @@ const node: ReaderFragment = {
               "storageKey": null
             }
           ]
-        },
-        {
-          "args": null,
-          "kind": "FragmentSpread",
-          "name": "ArtworkFilterArtworkGrid_filtered_artworks"
         }
       ],
       "storageKey": null
+    },
+    {
+      "args": [
+        {
+          "kind": "Variable",
+          "name": "input",
+          "variableName": "input"
+        }
+      ],
+      "kind": "FragmentSpread",
+      "name": "ArtworkFilter_viewer"
     }
   ],
-  "type": "Tag"
+  "type": "Viewer"
 };
-(node as any).hash = '0b6a23d6ca6313a91fe91bd2beddee79';
+(node as any).hash = '7488786274710c9452c8de2a516ebe7d';
 export default node;
