@@ -1,4 +1,4 @@
-import * as urls from "desktop/apps/auctions/utils/urls"
+import * as urls from "desktop/apps/auction/utils/urls"
 
 jest.mock("sharify", () => {
   return {
@@ -26,28 +26,6 @@ describe("desktop/apps/auctions/utils/urls.js", () => {
 
     it("does not append login with no options", () => {
       expect(urls.getLiveAuctionUrl("foo")).toEqual(`${PREDICTION_URL}/foo`)
-    })
-  })
-
-  describe("#getBidRedirectActionUrl", () => {
-    it("redirects to /auction/:id/bid/:artworkId if logged out or qualified to bid", () => {
-      expect(
-        urls.getBidRedirectActionUrl("logged-out", { id: "foo" }, { id: "bar" })
-      ).toEqual("/auction/bar/bid/foo")
-
-      expect(
-        urls.getBidRedirectActionUrl(
-          "qualified-to-bid",
-          { id: "foo" },
-          { id: "bar" }
-        )
-      ).toEqual("/auction/bar/bid/foo")
-    })
-
-    it("redirects to /artwork/:id by default", () => {
-      expect(
-        urls.getBidRedirectActionUrl("registered", { id: "foo" }, { id: "bar" })
-      ).toEqual("/artwork/foo")
     })
   })
 })
