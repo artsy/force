@@ -299,7 +299,12 @@ export const BaseArtworkFilter: React.FC<
             {Filters ? Filters : <ArtworkFilters />}
           </Column>
 
-          <Column span={9}>
+          <Column
+            span={9}
+            // Fix for issue in Firefox where contents overflow container.
+            // Safe to remove once artwork masonry uses CSS grid.
+            width="100%"
+          >
             {tokens.version === "v2" && (
               <Box mb={2} pt={2} borderTop="1px solid" borderTopColor="black10">
                 <SortFilter />
