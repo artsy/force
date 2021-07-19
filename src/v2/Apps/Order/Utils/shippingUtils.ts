@@ -165,5 +165,5 @@ export const getShippingQuotes = (
   const shippingQuotes =
     order?.lineItems?.edges &&
     order?.lineItems?.edges[0]?.node?.shippingQuoteOptions
-  return compact(shippingQuotes?.edges)
+  return shippingQuotes?.edges ? compact(shippingQuotes?.edges) : null
 }
