@@ -40,7 +40,7 @@ export const MyBidsBidItem: React.FC<MyBidsBidItemProps> = ({
         trackEvent(
           clickedArtworkGroup({
             contextModule,
-            contextPageOwnerType,
+            contextPageOwnerType: contextPageOwnerType!,
             artworkID: saleArtwork.internalID,
             artworkSlug: saleArtwork.slug,
             horizontalSlidePosition,
