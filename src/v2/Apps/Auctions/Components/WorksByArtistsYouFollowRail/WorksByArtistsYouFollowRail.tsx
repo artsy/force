@@ -52,7 +52,6 @@ const WorksByArtistsYouFollowRail: React.FC<WorksByArtistsYouFollowRailProps> = 
                 trackEvent(
                   clickedArtworkGroup({
                     contextModule,
-                    // @ts-expect-error STRICT_NULL_CHECK
                     contextPageOwnerType,
                     artworkID: node.internalID,
                     artworkSlug: node.slug,

@@ -40,7 +40,6 @@ export const MyBidsBidItem: React.FC<MyBidsBidItemProps> = ({
         trackEvent(
           clickedArtworkGroup({
             contextModule,
-            // @ts-expect-error STRICT_NULL_CHECK
             contextPageOwnerType,
             artworkID: saleArtwork.internalID,
             artworkSlug: saleArtwork.slug,

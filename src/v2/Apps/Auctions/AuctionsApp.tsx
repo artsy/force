@@ -8,7 +8,6 @@ import {
   Join,
   Spacer,
   Text,
-  Separator,
   Tabs,
   Tab,
 } from "@artsy/palette"
