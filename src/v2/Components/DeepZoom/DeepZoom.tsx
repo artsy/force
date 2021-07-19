@@ -1,5 +1,4 @@
-import { Box, Flex, Image, color, space } from "@artsy/palette"
-import { Link } from "react-head"
+import { Box, Flex, color, space } from "@artsy/palette"
 import { withSystemContext } from "v2/System"
 import * as Schema from "v2/System/Analytics/Schema"
 import FadeTransition from "v2/Components/Animation/FadeTransition"
@@ -8,9 +7,8 @@ import React from "react"
 import ReactDOM from "react-dom"
 import track from "react-tracking"
 import styled from "styled-components"
-import { userIsTeam } from "v2/Utils/user"
 import { CloseButton } from "./CloseButton"
-import { Slider, SliderProps } from "./LightboxSlider"
+import { Slider, SliderProps } from "./DeepZoomSlider"
 
 const KEYBOARD_EVENT = "keyup"
 const ZOOM_PER_CLICK = 1.4
@@ -24,11 +22,6 @@ const DeepZoomContainer = styled.div`
   left: 0;
   z-index: 1000;
   background-color: ${color("black100")};
-`
-
-const StyledImage = styled(Image)`
-  max-width: 100%;
-  max-height: 100%;
 `
 
 export interface DeepZoomProps {
@@ -46,20 +39,8 @@ export interface DeepZoomProps {
 }
 
 export interface LightboxProps {
-  imageAlt: string
   deepZoom: DeepZoomProps
-  enabled?: boolean
-  isDefault?: boolean
-  src: string
-  initialHeight?: string
-
-  /**
-   * Id of the element to render the lightbox in
-   * Defaults to lightbox-container
-   */
-  lightboxId?: string
-
-  user?: User
+  children({ onShow, onHide }: { onShow(): void; onHide(): void }): JSX.Element
 }
 
 export interface LightboxState {
@@ -73,7 +54,7 @@ export interface LightboxState {
 }
 
 @track({ context_module: Schema.ContextModule.Zoom })
-class LightboxComponent extends React.Component<LightboxProps, LightboxState> {
+class DeepZoomComponent extends React.Component<LightboxProps, LightboxState> {
   static defaultProps = {
     enabled: true,
     lightboxId: "lightbox-container",
@@ -100,7 +81,7 @@ class LightboxComponent extends React.Component<LightboxProps, LightboxState> {
     flow: Schema.Flow.ArtworkZoom,
     action_type: Schema.ActionType.Click,
   })
-  show(_event) {
+  show() {
     this.setState({ shown: true, showZoomSlider: true })
   }
 
@@ -295,53 +276,23 @@ class LightboxComponent extends React.Component<LightboxProps, LightboxState> {
   }
 
   render() {
-    const {
-      enabled,
-      isDefault,
-      imageAlt,
-      src,
-      initialHeight,
-      user,
-    } = this.props
-    const height = initialHeight || "auto"
-    const isTeam = userIsTeam(user)
+    const { children } = this.props
 
     // Only render client-side
     if (!this.state.element) {
-      return (
-        <Flex justifyContent="center" height={height} alignItems="center">
-          {isDefault && <Link rel="preload" as="image" href={src} />}
-          <StyledImage
-            style={{ cursor: enabled ? "zoom-in" : "auto" }}
-            alt={imageAlt}
-            src={src}
-            preventRightClick
-            lazyLoad
-          />
-        </Flex>
-      )
+      return children({
+        onShow: this.show.bind(this),
+        onHide: this.hide.bind(this),
+      })
     }
 
     return (
       <>
         {this.renderPortal()}
-        <Flex
-          justifyContent="center"
-          alignItems="center"
-          height={height}
-          onClick={enabled ? this.show.bind(this) : null}
-        >
-          {isDefault && <Link rel="preload" as="image" href={src} />}
-          <StyledImage
-            key={src}
-            style={{ cursor: enabled ? "zoom-in" : "auto" }}
-            src={src}
-            alt={imageAlt}
-            data-type="artwork-image"
-            data-is-default={isDefault}
-            preventRightClick={!isTeam}
-          />
-        </Flex>
+        {children({
+          onShow: this.show.bind(this),
+          onHide: this.hide.bind(this),
+        })}
       </>
     )
   }
@@ -373,4 +324,4 @@ class LightboxComponent extends React.Component<LightboxProps, LightboxState> {
   }
 }
 
-export const Lightbox = withSystemContext(LightboxComponent)
+export const DeepZoom = withSystemContext(DeepZoomComponent)
