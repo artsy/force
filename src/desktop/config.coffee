@@ -74,6 +74,7 @@ module.exports =
   METAPHYSICS_ENDPOINT: null
   MOBILE_MEDIA_QUERY: "only screen and (max-width: 640px)"
   NODE_ENV: 'development'
+  ONETRUST_SCRIPT_ID: null
   OPENREDIS_URL: null
   PAGE_CACHE_ENABLED: false
   PAGE_CACHE_TYPES: 'artist'
