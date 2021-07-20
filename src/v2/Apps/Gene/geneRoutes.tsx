@@ -46,7 +46,19 @@ export const geneRoutes: AppRouteConfig[] = [
           return GeneShowRoute.preload()
         },
         prepareVariables: ({ slug }, props) => {
-          const aggregations = ["TOTAL", "ARTIST"]
+          const aggregations = [
+            "TOTAL",
+            "ARTIST",
+            "MEDIUM",
+            "LOCATION_CITY",
+            "MATERIALS_TERMS",
+            "PARTNER",
+            "ARTIST_NATIONALITY",
+          ]
+
+          if (!!props.context.user) {
+            aggregations.push("FOLLOWED_ARTISTS")
+          }
 
           const urlFilterState = props.location ? props.location.query : {}
 
@@ -57,12 +69,7 @@ export const geneRoutes: AppRouteConfig[] = [
 
           return {
             aggregations,
-            input: {
-              ...allowedFilters(filters),
-              aggregations: !!props.context.user
-                ? ["FOLLOWED_ARTISTS"]
-                : undefined,
-            },
+            input: allowedFilters(filters),
             shouldFetchCounts: !!props.context.user,
             slug,
           }

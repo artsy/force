@@ -1,13 +1,11 @@
 import { MockBoot } from "v2/DevTools"
 import React from "react"
-import { GeneArtworkFilterRefetchContainer } from "../GeneArtworkFilter"
+import { ArtistSeriesArtworksFilterRefetchContainer } from "../Components/ArtistSeriesArtworksFilter"
 import { graphql } from "react-relay"
-import { GeneArtworkFilter_Query } from "v2/__generated__/GeneArtworkFilter_Query.graphql"
+import { ArtistSeriesArtworksFilter_Query } from "v2/__generated__/ArtistSeriesArtworksFilter_Query.graphql"
 import { useTracking } from "v2/System/Analytics/useTracking"
 import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
 import {
-  artistAggregation,
-  artistNationalityAggregation,
   locationCityAggregation,
   materialsTermsAggregation,
   mediumAggregation,
@@ -24,23 +22,31 @@ jest.mock("v2/System/Router/useRouter", () => ({
 }))
 jest.mock("v2/System/Analytics/useTracking")
 
-const { getWrapper } = setupTestWrapper<GeneArtworkFilter_Query>({
-  Component: ({ gene }) => (
+const { getWrapper } = setupTestWrapper<ArtistSeriesArtworksFilter_Query>({
+  Component: ({ artistSeries }) => (
     <MockBoot user={{ id: "percy-z" }}>
-      <GeneArtworkFilterRefetchContainer gene={gene!} />
+      <ArtistSeriesArtworksFilterRefetchContainer
+        aggregations={[
+          partnerAggregation,
+          locationCityAggregation,
+          mediumAggregation,
+          materialsTermsAggregation,
+        ]}
+        artistSeries={artistSeries!}
+      />
     </MockBoot>
   ),
   query: graphql`
-    query GeneArtworkFilter_Query($slug: String!) {
-      gene(id: $slug) {
-        ...GeneArtworkFilter_gene @arguments(shouldFetchCounts: true)
+    query ArtistSeriesArtworksFilter_Query($slug: ID!) {
+      artistSeries(id: $slug) {
+        ...ArtistSeriesArtworksFilter_artistSeries
       }
     }
   `,
-  variables: { slug: "representations-of-architecture" },
+  variables: { slug: "kaws-spongebob" },
 })
 
-describe("GeneArtworkFilter", () => {
+describe("ArtistSeriesArtworksFilter", () => {
   const trackEvent = jest.fn()
 
   beforeEach(() => {
@@ -63,22 +69,10 @@ describe("GeneArtworkFilter", () => {
         counts: {
           followedArtists: 10,
         },
-        aggregations: [
-          artistAggregation,
-          partnerAggregation,
-          locationCityAggregation,
-          mediumAggregation,
-          materialsTermsAggregation,
-          artistNationalityAggregation,
-        ],
       }),
     })
     const filterWrappers = wrapper.find("FilterExpandable")
     const filters = [
-      {
-        label: "Artists",
-        expanded: true,
-      },
       {
         label: "Rarity",
         expanded: true,
@@ -101,9 +95,6 @@ describe("GeneArtworkFilter", () => {
       },
       {
         label: "Material",
-      },
-      {
-        label: "Artist Nationality or Ethnicity",
       },
       {
         label: "Artwork Location",

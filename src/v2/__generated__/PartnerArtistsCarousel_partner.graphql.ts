@@ -13,8 +13,8 @@ export type PartnerArtistsCarousel_partner = {
             readonly node: {
                 readonly id: string;
                 readonly slug: string;
-                readonly " $fragmentRefs": FragmentRefs<"PartnerArtistsCarouselItem_artist">;
             } | null;
+            readonly " $fragmentRefs": FragmentRefs<"PartnerArtistsCarouselItem_artist">;
         } | null> | null;
     } | null;
     readonly " $refType": "PartnerArtistsCarousel_partner";
@@ -107,14 +107,14 @@ return {
                   "name": "id",
                   "storageKey": null
                 },
-                (v0/*: any*/),
-                {
-                  "args": null,
-                  "kind": "FragmentSpread",
-                  "name": "PartnerArtistsCarouselItem_artist"
-                }
+                (v0/*: any*/)
               ],
               "storageKey": null
+            },
+            {
+              "args": null,
+              "kind": "FragmentSpread",
+              "name": "PartnerArtistsCarouselItem_artist"
             }
           ],
           "storageKey": null
@@ -126,5 +126,5 @@ return {
   "type": "Partner"
 };
 })();
-(node as any).hash = 'ee2d03ee6c2198412ac82795f342ad54';
+(node as any).hash = '2ce6d9009b596b4d17a0ce6d6b7cc4f4';
 export default node;

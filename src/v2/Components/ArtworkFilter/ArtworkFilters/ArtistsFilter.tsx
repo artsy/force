@@ -94,7 +94,7 @@ export const ArtistsFilter: FC<ArtistsFilterProps> = ({
   })
 
   useEffect(() => {
-    if (relayEnvironment && user) {
+    if (artists?.counts && relayEnvironment && user) {
       fetchFollowedArtists({ relayEnvironment, fairID }).then(data => {
         setFollowedArtists(data)
       })

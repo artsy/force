@@ -1,7 +1,13 @@
+import React from "react"
 import loadable from "@loadable/component"
 import { graphql } from "react-relay"
+import { RedirectException } from "found"
 import { AppRouteConfig } from "v2/System/Router/Route"
-import { paramsToCamelCase } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
+import {
+  buildUrl,
+  paramsToCamelCase,
+} from "v2/Components/ArtworkFilter/Utils/urlBuilder"
+import { defaultSort, isValidSort } from "./Utils/IsValidSort"
 import { allowedFilters } from "v2/Components/ArtworkFilter/Utils/allowedFilters"
 
 const FairApp = loadable(
@@ -65,13 +71,42 @@ export const fairRoutes: AppRouteConfig[] = [
         prepare: () => {
           FairExhibitorsRoute.preload()
         },
+        prepareVariables: ({ slug }, { location }) => {
+          let { sort } = location.query
+          if (!isValidSort(sort)) {
+            sort = defaultSort
+          }
+          return { sort, slug }
+        },
         query: graphql`
-          query fairRoutes_FairExhibitorsQuery($slug: String!) {
+          query fairRoutes_FairExhibitorsQuery(
+            $slug: String!
+            $sort: ShowSorts
+          ) {
             fair(id: $slug) @principalField {
-              ...FairExhibitors_fair
+              ...FairExhibitors_fair @arguments(sort: $sort)
             }
           }
         `,
+        render: ({ Component, props, match }) => {
+          if (!(Component && props)) {
+            return undefined
+          }
+
+          const {
+            location: {
+              query: { sort, ...otherQuery },
+              pathname,
+            },
+          } = match
+
+          if (!isValidSort(sort)) {
+            const url = buildUrl(otherQuery, pathname)
+            throw new RedirectException(url)
+          }
+
+          return <Component {...props} />
+        },
       },
       {
         path: "artworks(.*)?",

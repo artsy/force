@@ -27,10 +27,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/cohesion/-/cohesion-1.60.0.tgz#854db37b9f8643ed650f3cc9d14234a1b762fcc8"
   integrity sha512-GBfa0/AoiLtG/Mw0VBR0vCiEj1s8+eBMTtKSLQS82iFo41Z84Li8M0YrlHAmXUrK3oBOO/YvhVNFE40avgK8xQ==
 
-"@artsy/cohesion@2.10.0":
-  version "2.10.0"
-  resolved "https://registry.yarnpkg.com/@artsy/cohesion/-/cohesion-2.10.0.tgz#fa38767c51fc6d0fa55ffd6a7d7b089f6ba4ab2d"
-  integrity sha512-wbFagEjFhcikMdczdCqunAX/x5OcC519HKYFel1KqcdCeBHrxyAyryx5k81Ff/G1QTJjW1QpT9N8PZRPAdQf9g==
+"@artsy/cohesion@2.11.0":
+  version "2.11.0"
+  resolved "https://registry.yarnpkg.com/@artsy/cohesion/-/cohesion-2.11.0.tgz#94a424e71db94ebca83d2ef530c775a460b508c3"
+  integrity sha512-Lcxb4E96c/1DTiOp7bcuJV8dZd/SzscYpUeYFI1m9cSJdu5QHkINH9yqCnJ1+hc3zYaP21JtEjoJ1g6MDZGJ9g==
   dependencies:
     core-js "3"
 
