@@ -206,7 +206,7 @@
     "react-scrollspy": "3.3.3",
     "react-waypoint": "8.0.0",
     "react-zendesk": "0.1.10",
-    "redis": "2.7.1",
+    "redis": "3.1.1",
     "redux": "3.6.0",
     "redux-form": "7.2.3",
     "redux-logger": "2.10.2",
