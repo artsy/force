@@ -132,7 +132,7 @@ class OrderApp extends React.Component<OrderAppProps, {}> {
 
     const stripePromise = loadStripe(sd.STRIPE_PUBLISHABLE_KEY)
 
-    const isModal = this.props.match?.location.query.isModal ? true : false
+    const isModal = !!this.props.match?.location.query.isModal
 
     return (
       <SystemContextConsumer>

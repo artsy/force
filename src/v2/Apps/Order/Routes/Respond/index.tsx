@@ -25,7 +25,7 @@ import {
 import { track } from "v2/System"
 import * as Schema from "v2/System/Analytics/Schema"
 import { CountdownTimer } from "v2/Components/CountdownTimer"
-import { Router } from "found"
+import { RouterState } from "found"
 import React, { Component } from "react"
 import { RelayProp, createFragmentContainer, graphql } from "react-relay"
 import createLogger from "v2/Utils/logger"
@@ -40,10 +40,9 @@ import {
 import { ShippingSummaryItemFragmentContainer as ShippingSummaryItem } from "../../Components/ShippingSummaryItem"
 import { BuyerGuarantee } from "../../Components/BuyerGuarantee"
 
-export interface RespondProps {
+export interface RespondProps extends RouterState {
   order: Respond_order
   relay?: RelayProp
-  router: Router
   dialog: Dialog
   commitMutation: CommitMutation
   isCommittingMutation: boolean
@@ -119,16 +118,18 @@ export class RespondRoute extends Component<RespondProps, RespondState> {
       highSpeedBumpEncountered,
     } = this.state
 
+    const search = this.props.match?.location.search || ""
+
     if (responseOption === "ACCEPT") {
       this.props.router.push(
-        `/orders/${this.props.order.internalID}/review/accept`
+        `/orders/${this.props.order.internalID}/review/accept${search}`
       )
       return
     }
 
     if (responseOption === "DECLINE") {
       this.props.router.push(
-        `/orders/${this.props.order.internalID}/review/decline`
+        `/orders/${this.props.order.internalID}/review/decline${search}`
       )
       return
     }
@@ -177,7 +178,7 @@ export class RespondRoute extends Component<RespondProps, RespondState> {
       }
 
       this.props.router.push(
-        `/orders/${this.props.order.internalID}/review/counter`
+        `/orders/${this.props.order.internalID}/review/counter${search}`
       )
     } catch (error) {
       logger.error(error)
