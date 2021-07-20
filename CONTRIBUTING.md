@@ -4,56 +4,18 @@ This project is work of [many developers](https://github.com/artsy/force/graphs/
 
 We accept [pull requests](https://github.com/artsy/force/pulls), and you may [propose features and discuss issues](https://github.com/artsy/force/issues).
 
-## Quick Start
-
-- Install dependencies:
-
-        $ git clone git@github.com:artsy/force.git
-        $ cd force
-        $ cp .env.oss .env
-        $ yarn install
-
-- To run the full Artsy.net server:
-
-        $ yarn start
-        $ open http://localhost:5000
-
-- Run the tests:
-
-        $ yarn type-check
-        $ yarn jest
-
 ## Setup Instructions
-
-### Clone the Project
 
 Clone the [project on GitHub](https://github.com/artsy/force) and cd in:
 
 ```sh
-git clone git@github.com:artsy/force.git
-cd force
+git clone git@github.com:artsy/force.git && cd force
 ```
 
-## Run Force
-
-Install [NVM](https://github.com/creationix/nvm) and Node 12:
+Execute the setup script:
 
 ```sh
-nvm install 12
-nvm alias default 12
-```
-
-Install node modules with Yarn:
-
-```sh
-brew install yarn
-yarn install
-```
-
-Copy the `.env.oss` file to a `.env` file:
-
-```sh
-cp .env.oss .env
+./scripts/setup.sh && nvm use
 ```
 
 Start the server:
@@ -64,7 +26,14 @@ yarn start
 
 Force should now be running at [http://localhost:5000/](http://localhost:5000/).
 
-## Running a local copy of Force in Production mode:
+## Run the tests
+
+```sh
+yarn type-check
+yarn jest
+```
+
+## Running a local copy of Force in Production mode
 
 ```sh
 yarn start:prod
@@ -96,16 +65,13 @@ that behavior even for subdomains (such as local.artsy.net).
 127.0.0.1 local.artsy.net
 ```
 
-2. Fetch the local development Recaptcha key from 1Password.
-
-3. Update your `.env` file's `APP_URL`, `RECAPTCHA_KEY`.
+2. Update your `.env` file's `APP_URL`:
 
 ```
 APP_URL=http://local.artsy.net:5000
-RECAPTCHA_KEY=REPLACE_ME
 ```
 
-4. Visit [`http://local.artsy.net:5000`](http://local.artsy.net:5000).
+3. Restart the server and navigate to [`http://local.artsy.net:5000`](http://local.artsy.net:5000).
 
 <details>
    <summary>Do you see an error about not providing a secure connection?</summary>
