@@ -5,7 +5,7 @@ set -ex
 # provide a default environment if none exists
 if [ ! -f ".env" ]; then
     echo "Using .env.oss"
-    cp .env.oss .env
+    cat .env.example > .env && cat .env.oss >> .env
 fi
 
 # prepare a production build

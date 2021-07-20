@@ -21,9 +21,13 @@ fi
 echo "Installing javascript dependencies"
 yarn install
 
-# Download the shared .env
-echo "Download .env.shared (for common local dev config)..."
-if [[ $(aws s3 ls s3://artsy-citadel/dev/ > /dev/null 2>&1 && echo $?) == 0 ]]; then
+# Test s3 access and download the shared .env or use .env.oss as shared
+if [[ $(aws s3 ls s3://artsy-citadel/dev/ > /dev/null 2>&1 && echo $?) != 0 ]]; then
+  echo "Unable to download shared config from s3. Using .env.oss!"
+  echo "This is expected when making open source contributions."
+  cp .env.oss .env.shared
+else
+  echo "Downloading .env.shared (for common local dev config)..."
   aws s3 cp s3://artsy-citadel/dev/.env.force .env.shared
 fi
 
@@ -33,4 +37,4 @@ if [ ! -e ".env" ]; then
 fi
 
 echo "Setup complete!
-To run the project execute: yarn start"
+To run the project execute: nvm use && yarn start"
