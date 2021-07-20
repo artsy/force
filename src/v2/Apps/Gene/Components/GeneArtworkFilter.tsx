@@ -8,16 +8,7 @@ import {
   Counts,
   SharedArtworkFilterContextProps,
 } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
-import { MediumFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/MediumFilter"
-import { PriceRangeFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/PriceRangeFilter"
-import { WaysToBuyFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/WaysToBuyFilter"
-import { SizeFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/SizeFilter"
-import { TimePeriodFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/TimePeriodFilter"
-import { ColorFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/ColorFilter"
-import { ArtistsFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/ArtistsFilter"
 import { GeneArtworkFilter_gene } from "v2/__generated__/GeneArtworkFilter_gene.graphql"
-import { AttributionClassFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/AttributionClassFilter"
-import { useSystemContext } from "v2/System"
 
 interface GeneArtworkFilterProps {
   gene: GeneArtworkFilter_gene
@@ -29,22 +20,7 @@ const GeneArtworkFilter: React.FC<GeneArtworkFilterProps> = ({
   relay,
 }) => {
   const { match } = useRouter()
-  const { filtered_artworks, sidebarAggregations } = gene
-
-  const { relayEnvironment, user } = useSystemContext()
-
-  const Filters = (
-    <>
-      <ArtistsFilter relayEnvironment={relayEnvironment} user={user} />
-      <MediumFilter expanded />
-      <PriceRangeFilter />
-      <AttributionClassFilter expanded />
-      <SizeFilter />
-      <WaysToBuyFilter />
-      <TimePeriodFilter />
-      <ColorFilter />
-    </>
-  )
+  const { sidebar } = gene
 
   return (
     <ArtworkFilterContextProvider
@@ -60,11 +36,11 @@ const GeneArtworkFilter: React.FC<GeneArtworkFilterProps> = ({
         { text: "Artwork year (asc.)", value: "year" },
       ]}
       aggregations={
-        sidebarAggregations?.aggregations as SharedArtworkFilterContextProps["aggregations"]
+        sidebar?.aggregations as SharedArtworkFilterContextProps["aggregations"]
       }
-      counts={filtered_artworks?.counts as Counts}
+      counts={sidebar?.counts as Counts}
     >
-      <BaseArtworkFilter relay={relay} viewer={gene} Filters={Filters} />
+      <BaseArtworkFilter relay={relay} viewer={gene} />
     </ArtworkFilterContextProvider>
   )
 }
@@ -81,10 +57,13 @@ export const GeneArtworkFilterRefetchContainer = createRefetchContainer(
         ) {
         slug
         internalID
-        sidebarAggregations: filterArtworksConnection(
+        sidebar: filterArtworksConnection(
           aggregations: $aggregations
           first: 1
         ) {
+          counts @include(if: $shouldFetchCounts) {
+            followedArtists
+          }
           aggregations {
             slice
             counts {
@@ -96,9 +75,6 @@ export const GeneArtworkFilterRefetchContainer = createRefetchContainer(
         }
         filtered_artworks: filterArtworksConnection(first: 30, input: $input) {
           id
-          counts @include(if: $shouldFetchCounts) {
-            followedArtists
-          }
           ...ArtworkFilterArtworkGrid_filtered_artworks
         }
       }
