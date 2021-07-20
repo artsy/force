@@ -42,6 +42,22 @@ const tabClass = (tabUrl, route) => {
   return currentRoute === tabUrl ? "active" : undefined
 }
 
+const useScrollIntoView = (isRouteActive: boolean) => {
+  const ref = React.useRef() as React.MutableRefObject<HTMLDivElement>
+  React.useEffect(() => {
+    if (isRouteActive && ref?.current) {
+      ref.current?.scrollIntoView &&
+        ref.current.scrollIntoView({
+          behavior: "smooth",
+          block: "end",
+          inline: "nearest",
+        })
+    }
+  }, [isRouteActive])
+
+  return { ref }
+}
+
 export const UserSettingsTabs: React.FC<UserSettingsTabsProps> = track()(
   ({ username }) => {
     return (
@@ -53,15 +69,17 @@ export const UserSettingsTabs: React.FC<UserSettingsTabsProps> = track()(
         </Box>
 
         <RouteTabs>
-          {routes.map((route, index) => (
-            <RouteTab
-              key={index}
-              className={tabClass(route.url, route)}
-              to={route.url}
-            >
-              {route.name}
-            </RouteTab>
-          ))}
+          {routes.map((route, index) => {
+            const isActive = tabClass(route.url, route) === "active"
+            const { ref } = useScrollIntoView(isActive)
+            return (
+              <div ref={ref} key={index}>
+                <RouteTab className={tabClass(route.url, route)} to={route.url}>
+                  {route.name}
+                </RouteTab>
+              </div>
+            )
+          })}
         </RouteTabs>
       </Box>
     )
