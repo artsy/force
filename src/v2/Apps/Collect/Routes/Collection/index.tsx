@@ -13,7 +13,6 @@ import { Link, Meta, Title } from "react-head"
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
 import { data as sd } from "sharify"
 import truncate from "trunc-html"
-import { CollectionAppQuery } from "./CollectionAppQuery"
 import { CollectionsHubRailsContainer as CollectionsHubRails } from "./Components/CollectionsHubRails"
 import { LazyLoadComponent } from "react-lazy-load-image-component"
 import {
@@ -24,6 +23,7 @@ import {
 import { BaseArtworkFilter } from "v2/Components/ArtworkFilter"
 import {
   ArtworkFilterContextProvider,
+  Counts,
   SharedArtworkFilterContextProps,
 } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
 import { updateUrl } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
@@ -145,11 +145,9 @@ export const CollectionApp: React.FC<CollectionAppProps> = props => {
             { text: "Artwork year (desc.)", value: "-year" },
             { text: "Artwork year (asc.)", value: "year" },
           ]}
-          // @ts-expect-error STRICT_NULL_CHECK
+          counts={artworksConnection?.counts as Counts}
           aggregations={
-            artworksConnection !== null
-              ? (artworksConnection?.aggregations as SharedArtworkFilterContextProps["aggregations"])
-              : null
+            artworksConnection?.aggregations as SharedArtworkFilterContextProps["aggregations"]
           }
           onChange={updateUrl}
         >
@@ -211,6 +209,7 @@ export const CollectionRefetchContainer = createRefetchContainer(
         @argumentDefinitions(
           aggregations: { type: "[ArtworkAggregation]" }
           input: { type: "FilterArtworksInput" }
+          shouldFetchCounts: { type: "Boolean!", defaultValue: false }
         ) {
         ...Header_collection
         description
@@ -251,6 +250,9 @@ export const CollectionRefetchContainer = createRefetchContainer(
         ) {
           ...Header_artworks
           ...SeoProductsForArtworks_artworks
+          counts @include(if: $shouldFetchCounts) {
+            followedArtists
+          }
           aggregations {
             slice
             counts {
@@ -260,7 +262,6 @@ export const CollectionRefetchContainer = createRefetchContainer(
             }
           }
         }
-
         #These two things are going to get highest price and lowest price of the artwork on the collection page.
         descending_artworks: artworksConnection(
           includeMediumFilterInAggregation: true
@@ -269,7 +270,6 @@ export const CollectionRefetchContainer = createRefetchContainer(
         ) {
           ...SeoProductsForCollections_descending_artworks
         }
-
         ascending_artworks: artworksConnection(
           includeMediumFilterInAggregation: true
           first: 1
@@ -277,7 +277,6 @@ export const CollectionRefetchContainer = createRefetchContainer(
         ) {
           ...SeoProductsForCollections_ascending_artworks
         }
-
         filtered_artworks: artworksConnection(input: $input) {
           id
           ...ArtworkFilterArtworkGrid_filtered_artworks
@@ -285,5 +284,16 @@ export const CollectionRefetchContainer = createRefetchContainer(
       }
     `,
   },
-  CollectionAppQuery
+  graphql`
+    query CollectionQuery(
+      $input: FilterArtworksInput
+      $slug: String!
+      $aggregations: [ArtworkAggregation]
+    ) {
+      collection: marketingCollection(slug: $slug) @principalField {
+        ...Collection_collection
+          @arguments(input: $input, aggregations: $aggregations)
+      }
+    }
+  `
 )
