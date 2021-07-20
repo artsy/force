@@ -4,9 +4,9 @@ import {
   ArtworkFilterContextProvider,
   useArtworkFilterContext,
 } from "../../ArtworkFilterContext"
-import { ArtworkSortFilter } from "../ArtworkSortFilter"
+import { SortFilter } from "../SortFilter"
 
-describe("ArtworkSortFilter", () => {
+describe("SortFilter", () => {
   let context
 
   const getWrapper = () => {
@@ -30,12 +30,16 @@ describe("ArtworkSortFilter", () => {
 
   const SortFilterFilterTest = () => {
     context = useArtworkFilterContext()
-    return <ArtworkSortFilter />
+    return <SortFilter />
   }
 
-  it("updates context on filter change", () => {
+  it("updates context on filter change", done => {
     const wrapper = getWrapper()
-    wrapper.find("Select").find("option").at(1).simulate("change")
-    expect(context.filters.sort).toEqual("bar")
+    wrapper.find("SelectSmall").find("option").at(1).simulate("change")
+
+    setTimeout(() => {
+      expect(context.filters.sort).toEqual("bar")
+      done()
+    }, 0)
   })
 })

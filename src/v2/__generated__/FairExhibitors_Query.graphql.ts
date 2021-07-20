@@ -3,12 +3,8 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type ShowSorts = "END_AT_ASC" | "END_AT_DESC" | "FEATURED_ASC" | "FEATURED_DESC" | "FEATURED_DESC_END_AT_DESC" | "NAME_ASC" | "NAME_DESC" | "PARTNER_ASC" | "SORTABLE_NAME_ASC" | "SORTABLE_NAME_DESC" | "START_AT_ASC" | "START_AT_DESC" | "UPDATED_AT_ASC" | "UPDATED_AT_DESC" | "%future added value";
 export type FairExhibitors_QueryVariables = {
-    id: string;
-    first?: number | null;
-    after?: string | null;
-    sort?: ShowSorts | null;
+    slug: string;
 };
 export type FairExhibitors_QueryResponse = {
     readonly fair: {
@@ -18,6 +14,7 @@ export type FairExhibitors_QueryResponse = {
 export type FairExhibitors_QueryRawResponse = {
     readonly fair: ({
         readonly slug: string;
+        readonly internalID: string;
         readonly exhibitors: ({
             readonly edges: ReadonlyArray<({
                 readonly node: ({
@@ -62,13 +59,10 @@ export type FairExhibitors_Query = {
 
 /*
 query FairExhibitors_Query(
-  $id: String!
-  $first: Int
-  $after: String
-  $sort: ShowSorts
+  $slug: String!
 ) {
-  fair(id: $id) {
-    ...FairExhibitors_fair_dWkdd
+  fair(id: $slug) {
+    ...FairExhibitors_fair
     id
   }
 }
@@ -95,9 +89,10 @@ fragment FairExhibitorRail_show on Show {
   }
 }
 
-fragment FairExhibitors_fair_dWkdd on Fair {
+fragment FairExhibitors_fair on Fair {
   slug
-  exhibitors: showsConnection(sort: $sort, first: $first, after: $after, totalCount: true) {
+  internalID
+  exhibitors: showsConnection(first: 15, sort: FEATURED_DESC, totalCount: true) {
     edges {
       node {
         id
@@ -134,82 +129,63 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "id",
+    "name": "slug",
     "type": "String!"
-  },
-  {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "first",
-    "type": "Int"
-  },
-  {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "after",
-    "type": "String"
-  },
-  {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "sort",
-    "type": "ShowSorts"
   }
 ],
 v1 = [
   {
     "kind": "Variable",
     "name": "id",
-    "variableName": "id"
+    "variableName": "slug"
   }
 ],
 v2 = {
-  "kind": "Variable",
-  "name": "after",
-  "variableName": "after"
-},
-v3 = {
-  "kind": "Variable",
-  "name": "first",
-  "variableName": "first"
-},
-v4 = {
-  "kind": "Variable",
-  "name": "sort",
-  "variableName": "sort"
-},
-v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "slug",
   "storageKey": null
 },
-v6 = [
-  (v2/*: any*/),
-  (v3/*: any*/),
-  (v4/*: any*/),
+v3 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+},
+v4 = [
+  {
+    "kind": "Literal",
+    "name": "first",
+    "value": 15
+  },
+  {
+    "kind": "Literal",
+    "name": "sort",
+    "value": "FEATURED_DESC"
+  },
   {
     "kind": "Literal",
     "name": "totalCount",
     "value": true
   }
 ],
-v7 = {
+v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v8 = {
+v6 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "__typename",
   "storageKey": null
 },
-v9 = [
+v7 = [
   {
     "alias": null,
     "args": null,
@@ -234,11 +210,7 @@ return {
         "plural": false,
         "selections": [
           {
-            "args": [
-              (v2/*: any*/),
-              (v3/*: any*/),
-              (v4/*: any*/)
-            ],
+            "args": null,
             "kind": "FragmentSpread",
             "name": "FairExhibitors_fair"
           }
@@ -262,10 +234,11 @@ return {
         "name": "fair",
         "plural": false,
         "selections": [
-          (v5/*: any*/),
+          (v2/*: any*/),
+          (v3/*: any*/),
           {
             "alias": "exhibitors",
-            "args": (v6/*: any*/),
+            "args": (v4/*: any*/),
             "concreteType": "ShowConnection",
             "kind": "LinkedField",
             "name": "showsConnection",
@@ -287,7 +260,7 @@ return {
                     "name": "node",
                     "plural": false,
                     "selections": [
-                      (v7/*: any*/),
+                      (v5/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -314,29 +287,23 @@ return {
                         "name": "partner",
                         "plural": false,
                         "selections": [
-                          (v8/*: any*/),
-                          (v7/*: any*/),
+                          (v6/*: any*/),
+                          (v5/*: any*/),
                           {
                             "kind": "InlineFragment",
-                            "selections": (v9/*: any*/),
+                            "selections": (v7/*: any*/),
                             "type": "Partner"
                           },
                           {
                             "kind": "InlineFragment",
-                            "selections": (v9/*: any*/),
+                            "selections": (v7/*: any*/),
                             "type": "ExternalPartner"
                           }
                         ],
                         "storageKey": null
                       },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "internalID",
-                        "storageKey": null
-                      },
-                      (v5/*: any*/),
+                      (v3/*: any*/),
+                      (v2/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -344,7 +311,7 @@ return {
                         "name": "href",
                         "storageKey": null
                       },
-                      (v8/*: any*/)
+                      (v6/*: any*/)
                     ],
                     "storageKey": null
                   },
@@ -384,11 +351,11 @@ return {
                 "storageKey": null
               }
             ],
-            "storageKey": null
+            "storageKey": "showsConnection(first:15,sort:\"FEATURED_DESC\",totalCount:true)"
           },
           {
             "alias": "exhibitors",
-            "args": (v6/*: any*/),
+            "args": (v4/*: any*/),
             "filters": [
               "sort",
               "totalCount"
@@ -398,7 +365,7 @@ return {
             "kind": "LinkedHandle",
             "name": "showsConnection"
           },
-          (v7/*: any*/)
+          (v5/*: any*/)
         ],
         "storageKey": null
       }
@@ -409,9 +376,9 @@ return {
     "metadata": {},
     "name": "FairExhibitors_Query",
     "operationKind": "query",
-    "text": "query FairExhibitors_Query(\n  $id: String!\n  $first: Int\n  $after: String\n  $sort: ShowSorts\n) {\n  fair(id: $id) {\n    ...FairExhibitors_fair_dWkdd\n    id\n  }\n}\n\nfragment FairExhibitorRail_show on Show {\n  internalID\n  slug\n  href\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on ExternalPartner {\n      name\n      id\n    }\n    ... on Node {\n      id\n    }\n  }\n  counts {\n    artworks\n  }\n}\n\nfragment FairExhibitors_fair_dWkdd on Fair {\n  slug\n  exhibitors: showsConnection(sort: $sort, first: $first, after: $after, totalCount: true) {\n    edges {\n      node {\n        id\n        counts {\n          artworks\n        }\n        partner {\n          __typename\n          ... on Partner {\n            id\n          }\n          ... on ExternalPartner {\n            id\n          }\n          ... on Node {\n            id\n          }\n        }\n        ...FairExhibitorRail_show\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query FairExhibitors_Query(\n  $slug: String!\n) {\n  fair(id: $slug) {\n    ...FairExhibitors_fair\n    id\n  }\n}\n\nfragment FairExhibitorRail_show on Show {\n  internalID\n  slug\n  href\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on ExternalPartner {\n      name\n      id\n    }\n    ... on Node {\n      id\n    }\n  }\n  counts {\n    artworks\n  }\n}\n\nfragment FairExhibitors_fair on Fair {\n  slug\n  internalID\n  exhibitors: showsConnection(first: 15, sort: FEATURED_DESC, totalCount: true) {\n    edges {\n      node {\n        id\n        counts {\n          artworks\n        }\n        partner {\n          __typename\n          ... on Partner {\n            id\n          }\n          ... on ExternalPartner {\n            id\n          }\n          ... on Node {\n            id\n          }\n        }\n        ...FairExhibitorRail_show\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'b2bfb1f8c654c92799ea39b5242f2163';
+(node as any).hash = '0c79ba8bfa4adb482b02f44c18f7c9d7';
 export default node;
