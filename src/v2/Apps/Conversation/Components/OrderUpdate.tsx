@@ -62,12 +62,6 @@ export const OrderUpdate: React.FC<OrderUpdateProps> = ({ event }) => {
   }
   return (
     <Flex flexDirection="column">
-      <TimeSince
-        style={{ alignSelf: "center" }}
-        time={event.createdAt}
-        exact
-        mb={1}
-      />
       <Flex px={2} justifyContent="center" flexDirection="row">
         <Flex flexDirection="row">
           <Icon mt="1px" fill={color} />
@@ -78,6 +72,12 @@ export const OrderUpdate: React.FC<OrderUpdateProps> = ({ event }) => {
           </Flex>
         </Flex>
       </Flex>
+      <TimeSince
+        style={{ alignSelf: "center" }}
+        time={event.createdAt}
+        exact
+        mb={1}
+      />
       <Spacer mb={5} />
     </Flex>
   )

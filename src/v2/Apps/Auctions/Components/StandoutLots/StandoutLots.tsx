@@ -1,26 +1,25 @@
-import React from "react"
-import { createFragmentContainer, graphql } from "react-relay"
-import { useAnalyticsContext } from "v2/System"
-import { WorksByArtistsYouFollowRail_viewer } from "v2/__generated__/WorksByArtistsYouFollowRail_viewer.graphql"
-import { useTracking } from "react-tracking"
 import { AuthContextModule, clickedArtworkGroup } from "@artsy/cohesion"
-import { tabTypeToContextModuleMap } from "../../Utils/tabTypeToContextModuleMap"
-import { Shelf, Spacer, Text, Sup } from "@artsy/palette"
+import { Shelf, Spacer, Sup, Text } from "@artsy/palette"
+import { graphql } from "lib/graphql"
+import React from "react"
+import { createFragmentContainer } from "react-relay"
+import { useTracking } from "react-tracking"
 import { ShelfArtworkFragmentContainer } from "v2/Components/Artwork/ShelfArtwork"
+import { useAnalyticsContext } from "v2/System"
 import { extractNodes } from "v2/Utils/extractNodes"
+import { StandoutLots_viewer } from "v2/__generated__/StandoutLots_viewer.graphql"
+import { tabTypeToContextModuleMap } from "../../Utils/tabTypeToContextModuleMap"
 
-export interface WorksByArtistsYouFollowRailProps {
-  viewer: WorksByArtistsYouFollowRail_viewer
+export interface StandoutLotsProps {
+  viewer: StandoutLots_viewer
 }
 
-const WorksByArtistsYouFollowRail: React.FC<WorksByArtistsYouFollowRailProps> = ({
-  viewer,
-}) => {
+const StandoutLots: React.FC<StandoutLotsProps> = ({ viewer }) => {
   const { trackEvent } = useTracking()
   const { contextPageOwnerType } = useAnalyticsContext()
-  const contextModule = tabTypeToContextModuleMap.worksByArtistsYouFollow as AuthContextModule
+  const contextModule = tabTypeToContextModuleMap.standoutLots as AuthContextModule
 
-  const nodes = extractNodes(viewer.saleArtworksConnection)
+  const nodes = extractNodes(viewer.standoutLotsConnection)
 
   if (nodes.length === 0) {
     return null
@@ -29,15 +28,15 @@ const WorksByArtistsYouFollowRail: React.FC<WorksByArtistsYouFollowRailProps> = 
   return (
     <>
       <Text as="h3" variant="lg" color="black100">
-        Works for you{" "}
-        <Sup color="brand">{viewer.saleArtworksConnection?.edges?.length}</Sup>
+        Standout Lots{" "}
+        <Sup color="brand">{viewer.standoutLotsConnection?.edges?.length}</Sup>
       </Text>
 
       <Text as="h3" variant="lg" color="black60">
-        Works at auction by artists you follow
+        Works that Artsy curators love
       </Text>
 
-      <Spacer mt={4} />
+      <Spacer mb={4} />
 
       <Shelf>
         {nodes.map((node, index) => {
@@ -67,16 +66,14 @@ const WorksByArtistsYouFollowRail: React.FC<WorksByArtistsYouFollowRailProps> = 
   )
 }
 
-export const WorksByArtistsYouFollowRailFragmentContainer = createFragmentContainer(
-  WorksByArtistsYouFollowRail,
+export const StandoutLotsFragmentContainer = createFragmentContainer(
+  StandoutLots,
   {
     viewer: graphql`
-      fragment WorksByArtistsYouFollowRail_viewer on Viewer {
-        saleArtworksConnection(
-          includeArtworksByFollowedArtists: true
-          isAuction: true
-          liveSale: true
+      fragment StandoutLots_viewer on Viewer {
+        standoutLotsConnection: saleArtworksConnection(
           first: 50
+          geneIDs: "highlights-at-auction"
         ) {
           edges {
             node {

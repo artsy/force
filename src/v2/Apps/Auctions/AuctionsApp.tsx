@@ -8,7 +8,8 @@ import {
   Join,
   Spacer,
   Text,
-  Separator,
+  Tabs,
+  Tab,
 } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RecentlyViewed } from "v2/Components/RecentlyViewed"
@@ -18,6 +19,8 @@ import { useSystemContext } from "v2/System/useSystemContext"
 import { WorksByArtistsYouFollowRailFragmentContainer } from "./Components/WorksByArtistsYouFollowRail/WorksByArtistsYouFollowRail"
 import { ChevronButton } from "v2/Components/ChevronButton"
 import { getENV } from "v2/Utils/getENV"
+import { TrendingLotsFragmentContainer } from "./Components/TrendingLots/TrendingLots"
+import { StandoutLotsFragmentContainer } from "./Components/StandoutLots/StandoutLots"
 
 export interface AuctionsAppProps {
   viewer: AuctionsApp_viewer
@@ -59,17 +62,24 @@ const AuctionsApp: React.FC<AuctionsAppProps> = props => {
         </Column>
       </GridColumns>
 
-      {user && (
-        <>
-          <Separator my={6} />
+      <Spacer mt={4} />
+      <Tabs>
+        {user && (
+          <Tab name="Works For You">
+            <Join separator={<Spacer mt={2} />}>
+              {viewer.me && <MyBidsFragmentContainer me={viewer.me} />}
 
-          <Join separator={<Spacer mt={6} />}>
-            {viewer.me && <MyBidsFragmentContainer me={viewer.me} />}
-
-            <WorksByArtistsYouFollowRailFragmentContainer viewer={viewer} />
-          </Join>
-        </>
-      )}
+              <WorksByArtistsYouFollowRailFragmentContainer viewer={viewer} />
+            </Join>
+          </Tab>
+        )}
+        <Tab name="Trending Lots">
+          <TrendingLotsFragmentContainer viewer={viewer} />
+        </Tab>
+        <Tab name="Standout lots">
+          <StandoutLotsFragmentContainer viewer={viewer} />
+        </Tab>
+      </Tabs>
 
       <Spacer mt={6} />
 
@@ -103,7 +113,8 @@ export const AuctionsAppFragmentContainer = createFragmentContainer(
     viewer: graphql`
       fragment AuctionsApp_viewer on Viewer {
         ...WorksByArtistsYouFollowRail_viewer
-
+        ...TrendingLots_viewer
+        ...StandoutLots_viewer
         me {
           ...MyBids_me
         }

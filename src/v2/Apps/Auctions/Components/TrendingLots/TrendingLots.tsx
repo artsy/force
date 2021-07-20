@@ -1,26 +1,25 @@
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { useAnalyticsContext } from "v2/System"
-import { WorksByArtistsYouFollowRail_viewer } from "v2/__generated__/WorksByArtistsYouFollowRail_viewer.graphql"
 import { useTracking } from "react-tracking"
-import { AuthContextModule, clickedArtworkGroup } from "@artsy/cohesion"
-import { tabTypeToContextModuleMap } from "../../Utils/tabTypeToContextModuleMap"
-import { Shelf, Spacer, Text, Sup } from "@artsy/palette"
-import { ShelfArtworkFragmentContainer } from "v2/Components/Artwork/ShelfArtwork"
-import { extractNodes } from "v2/Utils/extractNodes"
 
-export interface WorksByArtistsYouFollowRailProps {
-  viewer: WorksByArtistsYouFollowRail_viewer
+import { Shelf, Spacer, Sup, Text } from "@artsy/palette"
+import { AuthContextModule, clickedArtworkGroup } from "@artsy/cohesion"
+
+import { extractNodes } from "v2/Utils/extractNodes"
+import { ShelfArtworkFragmentContainer } from "v2/Components/Artwork/ShelfArtwork"
+import { tabTypeToContextModuleMap } from "../../Utils/tabTypeToContextModuleMap"
+import { TrendingLots_viewer } from "v2/__generated__/TrendingLots_viewer.graphql"
+import { useAnalyticsContext } from "v2/System"
+export interface TrendingLotsProps {
+  viewer: TrendingLots_viewer
 }
 
-const WorksByArtistsYouFollowRail: React.FC<WorksByArtistsYouFollowRailProps> = ({
-  viewer,
-}) => {
+const TrendingLots: React.FC<TrendingLotsProps> = ({ viewer }) => {
   const { trackEvent } = useTracking()
   const { contextPageOwnerType } = useAnalyticsContext()
-  const contextModule = tabTypeToContextModuleMap.worksByArtistsYouFollow as AuthContextModule
+  const contextModule = tabTypeToContextModuleMap.trendingLots as AuthContextModule
 
-  const nodes = extractNodes(viewer.saleArtworksConnection)
+  const nodes = extractNodes(viewer.trendingLotsConnection)
 
   if (nodes.length === 0) {
     return null
@@ -29,15 +28,15 @@ const WorksByArtistsYouFollowRail: React.FC<WorksByArtistsYouFollowRailProps> = 
   return (
     <>
       <Text as="h3" variant="lg" color="black100">
-        Works for you{" "}
-        <Sup color="brand">{viewer.saleArtworksConnection?.edges?.length}</Sup>
+        Trending lots{" "}
+        <Sup color="brand">{viewer.trendingLotsConnection?.edges?.length}</Sup>
       </Text>
 
       <Text as="h3" variant="lg" color="black60">
-        Works at auction by artists you follow
+        Works with the most bids today
       </Text>
 
-      <Spacer mt={4} />
+      <Spacer mb={4} />
 
       <Shelf>
         {nodes.map((node, index) => {
@@ -67,18 +66,19 @@ const WorksByArtistsYouFollowRail: React.FC<WorksByArtistsYouFollowRailProps> = 
   )
 }
 
-export const WorksByArtistsYouFollowRailFragmentContainer = createFragmentContainer(
-  WorksByArtistsYouFollowRail,
+export const TrendingLotsFragmentContainer = createFragmentContainer(
+  TrendingLots,
   {
     viewer: graphql`
-      fragment WorksByArtistsYouFollowRail_viewer on Viewer {
-        saleArtworksConnection(
-          includeArtworksByFollowedArtists: true
-          isAuction: true
-          liveSale: true
+      fragment TrendingLots_viewer on Viewer {
+        trendingLotsConnection: saleArtworksConnection(
           first: 50
+          sort: "-bidder_positions_count"
         ) {
           edges {
+            counts {
+              bidderPositions
+            }
             node {
               internalID
               slug
