@@ -4,7 +4,6 @@ import { graphql } from "react-relay"
 import { allowedFilters } from "v2/Components/ArtworkFilter/Utils/allowedFilters"
 
 import { paramsToCamelCase } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
-import { CollectionAppQuery } from "./Routes/Collection/CollectionAppQuery"
 
 const CollectApp = loadable(
   () => import(/* webpackChunkName: "collectBundle" */ "./Routes/Collect"),
@@ -69,7 +68,23 @@ export const collectRoutes: AppRouteConfig[] = [
       CollectionApp.preload()
     },
     prepareVariables: initializeVariablesWithFilterState,
-    query: CollectionAppQuery,
+    query: graphql`
+      query collectRoutes_CollectionQuery(
+        $input: FilterArtworksInput
+        $slug: String!
+        $aggregations: [ArtworkAggregation]
+        $shouldFetchCounts: Boolean!
+      ) {
+        collection: marketingCollection(slug: $slug) @principalField {
+          ...Collection_collection
+            @arguments(
+              input: $input
+              aggregations: $aggregations
+              shouldFetchCounts: $shouldFetchCounts
+            )
+        }
+      }
+    `,
   },
 ]
 
@@ -98,13 +113,19 @@ function initializeVariablesWithFilterState(params, props) {
   const collectionOnlyAggregations = collectionSlug
     ? ["MERCHANDISABLE_ARTISTS", "MEDIUM", "MAJOR_PERIOD"]
     : []
+
   const aggregations = [
     "TOTAL",
     "ARTIST_NATIONALITY",
     "LOCATION_CITY",
     "MATERIALS_TERMS",
     "PARTNER",
+    "ARTIST",
   ].concat(collectionOnlyAggregations)
+
+  if (!!props.context.user) {
+    aggregations.push("FOLLOWED_ARTISTS")
+  }
 
   const input = {
     sort: "-decayed_merch",
@@ -117,6 +138,7 @@ function initializeVariablesWithFilterState(params, props) {
     aggregations,
     slug: collectionSlug,
     sort: "-decayed_merch",
+    shouldFetchCounts: !!props.context.user,
   }
 }
 
@@ -126,6 +148,7 @@ function getArtworkFilterQuery() {
       $sort: String
       $input: FilterArtworksInput
       $aggregations: [ArtworkAggregation]
+      $shouldFetchCounts: Boolean!
     ) {
       marketingHubCollections {
         ...Collect_marketingHubCollections
@@ -136,6 +159,9 @@ function getArtworkFilterQuery() {
       viewer {
         ...ArtworkFilter_viewer @arguments(input: $input)
         artworksConnection(aggregations: $aggregations, input: $input) {
+          counts @include(if: $shouldFetchCounts) {
+            followedArtists
+          }
           aggregations {
             slice
             counts {
