@@ -33,9 +33,10 @@ else
 fi
 
 if [ ! -e ".env" ]; then
-  echo "Initialize .env from from .env.example (for any custom configuration)..."
+  echo "Initializing .env from from .env.example (for custom configuration)..."
   cat .env.example > .env
 fi
 
-echo "Setup complete!
+echo "
+Setup complete!
 To run the project execute: nvm use && yarn start"
