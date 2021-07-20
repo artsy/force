@@ -3,46 +3,28 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type ArtworkImageBrowserLarge_Test_QueryVariables = {};
-export type ArtworkImageBrowserLarge_Test_QueryResponse = {
+export type DeepZoom_Test_QueryVariables = {};
+export type DeepZoom_Test_QueryResponse = {
     readonly artwork: {
-        readonly " $fragmentRefs": FragmentRefs<"ArtworkImageBrowserLarge_artwork">;
+        readonly images: ReadonlyArray<{
+            readonly " $fragmentRefs": FragmentRefs<"DeepZoom_image">;
+        } | null> | null;
     } | null;
 };
-export type ArtworkImageBrowserLarge_Test_Query = {
-    readonly response: ArtworkImageBrowserLarge_Test_QueryResponse;
-    readonly variables: ArtworkImageBrowserLarge_Test_QueryVariables;
+export type DeepZoom_Test_Query = {
+    readonly response: DeepZoom_Test_QueryResponse;
+    readonly variables: DeepZoom_Test_QueryVariables;
 };
 
 
 
 /*
-query ArtworkImageBrowserLarge_Test_Query {
+query DeepZoom_Test_Query {
   artwork(id: "example") {
-    ...ArtworkImageBrowserLarge_artwork
-    id
-  }
-}
-
-fragment ArtworkImageBrowserLarge_artwork on Artwork {
-  ...ArtworkLightbox_artwork
-  images {
-    internalID
-    isZoomable
-    ...DeepZoom_image
-  }
-}
-
-fragment ArtworkLightbox_artwork on Artwork {
-  formattedMetadata
-  images {
-    isDefault
-    resized(width: 800, height: 800, version: ["normalized", "larger", "large"]) {
-      width
-      height
-      src
-      srcSet
+    images {
+      ...DeepZoom_image
     }
+    id
   }
 }
 
@@ -76,7 +58,7 @@ return {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "ArtworkImageBrowserLarge_Test_Query",
+    "name": "DeepZoom_Test_Query",
     "selections": [
       {
         "alias": null,
@@ -87,9 +69,20 @@ return {
         "plural": false,
         "selections": [
           {
+            "alias": null,
             "args": null,
-            "kind": "FragmentSpread",
-            "name": "ArtworkImageBrowserLarge_artwork"
+            "concreteType": "Image",
+            "kind": "LinkedField",
+            "name": "images",
+            "plural": true,
+            "selections": [
+              {
+                "args": null,
+                "kind": "FragmentSpread",
+                "name": "DeepZoom_image"
+              }
+            ],
+            "storageKey": null
           }
         ],
         "storageKey": "artwork(id:\"example\")"
@@ -101,7 +94,7 @@ return {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "ArtworkImageBrowserLarge_Test_Query",
+    "name": "DeepZoom_Test_Query",
     "selections": [
       {
         "alias": null,
@@ -114,98 +107,11 @@ return {
           {
             "alias": null,
             "args": null,
-            "kind": "ScalarField",
-            "name": "formattedMetadata",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
             "concreteType": "Image",
             "kind": "LinkedField",
             "name": "images",
             "plural": true,
             "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "isDefault",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": [
-                  {
-                    "kind": "Literal",
-                    "name": "height",
-                    "value": 800
-                  },
-                  {
-                    "kind": "Literal",
-                    "name": "version",
-                    "value": [
-                      "normalized",
-                      "larger",
-                      "large"
-                    ]
-                  },
-                  {
-                    "kind": "Literal",
-                    "name": "width",
-                    "value": 800
-                  }
-                ],
-                "concreteType": "ResizedImageUrl",
-                "kind": "LinkedField",
-                "name": "resized",
-                "plural": false,
-                "selections": [
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "width",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "height",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "src",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "srcSet",
-                    "storageKey": null
-                  }
-                ],
-                "storageKey": "resized(height:800,version:[\"normalized\",\"larger\",\"large\"],width:800)"
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "internalID",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "isZoomable",
-                "storageKey": null
-              },
               {
                 "alias": null,
                 "args": null,
@@ -306,11 +212,11 @@ return {
   "params": {
     "id": null,
     "metadata": {},
-    "name": "ArtworkImageBrowserLarge_Test_Query",
+    "name": "DeepZoom_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkImageBrowserLarge_Test_Query {\n  artwork(id: \"example\") {\n    ...ArtworkImageBrowserLarge_artwork\n    id\n  }\n}\n\nfragment ArtworkImageBrowserLarge_artwork on Artwork {\n  ...ArtworkLightbox_artwork\n  images {\n    internalID\n    isZoomable\n    ...DeepZoom_image\n  }\n}\n\nfragment ArtworkLightbox_artwork on Artwork {\n  formattedMetadata\n  images {\n    isDefault\n    resized(width: 800, height: 800, version: [\"normalized\", \"larger\", \"large\"]) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment DeepZoom_image on Image {\n  deepZoom {\n    Image {\n      xmlns\n      Url\n      Format\n      TileSize\n      Overlap\n      Size {\n        Width\n        Height\n      }\n    }\n  }\n}\n"
+    "text": "query DeepZoom_Test_Query {\n  artwork(id: \"example\") {\n    images {\n      ...DeepZoom_image\n    }\n    id\n  }\n}\n\nfragment DeepZoom_image on Image {\n  deepZoom {\n    Image {\n      xmlns\n      Url\n      Format\n      TileSize\n      Overlap\n      Size {\n        Width\n        Height\n      }\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '1245a19b5e1d71417c1a241b2771d525';
+(node as any).hash = 'bedee44e5add2b79a325153b9165a966';
 export default node;
