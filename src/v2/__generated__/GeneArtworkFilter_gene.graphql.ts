@@ -7,7 +7,10 @@ export type ArtworkAggregation = "ARTIST" | "ARTIST_NATIONALITY" | "ATTRIBUTION_
 export type GeneArtworkFilter_gene = {
     readonly slug: string;
     readonly internalID: string;
-    readonly sidebarAggregations: {
+    readonly sidebar: {
+        readonly counts?: {
+            readonly followedArtists: number | null;
+        } | null;
         readonly aggregations: ReadonlyArray<{
             readonly slice: ArtworkAggregation | null;
             readonly counts: ReadonlyArray<{
@@ -19,9 +22,6 @@ export type GeneArtworkFilter_gene = {
     } | null;
     readonly filtered_artworks: {
         readonly id: string;
-        readonly counts?: {
-            readonly followedArtists: number | null;
-        } | null;
         readonly " $fragmentRefs": FragmentRefs<"ArtworkFilterArtworkGrid_filtered_artworks">;
     } | null;
     readonly " $refType": "GeneArtworkFilter_gene";
@@ -74,7 +74,7 @@ const node: ReaderFragment = {
       "storageKey": null
     },
     {
-      "alias": "sidebarAggregations",
+      "alias": "sidebar",
       "args": [
         {
           "kind": "Variable",
@@ -141,6 +141,31 @@ const node: ReaderFragment = {
             }
           ],
           "storageKey": null
+        },
+        {
+          "condition": "shouldFetchCounts",
+          "kind": "Condition",
+          "passingValue": true,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": "FilterArtworksCounts",
+              "kind": "LinkedField",
+              "name": "counts",
+              "plural": false,
+              "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "followedArtists",
+                  "storageKey": null
+                }
+              ],
+              "storageKey": null
+            }
+          ]
         }
       ],
       "storageKey": null
@@ -172,31 +197,6 @@ const node: ReaderFragment = {
           "storageKey": null
         },
         {
-          "condition": "shouldFetchCounts",
-          "kind": "Condition",
-          "passingValue": true,
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "concreteType": "FilterArtworksCounts",
-              "kind": "LinkedField",
-              "name": "counts",
-              "plural": false,
-              "selections": [
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "followedArtists",
-                  "storageKey": null
-                }
-              ],
-              "storageKey": null
-            }
-          ]
-        },
-        {
           "args": null,
           "kind": "FragmentSpread",
           "name": "ArtworkFilterArtworkGrid_filtered_artworks"
@@ -207,5 +207,5 @@ const node: ReaderFragment = {
   ],
   "type": "Gene"
 };
-(node as any).hash = '32bbfe9b634970b980739547de40af84';
+(node as any).hash = 'e96fd22ac7be9124dbc79bc63a3f6623';
 export default node;
