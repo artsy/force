@@ -11,7 +11,6 @@ export const RouteTab: React.FC<BaseTabProps & RouterLinkProps> = ({
   ...rest
 }) => {
   const tracking = useTracking()
-
   const options = {
     exact: rest.exact !== undefined ? rest.exact : true,
   }
