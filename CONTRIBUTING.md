@@ -15,8 +15,10 @@ git clone git@github.com:artsy/force.git && cd force
 Execute the setup script:
 
 ```sh
-./scripts/setup.sh && nvm use
+./scripts/setup.sh
 ```
+
+> NOTE: for nvm users, remember to: `nvm use`
 
 Start the server:
 

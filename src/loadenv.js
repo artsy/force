@@ -8,7 +8,7 @@ const shared = checkFileExistsSync(".env.shared")
   : {}
 const env = checkFileExistsSync(".env") ? parse(readFileSync(".env")) : {}
 
-// merge env files and update process.env
+// merge env files and update process.env if mergedEnv is not empty
 let mergedEnv = { ...shared, ...env }
 if (Object.keys(mergedEnv).length !== 0) {
   for (const k in mergedEnv) {
