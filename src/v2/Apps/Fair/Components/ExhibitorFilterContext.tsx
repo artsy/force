@@ -6,6 +6,7 @@ import { SortOptions } from "v2/Components/SortFilter"
 
 export interface ExhibitorFilters {
   sort?: string
+  page?: number
 }
 
 export interface ExhibitorFiltersState extends ExhibitorFilters {
@@ -37,6 +38,7 @@ interface ExhibitorFiltersAction {
 
 export const initialExhibitorFilterState: ExhibitorFilters = {
   sort: "FEATURED_DESC",
+  page: 1,
 }
 
 export const ExhibitorFilterContext = createContext<
@@ -111,7 +113,11 @@ const exhibitorFilterReducer = (
     case "SET": {
       const { name, value } = action.payload
 
-      let filterState: ExhibitorFilters = {}
+      let filterState: ExhibitorFilters = { page: 1 }
+
+      if (name === "page") {
+        filterState[name] = Number(value)
+      }
 
       const primitiveFilterTypes: Array<keyof ExhibitorFilters> = ["sort"]
       primitiveFilterTypes.forEach(filter => {
