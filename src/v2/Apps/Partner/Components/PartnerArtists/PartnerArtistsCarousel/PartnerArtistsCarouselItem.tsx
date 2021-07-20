@@ -13,6 +13,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { FollowArtistButtonFragmentContainer } from "v2/Components/FollowButton/FollowArtistButton"
 import { PartnerArtistsCarouselItem_artist } from "v2/__generated__/PartnerArtistsCarouselItem_artist.graphql"
+import { extractNodes } from "v2/Utils/extractNodes"
 
 export const ResponsiveImage = styled(ResponsiveBox).attrs({
   aspectWidth: 3,
@@ -32,39 +33,34 @@ export const PartnerArtistsCarouselItem: React.FC<PartnerArtistsCarouselItemProp
   artist,
   partnerArtistHref,
 }) => {
-  // @ts-expect-error STRICT_NULL_CHECK
-  if (!artist || artist.filterArtworksConnection.edges.length === 0) return null
+  const artwork = extractNodes(artist.artworksConnection)
 
-  // @ts-expect-error STRICT_NULL_CHECK
-  const artwork = artist.filterArtworksConnection.edges[0].node
+  if (!artist || !artist.node || artwork.length === 0) return null
 
   return (
     <Box width={[300, "100%"]}>
       <ResponsiveImage>
         <RouterLink to={partnerArtistHref}>
-          <Image
-            // @ts-expect-error STRICT_NULL_CHECK
-            src={artwork.image.cropped.src}
-            // @ts-expect-error STRICT_NULL_CHECK
-            srcSet={artwork.image.cropped.srcSet}
-            width="100%"
-            height="100%"
-          />
+          {artwork[0].image?.cropped && (
+            <Image
+              src={artwork[0].image.cropped.src}
+              srcSet={artwork[0].image.cropped.srcSet}
+              width="100%"
+              height="100%"
+            />
+          )}
         </RouterLink>
       </ResponsiveImage>
 
       <Flex mt={1} justifyContent="space-between">
         <EntityHeader
-          // @ts-expect-error STRICT_NULL_CHECK
-          imageUrl={artist.image.cropped.url || ""}
-          // @ts-expect-error STRICT_NULL_CHECK
-          name={artist.name}
-          // @ts-expect-error STRICT_NULL_CHECK
-          meta={artist.formattedNationalityAndBirthday}
+          imageUrl={artist.node.image?.cropped?.url || ""}
+          name={artist.node.name || ""}
+          meta={artist.node.formattedNationalityAndBirthday || undefined}
           href={partnerArtistHref}
         />
         <FollowArtistButtonFragmentContainer
-          artist={artist}
+          artist={artist.node!}
           contextModule={ContextModule.recommendedArtistsRail}
           buttonProps={{
             variant: "secondaryOutline",
@@ -81,26 +77,27 @@ export const PartnerArtistsCarouselItemFragmentContainer = createFragmentContain
   PartnerArtistsCarouselItem,
   {
     artist: graphql`
-      fragment PartnerArtistsCarouselItem_artist on Artist {
-        id
-        name
-        formattedNationalityAndBirthday
-        ...FollowArtistButton_artist
-        image {
-          cropped(width: 100, height: 100) {
-            url
-          }
-        }
-        filterArtworksConnection(first: 1, partnerIDs: [$partnerId]) {
+      fragment PartnerArtistsCarouselItem_artist on ArtistPartnerEdge {
+        artworksConnection(first: 1) {
           edges {
             node {
-              id
               image {
                 cropped(height: 200, width: 300) {
                   src
                   srcSet
                 }
               }
+            }
+          }
+        }
+        node {
+          id
+          name
+          formattedNationalityAndBirthday
+          ...FollowArtistButton_artist
+          image {
+            cropped(width: 100, height: 100) {
+              url
             }
           }
         }

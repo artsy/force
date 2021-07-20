@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { Box, Text, Flex } from "@artsy/palette"
-import { flatten } from "lodash"
+import { compact, flatten } from "lodash"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "v2/System"
 import { RouterLink } from "v2/System/Router/RouterLink"
@@ -38,40 +38,43 @@ export const PartnerArtistsCarousel: React.FC<PartnerArtistsCarouselProps> = ({
       onRailOverflowChange={setIsSeeAllAvaliable}
       itemsPerViewport={[2, 2, 3, 4]}
     >
-      {/* @ts-expect-error STRICT_NULL_CHECK */}
       {flatten([
-        // @ts-expect-error STRICT_NULL_CHECK
-        artists.edges.map(edge => {
-          return (
-            <PartnerArtistsCarouselItemFragmentContainer
-              // @ts-expect-error STRICT_NULL_CHECK
-              key={edge.node.id}
-              // @ts-expect-error STRICT_NULL_CHECK
-              artist={edge.node}
-              // @ts-expect-error STRICT_NULL_CHECK
-              partnerArtistHref={`/partner/${slug}/artists/${edge.node.slug}`}
-            />
-          )
-        }),
-        isSeeAllAvaliable && (
-          <Box key="see-all-button" width={[300, "100%"]}>
-            <RouterLink to={`/partner/${slug}/artists`}>
-              <ScrollToPartnerHeader width="100%">
-                <ResponsiveImage>
-                  <Flex
-                    height="100%"
-                    alignItems="center"
-                    justifyContent="center"
-                  >
-                    <Text style={{ textDecoration: "underline" }}>
-                      See all artists
-                    </Text>
-                  </Flex>
-                </ResponsiveImage>
-              </ScrollToPartnerHeader>
-            </RouterLink>
-          </Box>
+        compact(
+          artists.edges?.map(edge => {
+            if (!edge || !edge.node) {
+              return
+            }
+
+            return (
+              <PartnerArtistsCarouselItemFragmentContainer
+                key={edge.node.id}
+                artist={edge}
+                partnerArtistHref={`/partner/${slug}/artists/${edge.node.slug}`}
+              />
+            )
+          })
         ),
+        isSeeAllAvaliable
+          ? [
+              <Box key="see-all-button" width={[300, "100%"]}>
+                <RouterLink to={`/partner/${slug}/artists`}>
+                  <ScrollToPartnerHeader width="100%">
+                    <ResponsiveImage>
+                      <Flex
+                        height="100%"
+                        alignItems="center"
+                        justifyContent="center"
+                      >
+                        <Text style={{ textDecoration: "underline" }}>
+                          See all artists
+                        </Text>
+                      </Flex>
+                    </ResponsiveImage>
+                  </ScrollToPartnerHeader>
+                </RouterLink>
+              </Box>,
+            ]
+          : [],
       ])}
     </Carousel>
   )
@@ -95,8 +98,8 @@ export const PartnerArtistsCarouselFragmentContainer = createFragmentContainer(
             node {
               id
               slug
-              ...PartnerArtistsCarouselItem_artist
             }
+            ...PartnerArtistsCarouselItem_artist
           }
         }
       }
