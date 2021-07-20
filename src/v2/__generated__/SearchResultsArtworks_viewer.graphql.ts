@@ -29,20 +29,18 @@ export type SearchResultsArtworks_viewer$key = {
 
 
 
-const node: ReaderFragment = (function(){
-var v0 = [
-  {
-    "kind": "Variable",
-    "name": "input",
-    "variableName": "input"
-  }
-];
-return {
+const node: ReaderFragment = {
   "argumentDefinitions": [
     {
       "defaultValue": null,
       "kind": "LocalArgument",
       "name": "input",
+      "type": "FilterArtworksInput"
+    },
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "sidebarInput",
       "type": "FilterArtworksInput"
     },
     {
@@ -58,7 +56,18 @@ return {
   "selections": [
     {
       "alias": "sidebar",
-      "args": (v0/*: any*/),
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "first",
+          "value": 1
+        },
+        {
+          "kind": "Variable",
+          "name": "input",
+          "variableName": "sidebarInput"
+        }
+      ],
       "concreteType": "FilterArtworksConnection",
       "kind": "LinkedField",
       "name": "artworksConnection",
@@ -143,13 +152,18 @@ return {
       "storageKey": null
     },
     {
-      "args": (v0/*: any*/),
+      "args": [
+        {
+          "kind": "Variable",
+          "name": "input",
+          "variableName": "input"
+        }
+      ],
       "kind": "FragmentSpread",
       "name": "ArtworkFilter_viewer"
     }
   ],
   "type": "Viewer"
 };
-})();
-(node as any).hash = '5e4deefd04c6104b18b48c21c1b05532';
+(node as any).hash = '0e069ef330942cb47f0b23ec352a3d96';
 export default node;

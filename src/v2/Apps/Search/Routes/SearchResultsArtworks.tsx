@@ -41,9 +41,10 @@ export const SearchResultsArtworksRouteFragmentContainer = createFragmentContain
       fragment SearchResultsArtworks_viewer on Viewer
         @argumentDefinitions(
           input: { type: "FilterArtworksInput" }
+          sidebarInput: { type: "FilterArtworksInput" }
           shouldFetchCounts: { type: "Boolean!", defaultValue: false }
         ) {
-        sidebar: artworksConnection(input: $input) {
+        sidebar: artworksConnection(first: 1, input: $sidebarInput) {
           counts @include(if: $shouldFetchCounts) {
             followedArtists
           }

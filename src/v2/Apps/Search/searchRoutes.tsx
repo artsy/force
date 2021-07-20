@@ -131,6 +131,10 @@ export const searchRoutes: AppRouteConfig[] = [
           } = prepareVariables(params, {
             location,
           })
+          const input: Record<string, any> = {
+            ...allowedFilters(other),
+            first: 30,
+          }
           const aggregations = [...sourceAggregations, "ARTIST"]
 
           if (!!context.user) {
@@ -139,21 +143,26 @@ export const searchRoutes: AppRouteConfig[] = [
 
           return {
             shouldFetchCounts: !!context.user,
-            input: {
-              ...allowedFilters(other),
-              first: 30,
+            input,
+            sidebarInput: {
               aggregations,
+              keyword: input.keyword,
             },
           }
         },
         query: graphql`
           query searchRoutes_ArtworksViewerQuery(
             $input: FilterArtworksInput
+            $sidebarInput: FilterArtworksInput
             $shouldFetchCounts: Boolean!
           ) {
             viewer {
               ...SearchResultsArtworks_viewer
-                @arguments(input: $input, shouldFetchCounts: $shouldFetchCounts)
+                @arguments(
+                  input: $input
+                  sidebarInput: $sidebarInput
+                  shouldFetchCounts: $shouldFetchCounts
+                )
             }
           }
         `,
