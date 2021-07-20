@@ -51,7 +51,6 @@ export const fairRoutes: AppRouteConfig[] = [
   {
     path: "/fair/:slug",
     theme: "v3",
-    ignoreScrollBehavior: true,
     getComponent: () => FairApp,
     prepare: () => {
       FairApp.preload()
