@@ -49,6 +49,15 @@ export type Conversation_conversation = {
             readonly internalID?: string;
             readonly " $fragmentRefs": FragmentRefs<"Item_item">;
         } | null;
+        readonly liveArtwork: ({
+            readonly isOfferableFromInquiry: boolean | null;
+            readonly internalID: string;
+            readonly __typename: "Artwork";
+        } | {
+            /*This will never be '%other', but we need some
+            value in case none of the concrete values match.*/
+            readonly __typename: "%other";
+        }) | null;
     } | null> | null;
     readonly " $fragmentRefs": FragmentRefs<"ConversationCTA_conversation">;
     readonly " $refType": "Conversation_conversation";
@@ -88,6 +97,13 @@ v3 = {
   "args": null,
   "kind": "ScalarField",
   "name": "__typename",
+  "storageKey": null
+},
+v4 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "isOfferableFromInquiry",
   "storageKey": null
 };
 return {
@@ -362,13 +378,7 @@ return {
               "kind": "InlineFragment",
               "selections": [
                 (v0/*: any*/),
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "isOfferableFromInquiry",
-                  "storageKey": null
-                },
+                (v4/*: any*/),
                 (v1/*: any*/)
               ],
               "type": "Artwork"
@@ -377,6 +387,26 @@ return {
               "args": null,
               "kind": "FragmentSpread",
               "name": "Item_item"
+            }
+          ],
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": null,
+          "kind": "LinkedField",
+          "name": "liveArtwork",
+          "plural": false,
+          "selections": [
+            {
+              "kind": "InlineFragment",
+              "selections": [
+                (v4/*: any*/),
+                (v1/*: any*/),
+                (v3/*: any*/)
+              ],
+              "type": "Artwork"
             }
           ],
           "storageKey": null
@@ -393,5 +423,5 @@ return {
   "type": "Conversation"
 };
 })();
-(node as any).hash = 'e28cfbeeb297ac855abe47b712e3bf8b';
+(node as any).hash = 'd57abac12a26d6b3bc625faa52d7d1f0';
 export default node;
