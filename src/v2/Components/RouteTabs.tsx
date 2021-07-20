@@ -11,28 +11,38 @@ export const RouteTab: React.FC<BaseTabProps & RouterLinkProps> = ({
   ...rest
 }) => {
   const tracking = useTracking()
-
+  const ref = React.useRef() as React.MutableRefObject<HTMLDivElement>
   const options = {
     exact: rest.exact !== undefined ? rest.exact : true,
   }
 
+  const isRouteActive = useIsRouteActive(to, options)
+
+  React.useEffect(() => {
+    if (isRouteActive && ref?.current) {
+      ref.current.scrollIntoView()
+    }
+  }, [isRouteActive])
+
   return (
-    <BaseTab
-      as={RouterLink}
-      // @ts-ignore
-      to={to}
-      active={useIsRouteActive(to, options)}
-      onClick={() => {
-        tracking.trackEvent({
-          action_type: AnalyticsSchema.ActionType.Click,
-          destination_path: to,
-          subject: children as string,
-        })
-      }}
-      {...rest}
-    >
-      {children}
-    </BaseTab>
+    <div ref={ref}>
+      <BaseTab
+        as={RouterLink}
+        // @ts-ignore
+        to={to}
+        active={isRouteActive}
+        onClick={() => {
+          tracking.trackEvent({
+            action_type: AnalyticsSchema.ActionType.Click,
+            destination_path: to,
+            subject: children as string,
+          })
+        }}
+        {...rest}
+      >
+        {children}
+      </BaseTab>
+    </div>
   )
 }
 
