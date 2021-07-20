@@ -21,10 +21,11 @@ const ShippingSummaryItem = ({
 }: {
   order: ShippingSummaryItem_order
 } & StepSummaryItemProps) => {
-  // @ts-expect-error STRICT_NULL_CHECK
-  return requestedFulfillment.__typename === "CommerceShip" ? (
+  if (!requestedFulfillment) return null
+
+  return requestedFulfillment.__typename === "CommerceShip" ||
+    requestedFulfillment.__typename === "CommerceShipArta" ? (
     <StepSummaryItem title="Ship to" {...others}>
-      {/* @ts-expect-error STRICT_NULL_CHECK */}
       <ShippingAddress ship={requestedFulfillment} />
     </StepSummaryItem>
   ) : (

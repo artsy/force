@@ -3,6 +3,7 @@ import {
   TransactionDetailsSummaryItemTestQueryResponse,
 } from "v2/__generated__/TransactionDetailsSummaryItemTestQuery.graphql"
 import {
+  BuyOrderWithSelectedShippingQuote,
   OfferOrderWithOffers,
   OfferWithTotals,
   UntouchedBuyOrder,
@@ -26,6 +27,16 @@ type TestBuyOrder = Exclude<
 
 const transactionSummaryBuyOrder: TestBuyOrder = {
   ...UntouchedBuyOrder,
+  shippingTotal: "$12.00",
+  shippingTotalCents: 1200,
+  taxTotal: "$3.25",
+  taxTotalCents: 325,
+  itemsTotal: "$200.00",
+  buyerTotal: "$215.25",
+}
+
+const transactionSummaryBuyOrderWithSelectedShippingQuote: TestBuyOrder = {
+  ...BuyOrderWithSelectedShippingQuote,
   shippingTotal: "$12.00",
   shippingTotalCents: 1200,
   taxTotal: "$3.25",
@@ -96,6 +107,16 @@ describe("TransactionDetailsSummaryItem", () => {
       expect(text).toMatch("Shipping—")
       expect(text).toMatch("Tax—")
       expect(text).toMatch("Total$215.25")
+    })
+
+    it("shows the shipping quote name if shipping by Arta", async () => {
+      const transactionSummary = await render(
+        transactionSummaryBuyOrderWithSelectedShippingQuote
+      )
+
+      const text = transactionSummary.text()
+
+      expect(text).toMatch("Select delivery")
     })
   })
 

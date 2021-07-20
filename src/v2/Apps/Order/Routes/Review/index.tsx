@@ -42,6 +42,7 @@ import { BuyerGuarantee } from "../../Components/BuyerGuarantee"
 import { createStripeWrapper } from "v2/Utils/createStripeWrapper"
 import type { Stripe, StripeElements } from "@stripe/stripe-js"
 import { withSystemContext } from "v2/System"
+import { ShippingArtaSummaryItemFragmentContainer } from "../../Components/ShippingArtaSummaryItem"
 export interface ReviewProps {
   stripe: Stripe
   elements: StripeElements
@@ -385,6 +386,11 @@ export class ReviewRoute extends Component<ReviewProps> {
                     onChange={this.onChangePayment}
                     title="Payment method"
                   />
+                  <ShippingArtaSummaryItemFragmentContainer
+                    order={order}
+                    onChange={this.onChangeShipping}
+                    title="Shipping"
+                  />
                 </Flex>
                 <Media greaterThan="xs">
                   {/* @ts-expect-error STRICT_NULL_CHECK */}
@@ -477,6 +483,7 @@ export const ReviewFragmentContainer = createFragmentContainer(
         ...TransactionDetailsSummaryItem_order
         ...ShippingSummaryItem_order
         ...CreditCardSummaryItem_order
+        ...ShippingArtaSummaryItem_order
         ...OfferSummaryItem_order
       }
     `,

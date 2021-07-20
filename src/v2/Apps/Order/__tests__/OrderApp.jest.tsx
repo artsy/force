@@ -15,6 +15,7 @@ import {
   OfferOrderWithShippingDetails,
   OfferWithTotals,
   UntouchedBuyOrder,
+  UntouchedBuyOrderWithShippingQuotes,
   UntouchedOfferOrder,
 } from "v2/Apps/__tests__/Fixtures/Order"
 import { MockBoot } from "v2/DevTools"
@@ -108,6 +109,7 @@ describe("OrderApp routing redirects", () => {
                   is_offerable: true,
                   slug: "artwork-id",
                 },
+                shippingQuoteOptions: null,
                 id: "node id",
               },
             },
@@ -155,6 +157,17 @@ describe("OrderApp routing redirects", () => {
     expect(redirect.url).toBe("/orders/2939023/shipping")
   })
 
+  it("redirects to the shipping route from the payment route if no shipping quote was set", async () => {
+    const { redirect } = await render(
+      "/orders/2939023/payment",
+      mockResolver({
+        ...UntouchedBuyOrderWithShippingQuotes,
+        state: "PENDING",
+      })
+    )
+    expect(redirect.url).toBe("/orders/2939023/shipping")
+  })
+
   it("stays on the payment route if there is shipping but no payment info", async () => {
     const { redirect } = await render(
       "/orders/2939023/payment",
@@ -177,6 +190,17 @@ describe("OrderApp routing redirects", () => {
         ...UntouchedBuyOrder,
         creditCard: null,
         requestedFulfillment: null,
+        state: "PENDING",
+      })
+    )
+    expect(redirect.url).toBe("/orders/2939023/shipping")
+  })
+
+  it("redirects to the shipping route from the review route if no shipping quote was set", async () => {
+    const { redirect } = await render(
+      "/orders/2939023/review",
+      mockResolver({
+        ...UntouchedBuyOrderWithShippingQuotes,
         state: "PENDING",
       })
     )

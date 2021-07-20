@@ -16,6 +16,19 @@ export const selectShippingOption = (
           orderOrError {
             ... on CommerceOrderWithMutationSuccess {
               __typename
+              order {
+                lineItems {
+                  edges {
+                    node {
+                      shippingQuoteOptions {
+                        edges {
+                          ...ShippingQuotes_shippingQuotes
+                        }
+                      }
+                    }
+                  }
+                }
+              }
             }
             ... on CommerceOrderWithMutationFailure {
               error {

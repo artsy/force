@@ -4,14 +4,14 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ShippingAddress_ship = {
-    readonly name: string | null;
-    readonly addressLine1: string | null;
-    readonly addressLine2: string | null;
-    readonly city: string | null;
-    readonly postalCode: string | null;
-    readonly region: string | null;
-    readonly country: string | null;
-    readonly phoneNumber: string | null;
+    readonly name?: string | null;
+    readonly addressLine1?: string | null;
+    readonly addressLine2?: string | null;
+    readonly city?: string | null;
+    readonly postalCode?: string | null;
+    readonly region?: string | null;
+    readonly country?: string | null;
+    readonly phoneNumber?: string | null;
     readonly " $refType": "ShippingAddress_ship";
 };
 export type ShippingAddress_ship$data = ShippingAddress_ship;
@@ -22,70 +22,84 @@ export type ShippingAddress_ship$key = {
 
 
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "name",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "addressLine1",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "addressLine2",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "city",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "postalCode",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "region",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "country",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "phoneNumber",
+    "storageKey": null
+  }
+];
+return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
   "name": "ShippingAddress_ship",
   "selections": [
     {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "name",
-      "storageKey": null
+      "kind": "InlineFragment",
+      "selections": (v0/*: any*/),
+      "type": "CommerceShip"
     },
     {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "addressLine1",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "addressLine2",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "city",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "postalCode",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "region",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "country",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "phoneNumber",
-      "storageKey": null
+      "kind": "InlineFragment",
+      "selections": (v0/*: any*/),
+      "type": "CommerceShipArta"
     }
   ],
-  "type": "CommerceShip"
+  "type": "CommerceRequestedFulfillmentUnion"
 };
-(node as any).hash = '965be360f1c02f1cf98d179dda1e2df4';
+})();
+(node as any).hash = '92a7556e23bed9386cd5a051956ad8db';
 export default node;

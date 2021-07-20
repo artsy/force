@@ -41,15 +41,27 @@ export const ShippingAddressFragmentContainer = createFragmentContainer(
   ShippingAddress,
   {
     ship: graphql`
-      fragment ShippingAddress_ship on CommerceShip {
-        name
-        addressLine1
-        addressLine2
-        city
-        postalCode
-        region
-        country
-        phoneNumber
+      fragment ShippingAddress_ship on CommerceRequestedFulfillmentUnion {
+        ... on CommerceShip {
+          name
+          addressLine1
+          addressLine2
+          city
+          postalCode
+          region
+          country
+          phoneNumber
+        }
+        ... on CommerceShipArta {
+          name
+          addressLine1
+          addressLine2
+          city
+          postalCode
+          region
+          country
+          phoneNumber
+        }
       }
     `,
   }

@@ -4,6 +4,7 @@ import { get } from "v2/Utils/get"
 import { RedirectPredicate, RedirectRecord } from "./getRedirect"
 
 import { redirects_order } from "v2/__generated__/redirects_order.graphql"
+import { extractNodes } from "v2/Utils/extractNodes"
 
 interface OrderQuery {
   order: redirects_order
@@ -41,7 +42,13 @@ const goToStatusIfOrderIsNotPending = goToStatusIf(
 )
 
 const goToShippingIfShippingIsNotCompleted: OrderPredicate = ({ order }) => {
-  if (!order.requestedFulfillment) {
+  if (
+    !order.requestedFulfillment ||
+    (order.requestedFulfillment.__typename === "CommerceShipArta" &&
+      !extractNodes(
+        extractNodes(order.lineItems)?.[0].shippingQuoteOptions
+      ).find(shippingQuote => shippingQuote.isSelected))
+  ) {
     return {
       path: `/orders/${order.internalID}/shipping`,
       reason: "Shipping was not yet completed",
@@ -239,6 +246,13 @@ graphql`
         node {
           artwork {
             slug
+          }
+          shippingQuoteOptions {
+            edges {
+              node {
+                isSelected
+              }
+            }
           }
         }
       }

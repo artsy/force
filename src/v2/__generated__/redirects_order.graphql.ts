@@ -20,6 +20,13 @@ export type redirects_order = {
                 readonly artwork: {
                     readonly slug: string;
                 } | null;
+                readonly shippingQuoteOptions: {
+                    readonly edges: ReadonlyArray<{
+                        readonly node: {
+                            readonly isSelected: boolean;
+                        } | null;
+                    } | null> | null;
+                } | null;
             } | null;
         } | null> | null;
     } | null;
@@ -150,6 +157,46 @@ return {
                     }
                   ],
                   "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "concreteType": "CommerceShippingQuoteConnection",
+                  "kind": "LinkedField",
+                  "name": "shippingQuoteOptions",
+                  "plural": false,
+                  "selections": [
+                    {
+                      "alias": null,
+                      "args": null,
+                      "concreteType": "CommerceShippingQuoteEdge",
+                      "kind": "LinkedField",
+                      "name": "edges",
+                      "plural": true,
+                      "selections": [
+                        {
+                          "alias": null,
+                          "args": null,
+                          "concreteType": "CommerceShippingQuote",
+                          "kind": "LinkedField",
+                          "name": "node",
+                          "plural": false,
+                          "selections": [
+                            {
+                              "alias": null,
+                              "args": null,
+                              "kind": "ScalarField",
+                              "name": "isSelected",
+                              "storageKey": null
+                            }
+                          ],
+                          "storageKey": null
+                        }
+                      ],
+                      "storageKey": null
+                    }
+                  ],
+                  "storageKey": null
                 }
               ],
               "storageKey": null
@@ -209,5 +256,5 @@ return {
   "type": "CommerceOrder"
 };
 })();
-(node as any).hash = '45b06150d1e7184360e9c945ed0660bf';
+(node as any).hash = 'dbab609bae5cc4775d5c585e3be67227';
 export default node;
