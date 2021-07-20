@@ -1,4 +1,4 @@
-require("dotenv/config")
+require("../../src/loadenv")
 
 const chalk = require("chalk")
 
