@@ -44,6 +44,7 @@ import { Sticky } from "v2/Components/Sticky"
 import { ScrollRefContext } from "./ArtworkFilters/useScrollContext"
 import { ArtworkSortFilter } from "./ArtworkFilters/ArtworkSortFilter"
 import { GeneArtworkFilter_gene } from "v2/__generated__/GeneArtworkFilter_gene.graphql"
+import RelayModernEnvironment from "relay-runtime/lib/store/RelayModernEnvironment"
 
 /**
  * Primary ArtworkFilter which is wrapped with a context and refetch container.
@@ -83,15 +84,21 @@ export const ArtworkFilter: React.FC<
   )
 }
 
-const FiltersWithScrollIntoView: React.FC<{ Filters?: JSX.Element }> = ({
-  Filters,
-}) => {
+const FiltersWithScrollIntoView: React.FC<{
+  Filters?: JSX.Element
+  user?: User
+  relayEnvironment?: RelayModernEnvironment
+}> = ({ Filters, relayEnvironment, user }) => {
   const scrollRef = useRef<HTMLDivElement | null>(null)
 
   return (
     <Box ref={scrollRef as any} overflowY="scroll" height="100%">
       <ScrollRefContext.Provider value={{ scrollRef }}>
-        {Filters ? Filters : <ArtworkFilters />}
+        {Filters ? (
+          Filters
+        ) : (
+          <ArtworkFilters relayEnvironment={relayEnvironment} user={user} />
+        )}
       </ScrollRefContext.Provider>
     </Box>
   )
@@ -131,6 +138,7 @@ export const BaseArtworkFilter: React.FC<
   const [showMobileActionSheet, toggleMobileActionSheet] = useState(false)
   const filterContext = useArtworkFilterContext()
   const previousFilters = usePrevious(filterContext.filters)
+  const { user } = useSystemContext()
 
   const { filtered_artworks } = viewer
   const hasFilter = filtered_artworks && filtered_artworks.id
@@ -234,7 +242,11 @@ export const BaseArtworkFilter: React.FC<
             <ArtworkFilterMobileActionSheet
               onClose={() => toggleMobileActionSheet(false)}
             >
-              <FiltersWithScrollIntoView Filters={Filters} />
+              <FiltersWithScrollIntoView
+                Filters={Filters}
+                user={user}
+                relayEnvironment={relay.environment}
+              />
             </ArtworkFilterMobileActionSheet>
           )}
 
@@ -296,7 +308,14 @@ export const BaseArtworkFilter: React.FC<
 
         <GridColumns>
           <Column span={3} pr={tokens.pr}>
-            {Filters ? Filters : <ArtworkFilters />}
+            {Filters ? (
+              Filters
+            ) : (
+              <ArtworkFilters
+                user={user}
+                relayEnvironment={relay.environment}
+              />
+            )}
           </Column>
 
           <Column
