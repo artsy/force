@@ -115,7 +115,7 @@ const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
           exact
           onClick={() => tracking.trackEvent(clickedExhibitorsTabTrackingData)}
         >
-          Exhibitors
+          Booths
         </RouteTab>
 
         <RouteTab
