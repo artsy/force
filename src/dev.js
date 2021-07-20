@@ -18,9 +18,6 @@ const { createReloadable } = require("@artsy/express-reloadable")
 const { createConfig } = require("../webpack")
 const { initializeMiddleware } = require("./middleware")
 
-// @ts-ignore
-const { APP_URL, PORT } = require("./config")
-
 /**
  * Force resolution of potentially `yarn link`'d modules to the local i
  * node_modules folder. This gets around SSR issues involving single react
