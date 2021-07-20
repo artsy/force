@@ -1,165 +1,134 @@
-import { Flex, color, space } from "@artsy/palette"
-import React, { SFC } from "react"
+import { Flex, ClickableProps, Clickable, FlexProps } from "@artsy/palette"
+import { themeGet } from "@styled-system/theme-get"
+import React from "react"
 import styled, { css } from "styled-components"
+
+interface DeepZoomSliderProps extends FlexProps {
+  min: number
+  max: number
+  step: number
+  value: number
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
+  onZoomInClicked?: (event: React.MouseEvent<HTMLButtonElement>) => void
+  onZoomOutClicked?: (event: React.MouseEvent<HTMLButtonElement>) => void
+}
+
+export const DeepZoomSlider: React.FC<DeepZoomSliderProps> = ({
+  min,
+  max,
+  step,
+  onChange,
+  value,
+  onZoomInClicked,
+  onZoomOutClicked,
+  ...rest
+}) => (
+  <Flex
+    width={240}
+    height={50}
+    borderRadius={2}
+    bg="rgba(0, 0, 0, 0.6)"
+    justifyContent="center"
+    alignItems="center"
+    {...rest}
+  >
+    <ZoomOutButton onClick={onZoomOutClicked} />
+
+    <Track>
+      <SliderInput
+        min={min.toString()}
+        max={max.toString()}
+        step={step.toString()}
+        onChange={onChange}
+        value={value}
+      />
+    </Track>
+
+    <ZoomInButton onClick={onZoomInClicked} />
+  </Flex>
+)
 
 const railStyles = css`
   width: 100%;
-  height: 2px;
-  background-color: ${color("black30")};
+  height: ${themeGet("space.2")};
 `
 
 const knobStyles = css`
   user-select: none;
   cursor: pointer;
-  width: ${space(2)}px;
-  height: ${space(2)}px;
-  border-radius: 20px;
-  background-color: ${color("white100")};
+  width: ${themeGet("space.2")};
+  height: ${themeGet("space.2")};
+  background-color: ${themeGet("colors.white100")};
+  border-radius: 50%;
 `
 
-const StyledSlider = styled.input`
-  appearance: none; /* Hides the slider so that custom slider can be made */
-  width: 100%; /* Specific width is required for Firefox. */
-  background: transparent; /* Otherwise white in Chrome */
-  margin: 0 ${space(1)}px;
+const Track = styled(Flex)`
+  align-items: center;
+  position: relative;
 
-  &::-webkit-slider-thumb {
-    /* stylelint-disable-next-line property-no-vendor-prefix */
-    -webkit-appearance: none;
-    margin-top: -9px; /* You need to specify a margin in Chrome, but in Firefox and IE it is automatic */
-    ${knobStyles}
+  &:before {
+    content: "";
+    display: block;
+    position: absolute;
+    height: 2px;
+    left: 0;
+    right: 0;
+    top: 50%;
+    margin-top: -1px;
+    background-color: ${themeGet("colors.black30")};
   }
+`
 
-  /* All the same stuff for Firefox */
-  &::-moz-range-thumb {
-    ${knobStyles};
-  }
-
-  /* All the same stuff for IE */
-  &::-ms-thumb {
-    ${knobStyles};
-  }
-
-  &::-ms-track {
-    background: transparent;
-    border-color: transparent;
-    color: transparent;
-    ${railStyles};
-  }
+const SliderInput = styled.input`
+  appearance: none;
+  background: transparent;
+  position: relative;
 
   &::-webkit-slider-runnable-track {
-    ${railStyles};
+    ${railStyles}
   }
 
   &::-moz-range-track {
-    ${railStyles};
+    ${railStyles}
   }
 
-  &::-moz-focus-outer {
-    border: 0;
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    ${knobStyles}
   }
 
-  &::-ms-fill-lower {
-    ${railStyles};
-  }
-
-  &::-ms-fill-upper {
-    ${railStyles};
-  }
-
-  &:invalid {
-    box-shadow: none;
-  }
-
-  &:focus {
-    outline: none;
+  &::-moz-range-thumb {
+    ${knobStyles}
   }
 `
 
-StyledSlider.defaultProps = {
+SliderInput.defaultProps = {
   type: "range",
 }
 
-const SliderContainer = styled.div`
-  width: 240px;
-  height: 50px;
-  border-radius: 2px;
-  background-color: rgba(0, 0, 0, 0.6);
-  padding: ${space(1)}px;
-`
-
-const ZoomSymbolContainer = styled.svg`
+const Svg = styled.svg`
+  display: block;
   height: 32px;
   width: 32px;
-  padding: ${space(1)}px;
+  padding: ${themeGet("space.1")};
   flex-shrink: 0;
   cursor: pointer;
+  stroke: ${themeGet("colors.white100")};
 `
 
-interface ZoomButton {
-  onClick?: () => void
-}
-
-const ZoomOutButton: SFC<ZoomButton> = props => (
-  <ZoomSymbolContainer {...props}>
-    <line
-      x1="0"
-      y1="50%"
-      x2="100%"
-      y2="50%"
-      stroke={color("white100")}
-      strokeWidth="2px"
-    />
-  </ZoomSymbolContainer>
+const ZoomOutButton: React.FC<ClickableProps> = props => (
+  <Clickable {...props}>
+    <Svg>
+      <line x1="0" y1="50%" x2="100%" y2="50%" strokeWidth="2px" />
+    </Svg>
+  </Clickable>
 )
 
-const ZoomInButton: SFC<ZoomButton> = props => (
-  <ZoomSymbolContainer {...props}>
-    <line
-      x1="50%"
-      y1="0"
-      x2="50%"
-      y2="100%"
-      stroke={color("white100")}
-      strokeWidth="2px"
-    />
-    <line
-      x1="0"
-      y1="50%"
-      x2="100%"
-      y2="50%"
-      stroke={color("white100")}
-      strokeWidth="2px"
-    />
-  </ZoomSymbolContainer>
-)
-
-export interface SliderProps {
-  min: number
-  max: number
-  step: number
-  value: number
-  onChange?: (Event) => void
-  onZoomInClicked?: () => void
-  onZoomOutClicked?: () => void
-}
-export const Slider: SFC<SliderProps> = props => (
-  <SliderContainer>
-    <Flex
-      height="100%"
-      width="100%"
-      justifyContent="center"
-      alignItems="center"
-    >
-      <ZoomOutButton onClick={props.onZoomOutClicked} />
-      <StyledSlider
-        min={props.min.toString()}
-        max={props.max.toString()}
-        step={props.step.toString()}
-        onChange={props.onChange}
-        ref={element => element && (element.value = String(props.value))}
-      />
-      <ZoomInButton onClick={props.onZoomInClicked} />
-    </Flex>
-  </SliderContainer>
+const ZoomInButton: React.FC<ClickableProps> = props => (
+  <Clickable {...props}>
+    <Svg>
+      <line x1="50%" y1="0" x2="50%" y2="100%" strokeWidth="2px" />
+      <line x1="0" y1="50%" x2="100%" y2="50%" strokeWidth="2px" />
+    </Svg>
+  </Clickable>
 )
