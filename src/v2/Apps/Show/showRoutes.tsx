@@ -38,9 +38,15 @@ export const showRoutes: AppRouteConfig[] = [
         $slug: String!
         $input: FilterArtworksInput
         $aggregations: [ArtworkAggregation]
+        $shouldFetchCounts: Boolean!
       ) {
         show(id: $slug) @principalField {
-          ...ShowApp_show @arguments(input: $input, aggregations: $aggregations)
+          ...ShowApp_show
+            @arguments(
+              input: $input
+              aggregations: $aggregations
+              shouldFetchCounts: $shouldFetchCounts
+            )
         }
       }
     `,
@@ -96,12 +102,17 @@ function initializeVariablesWithFilterState({ slug }, props) {
     "MAJOR_PERIOD",
     "ARTIST_NATIONALITY",
     "MATERIALS_TERMS",
+    "ARTIST",
   ]
+
+  if (!!props.context.user) {
+    aggregations.push("FOLLOWED_ARTISTS")
+  }
 
   const input = {
     sort: "partner_show_position",
     ...allowedFilters(paramsToCamelCase(initialFilterState)),
   }
 
-  return { slug, input, aggregations }
+  return { slug, input, aggregations, shouldFetchCounts: !!props.context.user }
 }
