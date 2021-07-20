@@ -32,6 +32,9 @@ export type Collection_collection = {
         } | null> | null;
     } | null;
     readonly artworksConnection: {
+        readonly counts?: {
+            readonly followedArtists: number | null;
+        } | null;
         readonly aggregations: ReadonlyArray<{
             readonly slice: ArtworkAggregation | null;
             readonly counts: ReadonlyArray<{
@@ -99,6 +102,12 @@ return {
       "kind": "LocalArgument",
       "name": "input",
       "type": "FilterArtworksInput"
+    },
+    {
+      "defaultValue": false,
+      "kind": "LocalArgument",
+      "name": "shouldFetchCounts",
+      "type": "Boolean!"
     }
   ],
   "kind": "Fragment",
@@ -349,6 +358,31 @@ return {
           "args": null,
           "kind": "FragmentSpread",
           "name": "SeoProductsForArtworks_artworks"
+        },
+        {
+          "condition": "shouldFetchCounts",
+          "kind": "Condition",
+          "passingValue": true,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": "FilterArtworksCounts",
+              "kind": "LinkedField",
+              "name": "counts",
+              "plural": false,
+              "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "followedArtists",
+                  "storageKey": null
+                }
+              ],
+              "storageKey": null
+            }
+          ]
         }
       ],
       "storageKey": null
@@ -433,5 +467,5 @@ return {
   "type": "MarketingCollection"
 };
 })();
-(node as any).hash = '360adf1045a85a674a06328896cb0140';
+(node as any).hash = '1f18c5dd15d90d91fa9f158b117f3916';
 export default node;
