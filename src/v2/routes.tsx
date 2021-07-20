@@ -20,6 +20,7 @@ import { identityVerificationRoutes } from "v2/Apps/IdentityVerification/identit
 import { orderRoutes } from "v2/Apps/Order/orderRoutes"
 import { partnerRoutes } from "v2/Apps/Partner/partnerRoutes"
 import { paymentRoutes } from "v2/Apps/Payment/paymentRoutes"
+import { shippingRoutes } from "v2/Apps/Shipping/shippingRoutes"
 import { purchaseRoutes } from "v2/Apps/Purchase/purchaseRoutes"
 import { searchRoutes } from "v2/Apps/Search/searchRoutes"
 import { showRoutes } from "v2/Apps/Show/showRoutes"
@@ -49,6 +50,7 @@ export function getAppRoutes(): AppRouteConfig[] {
     { routes: orderRoutes },
     { routes: partnerRoutes },
     { routes: paymentRoutes },
+    { routes: shippingRoutes },
     { routes: purchaseRoutes },
     { routes: searchRoutes },
     { routes: showRoutes },
