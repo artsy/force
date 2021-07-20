@@ -452,6 +452,28 @@ describe("Shipping", () => {
             }
         `)
       })
+
+      it("show error message if arta doesn't return shipping quotes", async () => {
+        fillAddressForm(page.root, {
+          ...validAddress,
+          region: "New Brunswick",
+          country: "US",
+        })
+
+        const settingOrderArtaShipmentSuccessWithoutQuotes = cloneDeep(
+          settingOrderArtaShipmentSuccess
+        ) as any
+        settingOrderArtaShipmentSuccessWithoutQuotes.commerceSetShipping.orderOrError.order.lineItems.edges[0].node.shippingQuoteOptions.edges = []
+
+        mutations.useResultsOnce(settingOrderArtaShipmentSuccessWithoutQuotes)
+
+        await page.clickSubmit()
+
+        expect(page.find(`[data-test="shipping-quotes"]`)).toHaveLength(0)
+        expect(
+          page.find(`[data-test="supportedShippingAreaErrorMessage"]`)
+        ).not.toHaveLength(0)
+      })
     })
 
     describe("with previously filled-in data", () => {
