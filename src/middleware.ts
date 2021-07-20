@@ -45,6 +45,7 @@ import { pageCacheMiddleware } from "./lib/middleware/pageCache"
 import { sameOriginMiddleware } from "./lib/middleware/sameOrigin"
 import { unsupportedBrowserMiddleware } from "./lib/middleware/unsupportedBrowser"
 import { backboneSync } from "lib/backboneSync"
+import { serverTimingHeaders } from "lib/middleware/serverTimingHeaders"
 
 // App-specific V2 server-side functionality
 import { artistMiddleware } from "lib/middleware/artistMiddleware"
@@ -68,6 +69,8 @@ const {
 } = config
 
 export function initializeMiddleware(app) {
+  app.use(serverTimingHeaders)
+
   app.set("trust proxy", true)
 
   // Setup error handling

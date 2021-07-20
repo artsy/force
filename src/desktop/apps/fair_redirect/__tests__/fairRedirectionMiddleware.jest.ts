@@ -3,19 +3,19 @@ import { ArtsyRequest, ArtsyResponse } from "lib/middleware/artsyExpress"
 import { fairRedirectionMiddleware } from "../fairRedirectionMiddleware"
 
 describe("fairRedirectionMiddleware", () => {
-  let req: Partial<ArtsyRequest>
-  let res: Partial<ArtsyResponse>
+  let req: ArtsyRequest
+  let res: ArtsyResponse
   let next: jest.Mock<NextFunction>
 
   beforeEach(() => {
     jest.resetModules()
 
-    req = {
+    req = ({
       params: { id: "big-expo" },
       route: "/:id",
-    }
+    } as unknown) as ArtsyRequest
 
-    res = {
+    res = ({
       locals: {
         profile: {
           get: jest.fn(attr => {
@@ -25,7 +25,7 @@ describe("fairRedirectionMiddleware", () => {
         },
       },
       redirect: jest.fn(),
-    }
+    } as unknown) as ArtsyResponse
 
     next = jest.fn()
   })

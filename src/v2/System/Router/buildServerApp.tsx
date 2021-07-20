@@ -12,7 +12,7 @@ import {
   getFarceResult,
 } from "found/server"
 import qs from "qs"
-import { Request, Response } from "express"
+import type { ArtsyRequest, ArtsyResponse } from "lib/middleware/artsyExpress"
 import { createQueryMiddleware } from "farce"
 
 import { createRelaySSREnvironment } from "v2/System/Relay/createRelaySSREnvironment"
@@ -49,8 +49,8 @@ const MediaStyle = createMediaStyle()
 const logger = createLogger("Artsy/Router/buildServerApp.tsx")
 
 export interface ServerRouterConfig extends RouterConfig {
-  req: Request
-  res: Response
+  req: ArtsyRequest
+  res: ArtsyResponse
   routes: AppRouteConfig[]
   context?: {
     injectedData?: any

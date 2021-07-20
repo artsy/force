@@ -4,11 +4,12 @@ import { featureAKGRoutes } from "v2/Apps/FeatureAKG/featureAKGRoutes"
 // @ts-ignore
 import JSONPage from "../../components/json_page"
 import React from "react"
-import { NextFunction, Request, Response } from "express"
+import { NextFunction } from "express"
+import type { ArtsyRequest, ArtsyResponse } from "lib/middleware/artsyExpress"
 
 export const landingPage = async (
-  req: Request,
-  res: Response,
+  req: ArtsyRequest,
+  res: ArtsyResponse,
   next: NextFunction
 ) => {
   try {

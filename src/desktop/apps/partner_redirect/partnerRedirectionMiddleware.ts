@@ -2,8 +2,8 @@ import { NextFunction } from "express"
 import { ArtsyRequest, ArtsyResponse } from "lib/middleware/artsyExpress"
 
 export const partnerRedirectionMiddleware = (
-  req: Partial<ArtsyRequest>,
-  res: Partial<ArtsyResponse>,
+  req: ArtsyRequest,
+  res: ArtsyResponse,
   next: NextFunction
 ) => {
   if (!res.locals?.profile?.isPartner() || !res.redirect) return next()
