@@ -17,9 +17,9 @@ function Sidebar({ isClosed }) {
   return (
     <div className={b()}>
       <div className={b("artist-filter")}>
-        {!isClosed && <RangeSlider />}
-        <MediumFilter />
         <ArtistFilter />
+        <MediumFilter />
+        {!isClosed && <RangeSlider />}
       </div>
     </div>
   )
