@@ -23,6 +23,18 @@ const node: ReaderFragment = {
       "kind": "LocalArgument",
       "name": "input",
       "type": "FilterArtworksInput"
+    },
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "aggregations",
+      "type": "[ArtworkAggregation]"
+    },
+    {
+      "defaultValue": false,
+      "kind": "LocalArgument",
+      "name": "shouldFetchCounts",
+      "type": "Boolean!"
     }
   ],
   "kind": "Fragment",
@@ -40,8 +52,18 @@ const node: ReaderFragment = {
       "args": [
         {
           "kind": "Variable",
+          "name": "aggregations",
+          "variableName": "aggregations"
+        },
+        {
+          "kind": "Variable",
           "name": "input",
           "variableName": "input"
+        },
+        {
+          "kind": "Variable",
+          "name": "shouldFetchCounts",
+          "variableName": "shouldFetchCounts"
         }
       ],
       "kind": "FragmentSpread",
@@ -55,5 +77,5 @@ const node: ReaderFragment = {
   ],
   "type": "Tag"
 };
-(node as any).hash = 'a1318a94a4283b018cca3a5d65aca87d';
+(node as any).hash = '15bfda47e4d0588e2e6ffeb5d7c2afdf';
 export default node;
