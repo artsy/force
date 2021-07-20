@@ -94,14 +94,15 @@ export type Slice =
 /**
  * Possible aggregations that can be passed
  */
-export type Aggregations = Array<{
+export type Aggregation = {
   slice: Slice
   counts: Array<{
     count: number
     value: string
     name: string
   }>
-}>
+}
+export type Aggregations = Array<Aggregation>
 
 export interface Counts {
   for_sale_artworks?: number
