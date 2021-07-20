@@ -7,19 +7,7 @@ export type ArtworkImageBrowserLarge_artwork = {
     readonly images: ReadonlyArray<{
         readonly internalID: string | null;
         readonly isZoomable: boolean | null;
-        readonly deepZoom: {
-            readonly Image: {
-                readonly xmlns: string | null;
-                readonly Url: string | null;
-                readonly Format: string | null;
-                readonly TileSize: number | null;
-                readonly Overlap: number | null;
-                readonly Size: {
-                    readonly Width: number | null;
-                    readonly Height: number | null;
-                } | null;
-            } | null;
-        } | null;
+        readonly " $fragmentRefs": FragmentRefs<"DeepZoom_image">;
     } | null> | null;
     readonly " $fragmentRefs": FragmentRefs<"ArtworkLightbox_artwork">;
     readonly " $refType": "ArtworkImageBrowserLarge_artwork";
@@ -61,86 +49,9 @@ const node: ReaderFragment = {
           "storageKey": null
         },
         {
-          "alias": null,
           "args": null,
-          "concreteType": "DeepZoom",
-          "kind": "LinkedField",
-          "name": "deepZoom",
-          "plural": false,
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "concreteType": "DeepZoomImage",
-              "kind": "LinkedField",
-              "name": "Image",
-              "plural": false,
-              "selections": [
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "xmlns",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "Url",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "Format",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "TileSize",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "Overlap",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "concreteType": "DeepZoomImageSize",
-                  "kind": "LinkedField",
-                  "name": "Size",
-                  "plural": false,
-                  "selections": [
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "Width",
-                      "storageKey": null
-                    },
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "Height",
-                      "storageKey": null
-                    }
-                  ],
-                  "storageKey": null
-                }
-              ],
-              "storageKey": null
-            }
-          ],
-          "storageKey": null
+          "kind": "FragmentSpread",
+          "name": "DeepZoom_image"
         }
       ],
       "storageKey": null
@@ -153,5 +64,5 @@ const node: ReaderFragment = {
   ],
   "type": "Artwork"
 };
-(node as any).hash = 'cde35836f4fa12c0da735d35e82474ac';
+(node as any).hash = '76181998a2ea6347028e36a0267ae23c';
 export default node;

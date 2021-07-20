@@ -14,7 +14,6 @@ export const useNextPrevious = ({ onNext, onPrevious }: UseNextPrevious) => {
 
   useEffect(() => {
     const handleKeydown = ({ key }: KeyboardEvent) => {
-      console.log(containerRef, document.activeElement, key)
       if (!containerRef.current) return
 
       // Only triggers keyboard navigation if component is in focus

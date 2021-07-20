@@ -10,7 +10,7 @@ import {
 import { compact } from "lodash"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworkImageBrowserSmall_artwork } from "v2/__generated__/ArtworkImageBrowserSmall_artwork.graphql"
-import { DeepZoom } from "v2/Components/DeepZoom"
+import { DeepZoomFragmentContainer, useDeepZoom } from "v2/Components/DeepZoom"
 import { ArtworkLightboxFragmentContainer } from "../ArtworkLightbox"
 
 interface ArtworkImageBrowserSmallProps {
@@ -22,6 +22,9 @@ const ArtworkImageBrowserSmall: React.FC<ArtworkImageBrowserSmallProps> = ({
 }) => {
   const [index, setIndex] = useState(0)
   const images = compact(artwork.images)
+  const activeImage = images[index]
+
+  const { isDeepZoomVisible, showDeepZoom, hideDeepZoom } = useDeepZoom()
 
   if (images.length === 0) {
     return null
@@ -29,22 +32,21 @@ const ArtworkImageBrowserSmall: React.FC<ArtworkImageBrowserSmallProps> = ({
 
   return (
     <>
+      {isDeepZoomVisible && (
+        <DeepZoomFragmentContainer image={activeImage} onClose={hideDeepZoom} />
+      )}
+
       <Swiper snap="center" onChange={setIndex} Cell={Cell} Rail={Rail}>
         {images.map((image, i) => {
           return (
-            <DeepZoom key={i} deepZoom={image.deepZoom}>
-              {({ onShow }) => {
-                return (
-                  <ArtworkLightboxFragmentContainer
-                    my={2}
-                    artwork={artwork}
-                    activeIndex={i}
-                    onClick={image.isZoomable ? onShow : undefined}
-                    lazyLoad={i !== 0}
-                  />
-                )
-              }}
-            </DeepZoom>
+            <ArtworkLightboxFragmentContainer
+              key={image.internalID ?? i}
+              my={2}
+              artwork={artwork}
+              activeIndex={i}
+              lazyLoad={i !== 0}
+              onClick={activeImage.isZoomable ? showDeepZoom : undefined}
+            />
           )
         })}
       </Swiper>
@@ -89,21 +91,8 @@ export const ArtworkImageBrowserSmallFragmentContainer = createFragmentContainer
         ...ArtworkLightbox_artwork
         images {
           internalID
-          # TODO: Move to deepZoom component
           isZoomable
-          deepZoom {
-            Image {
-              xmlns
-              Url
-              Format
-              TileSize
-              Overlap
-              Size {
-                Width
-                Height
-              }
-            }
-          }
+          ...DeepZoom_image
         }
       }
     `,

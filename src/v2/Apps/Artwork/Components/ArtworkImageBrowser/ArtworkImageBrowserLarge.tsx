@@ -14,7 +14,7 @@ import { useCursor } from "use-cursor"
 import { ArtworkLightboxFragmentContainer } from "../ArtworkLightbox"
 import { ArtworkImageBrowserLarge_artwork } from "v2/__generated__/ArtworkImageBrowserLarge_artwork.graphql"
 import { useNextPrevious } from "v2/Utils/Hooks/useNextPrevious"
-import { DeepZoom } from "v2/Components/DeepZoom"
+import { DeepZoomFragmentContainer, useDeepZoom } from "v2/Components/DeepZoom"
 
 interface ArtworkImageBrowserLargeProps {
   artwork: ArtworkImageBrowserLarge_artwork
@@ -27,6 +27,8 @@ const ArtworkImageBrowserLarge: React.FC<ArtworkImageBrowserLargeProps> = ({
   const { index, handleNext, handlePrev } = useCursor({ max: images.length })
   const activeImage = images[index]
 
+  const { showDeepZoom, hideDeepZoom, isDeepZoomVisible } = useDeepZoom()
+
   const { containerRef } = useNextPrevious({
     onNext: handleNext,
     onPrevious: handlePrev,
@@ -37,70 +39,70 @@ const ArtworkImageBrowserLarge: React.FC<ArtworkImageBrowserLargeProps> = ({
   }
 
   return (
-    <Box ref={containerRef as any} position="relative">
-      {images.length > 1 && (
-        <nav>
-          <NextPrevious
-            onClick={handlePrev}
-            aria-label="Previous image"
-            left={0}
-            p={2}
-          >
-            <ChevronIcon
-              direction="left"
-              // @ts-ignore
-              fill="currentColor"
-              width={30}
-              height={30}
-              aria-hidden
-            />
-          </NextPrevious>
-
-          <NextPrevious
-            onClick={handleNext}
-            aria-label="Next image"
-            right={0}
-            p={2}
-          >
-            <ChevronIcon
-              direction="right"
-              // @ts-ignore
-              fill="currentColor"
-              width={30}
-              height={30}
-              aria-hidden
-            />
-          </NextPrevious>
-        </nav>
+    <>
+      {isDeepZoomVisible && (
+        <DeepZoomFragmentContainer image={activeImage} onClose={hideDeepZoom} />
       )}
 
-      <DeepZoom deepZoom={activeImage.deepZoom}>
-        {({ onShow }) => {
-          return (
-            <ArtworkLightboxFragmentContainer
-              my={2}
-              artwork={artwork}
+      <Box ref={containerRef as any} position="relative">
+        {images.length > 1 && (
+          <nav>
+            <NextPrevious
+              onClick={handlePrev}
+              aria-label="Previous image"
+              left={0}
+              p={2}
+            >
+              <ChevronIcon
+                direction="left"
+                // @ts-ignore
+                fill="currentColor"
+                width={30}
+                height={30}
+                aria-hidden
+              />
+            </NextPrevious>
+
+            <NextPrevious
+              onClick={handleNext}
+              aria-label="Next image"
+              right={0}
+              p={2}
+            >
+              <ChevronIcon
+                direction="right"
+                // @ts-ignore
+                fill="currentColor"
+                width={30}
+                height={30}
+                aria-hidden
+              />
+            </NextPrevious>
+          </nav>
+        )}
+
+        <ArtworkLightboxFragmentContainer
+          my={2}
+          artwork={artwork}
+          activeIndex={index}
+          onClick={activeImage.isZoomable ? showDeepZoom : undefined}
+        />
+
+        {images.length > 1 && (
+          <>
+            <VisuallyHidden aria-live="polite" aria-atomic="true">
+              Page {index + 1} of {images.length}
+            </VisuallyHidden>
+
+            <ProgressDots
               activeIndex={index}
-              onClick={activeImage.isZoomable ? onShow : undefined}
+              amount={images.length}
+              variant="dash"
             />
-          )
-        }}
-      </DeepZoom>
-
-      {images.length > 1 && (
-        <>
-          <VisuallyHidden aria-live="polite" aria-atomic="true">
-            Page {index + 1} of {images.length}
-          </VisuallyHidden>
-
-          <ProgressDots
-            activeIndex={index}
-            amount={images.length}
-            variant="dash"
-          />
-        </>
-      )}
-    </Box>
+          </>
+        )}
+      </Box>
+    </>
   )
 }
 
@@ -128,21 +130,8 @@ export const ArtworkImageBrowserLargeFragmentContainer = createFragmentContainer
         ...ArtworkLightbox_artwork
         images {
           internalID
-          # TODO: Move to deepZoom component
           isZoomable
-          deepZoom {
-            Image {
-              xmlns
-              Url
-              Format
-              TileSize
-              Overlap
-              Size {
-                Width
-                Height
-              }
-            }
-          }
+          ...DeepZoom_image
         }
       }
     `,

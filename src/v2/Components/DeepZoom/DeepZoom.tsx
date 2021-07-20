@@ -1,145 +1,46 @@
-import { Box, Flex, color, space } from "@artsy/palette"
-import { withSystemContext } from "v2/System"
-import * as Schema from "v2/System/Analytics/Schema"
-import FadeTransition from "v2/Components/Animation/FadeTransition"
-import { bind, once, throttle } from "lodash"
+import { Box, Flex, ModalBase } from "@artsy/palette"
+import { AnalyticsSchema, useTracking } from "v2/System/Analytics"
+import { once, throttle } from "lodash"
 import React from "react"
-import ReactDOM from "react-dom"
-import track from "react-tracking"
-import styled from "styled-components"
-import { CloseButton } from "./CloseButton"
-import { Slider, SliderProps } from "./DeepZoomSlider"
+import { DeepZoomCloseButton } from "./DeepZoomCloseButton"
+import { DeepZoomSlider } from "./DeepZoomSlider"
+import { useState } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
+import { DeepZoom_image } from "v2/__generated__/DeepZoom_image.graphql"
+import { useRef } from "react"
+import { useEffect } from "react"
 
-const KEYBOARD_EVENT = "keyup"
 const ZOOM_PER_CLICK = 1.4
-const HIDE_ZOOM_SLIDER_AFTER = 2500
 
-const DeepZoomContainer = styled.div`
-  position: fixed !important;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 1000;
-  background-color: ${color("black100")};
-`
-
-export interface DeepZoomProps {
-  Image: {
-    xmlns: string
-    Url: string
-    Format: string
-    Overlap: number
-    TileSize: number
-    Size: {
-      Width: number
-      Height: number
-    }
-  }
+interface DeepZoomProps {
+  image: DeepZoom_image
+  onClose(): void
 }
 
-export interface LightboxProps {
-  deepZoom: DeepZoomProps
-  children({ onShow, onHide }: { onShow(): void; onHide(): void }): JSX.Element
-}
+const DeepZoom: React.FC<DeepZoomProps> = ({ image, onClose }) => {
+  const deepZoomRef = useRef<HTMLDivElement | null>(null)
+  const osdViewerRef = useRef<any | null>(null)
 
-export interface LightboxState {
-  shown: boolean
-  element: Element
-  viewer: any
-  deepZoomRef: any
-  slider: SliderProps
-  showZoomSlider: boolean
-  activityTimer?: number | NodeJS.Timeout
-}
+  const handleZoomChanged = () => {
+    if (!osdViewerRef.current) return
 
-@track({ context_module: Schema.ContextModule.Zoom })
-class DeepZoomComponent extends React.Component<LightboxProps, LightboxState> {
-  static defaultProps = {
-    enabled: true,
-    lightboxId: "lightbox-container",
+    const { current: viewer } = osdViewerRef
+
+    setSliderState(prevSliderState => ({
+      ...prevSliderState,
+      min: viewer.viewport.getMinZoom(),
+      max: viewer.viewport.getMaxZoom(),
+      value: viewer.viewport.getZoom(),
+    }))
   }
 
-  // @ts-expect-error STRICT_NULL_CHECK
-  state = {
-    element: null,
-    viewer: null,
-    shown: false,
-    activityTimer: null,
-    showZoomSlider: true,
-    deepZoomRef: React.createRef(),
-    slider: {
-      min: 0,
-      max: 1,
-      step: 0.001,
-      value: 0,
-    },
-  }
+  useEffect(() => {
+    if (!deepZoomRef.current) return
 
-  @track({
-    type: Schema.Type.Button,
-    flow: Schema.Flow.ArtworkZoom,
-    action_type: Schema.ActionType.Click,
-  })
-  show() {
-    this.setState({ shown: true, showZoomSlider: true })
-  }
-
-  hide = () => {
-    this.setState({ shown: false })
-    if (this.state.viewer) {
-      // @ts-expect-error STRICT_NULL_CHECK
-      this.state.viewer.destroy()
-      this.state.viewer = null
-    }
-    document.removeEventListener(KEYBOARD_EVENT, this.handleKeyPress)
-    // @ts-expect-error STRICT_NULL_CHECK
-    clearTimeout(this.state.activityTimer)
-  }
-
-  handleKeyPress = event => {
-    if (event && event.key === "Escape") {
-      this.hide()
-    }
-  }
-
-  detectActivity = throttle(() => {
-    // @ts-expect-error STRICT_NULL_CHECK
-    clearTimeout(this.state.activityTimer)
-    this.setState({
-      showZoomSlider: true,
-      activityTimer: setTimeout(() => {
-        this.setState({
-          showZoomSlider: false,
-        })
-      }, HIDE_ZOOM_SLIDER_AFTER),
-    })
-  }, 500) as () => void
-
-  zoomBy = amount => {
-    // @ts-expect-error STRICT_NULL_CHECK
-    if (this.state.viewer.viewport) {
-      // @ts-expect-error STRICT_NULL_CHECK
-      this.state.viewer.viewport.zoomBy(amount)
-      // @ts-expect-error STRICT_NULL_CHECK
-      this.state.viewer.viewport.applyConstraints()
-    }
-  }
-
-  zoomIn = () => {
-    this.zoomBy(ZOOM_PER_CLICK)
-  }
-
-  zoomOut = () => {
-    this.zoomBy(1 / ZOOM_PER_CLICK)
-  }
-
-  initSeaDragon = () => {
     import(/* webpackChunkName: "openseadragon" */ "openseadragon").then(
       OpenSeaDragon => {
         const viewer = OpenSeaDragon.default({
-          element: this.state.deepZoomRef.current,
-
+          element: deepZoomRef.current,
           debugMode: false,
           showNavigationControl: false,
           immediateRender: false,
@@ -155,8 +56,7 @@ class DeepZoomComponent extends React.Component<LightboxProps, LightboxState> {
           clickDistThreshold: 5,
           clickTimeThreshold: 300,
           visibilityRatio: 1,
-          tileSources: this.props.deepZoom,
-
+          tileSources: image.deepZoom,
           gestureSettingsTouch: {
             scrolltozoom: false,
             clicktozoom: true,
@@ -166,162 +66,187 @@ class DeepZoomComponent extends React.Component<LightboxProps, LightboxState> {
             flickmomentum: 0.4,
           },
         })
-        document.addEventListener(KEYBOARD_EVENT, this.handleKeyPress)
-        this.setState({
-          viewer,
-        })
+
+        osdViewerRef.current = viewer
+
+        viewer.addHandler("zoom", handleZoomChanged)
+
+        viewer.addHandler(
+          "tile-drawn",
+          once(() => {
+            setSliderState(prevSliderState => ({
+              ...prevSliderState,
+              min: viewer.viewport.getMinZoom(),
+              max: viewer.viewport.getMaxZoom(),
+              value: viewer.viewport.getHomeZoom(),
+            }))
+          })
+        )
       }
     )
-  }
 
-  onSliderChanged = event => {
-    // @ts-expect-error STRICT_NULL_CHECK
-    this.state.viewer.viewport.zoomTo(event.target.value)
-  }
-
-  onZoomChanged = () => {
-    if (!this.state.viewer) return
-    this.setState({
-      slider: {
-        ...this.state.slider,
-        // @ts-expect-error STRICT_NULL_CHECK
-        min: this.state.viewer.viewport.getMinZoom(),
-        // @ts-expect-error STRICT_NULL_CHECK
-        max: this.state.viewer.viewport.getMaxZoom(),
-        // @ts-expect-error STRICT_NULL_CHECK
-        value: this.state.viewer.viewport.getZoom(),
-      },
-    })
-  }
-
-  componentDidMount() {
-    // @ts-expect-error STRICT_NULL_CHECK
-    const element = document.getElementById(this.props.lightboxId)
-    if (element) {
-      this.setState({
-        element,
-      })
+    return () => {
+      osdViewerRef.current.destroy()
+      osdViewerRef.current = null
     }
+  }, [image.deepZoom])
+
+  const zoomBy = (amount: number) => {
+    if (!osdViewerRef.current) return
+
+    const { current: viewer } = osdViewerRef
+
+    if (!viewer.viewport) return
+
+    viewer.viewport.zoomBy(amount)
+    viewer.viewport.applyConstraints()
   }
 
-  componentWillUnmount() {
-    this.hide()
+  const [sliderState, setSliderState] = useState({
+    min: 0,
+    max: 1,
+    step: 0.001,
+    value: 0,
+  })
+
+  const handleSliderChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (!osdViewerRef.current) return
+    osdViewerRef.current.viewport.zoomTo(parseFloat(event.target.value))
   }
 
-  componentDidUpdate(_prevProps, prevState) {
-    if (this.state.shown === true && prevState.shown === false) {
-      this.initSeaDragon()
-    }
-    if (this.state.viewer && !prevState.viewer) {
-      this.postRender()
-    }
+  const handleZoomInClicked = () => {
+    zoomBy(ZOOM_PER_CLICK)
   }
 
-  renderLightbox() {
-    const { slider } = this.state
-    return (
-      <FadeTransition
-        in={this.state.shown}
-        mountOnEnter
-        unmountOnExit
-        timeout={{ enter: 250, exit: 300 }}
+  const handleZoomOutClicked = () => {
+    zoomBy(1 / ZOOM_PER_CLICK)
+  }
+
+  const { detectActivityProps, isActive } = useDetectActivity()
+
+  const [isMounted, setIsMounted] = useState(false)
+
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
+
+  return (
+    <ModalBase onClose={onClose} {...detectActivityProps}>
+      <Box
+        ref={deepZoomRef as any}
+        width="100vw"
+        height="100vh"
+        bg="black100"
+        style={{ transition: "opacity 250ms", opacity: isMounted ? 1 : 0 }}
+      />
+
+      <DeepZoomCloseButton
+        position="absolute"
+        top={0}
+        right={0}
+        p={2}
+        onClick={onClose}
+      />
+
+      <Flex
+        position="absolute"
+        bottom={20}
+        left="50%"
+        style={{
+          transform: "translateX(-50%)",
+          transition: "opacity 250ms",
+          opacity: isActive ? 1 : 0,
+        }}
       >
-        <DeepZoomContainer
-          onMouseMove={this.detectActivity}
-          onWheel={this.detectActivity}
-          onTouchStart={this.detectActivity}
-          onTouchMove={this.detectActivity}
-          ref={this.state.deepZoomRef as any /* TODO Update SC */}
-        >
-          <Box
-            position="absolute"
-            top={space(3) / 2}
-            right={space(3) / 2}
-            zIndex={1001}
-          >
-            <CloseButton onClick={() => this.hide()} />
-          </Box>
-          <Flex
-            position="absolute"
-            width="100%"
-            justifyContent="center"
-            zIndex={1001}
-            bottom={space(2)}
-          >
-            <FadeTransition
-              in={this.state.showZoomSlider}
-              timeout={{ enter: 50, exit: 150 }}
-            >
-              <Slider
-                min={slider.min}
-                max={slider.max}
-                step={slider.step}
-                value={slider.value}
-                onChange={this.onSliderChanged}
-                onZoomInClicked={() => this.zoomIn()}
-                onZoomOutClicked={() => this.zoomOut()}
-              />
-            </FadeTransition>
-          </Flex>
-        </DeepZoomContainer>
-      </FadeTransition>
-    )
-  }
+        <DeepZoomSlider
+          onChange={handleSliderChanged}
+          onZoomInClicked={handleZoomInClicked}
+          onZoomOutClicked={handleZoomOutClicked}
+          {...sliderState}
+        />
+      </Flex>
+    </ModalBase>
+  )
+}
 
-  renderPortal = () => {
-    return this.state.element
-      ? // @ts-expect-error STRICT_NULL_CHECK
-        ReactDOM.createPortal(this.renderLightbox(), this.state.element)
-      : null
-  }
-
-  render() {
-    const { children } = this.props
-
-    // Only render client-side
-    if (!this.state.element) {
-      return children({
-        onShow: this.show.bind(this),
-        onHide: this.hide.bind(this),
-      })
+export const DeepZoomFragmentContainer = createFragmentContainer(DeepZoom, {
+  image: graphql`
+    fragment DeepZoom_image on Image {
+      deepZoom {
+        Image {
+          xmlns
+          Url
+          Format
+          TileSize
+          Overlap
+          Size {
+            Width
+            Height
+          }
+        }
+      }
     }
+  `,
+})
 
-    return (
-      <>
-        {this.renderPortal()}
-        {children({
-          onShow: this.show.bind(this),
-          onHide: this.hide.bind(this),
-        })}
-      </>
-    )
-  }
+const useDetectActivity = (
+  { waitTime }: { waitTime: number } = { waitTime: 2500 }
+) => {
+  const [isActive, setIsActive] = useState(true)
 
-  postRender = () => {
-    // @ts-expect-error STRICT_NULL_CHECK
-    this.state.viewer.addHandler(
-      "zoom",
-      bind(throttle(this.onZoomChanged, 50), this)
-    )
-    // @ts-expect-error STRICT_NULL_CHECK
-    this.state.viewer.addHandler(
-      "tile-drawn",
-      once(() => {
-        this.setState({
-          slider: {
-            ...this.state.slider,
-            // @ts-expect-error STRICT_NULL_CHECK
-            min: this.state.viewer.viewport.getMinZoom(),
-            // @ts-expect-error STRICT_NULL_CHECK
-            max: this.state.viewer.viewport.getMaxZoom(),
-            // @ts-expect-error STRICT_NULL_CHECK
-            value: this.state.viewer.viewport.getHomeZoom(),
-          },
-        })
-      })
-    )
-    this.detectActivity()
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  const detectActivity = throttle(() => {
+    setIsActive(true)
+
+    timeoutRef.current && clearTimeout(timeoutRef.current)
+    timeoutRef.current = setTimeout(() => setIsActive(false), waitTime)
+  }, 500)
+
+  useEffect(() => {
+    timeoutRef.current = setTimeout(() => setIsActive(false), waitTime)
+
+    return () => {
+      timeoutRef.current && clearTimeout(timeoutRef.current)
+    }
+  }, [waitTime])
+
+  return {
+    detectActivity,
+    isActive,
+    detectActivityProps: {
+      onMouseMove: detectActivity,
+      onWheel: detectActivity,
+      onTouchStart: detectActivity,
+      onTouchMove: detectActivity,
+      onClick: detectActivity,
+    },
   }
 }
 
-export const DeepZoom = withSystemContext(DeepZoomComponent)
+export const useDeepZoom = () => {
+  const [isDeepZoomVisible, setIsDeepZoomVisible] = useState(false)
+
+  const { trackEvent } = useTracking()
+
+  const showDeepZoom = () => {
+    setIsDeepZoomVisible(true)
+
+    trackEvent({
+      context_module: AnalyticsSchema.ContextModule.Zoom,
+      type: AnalyticsSchema.Type.Button,
+      flow: AnalyticsSchema.Flow.ArtworkZoom,
+      action_type: AnalyticsSchema.ActionType.Click,
+    })
+  }
+
+  const hideDeepZoom = () => {
+    setIsDeepZoomVisible(false)
+  }
+
+  return {
+    showDeepZoom,
+    hideDeepZoom,
+    isDeepZoomVisible,
+  }
+}

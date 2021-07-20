@@ -29,19 +29,7 @@ fragment ArtworkImageBrowserSmall_artwork on Artwork {
   images {
     internalID
     isZoomable
-    deepZoom {
-      Image {
-        xmlns
-        Url
-        Format
-        TileSize
-        Overlap
-        Size {
-          Width
-          Height
-        }
-      }
-    }
+    ...DeepZoom_image
   }
 }
 
@@ -54,6 +42,22 @@ fragment ArtworkLightbox_artwork on Artwork {
       height
       src
       srcSet
+    }
+  }
+}
+
+fragment DeepZoom_image on Image {
+  deepZoom {
+    Image {
+      xmlns
+      Url
+      Format
+      TileSize
+      Overlap
+      Size {
+        Width
+        Height
+      }
     }
   }
 }
@@ -304,7 +308,7 @@ return {
     "metadata": {},
     "name": "ArtworkImageBrowserSmall_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkImageBrowserSmall_Test_Query {\n  artwork(id: \"example\") {\n    ...ArtworkImageBrowserSmall_artwork\n    id\n  }\n}\n\nfragment ArtworkImageBrowserSmall_artwork on Artwork {\n  ...ArtworkLightbox_artwork\n  images {\n    internalID\n    isZoomable\n    deepZoom {\n      Image {\n        xmlns\n        Url\n        Format\n        TileSize\n        Overlap\n        Size {\n          Width\n          Height\n        }\n      }\n    }\n  }\n}\n\nfragment ArtworkLightbox_artwork on Artwork {\n  formattedMetadata\n  images {\n    isDefault\n    resized(width: 800, height: 800, version: [\"normalized\", \"larger\", \"large\"]) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n"
+    "text": "query ArtworkImageBrowserSmall_Test_Query {\n  artwork(id: \"example\") {\n    ...ArtworkImageBrowserSmall_artwork\n    id\n  }\n}\n\nfragment ArtworkImageBrowserSmall_artwork on Artwork {\n  ...ArtworkLightbox_artwork\n  images {\n    internalID\n    isZoomable\n    ...DeepZoom_image\n  }\n}\n\nfragment ArtworkLightbox_artwork on Artwork {\n  formattedMetadata\n  images {\n    isDefault\n    resized(width: 800, height: 800, version: [\"normalized\", \"larger\", \"large\"]) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment DeepZoom_image on Image {\n  deepZoom {\n    Image {\n      xmlns\n      Url\n      Format\n      TileSize\n      Overlap\n      Size {\n        Width\n        Height\n      }\n    }\n  }\n}\n"
   }
 };
 })();

@@ -254,15 +254,6 @@ export class ArtworkApp extends React.Component<Props> {
           <Spacer mt={6} />
 
           <RecentlyViewed />
-
-          <div
-            id="lightbox-container"
-            style={{
-              position: "absolute",
-              top: 0,
-              zIndex: 1100, // over top nav
-            }}
-          />
         </>
       </>
     )
