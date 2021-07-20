@@ -27,7 +27,7 @@ const TrendingLots: React.FC<TrendingLotsProps> = ({ viewer }) => {
 
   return (
     <>
-      <Text as="h3" variant="lg" color="black100">
+      <Text as="h3" variant="lg" color="black100" mt={6}>
         Trending lots{" "}
         <Sup color="brand">{viewer.trendingLotsConnection?.edges?.length}</Sup>
       </Text>

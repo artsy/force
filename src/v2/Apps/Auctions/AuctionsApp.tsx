@@ -68,7 +68,6 @@ const AuctionsApp: React.FC<AuctionsAppProps> = props => {
           <Tab name="Works For You">
             <Join separator={<Spacer mt={2} />}>
               {viewer.me && <MyBidsFragmentContainer me={viewer.me} />}
-
               <WorksByArtistsYouFollowRailFragmentContainer viewer={viewer} />
             </Join>
           </Tab>
@@ -81,7 +80,7 @@ const AuctionsApp: React.FC<AuctionsAppProps> = props => {
         </Tab>
       </Tabs>
 
-      <Spacer mt={6} />
+      <Spacer my={12} />
 
       <RouteTabs fill>
         <RouteTab exact to="/auctions">

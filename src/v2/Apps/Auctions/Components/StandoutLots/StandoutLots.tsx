@@ -27,7 +27,7 @@ const StandoutLots: React.FC<StandoutLotsProps> = ({ viewer }) => {
 
   return (
     <>
-      <Text as="h3" variant="lg" color="black100">
+      <Text as="h3" variant="lg" color="black100" mt={6}>
         Standout Lots{" "}
         <Sup color="brand">{viewer.standoutLotsConnection?.edges?.length}</Sup>
       </Text>

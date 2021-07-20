@@ -28,7 +28,7 @@ const WorksByArtistsYouFollowRail: React.FC<WorksByArtistsYouFollowRailProps> = 
 
   return (
     <>
-      <Text as="h3" variant="lg" color="black100">
+      <Text as="h3" variant="lg" color="black100" mt={6}>
         Works for you{" "}
         <Sup color="brand">{viewer.saleArtworksConnection?.edges?.length}</Sup>
       </Text>
