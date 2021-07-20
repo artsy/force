@@ -14,7 +14,8 @@ import ReactDOMServer from "react-dom/server"
 import { Title } from "react-head"
 import { graphql } from "react-relay"
 import { Media } from "v2/Utils/Responsive"
-import { Request, Response } from "express"
+import { Request } from "express"
+import type { ArtsyResponse } from "lib/middleware/artsyExpress"
 import { createMockNetworkLayer } from "v2/DevTools/createMockNetworkLayer"
 
 jest.unmock("react-relay")
@@ -34,7 +35,7 @@ jest.mock("@loadable/server", () => ({
 const defaultComponent = () => <div>hi!</div>
 
 describe("buildServerApp", () => {
-  let res: Response
+  let res: ArtsyResponse
   let req: Request
   let options: Pick<
     ServerRouterConfig,
@@ -45,7 +46,7 @@ describe("buildServerApp", () => {
   beforeEach(() => {
     res = {
       locals: { sd: {} },
-    } as Response
+    } as ArtsyResponse
     let req = ({
       path: "/",
       url: "/",
