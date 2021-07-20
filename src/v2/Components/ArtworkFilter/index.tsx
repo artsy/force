@@ -10,7 +10,6 @@ import { Media } from "v2/Utils/Responsive"
 import { ArtworkFilter_viewer } from "v2/__generated__/ArtworkFilter_viewer.graphql"
 import { ArtworkQueryFilterQuery as ArtworkFilterQueryType } from "v2/__generated__/ArtworkQueryFilterQuery.graphql"
 import { ArtworkFilterArtworkGridRefetchContainer as ArtworkFilterArtworkGrid } from "./ArtworkFilterArtworkGrid"
-import { SortFilter } from "./ArtworkFilters/SortFilter"
 import {
   ArtworkFilterContextProvider,
   SharedArtworkFilterContextProps,
@@ -43,6 +42,7 @@ import { commercialFilterParamsChanged } from "@artsy/cohesion"
 import { allowedFilters } from "./Utils/allowedFilters"
 import { Sticky } from "v2/Components/Sticky"
 import { ScrollRefContext } from "./ArtworkFilters/useScrollContext"
+import { ArtworkSortFilter } from "./ArtworkFilters/ArtworkSortFilter"
 import { GeneArtworkFilter_gene } from "v2/__generated__/GeneArtworkFilter_gene.graphql"
 
 /**
@@ -264,7 +264,7 @@ export const BaseArtworkFilter: React.FC<
                     </Flex>
                   </Button>
 
-                  <SortFilter />
+                  <ArtworkSortFilter />
                 </Flex>
               )
             }}
@@ -290,7 +290,7 @@ export const BaseArtworkFilter: React.FC<
               Filter by
             </Text>
 
-            <SortFilter />
+            <ArtworkSortFilter />
           </Flex>
         )}
 
@@ -307,7 +307,7 @@ export const BaseArtworkFilter: React.FC<
           >
             {tokens.version === "v2" && (
               <Box mb={2} pt={2} borderTop="1px solid" borderTopColor="black10">
-                <SortFilter />
+                <ArtworkSortFilter />
               </Box>
             )}
 

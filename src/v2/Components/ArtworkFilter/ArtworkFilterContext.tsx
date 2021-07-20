@@ -1,6 +1,7 @@
 import { omit } from "lodash"
 import React, { useContext, useReducer, useState } from "react"
 import useDeepCompareEffect from "use-deep-compare-effect"
+import { SortOptions } from "../SortFilter"
 import { hasFilters } from "./Utils/hasFilters"
 import { isDefaultFilter } from "./Utils/isDefaultFilter"
 import { rangeToTuple } from "./Utils/rangeToTuple"
@@ -181,11 +182,6 @@ export const ArtworkFilterContext = React.createContext<
   ZeroState: null,
   mountedContext: false,
 })
-
-export type SortOptions = Array<{
-  value: string
-  text: string
-}>
 
 export type SharedArtworkFilterContextProps = Pick<
   ArtworkFilterContextProps,
