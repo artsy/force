@@ -144,7 +144,7 @@ describe("ArtworkFilter", () => {
         ],
       })
 
-      wrapper.find("SelectSmall").find("option").at(1).simulate("change")
+      wrapper.find("Select").find("option").at(1).simulate("change")
 
       expect(onChange).toHaveBeenCalledWith({
         majorPeriods: [],
