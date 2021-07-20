@@ -21,7 +21,10 @@ export type ShowApp_show = {
     readonly fair: {
         readonly hasFullFeature: boolean | null;
     } | null;
-    readonly sidebarAggregations: {
+    readonly sidebar: {
+        readonly counts?: {
+            readonly followedArtists: number | null;
+        } | null;
         readonly aggregations: ReadonlyArray<{
             readonly slice: ArtworkAggregation | null;
             readonly counts: ReadonlyArray<{
@@ -63,6 +66,12 @@ return {
       "kind": "LocalArgument",
       "name": "aggregations",
       "type": "[ArtworkAggregation]"
+    },
+    {
+      "defaultValue": false,
+      "kind": "LocalArgument",
+      "name": "shouldFetchCounts",
+      "type": "Boolean!"
     }
   ],
   "kind": "Fragment",
@@ -164,7 +173,7 @@ return {
       "storageKey": null
     },
     {
-      "alias": "sidebarAggregations",
+      "alias": "sidebar",
       "args": [
         {
           "kind": "Variable",
@@ -225,6 +234,31 @@ return {
             }
           ],
           "storageKey": null
+        },
+        {
+          "condition": "shouldFetchCounts",
+          "kind": "Condition",
+          "passingValue": true,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": "FilterArtworksCounts",
+              "kind": "LinkedField",
+              "name": "counts",
+              "plural": false,
+              "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "followedArtists",
+                  "storageKey": null
+                }
+              ],
+              "storageKey": null
+            }
+          ]
         }
       ],
       "storageKey": null
@@ -279,5 +313,5 @@ return {
   "type": "Show"
 };
 })();
-(node as any).hash = '7f54f9a73e16b80d49b03dc5a9e713f4';
+(node as any).hash = 'a153e4de51af149150d242013360b2a3';
 export default node;
