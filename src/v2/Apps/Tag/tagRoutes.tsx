@@ -21,6 +21,21 @@ export const tagRoutes: AppRouteConfig[] = [
       TagApp.preload()
     },
     prepareVariables: ({ slug }, props) => {
+      const aggregations = [
+        "TOTAL",
+        "MEDIUM",
+        "LOCATION_CITY",
+        "MATERIALS_TERMS",
+        "PARTNER",
+        "ARTIST_NATIONALITY",
+        "MAJOR_PERIOD",
+        "ARTIST",
+      ]
+
+      if (!!props.context.user) {
+        aggregations.push("FOLLOWED_ARTISTS")
+      }
+
       const urlFilterState = props.location ? props.location.query : {}
 
       const filters = {
@@ -29,14 +44,26 @@ export const tagRoutes: AppRouteConfig[] = [
       }
 
       return {
+        aggregations,
         input: allowedFilters(filters),
         slug,
+        shouldFetchCounts: !!props.context.user,
       }
     },
     query: graphql`
-      query tagRoutes_TagQuery($slug: String!, $input: FilterArtworksInput) {
+      query tagRoutes_TagQuery(
+        $slug: String!
+        $aggregations: [ArtworkAggregation]
+        $input: FilterArtworksInput
+        $shouldFetchCounts: Boolean!
+      ) {
         tag(id: $slug) @principalField {
-          ...TagApp_tag @arguments(input: $input)
+          ...TagApp_tag
+            @arguments(
+              input: $input
+              aggregations: $aggregations
+              shouldFetchCounts: $shouldFetchCounts
+            )
         }
       }
     `,

@@ -45,6 +45,7 @@ import { ScrollRefContext } from "./ArtworkFilters/useScrollContext"
 import { ArtworkSortFilter } from "./ArtworkFilters/ArtworkSortFilter"
 import { GeneArtworkFilter_gene } from "v2/__generated__/GeneArtworkFilter_gene.graphql"
 import RelayModernEnvironment from "relay-runtime/lib/store/RelayModernEnvironment"
+import { TagArtworkFilter_tag } from "v2/__generated__/TagArtworkFilter_tag.graphql"
 
 /**
  * Primary ArtworkFilter which is wrapped with a context and refetch container.
@@ -116,6 +117,7 @@ export const BaseArtworkFilter: React.FC<
       | FairArtworks_fair
       | ShowArtworks_show
       | GeneArtworkFilter_gene
+      | TagArtworkFilter_tag
     Filters?: JSX.Element
     offset?: number
   }
