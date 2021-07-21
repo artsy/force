@@ -1,5 +1,6 @@
 import { ReviewTestQueryRawResponse } from "v2/__generated__/ReviewTestQuery.graphql"
 import {
+  BuyOrderWithArtaShippingDetails,
   BuyOrderWithShippingDetails,
   OfferOrderWithMissingMetadata,
   OfferOrderWithShippingDetails,
@@ -31,6 +32,7 @@ import { GlobalData } from "sharify"
 import { mockLocation } from "v2/DevTools/mockLocation"
 import { mockStripe } from "v2/DevTools/mockStripe"
 import { TransactionDetailsSummaryItem } from "../../Components/TransactionDetailsSummaryItem"
+import { cloneDeep } from "lodash"
 
 jest.unmock("react-relay")
 
@@ -284,6 +286,51 @@ describe("Review", () => {
 
       await page.clickSubmit()
       expect(_mockStripe().confirmCardSetup).toBeCalledWith("client-secret")
+    })
+  })
+
+  describe("Arta shipping", () => {
+    let page: ReviewTestPage
+    beforeEach(async () => {
+      const buyOrderWithArtaShippingDetails = cloneDeep(
+        BuyOrderWithArtaShippingDetails
+      ) as any
+      buyOrderWithArtaShippingDetails.lineItems.edges[0].node.shippingQuoteOptions.edges[0].node.isSelected = true
+
+      page = await buildPage({
+        mockData: {
+          order: {
+            ...buyOrderWithArtaShippingDetails,
+            internalID: "1234",
+          },
+        },
+      })
+    })
+
+    it("takes the user back to the /shipping view", () => {
+      page.shippingArtaSummary.find("a").simulate("click")
+      expect(routes.mockPushRoute).toBeCalledWith("/orders/1234/shipping")
+    })
+
+    it("contains correct Arta shipping infirmation", () => {
+      const text = page.shippingArtaSummary.text()
+
+      expect(text).toContain("Shipping")
+      expect(text).toContain("Select delivery")
+      expect(text).toContain("($4.00)")
+    })
+
+    it("ship to section contains shipping address", () => {
+      const text = page.shippingSummary.text()
+
+      expect(text).toContain("401 Broadway")
+      expect(text).toContain("Suite 25")
+      expect(text).toContain("New York")
+      expect(text).toContain("United States")
+      expect(text).toContain("Joelle Van Dyne")
+      expect(text).toContain("10013")
+      expect(text).toContain("NY")
+      expect(text).toContain("120938120983")
     })
   })
 
