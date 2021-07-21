@@ -30,7 +30,7 @@ export type ArtworkActions_artwork = {
         readonly is_auction: boolean | null;
     } | null;
     readonly is_saved: boolean | null;
-    readonly " $fragmentRefs": FragmentRefs<"ArtworkActionsSaveButton_artwork" | "ArtworkSharePanel_artwork">;
+    readonly " $fragmentRefs": FragmentRefs<"ArtworkActionsSaveButton_artwork" | "ArtworkSharePanel_artwork" | "ViewInRoom_artwork">;
     readonly " $refType": "ArtworkActions_artwork";
 };
 export type ArtworkActions_artwork$data = ArtworkActions_artwork;
@@ -225,10 +225,15 @@ return {
       "args": null,
       "kind": "FragmentSpread",
       "name": "ArtworkSharePanel_artwork"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ViewInRoom_artwork"
     }
   ],
   "type": "Artwork"
 };
 })();
-(node as any).hash = 'f6576f15e8a0406ddf75bd97941e7593';
+(node as any).hash = '081642a6b096d961106c9c7a62641db9';
 export default node;

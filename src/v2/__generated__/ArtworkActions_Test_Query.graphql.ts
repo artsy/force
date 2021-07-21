@@ -32,6 +32,20 @@ export type ArtworkActions_Test_QueryRawResponse = {
         readonly artworkMeta: ({
             readonly share: string | null;
         }) | null;
+        readonly widthCm: number | null;
+        readonly heightCm: number | null;
+        readonly image: ({
+            readonly resized: ({
+                readonly src: string;
+                readonly srcSet: string;
+                readonly width: number | null;
+                readonly height: number | null;
+            }) | null;
+            readonly internalID: string | null;
+            readonly url: string | null;
+            readonly height: number | null;
+            readonly width: number | null;
+        }) | null;
         readonly artists: ReadonlyArray<({
             readonly name: string | null;
             readonly id: string | null;
@@ -39,12 +53,6 @@ export type ArtworkActions_Test_QueryRawResponse = {
         readonly date: string | null;
         readonly dimensions: ({
             readonly cm: string | null;
-        }) | null;
-        readonly image: ({
-            readonly internalID: string | null;
-            readonly url: string | null;
-            readonly height: number | null;
-            readonly width: number | null;
         }) | null;
         readonly is_downloadable: boolean | null;
         readonly is_hangable: boolean | null;
@@ -88,6 +96,7 @@ fragment ArtworkActionsSaveButton_artwork on Artwork {
 fragment ArtworkActions_artwork on Artwork {
   ...ArtworkActionsSaveButton_artwork
   ...ArtworkSharePanel_artwork
+  ...ViewInRoom_artwork
   artists {
     name
     id
@@ -128,6 +137,23 @@ fragment ArtworkSharePanel_artwork on Artwork {
     share
   }
 }
+
+fragment ViewInRoomArtwork_artwork on Artwork {
+  widthCm
+  heightCm
+  image {
+    resized(width: 800, height: 800, version: ["normalized", "larger", "large"]) {
+      src
+      srcSet
+      width
+      height
+    }
+  }
+}
+
+fragment ViewInRoom_artwork on Artwork {
+  ...ViewInRoomArtwork_artwork
+}
 */
 
 const node: ConcreteRequest = (function(){
@@ -165,6 +191,20 @@ v4 = {
   "args": null,
   "kind": "ScalarField",
   "name": "slug",
+  "storageKey": null
+},
+v5 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "width",
+  "storageKey": null
+},
+v6 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "height",
   "storageKey": null
 };
 return {
@@ -310,6 +350,94 @@ return {
           {
             "alias": null,
             "args": null,
+            "kind": "ScalarField",
+            "name": "widthCm",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "heightCm",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "Image",
+            "kind": "LinkedField",
+            "name": "image",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": [
+                  {
+                    "kind": "Literal",
+                    "name": "height",
+                    "value": 800
+                  },
+                  {
+                    "kind": "Literal",
+                    "name": "version",
+                    "value": [
+                      "normalized",
+                      "larger",
+                      "large"
+                    ]
+                  },
+                  {
+                    "kind": "Literal",
+                    "name": "width",
+                    "value": 800
+                  }
+                ],
+                "concreteType": "ResizedImageUrl",
+                "kind": "LinkedField",
+                "name": "resized",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "src",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "srcSet",
+                    "storageKey": null
+                  },
+                  (v5/*: any*/),
+                  (v6/*: any*/)
+                ],
+                "storageKey": "resized(height:800,version:[\"normalized\",\"larger\",\"large\"],width:800)"
+              },
+              (v2/*: any*/),
+              {
+                "alias": null,
+                "args": [
+                  {
+                    "kind": "Literal",
+                    "name": "version",
+                    "value": "larger"
+                  }
+                ],
+                "kind": "ScalarField",
+                "name": "url",
+                "storageKey": "url(version:\"larger\")"
+              },
+              (v6/*: any*/),
+              (v5/*: any*/)
+            ],
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
             "concreteType": "Artist",
             "kind": "LinkedField",
             "name": "artists",
@@ -352,45 +480,6 @@ return {
             "storageKey": null
           },
           {
-            "alias": null,
-            "args": null,
-            "concreteType": "Image",
-            "kind": "LinkedField",
-            "name": "image",
-            "plural": false,
-            "selections": [
-              (v2/*: any*/),
-              {
-                "alias": null,
-                "args": [
-                  {
-                    "kind": "Literal",
-                    "name": "version",
-                    "value": "larger"
-                  }
-                ],
-                "kind": "ScalarField",
-                "name": "url",
-                "storageKey": "url(version:\"larger\")"
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "height",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "width",
-                "storageKey": null
-              }
-            ],
-            "storageKey": null
-          },
-          {
             "alias": "is_downloadable",
             "args": null,
             "kind": "ScalarField",
@@ -427,7 +516,7 @@ return {
     "metadata": {},
     "name": "ArtworkActions_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkActions_Test_Query(\n  $artworkID: String!\n) {\n  artwork(id: $artworkID) {\n    ...ArtworkActions_artwork\n    id\n  }\n}\n\nfragment ArtworkActionsSaveButton_artwork on Artwork {\n  internalID\n  id\n  slug\n  title\n  sale {\n    isAuction\n    isClosed\n    id\n  }\n  is_saved: isSaved\n}\n\nfragment ArtworkActions_artwork on Artwork {\n  ...ArtworkActionsSaveButton_artwork\n  ...ArtworkSharePanel_artwork\n  artists {\n    name\n    id\n  }\n  date\n  dimensions {\n    cm\n  }\n  href\n  slug\n  image {\n    internalID\n    url(version: \"larger\")\n    height\n    width\n  }\n  is_downloadable: isDownloadable\n  is_hangable: isHangable\n  partner {\n    slug\n    id\n  }\n  title\n  sale {\n    is_closed: isClosed\n    is_auction: isAuction\n    id\n  }\n  is_saved: isSaved\n}\n\nfragment ArtworkSharePanel_artwork on Artwork {\n  href\n  images {\n    url\n  }\n  artworkMeta: meta {\n    share\n  }\n}\n"
+    "text": "query ArtworkActions_Test_Query(\n  $artworkID: String!\n) {\n  artwork(id: $artworkID) {\n    ...ArtworkActions_artwork\n    id\n  }\n}\n\nfragment ArtworkActionsSaveButton_artwork on Artwork {\n  internalID\n  id\n  slug\n  title\n  sale {\n    isAuction\n    isClosed\n    id\n  }\n  is_saved: isSaved\n}\n\nfragment ArtworkActions_artwork on Artwork {\n  ...ArtworkActionsSaveButton_artwork\n  ...ArtworkSharePanel_artwork\n  ...ViewInRoom_artwork\n  artists {\n    name\n    id\n  }\n  date\n  dimensions {\n    cm\n  }\n  href\n  slug\n  image {\n    internalID\n    url(version: \"larger\")\n    height\n    width\n  }\n  is_downloadable: isDownloadable\n  is_hangable: isHangable\n  partner {\n    slug\n    id\n  }\n  title\n  sale {\n    is_closed: isClosed\n    is_auction: isAuction\n    id\n  }\n  is_saved: isSaved\n}\n\nfragment ArtworkSharePanel_artwork on Artwork {\n  href\n  images {\n    url\n  }\n  artworkMeta: meta {\n    share\n  }\n}\n\nfragment ViewInRoomArtwork_artwork on Artwork {\n  widthCm\n  heightCm\n  image {\n    resized(width: 800, height: 800, version: [\"normalized\", \"larger\", \"large\"]) {\n      src\n      srcSet\n      width\n      height\n    }\n  }\n}\n\nfragment ViewInRoom_artwork on Artwork {\n  ...ViewInRoomArtwork_artwork\n}\n"
   }
 };
 })();

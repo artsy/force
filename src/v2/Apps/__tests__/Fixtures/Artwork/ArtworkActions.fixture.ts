@@ -28,7 +28,15 @@ export const ArtworkActionsFixture: ArtworkActions_Test_QueryRawResponse & {
       internalID: "5aa17f397622dd4f3b006294",
       url:
         "https://d32dm0rphc51dk.cloudfront.net/sSoqyQKLQrfODvlAR-oOjw/larger.jpg",
+      resized: {
+        src: "example.jpg",
+        srcSet: "example.jpg",
+        width: 450,
+        height: 450,
+      },
     },
+    widthCm: 50,
+    heightCm: 50,
     title: "FEMME ASSISE DANS UN FAUTEUIL TRESSE",
     images: [
       {
