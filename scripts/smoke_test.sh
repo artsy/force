@@ -4,8 +4,8 @@ set -ex
 
 # provide a default environment if none exists
 if [ ! -f ".env" ]; then
-    echo "Using .env.example and .env.oss as .env"
-    cat .env.example > .env && cat .env.oss >> .env
+    echo "Using .env.oss as .env"
+    cp .env.oss .env
 fi
 
 # prepare a production build
