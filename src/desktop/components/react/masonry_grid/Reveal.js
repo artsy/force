@@ -2,7 +2,6 @@ import { ArrowDownIcon } from "@artsy/palette"
 import PropTypes from "prop-types"
 import React, { Component } from "react"
 import styled, { css } from "styled-components"
-import Icon from "v2/Components/Icon"
 
 export class Reveal extends Component {
   static propTypes = {

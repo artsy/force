@@ -3,7 +3,6 @@ import Cookies from "cookies-js"
 import ReactDOM from "react-dom"
 import { init } from "../index"
 import { initModalManager } from "../initModalManager"
-import { data as sd } from "sharify"
 import { FullPageAuthStatic } from "../../components/FullPageAuthStatic"
 import { ModalContainer } from "../../components/ModalContainer"
 

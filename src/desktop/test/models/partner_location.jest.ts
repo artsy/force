@@ -1,4 +1,3 @@
-import _ from "underscore"
 const sd = require("sharify").data
 const benv = require("benv")
 const PartnerLocation = require("../../models/partner_location.coffee")

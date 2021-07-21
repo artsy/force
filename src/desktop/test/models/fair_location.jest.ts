@@ -1,4 +1,3 @@
-import _ from "underscore"
 const FairLocation = require("../../models/partner_location.coffee")
 
 describe("FairLocation", () => {

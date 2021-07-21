@@ -2,7 +2,6 @@ import configureMockStore from "redux-mock-store"
 import thunk from "redux-thunk"
 import auctions from "desktop/apps/auction/reducers"
 import * as actions from "desktop/apps/auction/actions/artworkBrowser"
-import { __RewireAPI__ as ActionsRewireApi } from "desktop/apps/auction/actions/artworkBrowser" // eslint-disable-line
 import sinon from "sinon"
 
 const rewire = require("rewire")("../../actions/artworkBrowser")
