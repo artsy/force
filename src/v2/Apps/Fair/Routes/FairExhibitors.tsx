@@ -1,16 +1,9 @@
 import React, { useState } from "react"
-import { useTracking } from "react-tracking"
-import {
-  graphql,
-  createPaginationContainer,
-  RelayPaginationProp,
-} from "react-relay"
+import { graphql, createRefetchContainer, RelayRefetchProp } from "react-relay"
 import useDeepCompareEffect from "use-deep-compare-effect"
 import { isEqual } from "lodash"
-import { Box, Button, Column, Flex, GridColumns, Spacer } from "@artsy/palette"
-import { ActionType, ClickedShowMore, ContextModule } from "@artsy/cohesion"
+import { Box, Flex, Spacer } from "@artsy/palette"
 import { FairExhibitors_fair } from "v2/__generated__/FairExhibitors_fair.graphql"
-import { useAnalyticsContext } from "v2/System/Analytics/AnalyticsContext"
 import { updateUrl } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
 import {
   ExhibitorFilterContextProvider,
@@ -25,6 +18,7 @@ import { usePrevious } from "v2/Utils/Hooks/usePrevious"
 import createLogger from "v2/Utils/logger"
 import { FairExhibitorRailFragmentContainer as FairExhibitorRail } from "../Components/FairExhibitorRail"
 import { FairExhibitorSortFilter } from "../Components/FairExhibitorSortFilter"
+import { PaginationFragmentContainer as Pagination } from "v2/Components/Pagination"
 
 const logger = createLogger("FairExhibitors.tsx")
 
@@ -32,32 +26,20 @@ const PAGE_SIZE = 15
 
 interface FairExhibitorsProps {
   fair: FairExhibitors_fair
-  relay: RelayPaginationProp
+  relay: RelayRefetchProp
 }
 
 const FairExhibitors: React.FC<FairExhibitorsProps> = ({ fair, relay }) => {
-  const tracking = useTracking()
-  const {
-    contextPageOwnerId,
-    contextPageOwnerSlug,
-    contextPageOwnerType,
-  } = useAnalyticsContext()
-
-  const clickShowMoreTrackingData: ClickedShowMore = {
-    action: ActionType.clickedShowMore,
-    context_module: ContextModule.exhibitorsTab,
-    context_page_owner_id: contextPageOwnerId,
-    context_page_owner_slug: contextPageOwnerSlug,
-    context_page_owner_type: contextPageOwnerType!,
-    subject: "Show More",
-  }
-
   const context = useExhibitorsFilterContext()
 
-  const [isGridLoading, setIsGridLoading] = useState(false)
-  const [isButtonLoading, setIsButtonLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
 
   const previousFilters = usePrevious(context.filters!)
+
+  const {
+    pageInfo: { hasNextPage },
+    pageCursors,
+  } = fair.exhibitors!
 
   useDeepCompareEffect(() => {
     const filtersHaveUpdated = Object.entries(context.filters!).some(
@@ -73,50 +55,41 @@ const FairExhibitors: React.FC<FairExhibitorsProps> = ({ fair, relay }) => {
   }, [context.filters])
 
   function fetchResults() {
-    setIsGridLoading(true)
+    setIsLoading(true)
 
-    relay.refetchConnection(
-      PAGE_SIZE,
-      err => {
-        setIsGridLoading(false)
-        if (err) {
-          logger.error(err)
-        }
-      },
-      {
-        first: PAGE_SIZE,
-        ...context.filters,
+    const relayParams = {
+      id: fair.slug,
+      first: PAGE_SIZE,
+    }
+
+    const relayRefetchVariables = {
+      ...relayParams,
+      ...context.filters,
+    }
+
+    relay.refetch(relayRefetchVariables, null, error => {
+      if (error) {
+        logger.error(error)
       }
-    )
+
+      setIsLoading(false)
+    })
   }
 
-  const handleClick = () => {
-    if (!relay.hasMore() || relay.isLoading()) return
+  function loadPage(page) {
+    context.setFilter("page", page)
+  }
 
-    tracking.trackEvent(clickShowMoreTrackingData)
-
-    setIsButtonLoading(true)
-
-    const previousScrollY = window.scrollY
-
-    relay.loadMore(PAGE_SIZE, err => {
-      setIsButtonLoading(false)
-
-      if (window.scrollY > previousScrollY) {
-        window.scrollTo({
-          behavior: "auto",
-          top: previousScrollY,
-        })
-      }
-
-      if (err) {
-        logger.error(err)
-      }
-    })
+  function loadNext() {
+    if (fair.exhibitors?.pageInfo.hasNextPage) {
+      loadPage(context?.filters?.page! + 1)
+    }
   }
 
   return (
     <>
+      <Box id="jump--ExhibitorsFilter" />
+
       <Media at="xs">
         <Sticky>
           {({ stuck }) => {
@@ -147,7 +120,7 @@ const FairExhibitors: React.FC<FairExhibitorsProps> = ({ fair, relay }) => {
 
       <Spacer mt={4} />
 
-      <LoadingArea isLoading={isGridLoading}>
+      <LoadingArea isLoading={isLoading}>
         {fair.exhibitors?.edges!.map((edge, index) => {
           const show = edge?.node!
           if (show?.counts?.artworks === 0 || !show?.partner) {
@@ -165,19 +138,13 @@ const FairExhibitors: React.FC<FairExhibitorsProps> = ({ fair, relay }) => {
 
       <Spacer mt={4} />
 
-      <GridColumns>
-        <Column span={6} start={4}>
-          <Button
-            width="100%"
-            variant="secondaryGray"
-            onClick={handleClick}
-            loading={isButtonLoading}
-            disabled={!relay.hasMore()}
-          >
-            Show more
-          </Button>
-        </Column>
-      </GridColumns>
+      <Pagination
+        hasNextPage={hasNextPage}
+        pageCursors={pageCursors}
+        onClick={(_cursor, page) => loadPage(page)}
+        onNext={() => loadNext()}
+        scrollTo="#jump--ExhibitorsFilter"
+      />
     </>
   )
 }
@@ -202,7 +169,7 @@ const FairExhibitorsWithContext: React.FC<FairExhibitorsProps> = ({
   )
 }
 
-export const FairExhibitorsFragmentContainer = createPaginationContainer(
+export const FairExhibitorsFragmentContainer = createRefetchContainer(
   FairExhibitorsWithContext,
   {
     fair: graphql`
@@ -210,15 +177,21 @@ export const FairExhibitorsFragmentContainer = createPaginationContainer(
         @argumentDefinitions(
           sort: { type: "ShowSorts", defaultValue: FEATURED_DESC }
           first: { type: "Int", defaultValue: 15 }
-          after: { type: "String" }
+          page: { type: "Int", defaultValue: 1 }
         ) {
         slug
         exhibitors: showsConnection(
           sort: $sort
           first: $first
-          after: $after
+          page: $page
           totalCount: true
-        ) @connection(key: "FairExhibitorsQuery_exhibitors") {
+        ) {
+          pageInfo {
+            hasNextPage
+          }
+          pageCursors {
+            ...Pagination_pageCursors
+          }
           edges {
             node {
               id
@@ -240,11 +213,5 @@ export const FairExhibitorsFragmentContainer = createPaginationContainer(
       }
     `,
   },
-  {
-    direction: "forward",
-    getVariables({ fair: { slug: id } }, { cursor: after }, { first, sort }) {
-      return { after, first, sort, id }
-    },
-    query: FairExhibitorsQuery,
-  }
+  FairExhibitorsQuery
 )
