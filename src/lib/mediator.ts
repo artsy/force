@@ -19,18 +19,6 @@ export interface BuyerPremiumEventOptions {
  */
 export type LogoutEventOptions = { redirectPath?: string }
 
-/**
- * Open viewInRoom from artwork page
- */
-export interface ViewInRoomEventOptions {
-  dimensions?: any
-  image?: {
-    url: string
-    width: any
-    height: any
-  }
-}
-
 export interface Mediator {
   emitter: EventEmitter
   ready: (eventName: string) => boolean
