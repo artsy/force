@@ -1,7 +1,7 @@
 // @ts-check
 
-import { readFileSync, accessSync, constants } from "fs"
-import { parse } from "dotenv"
+const { readFileSync, accessSync, constants } = require("fs")
+const { parse } = require("dotenv")
 
 const shared = checkFileExistsSync(".env.shared")
   ? parse(readFileSync(".env.shared"))
