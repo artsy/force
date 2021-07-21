@@ -2,6 +2,7 @@ import React from "react"
 import { track } from "v2/System"
 import { RouteTab, RouteTabs } from "v2/Components/RouteTabs"
 import { Box, Text } from "@artsy/palette"
+import { useScrollIntoView } from "v2/Utils/scrollHelpers"
 
 interface UserSettingsTabsProps {
   route?: string
@@ -40,22 +41,6 @@ const tabClass = (tabUrl, route) => {
     typeof window === "undefined" ? route : window.location.pathname
 
   return currentRoute === tabUrl ? "active" : undefined
-}
-
-const useScrollIntoView = (isRouteActive: boolean) => {
-  const ref = React.useRef() as React.MutableRefObject<HTMLDivElement>
-  React.useEffect(() => {
-    if (isRouteActive && ref?.current) {
-      ref.current?.scrollIntoView &&
-        ref.current.scrollIntoView({
-          behavior: "smooth",
-          block: "end",
-          inline: "start",
-        })
-    }
-  }, [isRouteActive])
-
-  return { ref }
 }
 
 export const UserSettingsTabs: React.FC<UserSettingsTabsProps> = track()(

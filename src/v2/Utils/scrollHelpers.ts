@@ -1,3 +1,5 @@
+import React from "react"
+
 const getElementPosition = $element => {
   const rect = $element.getBoundingClientRect()
   return {
@@ -23,4 +25,20 @@ export const scrollIntoView = (props: ScrollIntoViewProps) => {
       ...rest,
     })
   }
+}
+
+export const useScrollIntoView = (isRouteActive: boolean) => {
+  const ref = React.useRef() as React.MutableRefObject<HTMLDivElement>
+  React.useEffect(() => {
+    if (isRouteActive && ref?.current) {
+      ref.current?.scrollIntoView &&
+        ref.current.scrollIntoView({
+          behavior: "smooth",
+          block: "end",
+          inline: "start",
+        })
+    }
+  }, [isRouteActive])
+
+  return { ref }
 }
