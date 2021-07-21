@@ -23,7 +23,11 @@ const WorksByArtistsYouFollowRail: React.FC<WorksByArtistsYouFollowRailProps> = 
   const nodes = extractNodes(viewer.saleArtworksConnection)
 
   if (nodes.length === 0) {
-    return null
+    return (
+      <Text as="h3" variant="lg" mt={6}>
+        No Works To Show
+      </Text>
+    )
   }
 
   return (
