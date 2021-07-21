@@ -22,7 +22,6 @@ const PaymentApp: React.FC<PaymentAppProps> = props => {
       <Title>My payments | Artsy</Title>
       <Box mx={[1, 4]} pb={[2, 4]}>
         <Box mb={2} mt={1}>
-          {/* @ts-expect-error STRICT_NULL_CHECK */}
           <UserSettingsTabs route={sd.CURRENT_PATH} username={me?.name} />
         </Box>
         <PaymentSection me={me} />

@@ -19,10 +19,9 @@ const ShippingApp: React.FC<ShippingAppProps> = props => {
   // to apps
   return (
     <>
-      <Title>My shipping | Artsy</Title>
+      <Title>My addresses | Artsy</Title>
       <Box mx={[1, 4]} pb={[2, 4]}>
         <Box mb={2} mt={1}>
-          {/* @ts-expect-error STRICT_NULL_CHECK */}
           <UserSettingsTabs route={sd.CURRENT_PATH} username={me?.name} />
         </Box>
         <UserSettingsAddresses me={me} />

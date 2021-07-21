@@ -5,7 +5,7 @@ import { Box, Text } from "@artsy/palette"
 
 interface UserSettingsTabsProps {
   route?: string
-  username?: string
+  username: string | null
 }
 
 const routes: Record<"name" | "url", string>[] = [

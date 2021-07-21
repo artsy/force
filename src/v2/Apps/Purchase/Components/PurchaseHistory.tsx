@@ -93,7 +93,6 @@ const PurchaseHistory: React.FC<PurchaseHistoryProps> = (
   return !loading ? (
     <Box>
       <Box mx={["0px", "40px", "40px", "40px"]} mt="-5px">
-        {/* @ts-expect-error STRICT_NULL_CHECK */}
         <UserSettingsTabs route={sd.CURRENT_PATH} username={me.name} />
       </Box>
       {/* @ts-expect-error STRICT_NULL_CHECK */}
