@@ -74,6 +74,18 @@ return {
       "kind": "LocalArgument",
       "name": "input",
       "type": "FilterArtworksInput"
+    },
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "aggregations",
+      "type": "[ArtworkAggregation]"
+    },
+    {
+      "defaultValue": false,
+      "kind": "LocalArgument",
+      "name": "shouldFetchCounts",
+      "type": "Boolean!"
     }
   ],
   "kind": "Fragment",
@@ -167,8 +179,18 @@ return {
       "args": [
         {
           "kind": "Variable",
+          "name": "aggregations",
+          "variableName": "aggregations"
+        },
+        {
+          "kind": "Variable",
           "name": "input",
           "variableName": "input"
+        },
+        {
+          "kind": "Variable",
+          "name": "shouldFetchCounts",
+          "variableName": "shouldFetchCounts"
         }
       ],
       "kind": "FragmentSpread",
@@ -183,5 +205,5 @@ return {
   "type": "Gene"
 };
 })();
-(node as any).hash = '6c3c115878f919b45e49f380bc6da99e';
+(node as any).hash = 'd52cfba9ae30e2e941dccb64a97d6d3f';
 export default node;

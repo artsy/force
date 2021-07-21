@@ -23,6 +23,7 @@ import { paymentRoutes } from "v2/Apps/Payment/paymentRoutes"
 import { purchaseRoutes } from "v2/Apps/Purchase/purchaseRoutes"
 import { searchRoutes } from "v2/Apps/Search/searchRoutes"
 import { showRoutes } from "v2/Apps/Show/showRoutes"
+import { showsRoutes } from "v2/Apps/Shows/showsRoutes"
 import { tagRoutes } from "./Apps/Tag/tagRoutes"
 import { unsubscribeRoutes } from "./Apps/Unsubscribe/unsubscribeRoutes"
 import { viewingRoomRoutes } from "v2/Apps/ViewingRoom/viewingRoomRoutes"
@@ -51,6 +52,7 @@ export function getAppRoutes(): AppRouteConfig[] {
     { routes: purchaseRoutes },
     { routes: searchRoutes },
     { routes: showRoutes },
+    { routes: showsRoutes },
     { routes: tagRoutes },
     { routes: unsubscribeRoutes },
     { routes: viewingRoomRoutes },

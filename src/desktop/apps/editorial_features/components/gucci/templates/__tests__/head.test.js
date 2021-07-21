@@ -39,9 +39,6 @@ describe("Meta template", () => {
     html.should.containEql(
       '<meta name="keywords" content="women,gender,equality"/>'
     )
-    html.should.containEql(
-      '<meta name="sailthru.title" content="Good Morning, What Happened?"/><meta name="sailthru.image.full" content="http://emailimage.jpg"/><meta name="sailthru.image.thumb" content="http://emailimage.jpg"/><meta name="sailthru.author" content="Artsy Editors"/><meta name="sailthru.tags" content="magazine,article,gucci"/>'
-    )
   })
 
   it("contains basic meta tags on a nested route", () => {
@@ -84,9 +81,6 @@ describe("Meta template", () => {
     html.should.containEql('<meta name="description" content="Description"/>')
     html.should.containEql(
       '<meta name="keywords" content="women,gender,equality"/>'
-    )
-    html.should.containEql(
-      '<meta name="sailthru.title" content="Good Morning, What Happened?"/><meta name="sailthru.image.full" content="http://emailimage.jpg"/><meta name="sailthru.image.thumb" content="http://emailimage.jpg"/><meta name="sailthru.author" content="Artsy Editors"/><meta name="sailthru.tags" content="magazine,article,gucci"/>'
     )
   })
 })

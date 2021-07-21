@@ -38,19 +38,7 @@ export const PartnerArtistDetailsPlaceholder: React.FC = () => {
         <Column span={12} maxWidth="100%">
           <Carousel arrowHeight={160}>
             {[...new Array(10)].map((_, i) => {
-              return (
-                <Box key={i}>
-                  <SkeletonBox width={220} height={160} mb={1} />
-
-                  <SkeletonText variant="mediumText">Artist name</SkeletonText>
-
-                  <SkeletonText variant="text">Artwork name</SkeletonText>
-
-                  <SkeletonText variant="text">Partner name</SkeletonText>
-
-                  <SkeletonText variant="text">Contact For Price</SkeletonText>
-                </Box>
-              )
+              return <PartnerArtistArtworkCarouselItemPlaceholder key={i} />
             })}
           </Carousel>
         </Column>
@@ -58,3 +46,17 @@ export const PartnerArtistDetailsPlaceholder: React.FC = () => {
     </Box>
   )
 }
+
+export const PartnerArtistArtworkCarouselItemPlaceholder: React.FC = () => (
+  <Box>
+    <SkeletonBox width={220} height={160} mb={1} />
+
+    <SkeletonText variant="mediumText">Artist name</SkeletonText>
+
+    <SkeletonText variant="text">Artwork name</SkeletonText>
+
+    <SkeletonText variant="text">Partner name</SkeletonText>
+
+    <SkeletonText variant="text">Contact For Price</SkeletonText>
+  </Box>
+)

@@ -29,7 +29,8 @@ export type ArtworkActions_artwork = {
         readonly is_closed: boolean | null;
         readonly is_auction: boolean | null;
     } | null;
-    readonly " $fragmentRefs": FragmentRefs<"SaveButton_artwork" | "ArtworkSharePanel_artwork">;
+    readonly is_saved: boolean | null;
+    readonly " $fragmentRefs": FragmentRefs<"ArtworkActionsSaveButton_artwork" | "ArtworkSharePanel_artwork">;
     readonly " $refType": "ArtworkActions_artwork";
 };
 export type ArtworkActions_artwork$data = ArtworkActions_artwork;
@@ -209,9 +210,16 @@ return {
       "storageKey": null
     },
     {
+      "alias": "is_saved",
+      "args": null,
+      "kind": "ScalarField",
+      "name": "isSaved",
+      "storageKey": null
+    },
+    {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "SaveButton_artwork"
+      "name": "ArtworkActionsSaveButton_artwork"
     },
     {
       "args": null,
@@ -222,5 +230,5 @@ return {
   "type": "Artwork"
 };
 })();
-(node as any).hash = 'e081b8438a5e8d7f65fc6eedfa916dfc';
+(node as any).hash = 'f6576f15e8a0406ddf75bd97941e7593';
 export default node;

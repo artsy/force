@@ -38,6 +38,13 @@ var v0 = {
   "storageKey": null
 },
 v1 = [
+  {
+    "kind": "Literal",
+    "name": "format",
+    "value": "MMM D"
+  }
+],
+v2 = [
   (v0/*: any*/)
 ];
 return {
@@ -70,29 +77,17 @@ return {
     },
     {
       "alias": "formattedStartAt",
-      "args": [
-        {
-          "kind": "Literal",
-          "name": "format",
-          "value": "MMM D"
-        }
-      ],
+      "args": (v1/*: any*/),
       "kind": "ScalarField",
       "name": "startAt",
       "storageKey": "startAt(format:\"MMM D\")"
     },
     {
       "alias": "formattedEndAt",
-      "args": [
-        {
-          "kind": "Literal",
-          "name": "format",
-          "value": "D"
-        }
-      ],
+      "args": (v1/*: any*/),
       "kind": "ScalarField",
       "name": "endAt",
-      "storageKey": "endAt(format:\"D\")"
+      "storageKey": "endAt(format:\"MMM D\")"
     },
     {
       "alias": null,
@@ -104,12 +99,12 @@ return {
       "selections": [
         {
           "kind": "InlineFragment",
-          "selections": (v1/*: any*/),
+          "selections": (v2/*: any*/),
           "type": "Partner"
         },
         {
           "kind": "InlineFragment",
-          "selections": (v1/*: any*/),
+          "selections": (v2/*: any*/),
           "type": "ExternalPartner"
         }
       ],
@@ -166,5 +161,5 @@ return {
   "type": "Show"
 };
 })();
-(node as any).hash = '2c945f2c7c3964d4a617b35a69a6f6e9';
+(node as any).hash = '89a63d05a73470e8d942b6d9870c125d';
 export default node;

@@ -6,4 +6,6 @@ export const tabTypeToContextModuleMap = {
   past: ContextModule.pastAuctions,
   upcoming: ContextModule.upcomingAuctions,
   worksByArtistsYouFollow: ContextModule.worksByArtistsYouFollowRail,
+  trendingLots: ContextModule.trendingLots,
+  standoutLots: ContextModule.standoutLots,
 }

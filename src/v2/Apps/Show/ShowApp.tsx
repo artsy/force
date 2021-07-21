@@ -21,7 +21,10 @@ import {
   useAnalyticsContext,
 } from "v2/System/Analytics/AnalyticsContext"
 import { ShowArtworksEmptyStateFragmentContainer as ShowArtworksEmptyState } from "./Components/ShowArtworksEmptyState"
-import { SharedArtworkFilterContextProps } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
+import {
+  Counts,
+  SharedArtworkFilterContextProps,
+} from "v2/Components/ArtworkFilter/ArtworkFilterContext"
 import { RouterLink } from "v2/System/Router/RouterLink"
 
 interface ShowAppProps {
@@ -31,12 +34,12 @@ interface ShowAppProps {
 export const ShowApp: React.FC<ShowAppProps> = ({ show }) => {
   const { contextPageOwnerSlug, contextPageOwnerType } = useAnalyticsContext()
 
-  // @ts-expect-error STRICT_NULL_CHECK
-  const hasViewingRoom = show.viewingRoomsConnection?.edges.length > 0
+  const hasViewingRoom = (show.viewingRoomsConnection?.edges?.length ?? 0) > 0
   const hasAbout = !!show.about
   const hasWideHeader =
     (hasAbout && hasViewingRoom) || (!hasAbout && !hasViewingRoom)
-  const { sidebarAggregations } = show
+  const { sidebar } = show
+
   return (
     <>
       <ShowMeta show={show} />
@@ -89,13 +92,12 @@ export const ShowApp: React.FC<ShowAppProps> = ({ show }) => {
 
           <Spacer mt={[6, 12]} />
 
-          {/* @ts-expect-error STRICT_NULL_CHECK */}
-          {show.counts.eligibleArtworks > 0 ? (
+          {(show.counts?.eligibleArtworks ?? 0) > 0 ? (
             <ShowArtworksFilter
               aggregations={
-                // @ts-expect-error STRICT_NULL_CHECK
-                sidebarAggregations.aggregations as SharedArtworkFilterContextProps["aggregations"]
+                sidebar?.aggregations as SharedArtworkFilterContextProps["aggregations"]
               }
+              counts={sidebar?.counts as Counts}
               show={show}
             />
           ) : (
@@ -104,6 +106,7 @@ export const ShowApp: React.FC<ShowAppProps> = ({ show }) => {
               <ShowArtworksEmptyState show={show} />
             </>
           )}
+
           {show.fair?.hasFullFeature !== false && (
             <>
               <Separator as="hr" my={6} />
@@ -123,6 +126,7 @@ export const ShowAppFragmentContainer = createFragmentContainer(ShowApp, {
       @argumentDefinitions(
         input: { type: "FilterArtworksInput" }
         aggregations: { type: "[ArtworkAggregation]" }
+        shouldFetchCounts: { type: "Boolean!", defaultValue: false }
       ) {
       name
       href
@@ -140,10 +144,10 @@ export const ShowAppFragmentContainer = createFragmentContainer(ShowApp, {
       fair {
         hasFullFeature
       }
-      sidebarAggregations: filterArtworksConnection(
-        aggregations: $aggregations
-        first: 1
-      ) {
+      sidebar: filterArtworksConnection(aggregations: $aggregations, first: 1) {
+        counts @include(if: $shouldFetchCounts) {
+          followedArtists
+        }
         aggregations {
           slice
           counts {

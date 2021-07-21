@@ -14,17 +14,20 @@ const categoryMap = [
 ]
 
 export const MediumFilter: React.FC = () => {
-  const filterContext = useAuctionResultsFilterContext()
+  const {
+    currentlySelectedFilters,
+    setFilter,
+  } = useAuctionResultsFilterContext()
+  const { categories } = currentlySelectedFilters?.() || {}
 
-  const toggleSelection = (selected, name) => {
-    // @ts-expect-error STRICT_NULL_CHECK
-    let categories = filterContext.filters.categories.slice()
+  const toggleSelection = (selected: boolean, name: string) => {
+    let selectedCategories = categories?.slice()
     if (selected) {
-      categories.push(name)
+      selectedCategories?.push(name)
     } else {
-      categories = categories.filter(item => item !== name)
+      selectedCategories = selectedCategories?.filter(item => item !== name)
     }
-    filterContext.setFilter("categories", categories)
+    setFilter?.("categories", selectedCategories)
   }
 
   return (
@@ -35,12 +38,11 @@ export const MediumFilter: React.FC = () => {
             const { name, displayName } = checkbox
             const props = {
               key: index,
-              onSelect: selected => {
+              onSelect: (selected: boolean) => {
                 toggleSelection(selected, name)
               },
               my: 1,
-              // @ts-expect-error STRICT_NULL_CHECK
-              selected: filterContext.filters.categories.includes(name),
+              selected: categories?.includes(name),
             }
             return <Checkbox {...props}>{displayName}</Checkbox>
           })}

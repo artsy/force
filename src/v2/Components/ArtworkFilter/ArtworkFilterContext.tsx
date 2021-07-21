@@ -1,6 +1,7 @@
 import { omit } from "lodash"
 import React, { useContext, useReducer, useState } from "react"
 import useDeepCompareEffect from "use-deep-compare-effect"
+import { SortOptions } from "../SortFilter"
 import { hasFilters } from "./Utils/hasFilters"
 import { isDefaultFilter } from "./Utils/isDefaultFilter"
 import { rangeToTuple } from "./Utils/rangeToTuple"
@@ -93,16 +94,17 @@ export type Slice =
 /**
  * Possible aggregations that can be passed
  */
-export type Aggregations = Array<{
+export type Aggregation = {
   slice: Slice
   counts: Array<{
     count: number
     value: string
     name: string
   }>
-}>
+}
+export type Aggregations = Array<Aggregation>
 
-interface Counts {
+export interface Counts {
   for_sale_artworks?: number
   ecommerce_artworks?: number
   auction_artworks?: number
@@ -130,7 +132,6 @@ export interface ArtworkFilterContextProps {
   // Sorting
   sortOptions?: SortOptions
   aggregations?: Aggregations
-  setAggregations?: (aggregations: Aggregations) => void
   counts?: Counts
   setCounts?: (counts: Counts) => void
 
@@ -183,11 +184,6 @@ export const ArtworkFilterContext = React.createContext<
   mountedContext: false,
 })
 
-export type SortOptions = Array<{
-  value: string
-  text: string
-}>
-
 export type SharedArtworkFilterContextProps = Pick<
   ArtworkFilterContextProps,
   | "aggregations"
@@ -227,7 +223,6 @@ export const ArtworkFilterContextProvider: React.FC<
   const [stagedArtworkFilterState, stage] = useReducer(artworkFilterReducer, {})
 
   // TODO: Consolidate this into additional reducer
-  const [filterAggregations, setAggregations] = useState(aggregations)
   const [artworkCounts, setCounts] = useState(counts)
   const [shouldStageFilterChanges, setShouldStageFilterChanges] = useState(
     false
@@ -265,8 +260,7 @@ export const ArtworkFilterContextProvider: React.FC<
 
     // Sorting
     sortOptions,
-    aggregations: filterAggregations,
-    setAggregations,
+    aggregations,
     counts: artworkCounts,
     setCounts,
 

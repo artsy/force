@@ -65,7 +65,7 @@ const HomeFeaturedShowsContainer: React.FC = ({ children }) => {
           // @ts-ignore
           to="/shows"
         >
-          Explore all shows
+          Explore All Shows
         </Text>
       </Flex>
 

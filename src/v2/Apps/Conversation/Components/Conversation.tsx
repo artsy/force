@@ -8,7 +8,7 @@ import {
 } from "react-relay"
 import { graphql } from "relay-runtime"
 import Waypoint from "react-waypoint"
-import { Item } from "./Item"
+import { ItemFragmentContainer } from "./Item"
 import { Reply } from "./Reply"
 import { ConversationMessagesFragmentContainer as ConversationMessages } from "./ConversationMessages"
 import { UpdateConversation } from "../Mutation/UpdateConversationMutation"
@@ -21,6 +21,7 @@ import { BuyerGuaranteeMessage } from "./BuyerGuaranteeMessage"
 import { extractNodes } from "v2/Utils/extractNodes"
 import { returnOrderModalDetails } from "../Utils/returnOrderModalDetails"
 import { OrderModal } from "./OrderModal"
+import compact from "lodash/compact"
 
 import { UnreadMessagesToastQueryRenderer } from "./UnreadMessagesToast"
 import useOnScreen from "../Utils/useOnScreen"
@@ -45,29 +46,35 @@ const Conversation: React.FC<ConversationProps> = props => {
   const { conversation, relay, showDetails, setShowDetails } = props
   const { user } = useSystemContext()
 
-  const bottomOfPage = useRef(null)
+  const bottomOfMessageContainer = useRef<HTMLElement>(null)
   const initialMount = useRef(true)
 
-  const isMakeOfferArtwork =
-    conversation.items?.[0]?.item?.__typename === "Artwork" &&
-    conversation.items?.[0]?.item?.isOfferableFromInquiry
+  const firstItem = conversation?.items?.[0]?.item
+  const artwork = firstItem?.__typename === "Artwork" && firstItem
+  const isArtworkOfferable = !!artwork && !!firstItem?.isOfferableFromInquiry
 
   const isOfferable =
     user &&
     userHasLabFeature(user, "Web Inquiry Checkout") &&
-    isMakeOfferArtwork
+    isArtworkOfferable
+
+  const [showConfirmArtworkModal, setShowConfirmArtworkModal] = useState<
+    boolean
+  >(false)
+  const [showOrderModal, setShowOrderModal] = useState<boolean>(false)
+  const [fetchingMore, setFetchingMore] = useState<boolean>(false)
 
   // Keeping track of this for scroll on send
   const [lastMessageID, setLastMessageID] = useState<string | null>()
 
   const scrollToBottom = () => {
     if (
-      (bottomOfPage.current !== null && initialMount.current) ||
+      (bottomOfMessageContainer.current !== null && initialMount.current) ||
       lastMessageID !== conversation?.lastMessageID
     ) {
       const scrollOptions = initialMount.current ? {} : { behavior: "smooth" }
       // @ts-expect-error STRICT_NULL_CHECK
-      bottomOfPage.current.scrollIntoView(scrollOptions)
+      bottomOfMessageContainer.current.scrollIntoView(scrollOptions)
       initialMount.current = false
     }
   }
@@ -92,31 +99,17 @@ const Conversation: React.FC<ConversationProps> = props => {
     markRead(!conversation.isLastMessageToUser)
   }, [lastMessageID])
 
-  // @ts-expect-error STRICT_NULL_CHECK
-  const inquiryItemBox = conversation.items.map((i, idx) => (
-    <Item
-      // @ts-expect-error STRICT_NULL_CHECK
-      item={i.item}
-      key={
-        // @ts-expect-error STRICT_NULL_CHECK
-        i.item.__typename === "Artwork" || i.item.__typename === "Show"
-          ? // @ts-expect-error STRICT_NULL_CHECK
-            i.item.id
-          : idx
-      }
-    />
-  ))
+  const inquiryItemBox = compact(conversation.items).map((i, idx) => {
+    const isValidType =
+      i.item?.__typename === "Artwork" || i.item?.__typename === "Show"
 
-  const [showConfirmArtworkModal, setShowConfirmArtworkModal] = useState(false)
-  const [showOrderModal, setShowOrderModal] = useState(false)
-
-  const artwork =
-    conversation.items?.[0]?.item?.__typename === "Artwork" &&
-    conversation.items?.[0]?.item
-
-  // Pagination Scroll Logic
-  const [fetchingMore, setFetchingMore] = useState(false)
-  const scrollContainer = useRef(null)
+    return (
+      <ItemFragmentContainer
+        item={i.item!}
+        key={isValidType ? i.item?.id : idx}
+      />
+    )
+  })
 
   const loadMore = (): void => {
     if (
@@ -127,22 +120,12 @@ const Conversation: React.FC<ConversationProps> = props => {
     )
       return
     setFetchingMore(true)
-    const scrollCursor = scrollContainer.current
-      ? // @ts-expect-error STRICT_NULL_CHECK
-        scrollContainer.current.scrollHeight - scrollContainer.current.scrollTop
-      : 0
+
     relay.loadMore(PAGE_SIZE, error => {
       if (error) console.error(error)
       setFetchingMore(false)
-      if (scrollContainer.current) {
-        // Scrolling to former position
-        // @ts-expect-error STRICT_NULL_CHECK
-        scrollContainer.current.scrollTo({
-          // @ts-expect-error STRICT_NULL_CHECK
-          top: scrollContainer.current.scrollHeight - scrollCursor,
-          behavior: "smooth",
-        })
-      }
+
+      scrollToBottom()
     })
   }
 
@@ -162,7 +145,7 @@ const Conversation: React.FC<ConversationProps> = props => {
   })
 
   // New Messages
-  const isBottomVisible = useOnScreen(bottomOfPage)
+  const isBottomVisible = useOnScreen(bottomOfMessageContainer)
   useEffect(() => {
     if (isBottomVisible) refreshData()
   }, [isBottomVisible])
@@ -196,7 +179,7 @@ const Conversation: React.FC<ConversationProps> = props => {
         setShowDetails={setShowDetails}
       />
       <NoScrollFlex flexDirection="column" width="100%">
-        <MessageContainer ref={scrollContainer}>
+        <MessageContainer>
           <Box pb={[6, 6, 6, 0]} pr={1}>
             <Spacer mt={["75px", "75px", 2]} />
             <Flex flexDirection="column" width="100%" px={1}>
@@ -205,11 +188,11 @@ const Conversation: React.FC<ConversationProps> = props => {
               <Waypoint onEnter={loadMore} />
               {fetchingMore ? <Loading /> : null}
               <ConversationMessages
-                // @ts-expect-error STRICT_NULL_CHECK
-                messages={conversation.messagesConnection}
+                messages={conversation.messagesConnection!}
+                events={conversation.orderConnection}
                 lastViewedMessageID={+(lastMessageID || -1)}
               />
-              <Box ref={bottomOfPage}></Box>
+              <Box ref={bottomOfMessageContainer as any} />
             </Flex>
           </Box>
           <UnreadMessagesToastQueryRenderer
@@ -221,6 +204,7 @@ const Conversation: React.FC<ConversationProps> = props => {
         </MessageContainer>
         <Reply
           onScroll={scrollToBottom}
+          onMount={scrollToBottom}
           conversation={conversation}
           refetch={props.refetch}
           environment={relay.environment}
@@ -291,7 +275,8 @@ export const ConversationPaginationContainer = createPaginationContainer(
         unread
         orderConnection(
           first: 10
-          states: [APPROVED, FULFILLED, SUBMITTED, REFUNDED]
+          states: [APPROVED, FULFILLED, SUBMITTED, REFUNDED, CANCELED]
+          participantType: BUYER
         ) {
           edges {
             node {
@@ -301,7 +286,11 @@ export const ConversationPaginationContainer = createPaginationContainer(
               }
             }
           }
+          ...ConversationMessages_events
         }
+
+        unread
+
         messagesConnection(first: $count, after: $after, sort: DESC)
           @connection(key: "Messages_messagesConnection", filters: []) {
           pageInfo {
@@ -322,41 +311,11 @@ export const ConversationPaginationContainer = createPaginationContainer(
           item {
             __typename
             ... on Artwork {
-              internalID
               id
-              date
-              title
-              artistNames
-              href
               isOfferableFromInquiry
-              image {
-                url(version: ["large"])
-              }
-              listPrice {
-                __typename
-                ... on Money {
-                  display
-                }
-                ... on PriceRange {
-                  display
-                }
-              }
+              internalID
             }
-            ... on Show {
-              id
-              fair {
-                name
-                exhibitionPeriod
-                location {
-                  city
-                }
-              }
-              href
-              name
-              coverImage {
-                url
-              }
-            }
+            ...Item_item
           }
         }
         ...ConversationCTA_conversation

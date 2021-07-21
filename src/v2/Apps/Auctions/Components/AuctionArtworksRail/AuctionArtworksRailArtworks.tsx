@@ -45,8 +45,7 @@ const AuctionArtworksRailArtworks: React.FC<AuctionArtworksRailArtworksProps> = 
               trackEvent(
                 clickedArtworkGroup({
                   contextModule,
-                  // @ts-expect-error STRICT_NULL_CHECK
-                  contextPageOwnerType,
+                  contextPageOwnerType: contextPageOwnerType!,
                   artworkID: node.internalID,
                   artworkSlug: node.slug,
                   horizontalSlidePosition: index,

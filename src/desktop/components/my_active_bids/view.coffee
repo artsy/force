@@ -3,7 +3,7 @@ Backbone = require 'backbone'
 query = require './query.coffee'
 metaphysics2 = require '../../../lib/metaphysics2.coffee'
 template = -> require('./template.jade') arguments...
-{getLiveAuctionUrl} = require('../../../desktop/apps/auctions/utils/urls')
+{getLiveAuctionUrl} = require('../../../desktop/apps/auction/utils/urls')
 
 module.exports = class MyActiveBids extends Backbone.View
   events:

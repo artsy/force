@@ -103,11 +103,11 @@ describe("FairApp", () => {
     expect(html).not.toContain("Big Artists, Small Sculptures")
   })
 
-  it("renders the exhibitors tab by default", () => {
+  it("renders the exhibitors (booths) tab by default", () => {
     const wrapper = getWrapper()
     const html = wrapper.html()
 
-    expect(html).toContain("Exhibitors")
+    expect(html).toContain("Booths")
   })
 
   it("sets a title tag", () => {
@@ -118,23 +118,23 @@ describe("FairApp", () => {
     expect(wrapper.find(Title).prop("children")).toEqual("Miart 2020 | Artsy")
   })
 
-  it("renders the exhibitors tab with an appropriate href", () => {
+  it("renders the exhibitors (booths) tab with an appropriate href", () => {
     const wrapper = getWrapper({
       Fair: () => ({
         href: "/fair/miart-2020",
       }),
     })
 
-    const exhibitorsTab = wrapper
+    const boothsTab = wrapper
       .find("RouteTab")
-      .findWhere(t => !!t.text().match("Exhibitors"))
+      .findWhere(t => !!t.text().match("Booths"))
       .first()
 
-    expect(exhibitorsTab.text()).toContain("Exhibitors")
-    expect(exhibitorsTab.props().to).toEqual("/fair/miart-2020")
+    expect(boothsTab.text()).toContain("Booths")
+    expect(boothsTab.props().to).toEqual("/fair/miart-2020")
   })
 
-  it("tracks clicks to the exhibitors tab", () => {
+  it("tracks clicks to the exhibitors (booths) tab", () => {
     const wrapper = getWrapper({
       Fair: () => ({
         internalID: "bson-fair",
@@ -143,12 +143,12 @@ describe("FairApp", () => {
       }),
     })
 
-    const exhibitorsTab = wrapper
+    const boothsTab = wrapper
       .find("RouteTab")
-      .findWhere(t => t.text() === "Exhibitors")
+      .findWhere(t => t.text() === "Booths")
       .first()
 
-    exhibitorsTab.simulate("click")
+    boothsTab.simulate("click")
 
     expect(trackEvent).toHaveBeenCalledWith({
       action: "clickedNavigationTab",

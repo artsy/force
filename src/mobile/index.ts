@@ -15,7 +15,6 @@ app.use(
 )
 
 app.use(require("./apps/page"))
-app.use(require("./apps/home"))
 app.use(require("./apps/fair_organizer"))
 app.use(require("./apps/contact"))
 app.use(require("./apps/how_auctions_work"))

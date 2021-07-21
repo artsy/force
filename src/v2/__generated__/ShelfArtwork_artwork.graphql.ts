@@ -17,6 +17,7 @@ export type ShelfArtwork_artwork = {
     readonly imageTitle: string | null;
     readonly title: string | null;
     readonly href: string | null;
+    readonly is_saved: boolean | null;
     readonly " $fragmentRefs": FragmentRefs<"Metadata_artwork" | "SaveButton_artwork" | "Badge_artwork">;
     readonly " $refType": "ShelfArtwork_artwork";
 };
@@ -129,6 +130,13 @@ return {
       "storageKey": null
     },
     {
+      "alias": "is_saved",
+      "args": null,
+      "kind": "ScalarField",
+      "name": "isSaved",
+      "storageKey": null
+    },
+    {
       "args": null,
       "kind": "FragmentSpread",
       "name": "Metadata_artwork"
@@ -147,5 +155,5 @@ return {
   "type": "Artwork"
 };
 })();
-(node as any).hash = 'd1820313035096f06affbbffddc5b748';
+(node as any).hash = '0fffdc049243e8f8346b2f9a220b9d77';
 export default node;

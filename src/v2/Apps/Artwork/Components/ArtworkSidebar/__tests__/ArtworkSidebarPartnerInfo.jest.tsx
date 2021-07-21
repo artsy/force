@@ -39,7 +39,9 @@ describe("ArtworkSidebarPartnerInfo", () => {
       const wrapper = await getWrapper(artwork)
 
       expect(wrapper.text()).toContain(artwork.sale.name)
-      expect(wrapper.find({ href: artwork.sale.href }).length).toBe(1)
+      expect(
+        wrapper.find({ href: artwork.sale.href }).hostNodes()
+      ).toHaveLength(1)
     })
   })
 
@@ -52,7 +54,9 @@ describe("ArtworkSidebarPartnerInfo", () => {
       const wrapper = await getWrapper(artwork)
 
       expect(wrapper.text()).toContain(artwork.partner.name)
-      expect(wrapper.find({ href: artwork.partner.href }).length).toBe(1)
+      expect(
+        wrapper.find({ href: artwork.partner.href }).hostNodes()
+      ).toHaveLength(1)
     })
 
     it("displays partner name without href", async () => {

@@ -10,6 +10,7 @@ export interface CarouselProps extends BoxProps {
   children: JSX.Element | JSX.Element[]
   arrowHeight?: number
   onChange?(index: number): void
+  onPageCountChange?(count: number): void
 }
 
 /**

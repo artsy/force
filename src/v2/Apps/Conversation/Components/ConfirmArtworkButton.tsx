@@ -4,6 +4,8 @@ import { createFragmentContainer, graphql, RelayProp } from "react-relay"
 import createLogger from "v2/Utils/logger"
 import { ConfirmArtworkButton_artwork } from "v2/__generated__/ConfirmArtworkButton_artwork.graphql"
 import { MakeInquiryOffer } from "../Mutation/MakeInquiryOfferMutation"
+import { useTracking } from "react-tracking"
+import { tappedConfirmArtwork } from "@artsy/cohesion"
 
 const logger = createLogger("Conversation/Components/ConfirmArtworkButton.tsx")
 
@@ -26,7 +28,11 @@ export const ConfirmArtworkButton: React.FC<ConfirmArtworkButtonProps> = props =
     // TODO: trigger error modal?
   }
 
+  const tracking = useTracking()
+
   const handleCreateInquiryOfferOrder = () => {
+    tracking.trackEvent(tappedConfirmArtwork())
+
     const { relay, artwork, editionSetID, conversationID } = props
     const { internalID } = artwork
 

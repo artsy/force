@@ -55,14 +55,15 @@ describe("FairArtworks", () => {
   it("renders correctly", async () => {
     const wrapper = await getWrapper()
     expect(wrapper.find("ArtworkFilterArtworkGrid").length).toBe(1)
-    expect(wrapper.find("GridItem__ArtworkGridItem").length).toBe(2)
+    expect(wrapper.find("ArtworkGridItem").length).toBe(2)
   })
 
   it("includes the artist filter", async () => {
     const wrapper = await getWrapper()
-    expect(wrapper.find("ArtistsFilter").length).toBe(1)
-    wrapper.find("ArtistsFilter").find("ChevronIcon").simulate("click")
-    expect(wrapper.find("ArtistsFilter").text()).toMatch(
+    const artistFilter = wrapper.find("ArtistsFilter")
+    expect(artistFilter.length).toBe(1)
+    artistFilter.find("ChevronIcon").simulate("click")
+    expect(artistFilter.find("Checkbox").at(0).text()).toMatch(
       "Artists I follow (10)"
     )
   })

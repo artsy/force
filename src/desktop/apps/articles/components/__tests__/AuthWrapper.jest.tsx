@@ -14,7 +14,6 @@ jest.mock("desktop/components/cookies/index.coffee", () => ({
   set: jest.fn(),
 }))
 
-const qsMock = require("querystring").parse as jest.Mock
 const CookiesGetMock = require("desktop/components/cookies/index.coffee")
   .get as jest.Mock
 const CookiesSetMock = require("desktop/components/cookies/index.coffee")
@@ -69,15 +68,6 @@ describe("AuthWrapper", () => {
       expect(handleScrollingAuthModal).not.toBeCalled()
     })
 
-    it("does nothing if source is sailthru", () => {
-      qsMock.mockReturnValueOnce({
-        utm_source: "sailthru",
-      })
-      getWrapper()
-      expect(mediator.on).not.toBeCalled()
-      expect(handleScrollingAuthModal).not.toBeCalled()
-    })
-
     it("sets up scrolling auth modal", () => {
       const component = getWrapper().instance() as AuthWrapper
       expect(mediator.on).toBeCalledWith(
@@ -96,28 +86,6 @@ describe("AuthWrapper", () => {
         destination: "https://artsy.net/",
         intent: "viewEditorial",
       })
-    })
-  })
-
-  describe("#isFromSailthru", () => {
-    afterEach(() => {
-      qsMock.mockReturnValue({})
-    })
-
-    it("returns true if utm_source is sailthru", () => {
-      qsMock.mockReturnValue({
-        utm_source: "sailthru",
-      })
-      const component = getWrapper().instance() as AuthWrapper
-      expect(component.isFromSailthru()).toBe(true)
-    })
-
-    it("returns true if utm_content is sailthru", () => {
-      qsMock.mockReturnValue({
-        utm_content: "st-",
-      })
-      const component = getWrapper().instance() as AuthWrapper
-      expect(component.isFromSailthru()).toBe(true)
     })
   })
 

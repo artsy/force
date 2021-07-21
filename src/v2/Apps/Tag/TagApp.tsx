@@ -30,8 +30,17 @@ const TagApp: React.FC<TagAppProps> = ({ tag }) => {
 export const TagAppFragmentContainer = createFragmentContainer(TagApp, {
   tag: graphql`
     fragment TagApp_tag on Tag
-      @argumentDefinitions(input: { type: "FilterArtworksInput" }) {
-      ...TagArtworkFilter_tag @arguments(input: $input)
+      @argumentDefinitions(
+        input: { type: "FilterArtworksInput" }
+        aggregations: { type: "[ArtworkAggregation]" }
+        shouldFetchCounts: { type: "Boolean!", defaultValue: false }
+      ) {
+      ...TagArtworkFilter_tag
+        @arguments(
+          input: $input
+          aggregations: $aggregations
+          shouldFetchCounts: $shouldFetchCounts
+        )
       ...TagMeta_tag
       name
     }

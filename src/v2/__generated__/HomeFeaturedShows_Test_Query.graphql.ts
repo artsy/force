@@ -30,7 +30,7 @@ fragment HomeFeaturedShow_show on Show {
   startAt
   endAt
   formattedStartAt: startAt(format: "MMM D")
-  formattedEndAt: endAt(format: "D")
+  formattedEndAt: endAt(format: "MMM D")
   partner {
     __typename
     ... on Partner {
@@ -99,6 +99,13 @@ v3 = {
   "storageKey": null
 },
 v4 = [
+  {
+    "kind": "Literal",
+    "name": "format",
+    "value": "MMM D"
+  }
+],
+v5 = [
   (v3/*: any*/)
 ];
 return {
@@ -185,29 +192,17 @@ return {
                   },
                   {
                     "alias": "formattedStartAt",
-                    "args": [
-                      {
-                        "kind": "Literal",
-                        "name": "format",
-                        "value": "MMM D"
-                      }
-                    ],
+                    "args": (v4/*: any*/),
                     "kind": "ScalarField",
                     "name": "startAt",
                     "storageKey": "startAt(format:\"MMM D\")"
                   },
                   {
                     "alias": "formattedEndAt",
-                    "args": [
-                      {
-                        "kind": "Literal",
-                        "name": "format",
-                        "value": "D"
-                      }
-                    ],
+                    "args": (v4/*: any*/),
                     "kind": "ScalarField",
                     "name": "endAt",
-                    "storageKey": "endAt(format:\"D\")"
+                    "storageKey": "endAt(format:\"MMM D\")"
                   },
                   {
                     "alias": null,
@@ -221,12 +216,12 @@ return {
                       (v2/*: any*/),
                       {
                         "kind": "InlineFragment",
-                        "selections": (v4/*: any*/),
+                        "selections": (v5/*: any*/),
                         "type": "Partner"
                       },
                       {
                         "kind": "InlineFragment",
-                        "selections": (v4/*: any*/),
+                        "selections": (v5/*: any*/),
                         "type": "ExternalPartner"
                       }
                     ],
@@ -296,7 +291,7 @@ return {
     "metadata": {},
     "name": "HomeFeaturedShows_Test_Query",
     "operationKind": "query",
-    "text": "query HomeFeaturedShows_Test_Query {\n  orderedSet(id: \"example\") {\n    ...HomeFeaturedShows_orderedSet\n    id\n  }\n}\n\nfragment HomeFeaturedShow_show on Show {\n  name\n  href\n  startAt\n  endAt\n  formattedStartAt: startAt(format: \"MMM D\")\n  formattedEndAt: endAt(format: \"D\")\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on ExternalPartner {\n      name\n      id\n    }\n    ... on Node {\n      id\n    }\n  }\n  coverImage {\n    cropped(width: 600, height: 450) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment HomeFeaturedShows_orderedSet on OrderedSet {\n  items {\n    __typename\n    ... on Show {\n      internalID\n      ...HomeFeaturedShow_show\n    }\n    ... on Node {\n      id\n    }\n    ... on FeaturedLink {\n      id\n    }\n  }\n}\n"
+    "text": "query HomeFeaturedShows_Test_Query {\n  orderedSet(id: \"example\") {\n    ...HomeFeaturedShows_orderedSet\n    id\n  }\n}\n\nfragment HomeFeaturedShow_show on Show {\n  name\n  href\n  startAt\n  endAt\n  formattedStartAt: startAt(format: \"MMM D\")\n  formattedEndAt: endAt(format: \"MMM D\")\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on ExternalPartner {\n      name\n      id\n    }\n    ... on Node {\n      id\n    }\n  }\n  coverImage {\n    cropped(width: 600, height: 450) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment HomeFeaturedShows_orderedSet on OrderedSet {\n  items {\n    __typename\n    ... on Show {\n      internalID\n      ...HomeFeaturedShow_show\n    }\n    ... on Node {\n      id\n    }\n    ... on FeaturedLink {\n      id\n    }\n  }\n}\n"
   }
 };
 })();

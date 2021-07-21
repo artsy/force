@@ -454,7 +454,8 @@ describe("Artwork", () => {
     it("partner profile", () => {
       testContext.artwork.get("partner").default_profile_public = true
       testContext.artwork.get("partner").default_profile_id = "profile-id"
-      testContext.artwork.partnerLink().should.equal("/profile-id")
+      testContext.artwork.get("partner").id = "profile-id"
+      testContext.artwork.partnerLink().should.equal("/partner/profile-id")
     })
 
     it("doesn't render an external website", () => {

@@ -2,7 +2,15 @@ import React from "react"
 import { AuctionsApp_viewer } from "v2/__generated__/AuctionsApp_viewer.graphql"
 import { AuctionsMeta } from "./Components/AuctionsMeta"
 import { MyBidsFragmentContainer } from "./Components/MyBids/MyBids"
-import { Box, Column, GridColumns, Join, Spacer, Text } from "@artsy/palette"
+import {
+  Column,
+  GridColumns,
+  Join,
+  Spacer,
+  Text,
+  Tabs,
+  Tab,
+} from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RecentlyViewed } from "v2/Components/RecentlyViewed"
 import { RouterLink } from "v2/System/Router/RouterLink"
@@ -11,6 +19,8 @@ import { useSystemContext } from "v2/System/useSystemContext"
 import { WorksByArtistsYouFollowRailFragmentContainer } from "./Components/WorksByArtistsYouFollowRail/WorksByArtistsYouFollowRail"
 import { ChevronButton } from "v2/Components/ChevronButton"
 import { getENV } from "v2/Utils/getENV"
+import { TrendingLotsFragmentContainer } from "./Components/TrendingLots/TrendingLots"
+import { StandoutLotsFragmentContainer } from "./Components/StandoutLots/StandoutLots"
 
 export interface AuctionsAppProps {
   viewer: AuctionsApp_viewer
@@ -52,30 +62,35 @@ const AuctionsApp: React.FC<AuctionsAppProps> = props => {
         </Column>
       </GridColumns>
 
-      {user && (
-        <>
-          <Spacer py={2} />
-          <Join separator={<Spacer my={[2, 6]} />}>
-            <Box>
-              {/* @ts-expect-error STRICT_NULL_CHECK */}
-              <MyBidsFragmentContainer me={viewer.me} />
-            </Box>
-
-            <Box>
+      <Spacer mt={4} />
+      <Tabs>
+        {user && (
+          <Tab name="Works For You">
+            <Join separator={<Spacer mt={2} />}>
+              {viewer.me && <MyBidsFragmentContainer me={viewer.me} />}
               <WorksByArtistsYouFollowRailFragmentContainer viewer={viewer} />
-            </Box>
-          </Join>
-        </>
-      )}
+            </Join>
+          </Tab>
+        )}
+        <Tab name="Trending Lots">
+          <TrendingLotsFragmentContainer viewer={viewer} />
+        </Tab>
+        <Tab name="Standout lots">
+          <StandoutLotsFragmentContainer viewer={viewer} />
+        </Tab>
+      </Tabs>
 
-      <Spacer my={[4, 12]} />
+      <Spacer my={12} />
 
-      <RouteTabs mb={2} fill>
+      <RouteTabs fill>
         <RouteTab exact to="/auctions">
           Current Auctions
         </RouteTab>
+
         <RouteTab to="/auctions/upcoming">Upcoming</RouteTab>
+
         <RouteTab to="/auctions/past">Past</RouteTab>
+
         {enableNewAuctionsFilter && (
           <>
             <RouteTab to="/auctions/auctions">Auctions</RouteTab>
@@ -84,7 +99,7 @@ const AuctionsApp: React.FC<AuctionsAppProps> = props => {
         )}
       </RouteTabs>
 
-      <Box>{children}</Box>
+      {children}
 
       <RecentlyViewed />
     </>
@@ -97,7 +112,8 @@ export const AuctionsAppFragmentContainer = createFragmentContainer(
     viewer: graphql`
       fragment AuctionsApp_viewer on Viewer {
         ...WorksByArtistsYouFollowRail_viewer
-
+        ...TrendingLots_viewer
+        ...StandoutLots_viewer
         me {
           ...MyBids_me
         }

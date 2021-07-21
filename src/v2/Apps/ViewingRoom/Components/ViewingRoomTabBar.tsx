@@ -9,8 +9,7 @@ import {
   color,
 } from "@artsy/palette"
 import { useIsRouteActive, useRouter } from "v2/System/Router/useRouter"
-import { RouterLink } from "v2/System/Router/RouterLink"
-import { LinkProps } from "found"
+import { RouterLink, RouterLinkProps } from "v2/System/Router/RouterLink"
 import styled from "styled-components"
 
 const TabLink = styled(RouterLink)`
@@ -18,7 +17,7 @@ const TabLink = styled(RouterLink)`
   text-decoration: none;
 `
 
-const Tab: React.FC<LinkProps> = ({ children, to }) => {
+const Tab: React.FC<RouterLinkProps> = ({ children, to }) => {
   const active = useIsRouteActive(to)
 
   const borderBottom = active

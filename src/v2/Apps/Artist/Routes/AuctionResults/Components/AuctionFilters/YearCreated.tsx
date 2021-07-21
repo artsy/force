@@ -1,6 +1,6 @@
+import React, { useMemo } from "react"
 import { Box, Checkbox, Flex, Select, Spacer } from "@artsy/palette"
 import { FilterResetLink } from "v2/Components/FilterResetLink"
-import React, { useMemo } from "react"
 import createLogger from "v2/Utils/logger"
 import { useAuctionResultsFilterContext } from "../../AuctionResultsFilterContext"
 import { FilterExpandable } from "v2/Components/ArtworkFilter/ArtworkFilters/FilterExpandable"
@@ -20,36 +20,34 @@ const buildDateRange = (startYear: number, endYear: number) =>
   })
 
 export const YearCreated: React.FC = () => {
-  const filterContext = useAuctionResultsFilterContext()
-
   const {
-    // @ts-expect-error STRICT_NULL_CHECK
+    currentlySelectedFilters,
+    setFilter,
     earliestCreatedYear,
-    // @ts-expect-error STRICT_NULL_CHECK
     latestCreatedYear,
-    // @ts-expect-error STRICT_NULL_CHECK
-    createdAfterYear,
-    // @ts-expect-error STRICT_NULL_CHECK
-    createdBeforeYear,
-    // @ts-expect-error STRICT_NULL_CHECK
-    allowEmptyCreatedDates,
-  } = filterContext?.filters
+  } = useAuctionResultsFilterContext()
+
+  const { createdAfterYear, createdBeforeYear, allowEmptyCreatedDates } =
+    currentlySelectedFilters?.() || {}
 
   const hasChanges =
     earliestCreatedYear !== createdAfterYear ||
     latestCreatedYear !== createdBeforeYear
 
-  const fullDateRange = useMemo(
-    () => buildDateRange(earliestCreatedYear, latestCreatedYear),
-    [earliestCreatedYear, latestCreatedYear]
-  )
+  const fullDateRange = useMemo(() => {
+    if (earliestCreatedYear && latestCreatedYear) {
+      return buildDateRange(earliestCreatedYear, latestCreatedYear)
+    } else {
+      return []
+    }
+  }, [earliestCreatedYear, latestCreatedYear])
 
   const resetFilter = useMemo(
     () => () => {
-      filterContext.setFilter("createdAfterYear", earliestCreatedYear)
-      filterContext.setFilter("createdBeforeYear", latestCreatedYear)
+      setFilter?.("createdAfterYear", earliestCreatedYear)
+      setFilter?.("createdBeforeYear", latestCreatedYear)
     },
-    [earliestCreatedYear, latestCreatedYear, filterContext]
+    [earliestCreatedYear, latestCreatedYear, setFilter]
   )
 
   if (
@@ -69,7 +67,7 @@ export const YearCreated: React.FC = () => {
               title="Earliest"
               options={fullDateRange}
               onSelect={(year: string) => {
-                filterContext.setFilter("createdAfterYear", parseInt(year))
+                setFilter?.("createdAfterYear", parseInt(year))
               }}
               selected={`${createdAfterYear}`}
             />
@@ -78,7 +76,7 @@ export const YearCreated: React.FC = () => {
               title="Latest"
               options={fullDateRange}
               onSelect={(year: string) => {
-                filterContext.setFilter("createdBeforeYear", parseInt(year))
+                setFilter?.("createdBeforeYear", parseInt(year))
               }}
               selected={`${createdBeforeYear}`}
             />
@@ -92,7 +90,7 @@ export const YearCreated: React.FC = () => {
           <Checkbox
             selected={allowEmptyCreatedDates}
             onSelect={(allowEmpty: boolean) => {
-              filterContext.setFilter("allowEmptyCreatedDates", allowEmpty)
+              setFilter?.("allowEmptyCreatedDates", allowEmpty)
             }}
           >
             Include unspecified dates

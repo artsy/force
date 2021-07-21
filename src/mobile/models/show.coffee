@@ -46,8 +46,8 @@ module.exports = class Show extends Backbone.Model
     @imageUrl(size) isnt ''
 
   partnerProfileHref: ->
-    if @has('partner') and @get('partner').default_profile_id
-      "/#{@get('partner').default_profile_id}"
+    if @has('partner') and @get('partner').id
+      "/partner/#{@get('partner').id}"
     else
       null
 

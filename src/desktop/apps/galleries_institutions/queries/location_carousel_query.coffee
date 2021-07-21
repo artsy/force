@@ -1,11 +1,15 @@
 module.exports =
   """
   query GalleriesInstitutionsLocationsQuery($near: String, $type: [PartnerClassification]) {
-    primary: partners(eligible_for_listing: true, eligible_for_primary_bucket: true, sort: RANDOM_SCORE_DESC, default_profile_public: true, near: $near, type: $type) {
-      ... partner
+    primary: filterPartners(eligibleForListing: true, aggregations:[TOTAL], eligibleForPrimaryBucket: true, sort: RANDOM_SCORE_DESC, defaultProfilePublic: true, near: $near, type: $type) {
+      hits {
+        ... partner
+      }
     }
-    secondary: partners(eligible_for_listing: true, eligible_for_secondary_bucket: true, sort: RANDOM_SCORE_DESC, default_profile_public: true, near: $near, type: $type){
-      ... partner
+    secondary: filterPartners(eligibleForListing: true, aggregations:[TOTAL], eligibleForSecondaryBucket: true, sort: RANDOM_SCORE_DESC, defaultProfilePublic: true, near: $near, type: $type){
+      hits {
+        ... partner
+      }
     }
   }
 

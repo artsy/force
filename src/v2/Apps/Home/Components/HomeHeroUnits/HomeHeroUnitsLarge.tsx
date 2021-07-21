@@ -11,13 +11,17 @@ import {
   ShelfPrevious,
 } from "@artsy/palette"
 import { HomeHeroUnitsLarge_homePage } from "v2/__generated__/HomeHeroUnitsLarge_homePage.graphql"
-import { HomeHeroUnitFragmentContainer } from "./HomeHeroUnit"
+import {
+  HomeHeroUnitFragmentContainer,
+  LOGGED_OUT_HERO_UNIT,
+} from "./HomeHeroUnit"
 import { compact } from "lodash"
 import { useCursor } from "use-cursor"
 import { useRef, useEffect } from "react"
 import { HomeCarousel } from "../HomeCarousel"
 import { useSystemContext } from "v2/System"
-import { HomeHeroUnitLoggedOut } from "./HomeHeroUnitLoggedOut"
+import { useCallback } from "react"
+import { useNextPrevious } from "v2/Utils/Hooks/useNextPrevious"
 
 interface HomeHeroUnitsLargeProps {
   homePage: HomeHeroUnitsLarge_homePage
@@ -28,7 +32,10 @@ const HomeHeroUnitsLarge: React.FC<HomeHeroUnitsLargeProps> = ({
 }) => {
   const { isLoggedIn } = useSystemContext()
 
-  const heroUnits = compact(homePage.heroUnits)
+  const heroUnits = [
+    ...(isLoggedIn ? [] : [LOGGED_OUT_HERO_UNIT]),
+    ...compact(homePage.heroUnits),
+  ]
 
   const {
     index,
@@ -52,36 +59,40 @@ const HomeHeroUnitsLarge: React.FC<HomeHeroUnitsLargeProps> = ({
     return stopAutoPlay
   }, [setCursor])
 
-  const handleNext = () => {
+  const handleNext = useCallback(() => {
     onNext()
     stopAutoPlay()
-  }
+  }, [onNext])
 
-  const handlePrev = () => {
+  const handlePrev = useCallback(() => {
     onPrev()
     stopAutoPlay()
-  }
+  }, [onPrev])
 
   const handleClick = (index: number) => {
     setCursor(index)
     stopAutoPlay()
   }
 
+  const { containerRef } = useNextPrevious({
+    onNext: handleNext,
+    onPrevious: handlePrev,
+  })
+
   if (!homePage.heroUnits) return null
 
   return (
-    <>
+    <div ref={containerRef as any}>
       <FullBleed>
         <HomeCarousel initialIndex={index}>
-          {!isLoggedIn && <HomeHeroUnitLoggedOut index={0} layout="b" />}
-
           {heroUnits.map((heroUnit, i) => {
             return (
               <HomeHeroUnitFragmentContainer
                 key={i}
-                index={i + (isLoggedIn ? 0 : 1)}
+                index={i}
                 heroUnit={heroUnit}
-                layout={i % 2 === 0 ? "a" : "b"}
+                layout={i % 2 === 0 ? "b" : "a"}
+                bg={!isLoggedIn && i === 0 ? "black100" : "black5"}
               />
             )
           })}
@@ -108,7 +119,7 @@ const HomeHeroUnitsLarge: React.FC<HomeHeroUnitsLargeProps> = ({
 
         <ShelfNext onClick={handleNext} />
       </Flex>
-    </>
+    </div>
   )
 }
 

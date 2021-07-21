@@ -1,3 +1,4 @@
+/* eslint-disable jest/no-done-callback */
 /*
  * decaffeinate suggestions:
  * DS102: Remove unnecessary code created because of implicit returns
@@ -149,7 +150,6 @@ describe("Venice route", function () {
     }
     this.next = sinon.stub()
     routes.__set__("sd", { EF_VENICE: "123", EF_VIDEO_GUIDE: "456" })
-    return routes.__set__("sailthru", sinon.stub())
   })
 
   afterEach(function (done) {
@@ -214,7 +214,7 @@ describe("Venice route", function () {
     )
   })
 
-  xit("Fetches sub articles", function (done) {
+  it.skip("Fetches sub articles", function (done) {
     this.req = { params: { slug: "venice" } }
     routes.venice(this.req, this.res, this.next)
     return _.defer(() =>
@@ -233,17 +233,6 @@ describe("Venice route", function () {
         this.res.locals.jsonLD.should.containEql(
           '"headline":"Inside the Biennale venice"'
         )
-        return done()
-      })
-    )
-  })
-
-  return it("includes sailthru", function (done) {
-    this.req = { params: { slug: "venice" } }
-    routes.venice(this.req, this.res, this.next)
-    return _.defer(() =>
-      _.defer(() => {
-        this.res.locals.sd.INCLUDE_SAILTHRU.should.be.true()
         return done()
       })
     )

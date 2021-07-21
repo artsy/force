@@ -13,7 +13,6 @@ import { ConversationListHeader } from "./ConversationListHeader"
 const Container = styled(Box)`
   height: 100%;
   overflow: hidden;
-  border-bottom: 30px solid ${color("white100")};
   border-right: 1px solid ${color("black10")};
   ${media.xs`
     border-right: none;
@@ -71,10 +70,10 @@ const ConversationList: React.FC<ConversationsProps> = props => {
   }
 
   return (
-    <Container width={["100%", "100%", "375px"]} onScroll={handleScroll}>
+    <Container width={["100%", "100%", "375px"]}>
       <>
         <ConversationListHeader />
-        <ScrollContainer>
+        <ScrollContainer onScroll={handleScroll}>
           {/* @ts-expect-error STRICT_NULL_CHECK */}
           {conversations.map(edge => (
             <ConversationSnippet

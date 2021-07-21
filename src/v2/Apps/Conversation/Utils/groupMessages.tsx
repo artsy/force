@@ -3,7 +3,7 @@ import { DateTime } from "luxon"
 import { fromToday } from "../Components/TimeSince"
 
 // @ts-expect-error STRICT_NULL_CHECK
-type Message = ConversationMessages_messages["edges"][number]["node"]
+export type Message = ConversationMessages_messages["edges"][number]["node"]
 /**
  * Combines messages into groups of messages sent by the same party and
  * separated out into different groups if sent across multiple days

@@ -67,16 +67,8 @@ function getActiveRoutes(routeList) {
 }
 
 function createRouteConfiguration(route): AppRouteConfig {
-  let path = route.path
-  // FIXME: I'm certain this logic is incorrect. If the last character is a `/`
-  // trim the first character of the path.
-  if (path.slice(-1) === "/") {
-    path = route.path.substring(1) // remove leading slash from route
-  }
-
   return {
     ...route,
     fetchIndicator: "overlay",
-    path,
   }
 }

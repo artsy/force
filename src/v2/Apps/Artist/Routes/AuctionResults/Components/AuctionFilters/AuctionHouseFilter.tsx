@@ -11,33 +11,37 @@ const auctionHouses = [
 ]
 
 export const AuctionHouseFilter: React.FC = () => {
-  const filterContext = useAuctionResultsFilterContext()
+  const {
+    currentlySelectedFilters,
+    setFilter,
+  } = useAuctionResultsFilterContext()
+  const { organizations } = currentlySelectedFilters?.() || {}
 
-  const toggleSelection = (selected, name) => {
-    // @ts-expect-error STRICT_NULL_CHECK
-    let organizations = filterContext.filters.organizations.slice()
+  const toggleSelection = (selected: boolean, name: string) => {
+    let selectedOrganizations = organizations?.slice() ?? []
     if (selected) {
-      organizations.push(name)
+      selectedOrganizations.push(name)
     } else {
-      organizations = organizations.filter(item => item !== name)
+      selectedOrganizations = selectedOrganizations.filter(
+        item => item !== name
+      )
     }
-    filterContext.setFilter("organizations", organizations)
+    setFilter?.("organizations", selectedOrganizations)
   }
 
   return (
-    <FilterExpandable label="Auction House" expanded>
+    <FilterExpandable label="Auction House">
       <Flex flexDirection="column" alignItems="left">
         <ShowMore>
           {auctionHouses.map((checkbox, index) => {
             const { name } = checkbox
             const props = {
               key: index,
-              onSelect: selected => {
+              onSelect: (selected: boolean) => {
                 toggleSelection(selected, name)
               },
               my: 1,
-              // @ts-expect-error STRICT_NULL_CHECK
-              selected: filterContext.filters.organizations.includes(name),
+              selected: organizations?.includes(name),
             }
             return <Checkbox {...props}>{name}</Checkbox>
           })}

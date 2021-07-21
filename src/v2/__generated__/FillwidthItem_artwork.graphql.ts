@@ -11,6 +11,7 @@ export type FillwidthItem_artwork = {
     readonly imageTitle: string | null;
     readonly title: string | null;
     readonly href: string | null;
+    readonly is_saved: boolean | null;
     readonly " $fragmentRefs": FragmentRefs<"Metadata_artwork" | "SaveButton_artwork" | "Badge_artwork">;
     readonly " $refType": "FillwidthItem_artwork";
 };
@@ -81,6 +82,13 @@ const node: ReaderFragment = {
       "storageKey": null
     },
     {
+      "alias": "is_saved",
+      "args": null,
+      "kind": "ScalarField",
+      "name": "isSaved",
+      "storageKey": null
+    },
+    {
       "args": null,
       "kind": "FragmentSpread",
       "name": "Metadata_artwork"
@@ -98,5 +106,5 @@ const node: ReaderFragment = {
   ],
   "type": "Artwork"
 };
-(node as any).hash = 'f6a47553f20499b5a115eedeb6eddb24';
+(node as any).hash = '0e9fa6945304edc19779cd3c0654a318';
 export default node;

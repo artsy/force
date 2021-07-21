@@ -21,8 +21,8 @@ const env = {
   nodeEnv: process.env.NODE_ENV,
   onCi: yn(process.env.CI, { default: false }),
   port: process.env.PORT || "5000",
-  // @ts-expect-error STRICT_NULL_CHECK
-  webpackCiCpuLimit: Number.parseInt(process.env.WEBPACK_CI_CPU_LIMIT) || 4,
+  webpackCiCpuLimit: Number.parseInt(process.env.WEBPACK_CI_CPU_LIMIT || "") || 4,
+  webpackBundleSplit: yn(process.env.WEBPACK_BUNDLE_SPLIT, { default: true }),
   webpackConcatenate: yn(process.env.WEBPACK_CONCATENATE, { default: true }),
   webpackDebug: yn(process.env.WEBPACK_DEBUG),
   webpackDevtool: process.env.WEBPACK_DEVTOOL,
@@ -46,6 +46,7 @@ if (env.onCi || env.logConfig) {
   console.log("  NODE_ENV".padEnd(35), chalk.yellow(env.nodeEnv))
   console.log("  PORT".padEnd(35), chalk.yellow(env.port))
   console.log("  WEBPACK_ANALYZE".padEnd(35), chalk.yellow(env.enableWebpackAnalyze))
+  console.log("  WEBPACK_BUNDLE_SPLIT".padEnd(35), chalk.yellow(env.webpackBundleSplit))
   console.log("  WEBPACK_CI_CPU_LIMIT".padEnd(35), chalk.yellow(env.webpackCiCpuLimit))
   console.log("  WEBPACK_CONCATENATE".padEnd(35), chalk.yellow(env.webpackConcatenate))
   console.log("  WEBPACK_DEBUG".padEnd(35), chalk.yellow(env.webpackDebug))

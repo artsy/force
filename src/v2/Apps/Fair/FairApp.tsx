@@ -111,12 +111,11 @@ const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
 
       <RouteTabs mb={2} fill>
         <RouteTab
-          // @ts-expect-error STRICT_NULL_CHECK
           to={fair.href}
           exact
           onClick={() => tracking.trackEvent(clickedExhibitorsTabTrackingData)}
         >
-          Exhibitors
+          Booths
         </RouteTab>
 
         <RouteTab

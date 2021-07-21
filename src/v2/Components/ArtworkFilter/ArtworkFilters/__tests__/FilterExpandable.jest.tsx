@@ -1,29 +1,35 @@
-import { Breakpoint } from "@artsy/palette"
 import { mount } from "enzyme"
 import React from "react"
 import { FilterExpandable } from "../FilterExpandable"
+import { data as sd } from "sharify"
 
-jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
-  useMatchMedia: () => ({}),
-}))
+jest.mock("sharify")
 
 describe("FilterExpandable", () => {
-  const getWrapper = (breakpoint: Breakpoint = "xl") => {
+  const getWrapper = () => {
     return mount(
-      <FilterExpandable expanded={false}>
-        <></>
+      <FilterExpandable expanded={true}>
+        <span>Some render content</span>
       </FilterExpandable>
     )
   }
 
-  let wrapper
-
   beforeEach(() => {
-    wrapper = getWrapper()
+    sd.IS_MOBILE = false
   })
 
   it("renders correctly", () => {
+    const wrapper = getWrapper()
+
     expect(wrapper.find("Expandable")).toHaveLength(1)
     expect(wrapper.find("Expandable").prop("onClick")).toBeTruthy()
+    expect(wrapper.find("span").length).toBe(1)
+  })
+
+  it("should be hidden by default for mobile devices", () => {
+    sd.IS_MOBILE = true
+    const wrapper = getWrapper()
+
+    expect(wrapper.find("span").length).toBe(0)
   })
 })

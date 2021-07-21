@@ -88,7 +88,6 @@ export const FeatureFeaturedLink: React.FC<FeatureFeaturedLinkProps> = ({
   return (
     <Flex flexDirection="column" {...rest}>
       {img && (
-        // @ts-expect-error STRICT_NULL_CHECK
         <Figure to={href}>
           <ResponsiveImage
             // @ts-expect-error STRICT_NULL_CHECK
@@ -110,7 +109,6 @@ export const FeatureFeaturedLink: React.FC<FeatureFeaturedLinkProps> = ({
 
       {!img && title && (
         <Text variant="title" color="black100" my={2}>
-          {/* @ts-expect-error STRICT_NULL_CHECK */}
           <RouterLink to={href}>{title || "—"}</RouterLink>
         </Text>
       )}

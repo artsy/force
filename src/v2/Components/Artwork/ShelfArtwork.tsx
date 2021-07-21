@@ -2,10 +2,7 @@ import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { ShelfArtwork_artwork } from "v2/__generated__/ShelfArtwork_artwork.graphql"
-import {
-  Container as SaveButtonContainer,
-  SaveButtonFragmentContainer,
-} from "./SaveButton"
+import { SaveButtonFragmentContainer, useSaveButton } from "./SaveButton"
 import Metadata from "./Metadata"
 import { AuthContextModule } from "@artsy/cohesion"
 import styled from "styled-components"
@@ -43,14 +40,19 @@ const ShelfArtwork: React.FC<ShelfArtworkProps> = ({
   showExtended,
   showMetadata = true,
 }) => {
+  const { containerProps, isSaveButtonVisible } = useSaveButton({
+    isSaved: !!artwork.is_saved,
+  })
+
   return (
     <>
       <RouterLink
-        to={artwork?.href ?? ""}
-        noUnderline
-        onClick={() => {
-          onClick && onClick()
-        }}
+        to={artwork?.href}
+        display="block"
+        textDecoration="none"
+        onClick={onClick}
+        data-test="artworkShelfArtwork"
+        {...containerProps}
       >
         <ResponsiveContainer artwork={artwork}>
           <Image
@@ -63,10 +65,12 @@ const ShelfArtwork: React.FC<ShelfArtworkProps> = ({
           />
 
           <Media greaterThan="sm">
-            <SaveButtonFragmentContainer
-              contextModule={contextModule}
-              artwork={artwork}
-            />
+            {isSaveButtonVisible && (
+              <SaveButtonFragmentContainer
+                contextModule={contextModule}
+                artwork={artwork}
+              />
+            )}
           </Media>
         </ResponsiveContainer>
       </RouterLink>
@@ -124,12 +128,6 @@ const ResponsiveContainer: React.FC<{ artwork: ShelfArtwork_artwork }> = ({
 
 const Container = styled(Flex)`
   position: relative;
-
-  &:hover {
-    ${SaveButtonContainer} {
-      opacity: 1;
-    }
-  }
 `
 
 export const ShelfArtworkFragmentContainer = createFragmentContainer(
@@ -151,6 +149,7 @@ export const ShelfArtworkFragmentContainer = createFragmentContainer(
         imageTitle
         title
         href
+        is_saved: isSaved
         ...Metadata_artwork
         ...SaveButton_artwork
         ...Badge_artwork

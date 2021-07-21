@@ -81,8 +81,7 @@ const ShowBanner: React.FC<ShowBannerProps> = ({
           <Text textTransform="capitalize" variant="mediumText" mb={1}>
             {showType}
           </Text>
-          {/* @ts-expect-error STRICT_NULL_CHECK */}
-          <RouterLink to={href} noUnderline>
+          <RouterLink to={href} textDecoration="none">
             {name && <Text variant="largeTitle">{name}</Text>}
             {exhibitionPeriod && (
               <Text color="black60" variant="title">
@@ -107,7 +106,6 @@ const ShowBanner: React.FC<ShowBannerProps> = ({
 
           <GridColumns mt={[2, 3]}>
             <Column span={6}>
-              {/* @ts-expect-error STRICT_NULL_CHECK */}
               <RouterLink to={href}>
                 <Button width="100%">View More</Button>
               </RouterLink>
@@ -122,7 +120,6 @@ const ShowBanner: React.FC<ShowBannerProps> = ({
             opacity={active ? 1 : 0}
             right={active ? 0 : "-100%"}
           >
-            {/* @ts-expect-error STRICT_NULL_CHECK */}
             <RouterLink to={href}>
               <Image
                 src={coverImage.medium.src}

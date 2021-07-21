@@ -1,3 +1,4 @@
+/* eslint-disable jest/valid-expect-in-promise */
 import Backbone from "backbone"
 import sinon from "sinon"
 import articlesJSON from "./fixtures.coffee"

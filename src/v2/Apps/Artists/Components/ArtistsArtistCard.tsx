@@ -20,7 +20,6 @@ export const ArtistsArtistCard: React.FC<ArtistsArtistCardProps> = ({
   return (
     <>
       <RouterLink
-        // @ts-expect-error STRICT_NULL_CHECK
         to={artist.href}
         noUnderline
         style={{ display: "block" }}
@@ -50,7 +49,6 @@ export const ArtistsArtistCard: React.FC<ArtistsArtistCardProps> = ({
 
       <Flex mt={1} alignItems="center" justifyContent="space-between">
         <Box mr={1}>
-          {/* @ts-expect-error STRICT_NULL_CHECK */}
           <RouterLink to={artist.href} noUnderline style={{ display: "block" }}>
             <Text variant="md">{artist.name}</Text>
 

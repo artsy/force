@@ -17,7 +17,7 @@ import metaphysics2 from "lib/metaphysics2.coffee"
 import u from "updeep"
 import { initialState as appInitialState } from "desktop/apps/auction/reducers/app"
 import { initialState as auctionWorksInitialState } from "desktop/apps/auction/reducers/artworkBrowser"
-import { getLiveAuctionUrl } from "desktop/apps/auctions/utils/urls"
+import { getLiveAuctionUrl } from "desktop/apps/auction/utils/urls"
 import { stitch } from "@artsy/stitch"
 
 export async function index(req, res, next) {

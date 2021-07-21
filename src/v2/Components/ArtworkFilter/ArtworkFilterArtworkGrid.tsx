@@ -19,7 +19,7 @@ interface ArtworkFilterArtworkGridProps {
 }
 
 const ArtworkFilterArtworkGrid: React.FC<ArtworkFilterArtworkGridProps> = props => {
-  const { user, mediator } = useSystemContext()
+  const { user } = useSystemContext()
   const { trackEvent } = useTracking()
   const {
     contextPageOwnerType,
@@ -69,7 +69,6 @@ const ArtworkFilterArtworkGrid: React.FC<ArtworkFilterArtworkGridProps> = props 
           contextModule={ContextModule.artworkGrid}
           itemMargin={40}
           user={user}
-          mediator={mediator}
           onClearFilters={context.resetFilters}
           emptyStateComponent={context.ZeroState && <context.ZeroState />}
           onBrickClick={(artwork, artworkIndex) => {

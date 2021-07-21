@@ -16,18 +16,20 @@ import { HomeHeroUnit_heroUnit } from "v2/__generated__/HomeHeroUnit_heroUnit.gr
 import { cropped } from "v2/Utils/resized"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { Media } from "v2/Utils/Responsive"
+import { HomeHeroUnitCredit } from "./HomeHeroUnitCredit"
+
+type StaticHeroUnit = {
+  backgroundImageURL: string
+  href: string
+  heading?: string | JSX.Element
+  title: string
+  subtitle: string
+  linkText?: string
+  creditLine?: string
+}
 
 export interface HomeHeroUnitProps {
-  heroUnit:
-    | HomeHeroUnit_heroUnit
-    | {
-        backgroundImageURL: string
-        href: string
-        heading: string | JSX.Element
-        title: string
-        subtitle: string
-        linkText?: string
-      }
+  heroUnit: HomeHeroUnit_heroUnit | StaticHeroUnit
   bg?: "black5" | "black100"
   layout: "a" | "b"
   index: number
@@ -97,7 +99,11 @@ export const HomeHeroUnit: React.FC<HomeHeroUnitProps> = ({
 
             <Media greaterThan="xs">
               {className => (
-                <Box className={className} height={[300, 400, 500]}>
+                <Box
+                  className={className}
+                  height={[300, 400, 500]}
+                  position="relative"
+                >
                   <Image
                     src={image.src}
                     srcSet={image.srcSet}
@@ -106,6 +112,23 @@ export const HomeHeroUnit: React.FC<HomeHeroUnitProps> = ({
                     style={{ objectFit: "cover" }}
                     lazyLoad={index > 0}
                   />
+
+                  {heroUnit.creditLine && (
+                    <Box
+                      position="absolute"
+                      px={2}
+                      pb={1}
+                      pt={6}
+                      width="100%"
+                      bottom={0}
+                      background="linear-gradient(rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.1) 100%);"
+                      {...(layout === "a" ? { left: 0 } : { right: 0 })}
+                    >
+                      <HomeHeroUnitCredit>
+                        {heroUnit.creditLine}
+                      </HomeHeroUnitCredit>
+                    </Box>
+                  )}
                 </Box>
               )}
             </Media>
@@ -132,15 +155,19 @@ export const HomeHeroUnit: React.FC<HomeHeroUnitProps> = ({
             style={{ display: "block", textDecoration: "none" }}
           >
             <Media greaterThan="xs">
-              <Text
-                variant="xs"
-                textTransform="uppercase"
-                color={colorScheme.heading}
-              >
-                {heroUnit.heading}
-              </Text>
+              {heroUnit.heading && (
+                <>
+                  <Text
+                    variant="xs"
+                    textTransform="uppercase"
+                    color={colorScheme.heading}
+                  >
+                    {heroUnit.heading}
+                  </Text>
 
-              <Spacer mt={2} />
+                  <Spacer mt={2} />
+                </>
+              )}
             </Media>
 
             <Text
@@ -247,3 +274,12 @@ export const HomeHeroUnitFragmentContainer = createFragmentContainer(
     `,
   }
 )
+
+export const LOGGED_OUT_HERO_UNIT: StaticHeroUnit = {
+  title: "Collect art from leading galleries, fairs, and auctions",
+  subtitle: "Sign up to get updates about your favorite artists",
+  href: "/signup",
+  linkText: "Sign up",
+  backgroundImageURL:
+    "https://files.artsy.net/images/alexander-calder-rouge-triomphant-triumphant-red-1959-1965.jpg",
+}
