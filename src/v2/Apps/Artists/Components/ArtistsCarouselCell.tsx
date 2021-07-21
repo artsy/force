@@ -18,7 +18,7 @@ interface ArtistsCarouselCellProps {
 
 const ArtistsCarouselCell: React.FC<ArtistsCarouselCellProps> = ({
   featuredLink,
-  index,
+
 }) => {
   const { image } = featuredLink
 

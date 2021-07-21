@@ -10,8 +10,7 @@ const RowContainer: React.FC = ({ children }) => (
   </Flex>
 )
 
-// TODO: get count from context instead of passing down artist?
-export const AuctionResultsControls = ({ artist, toggleMobileActionSheet }) => {
+export const AuctionResultsControls = ({ toggleMobileActionSheet }) => {
   return (
     <>
       <Media at="xs">

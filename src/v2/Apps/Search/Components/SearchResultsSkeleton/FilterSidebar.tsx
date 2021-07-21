@@ -1,7 +1,7 @@
 import { Box, Flex, Separator, color } from "@artsy/palette"
 import React from "react"
 
-const FilterSidebarSection: React.SFC<any> = props => {
+const FilterSidebarSection: React.SFC<any> = () => {
   return (
     <>
       <Box
@@ -29,7 +29,7 @@ const FilterSidebarSection: React.SFC<any> = props => {
   )
 }
 
-export const FilterSidebar: React.SFC<any> = props => {
+export const FilterSidebar: React.SFC<any> = () => {
   return (
     <Box display={["none", "block"]} width="25%" pl={[0, 20]} pr={10} mr={10}>
       <FilterSidebarSection />

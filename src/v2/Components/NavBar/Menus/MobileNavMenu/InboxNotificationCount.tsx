@@ -27,7 +27,7 @@ const FloatingDot = styled(Flex)`
 
 export const InboxNotificationCount: React.FC<
   { error?: any } & Partial<InboxNotificationCountQueryResponse>
-> = ({ error, me }) => {
+> = ({ me }) => {
   const conversationCount =
     me?.unreadConversationCount || getConversationCount()
 

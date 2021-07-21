@@ -21,7 +21,7 @@ import {
 /** Displays action icons for logged in users such as inbox, profile, and notifications */
 export const LoggedInActions: React.FC<
   { error?: any } & Partial<LoggedInActionsQueryResponse>
-> = ({ error, me }) => {
+> = ({ me }) => {
   const { trackEvent } = useTracking()
   const hasUnreadNotifications =
     // @ts-expect-error STRICT_NULL_CHECK

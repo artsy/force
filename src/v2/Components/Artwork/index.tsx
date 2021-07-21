@@ -85,7 +85,7 @@ export class Artwork extends React.Component<ArtworkProps, ArtworkState> {
     isSelected: false,
   }
 
-  onSelected = e => {
+  onSelected = () => {
     if (!this.props.Overlay) {
       return
     }
