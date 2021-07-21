@@ -2,7 +2,7 @@ import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 
-import { Shelf, Spacer, Sup, Text } from "@artsy/palette"
+import { Box, Shelf, Spacer, Sup, Text } from "@artsy/palette"
 import { AuthContextModule, clickedArtworkGroup } from "@artsy/cohesion"
 
 import { extractNodes } from "v2/Utils/extractNodes"
@@ -23,9 +23,18 @@ const TrendingLots: React.FC<TrendingLotsProps> = ({ viewer }) => {
 
   if (nodes.length === 0) {
     return (
-      <Text as="h3" variant="lg" mt={6}>
-        No Works To Show
-      </Text>
+      <Box>
+        <Text
+          as="h3"
+          color="black60"
+          mb={12}
+          mt={6}
+          textAlign="center"
+          variant="mediumText"
+        >
+          No Works To Show
+        </Text>
+      </Box>
     )
   }
 
