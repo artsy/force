@@ -109,7 +109,6 @@ COPY patches ./patches
 COPY src ./src
 COPY webpack ./webpack
 COPY .env.oss \
-  .env.example \
   .env.test \
   .eslintrc.js \
   .nvmrc \

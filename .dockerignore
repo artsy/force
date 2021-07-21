@@ -20,7 +20,6 @@
 !__mocks__/
 !cypress/
 !.env.oss
-!.env.example
 !.env.test
 !cypress.json
 !jest.config.v1.js

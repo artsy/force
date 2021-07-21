@@ -313,6 +313,7 @@
     "case-sensitive-paths-webpack-plugin": "2.3.0",
     "coffee-loader": "0.8.0",
     "coffeescript": "1.11.1",
+    "concurrently": "^6.2.0",
     "csstype": "3.0.7",
     "cypress": "5.1.0",
     "danger": "^10.6.4",
