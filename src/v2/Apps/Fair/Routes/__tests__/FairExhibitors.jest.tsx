@@ -9,7 +9,6 @@ import { MockBoot, renderRelayTree } from "v2/DevTools"
 import { Breakpoint } from "v2/Utils/Responsive"
 import { SortFilter } from "v2/Components/SortFilter"
 import { Sticky } from "v2/Components/Sticky"
-import { PaginationFragmentContainer as Pagination } from "v2/Components/Pagination"
 
 jest.unmock("react-relay")
 jest.mock("v2/System/Router/useRouter", () => ({
@@ -44,12 +43,12 @@ describe("FairExhibitors", () => {
         query FairExhibitors_Query(
           $id: String!
           $first: Int
-          $page: Int
+          $after: String
           $sort: ShowSorts
         ) @raw_response_type {
           fair(id: $id) {
             ...FairExhibitors_fair
-              @arguments(first: $first, page: $page, sort: $sort)
+              @arguments(first: $first, after: $after, sort: $sort)
           }
         }
       `,
@@ -58,18 +57,8 @@ describe("FairExhibitors", () => {
     })
   }
 
-  let wrapper: ReactWrapper
-
-  let refetchSpy
-  beforeEach(async () => {
-    wrapper = await getWrapper({})
-    refetchSpy = jest.spyOn(
-      (wrapper.find("FairExhibitors").props() as any).relay,
-      "refetch"
-    )
-  })
-
   it("renders the rails from exhibitors that have artworks", async () => {
+    const wrapper = await getWrapper({})
     expect(wrapper.find(FairExhibitorRail).length).toBe(2)
     const text = wrapper.text()
     expect(text).toContain("First Partner Has Artworks")
@@ -77,15 +66,28 @@ describe("FairExhibitors", () => {
   })
 
   it("skips over any partners with no artworks", async () => {
+    const wrapper = await getWrapper({})
     const text = wrapper.text()
     expect(text).not.toContain("Partner Without Artworks")
   })
 
-  it("renders pagination", () => {
-    expect(wrapper.find(Pagination)).toHaveLength(1)
+  it("renders the show more button", async () => {
+    const wrapper = await getWrapper({})
+    expect(wrapper.text()).toContain("Show more")
   })
 
   describe("sort", () => {
+    let wrapper: ReactWrapper
+
+    let refetchSpy
+    beforeEach(async () => {
+      wrapper = await getWrapper({})
+      refetchSpy = jest.spyOn(
+        (wrapper.find("FairExhibitors").props() as any).relay,
+        "refetchConnection"
+      )
+    })
+
     it("renders correctly", () => {
       const text = wrapper.find(FairExhibitorSortFilter).text()
       expect(wrapper.find(FairExhibitorSortFilter).length).toBe(1)
@@ -102,16 +104,15 @@ describe("FairExhibitors", () => {
       expect(wrapper.find(SortFilter).prop("selected")).toEqual("NAME_ASC")
     })
 
-    it("calls refetch with proper params", () => {
+    it("calls refetchConnection with proper params", () => {
       const sort = wrapper.find(SortFilter)
       sort.find("option").at(1).simulate("change")
       expect(refetchSpy).toHaveBeenCalledTimes(1)
-      expect(refetchSpy.mock.calls[0][0]).toEqual(
+      expect(refetchSpy.mock.calls[0][0]).toEqual(15)
+      expect(refetchSpy.mock.calls[0][2]).toEqual(
         expect.objectContaining({
-          id: "xxx",
           first: 15,
           sort: "NAME_ASC",
-          page: 1,
         })
       )
     })
@@ -136,23 +137,14 @@ const FAIR_EXHIBITORS_FIXTURE: FairExhibitors_QueryRawResponse = {
     slug: "xxx",
     exhibitors: {
       pageInfo: {
+        endCursor: "xxx",
         hasNextPage: false,
-      },
-      pageCursors: {
-        around: [
-          {
-            cursor: "YXJyYXljb25uZWN0aW9uOi0x",
-            page: 1,
-            isCurrent: true,
-          },
-        ],
-        first: null,
-        last: null,
-        previous: null,
       },
       edges: [
         {
+          cursor: "xxx",
           node: {
+            __typename: "Show",
             id: "xxx-1",
             internalID: "xxx-1",
             slug: "show-slug",
@@ -166,7 +158,9 @@ const FAIR_EXHIBITORS_FIXTURE: FairExhibitors_QueryRawResponse = {
           },
         },
         {
+          cursor: "xxx",
           node: {
+            __typename: "Show",
             id: "xxx-2",
             internalID: "xxx-2",
             slug: "show-slug",
@@ -180,7 +174,9 @@ const FAIR_EXHIBITORS_FIXTURE: FairExhibitors_QueryRawResponse = {
           },
         },
         {
+          cursor: "xxx",
           node: {
+            __typename: "Show",
             id: "xxx-3",
             internalID: "xxx-3",
             slug: "show-slug",

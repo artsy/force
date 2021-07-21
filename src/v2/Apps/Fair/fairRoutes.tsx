@@ -72,20 +72,19 @@ export const fairRoutes: AppRouteConfig[] = [
           FairExhibitorsRoute.preload()
         },
         prepareVariables: ({ slug }, { location }) => {
-          let { sort, page } = location.query
+          let { sort } = location.query
           if (!isValidSort(sort)) {
             sort = defaultSort
           }
-          return { sort, page, slug }
+          return { sort, slug }
         },
         query: graphql`
           query fairRoutes_FairExhibitorsQuery(
             $slug: String!
-            $page: Int
             $sort: ShowSorts
           ) {
             fair(id: $slug) @principalField {
-              ...FairExhibitors_fair @arguments(sort: $sort, page: $page)
+              ...FairExhibitors_fair @arguments(sort: $sort)
             }
           }
         `,
