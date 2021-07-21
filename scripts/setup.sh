@@ -3,17 +3,15 @@
 # This assumes you have general prerequisites installed as by:
 # https://github.com/artsy/potential/blob/master/scripts/setup
 
-# Run like:
-#   source scripts/setup.sh
-#
-# Commands that may fail have "|| return" to avoid continuing or interfering with terminal.
+# Exit if any subcommand fails
+set -e
 
 # Install yarn if it does not exist.
 if ! yarn versions &> /dev/null; then
   echo 'yarn is required for setup, installing...'
   if ! brew --version &> /dev/null; then
     echo 'brew is required to install yarn, see https://docs.brew.sh/Installation'
-    return
+    exit 0
   fi
   brew install yarn
 fi
@@ -21,11 +19,11 @@ fi
 if [[ ! -z $NVM_DIR ]]; then # skip if nvm is not available
   echo "Installing Node..."
   source ~/.nvm/nvm.sh
-  nvm install || return
+  nvm install
 fi
 
-echo "Installing javascript dependencies"
-yarns install || echo 'Unable to install dependencies using yarn!'
+echo "Installing dependencies..."
+yarn install || echo 'Unable to install dependencies using yarn!'
 
 echo "Downloading .env.shared file..."
 if ! aws s3 cp s3://artsy-citadel/dev/.env.force .env.shared; then
