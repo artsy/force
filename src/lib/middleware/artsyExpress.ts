@@ -2,14 +2,18 @@ import type { Request, Response } from "express"
 
 export interface ArtsyRequest extends Request {
   _parsedUrl?: any
-  timedout?: any
-  session?: any
   id?: any
+  session?: any
+  timedout?: any
   user?: any
 }
 
 export interface ArtsyResponse extends Response {
+  _headers: any[]
+  backboneError?: any
   cookie: any
   locals: any
-  backboneError?: any
+  perfStart: any
+  serverTimingHeaders?: Map<string, number | null>
+  serverTimingHeadersWritten?: boolean
 }

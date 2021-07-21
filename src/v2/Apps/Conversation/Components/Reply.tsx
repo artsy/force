@@ -7,6 +7,7 @@ import {
   media,
   space,
   themeProps,
+  Separator,
 } from "@artsy/palette"
 import { Conversation_conversation } from "v2/__generated__/Conversation_conversation.graphql"
 import React, { useRef, useState } from "react"
@@ -20,6 +21,12 @@ import {
 } from "@artsy/cohesion"
 import { RightProps } from "styled-system"
 import { ConversationCTAFragmentContainer } from "./ConversationCTA"
+
+export const ShadowSeparator = styled(Separator)`
+  box-shadow: 0 -1px 1px rgba(50, 50, 50, 0.1);
+  width: 100%;
+  height: 0;
+`
 
 const StyledFlex = styled(Flex)<FlexProps & RightProps>`
   border-top: 1px solid ${color("black10")};
@@ -135,6 +142,7 @@ export const Reply: React.FC<ReplyProps> = props => {
         }}
       />
       <Flex zIndex={[null, 2]} flexDirection="column" background="white">
+        <ShadowSeparator />
         <ConversationCTAFragmentContainer
           conversation={conversation}
           openInquiryModal={() => openInquiryModal()}

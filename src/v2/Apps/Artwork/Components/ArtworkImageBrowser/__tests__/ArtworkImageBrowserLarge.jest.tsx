@@ -5,6 +5,9 @@ import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
 import { ArtworkImageBrowserLargeFragmentContainer } from "../ArtworkImageBrowserLarge"
 
 jest.unmock("react-relay")
+jest.mock("v2/System/Analytics/useTracking", () => ({
+  useTracking: () => ({ trackEvent: jest.fn() }),
+}))
 
 const { getWrapper } = setupTestWrapper({
   Component: props => {

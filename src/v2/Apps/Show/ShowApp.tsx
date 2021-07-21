@@ -21,7 +21,10 @@ import {
   useAnalyticsContext,
 } from "v2/System/Analytics/AnalyticsContext"
 import { ShowArtworksEmptyStateFragmentContainer as ShowArtworksEmptyState } from "./Components/ShowArtworksEmptyState"
-import { SharedArtworkFilterContextProps } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
+import {
+  Counts,
+  SharedArtworkFilterContextProps,
+} from "v2/Components/ArtworkFilter/ArtworkFilterContext"
 import { RouterLink } from "v2/System/Router/RouterLink"
 
 interface ShowAppProps {
@@ -35,7 +38,7 @@ export const ShowApp: React.FC<ShowAppProps> = ({ show }) => {
   const hasAbout = !!show.about
   const hasWideHeader =
     (hasAbout && hasViewingRoom) || (!hasAbout && !hasViewingRoom)
-  const { sidebarAggregations } = show
+  const { sidebar } = show
 
   return (
     <>
@@ -92,8 +95,9 @@ export const ShowApp: React.FC<ShowAppProps> = ({ show }) => {
           {(show.counts?.eligibleArtworks ?? 0) > 0 ? (
             <ShowArtworksFilter
               aggregations={
-                sidebarAggregations?.aggregations as SharedArtworkFilterContextProps["aggregations"]
+                sidebar?.aggregations as SharedArtworkFilterContextProps["aggregations"]
               }
+              counts={sidebar?.counts as Counts}
               show={show}
             />
           ) : (
@@ -122,6 +126,7 @@ export const ShowAppFragmentContainer = createFragmentContainer(ShowApp, {
       @argumentDefinitions(
         input: { type: "FilterArtworksInput" }
         aggregations: { type: "[ArtworkAggregation]" }
+        shouldFetchCounts: { type: "Boolean!", defaultValue: false }
       ) {
       name
       href
@@ -139,10 +144,10 @@ export const ShowAppFragmentContainer = createFragmentContainer(ShowApp, {
       fair {
         hasFullFeature
       }
-      sidebarAggregations: filterArtworksConnection(
-        aggregations: $aggregations
-        first: 1
-      ) {
+      sidebar: filterArtworksConnection(aggregations: $aggregations, first: 1) {
+        counts @include(if: $shouldFetchCounts) {
+          followedArtists
+        }
         aggregations {
           slice
           counts {

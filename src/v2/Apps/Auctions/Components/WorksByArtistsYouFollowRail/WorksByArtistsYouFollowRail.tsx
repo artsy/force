@@ -28,7 +28,7 @@ const WorksByArtistsYouFollowRail: React.FC<WorksByArtistsYouFollowRailProps> = 
 
   return (
     <>
-      <Text as="h3" variant="lg" color="black100">
+      <Text as="h3" variant="lg" color="black100" mt={6}>
         Works for you{" "}
         <Sup color="brand">{viewer.saleArtworksConnection?.edges?.length}</Sup>
       </Text>
@@ -52,8 +52,7 @@ const WorksByArtistsYouFollowRail: React.FC<WorksByArtistsYouFollowRailProps> = 
                 trackEvent(
                   clickedArtworkGroup({
                     contextModule,
-                    // @ts-expect-error STRICT_NULL_CHECK
-                    contextPageOwnerType,
+                    contextPageOwnerType: contextPageOwnerType!,
                     artworkID: node.internalID,
                     artworkSlug: node.slug,
                     horizontalSlidePosition: index,

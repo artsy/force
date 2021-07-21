@@ -46,6 +46,7 @@ import { ArtworkSortFilter } from "./ArtworkFilters/ArtworkSortFilter"
 import { GeneArtworkFilter_gene } from "v2/__generated__/GeneArtworkFilter_gene.graphql"
 import RelayModernEnvironment from "relay-runtime/lib/store/RelayModernEnvironment"
 import { TagArtworkFilter_tag } from "v2/__generated__/TagArtworkFilter_tag.graphql"
+import { Works_partner } from "v2/__generated__/Works_partner.graphql"
 
 /**
  * Primary ArtworkFilter which is wrapped with a context and refetch container.
@@ -118,6 +119,7 @@ export const BaseArtworkFilter: React.FC<
       | ShowArtworks_show
       | GeneArtworkFilter_gene
       | TagArtworkFilter_tag
+      | Works_partner
     Filters?: JSX.Element
     offset?: number
   }

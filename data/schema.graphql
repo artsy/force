@@ -3996,7 +3996,33 @@ type CommerceShipment {
     # A tz database time zone, otherwise falls back to `X-TIMEZONE` header
     timezone: String
   ): String!
+  deliveryEnd(
+    format: String
+
+    # A tz database time zone, otherwise falls back to `X-TIMEZONE` header
+    timezone: String
+  ): String
+  deliveryStart(
+    format: String
+
+    # A tz database time zone, otherwise falls back to `X-TIMEZONE` header
+    timezone: String
+  ): String
+  deliveryWindowModifier: String
   id: ID!
+  pickupEnd(
+    format: String
+
+    # A tz database time zone, otherwise falls back to `X-TIMEZONE` header
+    timezone: String
+  ): String
+  pickupStart(
+    format: String
+
+    # A tz database time zone, otherwise falls back to `X-TIMEZONE` header
+    timezone: String
+  ): String
+  pickupWindowModifier: String
   priceCents: Int!
   priceCurrency: String!
   status: String
@@ -6212,7 +6238,7 @@ type Fair implements EntityWithFilterArtworksConnectionInterface & Node {
     before: String
     first: Int
     last: Int
-    page: Int = 1
+    page: Int
 
     # Number of artworks to return
     section: String

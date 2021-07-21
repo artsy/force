@@ -209,6 +209,17 @@ export const partnerRoutes: AppRouteConfig[] = [
         },
         prepareVariables: (data, props) => {
           const filterStateFromUrl = props.location ? props.location.query : {}
+          const aggregations = [
+            "TOTAL",
+            "MEDIUM",
+            "MATERIALS_TERMS",
+            "ARTIST_NATIONALITY",
+            "ARTIST",
+          ]
+
+          if (!!props.context.user) {
+            aggregations.push("FOLLOWED_ARTISTS")
+          }
 
           const filterParams = {
             ...initialArtworkFilterState,
@@ -216,10 +227,10 @@ export const partnerRoutes: AppRouteConfig[] = [
           }
 
           return {
-            input: {
-              ...allowedFilters(filterParams),
-            },
+            aggregations,
+            input: allowedFilters(filterParams),
             partnerId: data.partnerId,
+            shouldFetchCounts: !!props.context.user,
           }
         },
         ignoreScrollBehavior: true,
@@ -227,9 +238,16 @@ export const partnerRoutes: AppRouteConfig[] = [
           query partnerRoutes_WorksQuery(
             $partnerId: String!
             $input: FilterArtworksInput
+            $aggregations: [ArtworkAggregation]
+            $shouldFetchCounts: Boolean!
           ) {
             partner(id: $partnerId) @principalField {
-              ...Works_partner @arguments(input: $input)
+              ...Works_partner
+                @arguments(
+                  input: $input
+                  aggregations: $aggregations
+                  shouldFetchCounts: $shouldFetchCounts
+                )
               displayWorksSection
               counts {
                 eligibleArtworks
