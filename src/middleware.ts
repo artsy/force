@@ -32,6 +32,7 @@ import {
   FACEBOOK_ID,
   FACEBOOK_SECRET,
   IP_DENYLIST,
+  MEMORY_PAGE_URL_FILTER,
   NODE_ENV,
   SEGMENT_WRITE_KEY_SERVER,
   SENTRY_PRIVATE_DSN,
@@ -57,10 +58,11 @@ import { downcaseMiddleware } from "./lib/middleware/downcase"
 import { hardcodedRedirectsMiddleware } from "./lib/middleware/hardcodedRedirects"
 import { localsMiddleware } from "./lib/middleware/locals"
 import { marketingModalsMiddleware } from "./lib/middleware/marketingModals"
-import { pageCacheMiddleware } from "./lib/middleware/pageCache"
+import { pageCacheMiddleware } from "./lib/middleware/redisPageCache"
 import { sameOriginMiddleware } from "./lib/middleware/sameOrigin"
 import { unsupportedBrowserMiddleware } from "./lib/middleware/unsupportedBrowser"
 import { backboneSync } from "lib/backboneSync"
+import { memoryPageCacheMiddleware } from "lib/middleware/memoryPageCache"
 import { serverTimingHeaders } from "lib/middleware/serverTimingHeaders"
 
 // App-specific V2 server-side functionality
@@ -70,6 +72,9 @@ import { handleArtworkImageDownload } from "lib/middleware/artworkMiddleware"
 import { searchMiddleware } from "lib/middleware/searchMiddleware"
 import { splitTestMiddleware } from "desktop/components/split_test/splitTestMiddleware"
 import { IGNORED_ERRORS } from "lib/analytics/sentryFilters"
+
+// Find the v2 routes, we will not be testing memory caching for legacy pages.
+import { getRouteList } from "v2/routes"
 
 const CurrentUser = require("./lib/current_user.coffee")
 
@@ -116,7 +121,9 @@ export function initializeMiddleware(app) {
   app.use(backboneErrorHandlerMiddleware)
   app.use(sameOriginMiddleware)
   app.use(unsupportedBrowserMiddleware)
-  app.use(pageCacheMiddleware)
+
+  // Initialize caches
+  applyCacheMiddleware(app)
 
   /**
    * Blank page used by Eigen for caching web views.
@@ -258,4 +265,25 @@ function applyStaticAssetMiddlewares(app) {
   // TODO: Move to ./public/images
   app.use(favicon(path.resolve(__dirname, "mobile/public/images/favicon.ico")))
   app.use("/(.well-known/)?apple-app-site-association", siteAssociation)
+}
+
+function applyCacheMiddleware(app) {
+  // For full page cache testing, find all the modern routes and enable pages we
+  // would like to test.
+  let cachableModernRoutes: string[] = getRouteList()
+
+  if (MEMORY_PAGE_URL_FILTER && MEMORY_PAGE_URL_FILTER.split(",").length > 0) {
+    const cacheFilters = MEMORY_PAGE_URL_FILTER.split(",")
+    cachableModernRoutes = cachableModernRoutes.filter(route => {
+      for (const cacheFilter of cacheFilters) {
+        if (route.startsWith(cacheFilter)) {
+          return true
+        }
+      }
+      return false
+    })
+  }
+
+  app.use(pageCacheMiddleware)
+  app.use(cachableModernRoutes, memoryPageCacheMiddleware)
 }

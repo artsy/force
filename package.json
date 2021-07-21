@@ -175,6 +175,7 @@
     "morgan": "1.10.0",
     "nib": "1.1.2",
     "nock": "9.0.13",
+    "node-cache": "^5.1.2",
     "node-uuid": "1.4.8",
     "nouislider": "9.2.0",
     "numeral": "2.0.6",
