@@ -20,7 +20,7 @@ const CollectionsApp = loadable(
 const CollectionApp = loadable(
   () => import(/* webpackChunkName: "collectBundle" */ "./Routes/Collection"),
   {
-    resolveComponent: component => component.CollectionRefetchContainer,
+    resolveComponent: component => component.CollectionFragmentContainer,
   }
 )
 
