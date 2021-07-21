@@ -33,7 +33,6 @@ sharify.data = _.extend(
     "CDN_URL",
     "CMS_URL",
     "COLLECT_PAGE_TITLES_URL",
-    "CONSIGNMENTS_APP_URL",
     "CONVECTION_APP_ID",
     "CONVECTION_APP_URL",
     "CONVECTION_GEMINI_APP",
