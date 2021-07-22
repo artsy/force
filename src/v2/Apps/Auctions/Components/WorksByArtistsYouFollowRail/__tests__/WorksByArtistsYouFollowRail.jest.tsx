@@ -58,6 +58,7 @@ describe("WorksByArtistsYouFollowRail", () => {
     expect(wrapper.html()).not.toContain(
       "Works at auction by artists you follow"
     )
+    expect(wrapper.html()).toContain("No Works To Show")
     expect(wrapper.find("Carousel").length).toBe(0)
     expect(wrapper.find("FillwidthItem").length).toBe(0)
   })
