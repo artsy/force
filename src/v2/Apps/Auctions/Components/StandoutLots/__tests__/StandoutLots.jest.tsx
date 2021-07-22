@@ -54,6 +54,7 @@ describe("StandoutLots", () => {
     })
 
     expect(wrapper.html()).not.toContain("Works that Artsy curators love")
+    expect(wrapper.html()).toContain("No Works To Show")
     expect(wrapper.find("Carousel").length).toBe(0)
     expect(wrapper.find("FillwidthItem").length).toBe(0)
   })

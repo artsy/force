@@ -8,6 +8,7 @@ import { tabTypeToContextModuleMap } from "../../Utils/tabTypeToContextModuleMap
 import { Shelf, Spacer, Text, Sup } from "@artsy/palette"
 import { ShelfArtworkFragmentContainer } from "v2/Components/Artwork/ShelfArtwork"
 import { extractNodes } from "v2/Utils/extractNodes"
+import { CuratorialRailsZeroState } from "../CuratorialRailsZeroState/CuratorialRailsZeroState"
 
 export interface WorksByArtistsYouFollowRailProps {
   viewer: WorksByArtistsYouFollowRail_viewer
@@ -23,7 +24,7 @@ const WorksByArtistsYouFollowRail: React.FC<WorksByArtistsYouFollowRailProps> = 
   const nodes = extractNodes(viewer.saleArtworksConnection)
 
   if (nodes.length === 0) {
-    return null
+    return <CuratorialRailsZeroState />
   }
 
   return (
