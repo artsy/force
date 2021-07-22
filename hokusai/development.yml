@@ -14,6 +14,9 @@ services:
       - S3_KEY
       - S3_SECRET
       - DEPLOY_ENV
+    env_file:
+      - ../.env.shared
+      - ../.env
     command: ["yarn", "start:dev"]
     ports:
       - 5000:5000
