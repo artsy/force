@@ -98,8 +98,8 @@ export function createRelaySSREnvironment(config: Config = {}) {
     }),
     relaySSRMiddleware.getMiddleware(),
     cacheMiddleware({
-      size: getENV("NETWORK_CACHE_SIZE"), // max 2000 requests
-      ttl: getENV("NETWORK_CACHE_TTL"), // 1 hour
+      size: Number(getENV("NETWORK_CACHE_SIZE")) ?? 2000, // max 2000 requests
+      ttl: Number(getENV("NETWORK_CACHE_TTL")) ?? 3600000, // 1 hour
       clearOnMutation: true,
       disableServerSideCache: !!user, // disable server-side cache if logged in
       onInit: queryResponseCache => {
