@@ -111,12 +111,8 @@ function initializeVariablesWithFilterState(params, props) {
 
   // TODO: Do these aggregations accomplish much on /collect?
   const collectionOnlyAggregations = collectionSlug
-    ? ["MERCHANDISABLE_ARTISTS", "MEDIUM", "MAJOR_PERIOD", "ARTIST"]
+    ? ["MERCHANDISABLE_ARTISTS", "MEDIUM", "MAJOR_PERIOD"]
     : []
-
-  if (!!props.context.user) {
-    collectionOnlyAggregations.push("FOLLOWED_ARTISTS")
-  }
 
   const aggregations = [
     "TOTAL",
@@ -124,7 +120,12 @@ function initializeVariablesWithFilterState(params, props) {
     "LOCATION_CITY",
     "MATERIALS_TERMS",
     "PARTNER",
+    "ARTIST",
   ].concat(collectionOnlyAggregations)
+
+  if (!!props.context.user) {
+    aggregations.push("FOLLOWED_ARTISTS")
+  }
 
   const input = {
     sort: "-decayed_merch",
@@ -147,6 +148,7 @@ function getArtworkFilterQuery() {
       $sort: String
       $input: FilterArtworksInput
       $aggregations: [ArtworkAggregation]
+      $shouldFetchCounts: Boolean!
     ) {
       marketingHubCollections {
         ...Collect_marketingHubCollections
@@ -157,6 +159,9 @@ function getArtworkFilterQuery() {
       viewer {
         ...ArtworkFilter_viewer @arguments(input: $input)
         artworksConnection(aggregations: $aggregations, input: $input) {
+          counts @include(if: $shouldFetchCounts) {
+            followedArtists
+          }
           aggregations {
             slice
             counts {
