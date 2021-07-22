@@ -19,6 +19,7 @@ import { data as sd } from "sharify"
 import { ZendeskWrapper } from "v2/Components/ZendeskWrapper"
 import { HorizontalPadding } from "../Components/HorizontalPadding"
 import { AppContainer } from "../Components/AppContainer"
+import { LegacyArtworkDllContainer } from "../../Utils/LegacyArtworkDllContainer"
 
 export interface OrderAppProps extends RouterState {
   params: {
@@ -45,18 +46,6 @@ class OrderApp extends React.Component<OrderAppProps, {}> {
     if (window.zEmbed) {
       window.zEmbed.show()
     }
-
-    if (!document.getElementById("legacy-assets-dll")) {
-      import(
-        /* webpackChunkName: 'legacy-assets-dll' */ "../../Utils/legacyAssetDll"
-      ).then(({ legacyAssetDll }) => {
-        legacyAssetDll()
-      })
-      document.body.insertAdjacentHTML(
-        "beforeend",
-        `<div id='legacy-assets-dll' />`
-      )
-    }
   }
 
   componentWillUnmount() {
@@ -69,10 +58,6 @@ class OrderApp extends React.Component<OrderAppProps, {}> {
     // zEmbed represents the Zendesk object
     if (window.zEmbed) {
       window.zEmbed.hide()
-    }
-
-    if (this.mediator) {
-      this.mediator.off("openOrdersContactArtsyModal")
     }
   }
 
@@ -142,6 +127,7 @@ class OrderApp extends React.Component<OrderAppProps, {}> {
 
           return (
             <Box>
+              <LegacyArtworkDllContainer />
               {/* FIXME: remove once we refactor out legacy backbone code.
                     Add place to attach legacy flash message, used in legacy inquiry flow
                 */}
