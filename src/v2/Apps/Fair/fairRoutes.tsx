@@ -101,7 +101,7 @@ export const fairRoutes: AppRouteConfig[] = [
           } = match
 
           if (!isValidSort(sort)) {
-            const url = buildUrl(otherQuery, pathname)
+            const url = buildUrl(otherQuery, { pathname })
             throw new RedirectException(url)
           }
 

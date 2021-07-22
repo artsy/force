@@ -34,8 +34,10 @@ export const paramsToCamelCase = params => {
 
 export const buildUrl = (
   state: ArtworkFilters,
-  pathname?: string,
-  defaultValues?: Partial<ArtworkFilters>
+  {
+    pathname,
+    defaultValues,
+  }: { pathname?: string; defaultValues?: Partial<ArtworkFilters> }
 ): string => {
   const params = removeDefaultValues(state, defaultValues)
   const queryString = qs.stringify(paramsToSnakeCase(params))
@@ -54,7 +56,7 @@ export const updateUrl = (
   state: ArtworkFilters,
   defaultValues?: Partial<ArtworkFilters>
 ) => {
-  const url = buildUrl(state, "", defaultValues)
+  const url = buildUrl(state, { defaultValues })
 
   if (typeof window !== "undefined") {
     window.history.replaceState({}, "", url)
