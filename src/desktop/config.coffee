@@ -22,7 +22,6 @@ module.exports =
   CLIENT_SECRET: null
   CMS_URL: 'https://cms.artsy.net'
   COLLECT_PAGE_TITLES_URL: 'https://s3.amazonaws.com/artsy-data/collect/collect.json'
-  CONSIGNMENTS_APP_URL: null
   CONVECTION_APP_URL: null
   CONVECTION_APP_ID: null
   CONVECTION_GEMINI_APP: 'convection-staging'

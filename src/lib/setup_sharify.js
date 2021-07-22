@@ -8,7 +8,7 @@
 // If it is sensitive configuration you should only add it to config.coffee and
 // require that file directly *only* server-side.
 //
-// See this doc for more details: https://github.com/artsy/force/blob/master/docs/adding_an_env_var.md
+// See this doc for more details: https://github.com/artsy/force/blob/master/docs/env_configuration.md
 //
 import _ from "underscore"
 import config from "../config"
@@ -33,7 +33,6 @@ sharify.data = _.extend(
     "CDN_URL",
     "CMS_URL",
     "COLLECT_PAGE_TITLES_URL",
-    "CONSIGNMENTS_APP_URL",
     "CONVECTION_APP_ID",
     "CONVECTION_APP_URL",
     "CONVECTION_GEMINI_APP",
