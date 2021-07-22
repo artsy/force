@@ -21,8 +21,14 @@ const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
   ...rest
 }) => {
   const images = compact(artwork.images)
-  const maxHeight = Math.max(...images.map(image => image.resized?.height ?? 0))
-  const { resized: image, isDefault } = images[activeIndex]
+  const hasGeometry = !!images[0].resized?.width
+  const maxHeight = Math.max(
+    ...images.map(image =>
+      hasGeometry ? image.resized!.height! : image.fallback!.height!
+    )
+  )
+  const { resized, fallback, isDefault } = images[activeIndex]
+  const image = hasGeometry ? resized : fallback
 
   const { user } = useSystemContext()
   const isTeam = userIsTeam(user)
@@ -80,6 +86,16 @@ export const ArtworkLightboxFragmentContainer = createFragmentContainer(
         formattedMetadata
         images {
           isDefault
+          fallback: cropped(
+            width: 800
+            height: 800
+            version: ["normalized", "larger", "large"]
+          ) {
+            width
+            height
+            src
+            srcSet
+          }
           resized(
             width: 800
             height: 800
