@@ -1,6 +1,6 @@
-import { Flex, Join, Sans, Serif, Spacer } from "@artsy/palette"
+import { Flex, Join, Input, Text, Spacer } from "@artsy/palette"
 import { CountrySelect } from "v2/Components/CountrySelect"
-import Input from "v2/Components/Input"
+// import Input from "v2/Components/Input"
 import React from "react"
 import { TwoColumnSplit } from "../Apps/Order/Components/TwoColumnLayout"
 
@@ -110,15 +110,14 @@ export class AddressForm extends React.Component<
             value={this.props.value.name}
             onChange={this.changeEventHandler("name")}
             error={this.getError("name")}
-            block
           />
         </Flex>
 
         <TwoColumnSplit>
           <Flex flexDirection="column" pb={1}>
-            <Serif mb={1} size="3t" color="black100" lineHeight="1.1em">
+            <Text variant="md" color="black100" lineHeight="1.1em">
               Country
-            </Serif>
+            </Text>
             <CountrySelect
               selected={
                 lockCountryToOrigin ||
@@ -133,11 +132,11 @@ export class AddressForm extends React.Component<
             {(lockCountryToOrigin || lockCountriesToEU) && (
               <>
                 <Spacer m={0.5} />
-                <Sans size="2" color="black60">
+                <Text variant="md" color="black60">
                   {lockCountriesToEU
                     ? "Continental Europe shipping only."
                     : "Domestic shipping only."}
-                </Sans>
+                </Text>
               </>
             )}
           </Flex>
@@ -149,11 +148,9 @@ export class AddressForm extends React.Component<
               title="Postal code"
               autoCapitalize="characters"
               autoCorrect="off"
-              // @ts-expect-error STRICT_NULL_CHECK
-              value={this.props.value.postalCode}
+              value={this.props.value?.postalCode}
               onChange={this.changeEventHandler("postalCode")}
               error={this.getError("postalCode")}
-              block
             />
           </Flex>
         </TwoColumnSplit>
@@ -163,11 +160,9 @@ export class AddressForm extends React.Component<
               id="AddressForm_addressLine1"
               placeholder="Add street address"
               title="Address line 1"
-              // @ts-expect-error STRICT_NULL_CHECK
-              value={this.props.value.addressLine1}
+              value={this.props.value?.addressLine1}
               onChange={this.changeEventHandler("addressLine1")}
               error={this.getError("addressLine1")}
-              block
             />
           </Flex>
 
@@ -176,11 +171,9 @@ export class AddressForm extends React.Component<
               id="AddressForm_addressLine2"
               placeholder="Add apt, floor, suite, etc."
               title="Address line 2 (optional)"
-              // @ts-expect-error STRICT_NULL_CHECK
-              value={this.props.value.addressLine2}
+              value={this.props.value?.addressLine2}
               onChange={this.changeEventHandler("addressLine2")}
               error={this.getError("addressLine2")}
-              block
             />
           </Flex>
         </TwoColumnSplit>
@@ -190,11 +183,9 @@ export class AddressForm extends React.Component<
               id="AddressForm_city"
               placeholder="Add city"
               title="City"
-              // @ts-expect-error STRICT_NULL_CHECK
-              value={this.props.value.city}
+              value={this.props.value?.city}
               onChange={this.changeEventHandler("city")}
               error={this.getError("city")}
-              block
             />
           </Flex>
 
@@ -204,11 +195,9 @@ export class AddressForm extends React.Component<
               placeholder="Add State, province, or region"
               title="State, province, or region"
               autoCorrect="off"
-              // @ts-expect-error STRICT_NULL_CHECK
-              value={this.props.value.region}
+              value={this.props.value?.region}
               onChange={this.changeEventHandler("region")}
               error={this.getError("region")}
-              block
             />
           </Flex>
         </TwoColumnSplit>
@@ -219,15 +208,12 @@ export class AddressForm extends React.Component<
                 id="AddressForm_phoneNumber"
                 title="Phone number"
                 type="tel"
-                // @ts-expect-error STRICT_NULL_CHECK
-                description={this.phoneNumberInputDescription()}
+                description={this.phoneNumberInputDescription()!}
                 placeholder="Add phone"
                 pattern="[^a-z]+"
-                // @ts-expect-error STRICT_NULL_CHECK
-                value={this.props.value.phoneNumber}
+                value={this.props.value?.phoneNumber}
                 onChange={this.changeEventHandler("phoneNumber")}
                 error={this.getError("phoneNumber")}
-                block
               />
             </Flex>
             <Spacer mb={2} />

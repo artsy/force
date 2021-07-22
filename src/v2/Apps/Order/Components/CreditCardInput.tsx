@@ -1,4 +1,4 @@
-import { BorderBox, Sans, color, themeProps } from "@artsy/palette"
+import { BorderBox, Text, color, themeProps } from "@artsy/palette"
 import { fontFamily } from "@artsy/palette/dist/platform/fonts"
 import {
   BorderProps as InputBorderProps,
@@ -63,8 +63,8 @@ export class CreditCardInput extends React.Component<
               style: {
                 base: {
                   "::placeholder": { color: color("black30") },
-                  fontFamily: fontFamily.serif.regular as string,
-                  fontSize: `${themeProps.typeSizes.serif["3t"].fontSize}px`,
+                  fontFamily: fontFamily.sans.regular as string,
+                  fontSize: `${themeProps.typeSizes.sans["6"].fontSize}px`,
                   fontSmoothing: "antialiased",
                   lineHeight: "20px",
                 },
@@ -80,9 +80,9 @@ export class CreditCardInput extends React.Component<
           />
         </StyledBorderBox>
         {message && (
-          <Sans pt={1} size="2" color="red100">
+          <Text variant="sm" color="red100">
             {message}
-          </Sans>
+          </Text>
         )}
       </>
     )

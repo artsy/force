@@ -1,4 +1,4 @@
-import { Box, Separator, Serif } from "@artsy/palette"
+import { Box, Separator, Text, ThemeProviderV3 } from "@artsy/palette"
 import { Match } from "found"
 
 import { BidderPositionQueryResponse } from "v2/__generated__/BidderPositionQuery.graphql"
@@ -323,46 +323,49 @@ export const ConfirmBidRoute: React.FC<
     return <ZendeskWrapper zdKey={sd.AUCTION_ZENDESK_KEY} />
   }
 
+  if (!artwork) {
+    return null
+  }
+
   return (
     <>
       <Title>Confirm Bid | Artsy</Title>
 
-      <Box maxWidth={550} px={[2, 0]} mx="auto" mt={[1, 0]} mb={[1, 100]}>
-        <Serif size="8">Confirm your bid</Serif>
-        <Separator />
-        {/* @ts-expect-error STRICT_NULL_CHECK */}
-        <LotInfo artwork={artwork} saleArtwork={artwork.saleArtwork} />
-        <Separator />
-        <BidForm
-          // @ts-expect-error STRICT_NULL_CHECK
-          artworkSlug={artwork.slug}
-          initialSelectedBid={props.match?.location?.query?.bid}
-          saleArtwork={saleArtwork}
-          onSubmit={handleSubmit}
-          onMaxBidSelect={trackMaxBidSelected}
-          me={me as any}
-          trackSubmissionErrors={errors =>
-            !isEmpty(errors) && trackConfirmBidFailed(errors)
-          }
-        />
-        {renderZendeskScript()}
-      </Box>
+      <ThemeProviderV3>
+        <Box maxWidth={550} px={[2, 0]} mx="auto" mt={[1, 0]} mb={[1, 100]}>
+          <Text variant="lg">Confirm your bid</Text>
+          <Separator />
+          <LotInfo artwork={artwork} saleArtwork={artwork.saleArtwork!} />
+          <Separator />
+          <BidForm
+            artworkSlug={artwork.slug}
+            initialSelectedBid={props.match?.location?.query?.bid}
+            saleArtwork={saleArtwork}
+            onSubmit={handleSubmit}
+            onMaxBidSelect={trackMaxBidSelected}
+            me={me}
+            trackSubmissionErrors={errors => {
+              !isEmpty(errors) && trackConfirmBidFailed(errors)
+            }}
+          />
+          {renderZendeskScript()}
+        </Box>
+      </ThemeProviderV3>
     </>
   )
 }
 
 const StripeWrappedConfirmBidRoute = createStripeWrapper(ConfirmBidRoute)
 
-const TrackingWrappedConfirmBidRoute = track<ConfirmBidProps>(props => ({
-  // @ts-expect-error STRICT_NULL_CHECK
-  artwork_slug: props.artwork.slug,
-  // @ts-expect-error STRICT_NULL_CHECK
-  auction_slug: props.artwork.saleArtwork.sale.slug,
-  context_page: Schema.PageName.AuctionConfirmBidPage,
-  // @ts-expect-error STRICT_NULL_CHECK
-  sale_id: props.artwork.saleArtwork.sale.internalID,
-  user_id: props.me.internalID,
-}))(StripeWrappedConfirmBidRoute)
+const TrackingWrappedConfirmBidRoute = track<ConfirmBidProps>(
+  (props: ConfirmBidProps) => ({
+    artwork_slug: props.artwork?.slug,
+    auction_slug: props.artwork?.saleArtwork?.sale?.slug,
+    context_page: Schema.PageName.AuctionConfirmBidPage,
+    sale_id: props.artwork?.saleArtwork?.sale?.internalID,
+    user_id: props.me.internalID,
+  })
+)(StripeWrappedConfirmBidRoute)
 
 export const ConfirmBidRouteFragmentContainer = createFragmentContainer<
   ConfirmBidProps
