@@ -16,7 +16,7 @@ import styled from "styled-components"
 import { SavedAddresses_me } from "v2/__generated__/SavedAddresses_me.graphql"
 import {
   AddressModal,
-  AddressModalAction,
+  ModalDetails,
 } from "v2/Apps/Order/Components/AddressModal"
 import { CommitMutation } from "v2/Apps/Order/Utils/commitMutation"
 import createLogger from "v2/Utils/logger"
@@ -24,6 +24,8 @@ import { SavedAddressItem } from "v2/Apps/Order/Components/SavedAddressItem"
 import { deleteUserAddress } from "v2/Apps/Order/Mutations/DeleteUserAddress"
 import { updateUserDefaultAddress } from "v2/Apps/Order/Mutations/UpdateUserDefaultAddress"
 import { useSystemContext } from "v2/System/SystemContext"
+import { compact } from "lodash"
+import { extractNodes } from "v2/Utils/extractNodes"
 
 export const NEW_ADDRESS = "NEW_ADDRESS"
 const PAGE_SIZE = 30
@@ -35,28 +37,33 @@ interface SavedAddressesProps {
   commitMutation?: CommitMutation
   relay: RelayRefetchProp
   addressCount?: number
-  onAddressDelete?: (isLast: boolean) => void
+  onAddressDelete?: (removedAddressId: string) => void
+  onSelectedAddressEdited?: () => void
   selectedAddress?: string
 }
-// @ts-expect-error STRICT_NULL_CHECK
-type Address = SavedAddresses_me["addressConnection"]["edges"][0]["node"]
 
-const defaultAddressIndex = addressList => {
-  const indexOfDefaultAddress = addressList.findIndex(
-    address => address.node.isDefault
-  )
-  return `${indexOfDefaultAddress > -1 ? indexOfDefaultAddress : 0}`
+type Address = NonNullable<
+  NonNullable<
+    NonNullable<NonNullable<SavedAddresses_me["addressConnection"]>["edges"]>[0]
+  >["node"]
+>
+
+const defaultAddressIndex = (addressList: Address[]) => {
+  const items = compact(addressList)
+
+  if (!items || items.length == 0) {
+    return
+  }
+
+  const defaultAddressID = items.find(node => node.isDefault)?.internalID
+
+  return defaultAddressID || items[0].internalID
 }
 
 const SavedAddresses: React.FC<SavedAddressesProps> = props => {
-  const [modalDetails, setModalDetails] = useState({
-    // @ts-expect-error STRICT_NULL_CHECK
-    addressModalTitle: null as string,
-    // @ts-expect-error STRICT_NULL_CHECK
-    addressModalAction: null as AddressModalAction,
-  })
+  const [modalDetails, setModalDetails] = useState<ModalDetails | undefined>()
   const [showAddressModal, setShowAddressModal] = useState<boolean>(false)
-  const [address, setAddress] = useState(null as Address)
+  const [address, setAddress] = useState<Address | undefined | null>(null)
   const logger = createLogger("SavedAddresses.tsx")
   const {
     onSelect,
@@ -65,11 +72,12 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
     relay,
     onAddressDelete,
     selectedAddress,
+    onSelectedAddressEdited,
   } = props
-  const addressList = me?.addressConnection?.edges ?? []
+  const addressList = extractNodes(me?.addressConnection) ?? []
   const { relayEnvironment } = useSystemContext()
 
-  const onSuccess = () => {
+  const refetchAddresses = (refetchSuccessCallback?: () => void) => {
     relay.refetch(
       {
         first: PAGE_SIZE,
@@ -78,6 +86,8 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
       error => {
         if (error) {
           logger.error(error)
+        } else {
+          refetchSuccessCallback && refetchSuccessCallback()
         }
       }
     )
@@ -88,9 +98,19 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
   }
 
   const handleDeleteAddress = (addressID: string) => {
-    // @ts-expect-error STRICT_NULL_CHECK
-    deleteUserAddress(relayEnvironment, addressID, onSuccess, onError)
-    onAddressDelete && onAddressDelete(addressList.length === 1)
+    deleteUserAddress(
+      // @ts-expect-error STRICT_NULL_CHECK
+      relayEnvironment,
+      addressID,
+      () => {
+        refetchAddresses(() => {
+          // Execute address delete callback after address deleted
+          // and list of addresses updated
+          onAddressDelete && onAddressDelete(addressID)
+        })
+      },
+      onError
+    )
   }
 
   const handleEditAddress = (address: Address, index: number) => {
@@ -103,18 +123,32 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
   }
 
   const handleSetDefaultAddress = (addressID: string) => {
-    // @ts-expect-error STRICT_NULL_CHECK
-    updateUserDefaultAddress(relayEnvironment, addressID, onSuccess, onError)
+    updateUserDefaultAddress(
+      // @ts-expect-error STRICT_NULL_CHECK
+      relayEnvironment,
+      addressID,
+      () => refetchAddresses(),
+      onError
+    )
+  }
+
+  const createOrUpdateAddressSuccess = address => {
+    refetchAddresses()
+
+    if (
+      selectedAddress ==
+      address?.updateUserAddress?.userAddressOrErrors?.internalID
+    ) {
+      onSelectedAddressEdited && onSelectedAddressEdited()
+    }
   }
 
   const collectorProfileAddressItems = addressList.map((address, index) => {
-    // @ts-expect-error STRICT_NULL_CHECK
-    if (!address.node) {
+    if (!address) {
       return null
     }
 
-    // @ts-expect-error STRICT_NULL_CHECK
-    const isDefaultAddress = address.node.isDefault
+    const isDefaultAddress = address.isDefault
 
     return (
       <BorderBox
@@ -125,17 +159,15 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
       >
         <SavedAddressItem
           index={index}
-          // @ts-expect-error STRICT_NULL_CHECK
-          address={address.node}
-          handleClickEdit={() => handleEditAddress(address?.node, index)}
+          address={address}
+          handleClickEdit={() => handleEditAddress(address, index)}
         />
         <Separator my={1} />
         <ModifyAddressWrapper>
           {!isDefaultAddress && (
             <Box mr={[3, 1]}>
               <Text
-                // @ts-expect-error STRICT_NULL_CHECK
-                onClick={() => handleSetDefaultAddress(address.node.internalID)}
+                onClick={() => handleSetDefaultAddress(address.internalID)}
                 variant="text"
                 color="black60"
                 style={{
@@ -148,7 +180,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
           )}
           <Box mr={[3, 1]}>
             <Text
-              onClick={() => handleEditAddress(address?.node, index)}
+              onClick={() => handleEditAddress(address, index)}
               variant="text"
               color="blue100"
               style={{
@@ -161,8 +193,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
           </Box>
           <Box>
             <Text
-              // @ts-expect-error STRICT_NULL_CHECK
-              onClick={() => handleDeleteAddress(address.node.internalID)}
+              onClick={() => handleDeleteAddress(address.internalID)}
               variant="text"
               color="red100"
               style={{
@@ -217,8 +248,8 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
         show={showAddressModal}
         modalDetails={modalDetails}
         closeModal={() => setShowAddressModal(false)}
-        address={address}
-        onSuccess={onSuccess}
+        address={address || undefined}
+        onSuccess={createOrUpdateAddressSuccess}
         onDeleteAddress={handleDeleteAddress}
         onError={onError}
         me={me}
@@ -226,19 +257,18 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
     </>
   )
 
-  const addressItems = addressList.map((address, index) => {
+  const addressItems = compact(addressList).map((address, index) => {
     return (
       <BorderedRadio
-        value={`${index}`}
+        value={address.internalID}
         key={index}
         position="relative"
         data-test="savedAddress"
       >
         <SavedAddressItem
           index={index}
-          // @ts-expect-error STRICT_NULL_CHECK
-          address={address.node}
-          handleClickEdit={() => handleEditAddress(address?.node, index)}
+          address={address}
+          handleClickEdit={() => handleEditAddress(address, index)}
         />
       </BorderedRadio>
     )

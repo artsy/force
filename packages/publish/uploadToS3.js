@@ -15,7 +15,6 @@ const options = {
   key: process.env.S3_KEY,
   secret: process.env.S3_SECRET,
   bucket: process.env.S3_BUCKET,
-  cdnUrl: process.env.CDN_URL,
 }
 
 // See: https://www.npmjs.com/package/s3 for more options

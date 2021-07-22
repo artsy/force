@@ -29,7 +29,7 @@ export type Review_order = {
         readonly hasDefiniteTotal: boolean;
         readonly internalID: string;
     } | null;
-    readonly " $fragmentRefs": FragmentRefs<"ArtworkSummaryItem_order" | "TransactionDetailsSummaryItem_order" | "ShippingSummaryItem_order" | "CreditCardSummaryItem_order" | "OfferSummaryItem_order">;
+    readonly " $fragmentRefs": FragmentRefs<"ArtworkSummaryItem_order" | "TransactionDetailsSummaryItem_order" | "ShippingSummaryItem_order" | "CreditCardSummaryItem_order" | "ShippingArtaSummaryItem_order" | "OfferSummaryItem_order">;
     readonly " $refType": "Review_order";
 };
 export type Review_order$data = Review_order;
@@ -205,11 +205,16 @@ return {
     {
       "args": null,
       "kind": "FragmentSpread",
+      "name": "ShippingArtaSummaryItem_order"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
       "name": "OfferSummaryItem_order"
     }
   ],
   "type": "CommerceOrder"
 };
 })();
-(node as any).hash = 'ce7f4c4cb962ff0aaf28261f0faf13a1';
+(node as any).hash = 'd772e5e6eca9d49f47f18ea4d505a860';
 export default node;

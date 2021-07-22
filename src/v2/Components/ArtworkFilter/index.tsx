@@ -31,7 +31,6 @@ import {
   useThemeConfig,
 } from "@artsy/palette"
 import { ArtistArtworkFilter_artist } from "v2/__generated__/ArtistArtworkFilter_artist.graphql"
-import { Collection_collection } from "v2/__generated__/Collection_collection.graphql"
 import { SystemQueryRenderer as QueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { ArtworkQueryFilter } from "./ArtworkQueryFilter"
 import { ArtistSeriesArtworksFilter_artistSeries } from "v2/__generated__/ArtistSeriesArtworksFilter_artistSeries.graphql"
@@ -47,6 +46,7 @@ import { GeneArtworkFilter_gene } from "v2/__generated__/GeneArtworkFilter_gene.
 import RelayModernEnvironment from "relay-runtime/lib/store/RelayModernEnvironment"
 import { TagArtworkFilter_tag } from "v2/__generated__/TagArtworkFilter_tag.graphql"
 import { Works_partner } from "v2/__generated__/Works_partner.graphql"
+import { CollectionArtworksFilter_collection } from "v2/__generated__/CollectionArtworksFilter_collection.graphql"
 
 /**
  * Primary ArtworkFilter which is wrapped with a context and refetch container.
@@ -112,7 +112,6 @@ export const BaseArtworkFilter: React.FC<
     relayVariables?: object
     viewer:
       | ArtworkFilter_viewer
-      | Collection_collection
       | ArtistArtworkFilter_artist
       | ArtistSeriesArtworksFilter_artistSeries
       | FairArtworks_fair
@@ -120,6 +119,7 @@ export const BaseArtworkFilter: React.FC<
       | GeneArtworkFilter_gene
       | TagArtworkFilter_tag
       | Works_partner
+      | CollectionArtworksFilter_collection
     Filters?: JSX.Element
     offset?: number
   }

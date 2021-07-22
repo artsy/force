@@ -2,16 +2,18 @@
 version: "3.8"
 services:
   force:
-{% include 'templates/docker-compose-service.yml.j2' %}
+    image: hokusai_force:latest
+    build:
+      context: ../
+      target: builder-src
     environment:
       - NODE_ENV=development
       - REDIS_URL=redis://force-redis:6379/0
       - OPENREDIS_URL=redis://force-redis:6379/0
       - PORT=5000
-      - S3_KEY
-      - S3_SECRET
-      - DEPLOY_ENV
-    env_file: ../.env
+    env_file:
+      - ../.env.shared
+      - ../.env
     command: ["yarn", "start:dev"]
     ports:
       - 5000:5000

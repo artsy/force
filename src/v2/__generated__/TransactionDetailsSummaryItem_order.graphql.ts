@@ -7,6 +7,9 @@ export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
 export type CommerceOrderParticipantEnum = "BUYER" | "SELLER" | "%future added value";
 export type TransactionDetailsSummaryItem_order = {
     readonly __typename: string;
+    readonly requestedFulfillment: {
+        readonly __typename: string;
+    } | null;
     readonly lineItems: {
         readonly edges: ReadonlyArray<{
             readonly node: {
@@ -21,6 +24,15 @@ export type TransactionDetailsSummaryItem_order = {
                     value in case none of the concrete values match.*/
                     readonly __typename: "%other";
                 }) | null;
+                readonly shippingQuoteOptions: {
+                    readonly edges: ReadonlyArray<{
+                        readonly node: {
+                            readonly name: string | null;
+                            readonly tier: string;
+                            readonly isSelected: boolean;
+                        } | null;
+                    } | null> | null;
+                } | null;
             } | null;
         } | null> | null;
     } | null;
@@ -185,6 +197,18 @@ return {
     {
       "alias": null,
       "args": null,
+      "concreteType": null,
+      "kind": "LinkedField",
+      "name": "requestedFulfillment",
+      "plural": false,
+      "selections": [
+        (v0/*: any*/)
+      ],
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
       "concreteType": "CommerceLineItemConnection",
       "kind": "LinkedField",
       "name": "lineItems",
@@ -224,6 +248,60 @@ return {
                       "kind": "InlineFragment",
                       "selections": (v1/*: any*/),
                       "type": "EditionSet"
+                    }
+                  ],
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "concreteType": "CommerceShippingQuoteConnection",
+                  "kind": "LinkedField",
+                  "name": "shippingQuoteOptions",
+                  "plural": false,
+                  "selections": [
+                    {
+                      "alias": null,
+                      "args": null,
+                      "concreteType": "CommerceShippingQuoteEdge",
+                      "kind": "LinkedField",
+                      "name": "edges",
+                      "plural": true,
+                      "selections": [
+                        {
+                          "alias": null,
+                          "args": null,
+                          "concreteType": "CommerceShippingQuote",
+                          "kind": "LinkedField",
+                          "name": "node",
+                          "plural": false,
+                          "selections": [
+                            {
+                              "alias": null,
+                              "args": null,
+                              "kind": "ScalarField",
+                              "name": "name",
+                              "storageKey": null
+                            },
+                            {
+                              "alias": null,
+                              "args": null,
+                              "kind": "ScalarField",
+                              "name": "tier",
+                              "storageKey": null
+                            },
+                            {
+                              "alias": null,
+                              "args": null,
+                              "kind": "ScalarField",
+                              "name": "isSelected",
+                              "storageKey": null
+                            }
+                          ],
+                          "storageKey": null
+                        }
+                      ],
+                      "storageKey": null
                     }
                   ],
                   "storageKey": null
@@ -286,5 +364,5 @@ return {
   "type": "CommerceOrder"
 };
 })();
-(node as any).hash = '636e45b93363a4168b366f5e4410947d';
+(node as any).hash = '76dfdd436b27b1d4354faf1f46d276e3';
 export default node;
