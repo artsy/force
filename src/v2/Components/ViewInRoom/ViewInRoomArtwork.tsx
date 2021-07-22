@@ -27,6 +27,7 @@ const ViewInRoomArtwork: React.FC<ViewInRoomArtworkProps> = ({ artwork }) => {
   return (
     <Wall>
       <Image
+        id="transitionTo--ViewInRoom"
         width={width}
         height={height}
         src={image.src}

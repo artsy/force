@@ -8,3 +8,6 @@ export const remap = (n: number, from: Range, to: Range) => {
 
 export const cmToPx = (cm: number) =>
   remap(cm, { min: 0, max: EIGHT_FEET_CM }, { min: 0, max: EIGHT_FEET_PX })
+
+export const wait = (ms: number) =>
+  new Promise(resolve => setTimeout(resolve, ms))
