@@ -1,5 +1,5 @@
 import { AuthContextModule, clickedArtworkGroup } from "@artsy/cohesion"
-import { Box, Shelf, Spacer, Sup, Text } from "@artsy/palette"
+import { Shelf, Spacer, Sup, Text } from "@artsy/palette"
 import { graphql } from "lib/graphql"
 import React from "react"
 import { createFragmentContainer } from "react-relay"
@@ -9,6 +9,7 @@ import { useAnalyticsContext } from "v2/System"
 import { extractNodes } from "v2/Utils/extractNodes"
 import { StandoutLots_viewer } from "v2/__generated__/StandoutLots_viewer.graphql"
 import { tabTypeToContextModuleMap } from "../../Utils/tabTypeToContextModuleMap"
+import { CuratorialRailsZeroState } from "../CuratorialRailsZeroState/CuratorialRailsZeroState"
 
 export interface StandoutLotsProps {
   viewer: StandoutLots_viewer
@@ -22,20 +23,7 @@ const StandoutLots: React.FC<StandoutLotsProps> = ({ viewer }) => {
   const nodes = extractNodes(viewer.standoutLotsConnection)
 
   if (nodes.length === 0) {
-    return (
-      <Box>
-        <Text
-          as="h3"
-          color="black60"
-          mb={12}
-          mt={6}
-          textAlign="center"
-          variant="mediumText"
-        >
-          No Works To Show
-        </Text>
-      </Box>
-    )
+    return <CuratorialRailsZeroState />
   }
 
   return (

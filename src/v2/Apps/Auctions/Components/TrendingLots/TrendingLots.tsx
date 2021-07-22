@@ -2,7 +2,7 @@ import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 
-import { Box, Shelf, Spacer, Sup, Text } from "@artsy/palette"
+import { Shelf, Spacer, Sup, Text } from "@artsy/palette"
 import { AuthContextModule, clickedArtworkGroup } from "@artsy/cohesion"
 
 import { extractNodes } from "v2/Utils/extractNodes"
@@ -10,6 +10,7 @@ import { ShelfArtworkFragmentContainer } from "v2/Components/Artwork/ShelfArtwor
 import { tabTypeToContextModuleMap } from "../../Utils/tabTypeToContextModuleMap"
 import { TrendingLots_viewer } from "v2/__generated__/TrendingLots_viewer.graphql"
 import { useAnalyticsContext } from "v2/System"
+import { CuratorialRailsZeroState } from "../CuratorialRailsZeroState/CuratorialRailsZeroState"
 export interface TrendingLotsProps {
   viewer: TrendingLots_viewer
 }
@@ -22,20 +23,7 @@ const TrendingLots: React.FC<TrendingLotsProps> = ({ viewer }) => {
   const nodes = extractNodes(viewer.trendingLotsConnection)
 
   if (nodes.length === 0) {
-    return (
-      <Box>
-        <Text
-          as="h3"
-          color="black60"
-          mb={12}
-          mt={6}
-          textAlign="center"
-          variant="mediumText"
-        >
-          No Works To Show
-        </Text>
-      </Box>
-    )
+    return <CuratorialRailsZeroState />
   }
 
   return (

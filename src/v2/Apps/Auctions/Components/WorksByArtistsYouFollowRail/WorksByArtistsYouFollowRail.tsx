@@ -5,9 +5,10 @@ import { WorksByArtistsYouFollowRail_viewer } from "v2/__generated__/WorksByArti
 import { useTracking } from "react-tracking"
 import { AuthContextModule, clickedArtworkGroup } from "@artsy/cohesion"
 import { tabTypeToContextModuleMap } from "../../Utils/tabTypeToContextModuleMap"
-import { Shelf, Spacer, Text, Sup, Box } from "@artsy/palette"
+import { Shelf, Spacer, Text, Sup } from "@artsy/palette"
 import { ShelfArtworkFragmentContainer } from "v2/Components/Artwork/ShelfArtwork"
 import { extractNodes } from "v2/Utils/extractNodes"
+import { CuratorialRailsZeroState } from "../CuratorialRailsZeroState/CuratorialRailsZeroState"
 
 export interface WorksByArtistsYouFollowRailProps {
   viewer: WorksByArtistsYouFollowRail_viewer
@@ -23,20 +24,7 @@ const WorksByArtistsYouFollowRail: React.FC<WorksByArtistsYouFollowRailProps> = 
   const nodes = extractNodes(viewer.saleArtworksConnection)
 
   if (nodes.length === 0) {
-    return (
-      <Box>
-        <Text
-          as="h3"
-          color="black60"
-          mb={12}
-          mt={6}
-          textAlign="center"
-          variant="mediumText"
-        >
-          No Works To Show
-        </Text>
-      </Box>
-    )
+    return <CuratorialRailsZeroState />
   }
 
   return (
