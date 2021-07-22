@@ -1,12 +1,10 @@
 import "isomorphic-fetch"
 import "regenerator-runtime/runtime"
-
 import { isEmpty } from "lodash"
 import RelayClientSSR from "react-relay-network-modern-ssr/lib/client"
 import RelayServerSSR from "react-relay-network-modern-ssr/lib/server"
 import { Environment, INetwork, RecordSource, Store } from "relay-runtime"
 import { data as sd } from "sharify"
-
 import {
   RelayNetworkLayer,
   batchMiddleware,
@@ -14,14 +12,13 @@ import {
   loggerMiddleware,
   urlMiddleware,
 } from "react-relay-network-modern/node8"
-
 import { cacheMiddleware } from "./middleware/cache/cacheMiddleware"
 import { metaphysicsErrorHandlerMiddleware } from "./middleware/metaphysicsErrorHandlerMiddleware"
 import { metaphysicsExtensionsLoggerMiddleware } from "./middleware/metaphysicsExtensionsLoggerMiddleware"
 import { principalFieldErrorHandlerMiddleware } from "./middleware/principalFieldErrorHandlerMiddleware"
 import { searchBarImmediateResolveMiddleware } from "./middleware/searchBarImmediateResolveMiddleware"
-
 import createLogger from "v2/Utils/logger"
+import { getENV } from "v2/Utils/getENV"
 
 const logger = createLogger("v2/System/Relay/createRelaySSREnvironment")
 
@@ -32,10 +29,7 @@ const isDevelopment =
 // Only log on the client during development
 const loggingEnabled = isDevelopment && !isServer
 
-const METAPHYSICS_ENDPOINT = `${
-  isServer ? process.env.METAPHYSICS_ENDPOINT : sd.METAPHYSICS_ENDPOINT
-}/v2`
-
+const METAPHYSICS_ENDPOINT = getENV("METAPHYSICS_ENDPOINT") + "/v2"
 const USER_AGENT = `Reaction/Migration`
 
 interface Config {
@@ -104,8 +98,8 @@ export function createRelaySSREnvironment(config: Config = {}) {
     }),
     relaySSRMiddleware.getMiddleware(),
     cacheMiddleware({
-      size: 2000, // max 2000 requests
-      ttl: 3600000, // 1 hour
+      size: getENV("NETWORK_CACHE_SIZE"), // max 2000 requests
+      ttl: getENV("NETWORK_CACHE_TTL"), // 1 hour
       clearOnMutation: true,
       disableServerSideCache: !!user, // disable server-side cache if logged in
       onInit: queryResponseCache => {
