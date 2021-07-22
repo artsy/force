@@ -8,7 +8,7 @@
 // If it is sensitive configuration you should only add it to config.coffee and
 // require that file directly *only* server-side.
 //
-// See this doc for more details: https://github.com/artsy/force/blob/master/docs/adding_an_env_var.md
+// See this doc for more details: https://github.com/artsy/force/blob/master/docs/env_configuration.md
 //
 import _ from "underscore"
 import config from "../config"

@@ -25,6 +25,8 @@ fi
 echo "Installing dependencies..."
 yarn install || echo 'Unable to install dependencies using yarn!'
 
+# For more info on shared configuration see:
+# https://github.com/artsy/force/blob/master/docs/env_configuration.md
 echo "Downloading .env.shared file..."
 if ! aws s3 cp s3://artsy-citadel/dev/.env.force .env.shared; then
   echo "Unable to download shared config from s3. Using .env.oss!"
