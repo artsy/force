@@ -60,7 +60,6 @@ export const CollapsibleArtworkDetails: React.FC<CollapsibleArtworkDetailsProps>
               <Image
                 width={artwork.image.resized?.width}
                 height={artwork.image.resized?.height}
-                // @ts-expect-error STRICT_NULL_CHECK
                 src={artwork.image.resized?.src}
                 srcSet={artwork.image.resized?.srcSet}
                 alt={artwork.title ?? ""}
