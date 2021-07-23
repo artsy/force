@@ -19,7 +19,17 @@ import sharify from "sharify"
 import siteAssociation from "artsy-eigen-web-association"
 import timeout from "connect-timeout"
 import bodyParser from "body-parser"
-import config from "./config"
+import {
+  APP_TIMEOUT,
+  IP_DENYLIST,
+  NODE_ENV,
+  CLIENT_ID,
+  CLIENT_SECRET,
+  API_URL,
+  SEGMENT_WRITE_KEY_SERVER,
+  SENTRY_PRIVATE_DSN,
+} from "./config"
+import * as config from "./config"
 
 // NOTE: Previoiusly, when deploying new Sentry SDK to prod we quickly start to
 // see errors like "`CURRENT_USER` is undefined". We need more investigation
@@ -56,17 +66,6 @@ import { splitTestMiddleware } from "desktop/components/split_test/splitTestMidd
 import { IGNORED_ERRORS } from "lib/analytics/sentryFilters"
 
 const CurrentUser = require("./lib/current_user.coffee")
-
-const {
-  APP_TIMEOUT,
-  IP_DENYLIST,
-  NODE_ENV,
-  CLIENT_ID,
-  CLIENT_SECRET,
-  API_URL,
-  SEGMENT_WRITE_KEY_SERVER,
-  SENTRY_PRIVATE_DSN,
-} = config
 
 export function initializeMiddleware(app) {
   app.use(serverTimingHeaders)

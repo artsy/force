@@ -1,10 +1,8 @@
 import superSync from "backbone-super-sync"
-import config from "../config"
+import { API_REQUEST_TIMEOUT, DEFAULT_CACHE_TIME } from "../config"
 import Backbone from "backbone"
 import artsyXapp from "@artsy/xapp"
 import { cache } from "./cache"
-
-const { API_REQUEST_TIMEOUT, DEFAULT_CACHE_TIME } = config
 
 export function backboneSync() {
   // Override Backbone to use server-side sync, inject the XAPP token,

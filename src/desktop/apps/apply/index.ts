@@ -1,7 +1,5 @@
 import express from "express"
-const config = require("../../config.coffee")
-
-const { APPLY_URL } = config
+import { APPLY_URL } from "../../../config"
 
 const app = (module.exports = express())
 

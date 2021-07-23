@@ -10,7 +10,7 @@ app = module.exports = express()
 app.set 'views', __dirname + '/templates'
 app.set 'view engine', 'jade'
 
-{ NODE_ENV } = require '../../config'
+{ NODE_ENV } = require '../../../config'
 app.set 'view cache', NODE_ENV is 'production'
 
 app.get '/dev/blank', (req, res) ->
