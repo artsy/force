@@ -9,6 +9,8 @@ export const isDefaultFilter: (
     return false
   }
 
+  const isCustomDefaultValuePassed = !!defaultValues[name]
+
   switch (true) {
     case name === "sizes" ||
       name === "artistIDs" ||
@@ -21,7 +23,7 @@ export const isDefaultFilter: (
       name === "artistNationalities" ||
       name === "materialsTerms":
       return value.length === 0
-    case !!defaultValues[name]:
+    case isCustomDefaultValuePassed:
       return value === defaultValues[name]
     case name === "sort":
       return value === "-decayed_merch"
