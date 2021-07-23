@@ -32,16 +32,21 @@ export const paramsToCamelCase = params => {
   }, {})
 }
 
+interface BuildUrlOptions {
+  pathname?: string
+  defaultValues?: Partial<ArtworkFilters>
+}
+
 export const buildUrl = (
   state: ArtworkFilters,
-  {
-    pathname,
-    defaultValues,
-  }: { pathname?: string; defaultValues?: Partial<ArtworkFilters> }
+  options?: BuildUrlOptions
 ): string => {
-  const params = removeDefaultValues(state, defaultValues)
+  const params = removeDefaultValues(state, {
+    defaultValues: options?.defaultValues,
+  })
   const queryString = qs.stringify(paramsToSnakeCase(params))
 
+  let pathname = options?.pathname
   if (!pathname && typeof window !== "undefined") {
     pathname = window.location.pathname
   }
@@ -52,11 +57,8 @@ export const buildUrl = (
   return url
 }
 
-export const updateUrl = (
-  state: ArtworkFilters,
-  defaultValues?: Partial<ArtworkFilters>
-) => {
-  const url = buildUrl(state, { defaultValues })
+export const updateUrl = (state: ArtworkFilters, options?: BuildUrlOptions) => {
+  const url = buildUrl(state, { defaultValues: options?.defaultValues })
 
   if (typeof window !== "undefined") {
     window.history.replaceState({}, "", url)
@@ -65,11 +67,11 @@ export const updateUrl = (
 
 export const removeDefaultValues = (
   state: ArtworkFilters,
-  defaultValues?: Partial<ArtworkFilters>
+  options?: BuildUrlOptions
 ) => {
   return Object.entries(state).reduce(
     (acc, [key, value]: [keyof ArtworkFilters, any]) => {
-      if (isDefaultFilter(key, value, defaultValues)) {
+      if (isDefaultFilter(key, value, options?.defaultValues)) {
         return acc
       } else {
         return { ...acc, [key]: value }
