@@ -20,6 +20,7 @@ import { useRouteComplete } from "v2/Utils/Hooks/useRouteComplete"
 import { useAuthIntent } from "v2/Utils/Hooks/useAuthIntent"
 import { AuthBanner } from "v2/Components/AuthBanner"
 import { Media } from "v2/Utils/Responsive"
+import { PrefetchContextProvider } from "v2/System/Router/Prefetch"
 
 const logger = createLogger("Apps/Components/AppShell")
 
@@ -109,7 +110,9 @@ export const AppShell: React.FC<AppShellProps> = props => {
             flex={1}
           >
             <AppContainer maxWidth={appContainerMaxWidth}>
-              <HorizontalPadding>{children}</HorizontalPadding>
+              <PrefetchContextProvider prefetch>
+                <HorizontalPadding>{children}</HorizontalPadding>
+              </PrefetchContextProvider>
             </AppContainer>
           </Flex>
 
