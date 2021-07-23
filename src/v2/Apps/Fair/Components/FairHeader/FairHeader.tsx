@@ -8,6 +8,7 @@ import {
   HTML,
   Text,
   Spacer,
+  Join,
 } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
@@ -45,8 +46,6 @@ const FairInfoSection: React.FC<FairInfoSectionProps> = ({
     ) : (
       <TextWithNewlines variant="md">{info}</TextWithNewlines>
     )}
-
-    <Spacer my={2} />
   </>
 )
 
@@ -89,24 +88,31 @@ const FairHeader: React.FC<FairHeaderProps> = ({ fair }) => {
         </Column>
 
         <Column span={6}>
-          {summary && <FairInfoSection isHTML info={summary} />}
-          {about && <FairInfoSection isHTML info={about} />}
-          {tagline && <FairInfoSection info={tagline} />}
-          {location?.summary && (
-            <FairInfoSection label="Location" info={location.summary} />
-          )}
-          {hours && <FairInfoSection label="Hours" isHTML info={hours} />}
-          {tickets && <FairInfoSection label="Tickets" isHTML info={tickets} />}
-          {ticketsLink && (
-            <>
+          <Join separator={<Spacer mt={2} />}>
+            <Text variant="md" textTransform="uppercase">
+              About
+            </Text>
+
+            {summary && <FairInfoSection isHTML info={summary} />}
+            {about && <FairInfoSection isHTML info={about} />}
+            {tagline && <FairInfoSection info={tagline} />}
+            {location?.summary && (
+              <FairInfoSection label="Location" info={location.summary} />
+            )}
+            {hours && <FairInfoSection label="Hours" isHTML info={hours} />}
+            {tickets && (
+              <FairInfoSection label="Tickets" isHTML info={tickets} />
+            )}
+            {ticketsLink && (
               <a href={ticketsLink}>
-                <Text>Buy Tickets</Text>
+                <Text variant="md">Buy Tickets</Text>
               </a>
-              <Spacer my={2} />
-            </>
-          )}
-          {links && <FairInfoSection label="Links" isHTML info={links} />}
-          {contact && <FairInfoSection label="Contact" isHTML info={contact} />}
+            )}
+            {links && <FairInfoSection label="Links" isHTML info={links} />}
+            {contact && (
+              <FairInfoSection label="Contact" isHTML info={contact} />
+            )}
+          </Join>
         </Column>
       </GridColumns>
 
