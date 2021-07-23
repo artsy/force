@@ -38,6 +38,7 @@
     "publish-assets:local": "yarn clean && yarn build:assets:legacy && yarn build:assets && yarn publish-assets",
     "relay": "relay-compiler",
     "sentry": "scripts/sentry.sh",
+    "sync-env": "aws s3 cp s3://artsy-citadel/dev/.env.force .env.shared && echo 'ENV sync complete.'",
     "start": "scripts/start.sh",
     "start:dev": "concurrently 'yarn start:dev:relay' 'yarn start:dev:server'",
     "start:dev:server": "NODE_ENV=development node --max_old_space_size=3072 ./src/dev.js",

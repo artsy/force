@@ -7,12 +7,8 @@
 set -e
 
 # Install yarn if it does not exist.
-if ! yarn versions &> /dev/null; then
-  echo 'yarn is required for setup, installing...'
-  if ! brew --version &> /dev/null; then
-    echo 'brew is required to install yarn, see https://docs.brew.sh/Installation'
-    exit 0
-  fi
+if ! which yarn > /dev/null; then
+  echo 'yarn is required for setup, installing with brew...'
   brew install yarn
 fi
 
@@ -23,7 +19,7 @@ if [[ ! -z $NVM_DIR ]]; then # skip if nvm is not available
 fi
 
 echo "Installing dependencies..."
-yarn install || echo 'Unable to install dependencies using yarn!'
+yarn install
 
 # For more info on shared configuration see:
 # https://github.com/artsy/force/blob/master/docs/env_configuration.md
