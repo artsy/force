@@ -20,6 +20,11 @@ import { searchBarImmediateResolveMiddleware } from "./middleware/searchBarImmed
 import createLogger from "v2/Utils/logger"
 import { getENV } from "v2/Utils/getENV"
 
+const {
+  NETWORK_CACHE_SIZE: DEFAULT_NETWORK_CACHE_SIZE,
+  NETWORK_CACHE_TTL: DEFAULT_NETWORK_CACHE_TTL,
+} = require("desktop/config.coffee")
+
 const logger = createLogger("v2/System/Relay/createRelaySSREnvironment")
 
 const isServer = typeof window === "undefined"
@@ -29,7 +34,7 @@ const isDevelopment =
 // Only log on the client during development
 const loggingEnabled = isDevelopment && !isServer
 
-const METAPHYSICS_ENDPOINT = getENV("METAPHYSICS_ENDPOINT") + "/v2"
+const METAPHYSICS_ENDPOINT = `${getENV("METAPHYSICS_ENDPOINT")}/v2`
 const USER_AGENT = `Reaction/Migration`
 
 interface Config {
@@ -98,8 +103,8 @@ export function createRelaySSREnvironment(config: Config = {}) {
     }),
     relaySSRMiddleware.getMiddleware(),
     cacheMiddleware({
-      size: Number(getENV("NETWORK_CACHE_SIZE")) ?? 2000, // max 2000 requests
-      ttl: Number(getENV("NETWORK_CACHE_TTL")) ?? 3600000, // 1 hour
+      size: Number(getENV("NETWORK_CACHE_SIZE")) ?? DEFAULT_NETWORK_CACHE_SIZE,
+      ttl: Number(getENV("NETWORK_CACHE_TTL")) ?? DEFAULT_NETWORK_CACHE_TTL,
       clearOnMutation: true,
       disableServerSideCache: !!user, // disable server-side cache if logged in
       onInit: queryResponseCache => {
