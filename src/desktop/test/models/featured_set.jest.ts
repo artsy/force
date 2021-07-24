@@ -1,4 +1,3 @@
-import _ from "underscore"
 import Backbone from "backbone"
 const FeaturedLink = require("../../models/featured_link.coffee")
 const FeaturedSet = require("../../models/featured_set.coffee")

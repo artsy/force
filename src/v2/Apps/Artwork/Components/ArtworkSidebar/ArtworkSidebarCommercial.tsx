@@ -111,7 +111,7 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
         <Row>
           <Radio
             flex={1}
-            onSelect={e => {
+            onSelect={() => {
               this.setState({ selectedEditionSet: editionSet })
             }}
             selected={this.state.selectedEditionSet === editionSet}

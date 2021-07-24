@@ -2,7 +2,7 @@ import React from "react"
 import { Meta, Title } from "react-head"
 import { data as sd } from "sharify"
 
-export const ExampleAppMeta = props => {
+export const ExampleAppMeta = () => {
   return (
     <>
       <Title>Example App | Artsy</Title>

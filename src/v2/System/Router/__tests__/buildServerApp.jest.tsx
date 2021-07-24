@@ -27,7 +27,7 @@ jest.mock("found-scroll", () => {})
 jest.mock("@loadable/server", () => ({
   ChunkExtractor: class {
     collectChunks = x => x
-    getScriptTags = x =>
+    getScriptTags = () =>
       `<script src="/assets/foo.js"></script> <script src="/assets/bar.js"></script>`
   },
 }))

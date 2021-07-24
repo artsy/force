@@ -226,7 +226,7 @@ const ArtistSearchResultsComponent: React.SFC<
         }
       `}
       variables={{ term }}
-      render={({ error, props }) => {
+      render={({ props }) => {
         if (props) {
           return (
             <ArtistSearchResultsContentContainer

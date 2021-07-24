@@ -1,4 +1,3 @@
-import _ from "underscore"
 import { fabricate } from "@artsy/antigravity"
 import Backbone from "backbone"
 const Profile = require("../../models/profile.coffee")

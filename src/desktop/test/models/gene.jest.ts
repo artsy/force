@@ -1,4 +1,3 @@
-import _ from "underscore"
 import Backbone from "backbone"
 import { fabricate } from "@artsy/antigravity"
 const Gene = require("../../models/gene.coffee")

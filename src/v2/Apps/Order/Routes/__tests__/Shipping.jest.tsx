@@ -16,7 +16,7 @@ import { CountrySelect } from "v2/Components/CountrySelect"
 import Input from "v2/Components/Input"
 import { Input as paletteInput } from "@artsy/palette"
 import { createTestEnv } from "v2/DevTools/createTestEnv"
-import { commitMutation as _commitMutation, graphql } from "react-relay"
+import { graphql } from "react-relay"
 import {
   selectShippingQuoteSuccess,
   settingOrderArtaShipmentSuccess,

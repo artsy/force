@@ -4,7 +4,7 @@ import { useFormikContext } from "formik"
 import { SavedAddressType } from "v2/Apps/Order/Utils/shippingUtils"
 import { CountrySelect } from "../CountrySelect"
 
-export const AddressModalFields: React.FC = props => {
+export const AddressModalFields: React.FC = () => {
   const {
     values,
     touched,

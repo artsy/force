@@ -1,7 +1,6 @@
 import { OfferTestQueryRawResponse } from "v2/__generated__/OfferTestQuery.graphql"
 import { createTestEnv } from "v2/DevTools/createTestEnv"
 import { graphql } from "react-relay"
-import { commitMutation as _commitMutation } from "react-relay"
 import {
   UntouchedOfferOrder,
   UntouchedOfferOrderInPounds,

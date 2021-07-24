@@ -27,7 +27,7 @@ const ArtworkSummaryItem: React.SFC<ArtworkSummaryItemProps> = ({
   ...others
 }) => {
   // @ts-expect-error STRICT_NULL_CHECK
-  const artwork = get({}, props => lineItems.edges[0].node.artwork)
+  const artwork = get({}, () => lineItems.edges[0].node.artwork)
 
   // @ts-expect-error STRICT_NULL_CHECK
   const { artist_names, title, date, shippingOrigin, image } = artwork

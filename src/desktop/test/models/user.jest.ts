@@ -1,4 +1,3 @@
-import _ from "underscore"
 import sinon from "sinon"
 import Backbone from "backbone"
 const User = require("../../models/user.coffee")
