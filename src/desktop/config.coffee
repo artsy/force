@@ -72,6 +72,8 @@ module.exports =
   MAX_SOCKETS: -1
   METAPHYSICS_ENDPOINT: null
   MOBILE_MEDIA_QUERY: "only screen and (max-width: 640px)"
+  NETWORK_CACHE_SIZE: 2000 # max 2000 requests
+  NETWORK_CACHE_TTL: 3600000 # 1 hour
   NODE_ENV: 'development'
   OPENREDIS_URL: null
   PAGE_CACHE_ENABLED: false

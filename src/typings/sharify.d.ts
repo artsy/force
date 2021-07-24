@@ -39,6 +39,8 @@ declare module "sharify" {
       IS_MOBILE: boolean
       readonly IP_ADDRESS: string
       readonly METAPHYSICS_ENDPOINT: string
+      readonly NETWORK_CACHE_SIZE: string
+      readonly NETWORK_CACHE_TTL: string
       readonly NODE_ENV: string
       readonly NOTIFICATION_COUNT: string
       readonly PREDICTION_URL: string
