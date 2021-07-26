@@ -1,16 +1,9 @@
-import React from "react"
+import React, { useRef } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FairApp_fair } from "v2/__generated__/FairApp_fair.graphql"
-import { Box, Spacer, Text } from "@artsy/palette"
-import {
-  FairEditorialFragmentContainer,
-  FAIR_EDITORIAL_AMOUNT,
-} from "./Components/FairEditorial"
-import { FairHeaderFragmentContainer } from "./Components/FairHeader"
+import { Spacer, Text } from "@artsy/palette"
 import { RouteTab, RouteTabs } from "v2/Components/RouteTabs"
 import { FairMetaFragmentContainer } from "./Components/FairMeta"
-import { FairCollectionsFragmentContainer } from "./Components/FairCollections"
-import { FairFollowedArtistsFragmentContainer } from "./Components/FairFollowedArtists"
 import { useSystemContext } from "v2/System"
 import { useTracking } from "react-tracking"
 import {
@@ -24,104 +17,82 @@ import {
 } from "@artsy/cohesion"
 import { HttpError } from "found"
 import { userIsAdmin } from "v2/Utils/user"
-import { RouterLink } from "v2/System/Router/RouterLink"
+import { FairHeaderImageFragmentContainer } from "./Components/FairHeader/FairHeaderImage"
 
 interface FairAppProps {
   fair: FairApp_fair
 }
 
 const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
-  const { user } = useSystemContext()
   const tracking = useTracking()
   const {
     contextPageOwnerId,
     contextPageOwnerSlug,
     contextPageOwnerType,
   } = useAnalyticsContext()
+  const lastClickedTab = useRef(ContextModule.fairInfo)
 
-  const hasArticles = (fair.articlesConnection?.edges?.length ?? 0) > 0
-  const hasCollections = (fair.marketingCollections?.length ?? 0) > 0
-  // @ts-expect-error STRICT_NULL_CHECK
-  const artworkCount = fair.counts.artworks
+  const fairHref = fair.href ?? ""
 
-  const clickedArtworksTabTrackingData: ClickedNavigationTab = {
-    action: ActionType.clickedNavigationTab,
-    context_module: ContextModule.exhibitorsTab,
-    context_page_owner_id: contextPageOwnerId,
-    context_page_owner_slug: contextPageOwnerSlug,
-    // @ts-expect-error STRICT_NULL_CHECK
-    context_page_owner_type: contextPageOwnerType,
-    destination_path: `${fair.href}/artworks`,
-    subject: "Artworks",
+  const trackTabData = (
+    destinationPath: string,
+    subject: string,
+    contextModule: ContextModule
+  ) => () => {
+    const trackingData: ClickedNavigationTab = {
+      action: ActionType.clickedNavigationTab,
+      context_module: lastClickedTab.current,
+      context_page_owner_id: contextPageOwnerId,
+      context_page_owner_slug: contextPageOwnerSlug,
+      // @ts-expect-error STRICT_NULL_CHECK
+      context_page_owner_type: contextPageOwnerType,
+      destination_path: destinationPath,
+      subject,
+    }
+
+    lastClickedTab.current = contextModule
+
+    tracking.trackEvent(trackingData)
   }
 
-  const clickedExhibitorsTabTrackingData: ClickedNavigationTab = {
-    action: ActionType.clickedNavigationTab,
-    context_module: ContextModule.artworksTab,
-    context_page_owner_id: contextPageOwnerId,
-    context_page_owner_slug: contextPageOwnerSlug,
-    // @ts-expect-error STRICT_NULL_CHECK
-    context_page_owner_type: contextPageOwnerType,
-    destination_path: `${fair.href}`,
-    subject: "Exhibitors",
-  }
+  const artworkCount = fair.counts?.artworks ?? 0
 
   return (
     <>
       <FairMetaFragmentContainer fair={fair} />
 
-      <FairHeaderFragmentContainer fair={fair} />
+      <FairHeaderImageFragmentContainer fair={fair} />
 
-      {hasArticles && (
-        <Box my={4} pt={4} borderTop="1px solid" borderColor="black10">
-          <Box display="flex" justifyContent="space-between">
-            {/* @ts-expect-error STRICT_NULL_CHECK */}
-            {fair.articlesConnection.totalCount > FAIR_EDITORIAL_AMOUNT && (
-              <RouterLink to={`${fair.href}/articles`} noUnderline>
-                <Text variant="sm">View all</Text>
-              </RouterLink>
-            )}
-          </Box>
+      <Spacer my={[4, 30]} />
 
-          <FairEditorialFragmentContainer fair={fair} />
-        </Box>
-      )}
-
-      {hasCollections && (
-        <Box my={4} pt={4} borderTop="1px solid" borderColor="black10">
-          <Text variant="lg" as="h3" mb={2}>
-            Curated Highlights
-          </Text>
-
-          <FairCollectionsFragmentContainer fair={fair} />
-        </Box>
-      )}
-
-      {!!user && (
-        <FairFollowedArtistsFragmentContainer
-          fair={fair}
-          my={2}
-          pt={2}
-          borderTop="1px solid"
-          borderColor="black10"
-        />
-      )}
-
-      <Spacer my={[4, 80]} />
-
-      <RouteTabs mb={2} fill>
+      <RouteTabs my={[0, 2]} fill>
         <RouteTab
-          to={fair.href}
+          to={fairHref}
           exact
-          onClick={() => tracking.trackEvent(clickedExhibitorsTabTrackingData)}
+          onClick={trackTabData(fairHref, "Overview", ContextModule.fairInfo)}
+        >
+          Overview
+        </RouteTab>
+        <RouteTab
+          to={`${fairHref}/booths`}
+          exact
+          onClick={trackTabData(
+            `${fairHref}/booths`,
+            "Booths",
+            ContextModule.exhibitorsTab
+          )}
         >
           Booths
         </RouteTab>
 
         <RouteTab
-          to={`${fair.href}/artworks`}
+          to={`${fairHref}/artworks`}
           exact
-          onClick={() => tracking.trackEvent(clickedArtworksTabTrackingData)}
+          onClick={trackTabData(
+            `${fairHref}/artworks`,
+            "Artworks",
+            ContextModule.artworksTab
+          )}
         >
           Artworks
           <Text display="inline">&nbsp;({artworkCount})</Text>
@@ -171,8 +142,7 @@ export const FairAppFragmentContainer = createFragmentContainer(
         slug
         ...FairMeta_fair
         ...FairHeader_fair
-        ...FairEditorial_fair
-        ...FairCollections_fair
+        ...FairHeaderImage_fair
         ...FairFollowedArtists_fair
         articlesConnection(first: 6, sort: PUBLISHED_AT_DESC) {
           totalCount
@@ -181,13 +151,13 @@ export const FairAppFragmentContainer = createFragmentContainer(
           }
         }
         marketingCollections(size: 5) {
-          __typename
+          id
         }
         counts {
           artworks
         }
         profile {
-          __typename
+          id
         }
       }
     `,
