@@ -256,6 +256,7 @@
     "@babel/preset-react": "7.12.13",
     "@babel/preset-typescript": "7.13.0",
     "@babel/register": "7.13.8",
+    "@datadog/build-plugin": "^0.4.3",
     "@graphql-inspector/core": "1.14.0",
     "@loadable/babel-plugin": "5.13.2",
     "@loadable/webpack-plugin": "5.14.0",

@@ -5,6 +5,7 @@ import merge from "webpack-merge"
 import fs from "fs"
 import path from "path"
 import { bundleAnalyzer } from "./plugins/bundleAnalyzer"
+import { metrics } from "./plugins/datadog"
 import { env, basePath } from "./utils/env"
 import { legacyCommonConfig } from "./envs/legacyCommonConfig"
 import { legacyDevelopmentConfig } from "./envs/legacyDevelopmentConfig"
@@ -73,17 +74,12 @@ function generateEnvBasedConfig() {
   }
 
   // Verify that only a single build is selected.
-  if (
-    !env.buildLegacyClient &&
-    !env.buildServer &&
-    !env.buildClient &&
-    !env.buildNovoServer
-  ) {
+  if (!env.buildLegacyClient && !env.buildServer && !env.buildClient) {
     console.log("Must build either the CLIENT or SERVER.")
     process.exit(1)
   } else if (
     (env.buildLegacyClient && env.buildServer) ||
-    (env.buildClient && env.buildNovoServer)
+    (env.buildClient && env.buildServer)
   ) {
     console.log("Must only build CLIENT or SERVER.")
     process.exit(1)
@@ -91,12 +87,16 @@ function generateEnvBasedConfig() {
 
   // Select the correct base config.
   let config
+  let name = ""
   if (env.buildLegacyClient) {
     config = getLegacyConfig()
+    name = "legacy-assets"
   } else if (env.buildServer) {
     config = getServerConfig()
+    name = "server"
   } else if (env.buildClient) {
     config = getClientConfig()
+    name = "assets"
   } else {
     console.log(chalk.red("No build selected."))
     process.exit(1)
@@ -104,6 +104,9 @@ function generateEnvBasedConfig() {
 
   // Optionally analyze the bundle
   config = bundleAnalyzer(config)
+
+  // Add datadog metrics
+  config = metrics(config, name)
 
   // Support configuration dumps for a basic insights into the webpack configuration.
   if (env.enableWebpackDumpConfig) {
