@@ -28,7 +28,7 @@ export const scrollIntoView = (props: ScrollIntoViewProps) => {
 }
 
 export const useScrollIntoView = (isRouteActive: boolean) => {
-  const ref = React.useRef() as React.MutableRefObject<HTMLDivElement>
+  const ref = React.useRef() as any
   React.useEffect(() => {
     if (isRouteActive && ref?.current) {
       ref.current?.scrollIntoView &&
