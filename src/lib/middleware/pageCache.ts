@@ -3,16 +3,14 @@ import type { ArtsyRequest, ArtsyResponse } from "./artsyExpress"
 
 import { getContextPageFromReq } from "lib/getContextPage"
 import { cache } from "lib/cache"
-import config from "../../config"
-
-const {
+import {
   PAGE_CACHE_ENABLED,
   PAGE_CACHE_EXPIRY_SECONDS,
   PAGE_CACHE_NAMESPACE,
   PAGE_CACHE_RETRIEVAL_TIMEOUT_MS,
   PAGE_CACHE_TYPES,
   PAGE_CACHE_VERSION,
-} = config
+} from "../../config"
 
 const runningTests = Object.keys(
   require("desktop/components/split_test/running_tests.coffee")

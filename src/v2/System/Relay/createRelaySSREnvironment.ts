@@ -20,10 +20,10 @@ import { searchBarImmediateResolveMiddleware } from "./middleware/searchBarImmed
 import createLogger from "v2/Utils/logger"
 import { getENV } from "v2/Utils/getENV"
 
-const {
-  NETWORK_CACHE_SIZE: DEFAULT_NETWORK_CACHE_SIZE,
-  NETWORK_CACHE_TTL: DEFAULT_NETWORK_CACHE_TTL,
-} = require("desktop/config.coffee")
+import {
+  NETWORK_CACHE_SIZE as DEFAULT_NETWORK_CACHE_SIZE,
+  NETWORK_CACHE_TTL as DEFAULT_NETWORK_CACHE_TTL,
+} from "../../../config"
 
 const logger = createLogger("v2/System/Relay/createRelaySSREnvironment")
 

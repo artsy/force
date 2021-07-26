@@ -10,8 +10,8 @@
 //
 // See this doc for more details: https://github.com/artsy/force/blob/master/docs/env_configuration.md
 //
-import _ from "underscore"
-import config from "../config"
+import _ from "lodash"
+import * as config from "../config"
 import sharify from "sharify"
 
 sharify.data = _.extend(
@@ -46,9 +46,9 @@ sharify.data = _.extend(
     "EMBEDLY_KEY",
     "ENABLE_INSTANT_PAGE",
     "ENABLE_NEW_AUCTIONS_FILTER",
+    "ENABLE_QUERY_BATCHING",
     "ENABLE_REQUEST_CONDITION_REPORT",
     "ENABLE_SERVER_SIDE_CACHE",
-    "ENABLE_QUERY_BATCHING",
     "ENABLE_WEB_CRAWLING",
     "EOY_2016_ARTICLE",
     "EOY_2016",

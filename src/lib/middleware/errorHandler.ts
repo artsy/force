@@ -3,10 +3,8 @@ import type { NextFunction } from "express"
 
 import { argv } from "yargs"
 import { IpDeniedError } from "express-ipfilter"
-import config from "../../config"
+import { NODE_ENV, VERBOSE_LOGGING } from "../../config"
 import path from "path"
-
-const { NODE_ENV, VERBOSE_LOGGING } = config
 
 export function errorHandlerMiddleware(
   err: any,

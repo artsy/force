@@ -1,5 +1,5 @@
 express = require 'express'
-{ NODE_ENV } = require '../../config'
+{ NODE_ENV } = require '../../../config'
 
 app = module.exports = express()
 app.set 'views', __dirname
