@@ -3,15 +3,15 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type PaymentApp_me = {
+export type ShippingApp_me = {
     readonly name: string | null;
-    readonly " $fragmentRefs": FragmentRefs<"PaymentSection_me">;
-    readonly " $refType": "PaymentApp_me";
+    readonly " $fragmentRefs": FragmentRefs<"UserSettingsAddresses_me">;
+    readonly " $refType": "ShippingApp_me";
 };
-export type PaymentApp_me$data = PaymentApp_me;
-export type PaymentApp_me$key = {
-    readonly " $data"?: PaymentApp_me$data;
-    readonly " $fragmentRefs": FragmentRefs<"PaymentApp_me">;
+export type ShippingApp_me$data = ShippingApp_me;
+export type ShippingApp_me$key = {
+    readonly " $data"?: ShippingApp_me$data;
+    readonly " $fragmentRefs": FragmentRefs<"ShippingApp_me">;
 };
 
 
@@ -20,7 +20,7 @@ const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "PaymentApp_me",
+  "name": "ShippingApp_me",
   "selections": [
     {
       "alias": null,
@@ -32,10 +32,10 @@ const node: ReaderFragment = {
     {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "PaymentSection_me"
+      "name": "UserSettingsAddresses_me"
     }
   ],
   "type": "Me"
 };
-(node as any).hash = 'f5f77a36b499ae5774ad4b562f1a2d4f';
+(node as any).hash = '45443c61c0eec90f7961c5cebb65dc8c';
 export default node;

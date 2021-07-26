@@ -6,6 +6,7 @@ const USER_REQUIRED_ROUTES = [
   "/user/conversations(.*)",
   "/user/purchases(.*)",
   "/user/payments",
+  "/user/shipping",
 ]
 
 const isRequestRequiringUser = req => {
