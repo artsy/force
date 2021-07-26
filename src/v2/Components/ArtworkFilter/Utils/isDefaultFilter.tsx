@@ -2,11 +2,14 @@ import { ArtworkFilters } from "../ArtworkFilterContext"
 
 export const isDefaultFilter: (
   name: keyof ArtworkFilters,
-  value: any
-) => boolean = (name, value) => {
+  value: any,
+  defaultValues?: Partial<ArtworkFilters>
+) => boolean = (name, value, defaultValues = {}) => {
   if (!value) {
     return false
   }
+
+  const isCustomDefaultValuePassed = !!defaultValues[name]
 
   switch (true) {
     case name === "sizes" ||
@@ -20,6 +23,8 @@ export const isDefaultFilter: (
       name === "artistNationalities" ||
       name === "materialsTerms":
       return value.length === 0
+    case isCustomDefaultValuePassed:
+      return value === defaultValues[name]
     case name === "sort":
       return value === "-decayed_merch"
     case name === "medium":

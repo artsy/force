@@ -195,7 +195,9 @@ const FairExhibitorsWithContext: React.FC<FairExhibitorsProps> = ({
         { text: "Relevance", value: "FEATURED_DESC" },
         { text: "Alphabetical (A-Z)", value: "NAME_ASC" },
       ]}
-      onChange={updateUrl}
+      onChange={event =>
+        updateUrl(event, { defaultValues: { sort: "FEATURED_DESC" } })
+      }
     >
       <FairExhibitors {...props} />
     </ExhibitorFilterContextProvider>

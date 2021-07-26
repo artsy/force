@@ -26,7 +26,7 @@ export function useComputeHref() {
       page,
     }
 
-    const href = buildUrl(filterState, location?.pathname)
+    const href = buildUrl(filterState, { pathname: location?.pathname })
     return href
   }
 

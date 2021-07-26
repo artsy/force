@@ -36,7 +36,7 @@ interface ExhibitorFiltersAction {
 }
 
 export const initialExhibitorFilterState: ExhibitorFilters = {
-  sort: "-decayed_merch",
+  sort: "FEATURED_DESC",
 }
 
 export const ExhibitorFilterContext = createContext<
