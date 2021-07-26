@@ -1,5 +1,5 @@
 _ = require 'underscore'
-{ cache } = require('../../lib/cache')
+{ cache } = require('../../../lib/cache')
 metaphysics = require '../../../lib/metaphysics2.coffee'
 { API_URL } = require('sharify').data
 PartnerCities = require '../../collections/partner_cities'

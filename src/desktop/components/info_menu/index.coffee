@@ -1,5 +1,5 @@
 _ = require 'underscore'
-{ cache } = require('../../lib/cache')
+{ cache } = require('../../../lib/cache')
 FairEvents = require '../../collections/fair_events'
 Articles = require '../../collections/articles'
 require '../../../lib/promiseDone'

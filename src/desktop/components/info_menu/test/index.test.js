@@ -13,7 +13,7 @@ const FairEvents = require("../../../collections/fair_events.coffee")
 const InfoMenu = require("../index.coffee")
 const Articles = require("../../../collections/articles.coffee")
 const Article = require("../../../models/article.coffee")
-const { cache } = require("../../../lib/cache")
+const { cache } = require("../../../../lib/cache")
 
 describe("InfoMenu", function () {
   beforeEach(function () {
