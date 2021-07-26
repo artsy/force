@@ -58,11 +58,11 @@ export const UserSettingsTabs: React.FC<UserSettingsTabsProps> = track()(
             const isActive = tabClass(route.url, route) === "active"
             const { ref } = useScrollIntoView(isActive)
             return (
-              <div ref={ref} key={index}>
+              <Box ref={ref} key={index}>
                 <RouteTab className={tabClass(route.url, route)} to={route.url}>
                   {route.name}
                 </RouteTab>
-              </div>
+              </Box>
             )
           })}
         </RouteTabs>

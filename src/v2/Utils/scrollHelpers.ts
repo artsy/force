@@ -35,7 +35,7 @@ export const useScrollIntoView = (isRouteActive: boolean) => {
         ref.current.scrollIntoView({
           behavior: "smooth",
           block: "end",
-          inline: "start",
+          inline: "center",
         })
     }
   }, [isRouteActive])
