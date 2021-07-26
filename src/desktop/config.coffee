@@ -22,7 +22,6 @@ module.exports =
   CLIENT_SECRET: null
   CMS_URL: 'https://cms.artsy.net'
   COLLECT_PAGE_TITLES_URL: 'https://s3.amazonaws.com/artsy-data/collect/collect.json'
-  CONSIGNMENTS_APP_URL: null
   CONVECTION_APP_URL: null
   CONVECTION_APP_ID: null
   CONVECTION_GEMINI_APP: 'convection-staging'
@@ -73,6 +72,8 @@ module.exports =
   MAX_SOCKETS: -1
   METAPHYSICS_ENDPOINT: null
   MOBILE_MEDIA_QUERY: "only screen and (max-width: 640px)"
+  NETWORK_CACHE_SIZE: 2000 # max 2000 requests
+  NETWORK_CACHE_TTL: 3600000 # 1 hour
   NODE_ENV: 'development'
   OPENREDIS_URL: null
   PAGE_CACHE_ENABLED: false

@@ -7,8 +7,9 @@ import {
   StepSummaryItem,
   StepSummaryItemProps,
 } from "v2/Components/StepSummaryItem"
-import { Omit } from "lodash"
+import { Omit, startCase } from "lodash"
 import { getOfferItemFromOrder } from "v2/Apps/Order/Utils/offerItemExtractor"
+import { extractNodes } from "v2/Utils/extractNodes"
 
 export interface TransactionDetailsSummaryItemProps
   extends Omit<StepSummaryItemProps, "order"> {
@@ -42,7 +43,10 @@ export class TransactionDetailsSummaryItem extends React.Component<
       <StepSummaryItem {...others}>
         {this.renderPriceEntry()}
         <Spacer mb={2} />
-        <Entry label="Shipping" value={this.shippingDisplayAmount()} />
+        <Entry
+          label={this.shippingDisplayLabel()}
+          value={this.shippingDisplayAmount()}
+        />
 
         <Entry label="Tax" value={this.taxDisplayAmount()} />
         <Spacer mb={2} />
@@ -67,6 +71,25 @@ export class TransactionDetailsSummaryItem extends React.Component<
         const offer = this.getOffer()
         return (offer && offer.shippingTotal) || this.amountPlaceholder
     }
+  }
+
+  shippingDisplayLabel = () => {
+    const { order } = this.props
+    let label = "Shipping"
+
+    if (order.requestedFulfillment?.__typename === "CommerceShipArta") {
+      const selectedShippingQuote = extractNodes(
+        extractNodes(order.lineItems)?.[0].shippingQuoteOptions
+      ).find(shippingQuote => shippingQuote.isSelected)
+
+      if (selectedShippingQuote) {
+        label = `${startCase(
+          selectedShippingQuote.name || selectedShippingQuote.tier
+        )} delivery`
+      }
+    }
+
+    return label
   }
 
   taxDisplayAmount = () => {
@@ -216,6 +239,9 @@ export const TransactionDetailsSummaryItemFragmentContainer = createFragmentCont
     order: graphql`
       fragment TransactionDetailsSummaryItem_order on CommerceOrder {
         __typename
+        requestedFulfillment {
+          __typename
+        }
         lineItems {
           edges {
             node {
@@ -226,6 +252,15 @@ export const TransactionDetailsSummaryItemFragmentContainer = createFragmentCont
                 }
                 ... on EditionSet {
                   price
+                }
+              }
+              shippingQuoteOptions {
+                edges {
+                  node {
+                    name
+                    tier
+                    isSelected
+                  }
                 }
               }
             }

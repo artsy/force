@@ -9,6 +9,7 @@ import { useAnalyticsContext } from "v2/System"
 import { extractNodes } from "v2/Utils/extractNodes"
 import { StandoutLots_viewer } from "v2/__generated__/StandoutLots_viewer.graphql"
 import { tabTypeToContextModuleMap } from "../../Utils/tabTypeToContextModuleMap"
+import { CuratorialRailsZeroState } from "../CuratorialRailsZeroState/CuratorialRailsZeroState"
 
 export interface StandoutLotsProps {
   viewer: StandoutLots_viewer
@@ -22,7 +23,7 @@ const StandoutLots: React.FC<StandoutLotsProps> = ({ viewer }) => {
   const nodes = extractNodes(viewer.standoutLotsConnection)
 
   if (nodes.length === 0) {
-    return null
+    return <CuratorialRailsZeroState />
   }
 
   return (

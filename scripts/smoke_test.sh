@@ -4,7 +4,7 @@ set -ex
 
 # provide a default environment if none exists
 if [ ! -f ".env" ]; then
-    echo "Using .env.oss"
+    echo "Using .env.oss as .env"
     cp .env.oss .env
 fi
 

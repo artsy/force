@@ -49,9 +49,10 @@ const Conversation: React.FC<ConversationProps> = props => {
   const bottomOfMessageContainer = useRef<HTMLElement>(null)
   const initialMount = useRef(true)
 
-  const firstItem = conversation?.items?.[0]?.item
-  const artwork = firstItem?.__typename === "Artwork" && firstItem
-  const isArtworkOfferable = !!artwork && !!firstItem?.isOfferableFromInquiry
+  const liveArtwork = conversation?.items?.[0]?.liveArtwork
+  const artwork = liveArtwork?.__typename === "Artwork" && liveArtwork
+
+  const isArtworkOfferable = !!artwork && !!artwork?.isOfferableFromInquiry
 
   const isOfferable =
     user &&
@@ -316,6 +317,13 @@ export const ConversationPaginationContainer = createPaginationContainer(
               internalID
             }
             ...Item_item
+          }
+          liveArtwork {
+            ... on Artwork {
+              isOfferableFromInquiry
+              internalID
+              __typename
+            }
           }
         }
         ...ConversationCTA_conversation

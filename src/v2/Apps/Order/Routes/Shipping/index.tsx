@@ -6,6 +6,7 @@ import {
   Col,
   Collapse,
   Flex,
+  Link,
   RadioGroup,
   Row,
   Sans,
@@ -74,6 +75,8 @@ import { SystemContextProps, withSystemContext } from "v2/System/SystemContext"
 import { ShippingQuotesFragmentContainer } from "../../Components/ShippingQuotes"
 import { compact } from "lodash"
 import { selectShippingOption } from "../../Mutations/SelectShippingOption"
+import { updateUserAddress } from "../../Mutations/UpdateUserAddress"
+import { deleteUserAddress } from "../../Mutations/DeleteUserAddress"
 
 export interface ShippingProps extends SystemContextProps {
   order: Shipping_order
@@ -93,10 +96,11 @@ export interface ShippingState {
   phoneNumberTouched: PhoneNumberTouched
   addressErrors: AddressErrors
   addressTouched: AddressTouched
-  selectedSavedAddress: string
+  selectedAddressID: string
   saveAddress: boolean
   shippingQuotes: ShippingQuotesType
   shippingQuoteId?: string
+  savedAddressID?: string
 }
 
 const logger = createLogger("Order/Routes/Shipping/index.tsx")
@@ -110,11 +114,12 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
     address: startingAddress(this.props.me, this.props.order),
     addressErrors: {},
     addressTouched: {},
+    savedAddressID: undefined,
     // @ts-expect-error STRICT_NULL_CHECK
     phoneNumber: startingPhoneNumber(this.props.me, this.props.order),
     phoneNumberError: "",
     phoneNumberTouched: false,
-    selectedSavedAddress: defaultShippingAddressIndex(
+    selectedAddressID: defaultShippingAddressIndex(
       this.props.me,
       this.props.order
     ),
@@ -136,9 +141,19 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
     }
   }
 
-  handleAddressDelete = (isLast: boolean) => {
-    if (isLast) {
-      this.setState({ selectedSavedAddress: NEW_ADDRESS })
+  handleAddressDelete = (deletedAddressID: string) => {
+    const addressList = this.getAddressList()
+
+    if (!addressList || addressList.length === 0) {
+      this.setState({
+        selectedAddressID: NEW_ADDRESS,
+        shippingQuotes: null,
+        shippingQuoteId: undefined,
+      })
+    } else if (this.state.selectedAddressID == deletedAddressID) {
+      this.selectSavedAddress(
+        addressList.find(address => address?.node?.isDefault)?.node?.internalID!
+      )
     }
   }
 
@@ -157,7 +172,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
 
   getOrderArtwork = () => this.props.order.lineItems?.edges?.[0]?.node?.artwork
 
-  isCreateNewAddress = () => this.state.selectedSavedAddress === NEW_ADDRESS
+  isCreateNewAddress = () => this.state.selectedAddressID === NEW_ADDRESS
 
   isArtaShipping = () => {
     const addresses = this.getAddressList()
@@ -166,7 +181,9 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
     const shippingCountry = this.isCreateNewAddress()
       ? this.state.address.country
       : addresses &&
-        addresses[parseInt(this.state.selectedSavedAddress)]?.node?.country
+        addresses.find(
+          address => address?.node?.internalID == this.state.selectedAddressID
+        )?.node?.country
 
     return (
       this.state.shippingOption === "SHIP" &&
@@ -188,7 +205,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
       address,
       shippingOption,
       phoneNumber,
-      selectedSavedAddress,
+      selectedAddressID,
     } = this.state
 
     if (shippingOption === "SHIP") {
@@ -236,13 +253,15 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
       const shipToAddress = this.isCreateNewAddress()
         ? address
         : convertShippingAddressForExchange(
-            // @ts-expect-error STRICT_NULL_CHECK
-            this.getAddressList()[parseInt(selectedSavedAddress)].node
+            this.getAddressList()?.find(
+              address => address?.node?.internalID == selectedAddressID
+            )?.node
           )
       const shipToPhoneNumber = this.isCreateNewAddress()
         ? phoneNumber
-        : // @ts-expect-error STRICT_NULL_CHECK
-          this.getAddressList()[parseInt(selectedSavedAddress)].node.phoneNumber
+        : this.getAddressList()?.find(
+            address => address?.node?.internalID == selectedAddressID
+          )?.node?.phoneNumber
 
       this.setState({
         shippingQuotes: null,
@@ -309,38 +328,74 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
         this.props.router.push(`/orders/${this.props.order.internalID}/payment`)
       } catch (error) {
         logger.error(error)
-        this.props.dialog.showErrorDialog()
+        this.props.dialog.showErrorDialog({
+          message: this.getArtaErrorMessage(),
+        })
       }
     }
   }
 
   saveAddress = async () => {
-    const { address, phoneNumber, shippingOption, saveAddress } = this.state
+    const {
+      address,
+      phoneNumber,
+      shippingOption,
+      saveAddress,
+      savedAddressID,
+    } = this.state
     const { relayEnvironment } = this.props
     const isCreateNewAddress = this.isCreateNewAddress()
 
-    if (
-      shippingOption === "SHIP" &&
-      isCreateNewAddress &&
-      saveAddress &&
-      relayEnvironment
-    ) {
-      await createUserAddress(
+    if (saveAddress) {
+      if (shippingOption === "SHIP" && isCreateNewAddress && relayEnvironment) {
+        if (savedAddressID) {
+          updateUserAddress(
+            relayEnvironment,
+            savedAddressID,
+            {
+              ...address,
+              phoneNumber: phoneNumber,
+            }, // address
+            () => {},
+            () => {
+              message => {
+                logger.error(message)
+              }
+            }, // onError
+            () => {} // onSuccess
+          )
+        } else {
+          await createUserAddress(
+            relayEnvironment,
+            {
+              ...address,
+              phoneNumber: phoneNumber,
+            }, // address
+            data => {
+              this.setState({
+                savedAddressID:
+                  data?.createUserAddress?.userAddressOrErrors.internalID,
+              })
+            }, // onSuccess
+            () => {
+              message => {
+                logger.error(message)
+              }
+            }, // onError
+            this.props.me, // me
+            () => {}
+          )
+        }
+      }
+    } else if (savedAddressID) {
+      deleteUserAddress(
+        // @ts-expect-error STRICT_NULL_CHECK
         relayEnvironment,
-        {
-          ...address,
-          phoneNumber: phoneNumber,
-        }, // address
-        () => {
-          // TODO: refetch delivery addresses
-        }, // onSuccess
-        () => {
-          message => {
-            logger.error(message)
-          }
-        }, // onError
-        this.props.me, // me
-        () => {}
+        savedAddressID,
+        () => {},
+        message => {
+          logger.error(message)
+        }
       )
     }
   }
@@ -366,10 +421,22 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
         title: "Can't ship to that address",
         message: "This work can only be shipped domestically.",
       })
+    } else if (this.isArtaShipping() && this.state.shippingQuoteId) {
+      this.props.dialog.showErrorDialog({
+        message: this.getArtaErrorMessage(),
+      })
     } else {
       this.props.dialog.showErrorDialog()
     }
   }
+
+  getArtaErrorMessage = () => (
+    <>
+      There was a problem getting shipping quotes. <br />
+      Please contact{" "}
+      <Link href={`mailto:orders@artsy.net`}>orders@artsy.net</Link>.
+    </>
+  )
 
   onAddressChange: AddressChangeHandler = (address, key) => {
     const { errors } = validateAddress(address)
@@ -384,6 +451,8 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
         ...this.state.addressTouched,
         [key]: true,
       },
+      shippingQuotes: null,
+      shippingQuoteId: undefined,
     })
   }
 
@@ -393,6 +462,8 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
       phoneNumber,
       phoneNumberError: error,
       phoneNumberTouched: true,
+      shippingQuotes: null,
+      shippingQuoteId: undefined,
     })
   }
 
@@ -416,18 +487,53 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
     }
   }
 
+  handleSelectedAddressEdited = () => {
+    this.setState(
+      {
+        shippingQuotes: null,
+        shippingQuoteId: undefined,
+      },
+      () => {
+        if (this.isArtaShipping()) {
+          this.selectShipping()
+        }
+      }
+    )
+  }
+
   handleShippingQuoteSelected = (shippingQuoteId: string) => {
     this.setState({ shippingQuoteId: shippingQuoteId })
   }
 
-  onSelectSavedAddress = (value: string) => {
-    if (this.state.selectedSavedAddress !== value) {
-      this.setState({ selectedSavedAddress: value }, () => {
+  selectSavedAddress = (value: string) => {
+    if (this.state.selectedAddressID !== value) {
+      this.setState({ selectedAddressID: value }, () => {
         if (this.isArtaShipping()) {
           this.selectShipping()
         }
       })
     }
+  }
+
+  renderSupportedShippingAreaErrorMessage() {
+    return (
+      <Text
+        py={1}
+        px={2}
+        mb={2}
+        bg="red10"
+        color="red100"
+        data-test="supportedShippingAreaErrorMessage"
+      >
+        Address is outside our supported shipping area. Select a different
+        address or reach out to{" "}
+        <Link color="red100" hoverColor="red100" href="mailto:orders@artsy.net">
+          orders@artsy.net
+        </Link>{" "}
+        and our team will reach out to the gallery on your behalf to request a
+        custom shipping quote
+      </Text>
+    )
   }
 
   render() {
@@ -442,7 +548,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
       shippingQuotes,
       shippingOption,
       shippingQuoteId,
-      selectedSavedAddress,
+      selectedAddressID,
     } = this.state
     const artwork = this.getOrderArtwork()
     const addressList = this.getAddressList()
@@ -510,22 +616,33 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
                   <Spacer mb={3} />
                 </>
               )}
-              {showSavedAddresses && (
-                <>
-                  <Text variant="mediumText" mb="1">
-                    Delivery address
-                  </Text>
-                  <SavedAddresses
-                    me={this.props.me}
-                    selectedAddress={selectedSavedAddress}
-                    onSelect={this.onSelectSavedAddress}
-                    inCollectorProfile={false}
-                    onAddressDelete={this.handleAddressDelete}
-                  />
-                </>
-              )}
+
+              <Collapse
+                data-test="savedAddressesCollapse"
+                open={!!showSavedAddresses}
+              >
+                <Text variant="mediumText" mb="1">
+                  Delivery address
+                </Text>
+                {isArtaShipping &&
+                  shippingQuotes &&
+                  shippingQuotes.length === 0 &&
+                  this.renderSupportedShippingAreaErrorMessage()}
+                <SavedAddresses
+                  me={this.props.me}
+                  selectedAddress={selectedAddressID}
+                  onSelect={this.selectSavedAddress}
+                  inCollectorProfile={false}
+                  onAddressDelete={this.handleAddressDelete}
+                  onSelectedAddressEdited={this.handleSelectedAddressEdited}
+                />
+              </Collapse>
 
               <Collapse data-test="addressFormCollapse" open={showAddressForm}>
+                {isArtaShipping &&
+                  shippingQuotes &&
+                  shippingQuotes.length === 0 &&
+                  this.renderSupportedShippingAreaErrorMessage()}
                 {/* @ts-expect-error STRICT_NULL_CHECK */}
                 <AddressForm
                   value={address}
@@ -574,7 +691,13 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
                 />
               </Collapse>
 
-              <Collapse open={isArtaShipping && !!shippingQuotes}>
+              <Collapse
+                open={
+                  isArtaShipping &&
+                  !!shippingQuotes &&
+                  shippingQuotes.length > 0
+                }
+              >
                 <Text variant="mediumText" mb="1">
                   Shipping options
                 </Text>

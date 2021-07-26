@@ -3,7 +3,7 @@ import { OfferOrderWithShippingDetails } from "v2/Apps/__tests__/Fixtures/Order"
 import { StepSummaryItem } from "v2/Components/StepSummaryItem"
 import { createTestEnv } from "v2/DevTools/createTestEnv"
 import { DateTime } from "luxon"
-import { commitMutation as _commitMutation, graphql } from "react-relay"
+import { graphql } from "react-relay"
 import {
   rejectOfferFailed,
   rejectOfferSuccess,

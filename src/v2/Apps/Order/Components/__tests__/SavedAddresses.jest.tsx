@@ -213,7 +213,7 @@ describe("SavedAddresses outside collector profile", () => {
     const radios = wrapper.find("Radio")
 
     expect(radios.length).toBe(2)
-    expect(radios.map(radio => radio.props().value)).toEqual(["0", "1"])
+    expect(radios.map(radio => radio.props().value)).toEqual(["1", "2"])
     expect(radios.map(radio => radio.props().selected)).toEqual([false, true])
     expect(radios.map(radio => radio.text())).toEqual([
       "Test Name1 Main StMadrid, Spain, 28001555-555-5555Edit",
@@ -227,6 +227,7 @@ const mockAddressConnection = {
     {
       cursor: "aaaabbbb",
       node: {
+        internalID: "1",
         addressLine1: "1 Main St",
         addressLine2: "",
         addressLine3: "",
@@ -242,6 +243,7 @@ const mockAddressConnection = {
     {
       cursor: "bbbbbcccc",
       node: {
+        internalID: "2",
         addressLine1: "401 Broadway",
         addressLine2: "Floor 25",
         addressLine3: "",

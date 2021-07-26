@@ -1,4 +1,3 @@
-import * as _ from "underscore"
 import { stitch } from "@artsy/stitch"
 import { App } from "desktop/apps/personalize/components/App"
 

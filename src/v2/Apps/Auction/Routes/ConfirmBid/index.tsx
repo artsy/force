@@ -164,8 +164,7 @@ export const ConfirmBidRoute: React.FC<
   }
 
   function trackConfirmBidSuccess(
-    positionId: string,
-    selectedBidAmountCents: number
+    positionId: string
   ) {
     trackEvent({
       action_type: Schema.ActionType.ConfirmBidSubmitted,
@@ -309,7 +308,7 @@ export const ConfirmBidRoute: React.FC<
 
       pollCount += 1
     } else if (status === "WINNING") {
-      trackConfirmBidSuccess(position.internalID, selectedBid)
+      trackConfirmBidSuccess(position.internalID)
       // @ts-expect-error STRICT_NULL_CHECK
       window.location.assign(`/artwork/${artwork.slug}`)
     } else {

@@ -6,6 +6,7 @@ import { ConditionsOfSaleDisclaimer } from "v2/Apps/Order/Components/ConditionsO
 import { CreditCardSummaryItemFragmentContainer } from "v2/Apps/Order/Components/CreditCardSummaryItem"
 import { OfferInput } from "v2/Apps/Order/Components/OfferInput"
 import { OrderStepper } from "v2/Apps/Order/Components/OrderStepper"
+import { ShippingArtaSummaryItemFragmentContainer } from "v2/Apps/Order/Components/ShippingArtaSummaryItem"
 import { ShippingSummaryItemFragmentContainer } from "v2/Apps/Order/Components/ShippingSummaryItem"
 import { TransactionDetailsSummaryItem } from "v2/Apps/Order/Components/TransactionDetailsSummaryItem"
 import { CountdownTimer } from "v2/Components/CountdownTimer"
@@ -38,6 +39,10 @@ export class OrderAppTestPage extends RootTestPage {
 
   get paymentSummary() {
     return expectOne(this.root.find(CreditCardSummaryItemFragmentContainer))
+  }
+
+  get shippingArtaSummary() {
+    return expectOne(this.root.find(ShippingArtaSummaryItemFragmentContainer))
   }
 
   get buyerGuarantee() {

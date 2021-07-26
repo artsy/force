@@ -215,7 +215,6 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
 
         <Column span={9} data-test={ContextModule.auctionResults}>
           <AuctionResultsControls
-            artist={artist}
             toggleMobileActionSheet={toggleMobileActionSheet}
           />
 

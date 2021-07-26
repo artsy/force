@@ -101,6 +101,20 @@ describe("AuctionsApp", () => {
     expect(html).toContain("Trending Lots")
   })
 
+  it("renders StandoutLots even if user is logged out", () => {
+    useSystemContext.mockImplementation(() => ({
+      user: null,
+      mediator: {
+        on: jest.fn(),
+        off: jest.fn(),
+      },
+    }))
+
+    const wrapper = getWrapper()
+    const html = wrapper.html()
+    expect(html).toContain("Standout Lots")
+  })
+
   it("does not render auctions if they are not present", () => {
     const wrapper = getWrapper({
       salesConnection: () => ({ edges: [] }),

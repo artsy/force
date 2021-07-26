@@ -1,11 +1,11 @@
 // @ts-check
 
-require("dotenv/config")
 require("coffeescript/register")
 require("@babel/register")({
   extensions: [".ts", ".js", ".tsx", ".jsx"],
   plugins: ["babel-plugin-dynamic-import-node"],
 })
+require("./loadenv")
 
 const express = require("express")
 const path = require("path")
@@ -17,9 +17,6 @@ const { setAliases } = require("require-control")
 const { createReloadable } = require("@artsy/express-reloadable")
 const { createConfig } = require("../webpack")
 const { initializeMiddleware } = require("./middleware")
-
-// @ts-ignore
-const { APP_URL, PORT } = require("./config")
 
 /**
  * Force resolution of potentially `yarn link`'d modules to the local i

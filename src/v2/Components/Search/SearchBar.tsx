@@ -235,7 +235,7 @@ export class SearchBar extends Component<Props, State> {
     }
   }
 
-  onSuggestionsClearRequested = e => {
+  onSuggestionsClearRequested = () => {
     // This event _also_ fires when a user clicks on a link in the preview pane
     //  or the magnifying glass icon. If we initialize state when that happens,
     //  the link will get removed from the DOM before the browser has a chance

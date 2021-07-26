@@ -5,7 +5,6 @@ import { graphql } from "react-relay"
 import loadable from "@loadable/component"
 
 import { RouteSpinner } from "v2/System/Relay/renderWithLoadProgress"
-import { ArtworkQueryFilter } from "v2/Components/ArtworkFilter/ArtworkQueryFilter"
 import { allowedFilters } from "v2/Components/ArtworkFilter/Utils/allowedFilters"
 import { paramsToCamelCase } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
 
@@ -20,9 +19,13 @@ const SearchResultsArtistsRouteFragmentContainer = loadable(
   }
 )
 const SearchResultsArtworksRoute = loadable(
-  () => import(/* webpackChunkName: "searchBundle" */ "./Routes/Artworks"),
+  () =>
+    import(
+      /* webpackChunkName: "searchBundle" */ "./Routes/SearchResultsArtworks"
+    ),
   {
-    resolveComponent: component => component.SearchResultsArtworksRoute,
+    resolveComponent: component =>
+      component.SearchResultsArtworksRouteFragmentContainer,
   }
 )
 const SearchResultsEntityRouteFragmentContainer = loadable(
@@ -121,15 +124,48 @@ export const searchRoutes: AppRouteConfig[] = [
       {
         path: "/",
         Component: SearchResultsArtworksRoute,
-        prepareVariables: (params, { location }) => {
+        prepareVariables: (params, { location, context }) => {
+          const {
+            aggregations: sourceAggregations,
+            ...other
+          } = prepareVariables(params, {
+            location,
+          })
+          const input: Record<string, any> = {
+            ...allowedFilters(other),
+            first: 30,
+          }
+          const aggregations = [...sourceAggregations, "ARTIST"]
+
+          if (!!context.user) {
+            aggregations.push("FOLLOWED_ARTISTS")
+          }
+
           return {
-            input: {
-              ...allowedFilters(prepareVariables(params, { location })),
-              first: 30,
+            shouldFetchCounts: !!context.user,
+            input,
+            sidebarInput: {
+              aggregations,
+              keyword: input.keyword,
             },
           }
         },
-        query: ArtworkQueryFilter,
+        query: graphql`
+          query searchRoutes_ArtworksViewerQuery(
+            $input: FilterArtworksInput
+            $sidebarInput: FilterArtworksInput
+            $shouldFetchCounts: Boolean!
+          ) {
+            viewer {
+              ...SearchResultsArtworks_viewer
+                @arguments(
+                  input: $input
+                  sidebarInput: $sidebarInput
+                  shouldFetchCounts: $shouldFetchCounts
+                )
+            }
+          }
+        `,
       },
       {
         path: "artists",
