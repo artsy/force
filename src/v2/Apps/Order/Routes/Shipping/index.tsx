@@ -282,13 +282,12 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
         })
       ).commerceSetShipping.orderOrError
 
-      // save address when user is entering new address AND save checkbox is selected
-      await this.saveAddress()
-
       if (orderOrError.error) {
         this.handleSubmitError(orderOrError.error)
         return
       }
+      // save address when user is entering new address AND save checkbox is selected
+      await this.saveAddress()
 
       if (isArtaShipping) {
         this.setState({
