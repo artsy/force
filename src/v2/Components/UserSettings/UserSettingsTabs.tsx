@@ -58,6 +58,7 @@ export const UserSettingsTabs: React.FC<UserSettingsTabsProps> = track()(
             const isActive = tabClass(route.url, route) === "active"
             const { ref } = useScrollIntoView(isActive)
             return (
+              // @ts-ignore
               <Box ref={ref} key={index}>
                 <RouteTab className={tabClass(route.url, route)} to={route.url}>
                   {route.name}
