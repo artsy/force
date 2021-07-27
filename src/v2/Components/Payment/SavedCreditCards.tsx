@@ -1,4 +1,4 @@
-import { BorderBox, Flex, Sans, Spinner } from "@artsy/palette"
+import { BorderBox, Flex, Text, Spinner, Clickable } from "@artsy/palette"
 import {
   SavedCreditCardsDeleteCreditCardMutation,
   SavedCreditCardsDeleteCreditCardMutationResponse,
@@ -37,11 +37,11 @@ export class CreditCard extends React.Component<
   render() {
     return (
       <>
-        <BorderBox flexDirection="column" p={2} mb={2}>
+        <BorderBox flexDirection="column" p={2} mb={4}>
           <Flex justifyContent="space-between" alignItems="center">
             {/* @ts-expect-error STRICT_NULL_CHECK */}
             <CreditCardDetails {...this.props.creditCard} />
-            <Sans size="2" color="purple100">
+            <Text variant="md" color="red100">
               {this.state.isCommittingMutation ? (
                 <SpinnerContainer>
                   <Spinner />
@@ -51,7 +51,7 @@ export class CreditCard extends React.Component<
                   Remove
                 </RemoveLink>
               )}
-            </Sans>
+            </Text>
           </Flex>
         </BorderBox>
         <ErrorModal
@@ -164,12 +164,9 @@ export class CreditCard extends React.Component<
   }
 }
 
-export const RemoveLink = styled.div`
+export const RemoveLink = styled(Clickable)`
   text-align: right;
-
-  &:hover {
-    cursor: pointer;
-  }
+  text-decoration: underline;
 `
 
 const SpinnerContainer = styled.div`

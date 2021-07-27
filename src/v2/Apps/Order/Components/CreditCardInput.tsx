@@ -1,25 +1,52 @@
-import { BorderBox, Sans, color, themeProps } from "@artsy/palette"
-import { fontFamily } from "@artsy/palette/dist/platform/fonts"
 import {
-  BorderProps as InputBorderProps,
-  borderMixin as inputBorder,
-} from "v2/Components/Mixins"
+  BorderBox,
+  themeProps,
+  useThemeConfig,
+  Text,
+  getThemeConfig,
+  TextVariant,
+} from "@artsy/palette"
+import { borderMixin, v3BorderMixin } from "v2/Components/Mixins"
 import React from "react"
 import type {
   StripeCardNumberElementChangeEvent,
   StripeError,
 } from "@stripe/stripe-js"
 import { CardElement } from "@stripe/react-stripe-js"
-import styled from "styled-components"
+import styled, { css } from "styled-components"
+import { useState } from "react"
+import { fontFamily } from "@artsy/palette/dist/platform/fonts"
 
-export const StyledCardElement = styled(CardElement)`
+export const StyledCardElement = styled(CardElement)<{ isV3?: boolean }>`
+  ${props => {
+    const states = getThemeConfig(props, {
+      v2: { padding: "9px 10px" },
+      v3: { padding: "12px 10px" },
+    })
+
+    return css`
+      padding: ${states.padding};
+    `
+  }}
   width: 100%;
-  padding: 9px 10px;
 `
 
 // Re-uses old input border behavior
-const StyledBorderBox = styled(BorderBox)<InputBorderProps>`
-  ${inputBorder};
+export interface BorderProps {
+  hasError?: boolean
+}
+
+const StyledBorderBox = styled(BorderBox)<BorderProps>`
+  ${props => {
+    const states = getThemeConfig(props, {
+      v2: { marginBottom: "0px", mixin: borderMixin },
+      v3: { marginBottom: "20px", mixin: v3BorderMixin },
+    })
+
+    return css`
+      ${states.mixin}
+    `
+  }}
   padding: 0;
   height: 40px;
 `
@@ -29,62 +56,69 @@ interface CreditCardInputProps {
   onChange?: (response: StripeCardNumberElementChangeEvent) => void
 }
 
-interface CreditCardInputState {
-  focused: boolean
-}
+export const CreditCardInput: React.FC<CreditCardInputProps> = props => {
+  const [focused, setFocused] = useState(false)
 
-export class CreditCardInput extends React.Component<
-  CreditCardInputProps,
-  CreditCardInputState
-> {
-  state = {
-    focused: false,
-  }
+  const styles = useThemeConfig({
+    v2: {
+      fontSize: `${themeProps.typeSizes.serif["3t"].fontSize}px`,
+      borderBox: "title",
+      fieldHeight: "40px",
+      fontColor: "black30",
+      fontFamily: fontFamily.serif.regular as string,
+      lineHeight: "20px",
+      variant: "text" as TextVariant,
+    },
+    v3: {
+      fontSize: "16px",
+      borderBox: "title",
+      fieldHeight: "50px !important",
+      fontColor: "black60",
+      fontFamily: "inherit",
+      lineHeight: "24px",
+      variant: "sm" as TextVariant,
+    },
+  })
 
-  onChange(response: StripeCardNumberElementChangeEvent) {
-    if (this.props.onChange) {
-      this.props.onChange(response)
+  const onChange = (response: StripeCardNumberElementChangeEvent) => {
+    if (props.onChange) {
+      props.onChange(response)
     }
   }
 
-  render() {
-    const { message } = this.props.error ? this.props.error : { message: null }
+  const { message } = props.error ? props.error : { message: null }
 
-    return (
-      <>
-        <StyledBorderBox
-          className={`${this.state.focused ? "focused" : ""}`}
-          hasError={!!message}
-          p={1}
-        >
-          <StyledCardElement
-            options={{
-              hidePostalCode: true,
-              style: {
-                base: {
-                  "::placeholder": { color: color("black30") },
-                  fontFamily: fontFamily.serif.regular as string,
-                  fontSize: `${themeProps.typeSizes.serif["3t"].fontSize}px`,
-                  fontSmoothing: "antialiased",
-                  lineHeight: "20px",
-                },
+  return (
+    <>
+      <StyledBorderBox
+        className={`${focused ? "focused" : ""}`}
+        hasError={!!message}
+        p={1}
+        height={styles.fieldHeight}
+      >
+        <StyledCardElement
+          options={{
+            hidePostalCode: true,
+            style: {
+              base: {
+                "::placeholder": { color: "black60" },
+                fontSize: styles.fontSize,
+                fontFamily: styles.fontFamily,
+                fontSmoothing: "antialiased",
+                lineHeight: styles.lineHeight,
               },
-            }}
-            onChange={this.onChange.bind(this)}
-            onFocus={() => this.setState({ focused: true })}
-            onBlur={() =>
-              this.setState({
-                focused: false,
-              })
-            }
-          />
-        </StyledBorderBox>
-        {message && (
-          <Sans pt={1} size="2" color="red100">
-            {message}
-          </Sans>
-        )}
-      </>
-    )
-  }
+            },
+          }}
+          onChange={onChange.bind(this)}
+          onFocus={() => setFocused(true)}
+          onBlur={() => setFocused(false)}
+        />
+      </StyledBorderBox>
+      {message && (
+        <Text pt={1} variant={styles.variant} color="red100">
+          {message}
+        </Text>
+      )}
+    </>
+  )
 }
