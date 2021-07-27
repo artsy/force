@@ -28,6 +28,7 @@ import { showsRoutes } from "v2/Apps/Shows/showsRoutes"
 import { tagRoutes } from "./Apps/Tag/tagRoutes"
 import { unsubscribeRoutes } from "./Apps/Unsubscribe/unsubscribeRoutes"
 import { viewingRoomRoutes } from "v2/Apps/ViewingRoom/viewingRoomRoutes"
+import { fairOrganizerRoutes } from "./Apps/FairOrginizer/fairOrganizerRoutes"
 
 export function getAppRoutes(): AppRouteConfig[] {
   return buildAppRoutes([
@@ -41,6 +42,7 @@ export function getAppRoutes(): AppRouteConfig[] {
     { routes: consignRoutes },
     { routes: conversationRoutes },
     { routes: exampleRoutes },
+    { routes: fairOrganizerRoutes },
     { routes: fairRoutes },
     { routes: fairsRoutes },
     { routes: featureRoutes },
