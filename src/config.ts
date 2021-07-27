@@ -118,6 +118,7 @@ export const MOBILE_MEDIA_QUERY: any = "only screen and (max-width: 640px)"
 export const NETWORK_CACHE_SIZE: any = 2000
 export const NETWORK_CACHE_TTL: any = 3600000
 export const NODE_ENV: any = "development"
+export const ONETRUST_SCRIPT_ID: any = null
 export const OPENREDIS_URL: any = null
 export const PAGE_CACHE_ENABLED: any = false
 export const PAGE_CACHE_EXPIRY_SECONDS: any = 600
