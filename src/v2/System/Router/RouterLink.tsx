@@ -64,10 +64,18 @@ RouterLink.displayName = "RouterLink"
 const textDecoration = system({ textDecoration: true })
 const routerLinkMixin = compose(boxMixin, textDecoration)
 
-const RouterAwareLink = styled(Link)`
+// TODO: Update styled-components types
+// @ts-ignore
+const RouterAwareLink = styled(Link).withConfig({
+  shouldForwardProp: (prop, defaultValidatorFn) => defaultValidatorFn(prop),
+})`
   ${routerLinkMixin}
 `
 
-const RouterUnawareLink = styled.a`
+// TODO: Update styled-components types
+// @ts-ignore
+const RouterUnawareLink = styled.a.withConfig({
+  shouldForwardProp: (prop, defaultValidatorFn) => defaultValidatorFn(prop),
+})`
   ${routerLinkMixin}
 `
