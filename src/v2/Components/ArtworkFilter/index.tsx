@@ -173,8 +173,7 @@ export const BaseArtworkFilter: React.FC<
   useDeepCompareEffect(() => {
     Object.entries(filterContext.filters ?? {}).forEach(
       ([filterKey, currentFilter]) => {
-        // @ts-expect-error STRICT_NULL_CHECK
-        const previousFilter = previousFilters[filterKey]
+        const previousFilter = previousFilters?.[filterKey]
         const filtersHaveUpdated = !isEqual(currentFilter, previousFilter)
 
         if (filtersHaveUpdated) {
@@ -194,13 +193,11 @@ export const BaseArtworkFilter: React.FC<
             tracking.trackEvent(
               commercialFilterParamsChanged({
                 changed: JSON.stringify({
-                  // @ts-expect-error STRICT_NULL_CHECK
-                  [filterKey]: filterContext.filters[filterKey],
+                  [filterKey]: filterContext.filters?.[filterKey],
                 }),
                 contextOwnerId: contextPageOwnerId,
                 contextOwnerSlug: contextPageOwnerSlug,
-                // @ts-expect-error STRICT_NULL_CHECK
-                contextOwnerType: contextPageOwnerType,
+                contextOwnerType: contextPageOwnerType!,
                 current: JSON.stringify(filterContext.filters),
               })
             )
