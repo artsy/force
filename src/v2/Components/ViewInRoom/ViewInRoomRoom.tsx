@@ -23,10 +23,19 @@ const Room = styled(Box)`
     no-repeat;
 `
 
-export const ViewInRoomRoom: React.FC<BoxProps> = props => {
+interface ViewInRoomRoomProps extends BoxProps {
+  onMount(): void
+}
+
+export const ViewInRoomRoom: React.FC<ViewInRoomRoomProps> = ({
+  onMount,
+  ...rest
+}) => {
   const ref = useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {
+    onMount()
+
     if (!ref.current) return
 
     const { current: room } = ref
@@ -47,7 +56,7 @@ export const ViewInRoomRoom: React.FC<BoxProps> = props => {
     return () => {
       window.removeEventListener("resize", scale)
     }
-  }, [])
+  }, [onMount])
 
-  return <Room ref={ref as any} {...props} />
+  return <Room ref={ref as any} {...rest} />
 }

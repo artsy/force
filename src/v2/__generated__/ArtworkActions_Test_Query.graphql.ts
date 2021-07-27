@@ -3,78 +3,22 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type ArtworkActions_Test_QueryVariables = {
-    artworkID: string;
-};
+export type ArtworkActions_Test_QueryVariables = {};
 export type ArtworkActions_Test_QueryResponse = {
     readonly artwork: {
         readonly " $fragmentRefs": FragmentRefs<"ArtworkActions_artwork">;
     } | null;
 };
-export type ArtworkActions_Test_QueryRawResponse = {
-    readonly artwork: ({
-        readonly internalID: string;
-        readonly id: string;
-        readonly slug: string;
-        readonly title: string | null;
-        readonly sale: ({
-            readonly isAuction: boolean | null;
-            readonly isClosed: boolean | null;
-            readonly id: string | null;
-            readonly is_closed: boolean | null;
-            readonly is_auction: boolean | null;
-        }) | null;
-        readonly is_saved: boolean | null;
-        readonly href: string | null;
-        readonly images: ReadonlyArray<({
-            readonly url: string | null;
-        }) | null> | null;
-        readonly artworkMeta: ({
-            readonly share: string | null;
-        }) | null;
-        readonly widthCm: number | null;
-        readonly heightCm: number | null;
-        readonly image: ({
-            readonly resized: ({
-                readonly src: string;
-                readonly srcSet: string;
-                readonly width: number | null;
-                readonly height: number | null;
-            }) | null;
-            readonly internalID: string | null;
-            readonly url: string | null;
-            readonly height: number | null;
-            readonly width: number | null;
-        }) | null;
-        readonly artists: ReadonlyArray<({
-            readonly name: string | null;
-            readonly id: string | null;
-        }) | null> | null;
-        readonly date: string | null;
-        readonly dimensions: ({
-            readonly cm: string | null;
-        }) | null;
-        readonly is_downloadable: boolean | null;
-        readonly is_hangable: boolean | null;
-        readonly partner: ({
-            readonly slug: string;
-            readonly id: string | null;
-        }) | null;
-    }) | null;
-};
 export type ArtworkActions_Test_Query = {
     readonly response: ArtworkActions_Test_QueryResponse;
     readonly variables: ArtworkActions_Test_QueryVariables;
-    readonly rawResponse: ArtworkActions_Test_QueryRawResponse;
 };
 
 
 
 /*
-query ArtworkActions_Test_Query(
-  $artworkID: String!
-) {
-  artwork(id: $artworkID) {
+query ArtworkActions_Test_Query {
+  artwork(id: "example") {
     ...ArtworkActions_artwork
     id
   }
@@ -159,48 +103,40 @@ fragment ViewInRoom_artwork on Artwork {
 const node: ConcreteRequest = (function(){
 var v0 = [
   {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "artworkID",
-    "type": "String!"
-  }
-],
-v1 = [
-  {
-    "kind": "Variable",
+    "kind": "Literal",
     "name": "id",
-    "variableName": "artworkID"
+    "value": "example"
   }
 ],
-v2 = {
+v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "internalID",
   "storageKey": null
 },
-v3 = {
+v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v4 = {
+v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "slug",
   "storageKey": null
 },
-v5 = {
+v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "width",
   "storageKey": null
 },
-v6 = {
+v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -209,14 +145,14 @@ v6 = {
 };
 return {
   "fragment": {
-    "argumentDefinitions": (v0/*: any*/),
+    "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
     "name": "ArtworkActions_Test_Query",
     "selections": [
       {
         "alias": null,
-        "args": (v1/*: any*/),
+        "args": (v0/*: any*/),
         "concreteType": "Artwork",
         "kind": "LinkedField",
         "name": "artwork",
@@ -228,28 +164,28 @@ return {
             "name": "ArtworkActions_artwork"
           }
         ],
-        "storageKey": null
+        "storageKey": "artwork(id:\"example\")"
       }
     ],
     "type": "Query"
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": (v0/*: any*/),
+    "argumentDefinitions": [],
     "kind": "Operation",
     "name": "ArtworkActions_Test_Query",
     "selections": [
       {
         "alias": null,
-        "args": (v1/*: any*/),
+        "args": (v0/*: any*/),
         "concreteType": "Artwork",
         "kind": "LinkedField",
         "name": "artwork",
         "plural": false,
         "selections": [
+          (v1/*: any*/),
           (v2/*: any*/),
           (v3/*: any*/),
-          (v4/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -279,7 +215,7 @@ return {
                 "name": "isClosed",
                 "storageKey": null
               },
-              (v3/*: any*/),
+              (v2/*: any*/),
               {
                 "alias": "is_closed",
                 "args": null,
@@ -411,12 +347,12 @@ return {
                     "name": "srcSet",
                     "storageKey": null
                   },
-                  (v5/*: any*/),
-                  (v6/*: any*/)
+                  (v4/*: any*/),
+                  (v5/*: any*/)
                 ],
                 "storageKey": "resized(height:800,version:[\"normalized\",\"larger\",\"large\"],width:800)"
               },
-              (v2/*: any*/),
+              (v1/*: any*/),
               {
                 "alias": null,
                 "args": [
@@ -430,8 +366,8 @@ return {
                 "name": "url",
                 "storageKey": "url(version:\"larger\")"
               },
-              (v6/*: any*/),
-              (v5/*: any*/)
+              (v5/*: any*/),
+              (v4/*: any*/)
             ],
             "storageKey": null
           },
@@ -450,7 +386,7 @@ return {
                 "name": "name",
                 "storageKey": null
               },
-              (v3/*: any*/)
+              (v2/*: any*/)
             ],
             "storageKey": null
           },
@@ -501,13 +437,13 @@ return {
             "name": "partner",
             "plural": false,
             "selections": [
-              (v4/*: any*/),
-              (v3/*: any*/)
+              (v3/*: any*/),
+              (v2/*: any*/)
             ],
             "storageKey": null
           }
         ],
-        "storageKey": null
+        "storageKey": "artwork(id:\"example\")"
       }
     ]
   },
@@ -516,9 +452,9 @@ return {
     "metadata": {},
     "name": "ArtworkActions_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkActions_Test_Query(\n  $artworkID: String!\n) {\n  artwork(id: $artworkID) {\n    ...ArtworkActions_artwork\n    id\n  }\n}\n\nfragment ArtworkActionsSaveButton_artwork on Artwork {\n  internalID\n  id\n  slug\n  title\n  sale {\n    isAuction\n    isClosed\n    id\n  }\n  is_saved: isSaved\n}\n\nfragment ArtworkActions_artwork on Artwork {\n  ...ArtworkActionsSaveButton_artwork\n  ...ArtworkSharePanel_artwork\n  ...ViewInRoom_artwork\n  artists {\n    name\n    id\n  }\n  date\n  dimensions {\n    cm\n  }\n  href\n  slug\n  image {\n    internalID\n    url(version: \"larger\")\n    height\n    width\n  }\n  is_downloadable: isDownloadable\n  is_hangable: isHangable\n  partner {\n    slug\n    id\n  }\n  title\n  sale {\n    is_closed: isClosed\n    is_auction: isAuction\n    id\n  }\n  is_saved: isSaved\n}\n\nfragment ArtworkSharePanel_artwork on Artwork {\n  href\n  images {\n    url\n  }\n  artworkMeta: meta {\n    share\n  }\n}\n\nfragment ViewInRoomArtwork_artwork on Artwork {\n  widthCm\n  heightCm\n  image {\n    resized(width: 800, height: 800, version: [\"normalized\", \"larger\", \"large\"]) {\n      src\n      srcSet\n      width\n      height\n    }\n  }\n}\n\nfragment ViewInRoom_artwork on Artwork {\n  ...ViewInRoomArtwork_artwork\n}\n"
+    "text": "query ArtworkActions_Test_Query {\n  artwork(id: \"example\") {\n    ...ArtworkActions_artwork\n    id\n  }\n}\n\nfragment ArtworkActionsSaveButton_artwork on Artwork {\n  internalID\n  id\n  slug\n  title\n  sale {\n    isAuction\n    isClosed\n    id\n  }\n  is_saved: isSaved\n}\n\nfragment ArtworkActions_artwork on Artwork {\n  ...ArtworkActionsSaveButton_artwork\n  ...ArtworkSharePanel_artwork\n  ...ViewInRoom_artwork\n  artists {\n    name\n    id\n  }\n  date\n  dimensions {\n    cm\n  }\n  href\n  slug\n  image {\n    internalID\n    url(version: \"larger\")\n    height\n    width\n  }\n  is_downloadable: isDownloadable\n  is_hangable: isHangable\n  partner {\n    slug\n    id\n  }\n  title\n  sale {\n    is_closed: isClosed\n    is_auction: isAuction\n    id\n  }\n  is_saved: isSaved\n}\n\nfragment ArtworkSharePanel_artwork on Artwork {\n  href\n  images {\n    url\n  }\n  artworkMeta: meta {\n    share\n  }\n}\n\nfragment ViewInRoomArtwork_artwork on Artwork {\n  widthCm\n  heightCm\n  image {\n    resized(width: 800, height: 800, version: [\"normalized\", \"larger\", \"large\"]) {\n      src\n      srcSet\n      width\n      height\n    }\n  }\n}\n\nfragment ViewInRoom_artwork on Artwork {\n  ...ViewInRoomArtwork_artwork\n}\n"
   }
 };
 })();
-(node as any).hash = '8295359dfbf0f695052bbd09b1f8969b';
+(node as any).hash = '90209d97b93da60c0fb4c25bb861d8a8';
 export default node;

@@ -4,7 +4,13 @@ import { useLayoutEffect } from "react"
 import { useState } from "react"
 import { wait } from "./util"
 
-export const ViewInRoomTransition: React.FC = ({ children }) => {
+interface ViewInRoomTransitionProps {
+  children({ onMount }: { onMount(): void }): JSX.Element
+}
+
+export const ViewInRoomTransition: React.FC<ViewInRoomTransitionProps> = ({
+  children,
+}) => {
   const [transitionState, setTransitionState] = useState<{
     src?: string
     srcSet?: string
@@ -16,11 +22,10 @@ export const ViewInRoomTransition: React.FC = ({ children }) => {
     "PENDING" | "TRANSITION" | "DONE"
   >("PENDING")
 
+  const [isMounted, setMounted] = useState(false)
+
   useLayoutEffect(() => {
     const run = async () => {
-      // TODO: Implement with a mount callback
-      await wait(25) // Wait for children to render
-
       const imgFrom = document.getElementById(
         "transitionFrom--ViewInRoom"
       ) as HTMLImageElement
@@ -43,19 +48,26 @@ export const ViewInRoomTransition: React.FC = ({ children }) => {
       setTransitionStage("DONE")
     }
 
-    run()
-  }, [])
+    if (isMounted) run()
+  }, [isMounted])
 
   return (
     <>
+      {/* Crops children in order to improve performance */}
       <Box
+        position="absolute"
+        top={0}
+        left={0}
+        width="100vw"
+        height="100vh"
+        overflow="hidden"
         style={{
           opacity: transitionStage !== "PENDING" ? 1 : 0,
           transition: "opacity 500ms",
           transitionDelay: "100ms",
         }}
       >
-        {children}
+        {children({ onMount: () => setMounted(true) })}
       </Box>
 
       {transitionStage !== "DONE" &&

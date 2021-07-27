@@ -19,19 +19,25 @@ const ViewInRoom: React.FC<ViewInRoomProps> = ({ artwork, onClose }) => {
   return (
     <ModalBase position="relative" onClose={onClose}>
       <ViewInRoomTransition>
-        <ViewInRoomRoom>
-          <ViewInRoomArtworkFragmentContainer artwork={artwork} />
+        {({ onMount }) => {
+          return (
+            <>
+              <ViewInRoomRoom onMount={onMount}>
+                <ViewInRoomArtworkFragmentContainer artwork={artwork} />
 
-          <ViewInRoomScale />
-        </ViewInRoomRoom>
+                <ViewInRoomScale />
+              </ViewInRoomRoom>
 
-        <ViewInRoomCloseButton
-          position="absolute"
-          top={0}
-          right={0}
-          p={2}
-          onClick={onClose}
-        />
+              <ViewInRoomCloseButton
+                position="absolute"
+                top={0}
+                right={0}
+                p={2}
+                onClick={onClose}
+              />
+            </>
+          )
+        }}
       </ViewInRoomTransition>
     </ModalBase>
   )

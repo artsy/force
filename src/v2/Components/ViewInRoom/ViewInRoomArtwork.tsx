@@ -18,30 +18,40 @@ interface ViewInRoomArtworkProps {
 const ViewInRoomArtwork: React.FC<ViewInRoomArtworkProps> = ({ artwork }) => {
   const image = artwork.image?.resized
 
-  if (!artwork.widthCm || !artwork.heightCm) return null
-  if (!image || !image.src || !image.width || !image.height) return null
+  if (
+    !artwork.widthCm ||
+    !artwork.heightCm ||
+    !image ||
+    !image.src ||
+    !image.width ||
+    !image.height
+  ) {
+    return null
+  }
 
   const width = cmToPx(artwork.widthCm)
   const height = cmToPx(artwork.heightCm)
+  const hangHeight =
+    // If too big to hang at eye-level
+    artwork.heightCm > eyeLevelSizeLimit
+      ? // Bottom edge rests at ground level
+        groundLevelPx
+      : // Centered on eye-level
+        eyeLevelPx - height / 2
 
   return (
     <Wall>
       <Image
         id="transitionTo--ViewInRoom"
-        width={width}
-        height={height}
         src={image.src}
         srcSet={image.srcSet}
         alt=""
-        mb={
-          // If too big to hang at eye-level
-          artwork.heightCm > eyeLevelSizeLimit
-            ? // Bottom edge rests at ground level
-              groundLevelPx
-            : // Centered on eye-level
-              eyeLevelPx - height / 2
-        }
-        style={{ boxShadow: "1px 5px 5px rgb(0, 0, 0, 0.25)" }}
+        style={{
+          boxShadow: "1px 5px 5px rgb(0, 0, 0, 0.25)",
+          width,
+          height,
+          marginBottom: hangHeight,
+        }}
       />
     </Wall>
   )

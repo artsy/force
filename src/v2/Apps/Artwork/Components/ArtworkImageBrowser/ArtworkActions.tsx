@@ -40,7 +40,10 @@ interface ArtworkActionsProps {
   selectDefaultSlide(): void
 }
 
-export const ArtworkActions: React.FC<ArtworkActionsProps> = ({ artwork }) => {
+export const ArtworkActions: React.FC<ArtworkActionsProps> = ({
+  artwork,
+  selectDefaultSlide,
+}) => {
   const { user } = useSystemContext()
   const isAdmin = userIsAdmin(user)
   const isTeam = userIsTeam(user)
@@ -68,8 +71,11 @@ export const ArtworkActions: React.FC<ArtworkActionsProps> = ({ artwork }) => {
     return (
       <UtilButton
         name="viewInRoom"
-        onClick={showViewInRoom}
         label="View in room"
+        onClick={() => {
+          selectDefaultSlide()
+          showViewInRoom()
+        }}
       />
     )
   }
