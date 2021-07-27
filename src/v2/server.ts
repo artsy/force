@@ -71,6 +71,7 @@ app.get(
         disable: {
           analytics: getServerParam(req, "disableAnalytics") === "true",
           onetrust: getServerParam(req, "disableOneTrust") === "true",
+          onetrust: getServerParam(req, "onetrust") === "true",
           postie: getServerParam(req, "disablePostie") === "true",
           segment: getServerParam(req, "disableSegment") === "true",
           stripe: getServerParam(req, "disableStripe") === "true",
