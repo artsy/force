@@ -1,6 +1,8 @@
 type Range = { min: number; max: number }
 
 /**
+ * Remaps a value from within one range to its corresponding value in another range.
+ * E.g. convert between units or proportionally scale a value.
  *
  * @param n A numeric value
  * @param from Range the value comes from

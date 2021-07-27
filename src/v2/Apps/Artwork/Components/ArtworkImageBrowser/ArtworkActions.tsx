@@ -33,7 +33,7 @@ import { ArtworkActionsSaveButtonFragmentContainer } from "./ArtworkActionsSaveB
 import {
   useViewInRoom,
   ViewInRoomFragmentContainer,
-} from "v2/Components/ViewInRoom"
+} from "v2/Components/ViewInRoom/ViewInRoom"
 
 interface ArtworkActionsProps {
   artwork: ArtworkActions_artwork

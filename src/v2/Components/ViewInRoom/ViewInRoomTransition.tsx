@@ -4,6 +4,9 @@ import { useLayoutEffect } from "react"
 import { useState } from "react"
 import { wait } from "./util"
 
+const transitionDelayMs = 100
+const transitionDurationMs = 500
+
 interface ViewInRoomTransitionProps {
   children({ onMount }: { onMount(): void }): JSX.Element
 }
@@ -41,10 +44,10 @@ export const ViewInRoomTransition: React.FC<ViewInRoomTransitionProps> = ({
         to: imgTo.getBoundingClientRect(),
       })
 
-      await wait(100)
+      await wait(transitionDelayMs)
       setTransitionStage("TRANSITION")
 
-      await wait(500)
+      await wait(transitionDurationMs)
       setTransitionStage("DONE")
     }
 
@@ -63,8 +66,8 @@ export const ViewInRoomTransition: React.FC<ViewInRoomTransitionProps> = ({
         overflow="hidden"
         style={{
           opacity: transitionStage !== "PENDING" ? 1 : 0,
-          transition: "opacity 500ms",
-          transitionDelay: "100ms",
+          transition: `opacity ${transitionDurationMs}ms`,
+          transitionDelay: `${transitionDelayMs}ms`,
         }}
       >
         {children({ onMount: () => setMounted(true) })}
@@ -83,8 +86,9 @@ export const ViewInRoomTransition: React.FC<ViewInRoomTransitionProps> = ({
               top: transitionState.from.y,
               left: transitionState.from.x,
               transform: "translateZ(0)",
-              transition:
-                "left 500ms, top 500ms, width 500ms, height 500ms, opacity 1s",
+              transition: `left ${transitionDurationMs}ms, top ${transitionDurationMs}ms, width ${transitionDurationMs}ms, height ${transitionDurationMs}ms, opacity ${
+                transitionDurationMs * 2
+              }s`,
 
               ...(transitionStage !== "PENDING"
                 ? {
