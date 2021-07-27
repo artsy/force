@@ -18,4 +18,5 @@ export default {
   yellowBold: "#f1af1b",
   greenRegular: "#0eda83",
   greenBold: "#0aa462",
+  greenToast: "#127438",
 }
