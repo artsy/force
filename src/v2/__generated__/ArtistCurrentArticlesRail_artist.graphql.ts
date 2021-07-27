@@ -13,12 +13,7 @@ export type ArtistCurrentArticlesRail_artist = {
                 readonly thumbnailTitle: string | null;
                 readonly publishedAt: string | null;
                 readonly thumbnailImage: {
-                    readonly cropped: {
-                        readonly width: number;
-                        readonly height: number;
-                        readonly src: string;
-                        readonly srcSet: string;
-                    } | null;
+                    readonly sourceUrl: string | null;
                 } | null;
             } | null;
         } | null> | null;
@@ -135,54 +130,20 @@ return {
                   "plural": false,
                   "selections": [
                     {
-                      "alias": null,
+                      "alias": "sourceUrl",
                       "args": [
                         {
                           "kind": "Literal",
-                          "name": "height",
-                          "value": 230
-                        },
-                        {
-                          "kind": "Literal",
-                          "name": "width",
-                          "value": 325
+                          "name": "version",
+                          "value": [
+                            "larger",
+                            "large"
+                          ]
                         }
                       ],
-                      "concreteType": "CroppedImageUrl",
-                      "kind": "LinkedField",
-                      "name": "cropped",
-                      "plural": false,
-                      "selections": [
-                        {
-                          "alias": null,
-                          "args": null,
-                          "kind": "ScalarField",
-                          "name": "width",
-                          "storageKey": null
-                        },
-                        {
-                          "alias": null,
-                          "args": null,
-                          "kind": "ScalarField",
-                          "name": "height",
-                          "storageKey": null
-                        },
-                        {
-                          "alias": null,
-                          "args": null,
-                          "kind": "ScalarField",
-                          "name": "src",
-                          "storageKey": null
-                        },
-                        {
-                          "alias": null,
-                          "args": null,
-                          "kind": "ScalarField",
-                          "name": "srcSet",
-                          "storageKey": null
-                        }
-                      ],
-                      "storageKey": "cropped(height:230,width:325)"
+                      "kind": "ScalarField",
+                      "name": "url",
+                      "storageKey": "url(version:[\"larger\",\"large\"])"
                     }
                   ],
                   "storageKey": null
@@ -209,5 +170,5 @@ return {
   "type": "Artist"
 };
 })();
-(node as any).hash = 'e500cb142b6664b7d5d4b2de008bfbaf';
+(node as any).hash = 'b7dde56edfcd6c909087bc76a3f56efb';
 export default node;

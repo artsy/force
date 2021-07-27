@@ -7,18 +7,9 @@ export type ArtworkLightbox_artwork = {
     readonly formattedMetadata: string | null;
     readonly images: ReadonlyArray<{
         readonly isDefault: boolean | null;
-        readonly fallback: {
-            readonly width: number;
-            readonly height: number;
-            readonly src: string;
-            readonly srcSet: string;
-        } | null;
-        readonly resized: {
-            readonly width: number | null;
-            readonly height: number | null;
-            readonly src: string;
-            readonly srcSet: string;
-        } | null;
+        readonly width: number | null;
+        readonly height: number | null;
+        readonly sourceUrl: string | null;
     } | null> | null;
     readonly " $refType": "ArtworkLightbox_artwork";
 };
@@ -30,59 +21,7 @@ export type ArtworkLightbox_artwork$key = {
 
 
 
-const node: ReaderFragment = (function(){
-var v0 = [
-  {
-    "kind": "Literal",
-    "name": "height",
-    "value": 800
-  },
-  {
-    "kind": "Literal",
-    "name": "version",
-    "value": [
-      "normalized",
-      "larger",
-      "large"
-    ]
-  },
-  {
-    "kind": "Literal",
-    "name": "width",
-    "value": 800
-  }
-],
-v1 = [
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "width",
-    "storageKey": null
-  },
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "height",
-    "storageKey": null
-  },
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "src",
-    "storageKey": null
-  },
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "srcSet",
-    "storageKey": null
-  }
-];
-return {
+const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
@@ -111,24 +50,35 @@ return {
           "storageKey": null
         },
         {
-          "alias": "fallback",
-          "args": (v0/*: any*/),
-          "concreteType": "CroppedImageUrl",
-          "kind": "LinkedField",
-          "name": "cropped",
-          "plural": false,
-          "selections": (v1/*: any*/),
-          "storageKey": "cropped(height:800,version:[\"normalized\",\"larger\",\"large\"],width:800)"
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "width",
+          "storageKey": null
         },
         {
           "alias": null,
-          "args": (v0/*: any*/),
-          "concreteType": "ResizedImageUrl",
-          "kind": "LinkedField",
-          "name": "resized",
-          "plural": false,
-          "selections": (v1/*: any*/),
-          "storageKey": "resized(height:800,version:[\"normalized\",\"larger\",\"large\"],width:800)"
+          "args": null,
+          "kind": "ScalarField",
+          "name": "height",
+          "storageKey": null
+        },
+        {
+          "alias": "sourceUrl",
+          "args": [
+            {
+              "kind": "Literal",
+              "name": "version",
+              "value": [
+                "normalized",
+                "larger",
+                "large"
+              ]
+            }
+          ],
+          "kind": "ScalarField",
+          "name": "url",
+          "storageKey": "url(version:[\"normalized\",\"larger\",\"large\"])"
         }
       ],
       "storageKey": null
@@ -136,6 +86,5 @@ return {
   ],
   "type": "Artwork"
 };
-})();
-(node as any).hash = '7c2f8996741173585967135127ee151f';
+(node as any).hash = 'b51cc76b00404605c54fa00e72a5211f';
 export default node;

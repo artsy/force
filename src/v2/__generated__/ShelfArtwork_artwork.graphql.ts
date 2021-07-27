@@ -5,14 +5,10 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ShelfArtwork_artwork = {
     readonly image: {
-        readonly resized: {
-            readonly src: string;
-            readonly srcSet: string;
-            readonly width: number | null;
-            readonly height: number | null;
-        } | null;
         readonly aspectRatio: number;
+        readonly width: number | null;
         readonly height: number | null;
+        readonly sourceUrl: string | null;
     } | null;
     readonly imageTitle: string | null;
     readonly title: string | null;
@@ -29,15 +25,7 @@ export type ShelfArtwork_artwork$key = {
 
 
 
-const node: ReaderFragment = (function(){
-var v0 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "height",
-  "storageKey": null
-};
-return {
+const node: ReaderFragment = {
   "argumentDefinitions": [
     {
       "defaultValue": 200,
@@ -60,51 +48,41 @@ return {
       "selections": [
         {
           "alias": null,
-          "args": [
-            {
-              "kind": "Variable",
-              "name": "width",
-              "variableName": "width"
-            }
-          ],
-          "concreteType": "ResizedImageUrl",
-          "kind": "LinkedField",
-          "name": "resized",
-          "plural": false,
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "src",
-              "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "srcSet",
-              "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "width",
-              "storageKey": null
-            },
-            (v0/*: any*/)
-          ],
+          "args": null,
+          "kind": "ScalarField",
+          "name": "aspectRatio",
           "storageKey": null
         },
         {
           "alias": null,
           "args": null,
           "kind": "ScalarField",
-          "name": "aspectRatio",
+          "name": "width",
           "storageKey": null
         },
-        (v0/*: any*/)
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "height",
+          "storageKey": null
+        },
+        {
+          "alias": "sourceUrl",
+          "args": [
+            {
+              "kind": "Literal",
+              "name": "version",
+              "value": [
+                "larger",
+                "large"
+              ]
+            }
+          ],
+          "kind": "ScalarField",
+          "name": "url",
+          "storageKey": "url(version:[\"larger\",\"large\"])"
+        }
       ],
       "storageKey": null
     },
@@ -154,6 +132,5 @@ return {
   ],
   "type": "Artwork"
 };
-})();
-(node as any).hash = '0fffdc049243e8f8346b2f9a220b9d77';
+(node as any).hash = 'f8a86dfa0be54a37693bdcc88d3ca150';
 export default node;

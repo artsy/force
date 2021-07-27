@@ -2,7 +2,7 @@ import { getENV } from "./getENV"
 import { crop, resize } from "./resizer"
 
 export const MOBILE_QUALITY: [number, number] = [80, 50]
-export const DESKTOP_QUALITY: [number, number] = [80, 80]
+export const DESKTOP_QUALITY: [number, number] = [80, 50]
 export const optimizedQuality = () =>
   getENV("IS_MOBILE") ? MOBILE_QUALITY : DESKTOP_QUALITY
 
@@ -44,6 +44,7 @@ export const resized = (
   const [quality1x, quality2x] = normalizeQuality(quality)
 
   const _1x = resize(src, { height, quality: quality1x, width, ...rest })
+
   const _2x = resize(src, {
     ...(width ? { width: width * 2 } : {}),
     ...(height ? { height: height * 2 } : {}),

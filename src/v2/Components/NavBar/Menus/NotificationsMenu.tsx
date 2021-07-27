@@ -11,7 +11,6 @@ import {
 } from "v2/__generated__/NotificationsMenuQuery.graphql"
 import {
   Box,
-  Image,
   Link,
   Separator,
   SkeletonBox,
@@ -96,15 +95,7 @@ export const NotificationMenuItems: React.FC<NotificationsMenuQueryResponse> = p
             >
               <NotificationMenuItemContent
                 aria-hidden="true"
-                image={
-                  <Image
-                    src={image.thumb.url}
-                    width={40}
-                    height={40}
-                    alt={summary}
-                    lazyLoad
-                  />
-                }
+                image={<></>}
                 summary={<Text variant="small">{summary}</Text>}
                 artists={
                   <Text variant="small" fontWeight="bold">

@@ -6,6 +6,7 @@ import { useTracking } from "react-tracking"
 import { AnalyticsSchema, useAnalyticsContext } from "v2/System"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { extractNodes } from "v2/Utils/extractNodes"
+import { cropped } from "v2/Utils/resized"
 import { ArtistCurrentArticlesRail_artist } from "v2/__generated__/ArtistCurrentArticlesRail_artist.graphql"
 
 interface ArtistCurrentArticlesRailProps {
@@ -57,6 +58,11 @@ const ArtistCurrentArticlesRail: React.FC<ArtistCurrentArticlesRailProps> = ({
       </Flex>
       <Shelf alignItems="flex-start">
         {nodes.map((node, index) => {
+          const image = cropped(node.thumbnailImage?.sourceUrl!, {
+            width: 325,
+            height: 230,
+          })
+
           return (
             <Box maxWidth={345} key={index}>
               <RouterLink
@@ -80,12 +86,12 @@ const ArtistCurrentArticlesRail: React.FC<ArtistCurrentArticlesRailProps> = ({
                   })
                 }}
               >
-                {node?.thumbnailImage?.cropped?.src ? (
+                {image.src ? (
                   <Image
-                    width={node.thumbnailImage.cropped.width}
-                    height={node.thumbnailImage.cropped.height}
-                    src={node.thumbnailImage.cropped.src}
-                    srcSet={node.thumbnailImage.cropped.srcSet}
+                    width={325}
+                    height={230}
+                    src={image.src}
+                    srcSet={image.srcSet}
                     lazyLoad
                   />
                 ) : (
@@ -123,12 +129,7 @@ export const ArtistCurrentArticlesRailFragmentContainer = createFragmentContaine
               thumbnailTitle
               publishedAt(format: "MMM Do, YYYY")
               thumbnailImage {
-                cropped(width: 325, height: 230) {
-                  width
-                  height
-                  src
-                  srcSet
-                }
+                sourceUrl: url(version: ["larger", "large"])
               }
             }
           }

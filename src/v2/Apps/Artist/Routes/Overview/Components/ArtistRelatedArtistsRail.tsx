@@ -1,5 +1,5 @@
 import { ContextModule, OwnerType } from "@artsy/cohesion"
-import { Box, EntityHeader, Image, Shelf, Spacer, Text } from "@artsy/palette"
+import { EntityHeader, Image, Shelf, Spacer, Text } from "@artsy/palette"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
@@ -7,6 +7,7 @@ import { ArtistFollowArtistButton } from "v2/Apps/Artist/Components/ArtistHeader
 import { AnalyticsSchema, useAnalyticsContext } from "v2/System"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { extractNodes } from "v2/Utils/extractNodes"
+import { cropped } from "v2/Utils/resized"
 import { ArtistRelatedArtistsRail_artist } from "v2/__generated__/ArtistRelatedArtistsRail_artist.graphql"
 
 interface ArtistRelatedArtistsRailProps {
@@ -37,11 +38,14 @@ const ArtistRelatedArtistsRail: React.FC<ArtistRelatedArtistsRailProps> = ({
 
       <Shelf alignItems="flex-start" data-test="relatedArtistsRail">
         {nodes.map((node, index) => {
-          const artworkImage = extractNodes(node.filterArtworksConnection)?.[0]
-            ?.image
+          const artwork = extractNodes(node.filterArtworksConnection)?.[0]
+          const image = cropped(artwork.image?.sourceUrl!, {
+            width: 325,
+            height: 230,
+          })
 
-          if (!artworkImage) {
-            return null as any
+          if (!image) {
+            return <></>
           }
 
           return (
@@ -65,21 +69,22 @@ const ArtistRelatedArtistsRail: React.FC<ArtistRelatedArtistsRailProps> = ({
                 })
               }}
             >
-              <Box>
+              <>
                 <Image
                   width={325}
-                  maxHeight={230}
                   height={230}
-                  src={artworkImage?.resized?.src!}
-                  srcSet={artworkImage?.resized?.srcSet}
-                  style={{ objectFit: "cover" }}
+                  src={image.src}
+                  srcSet={image.srcSet}
                 />
                 <Spacer my={1} />
 
                 <EntityHeader
                   width={325}
                   name={node.name!}
-                  imageUrl={node?.image?.resized?.url}
+                  imageUrl={
+                    cropped(node?.image?.sourceUrl!, { width: 50, height: 50 })
+                      .src
+                  }
                   href={`/artist/${node.slug}`}
                   meta={
                     node.nationality && node.birthday
@@ -104,7 +109,7 @@ const ArtistRelatedArtistsRail: React.FC<ArtistRelatedArtistsRailProps> = ({
                     />
                   }
                 />
-              </Box>
+              </>
             </RouterLink>
           )
         })}
@@ -140,23 +145,14 @@ export const ArtistRelatedArtistsRailFragmentContainer = createFragmentContainer
                     node {
                       internalID
                       slug
-
                       image {
-                        resized(width: 325, height: 230) {
-                          width
-                          height
-                          src
-                          srcSet
-                        }
+                        sourceUrl: url(version: ["larger", "large"])
                       }
                     }
                   }
                 }
-
                 image {
-                  resized(width: 50, height: 50) {
-                    url
-                  }
+                  sourceUrl: url(version: "large")
                 }
               }
             }

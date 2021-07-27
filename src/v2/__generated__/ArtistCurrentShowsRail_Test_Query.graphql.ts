@@ -32,12 +32,7 @@ fragment ArtistCurrentShowsRail_artist on Artist {
     edges {
       node {
         coverImage {
-          cropped(width: 325, height: 230) {
-            width
-            height
-            srcSet
-            src
-          }
+          sourceUrl: url(version: ["larger", "large"])
         }
         exhibitionPeriod
         href
@@ -179,54 +174,20 @@ return {
                         "plural": false,
                         "selections": [
                           {
-                            "alias": null,
+                            "alias": "sourceUrl",
                             "args": [
                               {
                                 "kind": "Literal",
-                                "name": "height",
-                                "value": 230
-                              },
-                              {
-                                "kind": "Literal",
-                                "name": "width",
-                                "value": 325
+                                "name": "version",
+                                "value": [
+                                  "larger",
+                                  "large"
+                                ]
                               }
                             ],
-                            "concreteType": "CroppedImageUrl",
-                            "kind": "LinkedField",
-                            "name": "cropped",
-                            "plural": false,
-                            "selections": [
-                              {
-                                "alias": null,
-                                "args": null,
-                                "kind": "ScalarField",
-                                "name": "width",
-                                "storageKey": null
-                              },
-                              {
-                                "alias": null,
-                                "args": null,
-                                "kind": "ScalarField",
-                                "name": "height",
-                                "storageKey": null
-                              },
-                              {
-                                "alias": null,
-                                "args": null,
-                                "kind": "ScalarField",
-                                "name": "srcSet",
-                                "storageKey": null
-                              },
-                              {
-                                "alias": null,
-                                "args": null,
-                                "kind": "ScalarField",
-                                "name": "src",
-                                "storageKey": null
-                              }
-                            ],
-                            "storageKey": "cropped(height:230,width:325)"
+                            "kind": "ScalarField",
+                            "name": "url",
+                            "storageKey": "url(version:[\"larger\",\"large\"])"
                           }
                         ],
                         "storageKey": null
@@ -269,7 +230,7 @@ return {
     "metadata": {},
     "name": "ArtistCurrentShowsRail_Test_Query",
     "operationKind": "query",
-    "text": "query ArtistCurrentShowsRail_Test_Query {\n  artist(id: \"test\") {\n    ...ArtistCurrentShowsRail_artist\n    id\n  }\n}\n\nfragment ArtistCurrentShowsRail_artist on Artist {\n  internalID\n  name\n  slug\n  showsConnection(first: 5, sort: END_AT_ASC, status: \"running\") {\n    edges {\n      node {\n        coverImage {\n          cropped(width: 325, height: 230) {\n            width\n            height\n            srcSet\n            src\n          }\n        }\n        exhibitionPeriod\n        href\n        internalID\n        name\n        slug\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query ArtistCurrentShowsRail_Test_Query {\n  artist(id: \"test\") {\n    ...ArtistCurrentShowsRail_artist\n    id\n  }\n}\n\nfragment ArtistCurrentShowsRail_artist on Artist {\n  internalID\n  name\n  slug\n  showsConnection(first: 5, sort: END_AT_ASC, status: \"running\") {\n    edges {\n      node {\n        coverImage {\n          sourceUrl: url(version: [\"larger\", \"large\"])\n        }\n        exhibitionPeriod\n        href\n        internalID\n        name\n        slug\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();
