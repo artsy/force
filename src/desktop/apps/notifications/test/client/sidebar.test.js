@@ -3,14 +3,11 @@
  * DS102: Remove unnecessary code created because of implicit returns
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
  */
-const _ = require("underscore")
 const { resolve } = require("path")
 const benv = require("benv")
 const Backbone = require("backbone")
 const sinon = require("sinon")
-const Notifications = require("../../../../collections/notifications.coffee")
 let SidebarView = null
-const { stubChildClasses } = require("../../../../test/helpers/stubs")
 
 describe("SidebarView", function () {
   before(done =>

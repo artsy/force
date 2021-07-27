@@ -5,7 +5,6 @@
  */
 const Backbone = require("backbone")
 const sinon = require("sinon")
-const Partner = require("../../../../models/partner.coffee")
 const Profile = require("../../../../models/profile.coffee")
 const PartnerShows = require("../../../../collections/partner_shows.coffee")
 const _ = require("underscore")
@@ -58,8 +57,6 @@ describe("PartnerShowsGridView", function () {
             ]
             this.partnerShows = new PartnerShows()
             this.partnerShows.fetch = options => {
-              const { page } = options.data
-              const { size } = options.data
               this.partnerShows.reset()
               this.partnerShows.add(this.src)
               return typeof options.success === "function"
@@ -192,8 +189,6 @@ describe("PartnerShowsGridView", function () {
 
             this.partnerShows = new PartnerShows()
             this.partnerShows.fetch = options => {
-              const { page } = options.data
-              const { size } = options.data
               this.partnerShows.reset()
               this.partnerShows.add(this.src)
               return typeof options.success === "function"
@@ -232,8 +227,6 @@ describe("PartnerShowsGridView", function () {
       $("figure").length.should.equal(31)
       const src = []
       this.partnerShows.fetch = options => {
-        const { page } = options.data
-        const { size } = options.data
         this.partnerShows.reset()
         this.partnerShows.add(src)
         return Promise.resolve(
@@ -251,8 +244,6 @@ describe("PartnerShowsGridView", function () {
       $("figure").length.should.equal(31)
       const src = [fabricate("show", { name: "show36", status: "closed" })]
       this.partnerShows.fetch = options => {
-        const { page } = options.data
-        const { size } = options.data
         this.partnerShows.reset()
         this.partnerShows.add(src)
         return Promise.resolve(

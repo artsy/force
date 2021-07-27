@@ -4,7 +4,6 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
  */
 const _ = require("underscore")
-const Backbone = require("backbone")
 const CurrentUser = require("../../../../models/current_user")
 const PasswordEdit = require("../../models/password_edit.coffee")
 const { fabricate } = require("@artsy/antigravity")

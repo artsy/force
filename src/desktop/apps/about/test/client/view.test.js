@@ -4,7 +4,6 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
  */
 import { mediator } from "lib/mediator"
-const _ = require("underscore")
 const benv = require("benv")
 const rewire = require("rewire")
 const sinon = require("sinon")

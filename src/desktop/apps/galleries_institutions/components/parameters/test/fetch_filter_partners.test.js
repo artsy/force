@@ -4,7 +4,6 @@
  * DS207: Consider shorter variations of null checks
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
  */
-const Backbone = require("backbone")
 const _ = require("underscore")
 const rewire = require("rewire")
 const { fabricate } = require("@artsy/antigravity")

@@ -6,8 +6,6 @@
 const fs = require("fs")
 const jade = require("jade")
 const path = require("path")
-const Page = require("../../../models/page")
-const { fabricate } = require("@artsy/antigravity")
 
 describe("Meta tags", function () {
   describe("press page", function () {

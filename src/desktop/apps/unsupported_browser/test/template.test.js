@@ -3,11 +3,9 @@
  * DS102: Remove unnecessary code created because of implicit returns
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
  */
-const _ = require("underscore")
 const jade = require("jade")
 const path = require("path")
 const fs = require("fs")
-const sd = require("sharify").data
 const cheerio = require("cheerio")
 const useragent = require("useragent")
 

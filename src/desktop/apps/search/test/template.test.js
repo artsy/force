@@ -23,23 +23,6 @@ describe("Search results template", function () {
 
   after(() => benv.teardown())
 
-  describe("No results", function () {
-    beforeEach(function () {
-      return (this.template = render("template")({
-        sd: {},
-        asset() {},
-        results: this.search.models,
-        term: "foobar",
-        crop: sinon.stub(),
-        _s,
-      }))
-    })
-
-    it("displays a message to the user that nothing can be found", function () {
-      this.template.should.containEql("Nothing found")
-    })
-  })
-
   describe("Has results", function () {
     beforeEach(function () {
       this.results = _.times(3, () => new SearchResult(fixture.searchResult))

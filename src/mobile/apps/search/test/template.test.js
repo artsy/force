@@ -5,15 +5,10 @@
  */
 const benv = require("benv")
 const _ = require("underscore")
-const jade = require("jade")
-const path = require("path")
-const fs = require("fs")
 const Backbone = require("backbone")
-const { fabricate } = require("@artsy/antigravity")
 const SearchResults = require("../../../collections/search_results")
 const SearchResult = require("../../../models/search_result")
 const sinon = require("sinon")
-
 const { resolve } = require("path")
 
 describe("Search results template", function () {

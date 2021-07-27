@@ -7,7 +7,7 @@ const _ = require("underscore")
 const jade = require("jade")
 const path = require("path")
 const fs = require("fs")
-const Backbone = require("backbone")
+require("backbone")
 const benv = require("benv")
 const { fabricate } = require("@artsy/antigravity")
 const { resolve } = require("path")
@@ -16,15 +16,8 @@ const Artist = require("../../../../models/artist")
 const AuctionLot = require("../../../../models/auction_lot")
 const AuctionLots = require("../../../../collections/auction_lots")
 const Artworks = require("../../../../collections/artworks")
-const CurrentUser = require("../../../../models/current_user")
+require("../../../../models/current_user")
 
-const render = function (templateName) {
-  const filename = path.resolve(
-    __dirname,
-    `../../templates/${templateName}.jade`
-  )
-  return jade.compile(fs.readFileSync(filename), { filename })
-}
 
 describe("Detail auction lots template", function () {
   before(function (done) {

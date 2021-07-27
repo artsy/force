@@ -3,10 +3,6 @@
  * DS102: Remove unnecessary code created because of implicit returns
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
  */
-const _ = require("underscore")
-const learnMoreTemplate = require("jade").compileFile(
-  require.resolve("../templates/learn_more.jade")
-)
 const fixture = require("../fixtures/data.json")
 const markdown = require("../../../components/util/markdown.coffee")
 const bidIncrements = require("../bid_increments.coffee")

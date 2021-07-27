@@ -6,14 +6,11 @@
  */
 const Backbone = require("backbone")
 const sinon = require("sinon")
-const PartnerArtists = require("../../../../collections/partner_artists.coffee")
 const PartnerArtist = require("../../../../models/partner_artist.coffee")
 const PartnerArtistArtworks = require("../../../../collections/partner_artist_artworks.coffee")
 const _ = require("underscore")
 const benv = require("benv")
-const { resolve } = require("path")
 const { fabricate } = require("@artsy/antigravity")
-const rewire = require("rewire")
 
 const PartnerArtistsArtistView = benv.requireWithJadeify(
   require.resolve("../../client/artists_artist"),

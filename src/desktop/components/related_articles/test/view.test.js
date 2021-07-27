@@ -8,7 +8,7 @@ const benv = require("benv")
 const Backbone = require("backbone")
 const sinon = require("sinon")
 const { resolve } = require("path")
-const CurrentUser = require("../../../models/current_user")
+require("../../../models/current_user")
 const Articles = require("../../../collections/articles")
 const fixtures = require("../../../test/helpers/fixtures")
 

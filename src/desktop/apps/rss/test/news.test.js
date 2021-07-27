@@ -4,7 +4,6 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
  */
 const _ = require("underscore")
-const fs = require("fs")
 const newsTemplate = require("jade").compileFile(
   require.resolve("../templates/news.jade")
 )
@@ -12,7 +11,6 @@ const articleTemplate = require("jade").compileFile(
   require.resolve("../templates/article.jade")
 )
 const sd = { APP_URL: "http://localhost" }
-const { fabricate } = require("@artsy/antigravity")
 const Article = require("../../../models/article")
 const Articles = require("../../../collections/articles")
 const moment = require("moment")

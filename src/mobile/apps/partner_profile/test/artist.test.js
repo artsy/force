@@ -11,8 +11,6 @@ const Artist = require("../../../models/artist")
 const Profile = require("../../../models/profile")
 const Partner = require("../../../models/partner")
 const Artworks = require("../../../collections/artworks")
-const FollowArtist = require("../../../models/follow_artist")
-const CurrentUser = require("../../../models/current_user")
 const { resolve } = require("path")
 const { fabricate } = require("@artsy/antigravity")
 
