@@ -69,6 +69,10 @@ export const CollectionApp: React.FC<CollectionAppProps> = props => {
       <Meta property="og:url" content={collectionHref} />
       <Meta property="og:image" content={socialImage} />
       <Meta property="og:description" content={metadataDescription} />
+      <Meta property="og:title" content={title} />
+      <Meta property="og:type" content="website" />
+      <Meta property="og:site_name" content="Artsy" />
+      <Meta property="twitter:card" content="summary_large_image" />
       <Meta property="twitter:description" content={metadataDescription} />
       <Link rel="canonical" href={collectionHref} />
       <BreadCrumbList
