@@ -1,6 +1,10 @@
 import qs from "qs"
 import { data } from "sharify"
 
+// https://res.cloudinary.com/artsy-demo/image/fetch/
+// c_fit,h_150,w_150/f_auto/
+// https://d32dm0rphc51dk.cloudfront.net/F0LQI52hCGA2WWVV7fTMpA/large.jpg
+
 const warn = message => {
   if (process.env.NODE_ENV === "development") {
     console.warn(message)
@@ -16,7 +20,7 @@ export const crop = (
     convert_to?: string
   }
 ) => {
-  const { width, height, quality, convert_to } = options
+  const { width, height } = options
 
   // dont call gemini with empty src
   if (!src) return null
@@ -32,16 +36,13 @@ export const crop = (
     return src
   }
 
-  const config = {
-    resize_to: "fill",
-    src,
-    width,
-    height,
-    quality: quality || 80,
-    convert_to,
-  }
+  const transformations = `c_crop,h_${height},w_${width}/f_auto/q_auto`
 
-  return [data.GEMINI_CLOUDFRONT_URL, qs.stringify(config)].join("?")
+  return [
+    "https://res.cloudinary.com/artsy-demo/image/fetch",
+    transformations,
+    src,
+  ].join("/")
 }
 
 export const resize = (
@@ -53,28 +54,16 @@ export const resize = (
     convert_to?: string
   }
 ) => {
-  const { width, height, quality, convert_to } = options
+  const { width, height } = options
 
   // dont call gemini with empty src
   if (!src) return null
 
-  let resizeTo
-  if (width && !height) {
-    resizeTo = "width"
-  } else if (height && !width) {
-    resizeTo = "height"
-  } else {
-    resizeTo = "fit"
-  }
+  const transformations = `c_fit,h_${height},w_${width}/f_auto/q_auto`
 
-  const config = {
-    resize_to: resizeTo,
+  return [
+    "https://res.cloudinary.com/artsy-demo/image/fetch",
+    transformations,
     src,
-    width,
-    height,
-    quality: quality || 80,
-    convert_to,
-  }
-
-  return [data.GEMINI_CLOUDFRONT_URL, qs.stringify(config)].join("?")
+  ].join("/")
 }

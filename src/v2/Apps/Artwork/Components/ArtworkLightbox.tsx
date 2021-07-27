@@ -6,6 +6,8 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworkLightbox_artwork } from "v2/__generated__/ArtworkLightbox_artwork.graphql"
 import { useSystemContext } from "v2/System"
 import { userIsTeam } from "v2/Utils/user"
+import { cropped, resized as resize } from "v2/Utils/resized"
+import { scale } from "proportional-scale"
 
 interface ArtworkLightboxProps extends ClickableProps {
   artwork: ArtworkLightbox_artwork
@@ -21,14 +23,32 @@ const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
   ...rest
 }) => {
   const images = compact(artwork.images)
-  const hasGeometry = !!images[0].resized?.width
+  const hasGeometry = !!images[0]?.width
+
   const maxHeight = Math.max(
     ...images.map(image =>
-      hasGeometry ? image.resized!.height! : image.fallback!.height!
+      hasGeometry
+        ? scale({
+            width: image.width!,
+            height: image.height!,
+            maxWidth: 800,
+            maxHeight: 800,
+          }).height
+        : 800
     )
   )
-  const { resized, fallback, isDefault } = images[activeIndex]
-  const image = hasGeometry ? resized : fallback
+  const { sourceUrl, isDefault, width, height } = images[activeIndex]
+  const geometry = scale({
+    width: width!,
+    height: height!,
+    maxWidth: 800,
+    maxHeight: 800,
+  })
+  const image = hasGeometry
+    ? resize(sourceUrl!, { width: 800, height: 800 })
+    : cropped(sourceUrl!, { width: 800, height: 800 })
+
+  console.log({ geometry })
 
   const { user } = useSystemContext()
   const isTeam = userIsTeam(user)
@@ -39,7 +59,14 @@ const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
 
   return (
     <>
-      {isDefault && <Link rel="preload" as="image" href={image.src} />}
+      {isDefault && (
+        <Link
+          rel="preload"
+          as="image"
+          href={image.src}
+          imagesrcset={image.srcSet}
+        />
+      )}
 
       <Clickable
         display="flex"
@@ -56,9 +83,9 @@ const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
           bg="black10"
           mx={[0, 2]}
           // @ts-ignore
-          maxWidth={image.width ?? "100%"}
-          aspectWidth={image.width ?? 1}
-          aspectHeight={image.height ?? 1}
+          maxWidth={geometry.width ?? "100%"}
+          aspectWidth={geometry.width ?? 1}
+          aspectHeight={geometry.height ?? 1}
         >
           <Image
             id={isDefault ? "transitionFrom--ViewInRoom" : undefined}
@@ -85,26 +112,9 @@ export const ArtworkLightboxFragmentContainer = createFragmentContainer(
         formattedMetadata
         images {
           isDefault
-          fallback: cropped(
-            width: 800
-            height: 800
-            version: ["normalized", "larger", "large"]
-          ) {
-            width
-            height
-            src
-            srcSet
-          }
-          resized(
-            width: 800
-            height: 800
-            version: ["normalized", "larger", "large"]
-          ) {
-            width
-            height
-            src
-            srcSet
-          }
+          width
+          height
+          sourceUrl: url(version: ["normalized", "larger", "large"])
         }
       }
     `,
