@@ -41,6 +41,7 @@ import {
   commercialFilterParamsChanged,
   ActionType,
   ContextModule,
+  ClickedChangePage,
 } from "@artsy/cohesion"
 import { allowedFilters } from "./Utils/allowedFilters"
 import { Sticky } from "v2/Components/Sticky"
@@ -180,15 +181,17 @@ export const BaseArtworkFilter: React.FC<
           fetchResults()
 
           if (filterKey === "page") {
-            tracking.trackEvent({
+            const pageTrackingParams: ClickedChangePage = {
               action: ActionType.clickedChangePage,
               context_module: ContextModule.artworkGrid,
-              context_page_owner_type: contextPageOwnerType,
+              context_page_owner_type: contextPageOwnerType!,
               context_page_owner_id: contextPageOwnerId,
               context_page_owner_slug: contextPageOwnerSlug,
               page_current: previousFilter,
               page_changed: currentFilter,
-            })
+            }
+
+            tracking.trackEvent(pageTrackingParams)
           } else {
             tracking.trackEvent(
               commercialFilterParamsChanged({
