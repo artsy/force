@@ -37,7 +37,11 @@ import { ArtistSeriesArtworksFilter_artistSeries } from "v2/__generated__/Artist
 import { FairArtworks_fair } from "v2/__generated__/FairArtworks_fair.graphql"
 import { ShowArtworks_show } from "v2/__generated__/ShowArtworks_show.graphql"
 import { useAnalyticsContext } from "v2/System/Analytics/AnalyticsContext"
-import { commercialFilterParamsChanged } from "@artsy/cohesion"
+import {
+  commercialFilterParamsChanged,
+  ActionType,
+  ContextModule,
+} from "@artsy/cohesion"
 import { allowedFilters } from "./Utils/allowedFilters"
 import { Sticky } from "v2/Components/Sticky"
 import { ScrollRefContext } from "./ArtworkFilters/useScrollContext"
@@ -167,8 +171,7 @@ export const BaseArtworkFilter: React.FC<
    * and trigger a reload.
    */
   useDeepCompareEffect(() => {
-    // @ts-expect-error STRICT_NULL_CHECK
-    Object.entries(filterContext.filters).forEach(
+    Object.entries(filterContext.filters ?? {}).forEach(
       ([filterKey, currentFilter]) => {
         // @ts-expect-error STRICT_NULL_CHECK
         const previousFilter = previousFilters[filterKey]
@@ -177,19 +180,31 @@ export const BaseArtworkFilter: React.FC<
         if (filtersHaveUpdated) {
           fetchResults()
 
-          tracking.trackEvent(
-            commercialFilterParamsChanged({
-              changed: JSON.stringify({
-                // @ts-expect-error STRICT_NULL_CHECK
-                [filterKey]: filterContext.filters[filterKey],
-              }),
-              contextOwnerId: contextPageOwnerId,
-              contextOwnerSlug: contextPageOwnerSlug,
-              // @ts-expect-error STRICT_NULL_CHECK
-              contextOwnerType: contextPageOwnerType,
-              current: JSON.stringify(filterContext.filters),
+          if (filterKey === "page") {
+            tracking.trackEvent({
+              action: ActionType.clickedChangePage,
+              context_module: ContextModule.artworkGrid,
+              context_page_owner_type: contextPageOwnerType,
+              context_page_owner_id: contextPageOwnerId,
+              context_page_owner_slug: contextPageOwnerSlug,
+              page_current: previousFilter,
+              page_changed: currentFilter,
             })
-          )
+          } else {
+            tracking.trackEvent(
+              commercialFilterParamsChanged({
+                changed: JSON.stringify({
+                  // @ts-expect-error STRICT_NULL_CHECK
+                  [filterKey]: filterContext.filters[filterKey],
+                }),
+                contextOwnerId: contextPageOwnerId,
+                contextOwnerSlug: contextPageOwnerSlug,
+                // @ts-expect-error STRICT_NULL_CHECK
+                contextOwnerType: contextPageOwnerType,
+                current: JSON.stringify(filterContext.filters),
+              })
+            )
+          }
         }
       }
     )
