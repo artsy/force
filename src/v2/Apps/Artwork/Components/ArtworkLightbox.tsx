@@ -39,7 +39,14 @@ const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
 
   return (
     <>
-      {isDefault && <Link rel="preload" as="image" href={image.src} />}
+      {isDefault && (
+        <Link
+          rel="preload"
+          as="image"
+          href={image.src}
+          imagesrcset={image.srcSet}
+        />
+      )}
 
       <Clickable
         display="flex"
