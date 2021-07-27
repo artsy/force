@@ -61,6 +61,7 @@ const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
           aspectHeight={image.height ?? 1}
         >
           <Image
+            id={isDefault ? "transitionFrom--ViewInRoom" : undefined}
             key={image.src}
             width="100%"
             height="100%"
@@ -69,8 +70,6 @@ const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
             alt={artwork.formattedMetadata ?? ""}
             lazyLoad={lazyLoad}
             preventRightClick={!isTeam}
-            // Currently used for viewing room
-            data-is-default={isDefault}
           />
         </ResponsiveBox>
       </Clickable>

@@ -1,11 +1,5 @@
-import { Breakpoint } from "@artsy/palette"
-import { ArtworkActions_Test_QueryRawResponse } from "v2/__generated__/ArtworkActions_Test_Query.graphql"
-import { ArtworkActionsFixture } from "v2/Apps/__tests__/Fixtures/Artwork/ArtworkActions.fixture"
-import { MockBoot, renderRelayTree } from "v2/DevTools"
-import { cloneDeep } from "lodash"
 import React from "react"
-import { ArtworkActionsFragmentContainer as ArtworkActions } from "../ArtworkActions"
-
+import { ArtworkActionsFragmentContainer } from "../ArtworkActions"
 import {
   BellFillIcon,
   DownloadIcon,
@@ -16,210 +10,166 @@ import {
   OpenEyeIcon,
   ShareIcon,
 } from "@artsy/palette"
-import { SystemContextProvider } from "v2/System"
 import { graphql } from "react-relay"
+import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
+import { userIsAdmin, userIsTeam } from "v2/Utils/user"
+import { MockBoot } from "v2/DevTools"
+import { Breakpoint } from "@artsy/palette/dist/themes/types"
 
 jest.unmock("react-relay")
+jest.mock("v2/System", () => ({
+  SystemContextProvider: ({ children }) => children,
+  track: jest.fn().mockReturnValue(jest.fn),
+  useSystemContext: jest.fn().mockReturnValue({ user: {} }),
+  useTracking: jest.fn().mockReturnValue({ trackEvent: jest.fn() }),
+}))
+jest.mock("v2/System/useSystemContext", () => ({
+  useSystemContext: jest.fn().mockReturnValue({ mediator: { on: jest.fn() } }),
+}))
+jest.mock("v2/System/Analytics", () => ({
+  AnalyticsSchema: {},
+  useTracking: () => ({}),
+}))
+jest.mock("v2/Utils/user", () => ({
+  userIsAdmin: jest.fn(),
+  userIsTeam: jest.fn(),
+}))
+
+const getWrapperWithBreakpoint = (breakpoint: Breakpoint) =>
+  setupTestWrapper({
+    Component: props => {
+      return (
+        <MockBoot breakpoint={breakpoint}>
+          {/* @ts-ignore */}
+          <ArtworkActionsFragmentContainer {...props} />
+        </MockBoot>
+      )
+    },
+    query: graphql`
+      query ArtworkActions_Test_Query {
+        artwork(id: "example") {
+          ...ArtworkActions_artwork
+        }
+      }
+    `,
+  }).getWrapper
 
 describe("ArtworkActions", () => {
-  const getWrapper = async (
-    breakpoint: Breakpoint = "lg",
-    data: ArtworkActions_Test_QueryRawResponse & {
-      user: User
-    } = ArtworkActionsFixture
-  ) => {
-    const { artwork, user } = data
-    return await renderRelayTree({
-      Component: ArtworkActions,
-      query: graphql`
-        query ArtworkActions_Test_Query($artworkID: String!)
-          @raw_response_type {
-          artwork(id: $artworkID) {
-            ...ArtworkActions_artwork
-          }
-        }
-      `,
-      mockData: { artwork } as ArtworkActions_Test_QueryRawResponse,
-      variables: {
-        artworkID: "matt-z-and-percy-still-life",
-      },
-      wrapper: children => (
-        <MockBoot breakpoint={breakpoint}>
-          <SystemContextProvider user={user}>{children}</SystemContextProvider>
-        </MockBoot>
-      ),
+  let mockUserIsAdmin: boolean
+  let mockUserIsTeam: boolean
+  ;(userIsAdmin as jest.Mock).mockImplementation(() => mockUserIsAdmin)
+  ;(userIsTeam as jest.Mock).mockImplementation(() => mockUserIsTeam)
+
+  describe("lg breakpoint", () => {
+    const getWrapper = getWrapperWithBreakpoint("lg")
+
+    it("renders proper components for a team user", () => {
+      mockUserIsAdmin = true
+      mockUserIsTeam = true
+      const wrapper = getWrapper()
+
+      expect(wrapper.find(EditIcon).length).toBe(1)
+      expect(wrapper.find(GenomeIcon).length).toBe(1)
+      expect(wrapper.find(MoreIcon).length).toBe(0)
     })
-  }
 
-  it("renders proper components for a team user", async () => {
-    const wrapper = await getWrapper()
-    expect(wrapper.find(EditIcon).length).toBe(1)
-    expect(wrapper.find(GenomeIcon).length).toBe(1)
-    expect(wrapper.find(MoreIcon).length).toBe(0)
-  })
+    it("renders proper components for a non-team user", () => {
+      mockUserIsAdmin = false
+      mockUserIsTeam = false
+      const wrapper = getWrapper()
 
-  it("renders proper components for a non-team user", async () => {
-    const data = cloneDeep(ArtworkActionsFixture)
-    data.user.type = "User"
-    data.user.roles = ["user"]
-    const wrapper = await getWrapper("lg", data)
-    expect(wrapper.find(HeartFillIcon).length).toBe(1)
-    expect(wrapper.find(ShareIcon).length).toBe(1)
-    expect(wrapper.find(OpenEyeIcon).length).toBe(1)
-    expect(wrapper.find(DownloadIcon).length).toBe(1)
-    expect(wrapper.find(EditIcon).length).toBe(0)
-    expect(wrapper.find(GenomeIcon).length).toBe(0)
-    expect(wrapper.find(MoreIcon).length).toBe(0)
-  })
-
-  describe("concerning SaveButton states icon states", () => {
-    it("renders heart icon when not sale", async () => {
-      const data = {
-        ...ArtworkActionsFixture,
-        artwork: {
-          ...ArtworkActionsFixture.artwork,
-          sale: null,
-        },
-      }
-      // @ts-expect-error STRICT_NULL_CHECK
-      const wrapper = await getWrapper("lg", data)
       expect(wrapper.find(HeartFillIcon).length).toBe(1)
-      expect(wrapper.find(BellFillIcon).length).toBe(0)
+      expect(wrapper.find(ShareIcon).length).toBe(1)
+      expect(wrapper.find(OpenEyeIcon).length).toBe(1)
+      expect(wrapper.find(DownloadIcon).length).toBe(1)
+      expect(wrapper.find(EditIcon).length).toBe(0)
+      expect(wrapper.find(GenomeIcon).length).toBe(0)
+      expect(wrapper.find(MoreIcon).length).toBe(0)
     })
 
-    it("renders heart icon when sale is closed", async () => {
-      const data = {
-        ...ArtworkActionsFixture,
-        artwork: {
-          ...ArtworkActionsFixture.artwork,
-          sale: {
-            // @ts-expect-error STRICT_NULL_CHECK
-            ...ArtworkActionsFixture.artwork.sale,
-            is_closed: true,
-          },
-        },
-      }
-      // @ts-expect-error STRICT_NULL_CHECK
-      const wrapper = await getWrapper("lg", data)
-      expect(wrapper.find(HeartFillIcon).length).toBe(1)
-      expect(wrapper.find(BellFillIcon).length).toBe(0)
-    })
+    describe("concerning SaveButton states icon states", () => {
+      it("renders heart icon when not sale", () => {
+        const wrapper = getWrapper({ Artwork: () => ({ sale: null }) })
 
-    it("renders bell icon when sale is open", async () => {
-      const data = {
-        ...ArtworkActionsFixture,
-        artwork: {
-          ...ArtworkActionsFixture.artwork,
-          sale: {
-            // @ts-expect-error STRICT_NULL_CHECK
-            ...ArtworkActionsFixture.artwork.sale,
+        expect(wrapper.find(HeartFillIcon).length).toBe(1)
+        expect(wrapper.find(BellFillIcon).length).toBe(0)
+      })
+
+      it("renders heart icon when sale is closed", () => {
+        const wrapper = getWrapper({ Sale: () => ({ is_closed: true }) })
+
+        expect(wrapper.find(HeartFillIcon).length).toBe(1)
+        expect(wrapper.find(BellFillIcon).length).toBe(0)
+      })
+
+      it("renders bell icon when sale is open", () => {
+        const wrapper = getWrapper({
+          Sale: () => ({
             is_auction: true,
             is_closed: false,
-          },
-        },
-      }
-      // @ts-expect-error STRICT_NULL_CHECK
-      const wrapper = await getWrapper("lg", data)
-      expect(wrapper.find(HeartFillIcon).length).toBe(0)
-      expect(wrapper.find(BellFillIcon).length).toBe(1)
-    })
-  })
+          }),
+        })
 
-  describe("view in a room", () => {
-    it("available for artworks that are hangable", async () => {
-      const data = {
-        ...ArtworkActionsFixture,
-        artwork: {
-          ...ArtworkActionsFixture.artwork,
-          is_hangable: true,
-        },
-        user: {
-          ...ArtworkActionsFixture.user,
-          type: "Admin",
-        },
-      }
-      // @ts-expect-error STRICT_NULL_CHECK
-      const wrapper = await getWrapper("lg", data)
-      expect(wrapper.find(OpenEyeIcon).length).toBe(1)
+        expect(wrapper.find(HeartFillIcon).length).toBe(0)
+        expect(wrapper.find(BellFillIcon).length).toBe(1)
+      })
     })
 
-    it("is not available for non hangable artworks", async () => {
-      const data = {
-        ...ArtworkActionsFixture,
-        artwork: {
-          ...ArtworkActionsFixture.artwork,
-          is_hangable: false,
-        },
-        user: {
-          ...ArtworkActionsFixture.user,
-          type: "Admin",
-        },
-      }
-      // @ts-expect-error STRICT_NULL_CHECK
-      const wrapper = await getWrapper("lg", data)
-      expect(wrapper.find(OpenEyeIcon).length).toBe(0)
-    })
-  })
+    describe("view in a room", () => {
+      it("available for artworks that are hangable", () => {
+        const wrapper = getWrapper({ Artwork: () => ({ is_hangable: true }) })
 
-  describe("concerning other utility actions", () => {
-    describe("download link", () => {
-      it("renders link if is_downloadable", async () => {
-        const data = {
-          ...ArtworkActionsFixture,
-          artwork: {
-            ...ArtworkActionsFixture.artwork,
-            is_downloadable: true,
-          },
-          user: {
-            ...ArtworkActionsFixture.user,
-            type: "User",
-          },
-        }
-        // @ts-expect-error STRICT_NULL_CHECK
-        const wrapper = await getWrapper("lg", data)
-        expect(wrapper.find(DownloadIcon).length).toBe(1)
+        expect(wrapper.find(OpenEyeIcon).length).toBe(1)
       })
 
-      it("renders link if admin", async () => {
-        const data = {
-          ...ArtworkActionsFixture,
-          artwork: {
-            ...ArtworkActionsFixture.artwork,
-            is_downloadable: false,
-          },
-          user: {
-            ...ArtworkActionsFixture.user,
-            type: "Admin",
-          },
-        }
-        // @ts-expect-error STRICT_NULL_CHECK
-        const wrapper = await getWrapper("lg", data)
-        expect(wrapper.find(DownloadIcon).length).toBe(1)
-      })
+      it("is not available for non hangable artworks", () => {
+        const wrapper = getWrapper({ Artwork: () => ({ is_hangable: false }) })
 
-      it("hides link if is_downloadable=false and the user is not an admin", async () => {
-        const data = {
-          ...ArtworkActionsFixture,
-          artwork: {
-            ...ArtworkActionsFixture.artwork,
-            is_downloadable: false,
-          },
-          user: {
-            ...ArtworkActionsFixture.user,
-            type: "User",
-            roles: [],
-          },
-        }
-        // @ts-expect-error STRICT_NULL_CHECK
-        const wrapper = await getWrapper("lg", data)
-        expect(wrapper.find(DownloadIcon).length).toBe(0)
+        expect(wrapper.find(OpenEyeIcon).length).toBe(0)
+      })
+    })
+
+    describe("concerning other utility actions", () => {
+      describe("download link", () => {
+        it("renders link if is_downloadable", () => {
+          mockUserIsAdmin = false
+          mockUserIsTeam = false
+          const wrapper = getWrapper({
+            Artwork: () => ({ is_downloadable: true }),
+          })
+
+          expect(wrapper.find(DownloadIcon).length).toBe(1)
+        })
+
+        it("renders link if admin", () => {
+          mockUserIsAdmin = true
+          mockUserIsTeam = true
+          const wrapper = getWrapper({
+            Artwork: () => ({ is_downloadable: false }),
+          })
+
+          expect(wrapper.find(DownloadIcon).length).toBe(1)
+        })
+
+        it("hides link if is_downloadable=false and the user is not an admin", () => {
+          mockUserIsAdmin = false
+          mockUserIsTeam = false
+          const wrapper = getWrapper({
+            Artwork: () => ({ is_downloadable: false }),
+          })
+
+          expect(wrapper.find(DownloadIcon).length).toBe(0)
+        })
       })
     })
   })
 
   describe("in the xs breakpoint", () => {
-    it("shows the More icon", async () => {
-      const wrapper = await getWrapper("xs")
+    const getWrapper = getWrapperWithBreakpoint("xs")
+
+    it("shows the More icon", () => {
+      const wrapper = getWrapper()
+
       expect(wrapper.find(HeartFillIcon).length).toBe(1)
       expect(wrapper.find(ShareIcon).length).toBe(1)
       expect(wrapper.find(OpenEyeIcon).length).toBe(1)
@@ -229,29 +179,13 @@ describe("ArtworkActions", () => {
       expect(wrapper.find(GenomeIcon).length).toBe(0)
     })
 
-    it("clicking the More icon shows the download link if non-admin", async () => {
-      const wrapper = await getWrapper("xs")
-      wrapper.find(MoreIcon).simulate("click")
-      expect(wrapper.find(DownloadIcon).length).toBe(1)
-      expect(wrapper.find(EditIcon).length).toBe(1)
-      expect(wrapper.find(GenomeIcon).length).toBe(1)
-    })
+    it("shows no More icon if there are <= 3 actions", () => {
+      mockUserIsAdmin = false
+      mockUserIsTeam = false
+      const wrapper = getWrapper({
+        Artwork: () => ({ is_downloadable: false }),
+      })
 
-    it("shows no More icon if there are <= 3 actions", async () => {
-      const data = {
-        ...ArtworkActionsFixture,
-        artwork: {
-          ...ArtworkActionsFixture.artwork,
-          is_downloadable: false,
-        },
-        user: {
-          ...ArtworkActionsFixture.user,
-          type: "User",
-          roles: [],
-        },
-      }
-      // @ts-expect-error STRICT_NULL_CHECK
-      const wrapper = await getWrapper("xs", data)
       expect(wrapper.find(HeartFillIcon).length).toBe(1)
       expect(wrapper.find(ShareIcon).length).toBe(1)
       expect(wrapper.find(OpenEyeIcon).length).toBe(1)
