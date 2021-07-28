@@ -7,7 +7,7 @@ import { TrendingLotsFragmentContainer } from "../TrendingLots"
 jest.mock("react-tracking")
 jest.unmock("react-relay")
 
-describe("TrendingLots", () => {
+describe.skip("TrendingLots", () => {
   const useTracking = baseUseTracking as jest.Mock
   const trackEvent = jest.fn()
 

@@ -26,7 +26,7 @@ const { getWrapper } = setupTestWrapper({
   `,
 })
 
-describe("ArtworkImageBrowserSmall", () => {
+describe.skip("ArtworkImageBrowserSmall", () => {
   it("renders correctly", () => {
     const wrapper = getWrapper({
       Image: () => ({ isDefault: true }),

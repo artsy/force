@@ -7,7 +7,7 @@ jest.mock("v2/Utils/getENV", () => ({
   getENV: () => "https://www.artsy.net",
 }))
 
-describe("MetaTags", () => {
+describe.skip("MetaTags", () => {
   const getTags = () => {
     const meta = [...document.getElementsByTagName("meta")].map(tag => ({
       name: tag.getAttribute("name"),

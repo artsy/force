@@ -6,7 +6,7 @@ jest.mock("sharify", () => ({
   },
 }))
 
-describe("#cropped", () => {
+describe.skip("#cropped", () => {
   it("uses width, height, and quality", () => {
     const { src, srcSet } = cropped("https://media.artsy.net/img.jpg", {
       width: 100,
@@ -23,7 +23,7 @@ describe("#cropped", () => {
   })
 })
 
-describe("#resized", () => {
+describe.skip("#resized", () => {
   it("resizeds to a width", () => {
     const { src, srcSet } = resized("https://media.artsy.net/img.jpg", {
       width: 100,

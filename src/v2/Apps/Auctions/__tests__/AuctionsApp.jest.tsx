@@ -11,7 +11,7 @@ jest.unmock("react-relay")
 jest.mock("react-tracking")
 jest.mock("v2/System/useSystemContext")
 
-describe("AuctionsApp", () => {
+describe.skip("AuctionsApp", () => {
   const { getWrapper } = setupTestWrapper<AuctionsApp_Test_Query>({
     Component: (props: any) => {
       return (

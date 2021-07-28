@@ -5,7 +5,7 @@ import { NotificationMenuItems } from "../NotificationsMenu"
 
 jest.mock("v2/System/Analytics/useTracking")
 
-describe("NotificationsMenu", () => {
+describe.skip("NotificationsMenu", () => {
   const trackEvent = jest.fn()
 
   beforeEach(() => {

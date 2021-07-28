@@ -7,7 +7,7 @@ import { useTracking as baseUseTracking } from "react-tracking"
 jest.unmock("react-relay")
 jest.mock("react-tracking")
 
-describe("AuctionArtworksRailArtworks", () => {
+describe.skip("AuctionArtworksRailArtworks", () => {
   const { getWrapper } = setupTestWrapper({
     Component: (props: any) => {
       return (
