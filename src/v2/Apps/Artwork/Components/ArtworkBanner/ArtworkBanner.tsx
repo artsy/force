@@ -2,10 +2,20 @@ import { ArtworkBanner_artwork } from "v2/__generated__/ArtworkBanner_artwork.gr
 import { ArtworkBannerQuery } from "v2/__generated__/ArtworkBannerQuery.graphql"
 import { SystemContext } from "v2/System"
 import { renderWithLoadProgress } from "v2/System/Relay/renderWithLoadProgress"
-import { SystemQueryRenderer as QueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
+import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import React, { useContext } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { Banner } from "./Banner"
+import {
+  Box,
+  ChevronIcon,
+  Column,
+  Flex,
+  GridColumns,
+  Image,
+  Text,
+} from "@artsy/palette"
+import { TopContextBar } from "v2/Components/TopContextBar"
+import { RouterLink } from "v2/System/Router/RouterLink"
 
 export interface ArtworkBannerProps {
   artwork: ArtworkBanner_artwork
@@ -18,19 +28,33 @@ export const ArtworkBanner: React.FC<ArtworkBannerProps> = props => {
     return null
   }
 
-  console.log(bannerProps, " *** ")
-
-  const { imageUrl, initials, meta, name, subHeadline, href } = bannerProps
+  const { image, meta, name, subHeadline, href } = bannerProps
+  const isShow = props.artwork?.context?.__typename === "Show"
 
   return (
-    <Banner
-      imageUrl={imageUrl as string}
-      initials={initials as string}
-      meta={meta}
-      name={name as string}
-      subHeadline={subHeadline}
-      href={href as string}
-    />
+    <RouterLink to={href} textDecoration="none">
+      <TopContextBar>
+        <GridColumns>
+          <Column span={8}>
+            <Flex alignItems="center">
+              {isShow ? (
+                <Box pr={0.5}>
+                  <ChevronIcon direction="left" top={"4px"} />
+                </Box>
+              ) : (
+                image && <Image src={image.src} srcSet={image.srcSet} pr={1} />
+              )}
+              <Text variant="xs" mr={0.5}>
+                {[name, subHeadline].filter(Boolean).join(" - ")}
+              </Text>
+              <Text variant="xs" color="black60">
+                {meta}
+              </Text>
+            </Flex>
+          </Column>
+        </GridColumns>
+      </TopContextBar>
+    </RouterLink>
   )
 }
 
@@ -47,11 +71,8 @@ const computeBannerProps = (props: ArtworkBannerProps) => {
         return null
       }
 
-      const auctionImage = sale.isAuction && sale.coverImage?.url
-
       return {
-        imageUrl: auctionImage,
-        initials: partner?.initials,
+        image: sale.coverImage?.cropped,
         meta: "In auction",
         name: context.name,
         subHeadline:
@@ -61,8 +82,7 @@ const computeBannerProps = (props: ArtworkBannerProps) => {
     }
     case "Fair": {
       return {
-        imageUrl: context.profile?.icon?.img?.url,
-        initials: context.profile?.initials,
+        image: context.profile?.icon?.cropped,
         meta: "At fair",
         name: context.name,
         subHeadline: partner?.name,
@@ -78,8 +98,7 @@ const computeBannerProps = (props: ArtworkBannerProps) => {
       }
 
       return {
-        imageUrl: context.thumbnail?.img?.url,
-        initials: partner?.initials,
+        image: context.thumbnail?.cropped,
         meta,
         name: context.name,
         subHeadline: partner?.name,
@@ -99,14 +118,16 @@ export const ArtworkBannerFragmentContainer = createFragmentContainer(
       fragment ArtworkBanner_artwork on Artwork {
         partner {
           name
-          initials
         }
         sale {
           isAuction
           isBenefit
           isGalleryAuction
           coverImage {
-            url(version: "square")
+            cropped(width: 30, height: 30, version: "square") {
+              src
+              srcSet
+            }
           }
         }
         context {
@@ -119,10 +140,10 @@ export const ArtworkBannerFragmentContainer = createFragmentContainer(
             name
             href
             profile {
-              initials
               icon {
-                img: resized(width: 70, height: 70, version: "square") {
-                  url
+                cropped(width: 30, height: 30, version: "square") {
+                  src
+                  srcSet
                 }
               }
             }
@@ -132,8 +153,9 @@ export const ArtworkBannerFragmentContainer = createFragmentContainer(
             href
             status
             thumbnail: coverImage {
-              img: resized(width: 70, height: 70, version: "square") {
-                url
+              cropped(width: 30, height: 30, version: "square") {
+                src
+                srcSet
               }
             }
           }
@@ -151,7 +173,7 @@ export const ArtworkBannerQueryRenderer = ({
   const { relayEnvironment } = useContext(SystemContext)
 
   return (
-    <QueryRenderer<ArtworkBannerQuery>
+    <SystemQueryRenderer<ArtworkBannerQuery>
       environment={relayEnvironment}
       variables={{ artworkID }}
       query={graphql`

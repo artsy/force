@@ -9,63 +9,9 @@ export type ArtworkBanner_Test_QueryResponse = {
         readonly " $fragmentRefs": FragmentRefs<"ArtworkBanner_artwork">;
     } | null;
 };
-export type ArtworkBanner_Test_QueryRawResponse = {
-    readonly artwork: ({
-        readonly partner: ({
-            readonly name: string | null;
-            readonly initials: string | null;
-            readonly id: string | null;
-        }) | null;
-        readonly sale: ({
-            readonly isAuction: boolean | null;
-            readonly isBenefit: boolean | null;
-            readonly isGalleryAuction: boolean | null;
-            readonly coverImage: ({
-                readonly url: string | null;
-            }) | null;
-            readonly id: string | null;
-        }) | null;
-        readonly context: ({
-            readonly __typename: "Sale";
-            readonly id: string | null;
-            readonly name: string | null;
-            readonly href: string | null;
-        } | {
-            readonly __typename: "Fair";
-            readonly id: string | null;
-            readonly name: string | null;
-            readonly href: string | null;
-            readonly profile: ({
-                readonly initials: string | null;
-                readonly icon: ({
-                    readonly img: ({
-                        readonly url: string;
-                    }) | null;
-                }) | null;
-                readonly id: string | null;
-            }) | null;
-        } | {
-            readonly __typename: "Show";
-            readonly id: string | null;
-            readonly name: string | null;
-            readonly href: string | null;
-            readonly status: string | null;
-            readonly thumbnail: ({
-                readonly img: ({
-                    readonly url: string;
-                }) | null;
-            }) | null;
-        } | {
-            readonly __typename: string;
-            readonly id: string | null;
-        }) | null;
-        readonly id: string | null;
-    }) | null;
-};
 export type ArtworkBanner_Test_Query = {
     readonly response: ArtworkBanner_Test_QueryResponse;
     readonly variables: ArtworkBanner_Test_QueryVariables;
-    readonly rawResponse: ArtworkBanner_Test_QueryRawResponse;
 };
 
 
@@ -81,7 +27,6 @@ query ArtworkBanner_Test_Query {
 fragment ArtworkBanner_artwork on Artwork {
   partner {
     name
-    initials
     id
   }
   sale {
@@ -89,7 +34,10 @@ fragment ArtworkBanner_artwork on Artwork {
     isBenefit
     isGalleryAuction
     coverImage {
-      url(version: "square")
+      cropped(width: 30, height: 30, version: "square") {
+        src
+        srcSet
+      }
     }
     id
   }
@@ -103,10 +51,10 @@ fragment ArtworkBanner_artwork on Artwork {
       name
       href
       profile {
-        initials
         icon {
-          img: resized(width: 70, height: 70, version: "square") {
-            url
+          cropped(width: 30, height: 30, version: "square") {
+            src
+            srcSet
           }
         }
         id
@@ -117,8 +65,9 @@ fragment ArtworkBanner_artwork on Artwork {
       href
       status
       thumbnail: coverImage {
-        img: resized(width: 70, height: 70, version: "square") {
-          url
+        cropped(width: 30, height: 30, version: "square") {
+          src
+          srcSet
         }
       }
     }
@@ -148,60 +97,59 @@ v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "initials",
-  "storageKey": null
-},
-v3 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v4 = {
-  "kind": "Literal",
-  "name": "version",
-  "value": "square"
-},
-v5 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "href",
-  "storageKey": null
-},
-v6 = [
+v3 = [
   {
-    "alias": "img",
+    "alias": null,
     "args": [
       {
         "kind": "Literal",
         "name": "height",
-        "value": 70
+        "value": 30
       },
-      (v4/*: any*/),
+      {
+        "kind": "Literal",
+        "name": "version",
+        "value": "square"
+      },
       {
         "kind": "Literal",
         "name": "width",
-        "value": 70
+        "value": 30
       }
     ],
-    "concreteType": "ResizedImageUrl",
+    "concreteType": "CroppedImageUrl",
     "kind": "LinkedField",
-    "name": "resized",
+    "name": "cropped",
     "plural": false,
     "selections": [
       {
         "alias": null,
         "args": null,
         "kind": "ScalarField",
-        "name": "url",
+        "name": "src",
+        "storageKey": null
+      },
+      {
+        "alias": null,
+        "args": null,
+        "kind": "ScalarField",
+        "name": "srcSet",
         "storageKey": null
       }
     ],
-    "storageKey": "resized(height:70,version:\"square\",width:70)"
+    "storageKey": "cropped(height:30,version:\"square\",width:30)"
   }
-];
+],
+v4 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "href",
+  "storageKey": null
+};
 return {
   "fragment": {
     "argumentDefinitions": [],
@@ -251,8 +199,7 @@ return {
             "plural": false,
             "selections": [
               (v1/*: any*/),
-              (v2/*: any*/),
-              (v3/*: any*/)
+              (v2/*: any*/)
             ],
             "storageKey": null
           },
@@ -292,20 +239,10 @@ return {
                 "kind": "LinkedField",
                 "name": "coverImage",
                 "plural": false,
-                "selections": [
-                  {
-                    "alias": null,
-                    "args": [
-                      (v4/*: any*/)
-                    ],
-                    "kind": "ScalarField",
-                    "name": "url",
-                    "storageKey": "url(version:\"square\")"
-                  }
-                ],
+                "selections": (v3/*: any*/),
                 "storageKey": null
               },
-              (v3/*: any*/)
+              (v2/*: any*/)
             ],
             "storageKey": null
           },
@@ -324,12 +261,12 @@ return {
                 "name": "__typename",
                 "storageKey": null
               },
-              (v3/*: any*/),
+              (v2/*: any*/),
               {
                 "kind": "InlineFragment",
                 "selections": [
                   (v1/*: any*/),
-                  (v5/*: any*/)
+                  (v4/*: any*/)
                 ],
                 "type": "Sale"
               },
@@ -337,7 +274,7 @@ return {
                 "kind": "InlineFragment",
                 "selections": [
                   (v1/*: any*/),
-                  (v5/*: any*/),
+                  (v4/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -346,7 +283,6 @@ return {
                     "name": "profile",
                     "plural": false,
                     "selections": [
-                      (v2/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -354,10 +290,10 @@ return {
                         "kind": "LinkedField",
                         "name": "icon",
                         "plural": false,
-                        "selections": (v6/*: any*/),
+                        "selections": (v3/*: any*/),
                         "storageKey": null
                       },
-                      (v3/*: any*/)
+                      (v2/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -368,7 +304,7 @@ return {
                 "kind": "InlineFragment",
                 "selections": [
                   (v1/*: any*/),
-                  (v5/*: any*/),
+                  (v4/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -383,7 +319,7 @@ return {
                     "kind": "LinkedField",
                     "name": "coverImage",
                     "plural": false,
-                    "selections": (v6/*: any*/),
+                    "selections": (v3/*: any*/),
                     "storageKey": null
                   }
                 ],
@@ -392,7 +328,7 @@ return {
             ],
             "storageKey": null
           },
-          (v3/*: any*/)
+          (v2/*: any*/)
         ],
         "storageKey": "artwork(id:\"richard-anuszkiewicz-lino-yellow-318\")"
       }
@@ -403,9 +339,9 @@ return {
     "metadata": {},
     "name": "ArtworkBanner_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkBanner_Test_Query {\n  artwork(id: \"richard-anuszkiewicz-lino-yellow-318\") {\n    ...ArtworkBanner_artwork\n    id\n  }\n}\n\nfragment ArtworkBanner_artwork on Artwork {\n  partner {\n    name\n    initials\n    id\n  }\n  sale {\n    isAuction\n    isBenefit\n    isGalleryAuction\n    coverImage {\n      url(version: \"square\")\n    }\n    id\n  }\n  context {\n    __typename\n    ... on Sale {\n      name\n      href\n    }\n    ... on Fair {\n      name\n      href\n      profile {\n        initials\n        icon {\n          img: resized(width: 70, height: 70, version: \"square\") {\n            url\n          }\n        }\n        id\n      }\n    }\n    ... on Show {\n      name\n      href\n      status\n      thumbnail: coverImage {\n        img: resized(width: 70, height: 70, version: \"square\") {\n          url\n        }\n      }\n    }\n    ... on Node {\n      id\n    }\n  }\n}\n"
+    "text": "query ArtworkBanner_Test_Query {\n  artwork(id: \"richard-anuszkiewicz-lino-yellow-318\") {\n    ...ArtworkBanner_artwork\n    id\n  }\n}\n\nfragment ArtworkBanner_artwork on Artwork {\n  partner {\n    name\n    id\n  }\n  sale {\n    isAuction\n    isBenefit\n    isGalleryAuction\n    coverImage {\n      cropped(width: 30, height: 30, version: \"square\") {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n  context {\n    __typename\n    ... on Sale {\n      name\n      href\n    }\n    ... on Fair {\n      name\n      href\n      profile {\n        icon {\n          cropped(width: 30, height: 30, version: \"square\") {\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n    ... on Show {\n      name\n      href\n      status\n      thumbnail: coverImage {\n        cropped(width: 30, height: 30, version: \"square\") {\n          src\n          srcSet\n        }\n      }\n    }\n    ... on Node {\n      id\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'fcd2b446978466c9791f591a01663f27';
+(node as any).hash = 'b04d01dba04bc362c4bd9213c3fd0505';
 export default node;
