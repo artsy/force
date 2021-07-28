@@ -23,20 +23,13 @@ export type ArtistRelatedArtistsRail_artist = {
                                 readonly internalID: string;
                                 readonly slug: string;
                                 readonly image: {
-                                    readonly resized: {
-                                        readonly width: number | null;
-                                        readonly height: number | null;
-                                        readonly src: string;
-                                        readonly srcSet: string;
-                                    } | null;
+                                    readonly sourceUrl: string | null;
                                 } | null;
                             } | null;
                         } | null> | null;
                     } | null;
                     readonly image: {
-                        readonly resized: {
-                            readonly url: string;
-                        } | null;
+                        readonly sourceUrl: string | null;
                     } | null;
                 } | null;
             } | null> | null;
@@ -204,54 +197,20 @@ return {
                                   "plural": false,
                                   "selections": [
                                     {
-                                      "alias": null,
+                                      "alias": "sourceUrl",
                                       "args": [
                                         {
                                           "kind": "Literal",
-                                          "name": "height",
-                                          "value": 230
-                                        },
-                                        {
-                                          "kind": "Literal",
-                                          "name": "width",
-                                          "value": 325
+                                          "name": "version",
+                                          "value": [
+                                            "larger",
+                                            "large"
+                                          ]
                                         }
                                       ],
-                                      "concreteType": "ResizedImageUrl",
-                                      "kind": "LinkedField",
-                                      "name": "resized",
-                                      "plural": false,
-                                      "selections": [
-                                        {
-                                          "alias": null,
-                                          "args": null,
-                                          "kind": "ScalarField",
-                                          "name": "width",
-                                          "storageKey": null
-                                        },
-                                        {
-                                          "alias": null,
-                                          "args": null,
-                                          "kind": "ScalarField",
-                                          "name": "height",
-                                          "storageKey": null
-                                        },
-                                        {
-                                          "alias": null,
-                                          "args": null,
-                                          "kind": "ScalarField",
-                                          "name": "src",
-                                          "storageKey": null
-                                        },
-                                        {
-                                          "alias": null,
-                                          "args": null,
-                                          "kind": "ScalarField",
-                                          "name": "srcSet",
-                                          "storageKey": null
-                                        }
-                                      ],
-                                      "storageKey": "resized(height:230,width:325)"
+                                      "kind": "ScalarField",
+                                      "name": "url",
+                                      "storageKey": "url(version:[\"larger\",\"large\"])"
                                     }
                                   ],
                                   "storageKey": null
@@ -274,33 +233,17 @@ return {
                       "plural": false,
                       "selections": [
                         {
-                          "alias": null,
+                          "alias": "sourceUrl",
                           "args": [
                             {
                               "kind": "Literal",
-                              "name": "height",
-                              "value": 50
-                            },
-                            {
-                              "kind": "Literal",
-                              "name": "width",
-                              "value": 50
+                              "name": "version",
+                              "value": "large"
                             }
                           ],
-                          "concreteType": "ResizedImageUrl",
-                          "kind": "LinkedField",
-                          "name": "resized",
-                          "plural": false,
-                          "selections": [
-                            {
-                              "alias": null,
-                              "args": null,
-                              "kind": "ScalarField",
-                              "name": "url",
-                              "storageKey": null
-                            }
-                          ],
-                          "storageKey": "resized(height:50,width:50)"
+                          "kind": "ScalarField",
+                          "name": "url",
+                          "storageKey": "url(version:\"large\")"
                         }
                       ],
                       "storageKey": null
@@ -326,5 +269,5 @@ return {
   "type": "Artist"
 };
 })();
-(node as any).hash = 'eaddcfb0dd8087050cbae7f7ee974f81';
+(node as any).hash = 'cd12cc225478b2f21176f706db4085c9';
 export default node;

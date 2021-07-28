@@ -10,6 +10,8 @@ import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { data as sd } from "sharify"
 import { useTracking } from "react-tracking"
 import { LoadingPlaceholder } from "./LoadingPlaceholder"
+import { resized } from "v2/Utils/resized"
+import { scale } from "proportional-scale"
 
 interface ArtistIconicCollectionsRailProps {
   marketingCollections: ArtistIconicCollectionsRail_marketingCollections
@@ -24,6 +26,8 @@ const ArtistIconicCollectionsRail: React.FC<ArtistIconicCollectionsRailProps> = 
     collection => collection?.artworksConnection?.edges?.length! > 0
   )
 
+  // width: 325, height: 230
+
   if (marketingCollections.length === 0 || !hasContent) {
     return null
   }
@@ -33,10 +37,24 @@ const ArtistIconicCollectionsRail: React.FC<ArtistIconicCollectionsRailProps> = 
       <Text variant="lg" my={4}>
         Iconic Collections
       </Text>
+
       <Shelf>
         {marketingCollections.map((marketingCollection, index) => {
-          const image =
+          const image = resized(
             marketingCollection?.artworksConnection?.edges?.[0]?.node?.image
+              ?.sourceUrl!,
+            { width: 325, height: 230 }
+          )
+
+          const geometry = scale({
+            width: marketingCollection?.artworksConnection?.edges?.[0]?.node
+              ?.image?.width!,
+            height: marketingCollection?.artworksConnection?.edges?.[0]?.node
+              ?.image?.height!,
+            maxWidth: 325,
+            maxHeight: 230,
+          })
+
           const formattedTitle = marketingCollection.title.split(": ")[1]
           const formattedPrice = `From $${currency(
             marketingCollection.priceGuidance!,
@@ -61,13 +79,13 @@ const ArtistIconicCollectionsRail: React.FC<ArtistIconicCollectionsRailProps> = 
                 })
               }}
             >
-              {image?.resized?.src && (
+              {image.src && (
                 <>
                   <Image
-                    width={image.resized.width}
-                    height={image.resized.height}
-                    src={image.resized.src}
-                    srcSet={image.resized.srcSet}
+                    width={geometry.width}
+                    height={geometry.height}
+                    src={image.src}
+                    srcSet={image.srcSet}
                     lazyLoad
                   />
                 </>
@@ -104,12 +122,9 @@ export const ArtistIconicCollectionsRailFragmentContainer = createFragmentContai
           edges {
             node {
               image {
-                resized(width: 325, height: 230) {
-                  width
-                  height
-                  src
-                  srcSet
-                }
+                width
+                height
+                sourceUrl: url(version: ["larger", "large"])
               }
             }
           }

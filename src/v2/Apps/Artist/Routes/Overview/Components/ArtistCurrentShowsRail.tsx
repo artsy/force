@@ -6,6 +6,7 @@ import { useTracking } from "react-tracking"
 import { AnalyticsSchema, useAnalyticsContext } from "v2/System"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { extractNodes } from "v2/Utils/extractNodes"
+import { cropped } from "v2/Utils/resized"
 import { ArtistCurrentShowsRail_artist } from "v2/__generated__/ArtistCurrentShowsRail_artist.graphql"
 
 interface ArtistCurrentShowsRailProps {
@@ -58,6 +59,11 @@ const ArtistCurrentShowsRail: React.FC<ArtistCurrentShowsRailProps> = ({
 
       <Shelf alignItems="flex-start">
         {nodes.map((node, index) => {
+          const image = cropped(node.coverImage?.sourceUrl!, {
+            width: 325,
+            height: 230,
+          })
+
           return (
             <RouterLink
               to={node.href!}
@@ -80,12 +86,12 @@ const ArtistCurrentShowsRail: React.FC<ArtistCurrentShowsRailProps> = ({
                 })
               }}
             >
-              {node.coverImage?.cropped?.src ? (
+              {image.src ? (
                 <Image
-                  width={node.coverImage.cropped.width}
-                  height={node.coverImage.cropped.height}
-                  src={node.coverImage.cropped.src}
-                  srcSet={node.coverImage.cropped.srcSet}
+                  width={325}
+                  height={230}
+                  src={image.src}
+                  srcSet={image.srcSet}
                   lazyLoad
                 />
               ) : (
@@ -117,12 +123,7 @@ export const ArtistCurrentShowsRailFragmentContainer = createFragmentContainer(
           edges {
             node {
               coverImage {
-                cropped(width: 325, height: 230) {
-                  width
-                  height
-                  srcSet
-                  src
-                }
+                sourceUrl: url(version: ["larger", "large"])
               }
               exhibitionPeriod
               href

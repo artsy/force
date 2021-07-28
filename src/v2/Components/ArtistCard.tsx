@@ -43,7 +43,7 @@ export const ArtistCardFragmentContainer = createFragmentContainer(
         slug
         href
         image {
-          cropped(width: 300, height: 300) {
+          cropped(width: 90, height: 90) {
             src
           }
         }

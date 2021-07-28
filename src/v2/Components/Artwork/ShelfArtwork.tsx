@@ -8,6 +8,8 @@ import { AuthContextModule } from "@artsy/cohesion"
 import styled from "styled-components"
 import { Image, Flex } from "@artsy/palette"
 import { Media } from "v2/Utils/Responsive"
+import { scale } from "proportional-scale"
+import { resized } from "v2/Utils/resized"
 
 /**
  * The max height for an image in the carousel
@@ -44,6 +46,14 @@ const ShelfArtwork: React.FC<ShelfArtworkProps> = ({
     isSaved: !!artwork.is_saved,
   })
 
+  const geometry = scale({
+    width: artwork.image!.width!,
+    height: artwork.image!.height!,
+    maxWidth: 200,
+  })
+
+  const image = resized(artwork.image!.sourceUrl!, { width: 200 })
+
   return (
     <>
       <RouterLink
@@ -56,9 +66,10 @@ const ShelfArtwork: React.FC<ShelfArtworkProps> = ({
       >
         <ResponsiveContainer artwork={artwork}>
           <Image
-            src={artwork.image?.resized?.src!}
-            srcSet={artwork.image?.resized?.srcSet}
-            width={artwork.image?.resized?.width}
+            src={image.src}
+            srcSet={image.srcSet}
+            width={geometry.width}
+            height={geometry.height}
             maxHeight={[IMG_HEIGHT.mobile, IMG_HEIGHT.desktop]}
             lazyLoad={lazyLoad}
             style={{ objectFit: "contain", display: "block" }}
@@ -82,7 +93,7 @@ const ShelfArtwork: React.FC<ShelfArtworkProps> = ({
           hidePartnerName={hidePartnerName}
           hideArtistName={hideArtistName}
           hideSaleInfo={hideSaleInfo}
-          maxWidth={artwork.image?.resized?.width}
+          maxWidth={geometry.width}
         />
       )}
     </>
@@ -93,21 +104,33 @@ const getHeight = (
   artwork: ShelfArtwork_artwork,
   size: keyof typeof IMG_HEIGHT
 ) => {
-  return (artwork.image?.resized?.height ?? 0) > IMG_HEIGHT[size]
+  const geometry = scale({
+    width: artwork.image!.width!,
+    height: artwork.image!.height!,
+    maxWidth: 200,
+  })
+
+  return (geometry.height ?? 0) > IMG_HEIGHT[size]
     ? IMG_HEIGHT[size]
-    : artwork?.image?.resized?.height
+    : geometry.height
 }
 
 const ResponsiveContainer: React.FC<{ artwork: ShelfArtwork_artwork }> = ({
   artwork,
   children,
 }) => {
+  const geometry = scale({
+    width: artwork.image!.width!,
+    height: artwork.image!.height!,
+    maxWidth: 200,
+  })
+
   // FIXME: Replace with <picture> and specific sizes for different platforms
   return (
     <>
       <Media at="xs">
         <Container
-          width={artwork.image?.resized?.width}
+          width={geometry?.width}
           height={getHeight(artwork, "mobile")}
         >
           {children}
@@ -116,7 +139,7 @@ const ResponsiveContainer: React.FC<{ artwork: ShelfArtwork_artwork }> = ({
 
       <Media greaterThan="xs">
         <Container
-          width={artwork.image?.resized?.width}
+          width={geometry?.width}
           height={getHeight(artwork, "desktop")}
         >
           {children}
@@ -137,14 +160,10 @@ export const ShelfArtworkFragmentContainer = createFragmentContainer(
       fragment ShelfArtwork_artwork on Artwork
         @argumentDefinitions(width: { type: "Int", defaultValue: 200 }) {
         image {
-          resized(width: $width) {
-            src
-            srcSet
-            width
-            height
-          }
           aspectRatio
+          width
           height
+          sourceUrl: url(version: ["larger", "large"])
         }
         imageTitle
         title

@@ -13,12 +13,9 @@ export type ArtistIconicCollectionsRail_marketingCollections = ReadonlyArray<{
         readonly edges: ReadonlyArray<{
             readonly node: {
                 readonly image: {
-                    readonly resized: {
-                        readonly width: number | null;
-                        readonly height: number | null;
-                        readonly src: string;
-                        readonly srcSet: string;
-                    } | null;
+                    readonly width: number | null;
+                    readonly height: number | null;
+                    readonly sourceUrl: string | null;
                 } | null;
             } | null;
         } | null> | null;
@@ -128,53 +125,33 @@ const node: ReaderFragment = {
                   "selections": [
                     {
                       "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "width",
+                      "storageKey": null
+                    },
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "height",
+                      "storageKey": null
+                    },
+                    {
+                      "alias": "sourceUrl",
                       "args": [
                         {
                           "kind": "Literal",
-                          "name": "height",
-                          "value": 230
-                        },
-                        {
-                          "kind": "Literal",
-                          "name": "width",
-                          "value": 325
+                          "name": "version",
+                          "value": [
+                            "larger",
+                            "large"
+                          ]
                         }
                       ],
-                      "concreteType": "ResizedImageUrl",
-                      "kind": "LinkedField",
-                      "name": "resized",
-                      "plural": false,
-                      "selections": [
-                        {
-                          "alias": null,
-                          "args": null,
-                          "kind": "ScalarField",
-                          "name": "width",
-                          "storageKey": null
-                        },
-                        {
-                          "alias": null,
-                          "args": null,
-                          "kind": "ScalarField",
-                          "name": "height",
-                          "storageKey": null
-                        },
-                        {
-                          "alias": null,
-                          "args": null,
-                          "kind": "ScalarField",
-                          "name": "src",
-                          "storageKey": null
-                        },
-                        {
-                          "alias": null,
-                          "args": null,
-                          "kind": "ScalarField",
-                          "name": "srcSet",
-                          "storageKey": null
-                        }
-                      ],
-                      "storageKey": "resized(height:230,width:325)"
+                      "kind": "ScalarField",
+                      "name": "url",
+                      "storageKey": "url(version:[\"larger\",\"large\"])"
                     }
                   ],
                   "storageKey": null
@@ -191,5 +168,5 @@ const node: ReaderFragment = {
   ],
   "type": "MarketingCollection"
 };
-(node as any).hash = 'f3b06a434748d30c42eed48e84c12d62';
+(node as any).hash = '6f0bd5de1016ec925cce3c1aea1d0716';
 export default node;

@@ -48,8 +48,6 @@ const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
     ? resize(sourceUrl!, { width: 800, height: 800 })
     : cropped(sourceUrl!, { width: 800, height: 800 })
 
-  console.log({ geometry })
-
   const { user } = useSystemContext()
   const isTeam = userIsTeam(user)
 

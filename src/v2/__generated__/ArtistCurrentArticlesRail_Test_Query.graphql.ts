@@ -34,12 +34,7 @@ fragment ArtistCurrentArticlesRail_artist on Artist {
         thumbnailTitle
         publishedAt(format: "MMM Do, YYYY")
         thumbnailImage {
-          cropped(width: 325, height: 230) {
-            width
-            height
-            src
-            srcSet
-          }
+          sourceUrl: url(version: ["larger", "large"])
         }
         id
       }
@@ -198,54 +193,20 @@ return {
                         "plural": false,
                         "selections": [
                           {
-                            "alias": null,
+                            "alias": "sourceUrl",
                             "args": [
                               {
                                 "kind": "Literal",
-                                "name": "height",
-                                "value": 230
-                              },
-                              {
-                                "kind": "Literal",
-                                "name": "width",
-                                "value": 325
+                                "name": "version",
+                                "value": [
+                                  "larger",
+                                  "large"
+                                ]
                               }
                             ],
-                            "concreteType": "CroppedImageUrl",
-                            "kind": "LinkedField",
-                            "name": "cropped",
-                            "plural": false,
-                            "selections": [
-                              {
-                                "alias": null,
-                                "args": null,
-                                "kind": "ScalarField",
-                                "name": "width",
-                                "storageKey": null
-                              },
-                              {
-                                "alias": null,
-                                "args": null,
-                                "kind": "ScalarField",
-                                "name": "height",
-                                "storageKey": null
-                              },
-                              {
-                                "alias": null,
-                                "args": null,
-                                "kind": "ScalarField",
-                                "name": "src",
-                                "storageKey": null
-                              },
-                              {
-                                "alias": null,
-                                "args": null,
-                                "kind": "ScalarField",
-                                "name": "srcSet",
-                                "storageKey": null
-                              }
-                            ],
-                            "storageKey": "cropped(height:230,width:325)"
+                            "kind": "ScalarField",
+                            "name": "url",
+                            "storageKey": "url(version:[\"larger\",\"large\"])"
                           }
                         ],
                         "storageKey": null
@@ -280,7 +241,7 @@ return {
     "metadata": {},
     "name": "ArtistCurrentArticlesRail_Test_Query",
     "operationKind": "query",
-    "text": "query ArtistCurrentArticlesRail_Test_Query {\n  artist(id: \"test\") {\n    ...ArtistCurrentArticlesRail_artist\n    id\n  }\n}\n\nfragment ArtistCurrentArticlesRail_artist on Artist {\n  articlesConnection(first: 10, sort: PUBLISHED_AT_DESC, inEditorialFeed: true) {\n    edges {\n      node {\n        internalID\n        slug\n        href\n        thumbnailTitle\n        publishedAt(format: \"MMM Do, YYYY\")\n        thumbnailImage {\n          cropped(width: 325, height: 230) {\n            width\n            height\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n  }\n  internalID\n  name\n  slug\n}\n"
+    "text": "query ArtistCurrentArticlesRail_Test_Query {\n  artist(id: \"test\") {\n    ...ArtistCurrentArticlesRail_artist\n    id\n  }\n}\n\nfragment ArtistCurrentArticlesRail_artist on Artist {\n  articlesConnection(first: 10, sort: PUBLISHED_AT_DESC, inEditorialFeed: true) {\n    edges {\n      node {\n        internalID\n        slug\n        href\n        thumbnailTitle\n        publishedAt(format: \"MMM Do, YYYY\")\n        thumbnailImage {\n          sourceUrl: url(version: [\"larger\", \"large\"])\n        }\n        id\n      }\n    }\n  }\n  internalID\n  name\n  slug\n}\n"
   }
 };
 })();
