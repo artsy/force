@@ -23,9 +23,9 @@ export type ArtistRelatedArtistsRail_artist = {
                                 readonly internalID: string;
                                 readonly slug: string;
                                 readonly image: {
-                                    readonly resized: {
-                                        readonly width: number | null;
-                                        readonly height: number | null;
+                                    readonly cropped: {
+                                        readonly width: number;
+                                        readonly height: number;
                                         readonly src: string;
                                         readonly srcSet: string;
                                     } | null;
@@ -34,7 +34,7 @@ export type ArtistRelatedArtistsRail_artist = {
                         } | null> | null;
                     } | null;
                     readonly image: {
-                        readonly resized: {
+                        readonly cropped: {
                             readonly url: string;
                         } | null;
                     } | null;
@@ -217,9 +217,9 @@ return {
                                           "value": 325
                                         }
                                       ],
-                                      "concreteType": "ResizedImageUrl",
+                                      "concreteType": "CroppedImageUrl",
                                       "kind": "LinkedField",
-                                      "name": "resized",
+                                      "name": "cropped",
                                       "plural": false,
                                       "selections": [
                                         {
@@ -251,7 +251,7 @@ return {
                                           "storageKey": null
                                         }
                                       ],
-                                      "storageKey": "resized(height:230,width:325)"
+                                      "storageKey": "cropped(height:230,width:325)"
                                     }
                                   ],
                                   "storageKey": null
@@ -287,9 +287,9 @@ return {
                               "value": 50
                             }
                           ],
-                          "concreteType": "ResizedImageUrl",
+                          "concreteType": "CroppedImageUrl",
                           "kind": "LinkedField",
-                          "name": "resized",
+                          "name": "cropped",
                           "plural": false,
                           "selections": [
                             {
@@ -300,7 +300,7 @@ return {
                               "storageKey": null
                             }
                           ],
-                          "storageKey": "resized(height:50,width:50)"
+                          "storageKey": "cropped(height:50,width:50)"
                         }
                       ],
                       "storageKey": null
@@ -326,5 +326,5 @@ return {
   "type": "Artist"
 };
 })();
-(node as any).hash = 'eaddcfb0dd8087050cbae7f7ee974f81';
+(node as any).hash = 'e9d3184fc48515cfc4d7ba212b71ed39';
 export default node;
