@@ -78,7 +78,7 @@ export const MyBidsBidItem: React.FC<MyBidsBidItemProps> = ({
             {saleArtwork.isWatching ? (
               <>
                 <Text variant="xs" overflowEllipsis>
-                  {saleArtwork.highestBid?.amount || saleArtwork.estimate}
+                  {saleArtwork.currentBid?.display || saleArtwork.estimate}
                 </Text>
 
                 <Text
@@ -95,7 +95,7 @@ export const MyBidsBidItem: React.FC<MyBidsBidItemProps> = ({
             ) : (
               <>
                 <Text variant="xs" overflowEllipsis>
-                  {saleArtwork.lotState?.sellingPrice?.display}{" "}
+                  {saleArtwork.currentBid?.display || saleArtwork.estimate}{" "}
                   <Box as="span" color="black60">
                     (
                     {saleArtwork.lotState?.bidCount === 1
@@ -150,8 +150,8 @@ export const MyBidsBidItemFragmentContainer = createFragmentContainer(
           }
         }
         estimate
-        highestBid {
-          amount
+        currentBid {
+          display
         }
         internalID
         isHighestBidder
