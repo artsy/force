@@ -9,10 +9,10 @@ export type ArtworkBanner_artwork = {
         readonly initials: string | null;
     } | null;
     readonly sale: {
-        readonly is_auction: boolean | null;
+        readonly isAuction: boolean | null;
         readonly isBenefit: boolean | null;
         readonly isGalleryAuction: boolean | null;
-        readonly cover_image: {
+        readonly coverImage: {
             readonly url: string | null;
         } | null;
     } | null;
@@ -144,7 +144,7 @@ return {
       "plural": false,
       "selections": [
         {
-          "alias": "is_auction",
+          "alias": null,
           "args": null,
           "kind": "ScalarField",
           "name": "isAuction",
@@ -165,7 +165,7 @@ return {
           "storageKey": null
         },
         {
-          "alias": "cover_image",
+          "alias": null,
           "args": null,
           "concreteType": "Image",
           "kind": "LinkedField",
@@ -272,5 +272,5 @@ return {
   "type": "Artwork"
 };
 })();
-(node as any).hash = '6f615caa1957f1bdfb662387e2e3cc46';
+(node as any).hash = '8fd012f424e346e5f453650c5cc21226';
 export default node;

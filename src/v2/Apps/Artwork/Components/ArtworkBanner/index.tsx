@@ -5,14 +5,36 @@ import { renderWithLoadProgress } from "v2/System/Relay/renderWithLoadProgress"
 import { SystemQueryRenderer as QueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import React, { useContext } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { get } from "v2/Utils/get"
 import { Banner } from "./Banner"
 
 export interface ArtworkBannerProps {
   artwork: ArtworkBanner_artwork
 }
 
-export const ArtworkBanner: React.SFC<ArtworkBannerProps> = props => {
+export const ArtworkBanner: React.FC<ArtworkBannerProps> = props => {
+  const bannerProps = computeBannerProps(props)
+
+  if (!bannerProps) {
+    return null
+  }
+
+  console.log(bannerProps, " *** ")
+
+  const { imageUrl, initials, meta, name, subHeadline, href } = bannerProps
+
+  return (
+    <Banner
+      imageUrl={imageUrl as string}
+      initials={initials as string}
+      meta={meta}
+      name={name as string}
+      subHeadline={subHeadline}
+      href={href as string}
+    />
+  )
+}
+
+const computeBannerProps = (props: ArtworkBannerProps) => {
   const { context, partner, sale } = props.artwork
 
   if (!context) {
@@ -21,77 +43,48 @@ export const ArtworkBanner: React.SFC<ArtworkBannerProps> = props => {
 
   switch (context.__typename) {
     case "Sale": {
-      // @ts-expect-error STRICT_NULL_CHECK
-      const auctionImage = get(sale, s => s.is_auction && s.cover_image.url)
-
       if (!sale) {
         return null
       }
 
-      return (
-        <Banner
-          // @ts-expect-error STRICT_NULL_CHECK
-          imageUrl={auctionImage}
-          // @ts-expect-error STRICT_NULL_CHECK
-          initials={partner && partner.initials}
-          meta="In auction"
-          // @ts-expect-error STRICT_NULL_CHECK
-          name={context.name}
-          // Do not display partner name for benefit or gallery auctions
-          // @ts-expect-error STRICT_NULL_CHECK
-          subHeadline={
-            sale.isBenefit || sale.isGalleryAuction
-              ? null
-              : partner && partner.name
-          }
-          // @ts-expect-error STRICT_NULL_CHECK
-          href={context.href}
-        />
-      )
+      const auctionImage = sale.isAuction && sale.coverImage?.url
+
+      return {
+        imageUrl: auctionImage,
+        initials: partner?.initials,
+        meta: "In auction",
+        name: context.name,
+        subHeadline:
+          sale.isBenefit || sale.isGalleryAuction ? null : partner?.name,
+        href: context.href,
+      }
     }
     case "Fair": {
-      // @ts-expect-error STRICT_NULL_CHECK
-      const fairImage = get(context, c => c.profile.icon.img.url)
-      // @ts-expect-error STRICT_NULL_CHECK
-      const initials = get(context, c => c.profile.initials)
-      return (
-        <Banner
-          imageUrl={fairImage}
-          // @ts-expect-error STRICT_NULL_CHECK
-          initials={initials}
-          meta="At fair"
-          // @ts-expect-error STRICT_NULL_CHECK
-          name={context.name}
-          // @ts-expect-error STRICT_NULL_CHECK
-          subHeadline={partner && partner.name}
-          // @ts-expect-error STRICT_NULL_CHECK
-          href={context.href}
-        />
-      )
+      return {
+        imageUrl: context.profile?.icon?.img?.url,
+        initials: context.profile?.initials,
+        meta: "At fair",
+        name: context.name,
+        subHeadline: partner?.name,
+        href: context.href,
+      }
     }
     case "Show": {
-      // @ts-expect-error STRICT_NULL_CHECK
-      const showImage = get(context, c => c.thumbnail.img.url)
-      let showLine = "In current show"
+      let meta = "In current show"
       if (context.status === "upcoming") {
-        showLine = "In upcoming show"
+        meta = "In upcoming show"
       } else if (context.status === "closed") {
-        showLine = "In past show"
+        meta = "In past show"
       }
-      return (
-        <Banner
-          imageUrl={showImage}
-          // @ts-expect-error STRICT_NULL_CHECK
-          initials={partner && partner.initials}
-          meta={showLine}
-          // @ts-expect-error STRICT_NULL_CHECK
-          name={context.name}
-          // @ts-expect-error STRICT_NULL_CHECK
-          subHeadline={partner && partner.name}
-          // @ts-expect-error STRICT_NULL_CHECK
-          href={context.href}
-        />
-      )
+
+      return {
+        imageUrl: context.thumbnail?.img?.url,
+        initials: partner?.initials,
+        meta,
+        name: context.name,
+        subHeadline: partner?.name,
+        href: context.href,
+      }
     }
     default: {
       return null
@@ -109,10 +102,10 @@ export const ArtworkBannerFragmentContainer = createFragmentContainer(
           initials
         }
         sale {
-          is_auction: isAuction
+          isAuction
           isBenefit
           isGalleryAuction
-          cover_image: coverImage {
+          coverImage {
             url(version: "square")
           }
         }

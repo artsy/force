@@ -17,10 +17,10 @@ export type ArtworkBanner_Test_QueryRawResponse = {
             readonly id: string | null;
         }) | null;
         readonly sale: ({
-            readonly is_auction: boolean | null;
+            readonly isAuction: boolean | null;
             readonly isBenefit: boolean | null;
             readonly isGalleryAuction: boolean | null;
-            readonly cover_image: ({
+            readonly coverImage: ({
                 readonly url: string | null;
             }) | null;
             readonly id: string | null;
@@ -85,10 +85,10 @@ fragment ArtworkBanner_artwork on Artwork {
     id
   }
   sale {
-    is_auction: isAuction
+    isAuction
     isBenefit
     isGalleryAuction
-    cover_image: coverImage {
+    coverImage {
       url(version: "square")
     }
     id
@@ -265,7 +265,7 @@ return {
             "plural": false,
             "selections": [
               {
-                "alias": "is_auction",
+                "alias": null,
                 "args": null,
                 "kind": "ScalarField",
                 "name": "isAuction",
@@ -286,7 +286,7 @@ return {
                 "storageKey": null
               },
               {
-                "alias": "cover_image",
+                "alias": null,
                 "args": null,
                 "concreteType": "Image",
                 "kind": "LinkedField",
@@ -403,7 +403,7 @@ return {
     "metadata": {},
     "name": "ArtworkBanner_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkBanner_Test_Query {\n  artwork(id: \"richard-anuszkiewicz-lino-yellow-318\") {\n    ...ArtworkBanner_artwork\n    id\n  }\n}\n\nfragment ArtworkBanner_artwork on Artwork {\n  partner {\n    name\n    initials\n    id\n  }\n  sale {\n    is_auction: isAuction\n    isBenefit\n    isGalleryAuction\n    cover_image: coverImage {\n      url(version: \"square\")\n    }\n    id\n  }\n  context {\n    __typename\n    ... on Sale {\n      name\n      href\n    }\n    ... on Fair {\n      name\n      href\n      profile {\n        initials\n        icon {\n          img: resized(width: 70, height: 70, version: \"square\") {\n            url\n          }\n        }\n        id\n      }\n    }\n    ... on Show {\n      name\n      href\n      status\n      thumbnail: coverImage {\n        img: resized(width: 70, height: 70, version: \"square\") {\n          url\n        }\n      }\n    }\n    ... on Node {\n      id\n    }\n  }\n}\n"
+    "text": "query ArtworkBanner_Test_Query {\n  artwork(id: \"richard-anuszkiewicz-lino-yellow-318\") {\n    ...ArtworkBanner_artwork\n    id\n  }\n}\n\nfragment ArtworkBanner_artwork on Artwork {\n  partner {\n    name\n    initials\n    id\n  }\n  sale {\n    isAuction\n    isBenefit\n    isGalleryAuction\n    coverImage {\n      url(version: \"square\")\n    }\n    id\n  }\n  context {\n    __typename\n    ... on Sale {\n      name\n      href\n    }\n    ... on Fair {\n      name\n      href\n      profile {\n        initials\n        icon {\n          img: resized(width: 70, height: 70, version: \"square\") {\n            url\n          }\n        }\n        id\n      }\n    }\n    ... on Show {\n      name\n      href\n      status\n      thumbnail: coverImage {\n        img: resized(width: 70, height: 70, version: \"square\") {\n          url\n        }\n      }\n    }\n    ... on Node {\n      id\n    }\n  }\n}\n"
   }
 };
 })();

@@ -1,23 +1,17 @@
-import { Column, EntityHeader, GridColumns } from "@artsy/palette"
+import {
+  Column,
+  EntityHeader,
+  EntityHeaderProps,
+  GridColumns,
+} from "@artsy/palette"
 import React from "react"
 import { TopContextBar } from "v2/Components/TopContextBar"
 
-export interface BannerProps {
-  /** Image for avatar  */
-  imageUrl?: string
-  /** Fallback partner initials in case image is not there. */
-  initials?: string
-  /** In auction / at fair / in show */
-  meta?: string
-  /** Auction / fair / show name */
-  name?: string
-  /** Partner name */
-  subHeadline?: string
-  /** Link to auction */
-  href?: string
+export interface BannerProps extends EntityHeaderProps {
+  subHeadline?: string | null
 }
 
-export const Banner: React.SFC<BannerProps> = ({
+export const Banner: React.FC<BannerProps> = ({
   imageUrl,
   initials,
   meta,
