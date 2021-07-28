@@ -6,6 +6,12 @@ import { FragmentRefs } from "relay-runtime";
 export type FairExhibitors_fair = {
     readonly slug: string;
     readonly exhibitors: {
+        readonly pageInfo: {
+            readonly hasNextPage: boolean;
+        };
+        readonly pageCursors: {
+            readonly " $fragmentRefs": FragmentRefs<"Pagination_pageCursors">;
+        };
         readonly edges: ReadonlyArray<{
             readonly node: {
                 readonly id: string;
@@ -55,25 +61,14 @@ return {
       "type": "Int"
     },
     {
-      "defaultValue": null,
+      "defaultValue": 1,
       "kind": "LocalArgument",
-      "name": "after",
-      "type": "String"
+      "name": "page",
+      "type": "Int"
     }
   ],
   "kind": "Fragment",
-  "metadata": {
-    "connection": [
-      {
-        "count": "first",
-        "cursor": "after",
-        "direction": "forward",
-        "path": [
-          "exhibitors"
-        ]
-      }
-    ]
-  },
+  "metadata": null,
   "name": "FairExhibitors_fair",
   "selections": [
     {
@@ -88,6 +83,16 @@ return {
       "args": [
         {
           "kind": "Variable",
+          "name": "first",
+          "variableName": "first"
+        },
+        {
+          "kind": "Variable",
+          "name": "page",
+          "variableName": "page"
+        },
+        {
+          "kind": "Variable",
           "name": "sort",
           "variableName": "sort"
         },
@@ -99,9 +104,43 @@ return {
       ],
       "concreteType": "ShowConnection",
       "kind": "LinkedField",
-      "name": "__FairExhibitorsQuery_exhibitors_connection",
+      "name": "showsConnection",
       "plural": false,
       "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "PageInfo",
+          "kind": "LinkedField",
+          "name": "pageInfo",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "hasNextPage",
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "PageCursors",
+          "kind": "LinkedField",
+          "name": "pageCursors",
+          "plural": false,
+          "selections": [
+            {
+              "args": null,
+              "kind": "FragmentSpread",
+              "name": "Pagination_pageCursors"
+            }
+          ],
+          "storageKey": null
+        },
         {
           "alias": null,
           "args": null,
@@ -159,50 +198,11 @@ return {
                   "storageKey": null
                 },
                 {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "__typename",
-                  "storageKey": null
-                },
-                {
                   "args": null,
                   "kind": "FragmentSpread",
                   "name": "FairExhibitorRail_show"
                 }
               ],
-              "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "cursor",
-              "storageKey": null
-            }
-          ],
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "concreteType": "PageInfo",
-          "kind": "LinkedField",
-          "name": "pageInfo",
-          "plural": false,
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "endCursor",
-              "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "hasNextPage",
               "storageKey": null
             }
           ],
@@ -215,5 +215,5 @@ return {
   "type": "Fair"
 };
 })();
-(node as any).hash = '6cbe334b06fc8fe681ee99d67114931c';
+(node as any).hash = 'a592977087f2ee380e24d6f9cf299413';
 export default node;
