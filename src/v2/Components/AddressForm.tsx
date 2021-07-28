@@ -38,6 +38,7 @@ export interface AddressFormProps {
   domesticOnly?: boolean
   euOrigin?: boolean
   showPhoneNumberInput?: boolean
+  isCollapsed?: boolean
   shippingCountry?: string
   errors: AddressErrors
   touched: AddressTouched
@@ -56,6 +57,12 @@ export class AddressForm extends React.Component<
       ...emptyAddress,
       ...this.props.value,
     },
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.isCollapsed !== this.props.isCollapsed) {
+      this.setState({ address: { ...emptyAddress } })
+    }
   }
 
   changeEventHandler = (key: keyof Address) => (
@@ -93,9 +100,10 @@ export class AddressForm extends React.Component<
   }
 
   render() {
-    const onlyLocalShipping = !this.props.billing && !!this.props.domesticOnly
-    const lockCountryToOrigin = onlyLocalShipping && !this.props.euOrigin
-    const lockCountriesToEU = onlyLocalShipping && this.props.euOrigin
+    const { billing, domesticOnly, euOrigin } = this.props
+    const onlyLocalShipping = !billing && !!domesticOnly
+    const lockCountryToOrigin = onlyLocalShipping && !euOrigin
+    const lockCountriesToEU = onlyLocalShipping && euOrigin
 
     const { address } = this.state
 
