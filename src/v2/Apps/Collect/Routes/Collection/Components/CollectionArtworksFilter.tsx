@@ -10,6 +10,19 @@ import { updateUrl } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
 import { usePathnameComplete } from "v2/Utils/Hooks/usePathnameComplete"
 import { useRouter } from "v2/System/Router/useRouter"
 import { CollectionArtworksFilter_collection } from "v2/__generated__/CollectionArtworksFilter_collection.graphql"
+import { ColorFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/ColorFilter"
+import { MediumFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/MediumFilter"
+import { PriceRangeFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/PriceRangeFilter"
+import { SizeFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/SizeFilter"
+import { TimePeriodFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/TimePeriodFilter"
+import { WaysToBuyFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/WaysToBuyFilter"
+import { AttributionClassFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/AttributionClassFilter"
+import { ArtworkLocationFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/ArtworkLocationFilter"
+import { ArtistNationalityFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/ArtistNationalityFilter"
+import { MaterialsFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/MaterialsFilter"
+import { PartnersFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/PartnersFilter"
+import { ArtistsFilter } from "v2/Components/ArtworkFilter/ArtworkFilters/ArtistsFilter"
+import { useSystemContext } from "v2/System"
 
 interface CollectionArtworksFilterProps {
   relay: RelayRefetchProp
@@ -20,10 +33,35 @@ interface CollectionArtworksFilterProps {
 
 export const CollectionArtworksFilter: React.FC<CollectionArtworksFilterProps> = props => {
   const { relay, collection, aggregations, counts } = props
-  const { slug } = collection
+  const { slug, query } = collection
+  const isArtistCollection = query?.artistIDs?.length === 1
 
   const { match } = useRouter()
   const { pathname } = usePathnameComplete()
+  const { user } = useSystemContext()
+
+  const Filters = (
+    <>
+      {!isArtistCollection && (
+        <ArtistsFilter
+          relayEnvironment={relay.environment}
+          user={user}
+          expanded
+        />
+      )}
+      <AttributionClassFilter expanded />
+      <MediumFilter expanded />
+      <PriceRangeFilter expanded />
+      <SizeFilter expanded />
+      <WaysToBuyFilter expanded />
+      <MaterialsFilter />
+      {!isArtistCollection && <ArtistNationalityFilter />}
+      <ArtworkLocationFilter />
+      <TimePeriodFilter />
+      <ColorFilter />
+      <PartnersFilter />
+    </>
+  )
 
   return (
     <ArtworkFilterContextProvider
@@ -56,6 +94,7 @@ export const CollectionArtworksFilter: React.FC<CollectionArtworksFilterProps> =
       <BaseArtworkFilter
         relay={relay}
         viewer={collection}
+        Filters={Filters}
         relayVariables={{
           slug,
         }}
@@ -71,6 +110,9 @@ export const CollectionArtworksFilterRefetchContainer = createRefetchContainer(
       fragment CollectionArtworksFilter_collection on MarketingCollection
         @argumentDefinitions(input: { type: "FilterArtworksInput" }) {
         slug
+        query {
+          artistIDs
+        }
         filtered_artworks: artworksConnection(input: $input) {
           id
           ...ArtworkFilterArtworkGrid_filtered_artworks
