@@ -5,7 +5,6 @@
  */
 const benv = require("benv")
 const Backbone = require("backbone")
-const sinon = require("sinon")
 const path = require("path")
 
 describe("ShareView", function () {

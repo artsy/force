@@ -9,7 +9,6 @@ const sinon = require("sinon")
 const Backbone = require("backbone")
 const Partner = require("../../models/partner")
 const PartnerLocations = require("../../collections/partner_locations")
-const Artist = require("../../models/artist")
 const { fabricate } = require("@artsy/antigravity")
 
 describe("Partner", function () {

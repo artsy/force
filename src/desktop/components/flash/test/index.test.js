@@ -181,7 +181,7 @@ describe("FlashMessage", function () {
 
   return describe("#open", () =>
     it("checks to see if the container is empty before starting the timer", function () {
-      const firstFlash = new FlashMessage({ message: "Goodbye world." })
+      const flash = new FlashMessage({ message: "Goodbye world." })
       $("body").text().should.equal("Goodbye world.")
       this.startTimerStub.restore()
       this.startTimerStub = this.sandbox.stub(

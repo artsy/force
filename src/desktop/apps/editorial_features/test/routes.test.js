@@ -6,15 +6,10 @@
  */
 const _ = require("underscore")
 const sinon = require("sinon")
-const moment = require("moment")
 const Backbone = require("backbone")
-const Article = require("../../../models/article")
-const Articles = require("../../../collections/articles")
-const Curation = require("../../../models/curation")
 const rewire = require("rewire")
 const routes = rewire("../routes")
 const fixtures = require("../../../test/helpers/fixtures.coffee")
-const markdown = require("../../../components/util/markdown.coffee")
 
 describe("EOY route", function () {
   beforeEach(function (done) {

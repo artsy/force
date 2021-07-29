@@ -7,7 +7,6 @@ const _ = require("underscore")
 const jade = require("jade")
 const path = require("path")
 const fs = require("fs")
-const Backbone = require("backbone")
 const Article = require("../../../../models/article")
 const fixtures = require("../../../../test/helpers/fixtures")
 

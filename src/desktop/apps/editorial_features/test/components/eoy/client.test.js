@@ -3,7 +3,6 @@
  * DS102: Remove unnecessary code created because of implicit returns
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
  */
-const _ = require("underscore")
 const benv = require("benv")
 const sinon = require("sinon")
 const Backbone = require("backbone")
@@ -12,7 +11,6 @@ const fixtures = require("../../../../../test/helpers/fixtures")
 const Curation = require("../../../../../models/curation.coffee")
 const Article = require("../../../../../models/article.coffee")
 const Articles = require("../../../../../collections/articles.coffee")
-const { resize } = require("../../../../../components/resizer")
 const markdown = require("../../../../../components/util/markdown.coffee")
 
 const sd = require("sharify").data

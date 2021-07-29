@@ -5,8 +5,6 @@
  */
 const $ = require("cheerio")
 const _ = require("underscore")
-const { fabricate } = require("@artsy/antigravity")
-const CurrentUser = require("../../../models/current_user")
 const template = require("jade").compileFile(
   require.resolve("../templates/index.jade")
 )

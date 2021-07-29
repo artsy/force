@@ -6,13 +6,10 @@
 const jade = require("jade")
 const path = require("path")
 const fs = require("fs")
-const Backbone = require("backbone")
-const _ = require("underscore")
 const cheerio = require("cheerio")
 const { fabricate } = require("@artsy/antigravity")
 const FeedItem = require("../models/feed_item")
 const FeedItems = require("../collections/feed_items")
-const CurrentUser = require("../../../models/current_user")
 const sd = require("sharify").data
 
 const render = function (templateName) {

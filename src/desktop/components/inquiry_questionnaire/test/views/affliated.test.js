@@ -7,7 +7,6 @@
 const benv = require("benv")
 const sinon = require("sinon")
 const rewire = require("rewire")
-const Backbone = require("backbone")
 const { setup } = require("./setup")
 
 let Affiliated = null

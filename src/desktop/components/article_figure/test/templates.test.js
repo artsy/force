@@ -3,13 +3,10 @@
  * DS102: Remove unnecessary code created because of implicit returns
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
  */
-const _ = require("underscore")
-const cheerio = require("cheerio")
 const path = require("path")
 const jade = require("jade")
 const fs = require("fs")
 const Article = require("../../../models/article")
-const fixtures = require("../../../test/helpers/fixtures")
 
 const render = function (templateName) {
   const filename = path.resolve(__dirname, `../${templateName}.jade`)

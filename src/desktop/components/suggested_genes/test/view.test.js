@@ -9,9 +9,6 @@ const benv = require("benv")
 const Backbone = require("backbone")
 const sinon = require("sinon")
 const { fabricate } = require("@artsy/antigravity")
-const OrderedSets = require("../../../collections/ordered_sets.coffee")
-const Gene = require("../../../models/gene")
-const Genes = require("../../../collections/genes")
 const { resolve } = require("path")
 const SuggestedGenesView = (mod = benv.requireWithJadeify(
   resolve(__dirname, "../view"),

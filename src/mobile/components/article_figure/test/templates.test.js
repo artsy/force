@@ -4,7 +4,6 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
  */
 const _ = require("underscore")
-const cheerio = require("cheerio")
 const path = require("path")
 const jade = require("jade")
 const fs = require("fs")

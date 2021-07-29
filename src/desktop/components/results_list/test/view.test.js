@@ -4,7 +4,6 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
  */
 const benv = require("benv")
-const sinon = require("sinon")
 const rewire = require("rewire")
 const Backbone = require("backbone")
 let TypeaheadView = null
