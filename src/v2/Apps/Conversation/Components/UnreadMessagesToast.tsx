@@ -16,7 +16,7 @@ import { UnreadMessagesToast_conversation } from "v2/__generated__/UnreadMessage
 import { extractNodes } from "v2/Utils/extractNodes"
 
 // TODO: refactor into one of the newer components when ready
-const Container = styled(Flex)<{ bottomMargin?: boolean }>`
+const Container = styled(Flex)<{ bottom?: number }>`
   background-color: #1023D7; //${color("blue100")};
   border: none;
   border-radius: 30px;
@@ -27,12 +27,12 @@ const Container = styled(Flex)<{ bottomMargin?: boolean }>`
   bottom: -40px;
   transition: all 300ms;
   &.visible {
-    bottom: ${props => (props.bottomMargin ? 180 : 80)}px;
+    bottom: ${props => props.bottom}px;
   }
 `
 
 interface UnreadMessagesToastProps {
-  onOfferable?: boolean
+  bottom?: number
   onClick: () => void
   refreshCallback: () => void
   hasScrolled: boolean
@@ -42,13 +42,12 @@ interface UnreadMessagesToastProps {
 }
 
 export const UnreadMessagesToast: React.FC<UnreadMessagesToastProps> = ({
-  onOfferable,
-  onClick,
   refreshCallback,
   hasScrolled,
   relay,
   conversation,
   lastOrderUpdate,
+  ...rest
 }) => {
   const { match } = useRouter()
   const [visible, setVisible] = useState(false)
@@ -59,7 +58,6 @@ export const UnreadMessagesToast: React.FC<UnreadMessagesToastProps> = ({
     const newMessages =
       conversation?.lastMessageID !== conversation?.fromLastViewedMessageID ||
       lastOrderUpdate !== activeOrder?.updatedAt
-
     if (!hasScrolled && newMessages && !visible) refreshCallback()
 
     setVisible(hasScrolled && newMessages)
@@ -90,7 +88,7 @@ export const UnreadMessagesToast: React.FC<UnreadMessagesToastProps> = ({
     () => {
       relay.refetch({ conversationID: conversation?.internalID }, null)
     },
-    5,
+    10,
     match.params?.conversationID,
     !tabActive
   )
@@ -101,8 +99,7 @@ export const UnreadMessagesToast: React.FC<UnreadMessagesToastProps> = ({
         alignItems="center"
         justifyContent="center"
         className={visible ? "visible" : ""}
-        onClick={onClick}
-        bottomMargin={onOfferable}
+        {...rest}
       >
         <Text color="white100">Unread Messages</Text>
         <ArrowDownIcon ml={1} height="16px" fill="white100" />
@@ -151,7 +148,7 @@ export const UnreadMessagesToastRefetchContainer = createRefetchContainer(
 export const UnreadMessagesToastQueryRenderer: React.FC<{
   conversationID: string
   lastOrderUpdate?: string | null
-  onOfferable?: boolean
+  bottom?: number
   onClick: () => void
   refreshCallback: () => void
   hasScrolled: boolean

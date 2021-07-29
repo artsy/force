@@ -8,16 +8,19 @@ export default function useOnScreen<T extends HTMLElement | null>(
     if (!("IntersectionObserver" in window)) return
     if (!ref || ref.current === null) return
 
-    const observer = new IntersectionObserver(([entry]) => {
-      setIntersecting(entry.isIntersecting)
-    })
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIntersecting(entry.isIntersecting)
+      },
+      { rootMargin: "30px" }
+    )
 
     observer.observe(ref.current)
 
     return () => {
       if (ref.current) observer.unobserve(ref.current)
     }
-  }, [ref.current])
+  }, [])
 
   return isIntersecting
 }

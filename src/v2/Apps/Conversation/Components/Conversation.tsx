@@ -123,23 +123,28 @@ const Conversation: React.FC<ConversationProps> = props => {
   }
   const scrollToBottom = () => {
     if (!!bottomOfMessageContainer.current) {
-      setOrderKey()
-      const scrollOptions = initialMount.current ? {} : { behavior: "smooth" }
+      const speedOptions = initialMount.current ? {} : { behavior: "smooth" }
       // @ts-expect-error STRICT_NULL_CHECK
-      bottomOfMessageContainer.current?.scrollIntoView(scrollOptions)
+      bottomOfMessageContainer.current?.scrollIntoView({
+        alignToTop: false,
+        ...speedOptions,
+      })
       if (isBottomVisible) initialMount.current = false
       setLastMessageID(conversation?.lastMessageID)
+      setOrderKey()
     }
   }
   const refreshData = () => {
-    props.refetch({ conversationID: conversation.internalID }, null, () => {
+    props.refetch({ conversationID: conversation.internalID }, null, error => {
+      if (error) console.error(error)
       scrollToBottom()
     })
   }
   const setOrderKey = () => {
-    const activeOrder = extractNodes(conversation?.orderConnection)[0]
     setLastOrderUpdate(activeOrder?.updatedAt)
   }
+
+  const [toastBottom, setToastBottom] = useState(0)
 
   // Behaviours
   // -Navigation
@@ -161,6 +166,8 @@ const Conversation: React.FC<ConversationProps> = props => {
   // -Workaround Reply render resizing race condition
   useEffect(() => {
     if (initialMount.current) scrollToBottom()
+    const rect = scrollContainer.current?.getBoundingClientRect()
+    setToastBottom(window.innerHeight - (rect?.bottom ?? 0) + 30)
   }, [scrollContainer.current?.clientHeight])
   // -On scroll down
   useEffect(() => {
@@ -194,7 +201,7 @@ const Conversation: React.FC<ConversationProps> = props => {
           <UnreadMessagesToastQueryRenderer
             conversationID={conversation?.internalID!}
             lastOrderUpdate={lastOrderUpdate}
-            onOfferable={!!(artwork && isOfferable)}
+            bottom={toastBottom}
             hasScrolled={!isBottomVisible}
             onClick={scrollToBottom}
             refreshCallback={refreshData}
