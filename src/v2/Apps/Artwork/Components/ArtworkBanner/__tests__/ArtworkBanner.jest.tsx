@@ -1,103 +1,164 @@
-import { ArtworkBanner_Test_QueryRawResponse } from "v2/__generated__/ArtworkBanner_Test_Query.graphql"
-import {
-  ArtworkAuctionBannerFixture,
-  ArtworkBenefitAuctionBannerFixture,
-  ArtworkFairBannerFixture,
-  ArtworkNoBannerFixture,
-  ArtworkUpcomingShowBannerFixture,
-} from "v2/Apps/__tests__/Fixtures/Artwork/ArtworkBanner"
-import { ArtworkBannerFragmentContainer } from "v2/Apps/Artwork/Components/ArtworkBanner"
-import { renderRelayTree } from "v2/DevTools"
+import { ArtworkBanner_Test_Query } from "v2/__generated__/ArtworkBanner_Test_Query.graphql"
+import { ArtworkBannerFragmentContainer } from "v2/Apps/Artwork/Components/ArtworkBanner/ArtworkBanner"
 import { graphql } from "react-relay"
+import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
 
 jest.unmock("react-relay")
 
 describe("ArtworkBanner", () => {
-  const getWrapper = async (
-    response: ArtworkBanner_Test_QueryRawResponse["artwork"]
-  ) => {
-    return await renderRelayTree({
-      Component: ArtworkBannerFragmentContainer,
-      query: graphql`
-        query ArtworkBanner_Test_Query @raw_response_type {
-          artwork(id: "richard-anuszkiewicz-lino-yellow-318") {
-            ...ArtworkBanner_artwork
-          }
+  const { getWrapper } = setupTestWrapper<ArtworkBanner_Test_Query>({
+    Component: ArtworkBannerFragmentContainer,
+    query: graphql`
+      query ArtworkBanner_Test_Query {
+        artwork(id: "richard-anuszkiewicz-lino-yellow-318") {
+          ...ArtworkBanner_artwork
         }
-      `,
-      mockData: { artwork: response } as ArtworkBanner_Test_QueryRawResponse,
-    })
-  }
+      }
+    `,
+  })
 
-  let wrapper
-
-  describe("ArtworkBanner for artwork with no banner", () => {
-    beforeAll(async () => {
-      wrapper = await getWrapper(ArtworkNoBannerFixture)
+  it("if no in show or auction or fair, render nothing", () => {
+    const wrapper = getWrapper({
+      Artwork: () => ({
+        context: null,
+      }),
     })
-    it("renders nothing", () => {
+
+    expect(wrapper.html()).toEqual("")
+  })
+
+  describe("sale", () => {
+    it("does not render if sale is invalid", () => {
+      const wrapper = getWrapper({
+        Artwork: () => ({
+          sale: null,
+        }),
+      })
+      expect(wrapper.html()).toEqual("")
+    })
+
+    it("renders a sale banner", () => {
+      const wrapper = getWrapper({
+        Artwork: () => ({
+          context: {
+            __typename: "Sale",
+            name: "saleName",
+            href: "saleHref",
+          },
+          sale: {
+            isBenefit: false,
+            isGalleryAuction: false,
+          },
+        }),
+        Partner: () => ({
+          name: "partnerName",
+        }),
+      })
+
       const html = wrapper.html()
-      expect(html).toBeFalsy()
+      const text = wrapper.text()
+      expect(html).toContain("src")
+      expect(html).toContain("srcSet")
+      expect(html).toContain("saleName")
+      expect(html).toContain("saleHref")
+      expect(text).toContain("partnerName")
+      expect(text).toContain("In auction")
+    })
+
+    it("does not render partnerName if benefit or gallery auction", () => {
+      const wrapper = getWrapper({
+        Artwork: () => ({
+          context: {
+            __typename: "Sale",
+          },
+          sale: {
+            isBenefit: true,
+            isGalleryAuction: true,
+          },
+        }),
+        Partner: () => ({
+          name: "partnerName",
+        }),
+      })
+
+      const html = wrapper.html()
+      expect(html).not.toContain("partnerHref")
     })
   })
 
-  describe("ArtworkBanner for artwork with regular auction banner", () => {
-    beforeAll(async () => {
-      wrapper = await getWrapper(ArtworkAuctionBannerFixture)
-    })
-    it("renders a correct data for the auction", () => {
-      const html = wrapper.html()
+  describe("fair", () => {
+    it("renders a fair banner", () => {
+      const wrapper = getWrapper({
+        Artwork: () => ({
+          context: {
+            __typename: "Fair",
+            name: "fairName",
+            href: "fairHref",
+          },
+        }),
+        Partner: () => ({
+          name: "partnerName",
+        }),
+      })
 
-      expect(html).toContain("In auction")
-      // expect(html).toContain("Doyle: Post-War & Contemporary Art")
-      expect(html).toContain(
-        "https://d32dm0rphc51dk.cloudfront.net/teoB9Znrq-78iSh6_Vh6Og/square.jpg"
-      )
-      expect(html).toContain("Doyle")
+      const html = wrapper.html()
+      const text = wrapper.text()
+      expect(html).toContain("src")
+      expect(html).toContain("srcSet")
+      expect(text).toContain("fairName")
+      expect(html).toContain("fairHref")
+      expect(text).toContain("At fair")
     })
   })
 
-  describe("ArtworkBanner for artwork with benefit auction banner", () => {
-    beforeAll(async () => {
-      wrapper = await getWrapper(ArtworkBenefitAuctionBannerFixture)
-    })
-    it("renders a correct data for the auction", () => {
+  describe("show", () => {
+    it("renders a show banner with default status", () => {
+      const wrapper = getWrapper({
+        Artwork: () => ({
+          context: {
+            __typename: "Show",
+            name: "showName",
+            href: "showHref",
+            status: "null",
+          },
+        }),
+        Partner: () => ({
+          name: "partnerName",
+        }),
+      })
+
       const html = wrapper.html()
-
-      expect(html).toContain("In auction")
-      // expect(html).toContain("BFAMI: Live Benefit Auction 2019")
-      expect(html).toContain(
-        "https://d32dm0rphc51dk.cloudfront.net/0XJ7rzO9dlu60lXl2OuH6g/square.jp"
-      )
-      expect(html).not.toContain(
-        "BFAMI: Live Benefit Auction 2019 partner name"
-      )
-    })
-  })
-
-  describe("ArtworkBanner for artwork with fair banner", () => {
-    beforeAll(async () => {
-      wrapper = await getWrapper(ArtworkFairBannerFixture)
+      const text = wrapper.text()
+      expect(wrapper.find("ChevronIcon").length).toBe(1)
+      expect(text).toContain("showName")
+      expect(html).toContain("showHref")
+      expect(text).toContain("In current show")
     })
 
-    it("renders a correct data for the fair", () => {
-      const html = wrapper.html()
-      expect(html).toContain("At fair")
-      // expect(html).toContain("West Bund Art & Design 2018")
-      expect(html).toContain("White Cube")
-    })
-  })
+    it("renders upcoming status", () => {
+      const wrapper = getWrapper({
+        Artwork: () => ({
+          context: {
+            __typename: "Show",
+            status: "upcoming",
+          },
+        }),
+      })
 
-  describe("ArtworkBanner for artwork with partner show banner", () => {
-    beforeAll(async () => {
-      wrapper = await getWrapper(ArtworkUpcomingShowBannerFixture)
+      expect(wrapper.text()).toContain("In upcoming show")
     })
 
-    it("renders a correct data for the show", () => {
-      const html = wrapper.html()
-      expect(html).toContain("In upcoming show")
-      // expect(html).toContain("Claudia Giraudo | The age of innocence")
-      expect(html).toContain("Galleria Punto Sull'Arte")
+    it("renders closed status", () => {
+      const wrapper = getWrapper({
+        Artwork: () => ({
+          context: {
+            __typename: "Show",
+            status: "closed",
+          },
+        }),
+      })
+
+      expect(wrapper.text()).toContain("In past show")
     })
   })
 })

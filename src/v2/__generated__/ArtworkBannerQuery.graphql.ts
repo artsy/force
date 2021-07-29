@@ -31,15 +31,17 @@ query ArtworkBannerQuery(
 fragment ArtworkBanner_artwork on Artwork {
   partner {
     name
-    initials
     id
   }
   sale {
-    is_auction: isAuction
+    isAuction
     isBenefit
     isGalleryAuction
-    cover_image: coverImage {
-      url(version: "square")
+    coverImage {
+      cropped(width: 30, height: 30, version: "square") {
+        src
+        srcSet
+      }
     }
     id
   }
@@ -53,10 +55,10 @@ fragment ArtworkBanner_artwork on Artwork {
       name
       href
       profile {
-        initials
         icon {
-          img: resized(width: 70, height: 70, version: "square") {
-            url
+          cropped(width: 30, height: 30, version: "square") {
+            src
+            srcSet
           }
         }
         id
@@ -67,8 +69,9 @@ fragment ArtworkBanner_artwork on Artwork {
       href
       status
       thumbnail: coverImage {
-        img: resized(width: 70, height: 70, version: "square") {
-          url
+        cropped(width: 30, height: 30, version: "square") {
+          src
+          srcSet
         }
       }
     }
@@ -106,60 +109,59 @@ v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "initials",
-  "storageKey": null
-},
-v4 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v5 = {
-  "kind": "Literal",
-  "name": "version",
-  "value": "square"
-},
-v6 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "href",
-  "storageKey": null
-},
-v7 = [
+v4 = [
   {
-    "alias": "img",
+    "alias": null,
     "args": [
       {
         "kind": "Literal",
         "name": "height",
-        "value": 70
+        "value": 30
       },
-      (v5/*: any*/),
+      {
+        "kind": "Literal",
+        "name": "version",
+        "value": "square"
+      },
       {
         "kind": "Literal",
         "name": "width",
-        "value": 70
+        "value": 30
       }
     ],
-    "concreteType": "ResizedImageUrl",
+    "concreteType": "CroppedImageUrl",
     "kind": "LinkedField",
-    "name": "resized",
+    "name": "cropped",
     "plural": false,
     "selections": [
       {
         "alias": null,
         "args": null,
         "kind": "ScalarField",
-        "name": "url",
+        "name": "src",
+        "storageKey": null
+      },
+      {
+        "alias": null,
+        "args": null,
+        "kind": "ScalarField",
+        "name": "srcSet",
         "storageKey": null
       }
     ],
-    "storageKey": "resized(height:70,version:\"square\",width:70)"
+    "storageKey": "cropped(height:30,version:\"square\",width:30)"
   }
-];
+],
+v5 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "href",
+  "storageKey": null
+};
 return {
   "fragment": {
     "argumentDefinitions": (v0/*: any*/),
@@ -209,8 +211,7 @@ return {
             "plural": false,
             "selections": [
               (v2/*: any*/),
-              (v3/*: any*/),
-              (v4/*: any*/)
+              (v3/*: any*/)
             ],
             "storageKey": null
           },
@@ -223,7 +224,7 @@ return {
             "plural": false,
             "selections": [
               {
-                "alias": "is_auction",
+                "alias": null,
                 "args": null,
                 "kind": "ScalarField",
                 "name": "isAuction",
@@ -244,26 +245,16 @@ return {
                 "storageKey": null
               },
               {
-                "alias": "cover_image",
+                "alias": null,
                 "args": null,
                 "concreteType": "Image",
                 "kind": "LinkedField",
                 "name": "coverImage",
                 "plural": false,
-                "selections": [
-                  {
-                    "alias": null,
-                    "args": [
-                      (v5/*: any*/)
-                    ],
-                    "kind": "ScalarField",
-                    "name": "url",
-                    "storageKey": "url(version:\"square\")"
-                  }
-                ],
+                "selections": (v4/*: any*/),
                 "storageKey": null
               },
-              (v4/*: any*/)
+              (v3/*: any*/)
             ],
             "storageKey": null
           },
@@ -282,12 +273,12 @@ return {
                 "name": "__typename",
                 "storageKey": null
               },
-              (v4/*: any*/),
+              (v3/*: any*/),
               {
                 "kind": "InlineFragment",
                 "selections": [
                   (v2/*: any*/),
-                  (v6/*: any*/)
+                  (v5/*: any*/)
                 ],
                 "type": "Sale"
               },
@@ -295,7 +286,7 @@ return {
                 "kind": "InlineFragment",
                 "selections": [
                   (v2/*: any*/),
-                  (v6/*: any*/),
+                  (v5/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -304,7 +295,6 @@ return {
                     "name": "profile",
                     "plural": false,
                     "selections": [
-                      (v3/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -312,10 +302,10 @@ return {
                         "kind": "LinkedField",
                         "name": "icon",
                         "plural": false,
-                        "selections": (v7/*: any*/),
+                        "selections": (v4/*: any*/),
                         "storageKey": null
                       },
-                      (v4/*: any*/)
+                      (v3/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -326,7 +316,7 @@ return {
                 "kind": "InlineFragment",
                 "selections": [
                   (v2/*: any*/),
-                  (v6/*: any*/),
+                  (v5/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -341,7 +331,7 @@ return {
                     "kind": "LinkedField",
                     "name": "coverImage",
                     "plural": false,
-                    "selections": (v7/*: any*/),
+                    "selections": (v4/*: any*/),
                     "storageKey": null
                   }
                 ],
@@ -350,7 +340,7 @@ return {
             ],
             "storageKey": null
           },
-          (v4/*: any*/)
+          (v3/*: any*/)
         ],
         "storageKey": null
       }
@@ -361,7 +351,7 @@ return {
     "metadata": {},
     "name": "ArtworkBannerQuery",
     "operationKind": "query",
-    "text": "query ArtworkBannerQuery(\n  $artworkID: String!\n) {\n  artwork(id: $artworkID) {\n    ...ArtworkBanner_artwork\n    id\n  }\n}\n\nfragment ArtworkBanner_artwork on Artwork {\n  partner {\n    name\n    initials\n    id\n  }\n  sale {\n    is_auction: isAuction\n    isBenefit\n    isGalleryAuction\n    cover_image: coverImage {\n      url(version: \"square\")\n    }\n    id\n  }\n  context {\n    __typename\n    ... on Sale {\n      name\n      href\n    }\n    ... on Fair {\n      name\n      href\n      profile {\n        initials\n        icon {\n          img: resized(width: 70, height: 70, version: \"square\") {\n            url\n          }\n        }\n        id\n      }\n    }\n    ... on Show {\n      name\n      href\n      status\n      thumbnail: coverImage {\n        img: resized(width: 70, height: 70, version: \"square\") {\n          url\n        }\n      }\n    }\n    ... on Node {\n      id\n    }\n  }\n}\n"
+    "text": "query ArtworkBannerQuery(\n  $artworkID: String!\n) {\n  artwork(id: $artworkID) {\n    ...ArtworkBanner_artwork\n    id\n  }\n}\n\nfragment ArtworkBanner_artwork on Artwork {\n  partner {\n    name\n    id\n  }\n  sale {\n    isAuction\n    isBenefit\n    isGalleryAuction\n    coverImage {\n      cropped(width: 30, height: 30, version: \"square\") {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n  context {\n    __typename\n    ... on Sale {\n      name\n      href\n    }\n    ... on Fair {\n      name\n      href\n      profile {\n        icon {\n          cropped(width: 30, height: 30, version: \"square\") {\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n    ... on Show {\n      name\n      href\n      status\n      thumbnail: coverImage {\n        cropped(width: 30, height: 30, version: \"square\") {\n          src\n          srcSet\n        }\n      }\n    }\n    ... on Node {\n      id\n    }\n  }\n}\n"
   }
 };
 })();
