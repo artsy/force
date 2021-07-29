@@ -51,7 +51,13 @@ export const FairOrganizerHeader: React.FC<any> = ({}) => {
         </Column>
 
         <Column span={6}>
-          <FairOrganizerInfo about="Art Paris, the leading spring event for modern and contemporary art, supports and celebrates the French art scene and invites visitors to discover the Spanish and Portuguese art from the 1950s to the present day, from modern masters to contemporary artists." />
+          <FairOrganizerInfo
+            about="Art Paris, the leading spring event for modern and contemporary art, supports and celebrates the French art scene and invites visitors to discover the Spanish and Portuguese art from the 1950s to the present day, from modern masters to contemporary artists."
+            links={[
+              { label: "Facebook", href: "https://www.facebook.com" },
+              { label: "Twitter", href: "https://twitter.com" },
+            ]}
+          />
         </Column>
       </GridColumns>
     </Box>

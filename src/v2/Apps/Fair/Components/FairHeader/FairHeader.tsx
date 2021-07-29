@@ -5,13 +5,11 @@ import {
   GridColumns,
   Column,
   Flex,
-  HTML,
   Text,
   Spacer,
   Join,
 } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import styled from "styled-components"
 import { FairHeader_fair } from "v2/__generated__/FairHeader_fair.graphql"
 import { FairTimingFragmentContainer as FairTiming } from "./FairTiming"
 import { FairHeaderIconFragmentContainer } from "./FairHeaderIcon"
@@ -23,31 +21,7 @@ import { FairCollectionsFragmentContainer } from "../FairCollections"
 import { FairFollowedArtistsFragmentContainer } from "../FairFollowedArtists"
 import { useSystemContext } from "v2/System"
 import { RouterLink } from "v2/System/Router/RouterLink"
-
-const TextWithNewlines = styled(Text)`
-  white-space: pre-wrap;
-`
-
-interface FairInfoSectionProps {
-  label?: string
-  info: string
-  isHTML?: boolean
-}
-
-const FairInfoSection: React.FC<FairInfoSectionProps> = ({
-  label,
-  info,
-  isHTML = false,
-}) => (
-  <>
-    {label && <Text variant="md">{label}</Text>}
-    {isHTML ? (
-      <HTML variant="md" html={info} />
-    ) : (
-      <TextWithNewlines variant="md">{info}</TextWithNewlines>
-    )}
-  </>
-)
+import { InfoSection } from "v2/Components/InfoSection"
 
 interface FairHeaderProps extends BoxProps {
   fair: FairHeader_fair
@@ -93,24 +67,28 @@ const FairHeader: React.FC<FairHeaderProps> = ({ fair }) => {
               About
             </Text>
 
-            {summary && <FairInfoSection isHTML info={summary} />}
-            {about && <FairInfoSection isHTML info={about} />}
-            {tagline && <FairInfoSection info={tagline} />}
+            {summary && <InfoSection type="html" info={summary} />}
+            {about && <InfoSection type="html" info={about} />}
+            {tagline && <InfoSection type="text" info={tagline} />}
             {location?.summary && (
-              <FairInfoSection label="Location" info={location.summary} />
+              <InfoSection
+                type="text"
+                label="Location"
+                info={location.summary}
+              />
             )}
-            {hours && <FairInfoSection label="Hours" isHTML info={hours} />}
+            {hours && <InfoSection type="html" label="Hours" info={hours} />}
             {tickets && (
-              <FairInfoSection label="Tickets" isHTML info={tickets} />
+              <InfoSection type="html" label="Tickets" info={tickets} />
             )}
             {ticketsLink && (
               <a href={ticketsLink}>
                 <Text variant="md">Buy Tickets</Text>
               </a>
             )}
-            {links && <FairInfoSection label="Links" isHTML info={links} />}
+            {links && <InfoSection type="html" label="Links" info={links} />}
             {contact && (
-              <FairInfoSection label="Contact" isHTML info={contact} />
+              <InfoSection type="html" label="Contact" info={contact} />
             )}
           </Join>
         </Column>

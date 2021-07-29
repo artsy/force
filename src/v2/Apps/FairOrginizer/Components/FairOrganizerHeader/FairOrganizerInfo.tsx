@@ -1,35 +1,24 @@
 import React from "react"
-import { HTML, Join, Spacer, Text } from "@artsy/palette"
-import styled from "styled-components"
+import { Join, Link, Spacer, Text } from "@artsy/palette"
+import { InfoSection } from "v2/Components/InfoSection"
 
-const TextWithNewlines = styled(Text)`
-  white-space: pre-wrap;
-`
-
-const FairInfoSection: React.FC<any> = ({ label, info, isHTML = false }) => (
-  <>
-    {label && <Text variant="md">{label}</Text>}
-    {isHTML ? (
-      <HTML variant="md" html={info} />
-    ) : (
-      <TextWithNewlines variant="md">{info}</TextWithNewlines>
-    )}
-  </>
-)
-
-export const FairOrganizerInfo: React.FC<any> = ({ summary, about }) => {
+export const FairOrganizerInfo: React.FC<any> = ({ about, links }) => {
   return (
     <Join separator={<Spacer mt={2} />}>
-      <Text variant="md" textTransform="uppercase">
-        About
-      </Text>
+      {about && <InfoSection type="html" label="About" info={about} />}
 
-      {summary && <FairInfoSection isHTML info={summary} />}
-      {about && <FairInfoSection isHTML info={about} />}
-
-      <Text variant="md" textTransform="uppercase">
-        Follow
-      </Text>
+      {!!links.length && (
+        <InfoSection
+          label="Follow"
+          info={links.map(({ label, href }) => {
+            return (
+              <Link href={href}>
+                <Text style={{ textDecoration: "underline" }}>{label}</Text>
+              </Link>
+            )
+          })}
+        />
+      )}
     </Join>
   )
 }
