@@ -112,11 +112,11 @@ export const RecentlyViewedV2QueryRenderer = () => {
           return null
         }
 
-        if (!props) {
+        if (!props || !props.me) {
           return <RecentlyViewedV2Placeholder />
         }
 
-        return <RecentlyViewedV2FragmentContainer {...props} />
+        return <RecentlyViewedV2FragmentContainer me={props.me} />
       }}
     />
   )

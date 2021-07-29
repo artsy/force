@@ -142,7 +142,7 @@ export const PartnerArtistDetailsRenderer: React.FC<{
             {...rest}
             {...props}
             partnerId={partnerId}
-            partnerArtist={props?.partner?.artistsConnection?.edges[0]}
+            partnerArtist={props?.partner?.artistsConnection?.edges?.[0]!}
           />
         )
       }}

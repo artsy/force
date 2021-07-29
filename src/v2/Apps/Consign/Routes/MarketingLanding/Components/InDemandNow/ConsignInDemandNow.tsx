@@ -126,10 +126,10 @@ const ConsignInDemandNowQueryRenderer: React.FC = () => {
         return (
           <>
             <Media greaterThanOrEqual="md">
-              <InDemandNowLarge {...props} />
+              <InDemandNowLarge {...props!} />
             </Media>
             <Media lessThan="md">
-              <InDemandNowSmall {...props} />
+              <InDemandNowSmall {...props!} />
             </Media>
           </>
         )

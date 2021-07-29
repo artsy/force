@@ -252,7 +252,7 @@ export const MarketStatsQueryRenderer: React.FC<{
 
         return (
           <MarketStatsFragmentContainer
-            priceInsightsConnection={props.priceInsightsConnection}
+            priceInsightsConnection={props.priceInsightsConnection!}
           />
         )
       }}

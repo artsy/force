@@ -224,7 +224,7 @@ const GeneSearchResultsComponent: React.SFC<
               onGeneFollow={onGeneFollow}
               onNoResults={onNoResults}
               term={term}
-              viewer={props.viewer}
+              viewer={props.viewer!}
             />
           )
         } else {

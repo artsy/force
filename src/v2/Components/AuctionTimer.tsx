@@ -98,7 +98,7 @@ export const AuctionTimerQueryRenderer = ({ saleID }: { saleID: string }) => {
         }
       `}
       render={({ props }) => {
-        return props && <AuctionTimerFragmentContainer sale={props.sale} />
+        return props && <AuctionTimerFragmentContainer sale={props.sale!} />
       }}
     />
   )
