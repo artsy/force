@@ -1,0 +1,112 @@
+import { graphql } from "react-relay"
+import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
+import { FairOrganizerFollowButton_Test_Query } from "v2/__generated__/FairOrganizerFollowButton_Test_Query.graphql"
+import { FairOrganizerFollowButtonFragmentContainer } from "../FairOrganizerFollowButton"
+import { openAuthToFollowSave } from "v2/Utils/openAuthModal"
+import { useSystemContext } from "v2/System/useSystemContext"
+import { fairOrganizerFollowMutation } from "../../Mutations/FairOrganizerFollowMutation"
+
+jest.unmock("react-relay")
+jest.mock("v2/Utils/openAuthModal")
+jest.mock("v2/System/useSystemContext")
+jest.mock("v2/Apps/FairOrginizer/Mutations/FairOrganizerFollowMutation.ts")
+
+describe("FairOrganizerFollowButton", () => {
+  const { getWrapper } = setupTestWrapper<FairOrganizerFollowButton_Test_Query>(
+    {
+      Component: FairOrganizerFollowButtonFragmentContainer,
+      query: graphql`
+        query FairOrganizerFollowButton_Test_Query($id: String!) {
+          fair(id: $id) {
+            ...FairOrganizerFollowButton_fair
+          }
+        }
+      `,
+      variables: { id: "fair" },
+    }
+  )
+
+  const mockUseSystemContext = useSystemContext as jest.Mock
+  const mockOpenAuthToFollowSave = openAuthToFollowSave as jest.Mock
+  const mockFairOrganizerFollowMutation = fairOrganizerFollowMutation as jest.Mock
+
+  beforeEach(() => {
+    mockUseSystemContext.mockImplementation(() => ({
+      mediator: jest.fn(),
+      user: jest.fn(),
+    }))
+  })
+
+  afterEach(() => {
+    jest.resetAllMocks()
+  })
+
+  it("renders correctly", () => {
+    const wrapper = getWrapper({
+      Profile: () => ({
+        isFollowed: false,
+      }),
+    })
+
+    expect(wrapper.text()).toContain("Follow")
+  })
+
+  it("toggles following label", () => {
+    const wrapper = getWrapper({
+      Profile: () => ({
+        isFollowed: true,
+      }),
+    })
+
+    expect(wrapper.text()).toContain("Following")
+  })
+
+  it("unauthenticated users trigger auth modal on click", () => {
+    mockUseSystemContext.mockImplementation(() => ({
+      mediator: "mediator",
+      user: null,
+    }))
+
+    const wrapper = getWrapper({
+      Fair: () => ({
+        internalID: "fairInternalID",
+        name: "fairName",
+        slug: "fairSlug",
+      }),
+    })
+    wrapper.simulate("click")
+
+    expect(mockOpenAuthToFollowSave).toHaveBeenCalledWith("mediator", {
+      contextModule: "fairInfo",
+      entity: { name: "fairName", slug: "fairSlug" },
+      intent: "followGene",
+    })
+  })
+
+  it("authenticated users trigger follow mutation on click", () => {
+    mockUseSystemContext.mockImplementation(() => ({
+      mediator: "mediator",
+      relayEnvironment: "relayEnvironment",
+      user: "user",
+    }))
+
+    const wrapper = getWrapper({
+      Profile: () => ({
+        id: "profileId",
+        internalID: "profileInternalID",
+        isFollowed: false,
+      }),
+    })
+
+    wrapper.simulate("click")
+
+    expect(mockFairOrganizerFollowMutation).toHaveBeenCalledWith(
+      "relayEnvironment",
+      {
+        id: "profileId",
+        profileID: "profileInternalID",
+        isFollowed: false,
+      }
+    )
+  })
+})
