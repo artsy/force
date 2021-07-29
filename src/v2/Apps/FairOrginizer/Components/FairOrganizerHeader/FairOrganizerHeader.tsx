@@ -11,7 +11,24 @@ export const FairOrganizerHeader: React.FC<any> = ({}) => {
         <Column span={6}>
           <Flex flexDirection="column">
             <Box>
-              <FairOrganizerHeaderIcon />
+              <FairOrganizerHeaderIcon
+                fairOrganizer={{
+                  icon: {
+                    desktop: {
+                      src:
+                        "https://d196wkiy8qx2u5.cloudfront.net?resize_to=fill&width=100&height=100&quality=80&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FpEE751u3-2o0oOfaTHTSYA%2Fsquare140.png",
+                      srcSet:
+                        "https://d196wkiy8qx2u5.cloudfront.net?resize_to=fill&width=100&height=100&quality=80&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FpEE751u3-2o0oOfaTHTSYA%2Fsquare140.png 1x, https://d196wkiy8qx2u5.cloudfront.net?resize_to=fill&width=200&height=200&quality=50&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FpEE751u3-2o0oOfaTHTSYA%2Fsquare140.png 2x",
+                    },
+                    mobile: {
+                      src:
+                        "https://d196wkiy8qx2u5.cloudfront.net?resize_to=fill&width=60&height=60&quality=80&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FpEE751u3-2o0oOfaTHTSYA%2Fsquare140.png",
+                      srcSet:
+                        "https://d196wkiy8qx2u5.cloudfront.net?resize_to=fill&width=60&height=60&quality=80&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FpEE751u3-2o0oOfaTHTSYA%2Fsquare140.png 1x, https://d196wkiy8qx2u5.cloudfront.net?resize_to=fill&width=120&height=120&quality=50&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FpEE751u3-2o0oOfaTHTSYA%2Fsquare140.png 2x",
+                    },
+                  },
+                }}
+              />
             </Box>
 
             <Spacer mt={1} />
