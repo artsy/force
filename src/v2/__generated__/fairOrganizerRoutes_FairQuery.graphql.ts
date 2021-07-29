@@ -34,6 +34,8 @@ fragment FairOrganizerApp_fair on Fair {
 
 fragment FairOrganizerFollowButton_fair on Fair {
   id
+  slug
+  name
   profile {
     id
     internalID
@@ -109,6 +111,20 @@ return {
           {
             "alias": null,
             "args": null,
+            "kind": "ScalarField",
+            "name": "slug",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "name",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
             "concreteType": "Profile",
             "kind": "LinkedField",
             "name": "profile",
@@ -142,7 +158,7 @@ return {
     "metadata": {},
     "name": "fairOrganizerRoutes_FairQuery",
     "operationKind": "query",
-    "text": "query fairOrganizerRoutes_FairQuery(\n  $id: String!\n) {\n  fair(id: $id) {\n    ...FairOrganizerApp_fair\n    id\n  }\n}\n\nfragment FairOrganizerApp_fair on Fair {\n  ...FairOrganizerFollowButton_fair\n}\n\nfragment FairOrganizerFollowButton_fair on Fair {\n  id\n  profile {\n    id\n    internalID\n    isFollowed\n  }\n}\n"
+    "text": "query fairOrganizerRoutes_FairQuery(\n  $id: String!\n) {\n  fair(id: $id) {\n    ...FairOrganizerApp_fair\n    id\n  }\n}\n\nfragment FairOrganizerApp_fair on Fair {\n  ...FairOrganizerFollowButton_fair\n}\n\nfragment FairOrganizerFollowButton_fair on Fair {\n  id\n  slug\n  name\n  profile {\n    id\n    internalID\n    isFollowed\n  }\n}\n"
   }
 };
 })();

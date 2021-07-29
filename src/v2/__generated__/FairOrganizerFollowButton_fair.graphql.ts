@@ -5,6 +5,8 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type FairOrganizerFollowButton_fair = {
     readonly id: string;
+    readonly slug: string;
+    readonly name: string | null;
     readonly profile: {
         readonly id: string;
         readonly internalID: string;
@@ -38,6 +40,20 @@ return {
     {
       "alias": null,
       "args": null,
+      "kind": "ScalarField",
+      "name": "slug",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "name",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
       "concreteType": "Profile",
       "kind": "LinkedField",
       "name": "profile",
@@ -65,5 +81,5 @@ return {
   "type": "Fair"
 };
 })();
-(node as any).hash = '52a5f20d314675f204cb74741e623ea7';
+(node as any).hash = '6cb78c0b786b06bfcef991cc8a9fd0a3';
 export default node;
