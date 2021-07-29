@@ -13,8 +13,7 @@ import {
   validAddress,
 } from "v2/Components/__tests__/Utils/addressForm"
 import { CountrySelect } from "v2/Components/CountrySelect"
-import Input from "v2/Components/Input"
-import { Input as paletteInput } from "@artsy/palette"
+import { Input } from "@artsy/palette"
 import { createTestEnv } from "v2/DevTools/createTestEnv"
 import { graphql } from "react-relay"
 import {
@@ -1122,7 +1121,7 @@ describe("Shipping", () => {
         expect(
           page
             .find("AddressModal")
-            .find(paletteInput)
+            .find(Input)
             .map(input => input.props().value)
         ).toMatchInlineSnapshot(`
           Array [
