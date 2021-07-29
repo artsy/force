@@ -1,34 +1,52 @@
 import React from "react"
-// FIXME: https://github.com/DefinitelyTyped/DefinitelyTyped/issues/37950
-// @ts-ignore
-import { QueryRenderer, QueryRendererProps } from "react-relay"
+import { useEffect } from "react"
+import { useState } from "react"
+import { QueryRenderer } from "react-relay"
 import { OperationType } from "relay-runtime"
 
-interface SystemQueryRendererState {
-  isMounted: boolean
+type QueryRendererProps = React.ComponentProps<typeof QueryRenderer>
+
+export type SystemQueryRendererProps<T extends OperationType> = Omit<
+  QueryRendererProps,
+  "render" | "environment" | "variables"
+> & {
+  placeholder?: React.ReactNode
+  environment?: QueryRendererProps["environment"]
+  variables?: QueryRendererProps["variables"]
+  render(renderProps: {
+    error: Error | null
+    props: T["response"] | null
+    retry: (() => void) | null
+  }): React.ReactNode
 }
 
-/** A QueryRenderer that runs only on the client */
-export class SystemQueryRenderer<
-  T extends OperationType
-> extends React.Component<QueryRendererProps<T>, SystemQueryRendererState> {
-  state = {
-    isMounted: false,
+export function SystemQueryRenderer<T extends OperationType>({
+  placeholder,
+  environment,
+  variables = {},
+  render,
+  ...rest
+}: SystemQueryRendererProps<T>): JSX.Element {
+  const [isMounted, setIsMounted] = useState(false)
+
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
+
+  if (!environment) {
+    return <></>
   }
 
-  componentDidMount() {
-    this.setState({
-      isMounted: true,
-    })
+  if (isMounted) {
+    return (
+      <QueryRenderer<T>
+        environment={environment}
+        variables={variables}
+        render={render}
+        {...rest}
+      />
+    )
   }
 
-  render() {
-    const { placeholder, ...rest } = this.props
-
-    if (this.state.isMounted) {
-      return <QueryRenderer<T> {...rest} />
-    } else {
-      return placeholder ? placeholder : null
-    }
-  }
+  return placeholder ? <>{placeholder}</> : <></>
 }
