@@ -6,12 +6,16 @@ export function setTimingHeader(
   name: string,
   durationMilli: number | null = null
 ) {
+  if (!res.serverTimingHeaders) {
+    return
+  }
+
   if (res.serverTimingHeadersWritten) {
     console.warn(
       `Header: ${name} will not be sent, response headers have already been sent.`
     )
   }
-  res.serverTimingHeaders!.set(name, durationMilli)
+  res.serverTimingHeaders.set(name, durationMilli)
 }
 
 export function serverTimingHeaders(

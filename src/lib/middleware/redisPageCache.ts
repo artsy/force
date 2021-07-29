@@ -39,7 +39,6 @@ export async function pageCacheMiddleware(
   }
   if (!isCacheablePageType(req)) return next()
 
-  // @ts-ignore
   const hasUser = !!req.user
   if (hasUser) return next()
 
