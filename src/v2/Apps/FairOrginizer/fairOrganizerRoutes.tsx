@@ -19,8 +19,6 @@ export const fairOrganizerRoutes: AppRouteConfig[] = [
       FairOrganizerApp.preload()
     },
     prepareVariables: params => {
-      console.log("[debug] params", params)
-
       return {
         id: params.slug,
       }
