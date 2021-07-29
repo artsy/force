@@ -96,6 +96,8 @@ const Conversation: React.FC<ConversationProps> = props => {
   const scrollContainer = useRef<HTMLDivElement>(null)
   const [fetchingMore, setFetchingMore] = useState<boolean>(false)
   const [lastMessageID, setLastMessageID] = useState<string | null>()
+  const [lastOrderUpdate, setLastOrderUpdate] = useState<string | null>()
+
   const isBottomVisible = useOnScreen(bottomOfMessageContainer)
 
   // Functions
@@ -121,6 +123,7 @@ const Conversation: React.FC<ConversationProps> = props => {
   }
   const scrollToBottom = () => {
     if (!!bottomOfMessageContainer.current) {
+      setOrderKey()
       const scrollOptions = initialMount.current ? {} : { behavior: "smooth" }
       // @ts-expect-error STRICT_NULL_CHECK
       bottomOfMessageContainer.current?.scrollIntoView(scrollOptions)
@@ -133,12 +136,17 @@ const Conversation: React.FC<ConversationProps> = props => {
       scrollToBottom()
     })
   }
+  const setOrderKey = () => {
+    const activeOrder = extractNodes(conversation?.orderConnection)[0]
+    setLastOrderUpdate(activeOrder?.updatedAt)
+  }
 
   // Behaviours
   // -Navigation
   useEffect(() => {
     setLastMessageID(conversation?.fromLastViewedMessageID)
     initialMount.current = true
+    setOrderKey()
   }, [conversation?.internalID])
   // -Last message opened
   useEffect(() => {
@@ -185,6 +193,7 @@ const Conversation: React.FC<ConversationProps> = props => {
           </Box>
           <UnreadMessagesToastQueryRenderer
             conversationID={conversation?.internalID!}
+            lastOrderUpdate={lastOrderUpdate}
             onOfferable={!!(artwork && isOfferable)}
             hasScrolled={!isBottomVisible}
             onClick={scrollToBottom}
@@ -269,6 +278,7 @@ export const ConversationPaginationContainer = createPaginationContainer(
           edges {
             node {
               internalID
+              updatedAt
               ... on CommerceOfferOrder {
                 buyerAction
               }

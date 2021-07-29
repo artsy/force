@@ -39,6 +39,16 @@ fragment UnreadMessagesToast_conversation on Conversation {
   lastMessageID
   fromLastViewedMessageID
   isLastMessageToUser
+  activeOrders: orderConnection(last: 1, states: [APPROVED, FULFILLED, SUBMITTED, REFUNDED]) {
+    edges {
+      node {
+        __typename
+        internalID
+        updatedAt
+        id
+      }
+    }
+  }
 }
 */
 
@@ -63,6 +73,13 @@ v2 = {
   "args": null,
   "kind": "ScalarField",
   "name": "id",
+  "storageKey": null
+},
+v3 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
   "storageKey": null
 };
 return {
@@ -125,13 +142,7 @@ return {
             "plural": false,
             "selections": [
               (v2/*: any*/),
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "internalID",
-                "storageKey": null
-              },
+              (v3/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -152,6 +163,71 @@ return {
                 "kind": "ScalarField",
                 "name": "isLastMessageToUser",
                 "storageKey": null
+              },
+              {
+                "alias": "activeOrders",
+                "args": [
+                  {
+                    "kind": "Literal",
+                    "name": "last",
+                    "value": 1
+                  },
+                  {
+                    "kind": "Literal",
+                    "name": "states",
+                    "value": [
+                      "APPROVED",
+                      "FULFILLED",
+                      "SUBMITTED",
+                      "REFUNDED"
+                    ]
+                  }
+                ],
+                "concreteType": "CommerceOrderConnectionWithTotalCount",
+                "kind": "LinkedField",
+                "name": "orderConnection",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "CommerceOrderEdge",
+                    "kind": "LinkedField",
+                    "name": "edges",
+                    "plural": true,
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": null,
+                        "kind": "LinkedField",
+                        "name": "node",
+                        "plural": false,
+                        "selections": [
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "__typename",
+                            "storageKey": null
+                          },
+                          (v3/*: any*/),
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "updatedAt",
+                            "storageKey": null
+                          },
+                          (v2/*: any*/)
+                        ],
+                        "storageKey": null
+                      }
+                    ],
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": "orderConnection(last:1,states:[\"APPROVED\",\"FULFILLED\",\"SUBMITTED\",\"REFUNDED\"])"
               }
             ],
             "storageKey": null
@@ -167,7 +243,7 @@ return {
     "metadata": {},
     "name": "UnreadMessagesToastQuery",
     "operationKind": "query",
-    "text": "query UnreadMessagesToastQuery(\n  $conversationID: String!\n) {\n  me {\n    conversation(id: $conversationID) {\n      ...UnreadMessagesToast_conversation\n      id\n    }\n    id\n  }\n}\n\nfragment UnreadMessagesToast_conversation on Conversation {\n  id\n  internalID\n  lastMessageID\n  fromLastViewedMessageID\n  isLastMessageToUser\n}\n"
+    "text": "query UnreadMessagesToastQuery(\n  $conversationID: String!\n) {\n  me {\n    conversation(id: $conversationID) {\n      ...UnreadMessagesToast_conversation\n      id\n    }\n    id\n  }\n}\n\nfragment UnreadMessagesToast_conversation on Conversation {\n  id\n  internalID\n  lastMessageID\n  fromLastViewedMessageID\n  isLastMessageToUser\n  activeOrders: orderConnection(last: 1, states: [APPROVED, FULFILLED, SUBMITTED, REFUNDED]) {\n    edges {\n      node {\n        __typename\n        internalID\n        updatedAt\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();

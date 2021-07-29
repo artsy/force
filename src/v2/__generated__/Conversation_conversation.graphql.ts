@@ -24,6 +24,7 @@ export type Conversation_conversation = {
         readonly edges: ReadonlyArray<{
             readonly node: {
                 readonly internalID: string;
+                readonly updatedAt: string;
                 readonly buyerAction?: CommerceBuyerOfferActionEnum | null;
             } | null;
         } | null> | null;
@@ -262,6 +263,13 @@ return {
               "selections": [
                 (v1/*: any*/),
                 {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "updatedAt",
+                  "storageKey": null
+                },
+                {
                   "kind": "InlineFragment",
                   "selections": [
                     {
@@ -447,5 +455,5 @@ return {
   "type": "Conversation"
 };
 })();
-(node as any).hash = 'cb08c4d237e9d18a392cef9efb4a1f60';
+(node as any).hash = '3ba3d5c05fa28d7e0e212562c89a5f4b';
 export default node;

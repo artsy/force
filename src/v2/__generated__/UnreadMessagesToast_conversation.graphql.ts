@@ -9,6 +9,14 @@ export type UnreadMessagesToast_conversation = {
     readonly lastMessageID: string | null;
     readonly fromLastViewedMessageID: string | null;
     readonly isLastMessageToUser: boolean | null;
+    readonly activeOrders: {
+        readonly edges: ReadonlyArray<{
+            readonly node: {
+                readonly internalID: string;
+                readonly updatedAt: string;
+            } | null;
+        } | null> | null;
+    } | null;
     readonly " $refType": "UnreadMessagesToast_conversation";
 };
 export type UnreadMessagesToast_conversation$data = UnreadMessagesToast_conversation;
@@ -19,7 +27,15 @@ export type UnreadMessagesToast_conversation$key = {
 
 
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+};
+return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
@@ -32,13 +48,7 @@ const node: ReaderFragment = {
       "name": "id",
       "storageKey": null
     },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "internalID",
-      "storageKey": null
-    },
+    (v0/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -59,9 +69,67 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "name": "isLastMessageToUser",
       "storageKey": null
+    },
+    {
+      "alias": "activeOrders",
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "last",
+          "value": 1
+        },
+        {
+          "kind": "Literal",
+          "name": "states",
+          "value": [
+            "APPROVED",
+            "FULFILLED",
+            "SUBMITTED",
+            "REFUNDED"
+          ]
+        }
+      ],
+      "concreteType": "CommerceOrderConnectionWithTotalCount",
+      "kind": "LinkedField",
+      "name": "orderConnection",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "CommerceOrderEdge",
+          "kind": "LinkedField",
+          "name": "edges",
+          "plural": true,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": null,
+              "kind": "LinkedField",
+              "name": "node",
+              "plural": false,
+              "selections": [
+                (v0/*: any*/),
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "updatedAt",
+                  "storageKey": null
+                }
+              ],
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        }
+      ],
+      "storageKey": "orderConnection(last:1,states:[\"APPROVED\",\"FULFILLED\",\"SUBMITTED\",\"REFUNDED\"])"
     }
   ],
   "type": "Conversation"
 };
-(node as any).hash = '54cb8f721886cc6671b1f08f70cfe66f';
+})();
+(node as any).hash = '4d34587b33e35fafafec625b2e57f5b2';
 export default node;

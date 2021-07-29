@@ -13,6 +13,7 @@ import {
   UnreadMessagesToastQueryResponse,
 } from "v2/__generated__/UnreadMessagesToastQuery.graphql"
 import { UnreadMessagesToast_conversation } from "v2/__generated__/UnreadMessagesToast_conversation.graphql"
+import { extractNodes } from "v2/Utils/extractNodes"
 
 // TODO: refactor into one of the newer components when ready
 const Container = styled(Flex)<{ bottomMargin?: boolean }>`
@@ -37,6 +38,7 @@ interface UnreadMessagesToastProps {
   hasScrolled: boolean
   relay: RelayRefetchProp
   conversation?: UnreadMessagesToast_conversation | null
+  lastOrderUpdate?: string | null
 }
 
 export const UnreadMessagesToast: React.FC<UnreadMessagesToastProps> = ({
@@ -46,20 +48,26 @@ export const UnreadMessagesToast: React.FC<UnreadMessagesToastProps> = ({
   hasScrolled,
   relay,
   conversation,
+  lastOrderUpdate,
 }) => {
   const { match } = useRouter()
   const [visible, setVisible] = useState(false)
   const [tabActive, setTabActive] = useState(true)
 
   useEffect(() => {
+    const activeOrder = extractNodes(conversation?.activeOrders)[0]
     const newMessages =
-      conversation?.lastMessageID !== conversation?.fromLastViewedMessageID
+      conversation?.lastMessageID !== conversation?.fromLastViewedMessageID ||
+      lastOrderUpdate !== activeOrder?.updatedAt
+
     if (!hasScrolled && newMessages && !visible) refreshCallback()
+
     setVisible(hasScrolled && newMessages)
   }, [
     hasScrolled,
     conversation?.lastMessageID,
     conversation?.fromLastViewedMessageID,
+    conversation?.activeOrders,
   ])
 
   // So as to not spam the server when not needed
@@ -123,6 +131,17 @@ export const UnreadMessagesToastRefetchContainer = createRefetchContainer(
         lastMessageID
         fromLastViewedMessageID
         isLastMessageToUser
+        activeOrders: orderConnection(
+          last: 1
+          states: [APPROVED, FULFILLED, SUBMITTED, REFUNDED]
+        ) {
+          edges {
+            node {
+              internalID
+              updatedAt
+            }
+          }
+        }
       }
     `,
   },
@@ -131,6 +150,7 @@ export const UnreadMessagesToastRefetchContainer = createRefetchContainer(
 
 export const UnreadMessagesToastQueryRenderer: React.FC<{
   conversationID: string
+  lastOrderUpdate?: string | null
   onOfferable?: boolean
   onClick: () => void
   refreshCallback: () => void
