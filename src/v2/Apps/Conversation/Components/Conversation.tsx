@@ -123,11 +123,10 @@ const Conversation: React.FC<ConversationProps> = props => {
   }
   const scrollToBottom = () => {
     if (!!bottomOfMessageContainer.current) {
-      const speedOptions = initialMount.current ? {} : { behavior: "smooth" }
-      // @ts-expect-error STRICT_NULL_CHECK
       bottomOfMessageContainer.current?.scrollIntoView({
-        alignToTop: false,
-        ...speedOptions,
+        block: "end",
+        inline: "nearest",
+        behavior: initialMount.current ? "auto" : "smooth",
       })
       if (isBottomVisible) initialMount.current = false
       setLastMessageID(conversation?.lastMessageID)
