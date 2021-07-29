@@ -48,7 +48,13 @@ export const FairOrganizerFollowButton: React.FC<FairOrganizerFollowButtonProps>
   }
 
   return (
-    <Button variant="secondaryOutline" size="large" onClick={handleClick}>
+    <Button
+      variant="secondaryOutline"
+      size="medium"
+      display="block"
+      width="100%"
+      onClick={handleClick}
+    >
       {profile?.isFollowed ? "Following" : "Follow"}
     </Button>
   )
