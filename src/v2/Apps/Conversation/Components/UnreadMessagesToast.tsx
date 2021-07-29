@@ -14,7 +14,7 @@ import {
 } from "v2/__generated__/UnreadMessagesToastQuery.graphql"
 import { UnreadMessagesToast_conversation } from "v2/__generated__/UnreadMessagesToast_conversation.graphql"
 
-// I assume this will have to be refactored into one of the newer components. Potentially one of the new buttons.
+// TODO: refactor into one of the newer components when ready
 const Container = styled(Flex)<{ bottomMargin?: boolean }>`
   background-color: #1023D7; //${color("blue100")};
   border: none;
@@ -33,6 +33,7 @@ const Container = styled(Flex)<{ bottomMargin?: boolean }>`
 interface UnreadMessagesToastProps {
   onOfferable?: boolean
   onClick: () => void
+  refreshCallback: () => void
   hasScrolled: boolean
   relay: RelayRefetchProp
   conversation?: UnreadMessagesToast_conversation | null
@@ -41,35 +42,49 @@ interface UnreadMessagesToastProps {
 export const UnreadMessagesToast: React.FC<UnreadMessagesToastProps> = ({
   onOfferable,
   onClick,
+  refreshCallback,
   hasScrolled,
   relay,
   conversation,
 }) => {
   const { match } = useRouter()
   const [visible, setVisible] = useState(false)
+  const [tabActive, setTabActive] = useState(true)
 
   useEffect(() => {
-    setVisible(
-      hasScrolled &&
-        conversation?.lastMessageID !== conversation?.fromLastViewedMessageID
-    )
+    const newMessages =
+      conversation?.lastMessageID !== conversation?.fromLastViewedMessageID
+    if (!hasScrolled && newMessages && !visible) refreshCallback()
+    setVisible(hasScrolled && newMessages)
   }, [
     hasScrolled,
     conversation?.lastMessageID,
     conversation?.fromLastViewedMessageID,
   ])
 
+  // So as to not spam the server when not needed
+  useEffect(() => {
+    const setFocus = () => {
+      setTabActive(true)
+    }
+    const removeFocus = () => {
+      setTabActive(false)
+    }
+    window.addEventListener("focus", setFocus)
+    window.addEventListener("blur", removeFocus)
+    return () => {
+      window.removeEventListener("focus", setFocus)
+      window.removeEventListener("blur", removeFocus)
+    }
+  }, [])
+
   usePoll(
     () => {
-      relay.refetch(
-        {
-          conversationID: conversation?.internalID,
-        },
-        null
-      )
+      relay.refetch({ conversationID: conversation?.internalID }, null)
     },
-    10,
-    match.params?.conversationID
+    5,
+    match.params?.conversationID,
+    !tabActive
   )
 
   return (
@@ -118,6 +133,7 @@ export const UnreadMessagesToastQueryRenderer: React.FC<{
   conversationID: string
   onOfferable?: boolean
   onClick: () => void
+  refreshCallback: () => void
   hasScrolled: boolean
 }> = ({ conversationID, ...rest }) => {
   const { relayEnvironment } = useSystemContext()

@@ -46,9 +46,6 @@ const Conversation: React.FC<ConversationProps> = props => {
   const { conversation, relay, showDetails, setShowDetails } = props
   const { user } = useSystemContext()
 
-  const bottomOfMessageContainer = useRef<HTMLElement>(null)
-  const initialMount = useRef(true)
-
   const liveArtwork = conversation?.items?.[0]?.liveArtwork
   const artwork = liveArtwork?.__typename === "Artwork" && liveArtwork
 
@@ -62,43 +59,6 @@ const Conversation: React.FC<ConversationProps> = props => {
   const [showConfirmArtworkModal, setShowConfirmArtworkModal] = useState<
     boolean
   >(false)
-  const [showOrderModal, setShowOrderModal] = useState<boolean>(false)
-  const [fetchingMore, setFetchingMore] = useState<boolean>(false)
-
-  // Keeping track of this for scroll on send
-  const [lastMessageID, setLastMessageID] = useState<string | null>()
-
-  const scrollToBottom = () => {
-    if (
-      (bottomOfMessageContainer.current !== null && initialMount.current) ||
-      lastMessageID !== conversation?.lastMessageID
-    ) {
-      const scrollOptions = initialMount.current ? {} : { behavior: "smooth" }
-      // @ts-expect-error STRICT_NULL_CHECK
-      bottomOfMessageContainer.current.scrollIntoView(scrollOptions)
-      initialMount.current = false
-    }
-  }
-
-  // Navigation behaviour
-  useEffect(() => {
-    setLastMessageID(conversation?.fromLastViewedMessageID)
-    scrollToBottom()
-  }, [conversation?.internalID])
-
-  // User sends message behaviour
-  useEffect(() => {
-    if (
-      conversation?.lastMessageID !== lastMessageID &&
-      !conversation.isLastMessageToUser
-    ) {
-      scrollToBottom()
-    }
-  }, [conversation?.lastMessageID])
-
-  useEffect(() => {
-    markRead(!conversation.isLastMessageToUser)
-  }, [lastMessageID])
 
   const inquiryItemBox = compact(conversation.items).map((i, idx) => {
     const isValidType =
@@ -112,24 +72,8 @@ const Conversation: React.FC<ConversationProps> = props => {
     )
   })
 
-  const loadMore = (): void => {
-    if (
-      relay.isLoading() ||
-      !relay.hasMore() ||
-      initialMount.current ||
-      fetchingMore
-    )
-      return
-    setFetchingMore(true)
-
-    relay.loadMore(PAGE_SIZE, error => {
-      if (error) console.error(error)
-      setFetchingMore(false)
-
-      scrollToBottom()
-    })
-  }
-
+  // ORDERS
+  const [showOrderModal, setShowOrderModal] = useState<boolean>(false)
   const activeOrder = extractNodes(conversation.orderConnection)[0]
 
   let orderID
@@ -145,32 +89,75 @@ const Conversation: React.FC<ConversationProps> = props => {
     orderID: orderID,
   })
 
-  // New Messages
+  // SCROLLING AND FETCHING
+  // States and Refs
+  const bottomOfMessageContainer = useRef<HTMLElement>(null)
+  const initialMount = useRef(true)
+  const scrollContainer = useRef<HTMLDivElement>(null)
+  const [fetchingMore, setFetchingMore] = useState<boolean>(false)
+  const [lastMessageID, setLastMessageID] = useState<string | null>()
   const isBottomVisible = useOnScreen(bottomOfMessageContainer)
-  useEffect(() => {
-    if (isBottomVisible) refreshData()
-  }, [isBottomVisible])
 
-  const refreshData = () => {
-    scrollToBottom()
-    props.refetch({ conversationID: conversation.internalID }, null, () => {
-      scrollToBottom()
-      markRead(!!conversation.isLastMessageToUser)
+  // Functions
+  const loadMore = (): void => {
+    if (relay.isLoading() || !relay.hasMore() || initialMount.current) return
+
+    setFetchingMore(true)
+    const scrollCursor = scrollContainer.current
+      ? scrollContainer.current?.scrollHeight -
+        scrollContainer.current?.scrollTop
+      : 0
+    relay.loadMore(PAGE_SIZE, error => {
+      if (error) console.error(error)
+      setFetchingMore(false)
+      if (scrollContainer.current) {
+        // Scrolling to former position
+        scrollContainer.current?.scrollTo({
+          top: scrollContainer.current?.scrollHeight - scrollCursor,
+          behavior: "smooth",
+        })
+      }
     })
   }
-  const markRead = (delayed?: boolean) => {
+  const scrollToBottom = () => {
+    if (!!bottomOfMessageContainer.current) {
+      const scrollOptions = initialMount.current ? {} : { behavior: "smooth" }
+      // @ts-expect-error STRICT_NULL_CHECK
+      bottomOfMessageContainer.current?.scrollIntoView(scrollOptions)
+      if (isBottomVisible) initialMount.current = false
+      setLastMessageID(conversation?.lastMessageID)
+    }
+  }
+  const refreshData = () => {
+    props.refetch({ conversationID: conversation.internalID }, null, () => {
+      scrollToBottom()
+    })
+  }
+
+  // Behaviours
+  // -Navigation
+  useEffect(() => {
+    setLastMessageID(conversation?.fromLastViewedMessageID)
+    initialMount.current = true
+  }, [conversation?.internalID])
+  // -Last message opened
+  useEffect(() => {
     // Set on a timeout so the user sees the "new" flag
     setTimeout(
       () => {
-        setLastMessageID(conversation?.lastMessageID)
         UpdateConversation(relay.environment, conversation)
       },
-      delayed ? 3000 : 0
+      !!conversation.isLastMessageToUser ? 3000 : 0
     )
-  }
-  const viewUnreadMessages = () => {
-    refreshData()
-  }
+  }, [lastMessageID])
+  // -Workaround Reply render resizing race condition
+  useEffect(() => {
+    if (initialMount.current) scrollToBottom()
+  }, [scrollContainer.current?.clientHeight])
+  // -On scroll down
+  useEffect(() => {
+    if (isBottomVisible) refreshData()
+  }, [isBottomVisible])
 
   return (
     <Flex flexDirection="column" flexGrow={1}>
@@ -180,7 +167,7 @@ const Conversation: React.FC<ConversationProps> = props => {
         setShowDetails={setShowDetails}
       />
       <NoScrollFlex flexDirection="column" width="100%">
-        <MessageContainer>
+        <MessageContainer ref={scrollContainer as any}>
           <Box pb={[6, 6, 6, 0]} pr={1}>
             <Spacer mt={["75px", "75px", 2]} />
             <Flex flexDirection="column" width="100%" px={1}>
@@ -191,7 +178,7 @@ const Conversation: React.FC<ConversationProps> = props => {
               <ConversationMessages
                 messages={conversation.messagesConnection!}
                 events={conversation.orderConnection}
-                lastViewedMessageID={+(lastMessageID || -1)}
+                lastViewedMessageID={conversation?.fromLastViewedMessageID}
               />
               <Box ref={bottomOfMessageContainer as any} />
             </Flex>
@@ -200,12 +187,12 @@ const Conversation: React.FC<ConversationProps> = props => {
             conversationID={conversation?.internalID!}
             onOfferable={!!(artwork && isOfferable)}
             hasScrolled={!isBottomVisible}
-            onClick={viewUnreadMessages}
+            onClick={scrollToBottom}
+            refreshCallback={refreshData}
           />
         </MessageContainer>
         <Reply
           onScroll={scrollToBottom}
-          onMount={scrollToBottom}
           conversation={conversation}
           refetch={props.refetch}
           environment={relay.environment}

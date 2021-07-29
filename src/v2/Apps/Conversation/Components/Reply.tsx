@@ -62,7 +62,6 @@ interface ReplyProps {
   conversation: Conversation_conversation
   environment: Environment
   onScroll: () => void
-  onMount: () => void
   refetch: RelayRefetchProp["refetch"]
   openInquiryModal: () => void
   openOrderModal: () => void
@@ -73,7 +72,6 @@ export const Reply: React.FC<ReplyProps> = props => {
     environment,
     conversation,
     onScroll,
-    onMount,
     openInquiryModal,
     openOrderModal,
   } = props
@@ -147,7 +145,6 @@ export const Reply: React.FC<ReplyProps> = props => {
           conversation={conversation}
           openInquiryModal={() => openInquiryModal()}
           openOrderModal={() => openOrderModal()}
-          onMount={onMount}
         />
         <StyledFlex p={1}>
           <FullWidthFlex width="100%">

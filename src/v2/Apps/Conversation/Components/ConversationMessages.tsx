@@ -19,7 +19,7 @@ import { NewMessageMarker } from "./NewMessageMarker"
 interface ConversationMessageProps {
   messages: ConversationMessages_messages
   events: ConversationMessages_events | null
-  lastViewedMessageID?: number | null
+  lastViewedMessageID?: string | null
 }
 type Order = NonNullable<
   NonNullable<
@@ -75,7 +75,7 @@ export const ConversationMessages = ({
   return (
     <>
       {messagesAndEvents.map((messageGroup, groupIndex) => {
-        let today
+        let today: boolean
         let newFlagShown = false
         if (messageGroup[0].createdAt) {
           today = fromToday(messageGroup[0].createdAt)
@@ -96,7 +96,7 @@ export const ConversationMessages = ({
               />
             )}
 
-            {messageGroup.reverse().map((message, messageIndex) => {
+            {[...messageGroup].reverse().map((message, messageIndex) => {
               if (isRelevantEvent(message)) {
                 return (
                   <OrderUpdateFragmentContainer
@@ -117,7 +117,7 @@ export const ConversationMessages = ({
                 if (
                   !newFlagShown &&
                   !!lastViewedMessageID &&
-                  message.internalID > lastViewedMessageID &&
+                  message.internalID > +lastViewedMessageID &&
                   !message.isFromUser
                 ) {
                   // This marks visibility
