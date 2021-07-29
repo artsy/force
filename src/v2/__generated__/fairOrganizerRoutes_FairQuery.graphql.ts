@@ -35,9 +35,9 @@ fragment FairOrganizerApp_fair on Fair {
 fragment FairOrganizerFollowButton_fair on Fair {
   id
   profile {
+    id
     internalID
     isFollowed
-    id
   }
 }
 */
@@ -114,6 +114,7 @@ return {
             "name": "profile",
             "plural": false,
             "selections": [
+              (v2/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -127,8 +128,7 @@ return {
                 "kind": "ScalarField",
                 "name": "isFollowed",
                 "storageKey": null
-              },
-              (v2/*: any*/)
+              }
             ],
             "storageKey": null
           }
@@ -142,7 +142,7 @@ return {
     "metadata": {},
     "name": "fairOrganizerRoutes_FairQuery",
     "operationKind": "query",
-    "text": "query fairOrganizerRoutes_FairQuery(\n  $id: String!\n) {\n  fair(id: $id) {\n    ...FairOrganizerApp_fair\n    id\n  }\n}\n\nfragment FairOrganizerApp_fair on Fair {\n  ...FairOrganizerFollowButton_fair\n}\n\nfragment FairOrganizerFollowButton_fair on Fair {\n  id\n  profile {\n    internalID\n    isFollowed\n    id\n  }\n}\n"
+    "text": "query fairOrganizerRoutes_FairQuery(\n  $id: String!\n) {\n  fair(id: $id) {\n    ...FairOrganizerApp_fair\n    id\n  }\n}\n\nfragment FairOrganizerApp_fair on Fair {\n  ...FairOrganizerFollowButton_fair\n}\n\nfragment FairOrganizerFollowButton_fair on Fair {\n  id\n  profile {\n    id\n    internalID\n    isFollowed\n  }\n}\n"
   }
 };
 })();

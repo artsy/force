@@ -6,6 +6,7 @@ import { FragmentRefs } from "relay-runtime";
 export type FairOrganizerFollowButton_fair = {
     readonly id: string;
     readonly profile: {
+        readonly id: string;
         readonly internalID: string;
         readonly isFollowed: boolean | null;
     } | null;
@@ -19,19 +20,21 @@ export type FairOrganizerFollowButton_fair$key = {
 
 
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+};
+return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
   "name": "FairOrganizerFollowButton_fair",
   "selections": [
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "id",
-      "storageKey": null
-    },
+    (v0/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -40,6 +43,7 @@ const node: ReaderFragment = {
       "name": "profile",
       "plural": false,
       "selections": [
+        (v0/*: any*/),
         {
           "alias": null,
           "args": null,
@@ -60,5 +64,6 @@ const node: ReaderFragment = {
   ],
   "type": "Fair"
 };
-(node as any).hash = '950eb0bb6d409fe45538253ef2fecfec';
+})();
+(node as any).hash = '52a5f20d314675f204cb74741e623ea7';
 export default node;
