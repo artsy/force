@@ -73,8 +73,12 @@ describe("CollectionArtworksFilter", () => {
     expect(wrapper.find("ArtworkGridItem").length).toBe(1)
   })
 
-  it("renders filters in correct order", () => {
-    const wrapper = getWrapper()
+  it("renders filters in correct order for just collection", () => {
+    const wrapper = getWrapper({
+      MarketingCollectionQuery: () => ({
+        artistIDs: [],
+      }),
+    })
     const filterWrappers = wrapper.find("FilterExpandable")
     const filters = [
       {
@@ -106,6 +110,59 @@ describe("CollectionArtworksFilter", () => {
       },
       {
         label: "Artist Nationality or Ethnicity",
+      },
+      {
+        label: "Artwork Location",
+      },
+      {
+        label: "Time Period",
+      },
+      {
+        label: "Color",
+      },
+      {
+        label: "Galleries and Institutions",
+      },
+    ]
+
+    filters.forEach((filter, filterIndex) => {
+      const { label, expanded } = filter
+
+      expect(filterWrappers.at(filterIndex).prop("label")).toEqual(label)
+      expect(filterWrappers.at(filterIndex).prop("expanded")).toEqual(expanded)
+    })
+  })
+
+  it("renders filters in correct order for artist's collection", () => {
+    const wrapper = getWrapper({
+      MarketingCollectionQuery: () => ({
+        artistIDs: ["some-unique-artist-id"],
+      }),
+    })
+    const filterWrappers = wrapper.find("FilterExpandable")
+    const filters = [
+      {
+        label: "Rarity",
+        expanded: true,
+      },
+      {
+        label: "Medium",
+        expanded: true,
+      },
+      {
+        label: "Price",
+        expanded: true,
+      },
+      {
+        label: "Size",
+        expanded: true,
+      },
+      {
+        label: "Ways to Buy",
+        expanded: true,
+      },
+      {
+        label: "Material",
       },
       {
         label: "Artwork Location",

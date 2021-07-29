@@ -7,7 +7,6 @@ const jade = require("jade")
 const path = require("path")
 const cheerio = require("cheerio")
 const fs = require("fs")
-const { fabricate } = require("@artsy/antigravity")
 
 const render = function (templateName) {
   const filename = path.resolve(__dirname, `../${templateName}.jade`)

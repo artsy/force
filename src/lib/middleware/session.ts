@@ -1,15 +1,13 @@
 import type { RequestHandler } from "express"
 
 import session from "cookie-session"
-import config from "../../config"
-
-const {
+import {
   COOKIE_DOMAIN,
   NODE_ENV,
   SESSION_COOKIE_KEY,
   SESSION_COOKIE_MAX_AGE,
   SESSION_SECRET,
-} = config
+} from "../../config"
 
 export function sessionMiddleware(): RequestHandler {
   return session({

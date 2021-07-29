@@ -4,10 +4,7 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
  */
 const benv = require("benv")
-const sinon = require("sinon")
 const Backbone = require("backbone")
-const { fabricate } = require("@artsy/antigravity")
-const Partners = require("../../../../../collections/partners")
 const PartnerCellView = benv.requireWithJadeify(
   require.resolve("../../partner_cell/view"),
   ["template"]

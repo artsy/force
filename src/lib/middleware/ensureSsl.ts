@@ -1,10 +1,8 @@
 import type { NextFunction } from "express"
 import type { ArtsyRequest, ArtsyResponse } from "./artsyExpress"
 
-import config from "../../config"
+import { APP_URL } from "../../config"
 import { parse } from "url"
-
-const { APP_URL } = config
 
 /**
  * Makes sure that any http requests get redirected to https

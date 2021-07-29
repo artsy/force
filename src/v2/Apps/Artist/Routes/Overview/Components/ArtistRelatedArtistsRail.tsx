@@ -1,5 +1,5 @@
 import { ContextModule, OwnerType } from "@artsy/cohesion"
-import { Box, EntityHeader, Image, Shelf, Spacer, Text } from "@artsy/palette"
+import { EntityHeader, Image, Shelf, Text } from "@artsy/palette"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
@@ -45,67 +45,66 @@ const ArtistRelatedArtistsRail: React.FC<ArtistRelatedArtistsRailProps> = ({
           }
 
           return (
-            <RouterLink
-              to={node.href!}
-              key={index}
-              noUnderline
-              onClick={() => {
-                tracking.trackEvent({
-                  action_type: AnalyticsSchema.ActionType.Click,
-                  contextModule: ContextModule.relatedArtistsRail,
-                  contextPageOwnerId,
-                  contextPageOwnerSlug,
-                  contextPageOwnerType,
-                  destination_path: node.href,
-                  destinationPageOwnerId: node.internalID,
-                  destinationPageOwnerSlug: node.slug,
-                  destinationPageOwnerType: OwnerType.artwork,
-                  horizontalSlidePosition: index + 1,
-                  type: "thumbnail",
-                })
-              }}
-            >
-              <Box>
+            <React.Fragment key={index}>
+              <RouterLink
+                to={node.href}
+                display="block"
+                textDecoration="none"
+                onClick={() => {
+                  tracking.trackEvent({
+                    action_type: AnalyticsSchema.ActionType.Click,
+                    contextModule: ContextModule.relatedArtistsRail,
+                    contextPageOwnerId,
+                    contextPageOwnerSlug,
+                    contextPageOwnerType,
+                    destination_path: node.href,
+                    destinationPageOwnerId: node.internalID,
+                    destinationPageOwnerSlug: node.slug,
+                    destinationPageOwnerType: OwnerType.artwork,
+                    horizontalSlidePosition: index + 1,
+                    type: "thumbnail",
+                  })
+                }}
+              >
                 <Image
                   width={325}
                   maxHeight={230}
                   height={230}
-                  src={artworkImage?.resized?.src!}
-                  srcSet={artworkImage?.resized?.srcSet}
-                  style={{ objectFit: "cover" }}
+                  src={artworkImage?.cropped?.src}
+                  srcSet={artworkImage?.cropped?.srcSet}
                 />
-                <Spacer my={1} />
+              </RouterLink>
 
-                <EntityHeader
-                  width={325}
-                  name={node.name!}
-                  imageUrl={node?.image?.resized?.url}
-                  href={`/artist/${node.slug}`}
-                  meta={
-                    node.nationality && node.birthday
-                      ? `${node.nationality}, b. ${node.birthday}`
-                      : undefined
-                  }
-                  FollowButton={
-                    <ArtistFollowArtistButton
-                      artist={{
-                        internalID: node.internalID,
-                        slug: node.slug,
-                        name: node.name,
-                        isFollowed: node.isFollowed,
-                        " $refType": "ArtistFollowArtistButton_artist",
-                      }}
-                      contextModule={ContextModule.featuredArtistsRail}
-                      buttonProps={{
-                        size: "small",
-                        variant: "secondaryOutline",
-                        width: null,
-                      }}
-                    />
-                  }
-                />
-              </Box>
-            </RouterLink>
+              <EntityHeader
+                mt={1}
+                width={325}
+                name={node.name!}
+                imageUrl={node?.image?.cropped?.url}
+                href={`/artist/${node.slug}`}
+                meta={
+                  node.nationality && node.birthday
+                    ? `${node.nationality}, b. ${node.birthday}`
+                    : undefined
+                }
+                FollowButton={
+                  <ArtistFollowArtistButton
+                    artist={{
+                      internalID: node.internalID,
+                      slug: node.slug,
+                      name: node.name,
+                      isFollowed: node.isFollowed,
+                      " $refType": "ArtistFollowArtistButton_artist",
+                    }}
+                    contextModule={ContextModule.featuredArtistsRail}
+                    buttonProps={{
+                      size: "small",
+                      variant: "secondaryOutline",
+                      width: null,
+                    }}
+                  />
+                }
+              />
+            </React.Fragment>
           )
         })}
       </Shelf>
@@ -140,9 +139,8 @@ export const ArtistRelatedArtistsRailFragmentContainer = createFragmentContainer
                     node {
                       internalID
                       slug
-
                       image {
-                        resized(width: 325, height: 230) {
+                        cropped(width: 325, height: 230) {
                           width
                           height
                           src
@@ -154,7 +152,7 @@ export const ArtistRelatedArtistsRailFragmentContainer = createFragmentContainer
                 }
 
                 image {
-                  resized(width: 50, height: 50) {
+                  cropped(width: 50, height: 50) {
                     url
                   }
                 }

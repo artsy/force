@@ -6,11 +6,8 @@
 const benv = require("benv")
 const Backbone = require("backbone")
 const sinon = require("sinon")
-const Partner = require("../../../../models/partner.coffee")
 const Profile = require("../../../../models/profile.coffee")
-const PartnerShows = require("../../../../collections/partner_shows.coffee")
 const PartnerArtists = require("../../../../collections/partner_artists.coffee")
-const _ = require("underscore")
 const { resolve } = require("path")
 const { fabricate } = require("@artsy/antigravity")
 

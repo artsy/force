@@ -8,9 +8,6 @@ const benv = require("benv")
 const sinon = require("sinon")
 const Backbone = require("backbone")
 const { fabricate } = require("@artsy/antigravity")
-const Notifications = require("../../../../collections/notifications.coffee")
-const Artworks = require("../../../../collections/artworks.coffee")
-const Artist = require("../../../../models/artist.coffee")
 const NotificationsView = benv.requireWithJadeify(
   require.resolve("../../client/mobile"),
   ["template", "artworkColumnsTemplate", "emptyTemplate"]

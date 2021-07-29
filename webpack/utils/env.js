@@ -9,7 +9,9 @@ const env = {
   buildLegacyClient: yn(process.env.BUILD_LEGACY_CLIENT, { default: false }),
   buildClient: yn(process.env.BUILD_CLIENT, { default: false }),
   buildServer: yn(process.env.BUILD_SERVER, { default: false }),
+  datadogKey: process.env.WEBPACK_DATADOG_KEY,
   enableWebpackAnalyze: yn(process.env.WEBPACK_ANALYZE, { default: false }),
+  enableWebpackDatadog: yn(process.env.WEBPACK_DATADOG, { default: true }),
   enableWebpackDumpConfig: process.env.WEBPACK_DUMP_CONFIG,
   fastProductionBuild: yn(process.env.WEBPACK_FAST_PRODUCTION_BUILD, {
     default: false,
@@ -21,7 +23,8 @@ const env = {
   nodeEnv: process.env.NODE_ENV,
   onCi: yn(process.env.CI, { default: false }),
   port: process.env.PORT || "5000",
-  webpackCiCpuLimit: Number.parseInt(process.env.WEBPACK_CI_CPU_LIMIT || "") || 4,
+  webpackCiCpuLimit:
+    Number.parseInt(process.env.WEBPACK_CI_CPU_LIMIT || "") || 4,
   webpackBundleSplit: yn(process.env.WEBPACK_BUNDLE_SPLIT, { default: true }),
   webpackConcatenate: yn(process.env.WEBPACK_CONCATENATE, { default: true }),
   webpackDebug: yn(process.env.WEBPACK_DEBUG),
@@ -49,6 +52,8 @@ if (env.onCi || env.logConfig) {
   console.log("  WEBPACK_BUNDLE_SPLIT".padEnd(35), chalk.yellow(env.webpackBundleSplit))
   console.log("  WEBPACK_CI_CPU_LIMIT".padEnd(35), chalk.yellow(env.webpackCiCpuLimit))
   console.log("  WEBPACK_CONCATENATE".padEnd(35), chalk.yellow(env.webpackConcatenate))
+  console.log("  WEBPACK_DATADOG_KEY".padEnd(35), chalk.yellow(env.datadogKey))
+  console.log("  WEBPACK_DATADOG".padEnd(35), chalk.yellow(env.enableWebpackDatadog))
   console.log("  WEBPACK_DEBUG".padEnd(35), chalk.yellow(env.webpackDebug))
   console.log("  WEBPACK_DEVTOOL".padEnd(35), chalk.yellow(env.webpackDevtool))
   console.log("  WEBPACK_DUMP_CONFIG".padEnd(35), chalk.yellow(env.enableWebpackDumpConfig))

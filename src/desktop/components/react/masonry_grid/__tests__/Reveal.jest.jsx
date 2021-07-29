@@ -22,7 +22,6 @@ describe("Reveal", () => {
 
   it("reveals hidden area when button is clicked", () => {
     const wrapper = getWrapper({ isEnabled: true })
-    const revealer = () => wrapper.find("Revealer")
     const button = wrapper.find("Button")
 
     expect(wrapper.find("Revealer").length).toBe(1)

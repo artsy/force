@@ -7,7 +7,6 @@ const benv = require("benv")
 const Backbone = require("backbone")
 const sinon = require("sinon")
 const JumpView = require("../view.coffee")
-const { resolve } = require("path")
 
 describe("JumpView", function () {
   beforeEach(function (done) {

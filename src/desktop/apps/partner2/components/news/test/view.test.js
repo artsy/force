@@ -6,7 +6,6 @@
 const _ = require("underscore")
 const sinon = require("sinon")
 const benv = require("benv")
-const rewire = require("rewire")
 const Backbone = require("backbone")
 const Partner = require("../../../../../models/partner.coffee")
 const PartnerShow = require("../../../../../models/partner_show.coffee")

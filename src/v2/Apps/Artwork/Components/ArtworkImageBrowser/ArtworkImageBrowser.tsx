@@ -29,7 +29,11 @@ export const ArtworkImageBrowser: React.FC<ArtworkImageBrowserProps> = ({
   }
 
   return (
-    <Box data-test={ContextModule.artworkImage}>
+    <Box
+      // Keyed to the artwork ID so that state is reset on route changes
+      key={artwork.internalID}
+      data-test={ContextModule.artworkImage}
+    >
       <Media at="xs">
         <ArtworkImageBrowserSmallFragmentContainer
           key={key}
@@ -62,6 +66,7 @@ export const ArtworkImageBrowserFragmentContainer = createFragmentContainer<
       ...ArtworkActions_artwork
       ...ArtworkImageBrowserSmall_artwork
       ...ArtworkImageBrowserLarge_artwork
+      internalID
       images {
         internalID
       }

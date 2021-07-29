@@ -6,7 +6,6 @@
 const fs = require("fs")
 const jade = require("jade")
 const path = require("path")
-const fixtures = require("../../../test/helpers/fixtures")
 const SearchResult = require("../../../models/search_result")
 
 describe("result.jade", function () {

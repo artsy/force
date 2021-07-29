@@ -1,7 +1,6 @@
 const benv = require("benv")
 const sinon = require("sinon")
 const Backbone = require("backbone")
-const sd = require("sharify").data
 const ErrorHandlingForm = require("../client/error_handling_form.coffee")
 
 describe("FavoritesStatusModalView", () => {

@@ -5,7 +5,6 @@
  */
 const _ = require("underscore")
 const benv = require("benv")
-const sinon = require("sinon")
 const Backbone = require("backbone")
 const { resolve } = require("path")
 const { fabricate } = require("@artsy/antigravity")

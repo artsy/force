@@ -5,9 +5,7 @@
  */
 const _ = require("underscore")
 const sinon = require("sinon")
-const moment = require("moment")
 const Backbone = require("backbone")
-const PartnerShow = require("../../../models/show")
 const { fabricate } = require("@artsy/antigravity")
 const routes = require("../routes")
 

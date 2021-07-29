@@ -6,14 +6,10 @@
 const jade = require("jade")
 const path = require("path")
 const fs = require("fs")
-const Backbone = require("backbone")
 const benv = require("benv")
-const { resolve } = require("path")
 const sd = require("sharify").data
 const rewire = require("rewire")
 const sinon = require("sinon")
-
-const { fabricate } = require("@artsy/antigravity")
 
 xdescribe("Bootstrapping client-side environment", function () {
   // FIXME: this whole file errors setting up due to react-flickity jquery errors

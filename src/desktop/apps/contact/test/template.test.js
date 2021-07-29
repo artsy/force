@@ -4,7 +4,6 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
  */
 const _ = require("underscore")
-const fs = require("fs")
 const template = require("jade").compileFile(
   require.resolve("../templates/index.jade")
 )

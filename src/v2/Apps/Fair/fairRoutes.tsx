@@ -22,6 +22,12 @@ const FairSubApp = loadable(
     resolveComponent: component => component.FairSubAppFragmentContainer,
   }
 )
+const FairOverviewRoute = loadable(
+  () => import(/* webpackChunkName: "fairBundle" */ "./Components/FairHeader"),
+  {
+    resolveComponent: component => component.FairHeaderFragmentContainer,
+  }
+)
 const FairExhibitorsRoute = loadable(
   () => import(/* webpackChunkName: "fairBundle" */ "./Routes/FairExhibitors"),
   {
@@ -32,12 +38,6 @@ const FairArtworksRoute = loadable(
   () => import(/* webpackChunkName: "fairBundle" */ "./Routes/FairArtworks"),
   {
     resolveComponent: component => component.FairArtworksRefetchContainer,
-  }
-)
-const FairInfoRoute = loadable(
-  () => import(/* webpackChunkName: "fairBundle" */ "./Routes/FairInfo"),
-  {
-    resolveComponent: component => component.FairInfoFragmentContainer,
   }
 )
 const FairArticlesRoute = loadable(
@@ -67,24 +67,40 @@ export const fairRoutes: AppRouteConfig[] = [
       {
         path: "",
         theme: "v3",
+        getComponent: () => FairOverviewRoute,
+        prepare: () => {
+          FairOverviewRoute.preload()
+        },
+        query: graphql`
+          query fairRoutes_FairHeaderQuery($slug: String!) {
+            fair(id: $slug) @principalField {
+              ...FairHeader_fair
+            }
+          }
+        `,
+      },
+      {
+        path: "booths(.*)?",
+        theme: "v3",
         getComponent: () => FairExhibitorsRoute,
         prepare: () => {
           FairExhibitorsRoute.preload()
         },
         prepareVariables: ({ slug }, { location }) => {
-          let { sort } = location.query
+          let { sort, page } = location.query
           if (!isValidSort(sort)) {
             sort = defaultSort
           }
-          return { sort, slug }
+          return { sort, page, slug }
         },
         query: graphql`
           query fairRoutes_FairExhibitorsQuery(
             $slug: String!
+            $page: Int
             $sort: ShowSorts
           ) {
             fair(id: $slug) @principalField {
-              ...FairExhibitors_fair @arguments(sort: $sort)
+              ...FairExhibitors_fair @arguments(sort: $sort, page: $page)
             }
           }
         `,
@@ -101,7 +117,7 @@ export const fairRoutes: AppRouteConfig[] = [
           } = match
 
           if (!isValidSort(sort)) {
-            const url = buildUrl(otherQuery, pathname)
+            const url = buildUrl(otherQuery, { pathname })
             throw new RedirectException(url)
           }
 
@@ -153,21 +169,6 @@ export const fairRoutes: AppRouteConfig[] = [
       }
     `,
     children: [
-      {
-        path: "info",
-        theme: "v3",
-        getComponent: () => FairInfoRoute,
-        prepare: () => {
-          FairInfoRoute.preload()
-        },
-        query: graphql`
-          query fairRoutes_FairInfoQuery($slug: String!) {
-            fair(id: $slug) @principalField {
-              ...FairInfo_fair
-            }
-          }
-        `,
-      },
       {
         path: "articles",
         theme: "v3",

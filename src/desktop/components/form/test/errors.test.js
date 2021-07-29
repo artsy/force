@@ -5,7 +5,6 @@
  */
 const _ = require("underscore")
 const benv = require("benv")
-const sinon = require("sinon")
 const Errors = require("../errors")
 const { template, errors } = require("./fixture")
 

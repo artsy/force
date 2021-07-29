@@ -8,7 +8,7 @@ import { FrameWithRecentlyViewed } from "v2/Components/FrameWithRecentlyViewed"
 import { RelatedCollectionsRailFragmentContainer as RelatedCollectionsRail } from "v2/Components/RelatedCollectionsRail/RelatedCollectionsRail"
 import { BreadCrumbList } from "v2/Components/Seo"
 import React from "react"
-import { Link, Meta, Title } from "react-head"
+import { Title } from "react-head"
 import { RelayRefetchProp, graphql, createFragmentContainer } from "react-relay"
 import { data as sd } from "sharify"
 import truncate from "trunc-html"
@@ -26,6 +26,7 @@ import {
   Counts,
   SharedArtworkFilterContextProps,
 } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
+import { MetaTags } from "v2/Components/MetaTags"
 
 interface CollectionAppProps extends SystemContextProps, AnalyticsContextProps {
   collection: Collection_collection
@@ -49,6 +50,7 @@ export const CollectionApp: React.FC<CollectionAppProps> = props => {
     ascending_artworks,
   } = collection
   const collectionHref = `${sd.APP_URL}/collection/${slug}`
+  const collectionSlug = `collection/${slug}`
 
   const metadataDescription = description
     ? `Buy, bid, and inquire on ${title} on Artsy. ` +
@@ -64,13 +66,14 @@ export const CollectionApp: React.FC<CollectionAppProps> = props => {
 
   return (
     <>
+      <MetaTags
+        description={metadataDescription}
+        imageURL={socialImage}
+        pathname={collectionSlug}
+        title={title}
+      />
+      {/* Overrides the title tag in MetaTags; necessary to add "for sale" */}
       <Title>{`${title} - For Sale on Artsy`}</Title>
-      <Meta name="description" content={metadataDescription} />
-      <Meta property="og:url" content={collectionHref} />
-      <Meta property="og:image" content={socialImage} />
-      <Meta property="og:description" content={metadataDescription} />
-      <Meta property="twitter:description" content={metadataDescription} />
-      <Link rel="canonical" href={collectionHref} />
       <BreadCrumbList
         items={[
           { name: "Collections", path: "/collections" },

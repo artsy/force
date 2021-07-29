@@ -18,13 +18,10 @@ let aboutTemplate,
 const _ = require("underscore")
 const sinon = require("sinon")
 const rewire = require("rewire")
-const Backbone = require("backbone")
-const Artworks = require("../../../../collections/artworks.coffee")
 const PartnerShows = require("../../../../collections/partner_shows.coffee")
 const Articles = require("../../../../collections/articles.coffee")
 const Profile = require("../../../../models/profile.coffee")
 const Partner = require("../../../../models/partner.coffee")
-const { resolve } = require("path")
 const { fabricate } = require("@artsy/antigravity")
 
 const factory = rewire("../../client/overview_layout_factory.coffee")

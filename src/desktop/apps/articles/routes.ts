@@ -3,8 +3,8 @@ import App from "desktop/apps/articles/components/App"
 import { newsArticlesQuery } from "./queries/news_articles_query"
 import { positronql as _positronql } from "desktop/lib/positronql"
 import { first, last, map, reject, sortBy } from "lodash"
+import { PARSELY_KEY, PARSELY_SECRET } from "../../../config"
 const { crop } = require("desktop/components/resizer/index.coffee")
-const { PARSELY_KEY, PARSELY_SECRET } = require("../../config.coffee")
 const _topParselyArticles = require("desktop/components/util/parsely.coffee")
   .topParselyArticles
 const magazineQuery = require("./queries/editorial_articles.coffee")

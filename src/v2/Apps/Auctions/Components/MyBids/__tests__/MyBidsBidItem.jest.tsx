@@ -85,14 +85,14 @@ describe("MyBidsBidItem", () => {
         const wrapper = getWrapper({
           SaleArtwork: () => ({
             isWatching: true,
-            highestBid: {
-              amount: "highestBidAmount",
+            currentBid: {
+              display: "currentBidDisplay",
             },
           }),
         })
 
         const text = wrapper.text()
-        expect(text).toContain("highestBidAmount")
+        expect(text).toContain("currentBidDisplay")
       })
 
       it("shows estimate if no highest bid", () => {
@@ -100,8 +100,8 @@ describe("MyBidsBidItem", () => {
           SaleArtwork: () => ({
             isWatching: true,
             estimate: "estimate",
-            highestBid: {
-              amount: null,
+            currentBid: {
+              display: null,
             },
           }),
         })
@@ -112,20 +112,18 @@ describe("MyBidsBidItem", () => {
     })
 
     describe("when not watching", () => {
-      it("shows the current selling price", () => {
+      it("shows the current bid", () => {
         const wrapper = getWrapper({
           SaleArtwork: () => ({
             isWatching: false,
-            lotState: {
-              sellingPrice: {
-                display: "lotStateSellingPriceDisplay",
-              },
+            currentBid: {
+              display: "currentBidDisplay",
             },
           }),
         })
 
         const text = wrapper.text()
-        expect(text).toContain("lotStateSellingPriceDisplay")
+        expect(text).toContain("currentBidDisplay")
       })
 
       it("shows proper bid label when only one bid", () => {

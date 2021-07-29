@@ -8,10 +8,6 @@ const benv = require("benv")
 const Backbone = require("backbone")
 const sinon = require("sinon")
 const path = require("path")
-const { fabricate } = require("@artsy/antigravity")
-const Articles = require("../../../../collections/articles")
-const Article = require("../../../../models/article")
-const fixtures = require("../../../../test/helpers/fixtures")
 const request = require("superagent")
 
 const articles = [

@@ -6,7 +6,7 @@ Article = require '../../models/article.coffee'
 Channel = require '../../models/channel.coffee'
 Articles = require '../../collections/articles.coffee'
 { stringifyJSONForWeb } = require '../../components/util/json.coffee'
-{ ALLOWED_VANITY_ASSETS, VANITY_BUCKET } = require '../../config.coffee'
+{ ALLOWED_VANITY_ASSETS, VANITY_BUCKET } = require '../../../config'
 proxy = httpProxy.createProxyServer(changeOrigin: true, ignorePath: true)
 { createMediaStyle } = require "../../../v2/Utils/Responsive"
 

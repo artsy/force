@@ -3,19 +3,13 @@
  * DS102: Remove unnecessary code created because of implicit returns
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
  */
-const _ = require("underscore")
 const { resolve } = require("path")
 const { fabricate } = require("@artsy/antigravity")
 const rewire = require("rewire")
 const benv = require("benv")
 const Backbone = require("backbone")
 const sinon = require("sinon")
-const Notifications = require("../../../../collections/notifications.coffee")
-const Artworks = require("../../../../collections/artworks.coffee")
 const CurrentUser = require("../../../../models/current_user")
-const Artist = require("../../../../models/artist.coffee")
-const Artists = require("../../../../collections/artists.coffee")
-const { stubChildClasses } = require("../../../../test/helpers/stubs")
 let SidebarView = null
 
 // FIXME: cannot set location on undefined (window) in benv setup

@@ -6,7 +6,6 @@
 const fs = require("fs")
 const path = require("path")
 const jade = require("jade")
-const { fabricate } = require("@artsy/antigravity")
 
 describe("Meta tags", function () {
   describe("index", function () {

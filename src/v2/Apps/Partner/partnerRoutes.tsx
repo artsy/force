@@ -351,7 +351,7 @@ export const partnerRoutes: AppRouteConfig[] = [
             return undefined
           }
 
-          if (partner.locations.totalCount === 0) {
+          if (!partner.locations || partner.locations.totalCount === 0) {
             throw new RedirectException(
               `/partner/${match.params.partnerId}`,
               302

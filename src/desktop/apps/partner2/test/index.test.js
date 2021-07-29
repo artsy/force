@@ -7,9 +7,7 @@
 const { fabricate } = require("@artsy/antigravity")
 const _ = require("underscore")
 const express = require("express")
-const sinon = require("sinon")
 const request = require("supertest")
-const Backbone = require("backbone")
 const CurrentUser = require("../../../models/current_user")
 const Profile = require("../../../models/profile.coffee")
 

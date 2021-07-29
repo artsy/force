@@ -4,7 +4,6 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
  */
 const Backbone = require("backbone")
-const _ = require("underscore")
 const sinon = require("sinon")
 const rewire = require("rewire")
 

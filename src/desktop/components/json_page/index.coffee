@@ -1,6 +1,6 @@
 knox = require 'knox'
 request = require 'superagent'
-{ S3_KEY, S3_SECRET, S3_BUCKET } = require '../../config'
+{ S3_KEY, S3_SECRET, S3_BUCKET } = require '../../../config'
 
 module.exports = class JSONPage
   constructor: ({ @name, @paths, @bucket }) ->
