@@ -21,7 +21,14 @@ export const FairOrganizerHeader: React.FC<any> = ({}) => {
                 Explore Art Paris on Artsy
               </Text>
 
-              <FairOrganizerTiming />
+              <FairOrganizerTiming
+                fairOrganizer={{
+                  status: "upcoming",
+                  period: "Aug 8th - 12th",
+                  startAt: "2021-08-08T19:00:00+03:00",
+                  endAt: "2021-08-12T19:00:00+03:00",
+                }}
+              />
             </Box>
           </Flex>
         </Column>
