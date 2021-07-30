@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from "react"
 import { Article } from "@artsy/reaction/dist/Components/Publishing/Article"
 import Waypoint from "react-waypoint"
-import {
+import type {
   ArticleData,
   RelatedArticleCanvasData,
 } from "@artsy/reaction/dist/Components/Publishing/Typings"

@@ -7,7 +7,7 @@ import { flatten, throttle } from "lodash"
 import Waypoint from "react-waypoint"
 import { positronql } from "desktop/lib/positronql"
 import { newsArticlesQuery } from "desktop/apps/article/queries/articles"
-import {
+import type {
   ArticleData,
   RelatedArticleCanvasData,
 } from "@artsy/reaction/dist/Components/Publishing/Typings"
