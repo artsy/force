@@ -2,12 +2,19 @@ import { useEffect, useRef } from "react"
 
 type IntervalFunction = () => unknown | void
 
-export default function usePoll(
-  callback: IntervalFunction,
-  seconds: number,
-  key: string | null,
-  stop?: boolean
-) {
+interface PollProps {
+  callback: () => unknown | void
+  intervalTime: number
+  key: string | null
+  clearWhen?: boolean
+}
+
+export const usePoll = ({
+  callback,
+  intervalTime,
+  key,
+  clearWhen,
+}: PollProps) => {
   const savedCallback = useRef<IntervalFunction | null>(null)
 
   useEffect(() => {
@@ -19,10 +26,10 @@ export default function usePoll(
       if (!!savedCallback.current) savedCallback.current()
     }
 
-    const id = setInterval(tick, seconds * 1000)
-    if (stop) clearInterval(id)
+    const id = setInterval(tick, intervalTime)
+    if (clearWhen) clearInterval(id)
 
     // Cleanup
     return () => clearInterval(id)
-  }, [seconds, stop])
+  }, [intervalTime, clearWhen])
 }

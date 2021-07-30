@@ -3,7 +3,7 @@ import { ArrowDownIcon, color, Flex, Text } from "@artsy/palette"
 import styled from "styled-components"
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 import { useRouter } from "v2/System/Router/useRouter"
-import usePoll from "../Utils/usePoll"
+import { usePoll } from "../Utils/usePoll"
 
 import { useSystemContext } from "v2/System"
 import { renderWithLoadProgress } from "v2/System/Relay/renderWithLoadProgress"
@@ -25,7 +25,7 @@ const Container = styled(Flex)<{ bottom?: number }>`
   cursor: pointer;
   position: fixed;
   bottom: -40px;
-  transition: all 300ms;
+  transition: all 250ms ease-out;
   &.visible {
     bottom: ${props => props.bottom}px;
   }
@@ -84,14 +84,14 @@ export const UnreadMessagesToast: React.FC<UnreadMessagesToastProps> = ({
     }
   }, [])
 
-  usePoll(
-    () => {
+  usePoll({
+    callback: () => {
       relay.refetch({ conversationID: conversation?.internalID }, null)
     },
-    10,
-    match.params?.conversationID,
-    !tabActive
-  )
+    intervalTime: 10000,
+    key: match.params?.conversationID,
+    clearWhen: !tabActive,
+  })
 
   return (
     <Flex justifyContent="center">
