@@ -1,9 +1,9 @@
 import React from "react"
 import {
-  ArtworkWithBadgeIcon,
+  EarnMoreIcon,
   Box,
   Flex,
-  LightningBoltIcon,
+  CircleWhiteCheckIcon,
   Text,
   UserWithChartIcon,
   color,
@@ -24,17 +24,17 @@ export const SellArtDifferently: React.FC = () => {
         mb={[0, 4, 0, 0]}
       >
         <Section
-          icon={<ArtworkWithBadgeIcon width={50} height={50} />}
+          icon={<EarnMoreIcon width={50} height={50} />}
           text="Earn More"
           description="We offer low fees, a global network of online bidders, and multiple sales options so you get the most out of your auction experience."
         />
         <Section
-          icon={<UserWithChartIcon width={50} height={50} />}
+          icon={<CircleWhiteCheckIcon width={50} height={50} />}
           text="Keep It Simple"
           description="Sell fast, risk-free, and in most cases, you keep your artwork until it sells. We’ll guide you at every step—we’re just a tap away in our app."
         />
         <Section
-          icon={<LightningBoltIcon width={50} height={50} />}
+          icon={<UserWithChartIcon width={50} height={50} />}
           text="Be Empowered"
           description="Our data advantage and industry expertise enhance your sale with informed pricing, transparency, and precision marketing."
         />
