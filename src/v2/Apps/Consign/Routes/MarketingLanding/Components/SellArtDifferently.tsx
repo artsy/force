@@ -49,7 +49,7 @@ export const SellArtDifferently: React.FC = () => {
           Are you an artist? <br />
           See our <u>FAQ</u> about selling your own work with Artsy.
         </Text>
-        {/* link to FAQ component in RouterLink */}
+        {/* TODO: link to FAQ component in RouterLink */}
         <RouterLink to={""}>
           <Button size="large">Learn more</Button>
         </RouterLink>
