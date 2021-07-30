@@ -4,14 +4,14 @@ import {
   withSystemContext,
 } from "v2/System"
 import React from "react"
-// FIXME: https://github.com/DefinitelyTyped/DefinitelyTyped/issues/37950
-// @ts-ignore
-import { QueryRendererProps } from "react-relay"
 import { OperationType } from "relay-runtime"
-import { SystemQueryRenderer } from "./SystemQueryRenderer"
+import {
+  SystemQueryRenderer,
+  SystemQueryRendererProps,
+} from "./SystemQueryRenderer"
 
 type Props<T extends OperationType> = SystemContextProps &
-  Omit<QueryRendererProps<T>, "environment">
+  SystemQueryRendererProps<T>
 
 class Renderer<T extends OperationType> extends React.Component<Props<T>> {
   redner() {

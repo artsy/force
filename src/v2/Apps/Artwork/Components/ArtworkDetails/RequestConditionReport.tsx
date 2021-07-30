@@ -219,7 +219,7 @@ export const RequestConditionReportQueryRenderer: React.FC<{
         }
       `}
       render={({ props }) => {
-        if (props) {
+        if (props && props.artwork && props.me) {
           return (
             <RequestConditionReportFragmentContainer
               artwork={props.artwork}

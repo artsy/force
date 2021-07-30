@@ -92,7 +92,9 @@ export const PartnerArtistsRenderer: React.FC<{
       render={({ error, props }) => {
         if (error || !props) return <PartnerArtistListPlaceholder />
 
-        return <PartnerArtistsFragmentContainer {...rest} {...props} />
+        return (
+          <PartnerArtistsFragmentContainer {...rest} partner={props.partner!} />
+        )
       }}
     />
   )

@@ -219,7 +219,8 @@ const PopularArtistsComponent: React.SFC<
           return (
             <PopularArtistContentContainer
               onArtistFollow={onArtistFollow}
-              popular_artists={props.highlights.popular_artists}
+              // @ts-ignore FIXME: The types in this component are pretty far gone
+              popular_artists={props.highlights?.popular_artists!}
             />
           )
         } else {

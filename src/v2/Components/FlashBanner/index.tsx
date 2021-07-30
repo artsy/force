@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useMemo } from "react"
 import qs from "qs"
 import { graphql } from "react-relay"
 import { Banner } from "@artsy/palette"
@@ -8,7 +8,7 @@ import { AnalyticsSchema as Schema, track } from "v2/System/Analytics"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { isServer } from "lib/isServer"
 import { EmailConfirmationLinkExpired } from "./EmailConfirmationLinkExpired"
-import { useMemo } from "react"
+import { FlashBannerQuery } from "v2/__generated__/FlashBannerQuery.graphql"
 
 interface FlashBannerProps {
   contentCode?: string
@@ -86,7 +86,7 @@ export const FlashBannerQueryRenderer: React.FC = () => {
   if (isServer) return null
 
   return user ? (
-    <SystemQueryRenderer
+    <SystemQueryRenderer<FlashBannerQuery>
       environment={relayEnvironment}
       query={graphql`
         query FlashBannerQuery {
@@ -96,9 +96,16 @@ export const FlashBannerQueryRenderer: React.FC = () => {
         }
       `}
       render={({ props, error }) => {
-        if (error) console.error(error)
+        if (error) {
+          console.error(error)
+          return null
+        }
 
-        return <TrackedFlashBanner {...props} />
+        if (!props?.me) {
+          return null
+        }
+
+        return <TrackedFlashBanner me={props.me} />
       }}
     />
   ) : (

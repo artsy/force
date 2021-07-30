@@ -170,7 +170,10 @@ export const ShowBannersRailRenderer: React.FC<
 
         return (
           <PartnerShowBannersContextProvider>
-            <ShowBannersRailFragmentContainer {...rest} {...props} />
+            <ShowBannersRailFragmentContainer
+              {...rest}
+              partner={props.partner!}
+            />
           </PartnerShowBannersContextProvider>
         )
       }}

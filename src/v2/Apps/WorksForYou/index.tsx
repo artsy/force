@@ -74,14 +74,14 @@ export class WorksForYou extends Component<Props> {
                             <WorksForYouArtistFeed
                               // @ts-expect-error STRICT_NULL_CHECK
                               artistID={this.props.artistID}
-                              viewer={props.viewer}
+                              viewer={props.viewer!}
                               forSale={forSale}
                               user={user}
                             />
                           ) : (
                             <WorksForYouFeed
                               user={user}
-                              viewer={props.viewer}
+                              viewer={props.viewer!}
                             />
                           )}
                         </Box>

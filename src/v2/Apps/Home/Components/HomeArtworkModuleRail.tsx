@@ -224,7 +224,7 @@ export const HomeArtworkModuleRailQueryRenderer: React.FC<HomeArtworkModuleRailQ
           return <HomeArtworkModulePlaceholder title={title} />
         }
 
-        if (props.homePage.artworkModule) {
+        if (props.homePage?.artworkModule) {
           return (
             <HomeArtworkModuleRailFragmentContainer
               artworkModule={props.homePage.artworkModule}

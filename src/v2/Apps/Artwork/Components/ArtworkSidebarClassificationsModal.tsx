@@ -120,7 +120,7 @@ export const ArtworkSidebarClassificationsModalQueryRenderer: React.FC<Omit<
         return (
           <ArtworkSidebarClassificationsModalFragmentContainer
             {...rest}
-            {...props}
+            viewer={props.viewer!}
           />
         )
       }}
