@@ -38,6 +38,7 @@ export interface ModalDetails {
 }
 
 export interface Props {
+  onCloseToast: () => void
   show: boolean
   closeModal: () => void
   address?: SavedAddressType
@@ -49,6 +50,11 @@ export interface Props {
   onError: (message: string) => void
   modalDetails?: ModalDetails
   me: SavedAddresses_me
+  onShowToast: (notificationVisible: boolean, action: string) => void
+  notificationState: {
+    notificationVisible: boolean
+    action: string
+  }
 }
 
 const SERVER_ERROR_MAP: Record<string, Record<string, string>> = {
@@ -72,6 +78,9 @@ export const AddressModal: React.FC<Props> = ({
   onError,
   modalDetails,
   me,
+  onShowToast,
+  notificationState,
+  onCloseToast,
 }) => {
   const title = modalDetails?.addressModalTitle
   const createMutation =
@@ -90,6 +99,7 @@ export const AddressModal: React.FC<Props> = ({
     null
   )
   const [showDialog, setShowDialog] = useState<boolean>(false)
+
   if (!relayEnvironment) return null
   return (
     <>
@@ -137,6 +147,8 @@ export const AddressModal: React.FC<Props> = ({
               } else {
                 onSuccess && onSuccess(savedAddress)
               }
+              onShowToast(true, "Saved")
+
               setCreateUpdateError(null)
             }
             const addressInput = convertShippingAddressToMutationInput(values)
@@ -229,9 +241,9 @@ export const AddressModal: React.FC<Props> = ({
           action: () => {
             setShowDialog(false)
             closeModal()
-
             if (address?.internalID) {
               onDeleteAddress(address.internalID)
+              onCloseToast()
             }
           },
           text: "Delete",
@@ -245,7 +257,13 @@ export const AddressModal: React.FC<Props> = ({
         onClose={() => setShowDialog(false)}
       />
       <Box width={200}>
-        <ToastComponent />
+        <ToastComponent
+          showNotification={notificationState.notificationVisible}
+          notificationAction={notificationState.action}
+          duration={5000}
+          title="Address Successfully"
+          onCloseToast={onCloseToast}
+        />
       </Box>
     </>
   )

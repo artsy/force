@@ -77,6 +77,25 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
   const addressList = extractNodes(me?.addressConnection) ?? []
   const { relayEnvironment } = useSystemContext()
 
+  const [notificationState, setNotificationState] = useState({
+    notificationVisible: false,
+    action: "",
+  })
+
+  const onShowToast = (show, action) => {
+    setNotificationState({
+      notificationVisible: show,
+      action: action,
+    })
+  }
+
+  const onCloseToast = () => {
+    setNotificationState({
+      ...notificationState,
+      notificationVisible: false,
+    })
+  }
+
   const refetchAddresses = (refetchSuccessCallback?: () => void) => {
     relay.refetch(
       {
@@ -107,6 +126,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
           // Execute address delete callback after address deleted
           // and list of addresses updated
           onAddressDelete && onAddressDelete(addressID)
+          onShowToast(true, "Deleted")
         })
       },
       onError
@@ -253,6 +273,9 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
         onDeleteAddress={handleDeleteAddress}
         onError={onError}
         me={me}
+        onShowToast={onShowToast}
+        notificationState={notificationState}
+        onCloseToast={onCloseToast}
       />
     </>
   )

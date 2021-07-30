@@ -1,60 +1,62 @@
 import styled from "styled-components"
 import colors from "../../Assets/Colors"
-import { color, Flex, Link, Text } from "@artsy/palette"
-import React, { useEffect, useState } from "react"
+import { color, Flex, Text } from "@artsy/palette"
+import React, { useEffect } from "react"
+import { useNavBarHeight } from "../NavBar/useNavBarHeight"
 
-const Header = styled.div<{
+const ToastContainer = styled.div<{
   isOpen: boolean
 }>`
   width: 100%;
-  padding: 14px 20px 12px;
+  z-index: 10000;
+  padding: 7px 20px 7px;
   background-color: ${colors.greenToast};
-  box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.08), 0px 2px 8px rgba(0, 0, 0, 0.12);
+  box-shadow: 0px 0px 1px 2rgba (0, 0, 0, 0.08), 0px 2px 8px rgba(0, 0, 0, 0.12);
   border-radius: 2px;
   border-bottom: 1px solid ${color("black10")};
-  transition: 0.4s;
+  transition: 0.6s;
+  opacity: 0;
   position: fixed;
-  bottom: 0;
   left: 0;
-  ${({ isOpen }) =>
-    isOpen
-      ? `
-    transform: translate3d(0, 0, 0);
-  `
-      : `
-    transform: translate3d(-100%, 0, 0);
-  `};
+  ${({ isOpen }) => isOpen && "opacity:1;"};
 `
-
-const ToastComponent = props => {
-  // const { isOpen } = props
-  const [isOpen, setisOpen] = useState(false)
-  console.log("reendeeeeer -------------------")
+interface ToastComponentProps {
+  showNotification: boolean
+  notificationAction: string
+  duration: number
+  title: string
+  onCloseToast: () => void
+}
+const ToastComponent: React.FC<ToastComponentProps> = ({
+  notificationAction,
+  showNotification,
+  title,
+  duration,
+  onCloseToast,
+}) => {
+  const navHeight = useNavBarHeight()
 
   useEffect(() => {
     setTimeout(() => {
-      setisOpen(true)
-    }, 2000)
-    // setTimeout(() => {
-    //   setisOpen(false)
-    // }, 15000)
-  }, [])
+      showNotification && onCloseToast()
+    }, duration)
+  }, [showNotification])
 
   const [touchStart, setTouchStart] = React.useState(0)
   const [touchEnd, setTouchEnd] = React.useState(0)
 
-  function handleTouchStart(e) {
+  const handleTouchStart = e => {
     setTouchStart(e.targetTouches[0].clientX)
   }
 
-  function handleTouchMove(e) {
+  const handleTouchMove = e => {
     setTouchEnd(e.targetTouches[0].clientX)
   }
 
-  function handleTouchEnd() {
+  const handleTouchEnd = () => {
     if (touchStart - touchEnd > 60) {
       // do your stuff here for left swipe
-      setisOpen(false)
+      onCloseToast()
     }
 
     if (touchStart - touchEnd < -60) {
@@ -64,29 +66,19 @@ const ToastComponent = props => {
   }
 
   return (
-    <div style={{ position: "fixed", bottom: "10px", right: "10px" }}>
-      <Header
-        onTouchStart={handleTouchStart}
-        onTouchMove={handleTouchMove}
-        onTouchEnd={handleTouchEnd}
-        isOpen={isOpen}
-      >
-        <Flex alignItems="center" justifyContent="space-between">
-          <Text color="white100" variant="subtitle">
-            Address Successfully Saved
-          </Text>
-          <Link
-            color="white"
-            href="https://github.com"
-            underlineBehavior="none"
-          >
-            <Text color="white100" variant="subtitle">
-              Undo
-            </Text>
-          </Link>
-        </Flex>
-      </Header>
-    </div>
+    <ToastContainer
+      style={{ top: `${navHeight.desktop}px` }}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
+      isOpen={showNotification}
+    >
+      <Flex alignItems="center" justifyContent="center">
+        <Text color="white100" variant="subtitle" textAlign="center">
+          {`${title} ${notificationAction}`}
+        </Text>
+      </Flex>
+    </ToastContainer>
   )
 }
 
