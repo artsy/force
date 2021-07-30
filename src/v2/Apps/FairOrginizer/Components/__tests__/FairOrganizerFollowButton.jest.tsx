@@ -77,9 +77,9 @@ describe("FairOrganizerFollowButton", () => {
     wrapper.simulate("click")
 
     expect(mockOpenAuthToFollowSave).toHaveBeenCalledWith("mediator", {
-      contextModule: "fairInfo",
+      contextModule: "fairOrganizerHeader",
       entity: { name: "fairName", slug: "fairSlug" },
-      intent: "followGene",
+      intent: "followPartner",
     })
   })
 

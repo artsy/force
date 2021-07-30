@@ -27,14 +27,12 @@ export const FairOrganizerFollowButton: React.FC<FairOrganizerFollowButtonProps>
       }
 
       openAuthToFollowSave(mediator!, {
-        // TODO: Replace on Fair Organizer
-        contextModule: ContextModule.fairInfo,
+        contextModule: ContextModule.fairOrganizerHeader,
         entity: {
           slug: fair.slug,
           name: fair.name!,
         },
-        // TODO: Replace on followFair
-        intent: Intent.followGene,
+        intent: Intent.followPartner,
       })
     }
 
