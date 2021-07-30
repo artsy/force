@@ -51,12 +51,27 @@ export const FAQ: React.FC = () => {
         </ToggleButton>
 
         <ToggleButton label="I am an artist. Can I sell my art with Artsy?">
+          {/* TODO: Add line breaks and email links and anchor tags to text */}
           <TextItem>
-            Based on the collector demand on our Artsy’s marketplace, we are
-            only able to accommodate works by artists with established demand
-            and a resale market consistent with our partners’ current interests.
-            As such, we do not accept submissions from artists selling their own
-            work.
+            {`At this time, Artsy does not partner directly with artists.
+            Instead, we offer partnerships for galleries, museums, and other
+            institutions. If you work with a gallery, we ask you to get in touch
+            with us at partners@artsy.net. Otherwise, we recommend reaching out
+            to your gallery and asking them to join Artsy by visiting
+            partners.artsy.net.\nArtsy has a Sell with Artsy program in which
+            we currently accept consignments of works by artists that are
+            already in our database who have a resale market and substantial
+            collector demand. To learn more about our Sell with Artsy program,
+            please visit our Help Center article on What do we look for in
+            consignment submissions? Please note that not being accepted for our
+            Sell with Artsy program is in no way a reflection or judgement of
+            artistic ability, potential now or in the future, or commitment to
+            the discipline; it is simply a result of the assessment of the
+            information that we were given at the time and possible services we
+            are able to currently provide. \n We'd also like to bring to your
+            attention The Working Artist’s Guide which is a resource for artists
+            put together by our Editorial team. We hope it can assist you and
+            that you continue to enjoy exploring Artsy.`}
           </TextItem>
         </ToggleButton>
 
