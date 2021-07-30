@@ -23,18 +23,26 @@ form.settings-password__form.stacked-form(
   .form-errors.js-form-errors
     //- Rendered client-side
 
-  label.avant-garde-form-label( for='current-password' )
-    | Current Password
-  input.bordered-input(
-    id='current-password'
-    name='current_password'
-    type='password'
-    autocomplete='on'
-    pattern='.{8,}'
-    title='8 characters minimum'
-    autofocus
-    required
-  )
+  if user.get('has_password')
+    label.avant-garde-form-label( for='current-password' )
+      | Current Password
+    input.bordered-input(
+      id='current-password'
+      name='current_password'
+      type='password'
+      autocomplete='on'
+      pattern='.{8,}'
+      title='8 characters minimum'
+      autofocus
+      required
+    )
+  else
+    input.bordered-input(
+      id='current-password'
+      name='current_password'
+      type='hidden'
+      value=''
+    )
 
   label.avant-garde-form-label( for='new_password' )
     | New Password
