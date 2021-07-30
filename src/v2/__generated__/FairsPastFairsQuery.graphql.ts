@@ -347,7 +347,7 @@ return {
                       {
                         "alias": null,
                         "args": null,
-                        "concreteType": "organizer",
+                        "concreteType": "FairOrganizer",
                         "kind": "LinkedField",
                         "name": "organizer",
                         "plural": false,
