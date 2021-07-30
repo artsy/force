@@ -3,7 +3,7 @@ import { useEffect, useRef } from "react"
 type IntervalFunction = () => unknown | void
 
 interface PollProps {
-  callback: () => unknown | void
+  callback: IntervalFunction
   intervalTime: number
   key: string | null
   clearWhen?: boolean
