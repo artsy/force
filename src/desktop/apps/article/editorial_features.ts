@@ -1,4 +1,4 @@
-import { ArticleData } from "@artsy/reaction/dist/Components/Publishing/Typings"
+import type { ArticleData } from "@artsy/reaction/dist/Components/Publishing/Typings"
 import { slugify } from "underscore.string"
 
 interface CustomArticle {

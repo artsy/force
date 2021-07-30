@@ -10,7 +10,7 @@ import {
 import { positronql } from "desktop/lib/positronql"
 import { data as sd } from "sharify"
 import { stitch } from "@artsy/stitch"
-import { getCurrentUnixTimestamp } from "@artsy/reaction/dist/Components/Publishing/Constants"
+import { DateTime } from "luxon"
 import {
   getCustomEditorialId,
   getVanguardSubArticleContent,
@@ -187,7 +187,7 @@ export const index = async (req, res, next) => {
         isMobile,
         isEigen,
         jsonLD: getJsonLd(article),
-        renderTime: getCurrentUnixTimestamp(),
+        renderTime: DateTime.local().toMillis(),
         showTooltips,
         superArticle,
         superSubArticles,

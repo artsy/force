@@ -15,7 +15,7 @@ import { UserInformationQuery } from "v2/__generated__/UserInformationQuery.grap
 import { Box, Button, Serif, Text, space } from "@artsy/palette"
 import { ChangeUserInformationValidator } from "v2/Components/Authentication/Validators"
 import { PasswordInput } from "v2/Components/PasswordInput"
-import { SystemContextProps } from "@artsy/reaction/dist/Artsy"
+import type { SystemContextProps } from "@artsy/reaction/dist/Artsy"
 import { UpdateUserInformation } from "./UpdateUserInformationMutation"
 import {
   UpdateMyProfileInput,
