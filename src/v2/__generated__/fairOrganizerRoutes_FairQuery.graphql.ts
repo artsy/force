@@ -4,7 +4,7 @@
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type fairOrganizerRoutes_FairQueryVariables = {
-    id: string;
+    slug: string;
 };
 export type fairOrganizerRoutes_FairQueryResponse = {
     readonly fair: {
@@ -20,9 +20,9 @@ export type fairOrganizerRoutes_FairQuery = {
 
 /*
 query fairOrganizerRoutes_FairQuery(
-  $id: String!
+  $slug: String!
 ) {
-  fair(id: $id) {
+  fair(id: $slug) {
     ...FairOrganizerApp_fair
     id
   }
@@ -49,7 +49,7 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "id",
+    "name": "slug",
     "type": "String!"
   }
 ],
@@ -57,7 +57,7 @@ v1 = [
   {
     "kind": "Variable",
     "name": "id",
-    "variableName": "id"
+    "variableName": "slug"
   }
 ],
 v2 = {
@@ -158,9 +158,9 @@ return {
     "metadata": {},
     "name": "fairOrganizerRoutes_FairQuery",
     "operationKind": "query",
-    "text": "query fairOrganizerRoutes_FairQuery(\n  $id: String!\n) {\n  fair(id: $id) {\n    ...FairOrganizerApp_fair\n    id\n  }\n}\n\nfragment FairOrganizerApp_fair on Fair {\n  ...FairOrganizerFollowButton_fair\n}\n\nfragment FairOrganizerFollowButton_fair on Fair {\n  id\n  slug\n  name\n  profile {\n    id\n    internalID\n    isFollowed\n  }\n}\n"
+    "text": "query fairOrganizerRoutes_FairQuery(\n  $slug: String!\n) {\n  fair(id: $slug) {\n    ...FairOrganizerApp_fair\n    id\n  }\n}\n\nfragment FairOrganizerApp_fair on Fair {\n  ...FairOrganizerFollowButton_fair\n}\n\nfragment FairOrganizerFollowButton_fair on Fair {\n  id\n  slug\n  name\n  profile {\n    id\n    internalID\n    isFollowed\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '5717a5fda787eec19496e7b9ed5d178e';
+(node as any).hash = '94ebecf8cdf2e5e663a32f6024e4e61d';
 export default node;

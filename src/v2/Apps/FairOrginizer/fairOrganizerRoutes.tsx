@@ -18,14 +18,9 @@ export const fairOrganizerRoutes: AppRouteConfig[] = [
     prepare: () => {
       FairOrganizerApp.preload()
     },
-    prepareVariables: params => {
-      return {
-        id: params.slug,
-      }
-    },
     query: graphql`
-      query fairOrganizerRoutes_FairQuery($id: String!) {
-        fair(id: $id) {
+      query fairOrganizerRoutes_FairQuery($slug: String!) {
+        fair(id: $slug) {
           ...FairOrganizerApp_fair
         }
       }
