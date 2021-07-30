@@ -1,24 +1,22 @@
 import React from "react"
-import { Link, Text } from "@artsy/palette"
+import { Text, Box, color } from "@artsy/palette"
 import { SectionContainer } from "./SectionContainer"
-import { Media } from "v2/Utils/Responsive"
 
 export const PromoSpace: React.FC = () => {
   return (
-    <SectionContainer bg="black5" py={3}>
-      <Media greaterThanOrEqual="sm">
-        <Text variant="subtitle" color="black100" textAlign="center">
-          Gallerist or art dealer?{" "}
-          <Link href="https://partners.artsy.net">Become a partner</Link> to
-          access the largest global online art marketplace
+    <SectionContainer>
+      <Box borderBottom={`1px solid ${color("black60")}`} width="100%">
+        <Text
+          width="60%"
+          textAlign={"center"}
+          pb={3}
+          variant="largeTitle"
+          margin="0 auto"
+        >
+          We connect the world's most innovative art collectors and sellers in
+          one place.
         </Text>
-      </Media>
-      <Media lessThan="sm">
-        <Text variant="subtitle" color="black100" textAlign="center">
-          Gallerist or art dealer?{" "}
-          <Link href="https://partners.artsy.net">Become a partner</Link>
-        </Text>
-      </Media>
+      </Box>
     </SectionContainer>
   )
 }

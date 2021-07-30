@@ -7,45 +7,54 @@ import {
   Text,
   UserWithChartIcon,
   color,
+  Button,
+  Spacer,
 } from "@artsy/palette"
 import { SectionContainer } from "./SectionContainer"
+import { RouterLink } from "v2/System/Router/RouterLink"
 
 export const SellArtDifferently: React.FC = () => {
   return (
     <SectionContainer>
-      <Text
-        width="100%"
-        textAlign={["center", "left"]}
-        pb={3}
-        variant="largeTitle"
-        borderBottom={`1px solid ${color("black60")}`}
-      >
-        A Smarter, Faster Way to Sell Your Art
-      </Text>
-
       <Flex
         flexDirection={["column", "row"]}
         alignItems="center"
         justifyContent="space-between"
-        pt={[1, 4]}
+        pt={[0, 4]}
         mb={[0, 4, 0, 0]}
       >
         <Section
           icon={<ArtworkWithBadgeIcon width={50} height={50} />}
-          text="Risk-free sales"
-          description="We offer no upfront fees, our auctions are confidential, and best of all, you keep your artwork until it’s sold."
+          text="Earn More"
+          description="We offer low fees, a global network of online bidders, and multiple sales options so you get the most out of your auction experience."
         />
         <Section
           icon={<UserWithChartIcon width={50} height={50} />}
-          text="Insights-driven matching"
-          description="Our proprietary data-driven insights and the largest global audience of collectors ensures better matchmaking to sell your work."
+          text="Keep It Simple"
+          description="Sell fast, risk-free, and in most cases, you keep your artwork until it sells. We’ll guide you at every step—we’re just a tap away in our app."
         />
         <Section
           icon={<LightningBoltIcon width={50} height={50} />}
-          text="Speed and efficiency"
-          description="We will present you with a sales option that will allow you to sell your work quickly."
+          text="Be Empowered"
+          description="Our data advantage and industry expertise enhance your sale with informed pricing, transparency, and precision marketing."
         />
       </Flex>
+      <Box
+        borderBottom={`1px solid ${color("black60")}`}
+        width="100%"
+        margin="10% 0"
+        textAlign={"center"}
+      >
+        <Text width="60%" pb={3} variant="largeTitle" margin="0 auto">
+          Are you an artist? <br />
+          See our <u>FAQ</u> about selling your own work with Artsy.
+        </Text>
+        {/* link to FAQ component in RouterLink */}
+        <RouterLink to={""}>
+          <Button size="large">Learn more</Button>
+        </RouterLink>
+        <Spacer mb={5} />
+      </Box>
     </SectionContainer>
   )
 }
