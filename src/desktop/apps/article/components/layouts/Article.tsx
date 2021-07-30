@@ -8,7 +8,7 @@ import { ContextModule, Intent } from "@artsy/cohesion"
 import { mediator } from "lib/mediator"
 const SuperArticleView = require("desktop/components/article/client/super_article.coffee")
 const ArticleModel = require("desktop/models/article.coffee")
-const Cookies = require("desktop/components/cookies/index.coffee")
+import Cookies from "desktop/components/cookies/index"
 
 export class ArticleLayout extends React.Component<AppProps> {
   componentDidMount() {

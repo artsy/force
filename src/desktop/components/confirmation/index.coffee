@@ -1,4 +1,4 @@
-Cookies = require '../cookies/index.coffee'
+Cookies = require '../cookies/index'
 open = require './client/index.coffee'
 
 module.exports =
