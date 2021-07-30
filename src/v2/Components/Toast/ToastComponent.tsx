@@ -1,12 +1,13 @@
 import styled from "styled-components"
 import colors from "../../Assets/Colors"
 import { color, Flex, Text, themeProps } from "@artsy/palette"
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import { useNavBarHeight } from "../NavBar/useNavBarHeight"
 import { useMatchMedia } from "v2/Utils/Hooks/useMatchMedia"
 
 const ToastContainer = styled.div<{
   isOpen: boolean
+  isMoveToRight: boolean
 }>`
   width: 100%;
   z-index: 10000;
@@ -19,7 +20,8 @@ const ToastContainer = styled.div<{
   opacity: 0;
   position: fixed;
   left: 0;
-  ${({ isOpen }) => isOpen && "opacity:1;"};
+  ${({ isOpen }) => isOpen && "opacity:1; transform: translate3d(0,0,0); "};
+  ${({ isMoveToRight }) => isMoveToRight && "transform: translate3d(100%,0,0);"}
 `
 interface ToastComponentProps {
   showNotification: boolean
@@ -46,6 +48,7 @@ const ToastComponent: React.FC<ToastComponentProps> = ({
 
   const [touchStart, setTouchStart] = React.useState(0)
   const [touchEnd, setTouchEnd] = React.useState(0)
+  const [isMoveToRight, setIsMoveToRight] = useState(false)
 
   const handleTouchStart = e => {
     setTouchStart(e.targetTouches[0].clientX)
@@ -56,14 +59,9 @@ const ToastComponent: React.FC<ToastComponentProps> = ({
   }
 
   const handleTouchEnd = () => {
-    if (touchStart - touchEnd > 60) {
-      // do your stuff here for left swipe
-      onCloseToast()
-    }
-
-    if (touchStart - touchEnd < -60) {
+    if (touchStart - touchEnd < -30) {
       // do your stuff here for right swipe
-      alert("swipe right")
+      setIsMoveToRight(true)
     }
   }
 
@@ -76,6 +74,7 @@ const ToastComponent: React.FC<ToastComponentProps> = ({
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
       isOpen={showNotification}
+      isMoveToRight={isMoveToRight}
     >
       <Flex alignItems="center" justifyContent="center">
         <Text color="white100" variant="subtitle" textAlign="center">

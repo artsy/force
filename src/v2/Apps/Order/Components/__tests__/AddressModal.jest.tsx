@@ -38,6 +38,9 @@ describe("AddressModal", () => {
       show: true,
       address: savedAddress,
       onSuccess: jest.fn(),
+      onShowToast: jest.fn(),
+      notificationState: { notificationVisible: false, action: "" },
+      onCloseToast: jest.fn(),
       onError: jest.fn(),
       onDeleteAddress: jest.fn(),
       modalDetails: {
