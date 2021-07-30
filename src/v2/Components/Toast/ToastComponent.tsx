@@ -1,8 +1,9 @@
 import styled from "styled-components"
 import colors from "../../Assets/Colors"
-import { color, Flex, Text } from "@artsy/palette"
+import { color, Flex, Text, themeProps } from "@artsy/palette"
 import React, { useEffect } from "react"
 import { useNavBarHeight } from "../NavBar/useNavBarHeight"
+import { useMatchMedia } from "v2/Utils/Hooks/useMatchMedia"
 
 const ToastContainer = styled.div<{
   isOpen: boolean
@@ -34,6 +35,7 @@ const ToastComponent: React.FC<ToastComponentProps> = ({
   duration,
   onCloseToast,
 }) => {
+  const isMobile = useMatchMedia(themeProps.mediaQueries.xs)
   const navHeight = useNavBarHeight()
 
   useEffect(() => {
@@ -67,7 +69,9 @@ const ToastComponent: React.FC<ToastComponentProps> = ({
 
   return (
     <ToastContainer
-      style={{ top: `${navHeight.desktop}px` }}
+      style={{
+        top: isMobile ? `${navHeight.mobile}px` : `${navHeight.desktop}px`,
+      }}
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
