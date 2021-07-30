@@ -28,7 +28,7 @@ query ArtworkInquiryQuery(
   }
 }
 
-fragment ArtworkInquiry_artwork on Artwork {
+fragment ArtworkInquiryForm_artwork on Artwork {
   internalID
   title
   date
@@ -48,6 +48,10 @@ fragment ArtworkInquiry_artwork on Artwork {
       srcSet
     }
   }
+}
+
+fragment ArtworkInquiry_artwork on Artwork {
+  ...ArtworkInquiryForm_artwork
 }
 */
 
@@ -237,7 +241,7 @@ return {
     "metadata": {},
     "name": "ArtworkInquiryQuery",
     "operationKind": "query",
-    "text": "query ArtworkInquiryQuery(\n  $id: String!\n) {\n  artwork(id: $id) {\n    ...ArtworkInquiry_artwork\n    id\n  }\n}\n\nfragment ArtworkInquiry_artwork on Artwork {\n  internalID\n  title\n  date\n  artist {\n    name\n    id\n  }\n  partner {\n    name\n    id\n  }\n  image {\n    resized(width: 60, height: 45) {\n      height\n      width\n      src\n      srcSet\n    }\n  }\n}\n"
+    "text": "query ArtworkInquiryQuery(\n  $id: String!\n) {\n  artwork(id: $id) {\n    ...ArtworkInquiry_artwork\n    id\n  }\n}\n\nfragment ArtworkInquiryForm_artwork on Artwork {\n  internalID\n  title\n  date\n  artist {\n    name\n    id\n  }\n  partner {\n    name\n    id\n  }\n  image {\n    resized(width: 60, height: 45) {\n      height\n      width\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ArtworkInquiry_artwork on Artwork {\n  ...ArtworkInquiryForm_artwork\n}\n"
   }
 };
 })();
