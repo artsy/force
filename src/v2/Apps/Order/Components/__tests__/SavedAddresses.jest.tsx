@@ -10,6 +10,9 @@ import { userAddressMutation } from "v2/Apps/__tests__/Fixtures/Order/MutationRe
 import { SavedAddressItem } from "v2/Apps/Order/Components/SavedAddressItem"
 
 jest.unmock("react-relay")
+jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
+  useMatchMedia: () => ({}),
+}))
 
 class SavedAddressesTestPage extends RootTestPage {
   async selectEdit() {

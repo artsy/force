@@ -11,12 +11,12 @@ const ToastContainer = styled.div<{
 }>`
   width: 100%;
   z-index: 10000;
-  padding: 7px 20px 7px;
+  padding: 10px 20px 10px;
   background-color: ${colors.greenToast};
   box-shadow: 0px 0px 1px 2rgba (0, 0, 0, 0.08), 0px 2px 8px rgba(0, 0, 0, 0.12);
   border-radius: 2px;
   border-bottom: 1px solid ${color("black10")};
-  transition: 0.6s;
+  transition: all 0.6s;
   opacity: 0;
   position: fixed;
   left: 0;
@@ -77,7 +77,7 @@ const ToastComponent: React.FC<ToastComponentProps> = ({
       isMoveToRight={isMoveToRight}
     >
       <Flex alignItems="center" justifyContent="center">
-        <Text color="white100" variant="subtitle" textAlign="center">
+        <Text color="white100" variant="text" textAlign="center">
           {`${title} ${notificationAction}`}
         </Text>
       </Flex>

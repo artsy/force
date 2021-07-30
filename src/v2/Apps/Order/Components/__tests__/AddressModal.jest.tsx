@@ -11,6 +11,9 @@ import { Dialog } from "@artsy/palette"
 import { SavedAddressType } from "../../Utils/shippingUtils"
 import { useSystemContext } from "v2/System/useSystemContext"
 jest.mock("v2/System/useSystemContext")
+jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
+  useMatchMedia: () => ({}),
+}))
 const errorBoxQuery = "Text[data-test='credit-card-error']"
 
 // needed for modal contentAnimation

@@ -34,6 +34,9 @@ import {
 } from "../__fixtures__/MutationResults/saveAddress"
 
 jest.unmock("react-relay")
+jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
+  useMatchMedia: () => ({}),
+}))
 
 const testOrder: ShippingTestQueryRawResponse["order"] = {
   ...UntouchedBuyOrder,

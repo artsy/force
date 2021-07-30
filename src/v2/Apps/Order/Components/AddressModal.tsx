@@ -10,7 +10,6 @@ import {
   ModalWidth,
   Spacer,
   Text,
-  Box,
 } from "@artsy/palette"
 import {
   SavedAddressType,
@@ -30,7 +29,6 @@ import { useSystemContext } from "v2/System/SystemContext"
 import { updateUserDefaultAddress } from "../Mutations/UpdateUserDefaultAddress"
 import { UpdateUserAddressMutationResponse } from "v2/__generated__/UpdateUserAddressMutation.graphql"
 import { CreateUserAddressMutationResponse } from "v2/__generated__/CreateUserAddressMutation.graphql"
-import ToastComponent from "v2/Components/Toast/ToastComponent"
 
 export interface ModalDetails {
   addressModalTitle: string
@@ -79,7 +77,6 @@ export const AddressModal: React.FC<Props> = ({
   modalDetails,
   me,
   onShowToast,
-  notificationState,
   onCloseToast,
 }) => {
   const title = modalDetails?.addressModalTitle
@@ -256,15 +253,6 @@ export const AddressModal: React.FC<Props> = ({
         }}
         onClose={() => setShowDialog(false)}
       />
-      <Box width={200}>
-        <ToastComponent
-          showNotification={notificationState.notificationVisible}
-          notificationAction={notificationState.action}
-          duration={5000}
-          title="Address Successfully"
-          onCloseToast={onCloseToast}
-        />
-      </Box>
     </>
   )
 }

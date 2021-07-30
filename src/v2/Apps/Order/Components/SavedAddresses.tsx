@@ -26,6 +26,7 @@ import { updateUserDefaultAddress } from "v2/Apps/Order/Mutations/UpdateUserDefa
 import { useSystemContext } from "v2/System/SystemContext"
 import { compact } from "lodash"
 import { extractNodes } from "v2/Utils/extractNodes"
+import ToastComponent from "v2/Components/Toast/ToastComponent"
 
 export const NEW_ADDRESS = "NEW_ADDRESS"
 const PAGE_SIZE = 30
@@ -171,60 +172,70 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
     const isDefaultAddress = address.isDefault
 
     return (
-      <BorderBox
-        p={2}
-        width="100%"
-        flexDirection="column"
-        key={"addressIndex" + index}
-      >
-        <SavedAddressItem
-          index={index}
-          address={address}
-          handleClickEdit={() => handleEditAddress(address, index)}
+      <>
+        {" "}
+        <ToastComponent
+          showNotification={notificationState.notificationVisible}
+          notificationAction={notificationState.action}
+          duration={5000}
+          title="Address Successfully"
+          onCloseToast={onCloseToast}
         />
-        <Separator my={1} />
-        <ModifyAddressWrapper>
-          {!isDefaultAddress && (
+        <BorderBox
+          p={2}
+          width="100%"
+          flexDirection="column"
+          key={"addressIndex" + index}
+        >
+          <SavedAddressItem
+            index={index}
+            address={address}
+            handleClickEdit={() => handleEditAddress(address, index)}
+          />
+          <Separator my={1} />
+          <ModifyAddressWrapper>
+            {!isDefaultAddress && (
+              <Box mr={[3, 1]}>
+                <Text
+                  onClick={() => handleSetDefaultAddress(address.internalID)}
+                  variant="text"
+                  color="black60"
+                  style={{
+                    cursor: "pointer",
+                  }}
+                >
+                  Set as Default
+                </Text>
+              </Box>
+            )}
             <Box mr={[3, 1]}>
               <Text
-                onClick={() => handleSetDefaultAddress(address.internalID)}
+                onClick={() => handleEditAddress(address, index)}
                 variant="text"
-                color="black60"
+                color="blue100"
+                style={{
+                  cursor: "pointer",
+                }}
+                data-test="editAddressInProfile"
+              >
+                Edit
+              </Text>
+            </Box>
+            <Box>
+              <Text
+                onClick={() => handleDeleteAddress(address.internalID)}
+                variant="text"
+                color="red100"
                 style={{
                   cursor: "pointer",
                 }}
               >
-                Set as Default
+                Delete
               </Text>
             </Box>
-          )}
-          <Box mr={[3, 1]}>
-            <Text
-              onClick={() => handleEditAddress(address, index)}
-              variant="text"
-              color="blue100"
-              style={{
-                cursor: "pointer",
-              }}
-              data-test="editAddressInProfile"
-            >
-              Edit
-            </Text>
-          </Box>
-          <Box>
-            <Text
-              onClick={() => handleDeleteAddress(address.internalID)}
-              variant="text"
-              color="red100"
-              style={{
-                cursor: "pointer",
-              }}
-            >
-              Delete
-            </Text>
-          </Box>
-        </ModifyAddressWrapper>
-      </BorderBox>
+          </ModifyAddressWrapper>
+        </BorderBox>
+      </>
     )
   })
 
