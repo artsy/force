@@ -1,89 +1,105 @@
-import { mount } from "enzyme"
 import React from "react"
-import { Item } from "../Item"
-import { Conversation_conversation } from "v2/__generated__/Conversation_conversation.graphql"
+import { ConversationPaginationContainer } from "../Conversation"
+import {
+  InquiryImage,
+  MockedInquiryConversation,
+} from "v2/Apps/__tests__/Fixtures/Conversation"
+import { MockBoot, renderRelayTree } from "v2/DevTools"
+import { graphql } from "react-relay"
+import {
+  ConversationPaginationTestQueryRawResponse,
+  ConversationPaginationTestQueryResponse,
+} from "v2/__generated__/ConversationPaginationTestQuery.graphql"
+import { useTracking } from "react-tracking"
+import { SystemContextProvider } from "v2/System"
+import { HeadProvider } from "react-head"
 
-describe("Conversation", () => {
-  describe("Item", () => {
-    describe("when inquiry item is an artwork", () => {
-      // @ts-expect-error STRICT_NULL_CHECK
-      const artworkItemProps: Conversation_conversation["items"][0]["item"] = {
-        __typename: "Artwork",
-        id: "12345",
-        date: "June 22, 2020",
-        title: "Untitled",
-        artistNames: "Banksy",
-        href: "site.com/banksy",
-        image: {
-          url: "image.com/banksy-image",
-        },
-        listPrice: {
-          __typename: "Money",
-          display: "$2000",
-        },
+jest.unmock("react-relay")
+
+const render = (
+  node: ConversationPaginationTestQueryRawResponse["node"],
+  user: User
+) =>
+  renderRelayTree({
+    Component: (props: ConversationPaginationTestQueryResponse) => {
+      return (
+        // @ts-expect-error STRICT_NULL_CHECK
+        <ConversationPaginationContainer
+          {...props}
+          conversation={props.node!}
+        />
+      )
+    },
+    mockData: {
+      node,
+      artwork: InquiryImage,
+    },
+    query: graphql`
+      query ConversationPaginationTestQuery {
+        node(id: "whatever") {
+          ...Conversation_conversation @arguments(count: 10, after: "whatever")
+        }
       }
-
-      it("renders the artwork item", () => {
-        const wrapper = mount(<Item item={artworkItemProps} />)
-        const imageSrc = wrapper.find("Image").first().prop("src")
-        const linkHref = wrapper.find("Link").first().prop("href")
-        const name = wrapper.find("Sans").first()
-        const title = wrapper.find("Sans").at(1)
-        const price = wrapper.find("Sans").last()
-
-        expect(imageSrc).toBe("image.com/banksy-image")
-        expect(linkHref).toBe("site.com/banksy")
-        expect(name.text()).toContain("Banksy")
-        expect(title.text()).toContain("Untitled / June 22, 2020")
-        expect(price.text()).toContain("$2000")
-      })
-    })
-
-    describe("when inquiry item is a show", () => {
-      // @ts-expect-error STRICT_NULL_CHECK
-      const showItemProps: Conversation_conversation["items"][0]["item"] = {
-        __typename: "Show",
-        id: "12345",
-        fair: {
-          name: "Art Fair 2020",
-          exhibitionPeriod: "June 25 - June 28",
-          location: {
-            city: "New York",
-          },
+    `,
+    wrapper: children => (
+      <MockBoot>
+        <HeadProvider>
+          <SystemContextProvider user={user}>{children}</SystemContextProvider>
+        </HeadProvider>
+      </MockBoot>
+    ),
+    mockMutationResults: {
+      updateConversation: {
+        conversation: {
+          id: "whatever",
+          unread: false,
         },
-        href: "site.com/art-fair-2020",
-        name: "Art Fair 2020",
-        coverImage: {
-          url: "image.com/fair-image",
-        },
-      }
-
-      it("renders the show item", () => {
-        const wrapper = mount(<Item item={showItemProps} />)
-        const imageSrc = wrapper.find("Image").first().prop("src")
-        const linkHref = wrapper.find("Link").first().prop("href")
-        const name = wrapper.find("Sans").first()
-        const locationAndDate = wrapper.find("Sans").last()
-
-        expect(imageSrc).toBe("image.com/fair-image")
-        expect(linkHref).toBe("site.com/art-fair-2020")
-        expect(name.text()).toContain("Art Fair 2020")
-        expect(locationAndDate.text()).toContain("New York, June 25 - June 28")
-      })
-    })
+      },
+    },
   })
 
-  describe("when inquiry item is %other", () => {
-    // @ts-expect-error STRICT_NULL_CHECK
-    const otherItemProps: Conversation_conversation["items"][0]["item"] = {
-      __typename: "%other",
+describe("Conversation", () => {
+  const mockuseTracking = useTracking as jest.Mock
+  const trackingSpy = jest.fn()
+
+  beforeEach(() => {
+    mockuseTracking.mockImplementation(() => ({
+      trackEvent: trackingSpy,
+    }))
+  })
+
+  afterEach(() => {
+    jest.resetAllMocks()
+  })
+
+  describe("when user has Inquiry Checkout feature and the artwork is offerable", () => {
+    const userMock = {
+      type: "NotAdmin",
+      lab_features: ["Web Inquiry Checkout"],
     }
 
-    it("renders the show item", () => {
-      const wrapper = mount(<Item item={otherItemProps} />)
+    it("shows the buyer guarantee message", async () => {
+      const conversation = await render(MockedInquiryConversation, userMock)
+      console.log(conversation)
+      const buyerGuaranteeMessage = conversation.find("BuyerGuaranteeMessage")
 
-      expect(wrapper.find("Link")).toHaveLength(0)
-      expect(wrapper.children()).toHaveLength(0)
+      expect(buyerGuaranteeMessage).toHaveLength(1)
+    })
+
+    it("renders the confirm artwork modal query renderer", async () => {
+      const conversation = await render(MockedInquiryConversation, userMock)
+      const queryRenderer = conversation.find(
+        "ConfirmArtworkModalQueryRenderer"
+      )
+
+      expect(queryRenderer).toHaveLength(1)
+    })
+
+    it("renders the OrderModal", async () => {
+      const conversation = await render(MockedInquiryConversation, userMock)
+      const orderModal = conversation.find("OrderModal")
+
+      expect(orderModal).toHaveLength(1)
     })
   })
 })
