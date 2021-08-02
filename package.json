@@ -153,7 +153,7 @@
     "insane": "2.6.1",
     "invariant": "2.2.4",
     "jade": "1.11.0",
-    "jquery": "2.2.4",
+    "jquery": "3.5.0",
     "jquery-fillwidth-lite": "1.0.8",
     "jquery-on-infinite-scroll": ">=1.0.1 && 1.0.1",
     "jquery-touch-events": "1.0.7",
