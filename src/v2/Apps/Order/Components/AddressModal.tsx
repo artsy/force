@@ -36,7 +36,6 @@ export interface ModalDetails {
 }
 
 export interface Props {
-  onCloseToast: () => void
   show: boolean
   closeModal: () => void
   address?: SavedAddressType
@@ -48,11 +47,6 @@ export interface Props {
   onError: (message: string) => void
   modalDetails?: ModalDetails
   me: SavedAddresses_me
-  onShowToast: (notificationVisible: boolean, action: string) => void
-  notificationState: {
-    notificationVisible: boolean
-    action: string
-  }
 }
 
 const SERVER_ERROR_MAP: Record<string, Record<string, string>> = {
@@ -76,8 +70,6 @@ export const AddressModal: React.FC<Props> = ({
   onError,
   modalDetails,
   me,
-  onShowToast,
-  onCloseToast,
 }) => {
   const title = modalDetails?.addressModalTitle
   const createMutation =
@@ -144,7 +136,6 @@ export const AddressModal: React.FC<Props> = ({
               } else {
                 onSuccess && onSuccess(savedAddress)
               }
-              onShowToast(true, "Saved")
 
               setCreateUpdateError(null)
             }
@@ -240,7 +231,6 @@ export const AddressModal: React.FC<Props> = ({
             closeModal()
             if (address?.internalID) {
               onDeleteAddress(address.internalID)
-              onCloseToast()
             }
           },
           text: "Delete",

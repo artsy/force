@@ -26,7 +26,6 @@ import { updateUserDefaultAddress } from "v2/Apps/Order/Mutations/UpdateUserDefa
 import { useSystemContext } from "v2/System/SystemContext"
 import { compact } from "lodash"
 import { extractNodes } from "v2/Utils/extractNodes"
-import ToastComponent from "v2/Components/Toast/ToastComponent"
 
 export const NEW_ADDRESS = "NEW_ADDRESS"
 const PAGE_SIZE = 30
@@ -41,6 +40,7 @@ interface SavedAddressesProps {
   onAddressDelete?: (removedAddressId: string) => void
   onSelectedAddressEdited?: () => void
   selectedAddress?: string
+  onShowToast: (isShow: boolean, action: string) => void
 }
 
 type Address = NonNullable<
@@ -74,28 +74,10 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
     onAddressDelete,
     selectedAddress,
     onSelectedAddressEdited,
+    onShowToast,
   } = props
   const addressList = extractNodes(me?.addressConnection) ?? []
   const { relayEnvironment } = useSystemContext()
-
-  const [notificationState, setNotificationState] = useState({
-    notificationVisible: false,
-    action: "",
-  })
-
-  const onShowToast = (show, action) => {
-    setNotificationState({
-      notificationVisible: show,
-      action: action,
-    })
-  }
-
-  const onCloseToast = () => {
-    setNotificationState({
-      ...notificationState,
-      notificationVisible: false,
-    })
-  }
 
   const refetchAddresses = (refetchSuccessCallback?: () => void) => {
     relay.refetch(
@@ -162,6 +144,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
     ) {
       onSelectedAddressEdited && onSelectedAddressEdited()
     }
+    onShowToast(true, "Saved")
   }
 
   const collectorProfileAddressItems = addressList.map((address, index) => {
@@ -173,14 +156,6 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
 
     return (
       <>
-        {" "}
-        <ToastComponent
-          showNotification={notificationState.notificationVisible}
-          notificationAction={notificationState.action}
-          duration={5000}
-          title="Address Successfully"
-          onCloseToast={onCloseToast}
-        />
         <BorderBox
           p={2}
           width="100%"
@@ -284,9 +259,6 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
         onDeleteAddress={handleDeleteAddress}
         onError={onError}
         me={me}
-        onShowToast={onShowToast}
-        notificationState={notificationState}
-        onCloseToast={onCloseToast}
       />
     </>
   )
