@@ -7,8 +7,8 @@ export type FairOrganizerFollowButton_Test_QueryVariables = {
     id: string;
 };
 export type FairOrganizerFollowButton_Test_QueryResponse = {
-    readonly fair: {
-        readonly " $fragmentRefs": FragmentRefs<"FairOrganizerFollowButton_fair">;
+    readonly fairOrganizer: {
+        readonly " $fragmentRefs": FragmentRefs<"FairOrganizerFollowButton_fairOrganizer">;
     } | null;
 };
 export type FairOrganizerFollowButton_Test_Query = {
@@ -22,14 +22,13 @@ export type FairOrganizerFollowButton_Test_Query = {
 query FairOrganizerFollowButton_Test_Query(
   $id: String!
 ) {
-  fair(id: $id) {
-    ...FairOrganizerFollowButton_fair
+  fairOrganizer(id: $id) {
+    ...FairOrganizerFollowButton_fairOrganizer
     id
   }
 }
 
-fragment FairOrganizerFollowButton_fair on Fair {
-  id
+fragment FairOrganizerFollowButton_fairOrganizer on FairOrganizer {
   slug
   name
   profile {
@@ -73,15 +72,15 @@ return {
       {
         "alias": null,
         "args": (v1/*: any*/),
-        "concreteType": "Fair",
+        "concreteType": "FairOrganizer",
         "kind": "LinkedField",
-        "name": "fair",
+        "name": "fairOrganizer",
         "plural": false,
         "selections": [
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "FairOrganizerFollowButton_fair"
+            "name": "FairOrganizerFollowButton_fairOrganizer"
           }
         ],
         "storageKey": null
@@ -98,12 +97,11 @@ return {
       {
         "alias": null,
         "args": (v1/*: any*/),
-        "concreteType": "Fair",
+        "concreteType": "FairOrganizer",
         "kind": "LinkedField",
-        "name": "fair",
+        "name": "fairOrganizer",
         "plural": false,
         "selections": [
-          (v2/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -143,7 +141,8 @@ return {
               }
             ],
             "storageKey": null
-          }
+          },
+          (v2/*: any*/)
         ],
         "storageKey": null
       }
@@ -154,9 +153,9 @@ return {
     "metadata": {},
     "name": "FairOrganizerFollowButton_Test_Query",
     "operationKind": "query",
-    "text": "query FairOrganizerFollowButton_Test_Query(\n  $id: String!\n) {\n  fair(id: $id) {\n    ...FairOrganizerFollowButton_fair\n    id\n  }\n}\n\nfragment FairOrganizerFollowButton_fair on Fair {\n  id\n  slug\n  name\n  profile {\n    id\n    internalID\n    isFollowed\n  }\n}\n"
+    "text": "query FairOrganizerFollowButton_Test_Query(\n  $id: String!\n) {\n  fairOrganizer(id: $id) {\n    ...FairOrganizerFollowButton_fairOrganizer\n    id\n  }\n}\n\nfragment FairOrganizerFollowButton_fairOrganizer on FairOrganizer {\n  slug\n  name\n  profile {\n    id\n    internalID\n    isFollowed\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '6d2d4fc2baf6eb9949fb60b449caf938';
+(node as any).hash = 'd6b1f282fc153c1ba563b4c3fa1934c7';
 export default node;

@@ -17,8 +17,8 @@ describe("FairOrganizerFollowButton", () => {
       Component: FairOrganizerFollowButtonFragmentContainer,
       query: graphql`
         query FairOrganizerFollowButton_Test_Query($id: String!) {
-          fair(id: $id) {
-            ...FairOrganizerFollowButton_fair
+          fairOrganizer(id: $id) {
+            ...FairOrganizerFollowButton_fairOrganizer
           }
         }
       `,
@@ -68,17 +68,17 @@ describe("FairOrganizerFollowButton", () => {
     }))
 
     const wrapper = getWrapper({
-      Fair: () => ({
-        internalID: "fairInternalID",
-        name: "fairName",
-        slug: "fairSlug",
+      FairOrganizer: () => ({
+        internalID: "fairOrganizerInternalID",
+        name: "fairOrganizerName",
+        slug: "faiOrganizerSlug",
       }),
     })
     wrapper.simulate("click")
 
     expect(mockOpenAuthToFollowSave).toHaveBeenCalledWith("mediator", {
       contextModule: "fairOrganizerHeader",
-      entity: { name: "fairName", slug: "fairSlug" },
+      entity: { name: "fairOrganizerName", slug: "faiOrganizerSlug" },
       intent: "followPartner",
     })
   })

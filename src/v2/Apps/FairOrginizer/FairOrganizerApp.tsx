@@ -2,14 +2,14 @@ import React from "react"
 import { Box, Column, GridColumns, Text, Title } from "@artsy/palette"
 import { FairOrganizerFollowButtonFragmentContainer as FairOrganizerFollowButton } from "./Components/FairOrganizerFollowButton"
 import { createFragmentContainer, graphql } from "react-relay"
-import { FairOrganizerApp_fair } from "v2/__generated__/FairOrganizerApp_fair.graphql"
+import { FairOrganizerApp_fairOrganizer } from "v2/__generated__/FairOrganizerApp_fairOrganizer.graphql"
 
 interface FairOrganizerAppProps {
-  fair: FairOrganizerApp_fair
+  fairOrganizer: FairOrganizerApp_fairOrganizer
 }
 
 export const FairOrganizerApp: React.FC<FairOrganizerAppProps> = props => {
-  const { fair } = props
+  const { fairOrganizer } = props
 
   return (
     <Box>
@@ -21,7 +21,7 @@ export const FairOrganizerApp: React.FC<FairOrganizerAppProps> = props => {
           </Text>
           <GridColumns my={2}>
             <Column span={[12, 8, 6]}>
-              <FairOrganizerFollowButton fair={fair} />
+              <FairOrganizerFollowButton fairOrganizer={fairOrganizer} />
             </Column>
           </GridColumns>
         </Column>
@@ -33,9 +33,9 @@ export const FairOrganizerApp: React.FC<FairOrganizerAppProps> = props => {
 export const FairOrganizerAppFragmentContainer = createFragmentContainer(
   FairOrganizerApp,
   {
-    fair: graphql`
-      fragment FairOrganizerApp_fair on Fair {
-        ...FairOrganizerFollowButton_fair
+    fairOrganizer: graphql`
+      fragment FairOrganizerApp_fairOrganizer on FairOrganizer {
+        ...FairOrganizerFollowButton_fairOrganizer
       }
     `,
   }

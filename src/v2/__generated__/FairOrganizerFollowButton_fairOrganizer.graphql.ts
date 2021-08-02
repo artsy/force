@@ -3,8 +3,7 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type FairOrganizerFollowButton_fair = {
-    readonly id: string;
+export type FairOrganizerFollowButton_fairOrganizer = {
     readonly slug: string;
     readonly name: string | null;
     readonly profile: {
@@ -12,31 +11,22 @@ export type FairOrganizerFollowButton_fair = {
         readonly internalID: string;
         readonly isFollowed: boolean | null;
     } | null;
-    readonly " $refType": "FairOrganizerFollowButton_fair";
+    readonly " $refType": "FairOrganizerFollowButton_fairOrganizer";
 };
-export type FairOrganizerFollowButton_fair$data = FairOrganizerFollowButton_fair;
-export type FairOrganizerFollowButton_fair$key = {
-    readonly " $data"?: FairOrganizerFollowButton_fair$data;
-    readonly " $fragmentRefs": FragmentRefs<"FairOrganizerFollowButton_fair">;
+export type FairOrganizerFollowButton_fairOrganizer$data = FairOrganizerFollowButton_fairOrganizer;
+export type FairOrganizerFollowButton_fairOrganizer$key = {
+    readonly " $data"?: FairOrganizerFollowButton_fairOrganizer$data;
+    readonly " $fragmentRefs": FragmentRefs<"FairOrganizerFollowButton_fairOrganizer">;
 };
 
 
 
-const node: ReaderFragment = (function(){
-var v0 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "id",
-  "storageKey": null
-};
-return {
+const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "FairOrganizerFollowButton_fair",
+  "name": "FairOrganizerFollowButton_fairOrganizer",
   "selections": [
-    (v0/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -59,7 +49,13 @@ return {
       "name": "profile",
       "plural": false,
       "selections": [
-        (v0/*: any*/),
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "id",
+          "storageKey": null
+        },
         {
           "alias": null,
           "args": null,
@@ -78,8 +74,7 @@ return {
       "storageKey": null
     }
   ],
-  "type": "Fair"
+  "type": "FairOrganizer"
 };
-})();
-(node as any).hash = '6cb78c0b786b06bfcef991cc8a9fd0a3';
+(node as any).hash = 'cf361b8603eabea0549c7d227e2b2d00';
 export default node;

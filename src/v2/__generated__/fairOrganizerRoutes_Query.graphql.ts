@@ -3,37 +3,36 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type fairOrganizerRoutes_FairQueryVariables = {
+export type fairOrganizerRoutes_QueryVariables = {
     slug: string;
 };
-export type fairOrganizerRoutes_FairQueryResponse = {
-    readonly fair: {
-        readonly " $fragmentRefs": FragmentRefs<"FairOrganizerApp_fair">;
+export type fairOrganizerRoutes_QueryResponse = {
+    readonly fairOrganizer: {
+        readonly " $fragmentRefs": FragmentRefs<"FairOrganizerApp_fairOrganizer">;
     } | null;
 };
-export type fairOrganizerRoutes_FairQuery = {
-    readonly response: fairOrganizerRoutes_FairQueryResponse;
-    readonly variables: fairOrganizerRoutes_FairQueryVariables;
+export type fairOrganizerRoutes_Query = {
+    readonly response: fairOrganizerRoutes_QueryResponse;
+    readonly variables: fairOrganizerRoutes_QueryVariables;
 };
 
 
 
 /*
-query fairOrganizerRoutes_FairQuery(
+query fairOrganizerRoutes_Query(
   $slug: String!
 ) {
-  fair(id: $slug) {
-    ...FairOrganizerApp_fair
+  fairOrganizer(id: $slug) {
+    ...FairOrganizerApp_fairOrganizer
     id
   }
 }
 
-fragment FairOrganizerApp_fair on Fair {
-  ...FairOrganizerFollowButton_fair
+fragment FairOrganizerApp_fairOrganizer on FairOrganizer {
+  ...FairOrganizerFollowButton_fairOrganizer
 }
 
-fragment FairOrganizerFollowButton_fair on Fair {
-  id
+fragment FairOrganizerFollowButton_fairOrganizer on FairOrganizer {
   slug
   name
   profile {
@@ -72,20 +71,20 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "fairOrganizerRoutes_FairQuery",
+    "name": "fairOrganizerRoutes_Query",
     "selections": [
       {
         "alias": null,
         "args": (v1/*: any*/),
-        "concreteType": "Fair",
+        "concreteType": "FairOrganizer",
         "kind": "LinkedField",
-        "name": "fair",
+        "name": "fairOrganizer",
         "plural": false,
         "selections": [
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "FairOrganizerApp_fair"
+            "name": "FairOrganizerApp_fairOrganizer"
           }
         ],
         "storageKey": null
@@ -97,17 +96,16 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "fairOrganizerRoutes_FairQuery",
+    "name": "fairOrganizerRoutes_Query",
     "selections": [
       {
         "alias": null,
         "args": (v1/*: any*/),
-        "concreteType": "Fair",
+        "concreteType": "FairOrganizer",
         "kind": "LinkedField",
-        "name": "fair",
+        "name": "fairOrganizer",
         "plural": false,
         "selections": [
-          (v2/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -147,7 +145,8 @@ return {
               }
             ],
             "storageKey": null
-          }
+          },
+          (v2/*: any*/)
         ],
         "storageKey": null
       }
@@ -156,11 +155,11 @@ return {
   "params": {
     "id": null,
     "metadata": {},
-    "name": "fairOrganizerRoutes_FairQuery",
+    "name": "fairOrganizerRoutes_Query",
     "operationKind": "query",
-    "text": "query fairOrganizerRoutes_FairQuery(\n  $slug: String!\n) {\n  fair(id: $slug) {\n    ...FairOrganizerApp_fair\n    id\n  }\n}\n\nfragment FairOrganizerApp_fair on Fair {\n  ...FairOrganizerFollowButton_fair\n}\n\nfragment FairOrganizerFollowButton_fair on Fair {\n  id\n  slug\n  name\n  profile {\n    id\n    internalID\n    isFollowed\n  }\n}\n"
+    "text": "query fairOrganizerRoutes_Query(\n  $slug: String!\n) {\n  fairOrganizer(id: $slug) {\n    ...FairOrganizerApp_fairOrganizer\n    id\n  }\n}\n\nfragment FairOrganizerApp_fairOrganizer on FairOrganizer {\n  ...FairOrganizerFollowButton_fairOrganizer\n}\n\nfragment FairOrganizerFollowButton_fairOrganizer on FairOrganizer {\n  slug\n  name\n  profile {\n    id\n    internalID\n    isFollowed\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '94ebecf8cdf2e5e663a32f6024e4e61d';
+(node as any).hash = '21e50cb3971b185f44955e4900cc839c';
 export default node;

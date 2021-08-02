@@ -1,19 +1,19 @@
 import React from "react"
 import { Button } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { FairOrganizerFollowButton_fair } from "v2/__generated__/FairOrganizerFollowButton_fair.graphql"
+import { FairOrganizerFollowButton_fairOrganizer } from "v2/__generated__/FairOrganizerFollowButton_fairOrganizer.graphql"
 import { useSystemContext } from "v2/System"
 import { fairOrganizerFollowMutation } from "../Mutations/FairOrganizerFollowMutation"
 import { openAuthToFollowSave } from "v2/Utils/openAuthModal"
 import { ContextModule, Intent } from "@artsy/cohesion"
 
 interface FairOrganizerFollowButtonProps {
-  fair: FairOrganizerFollowButton_fair
+  fairOrganizer: FairOrganizerFollowButton_fairOrganizer
 }
 
 export const FairOrganizerFollowButton: React.FC<FairOrganizerFollowButtonProps> = props => {
-  const { fair } = props
-  const { profile } = fair
+  const { fairOrganizer } = props
+  const { profile } = fairOrganizer
   const { relayEnvironment, user, mediator } = useSystemContext()
 
   const handleClick = async (
@@ -29,8 +29,8 @@ export const FairOrganizerFollowButton: React.FC<FairOrganizerFollowButtonProps>
       openAuthToFollowSave(mediator!, {
         contextModule: ContextModule.fairOrganizerHeader,
         entity: {
-          slug: fair.slug,
-          name: fair.name!,
+          slug: fairOrganizer.slug,
+          name: fairOrganizer.name!,
         },
         intent: Intent.followPartner,
       })
@@ -61,9 +61,8 @@ export const FairOrganizerFollowButton: React.FC<FairOrganizerFollowButtonProps>
 export const FairOrganizerFollowButtonFragmentContainer = createFragmentContainer(
   FairOrganizerFollowButton,
   {
-    fair: graphql`
-      fragment FairOrganizerFollowButton_fair on Fair {
-        id
+    fairOrganizer: graphql`
+      fragment FairOrganizerFollowButton_fairOrganizer on FairOrganizer {
         slug
         name
         profile {
