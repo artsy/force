@@ -2,15 +2,15 @@ import { query, setCookie, setupArtistSignUpModal } from "../artistSignupModal"
 import * as helpers from "desktop/lib/openAuthModal"
 import { mediator } from "lib/mediator"
 
-jest.mock("desktop/components/cookies/index.coffee", () => ({
+jest.mock("desktop/components/cookies/index", () => ({
   get: jest.fn(),
   set: jest.fn(),
 }))
 
-const CookiesSetMock = require("desktop/components/cookies/index.coffee")
+const CookiesSetMock = require("desktop/components/cookies/index")
   .set as jest.Mock
 
-const CookiesGetMock = require("desktop/components/cookies/index.coffee")
+const CookiesGetMock = require("desktop/components/cookies/index")
   .get as jest.Mock
 
 jest.mock("lib/metaphysics2.coffee", () =>

@@ -9,14 +9,14 @@ jest.mock("sharify")
 jest.mock("querystring", () => ({
   parse: jest.fn().mockReturnValue({}),
 }))
-jest.mock("desktop/components/cookies/index.coffee", () => ({
+jest.mock("desktop/components/cookies/index", () => ({
   get: jest.fn(),
   set: jest.fn(),
 }))
 
-const CookiesGetMock = require("desktop/components/cookies/index.coffee")
+const CookiesGetMock = require("desktop/components/cookies/index")
   .get as jest.Mock
-const CookiesSetMock = require("desktop/components/cookies/index.coffee")
+const CookiesSetMock = require("desktop/components/cookies/index")
   .set as jest.Mock
 jest.spyOn(helpers, "handleScrollingAuthModal")
 

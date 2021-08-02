@@ -7,7 +7,7 @@ JumpView = require '../../../components/jump/view.coffee'
 SidebarView = require './sidebar.coffee'
 UrlUpdater = require './url_updater.coffee'
 Following = require '../../../components/follow_button/collection.coffee'
-Cookies = require '../../../components/cookies/index.coffee'
+Cookies = require '../../../components/cookies/index'
 MobileNotificationsView = require './mobile.coffee'
 
 module.exports.NotificationsView = class NotificationsView extends Backbone.View

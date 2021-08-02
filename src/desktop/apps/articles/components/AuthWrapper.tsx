@@ -4,7 +4,7 @@ import { handleScrollingAuthModal } from "desktop/lib/openAuthModal"
 import { ContextModule, Intent } from "@artsy/cohesion"
 import { mediator } from "lib/mediator"
 
-const Cookies = require("desktop/components/cookies/index.coffee")
+import Cookies from "desktop/components/cookies/index"
 
 export class AuthWrapper extends React.Component {
   public openModal
