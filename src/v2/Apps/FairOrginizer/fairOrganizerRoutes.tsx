@@ -1,11 +1,12 @@
 import loadable from "@loadable/component"
+import { graphql } from "react-relay"
 import { AppRouteConfig } from "v2/System/Router/Route"
 
 const FairOrganizerApp = loadable(
   () =>
     import(/* webpackChunkName: "fairOrganizerBundle" */ "./FairOrganizerApp"),
   {
-    resolveComponent: component => component.FairOrganizerApp,
+    resolveComponent: component => component.FairOrganizerAppFragmentContainer,
   }
 )
 
@@ -17,5 +18,12 @@ export const fairOrganizerRoutes: AppRouteConfig[] = [
     prepare: () => {
       FairOrganizerApp.preload()
     },
+    query: graphql`
+      query fairOrganizerRoutes_Query($slug: String!) {
+        fairOrganizer(id: $slug) {
+          ...FairOrganizerApp_fairOrganizer
+        }
+      }
+    `,
   },
 ]
