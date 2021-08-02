@@ -1,5 +1,6 @@
 import { Box, BoxProps } from "@artsy/palette"
 import React from "react"
+import styled from "styled-components"
 import { Media } from "v2/Utils/Responsive"
 
 interface Icon {
@@ -21,6 +22,11 @@ interface ProfileIconProps extends BoxProps {
   profile: Profile
 }
 
+const BorderBox = styled(Box).attrs({
+  border: "solid #C2C2C2",
+  borderWidth: "1px",
+})``
+
 export const ProfileIcon: React.FC<ProfileIconProps> = ({
   profile,
   ...rest
@@ -33,25 +39,29 @@ export const ProfileIcon: React.FC<ProfileIconProps> = ({
     <Box {...rest}>
       {icon?.desktop?.src && (
         <Media greaterThanOrEqual="md">
-          <img
-            src={icon.desktop.src}
-            srcSet={icon.desktop.srcSet}
-            alt={`Logo of ${name}`}
-            width={100}
-            height={100}
-          />
+          <BorderBox width={102} height={102}>
+            <img
+              src={icon.desktop.src}
+              srcSet={icon.desktop.srcSet}
+              alt={`Logo of ${name}`}
+              width={100}
+              height={100}
+            />
+          </BorderBox>
         </Media>
       )}
 
       {icon?.mobile?.src && (
         <Media lessThan="md">
-          <img
-            src={icon.mobile.src}
-            srcSet={icon.mobile.srcSet}
-            alt={`Logo of ${name}`}
-            width={60}
-            height={60}
-          />
+          <BorderBox width={62} height={62}>
+            <img
+              src={icon.mobile.src}
+              srcSet={icon.mobile.srcSet}
+              alt={`Logo of ${name}`}
+              width={60}
+              height={60}
+            />
+          </BorderBox>
         </Media>
       )}
     </Box>
