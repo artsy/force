@@ -9,6 +9,7 @@ import {
   Separator,
   BorderBox,
   Join,
+  Clickable,
 } from "@artsy/palette"
 import React, { useState } from "react"
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
@@ -40,7 +41,7 @@ interface SavedAddressesProps {
   onAddressDelete?: (removedAddressId: string) => void
   onSelectedAddressEdited?: () => void
   selectedAddress?: string
-  onShowToast: (isShow: boolean, action: string) => void
+  onShowToast?: (isShow: boolean, action: string) => void
 }
 
 type Address = NonNullable<
@@ -109,7 +110,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
           // Execute address delete callback after address deleted
           // and list of addresses updated
           onAddressDelete && onAddressDelete(addressID)
-          onShowToast(true, "Deleted")
+          onShowToast && onShowToast(true, "Deleted")
         })
       },
       onError
@@ -144,7 +145,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
     ) {
       onSelectedAddressEdited && onSelectedAddressEdited()
     }
-    onShowToast(true, "Saved")
+    onShowToast && onShowToast(true, "Saved")
   }
 
   const collectorProfileAddressItems = addressList.map((address, index) => {
@@ -184,29 +185,33 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
               </Box>
             )}
             <Box mr={[3, 1]}>
-              <Text
-                onClick={() => handleEditAddress(address, index)}
-                variant="text"
-                color="blue100"
-                style={{
-                  cursor: "pointer",
-                }}
-                data-test="editAddressInProfile"
-              >
-                Edit
-              </Text>
+              <Clickable onClick={() => handleEditAddress(address, index)}>
+                <Text
+                  variant="text"
+                  color="blue100"
+                  style={{
+                    cursor: "pointer",
+                  }}
+                  data-test="editAddressInProfile"
+                >
+                  Edit
+                </Text>
+              </Clickable>
             </Box>
             <Box>
-              <Text
+              <Clickable
                 onClick={() => handleDeleteAddress(address.internalID)}
-                variant="text"
-                color="red100"
-                style={{
-                  cursor: "pointer",
-                }}
               >
-                Delete
-              </Text>
+                <Text
+                  variant="text"
+                  color="red100"
+                  style={{
+                    cursor: "pointer",
+                  }}
+                >
+                  Delete
+                </Text>
+              </Clickable>
             </Box>
           </ModifyAddressWrapper>
         </BorderBox>

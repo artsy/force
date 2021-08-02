@@ -1,28 +1,8 @@
-import styled from "styled-components"
-import colors from "../../Assets/Colors"
-import { color, Flex, Text, themeProps } from "@artsy/palette"
+import { Banner, Box, Text, themeProps } from "@artsy/palette"
 import React, { useEffect, useState } from "react"
 import { useNavBarHeight } from "../NavBar/useNavBarHeight"
 import { useMatchMedia } from "v2/Utils/Hooks/useMatchMedia"
 
-const ToastContainer = styled.div<{
-  isOpen: boolean
-  isMoveToRight: boolean
-}>`
-  width: 100%;
-  z-index: 10000;
-  padding: 10px 20px 10px;
-  background-color: ${colors.greenToast};
-  box-shadow: 0px 0px 1px 2rgba (0, 0, 0, 0.08), 0px 2px 8px rgba(0, 0, 0, 0.12);
-  border-radius: 2px;
-  border-bottom: 1px solid ${color("black10")};
-  transition: all 0.6s;
-  opacity: 0;
-  position: fixed;
-  left: 0;
-  ${({ isOpen }) => isOpen && "opacity:1; transform: translate3d(0,0,0); "};
-  ${({ isMoveToRight }) => isMoveToRight && "transform: translate3d(100%,0,0);"}
-`
 interface ToastComponentProps {
   showNotification: boolean
   notificationAction: string
@@ -30,6 +10,7 @@ interface ToastComponentProps {
   title: string
   onCloseToast: () => void
 }
+
 const ToastComponent: React.FC<ToastComponentProps> = ({
   notificationAction,
   showNotification,
@@ -64,24 +45,29 @@ const ToastComponent: React.FC<ToastComponentProps> = ({
       setIsMoveToRight(true)
     }
   }
-
   return (
-    <ToastContainer
+    <Box
+      paddingX={[10, 0]}
       style={{
         top: isMobile ? `${navHeight.mobile}px` : `${navHeight.desktop}px`,
+        transition: "all 0.5s",
+        boxShadow:
+          "0px 0px 1px 2rgba (0, 0, 0, 0.08), 0px 2px 8px rgba(0, 0, 0, 0.12)",
+        left: isMoveToRight ? "100%" : 0,
       }}
+      borderRadius={2}
+      position="fixed"
+      left={0}
+      width="100%"
+      opacity={showNotification ? 1 : 0}
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
-      isOpen={showNotification}
-      isMoveToRight={isMoveToRight}
     >
-      <Flex alignItems="center" justifyContent="center">
-        <Text color="white100" variant="text" textAlign="center">
-          {`${title} ${notificationAction}`}
-        </Text>
-      </Flex>
-    </ToastContainer>
+      <Banner variant="success" dismissable={false}>
+        <Text variant="text">{`${title} ${notificationAction}`}</Text>
+      </Banner>
+    </Box>
   )
 }
 
