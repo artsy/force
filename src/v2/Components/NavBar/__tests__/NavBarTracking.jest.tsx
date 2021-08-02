@@ -1,12 +1,9 @@
 import { mount } from "enzyme"
 import React from "react"
-
 import { AnalyticsSchema, SystemContextProvider } from "v2/System"
-
 import { useTracking } from "v2/System/Analytics/useTracking"
-import { MoreNavMenu, UserMenu } from "../Menus"
+import { NavBarUserMenu } from "../Menus"
 import { NavBar } from "../NavBar"
-import { NavItem } from "../NavItem"
 
 jest.mock("v2/System/Analytics/useTracking")
 jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
@@ -57,41 +54,15 @@ describe("NavBarTracking", () => {
     })
   })
 
-  describe("MoreNavMenu", () => {
-    it("tracks MoreNavMenu clicks", () => {
+  describe("NavBarUserMenu", () => {
+    it("tracks NavBarUserMenu clicks", () => {
       const wrapper = mount(
         <Wrapper>
-          <MoreNavMenu />
-        </Wrapper>
-      )
-      const menuItems = wrapper.find("MenuItem")
-      menuItems.first().simulate("click", {
-        target: {
-          context_module: AnalyticsSchema.ContextModule.HeaderMoreDropdown,
-          parentNode: {
-            parentNode: {
-              getAttribute: () => "/galleries",
-            },
-          },
-        },
-      })
-      expect(trackEvent).toBeCalledWith({
-        action_type: AnalyticsSchema.ActionType.Click,
-        context_module: AnalyticsSchema.ContextModule.HeaderMoreDropdown,
-        destination_path: "/galleries",
-      })
-    })
-  })
-
-  describe("UserMenu", () => {
-    it("tracks UserMenu clicks", () => {
-      const wrapper = mount(
-        <Wrapper>
-          <UserMenu />
+          <NavBarUserMenu />
         </Wrapper>
       )
 
-      const menuItems = wrapper.find("MenuItem")
+      const menuItems = wrapper.find("a")
 
       menuItems.first().simulate("click")
 
@@ -107,16 +78,29 @@ describe("NavBarTracking", () => {
     it("tracks NavItem item clicks", () => {
       const wrapper = mount(
         <Wrapper>
-          <NavItem href="/art-fairs">Fairs</NavItem>
+          <NavBar />
         </Wrapper>
       )
 
-      wrapper.find("a").simulate("click")
+      wrapper.find("a").find({ href: "/fairs" }).first().simulate("click")
 
-      expect(trackEvent).toBeCalledWith({
+      expect(trackEvent).toHaveBeenLastCalledWith({
         action_type: AnalyticsSchema.ActionType.Click,
         subject: "Fairs",
-        destination_path: "/art-fairs",
+        destination_path: "/fairs",
+      })
+
+      wrapper
+        .find("a")
+        .find({ href: "/collect" })
+        // Unfocusable anchor
+        .findWhere(node => node.text() === "")
+        .simulate("click")
+
+      expect(trackEvent).toHaveBeenLastCalledWith({
+        action_type: AnalyticsSchema.ActionType.Click,
+        subject: "Artworks",
+        destination_path: "/collect",
       })
     })
   })
@@ -129,7 +113,12 @@ describe("NavBarTracking", () => {
           <NavBar />
         </Wrapper>
       )
-      wrapper.find(".mobileHamburgerButton").find("a").first().simulate("click")
+
+      wrapper
+        .find("button")
+        .findWhere(node => node.text() === "Menu")
+        .first()
+        .simulate("click")
 
       expect(trackEvent).toBeCalledWith({
         action_type: AnalyticsSchema.ActionType.Click,

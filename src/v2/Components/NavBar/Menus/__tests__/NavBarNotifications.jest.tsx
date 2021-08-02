@@ -1,11 +1,11 @@
 import { useTracking } from "v2/System/Analytics/useTracking"
 import { mount } from "enzyme"
 import React from "react"
-import { NotificationMenuItems } from "../NotificationsMenu"
+import { NavBarNotifications } from "../NavBarNotifications"
 
 jest.mock("v2/System/Analytics/useTracking")
 
-describe("NotificationsMenu", () => {
+describe("NavBarNotifications", () => {
   const trackEvent = jest.fn()
 
   beforeEach(() => {
@@ -21,22 +21,23 @@ describe("NotificationsMenu", () => {
   })
 
   const getWrapper = (props = NotificationMenuFixture) => {
-    return mount(<NotificationMenuItems {...props} />)
+    // @ts-ignore
+    return mount(<NavBarNotifications {...props} />)
   }
 
   it("renders the correct number of menu items", () => {
     const wrapper = getWrapper()
-    expect(wrapper.find("MenuItem").length).toEqual(4)
+    expect(wrapper.find("a").length).toEqual(5)
   })
 
-  it("renders the correct MenuItem data", () => {
+  it("renders the correct data", () => {
     const wrapper = getWrapper()
-    const menuItem = wrapper.find("MenuItem").first()
+    const menuItem = wrapper.find("a").first()
     expect(menuItem.find("Image").length).toEqual(1)
     expect(menuItem.html()).toContain("1 work added")
     expect(menuItem.html()).toContain("David Hockney")
-    expect(wrapper.find("Link").html()).toContain("View all")
-    expect(wrapper.find("Link").prop("href")).toContain("/works-for-you")
+    expect(wrapper.find("a").last().html()).toContain("View all")
+    expect(wrapper.find("a").last().prop("href")).toContain("/works-for-you")
   })
 
   it("renders proper zerostate", () => {

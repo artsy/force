@@ -1,6 +1,7 @@
 import React from "react"
 import styled from "styled-components"
-import { Text, color, space } from "@artsy/palette"
+import { Text } from "@artsy/palette"
+import { themeGet } from "@styled-system/theme-get"
 
 export const NavBarSkipLink: React.FC = () => {
   return (
@@ -17,9 +18,9 @@ const Container = styled.a`
   position: absolute;
   top: -100%;
   left: 0;
-  padding: ${space(1)}px;
-  color: ${color("black100")};
-  background-color: ${color("black10")};
+  padding: ${themeGet("space.1")};
+  color: ${themeGet("color.black100")};
+  background-color: ${themeGet("color.black10")};
 
   &:focus {
     position: relative;
