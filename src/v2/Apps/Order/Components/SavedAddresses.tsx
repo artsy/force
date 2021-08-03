@@ -26,6 +26,8 @@ import { updateUserDefaultAddress } from "v2/Apps/Order/Mutations/UpdateUserDefa
 import { useSystemContext } from "v2/System/SystemContext"
 import { compact } from "lodash"
 import { extractNodes } from "v2/Utils/extractNodes"
+import { UpdateUserAddressMutationResponse } from "v2/__generated__/UpdateUserAddressMutation.graphql"
+import { CreateUserAddressMutationResponse } from "v2/__generated__/CreateUserAddressMutation.graphql"
 
 export const NEW_ADDRESS = "NEW_ADDRESS"
 const PAGE_SIZE = 30
@@ -38,6 +40,9 @@ interface SavedAddressesProps {
   relay: RelayRefetchProp
   addressCount?: number
   onAddressDelete?: (removedAddressId: string) => void
+  onAddressCreate?: (
+    address: CreateUserAddressMutationResponse["createUserAddress"]
+  ) => void
   onSelectedAddressEdited?: () => void
   selectedAddress?: string
 }
@@ -71,6 +76,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
     inCollectorProfile,
     relay,
     onAddressDelete,
+    onAddressCreate,
     selectedAddress,
     onSelectedAddressEdited,
   } = props
@@ -132,8 +138,15 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
     )
   }
 
-  const createOrUpdateAddressSuccess = address => {
+  const createOrUpdateAddressSuccess = (
+    address?: UpdateUserAddressMutationResponse &
+      CreateUserAddressMutationResponse
+  ) => {
     refetchAddresses()
+
+    if (address?.createUserAddress) {
+      onAddressCreate && onAddressCreate(address.createUserAddress)
+    }
 
     if (
       selectedAddress ==

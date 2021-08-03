@@ -77,6 +77,7 @@ import { compact } from "lodash"
 import { selectShippingOption } from "../../Mutations/SelectShippingOption"
 import { updateUserAddress } from "../../Mutations/UpdateUserAddress"
 import { deleteUserAddress } from "../../Mutations/DeleteUserAddress"
+import { CreateUserAddressMutationResponse } from "v2/__generated__/CreateUserAddressMutation.graphql"
 
 export interface ShippingProps extends SystemContextProps {
   order: Shipping_order
@@ -514,6 +515,14 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
     }
   }
 
+  handleAddressCreate = (
+    address: CreateUserAddressMutationResponse["createUserAddress"]
+  ) => {
+    if (address?.userAddressOrErrors?.internalID) {
+      this.selectSavedAddress(address.userAddressOrErrors.internalID)
+    }
+  }
+
   renderSupportedShippingAreaErrorMessage() {
     return (
       <Text
@@ -633,6 +642,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
                   onSelect={this.selectSavedAddress}
                   inCollectorProfile={false}
                   onAddressDelete={this.handleAddressDelete}
+                  onAddressCreate={this.handleAddressCreate}
                   onSelectedAddressEdited={this.handleSelectedAddressEdited}
                 />
               </Collapse>
