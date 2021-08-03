@@ -23,7 +23,7 @@ export const PastEventRailCell: React.FC<PastEventRailCellProps> = props => {
           alt={fair.name!}
         />
       ) : (
-        <Box width={325} height={240} bg="black10" />
+        <Box width={325} height={244} bg="black10" />
       )}
       <Text variant="xl" mt={1}>
         {fair.name}
@@ -40,7 +40,7 @@ export const PastEventRailCellFragmentContainer = createFragmentContainer(
         slug
         name
         image {
-          cropped(width: 325, height: 240) {
+          cropped(width: 325, height: 244) {
             width
             height
             src

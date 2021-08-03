@@ -58,7 +58,7 @@ const node: ReaderFragment = {
             {
               "kind": "Literal",
               "name": "height",
-              "value": 240
+              "value": 244
             },
             {
               "kind": "Literal",
@@ -100,7 +100,7 @@ const node: ReaderFragment = {
               "storageKey": null
             }
           ],
-          "storageKey": "cropped(height:240,width:325)"
+          "storageKey": "cropped(height:244,width:325)"
         }
       ],
       "storageKey": null
@@ -108,5 +108,5 @@ const node: ReaderFragment = {
   ],
   "type": "Fair"
 };
-(node as any).hash = 'a1b27445f949973bcc855e190a452356';
+(node as any).hash = 'bfe5e7129889de035d0d1924624f6052';
 export default node;

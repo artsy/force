@@ -1,4 +1,4 @@
-import { Box, Carousel, Spacer, Text } from "@artsy/palette"
+import { Box, Shelf, Spacer, Text } from "@artsy/palette"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { PastEventRailCellFragmentContainer as PastEventRailCell } from "./PastEventRailCell"
@@ -22,11 +22,11 @@ export const PastEventsRail: React.FC<PastEventsRailProps> = props => {
       <Text variant="lg" as="h3" mb={4}>
         Past Events
       </Text>
-      <Carousel>
+      <Shelf>
         {pastFairs.map(fair => {
           return <PastEventRailCell key={fair.id} fair={fair} />
         })}
-      </Carousel>
+      </Shelf>
       <Spacer mb={6} />
     </Box>
   )

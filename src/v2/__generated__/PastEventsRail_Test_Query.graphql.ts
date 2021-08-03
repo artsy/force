@@ -31,7 +31,7 @@ fragment PastEventRailCell_fair on Fair {
   slug
   name
   image {
-    cropped(width: 325, height: 240) {
+    cropped(width: 325, height: 244) {
       width
       height
       src
@@ -157,7 +157,7 @@ return {
                           {
                             "kind": "Literal",
                             "name": "height",
-                            "value": 240
+                            "value": 244
                           },
                           {
                             "kind": "Literal",
@@ -199,7 +199,7 @@ return {
                             "storageKey": null
                           }
                         ],
-                        "storageKey": "cropped(height:240,width:325)"
+                        "storageKey": "cropped(height:244,width:325)"
                       }
                     ],
                     "storageKey": null
@@ -220,7 +220,7 @@ return {
     "metadata": {},
     "name": "PastEventsRail_Test_Query",
     "operationKind": "query",
-    "text": "query PastEventsRail_Test_Query(\n  $slug: String!\n) {\n  fairs: fairsConnection(fairOrganizerID: $slug) {\n    ...PastEventsRail_fairs\n  }\n}\n\nfragment PastEventRailCell_fair on Fair {\n  slug\n  name\n  image {\n    cropped(width: 325, height: 240) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment PastEventsRail_fairs on FairConnection {\n  edges {\n    node {\n      id\n      ...PastEventRailCell_fair\n    }\n  }\n}\n"
+    "text": "query PastEventsRail_Test_Query(\n  $slug: String!\n) {\n  fairs: fairsConnection(fairOrganizerID: $slug) {\n    ...PastEventsRail_fairs\n  }\n}\n\nfragment PastEventRailCell_fair on Fair {\n  slug\n  name\n  image {\n    cropped(width: 325, height: 244) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment PastEventsRail_fairs on FairConnection {\n  edges {\n    node {\n      id\n      ...PastEventRailCell_fair\n    }\n  }\n}\n"
   }
 };
 })();
