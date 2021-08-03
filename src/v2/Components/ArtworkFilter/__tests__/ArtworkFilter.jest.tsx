@@ -7,6 +7,7 @@ import React from "react"
 import { ArtworkQueryFilter } from "../ArtworkQueryFilter"
 import { ArtworkFilterFixture } from "./fixtures/ArtworkFilter.fixture"
 import { Pagination } from "v2/Components/Pagination"
+import { initialArtworkFilterState } from "../ArtworkFilterContext"
 
 jest.unmock("react-relay")
 jest.mock("v2/System/Analytics/useTracking")
@@ -76,19 +77,8 @@ describe("ArtworkFilter", () => {
       const { current, changed } = trackEvent.mock.calls[0][0]
 
       expect(JSON.parse(current)).toMatchObject({
+        ...initialArtworkFilterState,
         acquireable: true,
-        majorPeriods: [],
-        page: 1,
-        sizes: [],
-        sort: "-decayed_merch",
-        artistIDs: [],
-        attributionClass: [],
-        partnerIDs: [],
-        additionalGeneIDs: [],
-        colors: [],
-        locationCities: [],
-        artistNationalities: [],
-        materialsTerms: [],
       })
 
       expect(JSON.parse(changed)).toMatchObject({
@@ -132,19 +122,8 @@ describe("ArtworkFilter", () => {
       wrapper.find("WaysToBuyFilter").find("Checkbox").first().simulate("click")
 
       expect(onFilterClick).toHaveBeenCalledWith("acquireable", true, {
+        ...initialArtworkFilterState,
         acquireable: true,
-        majorPeriods: [],
-        page: 1,
-        sizes: [],
-        sort: "-decayed_merch",
-        artistIDs: [],
-        attributionClass: [],
-        partnerIDs: [],
-        additionalGeneIDs: [],
-        colors: [],
-        locationCities: [],
-        artistNationalities: [],
-        materialsTerms: [],
       })
     })
 
@@ -176,19 +155,8 @@ describe("ArtworkFilter", () => {
       wrapper.find("WaysToBuyFilter").find("Checkbox").first().simulate("click")
 
       expect(onChange).toHaveBeenCalledWith({
+        ...initialArtworkFilterState,
         acquireable: true,
-        majorPeriods: [],
-        page: 1,
-        sizes: [],
-        sort: "-decayed_merch",
-        artistIDs: [],
-        attributionClass: [],
-        partnerIDs: [],
-        additionalGeneIDs: [],
-        colors: [],
-        locationCities: [],
-        artistNationalities: [],
-        materialsTerms: [],
       })
     })
 
@@ -210,18 +178,8 @@ describe("ArtworkFilter", () => {
       wrapper.find("Select").find("option").at(1).simulate("change")
 
       expect(onChange).toHaveBeenCalledWith({
-        majorPeriods: [],
-        page: 1,
-        sizes: [],
+        ...initialArtworkFilterState,
         sort: "-partner_updated_at",
-        artistIDs: [],
-        attributionClass: [],
-        partnerIDs: [],
-        additionalGeneIDs: [],
-        colors: [],
-        locationCities: [],
-        artistNationalities: [],
-        materialsTerms: [],
       })
     })
   })
