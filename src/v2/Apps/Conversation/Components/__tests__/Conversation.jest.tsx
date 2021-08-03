@@ -1,105 +1,75 @@
 import React from "react"
 import { ConversationPaginationContainer } from "../Conversation"
-import {
-  InquiryImage,
-  MockedInquiryConversation,
-} from "v2/Apps/__tests__/Fixtures/Conversation"
-import { MockBoot, renderRelayTree } from "v2/DevTools"
+import { MockBoot } from "v2/DevTools"
 import { graphql } from "react-relay"
+import { useTracking } from "react-tracking"
+import { useSystemContext as baseUseSystemContext } from "v2/System"
+import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
 import {
-  ConversationPaginationTestQueryRawResponse,
+  ConversationPaginationTestQuery,
   ConversationPaginationTestQueryResponse,
 } from "v2/__generated__/ConversationPaginationTestQuery.graphql"
-import { useTracking } from "react-tracking"
-import { SystemContextProvider } from "v2/System"
-import { HeadProvider } from "react-head"
 
 jest.unmock("react-relay")
+jest.mock("react-tracking")
+jest.mock("v2/System/useSystemContext")
 
-const render = (
-  node: ConversationPaginationTestQueryRawResponse["node"],
-  user: User
-) =>
-  renderRelayTree({
+describe("Conversation", () => {
+  const { getWrapper } = setupTestWrapper<ConversationPaginationTestQuery>({
     Component: (props: ConversationPaginationTestQueryResponse) => {
       return (
-        // @ts-expect-error STRICT_NULL_CHECK
-        <ConversationPaginationContainer
-          {...props}
-          conversation={props.node!}
-        />
+        <MockBoot>
+          <ConversationPaginationContainer
+            {...props}
+            conversation={props.me?.conversation!}
+            showDetails
+            setShowDetails={jest.fn()}
+            refetch={jest.fn()}
+          />
+        </MockBoot>
       )
-    },
-    mockData: {
-      node,
-      artwork: InquiryImage,
     },
     query: graphql`
       query ConversationPaginationTestQuery {
-        node(id: "whatever") {
-          ...Conversation_conversation @arguments(count: 10, after: "whatever")
+        me {
+          conversation(id: "whatever") {
+            ...Conversation_conversation
+          }
         }
       }
     `,
-    wrapper: children => (
-      <MockBoot>
-        <HeadProvider>
-          <SystemContextProvider user={user}>{children}</SystemContextProvider>
-        </HeadProvider>
-      </MockBoot>
-    ),
-    mockMutationResults: {
-      updateConversation: {
-        conversation: {
-          id: "whatever",
-          unread: false,
-        },
-      },
-    },
   })
 
-describe("Conversation", () => {
   const mockuseTracking = useTracking as jest.Mock
   const trackingSpy = jest.fn()
+  let useSystemContext = baseUseSystemContext as jest.Mock
 
   beforeEach(() => {
     mockuseTracking.mockImplementation(() => ({
       trackEvent: trackingSpy,
     }))
+
+    useSystemContext.mockImplementation(() => {
+      return {
+        user: { lab_features: ["Web Inquiry Checkout"] },
+        mediator: {
+          on: jest.fn(),
+          off: jest.fn(),
+        },
+      }
+    })
   })
 
   afterEach(() => {
     jest.resetAllMocks()
   })
 
-  describe("when user has Inquiry Checkout feature and the artwork is offerable", () => {
-    const userMock = {
-      type: "NotAdmin",
-      lab_features: ["Web Inquiry Checkout"],
-    }
-
-    it("shows the buyer guarantee message", async () => {
-      const conversation = await render(MockedInquiryConversation, userMock)
-      console.log(conversation)
-      const buyerGuaranteeMessage = conversation.find("BuyerGuaranteeMessage")
-
-      expect(buyerGuaranteeMessage).toHaveLength(1)
+  it("shows the buyer guarantee message", async () => {
+    const wrapper = getWrapper({
+      ConversationConnection: () => ({
+        edges: [],
+      }),
     })
-
-    it("renders the confirm artwork modal query renderer", async () => {
-      const conversation = await render(MockedInquiryConversation, userMock)
-      const queryRenderer = conversation.find(
-        "ConfirmArtworkModalQueryRenderer"
-      )
-
-      expect(queryRenderer).toHaveLength(1)
-    })
-
-    it("renders the OrderModal", async () => {
-      const conversation = await render(MockedInquiryConversation, userMock)
-      const orderModal = conversation.find("OrderModal")
-
-      expect(orderModal).toHaveLength(1)
-    })
+    expect(wrapper.find("BuyerGuaranteeMessage")).toHaveLength(1)
   })
 })
