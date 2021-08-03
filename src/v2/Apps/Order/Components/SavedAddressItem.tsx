@@ -1,4 +1,5 @@
-import { Flex, Text, RadioProps, Pill, color } from "@artsy/palette"
+import { Flex, Text, RadioProps, Pill } from "@artsy/palette"
+import { themeGet } from "@styled-system/theme-get"
 import React from "react"
 import styled from "styled-components"
 import { SavedAddresses_me } from "v2/__generated__/SavedAddresses_me.graphql"
@@ -105,6 +106,8 @@ const EditButton = styled(Text)`
 `
 
 const StyledPill = styled(Pill)`
-  background-color: ${color("black10")} !important;
-  pointer-events: none;
+  background-color: ${themeGet("colors.black10")};
+  &:hover {
+    background-color: ${themeGet("colors.black10")};
+  }
 `
