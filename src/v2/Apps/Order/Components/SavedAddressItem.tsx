@@ -60,6 +60,7 @@ export const SavedAddressItem: React.FC<SavedAddressItemProps> = (
                       hover
                       width={53}
                       maxHeight={21}
+                      style={{ boxShadow: "none" }}
                     >
                       <Text
                         textColor="black60"
@@ -106,5 +107,4 @@ const EditButton = styled(Text)`
 
 const StyledPill = styled(Pill)`
   background-color: ${color("black10")} !important;
-  pointer-events: none;
 `
