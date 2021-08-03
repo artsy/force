@@ -40,7 +40,7 @@ const Conversation: React.FC<ConversationProps> = props => {
   const bottomOfMessageContainer = useRef<HTMLElement>(null)
 
   const liveArtwork = conversation?.items?.[0]?.liveArtwork
-  const artwork = liveArtwork?.__typename === "Artwork" && liveArtwork
+  const artwork = liveArtwork?.__typename === "Artwork" ? liveArtwork : null
 
   const isArtworkOfferable = !!artwork && !!artwork?.isOfferableFromInquiry
 
@@ -155,7 +155,7 @@ const Conversation: React.FC<ConversationProps> = props => {
           openOrderModal={() => setShowOrderModal(true)}
         />
       </NoScrollFlex>
-      {artwork && isOfferable && (
+      {isOfferable && (
         <ConfirmArtworkModalQueryRenderer
           artworkID={artwork?.internalID!}
           conversationID={conversation.internalID!}

@@ -2,6 +2,7 @@ import React from "react"
 import { ConversationPaginationContainer } from "../Conversation"
 import {
   InquiryImage,
+  MockedConversation,
   MockedInquiryConversation,
 } from "v2/Apps/__tests__/Fixtures/Conversation"
 import { MockBoot, renderRelayTree } from "v2/DevTools"
@@ -35,9 +36,11 @@ const render = (
       artwork: InquiryImage,
     },
     query: graphql`
-      query ConversationPaginationTestQuery {
+      query ConversationPaginationTestQuery @raw_response_type {
         node(id: "whatever") {
-          ...Conversation_conversation @arguments(count: 10, after: "whatever")
+          __typename
+          ...Conversation_conversation
+          id
         }
       }
     `,
@@ -80,7 +83,6 @@ describe("Conversation", () => {
 
     it("shows the buyer guarantee message", async () => {
       const conversation = await render(MockedInquiryConversation, userMock)
-      console.log(conversation)
       const buyerGuaranteeMessage = conversation.find("BuyerGuaranteeMessage")
 
       expect(buyerGuaranteeMessage).toHaveLength(1)
@@ -100,6 +102,33 @@ describe("Conversation", () => {
       const orderModal = conversation.find("OrderModal")
 
       expect(orderModal).toHaveLength(1)
+    })
+  })
+
+  describe("when user doesn't have Inquiry Checkout feature", () => {
+    const userMock = {
+      type: "NotAdmin",
+    }
+
+    it("doesn't show the buyer guarantee message", async () => {
+      const conversation = await render(MockedInquiryConversation, userMock)
+      const buyerGuaranteeMessage = conversation.find("BuyerGuaranteeMessage")
+
+      expect(buyerGuaranteeMessage).toHaveLength(0)
+    })
+  })
+
+  describe("when the artwork is not offerable", () => {
+    const userMock = {
+      type: "NotAdmin",
+      lab_features: ["Web Inquiry Checkout"],
+    }
+
+    it("doesn't show the buyer guarantee message", async () => {
+      const conversation = await render(MockedConversation, userMock)
+      const buyerGuaranteeMessage = conversation.find("BuyerGuaranteeMessage")
+
+      expect(buyerGuaranteeMessage).toHaveLength(0)
     })
   })
 })
