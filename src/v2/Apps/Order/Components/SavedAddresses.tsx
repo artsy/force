@@ -43,7 +43,9 @@ interface SavedAddressesProps {
   onAddressCreate?: (
     address: CreateUserAddressMutationResponse["createUserAddress"]
   ) => void
-  onSelectedAddressEdited?: () => void
+  onAddressEdit?: (
+    address: UpdateUserAddressMutationResponse["updateUserAddress"]
+  ) => void
   selectedAddress?: string
 }
 
@@ -78,7 +80,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
     onAddressDelete,
     onAddressCreate,
     selectedAddress,
-    onSelectedAddressEdited,
+    onAddressEdit,
   } = props
   const addressList = extractNodes(me?.addressConnection) ?? []
   const { relayEnvironment } = useSystemContext()
@@ -146,13 +148,8 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
 
     if (address?.createUserAddress) {
       onAddressCreate && onAddressCreate(address.createUserAddress)
-    }
-
-    if (
-      selectedAddress ==
-      address?.updateUserAddress?.userAddressOrErrors?.internalID
-    ) {
-      onSelectedAddressEdited && onSelectedAddressEdited()
+    } else if (address?.updateUserAddress) {
+      onAddressEdit && onAddressEdit(address.updateUserAddress)
     }
   }
 
