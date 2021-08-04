@@ -24,9 +24,11 @@ export type RouterLinkProps = Omit<
     noUnderline?: boolean
   }
 
-export const RouterLink: React.ForwardRefExoticComponent<
-  RouterLinkProps & { ref?: React.Ref<HTMLAnchorElement> }
-> = React.forwardRef(({ to, noUnderline, ...rest }, forwardedRef) => {
+export const RouterLink: React.FC<RouterLinkProps> = ({
+  to,
+  noUnderline,
+  ...rest
+}) => {
   const context = useContext(RouterContext)
   const routes = context?.router?.matcher?.routeConfig ?? []
   const matcher = context?.router?.matcher
@@ -39,43 +41,37 @@ export const RouterLink: React.ForwardRefExoticComponent<
   const deprecated = noUnderline ? { textDecoration: "none" } : {}
 
   if (isSupportedInRouter) {
-    return (
-      <RouterAwareLink
-        ref={forwardedRef as any}
-        to={to ?? ""}
-        {...deprecated}
-        {...rest}
-      />
-    )
+    return <RouterAwareLink to={to ?? ""} {...deprecated} {...rest} />
   }
 
-  return (
-    <RouterUnawareLink
-      ref={forwardedRef as any}
-      href={to ?? ""}
-      {...deprecated}
-      {...rest}
-    />
-  )
-})
+  return <RouterUnawareLink href={to ?? ""} {...deprecated} {...rest} />
+}
 
 RouterLink.displayName = "RouterLink"
 
 const textDecoration = system({ textDecoration: true })
 const routerLinkMixin = compose(boxMixin, textDecoration)
 
-// TODO: Update styled-components types
-// @ts-ignore
-export const RouterAwareLink = styled(Link).withConfig({
-  shouldForwardProp: (prop, defaultValidatorFn) => defaultValidatorFn(prop),
-})`
-  ${routerLinkMixin}
-`
+type RouterLinkMixinProps = BoxProps & {
+  textDecoration?: ResponsiveValue<string>
+}
 
-// TODO: Update styled-components types
-// @ts-ignore
-export const RouterUnawareLink = styled.a.withConfig({
-  shouldForwardProp: (prop, defaultValidatorFn) => defaultValidatorFn(prop),
-})`
-  ${routerLinkMixin}
-`
+export const RouterAwareLink: React.FC<LinkPropsSimple & RouterLinkMixinProps> =
+  // TODO: Update styled-components types
+  // @ts-ignore
+  styled(Link).withConfig({
+    shouldForwardProp: (prop, defaultValidatorFn) => defaultValidatorFn(prop),
+  })`
+    ${routerLinkMixin}
+  `
+
+export const RouterUnawareLink: React.FC<
+  React.AnchorHTMLAttributes<HTMLAnchorElement> & RouterLinkMixinProps
+> =
+  // TODO: Update styled-components types
+  // @ts-ignore
+  styled.a.withConfig({
+    shouldForwardProp: (prop, defaultValidatorFn) => defaultValidatorFn(prop),
+  })`
+    ${routerLinkMixin}
+  `
