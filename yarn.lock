@@ -65,17 +65,17 @@
   dependencies:
     uuid "^8.3.0"
 
-"@artsy/palette-tokens@^2.3.0":
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/@artsy/palette-tokens/-/palette-tokens-2.3.0.tgz#3b1790426aceba35716af020c9678946bf940b21"
-  integrity sha512-dz9GQ7wnNsBSXdGjYXoDGGtLMeZB5X9Hez2Khra9tfyystdSbWPChDaLVEgk99LtSaJpLqRMrcNKDWvMcdb9Kw==
+"@artsy/palette-tokens@^2.4.0":
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/@artsy/palette-tokens/-/palette-tokens-2.4.0.tgz#b8d31c34dab7cf9755fde04d2fb5d55937c78f1f"
+  integrity sha512-i17VN3+mQAOX/Ho1SkoFLmLyWjq+dhy9yL0E7iYUjvet882F9OSA6bMzlYlCUpOXKyIOU3U76lNj6IKQwOVJrg==
 
-"@artsy/palette@14.50.0":
-  version "14.50.0"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-14.50.0.tgz#43219489670cc51d746aa63021dd8caf461251ab"
-  integrity sha512-bJkDlcf3FtBNL707OFVfgK7hWBVhwQQ0vknBu0+0jiPtp9rNSLRVyvLST//ZFaed3QqiLS1rtUnrG+SYdRE1PA==
+"@artsy/palette@14.51.0":
+  version "14.51.0"
+  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-14.51.0.tgz#6e936e55bc235323af16bec272377e71f0f864ef"
+  integrity sha512-GHAvk8f74RetM4nGXBUjyw7pPSOl8lETR+9ae61GP/qz08vgltBWrTrGfX1MgO5KbwH6IJjceJLeFx27QBgVsA==
   dependencies:
-    "@artsy/palette-tokens" "^2.3.0"
+    "@artsy/palette-tokens" "^2.4.0"
     "@seznam/compose-react-refs" "^1.0.6"
     "@styled-system/theme-get" "^5.1.2"
     d3-interpolate "^1.3.2"
