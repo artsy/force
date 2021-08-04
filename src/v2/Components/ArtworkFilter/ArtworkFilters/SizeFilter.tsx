@@ -103,7 +103,9 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
     width: parseRange(width) as CustomRange,
   }
 
-  const [showCustom, setShowCustom] = useState(isCustomSize)
+  const [showCustom, setShowCustom] = useState(
+    isCustomSize(width) || isCustomSize(height)
+  )
   const [customSize, setCustomSize] = useState<CustomSize>(
     hasValue(initialCustomSize) ? initialCustomSize : DEFAULT_CUSTOM_SIZE
   )
