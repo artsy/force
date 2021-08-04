@@ -101,7 +101,6 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
   }
 
   const handleDeleteAddress = async (addressID: string) => {
-    console.log("handleDeleteAddress")
     let response = await deleteUserAddress(
       // @ts-expect-error STRICT_NULL_CHECK
       relayEnvironment,
@@ -116,7 +115,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
       onError
     )
     if (!response.deleteUserAddress?.userAddressOrErrors.errors) {
-      onShowToast && onShowToast(true, "Deleted") //callback, that needed to be tested
+      onShowToast && onShowToast(true, "Deleted")
     }
   }
 
