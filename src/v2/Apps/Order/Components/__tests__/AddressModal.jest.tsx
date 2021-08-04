@@ -76,7 +76,7 @@ describe("AddressModal", () => {
     expect(wrapper.find("input").length).toBe(7)
     expect(wrapper.find("select").length).toBe(1)
     expect(wrapper.find("Checkbox[data-test='setAsDefault']").length).toBe(1)
-    expect(wrapper.find("Text[data-test='deleteButton']").length).toBe(1)
+    expect(wrapper.find("Clickable[data-test='deleteButton']").length).toBe(1)
     expect(wrapper.find("Button[data-test='saveButton']").length).toBe(1)
   })
 
@@ -104,13 +104,13 @@ describe("AddressModal", () => {
     expect(wrapper.find("input").length).toBe(7)
     expect(wrapper.find("select").length).toBe(1)
     expect(wrapper.find("Checkbox[data-test='setAsDefault']").length).toBe(1)
-    expect(wrapper.find("Text[data-test='deleteButton']").length).toBe(0)
+    expect(wrapper.find("Clickable[data-test='deleteButton']").length).toBe(0)
     expect(wrapper.find("Button[data-test='saveButton']").length).toBe(1)
   })
 
   it("clicking the delete button spawns a correct dialog", () => {
     const wrapper = getWrapper(testAddressModalProps)
-    const deleteButton = wrapper.find("Text[data-test='deleteButton']")
+    const deleteButton = wrapper.find("Clickable[data-test='deleteButton']")
     const dialog = wrapper.find(Dialog)
     expect(dialog.props().show).toBe(false)
     deleteButton.simulate("click")
@@ -128,7 +128,7 @@ describe("AddressModal", () => {
 
   it("when the dialog is confirmed, the delete action happens", () => {
     const wrapper = getWrapper(testAddressModalProps)
-    const deleteButton = wrapper.find("Text[data-test='deleteButton']")
+    const deleteButton = wrapper.find("Clickable[data-test='deleteButton']")
     deleteButton.simulate("click")
     const dialog = wrapper.find(Dialog)
     const dialogDelete = dialog
@@ -144,7 +144,7 @@ describe("AddressModal", () => {
 
   it("when the dialog is cancelled, the delete action doesn't happen", () => {
     const wrapper = getWrapper(testAddressModalProps)
-    const deleteButton = wrapper.find("Text[data-test='deleteButton']")
+    const deleteButton = wrapper.find("Clickable[data-test='deleteButton']")
     deleteButton.simulate("click")
     const dialog = wrapper.find(Dialog)
     const dialogCancel = dialog

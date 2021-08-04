@@ -39,7 +39,9 @@ describe("Saved Addresses mutations", () => {
 
   it("edits the saved addresses after calling edit address mutation", async () => {
     const page = await buildPage()
-    const editButton = page.find(`[data-test="editAddressInProfile"]`).first()
+    const editButton = page
+      .find(`[data-test="editAddressInProfileClick"]`)
+      .first()
     // @ts-expect-error STRICT_NULL_CHECK
     editButton
       .props()

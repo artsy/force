@@ -100,8 +100,9 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
     logger.error(message)
   }
 
-  const handleDeleteAddress = (addressID: string) => {
-    deleteUserAddress(
+  const handleDeleteAddress = async (addressID: string) => {
+    console.log("handleDeleteAddress")
+    let response = await deleteUserAddress(
       // @ts-expect-error STRICT_NULL_CHECK
       relayEnvironment,
       addressID,
@@ -110,11 +111,13 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
           // Execute address delete callback after address deleted
           // and list of addresses updated
           onAddressDelete && onAddressDelete(addressID)
-          onShowToast && onShowToast(true, "Deleted")
         })
       },
       onError
     )
+    if (!response.deleteUserAddress?.userAddressOrErrors.errors) {
+      onShowToast && onShowToast(true, "Deleted") //callback, that needed to be tested
+    }
   }
 
   const handleEditAddress = (address: Address, index: number) => {
@@ -156,66 +159,68 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
     const isDefaultAddress = address.isDefault
 
     return (
-      <>
-        <BorderBox
-          p={2}
-          width="100%"
-          flexDirection="column"
-          key={"addressIndex" + index}
-        >
-          <SavedAddressItem
-            index={index}
-            address={address}
-            handleClickEdit={() => handleEditAddress(address, index)}
-          />
-          <Separator my={1} />
-          <ModifyAddressWrapper>
-            {!isDefaultAddress && (
-              <Box mr={[3, 1]}>
-                <Text
-                  onClick={() => handleSetDefaultAddress(address.internalID)}
-                  variant="text"
-                  color="black60"
-                  style={{
-                    cursor: "pointer",
-                  }}
-                >
-                  Set as Default
-                </Text>
-              </Box>
-            )}
+      <BorderBox
+        p={2}
+        width="100%"
+        flexDirection="column"
+        key={"addressIndex" + index}
+      >
+        <SavedAddressItem
+          index={index}
+          address={address}
+          handleClickEdit={() => handleEditAddress(address, index)}
+        />
+        <Separator my={1} />
+        <ModifyAddressWrapper>
+          {!isDefaultAddress && (
             <Box mr={[3, 1]}>
-              <Clickable onClick={() => handleEditAddress(address, index)}>
-                <Text
-                  variant="text"
-                  color="blue100"
-                  style={{
-                    cursor: "pointer",
-                  }}
-                  data-test="editAddressInProfile"
-                >
-                  Edit
-                </Text>
-              </Clickable>
-            </Box>
-            <Box>
-              <Clickable
-                onClick={() => handleDeleteAddress(address.internalID)}
+              <Text
+                onClick={() => handleSetDefaultAddress(address.internalID)}
+                variant="text"
+                color="black60"
+                style={{
+                  cursor: "pointer",
+                }}
               >
-                <Text
-                  variant="text"
-                  color="red100"
-                  style={{
-                    cursor: "pointer",
-                  }}
-                >
-                  Delete
-                </Text>
-              </Clickable>
+                Set as Default
+              </Text>
             </Box>
-          </ModifyAddressWrapper>
-        </BorderBox>
-      </>
+          )}
+          <Box mr={[3, 1]}>
+            <Clickable
+              data-test="editAddressInProfileClick"
+              onClick={() => handleEditAddress(address, index)}
+            >
+              <Text
+                variant="text"
+                color="blue100"
+                style={{
+                  cursor: "pointer",
+                }}
+                data-test="editAddressInProfile"
+              >
+                Edit
+              </Text>
+            </Clickable>
+          </Box>
+          <Box>
+            <Clickable
+              data-test="deleteAddressInProfile"
+              onClick={() => handleDeleteAddress(address.internalID)}
+            >
+              <Text
+                variant="text"
+                color="red100"
+                style={{
+                  cursor: "pointer",
+                }}
+              >
+                Delete
+              </Text>
+            </Clickable>
+          </Box>
+        </ModifyAddressWrapper>
+      </BorderBox>
     )
   })
 

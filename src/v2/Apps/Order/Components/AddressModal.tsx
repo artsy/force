@@ -195,12 +195,11 @@ export const AddressModal: React.FC<Props> = ({
               )}
               {!createMutation && (
                 <Flex mt={2} flexDirection="column" alignItems="center">
-                  <Clickable onClick={() => setShowDialog(true)}>
-                    <Text
-                      data-test="deleteButton"
-                      variant="text"
-                      color="red100"
-                    >
+                  <Clickable
+                    data-test="deleteButton"
+                    onClick={() => setShowDialog(true)}
+                  >
+                    <Text variant="text" color="red100">
                       Delete address
                     </Text>
                   </Clickable>
