@@ -19,9 +19,9 @@ import {
 import { useAnalyticsContext } from "v2/System/Analytics/AnalyticsContext"
 import { RouterLink } from "v2/System/Router/RouterLink"
 
-interface FairEditorialItemProps {
+export interface FairEditorialItemProps {
   article: FairEditorialItem_article
-  size?: "large" | "small" | "mobileSmall"
+  size?: "large" | "small"
   isResponsive?: boolean
 }
 
@@ -61,7 +61,7 @@ export const FairEditorialItem: React.FC<FairEditorialItemProps> = ({
       primary: ["xl", "xxl"] as TextVariant[],
     },
     small: {
-      primary: ["lg", "xl"] as TextVariant[],
+      primary: ["lg", "lg", "xl"] as TextVariant[],
     },
   }[size]
 
