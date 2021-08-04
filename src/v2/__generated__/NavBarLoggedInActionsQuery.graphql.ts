@@ -2,8 +2,8 @@
 /* eslint-disable */
 
 import { ConcreteRequest } from "relay-runtime";
-export type LoggedInActionsQueryVariables = {};
-export type LoggedInActionsQueryResponse = {
+export type NavBarLoggedInActionsQueryVariables = {};
+export type NavBarLoggedInActionsQueryResponse = {
     readonly me: {
         readonly unreadNotificationsCount: number;
         readonly unreadConversationCount: number;
@@ -26,15 +26,15 @@ export type LoggedInActionsQueryResponse = {
         } | null;
     } | null;
 };
-export type LoggedInActionsQuery = {
-    readonly response: LoggedInActionsQueryResponse;
-    readonly variables: LoggedInActionsQueryVariables;
+export type NavBarLoggedInActionsQuery = {
+    readonly response: NavBarLoggedInActionsQueryResponse;
+    readonly variables: NavBarLoggedInActionsQueryVariables;
 };
 
 
 
 /*
-query LoggedInActionsQuery {
+query NavBarLoggedInActionsQuery {
   me {
     unreadNotificationsCount
     unreadConversationCount
@@ -220,7 +220,7 @@ return {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "LoggedInActionsQuery",
+    "name": "NavBarLoggedInActionsQuery",
     "selections": [
       {
         "alias": null,
@@ -296,7 +296,7 @@ return {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "LoggedInActionsQuery",
+    "name": "NavBarLoggedInActionsQuery",
     "selections": [
       {
         "alias": null,
@@ -394,11 +394,11 @@ return {
         }
       ]
     },
-    "name": "LoggedInActionsQuery",
+    "name": "NavBarLoggedInActionsQuery",
     "operationKind": "query",
-    "text": "query LoggedInActionsQuery {\n  me {\n    unreadNotificationsCount\n    unreadConversationCount\n    followsAndSaves {\n      notifications: bundledArtworksByArtistConnection(sort: PUBLISHED_AT_DESC, first: 10) {\n        edges {\n          node {\n            href\n            summary\n            artists\n            published_at: publishedAt(format: \"MMM DD\")\n            image {\n              resized(height: 40, width: 40) {\n                url\n              }\n            }\n            id\n            __typename\n          }\n          cursor\n        }\n        pageInfo {\n          endCursor\n          hasNextPage\n        }\n      }\n    }\n    id\n  }\n}\n"
+    "text": "query NavBarLoggedInActionsQuery {\n  me {\n    unreadNotificationsCount\n    unreadConversationCount\n    followsAndSaves {\n      notifications: bundledArtworksByArtistConnection(sort: PUBLISHED_AT_DESC, first: 10) {\n        edges {\n          node {\n            href\n            summary\n            artists\n            published_at: publishedAt(format: \"MMM DD\")\n            image {\n              resized(height: 40, width: 40) {\n                url\n              }\n            }\n            id\n            __typename\n          }\n          cursor\n        }\n        pageInfo {\n          endCursor\n          hasNextPage\n        }\n      }\n    }\n    id\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '072c854839a267f0199f1a2c14b36237';
+(node as any).hash = 'cfcc4ec76e30e889d67960d77123214d';
 export default node;

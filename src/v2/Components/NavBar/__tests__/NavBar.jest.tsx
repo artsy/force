@@ -3,7 +3,7 @@ import { SystemContextProvider } from "v2/System"
 import { useTracking } from "v2/System/Analytics/useTracking"
 import { mount } from "enzyme"
 import React from "react"
-import { NavBar, NavBarTier } from "../NavBar"
+import { NavBar } from "../NavBar"
 import { InboxNotificationCount } from "../Menus/MobileNavMenu/InboxNotificationCount"
 import { mediator } from "lib/mediator"
 
@@ -58,49 +58,6 @@ describe("NavBar", () => {
   })
 
   describe("desktop", () => {
-    const topNavBarDefaultLinks = [
-      ["/collect", "Buy"],
-      ["/consign", "Sell"],
-      ["/articles", "Editorial"],
-    ]
-
-    const bottomNavBarDefaultLinks = [
-      ["/artists", "Artists"],
-      ["/collect", "Artworks"],
-      ["/auctions", "Auctions"],
-      ["/viewing-rooms", "Viewing Rooms"],
-      ["/galleries", "Galleries"],
-      ["/fairs", "Fairs"],
-      ["/Shows", "Shows"],
-      ["/institutions", "Museums"],
-      ["#download-app-banner", "Download App"],
-    ]
-
-    it("renders correct nav items above xs", () => {
-      const wrapper = getWrapper()
-
-      // Should always be first
-      expect(wrapper.find("a").first().text()).toEqual("Skip to Main Content")
-
-      expect(wrapper.find("NavBarPrimaryLogo").find("a").prop("href")).toEqual(
-        "/"
-      )
-
-      const topNavBarLinks = wrapper.find(NavBarTier).at(0).find("NavItem")
-      const bottomNavBarLinks = wrapper.find(NavBarTier).at(1).find("NavItem")
-
-      topNavBarDefaultLinks.forEach(([href, text], index) => {
-        const navLink = topNavBarLinks.at(index)
-        expect(href).toEqual(navLink.prop("href"))
-        expect(text).toEqual(navLink.text())
-      })
-
-      bottomNavBarDefaultLinks.forEach(([href], index) => {
-        const navLink = bottomNavBarLinks.at(index)
-        expect(href).toEqual(navLink.prop("href"))
-      })
-    })
-
     it("renders logged out items", () => {
       const wrapper = getWrapper()
       expect(wrapper.html()).toContain("Log in")
@@ -115,7 +72,7 @@ describe("NavBar", () => {
       expect(wrapper.html()).not.toContain("Log in")
       expect(wrapper.html()).not.toContain("Sign up")
       expect(wrapper.find(BellIcon).length).toEqual(1)
-      expect(wrapper.find(SoloIcon).length).toEqual(2)
+      expect(wrapper.find(SoloIcon).length).toEqual(1)
     })
 
     describe("lab features", () => {
@@ -165,13 +122,14 @@ describe("NavBar", () => {
 
       const toggle = () =>
         wrapper
-          .find(NavBarTier)
-          .at(0)
-          .find("NavItem")
-          .find("a")
-          .last()
+          .find("button")
+          .findWhere(node => {
+            return node.text() === "Menu" || node.text() === "Close"
+          })
+          .first()
           .simulate("click")
 
+      expect(wrapper.find("MobileNavMenu").length).toEqual(0)
       toggle()
       expect(wrapper.find("MobileNavMenu").length).toEqual(1)
       toggle()

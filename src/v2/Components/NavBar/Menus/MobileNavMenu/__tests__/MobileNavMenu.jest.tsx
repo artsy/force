@@ -7,7 +7,7 @@ import {
   BackLink,
   MobileNavMenu,
   MobileSubmenuLink,
-} from "../../MobileNavMenu/MobileNavMenu"
+} from "../MobileNavMenu"
 import { mediator } from "lib/mediator"
 
 jest.mock("v2/System/Analytics/useTracking")

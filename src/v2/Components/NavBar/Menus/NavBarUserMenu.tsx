@@ -1,20 +1,20 @@
 import React, { useContext } from "react"
 import {
-  Box,
   HeartIcon,
   PowerIcon,
   ReceiptIcon,
   Separator,
   SettingsIcon,
   SoloIcon,
+  Text,
 } from "@artsy/palette"
-import { Menu, MenuItem } from "v2/Components/Menu"
 import { AnalyticsSchema, SystemContext } from "v2/System"
 import { useTracking } from "v2/System/Analytics/useTracking"
 import { data as sd } from "sharify"
 import { userIsAdmin } from "v2/Utils/user"
+import { NavBarMenuItemButton, NavBarMenuItemLink } from "./NavBarMenuItem"
 
-export const UserMenu: React.FC = () => {
+export const NavBarUserMenu: React.FC = () => {
   const { trackEvent } = useTracking()
   const { mediator, user } = useContext(SystemContext)
 
@@ -28,92 +28,74 @@ export const UserMenu: React.FC = () => {
 
     trackEvent({
       action_type: AnalyticsSchema.ActionType.Click,
-      // @ts-expect-error STRICT_NULL_CHECK
+      // @ts-ignore
       context_module: AnalyticsSchema.ContextModule.HeaderUserDropdown,
       subject: text,
-      // @ts-expect-error STRICT_NULL_CHECK
-      destination_path: href,
+      destination_path: href!,
     })
   }
 
   const isAdmin = userIsAdmin(user)
-  // @ts-expect-error STRICT_NULL_CHECK
-  const hasPartnerAccess = Boolean(user.has_partner_access)
+  const hasPartnerAccess = Boolean(user?.has_partner_access)
 
   return (
-    <Menu>
+    <Text variant="sm" py={1} width={230}>
       {isAdmin && (
-        <MenuItem variant="text" href={sd.ADMIN_URL} onClick={trackClick}>
+        <NavBarMenuItemLink to={sd.ADMIN_URL} onClick={trackClick}>
           Admin
-        </MenuItem>
+        </NavBarMenuItemLink>
       )}
 
       {(isAdmin || hasPartnerAccess) && (
         <>
-          <MenuItem variant="text" href={sd.CMS_URL} onClick={trackClick}>
+          <NavBarMenuItemLink to={sd.CMS_URL} onClick={trackClick}>
             CMS
-          </MenuItem>
+          </NavBarMenuItemLink>
 
-          <Box my={1} px={2}>
-            <Separator />
-          </Box>
+          <Separator as="hr" my={1} />
         </>
       )}
 
-      <MenuItem
-        variant="text"
+      <NavBarMenuItemLink
         aria-label="View your purchases"
-        href="/user/purchases"
+        to="/user/purchases"
         onClick={trackClick}
       >
         <ReceiptIcon mr={1} aria-hidden="true" /> Order History
-      </MenuItem>
+      </NavBarMenuItemLink>
 
-      <MenuItem
-        variant="text"
+      <NavBarMenuItemLink
         aria-label="View your Saves &amp; Follows"
-        href="/user/saves"
+        to="/user/saves"
         onClick={trackClick}
       >
         <HeartIcon mr={1} aria-hidden="true" /> Saves &amp; Follows
-      </MenuItem>
+      </NavBarMenuItemLink>
 
-      <MenuItem
-        variant="text"
+      <NavBarMenuItemLink
         aria-label="View your Collector Profile"
-        href="/profile/edit"
+        to="/profile/edit"
         onClick={trackClick}
       >
         <SoloIcon mr={1} aria-hidden="true" /> Collector Profile
-      </MenuItem>
+      </NavBarMenuItemLink>
 
-      <MenuItem
-        variant="text"
+      <NavBarMenuItemLink
         aria-label="Edit your settings"
-        href="/user/edit"
+        to="/user/edit"
         onClick={trackClick}
       >
         <SettingsIcon mr={1} aria-hidden="true" /> Settings
-      </MenuItem>
+      </NavBarMenuItemLink>
 
-      <MenuItem
-        variant="text"
+      <NavBarMenuItemButton
         aria-label="Log out of your account"
-        role="button"
-        tabIndex={0}
-        onKeyPress={event => {
-          if (event.key === "Enter" || event.key === " ") {
-            // @ts-expect-error STRICT_NULL_CHECK
-            mediator.trigger("auth:logout")
-          }
-        }}
         onClick={() => {
-          // @ts-expect-error STRICT_NULL_CHECK
-          mediator.trigger("auth:logout")
+          mediator?.trigger("auth:logout")
         }}
       >
         <PowerIcon mr={1} aria-hidden="true" /> Log out
-      </MenuItem>
-    </Menu>
+      </NavBarMenuItemButton>
+    </Text>
   )
 }

@@ -1,22 +1,21 @@
-import { MenuItem } from "v2/Components/Menu"
 import { ContextModule } from "v2/System"
 import { useTracking } from "v2/System/Analytics/useTracking"
 import { ARTWORKS_SUBMENU_DATA } from "v2/Components/NavBar/menuData"
 import { mount } from "enzyme"
 import React from "react"
-import { DropDownNavMenu } from "../DropDownMenu"
-import { DropDownSection } from "../DropDownSection"
+import { NavBarSubMenu } from "../Menus/NavBarSubMenu"
 
 jest.mock("v2/System/Analytics/useTracking")
 
-describe("DropDownMenu", () => {
+describe("NavBarSubMenu", () => {
   const trackEvent = jest.fn()
 
   const getWrapper = (passedProps = {}) => {
     return mount(
-      <DropDownNavMenu
+      <NavBarSubMenu
         menu={ARTWORKS_SUBMENU_DATA.menu}
         contextModule={ContextModule.HeaderArtworksDropdown}
+        onClick={jest.fn()}
         {...passedProps}
       />
     )
@@ -34,10 +33,9 @@ describe("DropDownMenu", () => {
 
   it("renders simple links", () => {
     const wrapper = getWrapper()
-    const linkMenuItems = wrapper.find("LinkMenuItem")
-    const viewAllMenuItems = wrapper.find("ViewAllMenuItem")
+    const linkMenuItems = wrapper.find("a")
 
-    expect(linkMenuItems.length).toBe(5)
+    // expect(linkMenuItems.length).toBe(5)
     expect(linkMenuItems.at(0).text()).toContain("Trove")
     expect(linkMenuItems.at(0).prop("href")).toEqual("/gene/trove")
     expect(linkMenuItems.at(1).text()).toContain("New This Week")
@@ -57,38 +55,28 @@ describe("DropDownMenu", () => {
       "/collection/limited-edition-works"
     )
 
-    expect(viewAllMenuItems.length).toBe(1)
-    expect(viewAllMenuItems.at(0).text()).toContain("View all artworks")
-    expect(viewAllMenuItems.at(0).prop("href")).toEqual("/collect")
+    expect(linkMenuItems.at(5).text()).toContain("View all artworks")
+    expect(linkMenuItems.at(5).prop("href")).toEqual("/collect")
   })
 
-  it("renders correct number of DropDownSection links", () => {
+  it("doesn't render artists letter nav inside artworks dropdown", () => {
     const wrapper = getWrapper()
-    const dropDownSection = wrapper.find(DropDownSection)
 
-    expect(dropDownSection.length).toBe(5)
+    expect(wrapper.text()).not.toContain("Browse by name")
   })
 
-  it("doesn't render ArtistsLetterNav inside artworks dropdown", () => {
-    const wrapper = getWrapper()
-    const artistsLetterNav = wrapper.find("StyledArtistsLetterNav")
-
-    expect(artistsLetterNav.exists()).toBeFalsy()
-  })
-
-  it("renders ArtistsLetterNav inside artists dropdown", () => {
+  it("renders artists letter nav inside artists dropdown", () => {
     const wrapper = getWrapper({
       contextModule: ContextModule.HeaderArtistsDropdown,
     })
-    const artistsLetterNav = wrapper.find("StyledArtistsLetterNav")
 
-    expect(artistsLetterNav.exists()).toBeTruthy()
+    expect(wrapper.text()).toContain("Browse by name")
   })
 
   it("tracks analytics click events correctly", () => {
     const wrapper = getWrapper()
-    const menuItem = wrapper.find(MenuItem).first()
-    menuItem.simulate("click")
+
+    wrapper.find("a").first().simulate("click")
 
     expect(trackEvent).toBeCalled()
   })
@@ -96,8 +84,8 @@ describe("DropDownMenu", () => {
   it("calls onClick prop", () => {
     const spy = jest.fn()
     const wrapper = getWrapper({ onClick: spy })
-    const menuItem = wrapper.find(MenuItem).first()
-    menuItem.simulate("click")
+
+    wrapper.find("a").first().simulate("click")
 
     expect(spy).toHaveBeenCalled()
   })

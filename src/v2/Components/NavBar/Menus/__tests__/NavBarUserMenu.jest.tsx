@@ -1,7 +1,7 @@
 import { SystemContextProvider } from "v2/System"
 import { mount } from "enzyme"
 import React from "react"
-import { UserMenu } from "../UserMenu"
+import { NavBarUserMenu } from "../NavBarUserMenu"
 import { mediator } from "lib/mediator"
 
 jest.mock("v2/System/Analytics/useTracking", () => {
@@ -12,41 +12,35 @@ jest.mock("v2/System/Analytics/useTracking", () => {
   }
 })
 
-describe("UserMenu", () => {
+describe("NavBarUserMenu", () => {
   jest.spyOn(mediator, "trigger")
 
   const getWrapper = (props = {}) => {
     return mount(
       <SystemContextProvider user={{}} {...props}>
-        <UserMenu />
+        <NavBarUserMenu />
       </SystemContextProvider>
     )
   }
 
-  // Label also includes SVG image title
-  const defaultLinks = [
-    ["/user/purchases", "Pending Order History"],
-    ["/user/saves", "Save Saves & Follows"],
-    ["/profile/edit", "User Collector Profile"],
-    ["/user/edit", "Settings Settings"],
-  ]
-
   it("renders correct menu items", () => {
     const wrapper = getWrapper()
-    const links = wrapper.find("MenuItem")
+    const links = wrapper.find("a")
 
-    defaultLinks.forEach(([href, linkLabel], index) => {
-      const navLink = links.at(index)
-      expect(href).toEqual(navLink.prop("href"))
-      expect(linkLabel).toEqual(navLink.text())
-    })
+    expect(links.map(a => [a.prop("href"), a.text()])).toEqual([
+      // Label also includes SVG image title
+      ["/user/purchases", "Pending Order History"],
+      ["/user/saves", "Save Saves & Follows"],
+      ["/profile/edit", "User Collector Profile"],
+      ["/user/edit", "Settings Settings"],
+    ])
 
-    expect(wrapper.find("MenuItem").last().text()).toContain("Log out")
+    expect(wrapper.find("button").last().text()).toContain("Log out")
   })
 
   it("calls logout auth action on logout menu click", () => {
     const wrapper = getWrapper()
-    wrapper.find("MenuItem").last().simulate("click")
+    wrapper.find("button").last().simulate("click")
     expect(mediator.trigger).toBeCalledWith("auth:logout")
   })
 

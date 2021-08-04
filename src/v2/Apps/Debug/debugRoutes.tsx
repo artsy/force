@@ -19,6 +19,7 @@ export const debugRoutes: AppRouteConfig[] = [
     Component: ({ children }) => children,
     children: [
       {
+        theme: "v3",
         path: "baseline",
         Component: DebugApp,
       },
