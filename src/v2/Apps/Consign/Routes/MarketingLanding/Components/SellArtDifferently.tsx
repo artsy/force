@@ -6,22 +6,23 @@ import {
   CircleWhiteCheckIcon,
   Text,
   UserWithChartIcon,
-  color,
   Button,
   Spacer,
+  breakpoints,
 } from "@artsy/palette"
 import { SectionContainer } from "./SectionContainer"
-import { RouterLink } from "v2/System/Router/RouterLink"
+import { scrollIntoView } from "v2/Utils/scrollHelpers"
+import { useNavBarHeight } from "v2/Components/NavBar/useNavBarHeight"
 
 export const SellArtDifferently: React.FC = () => {
+  const { desktop, mobile } = useNavBarHeight()
+
   return (
     <SectionContainer>
       <Flex
         flexDirection={["column", "row"]}
         alignItems="center"
         justifyContent="space-between"
-        pt={[0, 4]}
-        mb={[0, 4, 0, 0]}
       >
         <Section
           icon={<EarnMoreIcon width={50} height={50} />}
@@ -40,19 +41,30 @@ export const SellArtDifferently: React.FC = () => {
         />
       </Flex>
       <Box
-        borderBottom={`1px solid ${color("black60")}`}
+        borderBottom="1px solid"
+        borderColor="black60"
         width="100%"
-        margin="10% 0"
-        textAlign={"center"}
+        my={120}
+        textAlign="center"
       >
-        <Text width="60%" pb={3} variant="largeTitle" margin="0 auto">
+        <Text width="60%" pb={3} variant="xl" margin="0 auto">
           Are you an artist? <br />
           See our <u>FAQ</u> about selling your own work with Artsy.
         </Text>
-        {/* TODO: link to FAQ component in RouterLink */}
-        <RouterLink to={""}>
-          <Button size="large">Learn more</Button>
-        </RouterLink>
+        <Button
+          size="medium"
+          onClick={() => {
+            scrollIntoView({
+              selector: "#jump--faq",
+              offset:
+                window.innerWidth <= parseInt(breakpoints.xs, 10)
+                  ? mobile
+                  : desktop,
+            })
+          }}
+        >
+          Learn more
+        </Button>
         <Spacer mb={5} />
       </Box>
     </SectionContainer>
