@@ -5,7 +5,13 @@ import { SectionContainer } from "./SectionContainer"
 export const FAQ: React.FC = () => {
   return (
     <SectionContainer>
-      <Text width="100%" textAlign="left" mb={4} variant="largeTitle">
+      <Text
+        width="100%"
+        textAlign="left"
+        mb={4}
+        variant="largeTitle"
+        id="jump--faq"
+      >
         Frequently Asked Questions
       </Text>
       <Box>
@@ -51,27 +57,51 @@ export const FAQ: React.FC = () => {
         </ToggleButton>
 
         <ToggleButton label="I am an artist. Can I sell my art with Artsy?">
-          {/* TODO: Add line breaks and email links and anchor tags to text */}
           <TextItem>
-            {`At this time, Artsy does not partner directly with artists.
-            Instead, we offer partnerships for galleries, museums, and other
-            institutions. If you work with a gallery, we ask you to get in touch
-            with us at partners@artsy.net. Otherwise, we recommend reaching out
-            to your gallery and asking them to join Artsy by visiting
-            partners.artsy.net.\nArtsy has a Sell with Artsy program in which
-            we currently accept consignments of works by artists that are
-            already in our database who have a resale market and substantial
-            collector demand. To learn more about our Sell with Artsy program,
-            please visit our Help Center article on What do we look for in
-            consignment submissions? Please note that not being accepted for our
-            Sell with Artsy program is in no way a reflection or judgement of
-            artistic ability, potential now or in the future, or commitment to
-            the discipline; it is simply a result of the assessment of the
-            information that we were given at the time and possible services we
-            are able to currently provide. \n We'd also like to bring to your
-            attention The Working Artist’s Guide which is a resource for artists
-            put together by our Editorial team. We hope it can assist you and
-            that you continue to enjoy exploring Artsy.`}
+            <p>
+              At this time, Artsy does not partner directly with artists.
+              Instead, we offer partnerships for galleries, museums, and other
+              institutions. If you work with a gallery, we ask you to get in
+              touch with us at{" "}
+              <a href="mailto:partners@artsy.net">partners@artsy.net</a>.
+              Otherwise, we recommend reaching out to your gallery and asking
+              them to join Artsy by visiting{" "}
+              <a href="https://partners.artsy.net" target="_blank">
+                partners.artsy.net
+              </a>
+              .
+            </p>
+            <p>
+              Artsy has a{" "}
+              <a href="/consign" target="_blank">
+                Sell with Artsy program
+              </a>{" "}
+              in which we currently accept consignments of works by artists that
+              are already in our database who have a resale market and
+              substantial collector demand. To learn more about our Sell with
+              Artsy program, please visit our Help Center article on{" "}
+              <a
+                href="https://support.artsy.net/hc/en-us/articles/1500006366381"
+                target="_blank"
+              >
+                What do we look for in consignment submissions
+              </a>
+              ? Please note that not being accepted for our Sell with Artsy
+              program is in no way a reflection or judgement of artistic
+              ability, potential now or in the future, or commitment to the
+              discipline; it is simply a result of the assessment of the
+              information that we were given at the time and possible services
+              we are able to currently provide.
+            </p>
+            <p>
+              We'd also like to bring to your attention{" "}
+              <a href="/series/working-artists-guide" target="_blank">
+                The Working Artist’s Guide
+              </a>{" "}
+              which is a resource for artists put together by our Editorial
+              team. We hope it can assist you and that you continue to enjoy
+              exploring Artsy.
+            </p>
           </TextItem>
         </ToggleButton>
 
