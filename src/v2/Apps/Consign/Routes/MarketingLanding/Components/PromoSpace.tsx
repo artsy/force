@@ -1,11 +1,11 @@
 import React from "react"
-import { Text, Box, color } from "@artsy/palette"
+import { Text, Box } from "@artsy/palette"
 import { SectionContainer } from "./SectionContainer"
 
 export const PromoSpace: React.FC = () => {
   return (
     <SectionContainer>
-      <Box borderBottom={`1px solid ${color("black60")}`} width="100%">
+      <Box borderBottom="1px solid" borderColor="black60" width="100%">
         <Text
           width="60%"
           textAlign={"center"}
