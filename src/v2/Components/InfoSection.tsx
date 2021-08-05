@@ -5,10 +5,11 @@ import { HTML, Join, Spacer, Text } from "@artsy/palette"
 const TextWithNewlines = styled(Text)`
   white-space: pre-wrap;
 `
+TextWithNewlines.displayName = "TextWithNewlines"
 
 interface InfoSectionProps {
   label?: string
-  info: string
+  info: string | JSX.Element
   type?: "html" | "text"
 }
 
@@ -20,7 +21,7 @@ export const InfoSection: React.FC<InfoSectionProps> = ({
   const Info = () => {
     switch (type) {
       case "html": {
-        return <HTML variant="md" html={info} />
+        return <HTML variant="md" html={info as string} />
       }
       case "text": {
         return <TextWithNewlines variant="md">{info}</TextWithNewlines>
