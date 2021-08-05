@@ -2,29 +2,28 @@ import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Box, Column, GridColumns, Spacer, Text, Title } from "@artsy/palette"
 import { FairOrganizerFollowButtonFragmentContainer as FairOrganizerFollowButton } from "./Components/FairOrganizerFollowButton"
-import { FairOrganizerHeaderImage } from "./Components/FairOrganizerHeader/FairOrganizerHeaderImage"
 import { FairOrganizerApp_fairOrganizer } from "v2/__generated__/FairOrganizerApp_fairOrganizer.graphql"
+import { FairHeaderImageFragmentContainer as FairHeaderImage } from "../Fair/Components/FairHeader/FairHeaderImage"
+import { FairOrganizerHeaderFragmentContainer as FairOrganizerHeader } from "./Components/FairOrganizerHeader/FairOrganizerHeader"
 
 interface FairOrganizerAppProps {
   fairOrganizer: FairOrganizerApp_fairOrganizer
 }
 
 export const FairOrganizerApp: React.FC<FairOrganizerAppProps> = ({
-  children,
   fairOrganizer,
 }) => {
-  const { name } = fairOrganizer
+  const { fairs, name } = fairOrganizer
+  const { edges } = fairs!
+  const fair = edges?.[0]?.node!
   return (
     <>
       <Title>{name} | Artsy</Title>
 
       <Box>
-        <FairOrganizerHeaderImage
-          image={{
-            url:
-              "https://d32dm0rphc51dk.cloudfront.net/32RSQgH4I--VLWyuDBzFTQ/wide.jpg",
-          }}
-        />
+        <FairHeaderImage fair={fair} />
+        <Spacer mt={4} />
+        <FairOrganizerHeader fairOrganizer={fairOrganizer} />
 
         <GridColumns>
           <Column span={6}>
@@ -40,8 +39,6 @@ export const FairOrganizerApp: React.FC<FairOrganizerAppProps> = ({
         </GridColumns>
 
         <Spacer mt={4} />
-
-        {children}
       </Box>
     </>
   )
@@ -53,8 +50,15 @@ export const FairOrganizerAppFragmentContainer = createFragmentContainer(
     fairOrganizer: graphql`
       fragment FairOrganizerApp_fairOrganizer on FairOrganizer {
         name
-        ...FairOrganizerFollowButton_fairOrganizer
+        fairs: fairsConnection(first: 1) {
+          edges {
+            node {
+              ...FairHeaderImage_fair
+            }
+          }
+        }
         ...FairOrganizerHeader_fairOrganizer
+        ...FairOrganizerFollowButton_fairOrganizer
       }
     `,
   }
