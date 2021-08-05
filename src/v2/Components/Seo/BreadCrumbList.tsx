@@ -1,5 +1,5 @@
 import React from "react"
-import { Meta } from "react-head"
+import { StructuredData } from "./StructuredData"
 import { data as sd } from "sharify"
 
 const { APP_URL } = sd
@@ -32,17 +32,10 @@ export const computeListItems = (items, appUrl = APP_URL) => {
 export const BreadCrumbList: React.FC<BreadCrumbListProps> = props => {
   const listItems = computeListItems(props.items)
 
-  return (
-    <Meta
-      tag="script"
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{
-        __html: JSON.stringify({
-          "@context": "http://schema.org",
-          "@type": "BreadcrumbList",
-          itemListElement: listItems,
-        }),
-      }}
-    />
-  )
+  const schemaData = {
+    "@type": "BreadcrumbList",
+    itemListElement: listItems,
+  }
+
+  return <StructuredData schemaData={schemaData} />
 }

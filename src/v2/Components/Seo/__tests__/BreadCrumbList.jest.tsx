@@ -19,7 +19,7 @@ describe("BreadCrumbList", () => {
   it("sets the schema type", () => {
     const wrapper = getWrapper()
     const script = wrapper.find("script")
-    expect(script.text()).toMatch('"@type":"BreadcrumbList"')
+    expect(script.text()).toMatch('"@type": "BreadcrumbList"')
   })
 })
 
