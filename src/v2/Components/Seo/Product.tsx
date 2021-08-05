@@ -1,18 +1,11 @@
 import React from "react"
-import { Meta } from "react-head"
+import { StructuredData } from "./StructuredData"
 
 export const Product = ({ data }) => {
-  return (
-    <Meta
-      tag="script"
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{
-        __html: JSON.stringify({
-          "@context": "http://schema.org",
-          "@type": "Product",
-          ...data,
-        }),
-      }}
-    />
-  )
+  const schemaData = {
+    "@type": "Product",
+    ...data,
+  }
+
+  return <StructuredData schemaData={schemaData} />
 }
