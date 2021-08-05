@@ -2,37 +2,35 @@ import { SystemContextProvider } from "v2/System"
 import { useTracking } from "v2/System/Analytics/useTracking"
 import { mount } from "enzyme"
 import React from "react"
-import {
-  AnimatingMenuWrapper,
-  BackLink,
-  MobileNavMenu,
-  MobileSubmenuLink,
-} from "../MobileNavMenu"
+import { NavBarMobileMenu } from "../NavBarMobileMenu"
 import { mediator } from "lib/mediator"
+import { NavBarMobileMenuTransition } from "../NavBarMobileMenuTransition"
+import { NavBarMobileSubMenuBack } from "../NavBarMobileSubMenu"
 
 jest.mock("v2/System/Analytics/useTracking")
 jest.mock("lib/isServer", () => ({
   isServer: true,
 }))
 
-describe("MobileNavMenu", () => {
+describe("NavBarMobileMenu", () => {
   jest.spyOn(mediator, "trigger")
   const trackEvent = jest.fn()
   const noop = () => {}
   const getWrapper = props => {
     return mount(
       <SystemContextProvider user={props.user}>
-        <MobileNavMenu isOpen onClose={noop} />
+        <NavBarMobileMenu isOpen onClose={noop} />
       </SystemContextProvider>
     )
   }
 
-  const getMobileMenuLinkContainer = (userType = null, lab_features = []) =>
+  const getMobileMenuLinkContainer = (
+    userType: string | null = null,
+    lab_features: string[] = []
+  ) =>
     getWrapper({ user: userType ? { userType, lab_features } : null })
-      .find(AnimatingMenuWrapper)
-      .filterWhere(element => element.props().isOpen)
-      .find("ul")
-      .at(0)
+      .find(NavBarMobileMenuTransition)
+      .findWhere(element => element.props().isOpen)
 
   beforeEach(() => {
     ;(useTracking as jest.Mock).mockImplementation(() => {
@@ -47,16 +45,14 @@ describe("MobileNavMenu", () => {
   it("calls logout auth action on logout menu click", () => {
     const wrapper = getWrapper({ user: { type: "NotAdmin" } })
 
-    const MobileLink = wrapper.find("MobileLink")
-    const length = MobileLink.length
-    // @ts-expect-error STRICT_NULL_CHECK
+    const links = wrapper.find("a")
+    const length = links.length
+
     wrapper
-      .find("MobileLink")
+      .find("a")
       .at(length - 2)
-      .props()
-      .onClick({
-        preventDefault: () => {},
-      } as any)
+      .simulate("click")
+
     expect(mediator.trigger).toBeCalledWith("auth:logout")
   })
 
@@ -76,11 +72,11 @@ describe("MobileNavMenu", () => {
         ["/login?intent=login&contextModule=header", "Log in"],
       ].map(link => link.join(""))
 
-      const linkContainer = getMobileMenuLinkContainer()
-      const mobileMenuLinks = linkContainer.find("MobileLink")
+      const linkContainer = getWrapper({})
+      const menuLinks = linkContainer.find("a")
 
       // Exclude submenu links
-      const renderedMobileMenuLinks = mobileMenuLinks
+      const renderedMobileMenuLinks = menuLinks
         .map(node => node.props().href + node.text())
         .filter(link => defaultMobileMenuLinks.includes(link))
 
@@ -88,57 +84,43 @@ describe("MobileNavMenu", () => {
       // and that they're in the right relative order
       expect(renderedMobileMenuLinks).toEqual(defaultMobileMenuLinks)
 
-      const mobileSubmenuLinks = linkContainer.children(MobileSubmenuLink)
-      expect(mobileSubmenuLinks.length).toBe(2)
+      const subMenuButtons = linkContainer.find("button")
+      const subMenuButtonLabels = subMenuButtons
+        .map(node => node.text())
+        .join("")
 
-      let linkText = mobileSubmenuLinks.first().text()
-      expect(linkText).toContain("Artists")
+      expect(subMenuButtonLabels).toContain("Artists")
+      expect(subMenuButtonLabels).toContain("Artworks")
 
-      linkText = mobileSubmenuLinks.last().text()
-      expect(linkText).toContain("Artworks")
-
-      // TODO: Not sure these specs make any kind of sense:
-      // We don't use the data for rendering these links (why?)
-      // const simpleLinks = linkContainer.children(MobileLink)
-      // expect(simpleLinks.length).toBe(8)
-      // ;(MENU_DATA.links as SimpleLinkData[])
-      //   .slice(2)
-      //   .map(({ href, text }, index) => {
-      //     const simpleLink = simpleLinks.at(index)
-      //     expect(href).toEqual(simpleLink.prop("href"))
-      //     expect(text).toEqual(simpleLink.text())
-      //   })
-
-      linkText = linkContainer.text()
-      expect(linkText).not.toContain("Works for you")
+      expect(linkContainer.text()).not.toContain("Works for you")
     })
 
     it("renders the account subnav when logged in", () => {
-      // @ts-expect-error STRICT_NULL_CHECK
       const linkContainer = getMobileMenuLinkContainer("notAdmin")
       const mobileSubmenuLinks = linkContainer.children()
       let linkText = mobileSubmenuLinks.last().text()
+
       expect(linkText).toContain("Get the app")
     })
   })
 
   describe("lab features", () => {
     it("shows inbox menu option if lab feature enabled", () => {
-      // @ts-expect-error STRICT_NULL_CHECK
       const linkContainer = getMobileMenuLinkContainer("notAdmin", [
         "User Conversations View",
       ])
+
       expect(linkContainer.html()).toContain("Inbox")
     })
   })
 
   describe("Analytics tracking", () => {
     it("tracks back button click", () => {
-      // @ts-expect-error STRICT_NULL_CHECK
       const linkContainer = getMobileMenuLinkContainer("notAdmin")
+      const backLink = linkContainer.find(NavBarMobileSubMenuBack)
 
-      const backLink = linkContainer.find(BackLink)
       backLink.first().simulate("click")
+
       expect(trackEvent).toBeCalledWith({
         action_type: "Click",
         context_module: "Header",
@@ -147,10 +129,10 @@ describe("MobileNavMenu", () => {
       })
     })
 
-    it("tracks MobileSubmenuLink click", () => {
-      // @ts-expect-error STRICT_NULL_CHECK
+    it("tracks link clicks", () => {
       const linkContainer = getMobileMenuLinkContainer("notAdmin")
-      linkContainer.children().first().find("a").simulate("click")
+      linkContainer.find("a").first().simulate("click")
+
       expect(trackEvent).toHaveBeenCalledWith({
         action_type: "Click",
         context_module: "Header",

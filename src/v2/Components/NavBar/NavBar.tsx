@@ -10,8 +10,12 @@ import {
 } from "@artsy/palette"
 import { useSystemContext } from "v2/System/SystemContext"
 import { SearchBarQueryRenderer } from "v2/Components/Search/SearchBar"
-import { NavBarSubMenu, MobileNavMenu, MobileToggleIcon } from "./Menus"
-import { InboxNotificationCountQueryRenderer } from "./Menus/MobileNavMenu/InboxNotificationCount"
+import { NavBarSubMenu } from "./Menus"
+import {
+  NavBarMobileMenu,
+  NavBarMobileMenuIcon,
+} from "./NavBarMobileMenu/NavBarMobileMenu"
+import { NavBarMobileMenuInboxNotificationCountQueryRenderer } from "./NavBarMobileMenu/NavBarMobileMenuInboxNotificationCount"
 import { ModalType } from "v2/Components/Authentication/Types"
 import {
   ARTISTS_SUBMENU_DATA,
@@ -121,13 +125,14 @@ export const NavBar: React.FC = track(
         bg="white100"
         borderBottom="1px solid"
         borderColor="black30"
+        height={height}
       >
-        <AppContainer>
+        <AppContainer height="100%">
           <HorizontalPadding
             as="nav"
-            height={height}
             display="flex"
             flexDirection="column"
+            height="100%"
           >
             <Media at="xs">{!isLoggedIn && <AuthBanner pt={1} />}</Media>
 
@@ -209,8 +214,13 @@ export const NavBar: React.FC = track(
                 <NavBarItemButton
                   ml={1}
                   mr={-1}
-                  onClick={e => {
-                    e.preventDefault()
+                  width={40}
+                  height={40}
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
+                  onClick={event => {
+                    event.preventDefault()
 
                     const showMenu = !showMobileMenu
 
@@ -225,10 +235,10 @@ export const NavBar: React.FC = track(
                     }
                   }}
                 >
-                  <MobileToggleIcon open={showMobileMenu} />
+                  <NavBarMobileMenuIcon open={showMobileMenu} />
 
                   {showNotificationCount && (
-                    <InboxNotificationCountQueryRenderer />
+                    <NavBarMobileMenuInboxNotificationCountQueryRenderer />
                   )}
                 </NavBarItemButton>
               </Flex>
@@ -360,7 +370,7 @@ export const NavBar: React.FC = track(
       {/* TODO: V3 */}
       {showMobileMenu && (
         <>
-          <MobileNavMenu
+          <NavBarMobileMenu
             onClose={() => toggleMobileNav(false)}
             isOpen={showMobileMenu}
             onNavButtonClick={handleMobileNavClick}
