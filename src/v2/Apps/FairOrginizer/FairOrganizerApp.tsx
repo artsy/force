@@ -9,7 +9,7 @@ interface FairOrganizerAppProps {
   fairOrganizer: FairOrganizerApp_fairOrganizer
 }
 
-export const FairOrganizerApp: React.FC<FairOrganizerAppProps> = ({
+const FairOrganizerApp: React.FC<FairOrganizerAppProps> = ({
   fairOrganizer,
 }) => {
   const { fairs, name } = fairOrganizer
@@ -17,7 +17,7 @@ export const FairOrganizerApp: React.FC<FairOrganizerAppProps> = ({
   const fair = edges?.[0]?.node!
   return (
     <>
-      <Title>{name} | Artsy</Title>
+      <Title>{`${name} | Artsy`}</Title>
 
       <Box>
         <FairHeaderImage fair={fair} />
