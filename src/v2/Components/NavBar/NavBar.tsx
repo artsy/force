@@ -170,10 +170,9 @@ export const NavBar: React.FC = track(
                 {isLoggedIn ? (
                   <NavBarLoggedInActionsQueryRenderer />
                 ) : (
-                  <>
+                  <Flex alignItems="center">
                     <Button
-                      ml={2}
-                      mr={1}
+                      mx={1}
                       variant="secondaryOutline"
                       size="small"
                       onClick={() => {
@@ -201,7 +200,7 @@ export const NavBar: React.FC = track(
                     >
                       Sign up
                     </Button>
-                  </>
+                  </Flex>
                 )}
               </Flex>
 
