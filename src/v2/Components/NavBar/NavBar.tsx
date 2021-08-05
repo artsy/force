@@ -35,6 +35,8 @@ import { scrollIntoView } from "v2/Utils/scrollHelpers"
 import { AppContainer } from "v2/Apps/Components/AppContainer"
 import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
 import { useNavBarHeight } from "./useNavBarHeight"
+import { Media } from "v2/Utils/Responsive"
+import { AuthBanner } from "../AuthBanner"
 
 /**
  * Old Force pages have the navbar height hardcoded in several places. If
@@ -127,6 +129,8 @@ export const NavBar: React.FC = track(
             display="flex"
             flexDirection="column"
           >
+            <Media at="xs">{!isLoggedIn && <AuthBanner pt={1} />}</Media>
+
             {/* Top-tier */}
             <Flex pt={1} pb={[1, 0]} alignItems="stretch" flex={1}>
               <NavBarPrimaryLogo mr={1} />
