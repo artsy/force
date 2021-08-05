@@ -13,8 +13,29 @@ interface BreadCrumbListProps {
   items: Item[]
 }
 
+const rootItem = {
+  path: "",
+  name: "Artsy",
+}
+
+export const computeListItems = (appUrl = APP_URL) => {
+  const items = [rootItem]
+  const listItems = items.map(({ name, path }, index) => ({
+    "@type": "ListItem",
+    position: index + 1,
+    item: {
+      "@id": `${appUrl}${path}`,
+      name,
+    },
+  }))
+
+  return listItems
+}
+
 export class BreadCrumbList extends Component<BreadCrumbListProps> {
   render() {
+    const listItems = computeListItems()
+
     return (
       <Meta
         tag="script"
@@ -24,14 +45,7 @@ export class BreadCrumbList extends Component<BreadCrumbListProps> {
             "@context": "http://schema.org",
             "@type": "BreadcrumbList",
             itemListElement: [
-              {
-                "@type": "ListItem",
-                position: 1,
-                item: {
-                  "@id": APP_URL,
-                  name: "Artsy",
-                },
-              },
+              ...listItems,
               ...this.props.items.map(({ path, name }, index) => ({
                 "@type": "ListItem",
                 position: index + 2, // adding 2 because `position` starts with 1 and there's a top-level item.

@@ -1,6 +1,6 @@
 import { mount } from "enzyme"
 import React from "react"
-import { BreadCrumbList } from "../BreadCrumbList"
+import { BreadCrumbList, computeListItems } from "../BreadCrumbList"
 import { HeadProvider } from "react-head"
 
 describe("BreadCrumbList", () => {
@@ -20,5 +20,17 @@ describe("BreadCrumbList", () => {
     const wrapper = getWrapper()
     const script = wrapper.find("script")
     expect(script.text()).toMatch('"@type":"BreadcrumbList"')
+  })
+})
+
+describe("computeListItems", () => {
+  it("prepends a root item", () => {
+    const listItems = computeListItems("artsy.net")
+    expect(listItems.length).toEqual(1)
+    const rootItem = listItems[0]
+    expect(rootItem["@type"]).toEqual("ListItem")
+    expect(rootItem.position).toEqual(1)
+    expect(rootItem.item["@id"]).toEqual("artsy.net")
+    expect(rootItem.item.name).toEqual("Artsy")
   })
 })
