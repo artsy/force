@@ -76,7 +76,6 @@ fragment FairOrganizerHeaderIcon_fairOrganizer on FairOrganizer {
 
 fragment FairOrganizerHeader_fairOrganizer on FairOrganizer {
   name
-  about
   fairs: fairsConnection(first: 1) {
     edges {
       node {
@@ -87,6 +86,11 @@ fragment FairOrganizerHeader_fairOrganizer on FairOrganizer {
   }
   ...FairOrganizerHeaderIcon_fairOrganizer
   ...FairOrganizerFollowButton_fairOrganizer
+  ...FairOrganizerInfo_fairOrganizer
+}
+
+fragment FairOrganizerInfo_fairOrganizer on FairOrganizer {
+  about(format: HTML)
 }
 
 fragment FairOrganizerTiming_fair on Fair {
@@ -275,13 +279,6 @@ return {
           {
             "alias": null,
             "args": null,
-            "kind": "ScalarField",
-            "name": "about",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
             "concreteType": "Profile",
             "kind": "LinkedField",
             "name": "profile",
@@ -367,6 +364,19 @@ return {
             "name": "slug",
             "storageKey": null
           },
+          {
+            "alias": null,
+            "args": [
+              {
+                "kind": "Literal",
+                "name": "format",
+                "value": "HTML"
+              }
+            ],
+            "kind": "ScalarField",
+            "name": "about",
+            "storageKey": "about(format:\"HTML\")"
+          },
           (v2/*: any*/)
         ],
         "storageKey": null
@@ -378,7 +388,7 @@ return {
     "metadata": {},
     "name": "fairOrganizerRoutes_FairOrganizerQuery",
     "operationKind": "query",
-    "text": "query fairOrganizerRoutes_FairOrganizerQuery(\n  $slug: String!\n) {\n  fairOrganizer(id: $slug) @principalField {\n    ...FairOrganizerApp_fairOrganizer\n    id\n  }\n}\n\nfragment FairHeaderImage_fair on Fair {\n  image {\n    url(version: \"wide\")\n  }\n}\n\nfragment FairOrganizerApp_fairOrganizer on FairOrganizer {\n  name\n  fairs: fairsConnection(first: 1) {\n    edges {\n      node {\n        ...FairHeaderImage_fair\n        id\n      }\n    }\n  }\n  ...FairOrganizerHeader_fairOrganizer\n}\n\nfragment FairOrganizerFollowButton_fairOrganizer on FairOrganizer {\n  slug\n  name\n  profile {\n    id\n    internalID\n    isFollowed\n  }\n}\n\nfragment FairOrganizerHeaderIcon_fairOrganizer on FairOrganizer {\n  name\n  profile {\n    icon {\n      desktop: cropped(width: 100, height: 100, version: \"square140\") {\n        src\n        srcSet\n      }\n      mobile: cropped(width: 60, height: 60, version: \"square140\") {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment FairOrganizerHeader_fairOrganizer on FairOrganizer {\n  name\n  about\n  fairs: fairsConnection(first: 1) {\n    edges {\n      node {\n        ...FairOrganizerTiming_fair\n        id\n      }\n    }\n  }\n  ...FairOrganizerHeaderIcon_fairOrganizer\n  ...FairOrganizerFollowButton_fairOrganizer\n}\n\nfragment FairOrganizerTiming_fair on Fair {\n  startAt\n  isActive\n  exhibitionPeriod\n}\n"
+    "text": "query fairOrganizerRoutes_FairOrganizerQuery(\n  $slug: String!\n) {\n  fairOrganizer(id: $slug) @principalField {\n    ...FairOrganizerApp_fairOrganizer\n    id\n  }\n}\n\nfragment FairHeaderImage_fair on Fair {\n  image {\n    url(version: \"wide\")\n  }\n}\n\nfragment FairOrganizerApp_fairOrganizer on FairOrganizer {\n  name\n  fairs: fairsConnection(first: 1) {\n    edges {\n      node {\n        ...FairHeaderImage_fair\n        id\n      }\n    }\n  }\n  ...FairOrganizerHeader_fairOrganizer\n}\n\nfragment FairOrganizerFollowButton_fairOrganizer on FairOrganizer {\n  slug\n  name\n  profile {\n    id\n    internalID\n    isFollowed\n  }\n}\n\nfragment FairOrganizerHeaderIcon_fairOrganizer on FairOrganizer {\n  name\n  profile {\n    icon {\n      desktop: cropped(width: 100, height: 100, version: \"square140\") {\n        src\n        srcSet\n      }\n      mobile: cropped(width: 60, height: 60, version: \"square140\") {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment FairOrganizerHeader_fairOrganizer on FairOrganizer {\n  name\n  fairs: fairsConnection(first: 1) {\n    edges {\n      node {\n        ...FairOrganizerTiming_fair\n        id\n      }\n    }\n  }\n  ...FairOrganizerHeaderIcon_fairOrganizer\n  ...FairOrganizerFollowButton_fairOrganizer\n  ...FairOrganizerInfo_fairOrganizer\n}\n\nfragment FairOrganizerInfo_fairOrganizer on FairOrganizer {\n  about(format: HTML)\n}\n\nfragment FairOrganizerTiming_fair on Fair {\n  startAt\n  isActive\n  exhibitionPeriod\n}\n"
   }
 };
 })();

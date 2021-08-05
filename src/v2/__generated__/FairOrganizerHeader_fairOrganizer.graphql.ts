@@ -5,7 +5,6 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type FairOrganizerHeader_fairOrganizer = {
     readonly name: string | null;
-    readonly about: string | null;
     readonly fairs: {
         readonly edges: ReadonlyArray<{
             readonly node: {
@@ -13,7 +12,7 @@ export type FairOrganizerHeader_fairOrganizer = {
             } | null;
         } | null> | null;
     } | null;
-    readonly " $fragmentRefs": FragmentRefs<"FairOrganizerHeaderIcon_fairOrganizer" | "FairOrganizerFollowButton_fairOrganizer">;
+    readonly " $fragmentRefs": FragmentRefs<"FairOrganizerHeaderIcon_fairOrganizer" | "FairOrganizerFollowButton_fairOrganizer" | "FairOrganizerInfo_fairOrganizer">;
     readonly " $refType": "FairOrganizerHeader_fairOrganizer";
 };
 export type FairOrganizerHeader_fairOrganizer$data = FairOrganizerHeader_fairOrganizer;
@@ -35,13 +34,6 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "ScalarField",
       "name": "name",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "about",
       "storageKey": null
     },
     {
@@ -97,9 +89,14 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "FragmentSpread",
       "name": "FairOrganizerFollowButton_fairOrganizer"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "FairOrganizerInfo_fairOrganizer"
     }
   ],
   "type": "FairOrganizer"
 };
-(node as any).hash = 'f73dafddd184609299690feb40520e87';
+(node as any).hash = 'c0ea2603438e45b9b2f1a18a1992d6c5';
 export default node;

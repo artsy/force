@@ -4,7 +4,7 @@ import { Box, Column, Flex, GridColumns, Spacer, Text } from "@artsy/palette"
 import { FairOrganizerHeaderIconFragmentContainer as FairOrganizerHeaderIcon } from "./FairOrganizerHeaderIcon"
 import { FairOrganizerTimingFragmentContainer as FairOrganizerTiming } from "./FairOrganizerTiming"
 import { FairOrganizerFollowButtonFragmentContainer as FairOrganizerFollowButton } from "../../Components/FairOrganizerFollowButton"
-import { FairOrganizerInfo } from "./FairOrganizerInfo"
+import { FairOrganizerInfoFragmentContainer as FairOrganizerInfo } from "./FairOrganizerInfo"
 import { FairOrganizerHeader_fairOrganizer } from "v2/__generated__/FairOrganizerHeader_fairOrganizer.graphql"
 
 interface FairOrganizerHeaderProps {
@@ -50,13 +50,7 @@ export const FairOrganizerHeader: React.FC<FairOrganizerHeaderProps> = ({
         </Column>
 
         <Column span={6}>
-          <FairOrganizerInfo
-            about={fairOrganizer.about}
-            links={[
-              { label: "Facebook", href: "https://www.facebook.com" },
-              { label: "Twitter", href: "https://twitter.com" },
-            ]}
-          />
+          <FairOrganizerInfo fairOrganizer={fairOrganizer} />
         </Column>
       </GridColumns>
     </Box>
@@ -69,7 +63,6 @@ export const FairOrganizerHeaderFragmentContainer = createFragmentContainer(
     fairOrganizer: graphql`
       fragment FairOrganizerHeader_fairOrganizer on FairOrganizer {
         name
-        about
         fairs: fairsConnection(first: 1) {
           edges {
             node {
@@ -79,6 +72,7 @@ export const FairOrganizerHeaderFragmentContainer = createFragmentContainer(
         }
         ...FairOrganizerHeaderIcon_fairOrganizer
         ...FairOrganizerFollowButton_fairOrganizer
+        ...FairOrganizerInfo_fairOrganizer
       }
     `,
   }

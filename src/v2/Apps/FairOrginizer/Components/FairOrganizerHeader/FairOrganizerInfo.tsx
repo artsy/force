@@ -1,24 +1,24 @@
 import React from "react"
-import { Join, Link, Spacer, Text } from "@artsy/palette"
+import { createFragmentContainer, graphql } from "react-relay"
+import { Join, Spacer } from "@artsy/palette"
 import { InfoSection } from "v2/Components/InfoSection"
 
-export const FairOrganizerInfo: React.FC<any> = ({ about, links }) => {
+export const FairOrganizerInfo: React.FC<any> = ({ fairOrganizer }) => {
+  const { about } = fairOrganizer
   return (
     <Join separator={<Spacer mt={2} />}>
       {about && <InfoSection type="html" label="About" info={about} />}
-
-      {!!links.length && (
-        <InfoSection
-          label="Follow"
-          info={links.map(({ label, href }) => {
-            return (
-              <Link href={href}>
-                <Text style={{ textDecoration: "underline" }}>{label}</Text>
-              </Link>
-            )
-          })}
-        />
-      )}
     </Join>
   )
 }
+
+export const FairOrganizerInfoFragmentContainer = createFragmentContainer(
+  FairOrganizerInfo,
+  {
+    fairOrganizer: graphql`
+      fragment FairOrganizerInfo_fairOrganizer on FairOrganizer {
+        about(format: HTML)
+      }
+    `,
+  }
+)
