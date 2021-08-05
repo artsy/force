@@ -13,7 +13,7 @@ export type FairOrganizerHeader_fairOrganizer = {
             } | null;
         } | null> | null;
     } | null;
-    readonly " $fragmentRefs": FragmentRefs<"FairOrganizerHeaderIcon_fairOrganizer">;
+    readonly " $fragmentRefs": FragmentRefs<"FairOrganizerHeaderIcon_fairOrganizer" | "FairOrganizerFollowButton_fairOrganizer">;
     readonly " $refType": "FairOrganizerHeader_fairOrganizer";
 };
 export type FairOrganizerHeader_fairOrganizer$data = FairOrganizerHeader_fairOrganizer;
@@ -92,9 +92,14 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "FragmentSpread",
       "name": "FairOrganizerHeaderIcon_fairOrganizer"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "FairOrganizerFollowButton_fairOrganizer"
     }
   ],
   "type": "FairOrganizer"
 };
-(node as any).hash = '15a655a4a8a438c87d37be6cad5cfd00';
+(node as any).hash = 'f73dafddd184609299690feb40520e87';
 export default node;

@@ -1,7 +1,6 @@
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { Box, Column, GridColumns, Spacer, Text, Title } from "@artsy/palette"
-import { FairOrganizerFollowButtonFragmentContainer as FairOrganizerFollowButton } from "./Components/FairOrganizerFollowButton"
+import { Box, Spacer, Title } from "@artsy/palette"
 import { FairOrganizerApp_fairOrganizer } from "v2/__generated__/FairOrganizerApp_fairOrganizer.graphql"
 import { FairHeaderImageFragmentContainer as FairHeaderImage } from "../Fair/Components/FairHeader/FairHeaderImage"
 import { FairOrganizerHeaderFragmentContainer as FairOrganizerHeader } from "./Components/FairOrganizerHeader/FairOrganizerHeader"
@@ -22,21 +21,10 @@ export const FairOrganizerApp: React.FC<FairOrganizerAppProps> = ({
 
       <Box>
         <FairHeaderImage fair={fair} />
-        <Spacer mt={4} />
-        <FairOrganizerHeader fairOrganizer={fairOrganizer} />
 
-        <GridColumns>
-          <Column span={6}>
-            <Text as="h1" variant="lg" pt={4}>
-              Fair Organizer
-            </Text>
-            <GridColumns my={2}>
-              <Column span={[12, 8, 6]}>
-                <FairOrganizerFollowButton fairOrganizer={fairOrganizer} />
-              </Column>
-            </GridColumns>
-          </Column>
-        </GridColumns>
+        <Spacer mt={4} />
+
+        <FairOrganizerHeader fairOrganizer={fairOrganizer} />
 
         <Spacer mt={4} />
       </Box>
@@ -58,7 +46,6 @@ export const FairOrganizerAppFragmentContainer = createFragmentContainer(
           }
         }
         ...FairOrganizerHeader_fairOrganizer
-        ...FairOrganizerFollowButton_fairOrganizer
       }
     `,
   }
