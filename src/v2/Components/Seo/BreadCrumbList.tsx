@@ -14,19 +14,16 @@ interface BreadCrumbListProps {
 }
 
 const rootItem = {
-  path: "",
   name: "Artsy",
+  path: "",
 }
 
-export const computeListItems = (appUrl = APP_URL) => {
-  const items = [rootItem]
-  const listItems = items.map(({ name, path }, index) => ({
+export const computeListItems = (items, appUrl = APP_URL) => {
+  const allItems = [rootItem, ...items]
+  const listItems = allItems.map(({ name, path }, index) => ({
     "@type": "ListItem",
+    item: { "@id": `${appUrl}${path}`, name },
     position: index + 1,
-    item: {
-      "@id": `${appUrl}${path}`,
-      name,
-    },
   }))
 
   return listItems
@@ -34,7 +31,7 @@ export const computeListItems = (appUrl = APP_URL) => {
 
 export class BreadCrumbList extends Component<BreadCrumbListProps> {
   render() {
-    const listItems = computeListItems()
+    const listItems = computeListItems(this.props.items)
 
     return (
       <Meta
@@ -44,17 +41,7 @@ export class BreadCrumbList extends Component<BreadCrumbListProps> {
           __html: JSON.stringify({
             "@context": "http://schema.org",
             "@type": "BreadcrumbList",
-            itemListElement: [
-              ...listItems,
-              ...this.props.items.map(({ path, name }, index) => ({
-                "@type": "ListItem",
-                position: index + 2, // adding 2 because `position` starts with 1 and there's a top-level item.
-                item: {
-                  "@id": `${APP_URL}${path}`,
-                  name,
-                },
-              })),
-            ],
+            itemListElement: listItems,
           }),
         }}
       />
