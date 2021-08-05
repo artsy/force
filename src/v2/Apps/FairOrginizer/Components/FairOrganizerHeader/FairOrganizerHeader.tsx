@@ -1,58 +1,46 @@
 import React from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 import { Box, Column, Flex, GridColumns, Spacer, Text } from "@artsy/palette"
-import { FairOrganizerHeaderIcon } from "./FairOrganizerHeaderIcon"
-import { FairOrganizerTiming } from "./FairOrganizerTiming"
+import { FairOrganizerHeaderIconFragmentContainer as FairOrganizerHeaderIcon } from "./FairOrganizerHeaderIcon"
+import { FairOrganizerTimingFragmentContainer as FairOrganizerTiming } from "./FairOrganizerTiming"
 import { FairOrganizerInfo } from "./FairOrganizerInfo"
+import { FairOrganizerHeader_fairOrganizer } from "v2/__generated__/FairOrganizerHeader_fairOrganizer.graphql"
 
-export const FairOrganizerHeader: React.FC<any> = ({}) => {
+interface FairOrganizerHeaderProps {
+  fairOrganizer: FairOrganizerHeader_fairOrganizer
+}
+
+export const FairOrganizerHeader: React.FC<FairOrganizerHeaderProps> = ({
+  fairOrganizer,
+}) => {
+  const { fairs, name } = fairOrganizer
+  const { edges } = fairs!
+  const fair = edges?.[0]?.node!
+
   return (
     <Box>
       <GridColumns>
         <Column span={6}>
           <Flex flexDirection="column">
             <Box>
-              <FairOrganizerHeaderIcon
-                fairOrganizer={{
-                  icon: {
-                    desktop: {
-                      src:
-                        "https://d196wkiy8qx2u5.cloudfront.net?resize_to=fill&width=100&height=100&quality=80&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FpEE751u3-2o0oOfaTHTSYA%2Fsquare140.png",
-                      srcSet:
-                        "https://d196wkiy8qx2u5.cloudfront.net?resize_to=fill&width=100&height=100&quality=80&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FpEE751u3-2o0oOfaTHTSYA%2Fsquare140.png 1x, https://d196wkiy8qx2u5.cloudfront.net?resize_to=fill&width=200&height=200&quality=50&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FpEE751u3-2o0oOfaTHTSYA%2Fsquare140.png 2x",
-                    },
-                    mobile: {
-                      src:
-                        "https://d196wkiy8qx2u5.cloudfront.net?resize_to=fill&width=60&height=60&quality=80&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FpEE751u3-2o0oOfaTHTSYA%2Fsquare140.png",
-                      srcSet:
-                        "https://d196wkiy8qx2u5.cloudfront.net?resize_to=fill&width=60&height=60&quality=80&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FpEE751u3-2o0oOfaTHTSYA%2Fsquare140.png 1x, https://d196wkiy8qx2u5.cloudfront.net?resize_to=fill&width=120&height=120&quality=50&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2FpEE751u3-2o0oOfaTHTSYA%2Fsquare140.png 2x",
-                    },
-                  },
-                }}
-              />
+              <FairOrganizerHeaderIcon fairOrganizer={fairOrganizer} />
             </Box>
 
             <Spacer mt={1} />
 
             <Box>
               <Text as="h1" variant="xl">
-                Explore Art Paris on Artsy
+                Explore {name} on Artsy
               </Text>
 
-              <FairOrganizerTiming
-                fairOrganizer={{
-                  status: "upcoming",
-                  period: "Aug 8th - 12th",
-                  startAt: "2021-08-08T19:00:00+03:00",
-                  endAt: "2021-08-12T19:00:00+03:00",
-                }}
-              />
+              <FairOrganizerTiming fair={fair!} />
             </Box>
           </Flex>
         </Column>
 
         <Column span={6}>
           <FairOrganizerInfo
-            about="Art Paris, the leading spring event for modern and contemporary art, supports and celebrates the French art scene and invites visitors to discover the Spanish and Portuguese art from the 1950s to the present day, from modern masters to contemporary artists."
+            about={fairOrganizer.about}
             links={[
               { label: "Facebook", href: "https://www.facebook.com" },
               { label: "Twitter", href: "https://twitter.com" },
@@ -63,3 +51,23 @@ export const FairOrganizerHeader: React.FC<any> = ({}) => {
     </Box>
   )
 }
+
+export const FairOrganizerHeaderFragmentContainer = createFragmentContainer(
+  FairOrganizerHeader,
+  {
+    fairOrganizer: graphql`
+      fragment FairOrganizerHeader_fairOrganizer on FairOrganizer {
+        name
+        about
+        fairs: fairsConnection(first: 1) {
+          edges {
+            node {
+              ...FairOrganizerTiming_fair
+            }
+          }
+        }
+        ...FairOrganizerHeaderIcon_fairOrganizer
+      }
+    `,
+  }
+)

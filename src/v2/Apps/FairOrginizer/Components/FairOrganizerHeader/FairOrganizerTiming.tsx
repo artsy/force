@@ -1,31 +1,38 @@
 import React from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 import { Text } from "@artsy/palette"
 import { Timer } from "v2/Components/Timer"
+import { FairOrganizerTiming_fair } from "v2/__generated__/FairOrganizerTiming_fair.graphql"
 
-export const FairOrganizerTiming: React.FC<any> = ({ fairOrganizer }) => {
-  const { status, startAt, endAt, period } = fairOrganizer
+interface FairOrganizerTimingProps {
+  fair: FairOrganizerTiming_fair
+}
 
-  const TimingInfo = () => {
-    switch (status) {
-      case "upcoming": {
-        return <Timer size="lg" label="Opens in:" endDate={startAt} />
-      }
-      case "live": {
-        return <Timer size="lg" label="Closes in:" endDate={endAt} />
-      }
-      default: {
-        return null
-      }
-    }
-  }
+export const FairOrganizerTiming: React.FC<FairOrganizerTimingProps> = ({
+  fair,
+}) => {
+  const { isActive, startAt, exhibitionPeriod } = fair
 
   return (
     <>
       <Text variant="xl" color="black60" mb={1}>
-        {period}
+        {exhibitionPeriod}
       </Text>
 
-      <TimingInfo />
+      {!isActive && <Timer size="lg" label="Opens in:" endDate={startAt!} />}
     </>
   )
 }
+
+export const FairOrganizerTimingFragmentContainer = createFragmentContainer(
+  FairOrganizerTiming,
+  {
+    fair: graphql`
+      fragment FairOrganizerTiming_fair on Fair {
+        startAt
+        isActive
+        exhibitionPeriod
+      }
+    `,
+  }
+)

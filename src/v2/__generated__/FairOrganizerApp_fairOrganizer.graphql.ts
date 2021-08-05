@@ -4,7 +4,8 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type FairOrganizerApp_fairOrganizer = {
-    readonly " $fragmentRefs": FragmentRefs<"FairOrganizerFollowButton_fairOrganizer">;
+    readonly name: string | null;
+    readonly " $fragmentRefs": FragmentRefs<"FairOrganizerFollowButton_fairOrganizer" | "FairOrganizerHeader_fairOrganizer">;
     readonly " $refType": "FairOrganizerApp_fairOrganizer";
 };
 export type FairOrganizerApp_fairOrganizer$data = FairOrganizerApp_fairOrganizer;
@@ -22,12 +23,24 @@ const node: ReaderFragment = {
   "name": "FairOrganizerApp_fairOrganizer",
   "selections": [
     {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "name",
+      "storageKey": null
+    },
+    {
       "args": null,
       "kind": "FragmentSpread",
       "name": "FairOrganizerFollowButton_fairOrganizer"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "FairOrganizerHeader_fairOrganizer"
     }
   ],
   "type": "FairOrganizer"
 };
-(node as any).hash = 'c40c37704157ab5b252aded282bf3d71';
+(node as any).hash = 'ece0dea342718fcc1a5702b0ecab81af';
 export default node;

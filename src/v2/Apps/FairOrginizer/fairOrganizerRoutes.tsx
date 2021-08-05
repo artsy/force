@@ -16,7 +16,8 @@ const FairOrganizerOverviewRoute = loadable(
       /* webpackChunkName: "fairOrganizerBundle" */ "./Components/FairOrganizerHeader/FairOrganizerHeader"
     ),
   {
-    resolveComponent: component => component.FairOrganizerHeader,
+    resolveComponent: component =>
+      component.FairOrganizerHeaderFragmentContainer,
   }
 )
 
@@ -29,8 +30,8 @@ export const fairOrganizerRoutes: AppRouteConfig[] = [
       FairOrganizerApp.preload()
     },
     query: graphql`
-      query fairOrganizerRoutes_Query($slug: String!) {
-        fairOrganizer(id: $slug) {
+      query fairOrganizerRoutes_FairOrganizerQuery($slug: String!) {
+        fairOrganizer(id: $slug) @principalField {
           ...FairOrganizerApp_fairOrganizer
         }
       }
@@ -43,6 +44,13 @@ export const fairOrganizerRoutes: AppRouteConfig[] = [
         prepare: () => {
           FairOrganizerOverviewRoute.preload()
         },
+        query: graphql`
+          query fairOrganizerRoutes_FairOrganizerHeaderQuery($slug: String!) {
+            fairOrganizer(id: $slug) @principalField {
+              ...FairOrganizerHeader_fairOrganizer
+            }
+          }
+        `,
       },
     ],
   },
