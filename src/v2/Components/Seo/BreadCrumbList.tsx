@@ -1,4 +1,4 @@
-import React, { Component } from "react"
+import React from "react"
 import { Meta } from "react-head"
 import { data as sd } from "sharify"
 
@@ -29,22 +29,20 @@ export const computeListItems = (items, appUrl = APP_URL) => {
   return listItems
 }
 
-export class BreadCrumbList extends Component<BreadCrumbListProps> {
-  render() {
-    const listItems = computeListItems(this.props.items)
+export const BreadCrumbList: React.FC<BreadCrumbListProps> = props => {
+  const listItems = computeListItems(props.items)
 
-    return (
-      <Meta
-        tag="script"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "http://schema.org",
-            "@type": "BreadcrumbList",
-            itemListElement: listItems,
-          }),
-        }}
-      />
-    )
-  }
+  return (
+    <Meta
+      tag="script"
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{
+        __html: JSON.stringify({
+          "@context": "http://schema.org",
+          "@type": "BreadcrumbList",
+          itemListElement: listItems,
+        }),
+      }}
+    />
+  )
 }
