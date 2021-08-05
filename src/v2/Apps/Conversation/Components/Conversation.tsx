@@ -23,6 +23,9 @@ import { returnOrderModalDetails } from "../Utils/returnOrderModalDetails"
 import { OrderModal } from "./OrderModal"
 import compact from "lodash/compact"
 
+import { UnreadMessagesToastQueryRenderer } from "./UnreadMessagesToast"
+import useOnScreen from "../Utils/useOnScreen"
+
 export interface ConversationProps {
   conversation: Conversation_conversation
   showDetails: boolean
@@ -33,11 +36,15 @@ export interface ConversationProps {
 
 export const PAGE_SIZE: number = 15
 
+const Loading: React.FC = () => (
+  <SpinnerContainer>
+    <Spinner />
+  </SpinnerContainer>
+)
+
 const Conversation: React.FC<ConversationProps> = props => {
   const { conversation, relay, showDetails, setShowDetails } = props
   const { user } = useSystemContext()
-
-  const bottomOfMessageContainer = useRef<HTMLElement>(null)
 
   const liveArtwork = conversation?.items?.[0]?.liveArtwork
   const artwork = liveArtwork?.__typename === "Artwork" ? liveArtwork : null
@@ -52,31 +59,6 @@ const Conversation: React.FC<ConversationProps> = props => {
   const [showConfirmArtworkModal, setShowConfirmArtworkModal] = useState<
     boolean
   >(false)
-  const [showOrderModal, setShowOrderModal] = useState<boolean>(false)
-  const [fetchingMore, setFetchingMore] = useState<boolean>(false)
-
-  // Keeping track of this for scroll on send
-  const [lastMessageID, setLastMessageID] = useState<string | null>("")
-
-  const scrollToBottom = () => {
-    if (
-      bottomOfMessageContainer.current ||
-      lastMessageID !== conversation?.lastMessageID
-    ) {
-      setLastMessageID(conversation?.lastMessageID)
-      setTimeout(() => {
-        bottomOfMessageContainer!.current!.scrollIntoView({
-          behavior: "smooth",
-        })
-      }, 0)
-    }
-  }
-
-  useEffect(scrollToBottom, [conversation, lastMessageID])
-
-  useEffect(() => {
-    UpdateConversation(relay.environment, conversation)
-  }, [conversation, relay.environment, conversation.lastMessageID])
 
   const inquiryItemBox = compact(conversation.items).map((i, idx) => {
     const isValidType =
@@ -90,18 +72,8 @@ const Conversation: React.FC<ConversationProps> = props => {
     )
   })
 
-  const loadMore = (): void => {
-    if (relay.isLoading() || !relay.hasMore()) return
-    setFetchingMore(true)
-
-    relay.loadMore(PAGE_SIZE, error => {
-      if (error) console.error(error)
-      setFetchingMore(false)
-
-      scrollToBottom()
-    })
-  }
-
+  // ORDERS
+  const [showOrderModal, setShowOrderModal] = useState<boolean>(false)
   const activeOrder = extractNodes(conversation.orderConnection)[0]
 
   let orderID
@@ -117,6 +89,90 @@ const Conversation: React.FC<ConversationProps> = props => {
     orderID: orderID,
   })
 
+  // SCROLLING AND FETCHING
+  // States and Refs
+  const bottomOfMessageContainer = useRef<HTMLElement>(null)
+  const initialMount = useRef(true)
+  const scrollContainer = useRef<HTMLDivElement>(null)
+  const [fetchingMore, setFetchingMore] = useState<boolean>(false)
+  const [lastMessageID, setLastMessageID] = useState<string | null>()
+  const [lastOrderUpdate, setLastOrderUpdate] = useState<string | null>()
+
+  const isBottomVisible = useOnScreen(bottomOfMessageContainer)
+
+  // Functions
+  const loadMore = (): void => {
+    if (relay.isLoading() || !relay.hasMore() || initialMount.current) return
+
+    setFetchingMore(true)
+    const scrollCursor = scrollContainer.current
+      ? scrollContainer.current?.scrollHeight -
+        scrollContainer.current?.scrollTop
+      : 0
+    relay.loadMore(PAGE_SIZE, error => {
+      if (error) console.error(error)
+      setFetchingMore(false)
+      if (scrollContainer.current) {
+        // Scrolling to former position
+        scrollContainer.current?.scrollTo({
+          top: scrollContainer.current?.scrollHeight - scrollCursor,
+          behavior: "smooth",
+        })
+      }
+    })
+  }
+  const scrollToBottom = () => {
+    if (!!bottomOfMessageContainer.current) {
+      bottomOfMessageContainer.current?.scrollIntoView({
+        block: "end",
+        inline: "nearest",
+        behavior: initialMount.current ? "auto" : "smooth",
+      })
+      if (isBottomVisible) initialMount.current = false
+      setLastMessageID(conversation?.lastMessageID)
+      setOrderKey()
+    }
+  }
+  const refreshData = () => {
+    props.refetch({ conversationID: conversation.internalID }, null, error => {
+      if (error) console.error(error)
+      scrollToBottom()
+    })
+  }
+  const setOrderKey = () => {
+    setLastOrderUpdate(activeOrder?.updatedAt)
+  }
+
+  const [toastBottom, setToastBottom] = useState(0)
+
+  // Behaviours
+  // -Navigation
+  useEffect(() => {
+    setLastMessageID(conversation?.fromLastViewedMessageID)
+    initialMount.current = true
+    setOrderKey()
+  }, [conversation?.internalID])
+  // -Last message opened
+  useEffect(() => {
+    // Set on a timeout so the user sees the "new" flag
+    setTimeout(
+      () => {
+        UpdateConversation(relay.environment, conversation)
+      },
+      !!conversation.isLastMessageToUser ? 3000 : 0
+    )
+  }, [lastMessageID])
+  // -Workaround Reply render resizing race condition
+  useEffect(() => {
+    if (initialMount.current) scrollToBottom()
+    const rect = scrollContainer.current?.getBoundingClientRect()
+    setToastBottom(window.innerHeight - (rect?.bottom ?? 0) + 30)
+  }, [scrollContainer.current?.clientHeight])
+  // -On scroll down
+  useEffect(() => {
+    if (isBottomVisible) refreshData()
+  }, [isBottomVisible])
+
   return (
     <Flex flexDirection="column" flexGrow={1}>
       <ConversationHeader
@@ -125,29 +181,33 @@ const Conversation: React.FC<ConversationProps> = props => {
         setShowDetails={setShowDetails}
       />
       <NoScrollFlex flexDirection="column" width="100%">
-        <MessageContainer>
+        <MessageContainer ref={scrollContainer as any}>
           <Box pb={[6, 6, 6, 0]} pr={1}>
             <Spacer mt={["75px", "75px", 2]} />
             <Flex flexDirection="column" width="100%" px={1}>
               {isOfferable && <BuyerGuaranteeMessage />}
               {inquiryItemBox}
               <Waypoint onEnter={loadMore} />
-              {fetchingMore ? (
-                <SpinnerContainer>
-                  <Spinner />
-                </SpinnerContainer>
-              ) : null}
+              {fetchingMore ? <Loading /> : null}
               <ConversationMessages
                 messages={conversation.messagesConnection!}
                 events={conversation.orderConnection}
+                lastViewedMessageID={conversation?.fromLastViewedMessageID}
               />
               <Box ref={bottomOfMessageContainer as any} />
             </Flex>
           </Box>
+          <UnreadMessagesToastQueryRenderer
+            conversationID={conversation?.internalID!}
+            lastOrderUpdate={lastOrderUpdate}
+            bottom={toastBottom}
+            hasScrolled={!isBottomVisible}
+            onClick={scrollToBottom}
+            refreshCallback={refreshData}
+          />
         </MessageContainer>
         <Reply
           onScroll={scrollToBottom}
-          onMount={scrollToBottom}
           conversation={conversation}
           refetch={props.refetch}
           environment={relay.environment}
@@ -213,6 +273,8 @@ export const ConversationPaginationContainer = createPaginationContainer(
         }
         initialMessage
         lastMessageID
+        fromLastViewedMessageID
+        isLastMessageToUser
         unread
         orderConnection(
           first: 10
@@ -222,6 +284,7 @@ export const ConversationPaginationContainer = createPaginationContainer(
           edges {
             node {
               internalID
+              updatedAt
               ... on CommerceOfferOrder {
                 buyerAction
               }
@@ -245,6 +308,7 @@ export const ConversationPaginationContainer = createPaginationContainer(
               id
             }
           }
+          totalCount
           ...ConversationMessages_messages
         }
         items {

@@ -17,11 +17,14 @@ export type Conversation_conversation = {
     };
     readonly initialMessage: string;
     readonly lastMessageID: string | null;
+    readonly fromLastViewedMessageID: string | null;
+    readonly isLastMessageToUser: boolean | null;
     readonly unread: boolean | null;
     readonly orderConnection: {
         readonly edges: ReadonlyArray<{
             readonly node: {
                 readonly internalID: string;
+                readonly updatedAt: string;
                 readonly buyerAction?: CommerceBuyerOfferActionEnum | null;
             } | null;
         } | null> | null;
@@ -39,6 +42,7 @@ export type Conversation_conversation = {
                 readonly id: string;
             } | null;
         } | null> | null;
+        readonly totalCount: number | null;
         readonly " $fragmentRefs": FragmentRefs<"ConversationMessages_messages">;
     } | null;
     readonly items: ReadonlyArray<{
@@ -194,6 +198,20 @@ return {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
+      "name": "fromLastViewedMessageID",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "isLastMessageToUser",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "unread",
       "storageKey": null
     },
@@ -244,6 +262,13 @@ return {
               "plural": false,
               "selections": [
                 (v1/*: any*/),
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "updatedAt",
+                  "storageKey": null
+                },
                 {
                   "kind": "InlineFragment",
                   "selections": [
@@ -350,6 +375,13 @@ return {
           "storageKey": null
         },
         {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "totalCount",
+          "storageKey": null
+        },
+        {
           "args": null,
           "kind": "FragmentSpread",
           "name": "ConversationMessages_messages"
@@ -423,5 +455,5 @@ return {
   "type": "Conversation"
 };
 })();
-(node as any).hash = 'd57abac12a26d6b3bc625faa52d7d1f0';
+(node as any).hash = '3ba3d5c05fa28d7e0e212562c89a5f4b';
 export default node;

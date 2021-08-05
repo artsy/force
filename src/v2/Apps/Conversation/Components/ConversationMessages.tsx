@@ -14,9 +14,12 @@ import { sortBy } from "lodash"
 import { OrderUpdateFragmentContainer } from "./OrderUpdate"
 import { Message_message } from "v2/__generated__/Message_message.graphql"
 
+import { NewMessageMarker } from "./NewMessageMarker"
+
 interface ConversationMessageProps {
   messages: ConversationMessages_messages
   events: ConversationMessages_events | null
+  lastViewedMessageID?: string | null
 }
 type Order = NonNullable<
   NonNullable<
@@ -28,6 +31,7 @@ type OrderEvent = Order["orderHistory"][number]
 export const ConversationMessages = ({
   messages,
   events,
+  lastViewedMessageID,
 }: ConversationMessageProps) => {
   let [messagesAndEvents, setMessagesAndEvents] = useState<MessageType[][]>([])
 
@@ -71,7 +75,8 @@ export const ConversationMessages = ({
   return (
     <>
       {messagesAndEvents.map((messageGroup, groupIndex) => {
-        let today
+        let today: boolean
+        let newFlagShown = false
         if (messageGroup[0].createdAt) {
           today = fromToday(messageGroup[0].createdAt)
         }
@@ -91,7 +96,7 @@ export const ConversationMessages = ({
               />
             )}
 
-            {messageGroup.reverse().map((message, messageIndex) => {
+            {[...messageGroup].reverse().map((message, messageIndex) => {
               if (isRelevantEvent(message)) {
                 return (
                   <OrderUpdateFragmentContainer
@@ -108,8 +113,22 @@ export const ConversationMessages = ({
                   messageIndex === messageGroup.length - 1
                 const spaceAfter = senderChanges || lastMessageInGroup ? 2 : 0.5
 
+                let showNewFlag = false
+                if (
+                  !newFlagShown &&
+                  !!lastViewedMessageID &&
+                  message.internalID > +lastViewedMessageID &&
+                  !message.isFromUser
+                ) {
+                  // This marks visibility
+                  showNewFlag = true
+                  // This makes sure that it appears only on the first new message
+                  newFlagShown = true
+                }
+
                 return (
                   <React.Fragment key={`message-${message.internalID}`}>
+                    {showNewFlag && <NewMessageMarker />}
                     <Message
                       message={message}
                       key={message.internalID}
