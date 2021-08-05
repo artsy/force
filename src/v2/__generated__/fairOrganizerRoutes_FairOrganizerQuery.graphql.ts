@@ -30,7 +30,18 @@ query fairOrganizerRoutes_FairOrganizerQuery(
 
 fragment FairOrganizerApp_fairOrganizer on FairOrganizer {
   name
+  ...FairOrganizerFollowButton_fairOrganizer
   ...FairOrganizerHeader_fairOrganizer
+}
+
+fragment FairOrganizerFollowButton_fairOrganizer on FairOrganizer {
+  slug
+  name
+  profile {
+    id
+    internalID
+    isFollowed
+  }
 }
 
 fragment FairOrganizerHeaderIcon_fairOrganizer on FairOrganizer {
@@ -166,6 +177,94 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
+            "name": "slug",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "Profile",
+            "kind": "LinkedField",
+            "name": "profile",
+            "plural": false,
+            "selections": [
+              (v2/*: any*/),
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "internalID",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "isFollowed",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "Image",
+                "kind": "LinkedField",
+                "name": "icon",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": "desktop",
+                    "args": [
+                      {
+                        "kind": "Literal",
+                        "name": "height",
+                        "value": 100
+                      },
+                      (v3/*: any*/),
+                      {
+                        "kind": "Literal",
+                        "name": "width",
+                        "value": 100
+                      }
+                    ],
+                    "concreteType": "CroppedImageUrl",
+                    "kind": "LinkedField",
+                    "name": "cropped",
+                    "plural": false,
+                    "selections": (v4/*: any*/),
+                    "storageKey": "cropped(height:100,version:\"square140\",width:100)"
+                  },
+                  {
+                    "alias": "mobile",
+                    "args": [
+                      {
+                        "kind": "Literal",
+                        "name": "height",
+                        "value": 60
+                      },
+                      (v3/*: any*/),
+                      {
+                        "kind": "Literal",
+                        "name": "width",
+                        "value": 60
+                      }
+                    ],
+                    "concreteType": "CroppedImageUrl",
+                    "kind": "LinkedField",
+                    "name": "cropped",
+                    "plural": false,
+                    "selections": (v4/*: any*/),
+                    "storageKey": "cropped(height:60,version:\"square140\",width:60)"
+                  }
+                ],
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
             "name": "about",
             "storageKey": null
           },
@@ -230,73 +329,6 @@ return {
             ],
             "storageKey": "fairsConnection(first:1)"
           },
-          {
-            "alias": null,
-            "args": null,
-            "concreteType": "Profile",
-            "kind": "LinkedField",
-            "name": "profile",
-            "plural": false,
-            "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "concreteType": "Image",
-                "kind": "LinkedField",
-                "name": "icon",
-                "plural": false,
-                "selections": [
-                  {
-                    "alias": "desktop",
-                    "args": [
-                      {
-                        "kind": "Literal",
-                        "name": "height",
-                        "value": 100
-                      },
-                      (v3/*: any*/),
-                      {
-                        "kind": "Literal",
-                        "name": "width",
-                        "value": 100
-                      }
-                    ],
-                    "concreteType": "CroppedImageUrl",
-                    "kind": "LinkedField",
-                    "name": "cropped",
-                    "plural": false,
-                    "selections": (v4/*: any*/),
-                    "storageKey": "cropped(height:100,version:\"square140\",width:100)"
-                  },
-                  {
-                    "alias": "mobile",
-                    "args": [
-                      {
-                        "kind": "Literal",
-                        "name": "height",
-                        "value": 60
-                      },
-                      (v3/*: any*/),
-                      {
-                        "kind": "Literal",
-                        "name": "width",
-                        "value": 60
-                      }
-                    ],
-                    "concreteType": "CroppedImageUrl",
-                    "kind": "LinkedField",
-                    "name": "cropped",
-                    "plural": false,
-                    "selections": (v4/*: any*/),
-                    "storageKey": "cropped(height:60,version:\"square140\",width:60)"
-                  }
-                ],
-                "storageKey": null
-              },
-              (v2/*: any*/)
-            ],
-            "storageKey": null
-          },
           (v2/*: any*/)
         ],
         "storageKey": null
@@ -308,7 +340,7 @@ return {
     "metadata": {},
     "name": "fairOrganizerRoutes_FairOrganizerQuery",
     "operationKind": "query",
-    "text": "query fairOrganizerRoutes_FairOrganizerQuery(\n  $slug: String!\n) {\n  fairOrganizer(id: $slug) @principalField {\n    ...FairOrganizerApp_fairOrganizer\n    id\n  }\n}\n\nfragment FairOrganizerApp_fairOrganizer on FairOrganizer {\n  name\n  ...FairOrganizerHeader_fairOrganizer\n}\n\nfragment FairOrganizerHeaderIcon_fairOrganizer on FairOrganizer {\n  name\n  profile {\n    icon {\n      desktop: cropped(width: 100, height: 100, version: \"square140\") {\n        src\n        srcSet\n      }\n      mobile: cropped(width: 60, height: 60, version: \"square140\") {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment FairOrganizerHeader_fairOrganizer on FairOrganizer {\n  name\n  about\n  fairs: fairsConnection(first: 1) {\n    edges {\n      node {\n        ...FairOrganizerTiming_fair\n        id\n      }\n    }\n  }\n  ...FairOrganizerHeaderIcon_fairOrganizer\n}\n\nfragment FairOrganizerTiming_fair on Fair {\n  startAt\n  isActive\n  exhibitionPeriod\n}\n"
+    "text": "query fairOrganizerRoutes_FairOrganizerQuery(\n  $slug: String!\n) {\n  fairOrganizer(id: $slug) @principalField {\n    ...FairOrganizerApp_fairOrganizer\n    id\n  }\n}\n\nfragment FairOrganizerApp_fairOrganizer on FairOrganizer {\n  name\n  ...FairOrganizerFollowButton_fairOrganizer\n  ...FairOrganizerHeader_fairOrganizer\n}\n\nfragment FairOrganizerFollowButton_fairOrganizer on FairOrganizer {\n  slug\n  name\n  profile {\n    id\n    internalID\n    isFollowed\n  }\n}\n\nfragment FairOrganizerHeaderIcon_fairOrganizer on FairOrganizer {\n  name\n  profile {\n    icon {\n      desktop: cropped(width: 100, height: 100, version: \"square140\") {\n        src\n        srcSet\n      }\n      mobile: cropped(width: 60, height: 60, version: \"square140\") {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment FairOrganizerHeader_fairOrganizer on FairOrganizer {\n  name\n  about\n  fairs: fairsConnection(first: 1) {\n    edges {\n      node {\n        ...FairOrganizerTiming_fair\n        id\n      }\n    }\n  }\n  ...FairOrganizerHeaderIcon_fairOrganizer\n}\n\nfragment FairOrganizerTiming_fair on Fair {\n  startAt\n  isActive\n  exhibitionPeriod\n}\n"
   }
 };
 })();
