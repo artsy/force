@@ -84,7 +84,7 @@ export const FAQ: React.FC = () => {
                 href="https://support.artsy.net/hc/en-us/articles/1500006366381"
                 target="_blank"
               >
-                What do we look for in consignment submissions
+                what do we look for in consignment submissions
               </a>
               ? Please note that not being accepted for our Sell with Artsy
               program is in no way a reflection or judgement of artistic
