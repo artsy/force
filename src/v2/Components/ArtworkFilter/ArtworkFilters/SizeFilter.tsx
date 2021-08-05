@@ -84,7 +84,6 @@ const hasValue = (size: CustomSize) => {
 const getValue = (value: CustomRange[number]) => {
   return value === "*" || value === 0 ? "" : value
 }
-
 const isCustomSize = (value?: string) => isString(value) && value !== "*-*"
 
 export interface SizeFilterProps {
@@ -104,7 +103,9 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
     width: parseRange(width) as CustomRange,
   }
 
-  const [showCustom, setShowCustom] = useState(!!hasValue(initialCustomSize))
+  const [showCustom, setShowCustom] = useState(
+    isCustomSize(width) || isCustomSize(height)
+  )
   const [customSize, setCustomSize] = useState<CustomSize>(
     hasValue(initialCustomSize) ? initialCustomSize : DEFAULT_CUSTOM_SIZE
   )
@@ -147,13 +148,8 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
     const newFilters = {
       ...currentlySelectedFilters?.(),
       sizes,
-    }
-
-    if (isCustomSize(height)) {
-      newFilters.height = "*-*"
-    }
-    if (isCustomSize(width)) {
-      newFilters.width = "*-*"
+      height: "*-*",
+      width: "*-*",
     }
 
     setFilters?.(newFilters, { force: false })
@@ -161,21 +157,12 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
   }
 
   const handleClick = () => {
-    const { height: newHeightValue, width: newWidthValue } = mapSizeToRange(
-      convertSizeToInches(customSize) as CustomSize
-    )
-
     const newFilters = {
       ...currentlySelectedFilters?.(),
       sizes: [],
+      ...mapSizeToRange(convertSizeToInches(customSize) as CustomSize),
     }
 
-    if (isCustomSize(newWidthValue) || isCustomSize(width)) {
-      newFilters.width = newWidthValue
-    }
-    if (isCustomSize(newHeightValue) || isCustomSize(height)) {
-      newFilters.height = newHeightValue
-    }
     if (reset) {
       delete newFilters.reset
     }
