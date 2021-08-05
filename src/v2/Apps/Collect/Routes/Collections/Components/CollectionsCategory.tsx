@@ -10,7 +10,7 @@ import {
 import { crop } from "v2/Utils/resizer"
 import { createFragmentContainer, graphql } from "react-relay"
 import { CollectionsCategory_category } from "v2/__generated__/CollectionsCategory_category.graphql"
-import { MOBILE_NAV_HEIGHT, NAV_BAR_HEIGHT } from "v2/Components/NavBar"
+import { MOBILE_NAV_HEIGHT, DESKTOP_NAV_BAR_HEIGHT } from "v2/Components/NavBar"
 import { slugify } from "underscore.string"
 
 interface CollectionsCategoryProps {
@@ -36,7 +36,7 @@ export const CollectionsCategory: React.FC<CollectionsCategoryProps> = ({
             // TODO: Metaphysics should expose a slug
             id={slugify(category.name)}
             position="relative"
-            top={[-MOBILE_NAV_HEIGHT, -NAV_BAR_HEIGHT]}
+            top={[-MOBILE_NAV_HEIGHT, -DESKTOP_NAV_BAR_HEIGHT]}
           />
 
           <Text variant="lg" mb={2}>
