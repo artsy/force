@@ -8,7 +8,7 @@ export const PromoSpace: React.FC = () => {
       <Box borderBottom="1px solid" borderColor="black60" width="100%">
         <Text
           width="60%"
-          textAlign={"center"}
+          textAlign="center"
           pb={3}
           variant="largeTitle"
           margin="0 auto"

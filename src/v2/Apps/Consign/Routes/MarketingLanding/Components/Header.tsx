@@ -41,14 +41,6 @@ export const Header: React.FC = () => {
           <Button size="large">Get a Free Auction Valuation</Button>
         </RouterLink>
       </Box>
-      <Box
-        position="relative"
-        right="-70%"
-        text-align="right"
-        width="100%"
-        top="-15%"
-        color="white100"
-      ></Box>
     </FullBleedHeader>
   )
 }
