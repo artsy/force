@@ -3,26 +3,22 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type fairOrganizerRoutes_FairOrganizerQueryVariables = {
-    slug: string;
-};
-export type fairOrganizerRoutes_FairOrganizerQueryResponse = {
+export type FairOrganizerApp_Test_QueryVariables = {};
+export type FairOrganizerApp_Test_QueryResponse = {
     readonly fairOrganizer: {
         readonly " $fragmentRefs": FragmentRefs<"FairOrganizerApp_fairOrganizer">;
     } | null;
 };
-export type fairOrganizerRoutes_FairOrganizerQuery = {
-    readonly response: fairOrganizerRoutes_FairOrganizerQueryResponse;
-    readonly variables: fairOrganizerRoutes_FairOrganizerQueryVariables;
+export type FairOrganizerApp_Test_Query = {
+    readonly response: FairOrganizerApp_Test_QueryResponse;
+    readonly variables: FairOrganizerApp_Test_QueryVariables;
 };
 
 
 
 /*
-query fairOrganizerRoutes_FairOrganizerQuery(
-  $slug: String!
-) {
-  fairOrganizer(id: $slug) @principalField {
+query FairOrganizerApp_Test_Query {
+  fairOrganizer(id: "example") {
     ...FairOrganizerApp_fairOrganizer
     id
   }
@@ -102,32 +98,24 @@ fragment FairOrganizerTiming_fair on Fair {
 const node: ConcreteRequest = (function(){
 var v0 = [
   {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "slug",
-    "type": "String!"
-  }
-],
-v1 = [
-  {
-    "kind": "Variable",
+    "kind": "Literal",
     "name": "id",
-    "variableName": "slug"
+    "value": "example"
   }
 ],
-v2 = {
+v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v3 = {
+v2 = {
   "kind": "Literal",
   "name": "version",
   "value": "square140"
 },
-v4 = [
+v3 = [
   {
     "alias": null,
     "args": null,
@@ -145,14 +133,14 @@ v4 = [
 ];
 return {
   "fragment": {
-    "argumentDefinitions": (v0/*: any*/),
+    "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "fairOrganizerRoutes_FairOrganizerQuery",
+    "name": "FairOrganizerApp_Test_Query",
     "selections": [
       {
         "alias": null,
-        "args": (v1/*: any*/),
+        "args": (v0/*: any*/),
         "concreteType": "FairOrganizer",
         "kind": "LinkedField",
         "name": "fairOrganizer",
@@ -164,20 +152,20 @@ return {
             "name": "FairOrganizerApp_fairOrganizer"
           }
         ],
-        "storageKey": null
+        "storageKey": "fairOrganizer(id:\"example\")"
       }
     ],
     "type": "Query"
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": (v0/*: any*/),
+    "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "fairOrganizerRoutes_FairOrganizerQuery",
+    "name": "FairOrganizerApp_Test_Query",
     "selections": [
       {
         "alias": null,
-        "args": (v1/*: any*/),
+        "args": (v0/*: any*/),
         "concreteType": "FairOrganizer",
         "kind": "LinkedField",
         "name": "fairOrganizer",
@@ -244,7 +232,7 @@ return {
                         ],
                         "storageKey": null
                       },
-                      (v2/*: any*/),
+                      (v1/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -292,7 +280,7 @@ return {
                         "name": "height",
                         "value": 100
                       },
-                      (v3/*: any*/),
+                      (v2/*: any*/),
                       {
                         "kind": "Literal",
                         "name": "width",
@@ -303,7 +291,7 @@ return {
                     "kind": "LinkedField",
                     "name": "cropped",
                     "plural": false,
-                    "selections": (v4/*: any*/),
+                    "selections": (v3/*: any*/),
                     "storageKey": "cropped(height:100,version:\"square140\",width:100)"
                   },
                   {
@@ -314,7 +302,7 @@ return {
                         "name": "height",
                         "value": 60
                       },
-                      (v3/*: any*/),
+                      (v2/*: any*/),
                       {
                         "kind": "Literal",
                         "name": "width",
@@ -325,13 +313,13 @@ return {
                     "kind": "LinkedField",
                     "name": "cropped",
                     "plural": false,
-                    "selections": (v4/*: any*/),
+                    "selections": (v3/*: any*/),
                     "storageKey": "cropped(height:60,version:\"square140\",width:60)"
                   }
                 ],
                 "storageKey": null
               },
-              (v2/*: any*/),
+              (v1/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -369,20 +357,20 @@ return {
             "name": "about",
             "storageKey": "about(format:\"HTML\")"
           },
-          (v2/*: any*/)
+          (v1/*: any*/)
         ],
-        "storageKey": null
+        "storageKey": "fairOrganizer(id:\"example\")"
       }
     ]
   },
   "params": {
     "id": null,
     "metadata": {},
-    "name": "fairOrganizerRoutes_FairOrganizerQuery",
+    "name": "FairOrganizerApp_Test_Query",
     "operationKind": "query",
-    "text": "query fairOrganizerRoutes_FairOrganizerQuery(\n  $slug: String!\n) {\n  fairOrganizer(id: $slug) @principalField {\n    ...FairOrganizerApp_fairOrganizer\n    id\n  }\n}\n\nfragment FairHeaderImage_fair on Fair {\n  image {\n    url(version: \"wide\")\n  }\n}\n\nfragment FairOrganizerApp_fairOrganizer on FairOrganizer {\n  name\n  fairs: fairsConnection(first: 1) {\n    edges {\n      node {\n        ...FairHeaderImage_fair\n        id\n      }\n    }\n  }\n  ...FairOrganizerHeader_fairOrganizer\n}\n\nfragment FairOrganizerFollowButton_fairOrganizer on FairOrganizer {\n  slug\n  name\n  profile {\n    id\n    internalID\n    isFollowed\n  }\n}\n\nfragment FairOrganizerHeaderIcon_fairOrganizer on FairOrganizer {\n  name\n  profile {\n    icon {\n      desktop: cropped(width: 100, height: 100, version: \"square140\") {\n        src\n        srcSet\n      }\n      mobile: cropped(width: 60, height: 60, version: \"square140\") {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment FairOrganizerHeader_fairOrganizer on FairOrganizer {\n  name\n  fairs: fairsConnection(first: 1) {\n    edges {\n      node {\n        ...FairOrganizerTiming_fair\n        id\n      }\n    }\n  }\n  ...FairOrganizerHeaderIcon_fairOrganizer\n  ...FairOrganizerFollowButton_fairOrganizer\n  ...FairOrganizerInfo_fairOrganizer\n}\n\nfragment FairOrganizerInfo_fairOrganizer on FairOrganizer {\n  about(format: HTML)\n}\n\nfragment FairOrganizerTiming_fair on Fair {\n  startAt\n  exhibitionPeriod\n}\n"
+    "text": "query FairOrganizerApp_Test_Query {\n  fairOrganizer(id: \"example\") {\n    ...FairOrganizerApp_fairOrganizer\n    id\n  }\n}\n\nfragment FairHeaderImage_fair on Fair {\n  image {\n    url(version: \"wide\")\n  }\n}\n\nfragment FairOrganizerApp_fairOrganizer on FairOrganizer {\n  name\n  fairs: fairsConnection(first: 1) {\n    edges {\n      node {\n        ...FairHeaderImage_fair\n        id\n      }\n    }\n  }\n  ...FairOrganizerHeader_fairOrganizer\n}\n\nfragment FairOrganizerFollowButton_fairOrganizer on FairOrganizer {\n  slug\n  name\n  profile {\n    id\n    internalID\n    isFollowed\n  }\n}\n\nfragment FairOrganizerHeaderIcon_fairOrganizer on FairOrganizer {\n  name\n  profile {\n    icon {\n      desktop: cropped(width: 100, height: 100, version: \"square140\") {\n        src\n        srcSet\n      }\n      mobile: cropped(width: 60, height: 60, version: \"square140\") {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment FairOrganizerHeader_fairOrganizer on FairOrganizer {\n  name\n  fairs: fairsConnection(first: 1) {\n    edges {\n      node {\n        ...FairOrganizerTiming_fair\n        id\n      }\n    }\n  }\n  ...FairOrganizerHeaderIcon_fairOrganizer\n  ...FairOrganizerFollowButton_fairOrganizer\n  ...FairOrganizerInfo_fairOrganizer\n}\n\nfragment FairOrganizerInfo_fairOrganizer on FairOrganizer {\n  about(format: HTML)\n}\n\nfragment FairOrganizerTiming_fair on Fair {\n  startAt\n  exhibitionPeriod\n}\n"
   }
 };
 })();
-(node as any).hash = '365d6d1efca3d3bc5489b193ca51cb87';
+(node as any).hash = 'fc85ec753c636262ee839fdbf465b193';
 export default node;

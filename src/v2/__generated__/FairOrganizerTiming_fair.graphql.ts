@@ -5,7 +5,6 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type FairOrganizerTiming_fair = {
     readonly startAt: string | null;
-    readonly isActive: boolean | null;
     readonly exhibitionPeriod: string | null;
     readonly " $refType": "FairOrganizerTiming_fair";
 };
@@ -34,18 +33,11 @@ const node: ReaderFragment = {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "isActive",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
       "name": "exhibitionPeriod",
       "storageKey": null
     }
   ],
   "type": "Fair"
 };
-(node as any).hash = '9a949993f5e50c65ff833dccc5ecc77f';
+(node as any).hash = 'b51728fee266efa71ee2b9fd9de376e2';
 export default node;

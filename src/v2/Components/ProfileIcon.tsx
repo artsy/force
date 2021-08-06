@@ -13,7 +13,7 @@ interface IconSet {
   mobile: Icon | null
 }
 
-interface Profile {
+export interface Profile {
   icon?: IconSet | null
   name: string
 }
@@ -26,6 +26,7 @@ const BorderBox = styled(Box).attrs({
   border: "solid #C2C2C2",
   borderWidth: "1px",
 })``
+BorderBox.displayName = "BorderBox"
 
 export const ProfileIcon: React.FC<ProfileIconProps> = ({
   profile,

@@ -14,7 +14,7 @@ export const FairOrganizerTiming: React.FC<FairOrganizerTimingProps> = ({
 }) => {
   const { startAt, exhibitionPeriod } = fair
 
-  const showTimer = moment().isBefore(startAt!)
+  const showTimer = moment().isBefore(new Date(startAt!))
 
   return (
     <>
