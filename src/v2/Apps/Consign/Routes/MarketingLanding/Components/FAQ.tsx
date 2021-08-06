@@ -5,7 +5,13 @@ import { SectionContainer } from "./SectionContainer"
 export const FAQ: React.FC = () => {
   return (
     <SectionContainer>
-      <Text width="100%" textAlign="left" mb={4} variant="largeTitle">
+      <Text
+        width="100%"
+        textAlign="left"
+        mb={4}
+        variant="largeTitle"
+        id="jump--faq"
+      >
         Frequently Asked Questions
       </Text>
       <Box>
@@ -52,11 +58,50 @@ export const FAQ: React.FC = () => {
 
         <ToggleButton label="I am an artist. Can I sell my art with Artsy?">
           <TextItem>
-            Based on the collector demand on our Artsy’s marketplace, we are
-            only able to accommodate works by artists with established demand
-            and a resale market consistent with our partners’ current interests.
-            As such, we do not accept submissions from artists selling their own
-            work.
+            <p>
+              At this time, Artsy does not partner directly with artists.
+              Instead, we offer partnerships for galleries, museums, and other
+              institutions. If you work with a gallery, we ask you to get in
+              touch with us at{" "}
+              <a href="mailto:partners@artsy.net">partners@artsy.net</a>.
+              Otherwise, we recommend reaching out to your gallery and asking
+              them to join Artsy by visiting{" "}
+              <a href="https://partners.artsy.net" target="_blank">
+                partners.artsy.net
+              </a>
+              .
+            </p>
+            <p>
+              Artsy has a{" "}
+              <a href="/consign" target="_blank">
+                Sell with Artsy program
+              </a>{" "}
+              in which we currently accept consignments of works by artists that
+              are already in our database who have a resale market and
+              substantial collector demand. To learn more about our Sell with
+              Artsy program, please visit our Help Center article on{" "}
+              <a
+                href="https://support.artsy.net/hc/en-us/articles/1500006366381"
+                target="_blank"
+              >
+                what do we look for in consignment submissions
+              </a>
+              ? Please note that not being accepted for our Sell with Artsy
+              program is in no way a reflection or judgement of artistic
+              ability, potential now or in the future, or commitment to the
+              discipline; it is simply a result of the assessment of the
+              information that we were given at the time and possible services
+              we are able to currently provide.
+            </p>
+            <p>
+              We'd also like to bring to your attention{" "}
+              <a href="/series/working-artists-guide" target="_blank">
+                The Working Artist’s Guide
+              </a>{" "}
+              which is a resource for artists put together by our Editorial
+              team. We hope it can assist you and that you continue to enjoy
+              exploring Artsy.
+            </p>
           </TextItem>
         </ToggleButton>
 
