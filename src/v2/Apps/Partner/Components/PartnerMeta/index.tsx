@@ -12,13 +12,7 @@ interface PartnerMetaProps {
 }
 
 const PartnerMeta: React.FC<PartnerMetaProps> = ({
-  partner: {
-    locationsConnection,
-    // @ts-expect-error STRICT_NULL_CHECK
-    meta: { description, image, title },
-    name,
-    slug,
-  },
+  partner: { locationsConnection, meta, name, slug },
 }) => {
   const {
     match: {
@@ -36,21 +30,21 @@ const PartnerMeta: React.FC<PartnerMetaProps> = ({
 
   return (
     <>
-      <Title>{title}</Title>
-      <Meta name="description" content={description} />
+      <Title>{meta?.title}</Title>
+      <Meta name="description" content={meta?.description} />
 
-      <Meta property="og:title" content={title} />
-      <Meta property="og:description" content={description} />
+      <Meta property="og:title" content={meta?.title} />
+      <Meta property="og:description" content={meta?.description} />
       <Meta property="og:url" content={href} />
       <Meta property="og:type" content="profile" />
 
-      <Meta property="twitter:description" content={description} />
+      <Meta property="twitter:description" content={meta?.description} />
       <Meta property="twitter:card" content="summary" />
 
       <Link rel="canonical" href={canonicalHref} />
 
-      {image && <Meta property="og:image" content={image} />}
-      {image && <Meta name="thumbnail" content={image} />}
+      {meta?.image && <Meta property="og:image" content={meta?.image} />}
+      {meta?.image && <Meta name="thumbnail" content={meta?.image} />}
       <LocalBusiness partnerLocation={partnerLocation} partnerName={name} />
     </>
   )
