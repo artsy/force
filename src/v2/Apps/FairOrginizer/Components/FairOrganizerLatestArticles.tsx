@@ -1,48 +1,25 @@
 import React from "react"
+import styled from "styled-components"
 import { Box, Button, Column, GridColumns, Spacer, Text } from "@artsy/palette"
-import {
-  FairEditorialItemFragmentContainer as FairEditorialItem,
-  FairEditorialItemProps,
-} from "v2/Apps/Fair/Components/FairEditorial/FairEditorialItem"
+import { FairEditorialItemFragmentContainer as FairEditorialItem } from "v2/Apps/Fair/Components/FairEditorial/FairEditorialItem"
 import { RouterLink } from "v2/System/Router/RouterLink"
-import { createFragmentContainer, graphql } from "react-relay"
+import { createFragmentContainer, graphql, _FragmentRefs } from "react-relay"
+import { getArticlesColumns } from "../helpers/getArticlesColumns"
+import { FairOrganizerLatestArticles_fairOrganizer } from "v2/__generated__/FairOrganizerLatestArticles_fairOrganizer.graphql"
+import { extractNodes } from "v2/Utils/extractNodes"
 
-function getArticlesColumns<T>(articles: T[]) {
-  const leftColumn: T[] = []
-  const rightColumn: T[] = []
-
-  articles.forEach((article: T, i) => {
-    ;(i % 2 === 0 ? leftColumn : rightColumn).push(article)
-  })
-
-  return { leftColumn, rightColumn }
+interface FairOrganizerLatestArticlesProps {
+  fairOrganizer: FairOrganizerLatestArticles_fairOrganizer
 }
 
-export const FairOrganizerLatestArticles: React.FC<any> = ({
+export const FairOrganizerLatestArticles: React.FC<FairOrganizerLatestArticlesProps> = ({
   fairOrganizer,
 }) => {
   const { articles, name } = fairOrganizer
-  const [latestArticle, ...otherArticles] = articles.edges.map(
-    edge => edge.node
-  )
 
-  const { leftColumn, rightColumn } = getArticlesColumns<typeof otherArticles>(
-    otherArticles
-  )
-
-  const Article: React.FC<FairEditorialItemProps> = ({
-    article,
-    size = "small",
-  }) => (
-    <>
-      <FairEditorialItem
-        article={article as typeof otherArticles}
-        size={size as "large" | "small"}
-        isResponsive
-      />
-      <Spacer mt={30} />
-    </>
-  )
+  const nodes = extractNodes(articles)
+  const [latestArticle, ...otherArticles] = nodes
+  const { leftColumn, rightColumn } = getArticlesColumns(otherArticles)
 
   return (
     <Box>
@@ -56,6 +33,7 @@ export const FairOrganizerLatestArticles: React.FC<any> = ({
         {/* latest article */}
         <Column span={6}>
           <Article article={latestArticle} size="large" />
+          <Spacer mt={30} />
         </Column>
 
         {/* other articles */}
@@ -64,14 +42,20 @@ export const FairOrganizerLatestArticles: React.FC<any> = ({
             {/* left column */}
             <Column span={[6]}>
               {leftColumn.map(article => (
-                <Article article={article} />
+                <>
+                  <Article article={article} size={"small"} />
+                  <Spacer mt={30} />
+                </>
               ))}
             </Column>
 
             {/* right column */}
             <Column span={[6]}>
               {rightColumn.map(article => (
-                <Article article={article} />
+                <>
+                  <Article article={article} size={"small"} />
+                  <Spacer mt={30} />
+                </>
               ))}
             </Column>
 
@@ -116,3 +100,7 @@ export const FairOrganizerLatestArticlesFragmentContainer = createFragmentContai
     `,
   }
 )
+
+const Article = styled(FairEditorialItem).attrs({
+  isResponsive: true,
+})``
