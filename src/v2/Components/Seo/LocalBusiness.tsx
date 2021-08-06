@@ -1,6 +1,6 @@
 import React from "react"
 import { StructuredData } from "./StructuredData"
-import _ from "underscore"
+import { identity, pickBy } from "lodash"
 
 interface PostalAddressSchemaData {
   "@type": string
@@ -54,7 +54,7 @@ export const computeOptionalSchemaData = partnerLocation => {
       telephone: phone,
     }
 
-    address = _.pick(addressParts, _.identity)
+    address = pickBy(addressParts, identity) as PostalAddressSchemaData
 
     if (coordinates?.lat && coordinates?.lng) {
       location = {
