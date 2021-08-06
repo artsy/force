@@ -1,4 +1,5 @@
 import React from "react"
+import moment from "moment"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Text } from "@artsy/palette"
 import { Timer } from "v2/Components/Timer"
@@ -11,7 +12,9 @@ interface FairOrganizerTimingProps {
 export const FairOrganizerTiming: React.FC<FairOrganizerTimingProps> = ({
   fair,
 }) => {
-  const { isActive, startAt, exhibitionPeriod } = fair
+  const { startAt, exhibitionPeriod } = fair
+
+  const showTimer = moment().isBefore(startAt!)
 
   return (
     <>
@@ -19,7 +22,7 @@ export const FairOrganizerTiming: React.FC<FairOrganizerTimingProps> = ({
         {exhibitionPeriod}
       </Text>
 
-      {!isActive && <Timer size="lg" label="Opens in:" endDate={startAt!} />}
+      {showTimer && <Timer size="lg" label="Opens in:" endDate={startAt!} />}
     </>
   )
 }
@@ -30,7 +33,6 @@ export const FairOrganizerTimingFragmentContainer = createFragmentContainer(
     fair: graphql`
       fragment FairOrganizerTiming_fair on Fair {
         startAt
-        isActive
         exhibitionPeriod
       }
     `,
