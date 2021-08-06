@@ -479,12 +479,15 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
   }))
   onSelectShippingOption(shippingOption: CommerceOrderFulfillmentTypeEnum) {
     if (this.state.shippingOption !== shippingOption) {
-      this.setState({ shippingOption }, () => {
-        const addressList = this.getAddressList()
-        if (addressList && addressList.length > 0 && this.isArtaShipping()) {
-          this.selectShipping()
+      this.setState(
+        { shippingOption, shippingQuotes: null, shippingQuoteId: undefined },
+        () => {
+          const addressList = this.getAddressList()
+          if (addressList && addressList.length > 0 && this.isArtaShipping()) {
+            this.selectShipping()
+          }
         }
-      })
+      )
     }
   }
 
@@ -494,11 +497,18 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
 
   selectSavedAddress = (value: string) => {
     if (this.state.selectedAddressID !== value) {
-      this.setState({ selectedAddressID: value }, () => {
-        if (this.isArtaShipping()) {
-          this.selectShipping()
+      this.setState(
+        {
+          selectedAddressID: value,
+          shippingQuotes: null,
+          shippingQuoteId: undefined,
+        },
+        () => {
+          if (this.isArtaShipping()) {
+            this.selectShipping()
+          }
         }
-      })
+      )
     }
   }
 
