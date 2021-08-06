@@ -5,6 +5,7 @@ import { PartnerMeta_partner } from "v2/__generated__/PartnerMeta_partner.graphq
 import { getENV } from "v2/Utils/getENV"
 import { useRouter } from "v2/System/Router/useRouter"
 import { LocalBusiness } from "v2/Components/Seo/LocalBusiness"
+import { extractNodes } from "v2/Utils/extractNodes"
 
 interface PartnerMetaProps {
   partner: PartnerMeta_partner
@@ -31,8 +32,7 @@ const PartnerMeta: React.FC<PartnerMetaProps> = ({
     ? `${getENV("APP_URL")}/partner/${slug}/artists/${artistId}`
     : `${getENV("APP_URL")}/partner/${slug}`
 
-  const locationEdges = locationsConnection?.edges || []
-  const partnerLocation = locationEdges[0]?.node
+  const partnerLocation = extractNodes(locationsConnection)[0]
 
   return (
     <>
