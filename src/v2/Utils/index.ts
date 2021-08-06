@@ -6,7 +6,6 @@ export default {
   Events,
 }
 
-export * from "./BreakpointVisualizer"
 export * from "./ColorPreview"
 export * from "./Placeholder"
 export * from "./ScrollIntoView"
