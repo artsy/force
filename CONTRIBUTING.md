@@ -2,6 +2,10 @@
 
 This project is work of [many developers](https://github.com/artsy/force/graphs/contributors).
 
+For an overview of our current best practices, see [this doc](https://github.com/artsy/force/blob/master/docs/best_practices.md). 
+
+For an architecture overview (as of July 2021), see [this video](https://drive.google.com/drive/folders/1RE_7j4hocKD51RVZy60_5rZqUk9T-Zc2).
+
 We accept [pull requests](https://github.com/artsy/force/pulls), and you may [propose features and discuss issues](https://github.com/artsy/force/issues).
 
 ## Setup Instructions
