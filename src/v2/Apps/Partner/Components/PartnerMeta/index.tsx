@@ -4,6 +4,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { PartnerMeta_partner } from "v2/__generated__/PartnerMeta_partner.graphql"
 import { getENV } from "v2/Utils/getENV"
 import { useRouter } from "v2/System/Router/useRouter"
+import { LocalBusiness } from "v2/Components/Seo/LocalBusiness"
 
 interface PartnerMetaProps {
   partner: PartnerMeta_partner
@@ -11,9 +12,11 @@ interface PartnerMetaProps {
 
 const PartnerMeta: React.FC<PartnerMetaProps> = ({
   partner: {
-    slug,
+    locationsConnection,
     // @ts-expect-error STRICT_NULL_CHECK
     meta: { description, image, title },
+    name,
+    slug,
   },
 }) => {
   const {
@@ -27,6 +30,9 @@ const PartnerMeta: React.FC<PartnerMetaProps> = ({
   const canonicalHref = artistId
     ? `${getENV("APP_URL")}/partner/${slug}/artists/${artistId}`
     : `${getENV("APP_URL")}/partner/${slug}`
+
+  const locationEdges = locationsConnection?.edges || []
+  const partnerLocation = locationEdges[0]?.node
 
   return (
     <>
@@ -45,6 +51,7 @@ const PartnerMeta: React.FC<PartnerMetaProps> = ({
 
       {image && <Meta property="og:image" content={image} />}
       {image && <Meta name="thumbnail" content={image} />}
+      <LocalBusiness partnerLocation={partnerLocation} partnerName={name} />
     </>
   )
 }
@@ -54,12 +61,30 @@ export const PartnerMetaFragmentContainer = createFragmentContainer(
   {
     partner: graphql`
       fragment PartnerMeta_partner on Partner {
-        slug
+        locationsConnection(first: 1) {
+          edges {
+            node {
+              address
+              address2
+              city
+              coordinates {
+                lat
+                lng
+              }
+              country
+              phone
+              postalCode
+              state
+            }
+          }
+        }
         meta {
           image
           title
           description
         }
+        name
+        slug
       }
     `,
   }
