@@ -26,6 +26,8 @@ import { updateUserDefaultAddress } from "v2/Apps/Order/Mutations/UpdateUserDefa
 import { useSystemContext } from "v2/System/SystemContext"
 import { compact } from "lodash"
 import { extractNodes } from "v2/Utils/extractNodes"
+import { UpdateUserAddressMutationResponse } from "v2/__generated__/UpdateUserAddressMutation.graphql"
+import { CreateUserAddressMutationResponse } from "v2/__generated__/CreateUserAddressMutation.graphql"
 
 export const NEW_ADDRESS = "NEW_ADDRESS"
 const PAGE_SIZE = 30
@@ -38,7 +40,12 @@ interface SavedAddressesProps {
   relay: RelayRefetchProp
   addressCount?: number
   onAddressDelete?: (removedAddressId: string) => void
-  onSelectedAddressEdited?: () => void
+  onAddressCreate?: (
+    address: CreateUserAddressMutationResponse["createUserAddress"]
+  ) => void
+  onAddressEdit?: (
+    address: UpdateUserAddressMutationResponse["updateUserAddress"]
+  ) => void
   selectedAddress?: string
 }
 
@@ -71,8 +78,9 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
     inCollectorProfile,
     relay,
     onAddressDelete,
+    onAddressCreate,
     selectedAddress,
-    onSelectedAddressEdited,
+    onAddressEdit,
   } = props
   const addressList = extractNodes(me?.addressConnection) ?? []
   const { relayEnvironment } = useSystemContext()
@@ -132,14 +140,16 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
     )
   }
 
-  const createOrUpdateAddressSuccess = address => {
+  const createOrUpdateAddressSuccess = (
+    address?: UpdateUserAddressMutationResponse &
+      CreateUserAddressMutationResponse
+  ) => {
     refetchAddresses()
 
-    if (
-      selectedAddress ==
-      address?.updateUserAddress?.userAddressOrErrors?.internalID
-    ) {
-      onSelectedAddressEdited && onSelectedAddressEdited()
+    if (address?.createUserAddress) {
+      onAddressCreate && onAddressCreate(address.createUserAddress)
+    } else if (address?.updateUserAddress) {
+      onAddressEdit && onAddressEdit(address.updateUserAddress)
     }
   }
 

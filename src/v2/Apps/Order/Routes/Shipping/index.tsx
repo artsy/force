@@ -77,6 +77,8 @@ import { compact } from "lodash"
 import { selectShippingOption } from "../../Mutations/SelectShippingOption"
 import { updateUserAddress } from "../../Mutations/UpdateUserAddress"
 import { deleteUserAddress } from "../../Mutations/DeleteUserAddress"
+import { CreateUserAddressMutationResponse } from "v2/__generated__/CreateUserAddressMutation.graphql"
+import { UpdateUserAddressMutationResponse } from "v2/__generated__/UpdateUserAddressMutation.graphql"
 
 export interface ShippingProps extends SystemContextProps {
   order: Shipping_order
@@ -486,20 +488,6 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
     }
   }
 
-  handleSelectedAddressEdited = () => {
-    this.setState(
-      {
-        shippingQuotes: null,
-        shippingQuoteId: undefined,
-      },
-      () => {
-        if (this.isArtaShipping()) {
-          this.selectShipping()
-        }
-      }
-    )
-  }
-
   handleShippingQuoteSelected = (shippingQuoteId: string) => {
     this.setState({ shippingQuoteId: shippingQuoteId })
   }
@@ -511,6 +499,35 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
           this.selectShipping()
         }
       })
+    }
+  }
+
+  handleAddressEdit = (
+    address: UpdateUserAddressMutationResponse["updateUserAddress"]
+  ) => {
+    // reload shipping quotes if selected address edited
+    if (
+      this.state.selectedAddressID === address?.userAddressOrErrors?.internalID
+    ) {
+      this.setState(
+        {
+          shippingQuotes: null,
+          shippingQuoteId: undefined,
+        },
+        () => {
+          if (this.isArtaShipping()) {
+            this.selectShipping()
+          }
+        }
+      )
+    }
+  }
+
+  handleAddressCreate = (
+    address: CreateUserAddressMutationResponse["createUserAddress"]
+  ) => {
+    if (address?.userAddressOrErrors?.internalID) {
+      this.selectSavedAddress(address.userAddressOrErrors.internalID)
     }
   }
 
@@ -633,7 +650,8 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
                   onSelect={this.selectSavedAddress}
                   inCollectorProfile={false}
                   onAddressDelete={this.handleAddressDelete}
-                  onSelectedAddressEdited={this.handleSelectedAddressEdited}
+                  onAddressCreate={this.handleAddressCreate}
+                  onAddressEdit={this.handleAddressEdit}
                 />
               </Collapse>
 
