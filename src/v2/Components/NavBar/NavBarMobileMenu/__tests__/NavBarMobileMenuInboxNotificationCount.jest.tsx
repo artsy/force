@@ -1,5 +1,4 @@
 import { mount } from "enzyme"
-import { Sans } from "@artsy/palette"
 import React from "react"
 import { NavBarMobileMenuInboxNotificationCount } from "../NavBarMobileMenuInboxNotificationCount"
 
@@ -21,7 +20,6 @@ describe("NavBarMobileMenuInboxNotificationCount", () => {
   })
 
   it("renders the correct count", () => {
-    const inboxNotificationCount = getWrapper().find(Sans).first()
-    expect(inboxNotificationCount.text()).toEqual("2")
+    expect(getWrapper().text()).toContain("2")
   })
 })

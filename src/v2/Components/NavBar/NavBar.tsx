@@ -39,8 +39,7 @@ import { scrollIntoView } from "v2/Utils/scrollHelpers"
 import { AppContainer } from "v2/Apps/Components/AppContainer"
 import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
 import { useNavBarHeight } from "./useNavBarHeight"
-import { Media } from "v2/Utils/Responsive"
-import { AuthBanner } from "../AuthBanner"
+import { RouterLink } from "v2/System/Router/RouterLink"
 
 /**
  * Old Force pages have the navbar height hardcoded in several places. If
@@ -52,6 +51,9 @@ import { AuthBanner } from "../AuthBanner"
  *
  * Additional context:
  * https://github.com/artsy/force/pull/6991
+ *
+ * NOTE: Fresnel doesn't work correctly here because this is included
+ * on older CoffeeScript pages. Hence the `display={["none", "flex"]}` usage
  */
 
 export const NavBar: React.FC = track(
@@ -134,7 +136,32 @@ export const NavBar: React.FC = track(
             flexDirection="column"
             height="100%"
           >
-            <Media at="xs">{!isLoggedIn && <AuthBanner pt={1} />}</Media>
+            {/* Mobile authentication banner */}
+            {!isLoggedIn && (
+              <Flex display={["flex", "none"]} pt={1}>
+                <Button
+                  // @ts-ignore
+                  as={RouterLink}
+                  to="/signup"
+                  variant="secondaryOutline"
+                  flex={1}
+                  size="small"
+                >
+                  Sign up
+                </Button>
+
+                <Button
+                  // @ts-ignore
+                  as={RouterLink}
+                  to="/login"
+                  flex={1}
+                  ml={1}
+                  size="small"
+                >
+                  Log in
+                </Button>
+              </Flex>
+            )}
 
             {/* Top-tier */}
             <Flex pt={1} pb={[1, 0]} alignItems="stretch" flex={1}>
@@ -367,7 +394,6 @@ export const NavBar: React.FC = track(
         </AppContainer>
       </Box>
 
-      {/* TODO: V3 */}
       {showMobileMenu && (
         <>
           <NavBarMobileMenu
