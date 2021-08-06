@@ -190,7 +190,7 @@ const Registration: React.FC<RegistrationProps> = props => {
             <br />
             <a href="mailto:specialist@artsy.net">specialist@artsy.net</a>
             <br />
-            +1.646.712.8154
+            +1-646-381-3901
           </div>
         </div>
       )}
