@@ -122,8 +122,8 @@ const Conversation: React.FC<ConversationProps> = props => {
     })
   }
   const scrollToBottom = () => {
-    if (!!bottomOfMessageContainer.current) {
-      bottomOfMessageContainer.current?.scrollIntoView({
+    if (!!bottomOfMessageContainer?.current) {
+      bottomOfMessageContainer.current?.scrollIntoView?.({
         block: "end",
         inline: "nearest",
         behavior: initialMount.current ? "auto" : "smooth",

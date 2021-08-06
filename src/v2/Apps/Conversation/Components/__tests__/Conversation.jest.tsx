@@ -1,132 +1,116 @@
 import React from "react"
 import { ConversationPaginationContainer } from "../Conversation"
-import {
-  InquiryImage,
-  MockedConversation,
-  MockedInquiryConversation,
-} from "v2/Apps/__tests__/Fixtures/Conversation"
-import { MockBoot, renderRelayTree } from "v2/DevTools"
 import { graphql } from "react-relay"
-import {
-  ConversationPaginationTestQueryRawResponse,
-  ConversationPaginationTestQueryResponse,
-} from "v2/__generated__/ConversationPaginationTestQuery.graphql"
 import { useTracking } from "react-tracking"
-import { SystemContextProvider } from "v2/System"
-import { HeadProvider } from "react-head"
+import { useSystemContext } from "v2/System/useSystemContext"
+import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
+import { ConversationPagination_Test_Query } from "v2/__generated__/ConversationPagination_Test_Query.graphql"
 
 jest.unmock("react-relay")
+jest.mock("v2/System/useSystemContext")
 
-const render = (
-  node: ConversationPaginationTestQueryRawResponse["node"],
-  user: User
-) =>
-  renderRelayTree({
-    Component: (props: ConversationPaginationTestQueryResponse) => {
-      return (
-        // @ts-expect-error STRICT_NULL_CHECK
-        <ConversationPaginationContainer
-          {...props}
-          conversation={props.node!}
-        />
-      )
-    },
-    mockData: {
-      node,
-      artwork: InquiryImage,
-    },
-    query: graphql`
-      query ConversationPaginationTestQuery @raw_response_type {
-        node(id: "whatever") {
-          __typename
-          ...Conversation_conversation
-          id
-        }
+const { getWrapper } = setupTestWrapper<ConversationPagination_Test_Query>({
+  Component: props => {
+    if (!props.node) return null
+
+    return (
+      <ConversationPaginationContainer
+        conversation={props.node}
+        refetch={jest.fn()}
+        setShowDetails={jest.fn()}
+        showDetails
+      />
+    )
+  },
+  query: graphql`
+    query ConversationPagination_Test_Query {
+      node(id: "example") {
+        ...Conversation_conversation
       }
-    `,
-    wrapper: children => (
-      <MockBoot>
-        <HeadProvider>
-          <SystemContextProvider user={user}>{children}</SystemContextProvider>
-        </HeadProvider>
-      </MockBoot>
-    ),
-    mockMutationResults: {
-      updateConversation: {
-        conversation: {
-          id: "whatever",
-          unread: false,
-        },
-      },
-    },
-  })
+    }
+  `,
+})
 
 describe("Conversation", () => {
   const mockuseTracking = useTracking as jest.Mock
   const trackingSpy = jest.fn()
+  const mockuseSystemContext = useSystemContext as jest.Mock
+
+  let user = {}
 
   beforeEach(() => {
-    mockuseTracking.mockImplementation(() => ({
-      trackEvent: trackingSpy,
-    }))
+    mockuseTracking.mockImplementation(() => ({ trackEvent: trackingSpy }))
+    mockuseSystemContext.mockImplementation(() => ({ user }))
   })
 
   afterEach(() => {
-    jest.resetAllMocks()
+    mockuseTracking.mockReset()
+    mockuseSystemContext.mockReset()
+    user = {}
   })
 
   describe("when user has Inquiry Checkout feature and the artwork is offerable", () => {
-    const userMock = {
-      type: "NotAdmin",
-      lab_features: ["Web Inquiry Checkout"],
-    }
-
-    it("shows the buyer guarantee message", async () => {
-      const conversation = await render(MockedInquiryConversation, userMock)
-      const buyerGuaranteeMessage = conversation.find("BuyerGuaranteeMessage")
-
-      expect(buyerGuaranteeMessage).toHaveLength(1)
+    beforeEach(() => {
+      user = {
+        type: "NotAdmin",
+        lab_features: ["Web Inquiry Checkout"],
+      }
     })
 
-    it("renders the confirm artwork modal query renderer", async () => {
-      const conversation = await render(MockedInquiryConversation, userMock)
-      const queryRenderer = conversation.find(
-        "ConfirmArtworkModalQueryRenderer"
-      )
+    it("shows the buyer guarantee message", () => {
+      const wrapper = getWrapper({
+        Artwork: () => ({ isOfferableFromInquiry: true }),
+      })
 
-      expect(queryRenderer).toHaveLength(1)
+      expect(wrapper.find("BuyerGuaranteeMessage")).toHaveLength(1)
     })
 
-    it("renders the OrderModal", async () => {
-      const conversation = await render(MockedInquiryConversation, userMock)
-      const orderModal = conversation.find("OrderModal")
+    it("renders the confirm artwork modal query renderer", () => {
+      const wrapper = getWrapper({
+        Artwork: () => ({ isOfferableFromInquiry: true }),
+      })
 
-      expect(orderModal).toHaveLength(1)
+      expect(wrapper.find("ConfirmArtworkModalQueryRenderer")).toHaveLength(1)
+    })
+
+    it("renders the OrderModal", () => {
+      const wrapper = getWrapper({
+        Artwork: () => ({ isOfferableFromInquiry: true }),
+      })
+
+      expect(wrapper.find("OrderModal")).toHaveLength(1)
     })
   })
 
   describe("when user doesn't have Inquiry Checkout feature", () => {
-    const userMock = {
-      type: "NotAdmin",
-    }
+    beforeEach(() => {
+      user = {
+        type: "NotAdmin",
+      }
+    })
 
-    it("doesn't show the buyer guarantee message", async () => {
-      const conversation = await render(MockedInquiryConversation, userMock)
-      const buyerGuaranteeMessage = conversation.find("BuyerGuaranteeMessage")
+    it("doesn't show the buyer guarantee message", () => {
+      const wrapper = getWrapper({
+        Artwork: () => ({ isOfferableFromInquiry: true }),
+      })
 
-      expect(buyerGuaranteeMessage).toHaveLength(0)
+      expect(wrapper.find("BuyerGuaranteeMessage")).toHaveLength(0)
     })
   })
 
   describe("when the artwork is not offerable", () => {
-    const userMock = {
-      type: "NotAdmin",
-      lab_features: ["Web Inquiry Checkout"],
-    }
+    beforeEach(() => {
+      user = {
+        type: "NotAdmin",
+        lab_features: ["Web Inquiry Checkout"],
+      }
+    })
 
-    it("doesn't show the buyer guarantee message", async () => {
-      const conversation = await render(MockedConversation, userMock)
-      const buyerGuaranteeMessage = conversation.find("BuyerGuaranteeMessage")
+    it("doesn't show the buyer guarantee message", () => {
+      const wrapper = getWrapper({
+        Artwork: () => ({ isOfferableFromInquiry: false }),
+      })
+      const buyerGuaranteeMessage = wrapper.find("BuyerGuaranteeMessage")
 
       expect(buyerGuaranteeMessage).toHaveLength(0)
     })
