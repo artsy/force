@@ -10,8 +10,12 @@ import {
 } from "@artsy/palette"
 import { useSystemContext } from "v2/System/SystemContext"
 import { SearchBarQueryRenderer } from "v2/Components/Search/SearchBar"
-import { NavBarSubMenu, MobileNavMenu, MobileToggleIcon } from "./Menus"
-import { InboxNotificationCountQueryRenderer } from "./Menus/MobileNavMenu/InboxNotificationCount"
+import { NavBarSubMenu } from "./Menus"
+import {
+  NavBarMobileMenu,
+  NavBarMobileMenuIcon,
+} from "./NavBarMobileMenu/NavBarMobileMenu"
+import { NavBarMobileMenuInboxNotificationCountQueryRenderer } from "./NavBarMobileMenu/NavBarMobileMenuInboxNotificationCount"
 import { ModalType } from "v2/Components/Authentication/Types"
 import {
   ARTISTS_SUBMENU_DATA,
@@ -35,8 +39,7 @@ import { scrollIntoView } from "v2/Utils/scrollHelpers"
 import { AppContainer } from "v2/Apps/Components/AppContainer"
 import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
 import { useNavBarHeight } from "./useNavBarHeight"
-import { Media } from "v2/Utils/Responsive"
-import { AuthBanner } from "../AuthBanner"
+import { RouterLink } from "v2/System/Router/RouterLink"
 
 /**
  * Old Force pages have the navbar height hardcoded in several places. If
@@ -48,6 +51,9 @@ import { AuthBanner } from "../AuthBanner"
  *
  * Additional context:
  * https://github.com/artsy/force/pull/6991
+ *
+ * NOTE: Fresnel doesn't work correctly here because this is included
+ * on older CoffeeScript pages. Hence the `display={["none", "flex"]}` usage
  */
 
 export const NavBar: React.FC = track(
@@ -121,15 +127,41 @@ export const NavBar: React.FC = track(
         bg="white100"
         borderBottom="1px solid"
         borderColor="black30"
+        height={height}
       >
-        <AppContainer>
+        <AppContainer height="100%">
           <HorizontalPadding
             as="nav"
-            height={height}
             display="flex"
             flexDirection="column"
+            height="100%"
           >
-            <Media at="xs">{!isLoggedIn && <AuthBanner pt={1} />}</Media>
+            {/* Mobile authentication banner */}
+            {!isLoggedIn && (
+              <Flex display={["flex", "none"]} pt={1}>
+                <Button
+                  // @ts-ignore
+                  as={RouterLink}
+                  to="/signup"
+                  variant="secondaryOutline"
+                  flex={1}
+                  size="small"
+                >
+                  Sign up
+                </Button>
+
+                <Button
+                  // @ts-ignore
+                  as={RouterLink}
+                  to="/login"
+                  flex={1}
+                  ml={1}
+                  size="small"
+                >
+                  Log in
+                </Button>
+              </Flex>
+            )}
 
             {/* Top-tier */}
             <Flex pt={1} pb={[1, 0]} alignItems="stretch" flex={1}>
@@ -209,8 +241,13 @@ export const NavBar: React.FC = track(
                 <NavBarItemButton
                   ml={1}
                   mr={-1}
-                  onClick={e => {
-                    e.preventDefault()
+                  width={40}
+                  height={40}
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
+                  onClick={event => {
+                    event.preventDefault()
 
                     const showMenu = !showMobileMenu
 
@@ -225,10 +262,10 @@ export const NavBar: React.FC = track(
                     }
                   }}
                 >
-                  <MobileToggleIcon open={showMobileMenu} />
+                  <NavBarMobileMenuIcon open={showMobileMenu} />
 
                   {showNotificationCount && (
-                    <InboxNotificationCountQueryRenderer />
+                    <NavBarMobileMenuInboxNotificationCountQueryRenderer />
                   )}
                 </NavBarItemButton>
               </Flex>
@@ -357,10 +394,9 @@ export const NavBar: React.FC = track(
         </AppContainer>
       </Box>
 
-      {/* TODO: V3 */}
       {showMobileMenu && (
         <>
-          <MobileNavMenu
+          <NavBarMobileMenu
             onClose={() => toggleMobileNav(false)}
             isOpen={showMobileMenu}
             onNavButtonClick={handleMobileNavClick}

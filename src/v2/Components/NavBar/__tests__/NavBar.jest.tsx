@@ -4,7 +4,7 @@ import { useTracking } from "v2/System/Analytics/useTracking"
 import { mount } from "enzyme"
 import React from "react"
 import { NavBar } from "../NavBar"
-import { InboxNotificationCount } from "../Menus/MobileNavMenu/InboxNotificationCount"
+import { NavBarMobileMenuInboxNotificationCount } from "../NavBarMobileMenu/NavBarMobileMenuInboxNotificationCount"
 import { mediator } from "lib/mediator"
 
 jest.mock("v2/Components/Search/SearchBar", () => {
@@ -20,6 +20,10 @@ jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
 
 jest.mock("lib/isServer", () => ({
   isServer: true,
+}))
+
+jest.mock("v2/Components/NavBar/NavBarMobileMenu/NavBarMobileSubMenu", () => ({
+  NavBarMobileSubMenu: () => <></>,
 }))
 
 describe("NavBar", () => {
@@ -118,7 +122,7 @@ describe("NavBar", () => {
     it("toggles menu", () => {
       const wrapper = getWrapper()
 
-      expect(wrapper.find("MobileToggleIcon").length).toEqual(1)
+      expect(wrapper.find("NavBarMobileMenuIcon").length).toEqual(1)
 
       const toggle = () =>
         wrapper
@@ -129,19 +133,21 @@ describe("NavBar", () => {
           .first()
           .simulate("click")
 
-      expect(wrapper.find("MobileNavMenu").length).toEqual(0)
+      expect(wrapper.find("NavBarMobileMenu").length).toEqual(0)
       toggle()
-      expect(wrapper.find("MobileNavMenu").length).toEqual(1)
+      expect(wrapper.find("NavBarMobileMenu").length).toEqual(1)
       toggle()
-      expect(wrapper.find("MobileNavMenu").length).toEqual(0)
+      expect(wrapper.find("NavBarMobileMenu").length).toEqual(0)
     })
 
-    it("shows InboxNotificationCount when there are conversations", () => {
+    it("shows the inbox notifications count  when there are conversations", () => {
       const wrapper = getWrapper({
         // @ts-expect-error STRICT_NULL_CHECK
         user: { type: "NotAdmin", lab_features: ["User Conversations View"] },
       })
-      expect(wrapper.find(InboxNotificationCount).length).toBe(1)
+      expect(wrapper.find(NavBarMobileMenuInboxNotificationCount).length).toBe(
+        1
+      )
     })
   })
 

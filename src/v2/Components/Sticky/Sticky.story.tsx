@@ -1,6 +1,6 @@
 import { Box, Spacer, Text } from "@artsy/palette"
 import React from "react"
-import { MOBILE_NAV_HEIGHT, NAV_BAR_HEIGHT } from "../NavBar"
+import { MOBILE_NAV_HEIGHT, DESKTOP_NAV_BAR_HEIGHT } from "../NavBar"
 import { Sticky } from "./Sticky"
 import { StickyProvider } from "./StickyProvider"
 
@@ -16,14 +16,14 @@ export const Example = () => {
         top={0}
         left={0}
         right={0}
-        height={[MOBILE_NAV_HEIGHT, NAV_BAR_HEIGHT]}
+        height={[MOBILE_NAV_HEIGHT, DESKTOP_NAV_BAR_HEIGHT]}
         p={1}
         bg="black5"
       >
         <Text variant="md">Header placeholder</Text>
       </Box>
 
-      <Spacer height={[MOBILE_NAV_HEIGHT, NAV_BAR_HEIGHT]} />
+      <Spacer height={[MOBILE_NAV_HEIGHT, DESKTOP_NAV_BAR_HEIGHT]} />
 
       {[...new Array(10)].map((_, i) => {
         return (

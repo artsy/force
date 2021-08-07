@@ -3,7 +3,7 @@ import { NetworkOfflineMonitor } from "v2/System/Router/NetworkOfflineMonitor"
 import { findCurrentRoute } from "v2/System/Router/Utils/findCurrentRoute"
 import { useMaybeReloadAfterInquirySignIn } from "v2/System/Router/Utils/useMaybeReloadAfterInquirySignIn"
 import {
-  NAV_BAR_HEIGHT,
+  DESKTOP_NAV_BAR_HEIGHT,
   NavBar,
   MOBILE_NAV_HEIGHT,
   MOBILE_LOGGED_IN_NAV_HEIGHT,
@@ -89,7 +89,7 @@ export const AppShell: React.FC<AppShellProps> = props => {
       <Box
         pb={[
           isLoggedIn ? MOBILE_LOGGED_IN_NAV_HEIGHT : MOBILE_NAV_HEIGHT,
-          NAV_BAR_HEIGHT,
+          DESKTOP_NAV_BAR_HEIGHT,
         ]}
       >
         <Box left={0} position="fixed" width="100%" zIndex={100}>

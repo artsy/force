@@ -3,7 +3,7 @@ import styled from "styled-components"
 import { Flex, HTML, Join, Spacer, Text, color } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FeatureHeaderDefault_feature } from "v2/__generated__/FeatureHeaderDefault_feature.graphql"
-import { NAV_BAR_HEIGHT } from "v2/Components/NavBar"
+import { DESKTOP_NAV_BAR_HEIGHT } from "v2/Components/NavBar"
 
 const Container = styled(Flex)`
   width: 100%;
@@ -48,7 +48,10 @@ export const FeatureHeaderDefault: React.FC<FeatureHeaderDefaultProps> = ({
   return (
     <Container
       display={["block", "flex"]}
-      height={["auto", !!image ? `calc(95vh - ${NAV_BAR_HEIGHT}px)` : "50vh"]}
+      height={[
+        "auto",
+        !!image ? `calc(95vh - ${DESKTOP_NAV_BAR_HEIGHT}px)` : "50vh",
+      ]}
     >
       {image && (
         <Figure height={["50vh", "auto"]}>

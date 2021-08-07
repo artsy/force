@@ -7,6 +7,7 @@ export type HomeArtworkModuleRail_artworkModule = {
     readonly title: string | null;
     readonly key: string | null;
     readonly results: ReadonlyArray<{
+        readonly internalID: string;
         readonly " $fragmentRefs": FragmentRefs<"ShelfArtwork_artwork">;
     } | null> | null;
     readonly context: {
@@ -52,6 +53,13 @@ const node: ReaderFragment = {
       "plural": true,
       "selections": [
         {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "internalID",
+          "storageKey": null
+        },
+        {
           "args": null,
           "kind": "FragmentSpread",
           "name": "ShelfArtwork_artwork"
@@ -85,5 +93,5 @@ const node: ReaderFragment = {
   ],
   "type": "HomePageArtworkModule"
 };
-(node as any).hash = 'd9316b2be561839830e72fa16dd4650a';
+(node as any).hash = 'c52002757723ea240691001c3ddeb7e9';
 export default node;

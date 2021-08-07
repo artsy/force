@@ -3,7 +3,7 @@ import styled from "styled-components"
 import { Box, BoxProps, HTML, Join, Spacer, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FeatureHeaderFull_feature } from "v2/__generated__/FeatureHeaderFull_feature.graphql"
-import { NAV_BAR_HEIGHT, MOBILE_NAV_HEIGHT } from "v2/Components/NavBar"
+import { DESKTOP_NAV_BAR_HEIGHT, MOBILE_NAV_HEIGHT } from "v2/Components/NavBar"
 
 const Figure = styled(Box)`
   overflow: hidden;
@@ -34,7 +34,7 @@ export const FeatureHeaderFull: React.FC<FeatureHeaderFullProps> = ({
         <Figure
           height={[
             `calc(95vh - ${MOBILE_NAV_HEIGHT}px)`,
-            `calc(95vh - ${NAV_BAR_HEIGHT}px)`,
+            `calc(95vh - ${DESKTOP_NAV_BAR_HEIGHT}px)`,
           ]}
           bg="black10"
         >
