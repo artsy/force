@@ -67,6 +67,7 @@ describe("UnsubscribeApp", () => {
 
     expect(wrapper.find("UnsubscribeLoggedIn")).toHaveLength(1)
     expect(wrapper.find("UnsubscribeLoggedOut")).toHaveLength(0)
+    expect(wrapper.find("UnsubscribeFallback")).toHaveLength(0)
   })
 
   it("renders the logged out version with a token", () => {
@@ -75,6 +76,7 @@ describe("UnsubscribeApp", () => {
 
     expect(wrapper.find("UnsubscribeLoggedIn")).toHaveLength(0)
     expect(wrapper.find("UnsubscribeLoggedOut")).toHaveLength(1)
+    expect(wrapper.find("UnsubscribeFallback")).toHaveLength(0)
   })
 
   it("renders error message without a user or token", () => {
@@ -83,6 +85,6 @@ describe("UnsubscribeApp", () => {
 
     expect(wrapper.find("UnsubscribeLoggedInFragmentContainer")).toHaveLength(0)
     expect(wrapper.find("UnsubscribeLoggedOut")).toHaveLength(0)
-    expect(wrapper.text()).toMatch("Unable to update your email preferences")
+    expect(wrapper.find("UnsubscribeFallback")).toHaveLength(1)
   })
 })

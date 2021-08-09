@@ -7,6 +7,14 @@ import { UnsubscribeApp_me } from "v2/__generated__/UnsubscribeApp_me.graphql"
 import { UnsubscribeLoggedInFragmentContainer } from "./Components/UnsubscribeLoggedIn"
 import { UnsubscribeLoggedOut } from "./Components/UnsubscribeLoggedOut"
 
+const UnsubscribeFallback = () => {
+  return (
+    <Message variant="error" my={4}>
+      Unable to update your email preferences
+    </Message>
+  )
+}
+
 interface UnsubscribeAppProps {
   me: UnsubscribeApp_me | null
 }
@@ -16,11 +24,7 @@ export const UnsubscribeApp: React.FC<UnsubscribeAppProps> = ({ me }) => {
   const { authentication_token: authenticationToken } = match.location.query
 
   if (!me && !authenticationToken) {
-    return (
-      <Message variant="error" my={4}>
-        Unable to update your email preferences
-      </Message>
-    )
+    return <UnsubscribeFallback />
   }
 
   return (
