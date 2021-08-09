@@ -35,7 +35,7 @@ const FairOrganizerApp: React.FC<FairOrganizerAppProps> = ({
 
         <FairOrganizerPastEventsRail fairs={pastFairs} />
 
-        <Spacer mt={6} />
+        <Spacer mt={140} />
 
         <FairOrganizerLatestArticles fairOrganizer={fairOrganizer} />
       </Box>
