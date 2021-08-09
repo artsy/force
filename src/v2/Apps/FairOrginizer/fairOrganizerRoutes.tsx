@@ -10,6 +10,16 @@ const FairOrganizerApp = loadable(
   }
 )
 
+const FairOrganizerDedicatedArticles = loadable(
+  () =>
+    import(
+      /* webpackChunkName: "fairOrganizerBundle" */ "./Routes/FairOrganizerDedicatedArticles"
+    ),
+  {
+    resolveComponent: component => component.FairOrganizerDedicatedArticles,
+  }
+)
+
 export const fairOrganizerRoutes: AppRouteConfig[] = [
   {
     path: "/fair-organizer/:slug",
@@ -34,5 +44,13 @@ export const fairOrganizerRoutes: AppRouteConfig[] = [
         }
       }
     `,
+  },
+  {
+    path: "/fair-organizer/:slug/articles",
+    theme: "v3",
+    getComponent: () => FairOrganizerDedicatedArticles,
+    prepare: () => {
+      FairOrganizerDedicatedArticles.preload()
+    },
   },
 ]
