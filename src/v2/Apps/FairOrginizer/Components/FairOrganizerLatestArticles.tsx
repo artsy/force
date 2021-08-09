@@ -42,20 +42,18 @@ export const FairOrganizerLatestArticles: React.FC<FairOrganizerLatestArticlesPr
             {/* left column */}
             <Column span={[6]}>
               {leftColumn.map(article => (
-                <>
+                <Box mb={30} key={article.id}>
                   <Article article={article} size={"small"} />
-                  <Spacer mt={30} />
-                </>
+                </Box>
               ))}
             </Column>
 
             {/* right column */}
             <Column span={[6]}>
               {rightColumn.map(article => (
-                <>
+                <Box mb={30} key={article.id}>
                   <Article article={article} size={"small"} />
-                  <Spacer mt={30} />
-                </>
+                </Box>
               ))}
             </Column>
 
@@ -92,6 +90,7 @@ export const FairOrganizerLatestArticlesFragmentContainer = createFragmentContai
         articles: articlesConnection(first: 7) {
           edges {
             node {
+              id
               ...FairEditorialItem_article
             }
           }
@@ -104,3 +103,4 @@ export const FairOrganizerLatestArticlesFragmentContainer = createFragmentContai
 const Article = styled(FairEditorialItem).attrs({
   isResponsive: true,
 })``
+Article.displayName = "Article"
