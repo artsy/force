@@ -13,7 +13,16 @@ export const Timer: React.FC<{
   endDate: string
   labelWithTimeRemaining?: string
   labelWithoutTimeRemaining?: string
-}> = ({ endDate, labelWithTimeRemaining, labelWithoutTimeRemaining }) => {
+  label?: string
+  size?: TextVariant
+}> = ({
+  endDate,
+  labelWithTimeRemaining,
+  labelWithoutTimeRemaining,
+  label = "",
+  size = "md",
+  ...rest
+}) => {
   const tokens = useThemeConfig({
     v2: {
       variant: "mediumText" as TextVariant,
@@ -21,7 +30,7 @@ export const Timer: React.FC<{
       secondLineColor: "black100",
     },
     v3: {
-      variant: "md" as TextVariant,
+      variant: size,
       firstLineColor: "blue100",
       secondLineColor: "black60",
     },
@@ -39,8 +48,13 @@ export const Timer: React.FC<{
         const hasEnded = Math.floor(duration.seconds) <= 0
 
         return (
-          <Flex flexDirection="column" alignItems="center">
+          <Flex flexDirection="column" {...rest}>
             <Text variant={tokens.variant} color={tokens.firstLineColor}>
+              {label && (
+                <Text variant="md" color="black100">
+                  {label}
+                </Text>
+              )}
               {padWithZero(Math.max(0, Math.floor(duration.as("days"))))}d
               {SEPARATOR}
               {padWithZero(Math.max(0, Math.floor(duration.as("hours") % 24)))}h

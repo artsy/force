@@ -19,8 +19,8 @@ export const fairOrganizerRoutes: AppRouteConfig[] = [
       FairOrganizerApp.preload()
     },
     query: graphql`
-      query fairOrganizerRoutes_Query($slug: String!) {
-        fairOrganizer(id: $slug) {
+      query fairOrganizerRoutes_FairOrganizerQuery($slug: String!) {
+        fairOrganizer(id: $slug) @principalField {
           ...FairOrganizerApp_fairOrganizer
         }
       }

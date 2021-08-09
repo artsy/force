@@ -3,22 +3,22 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type FairOrganizerApp_fairOrganizer = {
+export type FairOrganizerHeader_fairOrganizer = {
     readonly name: string | null;
     readonly fairs: {
         readonly edges: ReadonlyArray<{
             readonly node: {
-                readonly " $fragmentRefs": FragmentRefs<"FairHeaderImage_fair">;
+                readonly " $fragmentRefs": FragmentRefs<"FairOrganizerTiming_fair">;
             } | null;
         } | null> | null;
     } | null;
-    readonly " $fragmentRefs": FragmentRefs<"FairOrganizerHeader_fairOrganizer">;
-    readonly " $refType": "FairOrganizerApp_fairOrganizer";
+    readonly " $fragmentRefs": FragmentRefs<"FairOrganizerHeaderIcon_fairOrganizer" | "FairOrganizerFollowButton_fairOrganizer" | "FairOrganizerInfo_fairOrganizer">;
+    readonly " $refType": "FairOrganizerHeader_fairOrganizer";
 };
-export type FairOrganizerApp_fairOrganizer$data = FairOrganizerApp_fairOrganizer;
-export type FairOrganizerApp_fairOrganizer$key = {
-    readonly " $data"?: FairOrganizerApp_fairOrganizer$data;
-    readonly " $fragmentRefs": FragmentRefs<"FairOrganizerApp_fairOrganizer">;
+export type FairOrganizerHeader_fairOrganizer$data = FairOrganizerHeader_fairOrganizer;
+export type FairOrganizerHeader_fairOrganizer$key = {
+    readonly " $data"?: FairOrganizerHeader_fairOrganizer$data;
+    readonly " $fragmentRefs": FragmentRefs<"FairOrganizerHeader_fairOrganizer">;
 };
 
 
@@ -27,7 +27,7 @@ const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "FairOrganizerApp_fairOrganizer",
+  "name": "FairOrganizerHeader_fairOrganizer",
   "selections": [
     {
       "alias": null,
@@ -69,7 +69,7 @@ const node: ReaderFragment = {
                 {
                   "args": null,
                   "kind": "FragmentSpread",
-                  "name": "FairHeaderImage_fair"
+                  "name": "FairOrganizerTiming_fair"
                 }
               ],
               "storageKey": null
@@ -83,10 +83,20 @@ const node: ReaderFragment = {
     {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "FairOrganizerHeader_fairOrganizer"
+      "name": "FairOrganizerHeaderIcon_fairOrganizer"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "FairOrganizerFollowButton_fairOrganizer"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "FairOrganizerInfo_fairOrganizer"
     }
   ],
   "type": "FairOrganizer"
 };
-(node as any).hash = '04a8e53c8219cc83f41b290b7ad4bba5';
+(node as any).hash = 'c0ea2603438e45b9b2f1a18a1992d6c5';
 export default node;
