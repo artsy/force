@@ -20,17 +20,40 @@ const { getWrapper } = setupTestWrapper<FairOrganizerApp_Test_Query>({
 })
 
 describe("FairOrganizerLatestArticles", () => {
-  it("renders correctly", () => {
+  it("renders a section title with the fair name", () => {
     const wrapper = getWrapper({
-      FairOrganizer: () => ({ name: "Art Paris", articles: articlesFixture }),
+      FairOrganizer: () => ({ name: "Art Paris" }),
     })
     expect(wrapper.text()).toContain("Latest from Art Paris")
-    expect(wrapper.text()).toContain("Read All Articles")
+  })
+
+  it("renders 7 articles", () => {
+    const wrapper = getWrapper({
+      FairOrganizer: () => ({ articles: articlesFixture }),
+    })
     expect(wrapper.find("Article").length).toBe(7)
+  })
+
+  it("renders the most recent article in a large card", () => {
+    const wrapper = getWrapper({
+      FairOrganizer: () => ({ articles: articlesFixture }),
+    })
     expect(wrapper.find("Article").first().prop("size")).toEqual("large")
+  })
+
+  it("renders the next 6 articles in small cards", () => {
+    const wrapper = getWrapper({
+      FairOrganizer: () => ({ articles: articlesFixture }),
+    })
     for (let i = 1; i < 7; i++) {
       expect(wrapper.find("Article").at(i).prop("size")).toEqual("small")
     }
+  })
+
+  it("renders a read all button", () => {
+    const wrapper = getWrapper({})
+    expect(wrapper.find("Button").length).toBe(1)
+    expect(wrapper.text()).toContain("Read All Articles")
   })
 })
 
