@@ -65,6 +65,7 @@ export const NavBarMobileMenu: React.FC<NavBarMobileMenuProps> = ({
             justifyContent="center"
             onClick={onClose}
             zIndex={2}
+            bg="transparent"
           >
             <NavBarMobileMenuIcon open />
           </NavBarMobileMenuItemButton>
