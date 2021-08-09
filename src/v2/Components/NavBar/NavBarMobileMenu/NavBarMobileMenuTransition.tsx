@@ -9,10 +9,12 @@ export const NavBarMobileMenuTransition = styled(Box)<{
   top: 0;
   left: 0;
   width: 100vw;
-  height: 100vh;
+  height: 100%;
   background-color: ${themeGet("colors.white100")};
-  overflow-x: hidden;
   transition: transform 150ms, opacity 150ms;
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 
   ${({ isOpen }) =>
     isOpen
@@ -25,5 +27,5 @@ export const NavBarMobileMenuTransition = styled(Box)<{
           z-index: 0;
           transform: translate3d(100%, 0, 0);
           opacity: 0;
-        `}
+        `};
 `
