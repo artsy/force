@@ -30,9 +30,28 @@ query fairOrganizerRoutes_FairOrganizerDedicatedArticles_Query(
   }
 }
 
+fragment FairEditorialItem_article on Article {
+  id
+  internalID
+  slug
+  title
+  href
+  publishedAt(format: "MMMM D, YYYY")
+  thumbnailTitle
+  thumbnailImage {
+    cropped(width: 325, height: 240) {
+      width
+      height
+      src
+      srcSet
+    }
+  }
+}
+
 fragment FairOrganizerDedicatedArticles_fairOrganizer_2Pg8Wv on FairOrganizer {
   slug
-  articles: articlesConnection(first: 16, page: $page) {
+  name
+  articlesConnection(first: 16, page: $page) {
     totalCount
     pageInfo {
       hasNextPage
@@ -43,7 +62,7 @@ fragment FairOrganizerDedicatedArticles_fairOrganizer_2Pg8Wv on FairOrganizer {
     edges {
       node {
         id
-        title
+        ...FairEditorialItem_article
       }
     }
   }
@@ -103,19 +122,26 @@ v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "cursor",
+  "name": "slug",
   "storageKey": null
 },
 v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
+  "name": "cursor",
+  "storageKey": null
+},
+v5 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
   "name": "page",
   "storageKey": null
 },
-v5 = [
-  (v3/*: any*/),
+v6 = [
   (v4/*: any*/),
+  (v5/*: any*/),
   {
     "alias": null,
     "args": null,
@@ -124,7 +150,7 @@ v5 = [
     "storageKey": null
   }
 ],
-v6 = {
+v7 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -173,15 +199,16 @@ return {
         "name": "fairOrganizer",
         "plural": false,
         "selections": [
+          (v3/*: any*/),
           {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "slug",
+            "name": "name",
             "storageKey": null
           },
           {
-            "alias": "articles",
+            "alias": null,
             "args": [
               {
                 "kind": "Literal",
@@ -235,7 +262,7 @@ return {
                     "kind": "LinkedField",
                     "name": "around",
                     "plural": true,
-                    "selections": (v5/*: any*/),
+                    "selections": (v6/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -245,7 +272,7 @@ return {
                     "kind": "LinkedField",
                     "name": "first",
                     "plural": false,
-                    "selections": (v5/*: any*/),
+                    "selections": (v6/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -255,7 +282,7 @@ return {
                     "kind": "LinkedField",
                     "name": "last",
                     "plural": false,
-                    "selections": (v5/*: any*/),
+                    "selections": (v6/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -266,8 +293,8 @@ return {
                     "name": "previous",
                     "plural": false,
                     "selections": [
-                      (v3/*: any*/),
-                      (v4/*: any*/)
+                      (v4/*: any*/),
+                      (v5/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -290,12 +317,108 @@ return {
                     "name": "node",
                     "plural": false,
                     "selections": [
-                      (v6/*: any*/),
+                      (v7/*: any*/),
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "internalID",
+                        "storageKey": null
+                      },
+                      (v3/*: any*/),
                       {
                         "alias": null,
                         "args": null,
                         "kind": "ScalarField",
                         "name": "title",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "href",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": [
+                          {
+                            "kind": "Literal",
+                            "name": "format",
+                            "value": "MMMM D, YYYY"
+                          }
+                        ],
+                        "kind": "ScalarField",
+                        "name": "publishedAt",
+                        "storageKey": "publishedAt(format:\"MMMM D, YYYY\")"
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "thumbnailTitle",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": "Image",
+                        "kind": "LinkedField",
+                        "name": "thumbnailImage",
+                        "plural": false,
+                        "selections": [
+                          {
+                            "alias": null,
+                            "args": [
+                              {
+                                "kind": "Literal",
+                                "name": "height",
+                                "value": 240
+                              },
+                              {
+                                "kind": "Literal",
+                                "name": "width",
+                                "value": 325
+                              }
+                            ],
+                            "concreteType": "CroppedImageUrl",
+                            "kind": "LinkedField",
+                            "name": "cropped",
+                            "plural": false,
+                            "selections": [
+                              {
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "width",
+                                "storageKey": null
+                              },
+                              {
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "height",
+                                "storageKey": null
+                              },
+                              {
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "src",
+                                "storageKey": null
+                              },
+                              {
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "srcSet",
+                                "storageKey": null
+                              }
+                            ],
+                            "storageKey": "cropped(height:240,width:325)"
+                          }
+                        ],
                         "storageKey": null
                       }
                     ],
@@ -307,7 +430,7 @@ return {
             ],
             "storageKey": null
           },
-          (v6/*: any*/)
+          (v7/*: any*/)
         ],
         "storageKey": null
       }
@@ -318,7 +441,7 @@ return {
     "metadata": {},
     "name": "fairOrganizerRoutes_FairOrganizerDedicatedArticles_Query",
     "operationKind": "query",
-    "text": "query fairOrganizerRoutes_FairOrganizerDedicatedArticles_Query(\n  $slug: String!\n  $page: Int\n) {\n  fairOrganizer(id: $slug) @principalField {\n    ...FairOrganizerDedicatedArticles_fairOrganizer_2Pg8Wv\n    id\n  }\n}\n\nfragment FairOrganizerDedicatedArticles_fairOrganizer_2Pg8Wv on FairOrganizer {\n  slug\n  articles: articlesConnection(first: 16, page: $page) {\n    totalCount\n    pageInfo {\n      hasNextPage\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        id\n        title\n      }\n    }\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n"
+    "text": "query fairOrganizerRoutes_FairOrganizerDedicatedArticles_Query(\n  $slug: String!\n  $page: Int\n) {\n  fairOrganizer(id: $slug) @principalField {\n    ...FairOrganizerDedicatedArticles_fairOrganizer_2Pg8Wv\n    id\n  }\n}\n\nfragment FairEditorialItem_article on Article {\n  id\n  internalID\n  slug\n  title\n  href\n  publishedAt(format: \"MMMM D, YYYY\")\n  thumbnailTitle\n  thumbnailImage {\n    cropped(width: 325, height: 240) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment FairOrganizerDedicatedArticles_fairOrganizer_2Pg8Wv on FairOrganizer {\n  slug\n  name\n  articlesConnection(first: 16, page: $page) {\n    totalCount\n    pageInfo {\n      hasNextPage\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        id\n        ...FairEditorialItem_article\n      }\n    }\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n"
   }
 };
 })();
