@@ -15,6 +15,15 @@ const { getWrapper } = setupTestWrapper<FairOrganizerApp_Test_Query>({
       fairOrganizer(id: "example") {
         ...FairOrganizerApp_fairOrganizer
       }
+      pastFairs: fairsConnection(
+        first: 20
+        fairOrganizerID: "example"
+        sort: START_AT_DESC
+        status: CLOSED
+        hasFullFeature: true
+      ) {
+        ...FairOrganizerApp_pastFairs
+      }
     }
   `,
 })
@@ -24,12 +33,13 @@ describe("FairOrganizerApp", () => {
     const wrapper = getWrapper({
       FairOrganizer: () => ({ name: "Art Paris" }),
     })
-    expect(wrapper.find("Title").text()).toEqual("Art Paris | Artsy")
+    expect(wrapper.find("Title").first().text()).toEqual("Art Paris | Artsy")
   })
 
   it("renders correctly", () => {
     const wrapper = getWrapper()
     expect(wrapper.find("FairHeaderImage").length).toBe(1)
     expect(wrapper.find("FairOrganizerHeader").length).toBe(1)
+    expect(wrapper.find("FairOrganizerPastEventsRail").length).toBe(1)
   })
 })
