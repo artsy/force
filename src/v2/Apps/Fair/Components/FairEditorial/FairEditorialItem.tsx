@@ -83,7 +83,8 @@ export const FairEditorialItem: React.FC<FairEditorialItemProps> = ({
     <RouterLink
       to={article.href!}
       aria-label={`${article.title} (${article.publishedAt})`}
-      style={{ textDecoration: "none", display: "block" }}
+      textDecoration="none"
+      style={{ display: "block" }}
       onClick={() => tracking.trackEvent(clickedArticleTrackingData)}
     >
       <Box maxWidth={image.width}>
