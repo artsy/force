@@ -16,7 +16,8 @@ const FairOrganizerDedicatedArticles = loadable(
       /* webpackChunkName: "fairOrganizerBundle" */ "./Routes/FairOrganizerDedicatedArticles"
     ),
   {
-    resolveComponent: component => component.FairOrganizerDedicatedArticles,
+    resolveComponent: component =>
+      component.FairOrganizerDedicatedArticlesFragmentContainer,
   }
 )
 
@@ -52,5 +53,20 @@ export const fairOrganizerRoutes: AppRouteConfig[] = [
     prepare: () => {
       FairOrganizerDedicatedArticles.preload()
     },
+    prepareVariables: ({ slug }, { location }) => {
+      const { page } = location.query
+      return { page, slug }
+    },
+    query: graphql`
+      query fairOrganizerRoutes_FairOrganizerDedicatedArticles_Query(
+        $slug: String!
+        $page: Int
+      ) {
+        fairOrganizer(id: $slug) @principalField {
+          ...FairOrganizerDedicatedArticles_fairOrganizer
+            @arguments(page: $page)
+        }
+      }
+    `,
   },
 ]
