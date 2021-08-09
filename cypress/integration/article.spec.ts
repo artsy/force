@@ -166,7 +166,7 @@ describe("Article", () => {
       })
 
       // TODO: Broken :'(
-      describe.skip("Venice Biennale 360", () => {
+      describe("Venice Biennale 360", () => {
         it("/venice-biennale", () => {
           visitWithStatusRetries("venice-biennale")
           cy.get(".venice-overlay__title").should(
