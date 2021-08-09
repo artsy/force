@@ -98,24 +98,23 @@
   dependencies:
     passport-strategy "1.x.x"
 
-"@artsy/passport@1.9.0":
-  version "1.9.0"
-  resolved "https://registry.yarnpkg.com/@artsy/passport/-/passport-1.9.0.tgz#1720c25e612c7968cddc8e1dc4c149860674038f"
-  integrity sha512-+6pZDGBxgC8wZM6VGrpGH6OIbrAbp7oFB4aiz3OMPjEMfS6Uim+I0MmXIvCrPNQXX9GXRQKZqJsAtUADC1Xi3w==
+"@artsy/passport@3.1.0":
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/@artsy/passport/-/passport-3.1.0.tgz#4caf28d6e90a87c3f18e940480a43d898a9340ca"
+  integrity sha512-Hml0Vl04FkDcr7dyCxja7o2fIYkGsqvEew1RNerg1ram95G5Jt56dZ1t7Ol/Yt26mm/IcvEVjqHFgsncNY4Lgg==
   dependencies:
     "@artsy/passport-local-with-otp" "0.3.1"
     "@artsy/xapp" "1.0.6"
     analytics-node "2.4.1"
     async "1.5.2"
     csurf "1.9.0"
-    dotenv "4.0.0"
     express "4.14.0"
     ip "1.1.5"
-    mailcheck "1.1.1"
     passport "0.3.2"
-    passport-apple "https://github.com/artsy/passport-apple#f41adb7822c8344b72bc36a7d68312f6592cb14f"
+    passport-apple "git+https://github.com/artsy/passport-apple.git#f41adb7822c8344b72bc36a7d68312f6592cb14f"
     passport-facebook "2.1.1"
     superagent "1.8.4"
+    underscore "^1.12.1"
     underscore.string "3.3.4"
 
 "@artsy/react-html-parser@^3.0.2":
@@ -15249,9 +15248,10 @@ pascalcase@^0.1.1:
   resolved "https://registry.yarnpkg.com/pascalcase/-/pascalcase-0.1.1.tgz#b363e55e8006ca6fe21784d2db22bd15d7917f14"
   integrity sha1-s2PlXoAGym/iF4TS2yK9FdeRfxQ=
 
-"passport-apple@https://github.com/artsy/passport-apple#f41adb7822c8344b72bc36a7d68312f6592cb14f":
+"passport-apple@git+https://github.com/artsy/passport-apple.git#f41adb7822c8344b72bc36a7d68312f6592cb14f":
   version "1.1.2"
-  resolved "https://github.com/artsy/passport-apple#f41adb7822c8344b72bc36a7d68312f6592cb14f"
+  uid f41adb7822c8344b72bc36a7d68312f6592cb14f
+  resolved "git+https://github.com/artsy/passport-apple.git#f41adb7822c8344b72bc36a7d68312f6592cb14f"
   dependencies:
     jsonwebtoken "^8.5.1"
     passport-oauth2 "^1.5.0"
@@ -19697,6 +19697,11 @@ underscore@*, underscore@1.12.1, underscore@>=1.4.0, underscore@>=1.8.3, undersc
   version "1.12.1"
   resolved "https://registry.yarnpkg.com/underscore/-/underscore-1.12.1.tgz#7bb8cc9b3d397e201cf8553336d262544ead829e"
   integrity sha512-hEQt0+ZLDVUMhebKxL4x1BTtDY7bavVofhZ9KZ4aI26X9SRaE+Y3m83XUL1UP2jn8ynjndwCCpEHdUG+9pP1Tw==
+
+underscore@^1.12.1:
+  version "1.13.1"
+  resolved "https://registry.yarnpkg.com/underscore/-/underscore-1.13.1.tgz#0c1c6bd2df54b6b69f2314066d65b6cde6fcf9d1"
+  integrity sha512-hzSoAVtJF+3ZtiFX0VgfFPHEDRm7Y/QPjGyNo4TVdnDTdft3tr8hEkD25a1jC+TjTuE7tkHGKkhwCgs9dgBB2g==
 
 underscore@~1.4.4:
   version "1.4.4"
