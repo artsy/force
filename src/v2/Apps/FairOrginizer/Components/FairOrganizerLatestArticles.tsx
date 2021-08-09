@@ -5,6 +5,7 @@ import {
   FairEditorialItemProps,
 } from "v2/Apps/Fair/Components/FairEditorial/FairEditorialItem"
 import { RouterLink } from "v2/System/Router/RouterLink"
+import { createFragmentContainer, graphql } from "react-relay"
 
 function getArticlesColumns<T>(articles: T[]) {
   const leftColumn: T[] = []
@@ -21,7 +22,9 @@ export const FairOrganizerLatestArticles: React.FC<any> = ({
   fairOrganizer,
 }) => {
   const { articles, name } = fairOrganizer
-  const [latestArticle, ...otherArticles] = articles
+  const [latestArticle, ...otherArticles] = articles.edges.map(
+    edge => edge.node
+  )
 
   const { leftColumn, rightColumn } = getArticlesColumns<typeof otherArticles>(
     otherArticles
@@ -76,7 +79,7 @@ export const FairOrganizerLatestArticles: React.FC<any> = ({
             <Column span={[12, 8, 6]} start={[1, 5, 7]}>
               <Spacer mt={30} />
               <RouterLink
-                to={"/fair/art-paris-2020"}
+                to={"/"}
                 style={{ textDecoration: "none", display: "block" }}
               >
                 <Button
@@ -95,3 +98,21 @@ export const FairOrganizerLatestArticles: React.FC<any> = ({
     </Box>
   )
 }
+
+export const FairOrganizerLatestArticlesFragmentContainer = createFragmentContainer(
+  FairOrganizerLatestArticles,
+  {
+    fairOrganizer: graphql`
+      fragment FairOrganizerLatestArticles_fairOrganizer on FairOrganizer {
+        name
+        articles: articlesConnection(first: 7) {
+          edges {
+            node {
+              ...FairEditorialItem_article
+            }
+          }
+        }
+      }
+    `,
+  }
+)
