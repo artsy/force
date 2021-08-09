@@ -3,19 +3,19 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type PastEventsRail_fairs = {
+export type FairOrganizerPastEventsRail_fairs = {
     readonly edges: ReadonlyArray<{
         readonly node: {
             readonly id: string;
-            readonly " $fragmentRefs": FragmentRefs<"PastEventRailCell_fair">;
+            readonly " $fragmentRefs": FragmentRefs<"FairOrganizerPastEventRailCell_fair">;
         } | null;
     } | null> | null;
-    readonly " $refType": "PastEventsRail_fairs";
+    readonly " $refType": "FairOrganizerPastEventsRail_fairs";
 };
-export type PastEventsRail_fairs$data = PastEventsRail_fairs;
-export type PastEventsRail_fairs$key = {
-    readonly " $data"?: PastEventsRail_fairs$data;
-    readonly " $fragmentRefs": FragmentRefs<"PastEventsRail_fairs">;
+export type FairOrganizerPastEventsRail_fairs$data = FairOrganizerPastEventsRail_fairs;
+export type FairOrganizerPastEventsRail_fairs$key = {
+    readonly " $data"?: FairOrganizerPastEventsRail_fairs$data;
+    readonly " $fragmentRefs": FragmentRefs<"FairOrganizerPastEventsRail_fairs">;
 };
 
 
@@ -24,7 +24,7 @@ const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "PastEventsRail_fairs",
+  "name": "FairOrganizerPastEventsRail_fairs",
   "selections": [
     {
       "alias": null,
@@ -52,7 +52,7 @@ const node: ReaderFragment = {
             {
               "args": null,
               "kind": "FragmentSpread",
-              "name": "PastEventRailCell_fair"
+              "name": "FairOrganizerPastEventRailCell_fair"
             }
           ],
           "storageKey": null
@@ -63,5 +63,5 @@ const node: ReaderFragment = {
   ],
   "type": "FairConnection"
 };
-(node as any).hash = '9b80329777176f429ac2179bd87d9596';
+(node as any).hash = 'f4b8edbf17149f9ddadfe4eb9d5db502';
 export default node;

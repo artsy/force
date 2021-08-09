@@ -3,31 +3,31 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type PastEventsRail_Test_QueryVariables = {
+export type FairOrganizerPastEventsRail_Test_QueryVariables = {
     slug: string;
 };
-export type PastEventsRail_Test_QueryResponse = {
+export type FairOrganizerPastEventsRail_Test_QueryResponse = {
     readonly fairs: {
-        readonly " $fragmentRefs": FragmentRefs<"PastEventsRail_fairs">;
+        readonly " $fragmentRefs": FragmentRefs<"FairOrganizerPastEventsRail_fairs">;
     } | null;
 };
-export type PastEventsRail_Test_Query = {
-    readonly response: PastEventsRail_Test_QueryResponse;
-    readonly variables: PastEventsRail_Test_QueryVariables;
+export type FairOrganizerPastEventsRail_Test_Query = {
+    readonly response: FairOrganizerPastEventsRail_Test_QueryResponse;
+    readonly variables: FairOrganizerPastEventsRail_Test_QueryVariables;
 };
 
 
 
 /*
-query PastEventsRail_Test_Query(
+query FairOrganizerPastEventsRail_Test_Query(
   $slug: String!
 ) {
   fairs: fairsConnection(fairOrganizerID: $slug) {
-    ...PastEventsRail_fairs
+    ...FairOrganizerPastEventsRail_fairs
   }
 }
 
-fragment PastEventRailCell_fair on Fair {
+fragment FairOrganizerPastEventRailCell_fair on Fair {
   slug
   name
   image {
@@ -40,11 +40,11 @@ fragment PastEventRailCell_fair on Fair {
   }
 }
 
-fragment PastEventsRail_fairs on FairConnection {
+fragment FairOrganizerPastEventsRail_fairs on FairConnection {
   edges {
     node {
       id
-      ...PastEventRailCell_fair
+      ...FairOrganizerPastEventRailCell_fair
     }
   }
 }
@@ -71,7 +71,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "PastEventsRail_Test_Query",
+    "name": "FairOrganizerPastEventsRail_Test_Query",
     "selections": [
       {
         "alias": "fairs",
@@ -84,7 +84,7 @@ return {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "PastEventsRail_fairs"
+            "name": "FairOrganizerPastEventsRail_fairs"
           }
         ],
         "storageKey": null
@@ -96,7 +96,7 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "PastEventsRail_Test_Query",
+    "name": "FairOrganizerPastEventsRail_Test_Query",
     "selections": [
       {
         "alias": "fairs",
@@ -218,11 +218,11 @@ return {
   "params": {
     "id": null,
     "metadata": {},
-    "name": "PastEventsRail_Test_Query",
+    "name": "FairOrganizerPastEventsRail_Test_Query",
     "operationKind": "query",
-    "text": "query PastEventsRail_Test_Query(\n  $slug: String!\n) {\n  fairs: fairsConnection(fairOrganizerID: $slug) {\n    ...PastEventsRail_fairs\n  }\n}\n\nfragment PastEventRailCell_fair on Fair {\n  slug\n  name\n  image {\n    cropped(width: 325, height: 244) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment PastEventsRail_fairs on FairConnection {\n  edges {\n    node {\n      id\n      ...PastEventRailCell_fair\n    }\n  }\n}\n"
+    "text": "query FairOrganizerPastEventsRail_Test_Query(\n  $slug: String!\n) {\n  fairs: fairsConnection(fairOrganizerID: $slug) {\n    ...FairOrganizerPastEventsRail_fairs\n  }\n}\n\nfragment FairOrganizerPastEventRailCell_fair on Fair {\n  slug\n  name\n  image {\n    cropped(width: 325, height: 244) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment FairOrganizerPastEventsRail_fairs on FairConnection {\n  edges {\n    node {\n      id\n      ...FairOrganizerPastEventRailCell_fair\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '5c312aa1f37cb843fb455cd9e6474ce6';
+(node as any).hash = '3183a2ac445876ba5d8dc61338f6b04c';
 export default node;

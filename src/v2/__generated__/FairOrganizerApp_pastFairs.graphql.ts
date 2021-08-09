@@ -4,7 +4,7 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type FairOrganizerApp_pastFairs = {
-    readonly " $fragmentRefs": FragmentRefs<"PastEventsRail_fairs">;
+    readonly " $fragmentRefs": FragmentRefs<"FairOrganizerPastEventsRail_fairs">;
     readonly " $refType": "FairOrganizerApp_pastFairs";
 };
 export type FairOrganizerApp_pastFairs$data = FairOrganizerApp_pastFairs;
@@ -24,10 +24,10 @@ const node: ReaderFragment = {
     {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "PastEventsRail_fairs"
+      "name": "FairOrganizerPastEventsRail_fairs"
     }
   ],
   "type": "FairConnection"
 };
-(node as any).hash = 'ace5c2d9c6f82f3d7b130be48420f132';
+(node as any).hash = 'd7ca4fed331d8a8722ceb109e081de0e';
 export default node;

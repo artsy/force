@@ -3,7 +3,7 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type PastEventRailCell_fair = {
+export type FairOrganizerPastEventRailCell_fair = {
     readonly slug: string;
     readonly name: string | null;
     readonly image: {
@@ -14,12 +14,12 @@ export type PastEventRailCell_fair = {
             readonly srcSet: string;
         } | null;
     } | null;
-    readonly " $refType": "PastEventRailCell_fair";
+    readonly " $refType": "FairOrganizerPastEventRailCell_fair";
 };
-export type PastEventRailCell_fair$data = PastEventRailCell_fair;
-export type PastEventRailCell_fair$key = {
-    readonly " $data"?: PastEventRailCell_fair$data;
-    readonly " $fragmentRefs": FragmentRefs<"PastEventRailCell_fair">;
+export type FairOrganizerPastEventRailCell_fair$data = FairOrganizerPastEventRailCell_fair;
+export type FairOrganizerPastEventRailCell_fair$key = {
+    readonly " $data"?: FairOrganizerPastEventRailCell_fair$data;
+    readonly " $fragmentRefs": FragmentRefs<"FairOrganizerPastEventRailCell_fair">;
 };
 
 
@@ -28,7 +28,7 @@ const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "PastEventRailCell_fair",
+  "name": "FairOrganizerPastEventRailCell_fair",
   "selections": [
     {
       "alias": null,
@@ -108,5 +108,5 @@ const node: ReaderFragment = {
   ],
   "type": "Fair"
 };
-(node as any).hash = 'bfe5e7129889de035d0d1924624f6052';
+(node as any).hash = '0128a360ad6a3c56c07bfede7f2fbb8f';
 export default node;

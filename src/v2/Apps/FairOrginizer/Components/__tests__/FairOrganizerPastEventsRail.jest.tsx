@@ -1,18 +1,20 @@
 import { graphql } from "react-relay"
 import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
-import { PastEventsRail_Test_Query } from "v2/__generated__/PastEventsRail_Test_Query.graphql"
-import { PastEventRailCell } from "../PastEventRailCell"
-import { PastEventsRailFragmentContainer as PastEventsRail } from "../PastEventsRail"
+import { FairOrganizerPastEventsRail_Test_Query } from "v2/__generated__/FairOrganizerPastEventsRail_Test_Query.graphql"
+import { FairOrganizerPastEventRailCell } from "../FairOrganizerPastEventRailCell"
+import { FairOrganizerPastEventsRailFragmentContainer as FairOrganizerPastEventsRail } from "../FairOrganizerPastEventsRail"
 
 jest.unmock("react-relay")
 
-describe("PastEventsRail", () => {
-  const { getWrapper } = setupTestWrapper<PastEventsRail_Test_Query>({
-    Component: PastEventsRail,
+describe("FairOrganizerPastEventsRail", () => {
+  const { getWrapper } = setupTestWrapper<
+    FairOrganizerPastEventsRail_Test_Query
+  >({
+    Component: FairOrganizerPastEventsRail,
     query: graphql`
-      query PastEventsRail_Test_Query($slug: String!) {
+      query FairOrganizerPastEventsRail_Test_Query($slug: String!) {
         fairs: fairsConnection(fairOrganizerID: $slug) {
-          ...PastEventsRail_fairs
+          ...FairOrganizerPastEventsRail_fairs
         }
       }
     `,
@@ -43,7 +45,7 @@ describe("PastEventsRail", () => {
       }),
     })
 
-    expect(wrapper.find(PastEventRailCell).length).toBe(2)
+    expect(wrapper.find(FairOrganizerPastEventRailCell).length).toBe(2)
     expect(wrapper.find("RouterLink").length).toBe(2)
 
     expect(wrapper.find("RouterLink").at(0).html()).toContain(
