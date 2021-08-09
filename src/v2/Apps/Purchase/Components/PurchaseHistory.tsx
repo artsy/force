@@ -93,7 +93,6 @@ const PurchaseHistory: React.FC<PurchaseHistoryProps> = (
   return !loading ? (
     <Box>
       <Box mx={["0px", "40px", "40px", "40px"]} mt="-5px">
-        {/* @ts-expect-error STRICT_NULL_CHECK */}
         <UserSettingsTabs route={sd.CURRENT_PATH} username={me.name} />
       </Box>
       {/* @ts-expect-error STRICT_NULL_CHECK */}
@@ -120,7 +119,7 @@ const PurchaseHistory: React.FC<PurchaseHistoryProps> = (
           {props.me.orders.pageCursors && (
             <SmallPagination
               {...paginationProps}
-              getHref={x => {
+              getHref={() => {
                 // FIXME: wire this up properly
                 return ""
               }}
@@ -135,7 +134,7 @@ const PurchaseHistory: React.FC<PurchaseHistoryProps> = (
             {props.me.orders.pageCursors && (
               <LargePagination
                 {...paginationProps}
-                getHref={x => {
+                getHref={() => {
                   // FIXME: wire this up properly
                   return ""
                 }}

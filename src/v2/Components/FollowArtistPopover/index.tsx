@@ -88,7 +88,7 @@ export const FollowArtistPopoverQueryRenderer = ({
         return (
           props && (
             <FollowArtistPopoverFragmentContainer
-              artist={props.artist}
+              artist={props.artist!}
               user={user}
             />
           )

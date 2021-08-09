@@ -8,7 +8,6 @@ let locateStub
 const _ = require("underscore")
 const sinon = require("sinon")
 const Backbone = require("backbone")
-const benv = require("benv")
 const rewire = require("rewire")
 
 const googleyAddress = {

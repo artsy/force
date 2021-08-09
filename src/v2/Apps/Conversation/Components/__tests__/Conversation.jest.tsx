@@ -1,89 +1,118 @@
-import { mount } from "enzyme"
 import React from "react"
-import { Item } from "../Item"
-import { Conversation_conversation } from "v2/__generated__/Conversation_conversation.graphql"
+import { ConversationPaginationContainer } from "../Conversation"
+import { graphql } from "react-relay"
+import { useTracking } from "react-tracking"
+import { useSystemContext } from "v2/System/useSystemContext"
+import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
+import { ConversationPagination_Test_Query } from "v2/__generated__/ConversationPagination_Test_Query.graphql"
+
+jest.unmock("react-relay")
+jest.mock("v2/System/useSystemContext")
+
+const { getWrapper } = setupTestWrapper<ConversationPagination_Test_Query>({
+  Component: props => {
+    if (!props.node) return null
+
+    return (
+      <ConversationPaginationContainer
+        conversation={props.node}
+        refetch={jest.fn()}
+        setShowDetails={jest.fn()}
+        showDetails
+      />
+    )
+  },
+  query: graphql`
+    query ConversationPagination_Test_Query {
+      node(id: "example") {
+        ...Conversation_conversation
+      }
+    }
+  `,
+})
 
 describe("Conversation", () => {
-  describe("Item", () => {
-    describe("when inquiry item is an artwork", () => {
-      // @ts-expect-error STRICT_NULL_CHECK
-      const artworkItemProps: Conversation_conversation["items"][0]["item"] = {
-        __typename: "Artwork",
-        id: "12345",
-        date: "June 22, 2020",
-        title: "Untitled",
-        artistNames: "Banksy",
-        href: "site.com/banksy",
-        image: {
-          url: "image.com/banksy-image",
-        },
-        listPrice: {
-          __typename: "Money",
-          display: "$2000",
-        },
+  const mockuseTracking = useTracking as jest.Mock
+  const trackingSpy = jest.fn()
+  const mockuseSystemContext = useSystemContext as jest.Mock
+
+  let user = {}
+
+  beforeEach(() => {
+    mockuseTracking.mockImplementation(() => ({ trackEvent: trackingSpy }))
+    mockuseSystemContext.mockImplementation(() => ({ user }))
+  })
+
+  afterEach(() => {
+    mockuseTracking.mockReset()
+    mockuseSystemContext.mockReset()
+    user = {}
+  })
+
+  describe("when user has Inquiry Checkout feature and the artwork is offerable", () => {
+    beforeEach(() => {
+      user = {
+        type: "NotAdmin",
+        lab_features: ["Web Inquiry Checkout"],
       }
-
-      it("renders the artwork item", () => {
-        const wrapper = mount(<Item item={artworkItemProps} />)
-        const imageSrc = wrapper.find("Image").first().prop("src")
-        const linkHref = wrapper.find("Link").first().prop("href")
-        const name = wrapper.find("Sans").first()
-        const title = wrapper.find("Sans").at(1)
-        const price = wrapper.find("Sans").last()
-
-        expect(imageSrc).toBe("image.com/banksy-image")
-        expect(linkHref).toBe("site.com/banksy")
-        expect(name.text()).toContain("Banksy")
-        expect(title.text()).toContain("Untitled / June 22, 2020")
-        expect(price.text()).toContain("$2000")
-      })
     })
 
-    describe("when inquiry item is a show", () => {
-      // @ts-expect-error STRICT_NULL_CHECK
-      const showItemProps: Conversation_conversation["items"][0]["item"] = {
-        __typename: "Show",
-        id: "12345",
-        fair: {
-          name: "Art Fair 2020",
-          exhibitionPeriod: "June 25 - June 28",
-          location: {
-            city: "New York",
-          },
-        },
-        href: "site.com/art-fair-2020",
-        name: "Art Fair 2020",
-        coverImage: {
-          url: "image.com/fair-image",
-        },
-      }
-
-      it("renders the show item", () => {
-        const wrapper = mount(<Item item={showItemProps} />)
-        const imageSrc = wrapper.find("Image").first().prop("src")
-        const linkHref = wrapper.find("Link").first().prop("href")
-        const name = wrapper.find("Sans").first()
-        const locationAndDate = wrapper.find("Sans").last()
-
-        expect(imageSrc).toBe("image.com/fair-image")
-        expect(linkHref).toBe("site.com/art-fair-2020")
-        expect(name.text()).toContain("Art Fair 2020")
-        expect(locationAndDate.text()).toContain("New York, June 25 - June 28")
+    it("shows the buyer guarantee message", () => {
+      const wrapper = getWrapper({
+        Artwork: () => ({ isOfferableFromInquiry: true }),
       })
+
+      expect(wrapper.find("BuyerGuaranteeMessage")).toHaveLength(1)
+    })
+
+    it("renders the confirm artwork modal query renderer", () => {
+      const wrapper = getWrapper({
+        Artwork: () => ({ isOfferableFromInquiry: true }),
+      })
+
+      expect(wrapper.find("ConfirmArtworkModalQueryRenderer")).toHaveLength(1)
+    })
+
+    it("renders the OrderModal", () => {
+      const wrapper = getWrapper({
+        Artwork: () => ({ isOfferableFromInquiry: true }),
+      })
+
+      expect(wrapper.find("OrderModal")).toHaveLength(1)
     })
   })
 
-  describe("when inquiry item is %other", () => {
-    // @ts-expect-error STRICT_NULL_CHECK
-    const otherItemProps: Conversation_conversation["items"][0]["item"] = {
-      __typename: "%other",
-    }
+  describe("when user doesn't have Inquiry Checkout feature", () => {
+    beforeEach(() => {
+      user = {
+        type: "NotAdmin",
+      }
+    })
 
-    it("renders the show item", () => {
-      const wrapper = mount(<Item item={otherItemProps} />)
+    it("doesn't show the buyer guarantee message", () => {
+      const wrapper = getWrapper({
+        Artwork: () => ({ isOfferableFromInquiry: true }),
+      })
 
-      expect(wrapper.find("Link")).toHaveLength(0)
-      expect(wrapper.children()).toHaveLength(0)
+      expect(wrapper.find("BuyerGuaranteeMessage")).toHaveLength(0)
+    })
+  })
+
+  describe("when the artwork is not offerable", () => {
+    beforeEach(() => {
+      user = {
+        type: "NotAdmin",
+        lab_features: ["Web Inquiry Checkout"],
+      }
+    })
+
+    it("doesn't show the buyer guarantee message", () => {
+      const wrapper = getWrapper({
+        Artwork: () => ({ isOfferableFromInquiry: false }),
+      })
+      const buyerGuaranteeMessage = wrapper.find("BuyerGuaranteeMessage")
+
+      expect(buyerGuaranteeMessage).toHaveLength(0)
     })
   })
 })

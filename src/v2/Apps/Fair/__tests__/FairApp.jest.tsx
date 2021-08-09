@@ -48,66 +48,11 @@ describe("FairApp", () => {
     trackEvent.mockClear()
   })
 
-  it("displays basic information about the fair", () => {
-    const wrapper = getWrapper()
-    expect(wrapper.find("FairHeader").length).toBe(1)
-  })
-
-  it("renders articles if they are present", () => {
-    const wrapper = getWrapper({
-      Article: () => ({
-        title: "IFPDA Fine Art Print Fair 2019: Programming and Projects",
-      }),
-    })
-
-    const html = wrapper.html()
-
-    expect(html).toContain(
-      "IFPDA Fine Art Print Fair 2019: Programming and Projects"
-    )
-  })
-
-  it("does not render articles when they are missing", () => {
-    const wrapper = getWrapper({
-      ArticleConnection: () => ({ edges: [] }),
-    })
-
-    const html = wrapper.html()
-
-    expect(html).not.toContain(
-      "IFPDA Fine Art Print Fair 2019: Programming and Projects"
-    )
-  })
-
-  it("renders the collection when it is present", () => {
-    const wrapper = getWrapper({
-      MarketingCollection: () => ({ title: "Big Artists, Small Sculptures" }),
-      FilterArtworksConnection: () => ({ counts: { total: 10 } }),
-    })
-
-    const html = wrapper.html()
-
-    expect(html).toContain("Curated Highlights")
-    expect(html).toContain("Big Artists, Small Sculptures")
-    expect(html).toContain("10 works")
-  })
-
-  it("does not render the collection when it is missing", () => {
-    const wrapper = getWrapper({
-      Fair: () => ({ marketingCollections: [] }),
-    })
-
-    const html = wrapper.html()
-
-    expect(html).not.toContain("Curated Highlights")
-    expect(html).not.toContain("Big Artists, Small Sculptures")
-  })
-
-  it("renders the exhibitors (booths) tab by default", () => {
+  it("renders the overview tab by default", () => {
     const wrapper = getWrapper()
     const html = wrapper.html()
 
-    expect(html).toContain("Booths")
+    expect(html).toContain("Overview")
   })
 
   it("sets a title tag", () => {
@@ -131,7 +76,7 @@ describe("FairApp", () => {
       .first()
 
     expect(boothsTab.text()).toContain("Booths")
-    expect(boothsTab.props().to).toEqual("/fair/miart-2020")
+    expect(boothsTab.props().to).toEqual("/fair/miart-2020/booths")
   })
 
   it("tracks clicks to the exhibitors (booths) tab", () => {
@@ -152,12 +97,12 @@ describe("FairApp", () => {
 
     expect(trackEvent).toHaveBeenCalledWith({
       action: "clickedNavigationTab",
-      context_module: "artworksTab",
+      context_module: "fairInfo",
       context_page_owner_id: "bson-fair",
       context_page_owner_slug: "miart-2020",
       context_page_owner_type: "fair",
-      destination_path: "/fair/miart-2020",
-      subject: "Exhibitors",
+      destination_path: "/fair/miart-2020/booths",
+      subject: "Booths",
     })
   })
 
@@ -189,7 +134,12 @@ describe("FairApp", () => {
       .find("RouteTab")
       .findWhere(t => !!t.text().match("Artworks"))
       .first()
+    const boothsTab = wrapper
+      .find("RouteTab")
+      .findWhere(t => !!t.text().match("Booths"))
+      .first()
 
+    boothsTab.simulate("click")
     artworksTab.simulate("click")
 
     expect(trackEvent).toHaveBeenCalledWith({

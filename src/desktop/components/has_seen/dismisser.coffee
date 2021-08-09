@@ -1,5 +1,5 @@
 _ = require 'underscore'
-Cookies = require '../cookies/index.coffee'
+Cookies = require '../cookies/index'
 
 module.exports = class Dismisser
   defaults:

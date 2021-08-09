@@ -1,11 +1,10 @@
-import { Box, BoxProps, Flex } from "@artsy/palette"
+import { Box, BoxProps } from "@artsy/palette"
 import { SearchBar_viewer } from "v2/__generated__/SearchBar_viewer.graphql"
 import { SearchBarSuggestQuery } from "v2/__generated__/SearchBarSuggestQuery.graphql"
 import { SystemContext, SystemContextProps, withSystemContext } from "v2/System"
 import { track } from "v2/System/Analytics"
 import * as Schema from "v2/System/Analytics/Schema"
-import { SystemQueryRenderer as QueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
-import colors from "v2/Assets/Colors"
+import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import {
   FirstSuggestionItem,
   PLACEHOLDER,
@@ -56,28 +55,20 @@ const AutosuggestWrapper = styled(Box)`
   }
 `
 
-const ResultsWrapper = styled(Box)`
-  background-color: ${colors.white};
-  display: flex;
-  border: 1px solid ${colors.grayRegular};
-  position: absolute;
-  z-index: 1;
-`
-
 const SuggestionContainer = ({ children, containerProps }) => {
   return (
-    <AutosuggestWrapper
-      width="100%"
-      flexDirection={["column", "row"]}
-      {...containerProps}
-    >
-      <ResultsWrapper width="100%" mt={0.5}>
-        <Box width="100%">
-          <Flex flexDirection="column" width="100%">
-            {children}
-          </Flex>
-        </Box>
-      </ResultsWrapper>
+    <AutosuggestWrapper {...containerProps}>
+      <Box
+        width="100%"
+        mt={0.5}
+        border="1px solid"
+        borderColor="black10"
+        bg="white100"
+        position="absolute"
+        zIndex={1}
+      >
+        {children}
+      </Box>
     </AutosuggestWrapper>
   )
 }
@@ -235,7 +226,7 @@ export class SearchBar extends Component<Props, State> {
     }
   }
 
-  onSuggestionsClearRequested = e => {
+  onSuggestionsClearRequested = () => {
     // This event _also_ fires when a user clicks on a link in the preview pane
     //  or the magnifying glass icon. If we initialize state when that happens,
     //  the link will get removed from the DOM before the browser has a chance
@@ -528,7 +519,7 @@ export const SearchBarQueryRenderer: React.FC<BoxProps> = props => {
   }
 
   return (
-    <QueryRenderer<SearchBarSuggestQuery>
+    <SystemQueryRenderer<SearchBarSuggestQuery>
       environment={relayEnvironment}
       query={graphql`
         query SearchBarSuggestQuery($term: String!, $hasTerm: Boolean!) {
@@ -555,14 +546,12 @@ export const SearchBarQueryRenderer: React.FC<BoxProps> = props => {
   )
 }
 
-export function getSearchTerm(location: Location): string {
-  const term = get(
-    qs,
-    querystring => querystring.parse(location.search.slice(1)).term,
-    ""
-  )
+export const getSearchTerm = (location: Location): string => {
+  const term = qs.parse(location.search?.slice(1))?.term ?? ""
+
   if (Array.isArray(term)) {
     return term[0]
   }
+
   return term
 }

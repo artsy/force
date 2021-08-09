@@ -6,14 +6,16 @@ import { FragmentRefs } from "relay-runtime";
 export type ArtworkBanner_artwork = {
     readonly partner: {
         readonly name: string | null;
-        readonly initials: string | null;
     } | null;
     readonly sale: {
-        readonly is_auction: boolean | null;
+        readonly isAuction: boolean | null;
         readonly isBenefit: boolean | null;
         readonly isGalleryAuction: boolean | null;
-        readonly cover_image: {
-            readonly url: string | null;
+        readonly coverImage: {
+            readonly cropped: {
+                readonly src: string;
+                readonly srcSet: string;
+            } | null;
         } | null;
     } | null;
     readonly context: ({
@@ -25,10 +27,10 @@ export type ArtworkBanner_artwork = {
         readonly name: string | null;
         readonly href: string | null;
         readonly profile: {
-            readonly initials: string | null;
             readonly icon: {
-                readonly img: {
-                    readonly url: string;
+                readonly cropped: {
+                    readonly src: string;
+                    readonly srcSet: string;
                 } | null;
             } | null;
         } | null;
@@ -38,8 +40,9 @@ export type ArtworkBanner_artwork = {
         readonly href: string | null;
         readonly status: string | null;
         readonly thumbnail: {
-            readonly img: {
-                readonly url: string;
+            readonly cropped: {
+                readonly src: string;
+                readonly srcSet: string;
             } | null;
         } | null;
     } | {
@@ -65,57 +68,56 @@ var v0 = {
   "name": "name",
   "storageKey": null
 },
-v1 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "initials",
-  "storageKey": null
-},
-v2 = {
-  "kind": "Literal",
-  "name": "version",
-  "value": "square"
-},
-v3 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "href",
-  "storageKey": null
-},
-v4 = [
+v1 = [
   {
-    "alias": "img",
+    "alias": null,
     "args": [
       {
         "kind": "Literal",
         "name": "height",
-        "value": 70
+        "value": 30
       },
-      (v2/*: any*/),
+      {
+        "kind": "Literal",
+        "name": "version",
+        "value": "square"
+      },
       {
         "kind": "Literal",
         "name": "width",
-        "value": 70
+        "value": 30
       }
     ],
-    "concreteType": "ResizedImageUrl",
+    "concreteType": "CroppedImageUrl",
     "kind": "LinkedField",
-    "name": "resized",
+    "name": "cropped",
     "plural": false,
     "selections": [
       {
         "alias": null,
         "args": null,
         "kind": "ScalarField",
-        "name": "url",
+        "name": "src",
+        "storageKey": null
+      },
+      {
+        "alias": null,
+        "args": null,
+        "kind": "ScalarField",
+        "name": "srcSet",
         "storageKey": null
       }
     ],
-    "storageKey": "resized(height:70,version:\"square\",width:70)"
+    "storageKey": "cropped(height:30,version:\"square\",width:30)"
   }
-];
+],
+v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "href",
+  "storageKey": null
+};
 return {
   "argumentDefinitions": [],
   "kind": "Fragment",
@@ -130,8 +132,7 @@ return {
       "name": "partner",
       "plural": false,
       "selections": [
-        (v0/*: any*/),
-        (v1/*: any*/)
+        (v0/*: any*/)
       ],
       "storageKey": null
     },
@@ -144,7 +145,7 @@ return {
       "plural": false,
       "selections": [
         {
-          "alias": "is_auction",
+          "alias": null,
           "args": null,
           "kind": "ScalarField",
           "name": "isAuction",
@@ -165,23 +166,13 @@ return {
           "storageKey": null
         },
         {
-          "alias": "cover_image",
+          "alias": null,
           "args": null,
           "concreteType": "Image",
           "kind": "LinkedField",
           "name": "coverImage",
           "plural": false,
-          "selections": [
-            {
-              "alias": null,
-              "args": [
-                (v2/*: any*/)
-              ],
-              "kind": "ScalarField",
-              "name": "url",
-              "storageKey": "url(version:\"square\")"
-            }
-          ],
+          "selections": (v1/*: any*/),
           "storageKey": null
         }
       ],
@@ -206,7 +197,7 @@ return {
           "kind": "InlineFragment",
           "selections": [
             (v0/*: any*/),
-            (v3/*: any*/)
+            (v2/*: any*/)
           ],
           "type": "Sale"
         },
@@ -214,7 +205,7 @@ return {
           "kind": "InlineFragment",
           "selections": [
             (v0/*: any*/),
-            (v3/*: any*/),
+            (v2/*: any*/),
             {
               "alias": null,
               "args": null,
@@ -223,7 +214,6 @@ return {
               "name": "profile",
               "plural": false,
               "selections": [
-                (v1/*: any*/),
                 {
                   "alias": null,
                   "args": null,
@@ -231,7 +221,7 @@ return {
                   "kind": "LinkedField",
                   "name": "icon",
                   "plural": false,
-                  "selections": (v4/*: any*/),
+                  "selections": (v1/*: any*/),
                   "storageKey": null
                 }
               ],
@@ -244,7 +234,7 @@ return {
           "kind": "InlineFragment",
           "selections": [
             (v0/*: any*/),
-            (v3/*: any*/),
+            (v2/*: any*/),
             {
               "alias": null,
               "args": null,
@@ -259,7 +249,7 @@ return {
               "kind": "LinkedField",
               "name": "coverImage",
               "plural": false,
-              "selections": (v4/*: any*/),
+              "selections": (v1/*: any*/),
               "storageKey": null
             }
           ],
@@ -272,5 +262,5 @@ return {
   "type": "Artwork"
 };
 })();
-(node as any).hash = '6f615caa1957f1bdfb662387e2e3cc46';
+(node as any).hash = '74f978c00aca04d15d63a12b55b40d03';
 export default node;

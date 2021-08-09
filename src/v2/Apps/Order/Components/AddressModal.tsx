@@ -27,17 +27,25 @@ import { SavedAddresses_me } from "v2/__generated__/SavedAddresses_me.graphql"
 import { AddressModalFields } from "v2/Components/Address/AddressModalFields"
 import { useSystemContext } from "v2/System/SystemContext"
 import { updateUserDefaultAddress } from "../Mutations/UpdateUserDefaultAddress"
+import { UpdateUserAddressMutationResponse } from "v2/__generated__/UpdateUserAddressMutation.graphql"
+import { CreateUserAddressMutationResponse } from "v2/__generated__/CreateUserAddressMutation.graphql"
+
+export interface ModalDetails {
+  addressModalTitle: string
+  addressModalAction: AddressModalAction
+}
+
 export interface Props {
   show: boolean
   closeModal: () => void
-  address: SavedAddressType
-  onSuccess: () => void
+  address?: SavedAddressType
+  onSuccess: (
+    address?: UpdateUserAddressMutationResponse &
+      CreateUserAddressMutationResponse
+  ) => void
   onDeleteAddress: (addressID: string) => void
   onError: (message: string) => void
-  modalDetails: {
-    addressModalTitle: string
-    addressModalAction: AddressModalAction
-  }
+  modalDetails?: ModalDetails
   me: SavedAddresses_me
 }
 
@@ -64,7 +72,8 @@ export const AddressModal: React.FC<Props> = ({
   me,
 }) => {
   const title = modalDetails?.addressModalTitle
-  const createMutation = modalDetails.addressModalAction === "createUserAddress"
+  const createMutation =
+    modalDetails?.addressModalAction === "createUserAddress"
   const validator = (values: any) => {
     const validationResult = validateAddress(values)
     const phoneValidation = validatePhoneNumber(values.phoneNumber)
@@ -89,6 +98,7 @@ export const AddressModal: React.FC<Props> = ({
         modalWidth={ModalWidth.Wide}
       >
         <Formik
+          validateOnMount
           initialValues={createMutation ? { country: "US" } : address}
           validate={validator}
           onSubmit={(
@@ -108,37 +118,48 @@ export const AddressModal: React.FC<Props> = ({
             }
 
             const handleSuccess = savedAddress => {
-              if (values?.isDefault) {
+              // update default address only if isDefault changed or new
+              // address marked ad default
+              if (
+                values?.isDefault &&
+                values?.isDefault !== address?.isDefault
+              ) {
                 updateUserDefaultAddress(
                   relayEnvironment,
                   savedAddress?.createUserAddress?.userAddressOrErrors
-                    ?.internalID || address.internalID,
-                  onSuccess,
+                    ?.internalID || address?.internalID,
+                  () => {
+                    onSuccess(savedAddress)
+                  },
                   onError
                 )
               } else {
-                onSuccess && onSuccess()
+                onSuccess && onSuccess(savedAddress)
               }
               setCreateUpdateError(null)
             }
             const addressInput = convertShippingAddressToMutationInput(values)
-            createMutation
-              ? createUserAddress(
+            if (createMutation) {
+              createUserAddress(
+                relayEnvironment,
+                addressInput,
+                handleSuccess,
+                handleError,
+                me,
+                closeModal
+              )
+            } else {
+              if (address?.internalID) {
+                updateUserAddress(
                   relayEnvironment,
-                  addressInput,
-                  handleSuccess,
-                  handleError,
-                  me,
-                  closeModal
-                )
-              : updateUserAddress(
-                  relayEnvironment,
-                  address?.internalID,
+                  address.internalID,
                   addressInput,
                   closeModal,
                   handleSuccess,
                   handleError
                 )
+              }
+            }
           }}
         >
           {(formik: FormikProps<SavedAddressType>) => (

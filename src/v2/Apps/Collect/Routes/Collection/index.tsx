@@ -7,10 +7,9 @@ import { SystemContextProps, withSystemContext } from "v2/System/SystemContext"
 import { FrameWithRecentlyViewed } from "v2/Components/FrameWithRecentlyViewed"
 import { RelatedCollectionsRailFragmentContainer as RelatedCollectionsRail } from "v2/Components/RelatedCollectionsRail/RelatedCollectionsRail"
 import { BreadCrumbList } from "v2/Components/Seo"
-import { Match } from "found"
 import React from "react"
-import { Link, Meta, Title } from "react-head"
-import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
+import { Title } from "react-head"
+import { RelayRefetchProp, graphql, createFragmentContainer } from "react-relay"
 import { data as sd } from "sharify"
 import truncate from "trunc-html"
 import { CollectionsHubRailsContainer as CollectionsHubRails } from "./Components/CollectionsHubRails"
@@ -20,32 +19,23 @@ import {
   AnalyticsContextProps,
   useAnalyticsContext,
 } from "v2/System/Analytics/AnalyticsContext"
-import { BaseArtworkFilter } from "v2/Components/ArtworkFilter"
+import { TrackingProp } from "react-tracking"
+import { ErrorPage } from "v2/Components/ErrorPage"
+import { CollectionArtworksFilterRefetchContainer } from "./Components/CollectionArtworksFilter"
 import {
-  ArtworkFilterContextProvider,
   Counts,
   SharedArtworkFilterContextProps,
 } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
-import { updateUrl } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
-import { TrackingProp } from "react-tracking"
-import { ErrorPage } from "v2/Components/ErrorPage"
-import { usePathnameComplete } from "v2/Utils/Hooks/usePathnameComplete"
+import { MetaTags } from "v2/Components/MetaTags"
 
 interface CollectionAppProps extends SystemContextProps, AnalyticsContextProps {
   collection: Collection_collection
-  match: Match
   relay: RelayRefetchProp
   tracking: TrackingProp
 }
 
 export const CollectionApp: React.FC<CollectionAppProps> = props => {
-  const {
-    collection,
-    match: { location },
-    relay,
-  } = props
-
-  const { pathname } = usePathnameComplete()
+  const { collection } = props
 
   if (!collection) return <ErrorPage code={404} />
 
@@ -60,6 +50,7 @@ export const CollectionApp: React.FC<CollectionAppProps> = props => {
     ascending_artworks,
   } = collection
   const collectionHref = `${sd.APP_URL}/collection/${slug}`
+  const collectionSlug = `collection/${slug}`
 
   const metadataDescription = description
     ? `Buy, bid, and inquire on ${title} on Artsy. ` +
@@ -75,13 +66,14 @@ export const CollectionApp: React.FC<CollectionAppProps> = props => {
 
   return (
     <>
+      <MetaTags
+        description={metadataDescription}
+        imageURL={socialImage}
+        pathname={collectionSlug}
+        title={title}
+      />
+      {/* Overrides the title tag in MetaTags; necessary to add "for sale" */}
       <Title>{`${title} - For Sale on Artsy`}</Title>
-      <Meta name="description" content={metadataDescription} />
-      <Meta property="og:url" content={collectionHref} />
-      <Meta property="og:image" content={socialImage} />
-      <Meta property="og:description" content={metadataDescription} />
-      <Meta property="twitter:description" content={metadataDescription} />
-      <Link rel="canonical" href={collectionHref} />
       <BreadCrumbList
         items={[
           { name: "Collections", path: "/collections" },
@@ -122,44 +114,14 @@ export const CollectionApp: React.FC<CollectionAppProps> = props => {
 
         <Spacer mt={6} />
 
-        <ArtworkFilterContextProvider
-          // Reset state of filter context without calling reset; which would
-          // affect analytics.
-          key={pathname}
-          filters={location.query}
-          sortOptions={[
-            { text: "Default", value: "-decayed_merch" },
-            {
-              text: "Price (desc.)",
-              value: "sold,-has_price,-prices",
-            },
-            {
-              text: "Price (asc.)",
-              value: "sold,-has_price,prices",
-            },
-            {
-              text: "Recently updated",
-              value: "-partner_updated_at",
-            },
-            { text: "Recently added", value: "-published_at" },
-            { text: "Artwork year (desc.)", value: "-year" },
-            { text: "Artwork year (asc.)", value: "year" },
-          ]}
-          counts={artworksConnection?.counts as Counts}
+        <CollectionArtworksFilterRefetchContainer
+          collection={collection}
           aggregations={
-            artworksConnection?.aggregations as SharedArtworkFilterContextProps["aggregations"]
+            collection.artworksConnection
+              ?.aggregations as SharedArtworkFilterContextProps["aggregations"]
           }
-          onChange={updateUrl}
-        >
-          <BaseArtworkFilter
-            relay={relay}
-            viewer={collection}
-            relayVariables={{
-              slug: collection.slug,
-              aggregations: ["TOTAL"],
-            }}
-          />
-        </ArtworkFilterContextProvider>
+          counts={collection.artworksConnection?.counts as Counts}
+        />
 
         {/* HOTFIX FIXME: This rail was causing an error if included in SSR render
               pass and so it was deferred to the client.
@@ -201,7 +163,7 @@ const TrackingWrappedCollectionApp: React.FC<CollectionAppProps> = props => {
   )
 }
 
-export const CollectionRefetchContainer = createRefetchContainer(
+export const CollectionFragmentContainer = createFragmentContainer(
   withSystemContext(TrackingWrappedCollectionApp),
   {
     collection: graphql`
@@ -262,6 +224,7 @@ export const CollectionRefetchContainer = createRefetchContainer(
             }
           }
         }
+
         #These two things are going to get highest price and lowest price of the artwork on the collection page.
         descending_artworks: artworksConnection(
           includeMediumFilterInAggregation: true
@@ -270,6 +233,7 @@ export const CollectionRefetchContainer = createRefetchContainer(
         ) {
           ...SeoProductsForCollections_descending_artworks
         }
+
         ascending_artworks: artworksConnection(
           includeMediumFilterInAggregation: true
           first: 1
@@ -277,23 +241,9 @@ export const CollectionRefetchContainer = createRefetchContainer(
         ) {
           ...SeoProductsForCollections_ascending_artworks
         }
-        filtered_artworks: artworksConnection(input: $input) {
-          id
-          ...ArtworkFilterArtworkGrid_filtered_artworks
-        }
+
+        ...CollectionArtworksFilter_collection @arguments(input: $input)
       }
     `,
-  },
-  graphql`
-    query CollectionQuery(
-      $input: FilterArtworksInput
-      $slug: String!
-      $aggregations: [ArtworkAggregation]
-    ) {
-      collection: marketingCollection(slug: $slug) @principalField {
-        ...Collection_collection
-          @arguments(input: $input, aggregations: $aggregations)
-      }
-    }
-  `
+  }
 )

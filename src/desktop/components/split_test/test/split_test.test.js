@@ -6,17 +6,6 @@
  */
 const benv = require("benv")
 const sinon = require("sinon")
-const runningTests = {
-  // Example test
-  header_design: {
-    key: "header_design",
-    outcomes: {
-      old: 80,
-      new: 20,
-    },
-    edge: "new",
-  },
-}
 
 describe("SplitTest", function () {
   beforeEach(function (done) {

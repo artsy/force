@@ -38,7 +38,6 @@ describe("Reply", () => {
             jest.fn
           }}
           onScroll={jest.fn()}
-          onMount={jest.fn()}
           environment={{} as Environment}
           refetch={() => ({ dispose: jest.fn })}
         />

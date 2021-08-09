@@ -14,8 +14,8 @@ export type MyBidsBidItem_saleArtwork = {
         } | null;
     } | null;
     readonly estimate: string | null;
-    readonly highestBid: {
-        readonly amount: string | null;
+    readonly currentBid: {
+        readonly display: string | null;
     } | null;
     readonly internalID: string;
     readonly isHighestBidder: boolean | null;
@@ -38,7 +38,17 @@ export type MyBidsBidItem_saleArtwork$key = {
 
 
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "display",
+    "storageKey": null
+  }
+];
+return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
@@ -119,19 +129,11 @@ const node: ReaderFragment = {
     {
       "alias": null,
       "args": null,
-      "concreteType": "SaleArtworkHighestBid",
+      "concreteType": "SaleArtworkCurrentBid",
       "kind": "LinkedField",
-      "name": "highestBid",
+      "name": "currentBid",
       "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "amount",
-          "storageKey": null
-        }
-      ],
+      "selections": (v0/*: any*/),
       "storageKey": null
     },
     {
@@ -177,15 +179,7 @@ const node: ReaderFragment = {
           "kind": "LinkedField",
           "name": "sellingPrice",
           "plural": false,
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "display",
-              "storageKey": null
-            }
-          ],
+          "selections": (v0/*: any*/),
           "storageKey": null
         }
       ],
@@ -208,5 +202,6 @@ const node: ReaderFragment = {
   ],
   "type": "SaleArtwork"
 };
-(node as any).hash = '6c0923162fe684b3f6480a175056bc8c';
+})();
+(node as any).hash = '75d4f2f4b2a4840a5725d1900cdbdeef';
 export default node;

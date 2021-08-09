@@ -1,0 +1,189 @@
+import { ArtworkBanner_artwork } from "v2/__generated__/ArtworkBanner_artwork.graphql"
+import { ArtworkBannerQuery } from "v2/__generated__/ArtworkBannerQuery.graphql"
+import { SystemContext } from "v2/System"
+import { renderWithLoadProgress } from "v2/System/Relay/renderWithLoadProgress"
+import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
+import React, { useContext } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
+import {
+  Box,
+  ChevronIcon,
+  Column,
+  Flex,
+  GridColumns,
+  Image,
+  Text,
+} from "@artsy/palette"
+import { TopContextBar } from "v2/Components/TopContextBar"
+import { RouterLink } from "v2/System/Router/RouterLink"
+
+export interface ArtworkBannerProps {
+  artwork: ArtworkBanner_artwork
+}
+
+export const ArtworkBanner: React.FC<ArtworkBannerProps> = props => {
+  const bannerProps = computeBannerProps(props)
+
+  if (!bannerProps) {
+    return null
+  }
+
+  const { image, meta, name, subHeadline, href } = bannerProps
+  const isShow = props.artwork?.context?.__typename === "Show"
+
+  return (
+    <RouterLink to={href} textDecoration="none">
+      <TopContextBar>
+        <GridColumns>
+          <Column span={8}>
+            <Flex alignItems="center">
+              {isShow ? (
+                <Box pr={0.5}>
+                  <ChevronIcon direction="left" top={"4px"} />
+                </Box>
+              ) : (
+                image && <Image src={image.src} srcSet={image.srcSet} pr={1} />
+              )}
+              <Text variant="xs" mr={0.5}>
+                {[name, subHeadline].filter(Boolean).join(" - ")}
+              </Text>
+              <Text variant="xs" color="black60">
+                {meta}
+              </Text>
+            </Flex>
+          </Column>
+        </GridColumns>
+      </TopContextBar>
+    </RouterLink>
+  )
+}
+
+const computeBannerProps = (props: ArtworkBannerProps) => {
+  const { context, partner, sale } = props.artwork
+
+  if (!context) {
+    return null
+  }
+
+  switch (context.__typename) {
+    case "Sale": {
+      if (!sale) {
+        return null
+      }
+
+      return {
+        image: sale.coverImage?.cropped,
+        meta: "In auction",
+        name: context.name,
+        subHeadline:
+          sale.isBenefit || sale.isGalleryAuction ? null : partner?.name,
+        href: context.href,
+      }
+    }
+    case "Fair": {
+      return {
+        image: context.profile?.icon?.cropped,
+        meta: "At fair",
+        name: context.name,
+        subHeadline: partner?.name,
+        href: context.href,
+      }
+    }
+    case "Show": {
+      let meta = "In current show"
+      if (context.status === "upcoming") {
+        meta = "In upcoming show"
+      } else if (context.status === "closed") {
+        meta = "In past show"
+      }
+
+      return {
+        image: context.thumbnail?.cropped,
+        meta,
+        name: context.name,
+        subHeadline: partner?.name,
+        href: context.href,
+      }
+    }
+    default: {
+      return null
+    }
+  }
+}
+
+export const ArtworkBannerFragmentContainer = createFragmentContainer(
+  ArtworkBanner,
+  {
+    artwork: graphql`
+      fragment ArtworkBanner_artwork on Artwork {
+        partner {
+          name
+        }
+        sale {
+          isAuction
+          isBenefit
+          isGalleryAuction
+          coverImage {
+            cropped(width: 30, height: 30, version: "square") {
+              src
+              srcSet
+            }
+          }
+        }
+        context {
+          __typename
+          ... on Sale {
+            name
+            href
+          }
+          ... on Fair {
+            name
+            href
+            profile {
+              icon {
+                cropped(width: 30, height: 30, version: "square") {
+                  src
+                  srcSet
+                }
+              }
+            }
+          }
+          ... on Show {
+            name
+            href
+            status
+            thumbnail: coverImage {
+              cropped(width: 30, height: 30, version: "square") {
+                src
+                srcSet
+              }
+            }
+          }
+        }
+      }
+    `,
+  }
+)
+
+export const ArtworkBannerQueryRenderer = ({
+  artworkID,
+}: {
+  artworkID: string
+}) => {
+  const { relayEnvironment } = useContext(SystemContext)
+
+  return (
+    <SystemQueryRenderer<ArtworkBannerQuery>
+      environment={relayEnvironment}
+      variables={{ artworkID }}
+      query={graphql`
+        query ArtworkBannerQuery($artworkID: String!) {
+          artwork(id: $artworkID) {
+            ...ArtworkBanner_artwork
+          }
+        }
+      `}
+      render={renderWithLoadProgress(ArtworkBannerFragmentContainer)}
+    />
+  )
+}

@@ -4,10 +4,8 @@ import type { ArtsyRequest, ArtsyResponse } from "./artsyExpress"
 import { string } from "underscore"
 import moment from "moment"
 import * as helpers from "../template_helpers"
-import config from "../../config"
+import { NODE_ENV } from "../../config"
 import * as templateModules from "../../desktop/lib/template_modules"
-
-const { NODE_ENV } = config
 
 /**
  * Inject common project-wide [view locals](http://expressjs.com/api.html#app.locals).

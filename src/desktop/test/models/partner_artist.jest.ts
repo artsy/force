@@ -1,4 +1,3 @@
-import _ from "underscore"
 import { fabricate } from "@artsy/antigravity"
 const PartnerArtist = require("../../models/partner_artist.coffee")
 

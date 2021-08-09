@@ -1,6 +1,5 @@
 import {
   alphabetizeGenes,
-  featuredGenesForFamily,
   geneFamiliesFromConnection,
 } from "../utils"
 

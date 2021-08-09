@@ -9,11 +9,10 @@ jest.mock("react-tracking")
 jest.unmock("react-relay")
 
 const { getWrapper } = setupTestWrapper<PaymentApp_Test_Query>({
-  Component: props => {
+  Component: ({ me }) => {
     return (
       <HeadProvider>
-        {/* @ts-expect-error STRICT_NULL_CHECK */}
-        <PaymentAppFragmentContainer {...props} />
+        <PaymentAppFragmentContainer me={me!} />
       </HeadProvider>
     )
   },

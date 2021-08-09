@@ -3,14 +3,10 @@
  * DS102: Remove unnecessary code created because of implicit returns
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
  */
-const _ = require("underscore")
 const sinon = require("sinon")
 let Backbone = require("backbone")
 const { fabricate } = require("@artsy/antigravity")
-const sd = require("sharify").data
-const should = require("should")
 Backbone = require("backbone")
-const PartnerShow = require("../../../models/partner_show")
 const CurrentUser = require("../../../models/current_user")
 const rewire = require("rewire")
 const FeedItem = rewire("../models/feed_item")

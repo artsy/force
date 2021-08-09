@@ -98,7 +98,7 @@ export const NearbyGalleriesRailRenderer: React.FC<
           <NearbyGalleriesRailFragmentContainer
             {...rest}
             {...props}
-            partners={props?.partnersConnection?.edges}
+            partners={compact(props?.partnersConnection?.edges)}
           />
         )
       }}

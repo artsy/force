@@ -1,4 +1,4 @@
-Cookies = require '../../cookies/index.coffee'
+Cookies = require '../../cookies/index'
 
 class Inverter
   key: 'is-inverted'

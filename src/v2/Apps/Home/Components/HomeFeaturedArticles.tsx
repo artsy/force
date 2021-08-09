@@ -9,6 +9,7 @@ import {
   SkeletonText,
   Shelf,
 } from "@artsy/palette"
+import { compact } from "lodash"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "v2/System"
@@ -174,7 +175,9 @@ export const HomeFeaturedArticlesQueryRenderer: React.FC = () => {
 
         if (props.articles) {
           return (
-            <HomeFeaturedArticlesFragmentContainer articles={props.articles} />
+            <HomeFeaturedArticlesFragmentContainer
+              articles={compact(props.articles)}
+            />
           )
         }
 

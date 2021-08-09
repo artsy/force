@@ -3,7 +3,7 @@ import { NetworkOfflineMonitor } from "v2/System/Router/NetworkOfflineMonitor"
 import { findCurrentRoute } from "v2/System/Router/Utils/findCurrentRoute"
 import { useMaybeReloadAfterInquirySignIn } from "v2/System/Router/Utils/useMaybeReloadAfterInquirySignIn"
 import {
-  NAV_BAR_HEIGHT,
+  DESKTOP_NAV_BAR_HEIGHT,
   NavBar,
   MOBILE_NAV_HEIGHT,
   MOBILE_LOGGED_IN_NAV_HEIGHT,
@@ -18,8 +18,6 @@ import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
 import { AppContainer } from "./AppContainer"
 import { useRouteComplete } from "v2/Utils/Hooks/useRouteComplete"
 import { useAuthIntent } from "v2/Utils/Hooks/useAuthIntent"
-import { AuthBanner } from "v2/Components/AuthBanner"
-import { Media } from "v2/Utils/Responsive"
 
 const logger = createLogger("Apps/Components/AppShell")
 
@@ -91,11 +89,10 @@ export const AppShell: React.FC<AppShellProps> = props => {
       <Box
         pb={[
           isLoggedIn ? MOBILE_LOGGED_IN_NAV_HEIGHT : MOBILE_NAV_HEIGHT,
-          NAV_BAR_HEIGHT,
+          DESKTOP_NAV_BAR_HEIGHT,
         ]}
       >
         <Box left={0} position="fixed" width="100%" zIndex={100}>
-          <Media at="xs">{!isLoggedIn && <AuthBanner />}</Media>
           <NavBar />
         </Box>
       </Box>

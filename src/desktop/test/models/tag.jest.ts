@@ -1,4 +1,3 @@
-import _ from "underscore"
 import Backbone from "backbone"
 import { fabricate } from "@artsy/antigravity"
 const Tag = require("../../models/tag.coffee")

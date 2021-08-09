@@ -6,12 +6,10 @@ import { HeadProvider } from "react-head"
 import { Environment } from "relay-runtime"
 import { data as sd } from "sharify"
 import { Provider as StateProvider } from "unstated"
-import { BreakpointVisualizer } from "v2/Utils/BreakpointVisualizer"
 import Events from "v2/Utils/Events"
 import { getENV } from "v2/Utils/getENV"
 import { ErrorBoundary } from "./ErrorBoundary"
 import { FocusVisible } from "v2/Components/FocusVisible"
-
 import {
   MatchingMediaQueries,
   MediaContextProvider,
@@ -82,9 +80,6 @@ export const Boot = track(null, {
                       <FocusVisible />
                       <SiftContainer />
                       {children}
-                      {process.env.NODE_ENV === "development" && (
-                        <BreakpointVisualizer />
-                      )}
                     </Grid>
                   </ResponsiveProvider>
                 </MediaContextProvider>

@@ -29,25 +29,11 @@ xdescribe("auction/components/layout/auction_info/AuctionInfoContainer.test", ()
 
   describe("<AuctionInfoContainer />", () => {
     it("renders mobile mode if isMobile", () => {
-      const { wrapper } = renderTestComponent({
-        Component: test.AuctionInfoContainer,
-        props: {
-          isMobile: true,
-        },
-      })
-
       expect(AuctionInfoDesktop).not.toBeCalled()
       expect(AuctionInfoMobile).toBeCalled()
     })
 
     it("renders desktop mode if isMobile is false", () => {
-      const { wrapper } = renderTestComponent({
-        Component: test.AuctionInfoContainer,
-        props: {
-          isMobile: false,
-        },
-      })
-
       expect(AuctionInfoDesktop).toBeCalled()
       expect(AuctionInfoMobile).not.toBeCalled()
     })

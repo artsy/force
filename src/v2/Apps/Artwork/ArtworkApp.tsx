@@ -5,7 +5,7 @@ import { data as sd } from "sharify"
 import { ArtworkApp_artwork } from "v2/__generated__/ArtworkApp_artwork.graphql"
 import { ArtworkApp_me } from "v2/__generated__/ArtworkApp_me.graphql"
 import { ArtistInfoFragmentContainer } from "./Components/ArtistInfo"
-import { ArtworkBannerFragmentContainer } from "./Components/ArtworkBanner"
+import { ArtworkBannerFragmentContainer } from "./Components/ArtworkBanner/ArtworkBanner"
 import { ArtworkDetailsFragmentContainer } from "./Components/ArtworkDetails"
 import { ArtworkImageBrowserFragmentContainer } from "./Components/ArtworkImageBrowser"
 import { ArtworkMetaFragmentContainer } from "./Components/ArtworkMeta"
@@ -24,10 +24,10 @@ import {
   useAnalyticsContext,
 } from "v2/System/Analytics/AnalyticsContext"
 import { Mediator } from "lib/mediator"
-import { data } from "sharify"
 import { ReCaptchaContainer } from "v2/Utils/ReCaptchaContainer"
 import { useRouteComplete } from "v2/Utils/Hooks/useRouteComplete"
 import { Media } from "v2/Utils/Responsive"
+import { LegacyArtworkDllContainer } from "../../Utils/LegacyArtworkDllContainer"
 
 export interface Props {
   artwork: ArtworkApp_artwork
@@ -41,26 +41,6 @@ export interface Props {
 
 declare const window: any
 
-export class LegacyArtworkDllContainer extends React.Component {
-  componentDidMount() {
-    if (!document.getElementById("legacy-assets-dll")) {
-      import(
-        /* webpackChunkName: 'legacy-assets-dll' */ "../../Utils/legacyAssetDll"
-      ).then(({ legacyAssetDll }) => {
-        legacyAssetDll()
-      })
-      document.body.insertAdjacentHTML(
-        "beforeend",
-        `<div id='legacy-assets-dll' />`
-      )
-    }
-  }
-
-  render() {
-    return null
-  }
-}
-
 export class ArtworkApp extends React.Component<Props> {
   /**
    * On mount, trigger a page view and product view
@@ -71,29 +51,12 @@ export class ArtworkApp extends React.Component<Props> {
    * data that remains consistent with the rest of the app.
    */
   componentDidMount() {
-    this.addLegacyStyles()
     this.track()
   }
 
   componentDidUpdate() {
     if (this.props.shouldTrackPageView) {
       this.track()
-    }
-  }
-
-  addLegacyStyles() {
-    if (!document.getElementById("legacyIconFont")) {
-      document.head.insertAdjacentHTML(
-        "beforeend",
-        `<link id="legacyIconFont" rel="preload" href="${data.WEBFONT_URL}/artsy-icons.woff2" as="font" type="font/woff2" crossorigin />`
-      )
-    }
-
-    if (!document.getElementById("legacyArtworkPageStyles")) {
-      document.head.insertAdjacentHTML(
-        "beforeend",
-        `<link id='legacyArtworkPageStyles' rel="stylesheet" href="${data.LEGACY_MAIN_CSS}" />`
-      )
     }
   }
 

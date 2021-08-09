@@ -4,14 +4,12 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
  */
 const { fabricate } = require("@artsy/antigravity")
-const fixtures = require("../../../test/helpers/fixtures.coffee")
 const _ = require("underscore")
 const sinon = require("sinon")
 const Backbone = require("backbone")
 const rewire = require("rewire")
 const moment = require("moment")
 const routes = rewire("../routes")
-const CurrentUser = require("../../../models/current_user")
 const FairOrganizer = require("../../../models/fair_organizer.coffee")
 const Fair = require("../../../models/fair.coffee")
 const Fairs = require("../../../collections/fairs.coffee")

@@ -5,7 +5,6 @@
  */
 const benv = require("benv")
 const blurb = require("../index")
-const sinon = require("sinon")
 
 describe("blurb", function () {
   before(done =>

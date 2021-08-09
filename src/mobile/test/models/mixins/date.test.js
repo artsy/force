@@ -4,7 +4,6 @@
  * DS206: Consider reworking classes to avoid initClass
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
  */
-const { fabricate } = require("@artsy/antigravity")
 const _ = require("underscore")
 const Backbone = require("backbone")
 const dateMixin = require("../../../models/mixins/date")

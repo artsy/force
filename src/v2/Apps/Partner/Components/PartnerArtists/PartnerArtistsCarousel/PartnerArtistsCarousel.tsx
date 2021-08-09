@@ -128,7 +128,12 @@ export const PartnerArtistsCarouselRenderer: React.FC<{
         if (error || !props)
           return <PartnerArtistsCarouselPlaceholder count={PAGE_SIZE} />
 
-        return <PartnerArtistsCarouselFragmentContainer {...rest} {...props} />
+        return (
+          <PartnerArtistsCarouselFragmentContainer
+            {...rest}
+            partner={props.partner!}
+          />
+        )
       }}
     />
   )

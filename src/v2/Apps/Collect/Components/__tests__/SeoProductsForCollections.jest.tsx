@@ -109,17 +109,17 @@ describe("Seo Products for Collection Page", () => {
     const wrapper = renderProducts()
 
     const html = wrapper.html()
-    expect(html).toContain('"name":"A fake name for collection"')
-    expect(html).toContain('"url":"A fake URL for collection"')
-    expect(html).toContain('"description":"A fake description for collection"')
+    expect(html).toContain('"name": "A fake name for collection"')
+    expect(html).toContain('"url": "A fake URL for collection"')
+    expect(html).toContain('"description": "A fake description for collection"')
   })
 
   it("renders pricing data for collections with price ranges", () => {
     const wrapper = renderProducts()
 
     const html = wrapper.html()
-    expect(html).toContain('"lowPrice":10')
-    expect(html).toContain('"highPrice":9000')
+    expect(html).toContain('"lowPrice": 10')
+    expect(html).toContain('"highPrice": 9000')
   })
 
   it("falls back to maxPrice if the ascending artwork range is missing minPrice", () => {
@@ -128,8 +128,8 @@ describe("Seo Products for Collection Page", () => {
     const wrapper = renderProducts()
 
     const html = wrapper.html()
-    expect(html).toContain('"lowPrice":25')
-    expect(html).toContain('"highPrice":9000')
+    expect(html).toContain('"lowPrice": 25')
+    expect(html).toContain('"highPrice": 9000')
   })
 
   it("falls back to minPrice if the descending artwork range is missing maxPrice", () => {
@@ -140,8 +140,8 @@ describe("Seo Products for Collection Page", () => {
     const wrapper = renderProducts()
 
     const html = wrapper.html()
-    expect(html).toContain('"lowPrice":10')
-    expect(html).toContain('"highPrice":500')
+    expect(html).toContain('"lowPrice": 10')
+    expect(html).toContain('"highPrice": 500')
   })
 
   it("renders pricing data for collections with individual prices", () => {
@@ -152,8 +152,8 @@ describe("Seo Products for Collection Page", () => {
     const wrapper = renderProducts()
 
     const html = wrapper.html()
-    expect(html).toContain('"lowPrice":15')
-    expect(html).toContain('"highPrice":30')
+    expect(html).toContain('"lowPrice": 15')
+    expect(html).toContain('"highPrice": 30')
   })
 
   describe("no prices for descending artwork", () => {
@@ -168,8 +168,8 @@ describe("Seo Products for Collection Page", () => {
       const wrapper = renderProducts()
 
       const html = wrapper.html()
-      expect(html).toContain('"lowPrice":20')
-      expect(html).toContain('"highPrice":20')
+      expect(html).toContain('"lowPrice": 20')
+      expect(html).toContain('"highPrice": 20')
     })
 
     it("renders price from ascending artwork price range", () => {
@@ -177,8 +177,8 @@ describe("Seo Products for Collection Page", () => {
       const wrapper = renderProducts()
 
       const html = wrapper.html()
-      expect(html).toContain('"lowPrice":11')
-      expect(html).toContain('"highPrice":14')
+      expect(html).toContain('"lowPrice": 11')
+      expect(html).toContain('"highPrice": 14')
     })
   })
 
@@ -194,8 +194,8 @@ describe("Seo Products for Collection Page", () => {
       const wrapper = renderProducts()
 
       const html = wrapper.html()
-      expect(html).toContain('"lowPrice":20')
-      expect(html).toContain('"highPrice":20')
+      expect(html).toContain('"lowPrice": 20')
+      expect(html).toContain('"highPrice": 20')
     })
 
     it("renders price from ascending artwork price range", () => {
@@ -205,8 +205,8 @@ describe("Seo Products for Collection Page", () => {
       const wrapper = renderProducts()
 
       const html = wrapper.html()
-      expect(html).toContain('"lowPrice":11')
-      expect(html).toContain('"highPrice":14')
+      expect(html).toContain('"lowPrice": 11')
+      expect(html).toContain('"highPrice": 14')
     })
   })
 
@@ -222,8 +222,8 @@ describe("Seo Products for Collection Page", () => {
       const wrapper = renderProducts()
 
       const html = wrapper.html()
-      expect(html).toContain('"lowPrice":42')
-      expect(html).toContain('"highPrice":420')
+      expect(html).toContain('"lowPrice": 42')
+      expect(html).toContain('"highPrice": 420')
     })
 
     it("it uses the minPrice when the ascending is a PriceRange", () => {
@@ -237,8 +237,8 @@ describe("Seo Products for Collection Page", () => {
       const wrapper = renderProducts()
 
       const html = wrapper.html()
-      expect(html).toContain('"lowPrice":42')
-      expect(html).toContain('"highPrice":420')
+      expect(html).toContain('"lowPrice": 42')
+      expect(html).toContain('"highPrice": 420')
     })
   })
 

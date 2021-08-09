@@ -1,10 +1,11 @@
-import { Box, Flex, Link, Text, color } from "@artsy/palette"
+import { Text } from "@artsy/palette"
 import match from "autosuggest-highlight/match"
 import parse from "autosuggest-highlight/parse"
 import React from "react"
 import styled from "styled-components"
+import { RouterLink } from "v2/System/Router/RouterLink"
 
-interface Props {
+interface SuggestionItemProps {
   display: string
   href: string
   isHighlighted: boolean
@@ -12,66 +13,53 @@ interface Props {
   query: string
 }
 
-export const FirstSuggestionItem: React.FC<Props> = props => {
-  const { href, isHighlighted, query } = props
-  const boxStyle = {
-    borderBottom: `1px solid ${color("black10")}`,
-  }
-
+export const FirstSuggestionItem: React.FC<SuggestionItemProps> = ({
+  href,
+  isHighlighted,
+  query,
+}) => {
   return (
-    <Box bg={isHighlighted ? "black5" : "white100"} style={boxStyle}>
-      <Link color="black100" href={href} underlineBehavior="none">
-        <SuggestionWrapper>
-          <InnerWrapper
-            flexDirection="column"
-            flexGrow={1}
-            justifyContent="center"
-          >
-            <Text variant="text">
-              See full results for &ldquo;{query}&rdquo;
-            </Text>
-          </InnerWrapper>
-        </SuggestionWrapper>
-      </Link>
-    </Box>
+    <SuggestionItemLink
+      to={href}
+      borderBottom="1px solid"
+      borderBottomColor="black10"
+      bg={isHighlighted ? "black5" : "white100"}
+    >
+      <Text variant="sm">See full results for &ldquo;{query}&rdquo;</Text>
+    </SuggestionItemLink>
   )
 }
 
-export const SuggestionItem: React.FC<Props> = props => {
+export const SuggestionItem: React.FC<SuggestionItemProps> = props => {
   const { href, isHighlighted } = props
 
   return (
-    <Box bg={isHighlighted ? "black5" : "white100"}>
-      <Link color="black100" href={href} underlineBehavior="none">
-        <SuggestionWrapper>
-          <InnerWrapper
-            flexDirection="column"
-            flexGrow={1}
-            justifyContent="center"
-          >
-            <DefaultSuggestion {...props} />
-          </InnerWrapper>
-        </SuggestionWrapper>
-      </Link>
-    </Box>
+    <SuggestionItemLink to={href} bg={isHighlighted ? "black5" : "white100"}>
+      <DefaultSuggestion {...props} />
+    </SuggestionItemLink>
   )
 }
 
-const InnerWrapper = styled(Flex)`
-  overflow: hidden;
-  white-space: nowrap;
+const SuggestionItemLink = styled(RouterLink).attrs({
+  color: "black100",
+  px: 2,
+  py: 1,
+})`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-decoration: none;
+  min-height: 60px;
 `
 
 export const PLACEHOLDER = "Search by artist, gallery, style, theme, tag, etc."
 export const PLACEHOLDER_XS = "Search Artsy"
 
-const SuggestionWrapper = props => (
-  <Flex alignItems="center" flexDirection="row" height="62px" pl={2}>
-    {props.children}
-  </Flex>
-)
-
-const DefaultSuggestion = ({ display, label, query }) => {
+const DefaultSuggestion: React.FC<SuggestionItemProps> = ({
+  display,
+  label,
+  query,
+}) => {
   const matches = match(display, query)
   const parts = parse(display, matches)
   const partTags = parts.map(({ highlight, text }, index) =>
@@ -80,16 +68,13 @@ const DefaultSuggestion = ({ display, label, query }) => {
 
   return (
     <>
-      <SuggestionTitle variant="text">{partTags}</SuggestionTitle>
+      <Text variant="sm" overflowEllipsis>
+        {partTags}
+      </Text>
 
-      <Text color="black60" variant="small">
+      <Text color="black60" variant="xs" overflowEllipsis>
         {label}
       </Text>
     </>
   )
 }
-
-const SuggestionTitle = styled(Text)`
-  overflow: hidden;
-  text-overflow: ellipsis;
-`

@@ -28,7 +28,7 @@ const logger = createLogger(
 
 interface RequestConditionReportProps {
   artwork: RequestConditionReport_artwork
-  me: RequestConditionReport_me
+  me: RequestConditionReport_me | null
 }
 
 export const RequestConditionReport: React.FC<RequestConditionReportProps> = props => {
@@ -219,7 +219,7 @@ export const RequestConditionReportQueryRenderer: React.FC<{
         }
       `}
       render={({ props }) => {
-        if (props) {
+        if (props && props.artwork) {
           return (
             <RequestConditionReportFragmentContainer
               artwork={props.artwork}

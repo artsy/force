@@ -6,8 +6,6 @@
 const sinon = require("sinon")
 const rewire = require("rewire")
 const Backbone = require("backbone")
-const { fabricate } = require("@artsy/antigravity")
-
 const OrderedSet = rewire("../../models/ordered_set.coffee")
 
 class Items extends Backbone.Model {}

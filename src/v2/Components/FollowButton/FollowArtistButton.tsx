@@ -273,7 +273,12 @@ export const FollowArtistButtonQueryRenderer: React.FC<
           return <FollowArtistButtonFragmentContainer {...rest} artist={null} />
         }
 
-        return <FollowArtistButtonFragmentContainer {...rest} {...props} />
+        return (
+          <FollowArtistButtonFragmentContainer
+            {...rest}
+            artist={props.artist!}
+          />
+        )
       }}
     />
   )

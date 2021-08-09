@@ -5,10 +5,8 @@
  */
 const _ = require("underscore")
 const benv = require("benv")
-const sinon = require("sinon")
 const Backbone = require("backbone")
 const { resolve } = require("path")
-const { fabricate } = require("@artsy/antigravity")
 const Articles = require("../../../collections/articles")
 const ArticleView = benv.requireWithJadeify(resolve(__dirname, "../article"), [
   "template",

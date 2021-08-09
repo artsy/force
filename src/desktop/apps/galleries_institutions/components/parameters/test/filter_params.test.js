@@ -3,10 +3,6 @@
  * DS102: Remove unnecessary code created because of implicit returns
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
  */
-const benv = require("benv")
-const sinon = require("sinon")
-const Backbone = require("backbone")
-const { fabricate } = require("@artsy/antigravity")
 const Params = require("../filter_params.coffee")
 
 describe("FilterParams", function () {

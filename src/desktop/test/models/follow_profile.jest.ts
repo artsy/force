@@ -1,4 +1,3 @@
-import _ from "underscore"
 import { fabricate } from "@artsy/antigravity"
 const sd = require("sharify").data
 const FollowProfile = require("../../models/follow_profile.coffee")

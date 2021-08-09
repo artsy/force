@@ -17,7 +17,6 @@ import {
 import { NumericInput } from "./PriceRangeFilter"
 import { Media } from "v2/Utils/Responsive"
 import { FilterExpandable } from "./FilterExpandable"
-import { isString } from "lodash"
 
 const SIZES = [
   { displayName: "Small (under 40cm)", name: "SMALL" },
@@ -30,11 +29,6 @@ type CustomRange = (number | "*")[]
 type CustomSize = {
   height: CustomRange
   width: CustomRange
-}
-
-const DEFAULT_CUSTOM_SIZE: CustomSize = {
-  height: ["*", "*"],
-  width: ["*", "*"],
 }
 
 const convertToCentimeters = (element: number) => Math.round(element * 2.54)
@@ -63,10 +57,8 @@ const convertRangeToInches = (range: CustomRange) => {
 
 const convertSizeToInches = (size: CustomSize) => {
   return {
-    height:
-      size.height !== undefined ? convertRangeToInches(size.height) : undefined,
-    width:
-      size.width !== undefined ? convertRangeToInches(size.width) : undefined,
+    height: convertRangeToInches(size.height),
+    width: convertRangeToInches(size.width),
   }
 }
 
@@ -77,15 +69,11 @@ const mapSizeToRange = (size: CustomSize) => {
   }
 }
 
-const hasValue = (size: CustomSize) => {
-  return size.height || size.width
-}
-
 const getValue = (value: CustomRange[number]) => {
   return value === "*" || value === 0 ? "" : value
 }
 
-const isCustomSize = (value?: string) => isString(value) && value !== "*-*"
+const isCustomSize = (value?: string) => value !== "*-*"
 
 export interface SizeFilterProps {
   expanded?: boolean
@@ -104,10 +92,10 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
     width: parseRange(width) as CustomRange,
   }
 
-  const [showCustom, setShowCustom] = useState(!!hasValue(initialCustomSize))
-  const [customSize, setCustomSize] = useState<CustomSize>(
-    hasValue(initialCustomSize) ? initialCustomSize : DEFAULT_CUSTOM_SIZE
+  const [showCustom, setShowCustom] = useState(
+    isCustomSize(width) || isCustomSize(height)
   )
+  const [customSize, setCustomSize] = useState<CustomSize>(initialCustomSize)
   const [mode, setMode] = useState<"resting" | "done">("resting")
 
   const handleInputChange = (dimension: "height" | "width", index: number) => ({
@@ -147,13 +135,8 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
     const newFilters = {
       ...currentlySelectedFilters?.(),
       sizes,
-    }
-
-    if (isCustomSize(height)) {
-      newFilters.height = "*-*"
-    }
-    if (isCustomSize(width)) {
-      newFilters.width = "*-*"
+      height: "*-*",
+      width: "*-*",
     }
 
     setFilters?.(newFilters, { force: false })
@@ -161,21 +144,12 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
   }
 
   const handleClick = () => {
-    const { height: newHeightValue, width: newWidthValue } = mapSizeToRange(
-      convertSizeToInches(customSize) as CustomSize
-    )
-
     const newFilters = {
       ...currentlySelectedFilters?.(),
       sizes: [],
+      ...mapSizeToRange(convertSizeToInches(customSize) as CustomSize),
     }
 
-    if (isCustomSize(newWidthValue) || isCustomSize(width)) {
-      newFilters.width = newWidthValue
-    }
-    if (isCustomSize(newHeightValue) || isCustomSize(height)) {
-      newFilters.height = newHeightValue
-    }
     if (reset) {
       delete newFilters.reset
     }
@@ -201,8 +175,8 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
   const customWidth = currentlySelectedFilters?.().width
   const hasSelection =
     (selection && selection.length > 0) ||
-    (customHeight && customHeight !== "*-*") ||
-    (customWidth && customWidth !== "*-*")
+    isCustomSize(customHeight) ||
+    isCustomSize(customWidth)
 
   return (
     <FilterExpandable label="Size" expanded={hasSelection || expanded}>
@@ -252,11 +226,7 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
               name="width_min"
               min="0"
               step="1"
-              value={
-                customSize.width !== undefined
-                  ? getValue(customSize.width[0])
-                  : undefined
-              }
+              value={getValue(customSize.width[0])}
               onChange={handleInputChange("width", 0)}
             />
             <Spacer mx={0.5} />
@@ -265,11 +235,7 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
               name="width_max"
               min="0"
               step="1"
-              value={
-                customSize.width !== undefined
-                  ? getValue(customSize.width[1])
-                  : undefined
-              }
+              value={getValue(customSize.width[1])}
               onChange={handleInputChange("width", 1)}
             />
           </Flex>
@@ -281,11 +247,7 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
               name="height_min"
               min="0"
               step="1"
-              value={
-                customSize.height !== undefined
-                  ? getValue(customSize.height[0])
-                  : undefined
-              }
+              value={getValue(customSize.height[0])}
               onChange={handleInputChange("height", 0)}
             />
 
@@ -296,11 +258,7 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
               name="height_max"
               min="0"
               step="1"
-              value={
-                customSize.height !== undefined
-                  ? getValue(customSize.height[1])
-                  : undefined
-              }
+              value={getValue(customSize.height[1])}
               onChange={handleInputChange("height", 1)}
             />
           </Flex>

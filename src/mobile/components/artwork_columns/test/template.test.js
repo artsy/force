@@ -5,7 +5,6 @@
  */
 const Artwork = require("../../../models/artwork")
 const Artworks = require("../../../collections/artworks")
-const Partner = require("../../../models/partner")
 const cheerio = require("cheerio")
 const { fabricate } = require("@artsy/antigravity")
 const path = require("path")

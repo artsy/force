@@ -6,7 +6,7 @@ import {
 } from "v2/Apps/__tests__/Fixtures/Order"
 import { createTestEnv } from "v2/DevTools/createTestEnv"
 import { DateTime } from "luxon"
-import { commitMutation as _commitMutation, graphql } from "react-relay"
+import { graphql } from "react-relay"
 import {
   insufficientInventoryResponse,
   submitPendingOfferFailed,

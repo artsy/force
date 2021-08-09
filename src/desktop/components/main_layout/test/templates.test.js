@@ -5,8 +5,6 @@
  */
 const jade = require("jade")
 const fs = require("fs")
-const Profile = require("../../../models/profile")
-const { fabricate } = require("@artsy/antigravity")
 const { resolve } = require("path")
 const sd = require("sharify").data
 

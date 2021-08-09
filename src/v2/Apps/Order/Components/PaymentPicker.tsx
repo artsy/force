@@ -252,6 +252,7 @@ export class PaymentPicker extends React.Component<
       addressErrors,
       addressTouched,
       creditCardSelection,
+      hideBillingAddress,
     } = this.state
     const {
       me: { creditCards },
@@ -348,7 +349,7 @@ export class PaymentPicker extends React.Component<
               <>
                 <Spacer mb={2} />
                 <Checkbox
-                  selected={this.state.hideBillingAddress}
+                  selected={hideBillingAddress}
                   onSelect={this.handleChangeHideBillingAddress.bind(this)}
                   data-test="BillingAndShippingAreTheSame"
                 >
@@ -363,6 +364,7 @@ export class PaymentPicker extends React.Component<
                 errors={addressErrors}
                 touched={addressTouched}
                 onChange={this.onAddressChange}
+                isCollapsed={hideBillingAddress}
                 billing
               />
               <Spacer mb={2} />

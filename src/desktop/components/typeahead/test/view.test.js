@@ -4,9 +4,7 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
  */
 const benv = require("benv")
-const sinon = require("sinon")
 const Backbone = require("backbone")
-const Suggestion = require("../../../models/suggestion")
 let TypeaheadView = null
 
 describe("TypeaheadView", function () {

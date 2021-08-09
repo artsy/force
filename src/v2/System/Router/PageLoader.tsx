@@ -73,7 +73,7 @@ export class PageLoader extends React.Component<
       <Box width="100%" style={style} className={className}>
         <ProgressBar
           percentComplete={progress}
-          highlight="purple100"
+          highlight="blue100"
           showBackground={showBackground}
         />
       </Box>

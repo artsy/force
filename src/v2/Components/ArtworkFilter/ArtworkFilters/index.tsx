@@ -11,7 +11,7 @@ import { ArtistNationalityFilter } from "./ArtistNationalityFilter"
 import { MaterialsFilter } from "./MaterialsFilter"
 import { PartnersFilter } from "./PartnersFilter"
 import { ArtistsFilter } from "./ArtistsFilter"
-import RelayModernEnvironment from "relay-runtime/lib/store/RelayModernEnvironment"
+import type RelayModernEnvironment from "relay-runtime/lib/store/RelayModernEnvironment"
 
 interface ArtworkFiltersProps {
   user?: User

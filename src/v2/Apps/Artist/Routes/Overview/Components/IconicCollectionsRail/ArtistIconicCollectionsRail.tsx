@@ -10,6 +10,7 @@ import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { data as sd } from "sharify"
 import { useTracking } from "react-tracking"
 import { LoadingPlaceholder } from "./LoadingPlaceholder"
+import { ArtistIconicCollectionsRailQuery } from "v2/__generated__/ArtistIconicCollectionsRailQuery.graphql"
 
 interface ArtistIconicCollectionsRailProps {
   marketingCollections: ArtistIconicCollectionsRail_marketingCollections
@@ -123,7 +124,7 @@ export const ArtistIconicCollectionsRailQueryRenderer = props => {
   const { relayEnvironment } = useSystemContext()
 
   return (
-    <SystemQueryRenderer
+    <SystemQueryRenderer<ArtistIconicCollectionsRailQuery>
       environment={relayEnvironment}
       variables={{
         artistID: props.artistID, // Refers to `internalID`, not `slug`

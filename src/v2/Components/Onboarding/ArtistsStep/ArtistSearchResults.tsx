@@ -226,14 +226,14 @@ const ArtistSearchResultsComponent: React.SFC<
         }
       `}
       variables={{ term }}
-      render={({ error, props }) => {
+      render={({ props }) => {
         if (props) {
           return (
             <ArtistSearchResultsContentContainer
               onArtistFollow={onArtistFollow}
               onNoResults={onNoResults}
               term={term}
-              viewer={props.viewer}
+              viewer={props.viewer!}
             />
           )
         } else {

@@ -54,6 +54,7 @@ describe("TrendingLots", () => {
     })
 
     expect(wrapper.html()).not.toContain("Works with the most bids today")
+    expect(wrapper.html()).toContain("No Works To Show")
     expect(wrapper.find("Carousel").length).toBe(0)
     expect(wrapper.find("FillwidthItem").length).toBe(0)
   })

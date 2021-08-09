@@ -2,7 +2,7 @@ _ = require 'underscore'
 geolib = require 'geolib'
 request = require 'superagent'
 { Cities } = require 'places'
-{ NODE_ENV, GEOIP_ENDPOINT } = require '../../config'
+{ NODE_ENV, GEOIP_ENDPOINT } = require '../../../config'
 
 geoIP = (ip) ->
   new Promise (resolve, reject) ->

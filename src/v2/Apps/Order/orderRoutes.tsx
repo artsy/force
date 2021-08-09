@@ -310,7 +310,7 @@ export const orderRoutes: AppRouteConfig[] = [
       }) as any,
       {
         path: "*",
-        Component: props => {
+        Component: () => {
           return <ErrorPage code={404} />
         },
       },

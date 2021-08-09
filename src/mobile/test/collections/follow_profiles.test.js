@@ -1,6 +1,4 @@
 const _ = require("underscore")
-const sd = require("sharify").data
-const should = require("should")
 const sinon = require("sinon")
 const { fabricate } = require("@artsy/antigravity")
 const Backbone = require("backbone")

@@ -53,3 +53,14 @@ stats*.json
 
 # DLL
 manifest-legacy-artwork-dll.json
+
+# Do not ignore .env.example
+!.env.example
+
+# Intelli
+.idea/
+
+# Depdency Cruiser
+.dependency-cruiser.js
+depcruiser*
+*.html

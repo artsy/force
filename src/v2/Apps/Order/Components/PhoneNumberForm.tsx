@@ -1,5 +1,4 @@
-import { Flex } from "@artsy/palette"
-import Input from "v2/Components/Input"
+import { Flex, Input } from "@artsy/palette"
 import React from "react"
 
 export type PhoneNumber = string
@@ -61,7 +60,6 @@ export class PhoneNumberForm extends React.Component<
           value={this.props.value}
           onChange={this.changeEventHandler()}
           error={this.getError()}
-          block
         />
       </Flex>
     )

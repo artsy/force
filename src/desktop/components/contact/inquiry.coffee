@@ -1,5 +1,5 @@
 _ = require 'underscore'
-Cookies = require '../cookies/index.coffee'
+Cookies = require '../cookies/index'
 ContactView = require './view.coffee'
 formTemplate = -> require('./templates/inquiry_form.jade') arguments...
 { SESSION_ID, API_URL } = sd = require('sharify').data

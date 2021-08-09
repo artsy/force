@@ -34,5 +34,6 @@ module.exports = class SettingsPasswordView extends GenericFormView
   , 300
 
   render: ->
-    @$el.html template()
+    @$el.html template
+      user: @user
     this

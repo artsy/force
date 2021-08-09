@@ -1,4 +1,3 @@
-import * as _ from "underscore"
 import path from "path"
 import jade from "jade"
 import fs from "fs"

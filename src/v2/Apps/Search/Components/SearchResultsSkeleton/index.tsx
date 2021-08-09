@@ -4,7 +4,7 @@ import { FilterSidebar } from "./FilterSidebar"
 import { GridItem } from "./GridItem"
 import { Header } from "./Header"
 
-export const SearchResultsSkeleton: React.FC<any> = props => {
+export const SearchResultsSkeleton: React.FC<any> = () => {
   return (
     <>
       <Box style={{ minWidth: 320 }} mx={2}>

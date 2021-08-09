@@ -8,10 +8,10 @@
 // If it is sensitive configuration you should only add it to config.coffee and
 // require that file directly *only* server-side.
 //
-// See this doc for more details: https://github.com/artsy/force/blob/master/docs/adding_an_env_var.md
+// See this doc for more details: https://github.com/artsy/force/blob/master/docs/env_configuration.md
 //
-import _ from "underscore"
-import config from "../config"
+import _ from "lodash"
+import * as config from "../config"
 import sharify from "sharify"
 
 sharify.data = _.extend(
@@ -33,7 +33,6 @@ sharify.data = _.extend(
     "CDN_URL",
     "CMS_URL",
     "COLLECT_PAGE_TITLES_URL",
-    "CONSIGNMENTS_APP_URL",
     "CONVECTION_APP_ID",
     "CONVECTION_APP_URL",
     "CONVECTION_GEMINI_APP",
@@ -47,9 +46,9 @@ sharify.data = _.extend(
     "EMBEDLY_KEY",
     "ENABLE_INSTANT_PAGE",
     "ENABLE_NEW_AUCTIONS_FILTER",
+    "ENABLE_QUERY_BATCHING",
     "ENABLE_REQUEST_CONDITION_REPORT",
     "ENABLE_SERVER_SIDE_CACHE",
-    "ENABLE_QUERY_BATCHING",
     "ENABLE_WEB_CRAWLING",
     "EOY_2016_ARTICLE",
     "EOY_2016",
@@ -74,6 +73,8 @@ sharify.data = _.extend(
     "METAPHYSICS_ENDPOINT",
     "MOBILE_MARKETING_SIGNUP_MODALS",
     "MOBILE_MEDIA_QUERY",
+    "NETWORK_CACHE_SIZE",
+    "NETWORK_CACHE_TTL",
     "NODE_ENV",
     "NOTIFICATION_COUNT",
     "PARSELY_KEY",

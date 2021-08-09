@@ -187,7 +187,8 @@ const SuggestedGenesComponent: React.SFC<
           return (
             <SuggestedGenesContainer
               onGeneFollow={onGeneFollow}
-              suggested_genes={props.highlights.suggested_genes}
+              // @ts-ignore // FIXME: The types in this file are pretty far gone
+              suggested_genes={props.highlights?.suggested_genes!}
             />
           )
         } else {

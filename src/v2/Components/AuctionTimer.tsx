@@ -37,6 +37,7 @@ export class AuctionTimer extends React.Component<Props> {
         labelWithoutTimeRemaining={this.labelWithoutTimeRemaining()}
         // @ts-expect-error STRICT_NULL_CHECK
         endDate={this.endDate}
+        alignItems="center"
       />
     )
   }
@@ -98,7 +99,7 @@ export const AuctionTimerQueryRenderer = ({ saleID }: { saleID: string }) => {
         }
       `}
       render={({ props }) => {
-        return props && <AuctionTimerFragmentContainer sale={props.sale} />
+        return props && <AuctionTimerFragmentContainer sale={props.sale!} />
       }}
     />
   )

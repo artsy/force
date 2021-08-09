@@ -10,6 +10,7 @@ import { ShelfArtworkFragmentContainer } from "v2/Components/Artwork/ShelfArtwor
 import { tabTypeToContextModuleMap } from "../../Utils/tabTypeToContextModuleMap"
 import { TrendingLots_viewer } from "v2/__generated__/TrendingLots_viewer.graphql"
 import { useAnalyticsContext } from "v2/System"
+import { CuratorialRailsZeroState } from "../CuratorialRailsZeroState/CuratorialRailsZeroState"
 export interface TrendingLotsProps {
   viewer: TrendingLots_viewer
 }
@@ -22,7 +23,7 @@ const TrendingLots: React.FC<TrendingLotsProps> = ({ viewer }) => {
   const nodes = extractNodes(viewer.trendingLotsConnection)
 
   if (nodes.length === 0) {
-    return null
+    return <CuratorialRailsZeroState />
   }
 
   return (

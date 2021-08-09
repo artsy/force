@@ -10,10 +10,11 @@ interface FairHeaderImageProps {
 export const FairHeaderImage: React.FC<FairHeaderImageProps> = ({
   fair: { image },
 }) => {
-  if (!image) return null
+  if (image?.url) {
+    return <FullBleedHeader src={image.url} />
+  }
 
-  // @ts-expect-error STRICT_NULL_CHECK
-  return <FullBleedHeader src={image.url} />
+  return null
 }
 
 export const FairHeaderImageFragmentContainer = createFragmentContainer(

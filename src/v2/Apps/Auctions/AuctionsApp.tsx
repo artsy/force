@@ -75,7 +75,7 @@ const AuctionsApp: React.FC<AuctionsAppProps> = props => {
         <Tab name="Trending Lots">
           <TrendingLotsFragmentContainer viewer={viewer} />
         </Tab>
-        <Tab name="Standout lots">
+        <Tab name="Standout Lots">
           <StandoutLotsFragmentContainer viewer={viewer} />
         </Tab>
       </Tabs>
