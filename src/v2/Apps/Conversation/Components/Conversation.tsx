@@ -15,7 +15,6 @@ import { UpdateConversation } from "../Mutation/UpdateConversationMutation"
 import styled from "styled-components"
 import { ConversationHeader } from "./ConversationHeader"
 import { ConfirmArtworkModalQueryRenderer } from "./ConfirmArtworkModal"
-import { useSystemContext } from "v2/System/SystemContext"
 import { BuyerGuaranteeMessage } from "./BuyerGuaranteeMessage"
 import { extractNodes } from "v2/Utils/extractNodes"
 import { returnOrderModalDetails } from "../Utils/returnOrderModalDetails"
@@ -43,14 +42,11 @@ const Loading: React.FC = () => (
 
 const Conversation: React.FC<ConversationProps> = props => {
   const { conversation, relay, showDetails, setShowDetails } = props
-  const { user } = useSystemContext()
 
   const liveArtwork = conversation?.items?.[0]?.liveArtwork
   const artwork = liveArtwork?.__typename === "Artwork" ? liveArtwork : null
 
-  const isArtworkOfferable = !!artwork && !!artwork?.isOfferableFromInquiry
-
-  const isOfferable = user && isArtworkOfferable
+  const isOfferable = !!artwork && !!artwork?.isOfferableFromInquiry
 
   const [showConfirmArtworkModal, setShowConfirmArtworkModal] = useState<
     boolean
