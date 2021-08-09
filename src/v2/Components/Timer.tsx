@@ -1,7 +1,13 @@
-import { Flex, Text, TextVariant, useThemeConfig } from "@artsy/palette"
+import React from "react"
+import {
+  Flex,
+  FlexProps,
+  Text,
+  TextVariant,
+  useThemeConfig,
+} from "@artsy/palette"
 import { WithCurrentTime } from "v2/Components/WithCurrentTime"
 import { DateTime, Duration } from "luxon"
-import React from "react"
 
 function padWithZero(num: number) {
   return num.toString().padStart(2, "0")
@@ -9,13 +15,15 @@ function padWithZero(num: number) {
 
 const SEPARATOR = <>&nbsp;&nbsp;</>
 
-export const Timer: React.FC<{
-  endDate: string
-  labelWithTimeRemaining?: string
-  labelWithoutTimeRemaining?: string
-  label?: string
-  size?: TextVariant
-}> = ({
+export const Timer: React.FC<
+  {
+    endDate: string
+    labelWithTimeRemaining?: string
+    labelWithoutTimeRemaining?: string
+    label?: string
+    size?: TextVariant
+  } & FlexProps
+> = ({
   endDate,
   labelWithTimeRemaining,
   labelWithoutTimeRemaining,

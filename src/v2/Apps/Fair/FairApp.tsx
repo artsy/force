@@ -1,7 +1,7 @@
 import React, { useRef } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FairApp_fair } from "v2/__generated__/FairApp_fair.graphql"
-import { Spacer, Text } from "@artsy/palette"
+import { Text } from "@artsy/palette"
 import { RouteTab, RouteTabs } from "v2/Components/RouteTabs"
 import { FairMetaFragmentContainer } from "./Components/FairMeta"
 import { useSystemContext } from "v2/System"
@@ -18,6 +18,7 @@ import {
 import { HttpError } from "found"
 import { userIsAdmin } from "v2/Utils/user"
 import { FairHeaderImageFragmentContainer } from "./Components/FairHeader/FairHeaderImage"
+import { FairHeaderFragmentContainer } from "./Components/FairHeader"
 
 interface FairAppProps {
   fair: FairApp_fair
@@ -63,7 +64,7 @@ const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
 
       <FairHeaderImageFragmentContainer fair={fair} />
 
-      <Spacer my={[4, 30]} />
+      <FairHeaderFragmentContainer fair={fair} />
 
       <RouteTabs my={[0, 2]} fill>
         <RouteTab
@@ -141,18 +142,9 @@ export const FairAppFragmentContainer = createFragmentContainer(
         href
         slug
         ...FairMeta_fair
+        ...FairOverview_fair
         ...FairHeader_fair
         ...FairHeaderImage_fair
-        ...FairFollowedArtists_fair
-        articlesConnection(first: 6, sort: PUBLISHED_AT_DESC) {
-          totalCount
-          edges {
-            __typename
-          }
-        }
-        marketingCollections(size: 5) {
-          id
-        }
         counts {
           artworks
         }
