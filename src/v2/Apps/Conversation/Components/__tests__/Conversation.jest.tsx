@@ -49,11 +49,10 @@ describe("Conversation", () => {
     user = {}
   })
 
-  describe("when user has Inquiry Checkout feature and the artwork is offerable", () => {
+  describe("when the artwork is offerable", () => {
     beforeEach(() => {
       user = {
         type: "NotAdmin",
-        lab_features: ["Web Inquiry Checkout"],
       }
     })
 
@@ -82,27 +81,10 @@ describe("Conversation", () => {
     })
   })
 
-  describe("when user doesn't have Inquiry Checkout feature", () => {
-    beforeEach(() => {
-      user = {
-        type: "NotAdmin",
-      }
-    })
-
-    it("doesn't show the buyer guarantee message", () => {
-      const wrapper = getWrapper({
-        Artwork: () => ({ isOfferableFromInquiry: true }),
-      })
-
-      expect(wrapper.find("BuyerGuaranteeMessage")).toHaveLength(0)
-    })
-  })
-
   describe("when the artwork is not offerable", () => {
     beforeEach(() => {
       user = {
         type: "NotAdmin",
-        lab_features: ["Web Inquiry Checkout"],
       }
     })
 

@@ -4,8 +4,6 @@ import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ReviewOfferCTA } from "./ReviewOfferCTA"
 import { OpenInquiryModalButtonQueryRenderer } from "./OpenInquiryModalButton"
-import { userHasLabFeature } from "v2/Utils/user"
-import { useSystemContext } from "v2/System/useSystemContext"
 
 interface ConversationCTAProps {
   conversation: ConversationCTA_conversation
@@ -26,13 +24,7 @@ export const ConversationCTA: React.FC<ConversationCTAProps> = ({
 
   let CTA: JSX.Element | null = null
 
-  const { user } = useSystemContext()
-  const inquiryCheckoutEnabled = userHasLabFeature(
-    user!,
-    "Web Inquiry Checkout"
-  )
-
-  if (inquiryCheckoutEnabled && artwork) {
+  if (artwork) {
     // artworkID is guaranteed to be present if `isOfferableFromInquiry` was present.
     const conversationID = conversation.internalID!
     const activeOrder = extractNodes(conversation.activeOrders)[0]

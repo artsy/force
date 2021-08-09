@@ -42,7 +42,6 @@ describe("ConversationCTA", () => {
 
     useSystemContext.mockImplementation(() => {
       return {
-        user: { lab_features: ["Web Inquiry Checkout"] },
         mediator: {
           on: jest.fn(),
           off: jest.fn(),
@@ -53,22 +52,6 @@ describe("ConversationCTA", () => {
 
   afterEach(() => {
     jest.resetAllMocks()
-  })
-
-  it("doesn't render if lab feature is false", () => {
-    useSystemContext.mockImplementation(() => {
-      return {
-        user: null,
-        mediator: {
-          on: jest.fn(),
-          off: jest.fn(),
-        },
-      }
-    })
-
-    const wrapper = getWrapper({})
-    expect(wrapper.find("ReviewOfferCTA").length).toBe(0)
-    expect(wrapper.find("MakeOfferButton").length).toBe(0)
   })
 
   it("renders the correct CTA when an offer has been received", () => {
