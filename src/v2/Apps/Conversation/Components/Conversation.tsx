@@ -15,7 +15,6 @@ import { UpdateConversation } from "../Mutation/UpdateConversationMutation"
 import styled from "styled-components"
 import { ConversationHeader } from "./ConversationHeader"
 import { ConfirmArtworkModalQueryRenderer } from "./ConfirmArtworkModal"
-import { userHasLabFeature } from "v2/Utils/user"
 import { useSystemContext } from "v2/System/SystemContext"
 import { BuyerGuaranteeMessage } from "./BuyerGuaranteeMessage"
 import { extractNodes } from "v2/Utils/extractNodes"
@@ -51,10 +50,7 @@ const Conversation: React.FC<ConversationProps> = props => {
 
   const isArtworkOfferable = !!artwork && !!artwork?.isOfferableFromInquiry
 
-  const isOfferable =
-    user &&
-    userHasLabFeature(user, "Web Inquiry Checkout") &&
-    isArtworkOfferable
+  const isOfferable = user && isArtworkOfferable
 
   const [showConfirmArtworkModal, setShowConfirmArtworkModal] = useState<
     boolean

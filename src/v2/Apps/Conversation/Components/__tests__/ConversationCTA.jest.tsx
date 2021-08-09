@@ -42,7 +42,6 @@ describe("ConversationCTA", () => {
 
     useSystemContext.mockImplementation(() => {
       return {
-        user: { lab_features: ["Web Inquiry Checkout"] },
         mediator: {
           on: jest.fn(),
           off: jest.fn(),
