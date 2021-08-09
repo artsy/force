@@ -30,8 +30,7 @@ describe("Articles", () => {
     })
   })
 
-  // TODO: Currently throwing error. Likely needs additional ENV var.
-  describe.skip("Team Blogs (channels)", () => {
+  describe("Team Blogs (channels)", () => {
     it("/artsy-education", () => {
       visitWithStatusRetries("artsy-education")
       cy.title().should("eq", "Artsy for Education")
