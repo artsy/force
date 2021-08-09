@@ -82,7 +82,6 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
     onAddressDelete,
     onAddressCreate,
     selectedAddress,
-    onSelectedAddressEdited,
     onShowToast,
     onAddressEdit,
   } = props

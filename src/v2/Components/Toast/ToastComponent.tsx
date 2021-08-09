@@ -41,7 +41,6 @@ const ToastComponent: React.FC<ToastComponentProps> = ({
 
   const handleTouchEnd = () => {
     if (touchStart - touchEnd < -30) {
-      // do your stuff here for right swipe
       setIsMoveToRight(true)
     }
   }

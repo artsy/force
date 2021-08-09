@@ -4,11 +4,17 @@ import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
 import { graphql } from "relay-runtime"
 import ToastComponent from "v2/Components/Toast/ToastComponent"
 import { deleteUserAddress } from "v2/Apps/Order/Mutations/DeleteUserAddress"
+import { createUserAddress } from "v2/Apps/Order/Mutations/CreateUserAddress"
+import { AddressModal } from "v2/Apps/Order/Components/AddressModal"
+import { Formik } from "formik"
+import { Modal } from "@artsy/palette"
+
 jest.unmock("react-relay")
 jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
   useMatchMedia: () => ({}),
 }))
 jest.mock("v2/Apps/Order/Mutations/DeleteUserAddress")
+jest.mock("v2/Apps/Order/Mutations/CreateUserAddress")
 
 describe("ToastComponent", () => {
   const { getWrapper } = setupTestWrapper({
@@ -24,32 +30,48 @@ describe("ToastComponent", () => {
     `,
   })
   const mockDeleteUserAddress = deleteUserAddress as jest.Mock
-  const wrapper = getWrapper({
-    Me: () => ({
-      id: "someid",
-      internalID: "someid",
-      addressConnection: mockAddressConnection,
-    }),
-  })
+  const mockCreateUserAddress = createUserAddress as jest.Mock
 
-  it("renders ToastComponent when address was saved", async () => {
-    const toast = wrapper.find(ToastComponent)
-    expect(toast.props().showNotification).toBe(false)
+  it("renders ToastComponent when address was deleted", async () => {
+    const wrapper = getWrapper({
+      Me: () => ({
+        id: "someid",
+        internalID: "someid",
+        addressConnection: mockAddressConnection,
+      }),
+    })
 
     const deleteButton = wrapper
       .find(`[data-test="deleteAddressInProfile"]`)
       .first()
-    mockDeleteUserAddress.mockResolvedValue(mockDeleteAddressSuccessResponse)
+    mockDeleteUserAddress.mockResolvedValue(
+      mockCreateDeleteAddressSuccessResponse
+    )
     deleteButton.simulate("click")
     await wrapper.update()
-    const toast2 = wrapper.find(ToastComponent)
-    // I run here onShowToast func, but I can't get updating tree
-    //I tried to use setTimeout, but it doesn't work
+    const toast = wrapper.find(ToastComponent)
     setTimeout(() => {
-      console.log(toast2.text())
-      expect(toast2.props().showNotification).toBe(true)
-    }, 0)
+      expect(toast.text()).toContain("Address Successfully Deleted")
+      // done()
+    }, 1000)
   })
+
+  // it("renders ToastComponent when address was saved", async () => {
+  //   const wrapper = getWrapper({
+  //     Me: () => ({
+  //       id: "someid",
+  //       internalID: "someid",
+  //       addressConnection: mockAddressConnection,
+  //     }),
+  //   })
+
+  //   const toast = wrapper.find(ToastComponent)
+  //   expect(toast.props().showNotification).toBe(false)
+  //   const button = wrapper.find("Button[data-test='saveButton']")
+  //   const modal = wrapper.find(AddressModal)
+  //   const formik = wrapper.find("form").first()
+  //   console.log(formik.props())
+  // })
 })
 
 const mockAddressConnection = {
@@ -73,7 +95,7 @@ const mockAddressConnection = {
   ],
 }
 
-const mockDeleteAddressSuccessResponse = {
+const mockCreateDeleteAddressSuccessResponse = {
   deleteUserAddress: {
     userAddressOrErrors: {
       addressLine1: "line1",
