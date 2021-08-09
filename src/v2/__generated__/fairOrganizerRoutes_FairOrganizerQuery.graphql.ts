@@ -58,6 +58,30 @@ fragment FairEditorialItem_article on Article {
   }
 }
 
+fragment FairEditorialItem_article on Article {
+  id
+  internalID
+  slug
+  title
+  href
+  publishedAt(format: "MMMM D, YYYY")
+  thumbnailTitle
+  thumbnailImage {
+    large: cropped(width: 670, height: 720) {
+      width
+      height
+      src
+      srcSet
+    }
+    small: cropped(width: 325, height: 240) {
+      width
+      height
+      src
+      srcSet
+    }
+  }
+}
+
 fragment FairHeaderImage_fair on Fair {
   image {
     url(version: "wide")
