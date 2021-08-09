@@ -3,8 +3,8 @@ import { SystemContextProvider } from "v2/System"
 import { useTracking } from "v2/System/Analytics/useTracking"
 import { mount } from "enzyme"
 import React from "react"
-import { NavBar, NavBarTier } from "../NavBar"
-import { InboxNotificationCount } from "../Menus/MobileNavMenu/InboxNotificationCount"
+import { NavBar } from "../NavBar"
+import { NavBarMobileMenuInboxNotificationCount } from "../NavBarMobileMenu/NavBarMobileMenuInboxNotificationCount"
 import { mediator } from "lib/mediator"
 
 jest.mock("v2/Components/Search/SearchBar", () => {
@@ -20,6 +20,10 @@ jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
 
 jest.mock("lib/isServer", () => ({
   isServer: true,
+}))
+
+jest.mock("v2/Components/NavBar/NavBarMobileMenu/NavBarMobileSubMenu", () => ({
+  NavBarMobileSubMenu: () => <></>,
 }))
 
 describe("NavBar", () => {
@@ -58,49 +62,6 @@ describe("NavBar", () => {
   })
 
   describe("desktop", () => {
-    const topNavBarDefaultLinks = [
-      ["/collect", "Buy"],
-      ["/consign", "Sell"],
-      ["/articles", "Editorial"],
-    ]
-
-    const bottomNavBarDefaultLinks = [
-      ["/artists", "Artists"],
-      ["/collect", "Artworks"],
-      ["/auctions", "Auctions"],
-      ["/viewing-rooms", "Viewing Rooms"],
-      ["/galleries", "Galleries"],
-      ["/fairs", "Fairs"],
-      ["/Shows", "Shows"],
-      ["/institutions", "Museums"],
-      ["#download-app-banner", "Download App"],
-    ]
-
-    it("renders correct nav items above xs", () => {
-      const wrapper = getWrapper()
-
-      // Should always be first
-      expect(wrapper.find("a").first().text()).toEqual("Skip to Main Content")
-
-      expect(wrapper.find("NavBarPrimaryLogo").find("a").prop("href")).toEqual(
-        "/"
-      )
-
-      const topNavBarLinks = wrapper.find(NavBarTier).at(0).find("NavItem")
-      const bottomNavBarLinks = wrapper.find(NavBarTier).at(1).find("NavItem")
-
-      topNavBarDefaultLinks.forEach(([href, text], index) => {
-        const navLink = topNavBarLinks.at(index)
-        expect(href).toEqual(navLink.prop("href"))
-        expect(text).toEqual(navLink.text())
-      })
-
-      bottomNavBarDefaultLinks.forEach(([href], index) => {
-        const navLink = bottomNavBarLinks.at(index)
-        expect(href).toEqual(navLink.prop("href"))
-      })
-    })
-
     it("renders logged out items", () => {
       const wrapper = getWrapper()
       expect(wrapper.html()).toContain("Log in")
@@ -115,7 +76,7 @@ describe("NavBar", () => {
       expect(wrapper.html()).not.toContain("Log in")
       expect(wrapper.html()).not.toContain("Sign up")
       expect(wrapper.find(BellIcon).length).toEqual(1)
-      expect(wrapper.find(SoloIcon).length).toEqual(2)
+      expect(wrapper.find(SoloIcon).length).toEqual(1)
     })
 
     describe("lab features", () => {
@@ -138,7 +99,7 @@ describe("NavBar", () => {
   describe("mediator actions", () => {
     it("calls login auth action on login button click", () => {
       const wrapper = getWrapper()
-      wrapper.find("Button").at(0).simulate("click")
+      wrapper.find("button").at(0).simulate("click")
       expect(mediator.trigger).toBeCalledWith("open:auth", {
         contextModule: "header",
         intent: "login",
@@ -148,7 +109,7 @@ describe("NavBar", () => {
 
     it("calls signup auth action on signup button click", () => {
       const wrapper = getWrapper()
-      wrapper.find("Button").at(1).simulate("click")
+      wrapper.find("button").at(1).simulate("click")
       expect(mediator.trigger).toBeCalledWith("open:auth", {
         contextModule: "header",
         intent: "signup",
@@ -161,29 +122,32 @@ describe("NavBar", () => {
     it("toggles menu", () => {
       const wrapper = getWrapper()
 
-      expect(wrapper.find("MobileToggleIcon").length).toEqual(1)
+      expect(wrapper.find("NavBarMobileMenuIcon").length).toEqual(1)
 
       const toggle = () =>
         wrapper
-          .find(NavBarTier)
-          .at(0)
-          .find("NavItem")
-          .find("a")
-          .last()
+          .find("button")
+          .findWhere(node => {
+            return node.text() === "Menu" || node.text() === "Close"
+          })
+          .first()
           .simulate("click")
 
+      expect(wrapper.find("NavBarMobileMenu").length).toEqual(0)
       toggle()
-      expect(wrapper.find("MobileNavMenu").length).toEqual(1)
+      expect(wrapper.find("NavBarMobileMenu").length).toEqual(1)
       toggle()
-      expect(wrapper.find("MobileNavMenu").length).toEqual(0)
+      expect(wrapper.find("NavBarMobileMenu").length).toEqual(0)
     })
 
-    it("shows InboxNotificationCount when there are conversations", () => {
+    it("shows the inbox notifications count  when there are conversations", () => {
       const wrapper = getWrapper({
         // @ts-expect-error STRICT_NULL_CHECK
         user: { type: "NotAdmin", lab_features: ["User Conversations View"] },
       })
-      expect(wrapper.find(InboxNotificationCount).length).toBe(1)
+      expect(wrapper.find(NavBarMobileMenuInboxNotificationCount).length).toBe(
+        1
+      )
     })
   })
 

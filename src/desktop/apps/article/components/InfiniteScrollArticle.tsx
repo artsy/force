@@ -9,7 +9,7 @@ import {
   ArticleProps,
 } from "@artsy/reaction/dist/Components/Publishing/Article"
 import { articlesQuery } from "desktop/apps/article/queries/articles"
-import { ArticleData } from "@artsy/reaction/dist/Components/Publishing/Typings"
+import type { ArticleData } from "@artsy/reaction/dist/Components/Publishing/Typings"
 import { shouldAdRender } from "desktop/apps/article/helpers"
 
 const FETCH_TOP_OFFSET = 200

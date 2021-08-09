@@ -1,6 +1,6 @@
 _ = require 'underscore'
 { isTouchDevice } = require '../util/device.coffee'
-Cookies = require '../cookies/index.coffee'
+Cookies = require '../cookies/index'
 
 transitionLength = 250
 dismissalLimit = 15

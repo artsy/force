@@ -4,7 +4,6 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
  */
 const { extend } = require("underscore")
-const sinon = require("sinon")
 const rewire = require("rewire")
 
 const dispatch = rewire("../services/index")

@@ -17,7 +17,6 @@ describe("ConversationCTA", () => {
           conversation={props.me.conversation}
           openInquiryModal={jest.fn()}
           openOrderModal={jest.fn()}
-          onMount={jest.fn()}
         />
       )
     },

@@ -233,7 +233,7 @@ const ArtistSearchResultsComponent: React.SFC<
               onArtistFollow={onArtistFollow}
               onNoResults={onNoResults}
               term={term}
-              viewer={props.viewer}
+              viewer={props.viewer!}
             />
           )
         } else {

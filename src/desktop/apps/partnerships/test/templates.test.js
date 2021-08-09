@@ -5,12 +5,9 @@
  */
 const _ = require("underscore")
 const $ = require("cheerio")
-const benv = require("benv")
 const jade = require("jade")
 const path = require("path")
 const fs = require("fs")
-const CurrentUser = require("../../../models/current_user")
-const { fabricate } = require("@artsy/antigravity")
 
 const render = function (opts) {
   const filename = path.resolve(__dirname, "../templates/index.jade")

@@ -2,8 +2,7 @@ import sharify from "sharify"
 import type { NextFunction } from "express"
 import type { ArtsyRequest, ArtsyResponse } from "lib/middleware/artsyExpress"
 import { buildServerApp } from "v2/System/Router/server"
-import { getAppRoutes } from "v2/routes"
-import { flatten } from "lodash"
+import { getAppRoutes, getRouteList } from "v2/routes"
 import ReactDOM from "react-dom/server"
 import loadAssetManifest from "lib/manifest"
 import express from "express"
@@ -22,42 +21,14 @@ if (!NOVO_MANIFEST) {
 }
 
 const app = express()
-
 const routes = getAppRoutes()
-
-/**
- * We can't use a wildcard route because of gallery vanity urls, so iterate
- * over all app routes and return an array that we can explicity match against.
- */
-let flatRoutes
-const appRoutes = routes[0]
-if (appRoutes) {
-  flatRoutes = flatten(
-    appRoutes.children?.map(app => {
-      // Only supports one level of nesting per app. For instance, these are tabs
-      // on the artist page, etc.
-      const childRoutePaths = app.children
-        ?.map(child => child.path)
-        .filter(route => route !== "/" && route !== "*")
-
-      const allRoutes = childRoutePaths
-        ? childRoutePaths
-            .map(child => app.path + "/" + child)
-            .concat(app.path + "")
-        : app.path
-
-      return allRoutes
-    })
-  )
-} else {
-  flatRoutes = []
-}
+const routeList = getRouteList()
 
 /**
  * Mount routes that will connect to global SSR router
  */
 app.get(
-  flatRoutes,
+  routeList,
   async (req: ArtsyRequest, res: ArtsyResponse, next: NextFunction) => {
     try {
       const {

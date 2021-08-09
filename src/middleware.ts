@@ -20,16 +20,23 @@ import siteAssociation from "artsy-eigen-web-association"
 import timeout from "connect-timeout"
 import bodyParser from "body-parser"
 import {
+  API_URL,
   APP_TIMEOUT,
-  IP_DENYLIST,
-  NODE_ENV,
+  APP_URL,
+  APPLE_CLIENT_ID,
+  APPLE_KEY_ID,
+  APPLE_PRIVATE_KEY,
+  APPLE_TEAM_ID,
   CLIENT_ID,
   CLIENT_SECRET,
-  API_URL,
+  FACEBOOK_ID,
+  FACEBOOK_SECRET,
+  IP_DENYLIST,
+  MEMORY_PAGE_URL_FILTER,
+  NODE_ENV,
   SEGMENT_WRITE_KEY_SERVER,
   SENTRY_PRIVATE_DSN,
 } from "./config"
-import * as config from "./config"
 
 // NOTE: Previoiusly, when deploying new Sentry SDK to prod we quickly start to
 // see errors like "`CURRENT_USER` is undefined". We need more investigation
@@ -51,10 +58,11 @@ import { downcaseMiddleware } from "./lib/middleware/downcase"
 import { hardcodedRedirectsMiddleware } from "./lib/middleware/hardcodedRedirects"
 import { localsMiddleware } from "./lib/middleware/locals"
 import { marketingModalsMiddleware } from "./lib/middleware/marketingModals"
-import { pageCacheMiddleware } from "./lib/middleware/pageCache"
+import { pageCacheMiddleware } from "./lib/middleware/redisPageCache"
 import { sameOriginMiddleware } from "./lib/middleware/sameOrigin"
 import { unsupportedBrowserMiddleware } from "./lib/middleware/unsupportedBrowser"
 import { backboneSync } from "lib/backboneSync"
+import { memoryPageCacheMiddleware } from "lib/middleware/memoryPageCache"
 import { serverTimingHeaders } from "lib/middleware/serverTimingHeaders"
 
 // App-specific V2 server-side functionality
@@ -64,6 +72,9 @@ import { handleArtworkImageDownload } from "lib/middleware/artworkMiddleware"
 import { searchMiddleware } from "lib/middleware/searchMiddleware"
 import { splitTestMiddleware } from "desktop/components/split_test/splitTestMiddleware"
 import { IGNORED_ERRORS } from "lib/analytics/sentryFilters"
+
+// Find the v2 routes, we will not be testing memory caching for legacy pages.
+import { getRouteList } from "v2/routes"
 
 const CurrentUser = require("./lib/current_user.coffee")
 
@@ -110,7 +121,9 @@ export function initializeMiddleware(app) {
   app.use(backboneErrorHandlerMiddleware)
   app.use(sameOriginMiddleware)
   app.use(unsupportedBrowserMiddleware)
-  app.use(pageCacheMiddleware)
+
+  // Initialize caches
+  applyCacheMiddleware(app)
 
   /**
    * Blank page used by Eigen for caching web views.
@@ -202,27 +215,31 @@ function applySecurityMiddleware(app) {
   // Passport middleware for authentication.
   app.use(
     artsyPassport({
-      ...config,
-      ...{
-        ARTSY_ID: CLIENT_ID,
-        ARTSY_SECRET: CLIENT_SECRET,
-        ARTSY_URL: API_URL,
-        CurrentUser: CurrentUser,
-        SEGMENT_WRITE_KEY: SEGMENT_WRITE_KEY_SERVER,
-        userKeys: [
-          "collector_level",
-          "default_profile_id",
-          "email",
-          "has_partner_access",
-          "id",
-          "lab_features",
-          "name",
-          "paddle_number",
-          "phone",
-          "roles",
-          "type",
-        ],
-      },
+      APP_URL,
+      APPLE_CLIENT_ID,
+      APPLE_KEY_ID,
+      APPLE_PRIVATE_KEY,
+      APPLE_TEAM_ID,
+      ARTSY_ID: CLIENT_ID,
+      ARTSY_SECRET: CLIENT_SECRET,
+      ARTSY_URL: API_URL,
+      CurrentUser: CurrentUser,
+      FACEBOOK_ID,
+      FACEBOOK_SECRET,
+      SEGMENT_WRITE_KEY: SEGMENT_WRITE_KEY_SERVER,
+      userKeys: [
+        "collector_level",
+        "default_profile_id",
+        "email",
+        "has_partner_access",
+        "id",
+        "lab_features",
+        "name",
+        "paddle_number",
+        "phone",
+        "roles",
+        "type",
+      ],
     })
   )
 
@@ -248,4 +265,25 @@ function applyStaticAssetMiddlewares(app) {
   // TODO: Move to ./public/images
   app.use(favicon(path.resolve(__dirname, "mobile/public/images/favicon.ico")))
   app.use("/(.well-known/)?apple-app-site-association", siteAssociation)
+}
+
+function applyCacheMiddleware(app) {
+  // For full page cache testing, find all the modern routes and enable pages we
+  // would like to test.
+  let cachableModernRoutes: string[] = getRouteList()
+
+  if (MEMORY_PAGE_URL_FILTER && MEMORY_PAGE_URL_FILTER.split(",").length > 0) {
+    const cacheFilters = MEMORY_PAGE_URL_FILTER.split(",")
+    cachableModernRoutes = cachableModernRoutes.filter(route => {
+      for (const cacheFilter of cacheFilters) {
+        if (route.startsWith(cacheFilter)) {
+          return true
+        }
+      }
+      return false
+    })
+  }
+
+  app.use(pageCacheMiddleware)
+  app.use(cachableModernRoutes, memoryPageCacheMiddleware)
 }

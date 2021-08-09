@@ -99,7 +99,7 @@ export const RecentlyViewedQueryRenderer = () => {
           return <RecentlyViewedPlaceholder />
         }
 
-        return <RecentlyViewedFragmentContainer {...props} />
+        return <RecentlyViewedFragmentContainer me={props.me!} />
       }}
     />
   )

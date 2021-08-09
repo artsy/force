@@ -1,9 +1,43 @@
 // @ts-check
 
+import { createHash } from "crypto"
+import { readFileSync, accessSync, constants } from "fs"
+import { parse } from "dotenv"
 import chalk from "chalk"
 import path from "path"
 import yn from "yn"
 import os from "os"
+import v8 from "v8"
+
+function loadEnv(env) {
+  return checkFileExistsSync(env) ? parse(readFileSync(env)) : {}
+}
+
+function applyToEnv(config) {
+  if (Object.keys(config).length !== 0) {
+    for (const k in config) {
+      process.env[k] = config[k]
+    }
+  }
+}
+
+function checkFileExistsSync(filepath) {
+  try {
+    accessSync(filepath, constants.F_OK)
+  } catch (e) {
+    return false
+  }
+  return true
+}
+
+// Load the default envs and apply to process.env
+applyToEnv({
+  ...loadEnv(".env.shared"),
+  ...loadEnv(".env"),
+})
+
+const hostnameHash = createHash("sha256")
+hostnameHash.update(os.hostname())
 
 const env = {
   buildLegacyClient: yn(process.env.BUILD_LEGACY_CLIENT, { default: false }),
@@ -11,7 +45,7 @@ const env = {
   buildServer: yn(process.env.BUILD_SERVER, { default: false }),
   datadogKey: process.env.WEBPACK_DATADOG_KEY,
   enableWebpackAnalyze: yn(process.env.WEBPACK_ANALYZE, { default: false }),
-  enableWebpackDatadog: yn(process.env.WEBPACK_DATADOG, { default: true }),
+  enableWebpackDatadog: yn(process.env.WEBPACK_DATADOG, { default: false }),
   enableWebpackDumpConfig: process.env.WEBPACK_DUMP_CONFIG,
   fastProductionBuild: yn(process.env.WEBPACK_FAST_PRODUCTION_BUILD, {
     default: false,
@@ -20,12 +54,16 @@ const env = {
   isProduction: process.env.NODE_ENV === "production",
   isStaging: process.env.NODE_ENV === "staging",
   logConfig: yn(process.env.WEBPACK_LOG_CONFIG, { default: false }),
+  machineCpus: os.cpus().length,
+  machineHeapSize: v8.getHeapStatistics().total_heap_size,
+  machineName: os.hostname(),
+  machineNameHash: hostnameHash.digest("hex"),
   nodeEnv: process.env.NODE_ENV,
   onCi: yn(process.env.CI, { default: false }),
   port: process.env.PORT || "5000",
+  webpackBundleSplit: yn(process.env.WEBPACK_BUNDLE_SPLIT, { default: true }),
   webpackCiCpuLimit:
     Number.parseInt(process.env.WEBPACK_CI_CPU_LIMIT || "") || 4,
-  webpackBundleSplit: yn(process.env.WEBPACK_BUNDLE_SPLIT, { default: true }),
   webpackConcatenate: yn(process.env.WEBPACK_CONCATENATE, { default: true }),
   webpackDebug: yn(process.env.WEBPACK_DEBUG),
   webpackDevtool: process.env.WEBPACK_DEVTOOL,
@@ -37,8 +75,11 @@ const basePath = path.join(__dirname, "..", "..")
 // prettier-ignore
 if (env.onCi || env.logConfig) {
   console.log("\n[Webpack Environment]")
-  console.log("  cpus".padEnd(35), chalk.yellow(os.cpus().length))
   console.log("  basePath".padEnd(35), chalk.yellow(basePath))
+  console.log("  machineCpus".padEnd(35), chalk.yellow(env.machineCpus))
+  console.log("  machineHeapSize".padEnd(35), chalk.yellow(env.machineHeapSize))
+  console.log("  machineName".padEnd(35), chalk.yellow(env.machineName))
+  console.log("  machineNameHash".padEnd(35), chalk.yellow(env.machineNameHash))
   console.log("  BUILD_LEGACY_CLIENT".padEnd(35), chalk.yellow(env.buildLegacyClient))
   console.log("  BUILD_SERVER".padEnd(35), chalk.yellow(env.buildServer))
   console.log("  BUILD_CLIENT".padEnd(35), chalk.yellow(env.buildClient))

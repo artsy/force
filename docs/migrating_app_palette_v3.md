@@ -73,17 +73,17 @@ export const MyApp = props => {
 The `useThemeConfig` hook can be used within components that are _shared_ between v2 and v3 apps, and thus can't be converted wholesale to v3. (A good example of this is the Artwork Filter, which is a complex component used in a couple different apps.)
 
 ```jsx
-import { useThemeConfig, Box, Text } from "@artsy/palette"
+import { useThemeConfig, Box, Text, TextVariant } from "@artsy/palette"
 
 const MyComponent = props => {
   const tokens = useThemeConfig({
     v2: {
       px: 5,
-      variant: "title",
+      variant: "title" as TextVariant,
     },
     v3: {
       px: 2,
-      variant: "lg",
+      variant: "lg" as TextVariant,
     },
   })
 

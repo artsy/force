@@ -11,14 +11,12 @@ interface ConversationCTAProps {
   conversation: ConversationCTA_conversation
   openInquiryModal: () => void
   openOrderModal: () => void
-  onMount: () => void
 }
 
 export const ConversationCTA: React.FC<ConversationCTAProps> = ({
   conversation,
   openInquiryModal,
   openOrderModal,
-  onMount,
 }) => {
   // Determine whether we have a conversation about an artwork
 
@@ -38,13 +36,11 @@ export const ConversationCTA: React.FC<ConversationCTAProps> = ({
     // artworkID is guaranteed to be present if `isOfferableFromInquiry` was present.
     const conversationID = conversation.internalID!
     const activeOrder = extractNodes(conversation.activeOrders)[0]
-
     if (!activeOrder) {
       CTA = (
         <OpenInquiryModalButtonQueryRenderer
           artworkID={artworkID!}
           openInquiryModal={() => openInquiryModal()}
-          onMount={onMount}
           conversationID={conversationID}
         />
       )

@@ -8,8 +8,6 @@ const sinon = require("sinon")
 const moment = require("moment")
 const Backbone = require("backbone")
 const PartnerShow = require("../../../models/partner_show")
-const PartnerCities = require("../../../collections/partner_cities")
-const PartnerFeaturedCities = require("../../../collections/partner_featured_cities")
 const { fabricate } = require("@artsy/antigravity")
 const routes = require("../routes")
 

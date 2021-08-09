@@ -4,12 +4,11 @@ export const FairExhibitorsQuery = graphql`
   query FairExhibitorsQuery(
     $id: String!
     $first: Int
-    $after: String
+    $page: Int
     $sort: ShowSorts
   ) {
     fair(id: $id) {
-      ...FairExhibitors_fair
-        @arguments(first: $first, after: $after, sort: $sort)
+      ...FairExhibitors_fair @arguments(first: $first, page: $page, sort: $sort)
     }
   }
 `

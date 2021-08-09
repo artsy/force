@@ -18,11 +18,10 @@ jest.mock("desktop/lib/positronql", () => ({
 }))
 const mockPositronql = require("desktop/lib/positronql").positronql as jest.Mock
 
-jest.mock("desktop/components/cookies/index.coffee", () => ({
+jest.mock("desktop/components/cookies/index", () => ({
   get: jest.fn(),
 }))
-const mockCookies = require("desktop/components/cookies/index.coffee")
-  .get as jest.Mock
+const mockCookies = require("desktop/components/cookies/index").get as jest.Mock
 
 jest.mock("desktop/lib/openAuthModal", () => ({
   handleScrollingAuthModal: jest.fn(),

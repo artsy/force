@@ -40,7 +40,7 @@ export const FullBleedHeader: React.FC<FullBleedHeaderProps> = ({
       </picture>
 
       {caption && (
-        <Overlay>
+        <Overlay display={["none", "flex"]}>
           <HTML html={caption} color="white100" variant="xs" px={2} py={1} />
         </Overlay>
       )}

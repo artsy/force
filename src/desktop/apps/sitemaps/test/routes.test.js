@@ -1,9 +1,7 @@
-const { fabricate } = require("@artsy/antigravity")
 const sinon = require("sinon")
 const Backbone = require("backbone")
 const rewire = require("rewire")
 const routes = rewire("../routes")
-const moment = require("moment")
 
 describe("Sitemaps", function () {
   beforeEach(function () {

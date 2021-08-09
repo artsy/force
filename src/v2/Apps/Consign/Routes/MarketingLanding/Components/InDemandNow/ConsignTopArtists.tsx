@@ -74,7 +74,7 @@ const ConsignTopArtistsQueryRenderer: React.FC = () => {
           return null
         }
 
-        return <TopArtists {...props} />
+        return <TopArtists {...props!} />
       }}
     />
   )

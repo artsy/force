@@ -7,12 +7,10 @@
 const _ = require("underscore")
 const sd = require("sharify").data
 const benv = require("benv")
-const should = require("should")
 const sinon = require("sinon")
 const Backbone = require("backbone")
 const Follow = require("../model")
 const Profile = require("../../../models/profile")
-const { fabricate } = require("@artsy/antigravity")
 const Following = require("../collection")
 const CurrentUser = require("../../../models/current_user")
 

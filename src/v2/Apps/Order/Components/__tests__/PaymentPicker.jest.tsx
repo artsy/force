@@ -1,4 +1,4 @@
-import { BorderedRadio, Checkbox, Collapse, Link } from "@artsy/palette"
+import { BorderedRadio, Checkbox, Collapse, Link, Input } from "@artsy/palette"
 import { PaymentPicker_me } from "v2/__generated__/PaymentPicker_me.graphql"
 import { PaymentPickerTestQueryRawResponse } from "v2/__generated__/PaymentPickerTestQuery.graphql"
 import {
@@ -15,7 +15,6 @@ import {
   validAddress,
 } from "v2/Components/__tests__/Utils/addressForm"
 import { Address, AddressForm } from "v2/Components/AddressForm"
-import { Input } from "v2/Components/Input"
 import { createTestEnv } from "v2/DevTools/createTestEnv"
 import { RootTestPage } from "v2/DevTools/RootTestPage"
 import { graphql } from "react-relay"

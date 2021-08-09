@@ -34,6 +34,7 @@ export const SearchInputContainer: React.ForwardRefExoticComponent<
     <LabeledInput
       ref={ref}
       width="100%"
+      height={40}
       label={
         <SearchButton
           type="submit"

@@ -30,6 +30,10 @@ import {
 import { userIsAdmin, userIsTeam } from "v2/Utils/user"
 import { themeGet } from "@styled-system/theme-get"
 import { ArtworkActionsSaveButtonFragmentContainer } from "./ArtworkActionsSaveButton"
+import {
+  useViewInRoom,
+  ViewInRoomFragmentContainer,
+} from "v2/Components/ViewInRoom/ViewInRoom"
 
 interface ArtworkActionsProps {
   artwork: ArtworkActions_artwork
@@ -40,7 +44,7 @@ export const ArtworkActions: React.FC<ArtworkActionsProps> = ({
   artwork,
   selectDefaultSlide,
 }) => {
-  const { user, mediator } = useSystemContext()
+  const { user } = useSystemContext()
   const isAdmin = userIsAdmin(user)
   const isTeam = userIsTeam(user)
 
@@ -55,22 +59,11 @@ export const ArtworkActions: React.FC<ArtworkActionsProps> = ({
     })
   }
 
-  const openViewInRoom = () => {
-    selectDefaultSlide()
-
-    const { dimensions, image } = artwork
-
-    setTimeout(() => {
-      mediator?.trigger("openViewInRoom", { dimensions, image })
-
-      tracking.trackEvent({
-        flow: AnalyticsSchema.Flow.ArtworkViewInRoom,
-        action_type: AnalyticsSchema.ActionType.Click,
-        context_module: AnalyticsSchema.ContextModule.ViewInRoom,
-        type: AnalyticsSchema.Type.Button,
-      })
-    }, 300)
-  }
+  const {
+    showViewInRoom,
+    hideViewInRoom,
+    isViewInRoomVisible,
+  } = useViewInRoom()
 
   const { is_downloadable, href, artists, title, date } = artwork
 
@@ -78,8 +71,11 @@ export const ArtworkActions: React.FC<ArtworkActionsProps> = ({
     return (
       <UtilButton
         name="viewInRoom"
-        onClick={openViewInRoom}
         label="View in room"
+        onClick={() => {
+          selectDefaultSlide()
+          showViewInRoom()
+        }}
       />
     )
   }
@@ -193,6 +189,13 @@ export const ArtworkActions: React.FC<ArtworkActionsProps> = ({
 
   return (
     <>
+      {isViewInRoomVisible && (
+        <ViewInRoomFragmentContainer
+          artwork={artwork}
+          onClose={hideViewInRoom}
+        />
+      )}
+
       <Container>
         <Join separator={<Spacer mx={0} />}>
           <Media greaterThan="xs">
@@ -258,6 +261,7 @@ export const ArtworkActionsFragmentContainer = createFragmentContainer(
       fragment ArtworkActions_artwork on Artwork {
         ...ArtworkActionsSaveButton_artwork
         ...ArtworkSharePanel_artwork
+        ...ViewInRoom_artwork
         artists {
           name
         }

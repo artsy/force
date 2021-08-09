@@ -24,7 +24,7 @@ import {
   PoweredByStripeIcon,
 } from "../Components/Icons"
 import { Feature } from "../Components/Feature"
-import { MOBILE_NAV_HEIGHT, NAV_BAR_HEIGHT } from "v2/Components/NavBar"
+import { MOBILE_NAV_HEIGHT, DESKTOP_NAV_BAR_HEIGHT } from "v2/Components/NavBar"
 import { scrollIntoView } from "v2/Utils/scrollHelpers"
 import { useMatchMedia } from "v2/Utils/Hooks/useMatchMedia"
 import { BuyerGuaranteeMeta } from "../Components/BuyerGuaranteeMeta"
@@ -66,7 +66,7 @@ export const BuyerGuaranteeIndex: React.FC = () => {
   )
 
   const scrollTo = (selector: string) => {
-    const offset = (isMobile ? MOBILE_NAV_HEIGHT : NAV_BAR_HEIGHT) + 30
+    const offset = (isMobile ? MOBILE_NAV_HEIGHT : DESKTOP_NAV_BAR_HEIGHT) + 30
 
     scrollIntoView({
       offset: offset,

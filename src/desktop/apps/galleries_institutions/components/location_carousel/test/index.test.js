@@ -5,7 +5,6 @@
  */
 const benv = require("benv")
 const sinon = require("sinon")
-const Backbone = require("backbone")
 const { fabricate } = require("@artsy/antigravity")
 const rewire = require("rewire")
 const fetchLocationCarousel = rewire("../index")

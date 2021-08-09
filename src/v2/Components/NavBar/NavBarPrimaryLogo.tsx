@@ -1,11 +1,15 @@
 import React from "react"
-import { ArtsyMarkIcon, color, space } from "@artsy/palette"
+import { ArtsyMarkIcon } from "@artsy/palette"
 import styled from "styled-components"
-import { RouterLink } from "v2/System/Router/RouterLink"
+import { RouterLink, RouterLinkProps } from "v2/System/Router/RouterLink"
+import { themeGet } from "@styled-system/theme-get"
 
-export const NavBarPrimaryLogo: React.FC = () => {
+export const NavBarPrimaryLogo: React.FC<Omit<
+  RouterLinkProps,
+  "to" | "ref"
+>> = props => {
   return (
-    <HitArea to="/">
+    <HitArea to="/" {...props}>
       <ArtsyMarkIcon height={40} width={40} name="Artsy" />
     </HitArea>
   )
@@ -19,15 +23,13 @@ const HitArea = styled(RouterLink)`
 
   > svg {
     box-sizing: content-box;
-    padding: ${space(0.3)}px;
-    border: 1px solid transparent;
   }
 
   &:focus {
     outline: none;
 
     > svg {
-      border-color: ${color("purple100")};
+      fill: ${themeGet("colors.brand")};
     }
   }
 `

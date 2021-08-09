@@ -1,5 +1,5 @@
-import React, { Component } from "react"
-import { Meta } from "react-head"
+import React from "react"
+import { StructuredData } from "./StructuredData"
 import { data as sd } from "sharify"
 
 const { APP_URL } = sd
@@ -13,37 +13,29 @@ interface BreadCrumbListProps {
   items: Item[]
 }
 
-export class BreadCrumbList extends Component<BreadCrumbListProps> {
-  render() {
-    return (
-      <Meta
-        tag="script"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "http://schema.org",
-            "@type": "BreadcrumbList",
-            itemListElement: [
-              {
-                "@type": "ListItem",
-                position: 1,
-                item: {
-                  "@id": APP_URL,
-                  name: "Artsy",
-                },
-              },
-              ...this.props.items.map(({ path, name }, index) => ({
-                "@type": "ListItem",
-                position: index + 2, // adding 2 because `position` starts with 1 and there's a top-level item.
-                item: {
-                  "@id": `${APP_URL}${path}`,
-                  name,
-                },
-              })),
-            ],
-          }),
-        }}
-      />
-    )
+const rootItem = {
+  name: "Artsy",
+  path: "",
+}
+
+export const computeListItems = (items, appUrl = APP_URL) => {
+  const allItems = [rootItem, ...items]
+  const listItems = allItems.map(({ name, path }, index) => ({
+    "@type": "ListItem",
+    item: { "@id": `${appUrl}${path}`, name },
+    position: index + 1,
+  }))
+
+  return listItems
+}
+
+export const BreadCrumbList: React.FC<BreadCrumbListProps> = props => {
+  const listItems = computeListItems(props.items)
+
+  const schemaData = {
+    "@type": "BreadcrumbList",
+    itemListElement: listItems,
   }
+
+  return <StructuredData schemaData={schemaData} />
 }

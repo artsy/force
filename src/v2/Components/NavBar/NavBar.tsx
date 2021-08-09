@@ -1,17 +1,27 @@
 import React, { useEffect, useState } from "react"
-import styled from "styled-components"
-import { Box, Button, Flex, FlexProps, color, themeProps } from "@artsy/palette"
+import {
+  Button,
+  Flex,
+  themeProps,
+  Text,
+  Dropdown,
+  ThemeProviderV3,
+  Box,
+} from "@artsy/palette"
 import { useSystemContext } from "v2/System/SystemContext"
-import { SearchBarQueryRenderer as SearchBar } from "v2/Components/Search/SearchBar"
-import { DropDownNavMenu, MobileNavMenu, MobileToggleIcon } from "./Menus"
-import { InboxNotificationCountQueryRenderer as InboxNotificationCount } from "./Menus/MobileNavMenu/InboxNotificationCount"
+import { SearchBarQueryRenderer } from "v2/Components/Search/SearchBar"
+import { NavBarSubMenu } from "./Menus"
+import {
+  NavBarMobileMenu,
+  NavBarMobileMenuIcon,
+} from "./NavBarMobileMenu/NavBarMobileMenu"
+import { NavBarMobileMenuInboxNotificationCountQueryRenderer } from "./NavBarMobileMenu/NavBarMobileMenuInboxNotificationCount"
 import { ModalType } from "v2/Components/Authentication/Types"
 import {
   ARTISTS_SUBMENU_DATA,
   ARTWORKS_SUBMENU_DATA,
 } from "v2/Components/NavBar/menuData"
 import { openAuthModal } from "v2/Utils/openAuthModal"
-import { NavItem } from "./NavItem"
 import { ContextModule, Intent } from "@artsy/cohesion"
 import { AnalyticsSchema } from "v2/System"
 import { track, useTracking } from "v2/System/Analytics"
@@ -19,12 +29,17 @@ import Events from "v2/Utils/Events"
 import { useMatchMedia } from "v2/Utils/Hooks/useMatchMedia"
 import { NavBarPrimaryLogo } from "./NavBarPrimaryLogo"
 import { NavBarSkipLink } from "./NavBarSkipLink"
-import { LoggedInActionsQueryRenderer as LoggedInActions } from "./LoggedInActions"
+import { NavBarLoggedInActionsQueryRenderer } from "./NavBarLoggedInActions"
 import {
-  NAV_BAR_TOP_TIER_HEIGHT,
-  NAV_BAR_BOTTOM_TIER_HEIGHT,
-} from "./constants"
-import { ScrollIntoView } from "v2/Utils"
+  NavBarItemButton,
+  NavBarItemLink,
+  NavBarItemUnfocusableAnchor,
+} from "./NavBarItem"
+import { scrollIntoView } from "v2/Utils/scrollHelpers"
+import { AppContainer } from "v2/Apps/Components/AppContainer"
+import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
+import { useNavBarHeight } from "./useNavBarHeight"
+import { RouterLink } from "v2/System/Router/RouterLink"
 
 /**
  * Old Force pages have the navbar height hardcoded in several places. If
@@ -36,6 +51,9 @@ import { ScrollIntoView } from "v2/Utils"
  *
  * Additional context:
  * https://github.com/artsy/force/pull/6991
+ *
+ * NOTE: Fresnel doesn't work correctly here because this is included
+ * on older CoffeeScript pages. Hence the `display={["none", "flex"]}` usage
  */
 
 export const NavBar: React.FC = track(
@@ -84,39 +102,111 @@ export const NavBar: React.FC = track(
     }
   }
 
+  const handleClick = (
+    event: React.MouseEvent<HTMLAnchorElement, MouseEvent>
+  ) => {
+    const link = event.currentTarget
+    const text = (link.textContent || link.getAttribute("data-label")) ?? ""
+    const href = link.getAttribute("href")!
+
+    trackEvent({
+      action_type: AnalyticsSchema.ActionType.Click,
+      destination_path: href,
+      subject: text,
+    })
+  }
+
+  const { height } = useNavBarHeight()
+
   return (
-    <>
+    <ThemeProviderV3>
       <NavBarSkipLink />
 
-      <header>
-        <NavBarContainer as="nav">
-          <NavBarTier height={NAV_BAR_TOP_TIER_HEIGHT}>
-            <NavSection ml={[0.5, 2]} mr={0.5}>
-              <NavBarPrimaryLogo />
-            </NavSection>
+      <Box
+        as="header"
+        bg="white100"
+        borderBottom="1px solid"
+        borderColor="black30"
+        height={height}
+      >
+        <AppContainer height="100%">
+          <HorizontalPadding
+            as="nav"
+            display="flex"
+            flexDirection="column"
+            height="100%"
+          >
+            {/* Mobile authentication banner */}
+            {!isLoggedIn && (
+              <Flex display={["flex", "none"]} pt={1}>
+                <Button
+                  // @ts-ignore
+                  as={RouterLink}
+                  to="/signup"
+                  variant="secondaryOutline"
+                  flex={1}
+                  size="small"
+                >
+                  Sign up
+                </Button>
 
-            <NavSection flex={1}>
-              <SearchBar width="100%" />
-            </NavSection>
+                <Button
+                  // @ts-ignore
+                  as={RouterLink}
+                  to="/login"
+                  flex={1}
+                  ml={1}
+                  size="small"
+                >
+                  Log in
+                </Button>
+              </Flex>
+            )}
 
-            {/* Desktop. Collapses into mobile at `xs` breakpoint. */}
-            <NavSection display={["none", "flex"]}>
-              <NavSection alignItems="center" ml={2}>
-                <NavItem href="/collect">Buy</NavItem>
-                <NavItem href="/consign">Sell</NavItem>
-                <NavItem href="/articles">Editorial</NavItem>
-              </NavSection>
+            {/* Top-tier */}
+            <Flex pt={1} pb={[1, 0]} alignItems="stretch" flex={1}>
+              <NavBarPrimaryLogo mr={1} />
 
-              <NavSection mr={2}>
+              <Flex flex={1} alignItems="center">
+                <SearchBarQueryRenderer width="100%" />
+              </Flex>
+
+              {/* Desktop. Collapses into mobile at `xs` breakpoint. */}
+              <Flex display={["none", "flex"]} ml={1} alignItems="stretch">
+                <Text variant="sm" lineHeight={1} display={["none", "flex"]}>
+                  <NavBarItemLink
+                    href="/collect"
+                    textDecoration="none"
+                    onClick={handleClick}
+                  >
+                    Buy
+                  </NavBarItemLink>
+
+                  <NavBarItemLink
+                    href="/consign"
+                    textDecoration="none"
+                    onClick={handleClick}
+                  >
+                    Sell
+                  </NavBarItemLink>
+
+                  <NavBarItemLink
+                    href="/articles"
+                    textDecoration="none"
+                    onClick={handleClick}
+                  >
+                    Editorial
+                  </NavBarItemLink>
+                </Text>
+
                 {isLoggedIn ? (
-                  <LoggedInActions />
+                  <NavBarLoggedInActionsQueryRenderer />
                 ) : (
-                  <>
+                  <Flex alignItems="center">
                     <Button
-                      ml={2}
-                      mr={1}
+                      mx={1}
                       variant="secondaryOutline"
-                      size="medium"
+                      size="small"
                       onClick={() => {
                         // @ts-expect-error STRICT_NULL_CHECK
                         openAuthModal(mediator, {
@@ -128,8 +218,9 @@ export const NavBar: React.FC = track(
                     >
                       Log in
                     </Button>
+
                     <Button
-                      size="medium"
+                      size="small"
                       onClick={() => {
                         // @ts-expect-error STRICT_NULL_CHECK
                         openAuthModal(mediator, {
@@ -141,174 +232,177 @@ export const NavBar: React.FC = track(
                     >
                       Sign up
                     </Button>
-                  </>
+                  </Flex>
                 )}
-              </NavSection>
-            </NavSection>
+              </Flex>
 
-            {/* Mobile. Triggers at the `xs` breakpoint. */}
-            <NavSection display={["flex", "none"]}>
-              <NavItem
-                className="mobileHamburgerButton"
-                borderLeft="1px solid"
-                borderColor="black10"
-                ml={1}
-                tabIndex={0}
-                role="button"
-                onClick={e => {
-                  e.preventDefault()
-
-                  const showMenu = !showMobileMenu
-                  if (showMenu) {
-                    trackEvent({
-                      action_type: AnalyticsSchema.ActionType.Click,
-                      subject:
-                        AnalyticsSchema.Subject.SmallScreenMenuSandwichIcon,
-                    })
-                  }
-
-                  toggleMobileNav(showMenu)
-                }}
-              >
-                <Box
-                  px={1}
+              {/* Mobile. Triggers at the `xs` breakpoint. */}
+              <Flex display={["flex", "none"]}>
+                <NavBarItemButton
+                  ml={1}
+                  mr={-1}
+                  width={40}
+                  height={40}
                   display="flex"
                   alignItems="center"
                   justifyContent="center"
-                >
-                  <MobileToggleIcon open={showMobileMenu} />
-                  {showNotificationCount && <InboxNotificationCount />}
-                </Box>
-              </NavItem>
-            </NavSection>
-          </NavBarTier>
+                  onClick={event => {
+                    event.preventDefault()
 
-          {/* Desktop. Collapses into mobile at `xs` breakpoint. */}
-          <NavBarTier
-            height={NAV_BAR_BOTTOM_TIER_HEIGHT}
-            display={["none", "flex"]}
-          >
-            <NavSection
-              width="100%"
-              justifyContent="space-between"
+                    const showMenu = !showMobileMenu
+
+                    toggleMobileNav(showMenu)
+
+                    if (showMenu) {
+                      trackEvent({
+                        action_type: AnalyticsSchema.ActionType.Click,
+                        subject:
+                          AnalyticsSchema.Subject.SmallScreenMenuSandwichIcon,
+                      })
+                    }
+                  }}
+                >
+                  <NavBarMobileMenuIcon open={showMobileMenu} />
+
+                  {showNotificationCount && (
+                    <NavBarMobileMenuInboxNotificationCountQueryRenderer />
+                  )}
+                </NavBarItemButton>
+              </Flex>
+            </Flex>
+
+            {/* Second-tier */}
+            {/* Desktop. Collapses into mobile at `xs` breakpoint. */}
+            <Text
               display={["none", "flex"]}
+              justifyContent="space-between"
+              alignItems="stretch"
+              flex={1}
+              variant="sm"
+              lineHeight={1}
             >
-              <NavSection alignItems="center" ml={2}>
-                <NavItem
-                  label="Artists"
-                  href="/artists"
-                  menuAnchor="full"
-                  Menu={({ setIsVisible }) => {
-                    return (
-                      <DropDownNavMenu
-                        width="100vw"
-                        menu={ARTISTS_SUBMENU_DATA.menu}
-                        contextModule={
-                          AnalyticsSchema.ContextModule.HeaderArtistsDropdown
-                        }
-                        onClick={() => {
-                          setIsVisible(false)
-                        }}
-                      />
-                    )
-                  }}
+              <Flex alignItems="stretch">
+                <Dropdown
+                  keepInDOM
+                  placement="bottom"
+                  offset={0}
+                  dropdown={({ setVisible }) => (
+                    <NavBarSubMenu
+                      menu={ARTISTS_SUBMENU_DATA.menu}
+                      contextModule={
+                        AnalyticsSchema.ContextModule.HeaderArtistsDropdown
+                      }
+                      onClick={() => setVisible(false)}
+                    />
+                  )}
                 >
-                  Artists
-                </NavItem>
-
-                <NavItem
-                  label="Artworks"
-                  href="/collect"
-                  menuAnchor="full"
-                  Menu={({ setIsVisible }) => {
-                    return (
-                      <DropDownNavMenu
-                        width="100vw"
-                        menu={ARTWORKS_SUBMENU_DATA.menu}
-                        contextModule={
-                          AnalyticsSchema.ContextModule.HeaderArtworksDropdown
-                        }
-                        onClick={() => {
-                          setIsVisible(false)
-                        }}
+                  {({ anchorRef, anchorProps, visible }) => (
+                    <NavBarItemButton
+                      ref={anchorRef as any}
+                      px={0}
+                      pr={1}
+                      active={visible}
+                      {...anchorProps}
+                    >
+                      <NavBarItemUnfocusableAnchor
+                        href="/artists"
+                        onClick={handleClick}
+                        data-label="Artists"
                       />
-                    )
-                  }}
-                >
-                  Artworks
-                </NavItem>
+                      Artists
+                    </NavBarItemButton>
+                  )}
+                </Dropdown>
 
-                <NavItem href="/auctions">Auctions</NavItem>
-                <NavItem href="/viewing-rooms">Viewing&nbsp;Rooms</NavItem>
-                <NavItem href="/galleries">Galleries</NavItem>
-                <NavItem href="/fairs">Fairs</NavItem>
-                <NavItem href="/Shows">Shows</NavItem>
-                <NavItem
+                <Dropdown
+                  keepInDOM
+                  placement="bottom"
+                  offset={0}
+                  dropdown={({ setVisible }) => (
+                    <NavBarSubMenu
+                      menu={ARTWORKS_SUBMENU_DATA.menu}
+                      contextModule={
+                        AnalyticsSchema.ContextModule.HeaderArtworksDropdown
+                      }
+                      onClick={() => setVisible(false)}
+                    />
+                  )}
+                >
+                  {({ anchorRef, anchorProps, visible }) => (
+                    <NavBarItemButton
+                      ref={anchorRef as any}
+                      active={visible}
+                      {...anchorProps}
+                    >
+                      <NavBarItemUnfocusableAnchor
+                        href="/collect"
+                        onClick={handleClick}
+                        data-label="Artworks"
+                      />
+                      Artworks
+                    </NavBarItemButton>
+                  )}
+                </Dropdown>
+
+                <NavBarItemLink href="/auctions" onClick={handleClick}>
+                  Auctions
+                </NavBarItemLink>
+
+                <NavBarItemLink href="/viewing-rooms" onClick={handleClick}>
+                  Viewing&nbsp;Rooms
+                </NavBarItemLink>
+
+                <NavBarItemLink href="/galleries" onClick={handleClick}>
+                  Galleries
+                </NavBarItemLink>
+
+                <NavBarItemLink href="/fairs" onClick={handleClick}>
+                  Fairs
+                </NavBarItemLink>
+
+                <NavBarItemLink href="/Shows" onClick={handleClick}>
+                  Shows
+                </NavBarItemLink>
+
+                <NavBarItemLink
                   // Hide link at smaller viewports — corresponding display inside of `MoreNavMenu`
                   // If we need to do this again, consider a more abstract solution
                   display={["none", "none", "flex", "flex"]}
                   href="/institutions"
+                  onClick={handleClick}
                 >
                   Museums
-                </NavItem>
-              </NavSection>
-              <NavSection alignItems="right" mr={2}>
-                <ScrollIntoView
-                  selector="#download-app-banner"
-                  behavior="smooth"
-                >
-                  <NavItem
-                    href="#download-app-banner"
-                    onClick={event => event.preventDefault()}
-                  >
-                    Download App
-                  </NavItem>
-                </ScrollIntoView>
-              </NavSection>
-            </NavSection>
-          </NavBarTier>
+                </NavBarItemLink>
+              </Flex>
 
-          {showMobileMenu && (
-            <>
-              <MobileNavMenu
-                onClose={() => toggleMobileNav(false)}
-                isOpen={showMobileMenu}
-                onNavButtonClick={handleMobileNavClick}
-              />
-            </>
-          )}
-        </NavBarContainer>
-      </header>
-    </>
+              <Flex alignItems="stretch" display={["none", "none", "flex"]}>
+                <NavBarItemButton
+                  px={0}
+                  pl={1}
+                  onClick={() => {
+                    scrollIntoView({
+                      selector: "#download-app-banner",
+                      behavior: "smooth",
+                    })
+                  }}
+                >
+                  Download App
+                </NavBarItemButton>
+              </Flex>
+            </Text>
+          </HorizontalPadding>
+        </AppContainer>
+      </Box>
+
+      {showMobileMenu && (
+        <>
+          <NavBarMobileMenu
+            onClose={() => toggleMobileNav(false)}
+            isOpen={showMobileMenu}
+            onNavButtonClick={handleMobileNavClick}
+          />
+        </>
+      )}
+    </ThemeProviderV3>
   )
 })
-
-const NavBarContainer = styled(Flex)`
-  position: relative;
-  background-color: ${color("white100")};
-  flex-direction: column;
-`
-
-export const NavBarTier = styled(Flex)`
-  position: relative;
-  border-bottom: 1px solid ${color("black10")};
-`
-
-const NavSection: React.FC<FlexProps> = ({
-  children,
-  justifyContent,
-  ...rest
-}) => {
-  return (
-    <Flex alignItems="stretch" height="100%" bg={rest.bg} {...rest}>
-      <Flex
-        width="100%"
-        height="100%"
-        alignItems="center"
-        justifyContent={justifyContent}
-      >
-        {children}
-      </Flex>
-    </Flex>
-  )
-}

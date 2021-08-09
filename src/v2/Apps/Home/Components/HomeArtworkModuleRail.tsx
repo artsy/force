@@ -89,6 +89,7 @@ const HomeArtworkModuleRail: React.FC<HomeArtworkModuleRailProps> = ({
         {artworks.map(artwork => {
           return (
             <ShelfArtworkFragmentContainer
+              key={artwork.internalID}
               contextModule={CONTEXT_MODULES[artworkModule.key!]}
               artwork={artwork}
               lazyLoad
@@ -108,6 +109,7 @@ const HomeArtworkModuleRailFragmentContainer = createFragmentContainer(
         title
         key
         results {
+          internalID
           ...ShelfArtwork_artwork
         }
         context {
@@ -224,7 +226,7 @@ export const HomeArtworkModuleRailQueryRenderer: React.FC<HomeArtworkModuleRailQ
           return <HomeArtworkModulePlaceholder title={title} />
         }
 
-        if (props.homePage.artworkModule) {
+        if (props.homePage?.artworkModule) {
           return (
             <HomeArtworkModuleRailFragmentContainer
               artworkModule={props.homePage.artworkModule}

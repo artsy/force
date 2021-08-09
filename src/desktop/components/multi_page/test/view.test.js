@@ -5,7 +5,6 @@
  */
 const _ = require("underscore")
 const benv = require("benv")
-const sinon = require("sinon")
 const Backbone = require("backbone")
 const MultiPageView = benv.requireWithJadeify(require.resolve("../view"), [
   "template",

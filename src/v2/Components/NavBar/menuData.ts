@@ -5,11 +5,18 @@ export interface MenuData {
 
 export type LinkData = MenuLinkData | SimpleLinkData
 
+export const isMenuLinkData = (
+  linkData: LinkData
+): linkData is MenuLinkData => {
+  return "menu" in linkData
+}
+
 // e.g. "Editorial"
 export interface SimpleLinkData {
   text: string
   href: string
   dividerBelow?: boolean
+  onClick?(event: React.MouseEvent<HTMLAnchorElement, MouseEvent>): void
 }
 
 // e.g. "Art Movement >"

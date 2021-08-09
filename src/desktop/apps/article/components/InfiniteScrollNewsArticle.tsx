@@ -7,7 +7,7 @@ import { flatten, throttle } from "lodash"
 import Waypoint from "react-waypoint"
 import { positronql } from "desktop/lib/positronql"
 import { newsArticlesQuery } from "desktop/apps/article/queries/articles"
-import {
+import type {
   ArticleData,
   RelatedArticleCanvasData,
 } from "@artsy/reaction/dist/Components/Publishing/Typings"
@@ -15,7 +15,7 @@ import { NewsNav } from "@artsy/reaction/dist/Components/Publishing/Nav/NewsNav"
 import { LoadingSpinner } from "./InfiniteScrollArticle"
 import { NewsArticle } from "./NewsArticle"
 import { NewsDateDivider } from "@artsy/reaction/dist/Components/Publishing/News/NewsDateDivider"
-const Cookies = require("desktop/components/cookies/index.coffee")
+import Cookies from "desktop/components/cookies/index"
 import { shouldAdRender } from "desktop/apps/article/helpers"
 import { handleScrollingAuthModal } from "desktop/lib/openAuthModal"
 import { ContextModule, Intent } from "@artsy/cohesion"

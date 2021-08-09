@@ -76,8 +76,8 @@ describe("SizeFilter", () => {
     await wrapper.find("Checkbox").at(0).simulate("click")
     expect(context.filters?.sizes).toEqual(["SMALL"])
 
-    expect(context.filters?.height).toEqual(undefined)
-    expect(context.filters?.width).toEqual(undefined)
+    expect(context.filters?.height).toEqual("*-*")
+    expect(context.filters?.width).toEqual("*-*")
   })
 
   it("width changes don't fire height changes", async () => {
@@ -97,7 +97,7 @@ describe("SizeFilter", () => {
       .simulate("click")
 
     expect(context.filters?.width).toEqual("4.72-6.3")
-    expect(context.filters?.height).toEqual(undefined)
+    expect(context.filters?.height).toEqual("*-*")
   })
 
   describe("filter values", () => {

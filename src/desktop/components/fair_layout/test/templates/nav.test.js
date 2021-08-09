@@ -3,7 +3,6 @@
  * DS102: Remove unnecessary code created because of implicit returns
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
  */
-const _ = require("underscore")
 const _s = require("underscore.string")
 const jade = require("jade")
 const path = require("path")
@@ -13,9 +12,6 @@ const Fair = require("../../../../models/fair")
 const Profile = require("../../../../models/profile")
 const CurrentUser = require("../../../../models/current_user")
 const cheerio = require("cheerio")
-
-const fair = new Fair(fabricate("fair"))
-const profile = new Profile(fabricate("fair_profile"))
 
 const render = function (templateName) {
   const filename = path.resolve(
@@ -89,8 +85,6 @@ describe("Header template", function () {
     })
 
     return it("works with out user", function () {
-      const user = undefined
-
       return this.$template.html().should.containEql("/login")
     })
   })

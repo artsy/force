@@ -2,6 +2,10 @@
 
 This project is work of [many developers](https://github.com/artsy/force/graphs/contributors).
 
+For an overview of our current best practices, see [this doc](https://github.com/artsy/force/blob/master/docs/best_practices.md). 
+
+For an architecture overview (as of July 2021), see [this video](https://drive.google.com/drive/folders/1RE_7j4hocKD51RVZy60_5rZqUk9T-Zc2).
+
 We accept [pull requests](https://github.com/artsy/force/pulls), and you may [propose features and discuss issues](https://github.com/artsy/force/issues).
 
 ## Setup Instructions
@@ -50,41 +54,16 @@ environment variable to disable webpack optimizations.
 env DEBUG=true yarn start:prod
 ```
 
-## Authentication in your local Force app
-
-Authentication in Force is handled by a modified OAuth flow, with [Gravity](https://github.com/artsy/gravity) authenticating the user and redirecting back to Force. For security reasons, the `localhost` origin [is forbidden as a redirect URL by Gravity in the staging environment](https://github.com/artsy/gravity/blob/543373d7d4413f5c8b1c8f84f73b2a592c00cba2/app/models/util/url_validation.rb#L23). This means that when running Force locally at `http://localhost:5000`, the staging Gravity environment won't redirect back to your locally running app to complete the flow.
-
-For most local development in Force, this shouldn't be a problem. The login will still take effect and you can manually visit the desired local URL after logging in.
-
-If you require the authentication flow to redirect back to your local version, you can configure Force to run locally at an `*.artsy.net` subdomain. Gravity's staging environment considers all `*.artsy.net` subdomains to be valid redirect URLs. Note that you may need to do this in
-an incognito window if you're using Chrome. Otherwise, the browser tends
-to remember that Artsy.net should always be accessed via SSL, and enforces
-that behavior even for subdomains (such as local.artsy.net).
-
-1. Add the following entry to your local hosts file (`/etc/hosts`):
-
-```
-127.0.0.1 local.artsy.net
-```
-
-2. Update your `.env` file's `APP_URL`:
-
-```
-APP_URL=http://local.artsy.net:5000
-```
-
-3. Restart the server and navigate to [`http://local.artsy.net:5000`](http://local.artsy.net:5000).
-
 <details>
    <summary>Do you see an error about not providing a secure connection?</summary>
 
-Your browser has probably cached a redirect from `http://*.artsy.net` to `https://...`. Clear your browser cache for this page:
+Your browser has probably cached a redirect to `https://...`. Clear your browser cache for this page:
 
-- Browse to https://local.artsy.net:5000
+- Browse to the failing page
 - Open Chrome Dev Tools (this adds a drop down menu to the reload icon)
 - Click and hold “Reload” icon until the drop down appears.
 - Select “Empty Cache and Hard Reload”
-- You may now browse to http://local.artsy.net:5000
+- You may now browse successfully to the page
 </details>
 
 ## Creating a Review App

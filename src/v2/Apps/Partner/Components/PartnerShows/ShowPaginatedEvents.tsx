@@ -207,7 +207,11 @@ export const ShowPaginatedEventsRenderer: React.FC<ShowPaginatedEventsRendererPr
         if (error || !props) return null
 
         return (
-          <ShowEventsRefetchContainer {...rest} {...props} paramsPage={page} />
+          <ShowEventsRefetchContainer
+            {...rest}
+            partner={props.partner!}
+            paramsPage={page!}
+          />
         )
       }}
     />

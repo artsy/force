@@ -131,7 +131,9 @@ export const ArtworksRailRenderer: React.FC<
         if (error || !props)
           return <ArtworksRailPlaceholder {...rest} count={15} />
 
-        return <ArtworksRailFragmentContainer {...rest} {...props} />
+        return (
+          <ArtworksRailFragmentContainer {...rest} partner={props.partner!} />
+        )
       }}
     />
   )

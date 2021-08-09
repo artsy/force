@@ -4,13 +4,11 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
  */
 const { resolve } = require("path")
-const fs = require("fs")
 const benv = require("benv")
 const sinon = require("sinon")
 const Backbone = require("backbone")
 const FilterDropdownView = require("../filter_dropdown_view.coffee")
 const PartnerFilterFacet = require("../../filter_facet/partner_filter_facet.coffee")
-const FilterParams = require("../../parameters/filter_params.coffee")
 
 describe("FilterDropdownView", function () {
   before(done =>

@@ -12,6 +12,7 @@ import { FAQ } from "./Components/FAQ"
 import { ArtworkCredits } from "./Components/ArtworkCredits"
 import { PromoSpace } from "./Components/PromoSpace"
 import { BecomePartner } from "./Components/BecomePartner"
+import { ArtsyMissionStatement } from "./Components/ArtsyMissionStatement"
 
 export const MarketingLandingApp = () => {
   return (
@@ -21,6 +22,7 @@ export const MarketingLandingApp = () => {
       <>
         <Header />
         <PromoSpace />
+        <ArtsyMissionStatement />
         <SellArtDifferently />
         <GetPriceEstimate />
         <HowToSell />

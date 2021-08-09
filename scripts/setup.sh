@@ -6,17 +6,15 @@
 # Exit if any subcommand fails
 set -e
 
-# Install yarn if it does not exist.
-if ! which yarn > /dev/null; then
-  echo 'yarn is required for setup, installing with brew...'
-  brew install yarn
-fi
-
 if [[ ! -z $NVM_DIR ]]; then # skip if nvm is not available
   echo "Installing Node..."
   source ~/.nvm/nvm.sh
   nvm install
 fi
+
+# Install yarn if it does not exist, otherwise ensure its up-to-date.
+echo "Installing yarn"
+npm install --global yarn@latest
 
 echo "Installing dependencies..."
 yarn install

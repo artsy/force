@@ -21,8 +21,14 @@ const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
   ...rest
 }) => {
   const images = compact(artwork.images)
-  const maxHeight = Math.max(...images.map(image => image.resized?.height ?? 0))
-  const { resized: image, isDefault } = images[activeIndex]
+  const hasGeometry = !!images[0].resized?.width
+  const maxHeight = Math.max(
+    ...images.map(image =>
+      hasGeometry ? image.resized!.height! : image.fallback!.height!
+    )
+  )
+  const { resized, fallback, isDefault } = images[activeIndex]
+  const image = hasGeometry ? resized : fallback
 
   const { user } = useSystemContext()
   const isTeam = userIsTeam(user)
@@ -33,7 +39,14 @@ const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
 
   return (
     <>
-      {isDefault && <Link rel="preload" as="image" href={image.src} />}
+      {isDefault && (
+        <Link
+          rel="preload"
+          as="image"
+          href={image.src}
+          imagesrcset={image.srcSet}
+        />
+      )}
 
       <Clickable
         display="flex"
@@ -55,6 +68,7 @@ const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
           aspectHeight={image.height ?? 1}
         >
           <Image
+            id={isDefault ? "transitionFrom--ViewInRoom" : undefined}
             key={image.src}
             width="100%"
             height="100%"
@@ -63,8 +77,6 @@ const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
             alt={artwork.formattedMetadata ?? ""}
             lazyLoad={lazyLoad}
             preventRightClick={!isTeam}
-            // Currently used for viewing room
-            data-is-default={isDefault}
           />
         </ResponsiveBox>
       </Clickable>
@@ -80,6 +92,16 @@ export const ArtworkLightboxFragmentContainer = createFragmentContainer(
         formattedMetadata
         images {
           isDefault
+          fallback: cropped(
+            width: 800
+            height: 800
+            version: ["normalized", "larger", "large"]
+          ) {
+            width
+            height
+            src
+            srcSet
+          }
           resized(
             width: 800
             height: 800

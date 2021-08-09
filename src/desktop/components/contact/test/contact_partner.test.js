@@ -10,7 +10,6 @@ const sinon = require("sinon")
 const Backbone = require("backbone")
 const Artwork = require("../../../models/artwork")
 const Partner = require("../../../models/partner")
-const rewire = require("rewire")
 const { fabricate } = require("@artsy/antigravity")
 const { resolve } = require("path")
 

@@ -154,7 +154,10 @@ export const PartnerArtistDetailsListRenderer: React.FC<{
           return <PartnerArtistDetailsListPlaceholder count={PAGE_SIZE} />
 
         return (
-          <PartnerArtistDetailsListPaginationContainer {...rest} {...props} />
+          <PartnerArtistDetailsListPaginationContainer
+            {...rest}
+            partner={props.partner!}
+          />
         )
       }}
     />

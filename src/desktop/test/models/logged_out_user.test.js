@@ -7,7 +7,6 @@ const _ = require("underscore")
 const benv = require("benv")
 const sinon = require("sinon")
 const Backbone = require("backbone")
-const { fabricate } = require("@artsy/antigravity")
 const rewire = require("rewire")
 const LoggedOutUser = rewire("../../models/logged_out_user")
 

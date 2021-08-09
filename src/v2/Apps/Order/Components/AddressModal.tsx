@@ -99,6 +99,7 @@ export const AddressModal: React.FC<Props> = ({
         modalWidth={ModalWidth.Wide}
       >
         <Formik
+          validateOnMount
           initialValues={createMutation ? { country: "US" } : address}
           validate={validator}
           onSubmit={(

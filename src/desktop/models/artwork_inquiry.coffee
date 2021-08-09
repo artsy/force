@@ -1,7 +1,7 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 { API_URL, SESSION_ID } = require('sharify').data
-Cookies = require '../components/cookies/index.coffee'
+Cookies = require '../components/cookies/index'
 
 module.exports = class ArtworkInquiry extends Backbone.Model
   urlRoot: "#{API_URL}/api/v1/me/artwork_inquiry_request"

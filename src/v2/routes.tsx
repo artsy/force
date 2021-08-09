@@ -28,6 +28,7 @@ import { showsRoutes } from "v2/Apps/Shows/showsRoutes"
 import { tagRoutes } from "./Apps/Tag/tagRoutes"
 import { unsubscribeRoutes } from "./Apps/Unsubscribe/unsubscribeRoutes"
 import { viewingRoomRoutes } from "v2/Apps/ViewingRoom/viewingRoomRoutes"
+import { fairOrganizerRoutes } from "./Apps/FairOrginizer/fairOrganizerRoutes"
 
 export function getAppRoutes(): AppRouteConfig[] {
   return buildAppRoutes([
@@ -41,6 +42,7 @@ export function getAppRoutes(): AppRouteConfig[] {
     { routes: consignRoutes },
     { routes: conversationRoutes },
     { routes: exampleRoutes },
+    { routes: fairOrganizerRoutes },
     { routes: fairRoutes },
     { routes: fairsRoutes },
     { routes: featureRoutes },
@@ -62,4 +64,23 @@ export function getAppRoutes(): AppRouteConfig[] {
     // For debugging baseline app shell stuff
     { routes: debugRoutes },
   ])
+}
+
+export function getRouteList(): string[] {
+  let flatRoutes: string[] = []
+  const appRoutes = getAppRoutes()[0]
+  if (appRoutes) {
+    appRoutes.children?.forEach(route => {
+      const childRoutes =
+        route.children
+          ?.map(child => child.path)
+          .filter(route => route !== "/" && route !== "*")
+          .map(childPath => route.path + "/" + childPath) || []
+      flatRoutes = flatRoutes.concat(childRoutes).concat(route.path || [])
+    })
+  } else {
+    flatRoutes = []
+  }
+
+  return flatRoutes
 }
