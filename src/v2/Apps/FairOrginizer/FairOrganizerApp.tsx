@@ -4,13 +4,17 @@ import { Box, Spacer, Title } from "@artsy/palette"
 import { FairOrganizerApp_fairOrganizer } from "v2/__generated__/FairOrganizerApp_fairOrganizer.graphql"
 import { FairHeaderImageFragmentContainer as FairHeaderImage } from "../Fair/Components/FairHeader/FairHeaderImage"
 import { FairOrganizerHeaderFragmentContainer as FairOrganizerHeader } from "./Components/FairOrganizerHeader/FairOrganizerHeader"
+import { PastEventsRailFragmentContainer as PastEventsRail } from "./Components/PastEventsRail"
+import { FairOrganizerApp_pastFairs } from "v2/__generated__/FairOrganizerApp_pastFairs.graphql"
 
 interface FairOrganizerAppProps {
   fairOrganizer: FairOrganizerApp_fairOrganizer
+  pastFairs: FairOrganizerApp_pastFairs
 }
 
 const FairOrganizerApp: React.FC<FairOrganizerAppProps> = ({
   fairOrganizer,
+  pastFairs,
 }) => {
   const { fairs, name } = fairOrganizer
   const { edges } = fairs!
@@ -26,7 +30,8 @@ const FairOrganizerApp: React.FC<FairOrganizerAppProps> = ({
 
         <FairOrganizerHeader fairOrganizer={fairOrganizer} />
 
-        <Spacer mt={4} />
+        <Spacer mt={6} />
+        <PastEventsRail fairs={pastFairs} />
       </Box>
     </>
   )
@@ -46,6 +51,11 @@ export const FairOrganizerAppFragmentContainer = createFragmentContainer(
           }
         }
         ...FairOrganizerHeader_fairOrganizer
+      }
+    `,
+    pastFairs: graphql`
+      fragment FairOrganizerApp_pastFairs on FairConnection {
+        ...PastEventsRail_fairs
       }
     `,
   }
