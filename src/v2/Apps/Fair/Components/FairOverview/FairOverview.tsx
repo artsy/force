@@ -4,13 +4,10 @@ import {
   BoxProps,
   GridColumns,
   Column,
-  HTML,
   Text,
   Spacer,
-  Join,
 } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import styled from "styled-components"
 import {
   FairEditorialFragmentContainer,
   FAIR_EDITORIAL_AMOUNT,
@@ -20,43 +17,9 @@ import { FairFollowedArtistsFragmentContainer } from "../FairFollowedArtists"
 import { useSystemContext } from "v2/System"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { FairOverview_fair } from "v2/__generated__/FairOverview_fair.graphql"
-import { Timer } from "v2/Components/Timer"
-import { DateTime, Duration } from "luxon"
-import { useCurrentTime } from "v2/Utils/Hooks/useCurrentTime"
-import { Media } from "v2/Utils/Responsive"
-
-const TextWithNewlines = styled(Text)`
-  white-space: pre-wrap;
-`
-
-interface FairInfoSectionProps {
-  label?: string
-  info: string
-  isHTML?: boolean
-}
-
-const FairInfoSection: React.FC<FairInfoSectionProps> = ({
-  label,
-  info,
-  isHTML = false,
-}) => (
-  <>
-    {label && <Text variant="md">{label}</Text>}
-    {isHTML ? (
-      <HTML variant="md" html={info} />
-    ) : (
-      <TextWithNewlines variant="md">{info}</TextWithNewlines>
-    )}
-  </>
-)
-
-const hasEventEnded = (endDate: string, currentTime: string) => {
-  const duration = Duration.fromISO(
-    DateTime.fromISO(endDate).diff(DateTime.fromISO(currentTime)).toString()
-  )
-
-  return Math.floor(duration.seconds) <= 0
-}
+import { InfoSection } from "v2/Components/InfoSection"
+import { moment } from "desktop/lib/template_modules"
+import { FairTimerFragmentContainer as FairTimer } from "./FairTimer"
 
 interface FairOverviewProps extends BoxProps {
   fair: FairOverview_fair
@@ -79,66 +42,38 @@ const FairOverview: React.FC<FairOverviewProps> = ({ fair }) => {
   const { user } = useSystemContext()
   const hasArticles = (fair.articlesConnection?.edges?.length ?? 0) > 0
   const hasCollections = (fair.marketingCollections?.length ?? 0) > 0
-  const currentTime = useCurrentTime({ syncWithServer: true })
-  const hasEnded = endAt && hasEventEnded(endAt, currentTime)
+  const hasEnded = endAt && moment().isAfter(new Date(endAt))
 
   return (
     <Box>
       <GridColumns mt={[2, 4]}>
-        {endAt && !hasEnded && (
-          <Column span={6}>
-            {/* Desktop Fair Timer */}
-            <Media greaterThan="xs">
-              <Text variant="xl">Closes in:</Text>
-              <Timer
-                endDate={endAt}
-                labelWithoutTimeRemaining="Closed"
-                size="xl"
-                alignItems="start"
-              />
-            </Media>
-
-            {/* Mobile Fair Timer */}
-            <Media at="xs">
-              <Box my={2}>
-                <Text variant="md">Closes in:</Text>
-                <Timer
-                  endDate={endAt}
-                  labelWithoutTimeRemaining="Closed"
-                  size="lg"
-                  alignItems="start"
-                />
-              </Box>
-            </Media>
-          </Column>
-        )}
+        {!hasEnded && <FairTimer fair={fair} />}
 
         <Column span={hasEnded ? 12 : 6}>
-          <Join separator={<Spacer mt={2} />}>
-            <Text variant="md" textTransform="uppercase">
-              About
-            </Text>
+          <Text variant="md" textTransform="uppercase">
+            About
+          </Text>
+          <Spacer mt={2} />
 
-            {summary && <FairInfoSection isHTML info={summary} />}
-            {about && <FairInfoSection isHTML info={about} />}
-            {tagline && <FairInfoSection info={tagline} />}
-            {location?.summary && (
-              <FairInfoSection label="Location" info={location.summary} />
-            )}
-            {hours && <FairInfoSection label="Hours" isHTML info={hours} />}
-            {tickets && (
-              <FairInfoSection label="Tickets" isHTML info={tickets} />
-            )}
-            {ticketsLink && (
-              <a href={ticketsLink}>
-                <Text variant="md">Buy Tickets</Text>
-              </a>
-            )}
-            {links && <FairInfoSection label="Links" isHTML info={links} />}
-            {contact && (
-              <FairInfoSection label="Contact" isHTML info={contact} />
-            )}
-          </Join>
+          {summary && <InfoSection type="html" info={summary} />}
+          {about && <InfoSection type="html" info={about} />}
+          {tagline && <InfoSection type="text" info={tagline} />}
+          {location?.summary && (
+            <InfoSection label="Location" type="text" info={location.summary} />
+          )}
+          {hours && <InfoSection label="Hours" type="html" info={hours} />}
+          {tickets && (
+            <InfoSection label="Tickets" type="html" info={tickets} />
+          )}
+          {ticketsLink && (
+            <a href={ticketsLink}>
+              <Text variant="md">Buy Tickets</Text>
+            </a>
+          )}
+          {links && <InfoSection label="Links" type="html" info={links} />}
+          {contact && (
+            <InfoSection label="Contact" type="html" info={contact} />
+          )}
         </Column>
       </GridColumns>
 
@@ -190,6 +125,7 @@ export const FairOverviewFragmentContainer = createFragmentContainer(
         ...FairEditorial_fair
         ...FairCollections_fair
         ...FairFollowedArtists_fair
+        ...FairTimer_fair
         endAt
         href
         about(format: HTML)

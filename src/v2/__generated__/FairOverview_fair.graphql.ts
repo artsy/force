@@ -27,7 +27,7 @@ export type FairOverview_fair = {
     readonly tickets: string | null;
     readonly summary: string | null;
     readonly contact: string | null;
-    readonly " $fragmentRefs": FragmentRefs<"FairEditorial_fair" | "FairCollections_fair" | "FairFollowedArtists_fair">;
+    readonly " $fragmentRefs": FragmentRefs<"FairEditorial_fair" | "FairCollections_fair" | "FairFollowedArtists_fair" | "FairTimer_fair">;
     readonly " $refType": "FairOverview_fair";
 };
 export type FairOverview_fair$data = FairOverview_fair;
@@ -232,10 +232,15 @@ return {
       "args": null,
       "kind": "FragmentSpread",
       "name": "FairFollowedArtists_fair"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "FairTimer_fair"
     }
   ],
   "type": "Fair"
 };
 })();
-(node as any).hash = 'ae03c5f35371c8a2a70fdd03f581b7a3';
+(node as any).hash = '9c35ed40fd5b58e9a2c2471792a7757c';
 export default node;
