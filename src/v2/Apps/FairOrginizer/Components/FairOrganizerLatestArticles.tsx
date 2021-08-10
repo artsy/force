@@ -15,11 +15,12 @@ interface FairOrganizerLatestArticlesProps {
 export const FairOrganizerLatestArticles: React.FC<FairOrganizerLatestArticlesProps> = ({
   fairOrganizer,
 }) => {
-  const { articles, name } = fairOrganizer
-
-  const nodes = extractNodes(articles)
-  const [latestArticle, ...otherArticles] = nodes
+  const { articlesConnection, name, slug } = fairOrganizer
+  const articles = extractNodes(articlesConnection)
+  const [latestArticle, ...otherArticles] = articles
   const { leftColumn, rightColumn } = getArticlesColumns(otherArticles)
+
+  const showReadAllButton = articlesConnection?.totalCount! > 7
 
   return (
     <Box>
@@ -58,22 +59,24 @@ export const FairOrganizerLatestArticles: React.FC<FairOrganizerLatestArticlesPr
             </Column>
 
             {/* Read All Articles button */}
-            <Column span={[12, 8, 6]} start={[1, 5, 7]}>
-              <Spacer mt={30} />
-              <RouterLink
-                to={"/"}
-                style={{ textDecoration: "none", display: "block" }}
-              >
-                <Button
-                  variant="secondaryOutline"
-                  size="medium"
-                  display="block"
-                  width="100%"
+            {showReadAllButton && (
+              <Column span={[12, 8, 6]} start={[1, 5, 7]}>
+                <Spacer mt={30} />
+                <RouterLink
+                  to={`/fair-organizer/${slug}/articles`}
+                  style={{ textDecoration: "none", display: "block" }}
                 >
-                  Read All Articles
-                </Button>
-              </RouterLink>
-            </Column>
+                  <Button
+                    variant="secondaryOutline"
+                    size="medium"
+                    display="block"
+                    width="100%"
+                  >
+                    Read All Articles
+                  </Button>
+                </RouterLink>
+              </Column>
+            )}
           </GridColumns>
         </Column>
       </GridColumns>
@@ -87,7 +90,9 @@ export const FairOrganizerLatestArticlesFragmentContainer = createFragmentContai
     fairOrganizer: graphql`
       fragment FairOrganizerLatestArticles_fairOrganizer on FairOrganizer {
         name
-        articles: articlesConnection(first: 7) {
+        slug
+        articlesConnection(first: 7) {
+          totalCount
           edges {
             node {
               id
