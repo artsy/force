@@ -1,6 +1,5 @@
 import React from "react"
-import { Box, Column, Text } from "@artsy/palette"
-import { Media } from "v2/Utils/Responsive"
+import { Box, Text } from "@artsy/palette"
 import { Timer } from "v2/Components/Timer"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FairTimer_fair } from "v2/__generated__/FairTimer_fair.graphql"
@@ -15,31 +14,10 @@ export const FairTimer: React.FC<FairTimerProps> = ({ fair: { endAt } }) => {
   }
 
   return (
-    <Column span={6}>
-      {/* Desktop Fair Timer */}
-      <Media greaterThan="xs">
-        <Text variant="xl">Closes in:</Text>
-        <Timer
-          endDate={endAt}
-          labelWithoutTimeRemaining="Closed"
-          size="xl"
-          alignItems="start"
-        />
-      </Media>
-
-      {/* Mobile Fair Timer */}
-      <Media at="xs">
-        <Box my={2}>
-          <Text variant="md">Closes in:</Text>
-          <Timer
-            endDate={endAt}
-            labelWithoutTimeRemaining="Closed"
-            size="lg"
-            alignItems="start"
-          />
-        </Box>
-      </Media>
-    </Column>
+    <Box my={[2, 0]}>
+      <Text variant={["md", "xl"]}>Closes in:</Text>
+      <Timer endDate={endAt} variant={["lg", "xl"]} alignItems="start" />
+    </Box>
   )
 }
 

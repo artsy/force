@@ -3,7 +3,6 @@ import { Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FairTiming_fair } from "v2/__generated__/FairTiming_fair.graphql"
 import { EventTiming } from "v2/Components/EventTiming"
-import { Media } from "v2/Utils/Responsive"
 import { useCurrentTime } from "v2/Utils/Hooks/useCurrentTime"
 
 interface Props {
@@ -23,21 +22,10 @@ const FairTiming: React.FC<Props> = ({
 
   return (
     <>
-      {/* Desktop Fair Timing */}
-      <Media greaterThan="xs">
-        <Text variant="xl" color="black60" mb={1}>
-          {exhibitionPeriod}
-        </Text>
-        <Text variant="lg">{renderEventTiming()}</Text>
-      </Media>
-
-      {/* Mobile Fair Timing */}
-      <Media at="xs">
-        <Text variant="lg" color="black60" mb={1}>
-          {exhibitionPeriod}
-        </Text>
-        <Text variant="md">{renderEventTiming()}</Text>
-      </Media>
+      <Text variant={["lg", "xl"]} color="black60" mb={1}>
+        {exhibitionPeriod}
+      </Text>
+      <Text variant={["md", "lg"]}>{renderEventTiming()}</Text>
     </>
   )
 }

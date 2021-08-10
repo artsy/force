@@ -3,6 +3,7 @@ import {
   Flex,
   FlexProps,
   Text,
+  TextProps,
   TextVariant,
   useThemeConfig,
 } from "@artsy/palette"
@@ -21,14 +22,14 @@ export const Timer: React.FC<
     labelWithTimeRemaining?: string
     labelWithoutTimeRemaining?: string
     label?: string
-    size?: TextVariant
-  } & FlexProps
+  } & FlexProps &
+    TextProps
 > = ({
   endDate,
   labelWithTimeRemaining,
   labelWithoutTimeRemaining,
   label = "",
-  size = "md",
+  variant = "md",
   ...rest
 }) => {
   const tokens = useThemeConfig({
@@ -38,7 +39,7 @@ export const Timer: React.FC<
       secondLineColor: "black100",
     },
     v3: {
-      variant: size,
+      variant,
       firstLineColor: "blue100",
       secondLineColor: "black60",
     },

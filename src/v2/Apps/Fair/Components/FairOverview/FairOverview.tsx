@@ -47,7 +47,11 @@ const FairOverview: React.FC<FairOverviewProps> = ({ fair }) => {
   return (
     <Box>
       <GridColumns mt={[2, 4]}>
-        {!hasEnded && <FairTimer fair={fair} />}
+        {!hasEnded && (
+          <Column span={6}>
+            <FairTimer fair={fair} />
+          </Column>
+        )}
 
         <Column span={hasEnded ? 12 : 6}>
           <Text variant="md" textTransform="uppercase">
