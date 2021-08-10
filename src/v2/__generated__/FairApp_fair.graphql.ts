@@ -7,22 +7,13 @@ export type FairApp_fair = {
     readonly internalID: string;
     readonly href: string | null;
     readonly slug: string;
-    readonly articlesConnection: {
-        readonly totalCount: number | null;
-        readonly edges: ReadonlyArray<{
-            readonly __typename: string;
-        } | null> | null;
-    } | null;
-    readonly marketingCollections: ReadonlyArray<{
-        readonly id: string;
-    } | null>;
     readonly counts: {
         readonly artworks: number | null;
     } | null;
     readonly profile: {
         readonly id: string;
     } | null;
-    readonly " $fragmentRefs": FragmentRefs<"FairMeta_fair" | "FairHeader_fair" | "FairHeaderImage_fair" | "FairFollowedArtists_fair">;
+    readonly " $fragmentRefs": FragmentRefs<"FairMeta_fair" | "FairOverview_fair" | "FairHeader_fair" | "FairHeaderImage_fair">;
     readonly " $refType": "FairApp_fair";
 };
 export type FairApp_fair$data = FairApp_fair;
@@ -33,17 +24,7 @@ export type FairApp_fair$key = {
 
 
 
-const node: ReaderFragment = (function(){
-var v0 = [
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "id",
-    "storageKey": null
-  }
-];
-return {
+const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
@@ -72,69 +53,6 @@ return {
     },
     {
       "alias": null,
-      "args": [
-        {
-          "kind": "Literal",
-          "name": "first",
-          "value": 6
-        },
-        {
-          "kind": "Literal",
-          "name": "sort",
-          "value": "PUBLISHED_AT_DESC"
-        }
-      ],
-      "concreteType": "ArticleConnection",
-      "kind": "LinkedField",
-      "name": "articlesConnection",
-      "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "totalCount",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "concreteType": "ArticleEdge",
-          "kind": "LinkedField",
-          "name": "edges",
-          "plural": true,
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "__typename",
-              "storageKey": null
-            }
-          ],
-          "storageKey": null
-        }
-      ],
-      "storageKey": "articlesConnection(first:6,sort:\"PUBLISHED_AT_DESC\")"
-    },
-    {
-      "alias": null,
-      "args": [
-        {
-          "kind": "Literal",
-          "name": "size",
-          "value": 5
-        }
-      ],
-      "concreteType": "MarketingCollection",
-      "kind": "LinkedField",
-      "name": "marketingCollections",
-      "plural": true,
-      "selections": (v0/*: any*/),
-      "storageKey": "marketingCollections(size:5)"
-    },
-    {
-      "alias": null,
       "args": null,
       "concreteType": "FairCounts",
       "kind": "LinkedField",
@@ -158,7 +76,15 @@ return {
       "kind": "LinkedField",
       "name": "profile",
       "plural": false,
-      "selections": (v0/*: any*/),
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "id",
+          "storageKey": null
+        }
+      ],
       "storageKey": null
     },
     {
@@ -169,21 +95,20 @@ return {
     {
       "args": null,
       "kind": "FragmentSpread",
+      "name": "FairOverview_fair"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
       "name": "FairHeader_fair"
     },
     {
       "args": null,
       "kind": "FragmentSpread",
       "name": "FairHeaderImage_fair"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "FairFollowedArtists_fair"
     }
   ],
   "type": "Fair"
 };
-})();
-(node as any).hash = '4d18f6973d42b8ecb6efd5172bf41bb7';
+(node as any).hash = 'c98f6793e96ac354490d8e55910fb65b';
 export default node;

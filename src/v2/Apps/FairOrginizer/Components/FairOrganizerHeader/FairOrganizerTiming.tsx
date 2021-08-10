@@ -22,7 +22,7 @@ export const FairOrganizerTiming: React.FC<FairOrganizerTimingProps> = ({
         {exhibitionPeriod}
       </Text>
 
-      {showTimer && <Timer size="lg" label="Opens in:" endDate={startAt!} />}
+      {showTimer && <Timer variant="lg" label="Opens in:" endDate={startAt!} />}
     </>
   )
 }
