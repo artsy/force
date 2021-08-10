@@ -1,9 +1,11 @@
 import {
   BorderBox,
-  themeProps,
   useThemeConfig,
   Text,
   getThemeConfig,
+  THEME_V3,
+  THEME_V2,
+  THEME,
   TextVariant,
 } from "@artsy/palette"
 import { borderMixin, v3BorderMixin } from "v2/Components/Mixins"
@@ -48,7 +50,6 @@ const StyledBorderBox = styled(BorderBox)<BorderProps>`
     `
   }}
   padding: 0;
-  height: 40px;
 `
 
 interface CreditCardInputProps {
@@ -61,21 +62,19 @@ export const CreditCardInput: React.FC<CreditCardInputProps> = props => {
 
   const styles = useThemeConfig({
     v2: {
-      fontSize: `${themeProps.typeSizes.serif["3t"].fontSize}px`,
-      borderBox: "title",
-      fieldHeight: "40px",
-      fontColor: "black30",
-      fontFamily: fontFamily.serif.regular as string,
-      lineHeight: "20px",
+      fontSize: THEME_V2.fontSizes.size3,
+      fieldHeight: THEME.space[4],
+      fontColor: THEME_V3.colors.black30,
+      fontFamily: fontFamily.sans.regular as string,
+      lineHeight: THEME.space[2],
       variant: "text" as TextVariant,
     },
     v3: {
-      fontSize: "16px",
-      borderBox: "title",
-      fieldHeight: "50px !important",
-      fontColor: "black60",
-      fontFamily: "inherit",
-      lineHeight: "24px",
+      fontSize: THEME_V3.textVariants.sm.fontSize,
+      fieldHeight: THEME.space[5],
+      fontColor: THEME_V3.colors.black60,
+      fontFamily: THEME_V3.fonts.sans,
+      lineHeight: THEME_V3.textVariants.sm.lineHeight,
       variant: "sm" as TextVariant,
     },
   })
@@ -101,7 +100,7 @@ export const CreditCardInput: React.FC<CreditCardInputProps> = props => {
             hidePostalCode: true,
             style: {
               base: {
-                "::placeholder": { color: "black60" },
+                "::placeholder": { color: THEME_V3.colors.black60 },
                 fontSize: styles.fontSize,
                 fontFamily: styles.fontFamily,
                 fontSmoothing: "antialiased",
