@@ -10,7 +10,7 @@ import { UnsubscribeLoggedOut } from "./Components/UnsubscribeLoggedOut"
 const UnsubscribeFallback = () => {
   return (
     <Message variant="error" my={4}>
-      Unable to update your email preferences
+      Please sign in to update your email preferences
     </Message>
   )
 }

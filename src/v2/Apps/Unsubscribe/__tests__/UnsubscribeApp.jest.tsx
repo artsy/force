@@ -79,11 +79,11 @@ describe("UnsubscribeApp", () => {
     expect(wrapper.find("UnsubscribeFallback")).toHaveLength(0)
   })
 
-  it("renders error message without a user or token", () => {
+  it("renders the fallback message without a user or token", () => {
     mockUseRouter.mockImplementation(() => emptyQuery)
     const wrapper = bootAndMount({ me: null })
 
-    expect(wrapper.find("UnsubscribeLoggedInFragmentContainer")).toHaveLength(0)
+    expect(wrapper.find("UnsubscribeLoggedIn")).toHaveLength(0)
     expect(wrapper.find("UnsubscribeLoggedOut")).toHaveLength(0)
     expect(wrapper.find("UnsubscribeFallback")).toHaveLength(1)
   })
