@@ -33,7 +33,13 @@ fragment FairEditorialItem_article on Article {
   publishedAt(format: "MMMM D, YYYY")
   thumbnailTitle
   thumbnailImage {
-    cropped(width: 325, height: 240) {
+    large: cropped(width: 670, height: 720) {
+      width
+      height
+      src
+      srcSet
+    }
+    small: cropped(width: 325, height: 240) {
       width
       height
       src
@@ -49,6 +55,36 @@ var v0 = [
     "kind": "Literal",
     "name": "id",
     "value": "test"
+  }
+],
+v1 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "width",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "height",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "src",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "srcSet",
+    "storageKey": null
   }
 ];
 return {
@@ -155,7 +191,28 @@ return {
             "plural": false,
             "selections": [
               {
-                "alias": null,
+                "alias": "large",
+                "args": [
+                  {
+                    "kind": "Literal",
+                    "name": "height",
+                    "value": 720
+                  },
+                  {
+                    "kind": "Literal",
+                    "name": "width",
+                    "value": 670
+                  }
+                ],
+                "concreteType": "CroppedImageUrl",
+                "kind": "LinkedField",
+                "name": "cropped",
+                "plural": false,
+                "selections": (v1/*: any*/),
+                "storageKey": "cropped(height:720,width:670)"
+              },
+              {
+                "alias": "small",
                 "args": [
                   {
                     "kind": "Literal",
@@ -172,36 +229,7 @@ return {
                 "kind": "LinkedField",
                 "name": "cropped",
                 "plural": false,
-                "selections": [
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "width",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "height",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "src",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "srcSet",
-                    "storageKey": null
-                  }
-                ],
+                "selections": (v1/*: any*/),
                 "storageKey": "cropped(height:240,width:325)"
               }
             ],
@@ -217,7 +245,7 @@ return {
     "metadata": {},
     "name": "FairEditorialItem_Test_Query",
     "operationKind": "query",
-    "text": "query FairEditorialItem_Test_Query {\n  article(id: \"test\") {\n    ...FairEditorialItem_article\n    id\n  }\n}\n\nfragment FairEditorialItem_article on Article {\n  id\n  internalID\n  slug\n  title\n  href\n  publishedAt(format: \"MMMM D, YYYY\")\n  thumbnailTitle\n  thumbnailImage {\n    cropped(width: 325, height: 240) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n"
+    "text": "query FairEditorialItem_Test_Query {\n  article(id: \"test\") {\n    ...FairEditorialItem_article\n    id\n  }\n}\n\nfragment FairEditorialItem_article on Article {\n  id\n  internalID\n  slug\n  title\n  href\n  publishedAt(format: \"MMMM D, YYYY\")\n  thumbnailTitle\n  thumbnailImage {\n    large: cropped(width: 670, height: 720) {\n      width\n      height\n      src\n      srcSet\n    }\n    small: cropped(width: 325, height: 240) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n"
   }
 };
 })();

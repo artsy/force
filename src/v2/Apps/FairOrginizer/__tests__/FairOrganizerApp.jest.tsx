@@ -41,5 +41,6 @@ describe("FairOrganizerApp", () => {
     expect(wrapper.find("FairHeaderImage").length).toBe(1)
     expect(wrapper.find("FairOrganizerHeader").length).toBe(1)
     expect(wrapper.find("FairOrganizerPastEventsRail").length).toBe(1)
+    expect(wrapper.find("FairOrganizerLatestArticles").length).toBe(1)
   })
 })

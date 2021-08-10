@@ -3,22 +3,22 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type FairOrganizerApp_fairOrganizer = {
+export type FairOrganizerLatestArticles_fairOrganizer = {
     readonly name: string | null;
-    readonly fairs: {
+    readonly articles: {
         readonly edges: ReadonlyArray<{
             readonly node: {
-                readonly " $fragmentRefs": FragmentRefs<"FairHeaderImage_fair">;
+                readonly id: string;
+                readonly " $fragmentRefs": FragmentRefs<"FairEditorialItem_article">;
             } | null;
         } | null> | null;
     } | null;
-    readonly " $fragmentRefs": FragmentRefs<"FairOrganizerHeader_fairOrganizer" | "FairOrganizerLatestArticles_fairOrganizer">;
-    readonly " $refType": "FairOrganizerApp_fairOrganizer";
+    readonly " $refType": "FairOrganizerLatestArticles_fairOrganizer";
 };
-export type FairOrganizerApp_fairOrganizer$data = FairOrganizerApp_fairOrganizer;
-export type FairOrganizerApp_fairOrganizer$key = {
-    readonly " $data"?: FairOrganizerApp_fairOrganizer$data;
-    readonly " $fragmentRefs": FragmentRefs<"FairOrganizerApp_fairOrganizer">;
+export type FairOrganizerLatestArticles_fairOrganizer$data = FairOrganizerLatestArticles_fairOrganizer;
+export type FairOrganizerLatestArticles_fairOrganizer$key = {
+    readonly " $data"?: FairOrganizerLatestArticles_fairOrganizer$data;
+    readonly " $fragmentRefs": FragmentRefs<"FairOrganizerLatestArticles_fairOrganizer">;
 };
 
 
@@ -27,7 +27,7 @@ const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "FairOrganizerApp_fairOrganizer",
+  "name": "FairOrganizerLatestArticles_fairOrganizer",
   "selections": [
     {
       "alias": null,
@@ -37,23 +37,23 @@ const node: ReaderFragment = {
       "storageKey": null
     },
     {
-      "alias": "fairs",
+      "alias": "articles",
       "args": [
         {
           "kind": "Literal",
           "name": "first",
-          "value": 1
+          "value": 7
         }
       ],
-      "concreteType": "FairConnection",
+      "concreteType": "ArticleConnection",
       "kind": "LinkedField",
-      "name": "fairsConnection",
+      "name": "articlesConnection",
       "plural": false,
       "selections": [
         {
           "alias": null,
           "args": null,
-          "concreteType": "FairEdge",
+          "concreteType": "ArticleEdge",
           "kind": "LinkedField",
           "name": "edges",
           "plural": true,
@@ -61,15 +61,22 @@ const node: ReaderFragment = {
             {
               "alias": null,
               "args": null,
-              "concreteType": "Fair",
+              "concreteType": "Article",
               "kind": "LinkedField",
               "name": "node",
               "plural": false,
               "selections": [
                 {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "id",
+                  "storageKey": null
+                },
+                {
                   "args": null,
                   "kind": "FragmentSpread",
-                  "name": "FairHeaderImage_fair"
+                  "name": "FairEditorialItem_article"
                 }
               ],
               "storageKey": null
@@ -78,20 +85,10 @@ const node: ReaderFragment = {
           "storageKey": null
         }
       ],
-      "storageKey": "fairsConnection(first:1)"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "FairOrganizerHeader_fairOrganizer"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "FairOrganizerLatestArticles_fairOrganizer"
+      "storageKey": "articlesConnection(first:7)"
     }
   ],
   "type": "FairOrganizer"
 };
-(node as any).hash = '8687a595dac0cb26a28dfb09317e7c93';
+(node as any).hash = '0669f0c7ae326f84949181eb3a291324';
 export default node;

@@ -1,9 +1,15 @@
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { FairEditorialItem_article } from "v2/__generated__/FairEditorialItem_article.graphql"
-import { Box, Text, Image, Spacer } from "@artsy/palette"
-import { RouterLink } from "v2/System/Router/RouterLink"
 import { useTracking } from "react-tracking"
+import { FairEditorialItem_article } from "v2/__generated__/FairEditorialItem_article.graphql"
+import {
+  Box,
+  Text,
+  Image,
+  Spacer,
+  ResponsiveBox,
+  TextVariant,
+} from "@artsy/palette"
 import {
   ActionType,
   ClickedArticleGroup,
@@ -11,13 +17,23 @@ import {
   OwnerType,
 } from "@artsy/cohesion"
 import { useAnalyticsContext } from "v2/System/Analytics/AnalyticsContext"
+import { RouterLink } from "v2/System/Router/RouterLink"
 
-interface FairEditorialItemProps {
+export interface FairEditorialItemProps {
   article: FairEditorialItem_article
+  size?: "large" | "small"
+  isResponsive?: boolean
+}
+
+interface ItemImageProps {
+  width?: number | string
+  height?: number | string
 }
 
 export const FairEditorialItem: React.FC<FairEditorialItemProps> = ({
   article,
+  size = "small",
+  isResponsive = false,
 }) => {
   const tracking = useTracking()
 
@@ -39,27 +55,55 @@ export const FairEditorialItem: React.FC<FairEditorialItemProps> = ({
     action: ActionType.clickedArticleGroup,
   }
 
+  const image = article.thumbnailImage?.[size]!
+  const variants = {
+    large: {
+      primary: ["xl", "xxl"] as TextVariant[],
+    },
+    small: {
+      primary: ["lg", "lg", "xl"] as TextVariant[],
+    },
+  }[size]
+
+  const ItemImage: React.FC<ItemImageProps> = ({
+    width = "100%",
+    height = "100%",
+  }) => (
+    <Image
+      width={width}
+      height={height}
+      src={image.src}
+      srcSet={image.srcSet}
+      lazyLoad={true}
+      alt={article.thumbnailTitle!}
+    />
+  )
+
   return (
-    <Box width={325}>
-      <RouterLink
-        to={article.href!}
-        aria-label={`${article.title} (${article.publishedAt})`}
-        style={{ textDecoration: "none" }}
-        onClick={() => tracking.trackEvent(clickedArticleTrackingData)}
-      >
-        <Image
-          src={article.thumbnailImage?.cropped?.src!}
-          srcSet={article.thumbnailImage?.cropped?.srcSet}
-          width="100%"
-          height={240}
-          lazyLoad={true}
-          alt={article.thumbnailTitle!}
-        />
+    <RouterLink
+      to={article.href!}
+      aria-label={`${article.title} (${article.publishedAt})`}
+      textDecoration="none"
+      style={{ display: "block" }}
+      onClick={() => tracking.trackEvent(clickedArticleTrackingData)}
+    >
+      <Box maxWidth={image.width}>
+        {isResponsive ? (
+          <ResponsiveBox
+            aspectWidth={image.width}
+            aspectHeight={image.height}
+            maxWidth={image.width}
+          >
+            <ItemImage />
+          </ResponsiveBox>
+        ) : (
+          <ItemImage width={image.width} height={image.height} />
+        )}
 
         <Spacer mt={1} />
 
         <Box pr={10}>
-          <Text variant="xl" as="h4">
+          <Text variant={variants.primary} as="h4">
             {article.title}
           </Text>
 
@@ -69,8 +113,8 @@ export const FairEditorialItem: React.FC<FairEditorialItemProps> = ({
             {article.publishedAt}
           </Text>
         </Box>
-      </RouterLink>
-    </Box>
+      </Box>
+    </RouterLink>
   )
 }
 
@@ -87,7 +131,13 @@ export const FairEditorialItemFragmentContainer = createFragmentContainer(
         publishedAt(format: "MMMM D, YYYY")
         thumbnailTitle
         thumbnailImage {
-          cropped(width: 325, height: 240) {
+          large: cropped(width: 670, height: 720) {
+            width
+            height
+            src
+            srcSet
+          }
+          small: cropped(width: 325, height: 240) {
             width
             height
             src
