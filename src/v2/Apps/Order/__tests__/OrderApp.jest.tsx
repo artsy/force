@@ -571,6 +571,15 @@ describe("OrderApp", () => {
     expect(subject.find("ZendeskWrapper")).toHaveLength(1)
   })
 
+  it("does not show the Zendesk chat integration button if in a modal", () => {
+    const props = getProps()
+    const subject = getWrapper({
+      props: { ...props, location: { query: { isModal: true } } },
+    })
+
+    expect(subject.find("ZendeskWrapper")).toHaveLength(1)
+  })
+
   it("shows an error page if the order is missing", () => {
     const props = getProps()
     const subject = getWrapper({
