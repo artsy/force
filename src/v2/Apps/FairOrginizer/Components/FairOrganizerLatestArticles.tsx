@@ -4,6 +4,7 @@ import { Box, Button, Column, GridColumns, Spacer, Text } from "@artsy/palette"
 import { FairEditorialItemFragmentContainer as FairEditorialItem } from "v2/Apps/Fair/Components/FairEditorial/FairEditorialItem"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { createFragmentContainer, graphql, _FragmentRefs } from "react-relay"
+import { getArticlesColumns } from "../helpers/getArticlesColumns"
 import { FairOrganizerLatestArticles_fairOrganizer } from "v2/__generated__/FairOrganizerLatestArticles_fairOrganizer.graphql"
 import { extractNodes } from "v2/Utils/extractNodes"
 
@@ -18,8 +19,7 @@ export const FairOrganizerLatestArticles: React.FC<FairOrganizerLatestArticlesPr
 
   const nodes = extractNodes(articles)
   const [latestArticle, ...otherArticles] = nodes
-  const leftColumn = otherArticles.filter((_article, i) => i % 2 === 0)
-  const rightColumn = otherArticles.filter((_article, i) => i % 2 !== 0)
+  const { leftColumn, rightColumn } = getArticlesColumns(otherArticles)
 
   return (
     <Box>
