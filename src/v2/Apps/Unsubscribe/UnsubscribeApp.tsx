@@ -7,6 +7,14 @@ import { UnsubscribeApp_me } from "v2/__generated__/UnsubscribeApp_me.graphql"
 import { UnsubscribeLoggedInFragmentContainer } from "./Components/UnsubscribeLoggedIn"
 import { UnsubscribeLoggedOut } from "./Components/UnsubscribeLoggedOut"
 
+const UnsubscribeFallback = () => {
+  return (
+    <Message variant="error" my={4}>
+      Please sign in to update your email preferences
+    </Message>
+  )
+}
+
 interface UnsubscribeAppProps {
   me: UnsubscribeApp_me | null
 }
@@ -14,30 +22,22 @@ interface UnsubscribeAppProps {
 export const UnsubscribeApp: React.FC<UnsubscribeAppProps> = ({ me }) => {
   const { match } = useRouter()
   const { authentication_token: authenticationToken } = match.location.query
-
-  if (!me && !authenticationToken) {
-    return (
-      <Message variant="error" my={4}>
-        Unable to update your email preferences
-      </Message>
-    )
-  }
+  const showFallback = !me && !authenticationToken
+  const showLoggedIn = me && !authenticationToken
+  const showLoggedOut = !me && authenticationToken
 
   return (
     <>
+      {showFallback && <UnsubscribeFallback />}
       <Title>Email Preferences | Artsy</Title>
-
       <GridColumns my={4}>
         <Column span={6}>
           <Text variant="xl" as="h1">
             Email Preferences
           </Text>
-
           <Spacer mt={6} />
-
-          {me ? (
-            <UnsubscribeLoggedInFragmentContainer me={me} />
-          ) : (
+          {showLoggedIn && <UnsubscribeLoggedInFragmentContainer me={me!} />}
+          {showLoggedOut && (
             <UnsubscribeLoggedOut authenticationToken={authenticationToken} />
           )}
         </Column>
