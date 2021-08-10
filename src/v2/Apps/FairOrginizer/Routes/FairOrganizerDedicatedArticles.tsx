@@ -1,7 +1,6 @@
-import { Box, Column, GridColumns, Spacer, Text } from "@artsy/palette"
+import { Box, Column, Flex, GridColumns, Spacer, Text } from "@artsy/palette"
 import React, { useEffect, useState } from "react"
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
-import { FairEditorialItemFragmentContainer as FairEditorialItem } from "v2/Apps/Fair/Components/FairEditorial/FairEditorialItem"
 import { PaginationFragmentContainer as Pagination } from "v2/Components/Pagination"
 import { extractNodes } from "v2/Utils/extractNodes"
 import { DedicatedArticlesBreadcrumbsFragmentContainer as DedicatedArticlesBreadcrumbs } from "../Components/DedicatedArticlesBreadcrumbs"
@@ -10,6 +9,7 @@ import { FairOrganizerDedicatedArticles_fairOrganizer } from "v2/__generated__/F
 import createLogger from "v2/Utils/logger"
 import { updateUrl } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
 import { LoadingArea } from "v2/Components/LoadingArea"
+import { FairOrganizerArticle } from "../Components/FairOrganizerArticle"
 
 const PAGE_SIZE = 16
 
@@ -79,8 +79,10 @@ export const FairOrganizerDedicatedArticles: React.FC<FairOrganizerDedicatedArti
         <LoadingArea isLoading={isLoading}>
           <GridColumns>
             {articles.map(article => (
-              <Column key={article.id} span={[12, 6, 3, 3]}>
-                <FairEditorialItem article={article as any} />
+              <Column key={article.id} span={[12, 3]} mb={30}>
+                <Flex justifyContent="center">
+                  <FairOrganizerArticle article={article} />
+                </Flex>
               </Column>
             ))}
           </GridColumns>

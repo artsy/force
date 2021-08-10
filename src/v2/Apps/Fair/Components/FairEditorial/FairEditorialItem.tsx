@@ -79,15 +79,25 @@ export const FairEditorialItem: React.FC<FairEditorialItemProps> = ({
     />
   )
 
+  const ItemLink = ({ children }) => {
+    return (
+      <RouterLink
+        to={article.href!}
+        aria-label={`${article.title} (${article.publishedAt})`}
+        textDecoration="none"
+        style={{ display: "block" }}
+        onClick={() => tracking.trackEvent(clickedArticleTrackingData)}
+      >
+        {children}
+      </RouterLink>
+    )
+  }
+
   return (
-    <RouterLink
-      to={article.href!}
-      aria-label={`${article.title} (${article.publishedAt})`}
-      textDecoration="none"
-      style={{ display: "block" }}
-      onClick={() => tracking.trackEvent(clickedArticleTrackingData)}
-    >
-      <Box maxWidth={image.width}>
+    <Box maxWidth={image.width}>
+      {/* Devided link into separate parts in order to avoid linking via empty
+        space when responsive box is applied */}
+      <ItemLink>
         {isResponsive ? (
           <ResponsiveBox
             aspectWidth={image.width}
@@ -99,7 +109,9 @@ export const FairEditorialItem: React.FC<FairEditorialItemProps> = ({
         ) : (
           <ItemImage width={image.width} height={image.height} />
         )}
+      </ItemLink>
 
+      <ItemLink>
         <Spacer mt={1} />
 
         <Box pr={10}>
@@ -113,8 +125,8 @@ export const FairEditorialItem: React.FC<FairEditorialItemProps> = ({
             {article.publishedAt}
           </Text>
         </Box>
-      </Box>
-    </RouterLink>
+      </ItemLink>
+    </Box>
   )
 }
 

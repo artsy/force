@@ -1,12 +1,11 @@
 import React from "react"
-import styled from "styled-components"
 import { Box, Button, Column, GridColumns, Spacer, Text } from "@artsy/palette"
-import { FairEditorialItemFragmentContainer as FairEditorialItem } from "v2/Apps/Fair/Components/FairEditorial/FairEditorialItem"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { createFragmentContainer, graphql, _FragmentRefs } from "react-relay"
 import { getArticlesColumns } from "../helpers/getArticlesColumns"
 import { FairOrganizerLatestArticles_fairOrganizer } from "v2/__generated__/FairOrganizerLatestArticles_fairOrganizer.graphql"
 import { extractNodes } from "v2/Utils/extractNodes"
+import { FairOrganizerArticle } from "./FairOrganizerArticle"
 
 interface FairOrganizerLatestArticlesProps {
   fairOrganizer: FairOrganizerLatestArticles_fairOrganizer
@@ -33,7 +32,7 @@ export const FairOrganizerLatestArticles: React.FC<FairOrganizerLatestArticlesPr
       <GridColumns>
         {/* latest article */}
         <Column span={6}>
-          <Article article={latestArticle} size="large" />
+          <FairOrganizerArticle article={latestArticle} size="large" />
           <Spacer mt={30} />
         </Column>
 
@@ -44,7 +43,7 @@ export const FairOrganizerLatestArticles: React.FC<FairOrganizerLatestArticlesPr
             <Column span={[6]}>
               {leftColumn.map(article => (
                 <Box mb={30} key={article.id}>
-                  <Article article={article} size={"small"} />
+                  <FairOrganizerArticle article={article} size={"small"} />
                 </Box>
               ))}
             </Column>
@@ -53,7 +52,7 @@ export const FairOrganizerLatestArticles: React.FC<FairOrganizerLatestArticlesPr
             <Column span={[6]}>
               {rightColumn.map(article => (
                 <Box mb={30} key={article.id}>
-                  <Article article={article} size={"small"} />
+                  <FairOrganizerArticle article={article} size={"small"} />
                 </Box>
               ))}
             </Column>
@@ -104,8 +103,3 @@ export const FairOrganizerLatestArticlesFragmentContainer = createFragmentContai
     `,
   }
 )
-
-const Article = styled(FairEditorialItem).attrs({
-  isResponsive: true,
-})``
-Article.displayName = "Article"
