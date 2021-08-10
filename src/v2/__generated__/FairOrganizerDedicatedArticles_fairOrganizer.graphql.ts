@@ -21,6 +21,7 @@ export type FairOrganizerDedicatedArticles_fairOrganizer = {
             } | null;
         } | null> | null;
     } | null;
+    readonly " $fragmentRefs": FragmentRefs<"DedicatedArticlesBreadcrumbs_fairOrganizer">;
     readonly " $refType": "FairOrganizerDedicatedArticles_fairOrganizer";
 };
 export type FairOrganizerDedicatedArticles_fairOrganizer$data = FairOrganizerDedicatedArticles_fairOrganizer;
@@ -160,9 +161,14 @@ const node: ReaderFragment = {
         }
       ],
       "storageKey": null
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "DedicatedArticlesBreadcrumbs_fairOrganizer"
     }
   ],
   "type": "FairOrganizer"
 };
-(node as any).hash = '9f07f5015bdc25be209772fec17d83ba';
+(node as any).hash = '874650d740112e5b3412a9b885e3c7dc';
 export default node;
