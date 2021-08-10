@@ -17,6 +17,10 @@ import {
   useArtworkInquiryContext,
   Screen,
 } from "./ArtworkInquiryContext"
+import { ArtworkInquiryExistingUserQueryRenderer } from "./ArtworkInquiryExistingUser"
+import { ArtworkInquirySignUp } from "./ArtworkInquirySignUp"
+import { ArtworkInquiryLogin } from "./ArtworkInquiryLogin"
+import { ArtworkInquiryResetPassword } from "./ArtworkInquiryResetPassword"
 
 interface ArtworkInquiryProps {
   artwork: ArtworkInquiry_artwork
@@ -32,11 +36,13 @@ const ArtworkInquiry: React.FC<ArtworkInquiryProps> = ({ artwork }) => {
           case Screen.Form:
             return <ArtworkInquiryFormFragmentContainer artwork={artwork} />
           case Screen.Login:
-            return <>TODO: Login</>
+            return <ArtworkInquiryLogin />
+          case Screen.ExistingUser:
+            return <ArtworkInquiryExistingUserQueryRenderer />
           case Screen.SignUp:
-            return <>TODO: Sign up</>
-          case Screen.Forgot:
-            return <>TODO: Forgot</>
+            return <ArtworkInquirySignUp />
+          case Screen.ResetPassword:
+            return <ArtworkInquiryResetPassword />
         }
       })()}
     </ArtworkInquiryDialog>
@@ -74,7 +80,7 @@ export const ArtworkInquiryQueryRenderer = ({
   }, [])
 
   return (
-    <ArtworkInquiryProvider onClose={onClose}>
+    <ArtworkInquiryProvider onClose={onClose} artworkID={artworkID}>
       <ArtworkInquiryBackdrop
         bg={isMounted ? "rgba(0, 0, 0, 0.8)" : "transparent"}
         onClose={onClose}
@@ -93,6 +99,7 @@ export const ArtworkInquiryQueryRenderer = ({
           render={({ error, props }) => {
             if (error) {
               console.error(error)
+              onClose()
               return null
             }
 
@@ -108,7 +115,11 @@ export const ArtworkInquiryQueryRenderer = ({
   )
 }
 
-export const useArtworkInquiry = () => {
+interface UseArtworkInquiry {
+  artworkID: string
+}
+
+export const useArtworkInquiry = ({ artworkID }: UseArtworkInquiry) => {
   const [isArtworkInquiryVisible, setIsArtworkInquiryVisible] = useState(false)
 
   const showArtworkInquiry = () => {
@@ -119,9 +130,23 @@ export const useArtworkInquiry = () => {
     setIsArtworkInquiryVisible(false)
   }
 
+  const ArtworkInquiry: React.FC = () => {
+    return (
+      <>
+        {isArtworkInquiryVisible && (
+          <ArtworkInquiryQueryRenderer
+            artworkID={artworkID}
+            onClose={hideArtworkInquiry}
+          />
+        )}
+      </>
+    )
+  }
+
   return {
     showArtworkInquiry,
     hideArtworkInquiry,
     isArtworkInquiryVisible,
+    ArtworkInquiry,
   }
 }

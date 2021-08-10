@@ -15,7 +15,7 @@ import React from "react"
 import { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworkInquiryForm_artwork } from "v2/__generated__/ArtworkInquiryForm_artwork.graphql"
-import { useInquiryRequest } from "./useInquiryRequest"
+import { useArtworkInquiryRequest } from "./useArtworkInquiryRequest"
 import { wait } from "v2/Utils/wait"
 import {
   useArtworkInquiryContext,
@@ -44,16 +44,14 @@ const ArtworkInquiryForm: React.FC<ArtworkInquiryFormProps> = ({ artwork }) => {
     navigateTo,
     setInquiry,
     inquiry,
+    artworkID,
   } = useArtworkInquiryContext()
 
   const [mode, setMode] = useState<Mode>(Mode.Pending)
 
-  const { submitInquiryRequest } = useInquiryRequest({
-    input: {
-      inquireableID: artwork.internalID,
-      inquireableType: "Artwork",
-      ...inquiry,
-    },
+  const { submitArtworkInquiryRequest } = useArtworkInquiryRequest({
+    artworkID,
+    message: inquiry.message,
   })
 
   const handleTextAreaChange = ({ value }: { value: string }) => {
@@ -79,13 +77,13 @@ const ArtworkInquiryForm: React.FC<ArtworkInquiryFormProps> = ({ artwork }) => {
     }
 
     if (!user) {
-      navigateTo(Screen.SignUp)
+      navigateTo(Screen.ExistingUser)
     }
 
     setMode(Mode.Sending)
 
     try {
-      await submitInquiryRequest()
+      await submitArtworkInquiryRequest()
       setMode(Mode.Success)
       await wait(5000)
       onClose()
@@ -99,7 +97,7 @@ const ArtworkInquiryForm: React.FC<ArtworkInquiryFormProps> = ({ artwork }) => {
     [Mode.Pending]: "Send",
     [Mode.Confirm]: "Send Anyway?",
     [Mode.Sending]: "Send",
-    [Mode.Success]: "Success",
+    [Mode.Success]: "Sent",
     [Mode.Error]: "Error",
   }[mode]
 
@@ -176,7 +174,7 @@ const ArtworkInquiryForm: React.FC<ArtworkInquiryFormProps> = ({ artwork }) => {
           <Input
             title="Your email"
             placeholder="Your email address"
-            onChange={handleInputChange("name")}
+            onChange={handleInputChange("email")}
             type="email"
             required
             my={1}

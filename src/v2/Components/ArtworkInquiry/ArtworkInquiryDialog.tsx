@@ -16,7 +16,7 @@ export const ArtworkInquiryDialog: React.FC = ({ children }) => {
     <Box
       position="relative"
       bg="white100"
-      width={700}
+      width={550}
       height="100%"
       p={2}
       style={{ boxShadow: DROP_SHADOW }}

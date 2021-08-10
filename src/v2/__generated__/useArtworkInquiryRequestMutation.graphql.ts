@@ -13,23 +13,23 @@ export type InquiryQuestionInput = {
     details?: string | null;
     questionID: string;
 };
-export type useInquiryRequestMutationVariables = {
+export type useArtworkInquiryRequestMutationVariables = {
     input: SubmitInquiryRequestMutationInput;
 };
-export type useInquiryRequestMutationResponse = {
+export type useArtworkInquiryRequestMutationResponse = {
     readonly submitInquiryRequestMutation: {
         readonly clientMutationId: string | null;
     } | null;
 };
-export type useInquiryRequestMutation = {
-    readonly response: useInquiryRequestMutationResponse;
-    readonly variables: useInquiryRequestMutationVariables;
+export type useArtworkInquiryRequestMutation = {
+    readonly response: useArtworkInquiryRequestMutationResponse;
+    readonly variables: useArtworkInquiryRequestMutationVariables;
 };
 
 
 
 /*
-mutation useInquiryRequestMutation(
+mutation useArtworkInquiryRequestMutation(
   $input: SubmitInquiryRequestMutationInput!
 ) {
   submitInquiryRequestMutation(input: $input) {
@@ -78,7 +78,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "useInquiryRequestMutation",
+    "name": "useArtworkInquiryRequestMutation",
     "selections": (v1/*: any*/),
     "type": "Mutation"
   },
@@ -86,17 +86,17 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "useInquiryRequestMutation",
+    "name": "useArtworkInquiryRequestMutation",
     "selections": (v1/*: any*/)
   },
   "params": {
     "id": null,
     "metadata": {},
-    "name": "useInquiryRequestMutation",
+    "name": "useArtworkInquiryRequestMutation",
     "operationKind": "mutation",
-    "text": "mutation useInquiryRequestMutation(\n  $input: SubmitInquiryRequestMutationInput!\n) {\n  submitInquiryRequestMutation(input: $input) {\n    clientMutationId\n  }\n}\n"
+    "text": "mutation useArtworkInquiryRequestMutation(\n  $input: SubmitInquiryRequestMutationInput!\n) {\n  submitInquiryRequestMutation(input: $input) {\n    clientMutationId\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'ad33908da27698b3181f3806cf302fcb';
+(node as any).hash = '3e8d95650aa3cdddaf88f2f1f2cea86f';
 export default node;
