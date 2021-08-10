@@ -76,7 +76,7 @@ mixin visibility(section)
         ul.browser-images.tools-images
           for image, i in section.browser_images
             li.browser-image.tools-image( class=(i === 0 ? 'is-active' : undefined) )
-              img( src=image.src )
+              img( src="https://artsy-media-uploads.s3.amazonaws.com/visibility_gif_1.gif")
 
       .image-container-caption
         h4= section.browser_caption.title
@@ -90,7 +90,7 @@ mixin visibility(section)
         ul.mobile-images.tools-images
           for image, i in section.mobile_images
             li.mobile-image.tools-image( class=(i === 0 ? 'is-active' : undefined) )
-              img( src=image.src )
+              img( src="https://artsy-media-uploads.s3.amazonaws.com/visibility_gif_2.gif" )
 
       .image-container-caption
         h4= section.mobile_caption.title
