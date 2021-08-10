@@ -35,6 +35,7 @@ describe("Partnerships templates", function () {
       "Experience",
       "Audience",
       "Access",
+      "Consignments",
       "Visibility",
       "Event Services",
       "Support",
