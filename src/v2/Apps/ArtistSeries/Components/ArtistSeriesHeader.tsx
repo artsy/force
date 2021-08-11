@@ -94,7 +94,7 @@ const ArtistSeriesHeader: React.FC<ArtistSeriesHeaderProps> = ({
           </Text>
 
           {descriptionFormatted && (
-            <HTML variant="text">
+            <HTML variant="sm">
               <ReadMore content={descriptionFormatted} maxChars={1000} />
             </HTML>
           )}
