@@ -15,6 +15,8 @@ export type ArtworkBanner_artwork = {
             readonly cropped: {
                 readonly src: string;
                 readonly srcSet: string;
+                readonly width: number;
+                readonly height: number;
             } | null;
         } | null;
     } | null;
@@ -31,6 +33,8 @@ export type ArtworkBanner_artwork = {
                 readonly cropped: {
                     readonly src: string;
                     readonly srcSet: string;
+                    readonly width: number;
+                    readonly height: number;
                 } | null;
             } | null;
         } | null;
@@ -43,6 +47,8 @@ export type ArtworkBanner_artwork = {
             readonly cropped: {
                 readonly src: string;
                 readonly srcSet: string;
+                readonly width: number;
+                readonly height: number;
             } | null;
         } | null;
     } | {
@@ -105,6 +111,20 @@ v1 = [
         "args": null,
         "kind": "ScalarField",
         "name": "srcSet",
+        "storageKey": null
+      },
+      {
+        "alias": null,
+        "args": null,
+        "kind": "ScalarField",
+        "name": "width",
+        "storageKey": null
+      },
+      {
+        "alias": null,
+        "args": null,
+        "kind": "ScalarField",
+        "name": "height",
         "storageKey": null
       }
     ],
@@ -262,5 +282,5 @@ return {
   "type": "Artwork"
 };
 })();
-(node as any).hash = '74f978c00aca04d15d63a12b55b40d03';
+(node as any).hash = '4898236c45792710759a2ce16638f5e4';
 export default node;
