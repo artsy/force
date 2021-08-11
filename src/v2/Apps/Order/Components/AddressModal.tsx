@@ -89,12 +89,18 @@ export const AddressModal: React.FC<Props> = ({
   )
   const [showDialog, setShowDialog] = useState<boolean>(false)
   if (!relayEnvironment) return null
+
+  const handleModalClose = () => {
+    closeModal()
+    setCreateUpdateError(null)
+  }
+
   return (
     <>
       <Modal
         title={title}
         show={show}
-        onClose={closeModal}
+        onClose={handleModalClose}
         modalWidth={ModalWidth.Wide}
       >
         <Formik
