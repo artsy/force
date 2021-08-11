@@ -22,13 +22,6 @@ export class LegacyArtworkDllContainer extends React.Component {
   }
 
   addLegacyStyles() {
-    if (!document.getElementById("legacyIconFont")) {
-      document.head.insertAdjacentHTML(
-        "beforeend",
-        `<link id="legacyIconFont" rel="preload" href="${sd.WEBFONT_URL}/artsy-icons.woff2" as="font" type="font/woff2" crossorigin />`
-      )
-    }
-
     if (!document.getElementById("legacyArtworkPageStyles")) {
       document.head.insertAdjacentHTML(
         "beforeend",
