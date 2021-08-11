@@ -26,7 +26,6 @@ module.exports = class AboutView extends Backbone.View
     @setupHeroUnits()
     @setupFlipHearts()
     @setupGenes()
-    @setImages()
 
   zoomImage: (e) ->
     e.preventDefault()
@@ -108,33 +107,6 @@ module.exports = class AboutView extends Backbone.View
       $(this).addClass 'is-active' if direction is 'down'
       $(this).removeClass 'is-active' if direction is 'up'
     , offset: '90%'
-
-  loadUptoSection: (selector, callback) ->
-    @loadedSections ?= []
-    return callback() if _.contains @loadedSections, selector.substring(1)
-    $section = @$sections.filter selector
-    $sections = @$sections.slice 0, $section.index()
-    $.when.apply(null, _.map $sections, (el) =>
-      @loadSection($el = $(el)).then =>
-        @loadedSections.push $el.attr 'id'
-    ).then callback
-
-  loadSection: ($section) ->
-    $images = $section.find('img')
-    $images.each @setImage
-    $images.imagesLoaded()
-
-  setImage: ->
-    $img = $(this)
-    src = $img.data 'src'
-    $parent = $img.parent()
-    $parent.imagesLoaded -> $.waypoints('refresh')
-    width = $parent.width()
-    src = resize(src, width: width * (window.devicePixelRatio or 1))
-    $img.attr 'src', src
-
-  setImages: ->
-    @$('img').each @setImage
 
   contactSpecialistModal: (e) ->
     e.preventDefault()
