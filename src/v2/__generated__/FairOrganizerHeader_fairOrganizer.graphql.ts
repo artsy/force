@@ -5,10 +5,11 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type FairOrganizerHeader_fairOrganizer = {
     readonly name: string | null;
-    readonly fairs: {
+    readonly fairsConnection: {
         readonly edges: ReadonlyArray<{
             readonly node: {
-                readonly " $fragmentRefs": FragmentRefs<"FairOrganizerTiming_fair">;
+                readonly startAt: string | null;
+                readonly exhibitionPeriod: string | null;
             } | null;
         } | null> | null;
     } | null;
@@ -37,7 +38,7 @@ const node: ReaderFragment = {
       "storageKey": null
     },
     {
-      "alias": "fairs",
+      "alias": null,
       "args": [
         {
           "kind": "Literal",
@@ -67,9 +68,18 @@ const node: ReaderFragment = {
               "plural": false,
               "selections": [
                 {
+                  "alias": null,
                   "args": null,
-                  "kind": "FragmentSpread",
-                  "name": "FairOrganizerTiming_fair"
+                  "kind": "ScalarField",
+                  "name": "startAt",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "exhibitionPeriod",
+                  "storageKey": null
                 }
               ],
               "storageKey": null
@@ -98,5 +108,5 @@ const node: ReaderFragment = {
   ],
   "type": "FairOrganizer"
 };
-(node as any).hash = 'c0ea2603438e45b9b2f1a18a1992d6c5';
+(node as any).hash = '1cad529826214e04f9ce747c67ce3c77';
 export default node;

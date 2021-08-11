@@ -39,7 +39,7 @@ export const Timer: React.FC<
       secondLineColor: "black100",
     },
     v3: {
-      variant,
+      variant: ["lg", "xl"] as TextVariant[],
       firstLineColor: "blue100",
       secondLineColor: "black60",
     },
@@ -60,7 +60,7 @@ export const Timer: React.FC<
           <Flex flexDirection="column" {...rest}>
             <Text variant={tokens.variant} color={tokens.firstLineColor}>
               {label && (
-                <Text variant="md" color="black100">
+                <Text variant={tokens.variant} color="black100">
                   {label}
                 </Text>
               )}

@@ -18,7 +18,7 @@ export const FairOrganizerHeaderIconFragmentContainer = createFragmentContainer(
         name
         profile {
           icon {
-            desktop: cropped(width: 100, height: 100, version: "square140") {
+            desktop: cropped(width: 80, height: 80, version: "square140") {
               src
               srcSet
             }

@@ -1,11 +1,13 @@
 import React from "react"
+import moment from "moment"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Box, Column, Flex, GridColumns, Spacer, Text } from "@artsy/palette"
 import { FairOrganizerHeaderIconFragmentContainer as FairOrganizerHeaderIcon } from "./FairOrganizerHeaderIcon"
-import { FairOrganizerTimingFragmentContainer as FairOrganizerTiming } from "./FairOrganizerTiming"
 import { FairOrganizerFollowButtonFragmentContainer as FairOrganizerFollowButton } from "../../Components/FairOrganizerFollowButton"
 import { FairOrganizerInfoFragmentContainer as FairOrganizerInfo } from "./FairOrganizerInfo"
 import { FairOrganizerHeader_fairOrganizer } from "v2/__generated__/FairOrganizerHeader_fairOrganizer.graphql"
+import { extractNodes } from "v2/Utils/extractNodes"
+import { Timer } from "v2/Components/Timer"
 
 interface FairOrganizerHeaderProps {
   fairOrganizer: FairOrganizerHeader_fairOrganizer
@@ -14,30 +16,40 @@ interface FairOrganizerHeaderProps {
 export const FairOrganizerHeader: React.FC<FairOrganizerHeaderProps> = ({
   fairOrganizer,
 }) => {
-  const { fairs, name } = fairOrganizer
-  const { edges } = fairs!
-  const fair = edges?.[0]?.node!
+  const { fairsConnection, name } = fairOrganizer
+  const fair = extractNodes(fairsConnection)[0]
+  const { startAt, exhibitionPeriod } = fair
+
+  const showTimer = moment().isBefore(new Date(startAt!))
 
   return (
     <Box>
+      <Flex>
+        <FairOrganizerHeaderIcon fairOrganizer={fairOrganizer} />
+        <Spacer mr={2} />
+        <Box>
+          <Text as="h1" variant="xl">
+            Explore {name} on Artsy
+          </Text>
+          <Text variant="xl" color="black60" mb={1}>
+            {exhibitionPeriod}
+          </Text>
+        </Box>
+      </Flex>
+
+      <Spacer mt={75} />
+
       <GridColumns>
         <Column span={6}>
           <Flex flexDirection="column">
             <Box>
-              <FairOrganizerHeaderIcon fairOrganizer={fairOrganizer} />
+              {showTimer && (
+                <>
+                  <Timer variant="lg" label="Opens in:" endDate={startAt!} />
+                  <Spacer mt={30} />
+                </>
+              )}
             </Box>
-
-            <Spacer mt={1} />
-
-            <Box>
-              <Text as="h1" variant="xl">
-                Explore {name} on Artsy
-              </Text>
-
-              <FairOrganizerTiming fair={fair!} />
-            </Box>
-
-            <Spacer mt={30} />
 
             <GridColumns>
               <Column span={[12, 8, 6]}>
@@ -63,10 +75,11 @@ export const FairOrganizerHeaderFragmentContainer = createFragmentContainer(
     fairOrganizer: graphql`
       fragment FairOrganizerHeader_fairOrganizer on FairOrganizer {
         name
-        fairs: fairsConnection(first: 1) {
+        fairsConnection(first: 1) {
           edges {
             node {
-              ...FairOrganizerTiming_fair
+              startAt
+              exhibitionPeriod
             }
           }
         }
