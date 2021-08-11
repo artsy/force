@@ -26,7 +26,13 @@ export const DedicatedArticlesBreadcrumbs: React.FC<DedicatedArticlesBreadcrumbs
       <RouterLink to={`/fair-organizer/${slug}`}>
         <Flex alignItems="center">
           <ArrowLeftIcon />
-          <Image width={30} height={30} src={image?.resized?.url!} mx={1} />
+          <Image
+            width={30}
+            height={30}
+            src={image?.resized?.src!}
+            srcSet={image?.resized?.srcSet!}
+            mx={1}
+          />
           <Text variant="xs">Explore {name} on Artsy</Text>
         </Flex>
       </RouterLink>
@@ -46,7 +52,8 @@ export const DedicatedArticlesBreadcrumbsFragmentContainer = createFragmentConta
             node {
               image {
                 resized(width: 30, height: 30, version: "square") {
-                  url
+                  src
+                  srcSet
                 }
               }
             }

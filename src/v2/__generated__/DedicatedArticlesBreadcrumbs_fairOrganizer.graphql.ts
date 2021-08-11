@@ -11,7 +11,8 @@ export type DedicatedArticlesBreadcrumbs_fairOrganizer = {
             readonly node: {
                 readonly image: {
                     readonly resized: {
-                        readonly url: string;
+                        readonly src: string;
+                        readonly srcSet: string;
                     } | null;
                 } | null;
             } | null;
@@ -113,7 +114,14 @@ const node: ReaderFragment = {
                           "alias": null,
                           "args": null,
                           "kind": "ScalarField",
-                          "name": "url",
+                          "name": "src",
+                          "storageKey": null
+                        },
+                        {
+                          "alias": null,
+                          "args": null,
+                          "kind": "ScalarField",
+                          "name": "srcSet",
                           "storageKey": null
                         }
                       ],
@@ -134,5 +142,5 @@ const node: ReaderFragment = {
   ],
   "type": "FairOrganizer"
 };
-(node as any).hash = 'd214ac5fc34d62ca6e71ee20705881c5';
+(node as any).hash = 'bfc8dab1efec5d889e13834e9faefd2f';
 export default node;
