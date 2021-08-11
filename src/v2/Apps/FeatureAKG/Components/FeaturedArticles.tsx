@@ -1,13 +1,4 @@
-import {
-  Box,
-  Col,
-  Flex,
-  Grid,
-  Image,
-  ResponsiveImage,
-  Row,
-  Sans,
-} from "@artsy/palette"
+import { Box, Col, Flex, Grid, Image, Row, Sans } from "@artsy/palette"
 import { FeaturedArticles_articles } from "v2/__generated__/FeaturedArticles_articles.graphql"
 import { StyledLink } from "./StyledLink"
 import { AnalyticsSchema } from "v2/System"
@@ -60,10 +51,15 @@ const FeaturedArticles: React.FC<FeaturedArticlesProps> = props => {
               onClick={() => trackClick(firstArticle.href)}
             >
               {firstArticleImage && (
-                <ResponsiveImage
-                  // @ts-expect-error STRICT_NULL_CHECK
-                  src={firstArticle.thumbnailImage.cropped.url}
-                  ratio={firstArticleImage.height / firstArticleImage.width}
+                <div
+                  style={{
+                    width: "100%",
+                    paddingBottom: `${
+                      (firstArticleImage.height / firstArticleImage.width) * 100
+                    }%`,
+                    backgroundImage: `url(${firstArticle?.thumbnailImage?.cropped?.url})`,
+                    backgroundSize: "contain",
+                  }}
                 />
               )}
               <Sans size={["4t", "4t", "6"]} my={1}>

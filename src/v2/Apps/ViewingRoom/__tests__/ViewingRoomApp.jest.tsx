@@ -130,8 +130,8 @@ describe("ViewingRoomApp", () => {
       describe("desktop", () => {
         it("renders correctly", async () => {
           const wrapper = await getWrapper()
-          expect(wrapper.find("ResponsiveImage").length).toBe(1)
           const html = wrapper.html()
+          expect(html).toContain("background-image: url")
           expect(html).toContain("Guy Yanai")
           expect(html).toContain("Subscription Demo GG")
           expect(html).toContain("Opens in 8 days")
@@ -141,8 +141,8 @@ describe("ViewingRoomApp", () => {
       describe("mobile", () => {
         it("renders correctly", async () => {
           const wrapper = await getWrapper()
-          expect(wrapper.find("ResponsiveImage").length).toBe(1)
           const html = wrapper.html()
+          expect(html).toContain("background-image: url")
           expect(html).toContain("Guy Yanai")
           expect(html).toContain("Subscription Demo GG")
           expect(html).toContain("Opens in 8 days")
@@ -196,8 +196,8 @@ describe("ViewingRoomApp", () => {
       describe("desktop", () => {
         it("renders correctly", async () => {
           const wrapper = await getWrapper()
-          expect(wrapper.find("ResponsiveImage").length).toBe(1)
           const html = wrapper.html()
+          expect(html).toContain("background-image: url")
           expect(html).toContain("Guy Yanai")
           expect(html).toContain("Subscription Demo GG")
           expect(html).toContain("Closes in 1 month")
@@ -207,8 +207,9 @@ describe("ViewingRoomApp", () => {
       describe("mobile", () => {
         it("renders correctly", async () => {
           const wrapper = await getWrapper()
-          expect(wrapper.find("ResponsiveImage").length).toBe(1)
+
           const html = wrapper.html()
+          expect(html).toContain("background-image: url")
           expect(html).toContain("Guy Yanai")
           expect(html).toContain("Subscription Demo GG")
           expect(html).toContain("Closes in 1 month")
@@ -272,8 +273,8 @@ describe("ViewingRoomApp", () => {
       describe("desktop", () => {
         it("renders correctly", async () => {
           const wrapper = await getWrapper()
-          expect(wrapper.find("ResponsiveImage").length).toBe(1)
           const html = wrapper.html()
+          expect(html).toContain("background-image: url")
           expect(html).toContain("Guy Yanai")
           expect(html).toContain("Subscription Demo GG")
           expect(html).toContain("Closed")
@@ -283,8 +284,8 @@ describe("ViewingRoomApp", () => {
       describe("mobile", () => {
         it("renders correctly", async () => {
           const wrapper = await getWrapper()
-          expect(wrapper.find("ResponsiveImage").length).toBe(1)
           const html = wrapper.html()
+          expect(html).toContain("background-image: url")
           expect(html).toContain("Guy Yanai")
           expect(html).toContain("Subscription Demo GG")
           expect(html).toContain("Closed")

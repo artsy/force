@@ -1,4 +1,4 @@
-import { Box, Flex, ResponsiveImage } from "@artsy/palette"
+import { Box, Flex } from "@artsy/palette"
 import { ArtistConsignHeaderImages_artist } from "v2/__generated__/ArtistConsignHeaderImages_artist.graphql"
 import { last } from "lodash"
 import React from "react"
@@ -72,9 +72,12 @@ interface ImageProps {
 }
 const LeftImagePhoto: React.FC<ImageProps> = ({ image }) => {
   return (
-    <ResponsiveImage
-      src={image.resized.url}
+    <div
       style={{
+        width: "100%",
+        paddingBottom: "100%",
+        backgroundImage: `url(${image.resized.url})`,
+        backgroundSize: "contain",
         backgroundPosition: "left",
         transformOrigin: "left",
       }}
@@ -83,7 +86,16 @@ const LeftImagePhoto: React.FC<ImageProps> = ({ image }) => {
 }
 
 const RightImagePhoto: React.FC<ImageProps> = ({ image }) => {
-  return <ResponsiveImage src={image.resized.url} />
+  return (
+    <div
+      style={{
+        width: "100%",
+        paddingBottom: "100%",
+        backgroundImage: `url(${image.resized.url})`,
+        backgroundSize: "contain",
+      }}
+    />
+  )
 }
 
 const LeftImage = styled(Box)`
