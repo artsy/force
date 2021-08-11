@@ -93,6 +93,7 @@ module.exports = class AboutView extends Backbone.View
       , offset: -> -($(this).height() - 1)
 
   setupHeroUnitSlideshow: ->
+    return unless @$('.about-hero-unit-bgs').length
     @heroUnitCycle = new Cycle $el: @$('.about-hero-unit-bgs'), selector: '.about-hero-unit-bg'
     @heroUnitCycle.start()
 
