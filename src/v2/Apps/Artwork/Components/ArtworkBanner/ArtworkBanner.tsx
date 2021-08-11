@@ -32,13 +32,13 @@ export const ArtworkBanner: React.FC<ArtworkBannerProps> = props => {
   const isShow = props.artwork?.context?.__typename === "Show"
 
   return (
-    <RouterLink to={href} display="block" textDecoration="none">
-      <TopContextBar>
+    <TopContextBar>
+      <RouterLink to={href} display="block" textDecoration="none">
         <GridColumns>
           <Column span={8}>
             <Flex alignItems="center">
               {isShow ? (
-                <ChevronIcon direction="left" pr={0.5} />
+                <ChevronIcon direction="left" height="14px" mr={1} />
               ) : (
                 image && (
                   <Image
@@ -55,15 +55,15 @@ export const ArtworkBanner: React.FC<ArtworkBannerProps> = props => {
               <Text variant="xs" lineHeight={1}>
                 {[name, subHeadline].filter(Boolean).join(" - ")}
 
-                <Box as="span" display="inline-block" color="black60" ml={1}>
+                <Box as="span" display="inline-block" color="black60" ml={0.5}>
                   {meta}
                 </Box>
               </Text>
             </Flex>
           </Column>
         </GridColumns>
-      </TopContextBar>
-    </RouterLink>
+      </RouterLink>
+    </TopContextBar>
   )
 }
 
