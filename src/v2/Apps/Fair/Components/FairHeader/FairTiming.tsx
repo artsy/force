@@ -2,8 +2,8 @@ import React from "react"
 import { Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FairTiming_fair } from "v2/__generated__/FairTiming_fair.graphql"
-import { WithCurrentTime } from "v2/Components/WithCurrentTime"
 import { EventTiming } from "v2/Components/EventTiming"
+import { useCurrentTime } from "v2/Utils/Hooks/useCurrentTime"
 
 interface Props {
   fair: FairTiming_fair
@@ -12,25 +12,20 @@ interface Props {
 const FairTiming: React.FC<Props> = ({
   fair: { exhibitionPeriod, startAt, endAt },
 }) => {
+  const currentTime = useCurrentTime({ syncWithServer: true })
+
+  const renderEventTiming = () =>
+    startAt &&
+    endAt && (
+      <EventTiming currentTime={currentTime} startAt={startAt} endAt={endAt} />
+    )
+
   return (
     <>
-      <Text variant="xl" color="black60" mb={1}>
+      <Text variant={["lg", "xl"]} color="black60" mb={1}>
         {exhibitionPeriod}
       </Text>
-
-      <Text variant="lg">
-        <WithCurrentTime syncWithServer>
-          {currentTime => {
-            const props = {
-              currentTime,
-              startAt,
-              endAt,
-            }
-            // @ts-expect-error STRICT_NULL_CHECK
-            return <EventTiming {...props} />
-          }}
-        </WithCurrentTime>
-      </Text>
+      <Text variant={["md", "lg"]}>{renderEventTiming()}</Text>
     </>
   )
 }

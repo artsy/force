@@ -23,9 +23,10 @@ const FairSubApp = loadable(
   }
 )
 const FairOverviewRoute = loadable(
-  () => import(/* webpackChunkName: "fairBundle" */ "./Components/FairHeader"),
+  () =>
+    import(/* webpackChunkName: "fairBundle" */ "./Components/FairOverview"),
   {
-    resolveComponent: component => component.FairHeaderFragmentContainer,
+    resolveComponent: component => component.FairOverviewFragmentContainer,
   }
 )
 const FairExhibitorsRoute = loadable(
@@ -72,9 +73,9 @@ export const fairRoutes: AppRouteConfig[] = [
           FairOverviewRoute.preload()
         },
         query: graphql`
-          query fairRoutes_FairHeaderQuery($slug: String!) {
+          query fairRoutes_FairOverviewQuery($slug: String!) {
             fair(id: $slug) @principalField {
-              ...FairHeader_fair
+              ...FairOverview_fair
             }
           }
         `,

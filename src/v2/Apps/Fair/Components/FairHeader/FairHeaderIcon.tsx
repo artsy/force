@@ -1,8 +1,8 @@
 import React from "react"
-import { Box, BoxProps } from "@artsy/palette"
+import { BoxProps } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FairHeaderIcon_fair } from "v2/__generated__/FairHeaderIcon_fair.graphql"
-import { Media } from "v2/Utils/Responsive"
+import { ProfileIcon } from "v2/Components/ProfileIcon"
 
 interface FairHeaderIconProps extends BoxProps {
   fair: FairHeaderIcon_fair
@@ -12,36 +12,8 @@ export const FairHeaderIcon: React.FC<FairHeaderIconProps> = ({
   fair: { name, profile },
   ...rest
 }) => {
-  if (!profile?.icon) return null
-
-  const { icon } = profile
-
   return (
-    <Box {...rest}>
-      {icon?.desktop?.src && (
-        <Media greaterThanOrEqual="md">
-          <img
-            src={icon.desktop.src}
-            srcSet={icon.desktop.srcSet}
-            alt={`Logo of ${name}`}
-            width={100}
-            height={100}
-          />
-        </Media>
-      )}
-
-      {icon?.mobile?.src && (
-        <Media lessThan="md">
-          <img
-            src={icon.mobile.src}
-            srcSet={icon.mobile.srcSet}
-            alt={`Logo of ${name}`}
-            width={60}
-            height={60}
-          />
-        </Media>
-      )}
-    </Box>
+    <ProfileIcon profile={{ icon: profile?.icon, name: name! }} {...rest} />
   )
 }
 

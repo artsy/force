@@ -25,7 +25,10 @@ describe("FairEditorialItem", () => {
             contextPageOwnerType: OwnerType.article,
           }}
         >
-          <FairEditorialItemFragmentContainer article={props.article} />
+          <FairEditorialItemFragmentContainer
+            article={props.article}
+            size="large"
+          />
         </AnalyticsContext.Provider>
       )
     },
@@ -47,7 +50,7 @@ describe("FairEditorialItem", () => {
         href: "/test",
         publishedAt: "May 25, 2021",
         thumbnailImage: {
-          cropped: {
+          large: {
             width: 320,
             height: 220,
             src: "articleImageSrc",

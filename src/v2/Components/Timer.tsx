@@ -1,7 +1,14 @@
-import { Flex, Text, TextVariant, useThemeConfig } from "@artsy/palette"
+import React from "react"
+import {
+  Flex,
+  FlexProps,
+  Text,
+  TextProps,
+  TextVariant,
+  useThemeConfig,
+} from "@artsy/palette"
 import { WithCurrentTime } from "v2/Components/WithCurrentTime"
 import { DateTime, Duration } from "luxon"
-import React from "react"
 
 function padWithZero(num: number) {
   return num.toString().padStart(2, "0")
@@ -9,11 +16,22 @@ function padWithZero(num: number) {
 
 const SEPARATOR = <>&nbsp;&nbsp;</>
 
-export const Timer: React.FC<{
-  endDate: string
-  labelWithTimeRemaining?: string
-  labelWithoutTimeRemaining?: string
-}> = ({ endDate, labelWithTimeRemaining, labelWithoutTimeRemaining }) => {
+export const Timer: React.FC<
+  {
+    endDate: string
+    labelWithTimeRemaining?: string
+    labelWithoutTimeRemaining?: string
+    label?: string
+  } & FlexProps &
+    TextProps
+> = ({
+  endDate,
+  labelWithTimeRemaining,
+  labelWithoutTimeRemaining,
+  label = "",
+  variant = "md",
+  ...rest
+}) => {
   const tokens = useThemeConfig({
     v2: {
       variant: "mediumText" as TextVariant,
@@ -21,7 +39,7 @@ export const Timer: React.FC<{
       secondLineColor: "black100",
     },
     v3: {
-      variant: "md" as TextVariant,
+      variant,
       firstLineColor: "blue100",
       secondLineColor: "black60",
     },
@@ -39,8 +57,13 @@ export const Timer: React.FC<{
         const hasEnded = Math.floor(duration.seconds) <= 0
 
         return (
-          <Flex flexDirection="column" alignItems="center">
+          <Flex flexDirection="column" {...rest}>
             <Text variant={tokens.variant} color={tokens.firstLineColor}>
+              {label && (
+                <Text variant="md" color="black100">
+                  {label}
+                </Text>
+              )}
               {padWithZero(Math.max(0, Math.floor(duration.as("days"))))}d
               {SEPARATOR}
               {padWithZero(Math.max(0, Math.floor(duration.as("hours") % 24)))}h

@@ -5,7 +5,6 @@ import { RouterLink } from "v2/System/Router/RouterLink"
 
 const navBarMobileMenuItemMixin = css`
   align-items: center;
-  background-color: ${themeGet("colors.white100")};
   transition: background-color 150ms;
   text-decoration: none;
   user-select: none;
@@ -23,6 +22,7 @@ NavBarMobileMenuItemButton.defaultProps = {
   display: "flex",
   py: 1,
   px: 2,
+  bg: "white100",
   color: "black60",
   width: "100%",
 }
@@ -35,6 +35,7 @@ NavBarMobileMenuItemLink.defaultProps = {
   display: "flex",
   py: 1,
   px: 2,
+  bg: "white100",
   color: "black60",
   width: "100%",
 }

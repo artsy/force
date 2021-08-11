@@ -1,32 +1,45 @@
 import React from "react"
-import { Box, Column, GridColumns, Text, Title } from "@artsy/palette"
-import { FairOrganizerFollowButtonFragmentContainer as FairOrganizerFollowButton } from "./Components/FairOrganizerFollowButton"
 import { createFragmentContainer, graphql } from "react-relay"
+import { Box, Spacer, Title } from "@artsy/palette"
 import { FairOrganizerApp_fairOrganizer } from "v2/__generated__/FairOrganizerApp_fairOrganizer.graphql"
+import { FairHeaderImageFragmentContainer as FairHeaderImage } from "../Fair/Components/FairHeader/FairHeaderImage"
+import { FairOrganizerHeaderFragmentContainer as FairOrganizerHeader } from "./Components/FairOrganizerHeader/FairOrganizerHeader"
+import { FairOrganizerPastEventsRailFragmentContainer as FairOrganizerPastEventsRail } from "./Components/FairOrganizerPastEventsRail"
+import { FairOrganizerApp_pastFairs } from "v2/__generated__/FairOrganizerApp_pastFairs.graphql"
+import { FairOrganizerLatestArticlesFragmentContainer as FairOrganizerLatestArticles } from "./Components/FairOrganizerLatestArticles"
 
 interface FairOrganizerAppProps {
   fairOrganizer: FairOrganizerApp_fairOrganizer
+  pastFairs: FairOrganizerApp_pastFairs
 }
 
-export const FairOrganizerApp: React.FC<FairOrganizerAppProps> = props => {
-  const { fairOrganizer } = props
-
+const FairOrganizerApp: React.FC<FairOrganizerAppProps> = ({
+  fairOrganizer,
+  pastFairs,
+}) => {
+  const { fairs, name } = fairOrganizer
+  const { edges } = fairs!
+  const fair = edges?.[0]?.node!
   return (
-    <Box>
-      <GridColumns>
-        <Column span={6}>
-          <Title>Fair Organizer | Artsy</Title>
-          <Text as="h1" variant="lg" pt={4}>
-            Fair Organizer
-          </Text>
-          <GridColumns my={2}>
-            <Column span={[12, 8, 6]}>
-              <FairOrganizerFollowButton fairOrganizer={fairOrganizer} />
-            </Column>
-          </GridColumns>
-        </Column>
-      </GridColumns>
-    </Box>
+    <>
+      <Title>{`${name} | Artsy`}</Title>
+
+      <Box>
+        <FairHeaderImage fair={fair} />
+
+        <Spacer mt={4} />
+
+        <FairOrganizerHeader fairOrganizer={fairOrganizer} />
+
+        <Spacer mt={6} />
+
+        <FairOrganizerPastEventsRail fairs={pastFairs} />
+
+        <Spacer mt={140} />
+
+        <FairOrganizerLatestArticles fairOrganizer={fairOrganizer} />
+      </Box>
+    </>
   )
 }
 
@@ -35,7 +48,21 @@ export const FairOrganizerAppFragmentContainer = createFragmentContainer(
   {
     fairOrganizer: graphql`
       fragment FairOrganizerApp_fairOrganizer on FairOrganizer {
-        ...FairOrganizerFollowButton_fairOrganizer
+        name
+        fairs: fairsConnection(first: 1) {
+          edges {
+            node {
+              ...FairHeaderImage_fair
+            }
+          }
+        }
+        ...FairOrganizerHeader_fairOrganizer
+        ...FairOrganizerLatestArticles_fairOrganizer
+      }
+    `,
+    pastFairs: graphql`
+      fragment FairOrganizerApp_pastFairs on FairConnection {
+        ...FairOrganizerPastEventsRail_fairs
       }
     `,
   }
