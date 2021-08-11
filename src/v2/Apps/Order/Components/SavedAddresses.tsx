@@ -9,6 +9,7 @@ import {
   Separator,
   BorderBox,
   Join,
+  Clickable,
 } from "@artsy/palette"
 import React, { useState } from "react"
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
@@ -47,6 +48,7 @@ interface SavedAddressesProps {
     address: UpdateUserAddressMutationResponse["updateUserAddress"]
   ) => void
   selectedAddress?: string
+  onShowToast?: (isShow: boolean, action: string) => void
 }
 
 type Address = NonNullable<
@@ -80,6 +82,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
     onAddressDelete,
     onAddressCreate,
     selectedAddress,
+    onShowToast,
     onAddressEdit,
   } = props
   const addressList = extractNodes(me?.addressConnection) ?? []
@@ -105,8 +108,8 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
     logger.error(message)
   }
 
-  const handleDeleteAddress = (addressID: string) => {
-    deleteUserAddress(
+  const handleDeleteAddress = async (addressID: string) => {
+    let response = await deleteUserAddress(
       // @ts-expect-error STRICT_NULL_CHECK
       relayEnvironment,
       addressID,
@@ -119,6 +122,9 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
       },
       onError
     )
+    if (!response.deleteUserAddress?.userAddressOrErrors.errors) {
+      onShowToast && onShowToast(true, "Deleted")
+    }
   }
 
   const handleEditAddress = (address: Address, index: number) => {
@@ -144,13 +150,14 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
     address?: UpdateUserAddressMutationResponse &
       CreateUserAddressMutationResponse
   ) => {
-    refetchAddresses(() => {
-      if (address?.createUserAddress) {
-        onAddressCreate && onAddressCreate(address.createUserAddress)
-      } else if (address?.updateUserAddress) {
-        onAddressEdit && onAddressEdit(address.updateUserAddress)
-      }
-    })
+    refetchAddresses()
+
+    if (address?.createUserAddress) {
+      onAddressCreate && onAddressCreate(address.createUserAddress)
+    } else if (address?.updateUserAddress) {
+      onAddressEdit && onAddressEdit(address.updateUserAddress)
+    }
+    onShowToast && onShowToast(true, "Saved")
   }
 
   const collectorProfileAddressItems = addressList.map((address, index) => {
@@ -189,29 +196,37 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
             </Box>
           )}
           <Box mr={[3, 1]}>
-            <Text
+            <Clickable
+              data-test="editAddressInProfileClick"
               onClick={() => handleEditAddress(address, index)}
-              variant="text"
-              color="blue100"
-              style={{
-                cursor: "pointer",
-              }}
-              data-test="editAddressInProfile"
             >
-              Edit
-            </Text>
+              <Text
+                variant="text"
+                color="blue100"
+                style={{
+                  cursor: "pointer",
+                }}
+                data-test="editAddressInProfile"
+              >
+                Edit
+              </Text>
+            </Clickable>
           </Box>
           <Box>
-            <Text
+            <Clickable
+              data-test="deleteAddressInProfile"
               onClick={() => handleDeleteAddress(address.internalID)}
-              variant="text"
-              color="red100"
-              style={{
-                cursor: "pointer",
-              }}
             >
-              Delete
-            </Text>
+              <Text
+                variant="text"
+                color="red100"
+                style={{
+                  cursor: "pointer",
+                }}
+              >
+                Delete
+              </Text>
+            </Clickable>
           </Box>
         </ModifyAddressWrapper>
       </BorderBox>
