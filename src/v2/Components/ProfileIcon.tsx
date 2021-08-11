@@ -40,13 +40,13 @@ export const ProfileIcon: React.FC<ProfileIconProps> = ({
     <Box {...rest}>
       {icon?.desktop?.src && (
         <Media greaterThanOrEqual="md">
-          <BorderBox width={102} height={102}>
+          <BorderBox width={82} height={82}>
             <img
               src={icon.desktop.src}
               srcSet={icon.desktop.srcSet}
               alt={`Logo of ${name}`}
-              width={100}
-              height={100}
+              width={80}
+              height={80}
             />
           </BorderBox>
         </Media>
