@@ -25,7 +25,10 @@ export const ArtworkSidebarArtists: React.FC<ArtistsProps> = ({
             name={artist.name}
             href={artist.href!}
             meta={artist.formattedNationalityAndBirthday!}
-            imageUrl={artist.avatar?.cropped?.src}
+            image={{
+              src: artist.avatar?.cropped?.src,
+              srcSet: artist.avatar?.cropped?.srcSet,
+            }}
             FollowButton={
               <FollowArtistButton
                 artist={artist}
@@ -67,8 +70,9 @@ export const ArtworkSidebarArtistsFragmentContainer = createFragmentContainer(
           formattedNationalityAndBirthday
           href
           avatar: image {
-            cropped(width: 300, height: 300) {
+            cropped(width: 45, height: 45) {
               src
+              srcSet
             }
           }
           ...FollowArtistButton_artist
