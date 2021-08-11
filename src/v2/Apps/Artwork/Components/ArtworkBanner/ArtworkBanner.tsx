@@ -32,23 +32,32 @@ export const ArtworkBanner: React.FC<ArtworkBannerProps> = props => {
   const isShow = props.artwork?.context?.__typename === "Show"
 
   return (
-    <RouterLink to={href} textDecoration="none">
+    <RouterLink to={href} display="block" textDecoration="none">
       <TopContextBar>
         <GridColumns>
           <Column span={8}>
             <Flex alignItems="center">
               {isShow ? (
-                <Box pr={0.5}>
-                  <ChevronIcon direction="left" top={"4px"} />
-                </Box>
+                <ChevronIcon direction="left" pr={0.5} />
               ) : (
-                image && <Image src={image.src} srcSet={image.srcSet} pr={1} />
+                image && (
+                  <Image
+                    src={image.src}
+                    srcSet={image.srcSet}
+                    width={image.width}
+                    height={image.height}
+                    mr={1}
+                    alt=""
+                  />
+                )
               )}
-              <Text variant="xs" mr={0.5}>
+
+              <Text variant="xs" lineHeight={1}>
                 {[name, subHeadline].filter(Boolean).join(" - ")}
-              </Text>
-              <Text variant="xs" color="black60">
-                {meta}
+
+                <Box as="span" display="inline-block" color="black60" ml={1}>
+                  {meta}
+                </Box>
               </Text>
             </Flex>
           </Column>
@@ -127,6 +136,8 @@ export const ArtworkBannerFragmentContainer = createFragmentContainer(
             cropped(width: 30, height: 30, version: "square") {
               src
               srcSet
+              width
+              height
             }
           }
         }
@@ -144,6 +155,8 @@ export const ArtworkBannerFragmentContainer = createFragmentContainer(
                 cropped(width: 30, height: 30, version: "square") {
                   src
                   srcSet
+                  width
+                  height
                 }
               }
             }
@@ -156,6 +169,8 @@ export const ArtworkBannerFragmentContainer = createFragmentContainer(
               cropped(width: 30, height: 30, version: "square") {
                 src
                 srcSet
+                width
+                height
               }
             }
           }
