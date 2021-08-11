@@ -24,31 +24,32 @@ export const FairOrganizerHeader: React.FC<FairOrganizerHeaderProps> = ({
 
   return (
     <Box>
+      <Flex>
+        <FairOrganizerHeaderIcon fairOrganizer={fairOrganizer} />
+        <Spacer mr={2} />
+        <Box>
+          <Text as="h1" variant="xl">
+            Explore {name} on Artsy
+          </Text>
+          <Text variant="xl" color="black60" mb={1}>
+            {exhibitionPeriod}
+          </Text>
+        </Box>
+      </Flex>
+
+      <Spacer mt={75} />
+
       <GridColumns>
         <Column span={6}>
           <Flex flexDirection="column">
-            <Flex>
-              <FairOrganizerHeaderIcon fairOrganizer={fairOrganizer} />
-              <Spacer mr={2} />
-              <Box>
-                <Text as="h1" variant="xl">
-                  Explore {name} on Artsy
-                </Text>
-                <Text variant="xl" color="black60" mb={1}>
-                  {exhibitionPeriod}
-                </Text>
-              </Box>
-            </Flex>
-
-            <Spacer mt={1} />
-
             <Box>
               {showTimer && (
-                <Timer variant="lg" label="Opens in:" endDate={startAt!} />
+                <>
+                  <Timer variant="lg" label="Opens in:" endDate={startAt!} />
+                  <Spacer mt={30} />
+                </>
               )}
             </Box>
-
-            <Spacer mt={30} />
 
             <GridColumns>
               <Column span={[12, 8, 6]}>
