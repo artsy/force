@@ -8,10 +8,13 @@ export const StructuredData = props => {
   }
 
   const schemaContent = JSON.stringify(schemaData, null, 2)
+  const dangerousHtml = { __html: schemaContent }
 
   return (
-    <Meta tag="script" type="application/ld+json">
-      {schemaContent}
-    </Meta>
+    <Meta
+      dangerouslySetInnerHTML={dangerousHtml}
+      tag="script"
+      type="application/ld+json"
+    />
   )
 }
