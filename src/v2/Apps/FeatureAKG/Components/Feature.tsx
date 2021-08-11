@@ -1,4 +1,4 @@
-import { Box, ResponsiveImage, Sans, Serif } from "@artsy/palette"
+import { Box, Sans, Serif } from "@artsy/palette"
 import { Feature_viewer } from "v2/__generated__/Feature_viewer.graphql"
 import { FeaturedArticlesFragmentContainer as FeaturedArticles } from "v2/Apps/FeatureAKG/Components/FeaturedArticles"
 import { FeaturedArtists } from "v2/Apps/FeatureAKG/Components/FeaturedArtists"
@@ -244,7 +244,14 @@ const StyledVideo = styled("video")`
 const ImageSection: React.FC<{ src: string; aspectRatio: number }> = props => {
   return (
     <BorderedSection>
-      <ResponsiveImage src={props.src} ratio={props.aspectRatio} />
+      <div
+        style={{
+          width: "100%",
+          paddingBottom: `${props.aspectRatio * 100}%`,
+          backgroundImage: `url(${props.src})`,
+          backgroundSize: "contain",
+        }}
+      />
     </BorderedSection>
   )
 }
@@ -293,8 +300,15 @@ export const FeaturedContentLink: React.FC<FeaturedLinkType> = props => {
       }
     >
       <Box position="relative">
-        {/* @ts-expect-error STRICT_NULL_CHECK */}
-        <ResponsiveImage src={croppedUrl} ratio={height / width} />
+        <div
+          style={{
+            width: "100%",
+            paddingBottom: `${(height / width) * 100}%`,
+            backgroundImage: `url(${croppedUrl})`,
+            backgroundSize: "contain",
+          }}
+        />
+
         <ImageOverlayText maxWidth="150px">
           <BlockText size="2" color="white">
             {props.title}
