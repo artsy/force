@@ -15,6 +15,7 @@ export type ArtworkSidebarArtists_artwork = {
         readonly avatar: {
             readonly cropped: {
                 readonly src: string;
+                readonly srcSet: string;
             } | null;
         } | null;
         readonly " $fragmentRefs": FragmentRefs<"FollowArtistButton_artist">;
@@ -113,12 +114,12 @@ const node: ReaderFragment = {
                 {
                   "kind": "Literal",
                   "name": "height",
-                  "value": 300
+                  "value": 45
                 },
                 {
                   "kind": "Literal",
                   "name": "width",
-                  "value": 300
+                  "value": 45
                 }
               ],
               "concreteType": "CroppedImageUrl",
@@ -132,9 +133,16 @@ const node: ReaderFragment = {
                   "kind": "ScalarField",
                   "name": "src",
                   "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "srcSet",
+                  "storageKey": null
                 }
               ],
-              "storageKey": "cropped(height:300,width:300)"
+              "storageKey": "cropped(height:45,width:45)"
             }
           ],
           "storageKey": null
@@ -156,5 +164,5 @@ const node: ReaderFragment = {
   ],
   "type": "Artwork"
 };
-(node as any).hash = '072bbede5100199180b1b913f242fd11';
+(node as any).hash = '3bd0d5dae070cc3a4cfb0892eacd488f';
 export default node;

@@ -7,8 +7,10 @@ export const ArtistInfoFixture: ArtistInfo_Test_QueryRawResponse["artist"] = {
   href: "/artist/pablo-picasso",
   image: {
     cropped: {
-      url:
+      src:
         "https://d7hftxdivxxvm.cloudfront.net?resize_to=fill&width=100&height=100&quality=80&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2Fi3rCA3IaKE-cLBnc-U5swQ%2Flarge.jpg",
+      srcSet:
+        "https://d7hftxdivxxvm.cloudfront.net?resize_to=fill&width=100&height=100&quality=80&src=https%3A%2F%2Fd32dm0rphc51dk.cloudfront.net%2Fi3rCA3IaKE-cLBnc-U5swQ%2Flarge.jpg 1x",
     },
   },
   formatted_nationality_and_birthday: "Spanish, 1881–1973",
