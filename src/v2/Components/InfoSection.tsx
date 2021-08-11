@@ -21,10 +21,14 @@ export const InfoSection: React.FC<InfoSectionProps> = ({
   const Info = () => {
     switch (type) {
       case "html": {
-        return <HTML variant="md" html={info as string} />
+        return <HTML variant="md" html={info as string} lineHeight="24px" />
       }
       case "text": {
-        return <TextWithNewlines variant="md">{info}</TextWithNewlines>
+        return (
+          <TextWithNewlines variant="md" lineHeight="24px">
+            {info}
+          </TextWithNewlines>
+        )
       }
       default: {
         return <Join separator={<Spacer mt={1} />}>{info}</Join>
