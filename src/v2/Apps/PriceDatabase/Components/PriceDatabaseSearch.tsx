@@ -11,8 +11,12 @@ import React, { useState } from "react"
 import { useAuctionResultsFilterContext } from "v2/Apps/Artist/Routes/AuctionResults/AuctionResultsFilterContext"
 import { paramsToSnakeCase } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
 import { useRouter } from "v2/System/Router/useRouter"
+import { filterSearchFilters } from "../Utils/filterSearchFilters"
 import { ArtistAutosuggest } from "./ArtistAutosuggest"
 
+const ALLOWED_FILTERS = ["categories", "sizes", "organizations"]
+
+// TODO: Get all categories
 const mediumOptions = [
   { text: "Painting", value: "Painting" },
   { text: "Work on paper", value: "Work on Paper" },
@@ -26,48 +30,31 @@ const sizeOptions = [
   { text: "Medium (40cm - 100cm)", value: "MEDIUM" },
   { text: "Large (over 100cm)", value: "LARGE" },
 ]
-const timePeriodOptions = Array.from({ length: 20 }, (_, i) => {
-  const createdAfterYear = 2010 - 10 * i
-
-  return {
-    text: `${createdAfterYear}s`,
-    value: `${createdAfterYear}`,
-  }
-})
+const organizationOptions = [
+  { text: "Sotheby's", value: "Sotheby's" },
+  { text: "Christie's", value: "Christie's" },
+  { text: "Phillips", value: "Phillips" },
+]
 
 export const PriceDatabaseSearch: React.FC = () => {
   const { router } = useRouter()
-
   const { filters, setFilter } = useAuctionResultsFilterContext()
-
   const [artistSlug, setArtistSlug] = useState<string | undefined>(undefined)
 
   const handleSearch = () => {
     const pathName = `/artist/${artistSlug}/auction-results`
-    const queryString = qs.stringify(paramsToSnakeCase(filters))
+
+    const searchFilters = filterSearchFilters(filters, ALLOWED_FILTERS)
+    const queryString = qs.stringify(paramsToSnakeCase(searchFilters))
 
     router.push(`${pathName}?${queryString}`)
   }
 
-  const handleMediumSelect = categories => {
+  const handleFilterSelect = key => selected => {
     setFilter?.(
-      "categories",
-      categories.map(category => category.value)
+      key,
+      selected.map(selected => selected.value)
     )
-  }
-
-  const handleSizeSelect = sizes => {
-    setFilter?.(
-      "sizes",
-      sizes.map(size => size.value)
-    )
-  }
-
-  const handleTimePeriodSelect = selected => {
-    const values = selected.map(size => size.value)
-
-    setFilter?.("createdAfterYear", +values.sort()[0])
-    setFilter?.("createdBeforeYear", +values.sort().slice(-1)[0] + 9)
   }
 
   return (
@@ -98,7 +85,7 @@ export const PriceDatabaseSearch: React.FC = () => {
           <Column span={4} pb={[0, 4]}>
             <MultiSelect
               options={mediumOptions}
-              onSelect={handleMediumSelect}
+              onSelect={handleFilterSelect("categories")}
               title={
                 <Text display="inline" color="black60">
                   Medium
@@ -114,18 +101,18 @@ export const PriceDatabaseSearch: React.FC = () => {
                   Size
                 </Text>
               }
-              onSelect={handleSizeSelect}
+              onSelect={handleFilterSelect("sizes")}
             />
           </Column>
           <Column span={4} pb={[0, 4]}>
             <MultiSelect
-              options={timePeriodOptions}
+              options={organizationOptions}
               title={
                 <Text color="black60" display="inline">
-                  Time Period
+                  Auction Houses
                 </Text>
               }
-              onSelect={handleTimePeriodSelect}
+              onSelect={handleFilterSelect("organizations")}
             />
           </Column>
         </GridColumns>

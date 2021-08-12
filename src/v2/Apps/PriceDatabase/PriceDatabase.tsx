@@ -6,7 +6,7 @@ import { PriceDatabaseMeta } from "./Components/PriceDatabaseMeta"
 import { AuctionResultsFilterContextProvider } from "v2/Apps/Artist/Routes/AuctionResults/AuctionResultsFilterContext"
 import { useMatchMedia } from "v2/Utils/Hooks/useMatchMedia"
 
-export const MarketingLandingApp = () => {
+export const PriceDatabase = () => {
   const isMobile = useMatchMedia(themeProps.mediaQueries.xs)
 
   return (

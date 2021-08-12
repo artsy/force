@@ -1,13 +1,17 @@
 import React from "react"
-import { MarketingLandingApp } from "../MarketingLandingApp"
+import { PriceDatabase } from "../PriceDatabase"
 import { mount } from "enzyme"
 import { HeadProvider } from "react-head"
 
-describe("MarketingLandingApp", () => {
+jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
+  useMatchMedia: () => ({}),
+}))
+
+describe("PriceDatabaseApp", () => {
   it("renders correct components", () => {
     const wrapper = mount(
       <HeadProvider>
-        <MarketingLandingApp />
+        <PriceDatabase />
       </HeadProvider>
     )
     expect(wrapper.find("PriceDatabaseMeta").length).toBe(1)

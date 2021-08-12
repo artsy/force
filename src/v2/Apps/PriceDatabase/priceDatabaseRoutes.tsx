@@ -1,13 +1,11 @@
 import loadable from "@loadable/component"
 import { AppRouteConfig } from "v2/System/Router/Route"
+import { PriceDatabase } from "./PriceDatabase"
 
-const MarketingLandingApp = loadable(
-  () =>
-    import(
-      /* webpackChunkName: "priceDatabaseBundle" */ "./Routes/MarketingLanding/MarketingLandingApp"
-    ),
+const PriceDatabaseApp = loadable(
+  () => import(/* webpackChunkName: "priceDatabaseBundle" */ "./PriceDatabase"),
   {
-    resolveComponent: component => component.MarketingLandingApp,
+    resolveComponent: component => component.PriceDatabase,
   }
 )
 
@@ -15,9 +13,9 @@ export const priceDatabaseRoutes: AppRouteConfig[] = [
   {
     path: "/price-database",
     theme: "v3",
-    getComponent: () => MarketingLandingApp,
+    getComponent: () => PriceDatabase,
     prepare: () => {
-      MarketingLandingApp.preload()
+      PriceDatabaseApp.preload()
     },
   },
 ]
