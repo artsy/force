@@ -190,8 +190,7 @@ describe("Routes/ConfirmBid", () => {
         })
 
         expect(window.location.assign).toHaveBeenCalledWith(
-          // @ts-expect-error STRICT_NULL_CHECK
-          `/artwork/${ConfirmBidQueryResponseFixture.artwork.slug}`
+          `/artwork/${ConfirmBidQueryResponseFixture.artwork?.slug}`
         )
         done()
       }, 1001)
@@ -801,8 +800,7 @@ describe("Routes/ConfirmBid", () => {
         bidderPositionID: "positionid",
       })
       expect(window.location.assign).toHaveBeenCalledWith(
-        // @ts-expect-error STRICT_NULL_CHECK
-        `/artwork/${ConfirmBidQueryResponseFixture.artwork.slug}`
+        `/artwork/${ConfirmBidQueryResponseFixture.artwork?.slug}`
       )
     })
 
@@ -832,7 +830,6 @@ describe("Routes/ConfirmBid", () => {
         mockData: FixtureForUnregisteredUserWithoutCreditCard,
       })
 
-      // @ts-expect-error STRICT_NULL_CHECK
       page
         .find(CreditCardInput)
         .props()
