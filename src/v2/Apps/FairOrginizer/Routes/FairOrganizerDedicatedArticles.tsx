@@ -1,4 +1,12 @@
-import { Box, Column, Flex, GridColumns, Spacer, Text } from "@artsy/palette"
+import {
+  Box,
+  Column,
+  Flex,
+  GridColumns,
+  Spacer,
+  Text,
+  Title,
+} from "@artsy/palette"
 import React, { useEffect, useState } from "react"
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 import { PaginationFragmentContainer as Pagination } from "v2/Components/Pagination"
@@ -67,6 +75,8 @@ export const FairOrganizerDedicatedArticles: React.FC<FairOrganizerDedicatedArti
 
   return (
     <>
+      <Title>{`${name} | Artsy`}</Title>
+
       <DedicatedArticlesBreadcrumbs fairOrganizer={fairOrganizer} />
 
       <Box id="jump--FairOrganizerDedicatedArticles">
