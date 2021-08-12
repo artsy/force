@@ -45,8 +45,8 @@ describe("ProfileIcon", () => {
       expect(image.prop("alt")).toEqual("Logo of Art")
       expect(image.prop("src")).toEqual("src_1")
       expect(image.prop("srcSet")).toEqual("srcSet_1")
-      expect(image.prop("width")).toEqual(100)
-      expect(image.prop("height")).toEqual(100)
+      expect(image.prop("width")).toEqual(80)
+      expect(image.prop("height")).toEqual(80)
     })
   })
 

@@ -64,13 +64,6 @@ describe("ConsignRoute", () => {
       expect(wrapper.find("ArtistConsignHeader").text()).toContain("Alex Katz")
     })
 
-    it("displays two images in header", async () => {
-      const wrapper = await getWrapper()
-      expect(
-        wrapper.find("ArtistConsignHeader").find("ResponsiveImage").length
-      ).toEqual(2)
-    })
-
     it("links out to consign page", async () => {
       const wrapper = await getWrapper()
       expect(

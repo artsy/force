@@ -10,6 +10,9 @@ import { userAddressMutation } from "v2/Apps/__tests__/Fixtures/Order/MutationRe
 import { SavedAddressItem } from "v2/Apps/Order/Components/SavedAddressItem"
 
 jest.unmock("react-relay")
+jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
+  useMatchMedia: () => ({}),
+}))
 
 class SavedAddressesTestPage extends RootTestPage {
   async selectEdit() {
@@ -36,7 +39,9 @@ describe("Saved Addresses mutations", () => {
 
   it("edits the saved addresses after calling edit address mutation", async () => {
     const page = await buildPage()
-    const editButton = page.find(`[data-test="editAddressInProfile"]`).first()
+    const editButton = page
+      .find(`[data-test="editAddressInProfileClick"]`)
+      .first()
     // @ts-expect-error STRICT_NULL_CHECK
     editButton
       .props()

@@ -7,7 +7,6 @@ import {
   Join,
   Link,
   QuestionCircleIcon,
-  ResponsiveImage,
   Sans,
   Separator,
   Spacer,
@@ -177,8 +176,14 @@ export const Details: FC<DetailsProps> = ({
               {/* @ts-expect-error STRICT_NULL_CHECK */}
               <a href={item.href}>
                 <Box height="80px" width="80px">
-                  {/* @ts-expect-error STRICT_NULL_CHECK */}
-                  <ResponsiveImage src={item.image?.thumbnailUrl} />
+                  <div
+                    style={{
+                      width: "100%",
+                      paddingBottom: "100%",
+                      backgroundImage: `url(${item.image?.thumbnailUrl})`,
+                      backgroundSize: "contain",
+                    }}
+                  />
                 </Box>
               </a>
               <Flex flexDirection="column" ml={1}>

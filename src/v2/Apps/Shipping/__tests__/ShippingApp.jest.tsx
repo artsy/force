@@ -7,7 +7,9 @@ import { HeadProvider } from "react-head"
 
 jest.mock("react-tracking")
 jest.unmock("react-relay")
-
+jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
+  useMatchMedia: () => ({}),
+}))
 const { getWrapper } = setupTestWrapper<ShippingApp_Test_Query>({
   Component: ({ me }) => {
     return (
@@ -35,7 +37,7 @@ describe("ShippingApp", () => {
 
     const userSettingsTabs = wrapper.find("UserSettingsTabs")
 
-    expect(userSettingsTabs.text()).toContain("Rob Ross")
     expect(userSettingsTabs.find("RouteTab").length).toBeGreaterThan(1)
+    expect(userSettingsTabs.text()).toContain("Rob Ross")
   })
 })

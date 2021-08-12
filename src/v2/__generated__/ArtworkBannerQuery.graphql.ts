@@ -41,6 +41,8 @@ fragment ArtworkBanner_artwork on Artwork {
       cropped(width: 30, height: 30, version: "square") {
         src
         srcSet
+        width
+        height
       }
     }
     id
@@ -59,6 +61,8 @@ fragment ArtworkBanner_artwork on Artwork {
           cropped(width: 30, height: 30, version: "square") {
             src
             srcSet
+            width
+            height
           }
         }
         id
@@ -72,6 +76,8 @@ fragment ArtworkBanner_artwork on Artwork {
         cropped(width: 30, height: 30, version: "square") {
           src
           srcSet
+          width
+          height
         }
       }
     }
@@ -149,6 +155,20 @@ v4 = [
         "args": null,
         "kind": "ScalarField",
         "name": "srcSet",
+        "storageKey": null
+      },
+      {
+        "alias": null,
+        "args": null,
+        "kind": "ScalarField",
+        "name": "width",
+        "storageKey": null
+      },
+      {
+        "alias": null,
+        "args": null,
+        "kind": "ScalarField",
+        "name": "height",
         "storageKey": null
       }
     ],
@@ -351,7 +371,7 @@ return {
     "metadata": {},
     "name": "ArtworkBannerQuery",
     "operationKind": "query",
-    "text": "query ArtworkBannerQuery(\n  $artworkID: String!\n) {\n  artwork(id: $artworkID) {\n    ...ArtworkBanner_artwork\n    id\n  }\n}\n\nfragment ArtworkBanner_artwork on Artwork {\n  partner {\n    name\n    id\n  }\n  sale {\n    isAuction\n    isBenefit\n    isGalleryAuction\n    coverImage {\n      cropped(width: 30, height: 30, version: \"square\") {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n  context {\n    __typename\n    ... on Sale {\n      name\n      href\n    }\n    ... on Fair {\n      name\n      href\n      profile {\n        icon {\n          cropped(width: 30, height: 30, version: \"square\") {\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n    ... on Show {\n      name\n      href\n      status\n      thumbnail: coverImage {\n        cropped(width: 30, height: 30, version: \"square\") {\n          src\n          srcSet\n        }\n      }\n    }\n    ... on Node {\n      id\n    }\n  }\n}\n"
+    "text": "query ArtworkBannerQuery(\n  $artworkID: String!\n) {\n  artwork(id: $artworkID) {\n    ...ArtworkBanner_artwork\n    id\n  }\n}\n\nfragment ArtworkBanner_artwork on Artwork {\n  partner {\n    name\n    id\n  }\n  sale {\n    isAuction\n    isBenefit\n    isGalleryAuction\n    coverImage {\n      cropped(width: 30, height: 30, version: \"square\") {\n        src\n        srcSet\n        width\n        height\n      }\n    }\n    id\n  }\n  context {\n    __typename\n    ... on Sale {\n      name\n      href\n    }\n    ... on Fair {\n      name\n      href\n      profile {\n        icon {\n          cropped(width: 30, height: 30, version: \"square\") {\n            src\n            srcSet\n            width\n            height\n          }\n        }\n        id\n      }\n    }\n    ... on Show {\n      name\n      href\n      status\n      thumbnail: coverImage {\n        cropped(width: 30, height: 30, version: \"square\") {\n          src\n          srcSet\n          width\n          height\n        }\n      }\n    }\n    ... on Node {\n      id\n    }\n  }\n}\n"
   }
 };
 })();

@@ -23,7 +23,10 @@ export type ArtworkDetailsAboutTheWorkFromPartner_artwork = {
         readonly profile: {
             readonly slug: string;
             readonly icon: {
-                readonly url: string | null;
+                readonly cropped: {
+                    readonly src: string;
+                    readonly srcSet: string;
+                } | null;
             } | null;
             readonly " $fragmentRefs": FragmentRefs<"FollowProfileButton_profile">;
         } | null;
@@ -181,13 +184,36 @@ return {
                   "args": [
                     {
                       "kind": "Literal",
-                      "name": "version",
-                      "value": "square140"
+                      "name": "height",
+                      "value": 45
+                    },
+                    {
+                      "kind": "Literal",
+                      "name": "width",
+                      "value": 45
                     }
                   ],
-                  "kind": "ScalarField",
-                  "name": "url",
-                  "storageKey": "url(version:\"square140\")"
+                  "concreteType": "CroppedImageUrl",
+                  "kind": "LinkedField",
+                  "name": "cropped",
+                  "plural": false,
+                  "selections": [
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "src",
+                      "storageKey": null
+                    },
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "srcSet",
+                      "storageKey": null
+                    }
+                  ],
+                  "storageKey": "cropped(height:45,width:45)"
                 }
               ],
               "storageKey": null
@@ -207,5 +233,5 @@ return {
   "type": "Artwork"
 };
 })();
-(node as any).hash = 'b4d409938d5854193023a059e8c29a43';
+(node as any).hash = '9ec2f5a9558b00c1e1818f617924a0a6';
 export default node;

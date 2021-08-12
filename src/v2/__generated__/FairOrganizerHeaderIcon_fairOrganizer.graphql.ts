@@ -84,13 +84,13 @@ return {
                 {
                   "kind": "Literal",
                   "name": "height",
-                  "value": 100
+                  "value": 80
                 },
                 (v0/*: any*/),
                 {
                   "kind": "Literal",
                   "name": "width",
-                  "value": 100
+                  "value": 80
                 }
               ],
               "concreteType": "CroppedImageUrl",
@@ -98,7 +98,7 @@ return {
               "name": "cropped",
               "plural": false,
               "selections": (v1/*: any*/),
-              "storageKey": "cropped(height:100,version:\"square140\",width:100)"
+              "storageKey": "cropped(height:80,version:\"square140\",width:80)"
             },
             {
               "alias": "mobile",
@@ -132,5 +132,5 @@ return {
   "type": "FairOrganizer"
 };
 })();
-(node as any).hash = '7966ae516d4cc10e9026cd2758f9398a';
+(node as any).hash = '3f35d322ce522a7edd84b6baed43778d';
 export default node;
