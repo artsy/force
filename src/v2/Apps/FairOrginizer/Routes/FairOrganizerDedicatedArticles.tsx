@@ -81,7 +81,7 @@ export const FairOrganizerDedicatedArticles: React.FC<FairOrganizerDedicatedArti
 
       <Box id="jump--FairOrganizerDedicatedArticles">
         <Text as="h1" variant="lg" mt={6}>
-          All Articles for Explore {name} on Artsy
+          All Articles for {name} on Artsy
         </Text>
 
         <Spacer mt={4} />

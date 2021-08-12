@@ -42,7 +42,7 @@ describe("FairOrganizerDedicatedArticles", () => {
       FairOrganizer: () => ({ name: "The Armory Show" }),
     })
     expect(wrapper.text()).toContain(
-      "All Articles for Explore The Armory Show on Artsy"
+      "All Articles for The Armory Show on Artsy"
     )
   })
 
