@@ -37,6 +37,12 @@ import { AuctionResultsControls } from "./Components/AuctionResultsControls"
 import { MarketStatsQueryRenderer } from "./Components/MarketStats"
 import { SortSelect } from "./Components/SortSelect"
 import { TableSidebar } from "./Components/TableSidebar"
+import { useRouter } from "v2/System/Router/useRouter"
+import {
+  paramsToCamelCase,
+  updateUrl,
+} from "v2/Components/ArtworkFilter/Utils/urlBuilder"
+import { allowedAuctionResultFilters } from "../../Utils/allowedAuctionResultFilters"
 
 const logger = createLogger("ArtistAuctionResults.tsx")
 
@@ -269,10 +275,18 @@ export const ArtistAuctionResultsRefetchContainer = createRefetchContainer(
     const { startAt, endAt } =
       props.artist.auctionResultsConnection?.createdYearRange ?? {}
 
+    const { match } = useRouter()
+
+    const filters = paramsToCamelCase(match && match.location.query)
+
     return (
       <AuctionResultsFilterContextProvider
         earliestCreatedYear={startAt}
         latestCreatedYear={endAt}
+        filters={filters}
+        onChange={filterState =>
+          updateUrl(allowedAuctionResultFilters(filterState))
+        }
       >
         <AuctionResultsContainer {...props} />
       </AuctionResultsFilterContextProvider>

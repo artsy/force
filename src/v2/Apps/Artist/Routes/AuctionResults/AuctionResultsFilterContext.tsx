@@ -27,7 +27,7 @@ export const initialAuctionResultsFilterState = (
   organizations: [],
   categories: [],
   sizes: [],
-  keyword: "",
+  keyword: undefined,
   pageAndCursor: { page: 1, cursor: null },
   sort: "DATE_DESC",
   createdAfterYear,

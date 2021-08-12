@@ -1,31 +1,92 @@
 import Autosuggest from "react-autosuggest"
-import React, { useState } from "react"
-import { Input, MagnifyingGlassIcon, Text, color } from "@artsy/palette"
+import React, { useEffect, useState } from "react"
+import {
+  Input,
+  MagnifyingGlassIcon,
+  usePosition,
+  Text,
+  Clickable,
+} from "@artsy/palette"
 import { graphql } from "lib/graphql"
 import { fetchQuery } from "relay-runtime"
 import { ArtistAutosuggest_SearchConnection_Query } from "v2/__generated__/ArtistAutosuggest_SearchConnection_Query.graphql"
 import { useSystemContext } from "v2/System"
+import { Container } from "v2/Components/Sticky"
 
-export const ArtistAutosuggest: React.FC = () => {
+interface ArtistAutosuggestProps {
+  onChange?: (artustSlug: string) => void
+}
+
+export const ArtistAutosuggest: React.FC<ArtistAutosuggestProps> = ({
+  onChange,
+}) => {
   const { relayEnvironment } = useSystemContext()
 
   const [suggestions, setSuggestions] = useState<any>([])
   const [searchQuery, setSearchQuery] = useState("")
 
-  // const tracking = useTracking()
+  const [width, setWidth] = useState(0)
 
-  const trackFocusedOnSearchInput = () => {
-    // TODO: Screen tracking
-    // tracking.trackEvent(
-    //   focusedOnSearchInput({
-    //     context_module: ContextModule.priceDatbase,
-    //     context_owner_type: OwnerType.priceDatabase,
-    //   })
-    // )
-  }
+  useEffect(() => {
+    if (!anchorRef.current) return
+
+    const handleResize = () => {
+      setWidth(anchorRef.current.offsetWidth)
+    }
+
+    handleResize()
+
+    window.addEventListener("resize", handleResize)
+    return () => {
+      window.removeEventListener("resize", handleResize)
+    }
+  }, [])
+
+  const { anchorRef, tooltipRef } = usePosition({
+    position: "bottom",
+    offset: 10,
+  })
 
   const selectSuggestion = async (selectedSuggestion: any) => {
+    onChange?.(selectedSuggestion?.node?.slug)
     console.log(selectedSuggestion)
+  }
+
+  const AutosuggestInput: React.FC = props => {
+    return (
+      <>
+        <Input
+          width="100%"
+          spellCheck={false}
+          style={{ boxShadow: "0px 2px 10px rgba(0,0,0,0.1)" }}
+          {...props}
+          ref={anchorRef as any}
+        />
+        <MagnifyingGlassIcon position="absolute" right="2%" top={"16px"} />
+      </>
+    )
+  }
+
+  const Suggestion: React.FC<{ node: any }> = ({ node }, { isHighlighted }) => {
+    return (
+      <Container
+        height={50}
+        background={"white"}
+        display="flex"
+        alignItems="center"
+        ref={tooltipRef as any}
+        color={isHighlighted ? "blue100" : "black100"}
+      >
+        <Text width="100%" paddingLeft={1}>
+          <Clickable
+            textDecoration={isHighlighted ? "underline" : "none"}
+            color={isHighlighted ? "blue100" : "black100"}
+          >
+            {node.displayLabel}
+          </Clickable>
+        </Text>
+      </Container>
+    )
   }
 
   return (
@@ -50,7 +111,6 @@ export const ArtistAutosuggest: React.FC = () => {
         onChange: (_, { newValue }) => {
           setSearchQuery(newValue)
         },
-        onFocus: trackFocusedOnSearchInput,
         placeholder: "Search by Artist Name",
         value: searchQuery,
       }}
@@ -62,53 +122,14 @@ export const ArtistAutosuggest: React.FC = () => {
         suggestionsContainer: {
           boxShadow:
             "0px 0px 1px rgba(0, 0, 0, 0.08), 0px 2px 8px rgba(0, 0, 0, 0.12)",
-          marginTop: "14px",
+          marginTop: "10px",
           position: "absolute",
           zIndex: 2,
-          paddingRight: "4px",
+          width,
         },
       }}
     />
   )
-}
-
-const AutosuggestInput: React.FC = props => {
-  return (
-    <>
-      <Input
-        width="100%"
-        height={40}
-        spellCheck={false}
-        style={{ boxShadow: "0px 2px 10px rgba(0,0,0,0.1)" }}
-        {...props}
-      />
-      <MagnifyingGlassIcon position="absolute" right="2%" top={"16px"} />
-    </>
-  )
-}
-
-const Suggestion: React.FC<{ node: any /* FIXME */ }> = (
-  { node },
-  { isHighlighted }
-) => {
-  return (
-    <Text
-      width="100%"
-      background={isHighlighted ? color("black10") : "white"}
-      py={0.5}
-      paddingLeft={1}
-      style={{
-        cursor: "pointer",
-      }}
-    >
-      {node.displayLabel}
-    </Text>
-  )
-}
-
-export const tests = {
-  AutosuggestInput,
-  Suggestion,
 }
 
 const fetchSuggestions = async (searchQuery, relayEnvironment) => {
