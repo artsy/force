@@ -74,6 +74,19 @@ const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
         >
           Overview
         </RouteTab>
+
+        <RouteTab
+          to={`${fairHref}/exhibitors`}
+          exact
+          onClick={trackTabData(
+            `${fairHref}/exhibitors`,
+            "Exhibitors A-Z",
+            ContextModule.exhibitorsTab
+          )}
+        >
+          Exhibitors
+        </RouteTab>
+
         <RouteTab
           to={`${fairHref}/booths`}
           exact
