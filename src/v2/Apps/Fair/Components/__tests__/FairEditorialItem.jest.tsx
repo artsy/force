@@ -71,14 +71,20 @@ describe("FairEditorialItem", () => {
     jest.clearAllMocks()
   })
 
-  it("renders correct components and data", () => {
-    expect(wrapper.find("RouterLink")).toBeDefined()
-    expect(wrapper.find("RouterLink").props().to).toBe("/test")
+  it("renders 2 links with proper href", () => {
+    expect(wrapper.find("RouterLink").length).toBe(2)
+    for (let i = 0; i < 2; i++) {
+      expect(wrapper.find("RouterLink").at(i).props().to).toBe("/test")
+    }
+  })
 
+  it("renders image with proper props", () => {
     expect(wrapper.find("Image")).toBeDefined()
     expect(wrapper.find("Image").props().src).toEqual("articleImageSrc")
     expect(wrapper.find("Image").props().srcSet).toEqual("articleImageSrcSet")
+  })
 
+  it("contains correct text", () => {
     const text = wrapper.text()
     expect(text).toContain("Test Title")
     expect(text).toContain("May 25, 2021")

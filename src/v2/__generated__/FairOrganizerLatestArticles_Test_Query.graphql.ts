@@ -50,7 +50,9 @@ fragment FairEditorialItem_article on Article {
 
 fragment FairOrganizerLatestArticles_fairOrganizer on FairOrganizer {
   name
-  articles: articlesConnection(first: 7) {
+  slug
+  articlesConnection(first: 7) {
+    totalCount
     edges {
       node {
         id
@@ -73,10 +75,17 @@ v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
+  "name": "slug",
+  "storageKey": null
+},
+v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v2 = [
+v3 = [
   {
     "alias": null,
     "args": null,
@@ -153,8 +162,9 @@ return {
             "name": "name",
             "storageKey": null
           },
+          (v1/*: any*/),
           {
-            "alias": "articles",
+            "alias": null,
             "args": [
               {
                 "kind": "Literal",
@@ -167,6 +177,13 @@ return {
             "name": "articlesConnection",
             "plural": false,
             "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "totalCount",
+                "storageKey": null
+              },
               {
                 "alias": null,
                 "args": null,
@@ -183,7 +200,7 @@ return {
                     "name": "node",
                     "plural": false,
                     "selections": [
-                      (v1/*: any*/),
+                      (v2/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -191,13 +208,7 @@ return {
                         "name": "internalID",
                         "storageKey": null
                       },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "slug",
-                        "storageKey": null
-                      },
+                      (v1/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -258,7 +269,7 @@ return {
                             "kind": "LinkedField",
                             "name": "cropped",
                             "plural": false,
-                            "selections": (v2/*: any*/),
+                            "selections": (v3/*: any*/),
                             "storageKey": "cropped(height:720,width:670)"
                           },
                           {
@@ -279,7 +290,7 @@ return {
                             "kind": "LinkedField",
                             "name": "cropped",
                             "plural": false,
-                            "selections": (v2/*: any*/),
+                            "selections": (v3/*: any*/),
                             "storageKey": "cropped(height:240,width:325)"
                           }
                         ],
@@ -294,7 +305,7 @@ return {
             ],
             "storageKey": "articlesConnection(first:7)"
           },
-          (v1/*: any*/)
+          (v2/*: any*/)
         ],
         "storageKey": "fairOrganizer(id:\"example\")"
       }
@@ -305,7 +316,7 @@ return {
     "metadata": {},
     "name": "FairOrganizerLatestArticles_Test_Query",
     "operationKind": "query",
-    "text": "query FairOrganizerLatestArticles_Test_Query {\n  fairOrganizer(id: \"example\") {\n    ...FairOrganizerLatestArticles_fairOrganizer\n    id\n  }\n}\n\nfragment FairEditorialItem_article on Article {\n  id\n  internalID\n  slug\n  title\n  href\n  publishedAt(format: \"MMMM D, YYYY\")\n  thumbnailTitle\n  thumbnailImage {\n    large: cropped(width: 670, height: 720) {\n      width\n      height\n      src\n      srcSet\n    }\n    small: cropped(width: 325, height: 240) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment FairOrganizerLatestArticles_fairOrganizer on FairOrganizer {\n  name\n  articles: articlesConnection(first: 7) {\n    edges {\n      node {\n        id\n        ...FairEditorialItem_article\n      }\n    }\n  }\n}\n"
+    "text": "query FairOrganizerLatestArticles_Test_Query {\n  fairOrganizer(id: \"example\") {\n    ...FairOrganizerLatestArticles_fairOrganizer\n    id\n  }\n}\n\nfragment FairEditorialItem_article on Article {\n  id\n  internalID\n  slug\n  title\n  href\n  publishedAt(format: \"MMMM D, YYYY\")\n  thumbnailTitle\n  thumbnailImage {\n    large: cropped(width: 670, height: 720) {\n      width\n      height\n      src\n      srcSet\n    }\n    small: cropped(width: 325, height: 240) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment FairOrganizerLatestArticles_fairOrganizer on FairOrganizer {\n  name\n  slug\n  articlesConnection(first: 7) {\n    totalCount\n    edges {\n      node {\n        id\n        ...FairEditorialItem_article\n      }\n    }\n  }\n}\n"
   }
 };
 })();
