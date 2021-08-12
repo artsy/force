@@ -7,41 +7,44 @@ import { UnsubscribeApp_me } from "v2/__generated__/UnsubscribeApp_me.graphql"
 import { UnsubscribeLoggedInFragmentContainer } from "./Components/UnsubscribeLoggedIn"
 import { UnsubscribeLoggedOut } from "./Components/UnsubscribeLoggedOut"
 
-const UnsubscribeFallback = () => {
-  return (
-    <Message variant="error" my={4}>
-      Please sign in to update your email preferences
-    </Message>
-  )
-}
-
 interface UnsubscribeAppProps {
   me: UnsubscribeApp_me | null
 }
 
 export const UnsubscribeApp: React.FC<UnsubscribeAppProps> = ({ me }) => {
   const { match } = useRouter()
+
   const { authentication_token: authenticationToken } = match.location.query
-  const showFallback = !me && !authenticationToken
-  const showLoggedIn = me && !authenticationToken
-  const showLoggedOut = !me && authenticationToken
 
   return (
     <>
-      {showFallback && <UnsubscribeFallback />}
       <Title>Email Preferences | Artsy</Title>
-      <GridColumns my={4}>
-        <Column span={6}>
-          <Text variant="xl" as="h1">
-            Email Preferences
-          </Text>
-          <Spacer mt={6} />
-          {showLoggedIn && <UnsubscribeLoggedInFragmentContainer me={me!} />}
-          {showLoggedOut && (
-            <UnsubscribeLoggedOut authenticationToken={authenticationToken} />
-          )}
-        </Column>
-      </GridColumns>
+
+      {!me && !authenticationToken ? (
+        // Is logged out and doesn't have token: can't update anything
+        <Message variant="error" my={4}>
+          Please sign in to update your email preferences
+        </Message>
+      ) : (
+        // Either logged in or logged out with a token
+        <GridColumns my={4}>
+          <Column span={6}>
+            <Text variant="xl" as="h1">
+              Email Preferences
+            </Text>
+
+            <Spacer mt={6} />
+
+            {!!me ? (
+              // If we're logged in, always favor the more detailed preferences
+              <UnsubscribeLoggedInFragmentContainer me={me} />
+            ) : (
+              // Otherwise simply show the opt-out
+              <UnsubscribeLoggedOut authenticationToken={authenticationToken} />
+            )}
+          </Column>
+        </GridColumns>
+      )}
     </>
   )
 }
