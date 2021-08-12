@@ -61,30 +61,37 @@ describe("UnsubscribeApp", () => {
     jest.clearAllMocks()
   })
 
-  it("renders the logged in version with a user", () => {
-    mockUseRouter.mockImplementation(() => emptyQuery)
-    const wrapper = getWrapper()
+  describe("logged in", () => {
+    it("allows the user to manage their email preferences", () => {
+      mockUseRouter.mockImplementation(() => emptyQuery)
+      const wrapper = getWrapper()
+      const html = wrapper.html()
 
-    expect(wrapper.find("UnsubscribeLoggedIn")).toHaveLength(1)
-    expect(wrapper.find("UnsubscribeLoggedOut")).toHaveLength(0)
-    expect(wrapper.find("UnsubscribeFallback")).toHaveLength(0)
+      expect(html).toContain("Email Preferences")
+      expect(html).toContain("Email frequency")
+    })
   })
 
-  it("renders the logged out version with a token", () => {
-    mockUseRouter.mockImplementation(() => queryWithToken)
-    const wrapper = bootAndMount({ me: null })
+  describe("logged out; has token", () => {
+    it("allows the user to opt-out of all email", () => {
+      mockUseRouter.mockImplementation(() => queryWithToken)
+      const wrapper = bootAndMount({ me: null })
+      const html = wrapper.html()
 
-    expect(wrapper.find("UnsubscribeLoggedIn")).toHaveLength(0)
-    expect(wrapper.find("UnsubscribeLoggedOut")).toHaveLength(1)
-    expect(wrapper.find("UnsubscribeFallback")).toHaveLength(0)
+      expect(html).toContain("Email Preferences")
+      expect(html).toContain("Opt out of all email")
+    })
   })
 
-  it("renders the fallback message without a user or token", () => {
-    mockUseRouter.mockImplementation(() => emptyQuery)
-    const wrapper = bootAndMount({ me: null })
+  describe("logged out; no token", () => {
+    it("renders the fallback message", () => {
+      mockUseRouter.mockImplementation(() => emptyQuery)
+      const wrapper = bootAndMount({ me: null })
+      const html = wrapper.html()
 
-    expect(wrapper.find("UnsubscribeLoggedIn")).toHaveLength(0)
-    expect(wrapper.find("UnsubscribeLoggedOut")).toHaveLength(0)
-    expect(wrapper.find("UnsubscribeFallback")).toHaveLength(1)
+      expect(html).toContain("Please sign in to update your email preferences")
+
+      expect(html).not.toContain("Email Preferences")
+    })
   })
 })
