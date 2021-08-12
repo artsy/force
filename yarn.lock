@@ -122,10 +122,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/react-html-parser/-/react-html-parser-3.0.2.tgz#6213d662441acf0bd8c9ee953aa77ac8d9cf1cdd"
   integrity sha512-FXiRSqfSvwpz/QgwaqFvjJsbDmo9qMGpvUp/0p1V6muaJbGnfxkTSxAYWmYlFst6bmjhVxCYKxvgQhEVE03Wfg==
 
-"@artsy/reaction@29.2.0":
-  version "29.2.0"
-  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-29.2.0.tgz#66cb05dd154ccabae4005b045ac24446e94c6ceb"
-  integrity sha512-mLbHG9PCt2ClypobOlwOGFnqBEq2eb/zDXRVG7jt78exFHNgrXem2L6j/8hYKxZCiO8CiuijhPL96Rm+P2Iimg==
+"@artsy/reaction@29.2.1":
+  version "29.2.1"
+  resolved "https://registry.yarnpkg.com/@artsy/reaction/-/reaction-29.2.1.tgz#1bb5afc87ad9fb3b6ec6e3be0d7e1f0d6e86e454"
+  integrity sha512-N6TraFamBs+v9zzGwt971kj9da5WuxQzVbpVwBVr+ZorKz2KPgQ6X0pSdlD36azWCFgurpkr+1jA+I7R3UL+9w==
   dependencies:
     "@artsy/cohesion" "1.60.0"
     "@artsy/detect-responsive-traits" "^0.0.5"
@@ -15250,7 +15250,6 @@ pascalcase@^0.1.1:
 
 "passport-apple@https://github.com/artsy/passport-apple#f41adb7822c8344b72bc36a7d68312f6592cb14f":
   version "1.1.2"
-  uid f41adb7822c8344b72bc36a7d68312f6592cb14f
   resolved "https://github.com/artsy/passport-apple#f41adb7822c8344b72bc36a7d68312f6592cb14f"
   dependencies:
     jsonwebtoken "^8.5.1"
