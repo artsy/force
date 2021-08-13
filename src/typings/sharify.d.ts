@@ -26,6 +26,7 @@ declare module "sharify" {
       CURRENT_USER: User
       readonly DEPLOY_ENV: string
       readonly EIGEN: boolean
+      readonly ENABLE_FAIR_ORGANIZER_REDIRECT: boolean
       readonly ENABLE_SERVER_SIDE_CACHE: string
       readonly ENABLE_QUERY_BATCHING: boolean
       readonly ENABLE_NEW_AUCTIONS_FILTER: boolean

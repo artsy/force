@@ -1,11 +1,16 @@
 import { NextFunction } from "express"
 import { ArtsyRequest, ArtsyResponse } from "lib/middleware/artsyExpress"
+import { data as sd } from "sharify"
 
 export const fairOrganizerRedirectionMiddleware = (
   req: ArtsyRequest,
   res: ArtsyResponse,
   next: NextFunction
 ): void => {
+  if (!sd.ENABLE_FAIR_ORGANIZER_REDIRECT) {
+    return next()
+  }
+
   const isFairOrganizerProfile =
     res.locals?.profile?.get("owner_type") === "FairOrganizer"
 
