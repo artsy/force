@@ -36,7 +36,7 @@ module.exports.TeamChannelView = class TeamChannelView extends Backbone.View
     @carousel = initCarousel $el,
       advanceBy: 2
       wrapAround: true
-    @windowResized()
+    @windowResized() if @carousel
 
   windowResized: =>
     # Advance by 1 for smaller screens

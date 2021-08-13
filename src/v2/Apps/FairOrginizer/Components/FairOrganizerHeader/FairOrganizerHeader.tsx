@@ -1,5 +1,5 @@
 import React from "react"
-import moment from "moment"
+import { DateTime } from "luxon"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Box, Column, Flex, GridColumns, Spacer, Text } from "@artsy/palette"
 import { FairOrganizerHeaderIconFragmentContainer as FairOrganizerHeaderIcon } from "./FairOrganizerHeaderIcon"
@@ -8,6 +8,7 @@ import { FairOrganizerInfoFragmentContainer as FairOrganizerInfo } from "./FairO
 import { FairOrganizerHeader_fairOrganizer } from "v2/__generated__/FairOrganizerHeader_fairOrganizer.graphql"
 import { extractNodes } from "v2/Utils/extractNodes"
 import { Timer } from "v2/Components/Timer"
+import { useCurrentTime } from "v2/Utils/Hooks/useCurrentTime"
 
 interface FairOrganizerHeaderProps {
   fairOrganizer: FairOrganizerHeader_fairOrganizer
@@ -20,7 +21,8 @@ export const FairOrganizerHeader: React.FC<FairOrganizerHeaderProps> = ({
   const fair = extractNodes(fairsConnection)[0]
   const { startAt, exhibitionPeriod } = fair
 
-  const showTimer = moment().isBefore(new Date(startAt!))
+  const currentTime = useCurrentTime({ syncWithServer: true })
+  const showTimer = DateTime.fromISO(currentTime) < DateTime.fromISO(startAt!)
 
   return (
     <Box>
@@ -45,7 +47,11 @@ export const FairOrganizerHeader: React.FC<FairOrganizerHeaderProps> = ({
             <Box>
               {showTimer && (
                 <>
-                  <Timer variant="lg" label="Opens in:" endDate={startAt!} />
+                  <Timer
+                    variant={["lg", "xl"]}
+                    label="Opens in:"
+                    endDate={startAt!}
+                  />
                   <Spacer mt={30} />
                 </>
               )}

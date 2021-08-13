@@ -10,8 +10,8 @@ describe("/artist/:id", () => {
     cy.get("meta[name='description']")
       .should("have.attr", "content")
       .and(
-        "eq",
-        "Find the latest shows, biography, and artworks for sale by Pablo Picasso. Perhaps the most influential artist of the 20th century, Pablo Picasso may be best …"
+        "contain",
+        "Find the latest shows, biography, and artworks for sale by Pablo Picasso."
       )
   })
 
@@ -21,3 +21,5 @@ describe("/artist/:id", () => {
     cy.get("h2").should("contain", "Notable works")
   })
 })
+
+//

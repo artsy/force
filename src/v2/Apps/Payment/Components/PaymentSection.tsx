@@ -1,4 +1,4 @@
-import { Box, Button, Theme } from "@artsy/palette"
+import { Box, Button, Text } from "@artsy/palette"
 import { SystemContextProps } from "v2/System"
 
 import React, { useState } from "react"
@@ -22,39 +22,39 @@ export const PaymentSection: React.FC<PaymentSectionProps> = props => {
   const creditCards = creditCardEdges.map(({ node: creditCard }) => {
     return creditCard
   })
-  const [showPaymentModal, setShowPatymentModal] = useState(false)
+  const [showPaymentModal, setShowPaymentModal] = useState(false)
   const stripePromise = loadStripe(sd.STRIPE_PUBLISHABLE_KEY)
 
   return (
-    <Theme>
-      <>
-        {creditCards?.length ? (
-          <Box maxWidth={542}>
-            <SavedCreditCards
-              creditCards={creditCards as CreditCardType[]}
-              relay={props.relay}
-              me={props.me}
-            />
-          </Box>
-        ) : null}
-        <Button
-          variant="primaryBlack"
-          size="large"
-          onClick={() => setShowPatymentModal(true)}
-        >
-          Add new card
-        </Button>
-        <Elements stripe={stripePromise}>
-          <PaymentModal
-            show={showPaymentModal}
-            closeModal={() => setShowPatymentModal(false)}
-            // @ts-expect-error STRICT_NULL_CHECK
+    <>
+      <Text variant="lg" my={4}>
+        Saved Cards
+      </Text>
+      {creditCards?.length ? (
+        <Box maxWidth={542}>
+          <SavedCreditCards
+            creditCards={creditCards as CreditCardType[]}
             relay={props.relay}
             me={props.me}
           />
-        </Elements>
-      </>
-    </Theme>
+        </Box>
+      ) : null}
+      <Button
+        variant="secondaryOutline"
+        onClick={() => setShowPaymentModal(true)}
+      >
+        Add new card
+      </Button>
+      <Elements stripe={stripePromise}>
+        <PaymentModal
+          show={showPaymentModal}
+          closeModal={() => setShowPaymentModal(false)}
+          // @ts-expect-error STRICT_NULL_CHECK
+          relay={props.relay}
+          me={props.me}
+        />
+      </Elements>
+    </>
   )
 }
 

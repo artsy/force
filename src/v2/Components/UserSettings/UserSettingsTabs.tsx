@@ -1,7 +1,7 @@
 import React from "react"
 import { track } from "v2/System"
 import { RouteTab, RouteTabs } from "v2/Components/RouteTabs"
-import { Box, Text } from "@artsy/palette"
+import { Box, Text, TextVariant, useThemeConfig } from "@artsy/palette"
 
 interface UserSettingsTabsProps {
   route?: string
@@ -48,10 +48,19 @@ const tabClass = (tabUrl, route) => {
 
 export const UserSettingsTabs: React.FC<UserSettingsTabsProps> = track()(
   ({ username }) => {
+    const tokens = useThemeConfig({
+      v2: {
+        variant: "title" as TextVariant,
+      },
+      v3: {
+        variant: "xl" as TextVariant,
+      },
+    })
+
     return (
       <Box pt={1} px={[2, 0]}>
         <Box>
-          <Text variant="title" my={2}>
+          <Text variant={tokens.variant} my={2}>
             {username}
           </Text>
         </Box>

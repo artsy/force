@@ -22,6 +22,7 @@ import {
   standardStats,
 } from "./commonEnv"
 import { standardPlugins } from "./commonPlugins"
+import { clientPlugins } from "./clientPlugins"
 import { clientChunks } from "./clientCommonConfig"
 
 export const clientProductionConfig = {
@@ -50,6 +51,7 @@ export const clientProductionConfig = {
   },
   plugins: [
     ...standardPlugins,
+    ...clientPlugins,
     new LoadablePlugin({
       filename: "loadable-novo-stats.json",
       path: path.resolve(basePath, "public", "assets"),

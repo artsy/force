@@ -24,6 +24,7 @@ import {
   mjsLoader,
 } from "./commonLoaders"
 import { standardPlugins } from "./commonPlugins"
+import { clientPlugins } from "./clientPlugins"
 import { clientChunks } from "./clientCommonConfig"
 
 export const clientDevelopmentConfig = {
@@ -53,6 +54,7 @@ export const clientDevelopmentConfig = {
   },
   plugins: [
     ...standardPlugins,
+    ...clientPlugins,
     new webpack.HotModuleReplacementPlugin(),
     new ForkTsCheckerWebpackPlugin({
       checkSyntacticErrors: true,

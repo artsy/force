@@ -1,5 +1,5 @@
 import { graphql } from "react-relay"
-import moment from "moment"
+import { DateTime } from "luxon"
 import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
 import { FairOrganizerHeaderFragmentContainer } from "../FairOrganizerHeader"
 
@@ -43,20 +43,14 @@ describe("FairOrganizerHeader", () => {
   })
 
   it("doesn't display timer if event is passed", () => {
-    const wrapper = getWrapper({
-      Fair: () => ({
-        startAt: "2020-09-01T05:00:00+03:00",
-      }),
-    })
+    const startAt = DateTime.local().minus({ days: 1 }).toString()
+    const wrapper = getWrapper({ Fair: () => ({ startAt }) })
     expect(wrapper.find("Timer").length).toBe(0)
   })
 
   it("displays timer if event starts in future", () => {
-    const wrapper = getWrapper({
-      Fair: () => ({
-        startAt: moment().add(1, "day"),
-      }),
-    })
+    const startAt = DateTime.local().plus({ days: 1 }).toString()
+    const wrapper = getWrapper({ Fair: () => ({ startAt }) })
     expect(wrapper.find("Timer").length).toBe(1)
     expect(wrapper.text()).toContain("Opens in:")
   })

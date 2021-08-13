@@ -7,8 +7,7 @@ describe("Institutions", () => {
     cy.title().should("eq", "Institutions | Artsy")
   })
 
-  // TODO: Currently throws an error. Likely needs an additional ENV var.
-  it.skip("/institution-partnerships", () => {
+  it("/institution-partnerships", () => {
     visitWithStatusRetries("institution-partnerships")
     cy.get("h1").should("contain", "Artsy for Museums")
     cy.title().should("eq", "Institution Partnerships | Artsy")
