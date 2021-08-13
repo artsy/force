@@ -355,6 +355,7 @@
     "mocha": "3.4.1",
     "mocha-junit-reporter": "1.22.0",
     "mocha-multi-reporters": "1.1.7",
+    "moment-timezone-data-webpack-plugin": "1.5.0",
     "nyc": "13.3.0",
     "patch-package": "6.2.0",
     "postinstall-prepare": "1.0.1",
