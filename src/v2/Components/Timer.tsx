@@ -7,12 +7,7 @@ import {
   TextVariant,
   useThemeConfig,
 } from "@artsy/palette"
-import { WithCurrentTime } from "v2/Components/WithCurrentTime"
-import { DateTime, Duration } from "luxon"
-
-function padWithZero(num: number) {
-  return num.toString().padStart(2, "0")
-}
+import { useTimer } from "v2/Utils/Hooks/useTimer"
 
 const SEPARATOR = <>&nbsp;&nbsp;</>
 
@@ -32,6 +27,9 @@ export const Timer: React.FC<
   variant = "md",
   ...rest
 }) => {
+  const { hasEnded, time } = useTimer(endDate)
+  const { days, hours, minutes, seconds } = time
+
   const tokens = useThemeConfig({
     v2: {
       variant: "mediumText" as TextVariant,
@@ -39,53 +37,31 @@ export const Timer: React.FC<
       secondLineColor: "black100",
     },
     v3: {
-      variant: ["lg", "xl"] as TextVariant[],
+      variant,
       firstLineColor: "blue100",
       secondLineColor: "black60",
     },
   })
 
   return (
-    <WithCurrentTime syncWithServer>
-      {currentTime => {
-        const duration = Duration.fromISO(
-          DateTime.fromISO(endDate)
-            .diff(DateTime.fromISO(currentTime))
-            .toString()
-        )
+    <Flex flexDirection="column" {...rest}>
+      <Text variant={tokens.variant} color={tokens.firstLineColor}>
+        {label && (
+          <Text variant={tokens.variant} color="black100">
+            {label}
+          </Text>
+        )}
+        {days}d{SEPARATOR}
+        {hours}h{SEPARATOR}
+        {minutes}m{SEPARATOR}
+        {seconds}s
+      </Text>
 
-        const hasEnded = Math.floor(duration.seconds) <= 0
-
-        return (
-          <Flex flexDirection="column" {...rest}>
-            <Text variant={tokens.variant} color={tokens.firstLineColor}>
-              {label && (
-                <Text variant={tokens.variant} color="black100">
-                  {label}
-                </Text>
-              )}
-              {padWithZero(Math.max(0, Math.floor(duration.as("days"))))}d
-              {SEPARATOR}
-              {padWithZero(Math.max(0, Math.floor(duration.as("hours") % 24)))}h
-              {SEPARATOR}
-              {padWithZero(
-                Math.max(0, Math.floor(duration.as("minutes") % 60))
-              )}
-              m{SEPARATOR}
-              {padWithZero(
-                Math.max(0, Math.floor(duration.as("seconds") % 60))
-              )}
-              s
-            </Text>
-
-            {(labelWithTimeRemaining || labelWithoutTimeRemaining) && (
-              <Text variant={tokens.variant} color={tokens.secondLineColor}>
-                {hasEnded ? labelWithoutTimeRemaining : labelWithTimeRemaining}
-              </Text>
-            )}
-          </Flex>
-        )
-      }}
-    </WithCurrentTime>
+      {(labelWithTimeRemaining || labelWithoutTimeRemaining) && (
+        <Text variant={tokens.variant} color={tokens.secondLineColor}>
+          {hasEnded ? labelWithoutTimeRemaining : labelWithTimeRemaining}
+        </Text>
+      )}
+    </Flex>
   )
 }
