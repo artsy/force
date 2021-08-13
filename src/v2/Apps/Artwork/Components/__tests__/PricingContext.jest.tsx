@@ -1,4 +1,5 @@
-import { BarChart, Link, QuestionCircleIcon } from "@artsy/palette"
+import { Link, QuestionCircleIcon } from "@artsy/palette"
+import { BarChart } from "@artsy/palette-charts"
 import {
   PricingContextTestQueryRawResponse,
   PricingContextTestQueryResponse,
