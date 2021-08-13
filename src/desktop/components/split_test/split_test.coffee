@@ -1,4 +1,8 @@
-_ = require 'lodash'
+sample = require 'lodash/sample'
+flatten = require 'lodash/flatten'
+map = require 'lodash/map'
+times = require 'lodash/times'
+reduce= require 'lodash/reduce'
 { CURRENT_USER } = require('sharify').data
 IS_TEST_ENV = require('sharify').data.NODE_ENV not in ['production', 'staging', 'development']
 
@@ -48,11 +52,11 @@ module.exports = class SplitTest
     if @weighting is 'equal'
       @outcomes[Math.floor(Math.random() * @outcomes.length)]
     else
-      _.sample _.flatten _.map @outcomes, (probability, outcome) ->
-        _.times(probability, -> outcome)
+      sample flatten map @outcomes, (probability, outcome) ->
+        times(probability, -> outcome)
 
   sum: ->
-    _.reduce @outcomes, (memo, probability, outcome) ->
+    reduce @outcomes, (memo, probability, outcome) ->
       memo + probability
     , 0
 
