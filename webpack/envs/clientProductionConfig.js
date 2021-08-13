@@ -7,7 +7,7 @@ import path from "path"
 import WebpackManifestPlugin from "webpack-manifest-plugin"
 import { basePath, env } from "../utils/env"
 import {
-  babelLoaderWithLodash,
+  babelLoader,
   coffeeLoader,
   ejsLoader,
   jadeLoader,
@@ -33,13 +33,7 @@ export const clientProductionConfig = {
   externals: clientExternals,
   mode: standardMode,
   module: {
-    rules: [
-      coffeeLoader,
-      jadeLoader,
-      babelLoaderWithLodash,
-      ejsLoader,
-      mjsLoader,
-    ],
+    rules: [coffeeLoader, jadeLoader, babelLoader, ejsLoader, mjsLoader],
   },
   optimization: {
     concatenateModules: env.webpackConcatenate,
