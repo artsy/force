@@ -10,6 +10,20 @@ mixin experience(section)
   .partnerships-section-content.auctions
     img( src=section.logos.src )
 
+mixin auction_apply(section)
+  .partnerships-section-header.apply
+    .auction-partnerships-apply-form
+      header
+        h3#apply-h3 Interested in partnering with Artsy?
+          aside  Apply to host your auctions on Artsy
+
+    //- Marketo
+    .partnerships-marketo-form
+      script(src='//app-ab14.marketo.com/js/forms2/js/forms2.min.js')
+      form#mktoForm_1240
+      script.
+        MktoForms2.loadForm("//app-ab14.marketo.com", "609-FDY-207", 1240);
+
 mixin auction_audience(section)
   .partnerships-section-header.audience
     .grid-2-up
@@ -43,7 +57,7 @@ mixin access(section)
     .audience-quotes
       .quote
         .quote-text= section.quote.quote
-        .quote-author #{section.quote.author}, #{section.quote.title}
+        .quote-author #{section.quote.author}, #{section.quote.title} 
 
 mixin visibility(section)
   .partnerships-section-header.visibility
@@ -62,7 +76,7 @@ mixin visibility(section)
         ul.browser-images.tools-images
           for image, i in section.browser_images
             li.browser-image.tools-image( class=(i === 0 ? 'is-active' : undefined) )
-              img( src=image.src )
+              img( src="https://artsy-media-uploads.s3.amazonaws.com/desktop+banner.png")
 
       .image-container-caption
         h4= section.browser_caption.title
@@ -76,7 +90,7 @@ mixin visibility(section)
         ul.mobile-images.tools-images
           for image, i in section.mobile_images
             li.mobile-image.tools-image( class=(i === 0 ? 'is-active' : undefined) )
-              img( src=image.src )
+              img( src="https://artsy-media-uploads.s3.amazonaws.com/IMG-24276624+(1).gif" )
 
       .image-container-caption
         h4= section.mobile_caption.title
@@ -98,24 +112,20 @@ mixin event_services(section)
           img( src=image.src )
           .event-services-caption= image.caption
 
-mixin auction_apply(section)
-  .partnerships-section-header.apply
-    .auction-partnerships-apply-form
-      header
-        h3#apply-h3 Interested in partnering with Artsy?
-          aside  Apply to host your auctions on Artsy
-
-    //- Marketo
-    .partnerships-marketo-form
-      script(src='//app-ab14.marketo.com/js/forms2/js/forms2.min.js')
-      form#mktoForm_1240
-      script.
-        MktoForms2.loadForm("//app-ab14.marketo.com", "609-FDY-207", 1240);
-
 section.partnerships-section( id= sections[0].slug, data-href="/auction-partnerships/#{sections[0].slug}" ): +experience(sections[0])
+section.partnerships-section( id= sections[6].slug, data-href="/auction-partnerships/#{sections[6].slug}" ): +auction_apply(sections[6])
 section.partnerships-section( id= sections[1].slug, data-href="/auction-partnerships/#{sections[1].slug}" ): +auction_audience(sections[1])
 section.partnerships-section( id= sections[2].slug, data-href="/auction-partnerships/#{sections[2].slug}" ): +access(sections[2])
+hr
+br
+h2 Consignments
+h3 Access to a comprehensive artwork database
+br
+p Artsy can be your additional source of consignments. Log in and seamlessly browse hundreds of vetted artworks from Modern to Post-War and Contemporary art. Artsy’s consignment experts have international auction house experience and liaise with our consignors directly to explain the auction process and walk them through market pricing—ensuring a seamless experience for all stakeholders. 
+br
+p Grow your footprint and build relationships with this international database of consignors quickly and easily. Available across desktop and mobile devices—submit consignment proposals wherever and whenever. See here for more details.
+br
+br
 section.partnerships-section( id= sections[3].slug, data-href="/auction-partnerships/#{sections[3].slug}" ): +visibility(sections[3])
 section.partnerships-section( id= sections[4].slug, data-href="/auction-partnerships/#{sections[4].slug}" ): +event_services(sections[4])
 section.partnerships-section( id= sections[5].slug, data-href="/auction-partnerships/#{sections[5].slug}" ): +support(sections[5])
-section.partnerships-section( id= sections[6].slug, data-href="/auction-partnerships/#{sections[6].slug}" ): +auction_apply(sections[6])
