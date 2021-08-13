@@ -22,6 +22,7 @@ export type ArtworkSidebarArtists_Test_QueryRawResponse = {
             readonly avatar: ({
                 readonly cropped: ({
                     readonly src: string;
+                    readonly srcSet: string;
                 }) | null;
             }) | null;
             readonly is_followed: boolean | null;
@@ -75,8 +76,9 @@ fragment ArtworkSidebarArtists_artwork on Artwork {
     formattedNationalityAndBirthday
     href
     avatar: image {
-      cropped(width: 300, height: 300) {
+      cropped(width: 45, height: 45) {
         src
+        srcSet
       }
     }
     ...FollowArtistButton_artist_2eN9lh
@@ -156,7 +158,19 @@ v4 = {
   "kind": "ScalarField",
   "name": "formattedNationalityAndBirthday",
   "storageKey": null
-};
+},
+v5 = [
+  {
+    "kind": "Literal",
+    "name": "height",
+    "value": 45
+  },
+  {
+    "kind": "Literal",
+    "name": "width",
+    "value": 45
+  }
+];
 return {
   "fragment": {
     "argumentDefinitions": [],
@@ -240,18 +254,7 @@ return {
                 "selections": [
                   {
                     "alias": null,
-                    "args": [
-                      {
-                        "kind": "Literal",
-                        "name": "height",
-                        "value": 300
-                      },
-                      {
-                        "kind": "Literal",
-                        "name": "width",
-                        "value": 300
-                      }
-                    ],
+                    "args": (v5/*: any*/),
                     "concreteType": "CroppedImageUrl",
                     "kind": "LinkedField",
                     "name": "cropped",
@@ -263,9 +266,16 @@ return {
                         "kind": "ScalarField",
                         "name": "src",
                         "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "srcSet",
+                        "storageKey": null
                       }
                     ],
-                    "storageKey": "cropped(height:300,width:300)"
+                    "storageKey": "cropped(height:45,width:45)"
                   }
                 ],
                 "storageKey": null
@@ -352,18 +362,7 @@ return {
                                 "selections": [
                                   {
                                     "alias": null,
-                                    "args": [
-                                      {
-                                        "kind": "Literal",
-                                        "name": "height",
-                                        "value": 45
-                                      },
-                                      {
-                                        "kind": "Literal",
-                                        "name": "width",
-                                        "value": 45
-                                      }
-                                    ],
+                                    "args": (v5/*: any*/),
                                     "concreteType": "CroppedImageUrl",
                                     "kind": "LinkedField",
                                     "name": "cropped",
@@ -408,7 +407,7 @@ return {
     "metadata": {},
     "name": "ArtworkSidebarArtists_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkSidebarArtists_Test_Query {\n  artwork(id: \"josef-albers-homage-to-the-square-85\") {\n    ...ArtworkSidebarArtists_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarArtists_artwork on Artwork {\n  cultural_maker: culturalMaker\n  artists {\n    id\n    internalID\n    slug\n    name\n    formattedNationalityAndBirthday\n    href\n    avatar: image {\n      cropped(width: 300, height: 300) {\n        src\n      }\n    }\n    ...FollowArtistButton_artist_2eN9lh\n  }\n}\n\nfragment FollowArtistButton_artist_2eN9lh on Artist {\n  id\n  internalID\n  name\n  slug\n  is_followed: isFollowed\n  counts {\n    follows\n  }\n  ...FollowArtistPopover_artist\n}\n\nfragment FollowArtistPopoverRow_artist on Artist {\n  internalID\n  name\n  formattedNationalityAndBirthday\n  image {\n    cropped(width: 45, height: 45) {\n      url\n    }\n  }\n}\n\nfragment FollowArtistPopover_artist on Artist {\n  related {\n    suggestedConnection(first: 3, excludeFollowedArtists: true) {\n      edges {\n        node {\n          id\n          internalID\n          ...FollowArtistPopoverRow_artist\n        }\n      }\n    }\n  }\n}\n"
+    "text": "query ArtworkSidebarArtists_Test_Query {\n  artwork(id: \"josef-albers-homage-to-the-square-85\") {\n    ...ArtworkSidebarArtists_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarArtists_artwork on Artwork {\n  cultural_maker: culturalMaker\n  artists {\n    id\n    internalID\n    slug\n    name\n    formattedNationalityAndBirthday\n    href\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    ...FollowArtistButton_artist_2eN9lh\n  }\n}\n\nfragment FollowArtistButton_artist_2eN9lh on Artist {\n  id\n  internalID\n  name\n  slug\n  is_followed: isFollowed\n  counts {\n    follows\n  }\n  ...FollowArtistPopover_artist\n}\n\nfragment FollowArtistPopoverRow_artist on Artist {\n  internalID\n  name\n  formattedNationalityAndBirthday\n  image {\n    cropped(width: 45, height: 45) {\n      url\n    }\n  }\n}\n\nfragment FollowArtistPopover_artist on Artist {\n  related {\n    suggestedConnection(first: 3, excludeFollowedArtists: true) {\n      edges {\n        node {\n          id\n          internalID\n          ...FollowArtistPopoverRow_artist\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();

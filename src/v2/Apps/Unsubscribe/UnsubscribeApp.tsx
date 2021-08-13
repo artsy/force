@@ -13,35 +13,38 @@ interface UnsubscribeAppProps {
 
 export const UnsubscribeApp: React.FC<UnsubscribeAppProps> = ({ me }) => {
   const { match } = useRouter()
-  const { authentication_token: authenticationToken } = match.location.query
 
-  if (!me && !authenticationToken) {
-    return (
-      <Message variant="error" my={4}>
-        Unable to update your email preferences
-      </Message>
-    )
-  }
+  const { authentication_token: authenticationToken } = match.location.query
 
   return (
     <>
       <Title>Email Preferences | Artsy</Title>
 
-      <GridColumns my={4}>
-        <Column span={6}>
-          <Text variant="xl" as="h1">
-            Email Preferences
-          </Text>
+      {!me && !authenticationToken ? (
+        // Is logged out and doesn't have token: can't update anything
+        <Message variant="error" my={4}>
+          Please sign in to update your email preferences
+        </Message>
+      ) : (
+        // Either logged in or logged out with a token
+        <GridColumns my={4}>
+          <Column span={6}>
+            <Text variant="xl" as="h1">
+              Email Preferences
+            </Text>
 
-          <Spacer mt={6} />
+            <Spacer mt={6} />
 
-          {me ? (
-            <UnsubscribeLoggedInFragmentContainer me={me} />
-          ) : (
-            <UnsubscribeLoggedOut authenticationToken={authenticationToken} />
-          )}
-        </Column>
-      </GridColumns>
+            {!!me ? (
+              // If we're logged in, always favor the more detailed preferences
+              <UnsubscribeLoggedInFragmentContainer me={me} />
+            ) : (
+              // Otherwise simply show the opt-out
+              <UnsubscribeLoggedOut authenticationToken={authenticationToken} />
+            )}
+          </Column>
+        </GridColumns>
+      )}
     </>
   )
 }

@@ -173,20 +173,19 @@ export const PaymentModal: React.FC<PaymentModalProps> = props => {
       >
         {(formik: FormikProps<SavedAddressType>) => (
           <form onSubmit={formik.handleSubmit}>
-            <Text data-test="credit-card-error" color="red" my={2}>
+            <Text data-test="credit-card-error" color="red100" my={2}>
               {createError}
             </Text>
-            <Text color="black60" mb={1}>
-              All fields marked * are mandatory
+            <Text textTransform="uppercase" variant="xs" mb={0.5}>
+              Credit card
             </Text>
-            <Text>Credit Card *</Text>
             <CreditCardInput />
             <Spacer mt={1} />
             <AddressModalFields />
             <Spacer mb={1} />
             <Button
               type="submit"
-              size="large"
+              variant="primaryBlack"
               loading={formik.isSubmitting}
               disabled={Object.keys(formik.errors).length > 0}
               width="100%"

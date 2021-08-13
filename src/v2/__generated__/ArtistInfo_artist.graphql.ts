@@ -10,7 +10,8 @@ export type ArtistInfo_artist = {
     readonly href: string | null;
     readonly image: {
         readonly cropped: {
-            readonly url: string;
+            readonly src: string;
+            readonly srcSet: string;
         } | null;
     } | null;
     readonly formatted_nationality_and_birthday: string | null;
@@ -120,12 +121,12 @@ return {
             {
               "kind": "Literal",
               "name": "height",
-              "value": 100
+              "value": 45
             },
             {
               "kind": "Literal",
               "name": "width",
-              "value": 100
+              "value": 45
             }
           ],
           "concreteType": "CroppedImageUrl",
@@ -137,11 +138,18 @@ return {
               "alias": null,
               "args": null,
               "kind": "ScalarField",
-              "name": "url",
+              "name": "src",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "srcSet",
               "storageKey": null
             }
           ],
-          "storageKey": "cropped(height:100,width:100)"
+          "storageKey": "cropped(height:45,width:45)"
         }
       ],
       "storageKey": null
@@ -360,5 +368,5 @@ return {
   "type": "Artist"
 };
 })();
-(node as any).hash = '19ed0541c06c626f31f52fe2039b9593';
+(node as any).hash = 'b06ab10ef844df509ed87274d44a3c2b';
 export default node;

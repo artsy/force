@@ -6,4 +6,10 @@ describe("FairOrganizer", () => {
     cy.contains("Explore Art Paris on Artsy").should("exist")
     cy.title().should("eq", "Art Paris | Artsy")
   })
+
+  it("/fair-organizer/:slug/articles", () => {
+    visitWithStatusRetries("fair-organizer/art-paris/articles")
+    cy.contains("All Articles for Art Paris on Artsy").should("exist")
+    cy.title().should("eq", "Art Paris | Artsy")
+  })
 })

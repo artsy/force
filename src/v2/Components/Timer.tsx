@@ -1,7 +1,14 @@
-import { Flex, Text, TextVariant, useThemeConfig } from "@artsy/palette"
+import React from "react"
+import {
+  Flex,
+  FlexProps,
+  Text,
+  TextProps,
+  TextVariant,
+  useThemeConfig,
+} from "@artsy/palette"
 import { WithCurrentTime } from "v2/Components/WithCurrentTime"
 import { DateTime, Duration } from "luxon"
-import React from "react"
 
 function padWithZero(num: number) {
   return num.toString().padStart(2, "0")
@@ -9,18 +16,20 @@ function padWithZero(num: number) {
 
 const SEPARATOR = <>&nbsp;&nbsp;</>
 
-export const Timer: React.FC<{
-  endDate: string
-  labelWithTimeRemaining?: string
-  labelWithoutTimeRemaining?: string
-  label?: string
-  size?: TextVariant
-}> = ({
+export const Timer: React.FC<
+  {
+    endDate: string
+    labelWithTimeRemaining?: string
+    labelWithoutTimeRemaining?: string
+    label?: string
+  } & FlexProps &
+    TextProps
+> = ({
   endDate,
   labelWithTimeRemaining,
   labelWithoutTimeRemaining,
   label = "",
-  size = "md",
+  variant = "md",
   ...rest
 }) => {
   const tokens = useThemeConfig({
@@ -30,7 +39,7 @@ export const Timer: React.FC<{
       secondLineColor: "black100",
     },
     v3: {
-      variant: size,
+      variant: ["lg", "xl"] as TextVariant[],
       firstLineColor: "blue100",
       secondLineColor: "black60",
     },
@@ -51,7 +60,7 @@ export const Timer: React.FC<{
           <Flex flexDirection="column" {...rest}>
             <Text variant={tokens.variant} color={tokens.firstLineColor}>
               {label && (
-                <Text variant="md" color="black100">
+                <Text variant={tokens.variant} color="black100">
                   {label}
                 </Text>
               )}

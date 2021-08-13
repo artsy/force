@@ -88,13 +88,20 @@ export const AddressModal: React.FC<Props> = ({
     null
   )
   const [showDialog, setShowDialog] = useState<boolean>(false)
+
   if (!relayEnvironment) return null
+
+  const handleModalClose = () => {
+    closeModal()
+    setCreateUpdateError(null)
+  }
+
   return (
     <>
       <Modal
         title={title}
         show={show}
-        onClose={closeModal}
+        onClose={handleModalClose}
         modalWidth={ModalWidth.Wide}
       >
         <Formik
@@ -136,6 +143,7 @@ export const AddressModal: React.FC<Props> = ({
               } else {
                 onSuccess && onSuccess(savedAddress)
               }
+
               setCreateUpdateError(null)
             }
             const addressInput = convertShippingAddressToMutationInput(values)
@@ -194,12 +202,11 @@ export const AddressModal: React.FC<Props> = ({
               )}
               {!createMutation && (
                 <Flex mt={2} flexDirection="column" alignItems="center">
-                  <Clickable onClick={() => setShowDialog(true)}>
-                    <Text
-                      data-test="deleteButton"
-                      variant="text"
-                      color="red100"
-                    >
+                  <Clickable
+                    data-test="deleteButton"
+                    onClick={() => setShowDialog(true)}
+                  >
+                    <Text variant="text" color="red100">
                       Delete address
                     </Text>
                   </Clickable>
@@ -228,7 +235,6 @@ export const AddressModal: React.FC<Props> = ({
           action: () => {
             setShowDialog(false)
             closeModal()
-
             if (address?.internalID) {
               onDeleteAddress(address.internalID)
             }

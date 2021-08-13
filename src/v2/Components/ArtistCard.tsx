@@ -17,20 +17,26 @@ export const ArtistCard: React.FC<ArtistCardProps> = ({
   contextModule,
 }) => {
   return (
-    <EntityHeader
-      name={artist.name ?? "-"}
-      href={artist.href!}
-      meta={artist.formatted_nationality_and_birthday!}
-      imageUrl={artist.image?.cropped?.src}
-      onClick={onClick}
-      FollowButton={
-        <FollowArtistButtonFragmentContainer
-          artist={artist}
-          contextModule={contextModule}
-          buttonProps={{ variant: "secondaryOutline", size: "small" }}
-        />
-      }
-    />
+    <>
+      <EntityHeader
+        name={artist.name ?? "-"}
+        href={artist.href!}
+        meta={artist.formatted_nationality_and_birthday!}
+        image={{
+          src: artist.image?.cropped?.src,
+          srcSet: artist.image?.cropped?.srcSet,
+          lazyLoad: true,
+        }}
+        onClick={onClick}
+        FollowButton={
+          <FollowArtistButtonFragmentContainer
+            artist={artist}
+            contextModule={contextModule}
+            buttonProps={{ variant: "secondaryOutline", size: "small" }}
+          />
+        }
+      />
+    </>
   )
 }
 
@@ -43,8 +49,9 @@ export const ArtistCardFragmentContainer = createFragmentContainer(
         slug
         href
         image {
-          cropped(width: 300, height: 300) {
+          cropped(width: 45, height: 45) {
             src
+            srcSet
           }
         }
         formatted_nationality_and_birthday: formattedNationalityAndBirthday

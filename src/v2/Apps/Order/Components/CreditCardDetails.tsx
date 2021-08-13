@@ -1,6 +1,6 @@
 import React from "react"
 
-import { CreditCardIcon, Flex, Serif, space } from "@artsy/palette"
+import { CreditCardIcon, Flex, Text } from "@artsy/palette"
 
 export const CreditCardDetails = ({
   brand,
@@ -16,12 +16,8 @@ export const CreditCardDetails = ({
   responsive?: boolean
 }) => (
   <Flex alignItems="center">
-    <CreditCardIcon
-      type={brand}
-      style={{ marginRight: space(1) }}
-      width="25px"
-    />
-    <Serif
+    <CreditCardIcon mr={1} type={brand} width="25px" />
+    <Text
       size={responsive ? ["2", "3"] : "3"}
       color="black100"
       style={{ position: "relative", top: "1px" }}
@@ -29,6 +25,6 @@ export const CreditCardDetails = ({
       •••• {lastDigits}
       &nbsp;&nbsp; Exp {expirationMonth.toString().padStart(2, "0")}/
       {expirationYear.toString().slice(-2)}
-    </Serif>
+    </Text>
   </Flex>
 )

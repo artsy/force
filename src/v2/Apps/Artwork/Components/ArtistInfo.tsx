@@ -43,7 +43,6 @@ export class ArtistInfo extends Component<ArtistInfoProps> {
     const { artist } = this.props
     const { biographyBlurb, image } = this.props.artist
     const showArtistBio = !!biographyBlurb?.text
-    const imageUrl = image?.cropped?.url
 
     return (
       <>
@@ -52,7 +51,11 @@ export class ArtistInfo extends Component<ArtistInfoProps> {
             name={artist.name!}
             href={artist.href!}
             meta={artist.formatted_nationality_and_birthday!}
-            imageUrl={imageUrl}
+            image={{
+              src: image?.cropped?.src,
+              srcSet: image?.cropped?.srcSet,
+              lazyLoad: true,
+            }}
             FollowButton={
               <FollowArtistButton
                 artist={artist}
@@ -61,7 +64,6 @@ export class ArtistInfo extends Component<ArtistInfoProps> {
               />
             }
           />
-
           {showArtistBio && (
             <>
               <Spacer mt={2} />
@@ -113,8 +115,9 @@ export const ArtistInfoFragmentContainer = createFragmentContainer(
         name
         href
         image {
-          cropped(width: 100, height: 100) {
-            url
+          cropped(width: 45, height: 45) {
+            src
+            srcSet
           }
         }
         formatted_nationality_and_birthday: formattedNationalityAndBirthday

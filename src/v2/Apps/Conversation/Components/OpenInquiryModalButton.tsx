@@ -2,11 +2,18 @@ import { OpenInquiryModalButtonQuery } from "v2/__generated__/OpenInquiryModalBu
 import { Button, CheckCircleIcon, Flex, Text } from "@artsy/palette"
 import React from "react"
 import { graphql } from "react-relay"
-import { Link } from "@artsy/palette"
+import { Link, Separator } from "@artsy/palette"
 import { useSystemContext } from "v2/System"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { useTracking } from "react-tracking"
 import { tappedMakeOffer } from "@artsy/cohesion"
+import styled from "styled-components"
+
+export const ShadowSeparator = styled(Separator)`
+  box-shadow: 0 -1px 1px rgba(50, 50, 50, 0.1);
+  width: 100%;
+  height: 0;
+`
 
 export interface OpenInquiryModalButtonProps {
   openInquiryModal: () => void
@@ -26,6 +33,7 @@ export const OpenInquiryModalButton: React.FC<OpenInquiryModalButtonProps> = ({
 
   return (
     <>
+      <ShadowSeparator />
       <Flex flexDirection="column" p={1}>
         <Flex flexDirection="row">
           <CheckCircleIcon mr={1} />

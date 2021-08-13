@@ -10,6 +10,17 @@ const FairOrganizerApp = loadable(
   }
 )
 
+const FairOrganizerDedicatedArticles = loadable(
+  () =>
+    import(
+      /* webpackChunkName: "fairOrganizerBundle" */ "./Routes/FairOrganizerDedicatedArticles"
+    ),
+  {
+    resolveComponent: component =>
+      component.FairOrganizerDedicatedArticlesFragmentContainer,
+  }
+)
+
 export const fairOrganizerRoutes: AppRouteConfig[] = [
   {
     path: "/fair-organizer/:slug",
@@ -31,6 +42,29 @@ export const fairOrganizerRoutes: AppRouteConfig[] = [
           hasFullFeature: true
         ) {
           ...FairOrganizerApp_pastFairs
+        }
+      }
+    `,
+  },
+  {
+    path: "/fair-organizer/:slug/articles",
+    theme: "v3",
+    getComponent: () => FairOrganizerDedicatedArticles,
+    prepare: () => {
+      FairOrganizerDedicatedArticles.preload()
+    },
+    prepareVariables: ({ slug }, { location }) => {
+      const { page } = location.query
+      return { page, slug }
+    },
+    query: graphql`
+      query fairOrganizerRoutes_FairOrganizerDedicatedArticles_Query(
+        $slug: String!
+        $page: Int
+      ) {
+        fairOrganizer(id: $slug) @principalField {
+          ...FairOrganizerDedicatedArticles_fairOrganizer
+            @arguments(page: $page)
         }
       }
     `,

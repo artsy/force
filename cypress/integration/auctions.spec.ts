@@ -10,8 +10,7 @@ describe("Auctions", () => {
     )
   })
 
-  // TODO: Currently throws an error. Likely needs an additional ENV var.
-  it.skip("/auction-partnerships", () => {
+  it("/auction-partnerships", () => {
     visitWithStatusRetries("auction-partnerships")
     cy.get("h1").should("contain", "Artsy for Auctions")
     cy.title().should("eq", "Auction Partnerships | Artsy")

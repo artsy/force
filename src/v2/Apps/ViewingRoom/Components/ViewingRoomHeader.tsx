@@ -1,5 +1,5 @@
 import React from "react"
-import { Box, Flex, Link, ResponsiveImage, Sans, color } from "@artsy/palette"
+import { Box, Flex, Link, Sans, color } from "@artsy/palette"
 import { DESKTOP_NAV_BAR_HEIGHT, MOBILE_NAV_HEIGHT } from "v2/Components/NavBar"
 import { Media } from "v2/Utils/Responsive"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -69,14 +69,13 @@ const ViewingRoomHeaderLarge: React.FC<ViewingRoomHeaderProps> = props => {
       }}
     >
       <Box width="50%" style={{ overflow: "hidden" }}>
-        <ResponsiveImage
-          // @ts-expect-error STRICT_NULL_CHECK
-          src={heroImageURL}
-          lazyLoad={false}
+        <div
           style={{
+            backgroundImage: `url(${heroImageURL})`,
             backgroundSize: "cover",
             backgroundPosition: "center",
             height: "100%",
+            paddingBottom: "100%",
           }}
         />
       </Box>
@@ -124,13 +123,13 @@ const ViewingRoomHeaderSmall: React.FC<ViewingRoomHeaderProps> = props => {
         position: "relative",
       }}
     >
-      <ResponsiveImage
-        // @ts-expect-error STRICT_NULL_CHECK
-        src={heroImageURL}
+      <div
         style={{
+          backgroundImage: `url(${heroImageURL})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
           height: "100%",
+          paddingBottom: "100%",
         }}
       />
 

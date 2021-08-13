@@ -143,15 +143,6 @@ describe("ArtworkDetails", () => {
       expect(wrapper.html()).toContain("Salon 94")
     })
 
-    it("displays partner icon when info is available", () => {
-      const wrapper = getWrapper({
-        Sale: () => ({ isBenefit: false, isGalleryAuction: false }),
-        Profile: () => ({ icon: { url: "https://profile_url" } }),
-      })
-
-      expect(wrapper.find("img").prop("src")).toContain("https://profile_url")
-    })
-
     it("displays partner Initials when profile is present but icon is not", () => {
       const wrapper = getWrapper({
         Sale: () => ({ isBenefit: false, isGalleryAuction: false }),

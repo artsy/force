@@ -86,8 +86,7 @@ export class ArtworkDetailsAboutTheWorkFromPartner extends React.Component<
       artwork.sale &&
       (artwork.sale.isBenefit || artwork.sale.isGalleryAuction)
     )
-    const imageUrl = showPartnerLogo && partner?.profile?.icon?.url
-    const partnerInitials = showPartnerLogo && partner?.initials
+
     const showPartnerFollow =
       partner && partner.type !== "Auction House" && partner.profile
     const hasDefaultPublicProfile = partner && partner.is_default_profile_public
@@ -102,16 +101,21 @@ export class ArtworkDetailsAboutTheWorkFromPartner extends React.Component<
               data-test="aboutTheWorkPartner"
             >
               <EntityHeader
-                // @ts-expect-error STRICT_NULL_CHECK
-                name={partnerName}
+                name={partnerName!}
                 href={
                   hasDefaultPublicProfile ? `${sd.APP_URL}${partner?.href}` : ""
                 }
                 meta={locationNames}
-                // @ts-expect-error STRICT_NULL_CHECK
-                imageUrl={imageUrl}
-                // @ts-expect-error STRICT_NULL_CHECK
-                initials={partnerInitials}
+                {...(showPartnerLogo
+                  ? {
+                      initials: partner?.initials!,
+                      image: {
+                        src: partner?.profile?.icon?.cropped?.src,
+                        srcSet: partner?.profile?.icon?.cropped?.srcSet,
+                        lazyLoad: true,
+                      },
+                    }
+                  : {})}
                 FollowButton={
                   showPartnerFollow && partner?.profile ? (
                     <FollowProfileButton
@@ -170,7 +174,10 @@ export const ArtworkDetailsAboutTheWorkFromPartnerFragmentContainer = createFrag
             ...FollowProfileButton_profile
             slug
             icon {
-              url(version: "square140")
+              cropped(width: 45, height: 45) {
+                src
+                srcSet
+              }
             }
           }
         }

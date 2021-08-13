@@ -32,6 +32,7 @@ describe("ArtistCard", () => {
         image: {
           cropped: {
             src: "https://picsum.photos/110/110/?random",
+            srcSet: "https://picsum.photos/110/110/?random 1x",
           },
         },
         href: "/artist/francesca-dimattio",
