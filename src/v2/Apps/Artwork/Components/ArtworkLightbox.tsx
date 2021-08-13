@@ -6,6 +6,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworkLightbox_artwork } from "v2/__generated__/ArtworkLightbox_artwork.graphql"
 import { useSystemContext } from "v2/System"
 import { userIsTeam } from "v2/Utils/user"
+import { ArtworkLightboxPlaceholder } from "./ArtworkLightboxPlaceholder"
 
 interface ArtworkLightboxProps extends ClickableProps {
   artwork: ArtworkLightbox_artwork
@@ -27,7 +28,7 @@ const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
       hasGeometry ? image.resized!.height! : image.fallback!.height!
     )
   )
-  const { resized, fallback, isDefault } = images[activeIndex]
+  const { resized, fallback, placeholder, isDefault } = images[activeIndex]
   const image = hasGeometry ? resized : fallback
 
   const { user } = useSystemContext()
@@ -67,6 +68,13 @@ const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
           aspectWidth={image.width ?? 1}
           aspectHeight={image.height ?? 1}
         >
+          <ArtworkLightboxPlaceholder
+            key={placeholder!}
+            src={placeholder!}
+            preload={!!isDefault}
+            lazyLoad={!!lazyLoad}
+          />
+
           <Image
             id={isDefault ? "transitionFrom--ViewInRoom" : undefined}
             key={image.src}
@@ -77,6 +85,7 @@ const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
             alt={artwork.formattedMetadata ?? ""}
             lazyLoad={lazyLoad}
             preventRightClick={!isTeam}
+            style={{ position: "relative" }}
           />
         </ResponsiveBox>
       </Clickable>
@@ -92,6 +101,7 @@ export const ArtworkLightboxFragmentContainer = createFragmentContainer(
         formattedMetadata
         images {
           isDefault
+          placeholder: url(version: ["small", "medium"])
           fallback: cropped(
             width: 800
             height: 800
