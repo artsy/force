@@ -37,7 +37,7 @@ export const Timer: React.FC<
       secondLineColor: "black100",
     },
     v3: {
-      variant: ["lg", "xl"] as TextVariant[],
+      variant,
       firstLineColor: "blue100",
       secondLineColor: "black60",
     },

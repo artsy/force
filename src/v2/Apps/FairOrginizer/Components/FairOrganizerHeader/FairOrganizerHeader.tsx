@@ -47,7 +47,11 @@ export const FairOrganizerHeader: React.FC<FairOrganizerHeaderProps> = ({
             <Box>
               {showTimer && (
                 <>
-                  <Timer variant="lg" label="Opens in:" endDate={startAt!} />
+                  <Timer
+                    variant={["lg", "xl"]}
+                    label="Opens in:"
+                    endDate={startAt!}
+                  />
                   <Spacer mt={30} />
                 </>
               )}
