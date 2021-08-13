@@ -31,7 +31,6 @@ export const standardResolve = {
     // configuration has been setup for SSR in `src/index`, via `require-control`.
     "styled-components": require.resolve("styled-components"),
     react: require.resolve("react"),
-    "lodash-es": "lodash",
   },
   extensions: [
     ".mjs",
