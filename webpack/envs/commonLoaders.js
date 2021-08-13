@@ -21,6 +21,30 @@ export const babelLoader = {
   ],
 }
 
+/**
+ * This loader ensures that all requisite babel configurations are in place to
+ * properly optimize lodash.
+ */
+export const babelLoaderWithLodashOptimization = {
+  exclude: /(node_modules)/,
+  include: path.resolve(basePath, "src"),
+  test: /(\.(js|ts)x?$)/,
+  use: [
+    {
+      loader: "babel-loader",
+      options: {
+        cacheDirectory:
+          !env.onCi && path.join(basePath, ".cache", "babel/force"),
+        plugins: [
+          "lodash",
+          env.isDevelopment && require.resolve("react-refresh/babel"),
+        ].filter(Boolean),
+        presets: [["@babel/preset-env", { modules: false }]],
+      },
+    },
+  ],
+}
+
 export const coffeeLoader = {
   exclude: /(node_modules)/,
   include: path.resolve(basePath, "src"),
