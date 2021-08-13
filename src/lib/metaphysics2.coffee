@@ -1,6 +1,7 @@
 qs = require 'qs'
 request = require 'superagent'
-{ extend, some } = require 'lodash'
+extend = require 'lodash/extend'
+some = require 'lodash/some'
 { METAPHYSICS_ENDPOINT, API_REQUEST_TIMEOUT, REQUEST_ID } = require('sharify').data
 { isV6Format } = require './ip'
 
