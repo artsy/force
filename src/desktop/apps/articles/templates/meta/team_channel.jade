@@ -17,3 +17,5 @@ meta( property="og:url", content="#{sd.APP_URL}/#{channel.get('slug')}" )
 meta( property="og:image", content=asset('/images/og_image.jpg') )
 meta( property="og:type", content="website" )
 meta( property="twitter:card", content="summary" )
+if sd.CURRENT_PATH == '/buying-with-artsy'
+  meta( name="google" content="nositelinkssearchbox" )
