@@ -1,5 +1,7 @@
+import React from "react"
 import loadable from "@loadable/component"
 import { graphql } from "react-relay"
+import { ErrorPage } from "v2/Components/ErrorPage"
 import { AppRouteConfig } from "v2/System/Router/Route"
 
 const FairOrganizerApp = loadable(
@@ -29,9 +31,22 @@ export const fairOrganizerRoutes: AppRouteConfig[] = [
     prepare: () => {
       FairOrganizerApp.preload()
     },
+    render: ({ Component, props }) => {
+      if (Component && props) {
+        const { fairOrganizer } = props as any
+        const { profile } = fairOrganizer
+        if (!profile) {
+          return <ErrorPage code={404} />
+        }
+        return <Component {...props} />
+      }
+    },
     query: graphql`
       query fairOrganizerRoutes_FairOrganizerQuery($slug: String!) {
         fairOrganizer(id: $slug) @principalField {
+          profile {
+            __typename
+          }
           ...FairOrganizerApp_fairOrganizer
         }
         pastFairs: fairsConnection(

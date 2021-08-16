@@ -17,6 +17,16 @@ const { getWrapper } = setupTestWrapper({
 })
 
 describe("FairOrganizerHeader", () => {
+  it("displays link to the fair page", () => {
+    const wrapper = getWrapper({
+      Fair: () => ({
+        href: "fair/art-paris-2020",
+      }),
+    })
+    expect(wrapper.find("RouterLink").length).toBe(1)
+    expect(wrapper.find("RouterLink").prop("to")).toEqual("fair/art-paris-2020")
+  })
+
   it("displays title with organizer name", () => {
     const wrapper = getWrapper({
       FairOrganizer: () => ({
