@@ -47,6 +47,11 @@ export const NavigationTabs: React.FC<NavigationTabsProps> = ({ partner }) => {
         hidden: !counts?.displayableShows,
       },
       {
+        name: "Viewing Rooms",
+        href: route("/viewing-rooms"),
+        exact: true,
+      },
+      {
         name: partnerType === "Brand" ? "Shop" : "Works",
         href: route("/works"),
         exact: true,
