@@ -1,42 +1,61 @@
-import { BoxProps, Flex, Text } from "@artsy/palette"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
+import { Text, Flex, Swiper } from "@artsy/palette"
+import { Media } from "v2/Utils/Responsive"
 import { ExhibitorsLetterNav_fair } from "v2/__generated__/ExhibitorsLetterNav_fair.graphql"
 
 const LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("").concat(["0-9"])
 
-interface ExhibitorsLetterNavProps extends BoxProps {
+interface ExhibitorsLetterNavProps {
   fair: ExhibitorsLetterNav_fair
 }
 
 export const ExhibitorsLetterNav: React.FC<ExhibitorsLetterNavProps> = ({
   fair,
-  ...rest
 }) => {
   const letters = fair?.exhibitorsGroupedByName?.map(group => group?.letter)
 
+  const Letters = props => {
+    return (
+      <Flex justifyContent="space-between" {...props}>
+        {LETTERS.map(letter => {
+          const isEnabled = letters?.includes(letter)
+          return (
+            <Letter
+              key={letter}
+              color={isEnabled ? "black100" : "black10"}
+              title={
+                isEnabled ? `View exhibitors starting with “${letter}”` : ""
+              }
+            >
+              {letter}
+            </Letter>
+          )
+        })}
+      </Flex>
+    )
+  }
+
   return (
-    <Flex justifyContent="space-between" {...rest}>
-      {LETTERS.map(letter => {
-        const isLetter = letters?.includes(letter)
-        return (
-          <Letter
-            key={letter}
-            color={isLetter ? "black100" : "black10"}
-            title={isLetter ? `View exhibitors starting with “${letter}”` : ""}
-          >
-            {letter}
-          </Letter>
-        )
-      })}
-    </Flex>
+    <>
+      <Media lessThan="md">
+        <Swiper snap="start">
+          <Letters width={1300} />
+        </Swiper>
+      </Media>
+
+      <Media greaterThanOrEqual="md">
+        <Letters />
+      </Media>
+    </>
   )
 }
 
 const Letter = styled(Text).attrs({ p: 1, variant: "md" })`
   display: inline-block;
   cursor: pointer;
+  white-space: nowrap;
 `
 
 export const ExhibitorsLetterNavFragmentContainer = createFragmentContainer(
