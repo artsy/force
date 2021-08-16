@@ -46,13 +46,17 @@ describe(
             .should.equal("From: Craig Spaeth (craigspaeth@gmail.com)")
         })
 
-        it("fires a recaptcha impression", () => {
-          // @ts-ignore
-          window.grecaptcha.execute.args[0][0].should.equal("RECAPTCHA_KEY")
-          // @ts-ignore
-          window.grecaptcha.execute.args[0][1].action.should.equal(
-            "inquiry_impression"
-          )
+        // eslint-disable-next-line jest/no-done-callback
+        it("fires a recaptcha impression", done => {
+          setTimeout(() => {
+            // @ts-ignore
+            window.grecaptcha.execute.args[0][0].should.equal("RECAPTCHA_KEY")
+            // @ts-ignore
+            window.grecaptcha.execute.args[0][1].action.should.equal(
+              "inquiry_impression"
+            )
+            done()
+          }, 1001)
         })
       })
 

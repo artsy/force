@@ -11,7 +11,6 @@ templates =
   forgot: -> require('../templates/account/forgot.jade') arguments...
 { recaptcha } = require "../../../../v2/Utils/recaptcha"
 { setAnalyticsClientReferrerOptions } = require "../../../../lib/analytics/setAnalyticsClientReferrerOptions"
-
 { mediator } = require('../../../../lib/mediator')
 
 module.exports = class Account extends StepView

@@ -8,11 +8,17 @@ sd = require('sharify').data
 template = -> require('../templates/inquiry.jade') arguments...
 { recaptcha } = require "../../../../v2/Utils/recaptcha"
 { setAnalyticsClientReferrerOptions } = require "../../../../lib/analytics/setAnalyticsClientReferrerOptions"
+{ loadRecaptcha } = require './loadRecaptcha'
 
 module.exports = class Inquiry extends StepView
 
   initialize: ({ @user, @inquiry, @artwork, @state, @trail, @modal }) ->
-    recaptcha('inquiry_impression')
+    loadRecaptcha()
+
+    setTimeout(() =>
+      recaptcha('inquiry_impression')
+    , 1000)
+
     super
 
   template: (data) ->
