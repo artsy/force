@@ -17,7 +17,7 @@ export const FairExhibitorsGroup: React.FC<FairExhibitorsGroupProps> = ({
 }) => {
   return (
     <Box>
-      <GridColumns position="relative">
+      <GridColumns position="relative" gridRowGap={[4, 4]}>
         {partnersConnection?.edges?.map(exhibitor => {
           if (!exhibitor?.node) {
             return null
