@@ -24,7 +24,6 @@ import {
   useAnalyticsContext,
 } from "v2/System/Analytics/AnalyticsContext"
 import { Mediator } from "lib/mediator"
-import { ReCaptchaContainer } from "v2/Utils/ReCaptchaContainer"
 import { useRouteComplete } from "v2/Utils/Hooks/useRouteComplete"
 import { Media } from "v2/Utils/Responsive"
 import { LegacyArtworkDllContainer } from "../../Utils/LegacyArtworkDllContainer"
@@ -174,8 +173,6 @@ export class ArtworkApp extends React.Component<Props> {
          * Add place to attach legacy flash message, used in legacy inquiry flow
          */}
         <div id="main-layout-flash" />
-
-        <ReCaptchaContainer />
 
         <>
           <ArtworkMetaFragmentContainer artwork={artwork} />
