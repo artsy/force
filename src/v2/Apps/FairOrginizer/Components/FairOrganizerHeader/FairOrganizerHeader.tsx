@@ -9,6 +9,7 @@ import { FairOrganizerHeader_fairOrganizer } from "v2/__generated__/FairOrganize
 import { extractNodes } from "v2/Utils/extractNodes"
 import { Timer } from "v2/Components/Timer"
 import { useCurrentTime } from "v2/Utils/Hooks/useCurrentTime"
+import { RouterLink } from "v2/System/Router/RouterLink"
 
 interface FairOrganizerHeaderProps {
   fairOrganizer: FairOrganizerHeader_fairOrganizer
@@ -19,7 +20,7 @@ export const FairOrganizerHeader: React.FC<FairOrganizerHeaderProps> = ({
 }) => {
   const { fairsConnection, name } = fairOrganizer
   const fair = extractNodes(fairsConnection)[0]
-  const { startAt, exhibitionPeriod } = fair
+  const { startAt, exhibitionPeriod, href } = fair
 
   const currentTime = useCurrentTime({ syncWithServer: true })
   const showTimer = DateTime.fromISO(currentTime) < DateTime.fromISO(startAt!)
@@ -27,16 +28,20 @@ export const FairOrganizerHeader: React.FC<FairOrganizerHeaderProps> = ({
   return (
     <Box>
       <Flex>
-        <FairOrganizerHeaderIcon fairOrganizer={fairOrganizer} />
-        <Spacer mr={2} />
-        <Box>
-          <Text as="h1" variant="xl">
-            Explore {name} on Artsy
-          </Text>
-          <Text variant="xl" color="black60" mb={1}>
-            {exhibitionPeriod}
-          </Text>
-        </Box>
+        <RouterLink to={href} noUnderline>
+          <Flex>
+            <FairOrganizerHeaderIcon fairOrganizer={fairOrganizer} />
+            <Spacer mr={2} />
+            <Box>
+              <Text as="h1" variant="xl">
+                Explore {name} on Artsy
+              </Text>
+              <Text variant="xl" color="black60" mb={1}>
+                {exhibitionPeriod}
+              </Text>
+            </Box>
+          </Flex>
+        </RouterLink>
       </Flex>
 
       <Spacer mt={75} />
@@ -84,6 +89,7 @@ export const FairOrganizerHeaderFragmentContainer = createFragmentContainer(
         fairsConnection(first: 1) {
           edges {
             node {
+              href
               startAt
               exhibitionPeriod
             }

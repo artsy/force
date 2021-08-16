@@ -8,6 +8,7 @@ export type FairOrganizerHeader_fairOrganizer = {
     readonly fairsConnection: {
         readonly edges: ReadonlyArray<{
             readonly node: {
+                readonly href: string | null;
                 readonly startAt: string | null;
                 readonly exhibitionPeriod: string | null;
             } | null;
@@ -71,6 +72,13 @@ const node: ReaderFragment = {
                   "alias": null,
                   "args": null,
                   "kind": "ScalarField",
+                  "name": "href",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
                   "name": "startAt",
                   "storageKey": null
                 },
@@ -108,5 +116,5 @@ const node: ReaderFragment = {
   ],
   "type": "FairOrganizer"
 };
-(node as any).hash = '1cad529826214e04f9ce747c67ce3c77';
+(node as any).hash = 'e34147f32210f9efac602b17ea212108';
 export default node;
