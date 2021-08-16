@@ -140,13 +140,13 @@ export const Message: React.FC<MessageProps> = props => {
           <Linkify componentDecorator={linkTargetDecorator}>{body}</Linkify>
         </MessageText>
       </Box>
-      {message?.attachments?.length &&
+      {!!message?.attachments?.length &&
         message?.attachments?.map(attachment => {
           return (
             <Attachment
               key={attachment?.id}
               attachment={attachment}
-              alignSelf={alignSelf!}
+              alignSelf={alignSelf ?? ""}
               textColor={textColor}
               bgColor={bgColor}
             />
