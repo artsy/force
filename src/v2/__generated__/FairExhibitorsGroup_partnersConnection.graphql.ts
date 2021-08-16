@@ -6,6 +6,7 @@ import { FragmentRefs } from "relay-runtime";
 export type FairExhibitorsGroup_partnersConnection = {
     readonly edges: ReadonlyArray<{
         readonly node: {
+            readonly internalID: string;
             readonly " $fragmentRefs": FragmentRefs<"FairExhibitorCard_partner">;
         } | null;
     } | null> | null;
@@ -42,6 +43,13 @@ const node: ReaderFragment = {
           "plural": false,
           "selections": [
             {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "internalID",
+              "storageKey": null
+            },
+            {
               "args": null,
               "kind": "FragmentSpread",
               "name": "FairExhibitorCard_partner"
@@ -55,5 +63,5 @@ const node: ReaderFragment = {
   ],
   "type": "PartnerConnection"
 };
-(node as any).hash = '2d45200d0f13859b5bc8d7cf5a77f482';
+(node as any).hash = '0c9e876ab26b7f898f051636f20cd17c';
 export default node;

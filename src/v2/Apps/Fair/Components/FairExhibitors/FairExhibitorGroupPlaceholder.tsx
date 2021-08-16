@@ -14,9 +14,9 @@ export const FairExhibitorsGroupPlaceholder: React.FC = () => {
   return (
     <Box>
       <GridColumns>
-        {[...new Array(4)].map(() => {
+        {[...new Array(4)].map((_, i) => {
           return (
-            <Column span={[12, 4, 3]}>
+            <Column key={i} span={[12, 6, 3]}>
               <Flex mb={1}>
                 <SkeletonBox width={50} height={50} mr={1} />
                 <Box>

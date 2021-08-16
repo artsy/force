@@ -70,52 +70,50 @@ export const FairExhibitorCard: React.FC<FairExhibitorCardProps> = ({
 
   return (
     <Box>
-      <Flex mb={1} flex={1}>
-        <RouterLink
-          to={partner.href}
-          noUnderline
-          onClick={() => tracking.trackEvent(tappedPartnerTrackingData)}
-        >
-          <Flex flex={1}>
-            <BorderBox width={52} height={52} p={0} mr={1}>
-              {profile?.icon?.cropped && (
-                <img
-                  src={profile?.icon?.cropped?.src}
-                  srcSet={profile?.icon?.cropped?.srcSet}
-                  alt={`Logo of ${name}`}
-                  width={50}
-                  height={50}
-                />
-              )}
-            </BorderBox>
-            <Box minWidth={0}>
-              <Text variant="md" overflowEllipsis>
-                {name}
+      <RouterLink
+        to={partner.href}
+        noUnderline
+        onClick={() => tracking.trackEvent(tappedPartnerTrackingData)}
+      >
+        <Flex mb={1} flex={1}>
+          <BorderBox width={52} height={52} p={0} mr={1}>
+            {profile?.icon?.cropped && (
+              <img
+                src={profile?.icon?.cropped?.src}
+                srcSet={profile?.icon?.cropped?.srcSet}
+                alt={`Logo of ${name}`}
+                width={50}
+                height={50}
+              />
+            )}
+          </BorderBox>
+          <Box overflow="hidden">
+            <Text variant="md" overflowEllipsis>
+              {name}
+            </Text>
+            {locations?.totalCount && locations.edges ? (
+              <Text variant="md" color="black60" overflowEllipsis>
+                {partnerAddress()}
               </Text>
-              {locations?.totalCount && locations.edges ? (
-                <Text variant="md" color="black60" overflowEllipsis>
-                  {partnerAddress()}
-                </Text>
-              ) : null}
-            </Box>
-          </Flex>
-        </RouterLink>
-        {partner.profile && (
-          <Box order={2} ml="auto">
-            <FollowProfileButton
-              profile={partner.profile}
-              user={user}
-              contextModule={ContextModule.partnerHeader}
-              buttonProps={{
-                size: "small",
-                variant: "secondaryOutline",
-                width: 70,
-                height: 30,
-              }}
-            />
+            ) : null}
           </Box>
-        )}
-      </Flex>
+          {partner.profile && (
+            <Box order={2} ml="auto">
+              <FollowProfileButton
+                profile={partner.profile}
+                user={user}
+                contextModule={ContextModule.partnerHeader}
+                buttonProps={{
+                  size: "small",
+                  variant: "secondaryOutline",
+                  width: 70,
+                  height: 30,
+                }}
+              />
+            </Box>
+          )}
+        </Flex>
+      </RouterLink>
 
       <Media greaterThan="xs">
         <RouterLink

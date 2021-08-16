@@ -80,11 +80,11 @@ const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
           exact
           onClick={trackTabData(
             `${fairHref}/exhibitors`,
-            "Exhibitors A-Z",
+            "Exhibitors",
             ContextModule.exhibitorsTab
           )}
         >
-          Exhibitors
+          Exhibitors A-Z
         </RouteTab>
 
         <RouteTab

@@ -3,23 +3,23 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type FairExhibitorsGroupQueryVariables = {
+export type FairExhibitorsGroup_Test_QueryVariables = {
     ids?: Array<string> | null;
 };
-export type FairExhibitorsGroupQueryResponse = {
+export type FairExhibitorsGroup_Test_QueryResponse = {
     readonly partnersConnection: {
         readonly " $fragmentRefs": FragmentRefs<"FairExhibitorsGroup_partnersConnection">;
     } | null;
 };
-export type FairExhibitorsGroupQuery = {
-    readonly response: FairExhibitorsGroupQueryResponse;
-    readonly variables: FairExhibitorsGroupQueryVariables;
+export type FairExhibitorsGroup_Test_Query = {
+    readonly response: FairExhibitorsGroup_Test_QueryResponse;
+    readonly variables: FairExhibitorsGroup_Test_QueryVariables;
 };
 
 
 
 /*
-query FairExhibitorsGroupQuery(
+query FairExhibitorsGroup_Test_Query(
   $ids: [String!]
 ) {
   partnersConnection(ids: $ids) {
@@ -124,7 +124,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "FairExhibitorsGroupQuery",
+    "name": "FairExhibitorsGroup_Test_Query",
     "selections": [
       {
         "alias": null,
@@ -149,7 +149,7 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "FairExhibitorsGroupQuery",
+    "name": "FairExhibitorsGroup_Test_Query",
     "selections": [
       {
         "alias": null,
@@ -347,11 +347,11 @@ return {
   "params": {
     "id": null,
     "metadata": {},
-    "name": "FairExhibitorsGroupQuery",
+    "name": "FairExhibitorsGroup_Test_Query",
     "operationKind": "query",
-    "text": "query FairExhibitorsGroupQuery(\n  $ids: [String!]\n) {\n  partnersConnection(ids: $ids) {\n    ...FairExhibitorsGroup_partnersConnection\n  }\n}\n\nfragment FairExhibitorCard_partner on Partner {\n  name\n  href\n  internalID\n  slug\n  profile {\n    ...FollowProfileButton_profile\n    icon {\n      cropped(width: 50, height: 50) {\n        src\n        srcSet\n      }\n    }\n    image {\n      url(version: \"medium\")\n    }\n    id\n  }\n  locations: locationsConnection(first: 20) {\n    totalCount\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n}\n\nfragment FairExhibitorsGroup_partnersConnection on PartnerConnection {\n  edges {\n    node {\n      internalID\n      ...FairExhibitorCard_partner\n      id\n    }\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  is_followed: isFollowed\n}\n"
+    "text": "query FairExhibitorsGroup_Test_Query(\n  $ids: [String!]\n) {\n  partnersConnection(ids: $ids) {\n    ...FairExhibitorsGroup_partnersConnection\n  }\n}\n\nfragment FairExhibitorCard_partner on Partner {\n  name\n  href\n  internalID\n  slug\n  profile {\n    ...FollowProfileButton_profile\n    icon {\n      cropped(width: 50, height: 50) {\n        src\n        srcSet\n      }\n    }\n    image {\n      url(version: \"medium\")\n    }\n    id\n  }\n  locations: locationsConnection(first: 20) {\n    totalCount\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n}\n\nfragment FairExhibitorsGroup_partnersConnection on PartnerConnection {\n  edges {\n    node {\n      internalID\n      ...FairExhibitorCard_partner\n      id\n    }\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  is_followed: isFollowed\n}\n"
   }
 };
 })();
-(node as any).hash = 'f3bc96cae7287d61f9b996ba2c9050fc';
+(node as any).hash = 'b82176d2782526620995210b2f6f3396';
 export default node;

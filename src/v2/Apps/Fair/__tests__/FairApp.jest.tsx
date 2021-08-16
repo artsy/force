@@ -79,6 +79,22 @@ describe("FairApp", () => {
     expect(boothsTab.props().to).toEqual("/fair/miart-2020/booths")
   })
 
+  it("renders the exhibitors tab with an appropriate href", () => {
+    const wrapper = getWrapper({
+      Fair: () => ({
+        href: "/fair/miart-2020",
+      }),
+    })
+
+    const exhibitorsTab = wrapper
+      .find("RouteTab")
+      .findWhere(t => !!t.text().match("Exhibitors A-Z"))
+      .first()
+
+    expect(exhibitorsTab.text()).toContain("Exhibitors A-Z")
+    expect(exhibitorsTab.props().to).toEqual("/fair/miart-2020/exhibitors")
+  })
+
   it("tracks clicks to the booths tab", () => {
     const wrapper = getWrapper({
       Fair: () => ({
