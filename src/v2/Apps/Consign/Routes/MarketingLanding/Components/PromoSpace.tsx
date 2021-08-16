@@ -5,7 +5,7 @@ import { Media } from "v2/Utils/Responsive"
 
 export const PromoSpace: React.FC = () => {
   return (
-    <SectionContainer bg="black5" py={3}>
+    <SectionContainer bg="black5" py={3} mt={0.3}>
       <Media greaterThanOrEqual="sm">
         <Text variant="subtitle" color="black100" textAlign="center">
           Gallerist or art dealer?{" "}
