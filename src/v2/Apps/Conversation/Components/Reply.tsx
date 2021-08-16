@@ -1,28 +1,29 @@
+import { Environment, RelayRefetchProp } from "react-relay"
+import React, { useRef, useState } from "react"
 import {
   Button,
   Dialog,
   Flex,
   FlexProps,
-  color,
   media,
-  space,
   themeProps,
 } from "@artsy/palette"
-import { Conversation_conversation } from "v2/__generated__/Conversation_conversation.graphql"
-import React, { useRef, useState } from "react"
-import { Environment, RelayRefetchProp } from "react-relay"
-import styled from "styled-components"
-import { SendConversationMessage } from "../Mutation/SendConversationMessage"
-import { useTracking } from "v2/System/Analytics"
 import {
   focusedOnConversationMessageInput,
   sentConversationMessage,
 } from "@artsy/cohesion"
+import styled from "styled-components"
 import { RightProps } from "styled-system"
+import { themeGet } from "@styled-system/theme-get"
+
+import { useTracking } from "v2/System/Analytics"
 import { ConversationCTAFragmentContainer } from "./ConversationCTA"
+import { SendConversationMessage } from "../Mutation/SendConversationMessage"
+
+import { Conversation_conversation } from "v2/__generated__/Conversation_conversation.graphql"
 
 const StyledFlex = styled(Flex)<FlexProps & RightProps>`
-  border-top: 1px solid ${color("black10")};
+  border-top: 1px solid ${themeGet("colors.black10")};
   background: white;
 `
 
@@ -43,9 +44,9 @@ const StyledTextArea = styled.textarea<{ height?: string }>`
   min-height: 40px;
   font-size: 16px;
   font-family: ${themeProps.fontFamily.sans.regular as string};
-  padding-top: ${space(0.5)}px;
-  padding-left: ${space(1)}px;
-  padding-right: ${space(1)}px;
+  padding-top: ${themeGet("space.0.5")}px;
+  padding-left: ${themeGet("space.1")}px;
+  padding-right: ${themeGet("space.1")}px;
   ${media.xs`
     max-height: calc(60vh - 115px);
   `};
@@ -74,7 +75,7 @@ export const Reply: React.FC<ReplyProps> = props => {
   const textArea = useRef()
   const { trackEvent } = useTracking()
 
-  const setupAndSendMessage = (onScroll = null) => {
+  const setupAndSendMessage = (onScroll: Function | null = null) => {
     {
       setLoading(true)
       return SendConversationMessage(
@@ -89,18 +90,18 @@ export const Reply: React.FC<ReplyProps> = props => {
           textArea.current.style.height = "inherit"
           setLoading(false)
           setButtonDisabled(true)
-          if (onScroll) {
-            // @ts-expect-error STRICT_NULL_CHECK
+
+          if (onScroll instanceof Function) {
             onScroll()
           }
+
           const {
             internalID,
           } = response?.sendConversationMessage?.messageEdge?.node
 
           trackEvent(
             sentConversationMessage({
-              // @ts-expect-error STRICT_NULL_CHECK
-              impulseConversationId: conversation.internalID,
+              impulseConversationId: conversation?.internalID ?? "",
               impulseMessageId: internalID,
             })
           )
@@ -156,14 +157,12 @@ export const Reply: React.FC<ReplyProps> = props => {
               onFocus={() => {
                 trackEvent(
                   focusedOnConversationMessageInput({
-                    // @ts-expect-error STRICT_NULL_CHECK
-                    impulseConversationId: conversation.internalID,
+                    impulseConversationId: conversation?.internalID ?? "",
                   })
                 )
               }}
               placeholder="Type your message"
-              // @ts-expect-error STRICT_NULL_CHECK
-              ref={textArea}
+              ref={textArea as any}
             />
           </FullWidthFlex>
           <Flex alignItems="flex-end" height="100%">
@@ -172,7 +171,7 @@ export const Reply: React.FC<ReplyProps> = props => {
               disabled={buttonDisabled}
               loading={loading}
               onClick={_event => {
-                // @ts-expect-error STRICT_NULL_CHECK
+                // @ts-ignore
                 setupAndSendMessage(onScroll)
               }}
             >

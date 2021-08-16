@@ -1,7 +1,8 @@
-import { Box, Button, Flex, Sans } from "@artsy/palette"
+import React from "react"
+import { Box, Button, Flex, Text } from "@artsy/palette"
+
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { EmptyInboxHeader } from "./EmptyInboxHeader"
-import React from "react"
 
 export const NoMessages = () => {
   return (
@@ -14,13 +15,18 @@ export const NoMessages = () => {
         height={["calc(100vh - 250px)", "calc(100vh - 145px)"]}
         px={[2, 4, 1]}
       >
-        <Sans size="6" weight="medium" mb={1} textAlign="center">
+        <Text variant="lg" mb={1} textAlign="center">
           You don't have any messages yet.
-        </Sans>
-        <Sans size="3" mb={2} maxWidth={["100%", "400px"]} textAlign="center">
+        </Text>
+        <Text
+          variant="xs"
+          mb={2}
+          maxWidth={["100%", "400px"]}
+          textAlign="center"
+        >
           Contact galleries to purchase available work. You'll find your ongoing
           conversations here.
-        </Sans>
+        </Text>
         <RouterLink to="/collect">
           <Button>Explore artworks</Button>
         </RouterLink>

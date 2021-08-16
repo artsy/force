@@ -1,20 +1,20 @@
+import React, { useEffect, useState } from "react"
+import { createFragmentContainer } from "react-relay"
+import { graphql } from "relay-runtime"
+import { Spacer } from "@artsy/palette"
+import { DateTime } from "luxon"
+import { sortBy } from "lodash"
+
 import { groupMessages, Message as MessageType } from "../Utils/groupMessages"
 import { TimeSince, fromToday } from "./TimeSince"
 import { MessageFragmentContainer as Message } from "./Message"
-import React, { useEffect, useState } from "react"
-import { Spacer } from "@artsy/palette"
-import { graphql } from "relay-runtime"
-import { createFragmentContainer } from "react-relay"
-import { ConversationMessages_messages } from "v2/__generated__/ConversationMessages_messages.graphql"
-import { ConversationMessages_events } from "v2/__generated__/ConversationMessages_events.graphql"
-
-import { extractNodes } from "v2/Utils/extractNodes"
-import { DateTime } from "luxon"
-import { sortBy } from "lodash"
-import { OrderUpdateFragmentContainer } from "./OrderUpdate"
-import { Message_message } from "v2/__generated__/Message_message.graphql"
-
 import { NewMessageMarker } from "./NewMessageMarker"
+import { OrderUpdateFragmentContainer } from "./OrderUpdate"
+import { extractNodes } from "v2/Utils/extractNodes"
+
+import { ConversationMessages_events } from "v2/__generated__/ConversationMessages_events.graphql"
+import { Message_message } from "v2/__generated__/Message_message.graphql"
+import { ConversationMessages_messages } from "v2/__generated__/ConversationMessages_messages.graphql"
 
 interface ConversationMessageProps {
   messages: ConversationMessages_messages

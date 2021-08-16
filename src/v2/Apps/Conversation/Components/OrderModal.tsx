@@ -1,5 +1,5 @@
-import { Modal, ModalWidth } from "@artsy/palette"
 import React from "react"
+import { Modal, ModalWidth } from "@artsy/palette"
 import styled from "styled-components"
 
 export const StyledIframe = styled("iframe")`

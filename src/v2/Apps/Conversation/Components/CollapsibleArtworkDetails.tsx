@@ -1,7 +1,8 @@
-import { Expandable, Flex, Image, Text } from "@artsy/palette"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
+import { Expandable, Flex, Image, Text } from "@artsy/palette"
 import styled from "styled-components"
+
 import { CollapsibleArtworkDetails_artwork } from "v2/__generated__/CollapsibleArtworkDetails_artwork.graphql"
 
 const artworkDetailItems = (artwork: CollapsibleArtworkDetails_artwork) => {
@@ -36,7 +37,7 @@ const WrappedText = styled(Text)`
 `
 
 const Field: React.FC<{ title: string }> = ({ title, children }) => (
-  <Flex flexDirection="column" mt="20px">
+  <Flex flexDirection="column" mt={2}>
     <Text>{title}</Text>
     <WrappedText color="black60">{children}</WrappedText>
   </Flex>
@@ -53,9 +54,9 @@ export const CollapsibleArtworkDetails: React.FC<CollapsibleArtworkDetailsProps>
   return (
     artwork && (
       <Expandable
-        pb="10px"
+        pb={1}
         label={
-          <Flex alignItems="center" mt="10px" mx="20px" pb="10px">
+          <Flex alignItems="center" mt={1} mx={2} pb={1}>
             {!!artwork.image && (
               <Image
                 width={artwork.image.resized?.width}
@@ -65,9 +66,9 @@ export const CollapsibleArtworkDetails: React.FC<CollapsibleArtworkDetailsProps>
                 alt={artwork.title ?? ""}
               />
             )}
-            <Flex flexDirection="column" ml="15px">
-              <Text>{artwork.artistNames}</Text>
-              <Text color="black60">
+            <Flex flexDirection="column" ml={1}>
+              <Text mb={0.5}>{artwork.artistNames}</Text>
+              <Text variant="xs" color="black60">
                 {artwork.title}, {artwork.date}
               </Text>
             </Flex>
@@ -76,8 +77,8 @@ export const CollapsibleArtworkDetails: React.FC<CollapsibleArtworkDetailsProps>
       >
         <Flex
           flexDirection="column"
-          ml="20px"
-          pr="20px"
+          ml={2}
+          pr={2}
           maxHeight="230px"
           overflowY="scroll"
         >

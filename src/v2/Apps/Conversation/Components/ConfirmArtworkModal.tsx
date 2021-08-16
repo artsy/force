@@ -1,3 +1,5 @@
+import React, { useState } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 import {
   Button,
   Flex,
@@ -7,19 +9,20 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import React, { useState } from "react"
-import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "v2/System"
 import { renderWithLoadProgress } from "v2/System/Relay/renderWithLoadProgress"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
+
+import { ConfirmArtworkButtonFragmentContainer } from "./ConfirmArtworkButton"
+import { CollapsibleArtworkDetailsFragmentContainer } from "./CollapsibleArtworkDetails"
+import { EditionSelectBoxFragmentContainer } from "./EditionSelectBox"
+
 import {
   ConfirmArtworkModalQuery,
   ConfirmArtworkModalQueryResponse,
 } from "v2/__generated__/ConfirmArtworkModalQuery.graphql"
 import { ConfirmArtworkModal_artwork } from "v2/__generated__/ConfirmArtworkModal_artwork.graphql"
-import { ConfirmArtworkButtonFragmentContainer } from "./ConfirmArtworkButton"
-import { CollapsibleArtworkDetailsFragmentContainer } from "./CollapsibleArtworkDetails"
-import { EditionSelectBoxFragmentContainer } from "./EditionSelectBox"
+
 export interface ConfirmArtworkModalProps {
   artwork: ConfirmArtworkModal_artwork
   conversationID: string
@@ -58,7 +61,7 @@ export const ConfirmArtworkModal: React.FC<ConfirmArtworkModalProps> = ({
           <Button variant="secondaryOutline" flexGrow={1} onClick={closeModal}>
             Cancel
           </Button>
-          <Spacer m="20px" />
+          <Spacer m={2} />
           <ConfirmArtworkButtonFragmentContainer
             artwork={artwork}
             disabled={!!isEdition && !selectedEdition}
@@ -68,7 +71,7 @@ export const ConfirmArtworkModal: React.FC<ConfirmArtworkModalProps> = ({
         </Flex>
       }
     >
-      <Text color="black60" variant="subtitle" mb="30px">
+      <Text color="black60" variant="md" mb={2}>
         Make sure the artwork below matches the intended work you’re making an
         offer on.
       </Text>
@@ -89,7 +92,7 @@ export const ConfirmArtworkModal: React.FC<ConfirmArtworkModalProps> = ({
           ))}
         </Flex>
       )}
-      <Message mt="20px" mx="20px">
+      <Message mt={2} mx={2}>
         Making an offer doesn’t guarantee you the work, as the seller might be
         receiving competing offers.
       </Message>

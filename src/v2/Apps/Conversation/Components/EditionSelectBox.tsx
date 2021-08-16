@@ -1,7 +1,8 @@
-import { Box, BorderBox, color, Flex, Text, Radio } from "@artsy/palette"
 import React from "react"
-import styled from "styled-components"
 import { createFragmentContainer, graphql } from "react-relay"
+import { Box, BorderBox, Flex, Text, Radio } from "@artsy/palette"
+import styled from "styled-components"
+import { themeGet } from "@styled-system/theme-get"
 
 import { EditionSelectBox_edition } from "v2/__generated__/EditionSelectBox_edition.graphql"
 
@@ -9,7 +10,7 @@ const UnavailableIndicator = styled(Box)`
   height: 8px;
   width: 8px;
   border-radius: 4px;
-  background-color: ${color("red100")};
+  background-color: ${themeGet("colors.red100")};
   margin-right: 6px;
 `
 

@@ -1,14 +1,16 @@
-import { Box, Flex, FullBleed, Title } from "@artsy/palette"
-import { Conversation_me } from "v2/__generated__/Conversation_me.graphql"
-import { ConversationPaginationContainer as Conversation } from "v2/Apps/Conversation/Components/Conversation"
-import { ConversationListPaginationContainer as ConversationList } from "v2/Apps/Conversation/Components/ConversationList"
-import { Match } from "found"
 import React, { useState } from "react"
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
-import { Media } from "v2/Utils/Responsive"
-import { DetailsFragmentContainer as Details } from "../../Components/Details"
+import { Box, Flex, FullBleed, Title, ThemeProviderV3 } from "@artsy/palette"
+import { Match } from "found"
 import styled from "styled-components"
 import { themeGet } from "@styled-system/theme-get"
+
+import { ConversationPaginationContainer as Conversation } from "v2/Apps/Conversation/Components/Conversation"
+import { ConversationListPaginationContainer as ConversationList } from "v2/Apps/Conversation/Components/ConversationList"
+import { Media } from "v2/Utils/Responsive"
+import { DetailsFragmentContainer as Details } from "../../Components/Details"
+
+import { Conversation_me } from "v2/__generated__/Conversation_me.graphql"
 interface ConversationRouteProps {
   me: Conversation_me
   conversationID: string
@@ -40,33 +42,32 @@ export const ConversationRoute: React.FC<ConversationRouteProps> = props => {
 
   return (
     <>
-      <FullBleed>
-        <Title>Inbox | Artsy</Title>
-        <ConstrainedHeightContainer>
-          <ConversationContainer>
-            <Media greaterThan="sm">
-              <ConversationList
-                me={me as any}
-                // @ts-expect-error STRICT_NULL_CHECK
-                selectedConversationID={me.conversation.internalID}
+      <ThemeProviderV3>
+        <FullBleed>
+          <Title>Inbox | Artsy</Title>
+          <ConstrainedHeightContainer>
+            <ConversationContainer>
+              <Media greaterThan="sm">
+                <ConversationList
+                  me={me as any}
+                  selectedConversationID={me?.conversation?.internalID ?? ""}
+                />
+              </Media>
+              <Conversation
+                conversation={me.conversation!}
+                showDetails={showDetails}
+                setShowDetails={setShowDetails}
+                refetch={props.relay.refetch}
               />
-            </Media>
-            <Conversation
-              // @ts-expect-error STRICT_NULL_CHECK
-              conversation={me.conversation}
-              showDetails={showDetails}
-              setShowDetails={setShowDetails}
-              refetch={props.relay.refetch}
-            />
-            <Details
-              // @ts-expect-error STRICT_NULL_CHECK
-              conversation={me.conversation}
-              showDetails={showDetails}
-              setShowDetails={setShowDetails}
-            />
-          </ConversationContainer>
-        </ConstrainedHeightContainer>
-      </FullBleed>
+              <Details
+                conversation={me.conversation!}
+                showDetails={showDetails}
+                setShowDetails={setShowDetails}
+              />
+            </ConversationContainer>
+          </ConstrainedHeightContainer>
+        </FullBleed>
+      </ThemeProviderV3>
     </>
   )
 }
