@@ -93,7 +93,6 @@ export const fairRoutes: AppRouteConfig[] = [
         prepare: () => {
           FairBoothsRoute.preload()
         },
-        prepareVariables: ({ slug }) => ({ slug }),
         query: graphql`
           query fairRoutes_FairExhibitorsQuery($slug: String!) {
             fair(id: $slug) @principalField {

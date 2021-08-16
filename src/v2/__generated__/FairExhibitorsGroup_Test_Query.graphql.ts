@@ -32,6 +32,7 @@ fragment FairExhibitorCard_partner on Partner {
   href
   internalID
   slug
+  cities
   profile {
     ...FollowProfileButton_profile
     icon {
@@ -44,15 +45,6 @@ fragment FairExhibitorCard_partner on Partner {
       url(version: "medium")
     }
     id
-  }
-  locations: locationsConnection(first: 20) {
-    totalCount
-    edges {
-      node {
-        city
-        id
-      }
-    }
   }
 }
 
@@ -188,6 +180,13 @@ return {
                   {
                     "alias": null,
                     "args": null,
+                    "kind": "ScalarField",
+                    "name": "cities",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
                     "concreteType": "Profile",
                     "kind": "LinkedField",
                     "name": "profile",
@@ -278,60 +277,6 @@ return {
                     ],
                     "storageKey": null
                   },
-                  {
-                    "alias": "locations",
-                    "args": [
-                      {
-                        "kind": "Literal",
-                        "name": "first",
-                        "value": 20
-                      }
-                    ],
-                    "concreteType": "LocationConnection",
-                    "kind": "LinkedField",
-                    "name": "locationsConnection",
-                    "plural": false,
-                    "selections": [
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "totalCount",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "concreteType": "LocationEdge",
-                        "kind": "LinkedField",
-                        "name": "edges",
-                        "plural": true,
-                        "selections": [
-                          {
-                            "alias": null,
-                            "args": null,
-                            "concreteType": "Location",
-                            "kind": "LinkedField",
-                            "name": "node",
-                            "plural": false,
-                            "selections": [
-                              {
-                                "alias": null,
-                                "args": null,
-                                "kind": "ScalarField",
-                                "name": "city",
-                                "storageKey": null
-                              },
-                              (v5/*: any*/)
-                            ],
-                            "storageKey": null
-                          }
-                        ],
-                        "storageKey": null
-                      }
-                    ],
-                    "storageKey": "locationsConnection(first:20)"
-                  },
                   (v5/*: any*/)
                 ],
                 "storageKey": null
@@ -349,7 +294,7 @@ return {
     "metadata": {},
     "name": "FairExhibitorsGroup_Test_Query",
     "operationKind": "query",
-    "text": "query FairExhibitorsGroup_Test_Query(\n  $ids: [String!]\n) {\n  partnersConnection(ids: $ids) {\n    ...FairExhibitorsGroup_partnersConnection\n  }\n}\n\nfragment FairExhibitorCard_partner on Partner {\n  name\n  href\n  internalID\n  slug\n  profile {\n    ...FollowProfileButton_profile\n    icon {\n      cropped(width: 50, height: 50) {\n        src\n        srcSet\n      }\n    }\n    image {\n      url(version: \"medium\")\n    }\n    id\n  }\n  locations: locationsConnection(first: 20) {\n    totalCount\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n}\n\nfragment FairExhibitorsGroup_partnersConnection on PartnerConnection {\n  edges {\n    node {\n      internalID\n      ...FairExhibitorCard_partner\n      id\n    }\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  is_followed: isFollowed\n}\n"
+    "text": "query FairExhibitorsGroup_Test_Query(\n  $ids: [String!]\n) {\n  partnersConnection(ids: $ids) {\n    ...FairExhibitorsGroup_partnersConnection\n  }\n}\n\nfragment FairExhibitorCard_partner on Partner {\n  name\n  href\n  internalID\n  slug\n  cities\n  profile {\n    ...FollowProfileButton_profile\n    icon {\n      cropped(width: 50, height: 50) {\n        src\n        srcSet\n      }\n    }\n    image {\n      url(version: \"medium\")\n    }\n    id\n  }\n}\n\nfragment FairExhibitorsGroup_partnersConnection on PartnerConnection {\n  edges {\n    node {\n      internalID\n      ...FairExhibitorCard_partner\n      id\n    }\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  is_followed: isFollowed\n}\n"
   }
 };
 })();

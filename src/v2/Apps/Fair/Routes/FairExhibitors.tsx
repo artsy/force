@@ -5,6 +5,7 @@ import { FairExhibitors_fair } from "v2/__generated__/FairExhibitors_fair.graphq
 import { FairExhibitorsGroupQueryRenderer as FairExhibitorsGroup } from "../Components/FairExhibitors"
 import { FairExhibitorsGroupPlaceholder } from "../Components/FairExhibitors/FairExhibitorGroupPlaceholder"
 import { useLazyLoadComponent } from "v2/Utils/Hooks/useLazyLoadComponent"
+import { compact } from "lodash"
 
 interface FairExhibitorsProps {
   fair: FairExhibitors_fair
@@ -22,8 +23,8 @@ const FairExhibitors: React.FC<FairExhibitorsProps> = ({ fair }) => {
           return null
         }
 
-        const partnerIds = exhibitorsGroup.exhibitors.map(
-          exhibitor => exhibitor?.partnerID || ""
+        const partnerIds = compact(
+          exhibitorsGroup.exhibitors.map(exhibitor => exhibitor?.partnerID)
         )
 
         return (

@@ -8,6 +8,7 @@ export type FairExhibitorCard_partner = {
     readonly href: string | null;
     readonly internalID: string;
     readonly slug: string;
+    readonly cities: ReadonlyArray<string | null> | null;
     readonly profile: {
         readonly icon: {
             readonly cropped: {
@@ -19,14 +20,6 @@ export type FairExhibitorCard_partner = {
             readonly url: string | null;
         } | null;
         readonly " $fragmentRefs": FragmentRefs<"FollowProfileButton_profile">;
-    } | null;
-    readonly locations: {
-        readonly totalCount: number | null;
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly city: string | null;
-            } | null;
-        } | null> | null;
     } | null;
     readonly " $refType": "FairExhibitorCard_partner";
 };
@@ -70,6 +63,13 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "ScalarField",
       "name": "slug",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "cities",
       "storageKey": null
     },
     {
@@ -158,62 +158,9 @@ const node: ReaderFragment = {
         }
       ],
       "storageKey": null
-    },
-    {
-      "alias": "locations",
-      "args": [
-        {
-          "kind": "Literal",
-          "name": "first",
-          "value": 20
-        }
-      ],
-      "concreteType": "LocationConnection",
-      "kind": "LinkedField",
-      "name": "locationsConnection",
-      "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "totalCount",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "concreteType": "LocationEdge",
-          "kind": "LinkedField",
-          "name": "edges",
-          "plural": true,
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "concreteType": "Location",
-              "kind": "LinkedField",
-              "name": "node",
-              "plural": false,
-              "selections": [
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "city",
-                  "storageKey": null
-                }
-              ],
-              "storageKey": null
-            }
-          ],
-          "storageKey": null
-        }
-      ],
-      "storageKey": "locationsConnection(first:20)"
     }
   ],
   "type": "Partner"
 };
-(node as any).hash = 'db3ab97e8b1d5c52dd8077e35036aaaa';
+(node as any).hash = '4d8c07f04dcc1695cdfc31d30913a3ff';
 export default node;

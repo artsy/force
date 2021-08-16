@@ -18,7 +18,6 @@ import {
 } from "@artsy/cohesion"
 import { FairExhibitorCard_partner } from "v2/__generated__/FairExhibitorCard_partner.graphql"
 import { Media } from "v2/Utils/Responsive"
-import { uniq } from "lodash"
 import { FollowProfileButtonFragmentContainer as FollowProfileButton } from "v2/Components/FollowButton/FollowProfileButton"
 import { RouterLink } from "v2/System/Router/RouterLink"
 
@@ -31,7 +30,7 @@ const VISIBLE_CITIES_NUM = 2
 export const FairExhibitorCard: React.FC<FairExhibitorCardProps> = ({
   partner,
 }) => {
-  const { name, profile, locations } = partner
+  const { name, profile, cities } = partner
   const { user } = useSystemContext()
   const tracking = useTracking()
   const {
@@ -52,14 +51,8 @@ export const FairExhibitorCard: React.FC<FairExhibitorCardProps> = ({
     action: ActionType.clickedPartnerCard,
   }
 
-  const partnerAddress = () => {
-    const { edges } = locations || {}
-    const cities = uniq(edges?.map(edge => edge?.node?.city?.trim()))
-    if (!cities) {
-      return null
-    }
-
-    const visibleCities = cities.slice(0, VISIBLE_CITIES_NUM).join(", ")
+  const partnerAddress = (cities: (string | null)[]) => {
+    const visibleCities = cities?.slice(0, VISIBLE_CITIES_NUM).join(", ")
 
     if (cities.length > VISIBLE_CITIES_NUM) {
       return `${visibleCities}, +${cities.length - VISIBLE_CITIES_NUM} more`
@@ -91,9 +84,9 @@ export const FairExhibitorCard: React.FC<FairExhibitorCardProps> = ({
             <Text variant="md" overflowEllipsis>
               {name}
             </Text>
-            {locations?.totalCount && locations.edges ? (
+            {cities?.length ? (
               <Text variant="md" color="black60" overflowEllipsis>
-                {partnerAddress()}
+                {partnerAddress([...cities])}
               </Text>
             ) : null}
           </Box>
@@ -128,7 +121,7 @@ export const FairExhibitorCard: React.FC<FairExhibitorCardProps> = ({
                   width="100%"
                   height="100%"
                   src={profile.image.url}
-                  alt="Please make sure you describe the image"
+                  alt={`Profile image for ${name}`}
                 />
               ) : null}
             </ResponsiveBox>
@@ -148,6 +141,7 @@ export const FairExhibitorCardFragmentContainer = createFragmentContainer(
         href
         internalID
         slug
+        cities
         profile {
           ...FollowProfileButton_profile
           icon {
@@ -158,14 +152,6 @@ export const FairExhibitorCardFragmentContainer = createFragmentContainer(
           }
           image {
             url(version: "medium")
-          }
-        }
-        locations: locationsConnection(first: 20) {
-          totalCount
-          edges {
-            node {
-              city
-            }
           }
         }
       }

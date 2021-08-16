@@ -7,6 +7,7 @@ import { FairExhibitorCardFragmentContainer as FairExhibitorCard } from "./FairE
 import { FairExhibitorsGroupPlaceholder } from "./FairExhibitorGroupPlaceholder"
 import { useSystemContext } from "v2/System"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
+import { extractNodes } from "v2/Utils/extractNodes"
 
 interface FairExhibitorsGroupProps {
   partnersConnection: FairExhibitorsGroup_partnersConnection
@@ -17,15 +18,11 @@ export const FairExhibitorsGroup: React.FC<FairExhibitorsGroupProps> = ({
 }) => {
   return (
     <Box>
-      <GridColumns position="relative" gridRowGap={[4, 4]}>
-        {partnersConnection?.edges?.map(exhibitor => {
-          if (!exhibitor?.node) {
-            return null
-          }
-
+      <GridColumns position="relative" gridRowGap={4}>
+        {extractNodes(partnersConnection).map(exhibitor => {
           return (
-            <Column key={exhibitor.node.internalID} span={[12, 6, 3]}>
-              <FairExhibitorCard partner={exhibitor.node} />
+            <Column key={exhibitor.internalID} span={[12, 6, 3]}>
+              <FairExhibitorCard partner={exhibitor} />
             </Column>
           )
         })}
@@ -71,13 +68,24 @@ export const FairExhibitorsGroupQueryRenderer: React.FC<{
       `}
       variables={{ ids }}
       render={({ error, props }) => {
-        if (error || !props) {
+        if (error) {
+          return null
+        }
+
+        if (!props) {
           return <FairExhibitorsGroupPlaceholder />
         }
 
-        return (
-          <FairExhibitorsGroupFragmentContainer {...rest} {...(props as any)} />
-        )
+        if (props.partnersConnection) {
+          return (
+            <FairExhibitorsGroupFragmentContainer
+              {...rest}
+              partnersConnection={props.partnersConnection}
+            />
+          )
+        }
+
+        return null
       }}
     />
   )
