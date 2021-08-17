@@ -29,10 +29,10 @@ const FairOverviewRoute = loadable(
     resolveComponent: component => component.FairOverviewFragmentContainer,
   }
 )
-const FairExhibitorsRoute = loadable(
-  () => import(/* webpackChunkName: "fairBundle" */ "./Routes/FairExhibitors"),
+const FairBoothsRoute = loadable(
+  () => import(/* webpackChunkName: "fairBundle" */ "./Routes/FairBooths"),
   {
-    resolveComponent: component => component.FairExhibitorsFragmentContainer,
+    resolveComponent: component => component.FairBoothsFragmentContainer,
   }
 )
 const FairArtworksRoute = loadable(
@@ -83,9 +83,9 @@ export const fairRoutes: AppRouteConfig[] = [
       {
         path: "booths(.*)?",
         theme: "v3",
-        getComponent: () => FairExhibitorsRoute,
+        getComponent: () => FairBoothsRoute,
         prepare: () => {
-          FairExhibitorsRoute.preload()
+          FairBoothsRoute.preload()
         },
         prepareVariables: ({ slug }, { location }) => {
           let { sort, page } = location.query
@@ -95,13 +95,13 @@ export const fairRoutes: AppRouteConfig[] = [
           return { sort, page, slug }
         },
         query: graphql`
-          query fairRoutes_FairExhibitorsQuery(
+          query fairRoutes_FairBoothsQuery(
             $slug: String!
             $page: Int
             $sort: ShowSorts
           ) {
             fair(id: $slug) @principalField {
-              ...FairExhibitors_fair @arguments(sort: $sort, page: $page)
+              ...FairBooths_fair @arguments(sort: $sort, page: $page)
             }
           }
         `,

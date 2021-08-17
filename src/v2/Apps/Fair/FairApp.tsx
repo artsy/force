@@ -14,6 +14,7 @@ import {
   ActionType,
   ClickedNavigationTab,
   ContextModule,
+  PageOwnerType,
 } from "@artsy/cohesion"
 import { HttpError } from "found"
 import { userIsAdmin } from "v2/Utils/user"
@@ -45,8 +46,7 @@ const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
       context_module: lastClickedTab.current,
       context_page_owner_id: contextPageOwnerId,
       context_page_owner_slug: contextPageOwnerSlug,
-      // @ts-expect-error STRICT_NULL_CHECK
-      context_page_owner_type: contextPageOwnerType,
+      context_page_owner_type: contextPageOwnerType as PageOwnerType,
       destination_path: destinationPath,
       subject,
     }
@@ -80,7 +80,7 @@ const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
           onClick={trackTabData(
             `${fairHref}/booths`,
             "Booths",
-            ContextModule.exhibitorsTab
+            "boothsTab" as ContextModule
           )}
         >
           Booths
@@ -142,7 +142,6 @@ export const FairAppFragmentContainer = createFragmentContainer(
         href
         slug
         ...FairMeta_fair
-        ...FairOverview_fair
         ...FairHeader_fair
         ...FairHeaderImage_fair
         counts {

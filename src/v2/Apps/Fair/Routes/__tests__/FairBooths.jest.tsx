@@ -1,10 +1,10 @@
 import React from "react"
 import { ReactWrapper } from "enzyme"
-import { FairExhibitorsFragmentContainer } from "../FairExhibitors"
-import { FairExhibitors_QueryRawResponse } from "v2/__generated__/FairExhibitors_Query.graphql"
-import { FairExhibitorRail } from "../../Components/FairExhibitorRail"
+import { FairBoothsFragmentContainer } from "../FairBooths"
+import { FairBooths_QueryRawResponse } from "v2/__generated__/FairBooths_Query.graphql"
+import { FairBoothRail } from "../../Components/FairBoothRail"
 import { graphql } from "react-relay"
-import { FairExhibitorSortFilter } from "../../Components/FairExhibitorSortFilter"
+import { FairBoothSortFilter } from "../../Components/FairBoothSortFilter"
 import { MockBoot, renderRelayTree } from "v2/DevTools"
 import { Breakpoint } from "v2/Utils/Responsive"
 import { SortFilter } from "v2/Components/SortFilter"
@@ -24,31 +24,31 @@ jest.mock("v2/System/Router/useRouter", () => ({
   }),
 }))
 
-describe("FairExhibitors", () => {
+describe("FairBooths", () => {
   const getWrapper = async ({
-    response = FAIR_EXHIBITORS_FIXTURE,
+    response = FAIR_BOOTHS_FIXTURE,
     breakpoint = "lg",
   }: {
-    response?: FairExhibitors_QueryRawResponse
+    response?: FairBooths_QueryRawResponse
     breakpoint?: Breakpoint
   }) => {
     return renderRelayTree({
       Component: ({ fair }) => {
         return (
           <MockBoot breakpoint={breakpoint}>
-            <FairExhibitorsFragmentContainer fair={fair} />
+            <FairBoothsFragmentContainer fair={fair} />
           </MockBoot>
         )
       },
       query: graphql`
-        query FairExhibitors_Query(
+        query FairBooths_Query(
           $id: String!
           $first: Int
           $page: Int
           $sort: ShowSorts
         ) @raw_response_type {
           fair(id: $id) {
-            ...FairExhibitors_fair
+            ...FairBooths_fair
               @arguments(first: $first, page: $page, sort: $sort)
           }
         }
@@ -64,13 +64,13 @@ describe("FairExhibitors", () => {
   beforeEach(async () => {
     wrapper = await getWrapper({})
     refetchSpy = jest.spyOn(
-      (wrapper.find("FairExhibitors").props() as any).relay,
+      (wrapper.find("FairBooths").props() as any).relay,
       "refetch"
     )
   })
 
   it("renders the rails from exhibitors that have artworks", async () => {
-    expect(wrapper.find(FairExhibitorRail).length).toBe(2)
+    expect(wrapper.find(FairBoothRail).length).toBe(2)
     const text = wrapper.text()
     expect(text).toContain("First Partner Has Artworks")
     expect(text).toContain("Second Partner Has Artworks")
@@ -87,8 +87,8 @@ describe("FairExhibitors", () => {
 
   describe("sort", () => {
     it("renders correctly", () => {
-      const text = wrapper.find(FairExhibitorSortFilter).text()
-      expect(wrapper.find(FairExhibitorSortFilter).length).toBe(1)
+      const text = wrapper.find(FairBoothSortFilter).text()
+      expect(wrapper.find(FairBoothSortFilter).length).toBe(1)
       expect(text).toContain("Sort:")
       expect(text).toContain("Relevance")
       expect(text).toContain("Alphabetical (A-Z)")
@@ -119,8 +119,8 @@ describe("FairExhibitors", () => {
     describe("on mobile", () => {
       it("renders correctly", async () => {
         const wrapper = await getWrapper({ breakpoint: "xs" })
-        const text = wrapper.find(FairExhibitorSortFilter).text()
-        expect(wrapper.find(FairExhibitorSortFilter).length).toBe(1)
+        const text = wrapper.find(FairBoothSortFilter).text()
+        expect(wrapper.find(FairBoothSortFilter).length).toBe(1)
         expect(wrapper.find(Sticky).length).toBe(1)
         expect(text).toContain("Sort:")
         expect(text).toContain("Relevance")
@@ -130,7 +130,7 @@ describe("FairExhibitors", () => {
   })
 })
 
-const FAIR_EXHIBITORS_FIXTURE: FairExhibitors_QueryRawResponse = {
+const FAIR_BOOTHS_FIXTURE: FairBooths_QueryRawResponse = {
   fair: {
     id: "xxx",
     slug: "xxx",
@@ -156,6 +156,7 @@ const FAIR_EXHIBITORS_FIXTURE: FairExhibitors_QueryRawResponse = {
             id: "xxx-1",
             internalID: "xxx-1",
             slug: "show-slug",
+            isDisplayable: false,
             counts: { artworks: 0 },
             href: "/show/example-1",
             partner: {
@@ -170,6 +171,7 @@ const FAIR_EXHIBITORS_FIXTURE: FairExhibitors_QueryRawResponse = {
             id: "xxx-2",
             internalID: "xxx-2",
             slug: "show-slug",
+            isDisplayable: true,
             counts: { artworks: 10 },
             href: "/show/example-2",
             partner: {
@@ -184,6 +186,7 @@ const FAIR_EXHIBITORS_FIXTURE: FairExhibitors_QueryRawResponse = {
             id: "xxx-3",
             internalID: "xxx-3",
             slug: "show-slug",
+            isDisplayable: true,
             counts: { artworks: 10 },
             href: "/show/example-3",
             partner: {

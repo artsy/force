@@ -2,7 +2,7 @@ import React from "react"
 import { Box, Shelf, SkeletonBox, SkeletonText } from "@artsy/palette"
 import { IMG_HEIGHT } from "v2/Components/Artwork/ShelfArtwork"
 
-export const FairExhibitorRailPlaceholder: React.FC = () => (
+export const FairBoothRailPlaceholder: React.FC = () => (
   <Shelf>
     {[...new Array(10)].map((_, i) => {
       return (

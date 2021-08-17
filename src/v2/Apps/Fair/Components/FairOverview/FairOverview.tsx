@@ -13,7 +13,7 @@ import {
   FAIR_EDITORIAL_AMOUNT,
 } from "../FairEditorial"
 import { FairCollectionsFragmentContainer } from "../FairCollections"
-import { FairFollowedArtistsFragmentContainer } from "../FairFollowedArtists"
+import { FairFollowedArtistsFragmentContainer } from "./FairFollowedArtists"
 import { useSystemContext } from "v2/System"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { FairOverview_fair } from "v2/__generated__/FairOverview_fair.graphql"

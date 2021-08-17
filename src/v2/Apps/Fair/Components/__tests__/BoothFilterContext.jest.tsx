@@ -2,45 +2,41 @@ import { mount } from "enzyme"
 import React from "react"
 import { act } from "react-dom/test-utils"
 import {
-  ExhibitorFilterContextProvider,
-  initialExhibitorFilterState,
-  useExhibitorsFilterContext,
-} from "../ExhibitorFilterContext"
+  BoothFilterContextProvider,
+  initialBoothFilterState,
+  useBoothsFilterContext,
+} from "../BoothFilterContext"
 
-describe("ExhibitorFilterContext", () => {
-  let context: ReturnType<typeof useExhibitorsFilterContext>
+describe("BoothFilterContext", () => {
+  let context: ReturnType<typeof useBoothsFilterContext>
 
   const getWrapper = (props = {}) => {
     return mount(
-      <ExhibitorFilterContextProvider {...props}>
+      <BoothFilterContextProvider {...props}>
         <TestComponent />
-      </ExhibitorFilterContextProvider>
+      </BoothFilterContextProvider>
     )
   }
 
   const TestComponent = () => {
-    context = useExhibitorsFilterContext()
+    context = useBoothsFilterContext()
     return null
   }
 
   it("boots with default filters", async () => {
     getWrapper()
-    expect(context.filters).toEqual(initialExhibitorFilterState)
+    expect(context.filters).toEqual(initialBoothFilterState)
   })
 
   describe("behaviors", () => {
     it("#onFilterClick", () => {
       const spy = jest.fn()
       getWrapper({ onFilterClick: spy })
-      context.onFilterClick!(
-        "sort",
-        "FEATURED_DESC",
-        initialExhibitorFilterState
-      )
+      context.onFilterClick!("sort", "FEATURED_DESC", initialBoothFilterState)
       expect(spy).toHaveBeenCalledWith(
         "sort",
         "FEATURED_DESC",
-        initialExhibitorFilterState
+        initialBoothFilterState
       )
     })
 

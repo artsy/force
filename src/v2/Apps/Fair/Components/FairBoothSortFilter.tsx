@@ -1,9 +1,9 @@
 import React from "react"
 import { SortFilter } from "v2/Components/SortFilter"
-import { useExhibitorsFilterContext } from "./ExhibitorFilterContext"
+import { useBoothsFilterContext } from "./BoothFilterContext"
 
-export const FairExhibitorSortFilter: React.FC = () => {
-  const context = useExhibitorsFilterContext()
+export const FairBoothSortFilter: React.FC = () => {
+  const context = useBoothsFilterContext()
   const { sortOptions, filters, setFilter } = context
 
   return (

@@ -3,34 +3,34 @@ import { graphql, createRefetchContainer, RelayRefetchProp } from "react-relay"
 import useDeepCompareEffect from "use-deep-compare-effect"
 import { isEqual } from "lodash"
 import { Box, Flex, Spacer } from "@artsy/palette"
-import { FairExhibitors_fair } from "v2/__generated__/FairExhibitors_fair.graphql"
+import { FairBooths_fair } from "v2/__generated__/FairBooths_fair.graphql"
 import { updateUrl } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
 import {
-  ExhibitorFilterContextProvider,
-  useExhibitorsFilterContext,
-} from "../Components/ExhibitorFilterContext"
-import { FairExhibitorsQuery } from "./FairExhibitorsQuery"
+  BoothFilterContextProvider,
+  useBoothsFilterContext,
+} from "../Components/BoothFilterContext"
+import { FairBoothsQuery } from "./FairBoothsQuery"
 import { LoadingArea } from "v2/Components/LoadingArea"
 import { Sticky } from "v2/Components/Sticky"
 import { useRouter } from "v2/System/Router/useRouter"
 import { Media } from "v2/Utils/Responsive"
 import { usePrevious } from "v2/Utils/Hooks/usePrevious"
 import createLogger from "v2/Utils/logger"
-import { FairExhibitorRailFragmentContainer as FairExhibitorRail } from "../Components/FairExhibitorRail"
-import { FairExhibitorSortFilter } from "../Components/FairExhibitorSortFilter"
+import { FairBoothRailFragmentContainer as FairBoothRail } from "../Components/FairBoothRail"
+import { FairBoothSortFilter } from "../Components/FairBoothSortFilter"
 import { PaginationFragmentContainer as Pagination } from "v2/Components/Pagination"
 
-const logger = createLogger("FairExhibitors.tsx")
+const logger = createLogger("FairBooths.tsx")
 
 const PAGE_SIZE = 15
 
-interface FairExhibitorsProps {
-  fair: FairExhibitors_fair
+interface FairBoothsProps {
+  fair: FairBooths_fair
   relay: RelayRefetchProp
 }
 
-const FairExhibitors: React.FC<FairExhibitorsProps> = ({ fair, relay }) => {
-  const context = useExhibitorsFilterContext()
+const FairBooths: React.FC<FairBoothsProps> = ({ fair, relay }) => {
+  const context = useBoothsFilterContext()
 
   const [isLoading, setIsLoading] = useState(false)
 
@@ -88,7 +88,7 @@ const FairExhibitors: React.FC<FairExhibitorsProps> = ({ fair, relay }) => {
 
   return (
     <>
-      <Box id="jump--ExhibitorsFilter" />
+      <Box id="jump--BoothsFilter" />
 
       <Media at="xs">
         <Sticky>
@@ -105,7 +105,7 @@ const FairExhibitors: React.FC<FairExhibitorsProps> = ({ fair, relay }) => {
                     }
                   : {})}
               >
-                <FairExhibitorSortFilter />
+                <FairBoothSortFilter />
               </Flex>
             )
           }}
@@ -114,7 +114,7 @@ const FairExhibitors: React.FC<FairExhibitorsProps> = ({ fair, relay }) => {
 
       <Media greaterThan="xs">
         <Flex justifyContent="flex-end">
-          <FairExhibitorSortFilter />
+          <FairBoothSortFilter />
         </Flex>
       </Media>
 
@@ -123,14 +123,14 @@ const FairExhibitors: React.FC<FairExhibitorsProps> = ({ fair, relay }) => {
       <LoadingArea isLoading={isLoading}>
         {fair.exhibitors?.edges!.map((edge, index) => {
           const show = edge?.node!
-          if (show?.counts?.artworks === 0 || !show?.partner) {
+          if (!show.isDisplayable) {
             // Skip rendering of booths without artworks
             return null
           }
 
           return (
             <Box my={6} key={index}>
-              <FairExhibitorRail key={show.id} show={show} />
+              <FairBoothRail key={show.id} show={show} />
             </Box>
           )
         })}
@@ -143,20 +143,18 @@ const FairExhibitors: React.FC<FairExhibitorsProps> = ({ fair, relay }) => {
         pageCursors={pageCursors}
         onClick={(_cursor, page) => loadPage(page)}
         onNext={() => loadNext()}
-        scrollTo="#jump--ExhibitorsFilter"
+        scrollTo="#jump--BoothsFilter"
       />
     </>
   )
 }
 
-const FairExhibitorsWithContext: React.FC<FairExhibitorsProps> = ({
-  ...props
-}) => {
+const FairBoothsWithContext: React.FC<FairBoothsProps> = ({ ...props }) => {
   const {
     match: { location },
   } = useRouter()
   return (
-    <ExhibitorFilterContextProvider
+    <BoothFilterContextProvider
       filters={location.query}
       sortOptions={[
         { text: "Relevance", value: "FEATURED_DESC" },
@@ -166,16 +164,16 @@ const FairExhibitorsWithContext: React.FC<FairExhibitorsProps> = ({
         updateUrl(event, { defaultValues: { sort: "FEATURED_DESC" } })
       }
     >
-      <FairExhibitors {...props} />
-    </ExhibitorFilterContextProvider>
+      <FairBooths {...props} />
+    </BoothFilterContextProvider>
   )
 }
 
-export const FairExhibitorsFragmentContainer = createRefetchContainer(
-  FairExhibitorsWithContext,
+export const FairBoothsFragmentContainer = createRefetchContainer(
+  FairBoothsWithContext,
   {
     fair: graphql`
-      fragment FairExhibitors_fair on Fair
+      fragment FairBooths_fair on Fair
         @argumentDefinitions(
           sort: { type: "ShowSorts", defaultValue: FEATURED_DESC }
           first: { type: "Int", defaultValue: 15 }
@@ -197,23 +195,13 @@ export const FairExhibitorsFragmentContainer = createRefetchContainer(
           edges {
             node {
               id
-              counts {
-                artworks
-              }
-              partner {
-                ... on Partner {
-                  id
-                }
-                ... on ExternalPartner {
-                  id
-                }
-              }
-              ...FairExhibitorRail_show
+              isDisplayable
+              ...FairBoothRail_show
             }
           }
         }
       }
     `,
   },
-  FairExhibitorsQuery
+  FairBoothsQuery
 )

@@ -4,36 +4,36 @@
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ShowSorts = "END_AT_ASC" | "END_AT_DESC" | "FEATURED_ASC" | "FEATURED_DESC" | "FEATURED_DESC_END_AT_DESC" | "NAME_ASC" | "NAME_DESC" | "PARTNER_ASC" | "SORTABLE_NAME_ASC" | "SORTABLE_NAME_DESC" | "START_AT_ASC" | "START_AT_DESC" | "UPDATED_AT_ASC" | "UPDATED_AT_DESC" | "%future added value";
-export type fairRoutes_FairExhibitorsQueryVariables = {
+export type fairRoutes_FairBoothsQueryVariables = {
     slug: string;
     page?: number | null;
     sort?: ShowSorts | null;
 };
-export type fairRoutes_FairExhibitorsQueryResponse = {
+export type fairRoutes_FairBoothsQueryResponse = {
     readonly fair: {
-        readonly " $fragmentRefs": FragmentRefs<"FairExhibitors_fair">;
+        readonly " $fragmentRefs": FragmentRefs<"FairBooths_fair">;
     } | null;
 };
-export type fairRoutes_FairExhibitorsQuery = {
-    readonly response: fairRoutes_FairExhibitorsQueryResponse;
-    readonly variables: fairRoutes_FairExhibitorsQueryVariables;
+export type fairRoutes_FairBoothsQuery = {
+    readonly response: fairRoutes_FairBoothsQueryResponse;
+    readonly variables: fairRoutes_FairBoothsQueryVariables;
 };
 
 
 
 /*
-query fairRoutes_FairExhibitorsQuery(
+query fairRoutes_FairBoothsQuery(
   $slug: String!
   $page: Int
   $sort: ShowSorts
 ) {
   fair(id: $slug) @principalField {
-    ...FairExhibitors_fair_20XdsY
+    ...FairBooths_fair_20XdsY
     id
   }
 }
 
-fragment FairExhibitorRail_show on Show {
+fragment FairBoothRail_show on Show {
   internalID
   slug
   href
@@ -55,7 +55,7 @@ fragment FairExhibitorRail_show on Show {
   }
 }
 
-fragment FairExhibitors_fair_20XdsY on Fair {
+fragment FairBooths_fair_20XdsY on Fair {
   slug
   exhibitors: showsConnection(sort: $sort, first: 15, page: $page, totalCount: true) {
     pageInfo {
@@ -67,22 +67,8 @@ fragment FairExhibitors_fair_20XdsY on Fair {
     edges {
       node {
         id
-        counts {
-          artworks
-        }
-        partner {
-          __typename
-          ... on Partner {
-            id
-          }
-          ... on ExternalPartner {
-            id
-          }
-          ... on Node {
-            id
-          }
-        }
-        ...FairExhibitorRail_show
+        isDisplayable
+        ...FairBoothRail_show
       }
     }
   }
@@ -202,7 +188,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "fairRoutes_FairExhibitorsQuery",
+    "name": "fairRoutes_FairBoothsQuery",
     "selections": [
       {
         "alias": null,
@@ -218,7 +204,7 @@ return {
               (v3/*: any*/)
             ],
             "kind": "FragmentSpread",
-            "name": "FairExhibitors_fair"
+            "name": "FairBooths_fair"
           }
         ],
         "storageKey": null
@@ -230,7 +216,7 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "fairRoutes_FairExhibitorsQuery",
+    "name": "fairRoutes_FairBoothsQuery",
     "selections": [
       {
         "alias": null,
@@ -354,19 +340,23 @@ return {
                       {
                         "alias": null,
                         "args": null,
-                        "concreteType": "ShowCounts",
-                        "kind": "LinkedField",
-                        "name": "counts",
-                        "plural": false,
-                        "selections": [
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "artworks",
-                            "storageKey": null
-                          }
-                        ],
+                        "kind": "ScalarField",
+                        "name": "isDisplayable",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "internalID",
+                        "storageKey": null
+                      },
+                      (v4/*: any*/),
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "href",
                         "storageKey": null
                       },
                       {
@@ -401,16 +391,19 @@ return {
                       {
                         "alias": null,
                         "args": null,
-                        "kind": "ScalarField",
-                        "name": "internalID",
-                        "storageKey": null
-                      },
-                      (v4/*: any*/),
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "href",
+                        "concreteType": "ShowCounts",
+                        "kind": "LinkedField",
+                        "name": "counts",
+                        "plural": false,
+                        "selections": [
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "artworks",
+                            "storageKey": null
+                          }
+                        ],
                         "storageKey": null
                       }
                     ],
@@ -431,11 +424,11 @@ return {
   "params": {
     "id": null,
     "metadata": {},
-    "name": "fairRoutes_FairExhibitorsQuery",
+    "name": "fairRoutes_FairBoothsQuery",
     "operationKind": "query",
-    "text": "query fairRoutes_FairExhibitorsQuery(\n  $slug: String!\n  $page: Int\n  $sort: ShowSorts\n) {\n  fair(id: $slug) @principalField {\n    ...FairExhibitors_fair_20XdsY\n    id\n  }\n}\n\nfragment FairExhibitorRail_show on Show {\n  internalID\n  slug\n  href\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on ExternalPartner {\n      name\n      id\n    }\n    ... on Node {\n      id\n    }\n  }\n  counts {\n    artworks\n  }\n}\n\nfragment FairExhibitors_fair_20XdsY on Fair {\n  slug\n  exhibitors: showsConnection(sort: $sort, first: 15, page: $page, totalCount: true) {\n    pageInfo {\n      hasNextPage\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        id\n        counts {\n          artworks\n        }\n        partner {\n          __typename\n          ... on Partner {\n            id\n          }\n          ... on ExternalPartner {\n            id\n          }\n          ... on Node {\n            id\n          }\n        }\n        ...FairExhibitorRail_show\n      }\n    }\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n"
+    "text": "query fairRoutes_FairBoothsQuery(\n  $slug: String!\n  $page: Int\n  $sort: ShowSorts\n) {\n  fair(id: $slug) @principalField {\n    ...FairBooths_fair_20XdsY\n    id\n  }\n}\n\nfragment FairBoothRail_show on Show {\n  internalID\n  slug\n  href\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on ExternalPartner {\n      name\n      id\n    }\n    ... on Node {\n      id\n    }\n  }\n  counts {\n    artworks\n  }\n}\n\nfragment FairBooths_fair_20XdsY on Fair {\n  slug\n  exhibitors: showsConnection(sort: $sort, first: 15, page: $page, totalCount: true) {\n    pageInfo {\n      hasNextPage\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        id\n        isDisplayable\n        ...FairBoothRail_show\n      }\n    }\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'b4272f44722040e242be328ed5f25748';
+(node as any).hash = '6d0d13aec52a75860a38948d1508eac1';
 export default node;

@@ -3,7 +3,7 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type FairExhibitorRail_show = {
+export type FairBoothRail_show = {
     readonly internalID: string;
     readonly slug: string;
     readonly href: string | null;
@@ -13,12 +13,12 @@ export type FairExhibitorRail_show = {
     readonly counts: {
         readonly artworks: number | null;
     } | null;
-    readonly " $refType": "FairExhibitorRail_show";
+    readonly " $refType": "FairBoothRail_show";
 };
-export type FairExhibitorRail_show$data = FairExhibitorRail_show;
-export type FairExhibitorRail_show$key = {
-    readonly " $data"?: FairExhibitorRail_show$data;
-    readonly " $fragmentRefs": FragmentRefs<"FairExhibitorRail_show">;
+export type FairBoothRail_show$data = FairBoothRail_show;
+export type FairBoothRail_show$key = {
+    readonly " $data"?: FairBoothRail_show$data;
+    readonly " $fragmentRefs": FragmentRefs<"FairBoothRail_show">;
 };
 
 
@@ -37,7 +37,7 @@ return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "FairExhibitorRail_show",
+  "name": "FairBoothRail_show",
   "selections": [
     {
       "alias": null,
@@ -103,5 +103,5 @@ return {
   "type": "Show"
 };
 })();
-(node as any).hash = 'b5e285e71e922173d341f3f3c3c9c3be';
+(node as any).hash = '39863519483da7edef303de7aa6c4a22';
 export default node;
