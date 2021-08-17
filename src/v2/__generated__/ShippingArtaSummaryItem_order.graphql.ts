@@ -10,15 +10,9 @@ export type ShippingArtaSummaryItem_order = {
     readonly lineItems: {
         readonly edges: ReadonlyArray<{
             readonly node: {
-                readonly shippingQuoteOptions: {
-                    readonly edges: ReadonlyArray<{
-                        readonly node: {
-                            readonly name: string | null;
-                            readonly tier: string;
-                            readonly isSelected: boolean;
-                            readonly price: string | null;
-                        } | null;
-                    } | null> | null;
+                readonly selectedShippingQuote: {
+                    readonly displayName: string;
+                    readonly price: string | null;
                 } | null;
             } | null;
         } | null> | null;
@@ -84,66 +78,30 @@ const node: ReaderFragment = {
                 {
                   "alias": null,
                   "args": null,
-                  "concreteType": "CommerceShippingQuoteConnection",
+                  "concreteType": "CommerceShippingQuote",
                   "kind": "LinkedField",
-                  "name": "shippingQuoteOptions",
+                  "name": "selectedShippingQuote",
                   "plural": false,
                   "selections": [
                     {
                       "alias": null,
                       "args": null,
-                      "concreteType": "CommerceShippingQuoteEdge",
-                      "kind": "LinkedField",
-                      "name": "edges",
-                      "plural": true,
-                      "selections": [
+                      "kind": "ScalarField",
+                      "name": "displayName",
+                      "storageKey": null
+                    },
+                    {
+                      "alias": null,
+                      "args": [
                         {
-                          "alias": null,
-                          "args": null,
-                          "concreteType": "CommerceShippingQuote",
-                          "kind": "LinkedField",
-                          "name": "node",
-                          "plural": false,
-                          "selections": [
-                            {
-                              "alias": null,
-                              "args": null,
-                              "kind": "ScalarField",
-                              "name": "name",
-                              "storageKey": null
-                            },
-                            {
-                              "alias": null,
-                              "args": null,
-                              "kind": "ScalarField",
-                              "name": "tier",
-                              "storageKey": null
-                            },
-                            {
-                              "alias": null,
-                              "args": null,
-                              "kind": "ScalarField",
-                              "name": "isSelected",
-                              "storageKey": null
-                            },
-                            {
-                              "alias": null,
-                              "args": [
-                                {
-                                  "kind": "Literal",
-                                  "name": "precision",
-                                  "value": 2
-                                }
-                              ],
-                              "kind": "ScalarField",
-                              "name": "price",
-                              "storageKey": "price(precision:2)"
-                            }
-                          ],
-                          "storageKey": null
+                          "kind": "Literal",
+                          "name": "precision",
+                          "value": 2
                         }
                       ],
-                      "storageKey": null
+                      "kind": "ScalarField",
+                      "name": "price",
+                      "storageKey": "price(precision:2)"
                     }
                   ],
                   "storageKey": null
@@ -160,5 +118,5 @@ const node: ReaderFragment = {
   ],
   "type": "CommerceOrder"
 };
-(node as any).hash = '88ac101bafce88ecb87567a6567ff171';
+(node as any).hash = '53c40d83d3cc92e8fee4ac4b7c2a09d3';
 export default node;

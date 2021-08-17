@@ -5,7 +5,6 @@ import {
 } from "v2/Components/StepSummaryItem"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { extractNodes } from "v2/Utils/extractNodes"
 import { Text } from "@artsy/palette"
 import { startCase } from "lodash"
 
@@ -16,9 +15,7 @@ interface ShippingArtaSummaryItemProps {
 const ShippingArtaSummaryItem: React.FC<
   ShippingArtaSummaryItemProps & StepSummaryItemProps
 > = ({ order: { requestedFulfillment, lineItems }, ...others }) => {
-  const shippingQuote = extractNodes(
-    lineItems?.edges?.[0]?.node?.shippingQuoteOptions
-  ).find(shippingQuote => shippingQuote.isSelected)
+  const shippingQuote = lineItems?.edges?.[0]?.node?.selectedShippingQuote
 
   if (
     !shippingQuote ||
@@ -27,12 +24,10 @@ const ShippingArtaSummaryItem: React.FC<
     return null
   }
 
-  const shippingQuoteName = shippingQuote.name || shippingQuote.tier
-
   return requestedFulfillment?.__typename === "CommerceShipArta" ? (
     <StepSummaryItem {...others}>
       <Text variant="md" fontWeight={["regular", "bold"]}>
-        {startCase(shippingQuoteName)} delivery ({shippingQuote.price})
+        {startCase(shippingQuote.displayName)} delivery ({shippingQuote.price})
       </Text>
     </StepSummaryItem>
   ) : null
@@ -49,15 +44,9 @@ export const ShippingArtaSummaryItemFragmentContainer = createFragmentContainer(
         lineItems {
           edges {
             node {
-              shippingQuoteOptions {
-                edges {
-                  node {
-                    name
-                    tier
-                    isSelected
-                    price(precision: 2)
-                  }
-                }
+              selectedShippingQuote {
+                displayName
+                price(precision: 2)
               }
             }
           }

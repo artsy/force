@@ -7,7 +7,7 @@ import {
   StepSummaryItem,
   StepSummaryItemProps,
 } from "v2/Components/StepSummaryItem"
-import { Omit, startCase } from "lodash"
+import { Omit } from "lodash"
 import { getOfferItemFromOrder } from "v2/Apps/Order/Utils/offerItemExtractor"
 import { extractNodes } from "v2/Utils/extractNodes"
 
@@ -78,14 +78,11 @@ export class TransactionDetailsSummaryItem extends React.Component<
     let label = "Shipping"
 
     if (order.requestedFulfillment?.__typename === "CommerceShipArta") {
-      const selectedShippingQuote = extractNodes(
-        extractNodes(order.lineItems)?.[0].shippingQuoteOptions
-      ).find(shippingQuote => shippingQuote.isSelected)
+      const selectedShippingQuote = extractNodes(order.lineItems)?.[0]
+        .selectedShippingQuote
 
       if (selectedShippingQuote) {
-        label = `${startCase(
-          selectedShippingQuote.name || selectedShippingQuote.tier
-        )} delivery`
+        label = `${selectedShippingQuote.displayName} delivery`
       }
     }
 
@@ -245,14 +242,8 @@ export const TransactionDetailsSummaryItemFragmentContainer = createFragmentCont
                   price
                 }
               }
-              shippingQuoteOptions {
-                edges {
-                  node {
-                    name
-                    tier
-                    isSelected
-                  }
-                }
+              selectedShippingQuote {
+                displayName
               }
             }
           }
