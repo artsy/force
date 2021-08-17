@@ -25,6 +25,16 @@ export const ArtistAutosuggest: React.FC<ArtistAutosuggestProps> = ({
   const [suggestions, setSuggestions] = useState<any>([])
   const [searchQuery, setSearchQuery] = useState("")
 
+  const updateSuggestions = async () => {
+    const suggestions = await fetchSuggestions(searchQuery, relayEnvironment)
+
+    setSuggestions(suggestions)
+  }
+
+  useEffect(() => {
+    updateSuggestions()
+  }, [searchQuery])
+
   const [width, setWidth] = useState(0)
 
   useEffect(() => {
@@ -49,7 +59,6 @@ export const ArtistAutosuggest: React.FC<ArtistAutosuggestProps> = ({
 
   const selectSuggestion = async (selectedSuggestion: any) => {
     onChange?.(selectedSuggestion?.node?.slug)
-    console.log(selectedSuggestion)
   }
 
   const AutosuggestInput: React.FC = props => {
@@ -93,14 +102,6 @@ export const ArtistAutosuggest: React.FC<ArtistAutosuggestProps> = ({
     <Autosuggest
       suggestions={suggestions ?? []}
       onSuggestionsClearRequested={x => x}
-      onSuggestionsFetchRequested={async () => {
-        const suggestions = await fetchSuggestions(
-          searchQuery,
-          relayEnvironment
-        )
-
-        setSuggestions(suggestions)
-      }}
       onSuggestionSelected={(_, { suggestion }) => {
         selectSuggestion(suggestion)
       }}
