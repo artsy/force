@@ -149,13 +149,14 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
     address?: UpdateUserAddressMutationResponse &
       CreateUserAddressMutationResponse
   ) => {
-    refetchAddresses()
+    refetchAddresses(() => {
+      if (address?.createUserAddress) {
+        onAddressCreate && onAddressCreate(address.createUserAddress)
+      } else if (address?.updateUserAddress) {
+        onAddressEdit && onAddressEdit(address.updateUserAddress)
+      }
+    })
 
-    if (address?.createUserAddress) {
-      onAddressCreate && onAddressCreate(address.createUserAddress)
-    } else if (address?.updateUserAddress) {
-      onAddressEdit && onAddressEdit(address.updateUserAddress)
-    }
     onShowToast && onShowToast(true, "Saved")
   }
 
