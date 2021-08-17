@@ -1,4 +1,4 @@
-import { Serif } from "@artsy/palette"
+import { Text } from "@artsy/palette"
 import React from "react"
 
 import { ShippingAddress_ship } from "v2/__generated__/ShippingAddress_ship.graphql"
@@ -22,18 +22,17 @@ export const ShippingAddress = ({
   },
 }: ShippingAddressProps) => (
   <>
-    <Serif size={["2", "3t"]}>{name}</Serif>
-    <Serif size={["2", "3t"]}>
+    <Text variant={["xs", "sm"]}>{name}</Text>
+    <Text variant={["xs", "sm"]}>
       {[addressLine1, (addressLine2 || "").trim()].filter(Boolean).join(", ")}
-    </Serif>
-    <Serif size={["2", "3t"]}>
+    </Text>
+    <Text variant={["xs", "sm"]}>
       {city}, {region} {postalCode}
-    </Serif>
-    <Serif size={["2", "3t"]}>
-      {/* @ts-expect-error STRICT_NULL_CHECK */}
-      {COUNTRY_CODE_TO_COUNTRY_NAME[country] || country}
-    </Serif>
-    {phoneNumber && <Serif size={["2", "3t"]}>{phoneNumber}</Serif>}
+    </Text>
+    <Text variant={["xs", "sm"]}>
+      {country && (COUNTRY_CODE_TO_COUNTRY_NAME[country] || country)}
+    </Text>
+    {phoneNumber && <Text variant={["xs", "sm"]}>{phoneNumber}</Text>}
   </>
 )
 

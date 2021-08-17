@@ -1,4 +1,4 @@
-import { Box, Col, Flex, Row, Spacer } from "@artsy/palette"
+import { Box, Column, Flex, GridColumns, Spacer } from "@artsy/palette"
 import React from "react"
 import { Media } from "v2/Utils/Responsive"
 
@@ -45,16 +45,16 @@ export const TwoColumnLayout = props => (
 )
 
 const DefaultLayout = ({ Content, Sidebar }) => (
-  <Row>
-    <Col col={CONTENT_SPAN}>{Content}</Col>
-    <Col col={1} />
-    <Col col={SIDEBAR_SPAN}>{Sidebar}</Col>
-  </Row>
+  <GridColumns>
+    <Column span={CONTENT_SPAN}>{Content}</Column>
+    <Column span={1} />
+    <Column span={SIDEBAR_SPAN}>{Sidebar}</Column>
+  </GridColumns>
 )
 
 const XsLayout = ({ Content, Sidebar }) => (
-  <Row>
-    <Col>{Content}</Col>
-    <Col>{Sidebar}</Col>
-  </Row>
+  <GridColumns>
+    <Column span={12}>{Content}</Column>
+    <Column span={12}>{Sidebar}</Column>
+  </GridColumns>
 )

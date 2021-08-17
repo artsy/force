@@ -89,6 +89,7 @@ const OrderApp = loadable(
 export const orderRoutes: AppRouteConfig[] = [
   {
     // TODO: Still need order2?
+    // theme: "v3",
     path: "/order(2|s)/:orderID",
     hideFooter: true,
     Component: OrderApp,
@@ -142,6 +143,7 @@ export const orderRoutes: AppRouteConfig[] = [
     children: [
       {
         path: "respond",
+        theme: "v3",
         Component: RespondRoute,
         shouldWarnBeforeLeaving: true,
         hideFooter: true,
@@ -158,6 +160,8 @@ export const orderRoutes: AppRouteConfig[] = [
       },
       {
         path: "offer",
+        // theme: "v3",
+
         Component: OfferRoute,
         shouldWarnBeforeLeaving: true,
         hideFooter: true,
@@ -174,6 +178,7 @@ export const orderRoutes: AppRouteConfig[] = [
       },
       {
         path: "shipping",
+        // theme: "v3",
         Component: ShippingRoute,
         shouldWarnBeforeLeaving: true,
         hideFooter: true,
@@ -193,6 +198,7 @@ export const orderRoutes: AppRouteConfig[] = [
       },
       {
         path: "payment",
+        // theme: "v3",
         Component: PaymentRoute,
         shouldWarnBeforeLeaving: true,
         hideFooter: true,
@@ -212,6 +218,7 @@ export const orderRoutes: AppRouteConfig[] = [
       },
       {
         path: "payment/new",
+        // theme: "v3",
         Component: NewPaymentRoute,
         shouldWarnBeforeLeaving: true,
         hideFooter: true,
@@ -231,6 +238,7 @@ export const orderRoutes: AppRouteConfig[] = [
       },
       {
         path: "review/counter",
+        // theme: "v3",
         Component: CounterRoute,
         shouldWarnBeforeLeaving: true,
         hideFooter: true,
@@ -247,6 +255,7 @@ export const orderRoutes: AppRouteConfig[] = [
       },
       {
         path: "review",
+        theme: "v3",
         Component: ReviewRoute,
         shouldWarnBeforeLeaving: true,
         hideFooter: true,
@@ -263,6 +272,7 @@ export const orderRoutes: AppRouteConfig[] = [
       },
       {
         path: "review/accept",
+        // theme: "v3",
         Component: AcceptRoute,
         hideFooter: true,
         query: graphql`

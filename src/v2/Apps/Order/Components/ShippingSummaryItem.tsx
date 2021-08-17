@@ -1,4 +1,4 @@
-import { Serif } from "@artsy/palette"
+import { Text } from "@artsy/palette"
 import { ShippingSummaryItem_order } from "v2/__generated__/ShippingSummaryItem_order.graphql"
 import {
   StepSummaryItem,
@@ -30,17 +30,18 @@ const ShippingSummaryItem = ({
     </StepSummaryItem>
   ) : (
     <StepSummaryItem
-      // @ts-expect-error STRICT_NULL_CHECK
-      title={<>Pick up ({lineItems.edges[0].node.artwork.shippingOrigin})</>}
+      title={
+        <>Pick up ({lineItems?.edges?.[0]?.node?.artwork?.shippingOrigin})</>
+      }
       /* Fixes spacing issues with title when no pickup description copy is present */
       mb={showPickupCopy(state) ? undefined : -1}
       {...others}
     >
       {showPickupCopy(state) && (
-        <Serif size="3t">
+        <Text variant="xs">
           After your order is confirmed, a specialist will contact you within 2
           business days to coordinate pickup.
-        </Serif>
+        </Text>
       )}
     </StepSummaryItem>
   )

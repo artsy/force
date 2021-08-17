@@ -172,7 +172,12 @@ export const AddressModal: React.FC<Props> = ({
         >
           {(formik: FormikProps<SavedAddressType>) => (
             <form onSubmit={formik.handleSubmit}>
-              <Text data-test="credit-card-error" color="red" my={2}>
+              <Text
+                variant="xs"
+                data-test="credit-card-error"
+                color="red100"
+                my={2}
+              >
                 {createUpdateError}
               </Text>
               <AddressModalFields />
@@ -206,7 +211,7 @@ export const AddressModal: React.FC<Props> = ({
                     data-test="deleteButton"
                     onClick={() => setShowDialog(true)}
                   >
-                    <Text variant="text" color="red100">
+                    <Text variant="xs" color="red100">
                       Delete address
                     </Text>
                   </Clickable>
@@ -215,7 +220,7 @@ export const AddressModal: React.FC<Props> = ({
               <Button
                 data-test="saveButton"
                 type="submit"
-                size="large"
+                variant="primaryBlack"
                 loading={formik.isSubmitting}
                 disabled={Object.keys(formik.errors).length > 0}
                 width="100%"
