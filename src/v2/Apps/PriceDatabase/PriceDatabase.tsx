@@ -1,6 +1,6 @@
 import { Flex, Separator, Spacer, themeProps } from "@artsy/palette"
 import React from "react"
-import { Benefits } from "./Components/Benefits"
+import { PriceDatabaseBenefits } from "./Components/PriceDatabaseBenefits"
 import { PriceDatabaseSearch } from "./Components/PriceDatabaseSearch"
 import { PriceDatabaseMeta } from "./Components/PriceDatabaseMeta"
 import { AuctionResultsFilterContextProvider } from "v2/Apps/Artist/Routes/AuctionResults/AuctionResultsFilterContext"
@@ -16,7 +16,7 @@ export const PriceDatabase = () => {
 
         <PriceDatabaseSearch />
         {isMobile ? <Spacer mt={4} /> : <Separator mt={4} />}
-        <Benefits />
+        <PriceDatabaseBenefits />
       </Flex>
     </AuctionResultsFilterContextProvider>
   )

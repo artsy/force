@@ -276,7 +276,6 @@ export const ArtistAuctionResultsRefetchContainer = createRefetchContainer(
       props.artist.auctionResultsConnection?.createdYearRange ?? {}
 
     const { match } = useRouter()
-
     const filters = paramsToCamelCase(match && match.location.query)
 
     return (

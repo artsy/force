@@ -7,7 +7,7 @@ export const PriceDatabaseMeta: React.FC = () => {
   const href = `${getENV("APP_URL")}/price-database`
   const metaDescription =
     "Search auction results for more than 340,000 artists for free."
-  const metaImage = null // FIXME: Need image for embeds
+  const metaImage = null // TODO: Need image for embeds
 
   return (
     <>

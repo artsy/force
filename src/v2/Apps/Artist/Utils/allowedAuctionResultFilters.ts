@@ -26,11 +26,5 @@ export const allowedAuctionResultFilters = (
 }
 
 const INTEGER_INPUT_ARGS = ["createdAfterYear", "createdBeforeYear"]
-
 const BOOLEAN_INPUT_ARGS = ["allowEmptyCreatedDates"]
-
-/**
- * This corresponds to all the allowed inputs to the filtered artworks connection.
- * This can be used as an allow-list when passing filter state from a URL.
- */
 const SUPPORTED_INPUT_ARGS = ["organizations", "categories", "sizes"]

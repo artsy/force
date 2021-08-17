@@ -10,7 +10,7 @@ import {
 import React from "react"
 import { useMatchMedia } from "v2/Utils/Hooks/useMatchMedia"
 
-export const Benefits: React.FC = () => {
+export const PriceDatabaseBenefits: React.FC = () => {
   const isMobile = useMatchMedia(themeProps.mediaQueries.xs)
 
   return (
