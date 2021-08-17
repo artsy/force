@@ -57,6 +57,7 @@ const Letter = styled(Text).attrs({ p: 1, variant: "md" })`
   cursor: pointer;
   white-space: nowrap;
 `
+Letter.displayName = "Letter"
 
 export const ExhibitorsLetterNavFragmentContainer = createFragmentContainer(
   ExhibitorsLetterNav,
