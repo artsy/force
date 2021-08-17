@@ -53,6 +53,9 @@ fragment NavigationTabs_partner on Partner {
   notRepresentedArtists: artistsConnection(representedBy: false, hasPublishedArtworks: true, displayOnPartnerProfile: true) {
     totalCount
   }
+  viewingRooms: viewingRoomsConnection(statuses: [live, closed, scheduled]) {
+    totalCount
+  }
 }
 
 fragment PartnerApp_partner on Partner {
@@ -631,6 +634,26 @@ return {
             "selections": (v6/*: any*/),
             "storageKey": "artistsConnection(displayOnPartnerProfile:true,hasPublishedArtworks:true,representedBy:false)"
           },
+          {
+            "alias": "viewingRooms",
+            "args": [
+              {
+                "kind": "Literal",
+                "name": "statuses",
+                "value": [
+                  "live",
+                  "closed",
+                  "scheduled"
+                ]
+              }
+            ],
+            "concreteType": "ViewingRoomsConnection",
+            "kind": "LinkedField",
+            "name": "viewingRoomsConnection",
+            "plural": false,
+            "selections": (v6/*: any*/),
+            "storageKey": "viewingRoomsConnection(statuses:[\"live\",\"closed\",\"scheduled\"])"
+          },
           (v1/*: any*/)
         ],
         "storageKey": "partner(id:\"example\")"
@@ -642,7 +665,7 @@ return {
     "metadata": {},
     "name": "PartnerApp_Test_Query",
     "operationKind": "query",
-    "text": "query PartnerApp_Test_Query {\n  partner(id: \"example\") {\n    ...PartnerApp_partner\n    id\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  is_followed: isFollowed\n}\n\nfragment NavigationTabs_partner on Partner {\n  slug\n  partnerType\n  displayArtistsSection\n  displayWorksSection\n  counts {\n    eligibleArtworks\n    displayableShows\n  }\n  locations: locationsConnection(first: 20) {\n    totalCount\n  }\n  articles: articlesConnection {\n    totalCount\n  }\n  representedArtists: artistsConnection(representedBy: true, displayOnPartnerProfile: true) {\n    totalCount\n  }\n  notRepresentedArtists: artistsConnection(representedBy: false, hasPublishedArtworks: true, displayOnPartnerProfile: true) {\n    totalCount\n  }\n}\n\nfragment PartnerApp_partner on Partner {\n  partnerType\n  displayFullPartnerPage\n  partnerPageEligible\n  isDefaultProfilePublic\n  profile {\n    ...PartnerHeaderImage_profile\n    id\n  }\n  ...PartnerMeta_partner\n  ...PartnerHeader_partner\n  ...NavigationTabs_partner\n}\n\nfragment PartnerHeaderImage_profile on Profile {\n  image {\n    url(version: \"wide\")\n  }\n}\n\nfragment PartnerHeader_partner on Partner {\n  name\n  type\n  slug\n  profile {\n    icon {\n      resized(width: 80, height: 80, version: \"square140\") {\n        src\n        srcSet\n      }\n    }\n    ...FollowProfileButton_profile\n    id\n  }\n  locations: locationsConnection(first: 20) {\n    totalCount\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n}\n\nfragment PartnerMeta_partner on Partner {\n  locationsConnection(first: 1) {\n    edges {\n      node {\n        address\n        address2\n        city\n        coordinates {\n          lat\n          lng\n        }\n        country\n        phone\n        postalCode\n        state\n        id\n      }\n    }\n  }\n  meta {\n    image\n    title\n    description\n  }\n  name\n  slug\n}\n"
+    "text": "query PartnerApp_Test_Query {\n  partner(id: \"example\") {\n    ...PartnerApp_partner\n    id\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  is_followed: isFollowed\n}\n\nfragment NavigationTabs_partner on Partner {\n  slug\n  partnerType\n  displayArtistsSection\n  displayWorksSection\n  counts {\n    eligibleArtworks\n    displayableShows\n  }\n  locations: locationsConnection(first: 20) {\n    totalCount\n  }\n  articles: articlesConnection {\n    totalCount\n  }\n  representedArtists: artistsConnection(representedBy: true, displayOnPartnerProfile: true) {\n    totalCount\n  }\n  notRepresentedArtists: artistsConnection(representedBy: false, hasPublishedArtworks: true, displayOnPartnerProfile: true) {\n    totalCount\n  }\n  viewingRooms: viewingRoomsConnection(statuses: [live, closed, scheduled]) {\n    totalCount\n  }\n}\n\nfragment PartnerApp_partner on Partner {\n  partnerType\n  displayFullPartnerPage\n  partnerPageEligible\n  isDefaultProfilePublic\n  profile {\n    ...PartnerHeaderImage_profile\n    id\n  }\n  ...PartnerMeta_partner\n  ...PartnerHeader_partner\n  ...NavigationTabs_partner\n}\n\nfragment PartnerHeaderImage_profile on Profile {\n  image {\n    url(version: \"wide\")\n  }\n}\n\nfragment PartnerHeader_partner on Partner {\n  name\n  type\n  slug\n  profile {\n    icon {\n      resized(width: 80, height: 80, version: \"square140\") {\n        src\n        srcSet\n      }\n    }\n    ...FollowProfileButton_profile\n    id\n  }\n  locations: locationsConnection(first: 20) {\n    totalCount\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n}\n\nfragment PartnerMeta_partner on Partner {\n  locationsConnection(first: 1) {\n    edges {\n      node {\n        address\n        address2\n        city\n        coordinates {\n          lat\n          lng\n        }\n        country\n        phone\n        postalCode\n        state\n        id\n      }\n    }\n  }\n  meta {\n    image\n    title\n    description\n  }\n  name\n  slug\n}\n"
   }
 };
 })();
