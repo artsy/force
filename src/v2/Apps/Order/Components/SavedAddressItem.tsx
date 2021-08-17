@@ -1,4 +1,4 @@
-import { Flex, Text, RadioProps, Pill } from "@artsy/palette"
+import { Flex, Text, RadioProps } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
 import React from "react"
 import styled from "styled-components"
@@ -45,6 +45,7 @@ export const SavedAddressItem: React.FC<SavedAddressItemProps> = (
                   justifyContent="row"
                   alignItems="center"
                   mb={index === 0 ? 1 : 0}
+                  height={24}
                 >
                   <Text
                     textTransform="capitalize"
@@ -54,14 +55,7 @@ export const SavedAddressItem: React.FC<SavedAddressItemProps> = (
                     {line}
                   </Text>
                   {address?.isDefault && index === 0 && (
-                    <StyledPill
-                      ml={0.5}
-                      variant="textSquare"
-                      disabled
-                      hover
-                      width={53}
-                      maxHeight={21}
-                    >
+                    <DefaultLabel>
                       <Text
                         textColor="black60"
                         variant="caption"
@@ -69,7 +63,7 @@ export const SavedAddressItem: React.FC<SavedAddressItemProps> = (
                       >
                         Default
                       </Text>
-                    </StyledPill>
+                    </DefaultLabel>
                   )}
                 </Flex>
               )
@@ -105,9 +99,12 @@ const EditButton = styled(Text)`
   }
 `
 
-const StyledPill = styled(Pill)`
+const DefaultLabel = styled.div`
+  display: flex;
+  align-items: center;
+  padding: 0 5px;
   background-color: ${themeGet("colors.black10")};
-  &:hover {
-    background-color: ${themeGet("colors.black10")};
-  }
+  height: 24px;
+  margin-left: 5px;
+  border-radius: 2px;
 `
