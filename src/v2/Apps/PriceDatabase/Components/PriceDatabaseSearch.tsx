@@ -9,6 +9,9 @@ import {
 import qs from "qs"
 import React, { useState } from "react"
 import { useAuctionResultsFilterContext } from "v2/Apps/Artist/Routes/AuctionResults/AuctionResultsFilterContext"
+import { auctionHousesMap } from "v2/Apps/Artist/Routes/AuctionResults/Components/AuctionFilters/AuctionHouseFilter"
+import { categoryMap } from "v2/Apps/Artist/Routes/AuctionResults/Components/AuctionFilters/MediumFilter"
+import { sizeMap } from "v2/Apps/Artist/Routes/AuctionResults/Components/AuctionFilters/SizeFilter"
 import { paramsToSnakeCase } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
 import { useRouter } from "v2/System/Router/useRouter"
 import { filterSearchFilters } from "../Utils/filterSearchFilters"
@@ -16,25 +19,13 @@ import { ArtistAutosuggest } from "./ArtistAutosuggest"
 
 const ALLOWED_FILTERS = ["categories", "sizes", "organizations"]
 
-// TODO: Get all categories
-const mediumOptions = [
-  { text: "Painting", value: "Painting" },
-  { text: "Work on paper", value: "Work on Paper" },
-  { text: "Sculpture", value: "Sculpture" },
-  { text: "Print", value: "Print" },
-  { text: "Photography", value: "Photography" },
-  { text: "Textile arts", value: "Textile Arts" },
-]
-const sizeOptions = [
-  { text: "Small (under 40cm)", value: "SMALL" },
-  { text: "Medium (40cm - 100cm)", value: "MEDIUM" },
-  { text: "Large (over 100cm)", value: "LARGE" },
-]
-const organizationOptions = [
-  { text: "Sotheby's", value: "Sotheby's" },
-  { text: "Christie's", value: "Christie's" },
-  { text: "Phillips", value: "Phillips" },
-]
+// TODO: Get options via aggregations for the specific artist
+const mapMapToOptions = map =>
+  map.map(element => ({ text: element.displayName, value: element.name }))
+
+const categoryOptions = mapMapToOptions(categoryMap)
+const sizeOptions = mapMapToOptions(sizeMap)
+const organizationOptions = mapMapToOptions(auctionHousesMap)
 
 export const PriceDatabaseSearch: React.FC = () => {
   const { router } = useRouter()
@@ -84,7 +75,7 @@ export const PriceDatabaseSearch: React.FC = () => {
           </Column>
           <Column span={4} pb={[0, 4]}>
             <MultiSelect
-              options={mediumOptions}
+              options={categoryOptions}
               onSelect={handleFilterSelect("categories")}
               title={
                 <Text display="inline" color="black60">
