@@ -64,6 +64,19 @@
   integrity sha512-Ipzswe6djF3c1fbiZLnlX2XTUoOUHRFkkj7aQdJknabA6+/TCNYEt3f2GGd8TmjqC3dwc/PhoIyKfYJd8vAYdQ==
   dependencies:
     uuid "^8.3.0"
+
+"@artsy/palette-charts@15.0.0":
+  version "15.0.0"
+  resolved "https://registry.yarnpkg.com/@artsy/palette-charts/-/palette-charts-15.0.0.tgz#64fa5da3a2879197677a3b99a4e0562902cf8122"
+  integrity sha512-l5H195eHTo+CgsDlLJWqZ/kt5BcchpSmYAsISYbkx4XL7e8pfVQfCgmjo1VmTRP/+Fp1GHH/eabV4Pftt3RoRw==
+  dependencies:
+    "@artsy/palette" "^16.0.0"
+    "@seznam/compose-react-refs" "^1.0.6"
+    "@styled-system/theme-get" "^5.1.2"
+    d3-interpolate "^1.3.2"
+    d3-shape "^1.3.5"
+    styled-system "^5.1.5"
+
 "@artsy/palette-tokens@^2.5.0":
   version "2.5.0"
   resolved "https://registry.yarnpkg.com/@artsy/palette-tokens/-/palette-tokens-2.5.0.tgz#55cdbba4714ac004c03401826faab66d2f978547"
@@ -92,6 +105,27 @@
   integrity sha512-toPmC8Nur5VnKGo5KfBltcNr1RdzHsW17S7DVoMIjN0hjwF1YZngbFpbgFCojubH5BfudHTETbVMM6+xRmqzHQ==
   dependencies:
     "@artsy/palette-tokens" "^2.5.0"
+    "@seznam/compose-react-refs" "^1.0.6"
+    "@styled-system/theme-get" "^5.1.2"
+    d3-interpolate "^1.3.2"
+    d3-shape "^1.3.5"
+    debounce "^1.2.0"
+    luxon "^1.15"
+    proportional-scale "^4.0.0"
+    rc-slider "^8.6.2"
+    react-lazy-load-image-component "1.5.0"
+    react-remove-scroll "^2.3.0"
+    styled-bootstrap-grid "3.1.0"
+    styled-system "^5.1.5"
+    trunc-html "^1.1.2"
+    use-cursor "^1.2.3"
+
+"@artsy/palette@^16.0.0":
+  version "16.0.0"
+  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-16.0.0.tgz#f66687e95474527b09cae6abeef7a38141cb93b6"
+  integrity sha512-pOU91U5mwK20c7o9NIEW65UqzzX9ykOBsnfc2crjHbDMpYgjLlWUCIHiTZQ7eDXfDYZrsISyfpGKZjc5sNr9Mw==
+  dependencies:
+    "@artsy/palette-tokens" "^2.6.0"
     "@seznam/compose-react-refs" "^1.0.6"
     "@styled-system/theme-get" "^5.1.2"
     debounce "^1.2.0"
@@ -16370,7 +16404,21 @@ rc-slider@7.0.8:
     rc-util "^4.0.4"
     warning "^3.0.0"
 
-rc-tooltip@^3.4.2:
+rc-slider@^8.6.2:
+  version "8.7.1"
+  resolved "https://registry.yarnpkg.com/rc-slider/-/rc-slider-8.7.1.tgz#9ed07362dc93489a38e654b21b8122ad70fd3c42"
+  integrity sha512-WMT5mRFUEcrLWwTxsyS8jYmlaMsTVCZIGENLikHsNv+tE8ThU2lCoPfi/xFNUfJFNFSBFP3MwPez9ZsJmNp13g==
+  dependencies:
+    babel-runtime "6.x"
+    classnames "^2.2.5"
+    prop-types "^15.5.4"
+    rc-tooltip "^3.7.0"
+    rc-util "^4.0.4"
+    react-lifecycles-compat "^3.0.4"
+    shallowequal "^1.1.0"
+    warning "^4.0.3"
+
+rc-tooltip@^3.4.2, rc-tooltip@^3.7.0:
   version "3.7.3"
   resolved "https://registry.yarnpkg.com/rc-tooltip/-/rc-tooltip-3.7.3.tgz#280aec6afcaa44e8dff0480fbaff9e87fc00aecc"
   integrity sha512-dE2ibukxxkrde7wH9W8ozHKUO4aQnPZ6qBHtrTH9LoO836PjDdiaWO73fgPB05VfJs9FbZdmGPVEbXCeOP99Ww==

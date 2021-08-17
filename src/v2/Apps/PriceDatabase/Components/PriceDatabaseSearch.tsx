@@ -9,7 +9,7 @@ import {
 import qs from "qs"
 import React, { useState } from "react"
 import { useAuctionResultsFilterContext } from "v2/Apps/Artist/Routes/AuctionResults/AuctionResultsFilterContext"
-import { auctionHousesMap } from "v2/Apps/Artist/Routes/AuctionResults/Components/AuctionFilters/AuctionHouseFilter"
+import { auctionHouseMap } from "v2/Apps/Artist/Routes/AuctionResults/Components/AuctionFilters/AuctionHouseFilter"
 import { categoryMap } from "v2/Apps/Artist/Routes/AuctionResults/Components/AuctionFilters/MediumFilter"
 import { sizeMap } from "v2/Apps/Artist/Routes/AuctionResults/Components/AuctionFilters/SizeFilter"
 import { paramsToSnakeCase } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
@@ -25,7 +25,7 @@ const mapMapToOptions = map =>
 
 const categoryOptions = mapMapToOptions(categoryMap)
 const sizeOptions = mapMapToOptions(sizeMap)
-const organizationOptions = mapMapToOptions(auctionHousesMap)
+const organizationOptions = mapMapToOptions(auctionHouseMap)
 
 export const PriceDatabaseSearch: React.FC = () => {
   const { router } = useRouter()
