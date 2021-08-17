@@ -23,6 +23,15 @@ jest.mock("v2/System/Router/Utils/catchLinks", () => ({
 jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
   useMatchMedia: () => ({}),
 }))
+jest.mock("v2/System/Router/useRouter", () => ({
+  useRouter: () => ({
+    match: {
+      location: {
+        query: "",
+      },
+    },
+  }),
+}))
 
 describe("AuctionResults", () => {
   let wrapper: ReactWrapper

@@ -102,6 +102,7 @@ export const ArtistAutosuggest: React.FC<ArtistAutosuggestProps> = ({
     <Autosuggest
       suggestions={suggestions ?? []}
       onSuggestionsClearRequested={x => x}
+      onSuggestionsFetchRequested={x => x}
       onSuggestionSelected={(_, { suggestion }) => {
         selectSuggestion(suggestion)
       }}
