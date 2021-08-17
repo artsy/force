@@ -30,6 +30,7 @@ export const NavigationTabs: React.FC<NavigationTabsProps> = ({ partner }) => {
       displayArtistsSection,
       representedArtists,
       notRepresentedArtists,
+      viewingRooms,
     } = partner
 
     const route = (path?: string) => `/partner/${slug}${path ? path : ""}`
@@ -50,6 +51,7 @@ export const NavigationTabs: React.FC<NavigationTabsProps> = ({ partner }) => {
         name: "Viewing Rooms",
         href: route("/viewing-rooms"),
         exact: true,
+        hidden: !viewingRooms || !viewingRooms.totalCount,
       },
       {
         name: partnerType === "Brand" ? "Shop" : "Works",
@@ -148,6 +150,11 @@ export const NavigationTabsFragmentContainer = createFragmentContainer(
           representedBy: false
           hasPublishedArtworks: true
           displayOnPartnerProfile: true
+        ) {
+          totalCount
+        }
+        viewingRooms: viewingRoomsConnection(
+          statuses: [live, closed, scheduled]
         ) {
           totalCount
         }
