@@ -6324,6 +6324,7 @@ type FairEdge {
 type FairExhibitor {
   # Exhibitor name
   name: String
+  partner: Partner
 
   # Exhibitors _id
   partnerID: String
