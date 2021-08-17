@@ -1,43 +1,40 @@
 import React from "react"
-import { Box, Column, GridColumns } from "@artsy/palette"
+import { Column, GridColumns } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { FairExhibitorsGroup_partnersConnection } from "v2/__generated__/FairExhibitorsGroup_partnersConnection.graphql"
-import { FairExhibitorsGroupQuery } from "v2/__generated__/FairExhibitorsGroupQuery.graphql"
+import { FairExhibitorsGroup_exhibitorsGroup } from "v2/__generated__/FairExhibitorsGroup_exhibitorsGroup.graphql"
 import { FairExhibitorCardFragmentContainer as FairExhibitorCard } from "./FairExhibitorCard"
-import { FairExhibitorsGroupPlaceholder } from "./FairExhibitorGroupPlaceholder"
-import { useSystemContext } from "v2/System"
-import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
-import { extractNodes } from "v2/Utils/extractNodes"
 
 interface FairExhibitorsGroupProps {
-  partnersConnection: FairExhibitorsGroup_partnersConnection
+  exhibitorsGroup: FairExhibitorsGroup_exhibitorsGroup
 }
 
 export const FairExhibitorsGroup: React.FC<FairExhibitorsGroupProps> = ({
-  partnersConnection,
+  exhibitorsGroup: { exhibitors },
 }) => {
   return (
-    <Box>
-      <GridColumns position="relative" gridRowGap={4}>
-        {extractNodes(partnersConnection).map(exhibitor => {
-          return (
-            <Column key={exhibitor.internalID} span={[12, 6, 3]}>
-              <FairExhibitorCard partner={exhibitor} />
-            </Column>
-          )
-        })}
-      </GridColumns>
-    </Box>
+    <GridColumns position="relative" gridRowGap={4}>
+      {exhibitors?.map(exhibitor => {
+        if (!exhibitor?.partner) {
+          return null
+        }
+
+        return (
+          <Column key={exhibitor.partner.internalID} span={[12, 6, 3]}>
+            <FairExhibitorCard partner={exhibitor.partner} />
+          </Column>
+        )
+      })}
+    </GridColumns>
   )
 }
 
 export const FairExhibitorsGroupFragmentContainer = createFragmentContainer(
   FairExhibitorsGroup,
   {
-    partnersConnection: graphql`
-      fragment FairExhibitorsGroup_partnersConnection on PartnerConnection {
-        edges {
-          node {
+    exhibitorsGroup: graphql`
+      fragment FairExhibitorsGroup_exhibitorsGroup on FairExhibitorsGroup {
+        exhibitors {
+          partner {
             internalID
             ...FairExhibitorCard_partner
           }
@@ -46,47 +43,3 @@ export const FairExhibitorsGroupFragmentContainer = createFragmentContainer(
     `,
   }
 )
-
-export const FairExhibitorsGroupQueryRenderer: React.FC<{
-  ids: string[]
-}> = ({ ids, ...rest }) => {
-  const { relayEnvironment } = useSystemContext()
-
-  if (!relayEnvironment) {
-    return null
-  }
-
-  return (
-    <SystemQueryRenderer<FairExhibitorsGroupQuery>
-      environment={relayEnvironment}
-      query={graphql`
-        query FairExhibitorsGroupQuery($ids: [String!]) {
-          partnersConnection(ids: $ids) {
-            ...FairExhibitorsGroup_partnersConnection
-          }
-        }
-      `}
-      variables={{ ids }}
-      render={({ error, props }) => {
-        if (error) {
-          return null
-        }
-
-        if (!props) {
-          return <FairExhibitorsGroupPlaceholder />
-        }
-
-        if (props.partnersConnection) {
-          return (
-            <FairExhibitorsGroupFragmentContainer
-              {...rest}
-              partnersConnection={props.partnersConnection}
-            />
-          )
-        }
-
-        return null
-      }}
-    />
-  )
-}

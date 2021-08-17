@@ -3,19 +3,19 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type FairExhibitorsGroup_partnersConnection = {
-    readonly edges: ReadonlyArray<{
-        readonly node: {
+export type FairExhibitorsGroup_exhibitorsGroup = {
+    readonly exhibitors: ReadonlyArray<{
+        readonly partner: {
             readonly internalID: string;
             readonly " $fragmentRefs": FragmentRefs<"FairExhibitorCard_partner">;
         } | null;
     } | null> | null;
-    readonly " $refType": "FairExhibitorsGroup_partnersConnection";
+    readonly " $refType": "FairExhibitorsGroup_exhibitorsGroup";
 };
-export type FairExhibitorsGroup_partnersConnection$data = FairExhibitorsGroup_partnersConnection;
-export type FairExhibitorsGroup_partnersConnection$key = {
-    readonly " $data"?: FairExhibitorsGroup_partnersConnection$data;
-    readonly " $fragmentRefs": FragmentRefs<"FairExhibitorsGroup_partnersConnection">;
+export type FairExhibitorsGroup_exhibitorsGroup$data = FairExhibitorsGroup_exhibitorsGroup;
+export type FairExhibitorsGroup_exhibitorsGroup$key = {
+    readonly " $data"?: FairExhibitorsGroup_exhibitorsGroup$data;
+    readonly " $fragmentRefs": FragmentRefs<"FairExhibitorsGroup_exhibitorsGroup">;
 };
 
 
@@ -24,14 +24,14 @@ const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "FairExhibitorsGroup_partnersConnection",
+  "name": "FairExhibitorsGroup_exhibitorsGroup",
   "selections": [
     {
       "alias": null,
       "args": null,
-      "concreteType": "PartnerEdge",
+      "concreteType": "FairExhibitor",
       "kind": "LinkedField",
-      "name": "edges",
+      "name": "exhibitors",
       "plural": true,
       "selections": [
         {
@@ -39,7 +39,7 @@ const node: ReaderFragment = {
           "args": null,
           "concreteType": "Partner",
           "kind": "LinkedField",
-          "name": "node",
+          "name": "partner",
           "plural": false,
           "selections": [
             {
@@ -61,7 +61,7 @@ const node: ReaderFragment = {
       "storageKey": null
     }
   ],
-  "type": "PartnerConnection"
+  "type": "FairExhibitorsGroup"
 };
-(node as any).hash = '0c9e876ab26b7f898f051636f20cd17c';
+(node as any).hash = 'cd02f228e39d69a2aa23a13a45a5e03b';
 export default node;

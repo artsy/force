@@ -3,26 +3,26 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type FairExhibitors_Test_QueryVariables = {
-    id: string;
+export type fairRoutes_FairExhibitorsQueryVariables = {
+    slug: string;
 };
-export type FairExhibitors_Test_QueryResponse = {
+export type fairRoutes_FairExhibitorsQueryResponse = {
     readonly fair: {
         readonly " $fragmentRefs": FragmentRefs<"FairExhibitors_fair">;
     } | null;
 };
-export type FairExhibitors_Test_Query = {
-    readonly response: FairExhibitors_Test_QueryResponse;
-    readonly variables: FairExhibitors_Test_QueryVariables;
+export type fairRoutes_FairExhibitorsQuery = {
+    readonly response: fairRoutes_FairExhibitorsQueryResponse;
+    readonly variables: fairRoutes_FairExhibitorsQueryVariables;
 };
 
 
 
 /*
-query FairExhibitors_Test_Query(
-  $id: String!
+query fairRoutes_FairExhibitorsQuery(
+  $slug: String!
 ) {
-  fair(id: $id) @principalField {
+  fair(id: $slug) @principalField {
     ...FairExhibitors_fair
     id
   }
@@ -83,7 +83,7 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "id",
+    "name": "slug",
     "type": "String!"
   }
 ],
@@ -91,7 +91,7 @@ v1 = [
   {
     "kind": "Variable",
     "name": "id",
-    "variableName": "id"
+    "variableName": "slug"
   }
 ],
 v2 = {
@@ -127,7 +127,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "FairExhibitors_Test_Query",
+    "name": "fairRoutes_FairExhibitorsQuery",
     "selections": [
       {
         "alias": null,
@@ -152,7 +152,7 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "FairExhibitors_Test_Query",
+    "name": "fairRoutes_FairExhibitorsQuery",
     "selections": [
       {
         "alias": null,
@@ -329,11 +329,11 @@ return {
   "params": {
     "id": null,
     "metadata": {},
-    "name": "FairExhibitors_Test_Query",
+    "name": "fairRoutes_FairExhibitorsQuery",
     "operationKind": "query",
-    "text": "query FairExhibitors_Test_Query(\n  $id: String!\n) {\n  fair(id: $id) @principalField {\n    ...FairExhibitors_fair\n    id\n  }\n}\n\nfragment FairExhibitorCard_partner on Partner {\n  name\n  href\n  internalID\n  slug\n  cities\n  profile {\n    ...FollowProfileButton_profile\n    icon {\n      cropped(width: 50, height: 50) {\n        src\n        srcSet\n      }\n    }\n    image {\n      url(version: \"medium\")\n    }\n    id\n  }\n}\n\nfragment FairExhibitorsGroup_exhibitorsGroup on FairExhibitorsGroup {\n  exhibitors {\n    partner {\n      internalID\n      ...FairExhibitorCard_partner\n      id\n    }\n  }\n}\n\nfragment FairExhibitors_fair on Fair {\n  exhibitorsGroupedByName {\n    letter\n    exhibitors {\n      partnerID\n    }\n    ...FairExhibitorsGroup_exhibitorsGroup\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  is_followed: isFollowed\n}\n"
+    "text": "query fairRoutes_FairExhibitorsQuery(\n  $slug: String!\n) {\n  fair(id: $slug) @principalField {\n    ...FairExhibitors_fair\n    id\n  }\n}\n\nfragment FairExhibitorCard_partner on Partner {\n  name\n  href\n  internalID\n  slug\n  cities\n  profile {\n    ...FollowProfileButton_profile\n    icon {\n      cropped(width: 50, height: 50) {\n        src\n        srcSet\n      }\n    }\n    image {\n      url(version: \"medium\")\n    }\n    id\n  }\n}\n\nfragment FairExhibitorsGroup_exhibitorsGroup on FairExhibitorsGroup {\n  exhibitors {\n    partner {\n      internalID\n      ...FairExhibitorCard_partner\n      id\n    }\n  }\n}\n\nfragment FairExhibitors_fair on Fair {\n  exhibitorsGroupedByName {\n    letter\n    exhibitors {\n      partnerID\n    }\n    ...FairExhibitorsGroup_exhibitorsGroup\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  is_followed: isFollowed\n}\n"
   }
 };
 })();
-(node as any).hash = 'eaf5d5cf07b2362dac31136c98921118';
+(node as any).hash = 'b8df584a7350aafbf64963fc92954dec';
 export default node;

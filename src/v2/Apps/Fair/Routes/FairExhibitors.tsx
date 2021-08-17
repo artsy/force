@@ -2,10 +2,9 @@ import React from "react"
 import { Text } from "@artsy/palette"
 import { graphql, createFragmentContainer } from "react-relay"
 import { FairExhibitors_fair } from "v2/__generated__/FairExhibitors_fair.graphql"
-import { FairExhibitorsGroupQueryRenderer as FairExhibitorsGroup } from "../Components/FairExhibitors"
+import { FairExhibitorsGroupFragmentContainer as FairExhibitorsGroup } from "../Components/FairExhibitors"
 import { FairExhibitorsGroupPlaceholder } from "../Components/FairExhibitors/FairExhibitorGroupPlaceholder"
 import { useLazyLoadComponent } from "v2/Utils/Hooks/useLazyLoadComponent"
-import { compact } from "lodash"
 
 interface FairExhibitorsProps {
   fair: FairExhibitors_fair
@@ -23,17 +22,13 @@ const FairExhibitors: React.FC<FairExhibitorsProps> = ({ fair }) => {
           return null
         }
 
-        const partnerIds = compact(
-          exhibitorsGroup.exhibitors.map(exhibitor => exhibitor?.partnerID)
-        )
-
         return (
           <React.Fragment key={exhibitorsGroup.letter}>
             <Text variant="lg" my={4}>
               {exhibitorsGroup.letter}
             </Text>
             {isEnteredView ? (
-              <FairExhibitorsGroup ids={partnerIds} />
+              <FairExhibitorsGroup exhibitorsGroup={exhibitorsGroup} />
             ) : (
               <FairExhibitorsGroupPlaceholder />
             )}
@@ -54,6 +49,7 @@ export const FairExhibitorsFragmentContainer = createFragmentContainer(
           exhibitors {
             partnerID
           }
+          ...FairExhibitorsGroup_exhibitorsGroup
         }
       }
     `,

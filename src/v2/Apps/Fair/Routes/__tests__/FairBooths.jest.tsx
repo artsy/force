@@ -158,7 +158,6 @@ const FAIR_BOOTHS_FIXTURE: FairBooths_QueryRawResponse = {
             slug: "show-slug",
             isDisplayable: false,
             counts: { artworks: 0 },
-            isDisplayable: false,
             href: "/show/example-1",
             partner: {
               __typename: "Partner",
@@ -174,7 +173,6 @@ const FAIR_BOOTHS_FIXTURE: FairBooths_QueryRawResponse = {
             slug: "show-slug",
             isDisplayable: true,
             counts: { artworks: 10 },
-            isDisplayable: true,
             href: "/show/example-2",
             partner: {
               __typename: "Partner",
@@ -190,7 +188,6 @@ const FAIR_BOOTHS_FIXTURE: FairBooths_QueryRawResponse = {
             slug: "show-slug",
             isDisplayable: true,
             counts: { artworks: 10 },
-            isDisplayable: true,
             href: "/show/example-3",
             partner: {
               __typename: "Partner",
