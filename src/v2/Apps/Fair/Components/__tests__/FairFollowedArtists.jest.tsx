@@ -1,5 +1,5 @@
 import React from "react"
-import { FairFollowedArtists } from "../FairFollowedArtists"
+import { FairFollowedArtists } from "../FairOverview/FairFollowedArtists"
 import { useTracking } from "react-tracking"
 import { AnalyticsContext } from "v2/System/Analytics/AnalyticsContext"
 import { mount } from "enzyme"

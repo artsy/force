@@ -1,10 +1,10 @@
 import React, { useRef } from "react"
 import { Box, BoxProps, Flex, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { FairExhibitorRail_show } from "v2/__generated__/FairExhibitorRail_show.graphql"
+import { FairBoothRail_show } from "v2/__generated__/FairBoothRail_show.graphql"
 import { useLazyLoadComponent } from "v2/Utils/Hooks/useLazyLoadComponent"
-import { FairExhibitorRailArtworksQueryRenderer as FairExhibitorRailArtworks } from "./FairExhibitorRailArtworks"
-import { FairExhibitorRailPlaceholder } from "./FairExhibitorRailPlaceholder"
+import { FairBoothRailArtworksQueryRenderer as FairBoothRailArtworks } from "./FairBoothRailArtworks"
+import { FairBoothRailPlaceholder } from "./FairBoothRailPlaceholder"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { useTracking } from "react-tracking"
 import {
@@ -12,14 +12,15 @@ import {
   ClickedArtworkGroup,
   ContextModule,
   OwnerType,
+  PageOwnerType,
 } from "@artsy/cohesion"
 import { useAnalyticsContext } from "v2/System/Analytics/AnalyticsContext"
 
-interface FairExhibitorRailProps extends BoxProps {
-  show: FairExhibitorRail_show
+interface FairBoothRailProps extends BoxProps {
+  show: FairBoothRail_show
 }
 
-export const FairExhibitorRail: React.FC<FairExhibitorRailProps> = ({
+export const FairBoothRail: React.FC<FairBoothRailProps> = ({
   show,
   ...rest
 }) => {
@@ -34,8 +35,7 @@ export const FairExhibitorRail: React.FC<FairExhibitorRailProps> = ({
 
   const tappedViewTrackingData: ClickedArtworkGroup = {
     context_module: ContextModule.galleryBoothRail,
-    // @ts-expect-error STRICT_NULL_CHECK
-    context_page_owner_type: contextPageOwnerType,
+    context_page_owner_type: contextPageOwnerType as PageOwnerType,
     context_page_owner_id: contextPageOwnerId,
     context_page_owner_slug: contextPageOwnerSlug,
     destination_page_owner_type: OwnerType.show,
@@ -58,15 +58,16 @@ export const FairExhibitorRail: React.FC<FairExhibitorRailProps> = ({
                 noUnderline
                 onClick={() => tracking.trackEvent(tappedViewTrackingData)}
               >
-                {/* @ts-expect-error STRICT_NULL_CHECK */}
-                {show.partner.name}
+                {show.partner?.name || ""}
               </RouterLink>
             </Text>
 
-            <Text as="h3" variant="lg" color="black60" mb={1}>
-              {/* @ts-expect-error STRICT_NULL_CHECK */}
-              {show.counts.artworks} work{show.counts.artworks === 1 ? "" : "s"}
-            </Text>
+            {show.counts?.artworks && (
+              <Text as="h3" variant="lg" color="black60" mb={1}>
+                {show.counts.artworks} work
+                {show.counts.artworks === 1 ? "" : "s"}
+              </Text>
+            )}
           </Box>
 
           {show.href && (
@@ -81,9 +82,9 @@ export const FairExhibitorRail: React.FC<FairExhibitorRailProps> = ({
 
         <Box>
           {isEnteredView ? (
-            <FairExhibitorRailArtworks id={show.internalID} />
+            <FairBoothRailArtworks id={show.internalID} />
           ) : (
-            <FairExhibitorRailPlaceholder />
+            <FairBoothRailPlaceholder />
           )}
         </Box>
       </Box>
@@ -91,11 +92,11 @@ export const FairExhibitorRail: React.FC<FairExhibitorRailProps> = ({
   )
 }
 
-export const FairExhibitorRailFragmentContainer = createFragmentContainer(
-  FairExhibitorRail,
+export const FairBoothRailFragmentContainer = createFragmentContainer(
+  FairBoothRail,
   {
     show: graphql`
-      fragment FairExhibitorRail_show on Show {
+      fragment FairBoothRail_show on Show {
         internalID
         slug
         href

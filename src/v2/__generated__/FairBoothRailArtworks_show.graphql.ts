@@ -3,22 +3,22 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type FairExhibitorRailArtworks_show = {
-    readonly artworks: {
+export type FairBoothRailArtworks_show = {
+    readonly artworksConnection: {
         readonly edges: ReadonlyArray<{
-            readonly artwork: {
+            readonly node: {
                 readonly internalID: string;
                 readonly slug: string;
                 readonly " $fragmentRefs": FragmentRefs<"ShelfArtwork_artwork">;
             } | null;
         } | null> | null;
     } | null;
-    readonly " $refType": "FairExhibitorRailArtworks_show";
+    readonly " $refType": "FairBoothRailArtworks_show";
 };
-export type FairExhibitorRailArtworks_show$data = FairExhibitorRailArtworks_show;
-export type FairExhibitorRailArtworks_show$key = {
-    readonly " $data"?: FairExhibitorRailArtworks_show$data;
-    readonly " $fragmentRefs": FragmentRefs<"FairExhibitorRailArtworks_show">;
+export type FairBoothRailArtworks_show$data = FairBoothRailArtworks_show;
+export type FairBoothRailArtworks_show$key = {
+    readonly " $data"?: FairBoothRailArtworks_show$data;
+    readonly " $fragmentRefs": FragmentRefs<"FairBoothRailArtworks_show">;
 };
 
 
@@ -27,10 +27,10 @@ const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "FairExhibitorRailArtworks_show",
+  "name": "FairBoothRailArtworks_show",
   "selections": [
     {
-      "alias": "artworks",
+      "alias": null,
       "args": [
         {
           "kind": "Literal",
@@ -52,7 +52,7 @@ const node: ReaderFragment = {
           "plural": true,
           "selections": [
             {
-              "alias": "artwork",
+              "alias": null,
               "args": null,
               "concreteType": "Artwork",
               "kind": "LinkedField",
@@ -96,5 +96,5 @@ const node: ReaderFragment = {
   ],
   "type": "Show"
 };
-(node as any).hash = 'e4e2d3ecb54c79200333cba4389c8101';
+(node as any).hash = 'c39c78268ad7b633fe073db484642ced';
 export default node;

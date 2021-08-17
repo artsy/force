@@ -1,6 +1,6 @@
 import React from "react"
 import { mount } from "enzyme"
-import { FairEditorialShare } from "../FairEditorialShare"
+import { FairEditorialShare } from "../FairEditorial/FairEditorialShare"
 
 describe("FariEditorialShare", () => {
   it("renders the share buttons", () => {

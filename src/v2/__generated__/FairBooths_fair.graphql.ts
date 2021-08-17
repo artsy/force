@@ -3,7 +3,7 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type FairExhibitors_fair = {
+export type FairBooths_fair = {
     readonly slug: string;
     readonly exhibitors: {
         readonly pageInfo: {
@@ -15,38 +15,22 @@ export type FairExhibitors_fair = {
         readonly edges: ReadonlyArray<{
             readonly node: {
                 readonly id: string;
-                readonly counts: {
-                    readonly artworks: number | null;
-                } | null;
-                readonly partner: {
-                    readonly id?: string;
-                } | null;
-                readonly " $fragmentRefs": FragmentRefs<"FairExhibitorRail_show">;
+                readonly isDisplayable: boolean | null;
+                readonly " $fragmentRefs": FragmentRefs<"FairBoothRail_show">;
             } | null;
         } | null> | null;
     } | null;
-    readonly " $refType": "FairExhibitors_fair";
+    readonly " $refType": "FairBooths_fair";
 };
-export type FairExhibitors_fair$data = FairExhibitors_fair;
-export type FairExhibitors_fair$key = {
-    readonly " $data"?: FairExhibitors_fair$data;
-    readonly " $fragmentRefs": FragmentRefs<"FairExhibitors_fair">;
+export type FairBooths_fair$data = FairBooths_fair;
+export type FairBooths_fair$key = {
+    readonly " $data"?: FairBooths_fair$data;
+    readonly " $fragmentRefs": FragmentRefs<"FairBooths_fair">;
 };
 
 
 
-const node: ReaderFragment = (function(){
-var v0 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "id",
-  "storageKey": null
-},
-v1 = [
-  (v0/*: any*/)
-];
-return {
+const node: ReaderFragment = {
   "argumentDefinitions": [
     {
       "defaultValue": "FEATURED_DESC",
@@ -69,7 +53,7 @@ return {
   ],
   "kind": "Fragment",
   "metadata": null,
-  "name": "FairExhibitors_fair",
+  "name": "FairBooths_fair",
   "selections": [
     {
       "alias": null,
@@ -157,50 +141,24 @@ return {
               "name": "node",
               "plural": false,
               "selections": [
-                (v0/*: any*/),
                 {
                   "alias": null,
                   "args": null,
-                  "concreteType": "ShowCounts",
-                  "kind": "LinkedField",
-                  "name": "counts",
-                  "plural": false,
-                  "selections": [
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "artworks",
-                      "storageKey": null
-                    }
-                  ],
+                  "kind": "ScalarField",
+                  "name": "id",
                   "storageKey": null
                 },
                 {
                   "alias": null,
                   "args": null,
-                  "concreteType": null,
-                  "kind": "LinkedField",
-                  "name": "partner",
-                  "plural": false,
-                  "selections": [
-                    {
-                      "kind": "InlineFragment",
-                      "selections": (v1/*: any*/),
-                      "type": "Partner"
-                    },
-                    {
-                      "kind": "InlineFragment",
-                      "selections": (v1/*: any*/),
-                      "type": "ExternalPartner"
-                    }
-                  ],
+                  "kind": "ScalarField",
+                  "name": "isDisplayable",
                   "storageKey": null
                 },
                 {
                   "args": null,
                   "kind": "FragmentSpread",
-                  "name": "FairExhibitorRail_show"
+                  "name": "FairBoothRail_show"
                 }
               ],
               "storageKey": null
@@ -214,6 +172,5 @@ return {
   ],
   "type": "Fair"
 };
-})();
-(node as any).hash = 'a592977087f2ee380e24d6f9cf299413';
+(node as any).hash = 'b4f0a37c4f31cb5828986cd5793aad15';
 export default node;
