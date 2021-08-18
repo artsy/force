@@ -17,7 +17,7 @@ import type { Stripe, StripeElements } from "@stripe/stripe-js"
 import createLogger from "v2/Utils/logger"
 import { Media } from "v2/Utils/Responsive"
 
-import { Box, Button, Col, Flex, Row, Spacer } from "@artsy/palette"
+import { Box, Button, Flex, Spacer } from "@artsy/palette"
 import {
   PaymentPicker,
   PaymentPickerFragmentContainer,
@@ -31,7 +31,7 @@ import { AnalyticsSchema, track } from "v2/System"
 import { BuyerGuarantee } from "../../Components/BuyerGuarantee"
 
 export const ContinueButton = props => (
-  <Button size="large" width="100%" {...props}>
+  <Button variant="primaryBlack" width="100%" {...props}>
     Continue
   </Button>
 )
@@ -71,15 +71,14 @@ export class PaymentRoute extends Component<
   onContinue = async () => {
     try {
       this.setState({ isGettingCreditCardId: true })
-      // @ts-expect-error STRICT_NULL_CHECK
-      const result = await this.paymentPicker.current.getCreditCardId()
+      const result = await this.paymentPicker?.current?.getCreditCardId()
       this.setState({ isGettingCreditCardId: false })
 
-      if (result.type === "invalid_form") {
+      if (result?.type === "invalid_form") {
         return
       }
 
-      if (result.type === "error") {
+      if (result?.type === "error") {
         this.props.dialog.showErrorDialog({
           title: result.error,
           message:
@@ -88,7 +87,7 @@ export class PaymentRoute extends Component<
         return
       }
 
-      if (result.type === "internal_error") {
+      if (result?.type === "internal_error") {
         this.props.dialog.showErrorDialog({
           title: "An internal error occurred",
         })
@@ -96,17 +95,16 @@ export class PaymentRoute extends Component<
         return
       }
 
-      // @ts-expect-error STRICT_NULL_CHECK
       const orderOrError = (
         await this.setOrderPayment({
           input: {
-            creditCardId: result.creditCardId,
-            id: this.props.order.internalID,
+            creditCardId: result?.creditCardId!,
+            id: this.props.order.internalID!,
           },
         })
-      ).commerceSetPayment.orderOrError
+      ).commerceSetPayment?.orderOrError
 
-      if (orderOrError.error) {
+      if (orderOrError?.error) {
         throw orderOrError.error
       }
 
@@ -125,14 +123,11 @@ export class PaymentRoute extends Component<
 
     return (
       <Box data-test="orderPayment">
-        <Row>
-          <Col>
-            <OrderStepper
-              currentStep="Payment"
-              steps={order.mode === "OFFER" ? offerFlowSteps : buyNowFlowSteps}
-            />
-          </Col>
-        </Row>
+        <OrderStepper
+          currentStep="Payment"
+          steps={order.mode === "OFFER" ? offerFlowSteps : buyNowFlowSteps}
+        />
+
         <TwoColumnLayout
           Content={
             <Flex
@@ -145,7 +140,7 @@ export class PaymentRoute extends Component<
                 order={this.props.order}
                 innerRef={this.paymentPicker}
               />
-              <Spacer mb={3} />
+              <Spacer mb={4} />
               <Media greaterThan="xs">
                 <ContinueButton onClick={this.onContinue} loading={isLoading} />
               </Media>
@@ -158,7 +153,7 @@ export class PaymentRoute extends Component<
                 <TransactionDetailsSummaryItem order={order} />
               </Flex>
               <BuyerGuarantee />
-              <Spacer mb={[2, 3]} />
+              <Spacer mb={[2, 4]} />
               <Media at="xs">
                 <>
                   <ContinueButton

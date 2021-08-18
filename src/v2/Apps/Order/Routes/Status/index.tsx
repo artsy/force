@@ -256,7 +256,7 @@ export class StatusRoute extends Component<StatusProps> {
                 variant="xs"
                 fontWeight="regular"
                 color="black60"
-                mb={[2, 2]}
+                mb={[2, 4]}
               >
                 {flowName} <span data-test="OrderCode">#{order.code}</span>
               </Text>

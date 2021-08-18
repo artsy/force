@@ -143,7 +143,7 @@ export const orderRoutes: AppRouteConfig[] = [
     children: [
       {
         path: "respond",
-        theme: "v3",
+        // theme: "v3",
         Component: RespondRoute,
         shouldWarnBeforeLeaving: true,
         hideFooter: true,
@@ -160,8 +160,7 @@ export const orderRoutes: AppRouteConfig[] = [
       },
       {
         path: "offer",
-        // theme: "v3",
-
+        theme: "v3",
         Component: OfferRoute,
         shouldWarnBeforeLeaving: true,
         hideFooter: true,
@@ -198,7 +197,7 @@ export const orderRoutes: AppRouteConfig[] = [
       },
       {
         path: "payment",
-        // theme: "v3",
+        theme: "v3",
         Component: PaymentRoute,
         shouldWarnBeforeLeaving: true,
         hideFooter: true,

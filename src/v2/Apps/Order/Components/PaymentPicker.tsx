@@ -31,8 +31,7 @@ import {
   Flex,
   Link,
   RadioGroup,
-  Sans,
-  Serif,
+  Text,
   Spacer,
 } from "@artsy/palette"
 import { CommitMutation } from "v2/Apps/Order/Utils/commitMutation"
@@ -90,12 +89,10 @@ export class PaymentPicker extends React.Component<
         id: this.props.order.creditCard.internalID,
       }
     } else {
-      // @ts-expect-error STRICT_NULL_CHECK
-      return this.props.me.creditCards.edges.length
+      return this.props.me.creditCards?.edges?.length
         ? {
             type: "existing",
-            // @ts-expect-error STRICT_NULL_CHECK
-            id: this.props.me.creditCards.edges[0].node.internalID,
+            id: this.props.me.creditCards.edges[0]?.node?.internalID!,
           }
         : { type: "new" }
     }
@@ -125,8 +122,7 @@ export class PaymentPicker extends React.Component<
     try {
       this.setState({ isCreatingStripeToken: true })
       const stripeBillingAddress = this.getStripeBillingAddress()
-      const element = this.props.elements.getElement(CardElement)
-      // @ts-expect-error STRICT_NULL_CHECK
+      const element = this.props.elements.getElement(CardElement)!
       return await this.props.stripe.createToken(element, stripeBillingAddress)
     } finally {
       this.setState({ isCreatingStripeToken: false })
@@ -168,40 +164,32 @@ export class PaymentPicker extends React.Component<
     const creditCardOrError = (
       await this.createCreditCard({
         input: {
-          // @ts-expect-error STRICT_NULL_CHECK
-          token: stripeResult.token.id,
+          token: stripeResult?.token?.id!,
           oneTimeUse: !saveNewCreditCard,
         },
       })
     ).createCreditCard.creditCardOrError
 
     if (
-      // @ts-expect-error STRICT_NULL_CHECK
-      creditCardOrError.mutationError &&
-      // @ts-expect-error STRICT_NULL_CHECK
+      creditCardOrError?.mutationError &&
       creditCardOrError.mutationError.detail
     ) {
       return {
         type: "error",
-        // @ts-expect-error STRICT_NULL_CHECK
         error: creditCardOrError.mutationError.detail,
       }
     } else if (
-      // @ts-expect-error STRICT_NULL_CHECK
-      creditCardOrError.mutationError &&
-      // @ts-expect-error STRICT_NULL_CHECK
+      creditCardOrError?.mutationError &&
       creditCardOrError.mutationError.message
     ) {
       return {
         type: "internal_error",
-        // @ts-expect-error STRICT_NULL_CHECK
         error: creditCardOrError.mutationError.message,
       }
     } else
       return {
         type: "success",
-        // @ts-expect-error STRICT_NULL_CHECK
-        creditCardId: creditCardOrError.creditCard.internalID,
+        creditCardId: creditCardOrError?.creditCard?.internalID!,
       }
   }
 
@@ -261,14 +249,12 @@ export class PaymentPicker extends React.Component<
 
     const orderCard = this.props.order.creditCard
 
-    // @ts-expect-error STRICT_NULL_CHECK
-    const creditCardsArray = creditCards.edges.map(e => e.node)
+    const creditCardsArray = creditCards?.edges?.map(e => e?.node)!
 
     // only add the unsaved card to the cards array if it exists and is not already there
     if (
       orderCard != null &&
-      // @ts-expect-error STRICT_NULL_CHECK
-      !creditCardsArray.some(card => card.internalID === orderCard.internalID)
+      !creditCardsArray.some(card => card?.internalID === orderCard.internalID)
     ) {
       creditCardsArray.unshift(orderCard)
     }
@@ -321,27 +307,25 @@ export class PaymentPicker extends React.Component<
             </RadioGroup>
             <Spacer mb={1} />
             {!isEigen && (
-              <Sans size="2">
+              <Text variant="xs">
                 <Link href="/user/payments" target="_blank">
                   Manage cards
                 </Link>
-              </Sans>
+              </Text>
             )}
           </>
         )}
 
         <Collapse open={this.state.creditCardSelection.type === "new"}>
-          {userHasExistingCards && <Spacer mb={3} />}
+          {userHasExistingCards && <Spacer mb={2} />}
           <Flex flexDirection="column">
-            <Serif mb={1} size="3t" color="black100" lineHeight="1.1em">
+            <Text mb={1} size="md" color="black100" lineHeight="1.1em">
               Credit card
-            </Serif>
+            </Text>
             <CreditCardInput
-              // @ts-expect-error STRICT_NULL_CHECK
-              error={stripeError}
+              error={stripeError!}
               onChange={response => {
-                // @ts-expect-error STRICT_NULL_CHECK
-                this.setState({ stripeError: response.error })
+                this.setState({ stripeError: response.error! })
               }}
             />
 
@@ -369,6 +353,7 @@ export class PaymentPicker extends React.Component<
               />
               <Spacer mb={2} />
             </Collapse>
+            <Spacer mb={1} />
             <Checkbox
               data-test="SaveNewCreditCard"
               selected={this.state.saveNewCreditCard}
