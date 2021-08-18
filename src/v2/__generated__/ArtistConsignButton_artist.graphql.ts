@@ -14,7 +14,8 @@ export type ArtistConsignButton_artist = {
     readonly href: string | null;
     readonly image: {
         readonly cropped: {
-            readonly url: string;
+            readonly src: string;
+            readonly srcSet: string;
         } | null;
     } | null;
     readonly " $refType": "ArtistConsignButton_artist";
@@ -100,12 +101,12 @@ const node: ReaderFragment = {
             {
               "kind": "Literal",
               "name": "height",
-              "value": 66
+              "value": 50
             },
             {
               "kind": "Literal",
               "name": "width",
-              "value": 66
+              "value": 50
             }
           ],
           "concreteType": "CroppedImageUrl",
@@ -117,11 +118,18 @@ const node: ReaderFragment = {
               "alias": null,
               "args": null,
               "kind": "ScalarField",
-              "name": "url",
+              "name": "src",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "srcSet",
               "storageKey": null
             }
           ],
-          "storageKey": "cropped(height:66,width:66)"
+          "storageKey": "cropped(height:50,width:50)"
         }
       ],
       "storageKey": null
@@ -129,5 +137,5 @@ const node: ReaderFragment = {
   ],
   "type": "Artist"
 };
-(node as any).hash = '00f008210bc719365dd2bf6db729abac';
+(node as any).hash = '16e052c9bf2ad2292e85f3b3bb2a6ac5';
 export default node;
