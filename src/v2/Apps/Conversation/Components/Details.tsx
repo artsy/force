@@ -97,21 +97,23 @@ export const Details: FC<DetailsProps> = ({
     ?.reduce((previous, current) => previous?.concat(current!), [])
     ?.filter(attachment => !attachment?.contentType.includes("image"))
 
-  const attachmentItems = attachments?.map(attachment => {
-    return (
-      <Link
-        key={attachment?.id ?? undefined}
-        href={attachment?.downloadURL ?? undefined}
-        target="_blank"
-        noUnderline
-      >
-        <Flex alignItems="center">
-          <DocumentIcon mr={0.5} />
-          <Text variant="xs">{attachment?.fileName}</Text>
-        </Flex>
-      </Link>
-    )
-  })
+  const attachmentItems = attachments
+    ?.filter(attachment => attachment?.id && attachment?.downloadURL)
+    ?.map(attachment => {
+      return (
+        <Link
+          key={attachment!.id}
+          href={attachment!.downloadURL}
+          target="_blank"
+          noUnderline
+        >
+          <Flex alignItems="center">
+            <DocumentIcon mr={0.5} />
+            <Text variant="xs">{attachment?.fileName}</Text>
+          </Flex>
+        </Link>
+      )
+    })
 
   const getDetailsContainerWidth = () => {
     // For big screens
