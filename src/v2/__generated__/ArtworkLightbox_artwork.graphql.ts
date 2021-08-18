@@ -7,6 +7,7 @@ export type ArtworkLightbox_artwork = {
     readonly formattedMetadata: string | null;
     readonly images: ReadonlyArray<{
         readonly isDefault: boolean | null;
+        readonly placeholder: string | null;
         readonly fallback: {
             readonly width: number;
             readonly height: number;
@@ -111,6 +112,22 @@ return {
           "storageKey": null
         },
         {
+          "alias": "placeholder",
+          "args": [
+            {
+              "kind": "Literal",
+              "name": "version",
+              "value": [
+                "small",
+                "medium"
+              ]
+            }
+          ],
+          "kind": "ScalarField",
+          "name": "url",
+          "storageKey": "url(version:[\"small\",\"medium\"])"
+        },
+        {
           "alias": "fallback",
           "args": (v0/*: any*/),
           "concreteType": "CroppedImageUrl",
@@ -137,5 +154,5 @@ return {
   "type": "Artwork"
 };
 })();
-(node as any).hash = '7c2f8996741173585967135127ee151f';
+(node as any).hash = 'c08feb918e53ca3bef0b7c07a3735fa1';
 export default node;

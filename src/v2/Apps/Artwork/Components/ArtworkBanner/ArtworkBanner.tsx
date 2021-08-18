@@ -52,7 +52,7 @@ export const ArtworkBanner: React.FC<ArtworkBannerProps> = props => {
                 )
               )}
 
-              <Text variant="xs" lineHeight={1}>
+              <Text variant="xs" lineHeight={1} lineClamp={2}>
                 {[name, subHeadline].filter(Boolean).join(" - ")}
 
                 <Box as="span" display="inline-block" color="black60" ml={0.5}>
