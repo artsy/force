@@ -17,7 +17,7 @@ import {
   standardStats,
 } from "./commonEnv"
 import {
-  babelLoader,
+  babelLoaderWithLodashOptimization,
   coffeeLoader,
   ejsLoader,
   jadeLoader,
@@ -38,7 +38,13 @@ export const clientDevelopmentConfig = {
   externals: clientExternals,
   mode: standardMode,
   module: {
-    rules: [coffeeLoader, jadeLoader, babelLoader, ejsLoader, mjsLoader],
+    rules: [
+      coffeeLoader,
+      jadeLoader,
+      babelLoaderWithLodashOptimization,
+      ejsLoader,
+      mjsLoader,
+    ],
   },
   name: "novo",
   optimization: {

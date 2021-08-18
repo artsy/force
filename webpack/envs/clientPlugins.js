@@ -1,9 +1,14 @@
 // @ts-check
 
 import MomentTimezoneDataPlugin from "moment-timezone-data-webpack-plugin"
+const LodashModuleReplacementPlugin = require("lodash-webpack-plugin")
+
 const currentYear = new Date().getFullYear()
 
 export const clientPlugins = [
+  new LodashModuleReplacementPlugin({
+    shorthands: true,
+  }),
   // To include only specific zones, use the matchZones option
   new MomentTimezoneDataPlugin({
     matchZones: /^America\/New_York/,

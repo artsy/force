@@ -8,7 +8,7 @@
  * without redis when necessary.
  */
 
-const _ = require("lodash")
+const once = require("lodash/once")
 const { NODE_ENV, OPENREDIS_URL, DEFAULT_CACHE_TIME } = process.env
 
 class Cache {
@@ -27,13 +27,13 @@ class Cache {
     }
     this.client.on(
       "error",
-      _.once(err => {
+      once(err => {
         console.warn("REDIS_CONNECTION_ERROR", err)
         this.client = null
         return callback()
       })
     )
-    return this.client.on("ready", _.once(callback))
+    return this.client.on("ready", once(callback))
   }
 
   // Convenience for setting a value in the cache with an expiry.
