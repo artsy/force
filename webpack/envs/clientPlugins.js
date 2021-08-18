@@ -1,7 +1,7 @@
 // @ts-check
 
 import MomentTimezoneDataPlugin from "moment-timezone-data-webpack-plugin"
-const LodashModuleReplacementPlugin = require("lodash-webpack-plugin")
+import LodashModuleReplacementPlugin from "lodash-webpack-plugin"
 
 const currentYear = new Date().getFullYear()
 
