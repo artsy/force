@@ -34,8 +34,9 @@ fragment ArtistConsignButton_artist on Artist {
   name
   href
   image {
-    cropped(width: 66, height: 66) {
-      url
+    cropped(width: 50, height: 50) {
+      src
+      srcSet
     }
   }
 }
@@ -156,12 +157,12 @@ return {
                   {
                     "kind": "Literal",
                     "name": "height",
-                    "value": 66
+                    "value": 50
                   },
                   {
                     "kind": "Literal",
                     "name": "width",
-                    "value": 66
+                    "value": 50
                   }
                 ],
                 "concreteType": "CroppedImageUrl",
@@ -173,11 +174,18 @@ return {
                     "alias": null,
                     "args": null,
                     "kind": "ScalarField",
-                    "name": "url",
+                    "name": "src",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "srcSet",
                     "storageKey": null
                   }
                 ],
-                "storageKey": "cropped(height:66,width:66)"
+                "storageKey": "cropped(height:50,width:50)"
               }
             ],
             "storageKey": null
@@ -199,7 +207,7 @@ return {
     "metadata": {},
     "name": "ArtistConsignButton_Test_Query",
     "operationKind": "query",
-    "text": "query ArtistConsignButton_Test_Query {\n  artist(id: \"alex-katz\") {\n    ...ArtistConsignButton_artist\n    id\n  }\n}\n\nfragment ArtistConsignButton_artist on Artist {\n  targetSupply {\n    isInMicrofunnel\n    isTargetSupply\n  }\n  internalID\n  slug\n  name\n  href\n  image {\n    cropped(width: 66, height: 66) {\n      url\n    }\n  }\n}\n"
+    "text": "query ArtistConsignButton_Test_Query {\n  artist(id: \"alex-katz\") {\n    ...ArtistConsignButton_artist\n    id\n  }\n}\n\nfragment ArtistConsignButton_artist on Artist {\n  targetSupply {\n    isInMicrofunnel\n    isTargetSupply\n  }\n  internalID\n  slug\n  name\n  href\n  image {\n    cropped(width: 50, height: 50) {\n      src\n      srcSet\n    }\n  }\n}\n"
   }
 };
 })();

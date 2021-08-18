@@ -1,7 +1,14 @@
-import { Box, Column, GridColumns, Spacer, Text } from "@artsy/palette"
+import {
+  Box,
+  Column,
+  GridColumns,
+  HTML,
+  Join,
+  Spacer,
+  Text,
+} from "@artsy/palette"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import styled from "styled-components"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { SelectedCareerAchievementsFragmentContainer } from "v2/Components/SelectedCareerAchievements"
 import { ArtistCareerHighlights_artist } from "v2/__generated__/ArtistCareerHighlights_artist.graphql"
@@ -22,55 +29,46 @@ const ArtistCareerHighlights: React.FC<ArtistCareerHighlightsProps> = ({
   const hasCategories = Boolean(artist.related?.genes?.edges?.length)
 
   return (
-    <>
-      <GridColumns>
-        <Column span={8}>
-          <>
-            <SelectedCareerAchievementsFragmentContainer
-              artist={artist}
-              onlyCareerHighlights
-              mb={4}
-            />
-          </>
+    <GridColumns gridRowGap={4}>
+      <Column span={8}>
+        <Join separator={<Spacer mt={4} />}>
+          <SelectedCareerAchievementsFragmentContainer
+            artist={artist}
+            onlyCareerHighlights
+          />
+
           {showCredit && text && (
-            <>
-              <Text variant="xs" textTransform="uppercase" mt={[2, 0]} mb={1}>
+            <Box>
+              <Text variant="xs" textTransform="uppercase" mb={1}>
                 Bio
               </Text>
-              <Text pb={1} variant="text">
-                <em>
-                  <RouterLink to={partnerHref}>{credit}</RouterLink>
-                </em>
-              </Text>
-              <Text variant="text" pr={[0, 2]}>
-                <BioSpan
-                  dangerouslySetInnerHTML={{
-                    __html: text,
-                  }}
-                />
+
+              <Text mb={1} variant="sm">
+                <RouterLink to={partnerHref}>{credit}</RouterLink>
               </Text>
 
-              <Spacer mb={4} />
-            </>
+              <HTML html={text} variant="sm" />
+            </Box>
           )}
 
-          <Box width={["100%", "72%"]}>
-            <ArtistConsignButtonFragmentContainer artist={artist} />
-          </Box>
-        </Column>
+          <GridColumns>
+            <Column span={9}>
+              <ArtistConsignButtonFragmentContainer artist={artist} />
+            </Column>
+          </GridColumns>
+        </Join>
+      </Column>
 
-        {hasCategories && (
-          <Column span={4}>
-            <Box>
-              <Text variant="md" mb={2}>
-                Related categories
-              </Text>
-              <ArtistGenesFragmentContainer artist={artist} />
-            </Box>
-          </Column>
-        )}
-      </GridColumns>
-    </>
+      {hasCategories && (
+        <Column span={4}>
+          <Text variant="md" mb={2}>
+            Related categories
+          </Text>
+
+          <ArtistGenesFragmentContainer artist={artist} />
+        </Column>
+      )}
+    </GridColumns>
   )
 }
 
@@ -106,18 +104,3 @@ export const ArtistCareerHighlightsFragmentContainer = createFragmentContainer(
     `,
   }
 )
-
-/**
- * Using dangerouslySetInnerHTML in our span adds an inline <p>. Here we make
- * sure the inline <p> is formatted properly.
- */
-const BioSpan = styled.span`
-  > * {
-    margin-block-start: 0;
-    margin-block-end: 0;
-    padding-bottom: 1em;
-  }
-  > *:last-child {
-    display: inline;
-  }
-`
