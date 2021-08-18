@@ -3,13 +3,10 @@ import {
   Box,
   Button,
   Checkbox,
-  Col,
   Collapse,
   Flex,
   Link,
   RadioGroup,
-  Row,
-  Sans,
   Spacer,
   Text,
 } from "@artsy/palette"
@@ -169,8 +166,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
     }
   }
 
-  // @ts-expect-error STRICT_NULL_CHECK
-  getAddressList = () => this.props.me.addressConnection.edges
+  getAddressList = () => this.props.me.addressConnection?.edges
 
   getOrderArtwork = () => this.props.order.lineItems?.edges?.[0]?.node?.artwork
 
@@ -272,7 +268,6 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
 
       const isArtaShipping = this.isArtaShipping()
 
-      // @ts-expect-error STRICT_NULL_CHECK
       const orderOrError = (
         await setShipping(this.props.commitMutation, {
           input: {
@@ -282,9 +277,9 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
             phoneNumber: shipToPhoneNumber,
           },
         })
-      ).commerceSetShipping.orderOrError
+      ).commerceSetShipping?.orderOrError
 
-      if (orderOrError.error) {
+      if (orderOrError?.error) {
         this.handleSubmitError(orderOrError.error)
         return
       }
@@ -390,8 +385,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
       }
     } else if (savedAddressID) {
       deleteUserAddress(
-        // @ts-expect-error STRICT_NULL_CHECK
-        relayEnvironment,
+        relayEnvironment!,
         savedAddressID,
         () => {},
         message => {
@@ -595,14 +589,10 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
 
     return (
       <Box data-test="orderShipping">
-        <Row>
-          <Col>
-            <OrderStepper
-              currentStep="Shipping"
-              steps={order.mode === "OFFER" ? offerFlowSteps : buyNowFlowSteps}
-            />
-          </Col>
-        </Row>
+        <OrderStepper
+          currentStep="Shipping"
+          steps={order.mode === "OFFER" ? offerFlowSteps : buyNowFlowSteps}
+        />
         <TwoColumnLayout
           Content={
             <Flex
@@ -612,15 +602,14 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
               {/* TODO: Make RadioGroup generic for the allowed values,
                   which could also ensure the children only use
                   allowed values. */}
-              {/* @ts-expect-error STRICT_NULL_CHECK */}
-              {artwork.pickup_available && (
+              {artwork?.pickup_available && (
                 <>
                   <RadioGroup
                     data-test="shipping-options"
                     onSelect={this.onSelectShippingOption.bind(this)}
                     defaultValue={shippingOption}
                   >
-                    <Text variant="mediumText" mb="1">
+                    <Text variant="md" mb="1">
                       Delivery method
                     </Text>
                     <BorderedRadio value="SHIP" label="Shipping" />
@@ -631,15 +620,15 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
                       data-test="pickupOption"
                     >
                       <Collapse open={shippingOption === "PICKUP"}>
-                        <Sans size="2" color="black60">
+                        <Text variant="xs" color="black60">
                           After your order is confirmed, a specialist will
                           contact you within 2 business days to coordinate
                           pickup.
-                        </Sans>
+                        </Text>
                       </Collapse>
                     </BorderedRadio>
                   </RadioGroup>
-                  <Spacer mb={3} />
+                  <Spacer mb={4} />
                 </>
               )}
 
@@ -647,7 +636,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
                 data-test="savedAddressesCollapse"
                 open={!!showSavedAddresses}
               >
-                <Text variant="mediumText" mb="1">
+                <Text variant="md" mb="1">
                   Delivery address
                 </Text>
                 {isArtaShipping &&
@@ -676,12 +665,9 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
                   errors={addressErrors}
                   touched={addressTouched}
                   onChange={this.onAddressChange}
-                  // @ts-expect-error STRICT_NULL_CHECK
-                  domesticOnly={artwork.onlyShipsDomestically}
-                  // @ts-expect-error STRICT_NULL_CHECK
-                  euOrigin={artwork.euShippingOrigin}
-                  // @ts-expect-error STRICT_NULL_CHECK
-                  shippingCountry={artwork.shippingCountry}
+                  domesticOnly={artwork?.onlyShipsDomestically}
+                  euOrigin={artwork?.euShippingOrigin}
+                  shippingCountry={artwork?.shippingCountry}
                   showPhoneNumberInput={false}
                 />
                 <Spacer mb={2} />
@@ -701,7 +687,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
                 >
                   Save shipping address for later use
                 </Checkbox>
-                <Spacer mt={3} />
+                <Spacer mt={4} />
               </Collapse>
 
               <Collapse
@@ -725,7 +711,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
                   shippingQuotes.length > 0
                 }
               >
-                <Text variant="mediumText" mb="1">
+                <Text variant="sm" mb="1">
                   Shipping options
                 </Text>
 
@@ -742,7 +728,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
                   onClick={this.onContinueButtonPressed}
                   loading={isCommittingMutation}
                   disabled={isContinueButtonDisabled}
-                  size="large"
+                  variant="primaryBlack"
                   width="100%"
                 >
                   Continue
@@ -751,19 +737,19 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
             </Flex>
           }
           Sidebar={
-            <Flex flexDirection="column" mt={[0, 3]}>
+            <Flex flexDirection="column" mt={[0, 4]}>
               <Flex flexDirection="column">
                 <ArtworkSummaryItem order={order} />
                 <TransactionDetailsSummaryItem order={order} />
               </Flex>
               <BuyerGuarantee />
-              <Spacer mb={[2, 3]} />
+              <Spacer mb={[2, 4]} />
               <Media at="xs">
                 <Button
                   onClick={this.onContinueButtonPressed}
                   loading={isCommittingMutation}
                   disabled={isContinueButtonDisabled}
-                  size="large"
+                  variant="primaryBlack"
                   width="100%"
                 >
                   Continue

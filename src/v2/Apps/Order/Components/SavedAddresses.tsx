@@ -318,7 +318,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
       </RadioGroup>
       <Spacer mb={14} />
       {addAddressButton}
-      <Spacer mb={3} />
+      <Spacer mb={4} />
     </>
   )
 }

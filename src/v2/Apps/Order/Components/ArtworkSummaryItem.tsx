@@ -48,26 +48,26 @@ const ArtworkSummaryItem: React.SFC<ArtworkSummaryItemProps> = ({
         {imageURL && <Image src={imageURL} alt={title} width="55px" mr={1} />}
       </Box>
       <Flex flexDirection="column" overflow="hidden">
-        <Text variant="xs" color="black60">
+        <Text variant="sm" color="black60">
           {artist_names}
         </Text>
         <Box style={{ lineHeight: "1", ...truncateTextStyle }}>
           <Text
             fontStyle="italic"
-            variant="xs"
+            variant="sm"
             color="black60"
             display="inline"
           >
             {title}
           </Text>
-          <Text variant="xs" color="black60" display="inline">
+          <Text variant="sm" color="black60" display="inline">
             {date && `, ${date}`}
           </Text>
         </Box>
-        <Text variant="xs" color="black60" style={truncateTextStyle}>
+        <Text variant="sm" color="black60" style={truncateTextStyle}>
           {name}
         </Text>
-        <Text variant="xs" color="black60">
+        <Text variant="sm" color="black60">
           {shippingOrigin}
         </Text>
       </Flex>

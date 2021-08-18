@@ -89,7 +89,7 @@ const OrderApp = loadable(
 export const orderRoutes: AppRouteConfig[] = [
   {
     // TODO: Still need order2?
-    // theme: "v3",
+    theme: "v3",
     path: "/order(2|s)/:orderID",
     hideFooter: true,
     Component: OrderApp,
@@ -178,7 +178,7 @@ export const orderRoutes: AppRouteConfig[] = [
       },
       {
         path: "shipping",
-        // theme: "v3",
+        theme: "v3",
         Component: ShippingRoute,
         shouldWarnBeforeLeaving: true,
         hideFooter: true,
@@ -288,6 +288,7 @@ export const orderRoutes: AppRouteConfig[] = [
       },
       {
         path: "review/decline",
+        // theme: "v3",
         Component: DeclineRoute,
         hideFooter: true,
         query: graphql`
@@ -300,6 +301,7 @@ export const orderRoutes: AppRouteConfig[] = [
       },
       {
         path: "status",
+        theme: "v3",
         Component: StatusRoute,
         hideFooter: true,
         query: graphql`
