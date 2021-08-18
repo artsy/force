@@ -130,6 +130,7 @@ const ViewingRoomHeaderSmall: React.FC<ViewingRoomHeaderProps> = props => {
           backgroundPosition: "center",
           height: "100%",
           paddingBottom: "100%",
+          width: "100%",
         }}
       />
 
