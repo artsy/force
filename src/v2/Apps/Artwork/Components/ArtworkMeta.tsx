@@ -60,8 +60,8 @@ export class ArtworkMeta extends Component<ArtworkMetaProps> {
   renderGoogleAdSnippet() {
     const { artwork, googleAdId: fromPropsGoogleAdId } = this.props
     const { GOOGLE_ADWORDS_ID: fromSharifyGoogleAdId } = sd
-    const { is_in_auction, is_acquireable, internalID } = artwork
-    if (!is_in_auction && !is_acquireable) return
+    const { is_in_auction, isAcquireable, internalID } = artwork
+    if (!is_in_auction && !isAcquireable) return
 
     // TODO: Investigate always being able to select from sharify.
     const googleAdId = fromSharifyGoogleAdId || fromPropsGoogleAdId
@@ -98,8 +98,19 @@ export class ArtworkMeta extends Component<ArtworkMetaProps> {
     )
   }
 
+  get isInquiryArtwork() {
+    const { isAcquireable, isInquireable, isOfferable } = this.props.artwork
+    const isInquiryArtwork = isInquireable && !isAcquireable && !isOfferable
+    return isInquiryArtwork
+  }
+
   renderZendeskScript() {
-    if (typeof window !== "undefined" && window.zEmbed) return
+    if (this.isInquiryArtwork) {
+      return
+    }
+    if (typeof window !== "undefined" && window.zEmbed) {
+      return
+    }
     const zdKey = this.props.artwork.is_in_auction
       ? sd.AUCTION_ZENDESK_KEY
       : sd.ZENDESK_KEY
@@ -159,7 +170,7 @@ export const ArtworkMetaFragmentContainer = createFragmentContainer(
         }
         image_rights: imageRights
         is_in_auction: isInAuction
-        is_acquireable: isAcquireable
+        isAcquireable
         isInquireable
         isOfferable
         is_shareable: isShareable
