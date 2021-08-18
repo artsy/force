@@ -50,7 +50,7 @@ const PurpleCircle = styled.div`
   height: 10px;
   background-color: ${themeGet("colors.red10")};
   border-radius: 50%;
-  margin-right: 5px;
+  margin-left: 5px;
 `
 
 interface ConversationSnippetProps {
@@ -96,12 +96,7 @@ const ConversationSnippet: React.FC<ConversationSnippetProps> = props => {
         underlineBehavior="none"
       >
         <Flex alignItems="center" px={0.5} width="100%" height="120px">
-          <Flex
-            alignItems="center"
-            width={`${themeGet("space.2")}`}
-            flexShrink={0}
-            height="100%"
-          >
+          <Flex alignItems="center" width={20} flexShrink={0} height="100%">
             {conversation.unread && <PurpleCircle />}
           </Flex>
           <StyledFlex alignItems="center" height="80px" width="80px">
