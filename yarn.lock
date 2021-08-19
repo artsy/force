@@ -65,12 +65,12 @@
   dependencies:
     uuid "^8.3.0"
 
-"@artsy/palette-charts@15.0.1":
-  version "15.0.1"
-  resolved "https://registry.yarnpkg.com/@artsy/palette-charts/-/palette-charts-15.0.1.tgz#c9bc62d01611ca7fc8edd0f7eabb25e2e1803f7c"
-  integrity sha512-6z0tRHNjf6g2AclfdMk59Z5DKChHzMITHCsbyX4QZzTCkqX15VvVj5CuU9BRVjUwXn7RKrfIlqj9Hb9cOFm5+A==
+"@artsy/palette-charts@16.0.0":
+  version "16.0.0"
+  resolved "https://registry.yarnpkg.com/@artsy/palette-charts/-/palette-charts-16.0.0.tgz#5a0116a4b5e81c03f5ba9a695c68d8b97fc0ce55"
+  integrity sha512-Cz6SJynCX1uVVfjcALO2pP+KLcyHLvCUUpTfUl5DZcsrEZb1FpSGEL4cd1n0RfvmyYEcnbhkuIJcocQUxkZ6pw==
   dependencies:
-    "@artsy/palette" "^16.0.1"
+    "@artsy/palette" "^17.0.0"
     "@seznam/compose-react-refs" "^1.0.6"
     "@styled-system/theme-get" "^5.1.2"
     d3-interpolate "^1.3.2"
@@ -82,10 +82,28 @@
   resolved "https://registry.yarnpkg.com/@artsy/palette-tokens/-/palette-tokens-2.6.0.tgz#3d780ff65994fef0daadef29d43d11f89470b728"
   integrity sha512-UQP6P+xv/5hm82ep0z5X3kCFFnk03H6y8kdW/wTU+xPq45ESUay7aNFYXeub47tmW2v6dXJ8Oa01Z0iwc6BVpA==
 
-"@artsy/palette@16.0.1", "@artsy/palette@^16.0.1":
+"@artsy/palette@16.0.1":
   version "16.0.1"
   resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-16.0.1.tgz#8a36ce06dd99596e5149cb6dce15d804d19df1a3"
   integrity sha512-T8T91DDUuEx3DIfq9e0LJdzh8uohVxSz+ok7woQIwO6aU7BcIJKFLACzw+Eupvhi4OuyR5kEU8A4/nmbNlkslQ==
+  dependencies:
+    "@artsy/palette-tokens" "^2.6.0"
+    "@seznam/compose-react-refs" "^1.0.6"
+    "@styled-system/theme-get" "^5.1.2"
+    debounce "^1.2.0"
+    luxon "^1.15"
+    proportional-scale "^4.0.0"
+    react-lazy-load-image-component "1.5.0"
+    react-remove-scroll "^2.3.0"
+    styled-bootstrap-grid "3.1.0"
+    styled-system "^5.1.5"
+    trunc-html "^1.1.2"
+    use-cursor "^1.2.3"
+
+"@artsy/palette@^17.0.0":
+  version "17.0.0"
+  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-17.0.0.tgz#463e54660f2852030398dbaf4a66380a28839e17"
+  integrity sha512-LvKNLFbg1suQIe4uayRqRfbtWp/yWgonOZpOWmTFC1eQAQVpDnjstjs5jOq3OQ96gjO9ASIQXYIoT2V10zoATA==
   dependencies:
     "@artsy/palette-tokens" "^2.6.0"
     "@seznam/compose-react-refs" "^1.0.6"
