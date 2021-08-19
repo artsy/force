@@ -1,55 +1,47 @@
 import React from "react"
-import { SectionContainer } from "../SectionContainer"
 import { ConsignArtistAutosuggest } from "./ConsignArtistAutosuggest"
 import { PriceEstimateContextProvider } from "./ConsignPriceEstimateContext"
-import { Flex, Spacer, Text } from "@artsy/palette"
+import { Column, FullBleed, GridColumns, Spacer, Text } from "@artsy/palette"
 import { EstimateResults } from "./EstimateResults"
+import { AppContainer } from "v2/Apps/Components/AppContainer"
+import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
 
 export const GetPriceEstimate: React.FC = () => {
-  // TODO: Investigate this very strange jest + css thing related to
-  // styled-system's responsive prop `textAlign`. For now just disable in test.
-  const textAlign: any =
-    typeof jest === "undefined" ? ["center", "center", "left"] : "center"
-
   return (
     <PriceEstimateContextProvider>
-      <SectionContainer background="black5">
-        <Flex
-          flexDirection={["column", "column", "column", "row"]}
-          alignItems={["center", "center", "center", "start"]}
-          justifyContent="center"
-        >
-          <Flex
-            flexDirection="column"
-            pr={[0, 0, 0, 5]}
-            mb={4}
-            width="100%"
-            maxWidth={360}
-            alignItems={["center", "center", "center", "start"]}
-          >
-            <Text variant="largeTitle">Get a Price Estimate</Text>
-            <Spacer my={1} />
-            <Text variant="subtitle" color="black60" textAlign={textAlign}>
-              Our proprietary market data allows us to price your artwork
-              accurately and quickly
-            </Text>
+      <FullBleed bg="black5">
+        <AppContainer>
+          <HorizontalPadding py={[2, 4]}>
+            <GridColumns>
+              <Column
+                span={3}
+                pt={[2, 4]}
+                pr={[2, 0]}
+                pb={[2, 4]}
+                pl={[2, 4]}
+                textAlign={["center", "left"]}
+              >
+                <Text variant="xl">Get a Price Estimate</Text>
 
-            <Spacer mt={3} />
+                <Spacer my={1} />
 
-            <Flex position="relative" width="100%">
-              <ConsignArtistAutosuggest />
-            </Flex>
-          </Flex>
+                <Text variant="sm" color="black60" maxWidth="40ch" mx="auto">
+                  Our proprietary market data allows us to price your artwork
+                  accurately and quickly
+                </Text>
 
-          <EstimateResults
-            alignItems="center"
-            justifyContent="center"
-            flex="1"
-            px={[0, 0, 0, 3]}
-            width={["100%", "100%", "100%", "auto"]}
-          />
-        </Flex>
-      </SectionContainer>
+                <Spacer mt={2} />
+
+                <ConsignArtistAutosuggest />
+              </Column>
+
+              <Column span={9} p={[2, 4]}>
+                <EstimateResults />
+              </Column>
+            </GridColumns>
+          </HorizontalPadding>
+        </AppContainer>
+      </FullBleed>
     </PriceEstimateContextProvider>
   )
 }

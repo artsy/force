@@ -1,20 +1,22 @@
 import React from "react"
 import { usePriceEstimateContext } from "./ConsignPriceEstimateContext"
 import { formatCentsToDollars } from "v2/Apps/Consign/Routes/MarketingLanding/Utils/formatCentsToDollars"
-
 import {
   Box,
   Button,
-  Flex,
   Image,
   Spacer,
   Text,
-  color,
-  SelectSmall,
+  Select,
+  DROP_SHADOW,
+  Skeleton,
+  SkeletonText,
+  SkeletonBox,
 } from "@artsy/palette"
 import styled from "styled-components"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { Media } from "v2/Utils/Responsive"
+import { cropped } from "v2/Utils/resized"
 
 export const ArtistInsightResult: React.FC = () => {
   const {
@@ -27,7 +29,7 @@ export const ArtistInsightResult: React.FC = () => {
   } = usePriceEstimateContext()
 
   if (isFetching) {
-    return <LoadingPlaceholder />
+    return <Placeholder />
   }
 
   if (!artistInsights.length) {
@@ -57,84 +59,99 @@ export const ArtistInsightResult: React.FC = () => {
   const artistSlug = selectedSuggestion?.node?.slug
   const { artistName } = artistInsight
 
-  const handleMediumChange = medium => {
-    // @ts-expect-error STRICT_NULL_CHECK
-    setMedium(medium)
+  const img = !!imageUrl ? cropped(imageUrl, { width: 125, height: 125 }) : null
+
+  const handleMediumChange = (medium: string) => {
+    setMedium?.(medium)
   }
 
   return (
-    <Box>
+    <>
       <Container>
-        <Flex flexDirection={["column", "column", "row", "row"]}>
-          <Box pr={4} mb={[2, 2, 0]}>
-            <Image
-              src={imageUrl}
-              width={[80, 80, 122]}
-              height={[80, 80, 122]}
-            />
-          </Box>
-          <Box>
-            <Text variant="largeTitle" mt="-6px">
-              {artistName}
-            </Text>
-            <Box mt={0.3} mb={0.5}>
-              <SelectSmall
-                selected={artistInsight.medium}
-                options={mediumSelectOptions}
-                onSelect={handleMediumChange}
-              />
-            </Box>
-            <Text variant="largeTitle">
-              {lowEstimateDollars} – {highEstimateDollars}
-            </Text>
-            <Text variant="text">Median: {medianEstimateDollars}</Text>
-          </Box>
-        </Flex>
+        {img && (
+          <Image
+            src={img.src}
+            srcSet={img.srcSet}
+            width={125}
+            height={125}
+            alt=""
+            lazyLoad
+            style={{ display: "block" }}
+            mb={2}
+            mx="auto"
+          />
+        )}
 
-        <Spacer mb={3} />
+        <Text variant="xl">{artistName}</Text>
 
-        <Box>
-          <Text>
-            An Artsy specialist can provide a custom valuation for your work.
-          </Text>
-          <Spacer mb={2} />
-          <Media greaterThanOrEqual="md">
-            <RouterLink to={`/artist/${artistSlug}/auction-results`}>
-              <Button width={230} variant="secondaryOutline" mr={2}>
-                Explore auction data
-              </Button>
-            </RouterLink>
-            <RouterLink to="/consign/submission">
-              <Button width={230}>Get a valuation</Button>
-            </RouterLink>
-          </Media>
-          <Media lessThan="md">
-            <RouterLink to="/consign/submission">
-              <Button mb={2} width="100%" size="large">
-                Get a valuation
-              </Button>
-            </RouterLink>
-            <Box textAlign="center">
-              <RouterLink
-                noUnderline
-                to={`/artist/${artistSlug}/auction-results`}
-              >
-                <Text variant="mediumText">Explore auction data</Text>
-              </RouterLink>
-            </Box>
-          </Media>
-        </Box>
+        <Select
+          my={1}
+          selected={artistInsight.medium}
+          options={mediumSelectOptions}
+          onSelect={handleMediumChange}
+        />
+
+        <Text variant="xl">
+          {lowEstimateDollars}–{highEstimateDollars}
+        </Text>
+
+        <Text variant="xs">Median: {medianEstimateDollars}</Text>
+
+        <Spacer mt={2} />
+
+        <Text variant="sm">
+          An Artsy specialist can provide a custom valuation for your work.
+        </Text>
+
+        <Spacer mb={2} />
+
+        <Media greaterThanOrEqual="md">
+          <Button
+            variant="secondaryOutline"
+            mr={2}
+            // @ts-ignore
+            as={RouterLink}
+            to={`/artist/${artistSlug}/auction-results`}
+          >
+            Explore auction data
+          </Button>
+
+          <Button
+            // @ts-ignore
+            as={RouterLink}
+            to="/consign/submission"
+          >
+            Get a valuation
+          </Button>
+        </Media>
+
+        <Media lessThan="md">
+          <Button
+            width="100%"
+            mb={2}
+            // @ts-ignore
+            as={RouterLink}
+            to="/consign/submission"
+          >
+            Get a valuation
+          </Button>
+
+          <RouterLink
+            textDecoration="none"
+            to={`/artist/${artistSlug}/auction-results`}
+          >
+            <Text variant="sm">Explore auction data</Text>
+          </RouterLink>
+        </Media>
       </Container>
 
-      <Spacer my={3} />
+      <Spacer mt={2} />
 
-      <Flex width="100%" justifyContent="center">
-        <Text variant="small" color="black60" maxWidth={495}>
-          Price estimate is based on 36 months of secondary market data for this
-          artist.
-        </Text>
-      </Flex>
-    </Box>
+      <Text variant="xs" color="black60">
+        Price estimate is based on 36 months of secondary market data for this
+        artist.
+      </Text>
+    </>
   )
 }
 
@@ -143,49 +160,54 @@ const ZeroState: React.FC = () => {
 
   return (
     <Container>
-      <Text variant="small" color="black60">
+      <Text variant="xs" mb={0.5}>
         Price estimate for works by
       </Text>
+
       <Text
-        variant="largeTitle"
-        borderBottom={`1px solid ${color("black60")}`}
-        pb={0.5}
+        variant="xl"
+        borderBottom="1px solid"
+        borderBottomColor="black60"
+        pb={1}
         mb={2}
       >
         {selectedSuggestion.node.displayLabel}
       </Text>
-      <Text variant="small" color="black60">
+
+      <Text variant="sm" mb={1}>
         Sorry, there isn’t enough secondary market data to provide a price
         estimate for this artist.
+        <br />
+        Try searching for another artist.
       </Text>
-      <Spacer mb={3} />
-      <Text variant="text">Try searching for another artist.</Text>
     </Container>
   )
 }
 
 const Container = styled(Box).attrs({
-  p: 3,
-  width: ["100%", 550],
+  p: 2,
+  bg: "white100",
 })`
-  background: white;
-  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  box-shadow: ${DROP_SHADOW};
 `
 
-const PlaceholderText = styled(Box)`
-  background-color: ${color("black10")};
-  height: 20px;
-  width: 75%;
-  margin-bottom: 10px;
-`
-
-const LoadingPlaceholder: React.FC = () => {
+const Placeholder: React.FC = () => {
   return (
     <Container>
-      <Box mb={2} height="80px" width="80px" bg="black10" />
-      <PlaceholderText />
-      <PlaceholderText />
-      <PlaceholderText />
+      <Skeleton>
+        <SkeletonBox mb={2} height={125} width={125} mx="auto" />
+
+        <SkeletonText variant="xl" mb={1}>
+          Artist name
+        </SkeletonText>
+
+        <SkeletonText variant="xl" mb={1}>
+          Example text
+        </SkeletonText>
+
+        <SkeletonText variant="sm">Etcetera</SkeletonText>
+      </Skeleton>
     </Container>
   )
 }

@@ -1,10 +1,14 @@
 import Autosuggest from "react-autosuggest"
 import React, { useEffect } from "react"
-import { Input, MagnifyingGlassIcon, Text, color } from "@artsy/palette"
+import {
+  MagnifyingGlassIcon,
+  Text,
+  DROP_SHADOW,
+  LabeledInput,
+} from "@artsy/palette"
 import { usePriceEstimateContext } from "./ConsignPriceEstimateContext"
 import { useTracking } from "react-tracking"
 import { Suggestion as ConsignSearchSuggestion } from "v2/Apps/Consign/Routes/MarketingLanding/Components/GetPriceEstimate/ConsignPriceEstimateContext"
-
 import {
   ContextModule,
   OwnerType,
@@ -102,8 +106,7 @@ export const ConsignArtistAutosuggest: React.FC = () => {
           width: "100%",
         },
         suggestionsContainer: {
-          boxShadow:
-            "0px 0px 1px rgba(0, 0, 0, 0.08), 0px 2px 8px rgba(0, 0, 0, 0.12)",
+          boxShadow: DROP_SHADOW,
           marginTop: "4px",
         },
       }}
@@ -113,16 +116,11 @@ export const ConsignArtistAutosuggest: React.FC = () => {
 
 const AutosuggestInput: React.FC = props => {
   return (
-    <>
-      <Input
-        width="100%"
-        height={40}
-        spellCheck={false}
-        style={{ boxShadow: "0px 2px 10px rgba(0,0,0,0.1)" }}
-        {...props}
-      />
-      <MagnifyingGlassIcon position="absolute" right="2%" top={1} />
-    </>
+    <LabeledInput
+      spellCheck={false}
+      label={<MagnifyingGlassIcon />}
+      {...props}
+    />
   )
 }
 
@@ -133,9 +131,9 @@ const Suggestion: React.FC<{ node: any /* FIXME */ }> = (
   return (
     <Text
       width="100%"
-      background={isHighlighted ? color("black10") : "white"}
-      py={0.5}
-      paddingLeft={1}
+      bg={isHighlighted ? "black5" : "white100"}
+      p={0.5}
+      variant="md"
       style={{
         cursor: "pointer",
       }}

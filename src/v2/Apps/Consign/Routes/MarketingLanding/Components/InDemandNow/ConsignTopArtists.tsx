@@ -4,16 +4,7 @@ import { useSystemContext } from "v2/System"
 import { graphql } from "react-relay"
 import { chunk, shuffle } from "lodash"
 import { ConsignTopArtistsQuery } from "v2/__generated__/ConsignTopArtistsQuery.graphql"
-import styled from "styled-components"
-
-import {
-  Avatar,
-  Text as BaseText,
-  Box,
-  Flex,
-  Join,
-  Spacer,
-} from "@artsy/palette"
+import { Text, EntityHeader, GridColumns, Column } from "@artsy/palette"
 import { formatCentsToDollars } from "v2/Apps/Consign/Routes/MarketingLanding/Utils/formatCentsToDollars"
 
 // @ts-expect-error STRICT_NULL_CHECK
@@ -24,11 +15,9 @@ type ArtworkProps = ConsignTopArtistsQuery["response"]["targetSupply"]["microfun
 export const ConsignTopArtists: React.FC = () => {
   return (
     <>
-      <Box>
-        <Text textAlign={"left"} mb={2} variant="largeTitle">
-          Top Artists
-        </Text>
-      </Box>
+      <Text mb={2} variant="xl">
+        Top Artists
+      </Text>
 
       <ConsignTopArtistsQueryRenderer />
     </>
@@ -131,53 +120,32 @@ const TopArtists: React.FC<ConsignTopArtistsQuery["response"]> = props => {
   )
 
   return (
-    <Box textAlign="left">
-      <Flex flexDirection="row" width="100%" overflow="scroll">
-        <Join separator={<Spacer mr={3} />}>
-          {recentlySoldArtworks.map((artworkSet, recentlySoldIndex) => {
-            return (
-              <Box key={recentlySoldIndex}>
-                {artworkSet.map(
-                  (recentlySoldArtwork: ArtworkProps, artworkSetIndex) => {
-                    const {
-                      image,
-                      artistNames,
-                      realizedPriceAverage,
-                    } = recentlySoldArtwork
-                    const imageUrl = image.imageURL.replace(":version", "small")
+    <GridColumns>
+      {recentlySoldArtworks.map((artworkSet, i) => {
+        return (
+          <React.Fragment key={i}>
+            {artworkSet.map((recentlySoldArtwork: ArtworkProps, k) => {
+              const {
+                image,
+                artistNames,
+                realizedPriceAverage,
+              } = recentlySoldArtwork
 
-                    return (
-                      <Box key={artworkSetIndex}>
-                        <Flex
-                          mb={2}
-                          alignItems="center"
-                          style={{ whiteSpace: "nowrap" }}
-                        >
-                          <Box pr={1}>
-                            <Avatar src={imageUrl} size="xs" />
-                          </Box>
-                          <Box>
-                            <Text variant="text" fontWeight="bold">
-                              {artistNames}
-                            </Text>
-                            <Text variant="text">
-                              Average Sale Price: {realizedPriceAverage}
-                            </Text>
-                          </Box>
-                        </Flex>
-                      </Box>
-                    )
-                  }
-                )}
-              </Box>
-            )
-          })}
-        </Join>
-      </Flex>
-    </Box>
+              const imageUrl = image.imageURL.replace(":version", "small")
+
+              return (
+                <Column key={k} span={[12, 4, 3, 2]}>
+                  <EntityHeader
+                    name={artistNames}
+                    meta={`Average Sale Price: ${realizedPriceAverage}`}
+                    image={{ src: imageUrl }}
+                  />
+                </Column>
+              )
+            })}
+          </React.Fragment>
+        )
+      })}
+    </GridColumns>
   )
 }
-
-const Text = styled(BaseText)`
-  color: white;
-`

@@ -1,12 +1,7 @@
 import React from "react"
-import {
-  Text as BaseText,
-  Box,
-  Flex,
-  Spacer,
-  TriangleDownIcon,
-} from "@artsy/palette"
+import { Text, Box, Flex, Spacer } from "@artsy/palette"
 import styled from "styled-components"
+import { themeGet } from "@styled-system/theme-get"
 
 export const DemandRank: React.FC<{ demandRank: number }> = ({
   demandRank,
@@ -15,35 +10,49 @@ export const DemandRank: React.FC<{ demandRank: number }> = ({
 
   return (
     <Box>
-      <Text>Demand Index</Text>
-      <Box>
-        <Text variant="largeTitle" color="white100">
-          {demandRank}
-        </Text>
-      </Box>
+      <Text variant="xs" textTransform="uppercase">
+        Demand Index
+      </Text>
+
+      <Text variant="xl" color="white100" mb={2}>
+        {demandRank}
+      </Text>
+
       <ProgressBar width={width} />
-      <Spacer my={0.3} />
+
+      <Spacer my={0.5} />
+
       <Flex flexDirection="row" justifyContent="space-between">
-        <Text>0.0</Text>
-        <Text>{demandRank}</Text>
+        <Text variant="xs">0.0</Text>
+        <Text variant="xs">{demandRank}</Text>
       </Flex>
     </Box>
   )
 }
 
+const TriangleDown = styled.div`
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-top: 6px solid ${themeGet("colors.white100")};
+  border-right: 4px solid transparent;
+  border-left: 4px solid transparent;
+`
+
 const ProgressBar: React.FC<{ width: number }> = ({ width }) => {
   const pctWidth = width + "%"
 
   return (
-    <Box overflow="hidden">
-      <Box width="100%" position="relative" height={10} left={-6}>
-        <TriangleDownIcon fill="white100" left={pctWidth} position="absolute" />
-      </Box>
+    <Box position="relative">
+      <TriangleDown
+        style={{ top: "-10px", left: pctWidth, transform: "translateX(-50%)" }}
+      />
+
       <Box height={20} width="100%" bg="black5">
         <Box
           width={pctWidth}
-          height={24}
-          className="card"
+          height="100%"
+          className="card" // TODO: Why?
           style={{
             background:
               "linear-gradient(to right, rgba(10, 26, 180, 0.1), #066AE0)",
@@ -53,7 +62,3 @@ const ProgressBar: React.FC<{ width: number }> = ({ width }) => {
     </Box>
   )
 }
-
-const Text = styled(BaseText)`
-  color: white;
-`

@@ -17,11 +17,11 @@ describe("BecomePartner", () => {
 
   it("has correct link", () => {
     const wrapper = getWrapper()
-    expect(wrapper.find("Link").props().href).toBe(
+    expect(wrapper.find("a").props().href).toBe(
       "https://partners.artsy.net/gallery-partnerships"
     )
     const wrapperMobile = getWrapper("xs")
-    expect(wrapperMobile.find("Link").props().href).toBe(
+    expect(wrapperMobile.find("a").props().href).toBe(
       "https://partners.artsy.net/gallery-partnerships"
     )
   })
