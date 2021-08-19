@@ -13,15 +13,17 @@ import { ArtworkCredits } from "./Components/ArtworkCredits"
 import { PromoSpace } from "./Components/PromoSpace"
 import { BecomePartner } from "./Components/BecomePartner"
 import { ArtsyMissionStatement } from "./Components/ArtsyMissionStatement"
+import { Join, Spacer } from "@artsy/palette"
 
 export const MarketingLandingApp = () => {
   return (
     <>
       <ConsignMeta />
 
-      <>
-        <Header />
-        <PromoSpace />
+      <Header />
+      <PromoSpace />
+
+      <Join separator={<Spacer mt={6} />}>
         <ArtsyMissionStatement />
         <SellArtDifferently />
         <GetPriceEstimate />
@@ -33,7 +35,7 @@ export const MarketingLandingApp = () => {
         <BecomePartner />
         <FAQ />
         <ArtworkCredits />
-      </>
+      </Join>
     </>
   )
 }

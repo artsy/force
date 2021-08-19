@@ -31,14 +31,7 @@ describe("ReadMore", () => {
     )
   }
 
-  it("links out to view all articles ", () => {
-    const wrapper = getWrapper("sm")
-    expect(wrapper.find("RouterLink").last().props().to).toBe(
-      "/series/guide-consigning-art"
-    )
-  })
-
-  it("tracks clicks on articles ", () => {
+  it("tracks clicks on articles", () => {
     const wrapper = getWrapper()
     const articles = wrapper.find("Article")
     articles.forEach(article => {

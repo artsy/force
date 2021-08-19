@@ -1,20 +1,33 @@
+import { Button, FullBleed, Text } from "@artsy/palette"
 import React from "react"
-import { LinkSection } from "./LinkSection"
+import { AppContainer } from "v2/Apps/Components/AppContainer"
+import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
 
-export const ContactUs: React.FC<{ darkVariant?: boolean }> = () => {
+export const ContactUs: React.FC = () => {
   return (
-    <LinkSection
-      title="Questions? Speak to an Artsy Specialist"
-      buttonText="Send an email"
-      link="mailto:consign@artsy.net"
-      text={() => {
-        return (
-          <>
-            Email us at <b>consign@artsy.net</b> or call <b>+1-646-797-3423</b>{" "}
-            for more information on how Artsy can sell your artwork.
-          </>
-        )
-      }}
-    />
+    <FullBleed bg="black5">
+      <AppContainer>
+        <HorizontalPadding py={[2, 4]}>
+          <Text variant="xl" mb={2}>
+            Questions? Speak to an Artsy Specialist
+          </Text>
+
+          <Text variant="sm" mb={4}>
+            Email us at <a href="mailto:consign@artsy.net">consign@artsy.net</a>{" "}
+            or call <a href="tel:!1-646-797-3423">+1-646-797-3423</a> for more
+            information on how Artsy can sell your artwork.
+          </Text>
+
+          <Button
+            variant="secondaryOutline"
+            // @ts-ignore
+            as="a"
+            href="mailto:consign@artsy.net"
+          >
+            Send an email
+          </Button>
+        </HorizontalPadding>
+      </AppContainer>
+    </FullBleed>
   )
 }

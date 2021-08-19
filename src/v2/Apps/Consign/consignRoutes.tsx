@@ -23,6 +23,7 @@ const OfferDetailApp = loadable(
 
 export const consignRoutes: AppRouteConfig[] = [
   {
+    theme: "v3",
     path: "/consign",
     getComponent: () => MarketingLandingApp,
     prepare: () => {

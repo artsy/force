@@ -1,22 +1,19 @@
 import React from "react"
-import { Text, Box } from "@artsy/palette"
-import { SectionContainer } from "./SectionContainer"
+import { Column, GridColumns, Separator, Text } from "@artsy/palette"
 
 export const ArtsyMissionStatement: React.FC = () => {
   return (
-    <SectionContainer>
-      <Box borderBottom="1px solid" borderColor="black60" width="100%">
-        <Text
-          width="60%"
-          textAlign="center"
-          pb={3}
-          variant="largeTitle"
-          margin="0 auto"
-        >
-          We connect the world's most innovative art collectors and sellers in
-          one place.
-        </Text>
-      </Box>
-    </SectionContainer>
+    <>
+      <GridColumns>
+        <Column span={8} start={3} py={4}>
+          <Text variant="xl" textAlign="center">
+            We connect the world's most innovative art collectors and sellers in
+            one place.
+          </Text>
+        </Column>
+      </GridColumns>
+
+      <Separator />
+    </>
   )
 }

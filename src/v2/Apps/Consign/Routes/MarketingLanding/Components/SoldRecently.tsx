@@ -1,14 +1,11 @@
 import React from "react"
-import { Flex, Spacer, Text } from "@artsy/palette"
+import { Box, Flex, Shelf, Spacer, Text } from "@artsy/palette"
 import { QueryRenderer, createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "v2/System"
 import { SoldRecentlyQuery } from "v2/__generated__/SoldRecentlyQuery.graphql"
 import { SoldRecently_targetSupply } from "v2/__generated__/SoldRecently_targetSupply.graphql"
 import { extractNodes } from "v2/Utils/extractNodes"
 import FillwidthItem from "v2/Components/Artwork/FillwidthItem"
-import { Carousel } from "v2/Components/Carousel"
-import { SectionContainer } from "./SectionContainer"
-import { Media } from "v2/Utils/Responsive"
 import { useTracking } from "react-tracking"
 import { ContextModule, OwnerType, clickedArtworkGroup } from "@artsy/cohesion"
 import { flatten, shuffle } from "lodash"
@@ -51,76 +48,60 @@ const SoldRecently: React.FC<SoldRecentlyProps> = ({ targetSupply }) => {
   }
 
   return (
-    <SectionContainer>
-      <Text mb={[3, 2]} variant="largeTitle">
+    <>
+      <Text variant="xl" mb={2}>
         Sold recently on Artsy
       </Text>
-      <Flex flexDirection="column">
-        <Carousel arrowHeight={HEIGHT}>
-          {recentlySoldArtworks.map((artwork, index) => {
-            return (
-              <Flex
-                key={index}
-                flexDirection="column"
-                style={{ textAlign: "left" }}
+
+      <Shelf>
+        {recentlySoldArtworks.map((artwork, index) => {
+          return (
+            <React.Fragment key={index}>
+              <FillwidthItem
+                artwork={artwork}
+                hidePartnerName
+                hideSaleInfo
+                imageHeight={HEIGHT}
+                showExtended={false}
+                onClick={trackArtworkItemClick(artwork, index)}
+                // @ts-ignore TODO: Add to AuthContextModule
+                contextModule={ContextModule.artworkRecentlySoldGrid}
+              />
+
+              <Text
+                variant="xs"
+                color="black60"
+                display={["block", "none"]}
+                mt={0.5}
               >
-                <FillwidthItem
-                  artwork={artwork}
-                  hidePartnerName
-                  hideSaleInfo
-                  imageHeight={HEIGHT}
-                  showExtended={false}
-                  onClick={trackArtworkItemClick(artwork, index)}
-                  // @ts-ignore TODO: Add to AuthContextModule
-                  contextModule={ContextModule.artworkRecentlySoldGrid}
-                />
-                <>
-                  <Media greaterThanOrEqual="sm">
-                    <Flex flexDirection="row" alignItems="baseline">
-                      <Text variant="largeTitle">{artwork.realizedPrice}</Text>
-                      <Spacer ml={0.5} />
-                      <Text variant="caption" color="black60">
-                        Realized price
-                      </Text>
-                    </Flex>
-                    <Flex flexDirection="row" alignItems="baseline">
-                      <Text variant="caption" fontWeight="bold" color="#00A03E">
-                        {artwork.realizedToEstimate + "x"}
-                      </Text>
-                      <Spacer ml={0.3} />
-                      <Text variant="caption" color="black60">
-                        estimate
-                      </Text>
-                    </Flex>
-                  </Media>
-                  <Media lessThan="sm">
-                    <Flex flexDirection="column">
-                      <Text variant="caption" color="black60" mt={0.5}>
-                        Realized price
-                      </Text>
-                      <Text variant="largeTitle">{artwork.realizedPrice}</Text>
-                      <Flex flexDirection="row" alignItems="baseline">
-                        <Text
-                          variant="caption"
-                          fontWeight="bold"
-                          color="#00A03E"
-                        >
-                          {artwork.realizedToEstimate + "x"}
-                        </Text>
-                        <Spacer ml={0.3} />
-                        <Text variant="caption" color="black60">
-                          estimate
-                        </Text>
-                      </Flex>
-                    </Flex>
-                  </Media>
-                </>
+                Realized price
+              </Text>
+
+              <Flex flexDirection="row" alignItems="baseline">
+                <Text variant="xl">{artwork.realizedPrice}</Text>
+
+                <Box display={["none", "flex"]} alignItems="baseline">
+                  <Spacer ml={0.5} />
+                  <Text variant="xs" color="black60">
+                    Realized price
+                  </Text>
+                </Box>
               </Flex>
-            )
-          })}
-        </Carousel>
-      </Flex>
-    </SectionContainer>
+
+              <Text variant="xs">
+                <Box as="span" color="green100">
+                  {artwork.realizedToEstimate + "×"}
+                </Box>
+
+                <Box as="span" color="black60">
+                  &nbsp;estimate
+                </Box>
+              </Text>
+            </React.Fragment>
+          )
+        })}
+      </Shelf>
+    </>
   )
 }
 

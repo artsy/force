@@ -24,9 +24,11 @@ describe("ContactUs", () => {
 
   it("has correct email link", () => {
     const wrapper = getWrapper()
-    expect(wrapper.find("Link").props().href).toBe("mailto:consign@artsy.net")
+    expect(wrapper.find("a").first().props().href).toBe(
+      "mailto:consign@artsy.net"
+    )
     const wrapperMobile = getWrapper("xs")
-    expect(wrapperMobile.find("Link").props().href).toBe(
+    expect(wrapperMobile.find("a").first().props().href).toBe(
       "mailto:consign@artsy.net"
     )
   })
