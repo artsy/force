@@ -3,32 +3,32 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type ArtworkInquiryQueryVariables = {
+export type InquiryInquiryQueryVariables = {
     id: string;
 };
-export type ArtworkInquiryQueryResponse = {
+export type InquiryInquiryQueryResponse = {
     readonly artwork: {
-        readonly " $fragmentRefs": FragmentRefs<"ArtworkInquiry_artwork">;
+        readonly " $fragmentRefs": FragmentRefs<"InquiryInquiry_artwork">;
     } | null;
 };
-export type ArtworkInquiryQuery = {
-    readonly response: ArtworkInquiryQueryResponse;
-    readonly variables: ArtworkInquiryQueryVariables;
+export type InquiryInquiryQuery = {
+    readonly response: InquiryInquiryQueryResponse;
+    readonly variables: InquiryInquiryQueryVariables;
 };
 
 
 
 /*
-query ArtworkInquiryQuery(
+query InquiryInquiryQuery(
   $id: String!
 ) {
   artwork(id: $id) {
-    ...ArtworkInquiry_artwork
+    ...InquiryInquiry_artwork
     id
   }
 }
 
-fragment ArtworkInquiryForm_artwork on Artwork {
+fragment InquiryInquiry_artwork on Artwork {
   internalID
   title
   date
@@ -48,10 +48,6 @@ fragment ArtworkInquiryForm_artwork on Artwork {
       srcSet
     }
   }
-}
-
-fragment ArtworkInquiry_artwork on Artwork {
-  ...ArtworkInquiryForm_artwork
 }
 */
 
@@ -93,7 +89,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "ArtworkInquiryQuery",
+    "name": "InquiryInquiryQuery",
     "selections": [
       {
         "alias": null,
@@ -106,7 +102,7 @@ return {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "ArtworkInquiry_artwork"
+            "name": "InquiryInquiry_artwork"
           }
         ],
         "storageKey": null
@@ -118,7 +114,7 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "ArtworkInquiryQuery",
+    "name": "InquiryInquiryQuery",
     "selections": [
       {
         "alias": null,
@@ -239,11 +235,11 @@ return {
   "params": {
     "id": null,
     "metadata": {},
-    "name": "ArtworkInquiryQuery",
+    "name": "InquiryInquiryQuery",
     "operationKind": "query",
-    "text": "query ArtworkInquiryQuery(\n  $id: String!\n) {\n  artwork(id: $id) {\n    ...ArtworkInquiry_artwork\n    id\n  }\n}\n\nfragment ArtworkInquiryForm_artwork on Artwork {\n  internalID\n  title\n  date\n  artist {\n    name\n    id\n  }\n  partner {\n    name\n    id\n  }\n  image {\n    resized(width: 60, height: 45) {\n      height\n      width\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ArtworkInquiry_artwork on Artwork {\n  ...ArtworkInquiryForm_artwork\n}\n"
+    "text": "query InquiryInquiryQuery(\n  $id: String!\n) {\n  artwork(id: $id) {\n    ...InquiryInquiry_artwork\n    id\n  }\n}\n\nfragment InquiryInquiry_artwork on Artwork {\n  internalID\n  title\n  date\n  artist {\n    name\n    id\n  }\n  partner {\n    name\n    id\n  }\n  image {\n    resized(width: 60, height: 45) {\n      height\n      width\n      src\n      srcSet\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '0bf63715fd827919f9350eb05040efd4';
+(node as any).hash = '231704eaffd30963a3caa4c5c525fa0d';
 export default node;

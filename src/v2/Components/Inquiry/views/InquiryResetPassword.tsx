@@ -1,7 +1,8 @@
 import { Button, Skeleton, SkeletonText, Spacer, Text } from "@artsy/palette"
 import React, { useState, useEffect } from "react"
-import { Screen, useArtworkInquiryContext } from "./ArtworkInquiryContext"
-import { resetPassword } from "./util"
+import { useInquiryContext } from "../InquiryContext"
+import { resetPassword } from "../util"
+import { useInquiryAccountContext, Screen } from "./InquiryAccount"
 
 enum Mode {
   Resetting,
@@ -9,8 +10,9 @@ enum Mode {
   Done,
 }
 
-export const ArtworkInquiryResetPassword: React.FC = () => {
-  const { inquiry, navigateTo } = useArtworkInquiryContext()
+export const InquiryResetPassword: React.FC = () => {
+  const { inquiry } = useInquiryContext()
+  const { navigateTo } = useInquiryAccountContext()
 
   const [mode, setMode] = useState<Mode>(Mode.Resetting)
 

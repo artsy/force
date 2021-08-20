@@ -1,17 +1,15 @@
 import { mount } from "enzyme"
 import React from "react"
-import { ArtworkInquiryLogin } from "../ArtworkInquiryLogin"
-import { login } from "../util"
-import { useArtworkInquiryRequest } from "../useArtworkInquiryRequest"
+import { InquiryLogin } from "../../views/InquiryLogin"
+import { login } from "../../util"
+import { useArtworkInquiryRequest } from "../../useArtworkInquiryRequest"
 import { flushPromiseQueue } from "v2/DevTools"
+import { useInquiryContext } from "../../InquiryContext"
 
-jest.mock("../util")
-jest.mock("../useArtworkInquiryRequest")
-jest.mock("../ArtworkInquiryContext", () => ({
-  useArtworkInquiryContext: () => ({
-    inquiry: { email: "example@example.com" },
-  }),
-}))
+jest.mock("../../util")
+jest.mock("../../useArtworkInquiryRequest")
+jest.mock("../../InquiryContext")
+jest.mock("v2/Utils/wait", () => ({ wait: () => Promise.resolve() }))
 
 const fill = (
   wrapper: ReturnType<typeof mount>,
@@ -23,15 +21,27 @@ const fill = (
   input.simulate("change")
 }
 
-describe("ArtworkInquiryLogin", () => {
+describe("InquiryLogin", () => {
+  const next = jest.fn()
+  const submitArtworkInquiryRequest = jest.fn()
+
   beforeEach(() => {
     ;(useArtworkInquiryRequest as jest.Mock).mockImplementation(() => ({
-      submitArtworkInquiryRequest: () => Promise.resolve(),
+      submitArtworkInquiryRequest,
+    }))
+    ;(useInquiryContext as jest.Mock).mockImplementation(() => ({
+      next,
+      inquiry: { email: "example@example.com" },
     }))
   })
 
+  afterEach(() => {
+    next.mockReset()
+    submitArtworkInquiryRequest.mockReset()
+  })
+
   it("renders correctly", () => {
-    const wrapper = mount(<ArtworkInquiryLogin />)
+    const wrapper = mount(<InquiryLogin />)
 
     expect(wrapper.html()).toContain(
       "We found an Artsy account associated with example@example.com."
@@ -46,9 +56,10 @@ describe("ArtworkInquiryLogin", () => {
     })
 
     it("logs in and sends the message", async () => {
-      const wrapper = mount(<ArtworkInquiryLogin />)
+      const wrapper = mount(<InquiryLogin />)
 
-      expect(wrapper.html()).not.toContain("Your Message Has Been Sent")
+      expect(submitArtworkInquiryRequest).not.toBeCalled()
+      expect(next).not.toBeCalled()
 
       // Enter password
       fill(wrapper, "password", "secret")
@@ -57,15 +68,17 @@ describe("ArtworkInquiryLogin", () => {
       wrapper.find("form").simulate("submit")
       await flushPromiseQueue()
 
-      expect(wrapper.html()).toContain("Your Message Has Been Sent")
+      expect(submitArtworkInquiryRequest).toBeCalled()
+      expect(next).toBeCalled()
     })
   })
 
   describe("with two-factor auth", () => {
     it("logs in and sends the message", async () => {
-      const wrapper = mount(<ArtworkInquiryLogin />)
+      const wrapper = mount(<InquiryLogin />)
 
-      expect(wrapper.html()).not.toContain("Your Message Has Been Sent")
+      expect(submitArtworkInquiryRequest).not.toBeCalled()
+      expect(next).not.toBeCalled()
 
       // Enter password
       fill(wrapper, "password", "secret")
@@ -92,7 +105,8 @@ describe("ArtworkInquiryLogin", () => {
       wrapper.find("form").simulate("submit")
       await flushPromiseQueue()
 
-      expect(wrapper.html()).toContain("Your Message Has Been Sent")
+      expect(submitArtworkInquiryRequest).toBeCalled()
+      expect(next).toBeCalled()
     })
   })
 })

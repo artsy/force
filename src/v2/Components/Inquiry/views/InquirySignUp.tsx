@@ -1,20 +1,12 @@
-import {
-  Banner,
-  Box,
-  Button,
-  Input,
-  Separator,
-  Spacer,
-  Text,
-} from "@artsy/palette"
+import { Box, Button, Input, Separator, Spacer, Text } from "@artsy/palette"
 import React from "react"
 import { useState } from "react"
 import { createRelaySSREnvironment } from "v2/System/Relay/createRelaySSREnvironment"
 import { ReCaptchaContainer } from "v2/Utils/ReCaptchaContainer"
 import { wait } from "v2/Utils/wait"
-import { useArtworkInquiryContext } from "./ArtworkInquiryContext"
-import { useArtworkInquiryRequest } from "./useArtworkInquiryRequest"
-import { signUp } from "./util"
+import { useInquiryContext } from "../InquiryContext"
+import { useArtworkInquiryRequest } from "../useArtworkInquiryRequest"
+import { signUp } from "../util"
 
 enum Mode {
   Pending,
@@ -24,24 +16,24 @@ enum Mode {
   Success,
 }
 
-interface ArtworkInquirySignUpState {
+interface InquirySignUpState {
   name: string
   email: string
   password: string
 }
 
-export const ArtworkInquirySignUp: React.FC = () => {
+export const InquirySignUp: React.FC = () => {
   const [mode, setMode] = useState<Mode>(Mode.Pending)
   const [error, setError] = useState("")
 
-  const { inquiry, artworkID, onClose } = useArtworkInquiryContext()
+  const { inquiry, artworkID, next } = useInquiryContext()
 
   const { submitArtworkInquiryRequest } = useArtworkInquiryRequest({
     artworkID,
     message: inquiry.message,
   })
 
-  const [state, setState] = useState<ArtworkInquirySignUpState>({
+  const [state, setState] = useState<InquirySignUpState>({
     name: inquiry.name ?? "",
     email: inquiry.email ?? "",
     password: "",
@@ -60,10 +52,8 @@ export const ArtworkInquirySignUp: React.FC = () => {
       })
 
       setMode(Mode.Success)
-
-      await wait(5000)
-
-      onClose()
+      await wait(500)
+      next()
     } catch (err) {
       setError(err.message)
       setMode(Mode.Error)
@@ -71,7 +61,7 @@ export const ArtworkInquirySignUp: React.FC = () => {
     }
   }
 
-  const handleInputChange = (name: keyof ArtworkInquirySignUpState) => (
+  const handleInputChange = (name: keyof InquirySignUpState) => (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     setState(prevState => ({ ...prevState, [name]: event.target.value }))
@@ -122,12 +112,6 @@ export const ArtworkInquirySignUp: React.FC = () => {
           required
           my={1}
         />
-
-        <Spacer mt={1} />
-
-        {mode === Mode.Success && (
-          <Banner variant="success">Your Message Has Been Sent</Banner>
-        )}
 
         <Spacer mt={2} />
 
