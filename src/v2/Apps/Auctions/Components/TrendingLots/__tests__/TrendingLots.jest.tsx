@@ -61,7 +61,6 @@ describe("TrendingLots", () => {
 
   it("renders the correct components", () => {
     const wrapper = getWrapper()
-    expect(wrapper.html()).toContain("Works with the most bids today")
     expect(wrapper.find("Carousel")).toBeDefined()
     expect(wrapper.find("FillwidthItem")).toBeDefined()
   })
