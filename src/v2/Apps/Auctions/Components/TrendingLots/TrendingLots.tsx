@@ -22,15 +22,18 @@ const TrendingLots: React.FC<TrendingLotsProps> = ({ viewer }) => {
 
   const nodes = extractNodes(viewer.trendingLotsConnection)
 
-  if (nodes.length === 0) {
+  const liveSaleArtworks = nodes.filter(node => {
+    return !node.sale?.isClosed
+  })
+
+  if (nodes.length === 0 || liveSaleArtworks.length === 0) {
     return <CuratorialRailsZeroState />
   }
 
   return (
     <>
       <Text as="h3" variant="lg" color="black100" mt={6}>
-        Trending lots{" "}
-        <Sup color="brand">{viewer.trendingLotsConnection?.edges?.length}</Sup>
+        Trending lots <Sup color="brand">{liveSaleArtworks?.length}</Sup>
       </Text>
 
       <Text as="h3" variant="lg" color="black60">
@@ -40,7 +43,7 @@ const TrendingLots: React.FC<TrendingLotsProps> = ({ viewer }) => {
       <Spacer mb={4} />
 
       <Shelf>
-        {nodes.map((node, index) => {
+        {liveSaleArtworks.map((node, index) => {
           return (
             <ShelfArtworkFragmentContainer
               artwork={node}
@@ -84,6 +87,9 @@ export const TrendingLotsFragmentContainer = createFragmentContainer(
               internalID
               slug
               ...ShelfArtwork_artwork @arguments(width: 325)
+              sale {
+                isClosed
+              }
             }
           }
         }
