@@ -1,6 +1,6 @@
 import React from "react"
 import { Box, Flex, Shelf, Spacer, Text } from "@artsy/palette"
-import { QueryRenderer, createFragmentContainer, graphql } from "react-relay"
+import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "v2/System"
 import { SoldRecentlyQuery } from "v2/__generated__/SoldRecentlyQuery.graphql"
 import { SoldRecently_targetSupply } from "v2/__generated__/SoldRecently_targetSupply.graphql"
@@ -9,6 +9,7 @@ import FillwidthItem from "v2/Components/Artwork/FillwidthItem"
 import { useTracking } from "react-tracking"
 import { ContextModule, OwnerType, clickedArtworkGroup } from "@artsy/cohesion"
 import { flatten, shuffle } from "lodash"
+import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 
 const HEIGHT = 300
 
@@ -125,11 +126,10 @@ const SoldRecentlyFragmentContainer = createFragmentContainer(SoldRecently, {
 
 export const SoldRecentlyQueryRenderer: React.FC = () => {
   const { relayEnvironment } = useSystemContext()
+
   return (
-    <QueryRenderer<SoldRecentlyQuery>
-      //  @ts-expect-error STRICT_NULL_CHECK
+    <SystemQueryRenderer<SoldRecentlyQuery>
       environment={relayEnvironment}
-      variables={{}}
       query={graphql`
         query SoldRecentlyQuery {
           targetSupply {
@@ -138,16 +138,17 @@ export const SoldRecentlyQueryRenderer: React.FC = () => {
         }
       `}
       render={({ props, error }) => {
-        //FIXME: Error handling
         if (error) {
+          console.error(error)
           return null
         }
-        //FIXME: Add skeleton loading state
-        if (!props) {
+
+        // FIXME: Add skeleton loading state
+        if (!props || !props.targetSupply) {
           return null
         }
+
         return (
-          // @ts-expect-error STRICT_NULL_CHECK
           <SoldRecentlyFragmentContainer targetSupply={props.targetSupply} />
         )
       }}
