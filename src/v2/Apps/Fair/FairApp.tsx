@@ -20,6 +20,7 @@ import { HttpError } from "found"
 import { userIsAdmin } from "v2/Utils/user"
 import { FairHeaderImageFragmentContainer } from "./Components/FairHeader/FairHeaderImage"
 import { FairHeaderFragmentContainer } from "./Components/FairHeader"
+import { data as sd } from "sharify"
 
 interface FairAppProps {
   fair: FairApp_fair
@@ -57,6 +58,7 @@ const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
   }
 
   const artworkCount = fair.counts?.artworks ?? 0
+  const enableFairPageExhibitorsTab = sd.ENABLE_FAIR_PAGE_EXHIBITORS_TAB
 
   return (
     <>
@@ -75,17 +77,19 @@ const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
           Overview
         </RouteTab>
 
-        <RouteTab
-          to={`${fairHref}/exhibitors`}
-          exact
-          onClick={trackTabData(
-            `${fairHref}/exhibitors`,
-            "Exhibitors",
-            ContextModule.exhibitorsTab
-          )}
-        >
-          Exhibitors A-Z
-        </RouteTab>
+        {enableFairPageExhibitorsTab && (
+          <RouteTab
+            to={`${fairHref}/exhibitors`}
+            exact
+            onClick={trackTabData(
+              `${fairHref}/exhibitors`,
+              "Exhibitors",
+              ContextModule.exhibitorsTab
+            )}
+          >
+            Exhibitors A-Z
+          </RouteTab>
+        )}
 
         <RouteTab
           to={`${fairHref}/booths`}

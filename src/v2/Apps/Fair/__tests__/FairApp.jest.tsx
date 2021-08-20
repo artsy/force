@@ -36,6 +36,7 @@ const { getWrapper } = setupTestWrapper<FairApp_Test_Query>({
     }
   `,
 })
+const sd = require("sharify").data
 
 describe("FairApp", () => {
   const trackEvent = jest.fn()
@@ -79,7 +80,8 @@ describe("FairApp", () => {
     expect(boothsTab.props().to).toEqual("/fair/miart-2020/booths")
   })
 
-  it("renders the exhibitors tab with an appropriate href", () => {
+  it("renders the exhibitors tab when env variable is true", () => {
+    sd.ENABLE_FAIR_PAGE_EXHIBITORS_TAB = true
     const wrapper = getWrapper({
       Fair: () => ({
         href: "/fair/miart-2020",
