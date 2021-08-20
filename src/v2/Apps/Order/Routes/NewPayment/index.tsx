@@ -191,7 +191,7 @@ export class NewPaymentRoute extends Component<
                 <TransactionDetailsSummaryItem order={order} />
               </Flex>
               <BuyerGuarantee />
-              <Spacer mb={[2, 3]} />
+              <Spacer mb={[2, 4]} />
               <Media at="xs">
                 <>
                   <ContinueButton

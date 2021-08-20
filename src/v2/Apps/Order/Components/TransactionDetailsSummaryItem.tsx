@@ -158,10 +158,10 @@ export class TransactionDetailsSummaryItem extends React.Component<
       return (
         <>
           <Spacer mb={[2, 4]} />
-          <Text variant={["xs", "md"]} fontWeight="semibold" color="black100">
+          <Text variant={["xs", "sm"]} fontWeight="semibold" color="black100">
             Your note
           </Text>
-          <Text size={["xs", "md"]} color="black60">
+          <Text size={["xs", "sm"]} color="black60">
             {offer.note}
           </Text>
         </>
@@ -186,13 +186,13 @@ const Entry: React.FunctionComponent<EntryProps> = ({
 }) => (
   <Flex justifyContent="space-between" alignItems="baseline">
     <div>
-      <Text variant={["xs", "md"]} color="black60">
+      <Text variant={["xs", "sm"]} color="black60">
         {label}
       </Text>
     </div>
     <div>
       <Text
-        variant={["xs", "md"]}
+        variant={["xs", "sm"]}
         color={final ? "black100" : "black60"}
         fontWeight={final ? "semibold" : "regular"}
       >
@@ -202,7 +202,10 @@ const Entry: React.FunctionComponent<EntryProps> = ({
   </Flex>
 )
 
-const SecondaryEntry: React.SFC<SecondaryEntryProps> = ({ label, value }) => (
+const SecondaryEntry: React.FunctionComponent<SecondaryEntryProps> = ({
+  label,
+  value,
+}) => (
   <Flex justifyContent="space-between" alignItems="baseline">
     <Text variant="xs" color="black60">
       {label}

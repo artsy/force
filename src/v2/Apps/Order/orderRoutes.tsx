@@ -143,7 +143,7 @@ export const orderRoutes: AppRouteConfig[] = [
     children: [
       {
         path: "respond",
-        // theme: "v3",
+        theme: "v3",
         Component: RespondRoute,
         shouldWarnBeforeLeaving: true,
         hideFooter: true,
@@ -237,7 +237,7 @@ export const orderRoutes: AppRouteConfig[] = [
       },
       {
         path: "review/counter",
-        // theme: "v3",
+        theme: "v3",
         Component: CounterRoute,
         shouldWarnBeforeLeaving: true,
         hideFooter: true,
@@ -271,7 +271,7 @@ export const orderRoutes: AppRouteConfig[] = [
       },
       {
         path: "review/accept",
-        // theme: "v3",
+        theme: "v3",
         Component: AcceptRoute,
         hideFooter: true,
         query: graphql`
@@ -287,7 +287,7 @@ export const orderRoutes: AppRouteConfig[] = [
       },
       {
         path: "review/decline",
-        // theme: "v3",
+        theme: "v3",
         Component: DeclineRoute,
         hideFooter: true,
         query: graphql`
