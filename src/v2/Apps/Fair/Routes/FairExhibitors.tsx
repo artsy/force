@@ -51,6 +51,7 @@ export const FairExhibitorsFragmentContainer = createFragmentContainer(
           }
           ...FairExhibitorsGroup_exhibitorsGroup
         }
+        ...ExhibitorsLetterNav_fair
       }
     `,
   }
