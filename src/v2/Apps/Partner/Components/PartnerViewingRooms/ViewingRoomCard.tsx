@@ -30,15 +30,17 @@ const ViewingRoomCard: React.FC<ViewingRoomCardProps> = ({ viewingRoom }) => {
           />
         </ResponsiveBox>
       )}
-      <Text
-        as="h5"
-        textTransform="capitalize"
-        color="black"
-        variant="mediumText"
-        mt={1}
-      >
-        Viewing Room
-      </Text>
+      {coverImage && title && href && exhibitionPeriod && (
+        <Text
+          as="h5"
+          textTransform="capitalize"
+          color="black"
+          variant="mediumText"
+          mt={1}
+        >
+          Viewing Room
+        </Text>
+      )}
       {title && (
         <Text as="h4" variant="subtitle" color="black">
           {title}
