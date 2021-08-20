@@ -13,7 +13,7 @@ interface PartnerShowsProps {
 }
 
 export const ViewingRooms: React.FC<PartnerShowsProps> = ({ partner }) => {
-  const { currentEvents, upcomingEvents } = partner
+  const { currentEvents, upcomingEvents, slug } = partner
 
   // const {
   //   match: {
@@ -46,7 +46,7 @@ export const ViewingRooms: React.FC<PartnerShowsProps> = ({ partner }) => {
 
       <ViewingRoomsPaginatedRenderer
         eventTitle="Past Events"
-        partnerId={partner.slug}
+        partnerId={slug}
         scrollTo="#jumpto--pastShowsGrid"
         offset={200}
         // page={page}

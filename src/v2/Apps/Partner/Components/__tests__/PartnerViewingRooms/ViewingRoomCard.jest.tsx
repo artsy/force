@@ -14,7 +14,7 @@ const { getWrapper } = setupTestWrapper({
     )
   },
   query: graphql`
-    query ViewingRoomCardCard_Test_Query {
+    query ViewingRoomCard_Test_Query {
       partner(id: "white-cube") @principalField {
         viewingRoomsConnection(first: 12) {
           edges {

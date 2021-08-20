@@ -3,8 +3,8 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type ViewingRoomCardCard_Test_QueryVariables = {};
-export type ViewingRoomCardCard_Test_QueryResponse = {
+export type ViewingRoomCard_Test_QueryVariables = {};
+export type ViewingRoomCard_Test_QueryResponse = {
     readonly partner: {
         readonly viewingRoomsConnection: {
             readonly edges: ReadonlyArray<{
@@ -16,15 +16,15 @@ export type ViewingRoomCardCard_Test_QueryResponse = {
         } | null;
     } | null;
 };
-export type ViewingRoomCardCard_Test_Query = {
-    readonly response: ViewingRoomCardCard_Test_QueryResponse;
-    readonly variables: ViewingRoomCardCard_Test_QueryVariables;
+export type ViewingRoomCard_Test_Query = {
+    readonly response: ViewingRoomCard_Test_QueryResponse;
+    readonly variables: ViewingRoomCard_Test_QueryVariables;
 };
 
 
 
 /*
-query ViewingRoomCardCard_Test_Query {
+query ViewingRoomCard_Test_Query {
   partner(id: "white-cube") @principalField {
     viewingRoomsConnection(first: 12) {
       edges {
@@ -79,7 +79,7 @@ return {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "ViewingRoomCardCard_Test_Query",
+    "name": "ViewingRoomCard_Test_Query",
     "selections": [
       {
         "alias": null,
@@ -138,7 +138,7 @@ return {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "ViewingRoomCardCard_Test_Query",
+    "name": "ViewingRoomCard_Test_Query",
     "selections": [
       {
         "alias": null,
@@ -261,11 +261,11 @@ return {
   "params": {
     "id": null,
     "metadata": {},
-    "name": "ViewingRoomCardCard_Test_Query",
+    "name": "ViewingRoomCard_Test_Query",
     "operationKind": "query",
-    "text": "query ViewingRoomCardCard_Test_Query {\n  partner(id: \"white-cube\") @principalField {\n    viewingRoomsConnection(first: 12) {\n      edges {\n        node {\n          internalID\n          ...ViewingRoomCard_viewingRoom\n        }\n      }\n    }\n    id\n  }\n}\n\nfragment ViewingRoomCard_viewingRoom on ViewingRoom {\n  href\n  title\n  exhibitionPeriod\n  coverImage: image {\n    imageURLs {\n      normalized\n    }\n    width\n    height\n  }\n}\n"
+    "text": "query ViewingRoomCard_Test_Query {\n  partner(id: \"white-cube\") @principalField {\n    viewingRoomsConnection(first: 12) {\n      edges {\n        node {\n          internalID\n          ...ViewingRoomCard_viewingRoom\n        }\n      }\n    }\n    id\n  }\n}\n\nfragment ViewingRoomCard_viewingRoom on ViewingRoom {\n  href\n  title\n  exhibitionPeriod\n  coverImage: image {\n    imageURLs {\n      normalized\n    }\n    width\n    height\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '4a41abaf1ceb7893003970460531d25e';
+(node as any).hash = '703e6d8b7c2de96dfc84605e2ceb7000';
 export default node;
