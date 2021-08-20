@@ -9,24 +9,26 @@ interface ViewingRoomsProps {
   eventTitle: string
 }
 
-const ViewingRooms: React.FC<ViewingRoomsProps> = ({ edges, eventTitle }) => (
-  <>
-    <Text color="black" variant="title" mb={6}>
-      {eventTitle}
-    </Text>
+const ViewingRooms: React.FC<ViewingRoomsProps> = ({ edges, eventTitle }) => {
+  return (
+    <>
+      <Text color="black" variant="title" mb={6}>
+        {eventTitle}
+      </Text>
 
-    <GridColumns mb={6} gridRowGap={[2, 4]}>
-      {edges.map(({ node: viewingRoom }) => {
-        if (!viewingRoom) return
-        return (
-          <Column key={viewingRoom.internalID} span={[6, 6, 3, 3]}>
-            <ViewingRoomCardFragmentContainer viewingRoom={viewingRoom} />
-          </Column>
-        )
-      })}
-    </GridColumns>
-  </>
-)
+      <GridColumns mb={6} gridRowGap={[2, 4]}>
+        {edges.map(({ node: viewingRoom }) => {
+          if (!viewingRoom) return
+          return (
+            <Column key={viewingRoom.internalID} span={[6, 6, 3, 3]}>
+              <ViewingRoomCardFragmentContainer viewingRoom={viewingRoom} />
+            </Column>
+          )
+        })}
+      </GridColumns>
+    </>
+  )
+}
 
 export const ViewingRoomsFragmentContainer = createFragmentContainer(
   ViewingRooms,

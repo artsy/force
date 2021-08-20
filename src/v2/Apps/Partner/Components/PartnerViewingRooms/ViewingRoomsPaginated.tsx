@@ -38,46 +38,40 @@ const ViewingRoomsPaginated: React.FC<ViewingRoomsProps> = ({
     return null
   }
 
-  const {
-    viewingRoomsList: {
-      edges: viewingRooms,
-      pageInfo: { hasNextPage, endCursor },
-      pageCursors,
-    },
-    slug,
-  } = partner
+  const { viewingRoomsList, slug } = partner
+  const { edges: viewingRooms, pageInfo, pageCursors } = viewingRoomsList
+  const { hasNextPage, endCursor } = pageInfo
 
   const handleClick = (cursor: string, page: number) => {
-    const canRefetch = paramsPage !== page
+    if (paramsPage === page) return
 
-    canRefetch && setIsLoading(true)
+    setIsLoading(true)
 
-    canRefetch &&
-      relay.refetch(
-        {
-          first: 2,
-          statuses: ["closed"],
-          after: cursor,
-          partnerID: slug,
-          before: null,
-          last: null,
-        },
-        null,
-        error => {
-          if (error) {
-            console.error(error)
-          }
-
-          const query = page === 1 ? {} : { ...location.query, page }
-
-          router.push({
-            pathname: location.pathname,
-            query,
-          })
-
-          setIsLoading(false)
+    relay.refetch(
+      {
+        first: 2,
+        statuses: ["closed"],
+        after: cursor,
+        partnerID: slug,
+        before: null,
+        last: null,
+      },
+      null,
+      error => {
+        if (error) {
+          console.error(error)
         }
-      )
+
+        const query = page === 1 ? {} : { ...location.query, page }
+
+        router.push({
+          pathname: location.pathname,
+          query,
+        })
+
+        setIsLoading(false)
+      }
+    )
   }
 
   const handleNext = (page: number) => {
