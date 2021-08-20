@@ -19,7 +19,6 @@ import { ArtistAutosuggest } from "./ArtistAutosuggest"
 
 const ALLOWED_FILTERS = ["categories", "sizes", "organizations"]
 
-// TODO: Get options via aggregations for the specific artist
 const mapMapToOptions = map =>
   map.map(element => ({ text: element.displayName, value: element.name }))
 
@@ -38,6 +37,8 @@ export const PriceDatabaseSearch: React.FC = () => {
     const searchFilters = filterSearchFilters(filters, ALLOWED_FILTERS)
     const queryString = qs.stringify(paramsToSnakeCase(searchFilters))
 
+    // TODO: Add tracking for search
+
     router.push(`${pathName}?${queryString}`)
   }
 
@@ -46,6 +47,8 @@ export const PriceDatabaseSearch: React.FC = () => {
       key,
       selected.map(selected => selected.value)
     )
+
+    // TODO: Add tracking for filter changes
   }
 
   return (
