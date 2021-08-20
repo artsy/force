@@ -1,19 +1,23 @@
-import { Box, Spinner, color, media } from "@artsy/palette"
-import { ConversationList_me } from "v2/__generated__/ConversationList_me.graphql"
 import React, { useState } from "react"
 import {
   RelayPaginationProp,
   createPaginationContainer,
   graphql,
 } from "react-relay"
-import { ConversationSnippetFragmentContainer as ConversationSnippet } from "./ConversationSnippet"
 import styled from "styled-components"
+import compact from "lodash/compact"
+import { themeGet } from "@styled-system/theme-get"
+import { Box, Spinner, media } from "@artsy/palette"
+
+import { ConversationSnippetFragmentContainer as ConversationSnippet } from "./ConversationSnippet"
 import { ConversationListHeader } from "./ConversationListHeader"
+
+import { ConversationList_me } from "v2/__generated__/ConversationList_me.graphql"
 
 const Container = styled(Box)`
   height: 100%;
   overflow: hidden;
-  border-right: 1px solid ${color("black10")};
+  border-right: 1px solid ${themeGet("colors.black10")};
   ${media.xs`
     border-right: none;
     border-bottom: none;
@@ -42,15 +46,12 @@ interface ConversationsProps {
 
 const ConversationList: React.FC<ConversationsProps> = props => {
   const { me, selectedConversationID, relay } = props
-  // @ts-expect-error STRICT_NULL_CHECK
-  const conversations = me.conversationsConnection.edges
+  const conversations = compact(me?.conversationsConnection?.edges)
 
   const [fetchingMore, setFetchingMore] = useState(false)
 
-  // @ts-expect-error STRICT_NULL_CHECK
   const selectedConversationIndex = conversations
-    // @ts-expect-error STRICT_NULL_CHECK
-    .map(e => e.node.internalID)
+    .map(e => e?.node?.internalID)
     .indexOf(selectedConversationID)
 
   const loadMore = () => {
@@ -74,21 +75,14 @@ const ConversationList: React.FC<ConversationsProps> = props => {
       <>
         <ConversationListHeader />
         <ScrollContainer onScroll={handleScroll}>
-          {/* @ts-expect-error STRICT_NULL_CHECK */}
           {conversations.map(edge => (
             <ConversationSnippet
-              // @ts-expect-error STRICT_NULL_CHECK
-              isSelected={edge.node.internalID === selectedConversationID}
-              // @ts-expect-error STRICT_NULL_CHECK
-              conversation={edge.node}
-              // @ts-expect-error STRICT_NULL_CHECK
+              isSelected={edge?.node?.internalID === selectedConversationID}
+              conversation={edge.node!}
               key={edge.cursor}
               hasDivider={
-                // @ts-expect-error STRICT_NULL_CHECK
                 conversations.indexOf(edge) !== selectedConversationIndex &&
-                // @ts-expect-error STRICT_NULL_CHECK
                 conversations.indexOf(edge) !== selectedConversationIndex - 1 &&
-                // @ts-expect-error STRICT_NULL_CHECK
                 conversations.indexOf(edge) !== conversations.length - 1
               }
             />

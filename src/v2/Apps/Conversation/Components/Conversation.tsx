@@ -1,5 +1,3 @@
-import { Box, Flex, Spacer, Spinner } from "@artsy/palette"
-import { Conversation_conversation } from "v2/__generated__/Conversation_conversation.graphql"
 import React, { useEffect, useRef, useState } from "react"
 import {
   RelayPaginationProp,
@@ -8,22 +6,24 @@ import {
 } from "react-relay"
 import { graphql } from "relay-runtime"
 import Waypoint from "react-waypoint"
+import { Box, Flex, Spacer, Spinner } from "@artsy/palette"
+import compact from "lodash/compact"
+import styled from "styled-components"
+
+import { extractNodes } from "v2/Utils/extractNodes"
 import { ItemFragmentContainer } from "./Item"
 import { Reply } from "./Reply"
 import { ConversationMessagesFragmentContainer as ConversationMessages } from "./ConversationMessages"
-import { UpdateConversation } from "../Mutation/UpdateConversationMutation"
-import styled from "styled-components"
 import { ConversationHeader } from "./ConversationHeader"
 import { ConfirmArtworkModalQueryRenderer } from "./ConfirmArtworkModal"
 import { BuyerGuaranteeMessage } from "./BuyerGuaranteeMessage"
-import { extractNodes } from "v2/Utils/extractNodes"
 import { returnOrderModalDetails } from "../Utils/returnOrderModalDetails"
 import { OrderModal } from "./OrderModal"
-import compact from "lodash/compact"
-
 import { UnreadMessagesToastQueryRenderer } from "./UnreadMessagesToast"
 import useOnScreen from "../Utils/useOnScreen"
+import { UpdateConversation } from "../Mutation/UpdateConversationMutation"
 
+import { Conversation_conversation } from "v2/__generated__/Conversation_conversation.graphql"
 export interface ConversationProps {
   conversation: Conversation_conversation
   showDetails: boolean
@@ -113,6 +113,7 @@ const Conversation: React.FC<ConversationProps> = props => {
       }
     })
   }
+
   const scrollToBottom = () => {
     if (!!bottomOfMessageContainer?.current) {
       bottomOfMessageContainer.current?.scrollIntoView?.({
@@ -125,12 +126,14 @@ const Conversation: React.FC<ConversationProps> = props => {
       setOrderKey()
     }
   }
+
   const refreshData = () => {
     props.refetch({ conversationID: conversation.internalID }, null, error => {
       if (error) console.error(error)
       scrollToBottom()
     })
   }
+
   const setOrderKey = () => {
     setLastOrderUpdate(activeOrder?.updatedAt)
   }
@@ -143,7 +146,11 @@ const Conversation: React.FC<ConversationProps> = props => {
     setLastMessageID(conversation?.fromLastViewedMessageID)
     initialMount.current = true
     setOrderKey()
-  }, [conversation?.internalID])
+  }, [
+    conversation.internalID,
+    conversation.fromLastViewedMessageID,
+    setOrderKey,
+  ])
   // -Last message opened
   useEffect(() => {
     // Set on a timeout so the user sees the "new" flag
@@ -159,7 +166,7 @@ const Conversation: React.FC<ConversationProps> = props => {
     if (initialMount.current) scrollToBottom()
     const rect = scrollContainer.current?.getBoundingClientRect()
     setToastBottom(window.innerHeight - (rect?.bottom ?? 0) + 30)
-  }, [scrollContainer.current?.clientHeight])
+  }, [scrollContainer?.current?.clientHeight])
   // -On scroll down
   useEffect(() => {
     if (isBottomVisible) refreshData()

@@ -4,12 +4,13 @@ import {
   Flex,
   Icon,
   Path,
-  Sans,
+  Text,
   Separator,
   Title,
 } from "@artsy/palette"
 import { color } from "styled-system"
 import styled from "styled-components"
+
 import { LARGE_SCREEN_HEADER_HEIGHT } from "./ConversationHeader"
 
 export interface DetailsProps {
@@ -37,9 +38,9 @@ export const DetailsHeader: FC<DetailsHeaderProps> = props => {
         alignItems="flex-end"
         pb={1}
       >
-        <Sans size="4" ml={2}>
+        <Text variant="md" ml={2}>
           Details
-        </Sans>
+        </Text>
         <CloseIcon
           mr={1}
           mt={0.5}

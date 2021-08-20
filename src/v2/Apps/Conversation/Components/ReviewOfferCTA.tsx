@@ -1,5 +1,6 @@
+import React from "react"
+import { useTracking } from "react-tracking"
 import { tappedViewOffer } from "@artsy/cohesion"
-import { useEventTiming } from "v2/Utils/Hooks/useEventTiming"
 import { DateTime } from "luxon"
 import {
   AlertCircleFillIcon,
@@ -10,9 +11,10 @@ import {
   MoneyFillIcon,
   Text,
 } from "@artsy/palette"
-import React from "react"
 import styled from "styled-components"
-import { useTracking } from "react-tracking"
+
+import { useEventTiming } from "v2/Utils/Hooks/useEventTiming"
+
 import { CommerceBuyerOfferActionEnum } from "v2/__generated__/ConversationCTA_conversation.graphql"
 
 export const ClickableFlex = styled(Flex)`
@@ -145,12 +147,12 @@ export const ReviewOfferCTA: React.FC<ReviewOfferCTAProps> = ({
         }}
       >
         <Flex flexDirection="row">
-          <Icon mt="3px" fill="white100" />
+          <Icon mt={0.5} fill="white100" />
           <Flex flexDirection="column" pl={1}>
-            <Text color="white100" variant="mediumText">
+            <Text color="white100" variant="sm">
               {message}
             </Text>
-            <Text color="white100" variant="caption">
+            <Text color="white100" variant="xs">
               {subMessage}
             </Text>
           </Flex>

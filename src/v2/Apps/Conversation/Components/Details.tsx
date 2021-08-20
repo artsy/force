@@ -1,3 +1,5 @@
+import React, { FC, useEffect } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 import {
   Box,
   DocumentIcon,
@@ -7,23 +9,23 @@ import {
   Join,
   Link,
   QuestionCircleIcon,
-  Sans,
+  Text,
   Separator,
   Spacer,
   breakpoints,
-  color,
   media,
 } from "@artsy/palette"
-import React, { FC, useEffect } from "react"
 import styled from "styled-components"
-import { createFragmentContainer, graphql } from "react-relay"
-import { useWindowSize } from "v2/Utils/Hooks/useWindowSize"
-import { Details_conversation } from "v2/__generated__/Details_conversation.graphql"
-import ArtworkDetails from "v2/Components/Artwork/Metadata"
-import { zIndex } from "styled-system"
 import { debounce } from "lodash"
+import { zIndex } from "styled-system"
+import { themeGet } from "@styled-system/theme-get"
+
+import { useWindowSize } from "v2/Utils/Hooks/useWindowSize"
+import ArtworkDetails from "v2/Components/Artwork/Metadata"
 import { getViewportDimensions } from "v2/Utils/viewport"
 import { DetailsHeader } from "./DetailsHeader"
+
+import { Details_conversation } from "v2/__generated__/Details_conversation.graphql"
 
 const DETAIL_BOX_XL_ANIMATION = `transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);`
 const DETAIL_BOX_XS_ANIMATION = `transition: opacity 0.3s, z-index 0.3s;`
@@ -33,9 +35,9 @@ const DETAIL_BOX_MD_ANIMATION = `transition: transform 0.3s;`
 // in XL screen it is animated with `width` because animation needs to push the mid column content
 // in L screens it is animated with `translate` for better performance (than `width`)
 const DetailsContainer = styled(Flex)<{ transform?: string }>`
-  border-left: 1px solid ${color("black10")};
+  border-left: 1px solid ${themeGet("colors.black10")};
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  background-color: ${color("white100")};
+  background-color: ${themeGet("colors.white100")};
   transform: none;
   ${DETAIL_BOX_XL_ANIMATION}
   ${media.xl`
@@ -89,29 +91,29 @@ export const Details: FC<DetailsProps> = ({
     conversation.items?.[0]?.item?.__typename !== "%other" &&
     conversation.items?.[0]?.item
 
-  // @ts-expect-error STRICT_NULL_CHECK
-  const attachments = conversation.messagesConnection.edges
-    // @ts-expect-error STRICT_NULL_CHECK
-    .map(({ node }) => node.attachments)
-    .filter(attachments => attachments.length > 0)
-    .reduce((previous, current) => previous.concat(current), [])
-    .filter(attachment => !attachment.contentType.includes("image"))
+  const attachments = conversation?.messagesConnection?.edges
+    ?.map(edge => edge?.node?.attachments)
+    ?.filter(attachments => attachments?.length)
+    ?.reduce((previous, current) => previous?.concat(current!), [])
+    ?.filter(attachment => !attachment?.contentType.includes("image"))
 
-  const attachmentItems = attachments?.map(attachment => {
-    return (
-      <Link
-        key={attachment.id}
-        href={attachment.downloadURL}
-        target="_blank"
-        noUnderline
-      >
-        <Flex alignItems="center">
-          <DocumentIcon mr={0.5} />
-          <Sans size="3">{attachment.fileName}</Sans>
-        </Flex>
-      </Link>
-    )
-  })
+  const attachmentItems = attachments
+    ?.filter(attachment => attachment?.id && attachment?.downloadURL)
+    ?.map(attachment => {
+      return (
+        <Link
+          key={attachment!.id}
+          href={attachment!.downloadURL}
+          target="_blank"
+          noUnderline
+        >
+          <Flex alignItems="center">
+            <DocumentIcon mr={0.5} />
+            <Text variant="xs">{attachment?.fileName}</Text>
+          </Flex>
+        </Link>
+      )
+    })
 
   const getDetailsContainerWidth = () => {
     // For big screens
@@ -162,19 +164,17 @@ export const Details: FC<DetailsProps> = ({
         px={2}
         py={1}
         name={conversation.to.name}
-        // @ts-expect-error STRICT_NULL_CHECK
-        initials={conversation.to.initials}
+        initials={conversation.to.initials ?? undefined}
       />
       {item && (
         <>
           <Separator />
           <Flex flexDirection="column" p={2}>
-            <Sans mb={2} size="3" weight="medium">
+            <Text variant="xs" mb={2}>
               {item.__typename}
-            </Sans>
+            </Text>
             <Flex>
-              {/* @ts-expect-error STRICT_NULL_CHECK */}
-              <a href={item.href}>
+              <a href={item.href!}>
                 <Box height="80px" width="80px">
                   <div
                     style={{
@@ -195,22 +195,22 @@ export const Details: FC<DetailsProps> = ({
           </Flex>
         </>
       )}
-      {attachments?.length > 0 && (
+      {attachments?.length && (
         <>
           <Separator my={2} />
           <Box px={2}>
-            <Sans size="3" weight="medium" mb={2}>
+            <Text variant="xs" mb={2}>
               Attachments
-            </Sans>
+            </Text>
             <Join separator={<Spacer mb={1} />}>{attachmentItems}</Join>
           </Box>
         </>
       )}
       <Separator my={2} />
       <Flex flexDirection="column" px={2}>
-        <Sans size="3" weight="medium" mb={2}>
+        <Text variant="xs" mb={2}>
           Support
-        </Sans>
+        </Text>
         <Link
           href="https://support.artsy.net/hc/en-us/sections/360008203054-Contact-a-gallery"
           target="_blank"
@@ -218,7 +218,7 @@ export const Details: FC<DetailsProps> = ({
         >
           <Flex alignItems="center" mb={1}>
             <QuestionCircleIcon mr={1} />
-            <Sans size="3">Inquiries FAQ</Sans>
+            <Text variant="xs">Inquiries FAQ</Text>
           </Flex>
         </Link>
       </Flex>

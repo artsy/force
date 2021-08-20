@@ -1,24 +1,19 @@
-import {
-  Box,
-  Flex,
-  Link,
-  Row,
-  Sans,
-  Separator,
-  color,
-  space,
-} from "@artsy/palette"
-import { ConversationSnippet_conversation } from "v2/__generated__/ConversationSnippet_conversation.graphql"
-import {
-  ImageWithFallback,
-  renderFallbackImage,
-} from "v2/Apps/Artist/Routes/AuctionResults/Components/ImageWithFallback"
 import React from "react"
 import { createFragmentContainer } from "react-relay"
 import { graphql } from "relay-runtime"
 import styled from "styled-components"
+import { Box, Flex, Link, Text, Separator } from "@artsy/palette"
+import { themeGet } from "@styled-system/theme-get"
+import compact from "lodash/compact"
+
+import {
+  ImageWithFallback,
+  renderFallbackImage,
+} from "v2/Apps/Artist/Routes/AuctionResults/Components/ImageWithFallback"
 import { TimeSince } from "./TimeSince"
 import { Truncator } from "v2/Components/Truncator"
+
+import { ConversationSnippet_conversation } from "v2/__generated__/ConversationSnippet_conversation.graphql"
 
 const StyledImage = styled(ImageWithFallback)`
   object-fit: cover;
@@ -33,14 +28,14 @@ const TimeSinceFlex = styled(Flex)`
   padding-left: 10px;
 `
 
-const StyledSans = styled(Sans)`
+const StyledText = styled(Text)`
   word-break: break-word;
 `
 const TextContainer = styled(Box)`
   overflow: hidden;
 `
 
-const TruncatedTitle = styled(Sans)`
+const TruncatedTitle = styled(Text)`
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
@@ -53,9 +48,9 @@ const TruncatedTitle = styled(Sans)`
 const PurpleCircle = styled.div`
   width: 10px;
   height: 10px;
-  background-color: ${color("purple100")};
+  background-color: ${themeGet("colors.red10")};
   border-radius: 50%;
-  margin-right: 5px;
+  margin-left: 5px;
 `
 
 interface ConversationSnippetProps {
@@ -66,30 +61,25 @@ interface ConversationSnippetProps {
 
 const ConversationSnippet: React.FC<ConversationSnippetProps> = props => {
   const conversation = props.conversation
+  const conversationItems = compact(props.conversation.items)
   // If we cannot resolve items in the conversation, such as deleted fair booths
   // prior to snapshotting them at time of inquiry (generally older conversations),
   // just skip over the entire conversation.
-  // @ts-expect-error STRICT_NULL_CHECK
-  if (conversation.items.length === 0) {
+  if (conversation?.items?.length === 0) {
     console.warn(
       `Unable to load items for conversation with ID ${conversation.internalID}`
     )
     return null
   }
 
-  // @ts-expect-error STRICT_NULL_CHECK
-  const item = conversation.items[0].item
+  const item = conversationItems[0].item
 
   let imageURL
 
-  // @ts-expect-error STRICT_NULL_CHECK
-  if (item.__typename === "Artwork") {
-    // @ts-expect-error STRICT_NULL_CHECK
-    imageURL = item.image && item.image.url
-    // @ts-expect-error STRICT_NULL_CHECK
-  } else if (item.__typename === "Show") {
-    // @ts-expect-error STRICT_NULL_CHECK
-    imageURL = item.coverImage && item.coverImage.url
+  if (item?.__typename === "Artwork") {
+    imageURL = item?.image && item.image.url
+  } else if (item?.__typename === "Show") {
+    imageURL = item?.coverImage && item.coverImage.url
   }
 
   const partnerName = conversation.to.name
@@ -105,13 +95,8 @@ const ConversationSnippet: React.FC<ConversationSnippetProps> = props => {
         href={`/user/conversations/${conversation.internalID}`}
         underlineBehavior="none"
       >
-        <Flex alignItems="center" px="5px" width="100%" height="120px">
-          <Flex
-            alignItems="center"
-            width={space(2)}
-            flexShrink={0}
-            height="100%"
-          >
+        <Flex alignItems="center" px={0.5} width="100%" height="120px">
+          <Flex alignItems="center" width={20} flexShrink={0} height="100%">
             {conversation.unread && <PurpleCircle />}
           </Flex>
           <StyledFlex alignItems="center" height="80px" width="80px">
@@ -132,36 +117,31 @@ const ConversationSnippet: React.FC<ConversationSnippetProps> = props => {
           </StyledFlex>
           <Flex pt={2} pl={1} width="100%" height="100%">
             <TextContainer width="100%">
-              <Row mb="2px">
+              <Box mb={0.5}>
                 <Flex width="100%" justifyContent="space-between">
                   <Flex>
                     <TruncatedTitle
-                      size="3t"
-                      weight="medium"
-                      mr="5px"
+                      variant="md"
+                      mr={0.5}
                       color={conversation.unread ? "black" : "black60"}
                     >
                       {partnerName}
                     </TruncatedTitle>
                   </Flex>
                   <TimeSinceFlex>
-                    <TimeSince
-                      time={conversation.lastMessageAt}
-                      size="3t"
-                      mr="15px"
-                    />
+                    <TimeSince time={conversation.lastMessageAt} mr={0.5} />
                   </TimeSinceFlex>
                 </Flex>
-              </Row>
-              <Row>
-                <StyledSans
-                  size="3t"
+              </Box>
+              <Box>
+                <StyledText
+                  variant="xs"
                   color={conversation.unread ? "black" : "black60"}
-                  mr="15px"
+                  mr={1}
                 >
                   <Truncator maxLineCount={3}>{conversationText}</Truncator>
-                </StyledSans>
-              </Row>
+                </StyledText>
+              </Box>
             </TextContainer>
           </Flex>
         </Flex>

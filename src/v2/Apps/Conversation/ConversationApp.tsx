@@ -1,13 +1,15 @@
-import { ConversationApp_me } from "v2/__generated__/ConversationApp_me.graphql"
-import { ConversationListPaginationContainer as ConversationList } from "v2/Apps/Conversation/Components/ConversationList"
-import { Match, Router } from "found"
 import React, { useEffect, useState } from "react"
 import { Title } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
+import { Match, Router } from "found"
+import debounce from "lodash/debounce"
+import compact from "lodash/compact"
 import { Flex, Spinner, breakpoints } from "@artsy/palette"
-import { debounce } from "lodash"
+
 import { NoMessages } from "./Components/NoMessages"
 
+import { ConversationListPaginationContainer as ConversationList } from "v2/Apps/Conversation/Components/ConversationList"
+import { ConversationApp_me } from "v2/__generated__/ConversationApp_me.graphql"
 interface ConversationAppProps {
   me: ConversationApp_me
   match: Match
@@ -51,8 +53,7 @@ export const ConversationApp: React.FC<ConversationAppProps> = props => {
   const { me, router } = props
   const [width, setWidth] = useState(0)
 
-  // @ts-expect-error STRICT_NULL_CHECK
-  const firstConversation = me?.conversationsConnection?.edges[0]?.node
+  const firstConversation = compact(me?.conversationsConnection?.edges)[0]?.node
 
   useEffect(() => {
     setWidth(getViewWidth())

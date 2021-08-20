@@ -4,6 +4,7 @@ import { graphql } from "react-relay"
 
 export const conversationRoutes: AppRouteConfig[] = [
   {
+    theme: "v3",
     path: "/user/conversations",
     displayFullPage: true,
     hideFooter: true,
@@ -35,6 +36,7 @@ export const conversationRoutes: AppRouteConfig[] = [
     },
   },
   {
+    theme: "v3",
     path: "/user/conversations/:conversationID",
     displayFullPage: true,
     hideFooter: true,

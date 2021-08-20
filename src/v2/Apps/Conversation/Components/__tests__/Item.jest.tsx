@@ -26,9 +26,9 @@ describe("Item", () => {
       const wrapper = mount(<Item item={artworkItemProps} />)
       const imageSrc = wrapper.find("Image").first().prop("src")
       const linkHref = wrapper.find("Link").first().prop("href")
-      const name = wrapper.find("Sans").first()
-      const title = wrapper.find("Sans").at(1)
-      const price = wrapper.find("Sans").last()
+      const name = wrapper.find("Text").first()
+      const title = wrapper.find("Text").at(1)
+      const price = wrapper.find("Text").last()
 
       console.log(wrapper.text())
 
@@ -63,8 +63,8 @@ describe("Item", () => {
       const wrapper = mount(<Item item={showItemProps} />)
       const imageSrc = wrapper.find("Image").first().prop("src")
       const linkHref = wrapper.find("Link").first().prop("href")
-      const name = wrapper.find("Sans").first()
-      const locationAndDate = wrapper.find("Sans").last()
+      const name = wrapper.find("Text").first()
+      const locationAndDate = wrapper.find("Text").last()
 
       expect(imageSrc).toBe("image.com/fair-image")
       expect(linkHref).toBe("site.com/art-fair-2020")
