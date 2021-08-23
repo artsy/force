@@ -2,6 +2,7 @@ import { BoxProps, Flex, HTML, FullBleed } from "@artsy/palette"
 import React from "react"
 import styled from "styled-components"
 import { cropped } from "v2/Utils/resized"
+import { useNavBarHeight } from "./NavBar/useNavBarHeight"
 
 export interface FullBleedHeaderProps extends BoxProps {
   /** Should the biggest size image available */
@@ -22,13 +23,10 @@ export const FullBleedHeader: React.FC<FullBleedHeaderProps> = ({
   const lg = cropped(src, { width: 1440, height: 600 })
   const xl = cropped(src, { width: 2000, height: 600 })
 
+  const height = useFullBleedHeaderHeight()
+
   return (
-    <Container
-      bg="black10"
-      height={FULL_BLEED_HEADER_HEIGHT}
-      position="relative"
-      {...rest}
-    >
+    <Container bg="black10" height={height} position="relative" {...rest}>
       <picture>
         <source srcSet={xl.srcSet} media="(min-width: 1720px)" />
         <source srcSet={lg.srcSet} media="(min-width: 1232px)" />
@@ -50,7 +48,10 @@ export const FullBleedHeader: React.FC<FullBleedHeaderProps> = ({
   )
 }
 
-export const FULL_BLEED_HEADER_HEIGHT = [320, 600]
+export const useFullBleedHeaderHeight = () => {
+  const { mobile, desktop } = useNavBarHeight()
+  return [`calc(50vh - ${mobile}px)`, `calc(50vh - ${desktop}px)`]
+}
 
 const Container = styled(FullBleed)`
   overflow: hidden;
