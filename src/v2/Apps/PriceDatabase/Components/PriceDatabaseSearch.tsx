@@ -80,32 +80,20 @@ export const PriceDatabaseSearch: React.FC = () => {
             <MultiSelect
               options={categoryOptions}
               onSelect={handleFilterSelect("categories")}
-              title={
-                <Text display="inline" color="black60">
-                  Medium
-                </Text>
-              }
+              name="Medium"
             />
           </Column>
           <Column span={4} pb={[0, 4]}>
             <MultiSelect
               options={sizeOptions}
-              title={
-                <Text display="inline" color="black60">
-                  Size
-                </Text>
-              }
+              name="Size"
               onSelect={handleFilterSelect("sizes")}
             />
           </Column>
           <Column span={4} pb={[0, 4]}>
             <MultiSelect
               options={organizationOptions}
-              title={
-                <Text color="black60" display="inline">
-                  Auction Houses
-                </Text>
-              }
+              name="Auction Houses"
               onSelect={handleFilterSelect("organizations")}
             />
           </Column>
