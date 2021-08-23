@@ -108,7 +108,7 @@ export class LoginForm extends Component<FormProps, LoginFormState> {
             if (globalError) {
               this.setState({ isLoading: false })
             }
-          }, [globalError])
+          }, [globalError, status])
 
           const handleChange = e => {
             setStatus(null)
