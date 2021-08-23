@@ -17,25 +17,25 @@ export type SearchBarTestQueryRawResponse = {
         readonly searchConnection: ({
             readonly edges: ReadonlyArray<({
                 readonly node: ({
-                    readonly __typename: "SearchableItem";
                     readonly displayLabel: string | null;
                     readonly href: string | null;
+                    readonly __typename: "SearchableItem";
                     readonly id: string | null;
                     readonly displayType: string | null;
                     readonly slug: string;
                 } | {
-                    readonly __typename: "Artist";
                     readonly displayLabel: string | null;
                     readonly href: string | null;
+                    readonly __typename: "Artist";
                     readonly id: string | null;
                     readonly counts: ({
                         readonly artworks: number | null;
                         readonly auctionResults: number | null;
                     }) | null;
                 } | {
-                    readonly __typename: string | null;
                     readonly displayLabel: string | null;
                     readonly href: string | null;
+                    readonly __typename: string;
                     readonly id: string | null;
                 }) | null;
             }) | null> | null;
@@ -64,9 +64,9 @@ fragment SearchBar_viewer_2Mejjw on Viewer {
   searchConnection(query: $term, mode: AUTOSUGGEST, first: 7) @include(if: $hasTerm) {
     edges {
       node {
-        __typename
         displayLabel
         href
+        __typename
         ... on SearchableItem {
           displayType
           slug
@@ -201,13 +201,6 @@ return {
                             "alias": null,
                             "args": null,
                             "kind": "ScalarField",
-                            "name": "__typename",
-                            "storageKey": null
-                          },
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
                             "name": "displayLabel",
                             "storageKey": null
                           },
@@ -216,6 +209,13 @@ return {
                             "args": null,
                             "kind": "ScalarField",
                             "name": "href",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "__typename",
                             "storageKey": null
                           },
                           {
@@ -297,7 +297,7 @@ return {
     "metadata": {},
     "name": "SearchBarTestQuery",
     "operationKind": "query",
-    "text": "query SearchBarTestQuery(\n  $term: String!\n  $hasTerm: Boolean!\n) {\n  viewer {\n    ...SearchBar_viewer_2Mejjw\n  }\n}\n\nfragment SearchBar_viewer_2Mejjw on Viewer {\n  searchConnection(query: $term, mode: AUTOSUGGEST, first: 7) @include(if: $hasTerm) {\n    edges {\n      node {\n        __typename\n        displayLabel\n        href\n        ... on SearchableItem {\n          displayType\n          slug\n        }\n        ... on Artist {\n          counts {\n            artworks\n            auctionResults\n          }\n        }\n        ... on Node {\n          id\n        }\n      }\n    }\n  }\n}\n"
+    "text": "query SearchBarTestQuery(\n  $term: String!\n  $hasTerm: Boolean!\n) {\n  viewer {\n    ...SearchBar_viewer_2Mejjw\n  }\n}\n\nfragment SearchBar_viewer_2Mejjw on Viewer {\n  searchConnection(query: $term, mode: AUTOSUGGEST, first: 7) @include(if: $hasTerm) {\n    edges {\n      node {\n        displayLabel\n        href\n        __typename\n        ... on SearchableItem {\n          displayType\n          slug\n        }\n        ... on Artist {\n          counts {\n            artworks\n            auctionResults\n          }\n        }\n        ... on Node {\n          id\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();

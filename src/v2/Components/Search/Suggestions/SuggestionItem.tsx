@@ -1,10 +1,4 @@
-import {
-  ArtworkIcon,
-  AuctionIcon,
-  GridColumns,
-  Pill,
-  Text,
-} from "@artsy/palette"
+import { ArtworkIcon, AuctionIcon, Flex, Pill, Text } from "@artsy/palette"
 import match from "autosuggest-highlight/match"
 import parse from "autosuggest-highlight/parse"
 import React from "react"
@@ -46,31 +40,14 @@ export const SuggestionItem: React.FC<SuggestionItemProps> = props => {
     showAuctionResultsButton,
   } = props
 
-  const showQuickNavigation = !!showArtworksButton || !!showAuctionResultsButton
-
   return (
     <SuggestionItemLink to={href} bg={isHighlighted ? "black5" : "white100"}>
       <DefaultSuggestion {...props} />
-      {showQuickNavigation && (
-        <GridColumns mt={1}>
-          {!!showArtworksButton && (
-            <RouterLink to={`${href}/works-for-sale`}>
-              <Pill variant="textSquare">
-                <ArtworkIcon mr={0.5} />
-                Artworks
-              </Pill>
-            </RouterLink>
-          )}
-          {!!showAuctionResultsButton && (
-            <RouterLink to={`${href}/auction-results`}>
-              <Pill variant="textSquare">
-                <AuctionIcon mr={0.5} />
-                <span>Auction Results</span>
-              </Pill>
-            </RouterLink>
-          )}
-        </GridColumns>
-      )}
+      <QuickNavigation
+        href={href}
+        showArtworksButton={!!showArtworksButton}
+        showAuctionResultsButton={!!showAuctionResultsButton}
+      />
     </SuggestionItemLink>
   )
 }
@@ -113,3 +90,36 @@ const DefaultSuggestion: React.FC<SuggestionItemProps> = ({
     </>
   )
 }
+
+const QuickNavigation: React.FC<{
+  href: string
+  showArtworksButton: boolean
+  showAuctionResultsButton: boolean
+}> = ({ href, showArtworksButton, showAuctionResultsButton }) => {
+  if (!showArtworksButton && !showAuctionResultsButton) return null
+
+  return (
+    <Flex mt={1}>
+      {!!showArtworksButton && (
+        <QuickNavigationItem to={`${href}/works-for-sale`}>
+          <ArtworkIcon mr={0.5} />
+          Artworks
+        </QuickNavigationItem>
+      )}
+      {!!showAuctionResultsButton && (
+        <QuickNavigationItem to={`${href}/auction-results`}>
+          <AuctionIcon mr={0.5} />
+          Auction Results
+        </QuickNavigationItem>
+      )}
+    </Flex>
+  )
+}
+
+const QuickNavigationItem: React.FC<{ to: string }> = ({ children, to }) => (
+  <RouterLink to={to} mr="1">
+    <Pill variant="textSquare">
+      <Flex alignItems="center">{children}</Flex>
+    </Pill>
+  </RouterLink>
+)

@@ -9,6 +9,7 @@ export type SearchBar_viewer = {
             readonly node: {
                 readonly displayLabel: string | null;
                 readonly href: string | null;
+                readonly __typename: string;
                 readonly displayType?: string | null;
                 readonly slug?: string;
                 readonly counts?: {
@@ -107,6 +108,13 @@ const node: ReaderFragment = {
                       "storageKey": null
                     },
                     {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "__typename",
+                      "storageKey": null
+                    },
+                    {
                       "kind": "InlineFragment",
                       "selections": [
                         {
@@ -171,5 +179,5 @@ const node: ReaderFragment = {
   ],
   "type": "Viewer"
 };
-(node as any).hash = 'c458d4a4d5aa42d7f62dfa36079784d0';
+(node as any).hash = 'a6694021e48afcf170cda92cb611ed97';
 export default node;
