@@ -61,7 +61,6 @@ describe("StandoutLots", () => {
 
   it("renders the correct components", () => {
     const wrapper = getWrapper()
-    expect(wrapper.html()).toContain("Works that Artsy curators love")
     expect(wrapper.find("Carousel")).toBeDefined()
     expect(wrapper.find("FillwidthItem")).toBeDefined()
   })

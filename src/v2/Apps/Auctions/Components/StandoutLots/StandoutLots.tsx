@@ -22,15 +22,18 @@ const StandoutLots: React.FC<StandoutLotsProps> = ({ viewer }) => {
 
   const nodes = extractNodes(viewer.standoutLotsConnection)
 
-  if (nodes.length === 0) {
+  const liveSaleArtworks = nodes.filter(node => {
+    return !node.sale?.isClosed
+  })
+
+  if (nodes.length === 0 || liveSaleArtworks.length === 0) {
     return <CuratorialRailsZeroState />
   }
 
   return (
     <>
       <Text as="h3" variant="lg" color="black100" mt={6}>
-        Standout Lots{" "}
-        <Sup color="brand">{viewer.standoutLotsConnection?.edges?.length}</Sup>
+        Standout Lots <Sup color="brand">{liveSaleArtworks.length}</Sup>
       </Text>
 
       <Text as="h3" variant="lg" color="black60">
@@ -40,7 +43,7 @@ const StandoutLots: React.FC<StandoutLotsProps> = ({ viewer }) => {
       <Spacer mb={4} />
 
       <Shelf>
-        {nodes.map((node, index) => {
+        {liveSaleArtworks.map((node, index) => {
           return (
             <ShelfArtworkFragmentContainer
               artwork={node}
@@ -81,6 +84,9 @@ export const StandoutLotsFragmentContainer = createFragmentContainer(
               internalID
               slug
               ...ShelfArtwork_artwork @arguments(width: 325)
+              sale {
+                isClosed
+              }
             }
           }
         }
