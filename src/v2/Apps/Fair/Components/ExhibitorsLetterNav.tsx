@@ -3,6 +3,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { Text, Flex, Swiper } from "@artsy/palette"
 import { Media } from "v2/Utils/Responsive"
+import { scrollIntoView } from "v2/Utils/scrollHelpers"
 import { ExhibitorsLetterNav_fair } from "v2/__generated__/ExhibitorsLetterNav_fair.graphql"
 
 const LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("").concat(["0-9"])
@@ -28,6 +29,15 @@ export const ExhibitorsLetterNav: React.FC<ExhibitorsLetterNavProps> = ({
               title={
                 isEnabled ? `View exhibitors starting with “${letter}”` : ""
               }
+              onClick={() => {
+                if (isEnabled) {
+                  scrollIntoView({
+                    selector: `#jump--letter${letter}`,
+                    offset: 120,
+                    behavior: "smooth",
+                  })
+                }
+              }}
             >
               {letter}
             </Letter>
