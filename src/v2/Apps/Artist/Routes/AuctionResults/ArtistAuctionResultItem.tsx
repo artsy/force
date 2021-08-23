@@ -129,6 +129,7 @@ const LargeAuctionItem: FC<Props> = props => {
     expanded,
     auctionResult: {
       images,
+      currency,
       date_text,
       organization,
       title,
@@ -138,6 +139,7 @@ const LargeAuctionItem: FC<Props> = props => {
       performance,
     },
     salePrice,
+    salePriceUSD,
   } = getProps(props)
 
   // @ts-expect-error STRICT_NULL_CHECK
@@ -199,7 +201,9 @@ const LargeAuctionItem: FC<Props> = props => {
         <Flex alignItems="center" height="100%">
           <Flex width="90%" pr="10px" justifyContent="flex-end">
             {renderPricing(
+              currency,
               salePrice,
+              salePriceUSD,
               saleDate,
               props.user,
               props.mediator,
@@ -225,12 +229,13 @@ const ExtraSmallAuctionItem: FC<Props> = props => {
       images,
       date_text,
       title,
-
+      currency,
       saleDate,
       boughtIn,
       performance,
     },
     salePrice,
+    salePriceUSD,
   } = getProps(props)
   // @ts-expect-error STRICT_NULL_CHECK
   const imageUrl = get(images, i => i.thumbnail.url, "")
@@ -265,7 +270,9 @@ const ExtraSmallAuctionItem: FC<Props> = props => {
         </Text>
         <Spacer mt="1" />
         {renderPricing(
+          currency,
           salePrice,
+          salePriceUSD,
           saleDate,
           props.user,
           props.mediator,
@@ -301,8 +308,10 @@ export const ArtistAuctionResultItemFragmentContainer = createFragmentContainer(
         date_text: dateText
         saleDate
         boughtIn
+        currency
         price_realized: priceRealized {
           display
+          display_usd: displayUSD
           cents_usd: centsUSD
         }
         performance {
@@ -331,18 +340,26 @@ const getSalePrice = price_realized => {
   return salePrice
 }
 
+const getSalePriceUSD = price_realized => {
+  const salePrice =
+    price_realized.cents_usd === 0 ? null : price_realized.display_usd
+  return salePrice
+}
+
 const getProps = (props: Props) => {
   const {
     auctionResult: { estimate, price_realized },
   } = props
 
   const salePrice = getSalePrice(price_realized)
-  // @ts-expect-error STRICT_NULL_CHECK
-  const estimatedPrice = estimate.display
+  const salePriceUSD = getSalePriceUSD(price_realized)
+
+  const estimatedPrice = estimate?.display
 
   return {
     ...props,
     salePrice,
+    salePriceUSD,
     estimatedPrice,
   }
 }
@@ -354,7 +371,9 @@ const getDisplaySaleDate = saleDate => {
 }
 
 const renderPricing = (
+  currency,
   salePrice,
+  salePriceUSD,
   saleDate,
   user,
   mediator,
@@ -371,13 +390,26 @@ const renderPricing = (
     const now = DateTime.local()
     const awaitingResults = dateOfSale > now
 
+    const showPriceUSD = currency !== "USD"
+
     return (
       <Box textAlign={textAlign} mb="5px">
         {salePrice && (
           <>
-            <Text variant="md" fontWeight="bold">
-              {salePrice}
-            </Text>
+            <Flex alignItems="center">
+              <Text variant="md" fontWeight="bold" mr={0.5}>
+                {salePrice}
+              </Text>
+              {!!showPriceUSD && (
+                <Text
+                  variant="xs"
+                  color="black60"
+                  style={{ paddingTop: "3px" }}
+                >
+                  {salePriceUSD}
+                </Text>
+              )}
+            </Flex>
             <Text variant="xs" color="black60">
               Realized price
             </Text>
