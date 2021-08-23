@@ -7,6 +7,9 @@ import { ExhibitorsLetterNav_Test_Query } from "v2/__generated__/ExhibitorsLette
 import { Breakpoint } from "v2/Utils/Responsive"
 
 jest.unmock("react-relay")
+jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
+  useMatchMedia: () => false,
+}))
 
 const getWrapperWithBreakpoint = (breakpoint: Breakpoint = "lg") =>
   setupTestWrapper<ExhibitorsLetterNav_Test_Query>({
@@ -87,11 +90,6 @@ describe("ExhibitorsLetterNav", () => {
     it("displays swiper", () => {
       const wrapper = getWrapper({})
       expect(wrapper.find("Swiper").length).toBe(1)
-    })
-
-    it("displays letters with fixed width 1300", () => {
-      const wrapper = getWrapper({})
-      expect(wrapper.find("Letters").prop("width")).toBe(1300)
     })
   })
 })

@@ -4,6 +4,9 @@ import { FairExhibitorsFragmentContainer } from "../FairExhibitors"
 import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
 
 jest.unmock("react-relay")
+jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
+  useMatchMedia: () => false,
+}))
 
 describe("FairExhibitors", () => {
   const { getWrapper } = setupTestWrapper<FairExhibitors_Test_Query>({
