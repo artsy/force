@@ -22,7 +22,7 @@ export const FairOrganizerPastEventsRail: React.FC<FairOrganizerPastEventsRailPr
       <Text variant="lg" as="h3" mb={4}>
         Past Events
       </Text>
-      <Shelf>
+      <Shelf alignItems="flex-start">
         {pastFairs.map(fair => {
           return <FairOrganizerPastEventRailCell key={fair.id} fair={fair} />
         })}
