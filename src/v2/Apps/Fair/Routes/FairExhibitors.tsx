@@ -1,10 +1,11 @@
 import React from "react"
-import { Text } from "@artsy/palette"
+import { Box, Spacer, Text } from "@artsy/palette"
 import { graphql, createFragmentContainer } from "react-relay"
 import { FairExhibitors_fair } from "v2/__generated__/FairExhibitors_fair.graphql"
 import { FairExhibitorsGroupFragmentContainer as FairExhibitorsGroup } from "../Components/FairExhibitors"
 import { FairExhibitorsGroupPlaceholder } from "../Components/FairExhibitors/FairExhibitorGroupPlaceholder"
 import { useLazyLoadComponent } from "v2/Utils/Hooks/useLazyLoadComponent"
+import { ExhibitorsLetterNavFragmentContainer as ExhibitorsLetterNav } from "../Components/ExhibitorsLetterNav"
 
 interface FairExhibitorsProps {
   fair: FairExhibitors_fair
@@ -17,22 +18,27 @@ const FairExhibitors: React.FC<FairExhibitorsProps> = ({ fair }) => {
     <>
       <Waypoint />
 
+      <Spacer mt={6} />
+
+      <ExhibitorsLetterNav fair={fair} />
+
       {fair.exhibitorsGroupedByName?.map(exhibitorsGroup => {
-        if (!exhibitorsGroup?.exhibitors?.length || !exhibitorsGroup.letter) {
+        const { letter } = exhibitorsGroup!
+        if (!exhibitorsGroup?.exhibitors?.length || !letter) {
           return null
         }
 
         return (
-          <React.Fragment key={exhibitorsGroup.letter}>
+          <Box key={letter} id={`jump--letter${letter}`}>
             <Text variant="lg" my={4}>
-              {exhibitorsGroup.letter}
+              {letter}
             </Text>
             {isEnteredView ? (
               <FairExhibitorsGroup exhibitorsGroup={exhibitorsGroup} />
             ) : (
               <FairExhibitorsGroupPlaceholder />
             )}
-          </React.Fragment>
+          </Box>
         )
       })}
     </>
@@ -51,6 +57,7 @@ export const FairExhibitorsFragmentContainer = createFragmentContainer(
           }
           ...FairExhibitorsGroup_exhibitorsGroup
         }
+        ...ExhibitorsLetterNav_fair
       }
     `,
   }
