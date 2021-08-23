@@ -7,10 +7,10 @@ import {
 } from "@artsy/palette"
 import React from "react"
 import styled from "styled-components"
-import { useArtworkInquiryContext } from "./ArtworkInquiryContext"
+import { useInquiryContext } from "./InquiryContext"
 
-export const ArtworkInquiryDialog: React.FC = ({ children }) => {
-  const { onClose } = useArtworkInquiryContext()
+export const InquiryDialog: React.FC = ({ children }) => {
+  const { onClose, View } = useInquiryContext()
 
   return (
     <Box
@@ -34,11 +34,11 @@ export const ArtworkInquiryDialog: React.FC = ({ children }) => {
         <CloseIcon fill="black100" display="block" />
       </Clickable>
 
-      {children}
+      <View />
     </Box>
   )
 }
 
-export const ArtworkInquiryBackdrop = styled(ModalBase)`
+export const InquiryBackdrop = styled(ModalBase)`
   transition: background-color 250ms;
 `

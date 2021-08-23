@@ -1,5 +1,4 @@
 import {
-  Banner,
   Box,
   Button,
   Clickable,
@@ -12,9 +11,10 @@ import {
 import React, { useState } from "react"
 import { createRelaySSREnvironment } from "v2/System/Relay/createRelaySSREnvironment"
 import { wait } from "v2/Utils/wait"
-import { Screen, useArtworkInquiryContext } from "./ArtworkInquiryContext"
-import { useArtworkInquiryRequest } from "./useArtworkInquiryRequest"
-import { login } from "./util"
+import { useInquiryContext } from "../InquiryContext"
+import { useArtworkInquiryRequest } from "../useArtworkInquiryRequest"
+import { login } from "../util"
+import { useInquiryAccountContext, Screen } from "./InquiryAccount"
 
 enum Mode {
   Pending,
@@ -24,17 +24,18 @@ enum Mode {
   Success,
 }
 
-interface ArtworkInquiryLoginState {
+interface InquiryLoginState {
   password: string
   authenticationCode: string
 }
 
-export const ArtworkInquiryLogin: React.FC = () => {
-  const { inquiry, navigateTo, artworkID, onClose } = useArtworkInquiryContext()
+export const InquiryLogin: React.FC = () => {
+  const { inquiry, artworkID, next } = useInquiryContext()
+  const { navigateTo } = useInquiryAccountContext()
 
   const [mode, setMode] = useState<Mode>(Mode.Pending)
 
-  const [state, setState] = useState<ArtworkInquiryLoginState>({
+  const [state, setState] = useState<InquiryLoginState>({
     password: "",
     authenticationCode: "",
   })
@@ -57,10 +58,8 @@ export const ArtworkInquiryLogin: React.FC = () => {
       })
 
       setMode(Mode.Success)
-
-      await wait(5000)
-
-      onClose()
+      await wait(500)
+      next()
     } catch (err) {
       if (
         err.message === "missing two-factor authentication code" ||
@@ -76,7 +75,7 @@ export const ArtworkInquiryLogin: React.FC = () => {
     }
   }
 
-  const handleInputChange = (name: keyof ArtworkInquiryLoginState) => (
+  const handleInputChange = (name: keyof InquiryLoginState) => (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     setState(prevState => ({ ...prevState, [name]: event.target.value }))
@@ -122,12 +121,6 @@ export const ArtworkInquiryLogin: React.FC = () => {
             autoFocus
             my={1}
           />
-        )}
-
-        <Spacer mt={1} />
-
-        {mode === Mode.Success && (
-          <Banner variant="success">Your Message Has Been Sent</Banner>
         )}
 
         <Spacer mt={2} />

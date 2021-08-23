@@ -3,7 +3,7 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type ArtworkInquiryForm_artwork = {
+export type InquiryInquiry_artwork = {
     readonly internalID: string;
     readonly title: string | null;
     readonly date: string | null;
@@ -21,12 +21,12 @@ export type ArtworkInquiryForm_artwork = {
             readonly srcSet: string;
         } | null;
     } | null;
-    readonly " $refType": "ArtworkInquiryForm_artwork";
+    readonly " $refType": "InquiryInquiry_artwork";
 };
-export type ArtworkInquiryForm_artwork$data = ArtworkInquiryForm_artwork;
-export type ArtworkInquiryForm_artwork$key = {
-    readonly " $data"?: ArtworkInquiryForm_artwork$data;
-    readonly " $fragmentRefs": FragmentRefs<"ArtworkInquiryForm_artwork">;
+export type InquiryInquiry_artwork$data = InquiryInquiry_artwork;
+export type InquiryInquiry_artwork$key = {
+    readonly " $data"?: InquiryInquiry_artwork$data;
+    readonly " $fragmentRefs": FragmentRefs<"InquiryInquiry_artwork">;
 };
 
 
@@ -45,7 +45,7 @@ return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "ArtworkInquiryForm_artwork",
+  "name": "InquiryInquiry_artwork",
   "selections": [
     {
       "alias": null,
@@ -153,5 +153,5 @@ return {
   "type": "Artwork"
 };
 })();
-(node as any).hash = '5c6d03207305937e57aee9a0766070fd';
+(node as any).hash = 'f60b7bd6c3523066d5cb774b240122ef';
 export default node;

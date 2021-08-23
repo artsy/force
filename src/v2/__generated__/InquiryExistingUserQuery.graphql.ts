@@ -2,23 +2,23 @@
 /* eslint-disable */
 
 import { ConcreteRequest } from "relay-runtime";
-export type ArtworkInquiryExistingUserQueryVariables = {
+export type InquiryExistingUserQueryVariables = {
     email: string;
 };
-export type ArtworkInquiryExistingUserQueryResponse = {
+export type InquiryExistingUserQueryResponse = {
     readonly user: {
         readonly internalID: string;
     } | null;
 };
-export type ArtworkInquiryExistingUserQuery = {
-    readonly response: ArtworkInquiryExistingUserQueryResponse;
-    readonly variables: ArtworkInquiryExistingUserQueryVariables;
+export type InquiryExistingUserQuery = {
+    readonly response: InquiryExistingUserQueryResponse;
+    readonly variables: InquiryExistingUserQueryVariables;
 };
 
 
 
 /*
-query ArtworkInquiryExistingUserQuery(
+query InquiryExistingUserQuery(
   $email: String!
 ) {
   user(email: $email) {
@@ -56,7 +56,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "ArtworkInquiryExistingUserQuery",
+    "name": "InquiryExistingUserQuery",
     "selections": [
       {
         "alias": null,
@@ -77,7 +77,7 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "ArtworkInquiryExistingUserQuery",
+    "name": "InquiryExistingUserQuery",
     "selections": [
       {
         "alias": null,
@@ -103,11 +103,11 @@ return {
   "params": {
     "id": null,
     "metadata": {},
-    "name": "ArtworkInquiryExistingUserQuery",
+    "name": "InquiryExistingUserQuery",
     "operationKind": "query",
-    "text": "query ArtworkInquiryExistingUserQuery(\n  $email: String!\n) {\n  user(email: $email) {\n    internalID\n    id\n  }\n}\n"
+    "text": "query InquiryExistingUserQuery(\n  $email: String!\n) {\n  user(email: $email) {\n    internalID\n    id\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'd6414de0b9ef17705168a41cfec3e29d';
+(node as any).hash = '16e2cf77a93770b61ec1584fee629a19';
 export default node;

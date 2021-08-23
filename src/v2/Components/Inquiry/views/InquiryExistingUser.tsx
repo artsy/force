@@ -3,10 +3,11 @@ import React from "react"
 import { graphql } from "react-relay"
 import { useSystemContext } from "v2/System"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
-import { ArtworkInquiryExistingUserQuery } from "v2/__generated__/ArtworkInquiryExistingUserQuery.graphql"
-import { Screen, useArtworkInquiryContext } from "./ArtworkInquiryContext"
+import { InquiryExistingUserQuery } from "v2/__generated__/InquiryExistingUserQuery.graphql"
+import { useInquiryContext } from "../InquiryContext"
+import { Screen, useInquiryAccountContext } from "./InquiryAccount"
 
-const ArtworkInquiryExistingUserPlaceholder: React.FC = () => {
+const InquiryExistingUserPlaceholder: React.FC = () => {
   return (
     <Box height={400}>
       <Spinner />
@@ -14,22 +15,23 @@ const ArtworkInquiryExistingUserPlaceholder: React.FC = () => {
   )
 }
 
-export const ArtworkInquiryExistingUserQueryRenderer: React.FC = () => {
+export const InquiryExistingUserQueryRenderer: React.FC = () => {
   const { relayEnvironment } = useSystemContext()
-  const { inquiry, navigateTo } = useArtworkInquiryContext()
+  const { inquiry } = useInquiryContext()
+  const { navigateTo } = useInquiryAccountContext()
 
   return (
-    <SystemQueryRenderer<ArtworkInquiryExistingUserQuery>
+    <SystemQueryRenderer<InquiryExistingUserQuery>
       environment={relayEnvironment!}
       variables={{ email: inquiry.email }}
       query={graphql`
-        query ArtworkInquiryExistingUserQuery($email: String!) {
+        query InquiryExistingUserQuery($email: String!) {
           user(email: $email) {
             internalID
           }
         }
       `}
-      placeholder={<ArtworkInquiryExistingUserPlaceholder />}
+      placeholder={<InquiryExistingUserPlaceholder />}
       render={({ error, props }) => {
         if (error) {
           console.error(error)
@@ -39,7 +41,7 @@ export const ArtworkInquiryExistingUserQueryRenderer: React.FC = () => {
 
         // Loading
         if (!props) {
-          return <ArtworkInquiryExistingUserPlaceholder />
+          return <InquiryExistingUserPlaceholder />
         }
 
         // If there's a user that can be found; navigate to the login screen

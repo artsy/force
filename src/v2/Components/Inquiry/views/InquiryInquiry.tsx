@@ -6,6 +6,9 @@ import {
   Image,
   Input,
   Separator,
+  Skeleton,
+  SkeletonBox,
+  SkeletonText,
   Spacer,
   Text,
   TextArea,
@@ -14,15 +17,16 @@ import { useSystemContext } from "v2/System"
 import React from "react"
 import { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ArtworkInquiryForm_artwork } from "v2/__generated__/ArtworkInquiryForm_artwork.graphql"
-import { useArtworkInquiryRequest } from "./useArtworkInquiryRequest"
+import { InquiryInquiry_artwork } from "v2/__generated__/InquiryInquiry_artwork.graphql"
+import { InquiryInquiryQuery } from "v2/__generated__/InquiryInquiryQuery.graphql"
+import { useArtworkInquiryRequest } from "../useArtworkInquiryRequest"
 import { wait } from "v2/Utils/wait"
 import {
-  useArtworkInquiryContext,
+  useInquiryContext,
   DEFAULT_MESSAGE,
-  Screen,
-  ArtworkInquiryState,
-} from "./ArtworkInquiryContext"
+  InquiryState,
+} from "../InquiryContext"
+import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 
 enum Mode {
   Pending,
@@ -32,20 +36,14 @@ enum Mode {
   Success,
 }
 
-interface ArtworkInquiryFormProps {
-  artwork: ArtworkInquiryForm_artwork
+interface InquiryInquiryProps {
+  artwork: InquiryInquiry_artwork
 }
 
-const ArtworkInquiryForm: React.FC<ArtworkInquiryFormProps> = ({ artwork }) => {
+const InquiryInquiry: React.FC<InquiryInquiryProps> = ({ artwork }) => {
   const { user } = useSystemContext()
 
-  const {
-    onClose,
-    navigateTo,
-    setInquiry,
-    inquiry,
-    artworkID,
-  } = useArtworkInquiryContext()
+  const { next, setInquiry, inquiry, artworkID } = useInquiryContext()
 
   const [mode, setMode] = useState<Mode>(Mode.Pending)
 
@@ -62,7 +60,7 @@ const ArtworkInquiryForm: React.FC<ArtworkInquiryFormProps> = ({ artwork }) => {
     setInquiry(prevState => ({ ...prevState, message: value }))
   }
 
-  const handleInputChange = (name: keyof ArtworkInquiryState) => (
+  const handleInputChange = (name: keyof InquiryState) => (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     setInquiry(prevState => ({ ...prevState, [name]: event.target.value }))
@@ -77,7 +75,7 @@ const ArtworkInquiryForm: React.FC<ArtworkInquiryFormProps> = ({ artwork }) => {
     }
 
     if (!user) {
-      navigateTo(Screen.ExistingUser)
+      next()
     }
 
     setMode(Mode.Sending)
@@ -85,8 +83,8 @@ const ArtworkInquiryForm: React.FC<ArtworkInquiryFormProps> = ({ artwork }) => {
     try {
       await submitArtworkInquiryRequest()
       setMode(Mode.Success)
-      await wait(5000)
-      onClose()
+      await wait(500)
+      next()
     } catch (err) {
       console.error(err)
       setMode(Mode.Error)
@@ -191,10 +189,6 @@ const ArtworkInquiryForm: React.FC<ArtworkInquiryFormProps> = ({ artwork }) => {
 
       <Spacer mt={1} />
 
-      {mode === Mode.Success && (
-        <Banner variant="success">Your Message Has Been Sent</Banner>
-      )}
-
       {mode === Mode.Confirm && (
         <Banner variant="defaultLight">
           We recommend personalizing your message to get a faster answer from
@@ -217,11 +211,11 @@ const ArtworkInquiryForm: React.FC<ArtworkInquiryFormProps> = ({ artwork }) => {
   )
 }
 
-export const ArtworkInquiryFormFragmentContainer = createFragmentContainer(
-  ArtworkInquiryForm,
+const InquiryInquiryFragmentContainer = createFragmentContainer(
+  InquiryInquiry,
   {
     artwork: graphql`
-      fragment ArtworkInquiryForm_artwork on Artwork {
+      fragment InquiryInquiry_artwork on Artwork {
         internalID
         title
         date
@@ -243,3 +237,87 @@ export const ArtworkInquiryFormFragmentContainer = createFragmentContainer(
     `,
   }
 )
+
+export const InquiryInquiryPlaceholder: React.FC = () => {
+  return (
+    <Skeleton>
+      <SkeletonText variant="lg" mr={4}>
+        Send message to gallery
+      </SkeletonText>
+
+      <Separator my={2} />
+
+      <SkeletonText variant="md" my={2}>
+        <Box display="inline-block" width={60}>
+          From
+        </Box>
+        Example Example (example@example.com)
+      </SkeletonText>
+
+      <Separator my={2} />
+
+      <SkeletonText variant="md" my={2}>
+        <Box display="inline-block" width={60}>
+          To
+        </Box>
+        Example Partner
+      </SkeletonText>
+
+      <Separator my={2} />
+
+      <Flex alignItems="center">
+        <SkeletonBox width={60} height={45} />
+
+        <Box ml={2}>
+          <SkeletonText variant="md">Artist Name</SkeletonText>
+
+          <SkeletonText variant="md">Artwork Title (0000)</SkeletonText>
+        </Box>
+      </Flex>
+
+      <Separator my={2} />
+
+      <SkeletonText variant="xs" textTransform="uppercase" mb={0.5}>
+        Your message
+      </SkeletonText>
+
+      <SkeletonBox height={120} />
+
+      <Spacer mt={2} />
+
+      <SkeletonBox height={50} />
+    </Skeleton>
+  )
+}
+
+export const InquiryInquiryQueryRenderer: React.FC = () => {
+  const { relayEnvironment } = useSystemContext()
+  const { artworkID } = useInquiryContext()
+
+  return (
+    <SystemQueryRenderer<InquiryInquiryQuery>
+      environment={relayEnvironment}
+      placeholder={<InquiryInquiryPlaceholder />}
+      query={graphql`
+        query InquiryInquiryQuery($id: String!) {
+          artwork(id: $id) {
+            ...InquiryInquiry_artwork
+          }
+        }
+      `}
+      variables={{ id: artworkID }}
+      render={({ props, error }) => {
+        if (error) {
+          console.error(error)
+          return null
+        }
+
+        if (!props || !props.artwork) {
+          return <InquiryInquiryPlaceholder />
+        }
+
+        return <InquiryInquiryFragmentContainer artwork={props.artwork} />
+      }}
+    />
+  )
+}

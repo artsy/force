@@ -1,12 +1,15 @@
 import { mount } from "enzyme"
 import React from "react"
 import { flushPromiseQueue } from "v2/DevTools"
-import { ArtworkInquirySignUp } from "../ArtworkInquirySignUp"
-import { useArtworkInquiryRequest } from "../useArtworkInquiryRequest"
-import { signUp } from "../util"
+import { InquirySignUp } from "../../views/InquirySignUp"
+import { useArtworkInquiryRequest } from "../../useArtworkInquiryRequest"
+import { signUp } from "../../util"
+import { useInquiryContext } from "../../InquiryContext"
 
-jest.mock("../util")
-jest.mock("../useArtworkInquiryRequest")
+jest.mock("../../util")
+jest.mock("../../useArtworkInquiryRequest")
+jest.mock("../../InquiryContext")
+jest.mock("v2/Utils/wait", () => ({ wait: () => Promise.resolve() }))
 
 const fill = (
   wrapper: ReturnType<typeof mount>,
@@ -18,15 +21,27 @@ const fill = (
   input.simulate("change")
 }
 
-describe("ArtworkInquirySignUp", () => {
+describe("InquirySignUp", () => {
+  const next = jest.fn()
+  const submitArtworkInquiryRequest = jest.fn()
+
   beforeEach(() => {
     ;(useArtworkInquiryRequest as jest.Mock).mockImplementation(() => ({
-      submitArtworkInquiryRequest: () => Promise.resolve(),
+      submitArtworkInquiryRequest,
+    }))
+    ;(useInquiryContext as jest.Mock).mockImplementation(() => ({
+      next,
+      inquiry: { email: "example@example.com" },
     }))
   })
 
+  afterEach(() => {
+    next.mockReset()
+    submitArtworkInquiryRequest.mockReset()
+  })
+
   it("renders correctly", () => {
-    const wrapper = mount(<ArtworkInquirySignUp />)
+    const wrapper = mount(<InquirySignUp />)
 
     expect(wrapper.html()).toContain("Create an account to send your message")
   })
@@ -39,9 +54,10 @@ describe("ArtworkInquirySignUp", () => {
     })
 
     it("signs up the user and sends the message", async () => {
-      const wrapper = mount(<ArtworkInquirySignUp />)
+      const wrapper = mount(<InquirySignUp />)
 
-      expect(wrapper.html()).not.toContain("Your Message Has Been Sent")
+      expect(submitArtworkInquiryRequest).not.toBeCalled()
+      expect(next).not.toBeCalled()
 
       // Fill inputs
       fill(wrapper, "name", "Example Example")
@@ -52,7 +68,8 @@ describe("ArtworkInquirySignUp", () => {
       wrapper.find("form").simulate("submit")
       await flushPromiseQueue()
 
-      expect(wrapper.html()).toContain("Your Message Has Been Sent")
+      expect(submitArtworkInquiryRequest).toBeCalled()
+      expect(next).toBeCalled()
     })
   })
 
@@ -64,9 +81,10 @@ describe("ArtworkInquirySignUp", () => {
     })
 
     it("handles and displays the error to the user", async () => {
-      const wrapper = mount(<ArtworkInquirySignUp />)
+      const wrapper = mount(<InquirySignUp />)
 
-      expect(wrapper.html()).not.toContain("Your Message Has Been Sent")
+      expect(submitArtworkInquiryRequest).not.toBeCalled()
+      expect(next).not.toBeCalled()
 
       // Fill inputs
       fill(wrapper, "name", "Example Example")
@@ -77,7 +95,8 @@ describe("ArtworkInquirySignUp", () => {
       wrapper.find("form").simulate("submit")
       await flushPromiseQueue()
 
-      expect(wrapper.html()).not.toContain("Your Message Has Been Sent")
+      expect(submitArtworkInquiryRequest).not.toBeCalled()
+      expect(next).not.toBeCalled()
       expect(wrapper.html()).toContain("something went wrong")
     })
   })
