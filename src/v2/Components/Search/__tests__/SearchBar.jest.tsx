@@ -4,14 +4,12 @@ import {
   SearchBarRefetchContainer as SearchBar,
   getSearchTerm,
 } from "v2/Components/Search/SearchBar"
-import { SuggestionItem } from "v2/Components/Search/Suggestions/SuggestionItem"
 import { renderRelayTree } from "v2/DevTools"
 import { MockBoot } from "v2/DevTools/MockBoot"
 import { ReactWrapper } from "enzyme"
 import React from "react"
 import { graphql } from "react-relay"
 import { flushPromiseQueue } from "v2/DevTools"
-import { mockLocation } from "v2/DevTools/mockLocation"
 
 jest.unmock("react-relay")
 
@@ -91,18 +89,6 @@ describe("SearchBar", () => {
     await flushPromiseQueue()
 
     expect(component.find(Input).props().placeholder).toBe("Search Artsy")
-  })
-
-  it("navigates the user when clicking on an item", async () => {
-    const component = await getWrapper(searchResults)
-
-    simulateTyping(component, "blah") // Any text of non-zero length.
-    await flushPromiseQueue()
-
-    mockLocation()
-    component.find(SuggestionItem).at(0).simulate("click")
-
-    expect(window.location.assign).toHaveBeenCalledWith("/cat/percy-z")
   })
 
   it("highlights matching parts of suggestions", async () => {

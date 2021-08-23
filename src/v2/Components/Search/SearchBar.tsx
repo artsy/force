@@ -332,20 +332,25 @@ export class SearchBar extends Component<Props, State> {
   }
 
   renderFirstSuggestion = (edge, { query, isHighlighted }) => {
-    const { displayLabel, __typename, href } = edge.node
+    const { displayLabel, displayType, __typename, href } = edge.node
+
+    const label = displayType || (__typename === "Artist" ? "Artist" : null)
+
     return (
       <FirstSuggestionItem
         display={displayLabel}
         href={href}
         isHighlighted={isHighlighted}
-        label={__typename}
+        label={label}
         query={query}
       />
     )
   }
 
   renderDefaultSuggestion = (edge, { query, isHighlighted }) => {
-    const { displayLabel, __typename, href, counts } = edge.node
+    const { displayLabel, displayType, __typename, href, counts } = edge.node
+
+    const label = displayType || (__typename === "Artist" ? "Artist" : null)
 
     const showArtworksButton = !!counts?.artworks
     const showAuctionResultsButton = !!counts?.auctionResults
@@ -355,7 +360,7 @@ export class SearchBar extends Component<Props, State> {
         display={displayLabel}
         href={href}
         isHighlighted={isHighlighted}
-        label={__typename}
+        label={label}
         query={query}
         showArtworksButton={showArtworksButton}
         showAuctionResultsButton={showAuctionResultsButton}
