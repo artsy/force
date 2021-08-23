@@ -46,7 +46,16 @@ const CurrentAuctions: React.FC<CurrentAuctionsProps> = ({ viewer, relay }) => {
   if (nodes.length === 0) {
     return (
       <Box>
-        <Text>No current auctions.</Text>
+        <Text
+          as="h3"
+          color="black60"
+          mb={12}
+          mt={6}
+          textAlign="center"
+          variant="mediumText"
+        >
+          No current auctions.
+        </Text>
       </Box>
     )
   }
