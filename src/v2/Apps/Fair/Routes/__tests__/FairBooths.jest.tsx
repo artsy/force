@@ -198,11 +198,5 @@ const FAIR_BOOTHS_FIXTURE: FairBooths_QueryRawResponse = {
         },
       ],
     },
-    exhibitorsGroupedByName: [
-      { letter: "K" },
-      { letter: "L" },
-      { letter: "M" },
-      { letter: "0-9" },
-    ],
   },
 }

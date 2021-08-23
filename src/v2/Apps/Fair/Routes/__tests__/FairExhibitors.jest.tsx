@@ -19,10 +19,45 @@ describe("FairExhibitors", () => {
   })
 
   afterEach(() => {
-    jest.resetAllMocks()
+    jest.clearAllMocks()
   })
 
-  it("renders the exhibitors group", async () => {
+  it("renders the letters nav", () => {
+    const wrapper = getWrapper()
+    expect(wrapper.find("ExhibitorsLetterNav").length).toBe(1)
+  })
+
+  it("scrolls down the page on letter click", () => {
+    document.querySelector = jest.fn().mockReturnValue({
+      getBoundingClientRect: () => ({
+        top: 0,
+      }),
+    })
+
+    const spy = jest.fn()
+    window.scrollTo = spy
+
+    const wrapper = getWrapper({
+      Fair: () => ({
+        exhibitorsGroupedByName: [
+          {
+            letter: "D",
+            exhibitors: [
+              {
+                partnerID: "642b20aff086930012ce478f",
+              },
+            ],
+          },
+        ],
+      }),
+    })
+
+    const letter = wrapper.find("ExhibitorsLetterNav").find("Letter").at(3)
+    letter.simulate("click")
+    expect(spy).toHaveBeenCalledTimes(1)
+  })
+
+  it("renders the exhibitors group", () => {
     const wrapper = getWrapper({
       Fair: () => ({
         exhibitorsGroupedByName: [
