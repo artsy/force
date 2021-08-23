@@ -342,9 +342,13 @@ export class SearchBar extends Component<Props, State> {
   }
 
   renderDefaultSuggestion = (edge, { query, isHighlighted }) => {
-    const { displayLabel, displayType, href } = edge.node
+    const { displayLabel, displayType, href, counts } = edge.node
     const newHref = displayType === "Artist" ? `${href}/works-for-sale` : href
 
+    const showArtworksButton = !!counts?.artworks
+    const showAuctionResultsButton = !!counts?.auctionResults
+
+    console.log(edge.node)
     return (
       <SuggestionItem
         display={displayLabel}
@@ -352,6 +356,8 @@ export class SearchBar extends Component<Props, State> {
         isHighlighted={isHighlighted}
         label={displayType}
         query={query}
+        showArtworksButton={showArtworksButton}
+        showAuctionResultsButton={showAuctionResultsButton}
       />
     )
   }
@@ -467,6 +473,12 @@ export const SearchBarRefetchContainer = createRefetchContainer(
               ... on SearchableItem {
                 displayType
                 slug
+              }
+              ... on Artist {
+                counts {
+                  artworks
+                  auctionResults
+                }
               }
             }
           }

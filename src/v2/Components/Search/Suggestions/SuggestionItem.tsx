@@ -1,4 +1,10 @@
-import { Text } from "@artsy/palette"
+import {
+  ArtworkIcon,
+  AuctionIcon,
+  GridColumns,
+  Pill,
+  Text,
+} from "@artsy/palette"
 import match from "autosuggest-highlight/match"
 import parse from "autosuggest-highlight/parse"
 import React from "react"
@@ -11,6 +17,8 @@ interface SuggestionItemProps {
   isHighlighted: boolean
   label: string
   query: string
+  showArtworksButton?: boolean
+  showAuctionResultsButton?: boolean
 }
 
 export const FirstSuggestionItem: React.FC<SuggestionItemProps> = ({
@@ -31,11 +39,38 @@ export const FirstSuggestionItem: React.FC<SuggestionItemProps> = ({
 }
 
 export const SuggestionItem: React.FC<SuggestionItemProps> = props => {
-  const { href, isHighlighted } = props
+  const {
+    href,
+    isHighlighted,
+    showArtworksButton,
+    showAuctionResultsButton,
+  } = props
+
+  const showQuickNavigation = !!showArtworksButton || !!showAuctionResultsButton
 
   return (
     <SuggestionItemLink to={href} bg={isHighlighted ? "black5" : "white100"}>
       <DefaultSuggestion {...props} />
+      {showQuickNavigation && (
+        <GridColumns mt={1}>
+          {!!showArtworksButton && (
+            <RouterLink to={`${href}/works-for-sale`}>
+              <Pill variant="textSquare">
+                <ArtworkIcon mr={0.5} />
+                Artworks
+              </Pill>
+            </RouterLink>
+          )}
+          {!!showAuctionResultsButton && (
+            <RouterLink to={`${href}/auction-results`}>
+              <Pill variant="textSquare">
+                <AuctionIcon mr={0.5} />
+                <span>Auction Results</span>
+              </Pill>
+            </RouterLink>
+          )}
+        </GridColumns>
+      )}
     </SuggestionItemLink>
   )
 }

@@ -11,6 +11,10 @@ export type SearchBar_viewer = {
                 readonly href: string | null;
                 readonly displayType?: string | null;
                 readonly slug?: string;
+                readonly counts?: {
+                    readonly artworks: number | null;
+                    readonly auctionResults: number | null;
+                } | null;
             } | null;
         } | null> | null;
     } | null;
@@ -121,6 +125,37 @@ const node: ReaderFragment = {
                         }
                       ],
                       "type": "SearchableItem"
+                    },
+                    {
+                      "kind": "InlineFragment",
+                      "selections": [
+                        {
+                          "alias": null,
+                          "args": null,
+                          "concreteType": "ArtistCounts",
+                          "kind": "LinkedField",
+                          "name": "counts",
+                          "plural": false,
+                          "selections": [
+                            {
+                              "alias": null,
+                              "args": null,
+                              "kind": "ScalarField",
+                              "name": "artworks",
+                              "storageKey": null
+                            },
+                            {
+                              "alias": null,
+                              "args": null,
+                              "kind": "ScalarField",
+                              "name": "auctionResults",
+                              "storageKey": null
+                            }
+                          ],
+                          "storageKey": null
+                        }
+                      ],
+                      "type": "Artist"
                     }
                   ],
                   "storageKey": null
@@ -136,5 +171,5 @@ const node: ReaderFragment = {
   ],
   "type": "Viewer"
 };
-(node as any).hash = '3aeb38b1dc5d0bfda3a165193d2b7a27';
+(node as any).hash = 'c458d4a4d5aa42d7f62dfa36079784d0';
 export default node;
