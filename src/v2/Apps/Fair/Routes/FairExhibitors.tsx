@@ -1,5 +1,5 @@
 import React from "react"
-import { Box, Text } from "@artsy/palette"
+import { Box, Spacer, Text } from "@artsy/palette"
 import { graphql, createFragmentContainer } from "react-relay"
 import { FairExhibitors_fair } from "v2/__generated__/FairExhibitors_fair.graphql"
 import { FairExhibitorsGroupFragmentContainer as FairExhibitorsGroup } from "../Components/FairExhibitors"
@@ -17,6 +17,8 @@ const FairExhibitors: React.FC<FairExhibitorsProps> = ({ fair }) => {
   return (
     <>
       <Waypoint />
+
+      <Spacer mt={6} />
 
       <ExhibitorsLetterNav fair={fair} />
 
