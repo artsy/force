@@ -14,7 +14,7 @@ import { extractNodes } from "v2/Utils/extractNodes"
 export interface TransactionDetailsSummaryItemProps
   extends Omit<StepSummaryItemProps, "order"> {
   order: TransactionDetailsSummaryItem_order
-  offerOverride?: string | null
+  offerOverride?: string | null | number
   useLastSubmittedOffer?: boolean
   offerContextPrice?: "LIST_PRICE" | "LAST_OFFER"
   showOfferNote?: boolean
@@ -179,11 +179,7 @@ interface EntryProps extends SecondaryEntryProps {
   final?: boolean
 }
 
-const Entry: React.FunctionComponent<EntryProps> = ({
-  label,
-  value,
-  final,
-}) => (
+const Entry: React.FC<EntryProps> = ({ label, value, final }) => (
   <Flex justifyContent="space-between" alignItems="baseline">
     <div>
       <Text variant={["xs", "sm"]} color="black60">
@@ -202,10 +198,7 @@ const Entry: React.FunctionComponent<EntryProps> = ({
   </Flex>
 )
 
-const SecondaryEntry: React.FunctionComponent<SecondaryEntryProps> = ({
-  label,
-  value,
-}) => (
+const SecondaryEntry: React.FC<SecondaryEntryProps> = ({ label, value }) => (
   <Flex justifyContent="space-between" alignItems="baseline">
     <Text variant="xs" color="black60">
       {label}

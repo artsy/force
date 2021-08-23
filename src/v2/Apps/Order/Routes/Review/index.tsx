@@ -72,10 +72,8 @@ export class ReviewRoute extends Component<ReviewProps> {
           ? (await this.submitBuyOrder()).commerceSubmitOrder?.orderOrError
           : (await this.submitOffer(setupIntentId)).commerceSubmitOrderWithOffer
               ?.orderOrError
-      // @ts-expect-error STRICT_NULL_CHECK
-      if (orderOrError.error) {
-        // @ts-expect-error STRICT_NULL_CHECK
-        this.handleSubmitError(orderOrError.error)
+      if (orderOrError?.error) {
+        this.handleSubmitError(orderOrError?.error!)
         return
       } else if (
         this.props.order.mode === "BUY" &&
@@ -203,7 +201,7 @@ export class ReviewRoute extends Component<ReviewProps> {
     })
   }
 
-  async handleSubmitError(error: { code: string; data: string }) {
+  async handleSubmitError(error: { code: string; data: string | null }) {
     logger.error(error)
     switch (error.code) {
       case "missing_required_info": {
@@ -226,7 +224,7 @@ export class ReviewRoute extends Component<ReviewProps> {
         break
       }
       case "failed_charge_authorize": {
-        const parsedData = JSON.parse(error.data)
+        const parsedData = JSON.parse(error.data!)
         this.props.dialog.showErrorDialog({
           title: "An error occurred",
           message: parsedData.failure_message,

@@ -160,7 +160,6 @@ export class PaymentPicker extends React.Component<
       return { type: "invalid_form" }
     }
 
-    // @ts-expect-error STRICT_NULL_CHECK
     const creditCardOrError = (
       await this.createCreditCard({
         input: {
@@ -168,7 +167,7 @@ export class PaymentPicker extends React.Component<
           oneTimeUse: !saveNewCreditCard,
         },
       })
-    ).createCreditCard.creditCardOrError
+    ).createCreditCard?.creditCardOrError
 
     if (
       creditCardOrError?.mutationError &&
@@ -444,8 +443,9 @@ export class PaymentPicker extends React.Component<
   }
 
   private isPickup = () => {
-    // @ts-expect-error STRICT_NULL_CHECK
-    return this.props.order.requestedFulfillment.__typename === "CommercePickup"
+    return (
+      this.props.order.requestedFulfillment?.__typename === "CommercePickup"
+    )
   }
 
   private needsAddress = () => {
@@ -456,7 +456,7 @@ export class PaymentPicker extends React.Component<
 // Our mess of HOC wrappers is not amenable to ref forwarding, so to expose a
 // ref to the PaymentPicker instance (for getCreditCardId) we'll add an
 // `innerRef` prop which gets sneakily injected here
-const PaymentPickerWithInnerRef: React.SFC<
+const PaymentPickerWithInnerRef: React.FC<
   PaymentPickerProps & {
     innerRef: React.RefObject<PaymentPicker>
   }

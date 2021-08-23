@@ -9,7 +9,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { RevealButton } from "./RevealButton"
 import { getOfferItemFromOrder } from "v2/Apps/Order/Utils/offerItemExtractor"
 
-const OfferHistoryItem: React.FunctionComponent<
+const OfferHistoryItem: React.FC<
   {
     order: OfferHistoryItem_order
   } & StepSummaryItemProps
@@ -85,7 +85,7 @@ const OfferHistoryItem: React.FunctionComponent<
     </StepSummaryItem>
   )
 }
-const Row: React.FunctionComponent<FlexProps> = ({ children, ...others }) => (
+const Row: React.FC<FlexProps> = ({ children, ...others }) => (
   <Flex justifyContent="space-between" alignItems="baseline" {...others}>
     {children}
   </Flex>

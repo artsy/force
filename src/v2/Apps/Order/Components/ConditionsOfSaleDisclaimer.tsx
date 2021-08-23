@@ -1,7 +1,7 @@
 import { Link, Text, SansProps } from "@artsy/palette"
 import React from "react"
 
-export const ConditionsOfSaleDisclaimer: React.SFC<Partial<SansProps>> = (
+export const ConditionsOfSaleDisclaimer: React.FC<Partial<SansProps>> = (
   props: any
 ) => (
   <Text variant="xs" color="black60" {...props}>

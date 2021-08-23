@@ -26,8 +26,10 @@ const goToStatusIf = (
 
 const goToArtworkIfOrderWasAbandoned: OrderPredicate = ({ order }) => {
   if (order.state === "ABANDONED") {
-    // @ts-expect-error STRICT_NULL_CHECK
-    const artworkID = get(order, o => o.lineItems.edges[0].node.artwork.slug)
+    const artworkID = get(
+      order,
+      o => o.lineItems?.edges?.[0]?.node?.artwork?.slug
+    )
     // If an artwork ID can't be found, redirect back to home page.
     return {
       path: artworkID ? `/artwork/${artworkID}` : "/",

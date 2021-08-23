@@ -1,11 +1,10 @@
 import { Address } from "v2/Components/AddressForm"
 import { isEmpty } from "lodash"
 
-export const validatePresence = (value: string): string => {
+export const validatePresence = (value: string): string | null => {
   if (value == undefined || isEmpty(value.trim())) {
     return "This field is required"
   }
-  // @ts-expect-error STRICT_NULL_CHECK
   return null
 }
 

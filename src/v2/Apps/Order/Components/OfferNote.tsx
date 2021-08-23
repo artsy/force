@@ -18,6 +18,7 @@ export const OfferNote: React.FC<{
           {counteroffer ? " counteroffer" : " offer"}. Please do not share
           personal information in this field. For any questions about the work,{" "}
           <Clickable
+            textDecoration="underlinbe"
             onClick={() =>
               mediator?.trigger("openOrdersContactArtsyModal", {
                 artworkId,
@@ -25,7 +26,7 @@ export const OfferNote: React.FC<{
             }
           >
             <Text variant="xs" color="black100">
-              <u>ask our specialists</u>
+              ask our specialists
             </Text>
           </Clickable>
           .

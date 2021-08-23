@@ -14,7 +14,7 @@ const dimensionsDisplay = dimensions => (
   </Text>
 )
 
-export const ItemReview: React.SFC<ItemReviewProps> = ({
+export const ItemReview: React.FC<ItemReviewProps> = ({
   lineItem: {
     artwork: {
       // @ts-expect-error STRICT_NULL_CHECK

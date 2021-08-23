@@ -93,7 +93,7 @@ export interface ShippingState {
   phoneNumber: PhoneNumber
   phoneNumberError: PhoneNumberError
   phoneNumberTouched: PhoneNumberTouched
-  addressErrors: AddressErrors
+  addressErrors: AddressErrors | {}
   addressTouched: AddressTouched
   selectedAddressID: string
   saveAddress: boolean
@@ -114,7 +114,6 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
     addressErrors: {},
     addressTouched: {},
     savedAddressID: undefined,
-    // @ts-expect-error STRICT_NULL_CHECK
     phoneNumber: startingPhoneNumber(this.props.me, this.props.order),
     phoneNumberError: "",
     phoneNumberTouched: false,
@@ -213,23 +212,21 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
         const { error, hasError } = validatePhoneNumber(phoneNumber)
         if (hasErrors && hasError) {
           this.setState({
-            // @ts-expect-error STRICT_NULL_CHECK
-            addressErrors: errors,
+            addressErrors: errors!,
             addressTouched: this.touchedAddress,
-            phoneNumberError: error,
+            phoneNumberError: error!,
             phoneNumberTouched: true,
           })
           return
         } else if (hasErrors) {
           this.setState({
-            // @ts-expect-error STRICT_NULL_CHECK
-            addressErrors: errors,
+            addressErrors: errors!,
             addressTouched: this.touchedAddress,
           })
           return
         } else if (hasError) {
           this.setState({
-            phoneNumberError: error,
+            phoneNumberError: error!,
             phoneNumberTouched: true,
           })
           return
@@ -239,7 +236,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
       const { error, hasError } = validatePhoneNumber(phoneNumber)
       if (hasError) {
         this.setState({
-          phoneNumberError: error,
+          phoneNumberError: error!,
           phoneNumberTouched: true,
         })
         return
@@ -253,7 +250,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
         : convertShippingAddressForExchange(
             this.getAddressList()?.find(
               address => address?.node?.internalID == selectedAddressID
-            )?.node
+            )?.node!
           )
       const shipToPhoneNumber = this.isCreateNewAddress()
         ? phoneNumber
@@ -437,7 +434,6 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
     const { errors } = validateAddress(address)
     this.setState({
       address,
-      // @ts-expect-error STRICT_NULL_CHECK
       addressErrors: {
         ...this.state.addressErrors,
         ...errors,
@@ -455,7 +451,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
     const { error } = validatePhoneNumber(phoneNumber)
     this.setState({
       phoneNumber,
-      phoneNumberError: error,
+      phoneNumberError: error!,
       phoneNumberTouched: true,
       shippingQuotes: null,
       shippingQuoteId: undefined,
@@ -659,15 +655,14 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
                   shippingQuotes &&
                   shippingQuotes.length === 0 &&
                   this.renderSupportedShippingAreaErrorMessage()}
-                {/* @ts-expect-error STRICT_NULL_CHECK */}
                 <AddressForm
                   value={address}
                   errors={addressErrors}
                   touched={addressTouched}
                   onChange={this.onAddressChange}
-                  domesticOnly={artwork?.onlyShipsDomestically}
-                  euOrigin={artwork?.euShippingOrigin}
-                  shippingCountry={artwork?.shippingCountry}
+                  domesticOnly={artwork?.onlyShipsDomestically!}
+                  euOrigin={artwork?.euShippingOrigin!}
+                  shippingCountry={artwork?.shippingCountry!}
                   showPhoneNumberInput={false}
                 />
                 <Spacer mb={2} />

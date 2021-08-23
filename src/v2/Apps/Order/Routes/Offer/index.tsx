@@ -284,7 +284,6 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
                 <ArtworkSummaryItem order={order} />
                 <TransactionDetailsSummaryItem
                   order={order}
-                  // @ts-expect-error STRICT_NULL_CHECK
                   offerOverride={
                     this.state.offerValue &&
                     this.state.offerValue.toLocaleString("en-US", {

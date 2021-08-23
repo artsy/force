@@ -138,8 +138,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
 
   const handleSetDefaultAddress = (addressID: string) => {
     updateUserDefaultAddress(
-      // @ts-expect-error STRICT_NULL_CHECK
-      relayEnvironment,
+      relayEnvironment!,
       addressID,
       () => refetchAddresses(),
       onError

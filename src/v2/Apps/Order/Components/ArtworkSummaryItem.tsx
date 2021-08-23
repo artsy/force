@@ -18,7 +18,7 @@ export interface ArtworkSummaryItemProps extends Omit<FlexProps, "order"> {
   className?: string
 }
 
-const ArtworkSummaryItem: React.SFC<ArtworkSummaryItemProps> = ({
+const ArtworkSummaryItem: React.FC<ArtworkSummaryItemProps> = ({
   order: {
     lineItems,
     // @ts-expect-error STRICT_NULL_CHECK
@@ -28,8 +28,7 @@ const ArtworkSummaryItem: React.SFC<ArtworkSummaryItemProps> = ({
 }) => {
   const artwork = get({}, () => lineItems?.edges?.[0]?.node?.artwork)
 
-  // @ts-expect-error STRICT_NULL_CHECK
-  const { artist_names, title, date, shippingOrigin, image } = artwork
+  const { artist_names, title, date, shippingOrigin, image } = artwork!
 
   const imageURL =
     image &&
@@ -45,7 +44,7 @@ const ArtworkSummaryItem: React.SFC<ArtworkSummaryItemProps> = ({
   return (
     <StackableBorderBox flexDirection="row" {...others}>
       <Box height="auto">
-        {imageURL && <Image src={imageURL} alt={title} width="55px" mr={1} />}
+        {imageURL && <Image src={imageURL} alt={title!} width="55px" mr={1} />}
       </Box>
       <Flex flexDirection="column" overflow="hidden">
         <Text variant="sm" color="black60">
