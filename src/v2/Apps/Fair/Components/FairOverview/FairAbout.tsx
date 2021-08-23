@@ -1,11 +1,12 @@
-import React, { useMemo } from "react"
-import { Column, GridColumns, Separator, Spacer, Text } from "@artsy/palette"
-import { moment } from "desktop/lib/template_modules"
+import React from "react"
+import { Column, GridColumns, Spacer, Text } from "@artsy/palette"
 import { some } from "lodash"
+import { DateTime } from "luxon"
 import { InfoSection } from "v2/Components/InfoSection"
 import { FairTimerFragmentContainer as FairTimer } from "./FairTimer"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FairAbout_fair } from "v2/__generated__/FairAbout_fair.graphql"
+import { useCurrentTime } from "v2/Utils/Hooks/useCurrentTime"
 
 const aboutInfoTypes = [
   "about",
@@ -36,12 +37,11 @@ const FairAbout: React.FC<FairAboutProps> = ({ fair }) => {
     tickets,
     endAt,
   } = fair
+  const currentTime = useCurrentTime({ syncWithServer: true })
 
-  const hasEnded = endAt && moment().isAfter(new Date(endAt))
-  const hasAboutContent = useMemo(
-    () => some(aboutInfoTypes, field => !!fair[field]),
-    [fair]
-  )
+  const hasEnded =
+    endAt && DateTime.fromISO(endAt) < DateTime.fromISO(currentTime)
+  const hasAboutContent = some(aboutInfoTypes, field => !!fair[field])
 
   if (hasEnded && !hasAboutContent) {
     return null
@@ -89,8 +89,6 @@ const FairAbout: React.FC<FairAboutProps> = ({ fair }) => {
           </Column>
         )}
       </GridColumns>
-
-      <Separator my={4} />
     </>
   )
 }

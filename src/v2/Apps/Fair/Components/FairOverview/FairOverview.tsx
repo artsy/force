@@ -1,5 +1,5 @@
 import React from "react"
-import { Box, BoxProps, Text, Spacer, Separator } from "@artsy/palette"
+import { Box, BoxProps, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import {
   FairEditorialFragmentContainer,
@@ -41,21 +41,16 @@ const FairOverview: React.FC<FairOverviewProps> = ({ fair }) => {
       )}
 
       {hasCollections && (
-        <>
-          <Separator my={4} />
-          <Box my={4}>
-            <Text variant="lg" as="h3" mb={4}>
-              Curated Highlights
-            </Text>
+        <Box my={6}>
+          <Text variant="lg" as="h3" mb={4}>
+            Curated Highlights
+          </Text>
 
-            <FairCollectionsFragmentContainer fair={fair} />
-          </Box>
-        </>
+          <FairCollectionsFragmentContainer fair={fair} />
+        </Box>
       )}
 
-      {!!user && <FairFollowedArtistsFragmentContainer fair={fair} my={2} />}
-
-      <Spacer my={[4, 6]} />
+      {!!user && <FairFollowedArtistsFragmentContainer fair={fair} my={6} />}
     </Box>
   )
 }
