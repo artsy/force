@@ -3,7 +3,8 @@ import React, { useState } from "react"
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 import { PaginationFragmentContainer } from "v2/Components/Pagination"
 import { LoadingArea } from "v2/Components/LoadingArea"
-import { ViewingRoomsFragmentContainer } from "v2/Apps/Partner/Components/PartnerViewingRooms/ViewingRooms"
+import { ViewingRoomsPaginatedPlaceholder } from "./ViewingRoomsPaginatedPlaceholder"
+import { ViewingRoomsFragmentContainer } from "./ViewingRooms"
 import { useSystemContext } from "v2/System"
 import { useRouter } from "v2/System/Router/useRouter"
 import { ViewingRoomsPaginatedRendererQuery } from "v2/__generated__/ViewingRoomsPaginatedRendererQuery.graphql"
@@ -49,7 +50,7 @@ const ViewingRoomsPaginated: React.FC<ViewingRoomsProps> = ({
 
     relay.refetch(
       {
-        first: 2,
+        first: 40,
         statuses: ["closed"],
         after: cursor,
         partnerID: slug,
@@ -172,9 +173,11 @@ export const ViewingRoomsPaginatedRenderer: React.FC<
           }
         }
       `}
+      placeholder={<ViewingRoomsPaginatedPlaceholder count={4} {...rest} />}
       variables={{ partnerId, first: 40, after: null }}
       render={({ error, props }) => {
-        if (error || !props) return null
+        if (error || !props)
+          return <ViewingRoomsPaginatedPlaceholder count={4} {...rest} />
 
         return (
           <ViewingRoomsRefetchContainer

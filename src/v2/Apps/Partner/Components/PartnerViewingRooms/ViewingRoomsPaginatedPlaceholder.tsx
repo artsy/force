@@ -1,0 +1,53 @@
+import React, { FC } from "react"
+import {
+  Box,
+  BoxProps,
+  Column,
+  Flex,
+  GridColumns,
+  ResponsiveBox,
+  SkeletonBox,
+  SkeletonText,
+} from "@artsy/palette"
+
+interface ViewingRoomsPaginatedPlaceholderProps extends BoxProps {
+  count: number
+}
+
+export const ViewingRoomsPaginatedPlaceholder: FC<ViewingRoomsPaginatedPlaceholderProps> = ({
+  count,
+  ...rest
+}) => {
+  return (
+    <>
+      <SkeletonText variant="title" mb={6}>
+        Past Events
+      </SkeletonText>
+
+      <GridColumns mb={6} gridRowGap={[2, 4]} {...rest}>
+        {[...Array(count)].map((_, i) => (
+          <Column key={i} span={[6, 6, 3, 3]}>
+            <Box width={[300, "100%"]} key={i}>
+              <ResponsiveBox
+                aspectWidth={263}
+                aspectHeight={222}
+                maxWidth="100%"
+                bg="black10"
+              >
+                <SkeletonBox height="100%" width="100%" />
+              </ResponsiveBox>
+
+              <Flex mt={1} justifyContent="space-between">
+                <Box>
+                  <SkeletonText variant="subtitle">Viewing Room</SkeletonText>
+                  <SkeletonText>Viewing Room Title</SkeletonText>
+                  <SkeletonText>Exhibition Period</SkeletonText>
+                </Box>
+              </Flex>
+            </Box>
+          </Column>
+        ))}
+      </GridColumns>
+    </>
+  )
+}
