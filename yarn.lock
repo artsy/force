@@ -65,23 +65,6 @@
   dependencies:
     uuid "^8.3.0"
 
-"@artsy/palette-charts@15.0.0":
-  version "15.0.0"
-  resolved "https://registry.yarnpkg.com/@artsy/palette-charts/-/palette-charts-15.0.0.tgz#64fa5da3a2879197677a3b99a4e0562902cf8122"
-  integrity sha512-l5H195eHTo+CgsDlLJWqZ/kt5BcchpSmYAsISYbkx4XL7e8pfVQfCgmjo1VmTRP/+Fp1GHH/eabV4Pftt3RoRw==
-  dependencies:
-    "@artsy/palette" "^16.0.0"
-    "@seznam/compose-react-refs" "^1.0.6"
-    "@styled-system/theme-get" "^5.1.2"
-    d3-interpolate "^1.3.2"
-    d3-shape "^1.3.5"
-    styled-system "^5.1.5"
-
-"@artsy/palette-tokens@^2.5.0":
-  version "2.5.0"
-  resolved "https://registry.yarnpkg.com/@artsy/palette-tokens/-/palette-tokens-2.5.0.tgz#55cdbba4714ac004c03401826faab66d2f978547"
-  integrity sha512-77RKXo4WOQ076OI2uYgF7uF1cNOlnQy54T4RS75GjtDuB/+rrEyARv6fLLLCeiRI5L1rrEZOdJN4eL3LRWeCeA==
-
 "@artsy/palette-charts@16.1.0":
   version "16.1.0"
   resolved "https://registry.yarnpkg.com/@artsy/palette-charts/-/palette-charts-16.1.0.tgz#fbcefd985d91e4207f02c83260104af3a26d7d8b"
@@ -94,36 +77,15 @@
     d3-shape "^1.3.5"
     styled-system "^5.1.5"
 
-"@artsy/palette-tokens@^2.6.0":
-  version "2.6.0"
-  resolved "https://registry.yarnpkg.com/@artsy/palette-tokens/-/palette-tokens-2.6.0.tgz#3d780ff65994fef0daadef29d43d11f89470b728"
-  integrity sha512-UQP6P+xv/5hm82ep0z5X3kCFFnk03H6y8kdW/wTU+xPq45ESUay7aNFYXeub47tmW2v6dXJ8Oa01Z0iwc6BVpA==
+"@artsy/palette-tokens@^2.5.0":
+  version "2.5.0"
+  resolved "https://registry.yarnpkg.com/@artsy/palette-tokens/-/palette-tokens-2.5.0.tgz#55cdbba4714ac004c03401826faab66d2f978547"
+  integrity sha512-77RKXo4WOQ076OI2uYgF7uF1cNOlnQy54T4RS75GjtDuB/+rrEyARv6fLLLCeiRI5L1rrEZOdJN4eL3LRWeCeA==
 
 "@artsy/palette@17.1.0", "@artsy/palette@^17.1.0":
   version "17.1.0"
   resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-17.1.0.tgz#e23f9a733c18a5079402b34693f6f63d98516eb8"
   integrity sha512-toPmC8Nur5VnKGo5KfBltcNr1RdzHsW17S7DVoMIjN0hjwF1YZngbFpbgFCojubH5BfudHTETbVMM6+xRmqzHQ==
-  dependencies:
-    "@artsy/palette-tokens" "^2.5.0"
-    "@seznam/compose-react-refs" "^1.0.6"
-    "@styled-system/theme-get" "^5.1.2"
-    d3-interpolate "^1.3.2"
-    d3-shape "^1.3.5"
-    debounce "^1.2.0"
-    luxon "^1.15"
-    proportional-scale "^4.0.0"
-    rc-slider "^8.6.2"
-    react-lazy-load-image-component "1.5.0"
-    react-remove-scroll "^2.3.0"
-    styled-bootstrap-grid "3.1.0"
-    styled-system "^5.1.5"
-    trunc-html "^1.1.2"
-    use-cursor "^1.2.3"
-
-"@artsy/palette@^16.0.0":
-  version "16.0.0"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-16.0.0.tgz#f66687e95474527b09cae6abeef7a38141cb93b6"
-  integrity sha512-pOU91U5mwK20c7o9NIEW65UqzzX9ykOBsnfc2crjHbDMpYgjLlWUCIHiTZQ7eDXfDYZrsISyfpGKZjc5sNr9Mw==
   dependencies:
     "@artsy/palette-tokens" "^2.6.0"
     "@seznam/compose-react-refs" "^1.0.6"
