@@ -24,6 +24,7 @@ import {
 } from "v2/Components/LocationAutocompleteInput"
 import { useState } from "react"
 import { useUpdateMyUserProfile } from "../useUpdateMyUserProfile"
+import { logger } from "../util"
 
 enum Mode {
   Pending,
@@ -77,7 +78,7 @@ const InquiryBasicInfo: React.FC<InquiryBasicInfoProps> = ({ artwork }) => {
       setMode(Mode.Success)
       next()
     } catch (err) {
-      console.error(err)
+      logger.error(err)
       setMode(Mode.Error)
     }
   }

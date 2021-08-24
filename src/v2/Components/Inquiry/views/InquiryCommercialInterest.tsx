@@ -3,6 +3,7 @@ import React from "react"
 import { useState } from "react"
 import { useInquiryContext } from "../InquiryContext"
 import { useUpdateMyUserProfile } from "../useUpdateMyUserProfile"
+import { logger } from "../util"
 
 enum Mode {
   Pending,
@@ -27,7 +28,7 @@ export const InquiryCommercialInterest: React.FC = () => {
       setMode(Mode.Success)
       next()
     } catch (err) {
-      console.error(err)
+      logger.error(err)
       setMode(Mode.Error)
     }
   }

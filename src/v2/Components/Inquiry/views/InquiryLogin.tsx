@@ -15,6 +15,7 @@ import { useInquiryContext } from "../InquiryContext"
 import { useArtworkInquiryRequest } from "../useArtworkInquiryRequest"
 import { login } from "v2/Utils/auth"
 import { useInquiryAccountContext, Screen } from "./InquiryAccount"
+import { logger } from "../util"
 
 enum Mode {
   Pending,
@@ -71,7 +72,7 @@ export const InquiryLogin: React.FC = () => {
 
       // TODO: Improve error messaging
       setMode(Mode.Error)
-      console.error(err)
+      logger.error(err)
     }
   }
 
