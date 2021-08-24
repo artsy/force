@@ -8,6 +8,7 @@ const currentYear = new Date().getFullYear()
 export const clientPlugins = [
   new LodashModuleReplacementPlugin({
     currying: true,
+    flattening: true,
     shorthands: true,
   }),
   // To include only specific zones, use the matchZones option
