@@ -50,7 +50,10 @@ export const FullBleedHeader: React.FC<FullBleedHeaderProps> = ({
 
 export const useFullBleedHeaderHeight = () => {
   const { mobile, desktop } = useNavBarHeight()
-  return [`calc(50vh - ${mobile}px)`, `calc(50vh - ${desktop}px)`]
+  return [
+    `max(calc(50vh - ${mobile}px), 360px)`,
+    `max(calc(50vh - ${desktop}px), 360px)`,
+  ]
 }
 
 const Container = styled(FullBleed)`
