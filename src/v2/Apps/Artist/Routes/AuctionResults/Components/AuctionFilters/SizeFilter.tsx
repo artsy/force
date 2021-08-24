@@ -47,6 +47,7 @@ export const SizeFilter: React.FC = () => {
               },
               my: 1,
               selected: filters?.sizes?.includes(name),
+              testID: `size-filter-${name}`,
             }
             return <Checkbox {...props}>{displayName}</Checkbox>
           })}

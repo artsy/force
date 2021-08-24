@@ -43,6 +43,7 @@ export const MediumFilter: React.FC = () => {
               },
               my: 1,
               selected: categories?.includes(name),
+              testID: `medium-filter-${name}`,
             }
             return <Checkbox {...props}>{displayName}</Checkbox>
           })}

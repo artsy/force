@@ -42,6 +42,7 @@ export const AuctionHouseFilter: React.FC = () => {
               },
               my: 1,
               selected: organizations?.includes(name),
+              testID: `organization-filter-${name}`,
             }
             return <Checkbox {...props}>{displayName}</Checkbox>
           })}
