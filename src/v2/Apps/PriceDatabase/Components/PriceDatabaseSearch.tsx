@@ -39,7 +39,9 @@ export const PriceDatabaseSearch: React.FC = () => {
 
     // TODO: Add tracking for search
 
-    router.push(`${pathName}?${queryString}`)
+    const url = queryString ? `${pathName}?${queryString}` : pathName
+
+    router.push(url)
   }
 
   const handleFilterSelect = key => selected => {
