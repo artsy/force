@@ -71,29 +71,29 @@ const OrderRow: React.FC<OrderRowProps> = props => {
   const XSOrderRow = (
     <Flex px={2} flexDirection="column">
       <Flex
-        py={1.5}
         flexDirection="row"
         alignItems="center"
         justifyContent="space-between"
+        py={2}
       >
         <Flex
           alignItems="center"
           justifyContent="center"
           height="50px"
           width="50px"
-          mr={1.5}
+          mr={2}
         >
           {artworkImage}
         </Flex>
 
         <Flex flexDirection="column" justifyContent="center" width="100%">
-          <Text variant="text" letterSpacing="tight">
+          <Text variant="sm" letterSpacing="tight">
             {artwork?.artist_names}
           </Text>
-          <Text variant="text" color="black60" letterSpacing="tight">
+          <Text variant="sm" color="black60" letterSpacing="tight">
             {partnerName}
           </Text>
-          <Text variant="text" color="black60" letterSpacing="tight">
+          <Text variant="sm" color="black60" letterSpacing="tight">
             {orderCreatedAt.toLocaleString(
               DateTime.DATE_SHORT as LocaleOptions
             )}
@@ -101,7 +101,7 @@ const OrderRow: React.FC<OrderRowProps> = props => {
         </Flex>
         <Flex flexDirection="column" alignItems="flex-end">
           <Text
-            variant="text"
+            variant="sm"
             color="black60"
             letterSpacing="tight"
             style={{ textTransform: "capitalize" }}
@@ -109,7 +109,7 @@ const OrderRow: React.FC<OrderRowProps> = props => {
             {order.buyerTotal}
           </Text>
           <Text
-            variant="text"
+            variant="sm"
             color={getOrderColor(order.state.toLowerCase())}
             letterSpacing="tight"
             style={{ textTransform: "capitalize" }}
@@ -121,7 +121,7 @@ const OrderRow: React.FC<OrderRowProps> = props => {
       <Flex>
         <Join separator={<Box ml={1} />}>
           {!orderIsInactive && (
-            <Box flexGrow={1}>
+            <Box flexGrow={1} mb={2}>
               <Button
                 width="100%"
                 onClick={() => {
@@ -134,7 +134,7 @@ const OrderRow: React.FC<OrderRowProps> = props => {
             </Box>
           )}
           {trackingId && (
-            <Box flexGrow={1}>
+            <Box flexGrow={1} mb={2}>
               <Button
                 width="100%"
                 onClick={() => {
@@ -147,12 +147,12 @@ const OrderRow: React.FC<OrderRowProps> = props => {
           )}
         </Join>
       </Flex>
-      {props.hasDivider && <Separator mt={2} />}
+      {props.hasDivider && <Separator />}
     </Flex>
   )
 
   const SMOrderRow = (
-    <BorderBox my={2} mx="40px" p={0} flexDirection="column">
+    <BorderBox my={2} mx={4} p={0} flexDirection="column">
       <Flex
         bg="black5"
         width="100%"
@@ -160,7 +160,7 @@ const OrderRow: React.FC<OrderRowProps> = props => {
         alignItems="center"
         p={2}
       >
-        <Text variant="text">
+        <Text variant="sm">
           {" "}
           {orderCreatedAt.toLocaleString(DateTime.DATE_MED as LocaleOptions)}
         </Text>
@@ -168,7 +168,7 @@ const OrderRow: React.FC<OrderRowProps> = props => {
           {getOrderIcon(order.state.toLowerCase())}
           <Text
             ml="2px"
-            variant="text"
+            variant="sm"
             color={getOrderColor(order.state.toLowerCase())}
             style={{ textTransform: "capitalize" }}
           >
@@ -176,7 +176,7 @@ const OrderRow: React.FC<OrderRowProps> = props => {
           </Text>
           {trackingId && (
             <>
-              <Text variant="text" mx={1}>
+              <Text variant="sm" mx={1}>
                 &#8226;
               </Text>
               <Link
@@ -184,7 +184,7 @@ const OrderRow: React.FC<OrderRowProps> = props => {
                 rel="noopener noreferrer"
                 href={trackingURL}
               >
-                <Text variant="text">Track order</Text>
+                <Text variant="sm">Track order</Text>
               </Link>
             </>
           )}
@@ -195,10 +195,10 @@ const OrderRow: React.FC<OrderRowProps> = props => {
           {artworkImage}
           <Flex flexDirection="column" ml={1}>
             <Link href={artistURL} underlineBehavior="hover">
-              <Text variant="text">{artwork?.artist_names}</Text>
+              <Text variant="sm">{artwork?.artist_names}</Text>
             </Link>
             <Link href={artworkURL} underlineBehavior="hover">
-              <Text variant="text" color="black60">
+              <Text variant="sm" color="black60">
                 {artwork?.title}
               </Text>
             </Link>
@@ -209,11 +209,11 @@ const OrderRow: React.FC<OrderRowProps> = props => {
           <Avatar size="xs" src={partnerImageUrl} initials={partnerInitials} />
           <Flex flexDirection="column" ml={1}>
             <Link href={partnerURL} underlineBehavior="hover">
-              <Text variant="text" color="black60" letterSpacing="tight">
+              <Text variant="sm" color="black60" letterSpacing="tight">
                 {partnerName}
               </Text>
             </Link>{" "}
-            <Text variant="text" color="black60">
+            <Text variant="sm" color="black60">
               {artwork?.shippingOrigin &&
                 artwork?.shippingOrigin.replace(/, US/g, "")}
             </Text>
@@ -225,35 +225,35 @@ const OrderRow: React.FC<OrderRowProps> = props => {
       </Flex>
       <Flex p={2}>
         <Flex flexDirection="column" width="25%">
-          <Text variant="text">Order No.</Text>
+          <Text variant="sm">Order No.</Text>
           {!orderIsInactive && (
             <Link href={orderURL} underlineBehavior="hover">
-              <Text variant="text" letterSpacing="tight">
+              <Text variant="sm" letterSpacing="tight">
                 {order.code}
               </Text>
             </Link>
           )}
           {orderIsInactive && (
-            <Text variant="text" letterSpacing="tight">
+            <Text variant="sm" letterSpacing="tight">
               {order.code}
             </Text>
           )}
         </Flex>
         <Flex flexDirection="column" width="25%">
-          <Text variant="text">Total</Text>
-          <Text variant="text" color="black60">
+          <Text variant="sm">Total</Text>
+          <Text variant="sm" color="black60">
             {order.buyerTotal}
           </Text>
         </Flex>
         <Flex flexDirection="column" width="25%">
-          <Text variant="text">Payment Method</Text>
-          <Text variant="text" color="black60">
+          <Text variant="sm">Payment Method</Text>
+          <Text variant="sm" color="black60">
             {creditCardNumber ? "•••• " + creditCardNumber : "N/A"}
           </Text>
         </Flex>
         <Flex flexDirection="column" width="25%">
-          <Text variant="text">Fulfillment</Text>
-          <Text variant="text" color="black60">
+          <Text variant="sm">Fulfillment</Text>
+          <Text variant="sm" color="black60">
             {isShip ? "Delivery" : "Pickup"}
           </Text>
         </Flex>
@@ -263,11 +263,11 @@ const OrderRow: React.FC<OrderRowProps> = props => {
       </Flex>
       <Flex p={2}>
         <HelpIcon fill="black60" mr="6px" />
-        <Text variant="text" color="black60">
+        <Text variant="sm" color="black60">
           Need Help?{" "}
         </Text>
         <Link href="mailto:support@artsy.net">
-          <Text variant="text" color="black60" ml="3px">
+          <Text variant="sm" color="black60" ml="3px">
             Contact Us.
           </Text>
         </Link>

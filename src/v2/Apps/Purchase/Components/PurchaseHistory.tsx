@@ -1,7 +1,7 @@
 import {
   Box,
   LargePagination,
-  Sans,
+  Text,
   Separator,
   SmallPagination,
   Spinner,
@@ -109,9 +109,9 @@ const PurchaseHistory: React.FC<PurchaseHistoryProps> = (
           />
         ))
       ) : (
-        <Sans size="4" py={2} px={4}>
+        <Text variant="sm" py={2} px={4}>
           No Orders
-        </Sans>
+        </Text>
       )}
       <StyledBox>
         <Media at="xs">
