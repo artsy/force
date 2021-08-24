@@ -6,7 +6,7 @@ import { ReCaptchaContainer } from "v2/Utils/ReCaptchaContainer"
 import { wait } from "v2/Utils/wait"
 import { useInquiryContext } from "../InquiryContext"
 import { useArtworkInquiryRequest } from "../useArtworkInquiryRequest"
-import { signUp } from "../util"
+import { signUp } from "v2/Utils/auth"
 
 enum Mode {
   Pending,

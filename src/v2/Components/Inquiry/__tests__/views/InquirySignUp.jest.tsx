@@ -3,11 +3,11 @@ import React from "react"
 import { flushPromiseQueue } from "v2/DevTools"
 import { InquirySignUp } from "../../views/InquirySignUp"
 import { useArtworkInquiryRequest } from "../../useArtworkInquiryRequest"
-import { signUp } from "../../util"
+import { signUp } from "v2/Utils/auth"
 import { useInquiryContext } from "../../InquiryContext"
 import { fill } from "../util"
 
-jest.mock("../../util")
+jest.mock("v2/Utils/auth")
 jest.mock("../../useArtworkInquiryRequest")
 jest.mock("../../InquiryContext")
 jest.mock("v2/Utils/wait", () => ({ wait: () => Promise.resolve() }))

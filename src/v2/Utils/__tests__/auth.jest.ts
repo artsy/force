@@ -1,4 +1,4 @@
-import { login, resetPassword, signUp } from "../util"
+import { login, resetPassword, signUp } from "../auth"
 
 jest.mock("sharify", () => ({
   data: {
