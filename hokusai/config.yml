@@ -1,5 +1,6 @@
 project-name: force
 pre-deploy: yarn publish-assets
 hokusai-required-version: ">=0.5.8"
+git-remote: git@github.com:artsy/force.git
 template-config-files:
   - s3://artsy-citadel/k8s/hokusai-vars.yml
