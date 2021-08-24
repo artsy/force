@@ -1,10 +1,10 @@
 import styled from "styled-components"
-import { Box } from "@artsy/palette"
+import { Box, BoxProps } from "@artsy/palette"
 import React, { useEffect, useRef, useState } from "react"
 import { useSticky } from "./StickyProvider"
 import { useNavBarHeight } from "../NavBar/useNavBarHeight"
 
-export const Sticky: React.FC = ({ children }) => {
+export const Sticky: React.FC<BoxProps> = ({ children, ...rest }) => {
   const sentinelRef = useRef<HTMLDivElement | null>(null)
   const containerRef = useRef<HTMLDivElement | null>(null)
 
@@ -56,6 +56,7 @@ export const Sticky: React.FC = ({ children }) => {
       />
 
       <Container
+        {...(stuck ? rest : {})}
         ref={containerRef as any}
         bg="white100"
         position={stuck ? "fixed" : "static"}

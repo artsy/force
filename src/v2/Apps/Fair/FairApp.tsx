@@ -21,6 +21,7 @@ import { userIsAdmin } from "v2/Utils/user"
 import { FairHeaderImageFragmentContainer } from "./Components/FairHeader/FairHeaderImage"
 import { FairHeaderFragmentContainer } from "./Components/FairHeader"
 import { data as sd } from "sharify"
+import { Sticky, StickyProvider } from "v2/Components/Sticky"
 
 interface FairAppProps {
   fair: FairApp_fair
@@ -61,64 +62,66 @@ const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
   const enableFairPageExhibitorsTab = sd.ENABLE_FAIR_PAGE_EXHIBITORS_TAB
 
   return (
-    <>
+    <StickyProvider>
       <FairMetaFragmentContainer fair={fair} />
 
       <FairHeaderImageFragmentContainer fair={fair} />
 
       <FairHeaderFragmentContainer fair={fair} />
 
-      <RouteTabs my={[0, 2]} fill>
-        <RouteTab
-          to={fairHref}
-          exact
-          onClick={trackTabData(fairHref, "Overview", ContextModule.fairInfo)}
-        >
-          Overview
-        </RouteTab>
-
-        {enableFairPageExhibitorsTab && (
+      <Sticky>
+        <RouteTabs pt={2} fill>
           <RouteTab
-            to={`${fairHref}/exhibitors`}
+            to={fairHref}
+            exact
+            onClick={trackTabData(fairHref, "Overview", ContextModule.fairInfo)}
+          >
+            Overview
+          </RouteTab>
+
+          {enableFairPageExhibitorsTab && (
+            <RouteTab
+              to={`${fairHref}/exhibitors`}
+              exact
+              onClick={trackTabData(
+                `${fairHref}/exhibitors`,
+                "Exhibitors",
+                ContextModule.exhibitorsTab
+              )}
+            >
+              Exhibitors A-Z
+            </RouteTab>
+          )}
+
+          <RouteTab
+            to={`${fairHref}/booths`}
             exact
             onClick={trackTabData(
-              `${fairHref}/exhibitors`,
-              "Exhibitors",
-              ContextModule.exhibitorsTab
+              `${fairHref}/booths`,
+              "Booths",
+              "boothsTab" as ContextModule
             )}
           >
-            Exhibitors A-Z
+            Booths
           </RouteTab>
-        )}
 
-        <RouteTab
-          to={`${fairHref}/booths`}
-          exact
-          onClick={trackTabData(
-            `${fairHref}/booths`,
-            "Booths",
-            "boothsTab" as ContextModule
-          )}
-        >
-          Booths
-        </RouteTab>
-
-        <RouteTab
-          to={`${fairHref}/artworks`}
-          exact
-          onClick={trackTabData(
-            `${fairHref}/artworks`,
-            "Artworks",
-            ContextModule.artworksTab
-          )}
-        >
-          Artworks
-          <Text display="inline">&nbsp;({artworkCount})</Text>
-        </RouteTab>
-      </RouteTabs>
+          <RouteTab
+            to={`${fairHref}/artworks`}
+            exact
+            onClick={trackTabData(
+              `${fairHref}/artworks`,
+              "Artworks",
+              ContextModule.artworksTab
+            )}
+          >
+            Artworks
+            <Text display="inline">&nbsp;({artworkCount})</Text>
+          </RouteTab>
+        </RouteTabs>
+      </Sticky>
 
       {children}
-    </>
+    </StickyProvider>
   )
 }
 
