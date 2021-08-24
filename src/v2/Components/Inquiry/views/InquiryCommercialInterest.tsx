@@ -1,18 +1,68 @@
-import { Button, Text } from "@artsy/palette"
+import { Banner, Button, Text } from "@artsy/palette"
 import React from "react"
+import { useState } from "react"
 import { useInquiryContext } from "../InquiryContext"
+import { useUpdateMyUserProfile } from "../useUpdateMyUserProfile"
+
+enum Mode {
+  Pending,
+  Loading3,
+  Loading2,
+  Success,
+  Error,
+}
 
 export const InquiryCommercialInterest: React.FC = () => {
   const { next } = useInquiryContext()
 
+  const [mode, setMode] = useState(Mode.Pending)
+
+  const { submitUpdateMyUserProfile } = useUpdateMyUserProfile()
+
+  const handleClick = (value: 2 | 3) => async () => {
+    setMode({ 2: Mode.Loading2, 3: Mode.Loading3 }[value])
+
+    try {
+      await submitUpdateMyUserProfile({ collectorLevel: value })
+      setMode(Mode.Success)
+      next()
+    } catch (err) {
+      console.error(err)
+      setMode(Mode.Error)
+    }
+  }
+
   return (
     <>
-      <Text variant="sm" mb={1}>
-        CommercialInterest
+      <Text variant="lg" mb={2}>
+        Have you bought art from a gallery or auction house before?
       </Text>
 
-      <Button width="100%" onClick={next}>
-        Next
+      {mode === Mode.Error && (
+        <Banner variant="error" dismissable my={2}>
+          Something went wrong. Please try again.
+        </Banner>
+      )}
+
+      <Button
+        variant="secondaryOutline"
+        width="100%"
+        onClick={handleClick(3)}
+        loading={mode === Mode.Loading3}
+        disabled={mode === Mode.Success || mode === Mode.Loading2}
+        mb={1}
+      >
+        Yes
+      </Button>
+
+      <Button
+        variant="secondaryOutline"
+        width="100%"
+        onClick={handleClick(2)}
+        loading={mode === Mode.Loading2}
+        disabled={mode === Mode.Success || mode === Mode.Loading3}
+      >
+        Not yet
       </Button>
     </>
   )
