@@ -19,6 +19,7 @@ Links should point to specific commits, and not a branch (in case the branch or 
 - [Prefer Relay containers (higher order components) over relay-hooks](#prefer-relay-containers-higher-order-components-over-relay-hooks)
 - [Keep file structure organized](#keep-file-structure-organized)
 - [Naming, imports and exports](#naming-imports-and-exports)
+- [Avoid implicit returns on React components](#avoid-implicit-returns-on-react-components)
 - [Write unit tests for new components](#write-unit-tests-for-new-components)
 - [Add smoke tests for new routes](#add-smoke-tests-for-new-routes)
 - [Adding global script tags](#adding-global-script-tags)
@@ -43,7 +44,7 @@ To learn how to create a new sub-app, see [the docs](https://github.com/artsy/fo
 
 We use [TypeScript](https://www.typescriptlang.org/docs) to maximize runtime code safety.
 
-> NOTE: Around mid-2021 we migrated to strict type checking for **all new code**. What this meant in practice was that all _old code_ that failed strict type checking was silenced via a special flag inserted by a script (`// @ts-expect-error STRICT_NULL_CHECK`) with all _new code_ expected to adhere to best practices. Going forward, this flag should never be used, and if encounted while working on old code it should be removed and the type error fixed. 
+> NOTE: Around mid-2021 we migrated to strict type checking for **all new code**. What this meant in practice was that all _old code_ that failed strict type checking was silenced via a special flag inserted by a script (`// @ts-expect-error STRICT_NULL_CHECK`) with all _new code_ expected to adhere to best practices. Going forward, this flag should never be used, and if encounted while working on old code it should be removed and the type error fixed.
 
 ### Use Relay for network requests
 
@@ -131,6 +132,40 @@ import { FooFragmentContainer as Foo } from "./Foo"
 // good
 import { FooFragmentContainer } from "./Foo"
 ```
+
+### Avoid implicit returns on React components
+
+When writing multi-line React components, always use the more explicit `return` form:
+
+Avoid:
+
+```tsx
+const Foo = props => (
+  <Box>
+    <Text variant="sm">Hi</Text>
+  </Box>
+)
+```
+
+Preferred:
+
+```tsx
+const Foo = props => {
+  return (
+    <Box>
+      <Text variant='sm'>Hi</Text>
+    </Box>
+  )
+)
+```
+
+OK:
+
+```tsx
+const Foo = ({ title }) => <Text variant="lg">{title}</Text>
+```
+
+The reasoning -- and this should be some kind of "Programmers Law" -- is that code is always returned to, either in the form of additions or for debugging. With implicit returns one can't `console.log` intermediate variables or easily add debugger statements, and if one needed to expand the code with a hook or some other piece of functionality the implicit return would need to be unwound.
 
 ### Write unit tests for new components
 
