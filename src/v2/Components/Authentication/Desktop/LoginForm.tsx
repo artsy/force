@@ -61,6 +61,7 @@ export interface LoginFormState {
   error?: string | null
   isSocialSignUp: boolean
   isLoading: boolean
+  otpRequired: boolean
 }
 
 export class LoginForm extends Component<FormProps, LoginFormState> {
@@ -68,6 +69,7 @@ export class LoginForm extends Component<FormProps, LoginFormState> {
     error: this.props.error,
     isSocialSignUp: false,
     isLoading: false,
+    otpRequired: false,
   }
 
   onSubmit = (values: InputValues, formikBag: FormikProps<InputValues>) => {
@@ -78,15 +80,22 @@ export class LoginForm extends Component<FormProps, LoginFormState> {
         isLoading: true,
       },
       () => {
-        this.props.handleSubmit?.(values, formikBag)
+        const postValues = {
+          ...values,
+          otpRequired: this.state.otpRequired,
+        }
+        this.props.handleSubmit?.(postValues, formikBag)
       }
     )
   }
 
   render() {
+    const initialValues = {
+      ...this.props.values,
+    }
     return (
       <Formik
-        initialValues={this.props.values || {}}
+        initialValues={initialValues || {}}
         onSubmit={this.onSubmit}
         validationSchema={LoginValidator}
       >
@@ -108,7 +117,13 @@ export class LoginForm extends Component<FormProps, LoginFormState> {
             if (globalError) {
               this.setState({ isLoading: false })
             }
-          }, [globalError])
+
+            if (globalError === "missing two-factor authentication code") {
+              this.setState({
+                otpRequired: true,
+              })
+            }
+          }, [globalError, status])
 
           const handleChange = e => {
             setStatus(null)

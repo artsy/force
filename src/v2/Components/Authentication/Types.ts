@@ -14,6 +14,7 @@ export interface InputValues {
   otp_attempt?: string
   accepted_terms_of_service?: boolean
   agreed_to_receive_emails?: boolean
+  otpSecondAttempt?: boolean
 }
 
 export type SubmitHandler = (

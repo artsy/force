@@ -195,6 +195,7 @@ const loginUser = async (
     "otp_attempt",
     "session_id",
     "_csrf",
+    "otpRequired",
   ])
 
   await fetch(url, {
