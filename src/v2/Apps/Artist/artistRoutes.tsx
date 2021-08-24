@@ -154,7 +154,10 @@ export const artistRoutes: AppRouteConfig[] = [
 
           return {
             artistID,
-            ...initialAuctionResultsFilterState(0, 0),
+            ...initialAuctionResultsFilterState({
+              startDate: 0,
+              endDate: 0,
+            }),
             ...allowedAuctionResultFilters(urlFilterState),
           }
         },

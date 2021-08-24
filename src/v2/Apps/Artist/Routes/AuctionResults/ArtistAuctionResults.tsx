@@ -95,10 +95,10 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
 
   const { startAt, endAt } =
     artist.auctionResultsConnection?.createdYearRange ?? {}
-  const auctionResultsFilterResetState = initialAuctionResultsFilterState(
-    endAt,
-    startAt
-  )
+  const auctionResultsFilterResetState = initialAuctionResultsFilterState({
+    startDate: startAt,
+    endDate: endAt,
+  })
 
   // Is current filter state different from the default (reset) state?
   const filtersAtDefault = isEqual(
@@ -276,7 +276,7 @@ export const ArtistAuctionResultsRefetchContainer = createRefetchContainer(
       props.artist.auctionResultsConnection?.createdYearRange ?? {}
 
     const { match } = useRouter()
-    const filters = paramsToCamelCase(match && match.location.query)
+    const filters = paramsToCamelCase(match?.location.query)
 
     return (
       <AuctionResultsFilterContextProvider

@@ -58,7 +58,7 @@ export const PriceDatabaseSearch: React.FC = () => {
           <Text as="h1" variant="xl">
             Artsy Price Database
           </Text>
-          <Text lineHeight={1.5} mb={[0, 2]}>
+          <Text variant="sm" mb={[0, 2]}>
             Search auction results for more than 340,000 artists FOR FREE
           </Text>
         </Column>

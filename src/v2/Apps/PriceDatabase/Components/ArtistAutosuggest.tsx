@@ -1,17 +1,34 @@
 import Autosuggest from "react-autosuggest"
-import React, { useEffect, useState } from "react"
+import React, { Ref, useEffect, useState } from "react"
 import {
-  Input,
   MagnifyingGlassIcon,
   usePosition,
   Text,
   Clickable,
+  LabeledInput,
+  DROP_SHADOW,
 } from "@artsy/palette"
 import { graphql } from "lib/graphql"
 import { fetchQuery } from "relay-runtime"
-import { ArtistAutosuggest_SearchConnection_Query } from "v2/__generated__/ArtistAutosuggest_SearchConnection_Query.graphql"
+import {
+  ArtistAutosuggest_SearchConnection_Query,
+  ArtistAutosuggest_SearchConnection_QueryResponse,
+} from "v2/__generated__/ArtistAutosuggest_SearchConnection_Query.graphql"
 import { useSystemContext } from "v2/System"
 import { Container } from "v2/Components/Sticky"
+
+type Suggestion =
+  | NonNullable<
+      NonNullable<
+        NonNullable<
+          ArtistAutosuggest_SearchConnection_QueryResponse["searchConnection"]
+        >["edges"]
+      >[number]
+    >
+  | null
+  | undefined
+
+type Suggestions = readonly Suggestion[] | undefined | null
 
 interface ArtistAutosuggestProps {
   onChange?: (artustSlug: string) => void
@@ -22,7 +39,7 @@ export const ArtistAutosuggest: React.FC<ArtistAutosuggestProps> = ({
 }) => {
   const { relayEnvironment } = useSystemContext()
 
-  const [suggestions, setSuggestions] = useState<any>([])
+  const [suggestions, setSuggestions] = useState<Suggestions>([])
   const [searchQuery, setSearchQuery] = useState("")
 
   const updateSuggestions = async () => {
@@ -57,26 +74,27 @@ export const ArtistAutosuggest: React.FC<ArtistAutosuggestProps> = ({
     offset: 10,
   })
 
-  const selectSuggestion = async (selectedSuggestion: any) => {
+  const selectSuggestion = async selectedSuggestion => {
     onChange?.(selectedSuggestion?.node?.slug)
   }
 
   const AutosuggestInput: React.FC = props => {
     return (
-      <>
-        <Input
-          width="100%"
-          spellCheck={false}
-          style={{ boxShadow: "0px 2px 10px rgba(0,0,0,0.1)" }}
-          {...props}
-          ref={anchorRef as any}
-        />
-        <MagnifyingGlassIcon position="absolute" right="2%" top={"16px"} />
-      </>
+      <LabeledInput
+        width="100%"
+        spellCheck={false}
+        type="text"
+        label={<MagnifyingGlassIcon />}
+        {...props}
+        ref={anchorRef as Ref<HTMLInputElement>}
+      />
     )
   }
 
-  const Suggestion: React.FC<{ node: any }> = ({ node }, { isHighlighted }) => {
+  const Suggestion: React.FC<{ node: NonNullable<Suggestion>["node"] }> = (
+    { node },
+    { isHighlighted }
+  ) => {
     return (
       <Container
         height={50}
@@ -91,7 +109,7 @@ export const ArtistAutosuggest: React.FC<ArtistAutosuggestProps> = ({
             textDecoration={isHighlighted ? "underline" : "none"}
             color={isHighlighted ? "blue100" : "black100"}
           >
-            {node.displayLabel}
+            {node?.displayLabel}
           </Clickable>
         </Text>
       </Container>
@@ -122,8 +140,7 @@ export const ArtistAutosuggest: React.FC<ArtistAutosuggestProps> = ({
           position: "relative",
         },
         suggestionsContainer: {
-          boxShadow:
-            "0px 0px 1px rgba(0, 0, 0, 0.08), 0px 2px 8px rgba(0, 0, 0, 0.12)",
+          boxShadow: DROP_SHADOW,
           marginTop: "10px",
           position: "absolute",
           zIndex: 2,

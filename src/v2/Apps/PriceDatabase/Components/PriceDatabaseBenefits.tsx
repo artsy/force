@@ -5,17 +5,15 @@ import {
   Image,
   Separator,
   Flex,
-  themeProps,
+  ResponsiveBox,
 } from "@artsy/palette"
-import React from "react"
-import { useMatchMedia } from "v2/Utils/Hooks/useMatchMedia"
+import React, { ReactElement } from "react"
+import { Media } from "v2/Utils/Responsive"
 
 export const PriceDatabaseBenefits: React.FC = () => {
-  const isMobile = useMatchMedia(themeProps.mediaQueries.xs)
-
   return (
     <Flex py={[1, 4]} flexDirection="column">
-      <GridColumns my={4} gridRowGap={[2, 0]}>
+      <GridColumns mt={4} gridRowGap={[2, 0]}>
         <Column span={12}>
           <Text as="h1" variant="xl">
             The Benefits of the
@@ -24,61 +22,79 @@ export const PriceDatabaseBenefits: React.FC = () => {
           </Text>
         </Column>
       </GridColumns>
-      <GridColumns mb={4} gridRowGap={[2, 0]}>
-        <Column span={6}>
-          <Image style={{ maxWidth: "100%" }} src={"images/browse.jpg"} />
-        </Column>
-        <Column span={6}>
-          <Text as="h1" variant="xl">
-            340,000 Artists
-          </Text>
-          <Text lineHeight={1.5}>
-            From well-known to niche auction houses, find sale results from your
-            favourite artists.
-          </Text>
-        </Column>
-      </GridColumns>
+
+      <Section
+        title="340,000 Artists"
+        text="From well-known to niche auction houses, find sale results from your favourite artists."
+        Image={<SectionImage src="" srcSet="" alt="" />} // TODO: replace with image
+      />
 
       <Separator />
 
-      <GridColumns my={4} gridRowGap={[2, 0]}>
-        {isMobile && (
-          <Column span={6}>
-            <Image style={{ maxWidth: "100%" }} src={"images/browse.jpg"} />
-          </Column>
-        )}
-        <Column span={6}>
-          <Text as="h1" variant="xl">
-            1 Database
-          </Text>
-          <Text lineHeight={1.5}>
-            Quickly and easily find Design, Fine and Decorative Art results all
-            in one place.
-          </Text>
-        </Column>
-        {!isMobile && (
-          <Column span={6}>
-            <Image style={{ maxWidth: "100%" }} src={"images/browse.jpg"} />
-          </Column>
-        )}
-      </GridColumns>
+      <Section
+        title="1 Database"
+        text="Quickly and easily find Design, Fine and Decorative Art results all in one place."
+        Image={<SectionImage src="" srcSet="" alt="" />} // TODO: replace with image
+        imagePosition="right"
+      />
 
       <Separator />
 
-      <GridColumns my={4} gridRowGap={[2, 0]}>
-        <Column span={6}>
-          <Image style={{ maxWidth: "100%" }} src={"images/browse.jpg"} />
-        </Column>
-        <Column span={6}>
-          <Text as="h1" variant="xl">
-            Search for Free
-          </Text>
-          <Text lineHeight={1.5}>
-            No search limits, no results limits, no subscriptions, and no
-            obligations.
-          </Text>
-        </Column>
-      </GridColumns>
+      <Section
+        title="Search for Free"
+        text="No search limits, no results limits, no subscriptions, and no obligations."
+        Image={<SectionImage src="" srcSet="" alt="" />} // TODO: replace with image
+      />
     </Flex>
   )
 }
+
+const Section: React.FC<{
+  title: string
+  text: string
+  Image: ReactElement
+  imagePosition?: "left" | "right"
+}> = ({ title, text, Image, imagePosition = "left" }) => {
+  return (
+    <>
+      <Media lessThan="sm">
+        <GridColumns my={4} gridRowGap={[2, 0]}>
+          <Column span={6}>{Image}</Column>
+          <Column span={6}>
+            <Text as="h1" variant="xl">
+              {title}
+            </Text>
+            <Text variant="sm">{text}</Text>
+          </Column>
+        </GridColumns>
+      </Media>
+      <Media greaterThanOrEqual="sm">
+        <GridColumns my={4} gridRowGap={[2, 0]}>
+          {imagePosition === "left" && <Column span={6}>{Image}</Column>}
+          <Column span={6}>
+            <Text as="h1" variant="xl">
+              {title}
+            </Text>
+            <Text variant="sm">{text}</Text>
+          </Column>
+          {imagePosition === "right" && <Column span={6}>{Image}</Column>}
+        </GridColumns>
+      </Media>
+    </>
+  )
+}
+
+const SectionImage: React.FC<{ src: string; srcSet: string; alt: string }> = ({
+  src,
+  srcSet,
+  alt,
+}) => (
+  <ResponsiveBox
+    aspectWidth={800}
+    aspectHeight={660}
+    maxWidth={800}
+    maxHeight={660}
+  >
+    <Image width="100%" height="100%" src={src} srcSet={srcSet} alt={alt} />
+  </ResponsiveBox>
+)

@@ -1,6 +1,6 @@
 export const allowedAuctionResultFilters = (
-  filterParams: Record<string, any> = {}
-): Record<string, any> => {
+  filterParams: Record<string, string | boolean> = {}
+): Record<string, string> => {
   return Object.keys(filterParams).reduce((obj, key) => {
     // Filter out unsupported arguments
     if (!SUPPORTED_INPUT_ARGS.includes(key)) {
@@ -9,7 +9,7 @@ export const allowedAuctionResultFilters = (
 
     // Coerce integers
     if (INTEGER_INPUT_ARGS.includes(key)) {
-      obj[key] = parseInt(filterParams[key], 10) || 1
+      obj[key] = parseInt(filterParams[key] as string, 10) || 1
       return obj
     }
 
