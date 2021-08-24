@@ -5,6 +5,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { ViewingRoomCarousel } from "./ViewingRoomCarousel"
 import { getTagProps } from "v2/Components/ViewingRoomCard"
 import { cropped } from "v2/Utils/resized"
+import { extractNodes } from "../../../Utils/extractNodes"
 
 interface ViewingRoomsFeaturedRailProps {
   featuredViewingRooms: ViewingRoomsFeaturedRail_featuredViewingRooms
@@ -13,13 +14,7 @@ interface ViewingRoomsFeaturedRailProps {
 export const ViewingRoomsFeaturedRail: React.FC<ViewingRoomsFeaturedRailProps> = props => {
   const featuredViewingRooms = props.featuredViewingRooms
 
-  // @ts-expect-error STRICT_NULL_CHECK
-  const featuredViewingRoomsForRail = featuredViewingRooms.edges
-    .map(vr => {
-      // @ts-expect-error STRICT_NULL_CHECK
-      return vr.node ? vr.node : null
-    })
-    .filter(Boolean)
+  const featuredViewingRoomsForRail = extractNodes(featuredViewingRooms)
 
   const numFeaturedViewingRooms = featuredViewingRoomsForRail.length
 
