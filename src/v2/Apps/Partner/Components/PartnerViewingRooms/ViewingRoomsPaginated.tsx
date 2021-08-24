@@ -9,7 +9,7 @@ import { useSystemContext } from "v2/System"
 import { useRouter } from "v2/System/Router/useRouter"
 import { ViewingRoomsPaginatedRendererQuery } from "v2/__generated__/ViewingRoomsPaginatedRendererQuery.graphql"
 import { ViewingRoomsPaginated_partner } from "v2/__generated__/ViewingRoomsPaginated_partner.graphql"
-import { SystemQueryRenderer as QueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
+import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { compact } from "lodash"
 
 interface ViewingRoomsProps {
@@ -159,7 +159,7 @@ export const ViewingRoomsPaginatedRenderer: React.FC<
   const { relayEnvironment } = useSystemContext()
 
   return (
-    <QueryRenderer<ViewingRoomsPaginatedRendererQuery>
+    <SystemQueryRenderer<ViewingRoomsPaginatedRendererQuery>
       environment={relayEnvironment}
       query={graphql`
         query ViewingRoomsPaginatedRendererQuery(
