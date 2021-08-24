@@ -1,25 +1,16 @@
 import { mount } from "enzyme"
 import React from "react"
 import { InquiryLogin } from "../../views/InquiryLogin"
-import { login } from "../../util"
+import { login } from "v2/Utils/auth"
 import { useArtworkInquiryRequest } from "../../useArtworkInquiryRequest"
 import { flushPromiseQueue } from "v2/DevTools"
 import { useInquiryContext } from "../../InquiryContext"
+import { fill } from "../util"
 
-jest.mock("../../util")
+jest.mock("v2/Utils/auth")
 jest.mock("../../useArtworkInquiryRequest")
 jest.mock("../../InquiryContext")
 jest.mock("v2/Utils/wait", () => ({ wait: () => Promise.resolve() }))
-
-const fill = (
-  wrapper: ReturnType<typeof mount>,
-  name: string,
-  value: string
-) => {
-  const input = wrapper.find(`input[name="${name}"]`)
-  ;(input.getDOMNode() as HTMLInputElement).value = value
-  input.simulate("change")
-}
 
 describe("InquiryLogin", () => {
   const next = jest.fn()

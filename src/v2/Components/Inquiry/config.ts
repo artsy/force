@@ -4,7 +4,7 @@ import { Engine } from "./Engine"
 import { InquiryAccount } from "./views/InquiryAccount"
 import { InquiryArtistsInCollection } from "./views/InquiryArtistsInCollection"
 import { InquiryAuctionHousesYouWorkWith } from "./views/InquiryAuctionHousesYouWorkWith"
-import { InquiryBasicInfo } from "./views/InquiryBasicInfo"
+import { InquiryBasicInfoQueryRenderer } from "./views/InquiryBasicInfo"
 import { InquiryCommercialInterest } from "./views/InquiryCommercialInterest"
 import { InquiryConfirmation } from "./views/InquiryConfirmation"
 import { InquiryDone } from "./views/InquiryDone"
@@ -16,17 +16,17 @@ import { InquiryInstitutionalAffiliations } from "./views/InquiryInstitutionalAf
 import { InquirySpecialist } from "./views/InquirySpecialist"
 
 const VIEWS = {
-  Account: InquiryAccount,
+  Account: InquiryAccount, // ✅
   ArtistsInCollection: InquiryArtistsInCollection,
   AuctionHousesYouWorkWith: InquiryAuctionHousesYouWorkWith,
-  BasicInfo: InquiryBasicInfo,
-  CommercialInterest: InquiryCommercialInterest,
+  BasicInfo: InquiryBasicInfoQueryRenderer, // ✅
+  CommercialInterest: InquiryCommercialInterest, // ✅
   Confirmation: InquiryConfirmation,
   Done: InquiryDone,
   FairsYouAttend: InquiryFairsYouAttend,
   GalleriesYouWorkWith: InquiryGalleriesYouWorkWith,
   HowCanWeHelp: InquiryHowCanWeHelp,
-  Inquiry: InquiryInquiryQueryRenderer,
+  Inquiry: InquiryInquiryQueryRenderer, // ✅
   InstitutionalAffiliations: InquiryInstitutionalAffiliations,
   Specialist: InquirySpecialist,
 }

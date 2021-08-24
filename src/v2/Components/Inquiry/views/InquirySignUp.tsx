@@ -6,7 +6,8 @@ import { ReCaptchaContainer } from "v2/Utils/ReCaptchaContainer"
 import { wait } from "v2/Utils/wait"
 import { useInquiryContext } from "../InquiryContext"
 import { useArtworkInquiryRequest } from "../useArtworkInquiryRequest"
-import { signUp } from "../util"
+import { signUp } from "v2/Utils/auth"
+import { logger } from "../util"
 
 enum Mode {
   Pending,
@@ -57,7 +58,7 @@ export const InquirySignUp: React.FC = () => {
     } catch (err) {
       setError(err.message)
       setMode(Mode.Error)
-      console.error(err)
+      logger.error(err)
     }
   }
 
