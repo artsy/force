@@ -113,7 +113,7 @@ const FairBooths: React.FC<FairBoothsProps> = ({ fair, relay }) => {
       </Media>
 
       <Media greaterThan="xs">
-        <Flex justifyContent="flex-end">
+        <Flex my={4} justifyContent="flex-end">
           <FairBoothSortFilter />
         </Flex>
       </Media>
