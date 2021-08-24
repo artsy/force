@@ -6,7 +6,6 @@ import { FairExhibitorsGroupFragmentContainer as FairExhibitorsGroup } from "../
 import { FairExhibitorsGroupPlaceholder } from "../Components/FairExhibitors/FairExhibitorGroupPlaceholder"
 import { useLazyLoadComponent } from "v2/Utils/Hooks/useLazyLoadComponent"
 import { ExhibitorsLetterNavFragmentContainer as ExhibitorsLetterNav } from "../Components/ExhibitorsLetterNav"
-import { Sticky } from "v2/Components/Sticky"
 
 interface FairExhibitorsProps {
   fair: FairExhibitors_fair
@@ -19,11 +18,9 @@ const FairExhibitors: React.FC<FairExhibitorsProps> = ({ fair }) => {
     <>
       <Waypoint />
 
-      <Spacer mt={4} />
+      <Spacer mt={6} />
 
-      <Sticky mx={[0, 4]}>
-        <ExhibitorsLetterNav fair={fair} />
-      </Sticky>
+      <ExhibitorsLetterNav fair={fair} />
 
       {fair.exhibitorsGroupedByName?.map(exhibitorsGroup => {
         const { letter } = exhibitorsGroup!
