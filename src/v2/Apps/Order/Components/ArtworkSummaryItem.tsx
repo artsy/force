@@ -63,7 +63,7 @@ const ArtworkSummaryItem: React.FC<ArtworkSummaryItemProps> = ({
             {date && `, ${date}`}
           </Text>
         </Box>
-        <Text variant="sm" color="black60" style={truncateTextStyle}>
+        <Text variant="sm" overflowEllipsis color="black60">
           {name}
         </Text>
         <Text variant="sm" color="black60">

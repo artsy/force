@@ -217,7 +217,7 @@ export const orderRoutes: AppRouteConfig[] = [
       },
       {
         path: "payment/new",
-        // theme: "v3",
+        theme: "v3",
         Component: NewPaymentRoute,
         shouldWarnBeforeLeaving: true,
         hideFooter: true,

@@ -239,7 +239,7 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
                 />
               </Flex>
               {Boolean(offerItem?.price) && (
-                <Text variant="xs" color="black60">
+                <Text my={1} variant="xs" color="black60">
                   List price: {offerItem?.price}
                 </Text>
               )}

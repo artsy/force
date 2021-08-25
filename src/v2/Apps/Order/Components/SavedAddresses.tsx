@@ -255,7 +255,6 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
           <Button
             data-test="shippingButton"
             variant="secondaryOutline"
-            width={159}
             onClick={() => {
               setShowAddressModal(true),
                 setModalDetails({

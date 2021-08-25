@@ -10,6 +10,7 @@ import {
   ModalWidth,
   Spacer,
   Text,
+  Banner,
 } from "@artsy/palette"
 import {
   SavedAddressType,
@@ -172,14 +173,9 @@ export const AddressModal: React.FC<Props> = ({
         >
           {(formik: FormikProps<SavedAddressType>) => (
             <form onSubmit={formik.handleSubmit}>
-              <Text
-                variant="xs"
-                data-test="credit-card-error"
-                color="red100"
-                my={2}
-              >
+              <Banner my={2} data-test="credit-card-error" variant="error">
                 {createUpdateError}
-              </Text>
+              </Banner>
               <AddressModalFields />
               <Spacer mb={2} />
               <Input

@@ -153,12 +153,11 @@ export class TransactionDetailsSummaryItem extends React.Component<
 
   renderNoteEntry = () => {
     const offer = this.getOffer()
-
     if (offer?.note) {
       return (
         <>
           <Spacer mb={[2, 4]} />
-          <Text variant={["xs", "sm"]} fontWeight="semibold" color="black100">
+          <Text variant={["xs", "sm"]} fontWeight="bold" color="black100">
             Your note
           </Text>
           <Text size={["xs", "sm"]} color="black60">

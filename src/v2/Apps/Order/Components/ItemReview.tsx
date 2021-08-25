@@ -1,6 +1,6 @@
 import React from "react"
 
-import { BorderBox, Flex, Text, Image, Box } from "@artsy/palette"
+import { BorderBox, Flex, Text, Image } from "@artsy/palette"
 import { ItemReview_lineItem } from "v2/__generated__/ItemReview_lineItem.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 
@@ -67,14 +67,7 @@ export const ItemReview: React.FC<ItemReviewProps> = ({
         </Text>
       )}
     </Flex>
-    <Box maxWidth={185}>
-      <Image
-        maxHeight={375}
-        width="100%"
-        src={url}
-        alt="Please make sure you describe the image"
-      />
-    </Box>
+    <Image maxHeight={375} width={185} src={url} alt={title} />
   </BorderBox>
 )
 
