@@ -23,7 +23,7 @@ export const ExhibitorsLetterNav: React.FC<ExhibitorsLetterNavProps> = ({
 
   const Letters = ({ withSwiper = false }) => {
     return (
-      <Flex justifyContent="space-between" pl={withSwiper ? 2 : 0}>
+      <Flex justifyContent="space-between" py={2} pl={withSwiper ? 2 : 0}>
         {LETTERS.map((letter, i) => {
           const isEnabled = letters?.includes(letter)
           const isLast = i === LETTERS.length - 1
@@ -38,8 +38,8 @@ export const ExhibitorsLetterNav: React.FC<ExhibitorsLetterNavProps> = ({
               onClick={() => {
                 if (isEnabled) {
                   const offset = isMobile
-                    ? MOBILE_NAV_HEIGHT
-                    : DESKTOP_NAV_BAR_HEIGHT + 30
+                    ? MOBILE_NAV_HEIGHT + 120
+                    : DESKTOP_NAV_BAR_HEIGHT + 160
                   scrollIntoView({
                     selector: `#jump--letter${letter}`,
                     offset,

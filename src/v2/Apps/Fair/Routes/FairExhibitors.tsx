@@ -1,11 +1,14 @@
 import React from "react"
-import { Box, Spacer, Text } from "@artsy/palette"
+import { Box, DROP_SHADOW, FullBleed, Spacer, Text } from "@artsy/palette"
 import { graphql, createFragmentContainer } from "react-relay"
 import { FairExhibitors_fair } from "v2/__generated__/FairExhibitors_fair.graphql"
 import { FairExhibitorsGroupFragmentContainer as FairExhibitorsGroup } from "../Components/FairExhibitors"
 import { FairExhibitorsGroupPlaceholder } from "../Components/FairExhibitors/FairExhibitorGroupPlaceholder"
 import { useLazyLoadComponent } from "v2/Utils/Hooks/useLazyLoadComponent"
 import { ExhibitorsLetterNavFragmentContainer as ExhibitorsLetterNav } from "../Components/ExhibitorsLetterNav"
+import { Sticky } from "v2/Components/Sticky"
+import { AppContainer } from "v2/Apps/Components/AppContainer"
+import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
 
 interface FairExhibitorsProps {
   fair: FairExhibitors_fair
@@ -18,9 +21,19 @@ const FairExhibitors: React.FC<FairExhibitorsProps> = ({ fair }) => {
     <>
       <Waypoint />
 
-      <Spacer mt={6} />
+      <Spacer mt={4} />
 
-      <ExhibitorsLetterNav fair={fair} />
+      <Sticky>
+        {({ stuck }) => (
+          <FullBleed style={stuck ? { boxShadow: DROP_SHADOW } : undefined}>
+            <AppContainer>
+              <HorizontalPadding>
+                <ExhibitorsLetterNav fair={fair} />
+              </HorizontalPadding>
+            </AppContainer>
+          </FullBleed>
+        )}
+      </Sticky>
 
       {fair.exhibitorsGroupedByName?.map(exhibitorsGroup => {
         const { letter } = exhibitorsGroup!
