@@ -80,22 +80,16 @@ export class LoginForm extends Component<FormProps, LoginFormState> {
         isLoading: true,
       },
       () => {
-        const postValues = {
-          ...values,
-          otpRequired: this.state.otpRequired,
-        }
-        this.props.handleSubmit?.(postValues, formikBag)
+        values.otpRequired = this.state.otpRequired
+        this.props.handleSubmit?.(values, formikBag)
       }
     )
   }
 
   render() {
-    const initialValues = {
-      ...this.props.values,
-    }
     return (
       <Formik
-        initialValues={initialValues || {}}
+        initialValues={this.props.values || {}}
         onSubmit={this.onSubmit}
         validationSchema={LoginValidator}
       >
