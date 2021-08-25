@@ -68,7 +68,7 @@ const Section: React.FC<{
           </Column>
         </GridColumns>
       </Media>
-      <Media greaterThanOrEqual="sm">
+      <Media greaterThan="sm">
         <GridColumns my={4} gridRowGap={[2, 0]}>
           {imagePosition === "left" && <Column span={6}>{Image}</Column>}
           <Column span={6}>
@@ -88,13 +88,15 @@ const SectionImage: React.FC<{ src: string; srcSet: string; alt: string }> = ({
   src,
   srcSet,
   alt,
-}) => (
-  <ResponsiveBox
-    aspectWidth={800}
-    aspectHeight={660}
-    maxWidth={800}
-    maxHeight={660}
-  >
-    <Image width="100%" height="100%" src={src} srcSet={srcSet} alt={alt} />
-  </ResponsiveBox>
-)
+}) => {
+  return (
+    <ResponsiveBox
+      aspectWidth={800}
+      aspectHeight={660}
+      maxWidth={800}
+      maxHeight={660}
+    >
+      <Image width="100%" height="100%" src={src} srcSet={srcSet} alt={alt} />
+    </ResponsiveBox>
+  )
+}

@@ -59,6 +59,7 @@ module.exports = {
 
     // FIXME: Investigate / reenable these rules. Disabled to introduce eslint
     // into codebase.
+    "arrow-body-style": ["error", "always"],
     "no-async-promise-executor": 0,
     "no-case-declarations": 0,
     "no-console": 0,
