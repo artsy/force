@@ -1,12 +1,10 @@
 import {
   BorderedRadio,
   Button,
-  Col,
+  Text,
   Collapse,
   Flex,
   RadioGroup,
-  Row,
-  Sans,
   Spacer,
   TextAreaChange,
 } from "@artsy/palette"
@@ -52,7 +50,7 @@ export interface RespondState {
   offerValue: number
   offerNoteValue: TextAreaChange
   formIsDirty: boolean
-  responseOption: "ACCEPT" | "COUNTER" | "DECLINE"
+  responseOption: "ACCEPT" | "COUNTER" | "DECLINE" | null
   lowSpeedBumpEncountered: boolean
   highSpeedBumpEncountered: boolean
 }
@@ -67,7 +65,6 @@ export class RespondRoute extends Component<RespondProps, RespondState> {
     lowSpeedBumpEncountered: false,
     offerNoteValue: { exceedsCharacterLimit: false, value: "" },
     offerValue: 0,
-    // @ts-expect-error STRICT_NULL_CHECK
     responseOption: null,
   }
 
@@ -144,8 +141,7 @@ export class RespondRoute extends Component<RespondProps, RespondState> {
 
     if (
       !lowSpeedBumpEncountered &&
-      // @ts-expect-error STRICT_NULL_CHECK
-      offerValue * 100 < currentOfferPrice * 0.75
+      offerValue * 100 < currentOfferPrice! * 0.75
     ) {
       this.showLowSpeedbump()
       return
@@ -153,27 +149,24 @@ export class RespondRoute extends Component<RespondProps, RespondState> {
 
     if (
       !highSpeedBumpEncountered &&
-      // @ts-expect-error STRICT_NULL_CHECK
-      this.state.offerValue * 100 > currentOfferPrice
+      this.state.offerValue * 100 > currentOfferPrice!
     ) {
       this.showHighSpeedbump()
       return
     }
 
     try {
-      // @ts-expect-error STRICT_NULL_CHECK
       const orderOrError = (
         await this.createCounterOffer({
           input: {
             amountCents: this.state.offerValue * 100,
             note: this.state.offerNoteValue && this.state.offerNoteValue.value,
-            // @ts-expect-error STRICT_NULL_CHECK
-            offerId: this.props.order.lastOffer.internalID,
+            offerId: this.props.order?.lastOffer?.internalID!,
           },
         })
-      ).commerceBuyerCounterOffer.orderOrError
+      ).commerceBuyerCounterOffer?.orderOrError
 
-      if (orderOrError.error) {
+      if (orderOrError?.error) {
         throw orderOrError.error
       }
 
@@ -219,16 +212,11 @@ export class RespondRoute extends Component<RespondProps, RespondState> {
   render() {
     const { order, isCommittingMutation } = this.props
 
-    // @ts-expect-error STRICT_NULL_CHECK
-    const artworkId = order.lineItems.edges[0].node.artwork.slug
+    const artworkId = order.lineItems?.edges?.[0]?.node?.artwork?.slug
 
     return (
       <>
-        <Row>
-          <Col>
-            <OrderStepper currentStep="Respond" steps={counterofferFlowSteps} />
-          </Col>
-        </Row>
+        <OrderStepper currentStep="Respond" steps={counterofferFlowSteps} />
         <TwoColumnLayout
           Content={
             <Flex
@@ -239,10 +227,8 @@ export class RespondRoute extends Component<RespondProps, RespondState> {
                 <CountdownTimer
                   action="Respond"
                   note="Expiration will end negotiations on this offer. Keep in mind the work can be sold to another buyer in the meantime."
-                  // @ts-expect-error STRICT_NULL_CHECK
-                  countdownStart={order.lastOffer.createdAt}
-                  // @ts-expect-error STRICT_NULL_CHECK
-                  countdownEnd={order.stateExpiresAt}
+                  countdownStart={order.lastOffer?.createdAt!}
+                  countdownEnd={order.stateExpiresAt!}
                 />
                 <OfferHistoryItem order={order} />
                 <TransactionDetailsSummaryItem
@@ -250,12 +236,12 @@ export class RespondRoute extends Component<RespondProps, RespondState> {
                   useLastSubmittedOffer
                 />
               </Flex>
-              <Spacer mb={[2, 3]} />
+              <Spacer mb={[2, 4]} />
               <RadioGroup
                 onSelect={(responseOption: any) =>
                   this.setState({ responseOption })
                 }
-                defaultValue={this.state.responseOption}
+                defaultValue={this.state.responseOption!}
               >
                 <BorderedRadio
                   value="ACCEPT"
@@ -280,7 +266,7 @@ export class RespondRoute extends Component<RespondProps, RespondState> {
                     />
                     {!order.isInquiryOrder && (
                       <>
-                        <Spacer mb={0.5} />
+                        <Spacer mb={1} />
                         <RevealButton
                           align="left"
                           buttonLabel="Add note to seller"
@@ -290,7 +276,7 @@ export class RespondRoute extends Component<RespondProps, RespondState> {
                             onChange={offerNoteValue =>
                               this.setState({ offerNoteValue })
                             }
-                            artworkId={artworkId}
+                            artworkId={artworkId!}
                             counteroffer
                           />
                         </RevealButton>
@@ -307,21 +293,21 @@ export class RespondRoute extends Component<RespondProps, RespondState> {
                   <Flex position="relative">
                     <Collapse open={this.state.responseOption === "DECLINE"}>
                       <Spacer mb={1} />
-                      <Sans size="2" color="black60">
+                      <Text variant="xs" color="black60">
                         Declining an offer will end the negotiation process on
                         this offer.
-                      </Sans>
+                      </Text>
                     </Collapse>
                   </Flex>
                 </BorderedRadio>
               </RadioGroup>
-              <Spacer mb={[2, 3]} />
+              <Spacer mb={[2, 4]} />
               <Flex flexDirection="column" />
               <Media greaterThan="xs">
                 <Button
                   onClick={this.onContinueButtonPressed}
                   loading={isCommittingMutation}
-                  size="large"
+                  variant="primaryBlack"
                   width="100%"
                 >
                   Continue

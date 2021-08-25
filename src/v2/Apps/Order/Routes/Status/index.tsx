@@ -3,8 +3,7 @@ import {
   Flex,
   Join,
   Message,
-  Sans,
-  Serif,
+  Text,
   Spacer,
   media,
 } from "@artsy/palette"
@@ -47,8 +46,7 @@ export class StatusRoute extends Component<StatusProps> {
       stateExpiresAt,
     } = this.props.order
     const isOfferFlow = mode === "OFFER"
-    // @ts-expect-error STRICT_NULL_CHECK
-    const isShip = requestedFulfillment.__typename === "CommerceShip"
+    const isShip = requestedFulfillment?.__typename === "CommerceShip"
 
     switch (state) {
       case "SUBMITTED":
@@ -205,8 +203,7 @@ export class StatusRoute extends Component<StatusProps> {
   getFulfilmentDescription(): React.ReactNode {
     const fulfillment = get(
       this.props.order,
-      // @ts-expect-error STRICT_NULL_CHECK
-      o => o.lineItems.edges[0].node.fulfillments.edges[0].node
+      o => o.lineItems?.edges?.[0]?.node?.fulfillments?.edges?.[0]?.node
     )
 
     if (!fulfillment) {
@@ -252,19 +249,24 @@ export class StatusRoute extends Component<StatusProps> {
         {({ isEigen }) => {
           return (
             <>
-              <Serif size="6" weight="regular" color="black100">
+              <Text variant="lg" fontWeight="regular" color="black100">
                 {title}
-              </Serif>
-              <Sans size="2" weight="regular" color="black60" mb={[2, 3]}>
+              </Text>
+              <Text
+                variant="xs"
+                fontWeight="regular"
+                color="black60"
+                mb={[2, 4]}
+              >
                 {flowName} <span data-test="OrderCode">#{order.code}</span>
-              </Sans>
+              </Text>
               <TwoColumnLayout
                 Content={
                   <>
                     <Title>{flowName} status | Artsy</Title>
-                    <Join separator={<Spacer mb={[2, 3]} />}>
+                    <Join separator={<Spacer mb={[2, 4]} />}>
                       {description && (
-                        <Message p={[2, 3]}>{description}</Message>
+                        <Message p={[2, 4]}>{description}</Message>
                       )}
                       {showTransactionSummary ? (
                         <Flex flexDirection="column">
@@ -280,7 +282,7 @@ export class StatusRoute extends Component<StatusProps> {
                           onClick={() => {
                             window.location.href = "/"
                           }}
-                          size="large"
+                          variant="primaryBlack"
                           width="100%"
                         >
                           Back to Artsy

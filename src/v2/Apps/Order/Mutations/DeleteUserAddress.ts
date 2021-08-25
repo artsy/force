@@ -48,8 +48,7 @@ export const deleteUserAddress = (
         onError(e.message)
       },
       onCompleted: (data, e) => {
-        // @ts-expect-error STRICT_NULL_CHECK
-        const errors = data.deleteUserAddress.userAddressOrErrors.errors
+        const errors = data.deleteUserAddress?.userAddressOrErrors.errors
         if (errors) {
           onError(errors.map(error => error.message).join(", "))
           reject(errors)

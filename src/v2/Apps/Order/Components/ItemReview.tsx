@@ -1,32 +1,20 @@
 import React from "react"
 
-import { BorderBox, Flex, Serif } from "@artsy/palette"
+import { BorderBox, Flex, Text, Image } from "@artsy/palette"
 import { ItemReview_lineItem } from "v2/__generated__/ItemReview_lineItem.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
-import styled from "styled-components"
 
 interface ItemReviewProps {
   lineItem: ItemReview_lineItem
 }
 
-const ImageBox = styled.div`
-  flex: 0 1 auto;
-
-  img {
-    max-width: 185px;
-    max-height: 375px;
-    display: block;
-    margin: 0;
-  }
-`
-
 const dimensionsDisplay = dimensions => (
-  <Serif size="2" color="black60">
+  <Text variant="sm" color="black60">
     {dimensions.in} ({dimensions.cm})
-  </Serif>
+  </Text>
 )
 
-export const ItemReview: React.SFC<ItemReviewProps> = ({
+export const ItemReview: React.FC<ItemReviewProps> = ({
   lineItem: {
     artwork: {
       // @ts-expect-error STRICT_NULL_CHECK
@@ -51,19 +39,19 @@ export const ItemReview: React.SFC<ItemReviewProps> = ({
     editionSetId,
   },
 }) => (
-  <BorderBox p={[2, 3]}>
+  <BorderBox p={[2, 4]}>
     <Flex flexGrow={1} flexDirection="column">
-      <Serif size="2" weight="semibold" color="black60">
+      <Text variant="sm" color="black60">
         {artist_names}
-      </Serif>
-      <Serif italic size="2" color="black60">
+      </Text>
+      <Text fontStyle="italic" variant="sm" color="black60">
         {title}
         {date && `, (${date})`}
-      </Serif>
+      </Text>
       {medium && (
-        <Serif size="2" color="black60">
+        <Text variant="sm" color="black60">
           {medium}
-        </Serif>
+        </Text>
       )}
       {editionSetId &&
         edition_sets &&
@@ -74,14 +62,12 @@ export const ItemReview: React.SFC<ItemReviewProps> = ({
         artworkDimensions &&
         dimensionsDisplay(artworkDimensions)}
       {attribution_class && (
-        <Serif size="2" color="black60">
+        <Text variant="sm" color="black60">
           {attribution_class.shortDescription}
-        </Serif>
+        </Text>
       )}
     </Flex>
-    <ImageBox>
-      <img alt={`${title} by ${artist_names}`} src={url} />
-    </ImageBox>
+    <Image maxHeight={375} width={185} src={url} alt={title} />
   </BorderBox>
 )
 

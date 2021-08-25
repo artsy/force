@@ -46,8 +46,7 @@ export const updateUserDefaultAddress = async (
       onError(e.message)
     },
     onCompleted: (data, e) => {
-      // @ts-expect-error STRICT_NULL_CHECK
-      const errors = data.updateUserDefaultAddress.userAddressOrErrors.errors
+      const errors = data.updateUserDefaultAddress?.userAddressOrErrors.errors
       if (errors) {
         onError(errors.map(error => error.message).join(", "))
       } else {

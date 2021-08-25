@@ -1,4 +1,4 @@
-import { CircleBlackCheckIcon, Flex, Link, Text, color } from "@artsy/palette"
+import { CircleBlackCheckIcon, Flex, Link, Text } from "@artsy/palette"
 import React from "react"
 
 export const BUYER_GUARANTEE_URL =
@@ -6,11 +6,13 @@ export const BUYER_GUARANTEE_URL =
 
 export const BuyerGuarantee: React.FC = () => {
   return (
-    <Flex p={2} my={1} backgroundColor={color("black10")}>
+    <Flex p={2} my={1} backgroundColor="black10">
       <CircleBlackCheckIcon mr={1} />
       <Flex flexDirection="column">
-        <Text variant="mediumText">Your purchase is protected.</Text>
-        <Text variant="text" color="black60">
+        <Text fontWeight="bold" variant="md">
+          Your purchase is protected.
+        </Text>
+        <Text variant="xs" color="black60">
           Learn more about{" "}
           <Link
             target="_blank"
