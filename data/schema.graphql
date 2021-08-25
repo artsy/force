@@ -1898,6 +1898,10 @@ type AuctionResultPriceRealized {
     # Passes in to numeral, such as `'0.00'`
     format: String = ""
   ): String
+  displayUSD(
+    # Passes in to numeral, such as `'0.00'`
+    format: String = ""
+  ): String
 }
 
 # An auction lot result
