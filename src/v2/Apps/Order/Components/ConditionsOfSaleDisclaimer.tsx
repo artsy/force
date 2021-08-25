@@ -1,13 +1,13 @@
-import { Link, Sans, SansProps } from "@artsy/palette"
+import { Link, Text, SansProps } from "@artsy/palette"
 import React from "react"
 
-export const ConditionsOfSaleDisclaimer: React.SFC<Partial<SansProps>> = (
+export const ConditionsOfSaleDisclaimer: React.FC<Partial<SansProps>> = (
   props: any
 ) => (
-  <Sans size="2" color="black60" {...props}>
+  <Text variant="xs" color="black60" {...props}>
     By clicking Submit, I agree to Artsy’s{" "}
     <Link href="/conditions-of-sale" target="_blank">
       Conditions of Sale.
     </Link>
-  </Sans>
+  </Text>
 )

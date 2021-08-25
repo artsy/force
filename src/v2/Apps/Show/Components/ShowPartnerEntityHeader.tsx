@@ -1,7 +1,7 @@
 import React from "react"
 import { ContextModule } from "@artsy/cohesion"
 import { createFragmentContainer, graphql } from "react-relay"
-import { EntityHeader, Text } from "@artsy/palette"
+import { EntityHeader } from "@artsy/palette"
 import { useSystemContext } from "v2/System"
 import { filterLocations } from "v2/Apps/Artwork/Utils/filterLocations"
 import { limitWithCount } from "v2/Apps/Artwork/Utils/limitWithCount"
@@ -33,37 +33,24 @@ const ShowPartnerEntityHeader: React.FC<ShowPartnerEntityHeaderProps> = ({
 
   return (
     <EntityHeader
-      // @ts-expect-error STRICT_NULL_CHECK
-      name={partner.name}
-      // @ts-expect-error STRICT_NULL_CHECK
-      href={partner.isDefaultProfilePublic && partner.href}
+      name={partner.name ?? ""}
+      href={
+        partner.isDefaultProfilePublic && partner.href
+          ? partner.href
+          : undefined
+      }
       meta={locationNames}
-      // @ts-expect-error STRICT_NULL_CHECK
-      imageUrl={imageUrl}
-      // @ts-expect-error STRICT_NULL_CHECK
-      initials={partnerInitials}
-      // @ts-expect-error STRICT_NULL_CHECK
+      imageUrl={imageUrl!}
+      initials={partnerInitials!}
       FollowButton={
-        canFollow && (
+        canFollow ? (
           <FollowProfileButton
             user={user}
-            // @ts-expect-error STRICT_NULL_CHECK
-            profile={partner.profile}
+            profile={partner.profile!}
             contextModule={ContextModule.partnerHeader}
-            render={profile => {
-              return (
-                <Text
-                  style={{
-                    cursor: "pointer",
-                    textDecoration: "underline",
-                  }}
-                >
-                  {profile.is_followed ? "Following" : "Follow"}
-                </Text>
-              )
-            }}
+            buttonProps={{ size: "small", variant: "secondaryOutline" }}
           />
-        )
+        ) : undefined
       }
     />
   )

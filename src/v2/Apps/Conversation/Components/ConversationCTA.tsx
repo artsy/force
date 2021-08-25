@@ -1,9 +1,11 @@
-import { ConversationCTA_conversation } from "v2/__generated__/ConversationCTA_conversation.graphql"
-import { extractNodes } from "v2/Utils/extractNodes"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
+
+import { extractNodes } from "v2/Utils/extractNodes"
 import { ReviewOfferCTA } from "./ReviewOfferCTA"
 import { OpenInquiryModalButtonQueryRenderer } from "./OpenInquiryModalButton"
+
+import { ConversationCTA_conversation } from "v2/__generated__/ConversationCTA_conversation.graphql"
 
 interface ConversationCTAProps {
   conversation: ConversationCTA_conversation

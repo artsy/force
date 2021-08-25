@@ -2,7 +2,7 @@ import { TransactionDetailsSummaryItem_order } from "v2/__generated__/Transactio
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 
-import { Flex, Sans, Serif, Spacer } from "@artsy/palette"
+import { Flex, Text, Spacer } from "@artsy/palette"
 import {
   StepSummaryItem,
   StepSummaryItemProps,
@@ -14,7 +14,7 @@ import { extractNodes } from "v2/Utils/extractNodes"
 export interface TransactionDetailsSummaryItemProps
   extends Omit<StepSummaryItemProps, "order"> {
   order: TransactionDetailsSummaryItem_order
-  offerOverride?: string | null
+  offerOverride?: string | null | number
   useLastSubmittedOffer?: boolean
   offerContextPrice?: "LIST_PRICE" | "LAST_OFFER"
   showOfferNote?: boolean
@@ -140,13 +140,11 @@ export class TransactionDetailsSummaryItem extends React.Component<
           // show last offer
           <SecondaryEntry
             label={
-              // @ts-expect-error STRICT_NULL_CHECK
-              order.lastOffer.fromParticipant === "SELLER"
+              order.lastOffer?.fromParticipant === "SELLER"
                 ? "Seller's offer"
                 : "Your offer"
             }
-            // @ts-expect-error STRICT_NULL_CHECK
-            value={order.lastOffer.amount}
+            value={order.lastOffer?.amount}
           />
         )}
       </>
@@ -155,19 +153,16 @@ export class TransactionDetailsSummaryItem extends React.Component<
 
   renderNoteEntry = () => {
     const offer = this.getOffer()
-
-    // @ts-expect-error STRICT_NULL_CHECK
-    if (offer.note) {
+    if (offer?.note) {
       return (
         <>
-          <Spacer mb={[2, 3]} />
-          <Serif size={["2", "3t"]} weight="semibold" color="black100">
+          <Spacer mb={[2, 4]} />
+          <Text variant={["xs", "sm"]} fontWeight="bold" color="black100">
             Your note
-          </Serif>
-          <Serif size={["2", "3t"]} color="black60">
-            {/* @ts-expect-error STRICT_NULL_CHECK */}
+          </Text>
+          <Text size={["xs", "sm"]} color="black60">
             {offer.note}
-          </Serif>
+          </Text>
         </>
       )
     }
@@ -183,37 +178,33 @@ interface EntryProps extends SecondaryEntryProps {
   final?: boolean
 }
 
-const Entry: React.SFC<EntryProps> = ({ label, value, final }) => (
+const Entry: React.FC<EntryProps> = ({ label, value, final }) => (
   <Flex justifyContent="space-between" alignItems="baseline">
     <div>
-      <Serif size={["2", "3"]} color="black60">
+      <Text variant={["xs", "sm"]} color="black60">
         {label}
-      </Serif>
+      </Text>
     </div>
     <div>
-      <Serif
-        size={["2", "3"]}
+      <Text
+        variant={["xs", "sm"]}
         color={final ? "black100" : "black60"}
-        weight={final ? "semibold" : "regular"}
+        fontWeight={final ? "semibold" : "regular"}
       >
         {value}
-      </Serif>
+      </Text>
     </div>
   </Flex>
 )
 
-const SecondaryEntry: React.SFC<SecondaryEntryProps> = ({ label, value }) => (
+const SecondaryEntry: React.FC<SecondaryEntryProps> = ({ label, value }) => (
   <Flex justifyContent="space-between" alignItems="baseline">
-    <div>
-      <Sans size="2" color="black60">
-        {label}
-      </Sans>
-    </div>
-    <div>
-      <Sans size="2" color="black60">
-        {value}
-      </Sans>
-    </div>
+    <Text variant="xs" color="black60">
+      {label}
+    </Text>
+    <Text variant="xs" color="black60">
+      {value}
+    </Text>
   </Flex>
 )
 

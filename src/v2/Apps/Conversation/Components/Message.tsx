@@ -1,3 +1,7 @@
+import React from "react"
+import { createFragmentContainer } from "react-relay"
+import { graphql } from "relay-runtime"
+import Linkify from "react-linkify"
 import {
   Box,
   BoxProps,
@@ -6,22 +10,20 @@ import {
   Flex,
   FlexProps,
   Image,
-  Sans,
-  color,
+  Text,
 } from "@artsy/palette"
-import { Message_message } from "v2/__generated__/Message_message.graphql"
-import React from "react"
-import { createFragmentContainer } from "react-relay"
-import { graphql } from "relay-runtime"
-import { TimeSince } from "./TimeSince"
 import styled from "styled-components"
 import {
   AlignSelfProps,
   BackgroundProps,
   alignSelf,
   background,
+  color,
 } from "styled-system"
-import Linkify from "react-linkify"
+
+import { TimeSince } from "./TimeSince"
+
+import { Message_message } from "v2/__generated__/Message_message.graphql"
 
 const AttachmentLink = styled.a<{ isImage: boolean } & AlignSelfProps>`
   ${alignSelf};
@@ -40,7 +42,7 @@ const AttachmentContainer = styled(Flex)<
   justify-content: space-between;
 `
 
-const MessageText = styled(Sans)`
+const MessageText = styled(Text)`
   word-break: break-word;
   white-space: pre-line;
   && {
@@ -84,9 +86,9 @@ export const Attachment: React.FC<AttachmentProps> = props => {
           />
         ) : (
           <>
-            <Sans color={textColor} weight="medium" size="4" mr={2}>
+            <Text color={textColor} variant="md" mr={2}>
               {attachment.fileName}
-            </Sans>
+            </Text>
             <Box flexShrink={0}>
               <DownloadIcon
                 fill={textColor}
@@ -134,21 +136,17 @@ export const Message: React.FC<MessageProps> = props => {
         maxWidth="66.67%"
         width="fit-content"
       >
-        <MessageText size="4" color={textColor}>
+        <MessageText variant="md" color={textColor}>
           <Linkify componentDecorator={linkTargetDecorator}>{body}</Linkify>
         </MessageText>
       </Box>
-      {/* @ts-expect-error STRICT_NULL_CHECK */}
-      {message.attachments.length > 0 &&
-        // @ts-expect-error STRICT_NULL_CHECK
-        message.attachments.map(attachment => {
+      {!!message?.attachments?.length &&
+        message?.attachments?.map(attachment => {
           return (
             <Attachment
-              // @ts-expect-error STRICT_NULL_CHECK
-              key={attachment.id}
+              key={attachment?.id}
               attachment={attachment}
-              // @ts-expect-error STRICT_NULL_CHECK
-              alignSelf={alignSelf}
+              alignSelf={alignSelf ?? ""}
               textColor={textColor}
               bgColor={bgColor}
             />

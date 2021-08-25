@@ -4,7 +4,7 @@ import { PartnerHeaderImage_profile } from "v2/__generated__/PartnerHeaderImage_
 import { Box } from "@artsy/palette"
 import {
   FullBleedHeader,
-  FULL_BLEED_HEADER_HEIGHT,
+  useFullBleedHeaderHeight,
 } from "v2/Components/FullBleedHeader"
 import { useNavBarHeight } from "v2/Components/NavBar/useNavBarHeight"
 
@@ -16,13 +16,14 @@ export const PartnerHeaderImage: React.FC<PartnerHeaderImageProps> = ({
   profile,
 }) => {
   const { mobile, desktop } = useNavBarHeight()
+  const height = useFullBleedHeaderHeight()
 
   if (!profile || !profile.image) return null
   const { image } = profile
 
   return (
     <>
-      <Box height={FULL_BLEED_HEADER_HEIGHT} />
+      <Box height={height} />
 
       <FullBleedHeader
         top={[mobile, desktop]}

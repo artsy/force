@@ -87,15 +87,14 @@ export const startingPhoneNumber = (me: Shipping_me, order: Shipping_order) => {
     (order.requestedFulfillment.__typename === "CommerceShip" ||
       order.requestedFulfillment.__typename === "CommerceShipArta" ||
       order.requestedFulfillment.__typename === "CommercePickup")
-    ? order.requestedFulfillment.phoneNumber
+    ? order.requestedFulfillment.phoneNumber!
     : ""
 }
 
 export const startingAddress = (me: Shipping_me, order: Shipping_order) => {
   const initialAddress = {
     ...emptyAddress,
-    // @ts-expect-error STRICT_NULL_CHECK
-    country: order.lineItems.edges[0].node.artwork.shippingCountry,
+    country: order.lineItems?.edges?.[0]?.node?.artwork?.shippingCountry!,
 
     // We need to pull out _only_ the values specified by the Address type,
     // since our state will be used for Relay variables later on. The
@@ -105,8 +104,9 @@ export const startingAddress = (me: Shipping_me, order: Shipping_order) => {
   return initialAddress
 }
 
-// @ts-expect-error STRICT_NULL_CHECK
-type MutationAddressResponse = UpdateUserAddressMutationResponse["updateUserAddress"]["userAddressOrErrors"]
+type MutationAddressResponse = NonNullable<
+  UpdateUserAddressMutationResponse["updateUserAddress"]
+>["userAddressOrErrors"]
 
 // Gravity address has isDefault and addressLine3 but exchange does not
 export const convertShippingAddressForExchange = (

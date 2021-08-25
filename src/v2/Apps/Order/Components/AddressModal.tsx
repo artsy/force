@@ -10,6 +10,7 @@ import {
   ModalWidth,
   Spacer,
   Text,
+  Banner,
 } from "@artsy/palette"
 import {
   SavedAddressType,
@@ -172,9 +173,9 @@ export const AddressModal: React.FC<Props> = ({
         >
           {(formik: FormikProps<SavedAddressType>) => (
             <form onSubmit={formik.handleSubmit}>
-              <Text data-test="credit-card-error" color="red" my={2}>
+              <Banner my={2} data-test="credit-card-error" variant="error">
                 {createUpdateError}
-              </Text>
+              </Banner>
               <AddressModalFields />
               <Spacer mb={2} />
               <Input
@@ -206,7 +207,7 @@ export const AddressModal: React.FC<Props> = ({
                     data-test="deleteButton"
                     onClick={() => setShowDialog(true)}
                   >
-                    <Text variant="text" color="red100">
+                    <Text variant="xs" color="red100">
                       Delete address
                     </Text>
                   </Clickable>
@@ -215,7 +216,7 @@ export const AddressModal: React.FC<Props> = ({
               <Button
                 data-test="saveButton"
                 type="submit"
-                size="large"
+                variant="primaryBlack"
                 loading={formik.isSubmitting}
                 disabled={Object.keys(formik.errors).length > 0}
                 width="100%"

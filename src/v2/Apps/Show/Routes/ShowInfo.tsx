@@ -1,5 +1,14 @@
 import React from "react"
-import { Box, Column, GridColumns, HTML, ReadMore, Text } from "@artsy/palette"
+import {
+  Box,
+  Column,
+  GridColumns,
+  HTML,
+  Join,
+  ReadMore,
+  Spacer,
+  Text,
+} from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ShowInfo_show } from "v2/__generated__/ShowInfo_show.graphql"
 import { ShowPartnerEntityHeaderFragmentContainer as ShowPartnerEntityHeader } from "../Components/ShowPartnerEntityHeader"
@@ -17,60 +26,68 @@ export const ShowInfo: React.FC<ShowInfoProps> = ({
 }) => {
   return (
     <>
-      <Text as="h1" variant="md" my={2}>
+      <Text as="h1" variant="xl" my={4}>
         About
       </Text>
 
       <GridColumns>
         <Column span={8}>
-          {partner && partner.__typename === "Partner" && (
-            <Box mb={2}>
-              <Text as="h2" variant="md" mb={1}>
-                {partner.type}
-              </Text>
+          <Join separator={<Spacer mt={4} />}>
+            {about && (
+              <Box>
+                <Text as="h3" variant="lg" mb={2}>
+                  Statement
+                </Text>
 
-              <ShowPartnerEntityHeader partner={partner} />
-            </Box>
-          )}
+                <Text variant="sm" mr={2}>
+                  {about}
+                </Text>
+              </Box>
+            )}
 
-          {about && (
-            <Box mb={2}>
-              <Text as="h3" variant="md" mb={1}>
-                Statement
-              </Text>
+            {pressRelease && (
+              <Box>
+                <Text as="h3" variant="lg" mb={2}>
+                  Press Release
+                </Text>
 
-              <Text>{about}</Text>
-            </Box>
-          )}
+                <HTML variant="sm" mr={2}>
+                  <Media lessThan="sm">
+                    <ReadMore content={pressRelease} maxChars={400} />
+                  </Media>
 
-          {pressRelease && (
-            <Box>
-              <Text as="h3" variant="md" mb={1}>
-                Press Release
-              </Text>
-
-              <HTML>
-                <Media lessThan="sm">
-                  <ReadMore content={pressRelease} maxChars={400} />
-                </Media>
-
-                <Media greaterThanOrEqual="sm">
-                  <ReadMore content={pressRelease} maxChars={600} />
-                </Media>
-              </HTML>
-            </Box>
-          )}
+                  <Media greaterThanOrEqual="sm">
+                    <ReadMore content={pressRelease} maxChars={600} />
+                  </Media>
+                </HTML>
+              </Box>
+            )}
+          </Join>
         </Column>
 
         {hasLocation && (
           <Column span={4}>
-            <Text as="h3" variant="md" mb={1}>
-              Location
-            </Text>
+            <Join separator={<Spacer mt={4} />}>
+              {partner && partner.__typename === "Partner" && (
+                <Box>
+                  <Text as="h2" variant="lg" mb={2}>
+                    {partner.type}
+                  </Text>
 
-            <ShowInfoLocation show={show} my={1} />
+                  <ShowPartnerEntityHeader partner={partner} />
+                </Box>
+              )}
 
-            <ShowHoursFragmentContainer show={show} my={2} />
+              <Box>
+                <Text as="h3" variant="lg" mb={2}>
+                  Location
+                </Text>
+
+                <ShowInfoLocation show={show} my={1} />
+
+                <ShowHoursFragmentContainer show={show} my={2} />
+              </Box>
+            </Join>
           </Column>
         )}
       </GridColumns>

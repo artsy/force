@@ -106,12 +106,16 @@ describe("Review", () => {
     })
 
     it("takes the user back to the /shipping view", () => {
-      page.shippingSummary.find("a").simulate("click")
+      page.shippingSummary
+        .find("Clickable[data-test='change-link']")
+        .simulate("click")
       expect(routes.mockPushRoute).toBeCalledWith("/orders/1234/shipping")
     })
 
     it("takes the user back to the /payment view", () => {
-      page.paymentSummary.find("a").simulate("click")
+      page.paymentSummary
+        .find("Clickable[data-test='change-link']")
+        .simulate("click")
       expect(routes.mockPushRoute).toBeCalledWith("/orders/1234/payment")
     })
 
@@ -210,7 +214,9 @@ describe("Review", () => {
 
     it("shows an offer section in the shipping and payment review", () => {
       expect(page.offerSummary.text()).toMatch("Your offer")
-      page.offerSummary.find("a").simulate("click")
+      page.offerSummary
+        .find("Clickable[data-test='change-link']")
+        .simulate("click")
       expect(routes.mockPushRoute).toBeCalledWith(
         "/orders/offer-order-id/offer"
       )
@@ -308,7 +314,9 @@ describe("Review", () => {
     })
 
     it("takes the user back to the /shipping view", () => {
-      page.shippingArtaSummary.find("a").simulate("click")
+      page.shippingArtaSummary
+        .find("Clickable[data-test='change-link']")
+        .simulate("click")
       expect(routes.mockPushRoute).toBeCalledWith("/orders/1234/shipping")
     })
 

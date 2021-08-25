@@ -9,7 +9,7 @@ import {
   Flex,
   FlexProps,
   Image,
-  Serif,
+  Text,
   StackableBorderBox,
 } from "@artsy/palette"
 
@@ -18,7 +18,7 @@ export interface ArtworkSummaryItemProps extends Omit<FlexProps, "order"> {
   className?: string
 }
 
-const ArtworkSummaryItem: React.SFC<ArtworkSummaryItemProps> = ({
+const ArtworkSummaryItem: React.FC<ArtworkSummaryItemProps> = ({
   order: {
     lineItems,
     // @ts-expect-error STRICT_NULL_CHECK
@@ -26,11 +26,9 @@ const ArtworkSummaryItem: React.SFC<ArtworkSummaryItemProps> = ({
   },
   ...others
 }) => {
-  // @ts-expect-error STRICT_NULL_CHECK
-  const artwork = get({}, () => lineItems.edges[0].node.artwork)
+  const artwork = get({}, () => lineItems?.edges?.[0]?.node?.artwork)
 
-  // @ts-expect-error STRICT_NULL_CHECK
-  const { artist_names, title, date, shippingOrigin, image } = artwork
+  const { artist_names, title, date, shippingOrigin, image } = artwork!
 
   const imageURL =
     image &&
@@ -46,31 +44,31 @@ const ArtworkSummaryItem: React.SFC<ArtworkSummaryItemProps> = ({
   return (
     <StackableBorderBox flexDirection="row" {...others}>
       <Box height="auto">
-        {imageURL && <Image src={imageURL} alt={title} width="55px" mr={1} />}
+        {imageURL && <Image src={imageURL} alt={title!} width="55px" mr={1} />}
       </Box>
-      <Flex flexDirection="column" style={{ overflow: "hidden" }}>
-        <Serif
-          size="2"
-          weight="semibold"
-          color="black60"
-          style={truncateTextStyle}
-        >
+      <Flex flexDirection="column" overflow="hidden">
+        <Text variant="sm" color="black60">
           {artist_names}
-        </Serif>
-        <div style={{ lineHeight: "1", ...truncateTextStyle }}>
-          <Serif italic size="2" color="black60" display="inline">
+        </Text>
+        <Box style={{ lineHeight: "1", ...truncateTextStyle }}>
+          <Text
+            fontStyle="italic"
+            variant="sm"
+            color="black60"
+            display="inline"
+          >
             {title}
-          </Serif>
-          <Serif size="2" color="black60" display="inline">
+          </Text>
+          <Text variant="sm" color="black60" display="inline">
             {date && `, ${date}`}
-          </Serif>
-        </div>
-        <Serif size="2" color="black60" style={truncateTextStyle}>
+          </Text>
+        </Box>
+        <Text variant="sm" overflowEllipsis color="black60">
           {name}
-        </Serif>
-        <Serif size="2" color="black60">
+        </Text>
+        <Text variant="sm" color="black60">
           {shippingOrigin}
-        </Serif>
+        </Text>
       </Flex>
     </StackableBorderBox>
   )

@@ -1,7 +1,8 @@
 import React, { FC } from "react"
-import { Flex, Sans } from "@artsy/palette"
-import { LARGE_SCREEN_HEADER_HEIGHT } from "./ConversationHeader"
+import { Flex, Text } from "@artsy/palette"
 import { color } from "styled-system"
+
+import { LARGE_SCREEN_HEADER_HEIGHT } from "./ConversationHeader"
 
 export const EmptyInboxHeader: FC = () => {
   return (
@@ -12,9 +13,7 @@ export const EmptyInboxHeader: FC = () => {
       alignItems="flex-end"
       borderBottom={`1px solid ${color("black10")}`}
     >
-      <Sans size="6" weight="medium">
-        Inbox
-      </Sans>
+      <Text variant="lg">Inbox</Text>
     </Flex>
   )
 }

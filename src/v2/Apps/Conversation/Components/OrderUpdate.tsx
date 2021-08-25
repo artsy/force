@@ -1,3 +1,5 @@
+import React from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 import {
   AlertCircleFillIcon,
   Color,
@@ -7,11 +9,10 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import React from "react"
-import { createFragmentContainer, graphql } from "react-relay"
-import { OrderUpdate_event } from "../../../__generated__/OrderUpdate_event.graphql"
+
 import { TimeSince } from "./TimeSince"
 
+import { OrderUpdate_event } from "../../../__generated__/OrderUpdate_event.graphql"
 export interface OrderUpdateProps {
   event: OrderUpdate_event
 }
@@ -70,9 +71,9 @@ export const OrderUpdate: React.FC<OrderUpdateProps> = ({ event }) => {
       />
       <Flex px={2} justifyContent="center" flexDirection="row">
         <Flex flexDirection="row">
-          <Icon mt="1px" fill={color} />
+          <Icon fill={color} />
           <Flex flexDirection="column" pl={1}>
-            <Text color={color} variant="text">
+            <Text color={color} variant="xs">
               {message}
             </Text>
           </Flex>

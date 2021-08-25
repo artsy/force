@@ -1,13 +1,14 @@
 import React from "react"
-import { color, Flex, Text } from "@artsy/palette"
+import { Flex, Text } from "@artsy/palette"
 import styled from "styled-components"
+import { themeGet } from "@styled-system/theme-get"
 
 const Separator = styled(Flex)`
   &::before,
   &::after {
     content: "";
     flex: 1;
-    border-bottom: 1px solid ${color("black10")};
+    border-bottom: 1px solid ${themeGet("colors.black10")};
   }
 
   &:not(:empty)::before {

@@ -117,6 +117,7 @@ export class LoginForm extends Component<FormProps, LoginFormState> {
                 otpRequired: true,
               })
             }
+
           }, [globalError, status])
 
           const handleChange = e => {

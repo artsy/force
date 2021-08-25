@@ -9,6 +9,9 @@ export type StandoutLots_viewer = {
             readonly node: {
                 readonly internalID: string;
                 readonly slug: string;
+                readonly sale: {
+                    readonly isClosed: boolean | null;
+                } | null;
                 readonly " $fragmentRefs": FragmentRefs<"ShelfArtwork_artwork">;
             } | null;
         } | null> | null;
@@ -79,6 +82,24 @@ const node: ReaderFragment = {
                   "storageKey": null
                 },
                 {
+                  "alias": null,
+                  "args": null,
+                  "concreteType": "Sale",
+                  "kind": "LinkedField",
+                  "name": "sale",
+                  "plural": false,
+                  "selections": [
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "isClosed",
+                      "storageKey": null
+                    }
+                  ],
+                  "storageKey": null
+                },
+                {
                   "args": [
                     {
                       "kind": "Literal",
@@ -101,5 +122,5 @@ const node: ReaderFragment = {
   ],
   "type": "Viewer"
 };
-(node as any).hash = '61a09e05c179137f957fce4e3ef83167';
+(node as any).hash = 'cc0c0ba6e1321bb08110e79c4991f2da';
 export default node;

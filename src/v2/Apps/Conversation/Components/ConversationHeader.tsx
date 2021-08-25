@@ -1,14 +1,15 @@
 import React, { FC } from "react"
-import styled from "styled-components"
 import {
   ArrowLeftIcon,
   Box,
   Flex,
   FlexProps,
-  Sans,
+  Text,
   Separator,
-  color,
 } from "@artsy/palette"
+import styled from "styled-components"
+import { themeGet } from "@styled-system/theme-get"
+
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { Media } from "v2/Utils/Responsive"
 import { DetailIcon, DetailsProps } from "./DetailsHeader"
@@ -21,7 +22,9 @@ interface BorderedFlexProps extends FlexProps {
 }
 const BorderedFlex = styled(Flex)<BorderedFlexProps>`
   ${props =>
-    props.bordered ? `border-right: 1px solid ${color("black10")};` : ""}
+    props.bordered
+      ? `border-right: 1px solid ${themeGet("colors.black10")};`
+      : ""}
   height: 100%;
 `
 
@@ -30,7 +33,7 @@ const SmallConversationHeaderContainer = styled(Flex)`
   top: 59px;
   left: 0;
   right: 0;
-  border-bottom: 1px solid ${color("black10")};
+  border-bottom: 1px solid ${themeGet("colors.black10")};
   background: white;
   z-index: 1;
 `
@@ -74,12 +77,12 @@ const SmallConversationHeader: FC<ConversationHeaderProps> = props => {
       <RouterLink to={`/user/conversations`}>
         <ArrowLeftIcon />
       </RouterLink>
-      <Sans size="3t" weight="medium" display={["none", "none", "auto"]}>
+      <Text variant="md" display={["none", "none", "auto"]}>
         Conversation with {partnerName}
-      </Sans>
-      <Sans size="3t" weight="medium" display={["auto", "auto", "none"]}>
+      </Text>
+      <Text variant="md" display={["auto", "auto", "none"]}>
         Inquiry with {partnerName}
-      </Sans>
+      </Text>
       <DetailIcon showDetails={showDetails} setShowDetails={setShowDetails} />
     </SmallConversationHeaderContainer>
   )
@@ -103,9 +106,9 @@ const LargeConversationHeader: FC<ConversationHeaderProps> = props => {
       >
         <Box>
           {partnerName ? (
-            <Sans size="4" ml={2}>
+            <Text variant="md" mb={0.5} ml={2}>
               Conversation with {partnerName}
-            </Sans>
+            </Text>
           ) : (
             <>{props.children}</>
           )}

@@ -1,5 +1,6 @@
 import loadable from "@loadable/component"
 import { AppRouteConfig } from "v2/System/Router/Route"
+import { DebugInquiryApp } from "./DebugInquiryApp"
 
 const DebugApp = loadable(
   () => import(/* webpackChunkName: "debugBundle" */ "./DebugApp"),
@@ -22,6 +23,12 @@ export const debugRoutes: AppRouteConfig[] = [
         theme: "v3",
         path: "baseline",
         Component: DebugApp,
+      },
+      // TODO: Remove once inquiry is complete
+      {
+        theme: "v3",
+        path: "inquiry",
+        Component: DebugInquiryApp,
       },
     ],
   },

@@ -1,23 +1,25 @@
 import React, { useState, useEffect } from "react"
-import { ArrowDownIcon, color, Flex, Text } from "@artsy/palette"
-import styled from "styled-components"
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
-import { useRouter } from "v2/System/Router/useRouter"
-import { usePoll } from "../Utils/usePoll"
+import { ArrowDownIcon, Flex, Text } from "@artsy/palette"
+import styled from "styled-components"
+import { themeGet } from "@styled-system/theme-get"
 
+import { useRouter } from "v2/System/Router/useRouter"
+import { extractNodes } from "v2/Utils/extractNodes"
 import { useSystemContext } from "v2/System"
 import { renderWithLoadProgress } from "v2/System/Relay/renderWithLoadProgress"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
+import { usePoll } from "../Utils/usePoll"
+
 import {
   UnreadMessagesToastQuery,
   UnreadMessagesToastQueryResponse,
 } from "v2/__generated__/UnreadMessagesToastQuery.graphql"
 import { UnreadMessagesToast_conversation } from "v2/__generated__/UnreadMessagesToast_conversation.graphql"
-import { extractNodes } from "v2/Utils/extractNodes"
 
 // TODO: refactor into one of the newer components when ready
 const Container = styled(Flex)<{ bottom?: number }>`
-  background-color: #1023D7; //${color("blue100")};
+  background-color: ${themeGet("colors.blue10")};
   border: none;
   border-radius: 30px;
   height: 40px;

@@ -1,7 +1,9 @@
-import { Flex, Image, Link, Sans, color } from "@artsy/palette"
-import { Item_item } from "v2/__generated__/Item_item.graphql"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
+import { Flex, Image, Link, Text } from "@artsy/palette"
+import { themeGet } from "@styled-system/theme-get"
+
+import { Item_item } from "v2/__generated__/Item_item.graphql"
 
 interface ItemProps {
   item: Item_item
@@ -28,28 +30,28 @@ export const Item: React.FC<ItemProps> = props => {
   const itemDetails = item => {
     if (item.__typename === "Artwork") {
       return [
-        <Sans key={1} size="4" weight="medium" color="white100">
+        <Text key={1} variant="md" color="white100">
           {item.artistNames}
-        </Sans>,
-        <Sans key={2} size="2" color="white100">
+        </Text>,
+        <Text key={2} variant="xs" color="white100">
           {item.title} / {item.date}
-        </Sans>,
+        </Text>,
         item.listPrice?.display && (
-          <Sans key={3} size="2" color="white100">
+          <Text key={3} variant="xs" color="white100">
             {item.listPrice?.display}
-          </Sans>
+          </Text>
         ),
       ]
     } else if (item.__typename === "Show") {
       const itemLocation = item.fair?.location?.city
       return [
-        <Sans key={1} size="4" weight="medium" color="white100">
+        <Text key={1} variant="md" color="white100">
           {item.fair.name}
-        </Sans>,
-        <Sans key={2} size="2" color="white100">
+        </Text>,
+        <Text key={2} variant="xs" color="white100">
           {itemLocation && `${itemLocation}, `}
           {item?.fair?.exhibitionPeriod}
-        </Sans>,
+        </Text>,
       ]
     }
   }
@@ -76,7 +78,7 @@ export const Item: React.FC<ItemProps> = props => {
             p={1}
             flexDirection="column"
             justifyContent="center"
-            background={color("black100")}
+            background={`${themeGet("colors.black100")}`}
             borderRadius="0 0 15px 15px"
           >
             {itemDetails(item)}

@@ -12,6 +12,9 @@ export type TrendingLots_viewer = {
             readonly node: {
                 readonly internalID: string;
                 readonly slug: string;
+                readonly sale: {
+                    readonly isClosed: boolean | null;
+                } | null;
                 readonly " $fragmentRefs": FragmentRefs<"ShelfArtwork_artwork">;
             } | null;
         } | null> | null;
@@ -100,6 +103,24 @@ const node: ReaderFragment = {
                   "storageKey": null
                 },
                 {
+                  "alias": null,
+                  "args": null,
+                  "concreteType": "Sale",
+                  "kind": "LinkedField",
+                  "name": "sale",
+                  "plural": false,
+                  "selections": [
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "isClosed",
+                      "storageKey": null
+                    }
+                  ],
+                  "storageKey": null
+                },
+                {
                   "args": [
                     {
                       "kind": "Literal",
@@ -122,5 +143,5 @@ const node: ReaderFragment = {
   ],
   "type": "Viewer"
 };
-(node as any).hash = '55ba411be6f10fbc7513da073d357cde';
+(node as any).hash = 'b1b4ae5c3bc22a7a2bbd6bf93450912f';
 export default node;

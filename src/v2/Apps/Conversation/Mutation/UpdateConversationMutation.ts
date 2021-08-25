@@ -9,10 +9,8 @@ export const UpdateConversation = (
   return commitMutation<UpdateConversationMutation>(environment, {
     variables: {
       input: {
-        // @ts-expect-error STRICT_NULL_CHECK
-        conversationId: conversation.internalID,
-        // @ts-expect-error STRICT_NULL_CHECK
-        fromLastViewedMessageId: conversation.lastMessageID,
+        conversationId: conversation?.internalID ?? "",
+        fromLastViewedMessageId: conversation?.lastMessageID ?? "",
       },
     },
     mutation: graphql`
@@ -30,16 +28,14 @@ export const UpdateConversation = (
     optimisticResponse: {
       updateConversation: {
         conversation: {
-          // @ts-expect-error STRICT_NULL_CHECK
-          id: conversation.internalID,
+          id: conversation?.internalID ?? "",
           unread: false,
         },
       },
     },
     updater: (store, data) => {
       const conversationProxy = store.get(conversation.id)
-      // @ts-expect-error STRICT_NULL_CHECK
-      conversationProxy.setValue(false, "unread")
+      conversationProxy?.setValue(false, "unread")
     },
   })
 }

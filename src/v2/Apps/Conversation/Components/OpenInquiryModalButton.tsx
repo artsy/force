@@ -1,13 +1,21 @@
-import { OpenInquiryModalButtonQuery } from "v2/__generated__/OpenInquiryModalButtonQuery.graphql"
-import { Button, CheckCircleIcon, Flex, Text } from "@artsy/palette"
 import React from "react"
+import {
+  Button,
+  CheckCircleIcon,
+  Flex,
+  Text,
+  Link,
+  Separator,
+} from "@artsy/palette"
 import { graphql } from "react-relay"
-import { Link, Separator } from "@artsy/palette"
-import { useSystemContext } from "v2/System"
-import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { useTracking } from "react-tracking"
 import { tappedMakeOffer } from "@artsy/cohesion"
 import styled from "styled-components"
+
+import { useSystemContext } from "v2/System"
+import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
+
+import { OpenInquiryModalButtonQuery } from "v2/__generated__/OpenInquiryModalButtonQuery.graphql"
 
 export const ShadowSeparator = styled(Separator)`
   box-shadow: 0 -1px 1px rgba(50, 50, 50, 0.1);
@@ -38,7 +46,7 @@ export const OpenInquiryModalButton: React.FC<OpenInquiryModalButtonProps> = ({
         <Flex flexDirection="row">
           <CheckCircleIcon mr={1} />
           <Flex flexShrink={1}>
-            <Text color="black60" variant="small" mb={1}>
+            <Text color="black60" variant="xs" mb={1}>
               Only purchases completed with our secure checkout are protected by{" "}
               <Link target="_blank" href="/buyer-guarantee">
                 The Artsy Guarantee
@@ -48,9 +56,8 @@ export const OpenInquiryModalButton: React.FC<OpenInquiryModalButtonProps> = ({
           </Flex>
         </Flex>
         <Button
-          size="large"
+          size="medium"
           variant="primaryBlack"
-          width="100%"
           onClick={() => handleOpenModal()}
         >
           Make Offer

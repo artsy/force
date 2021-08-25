@@ -6,7 +6,7 @@ import {
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { extractNodes } from "v2/Utils/extractNodes"
-import { Serif } from "@artsy/palette"
+import { Text } from "@artsy/palette"
 import { startCase } from "lodash"
 
 interface ShippingArtaSummaryItemProps {
@@ -31,9 +31,9 @@ const ShippingArtaSummaryItem: React.FC<
 
   return requestedFulfillment?.__typename === "CommerceShipArta" ? (
     <StepSummaryItem {...others}>
-      <Serif size={["3", "3t"]}>
+      <Text variant="md" fontWeight={["regular", "bold"]}>
         {startCase(shippingQuoteName)} delivery ({shippingQuote.price})
-      </Serif>
+      </Text>
     </StepSummaryItem>
   ) : null
 }

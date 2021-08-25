@@ -46,7 +46,16 @@ const PastAuctions: React.FC<PastAuctionsProps> = ({ viewer, relay }) => {
   if (nodes.length === 0) {
     return (
       <Box>
-        <Text>No past auctions.</Text>
+        <Text
+          as="h3"
+          color="black60"
+          mb={12}
+          mt={6}
+          textAlign="center"
+          variant="mediumText"
+        >
+          No past auctions.
+        </Text>
       </Box>
     )
   }

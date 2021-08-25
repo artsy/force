@@ -4,8 +4,13 @@ import React from "react"
 import styled from "styled-components"
 import { SavedAddresses_me } from "v2/__generated__/SavedAddresses_me.graphql"
 
-// @ts-expect-error STRICT_NULL_CHECK
-type AddressNode = SavedAddresses_me["addressConnection"]["edges"][number]["node"]
+type AddressNode = NonNullable<
+  NonNullable<
+    NonNullable<
+      NonNullable<SavedAddresses_me["addressConnection"]>["edges"]
+    >[number]
+  >["node"]
+>
 
 interface SavedAddressItemProps {
   address: AddressNode
@@ -50,7 +55,7 @@ export const SavedAddressItem: React.FC<SavedAddressItemProps> = (
                   <Text
                     textTransform="capitalize"
                     textColor={index === 0 ? "black100" : "black60"}
-                    variant="text"
+                    variant="sm"
                   >
                     {line}
                   </Text>
@@ -84,7 +89,7 @@ export const SavedAddressItem: React.FC<SavedAddressItemProps> = (
           handleClickEdit(index)
         }}
         textColor="blue100"
-        size="2"
+        variant="sm"
         data-test="editAddressInShipping"
       >
         Edit
