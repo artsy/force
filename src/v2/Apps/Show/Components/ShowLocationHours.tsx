@@ -18,7 +18,7 @@ export const ShowLocationHours: React.FC<ShowLocationHoursProps> = ({
   if (!!openingHours.text) {
     return (
       <Box {...rest}>
-        <HTML html={openingHours.text} />
+        <HTML variant="md" html={openingHours.text} />
       </Box>
     )
   }
@@ -31,11 +31,9 @@ export const ShowLocationHours: React.FC<ShowLocationHoursProps> = ({
         }
 
         return (
-          <Box key={i}>
-            <Text>
-              {[schedule.days, schedule.hours].filter(Boolean).join(", ")}
-            </Text>
-          </Box>
+          <Text variant="md" key={i}>
+            {[schedule.days, schedule.hours].filter(Boolean).join(", ")}
+          </Text>
         )
       })}
     </Box>
