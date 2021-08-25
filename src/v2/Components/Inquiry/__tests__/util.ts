@@ -5,7 +5,12 @@ export const fill = (
   name: string,
   value: string
 ) => {
-  const input = wrapper.find(`input[name="${name}"]`)
+  let input = wrapper.find(`input[name="${name}"]`)
+
+  if (input.length === 0) {
+    input = wrapper.find(`textarea[name="${name}"]`)
+  }
+
   ;(input.getDOMNode() as HTMLInputElement).value = value
   input.simulate("change")
 }

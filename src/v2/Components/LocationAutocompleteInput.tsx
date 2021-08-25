@@ -156,6 +156,5 @@ export const normalizePlace = (place: Place): Location => {
     stateCode: components.state?.short_name,
     postalCode: components.postalCode?.long_name,
     country: components.country?.long_name,
-    coordinates: [place.geometry.location.lat(), place.geometry.location.lng()],
   }
 }
