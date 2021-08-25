@@ -17,6 +17,8 @@ import {
 import { useSystemContext } from "v2/System"
 import { Container } from "v2/Components/Sticky"
 
+const MAX_SUGGESTIONS = 10
+
 type Suggestion =
   | NonNullable<
       NonNullable<
@@ -34,7 +36,7 @@ interface ArtistAutosuggestProps {
   onChange?: (artustSlug: string) => void
 }
 
-export const ArtistAutosuggest: React.FC<ArtistAutosuggestProps> = ({
+export const PriceDatabaseArtistAutosuggest: React.FC<ArtistAutosuggestProps> = ({
   onChange,
 }) => {
   const { relayEnvironment } = useSystemContext()
@@ -45,7 +47,12 @@ export const ArtistAutosuggest: React.FC<ArtistAutosuggestProps> = ({
   const updateSuggestions = async () => {
     const suggestions = await fetchSuggestions(searchQuery, relayEnvironment)
 
-    setSuggestions(suggestions)
+    const filteredSuggestions = filterSuggestions(suggestions)?.slice(
+      0,
+      MAX_SUGGESTIONS
+    )
+
+    setSuggestions(filteredSuggestions)
   }
 
   useEffect(() => {
@@ -119,12 +126,18 @@ export const ArtistAutosuggest: React.FC<ArtistAutosuggestProps> = ({
   return (
     <Autosuggest
       suggestions={suggestions ?? []}
-      onSuggestionsClearRequested={x => x}
-      onSuggestionsFetchRequested={x => x}
+      onSuggestionsClearRequested={x => {
+        return x
+      }}
+      onSuggestionsFetchRequested={x => {
+        return x
+      }}
       onSuggestionSelected={(_, { suggestion }) => {
         selectSuggestion(suggestion)
       }}
-      getSuggestionValue={suggestion => suggestion.node.displayLabel}
+      getSuggestionValue={suggestion => {
+        return suggestion.node.displayLabel
+      }}
       renderInputComponent={AutosuggestInput}
       renderSuggestion={Suggestion}
       inputProps={{
@@ -151,6 +164,12 @@ export const ArtistAutosuggest: React.FC<ArtistAutosuggestProps> = ({
   )
 }
 
+const filterSuggestions = (suggestions: Suggestions): Suggestions => {
+  return suggestions?.filter(suggestion => {
+    return suggestion?.node?.counts?.auctionResults
+  })
+}
+
 const fetchSuggestions = async (searchQuery, relayEnvironment) => {
   const response = await fetchQuery<ArtistAutosuggest_SearchConnection_Query>(
     relayEnvironment,
@@ -160,7 +179,7 @@ const fetchSuggestions = async (searchQuery, relayEnvironment) => {
           query: $searchQuery
           entities: ARTIST
           mode: AUTOSUGGEST
-          first: 7
+          first: 20
         ) {
           edges {
             node {
@@ -169,6 +188,9 @@ const fetchSuggestions = async (searchQuery, relayEnvironment) => {
                 slug
                 internalID
                 imageUrl
+                counts {
+                  auctionResults
+                }
               }
             }
           }

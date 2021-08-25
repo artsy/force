@@ -15,12 +15,15 @@ import { sizeMap } from "v2/Apps/Artist/Routes/AuctionResults/Components/Auction
 import { paramsToSnakeCase } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
 import { useRouter } from "v2/System/Router/useRouter"
 import { filterSearchFilters } from "../Utils/filterSearchFilters"
-import { ArtistAutosuggest } from "./ArtistAutosuggest"
+import { PriceDatabaseArtistAutosuggest } from "./PriceDatabaseArtistAutosuggest"
 
 const ALLOWED_FILTERS = ["categories", "sizes", "organizations"]
 
-const mapMapToOptions = map =>
-  map.map(element => ({ text: element.displayName, value: element.name }))
+const mapMapToOptions = map => {
+  return map.map(element => {
+    return { text: element.displayName, value: element.name }
+  })
+}
 
 const categoryOptions = mapMapToOptions(categoryMap)
 const sizeOptions = mapMapToOptions(sizeMap)
@@ -44,13 +47,17 @@ export const PriceDatabaseSearch: React.FC = () => {
     router.push(url)
   }
 
-  const handleFilterSelect = key => selected => {
-    setFilter?.(
-      key,
-      selected.map(selected => selected.value)
-    )
+  const handleFilterSelect = key => {
+    return selected => {
+      setFilter?.(
+        key,
+        selected.map(selected => {
+          return selected.value
+        })
+      )
 
-    // TODO: Add tracking for filter changes
+      // TODO: Add tracking for filter changes
+    }
   }
 
   return (
@@ -76,7 +83,11 @@ export const PriceDatabaseSearch: React.FC = () => {
       >
         <GridColumns pb={[4, 0]} gridRowGap={[2, 0]} width="100%" mx="auto">
           <Column span={12} pb={[0, 4]}>
-            <ArtistAutosuggest onChange={artist => setArtistSlug(artist)} />
+            <PriceDatabaseArtistAutosuggest
+              onChange={artist => {
+                return setArtistSlug(artist)
+              }}
+            />
           </Column>
           <Column span={4} pb={[0, 4]}>
             <MultiSelect

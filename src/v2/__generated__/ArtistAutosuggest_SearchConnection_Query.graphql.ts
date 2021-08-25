@@ -13,6 +13,9 @@ export type ArtistAutosuggest_SearchConnection_QueryResponse = {
                 readonly slug?: string;
                 readonly internalID?: string;
                 readonly imageUrl?: string | null;
+                readonly counts?: {
+                    readonly auctionResults: number | null;
+                } | null;
             } | null;
         } | null> | null;
     } | null;
@@ -28,7 +31,7 @@ export type ArtistAutosuggest_SearchConnection_Query = {
 query ArtistAutosuggest_SearchConnection_Query(
   $searchQuery: String!
 ) {
-  searchConnection(query: $searchQuery, entities: ARTIST, mode: AUTOSUGGEST, first: 7) {
+  searchConnection(query: $searchQuery, entities: ARTIST, mode: AUTOSUGGEST, first: 20) {
     edges {
       node {
         __typename
@@ -37,6 +40,9 @@ query ArtistAutosuggest_SearchConnection_Query(
           slug
           internalID
           imageUrl
+          counts {
+            auctionResults
+          }
         }
         ... on Node {
           id
@@ -65,7 +71,7 @@ v1 = [
   {
     "kind": "Literal",
     "name": "first",
-    "value": 7
+    "value": 20
   },
   {
     "kind": "Literal",
@@ -107,6 +113,24 @@ v3 = {
       "args": null,
       "kind": "ScalarField",
       "name": "imageUrl",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "ArtistCounts",
+      "kind": "LinkedField",
+      "name": "counts",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "auctionResults",
+          "storageKey": null
+        }
+      ],
       "storageKey": null
     }
   ],
@@ -219,9 +243,9 @@ return {
     "metadata": {},
     "name": "ArtistAutosuggest_SearchConnection_Query",
     "operationKind": "query",
-    "text": "query ArtistAutosuggest_SearchConnection_Query(\n  $searchQuery: String!\n) {\n  searchConnection(query: $searchQuery, entities: ARTIST, mode: AUTOSUGGEST, first: 7) {\n    edges {\n      node {\n        __typename\n        displayLabel\n        ... on Artist {\n          slug\n          internalID\n          imageUrl\n        }\n        ... on Node {\n          id\n        }\n      }\n    }\n  }\n}\n"
+    "text": "query ArtistAutosuggest_SearchConnection_Query(\n  $searchQuery: String!\n) {\n  searchConnection(query: $searchQuery, entities: ARTIST, mode: AUTOSUGGEST, first: 20) {\n    edges {\n      node {\n        __typename\n        displayLabel\n        ... on Artist {\n          slug\n          internalID\n          imageUrl\n          counts {\n            auctionResults\n          }\n        }\n        ... on Node {\n          id\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '3393a4157a55d871fc37ec0d657c7903';
+(node as any).hash = '721770ecbd60ee91dc90e7bfe11d86ef';
 export default node;

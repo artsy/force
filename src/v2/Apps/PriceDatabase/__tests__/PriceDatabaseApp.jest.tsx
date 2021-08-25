@@ -2,12 +2,16 @@ import React from "react"
 import { PriceDatabase } from "../PriceDatabase"
 import { mount, ReactWrapper } from "enzyme"
 import { HeadProvider } from "react-head"
-import { ArtistAutosuggest } from "../Components/ArtistAutosuggest"
+import { PriceDatabaseArtistAutosuggest } from "../Components/PriceDatabaseArtistAutosuggest"
 import { Button, MultiSelect } from "@artsy/palette"
 
-jest.mock("v2/System/Router/useRouter", () => ({
-  useRouter: jest.fn(() => ({ router: { push: mockRouterPush } })),
-}))
+jest.mock("v2/System/Router/useRouter", () => {
+  return {
+    useRouter: jest.fn(() => {
+      return { router: { push: mockRouterPush } }
+    }),
+  }
+})
 
 const mockRouterPush = jest.fn()
 
@@ -29,7 +33,10 @@ describe("PriceDatabaseApp", () => {
   })
 
   it("searches for artist's auction results without filters", () => {
-    wrapper.find(ArtistAutosuggest).props().onChange("gerhard-richter")
+    wrapper
+      .find(PriceDatabaseArtistAutosuggest)
+      .props()
+      .onChange("gerhard-richter")
     wrapper.find(Button).simulate("click")
 
     expect(mockRouterPush).toHaveBeenCalledWith(
@@ -38,7 +45,7 @@ describe("PriceDatabaseApp", () => {
   })
 
   it("searches for artist's auction results with filters", () => {
-    wrapper.find(ArtistAutosuggest).props().onChange("banksy")
+    wrapper.find(PriceDatabaseArtistAutosuggest).props().onChange("banksy")
 
     const mediumFilter = wrapper.find(MultiSelect).at(0)
     mediumFilter.props().onSelect([{ value: "Painting", text: "Painting" }])
