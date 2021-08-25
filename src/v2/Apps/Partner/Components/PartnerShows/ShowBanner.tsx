@@ -118,7 +118,7 @@ const ShowBanner: React.FC<ShowBannerProps> = ({
           <SlideBox
             width="100%"
             opacity={active ? 1 : 0}
-            right={active ? 0 : "-100%"}
+            right={active || !selected ? 0 : "-100%"}
           >
             <RouterLink to={href}>
               <Image
