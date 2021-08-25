@@ -51,7 +51,7 @@ export const NavigationTabs: React.FC<NavigationTabsProps> = ({ partner }) => {
         name: "Viewing Rooms",
         href: route("/viewing-rooms"),
         exact: true,
-        hidden: !viewingRooms || !viewingRooms.totalCount,
+        hidden: !viewingRooms || !viewingRooms?.totalCount,
       },
       {
         name: partnerType === "Brand" ? "Shop" : "Works",
