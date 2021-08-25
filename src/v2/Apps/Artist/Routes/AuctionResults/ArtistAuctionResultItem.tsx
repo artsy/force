@@ -390,7 +390,7 @@ const renderPricing = (
     const now = DateTime.local()
     const awaitingResults = dateOfSale > now
 
-    const showPriceUSD = currency !== "USD"
+    const showPriceUSD = salePriceUSD && currency !== "USD"
 
     return (
       <Box textAlign={textAlign} mb="5px">
@@ -403,6 +403,7 @@ const renderPricing = (
               {!!showPriceUSD && (
                 <Text
                   variant="xs"
+                  lineHeight={1}
                   color="black60"
                   style={{ paddingTop: "3px" }}
                 >
