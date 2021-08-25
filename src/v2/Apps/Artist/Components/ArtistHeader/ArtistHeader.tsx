@@ -9,10 +9,11 @@ import {
   Text,
 } from "@artsy/palette"
 import React from "react"
+import { ContextModule } from "@artsy/cohesion"
 import { createFragmentContainer, graphql } from "react-relay"
+import { FollowArtistButtonFragmentContainer } from "v2/Components/FollowButton/FollowArtistButton"
 import { SelectedCareerAchievementsFragmentContainer } from "v2/Components/SelectedCareerAchievements"
 import { ArtistHeader_artist } from "v2/__generated__/ArtistHeader_artist.graphql"
-import { ArtistFollowArtistButtonFragmentContainer } from "./ArtistFollowArtistButton"
 
 interface ArtistHeaderProps {
   artist: ArtistHeader_artist
@@ -52,7 +53,11 @@ const ArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {
 
           <GridColumns>
             <Column span={[12, 6, 3]}>
-              <ArtistFollowArtistButtonFragmentContainer artist={artist} />
+              <FollowArtistButtonFragmentContainer
+                artist={artist}
+                buttonProps={{ size: "medium" }}
+                contextModule={ContextModule.artistHeader}
+              />
             </Column>
 
             {!!artist.counts?.follows && (
@@ -108,7 +113,7 @@ export const ArtistHeaderFragmentContainer = createFragmentContainer(
             defaultValue: ["blue-chip", "top-established", "top-emerging"]
           }
         ) {
-        ...ArtistFollowArtistButton_artist
+        ...FollowArtistButton_artist
         ...SelectedCareerAchievements_artist
 
         artistHighlights: highlights {
