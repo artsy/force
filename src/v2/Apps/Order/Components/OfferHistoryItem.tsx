@@ -54,7 +54,7 @@ const OfferHistoryItem: React.FC<
           <Spacer mb={1} />
         </>
       )}
-      {previousOffers!.length > 0 && (
+      {previousOffers?.length > 0 && (
         <>
           <Spacer mb={2} />
           <RevealButton buttonLabel="Show offer history">
