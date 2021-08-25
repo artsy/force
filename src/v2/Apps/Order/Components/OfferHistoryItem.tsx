@@ -85,6 +85,7 @@ const OfferHistoryItem: React.FC<
     </StepSummaryItem>
   )
 }
+
 const Row: React.FC<FlexProps> = ({ children, ...others }) => (
   <Flex justifyContent="space-between" alignItems="baseline" {...others}>
     {children}
