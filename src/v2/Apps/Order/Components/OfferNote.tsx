@@ -25,7 +25,7 @@ export const OfferNote: React.FC<{
               })
             }
           >
-            <Text variant="xs" color="black100">
+            <Text data-test="ask-specialists" variant="xs" color="black100">
               ask our specialists
             </Text>
           </Clickable>

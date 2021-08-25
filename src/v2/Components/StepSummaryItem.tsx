@@ -44,7 +44,11 @@ export const StepSummaryItem: React.SFC<StepSummaryItemProps> = ({
             </Text>
           )}
           {!locked && onChange && (
-            <Clickable textDecoration="underline" onClick={onChange}>
+            <Clickable
+              data-test="change-link"
+              textDecoration="underline"
+              onClick={onChange}
+            >
               <Text variant="xs">Change</Text>
             </Clickable>
           )}

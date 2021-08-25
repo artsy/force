@@ -47,6 +47,7 @@ export class StickyFooter extends Component<StickyFooterProps> {
               <Text variant="xs" color="black60">
                 Need help?{" "}
                 <Clickable
+                  data-test="help-center-link"
                   textDecoration="underline"
                   onClick={this.onClickReadFAQ.bind(this)}
                 >
@@ -54,10 +55,11 @@ export class StickyFooter extends Component<StickyFooterProps> {
                 </Clickable>{" "}
                 or{" "}
                 <Clickable
+                  data-test="ask-question-link"
                   textDecoration="underline"
-                  onClick={this.onClickReadFAQ.bind(this)}
+                  onClick={this.onClickAskSpecialist.bind(this, mediator)}
                 >
-                  <Text variant="xs"> ask a question</Text>
+                  <Text variant="xs">ask a question</Text>
                 </Clickable>
                 .
               </Text>
