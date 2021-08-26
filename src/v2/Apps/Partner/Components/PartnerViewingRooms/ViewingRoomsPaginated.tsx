@@ -1,16 +1,21 @@
-import { Box } from "@artsy/palette"
 import React, { useState } from "react"
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
-import { PaginationFragmentContainer } from "v2/Components/Pagination"
-import { LoadingArea } from "v2/Components/LoadingArea"
-import { ViewingRoomsPaginatedPlaceholder } from "./ViewingRoomsPaginatedPlaceholder"
-import { ViewingRoomsFragmentContainer } from "./ViewingRooms"
+import { Box } from "@artsy/palette"
+import { compact } from "lodash"
+
 import { useSystemContext } from "v2/System"
 import { useRouter } from "v2/System/Router/useRouter"
+import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
+import { PaginationFragmentContainer } from "v2/Components/Pagination"
+import { LoadingArea } from "v2/Components/LoadingArea"
+import createLogger from "v2/Utils/logger"
+
+import { ViewingRoomsPaginatedPlaceholder } from "./ViewingRoomsPaginatedPlaceholder"
+import { ViewingRoomsFragmentContainer } from "./ViewingRooms"
 import { ViewingRoomsPaginatedRendererQuery } from "v2/__generated__/ViewingRoomsPaginatedRendererQuery.graphql"
 import { ViewingRoomsPaginated_partner } from "v2/__generated__/ViewingRoomsPaginated_partner.graphql"
-import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
-import { compact } from "lodash"
+
+const logger = createLogger("ViewingRoomsPaginated.tsx")
 
 interface ViewingRoomsProps {
   relay: RelayRefetchProp
@@ -60,7 +65,7 @@ const ViewingRoomsPaginated: React.FC<ViewingRoomsProps> = ({
       null,
       error => {
         if (error) {
-          console.error(error)
+          logger.error(error)
         }
 
         const query = page === 1 ? {} : { ...location.query, page }
