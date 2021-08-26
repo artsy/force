@@ -88,7 +88,7 @@ const ArtistRelatedArtistsRail: React.FC<ArtistRelatedArtistsRailProps> = ({
                 }
                 FollowButton={
                   <FollowArtistButtonFragmentContainer
-                    artist={artist}
+                    artist={node}
                     contextModule={ContextModule.featuredArtistsRail}
                     buttonProps={{
                       size: "small",
@@ -111,13 +111,13 @@ export const ArtistRelatedArtistsRailFragmentContainer = createFragmentContainer
   {
     artist: graphql`
       fragment ArtistRelatedArtistsRail_artist on Artist {
-        ...FollowArtistButton_artist
         name
         href
         related {
           artistsConnection(kind: MAIN, first: 20) {
             edges {
               node {
+                ...FollowArtistButton_artist
                 name
                 href
                 internalID
