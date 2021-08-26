@@ -26,7 +26,12 @@ export type ArtistHeader_artist = {
             } | null;
         } | null> | null;
     } | null;
-    readonly imageUrl: string | null;
+    readonly image: {
+        readonly cropped: {
+            readonly src: string;
+            readonly srcSet: string;
+        } | null;
+    } | null;
     readonly internalID: string;
     readonly slug: string;
     readonly name: string | null;
@@ -249,8 +254,48 @@ return {
     {
       "alias": null,
       "args": null,
-      "kind": "ScalarField",
-      "name": "imageUrl",
+      "concreteType": "Image",
+      "kind": "LinkedField",
+      "name": "image",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": [
+            {
+              "kind": "Literal",
+              "name": "height",
+              "value": 200
+            },
+            {
+              "kind": "Literal",
+              "name": "width",
+              "value": 200
+            }
+          ],
+          "concreteType": "CroppedImageUrl",
+          "kind": "LinkedField",
+          "name": "cropped",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "src",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "srcSet",
+              "storageKey": null
+            }
+          ],
+          "storageKey": "cropped(height:200,width:200)"
+        }
+      ],
       "storageKey": null
     },
     {
@@ -357,5 +402,5 @@ return {
   "type": "Artist"
 };
 })();
-(node as any).hash = '2d4dee3178be610da487cf3b4aadcd3e';
+(node as any).hash = '9fcbe7fe511dbab0445f308d238aa566';
 export default node;
