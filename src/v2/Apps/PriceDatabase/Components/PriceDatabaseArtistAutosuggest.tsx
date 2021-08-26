@@ -11,9 +11,9 @@ import {
 import { graphql } from "lib/graphql"
 import { fetchQuery } from "relay-runtime"
 import {
-  ArtistAutosuggest_SearchConnection_Query,
-  ArtistAutosuggest_SearchConnection_QueryResponse,
-} from "v2/__generated__/ArtistAutosuggest_SearchConnection_Query.graphql"
+  PriceDatabaseArtistAutosuggest_SearchConnection_Query,
+  PriceDatabaseArtistAutosuggest_SearchConnection_QueryResponse,
+} from "v2/__generated__/PriceDatabaseArtistAutosuggest_SearchConnection_Query.graphql"
 import { useSystemContext } from "v2/System"
 import { Container } from "v2/Components/Sticky"
 
@@ -23,7 +23,7 @@ type Suggestion =
   | NonNullable<
       NonNullable<
         NonNullable<
-          ArtistAutosuggest_SearchConnection_QueryResponse["searchConnection"]
+          PriceDatabaseArtistAutosuggest_SearchConnection_QueryResponse["searchConnection"]
         >["edges"]
       >[number]
     >
@@ -171,10 +171,14 @@ const filterSuggestions = (suggestions: Suggestions): Suggestions => {
 }
 
 const fetchSuggestions = async (searchQuery, relayEnvironment) => {
-  const response = await fetchQuery<ArtistAutosuggest_SearchConnection_Query>(
+  const response = await fetchQuery<
+    PriceDatabaseArtistAutosuggest_SearchConnection_Query
+  >(
     relayEnvironment,
     graphql`
-      query ArtistAutosuggest_SearchConnection_Query($searchQuery: String!) {
+      query PriceDatabasePriceDatabaseArtistAutosuggest_SearchConnection_Query(
+        $searchQuery: String!
+      ) {
         searchConnection(
           query: $searchQuery
           entities: ARTIST

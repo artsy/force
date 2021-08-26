@@ -2,10 +2,10 @@
 /* eslint-disable */
 
 import { ConcreteRequest } from "relay-runtime";
-export type ArtistAutosuggest_SearchConnection_QueryVariables = {
+export type PriceDatabaseArtistAutosuggest_SearchConnection_QueryVariables = {
     searchQuery: string;
 };
-export type ArtistAutosuggest_SearchConnection_QueryResponse = {
+export type PriceDatabaseArtistAutosuggest_SearchConnection_QueryResponse = {
     readonly searchConnection: {
         readonly edges: ReadonlyArray<{
             readonly node: {
@@ -20,15 +20,15 @@ export type ArtistAutosuggest_SearchConnection_QueryResponse = {
         } | null> | null;
     } | null;
 };
-export type ArtistAutosuggest_SearchConnection_Query = {
-    readonly response: ArtistAutosuggest_SearchConnection_QueryResponse;
-    readonly variables: ArtistAutosuggest_SearchConnection_QueryVariables;
+export type PriceDatabaseArtistAutosuggest_SearchConnection_Query = {
+    readonly response: PriceDatabaseArtistAutosuggest_SearchConnection_QueryResponse;
+    readonly variables: PriceDatabaseArtistAutosuggest_SearchConnection_QueryVariables;
 };
 
 
 
 /*
-query ArtistAutosuggest_SearchConnection_Query(
+query PriceDatabaseArtistAutosuggest_SearchConnection_Query(
   $searchQuery: String!
 ) {
   searchConnection(query: $searchQuery, entities: ARTIST, mode: AUTOSUGGEST, first: 20) {
@@ -141,7 +141,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "ArtistAutosuggest_SearchConnection_Query",
+    "name": "PriceDatabaseArtistAutosuggest_SearchConnection_Query",
     "selections": [
       {
         "alias": null,
@@ -185,7 +185,7 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "ArtistAutosuggest_SearchConnection_Query",
+    "name": "PriceDatabaseArtistAutosuggest_SearchConnection_Query",
     "selections": [
       {
         "alias": null,
@@ -241,11 +241,11 @@ return {
   "params": {
     "id": null,
     "metadata": {},
-    "name": "ArtistAutosuggest_SearchConnection_Query",
+    "name": "PriceDatabaseArtistAutosuggest_SearchConnection_Query",
     "operationKind": "query",
-    "text": "query ArtistAutosuggest_SearchConnection_Query(\n  $searchQuery: String!\n) {\n  searchConnection(query: $searchQuery, entities: ARTIST, mode: AUTOSUGGEST, first: 20) {\n    edges {\n      node {\n        __typename\n        displayLabel\n        ... on Artist {\n          slug\n          internalID\n          imageUrl\n          counts {\n            auctionResults\n          }\n        }\n        ... on Node {\n          id\n        }\n      }\n    }\n  }\n}\n"
+    "text": "query PriceDatabaseArtistAutosuggest_SearchConnection_Query(\n  $searchQuery: String!\n) {\n  searchConnection(query: $searchQuery, entities: ARTIST, mode: AUTOSUGGEST, first: 20) {\n    edges {\n      node {\n        __typename\n        displayLabel\n        ... on Artist {\n          slug\n          internalID\n          imageUrl\n          counts {\n            auctionResults\n          }\n        }\n        ... on Node {\n          id\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '721770ecbd60ee91dc90e7bfe11d86ef';
+(node as any).hash = '8a851530fab5a0af6e9a488810593843';
 export default node;
