@@ -138,8 +138,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
 
   const handleSetDefaultAddress = (addressID: string) => {
     updateUserDefaultAddress(
-      // @ts-expect-error STRICT_NULL_CHECK
-      relayEnvironment,
+      relayEnvironment!,
       addressID,
       () => refetchAddresses(),
       onError
@@ -150,13 +149,14 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
     address?: UpdateUserAddressMutationResponse &
       CreateUserAddressMutationResponse
   ) => {
-    refetchAddresses()
+    refetchAddresses(() => {
+      if (address?.createUserAddress) {
+        onAddressCreate && onAddressCreate(address.createUserAddress)
+      } else if (address?.updateUserAddress) {
+        onAddressEdit && onAddressEdit(address.updateUserAddress)
+      }
+    })
 
-    if (address?.createUserAddress) {
-      onAddressCreate && onAddressCreate(address.createUserAddress)
-    } else if (address?.updateUserAddress) {
-      onAddressEdit && onAddressEdit(address.updateUserAddress)
-    }
     onShowToast && onShowToast(true, "Saved")
   }
 
@@ -256,7 +256,6 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
           <Button
             data-test="shippingButton"
             variant="secondaryOutline"
-            width={159}
             onClick={() => {
               setShowAddressModal(true),
                 setModalDetails({
@@ -318,7 +317,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
       </RadioGroup>
       <Spacer mb={14} />
       {addAddressButton}
-      <Spacer mb={3} />
+      <Spacer mb={4} />
     </>
   )
 }

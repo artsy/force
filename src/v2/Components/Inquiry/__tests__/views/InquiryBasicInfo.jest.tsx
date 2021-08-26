@@ -61,7 +61,7 @@ describe("InquiryBasicInfo", () => {
     expect(mockSubmitUpdateMyUserProfile).not.toBeCalled()
     expect(mockNext).not.toBeCalled()
 
-    fill(wrapper, "phoneNumber", "555-555-5555")
+    fill(wrapper, "phone", "555-555-5555")
 
     wrapper.find("form").simulate("submit")
 
@@ -69,6 +69,31 @@ describe("InquiryBasicInfo", () => {
 
     expect(mockSubmitUpdateMyUserProfile).toBeCalledWith({
       phone: "555-555-5555",
+      shareFollows: true,
+    })
+
+    expect(mockNext).toBeCalled()
+  })
+
+  it("updates the collector profile when the form is submitted with more information", async () => {
+    const wrapper = getWrapper()
+
+    expect(mockSubmitUpdateMyUserProfile).not.toBeCalled()
+    expect(mockNext).not.toBeCalled()
+
+    fill(wrapper, "profession", "Carpenter")
+    fill(wrapper, "phone", "555-555-5555")
+
+    wrapper.find('[role="checkbox"]').first().simulate("click")
+
+    wrapper.find("form").simulate("submit")
+
+    await flushPromiseQueue()
+
+    expect(mockSubmitUpdateMyUserProfile).toBeCalledWith({
+      profession: "Carpenter",
+      phone: "555-555-5555",
+      shareFollows: false,
     })
 
     expect(mockNext).toBeCalled()

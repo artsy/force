@@ -24,14 +24,8 @@ export type TransactionDetailsSummaryItem_order = {
                     value in case none of the concrete values match.*/
                     readonly __typename: "%other";
                 }) | null;
-                readonly shippingQuoteOptions: {
-                    readonly edges: ReadonlyArray<{
-                        readonly node: {
-                            readonly name: string | null;
-                            readonly tier: string;
-                            readonly isSelected: boolean;
-                        } | null;
-                    } | null> | null;
+                readonly selectedShippingQuote: {
+                    readonly displayName: string;
                 } | null;
             } | null;
         } | null> | null;
@@ -255,52 +249,16 @@ return {
                 {
                   "alias": null,
                   "args": null,
-                  "concreteType": "CommerceShippingQuoteConnection",
+                  "concreteType": "CommerceShippingQuote",
                   "kind": "LinkedField",
-                  "name": "shippingQuoteOptions",
+                  "name": "selectedShippingQuote",
                   "plural": false,
                   "selections": [
                     {
                       "alias": null,
                       "args": null,
-                      "concreteType": "CommerceShippingQuoteEdge",
-                      "kind": "LinkedField",
-                      "name": "edges",
-                      "plural": true,
-                      "selections": [
-                        {
-                          "alias": null,
-                          "args": null,
-                          "concreteType": "CommerceShippingQuote",
-                          "kind": "LinkedField",
-                          "name": "node",
-                          "plural": false,
-                          "selections": [
-                            {
-                              "alias": null,
-                              "args": null,
-                              "kind": "ScalarField",
-                              "name": "name",
-                              "storageKey": null
-                            },
-                            {
-                              "alias": null,
-                              "args": null,
-                              "kind": "ScalarField",
-                              "name": "tier",
-                              "storageKey": null
-                            },
-                            {
-                              "alias": null,
-                              "args": null,
-                              "kind": "ScalarField",
-                              "name": "isSelected",
-                              "storageKey": null
-                            }
-                          ],
-                          "storageKey": null
-                        }
-                      ],
+                      "kind": "ScalarField",
+                      "name": "displayName",
                       "storageKey": null
                     }
                   ],
@@ -364,5 +322,5 @@ return {
   "type": "CommerceOrder"
 };
 })();
-(node as any).hash = '76dfdd436b27b1d4354faf1f46d276e3';
+(node as any).hash = '6b1894a4d076b716f3d62976b755a219';
 export default node;

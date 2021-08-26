@@ -26,7 +26,10 @@ describe("AuctionResultsFilterContext", () => {
   it("boots with default filters", async () => {
     getWrapper()
     expect(context.filters).toEqual(
-      initialAuctionResultsFilterState(null, null)
+      initialAuctionResultsFilterState({
+        startDate: null,
+        endDate: null,
+      })
     )
   })
 
@@ -207,7 +210,10 @@ describe("AuctionResultsFilterContext", () => {
       it("#resetFilters", () => {
         getWrapper({
           filters: {
-            ...initialAuctionResultsFilterState(null, null),
+            ...initialAuctionResultsFilterState({
+              startDate: null,
+              endDate: null,
+            }),
             organizations: [],
           },
         })
@@ -217,7 +223,10 @@ describe("AuctionResultsFilterContext", () => {
           context.resetFilters?.()
           setTimeout(() => {
             expect(context.filters).toEqual(
-              initialAuctionResultsFilterState(null, null)
+              initialAuctionResultsFilterState({
+                startDate: null,
+                endDate: null,
+              })
             )
           })
         })
@@ -227,7 +236,10 @@ describe("AuctionResultsFilterContext", () => {
     describe("when in staged mode", () => {
       beforeEach(() => {
         let filters = {
-          ...initialAuctionResultsFilterState?.(null, null),
+          ...initialAuctionResultsFilterState?.({
+            startDate: null,
+            endDate: null,
+          }),
           categories: ["painting"],
         }
 
@@ -259,11 +271,17 @@ describe("AuctionResultsFilterContext", () => {
           context.resetFilters?.()
         })
         expect(context.filters).not.toEqual({
-          ...initialAuctionResultsFilterState?.(null, null),
+          ...initialAuctionResultsFilterState?.({
+            startDate: null,
+            endDate: null,
+          }),
           reset: true,
         })
         expect(context.stagedFilters).toEqual({
-          ...initialAuctionResultsFilterState?.(null, null),
+          ...initialAuctionResultsFilterState?.({
+            startDate: null,
+            endDate: null,
+          }),
           reset: true,
         })
       })

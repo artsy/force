@@ -14,7 +14,7 @@ import type { Stripe, StripeElements } from "@stripe/stripe-js"
 import createLogger from "v2/Utils/logger"
 import { Media } from "v2/Utils/Responsive"
 
-import { Button, Col, Flex, Join, Row, Spacer } from "@artsy/palette"
+import { Button, Flex, Join, Spacer } from "@artsy/palette"
 import {
   PaymentPicker,
   PaymentPickerFragmentContainer,
@@ -29,7 +29,7 @@ import { BuyerGuarantee } from "../../Components/BuyerGuarantee"
 import { createStripeWrapper } from "v2/Utils/createStripeWrapper"
 
 export const ContinueButton = props => (
-  <Button size="large" width="100%" {...props}>
+  <Button variant="primaryBlack" width="100%" {...props}>
     Continue
   </Button>
 )
@@ -68,8 +68,7 @@ export class NewPaymentRoute extends Component<
   onContinue = async () => {
     try {
       this.setState({ isGettingCreditCardId: true })
-      // @ts-expect-error STRICT_NULL_CHECK
-      const result = await this.paymentPicker.current.getCreditCardId()
+      const result = await this.paymentPicker?.current?.getCreditCardId()!
       this.setState({ isGettingCreditCardId: false })
 
       if (result.type === "invalid_form") {
@@ -93,16 +92,14 @@ export class NewPaymentRoute extends Component<
         return
       }
 
-      // @ts-expect-error STRICT_NULL_CHECK
       const orderOrError = (
         await this.fixFailedPayment({
           input: {
             creditCardId: result.creditCardId,
-            // @ts-expect-error STRICT_NULL_CHECK
-            offerId: this.props.order.lastOffer.internalID,
+            offerId: this.props.order.lastOffer?.internalID!,
           },
         })
-      ).commerceFixFailedPayment.orderOrError
+      ).commerceFixFailedPayment?.orderOrError!
 
       if (orderOrError.error) {
         this.handleFixFailedPaymentError(orderOrError.error.code)
@@ -142,11 +139,8 @@ export class NewPaymentRoute extends Component<
 
     return (
       <>
-        <Row>
-          <Col>
-            <OrderStepper currentStep="Payment" steps={["Payment"]} />
-          </Col>
-        </Row>
+        <OrderStepper currentStep="Payment" steps={["Payment"]} />
+
         <TwoColumnLayout
           Content={
             <Flex
@@ -159,16 +153,14 @@ export class NewPaymentRoute extends Component<
                     <CountdownTimer
                       action="Submit new payment"
                       note="Expiration will end negotiations on this offer. Keep in mind the work can be sold to another buyer in the meantime."
-                      // @ts-expect-error STRICT_NULL_CHECK
-                      countdownStart={order.lastOffer.createdAt}
-                      // @ts-expect-error STRICT_NULL_CHECK
-                      countdownEnd={order.stateExpiresAt}
+                      countdownStart={order.lastOffer?.createdAt!}
+                      countdownEnd={order.stateExpiresAt!}
                     />
                   </Flex>
-                  <Spacer mb={[2, 3]} />
+                  <Spacer mb={[2, 4]} />
                 </>
               )}
-              <Join separator={<Spacer mb={3} />}>
+              <Join separator={<Spacer mb={4} />}>
                 <PaymentPickerFragmentContainer
                   order={order}
                   me={this.props.me}
@@ -191,7 +183,7 @@ export class NewPaymentRoute extends Component<
                 <TransactionDetailsSummaryItem order={order} />
               </Flex>
               <BuyerGuarantee />
-              <Spacer mb={[2, 3]} />
+              <Spacer mb={[2, 4]} />
               <Media at="xs">
                 <>
                   <ContinueButton
@@ -284,8 +276,7 @@ export class NewPaymentRoute extends Component<
   artistId() {
     return get(
       this.props.order,
-      // @ts-expect-error STRICT_NULL_CHECK
-      o => o.lineItems.edges[0].node.artwork.artists[0].slug
+      o => o.lineItems?.edges?.[0]?.node?.artwork?.artists?.[0]?.slug
     )
   }
 

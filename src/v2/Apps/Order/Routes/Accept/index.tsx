@@ -1,4 +1,4 @@
-import { Button, Col, Flex, Row, Spacer } from "@artsy/palette"
+import { Button, Flex, Spacer } from "@artsy/palette"
 import { Accept_order } from "v2/__generated__/Accept_order.graphql"
 import { TwoColumnLayout } from "v2/Apps/Order/Components/TwoColumnLayout"
 import { track } from "v2/System/Analytics"
@@ -45,8 +45,7 @@ export class Accept extends Component<AcceptProps> {
   acceptOffer() {
     return this.props.commitMutation<AcceptOfferMutation>({
       variables: {
-        // @ts-expect-error STRICT_NULL_CHECK
-        input: { offerId: this.props.order.lastOffer.internalID },
+        input: { offerId: this.props.order.lastOffer?.internalID },
       },
       // TODO: Inputs to the mutation might have changed case of the keys!
       mutation: graphql`
@@ -78,13 +77,11 @@ export class Accept extends Component<AcceptProps> {
 
   onSubmit = async () => {
     try {
-      // @ts-expect-error STRICT_NULL_CHECK
       const orderOrError = (await this.acceptOffer()).commerceBuyerAcceptOffer
-        .orderOrError
+        ?.orderOrError
 
-      if (orderOrError.error) {
-        // @ts-expect-error STRICT_NULL_CHECK
-        this.handleAcceptError(orderOrError.error)
+      if (orderOrError?.error) {
+        this.handleAcceptError(orderOrError?.error)
         return
       }
 
@@ -95,11 +92,11 @@ export class Accept extends Component<AcceptProps> {
     }
   }
 
-  async handleAcceptError(error: { code: string; data: string }) {
+  async handleAcceptError(error: { code: string; data: string | null }) {
     logger.error(error)
     switch (error.code) {
       case "capture_failed": {
-        const parsedData = get(error, e => JSON.parse(e.data), {})
+        const parsedData = get(error, e => JSON.parse(e.data!), {})
 
         // https://stripe.com/docs/declines/codes
         if (parsedData.decline_code === "insufficient_funds") {
@@ -151,8 +148,7 @@ export class Accept extends Component<AcceptProps> {
   artistId() {
     return get(
       this.props.order,
-      // @ts-expect-error STRICT_NULL_CHECK
-      o => o.lineItems.edges[0].node.artwork.artists[0].slug
+      o => o.lineItems?.edges?.[0]?.node?.artwork?.artists?.[0]?.slug
     )
   }
 
@@ -169,11 +165,7 @@ export class Accept extends Component<AcceptProps> {
 
     return (
       <>
-        <Row>
-          <Col>
-            <OrderStepper currentStep="Review" steps={counterofferFlowSteps} />
-          </Col>
-        </Row>
+        <OrderStepper currentStep="Review" steps={counterofferFlowSteps} />
         <TwoColumnLayout
           Content={
             <Flex
@@ -190,10 +182,8 @@ export class Accept extends Component<AcceptProps> {
                 <CountdownTimer
                   action="Respond"
                   note="Expired offers end the negotiation process permanently."
-                  // @ts-expect-error STRICT_NULL_CHECK
-                  countdownStart={order.lastOffer.createdAt}
-                  // @ts-expect-error STRICT_NULL_CHECK
-                  countdownEnd={order.stateExpiresAt}
+                  countdownStart={order.lastOffer?.createdAt!}
+                  countdownEnd={order.stateExpiresAt!}
                 />
                 <TransactionDetailsSummaryItem
                   order={order}
@@ -202,12 +192,12 @@ export class Accept extends Component<AcceptProps> {
                   onChange={this.onChangeResponse}
                 />
               </Flex>
-              <Spacer mb={[2, 3]} />
+              <Spacer mb={[2, 4]} />
               <Media greaterThan="xs">
                 <Button
                   onClick={this.onSubmit}
                   loading={isCommittingMutation}
-                  size="large"
+                  variant="primaryBlack"
                   width="100%"
                 >
                   Submit

@@ -1,4 +1,3 @@
-import { Link } from "@artsy/palette"
 import { SystemContextProvider } from "v2/System"
 import { mockTracking } from "v2/System/Analytics"
 import { mount } from "enzyme"
@@ -32,7 +31,7 @@ describe("Sticky footer", () => {
       <StickyFooter orderType="OFFER" artworkId="whatever" />
     )
 
-    component.find("a").at(0).simulate("click")
+    component.find("Clickable[data-test='help-center-link']").simulate("click")
 
     expect(window.open).toHaveBeenCalledWith(
       "https://support.artsy.net/hc/en-us/sections/360008203114-Buy-Now-and-Make-Offer",
@@ -46,9 +45,7 @@ describe("Sticky footer", () => {
         <StickyFooter orderType="OFFER" artworkId="whatever" />
       </SystemContextProvider>
     )
-
-    component.find("a").at(1).simulate("click")
-
+    component.find("Clickable[data-test='ask-question-link']").simulate("click")
     expect(mediator.trigger).toHaveBeenCalledWith(
       "openOrdersContactArtsyModal",
       {
@@ -73,7 +70,9 @@ describe("Sticky footer", () => {
         const component = mount(
           <Component orderType="OFFER" artworkId="whatever" />
         )
-        component.find(Link).at(0).simulate("click")
+        component
+          .find("Clickable[data-test='help-center-link']")
+          .simulate("click")
         expect(dispatch).toBeCalledWith({
           action_type: "Click",
           subject: "Visit our help center",
@@ -90,7 +89,9 @@ describe("Sticky footer", () => {
             <Component orderType="OFFER" artworkId="whatever" />
           </SystemContextProvider>
         )
-        component.find(Link).last().simulate("click")
+        component
+          .find("Clickable[data-test='ask-question-link']")
+          .simulate("click")
 
         expect(dispatch).toBeCalledWith({
           action_type: "Click",
@@ -108,7 +109,9 @@ describe("Sticky footer", () => {
         const component = mount(
           <Component orderType="BUY" artworkId="whatever" />
         )
-        component.find(Link).at(0).simulate("click")
+        component
+          .find("Clickable[data-test='help-center-link']")
+          .simulate("click")
         expect(dispatch).toBeCalledWith({
           action_type: "Click",
           subject: "Visit our help center",
@@ -125,7 +128,9 @@ describe("Sticky footer", () => {
             <Component orderType="BUY" artworkId="whatever" />
           </SystemContextProvider>
         )
-        component.find(Link).last().simulate("click")
+        component
+          .find("Clickable[data-test='ask-question-link']")
+          .simulate("click")
 
         expect(dispatch).toBeCalledWith({
           action_type: "Click",

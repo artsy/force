@@ -16,18 +16,86 @@ export type ArtistAuctionResultsRoute_artist$key = {
 
 
 const node: ReaderFragment = {
-  "argumentDefinitions": [],
+  "argumentDefinitions": [
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "organizations",
+      "type": "[String]"
+    },
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "categories",
+      "type": "[String]"
+    },
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "sizes",
+      "type": "[ArtworkSizes]"
+    },
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "createdAfterYear",
+      "type": "Int"
+    },
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "createdBeforeYear",
+      "type": "Int"
+    },
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "allowEmptyCreatedDates",
+      "type": "Boolean"
+    }
+  ],
   "kind": "Fragment",
   "metadata": null,
   "name": "ArtistAuctionResultsRoute_artist",
   "selections": [
     {
-      "args": null,
+      "args": [
+        {
+          "kind": "Variable",
+          "name": "allowEmptyCreatedDates",
+          "variableName": "allowEmptyCreatedDates"
+        },
+        {
+          "kind": "Variable",
+          "name": "categories",
+          "variableName": "categories"
+        },
+        {
+          "kind": "Variable",
+          "name": "createdAfterYear",
+          "variableName": "createdAfterYear"
+        },
+        {
+          "kind": "Variable",
+          "name": "createdBeforeYear",
+          "variableName": "createdBeforeYear"
+        },
+        {
+          "kind": "Variable",
+          "name": "organizations",
+          "variableName": "organizations"
+        },
+        {
+          "kind": "Variable",
+          "name": "sizes",
+          "variableName": "sizes"
+        }
+      ],
       "kind": "FragmentSpread",
       "name": "ArtistAuctionResults_artist"
     }
   ],
   "type": "Artist"
 };
-(node as any).hash = '2f6e0f0cb311e09a182ae087b8b29773';
+(node as any).hash = '63d57d29adb2cb0ec1c44e80d4e480e9';
 export default node;

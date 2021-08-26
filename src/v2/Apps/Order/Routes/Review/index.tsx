@@ -1,14 +1,4 @@
-import {
-  Box,
-  Button,
-  Col,
-  Flex,
-  Join,
-  Message,
-  Row,
-  Spacer,
-  Text,
-} from "@artsy/palette"
+import { Box, Button, Flex, Join, Message, Spacer, Text } from "@artsy/palette"
 import { Review_order } from "v2/__generated__/Review_order.graphql"
 import { ReviewSubmitOfferOrderMutation } from "v2/__generated__/ReviewSubmitOfferOrderMutation.graphql"
 import { ReviewSubmitOrderMutation } from "v2/__generated__/ReviewSubmitOrderMutation.graphql"
@@ -68,8 +58,8 @@ export class ReviewRoute extends Component<ReviewProps> {
     order_id: props.order.internalID,
     products: [
       {
-        // @ts-expect-error STRICT_NULL_CHECK
-        product_id: props.order.lineItems.edges[0].node.artwork.internalID,
+        product_id:
+          props.order.lineItems?.edges?.[0]?.node?.artwork?.internalID,
         quantity: 1,
         price: props.order.itemsTotal,
       },
@@ -79,18 +69,15 @@ export class ReviewRoute extends Component<ReviewProps> {
     try {
       const orderOrError =
         this.props.order.mode === "BUY"
-          ? // @ts-expect-error STRICT_NULL_CHECK
-            (await this.submitBuyOrder()).commerceSubmitOrder.orderOrError
-          : // @ts-expect-error STRICT_NULL_CHECK
-            (await this.submitOffer(setupIntentId)).commerceSubmitOrderWithOffer
-              .orderOrError
-      if (orderOrError.error) {
-        // @ts-expect-error STRICT_NULL_CHECK
-        this.handleSubmitError(orderOrError.error)
+          ? (await this.submitBuyOrder()).commerceSubmitOrder?.orderOrError
+          : (await this.submitOffer(setupIntentId)).commerceSubmitOrderWithOffer
+              ?.orderOrError
+      if (orderOrError?.error) {
+        this.handleSubmitError(orderOrError?.error!)
         return
       } else if (
         this.props.order.mode === "BUY" &&
-        orderOrError.actionData &&
+        orderOrError?.actionData &&
         orderOrError.actionData.clientSecret
       ) {
         this.props.stripe
@@ -108,7 +95,7 @@ export class ReviewRoute extends Component<ReviewProps> {
           })
       } else if (
         this.props.order.mode === "OFFER" &&
-        orderOrError.actionData &&
+        orderOrError?.actionData &&
         orderOrError.actionData.clientSecret
       ) {
         this.props.stripe
@@ -121,8 +108,7 @@ export class ReviewRoute extends Component<ReviewProps> {
               })
               return
             } else {
-              // @ts-expect-error STRICT_NULL_CHECK
-              this.onSubmit(result.setupIntent.id)
+              this.onSubmit(result.setupIntent?.id)
             }
           })
       } else {
@@ -180,8 +166,7 @@ export class ReviewRoute extends Component<ReviewProps> {
     return this.props.commitMutation<ReviewSubmitOfferOrderMutation>({
       variables: {
         input: {
-          // @ts-expect-error STRICT_NULL_CHECK
-          offerId: this.props.order.myLastOffer.internalID,
+          offerId: this.props.order.myLastOffer?.internalID,
           confirmedSetupIntentId: setupIntentId,
         },
       },
@@ -216,7 +201,7 @@ export class ReviewRoute extends Component<ReviewProps> {
     })
   }
 
-  async handleSubmitError(error: { code: string; data: string }) {
+  async handleSubmitError(error: { code: string; data: string | null }) {
     logger.error(error)
     switch (error.code) {
       case "missing_required_info": {
@@ -239,7 +224,7 @@ export class ReviewRoute extends Component<ReviewProps> {
         break
       }
       case "failed_charge_authorize": {
-        const parsedData = JSON.parse(error.data)
+        const parsedData = JSON.parse(error.data!)
         this.props.dialog.showErrorDialog({
           title: "An error occurred",
           message: parsedData.failure_message,
@@ -295,16 +280,14 @@ export class ReviewRoute extends Component<ReviewProps> {
   artistId() {
     return get(
       this.props.order,
-      // @ts-expect-error STRICT_NULL_CHECK
-      o => o.lineItems.edges[0].node.artwork.artists[0].slug
+      o => o.lineItems?.edges?.[0]?.node?.artwork?.artists?.[0]?.slug
     )
   }
 
   routeToArtworkPage() {
     const artworkId = get(
       this.props.order,
-      // @ts-expect-error STRICT_NULL_CHECK
-      o => o.lineItems.edges[0].node.artwork.slug
+      o => o.lineItems?.edges?.[0]?.node?.artwork?.slug
     )
     // Don't confirm whether or not you want to leave the page
     this.props.route.onTransition = () => null
@@ -336,20 +319,16 @@ export class ReviewRoute extends Component<ReviewProps> {
 
     return (
       <Box data-test="orderReview">
-        <Row>
-          <Col>
-            <OrderStepper
-              currentStep="Review"
-              steps={order.mode === "OFFER" ? offerFlowSteps : buyNowFlowSteps}
-            />
-          </Col>
-        </Row>
+        <OrderStepper
+          currentStep="Review"
+          steps={order.mode === "OFFER" ? offerFlowSteps : buyNowFlowSteps}
+        />
         <TwoColumnLayout
           Content={
             <>
-              <Join separator={<Spacer mb={3} />}>
-                <Flex flexDirection="column" mb={[2, 3]}>
-                  <Message p={[2, 3]} mb={[2, 3]}>
+              <Join separator={<Spacer mb={4} />}>
+                <Flex flexDirection="column" mb={[2, 4]}>
+                  <Message p={[2, 4]} mb={[2, 4]}>
                     Disruptions caused by COVID-19 may cause delays — we
                     appreciate your understanding.
                     <Spacer mb={1} />
@@ -358,7 +337,7 @@ export class ReviewRoute extends Component<ReviewProps> {
                   {isEigen && (
                     <>
                       <Button
-                        size="large"
+                        variant="primaryBlack"
                         width="100%"
                         loading={isCommittingMutation}
                         onClick={() => this.onSubmit()}
@@ -393,11 +372,10 @@ export class ReviewRoute extends Component<ReviewProps> {
                   />
                 </Flex>
                 <Media greaterThan="xs">
-                  {/* @ts-expect-error STRICT_NULL_CHECK */}
-                  <ItemReview lineItem={order.lineItems.edges[0].node} />
-                  <Spacer mb={3} />
+                  <ItemReview lineItem={order?.lineItems?.edges?.[0]?.node!} />
+                  <Spacer mb={2} />
                   <Button
-                    size="large"
+                    variant="primaryBlack"
                     width="100%"
                     loading={isCommittingMutation}
                     onClick={() => this.onSubmit()}
@@ -421,14 +399,14 @@ export class ReviewRoute extends Component<ReviewProps> {
               </Flex>
               <BuyerGuarantee />
               {order.myLastOffer && !order.myLastOffer?.hasDefiniteTotal && (
-                <Text variant="small" color="black60">
+                <Text variant="xs" color="black60">
                   *Shipping and taxes to be confirmed by gallery
                 </Text>
               )}
-              <Spacer mb={[2, 3]} />
+              <Spacer mb={[2, 4]} />
               <Media at="xs">
                 <Button
-                  size="large"
+                  variant="primaryBlack"
                   width="100%"
                   loading={isCommittingMutation}
                   onClick={() => this.onSubmit()}

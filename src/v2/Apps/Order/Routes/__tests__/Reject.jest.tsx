@@ -90,7 +90,7 @@ describe("Buyer rejects seller offer", () => {
     })
 
     it("Shows a change link that takes the user back to the respond page", () => {
-      page.root.find("StepSummaryItem a").simulate("click")
+      page.root.find("Clickable[data-test='change-link']").simulate("click")
       expect(routes.mockPushRoute).toHaveBeenCalledWith(
         `/orders/${testOrder.internalID}/respond`
       )

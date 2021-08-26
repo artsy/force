@@ -24,7 +24,7 @@ import {
 } from "v2/Components/LocationAutocompleteInput"
 import { useState } from "react"
 import { useUpdateMyUserProfile } from "../useUpdateMyUserProfile"
-import { logger } from "../util"
+import { compactObject, logger } from "../util"
 
 enum Mode {
   Pending,
@@ -45,13 +45,13 @@ const InquiryBasicInfo: React.FC<InquiryBasicInfoProps> = ({ artwork }) => {
   const [state, setState] = useState<{
     profession: string | null
     location: Location | null
-    phoneNumber: string | null
+    phone: string | null
     shareFollows: boolean
   }>({
     profession: null,
     location: null,
-    phoneNumber: null,
-    shareFollows: false,
+    phone: null,
+    shareFollows: true,
   })
 
   const handleLocation = (place: Place) => {
@@ -62,7 +62,7 @@ const InquiryBasicInfo: React.FC<InquiryBasicInfoProps> = ({ artwork }) => {
     setState(prevState => ({ ...prevState, shareFollows: value }))
   }
 
-  const handleInputChange = (name: "profession" | "phoneNumber") => (
+  const handleInputChange = (name: "profession" | "phone") => (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     setState(prevState => ({ ...prevState, [name]: event.target.value }))
@@ -73,8 +73,10 @@ const InquiryBasicInfo: React.FC<InquiryBasicInfoProps> = ({ artwork }) => {
 
     setMode(Mode.Loading)
 
+    const input = compactObject(state)
+
     try {
-      await submitUpdateMyUserProfile({ phone: state.phoneNumber })
+      await submitUpdateMyUserProfile(input)
       setMode(Mode.Success)
       next()
     } catch (err) {
@@ -113,10 +115,10 @@ const InquiryBasicInfo: React.FC<InquiryBasicInfoProps> = ({ artwork }) => {
 
       <Input
         title="Phone Number"
-        name="phoneNumber"
+        name="phone"
         placeholder="Phone Number"
         type="tel"
-        onChange={handleInputChange("phoneNumber")}
+        onChange={handleInputChange("phone")}
         mb={2}
       />
 

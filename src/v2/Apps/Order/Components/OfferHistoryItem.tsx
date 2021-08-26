@@ -1,4 +1,4 @@
-import { Flex, FlexProps, Sans, Serif, Spacer } from "@artsy/palette"
+import { Flex, FlexProps, Spacer, Text } from "@artsy/palette"
 import { OfferHistoryItem_order } from "v2/__generated__/OfferHistoryItem_order.graphql"
 import {
   StepSummaryItem,
@@ -9,14 +9,13 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { RevealButton } from "./RevealButton"
 import { getOfferItemFromOrder } from "v2/Apps/Order/Utils/offerItemExtractor"
 
-const OfferHistoryItem: React.SFC<
+const OfferHistoryItem: React.FC<
   {
     order: OfferHistoryItem_order
   } & StepSummaryItemProps
 > = ({ order: { lastOffer, lineItems, offers }, ...others }) => {
   const offerItem = getOfferItemFromOrder(lineItems)
-  // @ts-expect-error STRICT_NULL_CHECK
-  const previousOffers = offers.edges.filter(
+  const previousOffers = offers?.edges?.filter(
     // @ts-expect-error STRICT_NULL_CHECK
     ({ node: { internalID } }) => internalID !== lastOffer.internalID
   )
@@ -24,60 +23,59 @@ const OfferHistoryItem: React.SFC<
   return (
     <StepSummaryItem {...others}>
       <Row>
-        <Serif size={["2", "3"]} color="black100" weight="semibold">
-          {/* @ts-expect-error STRICT_NULL_CHECK */}
-          {lastOffer.fromParticipant === "SELLER"
+        <Text variant={["xs", "sm"]} color="black100" fontWeight="semibold">
+          {lastOffer?.fromParticipant === "SELLER"
             ? "Seller's offer"
             : "Your offer"}
-        </Serif>
-        <Serif size={["2", "3"]} color="black100">
-          {/* @ts-expect-error STRICT_NULL_CHECK */}
-          {lastOffer.amount}
-        </Serif>
+        </Text>
+        <Text variant={["xs", "sm"]} color="black100">
+          {lastOffer?.amount}
+        </Text>
       </Row>
       {offerItem && (
         <Row>
           <div />
-          <Sans size="2" color="black60">
+          <Text variant={"xs"} color="black60">
             List price: {offerItem.price}
-          </Sans>
+          </Text>
         </Row>
       )}
-      {/* @ts-expect-error STRICT_NULL_CHECK */}
-      {lastOffer.note && (
+      {lastOffer?.note && (
         <>
           <Spacer mb={2} />
-          <Serif size={["2", "3"]} color="black100" weight="semibold">
-            {/* @ts-expect-error STRICT_NULL_CHECK */}
+          <Text variant={["xs", "sm"]} color="black100" fontWeight="semibold">
             {lastOffer.fromParticipant === "SELLER"
               ? "Seller's note"
               : "Your note"}
-          </Serif>
-          <Serif size="2" color="black60">
-            {/* @ts-expect-error STRICT_NULL_CHECK */}
+          </Text>
+          <Text variant="xs" color="black60">
             {lastOffer.note}
-          </Serif>
+          </Text>
           <Spacer mb={1} />
         </>
       )}
-      {previousOffers.length > 0 && (
+      {previousOffers && previousOffers.length > 0 && (
         <>
           <Spacer mb={2} />
           <RevealButton buttonLabel="Show offer history">
             <Flex m={0} flexDirection="column">
-              <Serif size={["2", "3"]} color="black100" weight="semibold">
+              <Text
+                variant={["xs", "sm"]}
+                color="black100"
+                fontWeight="semibold"
+              >
                 Offer history
-              </Serif>
+              </Text>
               {/* @ts-expect-error STRICT_NULL_CHECK */}
               {previousOffers.map(({ node: offer }) => (
                 <Row key={offer.internalID}>
-                  <Serif size={["2", "3"]} color="black60">
+                  <Text variant={["xs", "sm"]} color="black60">
                     {offer.fromParticipant === "BUYER" ? "You" : "Seller"}
                     {` (${offer.createdAt})`}
-                  </Serif>
-                  <Serif size={["2", "3"]} color="black60">
+                  </Text>
+                  <Text variant={["xs", "sm"]} color="black60">
                     {offer.amount}
-                  </Serif>
+                  </Text>
                 </Row>
               ))}
             </Flex>
@@ -87,12 +85,8 @@ const OfferHistoryItem: React.SFC<
     </StepSummaryItem>
   )
 }
-// TODO: look into why a separate style prop is necessary here
-const Row: React.SFC<
-  FlexProps & {
-    style?: any // FIXME: HTMLProps<HTMLDivElement>["style"]
-  }
-> = ({ children, ...others }) => (
+
+const Row: React.FC<FlexProps> = ({ children, ...others }) => (
   <Flex justifyContent="space-between" alignItems="baseline" {...others}>
     {children}
   </Flex>

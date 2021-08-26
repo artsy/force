@@ -105,13 +105,11 @@ class OrderApp extends React.Component<OrderAppProps, {}> {
     } else {
       artworkId = get(
         this.props,
-        // @ts-expect-error STRICT_NULL_CHECK
-        () => order.lineItems.edges[0].node.artwork.slug
+        () => order.lineItems?.edges?.[0]?.node?.artwork?.slug
       )
       artworkHref = get(
         this.props,
-        // @ts-expect-error STRICT_NULL_CHECK
-        () => order.lineItems.edges[0].node.artwork.href
+        () => order.lineItems?.edges?.[0]?.node?.artwork?.href
       )
     }
 
@@ -122,8 +120,7 @@ class OrderApp extends React.Component<OrderAppProps, {}> {
     return (
       <SystemContextConsumer>
         {({ isEigen, mediator }) => {
-          // @ts-expect-error STRICT_NULL_CHECK
-          this.mediator = mediator
+          this.mediator = mediator!
 
           return (
             <Box>

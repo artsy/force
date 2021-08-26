@@ -1,4 +1,4 @@
-import { Sans, Serif, Spacer } from "@artsy/palette"
+import { Spacer, Text } from "@artsy/palette"
 import { OfferSummaryItem_order } from "v2/__generated__/OfferSummaryItem_order.graphql"
 import {
   StepSummaryItem,
@@ -15,29 +15,27 @@ const OfferSummaryItem = ({
   order: OfferSummaryItem_order
 } & StepSummaryItemProps) => {
   const offerItem = getOfferItemFromOrder(order.lineItems)
-  // @ts-expect-error STRICT_NULL_CHECK
-  const offerNote = order.myLastOffer.note
+  const offerNote = order.myLastOffer?.note
 
   return (
     <StepSummaryItem title="Your offer" {...others}>
-      <Serif size={["2", "3t"]} color="black100">
-        {/* @ts-expect-error STRICT_NULL_CHECK */}
-        {order.myLastOffer.amount}
-      </Serif>
+      <Text variant={["xs", "md"]} color="black100">
+        {order.myLastOffer?.amount}
+      </Text>
       {offerItem && (
-        <Sans size="2" color="black60">
+        <Text variant="xs" color="black60">
           List price: {offerItem.price}
-        </Sans>
+        </Text>
       )}
       {offerNote && (
         <>
-          <Spacer mb={[2, 3]} />
-          <Serif size={["2", "3t"]} weight="semibold" color="black100">
+          <Spacer mb={[2, 4]} />
+          <Text variant={["xs", "md"]} color="black100">
             Your note
-          </Serif>
-          <Serif size={["2", "3t"]} color="black60">
+          </Text>
+          <Text variant={["xs", "md"]} color="black60">
             {offerNote}
-          </Serif>
+          </Text>
         </>
       )}
     </StepSummaryItem>

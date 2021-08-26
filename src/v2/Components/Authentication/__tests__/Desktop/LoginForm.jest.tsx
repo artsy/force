@@ -1,3 +1,4 @@
+/* eslint-disable jest/no-done-callback */
 import { LoginForm } from "v2/Components/Authentication/Desktop/LoginForm"
 import { mount } from "enzyme"
 import React from "react"
@@ -77,6 +78,7 @@ describe("LoginForm", () => {
           {
             email: "foo@bar.com",
             password: "password123",
+            otpRequired: false,
           },
           expect.anything()
         )
@@ -104,6 +106,7 @@ describe("LoginForm", () => {
           email: "foo@bar.com",
           password: "password123",
           otp_attempt: "123456",
+          otpRequired: true,
         },
         expect.anything()
       )
@@ -141,6 +144,7 @@ describe("LoginForm", () => {
       expect(props.handleSubmit.mock.calls[0][0]).toEqual({
         email: "email@email.com",
         password: "password",
+        otpRequired: false,
       })
     })
 
@@ -199,6 +203,7 @@ describe("LoginForm", () => {
       expect(props.handleSubmit.mock.calls[0][0]).toEqual({
         email: "email@email.com",
         password: "password",
+        otpRequired: false,
       })
 
       const inputOtp = wrapper
@@ -216,6 +221,7 @@ describe("LoginForm", () => {
         email: "email@email.com",
         password: "password",
         otp_attempt: "111111",
+        otpRequired: true,
       })
 
       inputOtp.onChange(ChangeEvents.otpAttempt)
@@ -229,6 +235,7 @@ describe("LoginForm", () => {
         email: "email@email.com",
         password: "password",
         otp_attempt: "123456",
+        otpRequired: true,
       })
     })
 
