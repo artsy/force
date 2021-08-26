@@ -85,9 +85,7 @@ describe("ShippingQuotes", () => {
       shippingQuote => {
         const quote = shippingQuotes
           .findWhere(shippingQuotesItem =>
-            shippingQuotesItem
-              .text()
-              .startsWith(shippingQuote.node.name || shippingQuote.node.tier)
+            shippingQuotesItem.text().startsWith(shippingQuote.node.displayName)
           )
           .first()
 
@@ -98,7 +96,7 @@ describe("ShippingQuotes", () => {
         expect(text).toContain(shippingQuote.node.price)
         expect(text).toContain(
           shippingQuoteDescriptions[
-            (shippingQuote.node.name || shippingQuote.node.tier).toLowerCase()
+            shippingQuote.node.displayName.toLowerCase()
           ]
         )
       }

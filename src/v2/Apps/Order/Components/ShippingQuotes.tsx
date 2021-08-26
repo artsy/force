@@ -39,10 +39,8 @@ export const ShippingQuotes: React.FC<ShippingQuotesProps> = ({
       defaultValue={selectedShippingQuoteId}
     >
       {quotes.map(shippingQuote => {
-        const { id, name, price, tier } = shippingQuote
-        const shippingQuoteName = name || tier
-        const description =
-          shippingQuoteDescriptions[shippingQuoteName.toLowerCase()]
+        const { id, displayName, price } = shippingQuote
+        const description = shippingQuoteDescriptions[displayName.toLowerCase()]
 
         return (
           <BorderedRadio
@@ -53,7 +51,7 @@ export const ShippingQuotes: React.FC<ShippingQuotesProps> = ({
           >
             <Flex flexDirection="column">
               <Text textTransform="capitalize">
-                {shippingQuoteName} ({price})
+                {displayName} ({price})
               </Text>
               <Text textColor="black60">{description}</Text>
             </Flex>
@@ -72,8 +70,7 @@ export const ShippingQuotesFragmentContainer = createFragmentContainer(
         @relay(plural: true) {
         node {
           id
-          tier
-          name
+          displayName
           isSelected
           price(precision: 2)
         }

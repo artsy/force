@@ -301,7 +301,8 @@ describe("Review", () => {
       const buyOrderWithArtaShippingDetails = cloneDeep(
         BuyOrderWithArtaShippingDetails
       ) as any
-      buyOrderWithArtaShippingDetails.lineItems.edges[0].node.shippingQuoteOptions.edges[0].node.isSelected = true
+      buyOrderWithArtaShippingDetails.lineItems.edges[0].node.selectedShippingQuote =
+        buyOrderWithArtaShippingDetails.lineItems.edges[0].node.shippingQuoteOptions.edges[0].node
 
       page = await buildPage({
         mockData: {
