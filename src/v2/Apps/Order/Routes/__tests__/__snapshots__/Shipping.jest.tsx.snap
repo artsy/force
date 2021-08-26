@@ -72,8 +72,7 @@ Array [
 fragment ShippingQuotes_shippingQuotes on CommerceShippingQuoteEdge {
   node {
     id
-    tier
-    name
+    displayName
     isSelected
     price(precision: 2)
   }

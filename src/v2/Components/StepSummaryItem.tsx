@@ -5,9 +5,9 @@ import {
   Flex,
   FlexProps,
   LockIcon,
-  Sans,
-  Serif,
+  Text,
   StackableBorderBox,
+  Clickable,
 } from "@artsy/palette"
 
 export interface StepSummaryItemProps extends FlexProps {
@@ -39,16 +39,18 @@ export const StepSummaryItem: React.SFC<StepSummaryItemProps> = ({
       {showHeading && (
         <Flex justifyContent="space-between" alignItems="baseline" mb={1}>
           {title && (
-            <Serif size={["2", "3t"]} weight="semibold" color="black100">
+            <Text variant={["xs", "md"]} fontWeight="bold" color="black100">
               {title}
-            </Serif>
+            </Text>
           )}
           {!locked && onChange && (
-            <Sans size="2">
-              <a className="colorLink" onClick={onChange}>
-                Change
-              </a>
-            </Sans>
+            <Clickable
+              data-test="change-link"
+              textDecoration="underline"
+              onClick={onChange}
+            >
+              <Text variant="xs">Change</Text>
+            </Clickable>
           )}
           {locked && <LockIcon />}
         </Flex>

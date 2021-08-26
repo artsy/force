@@ -1,4 +1,4 @@
-import { Button, Col, Flex, Row, Spacer } from "@artsy/palette"
+import { Button, Flex, Spacer } from "@artsy/palette"
 import { Counter_order } from "v2/__generated__/Counter_order.graphql"
 import { CounterSubmitMutation } from "v2/__generated__/CounterSubmitMutation.graphql"
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "v2/Apps/Order/Components/ArtworkSummaryItem"
@@ -84,8 +84,7 @@ export class CounterRoute extends Component<CounterProps> {
         commerceSubmitPendingOffer: { orderOrError },
       } = await this.submitPendingOffer({
         input: {
-          // @ts-expect-error STRICT_NULL_CHECK
-          offerId: this.props.order.myLastOffer.internalID,
+          offerId: this.props.order.myLastOffer?.internalID!,
         },
       })
 
@@ -131,11 +130,7 @@ export class CounterRoute extends Component<CounterProps> {
 
     return (
       <>
-        <Row>
-          <Col>
-            <OrderStepper currentStep="Review" steps={counterofferFlowSteps} />
-          </Col>
-        </Row>
+        <OrderStepper currentStep="Review" steps={counterofferFlowSteps} />
         <TwoColumnLayout
           Content={
             <Flex
@@ -146,10 +141,8 @@ export class CounterRoute extends Component<CounterProps> {
                 <CountdownTimer
                   action="Respond"
                   note="Expired offers end the negotiation process permanently."
-                  // @ts-expect-error STRICT_NULL_CHECK
-                  countdownStart={order.lastOffer.createdAt}
-                  // @ts-expect-error STRICT_NULL_CHECK
-                  countdownEnd={order.stateExpiresAt}
+                  countdownStart={order.lastOffer?.createdAt!}
+                  countdownEnd={order.stateExpiresAt!}
                 />
                 <TransactionDetailsSummaryItem
                   order={order}
@@ -159,13 +152,13 @@ export class CounterRoute extends Component<CounterProps> {
                   showOfferNote={true}
                 />
               </Flex>
-              <Spacer mb={[2, 3]} />
+              <Spacer mb={[2, 4]} />
               <Flex flexDirection="column" />
               <Media greaterThan="xs">
                 <Button
                   onClick={this.onSubmitButtonPressed}
                   loading={isCommittingMutation}
-                  size="large"
+                  variant="primaryBlack"
                   width="100%"
                 >
                   Submit
@@ -186,13 +179,13 @@ export class CounterRoute extends Component<CounterProps> {
               <Media greaterThan="xs">
                 <Spacer mb={2} />
               </Media>
-              <Spacer mb={[2, 3]} />
+              <Spacer mb={[2, 4]} />
               <Media at="xs">
                 <>
                   <Button
                     onClick={this.onSubmitButtonPressed}
                     loading={isCommittingMutation}
-                    size="large"
+                    variant="primaryBlack"
                     width="100%"
                   >
                     Submit

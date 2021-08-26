@@ -83,8 +83,7 @@ mutation SelectShippingOptionMutation(
 fragment ShippingQuotes_shippingQuotes on CommerceShippingQuoteEdge {
   node {
     id
-    tier
-    name
+    displayName
     isSelected
     price(precision: 2)
   }
@@ -359,14 +358,7 @@ return {
                                                 "alias": null,
                                                 "args": null,
                                                 "kind": "ScalarField",
-                                                "name": "tier",
-                                                "storageKey": null
-                                              },
-                                              {
-                                                "alias": null,
-                                                "args": null,
-                                                "kind": "ScalarField",
-                                                "name": "name",
+                                                "name": "displayName",
                                                 "storageKey": null
                                               },
                                               {
@@ -429,7 +421,7 @@ return {
     "metadata": {},
     "name": "SelectShippingOptionMutation",
     "operationKind": "mutation",
-    "text": "mutation SelectShippingOptionMutation(\n  $input: CommerceSelectShippingOptionInput!\n) {\n  commerceSelectShippingOption(input: $input) {\n    orderOrError {\n      __typename\n      ... on CommerceOrderWithMutationSuccess {\n        __typename\n        order {\n          __typename\n          lineItems {\n            edges {\n              node {\n                shippingQuoteOptions {\n                  edges {\n                    ...ShippingQuotes_shippingQuotes\n                  }\n                }\n                id\n              }\n            }\n          }\n          id\n        }\n      }\n      ... on CommerceOrderWithMutationFailure {\n        error {\n          type\n          code\n          data\n        }\n      }\n    }\n  }\n}\n\nfragment ShippingQuotes_shippingQuotes on CommerceShippingQuoteEdge {\n  node {\n    id\n    tier\n    name\n    isSelected\n    price(precision: 2)\n  }\n}\n"
+    "text": "mutation SelectShippingOptionMutation(\n  $input: CommerceSelectShippingOptionInput!\n) {\n  commerceSelectShippingOption(input: $input) {\n    orderOrError {\n      __typename\n      ... on CommerceOrderWithMutationSuccess {\n        __typename\n        order {\n          __typename\n          lineItems {\n            edges {\n              node {\n                shippingQuoteOptions {\n                  edges {\n                    ...ShippingQuotes_shippingQuotes\n                  }\n                }\n                id\n              }\n            }\n          }\n          id\n        }\n      }\n      ... on CommerceOrderWithMutationFailure {\n        error {\n          type\n          code\n          data\n        }\n      }\n    }\n  }\n}\n\nfragment ShippingQuotes_shippingQuotes on CommerceShippingQuoteEdge {\n  node {\n    id\n    displayName\n    isSelected\n    price(precision: 2)\n  }\n}\n"
   }
 };
 })();

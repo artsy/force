@@ -1,4 +1,4 @@
-import { Link, TextArea, TextAreaChange } from "@artsy/palette"
+import { Clickable, Text, TextArea, TextAreaChange } from "@artsy/palette"
 import { SystemContext } from "v2/System"
 import React, { useContext } from "react"
 
@@ -17,16 +17,18 @@ export const OfferNote: React.FC<{
           Use this note to add any additional context about your
           {counteroffer ? " counteroffer" : " offer"}. Please do not share
           personal information in this field. For any questions about the work,{" "}
-          <Link
+          <Clickable
+            textDecoration="underline"
             onClick={() =>
-              // @ts-expect-error STRICT_NULL_CHECK
-              mediator.trigger("openOrdersContactArtsyModal", {
+              mediator?.trigger("openOrdersContactArtsyModal", {
                 artworkId,
               })
             }
           >
-            ask our specialists
-          </Link>
+            <Text data-test="ask-specialists" variant="xs" color="black100">
+              ask our specialists
+            </Text>
+          </Clickable>
           .
         </>
       }

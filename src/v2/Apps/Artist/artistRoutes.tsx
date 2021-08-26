@@ -5,6 +5,9 @@ import { graphql } from "react-relay"
 import { AppRouteConfig } from "v2/System/Router/Route"
 import { renderOrRedirect } from "./Routes/Overview/Utils/renderOrRedirect"
 import { getWorksForSaleRouteVariables } from "./Routes/WorksForSale/Utils/getWorksForSaleRouteVariables"
+import { paramsToCamelCase } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
+import { initialAuctionResultsFilterState } from "./Routes/AuctionResults/AuctionResultsFilterContext"
+import { allowedAuctionResultFilters } from "./Utils/allowedAuctionResultFilters"
 
 const ArtistApp = loadable(
   () => import(/* webpackChunkName: "artistBundle" */ "./ArtistApp"),
@@ -144,10 +147,40 @@ export const artistRoutes: AppRouteConfig[] = [
         prepare: () => {
           AuctionResultsRoute.preload()
         },
+        prepareVariables: ({ artistID }, props) => {
+          const urlFilterState = paramsToCamelCase(
+            props.location ? props.location.query : {}
+          )
+
+          return {
+            artistID,
+            ...initialAuctionResultsFilterState({
+              startDate: 0,
+              endDate: 0,
+            }),
+            ...allowedAuctionResultFilters(urlFilterState),
+          }
+        },
         query: graphql`
-          query artistRoutes_AuctionResultsQuery($artistID: String!) {
+          query artistRoutes_AuctionResultsQuery(
+            $artistID: String!
+            $organizations: [String]
+            $categories: [String]
+            $sizes: [ArtworkSizes]
+            $createdAfterYear: Int
+            $createdBeforeYear: Int
+            $allowEmptyCreatedDates: Boolean
+          ) {
             artist(id: $artistID) {
               ...ArtistAuctionResultsRoute_artist
+                @arguments(
+                  organizations: $organizations
+                  categories: $categories
+                  sizes: $sizes
+                  createdAfterYear: $createdAfterYear
+                  createdBeforeYear: $createdBeforeYear
+                  allowEmptyCreatedDates: $allowEmptyCreatedDates
+                )
             }
           }
         `,

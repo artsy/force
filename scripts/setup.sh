@@ -12,12 +12,8 @@ if [[ ! -z $NVM_DIR ]]; then # skip if nvm is not available
   nvm install
 fi
 
-# Install yarn if it does not exist, otherwise ensure its up-to-date.
-echo "Installing yarn"
-npm install --global yarn@latest
-
 echo "Installing dependencies..."
-yarn install
+yarn install || (npm install --global yarn@latest && yarn install)
 
 # For more info on shared configuration see:
 # https://github.com/artsy/force/blob/master/docs/env_configuration.md

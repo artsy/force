@@ -1,4 +1,4 @@
-import Input from "v2/Components/Input"
+import { Input } from "@artsy/palette"
 import React from "react"
 
 export interface OfferInputProps {
@@ -18,10 +18,7 @@ export class OfferInput extends React.Component<OfferInputProps> {
         title="Your offer"
         type="text"
         pattern="[0-9]"
-        // @ts-expect-error STRICT_NULL_CHECK
-        defaultValue={null}
-        // @ts-expect-error STRICT_NULL_CHECK
-        error={showError ? "Offer amount missing or invalid." : null}
+        error={showError ? "Offer amount missing or invalid." : false}
         onFocus={onFocus}
         onChange={ev => {
           const currentValue = ev.currentTarget.value
@@ -36,7 +33,6 @@ export class OfferInput extends React.Component<OfferInputProps> {
 
           this.props.onChange(Number(ev.currentTarget.value || "0"))
         }}
-        block
       />
     )
   }

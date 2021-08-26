@@ -15,8 +15,24 @@ export const AuctionResultsRouteFragmentContainer = createFragmentContainer(
   ArtistAuctionResultsRoute,
   {
     artist: graphql`
-      fragment ArtistAuctionResultsRoute_artist on Artist {
+      fragment ArtistAuctionResultsRoute_artist on Artist
+        @argumentDefinitions(
+          organizations: { type: "[String]" }
+          categories: { type: "[String]" }
+          sizes: { type: "[ArtworkSizes]" }
+          createdAfterYear: { type: "Int" }
+          createdBeforeYear: { type: "Int" }
+          allowEmptyCreatedDates: { type: "Boolean" }
+        ) {
         ...ArtistAuctionResults_artist
+          @arguments(
+            organizations: $organizations
+            categories: $categories
+            sizes: $sizes
+            createdAfterYear: $createdAfterYear
+            createdBeforeYear: $createdBeforeYear
+            allowEmptyCreatedDates: $allowEmptyCreatedDates
+          )
       }
     `,
   }

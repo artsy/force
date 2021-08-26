@@ -8,7 +8,6 @@ describe("normalizePlace", () => {
       stateCode: "NY",
       postalCode: "10536",
       country: "United States",
-      coordinates: [41.2587043, -73.6854137],
     })
   })
 

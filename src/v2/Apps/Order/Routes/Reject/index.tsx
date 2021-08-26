@@ -1,4 +1,4 @@
-import { Button, Col, Flex, Row, Sans, Spacer } from "@artsy/palette"
+import { Button, Flex, Text, Spacer } from "@artsy/palette"
 import { Reject_order } from "v2/__generated__/Reject_order.graphql"
 import { RejectOfferMutation } from "v2/__generated__/RejectOfferMutation.graphql"
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "v2/Apps/Order/Components/ArtworkSummaryItem"
@@ -67,17 +67,15 @@ export class Reject extends Component<RejectProps> {
 
   onSubmit = async () => {
     try {
-      // @ts-expect-error STRICT_NULL_CHECK
       const orderOrError = (
         await this.rejectOffer({
           input: {
-            // @ts-expect-error STRICT_NULL_CHECK
-            offerId: this.props.order.lastOffer.internalID,
+            offerId: this.props.order.lastOffer?.internalID!,
           },
         })
-      ).commerceBuyerRejectOffer.orderOrError
+      ).commerceBuyerRejectOffer?.orderOrError
 
-      if (orderOrError.error) {
+      if (orderOrError?.error) {
         throw orderOrError.error
       }
 
@@ -98,11 +96,7 @@ export class Reject extends Component<RejectProps> {
 
     return (
       <>
-        <Row>
-          <Col>
-            <OrderStepper currentStep="Review" steps={counterofferFlowSteps} />
-          </Col>
-        </Row>
+        <OrderStepper currentStep="Review" steps={counterofferFlowSteps} />
         <TwoColumnLayout
           Content={
             <Flex
@@ -119,27 +113,25 @@ export class Reject extends Component<RejectProps> {
                 <CountdownTimer
                   action="Respond"
                   note="Expired offers end the negotiation process permanently."
-                  // @ts-expect-error STRICT_NULL_CHECK
-                  countdownStart={order.lastOffer.createdAt}
-                  // @ts-expect-error STRICT_NULL_CHECK
-                  countdownEnd={order.stateExpiresAt}
+                  countdownStart={order.lastOffer?.createdAt!}
+                  countdownEnd={order.stateExpiresAt!}
                 />
                 <StepSummaryItem
                   title="Decline seller's offer"
                   onChange={this.onChangeResponse}
                 >
-                  <Sans size="2" color="black60">
+                  <Text variant="xs" color="black60">
                     Declining an offer permanently ends the negotiation process.
                     The seller will not be able to make a counteroffer.
-                  </Sans>
+                  </Text>
                 </StepSummaryItem>
               </Flex>
-              <Spacer mb={[2, 3]} />
+              <Spacer mb={[2, 4]} />
               <Media greaterThan="xs">
                 <Button
                   onClick={this.onSubmit}
                   loading={isCommittingMutation}
-                  size="large"
+                  variant="primaryBlack"
                   width="100%"
                 >
                   Submit
@@ -162,7 +154,7 @@ export class Reject extends Component<RejectProps> {
                   <Button
                     onClick={this.onSubmit}
                     loading={isCommittingMutation}
-                    size="large"
+                    variant="primaryBlack"
                     width="100%"
                   >
                     Submit

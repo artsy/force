@@ -3,7 +3,7 @@ import React from "react"
 
 import { WithCurrentTime } from "v2/Components/WithCurrentTime"
 
-export const CountdownTimer: React.SFC<{
+export const CountdownTimer: React.FunctionComponent<{
   action: string
   note: string
   countdownStart: string

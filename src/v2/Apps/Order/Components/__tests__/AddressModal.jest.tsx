@@ -14,7 +14,7 @@ jest.mock("v2/System/useSystemContext")
 jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
   useMatchMedia: () => ({}),
 }))
-const errorBoxQuery = "Text[data-test='credit-card-error']"
+const errorBoxQuery = "Banner[data-test='credit-card-error']"
 
 // needed for modal contentAnimation
 const tick = () => new Promise(resolve => setTimeout(resolve, 0))

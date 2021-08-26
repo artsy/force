@@ -134,10 +134,10 @@ fragment ArtistAuctionResultsCount_results on AuctionResultConnection {
 }
 
 fragment ArtistAuctionResultsRoute_artist on Artist {
-  ...ArtistAuctionResults_artist
+  ...ArtistAuctionResults_artist_1jJDyA
 }
 
-fragment ArtistAuctionResults_artist on Artist {
+fragment ArtistAuctionResults_artist_1jJDyA on Artist {
   slug
   internalID
   name

@@ -4,7 +4,7 @@ import { ShowMore } from "v2/Components/ArtworkFilter/ArtworkFilters/ShowMore"
 import { useAuctionResultsFilterContext } from "../../AuctionResultsFilterContext"
 import { FilterExpandable } from "v2/Components/ArtworkFilter/ArtworkFilters/FilterExpandable"
 
-const categoryMap = [
+export const categoryMap = [
   { displayName: "Painting", name: "Painting" },
   { displayName: "Work on paper", name: "Work on Paper" },
   { displayName: "Sculpture", name: "Sculpture" },
@@ -43,6 +43,7 @@ export const MediumFilter: React.FC = () => {
               },
               my: 1,
               selected: categories?.includes(name),
+              testID: `medium-filter-${name}`,
             }
             return <Checkbox {...props}>{displayName}</Checkbox>
           })}

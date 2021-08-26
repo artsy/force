@@ -1,10 +1,7 @@
 import {
   Button,
-  Col,
   Flex,
   Message,
-  Row,
-  Sans,
   Spacer,
   Text,
   TextAreaChange,
@@ -192,7 +189,6 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
     }
 
     try {
-      // @ts-expect-error STRICT_NULL_CHECK
       const orderOrError = (
         await this.addInitialOfferToOrder({
           input: {
@@ -201,9 +197,9 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
             orderId: this.props.order.internalID,
           },
         })
-      ).commerceAddInitialOfferToOrder.orderOrError
+      ).commerceAddInitialOfferToOrder?.orderOrError
 
-      if (orderOrError.error) {
+      if (orderOrError?.error) {
         this.handleSubmitError(orderOrError.error)
         return
       }
@@ -219,17 +215,12 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
     const { order, isCommittingMutation } = this.props
 
     const offerItem = getOfferItemFromOrder(order.lineItems)
-    // @ts-expect-error STRICT_NULL_CHECK
-    const artworkId = order.lineItems.edges[0].node.artwork.slug
+    const artworkId = order.lineItems?.edges?.[0]?.node?.artwork?.slug
     const orderCurrency = order.currencyCode
 
     return (
       <>
-        <Row>
-          <Col>
-            <OrderStepper currentStep="Offer" steps={offerFlowSteps} />
-          </Col>
-        </Row>
+        <OrderStepper currentStep="Offer" steps={offerFlowSteps} />
         <TwoColumnLayout
           Content={
             <Flex
@@ -248,26 +239,25 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
                 />
               </Flex>
               {Boolean(offerItem?.price) && (
-                <Sans size="2" color="black60">
-                  {/* @ts-expect-error STRICT_NULL_CHECK */}
-                  List price: {offerItem.price}
-                </Sans>
+                <Text my={1} variant="xs" color="black60">
+                  List price: {offerItem?.price}
+                </Text>
               )}
               {!order.isInquiryOrder && (
                 <>
-                  <Spacer mb={[2, 3]} />
+                  <Spacer mb={2} />
                   <RevealButton align="left" buttonLabel="Add note to seller">
                     <OfferNote
                       onChange={offerNoteValue =>
                         this.setState({ offerNoteValue })
                       }
-                      artworkId={artworkId}
+                      artworkId={artworkId!}
                     />
                   </RevealButton>
                 </>
               )}
-              <Spacer mb={[2, 3]} />
-              <Message p={[2, 3]}>
+              <Spacer mb={[2, 4]} />
+              <Message p={2}>
                 Please note that all final offers are binding. If your offer is
                 accepted, your payment will be processed immediately.
                 <Text mt={1}>
@@ -275,12 +265,12 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
                   as the seller might be receiving competing offers.
                 </Text>
               </Message>
-              <Spacer mb={[2, 3]} />
+              <Spacer mb={[2, 4]} />
               <Media greaterThan="xs">
                 <Button
                   onClick={this.onContinueButtonPressed}
                   loading={isCommittingMutation}
-                  size="large"
+                  variant="primaryBlack"
                   width="100%"
                 >
                   Continue
@@ -294,7 +284,6 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
                 <ArtworkSummaryItem order={order} />
                 <TransactionDetailsSummaryItem
                   order={order}
-                  // @ts-expect-error STRICT_NULL_CHECK
                   offerOverride={
                     this.state.offerValue &&
                     this.state.offerValue.toLocaleString("en-US", {
@@ -306,13 +295,13 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
                 />
               </Flex>
               <BuyerGuarantee />
-              <Spacer mb={[2, 3]} />
+              <Spacer mb={[2, 4]} />
               <Media at="xs">
                 <>
                   <Button
                     onClick={this.onContinueButtonPressed}
                     loading={isCommittingMutation}
-                    size="large"
+                    variant="primaryBlack"
                     width="100%"
                   >
                     Continue

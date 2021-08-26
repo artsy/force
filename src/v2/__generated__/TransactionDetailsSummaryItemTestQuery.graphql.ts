@@ -32,15 +32,9 @@ export type TransactionDetailsSummaryItemTestQueryRawResponse = {
                         readonly __typename: string;
                         readonly id: string | null;
                     }) | null;
-                    readonly shippingQuoteOptions: ({
-                        readonly edges: ReadonlyArray<({
-                            readonly node: ({
-                                readonly name: string | null;
-                                readonly tier: string;
-                                readonly isSelected: boolean;
-                                readonly id: string | null;
-                            }) | null;
-                        }) | null> | null;
+                    readonly selectedShippingQuote: ({
+                        readonly displayName: string;
+                        readonly id: string | null;
                     }) | null;
                     readonly id: string | null;
                 }) | null;
@@ -102,15 +96,9 @@ export type TransactionDetailsSummaryItemTestQueryRawResponse = {
                         readonly __typename: string;
                         readonly id: string | null;
                     }) | null;
-                    readonly shippingQuoteOptions: ({
-                        readonly edges: ReadonlyArray<({
-                            readonly node: ({
-                                readonly name: string | null;
-                                readonly tier: string;
-                                readonly isSelected: boolean;
-                                readonly id: string | null;
-                            }) | null;
-                        }) | null> | null;
+                    readonly selectedShippingQuote: ({
+                        readonly displayName: string;
+                        readonly id: string | null;
                     }) | null;
                     readonly id: string | null;
                 }) | null;
@@ -164,15 +152,9 @@ fragment TransactionDetailsSummaryItem_order on CommerceOrder {
             id
           }
         }
-        shippingQuoteOptions {
-          edges {
-            node {
-              name
-              tier
-              isSelected
-              id
-            }
-          }
+        selectedShippingQuote {
+          displayName
+          id
         }
         id
       }
@@ -444,55 +426,19 @@ return {
                       {
                         "alias": null,
                         "args": null,
-                        "concreteType": "CommerceShippingQuoteConnection",
+                        "concreteType": "CommerceShippingQuote",
                         "kind": "LinkedField",
-                        "name": "shippingQuoteOptions",
+                        "name": "selectedShippingQuote",
                         "plural": false,
                         "selections": [
                           {
                             "alias": null,
                             "args": null,
-                            "concreteType": "CommerceShippingQuoteEdge",
-                            "kind": "LinkedField",
-                            "name": "edges",
-                            "plural": true,
-                            "selections": [
-                              {
-                                "alias": null,
-                                "args": null,
-                                "concreteType": "CommerceShippingQuote",
-                                "kind": "LinkedField",
-                                "name": "node",
-                                "plural": false,
-                                "selections": [
-                                  {
-                                    "alias": null,
-                                    "args": null,
-                                    "kind": "ScalarField",
-                                    "name": "name",
-                                    "storageKey": null
-                                  },
-                                  {
-                                    "alias": null,
-                                    "args": null,
-                                    "kind": "ScalarField",
-                                    "name": "tier",
-                                    "storageKey": null
-                                  },
-                                  {
-                                    "alias": null,
-                                    "args": null,
-                                    "kind": "ScalarField",
-                                    "name": "isSelected",
-                                    "storageKey": null
-                                  },
-                                  (v2/*: any*/)
-                                ],
-                                "storageKey": null
-                              }
-                            ],
+                            "kind": "ScalarField",
+                            "name": "displayName",
                             "storageKey": null
-                          }
+                          },
+                          (v2/*: any*/)
                         ],
                         "storageKey": null
                       },
@@ -562,7 +508,7 @@ return {
     "metadata": {},
     "name": "TransactionDetailsSummaryItemTestQuery",
     "operationKind": "query",
-    "text": "query TransactionDetailsSummaryItemTestQuery {\n  order: commerceOrder(id: \"whatevs\") {\n    __typename\n    ...TransactionDetailsSummaryItem_order\n    id\n  }\n}\n\nfragment TransactionDetailsSummaryItem_order on CommerceOrder {\n  __typename\n  requestedFulfillment {\n    __typename\n  }\n  lineItems {\n    edges {\n      node {\n        artworkOrEditionSet {\n          __typename\n          ... on Artwork {\n            price\n          }\n          ... on EditionSet {\n            price\n            id\n          }\n          ... on Node {\n            id\n          }\n        }\n        shippingQuoteOptions {\n          edges {\n            node {\n              name\n              tier\n              isSelected\n              id\n            }\n          }\n        }\n        id\n      }\n    }\n  }\n  mode\n  shippingTotal(precision: 2)\n  shippingTotalCents\n  taxTotal(precision: 2)\n  taxTotalCents\n  itemsTotal(precision: 2)\n  buyerTotal(precision: 2)\n  ... on CommerceOfferOrder {\n    lastOffer {\n      internalID\n      amount(precision: 2)\n      amountCents\n      shippingTotal(precision: 2)\n      shippingTotalCents\n      taxTotal(precision: 2)\n      taxTotalCents\n      buyerTotal(precision: 2)\n      buyerTotalCents\n      fromParticipant\n      note\n      id\n    }\n    myLastOffer {\n      internalID\n      amount(precision: 2)\n      amountCents\n      shippingTotal(precision: 2)\n      shippingTotalCents\n      taxTotal(precision: 2)\n      taxTotalCents\n      buyerTotal(precision: 2)\n      buyerTotalCents\n      fromParticipant\n      note\n      id\n    }\n  }\n}\n"
+    "text": "query TransactionDetailsSummaryItemTestQuery {\n  order: commerceOrder(id: \"whatevs\") {\n    __typename\n    ...TransactionDetailsSummaryItem_order\n    id\n  }\n}\n\nfragment TransactionDetailsSummaryItem_order on CommerceOrder {\n  __typename\n  requestedFulfillment {\n    __typename\n  }\n  lineItems {\n    edges {\n      node {\n        artworkOrEditionSet {\n          __typename\n          ... on Artwork {\n            price\n          }\n          ... on EditionSet {\n            price\n            id\n          }\n          ... on Node {\n            id\n          }\n        }\n        selectedShippingQuote {\n          displayName\n          id\n        }\n        id\n      }\n    }\n  }\n  mode\n  shippingTotal(precision: 2)\n  shippingTotalCents\n  taxTotal(precision: 2)\n  taxTotalCents\n  itemsTotal(precision: 2)\n  buyerTotal(precision: 2)\n  ... on CommerceOfferOrder {\n    lastOffer {\n      internalID\n      amount(precision: 2)\n      amountCents\n      shippingTotal(precision: 2)\n      shippingTotalCents\n      taxTotal(precision: 2)\n      taxTotalCents\n      buyerTotal(precision: 2)\n      buyerTotalCents\n      fromParticipant\n      note\n      id\n    }\n    myLastOffer {\n      internalID\n      amount(precision: 2)\n      amountCents\n      shippingTotal(precision: 2)\n      shippingTotalCents\n      taxTotal(precision: 2)\n      taxTotalCents\n      buyerTotal(precision: 2)\n      buyerTotalCents\n      fromParticipant\n      note\n      id\n    }\n  }\n}\n"
   }
 };
 })();

@@ -1,4 +1,3 @@
-import { Link } from "@artsy/palette"
 import { SystemContextProvider } from "v2/System"
 import { ReactWrapper, mount } from "enzyme"
 import React from "react"
@@ -71,7 +70,7 @@ describe("OfferNote", () => {
 
   it("has a link to ask a specialist things", () => {
     const wrapper = getWrapper()
-    const link = wrapper.find(Link)
+    const link = wrapper.find("Text[data-test='ask-specialists']")
     expect(link.text()).toContain("ask our specialists")
 
     link.simulate("click")

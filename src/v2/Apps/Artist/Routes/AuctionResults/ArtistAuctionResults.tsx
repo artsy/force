@@ -37,6 +37,12 @@ import { AuctionResultsControls } from "./Components/AuctionResultsControls"
 import { MarketStatsQueryRenderer } from "./Components/MarketStats"
 import { SortSelect } from "./Components/SortSelect"
 import { TableSidebar } from "./Components/TableSidebar"
+import { useRouter } from "v2/System/Router/useRouter"
+import {
+  paramsToCamelCase,
+  updateUrl,
+} from "v2/Components/ArtworkFilter/Utils/urlBuilder"
+import { allowedAuctionResultFilters } from "../../Utils/allowedAuctionResultFilters"
 
 const logger = createLogger("ArtistAuctionResults.tsx")
 
@@ -89,10 +95,10 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
 
   const { startAt, endAt } =
     artist.auctionResultsConnection?.createdYearRange ?? {}
-  const auctionResultsFilterResetState = initialAuctionResultsFilterState(
-    endAt,
-    startAt
-  )
+  const auctionResultsFilterResetState = initialAuctionResultsFilterState({
+    startDate: startAt,
+    endDate: endAt,
+  })
 
   // Is current filter state different from the default (reset) state?
   const filtersAtDefault = isEqual(
@@ -269,10 +275,17 @@ export const ArtistAuctionResultsRefetchContainer = createRefetchContainer(
     const { startAt, endAt } =
       props.artist.auctionResultsConnection?.createdYearRange ?? {}
 
+    const { match } = useRouter()
+    const filters = paramsToCamelCase(match?.location.query)
+
     return (
       <AuctionResultsFilterContextProvider
         earliestCreatedYear={startAt}
         latestCreatedYear={endAt}
+        filters={filters}
+        onChange={filterState =>
+          updateUrl(allowedAuctionResultFilters(filterState))
+        }
       >
         <AuctionResultsContainer {...props} />
       </AuctionResultsFilterContextProvider>

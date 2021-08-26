@@ -29,8 +29,7 @@ export type ShippingQuotes_Test_QueryRawResponse = {
                         readonly edges: ReadonlyArray<({
                             readonly node: ({
                                 readonly id: string;
-                                readonly tier: string;
-                                readonly name: string | null;
+                                readonly displayName: string;
                                 readonly isSelected: boolean;
                                 readonly price: string | null;
                             }) | null;
@@ -74,8 +73,7 @@ query ShippingQuotes_Test_Query {
 fragment ShippingQuotes_shippingQuotes on CommerceShippingQuoteEdge {
   node {
     id
-    tier
-    name
+    displayName
     isSelected
     price(precision: 2)
   }
@@ -245,14 +243,7 @@ return {
                                     "alias": null,
                                     "args": null,
                                     "kind": "ScalarField",
-                                    "name": "tier",
-                                    "storageKey": null
-                                  },
-                                  {
-                                    "alias": null,
-                                    "args": null,
-                                    "kind": "ScalarField",
-                                    "name": "name",
+                                    "name": "displayName",
                                     "storageKey": null
                                   },
                                   {
@@ -305,7 +296,7 @@ return {
     "metadata": {},
     "name": "ShippingQuotes_Test_Query",
     "operationKind": "query",
-    "text": "query ShippingQuotes_Test_Query {\n  order: commerceOrder {\n    __typename\n    lineItems {\n      edges {\n        node {\n          shippingQuoteOptions {\n            edges {\n              ...ShippingQuotes_shippingQuotes\n            }\n          }\n          id\n        }\n      }\n    }\n    id\n  }\n}\n\nfragment ShippingQuotes_shippingQuotes on CommerceShippingQuoteEdge {\n  node {\n    id\n    tier\n    name\n    isSelected\n    price(precision: 2)\n  }\n}\n"
+    "text": "query ShippingQuotes_Test_Query {\n  order: commerceOrder {\n    __typename\n    lineItems {\n      edges {\n        node {\n          shippingQuoteOptions {\n            edges {\n              ...ShippingQuotes_shippingQuotes\n            }\n          }\n          id\n        }\n      }\n    }\n    id\n  }\n}\n\nfragment ShippingQuotes_shippingQuotes on CommerceShippingQuoteEdge {\n  node {\n    id\n    displayName\n    isSelected\n    price(precision: 2)\n  }\n}\n"
   }
 };
 })();
