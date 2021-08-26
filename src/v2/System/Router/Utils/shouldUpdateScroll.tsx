@@ -4,7 +4,20 @@
  *
  * @see https://github.com/4Catalyzer/found-scroll#custom-scroll-behavior
  */
-export function shouldUpdateScroll(_prevRenderArgs, { routes }) {
+
+const getParentRoute = routes => {
+  let parentRoute
+
+  if (Array.isArray(routes)) {
+    parentRoute = routes.find(
+      route => route.ignoreScrollBehaviorBetweenChildren
+    )
+  }
+
+  return parentRoute ?? null
+}
+
+export function shouldUpdateScroll(prevRenderArgs, { routes }) {
   try {
     // If true, don't reset scroll position on route change
     if (routes?.some(route => route.ignoreScrollBehavior)) {
@@ -13,6 +26,18 @@ export function shouldUpdateScroll(_prevRenderArgs, { routes }) {
 
     if (routes.some(route => route.scrollToTop)) {
       return [0, 0]
+    }
+
+    const parentRoute = getParentRoute(routes)
+    const prevParentRoute = getParentRoute(prevRenderArgs?.routes)
+
+    if (
+      prevParentRoute &&
+      parentRoute &&
+      prevParentRoute.path === parentRoute.path
+    ) {
+      console.log("[debug] parent navigate")
+      return false
     }
   } catch (error) {
     console.error("[Router/Utils/shouldUpdateScroll] Error:", error)

@@ -20,6 +20,7 @@ interface RouteConfigProps extends RouteConfig {
   hideFooter?: true
   hideNavigationTabs?: boolean
   ignoreScrollBehavior?: boolean
+  ignoreScrollBehaviorBetweenChildren?: boolean
   prepare?: () => void
   prepareVariables?: (params: any, props: any) => object
   query?: GraphQLTaggedNode
