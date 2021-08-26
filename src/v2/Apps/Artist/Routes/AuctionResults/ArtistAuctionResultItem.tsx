@@ -396,8 +396,8 @@ const renderPricing = (
       <Box textAlign={textAlign} mb="5px">
         {salePrice && (
           <>
-            <Flex alignItems="center">
-              <Text variant="md" fontWeight="bold" mr={0.5}>
+            <Flex alignItems="center" justifyContent="flex-end">
+              <Text variant="md" fontWeight="bold">
                 {salePrice}
               </Text>
               {!!showPriceUSD && (
@@ -406,6 +406,7 @@ const renderPricing = (
                   lineHeight={1}
                   color="black60"
                   style={{ paddingTop: "2px" }}
+                  ml={0.5}
                 >
                   {salePriceUSD}
                 </Text>
