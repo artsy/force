@@ -405,7 +405,7 @@ const renderPricing = (
                   variant="xs"
                   lineHeight={1}
                   color="black60"
-                  style={{ paddingTop: "3px" }}
+                  style={{ paddingTop: "2px" }}
                 >
                   {salePriceUSD}
                 </Text>

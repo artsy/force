@@ -126,6 +126,14 @@ describe("AuctionResults", () => {
       expect(html).toContain("Realized Price")
     })
 
+    it("renders price in original currency and in USD only if currency is not USD", () => {
+      const html = wrapper.html()
+      expect(html).toContain("€12,000")
+      expect(html).toContain("$15,000")
+
+      expect(html.match("20,000")?.length).toEqual(1)
+    })
+
     it("renders proper select options", () => {
       const html = wrapper.find("select").first().html()
       expect(html).toContain("Most recent")
@@ -530,11 +538,11 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_QueryRawResponse = {
               "Pablo Picasso (1881-1973)\n\nMandoline sur une table\n\nsigned 'Picasso' (lower right)\n\noil on canvas\n\n32 3/8 x 39 ½ in. (82.2 x 100.4 cm.)\n\nPainted in 1922",
             date_text: "1881-1973",
             saleDate: "2020-02-05T19:00:00-05:00",
-            currency: "USD",
+            currency: "EUR",
             price_realized: {
-              display: "$NaN",
-              display_usd: "$NaN",
-              cents_usd: 0,
+              display: "€12,000",
+              display_usd: "$15,000",
+              cents_usd: 15000,
             },
             boughtIn: false,
             performance: { mid: "-3%" },
@@ -561,9 +569,9 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_QueryRawResponse = {
             saleDate: "2020-02-05T19:00:00Z",
             currency: "USD",
             price_realized: {
-              display: "$NaN",
-              display_usd: "$NaN",
-              cents_usd: 0,
+              display: "$20,000",
+              display_usd: "$20,000",
+              cents_usd: 20000,
             },
             boughtIn: false,
             performance: { mid: "-7.4%" },
