@@ -3,7 +3,7 @@ import { EntityHeader, Image, Shelf, Text } from "@artsy/palette"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
-import { ArtistFollowArtistButton } from "v2/Apps/Artist/Components/ArtistHeader/ArtistFollowArtistButton"
+import { FollowArtistButtonFragmentContainer } from "v2/Components/FollowButton/FollowArtistButton"
 import { AnalyticsSchema, useAnalyticsContext } from "v2/System"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { extractNodes } from "v2/Utils/extractNodes"
@@ -87,14 +87,8 @@ const ArtistRelatedArtistsRail: React.FC<ArtistRelatedArtistsRailProps> = ({
                     : undefined
                 }
                 FollowButton={
-                  <ArtistFollowArtistButton
-                    artist={{
-                      internalID: node.internalID,
-                      slug: node.slug,
-                      name: node.name,
-                      isFollowed: node.isFollowed,
-                      " $refType": "ArtistFollowArtistButton_artist",
-                    }}
+                  <FollowArtistButtonFragmentContainer
+                    artist={node}
                     contextModule={ContextModule.featuredArtistsRail}
                     buttonProps={{
                       size: "small",
@@ -117,13 +111,13 @@ export const ArtistRelatedArtistsRailFragmentContainer = createFragmentContainer
   {
     artist: graphql`
       fragment ArtistRelatedArtistsRail_artist on Artist {
-        ...ArtistFollowArtistButton_artist
         name
         href
         related {
           artistsConnection(kind: MAIN, first: 20) {
             edges {
               node {
+                ...FollowArtistButton_artist
                 name
                 href
                 internalID
@@ -150,7 +144,6 @@ export const ArtistRelatedArtistsRailFragmentContainer = createFragmentContainer
                     }
                   }
                 }
-
                 image {
                   cropped(width: 50, height: 50) {
                     url

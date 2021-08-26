@@ -1,18 +1,20 @@
 import {
-  Avatar,
   Box,
   Column,
   Flex,
   GridColumns,
   HTML,
+  Image,
   ReadMore,
+  ResponsiveBox,
   Text,
 } from "@artsy/palette"
 import React from "react"
+import { ContextModule } from "@artsy/cohesion"
 import { createFragmentContainer, graphql } from "react-relay"
+import { FollowArtistButtonFragmentContainer } from "v2/Components/FollowButton/FollowArtistButton"
 import { SelectedCareerAchievementsFragmentContainer } from "v2/Components/SelectedCareerAchievements"
 import { ArtistHeader_artist } from "v2/__generated__/ArtistHeader_artist.graphql"
-import { ArtistFollowArtistButtonFragmentContainer } from "./ArtistFollowArtistButton"
 
 interface ArtistHeaderProps {
   artist: ArtistHeader_artist
@@ -23,44 +25,62 @@ const ArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {
     artist.biographyBlurb!.credit
   )
 
+  const avatar = artist.image?.cropped
+
   return (
     <Box data-test="artistHeader">
       <GridColumns>
-        {artist.imageUrl && (
-          <Column span={1}>
-            <Flex justifyContent={["center", "left"]}>
-              <Avatar src={artist.imageUrl} size="md" />
-            </Flex>
-          </Column>
-        )}
-        <Column span={5}>
-          <Text variant="xl" as="h1" textAlign={["center", "left"]}>
-            {artist.name}
-          </Text>
-
-          {artist.formattedNationalityAndBirthday && (
-            <Text
-              variant="xl"
-              as="h2"
-              color="black60"
-              mb={2}
-              textAlign={["center", "left"]}
-            >
-              {artist.formattedNationalityAndBirthday}
-            </Text>
-          )}
-
+        <Column span={6}>
           <GridColumns>
-            <Column span={[12, 6, 3]}>
-              <ArtistFollowArtistButtonFragmentContainer artist={artist} />
+            {avatar && (
+              <Column span={2}>
+                <Flex justifyContent={["center", "left"]}>
+                  <ResponsiveBox
+                    aspectWidth={1}
+                    aspectHeight={1}
+                    maxWidth={100}
+                    borderRadius="50%"
+                    overflow="hidden"
+                  >
+                    <Image
+                      src={avatar.src}
+                      srcSet={avatar.srcSet}
+                      alt=""
+                      width="100%"
+                      height="100%"
+                    />
+                  </ResponsiveBox>
+                </Flex>
+              </Column>
+            )}
+
+            <Column span={10}>
+              <Text variant="xl" as="h1" textAlign={["center", "left"]}>
+                {artist.name}
+              </Text>
+
+              {artist.formattedNationalityAndBirthday && (
+                <Text
+                  variant="xl"
+                  as="h2"
+                  color="black60"
+                  textAlign={["center", "left"]}
+                >
+                  {artist.formattedNationalityAndBirthday}
+                </Text>
+              )}
+            </Column>
+
+            <Column start={avatar ? 3 : undefined} span={4}>
+              <FollowArtistButtonFragmentContainer
+                artist={artist}
+                buttonProps={{ size: "medium", width: "100%" }}
+                contextModule={ContextModule.artistHeader}
+              />
             </Column>
 
             {!!artist.counts?.follows && (
-              <Column
-                span={[12, 6, 9]}
-                display={["block", "flex"]}
-                alignItems="center"
-              >
+              <Column span={6} display={["block", "flex"]} alignItems="center">
                 <Text
                   variant="xs"
                   color="black60"
@@ -108,7 +128,7 @@ export const ArtistHeaderFragmentContainer = createFragmentContainer(
             defaultValue: ["blue-chip", "top-established", "top-emerging"]
           }
         ) {
-        ...ArtistFollowArtistButton_artist
+        ...FollowArtistButton_artist
         ...SelectedCareerAchievements_artist
 
         artistHighlights: highlights {
@@ -142,7 +162,12 @@ export const ArtistHeaderFragmentContainer = createFragmentContainer(
             }
           }
         }
-        imageUrl
+        image {
+          cropped(width: 200, height: 200) {
+            src
+            srcSet
+          }
+        }
         internalID
         slug
         name

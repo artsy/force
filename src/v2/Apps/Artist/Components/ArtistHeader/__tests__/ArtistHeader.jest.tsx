@@ -10,12 +10,6 @@ jest.mock("react-tracking")
 jest.mock("v2/Components/SelectedCareerAchievements", () => ({
   SelectedCareerAchievementsFragmentContainer: () => null,
 }))
-jest.mock(
-  "v2/Apps/Artist/Components/ArtistHeader/ArtistFollowArtistButton.tsx",
-  () => ({
-    ArtistFollowArtistButtonFragmentContainer: () => null,
-  })
-)
 
 describe("ArtistHeader", () => {
   const { getWrapper } = setupTestWrapper<ArtistHeader_Test_Query>({
@@ -52,12 +46,8 @@ describe("ArtistHeader", () => {
       }),
     })
 
-    expect(wrapper.find("Avatar").length).toBe(1)
     expect(wrapper.text()).toContain("artistName")
     expect(wrapper.text()).toContain("formattedNationalityAndBirthday")
-    expect(
-      wrapper.find("ArtistFollowArtistButtonFragmentContainer").length
-    ).toBe(1)
     expect(wrapper.text()).toContain("111 Followers")
     expect(wrapper.text()).toContain("biographyBlurbText")
     expect(

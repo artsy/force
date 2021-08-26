@@ -121,13 +121,6 @@ fragment ArtistCurrentShowsRail_artist on Artist {
   }
 }
 
-fragment ArtistFollowArtistButton_artist on Artist {
-  internalID
-  slug
-  name
-  isFollowed
-}
-
 fragment ArtistGenes_artist on Artist {
   related {
     genes {
@@ -173,13 +166,13 @@ fragment ArtistOverviewRoute_artist on Artist {
 }
 
 fragment ArtistRelatedArtistsRail_artist on Artist {
-  ...ArtistFollowArtistButton_artist
   name
   href
   related {
     artistsConnection(kind: MAIN, first: 20) {
       edges {
         node {
+          ...FollowArtistButton_artist
           name
           href
           internalID
@@ -303,6 +296,17 @@ fragment Details_artwork on Artwork {
       display
     }
     id
+  }
+}
+
+fragment FollowArtistButton_artist on Artist {
+  id
+  internalID
+  name
+  slug
+  is_followed: isFollowed
+  counts {
+    follows
   }
 }
 
@@ -755,14 +759,7 @@ v18 = {
   "name": "first",
   "value": 20
 },
-v19 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "isFollowed",
-  "storageKey": null
-},
-v20 = [
+v19 = [
   {
     "kind": "Literal",
     "name": "height",
@@ -774,10 +771,10 @@ v20 = [
     "value": 325
   }
 ],
-v21 = [
+v20 = [
   {
     "alias": null,
-    "args": (v20/*: any*/),
+    "args": (v19/*: any*/),
     "concreteType": "CroppedImageUrl",
     "kind": "LinkedField",
     "name": "cropped",
@@ -1180,11 +1177,43 @@ return {
                         "name": "node",
                         "plural": false,
                         "selections": [
-                          (v12/*: any*/),
-                          (v9/*: any*/),
+                          (v11/*: any*/),
                           (v2/*: any*/),
-                          (v19/*: any*/),
+                          (v12/*: any*/),
                           (v1/*: any*/),
+                          {
+                            "alias": "is_followed",
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "isFollowed",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "concreteType": "ArtistCounts",
+                            "kind": "LinkedField",
+                            "name": "counts",
+                            "plural": false,
+                            "selections": [
+                              {
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "follows",
+                                "storageKey": null
+                              }
+                            ],
+                            "storageKey": null
+                          },
+                          (v9/*: any*/),
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "isFollowed",
+                            "storageKey": null
+                          },
                           {
                             "alias": null,
                             "args": null,
@@ -1235,7 +1264,7 @@ return {
                                         "kind": "LinkedField",
                                         "name": "image",
                                         "plural": false,
-                                        "selections": (v21/*: any*/),
+                                        "selections": (v20/*: any*/),
                                         "storageKey": null
                                       },
                                       (v11/*: any*/)
@@ -1277,8 +1306,7 @@ return {
                               }
                             ],
                             "storageKey": null
-                          },
-                          (v11/*: any*/)
+                          }
                         ],
                         "storageKey": null
                       }
@@ -1430,7 +1458,7 @@ return {
                         "selections": [
                           {
                             "alias": null,
-                            "args": (v20/*: any*/),
+                            "args": (v19/*: any*/),
                             "concreteType": "CroppedImageUrl",
                             "kind": "LinkedField",
                             "name": "cropped",
@@ -1533,7 +1561,7 @@ return {
                         "kind": "LinkedField",
                         "name": "thumbnailImage",
                         "plural": false,
-                        "selections": (v21/*: any*/),
+                        "selections": (v20/*: any*/),
                         "storageKey": null
                       },
                       (v11/*: any*/)
@@ -1546,7 +1574,6 @@ return {
             ],
             "storageKey": "articlesConnection(first:10,inEditorialFeed:true,sort:\"PUBLISHED_AT_DESC\")"
           },
-          (v19/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -1576,7 +1603,7 @@ return {
     "metadata": {},
     "name": "ArtistOverviewRoute_Test_Query",
     "operationKind": "query",
-    "text": "query ArtistOverviewRoute_Test_Query {\n  artist(id: \"test\") {\n    ...ArtistOverviewRoute_artist\n    id\n  }\n}\n\nfragment ArtistCareerHighlights_artist on Artist {\n  ...SelectedCareerAchievements_artist\n  ...ArtistConsignButton_artist\n  ...ArtistGenes_artist\n  biographyBlurb(format: HTML, partnerBio: false) {\n    partner {\n      profile {\n        href\n        id\n      }\n      id\n    }\n    credit\n    text\n  }\n  name\n  related {\n    genes {\n      edges {\n        node {\n          id\n        }\n      }\n    }\n  }\n  slug\n}\n\nfragment ArtistConsignButton_artist on Artist {\n  targetSupply {\n    isInMicrofunnel\n    isTargetSupply\n  }\n  internalID\n  slug\n  name\n  href\n  image {\n    cropped(width: 50, height: 50) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ArtistCurrentArticlesRail_artist on Artist {\n  articlesConnection(first: 10, sort: PUBLISHED_AT_DESC, inEditorialFeed: true) {\n    edges {\n      node {\n        internalID\n        slug\n        href\n        thumbnailTitle\n        publishedAt(format: \"MMM Do, YYYY\")\n        thumbnailImage {\n          cropped(width: 325, height: 230) {\n            width\n            height\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n  }\n  internalID\n  name\n  slug\n}\n\nfragment ArtistCurrentShowsRail_artist on Artist {\n  internalID\n  name\n  slug\n  showsConnection(first: 5, sort: END_AT_ASC, status: \"running\") {\n    edges {\n      node {\n        coverImage {\n          cropped(width: 325, height: 230) {\n            width\n            height\n            srcSet\n            src\n          }\n        }\n        exhibitionPeriod\n        href\n        internalID\n        name\n        slug\n        id\n      }\n    }\n  }\n}\n\nfragment ArtistFollowArtistButton_artist on Artist {\n  internalID\n  slug\n  name\n  isFollowed\n}\n\nfragment ArtistGenes_artist on Artist {\n  related {\n    genes {\n      edges {\n        node {\n          href\n          name\n          id\n        }\n      }\n    }\n  }\n}\n\nfragment ArtistNotableWorksRail_artist on Artist {\n  slug\n  internalID\n  filterArtworksConnection(sort: \"-weighted_iconicity\", first: 10) {\n    edges {\n      node {\n        internalID\n        slug\n        ...ShelfArtwork_artwork_OqwQs\n        id\n      }\n    }\n    id\n  }\n}\n\nfragment ArtistOverviewRoute_artist on Artist {\n  ...ArtistNotableWorksRail_artist\n  ...ArtistCareerHighlights_artist\n  ...ArtistWorksForSaleRail_artist\n  ...ArtistCurrentShowsRail_artist\n  ...ArtistCurrentArticlesRail_artist\n  ...ArtistRelatedArtistsRail_artist\n  name\n  counts {\n    artworks\n  }\n  internalID\n}\n\nfragment ArtistRelatedArtistsRail_artist on Artist {\n  ...ArtistFollowArtistButton_artist\n  name\n  href\n  related {\n    artistsConnection(kind: MAIN, first: 20) {\n      edges {\n        node {\n          name\n          href\n          internalID\n          isFollowed\n          slug\n          nationality\n          birthday\n          filterArtworksConnection(sort: \"-weighted_iconicity\", first: 1) {\n            edges {\n              node {\n                internalID\n                slug\n                image {\n                  cropped(width: 325, height: 230) {\n                    width\n                    height\n                    src\n                    srcSet\n                  }\n                }\n                id\n              }\n            }\n            id\n          }\n          image {\n            cropped(width: 50, height: 50) {\n              url\n            }\n          }\n          id\n        }\n      }\n    }\n  }\n}\n\nfragment ArtistWorksForSaleRail_artist on Artist {\n  artworksConnection(first: 20, sort: AVAILABILITY_ASC) {\n    edges {\n      node {\n        internalID\n        slug\n        ...ShelfArtwork_artwork_OqwQs\n        id\n      }\n    }\n  }\n  internalID\n  slug\n}\n\nfragment Badge_artwork on Artwork {\n  is_biddable: isBiddable\n  href\n  sale {\n    is_preview: isPreview\n    display_timely_at: displayTimelyAt\n    id\n  }\n}\n\nfragment Contact_artwork on Artwork {\n  href\n  is_inquireable: isInquireable\n  sale {\n    is_auction: isAuction\n    is_live_open: isLiveOpen\n    is_open: isOpen\n    is_closed: isClosed\n    id\n  }\n  partner(shallow: true) {\n    type\n    id\n  }\n  sale_artwork: saleArtwork {\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    counts {\n      bidder_positions: bidderPositions\n    }\n    id\n  }\n}\n\nfragment Details_artwork on Artwork {\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  ...Contact_artwork\n  href\n}\n\nfragment SaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n\nfragment SelectedCareerAchievements_artist on Artist {\n  highlights {\n    partnersConnection(first: 10, displayOnPartnerProfile: true, representedBy: true, partnerCategory: [\"blue-chip\", \"top-established\", \"top-emerging\"]) {\n      edges {\n        node {\n          categories {\n            slug\n            id\n          }\n          id\n        }\n        id\n      }\n    }\n  }\n  insights {\n    type\n    label\n    entities\n  }\n  auctionResultsConnection(recordsTrusted: true, first: 1, sort: PRICE_AND_DATE_DESC) {\n    edges {\n      node {\n        price_realized: priceRealized {\n          display(format: \"0.0a\")\n        }\n        organization\n        sale_date: saleDate(format: \"YYYY\")\n        id\n      }\n    }\n  }\n  slug\n}\n\nfragment ShelfArtwork_artwork_OqwQs on Artwork {\n  image {\n    resized(width: 200) {\n      src\n      srcSet\n      width\n      height\n    }\n    aspectRatio\n    height\n  }\n  imageTitle\n  title\n  href\n  is_saved: isSaved\n  ...Metadata_artwork\n  ...SaveButton_artwork\n  ...Badge_artwork\n}\n"
+    "text": "query ArtistOverviewRoute_Test_Query {\n  artist(id: \"test\") {\n    ...ArtistOverviewRoute_artist\n    id\n  }\n}\n\nfragment ArtistCareerHighlights_artist on Artist {\n  ...SelectedCareerAchievements_artist\n  ...ArtistConsignButton_artist\n  ...ArtistGenes_artist\n  biographyBlurb(format: HTML, partnerBio: false) {\n    partner {\n      profile {\n        href\n        id\n      }\n      id\n    }\n    credit\n    text\n  }\n  name\n  related {\n    genes {\n      edges {\n        node {\n          id\n        }\n      }\n    }\n  }\n  slug\n}\n\nfragment ArtistConsignButton_artist on Artist {\n  targetSupply {\n    isInMicrofunnel\n    isTargetSupply\n  }\n  internalID\n  slug\n  name\n  href\n  image {\n    cropped(width: 50, height: 50) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ArtistCurrentArticlesRail_artist on Artist {\n  articlesConnection(first: 10, sort: PUBLISHED_AT_DESC, inEditorialFeed: true) {\n    edges {\n      node {\n        internalID\n        slug\n        href\n        thumbnailTitle\n        publishedAt(format: \"MMM Do, YYYY\")\n        thumbnailImage {\n          cropped(width: 325, height: 230) {\n            width\n            height\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n  }\n  internalID\n  name\n  slug\n}\n\nfragment ArtistCurrentShowsRail_artist on Artist {\n  internalID\n  name\n  slug\n  showsConnection(first: 5, sort: END_AT_ASC, status: \"running\") {\n    edges {\n      node {\n        coverImage {\n          cropped(width: 325, height: 230) {\n            width\n            height\n            srcSet\n            src\n          }\n        }\n        exhibitionPeriod\n        href\n        internalID\n        name\n        slug\n        id\n      }\n    }\n  }\n}\n\nfragment ArtistGenes_artist on Artist {\n  related {\n    genes {\n      edges {\n        node {\n          href\n          name\n          id\n        }\n      }\n    }\n  }\n}\n\nfragment ArtistNotableWorksRail_artist on Artist {\n  slug\n  internalID\n  filterArtworksConnection(sort: \"-weighted_iconicity\", first: 10) {\n    edges {\n      node {\n        internalID\n        slug\n        ...ShelfArtwork_artwork_OqwQs\n        id\n      }\n    }\n    id\n  }\n}\n\nfragment ArtistOverviewRoute_artist on Artist {\n  ...ArtistNotableWorksRail_artist\n  ...ArtistCareerHighlights_artist\n  ...ArtistWorksForSaleRail_artist\n  ...ArtistCurrentShowsRail_artist\n  ...ArtistCurrentArticlesRail_artist\n  ...ArtistRelatedArtistsRail_artist\n  name\n  counts {\n    artworks\n  }\n  internalID\n}\n\nfragment ArtistRelatedArtistsRail_artist on Artist {\n  name\n  href\n  related {\n    artistsConnection(kind: MAIN, first: 20) {\n      edges {\n        node {\n          ...FollowArtistButton_artist\n          name\n          href\n          internalID\n          isFollowed\n          slug\n          nationality\n          birthday\n          filterArtworksConnection(sort: \"-weighted_iconicity\", first: 1) {\n            edges {\n              node {\n                internalID\n                slug\n                image {\n                  cropped(width: 325, height: 230) {\n                    width\n                    height\n                    src\n                    srcSet\n                  }\n                }\n                id\n              }\n            }\n            id\n          }\n          image {\n            cropped(width: 50, height: 50) {\n              url\n            }\n          }\n          id\n        }\n      }\n    }\n  }\n}\n\nfragment ArtistWorksForSaleRail_artist on Artist {\n  artworksConnection(first: 20, sort: AVAILABILITY_ASC) {\n    edges {\n      node {\n        internalID\n        slug\n        ...ShelfArtwork_artwork_OqwQs\n        id\n      }\n    }\n  }\n  internalID\n  slug\n}\n\nfragment Badge_artwork on Artwork {\n  is_biddable: isBiddable\n  href\n  sale {\n    is_preview: isPreview\n    display_timely_at: displayTimelyAt\n    id\n  }\n}\n\nfragment Contact_artwork on Artwork {\n  href\n  is_inquireable: isInquireable\n  sale {\n    is_auction: isAuction\n    is_live_open: isLiveOpen\n    is_open: isOpen\n    is_closed: isClosed\n    id\n  }\n  partner(shallow: true) {\n    type\n    id\n  }\n  sale_artwork: saleArtwork {\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    counts {\n      bidder_positions: bidderPositions\n    }\n    id\n  }\n}\n\nfragment Details_artwork on Artwork {\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n}\n\nfragment FollowArtistButton_artist on Artist {\n  id\n  internalID\n  name\n  slug\n  is_followed: isFollowed\n  counts {\n    follows\n  }\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  ...Contact_artwork\n  href\n}\n\nfragment SaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n\nfragment SelectedCareerAchievements_artist on Artist {\n  highlights {\n    partnersConnection(first: 10, displayOnPartnerProfile: true, representedBy: true, partnerCategory: [\"blue-chip\", \"top-established\", \"top-emerging\"]) {\n      edges {\n        node {\n          categories {\n            slug\n            id\n          }\n          id\n        }\n        id\n      }\n    }\n  }\n  insights {\n    type\n    label\n    entities\n  }\n  auctionResultsConnection(recordsTrusted: true, first: 1, sort: PRICE_AND_DATE_DESC) {\n    edges {\n      node {\n        price_realized: priceRealized {\n          display(format: \"0.0a\")\n        }\n        organization\n        sale_date: saleDate(format: \"YYYY\")\n        id\n      }\n    }\n  }\n  slug\n}\n\nfragment ShelfArtwork_artwork_OqwQs on Artwork {\n  image {\n    resized(width: 200) {\n      src\n      srcSet\n      width\n      height\n    }\n    aspectRatio\n    height\n  }\n  imageTitle\n  title\n  href\n  is_saved: isSaved\n  ...Metadata_artwork\n  ...SaveButton_artwork\n  ...Badge_artwork\n}\n"
   }
 };
 })();

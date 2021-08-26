@@ -26,7 +26,12 @@ export type ArtistHeader_artist = {
             } | null;
         } | null> | null;
     } | null;
-    readonly imageUrl: string | null;
+    readonly image: {
+        readonly cropped: {
+            readonly src: string;
+            readonly srcSet: string;
+        } | null;
+    } | null;
     readonly internalID: string;
     readonly slug: string;
     readonly name: string | null;
@@ -40,7 +45,7 @@ export type ArtistHeader_artist = {
         readonly partnerID: string | null;
         readonly text: string | null;
     } | null;
-    readonly " $fragmentRefs": FragmentRefs<"ArtistFollowArtistButton_artist" | "SelectedCareerAchievements_artist">;
+    readonly " $fragmentRefs": FragmentRefs<"FollowArtistButton_artist" | "SelectedCareerAchievements_artist">;
     readonly " $refType": "ArtistHeader_artist";
 };
 export type ArtistHeader_artist$data = ArtistHeader_artist;
@@ -249,8 +254,48 @@ return {
     {
       "alias": null,
       "args": null,
-      "kind": "ScalarField",
-      "name": "imageUrl",
+      "concreteType": "Image",
+      "kind": "LinkedField",
+      "name": "image",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": [
+            {
+              "kind": "Literal",
+              "name": "height",
+              "value": 200
+            },
+            {
+              "kind": "Literal",
+              "name": "width",
+              "value": 200
+            }
+          ],
+          "concreteType": "CroppedImageUrl",
+          "kind": "LinkedField",
+          "name": "cropped",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "src",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "srcSet",
+              "storageKey": null
+            }
+          ],
+          "storageKey": "cropped(height:200,width:200)"
+        }
+      ],
       "storageKey": null
     },
     {
@@ -346,7 +391,7 @@ return {
     {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "ArtistFollowArtistButton_artist"
+      "name": "FollowArtistButton_artist"
     },
     {
       "args": null,
@@ -357,5 +402,5 @@ return {
   "type": "Artist"
 };
 })();
-(node as any).hash = 'c562dc68706e9a135fabb644294a87b6';
+(node as any).hash = '9fcbe7fe511dbab0445f308d238aa566';
 export default node;
