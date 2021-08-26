@@ -176,7 +176,7 @@ const fetchSuggestions = async (searchQuery, relayEnvironment) => {
   >(
     relayEnvironment,
     graphql`
-      query PriceDatabasePriceDatabaseArtistAutosuggest_SearchConnection_Query(
+      query PriceDatabaseArtistAutosuggest_SearchConnection_Query(
         $searchQuery: String!
       ) {
         searchConnection(
