@@ -29,6 +29,7 @@ import { tagRoutes } from "./Apps/Tag/tagRoutes"
 import { unsubscribeRoutes } from "./Apps/Unsubscribe/unsubscribeRoutes"
 import { viewingRoomRoutes } from "v2/Apps/ViewingRoom/viewingRoomRoutes"
 import { fairOrganizerRoutes } from "./Apps/FairOrginizer/fairOrganizerRoutes"
+import { priceDatabaseRoutes } from "./Apps/PriceDatabase/priceDatabaseRoutes"
 
 export function getAppRoutes(): AppRouteConfig[] {
   return buildAppRoutes([
@@ -52,6 +53,7 @@ export function getAppRoutes(): AppRouteConfig[] {
     { routes: orderRoutes },
     { routes: partnerRoutes },
     { routes: paymentRoutes },
+    { routes: priceDatabaseRoutes },
     { routes: shippingRoutes },
     { routes: purchaseRoutes },
     { routes: searchRoutes },

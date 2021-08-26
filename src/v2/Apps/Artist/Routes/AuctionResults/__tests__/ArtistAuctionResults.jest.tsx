@@ -23,9 +23,24 @@ jest.mock("v2/System/Router/Utils/catchLinks", () => ({
 jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
   useMatchMedia: () => ({}),
 }))
+jest.mock("v2/System/Router/useRouter", () => ({
+  useRouter: jest.fn(),
+}))
+
+import { useRouter } from "v2/System/Router/useRouter"
 
 describe("AuctionResults", () => {
   let wrapper: ReactWrapper
+
+  beforeAll(() => {
+    ;(useRouter as jest.Mock).mockImplementation(() => ({
+      match: {
+        location: {
+          query: {},
+        },
+      },
+    }))
+  })
 
   const getWrapper = async (breakpoint: Breakpoint = "xl") => {
     return await renderRelayTree({
@@ -57,6 +72,7 @@ describe("AuctionResults", () => {
         trackEvent,
       }
     })
+
     mockOpenAuthModal.mockImplementation(() => {
       return
     })
@@ -131,6 +147,56 @@ describe("AuctionResults", () => {
       expect(html).toContain("Most recent")
       expect(html).toContain("Estimate")
       expect(html).toContain("Sale price")
+    })
+
+    describe("sets filters from URL query", () => {
+      beforeAll(async () => {
+        ;(useRouter as jest.Mock).mockImplementation(() => ({
+          match: {
+            location: {
+              query: {
+                categories: ["Painting"],
+                sizes: ["SMALL", "LARGE"],
+                organizations: ["Phillips"],
+              },
+            },
+          },
+        }))
+
+        wrapper = await getWrapper()
+      })
+
+      afterAll(() => {
+        ;(useRouter as jest.Mock).mockImplementation(() => ({
+          match: {
+            location: {
+              query: {},
+            },
+          },
+        }))
+      })
+
+      it("sets filters from query", async () => {
+        const MediumCheckbox = wrapper.find("[testID='medium-filter-Painting']")
+        expect(
+          MediumCheckbox.getElements().map(checkbox => checkbox.props.selected)
+        ).toEqual([true, true])
+
+        const SmallCheckbox = wrapper.find("[testID='size-filter-SMALL']")
+        expect(
+          SmallCheckbox.getElements().map(checkbox => checkbox.props.selected)
+        ).toEqual([true, true])
+
+        const LargeCheckbox = wrapper.find("[testID='size-filter-LARGE']")
+        expect(
+          LargeCheckbox.getElements().map(checkbox => checkbox.props.selected)
+        ).toEqual([true, true])
+
+        const OtherCheckbox = wrapper.find("[testID='medium-filter-Sculpture']")
+        expect(
+          OtherCheckbox.getElements().map(checkbox => checkbox.props.selected)
+        ).toEqual([false, false])
+      })
     })
 
     describe("collapsed details", () => {

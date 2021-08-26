@@ -4,10 +4,10 @@ import { useAuctionResultsFilterContext } from "../../AuctionResultsFilterContex
 import { FilterExpandable } from "v2/Components/ArtworkFilter/ArtworkFilters/FilterExpandable"
 import { ShowMore } from "v2/Components/ArtworkFilter/ArtworkFilters/ShowMore"
 
-const auctionHouses = [
-  { name: "Sotheby's" },
-  { name: "Christie's" },
-  { name: "Phillips" },
+export const auctionHouseMap = [
+  { displayName: "Sotheby's", name: "Sotheby's" },
+  { displayName: "Christie's", name: "Christie's" },
+  { displayName: "Phillips", name: "Phillips" },
 ]
 
 export const AuctionHouseFilter: React.FC = () => {
@@ -33,8 +33,8 @@ export const AuctionHouseFilter: React.FC = () => {
     <FilterExpandable label="Auction House">
       <Flex flexDirection="column" alignItems="left">
         <ShowMore>
-          {auctionHouses.map((checkbox, index) => {
-            const { name } = checkbox
+          {auctionHouseMap.map((checkbox, index) => {
+            const { name, displayName } = checkbox
             const props = {
               key: index,
               onSelect: (selected: boolean) => {
@@ -42,8 +42,9 @@ export const AuctionHouseFilter: React.FC = () => {
               },
               my: 1,
               selected: organizations?.includes(name),
+              testID: `organization-filter-${name}`,
             }
-            return <Checkbox {...props}>{name}</Checkbox>
+            return <Checkbox {...props}>{displayName}</Checkbox>
           })}
         </ShowMore>
       </Flex>

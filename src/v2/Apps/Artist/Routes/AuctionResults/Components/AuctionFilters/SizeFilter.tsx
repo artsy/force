@@ -4,7 +4,7 @@ import { FilterExpandable } from "v2/Components/ArtworkFilter/ArtworkFilters/Fil
 import { ShowMore } from "v2/Components/ArtworkFilter/ArtworkFilters/ShowMore"
 import { useAuctionResultsFilterContext } from "../../AuctionResultsFilterContext"
 
-const sizeMap = [
+export const sizeMap = [
   { displayName: "Small (under 40cm)", name: "SMALL" },
   { displayName: "Medium (40 – 100cm)", name: "MEDIUM" },
   { displayName: "Large (over 100cm)", name: "LARGE" },
@@ -47,6 +47,7 @@ export const SizeFilter: React.FC = () => {
               },
               my: 1,
               selected: filters?.sizes?.includes(name),
+              testID: `size-filter-${name}`,
             }
             return <Checkbox {...props}>{displayName}</Checkbox>
           })}
