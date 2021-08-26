@@ -334,17 +334,11 @@ FullDescriptionLink.displayName = "FullDescriptionLink"
 
 // Helpers
 
-const getSalePrice = price_realized => {
-  const salePrice =
-    price_realized.cents_usd === 0 ? null : price_realized.display
-  return salePrice
-}
+const getSalePrice = price_realized =>
+  price_realized.cents_usd === 0 ? null : price_realized.display
 
-const getSalePriceUSD = price_realized => {
-  const salePrice =
-    price_realized.cents_usd === 0 ? null : price_realized.display_usd
-  return salePrice
-}
+const getSalePriceUSD = price_realized =>
+  price_realized.cents_usd === 0 ? null : price_realized.display_usd
 
 const getProps = (props: Props) => {
   const {
