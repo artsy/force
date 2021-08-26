@@ -30,8 +30,8 @@ export const Feature: React.FC<FeatureProps> = ({
     <Flex pt={2} justifyContent="center">
       <Button inline variant="noOutline" onClick={onClick} mt="-4px">
         <Flex>
-          <Text variant="mediumText">Learn More</Text>
-          <ArrowRightIcon height="17px" width="17px" mt="2px" ml="2px" />
+          <Text variant="sm">Learn More</Text>
+          <ArrowRightIcon height="17px" width="17px" mt="4px" ml="2px" />
         </Flex>
       </Button>
     </Flex>
@@ -42,7 +42,12 @@ export const Feature: React.FC<FeatureProps> = ({
       <Flex flexDirection="column" alignItems="center" onClick={onClick}>
         <Icon height={50} width={50} />
         <Flex>
-          <Text variant="mediumText" my={2} style={{ whiteSpace: "nowrap" }}>
+          <Text
+            fontWeight="bold"
+            variant="sm"
+            my={2}
+            style={{ whiteSpace: "nowrap" }}
+          >
             {title}
           </Text>
           {!!onClick && <ArrowRightIcon height="20px" width="20px" mt={2} />}
@@ -63,11 +68,11 @@ export const Feature: React.FC<FeatureProps> = ({
         <Icon height={60} width={60} />
       </Box>
       <Box>
-        <Text my={2} variant="mediumText">
+        <Text fontWeight="bold" my={2} variant="sm">
           {title}
         </Text>
-        <Text variant="text">{text}</Text>
-        {!!forcedSecondLine && <Text variant="text">{forcedSecondLine}</Text>}
+        <Text variant="xs">{text}</Text>
+        {!!forcedSecondLine && <Text variant="xs">{forcedSecondLine}</Text>}
       </Box>
       {!!onClick && <Box>{learnMore}</Box>}
     </Flex>
