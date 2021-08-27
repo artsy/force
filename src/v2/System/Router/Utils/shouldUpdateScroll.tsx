@@ -1,3 +1,6 @@
+import { isEqual } from "lodash"
+import { cleanObject } from "v2/Utils/cleanObject"
+
 /**
  * Handler for `found-scroll` used for determining if scroll management should
  * be applied on route change, based on keys attached to a route.
@@ -26,9 +29,18 @@ export function shouldUpdateScroll(prevRenderArgs, currentRenderArgs) {
   const { routes } = currentRenderArgs
 
   try {
-    // If true, don't reset scroll position on route change
+    // If true, don't reset scroll position on route change, no matter what
     if (routes?.some(route => route.ignoreScrollBehavior)) {
       return false
+    }
+
+    // If params are changing between routes, we're likely transitioning between
+    // different types of pages, or different artists / artworks (but the same
+    // page), etc, so in that case we generally always want to jump to top
+    const prevParams = cleanObject(prevRenderArgs?.params)
+    const currentParams = cleanObject(currentRenderArgs?.params)
+    if (!isEqual(prevParams, currentParams)) {
+      return true
     }
 
     if (routes.some(route => route.scrollToTop)) {

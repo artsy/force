@@ -68,6 +68,7 @@ export const viewingRoomRoutes: AppRouteConfig[] = [
   {
     path: "/viewing-room/:slug",
     getComponent: () => ViewingRoomApp,
+    ignoreScrollBehaviorBetweenChildren: true,
     prepare: () => {
       ViewingRoomApp.preload()
     },
@@ -93,7 +94,6 @@ export const viewingRoomRoutes: AppRouteConfig[] = [
       {
         path: "works",
         Component: WorksRoute,
-        ignoreScrollBehavior: true,
         query: graphql`
           query viewingRoomRoutes_ViewingRoomWorksRouteQuery($slug: ID!) {
             viewingRoom(id: $slug) {

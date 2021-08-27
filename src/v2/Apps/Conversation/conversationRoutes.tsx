@@ -40,6 +40,7 @@ export const conversationRoutes: AppRouteConfig[] = [
     path: "/user/conversations/:conversationID",
     displayFullPage: true,
     hideFooter: true,
+    ignoreScrollBehavior: true,
     Component: loadable(
       () =>
         import(
@@ -65,6 +66,5 @@ export const conversationRoutes: AppRouteConfig[] = [
     cacheConfig: {
       force: true,
     },
-    ignoreScrollBehavior: true,
   },
 ]
