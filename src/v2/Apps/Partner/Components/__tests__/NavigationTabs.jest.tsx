@@ -35,6 +35,7 @@ describe("PartnerNavigationTabs", () => {
 
     expect(html).toContain("Overview")
     expect(html).toContain("Events")
+    expect(html).toContain("Viewing Rooms")
     expect(html).toContain("Works")
     expect(html).toContain("Artists")
     expect(html).toContain("Articles")
@@ -95,5 +96,16 @@ describe("PartnerNavigationTabs", () => {
     const html = wrapper.html()
 
     expect(html).not.toContain("Artists")
+  })
+
+  it("doesn't display viewing rooms tab if no vieving rooms", () => {
+    const wrapper = getWrapper({
+      Partner: () => ({
+        viewingRooms: { totalCount: 0 },
+      }),
+    })
+    const html = wrapper.html()
+
+    expect(html).not.toContain("Viewing Rooms")
   })
 })

@@ -24,6 +24,9 @@ export type NavigationTabs_partner = {
     readonly notRepresentedArtists: {
         readonly totalCount: number | null;
     } | null;
+    readonly viewingRooms: {
+        readonly totalCount: number | null;
+    } | null;
     readonly " $refType": "NavigationTabs_partner";
 };
 export type NavigationTabs_partner$data = NavigationTabs_partner;
@@ -172,10 +175,30 @@ return {
       "plural": false,
       "selections": (v0/*: any*/),
       "storageKey": "artistsConnection(displayOnPartnerProfile:true,hasPublishedArtworks:true,representedBy:false)"
+    },
+    {
+      "alias": "viewingRooms",
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "statuses",
+          "value": [
+            "live",
+            "closed",
+            "scheduled"
+          ]
+        }
+      ],
+      "concreteType": "ViewingRoomsConnection",
+      "kind": "LinkedField",
+      "name": "viewingRoomsConnection",
+      "plural": false,
+      "selections": (v0/*: any*/),
+      "storageKey": "viewingRoomsConnection(statuses:[\"live\",\"closed\",\"scheduled\"])"
     }
   ],
   "type": "Partner"
 };
 })();
-(node as any).hash = '05f71063223e5f66338187c85a293a82';
+(node as any).hash = 'e037daa355e3338cdce93f1238b3c646';
 export default node;
