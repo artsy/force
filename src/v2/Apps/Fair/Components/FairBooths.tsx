@@ -1,24 +1,27 @@
 import React, { useState } from "react"
-import { graphql, createRefetchContainer, RelayRefetchProp } from "react-relay"
+import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 import useDeepCompareEffect from "use-deep-compare-effect"
-import { isEqual } from "lodash"
 import { Box, Flex, Spacer } from "@artsy/palette"
+import { isEqual } from "lodash"
+import { usePrevious } from "v2/Utils/Hooks/usePrevious"
 import { FairBooths_fair } from "v2/__generated__/FairBooths_fair.graphql"
+import { Media } from "v2/Utils/Responsive"
+import { Sticky } from "v2/Components/Sticky"
+import { LoadingArea } from "v2/Components/LoadingArea"
+import { useSystemContext } from "v2/System"
+import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { updateUrl } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
+import { useRouter } from "v2/System/Router/useRouter"
+import createLogger from "v2/Utils/logger"
+import { FairBoothsContainerQuery } from "v2/__generated__/FairBoothsContainerQuery.graphql"
+import { PaginationFragmentContainer as Pagination } from "v2/Components/Pagination"
 import {
   BoothFilterContextProvider,
   useBoothsFilterContext,
-} from "../Components/BoothFilterContext"
-import { FairBoothsQuery } from "./FairBoothsQuery"
-import { LoadingArea } from "v2/Components/LoadingArea"
-import { Sticky } from "v2/Components/Sticky"
-import { useRouter } from "v2/System/Router/useRouter"
-import { Media } from "v2/Utils/Responsive"
-import { usePrevious } from "v2/Utils/Hooks/usePrevious"
-import createLogger from "v2/Utils/logger"
-import { FairBoothRailFragmentContainer as FairBoothRail } from "../Components/FairBoothRail"
-import { FairBoothSortFilter } from "../Components/FairBoothSortFilter"
-import { PaginationFragmentContainer as Pagination } from "v2/Components/Pagination"
+} from "./BoothFilterContext"
+import { FairBoothSortFilter } from "./FairBoothSortFilter"
+import { FairBoothRailFragmentContainer as FairBoothRail } from "./FairBoothRail"
+import { defaultSort, isValidSort } from "../Utils/IsValidSort"
 
 const logger = createLogger("FairBooths.tsx")
 
@@ -31,9 +34,7 @@ interface FairBoothsProps {
 
 const FairBooths: React.FC<FairBoothsProps> = ({ fair, relay }) => {
   const context = useBoothsFilterContext()
-
   const [isLoading, setIsLoading] = useState(false)
-
   const previousFilters = usePrevious(context.filters!)
 
   const {
@@ -61,7 +62,6 @@ const FairBooths: React.FC<FairBoothsProps> = ({ fair, relay }) => {
       id: fair.slug,
       first: PAGE_SIZE,
     }
-
     const relayRefetchVariables = {
       ...relayParams,
       ...context.filters,
@@ -203,5 +203,62 @@ export const FairBoothsFragmentContainer = createRefetchContainer(
       }
     `,
   },
-  FairBoothsQuery
+  graphql`
+    query FairBoothsQuery(
+      $id: String!
+      $first: Int
+      $page: Int
+      $sort: ShowSorts
+    ) {
+      fair(id: $id) {
+        ...FairBooths_fair @arguments(first: $first, page: $page, sort: $sort)
+      }
+    }
+  `
 )
+
+export const FairBoothsQueryRenderer: React.FC<{ slug: string }> = ({
+  slug,
+}) => {
+  const { relayEnvironment } = useSystemContext()
+  const {
+    match: { location },
+  } = useRouter()
+
+  const getVariables = () => {
+    let { sort, page } = location.query
+    if (!isValidSort(sort)) {
+      sort = defaultSort
+    }
+    return { sort, page, slug }
+  }
+
+  return (
+    <SystemQueryRenderer<FairBoothsContainerQuery>
+      environment={relayEnvironment}
+      query={graphql`
+        query FairBoothsContainerQuery(
+          $slug: String!
+          $page: Int
+          $sort: ShowSorts
+        ) {
+          fair(id: $slug) @principalField {
+            ...FairBooths_fair @arguments(sort: $sort, page: $page)
+          }
+        }
+      `}
+      variables={getVariables()}
+      render={({ error, props }) => {
+        if (error) {
+          return null
+        }
+
+        if (props?.fair) {
+          return <FairBoothsFragmentContainer fair={props.fair!} />
+        }
+
+        return null
+      }}
+    />
+  )
+}

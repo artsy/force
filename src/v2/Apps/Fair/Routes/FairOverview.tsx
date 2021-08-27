@@ -4,13 +4,15 @@ import { createFragmentContainer, graphql } from "react-relay"
 import {
   FairEditorialFragmentContainer,
   FAIR_EDITORIAL_AMOUNT,
-} from "../FairEditorial"
-import { FairCollectionsFragmentContainer } from "../FairCollections"
-import { FairFollowedArtistsFragmentContainer } from "./FairFollowedArtists"
+} from "../Components/FairEditorial"
+import { FairCollectionsFragmentContainer } from "../Components/FairCollections"
+import { FairFollowedArtistsFragmentContainer } from "../Components/FairOverview/FairFollowedArtists"
 import { useSystemContext } from "v2/System"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { FairOverview_fair } from "v2/__generated__/FairOverview_fair.graphql"
-import { FairAboutFragmentContainer as FairAbout } from "./FairAbout"
+import { FairAboutFragmentContainer as FairAbout } from "../Components/FairOverview/FairAbout"
+import { data as sd } from "sharify"
+import { FairBoothsQueryRenderer as FairBooths } from "../Components/FairBooths"
 
 interface FairOverviewProps extends BoxProps {
   fair: FairOverview_fair
@@ -26,7 +28,7 @@ const FairOverview: React.FC<FairOverviewProps> = ({ fair }) => {
       <FairAbout fair={fair} />
 
       {hasArticles && (
-        <Box my={4}>
+        <Box my={6}>
           <Box display="flex" justifyContent="space-between">
             {(fair.articlesConnection?.totalCount ?? 0) >
               FAIR_EDITORIAL_AMOUNT && (
@@ -51,6 +53,15 @@ const FairOverview: React.FC<FairOverviewProps> = ({ fair }) => {
       )}
 
       {!!user && <FairFollowedArtistsFragmentContainer fair={fair} my={6} />}
+
+      {sd.ENABLE_FAIR_PAGE_EXHIBITORS_TAB && (
+        <>
+          <Text variant="lg" mb={4}>
+            Booths
+          </Text>
+          <FairBooths slug={fair.slug} />
+        </>
+      )}
     </Box>
   )
 }
