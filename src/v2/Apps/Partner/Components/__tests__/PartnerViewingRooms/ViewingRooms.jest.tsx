@@ -19,11 +19,11 @@ const { getWrapper } = setupTestWrapper({
 })
 
 describe("ViewingRooms", () => {
-  it("renders correctly Current/Upcoming Events", () => {
+  it("renders correctly Current/Upcoming VRs", () => {
     const wrapper = getWrapper({
       Partner: () => ({
         slug: "antonio-colombo",
-        currentEvents: {
+        currentViewingRooms: {
           edges: [
             {
               node: {
@@ -32,7 +32,7 @@ describe("ViewingRooms", () => {
             },
           ],
         },
-        upcomingEvents: {
+        upcomingViewingRooms: {
           edges: [
             {
               node: {
@@ -44,15 +44,17 @@ describe("ViewingRooms", () => {
       }),
     })
 
-    expect(wrapper.find('div[children="Current Events"]').length).toBe(1)
-    expect(wrapper.find('div[children="Upcoming Events"]').length).toBe(1)
+    expect(wrapper.find('div[children="Current Viewing Rooms"]').length).toBe(1)
+    expect(wrapper.find('div[children="Upcoming Viewing Rooms"]').length).toBe(
+      1
+    )
   })
-  it("doest't render Current Events section if no currentEvents", () => {
+  it("doest't render Current VRs section if no currentVRs", () => {
     const wrapper = getWrapper({
       Partner: () => ({
         slug: "antonio-colombo",
-        currentEvents: null,
-        upcomingEvents: {
+        currentViewingRooms: null,
+        upcomingViewingRooms: {
           edges: [
             {
               node: {
@@ -64,14 +66,16 @@ describe("ViewingRooms", () => {
       }),
     })
 
-    expect(wrapper.find('div[children="Current Events"]').length).toBe(0)
-    expect(wrapper.find('div[children="Upcoming Events"]').length).toBe(1)
+    expect(wrapper.find('div[children="Current Viewing Rooms"]').length).toBe(0)
+    expect(wrapper.find('div[children="Upcoming Viewing Rooms"]').length).toBe(
+      1
+    )
   })
-  it("doest't render Upcoming Events section if no upcomingEvents", () => {
+  it("doest't render Upcoming VRs section if no upcomingVRs", () => {
     const wrapper = getWrapper({
       Partner: () => ({
         slug: "antonio-colombo",
-        currentEvents: {
+        currentViewingRooms: {
           edges: [
             {
               node: {
@@ -80,23 +84,27 @@ describe("ViewingRooms", () => {
             },
           ],
         },
-        upcomingEvents: null,
+        upcomingViewingRooms: null,
       }),
     })
 
-    expect(wrapper.find('div[children="Current Events"]').length).toBe(1)
-    expect(wrapper.find('div[children="Upcoming Events"]').length).toBe(0)
+    expect(wrapper.find('div[children="Current Viewing Rooms"]').length).toBe(1)
+    expect(wrapper.find('div[children="Upcoming Viewing Rooms"]').length).toBe(
+      0
+    )
   })
-  it("doest't render Current and Upcoming Events if no current and upcoming events", () => {
+  it("doest't render Current and Upcoming VRs if no current and upcoming VRs", () => {
     const wrapper = getWrapper({
       Partner: () => ({
         slug: "antonio-colombo",
-        currentEvents: null,
-        upcomingEvents: null,
+        currentViewingRooms: null,
+        upcomingViewingRooms: null,
       }),
     })
 
-    expect(wrapper.find('div[children="Current Events"]').length).toBe(0)
-    expect(wrapper.find('div[children="Upcoming Events"]').length).toBe(0)
+    expect(wrapper.find('div[children="Current Viewing Rooms"]').length).toBe(0)
+    expect(wrapper.find('div[children="Upcoming Viewing Rooms"]').length).toBe(
+      0
+    )
   })
 })

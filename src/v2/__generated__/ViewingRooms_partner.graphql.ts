@@ -5,7 +5,7 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ViewingRooms_partner = {
     readonly slug: string;
-    readonly currentEvents: {
+    readonly currentViewingRooms: {
         readonly edges: ReadonlyArray<{
             readonly node: {
                 readonly internalID: string;
@@ -13,7 +13,7 @@ export type ViewingRooms_partner = {
             readonly " $fragmentRefs": FragmentRefs<"ViewingRooms_edges">;
         } | null> | null;
     } | null;
-    readonly upcomingEvents: {
+    readonly upcomingViewingRooms: {
         readonly edges: ReadonlyArray<{
             readonly node: {
                 readonly internalID: string;
@@ -87,7 +87,7 @@ return {
       "storageKey": null
     },
     {
-      "alias": "currentEvents",
+      "alias": "currentViewingRooms",
       "args": [
         (v0/*: any*/),
         {
@@ -104,7 +104,7 @@ return {
       "storageKey": "viewingRoomsConnection(first:12,statuses:\"live\")"
     },
     {
-      "alias": "upcomingEvents",
+      "alias": "upcomingViewingRooms",
       "args": [
         (v0/*: any*/),
         {
@@ -124,5 +124,5 @@ return {
   "type": "Partner"
 };
 })();
-(node as any).hash = 'a39e98a0b87454b52aa6d2105764d3f3';
+(node as any).hash = 'd01b2daf350626bf9e90d8e1a49f98b0';
 export default node;

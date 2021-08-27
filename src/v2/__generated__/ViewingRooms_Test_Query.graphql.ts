@@ -46,7 +46,7 @@ fragment ViewingRooms_edges on ViewingRoomsEdge {
 
 fragment ViewingRooms_partner on Partner {
   slug
-  currentEvents: viewingRoomsConnection(first: 12, statuses: live) {
+  currentViewingRooms: viewingRoomsConnection(first: 12, statuses: live) {
     edges {
       node {
         internalID
@@ -54,7 +54,7 @@ fragment ViewingRooms_partner on Partner {
       ...ViewingRooms_edges
     }
   }
-  upcomingEvents: viewingRoomsConnection(first: 12, statuses: scheduled) {
+  upcomingViewingRooms: viewingRoomsConnection(first: 12, statuses: scheduled) {
     edges {
       node {
         internalID
@@ -221,7 +221,7 @@ return {
             "storageKey": null
           },
           {
-            "alias": "currentEvents",
+            "alias": "currentViewingRooms",
             "args": [
               (v1/*: any*/),
               {
@@ -238,7 +238,7 @@ return {
             "storageKey": "viewingRoomsConnection(first:12,statuses:\"live\")"
           },
           {
-            "alias": "upcomingEvents",
+            "alias": "upcomingViewingRooms",
             "args": [
               (v1/*: any*/),
               {
@@ -271,7 +271,7 @@ return {
     "metadata": {},
     "name": "ViewingRooms_Test_Query",
     "operationKind": "query",
-    "text": "query ViewingRooms_Test_Query {\n  partner(id: \"white-cube\") @principalField {\n    ...ViewingRooms_partner\n    id\n  }\n}\n\nfragment ViewingRoomCard_viewingRoom on ViewingRoom {\n  href\n  title\n  exhibitionPeriod\n  coverImage: image {\n    imageURLs {\n      normalized\n    }\n    width\n    height\n  }\n}\n\nfragment ViewingRooms_edges on ViewingRoomsEdge {\n  node {\n    internalID\n    ...ViewingRoomCard_viewingRoom\n  }\n}\n\nfragment ViewingRooms_partner on Partner {\n  slug\n  currentEvents: viewingRoomsConnection(first: 12, statuses: live) {\n    edges {\n      node {\n        internalID\n      }\n      ...ViewingRooms_edges\n    }\n  }\n  upcomingEvents: viewingRoomsConnection(first: 12, statuses: scheduled) {\n    edges {\n      node {\n        internalID\n      }\n      ...ViewingRooms_edges\n    }\n  }\n}\n"
+    "text": "query ViewingRooms_Test_Query {\n  partner(id: \"white-cube\") @principalField {\n    ...ViewingRooms_partner\n    id\n  }\n}\n\nfragment ViewingRoomCard_viewingRoom on ViewingRoom {\n  href\n  title\n  exhibitionPeriod\n  coverImage: image {\n    imageURLs {\n      normalized\n    }\n    width\n    height\n  }\n}\n\nfragment ViewingRooms_edges on ViewingRoomsEdge {\n  node {\n    internalID\n    ...ViewingRoomCard_viewingRoom\n  }\n}\n\nfragment ViewingRooms_partner on Partner {\n  slug\n  currentViewingRooms: viewingRoomsConnection(first: 12, statuses: live) {\n    edges {\n      node {\n        internalID\n      }\n      ...ViewingRooms_edges\n    }\n  }\n  upcomingViewingRooms: viewingRoomsConnection(first: 12, statuses: scheduled) {\n    edges {\n      node {\n        internalID\n      }\n      ...ViewingRooms_edges\n    }\n  }\n}\n"
   }
 };
 })();

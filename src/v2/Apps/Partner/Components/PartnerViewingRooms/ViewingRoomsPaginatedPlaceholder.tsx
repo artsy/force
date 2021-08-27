@@ -20,7 +20,7 @@ export const ViewingRoomsPaginatedPlaceholder: FC<ViewingRoomsPaginatedPlacehold
   return (
     <>
       <SkeletonText variant="title" mb={6}>
-        Past Events
+        Past Viewing Rooms
       </SkeletonText>
       <GridColumns mb={6} gridRowGap={[2, 4]} {...rest}>
         {[...Array(count)].map((_, i) => (

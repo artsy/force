@@ -10,30 +10,30 @@ interface PartnerShowsProps {
 }
 
 export const ViewingRooms: React.FC<PartnerShowsProps> = ({ partner }) => {
-  const { currentEvents, upcomingEvents, slug } = partner
-  const filteredCurrentEvents = compact(currentEvents?.edges)
-  const isCurrentEventsExist = !!filteredCurrentEvents.length
-  const filteredUpcomingEvents = compact(upcomingEvents?.edges)
-  const isUpcomingEventsExist = !!filteredUpcomingEvents.length
+  const { currentViewingRooms, upcomingViewingRooms, slug } = partner
+  const filteredCurrentViewingRooms = compact(currentViewingRooms?.edges)
+  const isCurrentViewingRoomsExist = !!filteredCurrentViewingRooms.length
+  const filteredUpcomingViewingRooms = compact(upcomingViewingRooms?.edges)
+  const isUpcomingViewingRoomsExist = !!filteredUpcomingViewingRooms.length
 
   return (
     <>
-      {isCurrentEventsExist && (
+      {isCurrentViewingRoomsExist && (
         <ViewingRoomsFragmentContainer
-          edges={filteredCurrentEvents}
-          eventTitle="Current Events"
+          edges={filteredCurrentViewingRooms}
+          eventTitle="Current Viewing Rooms"
         />
       )}
 
-      {isUpcomingEventsExist && (
+      {isUpcomingViewingRoomsExist && (
         <ViewingRoomsFragmentContainer
-          edges={filteredUpcomingEvents}
-          eventTitle="Upcoming Events"
+          edges={filteredUpcomingViewingRooms}
+          eventTitle="Upcoming Viewing Rooms"
         />
       )}
 
       <ViewingRoomsPaginatedRenderer
-        eventTitle="Past Events"
+        eventTitle="Past Viewing Rooms"
         partnerId={slug}
         scrollTo="#jumpto--pastShowsGrid"
         offset={200}
@@ -48,7 +48,7 @@ export const ViewingRoomFragmentContainer = createFragmentContainer(
     partner: graphql`
       fragment ViewingRooms_partner on Partner {
         slug
-        currentEvents: viewingRoomsConnection(first: 12, statuses: live) {
+        currentViewingRooms: viewingRoomsConnection(first: 12, statuses: live) {
           edges {
             node {
               internalID
@@ -56,7 +56,10 @@ export const ViewingRoomFragmentContainer = createFragmentContainer(
             ...ViewingRooms_edges
           }
         }
-        upcomingEvents: viewingRoomsConnection(first: 12, statuses: scheduled) {
+        upcomingViewingRooms: viewingRoomsConnection(
+          first: 12
+          statuses: scheduled
+        ) {
           edges {
             node {
               internalID
