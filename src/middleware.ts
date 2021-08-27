@@ -72,9 +72,9 @@ import { handleArtworkImageDownload } from "lib/middleware/artworkMiddleware"
 import { searchMiddleware } from "lib/middleware/searchMiddleware"
 import { splitTestMiddleware } from "desktop/components/split_test/splitTestMiddleware"
 import { IGNORED_ERRORS } from "lib/analytics/sentryFilters"
+import { getCacheableRoutes } from "v2/System/Router/getCacheableRoutes"
 
 // Find the v2 routes, we will not be testing memory caching for legacy pages.
-import { getRouteList } from "v2/routes"
 
 const CurrentUser = require("./lib/current_user.coffee")
 
@@ -270,11 +270,11 @@ function applyStaticAssetMiddlewares(app) {
 function applyCacheMiddleware(app) {
   // For full page cache testing, find all the modern routes and enable pages we
   // would like to test.
-  let cachableModernRoutes: string[] = getRouteList()
+  let cachableRoutes: string[] = getCacheableRoutes()
 
   if (MEMORY_PAGE_URL_FILTER && MEMORY_PAGE_URL_FILTER.split(",").length > 0) {
     const cacheFilters = MEMORY_PAGE_URL_FILTER.split(",")
-    cachableModernRoutes = cachableModernRoutes.filter(route => {
+    cachableRoutes = cachableRoutes.filter(route => {
       for (const cacheFilter of cacheFilters) {
         if (route.startsWith(cacheFilter)) {
           return true
@@ -285,5 +285,5 @@ function applyCacheMiddleware(app) {
   }
 
   app.use(pageCacheMiddleware)
-  app.use(cachableModernRoutes, memoryPageCacheMiddleware)
+  app.use(cachableRoutes, memoryPageCacheMiddleware)
 }
