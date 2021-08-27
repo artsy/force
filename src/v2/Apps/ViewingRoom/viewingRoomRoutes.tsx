@@ -1,4 +1,5 @@
 import loadable from "@loadable/component"
+import { RedirectException } from "found"
 import { graphql } from "react-relay"
 import { AppRouteConfig } from "v2/System/Router/Route"
 
@@ -92,6 +93,12 @@ export const viewingRoomRoutes: AppRouteConfig[] = [
       },
       {
         path: "works",
+        render: () => {
+          throw new RedirectException("artworks", 301)
+        },
+      },
+      {
+        path: "artworks",
         Component: WorksRoute,
         ignoreScrollBehavior: true,
         query: graphql`
