@@ -90,7 +90,7 @@ export const FairOrganizerLatestArticlesFragmentContainer = createFragmentContai
       fragment FairOrganizerLatestArticles_fairOrganizer on FairOrganizer {
         name
         slug
-        articlesConnection(first: 7) {
+        articlesConnection(first: 7, sort: PUBLISHED_AT_DESC) {
           totalCount
           edges {
             node {
