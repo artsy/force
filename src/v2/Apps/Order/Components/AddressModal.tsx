@@ -178,7 +178,6 @@ export const AddressModal: React.FC<Props> = ({
                   {createUpdateError}
                 </Banner>
               )}
-
               <AddressModalFields />
               <Spacer mb={2} />
               <Input

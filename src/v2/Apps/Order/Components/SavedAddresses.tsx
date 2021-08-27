@@ -10,6 +10,8 @@ import {
   BorderBox,
   Join,
   Clickable,
+  useThemeConfig,
+  TextVariant,
 } from "@artsy/palette"
 import React, { useState } from "react"
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
@@ -160,6 +162,15 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
     onShowToast && onShowToast(true, "Saved")
   }
 
+  const styles = useThemeConfig({
+    v2: {
+      variant: "text" as TextVariant,
+    },
+    v3: {
+      variant: "sm" as TextVariant,
+    },
+  })
+
   const collectorProfileAddressItems = addressList.map((address, index) => {
     if (!address) {
       return null
@@ -185,7 +196,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
             <Box mr={[3, 1]}>
               <Text
                 onClick={() => handleSetDefaultAddress(address.internalID)}
-                variant="text"
+                variant={styles.variant}
                 color="black60"
                 style={{
                   cursor: "pointer",
@@ -201,7 +212,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
               onClick={() => handleEditAddress(address, index)}
             >
               <Text
-                variant="text"
+                variant={styles.variant}
                 color="blue100"
                 style={{
                   cursor: "pointer",
@@ -218,7 +229,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
               onClick={() => handleDeleteAddress(address.internalID)}
             >
               <Text
-                variant="text"
+                variant={styles.variant}
                 color="red100"
                 style={{
                   cursor: "pointer",
@@ -240,7 +251,6 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
           data-test="profileButton"
           mt={2}
           variant="primaryBlack"
-          size="large"
           onClick={() => {
             setShowAddressModal(true),
               setModalDetails({
