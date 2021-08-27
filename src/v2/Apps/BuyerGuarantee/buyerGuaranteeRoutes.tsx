@@ -29,6 +29,7 @@ export const buyerGuaranteeRoutes: AppRouteConfig[] = [
     children: [
       {
         path: "",
+        theme: "v3",
         getComponent: () => BuyerGuaranteeIndexRoute,
         prepare: () => {
           return BuyerGuaranteeIndexRoute.preload()

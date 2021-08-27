@@ -4,12 +4,10 @@ import {
   Button,
   CertificateIcon,
   CheckIcon,
-  color,
   CSSGrid,
   Flex,
   Image,
   LockIcon,
-  space,
   Text,
   themeProps,
   VerifiedIcon,
@@ -151,7 +149,7 @@ export const BuyerGuaranteeIndex: React.FC = () => {
           >
             <Text
               fontSize={[34, null, 80]}
-              color={color("white100")}
+              color={"white100"}
               position="relative"
               as="h1"
             >
@@ -162,7 +160,7 @@ export const BuyerGuaranteeIndex: React.FC = () => {
       )}
       <Flex justifyContent="center" flexDirection="column">
         <Flex justifyContent="center" mx={["10%", "20%"]} textAlign="center">
-          <Text variant="title" mt={5}>
+          <Text variant="lg" mt={6}>
             Artsy is the safest place to buy the art you love.
             <br />
             Every purchase made exclusively with Artsy’s secure checkout
@@ -221,10 +219,10 @@ export const BuyerGuaranteeIndex: React.FC = () => {
           </Flex>
 
           <Flex
-            mb={[0, space(9)]}
+            mb={[0, 6]}
             flexWrap={["wrap", "nowrap"]}
             alignItems="flex-start"
-            mt={120}
+            mt={12}
           >
             <Feature
               title="Authenticity Guarantee"
@@ -255,7 +253,7 @@ export const BuyerGuaranteeIndex: React.FC = () => {
         </Media>
       </Flex>
       {/*  Artsy Guarantee Sections desktop */}
-      <Media greaterThanOrEqual="sm">
+      <Media greaterThanOrEqual="md">
         <CSSGrid gridTemplateColumns="repeat(2, 1fr)">
           {authenticityGuaranteeImageURL && (
             <Image
@@ -269,17 +267,17 @@ export const BuyerGuaranteeIndex: React.FC = () => {
               aria-label={authenticityImage?.imageTitle!}
             />
           )}
-          <Flex flexDirection="column" p={space(9)} id="jump--authenticity">
-            <Text variant="title">Authenticity Guarantee</Text>
-            <Text variant="text" my={2}>
+          <Flex flexDirection="column" p={12} id="jump--authenticity">
+            <Text variant="lg">Authenticity Guarantee</Text>
+            <Text variant="xs" my={2}>
               {authenticityText}
             </Text>
             <Media greaterThanOrEqual="lg">{learnMoreButton("40%")}</Media>
             <Media lessThan="lg">{learnMoreButton("80%")}</Media>
           </Flex>
-          <Flex flexDirection="column" p={space(9)} id="jump--moneyBack">
-            <Text variant="title">Money-Back Guarantee</Text>
-            <Text variant="text" my={2}>
+          <Flex flexDirection="column" p={12} id="jump--moneyBack">
+            <Text variant="lg">Money-Back Guarantee</Text>
+            <Text variant="xs" my={2}>
               {moneyBackGuaranteeText}
             </Text>
             <Media greaterThanOrEqual="lg">{learnMoreButton("40%")}</Media>
@@ -309,14 +307,9 @@ export const BuyerGuaranteeIndex: React.FC = () => {
               height="100%"
             />
           )}
-          <Flex
-            flexDirection="column"
-            px={space(9)}
-            pt={space(9)}
-            id="jump--securePayment"
-          >
-            <Text variant="title">Secure Payment</Text>
-            <Text variant="text" my={2}>
+          <Flex flexDirection="column" px={12} pt={12} id="jump--securePayment">
+            <Text variant="lg">Secure Payment</Text>
+            <Text variant="xs" my={2}>
               {securePaymentText}
             </Text>
             <PoweredByStripeIcon width={200} mt={"-10px"} ml={"-25px"} />
@@ -327,7 +320,7 @@ export const BuyerGuaranteeIndex: React.FC = () => {
       <Media lessThan="sm">
         <Flex
           flexDirection="column"
-          mt={5}
+          mt={4}
           mx={2}
           mb={4}
           id="jump--authenticityMobile"
@@ -341,17 +334,17 @@ export const BuyerGuaranteeIndex: React.FC = () => {
               aria-label={authenticityImage?.imageTitle!}
             />
           )}
-          <Text variant="title" mt={4}>
+          <Text variant="lg" mt={4}>
             Authenticity Guarantee
           </Text>
-          <Text variant="text" my={2}>
+          <Text variant="xs" my={2}>
             {authenticityText}
           </Text>
           {learnMoreButton("50%")}
         </Flex>
         <Flex
           flexDirection="column"
-          mt={5}
+          mt={4}
           mx={2}
           mb={4}
           id="jump--moneyBackMobile"
@@ -365,17 +358,17 @@ export const BuyerGuaranteeIndex: React.FC = () => {
               aria-label={moneyBackGuaranteeImage?.imageTitle!}
             />
           )}
-          <Text variant="title" mt={4}>
+          <Text variant="lg" mt={4}>
             Money-Back Guarantee
           </Text>
-          <Text variant="text" my={2}>
+          <Text variant="xs" my={2}>
             {moneyBackGuaranteeText}
           </Text>
           {learnMoreButton("50%")}
         </Flex>
         <Flex
           flexDirection="column"
-          mt={5}
+          mt={4}
           mx={2}
           mb={4}
           id="jump--securePaymentMobile"
@@ -389,10 +382,10 @@ export const BuyerGuaranteeIndex: React.FC = () => {
               aria-label={securePaymentImage?.imageTitle!}
             />
           )}
-          <Text variant="title" mt={4}>
+          <Text variant="lg" mt={4}>
             Secure Payment
           </Text>
-          <Text variant="text" my={2}>
+          <Text variant="xs" my={2}>
             {securePaymentText}
           </Text>
           <PoweredByStripeIcon width={200} ml={"-30px"} mt={0} />
@@ -400,38 +393,42 @@ export const BuyerGuaranteeIndex: React.FC = () => {
       </Media>
       {/*  Artsy Guarantee Grid block mobile */}
       <Media lessThan="sm">
-        <Box backgroundColor={color("black5")} mx="-20px">
+        <Box backgroundColor={"black5"} mx="-20px">
           <Flex
             justifyContent="center"
             py={4}
             mb="-20px"
-            backgroundColor={color("black5")}
+            backgroundColor={"black5"}
           >
-            <Text variant="title">The Artsy Guarantee</Text>
+            <Text variant="lg">The Artsy Guarantee</Text>
           </Flex>
           <CSSGrid
-            backgroundColor={color("black5")}
+            backgroundColor={"black5"}
             gridTemplateColumns="repeat(3, 1fr)"
             mt={2}
             px={2}
           >
-            <Box borderBottom={`solid 1px ${color("black10")}`}>{""}</Box>
+            <Box borderBottom={`solid 1px black10`}>{""}</Box>
             <Text
-              border={`solid 1px ${color("black10")}`}
+              border={`solid 1px `}
+              borderColor="black10"
               borderTop="none"
               pt={4}
               px={2}
               textAlign="center"
-              variant="mediumText"
+              variant="sm"
+              fontWeight="bold"
             >
               Making an Inquiry
             </Text>
             <Text
               p={2}
               textAlign="center"
-              variant="mediumText"
-              borderBottom={`solid 1px ${color("black10")}`}
-              backgroundColor={color("white100")}
+              variant="sm"
+              fontWeight="bold"
+              borderBottom="solid 1px "
+              borderColor="black10"
+              backgroundColor={"white100"}
             >
               Purchasing with Artsy’s Secure Checkout
             </Text>
@@ -442,14 +439,15 @@ export const BuyerGuaranteeIndex: React.FC = () => {
               alignItems="center"
               justifyContent="center"
             >
-              <Text textAlign="center" variant="mediumText">
+              <Text textAlign="center" variant="sm" fontWeight="bold">
                 Vetted Sellers
               </Text>
             </Flex>
             <Flex
               justifyContent="space-around"
               alignItems="center"
-              border={`solid 1px ${color("black10")}`}
+              border="solid 1px"
+              borderColor="black10"
               borderTop="none"
               height="60px"
             >
@@ -459,8 +457,9 @@ export const BuyerGuaranteeIndex: React.FC = () => {
               justifyContent="space-around"
               alignItems="center"
               height="60px"
-              borderBottom={`solid 1px ${color("black10")}`}
-              backgroundColor={color("white100")}
+              borderBottom="solid 1px"
+              borderColor="black10"
+              backgroundColor={"white100"}
             >
               <CheckIcon width="40px" height="40px" />
             </Flex>
@@ -468,13 +467,14 @@ export const BuyerGuaranteeIndex: React.FC = () => {
               justifyContent="center"
               flexDirection="column"
               alignItems="center"
-              border={`solid 1px ${color("black10")}`}
+              border="solid 1px"
+              borderColor="black10"
               borderLeft="none"
               mt="-1px"
               mr="-1px"
               height="62px"
             >
-              <Text textAlign="center" variant="mediumText">
+              <Text textAlign="center" variant="sm" fontWeight="bold">
                 Dedicated Support
               </Text>
             </Flex>
@@ -482,8 +482,9 @@ export const BuyerGuaranteeIndex: React.FC = () => {
               justifyContent="space-around"
               alignItems="center"
               height="61px"
-              borderBottom={`solid 1px ${color("black10")}`}
-              borderRight={`solid 1px ${color("black10")}`}
+              borderBottom="solid 1px"
+              borderColor="black10"
+              borderRight="solid 1px"
             >
               <CheckIcon width="40px" height="40px" />
             </Flex>
@@ -491,18 +492,20 @@ export const BuyerGuaranteeIndex: React.FC = () => {
               justifyContent="space-around"
               alignItems="center"
               height="60px"
-              borderBottom={`solid 1px ${color("black10")}`}
-              backgroundColor={color("white100")}
+              borderBottom="solid 1px"
+              borderColor="black10"
+              backgroundColor={"white100"}
             >
               <CheckIcon width="40px" height="40px" />
             </Flex>
             <Flex
               alignItems="center"
-              borderRight={`solid 1px ${color("black10")}`}
+              borderRight="solid 1px"
+              borderColor="black10"
               height="61px"
               mr="-1px"
             >
-              <Text textAlign="center" variant="mediumText">
+              <Text textAlign="center" variant="sm" fontWeight="bold">
                 Authenticity Guarantee
               </Text>
             </Flex>
@@ -510,8 +513,9 @@ export const BuyerGuaranteeIndex: React.FC = () => {
               justifyContent="space-around"
               alignItems="center"
               height="61px"
-              borderBottom={`solid 1px ${color("black10")}`}
-              borderRight={`solid 1px ${color("black10")}`}
+              borderBottom="solid 1px"
+              borderRight="solid 1px"
+              borderColor="black10"
             >
               {""}
             </Flex>
@@ -519,20 +523,22 @@ export const BuyerGuaranteeIndex: React.FC = () => {
               justifyContent="space-around"
               alignItems="center"
               height="61px"
-              borderBottom={`solid 1px ${color("black10")}`}
-              backgroundColor={color("white100")}
+              borderBottom="solid 1px"
+              backgroundColor={"white100"}
+              borderColor="black10"
             >
               <CheckIcon width="40px" height="40px" />
             </Flex>
             <Flex
               alignItems="center"
               height="62px"
-              border={`solid 1px ${color("black10")}`}
+              border="solid 1px"
               borderLeft="none"
+              borderColor="black10"
               mt="-1px"
               mr="-1px"
             >
-              <Text textAlign="center" variant="mediumText">
+              <Text textAlign="center" variant="sm" fontWeight="bold">
                 Money-Back Guarantee
               </Text>
             </Flex>
@@ -540,8 +546,9 @@ export const BuyerGuaranteeIndex: React.FC = () => {
               justifyContent="space-around"
               alignItems="center"
               height="61px"
-              borderBottom={`solid 1px ${color("black10")}`}
-              borderRight={`solid 1px ${color("black10")}`}
+              borderBottom="solid 1px"
+              borderRight="solid 1px"
+              borderColor="black10"
             >
               {""}
             </Flex>
@@ -549,21 +556,23 @@ export const BuyerGuaranteeIndex: React.FC = () => {
               justifyContent="space-around"
               alignItems="center"
               height="61px"
-              borderBottom={`solid 1px ${color("black10")}`}
-              backgroundColor={color("white100")}
+              borderBottom="solid 1px"
+              borderColor="black10"
+              backgroundColor={"white100"}
             >
               <CheckIcon width="40px" height="40px" />
             </Flex>
             <Flex
               alignItems="center"
               justifyContent="center"
-              borderBottom={`solid 1px ${color("black10")}`}
-              borderRight={`solid 1px ${color("black10")}`}
+              borderBottom="solid 1px"
+              borderRight="solid 1px"
+              borderColor="black10"
               height="61px"
               mr="-1px"
               flexDirection="column"
             >
-              <Text textAlign="center" variant="mediumText">
+              <Text textAlign="center" variant="sm" fontWeight="bold">
                 Secure Payment
               </Text>
             </Flex>
@@ -571,8 +580,9 @@ export const BuyerGuaranteeIndex: React.FC = () => {
               justifyContent="space-around"
               alignItems="center"
               height="61px"
-              borderBottom={`solid 1px ${color("black10")}`}
-              borderRight={`solid 1px ${color("black10")}`}
+              borderBottom="solid 1px"
+              borderRight="solid 1px"
+              borderColor="black10"
             >
               {""}
             </Flex>
@@ -580,94 +590,98 @@ export const BuyerGuaranteeIndex: React.FC = () => {
               justifyContent="space-around"
               alignItems="center"
               height="61px"
-              borderBottom={`solid 1px ${color("black10")}`}
-              backgroundColor={color("white100")}
+              borderBottom="solid 1px"
+              backgroundColor={"white100"}
+              borderColor="black10"
             >
               <CheckIcon width="40px" height="40px" />
             </Flex>
           </CSSGrid>
-          <Flex backgroundColor={color("black5")} p={4} justifyContent="center">
+          <Flex backgroundColor={"black5"} p={4} justifyContent="center">
             {learnMoreButton("100%")}
           </Flex>
         </Box>
       </Media>
       {/*  Artsy Guarantee Grid block iPad & desktop */}
       <Media greaterThanOrEqual="sm">
-        <Flex
-          justifyContent="center"
-          py={space(9)}
-          backgroundColor={color("black5")}
-        >
-          <Text variant="largeTitle">The Artsy Guarantee</Text>
+        <Flex justifyContent="center" py={12} backgroundColor={"black5"}>
+          <Text variant="xl">The Artsy Guarantee</Text>
         </Flex>
         <CSSGrid
-          backgroundColor={color("black5")}
+          backgroundColor={"black5"}
           gridTemplateColumns="repeat(6, 1fr)"
           px={2}
           pt={0}
-          pb={space(9)}
+          pb={6}
         >
-          <Flex borderBottom={`solid 1px ${color("black100")}`}>{""}</Flex>
+          <Flex borderColor="black100" borderBottom="solid 1px">
+            {""}
+          </Flex>
           <Flex
             alignItems="center"
             justifyContent="center"
-            borderBottom={`solid 1px ${color("black100")}`}
-            borderLeft={`solid 1px ${color("black100")}`}
+            borderBottom="solid 1px"
+            borderLeft="solid 1px"
+            borderColor="black100"
             height="50px"
             flexDirection="column"
           >
-            <Text p={1} variant="mediumText" textAlign="center">
+            <Text p={1} variant="sm" fontWeight="bold" textAlign="center">
               Vetted Sellers
             </Text>
           </Flex>
           <Flex
             alignItems="center"
             justifyContent="center"
-            borderBottom={`solid 1px ${color("black100")}`}
-            borderLeft={`solid 1px ${color("black100")}`}
+            borderBottom="solid 1px"
+            borderLeft="solid 1px"
+            borderColor="black100"
             height="50px"
             flexDirection="column"
           >
-            <Text p={1} variant="mediumText" textAlign="center">
+            <Text p={1} variant="sm" fontWeight="bold" textAlign="center">
               Dedicated Support
             </Text>
           </Flex>
           <Flex
             alignItems="center"
             justifyContent="center"
-            border={`solid 1px ${color("black100")}`}
+            border="solid 1px"
             borderTop="none"
+            borderColor="black100"
             height="50px"
             ml="-1px"
           >
-            <Text p={1} textAlign="center" variant="mediumText">
+            <Text p={1} textAlign="center" variant="sm" fontWeight="bold">
               Authenticity Guarantee
             </Text>
           </Flex>
           <Flex
             alignItems="center"
             justifyContent="center"
-            borderBottom={`solid 1px ${color("black100")}`}
-            borderRight={`solid 1px ${color("black100")}`}
+            borderBottom="solid 1px"
+            borderRight="solid 1px"
+            borderColor="black100"
             height="50px"
           >
-            <Text textAlign="center" variant="mediumText" p={1}>
+            <Text textAlign="center" variant="sm" fontWeight="bold" p={1}>
               Money-Back Guarantee
             </Text>
           </Flex>
           <Flex
             alignItems="center"
             justifyContent="center"
-            borderBottom={`solid 1px ${color("black100")}`}
+            borderBottom="solid 1px"
+            borderColor="black100"
             height="50px"
             flexDirection="column"
           >
-            <Text p={1} variant="mediumText" textAlign="center">
+            <Text p={1} variant="sm" fontWeight="bold" textAlign="center">
               Secure Payment
             </Text>
           </Flex>
           <Flex justifyContent="space-around" alignItems="center" height="91px">
-            <Text variant="mediumText" textAlign="center" pr={1}>
+            <Text variant="sm" fontWeight="bold" textAlign="center" pr={1}>
               Making an Inquiry
             </Text>
           </Flex>
@@ -675,7 +689,8 @@ export const BuyerGuaranteeIndex: React.FC = () => {
             justifyContent="space-around"
             alignItems="center"
             height="91px"
-            border={`solid 1px ${color("black100")}`}
+            border="solid 1px"
+            borderColor="black100"
             borderTop="none"
             marginRight="-1px"
           >
@@ -686,8 +701,9 @@ export const BuyerGuaranteeIndex: React.FC = () => {
             justifyContent="space-around"
             alignItems="center"
             height="91px"
-            borderBottom={`solid 1px ${color("black100")}`}
-            borderRight={`solid 1px ${color("black100")}`}
+            borderBottom="solid 1px"
+            borderRight="solid 1px"
+            borderColor="black100"
           >
             <CheckIcon width="40px" height="40px" />
           </Flex>
@@ -695,8 +711,9 @@ export const BuyerGuaranteeIndex: React.FC = () => {
             justifyContent="space-around"
             alignItems="center"
             height="91px"
-            borderBottom={`solid 1px ${color("black100")}`}
-            borderRight={`solid 1px ${color("black100")}`}
+            borderBottom="solid 1px"
+            borderRight="solid 1px"
+            borderColor="black100"
           >
             {""}
           </Flex>
@@ -704,8 +721,9 @@ export const BuyerGuaranteeIndex: React.FC = () => {
             justifyContent="space-around"
             alignItems="center"
             height="91px"
-            borderBottom={`solid 1px ${color("black100")}`}
-            borderRight={`solid 1px ${color("black100")}`}
+            borderBottom="solid 1px"
+            borderRight="solid 1px"
+            borderColor="black100"
           >
             {""}
           </Flex>
@@ -713,7 +731,8 @@ export const BuyerGuaranteeIndex: React.FC = () => {
             justifyContent="space-around"
             alignItems="center"
             height="91px"
-            borderBottom={`solid 1px ${color("black100")}`}
+            borderBottom="solid 1px"
+            borderColor="black100"
           >
             {""}
           </Flex>
@@ -722,10 +741,11 @@ export const BuyerGuaranteeIndex: React.FC = () => {
             alignItems="center"
             height="91px"
             mt="-1px"
-            borderTop={`solid 1px ${color("black100")}`}
-            backgroundColor={color("white100")}
+            borderTop="solid 1px"
+            borderColor="black100"
+            backgroundColor={"white100"}
           >
-            <Text textAlign="center" variant="mediumText" pr={1}>
+            <Text textAlign="center" fontWeight="bold" variant="sm" pr={1}>
               Purchasing with Artsy’s Secure Checkout
             </Text>
           </Flex>
@@ -735,9 +755,10 @@ export const BuyerGuaranteeIndex: React.FC = () => {
             height="91px"
             mr="-1px"
             zIndex={1}
-            borderLeft={`solid 1px ${color("black100")}`}
-            borderRight={`solid 1px ${color("black100")}`}
-            backgroundColor={color("white100")}
+            borderLeft="solid 1px"
+            borderRight="solid 1px"
+            borderColor="black100"
+            backgroundColor={"white100"}
           >
             <CheckIcon width="40px" height="40px" />
           </Flex>
@@ -745,7 +766,7 @@ export const BuyerGuaranteeIndex: React.FC = () => {
             justifyContent="space-around"
             alignItems="center"
             height="91px"
-            backgroundColor={color("white100")}
+            backgroundColor={"white100"}
           >
             <CheckIcon width="40px" height="40px" />
           </Flex>
@@ -753,10 +774,11 @@ export const BuyerGuaranteeIndex: React.FC = () => {
             justifyContent="space-around"
             alignItems="center"
             height="91px"
-            borderLeft={`solid 1px ${color("black100")}`}
-            borderRight={`solid 1px ${color("black100")}`}
+            borderLeft="solid 1px"
+            borderColor="black100"
+            borderRight="solid 1px"
             ml="-1px"
-            backgroundColor={color("white100")}
+            backgroundColor={"white100"}
           >
             <CheckIcon width="40px" height="40px" />
           </Flex>
@@ -764,8 +786,9 @@ export const BuyerGuaranteeIndex: React.FC = () => {
             justifyContent="space-around"
             alignItems="center"
             height="91px"
-            borderRight={`solid 1px ${color("black100")}`}
-            backgroundColor={color("white100")}
+            borderRight="solid 1px"
+            borderColor="black100"
+            backgroundColor={"white100"}
           >
             <CheckIcon width="40px" height="40px" />
           </Flex>
@@ -773,16 +796,12 @@ export const BuyerGuaranteeIndex: React.FC = () => {
             justifyContent="space-around"
             alignItems="center"
             height="91px"
-            backgroundColor={color("white100")}
+            backgroundColor={"white100"}
           >
             <CheckIcon width="40px" height="40px" />
           </Flex>
         </CSSGrid>
-        <Flex
-          justifyContent="center"
-          pb={space(9)}
-          backgroundColor={color("black5")}
-        >
+        <Flex justifyContent="center" pb={6} backgroundColor={"black5"}>
           {learnMoreButton("200px")}
         </Flex>
       </Media>
