@@ -7,6 +7,7 @@ const currentYear = new Date().getFullYear()
 
 export const clientPlugins = [
   new LodashModuleReplacementPlugin({
+    collections: true,
     currying: true,
     flattening: true,
     shorthands: true,

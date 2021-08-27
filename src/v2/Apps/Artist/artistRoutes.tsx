@@ -86,6 +86,7 @@ export const artistRoutes: AppRouteConfig[] = [
   {
     path: "/artist/:artistID",
     theme: "v3",
+    ignoreScrollBehaviorBetweenChildren: true,
     getComponent: () => ArtistApp,
     prepare: () => {
       ArtistApp.preload()
@@ -120,7 +121,6 @@ export const artistRoutes: AppRouteConfig[] = [
       {
         path: "works-for-sale",
         theme: "v3",
-        ignoreScrollBehavior: true,
         getComponent: () => WorksForSaleRoute,
         prepare: () => {
           WorksForSaleRoute.preload()
@@ -142,7 +142,6 @@ export const artistRoutes: AppRouteConfig[] = [
       {
         path: "auction-results",
         theme: "v3",
-        ignoreScrollBehavior: false,
         getComponent: () => AuctionResultsRoute,
         prepare: () => {
           AuctionResultsRoute.preload()
