@@ -131,7 +131,7 @@ describe("PartnerNavigationTabs", () => {
   it("doesn't display viewing rooms tab if not admin", () => {
     const wrapper = getWrapper({
       Partner: () => ({
-        viewingRooms: { totalCount: 0 },
+        viewingRooms: { totalCount: 1 },
       }),
     })
     const html = wrapper.html()
