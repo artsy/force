@@ -3,6 +3,8 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { Join, Spacer } from "@artsy/palette"
 import { InfoSection } from "v2/Components/InfoSection"
 import { FairOrganizerInfo_fairOrganizer } from "v2/__generated__/FairOrganizerInfo_fairOrganizer.graphql"
+import styled from "styled-components"
+import { themeGet } from "@styled-system/theme-get"
 
 interface FairOrganizerInfoProps {
   fairOrganizer: FairOrganizerInfo_fairOrganizer
@@ -14,10 +16,21 @@ export const FairOrganizerInfo: React.FC<FairOrganizerInfoProps> = ({
   const { about } = fairOrganizer
   return (
     <Join separator={<Spacer mt={2} />}>
-      {about && <InfoSection type="html" label="About" info={about} />}
+      {about && (
+        <InfoSectionContainer>
+          <InfoSection type="html" label="About" info={about} />
+        </InfoSectionContainer>
+      )}
     </Join>
   )
 }
+
+const InfoSectionContainer = styled.div`
+  a:hover:not(:disabled) {
+    text-decoration: underline;
+    color: ${themeGet("colors.blue100")};
+  }
+`
 
 export const FairOrganizerInfoFragmentContainer = createFragmentContainer(
   FairOrganizerInfo,
