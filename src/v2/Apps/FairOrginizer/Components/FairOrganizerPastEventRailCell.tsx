@@ -25,7 +25,7 @@ export const FairOrganizerPastEventRailCell: React.FC<FairOrganizerPastEventRail
       ) : (
         <Box width={325} height={244} bg="black10" />
       )}
-      <Text variant="xl" mt={1}>
+      <Text variant="xl" width={325} mt={1}>
         {fair.name}
       </Text>
     </RouterLink>
