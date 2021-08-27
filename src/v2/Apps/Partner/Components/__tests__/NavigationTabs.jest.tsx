@@ -3,9 +3,11 @@ import { graphql } from "react-relay"
 import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
 import { NavigationTabs_Test_PartnerQuery } from "v2/__generated__/NavigationTabs_Test_PartnerQuery.graphql"
 import { NavigationTabsFragmentContainer as NavigationTabs } from "v2/Apps/Partner/Components/NavigationTabs"
+import { useSystemContext } from "v2/System/useSystemContext"
 
 jest.unmock("react-relay")
 jest.mock("v2/Components/RouteTabs")
+jest.mock("v2/System/useSystemContext")
 
 const { getWrapper } = setupTestWrapper<NavigationTabs_Test_PartnerQuery>({
   Component: ({ partner }: any) => {
@@ -21,7 +23,21 @@ const { getWrapper } = setupTestWrapper<NavigationTabs_Test_PartnerQuery>({
 })
 
 describe("PartnerNavigationTabs", () => {
-  it("renders all tabs by default", () => {
+  const mockuseSystemContext = useSystemContext as jest.Mock
+  let user = {}
+
+  beforeEach(() => {
+    mockuseSystemContext.mockImplementation(() => ({ user }))
+  })
+
+  afterEach(() => {
+    mockuseSystemContext.mockReset()
+    user = {}
+  })
+  it("renders all tabs by default for admins", () => {
+    user = {
+      type: "Admin",
+    }
     const wrapper = getWrapper({
       Partner: () => ({
         id: "white-cube",
@@ -98,10 +114,24 @@ describe("PartnerNavigationTabs", () => {
     expect(html).not.toContain("Artists")
   })
 
-  it("doesn't display viewing rooms tab if no vieving rooms", () => {
+  it("doesn't display viewing rooms tab if no viewing rooms", () => {
+    user = {
+      type: "Admin",
+    }
     const wrapper = getWrapper({
       Partner: () => ({
         viewingRooms: { totalCount: 0 },
+      }),
+    })
+    const html = wrapper.html()
+
+    expect(html).not.toContain("Viewing Rooms")
+  })
+
+  it("doesn't display viewing rooms tab if not admin", () => {
+    const wrapper = getWrapper({
+      Partner: () => ({
+        viewingRooms: { totalCount: 1 },
       }),
     })
     const html = wrapper.html()
