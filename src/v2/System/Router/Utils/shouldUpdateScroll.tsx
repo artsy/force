@@ -5,19 +5,26 @@
  * @see https://github.com/4Catalyzer/found-scroll#custom-scroll-behavior
  */
 
-const getParentRoute = routes => {
-  let parentRoute
+const getRouteIndiceByScrollChildrenFlag = renderArgs => {
+  const { routes, routeIndices } = renderArgs ?? {}
+  let routeIndice
 
-  if (Array.isArray(routes)) {
-    parentRoute = routes.find(
-      route => route.ignoreScrollBehaviorBetweenChildren
+  if (Array.isArray(routes) && Array.isArray(routeIndices)) {
+    const routeIndex = routes.findIndex(
+      currentRoute => currentRoute.ignoreScrollBehaviorBetweenChildren
     )
+
+    if (routeIndex !== -1) {
+      routeIndice = routeIndices[routeIndex]
+    }
   }
 
-  return parentRoute ?? null
+  return routeIndice ?? -1
 }
 
-export function shouldUpdateScroll(prevRenderArgs, { routes }) {
+export function shouldUpdateScroll(prevRenderArgs, currentRenderArgs) {
+  const { routes } = currentRenderArgs
+
   try {
     // If true, don't reset scroll position on route change
     if (routes?.some(route => route.ignoreScrollBehavior)) {
@@ -28,15 +35,14 @@ export function shouldUpdateScroll(prevRenderArgs, { routes }) {
       return [0, 0]
     }
 
-    const parentRoute = getParentRoute(routes)
-    const prevParentRoute = getParentRoute(prevRenderArgs?.routes)
+    const routeIndice = getRouteIndiceByScrollChildrenFlag(currentRenderArgs)
+    const prevRouteIndice = getRouteIndiceByScrollChildrenFlag(prevRenderArgs)
 
     if (
-      prevParentRoute &&
-      parentRoute &&
-      prevParentRoute.path === parentRoute.path
+      routeIndice !== -1 &&
+      prevRouteIndice !== -1 &&
+      routeIndice === prevRouteIndice
     ) {
-      console.log("[debug] parent navigate")
       return false
     }
   } catch (error) {
