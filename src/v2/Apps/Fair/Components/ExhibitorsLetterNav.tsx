@@ -6,7 +6,7 @@ import { Media } from "v2/Utils/Responsive"
 import { scrollIntoView } from "v2/Utils/scrollHelpers"
 import { ExhibitorsLetterNav_fair } from "v2/__generated__/ExhibitorsLetterNav_fair.graphql"
 import { useMatchMedia } from "v2/Utils/Hooks/useMatchMedia"
-import { MOBILE_NAV_HEIGHT, DESKTOP_NAV_BAR_HEIGHT } from "v2/Components/NavBar"
+import { useNavBarHeight } from "v2/Components/NavBar/useNavBarHeight"
 
 const LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("").concat(["0-9"])
 
@@ -18,12 +18,19 @@ export const ExhibitorsLetterNav: React.FC<ExhibitorsLetterNavProps> = ({
   fair,
 }) => {
   const letters = fair?.exhibitorsGroupedByName?.map(group => group?.letter)
+  const {
+    height: [mobileNavBarHeight, desktopNavBarHeight],
+  } = useNavBarHeight()
 
   const isMobile = useMatchMedia(themeProps.mediaQueries.xs)
+  const stickyTabsHeight = 150
+
+  const offset =
+    (isMobile ? mobileNavBarHeight : desktopNavBarHeight) + stickyTabsHeight
 
   const Letters = ({ withSwiper = false }) => {
     return (
-      <Flex justifyContent="space-between" pl={withSwiper ? 2 : 0}>
+      <Flex justifyContent="space-between" py={2} pl={withSwiper ? 2 : 0}>
         {LETTERS.map((letter, i) => {
           const isEnabled = letters?.includes(letter)
           const isLast = i === LETTERS.length - 1
@@ -37,9 +44,6 @@ export const ExhibitorsLetterNav: React.FC<ExhibitorsLetterNavProps> = ({
               mr={!withSwiper || isLast ? 0 : 4}
               onClick={() => {
                 if (isEnabled) {
-                  const offset = isMobile
-                    ? MOBILE_NAV_HEIGHT
-                    : DESKTOP_NAV_BAR_HEIGHT + 30
                   scrollIntoView({
                     selector: `#jump--letter${letter}`,
                     offset,
