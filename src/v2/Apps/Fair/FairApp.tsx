@@ -146,7 +146,7 @@ const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
 }
 
 const FairRouteTab = styled(RouteTab).attrs({
-  variant: ["md", "lg"],
+  variant: "md",
   alignItems: "center",
   py: 2,
   height: "auto",

@@ -23,7 +23,7 @@ export const ExhibitorsLetterNav: React.FC<ExhibitorsLetterNavProps> = ({
   } = useNavBarHeight()
 
   const isMobile = useMatchMedia(themeProps.mediaQueries.xs)
-  const stickyTabsHeight = isMobile ? 120 : 160
+  const stickyTabsHeight = 150
 
   const offset =
     (isMobile ? mobileNavBarHeight : desktopNavBarHeight) + stickyTabsHeight
