@@ -51,7 +51,7 @@ fragment FairEditorialItem_article on Article {
 fragment FairOrganizerLatestArticles_fairOrganizer on FairOrganizer {
   name
   slug
-  articlesConnection(first: 7) {
+  articlesConnection(first: 7, sort: PUBLISHED_AT_DESC) {
     totalCount
     edges {
       node {
@@ -170,6 +170,11 @@ return {
                 "kind": "Literal",
                 "name": "first",
                 "value": 7
+              },
+              {
+                "kind": "Literal",
+                "name": "sort",
+                "value": "PUBLISHED_AT_DESC"
               }
             ],
             "concreteType": "ArticleConnection",
@@ -303,7 +308,7 @@ return {
                 "storageKey": null
               }
             ],
-            "storageKey": "articlesConnection(first:7)"
+            "storageKey": "articlesConnection(first:7,sort:\"PUBLISHED_AT_DESC\")"
           },
           (v2/*: any*/)
         ],
@@ -316,7 +321,7 @@ return {
     "metadata": {},
     "name": "FairOrganizerLatestArticles_Test_Query",
     "operationKind": "query",
-    "text": "query FairOrganizerLatestArticles_Test_Query {\n  fairOrganizer(id: \"example\") {\n    ...FairOrganizerLatestArticles_fairOrganizer\n    id\n  }\n}\n\nfragment FairEditorialItem_article on Article {\n  id\n  internalID\n  slug\n  title\n  href\n  publishedAt(format: \"MMMM D, YYYY\")\n  thumbnailTitle\n  thumbnailImage {\n    large: cropped(width: 670, height: 720) {\n      width\n      height\n      src\n      srcSet\n    }\n    small: cropped(width: 325, height: 240) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment FairOrganizerLatestArticles_fairOrganizer on FairOrganizer {\n  name\n  slug\n  articlesConnection(first: 7) {\n    totalCount\n    edges {\n      node {\n        id\n        ...FairEditorialItem_article\n      }\n    }\n  }\n}\n"
+    "text": "query FairOrganizerLatestArticles_Test_Query {\n  fairOrganizer(id: \"example\") {\n    ...FairOrganizerLatestArticles_fairOrganizer\n    id\n  }\n}\n\nfragment FairEditorialItem_article on Article {\n  id\n  internalID\n  slug\n  title\n  href\n  publishedAt(format: \"MMMM D, YYYY\")\n  thumbnailTitle\n  thumbnailImage {\n    large: cropped(width: 670, height: 720) {\n      width\n      height\n      src\n      srcSet\n    }\n    small: cropped(width: 325, height: 240) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment FairOrganizerLatestArticles_fairOrganizer on FairOrganizer {\n  name\n  slug\n  articlesConnection(first: 7, sort: PUBLISHED_AT_DESC) {\n    totalCount\n    edges {\n      node {\n        id\n        ...FairEditorialItem_article\n      }\n    }\n  }\n}\n"
   }
 };
 })();
