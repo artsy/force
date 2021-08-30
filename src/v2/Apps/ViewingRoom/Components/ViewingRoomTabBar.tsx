@@ -60,7 +60,7 @@ export const ViewingRoomTabBar: React.FC<FlexProps> = props => {
     >
       <Flex width={["100%", 720]}>
         <Tab to={`/viewing-room/${slug}`}>Statement</Tab>
-        <Tab to={`/viewing-room/${slug}/works`}>Works</Tab>
+        <Tab to={`/viewing-room/${slug}/artworks`}>Works</Tab>
       </Flex>
     </Flex>
   )

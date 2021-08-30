@@ -223,7 +223,7 @@ describe("ViewingRoomApp", () => {
         expect(wrapper.find("Tab").length).toBe(2)
         const html = wrapper.html()
         expect(html).toContain(`href="/viewing-room/${slug}"`)
-        expect(html).toContain(`href="/viewing-room/${slug}/works"`)
+        expect(html).toContain(`href="/viewing-room/${slug}/artworks"`)
       })
     })
   })
