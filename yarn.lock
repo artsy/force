@@ -39,10 +39,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/detect-responsive-traits/-/detect-responsive-traits-0.0.5.tgz#abf85959f8567816babec6f582b744f58c98b726"
   integrity sha512-axgW5YuqSpPzHb27yo2jmPHz/N9eN2hh2E+Mub5BKuu/jHZI+iDTdw0OZ3I+z7Z9WKBh+FPVx4gpza5w7slJNA==
 
-"@artsy/express-reloadable@1.4.9":
-  version "1.4.9"
-  resolved "https://registry.yarnpkg.com/@artsy/express-reloadable/-/express-reloadable-1.4.9.tgz#e6a77672905f986a58585d998faaafe329453b84"
-  integrity sha512-9NJXJdNk13S17I3VZH9YjEwUpfGlymDMZWOk9M46raV3iCqaDcw1a5IvmTz4uz4PxxvBS+KihAnJbOXC1TOsCg==
+"@artsy/express-reloadable@1.5.0":
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/@artsy/express-reloadable/-/express-reloadable-1.5.0.tgz#f1affb10ce7cd95230033d5b8b651fe91737516d"
+  integrity sha512-tYSbAfswKuIVjtnCNq/HuLOFeDsLz1UVFI0MSUMKBAK1XKoRZKfxblY9V3v3gvpN/MtHnDxrPl6OCCSB3GbuXg==
   dependencies:
     chalk "^2.3.1"
     chokidar "^3.0.0"
@@ -15478,9 +15478,10 @@ pascalcase@^0.1.1:
   resolved "https://registry.yarnpkg.com/pascalcase/-/pascalcase-0.1.1.tgz#b363e55e8006ca6fe21784d2db22bd15d7917f14"
   integrity sha1-s2PlXoAGym/iF4TS2yK9FdeRfxQ=
 
-"passport-apple@git+https://github.com/artsy/passport-apple.git#f41adb7822c8344b72bc36a7d68312f6592cb14f":
+"passport-apple@https://github.com/artsy/passport-apple#f41adb7822c8344b72bc36a7d68312f6592cb14f":
   version "1.1.2"
-  resolved "git+https://github.com/artsy/passport-apple.git#f41adb7822c8344b72bc36a7d68312f6592cb14f"
+  uid f41adb7822c8344b72bc36a7d68312f6592cb14f
+  resolved "https://github.com/artsy/passport-apple#f41adb7822c8344b72bc36a7d68312f6592cb14f"
   dependencies:
     jsonwebtoken "^8.5.1"
     passport-oauth2 "^1.5.0"
