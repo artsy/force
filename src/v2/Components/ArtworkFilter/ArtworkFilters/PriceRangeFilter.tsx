@@ -170,7 +170,7 @@ export const PriceRangeFilter: React.FC<PriceRangeFilterProps> = ({
             <Radio
               key="custom"
               my={tokens.my}
-              label="Custom price"
+              label="Custom Price"
               value="custom"
             />,
           ]}
