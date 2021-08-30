@@ -35,13 +35,13 @@ export const WaysToBuyFilter: FC<WaysToBuyFilterProps> = ({ expanded }) => {
     {
       // @ts-expect-error STRICT_NULL_CHECK
       disabled: isDisabled(filterContext.counts.ecommerce_artworks),
-      name: "Buy now",
+      name: "Buy Now",
       state: "acquireable",
     },
     {
       // @ts-expect-error STRICT_NULL_CHECK
       disabled: isDisabled(filterContext.counts.has_make_offer_artworks),
-      name: "Make offer",
+      name: "Make Offer",
       state: "offerable",
     },
     {
