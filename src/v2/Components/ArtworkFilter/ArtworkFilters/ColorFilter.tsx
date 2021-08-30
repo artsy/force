@@ -16,19 +16,19 @@ import { FilterExpandable } from "./FilterExpandable"
 import { INITIAL_ITEMS_TO_SHOW, ShowMore } from "./ShowMore"
 
 const COLOR_OPTIONS = [
-  { hex: "#ffffff", value: "black-and-white", name: "Black and white" },
+  { hex: "#ffffff", value: "black-and-white", name: "Black and White" },
   { hex: "#ff0000", value: "red", name: "Red" },
   { hex: "#fbe854", value: "yellow", name: "Yellow" },
   { hex: "#f7923a", value: "orange", name: "Orange" },
   { hex: "#fb81cd", value: "pink", name: "Pink" },
   { hex: "#b82c83", value: "violet", name: "Violet" },
   { hex: "#daa520", value: "gold", name: "Gold" },
-  { hex: "#f1572c", value: "darkorange", name: "Dark orange" },
-  { hex: "#217c44", value: "darkgreen", name: "Dark green" },
-  { hex: "#0a1ab4", value: "darkblue", name: "Dark blue" },
-  { hex: "#642b7f", value: "darkviolet", name: "Dark violet" },
-  { hex: "#bccc46", value: "lightgreen", name: "Light green" },
-  { hex: "#c2d5f1", value: "lightblue", name: "Light blue" },
+  { hex: "#f1572c", value: "darkorange", name: "Dark Orange" },
+  { hex: "#217c44", value: "darkgreen", name: "Dark Green" },
+  { hex: "#0a1ab4", value: "darkblue", name: "Dark Blue" },
+  { hex: "#642b7f", value: "darkviolet", name: "Dark Violet" },
+  { hex: "#bccc46", value: "lightgreen", name: "Light Green" },
+  { hex: "#c2d5f1", value: "lightblue", name: "Light Blue" },
 ]
 
 type ColorOption = typeof COLOR_OPTIONS[number]
