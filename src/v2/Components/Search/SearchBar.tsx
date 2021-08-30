@@ -273,7 +273,6 @@ export class SearchBar extends Component<Props, State> {
     if (method === "click") return
 
     this.userClickedOnDescendant = true
-    const newHref = __typename === "Artist" ? `${href}/works-for-sale` : href
 
     if (this.props.router) {
       // @ts-ignore (routeConfig not found; need to update DT types)
@@ -281,19 +280,19 @@ export class SearchBar extends Component<Props, State> {
       // @ts-ignore (matchRoutes not found; need to update DT types)
       const isSupportedInRouter = !!this.props.router.matcher.matchRoutes(
         routes,
-        newHref
+        href
       )
 
       // Check if url exists within the global router context
       if (isSupportedInRouter) {
-        this.props.router.push(newHref)
+        this.props.router.push(href)
         this.onBlur({})
       } else {
-        window.location.assign(newHref)
+        window.location.assign(href)
       }
       // Outside of router context
     } else {
-      window.location.assign(newHref)
+      window.location.assign(href)
     }
   }
 

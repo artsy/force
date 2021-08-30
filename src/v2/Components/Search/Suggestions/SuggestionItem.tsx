@@ -1,9 +1,17 @@
-import { ArtworkIcon, AuctionIcon, Flex, Pill, Text } from "@artsy/palette"
+import {
+  ArtworkIcon,
+  AuctionIcon,
+  Clickable,
+  Flex,
+  Pill,
+  Text,
+} from "@artsy/palette"
 import match from "autosuggest-highlight/match"
 import parse from "autosuggest-highlight/parse"
 import React from "react"
 import styled from "styled-components"
 import { RouterLink } from "v2/System/Router/RouterLink"
+import { useRouter } from "v2/System/Router/useRouter"
 
 interface SuggestionItemProps {
   display: string
@@ -116,10 +124,19 @@ const QuickNavigation: React.FC<{
   )
 }
 
-const QuickNavigationItem: React.FC<{ to: string }> = ({ children, to }) => (
-  <RouterLink to={to} mr="1">
-    <Pill variant="textSquare">
-      <Flex alignItems="center">{children}</Flex>
-    </Pill>
-  </RouterLink>
-)
+const QuickNavigationItem: React.FC<{ to: string }> = ({ children, to }) => {
+  const { router } = useRouter()
+
+  const onClick = event => {
+    event.preventDefault()
+
+    router ? router.push(to) : window.location.assign(to)
+  }
+  return (
+    <Clickable display="flex" onClick={onClick} as="div">
+      <Pill variant="textSquare" mr="1">
+        <Flex alignItems="center">{children}</Flex>
+      </Pill>
+    </Clickable>
+  )
+}
