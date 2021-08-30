@@ -77,6 +77,11 @@ const node: ReaderFragment = {
           "kind": "Variable",
           "name": "page",
           "variableName": "page"
+        },
+        {
+          "kind": "Literal",
+          "name": "sort",
+          "value": "PUBLISHED_AT_DESC"
         }
       ],
       "concreteType": "ArticleConnection",
@@ -170,5 +175,5 @@ const node: ReaderFragment = {
   ],
   "type": "FairOrganizer"
 };
-(node as any).hash = '874650d740112e5b3412a9b885e3c7dc';
+(node as any).hash = 'f055e099c96bf554574dd68603857fa9';
 export default node;

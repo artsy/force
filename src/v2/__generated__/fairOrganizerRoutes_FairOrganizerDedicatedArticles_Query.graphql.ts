@@ -75,7 +75,7 @@ fragment FairEditorialItem_article on Article {
 fragment FairOrganizerDedicatedArticles_fairOrganizer_2Pg8Wv on FairOrganizer {
   slug
   name
-  articlesConnection(first: 16, page: $page) {
+  articlesConnection(first: 16, page: $page, sort: PUBLISHED_AT_DESC) {
     totalCount
     pageInfo {
       hasNextPage
@@ -272,7 +272,12 @@ return {
                 "name": "first",
                 "value": 16
               },
-              (v2/*: any*/)
+              (v2/*: any*/),
+              {
+                "kind": "Literal",
+                "name": "sort",
+                "value": "PUBLISHED_AT_DESC"
+              }
             ],
             "concreteType": "ArticleConnection",
             "kind": "LinkedField",
@@ -570,7 +575,7 @@ return {
     "metadata": {},
     "name": "fairOrganizerRoutes_FairOrganizerDedicatedArticles_Query",
     "operationKind": "query",
-    "text": "query fairOrganizerRoutes_FairOrganizerDedicatedArticles_Query(\n  $slug: String!\n  $page: Int\n) {\n  fairOrganizer(id: $slug) @principalField {\n    ...FairOrganizerDedicatedArticles_fairOrganizer_2Pg8Wv\n    id\n  }\n}\n\nfragment DedicatedArticlesBreadcrumbs_fairOrganizer on FairOrganizer {\n  slug\n  name\n  fairsConnection(first: 1) {\n    edges {\n      node {\n        image {\n          resized(width: 30, height: 30, version: \"square\") {\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment FairEditorialItem_article on Article {\n  id\n  internalID\n  slug\n  title\n  href\n  publishedAt(format: \"MMMM D, YYYY\")\n  thumbnailTitle\n  thumbnailImage {\n    large: cropped(width: 670, height: 720) {\n      width\n      height\n      src\n      srcSet\n    }\n    small: cropped(width: 325, height: 240) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment FairOrganizerDedicatedArticles_fairOrganizer_2Pg8Wv on FairOrganizer {\n  slug\n  name\n  articlesConnection(first: 16, page: $page) {\n    totalCount\n    pageInfo {\n      hasNextPage\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        id\n        ...FairEditorialItem_article\n      }\n    }\n  }\n  ...DedicatedArticlesBreadcrumbs_fairOrganizer\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n"
+    "text": "query fairOrganizerRoutes_FairOrganizerDedicatedArticles_Query(\n  $slug: String!\n  $page: Int\n) {\n  fairOrganizer(id: $slug) @principalField {\n    ...FairOrganizerDedicatedArticles_fairOrganizer_2Pg8Wv\n    id\n  }\n}\n\nfragment DedicatedArticlesBreadcrumbs_fairOrganizer on FairOrganizer {\n  slug\n  name\n  fairsConnection(first: 1) {\n    edges {\n      node {\n        image {\n          resized(width: 30, height: 30, version: \"square\") {\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment FairEditorialItem_article on Article {\n  id\n  internalID\n  slug\n  title\n  href\n  publishedAt(format: \"MMMM D, YYYY\")\n  thumbnailTitle\n  thumbnailImage {\n    large: cropped(width: 670, height: 720) {\n      width\n      height\n      src\n      srcSet\n    }\n    small: cropped(width: 325, height: 240) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment FairOrganizerDedicatedArticles_fairOrganizer_2Pg8Wv on FairOrganizer {\n  slug\n  name\n  articlesConnection(first: 16, page: $page, sort: PUBLISHED_AT_DESC) {\n    totalCount\n    pageInfo {\n      hasNextPage\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        id\n        ...FairEditorialItem_article\n      }\n    }\n  }\n  ...DedicatedArticlesBreadcrumbs_fairOrganizer\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n"
   }
 };
 })();
