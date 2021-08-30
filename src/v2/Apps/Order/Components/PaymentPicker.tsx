@@ -362,7 +362,7 @@ export class PaymentPicker extends React.Component<
                 })
               }
             >
-              Save credit card for later use.ыы
+              Save credit card for later use.
             </Checkbox>
           </Flex>
         </Collapse>
