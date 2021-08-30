@@ -1,5 +1,6 @@
 import { intersection, orderBy } from "lodash"
 import { Flex } from "@artsy/palette"
+import { toTitleCase } from "@artsy/to-title-case"
 import React from "react"
 import {
   MultiSelectArtworkFilters,
@@ -80,11 +81,12 @@ export const ResultsFilter: React.FC<ResultsFilterProps> = ({
         {!isFiltered && (
           <ShowMore expanded={isBelowTheFoldFilterSelected}>
             {resultsSorted.map(({ name, value }) => {
+              const titleCasedName = toTitleCase(name)
               return (
                 <ResultOption
                   key={value}
                   facetName={facetName}
-                  name={name}
+                  name={titleCasedName}
                   value={value}
                 />
               )
