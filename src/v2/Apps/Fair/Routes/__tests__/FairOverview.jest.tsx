@@ -1,4 +1,4 @@
-import { FairOverviewFragmentContainer } from "../FairOverview"
+import { FairOverviewFragmentContainer } from "../../Routes/FairOverview"
 import { graphql } from "react-relay"
 import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
 

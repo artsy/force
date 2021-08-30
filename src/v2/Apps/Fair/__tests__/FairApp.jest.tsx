@@ -7,6 +7,7 @@ import { FairApp_Test_Query } from "v2/__generated__/FairApp_Test_Query.graphql"
 import { useTracking } from "react-tracking"
 import { OwnerType } from "@artsy/cohesion"
 import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
+import { ReactWrapper } from "enzyme"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
@@ -98,6 +99,8 @@ describe("FairApp", () => {
   })
 
   it("tracks clicks to the booths tab", () => {
+    sd.ENABLE_FAIR_PAGE_EXHIBITORS_TAB = false
+
     const wrapper = getWrapper({
       Fair: () => ({
         internalID: "bson-fair",
@@ -152,17 +155,31 @@ describe("FairApp", () => {
       .find("RouteTab")
       .findWhere(t => !!t.text().match("Artworks"))
       .first()
-    const boothsTab = wrapper
-      .find("RouteTab")
-      .findWhere(t => !!t.text().match("Booths"))
-      .first()
 
-    boothsTab.simulate("click")
+    const enableFairPageExhibitorsTab = sd.ENABLE_FAIR_PAGE_EXHIBITORS_TAB
+
+    let previousTab: ReactWrapper
+
+    if (enableFairPageExhibitorsTab) {
+      previousTab = wrapper
+        .find("RouteTab")
+        .findWhere(t => !!t.text().match("Exhibitors"))
+        .first()
+    } else {
+      previousTab = wrapper
+        .find("RouteTab")
+        .findWhere(t => !!t.text().match("Booths"))
+        .first()
+    }
+
+    previousTab.simulate("click")
     artworksTab.simulate("click")
 
     expect(trackEvent).toHaveBeenCalledWith({
       action: "clickedNavigationTab",
-      context_module: "boothsTab",
+      context_module: enableFairPageExhibitorsTab
+        ? "exhibitorsTab"
+        : "boothsTab",
       context_page_owner_id: "bson-fair",
       context_page_owner_slug: "miart-2020",
       context_page_owner_type: "fair",

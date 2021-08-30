@@ -94,6 +94,19 @@ const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
                       Overview
                     </FairRouteTab>
 
+                    <FairRouteTab
+                      to={`${fairHref}/artworks`}
+                      exact
+                      onClick={trackTabData(
+                        `${fairHref}/artworks`,
+                        "Artworks",
+                        ContextModule.artworksTab
+                      )}
+                    >
+                      Artworks
+                      <Text display="inline">&nbsp;({artworkCount})</Text>
+                    </FairRouteTab>
+
                     {enableFairPageExhibitorsTab && (
                       <FairRouteTab
                         to={`${fairHref}/exhibitors`}
@@ -108,30 +121,19 @@ const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
                       </FairRouteTab>
                     )}
 
-                    <FairRouteTab
-                      to={`${fairHref}/booths`}
-                      exact
-                      onClick={trackTabData(
-                        `${fairHref}/booths`,
-                        "Booths",
-                        "boothsTab" as ContextModule
-                      )}
-                    >
-                      Booths
-                    </FairRouteTab>
-
-                    <FairRouteTab
-                      to={`${fairHref}/artworks`}
-                      exact
-                      onClick={trackTabData(
-                        `${fairHref}/artworks`,
-                        "Artworks",
-                        ContextModule.artworksTab
-                      )}
-                    >
-                      Artworks
-                      <Text display="inline">&nbsp;({artworkCount})</Text>
-                    </FairRouteTab>
+                    {!enableFairPageExhibitorsTab && (
+                      <FairRouteTab
+                        to={`${fairHref}/booths`}
+                        exact
+                        onClick={trackTabData(
+                          `${fairHref}/booths`,
+                          "Booths",
+                          ContextModule.boothsTab
+                        )}
+                      >
+                        Booths
+                      </FairRouteTab>
+                    )}
                   </RouteTabs>
                 </HorizontalPadding>
               </AppContainer>
