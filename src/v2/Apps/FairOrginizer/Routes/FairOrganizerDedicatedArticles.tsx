@@ -121,7 +121,11 @@ export const FairOrganizerDedicatedArticlesFragmentContainer = createRefetchCont
         ) {
         slug
         name
-        articlesConnection(first: $first, page: $page) {
+        articlesConnection(
+          first: $first
+          page: $page
+          sort: PUBLISHED_AT_DESC
+        ) {
           totalCount
           pageInfo {
             hasNextPage
