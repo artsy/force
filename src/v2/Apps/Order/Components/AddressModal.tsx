@@ -173,9 +173,12 @@ export const AddressModal: React.FC<Props> = ({
         >
           {(formik: FormikProps<SavedAddressType>) => (
             <form onSubmit={formik.handleSubmit}>
-              <Banner my={2} data-test="credit-card-error" variant="error">
-                {createUpdateError}
-              </Banner>
+              {createUpdateError && (
+                <Banner my={2} data-test="credit-card-error" variant="error">
+                  {createUpdateError}
+                </Banner>
+              )}
+
               <AddressModalFields />
               <Spacer mb={2} />
               <Input
