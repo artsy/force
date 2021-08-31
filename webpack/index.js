@@ -71,7 +71,7 @@ function getClientConfig() {
 function generateEnvBasedConfig() {
   if (env.isDevelopment) {
     console.log(
-      chalk.red("Webpack: Compiling is not supported in development mode.")
+      chalk.red("Error: Attempting to create a production build while `NODE_ENV=development` is unsupported. To fix, set `NODE_ENV=production` and rerun the command.")
     )
     process.exit(1)
   }
