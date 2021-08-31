@@ -4,7 +4,6 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type FairAbout_fair = {
-    readonly endAt: string | null;
     readonly about: string | null;
     readonly tagline: string | null;
     readonly location: {
@@ -41,13 +40,6 @@ return {
   "metadata": null,
   "name": "FairAbout_fair",
   "selections": [
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "endAt",
-      "storageKey": null
-    },
     {
       "alias": null,
       "args": (v0/*: any*/),
@@ -131,5 +123,5 @@ return {
   "type": "Fair"
 };
 })();
-(node as any).hash = '58288f7223f1d4b678b49e925f7baea7';
+(node as any).hash = '6d38b5a14b70f30e550a20b0078062bc';
 export default node;

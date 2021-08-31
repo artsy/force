@@ -26,15 +26,4 @@ describe("FairHeader", () => {
 
     expect(wrapper.text()).toContain("Miart 2020")
   })
-
-  it("displays the relevant timing info", () => {
-    const wrapper = getWrapper({
-      Fair: () => ({
-        startAt: "2020-08-19T08:00:00+00:00",
-        endAt: "2020-09-19T08:00:00+00:00",
-      }),
-    })
-
-    expect(wrapper.text()).toContain("Closed")
-  })
 })

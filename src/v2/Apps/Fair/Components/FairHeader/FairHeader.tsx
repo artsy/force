@@ -3,14 +3,13 @@ import { Box, BoxProps, Flex, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FairHeaderIconFragmentContainer } from "./FairHeaderIcon"
 import { FairHeader_fair } from "v2/__generated__/FairHeader_fair.graphql"
-import { FairTimingFragmentContainer as FairTiming } from "./FairTiming"
 
 interface FairHeaderProps extends BoxProps {
   fair: FairHeader_fair
 }
 
 const FairHeader: React.FC<FairHeaderProps> = ({ fair }) => {
-  const { name } = fair
+  const { name, exhibitionPeriod } = fair
 
   return (
     <Flex my={[2, 4]}>
@@ -19,7 +18,9 @@ const FairHeader: React.FC<FairHeaderProps> = ({ fair }) => {
         <Text as="h1" variant={["lg", "xl"]}>
           {name}
         </Text>
-        <FairTiming fair={fair} />
+        <Text variant={["lg", "xl"]} color="black60">
+          {exhibitionPeriod}
+        </Text>
       </Box>
     </Flex>
   )
@@ -29,8 +30,8 @@ export const FairHeaderFragmentContainer = createFragmentContainer(FairHeader, {
   fair: graphql`
     fragment FairHeader_fair on Fair {
       ...FairHeaderIcon_fair
-      ...FairTiming_fair
       name
+      exhibitionPeriod
     }
   `,
 })
