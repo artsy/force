@@ -94,8 +94,12 @@ export const viewingRoomRoutes: AppRouteConfig[] = [
       },
       {
         path: "works",
-        render: () => {
-          throw new RedirectException("artworks", 301)
+        render: ({
+          match: {
+            params: { slug },
+          },
+        }) => {
+          throw new RedirectException(`/viewing-room/${slug}/artworks`, 301)
         },
       },
       {
