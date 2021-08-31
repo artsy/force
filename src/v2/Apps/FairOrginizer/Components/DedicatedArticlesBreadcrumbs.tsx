@@ -47,7 +47,7 @@ export const DedicatedArticlesBreadcrumbsFragmentContainer = createFragmentConta
       fragment DedicatedArticlesBreadcrumbs_fairOrganizer on FairOrganizer {
         slug
         name
-        fairsConnection(first: 1) {
+        fairsConnection(first: 1, sort: START_AT_DESC) {
           edges {
             node {
               image {

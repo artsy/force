@@ -86,7 +86,7 @@ export const FairOrganizerHeaderFragmentContainer = createFragmentContainer(
     fairOrganizer: graphql`
       fragment FairOrganizerHeader_fairOrganizer on FairOrganizer {
         name
-        fairsConnection(first: 1) {
+        fairsConnection(first: 1, sort: START_AT_DESC) {
           edges {
             node {
               href
