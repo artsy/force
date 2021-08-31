@@ -9,13 +9,8 @@ export type SearchBar_viewer = {
             readonly node: {
                 readonly displayLabel: string | null;
                 readonly href: string | null;
-                readonly __typename: string;
                 readonly displayType?: string | null;
                 readonly slug?: string;
-                readonly counts?: {
-                    readonly artworks: number | null;
-                    readonly auctionResults: number | null;
-                } | null;
             } | null;
         } | null> | null;
     } | null;
@@ -108,13 +103,6 @@ const node: ReaderFragment = {
                       "storageKey": null
                     },
                     {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "__typename",
-                      "storageKey": null
-                    },
-                    {
                       "kind": "InlineFragment",
                       "selections": [
                         {
@@ -133,37 +121,6 @@ const node: ReaderFragment = {
                         }
                       ],
                       "type": "SearchableItem"
-                    },
-                    {
-                      "kind": "InlineFragment",
-                      "selections": [
-                        {
-                          "alias": null,
-                          "args": null,
-                          "concreteType": "ArtistCounts",
-                          "kind": "LinkedField",
-                          "name": "counts",
-                          "plural": false,
-                          "selections": [
-                            {
-                              "alias": null,
-                              "args": null,
-                              "kind": "ScalarField",
-                              "name": "artworks",
-                              "storageKey": null
-                            },
-                            {
-                              "alias": null,
-                              "args": null,
-                              "kind": "ScalarField",
-                              "name": "auctionResults",
-                              "storageKey": null
-                            }
-                          ],
-                          "storageKey": null
-                        }
-                      ],
-                      "type": "Artist"
                     }
                   ],
                   "storageKey": null
@@ -179,5 +136,5 @@ const node: ReaderFragment = {
   ],
   "type": "Viewer"
 };
-(node as any).hash = 'a6694021e48afcf170cda92cb611ed97';
+(node as any).hash = '3aeb38b1dc5d0bfda3a165193d2b7a27';
 export default node;
