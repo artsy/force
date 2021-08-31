@@ -249,7 +249,7 @@ export class SearchBar extends Component<Props, State> {
       [
         {
           suggestion: {
-            node: { href, displayType, id, __typename },
+            node: { href, displayType, id },
           },
           suggestionIndex,
         },
@@ -257,7 +257,7 @@ export class SearchBar extends Component<Props, State> {
     ) => ({
       action_type: Schema.ActionType.SelectedItemFromSearch,
       destination_path:
-        __typename === "Artist" ? `${href}/works-for-sale` : href,
+        displayType === "Artist" ? `${href}/works-for-sale` : href,
       item_id: id,
       item_number: suggestionIndex,
       item_type: displayType,
@@ -266,13 +266,11 @@ export class SearchBar extends Component<Props, State> {
   )
   onSuggestionSelected({
     suggestion: {
-      node: { href, __typename },
+      node: { href, displayType },
     },
-    method,
   }) {
-    if (method === "click") return
-
     this.userClickedOnDescendant = true
+    const newHref = displayType === "Artist" ? `${href}/works-for-sale` : href
 
     if (this.props.router) {
       // @ts-ignore (routeConfig not found; need to update DT types)
@@ -280,19 +278,19 @@ export class SearchBar extends Component<Props, State> {
       // @ts-ignore (matchRoutes not found; need to update DT types)
       const isSupportedInRouter = !!this.props.router.matcher.matchRoutes(
         routes,
-        href
+        newHref
       )
 
       // Check if url exists within the global router context
       if (isSupportedInRouter) {
-        this.props.router.push(href)
+        this.props.router.push(newHref)
         this.onBlur({})
       } else {
-        window.location.assign(href)
+        window.location.assign(newHref)
       }
       // Outside of router context
     } else {
-      window.location.assign(href)
+      window.location.assign(newHref)
     }
   }
 
@@ -322,9 +320,6 @@ export class SearchBar extends Component<Props, State> {
     return displayLabel
   }
 
-  getLabel = ({ displayType, __typename }) =>
-    displayType || (__typename === "Artist" ? "Artist" : null)
-
   renderSuggestion = (edge, rest) => {
     const renderer = edge.node.isFirstItem
       ? this.renderFirstSuggestion
@@ -334,38 +329,29 @@ export class SearchBar extends Component<Props, State> {
   }
 
   renderFirstSuggestion = (edge, { query, isHighlighted }) => {
-    const { displayLabel, href } = edge.node
-
-    const label = this.getLabel(edge.node)
-
+    const { displayLabel, displayType, href } = edge.node
     return (
       <FirstSuggestionItem
         display={displayLabel}
         href={href}
         isHighlighted={isHighlighted}
-        label={label}
+        label={displayType}
         query={query}
       />
     )
   }
 
   renderDefaultSuggestion = (edge, { query, isHighlighted }) => {
-    const { displayLabel, href, counts } = edge.node
-
-    const label = this.getLabel(edge.node)
-
-    const showArtworksButton = !!counts?.artworks
-    const showAuctionResultsButton = !!counts?.auctionResults
+    const { displayLabel, displayType, href } = edge.node
+    const newHref = displayType === "Artist" ? `${href}/works-for-sale` : href
 
     return (
       <SuggestionItem
         display={displayLabel}
-        href={href}
+        href={newHref}
         isHighlighted={isHighlighted}
-        label={label}
+        label={displayType}
         query={query}
-        showArtworksButton={showArtworksButton}
-        showAuctionResultsButton={showAuctionResultsButton}
       />
     )
   }
@@ -478,16 +464,9 @@ export const SearchBarRefetchContainer = createRefetchContainer(
             node {
               displayLabel
               href
-              __typename
               ... on SearchableItem {
                 displayType
                 slug
-              }
-              ... on Artist {
-                counts {
-                  artworks
-                  auctionResults
-                }
               }
             }
           }
