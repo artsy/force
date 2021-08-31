@@ -15,15 +15,6 @@ const { getWrapper } = setupTestWrapper<FairOrganizerApp_Test_Query>({
       fairOrganizer(id: "example") {
         ...FairOrganizerApp_fairOrganizer
       }
-      pastFairs: fairsConnection(
-        first: 20
-        fairOrganizerID: "example"
-        sort: START_AT_DESC
-        status: CLOSED
-        hasFullFeature: true
-      ) {
-        ...FairOrganizerApp_pastFairs
-      }
     }
   `,
 })

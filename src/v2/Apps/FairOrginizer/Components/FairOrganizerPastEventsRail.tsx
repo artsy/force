@@ -2,16 +2,16 @@ import { Shelf, Text } from "@artsy/palette"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FairOrganizerPastEventRailCellFragmentContainer as FairOrganizerPastEventRailCell } from "./FairOrganizerPastEventRailCell"
-import { FairOrganizerPastEventsRail_fairs } from "v2/__generated__/FairOrganizerPastEventsRail_fairs.graphql"
+import { FairOrganizerPastEventsRail_fairOrganizer } from "v2/__generated__/FairOrganizerPastEventsRail_fairOrganizer.graphql"
 import { extractNodes } from "v2/Utils/extractNodes"
 
 interface FairOrganizerPastEventsRailProps {
-  fairs: FairOrganizerPastEventsRail_fairs
+  fairOrganizer: FairOrganizerPastEventsRail_fairOrganizer
 }
 
 export const FairOrganizerPastEventsRail: React.FC<FairOrganizerPastEventsRailProps> = props => {
-  const { fairs } = props
-  const pastFairs = extractNodes(fairs)
+  const { fairOrganizer } = props
+  const pastFairs = extractNodes(fairOrganizer.pastFairs)
 
   if (pastFairs.length === 0) {
     return null
@@ -34,12 +34,19 @@ export const FairOrganizerPastEventsRail: React.FC<FairOrganizerPastEventsRailPr
 export const FairOrganizerPastEventsRailFragmentContainer = createFragmentContainer(
   FairOrganizerPastEventsRail,
   {
-    fairs: graphql`
-      fragment FairOrganizerPastEventsRail_fairs on FairConnection {
-        edges {
-          node {
-            id
-            ...FairOrganizerPastEventRailCell_fair
+    fairOrganizer: graphql`
+      fragment FairOrganizerPastEventsRail_fairOrganizer on FairOrganizer {
+        pastFairs: fairsConnection(
+          first: 20
+          sort: START_AT_DESC
+          status: CLOSED
+          hasFullFeature: true
+        ) {
+          edges {
+            node {
+              id
+              ...FairOrganizerPastEventRailCell_fair
+            }
           }
         }
       }

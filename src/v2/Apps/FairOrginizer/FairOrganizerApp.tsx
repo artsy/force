@@ -5,17 +5,14 @@ import { FairOrganizerApp_fairOrganizer } from "v2/__generated__/FairOrganizerAp
 import { FairHeaderImageFragmentContainer as FairHeaderImage } from "../Fair/Components/FairHeader/FairHeaderImage"
 import { FairOrganizerHeaderFragmentContainer as FairOrganizerHeader } from "./Components/FairOrganizerHeader/FairOrganizerHeader"
 import { FairOrganizerPastEventsRailFragmentContainer as FairOrganizerPastEventsRail } from "./Components/FairOrganizerPastEventsRail"
-import { FairOrganizerApp_pastFairs } from "v2/__generated__/FairOrganizerApp_pastFairs.graphql"
 import { FairOrganizerLatestArticlesFragmentContainer as FairOrganizerLatestArticles } from "./Components/FairOrganizerLatestArticles"
 
 interface FairOrganizerAppProps {
   fairOrganizer: FairOrganizerApp_fairOrganizer
-  pastFairs: FairOrganizerApp_pastFairs
 }
 
 const FairOrganizerApp: React.FC<FairOrganizerAppProps> = ({
   fairOrganizer,
-  pastFairs,
 }) => {
   const { fairs, name } = fairOrganizer
   const { edges } = fairs!
@@ -33,7 +30,7 @@ const FairOrganizerApp: React.FC<FairOrganizerAppProps> = ({
 
         <Spacer mt={6} />
 
-        <FairOrganizerPastEventsRail fairs={pastFairs} />
+        <FairOrganizerPastEventsRail fairOrganizer={fairOrganizer} />
 
         <Spacer mt={140} />
 
@@ -56,13 +53,9 @@ export const FairOrganizerAppFragmentContainer = createFragmentContainer(
             }
           }
         }
+        ...FairOrganizerPastEventsRail_fairOrganizer
         ...FairOrganizerHeader_fairOrganizer
         ...FairOrganizerLatestArticles_fairOrganizer
-      }
-    `,
-    pastFairs: graphql`
-      fragment FairOrganizerApp_pastFairs on FairConnection {
-        ...FairOrganizerPastEventsRail_fairs
       }
     `,
   }

@@ -49,15 +49,6 @@ export const fairOrganizerRoutes: AppRouteConfig[] = [
           }
           ...FairOrganizerApp_fairOrganizer
         }
-        pastFairs: fairsConnection(
-          first: 20
-          fairOrganizerID: $slug
-          sort: START_AT_DESC
-          status: CLOSED
-          hasFullFeature: true
-        ) {
-          ...FairOrganizerApp_pastFairs
-        }
       }
     `,
   },
