@@ -5,7 +5,8 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type FairHeader_fair = {
     readonly name: string | null;
-    readonly " $fragmentRefs": FragmentRefs<"FairHeaderIcon_fair" | "FairTiming_fair">;
+    readonly exhibitionPeriod: string | null;
+    readonly " $fragmentRefs": FragmentRefs<"FairHeaderIcon_fair">;
     readonly " $refType": "FairHeader_fair";
 };
 export type FairHeader_fair$data = FairHeader_fair;
@@ -30,17 +31,19 @@ const node: ReaderFragment = {
       "storageKey": null
     },
     {
+      "alias": null,
       "args": null,
-      "kind": "FragmentSpread",
-      "name": "FairHeaderIcon_fair"
+      "kind": "ScalarField",
+      "name": "exhibitionPeriod",
+      "storageKey": null
     },
     {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "FairTiming_fair"
+      "name": "FairHeaderIcon_fair"
     }
   ],
   "type": "Fair"
 };
-(node as any).hash = '595661ce8e609dab5d1fe56ee28f04de';
+(node as any).hash = 'fc4beb63a9755972de49fcf6579a6cf9';
 export default node;
