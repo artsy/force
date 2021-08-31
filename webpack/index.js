@@ -70,7 +70,10 @@ function getClientConfig() {
 
 function generateEnvBasedConfig() {
   if (env.isDevelopment) {
-    return {}
+    console.log(
+      chalk.red("Webpack: Compiling is not supported in development mode.")
+    )
+    process.exit(1)
   }
 
   // Verify that only a single build is selected.
