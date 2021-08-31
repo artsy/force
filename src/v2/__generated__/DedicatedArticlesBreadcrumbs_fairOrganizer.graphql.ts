@@ -6,17 +6,13 @@ import { FragmentRefs } from "relay-runtime";
 export type DedicatedArticlesBreadcrumbs_fairOrganizer = {
     readonly slug: string;
     readonly name: string | null;
-    readonly fairsConnection: {
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly image: {
-                    readonly resized: {
-                        readonly src: string;
-                        readonly srcSet: string;
-                    } | null;
-                } | null;
+    readonly profile: {
+        readonly image: {
+            readonly resized: {
+                readonly src: string;
+                readonly srcSet: string;
             } | null;
-        } | null> | null;
+        } | null;
     } | null;
     readonly " $refType": "DedicatedArticlesBreadcrumbs_fairOrganizer";
 };
@@ -50,102 +46,69 @@ const node: ReaderFragment = {
     },
     {
       "alias": null,
-      "args": [
-        {
-          "kind": "Literal",
-          "name": "first",
-          "value": 1
-        },
-        {
-          "kind": "Literal",
-          "name": "sort",
-          "value": "START_AT_DESC"
-        }
-      ],
-      "concreteType": "FairConnection",
+      "args": null,
+      "concreteType": "Profile",
       "kind": "LinkedField",
-      "name": "fairsConnection",
+      "name": "profile",
       "plural": false,
       "selections": [
         {
           "alias": null,
           "args": null,
-          "concreteType": "FairEdge",
+          "concreteType": "Image",
           "kind": "LinkedField",
-          "name": "edges",
-          "plural": true,
+          "name": "image",
+          "plural": false,
           "selections": [
             {
               "alias": null,
-              "args": null,
-              "concreteType": "Fair",
+              "args": [
+                {
+                  "kind": "Literal",
+                  "name": "height",
+                  "value": 30
+                },
+                {
+                  "kind": "Literal",
+                  "name": "version",
+                  "value": "square"
+                },
+                {
+                  "kind": "Literal",
+                  "name": "width",
+                  "value": 30
+                }
+              ],
+              "concreteType": "ResizedImageUrl",
               "kind": "LinkedField",
-              "name": "node",
+              "name": "resized",
               "plural": false,
               "selections": [
                 {
                   "alias": null,
                   "args": null,
-                  "concreteType": "Image",
-                  "kind": "LinkedField",
-                  "name": "image",
-                  "plural": false,
-                  "selections": [
-                    {
-                      "alias": null,
-                      "args": [
-                        {
-                          "kind": "Literal",
-                          "name": "height",
-                          "value": 30
-                        },
-                        {
-                          "kind": "Literal",
-                          "name": "version",
-                          "value": "square"
-                        },
-                        {
-                          "kind": "Literal",
-                          "name": "width",
-                          "value": 30
-                        }
-                      ],
-                      "concreteType": "ResizedImageUrl",
-                      "kind": "LinkedField",
-                      "name": "resized",
-                      "plural": false,
-                      "selections": [
-                        {
-                          "alias": null,
-                          "args": null,
-                          "kind": "ScalarField",
-                          "name": "src",
-                          "storageKey": null
-                        },
-                        {
-                          "alias": null,
-                          "args": null,
-                          "kind": "ScalarField",
-                          "name": "srcSet",
-                          "storageKey": null
-                        }
-                      ],
-                      "storageKey": "resized(height:30,version:\"square\",width:30)"
-                    }
-                  ],
+                  "kind": "ScalarField",
+                  "name": "src",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "srcSet",
                   "storageKey": null
                 }
               ],
-              "storageKey": null
+              "storageKey": "resized(height:30,version:\"square\",width:30)"
             }
           ],
           "storageKey": null
         }
       ],
-      "storageKey": "fairsConnection(first:1,sort:\"START_AT_DESC\")"
+      "storageKey": null
     }
   ],
   "type": "FairOrganizer"
 };
-(node as any).hash = '87dc3d34dbc55002ddcfe95a43e9bbb4';
+(node as any).hash = '322d075ec0670293841ce10f1aa54c40';
 export default node;
