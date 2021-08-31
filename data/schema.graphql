@@ -6375,7 +6375,12 @@ type FairOrganizer {
     after: String
     before: String
     first: Int
+    hasFullFeature: Boolean
+    hasHomepageSection: Boolean
+    hasListing: Boolean
     last: Int
+    sort: FairSorts
+    status: EventStatus
   ): FairConnection
 
   # A globally unique ID.
