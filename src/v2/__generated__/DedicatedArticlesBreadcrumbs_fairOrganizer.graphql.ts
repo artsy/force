@@ -55,6 +55,11 @@ const node: ReaderFragment = {
           "kind": "Literal",
           "name": "first",
           "value": 1
+        },
+        {
+          "kind": "Literal",
+          "name": "sort",
+          "value": "START_AT_DESC"
         }
       ],
       "concreteType": "FairConnection",
@@ -137,10 +142,10 @@ const node: ReaderFragment = {
           "storageKey": null
         }
       ],
-      "storageKey": "fairsConnection(first:1)"
+      "storageKey": "fairsConnection(first:1,sort:\"START_AT_DESC\")"
     }
   ],
   "type": "FairOrganizer"
 };
-(node as any).hash = 'bfc8dab1efec5d889e13834e9faefd2f';
+(node as any).hash = '87dc3d34dbc55002ddcfe95a43e9bbb4';
 export default node;

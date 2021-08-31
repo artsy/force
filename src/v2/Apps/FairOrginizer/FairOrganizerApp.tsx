@@ -49,7 +49,7 @@ export const FairOrganizerAppFragmentContainer = createFragmentContainer(
     fairOrganizer: graphql`
       fragment FairOrganizerApp_fairOrganizer on FairOrganizer {
         name
-        fairs: fairsConnection(first: 1) {
+        fairs: fairsConnection(first: 1, sort: START_AT_DESC) {
           edges {
             node {
               ...FairHeaderImage_fair

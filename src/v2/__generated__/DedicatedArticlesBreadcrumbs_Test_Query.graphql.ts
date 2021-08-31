@@ -27,7 +27,7 @@ query DedicatedArticlesBreadcrumbs_Test_Query {
 fragment DedicatedArticlesBreadcrumbs_fairOrganizer on FairOrganizer {
   slug
   name
-  fairsConnection(first: 1) {
+  fairsConnection(first: 1, sort: START_AT_DESC) {
     edges {
       node {
         image {
@@ -119,6 +119,11 @@ return {
                 "kind": "Literal",
                 "name": "first",
                 "value": 1
+              },
+              {
+                "kind": "Literal",
+                "name": "sort",
+                "value": "START_AT_DESC"
               }
             ],
             "concreteType": "FairConnection",
@@ -202,7 +207,7 @@ return {
                 "storageKey": null
               }
             ],
-            "storageKey": "fairsConnection(first:1)"
+            "storageKey": "fairsConnection(first:1,sort:\"START_AT_DESC\")"
           },
           (v1/*: any*/)
         ],
@@ -215,7 +220,7 @@ return {
     "metadata": {},
     "name": "DedicatedArticlesBreadcrumbs_Test_Query",
     "operationKind": "query",
-    "text": "query DedicatedArticlesBreadcrumbs_Test_Query {\n  fairOrganizer(id: \"example\") {\n    ...DedicatedArticlesBreadcrumbs_fairOrganizer\n    id\n  }\n}\n\nfragment DedicatedArticlesBreadcrumbs_fairOrganizer on FairOrganizer {\n  slug\n  name\n  fairsConnection(first: 1) {\n    edges {\n      node {\n        image {\n          resized(width: 30, height: 30, version: \"square\") {\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query DedicatedArticlesBreadcrumbs_Test_Query {\n  fairOrganizer(id: \"example\") {\n    ...DedicatedArticlesBreadcrumbs_fairOrganizer\n    id\n  }\n}\n\nfragment DedicatedArticlesBreadcrumbs_fairOrganizer on FairOrganizer {\n  slug\n  name\n  fairsConnection(first: 1, sort: START_AT_DESC) {\n    edges {\n      node {\n        image {\n          resized(width: 30, height: 30, version: \"square\") {\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();
