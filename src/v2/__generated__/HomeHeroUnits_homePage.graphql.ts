@@ -4,7 +4,10 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type HomeHeroUnits_homePage = {
-    readonly " $fragmentRefs": FragmentRefs<"HomeHeroUnitsSmall_homePage" | "HomeHeroUnitsLarge_homePage">;
+    readonly heroUnits: ReadonlyArray<{
+        readonly internalID: string;
+        readonly " $fragmentRefs": FragmentRefs<"HomeHeroUnit_heroUnit">;
+    } | null> | null;
     readonly " $refType": "HomeHeroUnits_homePage";
 };
 export type HomeHeroUnits_homePage$data = HomeHeroUnits_homePage;
@@ -22,17 +25,36 @@ const node: ReaderFragment = {
   "name": "HomeHeroUnits_homePage",
   "selections": [
     {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "HomeHeroUnitsSmall_homePage"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "HomeHeroUnitsLarge_homePage"
+      "alias": null,
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "platform",
+          "value": "DESKTOP"
+        }
+      ],
+      "concreteType": "HomePageHeroUnit",
+      "kind": "LinkedField",
+      "name": "heroUnits",
+      "plural": true,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "internalID",
+          "storageKey": null
+        },
+        {
+          "args": null,
+          "kind": "FragmentSpread",
+          "name": "HomeHeroUnit_heroUnit"
+        }
+      ],
+      "storageKey": "heroUnits(platform:\"DESKTOP\")"
     }
   ],
   "type": "HomePage"
 };
-(node as any).hash = '46e23ad3c0a65ec752bcaf54587a6dde';
+(node as any).hash = '639c22acaf91b70e81d884f640676335';
 export default node;
