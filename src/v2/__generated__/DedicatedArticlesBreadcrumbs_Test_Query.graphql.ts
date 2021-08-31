@@ -27,18 +27,14 @@ query DedicatedArticlesBreadcrumbs_Test_Query {
 fragment DedicatedArticlesBreadcrumbs_fairOrganizer on FairOrganizer {
   slug
   name
-  fairsConnection(first: 1, sort: START_AT_DESC) {
-    edges {
-      node {
-        image {
-          resized(width: 30, height: 30, version: "square") {
-            src
-            srcSet
-          }
-        }
-        id
+  profile {
+    image {
+      resized(width: 30, height: 30, version: "square") {
+        src
+        srcSet
       }
     }
+    id
   }
 }
 */
@@ -114,100 +110,67 @@ return {
           },
           {
             "alias": null,
-            "args": [
-              {
-                "kind": "Literal",
-                "name": "first",
-                "value": 1
-              },
-              {
-                "kind": "Literal",
-                "name": "sort",
-                "value": "START_AT_DESC"
-              }
-            ],
-            "concreteType": "FairConnection",
+            "args": null,
+            "concreteType": "Profile",
             "kind": "LinkedField",
-            "name": "fairsConnection",
+            "name": "profile",
             "plural": false,
             "selections": [
               {
                 "alias": null,
                 "args": null,
-                "concreteType": "FairEdge",
+                "concreteType": "Image",
                 "kind": "LinkedField",
-                "name": "edges",
-                "plural": true,
+                "name": "image",
+                "plural": false,
                 "selections": [
                   {
                     "alias": null,
-                    "args": null,
-                    "concreteType": "Fair",
+                    "args": [
+                      {
+                        "kind": "Literal",
+                        "name": "height",
+                        "value": 30
+                      },
+                      {
+                        "kind": "Literal",
+                        "name": "version",
+                        "value": "square"
+                      },
+                      {
+                        "kind": "Literal",
+                        "name": "width",
+                        "value": 30
+                      }
+                    ],
+                    "concreteType": "ResizedImageUrl",
                     "kind": "LinkedField",
-                    "name": "node",
+                    "name": "resized",
                     "plural": false,
                     "selections": [
                       {
                         "alias": null,
                         "args": null,
-                        "concreteType": "Image",
-                        "kind": "LinkedField",
-                        "name": "image",
-                        "plural": false,
-                        "selections": [
-                          {
-                            "alias": null,
-                            "args": [
-                              {
-                                "kind": "Literal",
-                                "name": "height",
-                                "value": 30
-                              },
-                              {
-                                "kind": "Literal",
-                                "name": "version",
-                                "value": "square"
-                              },
-                              {
-                                "kind": "Literal",
-                                "name": "width",
-                                "value": 30
-                              }
-                            ],
-                            "concreteType": "ResizedImageUrl",
-                            "kind": "LinkedField",
-                            "name": "resized",
-                            "plural": false,
-                            "selections": [
-                              {
-                                "alias": null,
-                                "args": null,
-                                "kind": "ScalarField",
-                                "name": "src",
-                                "storageKey": null
-                              },
-                              {
-                                "alias": null,
-                                "args": null,
-                                "kind": "ScalarField",
-                                "name": "srcSet",
-                                "storageKey": null
-                              }
-                            ],
-                            "storageKey": "resized(height:30,version:\"square\",width:30)"
-                          }
-                        ],
+                        "kind": "ScalarField",
+                        "name": "src",
                         "storageKey": null
                       },
-                      (v1/*: any*/)
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "srcSet",
+                        "storageKey": null
+                      }
                     ],
-                    "storageKey": null
+                    "storageKey": "resized(height:30,version:\"square\",width:30)"
                   }
                 ],
                 "storageKey": null
-              }
+              },
+              (v1/*: any*/)
             ],
-            "storageKey": "fairsConnection(first:1,sort:\"START_AT_DESC\")"
+            "storageKey": null
           },
           (v1/*: any*/)
         ],
@@ -220,7 +183,7 @@ return {
     "metadata": {},
     "name": "DedicatedArticlesBreadcrumbs_Test_Query",
     "operationKind": "query",
-    "text": "query DedicatedArticlesBreadcrumbs_Test_Query {\n  fairOrganizer(id: \"example\") {\n    ...DedicatedArticlesBreadcrumbs_fairOrganizer\n    id\n  }\n}\n\nfragment DedicatedArticlesBreadcrumbs_fairOrganizer on FairOrganizer {\n  slug\n  name\n  fairsConnection(first: 1, sort: START_AT_DESC) {\n    edges {\n      node {\n        image {\n          resized(width: 30, height: 30, version: \"square\") {\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query DedicatedArticlesBreadcrumbs_Test_Query {\n  fairOrganizer(id: \"example\") {\n    ...DedicatedArticlesBreadcrumbs_fairOrganizer\n    id\n  }\n}\n\nfragment DedicatedArticlesBreadcrumbs_fairOrganizer on FairOrganizer {\n  slug\n  name\n  profile {\n    image {\n      resized(width: 30, height: 30, version: \"square\") {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n"
   }
 };
 })();

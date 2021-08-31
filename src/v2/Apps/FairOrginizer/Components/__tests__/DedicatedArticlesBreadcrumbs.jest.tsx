@@ -46,14 +46,8 @@ describe("DedicatedArticlesBreadcrumbs", () => {
   it("displays image", () => {
     const wrapper = getWrapper({
       FairOrganizer: () => ({
-        fairsConnection: {
-          edges: [
-            {
-              node: {
-                image: { resized: { src: "some-src", srcSet: "some-src-set" } },
-              },
-            },
-          ],
+        profile: {
+          image: { resized: { src: "some-src", srcSet: "some-src-set" } },
         },
       }),
     })

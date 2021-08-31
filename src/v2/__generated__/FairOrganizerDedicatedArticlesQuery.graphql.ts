@@ -35,18 +35,14 @@ query FairOrganizerDedicatedArticlesQuery(
 fragment DedicatedArticlesBreadcrumbs_fairOrganizer on FairOrganizer {
   slug
   name
-  fairsConnection(first: 1, sort: START_AT_DESC) {
-    edges {
-      node {
-        image {
-          resized(width: 30, height: 30, version: "square") {
-            src
-            srcSet
-          }
-        }
-        id
+  profile {
+    image {
+      resized(width: 30, height: 30, version: "square") {
+        src
+        srcSet
       }
     }
+    id
   }
 }
 
@@ -496,88 +492,55 @@ return {
           },
           {
             "alias": null,
-            "args": [
-              {
-                "kind": "Literal",
-                "name": "first",
-                "value": 1
-              },
-              {
-                "kind": "Literal",
-                "name": "sort",
-                "value": "START_AT_DESC"
-              }
-            ],
-            "concreteType": "FairConnection",
+            "args": null,
+            "concreteType": "Profile",
             "kind": "LinkedField",
-            "name": "fairsConnection",
+            "name": "profile",
             "plural": false,
             "selections": [
               {
                 "alias": null,
                 "args": null,
-                "concreteType": "FairEdge",
+                "concreteType": "Image",
                 "kind": "LinkedField",
-                "name": "edges",
-                "plural": true,
+                "name": "image",
+                "plural": false,
                 "selections": [
                   {
                     "alias": null,
-                    "args": null,
-                    "concreteType": "Fair",
+                    "args": [
+                      {
+                        "kind": "Literal",
+                        "name": "height",
+                        "value": 30
+                      },
+                      {
+                        "kind": "Literal",
+                        "name": "version",
+                        "value": "square"
+                      },
+                      {
+                        "kind": "Literal",
+                        "name": "width",
+                        "value": 30
+                      }
+                    ],
+                    "concreteType": "ResizedImageUrl",
                     "kind": "LinkedField",
-                    "name": "node",
+                    "name": "resized",
                     "plural": false,
                     "selections": [
-                      {
-                        "alias": null,
-                        "args": null,
-                        "concreteType": "Image",
-                        "kind": "LinkedField",
-                        "name": "image",
-                        "plural": false,
-                        "selections": [
-                          {
-                            "alias": null,
-                            "args": [
-                              {
-                                "kind": "Literal",
-                                "name": "height",
-                                "value": 30
-                              },
-                              {
-                                "kind": "Literal",
-                                "name": "version",
-                                "value": "square"
-                              },
-                              {
-                                "kind": "Literal",
-                                "name": "width",
-                                "value": 30
-                              }
-                            ],
-                            "concreteType": "ResizedImageUrl",
-                            "kind": "LinkedField",
-                            "name": "resized",
-                            "plural": false,
-                            "selections": [
-                              (v9/*: any*/),
-                              (v10/*: any*/)
-                            ],
-                            "storageKey": "resized(height:30,version:\"square\",width:30)"
-                          }
-                        ],
-                        "storageKey": null
-                      },
-                      (v8/*: any*/)
+                      (v9/*: any*/),
+                      (v10/*: any*/)
                     ],
-                    "storageKey": null
+                    "storageKey": "resized(height:30,version:\"square\",width:30)"
                   }
                 ],
                 "storageKey": null
-              }
+              },
+              (v8/*: any*/)
             ],
-            "storageKey": "fairsConnection(first:1,sort:\"START_AT_DESC\")"
+            "storageKey": null
           },
           (v8/*: any*/)
         ],
@@ -590,7 +553,7 @@ return {
     "metadata": {},
     "name": "FairOrganizerDedicatedArticlesQuery",
     "operationKind": "query",
-    "text": "query FairOrganizerDedicatedArticlesQuery(\n  $id: String!\n  $first: Int\n  $page: Int\n) {\n  fairOrganizer(id: $id) {\n    ...FairOrganizerDedicatedArticles_fairOrganizer_4D1OJz\n    id\n  }\n}\n\nfragment DedicatedArticlesBreadcrumbs_fairOrganizer on FairOrganizer {\n  slug\n  name\n  fairsConnection(first: 1, sort: START_AT_DESC) {\n    edges {\n      node {\n        image {\n          resized(width: 30, height: 30, version: \"square\") {\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment FairEditorialItem_article on Article {\n  id\n  internalID\n  slug\n  title\n  href\n  publishedAt(format: \"MMMM D, YYYY\")\n  thumbnailTitle\n  thumbnailImage {\n    large: cropped(width: 670, height: 720) {\n      width\n      height\n      src\n      srcSet\n    }\n    small: cropped(width: 325, height: 240) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment FairOrganizerDedicatedArticles_fairOrganizer_4D1OJz on FairOrganizer {\n  slug\n  name\n  articlesConnection(first: $first, page: $page, sort: PUBLISHED_AT_DESC) {\n    totalCount\n    pageInfo {\n      hasNextPage\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        id\n        ...FairEditorialItem_article\n      }\n    }\n  }\n  ...DedicatedArticlesBreadcrumbs_fairOrganizer\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n"
+    "text": "query FairOrganizerDedicatedArticlesQuery(\n  $id: String!\n  $first: Int\n  $page: Int\n) {\n  fairOrganizer(id: $id) {\n    ...FairOrganizerDedicatedArticles_fairOrganizer_4D1OJz\n    id\n  }\n}\n\nfragment DedicatedArticlesBreadcrumbs_fairOrganizer on FairOrganizer {\n  slug\n  name\n  profile {\n    image {\n      resized(width: 30, height: 30, version: \"square\") {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment FairEditorialItem_article on Article {\n  id\n  internalID\n  slug\n  title\n  href\n  publishedAt(format: \"MMMM D, YYYY\")\n  thumbnailTitle\n  thumbnailImage {\n    large: cropped(width: 670, height: 720) {\n      width\n      height\n      src\n      srcSet\n    }\n    small: cropped(width: 325, height: 240) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment FairOrganizerDedicatedArticles_fairOrganizer_4D1OJz on FairOrganizer {\n  slug\n  name\n  articlesConnection(first: $first, page: $page, sort: PUBLISHED_AT_DESC) {\n    totalCount\n    pageInfo {\n      hasNextPage\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        id\n        ...FairEditorialItem_article\n      }\n    }\n  }\n  ...DedicatedArticlesBreadcrumbs_fairOrganizer\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n"
   }
 };
 })();

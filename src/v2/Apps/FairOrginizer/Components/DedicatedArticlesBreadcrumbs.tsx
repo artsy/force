@@ -2,7 +2,6 @@ import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Breadcrumbs, Text, Image, Flex, ArrowLeftIcon } from "@artsy/palette"
 import { RouterLink } from "v2/System/Router/RouterLink"
-import { extractNodes } from "v2/Utils/extractNodes"
 import { DedicatedArticlesBreadcrumbs_fairOrganizer } from "v2/__generated__/DedicatedArticlesBreadcrumbs_fairOrganizer.graphql"
 
 interface DedicatedArticlesBreadcrumbsProps {
@@ -12,9 +11,7 @@ interface DedicatedArticlesBreadcrumbsProps {
 export const DedicatedArticlesBreadcrumbs: React.FC<DedicatedArticlesBreadcrumbsProps> = ({
   fairOrganizer,
 }) => {
-  const { name, slug, fairsConnection } = fairOrganizer
-  const fair = extractNodes(fairsConnection)[0]
-  const { image } = fair
+  const { name, slug, profile } = fairOrganizer
 
   return (
     <Breadcrumbs
@@ -29,8 +26,8 @@ export const DedicatedArticlesBreadcrumbs: React.FC<DedicatedArticlesBreadcrumbs
           <Image
             width={30}
             height={30}
-            src={image?.resized?.src!}
-            srcSet={image?.resized?.srcSet!}
+            src={profile?.image?.resized?.src!}
+            srcSet={profile?.image?.resized?.srcSet!}
             mx={1}
           />
           <Text variant="xs">Explore {name} on Artsy</Text>
@@ -47,15 +44,11 @@ export const DedicatedArticlesBreadcrumbsFragmentContainer = createFragmentConta
       fragment DedicatedArticlesBreadcrumbs_fairOrganizer on FairOrganizer {
         slug
         name
-        fairsConnection(first: 1, sort: START_AT_DESC) {
-          edges {
-            node {
-              image {
-                resized(width: 30, height: 30, version: "square") {
-                  src
-                  srcSet
-                }
-              }
+        profile {
+          image {
+            resized(width: 30, height: 30, version: "square") {
+              src
+              srcSet
             }
           }
         }
