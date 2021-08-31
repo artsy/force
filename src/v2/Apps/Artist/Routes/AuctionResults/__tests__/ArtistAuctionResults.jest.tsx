@@ -142,6 +142,14 @@ describe("AuctionResults", () => {
       expect(html).toContain("Realized Price")
     })
 
+    it("renders price in original currency and in USD only if currency is not USD", () => {
+      const html = wrapper.html()
+      expect(html).toContain("€12,000")
+      expect(html).toContain("$15,000")
+
+      expect(html.match("20,000")?.length).toEqual(1)
+    })
+
     it("renders proper select options", () => {
       const html = wrapper.find("select").first().html()
       expect(html).toContain("Most recent")
@@ -567,7 +575,12 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_QueryRawResponse = {
               "Pablo Picasso (1881-1973)\n\nOiseau fantastique\n\nfelt-tip pen on paper\n\n10 ¾ x 8 3/8 in. (27.2 x 21.1 cm.)\n\nDrawn in 1952",
             date_text: "1881-1973",
             saleDate: "2020-02-05T19:00:00Z",
-            price_realized: { display: "$NaN", cents_usd: 0 },
+            currency: "USD",
+            price_realized: {
+              display: "$NaN",
+              display_usd: "$NaN",
+              cents_usd: 0,
+            },
             boughtIn: false,
             performance: { mid: "3%" },
             estimate: { display: "$40,000 - 60,000" },
@@ -591,7 +604,12 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_QueryRawResponse = {
               "Pablo Picasso (1881-1973)\n\nMandoline sur une table\n\nsigned 'Picasso' (lower right)\n\noil on canvas\n\n32 3/8 x 39 ½ in. (82.2 x 100.4 cm.)\n\nPainted in 1922",
             date_text: "1881-1973",
             saleDate: "2020-02-05T19:00:00-05:00",
-            price_realized: { display: "$NaN", cents_usd: 0 },
+            currency: "EUR",
+            price_realized: {
+              display: "€12,000",
+              display_usd: "$15,000",
+              cents_usd: 15000,
+            },
             boughtIn: false,
             performance: { mid: "-3%" },
             estimate: { display: "$4,000,000 - 6,000,000" },
@@ -615,7 +633,12 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_QueryRawResponse = {
               "Pablo Picasso (1881-1973)\n\nTête d'homme\n\ninscribed and dated 'Boisgeloup 10 juillet XXXIV' (upper right)\n\npencil on paper\n\n20 1/8 x 13 ½ in. (51.2 x 34.2 cm.)\n\nDrawn in Boisgeloup on 10 July 1934",
             date_text: "1881-1973",
             saleDate: "2020-02-05T19:00:00Z",
-            price_realized: { display: "$NaN", cents_usd: 0 },
+            currency: "USD",
+            price_realized: {
+              display: "$20,000",
+              display_usd: "$20,000",
+              cents_usd: 20000,
+            },
             boughtIn: false,
             performance: { mid: "-7.4%" },
             estimate: { display: "$500,000 - 700,000" },
@@ -639,7 +662,12 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_QueryRawResponse = {
               "PABLO PICASSO (1881-1973)\n\nPicador et taureau _(A.R. 197)_\n\ndated '25.9.53.' (in reverse; lower center); stamped and numbered 'Madoura Plein Feu/Empreinte Originale de Picasso/29/200' (underneath)\n\nwhite earthenware ceramic plate with black oxide, colored engobe and glaze\n\nDiameter: 9 ¼ in. (23.5 cm.)\n\nConceived on 25 September 1953 and executed in a numbered edition of 200",
             date_text: "1881-1973",
             saleDate: "2020-02-05T19:00:00Z",
-            price_realized: { display: "$NaN", cents_usd: 0 },
+            currency: "USD",
+            price_realized: {
+              display: "$NaN",
+              display_usd: "$NaN",
+              cents_usd: 0,
+            },
             boughtIn: false,
             performance: { mid: "30%" },
             estimate: { display: "$3,500 - 4,500" },
@@ -663,7 +691,12 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_QueryRawResponse = {
               "PABLO PICASSO (1881-1973)\n\nColombe à la lucarne _(A.R. 78)_\n\nstamped, marked and numbered 'Madoura Plein Feu/Edition Picasso/193/200/Edition Picasso/Madoura' (underneath)\n\nwhite earthenware ceramic plate, partially engraved, with colored engobe and glaze\n\nLength: 15 3/8 in. (39 cm.)\n\nConceived in 1949 and executed in a numbered edition of 200",
             date_text: "1881-1973",
             saleDate: "2020-02-05T19:00:00Z",
-            price_realized: { display: "$NaN", cents_usd: 0 },
+            currency: "USD",
+            price_realized: {
+              display: "$NaN",
+              display_usd: "$NaN",
+              cents_usd: 0,
+            },
             boughtIn: false,
             performance: { mid: "200%" },
             estimate: { display: "$6,000 - 8,000" },
@@ -687,7 +720,12 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_QueryRawResponse = {
               "PABLO PICASSO (1881-1973)\n\nScène de plage _(A.R. 391)_\n\nstamped 'Madoura Plein Feu/Empreinte Originale de Picasso' (on the reverse)\n\nwhite earthenware ceramic plaque with black engobe and white glaze\n\nDiameter: 10 in. (25.3 cm.)\n\nConceived in 1956 and executed in an edition of 450",
             date_text: "1881-1973",
             saleDate: "2020-02-05T19:00:00Z",
-            price_realized: { display: "$NaN", cents_usd: 0 },
+            currency: "USD",
+            price_realized: {
+              display: "$NaN",
+              display_usd: "$NaN",
+              cents_usd: 0,
+            },
             boughtIn: false,
             performance: { mid: "-50.21%" },
             estimate: { display: "$2,500 - 3,500" },
@@ -711,7 +749,12 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_QueryRawResponse = {
               "PABLO PICASSO (1881-1973)\n\nTête de femme couronnée de fleurs _(A.R. 236)_\n\nsigned and dated 'Picasso/20.3.54.' (on the side); numbered '18/50/6.' (underneath)\n\nwhite earthenware ceramic vase, partially engraved, with white engobe\n\nHeight: 9 1/8 in. (23 cm.)\n\nConceived on 20 March 1954 and executed in a numbered edition of 50",
             date_text: "1881-1973",
             saleDate: "2020-02-05T19:00:00Z",
-            price_realized: { display: "$NaN", cents_usd: 0 },
+            currency: "USD",
+            price_realized: {
+              display: "$NaN",
+              display_usd: "$NaN",
+              cents_usd: 0,
+            },
             boughtIn: false,
             performance: { mid: "3%" },
             estimate: { display: "$18,000 - 25,000" },
@@ -735,7 +778,12 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_QueryRawResponse = {
               "PABLO PICASSO (1881-1973)\n\nFemme _(A.R. 297)_\n\nstamped 'Edition Picasso/Madoura Plein Feu/Edition Picasso' (underneath)\n\nwhite earthenware ceramic pitcher with colored engobe and glaze\n\nHeight: 13 in. (33 cm.)\n\nConceived in 1955 and executed in an edition of 100",
             date_text: "1881-1973",
             saleDate: "2020-02-05T19:00:00Z",
-            price_realized: { display: "$NaN", cents_usd: 0 },
+            currency: "USD",
+            price_realized: {
+              display: "$NaN",
+              display_usd: "$NaN",
+              cents_usd: 0,
+            },
             boughtIn: false,
             performance: { mid: "7%" },
             estimate: { display: "$10,000 - 15,000" },
@@ -759,7 +807,12 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_QueryRawResponse = {
               "PABLO PICASSO (1881-1973)\n\n_Taureau dans l'arène _(A.R. 80)\n\nstamped and marked 'Madoura Plein Feu/D'Après Picasso/Edition Picasso /GR' (underneath)\n\nwhite earthenware ceramic plate, partially engraved, with colored engobe and glaze\n\nLength: 14 ¾ in. (37.6 cm.)\n\nConceived in 1948 and executed in an edition of 450",
             date_text: "1881-1973",
             saleDate: "2020-02-05T19:00:00Z",
-            price_realized: { display: "$NaN", cents_usd: 0 },
+            currency: "USD",
+            price_realized: {
+              display: "$NaN",
+              display_usd: "$NaN",
+              cents_usd: 0,
+            },
             boughtIn: false,
             performance: { mid: "-9%" },
             estimate: { display: "$7,000 - 10,000" },
@@ -783,7 +836,12 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_QueryRawResponse = {
               "PABLO PICASSO (1881-1973)\n\nVisage de femme _(A.R. 192)_\n\nstamped, marked and numbered 'Edition Picasso/Madoura Plein Feu/Edition Picasso/99/200/Madoura' (underneath)\n\nwhite earthenware ceramic pitcher, partially engraved, with colored engobe and glaze\n\nHeight: 13 3/8 in. (34 cm.)\n\nConceived on 7 July 1953 and executed in a numbered edition of 200",
             date_text: "1881-1973",
             saleDate: "2020-02-05T19:00:00Z",
-            price_realized: { display: "$NaN", cents_usd: 0 },
+            currency: "USD",
+            price_realized: {
+              display: "$NaN",
+              display_usd: "$NaN",
+              cents_usd: 0,
+            },
             boughtIn: true,
             performance: { mid: "3%" },
             estimate: { display: "$7,000 - 10,000" },
