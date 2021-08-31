@@ -2,30 +2,11 @@
 /* eslint-disable */
 
 import { ConcreteRequest } from "relay-runtime";
+import { FragmentRefs } from "relay-runtime";
 export type categoriesRoutes_QueryVariables = {};
 export type categoriesRoutes_QueryResponse = {
     readonly geneFamiliesConnection: {
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly id: string;
-                readonly slug: string;
-                readonly name: string;
-                readonly genes: ReadonlyArray<{
-                    readonly id: string;
-                    readonly slug: string;
-                    readonly name: string | null;
-                    readonly displayName: string | null;
-                    readonly isPublished: boolean | null;
-                } | null> | null;
-                readonly featuredGeneLinks: ReadonlyArray<{
-                    readonly href: string;
-                    readonly title: string;
-                    readonly image: {
-                        readonly url: string | null;
-                    } | null;
-                } | null> | null;
-            } | null;
-        } | null> | null;
+        readonly " $fragmentRefs": FragmentRefs<"CategoriesApp_geneFamiliesConnection">;
     } | null;
 };
 export type categoriesRoutes_Query = {
@@ -38,24 +19,32 @@ export type categoriesRoutes_Query = {
 /*
 query categoriesRoutes_Query {
   geneFamiliesConnection(first: 20) {
-    edges {
-      node {
+    ...CategoriesApp_geneFamiliesConnection
+  }
+}
+
+fragment CategoriesApp_geneFamiliesConnection on GeneFamilyConnection {
+  ...GeneFamilies_geneFamiliesConnection
+}
+
+fragment GeneFamilies_geneFamiliesConnection on GeneFamilyConnection {
+  edges {
+    node {
+      id
+      slug
+      name
+      genes {
         id
         slug
         name
-        genes {
-          id
-          slug
-          name
-          displayName
-          isPublished
-        }
-        featuredGeneLinks {
-          href
-          title
-          image {
-            url(version: "large_rectangle")
-          }
+        displayName
+        isPublished
+      }
+      featuredGeneLinks {
+        href
+        title
+        image {
+          url(version: "large_rectangle")
         }
       }
     }
@@ -64,131 +53,166 @@ query categoriesRoutes_Query {
 */
 
 const node: ConcreteRequest = (function(){
-var v0 = {
+var v0 = [
+  {
+    "kind": "Literal",
+    "name": "first",
+    "value": 20
+  }
+],
+v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v1 = {
+v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "slug",
   "storageKey": null
 },
-v2 = {
+v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "name",
   "storageKey": null
-},
-v3 = [
-  {
-    "alias": null,
-    "args": [
-      {
-        "kind": "Literal",
-        "name": "first",
-        "value": 20
-      }
-    ],
-    "concreteType": "GeneFamilyConnection",
-    "kind": "LinkedField",
-    "name": "geneFamiliesConnection",
-    "plural": false,
+};
+return {
+  "fragment": {
+    "argumentDefinitions": [],
+    "kind": "Fragment",
+    "metadata": null,
+    "name": "categoriesRoutes_Query",
     "selections": [
       {
         "alias": null,
-        "args": null,
-        "concreteType": "GeneFamilyEdge",
+        "args": (v0/*: any*/),
+        "concreteType": "GeneFamilyConnection",
         "kind": "LinkedField",
-        "name": "edges",
-        "plural": true,
+        "name": "geneFamiliesConnection",
+        "plural": false,
+        "selections": [
+          {
+            "args": null,
+            "kind": "FragmentSpread",
+            "name": "CategoriesApp_geneFamiliesConnection"
+          }
+        ],
+        "storageKey": "geneFamiliesConnection(first:20)"
+      }
+    ],
+    "type": "Query"
+  },
+  "kind": "Request",
+  "operation": {
+    "argumentDefinitions": [],
+    "kind": "Operation",
+    "name": "categoriesRoutes_Query",
+    "selections": [
+      {
+        "alias": null,
+        "args": (v0/*: any*/),
+        "concreteType": "GeneFamilyConnection",
+        "kind": "LinkedField",
+        "name": "geneFamiliesConnection",
+        "plural": false,
         "selections": [
           {
             "alias": null,
             "args": null,
-            "concreteType": "GeneFamily",
+            "concreteType": "GeneFamilyEdge",
             "kind": "LinkedField",
-            "name": "node",
-            "plural": false,
+            "name": "edges",
+            "plural": true,
             "selections": [
-              (v0/*: any*/),
-              (v1/*: any*/),
-              (v2/*: any*/),
               {
                 "alias": null,
                 "args": null,
-                "concreteType": "Gene",
+                "concreteType": "GeneFamily",
                 "kind": "LinkedField",
-                "name": "genes",
-                "plural": true,
+                "name": "node",
+                "plural": false,
                 "selections": [
-                  (v0/*: any*/),
                   (v1/*: any*/),
                   (v2/*: any*/),
+                  (v3/*: any*/),
                   {
                     "alias": null,
                     "args": null,
-                    "kind": "ScalarField",
-                    "name": "displayName",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "isPublished",
-                    "storageKey": null
-                  }
-                ],
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "concreteType": "FeaturedGeneLink",
-                "kind": "LinkedField",
-                "name": "featuredGeneLinks",
-                "plural": true,
-                "selections": [
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "href",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "title",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "concreteType": "Image",
+                    "concreteType": "Gene",
                     "kind": "LinkedField",
-                    "name": "image",
-                    "plural": false,
+                    "name": "genes",
+                    "plural": true,
+                    "selections": [
+                      (v1/*: any*/),
+                      (v2/*: any*/),
+                      (v3/*: any*/),
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "displayName",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "isPublished",
+                        "storageKey": null
+                      }
+                    ],
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "FeaturedGeneLink",
+                    "kind": "LinkedField",
+                    "name": "featuredGeneLinks",
+                    "plural": true,
                     "selections": [
                       {
                         "alias": null,
-                        "args": [
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "href",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "title",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": "Image",
+                        "kind": "LinkedField",
+                        "name": "image",
+                        "plural": false,
+                        "selections": [
                           {
-                            "kind": "Literal",
-                            "name": "version",
-                            "value": "large_rectangle"
+                            "alias": null,
+                            "args": [
+                              {
+                                "kind": "Literal",
+                                "name": "version",
+                                "value": "large_rectangle"
+                              }
+                            ],
+                            "kind": "ScalarField",
+                            "name": "url",
+                            "storageKey": "url(version:\"large_rectangle\")"
                           }
                         ],
-                        "kind": "ScalarField",
-                        "name": "url",
-                        "storageKey": "url(version:\"large_rectangle\")"
+                        "storageKey": null
                       }
                     ],
                     "storageKey": null
@@ -200,36 +224,18 @@ v3 = [
             "storageKey": null
           }
         ],
-        "storageKey": null
+        "storageKey": "geneFamiliesConnection(first:20)"
       }
-    ],
-    "storageKey": "geneFamiliesConnection(first:20)"
-  }
-];
-return {
-  "fragment": {
-    "argumentDefinitions": [],
-    "kind": "Fragment",
-    "metadata": null,
-    "name": "categoriesRoutes_Query",
-    "selections": (v3/*: any*/),
-    "type": "Query"
-  },
-  "kind": "Request",
-  "operation": {
-    "argumentDefinitions": [],
-    "kind": "Operation",
-    "name": "categoriesRoutes_Query",
-    "selections": (v3/*: any*/)
+    ]
   },
   "params": {
     "id": null,
     "metadata": {},
     "name": "categoriesRoutes_Query",
     "operationKind": "query",
-    "text": "query categoriesRoutes_Query {\n  geneFamiliesConnection(first: 20) {\n    edges {\n      node {\n        id\n        slug\n        name\n        genes {\n          id\n          slug\n          name\n          displayName\n          isPublished\n        }\n        featuredGeneLinks {\n          href\n          title\n          image {\n            url(version: \"large_rectangle\")\n          }\n        }\n      }\n    }\n  }\n}\n"
+    "text": "query categoriesRoutes_Query {\n  geneFamiliesConnection(first: 20) {\n    ...CategoriesApp_geneFamiliesConnection\n  }\n}\n\nfragment CategoriesApp_geneFamiliesConnection on GeneFamilyConnection {\n  ...GeneFamilies_geneFamiliesConnection\n}\n\nfragment GeneFamilies_geneFamiliesConnection on GeneFamilyConnection {\n  edges {\n    node {\n      id\n      slug\n      name\n      genes {\n        id\n        slug\n        name\n        displayName\n        isPublished\n      }\n      featuredGeneLinks {\n        href\n        title\n        image {\n          url(version: \"large_rectangle\")\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '24b219b2446172b21575aa3b43705e30';
+(node as any).hash = '483513cb4356510874f412b71a6fd773';
 export default node;
