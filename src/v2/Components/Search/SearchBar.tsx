@@ -166,19 +166,15 @@ export class SearchBar extends Component<Props, State> {
     // Clear the search term once you navigate away from search results
     this.removeNavigationListener = this.props.router
       ? this.props.router.addNavigationListener(location => {
-          this.clearSearchTerm()
+          if (!location.pathname.startsWith("/search")) {
+            this.setState({ term: "" })
+          }
 
           return true
         })
       : () => {
           // noop
         }
-  }
-
-  clearSearchTerm = () => {
-    if (!location.pathname.startsWith("/search")) {
-      this.setState({ term: "" })
-    }
   }
 
   componentWillUnmount() {
@@ -274,10 +270,9 @@ export class SearchBar extends Component<Props, State> {
     },
     method,
   }) {
-    this.clearSearchTerm()
-    this.userClickedOnDescendant = true
-
     if (method === "click") return
+
+    this.userClickedOnDescendant = true
 
     if (this.props.router) {
       // @ts-ignore (routeConfig not found; need to update DT types)
