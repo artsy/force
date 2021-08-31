@@ -387,21 +387,18 @@ const renderPricing = (
     const showPriceUSD = salePriceUSD && currency !== "USD"
 
     return (
-      <Box textAlign={textAlign} mb="5px">
+      <Box textAlign={textAlign} mb={0.5} mr={0.5}>
         {salePrice && (
           <>
-            <Flex alignItems="center" justifyContent="flex-end">
+            <Flex
+              alignItems="flex-end"
+              justifyContent={size === "xs" ? undefined : "flex-end"}
+            >
               <Text variant="md" fontWeight="bold">
                 {salePrice}
               </Text>
               {!!showPriceUSD && (
-                <Text
-                  variant="xs"
-                  lineHeight={1}
-                  color="black60"
-                  style={{ paddingTop: "2px" }}
-                  ml={0.5}
-                >
+                <Text variant="xs" color="black60" ml={0.5}>
                   {salePriceUSD}
                 </Text>
               )}
