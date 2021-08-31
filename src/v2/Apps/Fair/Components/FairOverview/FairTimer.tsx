@@ -3,21 +3,14 @@ import { Box, Text } from "@artsy/palette"
 import { Timer } from "v2/Components/Timer"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FairTimer_fair } from "v2/__generated__/FairTimer_fair.graphql"
-import { useCurrentTime } from "v2/Utils/Hooks/useCurrentTime"
-import { DateTime } from "luxon"
+import { useTimer } from "v2/Utils/Hooks/useTimer"
 
 interface FairTimerProps {
   fair: FairTimer_fair
 }
 
 export const FairTimer: React.FC<FairTimerProps> = ({ fair: { endAt } }) => {
-  const currentTime = useCurrentTime({ syncWithServer: true })
-
-  if (!endAt) {
-    return null
-  }
-
-  const hasEnded = DateTime.fromISO(endAt) < DateTime.fromISO(currentTime)
+  const { hasEnded } = useTimer(endAt!)
 
   return (
     <Box my={[2, 0]}>
@@ -26,7 +19,7 @@ export const FairTimer: React.FC<FairTimerProps> = ({ fair: { endAt } }) => {
       ) : (
         <>
           <Text variant={["md", "xl"]}>Closes in:</Text>
-          <Timer endDate={endAt} variant={["lg", "xl"]} alignItems="start" />
+          <Timer endDate={endAt!} variant={["lg", "xl"]} alignItems="start" />
         </>
       )}
     </Box>
