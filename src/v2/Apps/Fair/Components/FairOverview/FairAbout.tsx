@@ -1,12 +1,10 @@
 import React from "react"
 import { Column, GridColumns, Spacer, Text } from "@artsy/palette"
 import { some } from "lodash"
-import { DateTime } from "luxon"
 import { InfoSection } from "v2/Components/InfoSection"
 import { FairTimerFragmentContainer as FairTimer } from "./FairTimer"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FairAbout_fair } from "v2/__generated__/FairAbout_fair.graphql"
-import { useCurrentTime } from "v2/Utils/Hooks/useCurrentTime"
 
 const aboutInfoTypes = [
   "about",
@@ -35,29 +33,18 @@ const FairAbout: React.FC<FairAboutProps> = ({ fair }) => {
     contact,
     summary,
     tickets,
-    endAt,
   } = fair
-  const currentTime = useCurrentTime({ syncWithServer: true })
-
-  const hasEnded =
-    endAt && DateTime.fromISO(endAt) < DateTime.fromISO(currentTime)
   const hasAboutContent = some(aboutInfoTypes, field => !!fair[field])
-
-  if (hasEnded && !hasAboutContent) {
-    return null
-  }
 
   return (
     <>
       <GridColumns mt={[2, 4]}>
-        {!hasEnded && (
-          <Column span={6}>
-            <FairTimer fair={fair} />
-          </Column>
-        )}
+        <Column span={6}>
+          <FairTimer fair={fair} />
+        </Column>
 
         {hasAboutContent && (
-          <Column span={hasEnded ? 12 : 6}>
+          <Column span={6}>
             <Text variant="md" textTransform="uppercase">
               About
             </Text>
@@ -97,7 +84,6 @@ export const FairAboutFragmentContainer = createFragmentContainer(FairAbout, {
   fair: graphql`
     fragment FairAbout_fair on Fair {
       ...FairTimer_fair
-      endAt
       about(format: HTML)
       tagline
       location {
