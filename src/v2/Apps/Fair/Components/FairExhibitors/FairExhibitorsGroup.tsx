@@ -19,7 +19,7 @@ export const FairExhibitorsGroup: React.FC<FairExhibitorsGroupProps> = ({
         }
 
         return (
-          <Column key={exhibitor.partner.internalID} span={[12, 6, 3]}>
+          <Column key={exhibitor.partner.internalID} span={[12, 3]}>
             <FairExhibitorCard partner={exhibitor.partner} />
           </Column>
         )

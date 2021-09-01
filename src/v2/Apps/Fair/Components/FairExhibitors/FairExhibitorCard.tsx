@@ -71,7 +71,8 @@ export const FairExhibitorCard: React.FC<FairExhibitorCardProps> = ({
         <Flex mb={1} flex={1}>
           <BorderBox width={52} height={52} p={0} mr={1}>
             {profile?.icon?.cropped && (
-              <img
+              <Image
+                lazyLoad
                 src={profile?.icon?.cropped?.src}
                 srcSet={profile?.icon?.cropped?.srcSet}
                 alt={`Logo of ${name}`}
@@ -118,6 +119,7 @@ export const FairExhibitorCard: React.FC<FairExhibitorCardProps> = ({
             <ResponsiveBox aspectWidth={400} aspectHeight={250} maxHeight={400}>
               {profile?.image?.url ? (
                 <Image
+                  lazyLoad
                   width="100%"
                   height="100%"
                   src={profile.image.url}
