@@ -65,7 +65,7 @@ export const PriceDatabaseArtistAutosuggest: React.FC<ArtistAutosuggestProps> = 
     if (!anchorRef.current) return
 
     const handleResize = () => {
-      setWidth(anchorRef.current.offsetWidth)
+      setWidth(anchorRef.current?.offsetWidth ?? 0)
     }
 
     handleResize()
