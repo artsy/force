@@ -10,7 +10,6 @@ import { compact } from "lodash"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
-import { useCursor } from "use-cursor"
 import { ArtworkLightboxFragmentContainer } from "../ArtworkLightbox"
 import { ArtworkImageBrowserLarge_artwork } from "v2/__generated__/ArtworkImageBrowserLarge_artwork.graphql"
 import { useNextPrevious } from "v2/Utils/Hooks/useNextPrevious"
@@ -18,21 +17,24 @@ import { DeepZoomFragmentContainer, useDeepZoom } from "v2/Components/DeepZoom"
 
 interface ArtworkImageBrowserLargeProps {
   artwork: ArtworkImageBrowserLarge_artwork
+  index: number
+  onNext(): void
+  onPrev(): void
 }
 
 const ArtworkImageBrowserLarge: React.FC<ArtworkImageBrowserLargeProps> = ({
   artwork,
+  index,
+  onNext,
+  onPrev,
 }) => {
   const images = compact(artwork.images)
-  const { index, handleNext, handlePrev } = useCursor({ max: images.length })
+
   const activeImage = images[index]
 
   const { showDeepZoom, hideDeepZoom, isDeepZoomVisible } = useDeepZoom()
 
-  const { containerRef } = useNextPrevious({
-    onNext: handleNext,
-    onPrevious: handlePrev,
-  })
+  const { containerRef } = useNextPrevious({ onNext, onPrevious: onPrev })
 
   if (images.length === 0) {
     return null
@@ -48,7 +50,7 @@ const ArtworkImageBrowserLarge: React.FC<ArtworkImageBrowserLargeProps> = ({
         {images.length > 1 && (
           <nav>
             <NextPrevious
-              onClick={handlePrev}
+              onClick={onPrev}
               aria-label="Previous image"
               left={0}
               p={2}
@@ -64,7 +66,7 @@ const ArtworkImageBrowserLarge: React.FC<ArtworkImageBrowserLargeProps> = ({
             </NextPrevious>
 
             <NextPrevious
-              onClick={handleNext}
+              onClick={onNext}
               aria-label="Next image"
               right={0}
               p={2}

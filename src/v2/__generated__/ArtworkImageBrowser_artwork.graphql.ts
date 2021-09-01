@@ -7,6 +7,7 @@ export type ArtworkImageBrowser_artwork = {
     readonly internalID: string;
     readonly images: ReadonlyArray<{
         readonly internalID: string | null;
+        readonly isDefault: boolean | null;
     } | null> | null;
     readonly " $fragmentRefs": FragmentRefs<"ArtworkActions_artwork" | "ArtworkImageBrowserSmall_artwork" | "ArtworkImageBrowserLarge_artwork">;
     readonly " $refType": "ArtworkImageBrowser_artwork";
@@ -42,7 +43,14 @@ return {
       "name": "images",
       "plural": true,
       "selections": [
-        (v0/*: any*/)
+        (v0/*: any*/),
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "isDefault",
+          "storageKey": null
+        }
       ],
       "storageKey": null
     },
@@ -65,5 +73,5 @@ return {
   "type": "Artwork"
 };
 })();
-(node as any).hash = '61778fde731ea48fa4e915467a9d2630';
+(node as any).hash = 'e8fb9e7d20d42ae658fa5c0c8e46063f';
 export default node;
