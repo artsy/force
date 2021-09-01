@@ -1,6 +1,4 @@
-import React from "react"
-import { createFragmentContainer } from "react-relay"
-import { graphql } from "relay-runtime"
+import React, { Children } from "react"
 import {
   Box,
   Flex,
@@ -10,39 +8,21 @@ import {
   ShelfNext,
   ShelfPrevious,
 } from "@artsy/palette"
-import { HomeHeroUnitsLarge_homePage } from "v2/__generated__/HomeHeroUnitsLarge_homePage.graphql"
-import {
-  HomeHeroUnitFragmentContainer,
-  LOGGED_OUT_HERO_UNIT,
-} from "./HomeHeroUnit"
-import { compact } from "lodash"
 import { useCursor } from "use-cursor"
 import { useRef, useEffect } from "react"
 import { HomeCarousel } from "../HomeCarousel"
-import { useSystemContext } from "v2/System"
 import { useCallback } from "react"
 import { useNextPrevious } from "v2/Utils/Hooks/useNextPrevious"
 
-interface HomeHeroUnitsLargeProps {
-  homePage: HomeHeroUnitsLarge_homePage
-}
-
-const HomeHeroUnitsLarge: React.FC<HomeHeroUnitsLargeProps> = ({
-  homePage,
-}) => {
-  const { isLoggedIn } = useSystemContext()
-
-  const heroUnits = [
-    ...(isLoggedIn ? [] : [LOGGED_OUT_HERO_UNIT]),
-    ...compact(homePage.heroUnits),
-  ]
+export const HomeHeroUnitsLarge: React.FC = ({ children }) => {
+  const length = Children.count(children)
 
   const {
     index,
     handleNext: onNext,
     handlePrev: onPrev,
     setCursor,
-  } = useCursor({ max: heroUnits.length })
+  } = useCursor({ max: length })
 
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
 
@@ -79,24 +59,12 @@ const HomeHeroUnitsLarge: React.FC<HomeHeroUnitsLargeProps> = ({
     onPrevious: handlePrev,
   })
 
-  if (!homePage.heroUnits) return null
+  if (!children) return null
 
   return (
     <div ref={containerRef as any}>
       <FullBleed>
-        <HomeCarousel initialIndex={index}>
-          {heroUnits.map((heroUnit, i) => {
-            return (
-              <HomeHeroUnitFragmentContainer
-                key={i}
-                index={i}
-                heroUnit={heroUnit}
-                layout={i % 2 === 0 ? "b" : "a"}
-                bg={!isLoggedIn && i === 0 ? "black100" : "black5"}
-              />
-            )
-          })}
-        </HomeCarousel>
+        <HomeCarousel initialIndex={index}>{children}</HomeCarousel>
       </FullBleed>
 
       <Spacer mt={4} />
@@ -105,7 +73,7 @@ const HomeHeroUnitsLarge: React.FC<HomeHeroUnitsLargeProps> = ({
         <Box flex={1}>
           <ProgressDots
             variant="dash"
-            amount={heroUnits.length}
+            amount={length}
             activeIndex={index}
             onClick={handleClick}
           />
@@ -122,17 +90,3 @@ const HomeHeroUnitsLarge: React.FC<HomeHeroUnitsLargeProps> = ({
     </div>
   )
 }
-
-export const HomeHeroUnitsLargeFragmentContainer = createFragmentContainer(
-  HomeHeroUnitsLarge,
-  {
-    homePage: graphql`
-      fragment HomeHeroUnitsLarge_homePage on HomePage {
-        heroUnits(platform: DESKTOP) {
-          internalID
-          ...HomeHeroUnit_heroUnit
-        }
-      }
-    `,
-  }
-)

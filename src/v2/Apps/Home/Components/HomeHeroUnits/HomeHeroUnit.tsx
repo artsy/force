@@ -18,7 +18,7 @@ import { RouterLink } from "v2/System/Router/RouterLink"
 import { Media } from "v2/Utils/Responsive"
 import { HomeHeroUnitCredit } from "./HomeHeroUnitCredit"
 
-type StaticHeroUnit = {
+export interface StaticHeroUnit {
   backgroundImageURL: string
   href: string
   heading?: string | JSX.Element

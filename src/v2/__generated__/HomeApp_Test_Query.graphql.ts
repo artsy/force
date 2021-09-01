@@ -84,25 +84,12 @@ fragment HomeHeroUnit_heroUnit on HomePageHeroUnit {
   creditLine
 }
 
-fragment HomeHeroUnitsLarge_homePage on HomePage {
-  heroUnits(platform: DESKTOP) {
-    internalID
-    ...HomeHeroUnit_heroUnit
-    id
-  }
-}
-
-fragment HomeHeroUnitsSmall_homePage on HomePage {
-  heroUnits(platform: DESKTOP) {
-    internalID
-    ...HomeHeroUnit_heroUnit
-    id
-  }
-}
-
 fragment HomeHeroUnits_homePage on HomePage {
-  ...HomeHeroUnitsSmall_homePage
-  ...HomeHeroUnitsLarge_homePage
+  heroUnits(platform: DESKTOP) {
+    internalID
+    ...HomeHeroUnit_heroUnit
+    id
+  }
 }
 */
 
@@ -429,7 +416,7 @@ return {
     "metadata": {},
     "name": "HomeApp_Test_Query",
     "operationKind": "query",
-    "text": "query HomeApp_Test_Query {\n  homePage {\n    ...HomeApp_homePage\n  }\n  orderedSet(id: \"example\") {\n    ...HomeApp_orderedSet\n    id\n  }\n}\n\nfragment HomeApp_homePage on HomePage {\n  ...HomeHeroUnits_homePage\n  ...HomeArtworkModules_homePage\n}\n\nfragment HomeApp_orderedSet on OrderedSet {\n  ...HomeFeaturedEventsRail_orderedSet\n}\n\nfragment HomeArtworkModules_homePage on HomePage {\n  artworkModules(maxRails: -1, maxFollowedGeneRails: -1, order: [ACTIVE_BIDS, RECENTLY_VIEWED_WORKS, SIMILAR_TO_RECENTLY_VIEWED, SAVED_WORKS, SIMILAR_TO_SAVED_WORKS, FOLLOWED_ARTISTS, FOLLOWED_GALLERIES, RECOMMENDED_WORKS, RELATED_ARTISTS, LIVE_AUCTIONS, CURRENT_FAIRS, FOLLOWED_GENES, GENERIC_GENES]) {\n    title\n    key\n    params {\n      internalID\n      relatedArtistID\n      followedArtistID\n    }\n    id\n  }\n}\n\nfragment HomeFeaturedEventsRail_orderedSet on OrderedSet {\n  items {\n    __typename\n    ... on FeaturedLink {\n      internalID\n      title\n      subtitle\n      href\n      image {\n        cropped(width: 95, height: 63) {\n          src\n          srcSet\n        }\n      }\n      id\n    }\n    ... on Node {\n      id\n    }\n  }\n}\n\nfragment HomeHeroUnit_heroUnit on HomePageHeroUnit {\n  backgroundImageURL\n  heading\n  title\n  subtitle\n  linkText\n  href\n  creditLine\n}\n\nfragment HomeHeroUnitsLarge_homePage on HomePage {\n  heroUnits(platform: DESKTOP) {\n    internalID\n    ...HomeHeroUnit_heroUnit\n    id\n  }\n}\n\nfragment HomeHeroUnitsSmall_homePage on HomePage {\n  heroUnits(platform: DESKTOP) {\n    internalID\n    ...HomeHeroUnit_heroUnit\n    id\n  }\n}\n\nfragment HomeHeroUnits_homePage on HomePage {\n  ...HomeHeroUnitsSmall_homePage\n  ...HomeHeroUnitsLarge_homePage\n}\n"
+    "text": "query HomeApp_Test_Query {\n  homePage {\n    ...HomeApp_homePage\n  }\n  orderedSet(id: \"example\") {\n    ...HomeApp_orderedSet\n    id\n  }\n}\n\nfragment HomeApp_homePage on HomePage {\n  ...HomeHeroUnits_homePage\n  ...HomeArtworkModules_homePage\n}\n\nfragment HomeApp_orderedSet on OrderedSet {\n  ...HomeFeaturedEventsRail_orderedSet\n}\n\nfragment HomeArtworkModules_homePage on HomePage {\n  artworkModules(maxRails: -1, maxFollowedGeneRails: -1, order: [ACTIVE_BIDS, RECENTLY_VIEWED_WORKS, SIMILAR_TO_RECENTLY_VIEWED, SAVED_WORKS, SIMILAR_TO_SAVED_WORKS, FOLLOWED_ARTISTS, FOLLOWED_GALLERIES, RECOMMENDED_WORKS, RELATED_ARTISTS, LIVE_AUCTIONS, CURRENT_FAIRS, FOLLOWED_GENES, GENERIC_GENES]) {\n    title\n    key\n    params {\n      internalID\n      relatedArtistID\n      followedArtistID\n    }\n    id\n  }\n}\n\nfragment HomeFeaturedEventsRail_orderedSet on OrderedSet {\n  items {\n    __typename\n    ... on FeaturedLink {\n      internalID\n      title\n      subtitle\n      href\n      image {\n        cropped(width: 95, height: 63) {\n          src\n          srcSet\n        }\n      }\n      id\n    }\n    ... on Node {\n      id\n    }\n  }\n}\n\nfragment HomeHeroUnit_heroUnit on HomePageHeroUnit {\n  backgroundImageURL\n  heading\n  title\n  subtitle\n  linkText\n  href\n  creditLine\n}\n\nfragment HomeHeroUnits_homePage on HomePage {\n  heroUnits(platform: DESKTOP) {\n    internalID\n    ...HomeHeroUnit_heroUnit\n    id\n  }\n}\n"
   }
 };
 })();
