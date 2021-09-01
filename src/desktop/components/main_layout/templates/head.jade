@@ -1,3 +1,10 @@
+//- onetrust cookie consent, must be the first js loaded.
+if ( !sd.THIRD_PARTIES_DISABLED && sd.ONETRUST_SCRIPT_ID )
+  script( src="https://cdn.cookielaw.org/consent/#{sd.ONETRUST_SCRIPT_ID}/OtAutoBlock.js", type="text/javascript" )
+  script( src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js", type="text/javascript", charset="UTF-8", data-domain-script="#{sd.ONETRUST_SCRIPT_ID}" )
+  script( type="text/javascript" ).
+    function OptanonWrapper() {}
+
 include ../../prevent_right_click/index
 link( rel='apple-touch-icon', href=asset('/images/icon-152.png') )
 link( rel='apple-touch-icon', sizes='120x120', href=asset('/images/icon-120.png') )
