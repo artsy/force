@@ -12,6 +12,7 @@ jest.unmock("react-relay")
 const testOfferHiddenPrice: OfferTestQueryRawResponse["order"] = {
   ...UntouchedOfferOrderPriceHidden,
   internalID: "1234",
+  __isCommerceOrder: "",
 }
 
 describe("an offer on the work with price hidden", () => {

@@ -1009,6 +1009,7 @@ const ArtKeepsGoingFixture: FeatureAKGRoute_Test_QueryRawResponse = {
     selectedWorks: {
       id: "selected-works",
       itemsConnection: {
+        __isArtworkConnectionInterface: "ArtworkConnection",
         edges: [
           {
             __typename: "Artwork",

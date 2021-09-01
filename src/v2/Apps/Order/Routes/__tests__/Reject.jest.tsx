@@ -20,6 +20,8 @@ const realSetInterval = global.setInterval
 
 const testOrder: RejectTestQueryRawResponse["order"] = {
   ...OfferOrderWithShippingDetails,
+  __isCommerceOrder: "CommerceOfferOrder",
+  __typename: "CommerceOfferOrder",
   stateExpiresAt: DateTime.fromISO(NOW).plus({ days: 1 }).toString(),
   lastOffer: {
     internalID: "last-offer-id",
@@ -96,7 +98,7 @@ describe("Buyer rejects seller offer", () => {
     it("Shows a change link that takes the user back to the respond page", () => {
       page.root.find("Clickable[data-test='change-link']").simulate("click")
       expect(routes.mockPushRoute).toHaveBeenCalledWith(
-        `/orders/${testOrder.internalID}/respond`
+        `/orders/${testOrder?.internalID}/respond`
       )
     })
   })
@@ -115,7 +117,7 @@ describe("Buyer rejects seller offer", () => {
     it("routes to status page after mutation completes", async () => {
       await page.clickSubmit()
       expect(routes.mockPushRoute).toHaveBeenCalledWith(
-        `/orders/${testOrder.internalID}/status`
+        `/orders/${testOrder?.internalID}/status`
       )
     })
 

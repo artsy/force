@@ -164,7 +164,7 @@ describe("Submit Pending Counter Offer", () => {
     it("routes to status page after mutation completes", async () => {
       await page.clickSubmit()
       expect(routes.mockPushRoute).toHaveBeenCalledWith(
-        `/orders/${testOrder.internalID}/status`
+        `/orders/${testOrder?.internalID}/status`
       )
     })
 

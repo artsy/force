@@ -74,6 +74,7 @@ const FAIR_ARTWORKS_FIXTURE: FairArtworks_QueryRawResponse = {
     slug: "cool-fair",
     internalID: "bson-fair",
     filtered_artworks: {
+      __isArtworkConnectionInterface: "FilterArtworksConnection",
       id: "filteredartworksabc123",
       counts: {
         followedArtists: 10,
