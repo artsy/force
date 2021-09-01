@@ -30,23 +30,27 @@ fragment CategoriesApp_geneFamiliesConnection on GeneFamilyConnection {
 fragment GeneFamilies_geneFamiliesConnection on GeneFamilyConnection {
   edges {
     node {
+      ...GeneFamily_geneFamily
       id
-      slug
-      name
-      genes {
-        id
-        slug
-        name
-        displayName
-        isPublished
-      }
-      featuredGeneLinks {
-        href
-        title
-        image {
-          url(version: "large_rectangle")
-        }
-      }
+    }
+  }
+}
+
+fragment GeneFamily_geneFamily on GeneFamily {
+  id
+  slug
+  name
+  genes {
+    id
+    displayName
+    name
+    slug
+  }
+  featuredGeneLinks {
+    href
+    title
+    image {
+      url(version: "large_rectangle")
     }
   }
 }
@@ -149,8 +153,6 @@ return {
                     "plural": true,
                     "selections": [
                       (v1/*: any*/),
-                      (v2/*: any*/),
-                      (v3/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -158,13 +160,8 @@ return {
                         "name": "displayName",
                         "storageKey": null
                       },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "isPublished",
-                        "storageKey": null
-                      }
+                      (v3/*: any*/),
+                      (v2/*: any*/)
                     ],
                     "storageKey": null
                   },
@@ -233,7 +230,7 @@ return {
     "metadata": {},
     "name": "categoriesRoutes_Query",
     "operationKind": "query",
-    "text": "query categoriesRoutes_Query {\n  geneFamiliesConnection(first: 20) {\n    ...CategoriesApp_geneFamiliesConnection\n  }\n}\n\nfragment CategoriesApp_geneFamiliesConnection on GeneFamilyConnection {\n  ...GeneFamilies_geneFamiliesConnection\n}\n\nfragment GeneFamilies_geneFamiliesConnection on GeneFamilyConnection {\n  edges {\n    node {\n      id\n      slug\n      name\n      genes {\n        id\n        slug\n        name\n        displayName\n        isPublished\n      }\n      featuredGeneLinks {\n        href\n        title\n        image {\n          url(version: \"large_rectangle\")\n        }\n      }\n    }\n  }\n}\n"
+    "text": "query categoriesRoutes_Query {\n  geneFamiliesConnection(first: 20) {\n    ...CategoriesApp_geneFamiliesConnection\n  }\n}\n\nfragment CategoriesApp_geneFamiliesConnection on GeneFamilyConnection {\n  ...GeneFamilies_geneFamiliesConnection\n}\n\nfragment GeneFamilies_geneFamiliesConnection on GeneFamilyConnection {\n  edges {\n    node {\n      ...GeneFamily_geneFamily\n      id\n    }\n  }\n}\n\nfragment GeneFamily_geneFamily on GeneFamily {\n  id\n  slug\n  name\n  genes {\n    id\n    displayName\n    name\n    slug\n  }\n  featuredGeneLinks {\n    href\n    title\n    image {\n      url(version: \"large_rectangle\")\n    }\n  }\n}\n"
   }
 };
 })();

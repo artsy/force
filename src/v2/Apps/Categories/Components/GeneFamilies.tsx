@@ -1,5 +1,5 @@
 import { Box } from "@artsy/palette"
-import { GeneFamily } from "./GeneFamily"
+import { GeneFamilyFragmentContainer } from "./GeneFamily"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { GeneFamilies_geneFamiliesConnection } from "v2/__generated__/GeneFamilies_geneFamiliesConnection.graphql"
@@ -15,7 +15,9 @@ const GeneFamilies: React.FC<GeneFamiliesProps> = props => {
 
   return (
     <Box>
-      <GeneFamily geneFamily={geneFamilies[0]} />
+      {geneFamilies.map(geneFamily => {
+        return <GeneFamilyFragmentContainer geneFamily={geneFamily} />
+      })}
     </Box>
   )
 }
@@ -27,23 +29,7 @@ export const GeneFamiliesFragmentContainer = createFragmentContainer(
       fragment GeneFamilies_geneFamiliesConnection on GeneFamilyConnection {
         edges {
           node {
-            id
-            slug
-            name
-            genes {
-              id
-              slug
-              name
-              displayName
-              isPublished
-            }
-            featuredGeneLinks {
-              href
-              title
-              image {
-                url(version: "large_rectangle")
-              }
-            }
+            ...GeneFamily_geneFamily
           }
         }
       }
