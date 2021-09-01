@@ -3,17 +3,25 @@ import { graphql } from "relay-runtime"
 import { MockBoot } from "v2/DevTools"
 import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
 import { ArtworkImageBrowserLargeFragmentContainer } from "../ArtworkImageBrowserLarge"
+import { ArtworkImageBrowserLarge_Test_Query } from "v2/__generated__/ArtworkImageBrowserLarge_Test_Query.graphql"
 
 jest.unmock("react-relay")
 jest.mock("v2/System/Analytics/useTracking", () => ({
   useTracking: () => ({ trackEvent: jest.fn() }),
 }))
 
-const { getWrapper } = setupTestWrapper({
+const { getWrapper } = setupTestWrapper<ArtworkImageBrowserLarge_Test_Query>({
   Component: props => {
+    if (!props.artwork) return null
+
     return (
       <MockBoot>
-        <ArtworkImageBrowserLargeFragmentContainer {...(props as any)} />
+        <ArtworkImageBrowserLargeFragmentContainer
+          artwork={props.artwork}
+          index={0}
+          onNext={jest.fn()}
+          onPrev={jest.fn()}
+        />
       </MockBoot>
     )
   },

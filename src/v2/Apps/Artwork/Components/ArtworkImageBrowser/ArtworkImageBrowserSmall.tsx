@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React from "react"
 import {
   ProgressDots,
   Swiper,
@@ -15,12 +15,15 @@ import { ArtworkLightboxFragmentContainer } from "../ArtworkLightbox"
 
 interface ArtworkImageBrowserSmallProps {
   artwork: ArtworkImageBrowserSmall_artwork
+  index: number
+  setIndex(index: number): void
 }
 
 const ArtworkImageBrowserSmall: React.FC<ArtworkImageBrowserSmallProps> = ({
   artwork,
+  index,
+  setIndex,
 }) => {
-  const [index, setIndex] = useState(0)
   const images = compact(artwork.images)
   const activeImage = images[index]
 
