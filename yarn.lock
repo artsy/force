@@ -82,7 +82,26 @@
   resolved "https://registry.yarnpkg.com/@artsy/palette-tokens/-/palette-tokens-2.6.0.tgz#3d780ff65994fef0daadef29d43d11f89470b728"
   integrity sha512-UQP6P+xv/5hm82ep0z5X3kCFFnk03H6y8kdW/wTU+xPq45ESUay7aNFYXeub47tmW2v6dXJ8Oa01Z0iwc6BVpA==
 
-"@artsy/palette@17.2.0", "@artsy/palette@^17.2.0":
+"@artsy/palette@17.2.1":
+  version "17.2.1"
+  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-17.2.1.tgz#f43b9e30d6e6bdef4666743d68c574f8ff5e0779"
+  integrity sha512-uTQrMIma0NChJo1FjUEDS7yTJbZh/OsVL3uuK/1GY7glPpZm3lAXdvAnDHSig/tRhXNGnyuKEup4czBhPQ9tIA==
+  dependencies:
+    "@artsy/palette-tokens" "^2.6.0"
+    "@seznam/compose-react-refs" "^1.0.6"
+    "@styled-system/theme-get" "^5.1.2"
+    debounce "^1.2.0"
+    luxon "^1.15"
+    proportional-scale "^4.0.0"
+    react-lazy-load-image-component "1.5.0"
+    react-remove-scroll "^2.3.0"
+    styled-bootstrap-grid "3.1.0"
+    styled-system "^5.1.5"
+    trunc-html "^1.1.2"
+    use-cursor "^1.2.3"
+    use-keyboard-list-navigation "2.4.1"
+
+"@artsy/palette@^17.2.0":
   version "17.2.0"
   resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-17.2.0.tgz#6651e9886cbafe6292f8882c465607b8bfd8a49d"
   integrity sha512-WTikAqby7uHi2pvD2NeO/oRxuJs5tbYYmG5/Rk+OduRqQCYEPZSOz9VI5TDvXnPW9qcNPr4L2gjnid6ae08z4A==
@@ -15481,7 +15500,6 @@ pascalcase@^0.1.1:
 
 "passport-apple@https://github.com/artsy/passport-apple#f41adb7822c8344b72bc36a7d68312f6592cb14f":
   version "1.1.2"
-  uid f41adb7822c8344b72bc36a7d68312f6592cb14f
   resolved "https://github.com/artsy/passport-apple#f41adb7822c8344b72bc36a7d68312f6592cb14f"
   dependencies:
     jsonwebtoken "^8.5.1"
