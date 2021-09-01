@@ -5,9 +5,6 @@ import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type SearchResultsArtistsQueryVariables = {
     first?: number | null;
-    last?: number | null;
-    after?: string | null;
-    before?: string | null;
     term: string;
     page?: number | null;
 };
@@ -26,14 +23,11 @@ export type SearchResultsArtistsQuery = {
 /*
 query SearchResultsArtistsQuery(
   $first: Int
-  $last: Int
-  $after: String
-  $before: String
   $term: String!
   $page: Int
 ) {
   viewer {
-    ...SearchResultsArtists_viewer_3D3mrw
+    ...SearchResultsArtists_viewer_2aqsc5
   }
 }
 
@@ -59,11 +53,10 @@ fragment Pagination_pageCursors on PageCursors {
   }
 }
 
-fragment SearchResultsArtists_viewer_3D3mrw on Viewer {
-  searchConnection(query: $term, first: $first, after: $after, before: $before, last: $last, page: $page, entities: [ARTIST]) @principalField {
+fragment SearchResultsArtists_viewer_2aqsc5 on Viewer {
+  searchConnection(query: $term, first: $first, page: $page, entities: [ARTIST]) @principalField {
     pageInfo {
       hasNextPage
-      endCursor
     }
     pageCursors {
       ...Pagination_pageCursors
@@ -98,24 +91,6 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "last",
-    "type": "Int"
-  },
-  {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "after",
-    "type": "String"
-  },
-  {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "before",
-    "type": "String"
-  },
-  {
-    "defaultValue": null,
-    "kind": "LocalArgument",
     "name": "term",
     "type": "String!"
   },
@@ -128,46 +103,31 @@ var v0 = [
 ],
 v1 = {
   "kind": "Variable",
-  "name": "after",
-  "variableName": "after"
-},
-v2 = {
-  "kind": "Variable",
-  "name": "before",
-  "variableName": "before"
-},
-v3 = {
-  "kind": "Variable",
   "name": "first",
   "variableName": "first"
 },
-v4 = {
-  "kind": "Variable",
-  "name": "last",
-  "variableName": "last"
-},
-v5 = {
+v2 = {
   "kind": "Variable",
   "name": "page",
   "variableName": "page"
 },
-v6 = {
+v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "cursor",
   "storageKey": null
 },
-v7 = {
+v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "page",
   "storageKey": null
 },
-v8 = [
-  (v6/*: any*/),
-  (v7/*: any*/),
+v5 = [
+  (v3/*: any*/),
+  (v4/*: any*/),
   {
     "alias": null,
     "args": null,
@@ -195,9 +155,6 @@ return {
             "args": [
               (v1/*: any*/),
               (v2/*: any*/),
-              (v3/*: any*/),
-              (v4/*: any*/),
-              (v5/*: any*/),
               {
                 "kind": "Variable",
                 "name": "term",
@@ -230,8 +187,6 @@ return {
           {
             "alias": null,
             "args": [
-              (v1/*: any*/),
-              (v2/*: any*/),
               {
                 "kind": "Literal",
                 "name": "entities",
@@ -239,9 +194,8 @@ return {
                   "ARTIST"
                 ]
               },
-              (v3/*: any*/),
-              (v4/*: any*/),
-              (v5/*: any*/),
+              (v1/*: any*/),
+              (v2/*: any*/),
               {
                 "kind": "Variable",
                 "name": "query",
@@ -267,13 +221,6 @@ return {
                     "kind": "ScalarField",
                     "name": "hasNextPage",
                     "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "endCursor",
-                    "storageKey": null
                   }
                 ],
                 "storageKey": null
@@ -293,7 +240,7 @@ return {
                     "kind": "LinkedField",
                     "name": "around",
                     "plural": true,
-                    "selections": (v8/*: any*/),
+                    "selections": (v5/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -303,7 +250,7 @@ return {
                     "kind": "LinkedField",
                     "name": "first",
                     "plural": false,
-                    "selections": (v8/*: any*/),
+                    "selections": (v5/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -313,7 +260,7 @@ return {
                     "kind": "LinkedField",
                     "name": "last",
                     "plural": false,
-                    "selections": (v8/*: any*/),
+                    "selections": (v5/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -324,8 +271,8 @@ return {
                     "name": "previous",
                     "plural": false,
                     "selections": [
-                      (v6/*: any*/),
-                      (v7/*: any*/)
+                      (v3/*: any*/),
+                      (v4/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -422,9 +369,9 @@ return {
     "metadata": {},
     "name": "SearchResultsArtistsQuery",
     "operationKind": "query",
-    "text": "query SearchResultsArtistsQuery(\n  $first: Int\n  $last: Int\n  $after: String\n  $before: String\n  $term: String!\n  $page: Int\n) {\n  viewer {\n    ...SearchResultsArtists_viewer_3D3mrw\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n\nfragment SearchResultsArtists_viewer_3D3mrw on Viewer {\n  searchConnection(query: $term, first: $first, after: $after, before: $before, last: $last, page: $page, entities: [ARTIST]) @principalField {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        __typename\n        ... on Artist {\n          name\n          internalID\n          href\n          imageUrl\n          bio\n        }\n        ... on Node {\n          id\n        }\n      }\n    }\n  }\n}\n"
+    "text": "query SearchResultsArtistsQuery(\n  $first: Int\n  $term: String!\n  $page: Int\n) {\n  viewer {\n    ...SearchResultsArtists_viewer_2aqsc5\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n\nfragment SearchResultsArtists_viewer_2aqsc5 on Viewer {\n  searchConnection(query: $term, first: $first, page: $page, entities: [ARTIST]) @principalField {\n    pageInfo {\n      hasNextPage\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        __typename\n        ... on Artist {\n          name\n          internalID\n          href\n          imageUrl\n          bio\n        }\n        ... on Node {\n          id\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '02345ec0391a8b94f74dde5fb12c4441';
+(node as any).hash = '1a305f085d21620ca6699008672efc1f';
 export default node;

@@ -30,12 +30,8 @@ export class SearchResultsArtistsRoute extends React.Component<Props, State> {
 
   constructor(props) {
     super(props)
-    const {
-      match: { location },
-    } = this.props
-    // @ts-expect-error STRICT_NULL_CHECK
-    const { page } = get(location, l => l.query)
 
+    const page = this.getQueryParam("page")
     this.state = { isLoading: false, page: (page && parseInt(page, 10)) || 1 }
   }
 
@@ -54,24 +50,33 @@ export class SearchResultsArtistsRoute extends React.Component<Props, State> {
 
     const {
       // @ts-expect-error STRICT_NULL_CHECK
-      pageInfo: { hasNextPage, endCursor },
+      pageInfo: { hasNextPage },
     } = searchConnection
 
     if (hasNextPage) {
-      this.loadAfter(endCursor, this.state.page + 1)
+      this.loadPage(this.state.page + 1)
     }
   }
 
-  loadAfter = (cursor: string, page: number) => {
+  getQueryParam = (paramName: string) => {
+    const {
+      match: { location },
+    } = this.props
+    // @ts-expect-error STRICT_NULL_CHECK
+    const param = get(location, l => l.query)[paramName]
+    return param
+  }
+
+  loadPage = (page: number) => {
     this.toggleLoading(true)
+
+    const term = this.getQueryParam("term")
 
     this.props.relay.refetch(
       {
-        after: cursor,
-        before: null,
         first: PAGE_SIZE,
-        last: null,
-        page: null,
+        page,
+        term,
       },
       null,
       error => {
@@ -81,11 +86,6 @@ export class SearchResultsArtistsRoute extends React.Component<Props, State> {
           console.error(error)
         }
 
-        const {
-          match: { location },
-        } = this.props
-        // @ts-expect-error STRICT_NULL_CHECK
-        const { term } = get(location, l => l.query)
         const urlParams = qs.stringify({
           page,
           term,
@@ -99,12 +99,8 @@ export class SearchResultsArtistsRoute extends React.Component<Props, State> {
   }
 
   renderArtists() {
-    const {
-      viewer,
-      match: { location },
-    } = this.props
-    // @ts-expect-error STRICT_NULL_CHECK
-    const { term } = get(location, l => l.query)
+    const { viewer } = this.props
+    const term = this.getQueryParam("term")
     const { searchConnection } = viewer
 
     // @ts-expect-error STRICT_NULL_CHECK
@@ -142,7 +138,7 @@ export class SearchResultsArtistsRoute extends React.Component<Props, State> {
         <Pagination
           // @ts-expect-error STRICT_NULL_CHECK
           pageCursors={searchConnection.pageCursors}
-          onClick={this.loadAfter}
+          onClick={(_cursor, page) => this.loadPage(page)}
           onNext={this.loadNext}
           scrollTo="#jumpto--searchResultTabs"
           // @ts-expect-error STRICT_NULL_CHECK
@@ -153,12 +149,8 @@ export class SearchResultsArtistsRoute extends React.Component<Props, State> {
   }
 
   render() {
-    const {
-      viewer,
-      match: { location },
-    } = this.props
-    // @ts-expect-error STRICT_NULL_CHECK
-    const { term } = get(location, l => l.query)
+    const { viewer } = this.props
+    const term = this.getQueryParam("term")
 
     // @ts-expect-error STRICT_NULL_CHECK
     const artists = get(viewer, v => v.searchConnection.edges, []).map(
@@ -187,23 +179,16 @@ export const SearchResultsArtistsRouteFragmentContainer = createRefetchContainer
         @argumentDefinitions(
           term: { type: "String!", defaultValue: "" }
           first: { type: "Int", defaultValue: 10 }
-          last: { type: "Int" }
-          after: { type: "String" }
-          before: { type: "String" }
           page: { type: "Int" }
         ) {
         searchConnection(
           query: $term
           first: $first
-          after: $after
-          before: $before
-          last: $last
           page: $page
           entities: [ARTIST]
         ) @principalField {
           pageInfo {
             hasNextPage
-            endCursor
           }
           pageCursors {
             ...Pagination_pageCursors
@@ -224,24 +209,10 @@ export const SearchResultsArtistsRouteFragmentContainer = createRefetchContainer
     `,
   },
   graphql`
-    query SearchResultsArtistsQuery(
-      $first: Int
-      $last: Int
-      $after: String
-      $before: String
-      $term: String!
-      $page: Int
-    ) {
+    query SearchResultsArtistsQuery($first: Int, $term: String!, $page: Int) {
       viewer {
         ...SearchResultsArtists_viewer
-          @arguments(
-            first: $first
-            last: $last
-            after: $after
-            before: $before
-            term: $term
-            page: $page
-          )
+          @arguments(first: $first, term: $term, page: $page)
       }
     }
   `
