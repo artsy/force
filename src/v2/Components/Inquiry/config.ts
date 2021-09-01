@@ -40,6 +40,7 @@ export const useEngine = () => {
     return new Engine({
       context: { user, isLoggedIn },
       workflow: [
+        "GalleriesYouWorkWith",
         {
           askSpecialist: {
             true: [
