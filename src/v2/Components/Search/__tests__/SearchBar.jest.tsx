@@ -20,6 +20,7 @@ const searchResults: SearchBarTestQueryRawResponse["viewer"] = {
     edges: [
       {
         node: {
+          __isNode: "SearchableItem",
           __typename: "SearchableItem",
           displayLabel: "Percy Z",
           href: "/cat/percy-z",

@@ -191,6 +191,7 @@ export const OpenAuctionReserveMetWithBids: ArtworkSidebarCurrentBidInfo_Test_Qu
 }
 
 export const OpenAuctionReserveNotMetIncreasingOwnBid: ArtworkSidebarCurrentBidInfo_Test_QueryRawResponse["artwork"] = {
+  // @ts-ignore
   id: "open_auction_reserve_not_met_increading_own_bid",
   ...OpenAuctionReserveNotMetWithBids,
   myLotStanding: [
@@ -208,6 +209,7 @@ export const OpenAuctionReserveNotMetIncreasingOwnBid: ArtworkSidebarCurrentBidI
 }
 
 export const OpenAuctionReserveMetWithMyWinningBid: ArtworkSidebarCurrentBidInfo_Test_QueryRawResponse["artwork"] = {
+  // @ts-ignore
   id: "open_auction_reserve_met_my_winning_bid",
   ...OpenAuctionReserveMetWithBids,
   myLotStanding: [
@@ -219,6 +221,7 @@ export const OpenAuctionReserveMetWithMyWinningBid: ArtworkSidebarCurrentBidInfo
 }
 
 export const OpenAuctionReserveMetWithMyLosingBid: ArtworkSidebarCurrentBidInfo_Test_QueryRawResponse["artwork"] = {
+  // @ts-ignore
   id: "open_auction_reserve_met_my_losing_bid",
   ...OpenAuctionReserveMetWithBids,
   myLotStanding: [

@@ -160,7 +160,8 @@ const FAIR_BOOTHS_FIXTURE: FairBooths_QueryRawResponse = {
             counts: { artworks: 0 },
             href: "/show/example-1",
             partner: {
-              __typename: "Partner",
+              __typename: "ExternalPartner",
+              __isNode: "ExternalPartner",
               id: "example-1",
               name: "Partner Without Artworks",
             },
@@ -175,7 +176,8 @@ const FAIR_BOOTHS_FIXTURE: FairBooths_QueryRawResponse = {
             counts: { artworks: 10 },
             href: "/show/example-2",
             partner: {
-              __typename: "Partner",
+              __typename: "ExternalPartner",
+              __isNode: "ExternalPartner",
               id: "example-2",
               name: "First Partner Has Artworks",
             },
@@ -190,7 +192,8 @@ const FAIR_BOOTHS_FIXTURE: FairBooths_QueryRawResponse = {
             counts: { artworks: 10 },
             href: "/show/example-3",
             partner: {
-              __typename: "Partner",
+              __typename: "ExternalPartner",
+              __isNode: "ExternalPartner",
               id: "example-3",
               name: "Second Partner Has Artworks",
             },

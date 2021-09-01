@@ -18,6 +18,7 @@ export const Items = [
       date: "2020-02-17",
       title: "Title 1",
       artistNames: "Some Artists",
+      __isNode: "Artwork",
       image: {
         url: "http://test.com",
       },
@@ -106,6 +107,7 @@ export const MockedConversation = {
 
 export const MockedInquiryConversation = {
   __typename: "Conversation",
+
   internalID: "6114",
   id: "Q29udmVyc2F0aW9uOjYxMTQ=",
   from: {
@@ -170,6 +172,7 @@ export const MockedInquiryConversation = {
     {
       item: {
         __typename: "Artwork",
+        __isNode: "Artwork",
         id: "QXJ0d29yazo1YjU2MWJjZDJjMjJjMTAwMjMzOTBkMjI=",
         isOfferableFromInquiry: true,
         internalID: "5b561bcd2c22c10023390d22",
