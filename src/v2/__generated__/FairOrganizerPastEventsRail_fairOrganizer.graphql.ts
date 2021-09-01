@@ -3,22 +3,21 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type FairOrganizerApp_fairOrganizer = {
-    readonly name: string | null;
-    readonly fairs: {
+export type FairOrganizerPastEventsRail_fairOrganizer = {
+    readonly pastFairs: {
         readonly edges: ReadonlyArray<{
             readonly node: {
-                readonly " $fragmentRefs": FragmentRefs<"FairHeaderImage_fair">;
+                readonly id: string;
+                readonly " $fragmentRefs": FragmentRefs<"FairOrganizerPastEventRailCell_fair">;
             } | null;
         } | null> | null;
     } | null;
-    readonly " $fragmentRefs": FragmentRefs<"FairOrganizerPastEventsRail_fairOrganizer" | "FairOrganizerHeader_fairOrganizer" | "FairOrganizerLatestArticles_fairOrganizer">;
-    readonly " $refType": "FairOrganizerApp_fairOrganizer";
+    readonly " $refType": "FairOrganizerPastEventsRail_fairOrganizer";
 };
-export type FairOrganizerApp_fairOrganizer$data = FairOrganizerApp_fairOrganizer;
-export type FairOrganizerApp_fairOrganizer$key = {
-    readonly " $data"?: FairOrganizerApp_fairOrganizer$data;
-    readonly " $fragmentRefs": FragmentRefs<"FairOrganizerApp_fairOrganizer">;
+export type FairOrganizerPastEventsRail_fairOrganizer$data = FairOrganizerPastEventsRail_fairOrganizer;
+export type FairOrganizerPastEventsRail_fairOrganizer$key = {
+    readonly " $data"?: FairOrganizerPastEventsRail_fairOrganizer$data;
+    readonly " $fragmentRefs": FragmentRefs<"FairOrganizerPastEventsRail_fairOrganizer">;
 };
 
 
@@ -27,27 +26,30 @@ const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "FairOrganizerApp_fairOrganizer",
+  "name": "FairOrganizerPastEventsRail_fairOrganizer",
   "selections": [
     {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "name",
-      "storageKey": null
-    },
-    {
-      "alias": "fairs",
+      "alias": "pastFairs",
       "args": [
         {
           "kind": "Literal",
           "name": "first",
-          "value": 1
+          "value": 20
+        },
+        {
+          "kind": "Literal",
+          "name": "hasFullFeature",
+          "value": true
         },
         {
           "kind": "Literal",
           "name": "sort",
           "value": "START_AT_DESC"
+        },
+        {
+          "kind": "Literal",
+          "name": "status",
+          "value": "CLOSED"
         }
       ],
       "concreteType": "FairConnection",
@@ -72,9 +74,16 @@ const node: ReaderFragment = {
               "plural": false,
               "selections": [
                 {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "id",
+                  "storageKey": null
+                },
+                {
                   "args": null,
                   "kind": "FragmentSpread",
-                  "name": "FairHeaderImage_fair"
+                  "name": "FairOrganizerPastEventRailCell_fair"
                 }
               ],
               "storageKey": null
@@ -83,25 +92,10 @@ const node: ReaderFragment = {
           "storageKey": null
         }
       ],
-      "storageKey": "fairsConnection(first:1,sort:\"START_AT_DESC\")"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "FairOrganizerPastEventsRail_fairOrganizer"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "FairOrganizerHeader_fairOrganizer"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "FairOrganizerLatestArticles_fairOrganizer"
+      "storageKey": "fairsConnection(first:20,hasFullFeature:true,sort:\"START_AT_DESC\",status:\"CLOSED\")"
     }
   ],
   "type": "FairOrganizer"
 };
-(node as any).hash = 'c7eca6dc37c306c58e77c7172effa4b1';
+(node as any).hash = '6aeda34d2d36710cd10a7f1f3e4ac93e';
 export default node;

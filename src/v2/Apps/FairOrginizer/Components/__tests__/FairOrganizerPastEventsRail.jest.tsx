@@ -12,13 +12,12 @@ describe("FairOrganizerPastEventsRail", () => {
   >({
     Component: FairOrganizerPastEventsRail,
     query: graphql`
-      query FairOrganizerPastEventsRail_Test_Query($slug: String!) {
-        fairs: fairsConnection(fairOrganizerID: $slug) {
-          ...FairOrganizerPastEventsRail_fairs
+      query FairOrganizerPastEventsRail_Test_Query {
+        fairOrganizer(id: "the-armory-show") {
+          ...FairOrganizerPastEventsRail_fairOrganizer
         }
       }
     `,
-    variables: { slug: "fair" },
   })
 
   it("renders correctly", () => {
