@@ -1,9 +1,9 @@
 // @ts-check
 
+import "./lib/loadenv"
 // This must come before any other instrumented module.
 // See https://docs.datadoghq.com/tracing/languages/nodejs/ for more info.
 import "./lib/datadog"
-import "./lib/loadenv"
 
 // Needs to be first, due to sharify side-effects.
 import { initializeMiddleware } from "./middleware"
