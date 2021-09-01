@@ -3,25 +3,31 @@
 const { readFileSync, accessSync, constants } = require("fs")
 const { parse } = require("dotenv")
 
-const shared = checkFileExistsSync(".env.shared")
-  ? parse(readFileSync(".env.shared"))
-  : {}
-const env = checkFileExistsSync(".env") ? parse(readFileSync(".env")) : {}
+function loadEnv(env) {
+  return checkFileExistsSync(env) ? parse(readFileSync(env)) : {}
+}
 
-// merge env files and update process.env if mergedEnv is not empty
-let mergedEnv = { ...shared, ...env }
-if (Object.keys(mergedEnv).length !== 0) {
-  for (const k in mergedEnv) {
-    process.env[k] = mergedEnv[k]
+function applyToEnv(config) {
+  if (Object.keys(config).length !== 0) {
+    for (const k in config) {
+      if (!process.env[k]) {
+        process.env[k] = config[k]
+      }
+    }
   }
 }
 
 function checkFileExistsSync(filepath) {
-  let flag = true
   try {
     accessSync(filepath, constants.F_OK)
   } catch (e) {
-    flag = false
+    return false
   }
-  return flag
+  return true
 }
+
+// Load the default envs and apply to process.env
+applyToEnv({
+  ...loadEnv(".env.shared"),
+  ...loadEnv(".env"),
+})

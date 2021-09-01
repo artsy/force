@@ -16,7 +16,9 @@ function loadEnv(env) {
 function applyToEnv(config) {
   if (Object.keys(config).length !== 0) {
     for (const k in config) {
-      process.env[k] = config[k]
+      if (!process.env[k]) {
+        process.env[k] = config[k]
+      }
     }
   }
 }
