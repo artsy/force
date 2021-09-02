@@ -24,6 +24,13 @@ const { getWrapper } = setupTestWrapper<FairOrganizerLatestArticles_Test_Query>(
 )
 
 describe("FairOrganizerLatestArticles", () => {
+  it("does not render if no articles are present", () => {
+    const wrapper = getWrapper({
+      FairOrganizer: () => ({ articlesConnection: { edges: [] } }),
+    })
+    expect(wrapper.html()).toBe("")
+  })
+
   it("renders a section title with the fair name", () => {
     const wrapper = getWrapper({
       FairOrganizer: () => ({ name: "Art Paris" }),
