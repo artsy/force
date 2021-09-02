@@ -16,9 +16,6 @@ export type FairExhibitorCard_partner = {
                 readonly srcSet: string;
             } | null;
         } | null;
-        readonly image: {
-            readonly url: string | null;
-        } | null;
         readonly " $fragmentRefs": FragmentRefs<"FollowProfileButton_profile">;
     } | null;
     readonly " $refType": "FairExhibitorCard_partner";
@@ -128,30 +125,6 @@ const node: ReaderFragment = {
           "storageKey": null
         },
         {
-          "alias": null,
-          "args": null,
-          "concreteType": "Image",
-          "kind": "LinkedField",
-          "name": "image",
-          "plural": false,
-          "selections": [
-            {
-              "alias": null,
-              "args": [
-                {
-                  "kind": "Literal",
-                  "name": "version",
-                  "value": "medium"
-                }
-              ],
-              "kind": "ScalarField",
-              "name": "url",
-              "storageKey": "url(version:\"medium\")"
-            }
-          ],
-          "storageKey": null
-        },
-        {
           "args": null,
           "kind": "FragmentSpread",
           "name": "FollowProfileButton_profile"
@@ -162,5 +135,5 @@ const node: ReaderFragment = {
   ],
   "type": "Partner"
 };
-(node as any).hash = '4d8c07f04dcc1695cdfc31d30913a3ff';
+(node as any).hash = 'c2363ecbd67e4e3dd672a11dcbb7e08d';
 export default node;

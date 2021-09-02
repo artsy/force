@@ -4,11 +4,9 @@ import {
   Column,
   Flex,
   GridColumns,
-  ResponsiveBox,
   SkeletonBox,
   SkeletonText,
 } from "@artsy/palette"
-import { Media } from "v2/Utils/Responsive"
 
 export const FairExhibitorsGroupPlaceholder: React.FC = () => {
   return (
@@ -23,17 +21,10 @@ export const FairExhibitorsGroupPlaceholder: React.FC = () => {
                   <SkeletonText variant="md">Partner Name</SkeletonText>
                   <SkeletonText variant="md">Partner Address</SkeletonText>
                 </Box>
+                <SkeletonText variant="lg" m="auto" mt={0} mr={0}>
+                  Follow
+                </SkeletonText>
               </Flex>
-
-              <Media greaterThan="xs">
-                <SkeletonBox mb={1}>
-                  <ResponsiveBox
-                    aspectWidth={400}
-                    aspectHeight={250}
-                    maxHeight={400}
-                  />
-                </SkeletonBox>
-              </Media>
             </Column>
           )
         })}
