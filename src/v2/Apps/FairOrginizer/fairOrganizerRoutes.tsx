@@ -3,8 +3,13 @@ import loadable from "@loadable/component"
 import { graphql } from "react-relay"
 import { ErrorPage } from "v2/Components/ErrorPage"
 import { AppRouteConfig } from "v2/System/Router/Route"
-import { RedirectException } from "found"
+import { RedirectException, RenderProps } from "found"
 import { extractNodes } from "v2/Utils/extractNodes"
+import { fairOrganizerRoutes_FairOrganizerQueryResponse } from "v2/__generated__/fairOrganizerRoutes_FairOrganizerQuery.graphql"
+
+export interface Props
+  extends RenderProps,
+    fairOrganizerRoutes_FairOrganizerQueryResponse {}
 
 const FairOrganizerApp = loadable(
   () =>
@@ -35,17 +40,16 @@ export const fairOrganizerRoutes: AppRouteConfig[] = [
     },
     render: ({ Component, props }) => {
       if (Component && props) {
-        const { fairOrganizer } = props as any
-        const { profile, runningFairs } = fairOrganizer
-
+        const { fairOrganizer } = props as Props
+        const { profile, runningFairs } = fairOrganizer!
         if (!profile) {
           return <ErrorPage code={404} />
         }
 
         const activeFair = extractNodes(runningFairs)[0]
         if (activeFair) {
-          const { href } = activeFair as any
-          throw new RedirectException(href, 302)
+          const { href } = activeFair
+          throw new RedirectException(href!, 302)
         }
 
         return <Component {...props} />
