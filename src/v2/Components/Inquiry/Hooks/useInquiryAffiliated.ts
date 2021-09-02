@@ -16,11 +16,9 @@ export enum Mode {
 
 export const useInquiryAffiliated = () => {
   const { next } = useInquiryContext()
-
-  const [mode, setMode] = useState(Mode.Pending)
-
   const { submitUpdateCollectorProfile } = useUpdateCollectorProfile()
 
+  const [mode, setMode] = useState(Mode.Pending)
   const [selection, setSelection] = useState<Option[]>([])
 
   const handleSelect = (option: Option) => {
