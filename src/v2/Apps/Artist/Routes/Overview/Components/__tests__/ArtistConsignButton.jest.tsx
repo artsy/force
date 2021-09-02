@@ -106,7 +106,7 @@ describe("ArtistConsignButton", () => {
 
         expect(wrapper.find("Image").length).toEqual(1)
         expect(wrapper.text()).toContain("Sell your Alex Katz")
-        expect(wrapper.find("RouterLink").html()).toContain(
+        expect(wrapper.find("RouterLink").first().html()).toContain(
           `href="/artist/alex-katz/consign"`
         )
       })
@@ -121,7 +121,9 @@ describe("ArtistConsignButton", () => {
         })
         expect(wrapper.find("Image").length).toEqual(1)
         expect(wrapper.text()).toContain("Sell art from your collection")
-        expect(wrapper.find("RouterLink").html()).toContain(`href="/consign"`)
+        expect(wrapper.find("RouterLink").first().html()).toContain(
+          `href="/consign"`
+        )
       })
 
       it("guards against missing imageURL", () => {
@@ -140,7 +142,7 @@ describe("ArtistConsignButton", () => {
           breakpoint: "md",
           response,
         })
-        wrapper.find("RouterLink").simulate("click")
+        wrapper.find("RouterLink").first().simulate("click")
         expect(trackEvent).toHaveBeenCalledWith({
           ...analyticsEvent,
           destination_path: "/artist/alex-katz/consign",
@@ -153,7 +155,7 @@ describe("ArtistConsignButton", () => {
         const wrapper = getWrapper({ breakpoint: "xs", response })
         expect(wrapper.find("Image").length).toEqual(1)
         expect(wrapper.text()).toContain("Sell your Alex Katz")
-        expect(wrapper.find("RouterLink").html()).toContain(
+        expect(wrapper.find("RouterLink").first().html()).toContain(
           `href="/artist/alex-katz/consign"`
         )
       })
@@ -168,7 +170,9 @@ describe("ArtistConsignButton", () => {
         })
         expect(wrapper.find("Image").length).toEqual(1)
         expect(wrapper.text()).toContain("Sell art from your collection")
-        expect(wrapper.find("RouterLink").html()).toContain(`href="/consign"`)
+        expect(wrapper.find("RouterLink").first().html()).toContain(
+          `href="/consign"`
+        )
       })
 
       it("guards against missing imageURL", () => {
@@ -187,7 +191,7 @@ describe("ArtistConsignButton", () => {
           breakpoint: "xs",
           response,
         })
-        wrapper.find("RouterLink").simulate("click")
+        wrapper.find("RouterLink").first().simulate("click")
         expect(trackEvent).toHaveBeenCalledWith({
           ...analyticsEvent,
           destination_path: "/artist/alex-katz/consign",
@@ -230,7 +234,9 @@ describe("ArtistConsignButton", () => {
         const wrapper = getWrapper({ breakpoint: "md", response })
         expect(wrapper.find("Image").length).toEqual(0)
         expect(wrapper.text()).toContain("Sell art from your collection")
-        expect(wrapper.find("RouterLink").html()).toContain(`href="/consign"`)
+        expect(wrapper.find("RouterLink").first().html()).toContain(
+          `href="/consign"`
+        )
       })
 
       it("tracks clicks", () => {
@@ -238,7 +244,7 @@ describe("ArtistConsignButton", () => {
           breakpoint: "md",
           response,
         })
-        wrapper.find("RouterLink").simulate("click")
+        wrapper.find("RouterLink").first().simulate("click")
         expect(trackEvent).toHaveBeenCalledWith({
           ...analyticsEvent,
           destination_path: "/consign",
@@ -251,7 +257,9 @@ describe("ArtistConsignButton", () => {
         const wrapper = getWrapper({ breakpoint: "xs", response })
         expect(wrapper.find("Image").length).toEqual(0)
         expect(wrapper.text()).toContain("Sell art from your collection")
-        expect(wrapper.find("RouterLink").html()).toContain(`href="/consign"`)
+        expect(wrapper.find("RouterLink").first().html()).toContain(
+          `href="/consign"`
+        )
       })
 
       it("tracks clicks", () => {
@@ -259,7 +267,7 @@ describe("ArtistConsignButton", () => {
           breakpoint: "xs",
           response,
         })
-        wrapper.find("RouterLink").simulate("click")
+        wrapper.find("RouterLink").first().simulate("click")
         expect(trackEvent).toHaveBeenCalledWith({
           ...analyticsEvent,
           destination_path: "/consign",
