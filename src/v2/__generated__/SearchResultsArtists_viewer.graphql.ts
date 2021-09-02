@@ -7,7 +7,6 @@ export type SearchResultsArtists_viewer = {
     readonly searchConnection: {
         readonly pageInfo: {
             readonly hasNextPage: boolean;
-            readonly endCursor: string | null;
         };
         readonly pageCursors: {
             readonly " $fragmentRefs": FragmentRefs<"Pagination_pageCursors">;
@@ -49,24 +48,6 @@ const node: ReaderFragment = {
     {
       "defaultValue": null,
       "kind": "LocalArgument",
-      "name": "last",
-      "type": "Int"
-    },
-    {
-      "defaultValue": null,
-      "kind": "LocalArgument",
-      "name": "after",
-      "type": "String"
-    },
-    {
-      "defaultValue": null,
-      "kind": "LocalArgument",
-      "name": "before",
-      "type": "String"
-    },
-    {
-      "defaultValue": null,
-      "kind": "LocalArgument",
       "name": "page",
       "type": "Int"
     }
@@ -79,16 +60,6 @@ const node: ReaderFragment = {
       "alias": null,
       "args": [
         {
-          "kind": "Variable",
-          "name": "after",
-          "variableName": "after"
-        },
-        {
-          "kind": "Variable",
-          "name": "before",
-          "variableName": "before"
-        },
-        {
           "kind": "Literal",
           "name": "entities",
           "value": [
@@ -99,11 +70,6 @@ const node: ReaderFragment = {
           "kind": "Variable",
           "name": "first",
           "variableName": "first"
-        },
-        {
-          "kind": "Variable",
-          "name": "last",
-          "variableName": "last"
         },
         {
           "kind": "Variable",
@@ -134,13 +100,6 @@ const node: ReaderFragment = {
               "args": null,
               "kind": "ScalarField",
               "name": "hasNextPage",
-              "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "endCursor",
               "storageKey": null
             }
           ],
@@ -231,5 +190,5 @@ const node: ReaderFragment = {
   ],
   "type": "Viewer"
 };
-(node as any).hash = '204321838585efb41c817e25978acad1';
+(node as any).hash = 'e56ba60404a845353821326cf3f1a678';
 export default node;

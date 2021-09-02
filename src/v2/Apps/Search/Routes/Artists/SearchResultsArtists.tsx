@@ -24,22 +24,17 @@ const PAGE_SIZE = 10
 export class SearchResultsArtistsRoute extends React.Component<Props, State> {
   state: State = {
     isLoading: false,
-    // @ts-expect-error STRICT_NULL_CHECK
-    page: null,
+    page: 1,
   }
 
   constructor(props) {
     super(props)
-    const {
-      match: { location },
-    } = this.props
-    // @ts-expect-error STRICT_NULL_CHECK
-    const { page } = get(location, l => l.query)
 
+    const page = this.getQueryParam("page")
     this.state = { isLoading: false, page: (page && parseInt(page, 10)) || 1 }
   }
 
-  toggleLoading = isLoading => {
+  toggleLoading = (isLoading): void => {
     this.setState(
       {
         isLoading,
@@ -48,30 +43,45 @@ export class SearchResultsArtistsRoute extends React.Component<Props, State> {
     )
   }
 
-  loadNext = () => {
+  loadNext = (): void => {
     const { viewer } = this.props
     const { searchConnection } = viewer
 
     const {
-      // @ts-expect-error STRICT_NULL_CHECK
-      pageInfo: { hasNextPage, endCursor },
-    } = searchConnection
+      pageInfo: { hasNextPage },
+    } = searchConnection!
 
     if (hasNextPage) {
-      this.loadAfter(endCursor, this.state.page + 1)
+      this.loadPage(this.state.page + 1)
     }
   }
 
-  loadAfter = (cursor: string, page: number) => {
+  getQueryParam = (paramName: string): string => {
+    const {
+      match: { location },
+    } = this.props
+    const param = get(location, l => l.query)?.[paramName]
+    return param ?? ""
+  }
+
+  getArtists = () => {
+    const { viewer } = this.props
+    const artists = get(viewer, v => v?.searchConnection?.edges, [])?.map(
+      e => e!.node
+    )
+    return artists
+  }
+
+  loadPage = (page: number): void => {
     this.toggleLoading(true)
+
+    const term = this.getQueryParam("term")
 
     this.props.relay.refetch(
       {
-        after: cursor,
-        before: null,
         first: PAGE_SIZE,
-        last: null,
-        page: null,
+        page,
+        term,
       },
       null,
       error => {
@@ -81,11 +91,6 @@ export class SearchResultsArtistsRoute extends React.Component<Props, State> {
           console.error(error)
         }
 
-        const {
-          match: { location },
-        } = this.props
-        // @ts-expect-error STRICT_NULL_CHECK
-        const { term } = get(location, l => l.query)
         const urlParams = qs.stringify({
           page,
           term,
@@ -99,75 +104,50 @@ export class SearchResultsArtistsRoute extends React.Component<Props, State> {
   }
 
   renderArtists() {
-    const {
-      viewer,
-      match: { location },
-    } = this.props
-    // @ts-expect-error STRICT_NULL_CHECK
-    const { term } = get(location, l => l.query)
+    const { viewer } = this.props
     const { searchConnection } = viewer
-
-    // @ts-expect-error STRICT_NULL_CHECK
-    const artists = get(viewer, v => v.searchConnection.edges, []).map(
-      // @ts-expect-error STRICT_NULL_CHECK
-      e => e.node
-    )
+    const term = this.getQueryParam("term")
+    const artists = this.getArtists()
 
     return (
       <>
-        {artists.map((artist, index) => {
-          // @ts-expect-error STRICT_NULL_CHECK
-          const worksForSaleHref = artist.href + "/works-for-sale"
+        {artists?.map((artist, index) => {
+          const worksForSaleHref = artist!.href + "/works-for-sale"
           return (
             <Box key={index}>
               {/* @ts-expect-error STRICT_NULL_CHECK */}
               <GenericSearchResultItem
-                // @ts-expect-error STRICT_NULL_CHECK
-                name={artist.name}
-                // @ts-expect-error STRICT_NULL_CHECK
-                description={artist.bio}
-                // @ts-expect-error STRICT_NULL_CHECK
-                imageUrl={artist.imageUrl}
+                name={artist!.name}
+                description={artist!.bio}
+                imageUrl={artist!.imageUrl}
                 entityType="Artist"
                 href={worksForSaleHref}
                 index={index}
                 term={term}
-                // @ts-expect-error STRICT_NULL_CHECK
-                id={artist.internalID}
+                id={artist!.internalID}
               />
               {index < artists.length - 1 && <Separator />}
             </Box>
           )
         })}
         <Pagination
-          // @ts-expect-error STRICT_NULL_CHECK
-          pageCursors={searchConnection.pageCursors}
-          onClick={this.loadAfter}
+          pageCursors={searchConnection!.pageCursors}
+          onClick={(_cursor, page) => this.loadPage(page)}
           onNext={this.loadNext}
           scrollTo="#jumpto--searchResultTabs"
-          // @ts-expect-error STRICT_NULL_CHECK
-          hasNextPage={searchConnection.pageInfo.hasNextPage}
+          hasNextPage={searchConnection!.pageInfo.hasNextPage}
         />
       </>
     )
   }
 
   render() {
-    const {
-      viewer,
-      match: { location },
-    } = this.props
-    // @ts-expect-error STRICT_NULL_CHECK
-    const { term } = get(location, l => l.query)
+    const artists = this.getArtists()
+    const term = this.getQueryParam("term")
 
-    // @ts-expect-error STRICT_NULL_CHECK
-    const artists = get(viewer, v => v.searchConnection.edges, []).map(
-      // @ts-expect-error STRICT_NULL_CHECK
-      e => e.node
-    )
     return (
       <LoadingArea isLoading={this.state.isLoading}>
-        {artists.length === 0 ? (
+        {artists!.length === 0 ? (
           <Box mt={3}>
             <ZeroState term={term} />
           </Box>
@@ -187,23 +167,16 @@ export const SearchResultsArtistsRouteFragmentContainer = createRefetchContainer
         @argumentDefinitions(
           term: { type: "String!", defaultValue: "" }
           first: { type: "Int", defaultValue: 10 }
-          last: { type: "Int" }
-          after: { type: "String" }
-          before: { type: "String" }
           page: { type: "Int" }
         ) {
         searchConnection(
           query: $term
           first: $first
-          after: $after
-          before: $before
-          last: $last
           page: $page
           entities: [ARTIST]
         ) @principalField {
           pageInfo {
             hasNextPage
-            endCursor
           }
           pageCursors {
             ...Pagination_pageCursors
@@ -224,24 +197,10 @@ export const SearchResultsArtistsRouteFragmentContainer = createRefetchContainer
     `,
   },
   graphql`
-    query SearchResultsArtistsQuery(
-      $first: Int
-      $last: Int
-      $after: String
-      $before: String
-      $term: String!
-      $page: Int
-    ) {
+    query SearchResultsArtistsQuery($first: Int, $term: String!, $page: Int) {
       viewer {
         ...SearchResultsArtists_viewer
-          @arguments(
-            first: $first
-            last: $last
-            after: $after
-            before: $before
-            term: $term
-            page: $page
-          )
+          @arguments(first: $first, term: $term, page: $page)
       }
     }
   `
