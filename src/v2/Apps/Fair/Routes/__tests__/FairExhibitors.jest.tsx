@@ -26,7 +26,7 @@ describe("FairExhibitors", () => {
   })
 
   it("renders the letters nav", () => {
-    const wrapper = getWrapper()
+    const wrapper = getWrapper(FAIR_FIXTURE)
     expect(wrapper.find("ExhibitorsLetterNav").length).toBe(1)
   })
 
@@ -40,55 +40,65 @@ describe("FairExhibitors", () => {
     const spy = jest.fn()
     window.scrollTo = spy
 
-    const wrapper = getWrapper({
-      Fair: () => ({
-        exhibitorsGroupedByName: [
-          {
-            letter: "D",
-            exhibitors: [
-              {
-                partnerID: "642b20aff086930012ce478f",
-              },
-            ],
-          },
-        ],
-      }),
-    })
+    const wrapper = getWrapper(FAIR_FIXTURE)
 
     const letter = wrapper.find("ExhibitorsLetterNav").find("Letter").at(3)
+
     letter.simulate("click")
     expect(spy).toHaveBeenCalledTimes(1)
   })
 
   it("renders the exhibitors group", () => {
-    const wrapper = getWrapper({
-      Fair: () => ({
-        exhibitorsGroupedByName: [
-          {
-            letter: "A",
-            exhibitors: [
-              {
-                partnerID: "600b45afd086930012ce478c",
-              },
-            ],
-          },
-          {
-            letter: "C",
-            exhibitors: [
-              {
-                partnerID: "551db9a6726169422f4d0600",
-              },
-              {
-                partnerID: "5694406501925b322c00010b",
-              },
-            ],
-          },
-        ],
-      }),
-    })
+    const wrapper = getWrapper(FAIR_FIXTURE)
 
     const exhibitorsGroups = wrapper.find("FairExhibitorsGroupPlaceholder")
 
-    expect(exhibitorsGroups.length).toBe(2)
+    expect(exhibitorsGroups.length).toBe(3)
   })
 })
+
+const FAIR_FIXTURE = {
+  Fair: () => ({
+    exhibitorsGroupedByName: [
+      {
+        letter: "A",
+        exhibitors: [
+          {
+            partner: {
+              internalID: "551db9a6726169422f4d0600",
+              cities: [],
+            },
+          },
+          {
+            partner: {
+              internalID: "5a2025c78b0c144e0bba965e",
+              cities: [],
+            },
+          },
+        ],
+      },
+      {
+        letter: "C",
+        exhibitors: [
+          {
+            partner: {
+              internalID: "5266d825a09a67eac50001f1",
+              cities: [],
+            },
+          },
+        ],
+      },
+      {
+        letter: "D",
+        exhibitors: [
+          {
+            partner: {
+              internalID: "5694406501925b322c00010b",
+              cities: [],
+            },
+          },
+        ],
+      },
+    ],
+  }),
+}

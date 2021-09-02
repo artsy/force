@@ -44,7 +44,7 @@ export const FairExhibitorCard: React.FC<FairExhibitorCardProps> = ({
   }
 
   const partnerAddress = (cities: readonly (string | null)[]) => {
-    const visibleCities = cities?.slice(0, VISIBLE_CITIES_NUM).join(", ")
+    const visibleCities = cities.slice(0, VISIBLE_CITIES_NUM).join(", ")
 
     if (cities.length > VISIBLE_CITIES_NUM) {
       return `${visibleCities}, +${cities.length - VISIBLE_CITIES_NUM} more`
