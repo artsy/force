@@ -18,16 +18,16 @@ import { InquirySpecialist } from "./Views/InquirySpecialist"
 const VIEWS = {
   Account: InquiryAccount, // ✅
   ArtistsInCollection: InquiryArtistsInCollection,
-  AuctionHousesYouWorkWith: InquiryAuctionHousesYouWorkWith,
+  AuctionHousesYouWorkWith: InquiryAuctionHousesYouWorkWith, // ✅
   BasicInfo: InquiryBasicInfoQueryRenderer, // ✅
   CommercialInterest: InquiryCommercialInterest, // ✅
   Confirmation: InquiryConfirmation,
   Done: InquiryDone,
-  FairsYouAttend: InquiryFairsYouAttend,
-  GalleriesYouWorkWith: InquiryGalleriesYouWorkWith,
+  FairsYouAttend: InquiryFairsYouAttend, // ✅
+  GalleriesYouWorkWith: InquiryGalleriesYouWorkWith, // ✅
   HowCanWeHelp: InquiryHowCanWeHelp,
   Inquiry: InquiryInquiryQueryRenderer, // ✅
-  InstitutionalAffiliations: InquiryInstitutionalAffiliations,
+  InstitutionalAffiliations: InquiryInstitutionalAffiliations, // ✅
   Specialist: InquirySpecialist,
 }
 
@@ -40,7 +40,6 @@ export const useEngine = () => {
     return new Engine({
       context: { user, isLoggedIn },
       workflow: [
-        "GalleriesYouWorkWith",
         {
           askSpecialist: {
             true: [
