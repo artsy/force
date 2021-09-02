@@ -1,4 +1,4 @@
-import { InquiryBasicInfoFragmentContainer } from "../../views/InquiryBasicInfo"
+import { InquiryBasicInfoFragmentContainer } from "../../Views/InquiryBasicInfo"
 import { useUpdateMyUserProfile } from "../../Hooks/useUpdateMyUserProfile"
 import { useInquiryContext } from "../../InquiryContext"
 import { flushPromiseQueue } from "v2/DevTools"

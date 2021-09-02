@@ -1,9 +1,9 @@
 import { mount } from "enzyme"
 import React from "react"
-import { flushPromiseQueue } from "v2/DevTools"
-import { InquirySignUp } from "../../views/InquirySignUp"
+import { InquiryLogin } from "../../Views/InquiryLogin"
+import { login } from "v2/Utils/auth"
 import { useArtworkInquiryRequest } from "../../Hooks/useArtworkInquiryRequest"
-import { signUp } from "v2/Utils/auth"
+import { flushPromiseQueue } from "v2/DevTools"
 import { useInquiryContext } from "../../InquiryContext"
 import { fill } from "../util"
 
@@ -12,7 +12,7 @@ jest.mock("../../useArtworkInquiryRequest")
 jest.mock("../../InquiryContext")
 jest.mock("v2/Utils/wait", () => ({ wait: () => Promise.resolve() }))
 
-describe("InquirySignUp", () => {
+describe("InquiryLogin", () => {
   const next = jest.fn()
   const submitArtworkInquiryRequest = jest.fn()
 
@@ -32,27 +32,27 @@ describe("InquirySignUp", () => {
   })
 
   it("renders correctly", () => {
-    const wrapper = mount(<InquirySignUp />)
+    const wrapper = mount(<InquiryLogin />)
 
-    expect(wrapper.html()).toContain("Create an account to send your message")
+    expect(wrapper.html()).toContain(
+      "We found an Artsy account associated with example@example.com."
+    )
   })
 
-  describe("success", () => {
+  describe("without two-factor auth", () => {
     beforeEach(() => {
-      ;(signUp as jest.Mock).mockImplementation(() =>
+      ;(login as jest.Mock).mockImplementation(() =>
         Promise.resolve({ user: { id: "id", access_token: "token" } })
       )
     })
 
-    it("signs up the user and sends the message", async () => {
-      const wrapper = mount(<InquirySignUp />)
+    it("logs in and sends the message", async () => {
+      const wrapper = mount(<InquiryLogin />)
 
       expect(submitArtworkInquiryRequest).not.toBeCalled()
       expect(next).not.toBeCalled()
 
-      // Fill inputs
-      fill(wrapper, "name", "Example Example")
-      fill(wrapper, "email", "example@example.com")
+      // Enter password
       fill(wrapper, "password", "secret")
 
       // Submit form
@@ -64,31 +64,40 @@ describe("InquirySignUp", () => {
     })
   })
 
-  describe("error", () => {
-    beforeEach(() => {
-      ;(signUp as jest.Mock).mockImplementation(() =>
-        Promise.reject(new Error("something went wrong"))
-      )
-    })
-
-    it("handles and displays the error to the user", async () => {
-      const wrapper = mount(<InquirySignUp />)
+  describe("with two-factor auth", () => {
+    it("logs in and sends the message", async () => {
+      const wrapper = mount(<InquiryLogin />)
 
       expect(submitArtworkInquiryRequest).not.toBeCalled()
       expect(next).not.toBeCalled()
 
-      // Fill inputs
-      fill(wrapper, "name", "Example Example")
-      fill(wrapper, "email", "example@example.com")
+      // Enter password
       fill(wrapper, "password", "secret")
+
+      // Login will error asking for 2fa code
+      ;(login as jest.Mock).mockImplementation(() =>
+        Promise.reject(new Error("missing two-factor authentication code"))
+      )
 
       // Submit form
       wrapper.find("form").simulate("submit")
       await flushPromiseQueue()
+      wrapper.update()
 
-      expect(submitArtworkInquiryRequest).not.toBeCalled()
-      expect(next).not.toBeCalled()
-      expect(wrapper.html()).toContain("something went wrong")
+      // Input two factor auth code
+      fill(wrapper, "authenticationCode", "code")
+
+      // Login works now
+      ;(login as jest.Mock).mockImplementation(() =>
+        Promise.resolve({ user: { id: "id", access_token: "token" } })
+      )
+
+      // Submit form again
+      wrapper.find("form").simulate("submit")
+      await flushPromiseQueue()
+
+      expect(submitArtworkInquiryRequest).toBeCalled()
+      expect(next).toBeCalled()
     })
   })
 })

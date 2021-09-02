@@ -1,6 +1,6 @@
 import React from "react"
 import { mount } from "enzyme"
-import { InquiryResetPassword } from "../../views/InquiryResetPassword"
+import { InquiryResetPassword } from "../../Views/InquiryResetPassword"
 
 jest.mock("../../InquiryContext", () => ({
   useInquiryContext: () => ({
