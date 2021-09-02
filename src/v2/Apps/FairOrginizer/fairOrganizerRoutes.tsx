@@ -47,9 +47,8 @@ export const fairOrganizerRoutes: AppRouteConfig[] = [
         }
 
         const activeFair = extractNodes(runningFairs)[0]
-        if (activeFair) {
-          const { href } = activeFair
-          throw new RedirectException(href!, 302)
+        if (activeFair?.href) {
+          throw new RedirectException(activeFair.href, 302)
         }
 
         return <Component {...props} />
