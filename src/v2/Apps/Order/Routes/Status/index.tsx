@@ -12,6 +12,7 @@ import {
   media,
 } from "@artsy/palette"
 import styled from "styled-components"
+import { RouterLink } from "v2/System/Router/RouterLink"
 import { TransactionDetailsSummaryItemFragmentContainer as TransactionDetailsSummaryItem } from "v2/Apps/Order/Components/TransactionDetailsSummaryItem"
 import { TwoColumnLayout } from "v2/Apps/Order/Components/TwoColumnLayout"
 import { get } from "v2/Utils/get"
@@ -174,7 +175,7 @@ export class StatusRoute extends Component<StatusProps> {
         return {
           title: "Offer expired",
           description: (
-            <>The seller’s offer expired because you didn’t respond iFn time.</>
+            <>The seller’s offer expired because you didn’t respond in time.</>
           ),
           showTransactionSummary: false,
         }
@@ -255,13 +256,8 @@ export class StatusRoute extends Component<StatusProps> {
     }
 
     return (
-      <Button
-        onClick={() => {
-          window.location.href = "/"
-        }}
-        variant="primaryBlack"
-        width="100%"
-      >
+      // @ts-ignore
+      <Button as={RouterLink} to="/" variant="primaryBlack" width="100%">
         Back to Artsy
       </Button>
     )
