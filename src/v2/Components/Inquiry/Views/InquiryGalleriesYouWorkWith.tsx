@@ -15,6 +15,11 @@ export const InquiryGalleriesYouWorkWith: React.FC = () => {
     mode,
   } = useInquiryAffiliated()
 
+  const handleClick = () => {
+    const affiliatedGalleryIds = selection.map(({ value }) => value)
+    handleSave({ affiliatedGalleryIds })
+  }
+
   return (
     <>
       <Text variant="lg" mb={2}>
@@ -52,7 +57,7 @@ export const InquiryGalleriesYouWorkWith: React.FC = () => {
         width="100%"
         loading={mode === Mode.Loading}
         disabled={mode === Mode.Success}
-        onClick={handleSave}
+        onClick={handleClick}
       >
         Next
       </Button>

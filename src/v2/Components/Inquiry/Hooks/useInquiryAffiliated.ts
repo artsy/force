@@ -3,6 +3,7 @@ import { useState } from "react"
 import { useInquiryContext } from "../InquiryContext"
 import { useUpdateCollectorProfile } from "./useUpdateCollectorProfile"
 import { logger } from "../util"
+import { UpdateCollectorProfileInput } from "v2/__generated__/useUpdateCollectorProfileMutation.graphql"
 
 type Option = { text: string; value: string }
 
@@ -34,13 +35,11 @@ export const useInquiryAffiliated = () => {
     )
   }
 
-  const handleSave = async () => {
+  const handleSave = async (input: UpdateCollectorProfileInput) => {
     setMode(Mode.Loading)
 
-    const affiliatedGalleryIds = selection.map(({ value }) => value)
-
     try {
-      await submitUpdateCollectorProfile({ affiliatedGalleryIds })
+      await submitUpdateCollectorProfile(input)
       setMode(Mode.Success)
       next()
     } catch (err) {
