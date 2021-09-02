@@ -1,10 +1,12 @@
-import { pageCacheMiddleware } from "../redisPageCache"
+import { redisPageCacheMiddleware } from "../redisPageCache"
 
 const { cache } = require("lib/cache")
 
 jest.mock("lib/cache", () => ({
   cache: {
-    get: jest.fn().mockResolvedValue(true),
+    get: jest.fn((key, cb) => {
+      return cb()
+    }),
     set: jest.fn(),
   },
 }))
@@ -24,6 +26,7 @@ describe("pageCacheMiddleware", () => {
   let next
   beforeEach(() => {
     req = {
+      method: "GET",
       path: "/artist/test-artist",
       url: "https://artsy.net/artist/test-artist",
     }
@@ -36,6 +39,10 @@ describe("pageCacheMiddleware", () => {
           html: "html",
         },
       },
+      statusCode: 200,
+      _headers: {
+        "content-type": "text/html; charset=utf-8",
+      },
     }
     next = jest.fn()
     cache.get.mockClear()
@@ -43,20 +50,30 @@ describe("pageCacheMiddleware", () => {
   })
 
   it("sets up cache for valid pageTypes", async () => {
-    await pageCacheMiddleware(req, res, next)
-    expect(cache.set).toBeCalledWith("page-cache|1|key", "html", 600)
-    expect(cache.get.mock.calls[0][0]).toBe(
-      "page-cache|1|https://artsy.net/artist/test-artist"
+    redisPageCacheMiddleware(req, res, next)
+    expect(cache.set).toBeCalledWith(
+      "page-cache|none|1|https://artsy.net/artist/test-artist",
+      expect.anything(),
+      600
     )
+    expect(cache.get.mock.calls[0][0]).toBe(
+      "page-cache|none|1|https://artsy.net/artist/test-artist"
+    )
+    await new Promise<void>(resolve => {
+      setTimeout(() => {
+        resolve()
+      }, 100)
+    })
     expect(next).toBeCalled()
   })
 
   it("skips cache for invalid pageTypes", async () => {
     req = {
+      method: "GET",
       path: "/artist-series/test-artist",
       url: "https://artsy.net/artist-series/test-artist",
     }
-    await pageCacheMiddleware(req, res, next)
+    redisPageCacheMiddleware(req, res, next)
     expect(cache.set).not.toBeCalled()
     expect(cache.get).not.toBeCalled()
     expect(next).toBeCalled()

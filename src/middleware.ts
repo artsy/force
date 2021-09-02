@@ -58,7 +58,7 @@ import { downcaseMiddleware } from "./lib/middleware/downcase"
 import { hardcodedRedirectsMiddleware } from "./lib/middleware/hardcodedRedirects"
 import { localsMiddleware } from "./lib/middleware/locals"
 import { marketingModalsMiddleware } from "./lib/middleware/marketingModals"
-import { pageCacheMiddleware } from "./lib/middleware/redisPageCache"
+import { redisPageCacheMiddleware } from "./lib/middleware/redisPageCache"
 import { sameOriginMiddleware } from "./lib/middleware/sameOrigin"
 import { unsupportedBrowserMiddleware } from "./lib/middleware/unsupportedBrowser"
 import { backboneSync } from "lib/backboneSync"
@@ -284,6 +284,6 @@ function applyCacheMiddleware(app) {
     })
   }
 
-  app.use(pageCacheMiddleware)
+  app.use(redisPageCacheMiddleware)
   app.use(cachableRoutes, memoryPageCacheMiddleware)
 }
