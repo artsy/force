@@ -16,6 +16,11 @@ export const FairOrganizerLatestArticles: React.FC<FairOrganizerLatestArticlesPr
 }) => {
   const { articlesConnection, name, slug } = fairOrganizer
   const articles = extractNodes(articlesConnection)
+
+  if (articles.length === 0) {
+    return null
+  }
+
   const [latestArticle, ...otherArticles] = articles
   const { leftColumn, rightColumn } = getArticlesColumns(otherArticles)
 
