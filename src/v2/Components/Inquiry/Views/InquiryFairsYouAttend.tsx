@@ -38,9 +38,8 @@ export const InquiryFairsYouAttend: React.FC = () => {
       <InquiryAffiliatedAutocomplete<InquiryFairsYouAttendQuery>
         query={query}
         onSelect={handleSelect}
-        getOptions={props =>
-          // TODO: Make this non-nullable
-          props.external!.fairs.map(option => ({
+        getOptions={({ external }) =>
+          external.fairs.map(option => ({
             text: option.name,
             value: option.internalID,
           }))

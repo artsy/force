@@ -38,9 +38,8 @@ export const InquiryGalleriesYouWorkWith: React.FC = () => {
       <InquiryAffiliatedAutocomplete<InquiryGalleriesYouWorkWithQuery>
         query={query}
         onSelect={handleSelect}
-        getOptions={props =>
-          // TODO: Make this non-nullable
-          props.external!.galleries.map(option => ({
+        getOptions={({ external }) =>
+          external.galleries.map(option => ({
             text: option.name,
             value: option.internalID,
           }))
