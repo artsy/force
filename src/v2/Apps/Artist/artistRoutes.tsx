@@ -157,7 +157,7 @@ export const artistRoutes: AppRouteConfig[] = [
           return {
             artistID,
             ...initialAuctionResultsFilterState({
-              // Setting start date and min date here because Relay fails when we don't pass any values.
+              // Setting start date and end date here because Relay fails when we don't pass any values.
               startDate: MIN_START_DATE,
               endDate: MAX_END_DATE,
             }),
