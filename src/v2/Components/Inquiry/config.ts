@@ -1,33 +1,33 @@
 import { useMemo, useState } from "react"
 import { useSystemContext } from "v2/System"
 import { Engine } from "./Engine"
-import { InquiryAccount } from "./views/InquiryAccount"
-import { InquiryArtistsInCollection } from "./views/InquiryArtistsInCollection"
-import { InquiryAuctionHousesYouWorkWith } from "./views/InquiryAuctionHousesYouWorkWith"
-import { InquiryBasicInfoQueryRenderer } from "./views/InquiryBasicInfo"
-import { InquiryCommercialInterest } from "./views/InquiryCommercialInterest"
-import { InquiryConfirmation } from "./views/InquiryConfirmation"
-import { InquiryDone } from "./views/InquiryDone"
-import { InquiryFairsYouAttend } from "./views/InquiryFairsYouAttend"
-import { InquiryGalleriesYouWorkWith } from "./views/InquiryGalleriesYouWorkWith"
-import { InquiryHowCanWeHelp } from "./views/InquiryHowCanWeHelp"
-import { InquiryInquiryQueryRenderer } from "./views/InquiryInquiry"
-import { InquiryInstitutionalAffiliations } from "./views/InquiryInstitutionalAffiliations"
-import { InquirySpecialist } from "./views/InquirySpecialist"
+import { InquiryAccount } from "./Views/InquiryAccount"
+import { InquiryArtistsInCollection } from "./Views/InquiryArtistsInCollection"
+import { InquiryAuctionHousesYouWorkWith } from "./Views/InquiryAuctionHousesYouWorkWith"
+import { InquiryBasicInfoQueryRenderer } from "./Views/InquiryBasicInfo"
+import { InquiryCommercialInterest } from "./Views/InquiryCommercialInterest"
+import { InquiryConfirmation } from "./Views/InquiryConfirmation"
+import { InquiryDone } from "./Views/InquiryDone"
+import { InquiryFairsYouAttend } from "./Views/InquiryFairsYouAttend"
+import { InquiryGalleriesYouWorkWith } from "./Views/InquiryGalleriesYouWorkWith"
+import { InquiryHowCanWeHelp } from "./Views/InquiryHowCanWeHelp"
+import { InquiryInquiryQueryRenderer } from "./Views/InquiryInquiry"
+import { InquiryInstitutionalAffiliations } from "./Views/InquiryInstitutionalAffiliations"
+import { InquirySpecialist } from "./Views/InquirySpecialist"
 
 const VIEWS = {
   Account: InquiryAccount, // ✅
   ArtistsInCollection: InquiryArtistsInCollection,
-  AuctionHousesYouWorkWith: InquiryAuctionHousesYouWorkWith,
+  AuctionHousesYouWorkWith: InquiryAuctionHousesYouWorkWith, // ✅
   BasicInfo: InquiryBasicInfoQueryRenderer, // ✅
   CommercialInterest: InquiryCommercialInterest, // ✅
   Confirmation: InquiryConfirmation,
   Done: InquiryDone,
-  FairsYouAttend: InquiryFairsYouAttend,
-  GalleriesYouWorkWith: InquiryGalleriesYouWorkWith,
+  FairsYouAttend: InquiryFairsYouAttend, // ✅
+  GalleriesYouWorkWith: InquiryGalleriesYouWorkWith, // ✅
   HowCanWeHelp: InquiryHowCanWeHelp,
   Inquiry: InquiryInquiryQueryRenderer, // ✅
-  InstitutionalAffiliations: InquiryInstitutionalAffiliations,
+  InstitutionalAffiliations: InquiryInstitutionalAffiliations, // ✅
   Specialist: InquirySpecialist,
 }
 

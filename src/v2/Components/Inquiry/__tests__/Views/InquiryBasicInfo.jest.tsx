@@ -1,5 +1,5 @@
-import { InquiryBasicInfoFragmentContainer } from "../../views/InquiryBasicInfo"
-import { useUpdateMyUserProfile } from "../../useUpdateMyUserProfile"
+import { InquiryBasicInfoFragmentContainer } from "../../Views/InquiryBasicInfo"
+import { useUpdateMyUserProfile } from "../../Hooks/useUpdateMyUserProfile"
 import { useInquiryContext } from "../../InquiryContext"
 import { flushPromiseQueue } from "v2/DevTools"
 import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
@@ -7,7 +7,7 @@ import { graphql } from "relay-runtime"
 import { fill } from "../util"
 
 jest.unmock("react-relay")
-jest.mock("../../useUpdateMyUserProfile")
+jest.mock("../../Hooks/useUpdateMyUserProfile")
 jest.mock("../../InquiryContext")
 jest.mock("v2/Components/LocationAutocompleteInput", () => ({
   LocationAutocompleteInput: () => null,

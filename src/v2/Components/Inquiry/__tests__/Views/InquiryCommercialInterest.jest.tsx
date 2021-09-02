@@ -1,11 +1,11 @@
 import React from "react"
 import { mount } from "enzyme"
-import { InquiryCommercialInterest } from "../../views/InquiryCommercialInterest"
-import { useUpdateMyUserProfile } from "../../useUpdateMyUserProfile"
+import { InquiryCommercialInterest } from "../../Views/InquiryCommercialInterest"
+import { useUpdateMyUserProfile } from "../../Hooks/useUpdateMyUserProfile"
 import { useInquiryContext } from "../../InquiryContext"
 import { flushPromiseQueue } from "v2/DevTools"
 
-jest.mock("../../useUpdateMyUserProfile")
+jest.mock("../../Hooks/useUpdateMyUserProfile")
 jest.mock("../../InquiryContext")
 
 describe("InquiryCommercialInterest", () => {

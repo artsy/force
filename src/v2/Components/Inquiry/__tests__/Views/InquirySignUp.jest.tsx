@@ -1,14 +1,14 @@
 import { mount } from "enzyme"
 import React from "react"
 import { flushPromiseQueue } from "v2/DevTools"
-import { InquirySignUp } from "../../views/InquirySignUp"
-import { useArtworkInquiryRequest } from "../../useArtworkInquiryRequest"
+import { InquirySignUp } from "../../Views/InquirySignUp"
+import { useArtworkInquiryRequest } from "../../Hooks/useArtworkInquiryRequest"
 import { signUp } from "v2/Utils/auth"
 import { useInquiryContext } from "../../InquiryContext"
 import { fill } from "../util"
 
 jest.mock("v2/Utils/auth")
-jest.mock("../../useArtworkInquiryRequest")
+jest.mock("../../Hooks/useArtworkInquiryRequest")
 jest.mock("../../InquiryContext")
 jest.mock("v2/Utils/wait", () => ({ wait: () => Promise.resolve() }))
 

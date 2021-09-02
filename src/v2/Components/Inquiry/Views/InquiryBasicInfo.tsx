@@ -23,7 +23,7 @@ import {
   Place,
 } from "v2/Components/LocationAutocompleteInput"
 import { useState } from "react"
-import { useUpdateMyUserProfile } from "../useUpdateMyUserProfile"
+import { useUpdateMyUserProfile } from "../Hooks/useUpdateMyUserProfile"
 import { compactObject, logger } from "../util"
 
 enum Mode {

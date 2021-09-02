@@ -5,7 +5,7 @@ import { createRelaySSREnvironment } from "v2/System/Relay/createRelaySSREnviron
 import { ReCaptchaContainer } from "v2/Utils/ReCaptchaContainer"
 import { wait } from "v2/Utils/wait"
 import { useInquiryContext } from "../InquiryContext"
-import { useArtworkInquiryRequest } from "../useArtworkInquiryRequest"
+import { useArtworkInquiryRequest } from "../Hooks/useArtworkInquiryRequest"
 import { signUp } from "v2/Utils/auth"
 import { logger } from "../util"
 
