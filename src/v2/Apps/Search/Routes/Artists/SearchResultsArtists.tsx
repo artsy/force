@@ -34,7 +34,7 @@ export class SearchResultsArtistsRoute extends React.Component<Props, State> {
     this.state = { isLoading: false, page: (page && parseInt(page, 10)) || 1 }
   }
 
-  toggleLoading = isLoading => {
+  toggleLoading = (isLoading): void => {
     this.setState(
       {
         isLoading,
@@ -43,7 +43,7 @@ export class SearchResultsArtistsRoute extends React.Component<Props, State> {
     )
   }
 
-  loadNext = () => {
+  loadNext = (): void => {
     const { viewer } = this.props
     const { searchConnection } = viewer
 
@@ -56,7 +56,7 @@ export class SearchResultsArtistsRoute extends React.Component<Props, State> {
     }
   }
 
-  getQueryParam = (paramName: string) => {
+  getQueryParam = (paramName: string): string => {
     const {
       match: { location },
     } = this.props
@@ -72,7 +72,7 @@ export class SearchResultsArtistsRoute extends React.Component<Props, State> {
     return artists
   }
 
-  loadPage = (page: number) => {
+  loadPage = (page: number): void => {
     this.toggleLoading(true)
 
     const term = this.getQueryParam("term")
