@@ -7,7 +7,7 @@ import { fill } from "../util"
 import { mount } from "enzyme"
 
 jest.unmock("react-relay")
-jest.mock("../../useUpdateCollectorProfile")
+jest.mock("../../Hooks/useUpdateCollectorProfile")
 jest.mock("../../InquiryContext")
 
 describe("InquiryBasicInfo", () => {

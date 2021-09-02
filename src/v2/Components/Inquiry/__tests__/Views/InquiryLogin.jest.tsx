@@ -8,7 +8,7 @@ import { useInquiryContext } from "../../InquiryContext"
 import { fill } from "../util"
 
 jest.mock("v2/Utils/auth")
-jest.mock("../../useArtworkInquiryRequest")
+jest.mock("../../Hooks/useArtworkInquiryRequest")
 jest.mock("../../InquiryContext")
 jest.mock("v2/Utils/wait", () => ({ wait: () => Promise.resolve() }))
 

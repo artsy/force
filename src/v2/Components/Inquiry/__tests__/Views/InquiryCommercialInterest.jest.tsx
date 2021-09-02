@@ -5,7 +5,7 @@ import { useUpdateMyUserProfile } from "../../Hooks/useUpdateMyUserProfile"
 import { useInquiryContext } from "../../InquiryContext"
 import { flushPromiseQueue } from "v2/DevTools"
 
-jest.mock("../../useUpdateMyUserProfile")
+jest.mock("../../Hooks/useUpdateMyUserProfile")
 jest.mock("../../InquiryContext")
 
 describe("InquiryCommercialInterest", () => {

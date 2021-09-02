@@ -7,7 +7,7 @@ import { graphql } from "relay-runtime"
 import { fill } from "../util"
 
 jest.unmock("react-relay")
-jest.mock("../../useUpdateMyUserProfile")
+jest.mock("../../Hooks/useUpdateMyUserProfile")
 jest.mock("../../InquiryContext")
 jest.mock("v2/Components/LocationAutocompleteInput", () => ({
   LocationAutocompleteInput: () => null,
