@@ -80,11 +80,24 @@ export const ArtistConsignButton: React.FC<ArtistConsignButtonProps> = ({
       </RouterLink>
 
       <Media greaterThanOrEqual="md">
-        <Button variant="secondaryGray">Get started</Button>
+        <Button
+          variant="secondaryGray"
+          // @ts-ignore
+          as={RouterLink}
+          to={consignURL}
+        >
+          Get started
+        </Button>
       </Media>
 
       <Media lessThan="md">
-        <Button variant="secondaryGray" size="small">
+        <Button
+          variant="secondaryGray"
+          size="small"
+          // @ts-ignore
+          as={RouterLink}
+          to={consignURL}
+        >
           Get started
         </Button>
       </Media>
