@@ -10268,7 +10268,7 @@ type Query {
   ): CreditCard
 
   # A namespace external partners (provided by Galaxy)
-  external: External
+  external: External!
 
   # A Fair
   fair(
@@ -12948,7 +12948,7 @@ type Viewer {
   ): CreditCard
 
   # A namespace external partners (provided by Galaxy)
-  external: External
+  external: External!
 
   # A Fair
   fair(
