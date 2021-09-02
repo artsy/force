@@ -2,7 +2,7 @@ import { Banner, Button, Text } from "@artsy/palette"
 import React from "react"
 import { useState } from "react"
 import { useInquiryContext } from "../InquiryContext"
-import { useUpdateMyUserProfile } from "../useUpdateMyUserProfile"
+import { useUpdateMyUserProfile } from "../Hooks/useUpdateMyUserProfile"
 import { logger } from "../util"
 
 enum Mode {

@@ -19,7 +19,7 @@ import { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { InquiryInquiry_artwork } from "v2/__generated__/InquiryInquiry_artwork.graphql"
 import { InquiryInquiryQuery } from "v2/__generated__/InquiryInquiryQuery.graphql"
-import { useArtworkInquiryRequest } from "../useArtworkInquiryRequest"
+import { useArtworkInquiryRequest } from "../Hooks/useArtworkInquiryRequest"
 import { wait } from "v2/Utils/wait"
 import {
   useInquiryContext,

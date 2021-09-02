@@ -1,6 +1,6 @@
 import React from "react"
 import { InquiryInstitutionalAffiliations } from "../../views/InquiryInstitutionalAffiliations"
-import { useUpdateCollectorProfile } from "../../useUpdateCollectorProfile"
+import { useUpdateCollectorProfile } from "../../Hooks/useUpdateCollectorProfile"
 import { useInquiryContext } from "../../InquiryContext"
 import { flushPromiseQueue } from "v2/DevTools"
 import { fill } from "../util"

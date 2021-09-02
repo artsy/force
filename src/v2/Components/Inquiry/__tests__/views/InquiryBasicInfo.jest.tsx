@@ -1,5 +1,5 @@
 import { InquiryBasicInfoFragmentContainer } from "../../views/InquiryBasicInfo"
-import { useUpdateMyUserProfile } from "../../useUpdateMyUserProfile"
+import { useUpdateMyUserProfile } from "../../Hooks/useUpdateMyUserProfile"
 import { useInquiryContext } from "../../InquiryContext"
 import { flushPromiseQueue } from "v2/DevTools"
 import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"

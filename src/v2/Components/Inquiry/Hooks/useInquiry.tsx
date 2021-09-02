@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { Inquiry } from "./Inquiry"
+import { Inquiry } from "../Inquiry"
 
 interface UseInquiry {
   artworkID: string

@@ -9,7 +9,7 @@ import {
 import React from "react"
 import { useState } from "react"
 import { useInquiryContext } from "../InquiryContext"
-import { useUpdateCollectorProfile } from "../useUpdateCollectorProfile"
+import { useUpdateCollectorProfile } from "../Hooks/useUpdateCollectorProfile"
 import { logger } from "../util"
 
 enum Mode {
