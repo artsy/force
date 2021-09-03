@@ -1,4 +1,4 @@
-import { Flex } from "@artsy/palette"
+import { Flex, Message } from "@artsy/palette"
 import {
   Error,
   Footer,
@@ -17,13 +17,15 @@ import QuickInput from "v2/Components/QuickInput"
 import { Formik, FormikProps, useFormikContext } from "formik"
 import React, { Component, useEffect, useState } from "react"
 import { recaptcha } from "v2/Utils/recaptcha"
+import { isOtpError } from "v2/Components/Authentication/helpers"
 
 interface ConditionalOtpInputProps {
   error: string
 }
 
 const ConditionalOtpInput: React.FC<ConditionalOtpInputProps> = props => {
-  const [show, setShow] = useState(false)
+  const [showOtpInput, setShowOtpInput] = useState(false)
+  const [showOtpOnDemandPrompt, setShowOtpOnDemandPrompt] = useState(false)
   const {
     errors,
     values,
@@ -31,14 +33,26 @@ const ConditionalOtpInput: React.FC<ConditionalOtpInputProps> = props => {
     handleChange,
     setTouched,
   } = useFormikContext<InputValues>()
+  const { error } = props
 
-  if (!show && props.error === "missing two-factor authentication code") {
-    setShow(true)
+  if (!showOtpInput) {
+    if (error === "missing two-factor authentication code") {
+      setShowOtpInput(true)
+    } else if (error === "missing on-demand authentication code") {
+      setShowOtpInput(true)
+      setShowOtpOnDemandPrompt(true)
+    }
   }
 
   return (
     <>
-      {show && (
+      {showOtpOnDemandPrompt && (
+        <Message>
+          This login requires additional authroization. Please check your email
+          for a one-time authentication code.
+        </Message>
+      )}
+      {showOtpInput && (
         <QuickInput
           block
           error={errors.otp_attempt}
@@ -112,12 +126,11 @@ export class LoginForm extends Component<FormProps, LoginFormState> {
               this.setState({ isLoading: false })
             }
 
-            if (globalError === "missing two-factor authentication code") {
+            if (isOtpError(globalError)) {
               this.setState({
                 otpRequired: true,
               })
             }
-
           }, [globalError, status])
 
           const handleChange = e => {
@@ -163,10 +176,9 @@ export class LoginForm extends Component<FormProps, LoginFormState> {
                   }
                 />
               </Flex>
-              {globalError &&
-                globalError !== "missing two-factor authentication code" && (
-                  <Error show>{globalError}</Error>
-                )}
+              {globalError && !isOtpError(globalError) && (
+                <Error show>{globalError}</Error>
+              )}
               <SubmitButton loading={isSubmitting || this.state.isLoading}>
                 Log in
               </SubmitButton>
