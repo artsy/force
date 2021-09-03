@@ -21,7 +21,7 @@ export const GeneFamily: React.FC<GeneFamilyProps> = props => {
   const isMobile = useMatchMedia(themeProps.mediaQueries.xs)
 
   return (
-    <Box>
+    <Box id={`jump--${geneFamily.slug}`}>
       <Text variant="xl">{name}</Text>
       <Spacer mt={4} />
       <ul style={{ columnCount: isMobile ? 1 : 3 }}>
