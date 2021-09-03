@@ -24,8 +24,8 @@ interface ConditionalOtpInputProps {
 }
 
 const ConditionalOtpInput: React.FC<ConditionalOtpInputProps> = props => {
-  const [showOtpInput, setShowOtpInput] = useState(false)
-  const [showOtpOnDemandPrompt, setShowOtpOnDemandPrompt] = useState(false)
+  const [showOtpInput, setShowOtpInput] = useState(true)
+  const [showOtpOnDemandPrompt, setShowOtpOnDemandPrompt] = useState(true)
   const {
     errors,
     values,
@@ -48,7 +48,7 @@ const ConditionalOtpInput: React.FC<ConditionalOtpInputProps> = props => {
     <>
       {showOtpOnDemandPrompt && (
         <Message>
-          This login requires additional authroization. Please check your email
+          This login requires additional authorization. Please check your email
           for a one-time authentication code.
         </Message>
       )}
