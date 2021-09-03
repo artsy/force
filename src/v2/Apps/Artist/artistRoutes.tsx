@@ -9,9 +9,6 @@ import { paramsToCamelCase } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
 import { initialAuctionResultsFilterState } from "./Routes/AuctionResults/AuctionResultsFilterContext"
 import { allowedAuctionResultFilters } from "./Utils/allowedAuctionResultFilters"
 
-const MIN_START_DATE = 0
-const MAX_END_DATE = 10000
-
 const ArtistApp = loadable(
   () => import(/* webpackChunkName: "artistBundle" */ "./ArtistApp"),
   {
@@ -156,11 +153,7 @@ export const artistRoutes: AppRouteConfig[] = [
 
           return {
             artistID,
-            ...initialAuctionResultsFilterState({
-              // Setting start date and end date here because Relay fails when we don't pass any values.
-              startDate: MIN_START_DATE,
-              endDate: MAX_END_DATE,
-            }),
+            ...initialAuctionResultsFilterState({}),
             ...allowedAuctionResultFilters(urlFilterState),
           }
         },

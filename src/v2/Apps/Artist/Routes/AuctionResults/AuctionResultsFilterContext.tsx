@@ -2,6 +2,9 @@ import React, { useContext, useReducer, useState } from "react"
 import { omit } from "lodash"
 import useDeepCompareEffect from "use-deep-compare-effect"
 
+const MIN_START_DATE = 0
+const MAX_END_DATE = 10000
+
 export interface AuctionResultsFilters {
   organizations?: string[]
   categories?: string[]
@@ -21,8 +24,8 @@ interface AuctionResultsFiltersState extends AuctionResultsFilters {
  * Initial filter state
  */
 export const initialAuctionResultsFilterState = ({
-  startDate = null,
-  endDate = null,
+  startDate = MIN_START_DATE,
+  endDate = MAX_END_DATE,
 }: {
   startDate?: number | null
   endDate?: number | null
