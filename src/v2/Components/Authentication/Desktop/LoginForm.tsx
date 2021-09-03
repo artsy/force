@@ -24,8 +24,8 @@ interface ConditionalOtpInputProps {
 }
 
 const ConditionalOtpInput: React.FC<ConditionalOtpInputProps> = props => {
-  const [showOtpInput, setShowOtpInput] = useState(true)
-  const [showOtpOnDemandPrompt, setShowOtpOnDemandPrompt] = useState(true)
+  const [showOtpInput, setShowOtpInput] = useState(false)
+  const [showOtpOnDemandPrompt, setShowOtpOnDemandPrompt] = useState(false)
   const {
     errors,
     values,
