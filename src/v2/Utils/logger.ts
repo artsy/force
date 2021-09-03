@@ -1,6 +1,6 @@
 import { sendErrorToService } from "v2/Utils/errors"
 
-export const shouldCaptureError = (environment: string = "development") =>
+export const shouldCaptureError = (environment: string) =>
   environment === "staging" || environment === "production"
 
 export default function createLogger(namespace = "") {
@@ -17,6 +17,7 @@ export default function createLogger(namespace = "") {
     error: (...errors) => {
       const error = errors.find(e => e instanceof Error)
 
+      // @ts-expect-error STRICT_NULL_CHECK
       if (error && shouldCaptureError(process.env.NODE_ENV)) {
         sendErrorToService(error)
       }
