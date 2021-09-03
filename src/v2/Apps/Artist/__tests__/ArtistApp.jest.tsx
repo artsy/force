@@ -44,7 +44,7 @@ describe("ArtistApp", () => {
       expect(wrapper.find("RouteTabs").length).toBe(1)
       expect(wrapper.find("RouteTab").at(0).text()).toBe("Overview")
       expect(wrapper.find("RouteTab").at(1).text()).toBe("Artworks")
-      expect(wrapper.find("RouteTab").at(2).text()).toBe("Auction results")
+      expect(wrapper.find("RouteTab").at(2).text()).toBe("Auction Results")
     })
 
     it("tabs navigate to the correct urls", () => {
@@ -80,7 +80,7 @@ describe("ArtistApp", () => {
           }),
         })
         expect(wrapper.find("RouteTab").at(0).text()).toBe("Artworks")
-        expect(wrapper.find("RouteTab").at(1).text()).toBe("Auction results")
+        expect(wrapper.find("RouteTab").at(1).text()).toBe("Auction Results")
       })
 
       it("hides works-for-sale tab when appropriate", () => {
@@ -93,7 +93,7 @@ describe("ArtistApp", () => {
           }),
         })
         expect(wrapper.find("RouteTab").at(0).text()).toBe("Overview")
-        expect(wrapper.find("RouteTab").at(1).text()).toBe("Auction results")
+        expect(wrapper.find("RouteTab").at(1).text()).toBe("Auction Results")
       })
 
       it("hides auction results tab when appropriate", () => {
