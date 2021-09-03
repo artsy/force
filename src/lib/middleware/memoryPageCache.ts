@@ -9,18 +9,14 @@ import {
   MEMORY_PAGE_CACHE_TTL_MINUTES,
   MEMORY_PAGE_CACHE_LIMIT,
 } from "../../config"
-import {
-  attachResponseHandler,
-  attachResponseRecorder,
-} from "./pageCacheCommon"
 
-const debugLog = util.debuglog("memoryCache")
+const debugLog = util.debuglog("cache")
 
 const ENABLED_AB_TESTS = Object.keys(
   require("desktop/components/split_test/running_tests.coffee")
 ).sort()
 
-const memoryCache = new MemoryCache({
+const memCache = new MemoryCache({
   maxKeys: MEMORY_PAGE_CACHE_LIMIT,
   stdTTL: MEMORY_PAGE_CACHE_TTL_MINUTES,
 })
@@ -64,17 +60,35 @@ export function memoryPageCacheMiddleware(
   // originalUrl includes the request parameters.
   // http://expressjs.com/en/api.html#req.originalUrl
   const cacheKey = `${abTestPrefix},${req.originalUrl}`
-  const cachedRes = memoryCache.has(cacheKey)
-    ? memoryCache.get<Buffer>(cacheKey)
+  const cachedRes = memCache.has(cacheKey)
+    ? memCache.get<Buffer>(cacheKey)
     : undefined
 
   let sentCachedResponse = false
+  const chunks: Buffer[] = []
   if (!cachedRes) {
-    attachResponseRecorder(res)
+    const defaultWrite = res.write
+    const defaultEnd = res.end
+
+    // @ts-ignore
+    res.write = (...restArgs) => {
+      if (restArgs[0]) {
+        chunks.push(new Buffer(restArgs[0]))
+      }
+      defaultWrite.apply(res, restArgs)
+    }
+
+    // @ts-ignore
+    res.end = (...restArgs) => {
+      if (restArgs.length > 1 && restArgs[0]) {
+        chunks.push(new Buffer(restArgs[0]))
+      }
+      defaultEnd.apply(res, restArgs)
+    }
   }
 
   // Register callback to write rendered page data to cache.
-  attachResponseHandler(res, (body, res) => {
+  res.once("finish", () => {
     if (res._headers["content-type"] !== "text/html; charset=utf-8") {
       return
     }
@@ -84,20 +98,21 @@ export function memoryPageCacheMiddleware(
 
     if (!sentCachedResponse) {
       debugLog(`[Mem Cache]: Writing to cache ${cacheKey}`)
-      memoryCache.set(cacheKey, body)
-      memoryCache.logStats()
+      const body = Buffer.concat(chunks)
+      memCache.set(cacheKey, body)
+      memCache.logStats()
     } else {
       debugLog(`[Mem Cache]: Refreshing cache ${cacheKey}`)
-      memoryCache.refresh(cacheKey)
+      memCache.refresh(cacheKey)
     }
   })
 
   if (cachedRes) {
     debugLog(`[Mem Cache]: Reading from cache ${cacheKey}`)
     sentCachedResponse = true
-    setTimingHeader(res, "memoryCacheHit")
+    setTimingHeader(res, "cacheHit")
     return res.send(cachedRes.toString("utf-8"))
   }
-  setTimingHeader(res, "memoryCacheMiss")
+  setTimingHeader(res, "cacheMiss")
   next()
 }
