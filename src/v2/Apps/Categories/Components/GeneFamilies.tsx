@@ -16,7 +16,12 @@ const GeneFamilies: React.FC<GeneFamiliesProps> = props => {
   return (
     <Box>
       {geneFamilies.map(geneFamily => {
-        return <GeneFamilyFragmentContainer geneFamily={geneFamily} />
+        return (
+          <GeneFamilyFragmentContainer
+            geneFamily={geneFamily}
+            key={geneFamily.internalID}
+          />
+        )
       })}
     </Box>
   )
@@ -29,6 +34,7 @@ export const GeneFamiliesFragmentContainer = createFragmentContainer(
       fragment GeneFamilies_geneFamiliesConnection on GeneFamilyConnection {
         edges {
           node {
+            internalID
             ...GeneFamily_geneFamily
           }
         }

@@ -2,14 +2,11 @@
 /* eslint-disable */
 
 import { ConcreteRequest } from "relay-runtime";
+import { FragmentRefs } from "relay-runtime";
 export type CategoriesApp_Test_QueryVariables = {};
 export type CategoriesApp_Test_QueryResponse = {
     readonly geneFamiliesConnection: {
-        readonly edges: ReadonlyArray<{
-            readonly node: {
-                readonly id: string;
-            } | null;
-        } | null> | null;
+        readonly " $fragmentRefs": FragmentRefs<"CategoriesApp_geneFamiliesConnection">;
     } | null;
 };
 export type CategoriesApp_Test_Query = {
@@ -22,10 +19,39 @@ export type CategoriesApp_Test_Query = {
 /*
 query CategoriesApp_Test_Query {
   geneFamiliesConnection(first: 20) {
-    edges {
-      node {
-        id
-      }
+    ...CategoriesApp_geneFamiliesConnection
+  }
+}
+
+fragment CategoriesApp_geneFamiliesConnection on GeneFamilyConnection {
+  ...GeneFamilies_geneFamiliesConnection
+}
+
+fragment GeneFamilies_geneFamiliesConnection on GeneFamilyConnection {
+  edges {
+    node {
+      internalID
+      ...GeneFamily_geneFamily
+      id
+    }
+  }
+}
+
+fragment GeneFamily_geneFamily on GeneFamily {
+  id
+  slug
+  name
+  genes {
+    id
+    displayName
+    name
+    slug
+  }
+  featuredGeneLinks {
+    href
+    title
+    image {
+      url(version: "large_rectangle")
     }
   }
 }
@@ -34,59 +60,56 @@ query CategoriesApp_Test_Query {
 const node: ConcreteRequest = (function(){
 var v0 = [
   {
-    "alias": null,
-    "args": [
-      {
-        "kind": "Literal",
-        "name": "first",
-        "value": 20
-      }
-    ],
-    "concreteType": "GeneFamilyConnection",
-    "kind": "LinkedField",
-    "name": "geneFamiliesConnection",
-    "plural": false,
-    "selections": [
-      {
-        "alias": null,
-        "args": null,
-        "concreteType": "GeneFamilyEdge",
-        "kind": "LinkedField",
-        "name": "edges",
-        "plural": true,
-        "selections": [
-          {
-            "alias": null,
-            "args": null,
-            "concreteType": "GeneFamily",
-            "kind": "LinkedField",
-            "name": "node",
-            "plural": false,
-            "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "id",
-                "storageKey": null
-              }
-            ],
-            "storageKey": null
-          }
-        ],
-        "storageKey": null
-      }
-    ],
-    "storageKey": "geneFamiliesConnection(first:20)"
+    "kind": "Literal",
+    "name": "first",
+    "value": 20
   }
-];
+],
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+},
+v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "slug",
+  "storageKey": null
+},
+v3 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "name",
+  "storageKey": null
+};
 return {
   "fragment": {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
     "name": "CategoriesApp_Test_Query",
-    "selections": (v0/*: any*/),
+    "selections": [
+      {
+        "alias": null,
+        "args": (v0/*: any*/),
+        "concreteType": "GeneFamilyConnection",
+        "kind": "LinkedField",
+        "name": "geneFamiliesConnection",
+        "plural": false,
+        "selections": [
+          {
+            "args": null,
+            "kind": "FragmentSpread",
+            "name": "CategoriesApp_geneFamiliesConnection"
+          }
+        ],
+        "storageKey": "geneFamiliesConnection(first:20)"
+      }
+    ],
     "type": "Query"
   },
   "kind": "Request",
@@ -94,16 +117,130 @@ return {
     "argumentDefinitions": [],
     "kind": "Operation",
     "name": "CategoriesApp_Test_Query",
-    "selections": (v0/*: any*/)
+    "selections": [
+      {
+        "alias": null,
+        "args": (v0/*: any*/),
+        "concreteType": "GeneFamilyConnection",
+        "kind": "LinkedField",
+        "name": "geneFamiliesConnection",
+        "plural": false,
+        "selections": [
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "GeneFamilyEdge",
+            "kind": "LinkedField",
+            "name": "edges",
+            "plural": true,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "GeneFamily",
+                "kind": "LinkedField",
+                "name": "node",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "internalID",
+                    "storageKey": null
+                  },
+                  (v1/*: any*/),
+                  (v2/*: any*/),
+                  (v3/*: any*/),
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "Gene",
+                    "kind": "LinkedField",
+                    "name": "genes",
+                    "plural": true,
+                    "selections": [
+                      (v1/*: any*/),
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "displayName",
+                        "storageKey": null
+                      },
+                      (v3/*: any*/),
+                      (v2/*: any*/)
+                    ],
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "FeaturedGeneLink",
+                    "kind": "LinkedField",
+                    "name": "featuredGeneLinks",
+                    "plural": true,
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "href",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "title",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": "Image",
+                        "kind": "LinkedField",
+                        "name": "image",
+                        "plural": false,
+                        "selections": [
+                          {
+                            "alias": null,
+                            "args": [
+                              {
+                                "kind": "Literal",
+                                "name": "version",
+                                "value": "large_rectangle"
+                              }
+                            ],
+                            "kind": "ScalarField",
+                            "name": "url",
+                            "storageKey": "url(version:\"large_rectangle\")"
+                          }
+                        ],
+                        "storageKey": null
+                      }
+                    ],
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
+          }
+        ],
+        "storageKey": "geneFamiliesConnection(first:20)"
+      }
+    ]
   },
   "params": {
     "id": null,
     "metadata": {},
     "name": "CategoriesApp_Test_Query",
     "operationKind": "query",
-    "text": "query CategoriesApp_Test_Query {\n  geneFamiliesConnection(first: 20) {\n    edges {\n      node {\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query CategoriesApp_Test_Query {\n  geneFamiliesConnection(first: 20) {\n    ...CategoriesApp_geneFamiliesConnection\n  }\n}\n\nfragment CategoriesApp_geneFamiliesConnection on GeneFamilyConnection {\n  ...GeneFamilies_geneFamiliesConnection\n}\n\nfragment GeneFamilies_geneFamiliesConnection on GeneFamilyConnection {\n  edges {\n    node {\n      internalID\n      ...GeneFamily_geneFamily\n      id\n    }\n  }\n}\n\nfragment GeneFamily_geneFamily on GeneFamily {\n  id\n  slug\n  name\n  genes {\n    id\n    displayName\n    name\n    slug\n  }\n  featuredGeneLinks {\n    href\n    title\n    image {\n      url(version: \"large_rectangle\")\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '57bfdadf488bd187845723b311ccccd0';
+(node as any).hash = '4f7c4472ca1fb6b197c14859b61fef5e';
 export default node;

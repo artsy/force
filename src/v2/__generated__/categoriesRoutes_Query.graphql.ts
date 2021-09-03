@@ -30,6 +30,7 @@ fragment CategoriesApp_geneFamiliesConnection on GeneFamilyConnection {
 fragment GeneFamilies_geneFamiliesConnection on GeneFamilyConnection {
   edges {
     node {
+      internalID
       ...GeneFamily_geneFamily
       id
     }
@@ -141,6 +142,13 @@ return {
                 "name": "node",
                 "plural": false,
                 "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "internalID",
+                    "storageKey": null
+                  },
                   (v1/*: any*/),
                   (v2/*: any*/),
                   (v3/*: any*/),
@@ -230,7 +238,7 @@ return {
     "metadata": {},
     "name": "categoriesRoutes_Query",
     "operationKind": "query",
-    "text": "query categoriesRoutes_Query {\n  geneFamiliesConnection(first: 20) {\n    ...CategoriesApp_geneFamiliesConnection\n  }\n}\n\nfragment CategoriesApp_geneFamiliesConnection on GeneFamilyConnection {\n  ...GeneFamilies_geneFamiliesConnection\n}\n\nfragment GeneFamilies_geneFamiliesConnection on GeneFamilyConnection {\n  edges {\n    node {\n      ...GeneFamily_geneFamily\n      id\n    }\n  }\n}\n\nfragment GeneFamily_geneFamily on GeneFamily {\n  id\n  slug\n  name\n  genes {\n    id\n    displayName\n    name\n    slug\n  }\n  featuredGeneLinks {\n    href\n    title\n    image {\n      url(version: \"large_rectangle\")\n    }\n  }\n}\n"
+    "text": "query categoriesRoutes_Query {\n  geneFamiliesConnection(first: 20) {\n    ...CategoriesApp_geneFamiliesConnection\n  }\n}\n\nfragment CategoriesApp_geneFamiliesConnection on GeneFamilyConnection {\n  ...GeneFamilies_geneFamiliesConnection\n}\n\nfragment GeneFamilies_geneFamiliesConnection on GeneFamilyConnection {\n  edges {\n    node {\n      internalID\n      ...GeneFamily_geneFamily\n      id\n    }\n  }\n}\n\nfragment GeneFamily_geneFamily on GeneFamily {\n  id\n  slug\n  name\n  genes {\n    id\n    displayName\n    name\n    slug\n  }\n  featuredGeneLinks {\n    href\n    title\n    image {\n      url(version: \"large_rectangle\")\n    }\n  }\n}\n"
   }
 };
 })();

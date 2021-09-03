@@ -6,6 +6,7 @@ import { FragmentRefs } from "relay-runtime";
 export type GeneFamilies_geneFamiliesConnection = {
     readonly edges: ReadonlyArray<{
         readonly node: {
+            readonly internalID: string;
             readonly " $fragmentRefs": FragmentRefs<"GeneFamily_geneFamily">;
         } | null;
     } | null> | null;
@@ -42,6 +43,13 @@ const node: ReaderFragment = {
           "plural": false,
           "selections": [
             {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "internalID",
+              "storageKey": null
+            },
+            {
               "args": null,
               "kind": "FragmentSpread",
               "name": "GeneFamily_geneFamily"
@@ -55,5 +63,5 @@ const node: ReaderFragment = {
   ],
   "type": "GeneFamilyConnection"
 };
-(node as any).hash = '9d5bcc19e33508cae3ba90522dacdabc';
+(node as any).hash = 'e0ccdba54d71b0f741fda4cafebf4445';
 export default node;
