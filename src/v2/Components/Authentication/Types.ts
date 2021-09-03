@@ -12,7 +12,6 @@ export interface InputValues {
   email?: string
   password?: string
   otp_attempt?: string
-  otpRequired?: boolean
   accepted_terms_of_service?: boolean
   agreed_to_receive_emails?: boolean
 }

@@ -78,6 +78,10 @@ export interface LoginFormState {
   otpRequired: boolean
 }
 
+interface SubmitValues extends InputValues {
+  otpRequired: boolean
+}
+
 export class LoginForm extends Component<FormProps, LoginFormState> {
   state = {
     error: this.props.error,
@@ -94,8 +98,11 @@ export class LoginForm extends Component<FormProps, LoginFormState> {
         isLoading: true,
       },
       () => {
-        values.otpRequired = this.state.otpRequired
-        this.props.handleSubmit?.(values, formikBag)
+        const submitValues: SubmitValues = {
+          ...values,
+          otpRequired: this.state.otpRequired,
+        }
+        this.props.handleSubmit?.(submitValues, formikBag)
       }
     )
   }
