@@ -20,7 +20,7 @@ export const FairExhibitorsGroup: React.FC<FairExhibitorsGroupProps> = ({
 
         return (
           <Column key={exhibitor.partner.internalID} span={[12, 3]}>
-            <FairExhibitorCard partner={exhibitor.partner} />
+            <FairExhibitorCard exhibitor={exhibitor} />
           </Column>
         )
       })}
@@ -36,8 +36,8 @@ export const FairExhibitorsGroupFragmentContainer = createFragmentContainer(
         exhibitors {
           partner {
             internalID
-            ...FairExhibitorCard_partner
           }
+          ...FairExhibitorCard_exhibitor
         }
       }
     `,
