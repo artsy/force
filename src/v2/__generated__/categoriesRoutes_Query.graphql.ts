@@ -24,6 +24,7 @@ query categoriesRoutes_Query {
 }
 
 fragment CategoriesApp_geneFamiliesConnection on GeneFamilyConnection {
+  ...StickyNav_geneFamiliesConnection
   ...GeneFamilies_geneFamiliesConnection
 }
 
@@ -38,20 +39,36 @@ fragment GeneFamilies_geneFamiliesConnection on GeneFamilyConnection {
 }
 
 fragment GeneFamily_geneFamily on GeneFamily {
-  id
-  slug
-  name
-  genes {
-    id
-    displayName
-    name
-    slug
-  }
   featuredGeneLinks {
     href
     title
     image {
+      resized(height: 400) {
+        src
+        srcSet
+      }
       url(version: "large_rectangle")
+    }
+  }
+  genes {
+    displayName
+    href
+    id
+    name
+    slug
+  }
+  id
+  name
+  slug
+}
+
+fragment StickyNav_geneFamiliesConnection on GeneFamilyConnection {
+  edges {
+    node {
+      internalID
+      slug
+      name
+      id
     }
   }
 }
@@ -69,21 +86,28 @@ v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "id",
+  "name": "slug",
   "storageKey": null
 },
 v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "slug",
+  "name": "name",
   "storageKey": null
 },
 v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "name",
+  "name": "id",
+  "storageKey": null
+},
+v4 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "href",
   "storageKey": null
 };
 return {
@@ -155,39 +179,12 @@ return {
                   {
                     "alias": null,
                     "args": null,
-                    "concreteType": "Gene",
-                    "kind": "LinkedField",
-                    "name": "genes",
-                    "plural": true,
-                    "selections": [
-                      (v1/*: any*/),
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "displayName",
-                        "storageKey": null
-                      },
-                      (v3/*: any*/),
-                      (v2/*: any*/)
-                    ],
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
                     "concreteType": "FeaturedGeneLink",
                     "kind": "LinkedField",
                     "name": "featuredGeneLinks",
                     "plural": true,
                     "selections": [
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "href",
-                        "storageKey": null
-                      },
+                      (v4/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -208,6 +205,37 @@ return {
                             "args": [
                               {
                                 "kind": "Literal",
+                                "name": "height",
+                                "value": 400
+                              }
+                            ],
+                            "concreteType": "ResizedImageUrl",
+                            "kind": "LinkedField",
+                            "name": "resized",
+                            "plural": false,
+                            "selections": [
+                              {
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "src",
+                                "storageKey": null
+                              },
+                              {
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "srcSet",
+                                "storageKey": null
+                              }
+                            ],
+                            "storageKey": "resized(height:400)"
+                          },
+                          {
+                            "alias": null,
+                            "args": [
+                              {
+                                "kind": "Literal",
                                 "name": "version",
                                 "value": "large_rectangle"
                               }
@@ -219,6 +247,28 @@ return {
                         ],
                         "storageKey": null
                       }
+                    ],
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "Gene",
+                    "kind": "LinkedField",
+                    "name": "genes",
+                    "plural": true,
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "displayName",
+                        "storageKey": null
+                      },
+                      (v4/*: any*/),
+                      (v3/*: any*/),
+                      (v2/*: any*/),
+                      (v1/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -238,7 +288,7 @@ return {
     "metadata": {},
     "name": "categoriesRoutes_Query",
     "operationKind": "query",
-    "text": "query categoriesRoutes_Query {\n  geneFamiliesConnection(first: 20) {\n    ...CategoriesApp_geneFamiliesConnection\n  }\n}\n\nfragment CategoriesApp_geneFamiliesConnection on GeneFamilyConnection {\n  ...GeneFamilies_geneFamiliesConnection\n}\n\nfragment GeneFamilies_geneFamiliesConnection on GeneFamilyConnection {\n  edges {\n    node {\n      internalID\n      ...GeneFamily_geneFamily\n      id\n    }\n  }\n}\n\nfragment GeneFamily_geneFamily on GeneFamily {\n  id\n  slug\n  name\n  genes {\n    id\n    displayName\n    name\n    slug\n  }\n  featuredGeneLinks {\n    href\n    title\n    image {\n      url(version: \"large_rectangle\")\n    }\n  }\n}\n"
+    "text": "query categoriesRoutes_Query {\n  geneFamiliesConnection(first: 20) {\n    ...CategoriesApp_geneFamiliesConnection\n  }\n}\n\nfragment CategoriesApp_geneFamiliesConnection on GeneFamilyConnection {\n  ...StickyNav_geneFamiliesConnection\n  ...GeneFamilies_geneFamiliesConnection\n}\n\nfragment GeneFamilies_geneFamiliesConnection on GeneFamilyConnection {\n  edges {\n    node {\n      internalID\n      ...GeneFamily_geneFamily\n      id\n    }\n  }\n}\n\nfragment GeneFamily_geneFamily on GeneFamily {\n  featuredGeneLinks {\n    href\n    title\n    image {\n      resized(height: 400) {\n        src\n        srcSet\n      }\n      url(version: \"large_rectangle\")\n    }\n  }\n  genes {\n    displayName\n    href\n    id\n    name\n    slug\n  }\n  id\n  name\n  slug\n}\n\nfragment StickyNav_geneFamiliesConnection on GeneFamilyConnection {\n  edges {\n    node {\n      internalID\n      slug\n      name\n      id\n    }\n  }\n}\n"
   }
 };
 })();

@@ -4,7 +4,7 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type CategoriesApp_geneFamiliesConnection = {
-    readonly " $fragmentRefs": FragmentRefs<"GeneFamilies_geneFamiliesConnection">;
+    readonly " $fragmentRefs": FragmentRefs<"StickyNav_geneFamiliesConnection" | "GeneFamilies_geneFamiliesConnection">;
     readonly " $refType": "CategoriesApp_geneFamiliesConnection";
 };
 export type CategoriesApp_geneFamiliesConnection$data = CategoriesApp_geneFamiliesConnection;
@@ -24,10 +24,15 @@ const node: ReaderFragment = {
     {
       "args": null,
       "kind": "FragmentSpread",
+      "name": "StickyNav_geneFamiliesConnection"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
       "name": "GeneFamilies_geneFamiliesConnection"
     }
   ],
   "type": "GeneFamilyConnection"
 };
-(node as any).hash = 'dcd162e82c321631ed6beadf26916f9f';
+(node as any).hash = '855564f4196c746eaf076bb5a27d9fa5';
 export default node;
