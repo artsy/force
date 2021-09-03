@@ -7,8 +7,8 @@ export type FairExhibitorsGroup_exhibitorsGroup = {
     readonly exhibitors: ReadonlyArray<{
         readonly partner: {
             readonly internalID: string;
-            readonly " $fragmentRefs": FragmentRefs<"FairExhibitorCard_partner">;
         } | null;
+        readonly " $fragmentRefs": FragmentRefs<"FairExhibitorCard_exhibitor">;
     } | null> | null;
     readonly " $refType": "FairExhibitorsGroup_exhibitorsGroup";
 };
@@ -48,14 +48,14 @@ const node: ReaderFragment = {
               "kind": "ScalarField",
               "name": "internalID",
               "storageKey": null
-            },
-            {
-              "args": null,
-              "kind": "FragmentSpread",
-              "name": "FairExhibitorCard_partner"
             }
           ],
           "storageKey": null
+        },
+        {
+          "args": null,
+          "kind": "FragmentSpread",
+          "name": "FairExhibitorCard_exhibitor"
         }
       ],
       "storageKey": null
@@ -63,5 +63,5 @@ const node: ReaderFragment = {
   ],
   "type": "FairExhibitorsGroup"
 };
-(node as any).hash = 'cd02f228e39d69a2aa23a13a45a5e03b';
+(node as any).hash = '364e3f278ff335323a71c21126d351da';
 export default node;

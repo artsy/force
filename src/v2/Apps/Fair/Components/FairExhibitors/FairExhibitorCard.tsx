@@ -9,20 +9,20 @@ import {
   OwnerType,
   PageOwnerType,
 } from "@artsy/cohesion"
-import { FairExhibitorCard_partner } from "v2/__generated__/FairExhibitorCard_partner.graphql"
+import { FairExhibitorCard_exhibitor } from "v2/__generated__/FairExhibitorCard_exhibitor.graphql"
 import { FollowProfileButtonFragmentContainer as FollowProfileButton } from "v2/Components/FollowButton/FollowProfileButton"
 import { RouterLink } from "v2/System/Router/RouterLink"
 
 interface FairExhibitorCardProps {
-  partner: FairExhibitorCard_partner
+  exhibitor: FairExhibitorCard_exhibitor
 }
 
 const VISIBLE_CITIES_NUM = 2
 
 export const FairExhibitorCard: React.FC<FairExhibitorCardProps> = ({
-  partner,
+  exhibitor,
 }) => {
-  const { name, profile, cities } = partner
+  const { name, profile, cities, slug, internalID } = exhibitor.partner!
   const { user } = useSystemContext()
   const tracking = useTracking()
   const {
@@ -37,8 +37,8 @@ export const FairExhibitorCard: React.FC<FairExhibitorCardProps> = ({
     context_page_owner_id: contextPageOwnerId,
     context_page_owner_slug: contextPageOwnerSlug,
     destination_page_owner_type: OwnerType.fair,
-    destination_page_owner_id: partner.internalID,
-    destination_page_owner_slug: partner.slug,
+    destination_page_owner_id: internalID,
+    destination_page_owner_slug: slug,
     type: "thumbnail",
     action: ActionType.clickedPartnerCard,
   }
@@ -55,7 +55,7 @@ export const FairExhibitorCard: React.FC<FairExhibitorCardProps> = ({
 
   return (
     <RouterLink
-      to={partner.href}
+      to={`/show/${exhibitor.profileID}`}
       noUnderline
       onClick={() => tracking.trackEvent(tappedPartnerTrackingData)}
     >
@@ -82,10 +82,10 @@ export const FairExhibitorCard: React.FC<FairExhibitorCardProps> = ({
             </Text>
           ) : null}
         </Box>
-        {partner.profile && (
+        {profile && (
           <Box order={2} ml="auto">
             <FollowProfileButton
-              profile={partner.profile}
+              profile={profile}
               user={user}
               contextModule={ContextModule.partnerHeader}
               buttonProps={{
@@ -105,19 +105,21 @@ export const FairExhibitorCard: React.FC<FairExhibitorCardProps> = ({
 export const FairExhibitorCardFragmentContainer = createFragmentContainer(
   FairExhibitorCard,
   {
-    partner: graphql`
-      fragment FairExhibitorCard_partner on Partner {
-        name
-        href
-        internalID
-        slug
-        cities
-        profile {
-          ...FollowProfileButton_profile
-          icon {
-            cropped(width: 50, height: 50) {
-              src
-              srcSet
+    exhibitor: graphql`
+      fragment FairExhibitorCard_exhibitor on FairExhibitor {
+        profileID
+        partner {
+          name
+          internalID
+          slug
+          cities
+          profile {
+            ...FollowProfileButton_profile
+            icon {
+              cropped(width: 50, height: 50) {
+                src
+                srcSet
+              }
             }
           }
         }
