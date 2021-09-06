@@ -27,6 +27,19 @@ const HomeFeaturedEventsRail: React.FC<HomeFeaturedEventsRailProps> = ({
     4
   )
 
+  const getHref = (initHref?: string | null): string => {
+    let href = ""
+
+    if (initHref?.includes("/fair/")) {
+      href = initHref
+        .split("/")
+        .filter(part => part !== "booths")
+        .join("/")
+    }
+
+    return href
+  }
+
   if (events.length === 0) return null
 
   return (
@@ -34,10 +47,12 @@ const HomeFeaturedEventsRail: React.FC<HomeFeaturedEventsRailProps> = ({
       {events.map((event, i) => {
         const image = event.image?.cropped
 
+        const href = getHref(event.href)
+
         return (
           <Column key={event.internalID ?? i} span={3}>
             <RouterLink
-              to={event.href ?? ""}
+              to={href}
               style={{ display: "block", textDecoration: "none" }}
             >
               <Flex alignItems="center">
