@@ -11,7 +11,7 @@ export type InquiryGalleriesYouWorkWithQueryResponse = {
             readonly internalID: string;
             readonly name: string;
         }>;
-    };
+    } | null;
 };
 export type InquiryGalleriesYouWorkWithQuery = {
     readonly response: InquiryGalleriesYouWorkWithQueryResponse;

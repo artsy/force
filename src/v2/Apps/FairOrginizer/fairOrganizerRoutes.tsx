@@ -61,7 +61,11 @@ export const fairOrganizerRoutes: AppRouteConfig[] = [
           profile {
             __typename
           }
-          runningFairs: fairsConnection(first: 1, status: RUNNING, sort: START_AT_DESC) {
+          runningFairs: fairsConnection(
+            first: 1
+            status: RUNNING
+            sort: START_AT_DESC
+          ) {
             edges {
               node {
                 href

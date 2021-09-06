@@ -11,7 +11,7 @@ export type InquiryFairsYouAttendQueryResponse = {
             readonly internalID: string;
             readonly name: string;
         }>;
-    };
+    } | null;
 };
 export type InquiryFairsYouAttendQuery = {
     readonly response: InquiryFairsYouAttendQueryResponse;

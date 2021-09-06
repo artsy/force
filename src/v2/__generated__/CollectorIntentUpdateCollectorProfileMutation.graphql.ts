@@ -4,7 +4,7 @@
 import { ConcreteRequest } from "relay-runtime";
 export type Intents = "BUY_ART_AND_DESIGN" | "FIND_ART_EXHIBITS" | "LEARN_ABOUT_ART" | "READ_ART_MARKET_NEWS" | "RESEARCH_ART_PRICES" | "SELL_ART_AND_DESIGN" | "%future added value";
 export type UpdateCollectorProfileInput = {
-    affiliatedAuctionHouseIds?: Array<string | null> | null;
+    affiliatedAuctionIds?: Array<string | null> | null;
     affiliatedFairIds?: Array<string | null> | null;
     affiliatedGalleryIds?: Array<string | null> | null;
     clientMutationId?: string | null;
