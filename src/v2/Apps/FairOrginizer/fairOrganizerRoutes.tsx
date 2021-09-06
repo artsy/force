@@ -47,7 +47,7 @@ export const fairOrganizerRoutes: AppRouteConfig[] = [
         }
 
         const activeFair = extractNodes(runningFairs)[0]
-        if (activeFair?.href) {
+        if (activeFair?.profile && activeFair?.href) {
           throw new RedirectException(activeFair.href, 302)
         }
 
@@ -68,6 +68,9 @@ export const fairOrganizerRoutes: AppRouteConfig[] = [
             edges {
               node {
                 href
+                profile {
+                  __typename
+                }
               }
             }
           }
