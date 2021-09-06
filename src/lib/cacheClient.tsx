@@ -1,6 +1,5 @@
 import createLogger from "v2/Utils/logger"
 import { cache as artsyCache } from "./cache"
-
 interface RedisCache {
   get: (key: string) => Promise<string>
   set: (
