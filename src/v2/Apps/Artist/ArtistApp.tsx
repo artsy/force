@@ -69,7 +69,7 @@ const ArtistApp: React.FC<ArtistAppProps> = ({ artist, children, match }) => {
 
         {showAuctionLotsTab && (
           <RouteTab to={`/artist/${artist.slug}/auction-results`}>
-            Auction results
+            Auction Results
           </RouteTab>
         )}
       </RouteTabs>
