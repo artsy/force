@@ -1,8 +1,11 @@
 import React from "react"
+import { DateTime } from "luxon"
 import loadable from "@loadable/component"
 import { graphql } from "react-relay"
 import { ErrorPage } from "v2/Components/ErrorPage"
 import { AppRouteConfig } from "v2/System/Router/Route"
+import { RedirectException } from "found"
+import { extractNodes } from "v2/Utils/extractNodes"
 
 const FairOrganizerApp = loadable(
   () =>
@@ -34,10 +37,26 @@ export const fairOrganizerRoutes: AppRouteConfig[] = [
     render: ({ Component, props }) => {
       if (Component && props) {
         const { fairOrganizer } = props as any
-        const { profile } = fairOrganizer
+        const { profile, fairsConnection } = fairOrganizer
+
         if (!profile) {
           return <ErrorPage code={404} />
         }
+
+        const fair = extractNodes(fairsConnection)[0]
+        if (fair) {
+          const { startAt, endAt, href } = fair as any
+          const currentTime = DateTime.fromJSDate(new Date())
+          const startTime = DateTime.fromISO(startAt!)
+          const endTime = DateTime.fromISO(endAt!)
+
+          const isFairActive = currentTime >= startTime && currentTime < endTime
+
+          if (isFairActive) {
+            throw new RedirectException(href, 302)
+          }
+        }
+
         return <Component {...props} />
       }
     },
@@ -46,6 +65,15 @@ export const fairOrganizerRoutes: AppRouteConfig[] = [
         fairOrganizer(id: $slug) @principalField {
           profile {
             __typename
+          }
+          fairsConnection(first: 1, sort: START_AT_DESC) {
+            edges {
+              node {
+                startAt
+                endAt
+                href
+              }
+            }
           }
           ...FairOrganizerApp_fairOrganizer
         }
