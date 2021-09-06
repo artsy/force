@@ -11,7 +11,7 @@ export type InquiryAuctionHousesYouWorkWithQueryResponse = {
             readonly internalID: string;
             readonly name: string;
         }>;
-    } | null;
+    };
 };
 export type InquiryAuctionHousesYouWorkWithQuery = {
     readonly response: InquiryAuctionHousesYouWorkWithQueryResponse;
