@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react"
+import React, { useContext, useState, useEffect } from "react"
 import {
   Box,
   Column,
@@ -66,6 +66,19 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
   const { pageInfo } = artist.auctionResultsConnection ?? {}
   const { hasNextPage, endCursor } = pageInfo ?? {}
   const artistName = artist.name
+  const queryString = require("query-string")
+
+  // scroll to auction results if param flag is present
+  useEffect(() => {
+    const queryParams = queryString.parse(location.search)
+    if (queryParams.scroll_to_auction_results) {
+      scrollIntoView({
+        selector: "#scrollTo--artistAuctionResultsTop",
+        behavior: "smooth",
+        offset: 150,
+      })
+    }
+  }, [queryString])
 
   const loadNext = () => {
     const currentPageNumber = filters?.pageAndCursor?.page ?? 0
