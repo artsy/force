@@ -74,3 +74,18 @@ export const checkEmail = ({
     }
   })
 }
+
+export const isOtpError = (errorMessage: string): boolean => {
+  const otpErrorMessages = [
+    "missing two-factor authentication code",
+    "missing on-demand authentication code",
+  ]
+
+  return otpErrorMessages.includes(errorMessage)
+}
+
+export const isMissingOnDemandOtpError = (errorMessage: string): boolean => {
+  const missingOnDemandOtpError = "missing on-demand authentication code"
+
+  return errorMessage === missingOnDemandOtpError
+}
