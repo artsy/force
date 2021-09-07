@@ -228,7 +228,10 @@ const Conversation: React.FC<ConversationProps> = props => {
           orderID={orderID}
           title={modalTitle!}
           show={showOrderModal}
-          closeModal={() => setShowOrderModal(false)}
+          closeModal={() => {
+            refreshData()
+            setShowOrderModal(false)
+          }}
         />
       )}
     </Flex>
