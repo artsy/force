@@ -1,7 +1,6 @@
 import { helpersEmailQuery } from "v2/__generated__/helpersEmailQuery.graphql"
 import { graphql } from "react-relay"
 import { fetchQuery } from "relay-runtime"
-import { errorMessageForBidding } from "v2/Apps/Auction/Components/Form"
 
 export const handleSubmit = (
   url: string,
