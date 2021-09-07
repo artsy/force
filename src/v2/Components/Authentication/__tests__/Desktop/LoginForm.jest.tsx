@@ -239,6 +239,90 @@ describe("LoginForm", () => {
       })
     })
 
+    it("shows on-demand one-time password prompt", async () => {
+      ;(props.handleSubmit as jest.Mock).mockImplementation(
+        (values, actions) => {
+          if (!values.otp_attempt) {
+            actions.setStatus({
+              error: "missing on-demand authentication code",
+            })
+          } else if (values.otp_attempt !== "123456") {
+            actions.setStatus({
+              error: "invalid on-demand authentication code",
+            })
+          } else {
+            actions.setStatus(null)
+          }
+        }
+      )
+
+      const wrapper = getWrapper()
+
+      const inputEmail = wrapper
+        .find(QuickInput)
+        .filterWhere(el => el.prop("name") === "email")
+        .instance() as QuickInput
+      inputEmail.onChange(ChangeEvents.email)
+
+      const inputPass = wrapper
+        .find(QuickInput)
+        .filterWhere(el => el.prop("name") === "password")
+        .instance() as QuickInput
+      inputPass.onChange(ChangeEvents.password)
+
+      const form = wrapper.find(`Formik`)
+      form.simulate("submit")
+
+      await flushPromiseQueue()
+      wrapper.update()
+
+      expect(wrapper.html()).not.toMatch(
+        "missing on-demand authentication code"
+      )
+      expect(wrapper.html()).toMatch(
+        "This login requires additional authorization. Please check your email for a one-time authentication code."
+      )
+      console.log(wrapper.state())
+      expect(props.handleSubmit.mock.calls[0][0]).toEqual({
+        email: "email@email.com",
+        password: "password",
+        otpRequired: false,
+      })
+      expect((wrapper.state() as any).otpRequired).toEqual(true)
+
+      const inputOtp = wrapper
+        .find(QuickInput)
+        .filterWhere(el => el.prop("name") === "otp_attempt")
+        .instance() as QuickInput
+      inputOtp.onChange(ChangeEvents.invalidOtpAttempt)
+      form.simulate("submit")
+
+      await flushPromiseQueue()
+      wrapper.update()
+
+      expect(wrapper.html()).toMatch("invalid on-demand authentication code")
+      expect(props.handleSubmit.mock.calls[1][0]).toEqual({
+        email: "email@email.com",
+        password: "password",
+        otp_attempt: "111111",
+        otpRequired: true,
+      })
+
+      inputOtp.onChange(ChangeEvents.otpAttempt)
+      form.simulate("submit")
+
+      await flushPromiseQueue()
+      wrapper.update()
+
+      expect(wrapper.html()).not.toMatch("Error")
+      expect(props.handleSubmit.mock.calls[2][0]).toEqual({
+        email: "email@email.com",
+        password: "password",
+        otp_attempt: "123456",
+        otpRequired: true,
+      })
+    })
+
     it("fires reCAPTCHA event", done => {
       props.values = LoginValues
       const wrapper = getWrapper()
