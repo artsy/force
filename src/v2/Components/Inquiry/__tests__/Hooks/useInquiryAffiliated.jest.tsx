@@ -18,6 +18,8 @@ describe("useInquiryAffiliated", () => {
       mode,
     } = useInquiryAffiliated()
 
+    const { submitUpdateCollectorProfile } = useUpdateCollectorProfile()
+
     const options = [
       { text: "example 1", value: "one" },
       { text: "example 2", value: "two" },
@@ -41,8 +43,8 @@ describe("useInquiryAffiliated", () => {
         <button
           id="save"
           onClick={() =>
-            handleSave({
-              affiliatedGalleryIds: selection.map(option => option.value),
+            handleSave(affiliatedGalleryIds => {
+              return submitUpdateCollectorProfile({ affiliatedGalleryIds })
             })
           }
         >

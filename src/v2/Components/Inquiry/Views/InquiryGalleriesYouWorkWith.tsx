@@ -5,6 +5,7 @@ import { InquiryGalleriesYouWorkWithQuery } from "v2/__generated__/InquiryGaller
 import { InquiryAffiliatedAutocomplete } from "../Components/InquiryAffiliatedAutocomplete"
 import { InquiryAffiliatedSelectedOptions } from "../Components/InquiryAffiliatedSelectedOptions"
 import { useInquiryAffiliated, Mode } from "../Hooks/useInquiryAffiliated"
+import { useUpdateCollectorProfile } from "../Hooks/useUpdateCollectorProfile"
 
 export const InquiryGalleriesYouWorkWith: React.FC = () => {
   const {
@@ -15,9 +16,12 @@ export const InquiryGalleriesYouWorkWith: React.FC = () => {
     mode,
   } = useInquiryAffiliated()
 
+  const { submitUpdateCollectorProfile } = useUpdateCollectorProfile()
+
   const handleClick = () => {
-    const affiliatedGalleryIds = selection.map(({ value }) => value)
-    handleSave({ affiliatedGalleryIds })
+    handleSave(affiliatedGalleryIds => {
+      return submitUpdateCollectorProfile({ affiliatedGalleryIds })
+    })
   }
 
   return (

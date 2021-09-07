@@ -5,6 +5,7 @@ import { InquiryFairsYouAttendQuery } from "v2/__generated__/InquiryFairsYouAtte
 import { InquiryAffiliatedAutocomplete } from "../Components/InquiryAffiliatedAutocomplete"
 import { InquiryAffiliatedSelectedOptions } from "../Components/InquiryAffiliatedSelectedOptions"
 import { useInquiryAffiliated, Mode } from "../Hooks/useInquiryAffiliated"
+import { useUpdateCollectorProfile } from "../Hooks/useUpdateCollectorProfile"
 
 export const InquiryFairsYouAttend: React.FC = () => {
   const {
@@ -15,9 +16,12 @@ export const InquiryFairsYouAttend: React.FC = () => {
     mode,
   } = useInquiryAffiliated()
 
+  const { submitUpdateCollectorProfile } = useUpdateCollectorProfile()
+
   const handleClick = () => {
-    const affiliatedFairIds = selection.map(({ value }) => value)
-    handleSave({ affiliatedFairIds })
+    handleSave(affiliatedFairIds => {
+      return submitUpdateCollectorProfile({ affiliatedFairIds })
+    })
   }
 
   return (

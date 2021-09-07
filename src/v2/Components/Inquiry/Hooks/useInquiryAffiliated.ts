@@ -1,9 +1,7 @@
 import { uniqBy } from "lodash"
 import { useState } from "react"
 import { useInquiryContext } from "../InquiryContext"
-import { useUpdateCollectorProfile } from "./useUpdateCollectorProfile"
 import { logger } from "../util"
-import { UpdateCollectorProfileInput } from "v2/__generated__/useUpdateCollectorProfileMutation.graphql"
 
 type Option = { text: string; value: string }
 
@@ -16,7 +14,6 @@ export enum Mode {
 
 export const useInquiryAffiliated = () => {
   const { next } = useInquiryContext()
-  const { submitUpdateCollectorProfile } = useUpdateCollectorProfile()
 
   const [mode, setMode] = useState(Mode.Pending)
   const [selection, setSelection] = useState<Option[]>([])
@@ -33,11 +30,13 @@ export const useInquiryAffiliated = () => {
     )
   }
 
-  const handleSave = async (input: UpdateCollectorProfileInput) => {
+  const handleSave = async (save: (values: string[]) => Promise<unknown>) => {
     setMode(Mode.Loading)
 
+    const values = selection.map(({ value }) => value)
+
     try {
-      await submitUpdateCollectorProfile(input)
+      await save(values)
       setMode(Mode.Success)
       next()
     } catch (err) {

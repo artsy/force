@@ -5,6 +5,7 @@ import { InquiryAuctionHousesYouWorkWithQuery } from "v2/__generated__/InquiryAu
 import { InquiryAffiliatedAutocomplete } from "../Components/InquiryAffiliatedAutocomplete"
 import { InquiryAffiliatedSelectedOptions } from "../Components/InquiryAffiliatedSelectedOptions"
 import { useInquiryAffiliated, Mode } from "../Hooks/useInquiryAffiliated"
+import { useUpdateCollectorProfile } from "../Hooks/useUpdateCollectorProfile"
 
 export const InquiryAuctionHousesYouWorkWith: React.FC = () => {
   const {
@@ -15,9 +16,12 @@ export const InquiryAuctionHousesYouWorkWith: React.FC = () => {
     mode,
   } = useInquiryAffiliated()
 
+  const { submitUpdateCollectorProfile } = useUpdateCollectorProfile()
+
   const handleClick = () => {
-    const affiliatedAuctionHouseIds = selection.map(({ value }) => value)
-    handleSave({ affiliatedAuctionHouseIds })
+    return handleSave(affiliatedAuctionHouseIds => {
+      return submitUpdateCollectorProfile({ affiliatedAuctionHouseIds })
+    })
   }
 
   return (
