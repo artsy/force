@@ -2,11 +2,11 @@ import React from "react"
 import { mount } from "enzyme"
 import { useInquiryAffiliated, Mode } from "../../Hooks/useInquiryAffiliated"
 import { useUpdateCollectorProfile } from "../../Hooks/useUpdateCollectorProfile"
-import { useInquiryContext } from "../../InquiryContext"
+import { useInquiryContext } from "../../Hooks/useInquiryContext"
 import { flushPromiseQueue } from "v2/DevTools"
 
 jest.mock("../../Hooks/useUpdateCollectorProfile")
-jest.mock("../../InquiryContext")
+jest.mock("../../Hooks/useInquiryContext")
 
 describe("useInquiryAffiliated", () => {
   const Wrapper = () => {

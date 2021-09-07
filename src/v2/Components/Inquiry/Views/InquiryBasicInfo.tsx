@@ -12,7 +12,7 @@ import {
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
-import { useInquiryContext } from "../InquiryContext"
+import { useInquiryContext } from "../Hooks/useInquiryContext"
 import { InquiryBasicInfo_artwork } from "v2/__generated__/InquiryBasicInfo_artwork.graphql"
 import { InquiryBasicInfoQuery } from "v2/__generated__/InquiryBasicInfoQuery.graphql"
 import { useSystemContext } from "v2/System"

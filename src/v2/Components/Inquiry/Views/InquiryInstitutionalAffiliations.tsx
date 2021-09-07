@@ -8,7 +8,7 @@ import {
 } from "@artsy/palette"
 import React from "react"
 import { useState } from "react"
-import { useInquiryContext } from "../InquiryContext"
+import { useInquiryContext } from "../Hooks/useInquiryContext"
 import { useUpdateCollectorProfile } from "../Hooks/useUpdateCollectorProfile"
 import { logger } from "../util"
 

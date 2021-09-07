@@ -11,7 +11,7 @@ import {
 import React, { useState } from "react"
 import { createRelaySSREnvironment } from "v2/System/Relay/createRelaySSREnvironment"
 import { wait } from "v2/Utils/wait"
-import { useInquiryContext } from "../InquiryContext"
+import { useInquiryContext } from "../Hooks/useInquiryContext"
 import { useArtworkInquiryRequest } from "../Hooks/useArtworkInquiryRequest"
 import { login } from "v2/Utils/auth"
 import { useInquiryAccountContext, Screen } from "./InquiryAccount"

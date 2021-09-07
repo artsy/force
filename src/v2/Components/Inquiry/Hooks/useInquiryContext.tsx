@@ -1,6 +1,6 @@
 import React, { createContext } from "react"
-import { Engine } from "./Engine"
-import { useEngine } from "./config"
+import { Engine } from "../Engine"
+import { useEngine } from "../config"
 import { useContext } from "react"
 import { useState } from "react"
 

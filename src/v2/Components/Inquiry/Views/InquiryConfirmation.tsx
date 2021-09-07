@@ -1,7 +1,7 @@
-import { Text } from "@artsy/palette"
+import { Clickable, Text } from "@artsy/palette"
 import React from "react"
 import { useEffect } from "react"
-import { useInquiryContext } from "../InquiryContext"
+import { useInquiryContext } from "../Hooks/useInquiryContext"
 
 export const InquiryConfirmation: React.FC = () => {
   const { next } = useInquiryContext()
@@ -15,10 +15,10 @@ export const InquiryConfirmation: React.FC = () => {
   }, [next])
 
   return (
-    <>
-      <Text variant="xl" textAlign="center" my={4}>
+    <Clickable onClick={next} width="100vw" height="100vh">
+      <Text variant="xl" textAlign="center" my={4} color="white100">
         Your message has been sent
       </Text>
-    </>
+    </Clickable>
   )
 }

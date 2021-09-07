@@ -4,7 +4,7 @@ import { graphql } from "react-relay"
 import { useSystemContext } from "v2/System"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { InquiryExistingUserQuery } from "v2/__generated__/InquiryExistingUserQuery.graphql"
-import { useInquiryContext } from "../InquiryContext"
+import { useInquiryContext } from "../Hooks/useInquiryContext"
 import { Screen, useInquiryAccountContext } from "./InquiryAccount"
 
 const InquiryExistingUserPlaceholder: React.FC = () => {
