@@ -17,7 +17,7 @@ import { InquirySpecialist } from "./Views/InquirySpecialist"
 
 const VIEWS = {
   Account: InquiryAccount, // ✅
-  ArtistsInCollection: InquiryArtistsInCollection,
+  ArtistsInCollection: InquiryArtistsInCollection, // ✅
   AuctionHousesYouWorkWith: InquiryAuctionHousesYouWorkWith, // ✅
   BasicInfo: InquiryBasicInfoQueryRenderer, // ✅
   CommercialInterest: InquiryCommercialInterest, // ✅
