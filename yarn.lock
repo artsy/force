@@ -82,7 +82,26 @@
   resolved "https://registry.yarnpkg.com/@artsy/palette-tokens/-/palette-tokens-2.6.0.tgz#3d780ff65994fef0daadef29d43d11f89470b728"
   integrity sha512-UQP6P+xv/5hm82ep0z5X3kCFFnk03H6y8kdW/wTU+xPq45ESUay7aNFYXeub47tmW2v6dXJ8Oa01Z0iwc6BVpA==
 
-"@artsy/palette@17.2.2", "@artsy/palette@^17.2.2":
+"@artsy/palette@17.3.0":
+  version "17.3.0"
+  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-17.3.0.tgz#a5e4b9af30e8e08286de8cc975321922e42fa8b4"
+  integrity sha512-CQz51ea8rZKMSlmya10cOX0DukVVquy4jumRf1y8Yt2HfPzAkhwq60APOjbB3qEmTwTJfF5SWHDRPpAed0dQzg==
+  dependencies:
+    "@artsy/palette-tokens" "^2.6.0"
+    "@seznam/compose-react-refs" "^1.0.6"
+    "@styled-system/theme-get" "^5.1.2"
+    debounce "^1.2.0"
+    luxon "^1.15"
+    proportional-scale "^4.0.0"
+    react-lazy-load-image-component "1.5.0"
+    react-remove-scroll "^2.3.0"
+    styled-bootstrap-grid "3.1.0"
+    styled-system "^5.1.5"
+    trunc-html "^1.1.2"
+    use-cursor "^1.2.3"
+    use-keyboard-list-navigation "2.4.1"
+
+"@artsy/palette@^17.2.2":
   version "17.2.2"
   resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-17.2.2.tgz#6ab38f5daefd6223beb7ed6b0905699f88ce8844"
   integrity sha512-11JrDjF6/Kg8V3HOpwjsxfYxfpKQ3Cal/GOXroU7V3MzVmP/OPk/wLevz8XLj564nKnjA3/s1g20VY5/K7SzBA==
