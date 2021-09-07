@@ -17,7 +17,10 @@ import QuickInput from "v2/Components/QuickInput"
 import { Formik, FormikProps, useFormikContext } from "formik"
 import React, { Component, useEffect, useState } from "react"
 import { recaptcha } from "v2/Utils/recaptcha"
-import { isOtpError } from "v2/Components/Authentication/helpers"
+import {
+  isOtpError,
+  isMissingOnDemandOtpError,
+} from "v2/Components/Authentication/helpers"
 
 interface ConditionalOtpInputProps {
   error: string
@@ -36,12 +39,8 @@ const ConditionalOtpInput: React.FC<ConditionalOtpInputProps> = props => {
   const { error } = props
 
   if (!showOtpInput) {
-    if (error === "missing two-factor authentication code") {
-      setShowOtpInput(true)
-    } else if (error === "missing on-demand authentication code") {
-      setShowOtpInput(true)
-      setShowOtpOnDemandPrompt(true)
-    }
+    if (isOtpError(error)) setShowOtpInput(true)
+    if (isMissingOnDemandOtpError(error)) setShowOtpOnDemandPrompt(true)
   }
 
   return (

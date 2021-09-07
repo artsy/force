@@ -1,6 +1,7 @@
 import { helpersEmailQuery } from "v2/__generated__/helpersEmailQuery.graphql"
 import { graphql } from "react-relay"
 import { fetchQuery } from "relay-runtime"
+import { errorMessageForBidding } from "v2/Apps/Auction/Components/Form"
 
 export const handleSubmit = (
   url: string,
@@ -82,4 +83,10 @@ export const isOtpError = (errorMessage: string): boolean => {
   ]
 
   return otpErrorMessages.includes(errorMessage)
+}
+
+export const isMissingOnDemandOtpError = (errorMessage: string): boolean => {
+  const missingOnDemandOtpError = "missing on-demand authentication code"
+
+  return errorMessage === missingOnDemandOtpError
 }
