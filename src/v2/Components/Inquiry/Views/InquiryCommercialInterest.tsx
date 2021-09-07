@@ -1,7 +1,7 @@
 import { Banner, Button, Text } from "@artsy/palette"
 import React from "react"
 import { useState } from "react"
-import { useInquiryContext } from "../InquiryContext"
+import { useInquiryContext } from "../Hooks/useInquiryContext"
 import { useUpdateMyUserProfile } from "../Hooks/useUpdateMyUserProfile"
 import { logger } from "../util"
 

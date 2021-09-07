@@ -1,6 +1,6 @@
 import { Button, Skeleton, SkeletonText, Spacer, Text } from "@artsy/palette"
 import React, { useState, useEffect } from "react"
-import { useInquiryContext } from "../InquiryContext"
+import { useInquiryContext } from "../Hooks/useInquiryContext"
 import { resetPassword } from "v2/Utils/auth"
 import { useInquiryAccountContext, Screen } from "./InquiryAccount"
 

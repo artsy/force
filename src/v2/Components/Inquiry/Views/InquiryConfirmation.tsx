@@ -1,7 +1,7 @@
 import { Text } from "@artsy/palette"
 import React from "react"
 import { useEffect } from "react"
-import { useInquiryContext } from "../InquiryContext"
+import { useInquiryContext } from "../Hooks/useInquiryContext"
 
 export const InquiryConfirmation: React.FC = () => {
   const { next } = useInquiryContext()

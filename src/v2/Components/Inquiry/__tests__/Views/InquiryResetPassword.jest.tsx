@@ -2,7 +2,7 @@ import React from "react"
 import { mount } from "enzyme"
 import { InquiryResetPassword } from "../../Views/InquiryResetPassword"
 
-jest.mock("../../InquiryContext", () => ({
+jest.mock("../../Hooks/useInquiryContext", () => ({
   useInquiryContext: () => ({
     inquiry: { email: "example@example.com" },
   }),

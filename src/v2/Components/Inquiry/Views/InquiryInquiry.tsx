@@ -25,7 +25,7 @@ import {
   useInquiryContext,
   DEFAULT_MESSAGE,
   InquiryState,
-} from "../InquiryContext"
+} from "../Hooks/useInquiryContext"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 
 enum Mode {

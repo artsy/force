@@ -1,6 +1,6 @@
 import { Button, Text } from "@artsy/palette"
 import React from "react"
-import { useInquiryContext } from "../InquiryContext"
+import { useInquiryContext } from "../Hooks/useInquiryContext"
 
 export const InquiryDone: React.FC = () => {
   const { onClose } = useInquiryContext()

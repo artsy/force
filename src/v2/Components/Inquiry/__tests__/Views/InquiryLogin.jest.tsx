@@ -4,12 +4,12 @@ import { InquiryLogin } from "../../Views/InquiryLogin"
 import { login } from "v2/Utils/auth"
 import { useArtworkInquiryRequest } from "../../Hooks/useArtworkInquiryRequest"
 import { flushPromiseQueue } from "v2/DevTools"
-import { useInquiryContext } from "../../InquiryContext"
+import { useInquiryContext } from "../../Hooks/useInquiryContext"
 import { fill } from "../util"
 
 jest.mock("v2/Utils/auth")
 jest.mock("../../Hooks/useArtworkInquiryRequest")
-jest.mock("../../InquiryContext")
+jest.mock("../../Hooks/useInquiryContext")
 jest.mock("v2/Utils/wait", () => ({ wait: () => Promise.resolve() }))
 
 describe("InquiryLogin", () => {

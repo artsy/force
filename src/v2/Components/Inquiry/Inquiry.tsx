@@ -1,7 +1,7 @@
 import React from "react"
 import { useEffect } from "react"
 import { useState } from "react"
-import { InquiryProvider } from "./InquiryContext"
+import { InquiryProvider } from "./Hooks/useInquiryContext"
 import { InquiryDialog, InquiryBackdrop } from "./InquiryDialog"
 
 interface InquiryProps {

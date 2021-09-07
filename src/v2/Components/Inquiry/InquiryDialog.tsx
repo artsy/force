@@ -7,7 +7,7 @@ import {
 } from "@artsy/palette"
 import React from "react"
 import styled from "styled-components"
-import { useInquiryContext } from "./InquiryContext"
+import { useInquiryContext } from "./Hooks/useInquiryContext"
 
 export const InquiryDialog: React.FC = ({ children }) => {
   const { onClose, View } = useInquiryContext()

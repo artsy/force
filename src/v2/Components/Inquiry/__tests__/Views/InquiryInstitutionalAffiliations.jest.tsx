@@ -1,14 +1,14 @@
 import React from "react"
 import { InquiryInstitutionalAffiliations } from "../../Views/InquiryInstitutionalAffiliations"
 import { useUpdateCollectorProfile } from "../../Hooks/useUpdateCollectorProfile"
-import { useInquiryContext } from "../../InquiryContext"
+import { useInquiryContext } from "../../Hooks/useInquiryContext"
 import { flushPromiseQueue } from "v2/DevTools"
 import { fill } from "../util"
 import { mount } from "enzyme"
 
 jest.unmock("react-relay")
 jest.mock("../../Hooks/useUpdateCollectorProfile")
-jest.mock("../../InquiryContext")
+jest.mock("../../Hooks/useInquiryContext")
 
 describe("InquiryBasicInfo", () => {
   const mockSubmitUpdateCollectorProfile = jest
