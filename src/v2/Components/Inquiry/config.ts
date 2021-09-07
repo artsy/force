@@ -21,8 +21,8 @@ const VIEWS = {
   AuctionHousesYouWorkWith: InquiryAuctionHousesYouWorkWith, // ✅
   BasicInfo: InquiryBasicInfoQueryRenderer, // ✅
   CommercialInterest: InquiryCommercialInterest, // ✅
-  Confirmation: InquiryConfirmation,
-  Done: InquiryDone,
+  Confirmation: InquiryConfirmation, // ✅
+  Done: InquiryDone, // ✅
   FairsYouAttend: InquiryFairsYouAttend, // ✅
   GalleriesYouWorkWith: InquiryGalleriesYouWorkWith, // ✅
   HowCanWeHelp: InquiryHowCanWeHelp,

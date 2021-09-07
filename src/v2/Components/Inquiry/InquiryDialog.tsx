@@ -10,33 +10,40 @@ import styled from "styled-components"
 import { useInquiryContext } from "./Hooks/useInquiryContext"
 
 export const InquiryDialog: React.FC = ({ children }) => {
-  const { onClose, View } = useInquiryContext()
+  const { onClose, current, View } = useInquiryContext()
 
-  return (
-    <Box
-      position="relative"
-      bg="white100"
-      width={550}
-      height="100%"
-      p={2}
-      style={{ boxShadow: DROP_SHADOW }}
-    >
-      <Clickable
-        position="absolute"
-        right={0}
-        top={0}
-        pt={2}
-        px={1}
-        mx={0.5}
-        onClick={onClose}
-        aria-label="Close"
-      >
-        <CloseIcon fill="black100" display="block" />
-      </Clickable>
+  switch (current) {
+    case "Confirmation":
+    case "Done":
+      return <View />
 
-      <View />
-    </Box>
-  )
+    default:
+      return (
+        <Box
+          position="relative"
+          bg="white100"
+          width={550}
+          height="100%"
+          p={2}
+          style={{ boxShadow: DROP_SHADOW }}
+        >
+          <Clickable
+            position="absolute"
+            right={0}
+            top={0}
+            pt={2}
+            px={1}
+            mx={0.5}
+            onClick={onClose}
+            aria-label="Close"
+          >
+            <CloseIcon fill="black100" display="block" />
+          </Clickable>
+
+          <View />
+        </Box>
+      )
+  }
 }
 
 export const InquiryBackdrop = styled(ModalBase)`
