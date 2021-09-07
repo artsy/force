@@ -1,3 +1,7 @@
+import React, { Component } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
+import { Title } from "react-head"
+import { Router, Match } from "found"
 import {
   Button,
   Flex,
@@ -7,20 +11,17 @@ import {
   Spacer,
   media,
 } from "@artsy/palette"
-import { Status_order } from "v2/__generated__/Status_order.graphql"
+import styled from "styled-components"
+import { RouterLink } from "v2/System/Router/RouterLink"
 import { TransactionDetailsSummaryItemFragmentContainer as TransactionDetailsSummaryItem } from "v2/Apps/Order/Components/TransactionDetailsSummaryItem"
 import { TwoColumnLayout } from "v2/Apps/Order/Components/TwoColumnLayout"
-import { Router } from "found"
-import React, { Component } from "react"
-import { Title } from "react-head"
-import { createFragmentContainer, graphql } from "react-relay"
-import styled from "styled-components"
 import { get } from "v2/Utils/get"
 import createLogger from "v2/Utils/logger"
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "../../Components/ArtworkSummaryItem"
 import { CreditCardSummaryItemFragmentContainer as CreditCardSummaryItem } from "../../Components/CreditCardSummaryItem"
 import { ShippingSummaryItemFragmentContainer as ShippingSummaryItem } from "../../Components/ShippingSummaryItem"
 import { SystemContextConsumer } from "v2/System/SystemContext"
+import { Status_order } from "v2/__generated__/Status_order.graphql"
 
 const logger = createLogger("Order/Routes/Status/index.tsx")
 
@@ -34,6 +35,7 @@ interface StatusPageConfig {
 export interface StatusProps {
   order: Status_order
   router: Router
+  match: Match
 }
 
 export class StatusRoute extends Component<StatusProps> {
@@ -233,9 +235,36 @@ export class StatusRoute extends Component<StatusProps> {
     )
   }
 
+  shouldButtonDisplay(): React.ReactNode | null {
+    const {
+      match,
+      order: { stateReason },
+    } = this.props
+    const isModal = !!match?.location.query.isModal
+    const declinedStatuses = [
+      "buyer_rejected",
+      "seller_rejected_offer_too_low",
+      "seller_rejected_shipping_unavailable",
+      "seller_rejected",
+      "seller_rejected_artwork_unavailable",
+      "seller_rejected_other",
+    ]
+    const isDeclined = declinedStatuses.includes(stateReason!)
+
+    if (isModal || isDeclined) {
+      return null
+    }
+
+    return (
+      // @ts-ignore
+      <Button as={RouterLink} to="/" variant="primaryBlack" width="100%">
+        Back to Artsy
+      </Button>
+    )
+  }
+
   render() {
     const { order } = this.props
-
     const flowName = order.mode === "OFFER" ? "Offer" : "Order"
     const {
       title,
@@ -277,16 +306,8 @@ export class StatusRoute extends Component<StatusProps> {
                             showOfferNote={showOfferNote}
                           />
                         </Flex>
-                      ) : isEigen ? null : (
-                        <Button
-                          onClick={() => {
-                            window.location.href = "/"
-                          }}
-                          variant="primaryBlack"
-                          width="100%"
-                        >
-                          Back to Artsy
-                        </Button>
+                      ) : (
+                        isEigen && this.shouldButtonDisplay()
                       )}
                     </Join>
                   </>
