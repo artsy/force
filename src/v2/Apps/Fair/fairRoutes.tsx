@@ -9,6 +9,7 @@ import {
 } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
 import { defaultSort, isValidSort } from "./Utils/IsValidSort"
 import { allowedFilters } from "v2/Components/ArtworkFilter/Utils/allowedFilters"
+import { data as sd } from "sharify"
 
 const FairApp = loadable(
   () => import(/* webpackChunkName: "fairBundle" */ "./FairApp"),
@@ -128,6 +129,11 @@ export const fairRoutes: AppRouteConfig[] = [
         render: ({ Component, props, match }) => {
           if (!(Component && props)) {
             return undefined
+          }
+
+          if (sd.ENABLE_FAIR_PAGE_EXHIBITORS_TAB) {
+            const slug = match.params.slug
+            throw new RedirectException(`/fair/${slug}`, 301)
           }
 
           const {

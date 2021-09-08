@@ -58,6 +58,7 @@ const FairBoothRailArtworks: React.FC<FairBoothRailArtworksProps> = ({
       {artworks.map((artwork, index) => {
         return (
           <ShelfArtworkFragmentContainer
+            key={artwork.internalID}
             contextModule={ContextModule.fairRail}
             artwork={artwork}
             hidePartnerName
