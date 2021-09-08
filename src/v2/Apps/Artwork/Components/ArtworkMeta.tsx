@@ -9,6 +9,18 @@ import { withSystemContext } from "v2/System"
 import { SeoDataForArtworkFragmentContainer as SeoDataForArtwork } from "./Seo/SeoDataForArtwork"
 import { ZendeskWrapper } from "v2/Components/ZendeskWrapper"
 
+const isExceededZendeskThreshold = ({ major: amount, currencyCode }) => {
+  return (
+    {
+      USD: 10000,
+      AUD: 13000,
+      EUR: 8000,
+      HKD: 77000,
+      GBP: 7000,
+    }[currencyCode] < amount
+  )
+}
+
 interface ArtworkMetaProps {
   artwork: ArtworkMeta_artwork
   googleAdId?: string
@@ -60,8 +72,8 @@ export class ArtworkMeta extends Component<ArtworkMetaProps> {
   renderGoogleAdSnippet() {
     const { artwork, googleAdId: fromPropsGoogleAdId } = this.props
     const { GOOGLE_ADWORDS_ID: fromSharifyGoogleAdId } = sd
-    const { is_in_auction, isAcquireable, internalID } = artwork
-    if (!is_in_auction && !isAcquireable) return
+    const { isInAuction, isAcquireable, internalID } = artwork
+    if (!isInAuction && !isAcquireable) return
 
     // TODO: Investigate always being able to select from sharify.
     const googleAdId = fromSharifyGoogleAdId || fromPropsGoogleAdId
@@ -111,7 +123,19 @@ export class ArtworkMeta extends Component<ArtworkMetaProps> {
     if (typeof window !== "undefined" && window.zEmbed) {
       return
     }
-    const zdKey = this.props.artwork.is_in_auction
+
+    const price =
+      this.props.artwork.listPrice?.__typename === "Money"
+        ? this.props.artwork.listPrice
+        : this.props.artwork.listPrice?.__typename === "PriceRange"
+        ? this.props.artwork.listPrice.maxPrice
+        : null
+
+    if (!price || !isExceededZendeskThreshold(price)) {
+      return
+    }
+
+    const zdKey = this.props.artwork.isInAuction
       ? sd.AUCTION_ZENDESK_KEY
       : sd.ZENDESK_KEY
 
@@ -165,11 +189,24 @@ export const ArtworkMetaFragmentContainer = createFragmentContainer(
         date
         artistNames
         sale_message: saleMessage
+        listPrice {
+          __typename
+          ... on Money {
+            currencyCode
+            major
+          }
+          ... on PriceRange {
+            maxPrice {
+              currencyCode
+              major
+            }
+          }
+        }
         partner {
           name
         }
         image_rights: imageRights
-        is_in_auction: isInAuction
+        isInAuction: isInAuction
         isAcquireable
         isInquireable
         isOfferable
