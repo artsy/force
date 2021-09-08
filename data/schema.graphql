@@ -8187,6 +8187,7 @@ type Me implements Node {
 
   # Whether user is allowed to request email confirmation
   canRequestEmailConfirmation: Boolean!
+  collectorLevel: Int
 
   # A collector profile.
   collectorProfile: CollectorProfileType
@@ -8255,9 +8256,11 @@ type Me implements Node {
     @deprecated(
       reason: "Payment Request was deprecated. The field was kept for legacy client support. [Will be removed in v2]"
     )
+  isCollector: Boolean!
 
   # List of lab features for this user
   labFeatures: [String!]!
+  location: MyLocation
 
   # Sale Artworks search results
   lotsByFollowedArtistsConnection(
@@ -8393,6 +8396,7 @@ type Me implements Node {
     last: Int
   ): SearchCriteriaConnection
   secondFactors(kinds: [SecondFactorKind]): [SecondFactor]
+  shareFollows: Boolean!
   type: String
 
   # The count of conversations with unread messages.
@@ -8910,6 +8914,26 @@ input MyCollectionUpdateArtworkInput {
 type MyCollectionUpdateArtworkPayload {
   artworkOrError: MyCollectionArtworkMutationType
   clientMutationId: String
+}
+
+type MyLocation {
+  address: String
+  address2: String
+  city: String
+  coordinates: LatLng!
+  country: String
+  display: String
+  displayCountry: String
+
+  # A globally unique ID.
+  id: ID!
+
+  # A type-specific ID.
+  internalID: ID!
+  postalCode: String
+  state: String
+  summary: String
+  timezone: String
 }
 
 input Near {
