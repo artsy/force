@@ -14,7 +14,6 @@ import {
   themeProps,
   VerifiedIcon,
 } from "@artsy/palette"
-import { Media } from "v2/Utils/Responsive"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { resize } from "v2/Utils/resizer"
 import { FullBleedHeader } from "v2/Components/FullBleedHeader"
@@ -78,7 +77,7 @@ export const BuyerGuaranteeIndex: React.FC = () => {
   const learnMoreButton = (width?: string) => (
     <RouterLink to={supportArticleURL} target="_blank">
       <Button
-        width={width ? width : ["100%", "80%", "40%"]}
+        width={width ? width : ["100%", "80%", "50%"]}
         variant="secondaryOutline"
       >
         Learn More
@@ -198,7 +197,7 @@ export const BuyerGuaranteeIndex: React.FC = () => {
         <Flex
           justifyContent={["space-around", "center"]}
           flexWrap={["wrap", "nowrap"]}
-          mt={2}
+          mt={[2, 6]}
         >
           <Feature
             title="Authenticity Guarantee"
@@ -230,7 +229,7 @@ export const BuyerGuaranteeIndex: React.FC = () => {
         </Flex>
       </Flex>
       {/*  Artsy Guarantee Sections desktop */}
-      <GridColumns gridColumnGap={0} gridRowGap={[6, 12]} my={[6, 12]}>
+      <GridColumns gridColumnGap={4} gridRowGap={[6, 12]} my={[6, 12]}>
         <Column span={6}>
           {authenticityGuaranteeImageURL && (
             <Image
@@ -248,7 +247,6 @@ export const BuyerGuaranteeIndex: React.FC = () => {
         <Column span={6}>
           <Flex
             py={[0, "60px", "80px", 12]}
-            px={[0, 4]}
             flexDirection="column"
             id="jump--authenticity"
           >
@@ -262,22 +260,21 @@ export const BuyerGuaranteeIndex: React.FC = () => {
         <Column span={12}>
           <Flex flexDirection={["column-reverse", "row"]} alignItems="stretch">
             <Flex
+              mr={[0, 2]}
               mt={[6, 0]}
               flexBasis="50%"
               flexDirection="column"
               py={[0, "60px", "80px", 12]}
-              px={[0, 4]}
               id="jump--moneyBack"
             >
               <Text variant="lg">Money-Back Guarantee</Text>
               <Text variant="xs" my={2}>
                 {moneyBackGuaranteeText}
               </Text>
-              <Media greaterThanOrEqual="lg">{learnMoreButton()}</Media>
-              <Media lessThan="lg">{learnMoreButton()}</Media>
+              {learnMoreButton()}
             </Flex>
 
-            <Box flexBasis="50%">
+            <Box ml={[0, 2]} flexBasis="50%">
               {moneyBackGuaranteeImageURL && (
                 <Image
                   src={moneyBackGuaranteeImageURL}
@@ -311,7 +308,6 @@ export const BuyerGuaranteeIndex: React.FC = () => {
           <Flex
             flexDirection="column"
             py={[0, "60px", "80px", 12]}
-            px={[0, 4]}
             id="jump--securePayment"
           >
             <Text variant="lg">Secure Payment</Text>
@@ -323,9 +319,9 @@ export const BuyerGuaranteeIndex: React.FC = () => {
         </Column>
       </GridColumns>
 
-      <Box mx="-40px">
-        <Flex justifyContent="center" py={6} backgroundColor="black5">
-          <Text variant="xl">The Artsy Guarantee</Text>
+      <Box px={2} mx="-40px">
+        <Flex justifyContent="center" py={[4, 6]} backgroundColor="black5">
+          <Text variant={["lg", "xl"]}>The Artsy Guarantee</Text>
         </Flex>
         <Box backgroundColor="black5">
           <GridColumns gridColumnGap={0} gridRowGap={0} px={2} pt={0} mb={6}>
@@ -347,7 +343,7 @@ export const BuyerGuaranteeIndex: React.FC = () => {
                   border="solid 1px transparent"
                   borderBottomColor={tableColor}
                   borderRightColor={tableColor}
-                  height={90}
+                  height={[60, 90]}
                   flexDirection="column"
                 >
                   <Text p={1} variant="sm" fontWeight="bold" textAlign="center">
@@ -356,7 +352,7 @@ export const BuyerGuaranteeIndex: React.FC = () => {
                 </Flex>
                 <Flex
                   flexBasis={["auto", "100%"]}
-                  height={90}
+                  height={[60, 90]}
                   alignItems="center"
                   justifyContent="center"
                   border="solid 1px transparent"
@@ -375,7 +371,7 @@ export const BuyerGuaranteeIndex: React.FC = () => {
                   border="solid 1px transparent"
                   borderRightColor={tableColor}
                   borderBottomColor={tableColor}
-                  height={90}
+                  height={[60, 90]}
                 >
                   <Text p={1} textAlign="center" variant="sm" fontWeight="bold">
                     Authenticity Guarantee
@@ -389,19 +385,19 @@ export const BuyerGuaranteeIndex: React.FC = () => {
                   border="solid 1px transparent"
                   borderRightColor={tableColor}
                   borderBottomColor={tableColor}
-                  height={90}
+                  height={[60, 90]}
                 >
                   <Text textAlign="center" variant="sm" fontWeight="bold" p={1}>
                     Money-Back Guarantee
                   </Text>
                 </Flex>
                 <Flex
-                  height={90}
+                  height={[60, 90]}
                   flexBasis={["auto", "100%"]}
                   alignItems="center"
                   justifyContent="center"
                   border="solid 1px transparent"
-                  borderRightColor={tableColor}
+                  borderRightColor={[tableColor, "transparent"]}
                   borderBottomColor={tableColor}
                 >
                   <Text textAlign="center" variant="sm" fontWeight="bold" p={1}>
@@ -421,12 +417,7 @@ export const BuyerGuaranteeIndex: React.FC = () => {
                   alignItems="center"
                   height="90px"
                 >
-                  <Text
-                    variant="sm"
-                    fontWeight="bold"
-                    textAlign="center"
-                    pr={1}
-                  >
+                  <Text variant="sm" fontWeight="bold" textAlign="center" p={2}>
                     Making an Inquiry
                   </Text>
                 </Flex>
@@ -434,7 +425,7 @@ export const BuyerGuaranteeIndex: React.FC = () => {
                   flexBasis={["auto", "100%"]}
                   justifyContent="space-around"
                   alignItems="center"
-                  height="90px"
+                  height={[60, 90]}
                   border="1px solid transparent"
                   borderBottomColor={tableColor}
                   borderRightColor={tableColor}
@@ -446,7 +437,7 @@ export const BuyerGuaranteeIndex: React.FC = () => {
                   flexBasis={["auto", "100%"]}
                   justifyContent="space-around"
                   alignItems="center"
-                  height="90px"
+                  height={[60, 90]}
                   border="1px solid transparent"
                   borderBottomColor={tableColor}
                   borderRightColor={tableColor}
@@ -457,7 +448,7 @@ export const BuyerGuaranteeIndex: React.FC = () => {
                   border="1px solid transparent"
                   borderBottomColor={tableColor}
                   borderRightColor={tableColor}
-                  height="90px"
+                  height={[60, 90]}
                   flexBasis={["auto", "100%"]}
                 >
                   <Separator border="none">{""}</Separator>
@@ -466,7 +457,7 @@ export const BuyerGuaranteeIndex: React.FC = () => {
                   border="1px solid transparent"
                   borderBottomColor={tableColor}
                   borderRightColor={tableColor}
-                  height="90px"
+                  height={[60, 90]}
                   flexBasis={["auto", "100%"]}
                 >
                   <Separator border="none">{""}</Separator>
@@ -474,8 +465,8 @@ export const BuyerGuaranteeIndex: React.FC = () => {
                 <Box
                   border="1px solid transparent"
                   borderBottomColor={tableColor}
-                  borderRightColor={tableColor}
-                  height="90px"
+                  borderRightColor={[tableColor, "transparent"]}
+                  height={[60, 90]}
                   flexBasis={["auto", "100%"]}
                 >
                   <Separator border="none">{""}</Separator>
@@ -486,21 +477,21 @@ export const BuyerGuaranteeIndex: React.FC = () => {
               <Flex flexDirection={["column", "row"]}>
                 <Flex
                   border="1px solid transparent"
-                  borderBottomColor={tableColor}
-                  borderRightColor={tableColor}
+                  borderBottomColor={[tableColor, "transparent"]}
+                  borderRightColor={["transparent", tableColor]}
                   borderLeftColor={[tableColor, "transparent"]}
                   flexBasis={["auto", "100%"]}
                   marginLeft={["-1px", 0]}
                   justifyContent="center"
                   alignItems="center"
-                  height="90px"
+                  height={90}
                   backgroundColor="white100"
                 >
                   <Text
                     textAlign="center"
                     fontWeight="bold"
                     variant="sm"
-                    pr={1}
+                    px={[2, 0]}
                   >
                     Purchasing with Artsy’s Secure Checkout
                   </Text>
@@ -509,10 +500,10 @@ export const BuyerGuaranteeIndex: React.FC = () => {
                   flexBasis={["auto", "100%"]}
                   justifyContent="space-around"
                   alignItems="center"
-                  height="90px"
+                  height={[60, 90]}
                   border="1px solid transparent"
-                  borderBottomColor={tableColor}
-                  borderRightColor={tableColor}
+                  borderBottomColor={[tableColor, "transparent"]}
+                  borderRightColor={["transparent", tableColor]}
                   backgroundColor="white100"
                 >
                   <CheckIcon width="40px" height="40px" />
@@ -521,10 +512,10 @@ export const BuyerGuaranteeIndex: React.FC = () => {
                   flexBasis={["auto", "100%"]}
                   justifyContent="space-around"
                   alignItems="center"
-                  height="90px"
+                  height={[60, 90]}
                   border="1px solid transparent"
-                  borderBottomColor={tableColor}
-                  borderRightColor={tableColor}
+                  borderBottomColor={[tableColor, "transparent"]}
+                  borderRightColor={["transparent", tableColor]}
                   backgroundColor="white100"
                 >
                   <CheckIcon width="40px" height="40px" />
@@ -533,11 +524,11 @@ export const BuyerGuaranteeIndex: React.FC = () => {
                   flexBasis={["auto", "100%"]}
                   justifyContent="space-around"
                   alignItems="center"
-                  height="90px"
+                  height={[60, 90]}
                   backgroundColor="white100"
                   border="1px solid transparent"
-                  borderBottomColor={tableColor}
-                  borderRightColor={tableColor}
+                  borderBottomColor={[tableColor, "transparent"]}
+                  borderRightColor={["transparent", tableColor]}
                 >
                   <CheckIcon width="40px" height="40px" />
                 </Flex>
@@ -545,10 +536,10 @@ export const BuyerGuaranteeIndex: React.FC = () => {
                   flexBasis={["auto", "100%"]}
                   justifyContent="space-around"
                   alignItems="center"
-                  height="90px"
+                  height={[60, 90]}
                   border="1px solid transparent"
-                  borderBottomColor={tableColor}
-                  borderRightColor={tableColor}
+                  borderBottomColor={[tableColor, "transparent"]}
+                  borderRightColor={["transparent", tableColor]}
                   backgroundColor="white100"
                 >
                   <CheckIcon width="40px" height="40px" />
@@ -557,10 +548,9 @@ export const BuyerGuaranteeIndex: React.FC = () => {
                   flexBasis={["auto", "100%"]}
                   justifyContent="space-around"
                   alignItems="center"
-                  height="90px"
+                  height={[60, 90]}
                   border="1px solid transparent"
-                  borderBottomColor={tableColor}
-                  borderRightColor={tableColor}
+                  borderBottomColor={[tableColor, "transparent"]}
                   backgroundColor="white100"
                 >
                   <CheckIcon width="40px" height="40px" />
@@ -569,7 +559,9 @@ export const BuyerGuaranteeIndex: React.FC = () => {
             </Column>
           </GridColumns>
           <Flex justifyContent="center" pb={6} backgroundColor="black5">
-            {learnMoreButton("325px")}
+            <Box px={2} width={["100%", "325px"]}>
+              {learnMoreButton("100%")}
+            </Box>
           </Flex>
         </Box>
       </Box>
