@@ -1,6 +1,7 @@
-import { useMemo, useState } from "react"
-import { useSystemContext } from "v2/System"
+import { useEffect, useRef, useState } from "react"
 import { Engine } from "./Engine"
+import { Context } from "./Hooks/useInquiryContext"
+import { Logger } from "./Logger"
 import { InquiryAccount } from "./Views/InquiryAccount"
 import { InquiryArtistsInCollection } from "./Views/InquiryArtistsInCollection"
 import { InquiryAuctionHousesYouWorkWith } from "./Views/InquiryAuctionHousesYouWorkWith"
@@ -10,7 +11,6 @@ import { InquiryConfirmation } from "./Views/InquiryConfirmation"
 import { InquiryDone } from "./Views/InquiryDone"
 import { InquiryFairsYouAttend } from "./Views/InquiryFairsYouAttend"
 import { InquiryGalleriesYouWorkWith } from "./Views/InquiryGalleriesYouWorkWith"
-import { InquiryHowCanWeHelp } from "./Views/InquiryHowCanWeHelp"
 import { InquiryInquiryQueryRenderer } from "./Views/InquiryInquiry"
 import { InquiryInstitutionalAffiliations } from "./Views/InquiryInstitutionalAffiliations"
 import { InquirySpecialist } from "./Views/InquirySpecialist"
@@ -25,7 +25,6 @@ const VIEWS = {
   Done: InquiryDone, // ✅
   FairsYouAttend: InquiryFairsYouAttend, // ✅
   GalleriesYouWorkWith: InquiryGalleriesYouWorkWith, // ✅
-  HowCanWeHelp: InquiryHowCanWeHelp,
   Inquiry: InquiryInquiryQueryRenderer, // ✅
   InstitutionalAffiliations: InquiryInstitutionalAffiliations, // ✅
   Specialist: InquirySpecialist,
@@ -33,12 +32,16 @@ const VIEWS = {
 
 type View = keyof typeof VIEWS
 
-export const useEngine = () => {
-  const { user, isLoggedIn } = useSystemContext()
+interface UseEngine {
+  context: React.RefObject<Context>
+  onDone(): void
+}
 
-  const engine = useMemo(() => {
-    return new Engine({
-      context: { user, isLoggedIn },
+export const useEngine = ({ context, onDone }: UseEngine) => {
+  const logger = useRef(new Logger("inquiry"))
+
+  const engine = useRef(
+    new Engine({
       workflow: [
         {
           askSpecialist: {
@@ -109,71 +112,95 @@ export const useEngine = () => {
         "Done",
       ],
       conditions: {
-        askSpecialist: context => {
-          // TODO:
-          return false
+        askSpecialist: () => {
+          return !!context.current?.askSpecialist
         },
-        hasBasicInfo: context => {
-          // TODO:
-          return false
+        hasBasicInfo: () => {
+          return (
+            !!context.current?.profession &&
+            !!context.current?.location?.city &&
+            !!context.current?.phone &&
+            !!context.current?.shareFollows
+          )
         },
-        hasCompletedProfile: context => {
-          // TODO:
-          return false
+        hasCompletedProfile: () => {
+          return (
+            // Has all the basic info
+            !!context.current?.profession &&
+              !!context.current.location?.city &&
+              !!context.current.phone &&
+              !!context.current.shareFollows &&
+              // And has logged all the relevant steps
+              (context.current.collectorLevel ?? 0) >= 3
+              ? // If you're a collector then you should have seen all of these
+                // before "completing" your profile
+                logger.current.hasLogged(
+                  "CommercialInterest",
+                  "ArtistsInCollection",
+                  "GalleriesYouWorkWith",
+                  "AuctionHousesYouWorkWith",
+                  "FairsYouAttend",
+                  "InstitutionalAffiliations"
+                )
+              : // If you've never bought art then you only saw this step
+                logger.current.hasLogged("CommercialInterest")
+          )
         },
-        hasSeenArtistsInCollection: context => {
-          // TODO:
-          return false
+        hasSeenArtistsInCollection: () => {
+          return logger.current.hasLogged("ArtistsInCollection")
         },
-        hasSeenAuctionHousesYouWorkWith: context => {
-          // TODO:
-          return false
+        hasSeenAuctionHousesYouWorkWith: () => {
+          return logger.current.hasLogged("AuctionHousesYouWorkWith")
         },
-        hasSeenCommercialInterest: context => {
-          // TODO:
-          return false
+        hasSeenCommercialInterest: () => {
+          return logger.current.hasLogged("CommercialInterest")
         },
-        hasSeenConfirmationThisSession: context => {
-          // TODO:
-          return false
+        hasSeenConfirmationThisSession: () => {
+          return logger.current.hasLogged("ConfirmationThisSession")
         },
-        hasSeenFairsYouAttend: context => {
-          // TODO:
-          return false
+        hasSeenFairsYouAttend: () => {
+          return logger.current.hasLogged("FairsYouAttend")
         },
-        hasSeenGalleriesYouWorkWith: context => {
-          // TODO:
-          return false
+        hasSeenGalleriesYouWorkWith: () => {
+          return logger.current.hasLogged("GalleriesYouWorkWith")
         },
-        hasSeenInstitutionalAffiliations: context => {
-          // TODO:
-          return false
+        hasSeenInstitutionalAffiliations: () => {
+          return logger.current.hasLogged("InstitutionalAffiliations")
         },
-        helpBy: context => {
-          // TODO:
-          return false
+        isCollector: () => {
+          return (context.current?.collectorLevel ?? 0) >= 3
         },
-        isCollector: context => {
-          // TODO:
-          return false
-        },
-        isLoggedIn: context => {
-          return !!context.isLoggedIn
-        },
-        isLoggedOut: context => {
-          return !context.isLoggedIn
+        isLoggedOut: () => {
+          return !context.current?.isLoggedIn
         },
       },
     })
-  }, [isLoggedIn, user])
+  )
 
-  const [current, setCurrent] = useState(engine.current())
+  const [current, setCurrent] = useState(engine.current.current())
 
   const View = VIEWS[current as View]
 
+  // Log each step as it updates
+  useEffect(() => {
+    logger.current.log(current)
+  }, [current, logger])
+
   const next = () => {
-    setCurrent(engine.next())
+    // At the end; closes the modal
+    if (current === "Done") {
+      onDone()
+      return
+    }
+
+    setCurrent(engine.current.next())
   }
 
-  return { engine, View, next, current }
+  return {
+    current,
+    engine: engine.current,
+    logger: logger.current,
+    next,
+    View,
+  }
 }

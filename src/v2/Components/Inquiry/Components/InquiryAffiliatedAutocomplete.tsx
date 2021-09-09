@@ -43,6 +43,7 @@ export const InquiryAffiliatedAutocomplete = <T extends OperationType>({
           mb={2}
           onChange={handleChange}
           value={term}
+          loading
         />
       }
       render={({ props, error }) => {
@@ -54,7 +55,7 @@ export const InquiryAffiliatedAutocomplete = <T extends OperationType>({
               mb={2}
               onChange={handleChange}
               value={term}
-              // TODO: Loading
+              loading
             />
           )
         }

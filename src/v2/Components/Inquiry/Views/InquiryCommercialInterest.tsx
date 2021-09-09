@@ -14,13 +14,15 @@ enum Mode {
 }
 
 export const InquiryCommercialInterest: React.FC = () => {
-  const { next } = useInquiryContext()
+  const { next, setContext } = useInquiryContext()
 
   const [mode, setMode] = useState(Mode.Pending)
 
   const { submitUpdateMyUserProfile } = useUpdateMyUserProfile()
 
   const handleClick = (value: 2 | 3) => async () => {
+    setContext({ collectorLevel: value })
+
     setMode({ 2: Mode.Loading2, 3: Mode.Loading3 }[value])
 
     try {

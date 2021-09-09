@@ -38,8 +38,10 @@ interface InquiryBasicInfoProps {
 }
 
 const InquiryBasicInfo: React.FC<InquiryBasicInfoProps> = ({ artwork }) => {
-  const { next } = useInquiryContext()
+  const { next, setContext } = useInquiryContext()
+
   const [mode, setMode] = useState(Mode.Pending)
+
   const { submitUpdateMyUserProfile } = useUpdateMyUserProfile()
 
   const [state, setState] = useState<{
@@ -74,6 +76,8 @@ const InquiryBasicInfo: React.FC<InquiryBasicInfoProps> = ({ artwork }) => {
     setMode(Mode.Loading)
 
     const input = compactObject(state)
+
+    setContext(input)
 
     try {
       await submitUpdateMyUserProfile(input)

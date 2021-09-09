@@ -1,11 +1,12 @@
 import React, { useState } from "react"
-import { Inquiry } from "../Inquiry"
+import { Inquiry } from "./Inquiry"
 
 interface UseInquiry {
   artworkID: string
+  askSpecialist?: boolean
 }
 
-export const useInquiry = ({ artworkID }: UseInquiry) => {
+export const useInquiry = ({ artworkID, askSpecialist }: UseInquiry) => {
   const [isInquiryVisible, setIsInquiryVisible] = useState(false)
 
   const showInquiry = () => {
@@ -19,7 +20,11 @@ export const useInquiry = ({ artworkID }: UseInquiry) => {
   const inquiryQuestionnaire = (
     <>
       {isInquiryVisible && (
-        <Inquiry artworkID={artworkID} onClose={hideInquiry} />
+        <Inquiry
+          artworkID={artworkID}
+          onClose={hideInquiry}
+          askSpecialist={askSpecialist}
+        />
       )}
     </>
   )

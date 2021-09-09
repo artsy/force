@@ -1,29 +1,68 @@
 import React from "react"
-import { useEffect } from "react"
-import { useState } from "react"
-import { InquiryProvider } from "./Hooks/useInquiryContext"
-import { InquiryDialog, InquiryBackdrop } from "./InquiryDialog"
+import {
+  InquiryProviderQueryRenderer,
+  useInquiryContext,
+} from "./Hooks/useInquiryContext"
+import { InquiryBackdrop } from "./Components/InquiryBackdrop"
+import { Box, Clickable, CloseIcon, DROP_SHADOW } from "@artsy/palette"
 
 interface InquiryProps {
   artworkID: string
+  askSpecialist?: boolean
   onClose(): void
 }
 
-export const Inquiry: React.FC<InquiryProps> = ({ artworkID, onClose }) => {
-  const [isMounted, setIsMounted] = useState(false)
-
-  useEffect(() => {
-    setIsMounted(true)
-  }, [])
-
+export const Inquiry: React.FC<InquiryProps> = ({
+  artworkID,
+  askSpecialist,
+  onClose,
+}) => {
   return (
-    <InquiryProvider artworkID={artworkID} onClose={onClose}>
-      <InquiryBackdrop
-        bg={isMounted ? "rgba(0, 0, 0, 0.8)" : "transparent"}
+    <InquiryBackdrop onClose={onClose}>
+      <InquiryProviderQueryRenderer
+        artworkID={artworkID}
+        askSpecialist={askSpecialist}
         onClose={onClose}
       >
         <InquiryDialog />
-      </InquiryBackdrop>
-    </InquiryProvider>
+      </InquiryProviderQueryRenderer>
+    </InquiryBackdrop>
   )
+}
+
+const InquiryDialog: React.FC = () => {
+  const { onClose, current, View } = useInquiryContext()
+
+  switch (current) {
+    case "Confirmation":
+    case "Done":
+      return <View />
+
+    default:
+      return (
+        <Box
+          position="relative"
+          bg="white100"
+          width={550}
+          height="100%"
+          p={2}
+          style={{ boxShadow: DROP_SHADOW }}
+        >
+          <Clickable
+            position="absolute"
+            right={0}
+            top={0}
+            pt={2}
+            px={1}
+            mx={0.5}
+            onClick={onClose}
+            aria-label="Close"
+          >
+            <CloseIcon fill="black100" display="block" />
+          </Clickable>
+
+          <View />
+        </Box>
+      )
+  }
 }
