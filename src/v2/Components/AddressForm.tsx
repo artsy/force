@@ -1,4 +1,4 @@
-import { Flex, Join, Sans, Serif, Spacer, Input } from "@artsy/palette"
+import { Flex, Join, Spacer, Input, Text } from "@artsy/palette"
 import { CountrySelect } from "v2/Components/CountrySelect"
 import React from "react"
 import { TwoColumnSplit } from "../Apps/Order/Components/TwoColumnLayout"
@@ -123,9 +123,14 @@ export class AddressForm extends React.Component<
 
         <TwoColumnSplit>
           <Flex flexDirection="column" pb={1}>
-            <Serif mb={1} size="3t" color="black100" lineHeight="1.1em">
+            <Text
+              variant="xs"
+              textTransform="uppercase"
+              color="black100"
+              mb={0.5}
+            >
               Country
-            </Serif>
+            </Text>
             <CountrySelect
               selected={
                 lockCountryToOrigin ||
@@ -140,11 +145,11 @@ export class AddressForm extends React.Component<
             {(lockCountryToOrigin || lockCountriesToEU) && (
               <>
                 <Spacer m={0.5} />
-                <Sans size="2" color="black60">
+                <Text variant="xs" color="black60">
                   {lockCountriesToEU
                     ? "Continental Europe shipping only."
                     : "Domestic shipping only."}
-                </Sans>
+                </Text>
               </>
             )}
           </Flex>
