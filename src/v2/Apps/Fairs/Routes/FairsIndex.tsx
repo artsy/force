@@ -133,7 +133,6 @@ export const FairsIndex: React.FC<FairsIndexProps> = ({
                 ))}
               </Tab>
             )}
-
             {upcomingFairs.length !== 0 && (
               <Tab name="Upcoming">
                 {upcomingFairs.map(fair => (
