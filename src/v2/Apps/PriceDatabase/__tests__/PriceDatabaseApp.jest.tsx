@@ -40,7 +40,7 @@ describe("PriceDatabaseApp", () => {
     wrapper.find(Button).simulate("click")
 
     expect(mockRouterPush).toHaveBeenCalledWith(
-      "/artist/gerhard-richter/auction-results"
+      "/artist/gerhard-richter/auction-results?scroll_to_auction_results=true"
     )
   })
 
@@ -64,7 +64,7 @@ describe("PriceDatabaseApp", () => {
     wrapper.find(Button).simulate("click")
 
     expect(mockRouterPush).toHaveBeenCalledWith(
-      "/artist/banksy/auction-results?organizations%5B0%5D=Phillips&categories%5B0%5D=Painting&sizes%5B0%5D=SMALL&sizes%5B1%5D=MEDIUM"
+      "/artist/banksy/auction-results?organizations%5B0%5D=Phillips&categories%5B0%5D=Painting&sizes%5B0%5D=SMALL&sizes%5B1%5D=MEDIUM&scroll_to_auction_results=true"
     )
   })
 })
