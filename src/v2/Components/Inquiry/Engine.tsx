@@ -1,26 +1,22 @@
 export type Branch = { [key: string]: Workflow }
 export type Workflow = (string | { [event: string]: Branch })[]
-export type Conditions<T> = Record<string, (context: T) => boolean>
+export type Conditions = Record<string, () => boolean>
 
-export class Engine<T extends {}> {
+export class Engine {
   workflow: Workflow
-  conditions: Conditions<T>
-  context: T
+  conditions: Conditions
   moves = 0
   index = 0
 
   constructor({
     workflow,
     conditions = {},
-    context,
   }: {
     workflow: Workflow
-    conditions?: Conditions<T>
-    context: T
+    conditions?: Conditions
   }) {
     this.workflow = workflow
     this.conditions = conditions
-    this.context = context
   }
 
   current(): string {
@@ -46,7 +42,7 @@ export class Engine<T extends {}> {
   }
 
   decide(key: string) {
-    return this.conditions[key](this.context)
+    return this.conditions[key]()
   }
 
   next() {
