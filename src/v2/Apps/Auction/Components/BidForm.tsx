@@ -23,7 +23,11 @@ import { BidForm_saleArtwork } from "v2/__generated__/BidForm_saleArtwork.graphq
 import { CreditCardInstructions } from "v2/Apps/Auction/Components/CreditCardInstructions"
 import { PricingTransparencyQueryRenderer as PricingTransparency } from "v2/Apps/Auction/Components/PricingTransparency"
 import { CreditCardInput } from "v2/Apps/Order/Components/CreditCardInput"
-import { AddressForm } from "v2/Components/AddressForm"
+import {
+  AddressErrors,
+  AddressForm,
+  AddressTouched,
+} from "v2/Components/AddressForm"
 import { ConditionsOfSaleCheckbox } from "v2/Components/Auction/ConditionsOfSaleCheckbox"
 import {
   OnSubmitValidationError,
@@ -163,12 +167,12 @@ export const BidForm: React.FC<Props> = ({
 
               <Spacer mt={2} />
 
-              {/* @ts-expect-error STRICT_NULL_CHECK */}
+              {/* type casting is needed because Formik doesn't have typing for nested forms */}
               <AddressForm
                 value={values.address}
                 onChange={address => setFieldValue("address", address)}
-                errors={errors.address}
-                touched={touched.address}
+                errors={errors.address as AddressErrors}
+                touched={touched.address as AddressTouched}
                 billing
                 showPhoneNumberInput
               />

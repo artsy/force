@@ -207,24 +207,24 @@ describe("Shipping", () => {
 
       expect(mutations.mockFetch).toHaveBeenCalledTimes(1)
       expect(mutations.lastFetchVariables).toMatchInlineSnapshot(`
-              Object {
-                "input": Object {
-                  "fulfillmentType": "SHIP",
-                  "id": "1234",
-                  "phoneNumber": "8475937743",
-                  "shipping": Object {
-                    "addressLine1": "14 Gower's Walk",
-                    "addressLine2": "Suite 2.5, The Loom",
-                    "city": "Whitechapel",
-                    "country": "UK",
-                    "name": "Artsy UK Ltd",
-                    "phoneNumber": "",
-                    "postalCode": "E1 8PY",
-                    "region": "London",
-                  },
-                },
-              }
-          `)
+        Object {
+          "input": Object {
+            "fulfillmentType": "SHIP",
+            "id": "1234",
+            "phoneNumber": "8475937743",
+            "shipping": Object {
+              "addressLine1": "14 Gower's Walk",
+              "addressLine2": "Suite 2.5, The Loom",
+              "city": "Whitechapel",
+              "country": "GB",
+              "name": "Artsy UK Ltd",
+              "phoneNumber": "",
+              "postalCode": "E1 8PY",
+              "region": "London",
+            },
+          },
+        }
+      `)
     })
 
     it("commits the mutation with shipping option", async () => {

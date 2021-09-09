@@ -4,7 +4,11 @@ import React from "react"
 
 import { CreditCardInstructions } from "v2/Apps/Auction/Components/CreditCardInstructions"
 import { CreditCardInput } from "v2/Apps/Order/Components/CreditCardInput"
-import { AddressForm } from "v2/Components/AddressForm"
+import {
+  AddressErrors,
+  AddressForm,
+  AddressTouched,
+} from "v2/Components/AddressForm"
 import { ConditionsOfSaleCheckbox } from "v2/Components/Auction/ConditionsOfSaleCheckbox"
 import { ErrorModal } from "v2/Components/Modal/ErrorModal"
 import {
@@ -71,12 +75,12 @@ export const RegistrationForm: React.FC<RegistrationFormProps> = props => (
 
         <Spacer mt={4} />
 
-        {/* @ts-expect-error STRICT_NULL_CHECK */}
+        {/* type casting is needed because Formik doesn't have typing for nested forms */}
         <AddressForm
           value={values.address}
           onChange={(address, _key) => setFieldValue("address", address)}
-          errors={errors.address}
-          touched={touched.address}
+          errors={errors.address as AddressErrors}
+          touched={touched.address as AddressTouched}
           billing
           showPhoneNumberInput
         />
