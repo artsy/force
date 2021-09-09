@@ -42,6 +42,8 @@ export type orderRoutes_OrderQueryResponse = {
         readonly creditCard: {
             readonly internalID: string;
         } | null;
+        readonly currencyCode: string;
+        readonly itemsTotalCents: number | null;
         readonly myLastOffer?: {
             readonly internalID: string;
             readonly createdAt: string;
@@ -93,6 +95,8 @@ export type orderRoutes_OrderQueryRawResponse = {
             readonly internalID: string;
             readonly id: string | null;
         }) | null;
+        readonly currencyCode: string;
+        readonly itemsTotalCents: number | null;
         readonly id: string | null;
         readonly myLastOffer: ({
             readonly internalID: string;
@@ -140,6 +144,8 @@ export type orderRoutes_OrderQueryRawResponse = {
             readonly internalID: string;
             readonly id: string | null;
         }) | null;
+        readonly currencyCode: string;
+        readonly itemsTotalCents: number | null;
         readonly id: string | null;
     }) | null;
 };
@@ -207,6 +213,8 @@ query orderRoutes_OrderQuery(
       internalID
       id
     }
+    currencyCode
+    itemsTotalCents
     id
   }
 }
@@ -321,31 +329,45 @@ v14 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
+  "name": "currencyCode",
+  "storageKey": null
+},
+v15 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "itemsTotalCents",
+  "storageKey": null
+},
+v16 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
   "name": "createdAt",
   "storageKey": null
 },
-v15 = [
+v17 = [
   (v3/*: any*/),
-  (v14/*: any*/)
+  (v16/*: any*/)
 ],
-v16 = {
+v18 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "awaitingResponseFrom",
   "storageKey": null
 },
-v17 = {
+v19 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v18 = [
+v20 = [
   (v3/*: any*/),
-  (v14/*: any*/),
-  (v17/*: any*/)
+  (v16/*: any*/),
+  (v19/*: any*/)
 ];
 return {
   "fragment": {
@@ -473,6 +495,8 @@ return {
             ],
             "storageKey": null
           },
+          (v14/*: any*/),
+          (v15/*: any*/),
           {
             "kind": "InlineFragment",
             "selections": [
@@ -483,7 +507,7 @@ return {
                 "kind": "LinkedField",
                 "name": "myLastOffer",
                 "plural": false,
-                "selections": (v15/*: any*/),
+                "selections": (v17/*: any*/),
                 "storageKey": null
               },
               {
@@ -493,10 +517,10 @@ return {
                 "kind": "LinkedField",
                 "name": "lastOffer",
                 "plural": false,
-                "selections": (v15/*: any*/),
+                "selections": (v17/*: any*/),
                 "storageKey": null
               },
-              (v16/*: any*/)
+              (v18/*: any*/)
             ],
             "type": "CommerceOfferOrder"
           }
@@ -521,7 +545,7 @@ return {
         "plural": false,
         "selections": [
           (v1/*: any*/),
-          (v17/*: any*/)
+          (v19/*: any*/)
         ],
         "storageKey": null
       },
@@ -572,7 +596,7 @@ return {
                         "plural": false,
                         "selections": [
                           (v9/*: any*/),
-                          (v17/*: any*/),
+                          (v19/*: any*/),
                           (v10/*: any*/),
                           (v11/*: any*/),
                           (v12/*: any*/)
@@ -604,7 +628,7 @@ return {
                                 "plural": false,
                                 "selections": [
                                   (v13/*: any*/),
-                                  (v17/*: any*/)
+                                  (v19/*: any*/)
                                 ],
                                 "storageKey": null
                               }
@@ -614,7 +638,7 @@ return {
                         ],
                         "storageKey": null
                       },
-                      (v17/*: any*/)
+                      (v19/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -633,11 +657,13 @@ return {
             "plural": false,
             "selections": [
               (v3/*: any*/),
-              (v17/*: any*/)
+              (v19/*: any*/)
             ],
             "storageKey": null
           },
-          (v17/*: any*/),
+          (v14/*: any*/),
+          (v15/*: any*/),
+          (v19/*: any*/),
           {
             "kind": "InlineFragment",
             "selections": [
@@ -648,7 +674,7 @@ return {
                 "kind": "LinkedField",
                 "name": "myLastOffer",
                 "plural": false,
-                "selections": (v18/*: any*/),
+                "selections": (v20/*: any*/),
                 "storageKey": null
               },
               {
@@ -658,10 +684,10 @@ return {
                 "kind": "LinkedField",
                 "name": "lastOffer",
                 "plural": false,
-                "selections": (v18/*: any*/),
+                "selections": (v20/*: any*/),
                 "storageKey": null
               },
-              (v16/*: any*/)
+              (v18/*: any*/)
             ],
             "type": "CommerceOfferOrder"
           }
@@ -675,7 +701,7 @@ return {
     "metadata": {},
     "name": "orderRoutes_OrderQuery",
     "operationKind": "query",
-    "text": "query orderRoutes_OrderQuery(\n  $orderID: ID!\n) {\n  me {\n    name\n    id\n  }\n  order: commerceOrder(id: $orderID) @principalField {\n    __typename\n    internalID\n    mode\n    state\n    lastTransactionFailed\n    ... on CommerceOfferOrder {\n      myLastOffer {\n        internalID\n        createdAt\n        id\n      }\n      lastOffer {\n        internalID\n        createdAt\n        id\n      }\n      awaitingResponseFrom\n    }\n    requestedFulfillment {\n      __typename\n    }\n    lineItems {\n      edges {\n        node {\n          artwork {\n            slug\n            id\n            href\n            is_acquireable: isAcquireable\n            is_offerable: isOfferable\n          }\n          shippingQuoteOptions {\n            edges {\n              node {\n                isSelected\n                id\n              }\n            }\n          }\n          id\n        }\n      }\n    }\n    creditCard {\n      internalID\n      id\n    }\n    id\n  }\n}\n"
+    "text": "query orderRoutes_OrderQuery(\n  $orderID: ID!\n) {\n  me {\n    name\n    id\n  }\n  order: commerceOrder(id: $orderID) @principalField {\n    __typename\n    internalID\n    mode\n    state\n    lastTransactionFailed\n    ... on CommerceOfferOrder {\n      myLastOffer {\n        internalID\n        createdAt\n        id\n      }\n      lastOffer {\n        internalID\n        createdAt\n        id\n      }\n      awaitingResponseFrom\n    }\n    requestedFulfillment {\n      __typename\n    }\n    lineItems {\n      edges {\n        node {\n          artwork {\n            slug\n            id\n            href\n            is_acquireable: isAcquireable\n            is_offerable: isOfferable\n          }\n          shippingQuoteOptions {\n            edges {\n              node {\n                isSelected\n                id\n              }\n            }\n          }\n          id\n        }\n      }\n    }\n    creditCard {\n      internalID\n      id\n    }\n    currencyCode\n    itemsTotalCents\n    id\n  }\n}\n"
   }
 };
 })();

@@ -187,6 +187,7 @@ const OrderArtworkFulfillmentsNode = {
 
 export const UntouchedOrder = {
   buyerTotal: "$12,000",
+  itemsTotalCents: 1200000,
   code: "abcdefg",
   createdAt: "2019-12-19T06:01:17.171Z",
   creditCard: null,

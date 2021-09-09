@@ -8,18 +8,7 @@ import { get } from "v2/Utils/get"
 import { withSystemContext } from "v2/System"
 import { SeoDataForArtworkFragmentContainer as SeoDataForArtwork } from "./Seo/SeoDataForArtwork"
 import { ZendeskWrapper } from "v2/Components/ZendeskWrapper"
-
-const isExceededZendeskThreshold = ({ major: amount, currencyCode }) => {
-  return (
-    {
-      USD: 10000,
-      AUD: 13000,
-      EUR: 8000,
-      HKD: 77000,
-      GBP: 7000,
-    }[currencyCode] < amount
-  )
-}
+import { isExceededZendeskThreshold } from "v2/Utils/isExceededZendeskThreshold"
 
 interface ArtworkMetaProps {
   artwork: ArtworkMeta_artwork
@@ -112,8 +101,7 @@ export class ArtworkMeta extends Component<ArtworkMetaProps> {
 
   get isInquiryArtwork() {
     const { isAcquireable, isInquireable, isOfferable } = this.props.artwork
-    const isInquiryArtwork = isInquireable && !isAcquireable && !isOfferable
-    return isInquiryArtwork
+    return isInquireable && !isAcquireable && !isOfferable
   }
 
   renderZendeskScript() {
@@ -124,14 +112,18 @@ export class ArtworkMeta extends Component<ArtworkMetaProps> {
       return
     }
 
+    const listPrice = this.props.artwork.listPrice
     const price =
-      this.props.artwork.listPrice?.__typename === "Money"
-        ? this.props.artwork.listPrice
-        : this.props.artwork.listPrice?.__typename === "PriceRange"
-        ? this.props.artwork.listPrice.maxPrice
+      listPrice?.__typename === "Money"
+        ? listPrice
+        : listPrice?.__typename === "PriceRange"
+        ? listPrice.maxPrice
         : null
 
-    if (!price || !isExceededZendeskThreshold(price)) {
+    if (
+      !price ||
+      !isExceededZendeskThreshold(price.major, price.currencyCode)
+    ) {
       return
     }
 

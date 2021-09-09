@@ -19,7 +19,8 @@ import { data as sd } from "sharify"
 import { ZendeskWrapper } from "v2/Components/ZendeskWrapper"
 import { HorizontalPadding } from "../Components/HorizontalPadding"
 import { AppContainer } from "../Components/AppContainer"
-import { LegacyArtworkDllContainer } from "../../Utils/LegacyArtworkDllContainer"
+import { LegacyArtworkDllContainer } from "v2/Utils/LegacyArtworkDllContainer"
+import { isExceededZendeskThreshold } from "v2/Utils/isExceededZendeskThreshold"
 
 export interface OrderAppProps extends RouterState {
   params: {
@@ -90,6 +91,12 @@ class OrderApp extends React.Component<OrderAppProps, {}> {
   }
 
   renderZendeskScript() {
+    const { itemsTotalCents, currencyCode } = this.props.order
+
+    const price = itemsTotalCents! / 100
+
+    if (!price || !isExceededZendeskThreshold(price, currencyCode)) return
+
     if (typeof window !== "undefined" && window.zEmbed) return
 
     return <ZendeskWrapper zdKey={sd.ZENDESK_KEY} />
@@ -179,6 +186,8 @@ const SafeAreaContainer = styled(Box)`
 graphql`
   fragment OrderApp_order on CommerceOrder {
     mode
+    currencyCode
+    itemsTotalCents
     lineItems {
       edges {
         node {

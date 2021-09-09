@@ -6,6 +6,8 @@ import { FragmentRefs } from "relay-runtime";
 export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
 export type OrderApp_order = {
     readonly mode: CommerceOrderModeEnum | null;
+    readonly currencyCode: string;
+    readonly itemsTotalCents: number | null;
     readonly lineItems: {
         readonly edges: ReadonlyArray<{
             readonly node: {
@@ -39,6 +41,20 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "ScalarField",
       "name": "mode",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "currencyCode",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "itemsTotalCents",
       "storageKey": null
     },
     {
@@ -116,5 +132,5 @@ const node: ReaderFragment = {
   ],
   "type": "CommerceOrder"
 };
-(node as any).hash = '22f0547ca97d2ba0d33dbc5db1aa4c77';
+(node as any).hash = '44860aea11d75dca20feda64a964481d';
 export default node;
