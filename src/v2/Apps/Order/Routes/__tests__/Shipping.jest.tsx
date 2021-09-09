@@ -417,8 +417,12 @@ describe("Shipping", () => {
         expect(mutations.mockFetch.mock.calls[0][0].name).toEqual(
           "SetShippingMutation"
         )
+        expect(page.submitButton.props().disabled).toBeTruthy()
 
         page.find(`[data-test="shipping-quotes"]`).last().simulate("click")
+
+        expect(page.submitButton.props().disabled).toBeFalsy()
+
         page
           .find(`[data-test="save-address-checkbox"]`)
           .first()
