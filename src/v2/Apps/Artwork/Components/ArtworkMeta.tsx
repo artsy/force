@@ -31,21 +31,18 @@ export class ArtworkMeta extends Component<ArtworkMetaProps> {
 
   renderImageMetaTags() {
     const { artwork } = this.props
-    const { meta_image, is_shareable } = artwork
-    // @ts-expect-error STRICT_NULL_CHECK
-    const imageURL = get(meta_image, img => img.resized.url)
+    const { metaImage, isShareable } = artwork
+    const imageURL = get(metaImage, img => img?.resized?.url)
 
-    if (is_shareable && imageURL) {
+    if (isShareable && imageURL) {
       return (
         <>
           <Meta property="twitter:card" content="summary_large_image" />
           <Meta property="og:image" content={imageURL} />
-          {/* @ts-expect-error STRICT_NULL_CHECK */}
-          <Meta property="og:image:width" content={meta_image.resized.width} />
+          <Meta property="og:image:width" content={metaImage?.resized?.width} />
           <Meta
             property="og:image:height"
-            // @ts-expect-error STRICT_NULL_CHECK
-            content={meta_image.resized.height}
+            content={metaImage?.resized?.height}
           />
         </>
       )
@@ -136,26 +133,20 @@ export class ArtworkMeta extends Component<ArtworkMetaProps> {
 
   render() {
     const { artwork } = this.props
-    // @ts-expect-error STRICT_NULL_CHECK
-    const imageURL = get(artwork, a => a.meta_image.resized.url)
+    const imageURL = get(artwork, a => a.metaImage?.resized?.url)
 
     return (
       <>
-        {/* @ts-expect-error STRICT_NULL_CHECK */}
-        <Title>{artwork.meta.title}</Title>
-        {/* @ts-expect-error STRICT_NULL_CHECK */}
-        <Meta name="description" content={artwork.meta.description} />
+        <Title>{artwork.meta?.title}</Title>
+        <Meta name="description" content={artwork.meta?.description} />
         {imageURL && <Meta name="thumbnail" content={imageURL} />}
         <Link rel="canonical" href={`${sd.APP_URL}${artwork.href}`} />
         <Meta
           property="twitter:description"
-          // @ts-expect-error STRICT_NULL_CHECK
-          content={artwork.meta.long_description}
+          content={artwork.meta?.longDescription}
         />
-        {/* @ts-expect-error STRICT_NULL_CHECK */}
-        <Meta property="og:title" content={artwork.meta.title} />
-        {/* @ts-expect-error STRICT_NULL_CHECK */}
-        <Meta property="og:description" content={artwork.meta.description} />
+        <Meta property="og:title" content={artwork.meta?.title} />
+        <Meta property="og:description" content={artwork.meta?.description} />
         <Meta property="og:url" content={`${sd.APP_URL}${artwork.href}`} />
         <Meta
           property="og:type"
@@ -197,13 +188,12 @@ export const ArtworkMetaFragmentContainer = createFragmentContainer(
         partner {
           name
         }
-        image_rights: imageRights
-        isInAuction: isInAuction
+        isInAuction
         isAcquireable
         isInquireable
         isOfferable
-        is_shareable: isShareable
-        meta_image: image {
+        isShareable
+        metaImage: image {
           resized(
             width: 640
             height: 640
@@ -217,7 +207,7 @@ export const ArtworkMetaFragmentContainer = createFragmentContainer(
         meta {
           title
           description(limit: 155)
-          long_description: description(limit: 200)
+          longDescription: description(limit: 200)
         }
         context {
           __typename
