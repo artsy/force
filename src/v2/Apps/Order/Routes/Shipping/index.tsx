@@ -581,7 +581,10 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
     const isArtaShipping = this.isArtaShipping()
     const isContinueButtonDisabled = isCommittingMutation
       ? false
-      : isArtaShipping && !shippingQuoteId && !this.isCreateNewAddress()
+      : isArtaShipping &&
+        !!shippingQuotes &&
+        shippingQuotes.length > 0 &&
+        !shippingQuoteId
 
     return (
       <Box data-test="orderShipping">
