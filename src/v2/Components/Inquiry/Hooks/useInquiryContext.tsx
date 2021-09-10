@@ -6,7 +6,7 @@ import { useInquiryContext_me } from "v2/__generated__/useInquiryContext_me.grap
 import { useInquiryContextQuery } from "v2/__generated__/useInquiryContextQuery.graphql"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { useSystemContext } from "v2/System"
-import { Logger } from "../Logger"
+import { Visited } from "../Visited"
 import { logger } from "../util"
 import { Location } from "v2/Components/LocationAutocompleteInput"
 import { Spinner } from "@artsy/palette"
@@ -52,24 +52,24 @@ const InquiryContext = createContext<{
   current: string
   engine: typeof emptyEngine
   inquiry: InquiryState
-  logger: Logger
   next(): void
   onClose(): void
   setContext: (updatedContext: Partial<Context>) => React.RefObject<Context>
   setInquiry: React.Dispatch<React.SetStateAction<InquiryState>>
   View: React.FC
+  visited: Visited
 }>({
   artworkID: "",
   context: React.createRef<Context>(),
   current: "",
   engine: emptyEngine,
   inquiry: { message: DEFAULT_MESSAGE },
-  logger: new Logger("empty"),
   next: () => {},
   onClose: () => {},
   setContext: () => React.createRef<Context>(),
   setInquiry: () => {},
   View: () => <></>,
+  visited: new Visited("empty"),
 })
 
 interface InquiryProviderProps {
@@ -111,7 +111,7 @@ const InquiryProvider: React.FC<InquiryProviderProps> = ({
     message: DEFAULT_MESSAGE,
   })
 
-  const { engine, current, next, View, logger } = useEngine({
+  const { engine, current, next, View, visited } = useEngine({
     context,
     onDone: onClose,
   })
@@ -124,7 +124,7 @@ const InquiryProvider: React.FC<InquiryProviderProps> = ({
         current,
         engine,
         inquiry,
-        logger,
+        visited,
         next,
         onClose,
         setContext,

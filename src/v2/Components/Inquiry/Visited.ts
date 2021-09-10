@@ -1,7 +1,7 @@
 import Cookies from "cookies-js"
 import { uniq } from "lodash"
 
-export class Logger {
+export class Visited {
   name: string
 
   expires = 31536000
@@ -32,12 +32,12 @@ export class Logger {
     this.set(uniq([...this.get(), step]))
   }
 
-  hasLogged(...steps: string[]) {
+  hasSeen(...steps: string[]) {
     const xs = this.get()
     return steps.every(step => xs.includes(step))
   }
 
-  hasLoggedThisSession(...steps: string[]) {
+  hasSeenThisSession(...steps: string[]) {
     const xs = this.session
     return steps.every(step => xs.includes(step))
   }

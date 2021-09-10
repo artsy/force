@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react"
 import { Engine } from "./Engine"
 import { Context } from "./Hooks/useInquiryContext"
-import { Logger } from "./Logger"
+import { Visited } from "./Visited"
 import { InquiryAccount } from "./Views/InquiryAccount"
 import { InquiryArtistsInCollection } from "./Views/InquiryArtistsInCollection"
 import { InquiryAuctionHousesYouWorkWith } from "./Views/InquiryAuctionHousesYouWorkWith"
@@ -38,7 +38,7 @@ interface UseEngine {
 }
 
 export const useEngine = ({ context, onDone }: UseEngine) => {
-  const logger = useRef(new Logger("inquiry"))
+  const visited = useRef(new Visited("inquiry"))
 
   const engine = useRef(
     new Engine({
@@ -134,7 +134,7 @@ export const useEngine = ({ context, onDone }: UseEngine) => {
               (context.current.collectorLevel ?? 0) >= 3
               ? // If you're a collector then you should have seen all of these
                 // before "completing" your profile
-                logger.current.hasLogged(
+                visited.current.hasSeen(
                   "CommercialInterest",
                   "ArtistsInCollection",
                   "GalleriesYouWorkWith",
@@ -143,29 +143,29 @@ export const useEngine = ({ context, onDone }: UseEngine) => {
                   "InstitutionalAffiliations"
                 )
               : // If you've never bought art then you only saw this step
-                logger.current.hasLogged("CommercialInterest")
+                visited.current.hasSeen("CommercialInterest")
           )
         },
         hasSeenArtistsInCollection: () => {
-          return logger.current.hasLogged("ArtistsInCollection")
+          return visited.current.hasSeen("ArtistsInCollection")
         },
         hasSeenAuctionHousesYouWorkWith: () => {
-          return logger.current.hasLogged("AuctionHousesYouWorkWith")
+          return visited.current.hasSeen("AuctionHousesYouWorkWith")
         },
         hasSeenCommercialInterest: () => {
-          return logger.current.hasLogged("CommercialInterest")
+          return visited.current.hasSeen("CommercialInterest")
         },
         hasSeenConfirmationThisSession: () => {
-          return logger.current.hasLogged("ConfirmationThisSession")
+          return visited.current.hasSeenThisSession("Confirmation")
         },
         hasSeenFairsYouAttend: () => {
-          return logger.current.hasLogged("FairsYouAttend")
+          return visited.current.hasSeen("FairsYouAttend")
         },
         hasSeenGalleriesYouWorkWith: () => {
-          return logger.current.hasLogged("GalleriesYouWorkWith")
+          return visited.current.hasSeen("GalleriesYouWorkWith")
         },
         hasSeenInstitutionalAffiliations: () => {
-          return logger.current.hasLogged("InstitutionalAffiliations")
+          return visited.current.hasSeen("InstitutionalAffiliations")
         },
         isCollector: () => {
           return (context.current?.collectorLevel ?? 0) >= 3
@@ -183,8 +183,8 @@ export const useEngine = ({ context, onDone }: UseEngine) => {
 
   // Log each step as it updates
   useEffect(() => {
-    logger.current.log(current)
-  }, [current, logger])
+    visited.current.log(current)
+  }, [current, visited])
 
   const next = () => {
     // At the end; closes the modal
@@ -199,8 +199,8 @@ export const useEngine = ({ context, onDone }: UseEngine) => {
   return {
     current,
     engine: engine.current,
-    logger: logger.current,
     next,
     View,
+    visited: visited.current,
   }
 }
