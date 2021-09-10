@@ -4,11 +4,9 @@ import {
   RadioProps,
   useThemeConfig,
   TextVariant,
-  getThemeConfig,
 } from "@artsy/palette"
-import { themeGet } from "@styled-system/theme-get"
 import React from "react"
-import styled, { css } from "styled-components"
+import styled from "styled-components"
 import { SavedAddresses_me } from "v2/__generated__/SavedAddresses_me.graphql"
 
 type AddressNode = NonNullable<
@@ -57,7 +55,7 @@ export const SavedAddressItem: React.FC<SavedAddressItemProps> = (
   })
 
   return (
-    <Flex width="100%">
+    <Flex maxWidth="100%">
       <Flex flexDirection="column">
         {nameAndAddressLine.length > 0 &&
           nameAndAddressLine.map(
@@ -77,17 +75,6 @@ export const SavedAddressItem: React.FC<SavedAddressItemProps> = (
                   >
                     {line}
                   </Text>
-                  {address?.isDefault && index === 0 && (
-                    <DefaultLabel>
-                      <Text
-                        textColor="black60"
-                        variant={styles.xsVariant}
-                        display="inline"
-                      >
-                        Default
-                      </Text>
-                    </DefaultLabel>
-                  )}
                 </Flex>
               )
           )}
@@ -126,22 +113,4 @@ const EditButton = styled(Text)`
   &:hover {
     text-decoration: underline;
   }
-`
-
-const DefaultLabel = styled.div`
-  ${props => {
-    const states = getThemeConfig(props, {
-      v2: { borderRadius: "2px", padding: "0 5px" },
-      v3: { borderRadius: "12px", padding: "5px 10px" },
-    })
-    return css`
-      border-radius: ${states.borderRadius};
-      padding: ${states.padding};
-    `
-  }}
-  display: flex;
-  align-items: center;
-  background-color: ${themeGet("colors.black10")};
-  height: 24px;
-  margin-left: 10px;
 `

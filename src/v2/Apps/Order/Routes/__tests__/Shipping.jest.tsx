@@ -63,6 +63,7 @@ const emptyTestMe: ShippingTestQueryRawResponse["me"] = {
   email: "test@gmail.com",
   id: "4321",
   addressConnection: {
+    totalCount: 0,
     edges: [],
     pageInfo,
   },
@@ -73,6 +74,7 @@ const testMe: ShippingTestQueryRawResponse["me"] = {
   email: "test@gmail.com",
   id: "4321",
   addressConnection: {
+    totalCount: 0,
     edges: [
       {
         node: {

@@ -6,6 +6,7 @@ import { FragmentRefs } from "relay-runtime";
 export type SavedAddresses_me = {
     readonly id: string;
     readonly addressConnection: {
+        readonly totalCount: number;
         readonly edges: ReadonlyArray<{
             readonly node: {
                 readonly id: string;
@@ -92,6 +93,13 @@ return {
       "name": "__SavedAddresses_addressConnection_connection",
       "plural": false,
       "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "totalCount",
+          "storageKey": null
+        },
         {
           "alias": null,
           "args": null,
@@ -252,5 +260,5 @@ return {
   "type": "Me"
 };
 })();
-(node as any).hash = '46883f06b60e1f3aea03559da940fae7';
+(node as any).hash = '81a45053db6c6122c064c0735e6b84f0';
 export default node;

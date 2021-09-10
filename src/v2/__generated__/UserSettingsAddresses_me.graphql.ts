@@ -6,6 +6,9 @@ import { FragmentRefs } from "relay-runtime";
 export type UserSettingsAddresses_me = {
     readonly id: string;
     readonly internalID: string;
+    readonly addresses: {
+        readonly totalCount: number;
+    } | null;
     readonly " $fragmentRefs": FragmentRefs<"SavedAddresses_me">;
     readonly " $refType": "UserSettingsAddresses_me";
 };
@@ -38,6 +41,24 @@ const node: ReaderFragment = {
       "storageKey": null
     },
     {
+      "alias": "addresses",
+      "args": null,
+      "concreteType": "UserAddressConnection",
+      "kind": "LinkedField",
+      "name": "addressConnection",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "totalCount",
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
+    },
+    {
       "args": null,
       "kind": "FragmentSpread",
       "name": "SavedAddresses_me"
@@ -45,5 +66,5 @@ const node: ReaderFragment = {
   ],
   "type": "Me"
 };
-(node as any).hash = 'db2ab86442c248fa1ed5e1a5ed53c165';
+(node as any).hash = '3262b4264d49e736c6c489e1f6cc36b5';
 export default node;

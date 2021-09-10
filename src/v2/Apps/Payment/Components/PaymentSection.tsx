@@ -24,12 +24,12 @@ export const PaymentSection: React.FC<PaymentSectionProps> = props => {
   })
   const [showPaymentModal, setShowPaymentModal] = useState(false)
   const stripePromise = loadStripe(sd.STRIPE_PUBLISHABLE_KEY)
-
   return (
     <>
-      <Text variant="lg" my={4}>
-        Saved Cards
+      <Text variant={["sm", "lg"]} my={4}>
+        {creditCards.length ? "Saved Cards" : "No Saved Cards"}
       </Text>
+
       {creditCards?.length ? (
         <Box maxWidth={940}>
           <SavedCreditCards
@@ -38,7 +38,11 @@ export const PaymentSection: React.FC<PaymentSectionProps> = props => {
             me={props.me}
           />
         </Box>
-      ) : null}
+      ) : (
+        <Text mb={4} color="black60" variant="sm">
+          Please add a payment card for a faster checkout experience in future.
+        </Text>
+      )}
       <Button
         variant="secondaryOutline"
         onClick={() => setShowPaymentModal(true)}

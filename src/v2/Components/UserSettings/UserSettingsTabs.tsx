@@ -60,7 +60,7 @@ export const UserSettingsTabs: React.FC<UserSettingsTabsProps> = track()(
     return (
       <Box pt={1} px={[2, 0]}>
         <Box>
-          <Text variant={tokens.variant} my={2}>
+          <Text variant={["lg", tokens.variant]} mt={2} mb={4}>
             {username}
           </Text>
         </Box>
