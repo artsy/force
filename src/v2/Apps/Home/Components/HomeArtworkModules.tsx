@@ -93,6 +93,7 @@ export const HomeArtworkModulesFragmentContainer = createFragmentContainer(
     homePage: graphql`
       fragment HomeArtworkModules_homePage on HomePage {
         artworkModules(
+          exclude: [POPULAR_ARTISTS, GENERIC_GENES]
           maxRails: -1
           maxFollowedGeneRails: -1
           order: [

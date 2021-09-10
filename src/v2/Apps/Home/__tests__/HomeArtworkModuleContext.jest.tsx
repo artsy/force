@@ -32,25 +32,6 @@ const { getWrapper } = setupTestWrapper<HomeArtworkModuleContext_Test_Query>({
 })
 
 describe("HomeArtworkModuleContext", () => {
-  describe("Gene", () => {
-    it("renders correctly", () => {
-      title = "Example Gene"
-
-      const wrapper = getWrapper({
-        HomePageArtworkModule: () => ({
-          context: {
-            __typename: "Gene",
-            href: "/gene/example-gene",
-          },
-        }),
-      })
-
-      expect(wrapper.text()).toContain("Example Gene")
-      expect(wrapper.text()).toContain("View All")
-      expect(wrapper.html()).toContain("/gene/example-gene")
-    })
-  })
-
   describe("Fair", () => {
     it("renders correctly", () => {
       title = "Example Fair"
