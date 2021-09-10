@@ -173,7 +173,6 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
     }
 
     const isDefaultAddress = address.isDefault
-    console.log(address, "address")
     return (
       <BorderBox
         p={2}
