@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react"
+import React, { useContext, useState, useEffect, useCallback } from "react"
 import {
   Box,
   Column,
@@ -66,19 +66,20 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
   const { pageInfo } = artist.auctionResultsConnection ?? {}
   const { hasNextPage, endCursor } = pageInfo ?? {}
   const artistName = artist.name
-  const queryString = require("query-string")
 
-  // scroll to auction results if param flag is present
+  const { match } = useRouter()
+  const queryParams: any = paramsToCamelCase(match?.location.query)
+
+  // Scroll to auction results if param flag is present
   useEffect(() => {
-    const queryParams = queryString.parse(location.search)
-    if (queryParams.scroll_to_auction_results) {
+    if (queryParams.scrollToAuctionResults) {
       scrollIntoView({
         selector: "#scrollTo--artistAuctionResultsTop",
         behavior: "smooth",
         offset: 150,
       })
     }
-  }, [queryString])
+  }, [queryParams.scrollToAuctionResults])
 
   const loadNext = () => {
     const currentPageNumber = filters?.pageAndCursor?.page ?? 0
@@ -192,12 +193,15 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
     <>
       <Title>{titleString}</Title>
 
-      <Box id="scrollTo--artistAuctionResultsTop" />
-
       <MarketStatsQueryRenderer
         artistInternalID={artist.internalID}
         environment={relay.environment}
       />
+
+      <Box id="scrollTo--artistAuctionResultsTop" />
+
+      <Text variant={["md", "lg"]}>Auction Results</Text>
+      <Spacer my={2} />
 
       {showMobileActionSheet && (
         <AuctionFilterMobileActionSheet
