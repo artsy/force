@@ -1,8 +1,7 @@
 import React from "react"
-import { useEffect } from "react"
-import { useState } from "react"
 import { QueryRenderer } from "react-relay"
 import { OperationType } from "relay-runtime"
+import { useDidMount } from "v2/Utils/Hooks/useDidMount"
 
 type QueryRendererProps = React.ComponentProps<typeof QueryRenderer>
 
@@ -27,11 +26,7 @@ export function SystemQueryRenderer<T extends OperationType>({
   render,
   ...rest
 }: SystemQueryRendererProps<T>): JSX.Element {
-  const [isMounted, setIsMounted] = useState(false)
-
-  useEffect(() => {
-    setIsMounted(true)
-  }, [])
+  const isMounted = useDidMount()
 
   if (!environment) {
     return <></>

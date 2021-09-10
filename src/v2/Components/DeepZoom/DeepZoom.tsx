@@ -9,6 +9,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { DeepZoom_image } from "v2/__generated__/DeepZoom_image.graphql"
 import { useRef } from "react"
 import { useEffect } from "react"
+import { useDidMount } from "v2/Utils/Hooks/useDidMount"
 
 const ZOOM_PER_CLICK = 1.4
 
@@ -124,11 +125,7 @@ const DeepZoom: React.FC<DeepZoomProps> = ({ image, onClose }) => {
 
   const { detectActivityProps, isActive } = useDetectActivity()
 
-  const [isMounted, setIsMounted] = useState(false)
-
-  useEffect(() => {
-    setIsMounted(true)
-  }, [])
+  const isMounted = useDidMount()
 
   return (
     <ModalBase onClose={onClose} {...detectActivityProps}>

@@ -4,7 +4,6 @@ describe("Engine", () => {
   describe("a straight path", () => {
     const machine = new Engine({
       workflow: ["first", "second", "third", "fourth"],
-      context: {},
     })
 
     describe("#current", () => {
@@ -28,7 +27,6 @@ describe("Engine", () => {
 
   describe("a complex path", () => {
     const machine = new Engine({
-      context: { someDependency: false },
       conditions: {
         firstDecision() {
           return false
@@ -36,8 +34,8 @@ describe("Engine", () => {
         secondDecision() {
           return true
         },
-        dependentDecision({ someDependency }) {
-          return someDependency
+        thirdDecision() {
+          return false
         },
       },
       workflow: [
@@ -53,7 +51,7 @@ describe("Engine", () => {
                   true: [
                     "falseTrueFirst",
                     {
-                      dependentDecision: {
+                      thirdDecision: {
                         true: ["falseTrueTrueFirst"],
                         false: ["falseTrueFalseFirst"],
                       },
@@ -83,7 +81,6 @@ describe("Engine", () => {
 
   describe("resumable path", () => {
     const machine = new Engine({
-      context: {},
       conditions: {
         second() {
           return true
@@ -139,7 +136,6 @@ describe("Engine", () => {
 
   describe("conditional steps", () => {
     const machine = new Engine({
-      context: {},
       conditions: {
         shouldSkip() {
           return true
