@@ -31,7 +31,7 @@ export const PaymentSection: React.FC<PaymentSectionProps> = props => {
         Saved Cards
       </Text>
       {creditCards?.length ? (
-        <Box maxWidth={542}>
+        <Box maxWidth={940}>
           <SavedCreditCards
             creditCards={creditCards as CreditCardType[]}
             relay={props.relay}
@@ -49,8 +49,7 @@ export const PaymentSection: React.FC<PaymentSectionProps> = props => {
         <PaymentModal
           show={showPaymentModal}
           closeModal={() => setShowPaymentModal(false)}
-          // @ts-expect-error STRICT_NULL_CHECK
-          relay={props.relay}
+          relay={props?.relay!}
           me={props.me}
         />
       </Elements>
