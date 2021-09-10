@@ -48,10 +48,7 @@ const InquiryInquiry: React.FC<InquiryInquiryProps> = ({ artwork }) => {
 
   const [mode, setMode] = useState<Mode>(Mode.Pending)
 
-  const { submitArtworkInquiryRequest } = useArtworkInquiryRequest({
-    artworkID,
-    message: inquiry.message,
-  })
+  const { submitArtworkInquiryRequest } = useArtworkInquiryRequest()
 
   const handleTextAreaChange = ({ value }: { value: string }) => {
     if (mode === Mode.Confirm && value !== DEFAULT_MESSAGE) {
@@ -85,7 +82,10 @@ const InquiryInquiry: React.FC<InquiryInquiryProps> = ({ artwork }) => {
     setMode(Mode.Sending)
 
     try {
-      await submitArtworkInquiryRequest()
+      await submitArtworkInquiryRequest({
+        artworkID,
+        message: inquiry.message,
+      })
       setMode(Mode.Success)
       await wait(500)
       next()

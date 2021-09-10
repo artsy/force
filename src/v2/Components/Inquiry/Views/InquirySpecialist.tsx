@@ -38,10 +38,7 @@ export const InquirySpecialist: React.FC = () => {
     setInquiry(prevState => ({ ...prevState, [name]: event.target.value }))
   }
 
-  const { submitArtworkInquiryRequest } = useArtworkInquiryRequest({
-    artworkID,
-    message: inquiry.message,
-  })
+  const { submitArtworkInquiryRequest } = useArtworkInquiryRequest()
 
   const handleSubmit = async (event: React.FormEvent<HTMLElement>) => {
     event.preventDefault()
@@ -56,7 +53,11 @@ export const InquirySpecialist: React.FC = () => {
     setMode(Mode.Sending)
 
     try {
-      await submitArtworkInquiryRequest()
+      await submitArtworkInquiryRequest({
+        artworkID,
+        message: inquiry.message,
+        contactGallery: false,
+      })
       setMode(Mode.Success)
       await wait(500)
       next()
