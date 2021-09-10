@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect, useCallback } from "react"
+import React, { useContext, useState, useEffect } from "react"
 import {
   Box,
   Column,
@@ -74,9 +74,9 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
   useEffect(() => {
     if (queryParams.scrollToAuctionResults) {
       scrollIntoView({
-        selector: "#scrollTo--artistAuctionResultsTop",
+        selector: "#scrollTo--artistMarketResultsTop",
         behavior: "smooth",
-        offset: 150,
+        offset: 125,
       })
     }
   }, [queryParams.scrollToAuctionResults])
@@ -93,7 +93,7 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
     scrollIntoView({
       selector: "#scrollTo--artistAuctionResultsTop",
       behavior: "smooth",
-      offset: 150,
+      offset: 160,
     })
     setFilter?.("pageAndCursor", {
       cursor: cursor,
@@ -193,15 +193,17 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
     <>
       <Title>{titleString}</Title>
 
+      <Box id="scrollTo--artistMarketResultsTop" />
+
       <MarketStatsQueryRenderer
         artistInternalID={artist.internalID}
         environment={relay.environment}
       />
 
-      <Box id="scrollTo--artistAuctionResultsTop" />
-
       <Text variant={["md", "lg"]}>Auction Results</Text>
       <Spacer my={2} />
+
+      <Box id="scrollTo--artistAuctionResultsTop" />
 
       {showMobileActionSheet && (
         <AuctionFilterMobileActionSheet
