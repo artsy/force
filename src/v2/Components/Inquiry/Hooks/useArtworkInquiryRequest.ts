@@ -1,23 +1,23 @@
 import { commitMutation, graphql, Environment } from "relay-runtime"
 import { useSystemContext } from "v2/System"
-import { useArtworkInquiryRequestMutation } from "v2/__generated__/useArtworkInquiryRequestMutation.graphql"
+import {
+  SubmitInquiryRequestMutationInput,
+  useArtworkInquiryRequestMutation,
+} from "v2/__generated__/useArtworkInquiryRequestMutation.graphql"
 
-interface UseInquiryRequest {
-  artworkID: string
-  message: string
-}
+type UseArtworkInquiryRequestInput = Omit<
+  SubmitInquiryRequestMutationInput,
+  "inquireableID" | "inquireableType" | "message"
+> & { relayEnvironment?: Environment; artworkID: string; message: string }
 
-export const useArtworkInquiryRequest = ({
-  artworkID,
-  message,
-}: UseInquiryRequest) => {
+export const useArtworkInquiryRequest = () => {
   const { relayEnvironment: defaultRelayEnvironment } = useSystemContext()
 
   const submitArtworkInquiryRequest = ({
     relayEnvironment = defaultRelayEnvironment,
-  }: {
-    relayEnvironment?: Environment
-  } = {}) => {
+    artworkID,
+    ...rest
+  }: UseArtworkInquiryRequestInput) => {
     return new Promise((resolve, reject) => {
       commitMutation<useArtworkInquiryRequestMutation>(relayEnvironment!, {
         onCompleted: (res, errors) => {
@@ -41,7 +41,7 @@ export const useArtworkInquiryRequest = ({
           input: {
             inquireableID: artworkID,
             inquireableType: "Artwork",
-            message,
+            ...rest,
           },
         },
       })

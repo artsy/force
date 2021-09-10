@@ -41,10 +41,7 @@ export const InquiryLogin: React.FC = () => {
     authenticationCode: "",
   })
 
-  const { submitArtworkInquiryRequest } = useArtworkInquiryRequest({
-    artworkID,
-    message: inquiry.message,
-  })
+  const { submitArtworkInquiryRequest } = useArtworkInquiryRequest()
 
   const handleSubmit = async (event: React.FormEvent<HTMLElement>) => {
     event.preventDefault()
@@ -56,6 +53,8 @@ export const InquiryLogin: React.FC = () => {
 
       await submitArtworkInquiryRequest({
         relayEnvironment: createRelaySSREnvironment({ user }),
+        artworkID,
+        message: inquiry.message,
       })
 
       setMode(Mode.Success)

@@ -29,10 +29,7 @@ export const InquirySignUp: React.FC = () => {
 
   const { inquiry, artworkID, next } = useInquiryContext()
 
-  const { submitArtworkInquiryRequest } = useArtworkInquiryRequest({
-    artworkID,
-    message: inquiry.message,
-  })
+  const { submitArtworkInquiryRequest } = useArtworkInquiryRequest()
 
   const [state, setState] = useState<InquirySignUpState>({
     name: inquiry.name ?? "",
@@ -50,6 +47,8 @@ export const InquirySignUp: React.FC = () => {
 
       await submitArtworkInquiryRequest({
         relayEnvironment: createRelaySSREnvironment({ user }),
+        artworkID,
+        message: inquiry.message,
       })
 
       setMode(Mode.Success)

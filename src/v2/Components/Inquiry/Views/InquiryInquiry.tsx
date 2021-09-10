@@ -27,6 +27,7 @@ import {
   InquiryState,
 } from "../Hooks/useInquiryContext"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
+import { logger } from "../util"
 
 enum Mode {
   Pending,
@@ -47,10 +48,7 @@ const InquiryInquiry: React.FC<InquiryInquiryProps> = ({ artwork }) => {
 
   const [mode, setMode] = useState<Mode>(Mode.Pending)
 
-  const { submitArtworkInquiryRequest } = useArtworkInquiryRequest({
-    artworkID,
-    message: inquiry.message,
-  })
+  const { submitArtworkInquiryRequest } = useArtworkInquiryRequest()
 
   const handleTextAreaChange = ({ value }: { value: string }) => {
     if (mode === Mode.Confirm && value !== DEFAULT_MESSAGE) {
@@ -74,19 +72,25 @@ const InquiryInquiry: React.FC<InquiryInquiryProps> = ({ artwork }) => {
       return
     }
 
+    // If the user is logged out we just go to the next view which should
+    // be the authentication step. The inquiry gets sent after login or sign up.
     if (!user) {
       next()
+      return
     }
 
     setMode(Mode.Sending)
 
     try {
-      await submitArtworkInquiryRequest()
+      await submitArtworkInquiryRequest({
+        artworkID,
+        message: inquiry.message,
+      })
       setMode(Mode.Success)
       await wait(500)
       next()
     } catch (err) {
-      console.error(err)
+      logger.error(err)
       setMode(Mode.Error)
     }
   }
