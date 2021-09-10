@@ -11,7 +11,13 @@ export type HomeFeaturedEventsRail_orderedSet = {
         readonly subtitle: string | null;
         readonly href: string | null;
         readonly image: {
-            readonly cropped: {
+            readonly small: {
+                readonly src: string;
+                readonly srcSet: string;
+                readonly width: number;
+                readonly height: number;
+            } | null;
+            readonly large: {
                 readonly src: string;
                 readonly srcSet: string;
             } | null;
@@ -31,7 +37,22 @@ export type HomeFeaturedEventsRail_orderedSet$key = {
 
 
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "src",
+  "storageKey": null
+},
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "srcSet",
+  "storageKey": null
+};
+return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
@@ -92,7 +113,7 @@ const node: ReaderFragment = {
               "plural": false,
               "selections": [
                 {
-                  "alias": null,
+                  "alias": "small",
                   "args": [
                     {
                       "kind": "Literal",
@@ -110,22 +131,48 @@ const node: ReaderFragment = {
                   "name": "cropped",
                   "plural": false,
                   "selections": [
+                    (v0/*: any*/),
+                    (v1/*: any*/),
                     {
                       "alias": null,
                       "args": null,
                       "kind": "ScalarField",
-                      "name": "src",
+                      "name": "width",
                       "storageKey": null
                     },
                     {
                       "alias": null,
                       "args": null,
                       "kind": "ScalarField",
-                      "name": "srcSet",
+                      "name": "height",
                       "storageKey": null
                     }
                   ],
                   "storageKey": "cropped(height:63,width:95)"
+                },
+                {
+                  "alias": "large",
+                  "args": [
+                    {
+                      "kind": "Literal",
+                      "name": "height",
+                      "value": 297
+                    },
+                    {
+                      "kind": "Literal",
+                      "name": "width",
+                      "value": 445
+                    }
+                  ],
+                  "concreteType": "CroppedImageUrl",
+                  "kind": "LinkedField",
+                  "name": "cropped",
+                  "plural": false,
+                  "selections": [
+                    (v0/*: any*/),
+                    (v1/*: any*/)
+                  ],
+                  "storageKey": "cropped(height:297,width:445)"
                 }
               ],
               "storageKey": null
@@ -139,5 +186,6 @@ const node: ReaderFragment = {
   ],
   "type": "OrderedSet"
 };
-(node as any).hash = '6c88a0ed5302a1aaad0774e619990b2c';
+})();
+(node as any).hash = 'a5ec8830f2f214d59a527aa593060498';
 export default node;
