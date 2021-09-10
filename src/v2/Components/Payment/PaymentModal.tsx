@@ -161,7 +161,7 @@ export const PaymentModal: React.FC<PaymentModalProps> = props => {
     }
   }
   return (
-    <Modal title="Add credit card" show={show} onClose={closeModal}>
+    <Modal isWide title="Add credit card" show={show} onClose={closeModal}>
       <Formik
         initialValues={{
           country: "US",

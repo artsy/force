@@ -1,4 +1,4 @@
-import { Box, Theme, Text } from "@artsy/palette"
+import { Box, Text } from "@artsy/palette"
 import { SavedAddressesFragmentContainer as SavedAddresses } from "v2/Apps/Order/Components/SavedAddresses"
 import { renderWithLoadProgress } from "v2/System/Relay/renderWithLoadProgress"
 import { SystemContextProps } from "v2/System"
@@ -41,27 +41,25 @@ export const UserSettingsAddresses: React.FC<UserSettingsAddressesProps> = props
   }
 
   return (
-    <Theme>
-      <Box maxWidth={940} mb={3}>
-        <Text variant="subtitle" mb={3}>
-          Saved Addresses
-        </Text>
-        <ToastComponent
-          showNotification={notificationState.notificationVisible}
-          notificationAction={notificationState.action}
-          duration={5000}
-          title="Address Successfully"
-          onCloseToast={onCloseToast}
-        />
-        <SavedAddresses
-          // @ts-expect-error STRICT_NULL_CHECK
-          me={me}
-          onShowToast={onShowToast}
-          inCollectorProfile
-          {...props}
-        />
-      </Box>
-    </Theme>
+    <Box maxWidth={940} mb={3}>
+      <Text variant="lg" my={4}>
+        Saved Addresses
+      </Text>
+      <ToastComponent
+        showNotification={notificationState.notificationVisible}
+        notificationAction={notificationState.action}
+        duration={5000}
+        title="Address Successfully"
+        onCloseToast={onCloseToast}
+      />
+      <SavedAddresses
+        // @ts-expect-error STRICT_NULL_CHECK
+        me={me}
+        onShowToast={onShowToast}
+        inCollectorProfile
+        {...props}
+      />
+    </Box>
   )
 }
 

@@ -51,7 +51,7 @@ export const AddressModalFields: React.FC = () => {
         />
       </Flex>
       <GridColumns mt={[1, 2]}>
-        <Column span={12}>
+        <Column span={6}>
           <Box>
             <Text
               textTransform={styles.textTransform}
@@ -69,7 +69,7 @@ export const AddressModalFields: React.FC = () => {
             />
           </Box>
         </Column>
-        <Column span={12}>
+        <Column span={6}>
           <Input
             title="Postal Code"
             placeholder="Add postal code"
@@ -83,7 +83,7 @@ export const AddressModalFields: React.FC = () => {
       </GridColumns>
 
       <GridColumns mt={[1, 2]}>
-        <Column span={12}>
+        <Column span={6}>
           <Input
             title="Address Line 1"
             placeholder="Add address"
@@ -94,7 +94,7 @@ export const AddressModalFields: React.FC = () => {
             value={values?.addressLine1}
           />
         </Column>
-        <Column span={12}>
+        <Column span={6}>
           <Input
             title="Address Line 2 (optional)"
             placeholder="Add address line 2"
@@ -107,7 +107,7 @@ export const AddressModalFields: React.FC = () => {
         </Column>
       </GridColumns>
       <GridColumns mt={[1, 2]}>
-        <Column span={12}>
+        <Column span={6}>
           <Input
             title="City"
             placeholder="Enter city"
@@ -118,7 +118,7 @@ export const AddressModalFields: React.FC = () => {
             value={values?.city}
           />
         </Column>
-        <Column span={12}>
+        <Column span={6}>
           <Input
             title="State, province, or region"
             placeholder="Add state, province, or region"
