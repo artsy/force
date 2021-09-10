@@ -80,7 +80,7 @@ describe("ExhibitorsLetterNav", () => {
       expect(letter.at(i).prop("title")).toEqual("")
     }
     expect(letter.at(26).prop("title")).toEqual(
-      `View exhibitors starting with “0-9”`
+      `View exhibitors starting with special character or number`
     )
   })
 
@@ -98,5 +98,5 @@ const exhibitorsGroupedByName = [
   { letter: "K" },
   { letter: "L" },
   { letter: "M" },
-  { letter: "0-9" },
+  { letter: "#" },
 ]
