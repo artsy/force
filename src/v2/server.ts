@@ -1,4 +1,3 @@
-import sharify from "sharify"
 import type { NextFunction } from "express"
 import type { ArtsyRequest, ArtsyResponse } from "lib/middleware/artsyExpress"
 import { buildServerApp } from "v2/System/Router/server"
@@ -56,7 +55,7 @@ app.get(
       }
 
       const headTagsString = ReactDOM.renderToString(headTags as any)
-      const sharifyData = res.locals.sharify.script()
+      const sharify = res.locals.sharify
 
       const { APP_URL, CURRENT_PATH, WEBFONT_URL } = sharify.data
 
@@ -64,7 +63,7 @@ app.get(
         cdnUrl: NODE_ENV === "production" ? CDN_URL : "",
         content: {
           body: bodyHTML,
-          data: sharifyData,
+          data: sharify.script(),
           head: headTagsString,
           scripts,
           style: styleTags,
