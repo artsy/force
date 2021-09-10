@@ -15,6 +15,8 @@ export type OrderRow_order = {
     } | {
         readonly __typename: "CommercePickup";
     } | {
+        readonly __typename: "CommerceShipArta";
+    } | {
         /*This will never be '%other', but we need some
         value in case none of the concrete values match.*/
         readonly __typename: "%other";
@@ -28,6 +30,9 @@ export type OrderRow_order = {
     readonly lineItems: {
         readonly edges: ReadonlyArray<{
             readonly node: {
+                readonly shipment: {
+                    readonly status: string | null;
+                } | null;
                 readonly artwork: {
                     readonly slug: string;
                     readonly date: string | null;
@@ -49,7 +54,7 @@ export type OrderRow_order = {
                     readonly shippingOrigin: string | null;
                     readonly internalID: string;
                     readonly title: string | null;
-                    readonly artist_names: string | null;
+                    readonly artistNames: string | null;
                     readonly artists: ReadonlyArray<{
                         readonly slug: string;
                     } | null> | null;
@@ -143,6 +148,11 @@ return {
           "kind": "InlineFragment",
           "selections": (v1/*: any*/),
           "type": "CommercePickup"
+        },
+        {
+          "kind": "InlineFragment",
+          "selections": (v1/*: any*/),
+          "type": "CommerceShipArta"
         }
       ],
       "storageKey": null
@@ -210,6 +220,24 @@ return {
               "name": "node",
               "plural": false,
               "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "concreteType": "CommerceShipment",
+                  "kind": "LinkedField",
+                  "name": "shipment",
+                  "plural": false,
+                  "selections": [
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "status",
+                      "storageKey": null
+                    }
+                  ],
+                  "storageKey": null
+                },
                 {
                   "alias": null,
                   "args": null,
@@ -344,7 +372,7 @@ return {
                       "storageKey": null
                     },
                     {
-                      "alias": "artist_names",
+                      "alias": null,
                       "args": null,
                       "kind": "ScalarField",
                       "name": "artistNames",
@@ -424,5 +452,5 @@ return {
   "type": "CommerceOrder"
 };
 })();
-(node as any).hash = 'd1853d9bb002c67703e18648a78e5a7f';
+(node as any).hash = 'e3a37c6bc7d17729054affe374a30407';
 export default node;

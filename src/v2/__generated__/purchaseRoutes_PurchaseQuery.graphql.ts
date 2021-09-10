@@ -37,6 +37,9 @@ fragment OrderRow_order on CommerceOrder {
     ... on CommercePickup {
       __typename
     }
+    ... on CommerceShipArta {
+      __typename
+    }
   }
   creditCard {
     lastDigits
@@ -48,6 +51,10 @@ fragment OrderRow_order on CommerceOrder {
   lineItems {
     edges {
       node {
+        shipment {
+          status
+          id
+        }
         artwork {
           slug
           date
@@ -71,7 +78,7 @@ fragment OrderRow_order on CommerceOrder {
           shippingOrigin
           internalID
           title
-          artist_names: artistNames
+          artistNames
           artists {
             slug
             id
@@ -324,6 +331,11 @@ return {
                             "kind": "InlineFragment",
                             "selections": (v3/*: any*/),
                             "type": "CommercePickup"
+                          },
+                          {
+                            "kind": "InlineFragment",
+                            "selections": (v3/*: any*/),
+                            "type": "CommerceShipArta"
                           }
                         ],
                         "storageKey": null
@@ -392,6 +404,25 @@ return {
                                 "name": "node",
                                 "plural": false,
                                 "selections": [
+                                  {
+                                    "alias": null,
+                                    "args": null,
+                                    "concreteType": "CommerceShipment",
+                                    "kind": "LinkedField",
+                                    "name": "shipment",
+                                    "plural": false,
+                                    "selections": [
+                                      {
+                                        "alias": null,
+                                        "args": null,
+                                        "kind": "ScalarField",
+                                        "name": "status",
+                                        "storageKey": null
+                                      },
+                                      (v4/*: any*/)
+                                    ],
+                                    "storageKey": null
+                                  },
                                   {
                                     "alias": null,
                                     "args": null,
@@ -522,7 +553,7 @@ return {
                                         "storageKey": null
                                       },
                                       {
-                                        "alias": "artist_names",
+                                        "alias": null,
                                         "args": null,
                                         "kind": "ScalarField",
                                         "name": "artistNames",
@@ -713,7 +744,7 @@ return {
     "metadata": {},
     "name": "purchaseRoutes_PurchaseQuery",
     "operationKind": "query",
-    "text": "query purchaseRoutes_PurchaseQuery {\n  me {\n    ...PurchaseApp_me\n    id\n  }\n}\n\nfragment OrderRow_order on CommerceOrder {\n  internalID\n  code\n  state\n  mode\n  requestedFulfillment {\n    __typename\n    ... on CommerceShip {\n      __typename\n    }\n    ... on CommercePickup {\n      __typename\n    }\n  }\n  creditCard {\n    lastDigits\n    id\n  }\n  buyerTotal\n  createdAt\n  itemsTotal\n  lineItems {\n    edges {\n      node {\n        artwork {\n          slug\n          date\n          image {\n            resized(width: 55) {\n              url\n            }\n          }\n          partner {\n            href\n            initials\n            name\n            profile {\n              icon {\n                url(version: \"square140\")\n              }\n              id\n            }\n            id\n          }\n          shippingOrigin\n          internalID\n          title\n          artist_names: artistNames\n          artists {\n            slug\n            id\n          }\n          id\n        }\n        fulfillments(first: 1) {\n          edges {\n            node {\n              trackingId\n              id\n            }\n          }\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment PurchaseApp_me on Me {\n  ...PurchaseHistory_me\n}\n\nfragment PurchaseHistory_me on Me {\n  name\n  orders(states: [APPROVED, CANCELED, FULFILLED, REFUNDED, SUBMITTED], first: 10) {\n    edges {\n      node {\n        __typename\n        code\n        ...OrderRow_order\n        id\n      }\n    }\n    pageCursors {\n      around {\n        cursor\n        isCurrent\n        page\n      }\n      first {\n        cursor\n        isCurrent\n        page\n      }\n      last {\n        cursor\n        isCurrent\n        page\n      }\n      previous {\n        cursor\n        isCurrent\n        page\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n"
+    "text": "query purchaseRoutes_PurchaseQuery {\n  me {\n    ...PurchaseApp_me\n    id\n  }\n}\n\nfragment OrderRow_order on CommerceOrder {\n  internalID\n  code\n  state\n  mode\n  requestedFulfillment {\n    __typename\n    ... on CommerceShip {\n      __typename\n    }\n    ... on CommercePickup {\n      __typename\n    }\n    ... on CommerceShipArta {\n      __typename\n    }\n  }\n  creditCard {\n    lastDigits\n    id\n  }\n  buyerTotal\n  createdAt\n  itemsTotal\n  lineItems {\n    edges {\n      node {\n        shipment {\n          status\n          id\n        }\n        artwork {\n          slug\n          date\n          image {\n            resized(width: 55) {\n              url\n            }\n          }\n          partner {\n            href\n            initials\n            name\n            profile {\n              icon {\n                url(version: \"square140\")\n              }\n              id\n            }\n            id\n          }\n          shippingOrigin\n          internalID\n          title\n          artistNames\n          artists {\n            slug\n            id\n          }\n          id\n        }\n        fulfillments(first: 1) {\n          edges {\n            node {\n              trackingId\n              id\n            }\n          }\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment PurchaseApp_me on Me {\n  ...PurchaseHistory_me\n}\n\nfragment PurchaseHistory_me on Me {\n  name\n  orders(states: [APPROVED, CANCELED, FULFILLED, REFUNDED, SUBMITTED], first: 10) {\n    edges {\n      node {\n        __typename\n        code\n        ...OrderRow_order\n        id\n      }\n    }\n    pageCursors {\n      around {\n        cursor\n        isCurrent\n        page\n      }\n      first {\n        cursor\n        isCurrent\n        page\n      }\n      last {\n        cursor\n        isCurrent\n        page\n      }\n      previous {\n        cursor\n        isCurrent\n        page\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n"
   }
 };
 })();
