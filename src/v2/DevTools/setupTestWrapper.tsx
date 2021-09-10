@@ -1,5 +1,6 @@
 import React from "react"
 import { mount } from "enzyme"
+import { render } from "@testing-library/react"
 import { QueryRenderer } from "react-relay"
 import { MockPayloadGenerator, createMockEnvironment } from "relay-test-utils"
 import { GraphQLTaggedNode, OperationType } from "relay-runtime"
@@ -12,7 +13,7 @@ type SetupTestWrapper<T extends OperationType> = {
 }
 /**
  * Creates an enzyme-based wrapper for testing Relay components using the
- * `relay-test-tools` package, which will provide automatic fixture data for
+ * `relay-test-utils` package, which will provide automatic fixture data for
  * GraphQL queries.
  *
  * Note: If wanting to test a QueryRenderer, extract the render code into a
@@ -94,4 +95,48 @@ export const setupTestWrapper = <T extends OperationType>({
   }
 
   return { getWrapper }
+}
+
+/**
+ * Creates a React Testing Library-based wrapper for testing Relay components
+ * using the `relay-test-utils` package, which will provide automatic fixture
+ * data for GraphQL queries.
+ *
+ * @see https://relay.dev/docs/en/testing-relay-components
+ * @see https://testing-library.com/docs/react-testing-library/
+ */
+export const setupTestWrapperTL = <T extends OperationType>({
+  Component,
+  query,
+  variables = {},
+}: SetupTestWrapper<T>) => {
+  const renderWithRelay = (mockResolvers: MockResolvers = {}) => {
+    const env = createMockEnvironment()
+
+    const TestRenderer = () => (
+      <QueryRenderer<T>
+        environment={env}
+        variables={variables}
+        query={query}
+        render={({ props, error }) => {
+          if (props) {
+            // @ts-expect-error STRICT_NULL_CHECK
+            return <Component {...props} />
+          } else if (error) {
+            console.error(error)
+          }
+        }}
+      />
+    )
+
+    const view = render(<TestRenderer />)
+
+    env.mock.resolveMostRecentOperation(operation => {
+      return MockPayloadGenerator.generate(operation, mockResolvers)
+    })
+
+    return view
+  }
+
+  return { renderWithRelay }
 }
