@@ -74,15 +74,14 @@ export function getOrderStatus(
 export const getOrderIcon = (status: string) => {
   switch (status) {
     case "pending":
+    case "confirmed":
+    case "processing":
+    case "in transit":
       return <PendingCircleIcon fill="black60" />
     case "canceled":
     case "refunded":
       return <XCircleIcon fill="red100" />
-    case "confirmed":
     case "delivered":
-    case "processing":
-    case "in transit":
-    case "completed":
       return <CheckCircleFillIcon />
   }
 }
@@ -90,15 +89,15 @@ export const getOrderIcon = (status: string) => {
 export const getOrderColor = (status: string) => {
   switch (status) {
     case "pending":
+    case "processing":
+    case "confirmed":
       return "black60"
     case "canceled":
     case "refunded":
       return "red100"
-    case "confirmed":
     case "delivered":
-    case "processing":
-    case "in transit":
     case "completed":
+    case "in transit":
       return "black100"
   }
 }
