@@ -1,16 +1,17 @@
 import {
-  Flex,
   Box,
   Image,
   Text,
-  Spacer,
   GridColumns,
   Column,
+  ResponsiveBox,
+  Flex,
 } from "@artsy/palette"
 import { compact, take } from "lodash"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "v2/System/Router/RouterLink"
+import { Media } from "v2/Utils/Responsive"
 import { HomeFeaturedEventsRail_orderedSet } from "v2/__generated__/HomeFeaturedEventsRail_orderedSet.graphql"
 
 interface HomeFeaturedEventsRailProps {
@@ -30,47 +31,78 @@ const HomeFeaturedEventsRail: React.FC<HomeFeaturedEventsRailProps> = ({
   if (events.length === 0) return null
 
   return (
-    <GridColumns>
-      {events.map((event, i) => {
-        const image = event.image?.cropped
+    <>
+      <Text variant="lg" mb={4}>
+        Featured
+      </Text>
 
-        return (
-          <Column key={event.internalID ?? i} span={3}>
-            <RouterLink
-              to={event.href ?? ""}
-              style={{ display: "block", textDecoration: "none" }}
-            >
-              <Flex alignItems="center">
-                <Box flexShrink={0}>
-                  {image ? (
-                    <Image
-                      src={image.src}
-                      srcSet={image.srcSet}
-                      width={95}
-                      height={63}
-                      alt=""
-                      lazyLoad
-                    />
-                  ) : (
-                    <Box bg="black10" width={95} height={63} />
-                  )}
-                </Box>
+      <GridColumns gridRowGap={2}>
+        {events.map((event, i) => {
+          const image = event.image
 
-                <Spacer ml={2} />
+          return (
+            <Column key={event.internalID ?? i} span={3}>
+              <RouterLink
+                to={event.href ?? ""}
+                style={{ display: "block", textDecoration: "none" }}
+              >
+                <Media lessThan="sm">
+                  <Flex>
+                    {image?.small ? (
+                      <Image
+                        src={image.small.src}
+                        srcSet={image.small.srcSet}
+                        width={image.small.width}
+                        height={image.small.height}
+                        alt=""
+                        lazyLoad
+                      />
+                    ) : (
+                      <Box bg="black10" width="100%" height="100%" />
+                    )}
 
-                <Flex flexDirection="column" justifyContent="center">
-                  <Text variant="xs" color="black60">
+                    <Box ml={2}>
+                      <Text variant="xs" textTransform="uppercase">
+                        {event.title}
+                      </Text>
+
+                      <Text variant="lg">{event.subtitle}</Text>
+                    </Box>
+                  </Flex>
+                </Media>
+
+                <Media greaterThanOrEqual="sm">
+                  <ResponsiveBox
+                    aspectWidth={3}
+                    aspectHeight={2}
+                    maxWidth="100%"
+                  >
+                    {image?.large ? (
+                      <Image
+                        src={image.large.src}
+                        srcSet={image.large.srcSet}
+                        width="100%"
+                        height="100%"
+                        alt=""
+                        lazyLoad
+                      />
+                    ) : (
+                      <Box bg="black10" width="100%" height="100%" />
+                    )}
+                  </ResponsiveBox>
+
+                  <Text variant="xs" textTransform="uppercase" mt={1}>
                     {event.title}
                   </Text>
 
-                  <Text variant="md">{event.subtitle}</Text>
-                </Flex>
-              </Flex>
-            </RouterLink>
-          </Column>
-        )
-      })}
-    </GridColumns>
+                  <Text variant="lg">{event.subtitle}</Text>
+                </Media>
+              </RouterLink>
+            </Column>
+          )
+        })}
+      </GridColumns>
+    </>
   )
 }
 
@@ -87,8 +119,13 @@ export const HomeFeaturedEventsRailFragmentContainer = createFragmentContainer(
             subtitle
             href
             image {
-              # 3:2
-              cropped(width: 95, height: 63) {
+              small: cropped(width: 95, height: 63) {
+                src
+                srcSet
+                width
+                height
+              }
+              large: cropped(width: 445, height: 297) {
                 src
                 srcSet
               }
