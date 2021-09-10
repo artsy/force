@@ -109,7 +109,12 @@ export const useEngine = ({ context, onDone }: UseEngine) => {
             ],
           },
         },
-        "Done",
+        {
+          hasSeenConfirmationThisSession: {
+            true: ["Done"],
+            false: ["Confirmation"],
+          },
+        },
       ],
       conditions: {
         askSpecialist: () => {
@@ -188,7 +193,7 @@ export const useEngine = ({ context, onDone }: UseEngine) => {
 
   const next = () => {
     // At the end; closes the modal
-    if (current === "Done") {
+    if (engine.current.isEnd()) {
       onDone()
       return
     }
