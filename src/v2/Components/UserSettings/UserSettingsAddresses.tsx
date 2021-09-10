@@ -45,9 +45,9 @@ export const UserSettingsAddresses: React.FC<UserSettingsAddressesProps> = props
   }
 
   return (
-    <Box mb={3}>
-      <Text variant={["sm", "lg"]} my={4}>
-        {updater ? "Saved Cards" : "No Saved Cards"}
+    <Box mb={2}>
+      <Text variant={["sm", "lg"]} my={[2, 4]}>
+        {updater ? "Saved Addresses" : "No Saved Addresses"}
       </Text>
       <ToastComponent
         showNotification={notificationState.notificationVisible}
@@ -93,8 +93,7 @@ export const UserSettingsAddressesQueryRenderer = () => {
 
   return (
     <QueryRenderer<UserSettingsAddressesQuery>
-      // @ts-expect-error STRICT_NULL_CHECK
-      environment={relayEnvironment}
+      environment={relayEnvironment!}
       variables={{}}
       query={graphql`
         query UserSettingsAddressesQuery {

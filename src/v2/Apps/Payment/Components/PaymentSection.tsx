@@ -26,7 +26,7 @@ export const PaymentSection: React.FC<PaymentSectionProps> = props => {
   const stripePromise = loadStripe(sd.STRIPE_PUBLISHABLE_KEY)
   return (
     <>
-      <Text variant={["sm", "lg"]} my={4}>
+      <Text variant={["sm", "lg"]} mt={4} mb={[2, 4]}>
         {creditCards.length ? "Saved Cards" : "No Saved Cards"}
       </Text>
 
@@ -39,11 +39,12 @@ export const PaymentSection: React.FC<PaymentSectionProps> = props => {
           />
         </Box>
       ) : (
-        <Text mb={4} color="black60" variant="sm">
+        <Text mb={2} color="black60" variant="sm">
           Please add a payment card for a faster checkout experience in future.
         </Text>
       )}
       <Button
+        mt={2}
         variant="secondaryOutline"
         onClick={() => setShowPaymentModal(true)}
       >

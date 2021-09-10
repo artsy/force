@@ -241,6 +241,8 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
     <>
       {inCollectorProfile ? (
         <Button
+          mb={2}
+          mt={[2, 4]}
           data-test="profileButton"
           variant="secondaryOutline"
           onClick={() => {
@@ -256,6 +258,8 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
       ) : (
         addressList.length > 0 && (
           <Button
+            mt={[2, 4]}
+            mb={2}
             data-test="shippingButton"
             variant="secondaryOutline"
             onClick={() => {
@@ -307,7 +311,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
           {collectorProfileAddressItems.length ? (
             collectorProfileAddressItems
           ) : (
-            <Text mb={4} color="black60" variant="sm">
+            <Text color="black60" variant="sm">
               Please add an address for a faster checkout experience in future.
             </Text>
           )}

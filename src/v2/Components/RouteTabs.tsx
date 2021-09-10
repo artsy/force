@@ -45,7 +45,7 @@ export const RouteTabs: React.FC<
   return (
     <BaseTabs
       justifyContent="space-between"
-      mx={[-2, 0]}
+      mx={[-4, 0]}
       px={[2, 0]}
       {...props}
     />
