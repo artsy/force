@@ -1,3 +1,4 @@
+import React from "react"
 import {
   AuctionIcon,
   FairIcon,
@@ -9,7 +10,6 @@ import {
   TagIcon,
   UserSingleIcon,
 } from "@artsy/palette"
-import React, { SFC } from "react"
 
 const iconMapping = {
   Auction: AuctionIcon,
@@ -22,11 +22,11 @@ const iconMapping = {
   Tag: TagIcon,
 }
 
-interface FallbackIcon {
+interface FallbackIconProps {
   entityType: string
 }
 
-export const FallbackIcon: SFC<FallbackIcon> = ({ entityType }) => {
+export const FallbackIcon: React.FC<FallbackIconProps> = ({ entityType }) => {
   const Icon = iconMapping[entityType] || NoImageIcon
 
   return <Icon height={28} width={28} opacity={0.4} />

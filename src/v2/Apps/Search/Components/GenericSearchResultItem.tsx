@@ -1,19 +1,10 @@
-import {
-  Box,
-  Flex,
-  Image,
-  Link,
-  Sans,
-  Serif,
-  Spacer,
-  color,
-} from "@artsy/palette"
+import React from "react"
+import { Box, Flex, Image, Link, Text, BorderBox } from "@artsy/palette"
 import { track } from "v2/System/Analytics"
 import * as Schema from "v2/System/Analytics/Schema"
-import { Truncator } from "v2/Components/Truncator"
-import React from "react"
 import styled from "styled-components"
-import { FallbackIcon } from "./FallbackIcon"
+import { themeGet } from "@styled-system/theme-get"
+import { Truncator } from "v2/Components/Truncator"
 
 interface GenericSearchResultItemProps {
   imageUrl: string
@@ -54,52 +45,31 @@ export class GenericSearchResultItem extends React.Component<
     }
 
     return (
-      <Link
-        href={href}
-        underlineBehavior="none"
-        onClick={() => {
-          this.handleClick()
-        }}
-      >
-        <ItemRow>
-          <Spacer pb={3} />
-          <Flex pl={4} flexDirection="row">
-            <Box height={70} width={70} mr={2}>
-              <Flex
-                style={{ backgroundColor: color("black10") }}
-                height="100%"
-                justifyContent="center"
-                alignItems="center"
-              >
-                {imageUrl && entityType !== "City" ? (
+      <Link href={href} underlineBehavior="none" onClick={this.handleClick}>
+        <ItemRow py={2}>
+          <Flex px={[0, 4]} flexDirection="row">
+            <Box width={72} height={72} mr={2}>
+              <BorderBox width={72} height={72} p={0}>
+                {imageUrl && entityType !== "City" && (
                   <Image width={70} height={70} src={imageUrl} alt={name} />
-                ) : (
-                  <FallbackIcon entityType={entityType} />
                 )}
-              </Flex>
+              </BorderBox>
             </Box>
 
             <Box>
-              <Sans color="black100" size="2" weight="medium">
+              <Text variant="xs" color="black60" mb={0.5}>
                 {translateEntityType(entityType)}
-              </Sans>
-              <Spacer mb={0.5} />
+              </Text>
 
-              <Serif color="black100" size="3">
-                {name}
-              </Serif>
+              <Text size="md">{name}</Text>
 
               {description && (
-                <>
-                  <Spacer mb={0.5} />
-                  <Serif color="black60" size="3" maxWidth={536}>
-                    <Truncator maxLineCount={3}>{description}</Truncator>
-                  </Serif>
-                </>
+                <Text mt={0.5} variant="sm" color="black60">
+                  <Truncator maxLineCount={3}>{description}</Truncator>
+                </Text>
               )}
             </Box>
           </Flex>
-          <Spacer pb={3} />
         </ItemRow>
       </Link>
     )
@@ -108,6 +78,6 @@ export class GenericSearchResultItem extends React.Component<
 
 const ItemRow = styled(Box)`
   &:hover {
-    background-color: ${color("black5")};
+    background-color: ${themeGet("colors.black5")};
   }
 `

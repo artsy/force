@@ -1,12 +1,15 @@
-import { Text } from "@artsy/palette"
+import React from "react"
+import { BoxProps, Text } from "@artsy/palette"
 import { NavigationTabs_searchableConnection } from "v2/__generated__/NavigationTabs_searchableConnection.graphql"
 import { track } from "v2/System/Analytics"
 import * as Schema from "v2/System/Analytics/Schema"
 import { RouteTab, RouteTabs } from "v2/Components/RouteTabs"
-import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { get } from "v2/Utils/get"
 import { SystemContextProps, withSystemContext } from "v2/System"
+import { RouterLinkProps } from "v2/System/Router/RouterLink"
+import { useIsRouteActive } from "v2/System/Router/useRouter"
+import { Media } from "v2/Utils/Responsive"
 
 export interface Props extends SystemContextProps {
   searchableConnection: NavigationTabs_searchableConnection
@@ -17,17 +20,55 @@ export interface Props extends SystemContextProps {
 const MORE_TABS = ["tag", "city", "feature", "page"]
 
 const TAB_NAME_MAP = {
-  PartnerGallery: "Galleries",
+  artist: "Artists",
+  article: "Articles",
+  sale: "Auctions",
+  artist_series: "Artist Series",
+  marketing_collection: "Collections",
+  fair: "Fairs",
+  partner_show: "Shows",
   PartnerInstitution: "Institutions",
   PartnerInstitutionalSeller: "Institutions",
-  article: "Articles",
-  artist: "Artists",
-  artist_series: "Artist Series",
-  fair: "Fairs",
+  PartnerGallery: "Galleries",
   gene: "Categories",
-  marketing_collection: "Collections",
-  partner_show: "Shows",
-  sale: "Auctions",
+}
+
+interface RouteTabProps extends BoxProps, RouterLinkProps {
+  text: string
+  count?: number
+}
+
+const RoundedRouteTab: React.FC<RouteTabProps> = ({ text, count, ...rest }) => {
+  const isActive = useIsRouteActive(rest.to, { exact: rest.exact ?? true })
+
+  return (
+    <RouteTab
+      height="auto"
+      borderWidth="1px"
+      borderStyle="solid"
+      borderRadius="20px / 50%"
+      borderColor={isActive ? "black60" : "black10"}
+      px={[1, 2]}
+      py={[0.5, 1]}
+      mr={1}
+      {...rest}
+    >
+      <Text variant="md" color={isActive ? "black100" : "black60"}>
+        {text}
+      </Text>
+      <Media greaterThan="xs">
+        {count && (
+          <Text
+            variant="xs"
+            color={isActive ? "blue100" : "black60"}
+            display="inline"
+          >
+            {count}
+          </Text>
+        )}
+      </Media>
+    </RouteTab>
+  )
 }
 
 @track({
@@ -59,7 +100,7 @@ export class NavigationTabs extends React.Component<Props> {
     const tabName = text.replace(/[0-9]/g, "").trim()
 
     return (
-      <RouteTab
+      <RoundedRouteTab
         to={to}
         exact={exact}
         onClick={event => {
@@ -69,14 +110,9 @@ export class NavigationTabs extends React.Component<Props> {
           this.trackClick(tabName, to)
         }}
         key={to}
-      >
-        {text}
-        {count != null && (
-          <Text variant="text" display="inline">
-            &nbsp;({count})
-          </Text>
-        )}
-      </RouteTab>
+        text={tabName}
+        count={count}
+      />
     )
   }
 
@@ -133,7 +169,7 @@ export class NavigationTabs extends React.Component<Props> {
 
   render() {
     return (
-      <RouteTabs key={`tab-carousel-${this.props.term}`}>
+      <RouteTabs pb={4} key={`tab-carousel-${this.props.term}`}>
         {this.tabs()}
       </RouteTabs>
     )
