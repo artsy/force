@@ -58,7 +58,7 @@ const HomeFeaturedEventsRail: React.FC<HomeFeaturedEventsRailProps> = ({
                         lazyLoad
                       />
                     ) : (
-                      <Box bg="black10" width="100%" height="100%" />
+                      <Box bg="black10" width={95} height={63} />
                     )}
 
                     <Box ml={2}>
