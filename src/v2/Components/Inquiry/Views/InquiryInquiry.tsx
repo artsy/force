@@ -27,6 +27,7 @@ import {
   InquiryState,
 } from "../Hooks/useInquiryContext"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
+import { logger } from "../util"
 
 enum Mode {
   Pending,
@@ -74,8 +75,11 @@ const InquiryInquiry: React.FC<InquiryInquiryProps> = ({ artwork }) => {
       return
     }
 
+    // If the user is logged out we just go to the next view which should
+    // be the authentication step. The inquiry gets sent after login or sign up.
     if (!user) {
       next()
+      return
     }
 
     setMode(Mode.Sending)
@@ -86,7 +90,7 @@ const InquiryInquiry: React.FC<InquiryInquiryProps> = ({ artwork }) => {
       await wait(500)
       next()
     } catch (err) {
-      console.error(err)
+      logger.error(err)
       setMode(Mode.Error)
     }
   }
