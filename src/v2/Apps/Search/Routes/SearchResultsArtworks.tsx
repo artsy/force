@@ -21,7 +21,7 @@ export const SearchResultsArtworksRoute: React.FC<SearchResultsRouteProps> = pro
 
   return (
     <ArtworkFilter
-      mt={[0, "-1px"]}
+      mt={4}
       viewer={viewer}
       filters={match.location.query}
       onChange={updateUrl}

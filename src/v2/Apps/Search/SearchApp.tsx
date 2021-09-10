@@ -20,10 +20,10 @@ const TotalResults: React.FC<{ count: number; term: string }> = ({
   return (
     <>
       <Text variant={["lg", "xl"]} display="inline">
-        {count.toLocaleString()} result{count > 1 ? "s" : ""} for&nbsp;
+        {count.toLocaleString()} result{count > 1 ? "s" : ""} for
       </Text>
       <Text variant={["lg", "xl"]} color="blue100" display="inline">
-        “{term}”
+        {` \u201C${term}\u201D`}
       </Text>
     </>
   )
