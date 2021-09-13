@@ -63,6 +63,7 @@ const emptyTestMe: ShippingTestQueryRawResponse["me"] = {
   email: "test@gmail.com",
   id: "4321",
   addressConnection: {
+    totalCount: 0,
     edges: [],
     pageInfo,
   },
@@ -73,6 +74,7 @@ const testMe: ShippingTestQueryRawResponse["me"] = {
   email: "test@gmail.com",
   id: "4321",
   addressConnection: {
+    totalCount: 0,
     edges: [
       {
         node: {
@@ -772,14 +774,14 @@ describe("Shipping", () => {
         "Shipping",
         "Arrange for pickup (free)After your order is confirmed, a specialist will contact you within 2 business days to coordinate pickup.",
         "Test Name1 Main StMadrid, ES, 28001555-555-5555Edit",
-        "Test NameDefault401 BroadwayFloor 25New York, NY, US, 10013422-424-4242Edit",
+        "Test Name401 BroadwayFloor 25New York, NY, US, 10013422-424-4242Edit",
       ])
 
       expect(page.text()).toContain(
         "Test Name1 Main StMadrid, ES, 28001555-555-5555Edit"
       )
       expect(page.text()).toContain(
-        "Test NameDefault401 BroadwayFloor 25New York, NY, US, 10013422-424-4242Edit"
+        "Test Name401 BroadwayFloor 25New York, NY, US, 10013422-424-4242Edit"
       )
     })
 

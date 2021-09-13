@@ -24,22 +24,27 @@ export const PaymentSection: React.FC<PaymentSectionProps> = props => {
   })
   const [showPaymentModal, setShowPaymentModal] = useState(false)
   const stripePromise = loadStripe(sd.STRIPE_PUBLISHABLE_KEY)
-
   return (
     <>
-      <Text variant="lg" my={4}>
-        Saved Cards
+      <Text variant={["sm", "lg"]} mt={4} mb={[2, 4]}>
+        {creditCards.length ? "Saved Cards" : "No Saved Cards"}
       </Text>
+
       {creditCards?.length ? (
-        <Box maxWidth={542}>
+        <Box maxWidth={["100%", "75%"]}>
           <SavedCreditCards
             creditCards={creditCards as CreditCardType[]}
             relay={props.relay}
             me={props.me}
           />
         </Box>
-      ) : null}
+      ) : (
+        <Text mb={2} color="black60" variant="sm">
+          Please add a payment card for a faster checkout experience in future.
+        </Text>
+      )}
       <Button
+        mt={2}
         variant="secondaryOutline"
         onClick={() => setShowPaymentModal(true)}
       >
@@ -49,8 +54,7 @@ export const PaymentSection: React.FC<PaymentSectionProps> = props => {
         <PaymentModal
           show={showPaymentModal}
           closeModal={() => setShowPaymentModal(false)}
-          // @ts-expect-error STRICT_NULL_CHECK
-          relay={props.relay}
+          relay={props?.relay!}
           me={props.me}
         />
       </Elements>

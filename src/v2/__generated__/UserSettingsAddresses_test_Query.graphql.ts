@@ -27,6 +27,7 @@ query UserSettingsAddresses_test_Query {
 fragment SavedAddresses_me on Me {
   id
   addressConnection(first: 30) {
+    totalCount
     edges {
       node {
         id
@@ -55,9 +56,12 @@ fragment SavedAddresses_me on Me {
 }
 
 fragment UserSettingsAddresses_me on Me {
-  ...SavedAddresses_me
   id
   internalID
+  ...SavedAddresses_me
+  addresses: addressConnection {
+    totalCount
+  }
 }
 */
 
@@ -69,18 +73,25 @@ var v0 = {
   "name": "id",
   "storageKey": null
 },
-v1 = [
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+},
+v2 = [
   {
     "kind": "Literal",
     "name": "first",
     "value": 30
   }
 ],
-v2 = {
+v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "internalID",
+  "name": "totalCount",
   "storageKey": null
 };
 return {
@@ -124,14 +135,16 @@ return {
         "plural": false,
         "selections": [
           (v0/*: any*/),
+          (v1/*: any*/),
           {
             "alias": null,
-            "args": (v1/*: any*/),
+            "args": (v2/*: any*/),
             "concreteType": "UserAddressConnection",
             "kind": "LinkedField",
             "name": "addressConnection",
             "plural": false,
             "selections": [
+              (v3/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -149,7 +162,7 @@ return {
                     "plural": false,
                     "selections": [
                       (v0/*: any*/),
-                      (v2/*: any*/),
+                      (v1/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -284,14 +297,25 @@ return {
           },
           {
             "alias": null,
-            "args": (v1/*: any*/),
+            "args": (v2/*: any*/),
             "filters": null,
             "handle": "connection",
             "key": "SavedAddresses_addressConnection",
             "kind": "LinkedHandle",
             "name": "addressConnection"
           },
-          (v2/*: any*/)
+          {
+            "alias": "addresses",
+            "args": null,
+            "concreteType": "UserAddressConnection",
+            "kind": "LinkedField",
+            "name": "addressConnection",
+            "plural": false,
+            "selections": [
+              (v3/*: any*/)
+            ],
+            "storageKey": null
+          }
         ],
         "storageKey": null
       }
@@ -302,7 +326,7 @@ return {
     "metadata": {},
     "name": "UserSettingsAddresses_test_Query",
     "operationKind": "query",
-    "text": "query UserSettingsAddresses_test_Query {\n  me {\n    ...UserSettingsAddresses_me\n    id\n  }\n}\n\nfragment SavedAddresses_me on Me {\n  id\n  addressConnection(first: 30) {\n    edges {\n      node {\n        id\n        internalID\n        addressLine1\n        addressLine2\n        addressLine3\n        city\n        country\n        isDefault\n        name\n        phoneNumber\n        postalCode\n        region\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n\nfragment UserSettingsAddresses_me on Me {\n  ...SavedAddresses_me\n  id\n  internalID\n}\n"
+    "text": "query UserSettingsAddresses_test_Query {\n  me {\n    ...UserSettingsAddresses_me\n    id\n  }\n}\n\nfragment SavedAddresses_me on Me {\n  id\n  addressConnection(first: 30) {\n    totalCount\n    edges {\n      node {\n        id\n        internalID\n        addressLine1\n        addressLine2\n        addressLine3\n        city\n        country\n        isDefault\n        name\n        phoneNumber\n        postalCode\n        region\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n\nfragment UserSettingsAddresses_me on Me {\n  id\n  internalID\n  ...SavedAddresses_me\n  addresses: addressConnection {\n    totalCount\n  }\n}\n"
   }
 };
 })();
