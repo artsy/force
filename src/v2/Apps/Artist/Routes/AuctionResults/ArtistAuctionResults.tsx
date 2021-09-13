@@ -68,18 +68,20 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
   const artistName = artist.name
 
   const { match } = useRouter()
-  const queryParams: any = paramsToCamelCase(match?.location.query)
+  const { scrollToAuctionResults } = paramsToCamelCase(
+    match?.location.query
+  ) as { scrollToAuctionResults?: boolean }
 
   // Scroll to auction results if param flag is present
   useEffect(() => {
-    if (queryParams.scrollToAuctionResults) {
+    if (scrollToAuctionResults) {
       scrollIntoView({
         selector: "#scrollTo--artistMarketResultsTop",
         behavior: "smooth",
         offset: 125,
       })
     }
-  }, [queryParams.scrollToAuctionResults])
+  }, [scrollToAuctionResults])
 
   const loadNext = () => {
     const currentPageNumber = filters?.pageAndCursor?.page ?? 0
