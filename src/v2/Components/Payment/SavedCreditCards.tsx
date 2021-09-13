@@ -5,7 +5,7 @@ import {
 } from "v2/__generated__/SavedCreditCardsDeleteCreditCardMutation.graphql"
 import { CreditCardDetails } from "v2/Apps/Order/Components/CreditCardDetails"
 import { ErrorModal } from "v2/Components/Modal/ErrorModal"
-import React, { SFC } from "react"
+import React from "react"
 import { RelayProp, commitMutation, graphql } from "react-relay"
 import { ConnectionHandler, RecordSourceSelectorProxy } from "relay-runtime"
 import styled from "styled-components"
@@ -37,10 +37,9 @@ export class CreditCard extends React.Component<
   render() {
     return (
       <>
-        <BorderBox flexDirection="column" p={2} mb={4}>
+        <BorderBox flexDirection="column" p={2} mb={2}>
           <Flex justifyContent="space-between" alignItems="center">
-            {/* @ts-expect-error STRICT_NULL_CHECK */}
-            <CreditCardDetails {...this.props.creditCard} />
+            <CreditCardDetails {...this.props.creditCard!} />
             <Text variant="md" color="red100">
               {this.state.isCommittingMutation ? (
                 <SpinnerContainer>
@@ -142,20 +141,17 @@ export class CreditCard extends React.Component<
       let connection = null
       // @ts-expect-error STRICT_NULL_CHECK
       connection = ConnectionHandler.getConnection(
-        // @ts-expect-error STRICT_NULL_CHECK
-        meStore,
+        meStore!,
         "UserSettingsPayments_creditCards"
       )
       if (!connection) {
         // @ts-expect-error STRICT_NULL_CHECK
         connection = ConnectionHandler.getConnection(
-          // @ts-expect-error STRICT_NULL_CHECK
-          meStore,
+          meStore!,
           "PaymentSection_creditCards"
         )
       }
-      // @ts-expect-error STRICT_NULL_CHECK
-      ConnectionHandler.deleteNode(connection, creditCardId)
+      ConnectionHandler.deleteNode(connection!, creditCardId)
     }
   }
 
@@ -174,7 +170,7 @@ const SpinnerContainer = styled.div`
   position: relative;
 `
 
-export const SavedCreditCards: SFC<SavedCreditCardsProps> = props => {
+export const SavedCreditCards: React.FC<SavedCreditCardsProps> = props => {
   return (
     <>
       {props.creditCards.map((creditCard, i) => (

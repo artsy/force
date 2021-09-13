@@ -107,7 +107,7 @@ export const AddressModal: React.FC<Props> = ({
       >
         <Formik
           validateOnMount
-          initialValues={createMutation ? { country: "US" } : address}
+          initialValues={createMutation ? { country: "US" } : { ...address }}
           validate={validator}
           onSubmit={(
             values: SavedAddressType,

@@ -26,6 +26,10 @@ export const UserSettingsAddresses: React.FC<UserSettingsAddressesProps> = props
     notificationVisible: false,
     action: "",
   })
+  const [updater, setAddressCountChanged] = useState()
+  const handleChangeAddressCount = totalcount => {
+    setAddressCountChanged(totalcount)
+  }
 
   const onShowToast = (isShow, action) => {
     setNotificationState({
@@ -41,9 +45,9 @@ export const UserSettingsAddresses: React.FC<UserSettingsAddressesProps> = props
   }
 
   return (
-    <Box maxWidth={940} mb={3}>
-      <Text variant="lg" my={4}>
-        Saved Addresses
+    <Box mb={2}>
+      <Text variant={["sm", "lg"]} my={[2, 4]}>
+        {updater ? "Saved Addresses" : "No Saved Addresses"}
       </Text>
       <ToastComponent
         showNotification={notificationState.notificationVisible}
@@ -55,6 +59,7 @@ export const UserSettingsAddresses: React.FC<UserSettingsAddressesProps> = props
       <SavedAddresses
         // @ts-expect-error STRICT_NULL_CHECK
         me={me}
+        onChangeAddressCount={handleChangeAddressCount}
         onShowToast={onShowToast}
         inCollectorProfile
         {...props}
@@ -68,9 +73,12 @@ export const UserSettingsAddressesFragmentContainer = createFragmentContainer(
   {
     me: graphql`
       fragment UserSettingsAddresses_me on Me {
-        ...SavedAddresses_me
         id
         internalID
+        ...SavedAddresses_me
+        addresses: addressConnection {
+          totalCount
+        }
       }
     `,
   }
@@ -85,8 +93,7 @@ export const UserSettingsAddressesQueryRenderer = () => {
 
   return (
     <QueryRenderer<UserSettingsAddressesQuery>
-      // @ts-expect-error STRICT_NULL_CHECK
-      environment={relayEnvironment}
+      environment={relayEnvironment!}
       variables={{}}
       query={graphql`
         query UserSettingsAddressesQuery {

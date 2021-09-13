@@ -145,8 +145,8 @@ describe("SavedAddresses in collector profile", () => {
 
     expect(addresses).toHaveLength(2)
     expect(addresses.map(address => address.text())).toEqual([
-      "Test Name1 Main StMadrid, Spain, 28001555-555-5555EditSet as DefaultEditDelete",
-      "Test NameDefault401 BroadwayFloor 25New York, NY, USA, 10013422-424-4242EditEditDelete",
+      "Test Name1 Main StMadrid, Spain, 28001555-555-5555EditEditDelete",
+      "Test Name401 BroadwayFloor 25New York, NY, USA, 10013422-424-4242EditDefault AddressEditDelete",
     ])
   })
 })
@@ -222,7 +222,7 @@ describe("SavedAddresses outside collector profile", () => {
     expect(radios.map(radio => radio.props().selected)).toEqual([false, true])
     expect(radios.map(radio => radio.text())).toEqual([
       "Test Name1 Main StMadrid, Spain, 28001555-555-5555Edit",
-      "Test NameDefault401 BroadwayFloor 25New York, NY, USA, 10013422-424-4242Edit",
+      "Test Name401 BroadwayFloor 25New York, NY, USA, 10013422-424-4242Edit",
     ])
   })
 })

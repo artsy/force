@@ -50,6 +50,7 @@ describe("AddressModal", () => {
       me: {
         id: "1234",
         addressConnection: {
+          totalCount: 0,
           edges: [],
         },
         " $refType": "SavedAddresses_me",

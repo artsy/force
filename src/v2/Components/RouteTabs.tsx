@@ -42,7 +42,14 @@ export const RouteTabs: React.FC<
   // FIXME: For some reason this isn't liking conditional rendering in jsx
   Omit<BaseTabsProps, "children"> & { children: any }
 > = props => {
-  return <BaseTabs mx={[-2, 0]} px={[2, 0]} {...props} />
+  return (
+    <BaseTabs
+      justifyContent="space-between"
+      mx={[-4, 0]}
+      px={[2, 0]}
+      {...props}
+    />
+  )
 }
 
 RouteTabs.displayName = "RouteTabs"

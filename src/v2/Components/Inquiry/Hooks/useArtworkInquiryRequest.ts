@@ -8,7 +8,12 @@ import {
 type UseArtworkInquiryRequestInput = Omit<
   SubmitInquiryRequestMutationInput,
   "inquireableID" | "inquireableType" | "message"
-> & { relayEnvironment?: Environment; artworkID: string; message: string }
+> & {
+  relayEnvironment?: Environment
+  artworkID: string
+  message: string
+  contactGallery?: boolean
+}
 
 export const useArtworkInquiryRequest = () => {
   const { relayEnvironment: defaultRelayEnvironment } = useSystemContext()

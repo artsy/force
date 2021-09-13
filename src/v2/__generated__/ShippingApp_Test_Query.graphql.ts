@@ -27,6 +27,7 @@ query ShippingApp_Test_Query {
 fragment SavedAddresses_me on Me {
   id
   addressConnection(first: 30) {
+    totalCount
     edges {
       node {
         id
@@ -60,9 +61,12 @@ fragment ShippingApp_me on Me {
 }
 
 fragment UserSettingsAddresses_me on Me {
-  ...SavedAddresses_me
   id
   internalID
+  ...SavedAddresses_me
+  addresses: addressConnection {
+    totalCount
+  }
 }
 */
 
@@ -81,18 +85,25 @@ v1 = {
   "name": "id",
   "storageKey": null
 },
-v2 = [
+v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+},
+v3 = [
   {
     "kind": "Literal",
     "name": "first",
     "value": 30
   }
 ],
-v3 = {
+v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "internalID",
+  "name": "totalCount",
   "storageKey": null
 };
 return {
@@ -137,14 +148,16 @@ return {
         "selections": [
           (v0/*: any*/),
           (v1/*: any*/),
+          (v2/*: any*/),
           {
             "alias": null,
-            "args": (v2/*: any*/),
+            "args": (v3/*: any*/),
             "concreteType": "UserAddressConnection",
             "kind": "LinkedField",
             "name": "addressConnection",
             "plural": false,
             "selections": [
+              (v4/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -162,7 +175,7 @@ return {
                     "plural": false,
                     "selections": [
                       (v1/*: any*/),
-                      (v3/*: any*/),
+                      (v2/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -291,14 +304,25 @@ return {
           },
           {
             "alias": null,
-            "args": (v2/*: any*/),
+            "args": (v3/*: any*/),
             "filters": null,
             "handle": "connection",
             "key": "SavedAddresses_addressConnection",
             "kind": "LinkedHandle",
             "name": "addressConnection"
           },
-          (v3/*: any*/)
+          {
+            "alias": "addresses",
+            "args": null,
+            "concreteType": "UserAddressConnection",
+            "kind": "LinkedField",
+            "name": "addressConnection",
+            "plural": false,
+            "selections": [
+              (v4/*: any*/)
+            ],
+            "storageKey": null
+          }
         ],
         "storageKey": null
       }
@@ -309,7 +333,7 @@ return {
     "metadata": {},
     "name": "ShippingApp_Test_Query",
     "operationKind": "query",
-    "text": "query ShippingApp_Test_Query {\n  me {\n    ...ShippingApp_me\n    id\n  }\n}\n\nfragment SavedAddresses_me on Me {\n  id\n  addressConnection(first: 30) {\n    edges {\n      node {\n        id\n        internalID\n        addressLine1\n        addressLine2\n        addressLine3\n        city\n        country\n        isDefault\n        name\n        phoneNumber\n        postalCode\n        region\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n\nfragment ShippingApp_me on Me {\n  name\n  ...UserSettingsAddresses_me\n}\n\nfragment UserSettingsAddresses_me on Me {\n  ...SavedAddresses_me\n  id\n  internalID\n}\n"
+    "text": "query ShippingApp_Test_Query {\n  me {\n    ...ShippingApp_me\n    id\n  }\n}\n\nfragment SavedAddresses_me on Me {\n  id\n  addressConnection(first: 30) {\n    totalCount\n    edges {\n      node {\n        id\n        internalID\n        addressLine1\n        addressLine2\n        addressLine3\n        city\n        country\n        isDefault\n        name\n        phoneNumber\n        postalCode\n        region\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n\nfragment ShippingApp_me on Me {\n  name\n  ...UserSettingsAddresses_me\n}\n\nfragment UserSettingsAddresses_me on Me {\n  id\n  internalID\n  ...SavedAddresses_me\n  addresses: addressConnection {\n    totalCount\n  }\n}\n"
   }
 };
 })();
