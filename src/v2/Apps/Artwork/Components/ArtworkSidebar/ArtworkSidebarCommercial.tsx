@@ -34,14 +34,15 @@ import { openAuthModal } from "v2/Utils/openAuthModal"
 import { ArtworkSidebarSizeInfoFragmentContainer as SizeInfo } from "./ArtworkSidebarSizeInfo"
 import { Mediator } from "lib/mediator"
 
-// @ts-expect-error STRICT_NULL_CHECK
-type EditionSet = ArtworkSidebarCommercial_artwork["edition_sets"][0]
+type EditionSet = NonNullable<
+  ArtworkSidebarCommercial_artwork["edition_sets"]
+>[0]
 
 export interface ArtworkSidebarCommercialContainerProps
   extends ArtworkSidebarCommercialProps {
-  mediator: Mediator
+  mediator?: Mediator
   router?: Router
-  user: User
+  user?: User
 }
 
 export interface ArtworkSidebarCommercialContainerState {
@@ -95,14 +96,14 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
 
   renderEditionSet(editionSet: EditionSet, includeSelectOption: boolean) {
     const editionEcommerceAvailable =
-      editionSet.is_acquireable || editionSet.is_offerable
+      editionSet?.is_acquireable || editionSet?.is_offerable
 
     const editionFragment = (
       <Flex justifyContent="space-between" flex={1}>
-        <SizeInfo piece={editionSet} />
+        <SizeInfo piece={editionSet!} />
 
         <Text ml={1} variant="xs" data-test="SaleMessage">
-          {editionSet.sale_message}
+          {editionSet?.sale_message}
         </Text>
       </Flex>
     )
@@ -128,19 +129,16 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
   renderEditionSets(includeSelectOption: boolean) {
     const editionSets = this.props.artwork.edition_sets
 
-    // @ts-expect-error STRICT_NULL_CHECK
-    const editionSetsFragment = editionSets.map((editionSet, index) => {
+    const editionSetsFragment = editionSets?.map((editionSet, index) => {
       return (
-        // @ts-expect-error STRICT_NULL_CHECK
-        <React.Fragment key={editionSet.id}>
+        <React.Fragment key={editionSet?.id}>
           <Box py={2}>
             {this.renderEditionSet(editionSet, includeSelectOption)}
           </Box>
-          {/* @ts-expect-error STRICT_NULL_CHECK */}
           {index !== editionSets.length - 1 && <Separator />}
         </React.Fragment>
       )
-    })
+    })!
 
     return <RadioGroup>{editionSetsFragment}</RadioGroup>
   }
@@ -165,8 +163,8 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
     artwork_slug: props.artwork.slug,
   }))
   handleInquiry() {
-    get(this.props, props => props.mediator.trigger) &&
-      this.props.mediator.trigger("launchInquiryFlow", {
+    get(this.props, props => props.mediator?.trigger) &&
+      this.props.mediator?.trigger("launchInquiryFlow", {
         artworkId: this.props.artwork.internalID,
       })
   }
@@ -226,7 +224,7 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
                   artworkId: this.props.artwork.internalID,
                   editionSetId: get(
                     this.state,
-                    state => state.selectedEditionSet.internalID
+                    state => state.selectedEditionSet?.internalID
                   ),
                 },
               },
@@ -259,7 +257,7 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
         }
       })
     } else {
-      openAuthModal(mediator, {
+      openAuthModal(mediator!, {
         mode: ModalType.signup,
         redirectTo: location.href,
         contextModule: ContextModule.artworkSidebar,
@@ -315,7 +313,7 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
                   artworkId: this.props.artwork.internalID,
                   editionSetId: get(
                     this.state,
-                    state => state.selectedEditionSet.internalID
+                    state => state.selectedEditionSet?.internalID
                   ),
                 },
               },
@@ -348,7 +346,7 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
         }
       })
     } else {
-      openAuthModal(mediator, {
+      openAuthModal(mediator!, {
         mode: ModalType.signup,
         redirectTo: location.href,
         contextModule: ContextModule.artworkSidebar,
@@ -392,7 +390,7 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
             {selectedEditionSet && (
               <>
                 <Separator mb={2} />
-                {this.renderSaleMessage(selectedEditionSet.sale_message)}
+                {this.renderSaleMessage(selectedEditionSet?.sale_message!)}
               </>
             )}
           </>
@@ -484,10 +482,9 @@ export const ArtworkSidebarCommercial: FC<ArtworkSidebarCommercialProps> = props
   const { mediator, router, user } = useContext(SystemContext)
 
   return (
-    // @ts-expect-error STRICT_NULL_CHECK
     <ArtworkSidebarCommercialContainer
       {...props}
-      mediator={mediator}
+      mediator={mediator!}
       router={router}
       user={user}
     />
