@@ -27,7 +27,7 @@ export const UserSettingsAddresses: React.FC<UserSettingsAddressesProps> = props
     action: "",
   })
   const [updater, setAddressCountChanged] = useState()
-  const handeChangesAddressCount = totalcount => {
+  const handleChangeAddressCount = totalcount => {
     setAddressCountChanged(totalcount)
   }
 
@@ -59,7 +59,7 @@ export const UserSettingsAddresses: React.FC<UserSettingsAddressesProps> = props
       <SavedAddresses
         // @ts-expect-error STRICT_NULL_CHECK
         me={me}
-        handeChangesAddressCount={handeChangesAddressCount}
+        onChangeAddressCount={handleChangeAddressCount}
         onShowToast={onShowToast}
         inCollectorProfile
         {...props}

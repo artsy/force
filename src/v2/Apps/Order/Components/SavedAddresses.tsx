@@ -35,7 +35,7 @@ export const NEW_ADDRESS = "NEW_ADDRESS"
 const PAGE_SIZE = 30
 
 interface SavedAddressesProps {
-  handeChangesAddressCount?: (active?: number) => void
+  onChangeAddressCount?: (active?: number) => void
   me: SavedAddresses_me
   onSelect?: (string) => void
   inCollectorProfile: boolean
@@ -78,7 +78,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
   const logger = createLogger("SavedAddresses.tsx")
   const {
     onSelect,
-    handeChangesAddressCount,
+    onChangeAddressCount,
     me,
     inCollectorProfile,
     relay,
@@ -90,8 +90,8 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
   } = props
 
   useEffect(() => {
-    handeChangesAddressCount &&
-      handeChangesAddressCount(me.addressConnection?.totalCount)
+    onChangeAddressCount &&
+      onChangeAddressCount(me.addressConnection?.totalCount)
   }, [me.addressConnection?.totalCount])
   const addressList = extractNodes(me?.addressConnection) ?? []
   const { relayEnvironment } = useSystemContext()

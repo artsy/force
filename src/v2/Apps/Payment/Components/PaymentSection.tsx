@@ -31,7 +31,7 @@ export const PaymentSection: React.FC<PaymentSectionProps> = props => {
       </Text>
 
       {creditCards?.length ? (
-        <Box maxWidth={940}>
+        <Box maxWidth={["100%", "75%"]}>
           <SavedCreditCards
             creditCards={creditCards as CreditCardType[]}
             relay={props.relay}
