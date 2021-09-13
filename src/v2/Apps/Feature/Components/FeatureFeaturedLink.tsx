@@ -59,17 +59,23 @@ const Figure = styled(RouterLink)`
   }
 `
 
-const Title = styled(Text).attrs({
-  variant: "title",
+// const Title = styled(Text).attrs({
+//   variant: "title",
+// })`
+//   position: absolute;
+//   bottom: 0;
+//   left: 0;
+//   right: 0;
+//   background: linear-gradient(
+//     rgba(255, 255, 255, 0) 0%,
+//     rgba(0, 0, 0, 0.25) 100%
+//   );
+// `
+
+const Subtitle = styled(Text).attrs({
+  variant: "xs",
 })`
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: linear-gradient(
-    rgba(255, 255, 255, 0) 0%,
-    rgba(0, 0, 0, 0.25) 100%
-  );
+  text-transform: uppercase;
 `
 
 export interface FeatureFeaturedLinkProps extends FlexProps {
@@ -100,10 +106,6 @@ export const FeatureFeaturedLink: React.FC<FeatureFeaturedLinkProps> = ({
             {/* @ts-expect-error STRICT_NULL_CHECK */}
             <img src={img.src} srcSet={img.srcSet} alt={title} />
           </ResponsiveImage>
-
-          <Title color="white100" p={2} pt={9}>
-            {title}
-          </Title>
         </Figure>
       )}
 
@@ -114,9 +116,9 @@ export const FeatureFeaturedLink: React.FC<FeatureFeaturedLinkProps> = ({
       )}
 
       <Flex flexDirection={size === "large" ? ["column", "row"] : "column"}>
-        {subtitle && (
-          <HTML variant="mediumText" html={subtitle} mt={2} flexBasis="50%" />
-        )}
+        {subtitle && <Subtitle my={1}>{subtitle}</Subtitle>}
+
+        <Text variant="xl">{title}</Text>
 
         {description &&
           (size === "full" ? (

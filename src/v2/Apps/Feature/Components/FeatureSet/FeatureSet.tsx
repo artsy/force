@@ -8,8 +8,8 @@ import { FeatureSetContainerFragmentContainer as FeatureSetContainer } from "./F
 import { FeatureSetItemFragmentContainer as FeatureSetItem } from "./FeatureSetItem"
 
 const Container = styled(Box)`
-  border-top: 1px solid ${color("black100")};
-  margin-top: -1px;
+  /* border-top: 1px solid ${color("black100")};
+  margin-top: -1px; */
 `
 
 export interface FeatureSetProps extends Omit<BoxProps, "color"> {

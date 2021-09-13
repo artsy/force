@@ -3,7 +3,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { FeatureMetaFragmentContainer as FeatureMeta } from "./Components/FeatureMeta"
 import { FeatureHeaderFragmentContainer as FeatureHeader } from "./Components/FeatureHeader"
 import { FeatureApp_feature } from "v2/__generated__/FeatureApp_feature.graphql"
-import { Col, FullBleed, Grid, HTML, Join, Row, Spacer } from "@artsy/palette"
+import { Text, ThemeProviderV3, Join, Spacer } from "@artsy/palette"
 import { FeatureSetFragmentContainer as FeatureSet } from "./Components/FeatureSet"
 
 interface FeatureAppProps {
@@ -14,31 +14,21 @@ const FeatureApp: React.FC<FeatureAppProps> = ({ feature }) => {
   if (!feature) return null
 
   return (
-    <>
+    <ThemeProviderV3>
       <FeatureMeta feature={feature} />
-
-      <FullBleed>
-        <FeatureHeader feature={feature} />
-      </FullBleed>
+      <Spacer mt={4} />
+      <FeatureHeader feature={feature} />
 
       {(feature.description || feature.callout) && (
-        <Grid my={3} px={3}>
-          <Row>
-            <Col sm={8} mx="auto">
-              <Join separator={<Spacer my={3} />}>
-                {feature.description && (
-                  <HTML variant="text" html={feature.description} />
-                )}
+        <Join separator={<Spacer my={3} />}>
+          {feature.description && (
+            <Text variant="lg">{feature.description}</Text>
+          )}
 
-                {feature.callout && (
-                  <HTML variant="title" html={feature.callout} />
-                )}
-              </Join>
-            </Col>
-          </Row>
-        </Grid>
+          {feature.callout && <Text variant="lg">{feature.callout}</Text>}
+        </Join>
       )}
-
+      <Spacer mb={12} />
       {/* @ts-expect-error STRICT_NULL_CHECK */}
       {feature.sets.edges.length > 0 &&
         // @ts-expect-error STRICT_NULL_CHECK
@@ -46,7 +36,7 @@ const FeatureApp: React.FC<FeatureAppProps> = ({ feature }) => {
           // @ts-expect-error STRICT_NULL_CHECK
           ({ node: set }) => set && <FeatureSet key={set.id} set={set} />
         )}
-    </>
+    </ThemeProviderV3>
   )
 }
 
@@ -56,8 +46,8 @@ export const FeatureAppFragmentContainer = createFragmentContainer(FeatureApp, {
     fragment FeatureApp_feature on Feature {
       ...FeatureMeta_feature
       ...FeatureHeader_feature
-      description(format: HTML)
-      callout(format: HTML)
+      description
+      callout
       sets: setsConnection(first: 20) {
         edges {
           node {

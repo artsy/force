@@ -14,7 +14,7 @@ export const FeatureSetMeta: React.FC<FeatureSetMetaProps> = ({
   return (
     <Box {...rest}>
       {set.name && (
-        <Text variant="largeTitle" color="black100" mb={1}>
+        <Text variant="xl" mb={4}>
           {set.name}
         </Text>
       )}
