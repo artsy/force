@@ -19,8 +19,21 @@ describe("Budget", () => {
     updateUserProfile: mockUpdateProfile,
   }
 
+  let originalWindowLocation: Location
+
+  beforeAll(() => {
+    originalWindowLocation = window.location
+    // @ts-ignore
+    delete window.location
+    // @ts-ignore
+    window.location = { assign: jest.fn() }
+  })
+
+  afterAll(() => {
+    window.location = originalWindowLocation
+  })
+
   beforeEach(() => {
-    window.location.assign = jest.fn()
     jest.clearAllMocks()
   })
 
