@@ -3,28 +3,28 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type HomeFeaturedArticlesQueryVariables = {};
-export type HomeFeaturedArticlesQueryResponse = {
+export type HomeFeaturedMarketNews_Test_QueryVariables = {};
+export type HomeFeaturedMarketNews_Test_QueryResponse = {
     readonly articles: ReadonlyArray<{
-        readonly " $fragmentRefs": FragmentRefs<"HomeFeaturedArticles_articles">;
+        readonly " $fragmentRefs": FragmentRefs<"HomeFeaturedMarketNews_articles">;
     } | null> | null;
 };
-export type HomeFeaturedArticlesQuery = {
-    readonly response: HomeFeaturedArticlesQueryResponse;
-    readonly variables: HomeFeaturedArticlesQueryVariables;
+export type HomeFeaturedMarketNews_Test_Query = {
+    readonly response: HomeFeaturedMarketNews_Test_QueryResponse;
+    readonly variables: HomeFeaturedMarketNews_Test_QueryVariables;
 };
 
 
 
 /*
-query HomeFeaturedArticlesQuery {
-  articles(featured: true, published: true, sort: PUBLISHED_AT_DESC) {
-    ...HomeFeaturedArticles_articles
+query HomeFeaturedMarketNews_Test_Query {
+  articles {
+    ...HomeFeaturedMarketNews_articles
     id
   }
 }
 
-fragment HomeFeaturedArticles_articles on Article {
+fragment HomeFeaturedMarketNews_articles on Article {
   internalID
   href
   title
@@ -55,23 +55,6 @@ fragment HomeFeaturedArticles_articles on Article {
 const node: ConcreteRequest = (function(){
 var v0 = [
   {
-    "kind": "Literal",
-    "name": "featured",
-    "value": true
-  },
-  {
-    "kind": "Literal",
-    "name": "published",
-    "value": true
-  },
-  {
-    "kind": "Literal",
-    "name": "sort",
-    "value": "PUBLISHED_AT_DESC"
-  }
-],
-v1 = [
-  {
     "alias": null,
     "args": null,
     "kind": "ScalarField",
@@ -100,7 +83,7 @@ v1 = [
     "storageKey": null
   }
 ],
-v2 = {
+v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -112,11 +95,11 @@ return {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "HomeFeaturedArticlesQuery",
+    "name": "HomeFeaturedMarketNews_Test_Query",
     "selections": [
       {
         "alias": null,
-        "args": (v0/*: any*/),
+        "args": null,
         "concreteType": "Article",
         "kind": "LinkedField",
         "name": "articles",
@@ -125,10 +108,10 @@ return {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "HomeFeaturedArticles_articles"
+            "name": "HomeFeaturedMarketNews_articles"
           }
         ],
-        "storageKey": "articles(featured:true,published:true,sort:\"PUBLISHED_AT_DESC\")"
+        "storageKey": null
       }
     ],
     "type": "Query"
@@ -137,11 +120,11 @@ return {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "HomeFeaturedArticlesQuery",
+    "name": "HomeFeaturedMarketNews_Test_Query",
     "selections": [
       {
         "alias": null,
-        "args": (v0/*: any*/),
+        "args": null,
         "concreteType": "Article",
         "kind": "LinkedField",
         "name": "articles",
@@ -221,7 +204,7 @@ return {
                 "kind": "LinkedField",
                 "name": "cropped",
                 "plural": false,
-                "selections": (v1/*: any*/),
+                "selections": (v0/*: any*/),
                 "storageKey": "cropped(height:720,width:670)"
               },
               {
@@ -242,7 +225,7 @@ return {
                 "kind": "LinkedField",
                 "name": "cropped",
                 "plural": false,
-                "selections": (v1/*: any*/),
+                "selections": (v0/*: any*/),
                 "storageKey": "cropped(height:240,width:325)"
               }
             ],
@@ -263,24 +246,24 @@ return {
                 "name": "name",
                 "storageKey": null
               },
-              (v2/*: any*/)
+              (v1/*: any*/)
             ],
             "storageKey": null
           },
-          (v2/*: any*/)
+          (v1/*: any*/)
         ],
-        "storageKey": "articles(featured:true,published:true,sort:\"PUBLISHED_AT_DESC\")"
+        "storageKey": null
       }
     ]
   },
   "params": {
     "id": null,
     "metadata": {},
-    "name": "HomeFeaturedArticlesQuery",
+    "name": "HomeFeaturedMarketNews_Test_Query",
     "operationKind": "query",
-    "text": "query HomeFeaturedArticlesQuery {\n  articles(featured: true, published: true, sort: PUBLISHED_AT_DESC) {\n    ...HomeFeaturedArticles_articles\n    id\n  }\n}\n\nfragment HomeFeaturedArticles_articles on Article {\n  internalID\n  href\n  title\n  publishedAt(format: \"MMM D YYYY\")\n  vertical\n  thumbnailTitle\n  thumbnailImage {\n    large: cropped(width: 670, height: 720) {\n      width\n      height\n      src\n      srcSet\n    }\n    small: cropped(width: 325, height: 240) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n  author {\n    name\n    id\n  }\n}\n"
+    "text": "query HomeFeaturedMarketNews_Test_Query {\n  articles {\n    ...HomeFeaturedMarketNews_articles\n    id\n  }\n}\n\nfragment HomeFeaturedMarketNews_articles on Article {\n  internalID\n  href\n  title\n  publishedAt(format: \"MMM D YYYY\")\n  vertical\n  thumbnailTitle\n  thumbnailImage {\n    large: cropped(width: 670, height: 720) {\n      width\n      height\n      src\n      srcSet\n    }\n    small: cropped(width: 325, height: 240) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n  author {\n    name\n    id\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '1f3bf55b1a5fc5c758b6fccefdabf628';
+(node as any).hash = '40dca964711f6194bf54326edad403cc';
 export default node;

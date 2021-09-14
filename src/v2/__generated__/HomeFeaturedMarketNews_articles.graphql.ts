@@ -3,7 +3,7 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type HomeFeaturedArticles_articles = ReadonlyArray<{
+export type HomeFeaturedMarketNews_articles = ReadonlyArray<{
     readonly internalID: string;
     readonly href: string | null;
     readonly title: string | null;
@@ -27,12 +27,12 @@ export type HomeFeaturedArticles_articles = ReadonlyArray<{
     readonly author: {
         readonly name: string | null;
     } | null;
-    readonly " $refType": "HomeFeaturedArticles_articles";
+    readonly " $refType": "HomeFeaturedMarketNews_articles";
 }>;
-export type HomeFeaturedArticles_articles$data = HomeFeaturedArticles_articles;
-export type HomeFeaturedArticles_articles$key = ReadonlyArray<{
-    readonly " $data"?: HomeFeaturedArticles_articles$data;
-    readonly " $fragmentRefs": FragmentRefs<"HomeFeaturedArticles_articles">;
+export type HomeFeaturedMarketNews_articles$data = HomeFeaturedMarketNews_articles;
+export type HomeFeaturedMarketNews_articles$key = ReadonlyArray<{
+    readonly " $data"?: HomeFeaturedMarketNews_articles$data;
+    readonly " $fragmentRefs": FragmentRefs<"HomeFeaturedMarketNews_articles">;
 }>;
 
 
@@ -74,7 +74,7 @@ return {
   "metadata": {
     "plural": true
   },
-  "name": "HomeFeaturedArticles_articles",
+  "name": "HomeFeaturedMarketNews_articles",
   "selections": [
     {
       "alias": null,
@@ -199,5 +199,5 @@ return {
   "type": "Article"
 };
 })();
-(node as any).hash = 'd2bf5222fa0e5e98a988a99574fe0e1f';
+(node as any).hash = '9d20317d7100f669742294f87ddbebbf';
 export default node;

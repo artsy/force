@@ -20,16 +20,16 @@ import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { useLazyLoadComponent } from "v2/Utils/Hooks/useLazyLoadComponent"
 import { Media } from "v2/Utils/Responsive"
-import { HomeFeaturedArticlesQuery } from "v2/__generated__/HomeFeaturedArticlesQuery.graphql"
-import { HomeFeaturedArticles_articles } from "v2/__generated__/HomeFeaturedArticles_articles.graphql"
+import { HomeFeaturedMarketNewsQuery } from "v2/__generated__/HomeFeaturedMarketNewsQuery.graphql"
+import { HomeFeaturedMarketNews_articles } from "v2/__generated__/HomeFeaturedMarketNews_articles.graphql"
 
 const ARTICLE_COUNT = 6
 
-interface HomeFeaturedArticlesProps {
-  articles: HomeFeaturedArticles_articles
+interface HomeFeaturedMarketNewsProps {
+  articles: HomeFeaturedMarketNews_articles
 }
 
-const HomeFeaturedArticles: React.FC<HomeFeaturedArticlesProps> = ({
+const HomeFeaturedMarketNews: React.FC<HomeFeaturedMarketNewsProps> = ({
   articles,
 }) => {
   const [firstArticle, ...restOfArticles] = articles
@@ -37,7 +37,7 @@ const HomeFeaturedArticles: React.FC<HomeFeaturedArticlesProps> = ({
   const articlesList = take(restOfArticles, ARTICLE_COUNT)
 
   return (
-    <HomeFeaturedArticlesContainer>
+    <HomeFeaturedMarketNewsContainer>
       <GridColumns>
         <Column span={[12, 6]} mb={[4, 0]}>
           <RouterLink
@@ -117,11 +117,11 @@ const HomeFeaturedArticles: React.FC<HomeFeaturedArticlesProps> = ({
           </Masonry>
         </Column>
       </GridColumns>
-    </HomeFeaturedArticlesContainer>
+    </HomeFeaturedMarketNewsContainer>
   )
 }
 
-const HomeFeaturedArticlesContainer: React.FC = ({ children }) => {
+const HomeFeaturedMarketNewsContainer: React.FC = ({ children }) => {
   return (
     <>
       <Flex justifyContent="space-between">
@@ -144,11 +144,11 @@ const HomeFeaturedArticlesContainer: React.FC = ({ children }) => {
   )
 }
 
-export const HomeFeaturedArticlesFragmentContainer = createFragmentContainer(
-  HomeFeaturedArticles,
+export const HomeFeaturedMarketNewsFragmentContainer = createFragmentContainer(
+  HomeFeaturedMarketNews,
   {
     articles: graphql`
-      fragment HomeFeaturedArticles_articles on Article @relay(plural: true) {
+      fragment HomeFeaturedMarketNews_articles on Article @relay(plural: true) {
         internalID
         href
         title
@@ -180,7 +180,7 @@ export const HomeFeaturedArticlesFragmentContainer = createFragmentContainer(
 
 const PLACEHOLDER = (
   <Skeleton>
-    <HomeFeaturedArticlesContainer>
+    <HomeFeaturedMarketNewsContainer>
       <GridColumns>
         <Column span={6}>
           <Media greaterThan="xs">
@@ -247,20 +247,20 @@ const PLACEHOLDER = (
           </Masonry>
         </Column>
       </GridColumns>
-    </HomeFeaturedArticlesContainer>
+    </HomeFeaturedMarketNewsContainer>
   </Skeleton>
 )
 
-export const HomeFeaturedArticlesQueryRenderer: React.FC = () => {
+export const HomeFeaturedMarketNewsQueryRenderer: React.FC = () => {
   const { relayEnvironment } = useSystemContext()
 
   return (
-    <SystemQueryRenderer<HomeFeaturedArticlesQuery>
+    <SystemQueryRenderer<HomeFeaturedMarketNewsQuery>
       environment={relayEnvironment}
       query={graphql`
-        query HomeFeaturedArticlesQuery {
+        query HomeFeaturedMarketNewsQuery {
           articles(featured: true, published: true, sort: PUBLISHED_AT_DESC) {
-            ...HomeFeaturedArticles_articles
+            ...HomeFeaturedMarketNews_articles
           }
         }
       `}
@@ -277,7 +277,7 @@ export const HomeFeaturedArticlesQueryRenderer: React.FC = () => {
 
         if (props.articles) {
           return (
-            <HomeFeaturedArticlesFragmentContainer
+            <HomeFeaturedMarketNewsFragmentContainer
               articles={compact(props.articles)}
             />
           )
@@ -289,14 +289,14 @@ export const HomeFeaturedArticlesQueryRenderer: React.FC = () => {
   )
 }
 
-export const HomeFeaturedArticlesLazyQueryRenderer: React.FC = () => {
+export const HomeFeaturedMarketNewsLazyQueryRenderer: React.FC = () => {
   const { Waypoint, isEnteredView } = useLazyLoadComponent()
 
   return (
     <>
       <Waypoint />
 
-      {isEnteredView ? <HomeFeaturedArticlesQueryRenderer /> : PLACEHOLDER}
+      {isEnteredView ? <HomeFeaturedMarketNewsQueryRenderer /> : PLACEHOLDER}
     </>
   )
 }
