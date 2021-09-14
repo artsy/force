@@ -1,6 +1,6 @@
-import { Props, tabCountMap } from "../NavigationTabs"
+import { NavigationTabsProps, tabCountMap } from "../NavigationTabs"
 
-const props: Props = {
+const props: NavigationTabsProps = {
   artworkCount: 601,
   term: "whitney",
   searchableConnection: {
@@ -54,7 +54,7 @@ const props: Props = {
 
 describe("Search NavigationTabs tabCountMap", () => {
   it("returns the correct Institutions count with PartnerInstution and PartnerInstitutionSeller combined", () => {
-    const countMap = tabCountMap(props)
+    const countMap = tabCountMap(props.searchableConnection)
     expect(countMap.Institutions).toEqual(2)
   })
 })

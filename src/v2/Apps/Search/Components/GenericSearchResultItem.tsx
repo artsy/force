@@ -4,7 +4,6 @@ import { track } from "v2/System/Analytics"
 import * as Schema from "v2/System/Analytics/Schema"
 import styled from "styled-components"
 import { themeGet } from "@styled-system/theme-get"
-import { Truncator } from "v2/Components/Truncator"
 
 interface GenericSearchResultItemProps {
   imageUrl: string
@@ -51,7 +50,13 @@ export class GenericSearchResultItem extends React.Component<
             <Box width={72} height={72} mr={2}>
               <BorderBox width={72} height={72} p={0}>
                 {imageUrl && entityType !== "City" && (
-                  <Image width={70} height={70} src={imageUrl} alt={name} />
+                  <Image
+                    lazyLoad
+                    width={70}
+                    height={70}
+                    src={imageUrl}
+                    alt={name}
+                  />
                 )}
               </BorderBox>
             </Box>
@@ -64,8 +69,8 @@ export class GenericSearchResultItem extends React.Component<
               <Text size="md">{name}</Text>
 
               {description && (
-                <Text mt={0.5} variant="sm" color="black60">
-                  <Truncator maxLineCount={3}>{description}</Truncator>
+                <Text mt={0.5} variant="sm" color="black60" lineClamp={3}>
+                  {description}
                 </Text>
               )}
             </Box>

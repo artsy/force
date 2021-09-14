@@ -64,11 +64,10 @@ export const SearchApp: React.FC<SearchAppProps> = ({ viewer, children }) => {
       {hasResults ? (
         <>
           <TotalResults count={totalCount} term={term} />
-          <Spacer mb={4} />
           <NavigationTabs
             artworkCount={artworkCount}
             term={term}
-            searchableConnection={searchConnection}
+            searchableConnection={searchConnection!}
           />
           <Box minHeight="30vh">{children}</Box>
         </>
