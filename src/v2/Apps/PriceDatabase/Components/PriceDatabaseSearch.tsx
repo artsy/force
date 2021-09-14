@@ -36,13 +36,15 @@ export const PriceDatabaseSearch: React.FC = () => {
 
   const handleSearch = () => {
     const pathName = `/artist/${artistSlug}/auction-results`
-
     const searchFilters = filterSearchFilters(filters, ALLOWED_FILTERS)
     const queryString = qs.stringify(paramsToSnakeCase(searchFilters))
+    const paramFlag = "scroll_to_auction_results=true"
 
     // TODO: Add tracking for search
 
-    const url = queryString ? `${pathName}?${queryString}` : pathName
+    const url = queryString
+      ? `${pathName}?${queryString}&${paramFlag}`
+      : `${pathName}?${paramFlag}`
 
     router.push(url)
   }
