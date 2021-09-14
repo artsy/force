@@ -7,17 +7,23 @@ import {
   Skeleton,
   SkeletonBox,
   SkeletonText,
-  Shelf,
+  GridColumns,
+  Column,
+  ResponsiveBox,
 } from "@artsy/palette"
-import { compact } from "lodash"
+import { compact, take } from "lodash"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
+import { Masonry } from "v2/Components/Masonry"
 import { useSystemContext } from "v2/System"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { useLazyLoadComponent } from "v2/Utils/Hooks/useLazyLoadComponent"
+import { Media } from "v2/Utils/Responsive"
 import { HomeFeaturedArticlesQuery } from "v2/__generated__/HomeFeaturedArticlesQuery.graphql"
 import { HomeFeaturedArticles_articles } from "v2/__generated__/HomeFeaturedArticles_articles.graphql"
+
+const ARTICLE_COUNT = 6
 
 interface HomeFeaturedArticlesProps {
   articles: HomeFeaturedArticles_articles
@@ -26,53 +32,91 @@ interface HomeFeaturedArticlesProps {
 const HomeFeaturedArticles: React.FC<HomeFeaturedArticlesProps> = ({
   articles,
 }) => {
+  const [firstArticle, ...restOfArticles] = articles
+  const firstImage = firstArticle.thumbnailImage?.large
+  const articlesList = take(restOfArticles, ARTICLE_COUNT)
+
   return (
     <HomeFeaturedArticlesContainer>
-      <Shelf alignItems="flex-start">
-        {articles.map(article => {
-          const image = article.thumbnailImage?.cropped
-
-          return (
-            <RouterLink
-              key={article.internalID}
-              to={article.href ?? ""}
-              style={{ display: "block", textDecoration: "none" }}
-            >
-              {image ? (
+      <GridColumns>
+        <Column span={[12, 6]} mb={[4, 0]}>
+          <RouterLink
+            key={firstArticle.internalID}
+            to={firstArticle.href ?? ""}
+            display="block"
+            textDecoration="none"
+          >
+            {firstImage && (
+              <ResponsiveBox
+                aspectWidth={firstImage.width}
+                aspectHeight={firstImage.height}
+                maxWidth={firstImage.width}
+              >
                 <Image
-                  src={image.src}
-                  srcSet={image.srcSet}
-                  width={325}
-                  height={244}
-                  lazyLoad
-                  alt=""
-                  style={{ display: "block" }}
+                  src={firstImage.src}
+                  srcSet={firstImage.srcSet}
+                  lazyLoad={true}
                 />
-              ) : (
-                <Box bg="black10" width={325} height={244} />
-              )}
+              </ResponsiveBox>
+            )}
 
-              <Spacer mt={2} />
+            <Text variant="xs" textTransform="uppercase" my={1}>
+              {firstArticle.vertical}
+            </Text>
 
-              <Text variant="lg" width={325} pr={1}>
-                {article.title}
-              </Text>
+            <Text variant="xl">{firstArticle.title}</Text>
 
-              {article.author?.name && (
-                <Text variant="lg" width={325} pr={1} color="black60">
-                  {article.author?.name}
-                </Text>
-              )}
+            <Text variant="lg" mt={1}>
+              By {firstArticle.author?.name}
+            </Text>
+          </RouterLink>
+        </Column>
 
-              <Spacer mt={0.5} />
+        <Column span={[12, 6]}>
+          <Masonry columnCount={2}>
+            {articlesList.map(article => {
+              const image = article.thumbnailImage?.small
 
-              <Text variant="sm" color="black60">
-                {article.publishedAt}
-              </Text>
-            </RouterLink>
-          )
-        })}
-      </Shelf>
+              return (
+                <RouterLink
+                  key={article.internalID}
+                  to={article.href ?? ""}
+                  display="block"
+                  textDecoration="none"
+                >
+                  <Box mb={4}>
+                    {image && (
+                      <ResponsiveBox
+                        aspectWidth={image.width}
+                        aspectHeight={image.height}
+                        maxWidth={image.width}
+                      >
+                        <Image
+                          width="100%"
+                          height="100%"
+                          src={image.src}
+                          srcSet={image.srcSet}
+                          lazyLoad={true}
+                        />
+                      </ResponsiveBox>
+                    )}
+
+                    <Text variant="xs" textTransform="uppercase" my={1}>
+                      {article.vertical}
+                    </Text>
+
+                    <Text variant="lg">{article.title}</Text>
+
+                    <Text variant="md" mt={1}>
+                      By {article.author?.name}
+                    </Text>
+                  </Box>
+                </RouterLink>
+              )
+            })}
+          </Masonry>
+        </Column>
+      </GridColumns>
     </HomeFeaturedArticlesContainer>
   )
 }
@@ -81,7 +125,7 @@ const HomeFeaturedArticlesContainer: React.FC = ({ children }) => {
   return (
     <>
       <Flex justifyContent="space-between">
-        <Text variant="xl">Artsy Editorial</Text>
+        <Text variant="xl">Market News</Text>
 
         <Text
           variant="sm"
@@ -109,8 +153,19 @@ export const HomeFeaturedArticlesFragmentContainer = createFragmentContainer(
         href
         title
         publishedAt(format: "MMM D YYYY")
+        vertical
+        thumbnailTitle
         thumbnailImage {
-          cropped(width: 325, height: 244) {
+          large: cropped(width: 670, height: 720) {
+            width
+            height
+            src
+            srcSet
+          }
+
+          small: cropped(width: 325, height: 240) {
+            width
+            height
             src
             srcSet
           }
@@ -124,29 +179,76 @@ export const HomeFeaturedArticlesFragmentContainer = createFragmentContainer(
 )
 
 const PLACEHOLDER = (
-  <HomeFeaturedArticlesContainer>
-    <Skeleton>
-      <Shelf>
-        {[...new Array(8)].map((_, i) => {
-          return (
-            <React.Fragment key={i}>
-              <SkeletonBox width={325} height={244} />
+  <Skeleton>
+    <HomeFeaturedArticlesContainer>
+      <GridColumns>
+        <Column span={6}>
+          <Media greaterThan="xs">
+            <SkeletonBox bg="black30" height={720} mb={2} />
+            <SkeletonText variant="xs" textTransform="uppercase" my={1}>
+              Art Fairs
+            </SkeletonText>
 
-              <Spacer mt={2} />
+            <SkeletonText variant="xl">
+              Essential Tips for Collecting Work by Anni and Josef Albers
+            </SkeletonText>
 
-              <SkeletonText variant="lg" width={325}>
-                Article Title Which Is Often Two Lines
-              </SkeletonText>
+            <SkeletonText variant="lg" mt={1}>
+              By Artsy Editorial
+            </SkeletonText>
+          </Media>
+        </Column>
 
-              <Spacer mt={0.5} />
+        <Column span={[12, 6]}>
+          <Masonry columnCount={[1, 2]}>
+            {[...new Array(8)].map((_, i) => {
+              return (
+                <React.Fragment key={i}>
+                  <Box mb={4}>
+                    <Media at="xs">
+                      <SkeletonBox
+                        bg="black30"
+                        width="100%"
+                        height={300}
+                        mb={1}
+                      />
+                    </Media>
+                    <Media greaterThan="xs">
+                      <ResponsiveBox
+                        aspectWidth={325}
+                        aspectHeight={280}
+                        maxWidth={325}
+                      >
+                        <SkeletonBox
+                          bg="black30"
+                          height="100%"
+                          width="100%"
+                          mb={1}
+                        />
+                      </ResponsiveBox>
+                    </Media>
 
-              <SkeletonText variant="md">June 23, 2021</SkeletonText>
-            </React.Fragment>
-          )
-        })}
-      </Shelf>
-    </Skeleton>
-  </HomeFeaturedArticlesContainer>
+                    <SkeletonText variant="xs" textTransform="uppercase" my={1}>
+                      Art Fairs
+                    </SkeletonText>
+
+                    <SkeletonText variant="lg">
+                      Essential Tips for Collecting Work by Anni and Josef
+                      Albers
+                    </SkeletonText>
+
+                    <SkeletonText variant="md" mt={1}>
+                      By Artsy Editorial
+                    </SkeletonText>
+                  </Box>
+                </React.Fragment>
+              )
+            })}
+          </Masonry>
+        </Column>
+      </GridColumns>
+    </HomeFeaturedArticlesContainer>
+  </Skeleton>
 )
 
 export const HomeFeaturedArticlesQueryRenderer: React.FC = () => {

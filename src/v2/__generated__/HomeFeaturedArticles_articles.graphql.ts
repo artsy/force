@@ -8,8 +8,18 @@ export type HomeFeaturedArticles_articles = ReadonlyArray<{
     readonly href: string | null;
     readonly title: string | null;
     readonly publishedAt: string | null;
+    readonly vertical: string | null;
+    readonly thumbnailTitle: string | null;
     readonly thumbnailImage: {
-        readonly cropped: {
+        readonly large: {
+            readonly width: number;
+            readonly height: number;
+            readonly src: string;
+            readonly srcSet: string;
+        } | null;
+        readonly small: {
+            readonly width: number;
+            readonly height: number;
             readonly src: string;
             readonly srcSet: string;
         } | null;
@@ -27,7 +37,38 @@ export type HomeFeaturedArticles_articles$key = ReadonlyArray<{
 
 
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "width",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "height",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "src",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "srcSet",
+    "storageKey": null
+  }
+];
+return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": {
@@ -72,18 +113,53 @@ const node: ReaderFragment = {
     {
       "alias": null,
       "args": null,
+      "kind": "ScalarField",
+      "name": "vertical",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "thumbnailTitle",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
       "concreteType": "Image",
       "kind": "LinkedField",
       "name": "thumbnailImage",
       "plural": false,
       "selections": [
         {
-          "alias": null,
+          "alias": "large",
           "args": [
             {
               "kind": "Literal",
               "name": "height",
-              "value": 244
+              "value": 720
+            },
+            {
+              "kind": "Literal",
+              "name": "width",
+              "value": 670
+            }
+          ],
+          "concreteType": "CroppedImageUrl",
+          "kind": "LinkedField",
+          "name": "cropped",
+          "plural": false,
+          "selections": (v0/*: any*/),
+          "storageKey": "cropped(height:720,width:670)"
+        },
+        {
+          "alias": "small",
+          "args": [
+            {
+              "kind": "Literal",
+              "name": "height",
+              "value": 240
             },
             {
               "kind": "Literal",
@@ -95,23 +171,8 @@ const node: ReaderFragment = {
           "kind": "LinkedField",
           "name": "cropped",
           "plural": false,
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "src",
-              "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "srcSet",
-              "storageKey": null
-            }
-          ],
-          "storageKey": "cropped(height:244,width:325)"
+          "selections": (v0/*: any*/),
+          "storageKey": "cropped(height:240,width:325)"
         }
       ],
       "storageKey": null
@@ -137,5 +198,6 @@ const node: ReaderFragment = {
   ],
   "type": "Article"
 };
-(node as any).hash = '08b0601c1ab13cebbf496a329d986cc0';
+})();
+(node as any).hash = 'd2bf5222fa0e5e98a988a99574fe0e1f';
 export default node;

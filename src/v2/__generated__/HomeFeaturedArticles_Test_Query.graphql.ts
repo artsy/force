@@ -29,8 +29,18 @@ fragment HomeFeaturedArticles_articles on Article {
   href
   title
   publishedAt(format: "MMM D YYYY")
+  vertical
+  thumbnailTitle
   thumbnailImage {
-    cropped(width: 325, height: 244) {
+    large: cropped(width: 670, height: 720) {
+      width
+      height
+      src
+      srcSet
+    }
+    small: cropped(width: 325, height: 240) {
+      width
+      height
       src
       srcSet
     }
@@ -43,7 +53,37 @@ fragment HomeFeaturedArticles_articles on Article {
 */
 
 const node: ConcreteRequest = (function(){
-var v0 = {
+var v0 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "width",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "height",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "src",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "srcSet",
+    "storageKey": null
+  }
+],
+v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -127,18 +167,53 @@ return {
           {
             "alias": null,
             "args": null,
+            "kind": "ScalarField",
+            "name": "vertical",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "thumbnailTitle",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
             "concreteType": "Image",
             "kind": "LinkedField",
             "name": "thumbnailImage",
             "plural": false,
             "selections": [
               {
-                "alias": null,
+                "alias": "large",
                 "args": [
                   {
                     "kind": "Literal",
                     "name": "height",
-                    "value": 244
+                    "value": 720
+                  },
+                  {
+                    "kind": "Literal",
+                    "name": "width",
+                    "value": 670
+                  }
+                ],
+                "concreteType": "CroppedImageUrl",
+                "kind": "LinkedField",
+                "name": "cropped",
+                "plural": false,
+                "selections": (v0/*: any*/),
+                "storageKey": "cropped(height:720,width:670)"
+              },
+              {
+                "alias": "small",
+                "args": [
+                  {
+                    "kind": "Literal",
+                    "name": "height",
+                    "value": 240
                   },
                   {
                     "kind": "Literal",
@@ -150,23 +225,8 @@ return {
                 "kind": "LinkedField",
                 "name": "cropped",
                 "plural": false,
-                "selections": [
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "src",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "srcSet",
-                    "storageKey": null
-                  }
-                ],
-                "storageKey": "cropped(height:244,width:325)"
+                "selections": (v0/*: any*/),
+                "storageKey": "cropped(height:240,width:325)"
               }
             ],
             "storageKey": null
@@ -186,11 +246,11 @@ return {
                 "name": "name",
                 "storageKey": null
               },
-              (v0/*: any*/)
+              (v1/*: any*/)
             ],
             "storageKey": null
           },
-          (v0/*: any*/)
+          (v1/*: any*/)
         ],
         "storageKey": null
       }
@@ -201,7 +261,7 @@ return {
     "metadata": {},
     "name": "HomeFeaturedArticles_Test_Query",
     "operationKind": "query",
-    "text": "query HomeFeaturedArticles_Test_Query {\n  articles {\n    ...HomeFeaturedArticles_articles\n    id\n  }\n}\n\nfragment HomeFeaturedArticles_articles on Article {\n  internalID\n  href\n  title\n  publishedAt(format: \"MMM D YYYY\")\n  thumbnailImage {\n    cropped(width: 325, height: 244) {\n      src\n      srcSet\n    }\n  }\n  author {\n    name\n    id\n  }\n}\n"
+    "text": "query HomeFeaturedArticles_Test_Query {\n  articles {\n    ...HomeFeaturedArticles_articles\n    id\n  }\n}\n\nfragment HomeFeaturedArticles_articles on Article {\n  internalID\n  href\n  title\n  publishedAt(format: \"MMM D YYYY\")\n  vertical\n  thumbnailTitle\n  thumbnailImage {\n    large: cropped(width: 670, height: 720) {\n      width\n      height\n      src\n      srcSet\n    }\n    small: cropped(width: 325, height: 240) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n  author {\n    name\n    id\n  }\n}\n"
   }
 };
 })();
