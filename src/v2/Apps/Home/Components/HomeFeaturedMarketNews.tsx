@@ -124,7 +124,7 @@ const HomeFeaturedMarketNews: React.FC<HomeFeaturedMarketNewsProps> = ({
 const HomeFeaturedMarketNewsContainer: React.FC = ({ children }) => {
   return (
     <>
-      <Flex justifyContent="space-between">
+      <Flex justifyContent="space-between" alignItems="center">
         <Text variant="xl">Market News</Text>
 
         <Text

@@ -56,7 +56,7 @@ const HomeFeaturedShows: React.FC<HomeFeaturedShowsProps> = ({
 const HomeFeaturedShowsContainer: React.FC = ({ children }) => {
   return (
     <>
-      <Flex justifyContent="space-between">
+      <Flex justifyContent="space-between" alignItems="center">
         <Text variant="xl">Featured shows</Text>
 
         <Text

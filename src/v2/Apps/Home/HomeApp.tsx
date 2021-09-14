@@ -9,13 +9,17 @@ import { HomeFeaturedMarketNewsLazyQueryRenderer } from "./Components/HomeFeatur
 import { HomeFeaturedEventsRailFragmentContainer } from "./Components/HomeFeaturedEventsRail"
 import { HomeMeta } from "./Components/HomeMeta"
 import { FlashBannerQueryRenderer } from "v2/Components/FlashBanner"
+import { HomeFeaturedGalleriesRailQueryRenderer } from "./Components/HomeFeaturedGalleriesRail"
 
 interface HomeAppProps {
   homePage: HomeApp_homePage | null
-  orderedSet: HomeApp_featuredEventsOrderedSet | null
+  featuredEventsOrderedSet: HomeApp_featuredEventsOrderedSet | null
 }
 
-export const HomeApp: React.FC<HomeAppProps> = ({ homePage, orderedSet }) => {
+export const HomeApp: React.FC<HomeAppProps> = ({
+  homePage,
+  featuredEventsOrderedSet,
+}) => {
   return (
     <>
       <HomeMeta />
@@ -31,9 +35,11 @@ export const HomeApp: React.FC<HomeAppProps> = ({ homePage, orderedSet }) => {
       <Spacer mt={4} />
 
       <Join separator={<Spacer mt={6} />}>
-        {orderedSet && (
+        {featuredEventsOrderedSet && (
           <>
-            <HomeFeaturedEventsRailFragmentContainer orderedSet={orderedSet} />
+            <HomeFeaturedEventsRailFragmentContainer
+              orderedSet={featuredEventsOrderedSet}
+            />
 
             <Separator />
           </>
@@ -44,6 +50,8 @@ export const HomeApp: React.FC<HomeAppProps> = ({ homePage, orderedSet }) => {
         )}
 
         <HomeFeaturedMarketNewsLazyQueryRenderer />
+
+        <HomeFeaturedGalleriesRailQueryRenderer />
       </Join>
     </>
   )
