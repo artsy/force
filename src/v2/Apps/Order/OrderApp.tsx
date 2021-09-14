@@ -1,6 +1,6 @@
 import { Box } from "@artsy/palette"
 import { OrderApp_order } from "v2/__generated__/OrderApp_order.graphql"
-import { StickyFooter } from "v2/Apps/Order/Components/StickyFooter"
+import { StickyFooterWithInquiry } from "v2/Apps/Order/Components/StickyFooter"
 import { SystemContextConsumer, withSystemContext } from "v2/System"
 import { findCurrentRoute } from "v2/System/Router/Utils/findCurrentRoute"
 import { ErrorPage } from "v2/Components/ErrorPage"
@@ -151,7 +151,10 @@ class OrderApp extends React.Component<OrderAppProps, {}> {
                   </Elements>
                 </SafeAreaContainer>
                 {!isModal && (
-                  <StickyFooter orderType={order.mode} artworkId={artworkId} />
+                  <StickyFooterWithInquiry
+                    orderType={order.mode}
+                    artworkID={artworkId}
+                  />
                 )}
                 <ConnectedModalDialog />
               </MinimalNavBar>
