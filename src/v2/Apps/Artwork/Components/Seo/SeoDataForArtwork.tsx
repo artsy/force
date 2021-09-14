@@ -22,7 +22,7 @@ export const AVAILABILITY = {
 export const SeoDataForArtwork: React.FC<SeoDataForArtworkProps> = ({
   artwork,
 }) => {
-  const artistsName = artwork.artist_names
+  const artistsName = artwork.artistNames
 
   // @ts-expect-error STRICT_NULL_CHECK
   const dimensions = parseDimensions(get(artwork, a => a.dimensions.in, ""))
@@ -117,7 +117,7 @@ export const SeoDataForArtworkFragmentContainer = createFragmentContainer(
             }
           }
         }
-        artist_names: artistNames
+        artistNames
         availability
         category
         dimensions {

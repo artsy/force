@@ -163,7 +163,7 @@ export const ArtworkMetaFragmentContainer = createFragmentContainer(
         href
         internalID
         date
-        artist_names: artistNames
+        artistNames
         sale_message: saleMessage
         partner {
           name

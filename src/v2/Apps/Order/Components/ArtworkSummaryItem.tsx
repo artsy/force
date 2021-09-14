@@ -28,7 +28,7 @@ const ArtworkSummaryItem: React.FC<ArtworkSummaryItemProps> = ({
 }) => {
   const artwork = get({}, () => lineItems?.edges?.[0]?.node?.artwork)
 
-  const { artist_names, title, date, shippingOrigin, image } = artwork!
+  const { artistNames, title, date, shippingOrigin, image } = artwork!
 
   const imageURL =
     image &&
@@ -48,7 +48,7 @@ const ArtworkSummaryItem: React.FC<ArtworkSummaryItemProps> = ({
       </Box>
       <Flex flexDirection="column" overflow="hidden">
         <Text variant="sm" color="black60">
-          {artist_names}
+          {artistNames}
         </Text>
         <Box style={{ lineHeight: "1", ...truncateTextStyle }}>
           <Text
@@ -88,7 +88,7 @@ export const ArtworkSummaryItemFragmentContainer = createFragmentContainer(
           edges {
             node {
               artwork {
-                artist_names: artistNames
+                artistNames
                 title
                 date
                 shippingOrigin

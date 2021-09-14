@@ -31,7 +31,7 @@ export const SeoDataForArtworkFixture: SeoDataForArtwork_Test_QueryRawResponse["
       },
     },
   },
-  artist_names: "Artist McArtist",
+  artistNames: "Artist McArtist",
   availability: "for sale",
   category: "Design/Decorative Art",
   dimensions: {
