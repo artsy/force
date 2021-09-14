@@ -120,15 +120,12 @@ export const convertShippingAddressForExchange = (
 }
 
 export const convertShippingAddressToMutationInput = (
-  phoneNumber: SavedAddressType["phoneNumber"],
   address: SavedAddressType
 ): UserAddressAttributes => {
-  const modifiedAddress = { ...address, phoneNumber }
-
   return omit(
     {
-      ...modifiedAddress,
-      name: modifiedAddress?.name || "",
+      ...address,
+      name: address?.name || "",
     },
     ["isDefault", "internalID", "id", "__typename"]
   )

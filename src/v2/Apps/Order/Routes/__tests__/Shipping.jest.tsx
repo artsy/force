@@ -984,8 +984,7 @@ describe("Shipping", () => {
           input.instance().value = `Test input '${input.props().name}'`
           input.simulate("change")
         })
-
-        const countrySelect = page.find("AddressModal").find("select").first()
+        const countrySelect = page.find("AddressModal").find("select")
         countrySelect.instance().value = `US`
         countrySelect.simulate("change")
 
@@ -1021,23 +1020,23 @@ describe("Shipping", () => {
 
         expect(mutations.mockFetch).toHaveBeenCalledTimes(3)
         expect(mutations.mockFetch.mock.calls[1][1]).toMatchInlineSnapshot(`
-          Object {
-            "input": Object {
-              "attributes": Object {
-                "addressLine1": "Test input 'addressLine1'",
-                "addressLine2": "Test input 'addressLine2'",
-                "addressLine3": "",
-                "city": "Test input 'city'",
-                "country": "US",
-                "name": "Test input 'name'",
-                "phoneNumber": "",
-                "postalCode": "Test input 'postalCode'",
-                "region": "Test input 'region'",
-              },
-              "userAddressID": "2",
-            },
-          }
-        `)
+              Object {
+                "input": Object {
+                  "attributes": Object {
+                    "addressLine1": "Test input 'addressLine1'",
+                    "addressLine2": "Test input 'addressLine2'",
+                    "addressLine3": "",
+                    "city": "Test input 'city'",
+                    "country": "US",
+                    "name": "Test input 'name'",
+                    "phoneNumber": "Test input 'phoneNumber'",
+                    "postalCode": "Test input 'postalCode'",
+                    "region": "Test input 'region'",
+                  },
+                  "userAddressID": "2",
+                },
+              }
+            `)
       })
 
       it("does not reload shipping quotes after edit not selected address", async () => {
@@ -1054,7 +1053,7 @@ describe("Shipping", () => {
           input.instance().value = `Test input '${input.props().name}'`
           input.simulate("change")
         })
-        const countrySelect = page.find("AddressModal").find("select").first()
+        const countrySelect = page.find("AddressModal").find("select")
         countrySelect.instance().value = `US`
         countrySelect.simulate("change")
 
@@ -1087,23 +1086,23 @@ describe("Shipping", () => {
 
         expect(mutations.mockFetch).toHaveBeenCalledTimes(2)
         expect(mutations.mockFetch.mock.calls[1][1]).toMatchInlineSnapshot(`
-          Object {
-            "input": Object {
-              "attributes": Object {
-                "addressLine1": "Test input 'addressLine1'",
-                "addressLine2": "Test input 'addressLine2'",
-                "addressLine3": "",
-                "city": "Test input 'city'",
-                "country": "US",
-                "name": "Test input 'name'",
-                "phoneNumber": "",
-                "postalCode": "Test input 'postalCode'",
-                "region": "Test input 'region'",
-              },
-              "userAddressID": "1",
-            },
-          }
-        `)
+              Object {
+                "input": Object {
+                  "attributes": Object {
+                    "addressLine1": "Test input 'addressLine1'",
+                    "addressLine2": "Test input 'addressLine2'",
+                    "addressLine3": "",
+                    "city": "Test input 'city'",
+                    "country": "US",
+                    "name": "Test input 'name'",
+                    "phoneNumber": "Test input 'phoneNumber'",
+                    "postalCode": "Test input 'postalCode'",
+                    "region": "Test input 'region'",
+                  },
+                  "userAddressID": "1",
+                },
+              }
+            `)
       })
     })
 
@@ -1155,7 +1154,7 @@ describe("Shipping", () => {
           input.instance().value = `Test input '${input.props().name}'`
           input.simulate("change")
         })
-        const countrySelect = page.find("AddressModal").find("select").first()
+        const countrySelect = page.find("AddressModal").find("select")
         countrySelect.instance().value = `US`
         countrySelect.simulate("change")
 
@@ -1173,7 +1172,7 @@ describe("Shipping", () => {
                 "city": "Test input 'city'",
                 "country": "US",
                 "name": "Test input 'name'",
-                "phoneNumber": "",
+                "phoneNumber": "Test input 'phoneNumber'",
                 "postalCode": "Test input 'postalCode'",
                 "region": "Test input 'region'",
               },
