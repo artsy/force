@@ -5,7 +5,6 @@ import { NavigationTabsFragmentContainer as NavigationTabs } from "v2/Apps/Searc
 import { SearchMeta } from "v2/Apps/Search/Components/SearchMeta"
 import { RecentlyViewed } from "v2/Components/RecentlyViewed"
 import { createFragmentContainer, graphql } from "react-relay"
-import { get } from "v2/Utils/get"
 import { ZeroState } from "./Components/ZeroState"
 import { useRouter } from "v2/System/Router/useRouter"
 
@@ -42,7 +41,7 @@ export const SearchApp: React.FC<SearchAppProps> = ({ viewer, children }) => {
   const typeAggregation = aggregations?.find(agg => agg?.slice === "TYPE")
     ?.counts
 
-  const artworkCount = get(artworksConnection, f => f?.counts?.total, 0) ?? 0
+  const artworkCount = artworksConnection?.counts?.total ?? 0
   const countWithoutArtworks =
     typeAggregation?.reduce((total = 0, aggregation) => {
       if (!aggregation) {

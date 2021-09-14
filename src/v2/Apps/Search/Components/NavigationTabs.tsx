@@ -1,9 +1,8 @@
 import React from "react"
-import { BoxProps, Flex, Pill, Sup, Swiper, Text } from "@artsy/palette"
+import { BaseTabs, BoxProps, Flex, Pill, Sup, Text } from "@artsy/palette"
 import { NavigationTabs_searchableConnection } from "v2/__generated__/NavigationTabs_searchableConnection.graphql"
 import { useAnalyticsContext, useTracking } from "v2/System/Analytics"
 import { createFragmentContainer, graphql } from "react-relay"
-import { get } from "v2/Utils/get"
 import { RouterLink, RouterLinkProps } from "v2/System/Router/RouterLink"
 import { useIsRouteActive } from "v2/System/Router/useRouter"
 import { Media } from "v2/Utils/Responsive"
@@ -142,11 +141,7 @@ export const NavigationTabs: React.FC<NavigationTabsProps> = ({
   )
 
   const restAggregationCount = MORE_TABS.reduce((prev, key) => {
-    const tabAggregation = get(
-      aggregationFor(searchableConnection, key),
-      agg => agg?.count,
-      0
-    )
+    const tabAggregation = aggregationFor(searchableConnection, key)?.count ?? 0
 
     return tabAggregation ? (prev += tabAggregation) : prev
   }, 0)
@@ -158,11 +153,7 @@ export const NavigationTabs: React.FC<NavigationTabsProps> = ({
       })
     )
 
-  return (
-    <Swiper my={2} snap="start">
-      {tabs}
-    </Swiper>
-  )
+  return <BaseTabs my={2}>{tabs}</BaseTabs>
 }
 
 export const NavigationTabsFragmentContainer = createFragmentContainer(
@@ -199,7 +190,7 @@ export const tabCountMap: (
   searchableConnection: NavigationTabs_searchableConnection
 ) => TabCounts = props => {
   return Object.entries(TAB_NAME_MAP).reduce((acc, [key, val]) => {
-    let count = get(aggregationFor(props, key), agg => agg?.count, 0)
+    let count = aggregationFor(props, key)?.count ?? 0
     if (!count) {
       return acc
     }
