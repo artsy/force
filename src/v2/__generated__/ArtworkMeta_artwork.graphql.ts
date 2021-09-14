@@ -7,7 +7,7 @@ export type ArtworkMeta_artwork = {
     readonly href: string | null;
     readonly internalID: string;
     readonly date: string | null;
-    readonly artist_names: string | null;
+    readonly artistNames: string | null;
     readonly sale_message: string | null;
     readonly partner: {
         readonly name: string | null;
@@ -86,7 +86,7 @@ return {
       "storageKey": null
     },
     {
-      "alias": "artist_names",
+      "alias": null,
       "args": null,
       "kind": "ScalarField",
       "name": "artistNames",
@@ -301,5 +301,5 @@ return {
   "type": "Artwork"
 };
 })();
-(node as any).hash = 'c404ddbc5676aea233f19637f7d96f5e';
+(node as any).hash = '9a762b2eee90cdd725d9494cef0fe4c0';
 export default node;

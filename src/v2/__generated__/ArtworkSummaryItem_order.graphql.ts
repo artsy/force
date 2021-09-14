@@ -11,7 +11,7 @@ export type ArtworkSummaryItem_order = {
         readonly edges: ReadonlyArray<{
             readonly node: {
                 readonly artwork: {
-                    readonly artist_names: string | null;
+                    readonly artistNames: string | null;
                     readonly title: string | null;
                     readonly date: string | null;
                     readonly shippingOrigin: string | null;
@@ -97,7 +97,7 @@ const node: ReaderFragment = {
                   "plural": false,
                   "selections": [
                     {
-                      "alias": "artist_names",
+                      "alias": null,
                       "args": null,
                       "kind": "ScalarField",
                       "name": "artistNames",
@@ -174,5 +174,5 @@ const node: ReaderFragment = {
   ],
   "type": "CommerceOrder"
 };
-(node as any).hash = 'ef1e5063c36ba2a92e3abe4d4b9b16b9';
+(node as any).hash = '56cd6a501085da43b77b96d899f715e1';
 export default node;

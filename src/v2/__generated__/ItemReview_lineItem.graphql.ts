@@ -5,7 +5,7 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ItemReview_lineItem = {
     readonly artwork: {
-        readonly artist_names: string | null;
+        readonly artistNames: string | null;
         readonly title: string | null;
         readonly date: string | null;
         readonly medium: string | null;
@@ -81,7 +81,7 @@ return {
       "plural": false,
       "selections": [
         {
-          "alias": "artist_names",
+          "alias": null,
           "args": null,
           "kind": "ScalarField",
           "name": "artistNames",
@@ -195,5 +195,5 @@ return {
   "type": "CommerceLineItem"
 };
 })();
-(node as any).hash = '1cbb0c8982674f0dcdd9ee38d36fe8cf';
+(node as any).hash = '21a2e52e8eb6eaafb635eaa2a27ed561';
 export default node;

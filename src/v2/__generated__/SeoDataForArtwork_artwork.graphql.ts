@@ -48,7 +48,7 @@ export type SeoDataForArtwork_artwork = {
             } | null;
         } | null;
     } | null;
-    readonly artist_names: string | null;
+    readonly artistNames: string | null;
     readonly availability: string | null;
     readonly category: string | null;
     readonly dimensions: {
@@ -340,7 +340,7 @@ return {
       "storageKey": null
     },
     {
-      "alias": "artist_names",
+      "alias": null,
       "args": null,
       "kind": "ScalarField",
       "name": "artistNames",
@@ -382,5 +382,5 @@ return {
   "type": "Artwork"
 };
 })();
-(node as any).hash = 'dffd7ec8e9259daca70604dfb2fc7d41';
+(node as any).hash = '1d1e3916a7301124ca124a3c1957a99b';
 export default node;
