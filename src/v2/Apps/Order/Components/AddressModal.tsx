@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useRef, useState } from "react"
 import {
   Button,
   Clickable,
@@ -11,6 +11,8 @@ import {
   Spacer,
   Text,
   Banner,
+  Select,
+  Box,
 } from "@artsy/palette"
 import {
   SavedAddressType,
@@ -30,6 +32,7 @@ import { useSystemContext } from "v2/System/SystemContext"
 import { updateUserDefaultAddress } from "../Mutations/UpdateUserDefaultAddress"
 import { UpdateUserAddressMutationResponse } from "v2/__generated__/UpdateUserAddressMutation.graphql"
 import { CreateUserAddressMutationResponse } from "v2/__generated__/CreateUserAddressMutation.graphql"
+import { countries, countryCodes } from "v2/Utils/countries"
 
 export interface ModalDetails {
   addressModalTitle: string
@@ -72,6 +75,15 @@ export const AddressModal: React.FC<Props> = ({
   modalDetails,
   me,
 }) => {
+  const ref = useRef<HTMLInputElement | null>(null)
+  const [countryCode, setCountryCode] = useState<string>("us")
+  const [phoneNumber, setphoneNumber] = useState<string>(
+    address?.phoneNumber ?? ""
+  )
+  const mergeCountryCodeToPhoneNum = (phoneInput: string) => {
+    const cc = countryCodes[countryCode.toUpperCase()] ?? ""
+    setphoneNumber("+" + cc + phoneInput)
+  }
   const title = modalDetails?.addressModalTitle
   const createMutation =
     modalDetails?.addressModalAction === "createUserAddress"
@@ -147,7 +159,10 @@ export const AddressModal: React.FC<Props> = ({
 
               setCreateUpdateError(null)
             }
-            const addressInput = convertShippingAddressToMutationInput(values)
+            const addressInput = convertShippingAddressToMutationInput(
+              phoneNumber,
+              values
+            )
             if (createMutation) {
               createUserAddress(
                 relayEnvironment,
@@ -180,17 +195,54 @@ export const AddressModal: React.FC<Props> = ({
               )}
               <AddressModalFields />
               <Spacer mb={2} />
-              <Input
-                title="Phone number"
-                description="Required for shipping logistics"
-                placeholder="Add phone number"
-                name="phoneNumber"
-                type="tel"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                error={formik.touched.phoneNumber && formik.errors.phoneNumber}
-                value={formik.values?.phoneNumber || ""}
-              />
+              <Flex>
+                <Box style={{ maxWidth: "35%" }}>
+                  <Select
+                    title="Phone number"
+                    description="Only used for shipping purposes"
+                    options={countries}
+                    onSelect={cc => {
+                      setCountryCode(cc)
+
+                      if (ref.current?.value) {
+                        mergeCountryCodeToPhoneNum(ref.current?.value)
+                      }
+                    }}
+                    style={{
+                      letterSpacing: "1px",
+                      borderRight: "none",
+                    }}
+                    data-test="countryDropdown"
+                  />
+                </Box>
+                <Flex
+                  flexDirection="column"
+                  style={{
+                    width: "100%",
+                  }}
+                >
+                  <Box height="100%"></Box>
+                  <Input
+                    ref={ref}
+                    title=""
+                    description=""
+                    placeholder={"Add phone number"}
+                    name="phoneNumber"
+                    type="tel"
+                    onChange={formik.handleChange}
+                    onBlur={e => {
+                      mergeCountryCodeToPhoneNum(e.target.value)
+
+                      formik.handleBlur
+                    }}
+                    error={
+                      formik.touched.phoneNumber && formik.errors.phoneNumber
+                    }
+                    value={formik.values?.phoneNumber ?? ""}
+                    style={{ borderLeft: "none" }}
+                  />
+                </Flex>
+              </Flex>
               <Spacer mb={2} />
               {(!address?.isDefault || createMutation) && (
                 <Checkbox
