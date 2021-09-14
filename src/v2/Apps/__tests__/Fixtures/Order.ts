@@ -33,7 +33,7 @@ export const mockResolver = (
 })
 
 const OrderArtworkNodeWithoutShipping = {
-  artist_names: "Lisa Breslow",
+  artistNames: "Lisa Breslow",
   artists: [
     {
       id: "239084092",
@@ -203,6 +203,7 @@ export const UntouchedOrder = {
           id: "line-item-node-id",
           selectedShippingQuote: null,
           shippingQuoteOptions: null,
+          shipment: null,
           ...OrderArtworkNode,
           ...OrderArtworkOrEditionSetkNode_Artwork,
           ...OrderArtworkFulfillmentsNode,
