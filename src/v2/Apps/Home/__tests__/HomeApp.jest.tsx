@@ -24,7 +24,7 @@ describe("HomeApp", () => {
           ...HomeApp_homePage
         }
         orderedSet(id: "example") {
-          ...HomeApp_orderedSet
+          ...HomeApp_featuredEventsOrderedSet
         }
       }
     `,
