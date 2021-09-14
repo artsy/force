@@ -15,6 +15,6 @@ describe("Shows", () => {
     const showLink = cy.get('a[href*="/show/"]:first')
     showLink.click()
     cy.url().should("contain", "/show/")
-    cy.contains("Presented by")
+    cy.contains("Show")
   })
 })
