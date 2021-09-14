@@ -33,15 +33,19 @@ import createLogger from "v2/Utils/logger"
 import { openAuthModal } from "v2/Utils/openAuthModal"
 import { ArtworkSidebarSizeInfoFragmentContainer as SizeInfo } from "./ArtworkSidebarSizeInfo"
 import { Mediator } from "lib/mediator"
+import { useInquiry, WithInquiryProps } from "v2/Components/Inquiry/useInquiry"
+import { data as sd } from "sharify"
 
-// @ts-expect-error STRICT_NULL_CHECK
-type EditionSet = ArtworkSidebarCommercial_artwork["edition_sets"][0]
+type EditionSet = NonNullable<
+  ArtworkSidebarCommercial_artwork["edition_sets"]
+>[0]
 
 export interface ArtworkSidebarCommercialContainerProps
-  extends ArtworkSidebarCommercialProps {
+  extends ArtworkSidebarCommercialProps,
+    WithInquiryProps {
   mediator: Mediator
   router?: Router
-  user: User
+  user?: User
 }
 
 export interface ArtworkSidebarCommercialContainerState {
@@ -95,14 +99,14 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
 
   renderEditionSet(editionSet: EditionSet, includeSelectOption: boolean) {
     const editionEcommerceAvailable =
-      editionSet.is_acquireable || editionSet.is_offerable
+      editionSet?.is_acquireable || editionSet?.is_offerable
 
     const editionFragment = (
       <Flex justifyContent="space-between" flex={1}>
-        <SizeInfo piece={editionSet} />
+        <SizeInfo piece={editionSet!} />
 
         <Text ml={1} variant="xs" data-test="SaleMessage">
-          {editionSet.sale_message}
+          {editionSet?.sale_message}
         </Text>
       </Flex>
     )
@@ -128,19 +132,16 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
   renderEditionSets(includeSelectOption: boolean) {
     const editionSets = this.props.artwork.edition_sets
 
-    // @ts-expect-error STRICT_NULL_CHECK
-    const editionSetsFragment = editionSets.map((editionSet, index) => {
+    const editionSetsFragment = editionSets?.map((editionSet, index) => {
       return (
-        // @ts-expect-error STRICT_NULL_CHECK
-        <React.Fragment key={editionSet.id}>
+        <React.Fragment key={editionSet?.id}>
           <Box py={2}>
             {this.renderEditionSet(editionSet, includeSelectOption)}
           </Box>
-          {/* @ts-expect-error STRICT_NULL_CHECK */}
           {index !== editionSets.length - 1 && <Separator />}
         </React.Fragment>
       )
-    })
+    })!
 
     return <RadioGroup>{editionSetsFragment}</RadioGroup>
   }
@@ -165,6 +166,11 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
     artwork_slug: props.artwork.slug,
   }))
   handleInquiry() {
+    if (sd.ENABLE_V3_INQUIRY) {
+      this.props.showInquiry()
+      return
+    }
+
     get(this.props, props => props.mediator.trigger) &&
       this.props.mediator.trigger("launchInquiryFlow", {
         artworkId: this.props.artwork.internalID,
@@ -226,7 +232,7 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
                   artworkId: this.props.artwork.internalID,
                   editionSetId: get(
                     this.state,
-                    state => state.selectedEditionSet.internalID
+                    state => state.selectedEditionSet?.internalID
                   ),
                 },
               },
@@ -315,7 +321,7 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
                   artworkId: this.props.artwork.internalID,
                   editionSetId: get(
                     this.state,
-                    state => state.selectedEditionSet.internalID
+                    state => state.selectedEditionSet?.internalID
                   ),
                 },
               },
@@ -358,7 +364,7 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
   }
 
   render() {
-    const { artwork } = this.props
+    const { artwork, inquiryComponent } = this.props
 
     const {
       isCommittingCreateOrderMutation,
@@ -375,102 +381,108 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
     }
 
     return (
-      <Box textAlign="left">
-        {artwork.sale_message && <Separator />}
+      <>
+        {inquiryComponent}
 
-        {(artwork.edition_sets?.length ?? 0) < 2 ? (
-          artwork.sale_message && (
-            <>
-              <Spacer mt={2} />
-              {this.renderSaleMessage(artwork.sale_message)}
-            </>
-          )
-        ) : (
-          <>
-            {this.renderEditionSets(artworkEcommerceAvailable)}
+        <Box textAlign="left">
+          {artwork.sale_message && <Separator />}
 
-            {selectedEditionSet && (
+          {(artwork.edition_sets?.length ?? 0) < 2 ? (
+            artwork.sale_message && (
               <>
-                <Separator mb={2} />
-                {this.renderSaleMessage(selectedEditionSet.sale_message)}
+                <Spacer mt={2} />
+                {this.renderSaleMessage(artwork.sale_message)}
               </>
-            )}
-          </>
-        )}
+            )
+          ) : (
+            <>
+              {this.renderEditionSets(artworkEcommerceAvailable)}
 
-        {artworkEcommerceAvailable &&
-          (artwork.shippingOrigin || artwork.shippingInfo) && <Spacer mt={1} />}
-
-        {artworkEcommerceAvailable && artwork.shippingOrigin && (
-          <Text variant="xs" color="black60">
-            Ships from {artwork.shippingOrigin}
-          </Text>
-        )}
-
-        {artworkEcommerceAvailable && artwork.shippingInfo && (
-          <Text variant="xs" color="black60">
-            {artwork.shippingInfo}
-          </Text>
-        )}
-
-        {artworkEcommerceAvailable && artwork.priceIncludesTaxDisplay && (
-          <Text variant="xs" color="black60">
-            {artwork.priceIncludesTaxDisplay}
-          </Text>
-        )}
-
-        {artwork.is_inquireable ||
-        artwork.is_acquireable ||
-        artwork.is_offerable ? (
-          artwork.sale_message && <Spacer mt={2} />
-        ) : (
-          <Separator my={2} />
-        )}
-
-        {artwork.is_acquireable && (
-          <Button
-            width="100%"
-            size="medium"
-            loading={isCommittingCreateOrderMutation}
-            onClick={this.handleCreateOrder.bind(this)}
-          >
-            Buy now
-          </Button>
-        )}
-        {artwork.is_offerable && (
-          <>
-            <Spacer mt={2} />
-            <Button
-              variant={
-                artwork.is_acquireable ? "secondaryOutline" : "primaryBlack"
-              }
-              width="100%"
-              size="medium"
-              loading={isCommittingCreateOfferOrderMutation}
-              onClick={this.handleCreateOfferOrder.bind(this)}
-            >
-              Make offer
-            </Button>
-          </>
-        )}
-        {artwork.is_inquireable &&
-          !artwork.is_acquireable &&
-          !artwork.is_offerable && (
-            <Button
-              width="100%"
-              size="medium"
-              onClick={this.handleInquiry.bind(this)}
-            >
-              Contact Gallery
-            </Button>
+              {selectedEditionSet && (
+                <>
+                  <Separator mb={2} />
+                  {this.renderSaleMessage(selectedEditionSet?.sale_message!)}
+                </>
+              )}
+            </>
           )}
 
-        <ErrorModal
-          onClose={this.onCloseModal}
-          show={this.state.isErrorModalOpen}
-          contactEmail="orders@artsy.net"
-        />
-      </Box>
+          {artworkEcommerceAvailable &&
+            (artwork.shippingOrigin || artwork.shippingInfo) && (
+              <Spacer mt={1} />
+            )}
+
+          {artworkEcommerceAvailable && artwork.shippingOrigin && (
+            <Text variant="xs" color="black60">
+              Ships from {artwork.shippingOrigin}
+            </Text>
+          )}
+
+          {artworkEcommerceAvailable && artwork.shippingInfo && (
+            <Text variant="xs" color="black60">
+              {artwork.shippingInfo}
+            </Text>
+          )}
+
+          {artworkEcommerceAvailable && artwork.priceIncludesTaxDisplay && (
+            <Text variant="xs" color="black60">
+              {artwork.priceIncludesTaxDisplay}
+            </Text>
+          )}
+
+          {artwork.is_inquireable ||
+          artwork.is_acquireable ||
+          artwork.is_offerable ? (
+            artwork.sale_message && <Spacer mt={2} />
+          ) : (
+            <Separator my={2} />
+          )}
+
+          {artwork.is_acquireable && (
+            <Button
+              width="100%"
+              size="medium"
+              loading={isCommittingCreateOrderMutation}
+              onClick={this.handleCreateOrder.bind(this)}
+            >
+              Buy now
+            </Button>
+          )}
+          {artwork.is_offerable && (
+            <>
+              <Spacer mt={2} />
+              <Button
+                variant={
+                  artwork.is_acquireable ? "secondaryOutline" : "primaryBlack"
+                }
+                width="100%"
+                size="medium"
+                loading={isCommittingCreateOfferOrderMutation}
+                onClick={this.handleCreateOfferOrder.bind(this)}
+              >
+                Make offer
+              </Button>
+            </>
+          )}
+          {artwork.is_inquireable &&
+            !artwork.is_acquireable &&
+            !artwork.is_offerable && (
+              <Button
+                width="100%"
+                size="medium"
+                onClick={this.handleInquiry.bind(this)}
+              >
+                Contact Gallery
+              </Button>
+            )}
+
+          <ErrorModal
+            onClose={this.onCloseModal}
+            show={this.state.isErrorModalOpen}
+            contactEmail="orders@artsy.net"
+          />
+        </Box>
+      </>
     )
   }
 }
@@ -480,16 +492,23 @@ interface ArtworkSidebarCommercialProps {
   relay?: RelayProp
 }
 
-export const ArtworkSidebarCommercial: FC<ArtworkSidebarCommercialProps> = props => {
+export const ArtworkSidebarCommercial: FC<ArtworkSidebarCommercialProps> = ({
+  artwork,
+  ...rest
+}) => {
   const { mediator, router, user } = useContext(SystemContext)
 
+  const inquiry = useInquiry({ artworkID: artwork.internalID })
+
   return (
-    // @ts-expect-error STRICT_NULL_CHECK
     <ArtworkSidebarCommercialContainer
-      {...props}
-      mediator={mediator}
+      artworkID={artwork.internalID}
+      artwork={artwork}
+      mediator={mediator!}
       router={router}
       user={user}
+      {...inquiry}
+      {...rest}
     />
   )
 }

@@ -26,8 +26,13 @@ import { ModalButton } from "v2/Components/Modal/ModalDialog"
 import { mockLocation } from "v2/DevTools/mockLocation"
 import { SystemContextProvider } from "v2/System"
 import { mediator } from "lib/mediator"
+import { withInquiry } from "v2/Components/Inquiry/useInquiry"
 
 const commitMutation = _commitMutation as jest.Mock<any>
+
+const ArtworkSidebarCommercialContainerWithInquiry = withInquiry(
+  ArtworkSidebarCommercialContainer
+)
 
 describe("ArtworkSidebarCommercial", () => {
   let user
@@ -38,7 +43,8 @@ describe("ArtworkSidebarCommercial", () => {
   const getWrapper = (artwork, otherProps = {}) => {
     return mount(
       <SystemContextProvider>
-        <ArtworkSidebarCommercialContainer
+        <ArtworkSidebarCommercialContainerWithInquiry
+          artworkID={artwork.internalID}
           artwork={artwork}
           user={user}
           mediator={mediator}

@@ -31,6 +31,7 @@ declare module "sharify" {
       readonly ENABLE_SERVER_SIDE_CACHE: string
       readonly ENABLE_QUERY_BATCHING: boolean
       readonly ENABLE_NEW_AUCTIONS_FILTER: boolean
+      readonly ENABLE_V3_INQUIRY: boolean
       readonly FACEBOOK_APP_NAMESPACE: string
       readonly FACEBOOK_ID: string
       readonly FORCE_CLOUDFRONT_URL: string

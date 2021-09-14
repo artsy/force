@@ -1,23 +1,25 @@
 import React, { useState } from "react"
 import { Inquiry } from "./Inquiry"
 
-interface UseInquiry {
+export interface UseInquiryProps {
   artworkID: string
-  askSpecialist?: boolean
 }
 
-export const useInquiry = ({ artworkID, askSpecialist }: UseInquiry) => {
+export const useInquiry = ({ artworkID }: UseInquiryProps) => {
   const [isInquiryVisible, setIsInquiryVisible] = useState(false)
+  const [askSpecialist, setAskSpecialist] = useState(false)
 
-  const showInquiry = () => {
+  const showInquiry = (options: { askSpecialist?: boolean } = {}) => {
+    if (options.askSpecialist) setAskSpecialist(true)
     setIsInquiryVisible(true)
   }
 
   const hideInquiry = () => {
+    setAskSpecialist(false)
     setIsInquiryVisible(false)
   }
 
-  const inquiryQuestionnaire = (
+  const inquiryComponent = (
     <>
       {isInquiryVisible && (
         <Inquiry
@@ -33,6 +35,35 @@ export const useInquiry = ({ artworkID, askSpecialist }: UseInquiry) => {
     showInquiry,
     hideInquiry,
     isInquiryVisible,
-    inquiryQuestionnaire,
+    /**
+     * Component that must be included in your calling component
+     * <>{inquiryComponent}</>
+     */
+    inquiryComponent,
   }
+}
+
+export type WithInquiryProps = ReturnType<typeof useInquiry> & UseInquiryProps
+
+/** Also exposed as a HOC for older class components */
+export function withInquiry<T extends WithInquiryProps = WithInquiryProps>(
+  WrappedComponent: React.ComponentType<T>
+) {
+  const ComponentWithInquiry: React.FC<
+    Omit<T, keyof WithInquiryProps> & UseInquiryProps
+  > = props => {
+    const { artworkID, ...rest } = props
+    const inquiry = useInquiry({ artworkID })
+
+    return (
+      <WrappedComponent artworkID={artworkID} {...inquiry} {...(rest as any)} />
+    )
+  }
+
+  const displayName =
+    WrappedComponent.displayName || WrappedComponent.name || "Component"
+
+  ComponentWithInquiry.displayName = `withInquiry(${displayName})`
+
+  return ComponentWithInquiry
 }

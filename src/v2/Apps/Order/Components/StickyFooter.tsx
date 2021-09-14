@@ -5,9 +5,11 @@ import * as Schema from "v2/System/Analytics/Schema"
 import React, { Component } from "react"
 import styled from "styled-components"
 import { themeGet } from "@styled-system/theme-get"
+import { withInquiry, WithInquiryProps } from "v2/Components/Inquiry/useInquiry"
+import { data as sd } from "sharify"
 
-interface StickyFooterProps {
-  artworkId: string | null
+interface StickyFooterProps extends WithInquiryProps {
+  artworkID: string
   orderType: string | null
 }
 
@@ -33,44 +35,55 @@ export class StickyFooter extends Component<StickyFooterProps> {
     flow: props.orderType === "OFFER" ? "make offer" : "buy now",
   }))
   onClickAskSpecialist(mediator) {
+    if (sd.ENABLE_V3_INQUIRY) {
+      this.props.showInquiry({ askSpecialist: true })
+      return
+    }
+
     mediator.trigger("openOrdersContactArtsyModal", {
-      artworkId: this.props.artworkId,
+      artworkId: this.props.artworkID,
     })
   }
 
   render() {
     return (
-      <FooterContainer>
-        <SystemContextConsumer>
-          {({ mediator }) => (
-            <>
-              <Text variant="xs" color="black60">
-                Need help?{" "}
-                <Clickable
-                  data-test="help-center-link"
-                  textDecoration="underline"
-                  onClick={this.onClickReadFAQ.bind(this)}
-                >
-                  <Text variant="xs">Visit our help center</Text>
-                </Clickable>{" "}
-                or{" "}
-                <Clickable
-                  data-test="ask-question-link"
-                  textDecoration="underline"
-                  onClick={this.onClickAskSpecialist.bind(this, mediator)}
-                >
-                  <Text variant="xs">ask a question</Text>
-                </Clickable>
-                .
-              </Text>
-              <Spacer mb={2} />
-            </>
-          )}
-        </SystemContextConsumer>
-      </FooterContainer>
+      <>
+        {this.props.inquiryComponent}
+
+        <FooterContainer>
+          <SystemContextConsumer>
+            {({ mediator }) => (
+              <>
+                <Text variant="xs" color="black60">
+                  Need help?{" "}
+                  <Clickable
+                    data-test="help-center-link"
+                    textDecoration="underline"
+                    onClick={this.onClickReadFAQ.bind(this)}
+                  >
+                    <Text variant="xs">Visit our help center</Text>
+                  </Clickable>{" "}
+                  or{" "}
+                  <Clickable
+                    data-test="ask-question-link"
+                    textDecoration="underline"
+                    onClick={this.onClickAskSpecialist.bind(this, mediator)}
+                  >
+                    <Text variant="xs">ask a question</Text>
+                  </Clickable>
+                  .
+                </Text>
+                <Spacer mb={2} />
+              </>
+            )}
+          </SystemContextConsumer>
+        </FooterContainer>
+      </>
     )
   }
 }
+
+export const StickyFooterWithInquiry = withInquiry(StickyFooter)
 
 const FooterContainer = styled(Flex)`
   height: calc(46px + env(safe-area-inset-bottom));

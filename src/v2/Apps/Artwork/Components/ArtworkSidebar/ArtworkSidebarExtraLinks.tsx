@@ -6,13 +6,16 @@ import React, { useContext } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworkSidebarExtraLinks_artwork } from "v2/__generated__/ArtworkSidebarExtraLinks_artwork.graphql"
 import { Mediator } from "lib/mediator"
+import { useInquiry, WithInquiryProps } from "v2/Components/Inquiry/useInquiry"
+import { data as sd } from "sharify"
 
 export interface ArtworkSidebarExtraLinksProps {
   artwork: ArtworkSidebarExtraLinks_artwork
 }
 
 export interface ArtworkSidebarExtraLinksContainerProps
-  extends ArtworkSidebarExtraLinksProps {
+  extends ArtworkSidebarExtraLinksProps,
+    WithInquiryProps {
   mediator: Mediator
 }
 
@@ -72,6 +75,11 @@ class ArtworkSidebarExtraLinksContainer extends React.Component<
     type: Schema.Type.Link,
   }))
   onClickAuctionAskSpecialist() {
+    if (sd.ENABLE_V3_INQUIRY) {
+      this.props.showInquiry({ askSpecialist: true })
+      return
+    }
+
     this.props.mediator &&
       this.props.mediator.trigger &&
       this.props.mediator.trigger("openAuctionAskSpecialistModal", {
@@ -85,6 +93,11 @@ class ArtworkSidebarExtraLinksContainer extends React.Component<
     type: Schema.Type.Link,
   }))
   onClickBuyNowAskSpecialist() {
+    if (sd.ENABLE_V3_INQUIRY) {
+      this.props.showInquiry({ askSpecialist: true })
+      return
+    }
+
     this.props.mediator &&
       this.props.mediator.trigger &&
       this.props.mediator.trigger("openBuyNowAskSpecialistModal", {
@@ -236,6 +249,8 @@ class ArtworkSidebarExtraLinksContainer extends React.Component<
 
     return (
       <>
+        {this.props.inquiryComponent}
+
         <Separator my={2} />
 
         {isInOpenAuction && this.renderAuctionTerms()}
@@ -254,8 +269,16 @@ class ArtworkSidebarExtraLinksContainer extends React.Component<
 
 export const ArtworkSidebarExtraLinks: React.FC<ArtworkSidebarExtraLinksProps> = props => {
   const { mediator } = useContext(SystemContext)
-  // @ts-expect-error STRICT_NULL_CHECK
-  return <ArtworkSidebarExtraLinksContainer {...props} mediator={mediator} />
+  const inquiry = useInquiry({ artworkID: props.artwork.internalID })
+
+  return (
+    <ArtworkSidebarExtraLinksContainer
+      artworkID={props.artwork.internalID}
+      mediator={mediator!}
+      {...inquiry}
+      {...props}
+    />
+  )
 }
 
 export const ArtworkSidebarExtraLinksFragmentContainer = createFragmentContainer(
