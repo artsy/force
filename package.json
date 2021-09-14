@@ -352,6 +352,7 @@
     "inquirer": "1.2.3",
     "jest": "24.9.0",
     "jest-coffee-preprocessor": "1.0.0",
+    "jest-environment-jsdom-thirteen": "^1.0.1",
     "jest-junit": "6.4.0",
     "jest-styled-components": "7.0.4",
     "jest-transform-graphql": "2.1.0",

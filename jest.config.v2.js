@@ -14,6 +14,7 @@ module.exports = {
       },
       reporters: ["default", "jest-junit"],
       setupFilesAfterEnv: ["<rootDir>/src/v2/jest.envSetup.ts"],
+      testEnvironment: "jest-environment-jsdom-thirteen",
       testMatch: ["**/src/v2/**/*.jest.(ts|tsx)"],
       testURL: "http://localhost",
       transform: {
