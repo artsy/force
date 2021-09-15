@@ -129,7 +129,7 @@ const QuickNavigationItem: React.FC<{ to: string }> = ({ children, to }) => {
     router ? router.push(to) : window.location.assign(to)
   }
   return (
-    <ClickableFlex tabIndex={0} role="button" onClick={onClick} mt={1} mr={1}>
+    <ClickableFlex onClick={onClick} mt={1} mr={1}>
       <Pill variant="textSquare">
         <Flex alignItems="center">{children}</Flex>
       </Pill>
