@@ -9840,6 +9840,7 @@ type Profile {
   isFollowed: Boolean
   isPubliclyVisible: Boolean
   isPublished: Boolean
+  location: String
   name: String
   profileArtistsLayout: String
     @deprecated(reason: "Prefer profileArtistsLayout in Partner type")
