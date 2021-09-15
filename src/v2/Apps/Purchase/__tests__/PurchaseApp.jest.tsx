@@ -26,49 +26,22 @@ const pageInfo: PurchaseAppTestQueryRawResponse["me"]["orders"]["pageInfo"] = {
 // @ts-expect-error STRICT_NULL_CHECK
 const pageCursors: PurchaseAppTestQueryRawResponse["me"]["orders"]["pageCursors"] = {
   around: [
-    {
-      cursor: "",
-      isCurrent: true,
-      page: 1,
-    },
-    {
-      cursor: "NQ",
-      isCurrent: false,
-      page: 2,
-    },
-    {
-      cursor: "MTA",
-      isCurrent: false,
-      page: 3,
-    },
-    {
-      cursor: "MTU",
-      isCurrent: false,
-      page: 4,
-    },
+    { cursor: "", isCurrent: true, page: 1 },
+    { cursor: "NQ", isCurrent: false, page: 2 },
+    { cursor: "MTA", isCurrent: false, page: 3 },
+    { cursor: "MTU", isCurrent: false, page: 4 },
   ],
   first: null,
-  last: {
-    cursor: "MzA",
-    isCurrent: false,
-    page: 7,
-  },
+  last: { cursor: "MzA", isCurrent: false, page: 7 },
   previous: null,
 }
 
 const render = (me: PurchaseAppTestQueryRawResponse["me"], user: User) =>
   renderRelayTree({
     Component: (props: PurchaseAppTestQueryResponse) => (
-      <PurchaseAppFragmentContainer
-        me={{
-          ...me,
-        }}
-        {...props}
-      />
+      <PurchaseAppFragmentContainer me={{ ...me }} {...props} />
     ),
-    mockData: {
-      me,
-    } as PurchaseAppTestQueryRawResponse,
+    mockData: { me } as PurchaseAppTestQueryRawResponse,
     query: graphql`
       query PurchaseAppTestQuery @raw_response_type {
         me {
@@ -90,7 +63,6 @@ describe("Purchase app", () => {
   describe("A logged in use", () => {
     describe("having previous orders", () => {
       it("renders orders", async () => {
-        // TODO: revisit mocking and remove `artist_names` alias from PurchseHistory
         const mockMe = {
           id: "34343267",
           name: "Moira Rose",
@@ -103,7 +75,7 @@ describe("Purchase app", () => {
         const component = await render(mockMe, userType)
         const text = component.text()
         expect(text).toContain(
-          "pending•Track orderLisa BreslowGramercy Park SouthAGA Gallery New York, NYOrder No.abcdefgTotal$12,000Payment MethodN/AFulfillmentPickupMore infoNeed Help? Contact Us."
+          "Moira RoseSaves & FollowsCollector ProfileOrder HistoryBidsSettingsPaymentsShipping Dec 19, 2019Pendingprocessing•Track orderLisa BreslowGramercy Park SouthAGA Gallery New York, NYOrder No.abcdefgTotal$12,000Payment MethodN/AFulfillmentDeliveryMore infoNeed Help? Contact Us.1234…7Navigate leftPrevNextNavigate right"
         )
       })
     })

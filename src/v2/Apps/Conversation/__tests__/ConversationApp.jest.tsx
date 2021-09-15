@@ -60,7 +60,6 @@ describe("Conversation app", () => {
     }
     describe("having previous conversations", () => {
       it("renders conversations", async () => {
-        // TODO: revisit mocking and remove `artist_names` alias from PurchseHistory
         const mockMe = {
           id: "111",
           conversationsConnection: {

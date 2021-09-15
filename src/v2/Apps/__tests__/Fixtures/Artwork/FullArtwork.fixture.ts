@@ -419,7 +419,7 @@ export const FullArtworkFixture = {
   id: "QXJ0d29yazphbmR5LXdhcmhvbC1za3VsbA==",
   href: "/artwork/andy-warhol-skull",
   date: "1976",
-  artist_names: "Andy Warhol",
+  artistNames: "Andy Warhol",
   sale_message: null,
   partner: {
     name: "Gagosian",

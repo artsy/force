@@ -18,8 +18,14 @@ import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { Media } from "v2/Utils/Responsive"
 import { OrderRow_order } from "v2/__generated__/OrderRow_order.graphql"
-import { getOrderColor, getOrderIcon } from "../Utils/orderHelper"
+import {
+  getOrderColor,
+  getOrderIcon,
+  getOrderStatus,
+  OrderState,
+} from "../Utils/orderHelper"
 import { LocaleOptions } from "luxon"
+import { extractNodes } from "v2/Utils/extractNodes"
 
 interface OrderRowProps {
   order: OrderRow_order
@@ -34,30 +40,28 @@ const StyledImage = styled(Image)`
 
 const OrderRow: React.FC<OrderRowProps> = props => {
   const { order } = props
-  // @ts-expect-error STRICT_NULL_CHECK
-  const artwork = order.lineItems.edges[0].node.artwork
-
+  const [lineItem] = extractNodes(order?.lineItems)
+  const { artwork, fulfillments } = lineItem
   const orderCreatedAt = DateTime.fromISO(order.createdAt)
-
   const { creditCard, requestedFulfillment } = order
-
+  const orderStatus = getOrderStatus(order.state as OrderState, lineItem)
   const orderIsInactive =
-    order.state === "CANCELED" || order.state === "REFUNDED"
+    orderStatus === "canceled" || orderStatus === "refunded"
 
   const partnerImageUrl = artwork?.partner?.profile?.icon?.url
   const partnerInitials = artwork?.partner?.initials
   const partnerName = artwork?.partner?.name
   const creditCardNumber = creditCard?.lastDigits
   const fulfillment = requestedFulfillment?.__typename
-  const trackingId =
-    order?.lineItems?.edges?.[0]?.node?.fulfillments?.edges?.[0]?.node
-      ?.trackingId
+  const trackingId = fulfillments?.edges?.[0]?.node?.trackingId
 
-  const isShip = fulfillment === "CommerceShip"
+  const isPickup = fulfillment === "CommercePickup"
 
   const artworkImage = artwork ? (
-    // @ts-expect-error STRICT_NULL_CHECK
-    <StyledImage src={artwork.image?.resized?.url} alt={artwork.title} />
+    <StyledImage
+      src={artwork.image?.resized?.url}
+      alt={artwork.title || undefined}
+    />
   ) : (
     <Box width="50px" height="50px" backgroundColor="black10" />
   )
@@ -88,7 +92,7 @@ const OrderRow: React.FC<OrderRowProps> = props => {
 
         <Flex flexDirection="column" justifyContent="center" width="100%">
           <Text variant="sm" letterSpacing="tight">
-            {artwork?.artist_names}
+            {artwork?.artistNames}
           </Text>
           <Text variant="sm" color="black60" letterSpacing="tight">
             {partnerName}
@@ -110,11 +114,11 @@ const OrderRow: React.FC<OrderRowProps> = props => {
           </Text>
           <Text
             variant="sm"
-            color={getOrderColor(order.state.toLowerCase())}
+            color={getOrderColor(orderStatus)}
             letterSpacing="tight"
             style={{ textTransform: "capitalize" }}
           >
-            {order.state.toLowerCase()}
+            {orderStatus}
           </Text>
         </Flex>
       </Flex>
@@ -165,14 +169,14 @@ const OrderRow: React.FC<OrderRowProps> = props => {
           {orderCreatedAt.toLocaleString(DateTime.DATE_MED as LocaleOptions)}
         </Text>
         <Flex alignItems="center">
-          {getOrderIcon(order.state.toLowerCase())}
+          {getOrderIcon(orderStatus)}
           <Text
             ml="2px"
             variant="sm"
-            color={getOrderColor(order.state.toLowerCase())}
+            color={getOrderColor(orderStatus)}
             style={{ textTransform: "capitalize" }}
           >
-            {order.state.toLowerCase()}
+            {orderStatus}
           </Text>
           {trackingId && (
             <>
@@ -195,7 +199,7 @@ const OrderRow: React.FC<OrderRowProps> = props => {
           {artworkImage}
           <Flex flexDirection="column" ml={1}>
             <Link href={artistURL} underlineBehavior="hover">
-              <Text variant="sm">{artwork?.artist_names}</Text>
+              <Text variant="sm">{artwork?.artistNames}</Text>
             </Link>
             <Link href={artworkURL} underlineBehavior="hover">
               <Text variant="sm" color="black60">
@@ -205,8 +209,11 @@ const OrderRow: React.FC<OrderRowProps> = props => {
           </Flex>
         </Flex>
         <Flex width="50%">
-          {/* @ts-expect-error STRICT_NULL_CHECK */}
-          <Avatar size="xs" src={partnerImageUrl} initials={partnerInitials} />
+          <Avatar
+            size="xs"
+            src={partnerImageUrl || undefined}
+            initials={partnerInitials || undefined}
+          />
           <Flex flexDirection="column" ml={1}>
             <Link href={partnerURL} underlineBehavior="hover">
               <Text variant="sm" color="black60" letterSpacing="tight">
@@ -254,7 +261,7 @@ const OrderRow: React.FC<OrderRowProps> = props => {
         <Flex flexDirection="column" width="25%">
           <Text variant="sm">Fulfillment</Text>
           <Text variant="sm" color="black60">
-            {isShip ? "Delivery" : "Pickup"}
+            {isPickup ? "Pickup" : "Delivery"}
           </Text>
         </Flex>
       </Flex>
@@ -299,6 +306,9 @@ export const OrderRowFragmentContainer = createFragmentContainer(
           ... on CommercePickup {
             __typename
           }
+          ... on CommerceShipArta {
+            __typename
+          }
         }
         creditCard {
           lastDigits
@@ -309,6 +319,9 @@ export const OrderRowFragmentContainer = createFragmentContainer(
         lineItems {
           edges {
             node {
+              shipment {
+                status
+              }
               artwork {
                 slug
                 date
@@ -330,7 +343,7 @@ export const OrderRowFragmentContainer = createFragmentContainer(
                 shippingOrigin
                 internalID
                 title
-                artist_names: artistNames
+                artistNames
                 artists {
                   slug
                 }

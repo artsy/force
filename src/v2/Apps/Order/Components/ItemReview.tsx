@@ -18,7 +18,7 @@ export const ItemReview: React.FC<ItemReviewProps> = ({
   lineItem: {
     artwork: {
       // @ts-expect-error STRICT_NULL_CHECK
-      artist_names,
+      artistNames,
       // @ts-expect-error STRICT_NULL_CHECK
       title,
       // @ts-expect-error STRICT_NULL_CHECK
@@ -42,7 +42,7 @@ export const ItemReview: React.FC<ItemReviewProps> = ({
   <BorderBox p={[2, 4]}>
     <Flex flexGrow={1} flexDirection="column">
       <Text variant="sm" color="black60">
-        {artist_names}
+        {artistNames}
       </Text>
       <Text fontStyle="italic" variant="sm" color="black60">
         {title}
@@ -75,7 +75,7 @@ export const ItemReviewFragmentContainer = createFragmentContainer(ItemReview, {
   lineItem: graphql`
     fragment ItemReview_lineItem on CommerceLineItem {
       artwork {
-        artist_names: artistNames
+        artistNames
         title
         date
         medium
