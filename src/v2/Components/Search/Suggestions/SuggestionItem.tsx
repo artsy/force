@@ -1,16 +1,9 @@
-import {
-  ArtworkIcon,
-  AuctionIcon,
-  Clickable,
-  Flex,
-  Pill,
-  Text,
-} from "@artsy/palette"
+import { ArtworkIcon, AuctionIcon, Flex, Pill, Text } from "@artsy/palette"
 import match from "autosuggest-highlight/match"
 import parse from "autosuggest-highlight/parse"
 import React from "react"
 import styled from "styled-components"
-import { Container } from "v2/Components/Sticky"
+import { ClickableFlex } from "v2/Apps/Conversation/Components/ReviewOfferCTA"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { useRouter } from "v2/System/Router/useRouter"
 
@@ -108,7 +101,7 @@ const QuickNavigation: React.FC<{
   if (!showArtworksButton && !showAuctionResultsButton) return null
 
   return (
-    <Flex mt={1}>
+    <Flex flexWrap="wrap">
       {!!showArtworksButton && (
         <QuickNavigationItem to={`${href}/works-for-sale`}>
           <ArtworkIcon mr={0.5} />
@@ -129,30 +122,17 @@ const QuickNavigationItem: React.FC<{ to: string }> = ({ children, to }) => {
   const { router } = useRouter()
 
   const onClick = event => {
+    // Stopping the event from propagating to prevent SearchBar from navigation to the main suggestion item url.
+    event.stopPropagation()
     event.preventDefault()
 
-    // router ? router.push(to) : window.location.assign(to)
+    router ? router.push(to) : window.location.assign(to)
   }
   return (
-    <RouterLink
-      tabIndex={0}
-      role="button"
-      display="flex"
-      onClick={onClick}
-      to={to}
-      position="absolute"
-    >
-      <Pill variant="textSquare" mr="1" tabIndex={10}>
+    <ClickableFlex tabIndex={0} role="button" onClick={onClick} mt={1} mr={1}>
+      <Pill variant="textSquare">
         <Flex alignItems="center">{children}</Flex>
       </Pill>
-    </RouterLink>
+    </ClickableFlex>
   )
-
-  // return (
-  //   <Clickable display="flex" onClick={onClick} as="div">
-  //     <Pill variant="textSquare" mr="1">
-  //       <Flex alignItems="center">{children}</Flex>
-  //     </Pill>
-  //   </Clickable>
-  // )
 }
