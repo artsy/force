@@ -1,5 +1,14 @@
 import React from "react"
-import { BaseTabs, BoxProps, Flex, Pill, Sup, Text } from "@artsy/palette"
+import {
+  BaseTabs,
+  BoxProps,
+  DROP_SHADOW,
+  Flex,
+  FullBleed,
+  Pill,
+  Sup,
+  Text,
+} from "@artsy/palette"
 import { NavigationTabs_searchableConnection } from "v2/__generated__/NavigationTabs_searchableConnection.graphql"
 import { useAnalyticsContext, useTracking } from "v2/System/Analytics"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -13,6 +22,9 @@ import {
   PageOwnerType,
 } from "@artsy/cohesion"
 import { useRouter } from "found"
+import { Sticky } from "v2/Components/Sticky"
+import { AppContainer } from "v2/Apps/Components/AppContainer"
+import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
 
 export interface NavigationTabsProps {
   searchableConnection: NavigationTabs_searchableConnection
@@ -46,10 +58,10 @@ const RoundedRouteTab: React.FC<RouteTabProps> = ({ text, count, ...rest }) => {
 
   return (
     // @ts-ignore
-    <Pill variant="filter" as={RouterLink} my={2} {...rest}>
+    <Pill variant="filter" as={RouterLink} my={1} mr={1} {...rest}>
       <Flex alignItems="center">
         <Text variant={["xs", "md"]} color={isActive ? "black100" : "black60"}>
-          {text}
+          {text}&nbsp;
         </Text>
         <Media greaterThan="xs">
           {count && (
@@ -153,7 +165,21 @@ export const NavigationTabs: React.FC<NavigationTabsProps> = ({
       })
     )
 
-  return <BaseTabs my={2}>{tabs}</BaseTabs>
+  return (
+    <Sticky>
+      {({ stuck }) => {
+        return (
+          <FullBleed style={stuck ? { boxShadow: DROP_SHADOW } : undefined}>
+            <AppContainer>
+              <HorizontalPadding>
+                <BaseTabs>{tabs}</BaseTabs>
+              </HorizontalPadding>
+            </AppContainer>
+          </FullBleed>
+        )
+      }}
+    </Sticky>
+  )
 }
 
 export const NavigationTabsFragmentContainer = createFragmentContainer(
