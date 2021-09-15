@@ -9025,7 +9025,14 @@ type OrderedSetEdge {
   node: OrderedSet
 }
 
-union OrderedSetItem = Artist | Artwork | FeaturedLink | Gene | Sale | Show
+union OrderedSetItem =
+    Artist
+  | Artwork
+  | FeaturedLink
+  | Gene
+  | Profile
+  | Sale
+  | Show
 
 # A connection to a list of items.
 type OrderedSetItemConnection {

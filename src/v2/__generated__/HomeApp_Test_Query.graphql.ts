@@ -77,6 +77,9 @@ fragment HomeFeaturedEventsRail_orderedSet on OrderedSet {
     ... on Node {
       id
     }
+    ... on Profile {
+      id
+    }
   }
 }
 
@@ -470,7 +473,7 @@ return {
     "metadata": {},
     "name": "HomeApp_Test_Query",
     "operationKind": "query",
-    "text": "query HomeApp_Test_Query {\n  homePage {\n    ...HomeApp_homePage\n  }\n  orderedSet(id: \"example\") {\n    ...HomeApp_orderedSet\n    id\n  }\n}\n\nfragment HomeApp_homePage on HomePage {\n  ...HomeHeroUnits_homePage\n  ...HomeArtworkModules_homePage\n}\n\nfragment HomeApp_orderedSet on OrderedSet {\n  ...HomeFeaturedEventsRail_orderedSet\n}\n\nfragment HomeArtworkModules_homePage on HomePage {\n  artworkModules(exclude: [POPULAR_ARTISTS, GENERIC_GENES], maxRails: -1, maxFollowedGeneRails: -1, order: [ACTIVE_BIDS, RECENTLY_VIEWED_WORKS, SIMILAR_TO_RECENTLY_VIEWED, SAVED_WORKS, SIMILAR_TO_SAVED_WORKS, FOLLOWED_ARTISTS, FOLLOWED_GALLERIES, RECOMMENDED_WORKS, RELATED_ARTISTS, LIVE_AUCTIONS, CURRENT_FAIRS, FOLLOWED_GENES, GENERIC_GENES]) {\n    title\n    key\n    params {\n      internalID\n      relatedArtistID\n      followedArtistID\n    }\n    id\n  }\n}\n\nfragment HomeFeaturedEventsRail_orderedSet on OrderedSet {\n  items {\n    __typename\n    ... on FeaturedLink {\n      internalID\n      title\n      subtitle\n      href\n      image {\n        small: cropped(width: 95, height: 63) {\n          src\n          srcSet\n          width\n          height\n        }\n        large: cropped(width: 445, height: 297) {\n          src\n          srcSet\n        }\n      }\n      id\n    }\n    ... on Node {\n      id\n    }\n  }\n}\n\nfragment HomeHeroUnit_heroUnit on HomePageHeroUnit {\n  backgroundImageURL\n  heading\n  title\n  subtitle\n  linkText\n  href\n  creditLine\n}\n\nfragment HomeHeroUnits_homePage on HomePage {\n  heroUnits(platform: DESKTOP) {\n    internalID\n    ...HomeHeroUnit_heroUnit\n    id\n  }\n}\n"
+    "text": "query HomeApp_Test_Query {\n  homePage {\n    ...HomeApp_homePage\n  }\n  orderedSet(id: \"example\") {\n    ...HomeApp_orderedSet\n    id\n  }\n}\n\nfragment HomeApp_homePage on HomePage {\n  ...HomeHeroUnits_homePage\n  ...HomeArtworkModules_homePage\n}\n\nfragment HomeApp_orderedSet on OrderedSet {\n  ...HomeFeaturedEventsRail_orderedSet\n}\n\nfragment HomeArtworkModules_homePage on HomePage {\n  artworkModules(exclude: [POPULAR_ARTISTS, GENERIC_GENES], maxRails: -1, maxFollowedGeneRails: -1, order: [ACTIVE_BIDS, RECENTLY_VIEWED_WORKS, SIMILAR_TO_RECENTLY_VIEWED, SAVED_WORKS, SIMILAR_TO_SAVED_WORKS, FOLLOWED_ARTISTS, FOLLOWED_GALLERIES, RECOMMENDED_WORKS, RELATED_ARTISTS, LIVE_AUCTIONS, CURRENT_FAIRS, FOLLOWED_GENES, GENERIC_GENES]) {\n    title\n    key\n    params {\n      internalID\n      relatedArtistID\n      followedArtistID\n    }\n    id\n  }\n}\n\nfragment HomeFeaturedEventsRail_orderedSet on OrderedSet {\n  items {\n    __typename\n    ... on FeaturedLink {\n      internalID\n      title\n      subtitle\n      href\n      image {\n        small: cropped(width: 95, height: 63) {\n          src\n          srcSet\n          width\n          height\n        }\n        large: cropped(width: 445, height: 297) {\n          src\n          srcSet\n        }\n      }\n      id\n    }\n    ... on Node {\n      id\n    }\n    ... on Profile {\n      id\n    }\n  }\n}\n\nfragment HomeHeroUnit_heroUnit on HomePageHeroUnit {\n  backgroundImageURL\n  heading\n  title\n  subtitle\n  linkText\n  href\n  creditLine\n}\n\nfragment HomeHeroUnits_homePage on HomePage {\n  heroUnits(platform: DESKTOP) {\n    internalID\n    ...HomeHeroUnit_heroUnit\n    id\n  }\n}\n"
   }
 };
 })();
