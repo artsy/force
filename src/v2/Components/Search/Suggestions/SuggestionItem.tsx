@@ -1,11 +1,4 @@
-import {
-  ArtworkIcon,
-  AuctionIcon,
-  Clickable,
-  Flex,
-  Pill,
-  Text,
-} from "@artsy/palette"
+import { ArtworkIcon, AuctionIcon, Flex, Pill, Text } from "@artsy/palette"
 import match from "autosuggest-highlight/match"
 import parse from "autosuggest-highlight/parse"
 import React from "react"
