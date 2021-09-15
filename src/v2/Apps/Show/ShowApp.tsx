@@ -26,6 +26,7 @@ import {
   SharedArtworkFilterContextProps,
 } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
 import { RouterLink } from "v2/System/Router/RouterLink"
+import { ShowNavigationBannerFragmentContainer as ShowNavigationBanner } from "./Components/ShowNavigationBanner"
 
 interface ShowAppProps {
   show: ShowApp_show
@@ -52,9 +53,13 @@ export const ShowApp: React.FC<ShowAppProps> = ({ show }) => {
             contextPageOwnerType,
           }}
         >
-          <Box mt={4} mb={[4, 6]}>
-            <ShowInstallShots show={show} mt={4} mb={6} />
-          </Box>
+          <ShowNavigationBanner show={show} mt={2} mb={4} />
+
+          {show?.images!.length > 0 && (
+            <Box my={4}>
+              <ShowInstallShots show={show} mt={4} mb={6} />
+            </Box>
+          )}
 
           <GridColumns>
             <Column span={hasWideHeader ? [12, 8, 6] : 6} wrap={hasWideHeader}>
@@ -157,6 +162,10 @@ export const ShowAppFragmentContainer = createFragmentContainer(ShowApp, {
           }
         }
       }
+      images(default: false, size: 100) {
+        url
+      }
+      ...ShowNavigationBanner_show
       ...ShowHeader_show
       ...ShowAbout_show
       ...ShowMeta_show
