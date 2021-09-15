@@ -984,7 +984,7 @@ describe("Shipping", () => {
           input.instance().value = `Test input '${input.props().name}'`
           input.simulate("change")
         })
-        const countrySelect = page.find("AddressModal").find("select")
+        const countrySelect = page.find("AddressModal").find("select").first()
         countrySelect.instance().value = `US`
         countrySelect.simulate("change")
 
@@ -1053,7 +1053,7 @@ describe("Shipping", () => {
           input.instance().value = `Test input '${input.props().name}'`
           input.simulate("change")
         })
-        const countrySelect = page.find("AddressModal").find("select")
+        const countrySelect = page.find("AddressModal").find("select").first()
         countrySelect.instance().value = `US`
         countrySelect.simulate("change")
 
@@ -1154,7 +1154,7 @@ describe("Shipping", () => {
           input.instance().value = `Test input '${input.props().name}'`
           input.simulate("change")
         })
-        const countrySelect = page.find("AddressModal").find("select")
+        const countrySelect = page.find("AddressModal").find("select").first()
         countrySelect.instance().value = `US`
         countrySelect.simulate("change")
 
