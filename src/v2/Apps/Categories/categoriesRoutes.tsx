@@ -5,7 +5,7 @@ import { CategoriesAppFragmentContainer } from "./CategoriesApp"
 
 export const categoriesRoutes: AppRouteConfig[] = [
   {
-    path: "/categories-2",
+    path: "/categories",
     theme: "v3",
     Component: props => {
       return <CategoriesAppFragmentContainer {...props} />
