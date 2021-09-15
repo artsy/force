@@ -124,7 +124,7 @@ const QuickNavigationItem: React.FC<{ to: string }> = ({ children, to }) => {
     event.stopPropagation()
     event.preventDefault()
 
-    // Fixme: Using `window.location.assign(to)` instead of `router.push(to)` to prevent a bug where the search bar won't hide anymore.
+    // FIXME: Using `window.location.assign(to)` instead of `router.push(to)` to prevent a bug where the search bar won't hide anymore.
     window.location.assign(to)
   }
   return (
