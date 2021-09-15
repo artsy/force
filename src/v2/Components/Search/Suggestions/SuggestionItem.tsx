@@ -119,8 +119,6 @@ const QuickNavigation: React.FC<{
 }
 
 const QuickNavigationItem: React.FC<{ to: string }> = ({ children, to }) => {
-  const { router } = useRouter()
-
   const onClick = event => {
     // Stopping the event from propagating to prevent SearchBar from navigation to the main suggestion item url.
     event.stopPropagation()
