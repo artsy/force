@@ -65,7 +65,7 @@ const SuggestionContainer = ({ children, containerProps }) => {
         borderColor="black10"
         bg="white100"
         position="absolute"
-        zIndex={1}
+        zIndex={2}
       >
         {children}
       </Box>
