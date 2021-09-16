@@ -60,7 +60,7 @@ export const ShowApp: React.FC<ShowAppProps> = ({ show }) => {
             <ShowNavigationBanner show={show} mt={2} mb={4} />
           )}
 
-          {show?.images!.length > 0 && (
+          {Number(show?.images?.length) > 0 && (
             <Box my={4}>
               <ShowInstallShots show={show} mt={4} mb={6} />
             </Box>

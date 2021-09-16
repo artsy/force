@@ -14,9 +14,13 @@ const ShowNavigationBanner: React.FC<ShowNavigationBannerProps & BoxProps> = ({
 }) => {
   const { fair } = show
 
+  if (!fair?.name) {
+    return null
+  }
+
   return (
     <BackLink {...rest} to={`${fair?.href}/exhibitors`}>
-      Back to {fair?.name}
+      Back to {fair.name}
     </BackLink>
   )
 }
