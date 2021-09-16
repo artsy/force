@@ -51,7 +51,7 @@ describe("ArtworkSidebarCurrentBidInfo", () => {
       // @ts-expect-error STRICT_NULL_CHECK
       component
         .find("button")
-        .filterWhere(l => l.text() === "buyer's premium")
+        .filterWhere(l => l.text() === "buyer’s premium")
         .first()
         .props()
         .onClick({} as any)
@@ -157,7 +157,7 @@ describe("ArtworkSidebarCurrentBidInfo", () => {
     it("displays buyer's premium information", async () => {
       const wrapper = await getWrapper(OpenAuctionReserveMetWithMyWinningBid)
 
-      expect(wrapper.text()).toContain("This auction has a buyer's premium.")
+      expect(wrapper.text()).toContain("This auction has a buyer’s premium.")
       expect(wrapper.text()).toContain(
         "Shipping, taxes, and additional fees may apply."
       )

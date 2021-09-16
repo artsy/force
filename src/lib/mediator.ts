@@ -8,13 +8,6 @@ export interface ArtworkEventOptions {
 }
 
 /**
- * Open auction BuyerPremium from artwork page
- */
-export interface BuyerPremiumEventOptions {
-  auctionId: string
-}
-
-/**
  * Logout user and optionally redirect
  */
 export type LogoutEventOptions = { redirectPath?: string }

@@ -3,17 +3,13 @@ import { data as sd } from "sharify"
 import { getContextPageFromClient } from "lib/getContextPage"
 import { OwnerType } from "@artsy/cohesion"
 import { mediator } from "lib/mediator"
-import type {
-  ArtworkEventOptions,
-  BuyerPremiumEventOptions,
-} from "lib/mediator"
+import type { ArtworkEventOptions } from "lib/mediator"
 
 export const legacyAssetDll = () => {
   const User = require("desktop/models/user.coffee")
   const Artwork = require("desktop/models/artwork.coffee")
   const ArtworkInquiry = require("desktop/models/artwork_inquiry.coffee")
   const openInquiryQuestionnaireFor = require("desktop/components/inquiry_questionnaire/index.coffee")
-  const openAuctionBuyerPremium = require("desktop/components/artworkBuyersPremium/index.coffee")
   const openMultiPageModal = require("desktop/components/multi_page_modal/index.coffee")
 
   require("jquery.transition")
@@ -84,24 +80,7 @@ export const legacyAssetDll = () => {
     openInquireableModal(options.artworkId, { ask_specialist: true })
   })
 
-  mediator.on("openCollectorFAQModal", () => {
-    openMultiPageModal("collector-faqs")
-  })
-
   mediator.on("openAuctionFAQModal", () => {
     openMultiPageModal("auction-faqs")
   })
-
-  mediator.on(
-    "openAuctionBuyerPremium",
-    ({ auctionId }: BuyerPremiumEventOptions) => {
-      $.ajaxSettings.headers = {
-        "X-ACCESS-TOKEN":
-          sd.CURRENT_USER != null ? sd.CURRENT_USER.accessToken : undefined,
-        "X-XAPP-TOKEN": sd.ARTSY_XAPP_TOKEN,
-      }
-
-      openAuctionBuyerPremium(auctionId)
-    }
-  )
 }
