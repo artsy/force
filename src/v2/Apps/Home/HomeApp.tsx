@@ -10,7 +10,7 @@ import { HomeFeaturedEventsRailFragmentContainer } from "./Components/HomeFeatur
 import { HomeMeta } from "./Components/HomeMeta"
 import { FlashBannerQueryRenderer } from "v2/Components/FlashBanner"
 import { HomeFeaturedGalleriesRailQueryRenderer } from "./Components/HomeFeaturedGalleriesRail"
-import { HomeFeaturedShowsQueryRenderer } from "./Components/HomeFeaturedShows"
+import { HomeFeaturedShowsRailQueryRenderer } from "./Components/HomeFeaturedShowsRail"
 
 interface HomeAppProps {
   homePage: HomeApp_homePage | null
@@ -54,7 +54,7 @@ export const HomeApp: React.FC<HomeAppProps> = ({
 
         <HomeFeaturedGalleriesRailQueryRenderer />
 
-        <HomeFeaturedShowsQueryRenderer />
+        <HomeFeaturedShowsRailQueryRenderer />
       </Join>
     </>
   )

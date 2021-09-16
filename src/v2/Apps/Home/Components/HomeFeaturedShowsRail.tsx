@@ -16,17 +16,17 @@ import { useSystemContext } from "v2/System"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { useLazyLoadComponent } from "v2/Utils/Hooks/useLazyLoadComponent"
-import { HomeFeaturedShowsQuery } from "v2/__generated__/HomeFeaturedShowsQuery.graphql"
-import { HomeFeaturedShows_orderedSet } from "v2/__generated__/HomeFeaturedShows_orderedSet.graphql"
+import { HomeFeaturedShowsRailQuery } from "v2/__generated__/HomeFeaturedShowsRailQuery.graphql"
+import { HomeFeaturedShowsRail_orderedSet } from "v2/__generated__/HomeFeaturedShowsRail_orderedSet.graphql"
 import { HomeFeaturedShowFragmentContainer } from "./HomeFeaturedShow"
 
 const SHOWS_LIMIT = 6
 
-interface HomeFeaturedShowsProps {
-  orderedSet: HomeFeaturedShows_orderedSet
+interface HomeFeaturedShowsRailProps {
+  orderedSet: HomeFeaturedShowsRail_orderedSet
 }
 
-const HomeFeaturedShows: React.FC<HomeFeaturedShowsProps> = ({
+const HomeFeaturedShowsRail: React.FC<HomeFeaturedShowsRailProps> = ({
   orderedSet,
 }) => {
   const shows = take(
@@ -39,7 +39,7 @@ const HomeFeaturedShows: React.FC<HomeFeaturedShowsProps> = ({
   if (shows.length === 0) return null
 
   return (
-    <HomeFeaturedShowsContainer showsCount={shows.length}>
+    <HomeFeaturedShowsRailContainer showsCount={shows.length}>
       <Shelf alignItems="flex-start">
         {shows.map((show, index) => {
           return (
@@ -49,11 +49,11 @@ const HomeFeaturedShows: React.FC<HomeFeaturedShowsProps> = ({
           )
         })}
       </Shelf>
-    </HomeFeaturedShowsContainer>
+    </HomeFeaturedShowsRailContainer>
   )
 }
 
-const HomeFeaturedShowsContainer: React.FC<{ showsCount: number }> = ({
+const HomeFeaturedShowsRailContainer: React.FC<{ showsCount: number }> = ({
   children,
   showsCount,
 }) => {
@@ -82,11 +82,11 @@ const HomeFeaturedShowsContainer: React.FC<{ showsCount: number }> = ({
   )
 }
 
-export const HomeFeaturedShowsFragmentContainer = createFragmentContainer(
-  HomeFeaturedShows,
+export const HomeFeaturedShowsRailFragmentContainer = createFragmentContainer(
+  HomeFeaturedShowsRail,
   {
     orderedSet: graphql`
-      fragment HomeFeaturedShows_orderedSet on OrderedSet {
+      fragment HomeFeaturedShowsRail_orderedSet on OrderedSet {
         items {
           __typename
           ... on Show {
@@ -100,7 +100,7 @@ export const HomeFeaturedShowsFragmentContainer = createFragmentContainer(
 )
 
 const PLACEHOLDER = (
-  <HomeFeaturedShowsContainer>
+  <HomeFeaturedShowsRailContainer showsCount={0}>
     <Skeleton>
       <Shelf>
         {[...new Array(6)].map((_, i) => {
@@ -124,19 +124,19 @@ const PLACEHOLDER = (
         })}
       </Shelf>
     </Skeleton>
-  </HomeFeaturedShowsContainer>
+  </HomeFeaturedShowsRailContainer>
 )
 
-export const HomeFeaturedShowsQueryRenderer: React.FC = () => {
+export const HomeFeaturedShowsRailQueryRenderer: React.FC = () => {
   const { relayEnvironment } = useSystemContext()
 
   return (
-    <SystemQueryRenderer<HomeFeaturedShowsQuery>
+    <SystemQueryRenderer<HomeFeaturedShowsRailQuery>
       environment={relayEnvironment}
       query={graphql`
-        query HomeFeaturedShowsQuery {
+        query HomeFeaturedShowsRailQuery {
           orderedSet(id: "530ebe92139b21efd6000071") {
-            ...HomeFeaturedShows_orderedSet
+            ...HomeFeaturedShowsRail_orderedSet
           }
         }
       `}
@@ -153,7 +153,9 @@ export const HomeFeaturedShowsQueryRenderer: React.FC = () => {
 
         if (props.orderedSet) {
           return (
-            <HomeFeaturedShowsFragmentContainer orderedSet={props.orderedSet} />
+            <HomeFeaturedShowsRailFragmentContainer
+              orderedSet={props.orderedSet}
+            />
           )
         }
 
@@ -163,14 +165,14 @@ export const HomeFeaturedShowsQueryRenderer: React.FC = () => {
   )
 }
 
-export const HomeFeaturedShowsLazyQueryRenderer: React.FC = () => {
+export const HomeFeaturedShowsRailLazyQueryRenderer: React.FC = () => {
   const { Waypoint, isEnteredView } = useLazyLoadComponent()
 
   return (
     <>
       <Waypoint />
 
-      {isEnteredView ? <HomeFeaturedShowsQueryRenderer /> : PLACEHOLDER}
+      {isEnteredView ? <HomeFeaturedShowsRailQueryRenderer /> : PLACEHOLDER}
     </>
   )
 }

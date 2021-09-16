@@ -1,22 +1,22 @@
 import { graphql } from "relay-runtime"
 import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
-import { HomeFeaturedShowsFragmentContainer } from "../Components/HomeFeaturedShows"
-import { HomeFeaturedShows_Test_Query } from "v2/__generated__/HomeFeaturedShows_Test_Query.graphql"
+import { HomeFeaturedShowsRailFragmentContainer } from "../Components/HomeFeaturedShowsRail"
+import { HomeFeaturedShowsRail_Test_Query } from "v2/__generated__/HomeFeaturedShowsRail_Test_Query.graphql"
 
 jest.unmock("react-relay")
 
-const { getWrapper } = setupTestWrapper<HomeFeaturedShows_Test_Query>({
-  Component: HomeFeaturedShowsFragmentContainer,
+const { getWrapper } = setupTestWrapper<HomeFeaturedShowsRail_Test_Query>({
+  Component: HomeFeaturedShowsRailFragmentContainer,
   query: graphql`
-    query HomeFeaturedShows_Test_Query {
+    query HomeFeaturedShowsRail_Test_Query {
       orderedSet(id: "example") {
-        ...HomeFeaturedShows_orderedSet
+        ...HomeFeaturedShowsRail_orderedSet
       }
     }
   `,
 })
 
-describe("HomeFeaturedShows", () => {
+describe("HomeFeaturedShowsRail", () => {
   it("renders correctly", () => {
     const wrapper = getWrapper({
       Show: () => ({

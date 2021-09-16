@@ -3,23 +3,23 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type HomeFeaturedShowsQueryVariables = {};
-export type HomeFeaturedShowsQueryResponse = {
+export type HomeFeaturedShowsRailQueryVariables = {};
+export type HomeFeaturedShowsRailQueryResponse = {
     readonly orderedSet: {
-        readonly " $fragmentRefs": FragmentRefs<"HomeFeaturedShows_orderedSet">;
+        readonly " $fragmentRefs": FragmentRefs<"HomeFeaturedShowsRail_orderedSet">;
     } | null;
 };
-export type HomeFeaturedShowsQuery = {
-    readonly response: HomeFeaturedShowsQueryResponse;
-    readonly variables: HomeFeaturedShowsQueryVariables;
+export type HomeFeaturedShowsRailQuery = {
+    readonly response: HomeFeaturedShowsRailQueryResponse;
+    readonly variables: HomeFeaturedShowsRailQueryVariables;
 };
 
 
 
 /*
-query HomeFeaturedShowsQuery {
+query HomeFeaturedShowsRailQuery {
   orderedSet(id: "530ebe92139b21efd6000071") {
-    ...HomeFeaturedShows_orderedSet
+    ...HomeFeaturedShowsRail_orderedSet
     id
   }
 }
@@ -54,7 +54,7 @@ fragment HomeFeaturedShow_show on Show {
   }
 }
 
-fragment HomeFeaturedShows_orderedSet on OrderedSet {
+fragment HomeFeaturedShowsRail_orderedSet on OrderedSet {
   items {
     __typename
     ... on Show {
@@ -118,7 +118,7 @@ return {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "HomeFeaturedShowsQuery",
+    "name": "HomeFeaturedShowsRailQuery",
     "selections": [
       {
         "alias": null,
@@ -131,7 +131,7 @@ return {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "HomeFeaturedShows_orderedSet"
+            "name": "HomeFeaturedShowsRail_orderedSet"
           }
         ],
         "storageKey": "orderedSet(id:\"530ebe92139b21efd6000071\")"
@@ -143,7 +143,7 @@ return {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "HomeFeaturedShowsQuery",
+    "name": "HomeFeaturedShowsRailQuery",
     "selections": [
       {
         "alias": null,
@@ -308,11 +308,11 @@ return {
   "params": {
     "id": null,
     "metadata": {},
-    "name": "HomeFeaturedShowsQuery",
+    "name": "HomeFeaturedShowsRailQuery",
     "operationKind": "query",
-    "text": "query HomeFeaturedShowsQuery {\n  orderedSet(id: \"530ebe92139b21efd6000071\") {\n    ...HomeFeaturedShows_orderedSet\n    id\n  }\n}\n\nfragment HomeFeaturedShow_show on Show {\n  name\n  href\n  startAt\n  endAt\n  formattedStartAt: startAt(format: \"MMM D\")\n  formattedEndAt: endAt(format: \"MMM D\")\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on ExternalPartner {\n      name\n      id\n    }\n    ... on Node {\n      id\n    }\n  }\n  coverImage {\n    cropped(width: 325, height: 230) {\n      src\n      srcSet\n      width\n      height\n    }\n  }\n}\n\nfragment HomeFeaturedShows_orderedSet on OrderedSet {\n  items {\n    __typename\n    ... on Show {\n      internalID\n      ...HomeFeaturedShow_show\n    }\n    ... on Node {\n      id\n    }\n    ... on FeaturedLink {\n      id\n    }\n    ... on Profile {\n      id\n    }\n  }\n}\n"
+    "text": "query HomeFeaturedShowsRailQuery {\n  orderedSet(id: \"530ebe92139b21efd6000071\") {\n    ...HomeFeaturedShowsRail_orderedSet\n    id\n  }\n}\n\nfragment HomeFeaturedShow_show on Show {\n  name\n  href\n  startAt\n  endAt\n  formattedStartAt: startAt(format: \"MMM D\")\n  formattedEndAt: endAt(format: \"MMM D\")\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on ExternalPartner {\n      name\n      id\n    }\n    ... on Node {\n      id\n    }\n  }\n  coverImage {\n    cropped(width: 325, height: 230) {\n      src\n      srcSet\n      width\n      height\n    }\n  }\n}\n\nfragment HomeFeaturedShowsRail_orderedSet on OrderedSet {\n  items {\n    __typename\n    ... on Show {\n      internalID\n      ...HomeFeaturedShow_show\n    }\n    ... on Node {\n      id\n    }\n    ... on FeaturedLink {\n      id\n    }\n    ... on Profile {\n      id\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'bfcc116150c94d9ed39102001f5bb95a';
+(node as any).hash = '790e9f6329d58e4b6b83a54cebdb8d70';
 export default node;

@@ -3,23 +3,23 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type HomeFeaturedShows_Test_QueryVariables = {};
-export type HomeFeaturedShows_Test_QueryResponse = {
+export type HomeFeaturedShowsRail_Test_QueryVariables = {};
+export type HomeFeaturedShowsRail_Test_QueryResponse = {
     readonly orderedSet: {
-        readonly " $fragmentRefs": FragmentRefs<"HomeFeaturedShows_orderedSet">;
+        readonly " $fragmentRefs": FragmentRefs<"HomeFeaturedShowsRail_orderedSet">;
     } | null;
 };
-export type HomeFeaturedShows_Test_Query = {
-    readonly response: HomeFeaturedShows_Test_QueryResponse;
-    readonly variables: HomeFeaturedShows_Test_QueryVariables;
+export type HomeFeaturedShowsRail_Test_Query = {
+    readonly response: HomeFeaturedShowsRail_Test_QueryResponse;
+    readonly variables: HomeFeaturedShowsRail_Test_QueryVariables;
 };
 
 
 
 /*
-query HomeFeaturedShows_Test_Query {
+query HomeFeaturedShowsRail_Test_Query {
   orderedSet(id: "example") {
-    ...HomeFeaturedShows_orderedSet
+    ...HomeFeaturedShowsRail_orderedSet
     id
   }
 }
@@ -54,7 +54,7 @@ fragment HomeFeaturedShow_show on Show {
   }
 }
 
-fragment HomeFeaturedShows_orderedSet on OrderedSet {
+fragment HomeFeaturedShowsRail_orderedSet on OrderedSet {
   items {
     __typename
     ... on Show {
@@ -118,7 +118,7 @@ return {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "HomeFeaturedShows_Test_Query",
+    "name": "HomeFeaturedShowsRail_Test_Query",
     "selections": [
       {
         "alias": null,
@@ -131,7 +131,7 @@ return {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "HomeFeaturedShows_orderedSet"
+            "name": "HomeFeaturedShowsRail_orderedSet"
           }
         ],
         "storageKey": "orderedSet(id:\"example\")"
@@ -143,7 +143,7 @@ return {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "HomeFeaturedShows_Test_Query",
+    "name": "HomeFeaturedShowsRail_Test_Query",
     "selections": [
       {
         "alias": null,
@@ -308,11 +308,11 @@ return {
   "params": {
     "id": null,
     "metadata": {},
-    "name": "HomeFeaturedShows_Test_Query",
+    "name": "HomeFeaturedShowsRail_Test_Query",
     "operationKind": "query",
-    "text": "query HomeFeaturedShows_Test_Query {\n  orderedSet(id: \"example\") {\n    ...HomeFeaturedShows_orderedSet\n    id\n  }\n}\n\nfragment HomeFeaturedShow_show on Show {\n  name\n  href\n  startAt\n  endAt\n  formattedStartAt: startAt(format: \"MMM D\")\n  formattedEndAt: endAt(format: \"MMM D\")\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on ExternalPartner {\n      name\n      id\n    }\n    ... on Node {\n      id\n    }\n  }\n  coverImage {\n    cropped(width: 325, height: 230) {\n      src\n      srcSet\n      width\n      height\n    }\n  }\n}\n\nfragment HomeFeaturedShows_orderedSet on OrderedSet {\n  items {\n    __typename\n    ... on Show {\n      internalID\n      ...HomeFeaturedShow_show\n    }\n    ... on Node {\n      id\n    }\n    ... on FeaturedLink {\n      id\n    }\n    ... on Profile {\n      id\n    }\n  }\n}\n"
+    "text": "query HomeFeaturedShowsRail_Test_Query {\n  orderedSet(id: \"example\") {\n    ...HomeFeaturedShowsRail_orderedSet\n    id\n  }\n}\n\nfragment HomeFeaturedShow_show on Show {\n  name\n  href\n  startAt\n  endAt\n  formattedStartAt: startAt(format: \"MMM D\")\n  formattedEndAt: endAt(format: \"MMM D\")\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on ExternalPartner {\n      name\n      id\n    }\n    ... on Node {\n      id\n    }\n  }\n  coverImage {\n    cropped(width: 325, height: 230) {\n      src\n      srcSet\n      width\n      height\n    }\n  }\n}\n\nfragment HomeFeaturedShowsRail_orderedSet on OrderedSet {\n  items {\n    __typename\n    ... on Show {\n      internalID\n      ...HomeFeaturedShow_show\n    }\n    ... on Node {\n      id\n    }\n    ... on FeaturedLink {\n      id\n    }\n    ... on Profile {\n      id\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '11a79bb1ac974281339abb392910f0fd';
+(node as any).hash = '2c79ca3c4653c768aaf000ce518490d2';
 export default node;
