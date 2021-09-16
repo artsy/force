@@ -18,6 +18,16 @@ jest.mock("v2/Apps/Show/Components/ShowInstallShots", () => ({
   ShowInstallShotsFragmentContainer: () => null,
 }))
 
+jest.mock("v2/System/Router/useRouter", () => ({
+  useRouter: () => ({
+    match: {
+      location: {
+        query: "",
+      },
+    },
+  }),
+}))
+
 const { getWrapper } = setupTestWrapper<ShowApp_Test_Query>({
   Component: ShowAppFragmentContainer,
   query: graphql`
