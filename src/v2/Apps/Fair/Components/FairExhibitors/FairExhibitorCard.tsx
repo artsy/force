@@ -55,7 +55,8 @@ export const FairExhibitorCard: React.FC<FairExhibitorCardProps> = ({
 
   return (
     <RouterLink
-      to={`/show/${exhibitor.profileID}`}
+      // use this param to display navigation banner on show
+      to={`/show/${exhibitor.profileID}?from_fair=true`}
       noUnderline
       onClick={() => tracking.trackEvent(tappedPartnerTrackingData)}
     >

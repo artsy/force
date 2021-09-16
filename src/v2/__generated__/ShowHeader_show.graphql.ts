@@ -10,9 +10,6 @@ export type ShowHeader_show = {
     readonly status: string | null;
     readonly formattedStartAt: string | null;
     readonly formattedEndAt: string | null;
-    readonly partner: {
-        readonly name?: string | null;
-    } | null;
     readonly " $fragmentRefs": FragmentRefs<"ShowContextualLink_show">;
     readonly " $refType": "ShowHeader_show";
 };
@@ -24,24 +21,19 @@ export type ShowHeader_show$key = {
 
 
 
-const node: ReaderFragment = (function(){
-var v0 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "name",
-  "storageKey": null
-},
-v1 = [
-  (v0/*: any*/)
-];
-return {
+const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
   "name": "ShowHeader_show",
   "selections": [
-    (v0/*: any*/),
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "name",
+      "storageKey": null
+    },
     {
       "alias": null,
       "args": null,
@@ -90,27 +82,6 @@ return {
       "storageKey": "endAt(format:\"MMMM D, YYYY\")"
     },
     {
-      "alias": null,
-      "args": null,
-      "concreteType": null,
-      "kind": "LinkedField",
-      "name": "partner",
-      "plural": false,
-      "selections": [
-        {
-          "kind": "InlineFragment",
-          "selections": (v1/*: any*/),
-          "type": "Partner"
-        },
-        {
-          "kind": "InlineFragment",
-          "selections": (v1/*: any*/),
-          "type": "ExternalPartner"
-        }
-      ],
-      "storageKey": null
-    },
-    {
       "args": null,
       "kind": "FragmentSpread",
       "name": "ShowContextualLink_show"
@@ -118,6 +89,5 @@ return {
   ],
   "type": "Show"
 };
-})();
-(node as any).hash = 'e43ae44402dd264c1c959bad52acbb7b';
+(node as any).hash = 'b0313b77396a65710ee44b7752d1de7a';
 export default node;
