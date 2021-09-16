@@ -47,8 +47,7 @@ describe("ArtworkSidebarExtraLinks", () => {
       )
       // @ts-expect-error STRICT_NULL_CHECK
       expect(wrapper.text()).toContain(
-        // "Have a question? Read our auction FAQs or ask a specialist."
-        "Have a question? Ask a specialist."
+        "Have a question? Read our auction FAQs or ask a specialist."
       )
       // @ts-expect-error STRICT_NULL_CHECK
       expect(wrapper.text()).toContain(
@@ -95,8 +94,7 @@ describe("ArtworkSidebarExtraLinks", () => {
       )
       // @ts-expect-error STRICT_NULL_CHECK
       expect(wrapper.text()).toContain(
-        // "Have a question? Read our auction FAQs or ask a specialist."
-        "Have a question? Ask a specialist."
+        "Have a question? Read our auction FAQs or ask a specialist."
       )
       // @ts-expect-error STRICT_NULL_CHECK
       expect(wrapper.text()).toContain(
@@ -107,13 +105,13 @@ describe("ArtworkSidebarExtraLinks", () => {
       // @ts-expect-error STRICT_NULL_CHECK
       expect(wrapper.find('a[children="Conditions of Sale"]').length).toBe(1)
     })
-    it.skip("displays FAQ link that brings auction FAQ modal", () => {
+    it("displays FAQ link that brings auction FAQ modal", () => {
       // @ts-expect-error STRICT_NULL_CHECK
       expect(wrapper.find('button[children="auction FAQs"]').length).toBe(1)
     })
     it("displays ask a specialist link that brings ask an auction specialist modal", () => {
       // @ts-expect-error STRICT_NULL_CHECK
-      expect(wrapper.find('button[children="Ask a specialist"]').length).toBe(1)
+      expect(wrapper.find('button[children="ask a specialist"]').length).toBe(1)
     })
     it("displays consign link that opens consign page", () => {
       // @ts-expect-error STRICT_NULL_CHECK
