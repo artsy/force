@@ -2,20 +2,24 @@ import { Spacer, Join, Separator, FullBleed } from "@artsy/palette"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { HomeApp_homePage } from "v2/__generated__/HomeApp_homePage.graphql"
-import { HomeApp_orderedSet } from "v2/__generated__/HomeApp_orderedSet.graphql"
+import { HomeApp_featuredEventsOrderedSet } from "v2/__generated__/HomeApp_featuredEventsOrderedSet.graphql"
 import { HomeArtworkModulesFragmentContainer } from "./Components/HomeArtworkModules"
 import { HomeHeroUnitsFragmentContainer } from "./Components/HomeHeroUnits/HomeHeroUnits"
-import { HomeFeaturedArticlesLazyQueryRenderer } from "./Components/HomeFeaturedArticles"
+import { HomeFeaturedMarketNewsLazyQueryRenderer } from "./Components/HomeFeaturedMarketNews"
 import { HomeFeaturedEventsRailFragmentContainer } from "./Components/HomeFeaturedEventsRail"
 import { HomeMeta } from "./Components/HomeMeta"
 import { FlashBannerQueryRenderer } from "v2/Components/FlashBanner"
+import { HomeFeaturedGalleriesRailQueryRenderer } from "./Components/HomeFeaturedGalleriesRail"
 
 interface HomeAppProps {
   homePage: HomeApp_homePage | null
-  orderedSet: HomeApp_orderedSet | null
+  featuredEventsOrderedSet: HomeApp_featuredEventsOrderedSet | null
 }
 
-export const HomeApp: React.FC<HomeAppProps> = ({ homePage, orderedSet }) => {
+export const HomeApp: React.FC<HomeAppProps> = ({
+  homePage,
+  featuredEventsOrderedSet,
+}) => {
   return (
     <>
       <HomeMeta />
@@ -31,9 +35,11 @@ export const HomeApp: React.FC<HomeAppProps> = ({ homePage, orderedSet }) => {
       <Spacer mt={4} />
 
       <Join separator={<Spacer mt={6} />}>
-        {orderedSet && (
+        {featuredEventsOrderedSet && (
           <>
-            <HomeFeaturedEventsRailFragmentContainer orderedSet={orderedSet} />
+            <HomeFeaturedEventsRailFragmentContainer
+              orderedSet={featuredEventsOrderedSet}
+            />
 
             <Separator />
           </>
@@ -43,7 +49,9 @@ export const HomeApp: React.FC<HomeAppProps> = ({ homePage, orderedSet }) => {
           <HomeArtworkModulesFragmentContainer homePage={homePage} />
         )}
 
-        <HomeFeaturedArticlesLazyQueryRenderer />
+        <HomeFeaturedMarketNewsLazyQueryRenderer />
+
+        <HomeFeaturedGalleriesRailQueryRenderer />
       </Join>
     </>
   )
@@ -56,8 +64,8 @@ export const HomeAppFragmentContainer = createFragmentContainer(HomeApp, {
       ...HomeArtworkModules_homePage
     }
   `,
-  orderedSet: graphql`
-    fragment HomeApp_orderedSet on OrderedSet {
+  featuredEventsOrderedSet: graphql`
+    fragment HomeApp_featuredEventsOrderedSet on OrderedSet {
       ...HomeFeaturedEventsRail_orderedSet
     }
   `,

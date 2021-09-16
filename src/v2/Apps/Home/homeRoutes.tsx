@@ -20,8 +20,8 @@ export const homeRoutes: AppRouteConfig[] = [
         homePage {
           ...HomeApp_homePage
         }
-        orderedSet(id: "529939e2275b245e290004a0") {
-          ...HomeApp_orderedSet
+        featuredEventsOrderedSet: orderedSet(id: "529939e2275b245e290004a0") {
+          ...HomeApp_featuredEventsOrderedSet
         }
       }
     `,
