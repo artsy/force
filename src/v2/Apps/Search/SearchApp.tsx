@@ -1,5 +1,5 @@
 import React from "react"
-import { Box, Spacer, Text } from "@artsy/palette"
+import { Box, DROP_SHADOW, FullBleed, Spacer, Text } from "@artsy/palette"
 import { SearchApp_viewer } from "v2/__generated__/SearchApp_viewer.graphql"
 import { NavigationTabsFragmentContainer as NavigationTabs } from "v2/Apps/Search/Components/NavigationTabs"
 import { SearchMeta } from "v2/Apps/Search/Components/SearchMeta"
@@ -7,7 +7,9 @@ import { RecentlyViewed } from "v2/Components/RecentlyViewed"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ZeroState } from "./Components/ZeroState"
 import { useRouter } from "v2/System/Router/useRouter"
-import { StickyProvider } from "v2/Components/Sticky"
+import { Sticky, StickyProvider } from "v2/Components/Sticky"
+import { AppContainer } from "../Components/AppContainer"
+import { HorizontalPadding } from "../Components/HorizontalPadding"
 
 export interface SearchAppProps {
   viewer: SearchApp_viewer
@@ -65,11 +67,25 @@ export const SearchApp: React.FC<SearchAppProps> = ({ viewer, children }) => {
         <>
           <TotalResults count={totalCount} term={term} />
           <Spacer mb={4} />
-          <NavigationTabs
-            artworkCount={artworkCount}
-            term={term}
-            searchableConnection={searchConnection!}
-          />
+          <Sticky>
+            {({ stuck }) => {
+              return (
+                <FullBleed
+                  style={stuck ? { boxShadow: DROP_SHADOW } : undefined}
+                >
+                  <AppContainer>
+                    <HorizontalPadding>
+                      <NavigationTabs
+                        artworkCount={artworkCount}
+                        term={term}
+                        searchableConnection={searchConnection!}
+                      />
+                    </HorizontalPadding>
+                  </AppContainer>
+                </FullBleed>
+              )
+            }}
+          </Sticky>
           <Spacer mb={4} />
           <Box minHeight="30vh">{children}</Box>
         </>

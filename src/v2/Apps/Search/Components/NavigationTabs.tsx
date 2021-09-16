@@ -1,12 +1,12 @@
 import React from "react"
 import {
-  BaseTabs,
   BoxProps,
-  DROP_SHADOW,
   Flex,
-  FullBleed,
   Pill,
   Sup,
+  Swiper,
+  SwiperCell,
+  SwiperCellProps,
   Text,
 } from "@artsy/palette"
 import { NavigationTabs_searchableConnection } from "v2/__generated__/NavigationTabs_searchableConnection.graphql"
@@ -22,9 +22,6 @@ import {
   PageOwnerType,
 } from "@artsy/cohesion"
 import { useRouter } from "found"
-import { Sticky } from "v2/Components/Sticky"
-import { AppContainer } from "v2/Apps/Components/AppContainer"
-import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
 
 export interface NavigationTabsProps {
   searchableConnection: NavigationTabs_searchableConnection
@@ -165,22 +162,22 @@ export const NavigationTabs: React.FC<NavigationTabsProps> = ({
       })
     )
 
-  return (
-    <Sticky>
-      {({ stuck }) => {
-        return (
-          <FullBleed style={stuck ? { boxShadow: DROP_SHADOW } : undefined}>
-            <AppContainer>
-              <HorizontalPadding>
-                <BaseTabs borderBottom={undefined}>{tabs}</BaseTabs>
-              </HorizontalPadding>
-            </AppContainer>
-          </FullBleed>
-        )
-      }}
-    </Sticky>
-  )
+  return <Swiper Cell={Cell}>{tabs}</Swiper>
 }
+
+const Cell: React.ForwardRefExoticComponent<SwiperCellProps> = React.forwardRef(
+  (props, ref) => {
+    return (
+      <SwiperCell
+        {...props}
+        ref={ref as any}
+        display="inline-flex"
+        verticalAlign="top"
+        pr={0}
+      />
+    )
+  }
+)
 
 export const NavigationTabsFragmentContainer = createFragmentContainer(
   NavigationTabs,
