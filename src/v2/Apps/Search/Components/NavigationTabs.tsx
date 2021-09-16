@@ -172,7 +172,7 @@ export const NavigationTabs: React.FC<NavigationTabsProps> = ({
           <FullBleed style={stuck ? { boxShadow: DROP_SHADOW } : undefined}>
             <AppContainer>
               <HorizontalPadding>
-                <BaseTabs>{tabs}</BaseTabs>
+                <BaseTabs borderBottom={undefined}>{tabs}</BaseTabs>
               </HorizontalPadding>
             </AppContainer>
           </FullBleed>

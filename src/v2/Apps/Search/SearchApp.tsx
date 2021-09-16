@@ -70,7 +70,7 @@ export const SearchApp: React.FC<SearchAppProps> = ({ viewer, children }) => {
             term={term}
             searchableConnection={searchConnection!}
           />
-          <Spacer mb={[4, 6]} />
+          <Spacer mb={4} />
           <Box minHeight="30vh">{children}</Box>
         </>
       ) : (
