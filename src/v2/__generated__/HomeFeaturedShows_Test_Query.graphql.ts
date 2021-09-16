@@ -45,9 +45,11 @@ fragment HomeFeaturedShow_show on Show {
     }
   }
   coverImage {
-    cropped(width: 600, height: 450) {
+    cropped(width: 325, height: 230) {
       src
       srcSet
+      width
+      height
     }
   }
 }
@@ -244,12 +246,12 @@ return {
                           {
                             "kind": "Literal",
                             "name": "height",
-                            "value": 450
+                            "value": 230
                           },
                           {
                             "kind": "Literal",
                             "name": "width",
-                            "value": 600
+                            "value": 325
                           }
                         ],
                         "concreteType": "CroppedImageUrl",
@@ -270,9 +272,23 @@ return {
                             "kind": "ScalarField",
                             "name": "srcSet",
                             "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "width",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "height",
+                            "storageKey": null
                           }
                         ],
-                        "storageKey": "cropped(height:450,width:600)"
+                        "storageKey": "cropped(height:230,width:325)"
                       }
                     ],
                     "storageKey": null
@@ -294,7 +310,7 @@ return {
     "metadata": {},
     "name": "HomeFeaturedShows_Test_Query",
     "operationKind": "query",
-    "text": "query HomeFeaturedShows_Test_Query {\n  orderedSet(id: \"example\") {\n    ...HomeFeaturedShows_orderedSet\n    id\n  }\n}\n\nfragment HomeFeaturedShow_show on Show {\n  name\n  href\n  startAt\n  endAt\n  formattedStartAt: startAt(format: \"MMM D\")\n  formattedEndAt: endAt(format: \"MMM D\")\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on ExternalPartner {\n      name\n      id\n    }\n    ... on Node {\n      id\n    }\n  }\n  coverImage {\n    cropped(width: 600, height: 450) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment HomeFeaturedShows_orderedSet on OrderedSet {\n  items {\n    __typename\n    ... on Show {\n      internalID\n      ...HomeFeaturedShow_show\n    }\n    ... on Node {\n      id\n    }\n    ... on FeaturedLink {\n      id\n    }\n    ... on Profile {\n      id\n    }\n  }\n}\n"
+    "text": "query HomeFeaturedShows_Test_Query {\n  orderedSet(id: \"example\") {\n    ...HomeFeaturedShows_orderedSet\n    id\n  }\n}\n\nfragment HomeFeaturedShow_show on Show {\n  name\n  href\n  startAt\n  endAt\n  formattedStartAt: startAt(format: \"MMM D\")\n  formattedEndAt: endAt(format: \"MMM D\")\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on ExternalPartner {\n      name\n      id\n    }\n    ... on Node {\n      id\n    }\n  }\n  coverImage {\n    cropped(width: 325, height: 230) {\n      src\n      srcSet\n      width\n      height\n    }\n  }\n}\n\nfragment HomeFeaturedShows_orderedSet on OrderedSet {\n  items {\n    __typename\n    ... on Show {\n      internalID\n      ...HomeFeaturedShow_show\n    }\n    ... on Node {\n      id\n    }\n    ... on FeaturedLink {\n      id\n    }\n    ... on Profile {\n      id\n    }\n  }\n}\n"
   }
 };
 })();

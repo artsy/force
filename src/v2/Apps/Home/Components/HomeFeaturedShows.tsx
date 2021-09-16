@@ -1,6 +1,4 @@
 import {
-  GridColumns,
-  Column,
   ResponsiveBox,
   Text,
   Spacer,
@@ -8,6 +6,8 @@ import {
   Skeleton,
   SkeletonBox,
   SkeletonText,
+  Shelf,
+  Sup,
 } from "@artsy/palette"
 import { compact, take } from "lodash"
 import React from "react"
@@ -39,25 +39,31 @@ const HomeFeaturedShows: React.FC<HomeFeaturedShowsProps> = ({
   if (shows.length === 0) return null
 
   return (
-    <HomeFeaturedShowsContainer>
-      <GridColumns gridRowGap={6}>
-        {shows.map(show => {
+    <HomeFeaturedShowsContainer showsCount={shows.length}>
+      <Shelf alignItems="flex-start">
+        {shows.map((show, index) => {
           return (
-            <Column key={show.internalID} span={4}>
+            <React.Fragment key={index}>
               <HomeFeaturedShowFragmentContainer show={show} />
-            </Column>
+            </React.Fragment>
           )
         })}
-      </GridColumns>
+      </Shelf>
     </HomeFeaturedShowsContainer>
   )
 }
 
-const HomeFeaturedShowsContainer: React.FC = ({ children }) => {
+const HomeFeaturedShowsContainer: React.FC<{ showsCount: number }> = ({
+  children,
+  showsCount,
+}) => {
   return (
     <>
       <Flex justifyContent="space-between" alignItems="center">
-        <Text variant="xl">Featured shows</Text>
+        <Text variant="lg">
+          Featured shows{" "}
+          {showsCount > 1 && <Sup color="brand">{showsCount}</Sup>}
+        </Text>
 
         <Text
           variant="sm"
@@ -96,29 +102,27 @@ export const HomeFeaturedShowsFragmentContainer = createFragmentContainer(
 const PLACEHOLDER = (
   <HomeFeaturedShowsContainer>
     <Skeleton>
-      <GridColumns gridRowGap={6}>
+      <Shelf>
         {[...new Array(6)].map((_, i) => {
           return (
-            <Column key={i} span={4}>
+            <React.Fragment key={i}>
               <ResponsiveBox aspectWidth={4} aspectHeight={3} maxWidth="100%">
                 <SkeletonBox width="100%" height="100%" />
               </ResponsiveBox>
 
               <Spacer mt={2} />
 
-              <SkeletonText variant="xl" mr={1}>
+              <SkeletonText variant="lg" mr={1}>
                 Show Title Typically Two Lines
               </SkeletonText>
 
-              <SkeletonText variant="xl">Partner name</SkeletonText>
-
-              <Spacer mt={1} />
+              <SkeletonText variant="sm">Partner name</SkeletonText>
 
               <SkeletonText variant="sm">Jan 1–31</SkeletonText>
-            </Column>
+            </React.Fragment>
           )
         })}
-      </GridColumns>
+      </Shelf>
     </Skeleton>
   </HomeFeaturedShowsContainer>
 )
