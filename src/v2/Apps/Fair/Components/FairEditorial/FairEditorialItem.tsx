@@ -94,7 +94,7 @@ export const FairEditorialItem: React.FC<FairEditorialItemProps> = ({
   }
 
   return (
-    <Box maxWidth={image.width}>
+    <Box>
       {/* Devided link into separate parts in order to avoid linking via empty
         space when responsive box is applied */}
       <ItemLink>
@@ -102,7 +102,7 @@ export const FairEditorialItem: React.FC<FairEditorialItemProps> = ({
           <ResponsiveBox
             aspectWidth={image.width}
             aspectHeight={image.height}
-            maxWidth={image.width}
+            maxWidth="100%"
           >
             <ItemImage />
           </ResponsiveBox>
