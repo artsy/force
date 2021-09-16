@@ -16,26 +16,25 @@ const { getWrapper } = setupTestWrapper({
 })
 
 describe("FairOverview", () => {
-  it("displays basic information about the fair", () => {
-    const wrapper = getWrapper({
-      Fair: () => ({
-        summary: "This is the summary.",
-      }),
-    })
-
-    expect(wrapper.text()).toContain("This is the summary.")
-  })
-
-  it("displays both the about content and summary", () => {
+  it("displays the about information", () => {
     const wrapper = getWrapper({
       Fair: () => ({
         about: "This is the about.",
-        summary: "This is the summary.",
       }),
     })
 
     expect(wrapper.text()).toContain("This is the about.")
-    expect(wrapper.text()).toContain("This is the summary.")
+  })
+
+  it("displays Read more if about section contains more than 480 symbols", () => {
+    const wrapper = getWrapper({
+      Fair: () => ({
+        about:
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum bibendum nulla sit amet erat vehicula, ut scelerisque purus interdum. Quisque vel pretium arcu. Phasellus nunc tellus, laoreet eget cursus a, vehicula sit amet erat. Integer porttitor mollis tellus, ultrices euismod dolor aliquet et. Integer placerat turpis vitae ligula dignissim commodo. Vivamus id sapien eros. Vestibulum consequat, lacus eu facilisis auctor, dui odio dignissim arcu, nec tincidunt erat eros sed libero.",
+      }),
+    })
+
+    expect(wrapper.text()).toContain("Read more")
   })
 
   it("renders articles if they are present", () => {
