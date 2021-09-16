@@ -1,4 +1,4 @@
-import { ResponsiveBox, Image, Spacer, Text } from "@artsy/palette"
+import { Image, Spacer, Text } from "@artsy/palette"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "v2/System/Router/RouterLink"
@@ -21,40 +21,28 @@ const HomeFeaturedShow: React.FC<HomeFeaturedShowProps> = ({ show }) => {
   const image = show.coverImage?.cropped
 
   return (
-    <RouterLink
-      to={show.href ?? ""}
-      style={{ display: "block", textDecoration: "none" }}
-    >
-      <ResponsiveBox
-        aspectWidth={4}
-        aspectHeight={3}
-        maxWidth="100%"
-        bg="black10"
-      >
-        {image && (
-          <Image
-            src={image.src}
-            srcSet={image.srcSet}
-            width="100%"
-            height="100%"
-            alt=""
-          />
-        )}
-      </ResponsiveBox>
+    <RouterLink to={show.href ?? ""} display="block" textDecoration="none">
+      {image && (
+        <Image
+          src={image.src}
+          srcSet={image.srcSet}
+          width={image.width}
+          height={image.height}
+          alt=""
+        />
+      )}
 
       <Spacer mt={2} />
 
-      <Text variant="xl" mr={1} lineClamp={2}>
+      <Text variant="lg" mr={1} lineClamp={2}>
         {show.name}
       </Text>
 
-      <Text variant="xl" color="black60" lineClamp={1}>
+      <Text variant="sm" color="black60" lineClamp={1}>
         {show.partner?.name}
       </Text>
 
-      <Spacer mt={1} />
-
-      <Text variant="sm">
+      <Text variant="sm" color="black60">
         {[show.formattedStartAt, show.formattedEndAt].filter(Boolean).join("–")}
         {formattedTime && (
           <>
@@ -87,9 +75,11 @@ export const HomeFeaturedShowFragmentContainer = createFragmentContainer(
           }
         }
         coverImage {
-          cropped(width: 600, height: 450) {
+          cropped(width: 325, height: 230) {
             src
             srcSet
+            width
+            height
           }
         }
       }

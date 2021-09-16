@@ -3,7 +3,7 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type HomeFeaturedShows_orderedSet = {
+export type HomeFeaturedShowsRail_orderedSet = {
     readonly items: ReadonlyArray<({
         readonly __typename: "Show";
         readonly internalID: string;
@@ -13,12 +13,12 @@ export type HomeFeaturedShows_orderedSet = {
         value in case none of the concrete values match.*/
         readonly __typename: "%other";
     }) | null> | null;
-    readonly " $refType": "HomeFeaturedShows_orderedSet";
+    readonly " $refType": "HomeFeaturedShowsRail_orderedSet";
 };
-export type HomeFeaturedShows_orderedSet$data = HomeFeaturedShows_orderedSet;
-export type HomeFeaturedShows_orderedSet$key = {
-    readonly " $data"?: HomeFeaturedShows_orderedSet$data;
-    readonly " $fragmentRefs": FragmentRefs<"HomeFeaturedShows_orderedSet">;
+export type HomeFeaturedShowsRail_orderedSet$data = HomeFeaturedShowsRail_orderedSet;
+export type HomeFeaturedShowsRail_orderedSet$key = {
+    readonly " $data"?: HomeFeaturedShowsRail_orderedSet$data;
+    readonly " $fragmentRefs": FragmentRefs<"HomeFeaturedShowsRail_orderedSet">;
 };
 
 
@@ -27,7 +27,7 @@ const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "HomeFeaturedShows_orderedSet",
+  "name": "HomeFeaturedShowsRail_orderedSet",
   "selections": [
     {
       "alias": null,
@@ -68,5 +68,5 @@ const node: ReaderFragment = {
   ],
   "type": "OrderedSet"
 };
-(node as any).hash = '66447453f7810a7b6676ae408f7cb764';
+(node as any).hash = '49e04387afd50290a42f4f22b3334727';
 export default node;

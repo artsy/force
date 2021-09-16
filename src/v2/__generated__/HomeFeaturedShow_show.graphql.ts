@@ -17,6 +17,8 @@ export type HomeFeaturedShow_show = {
         readonly cropped: {
             readonly src: string;
             readonly srcSet: string;
+            readonly width: number;
+            readonly height: number;
         } | null;
     } | null;
     readonly " $refType": "HomeFeaturedShow_show";
@@ -124,12 +126,12 @@ return {
             {
               "kind": "Literal",
               "name": "height",
-              "value": 450
+              "value": 230
             },
             {
               "kind": "Literal",
               "name": "width",
-              "value": 600
+              "value": 325
             }
           ],
           "concreteType": "CroppedImageUrl",
@@ -150,9 +152,23 @@ return {
               "kind": "ScalarField",
               "name": "srcSet",
               "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "width",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "height",
+              "storageKey": null
             }
           ],
-          "storageKey": "cropped(height:450,width:600)"
+          "storageKey": "cropped(height:230,width:325)"
         }
       ],
       "storageKey": null
@@ -161,5 +177,5 @@ return {
   "type": "Show"
 };
 })();
-(node as any).hash = '89a63d05a73470e8d942b6d9870c125d';
+(node as any).hash = '0c3979e37c2401671ad42d3c3a8631ac';
 export default node;

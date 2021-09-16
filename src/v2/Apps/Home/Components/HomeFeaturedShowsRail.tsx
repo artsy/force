@@ -1,6 +1,4 @@
 import {
-  GridColumns,
-  Column,
   ResponsiveBox,
   Text,
   Spacer,
@@ -8,6 +6,8 @@ import {
   Skeleton,
   SkeletonBox,
   SkeletonText,
+  Shelf,
+  Sup,
 } from "@artsy/palette"
 import { compact, take } from "lodash"
 import React from "react"
@@ -16,17 +16,17 @@ import { useSystemContext } from "v2/System"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { useLazyLoadComponent } from "v2/Utils/Hooks/useLazyLoadComponent"
-import { HomeFeaturedShowsQuery } from "v2/__generated__/HomeFeaturedShowsQuery.graphql"
-import { HomeFeaturedShows_orderedSet } from "v2/__generated__/HomeFeaturedShows_orderedSet.graphql"
+import { HomeFeaturedShowsRailQuery } from "v2/__generated__/HomeFeaturedShowsRailQuery.graphql"
+import { HomeFeaturedShowsRail_orderedSet } from "v2/__generated__/HomeFeaturedShowsRail_orderedSet.graphql"
 import { HomeFeaturedShowFragmentContainer } from "./HomeFeaturedShow"
 
 const SHOWS_LIMIT = 6
 
-interface HomeFeaturedShowsProps {
-  orderedSet: HomeFeaturedShows_orderedSet
+interface HomeFeaturedShowsRailProps {
+  orderedSet: HomeFeaturedShowsRail_orderedSet
 }
 
-const HomeFeaturedShows: React.FC<HomeFeaturedShowsProps> = ({
+const HomeFeaturedShowsRail: React.FC<HomeFeaturedShowsRailProps> = ({
   orderedSet,
 }) => {
   const shows = take(
@@ -39,25 +39,31 @@ const HomeFeaturedShows: React.FC<HomeFeaturedShowsProps> = ({
   if (shows.length === 0) return null
 
   return (
-    <HomeFeaturedShowsContainer>
-      <GridColumns gridRowGap={6}>
-        {shows.map(show => {
+    <HomeFeaturedShowsRailContainer showsCount={shows.length}>
+      <Shelf alignItems="flex-start">
+        {shows.map((show, index) => {
           return (
-            <Column key={show.internalID} span={4}>
+            <React.Fragment key={index}>
               <HomeFeaturedShowFragmentContainer show={show} />
-            </Column>
+            </React.Fragment>
           )
         })}
-      </GridColumns>
-    </HomeFeaturedShowsContainer>
+      </Shelf>
+    </HomeFeaturedShowsRailContainer>
   )
 }
 
-const HomeFeaturedShowsContainer: React.FC = ({ children }) => {
+const HomeFeaturedShowsRailContainer: React.FC<{ showsCount: number }> = ({
+  children,
+  showsCount,
+}) => {
   return (
     <>
       <Flex justifyContent="space-between" alignItems="center">
-        <Text variant="xl">Featured shows</Text>
+        <Text variant="lg">
+          Featured shows{" "}
+          {showsCount > 1 && <Sup color="brand">{showsCount}</Sup>}
+        </Text>
 
         <Text
           variant="sm"
@@ -76,11 +82,11 @@ const HomeFeaturedShowsContainer: React.FC = ({ children }) => {
   )
 }
 
-export const HomeFeaturedShowsFragmentContainer = createFragmentContainer(
-  HomeFeaturedShows,
+export const HomeFeaturedShowsRailFragmentContainer = createFragmentContainer(
+  HomeFeaturedShowsRail,
   {
     orderedSet: graphql`
-      fragment HomeFeaturedShows_orderedSet on OrderedSet {
+      fragment HomeFeaturedShowsRail_orderedSet on OrderedSet {
         items {
           __typename
           ... on Show {
@@ -94,45 +100,43 @@ export const HomeFeaturedShowsFragmentContainer = createFragmentContainer(
 )
 
 const PLACEHOLDER = (
-  <HomeFeaturedShowsContainer>
+  <HomeFeaturedShowsRailContainer showsCount={0}>
     <Skeleton>
-      <GridColumns gridRowGap={6}>
+      <Shelf>
         {[...new Array(6)].map((_, i) => {
           return (
-            <Column key={i} span={4}>
+            <React.Fragment key={i}>
               <ResponsiveBox aspectWidth={4} aspectHeight={3} maxWidth="100%">
                 <SkeletonBox width="100%" height="100%" />
               </ResponsiveBox>
 
               <Spacer mt={2} />
 
-              <SkeletonText variant="xl" mr={1}>
+              <SkeletonText variant="lg" mr={1}>
                 Show Title Typically Two Lines
               </SkeletonText>
 
-              <SkeletonText variant="xl">Partner name</SkeletonText>
-
-              <Spacer mt={1} />
+              <SkeletonText variant="sm">Partner name</SkeletonText>
 
               <SkeletonText variant="sm">Jan 1–31</SkeletonText>
-            </Column>
+            </React.Fragment>
           )
         })}
-      </GridColumns>
+      </Shelf>
     </Skeleton>
-  </HomeFeaturedShowsContainer>
+  </HomeFeaturedShowsRailContainer>
 )
 
-export const HomeFeaturedShowsQueryRenderer: React.FC = () => {
+export const HomeFeaturedShowsRailQueryRenderer: React.FC = () => {
   const { relayEnvironment } = useSystemContext()
 
   return (
-    <SystemQueryRenderer<HomeFeaturedShowsQuery>
+    <SystemQueryRenderer<HomeFeaturedShowsRailQuery>
       environment={relayEnvironment}
       query={graphql`
-        query HomeFeaturedShowsQuery {
+        query HomeFeaturedShowsRailQuery {
           orderedSet(id: "530ebe92139b21efd6000071") {
-            ...HomeFeaturedShows_orderedSet
+            ...HomeFeaturedShowsRail_orderedSet
           }
         }
       `}
@@ -149,7 +153,9 @@ export const HomeFeaturedShowsQueryRenderer: React.FC = () => {
 
         if (props.orderedSet) {
           return (
-            <HomeFeaturedShowsFragmentContainer orderedSet={props.orderedSet} />
+            <HomeFeaturedShowsRailFragmentContainer
+              orderedSet={props.orderedSet}
+            />
           )
         }
 
@@ -159,14 +165,14 @@ export const HomeFeaturedShowsQueryRenderer: React.FC = () => {
   )
 }
 
-export const HomeFeaturedShowsLazyQueryRenderer: React.FC = () => {
+export const HomeFeaturedShowsRailLazyQueryRenderer: React.FC = () => {
   const { Waypoint, isEnteredView } = useLazyLoadComponent()
 
   return (
     <>
       <Waypoint />
 
-      {isEnteredView ? <HomeFeaturedShowsQueryRenderer /> : PLACEHOLDER}
+      {isEnteredView ? <HomeFeaturedShowsRailQueryRenderer /> : PLACEHOLDER}
     </>
   )
 }

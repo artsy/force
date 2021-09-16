@@ -3,23 +3,23 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type HomeFeaturedShows_Test_QueryVariables = {};
-export type HomeFeaturedShows_Test_QueryResponse = {
+export type HomeFeaturedShowsRailQueryVariables = {};
+export type HomeFeaturedShowsRailQueryResponse = {
     readonly orderedSet: {
-        readonly " $fragmentRefs": FragmentRefs<"HomeFeaturedShows_orderedSet">;
+        readonly " $fragmentRefs": FragmentRefs<"HomeFeaturedShowsRail_orderedSet">;
     } | null;
 };
-export type HomeFeaturedShows_Test_Query = {
-    readonly response: HomeFeaturedShows_Test_QueryResponse;
-    readonly variables: HomeFeaturedShows_Test_QueryVariables;
+export type HomeFeaturedShowsRailQuery = {
+    readonly response: HomeFeaturedShowsRailQueryResponse;
+    readonly variables: HomeFeaturedShowsRailQueryVariables;
 };
 
 
 
 /*
-query HomeFeaturedShows_Test_Query {
-  orderedSet(id: "example") {
-    ...HomeFeaturedShows_orderedSet
+query HomeFeaturedShowsRailQuery {
+  orderedSet(id: "530ebe92139b21efd6000071") {
+    ...HomeFeaturedShowsRail_orderedSet
     id
   }
 }
@@ -45,14 +45,16 @@ fragment HomeFeaturedShow_show on Show {
     }
   }
   coverImage {
-    cropped(width: 600, height: 450) {
+    cropped(width: 325, height: 230) {
       src
       srcSet
+      width
+      height
     }
   }
 }
 
-fragment HomeFeaturedShows_orderedSet on OrderedSet {
+fragment HomeFeaturedShowsRail_orderedSet on OrderedSet {
   items {
     __typename
     ... on Show {
@@ -77,7 +79,7 @@ var v0 = [
   {
     "kind": "Literal",
     "name": "id",
-    "value": "example"
+    "value": "530ebe92139b21efd6000071"
   }
 ],
 v1 = {
@@ -116,7 +118,7 @@ return {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "HomeFeaturedShows_Test_Query",
+    "name": "HomeFeaturedShowsRailQuery",
     "selections": [
       {
         "alias": null,
@@ -129,10 +131,10 @@ return {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "HomeFeaturedShows_orderedSet"
+            "name": "HomeFeaturedShowsRail_orderedSet"
           }
         ],
-        "storageKey": "orderedSet(id:\"example\")"
+        "storageKey": "orderedSet(id:\"530ebe92139b21efd6000071\")"
       }
     ],
     "type": "Query"
@@ -141,7 +143,7 @@ return {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "HomeFeaturedShows_Test_Query",
+    "name": "HomeFeaturedShowsRailQuery",
     "selections": [
       {
         "alias": null,
@@ -244,12 +246,12 @@ return {
                           {
                             "kind": "Literal",
                             "name": "height",
-                            "value": 450
+                            "value": 230
                           },
                           {
                             "kind": "Literal",
                             "name": "width",
-                            "value": 600
+                            "value": 325
                           }
                         ],
                         "concreteType": "CroppedImageUrl",
@@ -270,9 +272,23 @@ return {
                             "kind": "ScalarField",
                             "name": "srcSet",
                             "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "width",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "height",
+                            "storageKey": null
                           }
                         ],
-                        "storageKey": "cropped(height:450,width:600)"
+                        "storageKey": "cropped(height:230,width:325)"
                       }
                     ],
                     "storageKey": null
@@ -285,18 +301,18 @@ return {
           },
           (v2/*: any*/)
         ],
-        "storageKey": "orderedSet(id:\"example\")"
+        "storageKey": "orderedSet(id:\"530ebe92139b21efd6000071\")"
       }
     ]
   },
   "params": {
     "id": null,
     "metadata": {},
-    "name": "HomeFeaturedShows_Test_Query",
+    "name": "HomeFeaturedShowsRailQuery",
     "operationKind": "query",
-    "text": "query HomeFeaturedShows_Test_Query {\n  orderedSet(id: \"example\") {\n    ...HomeFeaturedShows_orderedSet\n    id\n  }\n}\n\nfragment HomeFeaturedShow_show on Show {\n  name\n  href\n  startAt\n  endAt\n  formattedStartAt: startAt(format: \"MMM D\")\n  formattedEndAt: endAt(format: \"MMM D\")\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on ExternalPartner {\n      name\n      id\n    }\n    ... on Node {\n      id\n    }\n  }\n  coverImage {\n    cropped(width: 600, height: 450) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment HomeFeaturedShows_orderedSet on OrderedSet {\n  items {\n    __typename\n    ... on Show {\n      internalID\n      ...HomeFeaturedShow_show\n    }\n    ... on Node {\n      id\n    }\n    ... on FeaturedLink {\n      id\n    }\n    ... on Profile {\n      id\n    }\n  }\n}\n"
+    "text": "query HomeFeaturedShowsRailQuery {\n  orderedSet(id: \"530ebe92139b21efd6000071\") {\n    ...HomeFeaturedShowsRail_orderedSet\n    id\n  }\n}\n\nfragment HomeFeaturedShow_show on Show {\n  name\n  href\n  startAt\n  endAt\n  formattedStartAt: startAt(format: \"MMM D\")\n  formattedEndAt: endAt(format: \"MMM D\")\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on ExternalPartner {\n      name\n      id\n    }\n    ... on Node {\n      id\n    }\n  }\n  coverImage {\n    cropped(width: 325, height: 230) {\n      src\n      srcSet\n      width\n      height\n    }\n  }\n}\n\nfragment HomeFeaturedShowsRail_orderedSet on OrderedSet {\n  items {\n    __typename\n    ... on Show {\n      internalID\n      ...HomeFeaturedShow_show\n    }\n    ... on Node {\n      id\n    }\n    ... on FeaturedLink {\n      id\n    }\n    ... on Profile {\n      id\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '11a79bb1ac974281339abb392910f0fd';
+(node as any).hash = '790e9f6329d58e4b6b83a54cebdb8d70';
 export default node;
