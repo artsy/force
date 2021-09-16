@@ -10,7 +10,6 @@ export const legacyAssetDll = () => {
   const Artwork = require("desktop/models/artwork.coffee")
   const ArtworkInquiry = require("desktop/models/artwork_inquiry.coffee")
   const openInquiryQuestionnaireFor = require("desktop/components/inquiry_questionnaire/index.coffee")
-  const openMultiPageModal = require("desktop/components/multi_page_modal/index.coffee")
 
   require("jquery.transition")
   require("typeahead.js/dist/typeahead.bundle.min.js")
@@ -78,9 +77,5 @@ export const legacyAssetDll = () => {
 
   mediator.on("openOrdersContactArtsyModal", (options: ArtworkEventOptions) => {
     openInquireableModal(options.artworkId, { ask_specialist: true })
-  })
-
-  mediator.on("openAuctionFAQModal", () => {
-    openMultiPageModal("auction-faqs")
   })
 }

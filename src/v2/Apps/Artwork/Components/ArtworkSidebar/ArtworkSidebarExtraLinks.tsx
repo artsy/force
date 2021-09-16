@@ -8,6 +8,8 @@ import { ArtworkSidebarExtraLinks_artwork } from "v2/__generated__/ArtworkSideba
 import { Mediator } from "lib/mediator"
 import { useInquiry, WithInquiryProps } from "v2/Components/Inquiry/useInquiry"
 import { data as sd } from "sharify"
+import { useDialog } from "v2/Utils/Hooks/useDialog"
+import { AuctionFAQsDialogQueryRenderer } from "v2/Components/AuctionFAQsDialog"
 
 export interface ArtworkSidebarExtraLinksProps {
   artwork: ArtworkSidebarExtraLinks_artwork
@@ -17,6 +19,10 @@ export interface ArtworkSidebarExtraLinksContainerProps
   extends ArtworkSidebarExtraLinksProps,
     WithInquiryProps {
   mediator: Mediator
+  auctionFAQsDialog: {
+    showDialog(): void
+    dialogComponent: JSX.Element
+  }
 }
 
 const Container = ({ children }) => (
@@ -46,9 +52,7 @@ class ArtworkSidebarExtraLinksContainer extends React.Component<
     type: Schema.Type.Link,
   }))
   onClickAuctionFAQ() {
-    this.props.mediator &&
-      this.props.mediator.trigger &&
-      this.props.mediator.trigger("openAuctionFAQModal")
+    this.props.auctionFAQsDialog.showDialog()
   }
 
   @track(() => ({
@@ -151,27 +155,29 @@ class ArtworkSidebarExtraLinksContainer extends React.Component<
   }
   renderAuctionQuestionsLine() {
     return (
-      <Container>
-        {/* FIXME: */}
-        {/* Have a question? Read our{" "}
-        <Clickable
-          onClick={this.onClickAuctionFAQ.bind(this)}
-          textDecoration="underline"
-          color="black100"
-        >
-          auction FAQs
-        </Clickable>{" "}
-        or{" "} */}
-        Have a question?{" "}
-        <Clickable
-          onClick={this.onClickAuctionAskSpecialist.bind(this)}
-          textDecoration="underline"
-          color="black100"
-        >
-          Ask a specialist
-        </Clickable>
-        .
-      </Container>
+      <>
+        {this.props.auctionFAQsDialog.dialogComponent}
+
+        <Container>
+          Have a question? Read our{" "}
+          <Clickable
+            onClick={this.onClickAuctionFAQ.bind(this)}
+            textDecoration="underline"
+            color="black100"
+          >
+            auction FAQs
+          </Clickable>{" "}
+          or{" "}
+          <Clickable
+            onClick={this.onClickAuctionAskSpecialist.bind(this)}
+            textDecoration="underline"
+            color="black100"
+          >
+            ask a specialist
+          </Clickable>
+          .
+        </Container>
+      </>
     )
   }
   renderForSaleQuestionsLine() {
@@ -271,10 +277,15 @@ export const ArtworkSidebarExtraLinks: React.FC<ArtworkSidebarExtraLinksProps> =
   const { mediator } = useContext(SystemContext)
   const inquiry = useInquiry({ artworkID: props.artwork.internalID })
 
+  const { dialogComponent, showDialog, hideDialog } = useDialog({
+    Dialog: () => <AuctionFAQsDialogQueryRenderer onClose={hideDialog} />,
+  })
+
   return (
     <ArtworkSidebarExtraLinksContainer
       artworkID={props.artwork.internalID}
       mediator={mediator!}
+      auctionFAQsDialog={{ dialogComponent, showDialog }}
       {...inquiry}
       {...props}
     />
