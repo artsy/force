@@ -9080,6 +9080,18 @@ enum OrderedSetSorts {
 
 union OrderParty = Partner | User
 
+type Page {
+  content(format: Format): String
+
+  # A globally unique ID.
+  id: ID!
+
+  # A type-specific ID.
+  internalID: ID!
+  name: String!
+  published: Boolean!
+}
+
 type PageCursor {
   # first cursor on the page
   cursor: String!
@@ -10511,6 +10523,7 @@ type Query {
     key: String!
     public: Boolean = true
   ): [OrderedSet]
+  page(id: ID!): Page!
 
   # A Partner
   partner(
@@ -13182,6 +13195,7 @@ type Viewer {
     key: String!
     public: Boolean = true
   ): [OrderedSet]
+  page(id: ID!): Page!
 
   # A Partner
   partner(
