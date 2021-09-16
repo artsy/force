@@ -50,6 +50,13 @@ fragment FairEditorialItem_article on Article {
 
 fragment FairOrganizerApp_fairOrganizer on FairOrganizer {
   name
+  slug
+  profile {
+    image {
+      url(version: "wide")
+    }
+    id
+  }
   ...FairOrganizerPastEventsRail_fairOrganizer
   ...FairOrganizerHeaderImage_fairOrganizer
   ...FairOrganizerHeader_fairOrganizer
@@ -168,9 +175,11 @@ v1 = {
   "storageKey": null
 },
 v2 = {
-  "kind": "Literal",
-  "name": "sort",
-  "value": "START_AT_DESC"
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "slug",
+  "storageKey": null
 },
 v3 = {
   "alias": null,
@@ -180,32 +189,46 @@ v3 = {
   "storageKey": null
 },
 v4 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "slug",
-  "storageKey": null
+  "kind": "Literal",
+  "name": "version",
+  "value": "square140"
 },
 v5 = {
-  "kind": "Literal",
-  "name": "width",
-  "value": 325
-},
-v6 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "src",
   "storageKey": null
 },
-v7 = {
+v6 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "srcSet",
   "storageKey": null
 },
-v8 = [
+v7 = [
+  (v5/*: any*/),
+  (v6/*: any*/)
+],
+v8 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+},
+v9 = {
+  "kind": "Literal",
+  "name": "sort",
+  "value": "START_AT_DESC"
+},
+v10 = {
+  "kind": "Literal",
+  "name": "width",
+  "value": 325
+},
+v11 = [
   {
     "alias": null,
     "args": null,
@@ -220,25 +243,9 @@ v8 = [
     "name": "height",
     "storageKey": null
   },
-  (v6/*: any*/),
-  (v7/*: any*/)
+  (v5/*: any*/),
+  (v6/*: any*/)
 ],
-v9 = {
-  "kind": "Literal",
-  "name": "version",
-  "value": "square140"
-},
-v10 = [
-  (v6/*: any*/),
-  (v7/*: any*/)
-],
-v11 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "internalID",
-  "storageKey": null
-},
 v12 = {
   "alias": null,
   "args": null,
@@ -287,87 +294,7 @@ return {
         "plural": false,
         "selections": [
           (v1/*: any*/),
-          {
-            "alias": "pastFairs",
-            "args": [
-              {
-                "kind": "Literal",
-                "name": "first",
-                "value": 20
-              },
-              {
-                "kind": "Literal",
-                "name": "hasFullFeature",
-                "value": true
-              },
-              (v2/*: any*/),
-              {
-                "kind": "Literal",
-                "name": "status",
-                "value": "CLOSED"
-              }
-            ],
-            "concreteType": "FairConnection",
-            "kind": "LinkedField",
-            "name": "fairsConnection",
-            "plural": false,
-            "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "concreteType": "FairEdge",
-                "kind": "LinkedField",
-                "name": "edges",
-                "plural": true,
-                "selections": [
-                  {
-                    "alias": null,
-                    "args": null,
-                    "concreteType": "Fair",
-                    "kind": "LinkedField",
-                    "name": "node",
-                    "plural": false,
-                    "selections": [
-                      (v3/*: any*/),
-                      (v4/*: any*/),
-                      (v1/*: any*/),
-                      {
-                        "alias": null,
-                        "args": null,
-                        "concreteType": "Image",
-                        "kind": "LinkedField",
-                        "name": "image",
-                        "plural": false,
-                        "selections": [
-                          {
-                            "alias": null,
-                            "args": [
-                              {
-                                "kind": "Literal",
-                                "name": "height",
-                                "value": 244
-                              },
-                              (v5/*: any*/)
-                            ],
-                            "concreteType": "CroppedImageUrl",
-                            "kind": "LinkedField",
-                            "name": "cropped",
-                            "plural": false,
-                            "selections": (v8/*: any*/),
-                            "storageKey": "cropped(height:244,width:325)"
-                          }
-                        ],
-                        "storageKey": null
-                      }
-                    ],
-                    "storageKey": null
-                  }
-                ],
-                "storageKey": null
-              }
-            ],
-            "storageKey": "fairsConnection(first:20,hasFullFeature:true,sort:\"START_AT_DESC\",status:\"CLOSED\")"
-          },
+          (v2/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -417,7 +344,7 @@ return {
                         "name": "height",
                         "value": 80
                       },
-                      (v9/*: any*/),
+                      (v4/*: any*/),
                       {
                         "kind": "Literal",
                         "name": "width",
@@ -428,7 +355,7 @@ return {
                     "kind": "LinkedField",
                     "name": "cropped",
                     "plural": false,
-                    "selections": (v10/*: any*/),
+                    "selections": (v7/*: any*/),
                     "storageKey": "cropped(height:80,version:\"square140\",width:80)"
                   },
                   {
@@ -439,7 +366,7 @@ return {
                         "name": "height",
                         "value": 60
                       },
-                      (v9/*: any*/),
+                      (v4/*: any*/),
                       {
                         "kind": "Literal",
                         "name": "width",
@@ -450,13 +377,13 @@ return {
                     "kind": "LinkedField",
                     "name": "cropped",
                     "plural": false,
-                    "selections": (v10/*: any*/),
+                    "selections": (v7/*: any*/),
                     "storageKey": "cropped(height:60,version:\"square140\",width:60)"
                   }
                 ],
                 "storageKey": null
               },
-              (v11/*: any*/),
+              (v8/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -468,6 +395,87 @@ return {
             "storageKey": null
           },
           {
+            "alias": "pastFairs",
+            "args": [
+              {
+                "kind": "Literal",
+                "name": "first",
+                "value": 20
+              },
+              {
+                "kind": "Literal",
+                "name": "hasFullFeature",
+                "value": true
+              },
+              (v9/*: any*/),
+              {
+                "kind": "Literal",
+                "name": "status",
+                "value": "CLOSED"
+              }
+            ],
+            "concreteType": "FairConnection",
+            "kind": "LinkedField",
+            "name": "fairsConnection",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "FairEdge",
+                "kind": "LinkedField",
+                "name": "edges",
+                "plural": true,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "Fair",
+                    "kind": "LinkedField",
+                    "name": "node",
+                    "plural": false,
+                    "selections": [
+                      (v3/*: any*/),
+                      (v2/*: any*/),
+                      (v1/*: any*/),
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": "Image",
+                        "kind": "LinkedField",
+                        "name": "image",
+                        "plural": false,
+                        "selections": [
+                          {
+                            "alias": null,
+                            "args": [
+                              {
+                                "kind": "Literal",
+                                "name": "height",
+                                "value": 244
+                              },
+                              (v10/*: any*/)
+                            ],
+                            "concreteType": "CroppedImageUrl",
+                            "kind": "LinkedField",
+                            "name": "cropped",
+                            "plural": false,
+                            "selections": (v11/*: any*/),
+                            "storageKey": "cropped(height:244,width:325)"
+                          }
+                        ],
+                        "storageKey": null
+                      }
+                    ],
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              }
+            ],
+            "storageKey": "fairsConnection(first:20,hasFullFeature:true,sort:\"START_AT_DESC\",status:\"CLOSED\")"
+          },
+          {
             "alias": null,
             "args": [
               {
@@ -475,7 +483,7 @@ return {
                 "name": "first",
                 "value": 1
               },
-              (v2/*: any*/)
+              (v9/*: any*/)
             ],
             "concreteType": "FairConnection",
             "kind": "LinkedField",
@@ -523,7 +531,6 @@ return {
             ],
             "storageKey": "fairsConnection(first:1,sort:\"START_AT_DESC\")"
           },
-          (v4/*: any*/),
           {
             "alias": null,
             "args": [
@@ -580,8 +587,8 @@ return {
                     "plural": false,
                     "selections": [
                       (v3/*: any*/),
-                      (v11/*: any*/),
-                      (v4/*: any*/),
+                      (v8/*: any*/),
+                      (v2/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -636,7 +643,7 @@ return {
                             "kind": "LinkedField",
                             "name": "cropped",
                             "plural": false,
-                            "selections": (v8/*: any*/),
+                            "selections": (v11/*: any*/),
                             "storageKey": "cropped(height:720,width:670)"
                           },
                           {
@@ -647,13 +654,13 @@ return {
                                 "name": "height",
                                 "value": 240
                               },
-                              (v5/*: any*/)
+                              (v10/*: any*/)
                             ],
                             "concreteType": "CroppedImageUrl",
                             "kind": "LinkedField",
                             "name": "cropped",
                             "plural": false,
-                            "selections": (v8/*: any*/),
+                            "selections": (v11/*: any*/),
                             "storageKey": "cropped(height:240,width:325)"
                           }
                         ],
@@ -679,7 +686,7 @@ return {
     "metadata": {},
     "name": "FairOrganizerApp_Test_Query",
     "operationKind": "query",
-    "text": "query FairOrganizerApp_Test_Query {\n  fairOrganizer(id: \"example\") {\n    ...FairOrganizerApp_fairOrganizer\n    id\n  }\n}\n\nfragment FairEditorialItem_article on Article {\n  id\n  internalID\n  slug\n  title\n  href\n  publishedAt(format: \"MMMM D, YYYY\")\n  thumbnailTitle\n  thumbnailImage {\n    large: cropped(width: 670, height: 720) {\n      width\n      height\n      src\n      srcSet\n    }\n    small: cropped(width: 325, height: 240) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment FairOrganizerApp_fairOrganizer on FairOrganizer {\n  name\n  ...FairOrganizerPastEventsRail_fairOrganizer\n  ...FairOrganizerHeaderImage_fairOrganizer\n  ...FairOrganizerHeader_fairOrganizer\n  ...FairOrganizerLatestArticles_fairOrganizer\n}\n\nfragment FairOrganizerFollowButton_fairOrganizer on FairOrganizer {\n  slug\n  name\n  profile {\n    id\n    internalID\n    isFollowed\n  }\n}\n\nfragment FairOrganizerHeaderIcon_fairOrganizer on FairOrganizer {\n  name\n  profile {\n    icon {\n      desktop: cropped(width: 80, height: 80, version: \"square140\") {\n        src\n        srcSet\n      }\n      mobile: cropped(width: 60, height: 60, version: \"square140\") {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment FairOrganizerHeaderImage_fairOrganizer on FairOrganizer {\n  profile {\n    image {\n      url(version: \"wide\")\n    }\n    id\n  }\n}\n\nfragment FairOrganizerHeader_fairOrganizer on FairOrganizer {\n  name\n  fairsConnection(first: 1, sort: START_AT_DESC) {\n    edges {\n      node {\n        href\n        startAt\n        exhibitionPeriod\n        id\n      }\n    }\n  }\n  ...FairOrganizerHeaderIcon_fairOrganizer\n  ...FairOrganizerFollowButton_fairOrganizer\n  ...FairOrganizerInfo_fairOrganizer\n}\n\nfragment FairOrganizerInfo_fairOrganizer on FairOrganizer {\n  about(format: HTML)\n}\n\nfragment FairOrganizerLatestArticles_fairOrganizer on FairOrganizer {\n  name\n  slug\n  articlesConnection(first: 7, sort: PUBLISHED_AT_DESC) {\n    totalCount\n    edges {\n      node {\n        id\n        ...FairEditorialItem_article\n      }\n    }\n  }\n}\n\nfragment FairOrganizerPastEventRailCell_fair on Fair {\n  slug\n  name\n  image {\n    cropped(width: 325, height: 244) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment FairOrganizerPastEventsRail_fairOrganizer on FairOrganizer {\n  pastFairs: fairsConnection(first: 20, sort: START_AT_DESC, status: CLOSED, hasFullFeature: true) {\n    edges {\n      node {\n        id\n        ...FairOrganizerPastEventRailCell_fair\n      }\n    }\n  }\n}\n"
+    "text": "query FairOrganizerApp_Test_Query {\n  fairOrganizer(id: \"example\") {\n    ...FairOrganizerApp_fairOrganizer\n    id\n  }\n}\n\nfragment FairEditorialItem_article on Article {\n  id\n  internalID\n  slug\n  title\n  href\n  publishedAt(format: \"MMMM D, YYYY\")\n  thumbnailTitle\n  thumbnailImage {\n    large: cropped(width: 670, height: 720) {\n      width\n      height\n      src\n      srcSet\n    }\n    small: cropped(width: 325, height: 240) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment FairOrganizerApp_fairOrganizer on FairOrganizer {\n  name\n  slug\n  profile {\n    image {\n      url(version: \"wide\")\n    }\n    id\n  }\n  ...FairOrganizerPastEventsRail_fairOrganizer\n  ...FairOrganizerHeaderImage_fairOrganizer\n  ...FairOrganizerHeader_fairOrganizer\n  ...FairOrganizerLatestArticles_fairOrganizer\n}\n\nfragment FairOrganizerFollowButton_fairOrganizer on FairOrganizer {\n  slug\n  name\n  profile {\n    id\n    internalID\n    isFollowed\n  }\n}\n\nfragment FairOrganizerHeaderIcon_fairOrganizer on FairOrganizer {\n  name\n  profile {\n    icon {\n      desktop: cropped(width: 80, height: 80, version: \"square140\") {\n        src\n        srcSet\n      }\n      mobile: cropped(width: 60, height: 60, version: \"square140\") {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment FairOrganizerHeaderImage_fairOrganizer on FairOrganizer {\n  profile {\n    image {\n      url(version: \"wide\")\n    }\n    id\n  }\n}\n\nfragment FairOrganizerHeader_fairOrganizer on FairOrganizer {\n  name\n  fairsConnection(first: 1, sort: START_AT_DESC) {\n    edges {\n      node {\n        href\n        startAt\n        exhibitionPeriod\n        id\n      }\n    }\n  }\n  ...FairOrganizerHeaderIcon_fairOrganizer\n  ...FairOrganizerFollowButton_fairOrganizer\n  ...FairOrganizerInfo_fairOrganizer\n}\n\nfragment FairOrganizerInfo_fairOrganizer on FairOrganizer {\n  about(format: HTML)\n}\n\nfragment FairOrganizerLatestArticles_fairOrganizer on FairOrganizer {\n  name\n  slug\n  articlesConnection(first: 7, sort: PUBLISHED_AT_DESC) {\n    totalCount\n    edges {\n      node {\n        id\n        ...FairEditorialItem_article\n      }\n    }\n  }\n}\n\nfragment FairOrganizerPastEventRailCell_fair on Fair {\n  slug\n  name\n  image {\n    cropped(width: 325, height: 244) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment FairOrganizerPastEventsRail_fairOrganizer on FairOrganizer {\n  pastFairs: fairsConnection(first: 20, sort: START_AT_DESC, status: CLOSED, hasFullFeature: true) {\n    edges {\n      node {\n        id\n        ...FairOrganizerPastEventRailCell_fair\n      }\n    }\n  }\n}\n"
   }
 };
 })();

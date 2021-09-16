@@ -6,6 +6,7 @@ import { FairOrganizerHeaderImageFragmentContainer as FairOrganizerHeaderImage }
 import { FairOrganizerHeaderFragmentContainer as FairOrganizerHeader } from "./Components/FairOrganizerHeader/FairOrganizerHeader"
 import { FairOrganizerPastEventsRailFragmentContainer as FairOrganizerPastEventsRail } from "./Components/FairOrganizerPastEventsRail"
 import { FairOrganizerLatestArticlesFragmentContainer as FairOrganizerLatestArticles } from "./Components/FairOrganizerLatestArticles"
+import { MetaTags } from "v2/Components/MetaTags"
 
 interface FairOrganizerAppProps {
   fairOrganizer: FairOrganizerApp_fairOrganizer
@@ -14,10 +15,20 @@ interface FairOrganizerAppProps {
 const FairOrganizerApp: React.FC<FairOrganizerAppProps> = ({
   fairOrganizer,
 }) => {
-  const { name } = fairOrganizer
+  const { name, profile, slug } = fairOrganizer
+
+  const title = `${name} | Artsy`
+
   return (
     <>
-      <Title>{`${name} | Artsy`}</Title>
+      <MetaTags
+        description={`Search for fairs on ${name} on Artsy`}
+        imageURL={profile?.image?.url}
+        pathname={`fair-organizer/${slug}`}
+        title={title}
+      />
+
+      <Title>{`${title}`}</Title>
 
       <Box>
         <FairOrganizerHeaderImage fairOrganizer={fairOrganizer} />
@@ -44,6 +55,12 @@ export const FairOrganizerAppFragmentContainer = createFragmentContainer(
     fairOrganizer: graphql`
       fragment FairOrganizerApp_fairOrganizer on FairOrganizer {
         name
+        slug
+        profile {
+          image {
+            url(version: "wide")
+          }
+        }
         ...FairOrganizerPastEventsRail_fairOrganizer
         ...FairOrganizerHeaderImage_fairOrganizer
         ...FairOrganizerHeader_fairOrganizer
