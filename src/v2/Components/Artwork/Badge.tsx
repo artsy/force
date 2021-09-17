@@ -1,9 +1,10 @@
-import { Box, Flex, Sans, space } from "@artsy/palette"
+import { Flex, Text } from "@artsy/palette"
 import { Badge_artwork } from "v2/__generated__/Badge_artwork.graphql"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { get } from "v2/Utils/get"
+import { themeGet } from "@styled-system/theme-get"
 
 interface BadgeProps {
   artwork: Badge_artwork
@@ -34,16 +35,15 @@ class Badge extends React.Component<BadgeProps> {
     // E.g.(ENDS IN 59M)
     const saleTimingHint =
       sale && sale.display_timely_at ? ` (${sale.display_timely_at})` : ""
+
     return (
-      <>
-        <Badges flexDirection={this.stackedLayout ? "column" : "row"}>
-          {includeBidBadge && (
-            <Label>
-              <Sans size="0">Bid{saleTimingHint}</Sans>
-            </Label>
-          )}
-        </Badges>
-      </>
+      <Badges flexDirection={this.stackedLayout ? "column" : "row"}>
+        {includeBidBadge && (
+          <Label ml={1} mb={1}>
+            Bid{saleTimingHint}
+          </Label>
+        )}
+      </Badges>
     )
   }
 }
@@ -61,20 +61,20 @@ export default createFragmentContainer(Badge, {
   `,
 })
 
-const Label = styled(Box)`
+const Label = styled(Text)`
+  background-color: ${themeGet("colors.white100")};
   border-radius: 2px;
-  letter-spacing: 0.3px;
-  padding: 3px 5px 1px 6px;
-  background-color: white;
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.1);
+  font-size: 8px;
+  letter-spacing: 0.3px;
+  line-height: 1;
+  padding: 2px 5px;
   text-transform: uppercase;
-  margin-left: ${space(0.5)}px;
-  margin-top: ${space(0.5)}px;
 `
 
 const Badges = styled(Flex)`
   position: absolute;
-  bottom: 8px;
-  left: 3px;
+  bottom: 0;
+  left: 0;
   pointer-events: none;
 `

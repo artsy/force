@@ -34,18 +34,16 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
   })
 
   const aspectRatio = artwork.image?.aspect_ratio ?? 1
-  const width = 400
+  const width = 445
   const height = Math.floor(width / aspectRatio)
   const transform = aspectRatio === 1 ? cropped : resized
   const imageURL = artwork.image?.url
-  const { src } = imageURL
-    ? transform(imageURL, { width, height, quality: 80 })
-    : { src: "" }
+  const { src, srcSet } = imageURL
+    ? transform(imageURL, { width, height })
+    : { src: "", srcSet: "" }
 
   const handleClick = () => {
-    if (onClick) {
-      onClick()
-    }
+    onClick?.()
   }
 
   return (
@@ -59,7 +57,7 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
         position="relative"
         width="100%"
         bg="black10"
-        pb={artwork.image?.placeholder}
+        style={{ paddingBottom: artwork.image?.placeholder ?? undefined }}
       >
         <Link
           to={artwork.href}
@@ -69,7 +67,8 @@ export const ArtworkGridItem: React.FC<ArtworkGridItemProps> = ({
           <Image
             title={artwork.title ?? undefined}
             alt={artwork.image_title ?? ""}
-            src={src} // TODO: Support srcSet
+            src={src}
+            srcSet={srcSet}
             lazyLoad={lazyLoad}
             preventRightClick={!isTeam}
           />
