@@ -9,6 +9,7 @@ import {
   Spacer,
   ResponsiveBox,
   TextVariant,
+  BoxProps,
 } from "@artsy/palette"
 import {
   ActionType,
@@ -19,7 +20,7 @@ import {
 import { useAnalyticsContext } from "v2/System/Analytics/AnalyticsContext"
 import { RouterLink } from "v2/System/Router/RouterLink"
 
-export interface FairEditorialItemProps {
+export interface FairEditorialItemProps extends BoxProps {
   article: FairEditorialItem_article
   size?: "large" | "small"
   isResponsive?: boolean
@@ -34,6 +35,7 @@ export const FairEditorialItem: React.FC<FairEditorialItemProps> = ({
   article,
   size = "small",
   isResponsive = false,
+  ...rest
 }) => {
   const tracking = useTracking()
 
@@ -94,7 +96,7 @@ export const FairEditorialItem: React.FC<FairEditorialItemProps> = ({
   }
 
   return (
-    <Box maxWidth={image.width}>
+    <Box {...rest}>
       {/* Devided link into separate parts in order to avoid linking via empty
         space when responsive box is applied */}
       <ItemLink>
@@ -102,7 +104,7 @@ export const FairEditorialItem: React.FC<FairEditorialItemProps> = ({
           <ResponsiveBox
             aspectWidth={image.width}
             aspectHeight={image.height}
-            maxWidth={image.width}
+            maxWidth="100%"
           >
             <ItemImage />
           </ResponsiveBox>

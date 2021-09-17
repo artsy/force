@@ -17,7 +17,13 @@ const FairEditorialRailArticles: React.FC<FairBoothRailArtworksProps> = ({
   return (
     <Shelf alignItems="flex-start">
       {articles.map(article => {
-        return <FairEditorialItem key={article.id} article={article} />
+        return (
+          <FairEditorialItem
+            key={article.id}
+            article={article}
+            maxWidth={325}
+          />
+        )
       })}
     </Shelf>
   )
