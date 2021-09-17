@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -65,7 +66,8 @@ return {
         "storageKey": "gene(id:\"example\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -122,6 +124,7 @@ return {
     ]
   },
   "params": {
+    "cacheID": "400ec25326a33f1da5029ba13e220fff",
     "id": null,
     "metadata": {},
     "name": "FollowGeneButton_Test_Query",

@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -14,9 +15,9 @@ export type createTestEnvQueryRawResponse = {
         readonly title: string | null;
         readonly artist: ({
             readonly name: string | null;
-            readonly id: string | null;
+            readonly id: string;
         }) | null;
-        readonly id: string | null;
+        readonly id: string;
     }) | null;
 };
 export type createTestEnvQuery = {
@@ -83,7 +84,8 @@ return {
         "storageKey": "artwork(id:\"unused\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -132,6 +134,7 @@ return {
     ]
   },
   "params": {
+    "cacheID": "4b1d5d56fe44157d5741390cb8eba295",
     "id": null,
     "metadata": {},
     "name": "createTestEnvQuery",

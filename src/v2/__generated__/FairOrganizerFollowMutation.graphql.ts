@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 export type FollowProfileInput = {
@@ -43,8 +44,7 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "input",
-    "type": "FollowProfileInput!"
+    "name": "input"
   }
 ],
 v1 = [
@@ -98,7 +98,8 @@ return {
     "metadata": null,
     "name": "FairOrganizerFollowMutation",
     "selections": (v1/*: any*/),
-    "type": "Mutation"
+    "type": "Mutation",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -108,6 +109,7 @@ return {
     "selections": (v1/*: any*/)
   },
   "params": {
+    "cacheID": "d26c8c51b0a41c29451b00f1018c16bf",
     "id": null,
     "metadata": {},
     "name": "FairOrganizerFollowMutation",

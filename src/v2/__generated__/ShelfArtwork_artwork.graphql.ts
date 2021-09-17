@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -42,8 +43,7 @@ return {
     {
       "defaultValue": 200,
       "kind": "LocalArgument",
-      "name": "width",
-      "type": "Int"
+      "name": "width"
     }
   ],
   "kind": "Fragment",
@@ -152,7 +152,8 @@ return {
       "name": "Badge_artwork"
     }
   ],
-  "type": "Artwork"
+  "type": "Artwork",
+  "abstractKey": null
 };
 })();
 (node as any).hash = '0fffdc049243e8f8346b2f9a220b9d77';

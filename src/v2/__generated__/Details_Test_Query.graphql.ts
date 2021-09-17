@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -25,12 +26,12 @@ export type Details_Test_QueryRawResponse = {
         readonly partner: ({
             readonly name: string | null;
             readonly href: string | null;
-            readonly id: string | null;
+            readonly id: string;
         }) | null;
         readonly sale: ({
             readonly is_auction: boolean | null;
             readonly is_closed: boolean | null;
-            readonly id: string | null;
+            readonly id: string;
         }) | null;
         readonly sale_artwork: ({
             readonly counts: ({
@@ -42,9 +43,9 @@ export type Details_Test_QueryRawResponse = {
             readonly opening_bid: ({
                 readonly display: string | null;
             }) | null;
-            readonly id: string | null;
+            readonly id: string;
         }) | null;
-        readonly id: string | null;
+        readonly id: string;
     }) | null;
 };
 export type Details_Test_Query = {
@@ -169,7 +170,8 @@ return {
         "storageKey": "artwork(id:\"gerhard-richter-bagdad-ii-flow-p10-1\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -332,6 +334,7 @@ return {
     ]
   },
   "params": {
+    "cacheID": "b6bb23c02bec205fddd1feafcc11adbc",
     "id": null,
     "metadata": {},
     "name": "Details_Test_Query",

@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -121,7 +122,8 @@ v2 = {
               "storageKey": null
             }
           ],
-          "type": "OpeningHoursArray"
+          "type": "OpeningHoursArray",
+          "abstractKey": null
         },
         {
           "kind": "InlineFragment",
@@ -134,7 +136,8 @@ v2 = {
               "storageKey": null
             }
           ],
-          "type": "OpeningHoursText"
+          "type": "OpeningHoursText",
+          "abstractKey": null
         }
       ],
       "storageKey": null
@@ -167,7 +170,8 @@ return {
         "storageKey": "show(id:\"example\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -204,6 +208,7 @@ return {
     ]
   },
   "params": {
+    "cacheID": "4549037f7266f13a5496fd0b030325d7",
     "id": null,
     "metadata": {},
     "name": "ShowHours_Test_Query",

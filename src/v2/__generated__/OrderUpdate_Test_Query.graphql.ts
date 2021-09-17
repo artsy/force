@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -54,6 +55,7 @@ query OrderUpdate_Test_Query(
 }
 
 fragment OrderUpdate_event on CommerceOrderEventUnion {
+  __isCommerceOrderEventUnion: __typename
   __typename
   ... on CommerceOrderStateChangedEvent {
     createdAt
@@ -82,8 +84,7 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "conversationID",
-    "type": "String!"
+    "name": "conversationID"
   }
 ],
 v1 = [
@@ -213,7 +214,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -272,6 +274,10 @@ return {
                             "selections": [
                               (v3/*: any*/),
                               {
+                                "kind": "TypeDiscriminator",
+                                "abstractKey": "__isCommerceOrderEventUnion"
+                              },
+                              {
                                 "kind": "InlineFragment",
                                 "selections": [
                                   (v4/*: any*/),
@@ -290,7 +296,8 @@ return {
                                     "storageKey": null
                                   }
                                 ],
-                                "type": "CommerceOrderStateChangedEvent"
+                                "type": "CommerceOrderStateChangedEvent",
+                                "abstractKey": null
                               },
                               {
                                 "kind": "InlineFragment",
@@ -344,7 +351,8 @@ return {
                                     "storageKey": null
                                   }
                                 ],
-                                "type": "CommerceOfferSubmittedEvent"
+                                "type": "CommerceOfferSubmittedEvent",
+                                "abstractKey": null
                               }
                             ],
                             "storageKey": null
@@ -370,11 +378,12 @@ return {
     ]
   },
   "params": {
+    "cacheID": "4adb98caa6a7744e6f7936053144a8c9",
     "id": null,
     "metadata": {},
     "name": "OrderUpdate_Test_Query",
     "operationKind": "query",
-    "text": "query OrderUpdate_Test_Query(\n  $conversationID: String!\n) {\n  me {\n    conversation(id: $conversationID) {\n      orderConnection(first: 10, participantType: BUYER) {\n        edges {\n          node {\n            __typename\n            orderHistory {\n              __typename\n              ...OrderUpdate_event\n            }\n            id\n          }\n        }\n      }\n      id\n    }\n    id\n  }\n}\n\nfragment OrderUpdate_event on CommerceOrderEventUnion {\n  __typename\n  ... on CommerceOrderStateChangedEvent {\n    createdAt\n    stateReason\n    state\n  }\n  ... on CommerceOfferSubmittedEvent {\n    createdAt\n    offer {\n      amount\n      fromParticipant\n      definesTotal\n      offerAmountChanged\n      respondsTo {\n        fromParticipant\n        id\n      }\n      id\n    }\n  }\n}\n"
+    "text": "query OrderUpdate_Test_Query(\n  $conversationID: String!\n) {\n  me {\n    conversation(id: $conversationID) {\n      orderConnection(first: 10, participantType: BUYER) {\n        edges {\n          node {\n            __typename\n            orderHistory {\n              __typename\n              ...OrderUpdate_event\n            }\n            id\n          }\n        }\n      }\n      id\n    }\n    id\n  }\n}\n\nfragment OrderUpdate_event on CommerceOrderEventUnion {\n  __isCommerceOrderEventUnion: __typename\n  __typename\n  ... on CommerceOrderStateChangedEvent {\n    createdAt\n    stateReason\n    state\n  }\n  ... on CommerceOfferSubmittedEvent {\n    createdAt\n    offer {\n      amount\n      fromParticipant\n      definesTotal\n      offerAmountChanged\n      respondsTo {\n        fromParticipant\n        id\n      }\n      id\n    }\n  }\n}\n"
   }
 };
 })();

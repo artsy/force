@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -16,16 +17,16 @@ export type ArtworkSidebarPartnerInfo_Test_QueryRawResponse = {
             readonly href: string | null;
             readonly locations: ReadonlyArray<({
                 readonly city: string | null;
-                readonly id: string | null;
+                readonly id: string;
             }) | null> | null;
-            readonly id: string | null;
+            readonly id: string;
         }) | null;
         readonly sale: ({
             readonly name: string | null;
             readonly href: string | null;
-            readonly id: string | null;
+            readonly id: string;
         }) | null;
-        readonly id: string | null;
+        readonly id: string;
     }) | null;
 };
 export type ArtworkSidebarPartnerInfo_Test_Query = {
@@ -115,7 +116,8 @@ return {
         "storageKey": "artwork(id:\"artwork_from_partner_with_locations\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -185,6 +187,7 @@ return {
     ]
   },
   "params": {
+    "cacheID": "405b9532fe786c0825194ba0d3166f6d",
     "id": null,
     "metadata": {},
     "name": "ArtworkSidebarPartnerInfo_Test_Query",

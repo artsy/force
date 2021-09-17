@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -65,7 +66,8 @@ return {
         "storageKey": "artwork(id:\"example-artwork-id\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -122,6 +124,7 @@ return {
     ]
   },
   "params": {
+    "cacheID": "e1cbe5325f819672486b47a6c3c8326f",
     "id": null,
     "metadata": {},
     "name": "SaveButtonTestQuery",

@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -147,7 +148,8 @@ return {
           "storageKey": "endAt(format:\"MMM D\")"
         }
       ],
-      "type": "Sale"
+      "type": "Sale",
+      "abstractKey": null
     },
     {
       "kind": "InlineFragment",
@@ -161,12 +163,14 @@ return {
           "storageKey": null
         }
       ],
-      "type": "Fair"
+      "type": "Fair",
+      "abstractKey": null
     },
     {
       "kind": "InlineFragment",
       "selections": (v2/*: any*/),
-      "type": "Gene"
+      "type": "Gene",
+      "abstractKey": null
     },
     {
       "kind": "InlineFragment",
@@ -192,7 +196,8 @@ return {
           "storageKey": null
         }
       ],
-      "type": "HomePageRelatedArtistArtworkModule"
+      "type": "HomePageRelatedArtistArtworkModule",
+      "abstractKey": null
     },
     {
       "kind": "InlineFragment",
@@ -208,20 +213,24 @@ return {
           "storageKey": null
         }
       ],
-      "type": "HomePageFollowedArtistArtworkModule"
+      "type": "HomePageFollowedArtistArtworkModule",
+      "abstractKey": null
     },
     {
       "kind": "InlineFragment",
       "selections": (v5/*: any*/),
-      "type": "TrendingArtists"
+      "type": "TrendingArtists",
+      "abstractKey": null
     },
     {
       "kind": "InlineFragment",
       "selections": (v5/*: any*/),
-      "type": "FollowArtists"
+      "type": "FollowArtists",
+      "abstractKey": null
     }
   ],
-  "type": "HomePageArtworkModuleContext"
+  "type": "HomePageArtworkModuleContext",
+  "abstractKey": "__isHomePageArtworkModuleContext"
 };
 })();
 (node as any).hash = 'aaf7af84cacea3d163e3d9309d4f2d48';

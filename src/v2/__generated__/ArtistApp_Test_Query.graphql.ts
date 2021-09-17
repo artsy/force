@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -483,7 +484,8 @@ return {
         "storageKey": "artist(id:\"example\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -965,12 +967,14 @@ return {
                                 "storageKey": null
                               }
                             ],
-                            "type": "PriceRange"
+                            "type": "PriceRange",
+                            "abstractKey": null
                           },
                           {
                             "kind": "InlineFragment",
                             "selections": (v14/*: any*/),
-                            "type": "Money"
+                            "type": "Money",
+                            "abstractKey": null
                           }
                         ],
                         "storageKey": null
@@ -1164,6 +1168,7 @@ return {
     ]
   },
   "params": {
+    "cacheID": "608100fdba24f98cea55372e7dcb772a",
     "id": null,
     "metadata": {},
     "name": "ArtistApp_Test_Query",

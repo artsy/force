@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -56,6 +57,7 @@ fragment SearchApp_viewer_2hPz0N on Viewer {
           displayType
         }
         ... on Node {
+          __isNode: __typename
           id
         }
       }
@@ -75,8 +77,7 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "keyword",
-    "type": "String!"
+    "name": "keyword"
   }
 ],
 v1 = {
@@ -116,7 +117,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -224,7 +226,6 @@ return {
                         "name": "__typename",
                         "storageKey": null
                       },
-                      (v1/*: any*/),
                       {
                         "kind": "InlineFragment",
                         "selections": [
@@ -250,7 +251,16 @@ return {
                             "storageKey": null
                           }
                         ],
-                        "type": "SearchableItem"
+                        "type": "SearchableItem",
+                        "abstractKey": null
+                      },
+                      {
+                        "kind": "InlineFragment",
+                        "selections": [
+                          (v1/*: any*/)
+                        ],
+                        "type": "Node",
+                        "abstractKey": "__isNode"
                       }
                     ],
                     "storageKey": null
@@ -315,11 +325,12 @@ return {
     ]
   },
   "params": {
+    "cacheID": "29135631f3bc0ca939f6d9397bbd8532",
     "id": null,
     "metadata": {},
     "name": "searchRoutes_SearchResultsTopLevelQuery",
     "operationKind": "query",
-    "text": "query searchRoutes_SearchResultsTopLevelQuery(\n  $keyword: String!\n) {\n  viewer {\n    ...SearchApp_viewer_2hPz0N\n  }\n}\n\nfragment NavigationTabs_searchableConnection on SearchableConnection {\n  aggregations {\n    slice\n    counts {\n      count\n      name\n    }\n  }\n}\n\nfragment SearchApp_viewer_2hPz0N on Viewer {\n  searchConnection(query: $keyword, first: 1, aggregations: [TYPE]) {\n    aggregations {\n      slice\n      counts {\n        count\n        name\n      }\n    }\n    ...NavigationTabs_searchableConnection\n    edges {\n      node {\n        __typename\n        ... on SearchableItem {\n          slug\n          displayLabel\n          displayType\n        }\n        ... on Node {\n          id\n        }\n      }\n    }\n  }\n  artworksConnection(keyword: $keyword, size: 0, aggregations: [TOTAL]) {\n    counts {\n      total\n    }\n    id\n  }\n}\n"
+    "text": "query searchRoutes_SearchResultsTopLevelQuery(\n  $keyword: String!\n) {\n  viewer {\n    ...SearchApp_viewer_2hPz0N\n  }\n}\n\nfragment NavigationTabs_searchableConnection on SearchableConnection {\n  aggregations {\n    slice\n    counts {\n      count\n      name\n    }\n  }\n}\n\nfragment SearchApp_viewer_2hPz0N on Viewer {\n  searchConnection(query: $keyword, first: 1, aggregations: [TYPE]) {\n    aggregations {\n      slice\n      counts {\n        count\n        name\n      }\n    }\n    ...NavigationTabs_searchableConnection\n    edges {\n      node {\n        __typename\n        ... on SearchableItem {\n          slug\n          displayLabel\n          displayType\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n      }\n    }\n  }\n  artworksConnection(keyword: $keyword, size: 0, aggregations: [TOTAL]) {\n    counts {\n      total\n    }\n    id\n  }\n}\n"
   }
 };
 })();

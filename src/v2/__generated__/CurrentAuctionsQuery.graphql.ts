@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -62,38 +63,34 @@ fragment CurrentAuctions_viewer_2HEEH6 on Viewer {
 */
 
 const node: ConcreteRequest = (function(){
-var v0 = [
-  {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "first",
-    "type": "Int!"
-  },
-  {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "after",
-    "type": "String"
-  }
-],
+var v0 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "after"
+},
 v1 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "first"
+},
+v2 = {
   "kind": "Variable",
   "name": "after",
   "variableName": "after"
 },
-v2 = {
+v3 = {
   "kind": "Variable",
   "name": "first",
   "variableName": "first"
 },
-v3 = [
-  (v1/*: any*/),
+v4 = [
+  (v2/*: any*/),
   {
     "kind": "Literal",
     "name": "auctionState",
     "value": "OPEN"
   },
-  (v2/*: any*/),
+  (v3/*: any*/),
   {
     "kind": "Literal",
     "name": "live",
@@ -112,7 +109,10 @@ v3 = [
 ];
 return {
   "fragment": {
-    "argumentDefinitions": (v0/*: any*/),
+    "argumentDefinitions": [
+      (v0/*: any*/),
+      (v1/*: any*/)
+    ],
     "kind": "Fragment",
     "metadata": null,
     "name": "CurrentAuctionsQuery",
@@ -127,8 +127,8 @@ return {
         "selections": [
           {
             "args": [
-              (v1/*: any*/),
-              (v2/*: any*/)
+              (v2/*: any*/),
+              (v3/*: any*/)
             ],
             "kind": "FragmentSpread",
             "name": "CurrentAuctions_viewer"
@@ -137,11 +137,15 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": (v0/*: any*/),
+    "argumentDefinitions": [
+      (v1/*: any*/),
+      (v0/*: any*/)
+    ],
     "kind": "Operation",
     "name": "CurrentAuctionsQuery",
     "selections": [
@@ -155,7 +159,7 @@ return {
         "selections": [
           {
             "alias": null,
-            "args": (v3/*: any*/),
+            "args": (v4/*: any*/),
             "concreteType": "SaleConnection",
             "kind": "LinkedField",
             "name": "salesConnection",
@@ -290,7 +294,7 @@ return {
           },
           {
             "alias": null,
-            "args": (v3/*: any*/),
+            "args": (v4/*: any*/),
             "filters": [
               "live",
               "published",
@@ -308,6 +312,7 @@ return {
     ]
   },
   "params": {
+    "cacheID": "f1b1076f7131edfe46161a582a72620f",
     "id": null,
     "metadata": {},
     "name": "CurrentAuctionsQuery",

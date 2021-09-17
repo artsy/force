@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -100,6 +101,7 @@ fragment ShowsFeaturedShow_show on Show {
       id
     }
     ... on Node {
+      __isNode: __typename
       id
     }
   }
@@ -133,8 +135,7 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "slug",
-    "type": "String!"
+    "name": "slug"
   }
 ],
 v1 = [
@@ -216,10 +217,7 @@ v7 = [
     "storageKey": null
   }
 ],
-v8 = [
-  (v3/*: any*/)
-],
-v9 = {
+v8 = {
   "alias": null,
   "args": null,
   "concreteType": "ShowEdge",
@@ -373,16 +371,30 @@ v9 = {
               "name": "__typename",
               "storageKey": null
             },
-            (v6/*: any*/),
             {
               "kind": "InlineFragment",
-              "selections": (v8/*: any*/),
-              "type": "Partner"
+              "selections": [
+                (v3/*: any*/)
+              ],
+              "type": "Partner",
+              "abstractKey": null
             },
             {
               "kind": "InlineFragment",
-              "selections": (v8/*: any*/),
-              "type": "ExternalPartner"
+              "selections": [
+                (v3/*: any*/),
+                (v6/*: any*/)
+              ],
+              "type": "ExternalPartner",
+              "abstractKey": null
+            },
+            {
+              "kind": "InlineFragment",
+              "selections": [
+                (v6/*: any*/)
+              ],
+              "type": "Node",
+              "abstractKey": "__isNode"
             }
           ],
           "storageKey": null
@@ -393,8 +405,8 @@ v9 = {
   ],
   "storageKey": null
 },
-v10 = [
-  (v9/*: any*/)
+v9 = [
+  (v8/*: any*/)
 ];
 return {
   "fragment": {
@@ -436,7 +448,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -504,7 +517,7 @@ return {
             "kind": "LinkedField",
             "name": "showsConnection",
             "plural": false,
-            "selections": (v10/*: any*/),
+            "selections": (v9/*: any*/),
             "storageKey": "showsConnection(first:18,status:\"UPCOMING\")"
           },
           {
@@ -529,7 +542,7 @@ return {
                 "name": "totalCount",
                 "storageKey": null
               },
-              (v9/*: any*/)
+              (v8/*: any*/)
             ],
             "storageKey": "showsConnection(first:18,status:\"CURRENT\")"
           },
@@ -547,7 +560,7 @@ return {
             "kind": "LinkedField",
             "name": "showsConnection",
             "plural": false,
-            "selections": (v10/*: any*/),
+            "selections": (v9/*: any*/),
             "storageKey": "showsConnection(first:18,status:\"CLOSED\")"
           }
         ],
@@ -556,11 +569,12 @@ return {
     ]
   },
   "params": {
+    "cacheID": "3be525b807486ab4dbca9cad0828deb0",
     "id": null,
     "metadata": {},
     "name": "showsRoutes_ShowsCityQuery",
     "operationKind": "query",
-    "text": "query showsRoutes_ShowsCityQuery(\n  $slug: String!\n) {\n  viewer {\n    ...ShowsCity_viewer\n  }\n  city(slug: $slug) {\n    ...ShowsCity_city\n  }\n}\n\nfragment ShowsCity_city on City {\n  name\n  upcomingShows: showsConnection(first: 18, status: UPCOMING) {\n    edges {\n      node {\n        internalID\n        startAt\n        ...ShowsFeaturedShow_show\n        id\n      }\n    }\n  }\n  currentShows: showsConnection(first: 18, status: CURRENT) {\n    totalCount\n    edges {\n      node {\n        internalID\n        ...ShowsFeaturedShow_show\n        id\n      }\n    }\n  }\n  pastShows: showsConnection(first: 18, status: CLOSED) {\n    edges {\n      node {\n        internalID\n        ...ShowsFeaturedShow_show\n        id\n      }\n    }\n  }\n}\n\nfragment ShowsCity_viewer on Viewer {\n  ...ShowsHeader_viewer\n}\n\nfragment ShowsFeaturedShow_show on Show {\n  ...ShowsShowDates_show\n  id\n  name\n  href\n  coverImage {\n    title\n    large: cropped(width: 910, height: 683) {\n      width\n      height\n      src\n      srcSet\n    }\n    small: cropped(width: 600, height: 450) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on ExternalPartner {\n      name\n      id\n    }\n    ... on Node {\n      id\n    }\n  }\n}\n\nfragment ShowsHeader_viewer on Viewer {\n  allCities: cities {\n    text: name\n    value: slug\n  }\n  featuredCities: cities(featured: true) {\n    text: name\n    value: slug\n  }\n}\n\nfragment ShowsShowDates_show on Show {\n  startAt\n  endAt\n  formattedStartAt: startAt(format: \"MMM D\")\n  formattedEndAt: endAt(format: \"MMM D\")\n  location {\n    city\n    id\n  }\n}\n"
+    "text": "query showsRoutes_ShowsCityQuery(\n  $slug: String!\n) {\n  viewer {\n    ...ShowsCity_viewer\n  }\n  city(slug: $slug) {\n    ...ShowsCity_city\n  }\n}\n\nfragment ShowsCity_city on City {\n  name\n  upcomingShows: showsConnection(first: 18, status: UPCOMING) {\n    edges {\n      node {\n        internalID\n        startAt\n        ...ShowsFeaturedShow_show\n        id\n      }\n    }\n  }\n  currentShows: showsConnection(first: 18, status: CURRENT) {\n    totalCount\n    edges {\n      node {\n        internalID\n        ...ShowsFeaturedShow_show\n        id\n      }\n    }\n  }\n  pastShows: showsConnection(first: 18, status: CLOSED) {\n    edges {\n      node {\n        internalID\n        ...ShowsFeaturedShow_show\n        id\n      }\n    }\n  }\n}\n\nfragment ShowsCity_viewer on Viewer {\n  ...ShowsHeader_viewer\n}\n\nfragment ShowsFeaturedShow_show on Show {\n  ...ShowsShowDates_show\n  id\n  name\n  href\n  coverImage {\n    title\n    large: cropped(width: 910, height: 683) {\n      width\n      height\n      src\n      srcSet\n    }\n    small: cropped(width: 600, height: 450) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on ExternalPartner {\n      name\n      id\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n  }\n}\n\nfragment ShowsHeader_viewer on Viewer {\n  allCities: cities {\n    text: name\n    value: slug\n  }\n  featuredCities: cities(featured: true) {\n    text: name\n    value: slug\n  }\n}\n\nfragment ShowsShowDates_show on Show {\n  startAt\n  endAt\n  formattedStartAt: startAt(format: \"MMM D\")\n  formattedEndAt: endAt(format: \"MMM D\")\n  location {\n    city\n    id\n  }\n}\n"
   }
 };
 })();

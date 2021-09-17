@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -88,7 +89,8 @@ return {
         "storageKey": "fairOrganizer(id:\"the-armory-show\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -241,6 +243,7 @@ return {
     ]
   },
   "params": {
+    "cacheID": "7386bdfb7dc7b35a3ec13a67aae86838",
     "id": null,
     "metadata": {},
     "name": "FairOrganizerPastEventsRail_Test_Query",

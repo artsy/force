@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -65,7 +66,8 @@ return {
         "storageKey": "sale(id:\"example\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -126,6 +128,7 @@ return {
     ]
   },
   "params": {
+    "cacheID": "a68ed85b846d0425622c52593e65d909",
     "id": null,
     "metadata": {},
     "name": "AuctionBuyersPremiumDialog_Test_Query",

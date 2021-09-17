@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 export type PricingTransparencyQueryVariables = {
@@ -58,41 +59,36 @@ query PricingTransparencyQuery(
 */
 
 const node: ConcreteRequest = (function(){
-var v0 = [
-  {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "saleId",
-    "type": "String!"
-  },
-  {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "artworkId",
-    "type": "String!"
-  },
-  {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "bidAmountMinor",
-    "type": "Int!"
-  }
-],
-v1 = [
+var v0 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "artworkId"
+},
+v1 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "bidAmountMinor"
+},
+v2 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "saleId"
+},
+v3 = [
   {
     "kind": "Variable",
     "name": "id",
     "variableName": "artworkId"
   }
 ],
-v2 = [
+v4 = [
   {
     "kind": "Variable",
     "name": "saleID",
     "variableName": "saleId"
   }
 ],
-v3 = [
+v5 = [
   {
     "alias": null,
     "args": null,
@@ -101,7 +97,7 @@ v3 = [
     "storageKey": null
   }
 ],
-v4 = {
+v6 = {
   "alias": null,
   "args": [
     {
@@ -122,7 +118,7 @@ v4 = {
       "kind": "LinkedField",
       "name": "bidAmount",
       "plural": false,
-      "selections": (v3/*: any*/),
+      "selections": (v5/*: any*/),
       "storageKey": null
     },
     {
@@ -132,7 +128,7 @@ v4 = {
       "kind": "LinkedField",
       "name": "buyersPremium",
       "plural": false,
-      "selections": (v3/*: any*/),
+      "selections": (v5/*: any*/),
       "storageKey": null
     },
     {
@@ -142,13 +138,13 @@ v4 = {
       "kind": "LinkedField",
       "name": "subtotal",
       "plural": false,
-      "selections": (v3/*: any*/),
+      "selections": (v5/*: any*/),
       "storageKey": null
     }
   ],
   "storageKey": null
 },
-v5 = {
+v7 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -157,14 +153,18 @@ v5 = {
 };
 return {
   "fragment": {
-    "argumentDefinitions": (v0/*: any*/),
+    "argumentDefinitions": [
+      (v0/*: any*/),
+      (v1/*: any*/),
+      (v2/*: any*/)
+    ],
     "kind": "Fragment",
     "metadata": null,
     "name": "PricingTransparencyQuery",
     "selections": [
       {
         "alias": null,
-        "args": (v1/*: any*/),
+        "args": (v3/*: any*/),
         "concreteType": "Artwork",
         "kind": "LinkedField",
         "name": "artwork",
@@ -172,13 +172,13 @@ return {
         "selections": [
           {
             "alias": null,
-            "args": (v2/*: any*/),
+            "args": (v4/*: any*/),
             "concreteType": "SaleArtwork",
             "kind": "LinkedField",
             "name": "saleArtwork",
             "plural": false,
             "selections": [
-              (v4/*: any*/)
+              (v6/*: any*/)
             ],
             "storageKey": null
           }
@@ -186,17 +186,22 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": (v0/*: any*/),
+    "argumentDefinitions": [
+      (v2/*: any*/),
+      (v0/*: any*/),
+      (v1/*: any*/)
+    ],
     "kind": "Operation",
     "name": "PricingTransparencyQuery",
     "selections": [
       {
         "alias": null,
-        "args": (v1/*: any*/),
+        "args": (v3/*: any*/),
         "concreteType": "Artwork",
         "kind": "LinkedField",
         "name": "artwork",
@@ -204,24 +209,25 @@ return {
         "selections": [
           {
             "alias": null,
-            "args": (v2/*: any*/),
+            "args": (v4/*: any*/),
             "concreteType": "SaleArtwork",
             "kind": "LinkedField",
             "name": "saleArtwork",
             "plural": false,
             "selections": [
-              (v4/*: any*/),
-              (v5/*: any*/)
+              (v6/*: any*/),
+              (v7/*: any*/)
             ],
             "storageKey": null
           },
-          (v5/*: any*/)
+          (v7/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
+    "cacheID": "32ac9984618e63cde9cfe54115b5523e",
     "id": null,
     "metadata": {},
     "name": "PricingTransparencyQuery",

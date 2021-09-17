@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -44,8 +45,7 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "id",
-    "type": "String!"
+    "name": "id"
   }
 ],
 v1 = [
@@ -86,7 +86,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -149,6 +150,7 @@ return {
     ]
   },
   "params": {
+    "cacheID": "76c259741d94ef5c3baeb0160f91cf3a",
     "id": null,
     "metadata": {},
     "name": "FairOrganizerFollowButton_Test_Query",

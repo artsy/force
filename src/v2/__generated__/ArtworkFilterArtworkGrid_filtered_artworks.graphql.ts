@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -113,7 +114,8 @@ return {
       "name": "ArtworkGrid_artworks"
     }
   ],
-  "type": "FilterArtworksConnection"
+  "type": "FilterArtworksConnection",
+  "abstractKey": null
 };
 })();
 (node as any).hash = '04cd49aefae4484840f678821ea905e1';

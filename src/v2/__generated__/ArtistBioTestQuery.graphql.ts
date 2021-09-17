@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -16,7 +17,7 @@ export type ArtistBioTestQueryRawResponse = {
             readonly partnerID: string | null;
             readonly text: string | null;
         }) | null;
-        readonly id: string | null;
+        readonly id: string;
     }) | null;
 };
 export type ArtistBioTestQuery = {
@@ -76,7 +77,8 @@ return {
         "storageKey": "artist(id:\"unused\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -148,6 +150,7 @@ return {
     ]
   },
   "params": {
+    "cacheID": "05ebe8eb11518db5711bac9b45daaf90",
     "id": null,
     "metadata": {},
     "name": "ArtistBioTestQuery",

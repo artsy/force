@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -30,7 +31,7 @@ export type FollowArtistPopover_Test_QueryRawResponse = {
                 }) | null> | null;
             }) | null;
         }) | null;
-        readonly id: string | null;
+        readonly id: string;
     }) | null;
 };
 export type FollowArtistPopover_Test_Query = {
@@ -82,8 +83,7 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "artistID",
-    "type": "String!"
+    "name": "artistID"
   }
 ],
 v1 = [
@@ -124,7 +124,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -264,6 +265,7 @@ return {
     ]
   },
   "params": {
+    "cacheID": "02a44b171ccaae157487cd93f020d71d",
     "id": null,
     "metadata": {},
     "name": "FollowArtistPopover_Test_Query",

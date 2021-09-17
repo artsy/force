@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 export type IntendedState = "ACCEPTED" | "REJECTED" | "REVIEW" | "%future added value";
@@ -46,8 +47,7 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "input",
-    "type": "CreateOfferResponseMutationInput!"
+    "name": "input"
   }
 ],
 v1 = [
@@ -95,7 +95,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Mutation"
+    "type": "Mutation",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -136,6 +137,7 @@ return {
     ]
   },
   "params": {
+    "cacheID": "7dce3397285769fd207b8601337f9d37",
     "id": null,
     "metadata": {},
     "name": "CreateOfferResponseMutation",

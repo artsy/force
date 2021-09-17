@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 export type EnableSecondFactorInput = {
@@ -34,17 +35,13 @@ export type EnableSecondFactorMutationResponse = {
 export type EnableSecondFactorMutationRawResponse = {
     readonly enableSecondFactor: ({
         readonly secondFactorOrErrors: {
-            readonly __typename: "SmsSecondFactor";
-        } | {
-            readonly __typename: "AppSecondFactor";
-        } | {
             readonly __typename: "Errors";
             readonly errors: ReadonlyArray<{
                 readonly message: string;
                 readonly code: string;
             }>;
         } | {
-            readonly __typename: string | null;
+            readonly __typename: string;
         };
         readonly recoveryCodes: ReadonlyArray<string> | null;
     }) | null;
@@ -88,8 +85,7 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "input",
-    "type": "EnableSecondFactorInput!"
+    "name": "input"
   }
 ],
 v1 = [
@@ -110,48 +106,31 @@ v3 = [
   (v2/*: any*/)
 ],
 v4 = {
-  "kind": "InlineFragment",
-  "selections": (v3/*: any*/),
-  "type": "SmsSecondFactor"
-},
-v5 = {
-  "kind": "InlineFragment",
-  "selections": (v3/*: any*/),
-  "type": "AppSecondFactor"
-},
-v6 = {
-  "kind": "InlineFragment",
+  "alias": null,
+  "args": null,
+  "concreteType": "Error",
+  "kind": "LinkedField",
+  "name": "errors",
+  "plural": true,
   "selections": [
-    (v2/*: any*/),
     {
       "alias": null,
       "args": null,
-      "concreteType": "Error",
-      "kind": "LinkedField",
-      "name": "errors",
-      "plural": true,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "message",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "code",
-          "storageKey": null
-        }
-      ],
+      "kind": "ScalarField",
+      "name": "message",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "code",
       "storageKey": null
     }
   ],
-  "type": "Errors"
+  "storageKey": null
 },
-v7 = {
+v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -181,18 +160,37 @@ return {
             "name": "secondFactorOrErrors",
             "plural": false,
             "selections": [
-              (v4/*: any*/),
-              (v5/*: any*/),
-              (v6/*: any*/)
+              {
+                "kind": "InlineFragment",
+                "selections": (v3/*: any*/),
+                "type": "SmsSecondFactor",
+                "abstractKey": null
+              },
+              {
+                "kind": "InlineFragment",
+                "selections": (v3/*: any*/),
+                "type": "AppSecondFactor",
+                "abstractKey": null
+              },
+              {
+                "kind": "InlineFragment",
+                "selections": [
+                  (v2/*: any*/),
+                  (v4/*: any*/)
+                ],
+                "type": "Errors",
+                "abstractKey": null
+              }
             ],
             "storageKey": null
           },
-          (v7/*: any*/)
+          (v5/*: any*/)
         ],
         "storageKey": null
       }
     ],
-    "type": "Mutation"
+    "type": "Mutation",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -217,19 +215,25 @@ return {
             "plural": false,
             "selections": [
               (v2/*: any*/),
-              (v4/*: any*/),
-              (v5/*: any*/),
-              (v6/*: any*/)
+              {
+                "kind": "InlineFragment",
+                "selections": [
+                  (v4/*: any*/)
+                ],
+                "type": "Errors",
+                "abstractKey": null
+              }
             ],
             "storageKey": null
           },
-          (v7/*: any*/)
+          (v5/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
+    "cacheID": "4a6cdc9373764132ffd1abb209029d4b",
     "id": null,
     "metadata": {},
     "name": "EnableSecondFactorMutation",

@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -22,7 +23,7 @@ export type FairSubApp_QueryRawResponse = {
         readonly id: string;
         readonly profile: ({
             readonly __typename: "Profile";
-            readonly id: string | null;
+            readonly id: string;
         }) | null;
     }) | null;
 };
@@ -70,8 +71,7 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "slug",
-    "type": "String!"
+    "name": "slug"
   }
 ],
 v1 = [
@@ -112,7 +112,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -199,6 +200,7 @@ return {
     ]
   },
   "params": {
+    "cacheID": "19fd33aa842c238e44b218c6b8939b20",
     "id": null,
     "metadata": {},
     "name": "FairSubApp_Query",

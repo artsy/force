@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -24,7 +25,7 @@ export type ViewingRoomStatementRoute_Test_QueryRawResponse = {
                     readonly title: string | null;
                     readonly date: string | null;
                     readonly saleMessage: string | null;
-                    readonly id: string | null;
+                    readonly id: string;
                 }) | null;
             }) | null> | null;
         }) | null;
@@ -120,8 +121,7 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "slug",
-    "type": "ID!"
+    "name": "slug"
   }
 ],
 v1 = [
@@ -176,7 +176,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -346,6 +347,7 @@ return {
     ]
   },
   "params": {
+    "cacheID": "db0ad30cf316172cee2712baf97c888f",
     "id": null,
     "metadata": {},
     "name": "ViewingRoomStatementRoute_Test_Query",

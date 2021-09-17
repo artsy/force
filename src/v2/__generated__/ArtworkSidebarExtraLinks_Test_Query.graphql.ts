@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -18,18 +19,18 @@ export type ArtworkSidebarExtraLinks_Test_QueryRawResponse = {
         readonly is_inquireable: boolean | null;
         readonly artists: ReadonlyArray<({
             readonly is_consignable: boolean | null;
-            readonly id: string | null;
+            readonly id: string;
         }) | null> | null;
         readonly sale: ({
             readonly is_closed: boolean | null;
             readonly isBenefit: boolean | null;
             readonly partner: ({
                 readonly name: string | null;
-                readonly id: string | null;
+                readonly id: string;
             }) | null;
-            readonly id: string | null;
+            readonly id: string;
         }) | null;
-        readonly id: string | null;
+        readonly id: string;
     }) | null;
 };
 export type ArtworkSidebarExtraLinks_Test_Query = {
@@ -109,7 +110,8 @@ return {
         "storageKey": "artwork(id:\"josef-albers-homage-to-the-square-85\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -231,6 +233,7 @@ return {
     ]
   },
   "params": {
+    "cacheID": "2f3d7bb557d7f15752b4ae615d0e6f0f",
     "id": null,
     "metadata": {},
     "name": "ArtworkSidebarExtraLinks_Test_Query",

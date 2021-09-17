@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -197,7 +198,8 @@ return {
         "storageKey": "partner(id:\"white-cube\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -267,6 +269,7 @@ return {
     ]
   },
   "params": {
+    "cacheID": "41e928d4fef094b1010b34b3a3c6f098",
     "id": null,
     "metadata": {},
     "name": "ViewingRooms_Test_Query",

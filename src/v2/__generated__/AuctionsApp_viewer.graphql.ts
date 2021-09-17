@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -56,7 +57,8 @@ const node: ReaderFragment = {
       "name": "StandoutLots_viewer"
     }
   ],
-  "type": "Viewer"
+  "type": "Viewer",
+  "abstractKey": null
 };
 (node as any).hash = '45cba12260871ce91aea116e78af67db';
 export default node;

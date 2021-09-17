@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -51,9 +52,9 @@ export type auctionRoutes_ConfirmBidQueryRawResponse = {
                 readonly registrationStatus: ({
                     readonly internalID: string;
                     readonly qualifiedForBidding: boolean | null;
-                    readonly id: string | null;
+                    readonly id: string;
                 }) | null;
-                readonly id: string | null;
+                readonly id: string;
             }) | null;
             readonly counts: ({
                 readonly bidderPositions: number | null;
@@ -68,18 +69,18 @@ export type auctionRoutes_ConfirmBidQueryRawResponse = {
                 readonly cents: number | null;
                 readonly display: string | null;
             }) | null> | null;
-            readonly id: string | null;
+            readonly id: string;
         }) | null;
         readonly date: string | null;
         readonly title: string | null;
         readonly imageUrl: string | null;
         readonly artistNames: string | null;
-        readonly id: string | null;
+        readonly id: string;
     }) | null;
     readonly me: ({
         readonly internalID: string;
         readonly hasQualifiedCreditCards: boolean | null;
-        readonly id: string | null;
+        readonly id: string;
     }) | null;
 };
 export type auctionRoutes_ConfirmBidQuery = {
@@ -179,98 +180,94 @@ fragment LotInfo_saleArtwork on SaleArtwork {
 */
 
 const node: ConcreteRequest = (function(){
-var v0 = [
-  {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "saleID",
-    "type": "String!"
-  },
-  {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "artworkID",
-    "type": "String!"
-  }
-],
-v1 = [
+var v0 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "artworkID"
+},
+v1 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "saleID"
+},
+v2 = [
   {
     "kind": "Variable",
     "name": "id",
     "variableName": "artworkID"
   }
 ],
-v2 = {
+v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "internalID",
   "storageKey": null
 },
-v3 = {
+v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "slug",
   "storageKey": null
 },
-v4 = [
+v5 = [
   {
     "kind": "Variable",
     "name": "saleID",
     "variableName": "saleID"
   }
 ],
-v5 = {
+v6 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "name",
   "storageKey": null
 },
-v6 = {
+v7 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "isClosed",
   "storageKey": null
 },
-v7 = {
+v8 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "isRegistrationClosed",
   "storageKey": null
 },
-v8 = {
+v9 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "qualifiedForBidding",
   "storageKey": null
 },
-v9 = {
+v10 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "hasQualifiedCreditCards",
   "storageKey": null
 },
-v10 = {
+v11 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v11 = {
+v12 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "cents",
   "storageKey": null
 },
-v12 = {
+v13 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -279,31 +276,34 @@ v12 = {
 };
 return {
   "fragment": {
-    "argumentDefinitions": (v0/*: any*/),
+    "argumentDefinitions": [
+      (v0/*: any*/),
+      (v1/*: any*/)
+    ],
     "kind": "Fragment",
     "metadata": null,
     "name": "auctionRoutes_ConfirmBidQuery",
     "selections": [
       {
         "alias": null,
-        "args": (v1/*: any*/),
+        "args": (v2/*: any*/),
         "concreteType": "Artwork",
         "kind": "LinkedField",
         "name": "artwork",
         "plural": false,
         "selections": [
-          (v2/*: any*/),
           (v3/*: any*/),
+          (v4/*: any*/),
           {
             "alias": null,
-            "args": (v4/*: any*/),
+            "args": (v5/*: any*/),
             "concreteType": "SaleArtwork",
             "kind": "LinkedField",
             "name": "saleArtwork",
             "plural": false,
             "selections": [
-              (v2/*: any*/),
               (v3/*: any*/),
+              (v4/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -312,11 +312,11 @@ return {
                 "name": "sale",
                 "plural": false,
                 "selections": [
-                  (v2/*: any*/),
                   (v3/*: any*/),
-                  (v5/*: any*/),
+                  (v4/*: any*/),
                   (v6/*: any*/),
                   (v7/*: any*/),
+                  (v8/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -325,8 +325,8 @@ return {
                     "name": "registrationStatus",
                     "plural": false,
                     "selections": [
-                      (v2/*: any*/),
-                      (v8/*: any*/)
+                      (v3/*: any*/),
+                      (v9/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -362,8 +362,8 @@ return {
         "name": "me",
         "plural": false,
         "selections": [
-          (v2/*: any*/),
-          (v9/*: any*/),
+          (v3/*: any*/),
+          (v10/*: any*/),
           {
             "args": null,
             "kind": "FragmentSpread",
@@ -373,34 +373,38 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": (v0/*: any*/),
+    "argumentDefinitions": [
+      (v1/*: any*/),
+      (v0/*: any*/)
+    ],
     "kind": "Operation",
     "name": "auctionRoutes_ConfirmBidQuery",
     "selections": [
       {
         "alias": null,
-        "args": (v1/*: any*/),
+        "args": (v2/*: any*/),
         "concreteType": "Artwork",
         "kind": "LinkedField",
         "name": "artwork",
         "plural": false,
         "selections": [
-          (v2/*: any*/),
           (v3/*: any*/),
+          (v4/*: any*/),
           {
             "alias": null,
-            "args": (v4/*: any*/),
+            "args": (v5/*: any*/),
             "concreteType": "SaleArtwork",
             "kind": "LinkedField",
             "name": "saleArtwork",
             "plural": false,
             "selections": [
-              (v2/*: any*/),
               (v3/*: any*/),
+              (v4/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -409,11 +413,11 @@ return {
                 "name": "sale",
                 "plural": false,
                 "selections": [
-                  (v2/*: any*/),
                   (v3/*: any*/),
-                  (v5/*: any*/),
+                  (v4/*: any*/),
                   (v6/*: any*/),
                   (v7/*: any*/),
+                  (v8/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -422,13 +426,13 @@ return {
                     "name": "registrationStatus",
                     "plural": false,
                     "selections": [
-                      (v2/*: any*/),
-                      (v8/*: any*/),
-                      (v10/*: any*/)
+                      (v3/*: any*/),
+                      (v9/*: any*/),
+                      (v11/*: any*/)
                     ],
                     "storageKey": null
                   },
-                  (v10/*: any*/)
+                  (v11/*: any*/)
                 ],
                 "storageKey": null
               },
@@ -472,8 +476,8 @@ return {
                     "name": "amount",
                     "storageKey": null
                   },
-                  (v11/*: any*/),
-                  (v12/*: any*/)
+                  (v12/*: any*/),
+                  (v13/*: any*/)
                 ],
                 "storageKey": null
               },
@@ -491,12 +495,12 @@ return {
                 "name": "increments",
                 "plural": true,
                 "selections": [
-                  (v11/*: any*/),
-                  (v12/*: any*/)
+                  (v12/*: any*/),
+                  (v13/*: any*/)
                 ],
                 "storageKey": "increments(useMyMaxBid:true)"
               },
-              (v10/*: any*/)
+              (v11/*: any*/)
             ],
             "storageKey": null
           },
@@ -528,7 +532,7 @@ return {
             "name": "artistNames",
             "storageKey": null
           },
-          (v10/*: any*/)
+          (v11/*: any*/)
         ],
         "storageKey": null
       },
@@ -540,15 +544,16 @@ return {
         "name": "me",
         "plural": false,
         "selections": [
-          (v2/*: any*/),
-          (v9/*: any*/),
-          (v10/*: any*/)
+          (v3/*: any*/),
+          (v10/*: any*/),
+          (v11/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
+    "cacheID": "28a1a259429ad6f02dfc8fff7a1e1fd7",
     "id": null,
     "metadata": {},
     "name": "auctionRoutes_ConfirmBidQuery",

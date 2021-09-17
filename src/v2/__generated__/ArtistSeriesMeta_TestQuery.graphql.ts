@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -18,7 +19,7 @@ export type ArtistSeriesMeta_TestQueryRawResponse = {
         readonly slug: string;
         readonly artists: ReadonlyArray<({
             readonly name: string | null;
-            readonly id: string | null;
+            readonly id: string;
         }) | null> | null;
     }) | null;
 };
@@ -55,8 +56,7 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "slug",
-    "type": "ID!"
+    "name": "slug"
   }
 ],
 v1 = [
@@ -90,7 +90,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -164,6 +165,7 @@ return {
     ]
   },
   "params": {
+    "cacheID": "868f3d4385f11ae2bdfc73c06bbae975",
     "id": null,
     "metadata": {},
     "name": "ArtistSeriesMeta_TestQuery",

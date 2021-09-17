@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -46,27 +47,22 @@ fragment CollectionsRail_collections on MarketingCollection {
 */
 
 const node: ConcreteRequest = (function(){
-var v0 = [
-  {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "showOnEditorial",
-    "type": "Boolean"
-  },
-  {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "size",
-    "type": "Int"
-  },
-  {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "randomizationSeed",
-    "type": "String"
-  }
-],
-v1 = [
+var v0 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "randomizationSeed"
+},
+v1 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "showOnEditorial"
+},
+v2 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "size"
+},
+v3 = [
   {
     "kind": "Variable",
     "name": "randomizationSeed",
@@ -85,14 +81,18 @@ v1 = [
 ];
 return {
   "fragment": {
-    "argumentDefinitions": (v0/*: any*/),
+    "argumentDefinitions": [
+      (v0/*: any*/),
+      (v1/*: any*/),
+      (v2/*: any*/)
+    ],
     "kind": "Fragment",
     "metadata": null,
     "name": "CollectionsRailQuery",
     "selections": [
       {
         "alias": "collections",
-        "args": (v1/*: any*/),
+        "args": (v3/*: any*/),
         "concreteType": "MarketingCollection",
         "kind": "LinkedField",
         "name": "marketingCollections",
@@ -107,17 +107,22 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": (v0/*: any*/),
+    "argumentDefinitions": [
+      (v1/*: any*/),
+      (v2/*: any*/),
+      (v0/*: any*/)
+    ],
     "kind": "Operation",
     "name": "CollectionsRailQuery",
     "selections": [
       {
         "alias": "collections",
-        "args": (v1/*: any*/),
+        "args": (v3/*: any*/),
         "concreteType": "MarketingCollection",
         "kind": "LinkedField",
         "name": "marketingCollections",
@@ -171,6 +176,7 @@ return {
     ]
   },
   "params": {
+    "cacheID": "78be7db831454eb37ba846b1514d01ca",
     "id": null,
     "metadata": {},
     "name": "CollectionsRailQuery",

@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -40,6 +41,7 @@ fragment ShowContextualLink_show on Show {
       href
     }
     ... on Node {
+      __isNode: __typename
       id
     }
     ... on ExternalPartner {
@@ -77,7 +79,10 @@ v3 = {
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
-};
+},
+v4 = [
+  (v3/*: any*/)
+];
 return {
   "fragment": {
     "argumentDefinitions": [],
@@ -102,7 +107,8 @@ return {
         "storageKey": "show(id:\"catty-show\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -161,7 +167,6 @@ return {
                 "name": "__typename",
                 "storageKey": null
               },
-              (v3/*: any*/),
               {
                 "kind": "InlineFragment",
                 "selections": [
@@ -175,7 +180,20 @@ return {
                   (v2/*: any*/),
                   (v1/*: any*/)
                 ],
-                "type": "Partner"
+                "type": "Partner",
+                "abstractKey": null
+              },
+              {
+                "kind": "InlineFragment",
+                "selections": (v4/*: any*/),
+                "type": "Node",
+                "abstractKey": "__isNode"
+              },
+              {
+                "kind": "InlineFragment",
+                "selections": (v4/*: any*/),
+                "type": "ExternalPartner",
+                "abstractKey": null
               }
             ],
             "storageKey": null
@@ -187,11 +205,12 @@ return {
     ]
   },
   "params": {
+    "cacheID": "974ac8587680e7ed44f89a313ab25e94",
     "id": null,
     "metadata": {},
     "name": "ShowContextualLink_Test_Query",
     "operationKind": "query",
-    "text": "query ShowContextualLink_Test_Query {\n  show(id: \"catty-show\") {\n    ...ShowContextualLink_show\n    id\n  }\n}\n\nfragment ShowContextualLink_show on Show {\n  isFairBooth\n  fair {\n    href\n    isActive\n    name\n    id\n  }\n  partner {\n    __typename\n    ... on Partner {\n      isLinkable\n      name\n      href\n    }\n    ... on Node {\n      id\n    }\n    ... on ExternalPartner {\n      id\n    }\n  }\n}\n"
+    "text": "query ShowContextualLink_Test_Query {\n  show(id: \"catty-show\") {\n    ...ShowContextualLink_show\n    id\n  }\n}\n\nfragment ShowContextualLink_show on Show {\n  isFairBooth\n  fair {\n    href\n    isActive\n    name\n    id\n  }\n  partner {\n    __typename\n    ... on Partner {\n      isLinkable\n      name\n      href\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on ExternalPartner {\n      id\n    }\n  }\n}\n"
   }
 };
 })();

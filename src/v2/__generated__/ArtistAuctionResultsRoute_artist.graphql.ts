@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -20,38 +21,32 @@ const node: ReaderFragment = {
     {
       "defaultValue": null,
       "kind": "LocalArgument",
-      "name": "organizations",
-      "type": "[String]"
+      "name": "allowEmptyCreatedDates"
     },
     {
       "defaultValue": null,
       "kind": "LocalArgument",
-      "name": "categories",
-      "type": "[String]"
+      "name": "categories"
     },
     {
       "defaultValue": null,
       "kind": "LocalArgument",
-      "name": "sizes",
-      "type": "[ArtworkSizes]"
+      "name": "createdAfterYear"
     },
     {
       "defaultValue": null,
       "kind": "LocalArgument",
-      "name": "createdAfterYear",
-      "type": "Int"
+      "name": "createdBeforeYear"
     },
     {
       "defaultValue": null,
       "kind": "LocalArgument",
-      "name": "createdBeforeYear",
-      "type": "Int"
+      "name": "organizations"
     },
     {
       "defaultValue": null,
       "kind": "LocalArgument",
-      "name": "allowEmptyCreatedDates",
-      "type": "Boolean"
+      "name": "sizes"
     }
   ],
   "kind": "Fragment",
@@ -95,7 +90,8 @@ const node: ReaderFragment = {
       "name": "ArtistAuctionResults_artist"
     }
   ],
-  "type": "Artist"
+  "type": "Artist",
+  "abstractKey": null
 };
 (node as any).hash = '63d57d29adb2cb0ec1c44e80d4e480e9';
 export default node;

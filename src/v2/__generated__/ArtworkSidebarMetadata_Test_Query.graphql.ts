@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -14,25 +15,26 @@ export type ArtworkSidebarMetadata_Test_QueryRawResponse = {
         readonly is_biddable: boolean | null;
         readonly edition_sets: ReadonlyArray<({
             readonly __typename: string;
-            readonly id: string | null;
+            readonly id: string;
         }) | null> | null;
         readonly sale_artwork: ({
             readonly lot_label: string | null;
-            readonly id: string | null;
+            readonly id: string;
         }) | null;
         readonly title: string | null;
         readonly date: string | null;
         readonly medium: string | null;
+        readonly attributionClass: ({
+            readonly shortDescription: string | null;
+            readonly id: string;
+        }) | null;
+        readonly id: string;
+        readonly __isSellable: "Artwork";
         readonly dimensions: ({
             readonly in: string | null;
             readonly cm: string | null;
         }) | null;
         readonly edition_of: string | null;
-        readonly attributionClass: ({
-            readonly shortDescription: string | null;
-            readonly id: string | null;
-        }) | null;
-        readonly id: string | null;
     }) | null;
 };
 export type ArtworkSidebarMetadata_Test_Query = {
@@ -74,6 +76,7 @@ fragment ArtworkSidebarMetadata_artwork on Artwork {
 }
 
 fragment ArtworkSidebarSizeInfo_piece on Sellable {
+  __isSellable: __typename
   dimensions {
     in
     cm
@@ -127,7 +130,8 @@ return {
         "storageKey": "artwork(id:\"josef-albers-homage-to-the-square-85\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -212,38 +216,6 @@ return {
           {
             "alias": null,
             "args": null,
-            "concreteType": "dimensions",
-            "kind": "LinkedField",
-            "name": "dimensions",
-            "plural": false,
-            "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "in",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "cm",
-                "storageKey": null
-              }
-            ],
-            "storageKey": null
-          },
-          {
-            "alias": "edition_of",
-            "args": null,
-            "kind": "ScalarField",
-            "name": "editionOf",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
             "concreteType": "AttributionClass",
             "kind": "LinkedField",
             "name": "attributionClass",
@@ -260,18 +232,58 @@ return {
             ],
             "storageKey": null
           },
-          (v1/*: any*/)
+          (v1/*: any*/),
+          {
+            "kind": "InlineFragment",
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "dimensions",
+                "kind": "LinkedField",
+                "name": "dimensions",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "in",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "cm",
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              },
+              {
+                "alias": "edition_of",
+                "args": null,
+                "kind": "ScalarField",
+                "name": "editionOf",
+                "storageKey": null
+              }
+            ],
+            "type": "Sellable",
+            "abstractKey": "__isSellable"
+          }
         ],
         "storageKey": "artwork(id:\"josef-albers-homage-to-the-square-85\")"
       }
     ]
   },
   "params": {
+    "cacheID": "d0536723808ebb1873a9413c6f66180b",
     "id": null,
     "metadata": {},
     "name": "ArtworkSidebarMetadata_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkSidebarMetadata_Test_Query {\n  artwork(id: \"josef-albers-homage-to-the-square-85\") {\n    ...ArtworkSidebarMetadata_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarClassification_artwork on Artwork {\n  attributionClass {\n    shortDescription\n    id\n  }\n}\n\nfragment ArtworkSidebarMetadata_artwork on Artwork {\n  is_biddable: isBiddable\n  edition_sets: editionSets {\n    __typename\n    id\n  }\n  sale_artwork: saleArtwork {\n    lot_label: lotLabel\n    id\n  }\n  ...ArtworkSidebarTitleInfo_artwork\n  ...ArtworkSidebarSizeInfo_piece\n  ...ArtworkSidebarClassification_artwork\n}\n\nfragment ArtworkSidebarSizeInfo_piece on Sellable {\n  dimensions {\n    in\n    cm\n  }\n  edition_of: editionOf\n}\n\nfragment ArtworkSidebarTitleInfo_artwork on Artwork {\n  title\n  date\n  medium\n}\n"
+    "text": "query ArtworkSidebarMetadata_Test_Query {\n  artwork(id: \"josef-albers-homage-to-the-square-85\") {\n    ...ArtworkSidebarMetadata_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarClassification_artwork on Artwork {\n  attributionClass {\n    shortDescription\n    id\n  }\n}\n\nfragment ArtworkSidebarMetadata_artwork on Artwork {\n  is_biddable: isBiddable\n  edition_sets: editionSets {\n    __typename\n    id\n  }\n  sale_artwork: saleArtwork {\n    lot_label: lotLabel\n    id\n  }\n  ...ArtworkSidebarTitleInfo_artwork\n  ...ArtworkSidebarSizeInfo_piece\n  ...ArtworkSidebarClassification_artwork\n}\n\nfragment ArtworkSidebarSizeInfo_piece on Sellable {\n  __isSellable: __typename\n  dimensions {\n    in\n    cm\n  }\n  edition_of: editionOf\n}\n\nfragment ArtworkSidebarTitleInfo_artwork on Artwork {\n  title\n  date\n  medium\n}\n"
   }
 };
 })();

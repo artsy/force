@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 export type CreditCardInput = {
@@ -57,8 +58,7 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "input",
-    "type": "CreditCardInput!"
+    "name": "input"
   }
 ],
 v1 = [
@@ -97,7 +97,8 @@ v3 = {
       "storageKey": null
     }
   ],
-  "type": "CreditCardMutationFailure"
+  "type": "CreditCardMutationFailure",
+  "abstractKey": null
 };
 return {
   "fragment": {
@@ -138,7 +139,8 @@ return {
                     "storageKey": null
                   }
                 ],
-                "type": "CreditCardMutationSuccess"
+                "type": "CreditCardMutationSuccess",
+                "abstractKey": null
               },
               (v3/*: any*/)
             ],
@@ -148,7 +150,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Mutation"
+    "type": "Mutation",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -202,7 +205,8 @@ return {
                     "storageKey": null
                   }
                 ],
-                "type": "CreditCardMutationSuccess"
+                "type": "CreditCardMutationSuccess",
+                "abstractKey": null
               },
               (v3/*: any*/)
             ],
@@ -214,6 +218,7 @@ return {
     ]
   },
   "params": {
+    "cacheID": "a02d4c0105d5d4af497f3efd79ca8c2c",
     "id": null,
     "metadata": {},
     "name": "createTestEnvCreditCardMutation",

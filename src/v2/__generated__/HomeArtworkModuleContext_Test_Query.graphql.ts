@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -28,6 +29,7 @@ query HomeArtworkModuleContext_Test_Query {
         __typename
         ...HomeArtworkModuleContext_context
         ... on Node {
+          __isNode: __typename
           id
         }
       }
@@ -37,6 +39,7 @@ query HomeArtworkModuleContext_Test_Query {
 }
 
 fragment HomeArtworkModuleContext_context on HomePageArtworkModuleContext {
+  __isHomePageArtworkModuleContext: __typename
   __typename
   ... on Sale {
     href
@@ -91,34 +94,34 @@ var v0 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "id",
-  "storageKey": null
-},
-v1 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
   "name": "href",
   "storageKey": null
 },
-v2 = [
+v1 = [
   {
     "kind": "Literal",
     "name": "format",
     "value": "MMM D"
   }
 ],
-v3 = {
+v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "name",
   "storageKey": null
 },
+v3 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+},
 v4 = [
-  (v3/*: any*/),
-  (v1/*: any*/),
-  (v0/*: any*/)
+  (v2/*: any*/),
+  (v0/*: any*/),
+  (v3/*: any*/)
 ],
 v5 = [
   {
@@ -129,9 +132,9 @@ v5 = [
     "name": "artists",
     "plural": true,
     "selections": [
-      (v1/*: any*/),
-      (v3/*: any*/),
-      (v0/*: any*/)
+      (v0/*: any*/),
+      (v2/*: any*/),
+      (v3/*: any*/)
     ],
     "storageKey": null
   }
@@ -182,7 +185,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -221,39 +225,43 @@ return {
                     "name": "__typename",
                     "storageKey": null
                   },
-                  (v0/*: any*/),
+                  {
+                    "kind": "TypeDiscriminator",
+                    "abstractKey": "__isHomePageArtworkModuleContext"
+                  },
                   {
                     "kind": "InlineFragment",
                     "selections": [
-                      (v1/*: any*/),
+                      (v0/*: any*/),
                       {
                         "alias": null,
-                        "args": (v2/*: any*/),
+                        "args": (v1/*: any*/),
                         "kind": "ScalarField",
                         "name": "liveStartAt",
                         "storageKey": "liveStartAt(format:\"MMM D\")"
                       },
                       {
                         "alias": null,
-                        "args": (v2/*: any*/),
+                        "args": (v1/*: any*/),
                         "kind": "ScalarField",
                         "name": "startAt",
                         "storageKey": "startAt(format:\"MMM D\")"
                       },
                       {
                         "alias": null,
-                        "args": (v2/*: any*/),
+                        "args": (v1/*: any*/),
                         "kind": "ScalarField",
                         "name": "endAt",
                         "storageKey": "endAt(format:\"MMM D\")"
                       }
                     ],
-                    "type": "Sale"
+                    "type": "Sale",
+                    "abstractKey": null
                   },
                   {
                     "kind": "InlineFragment",
                     "selections": [
-                      (v1/*: any*/),
+                      (v0/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -262,14 +270,16 @@ return {
                         "storageKey": null
                       }
                     ],
-                    "type": "Fair"
+                    "type": "Fair",
+                    "abstractKey": null
                   },
                   {
                     "kind": "InlineFragment",
                     "selections": [
-                      (v1/*: any*/)
+                      (v0/*: any*/)
                     ],
-                    "type": "Gene"
+                    "type": "Gene",
+                    "abstractKey": null
                   },
                   {
                     "kind": "InlineFragment",
@@ -295,7 +305,8 @@ return {
                         "storageKey": null
                       }
                     ],
-                    "type": "HomePageRelatedArtistArtworkModule"
+                    "type": "HomePageRelatedArtistArtworkModule",
+                    "abstractKey": null
                   },
                   {
                     "kind": "InlineFragment",
@@ -308,28 +319,39 @@ return {
                         "name": "artist",
                         "plural": false,
                         "selections": [
-                          (v1/*: any*/),
-                          (v0/*: any*/)
+                          (v0/*: any*/),
+                          (v3/*: any*/)
                         ],
                         "storageKey": null
                       }
                     ],
-                    "type": "HomePageFollowedArtistArtworkModule"
+                    "type": "HomePageFollowedArtistArtworkModule",
+                    "abstractKey": null
                   },
                   {
                     "kind": "InlineFragment",
                     "selections": (v5/*: any*/),
-                    "type": "TrendingArtists"
+                    "type": "TrendingArtists",
+                    "abstractKey": null
                   },
                   {
                     "kind": "InlineFragment",
                     "selections": (v5/*: any*/),
-                    "type": "FollowArtists"
+                    "type": "FollowArtists",
+                    "abstractKey": null
+                  },
+                  {
+                    "kind": "InlineFragment",
+                    "selections": [
+                      (v3/*: any*/)
+                    ],
+                    "type": "Node",
+                    "abstractKey": "__isNode"
                   }
                 ],
                 "storageKey": null
               },
-              (v0/*: any*/)
+              (v3/*: any*/)
             ],
             "storageKey": null
           }
@@ -339,11 +361,12 @@ return {
     ]
   },
   "params": {
+    "cacheID": "542f82bef045ee9cae82624333b5f308",
     "id": null,
     "metadata": {},
     "name": "HomeArtworkModuleContext_Test_Query",
     "operationKind": "query",
-    "text": "query HomeArtworkModuleContext_Test_Query {\n  homePage {\n    artworkModules {\n      context {\n        __typename\n        ...HomeArtworkModuleContext_context\n        ... on Node {\n          id\n        }\n      }\n      id\n    }\n  }\n}\n\nfragment HomeArtworkModuleContext_context on HomePageArtworkModuleContext {\n  __typename\n  ... on Sale {\n    href\n    liveStartAt(format: \"MMM D\")\n    startAt(format: \"MMM D\")\n    endAt(format: \"MMM D\")\n  }\n  ... on Fair {\n    href\n    exhibitionPeriod\n  }\n  ... on Gene {\n    href\n  }\n  ... on HomePageRelatedArtistArtworkModule {\n    artist {\n      name\n      href\n      id\n    }\n    basedOn {\n      name\n      href\n      id\n    }\n  }\n  ... on HomePageFollowedArtistArtworkModule {\n    artist {\n      href\n      id\n    }\n  }\n  ... on TrendingArtists {\n    artists {\n      href\n      name\n      id\n    }\n  }\n  ... on FollowArtists {\n    artists {\n      href\n      name\n      id\n    }\n  }\n}\n"
+    "text": "query HomeArtworkModuleContext_Test_Query {\n  homePage {\n    artworkModules {\n      context {\n        __typename\n        ...HomeArtworkModuleContext_context\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n      }\n      id\n    }\n  }\n}\n\nfragment HomeArtworkModuleContext_context on HomePageArtworkModuleContext {\n  __isHomePageArtworkModuleContext: __typename\n  __typename\n  ... on Sale {\n    href\n    liveStartAt(format: \"MMM D\")\n    startAt(format: \"MMM D\")\n    endAt(format: \"MMM D\")\n  }\n  ... on Fair {\n    href\n    exhibitionPeriod\n  }\n  ... on Gene {\n    href\n  }\n  ... on HomePageRelatedArtistArtworkModule {\n    artist {\n      name\n      href\n      id\n    }\n    basedOn {\n      name\n      href\n      id\n    }\n  }\n  ... on HomePageFollowedArtistArtworkModule {\n    artist {\n      href\n      id\n    }\n  }\n  ... on TrendingArtists {\n    artists {\n      href\n      name\n      id\n    }\n  }\n  ... on FollowArtists {\n    artists {\n      href\n      name\n      id\n    }\n  }\n}\n"
   }
 };
 })();

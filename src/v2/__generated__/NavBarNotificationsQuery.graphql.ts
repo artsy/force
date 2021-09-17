@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -97,7 +98,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -296,6 +298,7 @@ return {
     ]
   },
   "params": {
+    "cacheID": "2599d553ba8011fd16a5cc457161b474",
     "id": null,
     "metadata": {},
     "name": "NavBarNotificationsQuery",

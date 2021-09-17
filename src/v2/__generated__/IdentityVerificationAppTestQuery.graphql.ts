@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -17,9 +18,9 @@ export type IdentityVerificationAppTestQueryRawResponse = {
             readonly internalID: string;
             readonly userID: string;
             readonly state: string;
-            readonly id: string | null;
+            readonly id: string;
         }) | null;
-        readonly id: string | null;
+        readonly id: string;
     }) | null;
 };
 export type IdentityVerificationAppTestQuery = {
@@ -96,7 +97,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -154,6 +156,7 @@ return {
     ]
   },
   "params": {
+    "cacheID": "8b65aa859d5eb88e45e38bd744455251",
     "id": null,
     "metadata": {},
     "name": "IdentityVerificationAppTestQuery",

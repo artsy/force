@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -41,7 +42,8 @@ const node: ReaderFragment = {
       "name": "FeatureHeaderFull_feature"
     }
   ],
-  "type": "Feature"
+  "type": "Feature",
+  "abstractKey": null
 };
 (node as any).hash = '410eddfc25f11a9687c26ed516418f0e';
 export default node;

@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -17,23 +18,18 @@ export type PurchaseAppTestQueryRawResponse = {
         readonly orders: ({
             readonly edges: ReadonlyArray<({
                 readonly node: ({
-                    readonly __typename: string | null;
+                    readonly __typename: string;
                     readonly code: string;
+                    readonly __isCommerceOrder: string;
                     readonly internalID: string;
                     readonly state: CommerceOrderStateEnum;
                     readonly mode: CommerceOrderModeEnum | null;
                     readonly requestedFulfillment: ({
-                        readonly __typename: "CommerceShip";
-                    } | {
-                        readonly __typename: "CommercePickup";
-                    } | {
-                        readonly __typename: "CommerceShipArta";
-                    } | {
-                        readonly __typename: string | null;
+                        readonly __typename: string;
                     }) | null;
                     readonly creditCard: ({
                         readonly lastDigits: string;
-                        readonly id: string | null;
+                        readonly id: string;
                     }) | null;
                     readonly buyerTotal: string | null;
                     readonly createdAt: string;
@@ -43,7 +39,7 @@ export type PurchaseAppTestQueryRawResponse = {
                             readonly node: ({
                                 readonly shipment: ({
                                     readonly status: string | null;
-                                    readonly id: string | null;
+                                    readonly id: string;
                                 }) | null;
                                 readonly artwork: ({
                                     readonly slug: string;
@@ -61,9 +57,9 @@ export type PurchaseAppTestQueryRawResponse = {
                                             readonly icon: ({
                                                 readonly url: string | null;
                                             }) | null;
-                                            readonly id: string | null;
+                                            readonly id: string;
                                         }) | null;
-                                        readonly id: string | null;
+                                        readonly id: string;
                                     }) | null;
                                     readonly shippingOrigin: string | null;
                                     readonly internalID: string;
@@ -71,23 +67,23 @@ export type PurchaseAppTestQueryRawResponse = {
                                     readonly artistNames: string | null;
                                     readonly artists: ReadonlyArray<({
                                         readonly slug: string;
-                                        readonly id: string | null;
+                                        readonly id: string;
                                     }) | null> | null;
-                                    readonly id: string | null;
+                                    readonly id: string;
                                 }) | null;
                                 readonly fulfillments: ({
                                     readonly edges: ReadonlyArray<({
                                         readonly node: ({
                                             readonly trackingId: string | null;
-                                            readonly id: string | null;
+                                            readonly id: string;
                                         }) | null;
                                     }) | null> | null;
                                 }) | null;
-                                readonly id: string | null;
+                                readonly id: string;
                             }) | null;
                         }) | null> | null;
                     }) | null;
-                    readonly id: string | null;
+                    readonly id: string;
                 }) | null;
             }) | null> | null;
             readonly pageCursors: ({
@@ -119,7 +115,7 @@ export type PurchaseAppTestQueryRawResponse = {
                 readonly startCursor: string | null;
             };
         }) | null;
-        readonly id: string | null;
+        readonly id: string;
     }) | null;
 };
 export type PurchaseAppTestQuery = {
@@ -139,6 +135,7 @@ query PurchaseAppTestQuery {
 }
 
 fragment OrderRow_order on CommerceOrder {
+  __isCommerceOrder: __typename
   internalID
   code
   state
@@ -282,24 +279,21 @@ v2 = {
   "name": "internalID",
   "storageKey": null
 },
-v3 = [
-  (v1/*: any*/)
-],
-v4 = {
+v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v5 = {
+v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "slug",
   "storageKey": null
 },
-v6 = [
+v5 = [
   {
     "alias": null,
     "args": null,
@@ -346,7 +340,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -412,6 +407,10 @@ return {
                         "name": "code",
                         "storageKey": null
                       },
+                      {
+                        "kind": "TypeDiscriminator",
+                        "abstractKey": "__isCommerceOrder"
+                      },
                       (v2/*: any*/),
                       {
                         "alias": null,
@@ -435,22 +434,7 @@ return {
                         "name": "requestedFulfillment",
                         "plural": false,
                         "selections": [
-                          (v1/*: any*/),
-                          {
-                            "kind": "InlineFragment",
-                            "selections": (v3/*: any*/),
-                            "type": "CommerceShip"
-                          },
-                          {
-                            "kind": "InlineFragment",
-                            "selections": (v3/*: any*/),
-                            "type": "CommercePickup"
-                          },
-                          {
-                            "kind": "InlineFragment",
-                            "selections": (v3/*: any*/),
-                            "type": "CommerceShipArta"
-                          }
+                          (v1/*: any*/)
                         ],
                         "storageKey": null
                       },
@@ -469,7 +453,7 @@ return {
                             "name": "lastDigits",
                             "storageKey": null
                           },
-                          (v4/*: any*/)
+                          (v3/*: any*/)
                         ],
                         "storageKey": null
                       },
@@ -533,7 +517,7 @@ return {
                                         "name": "status",
                                         "storageKey": null
                                       },
-                                      (v4/*: any*/)
+                                      (v3/*: any*/)
                                     ],
                                     "storageKey": null
                                   },
@@ -545,7 +529,7 @@ return {
                                     "name": "artwork",
                                     "plural": false,
                                     "selections": [
-                                      (v5/*: any*/),
+                                      (v4/*: any*/),
                                       {
                                         "alias": null,
                                         "args": null,
@@ -643,11 +627,11 @@ return {
                                                 ],
                                                 "storageKey": null
                                               },
-                                              (v4/*: any*/)
+                                              (v3/*: any*/)
                                             ],
                                             "storageKey": null
                                           },
-                                          (v4/*: any*/)
+                                          (v3/*: any*/)
                                         ],
                                         "storageKey": null
                                       },
@@ -681,12 +665,12 @@ return {
                                         "name": "artists",
                                         "plural": true,
                                         "selections": [
-                                          (v5/*: any*/),
-                                          (v4/*: any*/)
+                                          (v4/*: any*/),
+                                          (v3/*: any*/)
                                         ],
                                         "storageKey": null
                                       },
-                                      (v4/*: any*/)
+                                      (v3/*: any*/)
                                     ],
                                     "storageKey": null
                                   },
@@ -727,7 +711,7 @@ return {
                                                 "name": "trackingId",
                                                 "storageKey": null
                                               },
-                                              (v4/*: any*/)
+                                              (v3/*: any*/)
                                             ],
                                             "storageKey": null
                                           }
@@ -737,7 +721,7 @@ return {
                                     ],
                                     "storageKey": "fulfillments(first:1)"
                                   },
-                                  (v4/*: any*/)
+                                  (v3/*: any*/)
                                 ],
                                 "storageKey": null
                               }
@@ -747,7 +731,7 @@ return {
                         ],
                         "storageKey": null
                       },
-                      (v4/*: any*/)
+                      (v3/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -769,7 +753,7 @@ return {
                     "kind": "LinkedField",
                     "name": "around",
                     "plural": true,
-                    "selections": (v6/*: any*/),
+                    "selections": (v5/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -779,7 +763,7 @@ return {
                     "kind": "LinkedField",
                     "name": "first",
                     "plural": false,
-                    "selections": (v6/*: any*/),
+                    "selections": (v5/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -789,7 +773,7 @@ return {
                     "kind": "LinkedField",
                     "name": "last",
                     "plural": false,
-                    "selections": (v6/*: any*/),
+                    "selections": (v5/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -799,7 +783,7 @@ return {
                     "kind": "LinkedField",
                     "name": "previous",
                     "plural": false,
-                    "selections": (v6/*: any*/),
+                    "selections": (v5/*: any*/),
                     "storageKey": null
                   }
                 ],
@@ -847,18 +831,19 @@ return {
             ],
             "storageKey": "orders(first:10,states:[\"APPROVED\",\"CANCELED\",\"FULFILLED\",\"REFUNDED\",\"SUBMITTED\"])"
           },
-          (v4/*: any*/)
+          (v3/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
+    "cacheID": "0b06c2214e5729b06f0c7b70187e1994",
     "id": null,
     "metadata": {},
     "name": "PurchaseAppTestQuery",
     "operationKind": "query",
-    "text": "query PurchaseAppTestQuery {\n  me {\n    ...PurchaseApp_me\n    id\n  }\n}\n\nfragment OrderRow_order on CommerceOrder {\n  internalID\n  code\n  state\n  mode\n  requestedFulfillment {\n    __typename\n    ... on CommerceShip {\n      __typename\n    }\n    ... on CommercePickup {\n      __typename\n    }\n    ... on CommerceShipArta {\n      __typename\n    }\n  }\n  creditCard {\n    lastDigits\n    id\n  }\n  buyerTotal\n  createdAt\n  itemsTotal\n  lineItems {\n    edges {\n      node {\n        shipment {\n          status\n          id\n        }\n        artwork {\n          slug\n          date\n          image {\n            resized(width: 55) {\n              url\n            }\n          }\n          partner {\n            href\n            initials\n            name\n            profile {\n              icon {\n                url(version: \"square140\")\n              }\n              id\n            }\n            id\n          }\n          shippingOrigin\n          internalID\n          title\n          artistNames\n          artists {\n            slug\n            id\n          }\n          id\n        }\n        fulfillments(first: 1) {\n          edges {\n            node {\n              trackingId\n              id\n            }\n          }\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment PurchaseApp_me on Me {\n  ...PurchaseHistory_me\n}\n\nfragment PurchaseHistory_me on Me {\n  name\n  orders(states: [APPROVED, CANCELED, FULFILLED, REFUNDED, SUBMITTED], first: 10) {\n    edges {\n      node {\n        __typename\n        code\n        ...OrderRow_order\n        id\n      }\n    }\n    pageCursors {\n      around {\n        cursor\n        isCurrent\n        page\n      }\n      first {\n        cursor\n        isCurrent\n        page\n      }\n      last {\n        cursor\n        isCurrent\n        page\n      }\n      previous {\n        cursor\n        isCurrent\n        page\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n"
+    "text": "query PurchaseAppTestQuery {\n  me {\n    ...PurchaseApp_me\n    id\n  }\n}\n\nfragment OrderRow_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  internalID\n  code\n  state\n  mode\n  requestedFulfillment {\n    __typename\n    ... on CommerceShip {\n      __typename\n    }\n    ... on CommercePickup {\n      __typename\n    }\n    ... on CommerceShipArta {\n      __typename\n    }\n  }\n  creditCard {\n    lastDigits\n    id\n  }\n  buyerTotal\n  createdAt\n  itemsTotal\n  lineItems {\n    edges {\n      node {\n        shipment {\n          status\n          id\n        }\n        artwork {\n          slug\n          date\n          image {\n            resized(width: 55) {\n              url\n            }\n          }\n          partner {\n            href\n            initials\n            name\n            profile {\n              icon {\n                url(version: \"square140\")\n              }\n              id\n            }\n            id\n          }\n          shippingOrigin\n          internalID\n          title\n          artistNames\n          artists {\n            slug\n            id\n          }\n          id\n        }\n        fulfillments(first: 1) {\n          edges {\n            node {\n              trackingId\n              id\n            }\n          }\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment PurchaseApp_me on Me {\n  ...PurchaseHistory_me\n}\n\nfragment PurchaseHistory_me on Me {\n  name\n  orders(states: [APPROVED, CANCELED, FULFILLED, REFUNDED, SUBMITTED], first: 10) {\n    edges {\n      node {\n        __typename\n        code\n        ...OrderRow_order\n        id\n      }\n    }\n    pageCursors {\n      around {\n        cursor\n        isCurrent\n        page\n      }\n      first {\n        cursor\n        isCurrent\n        page\n      }\n      last {\n        cursor\n        isCurrent\n        page\n      }\n      previous {\n        cursor\n        isCurrent\n        page\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n"
   }
 };
 })();

@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -99,7 +100,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -241,6 +243,7 @@ return {
     ]
   },
   "params": {
+    "cacheID": "d47e5f008c45e041088a492094f8abf9",
     "id": null,
     "metadata": {},
     "name": "paymentRoutes_PaymentQuery",

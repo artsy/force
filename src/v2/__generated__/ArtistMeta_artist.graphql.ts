@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -386,12 +387,14 @@ return {
                           "storageKey": null
                         }
                       ],
-                      "type": "PriceRange"
+                      "type": "PriceRange",
+                      "abstractKey": null
                     },
                     {
                       "kind": "InlineFragment",
                       "selections": (v5/*: any*/),
-                      "type": "Money"
+                      "type": "Money",
+                      "abstractKey": null
                     }
                   ],
                   "storageKey": null
@@ -445,7 +448,8 @@ return {
       "name": "ArtistMetaCanonicalLink_artist"
     }
   ],
-  "type": "Artist"
+  "type": "Artist",
+  "abstractKey": null
 };
 })();
 (node as any).hash = 'a16a38b3bce624e4b8e514d8fadd4416';

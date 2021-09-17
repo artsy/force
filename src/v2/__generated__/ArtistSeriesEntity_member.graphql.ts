@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -228,7 +229,8 @@ return {
       "storageKey": "artworksConnection(aggregations:[\"TOTAL\"],first:3,sort:\"-decayed_merch\")"
     }
   ],
-  "type": "MarketingCollection"
+  "type": "MarketingCollection",
+  "abstractKey": null
 };
 })();
 (node as any).hash = '91fea7ae7e932abb5c2a197ca8a00384';

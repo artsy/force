@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -37,8 +38,7 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "ip",
-    "type": "String!"
+    "name": "ip"
   }
 ],
 v1 = [
@@ -72,7 +72,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -101,6 +102,7 @@ return {
     ]
   },
   "params": {
+    "cacheID": "fbb557786c09f803e12be2cbc59ef132",
     "id": null,
     "metadata": {},
     "name": "SignUpFormLocationQuery",

@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -20,14 +21,16 @@ export type SearchBarTestQueryRawResponse = {
                     readonly displayLabel: string | null;
                     readonly href: string | null;
                     readonly __typename: "SearchableItem";
-                    readonly id: string | null;
+                    readonly __isNode: "SearchableItem";
+                    readonly id: string;
                     readonly displayType: string | null;
                     readonly slug: string;
                 } | {
                     readonly displayLabel: string | null;
                     readonly href: string | null;
                     readonly __typename: "Artist";
-                    readonly id: string | null;
+                    readonly __isNode: "Artist";
+                    readonly id: string;
                     readonly counts: ({
                         readonly artworks: number | null;
                         readonly auctionResults: number | null;
@@ -36,7 +39,8 @@ export type SearchBarTestQueryRawResponse = {
                     readonly displayLabel: string | null;
                     readonly href: string | null;
                     readonly __typename: string;
-                    readonly id: string | null;
+                    readonly __isNode: string;
+                    readonly id: string;
                 }) | null;
             }) | null> | null;
         }) | null;
@@ -78,6 +82,7 @@ fragment SearchBar_viewer_2Mejjw on Viewer {
           }
         }
         ... on Node {
+          __isNode: __typename
           id
         }
       }
@@ -87,23 +92,22 @@ fragment SearchBar_viewer_2Mejjw on Viewer {
 */
 
 const node: ConcreteRequest = (function(){
-var v0 = [
-  {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "term",
-    "type": "String!"
-  },
-  {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "hasTerm",
-    "type": "Boolean!"
-  }
-];
+var v0 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "hasTerm"
+},
+v1 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "term"
+};
 return {
   "fragment": {
-    "argumentDefinitions": (v0/*: any*/),
+    "argumentDefinitions": [
+      (v0/*: any*/),
+      (v1/*: any*/)
+    ],
     "kind": "Fragment",
     "metadata": null,
     "name": "SearchBarTestQuery",
@@ -136,11 +140,15 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": (v0/*: any*/),
+    "argumentDefinitions": [
+      (v1/*: any*/),
+      (v0/*: any*/)
+    ],
     "kind": "Operation",
     "name": "SearchBarTestQuery",
     "selections": [
@@ -219,13 +227,6 @@ return {
                             "storageKey": null
                           },
                           {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "id",
-                            "storageKey": null
-                          },
-                          {
                             "kind": "InlineFragment",
                             "selections": [
                               {
@@ -243,7 +244,8 @@ return {
                                 "storageKey": null
                               }
                             ],
-                            "type": "SearchableItem"
+                            "type": "SearchableItem",
+                            "abstractKey": null
                           },
                           {
                             "kind": "InlineFragment",
@@ -274,7 +276,22 @@ return {
                                 "storageKey": null
                               }
                             ],
-                            "type": "Artist"
+                            "type": "Artist",
+                            "abstractKey": null
+                          },
+                          {
+                            "kind": "InlineFragment",
+                            "selections": [
+                              {
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "id",
+                                "storageKey": null
+                              }
+                            ],
+                            "type": "Node",
+                            "abstractKey": "__isNode"
                           }
                         ],
                         "storageKey": null
@@ -293,11 +310,12 @@ return {
     ]
   },
   "params": {
+    "cacheID": "acda3c9a1017d41e72df99b57776a9d1",
     "id": null,
     "metadata": {},
     "name": "SearchBarTestQuery",
     "operationKind": "query",
-    "text": "query SearchBarTestQuery(\n  $term: String!\n  $hasTerm: Boolean!\n) {\n  viewer {\n    ...SearchBar_viewer_2Mejjw\n  }\n}\n\nfragment SearchBar_viewer_2Mejjw on Viewer {\n  searchConnection(query: $term, mode: AUTOSUGGEST, first: 7) @include(if: $hasTerm) {\n    edges {\n      node {\n        displayLabel\n        href\n        __typename\n        ... on SearchableItem {\n          displayType\n          slug\n        }\n        ... on Artist {\n          counts {\n            artworks\n            auctionResults\n          }\n        }\n        ... on Node {\n          id\n        }\n      }\n    }\n  }\n}\n"
+    "text": "query SearchBarTestQuery(\n  $term: String!\n  $hasTerm: Boolean!\n) {\n  viewer {\n    ...SearchBar_viewer_2Mejjw\n  }\n}\n\nfragment SearchBar_viewer_2Mejjw on Viewer {\n  searchConnection(query: $term, mode: AUTOSUGGEST, first: 7) @include(if: $hasTerm) {\n    edges {\n      node {\n        displayLabel\n        href\n        __typename\n        ... on SearchableItem {\n          displayType\n          slug\n        }\n        ... on Artist {\n          counts {\n            artworks\n            auctionResults\n          }\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();

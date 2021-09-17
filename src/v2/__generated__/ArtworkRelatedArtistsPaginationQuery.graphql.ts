@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -83,48 +84,43 @@ fragment FollowArtistButton_artist on Artist {
 */
 
 const node: ConcreteRequest = (function(){
-var v0 = [
-  {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "count",
-    "type": "Int!"
-  },
-  {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "cursor",
-    "type": "String"
-  },
-  {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "artworkID",
-    "type": "String!"
-  }
-],
-v1 = [
+var v0 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "artworkID"
+},
+v1 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "count"
+},
+v2 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "cursor"
+},
+v3 = [
   {
     "kind": "Variable",
     "name": "id",
     "variableName": "artworkID"
   }
 ],
-v2 = {
+v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "slug",
   "storageKey": null
 },
-v3 = {
+v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "href",
   "storageKey": null
 },
-v4 = [
+v6 = [
   {
     "kind": "Variable",
     "name": "after",
@@ -141,7 +137,7 @@ v4 = [
     "value": "MAIN"
   }
 ],
-v5 = {
+v7 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -150,14 +146,18 @@ v5 = {
 };
 return {
   "fragment": {
-    "argumentDefinitions": (v0/*: any*/),
+    "argumentDefinitions": [
+      (v0/*: any*/),
+      (v1/*: any*/),
+      (v2/*: any*/)
+    ],
     "kind": "Fragment",
     "metadata": null,
     "name": "ArtworkRelatedArtistsPaginationQuery",
     "selections": [
       {
         "alias": null,
-        "args": (v1/*: any*/),
+        "args": (v3/*: any*/),
         "concreteType": "Artwork",
         "kind": "LinkedField",
         "name": "artwork",
@@ -183,23 +183,28 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": (v0/*: any*/),
+    "argumentDefinitions": [
+      (v1/*: any*/),
+      (v2/*: any*/),
+      (v0/*: any*/)
+    ],
     "kind": "Operation",
     "name": "ArtworkRelatedArtistsPaginationQuery",
     "selections": [
       {
         "alias": null,
-        "args": (v1/*: any*/),
+        "args": (v3/*: any*/),
         "concreteType": "Artwork",
         "kind": "LinkedField",
         "name": "artwork",
         "plural": false,
         "selections": [
-          (v2/*: any*/),
+          (v4/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -208,7 +213,7 @@ return {
             "name": "artist",
             "plural": false,
             "selections": [
-              (v3/*: any*/),
+              (v5/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -219,7 +224,7 @@ return {
                 "selections": [
                   {
                     "alias": null,
-                    "args": (v4/*: any*/),
+                    "args": (v6/*: any*/),
                     "concreteType": "ArtistConnection",
                     "kind": "LinkedField",
                     "name": "artistsConnection",
@@ -273,8 +278,8 @@ return {
                                 "name": "name",
                                 "storageKey": null
                               },
-                              (v2/*: any*/),
-                              (v3/*: any*/),
+                              (v4/*: any*/),
+                              (v5/*: any*/),
                               {
                                 "alias": null,
                                 "args": null,
@@ -329,7 +334,7 @@ return {
                                 "name": "formattedNationalityAndBirthday",
                                 "storageKey": null
                               },
-                              (v5/*: any*/),
+                              (v7/*: any*/),
                               {
                                 "alias": null,
                                 "args": null,
@@ -387,7 +392,7 @@ return {
                   },
                   {
                     "alias": null,
-                    "args": (v4/*: any*/),
+                    "args": (v6/*: any*/),
                     "filters": [
                       "kind"
                     ],
@@ -399,17 +404,18 @@ return {
                 ],
                 "storageKey": null
               },
-              (v5/*: any*/)
+              (v7/*: any*/)
             ],
             "storageKey": null
           },
-          (v5/*: any*/)
+          (v7/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
+    "cacheID": "92873877821a15fed37145052cd1bc30",
     "id": null,
     "metadata": {},
     "name": "ArtworkRelatedArtistsPaginationQuery",

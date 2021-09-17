@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -17,11 +18,11 @@ export type SelectedCareerAchievementsTestQueryRawResponse = {
                     readonly node: ({
                         readonly categories: ReadonlyArray<({
                             readonly slug: string;
-                            readonly id: string | null;
+                            readonly id: string;
                         }) | null> | null;
-                        readonly id: string | null;
+                        readonly id: string;
                     }) | null;
-                    readonly id: string | null;
+                    readonly id: string;
                 }) | null> | null;
             }) | null;
         }) | null;
@@ -38,12 +39,12 @@ export type SelectedCareerAchievementsTestQueryRawResponse = {
                     }) | null;
                     readonly organization: string | null;
                     readonly sale_date: string | null;
-                    readonly id: string | null;
+                    readonly id: string;
                 }) | null;
             }) | null> | null;
         }) | null;
         readonly slug: string;
-        readonly id: string | null;
+        readonly id: string;
     }) | null;
 };
 export type SelectedCareerAchievementsTestQuery = {
@@ -144,7 +145,8 @@ return {
         "storageKey": "artist(id:\"pablo-picasso\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -378,6 +380,7 @@ return {
     ]
   },
   "params": {
+    "cacheID": "b291001f917daaa4195c1a37e3bad541",
     "id": null,
     "metadata": {},
     "name": "SelectedCareerAchievementsTestQuery",

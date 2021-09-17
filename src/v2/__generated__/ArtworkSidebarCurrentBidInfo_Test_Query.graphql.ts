@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -16,7 +17,7 @@ export type ArtworkSidebarCurrentBidInfo_Test_QueryRawResponse = {
             readonly is_live_open: boolean | null;
             readonly internalID: string;
             readonly is_with_buyers_premium: boolean | null;
-            readonly id: string | null;
+            readonly id: string;
         }) | null;
         readonly sale_artwork: ({
             readonly is_with_reserve: boolean | null;
@@ -28,21 +29,21 @@ export type ArtworkSidebarCurrentBidInfo_Test_QueryRawResponse = {
             readonly counts: ({
                 readonly bidder_positions: number | null;
             }) | null;
-            readonly id: string | null;
+            readonly id: string;
         }) | null;
         readonly myLotStanding: ReadonlyArray<{
             readonly active_bid: ({
                 readonly is_winning: boolean | null;
-                readonly id: string | null;
+                readonly id: string;
             }) | null;
             readonly most_recent_bid: ({
                 readonly max_bid: ({
                     readonly display: string | null;
                 }) | null;
-                readonly id: string | null;
+                readonly id: string;
             }) | null;
         }> | null;
-        readonly id: string | null;
+        readonly id: string;
     }) | null;
 };
 export type ArtworkSidebarCurrentBidInfo_Test_Query = {
@@ -144,7 +145,8 @@ return {
         "storageKey": "artwork(id:\"auction_artwork_estimate_premium\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -326,6 +328,7 @@ return {
     ]
   },
   "params": {
+    "cacheID": "60c3871f8ca3b3b48e2673cc8d1aaa91",
     "id": null,
     "metadata": {},
     "name": "ArtworkSidebarCurrentBidInfo_Test_Query",

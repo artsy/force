@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -51,13 +52,13 @@ export type ArtworkArtistSeries_QueryRawResponse = {
                                 readonly partner: ({
                                     readonly name: string | null;
                                     readonly href: string | null;
-                                    readonly id: string | null;
+                                    readonly id: string;
                                     readonly type: string | null;
                                 }) | null;
                                 readonly sale: ({
                                     readonly is_auction: boolean | null;
                                     readonly is_closed: boolean | null;
-                                    readonly id: string | null;
+                                    readonly id: string;
                                     readonly is_live_open: boolean | null;
                                     readonly is_open: boolean | null;
                                     readonly is_preview: boolean | null;
@@ -73,14 +74,14 @@ export type ArtworkArtistSeries_QueryRawResponse = {
                                     readonly opening_bid: ({
                                         readonly display: string | null;
                                     }) | null;
-                                    readonly id: string | null;
+                                    readonly id: string;
                                 }) | null;
                                 readonly is_inquireable: boolean | null;
                                 readonly id: string;
                                 readonly is_biddable: boolean | null;
                             }) | null;
                         }) | null> | null;
-                        readonly id: string | null;
+                        readonly id: string;
                     }) | null;
                 }) | null;
             }) | null> | null;
@@ -105,7 +106,7 @@ export type ArtworkArtistSeries_QueryRawResponse = {
                     }) | null;
                 }) | null> | null;
             }) | null;
-            readonly id: string | null;
+            readonly id: string;
         }) | null;
         readonly seriesForCounts: ({
             readonly edges: ReadonlyArray<({
@@ -114,7 +115,7 @@ export type ArtworkArtistSeries_QueryRawResponse = {
                 }) | null;
             }) | null> | null;
         }) | null;
-        readonly id: string | null;
+        readonly id: string;
     }) | null;
 };
 export type ArtworkArtistSeries_Query = {
@@ -324,8 +325,7 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "slug",
-    "type": "String!"
+    "name": "slug"
   }
 ],
 v1 = [
@@ -452,7 +452,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -942,6 +943,7 @@ return {
     ]
   },
   "params": {
+    "cacheID": "5a80a8824dd4e825f5fb69f5502359e9",
     "id": null,
     "metadata": {},
     "name": "ArtworkArtistSeries_Query",

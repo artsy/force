@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -75,11 +76,11 @@ export type ArtistAuctionResults_Test_QueryRawResponse = {
                     readonly estimate: ({
                         readonly display: string | null;
                     }) | null;
-                    readonly id: string | null;
+                    readonly id: string;
                 }) | null;
             }) | null> | null;
         }) | null;
-        readonly id: string | null;
+        readonly id: string;
     }) | null;
 };
 export type ArtistAuctionResults_Test_Query = {
@@ -201,8 +202,7 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "artistID",
-    "type": "String!"
+    "name": "artistID"
   }
 ],
 v1 = [
@@ -275,7 +275,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -630,6 +631,7 @@ return {
     ]
   },
   "params": {
+    "cacheID": "e50fdbef934f5dd1cb5b82a0b188611d",
     "id": null,
     "metadata": {},
     "name": "ArtistAuctionResults_Test_Query",

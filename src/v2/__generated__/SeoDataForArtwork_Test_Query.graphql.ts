@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -51,9 +52,9 @@ export type SeoDataForArtwork_Test_QueryRawResponse = {
                         readonly url: string;
                     }) | null;
                 }) | null;
-                readonly id: string | null;
+                readonly id: string;
             }) | null;
-            readonly id: string | null;
+            readonly id: string;
         }) | null;
         readonly artistNames: string | null;
         readonly availability: string | null;
@@ -61,7 +62,7 @@ export type SeoDataForArtwork_Test_QueryRawResponse = {
         readonly dimensions: ({
             readonly in: string | null;
         }) | null;
-        readonly id: string | null;
+        readonly id: string;
     }) | null;
 };
 export type SeoDataForArtwork_Test_Query = {
@@ -197,7 +198,8 @@ return {
         "storageKey": "artwork(id:\"richard-anuszkiewicz-lino-yellow-318\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -282,12 +284,14 @@ return {
                     "storageKey": null
                   }
                 ],
-                "type": "PriceRange"
+                "type": "PriceRange",
+                "abstractKey": null
               },
               {
                 "kind": "InlineFragment",
                 "selections": (v2/*: any*/),
-                "type": "Money"
+                "type": "Money",
+                "abstractKey": null
               }
             ],
             "storageKey": null
@@ -505,6 +509,7 @@ return {
     ]
   },
   "params": {
+    "cacheID": "f8392b0d6f9c82a9432ddf2ec1e103f5",
     "id": null,
     "metadata": {},
     "name": "SeoDataForArtwork_Test_Query",

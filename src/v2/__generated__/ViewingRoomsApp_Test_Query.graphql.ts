@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -29,7 +30,7 @@ export type ViewingRoomsApp_Test_QueryRawResponse = {
                     readonly distanceToClose: string | null;
                     readonly partner: ({
                         readonly name: string | null;
-                        readonly id: string | null;
+                        readonly id: string;
                     }) | null;
                     readonly artworksConnection: ({
                         readonly totalCount: number | null;
@@ -45,7 +46,7 @@ export type ViewingRoomsApp_Test_QueryRawResponse = {
                                         readonly srcSet: string;
                                     }) | null;
                                 }) | null;
-                                readonly id: string | null;
+                                readonly id: string;
                             }) | null;
                         }) | null> | null;
                     }) | null;
@@ -74,7 +75,7 @@ export type ViewingRoomsApp_Test_QueryRawResponse = {
                 readonly distanceToClose: string | null;
                 readonly partner: ({
                     readonly name: string | null;
-                    readonly id: string | null;
+                    readonly id: string;
                 }) | null;
             }) | null;
         }) | null> | null;
@@ -341,7 +342,8 @@ return {
         "storageKey": "viewingRooms(featured:true)"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -583,6 +585,7 @@ return {
     ]
   },
   "params": {
+    "cacheID": "21b841b8cab05c246f6bafbb65265e5d",
     "id": null,
     "metadata": {},
     "name": "ViewingRoomsApp_Test_Query",

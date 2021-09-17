@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -33,22 +34,19 @@ export type FairBooths_fair$key = {
 const node: ReaderFragment = {
   "argumentDefinitions": [
     {
-      "defaultValue": "FEATURED_DESC",
-      "kind": "LocalArgument",
-      "name": "sort",
-      "type": "ShowSorts"
-    },
-    {
       "defaultValue": 15,
       "kind": "LocalArgument",
-      "name": "first",
-      "type": "Int"
+      "name": "first"
     },
     {
       "defaultValue": 1,
       "kind": "LocalArgument",
-      "name": "page",
-      "type": "Int"
+      "name": "page"
+    },
+    {
+      "defaultValue": "FEATURED_DESC",
+      "kind": "LocalArgument",
+      "name": "sort"
     }
   ],
   "kind": "Fragment",
@@ -170,7 +168,8 @@ const node: ReaderFragment = {
       "storageKey": null
     }
   ],
-  "type": "Fair"
+  "type": "Fair",
+  "abstractKey": null
 };
 (node as any).hash = 'b4f0a37c4f31cb5828986cd5793aad15';
 export default node;

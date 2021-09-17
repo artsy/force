@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -109,8 +110,7 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "artworkID",
-    "type": "String!"
+    "name": "artworkID"
   }
 ],
 v1 = [
@@ -190,7 +190,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -444,12 +445,14 @@ return {
                   {
                     "kind": "InlineFragment",
                     "selections": (v7/*: any*/),
-                    "type": "Money"
+                    "type": "Money",
+                    "abstractKey": null
                   },
                   {
                     "kind": "InlineFragment",
                     "selections": (v7/*: any*/),
-                    "type": "PriceRange"
+                    "type": "PriceRange",
+                    "abstractKey": null
                   }
                 ],
                 "storageKey": null
@@ -478,6 +481,7 @@ return {
     ]
   },
   "params": {
+    "cacheID": "69939648cc2405a8fd51fea3f19588d5",
     "id": null,
     "metadata": {},
     "name": "ConfirmArtworkModalQuery",

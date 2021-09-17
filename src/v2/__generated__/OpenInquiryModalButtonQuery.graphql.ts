@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 export type OpenInquiryModalButtonQueryVariables = {
@@ -33,8 +34,7 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "artworkID",
-    "type": "String!"
+    "name": "artworkID"
   }
 ],
 v1 = [
@@ -71,7 +71,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -101,6 +102,7 @@ return {
     ]
   },
   "params": {
+    "cacheID": "b886b01cd3225437f792983bf3217cfb",
     "id": null,
     "metadata": {},
     "name": "OpenInquiryModalButtonQuery",

@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -55,6 +56,7 @@ fragment HomeFeaturedGalleriesRail_orderedSet on OrderedSet {
           id
         }
         ... on Node {
+          __isNode: __typename
           id
         }
         ... on FeaturedLink {
@@ -80,7 +82,10 @@ v1 = {
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
-};
+},
+v2 = [
+  (v1/*: any*/)
+];
 return {
   "fragment": {
     "argumentDefinitions": [],
@@ -105,7 +110,8 @@ return {
         "storageKey": "orderedSet(id:\"5638fdfb7261690296000031\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -158,10 +164,10 @@ return {
                         "name": "__typename",
                         "storageKey": null
                       },
-                      (v1/*: any*/),
                       {
                         "kind": "InlineFragment",
                         "selections": [
+                          (v1/*: any*/),
                           {
                             "alias": null,
                             "args": null,
@@ -266,7 +272,20 @@ return {
                             "storageKey": null
                           }
                         ],
-                        "type": "Profile"
+                        "type": "Profile",
+                        "abstractKey": null
+                      },
+                      {
+                        "kind": "InlineFragment",
+                        "selections": (v2/*: any*/),
+                        "type": "Node",
+                        "abstractKey": "__isNode"
+                      },
+                      {
+                        "kind": "InlineFragment",
+                        "selections": (v2/*: any*/),
+                        "type": "FeaturedLink",
+                        "abstractKey": null
                       }
                     ],
                     "storageKey": null
@@ -284,11 +303,12 @@ return {
     ]
   },
   "params": {
+    "cacheID": "2ee3e88ad66492140c517cdf0879a65d",
     "id": null,
     "metadata": {},
     "name": "HomeFeaturedGalleriesRailQuery",
     "operationKind": "query",
-    "text": "query HomeFeaturedGalleriesRailQuery {\n  orderedSet(id: \"5638fdfb7261690296000031\") {\n    ...HomeFeaturedGalleriesRail_orderedSet\n    id\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  is_followed: isFollowed\n}\n\nfragment HomeFeaturedGalleriesRail_orderedSet on OrderedSet {\n  orderedItemsConnection(first: 20) {\n    edges {\n      node {\n        __typename\n        ... on Profile {\n          ...FollowProfileButton_profile\n          internalID\n          name\n          slug\n          href\n          location\n          image {\n            cropped(width: 325, height: 230) {\n              src\n              srcSet\n              width\n              height\n            }\n          }\n          id\n        }\n        ... on Node {\n          id\n        }\n        ... on FeaturedLink {\n          id\n        }\n      }\n    }\n  }\n}\n"
+    "text": "query HomeFeaturedGalleriesRailQuery {\n  orderedSet(id: \"5638fdfb7261690296000031\") {\n    ...HomeFeaturedGalleriesRail_orderedSet\n    id\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  is_followed: isFollowed\n}\n\nfragment HomeFeaturedGalleriesRail_orderedSet on OrderedSet {\n  orderedItemsConnection(first: 20) {\n    edges {\n      node {\n        __typename\n        ... on Profile {\n          ...FollowProfileButton_profile\n          internalID\n          name\n          slug\n          href\n          location\n          image {\n            cropped(width: 325, height: 230) {\n              src\n              srcSet\n              width\n              height\n            }\n          }\n          id\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n        ... on FeaturedLink {\n          id\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();

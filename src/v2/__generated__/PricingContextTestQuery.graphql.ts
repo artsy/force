@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -29,7 +30,7 @@ export type PricingContextTestQueryRawResponse = {
         }) | null;
         readonly artists: ReadonlyArray<({
             readonly slug: string;
-            readonly id: string | null;
+            readonly id: string;
         }) | null> | null;
         readonly category: string | null;
         readonly pricingContext: ({
@@ -46,7 +47,7 @@ export type PricingContextTestQueryRawResponse = {
                 readonly numArtworks: number;
             }>;
         }) | null;
-        readonly id: string | null;
+        readonly id: string;
     }) | null;
 };
 export type PricingContextTestQuery = {
@@ -157,7 +158,8 @@ return {
         "storageKey": "artwork(id:\"unused\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -212,12 +214,14 @@ return {
                     "storageKey": null
                   }
                 ],
-                "type": "PriceRange"
+                "type": "PriceRange",
+                "abstractKey": null
               },
               {
                 "kind": "InlineFragment",
                 "selections": (v1/*: any*/),
-                "type": "Money"
+                "type": "Money",
+                "abstractKey": null
               }
             ],
             "storageKey": null
@@ -332,6 +336,7 @@ return {
     ]
   },
   "params": {
+    "cacheID": "b1e971a4dff21b591743d4062e780480",
     "id": null,
     "metadata": {},
     "name": "PricingContextTestQuery",

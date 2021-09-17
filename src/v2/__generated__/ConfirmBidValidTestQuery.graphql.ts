@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -58,10 +59,10 @@ export type ConfirmBidValidTestQueryRawResponse = {
                 readonly slug: string;
                 readonly registrationStatus: ({
                     readonly qualifiedForBidding: boolean | null;
-                    readonly id: string | null;
+                    readonly id: string;
                     readonly internalID: string;
                 }) | null;
-                readonly id: string | null;
+                readonly id: string;
                 readonly internalID: string;
                 readonly name: string | null;
                 readonly isClosed: boolean | null;
@@ -69,14 +70,14 @@ export type ConfirmBidValidTestQueryRawResponse = {
             }) | null;
             readonly internalID: string;
             readonly slug: string;
-            readonly id: string | null;
+            readonly id: string;
         }) | null;
-        readonly id: string | null;
+        readonly id: string;
     }) | null;
     readonly me: ({
         readonly internalID: string;
         readonly hasQualifiedCreditCards: boolean | null;
-        readonly id: string | null;
+        readonly id: string;
     }) | null;
 };
 export type ConfirmBidValidTestQuery = {
@@ -353,7 +354,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -529,6 +531,7 @@ return {
     ]
   },
   "params": {
+    "cacheID": "c290524f7ec9d6baa296bdc18f18da35",
     "id": null,
     "metadata": {},
     "name": "ConfirmBidValidTestQuery",

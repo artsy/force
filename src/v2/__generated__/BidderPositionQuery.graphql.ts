@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 export type BidderPositionQueryVariables = {
@@ -54,8 +55,7 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "bidderPositionID",
-    "type": "String!"
+    "name": "bidderPositionID"
   }
 ],
 v1 = [
@@ -163,7 +163,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -213,6 +214,7 @@ return {
     ]
   },
   "params": {
+    "cacheID": "91578a2a16ca84bbd38a42578c2fe6d9",
     "id": null,
     "metadata": {},
     "name": "BidderPositionQuery",

@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 export type UserInterestCategory = "COLLECTED_BEFORE" | "INTERESTED_IN_COLLECTING" | "%future added value";
@@ -43,8 +44,7 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "input",
-    "type": "CreateUserInterestMutationInput!"
+    "name": "input"
   }
 ],
 v1 = [
@@ -80,7 +80,8 @@ return {
     "metadata": null,
     "name": "useCreateUserInterestMutation",
     "selections": (v1/*: any*/),
-    "type": "Mutation"
+    "type": "Mutation",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -90,6 +91,7 @@ return {
     "selections": (v1/*: any*/)
   },
   "params": {
+    "cacheID": "26d06dec6d7e0a2344adf861126f02cd",
     "id": null,
     "metadata": {},
     "name": "useCreateUserInterestMutation",

@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -139,7 +140,8 @@ return {
         "storageKey": "fairOrganizer(id:\"example\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -317,6 +319,7 @@ return {
     ]
   },
   "params": {
+    "cacheID": "c427cb6b9745687845a0497c9016946c",
     "id": null,
     "metadata": {},
     "name": "FairOrganizerLatestArticles_Test_Query",

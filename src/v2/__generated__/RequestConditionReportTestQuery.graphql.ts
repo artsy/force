@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -16,16 +17,16 @@ export type RequestConditionReportTestQueryRawResponse = {
     readonly me: ({
         readonly email: string | null;
         readonly internalID: string;
-        readonly id: string | null;
+        readonly id: string;
     }) | null;
     readonly artwork: ({
         readonly internalID: string;
         readonly slug: string;
         readonly saleArtwork: ({
             readonly internalID: string;
-            readonly id: string | null;
+            readonly id: string;
         }) | null;
-        readonly id: string | null;
+        readonly id: string;
     }) | null;
 };
 export type RequestConditionReportTestQuery = {
@@ -125,7 +126,8 @@ return {
         "storageKey": "artwork(id:\"artwork-id\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -189,6 +191,7 @@ return {
     ]
   },
   "params": {
+    "cacheID": "96e5136e1d518b2c9a0724fd52938694",
     "id": null,
     "metadata": {},
     "name": "RequestConditionReportTestQuery",

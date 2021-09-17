@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -16,10 +17,10 @@ export type MockRelayRendererFixturesBadQueryRawResponse = {
         }) | null;
         readonly artist: ({
             readonly slug: string;
-            readonly id: string | null;
+            readonly id: string;
         }) | null;
         readonly title: string | null;
-        readonly id: string | null;
+        readonly id: string;
     }) | null;
 };
 export type MockRelayRendererFixturesBadQuery = {
@@ -93,7 +94,8 @@ return {
         "storageKey": "artwork(id:\"mona-lisa\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -160,6 +162,7 @@ return {
     ]
   },
   "params": {
+    "cacheID": "fb272ba544200e2e2beef09e1fe0a2f3",
     "id": null,
     "metadata": {},
     "name": "MockRelayRendererFixturesBadQuery",

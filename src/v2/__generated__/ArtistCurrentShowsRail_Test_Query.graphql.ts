@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -111,7 +112,8 @@ return {
         "storageKey": "artist(id:\"test\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -265,6 +267,7 @@ return {
     ]
   },
   "params": {
+    "cacheID": "7f643ecb55a9310a0bff55861380137c",
     "id": null,
     "metadata": {},
     "name": "ArtistCurrentShowsRail_Test_Query",

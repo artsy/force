@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -13,9 +14,9 @@ export type ArtworkSidebarClassification_Test_QueryRawResponse = {
     readonly artwork: ({
         readonly attributionClass: ({
             readonly shortDescription: string | null;
-            readonly id: string | null;
+            readonly id: string;
         }) | null;
-        readonly id: string | null;
+        readonly id: string;
     }) | null;
 };
 export type ArtworkSidebarClassification_Test_Query = {
@@ -81,7 +82,8 @@ return {
         "storageKey": "artwork(id:\"josef-albers-homage-to-the-square-85\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -123,6 +125,7 @@ return {
     ]
   },
   "params": {
+    "cacheID": "3e2fee4ac8a516f21734a5b2a8093745",
     "id": null,
     "metadata": {},
     "name": "ArtworkSidebarClassification_Test_Query",

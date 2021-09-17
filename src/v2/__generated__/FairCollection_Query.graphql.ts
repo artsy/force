@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -25,10 +26,10 @@ export type FairCollection_QueryRawResponse = {
                     readonly image: ({
                         readonly url: string | null;
                     }) | null;
-                    readonly id: string | null;
+                    readonly id: string;
                 }) | null;
             }) | null> | null;
-            readonly id: string | null;
+            readonly id: string;
         }) | null;
     }) | null;
 };
@@ -76,8 +77,7 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "slug",
-    "type": "String!"
+    "name": "slug"
   }
 ],
 v1 = [
@@ -118,7 +118,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -238,6 +239,7 @@ return {
     ]
   },
   "params": {
+    "cacheID": "5e865ed859305a24d9624c2a9e29ee26",
     "id": null,
     "metadata": {},
     "name": "FairCollection_Query",

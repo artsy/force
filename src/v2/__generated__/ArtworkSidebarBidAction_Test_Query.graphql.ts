@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -19,7 +20,7 @@ export type ArtworkSidebarBidAction_Test_QueryRawResponse = {
                 readonly max_bid: ({
                     readonly cents: number | null;
                 }) | null;
-                readonly id: string | null;
+                readonly id: string;
             }) | null;
         }> | null;
         readonly slug: string;
@@ -28,7 +29,7 @@ export type ArtworkSidebarBidAction_Test_QueryRawResponse = {
             readonly slug: string;
             readonly registrationStatus: ({
                 readonly qualified_for_bidding: boolean | null;
-                readonly id: string | null;
+                readonly id: string;
             }) | null;
             readonly is_preview: boolean | null;
             readonly is_open: boolean | null;
@@ -36,24 +37,24 @@ export type ArtworkSidebarBidAction_Test_QueryRawResponse = {
             readonly is_closed: boolean | null;
             readonly is_registration_closed: boolean | null;
             readonly requireIdentityVerification: boolean | null;
-            readonly id: string | null;
+            readonly id: string;
         }) | null;
         readonly sale_artwork: ({
             readonly increments: ReadonlyArray<({
                 readonly cents: number | null;
                 readonly display: string | null;
             }) | null> | null;
-            readonly id: string | null;
+            readonly id: string;
         }) | null;
-        readonly id: string | null;
+        readonly id: string;
     }) | null;
     readonly me: ({
         readonly identityVerified: boolean | null;
         readonly pendingIdentityVerification: ({
             readonly internalID: string;
-            readonly id: string | null;
+            readonly id: string;
         }) | null;
-        readonly id: string | null;
+        readonly id: string;
     }) | null;
 };
 export type ArtworkSidebarBidAction_Test_Query = {
@@ -195,7 +196,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -398,6 +400,7 @@ return {
     ]
   },
   "params": {
+    "cacheID": "c753daef542a160483841275700ccbcb",
     "id": null,
     "metadata": {},
     "name": "ArtworkSidebarBidAction_Test_Query",

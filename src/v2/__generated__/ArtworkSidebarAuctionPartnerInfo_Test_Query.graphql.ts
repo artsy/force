@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -13,18 +14,18 @@ export type ArtworkSidebarAuctionPartnerInfo_Test_QueryRawResponse = {
     readonly artwork: ({
         readonly partner: ({
             readonly name: string | null;
-            readonly id: string | null;
+            readonly id: string;
         }) | null;
         readonly sale_artwork: ({
             readonly estimate: string | null;
-            readonly id: string | null;
+            readonly id: string;
         }) | null;
         readonly sale: ({
             readonly internalID: string;
             readonly is_closed: boolean | null;
-            readonly id: string | null;
+            readonly id: string;
         }) | null;
-        readonly id: string | null;
+        readonly id: string;
     }) | null;
 };
 export type ArtworkSidebarAuctionPartnerInfo_Test_Query = {
@@ -99,7 +100,8 @@ return {
         "storageKey": "artwork(id:\"auction_artwork_estimate_premium\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -186,6 +188,7 @@ return {
     ]
   },
   "params": {
+    "cacheID": "f6cc3b67662fcadcaad2db702ba3a9fb",
     "id": null,
     "metadata": {},
     "name": "ArtworkSidebarAuctionPartnerInfo_Test_Query",

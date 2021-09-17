@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -75,6 +76,7 @@ fragment ArtistsIndex_featuredArtists on OrderedSet {
     }
     ...ArtistsCarouselCell_featuredLink
     ... on Node {
+      __isNode: __typename
       id
     }
     ... on Profile {
@@ -98,6 +100,7 @@ fragment ArtistsIndex_featuredGenes on OrderedSet {
       }
     }
     ... on Node {
+      __isNode: __typename
       id
     }
     ... on FeaturedLink {
@@ -154,24 +157,17 @@ v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "id",
+  "name": "internalID",
   "storageKey": null
 },
 v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "internalID",
-  "storageKey": null
-},
-v6 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
   "name": "href",
   "storageKey": null
 },
-v7 = [
+v6 = [
   {
     "alias": null,
     "args": null,
@@ -200,7 +196,29 @@ v7 = [
     "name": "srcSet",
     "storageKey": null
   }
-];
+],
+v7 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+},
+v8 = [
+  (v7/*: any*/)
+],
+v9 = {
+  "kind": "InlineFragment",
+  "selections": (v8/*: any*/),
+  "type": "Node",
+  "abstractKey": "__isNode"
+},
+v10 = {
+  "kind": "InlineFragment",
+  "selections": (v8/*: any*/),
+  "type": "Profile",
+  "abstractKey": null
+};
 return {
   "fragment": {
     "argumentDefinitions": [],
@@ -241,7 +259,8 @@ return {
         "storageKey": "orderedSets(key:\"artists:featured-genes\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -267,11 +286,10 @@ return {
             "plural": true,
             "selections": [
               (v3/*: any*/),
-              (v4/*: any*/),
               {
                 "kind": "InlineFragment",
                 "selections": [
-                  (v5/*: any*/),
+                  (v4/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -286,7 +304,7 @@ return {
                     "name": "subtitle",
                     "storageKey": null
                   },
-                  (v6/*: any*/),
+                  (v5/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -318,19 +336,23 @@ return {
                         "kind": "LinkedField",
                         "name": "cropped",
                         "plural": false,
-                        "selections": (v7/*: any*/),
+                        "selections": (v6/*: any*/),
                         "storageKey": "cropped(height:450,version:\"wide\",width:600)"
                       }
                     ],
                     "storageKey": null
-                  }
+                  },
+                  (v7/*: any*/)
                 ],
-                "type": "FeaturedLink"
-              }
+                "type": "FeaturedLink",
+                "abstractKey": null
+              },
+              (v9/*: any*/),
+              (v10/*: any*/)
             ],
             "storageKey": null
           },
-          (v4/*: any*/)
+          (v7/*: any*/)
         ],
         "storageKey": "orderedSets(key:\"homepage:featured-artists\")"
       },
@@ -352,13 +374,12 @@ return {
             "plural": true,
             "selections": [
               (v3/*: any*/),
-              (v4/*: any*/),
               {
                 "kind": "InlineFragment",
                 "selections": [
-                  (v5/*: any*/),
+                  (v4/*: any*/),
                   (v2/*: any*/),
-                  (v6/*: any*/),
+                  (v5/*: any*/),
                   {
                     "alias": null,
                     "args": [
@@ -373,8 +394,8 @@ return {
                     "name": "trendingArtists",
                     "plural": true,
                     "selections": [
-                      (v5/*: any*/),
                       (v4/*: any*/),
+                      (v7/*: any*/),
                       (v2/*: any*/),
                       {
                         "alias": null,
@@ -422,7 +443,7 @@ return {
                         ],
                         "storageKey": null
                       },
-                      (v6/*: any*/),
+                      (v5/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -456,7 +477,7 @@ return {
                             "kind": "LinkedField",
                             "name": "cropped",
                             "plural": false,
-                            "selections": (v7/*: any*/),
+                            "selections": (v6/*: any*/),
                             "storageKey": "cropped(height:334,width:445)"
                           }
                         ],
@@ -466,23 +487,33 @@ return {
                     "storageKey": "trendingArtists(sample:4)"
                   }
                 ],
-                "type": "Gene"
-              }
+                "type": "Gene",
+                "abstractKey": null
+              },
+              (v9/*: any*/),
+              {
+                "kind": "InlineFragment",
+                "selections": (v8/*: any*/),
+                "type": "FeaturedLink",
+                "abstractKey": null
+              },
+              (v10/*: any*/)
             ],
             "storageKey": null
           },
-          (v4/*: any*/)
+          (v7/*: any*/)
         ],
         "storageKey": "orderedSets(key:\"artists:featured-genes\")"
       }
     ]
   },
   "params": {
+    "cacheID": "af58200e0e7f8f760e0589166ee12a25",
     "id": null,
     "metadata": {},
     "name": "artistsRoutes_ArtistsQuery",
     "operationKind": "query",
-    "text": "query artistsRoutes_ArtistsQuery {\n  featuredArtists: orderedSets(key: \"homepage:featured-artists\") {\n    ...ArtistsIndex_featuredArtists\n    id\n  }\n  featuredGenes: orderedSets(key: \"artists:featured-genes\") {\n    ...ArtistsIndex_featuredGenes\n    id\n  }\n}\n\nfragment ArtistsArtistCard_artist on Artist {\n  ...FollowArtistButton_artist\n  name\n  href\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  image {\n    thumb: cropped(width: 445, height: 334) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ArtistsCarouselCell_featuredLink on FeaturedLink {\n  internalID\n  title\n  subtitle\n  href\n  image {\n    thumb: cropped(width: 600, height: 450, version: \"wide\") {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ArtistsIndex_featuredArtists on OrderedSet {\n  name\n  artists: items {\n    __typename\n    ... on FeaturedLink {\n      internalID\n      id\n    }\n    ...ArtistsCarouselCell_featuredLink\n    ... on Node {\n      id\n    }\n    ... on Profile {\n      id\n    }\n  }\n}\n\nfragment ArtistsIndex_featuredGenes on OrderedSet {\n  name\n  genes: items {\n    __typename\n    ... on Gene {\n      internalID\n      name\n      href\n      trendingArtists(sample: 4) {\n        internalID\n        ...ArtistsArtistCard_artist\n        id\n      }\n    }\n    ... on Node {\n      id\n    }\n    ... on FeaturedLink {\n      id\n    }\n    ... on Profile {\n      id\n    }\n  }\n}\n\nfragment FollowArtistButton_artist on Artist {\n  id\n  internalID\n  name\n  slug\n  is_followed: isFollowed\n  counts {\n    follows\n  }\n}\n"
+    "text": "query artistsRoutes_ArtistsQuery {\n  featuredArtists: orderedSets(key: \"homepage:featured-artists\") {\n    ...ArtistsIndex_featuredArtists\n    id\n  }\n  featuredGenes: orderedSets(key: \"artists:featured-genes\") {\n    ...ArtistsIndex_featuredGenes\n    id\n  }\n}\n\nfragment ArtistsArtistCard_artist on Artist {\n  ...FollowArtistButton_artist\n  name\n  href\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  image {\n    thumb: cropped(width: 445, height: 334) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ArtistsCarouselCell_featuredLink on FeaturedLink {\n  internalID\n  title\n  subtitle\n  href\n  image {\n    thumb: cropped(width: 600, height: 450, version: \"wide\") {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ArtistsIndex_featuredArtists on OrderedSet {\n  name\n  artists: items {\n    __typename\n    ... on FeaturedLink {\n      internalID\n      id\n    }\n    ...ArtistsCarouselCell_featuredLink\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on Profile {\n      id\n    }\n  }\n}\n\nfragment ArtistsIndex_featuredGenes on OrderedSet {\n  name\n  genes: items {\n    __typename\n    ... on Gene {\n      internalID\n      name\n      href\n      trendingArtists(sample: 4) {\n        internalID\n        ...ArtistsArtistCard_artist\n        id\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on FeaturedLink {\n      id\n    }\n    ... on Profile {\n      id\n    }\n  }\n}\n\nfragment FollowArtistButton_artist on Artist {\n  id\n  internalID\n  name\n  slug\n  is_followed: isFollowed\n  counts {\n    follows\n  }\n}\n"
   }
 };
 })();

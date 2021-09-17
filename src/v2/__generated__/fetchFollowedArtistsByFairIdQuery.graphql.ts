@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 export type fetchFollowedArtistsByFairIdQueryVariables = {
@@ -57,8 +58,7 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "fairID",
-    "type": "String"
+    "name": "fairID"
   }
 ],
 v1 = [
@@ -170,7 +170,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -252,6 +253,7 @@ return {
     ]
   },
   "params": {
+    "cacheID": "b67b9494c651c9cc7fa543497efb5697",
     "id": null,
     "metadata": {},
     "name": "fetchFollowedArtistsByFairIdQuery",

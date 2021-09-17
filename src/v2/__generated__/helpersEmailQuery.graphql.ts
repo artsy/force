@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 export type helpersEmailQueryVariables = {
@@ -33,8 +34,7 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "email",
-    "type": "String!"
+    "name": "email"
   }
 ],
 v1 = [
@@ -71,7 +71,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -101,6 +102,7 @@ return {
     ]
   },
   "params": {
+    "cacheID": "6134ac24c778172a2433a6d0162fa2ed",
     "id": null,
     "metadata": {},
     "name": "helpersEmailQuery",

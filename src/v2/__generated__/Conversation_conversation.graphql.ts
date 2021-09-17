@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -113,16 +114,14 @@ v4 = {
 return {
   "argumentDefinitions": [
     {
-      "defaultValue": 30,
-      "kind": "LocalArgument",
-      "name": "count",
-      "type": "Int"
-    },
-    {
       "defaultValue": null,
       "kind": "LocalArgument",
-      "name": "after",
-      "type": "String"
+      "name": "after"
+    },
+    {
+      "defaultValue": 30,
+      "kind": "LocalArgument",
+      "name": "count"
     }
   ],
   "kind": "Fragment",
@@ -280,7 +279,8 @@ return {
                       "storageKey": null
                     }
                   ],
-                  "type": "CommerceOfferOrder"
+                  "type": "CommerceOfferOrder",
+                  "abstractKey": null
                 }
               ],
               "storageKey": null
@@ -413,7 +413,8 @@ return {
                 (v4/*: any*/),
                 (v1/*: any*/)
               ],
-              "type": "Artwork"
+              "type": "Artwork",
+              "abstractKey": null
             },
             {
               "args": null,
@@ -438,7 +439,8 @@ return {
                 (v1/*: any*/),
                 (v3/*: any*/)
               ],
-              "type": "Artwork"
+              "type": "Artwork",
+              "abstractKey": null
             }
           ],
           "storageKey": null
@@ -452,7 +454,8 @@ return {
       "name": "ConversationCTA_conversation"
     }
   ],
-  "type": "Conversation"
+  "type": "Conversation",
+  "abstractKey": null
 };
 })();
 (node as any).hash = '3ba3d5c05fa28d7e0e212562c89a5f4b';

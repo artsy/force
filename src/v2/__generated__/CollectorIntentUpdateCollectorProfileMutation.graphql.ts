@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 export type Intents = "BUY_ART_AND_DESIGN" | "FIND_ART_EXHIBITS" | "LEARN_ABOUT_ART" | "READ_ART_MARKET_NEWS" | "RESEARCH_ART_PRICES" | "SELL_ART_AND_DESIGN" | "%future added value";
@@ -45,8 +46,7 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "input",
-    "type": "UpdateCollectorProfileInput!"
+    "name": "input"
   }
 ],
 v1 = [
@@ -83,7 +83,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Mutation"
+    "type": "Mutation",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -113,6 +114,7 @@ return {
     ]
   },
   "params": {
+    "cacheID": "615cbc0019b26c0dff02e3765875106d",
     "id": null,
     "metadata": {},
     "name": "CollectorIntentUpdateCollectorProfileMutation",

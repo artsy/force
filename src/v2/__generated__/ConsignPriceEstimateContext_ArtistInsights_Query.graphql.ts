@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 export type ConsignPriceEstimateContext_ArtistInsights_QueryVariables = {
@@ -49,8 +50,7 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "artistInternalID",
-    "type": "ID!"
+    "name": "artistInternalID"
   }
 ],
 v1 = [
@@ -151,7 +151,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -207,6 +208,7 @@ return {
     ]
   },
   "params": {
+    "cacheID": "caecc62bbbdd378f288de4ac417a1cb2",
     "id": null,
     "metadata": {},
     "name": "ConsignPriceEstimateContext_ArtistInsights_Query",

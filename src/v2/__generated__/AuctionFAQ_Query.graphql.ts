@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -13,23 +14,23 @@ export type AuctionFAQ_QueryRawResponse = {
     readonly viewer: ({
         readonly bidding: ({
             readonly content: string | null;
-            readonly id: string | null;
+            readonly id: string;
         }) | null;
         readonly buyersPremiumTaxesAndFees: ({
             readonly content: string | null;
-            readonly id: string | null;
+            readonly id: string;
         }) | null;
         readonly paymentsAndShipping: ({
             readonly content: string | null;
-            readonly id: string | null;
+            readonly id: string;
         }) | null;
         readonly emailsAndAlerts: ({
             readonly content: string | null;
-            readonly id: string | null;
+            readonly id: string;
         }) | null;
         readonly conditionsOfSale: ({
             readonly content: string | null;
-            readonly id: string | null;
+            readonly id: string;
         }) | null;
     }) | null;
 };
@@ -113,7 +114,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -215,6 +217,7 @@ return {
     ]
   },
   "params": {
+    "cacheID": "b869a5209002072384d42e9d8e4eb423",
     "id": null,
     "metadata": {},
     "name": "AuctionFAQ_Query",

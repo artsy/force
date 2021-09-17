@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -18,12 +19,12 @@ export type RegisterValidTestQueryRawResponse = {
         readonly internalID: string;
         readonly status: string | null;
         readonly requireIdentityVerification: boolean | null;
-        readonly id: string | null;
+        readonly id: string;
     }) | null;
     readonly me: ({
         readonly internalID: string;
         readonly identityVerified: boolean | null;
-        readonly id: string | null;
+        readonly id: string;
     }) | null;
 };
 export type RegisterValidTestQuery = {
@@ -121,7 +122,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -186,6 +188,7 @@ return {
     ]
   },
   "params": {
+    "cacheID": "3725d1fc5453f47190c6d7d172403372",
     "id": null,
     "metadata": {},
     "name": "RegisterValidTestQuery",

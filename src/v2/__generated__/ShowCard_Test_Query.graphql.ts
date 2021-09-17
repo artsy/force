@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -142,7 +143,8 @@ return {
         "storageKey": "partner(id:\"white-cube\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -289,6 +291,7 @@ return {
     ]
   },
   "params": {
+    "cacheID": "a6e0bf858d5d726da259057a40ec2abc",
     "id": null,
     "metadata": {},
     "name": "ShowCard_Test_Query",

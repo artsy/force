@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -37,6 +38,7 @@ fragment ShowMeta_show on Show {
       name
     }
     ... on Node {
+      __isNode: __typename
       id
     }
     ... on ExternalPartner {
@@ -69,7 +71,10 @@ v2 = {
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
-};
+},
+v3 = [
+  (v2/*: any*/)
+];
 return {
   "fragment": {
     "argumentDefinitions": [],
@@ -94,7 +99,8 @@ return {
         "storageKey": "show(id:\"some-show\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -164,13 +170,25 @@ return {
                 "name": "__typename",
                 "storageKey": null
               },
-              (v2/*: any*/),
               {
                 "kind": "InlineFragment",
                 "selections": [
                   (v1/*: any*/)
                 ],
-                "type": "Partner"
+                "type": "Partner",
+                "abstractKey": null
+              },
+              {
+                "kind": "InlineFragment",
+                "selections": (v3/*: any*/),
+                "type": "Node",
+                "abstractKey": "__isNode"
+              },
+              {
+                "kind": "InlineFragment",
+                "selections": (v3/*: any*/),
+                "type": "ExternalPartner",
+                "abstractKey": null
               }
             ],
             "storageKey": null
@@ -208,11 +226,12 @@ return {
     ]
   },
   "params": {
+    "cacheID": "d7a27551ca47553021e6a94042b4ca74",
     "id": null,
     "metadata": {},
     "name": "ShowMeta_Test_Query",
     "operationKind": "query",
-    "text": "query ShowMeta_Test_Query {\n  show(id: \"some-show\") {\n    ...ShowMeta_show\n    id\n  }\n}\n\nfragment ShowMeta_show on Show {\n  name\n  slug\n  metaDescription: description\n  metaImage {\n    src: url(version: \"large\")\n  }\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on Node {\n      id\n    }\n    ... on ExternalPartner {\n      id\n    }\n  }\n  formattedStartAt: startAt(format: \"MMMM D\")\n  formattedEndAt: endAt(format: \"MMMM D, YYYY\")\n}\n"
+    "text": "query ShowMeta_Test_Query {\n  show(id: \"some-show\") {\n    ...ShowMeta_show\n    id\n  }\n}\n\nfragment ShowMeta_show on Show {\n  name\n  slug\n  metaDescription: description\n  metaImage {\n    src: url(version: \"large\")\n  }\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on ExternalPartner {\n      id\n    }\n  }\n  formattedStartAt: startAt(format: \"MMMM D\")\n  formattedEndAt: endAt(format: \"MMMM D, YYYY\")\n}\n"
   }
 };
 })();

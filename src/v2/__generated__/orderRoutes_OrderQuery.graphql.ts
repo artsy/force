@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
@@ -56,10 +57,11 @@ export type orderRoutes_OrderQueryResponse = {
 export type orderRoutes_OrderQueryRawResponse = {
     readonly me: ({
         readonly name: string | null;
-        readonly id: string | null;
+        readonly id: string;
     }) | null;
     readonly order: ({
         readonly __typename: "CommerceOfferOrder";
+        readonly __isCommerceOrder: "CommerceOfferOrder";
         readonly internalID: string;
         readonly mode: CommerceOrderModeEnum | null;
         readonly state: CommerceOrderStateEnum;
@@ -72,7 +74,7 @@ export type orderRoutes_OrderQueryRawResponse = {
                 readonly node: ({
                     readonly artwork: ({
                         readonly slug: string;
-                        readonly id: string | null;
+                        readonly id: string;
                         readonly href: string | null;
                         readonly is_acquireable: boolean | null;
                         readonly is_offerable: boolean | null;
@@ -81,32 +83,33 @@ export type orderRoutes_OrderQueryRawResponse = {
                         readonly edges: ReadonlyArray<({
                             readonly node: ({
                                 readonly isSelected: boolean;
-                                readonly id: string | null;
+                                readonly id: string;
                             }) | null;
                         }) | null> | null;
                     }) | null;
-                    readonly id: string | null;
+                    readonly id: string;
                 }) | null;
             }) | null> | null;
         }) | null;
         readonly creditCard: ({
             readonly internalID: string;
-            readonly id: string | null;
+            readonly id: string;
         }) | null;
-        readonly id: string | null;
+        readonly id: string;
         readonly myLastOffer: ({
             readonly internalID: string;
             readonly createdAt: string;
-            readonly id: string | null;
+            readonly id: string;
         }) | null;
         readonly lastOffer: ({
             readonly internalID: string;
             readonly createdAt: string;
-            readonly id: string | null;
+            readonly id: string;
         }) | null;
         readonly awaitingResponseFrom: CommerceOrderParticipantEnum | null;
     } | {
-        readonly __typename: string | null;
+        readonly __typename: string;
+        readonly __isCommerceOrder: string;
         readonly internalID: string;
         readonly mode: CommerceOrderModeEnum | null;
         readonly state: CommerceOrderStateEnum;
@@ -119,7 +122,7 @@ export type orderRoutes_OrderQueryRawResponse = {
                 readonly node: ({
                     readonly artwork: ({
                         readonly slug: string;
-                        readonly id: string | null;
+                        readonly id: string;
                         readonly href: string | null;
                         readonly is_acquireable: boolean | null;
                         readonly is_offerable: boolean | null;
@@ -128,19 +131,19 @@ export type orderRoutes_OrderQueryRawResponse = {
                         readonly edges: ReadonlyArray<({
                             readonly node: ({
                                 readonly isSelected: boolean;
-                                readonly id: string | null;
+                                readonly id: string;
                             }) | null;
                         }) | null> | null;
                     }) | null;
-                    readonly id: string | null;
+                    readonly id: string;
                 }) | null;
             }) | null> | null;
         }) | null;
         readonly creditCard: ({
             readonly internalID: string;
-            readonly id: string | null;
+            readonly id: string;
         }) | null;
-        readonly id: string | null;
+        readonly id: string;
     }) | null;
 };
 export type orderRoutes_OrderQuery = {
@@ -161,6 +164,7 @@ query orderRoutes_OrderQuery(
   }
   order: commerceOrder(id: $orderID) @principalField {
     __typename
+    __isCommerceOrder: __typename
     internalID
     mode
     state
@@ -217,8 +221,7 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "orderID",
-    "type": "ID!"
+    "name": "orderID"
   }
 ],
 v1 = {
@@ -498,13 +501,15 @@ return {
               },
               (v16/*: any*/)
             ],
-            "type": "CommerceOfferOrder"
+            "type": "CommerceOfferOrder",
+            "abstractKey": null
           }
         ],
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -534,6 +539,10 @@ return {
         "plural": false,
         "selections": [
           (v7/*: any*/),
+          {
+            "kind": "TypeDiscriminator",
+            "abstractKey": "__isCommerceOrder"
+          },
           (v3/*: any*/),
           (v4/*: any*/),
           (v5/*: any*/),
@@ -663,7 +672,8 @@ return {
               },
               (v16/*: any*/)
             ],
-            "type": "CommerceOfferOrder"
+            "type": "CommerceOfferOrder",
+            "abstractKey": null
           }
         ],
         "storageKey": null
@@ -671,11 +681,12 @@ return {
     ]
   },
   "params": {
+    "cacheID": "1819967209a16e6a97c993b577b9e3fc",
     "id": null,
     "metadata": {},
     "name": "orderRoutes_OrderQuery",
     "operationKind": "query",
-    "text": "query orderRoutes_OrderQuery(\n  $orderID: ID!\n) {\n  me {\n    name\n    id\n  }\n  order: commerceOrder(id: $orderID) @principalField {\n    __typename\n    internalID\n    mode\n    state\n    lastTransactionFailed\n    ... on CommerceOfferOrder {\n      myLastOffer {\n        internalID\n        createdAt\n        id\n      }\n      lastOffer {\n        internalID\n        createdAt\n        id\n      }\n      awaitingResponseFrom\n    }\n    requestedFulfillment {\n      __typename\n    }\n    lineItems {\n      edges {\n        node {\n          artwork {\n            slug\n            id\n            href\n            is_acquireable: isAcquireable\n            is_offerable: isOfferable\n          }\n          shippingQuoteOptions {\n            edges {\n              node {\n                isSelected\n                id\n              }\n            }\n          }\n          id\n        }\n      }\n    }\n    creditCard {\n      internalID\n      id\n    }\n    id\n  }\n}\n"
+    "text": "query orderRoutes_OrderQuery(\n  $orderID: ID!\n) {\n  me {\n    name\n    id\n  }\n  order: commerceOrder(id: $orderID) @principalField {\n    __typename\n    __isCommerceOrder: __typename\n    internalID\n    mode\n    state\n    lastTransactionFailed\n    ... on CommerceOfferOrder {\n      myLastOffer {\n        internalID\n        createdAt\n        id\n      }\n      lastOffer {\n        internalID\n        createdAt\n        id\n      }\n      awaitingResponseFrom\n    }\n    requestedFulfillment {\n      __typename\n    }\n    lineItems {\n      edges {\n        node {\n          artwork {\n            slug\n            id\n            href\n            is_acquireable: isAcquireable\n            is_offerable: isOfferable\n          }\n          shippingQuoteOptions {\n            edges {\n              node {\n                isSelected\n                id\n              }\n            }\n          }\n          id\n        }\n      }\n    }\n    creditCard {\n      internalID\n      id\n    }\n    id\n  }\n}\n"
   }
 };
 })();

@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 export type CommerceCancelReasonTypeEnum = "ADMIN_CANCELED" | "BUYER_LAPSED" | "BUYER_REJECTED" | "SELLER_LAPSED" | "SELLER_REJECTED" | "SELLER_REJECTED_ARTWORK_UNAVAILABLE" | "SELLER_REJECTED_OFFER_TOO_LOW" | "SELLER_REJECTED_OTHER" | "SELLER_REJECTED_SHIPPING_UNAVAILABLE" | "%future added value";
@@ -70,8 +71,7 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "input",
-    "type": "CommerceBuyerRejectOfferInput!"
+    "name": "input"
   }
 ],
 v1 = [
@@ -106,7 +106,8 @@ v4 = {
       "storageKey": null
     }
   ],
-  "type": "CommerceOfferOrder"
+  "type": "CommerceOfferOrder",
+  "abstractKey": null
 },
 v5 = {
   "kind": "InlineFragment",
@@ -144,7 +145,8 @@ v5 = {
       "storageKey": null
     }
   ],
-  "type": "CommerceOrderWithMutationFailure"
+  "type": "CommerceOrderWithMutationFailure",
+  "abstractKey": null
 };
 return {
   "fragment": {
@@ -187,7 +189,8 @@ return {
                     "storageKey": null
                   }
                 ],
-                "type": "CommerceOrderWithMutationSuccess"
+                "type": "CommerceOrderWithMutationSuccess",
+                "abstractKey": null
               },
               (v5/*: any*/)
             ],
@@ -197,7 +200,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Mutation"
+    "type": "Mutation",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -225,7 +229,6 @@ return {
               {
                 "kind": "InlineFragment",
                 "selections": [
-                  (v2/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -248,7 +251,8 @@ return {
                     "storageKey": null
                   }
                 ],
-                "type": "CommerceOrderWithMutationSuccess"
+                "type": "CommerceOrderWithMutationSuccess",
+                "abstractKey": null
               },
               (v5/*: any*/)
             ],
@@ -260,6 +264,7 @@ return {
     ]
   },
   "params": {
+    "cacheID": "96754b731151eab290a32787dd0ae728",
     "id": null,
     "metadata": {},
     "name": "RejectOfferMutation",

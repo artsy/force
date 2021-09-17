@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -21,7 +22,7 @@ export type ShippingQuotes_Test_QueryResponse = {
 };
 export type ShippingQuotes_Test_QueryRawResponse = {
     readonly order: ({
-        readonly __typename: string | null;
+        readonly __typename: string;
         readonly lineItems: ({
             readonly edges: ReadonlyArray<({
                 readonly node: ({
@@ -35,11 +36,11 @@ export type ShippingQuotes_Test_QueryRawResponse = {
                             }) | null;
                         }) | null> | null;
                     }) | null;
-                    readonly id: string | null;
+                    readonly id: string;
                 }) | null;
             }) | null> | null;
         }) | null;
-        readonly id: string | null;
+        readonly id: string;
     }) | null;
 };
 export type ShippingQuotes_Test_Query = {
@@ -167,7 +168,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -292,6 +294,7 @@ return {
     ]
   },
   "params": {
+    "cacheID": "89e3d437a644072958d540b08e8d27bf",
     "id": null,
     "metadata": {},
     "name": "ShippingQuotes_Test_Query",

@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -33,7 +34,7 @@ export type PartnerContacts_Test_QueryRawResponse = {
                 }) | null;
             }) | null> | null;
         }) | null;
-        readonly id: string | null;
+        readonly id: string;
     }) | null;
 };
 export type PartnerContacts_Test_Query = {
@@ -161,7 +162,8 @@ return {
         "storageKey": "partner(id:\"white-cube\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -292,6 +294,7 @@ return {
     ]
   },
   "params": {
+    "cacheID": "71f07a37256f0b1ba2ced9768f36ea37",
     "id": null,
     "metadata": {},
     "name": "PartnerContacts_Test_Query",

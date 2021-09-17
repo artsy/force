@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -34,7 +35,7 @@ export type NavigationTabs_Test_PartnerQueryRawResponse = {
         readonly viewingRooms: ({
             readonly totalCount: number | null;
         }) | null;
-        readonly id: string | null;
+        readonly id: string;
     }) | null;
 };
 export type NavigationTabs_Test_PartnerQuery = {
@@ -126,7 +127,8 @@ return {
         "storageKey": "partner(id:\"white-cube\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -293,6 +295,7 @@ return {
     ]
   },
   "params": {
+    "cacheID": "d66bb51acde386d5ed4cc0dc0ca51425",
     "id": null,
     "metadata": {},
     "name": "NavigationTabs_Test_PartnerQuery",

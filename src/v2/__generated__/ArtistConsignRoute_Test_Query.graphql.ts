@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -33,7 +34,7 @@ export type ArtistConsignRoute_Test_QueryRawResponse = {
                                 readonly url: string | null;
                                 readonly aspectRatio: number;
                             }) | null;
-                            readonly id: string | null;
+                            readonly id: string;
                             readonly imageTitle: string | null;
                             readonly title: string | null;
                             readonly href: string | null;
@@ -50,13 +51,13 @@ export type ArtistConsignRoute_Test_QueryRawResponse = {
                             readonly partner: ({
                                 readonly name: string | null;
                                 readonly href: string | null;
-                                readonly id: string | null;
+                                readonly id: string;
                                 readonly type: string | null;
                             }) | null;
                             readonly sale: ({
                                 readonly is_auction: boolean | null;
                                 readonly is_closed: boolean | null;
-                                readonly id: string | null;
+                                readonly id: string;
                                 readonly is_live_open: boolean | null;
                                 readonly is_open: boolean | null;
                                 readonly is_preview: boolean | null;
@@ -72,7 +73,7 @@ export type ArtistConsignRoute_Test_QueryRawResponse = {
                                 readonly opening_bid: ({
                                     readonly display: string | null;
                                 }) | null;
-                                readonly id: string | null;
+                                readonly id: string;
                             }) | null;
                             readonly is_inquireable: boolean | null;
                             readonly internalID: string;
@@ -92,7 +93,7 @@ export type ArtistConsignRoute_Test_QueryRawResponse = {
             }) | null;
             readonly isInMicrofunnel: boolean | null;
         }) | null;
-        readonly id: string | null;
+        readonly id: string;
     }) | null;
 };
 export type ArtistConsignRoute_Test_Query = {
@@ -336,8 +337,7 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "artistID",
-    "type": "String!"
+    "name": "artistID"
   }
 ],
 v1 = [
@@ -427,7 +427,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -861,6 +862,7 @@ return {
     ]
   },
   "params": {
+    "cacheID": "72869e6bdb1064ffe6ebae25fd42ac52",
     "id": null,
     "metadata": {},
     "name": "ArtistConsignRoute_Test_Query",

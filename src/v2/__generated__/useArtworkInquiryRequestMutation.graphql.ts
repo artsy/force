@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 export type SubmitInquiryRequestMutationInput = {
@@ -44,8 +45,7 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "input",
-    "type": "SubmitInquiryRequestMutationInput!"
+    "name": "input"
   }
 ],
 v1 = [
@@ -81,7 +81,8 @@ return {
     "metadata": null,
     "name": "useArtworkInquiryRequestMutation",
     "selections": (v1/*: any*/),
-    "type": "Mutation"
+    "type": "Mutation",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -91,6 +92,7 @@ return {
     "selections": (v1/*: any*/)
   },
   "params": {
+    "cacheID": "f169ae8dd1d388d71d4c07843cfebca5",
     "id": null,
     "metadata": {},
     "name": "useArtworkInquiryRequestMutation",

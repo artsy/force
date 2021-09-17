@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 export type DeleteUserAddressInput = {
@@ -73,8 +74,7 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "input",
-    "type": "DeleteUserAddressInput!"
+    "name": "input"
   }
 ],
 v1 = [
@@ -165,7 +165,8 @@ v2 = {
       "storageKey": null
     }
   ],
-  "type": "UserAddress"
+  "type": "UserAddress",
+  "abstractKey": null
 },
 v3 = {
   "kind": "InlineFragment",
@@ -196,7 +197,8 @@ v3 = {
       "storageKey": null
     }
   ],
-  "type": "Errors"
+  "type": "Errors",
+  "abstractKey": null
 };
 return {
   "fragment": {
@@ -230,7 +232,8 @@ return {
         "storageKey": null
       }
     ],
-    "type": "Mutation"
+    "type": "Mutation",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -272,6 +275,7 @@ return {
     ]
   },
   "params": {
+    "cacheID": "fb2fb91ba360096694ec247ccfd214d1",
     "id": null,
     "metadata": {},
     "name": "DeleteUserAddressMutation",

@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 export type UserEmailPreferencesQueryVariables = {};
@@ -60,7 +61,8 @@ return {
     "metadata": null,
     "name": "UserEmailPreferencesQuery",
     "selections": (v0/*: any*/),
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -70,6 +72,7 @@ return {
     "selections": (v0/*: any*/)
   },
   "params": {
+    "cacheID": "5317b5bc962e427c02db8ce4a50a5193",
     "id": null,
     "metadata": {},
     "name": "UserEmailPreferencesQuery",

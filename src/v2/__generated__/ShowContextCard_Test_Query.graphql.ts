@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -65,6 +66,7 @@ fragment ShowContextCard_show on Show {
       }
     }
     ... on Node {
+      __isNode: __typename
       id
     }
     ... on ExternalPartner {
@@ -96,37 +98,40 @@ v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "id",
+  "name": "internalID",
   "storageKey": null
 },
 v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "internalID",
+  "name": "slug",
   "storageKey": null
 },
 v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "slug",
+  "name": "href",
   "storageKey": null
 },
 v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "href",
+  "name": "name",
   "storageKey": null
 },
 v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "name",
+  "name": "id",
   "storageKey": null
-};
+},
+v6 = [
+  (v5/*: any*/)
+];
 return {
   "fragment": {
     "argumentDefinitions": [],
@@ -151,7 +156,8 @@ return {
         "storageKey": "show(id:\"xxx\")"
       }
     ],
-    "type": "Query"
+    "type": "Query",
+    "abstractKey": null
   },
   "kind": "Request",
   "operation": {
@@ -189,14 +195,13 @@ return {
                 "name": "__typename",
                 "storageKey": null
               },
-              (v1/*: any*/),
               {
                 "kind": "InlineFragment",
                 "selections": [
+                  (v1/*: any*/),
                   (v2/*: any*/),
                   (v3/*: any*/),
                   (v4/*: any*/),
-                  (v5/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -212,7 +217,7 @@ return {
                         "name": "city",
                         "storageKey": null
                       },
-                      (v1/*: any*/)
+                      (v5/*: any*/)
                     ],
                     "storageKey": null
                   },
@@ -275,7 +280,7 @@ return {
                                 ],
                                 "storageKey": null
                               },
-                              (v1/*: any*/)
+                              (v5/*: any*/)
                             ],
                             "storageKey": null
                           }
@@ -286,7 +291,20 @@ return {
                     "storageKey": "artworksConnection(first:3,sort:\"MERCHANDISABILITY_DESC\")"
                   }
                 ],
-                "type": "Partner"
+                "type": "Partner",
+                "abstractKey": null
+              },
+              {
+                "kind": "InlineFragment",
+                "selections": (v6/*: any*/),
+                "type": "Node",
+                "abstractKey": "__isNode"
+              },
+              {
+                "kind": "InlineFragment",
+                "selections": (v6/*: any*/),
+                "type": "ExternalPartner",
+                "abstractKey": null
               }
             ],
             "storageKey": null
@@ -299,7 +317,7 @@ return {
             "name": "fair",
             "plural": false,
             "selections": [
-              (v2/*: any*/),
+              (v1/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -307,9 +325,9 @@ return {
                 "name": "isActive",
                 "storageKey": null
               },
+              (v2/*: any*/),
               (v3/*: any*/),
               (v4/*: any*/),
-              (v5/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -383,22 +401,23 @@ return {
                 ],
                 "storageKey": null
               },
-              (v1/*: any*/)
+              (v5/*: any*/)
             ],
             "storageKey": null
           },
-          (v1/*: any*/)
+          (v5/*: any*/)
         ],
         "storageKey": "show(id:\"xxx\")"
       }
     ]
   },
   "params": {
+    "cacheID": "fb7d7202bfc43bd73749e915995fb41c",
     "id": null,
     "metadata": {},
     "name": "ShowContextCard_Test_Query",
     "operationKind": "query",
-    "text": "query ShowContextCard_Test_Query {\n  show(id: \"xxx\") {\n    ...ShowContextCard_show\n    id\n  }\n}\n\nfragment FairCard_fair on Fair {\n  name\n  image {\n    cropped(width: 768, height: 512, version: \"wide\") {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment FairTiming_fair on Fair {\n  exhibitionPeriod\n  startAt\n  endAt\n}\n\nfragment ShowContextCard_show on Show {\n  isFairBooth\n  partner {\n    __typename\n    ... on Partner {\n      internalID\n      slug\n      href\n      name\n      locations {\n        city\n        id\n      }\n      artworksConnection(first: 3, sort: MERCHANDISABILITY_DESC) {\n        edges {\n          node {\n            image {\n              url(version: \"larger\")\n            }\n            id\n          }\n        }\n      }\n    }\n    ... on Node {\n      id\n    }\n    ... on ExternalPartner {\n      id\n    }\n  }\n  fair {\n    internalID\n    isActive\n    slug\n    href\n    name\n    ...FairTiming_fair\n    ...FairCard_fair\n    id\n  }\n}\n"
+    "text": "query ShowContextCard_Test_Query {\n  show(id: \"xxx\") {\n    ...ShowContextCard_show\n    id\n  }\n}\n\nfragment FairCard_fair on Fair {\n  name\n  image {\n    cropped(width: 768, height: 512, version: \"wide\") {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment FairTiming_fair on Fair {\n  exhibitionPeriod\n  startAt\n  endAt\n}\n\nfragment ShowContextCard_show on Show {\n  isFairBooth\n  partner {\n    __typename\n    ... on Partner {\n      internalID\n      slug\n      href\n      name\n      locations {\n        city\n        id\n      }\n      artworksConnection(first: 3, sort: MERCHANDISABILITY_DESC) {\n        edges {\n          node {\n            image {\n              url(version: \"larger\")\n            }\n            id\n          }\n        }\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on ExternalPartner {\n      id\n    }\n  }\n  fair {\n    internalID\n    isActive\n    slug\n    href\n    name\n    ...FairTiming_fair\n    ...FairCard_fair\n    id\n  }\n}\n"
   }
 };
 })();
