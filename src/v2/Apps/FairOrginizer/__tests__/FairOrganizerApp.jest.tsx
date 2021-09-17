@@ -26,11 +26,8 @@ const { getWrapper } = setupTestWrapper<FairOrganizerApp_Test_Query>({
 
 describe("FairOrganizerApp", () => {
   it("sets a title tag", () => {
-    const profile = {
-      image: { url: "https://randomhash.cloudfront.net/12312/test.jpg" },
-    }
     const wrapper = getWrapper({
-      FairOrganizer: () => ({ name: "Art Paris", slug: "art-paris", profile }),
+      FairOrganizer: () => ({ name: "Art Paris", slug: "art-paris" }),
     })
     expect(wrapper.find("Title").first().text()).toEqual("Art Paris | Artsy")
   })
