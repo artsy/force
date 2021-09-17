@@ -1,4 +1,4 @@
-import { Text } from "@artsy/palette"
+import { ArtworkIcon, AuctionIcon, Flex, Pill, Text } from "@artsy/palette"
 import match from "autosuggest-highlight/match"
 import parse from "autosuggest-highlight/parse"
 import React from "react"
@@ -11,6 +11,8 @@ interface SuggestionItemProps {
   isHighlighted: boolean
   label: string
   query: string
+  showArtworksButton?: boolean
+  showAuctionResultsButton?: boolean
 }
 
 export const FirstSuggestionItem: React.FC<SuggestionItemProps> = ({
@@ -31,11 +33,21 @@ export const FirstSuggestionItem: React.FC<SuggestionItemProps> = ({
 }
 
 export const SuggestionItem: React.FC<SuggestionItemProps> = props => {
-  const { href, isHighlighted } = props
+  const {
+    href,
+    isHighlighted,
+    showArtworksButton,
+    showAuctionResultsButton,
+  } = props
 
   return (
     <SuggestionItemLink to={href} bg={isHighlighted ? "black5" : "white100"}>
       <DefaultSuggestion {...props} />
+      <QuickNavigation
+        href={href}
+        showArtworksButton={!!showArtworksButton}
+        showAuctionResultsButton={!!showAuctionResultsButton}
+      />
     </SuggestionItemLink>
   )
 }
@@ -76,5 +88,48 @@ const DefaultSuggestion: React.FC<SuggestionItemProps> = ({
         {label}
       </Text>
     </>
+  )
+}
+
+const QuickNavigation: React.FC<{
+  href: string
+  showArtworksButton: boolean
+  showAuctionResultsButton: boolean
+}> = ({ href, showArtworksButton, showAuctionResultsButton }) => {
+  if (!showArtworksButton && !showAuctionResultsButton) return null
+
+  return (
+    <Flex flexWrap="wrap">
+      {!!showArtworksButton && (
+        <QuickNavigationItem to={`${href}/works-for-sale`}>
+          <ArtworkIcon mr={0.5} />
+          Artworks
+        </QuickNavigationItem>
+      )}
+      {!!showAuctionResultsButton && (
+        <QuickNavigationItem to={`${href}/auction-results`}>
+          <AuctionIcon mr={0.5} />
+          Auction Results
+        </QuickNavigationItem>
+      )}
+    </Flex>
+  )
+}
+
+const QuickNavigationItem: React.FC<{ to: string }> = ({ children, to }) => {
+  const onClick = event => {
+    // Stopping the event from propagating to prevent SearchBar from navigation to the main suggestion item url.
+    event.stopPropagation()
+    event.preventDefault()
+
+    // FIXME: Using `window.location.assign(to)` instead of `router.push(to)` to prevent a bug where the search bar won't hide anymore.
+    window.location.assign(to)
+  }
+  return (
+    <Flex onClick={onClick} mt={1} mr={1}>
+      <Pill variant="textSquare">
+        <Flex alignItems="center">{children}</Flex>
+      </Pill>
+    </Flex>
   )
 }

@@ -4,14 +4,14 @@ import {
   SearchBarRefetchContainer as SearchBar,
   getSearchTerm,
 } from "v2/Components/Search/SearchBar"
-import { SuggestionItem } from "v2/Components/Search/Suggestions/SuggestionItem"
 import { renderRelayTree } from "v2/DevTools"
 import { MockBoot } from "v2/DevTools/MockBoot"
 import { ReactWrapper } from "enzyme"
 import React from "react"
 import { graphql } from "react-relay"
 import { flushPromiseQueue } from "v2/DevTools"
-import { mockLocation } from "v2/DevTools/mockLocation"
+
+const mockAssign = jest.fn()
 
 jest.unmock("react-relay")
 
@@ -26,6 +26,30 @@ const searchResults: SearchBarTestQueryRawResponse["viewer"] = {
           displayType: "Cat",
           slug: "percy-z",
           id: "opaque-searchable-item-id",
+        },
+      },
+      {
+        node: {
+          displayLabel: "Banksy",
+          href: "/artist/banksy",
+          __typename: "Artist",
+          counts: {
+            artworks: 3390,
+            auctionResults: 734,
+          },
+          id: "opaque-searchable-item-id2",
+        },
+      },
+      {
+        node: {
+          displayLabel: "Not Banksy",
+          href: "/artist/not-banksy",
+          __typename: "Artist",
+          counts: {
+            artworks: 0,
+            auctionResults: 0,
+          },
+          id: "opaque-searchable-item-id3",
         },
       },
     ],
@@ -68,6 +92,10 @@ const getWrapper = (
 }
 
 describe("SearchBar", () => {
+  beforeEach(() => {
+    window.location.assign = mockAssign
+  })
+
   it("displays search results", async () => {
     const component = await getWrapper(searchResults)
 
@@ -76,6 +104,34 @@ describe("SearchBar", () => {
 
     expect(component.text()).toContain("Percy Z")
     expect(component.text()).toContain("Cat")
+  })
+
+  it("displays quick navigation links only for artists with artworks or auction results", async () => {
+    const component = await getWrapper(searchResults)
+
+    simulateTyping(component, "blah") // Any text of non-zero length.
+    await flushPromiseQueue()
+
+    const quickNavigationItems = component.find("QuickNavigationItem")
+
+    expect(quickNavigationItems.length).toBe(2)
+    expect(quickNavigationItems.at(0).text()).toContain("Artworks")
+    expect(quickNavigationItems.at(1).text()).toContain("Auction Results")
+  })
+
+  it("navigates when clicking quick navigation items", async () => {
+    const component = await getWrapper(searchResults)
+
+    simulateTyping(component, "blah") // Any text of non-zero length.
+    await flushPromiseQueue()
+
+    const quickNavigationItems = component.find("QuickNavigationItem")
+
+    quickNavigationItems.at(0).simulate("click")
+    expect(mockAssign).toHaveBeenCalledWith("/artist/banksy/works-for-sale")
+
+    quickNavigationItems.at(1).simulate("click")
+    expect(mockAssign).toHaveBeenCalledWith("/artist/banksy/auction-results")
   })
 
   it("displays long placeholder text at sizes greater than xs", async () => {
@@ -91,18 +147,6 @@ describe("SearchBar", () => {
     await flushPromiseQueue()
 
     expect(component.find(Input).props().placeholder).toBe("Search Artsy")
-  })
-
-  it("navigates the user when clicking on an item", async () => {
-    const component = await getWrapper(searchResults)
-
-    simulateTyping(component, "blah") // Any text of non-zero length.
-    await flushPromiseQueue()
-
-    mockLocation()
-    component.find(SuggestionItem).at(0).simulate("click")
-
-    expect(window.location.assign).toHaveBeenCalledWith("/cat/percy-z")
   })
 
   it("highlights matching parts of suggestions", async () => {
