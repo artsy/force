@@ -13,11 +13,8 @@ export const ShowHeader: React.FC<ShowHeaderProps> = ({ show, ...rest }) => {
   const { name, startAt, endAt, formattedStartAt, formattedEndAt } = show
 
   const currentTime = useCurrentTime({ syncWithServer: true })
-  const { formattedTime } = useEventTiming({
-    currentTime,
-    startAt: startAt!,
-    endAt: endAt!,
-  })
+  // @ts-expect-error STRICT_NULL_CHECK
+  const { formattedTime } = useEventTiming({ currentTime, startAt, endAt })
 
   return (
     <Box {...rest}>
@@ -54,6 +51,15 @@ export const ShowHeaderFragmentContainer = createFragmentContainer(ShowHeader, {
       status
       formattedStartAt: startAt(format: "MMMM D")
       formattedEndAt: endAt(format: "MMMM D, YYYY")
+      partner {
+        ... on Partner {
+          name
+        }
+        ... on ExternalPartner {
+          name
+        }
+      }
+
       ...ShowContextualLink_show
     }
   `,
