@@ -43,14 +43,17 @@ const HomeCurrentFairsRail: React.FC<HomeCurrentFairsRailProps> = ({
               key={index}
             >
               <Box key={index}>
-                {fair.image?.cropped?.src && (
+                {fair.image?.cropped?.src ? (
                   <Image
                     src={fair.image.cropped.src}
                     srcSet={fair.image.cropped.srcSet}
                     width={fair.image.cropped.width}
                     height={fair.image.cropped.height}
+                    alt=""
                     lazyLoad
                   />
+                ) : (
+                  <Box bg="black30" width={440} height={315} />
                 )}
               </Box>
               <Text variant="xl" mt={1}>

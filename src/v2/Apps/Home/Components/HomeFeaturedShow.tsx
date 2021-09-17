@@ -1,4 +1,4 @@
-import { Image, Spacer, Text } from "@artsy/palette"
+import { Box, Image, Spacer, Text } from "@artsy/palette"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "v2/System/Router/RouterLink"
@@ -22,14 +22,17 @@ const HomeFeaturedShow: React.FC<HomeFeaturedShowProps> = ({ show }) => {
 
   return (
     <RouterLink to={show.href ?? ""} display="block" textDecoration="none">
-      {image && (
+      {image ? (
         <Image
           src={image.src}
           srcSet={image.srcSet}
           width={image.width}
           height={image.height}
+          lazyLoad
           alt=""
         />
+      ) : (
+        <Box bg="black30" width={325} height={230} />
       )}
 
       <Spacer mt={2} />

@@ -50,12 +50,13 @@ const HomeFeaturedMarketNews: React.FC<HomeFeaturedMarketNewsProps> = ({
               <ResponsiveBox
                 aspectWidth={firstImage.width}
                 aspectHeight={firstImage.height}
-                maxWidth={firstImage.width}
+                maxWidth="100%"
               >
                 <Image
                   src={firstImage.src}
                   srcSet={firstImage.srcSet}
-                  lazyLoad={true}
+                  style={{ display: "block" }}
+                  lazyLoad
                 />
               </ResponsiveBox>
             )}
@@ -89,14 +90,16 @@ const HomeFeaturedMarketNews: React.FC<HomeFeaturedMarketNewsProps> = ({
                       <ResponsiveBox
                         aspectWidth={image.width}
                         aspectHeight={image.height}
-                        maxWidth={image.width}
+                        maxWidth="100%"
+                        display="block"
                       >
                         <Image
                           width="100%"
                           height="100%"
                           src={image.src}
                           srcSet={image.srcSet}
-                          lazyLoad={true}
+                          style={{ display: "block" }}
+                          lazyLoad
                         />
                       </ResponsiveBox>
                     )}
@@ -184,7 +187,7 @@ const PLACEHOLDER = (
       <GridColumns>
         <Column span={6}>
           <Media greaterThan="xs">
-            <SkeletonBox bg="black30" height={720} mb={2} />
+            <SkeletonBox bg="black30" width="670" height={720} mb={2} />
             <SkeletonText variant="xs" textTransform="uppercase" my={1}>
               Art Fairs
             </SkeletonText>
