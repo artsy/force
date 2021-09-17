@@ -6,6 +6,7 @@ import { FragmentRefs } from "relay-runtime";
 export type FairOrganizerApp_fairOrganizer = {
     readonly name: string | null;
     readonly slug: string;
+    readonly about: string | null;
     readonly profile: {
         readonly image: {
             readonly url: string | null;
@@ -41,6 +42,19 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "name": "slug",
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "format",
+          "value": "HTML"
+        }
+      ],
+      "kind": "ScalarField",
+      "name": "about",
+      "storageKey": "about(format:\"HTML\")"
     },
     {
       "alias": null,
@@ -100,5 +114,5 @@ const node: ReaderFragment = {
   ],
   "type": "FairOrganizer"
 };
-(node as any).hash = 'ad5e1ec1b8248f160b25d3ccd9e4f032';
+(node as any).hash = '72c9c6980aa419127501dd39b6d34f3e';
 export default node;
