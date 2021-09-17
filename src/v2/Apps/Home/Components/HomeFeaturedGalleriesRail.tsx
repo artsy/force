@@ -66,16 +66,19 @@ const HomeFeaturedGalleriesRail: React.FC<HomeFeaturedGalleriesRailProps> = ({
                     />
                   }
                 />
-                {node.image?.cropped?.src && (
+                {node.image?.cropped?.src ? (
                   <Box mt={1}>
                     <Image
                       src={node.image.cropped.src}
                       srcSet={node.image.cropped.srcSet}
                       width={node.image.cropped.width}
                       height={node.image.cropped.height}
+                      alt=""
                       lazyLoad
                     />
                   </Box>
+                ) : (
+                  <Box bg="black30" width={325} height={230} />
                 )}
               </Box>
             </RouterLink>
