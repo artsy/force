@@ -34,6 +34,7 @@ const searchResults: SearchBarTestQueryRawResponse["viewer"] = {
           displayLabel: "Banksy",
           href: "/artist/banksy",
           __typename: "Artist",
+          __isNode: "Artist",
           counts: {
             artworks: 3390,
             auctionResults: 734,
@@ -46,6 +47,7 @@ const searchResults: SearchBarTestQueryRawResponse["viewer"] = {
           displayLabel: "Not Banksy",
           href: "/artist/not-banksy",
           __typename: "Artist",
+          __isNode: "Artist",
           counts: {
             artworks: 0,
             auctionResults: 0,
