@@ -276,9 +276,9 @@ export const HomeHeroUnitFragmentContainer = createFragmentContainer(
 )
 
 export const LOGGED_OUT_HERO_UNIT: StaticHeroUnit = {
-  title: "Collect art by the world's leading artists",
+  title: "Collect art by the world’s leading artists",
   subtitle: "Register for updates on available works, market news, and more.",
   href: "/signup",
-  linkText: "Sign up",
+  linkText: "Sign Up",
   backgroundImageURL: "http://files.artsy.net/homepage/signup-banner.png",
 }
