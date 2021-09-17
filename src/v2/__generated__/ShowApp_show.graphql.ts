@@ -34,10 +34,7 @@ export type ShowApp_show = {
             } | null> | null;
         } | null> | null;
     } | null;
-    readonly images: ReadonlyArray<{
-        readonly url: string | null;
-    } | null> | null;
-    readonly " $fragmentRefs": FragmentRefs<"ShowNavigationBanner_show" | "ShowHeader_show" | "ShowAbout_show" | "ShowMeta_show" | "ShowInstallShots_show" | "ShowViewingRoom_show" | "ShowArtworksEmptyState_show" | "ShowArtworks_show" | "ShowContextCard_show">;
+    readonly " $fragmentRefs": FragmentRefs<"ShowHeader_show" | "ShowAbout_show" | "ShowMeta_show" | "ShowInstallShots_show" | "ShowViewingRoom_show" | "ShowArtworksEmptyState_show" | "ShowArtworks_show" | "ShowContextCard_show">;
     readonly " $refType": "ShowApp_show";
 };
 export type ShowApp_show$data = ShowApp_show;
@@ -267,40 +264,6 @@ return {
       "storageKey": null
     },
     {
-      "alias": null,
-      "args": [
-        {
-          "kind": "Literal",
-          "name": "default",
-          "value": false
-        },
-        {
-          "kind": "Literal",
-          "name": "size",
-          "value": 100
-        }
-      ],
-      "concreteType": "Image",
-      "kind": "LinkedField",
-      "name": "images",
-      "plural": true,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "url",
-          "storageKey": null
-        }
-      ],
-      "storageKey": "images(default:false,size:100)"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "ShowNavigationBanner_show"
-    },
-    {
       "args": null,
       "kind": "FragmentSpread",
       "name": "ShowHeader_show"
@@ -350,5 +313,5 @@ return {
   "type": "Show"
 };
 })();
-(node as any).hash = '338edf3be7508a8349a7c0a5e55f4456';
+(node as any).hash = 'a153e4de51af149150d242013360b2a3';
 export default node;

@@ -26,8 +26,6 @@ import {
   SharedArtworkFilterContextProps,
 } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
 import { RouterLink } from "v2/System/Router/RouterLink"
-import { ShowNavigationBannerFragmentContainer as ShowNavigationBanner } from "./Components/ShowNavigationBanner"
-import { useRouter } from "v2/System/Router/useRouter"
 
 interface ShowAppProps {
   show: ShowApp_show
@@ -35,8 +33,6 @@ interface ShowAppProps {
 
 export const ShowApp: React.FC<ShowAppProps> = ({ show }) => {
   const { contextPageOwnerSlug, contextPageOwnerType } = useAnalyticsContext()
-  const { match } = useRouter()
-  const { from_fair: arrivedFromFair } = match.location.query
 
   const hasViewingRoom = (show.viewingRoomsConnection?.edges?.length ?? 0) > 0
   const hasAbout = !!show.about
@@ -56,17 +52,11 @@ export const ShowApp: React.FC<ShowAppProps> = ({ show }) => {
             contextPageOwnerType,
           }}
         >
-          {arrivedFromFair && (
-            <ShowNavigationBanner show={show} mt={2} mb={4} />
-          )}
+          <Box mt={4} mb={[4, 6]}>
+            <ShowInstallShots show={show} mt={4} mb={6} />
+          </Box>
 
-          {Number(show?.images?.length) > 0 && (
-            <Box my={4}>
-              <ShowInstallShots show={show} mt={4} mb={6} />
-            </Box>
-          )}
-
-          <GridColumns mt={2}>
+          <GridColumns>
             <Column span={hasWideHeader ? [12, 8, 6] : 6} wrap={hasWideHeader}>
               <ShowHeader show={show} />
 
@@ -167,10 +157,6 @@ export const ShowAppFragmentContainer = createFragmentContainer(ShowApp, {
           }
         }
       }
-      images(default: false, size: 100) {
-        url
-      }
-      ...ShowNavigationBanner_show
       ...ShowHeader_show
       ...ShowAbout_show
       ...ShowMeta_show
