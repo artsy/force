@@ -16,17 +16,17 @@ import { InquiryInstitutionalAffiliations } from "./Views/InquiryInstitutionalAf
 import { InquirySpecialist } from "./Views/InquirySpecialist"
 
 const VIEWS = {
-  Account: InquiryAccount, // ✅
-  ArtistsInCollection: InquiryArtistsInCollection, // ✅
-  AuctionHousesYouWorkWith: InquiryAuctionHousesYouWorkWith, // ✅
-  BasicInfo: InquiryBasicInfoQueryRenderer, // ✅
-  CommercialInterest: InquiryCommercialInterest, // ✅
-  Confirmation: InquiryConfirmation, // ✅
-  Done: InquiryDone, // ✅
-  FairsYouAttend: InquiryFairsYouAttend, // ✅
-  GalleriesYouWorkWith: InquiryGalleriesYouWorkWith, // ✅
-  Inquiry: InquiryInquiryQueryRenderer, // ✅
-  InstitutionalAffiliations: InquiryInstitutionalAffiliations, // ✅
+  Account: InquiryAccount,
+  ArtistsInCollection: InquiryArtistsInCollection,
+  AuctionHousesYouWorkWith: InquiryAuctionHousesYouWorkWith,
+  BasicInfo: InquiryBasicInfoQueryRenderer,
+  CommercialInterest: InquiryCommercialInterest,
+  Confirmation: InquiryConfirmation,
+  Done: InquiryDone,
+  FairsYouAttend: InquiryFairsYouAttend,
+  GalleriesYouWorkWith: InquiryGalleriesYouWorkWith,
+  Inquiry: InquiryInquiryQueryRenderer,
+  InstitutionalAffiliations: InquiryInstitutionalAffiliations,
   Specialist: InquirySpecialist,
 }
 
