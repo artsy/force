@@ -83,7 +83,8 @@ export class NavigationTabs extends React.Component<Props> {
   tabs() {
     const { term, artworkCount } = this.props
 
-    const route = tab => `/search${tab.replace(/\s/g, "_")}?term=${term}`
+    const route = tab =>
+      `/search${tab.replace(/\s/g, "_")}?term=${encodeURIComponent(term)}`
 
     let restAggregationCount: number = 0
     MORE_TABS.forEach(

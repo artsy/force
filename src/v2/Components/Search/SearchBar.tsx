@@ -1,3 +1,4 @@
+import React, { Component, useContext } from "react"
 import { Box, BoxProps } from "@artsy/palette"
 import { SearchBar_viewer } from "v2/__generated__/SearchBar_viewer.graphql"
 import { SearchBarSuggestQuery } from "v2/__generated__/SearchBarSuggestQuery.graphql"
@@ -15,7 +16,6 @@ import { Router } from "found"
 import { isEmpty } from "lodash"
 import { throttle } from "lodash"
 import qs from "qs"
-import React, { Component, useContext } from "react"
 import Autosuggest from "react-autosuggest"
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
 import { data as sd } from "sharify"
@@ -397,7 +397,7 @@ export class SearchBar extends Component<Props, State> {
       node: {
         displayLabel: term,
         displayType: "FirstItem",
-        href: `/search?term=${term}`,
+        href: `/search?term=${encodeURIComponent(term)}`,
         isFirstItem: true,
       },
     }
@@ -439,11 +439,12 @@ export class SearchBar extends Component<Props, State> {
         onSubmit={event => {
           if (router) {
             event.preventDefault()
+            const encodedTerm = encodeURIComponent(this.state.term)
+
             // TODO: Reenable in-router push once all routes have been moved over
             // to new novo app
             // router.push(`/search?term=${this.state.term}`)
-
-            window.location.assign(`/search?term=${this.state.term}`)
+            window.location.assign(`/search?term=${encodedTerm}`)
             this.onBlur(event)
           } else {
             console.error(
