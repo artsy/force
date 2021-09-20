@@ -14,6 +14,10 @@ jest.mock("v2/System/useSystemContext")
 jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
   useMatchMedia: () => ({}),
 }))
+jest.mock("v2/Utils/user", () => ({
+  userHasLabFeature: jest.fn(),
+}))
+
 const errorBoxQuery = "Banner[data-test='credit-card-error']"
 
 // needed for modal contentAnimation
@@ -60,6 +64,7 @@ describe("AddressModal", () => {
     commitMutation.mockReset()
     ;(useSystemContext as jest.Mock).mockImplementation(() => {
       return {
+        user: { lab_features: [] },
         isLoggedIn: true,
         relayEnvironment: {},
         mediator: {
@@ -71,12 +76,14 @@ describe("AddressModal", () => {
       }
     })
   })
+
   it("renders EditModal with the title, input fields and buttons", () => {
     const wrapper = getWrapper(testAddressModalProps)
+
     expect(wrapper.text()).toContain("Edit address")
     expect(wrapper.find("input").length).toBe(7)
-    expect(wrapper.find("select").length).toBe(2)
-    expect(wrapper.find("Select[data-test='countryDropdown']").length).toBe(1)
+    expect(wrapper.find("select").length).toBe(1)
+
     expect(wrapper.find("Checkbox[data-test='setAsDefault']").length).toBe(1)
     expect(wrapper.find("Clickable[data-test='deleteButton']").length).toBe(1)
     expect(wrapper.find("Button[data-test='saveButton']").length).toBe(1)
@@ -104,7 +111,8 @@ describe("AddressModal", () => {
     })
     expect(wrapper.text()).toContain("Add address")
     expect(wrapper.find("input").length).toBe(7)
-    expect(wrapper.find("select").length).toBe(2)
+    expect(wrapper.find("select").length).toBe(1)
+
     expect(wrapper.find("Checkbox[data-test='setAsDefault']").length).toBe(1)
     expect(wrapper.find("Clickable[data-test='deleteButton']").length).toBe(0)
     expect(wrapper.find("Button[data-test='saveButton']").length).toBe(1)
@@ -277,5 +285,51 @@ describe("AddressModal", () => {
       "phoneNumber",
       "Please enter a valid phone number"
     )
+  })
+})
+
+describe("AddressModal feature flag", () => {
+  beforeEach(() => {
+    testAddressModalProps = {
+      show: true,
+      address: savedAddress,
+      onSuccess: jest.fn(),
+      onError: jest.fn(),
+      onDeleteAddress: jest.fn(),
+      modalDetails: {
+        addressModalTitle: "Edit address",
+        addressModalAction: "editUserAddress",
+      },
+      me: {
+        id: "1234",
+        addressConnection: {
+          totalCount: 0,
+          edges: [],
+        },
+        " $refType": "SavedAddresses_me",
+      },
+      closeModal: jest.fn(),
+    }
+    commitMutation.mockReset()
+    ;(useSystemContext as jest.Mock).mockImplementation(() => {
+      return {
+        user: { lab_features: ["Phone Number Validation"] },
+        isLoggedIn: true,
+        relayEnvironment: {},
+        mediator: {
+          on: jest.fn(),
+          off: jest.fn(),
+          ready: jest.fn(),
+          trigger: jest.fn(),
+        },
+      }
+    })
+  })
+
+  it("renders dropdown phone input field when feat flag present", () => {
+    const wrapper = getWrapper(testAddressModalProps)
+    expect(
+      wrapper.find("Input[data-test='phoneInputWithoutValidationFlag']").length
+    ).toBe(0)
   })
 })
