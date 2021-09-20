@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useRef, useState } from "react"
 import { Engine } from "../Engine"
 import { useEngine } from "../config"
-import { createFragmentContainer, graphql } from "react-relay"
+import { createFragmentContainer, graphql, Environment } from "react-relay"
 import { useInquiryContext_me } from "v2/__generated__/useInquiryContext_me.graphql"
 import { useInquiryContextQuery } from "v2/__generated__/useInquiryContextQuery.graphql"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
@@ -54,8 +54,12 @@ const InquiryContext = createContext<{
   inquiry: InquiryState
   next(): void
   onClose(): void
+  relayEnvironment: React.RefObject<Environment>
   setContext: (updatedContext: Partial<Context>) => React.RefObject<Context>
   setInquiry: React.Dispatch<React.SetStateAction<InquiryState>>
+  setRelayEnvironment: (
+    updatedEnvironment: Environment
+  ) => React.RefObject<Environment>
   View: React.FC
   visited: Visited
 }>({
@@ -66,8 +70,10 @@ const InquiryContext = createContext<{
   inquiry: { message: DEFAULT_MESSAGE },
   next: () => {},
   onClose: () => {},
+  relayEnvironment: React.createRef<Environment>(),
   setContext: () => React.createRef<Context>(),
   setInquiry: () => {},
+  setRelayEnvironment: () => React.createRef<Environment>(),
   View: () => <></>,
   visited: new Visited("empty"),
 })
@@ -116,6 +122,15 @@ const InquiryProvider: React.FC<InquiryProviderProps> = ({
     onDone: onClose,
   })
 
+  const { relayEnvironment: defaultRelayEnvironment } = useSystemContext()
+
+  const relayEnvironment = useRef(defaultRelayEnvironment!)
+
+  const setRelayEnvironment = (updatedEnvironment: Environment) => {
+    relayEnvironment.current = updatedEnvironment
+    return relayEnvironment
+  }
+
   return (
     <InquiryContext.Provider
       value={{
@@ -124,12 +139,14 @@ const InquiryProvider: React.FC<InquiryProviderProps> = ({
         current,
         engine,
         inquiry,
-        visited,
         next,
         onClose,
+        relayEnvironment,
         setContext,
         setInquiry,
+        setRelayEnvironment,
         View,
+        visited,
       }}
     >
       {children}

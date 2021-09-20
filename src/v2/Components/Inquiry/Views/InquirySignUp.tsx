@@ -27,7 +27,7 @@ export const InquirySignUp: React.FC = () => {
   const [mode, setMode] = useState<Mode>(Mode.Pending)
   const [error, setError] = useState("")
 
-  const { inquiry, artworkID, next } = useInquiryContext()
+  const { inquiry, artworkID, next, setRelayEnvironment } = useInquiryContext()
 
   const { submitArtworkInquiryRequest } = useArtworkInquiryRequest()
 
@@ -45,8 +45,12 @@ export const InquirySignUp: React.FC = () => {
     try {
       const { user } = await signUp(state)
 
+      const relayEnvironment = createRelaySSREnvironment({ user })
+
+      // Sets logged in environment
+      setRelayEnvironment(relayEnvironment)
+
       await submitArtworkInquiryRequest({
-        relayEnvironment: createRelaySSREnvironment({ user }),
         artworkID,
         message: inquiry.message,
       })

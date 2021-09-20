@@ -1,18 +1,16 @@
 import { commitMutation, graphql } from "relay-runtime"
 import {
-  useUpdateCollectorProfileMutation,
-  UpdateCollectorProfileInput,
-} from "v2/__generated__/useUpdateCollectorProfileMutation.graphql"
+  useUpdateMyUserProfileMutation,
+  UpdateMyProfileInput,
+} from "v2/__generated__/useUpdateMyUserProfileMutation.graphql"
 import { useInquiryContext } from "./useInquiryContext"
 
-export const useUpdateCollectorProfile = () => {
+export const useUpdateMyUserProfile = () => {
   const { relayEnvironment } = useInquiryContext()
 
-  const submitUpdateCollectorProfile = (
-    input: UpdateCollectorProfileInput = {}
-  ) => {
+  const submitUpdateMyUserProfile = (input: UpdateMyProfileInput = {}) => {
     return new Promise((resolve, reject) => {
-      commitMutation<useUpdateCollectorProfileMutation>(
+      commitMutation<useUpdateMyUserProfileMutation>(
         relayEnvironment.current!,
         {
           onError: reject,
@@ -25,10 +23,10 @@ export const useUpdateCollectorProfile = () => {
             resolve(res)
           },
           mutation: graphql`
-            mutation useUpdateCollectorProfileMutation(
-              $input: UpdateCollectorProfileInput!
+            mutation useUpdateMyUserProfileMutation(
+              $input: UpdateMyProfileInput!
             ) {
-              updateCollectorProfile(input: $input) {
+              updateMyUserProfile(input: $input) {
                 clientMutationId
               }
             }
@@ -39,5 +37,5 @@ export const useUpdateCollectorProfile = () => {
     })
   }
 
-  return { submitUpdateCollectorProfile }
+  return { submitUpdateMyUserProfile }
 }
