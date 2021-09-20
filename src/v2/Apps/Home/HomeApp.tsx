@@ -12,6 +12,7 @@ import { FlashBannerQueryRenderer } from "v2/Components/FlashBanner"
 import { HomeFeaturedGalleriesRailQueryRenderer } from "./Components/HomeFeaturedGalleriesRail"
 import { HomeFeaturedShowsRailQueryRenderer } from "./Components/HomeFeaturedShowsRail"
 import { HomeCurrentFairsRailQueryRenderer } from "./Components/HomeCurrentFairsRail"
+import { HomeTrendingArtistsRailQueryRenderer } from "./Components/HomeTrendingArtistsRail"
 
 interface HomeAppProps {
   homePage: HomeApp_homePage | null
@@ -52,12 +53,10 @@ export const HomeApp: React.FC<HomeAppProps> = ({
         )}
 
         <HomeFeaturedMarketNewsLazyQueryRenderer />
-
         <HomeFeaturedGalleriesRailQueryRenderer />
-
         <HomeFeaturedShowsRailQueryRenderer />
-
         <HomeCurrentFairsRailQueryRenderer />
+        <HomeTrendingArtistsRailQueryRenderer />
       </Join>
     </>
   )
