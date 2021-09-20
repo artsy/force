@@ -24,12 +24,17 @@ query FairEditorialItem_Test_Query {
   }
 }
 
-fragment FairEditorialItem_article on Article {
-  id
+fragment FairEditorialItemLink_article on Article {
   internalID
   slug
   title
   href
+  publishedAt(format: "MMMM D, YYYY")
+}
+
+fragment FairEditorialItem_article on Article {
+  id
+  title
   publishedAt(format: "MMMM D, YYYY")
   thumbnailTitle
   thumbnailImage {
@@ -46,6 +51,7 @@ fragment FairEditorialItem_article on Article {
       srcSet
     }
   }
+  ...FairEditorialItemLink_article
 }
 */
 
@@ -138,28 +144,7 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "internalID",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "slug",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
             "name": "title",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "href",
             "storageKey": null
           },
           {
@@ -234,6 +219,27 @@ return {
               }
             ],
             "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "internalID",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "slug",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "href",
+            "storageKey": null
           }
         ],
         "storageKey": "article(id:\"test\")"
@@ -245,7 +251,7 @@ return {
     "metadata": {},
     "name": "FairEditorialItem_Test_Query",
     "operationKind": "query",
-    "text": "query FairEditorialItem_Test_Query {\n  article(id: \"test\") {\n    ...FairEditorialItem_article\n    id\n  }\n}\n\nfragment FairEditorialItem_article on Article {\n  id\n  internalID\n  slug\n  title\n  href\n  publishedAt(format: \"MMMM D, YYYY\")\n  thumbnailTitle\n  thumbnailImage {\n    large: cropped(width: 670, height: 720) {\n      width\n      height\n      src\n      srcSet\n    }\n    small: cropped(width: 325, height: 240) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n"
+    "text": "query FairEditorialItem_Test_Query {\n  article(id: \"test\") {\n    ...FairEditorialItem_article\n    id\n  }\n}\n\nfragment FairEditorialItemLink_article on Article {\n  internalID\n  slug\n  title\n  href\n  publishedAt(format: \"MMMM D, YYYY\")\n}\n\nfragment FairEditorialItem_article on Article {\n  id\n  title\n  publishedAt(format: \"MMMM D, YYYY\")\n  thumbnailTitle\n  thumbnailImage {\n    large: cropped(width: 670, height: 720) {\n      width\n      height\n      src\n      srcSet\n    }\n    small: cropped(width: 325, height: 240) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n  ...FairEditorialItemLink_article\n}\n"
   }
 };
 })();

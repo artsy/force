@@ -5,10 +5,7 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type FairEditorialItem_article = {
     readonly id: string;
-    readonly internalID: string;
-    readonly slug: string | null;
     readonly title: string | null;
-    readonly href: string | null;
     readonly publishedAt: string | null;
     readonly thumbnailTitle: string | null;
     readonly thumbnailImage: {
@@ -25,6 +22,7 @@ export type FairEditorialItem_article = {
             readonly srcSet: string;
         } | null;
     } | null;
+    readonly " $fragmentRefs": FragmentRefs<"FairEditorialItemLink_article">;
     readonly " $refType": "FairEditorialItem_article";
 };
 export type FairEditorialItem_article$data = FairEditorialItem_article;
@@ -83,28 +81,7 @@ return {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "internalID",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "slug",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
       "name": "title",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "href",
       "storageKey": null
     },
     {
@@ -179,10 +156,15 @@ return {
         }
       ],
       "storageKey": null
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "FairEditorialItemLink_article"
     }
   ],
   "type": "Article"
 };
 })();
-(node as any).hash = '61a23186bdd9ff00376fbad12d7ee0a5';
+(node as any).hash = 'c75b6595a83db414fce5e180962b885e';
 export default node;

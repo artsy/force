@@ -91,7 +91,7 @@ export const FairOrganizerDedicatedArticles: React.FC<FairOrganizerDedicatedArti
             {articles.map(article => (
               <Column key={article.id} span={[12, 3]} mb={30}>
                 <Flex justifyContent="center">
-                  <FairOrganizerArticle article={article} />
+                  <FairOrganizerArticle article={article} width="100%" />
                 </Flex>
               </Column>
             ))}
