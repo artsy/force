@@ -85,7 +85,7 @@
     "@artsy/palette-charts": "16.6.0",
     "@artsy/passport": "3.2.0",
     "@artsy/reaction": "29.2.1",
-    "@artsy/stitch": "6.3.0",
+    "@artsy/stitch": "6.4.0",
     "@artsy/to-title-case": "^1.0.3",
     "@artsy/xapp": "1.0.6",
     "@babel/runtime": "7.13.10",
