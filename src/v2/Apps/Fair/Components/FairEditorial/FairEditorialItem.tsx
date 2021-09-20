@@ -1,6 +1,5 @@
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { useTracking } from "react-tracking"
 import { FairEditorialItem_article } from "v2/__generated__/FairEditorialItem_article.graphql"
 import {
   Box,
@@ -11,14 +10,7 @@ import {
   TextVariant,
   BoxProps,
 } from "@artsy/palette"
-import {
-  ActionType,
-  ClickedArticleGroup,
-  ContextModule,
-  OwnerType,
-} from "@artsy/cohesion"
-import { useAnalyticsContext } from "v2/System/Analytics/AnalyticsContext"
-import { RouterLink } from "v2/System/Router/RouterLink"
+import { FairEditorialItemLinkFragmentContainer as FairEditorialItemLink } from "./FairEditorialItemLink"
 
 export interface FairEditorialItemProps extends BoxProps {
   article: FairEditorialItem_article
@@ -27,9 +19,30 @@ export interface FairEditorialItemProps extends BoxProps {
 }
 
 interface ItemImageProps {
+  image: {
+    src: string
+    srcSet: string
+  }
+  thumbnailTitle: string | null
   width?: number | string
   height?: number | string
 }
+
+const ItemImage: React.FC<ItemImageProps> = ({
+  image,
+  thumbnailTitle,
+  width = "100%",
+  height = "100%",
+}) => (
+  <Image
+    width={width}
+    height={height}
+    src={image.src}
+    srcSet={image.srcSet}
+    lazyLoad={true}
+    alt={thumbnailTitle ?? ""}
+  />
+)
 
 export const FairEditorialItem: React.FC<FairEditorialItemProps> = ({
   article,
@@ -37,26 +50,6 @@ export const FairEditorialItem: React.FC<FairEditorialItemProps> = ({
   isResponsive = false,
   ...rest
 }) => {
-  const tracking = useTracking()
-
-  const {
-    contextPageOwnerId,
-    contextPageOwnerSlug,
-    contextPageOwnerType,
-  } = useAnalyticsContext()
-
-  const clickedArticleTrackingData: ClickedArticleGroup = {
-    context_module: ContextModule.relatedArticles,
-    context_page_owner_type: contextPageOwnerType!,
-    context_page_owner_id: contextPageOwnerId,
-    context_page_owner_slug: contextPageOwnerSlug,
-    destination_page_owner_type: OwnerType.article,
-    destination_page_owner_id: article.internalID,
-    destination_page_owner_slug: article.slug!,
-    type: "thumbnail",
-    action: ActionType.clickedArticleGroup,
-  }
-
   const image = article.thumbnailImage?.[size]!
   const variants = {
     large: {
@@ -67,53 +60,30 @@ export const FairEditorialItem: React.FC<FairEditorialItemProps> = ({
     },
   }[size]
 
-  const ItemImage: React.FC<ItemImageProps> = ({
-    width = "100%",
-    height = "100%",
-  }) => (
-    <Image
-      width={width}
-      height={height}
-      src={image.src}
-      srcSet={image.srcSet}
-      lazyLoad={true}
-      alt={article.thumbnailTitle!}
-    />
-  )
-
-  const ItemLink = ({ children }) => {
-    return (
-      <RouterLink
-        to={article.href!}
-        aria-label={`${article.title} (${article.publishedAt})`}
-        textDecoration="none"
-        style={{ display: "block" }}
-        onClick={() => tracking.trackEvent(clickedArticleTrackingData)}
-      >
-        {children}
-      </RouterLink>
-    )
-  }
-
   return (
     <Box {...rest}>
       {/* Devided link into separate parts in order to avoid linking via empty
         space when responsive box is applied */}
-      <ItemLink>
+      <FairEditorialItemLink article={article}>
         {isResponsive ? (
           <ResponsiveBox
             aspectWidth={image.width}
             aspectHeight={image.height}
             maxWidth="100%"
           >
-            <ItemImage />
+            <ItemImage thumbnailTitle={article.thumbnailTitle} image={image} />
           </ResponsiveBox>
         ) : (
-          <ItemImage width={image.width} height={image.height} />
+          <ItemImage
+            thumbnailTitle={article.thumbnailTitle}
+            image={image}
+            width={image.width}
+            height={image.height}
+          />
         )}
-      </ItemLink>
+      </FairEditorialItemLink>
 
-      <ItemLink>
+      <FairEditorialItemLink article={article}>
         <Spacer mt={1} />
 
         <Box pr={10}>
@@ -127,7 +97,7 @@ export const FairEditorialItem: React.FC<FairEditorialItemProps> = ({
             {article.publishedAt}
           </Text>
         </Box>
-      </ItemLink>
+      </FairEditorialItemLink>
     </Box>
   )
 }
@@ -138,10 +108,7 @@ export const FairEditorialItemFragmentContainer = createFragmentContainer(
     article: graphql`
       fragment FairEditorialItem_article on Article {
         id
-        internalID
-        slug
         title
-        href
         publishedAt(format: "MMMM D, YYYY")
         thumbnailTitle
         thumbnailImage {
@@ -158,6 +125,7 @@ export const FairEditorialItemFragmentContainer = createFragmentContainer(
             srcSet
           }
         }
+        ...FairEditorialItemLink_article
       }
     `,
   }
