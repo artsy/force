@@ -47,8 +47,8 @@ const ConditionalOtpInput: React.FC<ConditionalOtpInputProps> = props => {
     <>
       {showOtpOnDemandPrompt && (
         <Message>
-          This login requires additional authorization. Please check your email
-          for a one-time authentication code.
+          Your safety and security are important to us. Please check your email
+          for a one-time authentication code to complete your login.
         </Message>
       )}
       {showOtpInput && (

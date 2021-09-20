@@ -280,7 +280,7 @@ describe("LoginForm", () => {
         "missing on-demand authentication code"
       )
       expect(wrapper.html()).toMatch(
-        "This login requires additional authorization. Please check your email for a one-time authentication code."
+        "Your safety and security are important to us. Please check your email for a one-time authentication code to complete your login."
       )
       console.log(wrapper.state())
       expect(props.handleSubmit.mock.calls[0][0]).toEqual({
