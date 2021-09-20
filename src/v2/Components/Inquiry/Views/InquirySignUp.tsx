@@ -135,12 +135,16 @@ export const InquirySignUp: React.FC = () => {
           By signing up, you agree to our{" "}
           <a href="/terms" target="_blank">
             Terms of Use
-          </a>{" "}
-          and{" "}
+          </a>
+          ,{" "}
           <a href="/privacy" target="_blank">
             Privacy Policy
           </a>
-          .
+          ,{" "}
+          <a href="/conditions-of-sale" target="_blank">
+            Conditions of Sale
+          </a>{" "}
+          and to receiving emails from Artsy.
         </Text>
 
         <Text variant="xs" color="black60" mt={1}>
