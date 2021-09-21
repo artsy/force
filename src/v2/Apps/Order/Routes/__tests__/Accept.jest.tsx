@@ -19,6 +19,7 @@ import { AcceptFragmentContainer } from "../Accept"
 import { OrderAppTestPage } from "./Utils/OrderAppTestPage"
 import { mockLocation } from "v2/DevTools/mockLocation"
 import { useTracking } from "v2/System"
+import { mockStripe } from "v2/DevTools/mockStripe"
 
 jest.unmock("react-relay")
 
@@ -26,6 +27,22 @@ jest.mock("v2/Utils/getCurrentTimeAsIsoString")
 jest.mock("v2/System/Analytics/useTracking")
 const NOW = "2018-12-05T13:47:16.446Z"
 require("v2/Utils/getCurrentTimeAsIsoString").__setCurrentTime(NOW)
+
+jest.mock("@stripe/stripe-js", () => {
+  let mock = null
+  return {
+    loadStripe: () => {
+      if (mock === null) {
+        // @ts-expect-error STRICT_NULL_CHECK
+        mock = mockStripe()
+      }
+      return mock
+    },
+    _mockStripe: () => mock,
+    // @ts-expect-error STRICT_NULL_CHECK
+    _mockReset: () => (mock = mockStripe()),
+  }
+})
 
 const realSetInterval = global.setInterval
 
@@ -40,6 +57,7 @@ const testOrder = {
   },
   offers: { edges: Offers },
   buyer: Buyer,
+  creditCardId: "creditCardId",
 }
 
 describe("Accept seller offer", () => {
