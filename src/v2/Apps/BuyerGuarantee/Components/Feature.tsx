@@ -63,7 +63,7 @@ export const Feature: React.FC<FeatureProps> = ({
         <Icon height={60} width={60} />
       </Box>
       <ConditionalWrapper
-        condition={isMobile!}
+        condition={isMobile! && onClick}
         wrapper={children => (
           <Button inline variant="noOutline" onClick={onClick}>
             {children}
