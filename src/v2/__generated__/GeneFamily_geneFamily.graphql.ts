@@ -21,6 +21,7 @@ export type GeneFamily_geneFamily = {
         readonly id: string;
         readonly name: string | null;
         readonly slug: string;
+        readonly isPublished: boolean | null;
     } | null> | null;
     readonly id: string;
     readonly name: string;
@@ -162,7 +163,14 @@ return {
         (v0/*: any*/),
         (v1/*: any*/),
         (v2/*: any*/),
-        (v3/*: any*/)
+        (v3/*: any*/),
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "isPublished",
+          "storageKey": null
+        }
       ],
       "storageKey": null
     },
@@ -173,5 +181,5 @@ return {
   "type": "GeneFamily"
 };
 })();
-(node as any).hash = 'c8debec6d37477c020f3f74bac7a0f87';
+(node as any).hash = 'e23acb7e5e6d178e93331db904729666';
 export default node;

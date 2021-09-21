@@ -40,7 +40,8 @@ export const GeneFamily: React.FC<GeneFamilyProps> = props => {
     return geneWithImage ?? gene
   })
 
-  const sortedGenes = alphabetizeGenes(genesWithImages)
+  const publishedGenes = genesWithImages.filter(g => g.isPublished)
+  const sortedGenes = alphabetizeGenes(publishedGenes)
 
   return (
     <Box id={`jump--${geneFamily.slug}`}>
@@ -93,6 +94,7 @@ export const GeneFamilyFragmentContainer = createFragmentContainer(GeneFamily, {
         id
         name
         slug
+        isPublished
       }
       id
       name
