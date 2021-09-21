@@ -35,7 +35,7 @@ export const InquiryArtistsInCollection: React.FC = () => {
 
   return (
     <>
-      <Text variant="lg" mb={2}>
+      <Text variant="lg" mb={2} pr={2}>
         What artists do you collect?{" "}
         <Box color="black60" as="span">
           (Optional)
