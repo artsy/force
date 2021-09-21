@@ -192,6 +192,13 @@ export const useEngine = ({ context, onDone }: UseEngine) => {
   }, [current, visited])
 
   const next = () => {
+    // At the end, and previously logged out; refresh the page
+    // to log in the entire stack
+    if (engine.current.isEnd() && !context.current?.isLoggedIn) {
+      window.location.reload()
+      return
+    }
+
     // At the end; closes the modal
     if (engine.current.isEnd()) {
       onDone()
