@@ -13,7 +13,9 @@ import {
   acceptOfferInsufficientInventoryFailure,
   acceptOfferPaymentFailed,
   acceptOfferPaymentFailedInsufficientFunds,
+  acceptOfferPaymentRequiresAction,
   acceptOfferSuccess,
+  fixFailedPaymentSuccess,
 } from "../__fixtures__/MutationResults"
 import { AcceptFragmentContainer } from "../Accept"
 import { OrderAppTestPage } from "./Utils/OrderAppTestPage"
@@ -90,6 +92,7 @@ describe("Accept seller offer", () => {
     } as AcceptTestQueryRawResponse,
     defaultMutationResults: {
       ...acceptOfferSuccess,
+      ...fixFailedPaymentSuccess,
     },
     TestPage: OrderAppTestPage,
   })
@@ -195,6 +198,18 @@ describe("Accept seller offer", () => {
       await page.expectAndDismissDefaultErrorDialog()
     })
 
+    it("commits fixFailedPayment mutation with Gravity credit card id", async () => {
+      mutations.useResultsOnce(acceptOfferPaymentRequiresAction)
+      await page.clickSubmit()
+
+      expect(mutations.lastFetchVariables).toMatchObject({
+        input: {
+          creditCardId: "creditCardId",
+          offerId: "myoffer-id",
+        },
+      })
+    })
+
     it("shows an error modal if there is a capture_failed error", async () => {
       mutations.useResultsOnce(acceptOfferPaymentFailed)
       await page.clickSubmit()
@@ -207,7 +222,7 @@ describe("Accept seller offer", () => {
       )
     })
 
-    it("shows an error modal if there is a capture_failed error with insuffient_funds", async () => {
+    it("shows an error modal if there is a capture_failed error with insufficient_funds", async () => {
       mutations.useResultsOnce(acceptOfferPaymentFailedInsufficientFunds)
       await page.clickSubmit()
       await page.expectAndDismissErrorDialogMatching(
