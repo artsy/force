@@ -6,7 +6,9 @@ export const CategoriesIntro: React.FC = () => {
     <>
       <GridColumns>
         <Column span={6}>
-          <Text variant="xl">The Art Genome Project</Text>
+          <Text variant="xl">
+            <h1>The Art Genome Project</h1>
+          </Text>
         </Column>
         <Column span={6}>
           <Text variant="md">
