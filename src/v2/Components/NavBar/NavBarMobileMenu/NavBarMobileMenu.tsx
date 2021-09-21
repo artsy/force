@@ -122,6 +122,14 @@ export const NavBarMobileMenu: React.FC<NavBarMobileMenuProps> = ({
             </NavBarMobileMenuItemLink>
 
             <NavBarMobileMenuItemLink
+              to="/price-database"
+              color="black100"
+              onClick={handleClick}
+            >
+              Price Database
+            </NavBarMobileMenuItemLink>
+
+            <NavBarMobileMenuItemLink
               to="/articles"
               color="black100"
               onClick={handleClick}

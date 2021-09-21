@@ -94,6 +94,11 @@ describe("NavBar", () => {
       expect(wrapper.html()).toContain("View all artists")
       expect(wrapper.html()).toContain("View all artworks")
     })
+
+    it("renders menu item price database", () => {
+      const wrapper = getWrapper()
+      expect(wrapper.html()).toContain("Price Database")
+    })
   })
 
   describe("mediator actions", () => {
