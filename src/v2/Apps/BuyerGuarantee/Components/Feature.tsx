@@ -65,7 +65,12 @@ export const Feature: React.FC<FeatureProps> = ({
       <ConditionalWrapper
         condition={isMobile! && onClick}
         wrapper={children => (
-          <Button inline variant="noOutline" onClick={onClick}>
+          <Button
+            inline
+            variant="noOutline"
+            onClick={onClick}
+            style={{ whiteSpace: "pre-wrap" }}
+          >
             {children}
           </Button>
         )}
@@ -80,7 +85,14 @@ export const Feature: React.FC<FeatureProps> = ({
             {!!onClick && <Box>{learnMore}</Box>}
           </Media>
           <Media lessThan="sm">
-            {!!onClick && <ArrowRightIcon height="20px" width="20px" my={2} />}
+            {!!onClick && (
+              <ArrowRightIcon
+                height="20px"
+                width="20px"
+                my={2}
+                mr={isMobile ? "-20px" : 0}
+              />
+            )}
           </Media>
         </Flex>
       </ConditionalWrapper>

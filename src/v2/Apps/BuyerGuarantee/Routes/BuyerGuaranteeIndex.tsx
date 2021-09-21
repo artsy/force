@@ -229,7 +229,7 @@ export const BuyerGuaranteeIndex: React.FC = () => {
         </Flex>
       </Flex>
       {/*  Artsy Guarantee Sections desktop */}
-      <GridColumns gridColumnGap={4} gridRowGap={[6, 12]} my={[6, 12]}>
+      <GridColumns gridColumnGap={[0, 4]} gridRowGap={[6, 12]} my={[6, 12]}>
         <Column span={6}>
           {authenticityGuaranteeImageURL && (
             <Image
