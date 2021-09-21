@@ -19,7 +19,7 @@ type SetupTestWrapper<T extends OperationType> = {
  * fragment-like container and test that; `QueryRenderer` components aren't
  * supported.
  *
- * @see https://relay.dev/docs/en/testing-relay-components
+ * @see https://relay.dev/docs/guides/testing-relay-components/
  *
  * @example
 
