@@ -75,10 +75,10 @@ export const BuyerGuaranteeIndex: React.FC = () => {
   }
 
   const learnMoreButton = (width?: string) => (
-    <RouterLink to={supportArticleURL} target="_blank">
+    <RouterLink noUnderline to={supportArticleURL} target="_blank">
       <Button
         width={width ? width : ["100%", "80%", "50%"]}
-        variant="secondaryOutline"
+        variant={isMobile ? "secondaryOutline" : "primaryBlack"}
       >
         Learn More
       </Button>
