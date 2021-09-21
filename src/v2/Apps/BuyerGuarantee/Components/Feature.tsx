@@ -6,8 +6,22 @@ import {
   Flex,
   IconProps,
   Text,
+  themeProps,
 } from "@artsy/palette"
 import { Media } from "v2/Utils/Responsive"
+import { useMatchMedia } from "v2/Utils/Hooks/useMatchMedia"
+
+interface ConditionalWrapperProps {
+  condition: boolean
+  wrapper: (children: React.ReactElement) => JSX.Element
+  children: React.ReactElement
+}
+
+const ConditionalWrapper: React.FC<ConditionalWrapperProps> = ({
+  condition,
+  wrapper,
+  children,
+}) => (condition ? wrapper(children) : children)
 
 interface FeatureProps {
   title: string
@@ -24,6 +38,7 @@ export const Feature: React.FC<FeatureProps> = ({
   icon,
   onClick,
 }) => {
+  const isMobile = useMatchMedia(themeProps.mediaQueries.xs)
   const Icon = icon
   const learnMore = (
     <Flex pt={2} justifyContent="center">
@@ -47,19 +62,28 @@ export const Feature: React.FC<FeatureProps> = ({
       <Box>
         <Icon height={60} width={60} />
       </Box>
-      <Flex flexDirection={["row", "column"]} alignItems="center">
-        <Text fontWeight="bold" my={2} variant="sm">
-          {title}
-        </Text>
-        <Media greaterThan="xs">
-          <Text variant="xs">{text}</Text>
-          {!!forcedSecondLine && <Text variant="xs">{forcedSecondLine}</Text>}
-          {!!onClick && <Box>{learnMore}</Box>}
-        </Media>
-        <Media lessThan="sm">
-          {!!onClick && <ArrowRightIcon height="20px" width="20px" my={2} />}
-        </Media>
-      </Flex>
+      <ConditionalWrapper
+        condition={isMobile!}
+        wrapper={children => (
+          <Button inline variant="noOutline" onClick={onClick}>
+            {children}
+          </Button>
+        )}
+      >
+        <Flex flexDirection={["row", "column"]} alignItems="center">
+          <Text fontWeight="bold" my={2} variant="sm">
+            {title}
+          </Text>
+          <Media greaterThan="xs">
+            <Text variant="xs">{text}</Text>
+            {!!forcedSecondLine && <Text variant="xs">{forcedSecondLine}</Text>}
+            {!!onClick && <Box>{learnMore}</Box>}
+          </Media>
+          <Media lessThan="sm">
+            {!!onClick && <ArrowRightIcon height="20px" width="20px" my={2} />}
+          </Media>
+        </Flex>
+      </ConditionalWrapper>
     </Flex>
   )
 }
