@@ -70,7 +70,7 @@ const HomeTrendingArtistsRail: React.FC<HomeTrendingArtistsRailProps> = ({
                   FollowButton={
                     <FollowArtistButtonFragmentContainer
                       user={user}
-                      artist={node as any}
+                      artist={node}
                       contextModule={ContextModule.artistHeader}
                       buttonProps={{
                         size: "small",
