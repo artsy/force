@@ -9,7 +9,6 @@ import { ZeroState } from "./Components/ZeroState"
 import { useRouter } from "v2/System/Router/useRouter"
 import { Sticky, StickyProvider } from "v2/Components/Sticky"
 import { AppContainer } from "../Components/AppContainer"
-import { HorizontalPadding } from "../Components/HorizontalPadding"
 
 export interface SearchAppProps {
   viewer: SearchApp_viewer
@@ -74,13 +73,11 @@ export const SearchApp: React.FC<SearchAppProps> = ({ viewer, children }) => {
                   style={stuck ? { boxShadow: DROP_SHADOW } : undefined}
                 >
                   <AppContainer>
-                    <HorizontalPadding>
-                      <NavigationTabs
-                        artworkCount={artworkCount}
-                        term={term}
-                        searchableConnection={searchConnection!}
-                      />
-                    </HorizontalPadding>
+                    <NavigationTabs
+                      artworkCount={artworkCount}
+                      term={term}
+                      searchableConnection={searchConnection!}
+                    />
                   </AppContainer>
                 </FullBleed>
               )

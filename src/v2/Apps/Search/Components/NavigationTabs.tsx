@@ -7,6 +7,8 @@ import {
   Swiper,
   SwiperCell,
   SwiperCellProps,
+  SwiperRail,
+  SwiperRailProps,
   Text,
 } from "@artsy/palette"
 import { NavigationTabs_searchableConnection } from "v2/__generated__/NavigationTabs_searchableConnection.graphql"
@@ -22,6 +24,8 @@ import {
   PageOwnerType,
 } from "@artsy/cohesion"
 import { useRouter } from "found"
+import { AppContainer } from "v2/Apps/Components/AppContainer"
+import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
 
 export interface NavigationTabsProps {
   searchableConnection: NavigationTabs_searchableConnection
@@ -55,14 +59,12 @@ const RoundedRouteTab: React.FC<RouteTabProps> = ({ text, count, ...rest }) => {
 
   return (
     // @ts-ignore
-    <Pill variant="filter" as={RouterLink} my={1} mr={1} {...rest}>
+    <Pill variant="filter" as={RouterLink} my={0.5} mr={1} {...rest}>
       <Flex alignItems="center">
-        <Text variant={["xs", "md"]} color={isActive ? "black100" : "black60"}>
-          {text}&nbsp;
-        </Text>
+        <Text variant={["xs", "md"]}>{text}&nbsp;</Text>
         <Media greaterThan="xs">
           {count && (
-            <Sup variant="xs" color={isActive ? "blue100" : "black60"}>
+            <Sup variant="xs" color={isActive ? "brand" : "inherit"}>
               {count}
             </Sup>
           )}
@@ -162,7 +164,11 @@ export const NavigationTabs: React.FC<NavigationTabsProps> = ({
       })
     )
 
-  return <Swiper Cell={Cell}>{tabs}</Swiper>
+  return (
+    <Swiper Cell={Cell} Rail={Rail}>
+      {tabs}
+    </Swiper>
+  )
 }
 
 const Cell: React.ForwardRefExoticComponent<SwiperCellProps> = React.forwardRef(
@@ -178,6 +184,16 @@ const Cell: React.ForwardRefExoticComponent<SwiperCellProps> = React.forwardRef(
     )
   }
 )
+
+const Rail: React.FC<SwiperRailProps> = props => {
+  return (
+    <AppContainer>
+      <HorizontalPadding>
+        <SwiperRail {...props} />
+      </HorizontalPadding>
+    </AppContainer>
+  )
+}
 
 export const NavigationTabsFragmentContainer = createFragmentContainer(
   NavigationTabs,

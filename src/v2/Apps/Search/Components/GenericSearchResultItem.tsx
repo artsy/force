@@ -46,7 +46,7 @@ export class GenericSearchResultItem extends React.Component<
     return (
       <Link href={href} underlineBehavior="none" onClick={this.handleClick}>
         <ItemRow py={2}>
-          <Flex px={[0, 4]} flexDirection="row">
+          <Flex flexDirection="row">
             <Box width={72} height={72} mr={2}>
               <BorderBox width={72} height={72} p={0}>
                 {imageUrl && entityType !== "City" && (
