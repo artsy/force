@@ -16,9 +16,14 @@ const alphabetizeGenes = (genes: Genes): Genes =>
 export const GeneFamily: React.FC<GeneFamilyProps> = props => {
   const { geneFamily } = props
   const { name, genes } = geneFamily
-  const sortedGenes = alphabetizeGenes(genes)
-
   const isMobile = useMatchMedia(themeProps.mediaQueries.xs)
+
+  if (!genes) {
+    return null
+  }
+
+  const publishedGenes = genes.filter(g => !!g && g.isPublished)
+  const sortedGenes = alphabetizeGenes(publishedGenes)
 
   return (
     <Box id={`jump--${geneFamily.slug}`}>
@@ -48,17 +53,11 @@ export const GeneFamilyFragmentContainer = createFragmentContainer(GeneFamily, {
       slug
       name
       genes {
+        isPublished
         id
         displayName
         name
         slug
-      }
-      featuredGeneLinks {
-        href
-        title
-        image {
-          url(version: "large_rectangle")
-        }
       }
     }
   `,

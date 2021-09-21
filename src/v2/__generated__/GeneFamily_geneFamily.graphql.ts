@@ -4,27 +4,16 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type GeneFamily_geneFamily = {
-    readonly featuredGeneLinks: ReadonlyArray<{
-        readonly href: string;
-        readonly title: string;
-        readonly image: {
-            readonly resized: {
-                readonly src: string;
-                readonly srcSet: string;
-            } | null;
-            readonly url: string | null;
-        } | null;
-    } | null> | null;
+    readonly id: string;
+    readonly slug: string;
+    readonly name: string;
     readonly genes: ReadonlyArray<{
-        readonly displayName: string | null;
-        readonly href: string | null;
+        readonly isPublished: boolean | null;
         readonly id: string;
+        readonly displayName: string | null;
         readonly name: string | null;
         readonly slug: string;
     } | null> | null;
-    readonly id: string;
-    readonly name: string;
-    readonly slug: string;
     readonly " $refType": "GeneFamily_geneFamily";
 };
 export type GeneFamily_geneFamily$data = GeneFamily_geneFamily;
@@ -40,14 +29,14 @@ var v0 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "href",
+  "name": "id",
   "storageKey": null
 },
 v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "id",
+  "name": "slug",
   "storageKey": null
 },
 v2 = {
@@ -56,13 +45,6 @@ v2 = {
   "kind": "ScalarField",
   "name": "name",
   "storageKey": null
-},
-v3 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "slug",
-  "storageKey": null
 };
 return {
   "argumentDefinitions": [],
@@ -70,80 +52,9 @@ return {
   "metadata": null,
   "name": "GeneFamily_geneFamily",
   "selections": [
-    {
-      "alias": null,
-      "args": null,
-      "concreteType": "FeaturedGeneLink",
-      "kind": "LinkedField",
-      "name": "featuredGeneLinks",
-      "plural": true,
-      "selections": [
-        (v0/*: any*/),
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "title",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "concreteType": "Image",
-          "kind": "LinkedField",
-          "name": "image",
-          "plural": false,
-          "selections": [
-            {
-              "alias": null,
-              "args": [
-                {
-                  "kind": "Literal",
-                  "name": "height",
-                  "value": 400
-                }
-              ],
-              "concreteType": "ResizedImageUrl",
-              "kind": "LinkedField",
-              "name": "resized",
-              "plural": false,
-              "selections": [
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "src",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "srcSet",
-                  "storageKey": null
-                }
-              ],
-              "storageKey": "resized(height:400)"
-            },
-            {
-              "alias": null,
-              "args": [
-                {
-                  "kind": "Literal",
-                  "name": "version",
-                  "value": "large_rectangle"
-                }
-              ],
-              "kind": "ScalarField",
-              "name": "url",
-              "storageKey": "url(version:\"large_rectangle\")"
-            }
-          ],
-          "storageKey": null
-        }
-      ],
-      "storageKey": null
-    },
+    (v0/*: any*/),
+    (v1/*: any*/),
+    (v2/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -156,22 +67,25 @@ return {
           "alias": null,
           "args": null,
           "kind": "ScalarField",
-          "name": "displayName",
+          "name": "isPublished",
           "storageKey": null
         },
         (v0/*: any*/),
-        (v1/*: any*/),
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "displayName",
+          "storageKey": null
+        },
         (v2/*: any*/),
-        (v3/*: any*/)
+        (v1/*: any*/)
       ],
       "storageKey": null
-    },
-    (v1/*: any*/),
-    (v2/*: any*/),
-    (v3/*: any*/)
+    }
   ],
   "type": "GeneFamily"
 };
 })();
-(node as any).hash = 'c8debec6d37477c020f3f74bac7a0f87';
+(node as any).hash = '6f2458387d1c83552af32f8a341f82c5';
 export default node;

@@ -39,27 +39,16 @@ fragment GeneFamilies_geneFamiliesConnection on GeneFamilyConnection {
 }
 
 fragment GeneFamily_geneFamily on GeneFamily {
-  featuredGeneLinks {
-    href
-    title
-    image {
-      resized(height: 400) {
-        src
-        srcSet
-      }
-      url(version: "large_rectangle")
-    }
-  }
+  id
+  slug
+  name
   genes {
-    displayName
-    href
+    isPublished
     id
+    displayName
     name
     slug
   }
-  id
-  name
-  slug
 }
 
 fragment StickyNav_geneFamiliesConnection on GeneFamilyConnection {
@@ -101,13 +90,6 @@ v3 = {
   "args": null,
   "kind": "ScalarField",
   "name": "id",
-  "storageKey": null
-},
-v4 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "href",
   "storageKey": null
 };
 return {
@@ -179,80 +161,6 @@ return {
                   {
                     "alias": null,
                     "args": null,
-                    "concreteType": "FeaturedGeneLink",
-                    "kind": "LinkedField",
-                    "name": "featuredGeneLinks",
-                    "plural": true,
-                    "selections": [
-                      (v4/*: any*/),
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "title",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "concreteType": "Image",
-                        "kind": "LinkedField",
-                        "name": "image",
-                        "plural": false,
-                        "selections": [
-                          {
-                            "alias": null,
-                            "args": [
-                              {
-                                "kind": "Literal",
-                                "name": "height",
-                                "value": 400
-                              }
-                            ],
-                            "concreteType": "ResizedImageUrl",
-                            "kind": "LinkedField",
-                            "name": "resized",
-                            "plural": false,
-                            "selections": [
-                              {
-                                "alias": null,
-                                "args": null,
-                                "kind": "ScalarField",
-                                "name": "src",
-                                "storageKey": null
-                              },
-                              {
-                                "alias": null,
-                                "args": null,
-                                "kind": "ScalarField",
-                                "name": "srcSet",
-                                "storageKey": null
-                              }
-                            ],
-                            "storageKey": "resized(height:400)"
-                          },
-                          {
-                            "alias": null,
-                            "args": [
-                              {
-                                "kind": "Literal",
-                                "name": "version",
-                                "value": "large_rectangle"
-                              }
-                            ],
-                            "kind": "ScalarField",
-                            "name": "url",
-                            "storageKey": "url(version:\"large_rectangle\")"
-                          }
-                        ],
-                        "storageKey": null
-                      }
-                    ],
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
                     "concreteType": "Gene",
                     "kind": "LinkedField",
                     "name": "genes",
@@ -262,11 +170,17 @@ return {
                         "alias": null,
                         "args": null,
                         "kind": "ScalarField",
+                        "name": "isPublished",
+                        "storageKey": null
+                      },
+                      (v3/*: any*/),
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
                         "name": "displayName",
                         "storageKey": null
                       },
-                      (v4/*: any*/),
-                      (v3/*: any*/),
                       (v2/*: any*/),
                       (v1/*: any*/)
                     ],
@@ -288,7 +202,7 @@ return {
     "metadata": {},
     "name": "CategoriesApp_Test_Query",
     "operationKind": "query",
-    "text": "query CategoriesApp_Test_Query {\n  geneFamiliesConnection(first: 20) {\n    ...CategoriesApp_geneFamiliesConnection\n  }\n}\n\nfragment CategoriesApp_geneFamiliesConnection on GeneFamilyConnection {\n  ...StickyNav_geneFamiliesConnection\n  ...GeneFamilies_geneFamiliesConnection\n}\n\nfragment GeneFamilies_geneFamiliesConnection on GeneFamilyConnection {\n  edges {\n    node {\n      internalID\n      ...GeneFamily_geneFamily\n      id\n    }\n  }\n}\n\nfragment GeneFamily_geneFamily on GeneFamily {\n  featuredGeneLinks {\n    href\n    title\n    image {\n      resized(height: 400) {\n        src\n        srcSet\n      }\n      url(version: \"large_rectangle\")\n    }\n  }\n  genes {\n    displayName\n    href\n    id\n    name\n    slug\n  }\n  id\n  name\n  slug\n}\n\nfragment StickyNav_geneFamiliesConnection on GeneFamilyConnection {\n  edges {\n    node {\n      internalID\n      slug\n      name\n      id\n    }\n  }\n}\n"
+    "text": "query CategoriesApp_Test_Query {\n  geneFamiliesConnection(first: 20) {\n    ...CategoriesApp_geneFamiliesConnection\n  }\n}\n\nfragment CategoriesApp_geneFamiliesConnection on GeneFamilyConnection {\n  ...StickyNav_geneFamiliesConnection\n  ...GeneFamilies_geneFamiliesConnection\n}\n\nfragment GeneFamilies_geneFamiliesConnection on GeneFamilyConnection {\n  edges {\n    node {\n      internalID\n      ...GeneFamily_geneFamily\n      id\n    }\n  }\n}\n\nfragment GeneFamily_geneFamily on GeneFamily {\n  id\n  slug\n  name\n  genes {\n    isPublished\n    id\n    displayName\n    name\n    slug\n  }\n}\n\nfragment StickyNav_geneFamiliesConnection on GeneFamilyConnection {\n  edges {\n    node {\n      internalID\n      slug\n      name\n      id\n    }\n  }\n}\n"
   }
 };
 })();
