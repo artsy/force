@@ -8,6 +8,9 @@ export type InquiryBasicInfo_Test_QueryResponse = {
     readonly artwork: {
         readonly " $fragmentRefs": FragmentRefs<"InquiryBasicInfo_artwork">;
     } | null;
+    readonly me: {
+        readonly " $fragmentRefs": FragmentRefs<"InquiryBasicInfo_me">;
+    } | null;
 };
 export type InquiryBasicInfo_Test_Query = {
     readonly response: InquiryBasicInfo_Test_QueryResponse;
@@ -22,6 +25,10 @@ query InquiryBasicInfo_Test_Query {
     ...InquiryBasicInfo_artwork
     id
   }
+  me {
+    ...InquiryBasicInfo_me
+    id
+  }
 }
 
 fragment InquiryBasicInfo_artwork on Artwork {
@@ -29,6 +36,15 @@ fragment InquiryBasicInfo_artwork on Artwork {
     name
     id
   }
+}
+
+fragment InquiryBasicInfo_me on Me {
+  location {
+    display
+    id
+  }
+  phone
+  profession
 }
 */
 
@@ -69,6 +85,22 @@ return {
           }
         ],
         "storageKey": "artwork(id:\"example\")"
+      },
+      {
+        "alias": null,
+        "args": null,
+        "concreteType": "Me",
+        "kind": "LinkedField",
+        "name": "me",
+        "plural": false,
+        "selections": [
+          {
+            "args": null,
+            "kind": "FragmentSpread",
+            "name": "InquiryBasicInfo_me"
+          }
+        ],
+        "storageKey": null
       }
     ],
     "type": "Query"
@@ -109,6 +141,51 @@ return {
           (v1/*: any*/)
         ],
         "storageKey": "artwork(id:\"example\")"
+      },
+      {
+        "alias": null,
+        "args": null,
+        "concreteType": "Me",
+        "kind": "LinkedField",
+        "name": "me",
+        "plural": false,
+        "selections": [
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "MyLocation",
+            "kind": "LinkedField",
+            "name": "location",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "display",
+                "storageKey": null
+              },
+              (v1/*: any*/)
+            ],
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "phone",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "profession",
+            "storageKey": null
+          },
+          (v1/*: any*/)
+        ],
+        "storageKey": null
       }
     ]
   },
@@ -117,9 +194,9 @@ return {
     "metadata": {},
     "name": "InquiryBasicInfo_Test_Query",
     "operationKind": "query",
-    "text": "query InquiryBasicInfo_Test_Query {\n  artwork(id: \"example\") {\n    ...InquiryBasicInfo_artwork\n    id\n  }\n}\n\nfragment InquiryBasicInfo_artwork on Artwork {\n  partner {\n    name\n    id\n  }\n}\n"
+    "text": "query InquiryBasicInfo_Test_Query {\n  artwork(id: \"example\") {\n    ...InquiryBasicInfo_artwork\n    id\n  }\n  me {\n    ...InquiryBasicInfo_me\n    id\n  }\n}\n\nfragment InquiryBasicInfo_artwork on Artwork {\n  partner {\n    name\n    id\n  }\n}\n\nfragment InquiryBasicInfo_me on Me {\n  location {\n    display\n    id\n  }\n  phone\n  profession\n}\n"
   }
 };
 })();
-(node as any).hash = '61f4f81b0f53ae5d817f4f98a2b58592';
+(node as any).hash = 'ac5d7ac52094619ada68ee5e746ea2c7';
 export default node;
