@@ -1,14 +1,21 @@
-import React from "react"
+import loadable from "@loadable/component"
 import { graphql } from "react-relay"
 import { AppRouteConfig } from "v2/System/Router/Route"
-import { CategoriesAppFragmentContainer } from "./CategoriesApp"
+
+const CategoriesApp = loadable(
+  () => import(/* webpackChunkName: "categoriesBundle" */ "./CategoriesApp"),
+  {
+    resolveComponent: component => component.CategoriesAppFragmentContainer,
+  }
+)
 
 export const categoriesRoutes: AppRouteConfig[] = [
   {
     path: "/categories",
     theme: "v3",
-    Component: props => {
-      return <CategoriesAppFragmentContainer {...props} />
+    getComponent: () => CategoriesApp,
+    prepare: () => {
+      CategoriesApp.preload()
     },
     query: graphql`
       query categoriesRoutes_Query {
