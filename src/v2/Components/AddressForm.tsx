@@ -96,15 +96,18 @@ export const AddressForm: React.FC<AddressFormProps> = ({
     if (key) {
       onChange(address, key)
     }
-  }, [address, key])
+  }, [address, key, onChange])
 
   const onChangeValue = (key: keyof Address, value: string) => {
     setAddress(prevAddress => ({ ...prevAddress, [key]: value }))
   }
 
-  const getError = useCallback((key: keyof Address) => {
-    return (touched && touched[key] && errors && errors[key]) || ""
-  }, [])
+  const getError = useCallback(
+    (key: keyof Address) => {
+      return (touched && touched[key] && errors && errors[key]) || ""
+    },
+    [errors, touched]
+  )
 
   const phoneNumberInputDescription = (): string | undefined => {
     if (billing && showPhoneNumberInput) {
