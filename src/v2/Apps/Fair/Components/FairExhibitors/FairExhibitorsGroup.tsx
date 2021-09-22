@@ -3,6 +3,7 @@ import { Column, GridColumns } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FairExhibitorsGroup_exhibitorsGroup } from "v2/__generated__/FairExhibitorsGroup_exhibitorsGroup.graphql"
 import { FairExhibitorCardFragmentContainer as FairExhibitorCard } from "./FairExhibitorCard"
+import { useRouter } from "v2/System/Router/useRouter"
 
 interface FairExhibitorsGroupProps {
   exhibitorsGroup: FairExhibitorsGroup_exhibitorsGroup
@@ -11,6 +12,16 @@ interface FairExhibitorsGroupProps {
 export const FairExhibitorsGroup: React.FC<FairExhibitorsGroupProps> = ({
   exhibitorsGroup: { exhibitors },
 }) => {
+  const { match } = useRouter()
+  const { focused_exhibitor: focusedExhibitorID } = match.location.query
+
+  const focusedExhibitorStyles = {
+    borderColor: "brand",
+    borderStyle: "solid",
+    borderWidth: "1px",
+    padding: "2px",
+  }
+
   return (
     <GridColumns position="relative" gridRowGap={4}>
       {exhibitors?.map(exhibitor => {
@@ -18,8 +29,15 @@ export const FairExhibitorsGroup: React.FC<FairExhibitorsGroupProps> = ({
           return null
         }
 
+        const focused = focusedExhibitorID === exhibitor.partner.internalID
+        const exhibitorCardStyle = focused ? focusedExhibitorStyles : {}
+
         return (
-          <Column key={exhibitor.partner.internalID} span={[12, 6, 3]}>
+          <Column
+            {...exhibitorCardStyle}
+            key={exhibitor.partner.internalID}
+            span={[12, 6, 3]}
+          >
             <FairExhibitorCard exhibitor={exhibitor} />
           </Column>
         )

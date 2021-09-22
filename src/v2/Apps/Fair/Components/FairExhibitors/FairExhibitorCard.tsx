@@ -55,11 +55,13 @@ export const FairExhibitorCard: React.FC<FairExhibitorCardProps> = ({
 
   return (
     <RouterLink
-      to={`/show/${exhibitor.profileID}`}
-      noUnderline
+      // use this param to display navigation banner on show
+      to={`/show/${exhibitor.profileID}?from_fair=true`}
+      textDecoration="none"
+      display="block"
       onClick={() => tracking.trackEvent(tappedPartnerTrackingData)}
     >
-      <Flex mb={1} flex={1}>
+      <Flex id={`jump--${exhibitor.partner?.internalID}`}>
         <BorderBox width={52} height={52} p={0} mr={1}>
           {profile?.icon?.cropped && (
             <Image

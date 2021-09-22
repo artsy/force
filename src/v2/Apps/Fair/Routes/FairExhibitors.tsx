@@ -1,27 +1,38 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { Box, DROP_SHADOW, FullBleed, Spacer, Text } from "@artsy/palette"
 import { graphql, createFragmentContainer } from "react-relay"
 import { FairExhibitors_fair } from "v2/__generated__/FairExhibitors_fair.graphql"
 import { FairExhibitorsGroupFragmentContainer as FairExhibitorsGroup } from "../Components/FairExhibitors"
-import { FairExhibitorsGroupPlaceholder } from "../Components/FairExhibitors/FairExhibitorGroupPlaceholder"
-import { useLazyLoadComponent } from "v2/Utils/Hooks/useLazyLoadComponent"
 import { ExhibitorsLetterNavFragmentContainer as ExhibitorsLetterNav } from "../Components/ExhibitorsLetterNav"
 import { Sticky } from "v2/Components/Sticky"
 import { AppContainer } from "v2/Apps/Components/AppContainer"
 import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
 import { getExhibitorSectionId } from "../Utils/getExhibitorSectionId"
+import { useRouter } from "v2/System/Router/useRouter"
+import { useExhibitorsTabOffset } from "../Utils/useExhibitorsTabOffset"
+import { scrollIntoView } from "v2/Utils/scrollHelpers"
 
 interface FairExhibitorsProps {
   fair: FairExhibitors_fair
 }
 
 const FairExhibitors: React.FC<FairExhibitorsProps> = ({ fair }) => {
-  const { isEnteredView, Waypoint } = useLazyLoadComponent()
+  const { match } = useRouter()
+  const { focused_exhibitor: focusedExhibitorID } = match.location.query
+  const offset = useExhibitorsTabOffset()
+
+  useEffect(() => {
+    if (focusedExhibitorID) {
+      scrollIntoView({
+        selector: `#jump--${focusedExhibitorID}`,
+        offset,
+        behavior: "smooth",
+      })
+    }
+  }, [focusedExhibitorID, offset])
 
   return (
     <>
-      <Waypoint />
-
       <Spacer mt={4} />
 
       <Sticky>
@@ -47,11 +58,7 @@ const FairExhibitors: React.FC<FairExhibitorsProps> = ({ fair }) => {
             <Text variant="lg" my={4}>
               {letter}
             </Text>
-            {isEnteredView ? (
-              <FairExhibitorsGroup exhibitorsGroup={exhibitorsGroup} />
-            ) : (
-              <FairExhibitorsGroupPlaceholder />
-            )}
+            <FairExhibitorsGroup exhibitorsGroup={exhibitorsGroup} />
           </Box>
         )
       })}
