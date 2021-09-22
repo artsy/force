@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react"
+import React, { useContext, useState } from "react"
 import {
   Box,
   Column,
@@ -7,6 +7,7 @@ import {
   Message,
   Spacer,
   Text,
+  themeProps,
 } from "@artsy/palette"
 import { isEqual } from "lodash"
 import { Title } from "react-head"
@@ -43,6 +44,7 @@ import {
   updateUrl,
 } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
 import { allowedAuctionResultFilters } from "../../Utils/allowedAuctionResultFilters"
+import { useMatchMedia } from "v2/Utils/Hooks/useMatchMedia"
 
 const logger = createLogger("ArtistAuctionResults.tsx")
 
@@ -57,6 +59,7 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
   artist,
   relay,
 }) => {
+  const isMobile = useMatchMedia(themeProps.mediaQueries.xs)
   const { user, mediator } = useContext(SystemContext)
   const {
     filters,
@@ -72,16 +75,16 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
     match?.location.query
   ) as { scrollToAuctionResults?: boolean }
 
-  // Scroll to auction results if param flag is present
-  useEffect(() => {
-    if (scrollToAuctionResults) {
-      scrollIntoView({
-        selector: "#scrollTo--artistMarketResultsTop",
-        behavior: "smooth",
-        offset: 125,
-      })
-    }
-  }, [scrollToAuctionResults])
+  const scrollToAuctionResultsTop = () => {
+    // Increasing offset if the user is not logged in to compensate the top log in container height
+    const offset = isMobile && user ? 90 : 140
+
+    scrollIntoView({
+      selector: "#scrollTo--artistAuctionResultsTop",
+      behavior: "smooth",
+      offset,
+    })
+  }
 
   const loadNext = () => {
     const currentPageNumber = filters?.pageAndCursor?.page ?? 0
@@ -92,11 +95,7 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
   }
 
   const loadPage = (cursor, pageNum) => {
-    scrollIntoView({
-      selector: "#scrollTo--artistAuctionResultsTop",
-      behavior: "smooth",
-      offset: 160,
-    })
+    scrollToAuctionResultsTop()
     setFilter?.("pageAndCursor", {
       cursor: cursor,
       page: pageNum,
@@ -191,21 +190,27 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
 
   const titleString = `${artist.name} - Auction Results on Artsy`
 
+  const handleMarketStatsRendered = () => {
+    // Scroll to auction results if param flag is present
+    if (!scrollToAuctionResults) return
+
+    setImmediate(() => scrollToAuctionResultsTop(), 0)
+  }
+
   return (
     <>
       <Title>{titleString}</Title>
 
-      <Box id="scrollTo--artistMarketResultsTop" />
-
       <MarketStatsQueryRenderer
         artistInternalID={artist.internalID}
         environment={relay.environment}
+        onRendered={handleMarketStatsRendered}
       />
+
+      <Box id="scrollTo--artistAuctionResultsTop" />
 
       <Text variant={["md", "lg"]}>Auction Results</Text>
       <Spacer my={2} />
-
-      <Box id="scrollTo--artistAuctionResultsTop" />
 
       {showMobileActionSheet && (
         <AuctionFilterMobileActionSheet

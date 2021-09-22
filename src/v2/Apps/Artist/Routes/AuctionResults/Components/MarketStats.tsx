@@ -224,7 +224,17 @@ export const MarketStatsFragmentContainer = createFragmentContainer(
 export const MarketStatsQueryRenderer: React.FC<{
   artistInternalID: string
   environment: RelayModernEnvironment
-}> = ({ artistInternalID, environment }) => {
+  onRendered?: () => void
+}> = ({ artistInternalID, environment, onRendered }) => {
+  const [hasRendered, setHasRendered] = useState(false)
+
+  const onRender = () => {
+    if (hasRendered) return
+
+    setImmediate(() => setHasRendered(true))
+    onRendered?.()
+  }
+
   return (
     <SystemQueryRenderer<MarketStatsQuery>
       environment={environment}
@@ -241,6 +251,8 @@ export const MarketStatsQueryRenderer: React.FC<{
         }
       `}
       render={({ props, error }) => {
+        if (error || props) onRender()
+
         if (error) {
           console.error(error)
           return null
