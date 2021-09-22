@@ -23,20 +23,6 @@ export const FeatureHeaderDefaultFragmentContainer = createFragmentContainer(
     feature: graphql`
       fragment FeatureHeaderDefault_feature on Feature {
         name
-        defaultImage: image {
-          sm: cropped(width: 400, height: 400, version: ["main", "wide"]) {
-            src
-            srcSet
-          }
-          md: cropped(width: 600, height: 600, version: ["main", "wide"]) {
-            src
-            srcSet
-          }
-          lg: cropped(width: 1000, height: 1000, version: ["main", "wide"]) {
-            src
-            srcSet
-          }
-        }
       }
     `,
   }
