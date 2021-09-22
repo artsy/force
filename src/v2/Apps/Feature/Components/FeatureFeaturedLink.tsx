@@ -59,12 +59,6 @@ const Figure = styled(RouterLink)`
   }
 `
 
-const Subtitle = styled(Text).attrs({
-  variant: "xs",
-})`
-  text-transform: uppercase;
-`
-
 export interface FeatureFeaturedLinkProps extends FlexProps {
   size: "small" | "medium" | "large" | "full"
   featuredLink: FeatureFeaturedLink_featuredLink
@@ -103,7 +97,11 @@ export const FeatureFeaturedLink: React.FC<FeatureFeaturedLinkProps> = ({
       )}
 
       <Flex flexDirection={size === "large" ? ["column", "row"] : "column"}>
-        {subtitle && <Subtitle my={1}>{subtitle}</Subtitle>}
+        {subtitle && (
+          <Text my={1} variant="xl" textTransform="uppercase">
+            {subtitle}
+          </Text>
+        )}
 
         <Text variant="xl">{title}</Text>
 
