@@ -1,4 +1,12 @@
-import { Box, FullBleed, Separator, Spacer, Text } from "@artsy/palette"
+import {
+  Box,
+  Column,
+  FullBleed,
+  GridColumns,
+  Separator,
+  Spacer,
+  Text,
+} from "@artsy/palette"
 import React from "react"
 import { AppContainer } from "v2/Apps/Components/AppContainer"
 import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
@@ -10,9 +18,9 @@ export default {
   title: "Components/Sticky",
 }
 
-export const Example = () => {
+const HeaderPlaceholder: React.FC = () => {
   return (
-    <StickyProvider>
+    <>
       <Box
         position="fixed"
         top={0}
@@ -26,14 +34,30 @@ export const Example = () => {
       </Box>
 
       <Spacer height={[MOBILE_NAV_HEIGHT, DESKTOP_NAV_BAR_HEIGHT]} />
+    </>
+  )
+}
 
-      {[...new Array(10)].map((_, i) => {
+const Filler: React.FC<{ amount?: number }> = ({ amount = 10 }) => {
+  return (
+    <>
+      {[...new Array(amount)].map((_, i) => {
         return (
           <Text variant="sm" key={i}>
             Static content
           </Text>
         )
       })}
+    </>
+  )
+}
+
+export const Example = () => {
+  return (
+    <StickyProvider>
+      <HeaderPlaceholder />
+
+      <Filler />
 
       <Sticky>
         <Box bg="black10" p={1}>
@@ -41,13 +65,7 @@ export const Example = () => {
         </Box>
       </Sticky>
 
-      {[...new Array(10)].map((_, i) => {
-        return (
-          <Text variant="sm" key={i}>
-            Static content
-          </Text>
-        )
-      })}
+      <Filler />
 
       <Sticky>
         {({ stuck }) => {
@@ -61,13 +79,7 @@ export const Example = () => {
         }}
       </Sticky>
 
-      {[...new Array(10)].map((_, i) => {
-        return (
-          <Text variant="sm" key={i}>
-            Static content
-          </Text>
-        )
-      })}
+      <Filler />
 
       <Sticky>
         <Box bg="green10" p={1}>
@@ -75,14 +87,34 @@ export const Example = () => {
         </Box>
       </Sticky>
 
-      {[...new Array(100)].map((_, i) => {
-        return (
-          <Text variant="sm" key={i}>
-            Static content
-          </Text>
-        )
-      })}
+      <Filler amount={100} />
     </StickyProvider>
+  )
+}
+
+export const ContainedExample = () => {
+  return (
+    <AppContainer>
+      <HorizontalPadding>
+        <HeaderPlaceholder />
+
+        <Filler />
+
+        <GridColumns my={2}>
+          <Column span={6}>
+            <Sticky proportional>
+              <Box bg="black10" height={400} width="100%" />
+            </Sticky>
+          </Column>
+
+          <Column span={6}>
+            <Filler amount={30} />
+          </Column>
+        </GridColumns>
+
+        <Filler amount={100} />
+      </HorizontalPadding>
+    </AppContainer>
   )
 }
 
@@ -90,6 +122,8 @@ export const GridExample = () => {
   return (
     <AppContainer>
       <HorizontalPadding>
+        <HeaderPlaceholder />
+
         <Text variant="sm">
           This is a bit verbose but we currently don't match{" "}
           <code>position: sticky;</code>
@@ -104,13 +138,7 @@ export const GridExample = () => {
 
         <Separator my={1} />
 
-        {[...new Array(10)].map((_, i) => {
-          return (
-            <Text variant="sm" key={i}>
-              Static content
-            </Text>
-          )
-        })}
+        <Filler />
 
         <Sticky>
           <FullBleed>

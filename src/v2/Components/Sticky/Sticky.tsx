@@ -1,8 +1,26 @@
 import styled from "styled-components"
 import { Box } from "@artsy/palette"
-import React, { useEffect, useRef, useState } from "react"
+import React, { cloneElement, useEffect, useRef, useState } from "react"
 import { useSticky } from "./StickyProvider"
 import { useNavBarHeight } from "../NavBar/useNavBarHeight"
+
+interface StickyProps {
+  proportional?: boolean
+}
+
+interface Rect {
+  right: number
+  left: number
+  width: number
+  height: number
+}
+
+const DEFAULT_RECT = {
+  right: 0,
+  left: 0,
+  width: 0,
+  height: 0,
+}
 
 /**
  * Wrap a component to have it stick below the main nav.
@@ -29,11 +47,13 @@ import { useNavBarHeight } from "../NavBar/useNavBarHeight"
  * - Q: How do I unstick an element once it reaches the end of its parent container?
  * - A: This is also not currently supported.
  */
-export const Sticky: React.FC = ({ children }) => {
+export const Sticky: React.FC<StickyProps> = ({ children, proportional }) => {
   const sentinelRef = useRef<HTMLDivElement | null>(null)
   const containerRef = useRef<HTMLDivElement | null>(null)
+  const placeholderRef = useRef<HTMLDivElement | null>(null)
 
   const [stuck, setStuck] = useState(false)
+  const [rect, setRect] = useState<Rect>(DEFAULT_RECT)
 
   const { mobile, desktop } = useNavBarHeight()
 
@@ -68,10 +88,34 @@ export const Sticky: React.FC = ({ children }) => {
 
   const { offsetTop, registerSticky, deregisterSticky } = useSticky()
 
+  // Register/deregister sticky
   useEffect(() => {
     registerSticky(containerRef.current?.clientHeight)
     return deregisterSticky
   }, [registerSticky, deregisterSticky])
+
+  // Set initial rect
+  useEffect(() => {
+    if (!containerRef.current) return
+    setRect(containerRef.current.getBoundingClientRect())
+  }, [])
+
+  const content =
+    typeof children === "function" ? children({ stuck }) : children
+  const placeholder = cloneElement(content)
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (!containerRef.current || (stuck && !placeholderRef.current)) return
+      const el = stuck ? placeholderRef.current : containerRef.current
+      setRect(el!.getBoundingClientRect())
+    }
+
+    window.addEventListener("resize", handleResize, { passive: true })
+    return () => {
+      window.removeEventListener("resize", handleResize)
+    }
+  }, [stuck])
 
   return (
     <>
@@ -86,12 +130,29 @@ export const Sticky: React.FC = ({ children }) => {
         position={stuck ? "fixed" : "static"}
         top={[mobile + offsetTop, desktop + offsetTop]}
       >
-        {typeof children === "function" ? children({ stuck }) : children}
+        {proportional && stuck ? (
+          <div
+            style={{
+              position: "absolute",
+              right: `${rect.right}px`,
+              left: `${rect.left}px`,
+              width: `${rect.width}px`,
+              height: `${rect.height}px`,
+            }}
+          >
+            {content}
+          </div>
+        ) : (
+          content
+        )}
       </Container>
 
       {stuck && (
-        // Insert placeholder the same height as the container to prevent scroll from changing
-        <div style={{ height: containerRef.current?.clientHeight }} />
+        // Inserts a copy of the underlying content to prevent scroll from changing
+        // as well as allowing us to track the size
+        <div ref={placeholderRef} style={{ opacity: 0, pointerEvents: "none" }}>
+          {placeholder}
+        </div>
       )}
     </>
   )
