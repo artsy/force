@@ -194,7 +194,7 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
     // Scroll to auction results if param flag is present
     if (!scrollToAuctionResults) return
 
-    setImmediate(() => scrollToAuctionResultsTop(), 0)
+    setImmediate(scrollToAuctionResultsTop)
   }
 
   return (
