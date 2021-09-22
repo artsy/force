@@ -1,9 +1,10 @@
 import React from "react"
-import { Column, GridColumns } from "@artsy/palette"
+import { Column, GridColumns, themeProps } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FairExhibitorsGroup_exhibitorsGroup } from "v2/__generated__/FairExhibitorsGroup_exhibitorsGroup.graphql"
 import { FairExhibitorCardFragmentContainer as FairExhibitorCard } from "./FairExhibitorCard"
 import { useRouter } from "v2/System/Router/useRouter"
+import { useMatchMedia } from "v2/Utils/Hooks/useMatchMedia"
 
 interface FairExhibitorsGroupProps {
   exhibitorsGroup: FairExhibitorsGroup_exhibitorsGroup
@@ -14,6 +15,7 @@ export const FairExhibitorsGroup: React.FC<FairExhibitorsGroupProps> = ({
 }) => {
   const { match } = useRouter()
   const { focused_exhibitor: focusedExhibitorID } = match.location.query
+  const isMobile = useMatchMedia(themeProps.mediaQueries.xs)
 
   const focusedExhibitorStyles = {
     borderColor: "brand",
@@ -30,7 +32,8 @@ export const FairExhibitorsGroup: React.FC<FairExhibitorsGroupProps> = ({
         }
 
         const focused = focusedExhibitorID === exhibitor.partner.internalID
-        const exhibitorCardStyle = focused ? focusedExhibitorStyles : {}
+        const exhibitorCardStyle =
+          focused && !isMobile ? focusedExhibitorStyles : {}
 
         return (
           <Column
