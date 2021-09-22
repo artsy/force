@@ -1,9 +1,9 @@
-import { Box, Link, Spacer, Text, themeProps } from "@artsy/palette"
+import { Box, Link, Spacer, Text } from "@artsy/palette"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { GeneFamily_geneFamily } from "v2/__generated__/GeneFamily_geneFamily.graphql"
 import { sortBy } from "lodash"
-import { useMatchMedia } from "v2/Utils/Hooks/useMatchMedia"
+import { Masonry } from "v2/Components/Masonry"
 interface GeneFamilyProps {
   geneFamily: GeneFamily_geneFamily
 }
@@ -16,7 +16,6 @@ const alphabetizeGenes = (genes: Genes): Genes =>
 export const GeneFamily: React.FC<GeneFamilyProps> = props => {
   const { geneFamily } = props
   const { name, genes } = geneFamily
-  const isMobile = useMatchMedia(themeProps.mediaQueries.xs)
 
   if (!genes) {
     return null
@@ -29,7 +28,7 @@ export const GeneFamily: React.FC<GeneFamilyProps> = props => {
     <Box id={`jump--${geneFamily.slug}`}>
       <Text variant="xl">{name}</Text>
       <Spacer mt={4} />
-      <ul style={{ columnCount: isMobile ? 1 : 3 }}>
+      <Masonry columnCount={[1, 3]}>
         {sortedGenes?.map(gene => {
           return (
             <Box key={gene?.id}>
@@ -40,7 +39,7 @@ export const GeneFamily: React.FC<GeneFamilyProps> = props => {
             </Box>
           )
         })}
-      </ul>
+      </Masonry>
       <Spacer mt={6} />
     </Box>
   )
