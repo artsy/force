@@ -3,7 +3,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { FeatureMetaFragmentContainer as FeatureMeta } from "./Components/FeatureMeta"
 import { FeatureHeaderFragmentContainer as FeatureHeader } from "./Components/FeatureHeader"
 import { FeatureApp_feature } from "v2/__generated__/FeatureApp_feature.graphql"
-import { Text, ThemeProviderV3, Join, Spacer } from "@artsy/palette"
+import { Text, Join, Spacer } from "@artsy/palette"
 import { FeatureSetFragmentContainer as FeatureSet } from "./Components/FeatureSet"
 
 interface FeatureAppProps {
@@ -14,7 +14,7 @@ const FeatureApp: React.FC<FeatureAppProps> = ({ feature }) => {
   if (!feature) return null
 
   return (
-    <ThemeProviderV3>
+    <>
       <FeatureMeta feature={feature} />
       <Spacer mt={4} />
       <FeatureHeader feature={feature} />
@@ -22,7 +22,7 @@ const FeatureApp: React.FC<FeatureAppProps> = ({ feature }) => {
       {(feature.description || feature.callout) && (
         <Join separator={<Spacer my={3} />}>
           {feature.description && (
-            <Text variant="lg">{feature.description}</Text>
+            <Text variant={["md", "lg"]}>{feature.description}</Text>
           )}
 
           {feature.callout && <Text variant="lg">{feature.callout}</Text>}
@@ -36,7 +36,7 @@ const FeatureApp: React.FC<FeatureAppProps> = ({ feature }) => {
           // @ts-expect-error STRICT_NULL_CHECK
           ({ node: set }) => set && <FeatureSet key={set.id} set={set} />
         )}
-    </ThemeProviderV3>
+    </>
   )
 }
 

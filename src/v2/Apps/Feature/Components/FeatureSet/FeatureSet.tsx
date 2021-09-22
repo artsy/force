@@ -1,16 +1,10 @@
 import React from "react"
-import styled from "styled-components"
-import { Box, BoxProps, Spacer, color } from "@artsy/palette"
+import { Box, BoxProps, Spacer } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FeatureSet_set } from "v2/__generated__/FeatureSet_set.graphql"
 import { FeatureSetMetaFragmentContainer as FeatureSetMeta } from "./FeatureSetMeta"
 import { FeatureSetContainerFragmentContainer as FeatureSetContainer } from "./FeatureSetContainer"
 import { FeatureSetItemFragmentContainer as FeatureSetItem } from "./FeatureSetItem"
-
-const Container = styled(Box)`
-  /* border-top: 1px solid ${color("black100")};
-  margin-top: -1px; */
-`
 
 export interface FeatureSetProps extends Omit<BoxProps, "color"> {
   set: FeatureSet_set
@@ -41,13 +35,12 @@ export const FeatureSet: React.FC<FeatureSetProps> = ({ set, ...rest }) => {
   }
 
   return (
-    <Container {...rest}>
+    <Box {...rest}>
       {set.name || set.description ? (
         <FeatureSetMeta set={set} mt={4} mb={2} />
       ) : (
         <Spacer my={4} />
       )}
-
       <FeatureSetContainer set={set}>
         {/* @ts-expect-error STRICT_NULL_CHECK */}
         {set.orderedItems.edges.map(({ node: setItem }) => {
@@ -56,7 +49,7 @@ export const FeatureSet: React.FC<FeatureSetProps> = ({ set, ...rest }) => {
           )
         })}
       </FeatureSetContainer>
-    </Container>
+    </Box>
   )
 }
 

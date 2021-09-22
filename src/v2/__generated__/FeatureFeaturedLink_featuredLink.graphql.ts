@@ -45,14 +45,7 @@ export type FeatureFeaturedLink_featuredLink$key = {
 
 
 const node: ReaderFragment = (function(){
-var v0 = [
-  {
-    "kind": "Literal",
-    "name": "format",
-    "value": "HTML"
-  }
-],
-v1 = {
+var v0 = {
   "kind": "Literal",
   "name": "version",
   "value": [
@@ -60,7 +53,7 @@ v1 = {
     "wide"
   ]
 },
-v2 = [
+v1 = [
   {
     "alias": null,
     "args": null,
@@ -90,7 +83,7 @@ v2 = [
     "storageKey": null
   }
 ],
-v3 = {
+v2 = {
   "kind": "Literal",
   "name": "width",
   "value": 1112
@@ -117,14 +110,20 @@ return {
     },
     {
       "alias": null,
-      "args": (v0/*: any*/),
+      "args": null,
       "kind": "ScalarField",
       "name": "subtitle",
-      "storageKey": "subtitle(format:\"HTML\")"
+      "storageKey": null
     },
     {
       "alias": null,
-      "args": (v0/*: any*/),
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "format",
+          "value": "HTML"
+        }
+      ],
       "kind": "ScalarField",
       "name": "description",
       "storageKey": "description(format:\"HTML\")"
@@ -145,7 +144,7 @@ return {
               "name": "height",
               "value": 500
             },
-            (v1/*: any*/),
+            (v0/*: any*/),
             {
               "kind": "Literal",
               "name": "width",
@@ -156,7 +155,7 @@ return {
           "kind": "LinkedField",
           "name": "cropped",
           "plural": false,
-          "selections": (v2/*: any*/),
+          "selections": (v1/*: any*/),
           "storageKey": "cropped(height:500,version:[\"main\",\"wide\"],width:400)"
         },
         {
@@ -167,7 +166,7 @@ return {
               "name": "height",
               "value": 683
             },
-            (v1/*: any*/),
+            (v0/*: any*/),
             {
               "kind": "Literal",
               "name": "width",
@@ -178,7 +177,7 @@ return {
           "kind": "LinkedField",
           "name": "cropped",
           "plural": false,
-          "selections": (v2/*: any*/),
+          "selections": (v1/*: any*/),
           "storageKey": "cropped(height:683,version:[\"main\",\"wide\"],width:546)"
         },
         {
@@ -189,14 +188,14 @@ return {
               "name": "height",
               "value": 626
             },
-            (v1/*: any*/),
-            (v3/*: any*/)
+            (v0/*: any*/),
+            (v2/*: any*/)
           ],
           "concreteType": "CroppedImageUrl",
           "kind": "LinkedField",
           "name": "cropped",
           "plural": false,
-          "selections": (v2/*: any*/),
+          "selections": (v1/*: any*/),
           "storageKey": "cropped(height:626,version:[\"main\",\"wide\"],width:1112)"
         },
         {
@@ -207,14 +206,14 @@ return {
               "name": "height",
               "value": 1112
             },
-            (v1/*: any*/),
-            (v3/*: any*/)
+            (v0/*: any*/),
+            (v2/*: any*/)
           ],
           "concreteType": "ResizedImageUrl",
           "kind": "LinkedField",
           "name": "resized",
           "plural": false,
-          "selections": (v2/*: any*/),
+          "selections": (v1/*: any*/),
           "storageKey": "resized(height:1112,version:[\"main\",\"wide\"],width:1112)"
         }
       ],
@@ -224,5 +223,5 @@ return {
   "type": "FeaturedLink"
 };
 })();
-(node as any).hash = 'cb4a054d338fc3c7f4c9df3b09d7a4a1';
+(node as any).hash = '1313caa56afa7adb03b9be20b03b67c8';
 export default node;

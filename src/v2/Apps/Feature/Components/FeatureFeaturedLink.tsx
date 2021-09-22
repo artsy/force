@@ -59,19 +59,6 @@ const Figure = styled(RouterLink)`
   }
 `
 
-// const Title = styled(Text).attrs({
-//   variant: "title",
-// })`
-//   position: absolute;
-//   bottom: 0;
-//   left: 0;
-//   right: 0;
-//   background: linear-gradient(
-//     rgba(255, 255, 255, 0) 0%,
-//     rgba(0, 0, 0, 0.25) 100%
-//   );
-// `
-
 const Subtitle = styled(Text).attrs({
   variant: "xs",
 })`
@@ -144,7 +131,7 @@ export const FeatureFeaturedLinkFragmentContainer = createFragmentContainer(
       fragment FeatureFeaturedLink_featuredLink on FeaturedLink {
         href
         title
-        subtitle(format: HTML)
+        subtitle
         description(format: HTML)
         image {
           # 4:5
