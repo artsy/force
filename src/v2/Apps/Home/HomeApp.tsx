@@ -3,7 +3,6 @@ import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { HomeApp_homePage } from "v2/__generated__/HomeApp_homePage.graphql"
 import { HomeApp_featuredEventsOrderedSet } from "v2/__generated__/HomeApp_featuredEventsOrderedSet.graphql"
-import { HomeArtworkModulesFragmentContainer } from "./Components/HomeArtworkModules"
 import { HomeHeroUnitsFragmentContainer } from "./Components/HomeHeroUnits/HomeHeroUnits"
 import { HomeFeaturedMarketNewsLazyQueryRenderer } from "./Components/HomeFeaturedMarketNews"
 import { HomeFeaturedEventsRailFragmentContainer } from "./Components/HomeFeaturedEventsRail"
@@ -14,6 +13,8 @@ import { HomeFeaturedShowsRailQueryRenderer } from "./Components/HomeFeaturedSho
 import { HomeCurrentFairsRailQueryRenderer } from "./Components/HomeCurrentFairsRail"
 import { HomeTrendingArtistsRailQueryRenderer } from "./Components/HomeTrendingArtistsRail"
 import { HomeAuctionLotsRailQueryRenderer } from "./Components/HomeAuctionLotsRail"
+import { HomeWorksForYouTabBar } from "./Components/HomeWorksForYouTabBar"
+import { MyBidsQueryRenderer } from "../Auctions/Components/MyBids/MyBids"
 
 interface HomeAppProps {
   homePage: HomeApp_homePage | null
@@ -49,16 +50,26 @@ export const HomeApp: React.FC<HomeAppProps> = ({
           </>
         )}
 
-        {homePage && (
-          <HomeArtworkModulesFragmentContainer homePage={homePage} />
-        )}
+        <MyBidsQueryRenderer />
+
+        <HomeWorksForYouTabBar />
 
         <HomeFeaturedMarketNewsLazyQueryRenderer />
+
         <HomeAuctionLotsRailQueryRenderer />
-        <HomeFeaturedGalleriesRailQueryRenderer />
+
         <HomeFeaturedShowsRailQueryRenderer />
+
         <HomeCurrentFairsRailQueryRenderer />
+
+        <HomeFeaturedGalleriesRailQueryRenderer />
+
         <HomeTrendingArtistsRailQueryRenderer />
+
+        {/* TODO: Remove this code once we're 100% sure we don't want anymore  */}
+        {/* {homePage && (
+          <HomeArtworkModulesFragmentContainer homePage={homePage} />
+        )} */}
       </Join>
     </>
   )
@@ -68,7 +79,6 @@ export const HomeAppFragmentContainer = createFragmentContainer(HomeApp, {
   homePage: graphql`
     fragment HomeApp_homePage on HomePage {
       ...HomeHeroUnits_homePage
-      ...HomeArtworkModules_homePage
     }
   `,
   featuredEventsOrderedSet: graphql`

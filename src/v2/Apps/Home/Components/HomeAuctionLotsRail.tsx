@@ -45,8 +45,6 @@ const HomeAuctionLotsRail: React.FC<HomeAuctionLotsRailProps> = ({
               // TODO: Add home type to cohesion once we have tracking
               contextModule={null as any}
               hidePartnerName
-              // FIXME: For some reason this is leaves the gray loading
-              // background post load
               lazyLoad
             />
           )
