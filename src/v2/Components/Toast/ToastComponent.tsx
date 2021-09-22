@@ -53,6 +53,7 @@ const ToastComponent: React.FC<ToastComponentProps> = ({
         boxShadow:
           "0px 0px 1px 2rgba (0, 0, 0, 0.08), 0px 2px 8px rgba(0, 0, 0, 0.12)",
         left: isMoveToRight ? "100%" : 0,
+        zIndex: 1,
       }}
       borderRadius={2}
       position="fixed"
