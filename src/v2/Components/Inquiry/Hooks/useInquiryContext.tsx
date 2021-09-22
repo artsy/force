@@ -57,6 +57,7 @@ const InquiryContext = createContext<{
   relayEnvironment: React.RefObject<Environment>
   setContext: (updatedContext: Partial<Context>) => React.RefObject<Context>
   setInquiry: React.Dispatch<React.SetStateAction<InquiryState>>
+  /** Set an updated Relay environment once the user is authenticated */
   setRelayEnvironment: (
     updatedEnvironment: Environment
   ) => React.RefObject<Environment>
@@ -126,6 +127,11 @@ const InquiryProvider: React.FC<InquiryProviderProps> = ({
 
   const relayEnvironment = useRef(defaultRelayEnvironment!)
 
+  /**
+   * In this flow we go from a logged out state to a logged in/signed up state
+   * where we have to execute mutations like sending the inquiry, saving your
+   * information, etc. We store the Relay environment in a ref then update it here.
+   */
   const setRelayEnvironment = (updatedEnvironment: Environment) => {
     relayEnvironment.current = updatedEnvironment
     return relayEnvironment
