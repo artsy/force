@@ -3,7 +3,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 
 import { Shelf, Spacer, Sup, Text } from "@artsy/palette"
-import { AuthContextModule, clickedArtworkGroup } from "@artsy/cohesion"
+import { AuthContextModule } from "@artsy/cohesion"
 
 import { extractNodes } from "v2/Utils/extractNodes"
 import { ShelfArtworkFragmentContainer } from "v2/Components/Artwork/ShelfArtwork"
@@ -11,6 +11,7 @@ import { tabTypeToContextModuleMap } from "../../Utils/tabTypeToContextModuleMap
 import { TrendingLots_viewer } from "v2/__generated__/TrendingLots_viewer.graphql"
 import { useAnalyticsContext } from "v2/System"
 import { CuratorialRailsZeroState } from "../CuratorialRailsZeroState/CuratorialRailsZeroState"
+import { trackHelpers } from "v2/Utils/cohesionHelpers"
 export interface TrendingLotsProps {
   viewer: TrendingLots_viewer
 }
@@ -53,13 +54,13 @@ const TrendingLots: React.FC<TrendingLotsProps> = ({ viewer }) => {
               lazyLoad
               onClick={() => {
                 trackEvent(
-                  clickedArtworkGroup({
+                  trackHelpers.clickedArtworkGroup(
                     contextModule,
-                    contextPageOwnerType: contextPageOwnerType!,
-                    artworkID: node.internalID,
-                    artworkSlug: node.slug,
-                    horizontalSlidePosition: index,
-                  })
+                    contextPageOwnerType!,
+                    node.internalID,
+                    node.slug,
+                    index
+                  )
                 )
               }}
             />

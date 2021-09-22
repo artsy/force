@@ -9,9 +9,11 @@ import { AuctionArtworksRailPlaceholder } from "../AuctionArtworksRailPlaceholde
 import { tabTypeToContextModuleMap } from "../../Utils/tabTypeToContextModuleMap"
 import { useTracking } from "react-tracking"
 import {
-  clickedArtworkGroupHeader,
-  ClickedArtworkGroupHeaderArgs,
+  ActionType,
+  ClickedArtworkGroup,
+  ContextModule,
   OwnerType,
+  PageOwnerType,
 } from "@artsy/cohesion"
 import { useAnalyticsContext } from "v2/System"
 
@@ -46,15 +48,12 @@ export const AuctionArtworksRail: React.FC<AuctionArtworksRailProps> = ({
 
   const trackViewSaleClick = () => {
     trackEvent(
-      clickedArtworkGroupHeader({
+      tracks.clickedArtworkGroupHeader(
         contextModule,
-        contextPageOwnerType,
-        destinationPageOwnerId: sale.internalID,
-        destinationPageOwnerSlug: sale.slug,
-        destinationPageOwnerType: OwnerType.sale,
-        type: "viewAll",
-        // FIXME: Remove this once cohesion pr has been automerged
-      } as ClickedArtworkGroupHeaderArgs)
+        contextPageOwnerType!,
+        sale.internalID,
+        sale.slug
+      )
     )
   }
 
@@ -113,3 +112,20 @@ export const AuctionArtworksRailFragmentContainer = createFragmentContainer(
     `,
   }
 )
+
+const tracks = {
+  clickedArtworkGroupHeader: (
+    contextModule: ContextModule,
+    contextPageOwnerType: PageOwnerType,
+    saleID: string,
+    saleSlug: string
+  ): ClickedArtworkGroup => ({
+    action: ActionType.clickedArtworkGroup,
+    context_module: contextModule,
+    context_page_owner_type: contextPageOwnerType,
+    destination_page_owner_id: saleID,
+    destination_page_owner_slug: saleSlug,
+    destination_page_owner_type: OwnerType.sale,
+    type: "viewAll",
+  }),
+}
