@@ -9,16 +9,30 @@ export type ArtworkMeta_artwork = {
     readonly date: string | null;
     readonly artistNames: string | null;
     readonly sale_message: string | null;
+    readonly listPrice: ({
+        readonly __typename: "Money";
+        readonly currencyCode: string;
+        readonly major: number;
+    } | {
+        readonly __typename: "PriceRange";
+        readonly maxPrice: {
+            readonly currencyCode: string;
+            readonly major: number;
+        } | null;
+    } | {
+        /*This will never be '%other', but we need some
+        value in case none of the concrete values match.*/
+        readonly __typename: "%other";
+    }) | null;
     readonly partner: {
         readonly name: string | null;
     } | null;
-    readonly image_rights: string | null;
-    readonly is_in_auction: boolean | null;
+    readonly isInAuction: boolean | null;
     readonly isAcquireable: boolean | null;
     readonly isInquireable: boolean | null;
     readonly isOfferable: boolean | null;
-    readonly is_shareable: boolean | null;
-    readonly meta_image: {
+    readonly isShareable: boolean | null;
+    readonly metaImage: {
         readonly resized: {
             readonly width: number | null;
             readonly height: number | null;
@@ -28,7 +42,7 @@ export type ArtworkMeta_artwork = {
     readonly meta: {
         readonly title: string | null;
         readonly description: string | null;
-        readonly long_description: string | null;
+        readonly longDescription: string | null;
     } | null;
     readonly context: ({
         readonly __typename: "Fair";
@@ -52,6 +66,29 @@ export type ArtworkMeta_artwork$key = {
 
 const node: ReaderFragment = (function(){
 var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "__typename",
+  "storageKey": null
+},
+v1 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "currencyCode",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "major",
+    "storageKey": null
+  }
+],
+v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -102,24 +139,50 @@ return {
     {
       "alias": null,
       "args": null,
+      "concreteType": null,
+      "kind": "LinkedField",
+      "name": "listPrice",
+      "plural": false,
+      "selections": [
+        (v0/*: any*/),
+        {
+          "kind": "InlineFragment",
+          "selections": (v1/*: any*/),
+          "type": "Money"
+        },
+        {
+          "kind": "InlineFragment",
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": "Money",
+              "kind": "LinkedField",
+              "name": "maxPrice",
+              "plural": false,
+              "selections": (v1/*: any*/),
+              "storageKey": null
+            }
+          ],
+          "type": "PriceRange"
+        }
+      ],
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
       "concreteType": "Partner",
       "kind": "LinkedField",
       "name": "partner",
       "plural": false,
       "selections": [
-        (v0/*: any*/)
+        (v2/*: any*/)
       ],
       "storageKey": null
     },
     {
-      "alias": "image_rights",
-      "args": null,
-      "kind": "ScalarField",
-      "name": "imageRights",
-      "storageKey": null
-    },
-    {
-      "alias": "is_in_auction",
+      "alias": null,
       "args": null,
       "kind": "ScalarField",
       "name": "isInAuction",
@@ -147,14 +210,14 @@ return {
       "storageKey": null
     },
     {
-      "alias": "is_shareable",
+      "alias": null,
       "args": null,
       "kind": "ScalarField",
       "name": "isShareable",
       "storageKey": null
     },
     {
-      "alias": "meta_image",
+      "alias": "metaImage",
       "args": null,
       "concreteType": "Image",
       "kind": "LinkedField",
@@ -245,7 +308,7 @@ return {
           "storageKey": "description(limit:155)"
         },
         {
-          "alias": "long_description",
+          "alias": "longDescription",
           "args": [
             {
               "kind": "Literal",
@@ -268,13 +331,7 @@ return {
       "name": "context",
       "plural": false,
       "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "__typename",
-          "storageKey": null
-        },
+        (v0/*: any*/),
         {
           "kind": "InlineFragment",
           "selections": [
@@ -285,7 +342,7 @@ return {
               "name": "slug",
               "storageKey": null
             },
-            (v0/*: any*/)
+            (v2/*: any*/)
           ],
           "type": "Fair"
         }
@@ -301,5 +358,5 @@ return {
   "type": "Artwork"
 };
 })();
-(node as any).hash = '9a762b2eee90cdd725d9494cef0fe4c0';
+(node as any).hash = '31f3bd396402fb7d7c0f370fe4b9bf2d';
 export default node;

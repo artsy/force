@@ -8,6 +8,7 @@ import { get } from "v2/Utils/get"
 import { withSystemContext } from "v2/System"
 import { SeoDataForArtworkFragmentContainer as SeoDataForArtwork } from "./Seo/SeoDataForArtwork"
 import { ZendeskWrapper } from "v2/Components/ZendeskWrapper"
+import { isExceededZendeskThreshold } from "v2/Utils/isExceededZendeskThreshold"
 
 interface ArtworkMetaProps {
   artwork: ArtworkMeta_artwork
@@ -30,21 +31,18 @@ export class ArtworkMeta extends Component<ArtworkMetaProps> {
 
   renderImageMetaTags() {
     const { artwork } = this.props
-    const { meta_image, is_shareable } = artwork
-    // @ts-expect-error STRICT_NULL_CHECK
-    const imageURL = get(meta_image, img => img.resized.url)
+    const { metaImage, isShareable } = artwork
+    const imageURL = get(metaImage, img => img?.resized?.url)
 
-    if (is_shareable && imageURL) {
+    if (isShareable && imageURL) {
       return (
         <>
           <Meta property="twitter:card" content="summary_large_image" />
           <Meta property="og:image" content={imageURL} />
-          {/* @ts-expect-error STRICT_NULL_CHECK */}
-          <Meta property="og:image:width" content={meta_image.resized.width} />
+          <Meta property="og:image:width" content={metaImage?.resized?.width} />
           <Meta
             property="og:image:height"
-            // @ts-expect-error STRICT_NULL_CHECK
-            content={meta_image.resized.height}
+            content={metaImage?.resized?.height}
           />
         </>
       )
@@ -60,8 +58,8 @@ export class ArtworkMeta extends Component<ArtworkMetaProps> {
   renderGoogleAdSnippet() {
     const { artwork, googleAdId: fromPropsGoogleAdId } = this.props
     const { GOOGLE_ADWORDS_ID: fromSharifyGoogleAdId } = sd
-    const { is_in_auction, isAcquireable, internalID } = artwork
-    if (!is_in_auction && !isAcquireable) return
+    const { isInAuction, isAcquireable, internalID } = artwork
+    if (!isInAuction && !isAcquireable) return
 
     // TODO: Investigate always being able to select from sharify.
     const googleAdId = fromSharifyGoogleAdId || fromPropsGoogleAdId
@@ -100,8 +98,7 @@ export class ArtworkMeta extends Component<ArtworkMetaProps> {
 
   get isInquiryArtwork() {
     const { isAcquireable, isInquireable, isOfferable } = this.props.artwork
-    const isInquiryArtwork = isInquireable && !isAcquireable && !isOfferable
-    return isInquiryArtwork
+    return isInquireable && !isAcquireable && !isOfferable
   }
 
   renderZendeskScript() {
@@ -111,7 +108,23 @@ export class ArtworkMeta extends Component<ArtworkMetaProps> {
     if (typeof window !== "undefined" && window.zEmbed) {
       return
     }
-    const zdKey = this.props.artwork.is_in_auction
+
+    const listPrice = this.props.artwork.listPrice
+    const price =
+      listPrice?.__typename === "Money"
+        ? listPrice
+        : listPrice?.__typename === "PriceRange"
+        ? listPrice.maxPrice
+        : null
+
+    if (
+      !price ||
+      !isExceededZendeskThreshold(price.major, price.currencyCode)
+    ) {
+      return
+    }
+
+    const zdKey = this.props.artwork.isInAuction
       ? sd.AUCTION_ZENDESK_KEY
       : sd.ZENDESK_KEY
 
@@ -120,26 +133,20 @@ export class ArtworkMeta extends Component<ArtworkMetaProps> {
 
   render() {
     const { artwork } = this.props
-    // @ts-expect-error STRICT_NULL_CHECK
-    const imageURL = get(artwork, a => a.meta_image.resized.url)
+    const imageURL = get(artwork, a => a.metaImage?.resized?.url)
 
     return (
       <>
-        {/* @ts-expect-error STRICT_NULL_CHECK */}
-        <Title>{artwork.meta.title}</Title>
-        {/* @ts-expect-error STRICT_NULL_CHECK */}
-        <Meta name="description" content={artwork.meta.description} />
+        <Title>{artwork.meta?.title}</Title>
+        <Meta name="description" content={artwork.meta?.description} />
         {imageURL && <Meta name="thumbnail" content={imageURL} />}
         <Link rel="canonical" href={`${sd.APP_URL}${artwork.href}`} />
         <Meta
           property="twitter:description"
-          // @ts-expect-error STRICT_NULL_CHECK
-          content={artwork.meta.long_description}
+          content={artwork.meta?.longDescription}
         />
-        {/* @ts-expect-error STRICT_NULL_CHECK */}
-        <Meta property="og:title" content={artwork.meta.title} />
-        {/* @ts-expect-error STRICT_NULL_CHECK */}
-        <Meta property="og:description" content={artwork.meta.description} />
+        <Meta property="og:title" content={artwork.meta?.title} />
+        <Meta property="og:description" content={artwork.meta?.description} />
         <Meta property="og:url" content={`${sd.APP_URL}${artwork.href}`} />
         <Meta
           property="og:type"
@@ -165,16 +172,28 @@ export const ArtworkMetaFragmentContainer = createFragmentContainer(
         date
         artistNames
         sale_message: saleMessage
+        listPrice {
+          __typename
+          ... on Money {
+            currencyCode
+            major
+          }
+          ... on PriceRange {
+            maxPrice {
+              currencyCode
+              major
+            }
+          }
+        }
         partner {
           name
         }
-        image_rights: imageRights
-        is_in_auction: isInAuction
+        isInAuction
         isAcquireable
         isInquireable
         isOfferable
-        is_shareable: isShareable
-        meta_image: image {
+        isShareable
+        metaImage: image {
           resized(
             width: 640
             height: 640
@@ -188,7 +207,7 @@ export const ArtworkMetaFragmentContainer = createFragmentContainer(
         meta {
           title
           description(limit: 155)
-          long_description: description(limit: 200)
+          longDescription: description(limit: 200)
         }
         context {
           __typename
