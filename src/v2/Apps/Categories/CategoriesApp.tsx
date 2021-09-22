@@ -20,15 +20,18 @@ const CategoriesApp: React.FC<CategoriesAppProps> = props => {
       <MetaTags pathname="categories" />
       <Spacer mt={[2, 4]} />
       <CategoriesIntro />
+      <Spacer mt={[6, 12]} />
       <StickyProvider>
         <Sticky>
           {({ stuck }) => {
             return (
               <FullBleed style={stuck ? { boxShadow: DROP_SHADOW } : undefined}>
                 <AppContainer maxWidth="none">
+                  <Spacer pb={1} />
                   <StickyNavFragmentContainer
                     geneFamiliesConnection={geneFamiliesConnection}
                   />
+                  <Spacer pb={1} />
                 </AppContainer>
               </FullBleed>
             )

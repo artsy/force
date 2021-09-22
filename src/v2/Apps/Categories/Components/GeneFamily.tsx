@@ -40,7 +40,6 @@ export const GeneFamily: React.FC<GeneFamilyProps> = props => {
           )
         })}
       </Masonry>
-      <Spacer mt={6} />
     </Box>
   )
 }

@@ -39,28 +39,24 @@ const StickyNav: React.FC<StickyNavProps> = props => {
   }
 
   return (
-    <>
-      <Spacer pb={1} />
-      <Swiper Cell={Cell} Rail={Rail}>
-        <Spacer pr={[2, 4]} />
-        {geneFamilies.map((geneFamily, i) => {
-          return (
-            <Flex key={geneFamily.slug} flexDirection="row">
-              <Link
-                href={`#jump--${geneFamily.slug}`}
-                noUnderline={true}
-                onClick={handleClick}
-              >
-                <Pill variant="filter">{geneFamily.name}</Pill>
-              </Link>
-              {i !== geneFamilies.length - 1 ? <Spacer pr={1} /> : null}
-            </Flex>
-          )
-        })}
-        <Spacer pr={[2, 4]} />
-      </Swiper>
-      <Spacer pb={1} />
-    </>
+    <Swiper Cell={Cell} Rail={Rail}>
+      <Spacer pr={[2, 4]} />
+      {geneFamilies.map((geneFamily, i) => {
+        return (
+          <Flex key={geneFamily.slug} flexDirection="row">
+            <Link
+              href={`#jump--${geneFamily.slug}`}
+              noUnderline={true}
+              onClick={handleClick}
+            >
+              <Pill variant="filter">{geneFamily.name}</Pill>
+            </Link>
+            {i !== geneFamilies.length - 1 ? <Spacer pr={1} /> : null}
+          </Flex>
+        )
+      })}
+      <Spacer pr={[2, 4]} />
+    </Swiper>
   )
 }
 

@@ -1,4 +1,4 @@
-import { Box } from "@artsy/palette"
+import { Box, Spacer } from "@artsy/palette"
 import { GeneFamilyFragmentContainer } from "./GeneFamily"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -17,10 +17,10 @@ const GeneFamilies: React.FC<GeneFamiliesProps> = props => {
     <Box>
       {geneFamilies.map(geneFamily => {
         return (
-          <GeneFamilyFragmentContainer
-            geneFamily={geneFamily}
-            key={geneFamily.internalID}
-          />
+          <Box key={geneFamily.internalID}>
+            <GeneFamilyFragmentContainer geneFamily={geneFamily} />
+            <Spacer mt={6} />
+          </Box>
         )
       })}
     </Box>
