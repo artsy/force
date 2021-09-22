@@ -3,8 +3,9 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
+export type HomePageArtworkModuleTypes = "ACTIVE_BIDS" | "CURRENT_FAIRS" | "FOLLOWED_ARTIST" | "FOLLOWED_ARTISTS" | "FOLLOWED_GALLERIES" | "FOLLOWED_GENES" | "GENERIC_GENES" | "LIVE_AUCTIONS" | "POPULAR_ARTISTS" | "RECENTLY_VIEWED_WORKS" | "RECOMMENDED_WORKS" | "RELATED_ARTISTS" | "SAVED_WORKS" | "SIMILAR_TO_RECENTLY_VIEWED" | "SIMILAR_TO_SAVED_WORKS" | "%future added value";
 export type HomeArtworkModuleRailQueryVariables = {
-    key?: string | null;
+    key?: HomePageArtworkModuleTypes | null;
     id?: string | null;
     relatedArtistID?: string | null;
     followedArtistID?: string | null;
@@ -25,7 +26,7 @@ export type HomeArtworkModuleRailQuery = {
 
 /*
 query HomeArtworkModuleRailQuery(
-  $key: String
+  $key: HomePageArtworkModuleTypes
   $id: String
   $relatedArtistID: String
   $followedArtistID: String
@@ -219,7 +220,7 @@ var v0 = [
     "defaultValue": null,
     "kind": "LocalArgument",
     "name": "key",
-    "type": "String"
+    "type": "HomePageArtworkModuleTypes"
   },
   {
     "defaultValue": null,
@@ -826,9 +827,9 @@ return {
     "metadata": {},
     "name": "HomeArtworkModuleRailQuery",
     "operationKind": "query",
-    "text": "query HomeArtworkModuleRailQuery(\n  $key: String\n  $id: String\n  $relatedArtistID: String\n  $followedArtistID: String\n) {\n  homePage {\n    artworkModule(key: $key, id: $id, relatedArtistID: $relatedArtistID, followedArtistID: $followedArtistID) {\n      ...HomeArtworkModuleRail_artworkModule\n      id\n    }\n  }\n}\n\nfragment Badge_artwork on Artwork {\n  is_biddable: isBiddable\n  href\n  sale {\n    is_preview: isPreview\n    display_timely_at: displayTimelyAt\n    id\n  }\n}\n\nfragment Contact_artwork on Artwork {\n  href\n  is_inquireable: isInquireable\n  sale {\n    is_auction: isAuction\n    is_live_open: isLiveOpen\n    is_open: isOpen\n    is_closed: isClosed\n    id\n  }\n  partner(shallow: true) {\n    type\n    id\n  }\n  sale_artwork: saleArtwork {\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    counts {\n      bidder_positions: bidderPositions\n    }\n    id\n  }\n}\n\nfragment Details_artwork on Artwork {\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n}\n\nfragment HomeArtworkModuleContext_context on HomePageArtworkModuleContext {\n  __typename\n  ... on Sale {\n    href\n    liveStartAt(format: \"MMM D\")\n    startAt(format: \"MMM D\")\n    endAt(format: \"MMM D\")\n  }\n  ... on Fair {\n    href\n    exhibitionPeriod\n  }\n  ... on Gene {\n    href\n  }\n  ... on HomePageRelatedArtistArtworkModule {\n    artist {\n      name\n      href\n      id\n    }\n    basedOn {\n      name\n      href\n      id\n    }\n  }\n  ... on HomePageFollowedArtistArtworkModule {\n    artist {\n      href\n      id\n    }\n  }\n  ... on TrendingArtists {\n    artists {\n      href\n      name\n      id\n    }\n  }\n  ... on FollowArtists {\n    artists {\n      href\n      name\n      id\n    }\n  }\n}\n\nfragment HomeArtworkModuleRail_artworkModule on HomePageArtworkModule {\n  title\n  key\n  results {\n    internalID\n    ...ShelfArtwork_artwork\n    id\n  }\n  context {\n    __typename\n    ...HomeArtworkModuleContext_context\n    ... on Node {\n      id\n    }\n  }\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  ...Contact_artwork\n  href\n}\n\nfragment SaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n\nfragment ShelfArtwork_artwork on Artwork {\n  image {\n    resized(width: 200) {\n      src\n      srcSet\n      width\n      height\n    }\n    aspectRatio\n    height\n  }\n  imageTitle\n  title\n  href\n  is_saved: isSaved\n  ...Metadata_artwork\n  ...SaveButton_artwork\n  ...Badge_artwork\n}\n"
+    "text": "query HomeArtworkModuleRailQuery(\n  $key: HomePageArtworkModuleTypes\n  $id: String\n  $relatedArtistID: String\n  $followedArtistID: String\n) {\n  homePage {\n    artworkModule(key: $key, id: $id, relatedArtistID: $relatedArtistID, followedArtistID: $followedArtistID) {\n      ...HomeArtworkModuleRail_artworkModule\n      id\n    }\n  }\n}\n\nfragment Badge_artwork on Artwork {\n  is_biddable: isBiddable\n  href\n  sale {\n    is_preview: isPreview\n    display_timely_at: displayTimelyAt\n    id\n  }\n}\n\nfragment Contact_artwork on Artwork {\n  href\n  is_inquireable: isInquireable\n  sale {\n    is_auction: isAuction\n    is_live_open: isLiveOpen\n    is_open: isOpen\n    is_closed: isClosed\n    id\n  }\n  partner(shallow: true) {\n    type\n    id\n  }\n  sale_artwork: saleArtwork {\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    counts {\n      bidder_positions: bidderPositions\n    }\n    id\n  }\n}\n\nfragment Details_artwork on Artwork {\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n}\n\nfragment HomeArtworkModuleContext_context on HomePageArtworkModuleContext {\n  __typename\n  ... on Sale {\n    href\n    liveStartAt(format: \"MMM D\")\n    startAt(format: \"MMM D\")\n    endAt(format: \"MMM D\")\n  }\n  ... on Fair {\n    href\n    exhibitionPeriod\n  }\n  ... on Gene {\n    href\n  }\n  ... on HomePageRelatedArtistArtworkModule {\n    artist {\n      name\n      href\n      id\n    }\n    basedOn {\n      name\n      href\n      id\n    }\n  }\n  ... on HomePageFollowedArtistArtworkModule {\n    artist {\n      href\n      id\n    }\n  }\n  ... on TrendingArtists {\n    artists {\n      href\n      name\n      id\n    }\n  }\n  ... on FollowArtists {\n    artists {\n      href\n      name\n      id\n    }\n  }\n}\n\nfragment HomeArtworkModuleRail_artworkModule on HomePageArtworkModule {\n  title\n  key\n  results {\n    internalID\n    ...ShelfArtwork_artwork\n    id\n  }\n  context {\n    __typename\n    ...HomeArtworkModuleContext_context\n    ... on Node {\n      id\n    }\n  }\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  ...Contact_artwork\n  href\n}\n\nfragment SaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n\nfragment ShelfArtwork_artwork on Artwork {\n  image {\n    resized(width: 200) {\n      src\n      srcSet\n      width\n      height\n    }\n    aspectRatio\n    height\n  }\n  imageTitle\n  title\n  href\n  is_saved: isSaved\n  ...Metadata_artwork\n  ...SaveButton_artwork\n  ...Badge_artwork\n}\n"
   }
 };
 })();
-(node as any).hash = 'e60fbd85d83306ee9e5e3d3c22cf46e3';
+(node as any).hash = '847a655ba296c424770086d655415365';
 export default node;

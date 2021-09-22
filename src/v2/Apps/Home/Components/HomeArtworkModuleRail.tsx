@@ -19,21 +19,21 @@ import { HomeArtworkModuleContextFragmentContainer } from "./HomeArtworkModuleCo
 import { useLazyLoadComponent } from "v2/Utils/Hooks/useLazyLoadComponent"
 
 const HOME_ARTWORK_MODULES = [
-  "active_bids",
-  "current_fairs",
-  "followed_artist",
-  "followed_artists",
-  "followed_galleries",
-  "generic_gene", // GENERIC_GENES
-  "genes", // FOLLOWED_GENES
-  "live_auctions",
-  "popular_artists",
-  "recently_viewed_works",
-  "recommended_works",
-  "related_artists",
-  "saved_works",
-  "similar_to_recently_viewed",
-  "similar_to_saved_works",
+  "ACTIVE_BIDS",
+  "CURRENT_FAIRS",
+  "FOLLOWED_ARTIST",
+  "FOLLOWED_ARTISTS",
+  "FOLLOWED_GALLERIES",
+  "GENERIC_GENES",
+  "FOLLOWED_GENES",
+  "LIVE_AUCTIONS",
+  "POPULAR_ARTISTS",
+  "RECENTLY_VIEWED_WORKS",
+  "RECOMMENDED_WORKS",
+  "RELATED_ARTISTS",
+  "SAVED_WORKS",
+  "SIMILAR_TO_RECENTLY_VIEWED",
+  "SIMILAR_TO_SAVED_WORKS",
 ] as const
 
 export type HomeArtworkModuleKey = typeof HOME_ARTWORK_MODULES[number]
@@ -174,7 +174,7 @@ const HomeArtworkModulePlaceholder: React.FC<{ title: string }> = ({
 interface HomeArtworkModuleRailQueryRendererProps {
   title: string
   params: {
-    key: string
+    key: HomeArtworkModuleKey
     id?: string | null
     relatedArtistID?: string | null
     followedArtistID?: string | null
@@ -192,7 +192,7 @@ export const HomeArtworkModuleRailQueryRenderer: React.FC<HomeArtworkModuleRailQ
       environment={relayEnvironment}
       query={graphql`
         query HomeArtworkModuleRailQuery(
-          $key: String
+          $key: HomePageArtworkModuleTypes
           $id: String
           $relatedArtistID: String
           $followedArtistID: String
