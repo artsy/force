@@ -127,11 +127,9 @@ const SectionImage: React.FC<{
         style={{ objectFit: "cover", alignSelf: "center" }}
       />
       {!!artistName && !!artworkName && (
-        <>
-          <Text variant="xs" color="black60">
-            {artistName}, <i>{artworkName}</i>
-          </Text>
-        </>
+        <Text variant="xs" color="black60">
+          {artistName}, <i>{artworkName}</i>
+        </Text>
       )}
     </ResponsiveBox>
   )
