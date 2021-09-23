@@ -4,7 +4,8 @@ import { setupTestWrapperTL } from "v2/DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
 import { TagApp_Test_RTL_Query } from "v2/__generated__/TagApp_Test_RTL_Query.graphql"
 import { MockBoot } from "v2/DevTools"
-import { screen, waitFor } from "@testing-library/react"
+import { screen } from "@testing-library/react"
+import { findMetaTagBySelector } from "v2/DevTools"
 
 jest.unmock("react-relay")
 jest.mock("../Components/TagArtworkFilter", () => ({
@@ -28,14 +29,6 @@ const { renderWithRelay } = setupTestWrapperTL<TagApp_Test_RTL_Query>({
     }
   `,
 })
-
-async function findMetaTagBySelector(selector: string) {
-  await waitFor(() =>
-    /* eslint-disable testing-library/no-node-access */
-    expect(document.querySelectorAll("meta").length).toBeGreaterThan(0)
-  )
-  return document.querySelector(selector)
-}
 
 describe("TagApp", () => {
   it("renders correctly", () => {
