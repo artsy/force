@@ -24,7 +24,7 @@ const CategoriesApp: React.FC<CategoriesAppProps> = props => {
       <MetaTags pathname="categories" />
       <Spacer mt={[2, 4]} />
       <CategoriesIntro />
-      <Spacer mt={[6, 12]} />
+      <Spacer mt={6} />
       <StickyProvider>
         <Sticky>
           {({ stuck }) => {
@@ -51,7 +51,7 @@ const CategoriesApp: React.FC<CategoriesAppProps> = props => {
           }}
         </Sticky>
       </StickyProvider>
-      <Spacer mt={[4, 6]} />
+      <Spacer mt={6} />
       <GeneFamiliesFragmentContainer
         geneFamiliesConnection={geneFamiliesConnection}
       />
