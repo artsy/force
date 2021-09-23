@@ -30,7 +30,7 @@ const HomeArtworkModules: React.FC<HomeArtworkModulesProps> = ({
               <HomeArtworkModuleRailLazyQueryRenderer
                 title={artworkModule.title}
                 params={{
-                  key: artworkModule.key as HomeArtworkModuleKey,
+                  key: artworkModule.key.toUpperCase() as HomeArtworkModuleKey,
                   id: artworkModule.params?.internalID,
                   relatedArtistID: artworkModule.params?.relatedArtistID,
                   followedArtistID: artworkModule.params?.followedArtistID,
