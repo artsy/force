@@ -8,6 +8,8 @@ import {
 } from "@artsy/palette"
 import qs from "qs"
 import React, { useState } from "react"
+import { useTracking } from "react-tracking"
+import { AnalyticsSchema } from "v2/System"
 import { useAuctionResultsFilterContext } from "v2/Apps/Artist/Routes/AuctionResults/AuctionResultsFilterContext"
 import { auctionHouseMap } from "v2/Apps/Artist/Routes/AuctionResults/Components/AuctionFilters/AuctionHouseFilter"
 import { categoryMap } from "v2/Apps/Artist/Routes/AuctionResults/Components/AuctionFilters/MediumFilter"
@@ -32,6 +34,7 @@ const organizationOptions = mapMapToOptions(auctionHouseMap)
 export const PriceDatabaseSearch: React.FC = () => {
   const { router } = useRouter()
   const { filters, setFilter } = useAuctionResultsFilterContext()
+  const { trackEvent } = useTracking()
   const [artistSlug, setArtistSlug] = useState<string | undefined>(undefined)
 
   const handleSearch = () => {
@@ -40,7 +43,13 @@ export const PriceDatabaseSearch: React.FC = () => {
     const queryString = qs.stringify(paramsToSnakeCase(searchFilters))
     const paramFlag = "scroll_to_market_signals=true"
 
-    // TODO: Add tracking for search
+    trackEvent({
+      action_type: AnalyticsSchema.ActionType.Click,
+      destination_path: pathName,
+      context_page_owner_type: AnalyticsSchema.OwnerType.PriceDatabase,
+      context_page: AnalyticsSchema.PageName.PriceDatabase,
+      subject: AnalyticsSchema.Subject.SearchArtistInDatabase,
+    })
 
     const url = queryString
       ? `${pathName}?${queryString}&${paramFlag}`
@@ -50,6 +59,13 @@ export const PriceDatabaseSearch: React.FC = () => {
   }
 
   const handleFilterSelect = key => {
+    trackEvent({
+      action_type: AnalyticsSchema.ActionType.ChangedFilters,
+      context_page_owner_type: AnalyticsSchema.OwnerType.PriceDatabase,
+      context_page: AnalyticsSchema.PageName.PriceDatabase,
+      subject: `${AnalyticsSchema.Subject.SetFilterOnSearchArtistInDatabase}: ${key}`,
+    })
+
     return selected => {
       setFilter?.(
         key,
@@ -57,8 +73,6 @@ export const PriceDatabaseSearch: React.FC = () => {
           return selected.value
         })
       )
-
-      // TODO: Add tracking for filter changes
     }
   }
 

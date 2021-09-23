@@ -13,6 +13,7 @@ export enum PageName {
   SearchPage = "Search page",
   HomePage = "Home",
   IdentityVerificationPage = "Identity Verification page",
+  PriceDatabase = "Price Database page",
 }
 
 /**
@@ -34,6 +35,7 @@ export enum OwnerType {
   Invoice = "Invoice",
   Partner = "Partner",
   Show = "Show",
+  PriceDatabase = "PriceDatabase",
 }
 
 /**
@@ -146,6 +148,11 @@ export enum ActionType {
    */
   ClickedArtworkGroup = "clickedArtworkGroup",
   ClickedBuyViewingGroup = "clickedBuyViewingRoom",
+
+  /**
+   * Price Database
+   */
+  ChangedFilters = "changedFilters",
 }
 
 /**
@@ -305,6 +312,12 @@ export enum Subject {
   ViewWorks = "View works",
   ArtworkThumbnail = "ArtworkThumbnail",
   ViewingRoomArtworkDetail = "ViewingRoomArtworkDetail",
+
+  /**
+   * Price Database
+   */
+  SearchArtistInDatabase = "SearchArtistInDatabase",
+  SetFilterOnSearchArtistInDatabase = "SetFilterOnSearchArtistInDatabase",
 }
 
 /**
