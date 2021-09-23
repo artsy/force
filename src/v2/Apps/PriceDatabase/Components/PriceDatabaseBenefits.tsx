@@ -7,6 +7,7 @@ import {
   Flex,
   ResponsiveBox,
   Box,
+  Spacer,
 } from "@artsy/palette"
 import React, { ReactElement } from "react"
 import { Media } from "v2/Utils/Responsive"
@@ -40,7 +41,8 @@ export const PriceDatabaseBenefits: React.FC = () => {
             src="http://files.artsy.net/images/kehinde_wiley_portrait_of_nelly_moudime_ii.webp"
             srcSet=""
             alt=""
-            credits="Kehinde Wiley, Portrait of Nelly Moudime II (2020)"
+            artistName="Kehinde Wiley"
+            artworkName="Portrait of Nelly Moudime II (2020)"
           />
         }
         jsxPosition="right"
@@ -56,7 +58,8 @@ export const PriceDatabaseBenefits: React.FC = () => {
             src="http://files.artsy.net/images/damien_hirst_kindness.webp"
             srcSet=""
             alt=""
-            credits="Damien Hirst, Kindness, 2011."
+            artistName="Damien Hirst"
+            artworkName="Kindness, 2011."
           />
         }
       />
@@ -74,12 +77,14 @@ const Section: React.FC<{
     <>
       <Media lessThan="md">
         <Flex mt={4} />
-        {jsx}
         <Text as="h1" variant="xl" mt={2}>
           {title}
         </Text>
+        <Flex mb={1} />
         <Text variant="sm">{text}</Text>
-        <Flex mb={4} />
+        <Flex mb={2} />
+        {jsx}
+        <Spacer height={80} />
       </Media>
       <Media greaterThanOrEqual="md">
         <GridColumns my={4} gridRowGap={[2, 0]}>
@@ -103,8 +108,9 @@ const SectionImage: React.FC<{
   src: string
   srcSet: string
   alt: string
-  credits?: string
-}> = ({ src, srcSet, alt, credits }) => {
+  artistName?: string
+  artworkName?: string
+}> = ({ src, srcSet, alt, artistName, artworkName }) => {
   return (
     <ResponsiveBox
       aspectWidth={800}
@@ -120,10 +126,12 @@ const SectionImage: React.FC<{
         alt={alt}
         style={{ objectFit: "cover", alignSelf: "center" }}
       />
-      {!!credits && (
-        <Text variant="xs" color="black60" fontStyle="italic">
-          {credits}
-        </Text>
+      {!!artistName && !!artworkName && (
+        <>
+          <Text variant="xs" color="black60">
+            {artistName}, <i>{artworkName}</i>
+          </Text>
+        </>
       )}
     </ResponsiveBox>
   )
