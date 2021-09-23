@@ -24,13 +24,13 @@ const HomeArtworkModules: React.FC<HomeArtworkModulesProps> = ({
 
         return (
           <React.Fragment key={artworkModule.title ?? i}>
-            {(artworkModule.key as HomeArtworkModuleKey) === "active_bids" ? (
+            {(artworkModule.key as HomeArtworkModuleKey) === "ACTIVE_BIDS" ? (
               <MyBidsQueryRenderer />
             ) : (
               <HomeArtworkModuleRailLazyQueryRenderer
                 title={artworkModule.title}
                 params={{
-                  key: artworkModule.key,
+                  key: artworkModule.key as HomeArtworkModuleKey,
                   id: artworkModule.params?.internalID,
                   relatedArtistID: artworkModule.params?.relatedArtistID,
                   followedArtistID: artworkModule.params?.followedArtistID,
