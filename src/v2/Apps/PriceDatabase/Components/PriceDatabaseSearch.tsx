@@ -9,7 +9,6 @@ import {
 import qs from "qs"
 import React, { useState } from "react"
 import { useTracking } from "react-tracking"
-import { AnalyticsSchema } from "v2/System"
 import { useAuctionResultsFilterContext } from "v2/Apps/Artist/Routes/AuctionResults/AuctionResultsFilterContext"
 import { auctionHouseMap } from "v2/Apps/Artist/Routes/AuctionResults/Components/AuctionFilters/AuctionHouseFilter"
 import { categoryMap } from "v2/Apps/Artist/Routes/AuctionResults/Components/AuctionFilters/MediumFilter"
@@ -18,6 +17,7 @@ import { paramsToSnakeCase } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
 import { useRouter } from "v2/System/Router/useRouter"
 import { filterSearchFilters } from "../Utils/filterSearchFilters"
 import { PriceDatabaseArtistAutosuggest } from "./PriceDatabaseArtistAutosuggest"
+import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
 
 const ALLOWED_FILTERS = ["categories", "sizes", "organizations"]
 
@@ -44,11 +44,14 @@ export const PriceDatabaseSearch: React.FC = () => {
     const paramFlag = "scroll_to_market_signals=true"
 
     trackEvent({
-      action_type: AnalyticsSchema.ActionType.Click,
+      action: ActionType.searchedPriceDatabase,
+      context_module: ContextModule.priceDatabaseLanding,
+      context_owner_type: OwnerType.priceDatabase,
+      destination_owner_type: OwnerType.artistAuctionResults,
+      destination_owner_slug: artistSlug,
       destination_path: pathName,
-      context_page_owner_type: AnalyticsSchema.OwnerType.PriceDatabase,
-      context_page: AnalyticsSchema.PageName.PriceDatabase,
-      subject: AnalyticsSchema.Subject.SearchArtistInDatabase,
+      filters: JSON.stringify(searchFilters),
+      query: queryString,
     })
 
     const url = queryString
@@ -59,17 +62,20 @@ export const PriceDatabaseSearch: React.FC = () => {
   }
 
   const handleFilterSelect = key => {
-    trackEvent({
-      action_type: AnalyticsSchema.ActionType.ChangedFilters,
-      context_page_owner_type: AnalyticsSchema.OwnerType.PriceDatabase,
-      context_page: AnalyticsSchema.PageName.PriceDatabase,
-      subject: `${AnalyticsSchema.Subject.SetFilterOnSearchArtistInDatabase}: ${key}`,
-    })
-
     return selected => {
       setFilter?.(
         key,
         selected.map(selected => {
+          trackEvent({
+            action_type: ActionType.priceDatabaseFilterParamsChanged,
+            context_module: ContextModule.priceDatabaseLanding,
+            context_owner_type: OwnerType.priceDatabase,
+            changed: `{${key}: ${selected.value}}`,
+            current: JSON.stringify(
+              filterSearchFilters(filters, ALLOWED_FILTERS)
+            ),
+          })
+
           return selected.value
         })
       )
