@@ -37,9 +37,6 @@ export const fillInPhoneNumber = (
 
 export const fillCountrySelect = (component, value) => {
   const input = component.find(CountrySelect)
-  // input.simulate("select", {
-  //   target: { value: "GB" },
-  // })
   input.props().onSelect(value)
 }
 
