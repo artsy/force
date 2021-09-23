@@ -1,7 +1,8 @@
 import { artworkGridRenders } from "../helpers/artworkGridRenders"
 import { visitWithStatusRetries } from "../helpers/visitWithStatusRetries"
 
-describe("/collection/:id", () => {
+// FIXME: Remove skip once Staging is back up
+describe.skip("/collection/:id", () => {
   beforeEach(() => {
     visitWithStatusRetries("/collection/emerging-photographers")
   })
@@ -20,7 +21,8 @@ describe("/collection/:id", () => {
   })
 })
 
-describe("/collection/:id (a collection hub)", () => {
+// FIXME: Remove skip once Staging is back up
+describe.skip("/collection/:id (a collection hub)", () => {
   beforeEach(() => {
     visitWithStatusRetries("/collection/contemporary")
   })

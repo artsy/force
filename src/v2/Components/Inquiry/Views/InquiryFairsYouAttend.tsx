@@ -26,7 +26,7 @@ export const InquiryFairsYouAttend: React.FC = () => {
 
   return (
     <>
-      <Text variant="lg" mb={2}>
+      <Text variant="lg" mb={2} pr={2}>
         What fairs do you attend?{" "}
         <Box color="black60" as="span">
           (Optional)

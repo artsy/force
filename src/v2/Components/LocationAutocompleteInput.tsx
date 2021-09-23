@@ -1,5 +1,10 @@
 import React from "react"
-import { DEFAULT_MODAL_Z_INDEX, Input, InputProps } from "@artsy/palette"
+import {
+  DEFAULT_MODAL_Z_INDEX,
+  DROP_SHADOW,
+  Input,
+  InputProps,
+} from "@artsy/palette"
 import { useLoadScript } from "v2/Utils/Hooks/useLoadScript"
 import { data as sd } from "sharify"
 import { useRef } from "react"
@@ -29,7 +34,11 @@ export const LocationAutocompleteInput: React.FC<LocationAutocompleteInputProps>
 
   useAppendStylesheet({
     id: "google-maps-css",
-    body: `.pac-container { z-index: ${DEFAULT_MODAL_Z_INDEX}; }`,
+    body: `
+      .pac-container { margin-top: 10px; z-index: ${DEFAULT_MODAL_Z_INDEX}; box-shadow: ${DROP_SHADOW}; border-top: 0; }
+      .pac-item { padding: 10px; border-top: 0; }
+      .pac-item, .pac-item-query { font-size: 1rem; }
+    `,
   })
 
   const inputRef = useRef<HTMLInputElement | null>(null)

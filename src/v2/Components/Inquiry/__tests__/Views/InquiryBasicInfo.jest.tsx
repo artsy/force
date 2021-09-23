@@ -20,6 +20,9 @@ const { getWrapper } = setupTestWrapper({
       artwork(id: "example") {
         ...InquiryBasicInfo_artwork
       }
+      me {
+        ...InquiryBasicInfo_me
+      }
     }
   `,
 })

@@ -1,16 +1,16 @@
 import { commitMutation, graphql } from "relay-runtime"
-import { useSystemContext } from "v2/System"
 import {
   useCreateUserInterestMutation,
   CreateUserInterestMutationInput,
 } from "v2/__generated__/useCreateUserInterestMutation.graphql"
+import { useInquiryContext } from "./useInquiryContext"
 
 export const useCreateUserInterest = () => {
-  const { relayEnvironment } = useSystemContext()
+  const { relayEnvironment } = useInquiryContext()
 
   const submitCreateUserInterest = (input: CreateUserInterestMutationInput) => {
     return new Promise((resolve, reject) => {
-      commitMutation<useCreateUserInterestMutation>(relayEnvironment!, {
+      commitMutation<useCreateUserInterestMutation>(relayEnvironment.current!, {
         onError: reject,
         onCompleted: (res, errors) => {
           if (errors !== null) {

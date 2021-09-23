@@ -27,7 +27,13 @@ export const InquirySignUp: React.FC = () => {
   const [mode, setMode] = useState<Mode>(Mode.Pending)
   const [error, setError] = useState("")
 
-  const { inquiry, artworkID, next } = useInquiryContext()
+  const {
+    inquiry,
+    artworkID,
+    next,
+    setRelayEnvironment,
+    engine,
+  } = useInquiryContext()
 
   const { submitArtworkInquiryRequest } = useArtworkInquiryRequest()
 
@@ -45,10 +51,16 @@ export const InquirySignUp: React.FC = () => {
     try {
       const { user } = await signUp(state)
 
+      // Creates an authenticated relay environment now that we have a user
+      const relayEnvironment = createRelaySSREnvironment({ user })
+
+      // Sets the authenicated environment so other steps can use it
+      setRelayEnvironment(relayEnvironment)
+
       await submitArtworkInquiryRequest({
-        relayEnvironment: createRelaySSREnvironment({ user }),
         artworkID,
         message: inquiry.message,
+        contactGallery: !engine.decide("askSpecialist"),
       })
 
       setMode(Mode.Success)
@@ -131,12 +143,16 @@ export const InquirySignUp: React.FC = () => {
           By signing up, you agree to our{" "}
           <a href="/terms" target="_blank">
             Terms of Use
-          </a>{" "}
-          and{" "}
+          </a>
+          ,{" "}
           <a href="/privacy" target="_blank">
             Privacy Policy
           </a>
-          .
+          ,{" "}
+          <a href="/conditions-of-sale" target="_blank">
+            Conditions of Sale
+          </a>{" "}
+          and to receiving emails from Artsy.
         </Text>
 
         <Text variant="xs" color="black60" mt={1}>

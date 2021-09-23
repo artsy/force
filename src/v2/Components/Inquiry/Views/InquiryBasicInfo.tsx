@@ -14,6 +14,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { useInquiryContext } from "../Hooks/useInquiryContext"
 import { InquiryBasicInfo_artwork } from "v2/__generated__/InquiryBasicInfo_artwork.graphql"
+import { InquiryBasicInfo_me } from "v2/__generated__/InquiryBasicInfo_me.graphql"
 import { InquiryBasicInfoQuery } from "v2/__generated__/InquiryBasicInfoQuery.graphql"
 import { useSystemContext } from "v2/System"
 import {
@@ -35,9 +36,10 @@ enum Mode {
 
 interface InquiryBasicInfoProps {
   artwork: InquiryBasicInfo_artwork
+  me: InquiryBasicInfo_me | null
 }
 
-const InquiryBasicInfo: React.FC<InquiryBasicInfoProps> = ({ artwork }) => {
+const InquiryBasicInfo: React.FC<InquiryBasicInfoProps> = ({ artwork, me }) => {
   const { next, setContext } = useInquiryContext()
 
   const [mode, setMode] = useState(Mode.Pending)
@@ -91,7 +93,7 @@ const InquiryBasicInfo: React.FC<InquiryBasicInfoProps> = ({ artwork }) => {
 
   return (
     <Box as="form" onSubmit={handleSubmit}>
-      <Text variant="lg" mb={2}>
+      <Text variant="lg" mb={2} pr={2}>
         Tell {artwork.partner?.name ?? "us"} a little bit about yourself.
       </Text>
 
@@ -106,6 +108,7 @@ const InquiryBasicInfo: React.FC<InquiryBasicInfoProps> = ({ artwork }) => {
         name="profession"
         placeholder="Profession"
         onChange={handleInputChange("profession")}
+        defaultValue={me?.profession ?? undefined}
         mb={1}
       />
 
@@ -114,6 +117,7 @@ const InquiryBasicInfo: React.FC<InquiryBasicInfoProps> = ({ artwork }) => {
         name="location"
         placeholder="Location"
         onChange={handleLocation}
+        defaultValue={me?.location?.display ?? undefined}
         mb={1}
       />
 
@@ -123,6 +127,7 @@ const InquiryBasicInfo: React.FC<InquiryBasicInfoProps> = ({ artwork }) => {
         placeholder="Phone Number"
         type="tel"
         onChange={handleInputChange("phone")}
+        defaultValue={me?.phone ?? undefined}
         mb={2}
       />
 
@@ -186,6 +191,15 @@ export const InquiryBasicInfoFragmentContainer = createFragmentContainer(
         }
       }
     `,
+    me: graphql`
+      fragment InquiryBasicInfo_me on Me {
+        location {
+          display
+        }
+        phone
+        profession
+      }
+    `,
   }
 )
 
@@ -202,6 +216,9 @@ export const InquiryBasicInfoQueryRenderer: React.FC = () => {
           artwork(id: $id) {
             ...InquiryBasicInfo_artwork
           }
+          me {
+            ...InquiryBasicInfo_me
+          }
         }
       `}
       variables={{ id: artworkID }}
@@ -215,7 +232,12 @@ export const InquiryBasicInfoQueryRenderer: React.FC = () => {
           return <InquiryBasicInfoPlaceholder />
         }
 
-        return <InquiryBasicInfoFragmentContainer artwork={props.artwork} />
+        return (
+          <InquiryBasicInfoFragmentContainer
+            artwork={props.artwork}
+            me={props.me}
+          />
+        )
       }}
     />
   )

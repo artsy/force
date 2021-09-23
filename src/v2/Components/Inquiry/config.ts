@@ -16,17 +16,17 @@ import { InquiryInstitutionalAffiliations } from "./Views/InquiryInstitutionalAf
 import { InquirySpecialist } from "./Views/InquirySpecialist"
 
 const VIEWS = {
-  Account: InquiryAccount, // ✅
-  ArtistsInCollection: InquiryArtistsInCollection, // ✅
-  AuctionHousesYouWorkWith: InquiryAuctionHousesYouWorkWith, // ✅
-  BasicInfo: InquiryBasicInfoQueryRenderer, // ✅
-  CommercialInterest: InquiryCommercialInterest, // ✅
-  Confirmation: InquiryConfirmation, // ✅
-  Done: InquiryDone, // ✅
-  FairsYouAttend: InquiryFairsYouAttend, // ✅
-  GalleriesYouWorkWith: InquiryGalleriesYouWorkWith, // ✅
-  Inquiry: InquiryInquiryQueryRenderer, // ✅
-  InstitutionalAffiliations: InquiryInstitutionalAffiliations, // ✅
+  Account: InquiryAccount,
+  ArtistsInCollection: InquiryArtistsInCollection,
+  AuctionHousesYouWorkWith: InquiryAuctionHousesYouWorkWith,
+  BasicInfo: InquiryBasicInfoQueryRenderer,
+  CommercialInterest: InquiryCommercialInterest,
+  Confirmation: InquiryConfirmation,
+  Done: InquiryDone,
+  FairsYouAttend: InquiryFairsYouAttend,
+  GalleriesYouWorkWith: InquiryGalleriesYouWorkWith,
+  Inquiry: InquiryInquiryQueryRenderer,
+  InstitutionalAffiliations: InquiryInstitutionalAffiliations,
   Specialist: InquirySpecialist,
 }
 
@@ -192,6 +192,13 @@ export const useEngine = ({ context, onDone }: UseEngine) => {
   }, [current, visited])
 
   const next = () => {
+    // At the end, and previously logged out; refresh the page
+    // to log in the entire stack
+    if (engine.current.isEnd() && !context.current?.isLoggedIn) {
+      window.location.reload()
+      return
+    }
+
     // At the end; closes the modal
     if (engine.current.isEnd()) {
       onDone()
