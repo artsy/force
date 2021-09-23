@@ -22,7 +22,10 @@ describe("InquirySignUp", () => {
     }))
     ;(useInquiryContext as jest.Mock).mockImplementation(() => ({
       next,
-      inquiry: { email: "example@example.com" },
+      artworkID: "example",
+      inquiry: { email: "example@example.com", message: "Hello world" },
+      setRelayEnvironment: jest.fn(),
+      engine: { decide: jest.fn().mockReturnValue(false) },
     }))
   })
 
@@ -59,7 +62,11 @@ describe("InquirySignUp", () => {
       wrapper.find("form").simulate("submit")
       await flushPromiseQueue()
 
-      expect(submitArtworkInquiryRequest).toBeCalled()
+      expect(submitArtworkInquiryRequest).toBeCalledWith({
+        artworkID: "example",
+        contactGallery: true,
+        message: "Hello world",
+      })
       expect(next).toBeCalled()
     })
   })

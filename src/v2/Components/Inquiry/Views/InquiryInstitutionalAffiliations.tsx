@@ -54,7 +54,7 @@ export const InquiryInstitutionalAffiliations: React.FC = () => {
 
   return (
     <>
-      <Text variant="lg">
+      <Text variant="lg" pr={2}>
         Any institutional affiliations?{" "}
         <Box color="black60" as="span">
           (Optional)

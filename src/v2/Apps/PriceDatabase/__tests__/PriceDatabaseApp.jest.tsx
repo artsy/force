@@ -1,9 +1,9 @@
-import React from "react"
-import { PriceDatabase } from "../PriceDatabase"
+import { Button, MultiSelect } from "@artsy/palette"
 import { mount, ReactWrapper } from "enzyme"
+import React from "react"
 import { HeadProvider } from "react-head"
 import { PriceDatabaseArtistAutosuggest } from "../Components/PriceDatabaseArtistAutosuggest"
-import { Button, MultiSelect } from "@artsy/palette"
+import { PriceDatabase } from "../PriceDatabase"
 
 jest.mock("v2/System/Router/useRouter", () => {
   return {
@@ -40,7 +40,7 @@ describe("PriceDatabaseApp", () => {
     wrapper.find(Button).simulate("click")
 
     expect(mockRouterPush).toHaveBeenCalledWith(
-      "/artist/gerhard-richter/auction-results?scroll_to_auction_results=true"
+      "/artist/gerhard-richter/auction-results?scroll_to_market_signals=true"
     )
   })
 
@@ -64,7 +64,7 @@ describe("PriceDatabaseApp", () => {
     wrapper.find(Button).simulate("click")
 
     expect(mockRouterPush).toHaveBeenCalledWith(
-      "/artist/banksy/auction-results?organizations%5B0%5D=Phillips&categories%5B0%5D=Painting&sizes%5B0%5D=SMALL&sizes%5B1%5D=MEDIUM&scroll_to_auction_results=true"
+      "/artist/banksy/auction-results?organizations%5B0%5D=Phillips&categories%5B0%5D=Painting&sizes%5B0%5D=SMALL&sizes%5B1%5D=MEDIUM&scroll_to_market_signals=true"
     )
   })
 })

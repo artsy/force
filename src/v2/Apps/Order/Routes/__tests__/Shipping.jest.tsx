@@ -1020,23 +1020,23 @@ describe("Shipping", () => {
 
         expect(mutations.mockFetch).toHaveBeenCalledTimes(3)
         expect(mutations.mockFetch.mock.calls[1][1]).toMatchInlineSnapshot(`
-              Object {
-                "input": Object {
-                  "attributes": Object {
-                    "addressLine1": "Test input 'addressLine1'",
-                    "addressLine2": "Test input 'addressLine2'",
-                    "addressLine3": "",
-                    "city": "Test input 'city'",
-                    "country": "US",
-                    "name": "Test input 'name'",
-                    "phoneNumber": "Test input 'phoneNumber'",
-                    "postalCode": "Test input 'postalCode'",
-                    "region": "Test input 'region'",
-                  },
-                  "userAddressID": "2",
-                },
-              }
-            `)
+          Object {
+            "input": Object {
+              "attributes": Object {
+                "addressLine1": "Test input 'addressLine1'",
+                "addressLine2": "Test input 'addressLine2'",
+                "addressLine3": "",
+                "city": "Test input 'city'",
+                "country": "US",
+                "name": "Test input 'name'",
+                "phoneNumber": "422-424-4242",
+                "postalCode": "Test input 'postalCode'",
+                "region": "Test input 'region'",
+              },
+              "userAddressID": "2",
+            },
+          }
+        `)
       })
 
       it("does not reload shipping quotes after edit not selected address", async () => {
@@ -1086,23 +1086,23 @@ describe("Shipping", () => {
 
         expect(mutations.mockFetch).toHaveBeenCalledTimes(2)
         expect(mutations.mockFetch.mock.calls[1][1]).toMatchInlineSnapshot(`
-              Object {
-                "input": Object {
-                  "attributes": Object {
-                    "addressLine1": "Test input 'addressLine1'",
-                    "addressLine2": "Test input 'addressLine2'",
-                    "addressLine3": "",
-                    "city": "Test input 'city'",
-                    "country": "US",
-                    "name": "Test input 'name'",
-                    "phoneNumber": "Test input 'phoneNumber'",
-                    "postalCode": "Test input 'postalCode'",
-                    "region": "Test input 'region'",
-                  },
-                  "userAddressID": "1",
-                },
-              }
-            `)
+          Object {
+            "input": Object {
+              "attributes": Object {
+                "addressLine1": "Test input 'addressLine1'",
+                "addressLine2": "Test input 'addressLine2'",
+                "addressLine3": "",
+                "city": "Test input 'city'",
+                "country": "US",
+                "name": "Test input 'name'",
+                "phoneNumber": "555-555-5555",
+                "postalCode": "Test input 'postalCode'",
+                "region": "Test input 'region'",
+              },
+              "userAddressID": "1",
+            },
+          }
+        `)
       })
     })
 
@@ -1140,7 +1140,6 @@ describe("Shipping", () => {
             "",
             "Madrid",
             "",
-            "555-555-5555",
           ]
         `)
       })
@@ -1172,7 +1171,7 @@ describe("Shipping", () => {
                 "city": "Test input 'city'",
                 "country": "US",
                 "name": "Test input 'name'",
-                "phoneNumber": "Test input 'phoneNumber'",
+                "phoneNumber": "555-555-5555",
                 "postalCode": "Test input 'postalCode'",
                 "region": "Test input 'region'",
               },

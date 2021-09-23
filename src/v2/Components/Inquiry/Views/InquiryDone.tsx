@@ -15,7 +15,7 @@ export const InquiryDone: React.FC = () => {
 
   return (
     <Clickable onClick={next} width="100vw" height="100vh">
-      <Text variant="xl" textAlign="center" my={4} color="white100">
+      <Text variant="xl" textAlign="center" my={4} px={2} color="white100">
         Thank you for completing your profile
       </Text>
     </Clickable>

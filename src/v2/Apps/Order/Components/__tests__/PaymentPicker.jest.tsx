@@ -247,8 +247,10 @@ describe("PaymentPickerFragmentContainer", () => {
 
     // expand address form again
     page.toggleSameAddressCheckbox()
+    await page.update()
 
     expect(page.addressFormIsVisible).toBe(true)
+    await page.update()
 
     // expect name to be empty
     expect((page.nameInput.instance() as any).value).toEqual("")
@@ -740,6 +742,7 @@ describe("PaymentPickerFragmentContainer", () => {
 
       fillIn(page.root, { title: "Name on card", value: "Erik David" })
 
+      await page.update()
       await page.getCreditCardId()
 
       const cityInput = page
@@ -783,6 +786,7 @@ describe("PaymentPickerFragmentContainer", () => {
       }
 
       fillAddressForm(page.root, address)
+      await page.update()
       await page.getCreditCardId()
       expect(_mockStripe().createToken).toBeCalled()
       expect(env.mutations.mockFetch).toBeCalledTimes(1)
@@ -807,6 +811,7 @@ describe("PaymentPickerFragmentContainer", () => {
       }
       fillAddressForm(page.root, address)
 
+      await page.update()
       await page.getCreditCardId()
 
       expect(_mockStripe().createToken).toBeCalled()

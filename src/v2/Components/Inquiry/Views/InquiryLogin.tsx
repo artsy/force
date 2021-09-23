@@ -31,7 +31,13 @@ interface InquiryLoginState {
 }
 
 export const InquiryLogin: React.FC = () => {
-  const { inquiry, artworkID, next } = useInquiryContext()
+  const {
+    inquiry,
+    artworkID,
+    next,
+    setRelayEnvironment,
+    engine,
+  } = useInquiryContext()
   const { navigateTo } = useInquiryAccountContext()
 
   const [mode, setMode] = useState<Mode>(Mode.Pending)
@@ -51,10 +57,16 @@ export const InquiryLogin: React.FC = () => {
     try {
       const { user } = await login({ email: inquiry.email!, ...state })
 
+      // Creates an authenticated relay environment now that we have a user
+      const relayEnvironment = createRelaySSREnvironment({ user })
+
+      // Sets the authenicated environment so other steps can use it
+      setRelayEnvironment(relayEnvironment)
+
       await submitArtworkInquiryRequest({
-        relayEnvironment: createRelaySSREnvironment({ user }),
         artworkID,
         message: inquiry.message,
+        contactGallery: !engine.decide("askSpecialist"),
       })
 
       setMode(Mode.Success)

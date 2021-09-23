@@ -1,7 +1,7 @@
 import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { Box, Column, GridColumns, Select, Text } from "@artsy/palette"
 import { rest } from "lodash"
-import React, { useRef, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import type RelayModernEnvironment from "relay-runtime/lib/store/RelayModernEnvironment"
@@ -16,14 +16,18 @@ import { MarketStatsPlaceholder } from "./MarketStatsPlaceholder"
 
 interface MarketStatsProps {
   priceInsightsConnection: MarketStats_priceInsightsConnection
+  onRendered?: (visible: boolean) => void
 }
 
 export const MarketStats: React.FC<MarketStatsProps> = ({
   priceInsightsConnection,
+  onRendered,
 }) => {
   const { trackEvent } = useTracking()
 
   const priceInsights = extractNodes(priceInsightsConnection)
+
+  useEffect(() => onRendered?.(priceInsights.length > 0), [priceInsights])
 
   const [selectedPriceInsight, setSelectedPriceInsight] = useState(
     priceInsights[0]
@@ -228,7 +232,17 @@ export const MarketStatsFragmentContainer = createFragmentContainer(
 export const MarketStatsQueryRenderer: React.FC<{
   artistInternalID: string
   environment: RelayModernEnvironment
-}> = ({ artistInternalID, environment }) => {
+  onRendered?: (visible: boolean) => void
+}> = ({ artistInternalID, environment, onRendered }) => {
+  const [hasRendered, setHasRendered] = useState(false)
+
+  const onRender = (visible: boolean) => {
+    if (hasRendered) return
+
+    setImmediate(() => setHasRendered(true))
+    onRendered?.(visible)
+  }
+
   return (
     <SystemQueryRenderer<MarketStatsQuery>
       environment={environment}
@@ -246,6 +260,8 @@ export const MarketStatsQueryRenderer: React.FC<{
       `}
       render={({ props, error }) => {
         if (error) {
+          onRender(false)
+
           console.error(error)
           return null
         }
@@ -257,6 +273,7 @@ export const MarketStatsQueryRenderer: React.FC<{
         return (
           <MarketStatsFragmentContainer
             priceInsightsConnection={props.priceInsightsConnection!}
+            onRendered={onRender}
           />
         )
       }}

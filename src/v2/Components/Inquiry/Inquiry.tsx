@@ -43,8 +43,8 @@ const InquiryDialog: React.FC = () => {
         <Box
           position="relative"
           bg="white100"
-          width={550}
-          height="100%"
+          width={["100vw", 550]}
+          height={["100vh", "100%"]}
           p={2}
           style={{ boxShadow: DROP_SHADOW }}
         >

@@ -37,7 +37,7 @@ const HomeFeaturedGalleriesRail: React.FC<HomeFeaturedGalleriesRailProps> = ({
   }
 
   return (
-    <HomeFeaturedGalleriesContainer galleriesCount={nodes.length}>
+    <HomeFeaturedGalleriesRailContainer galleriesCount={nodes.length}>
       <Shelf>
         {nodes.map((node, index) => {
           if (node.__typename !== "Profile") {
@@ -66,8 +66,11 @@ const HomeFeaturedGalleriesRail: React.FC<HomeFeaturedGalleriesRailProps> = ({
                     />
                   }
                 />
+
+                <Spacer mt={1} />
+
                 {node.image?.cropped?.src ? (
-                  <Box mt={1}>
+                  <Box>
                     <Image
                       src={node.image.cropped.src}
                       srcSet={node.image.cropped.srcSet}
@@ -85,14 +88,13 @@ const HomeFeaturedGalleriesRail: React.FC<HomeFeaturedGalleriesRailProps> = ({
           )
         })}
       </Shelf>
-    </HomeFeaturedGalleriesContainer>
+    </HomeFeaturedGalleriesRailContainer>
   )
 }
 
-const HomeFeaturedGalleriesContainer: React.FC<{ galleriesCount: number }> = ({
-  children,
-  galleriesCount,
-}) => {
+const HomeFeaturedGalleriesRailContainer: React.FC<{
+  galleriesCount: number
+}> = ({ children, galleriesCount }) => {
   return (
     <>
       <Flex justifyContent="space-between" alignItems="center">
@@ -120,7 +122,7 @@ const HomeFeaturedGalleriesContainer: React.FC<{ galleriesCount: number }> = ({
 
 const PLACEHOLDER = (
   <Skeleton>
-    <HomeFeaturedGalleriesContainer galleriesCount={0}>
+    <HomeFeaturedGalleriesRailContainer galleriesCount={0}>
       <Shelf>
         {[...new Array(8)].map((_, i) => {
           return (
@@ -132,7 +134,7 @@ const PLACEHOLDER = (
           )
         })}
       </Shelf>
-    </HomeFeaturedGalleriesContainer>
+    </HomeFeaturedGalleriesRailContainer>
   </Skeleton>
 )
 

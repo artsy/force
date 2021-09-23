@@ -14,6 +14,7 @@ export type UserAddressAttributes = {
     country: string;
     name: string;
     phoneNumber?: string | null;
+    phoneNumberCountryCode?: string | null;
     postalCode?: string | null;
     region?: string | null;
 };
