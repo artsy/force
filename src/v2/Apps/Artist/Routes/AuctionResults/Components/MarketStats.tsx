@@ -123,12 +123,13 @@ export const MarketStats: React.FC<MarketStatsProps> = ({
                   display="flex"
                   flexDirection="column"
                 >
-                  <Text variant={["xs", "sm"]} pb={[0.5, 1]}>
+                  <Text variant={["xs", "sm"]} pb={[0.5, 1]} textAlign="right">
                     Yearly lots sold
                   </Text>
                   <Text
                     variant={["xxl", "xxl"]}
                     style={{ whiteSpace: "nowrap" }}
+                    textAlign="right"
                   >
                     {selectedPriceInsight.annualLotsSold}
                   </Text>
@@ -140,12 +141,13 @@ export const MarketStats: React.FC<MarketStatsProps> = ({
                   display="flex"
                   flexDirection="column"
                 >
-                  <Text variant={["xs", "sm"]} pb={[0.5, 1]}>
+                  <Text variant={["xs", "sm"]} pb={[0.5, 1]} textAlign="right">
                     Sell-through rate
                   </Text>
                   <Text
                     variant={["xxl", "xxl"]}
                     style={{ whiteSpace: "nowrap" }}
+                    textAlign="right"
                   >
                     {formattedSellThroughRate}%
                   </Text>
@@ -161,13 +163,14 @@ export const MarketStats: React.FC<MarketStatsProps> = ({
                   display="flex"
                   flexDirection="column"
                 >
-                  <Text variant={["xs", "sm"]} pb={[0.5, 1]}>
+                  <Text variant={["xs", "sm"]} pb={[0.5, 1]} textAlign="right">
                     Sale price
                   </Text>
 
                   <Text
                     variant={["xxl", "xxl"]}
                     style={{ whiteSpace: "nowrap" }}
+                    textAlign="right"
                   >
                     ${formattedAverageValueSold}
                   </Text>
@@ -179,7 +182,7 @@ export const MarketStats: React.FC<MarketStatsProps> = ({
                   display="flex"
                   flexDirection="column"
                 >
-                  <Text variant={["xs", "sm"]} pb={[0.5, 1]}>
+                  <Text variant={["xs", "sm"]} pb={[0.5, 1]} textAlign="right">
                     Price over estimate
                   </Text>
 
@@ -187,6 +190,7 @@ export const MarketStats: React.FC<MarketStatsProps> = ({
                     variant={["xxl", "xxl"]}
                     color={deltaColor}
                     style={{ whiteSpace: "nowrap" }}
+                    textAlign="right"
                   >
                     {deltaIcon}
                     &#8202;
