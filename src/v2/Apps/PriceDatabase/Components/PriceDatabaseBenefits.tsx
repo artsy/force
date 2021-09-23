@@ -6,6 +6,7 @@ import {
   Separator,
   Flex,
   ResponsiveBox,
+  Box,
 } from "@artsy/palette"
 import React, { ReactElement } from "react"
 import { Media } from "v2/Utils/Responsive"
@@ -25,7 +26,7 @@ export const PriceDatabaseBenefits: React.FC = () => {
 
       <Section
         title="The largest publicly available art market database"
-        text="With nearly 6.5 million auction records, our growing database encompasses 2,400 top auction houses with pricing that dates back to 1986. Get real-time records from history-making auction houses like Christie’s, Sotheby’s, Phillips, Bonhams, and more."
+        text="With nearly 6.5 million auction records, our growing database encompasses 2,400 top auction houses with pricing that dates back to 1986. Get real-time records from history-making auction houses like Christie's, Sotheby's, Phillips, Bonhams, and more."
         jsx={<PopularArtistsList />}
       />
 
@@ -48,7 +49,7 @@ export const PriceDatabaseBenefits: React.FC = () => {
       <Separator />
 
       <Section
-        title="It’s free and always will be"
+        title="It's free and always will be"
         text="No search limits, no subscriptions, and no obligations. Collect smarter with unparalleled access to art market data."
         jsx={
           <SectionImage
@@ -129,26 +130,13 @@ const SectionImage: React.FC<{
 }
 
 const PopularArtistsList = () => (
-  <>
-    <Media lessThan="lg">
-      <GridColumns>
-        {POPULAR_ARTISTS.map(popularArtist => (
-          <Column span={6}>
-            <PopularArtistTile {...popularArtist} />
-          </Column>
-        ))}
-      </GridColumns>
-    </Media>
-    <Media greaterThanOrEqual="lg">
-      <GridColumns>
-        {POPULAR_ARTISTS.map(popularArtist => (
-          <Column span={4}>
-            <PopularArtistTile {...popularArtist} />
-          </Column>
-        ))}
-      </GridColumns>
-    </Media>
-  </>
+  <GridColumns>
+    {POPULAR_ARTISTS.map(popularArtist => (
+      <Column span={[6, 6, 4]}>
+        <PopularArtistTile {...popularArtist} />
+      </Column>
+    ))}
+  </GridColumns>
 )
 
 type PopularArtist = {
@@ -164,8 +152,8 @@ const PopularArtistTile = ({
   artistNationality,
   artistThumbnail,
 }: PopularArtist) => (
-  <GridColumns minHeight={70}>
-    <Flex height={60} width={64} alignItems="flex-start">
+  <Flex minHeight={70}>
+    <Flex height={60} width={64} alignItems="flex-start" mr={1}>
       <Image
         maxHeight="100%"
         width={64}
@@ -174,13 +162,13 @@ const PopularArtistTile = ({
         style={{ objectFit: "contain" }}
       />
     </Flex>
-    <Column span={9}>
+    <Box>
       <Text variant="xs">{artistName}</Text>
       <Text variant="xs" color="black60">
         {artistNationality}, {artistBirthday}
       </Text>
-    </Column>
-  </GridColumns>
+    </Box>
+  </Flex>
 )
 
 const POPULAR_ARTISTS: PopularArtist[] = [
