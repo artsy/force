@@ -8,6 +8,8 @@ import { StickyNavFragmentContainer } from "./Components/StickyNav"
 import { DROP_SHADOW, FullBleed, Spacer } from "@artsy/palette"
 import { StickyProvider, Sticky } from "v2/Components/Sticky"
 import { AppContainer } from "../Components/AppContainer"
+import { useNavBarHeight } from "v2/Components/NavBar/useNavBarHeight"
+import { Media } from "v2/Utils/Responsive"
 
 interface CategoriesAppProps {
   geneFamiliesConnection: CategoriesApp_geneFamiliesConnection
@@ -15,6 +17,8 @@ interface CategoriesAppProps {
 
 const CategoriesApp: React.FC<CategoriesAppProps> = props => {
   const { geneFamiliesConnection } = props
+  const { mobile, desktop } = useNavBarHeight()
+
   return (
     <>
       <MetaTags pathname="categories" />
@@ -28,9 +32,18 @@ const CategoriesApp: React.FC<CategoriesAppProps> = props => {
               <FullBleed style={stuck ? { boxShadow: DROP_SHADOW } : undefined}>
                 <AppContainer maxWidth="none">
                   <Spacer pb={1} />
-                  <StickyNavFragmentContainer
-                    geneFamiliesConnection={geneFamiliesConnection}
-                  />
+                  <Media at="xs">
+                    <StickyNavFragmentContainer
+                      navBarHeight={mobile}
+                      geneFamiliesConnection={geneFamiliesConnection}
+                    />
+                  </Media>
+                  <Media greaterThan="xs">
+                    <StickyNavFragmentContainer
+                      navBarHeight={desktop}
+                      geneFamiliesConnection={geneFamiliesConnection}
+                    />
+                  </Media>
                   <Spacer pb={1} />
                 </AppContainer>
               </FullBleed>

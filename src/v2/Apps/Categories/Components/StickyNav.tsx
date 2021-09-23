@@ -1,7 +1,6 @@
 import {
   Pill,
   Spacer,
-  themeProps,
   Swiper,
   SwiperCell,
   SwiperRail,
@@ -12,29 +11,27 @@ import {
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { AppContainer } from "v2/Apps/Components/AppContainer"
-import { useNavBarHeight } from "v2/Components/NavBar/useNavBarHeight"
 import { extractNodes } from "v2/Utils/extractNodes"
-import { useMatchMedia } from "v2/Utils/Hooks/useMatchMedia"
 import { scrollIntoView } from "v2/Utils/scrollHelpers"
 import { StickyNav_geneFamiliesConnection } from "v2/__generated__/StickyNav_geneFamiliesConnection.graphql"
 interface StickyNavProps {
   geneFamiliesConnection: StickyNav_geneFamiliesConnection
+  navBarHeight: number
 }
 
 const StickyNav: React.FC<StickyNavProps> = props => {
-  const { geneFamiliesConnection } = props
+  const { geneFamiliesConnection, navBarHeight } = props
+
   const geneFamilies = extractNodes(geneFamiliesConnection)
-  const { mobile, desktop } = useNavBarHeight()
-  const isMobile = useMatchMedia(themeProps.mediaQueries.xs)
-  const navBarHeight = isMobile ? mobile : desktop
+
   const stickyNavHeight = 50
-  const offset = navBarHeight + stickyNavHeight + 20
+  const scrollOffset = navBarHeight + stickyNavHeight + 20
 
   const handleClick = e => {
     e.preventDefault()
     const id = e.currentTarget.hash
 
-    scrollIntoView({ selector: id, offset, behavior: "smooth" })
+    scrollIntoView({ selector: id, offset: scrollOffset, behavior: "smooth" })
   }
 
   return (
