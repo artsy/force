@@ -203,7 +203,11 @@ const MyBidsPlaceholder: React.FC = () => {
 }
 
 export const MyBidsQueryRenderer: React.FC = () => {
-  const { relayEnvironment } = useSystemContext()
+  const { relayEnvironment, user } = useSystemContext()
+
+  if (!user) {
+    return null
+  }
 
   return (
     <SystemQueryRenderer<MyBidsQuery>

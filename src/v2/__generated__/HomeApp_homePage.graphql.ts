@@ -4,7 +4,7 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type HomeApp_homePage = {
-    readonly " $fragmentRefs": FragmentRefs<"HomeHeroUnits_homePage" | "HomeArtworkModules_homePage">;
+    readonly " $fragmentRefs": FragmentRefs<"HomeHeroUnits_homePage">;
     readonly " $refType": "HomeApp_homePage";
 };
 export type HomeApp_homePage$data = HomeApp_homePage;
@@ -25,14 +25,9 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "FragmentSpread",
       "name": "HomeHeroUnits_homePage"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "HomeArtworkModules_homePage"
     }
   ],
   "type": "HomePage"
 };
-(node as any).hash = 'cfc9f14cd03ccee65151e3b92f835d84';
+(node as any).hash = '88cdcdc3789855289e8a13bd7d5d605c';
 export default node;

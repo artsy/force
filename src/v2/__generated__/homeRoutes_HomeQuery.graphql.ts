@@ -36,20 +36,6 @@ fragment HomeApp_featuredEventsOrderedSet on OrderedSet {
 
 fragment HomeApp_homePage on HomePage {
   ...HomeHeroUnits_homePage
-  ...HomeArtworkModules_homePage
-}
-
-fragment HomeArtworkModules_homePage on HomePage {
-  artworkModules(exclude: [POPULAR_ARTISTS, GENERIC_GENES], maxRails: -1, maxFollowedGeneRails: -1, order: [ACTIVE_BIDS, RECENTLY_VIEWED_WORKS, SIMILAR_TO_RECENTLY_VIEWED, SAVED_WORKS, SIMILAR_TO_SAVED_WORKS, FOLLOWED_ARTISTS, FOLLOWED_GALLERIES, RECOMMENDED_WORKS, RELATED_ARTISTS, LIVE_AUCTIONS, CURRENT_FAIRS, FOLLOWED_GENES, GENERIC_GENES]) {
-    title
-    key
-    params {
-      internalID
-      relatedArtistID
-      followedArtistID
-    }
-    id
-  }
 }
 
 fragment HomeFeaturedEventsRail_orderedSet on OrderedSet {
@@ -264,90 +250,6 @@ return {
               (v5/*: any*/)
             ],
             "storageKey": "heroUnits(platform:\"DESKTOP\")"
-          },
-          {
-            "alias": null,
-            "args": [
-              {
-                "kind": "Literal",
-                "name": "exclude",
-                "value": [
-                  "POPULAR_ARTISTS",
-                  "GENERIC_GENES"
-                ]
-              },
-              {
-                "kind": "Literal",
-                "name": "maxFollowedGeneRails",
-                "value": -1
-              },
-              {
-                "kind": "Literal",
-                "name": "maxRails",
-                "value": -1
-              },
-              {
-                "kind": "Literal",
-                "name": "order",
-                "value": [
-                  "ACTIVE_BIDS",
-                  "RECENTLY_VIEWED_WORKS",
-                  "SIMILAR_TO_RECENTLY_VIEWED",
-                  "SAVED_WORKS",
-                  "SIMILAR_TO_SAVED_WORKS",
-                  "FOLLOWED_ARTISTS",
-                  "FOLLOWED_GALLERIES",
-                  "RECOMMENDED_WORKS",
-                  "RELATED_ARTISTS",
-                  "LIVE_AUCTIONS",
-                  "CURRENT_FAIRS",
-                  "FOLLOWED_GENES",
-                  "GENERIC_GENES"
-                ]
-              }
-            ],
-            "concreteType": "HomePageArtworkModule",
-            "kind": "LinkedField",
-            "name": "artworkModules",
-            "plural": true,
-            "selections": [
-              (v2/*: any*/),
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "key",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "concreteType": "HomePageModulesParams",
-                "kind": "LinkedField",
-                "name": "params",
-                "plural": false,
-                "selections": [
-                  (v1/*: any*/),
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "relatedArtistID",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "followedArtistID",
-                    "storageKey": null
-                  }
-                ],
-                "storageKey": null
-              },
-              (v5/*: any*/)
-            ],
-            "storageKey": "artworkModules(exclude:[\"POPULAR_ARTISTS\",\"GENERIC_GENES\"],maxFollowedGeneRails:-1,maxRails:-1,order:[\"ACTIVE_BIDS\",\"RECENTLY_VIEWED_WORKS\",\"SIMILAR_TO_RECENTLY_VIEWED\",\"SAVED_WORKS\",\"SIMILAR_TO_SAVED_WORKS\",\"FOLLOWED_ARTISTS\",\"FOLLOWED_GALLERIES\",\"RECOMMENDED_WORKS\",\"RELATED_ARTISTS\",\"LIVE_AUCTIONS\",\"CURRENT_FAIRS\",\"FOLLOWED_GENES\",\"GENERIC_GENES\"])"
           }
         ],
         "storageKey": null
@@ -473,7 +375,7 @@ return {
     "metadata": {},
     "name": "homeRoutes_HomeQuery",
     "operationKind": "query",
-    "text": "query homeRoutes_HomeQuery {\n  homePage {\n    ...HomeApp_homePage\n  }\n  featuredEventsOrderedSet: orderedSet(id: \"529939e2275b245e290004a0\") {\n    ...HomeApp_featuredEventsOrderedSet\n    id\n  }\n}\n\nfragment HomeApp_featuredEventsOrderedSet on OrderedSet {\n  ...HomeFeaturedEventsRail_orderedSet\n}\n\nfragment HomeApp_homePage on HomePage {\n  ...HomeHeroUnits_homePage\n  ...HomeArtworkModules_homePage\n}\n\nfragment HomeArtworkModules_homePage on HomePage {\n  artworkModules(exclude: [POPULAR_ARTISTS, GENERIC_GENES], maxRails: -1, maxFollowedGeneRails: -1, order: [ACTIVE_BIDS, RECENTLY_VIEWED_WORKS, SIMILAR_TO_RECENTLY_VIEWED, SAVED_WORKS, SIMILAR_TO_SAVED_WORKS, FOLLOWED_ARTISTS, FOLLOWED_GALLERIES, RECOMMENDED_WORKS, RELATED_ARTISTS, LIVE_AUCTIONS, CURRENT_FAIRS, FOLLOWED_GENES, GENERIC_GENES]) {\n    title\n    key\n    params {\n      internalID\n      relatedArtistID\n      followedArtistID\n    }\n    id\n  }\n}\n\nfragment HomeFeaturedEventsRail_orderedSet on OrderedSet {\n  items {\n    __typename\n    ... on FeaturedLink {\n      internalID\n      title\n      subtitle\n      href\n      image {\n        small: cropped(width: 95, height: 63) {\n          src\n          srcSet\n          width\n          height\n        }\n        large: cropped(width: 445, height: 297) {\n          src\n          srcSet\n        }\n      }\n      id\n    }\n    ... on Node {\n      id\n    }\n    ... on Profile {\n      id\n    }\n  }\n}\n\nfragment HomeHeroUnit_heroUnit on HomePageHeroUnit {\n  backgroundImageURL\n  heading\n  title\n  subtitle\n  linkText\n  href\n  creditLine\n}\n\nfragment HomeHeroUnits_homePage on HomePage {\n  heroUnits(platform: DESKTOP) {\n    internalID\n    ...HomeHeroUnit_heroUnit\n    id\n  }\n}\n"
+    "text": "query homeRoutes_HomeQuery {\n  homePage {\n    ...HomeApp_homePage\n  }\n  featuredEventsOrderedSet: orderedSet(id: \"529939e2275b245e290004a0\") {\n    ...HomeApp_featuredEventsOrderedSet\n    id\n  }\n}\n\nfragment HomeApp_featuredEventsOrderedSet on OrderedSet {\n  ...HomeFeaturedEventsRail_orderedSet\n}\n\nfragment HomeApp_homePage on HomePage {\n  ...HomeHeroUnits_homePage\n}\n\nfragment HomeFeaturedEventsRail_orderedSet on OrderedSet {\n  items {\n    __typename\n    ... on FeaturedLink {\n      internalID\n      title\n      subtitle\n      href\n      image {\n        small: cropped(width: 95, height: 63) {\n          src\n          srcSet\n          width\n          height\n        }\n        large: cropped(width: 445, height: 297) {\n          src\n          srcSet\n        }\n      }\n      id\n    }\n    ... on Node {\n      id\n    }\n    ... on Profile {\n      id\n    }\n  }\n}\n\nfragment HomeHeroUnit_heroUnit on HomePageHeroUnit {\n  backgroundImageURL\n  heading\n  title\n  subtitle\n  linkText\n  href\n  creditLine\n}\n\nfragment HomeHeroUnits_homePage on HomePage {\n  heroUnits(platform: DESKTOP) {\n    internalID\n    ...HomeHeroUnit_heroUnit\n    id\n  }\n}\n"
   }
 };
 })();
