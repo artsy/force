@@ -11,8 +11,6 @@ import React from "react"
 import { graphql } from "react-relay"
 import { flushPromiseQueue } from "v2/DevTools"
 
-const mockAssign = jest.fn()
-
 jest.unmock("react-relay")
 
 const searchResults: SearchBarTestQueryRawResponse["viewer"] = {
@@ -92,8 +90,21 @@ const getWrapper = (
 }
 
 describe("SearchBar", () => {
-  beforeEach(() => {
-    window.location.assign = mockAssign
+  let originalWindowLocation: Location
+
+  beforeAll(() => {
+    originalWindowLocation = window.location
+    // @ts-ignore
+    delete window.location
+    // @ts-ignore
+    window.location = {
+      assign: jest.fn(),
+      pathname: "foo/bar",
+    }
+  })
+
+  afterAll(() => {
+    window.location = originalWindowLocation
   })
 
   it("displays search results", async () => {
@@ -128,10 +139,14 @@ describe("SearchBar", () => {
     const quickNavigationItems = component.find("QuickNavigationItem")
 
     quickNavigationItems.at(0).simulate("click")
-    expect(mockAssign).toHaveBeenCalledWith("/artist/banksy/works-for-sale")
+    expect(window.location.assign).toHaveBeenCalledWith(
+      "/artist/banksy/works-for-sale"
+    )
 
     quickNavigationItems.at(1).simulate("click")
-    expect(mockAssign).toHaveBeenCalledWith("/artist/banksy/auction-results")
+    expect(window.location.assign).toHaveBeenCalledWith(
+      "/artist/banksy/auction-results"
+    )
   })
 
   it("displays long placeholder text at sizes greater than xs", async () => {

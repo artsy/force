@@ -1,169 +1,173 @@
-import { mount, ReactWrapper } from "enzyme"
-import React from "react"
-import { Input } from "@artsy/palette"
+import React, { ReactElement } from "react"
+import {
+  render as originalRender,
+  RenderOptions,
+  screen,
+} from "@testing-library/react"
+import userEvent from "@testing-library/user-event"
+
 import {
   ArtworkFilterContextProps,
   ArtworkFilterContextProvider,
   useArtworkFilterContext,
 } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
-import { SizeFilter, SizeFilterProps } from "../SizeFilter"
+import { SizeFilter } from "../SizeFilter"
 
-jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
-  useMatchMedia: () => ({}),
-}))
+const render = (ui: ReactElement, options: RenderOptions = {}) =>
+  originalRender(ui, { wrapper: Wrapper, ...options })
+
+const Wrapper: React.FC = ({ children }) => {
+  return (
+    <ArtworkFilterContextProvider>
+      <ClearAllButton />
+      {children}
+      <ArtworkFilterContextInspector />
+    </ArtworkFilterContextProvider>
+  )
+}
+
+const ClearAllButton: React.FC = () => {
+  const artworkFilterContext = useArtworkFilterContext()
+
+  return (
+    <button onClick={() => artworkFilterContext.resetFilters()}>
+      Clear all
+    </button>
+  )
+}
+
+const ArtworkFilterContextInspector: React.FC = () => {
+  const artworkFilterContext = useArtworkFilterContext()
+
+  return (
+    <aside data-testid="artwork-filter-context-inspector">
+      {JSON.stringify(artworkFilterContext, null, 2)}
+    </aside>
+  )
+}
+
+const currentContext = (): ArtworkFilterContextProps => {
+  let contextInspector: HTMLElement
+  try {
+    contextInspector = screen.getByTestId("artwork-filter-context-inspector")
+  } catch (error) {
+    if (error.name === "TestingLibraryElementError")
+      throw new Error(
+        `The currentContext() helper function requires an <ArtworkFilterContextInspector /> to be mounted in the current DOM.`
+      )
+  }
+  return JSON.parse(contextInspector!.textContent!)
+}
 
 describe("SizeFilter", () => {
-  let context: ArtworkFilterContextProps
+  it("toggles custom input render", () => {
+    render(<SizeFilter expanded />)
 
-  const getWrapper = (props: SizeFilterProps = { expanded: true }) => {
-    return mount(
-      <ArtworkFilterContextProvider>
-        <SizeFilterTest {...props} />
-      </ArtworkFilterContextProvider>
-    )
-  }
+    // note: an <input type="number" /> has a role of 'spinbutton'
+    expect(screen.queryByRole("spinbutton")).not.toBeInTheDocument()
 
-  const SizeFilterTest = (props: SizeFilterProps) => {
-    context = useArtworkFilterContext()
-    return <SizeFilter {...props} />
-  }
+    userEvent.click(screen.getByText("Show custom size"))
 
-  const simulateTyping = (
-    wrapper: ReactWrapper,
-    name: string,
-    text: string
-  ) => {
-    const nameInput = wrapper.find(`input[name='${name}']`)
-    // @ts-ignore
-    nameInput.getDOMNode().value = text
-    nameInput.simulate("change")
-  }
-
-  it("updates context on filter change", async () => {
-    const wrapper = getWrapper() as any
-
-    await wrapper.find("Checkbox").at(0).simulate("click")
-    expect(context.filters?.sizes).toEqual(["SMALL"])
-
-    await wrapper.find("Checkbox").at(2).simulate("click")
-    expect(context.filters?.sizes).toEqual(["SMALL", "LARGE"])
+    expect(screen.getByText("Hide custom size")).toBeInTheDocument()
+    expect(screen.getAllByRole("spinbutton")).toHaveLength(4)
+    expect(screen.getByText("Height")).toBeInTheDocument()
+    expect(screen.getByText("Width")).toBeInTheDocument()
   })
 
-  it("toggles custom input render", async () => {
-    const wrapper = getWrapper()
+  it("updates context on filter change", () => {
+    render(<SizeFilter expanded />)
+    expect(currentContext().filters?.sizes).toEqual([])
 
-    expect(wrapper.find(Input)).toHaveLength(0)
-    expect(wrapper.text()).not.toContain("Height")
-    expect(wrapper.text()).not.toContain("Width")
+    userEvent.click(screen.getAllByRole("checkbox")[0])
+    expect(currentContext().filters?.sizes).toEqual(["SMALL"])
 
-    wrapper
-      .find("button")
-      .filterWhere(n => n.text() === "Show custom size")
-      .simulate("click")
-
-    expect(
-      wrapper.find("button").filterWhere(n => n.text() === "Hide custom size")
-    ).toHaveLength(1)
-
-    expect(wrapper.find(Input)).toHaveLength(4)
-    expect(wrapper.text()).toContain("Height")
-    expect(wrapper.text()).toContain("Width")
+    userEvent.click(screen.getAllByRole("checkbox")[2])
+    expect(currentContext().filters?.sizes).toEqual(["SMALL", "LARGE"])
   })
 
-  it("size selection don't change empty custom size", async () => {
-    const wrapper = getWrapper()
+  it("updates the filter values", async () => {
+    render(<SizeFilter expanded />)
 
-    await wrapper.find("Checkbox").at(0).simulate("click")
-    expect(context.filters?.sizes).toEqual(["SMALL"])
+    userEvent.click(screen.getByText("Show custom size"))
+    userEvent.type(screen.getAllByRole("spinbutton")[0], "12")
+    userEvent.type(screen.getAllByRole("spinbutton")[1], "16")
+    userEvent.type(screen.getAllByRole("spinbutton")[2], "12")
+    userEvent.type(screen.getAllByRole("spinbutton")[3], "16")
+    userEvent.click(screen.getByText("Set size"))
 
-    expect(context.filters?.height).toEqual("*-*")
-    expect(context.filters?.width).toEqual("*-*")
+    expect(currentContext().filters?.sizes).toEqual([])
+    expect(currentContext().filters?.height).toEqual("4.72-6.3")
+    expect(currentContext().filters?.width).toEqual("4.72-6.3")
   })
 
-  it("width changes don't fire height changes", async () => {
-    const wrapper = getWrapper()
+  it("updates the filter values when only one dimension is added", () => {
+    render(<SizeFilter expanded />)
+    userEvent.click(screen.getByText("Show custom size"))
+    screen.getAllByRole("spinbutton").map(field => userEvent.clear(field)) // 😭
+    userEvent.type(screen.getAllByRole("spinbutton")[2], "12")
+    userEvent.type(screen.getAllByRole("spinbutton")[3], "24")
+    userEvent.click(screen.getByText("Set size"))
 
-    wrapper
-      .find("button")
-      .filterWhere(n => n.text() === "Show custom size")
-      .simulate("click")
-
-    simulateTyping(wrapper, "width_min", "12")
-    simulateTyping(wrapper, "width_max", "16")
-
-    await wrapper
-      .find("button")
-      .filterWhere(n => n.text() === "Set size")
-      .simulate("click")
-
-    expect(context.filters?.width).toEqual("4.72-6.3")
-    expect(context.filters?.height).toEqual("*-*")
+    expect(currentContext().filters?.sizes).toEqual([])
+    expect(currentContext().filters?.height).toEqual("4.72-9.45")
+    expect(currentContext().filters?.width).toEqual("*-*")
   })
 
-  describe("filter values", () => {
-    it("are updated", async () => {
-      const wrapper = getWrapper()
+  it("clears local input state after Clear All", () => {
+    render(<SizeFilter expanded />)
 
-      await wrapper.find("Checkbox").at(0).simulate("click")
-      expect(context.filters?.sizes).toEqual(["SMALL"])
+    // before: filter state and input state are empty
+    expect(currentContext().filters?.height).toEqual("*-*")
+    expect(currentContext().filters?.width).toEqual("*-*")
+    expect(screen.queryByDisplayValue("1")).not.toBeInTheDocument()
+    expect(screen.queryByDisplayValue("2")).not.toBeInTheDocument()
+    expect(screen.queryByDisplayValue("3")).not.toBeInTheDocument()
+    expect(screen.queryByDisplayValue("4")).not.toBeInTheDocument()
 
-      wrapper
-        .find("button")
-        .filterWhere(n => n.text() === "Show custom size")
-        .simulate("click")
+    // act: enter custom height and width
+    userEvent.click(screen.getByText("Show custom size"))
+    screen.getAllByRole("spinbutton").map(field => userEvent.clear(field)) // 😭
+    userEvent.type(screen.getAllByRole("spinbutton")[0], "1")
+    userEvent.type(screen.getAllByRole("spinbutton")[1], "2")
+    userEvent.type(screen.getAllByRole("spinbutton")[2], "3")
+    userEvent.type(screen.getAllByRole("spinbutton")[3], "4")
+    userEvent.click(screen.getByText("Set size"))
 
-      simulateTyping(wrapper, "height_min", "12")
-      simulateTyping(wrapper, "height_max", "16")
-      simulateTyping(wrapper, "width_min", "12")
-      simulateTyping(wrapper, "width_max", "16")
+    // assert: state and ui are updated
+    expect(currentContext().filters?.sizes).toEqual([])
+    expect(currentContext().filters?.width).toEqual("0.39-0.79")
+    expect(currentContext().filters?.height).toEqual("1.18-1.57")
+    expect(screen.queryByDisplayValue("1")).toBeInTheDocument()
+    expect(screen.queryByDisplayValue("2")).toBeInTheDocument()
+    expect(screen.queryByDisplayValue("3")).toBeInTheDocument()
+    expect(screen.queryByDisplayValue("4")).toBeInTheDocument()
 
-      await wrapper
-        .find("button")
-        .filterWhere(n => n.text() === "Set size")
-        .simulate("click")
+    // act: clear all filters
+    userEvent.click(screen.getByText("Clear all"))
 
-      expect(context.filters?.sizes).toEqual([])
-      // assert conversion from centimeters to inches
-      expect(context.filters?.height).toEqual("4.72-6.3")
-      expect(context.filters?.width).toEqual("4.72-6.3")
-    })
-
-    it("are updated when only one dimension is added", async () => {
-      const wrapper = getWrapper()
-
-      wrapper
-        .find("button")
-        .filterWhere(n => n.text() === "Show custom size")
-        .simulate("click")
-
-      simulateTyping(wrapper, "height_min", "12")
-      simulateTyping(wrapper, "height_max", "24")
-
-      await wrapper
-        .find("button")
-        .filterWhere(n => n.text() === "Set size")
-        .simulate("click")
-
-      expect(context.filters?.sizes).toEqual([])
-      // assert conversion centimeters to inches
-      expect(context.filters?.height).toEqual("4.72-9.45")
-    })
+    // assert: state and ui are cleared
+    expect(currentContext().filters?.height).toEqual("*-*")
+    expect(currentContext().filters?.width).toEqual("*-*")
+    expect(screen.queryByDisplayValue("1")).not.toBeInTheDocument()
+    expect(screen.queryByDisplayValue("2")).not.toBeInTheDocument()
+    expect(screen.queryByDisplayValue("3")).not.toBeInTheDocument()
+    expect(screen.queryByDisplayValue("4")).not.toBeInTheDocument()
   })
 
   describe("the `expanded` prop", () => {
     it("hides the filter controls when not set", () => {
-      const wrapper = getWrapper({})
-      expect(wrapper.find("Checkbox").length).toBe(0)
+      render(<SizeFilter />)
+      expect(screen.queryByRole("checkbox")).not.toBeInTheDocument()
     })
 
     it("hides the filter controls when `false`", () => {
-      const wrapper = getWrapper({ expanded: false })
-      expect(wrapper.find("Checkbox").length).toBe(0)
+      render(<SizeFilter expanded={false} />)
+      expect(screen.queryByRole("checkbox")).not.toBeInTheDocument()
     })
 
     it("shows the filter controls when `true`", () => {
-      const wrapper = getWrapper({ expanded: true })
-      expect(wrapper.find("Checkbox").length).not.toBe(0)
+      render(<SizeFilter expanded={true} />)
+      expect(screen.getAllByRole("checkbox")).toHaveLength(3)
     })
   })
 })
