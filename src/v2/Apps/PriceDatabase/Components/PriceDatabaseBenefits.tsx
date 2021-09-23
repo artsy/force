@@ -17,11 +17,20 @@ export const PriceDatabaseBenefits: React.FC = () => {
     <Flex py={[1, 4]} flexDirection="column">
       <GridColumns mt={4} gridRowGap={[2, 0]}>
         <Column span={12}>
-          <Text as="h1" variant="xxl">
-            Auction records from 340,000
-            <br />
-            artists —and counting
-          </Text>
+          <Media lessThan="md">
+            <Text as="h1" variant="xl">
+              Auction records from 340,000
+              <br />
+              artists—and counting
+            </Text>
+          </Media>
+          <Media greaterThanOrEqual="md">
+            <Text as="h1" variant="xxl">
+              Auction records from 340,000
+              <br />
+              artists—and counting
+            </Text>
+          </Media>
         </Column>
       </GridColumns>
 
@@ -76,15 +85,25 @@ const Section: React.FC<{
   return (
     <>
       <Media lessThan="md">
-        <Flex mt={4} />
-        <Text as="h1" variant="xl" mt={2}>
+        {jsxPosition === "left" && (
+          <>
+            <Spacer height={40} />
+            {jsx}
+          </>
+        )}
+        <Spacer height={20} />
+        <Text as="h1" variant="lg" mt={2}>
           {title}
         </Text>
         <Flex mb={1} />
         <Text variant="sm">{text}</Text>
-        <Flex mb={2} />
-        {jsx}
-        <Spacer height={80} />
+        {jsxPosition === "right" && (
+          <>
+            <Spacer height={20} />
+            {jsx}
+          </>
+        )}
+        <Spacer height={40} />
       </Media>
       <Media greaterThanOrEqual="md">
         <GridColumns my={4} gridRowGap={[2, 0]}>
@@ -117,6 +136,7 @@ const SectionImage: React.FC<{
       aspectHeight={660}
       maxWidth={800}
       maxHeight={660}
+      mb={artistName ? 2 : 0}
     >
       <Image
         width="100%"
@@ -126,7 +146,7 @@ const SectionImage: React.FC<{
         alt={alt}
         style={{ objectFit: "cover", alignSelf: "center" }}
       />
-      {!!artistName && !!artworkName && (
+      {!!artistName && (
         <Text variant="xs" color="black60">
           {artistName}, <i>{artworkName}</i>
         </Text>

@@ -14,6 +14,7 @@ import { categoryMap } from "v2/Apps/Artist/Routes/AuctionResults/Components/Auc
 import { sizeMap } from "v2/Apps/Artist/Routes/AuctionResults/Components/AuctionFilters/SizeFilter"
 import { paramsToSnakeCase } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
 import { useRouter } from "v2/System/Router/useRouter"
+import { Media } from "v2/Utils/Responsive"
 import { filterSearchFilters } from "../Utils/filterSearchFilters"
 import { PriceDatabaseArtistAutosuggest } from "./PriceDatabaseArtistAutosuggest"
 
@@ -66,15 +67,28 @@ export const PriceDatabaseSearch: React.FC = () => {
     <>
       <GridColumns my={4} gridRowGap={[2, 0]}>
         <Column span={12}>
-          <Text as="h1" variant="xl">
-            Artsy Price Database
-          </Text>
-          <Text variant="sm" mb={[0, 2]}>
-            Unlimited access to auction results and art market data—for free.
-            <br />
-            Browse 6.5 million auction records from 2,400 top auction houses,
-            from 1986 to today.
-          </Text>
+          <Media lessThan="md">
+            <Text as="h1" variant="xl">
+              Artsy Price Database
+            </Text>
+            <Text variant="sm" mb={[0, 2]}>
+              Unlimited access to auction results and art market data—for free.
+              <br />
+              Browse 6.5 million auction records from 2,400 top auction houses,
+              from 1986 to today.
+            </Text>
+          </Media>
+          <Media greaterThanOrEqual="md">
+            <Text as="h1" variant="xxl">
+              Artsy Price Database
+            </Text>
+            <Text variant="lg" mb={[0, 2]}>
+              Unlimited access to auction results and art market data—for free.
+              <br />
+              Browse 6.5 million auction records from 2,400 top auction houses,
+              from 1986 to today.
+            </Text>
+          </Media>
         </Column>
       </GridColumns>
       <Flex
