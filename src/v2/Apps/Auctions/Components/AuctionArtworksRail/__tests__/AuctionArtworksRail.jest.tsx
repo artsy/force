@@ -65,13 +65,18 @@ describe("AuctionArtworksRail", () => {
   it("tracks clicks", () => {
     const wrapper = getWrapper()
     wrapper.find("RouterLink").first().simulate("click")
-    expect(trackEvent).toHaveBeenCalledWith({
-      action: "clickedArtworkGroup",
-      context_module: "currentAuctions",
-      destination_page_owner_id: '<mock-value-for-field-"internalID">',
-      destination_page_owner_slug: '<mock-value-for-field-"slug">',
-      destination_page_owner_type: "sale",
-      type: "viewAll",
-    })
+    expect(trackEvent.mock.calls[0]).toMatchInlineSnapshot(`
+      Array [
+        Object {
+          "action": "clickedArtworkGroup",
+          "context_module": "currentAuctions",
+          "context_page_owner_type": undefined,
+          "destination_page_owner_id": "<mock-value-for-field-\\"internalID\\">",
+          "destination_page_owner_slug": "<mock-value-for-field-\\"slug\\">",
+          "destination_page_owner_type": "sale",
+          "type": "viewAll",
+        },
+      ]
+    `)
   })
 })
