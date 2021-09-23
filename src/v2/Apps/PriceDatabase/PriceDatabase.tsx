@@ -9,7 +9,7 @@ import { Media } from "v2/Utils/Responsive"
 export const PriceDatabase = () => {
   return (
     <AuctionResultsFilterContextProvider>
-      <Flex maxWidth="900px" flexDirection="column" mx="auto" py={[0, 4]}>
+      <Flex flexDirection="column" mx="auto" py={[0, 4]}>
         <PriceDatabaseMeta />
 
         <PriceDatabaseSearch />

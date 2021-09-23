@@ -15,35 +15,49 @@ export const PriceDatabaseBenefits: React.FC = () => {
     <Flex py={[1, 4]} flexDirection="column">
       <GridColumns mt={4} gridRowGap={[2, 0]}>
         <Column span={12}>
-          <Text as="h1" variant="xl">
-            The Benefits of the
+          <Text as="h1" variant="xxl">
+            Auction records from 340,000
             <br />
-            Artsy Price Database
+            artists —and counting
           </Text>
         </Column>
       </GridColumns>
 
       <Section
-        title="340,000 Artists"
-        text="From well-known to niche auction houses, find sale results from your favourite artists."
-        Image={<SectionImage src="" srcSet="" alt="" />} // TODO: replace with image
+        title="The largest publicly available art market database"
+        text="With nearly 6.5 million auction records, our growing database encompasses 2,400 top auction houses with pricing that dates back to 1986. Get real-time records from history-making auction houses like Christie’s, Sotheby’s, Phillips, Bonhams, and more."
+        jsx={<PopularArtistsList />}
       />
 
       <Separator />
 
       <Section
-        title="1 Database"
-        text="Quickly and easily find Design, Fine and Decorative Art results all in one place."
-        Image={<SectionImage src="" srcSet="" alt="" />} // TODO: replace with image
-        imagePosition="right"
+        title="Visibility into the art market"
+        text="Whether researching, buying, or selling, our dynamic market intelligence allows you to determine value, make strategic decisions, and validate pricing against historical market data."
+        jsx={
+          <SectionImage
+            src="http://files.artsy.net/images/kehinde_wiley_portrait_of_nelly_moudime_ii.webp"
+            srcSet=""
+            alt=""
+            credits="Kehinde Wiley, Portrait of Nelly Moudime II (2020)"
+          />
+        }
+        jsxPosition="right"
       />
 
       <Separator />
 
       <Section
-        title="Search for Free"
-        text="No search limits, no results limits, no subscriptions, and no obligations."
-        Image={<SectionImage src="" srcSet="" alt="" />} // TODO: replace with image
+        title="It’s free and always will be"
+        text="No search limits, no subscriptions, and no obligations. Collect smarter with unparalleled access to art market data."
+        jsx={
+          <SectionImage
+            src="http://files.artsy.net/images/damien_hirst_kindness.webp"
+            srcSet=""
+            alt=""
+            credits="Damien Hirst, Kindness, 2011."
+          />
+        }
       />
     </Flex>
   )
@@ -52,43 +66,44 @@ export const PriceDatabaseBenefits: React.FC = () => {
 const Section: React.FC<{
   title: string
   text: string
-  Image: ReactElement
-  imagePosition?: "left" | "right"
-}> = ({ title, text, Image, imagePosition = "left" }) => {
+  jsx: ReactElement
+  jsxPosition?: "left" | "right"
+}> = ({ title, text, jsx, jsxPosition = "left" }) => {
   return (
     <>
-      <Media lessThan="sm">
-        <GridColumns my={4} gridRowGap={[2, 0]}>
-          <Column span={6}>{Image}</Column>
-          <Column span={6}>
-            <Text as="h1" variant="xl">
-              {title}
-            </Text>
-            <Text variant="sm">{text}</Text>
-          </Column>
-        </GridColumns>
+      <Media lessThan="md">
+        <Flex mt={4} />
+        {jsx}
+        <Text as="h1" variant="xl" mt={2}>
+          {title}
+        </Text>
+        <Text variant="sm">{text}</Text>
+        <Flex mb={4} />
       </Media>
-      <Media greaterThan="sm">
+      <Media greaterThanOrEqual="md">
         <GridColumns my={4} gridRowGap={[2, 0]}>
-          {imagePosition === "left" && <Column span={6}>{Image}</Column>}
+          {jsxPosition === "left" && <Column span={6}>{jsx}</Column>}
           <Column span={6}>
-            <Text as="h1" variant="xl">
+            <Text as="h2" variant="xl">
               {title}
             </Text>
-            <Text variant="sm">{text}</Text>
+            <Text variant="sm" mt={1}>
+              {text}
+            </Text>
           </Column>
-          {imagePosition === "right" && <Column span={6}>{Image}</Column>}
+          {jsxPosition === "right" && <Column span={6}>{jsx}</Column>}
         </GridColumns>
       </Media>
     </>
   )
 }
 
-const SectionImage: React.FC<{ src: string; srcSet: string; alt: string }> = ({
-  src,
-  srcSet,
-  alt,
-}) => {
+const SectionImage: React.FC<{
+  src: string
+  srcSet: string
+  alt: string
+  credits?: string
+}> = ({ src, srcSet, alt, credits }) => {
   return (
     <ResponsiveBox
       aspectWidth={800}
@@ -96,7 +111,167 @@ const SectionImage: React.FC<{ src: string; srcSet: string; alt: string }> = ({
       maxWidth={800}
       maxHeight={660}
     >
-      <Image width="100%" height="100%" src={src} srcSet={srcSet} alt={alt} />
+      <Image
+        width="100%"
+        height="100%"
+        src={src}
+        srcSet={srcSet}
+        alt={alt}
+        style={{ objectFit: "cover", alignSelf: "center" }}
+      />
+      {!!credits && (
+        <Text variant="xs" color="black60" fontStyle="italic">
+          {credits}
+        </Text>
+      )}
     </ResponsiveBox>
   )
 }
+
+const PopularArtistsList = () => (
+  <>
+    <Media lessThan="lg">
+      <GridColumns>
+        {POPULAR_ARTISTS.map(popularArtist => (
+          <Column span={6}>
+            <PopularArtistTile {...popularArtist} />
+          </Column>
+        ))}
+      </GridColumns>
+    </Media>
+    <Media greaterThanOrEqual="lg">
+      <GridColumns>
+        {POPULAR_ARTISTS.map(popularArtist => (
+          <Column span={4}>
+            <PopularArtistTile {...popularArtist} />
+          </Column>
+        ))}
+      </GridColumns>
+    </Media>
+  </>
+)
+
+type PopularArtist = {
+  artistBirthday: string
+  artistName: string
+  artistNationality: string
+  artistThumbnail: string
+}
+
+const PopularArtistTile = ({
+  artistBirthday,
+  artistName,
+  artistNationality,
+  artistThumbnail,
+}: PopularArtist) => (
+  <GridColumns minHeight={70}>
+    <Flex height={60} width={64} alignItems="flex-start">
+      <Image
+        maxHeight="100%"
+        width={64}
+        src={artistThumbnail}
+        alt={artistName}
+        style={{ objectFit: "contain" }}
+      />
+    </Flex>
+    <Column span={9}>
+      <Text variant="xs">{artistName}</Text>
+      <Text variant="xs" color="black60">
+        {artistNationality}, {artistBirthday}
+      </Text>
+    </Column>
+  </GridColumns>
+)
+
+const POPULAR_ARTISTS: PopularArtist[] = [
+  {
+    artistName: "Banksy",
+    artistNationality: "British",
+    artistBirthday: "b. 1973",
+    artistThumbnail: "http://files.artsy.net/images/banksy.png",
+  },
+  {
+    artistName: "David Shrigley",
+    artistNationality: "British",
+    artistBirthday: "b. 1968",
+    artistThumbnail: "http://files.artsy.net/images/david_shrigley.png",
+  },
+  {
+    artistName: "KAWS",
+    artistNationality: "American",
+    artistBirthday: "b. 1974",
+    artistThumbnail: "http://files.artsy.net/images/kaws.png",
+  },
+  {
+    artistName: "Eddie Martinez",
+    artistNationality: "American",
+    artistBirthday: "b. 1977",
+    artistThumbnail: "http://files.artsy.net/images/eddie_martinez.png",
+  },
+  {
+    artistName: "Salman Toor",
+    artistNationality: "Pakistani",
+    artistBirthday: "b. 1983",
+    artistThumbnail: "http://files.artsy.net/images/salman_toor.png",
+  },
+  {
+    artistName: "Wolfgang Tillmans",
+    artistNationality: "German",
+    artistBirthday: "b. 1968",
+    artistThumbnail: "http://files.artsy.net/images/wolfgang_tillmans.png",
+  },
+  {
+    artistName: "David Hockney",
+    artistNationality: "British",
+    artistBirthday: "b. 1968",
+    artistThumbnail: "http://files.artsy.net/images/david_hockney.png",
+  },
+  {
+    artistName: "Cindy Sherman",
+    artistNationality: "American",
+    artistBirthday: "b. 1968",
+    artistThumbnail: "http://files.artsy.net/images/cindy_sherman.png",
+  },
+  {
+    artistName: "Sterling Ruby",
+    artistNationality: "American",
+    artistBirthday: "b. 1968",
+    artistThumbnail: "http://files.artsy.net/images/sterling_ruby.png",
+  },
+  {
+    artistName: "Kehinde Wiley",
+    artistNationality: "American",
+    artistBirthday: "b. 1977",
+    artistThumbnail: "http://files.artsy.net/images/kehinde_wiley.png",
+  },
+  {
+    artistName: "Takashi Murakami",
+    artistNationality: "Japanese",
+    artistBirthday: "b. 1962",
+    artistThumbnail: "http://files.artsy.net/images/takashi_murakami.png",
+  },
+  {
+    artistName: "Erik Parker",
+    artistNationality: "German",
+    artistBirthday: "b. 1968",
+    artistThumbnail: "http://files.artsy.net/images/erik_parker.png",
+  },
+  {
+    artistName: "Joan Miró",
+    artistNationality: "Spanish",
+    artistBirthday: "1893-1983",
+    artistThumbnail: "http://files.artsy.net/images/joan_miro.png",
+  },
+  {
+    artistName: "Oh de Laval",
+    artistNationality: "Polish",
+    artistBirthday: "b. 1990",
+    artistThumbnail: "http://files.artsy.net/images/oh_de_laval.png",
+  },
+  {
+    artistName: "Ghada Amer",
+    artistNationality: "Egyptian",
+    artistBirthday: "b. 1963",
+    artistThumbnail: "http://files.artsy.net/images/ghada_amer.png",
+  },
+]

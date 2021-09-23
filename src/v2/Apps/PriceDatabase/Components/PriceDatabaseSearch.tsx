@@ -70,14 +70,16 @@ export const PriceDatabaseSearch: React.FC = () => {
             Artsy Price Database
           </Text>
           <Text variant="sm" mb={[0, 2]}>
-            Search auction results for more than 340,000 artists FOR FREE
+            Unlimited access to auction results and art market data—for free.
+            <br />
+            Browse 6.5 million auction records from 2,400 top auction houses,
+            from 1986 to today.
           </Text>
         </Column>
       </GridColumns>
       <Flex
         alignItems="center"
         justifyContent="center"
-        maxWidth="800px"
         width="100%"
         mx="auto"
         flexDirection="column"
