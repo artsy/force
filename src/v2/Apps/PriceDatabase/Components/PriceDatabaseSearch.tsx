@@ -69,7 +69,9 @@ export const PriceDatabaseSearch: React.FC = () => {
         <Column span={12}>
           <Media lessThan="md">
             <Text as="h1" variant="xl">
-              Artsy Price Database
+              Artsy Price
+              <br />
+              Database
             </Text>
             <Text variant="sm" mb={[0, 2]}>
               Unlimited access to auction results and art market data—for free.
