@@ -8,6 +8,9 @@ jest.mock("v2/Apps/Home/Components/HomeWorksByArtistsYouFollowRail", () => ({
 jest.mock("v2/Apps/Home/Components/HomeRecentlyViewedRail", () => ({
   HomeRecentlyViewedRailQueryRenderer: () => null,
 }))
+jest.mock("v2/System/useSystemContext", () => ({
+  useSystemContext: jest.fn().mockReturnValue({ user: true }),
+}))
 
 describe("HomeWorksForYouTabBar", () => {
   const getWrapper = () => {

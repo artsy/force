@@ -88,10 +88,15 @@ const PLACEHOLDER = (
       <Shelf>
         {[...new Array(8)].map((_, i) => {
           return (
-            <Box width={325} key={i}>
-              <SkeletonBox width={325} height={230} />
-              <SkeletonText variant="lg">Some Artist</SkeletonText>
-              <SkeletonText variant="md">Location</SkeletonText>
+            <Box width={200} key={i}>
+              <SkeletonBox width={200} height={[200, 300, 250, 275][i % 4]} />
+
+              <Spacer mt={1} />
+
+              <SkeletonText variant="md">Artist Name</SkeletonText>
+              <SkeletonText variant="md">Artwork Title</SkeletonText>
+              <SkeletonText variant="xs">Partner</SkeletonText>
+              <SkeletonText variant="xs">Price</SkeletonText>
             </Box>
           )
         })}
