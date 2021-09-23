@@ -325,7 +325,7 @@ describe("Review", () => {
       const text = page.shippingArtaSummary.text()
 
       expect(text).toContain("Shipping")
-      expect(text).toContain("Select delivery")
+      expect(text).toContain("Premium delivery")
       expect(text).toContain("($4.00)")
     })
 
