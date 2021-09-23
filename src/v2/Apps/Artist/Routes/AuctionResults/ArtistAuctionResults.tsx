@@ -205,6 +205,7 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
     // Scroll to auction results if param flag is present
     if (!scrollToMarketSignals) return
 
+    // Scroll to auction results if the market signals section is not visible
     setImmediate(visible ? scrollToMarketSignalsTop : scrollToAuctionResultsTop)
   }
 
