@@ -1,8 +1,6 @@
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Flex, Image, Link, Text } from "@artsy/palette"
-import { themeGet } from "@styled-system/theme-get"
-
 import { Item_item } from "v2/__generated__/Item_item.graphql"
 
 interface ItemProps {
@@ -78,7 +76,7 @@ export const Item: React.FC<ItemProps> = props => {
             p={1}
             flexDirection="column"
             justifyContent="center"
-            background={`${themeGet("colors.black100")}`}
+            backgroundColor="black100"
             borderRadius="0 0 15px 15px"
           >
             {itemDetails(item)}
