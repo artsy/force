@@ -30,11 +30,9 @@ export const AppShell: React.FC<AppShellProps> = props => {
   useAuthIntent()
 
   const { children, match } = props
-  const routeConfig = findCurrentRoute(match)
+  const routeConfig = findCurrentRoute(match)!
   const { user, isEigen } = useSystemContext()
-  // @ts-expect-error STRICT_NULL_CHECK
   const showFooter = !isEigen && !routeConfig.hideFooter
-  // @ts-expect-error STRICT_NULL_CHECK
   const appContainerMaxWidth = routeConfig.displayFullPage ? "100%" : null
   const isLoggedIn = Boolean(user)
   /**
@@ -43,10 +41,8 @@ export const AppShell: React.FC<AppShellProps> = props => {
    * in the background.
    */
   useEffect(() => {
-    // @ts-expect-error STRICT_NULL_CHECK
     if (isFunction(routeConfig.prepare)) {
       try {
-        // @ts-expect-error STRICT_NULL_CHECK
         routeConfig.prepare()
       } catch (error) {
         logger.error(error)
@@ -68,7 +64,6 @@ export const AppShell: React.FC<AppShellProps> = props => {
    * will cause the styles to update out of sync with the page change. Here we
    * wait for the route to finish rendering before setting the next theme.
    */
-  // @ts-expect-error STRICT_NULL_CHECK
   const nextTheme = routeConfig.theme ?? "v2"
   const [theme, setTheme] = useState<"v2" | "v3">(nextTheme)
   useRouteComplete({ onComplete: () => setTheme(nextTheme) })

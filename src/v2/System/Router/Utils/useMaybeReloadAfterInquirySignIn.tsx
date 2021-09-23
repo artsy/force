@@ -8,21 +8,17 @@ import { useEffect } from "react"
  * logged in state.
  */
 export function useMaybeReloadAfterInquirySignIn() {
-  const { mediator } = useSystemContext()
+  const mediator = useSystemContext().mediator!
 
   useEffect(() => {
-    // @ts-expect-error STRICT_NULL_CHECK
     mediator.on("auth:login:inquiry_form", () => {
-      // @ts-expect-error STRICT_NULL_CHECK
       mediator.on("auth:login:inquiry_form:maybeReloadOnModalClose", () => {
         window.location.reload()
       })
     })
 
     return () => {
-      // @ts-expect-error STRICT_NULL_CHECK
       mediator.off("auth:login:inquiry_form")
-      // @ts-expect-error STRICT_NULL_CHECK
       mediator.off("auth:login:inquiry_form:maybeReloadOnModalClose")
     }
   }, [mediator])

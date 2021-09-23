@@ -109,7 +109,6 @@ export function buildClientApp(config: RouterConfig): Promise<Resolve> {
         return (
           <Boot
             context={clientContext}
-            // @ts-expect-error STRICT_NULL_CHECK
             user={user}
             relayEnvironment={relayEnvironment}
             routes={routes}

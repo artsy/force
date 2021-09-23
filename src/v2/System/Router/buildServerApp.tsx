@@ -106,14 +106,16 @@ export function buildServerApp(
         const matchingMediaQueries =
           userAgent && matchingMediaQueriesForUserAgent(userAgent)
 
-        const ServerApp = ({ tags = [] }) => {
+        const ServerApp: React.FC<{ tags: JSX.Element[] }> = ({
+          tags = [],
+        }) => {
           return (
             <Boot
               context={serverContext}
-              // @ts-expect-error STRICT_NULL_CHECK
               user={user}
               headTags={tags}
-              // @ts-expect-error STRICT_NULL_CHECK
+              // FIXME:
+              // @ts-ignore
               onlyMatchMediaQueries={matchingMediaQueries}
               relayEnvironment={relayEnvironment}
               routes={routes}
@@ -157,7 +159,6 @@ export function buildServerApp(
 
         // Wrap component tree in library contexts to extract usage
         bundleJSX = extractor.collectChunks(
-          // @ts-expect-error STRICT_NULL_CHECK
           sheet.collectStyles(<ServerApp tags={headTags} />)
         )
 

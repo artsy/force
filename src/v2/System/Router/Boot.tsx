@@ -28,13 +28,12 @@ export interface BootProps {
   onlyMatchMediaQueries?: MatchingMediaQueries
   relayEnvironment: Environment
   routes: AppRouteConfig[]
-  user: User
+  user: User | null
 }
 
 const { GlobalStyles } = injectGlobalStyles()
 
-// @ts-expect-error STRICT_NULL_CHECK
-export const Boot = track(null, {
+export const Boot = track(undefined, {
   dispatch: Events.postEvent,
 })((props: BootProps) => {
   /**

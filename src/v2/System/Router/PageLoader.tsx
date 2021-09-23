@@ -26,8 +26,7 @@ export class PageLoader extends React.Component<
 > {
   state = {
     progress: 0,
-    // @ts-expect-error STRICT_NULL_CHECK
-    step: random(1, this.props.step),
+    step: random(1, this.props.step!),
   }
 
   static defaultProps = {

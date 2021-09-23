@@ -40,8 +40,7 @@ describe("buildAppRoutes", () => {
       },
     ])
 
-    // @ts-expect-error STRICT_NULL_CHECK
-    expect(routes[0].Component.displayName).toEqual("withRouter(Component)")
+    expect(routes[0].Component?.displayName).toEqual("withRouter(Component)")
 
     expect(routes[0].children).toEqual([
       {
