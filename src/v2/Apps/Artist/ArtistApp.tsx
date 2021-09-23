@@ -4,7 +4,11 @@ import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { findCurrentRoute } from "v2/System/Router/Utils/findCurrentRoute"
 import { ArtistApp_artist } from "v2/__generated__/ArtistApp_artist.graphql"
-import { AnalyticsContext, useAnalyticsContext } from "v2/System"
+import {
+  AnalyticsContext,
+  useAnalyticsContext,
+  useSystemContext,
+} from "v2/System"
 import { BackLinkFragmentContainer } from "./Components/BackLink"
 import { ArtistHeaderFragmentContainer } from "./Components/ArtistHeader/ArtistHeader"
 import { RouteTab, RouteTabs } from "v2/Components/RouteTabs"
@@ -24,6 +28,7 @@ interface ArtistAppProps {
 
 const ArtistApp: React.FC<ArtistAppProps> = ({ artist, children, match }) => {
   const route = findCurrentRoute(match)!
+  const { isEigen } = useSystemContext()
 
   // A stand-alone page under the /artist route path
   if (route.displayFullPage) {
@@ -34,8 +39,7 @@ const ArtistApp: React.FC<ArtistAppProps> = ({ artist, children, match }) => {
   if (route.hideNavigationTabs) {
     return (
       <PageWrapper artist={artist}>
-        <BackLinkFragmentContainer artist={artist} />
-
+        {!isEigen && <BackLinkFragmentContainer artist={artist} />}
         <Box mt={2}>{children}</Box>
       </PageWrapper>
     )
