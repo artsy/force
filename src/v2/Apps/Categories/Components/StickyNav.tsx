@@ -1,5 +1,4 @@
 import {
-  Link,
   Pill,
   Spacer,
   themeProps,
@@ -44,13 +43,9 @@ const StickyNav: React.FC<StickyNavProps> = props => {
       {geneFamilies.map((geneFamily, i) => {
         return (
           <Flex key={geneFamily.slug} flexDirection="row">
-            <Link
-              href={`#jump--${geneFamily.slug}`}
-              noUnderline={true}
-              onClick={handleClick}
-            >
+            <a href={`#jump--${geneFamily.slug}`} onClick={handleClick}>
               <Pill variant="filter">{geneFamily.name}</Pill>
-            </Link>
+            </a>
             {i !== geneFamilies.length - 1 ? <Spacer pr={1} /> : null}
           </Flex>
         )

@@ -1,9 +1,10 @@
-import { Box, Link, Spacer, Text } from "@artsy/palette"
+import { Box, Spacer, Text } from "@artsy/palette"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { GeneFamily_geneFamily } from "v2/__generated__/GeneFamily_geneFamily.graphql"
 import { sortBy } from "lodash"
 import { Masonry } from "v2/Components/Masonry"
+import { RouterLink } from "v2/System/Router/RouterLink"
 interface GeneFamilyProps {
   geneFamily: GeneFamily_geneFamily
 }
@@ -32,9 +33,9 @@ export const GeneFamily: React.FC<GeneFamilyProps> = props => {
         {sortedGenes?.map(gene => {
           return (
             <Box key={gene?.id}>
-              <Link href={`/gene/${gene?.slug}`} noUnderline={true}>
+              <RouterLink to={`/gene/${gene?.slug}`} textDecoration="none">
                 <Text variant="md">{gene?.displayName || gene?.name}</Text>
-              </Link>
+              </RouterLink>
               <Spacer mb={1} />
             </Box>
           )
