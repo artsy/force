@@ -70,6 +70,8 @@ describe("SizeFilter", () => {
 
     expect(screen.getByText("Hide custom size")).toBeInTheDocument()
     expect(screen.getAllByRole("spinbutton")).toHaveLength(4)
+    expect(screen.getByText("Height")).toBeInTheDocument()
+    expect(screen.getByText("Width")).toBeInTheDocument()
   })
 
   it("updates context on filter change", () => {
