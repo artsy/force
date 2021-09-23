@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react"
+import { ContextModule, Intent } from "@artsy/cohesion"
 import {
   Box,
   Column,
@@ -7,23 +7,31 @@ import {
   Message,
   Spacer,
   Text,
+  themeProps,
 } from "@artsy/palette"
 import { isEqual } from "lodash"
+import React, { useContext, useState } from "react"
 import { Title } from "react-head"
+import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 import { useTracking } from "react-tracking"
 import useDeepCompareEffect from "use-deep-compare-effect"
-import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
-import { ContextModule, Intent } from "@artsy/cohesion"
+import {
+  paramsToCamelCase,
+  updateUrl,
+} from "v2/Components/ArtworkFilter/Utils/urlBuilder"
 import { ModalType } from "v2/Components/Authentication/Types"
 import { LoadingArea } from "v2/Components/LoadingArea"
 import { PaginationFragmentContainer as Pagination } from "v2/Components/Pagination"
 import { AnalyticsSchema, SystemContext } from "v2/System"
+import { useRouter } from "v2/System/Router/useRouter"
+import { useMatchMedia } from "v2/Utils/Hooks/useMatchMedia"
 import { usePrevious } from "v2/Utils/Hooks/usePrevious"
 import createLogger from "v2/Utils/logger"
 import { openAuthModal } from "v2/Utils/openAuthModal"
 import { Media } from "v2/Utils/Responsive"
 import { scrollIntoView } from "v2/Utils/scrollHelpers"
 import { ArtistAuctionResults_artist } from "v2/__generated__/ArtistAuctionResults_artist.graphql"
+import { allowedAuctionResultFilters } from "../../Utils/allowedAuctionResultFilters"
 import { ArtistAuctionResultItemFragmentContainer as AuctionResultItem } from "./ArtistAuctionResultItem"
 import {
   AuctionResultsFilterContextProvider,
@@ -32,17 +40,11 @@ import {
 } from "./AuctionResultsFilterContext"
 import { AuctionFilterMobileActionSheet } from "./Components/AuctionFilterMobileActionSheet"
 import { AuctionFilters } from "./Components/AuctionFilters"
-import { KeywordFilter } from "./Components/KeywordFilter"
 import { AuctionResultsControls } from "./Components/AuctionResultsControls"
+import { KeywordFilter } from "./Components/KeywordFilter"
 import { MarketStatsQueryRenderer } from "./Components/MarketStats"
 import { SortSelect } from "./Components/SortSelect"
 import { TableSidebar } from "./Components/TableSidebar"
-import { useRouter } from "v2/System/Router/useRouter"
-import {
-  paramsToCamelCase,
-  updateUrl,
-} from "v2/Components/ArtworkFilter/Utils/urlBuilder"
-import { allowedAuctionResultFilters } from "../../Utils/allowedAuctionResultFilters"
 
 const logger = createLogger("ArtistAuctionResults.tsx")
 
@@ -57,6 +59,7 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
   artist,
   relay,
 }) => {
+  const isMobile = useMatchMedia(themeProps.mediaQueries.xs)
   const { user, mediator } = useContext(SystemContext)
   const {
     filters,
@@ -68,20 +71,31 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
   const artistName = artist.name
 
   const { match } = useRouter()
-  const { scrollToAuctionResults } = paramsToCamelCase(
+  const { scrollToMarketSignals } = paramsToCamelCase(
     match?.location.query
-  ) as { scrollToAuctionResults?: boolean }
+  ) as { scrollToMarketSignals?: boolean }
 
-  // Scroll to auction results if param flag is present
-  useEffect(() => {
-    if (scrollToAuctionResults) {
-      scrollIntoView({
-        selector: "#scrollTo--artistMarketResultsTop",
-        behavior: "smooth",
-        offset: 125,
-      })
-    }
-  }, [scrollToAuctionResults])
+  const scrollToAuctionResultsTop = () => {
+    // Increasing offset if the user is not logged in to compensate the top log in container height
+    const offset = isMobile && user ? 90 : 140
+
+    scrollIntoView({
+      selector: "#scrollTo--artistAuctionResultsTop",
+      behavior: "smooth",
+      offset,
+    })
+  }
+
+  const scrollToMarketSignalsTop = () => {
+    // Increasing offset if the user is not logged in to compensate the top log in container height
+    const offset = isMobile && !user ? 120 : 75
+
+    scrollIntoView({
+      selector: "#scrollTo--marketSignalsTop",
+      behavior: "smooth",
+      offset,
+    })
+  }
 
   const loadNext = () => {
     const currentPageNumber = filters?.pageAndCursor?.page ?? 0
@@ -92,11 +106,7 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
   }
 
   const loadPage = (cursor, pageNum) => {
-    scrollIntoView({
-      selector: "#scrollTo--artistAuctionResultsTop",
-      behavior: "smooth",
-      offset: 160,
-    })
+    scrollToAuctionResultsTop()
     setFilter?.("pageAndCursor", {
       cursor: cursor,
       page: pageNum,
@@ -191,21 +201,30 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
 
   const titleString = `${artist.name} - Auction Results on Artsy`
 
+  const handleMarketStatsRendered = (visible: boolean) => {
+    // Scroll to auction results if param flag is present
+    if (!scrollToMarketSignals) return
+
+    // Scroll to auction results if the market signals section is not visible
+    setImmediate(visible ? scrollToMarketSignalsTop : scrollToAuctionResultsTop)
+  }
+
   return (
     <>
       <Title>{titleString}</Title>
 
-      <Box id="scrollTo--artistMarketResultsTop" />
+      <Box id="scrollTo--marketSignalsTop" />
 
       <MarketStatsQueryRenderer
         artistInternalID={artist.internalID}
         environment={relay.environment}
+        onRendered={handleMarketStatsRendered}
       />
+
+      <Box id="scrollTo--artistAuctionResultsTop" />
 
       <Text variant={["md", "lg"]}>Auction Results</Text>
       <Spacer my={2} />
-
-      <Box id="scrollTo--artistAuctionResultsTop" />
 
       {showMobileActionSheet && (
         <AuctionFilterMobileActionSheet
