@@ -3,12 +3,13 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { useAnalyticsContext } from "v2/System"
 import { WorksByArtistsYouFollowRail_viewer } from "v2/__generated__/WorksByArtistsYouFollowRail_viewer.graphql"
 import { useTracking } from "react-tracking"
-import { AuthContextModule, clickedArtworkGroup } from "@artsy/cohesion"
+import { AuthContextModule } from "@artsy/cohesion"
 import { tabTypeToContextModuleMap } from "../../Utils/tabTypeToContextModuleMap"
 import { Shelf, Spacer, Text, Sup } from "@artsy/palette"
 import { ShelfArtworkFragmentContainer } from "v2/Components/Artwork/ShelfArtwork"
 import { extractNodes } from "v2/Utils/extractNodes"
 import { CuratorialRailsZeroState } from "../CuratorialRailsZeroState/CuratorialRailsZeroState"
+import { trackHelpers } from "v2/Utils/cohesionHelpers"
 
 export interface WorksByArtistsYouFollowRailProps {
   viewer: WorksByArtistsYouFollowRail_viewer
@@ -51,13 +52,13 @@ const WorksByArtistsYouFollowRail: React.FC<WorksByArtistsYouFollowRailProps> = 
               lazyLoad
               onClick={() => {
                 trackEvent(
-                  clickedArtworkGroup({
+                  trackHelpers.clickedArtworkGroup(
                     contextModule,
-                    contextPageOwnerType: contextPageOwnerType!,
-                    artworkID: node.internalID,
-                    artworkSlug: node.slug,
-                    horizontalSlidePosition: index,
-                  })
+                    contextPageOwnerType!,
+                    node.internalID,
+                    node.slug,
+                    index
+                  )
                 )
               }}
             />

@@ -7,10 +7,11 @@ import { AuctionArtworksRailArtworks_sale } from "v2/__generated__/AuctionArtwor
 import { TabType } from "./AuctionArtworksRail"
 import { AuctionArtworksRailPlaceholder } from "../AuctionArtworksRailPlaceholder"
 import { useTracking } from "react-tracking"
-import { AuthContextModule, clickedArtworkGroup } from "@artsy/cohesion"
+import { AuthContextModule } from "@artsy/cohesion"
 import { tabTypeToContextModuleMap } from "../../Utils/tabTypeToContextModuleMap"
 import { ShelfArtworkFragmentContainer } from "v2/Components/Artwork/ShelfArtwork"
 import { extractNodes } from "v2/Utils/extractNodes"
+import { trackHelpers } from "v2/Utils/cohesionHelpers"
 
 export interface AuctionArtworksRailArtworksProps {
   sale: AuctionArtworksRailArtworks_sale
@@ -43,13 +44,13 @@ const AuctionArtworksRailArtworks: React.FC<AuctionArtworksRailArtworksProps> = 
             lazyLoad
             onClick={() => {
               trackEvent(
-                clickedArtworkGroup({
+                trackHelpers.clickedArtworkGroup(
                   contextModule,
-                  contextPageOwnerType: contextPageOwnerType!,
-                  artworkID: node.internalID,
-                  artworkSlug: node.slug,
-                  horizontalSlidePosition: index,
-                })
+                  contextPageOwnerType!,
+                  node.internalID,
+                  node.slug,
+                  index
+                )
               )
             }}
           />

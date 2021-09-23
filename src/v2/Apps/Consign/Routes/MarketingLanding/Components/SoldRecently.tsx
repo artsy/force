@@ -7,9 +7,10 @@ import { SoldRecently_targetSupply } from "v2/__generated__/SoldRecently_targetS
 import { extractNodes } from "v2/Utils/extractNodes"
 import FillwidthItem from "v2/Components/Artwork/FillwidthItem"
 import { useTracking } from "react-tracking"
-import { ContextModule, OwnerType, clickedArtworkGroup } from "@artsy/cohesion"
+import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { flatten, shuffle } from "lodash"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
+import { trackHelpers } from "v2/Utils/cohesionHelpers"
 
 const HEIGHT = 300
 
@@ -38,13 +39,13 @@ const SoldRecently: React.FC<SoldRecentlyProps> = ({ targetSupply }) => {
 
   const trackArtworkItemClick = (artwork, horizontalSlidePosition) => () => {
     tracking.trackEvent(
-      clickedArtworkGroup({
-        artworkID: artwork.internalID,
-        artworkSlug: artwork.slug,
-        contextModule: ContextModule.artworkRecentlySoldGrid,
-        contextPageOwnerType: OwnerType.consign,
-        horizontalSlidePosition,
-      })
+      trackHelpers.clickedArtworkGroup(
+        ContextModule.artworkRecentlySoldGrid,
+        OwnerType.consign,
+        artwork.internalID,
+        artwork.slug,
+        horizontalSlidePosition
+      )
     )
   }
 

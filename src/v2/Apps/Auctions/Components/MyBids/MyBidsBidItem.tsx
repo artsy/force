@@ -14,7 +14,7 @@ import {
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { useTracking } from "react-tracking"
 import { useAnalyticsContext } from "v2/System"
-import { clickedArtworkGroup } from "@artsy/cohesion"
+import { trackHelpers } from "v2/Utils/cohesionHelpers"
 import { tabTypeToContextModuleMap } from "../../Utils/tabTypeToContextModuleMap"
 
 interface MyBidsBidItemProps {
@@ -38,13 +38,13 @@ export const MyBidsBidItem: React.FC<MyBidsBidItemProps> = ({
       noUnderline
       onClick={() => {
         trackEvent(
-          clickedArtworkGroup({
+          trackHelpers.clickedArtworkGroup(
             contextModule,
-            contextPageOwnerType: contextPageOwnerType!,
-            artworkID: saleArtwork.internalID,
-            artworkSlug: saleArtwork.slug,
-            horizontalSlidePosition,
-          })
+            contextPageOwnerType!,
+            saleArtwork.internalID,
+            saleArtwork.slug,
+            horizontalSlidePosition
+          )
         )
       }}
     >
