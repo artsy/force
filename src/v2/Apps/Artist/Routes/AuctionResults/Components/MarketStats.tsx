@@ -16,7 +16,7 @@ import { MarketStatsPlaceholder } from "./MarketStatsPlaceholder"
 
 interface MarketStatsProps {
   priceInsightsConnection: MarketStats_priceInsightsConnection
-  onRendered: (visible: boolean) => void
+  onRendered?: (visible: boolean) => void
 }
 
 export const MarketStats: React.FC<MarketStatsProps> = ({
@@ -27,7 +27,7 @@ export const MarketStats: React.FC<MarketStatsProps> = ({
 
   const priceInsights = extractNodes(priceInsightsConnection)
 
-  useEffect(() => onRendered(priceInsights.length > 0), [priceInsights])
+  useEffect(() => onRendered?.(priceInsights.length > 0), [priceInsights])
 
   const [selectedPriceInsight, setSelectedPriceInsight] = useState(
     priceInsights[0]
