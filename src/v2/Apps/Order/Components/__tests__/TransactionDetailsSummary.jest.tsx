@@ -116,7 +116,7 @@ describe("TransactionDetailsSummaryItem", () => {
 
       const text = transactionSummary.text()
 
-      expect(text).toMatch("Select delivery")
+      expect(text).toMatch("Premium delivery")
     })
   })
 

@@ -5,13 +5,16 @@ import { ShippingQuotes_shippingQuotes } from "v2/__generated__/ShippingQuotes_s
 import { compact } from "lodash"
 
 export const shippingQuoteDescriptions = {
-  ground: "Delivers in 3-5 days once shipped.",
-  "second day air": "Delivers in 2 business days once shipped.",
-  "next day air": "Delivers the following business day once shipped. ",
-  select:
-    "Consolidated transportation including blanket wrap and transit packing with white glove handling at collection and delivery.",
+  standard:
+    "Delivers to your door in 3-5 business days once packaged and shipped via a common carrier.",
+  express:
+    "Delivers to your door in 2 business days once packaged and shipped via a common carrier.",
+  rush:
+    "Delivers to your door in 1 business day once packaged and shipped via a common carrier.",
   premium:
-    "Specialized climate controlled transportation and museum quality packing, handled by trained technicians from wall to wall.",
+    "Inside delivery shipped via a white glove shipping service with custom packaging. Delivery timing variable.",
+  "white glove":
+    "Room-of-choice delivery handled via trained technicians with specialized packaging and climate-controlled transportation. Recommended for high-value works. Delivery timing variable.",
 }
 
 export interface ShippingQuotesProps extends BoxProps {
