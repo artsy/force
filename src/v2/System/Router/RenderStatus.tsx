@@ -22,8 +22,7 @@ export const RenderPending = () => {
    * duration of the fetch.
    */
   if (!isFetching) {
-    // @ts-expect-error STRICT_NULL_CHECK
-    setFetching(true)
+    setImmediate(() => setFetching?.(true))
   }
 
   if (isFetching) {
@@ -50,15 +49,11 @@ export const RenderPending = () => {
   }
 }
 
-// @ts-expect-error STRICT_NULL_CHECK
-export const RenderReady: React.FC<{
-  elements: React.ReactNode
-}> = props => {
+export const RenderReady = (props: { elements: React.ReactNode }) => {
   const { isFetching, setFetching } = useSystemContext()
 
   if (isFetching) {
-    // @ts-expect-error STRICT_NULL_CHECK
-    setFetching(false)
+    setImmediate(() => setFetching?.(false))
   }
 
   if (!isFetching) {
@@ -78,8 +73,7 @@ export const RenderError: React.FC<{
   const { isFetching, setFetching } = useSystemContext()
 
   if (isFetching) {
-    // @ts-expect-error STRICT_NULL_CHECK
-    setFetching(false)
+    setImmediate(() => setFetching?.(false))
   }
 
   const message =
