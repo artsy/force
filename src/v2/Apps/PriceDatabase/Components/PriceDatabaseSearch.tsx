@@ -3,8 +3,8 @@ import {
   Column,
   Flex,
   GridColumns,
-  Text,
   MultiSelect,
+  Text,
 } from "@artsy/palette"
 import qs from "qs"
 import React, { useState } from "react"
@@ -38,7 +38,7 @@ export const PriceDatabaseSearch: React.FC = () => {
     const pathName = `/artist/${artistSlug}/auction-results`
     const searchFilters = filterSearchFilters(filters, ALLOWED_FILTERS)
     const queryString = qs.stringify(paramsToSnakeCase(searchFilters))
-    const paramFlag = "scroll_to_auction_results=true"
+    const paramFlag = "scroll_to_market_signals=true"
 
     // TODO: Add tracking for search
 
