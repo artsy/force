@@ -2,14 +2,14 @@
 # yarn lockfile v1
 
 
-"@artsy/antigravity@0.2.0":
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/@artsy/antigravity/-/antigravity-0.2.0.tgz#4876bd5bee1a95247916441b4c4830ad00979aa1"
-  integrity sha512-QfgQSFQAVHdIvKsgeDDw8AB7lpF4n0wVwtV813Etd0uarFsPXhYPgp1bb8eGFjj9rSKnWukD+GZjEIUatixM+w==
+"@artsy/antigravity@0.3.0":
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/@artsy/antigravity/-/antigravity-0.3.0.tgz#76b649dbf62995eb709e9b5d085c22b0d802c0b8"
+  integrity sha512-1/LPoMZiKW0YpSnFDcvyrx6iC8VxwYz0JauV/yf8fzyOCw08EQkL5Q+90YUZGU3BYSRHPXRDTCo2tMJ4iH9uYg==
   dependencies:
-    express "4.17.1"
-    lodash "4.17.15"
-    prettier "1.19.1"
+    express "^4.17.1"
+    lodash "^4.17.21"
+    prettier "^1.19.1"
 
 "@artsy/backbone-mixins@2.0.0":
   version "2.0.0"
@@ -8880,7 +8880,7 @@ express-request-id@1.4.0:
   dependencies:
     uuid "^3.0.1"
 
-express@*, express@4.17.1, express@^4.16.3, express@^4.17.1:
+express@*, express@^4.16.3, express@^4.17.1:
   version "4.17.1"
   resolved "https://registry.yarnpkg.com/express/-/express-4.17.1.tgz#4491fc38605cf51f8629d39c2b5d026f98a4c134"
   integrity sha512-mHJ9O79RqluphRrcw2X/GTh3k9tVv8YcoyY4Kkh4WDMUYKRZUq0h1o0w2rrrxBqM7VoeUVqgb27xlEMXTnYt4g==
@@ -13747,7 +13747,7 @@ lodash.upperfirst@^4.3.1:
   resolved "https://registry.yarnpkg.com/lodash.upperfirst/-/lodash.upperfirst-4.3.1.tgz#1365edf431480481ef0d1c68957a5ed99d49f7ce"
   integrity sha1-E2Xt9DFIBIHvDRxolXpe2Z1J984=
 
-lodash@4.17.15, lodash@4.17.21, "lodash@>=3.5 <5", lodash@^4.11.1, lodash@^4.15.0, lodash@^4.16.4, lodash@^4.17.10, lodash@^4.17.11, lodash@^4.17.14, lodash@^4.17.15, lodash@^4.17.19, lodash@^4.17.20, lodash@^4.17.21, lodash@^4.17.3, lodash@^4.17.4, lodash@^4.17.5, lodash@^4.2.0, lodash@^4.2.1, lodash@^4.3.0, lodash@~3.10.1, lodash@~4.17.2:
+lodash@4.17.21, "lodash@>=3.5 <5", lodash@^4.11.1, lodash@^4.15.0, lodash@^4.16.4, lodash@^4.17.10, lodash@^4.17.11, lodash@^4.17.14, lodash@^4.17.15, lodash@^4.17.19, lodash@^4.17.20, lodash@^4.17.21, lodash@^4.17.3, lodash@^4.17.4, lodash@^4.17.5, lodash@^4.2.0, lodash@^4.2.1, lodash@^4.3.0, lodash@~3.10.1, lodash@~4.17.2:
   version "4.17.21"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.21.tgz#679591c564c3bffaae8454cf0b3df370c3d6911c"
   integrity sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==
@@ -15880,15 +15880,15 @@ prepend-http@^2.0.0:
   resolved "https://registry.yarnpkg.com/prepend-http/-/prepend-http-2.0.0.tgz#e92434bfa5ea8c19f41cdfd401d741a3c819d897"
   integrity sha1-6SQ0v6XqjBn0HN/UAddBo8gZ2Jc=
 
-prettier@1.19.1, prettier@^1.14.3, prettier@^1.19.1:
-  version "1.19.1"
-  resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.19.1.tgz#f7d7f5ff8a9cd872a7be4ca142095956a60797cb"
-  integrity sha512-s7PoyDv/II1ObgQunCbB9PdLmUcBZcnWOcxDh7O0N/UwDEsHyqkW+Qh28jW+mVuCdx7gLB0BotYI1Y6uI9iyew==
-
 prettier@2.0.5:
   version "2.0.5"
   resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.0.5.tgz#d6d56282455243f2f92cc1716692c08aa31522d4"
   integrity sha512-7PtVymN48hGcO4fGjybyBSIWDsLU4H4XlvOHfq91pz9kkGlonzwTfYkaIEwiRg/dAJF9YlbsduBAgtYLi+8cFg==
+
+prettier@^1.14.3, prettier@^1.19.1:
+  version "1.19.1"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.19.1.tgz#f7d7f5ff8a9cd872a7be4ca142095956a60797cb"
+  integrity sha512-s7PoyDv/II1ObgQunCbB9PdLmUcBZcnWOcxDh7O0N/UwDEsHyqkW+Qh28jW+mVuCdx7gLB0BotYI1Y6uI9iyew==
 
 prettier@~2.2.1:
   version "2.2.1"
