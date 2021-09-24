@@ -75,10 +75,10 @@ export const BuyerGuaranteeIndex: React.FC = () => {
   }
 
   const learnMoreButton = (width?: string) => (
-    <RouterLink to={supportArticleURL} target="_blank">
+    <RouterLink noUnderline to={supportArticleURL} target="_blank">
       <Button
         width={width ? width : ["100%", "80%", "50%"]}
-        variant="secondaryOutline"
+        variant={isMobile ? "secondaryOutline" : "primaryBlack"}
       >
         Learn More
       </Button>
@@ -229,7 +229,7 @@ export const BuyerGuaranteeIndex: React.FC = () => {
         </Flex>
       </Flex>
       {/*  Artsy Guarantee Sections desktop */}
-      <GridColumns gridColumnGap={4} gridRowGap={[6, 12]} my={[6, 12]}>
+      <GridColumns gridColumnGap={[0, 4]} gridRowGap={[6, 12]} my={[6, 12]}>
         <Column span={6}>
           {authenticityGuaranteeImageURL && (
             <Image
