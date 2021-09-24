@@ -30,6 +30,7 @@ import { unsubscribeRoutes } from "./Apps/Unsubscribe/unsubscribeRoutes"
 import { viewingRoomRoutes } from "v2/Apps/ViewingRoom/viewingRoomRoutes"
 import { fairOrganizerRoutes } from "./Apps/FairOrginizer/fairOrganizerRoutes"
 import { priceDatabaseRoutes } from "./Apps/PriceDatabase/priceDatabaseRoutes"
+import { categoriesRoutes } from "./Apps/Categories/categoriesRoutes"
 
 export function getAppRoutes(): AppRouteConfig[] {
   return buildAppRoutes([
@@ -39,6 +40,7 @@ export function getAppRoutes(): AppRouteConfig[] {
     { routes: artworkRoutes },
     { routes: auctionsRoutes },
     { routes: buyerGuaranteeRoutes },
+    { routes: categoriesRoutes },
     { routes: collectRoutes },
     { routes: consignRoutes },
     { routes: conversationRoutes },
