@@ -30,4 +30,31 @@ describe("CategoriesApp", () => {
     renderWithRelay()
     expect(screen.getByText("The Art Genome Project")).toBeInTheDocument()
   })
+
+  it("displays families and genes", () => {
+    renderWithRelay({
+      GeneFamilyConnection: () => ({
+        edges: [
+          {
+            node: {
+              name: "Styles and Movements",
+              genes: [
+                {
+                  displayName: "Early Randomcore",
+                },
+              ],
+            },
+          },
+        ],
+      }),
+    })
+
+    expect(
+      screen.getByRole("heading", { name: "Styles and Movements" })
+    ).toBeInTheDocument()
+
+    expect(
+      screen.getByRole("link", { name: "Early Randomcore" })
+    ).toBeInTheDocument()
+  })
 })
