@@ -63,8 +63,8 @@ describe("PriceDatabaseApp", () => {
       "/artist/gerhard-richter/auction-results?scroll_to_market_signals=true"
     )
 
-    expect(trackEvent).toHaveBeenCalledTimes(2)
-    expect(trackEvent.mock.calls[1][0]).toMatchInlineSnapshot(`
+    expect(trackEvent).toHaveBeenCalledTimes(1)
+    expect(trackEvent.mock.calls[0][0]).toMatchInlineSnapshot(`
       Object {
         "action": "searchedPriceDatabase",
         "context_module": "priceDatabaseLanding",

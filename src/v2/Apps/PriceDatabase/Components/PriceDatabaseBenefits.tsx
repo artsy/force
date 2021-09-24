@@ -148,8 +148,8 @@ const SectionImage: React.FC<{
 
 const PopularArtistsList = () => (
   <GridColumns>
-    {POPULAR_ARTISTS.map(popularArtist => (
-      <Column span={[6, 6, 4]}>
+    {POPULAR_ARTISTS.map((popularArtist, index) => (
+      <Column span={[6, 6, 4]} key={`popular-artist-${index}`}>
         <PopularArtistTile {...popularArtist} />
       </Column>
     ))}
