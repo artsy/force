@@ -269,7 +269,7 @@ describe("PaymentPickerFragmentContainer", () => {
             street2: "Suite 2.5, The Loom",
             city: "London",
             state: "Whitechapel",
-            country: "UK",
+            country: "GB",
             postalCode: "E1 8PY",
             expirationMonth: 12,
             expirationYear: 2022,
@@ -314,7 +314,7 @@ describe("PaymentPickerFragmentContainer", () => {
       address_city: "Whitechapel",
       address_state: "London",
       address_zip: "E1 8PY",
-      address_country: "UK",
+      address_country: "GB",
     })
   })
 
@@ -347,7 +347,7 @@ describe("PaymentPickerFragmentContainer", () => {
       address_city: "Whitechapel",
       address_state: "London",
       address_zip: "E1 8PY",
-      address_country: "UK",
+      address_country: "GB",
     })
   })
 
