@@ -47,7 +47,7 @@ export const PriceDatabaseBenefits: React.FC = () => {
         text="Whether researching, buying, or selling, our dynamic market intelligence allows you to determine value, make strategic decisions, and validate pricing against historical market data."
         jsx={
           <SectionImage
-            src="http://files.artsy.net/images/kehinde_wiley_portrait_of_nelly_moudime_ii.png"
+            src="https://files.artsy.net/images/kehinde_wiley_portrait_of_nelly_moudime_ii.png"
             srcSet=""
             alt=""
             artistName="Kehinde Wiley"
