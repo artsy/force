@@ -9,7 +9,7 @@ import { ArtworkFilterMobileActionSheet } from "../ArtworkFilterMobileActionShee
 import { ArtworkFilters } from "../ArtworkFilters"
 
 jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
-  useMatchMedia: () => ({ sm: true }),
+  __internal__useMatchMedia: () => ({ sm: true }),
 }))
 
 describe("ArtworkFilterMobileActionSheet", () => {

@@ -7,7 +7,7 @@ import { deleteUserAddress } from "v2/Apps/Order/Mutations/DeleteUserAddress"
 
 jest.unmock("react-relay")
 jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
-  useMatchMedia: () => ({}),
+  __internal__useMatchMedia: () => ({}),
 }))
 jest.mock("v2/Apps/Order/Mutations/DeleteUserAddress")
 

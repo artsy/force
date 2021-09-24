@@ -1,7 +1,7 @@
 import { Banner, Box, Text, themeProps } from "@artsy/palette"
 import React, { useEffect, useState } from "react"
 import { useNavBarHeight } from "../NavBar/useNavBarHeight"
-import { useMatchMedia } from "v2/Utils/Hooks/useMatchMedia"
+import { __internal__useMatchMedia } from "v2/Utils/Hooks/useMatchMedia"
 
 interface ToastComponentProps {
   showNotification: boolean
@@ -18,7 +18,7 @@ const ToastComponent: React.FC<ToastComponentProps> = ({
   duration,
   onCloseToast,
 }) => {
-  const isMobile = useMatchMedia(themeProps.mediaQueries.xs)
+  const isMobile = __internal__useMatchMedia(themeProps.mediaQueries.xs)
   const navHeight = useNavBarHeight()
 
   useEffect(() => {

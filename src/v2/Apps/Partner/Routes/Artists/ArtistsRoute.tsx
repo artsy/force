@@ -13,7 +13,7 @@ import { createFragmentContainer } from "react-relay"
 import { Media } from "v2/Utils/Responsive"
 import { usePartnerArtistsLoadingContext } from "../../Utils/PartnerArtistsLoadingContext"
 import { scrollIntoView } from "v2/Utils/scrollHelpers"
-import { useMatchMedia } from "v2/Utils/Hooks/useMatchMedia"
+import { __internal__useMatchMedia } from "v2/Utils/Hooks/useMatchMedia"
 import { useNavBarHeight } from "v2/Components/NavBar/useNavBarHeight"
 
 export interface ArtistsRouteProps {
@@ -26,7 +26,7 @@ export const ArtistsRoute: React.FC<ArtistsRouteProps> = ({
   match,
 }) => {
   const { mobile, desktop } = useNavBarHeight()
-  const isMobile = useMatchMedia(themeProps.mediaQueries.xs)
+  const isMobile = __internal__useMatchMedia(themeProps.mediaQueries.xs)
   const { isLoaded } = usePartnerArtistsLoadingContext()
 
   useEffect(() => {

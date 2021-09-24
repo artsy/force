@@ -8,7 +8,7 @@ import { Breakpoint } from "v2/Utils/Responsive"
 
 jest.unmock("react-relay")
 jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
-  useMatchMedia: () => false,
+  __internal__useMatchMedia: () => false,
 }))
 
 const getWrapperWithBreakpoint = (breakpoint: Breakpoint = "lg") =>

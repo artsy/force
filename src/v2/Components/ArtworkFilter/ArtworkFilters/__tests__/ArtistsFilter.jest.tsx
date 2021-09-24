@@ -8,7 +8,7 @@ import {
 import { ArtistsFilter, ArtistsFilterProps } from "../ArtistsFilter"
 
 jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
-  useMatchMedia: () => ({}),
+  __internal__useMatchMedia: () => ({}),
 }))
 
 describe("ArtistsFilter", () => {

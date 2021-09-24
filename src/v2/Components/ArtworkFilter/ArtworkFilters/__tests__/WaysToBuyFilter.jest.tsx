@@ -7,7 +7,7 @@ import {
 import { WaysToBuyFilter, WaysToBuyFilterProps } from "../WaysToBuyFilter"
 
 jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
-  useMatchMedia: () => ({}),
+  __internal__useMatchMedia: () => ({}),
 }))
 
 describe("WaysToBuyFilter", () => {
