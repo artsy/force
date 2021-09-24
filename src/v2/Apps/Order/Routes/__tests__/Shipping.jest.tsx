@@ -34,7 +34,7 @@ import {
 
 jest.unmock("react-relay")
 jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
-  useMatchMedia: () => ({}),
+  __internal__useMatchMedia: () => ({}),
 }))
 
 const testOrder: ShippingTestQueryRawResponse["order"] = {

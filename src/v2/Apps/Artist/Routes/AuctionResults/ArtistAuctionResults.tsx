@@ -24,7 +24,7 @@ import { LoadingArea } from "v2/Components/LoadingArea"
 import { PaginationFragmentContainer as Pagination } from "v2/Components/Pagination"
 import { AnalyticsSchema, SystemContext } from "v2/System"
 import { useRouter } from "v2/System/Router/useRouter"
-import { useMatchMedia } from "v2/Utils/Hooks/useMatchMedia"
+import { __internal__useMatchMedia } from "v2/Utils/Hooks/useMatchMedia"
 import { usePrevious } from "v2/Utils/Hooks/usePrevious"
 import createLogger from "v2/Utils/logger"
 import { openAuthModal } from "v2/Utils/openAuthModal"
@@ -59,7 +59,7 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
   artist,
   relay,
 }) => {
-  const isMobile = useMatchMedia(themeProps.mediaQueries.xs)
+  const isMobile = __internal__useMatchMedia(themeProps.mediaQueries.xs)
   const { user, mediator } = useContext(SystemContext)
   const {
     filters,

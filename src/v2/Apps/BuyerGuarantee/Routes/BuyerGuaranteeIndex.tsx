@@ -25,11 +25,11 @@ import {
 import { Feature } from "../Components/Feature"
 import { MOBILE_NAV_HEIGHT, DESKTOP_NAV_BAR_HEIGHT } from "v2/Components/NavBar"
 import { scrollIntoView } from "v2/Utils/scrollHelpers"
-import { useMatchMedia } from "v2/Utils/Hooks/useMatchMedia"
+import { __internal__useMatchMedia } from "v2/Utils/Hooks/useMatchMedia"
 import { BuyerGuaranteeMeta } from "../Components/BuyerGuaranteeMeta"
 
 export const BuyerGuaranteeIndex: React.FC = () => {
-  const isMobile = useMatchMedia(themeProps.mediaQueries.xs)
+  const isMobile = __internal__useMatchMedia(themeProps.mediaQueries.xs)
 
   const authenticityText = `We are dedicated to being the world’s most trustworthy marketplace
   to buy and sell art. In the rare case that a work purchased
@@ -130,7 +130,7 @@ export const BuyerGuaranteeIndex: React.FC = () => {
     },
   }
 
-  const tableColor = useMatchMedia(themeProps.mediaQueries.xs)
+  const tableColor = __internal__useMatchMedia(themeProps.mediaQueries.xs)
     ? "black10"
     : "black100"
 

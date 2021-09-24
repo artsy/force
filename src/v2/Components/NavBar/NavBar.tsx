@@ -26,7 +26,7 @@ import { ContextModule, Intent } from "@artsy/cohesion"
 import { AnalyticsSchema } from "v2/System"
 import { track, useTracking } from "v2/System/Analytics"
 import Events from "v2/Utils/Events"
-import { useMatchMedia } from "v2/Utils/Hooks/useMatchMedia"
+import { __internal__useMatchMedia } from "v2/Utils/Hooks/useMatchMedia"
 import { NavBarPrimaryLogo } from "./NavBarPrimaryLogo"
 import { NavBarSkipLink } from "./NavBarSkipLink"
 import { NavBarLoggedInActionsQueryRenderer } from "./NavBarLoggedInActions"
@@ -71,8 +71,8 @@ export const NavBar: React.FC = track(
   }
   const { trackEvent } = useTracking()
   const [showMobileMenu, toggleMobileNav] = useState(false)
-  const xs = useMatchMedia(themeProps.mediaQueries.xs)
-  const sm = useMatchMedia(themeProps.mediaQueries.sm)
+  const xs = __internal__useMatchMedia(themeProps.mediaQueries.xs)
+  const sm = __internal__useMatchMedia(themeProps.mediaQueries.sm)
   const isMobile = xs || sm
   const isLoggedIn = Boolean(user)
   const showNotificationCount = isLoggedIn && !showMobileMenu

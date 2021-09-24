@@ -9,7 +9,7 @@ import {
 import { ViewAllButton } from "../../Overview/ViewAllButton"
 
 jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
-  useMatchMedia: () => ({}),
+  __internal__useMatchMedia: () => ({}),
 }))
 jest.unmock("react-relay")
 

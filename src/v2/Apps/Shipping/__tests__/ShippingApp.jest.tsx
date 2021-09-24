@@ -8,7 +8,7 @@ import { HeadProvider } from "react-head"
 jest.mock("react-tracking")
 jest.unmock("react-relay")
 jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
-  useMatchMedia: () => ({}),
+  __internal__useMatchMedia: () => ({}),
 }))
 const { getWrapper } = setupTestWrapper<ShippingApp_Test_Query>({
   Component: ({ me }) => {

@@ -5,7 +5,7 @@ import { Text, Flex, Swiper, themeProps } from "@artsy/palette"
 import { Media } from "v2/Utils/Responsive"
 import { scrollIntoView } from "v2/Utils/scrollHelpers"
 import { ExhibitorsLetterNav_fair } from "v2/__generated__/ExhibitorsLetterNav_fair.graphql"
-import { useMatchMedia } from "v2/Utils/Hooks/useMatchMedia"
+import { __internal__useMatchMedia } from "v2/Utils/Hooks/useMatchMedia"
 import { useNavBarHeight } from "v2/Components/NavBar/useNavBarHeight"
 import { getExhibitorSectionId } from "../Utils/getExhibitorSectionId"
 
@@ -23,7 +23,7 @@ export const ExhibitorsLetterNav: React.FC<ExhibitorsLetterNavProps> = ({
     height: [mobileNavBarHeight, desktopNavBarHeight],
   } = useNavBarHeight()
 
-  const isMobile = useMatchMedia(themeProps.mediaQueries.xs)
+  const isMobile = __internal__useMatchMedia(themeProps.mediaQueries.xs)
   const stickyTabsHeight = 150
 
   const offset =

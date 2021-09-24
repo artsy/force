@@ -9,7 +9,7 @@ import {
   themeProps,
 } from "@artsy/palette"
 import { Media } from "v2/Utils/Responsive"
-import { useMatchMedia } from "v2/Utils/Hooks/useMatchMedia"
+import { __internal__useMatchMedia } from "v2/Utils/Hooks/useMatchMedia"
 
 interface ConditionalWrapperProps {
   condition: boolean
@@ -38,7 +38,7 @@ export const Feature: React.FC<FeatureProps> = ({
   icon,
   onClick,
 }) => {
-  const isMobile = useMatchMedia(themeProps.mediaQueries.xs)
+  const isMobile = __internal__useMatchMedia(themeProps.mediaQueries.xs)
   const Icon = icon
   const learnMore = (
     <Flex pt={2} justifyContent="center">

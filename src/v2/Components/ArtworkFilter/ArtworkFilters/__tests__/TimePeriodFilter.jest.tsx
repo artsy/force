@@ -7,7 +7,7 @@ import {
 import { TimePeriodFilter, TimePeriodFilterProps } from "../TimePeriodFilter"
 
 jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
-  useMatchMedia: () => ({}),
+  __internal__useMatchMedia: () => ({}),
 }))
 
 describe("TimePeriodFilter", () => {

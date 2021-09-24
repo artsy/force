@@ -5,7 +5,7 @@ import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
 
 jest.unmock("react-relay")
 jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
-  useMatchMedia: () => false,
+  __internal__useMatchMedia: () => false,
 }))
 
 describe("FairExhibitors", () => {
