@@ -47,7 +47,7 @@ export const PriceDatabaseBenefits: React.FC = () => {
         text="Whether researching, buying, or selling, our dynamic market intelligence allows you to determine value, make strategic decisions, and validate pricing against historical market data."
         jsx={
           <SectionImage
-            src="http://files.artsy.net/images/kehinde_wiley_portrait_of_nelly_moudime_ii.webp"
+            src="https://files.artsy.net/images/kehinde_wiley_portrait_of_nelly_moudime_ii.png"
             srcSet=""
             alt=""
             artistName="Kehinde Wiley"
@@ -64,7 +64,7 @@ export const PriceDatabaseBenefits: React.FC = () => {
         text="No search limits, no subscriptions, and no obligations. Collect smarter with unparalleled access to art market data."
         jsx={
           <SectionImage
-            src="http://files.artsy.net/images/damien_hirst_kindness.webp"
+            src="https://files.artsy.net/images/damien_hirst_kindness.png"
             srcSet=""
             alt=""
             artistName="Damien Hirst"
