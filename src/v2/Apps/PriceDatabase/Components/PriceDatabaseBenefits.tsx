@@ -64,7 +64,7 @@ export const PriceDatabaseBenefits: React.FC = () => {
         text="No search limits, no subscriptions, and no obligations. Collect smarter with unparalleled access to art market data."
         jsx={
           <SectionImage
-            src="http://files.artsy.net/images/damien_hirst_kindness.png"
+            src="https://files.artsy.net/images/damien_hirst_kindness.png"
             srcSet=""
             alt=""
             artistName="Damien Hirst"
