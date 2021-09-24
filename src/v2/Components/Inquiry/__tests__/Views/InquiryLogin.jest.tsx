@@ -6,15 +6,18 @@ import { useArtworkInquiryRequest } from "../../Hooks/useArtworkInquiryRequest"
 import { flushPromiseQueue } from "v2/DevTools"
 import { useInquiryContext } from "../../Hooks/useInquiryContext"
 import { fill } from "../util"
+import { useTracking } from "v2/System/Analytics/useTracking"
 
 jest.mock("v2/Utils/auth")
 jest.mock("../../Hooks/useArtworkInquiryRequest")
 jest.mock("../../Hooks/useInquiryContext")
 jest.mock("v2/Utils/wait", () => ({ wait: () => Promise.resolve() }))
+jest.mock("v2/System/Analytics/useTracking")
 
 describe("InquiryLogin", () => {
   const next = jest.fn()
   const submitArtworkInquiryRequest = jest.fn()
+  const trackEvent = jest.fn()
 
   beforeEach(() => {
     ;(useArtworkInquiryRequest as jest.Mock).mockImplementation(() => ({
@@ -27,11 +30,13 @@ describe("InquiryLogin", () => {
       setRelayEnvironment: jest.fn(),
       engine: { decide: jest.fn().mockReturnValue(false) },
     }))
+    ;(useTracking as jest.Mock).mockImplementation(() => ({ trackEvent }))
   })
 
   afterEach(() => {
     next.mockReset()
     submitArtworkInquiryRequest.mockReset()
+    trackEvent.mockClear()
   })
 
   it("renders correctly", () => {
@@ -45,7 +50,7 @@ describe("InquiryLogin", () => {
   describe("without two-factor auth", () => {
     beforeEach(() => {
       ;(login as jest.Mock).mockImplementation(() =>
-        Promise.resolve({ user: { id: "id", access_token: "token" } })
+        Promise.resolve({ user: { id: "example-id", access_token: "token" } })
       )
     })
 
@@ -68,6 +73,17 @@ describe("InquiryLogin", () => {
         message: "Hello world",
       })
       expect(next).toBeCalled()
+      expect(trackEvent).toBeCalledTimes(1)
+      expect(trackEvent).toBeCalledWith({
+        action: "successfullyLoggedIn",
+        auth_redirect: "http://localhost/",
+        context_module: "inquiry",
+        intent: "inquire",
+        service: "email",
+        trigger: "click",
+        type: "login",
+        user_id: "example-id",
+      })
     })
   })
 

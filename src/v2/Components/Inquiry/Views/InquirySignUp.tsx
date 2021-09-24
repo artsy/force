@@ -8,6 +8,14 @@ import { useInquiryContext } from "../Hooks/useInquiryContext"
 import { useArtworkInquiryRequest } from "../Hooks/useArtworkInquiryRequest"
 import { signUp } from "v2/Utils/auth"
 import { logger } from "../util"
+import {
+  ActionType,
+  AuthModalType,
+  ContextModule,
+  CreatedAccount,
+  Intent,
+} from "@artsy/cohesion"
+import { useTracking } from "v2/System/Analytics/useTracking"
 
 enum Mode {
   Pending,
@@ -43,6 +51,8 @@ export const InquirySignUp: React.FC = () => {
     password: "",
   })
 
+  const { trackEvent } = useTracking()
+
   const handleSubmit = async (event: React.FormEvent<HTMLElement>) => {
     event.preventDefault()
 
@@ -66,6 +76,20 @@ export const InquirySignUp: React.FC = () => {
       setMode(Mode.Success)
       await wait(500)
       next()
+
+      const options: CreatedAccount = {
+        action: ActionType.createdAccount,
+        auth_redirect: window.location.href,
+        context_module: ContextModule.inquiry,
+        intent: Intent.inquire,
+        onboarding: false,
+        service: "email",
+        trigger: "click",
+        type: AuthModalType.signup,
+        user_id: user.id,
+      }
+
+      trackEvent(options)
     } catch (err) {
       setError(err.message)
       setMode(Mode.Error)
