@@ -4,6 +4,7 @@ import React from "react"
 import { HeadProvider } from "react-head"
 import { PriceDatabaseArtistAutosuggest } from "../Components/PriceDatabaseArtistAutosuggest"
 import { PriceDatabase } from "../PriceDatabase"
+import { useTracking } from "react-tracking"
 
 jest.mock("v2/System/Router/useRouter", () => {
   return {
@@ -14,22 +15,41 @@ jest.mock("v2/System/Router/useRouter", () => {
 })
 
 const mockRouterPush = jest.fn()
+const trackEvent = jest.fn()
 
 describe("PriceDatabaseApp", () => {
   let wrapper: ReactWrapper
 
   beforeAll(() => {
+    ;(useTracking as jest.Mock).mockImplementation(() => {
+      return {
+        trackEvent,
+      }
+    })
+
     wrapper = mount(
       <HeadProvider>
         <PriceDatabase />
       </HeadProvider>
     )
   })
+  afterEach(() => {
+    trackEvent.mockReset()
+  })
 
   it("renders correct components", () => {
     expect(wrapper.find("PriceDatabaseMeta").length).toBe(1)
     expect(wrapper.find("PriceDatabaseSearch").length).toBe(1)
     expect(wrapper.find("PriceDatabaseBenefits").length).toBe(1)
+
+    expect(trackEvent).toHaveBeenCalledTimes(1)
+    expect(trackEvent.mock.calls[0][0]).toMatchInlineSnapshot(`
+      Object {
+        "action": "screen",
+        "context_module": "priceDatabaseLanding",
+        "context_screen_owner_type": "priceDatabase",
+      }
+    `)
   })
 
   it("searches for artist's auction results without filters", () => {
@@ -42,6 +62,20 @@ describe("PriceDatabaseApp", () => {
     expect(mockRouterPush).toHaveBeenCalledWith(
       "/artist/gerhard-richter/auction-results?scroll_to_market_signals=true"
     )
+
+    expect(trackEvent).toHaveBeenCalledTimes(2)
+    expect(trackEvent.mock.calls[1][0]).toMatchInlineSnapshot(`
+      Object {
+        "action": "searchedPriceDatabase",
+        "context_module": "priceDatabaseLanding",
+        "context_owner_type": "priceDatabase",
+        "destination_owner_slug": "gerhard-richter",
+        "destination_owner_type": "artistAuctionResults",
+        "destination_path": "/artist/gerhard-richter/auction-results",
+        "filters": "{\\"organizations\\":[],\\"categories\\":[],\\"sizes\\":[]}",
+        "query": "",
+      }
+    `)
   })
 
   it("searches for artist's auction results with filters", () => {
@@ -66,5 +100,18 @@ describe("PriceDatabaseApp", () => {
     expect(mockRouterPush).toHaveBeenCalledWith(
       "/artist/banksy/auction-results?organizations%5B0%5D=Phillips&categories%5B0%5D=Painting&sizes%5B0%5D=SMALL&sizes%5B1%5D=MEDIUM&scroll_to_market_signals=true"
     )
+
+    expect(trackEvent.mock.calls[4][0]).toMatchInlineSnapshot(`
+      Object {
+        "action": "searchedPriceDatabase",
+        "context_module": "priceDatabaseLanding",
+        "context_owner_type": "priceDatabase",
+        "destination_owner_slug": "banksy",
+        "destination_owner_type": "artistAuctionResults",
+        "destination_path": "/artist/banksy/auction-results",
+        "filters": "{\\"organizations\\":[\\"Phillips\\"],\\"categories\\":[\\"Painting\\"],\\"sizes\\":[\\"SMALL\\",\\"MEDIUM\\"]}",
+        "query": "organizations%5B0%5D=Phillips&categories%5B0%5D=Painting&sizes%5B0%5D=SMALL&sizes%5B1%5D=MEDIUM",
+      }
+    `)
   })
 })
