@@ -20,7 +20,6 @@ describe("Article Layout", () => {
   let props
   const getWrapper = (passedProps = props) => {
     return mount(
-      // @ts-expect-error STRICT_NULL_CHECK
       <SystemContextProvider user={null}>
         <ArticleLayout {...passedProps} />
       </SystemContextProvider>
@@ -78,7 +77,7 @@ describe("Article Layout", () => {
       expect(component.find(InfiniteScrollArticle).length).toBe(0)
     })
 
-    it("it mounts backbone views for super articles", () => {
+    it("mounts backbone views for super articles", () => {
       props.templates = {
         SuperArticleFooter: "sa-footer",
         SuperArticleHeader: "sa-header",

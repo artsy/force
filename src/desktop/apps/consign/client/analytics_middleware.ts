@@ -12,13 +12,12 @@ const analyticsMiddleware = store => next => action => {
     }
 
     case actions.SUBMISSION_CREATED: {
-      // @ts-expect-error STRICT_NULL_CHECK
-      window.analytics.track("consignment_submitted", {
+      window.analytics?.track("consignment_submitted", {
         contextPath: nextState.submissionFlow.contextPath,
         submissionId: action.payload.submissionId,
         subject: nextState.submissionFlow.subject,
-        userId: sd.CURRENT_USER.id,
-        userEmail: sd.CURRENT_USER.email,
+        userId: sd.CURRENT_USER?.id,
+        userEmail: sd.CURRENT_USER?.email,
       })
       return result
     }

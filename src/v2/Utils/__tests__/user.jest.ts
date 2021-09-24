@@ -16,7 +16,6 @@ describe("user", () => {
     it("returns false when user doesn't exist", () => {
       const featureName = "my feature"
 
-      // @ts-expect-error STRICT_NULL_CHECK
       const result = userHasLabFeature(null, featureName)
 
       expect(result).toEqual(false)
@@ -44,7 +43,6 @@ describe("user", () => {
 
   describe("userIsAdmin", () => {
     it("returns undefined if user is undefined", () => {
-      // @ts-expect-error STRICT_NULL_CHECK
       const user: User = undefined
 
       const result = userIsAdmin(user)
@@ -75,7 +73,6 @@ describe("user", () => {
 
   describe("userIsTeam", () => {
     it("returns undefined if user is undefined", () => {
-      // @ts-expect-error STRICT_NULL_CHECK
       const user: User = undefined
 
       const result = userIsTeam(user)

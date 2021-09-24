@@ -20,7 +20,6 @@ describe("InfiniteScrollArticle", () => {
 
   const getWrapper = (passedProps = props) => {
     return mount(
-      // @ts-expect-error STRICT_NULL_CHECK
       <SystemContextProvider user={null}>
         <InfiniteScrollArticle {...passedProps} showTooltips={false} />
       </SystemContextProvider>

@@ -31,7 +31,6 @@ describe("NavBar", () => {
 
   const getWrapper = ({ user = null, isEigen = false } = {}) => {
     return mount(
-      // @ts-expect-error STRICT_NULL_CHECK
       <SystemContextProvider user={user} isEigen={isEigen}>
         <NavBar />
       </SystemContextProvider>

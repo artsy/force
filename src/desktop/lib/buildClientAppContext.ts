@@ -4,7 +4,7 @@ import { AnalyticsContextProps } from "v2/System/Analytics/AnalyticsContext"
 import { Mediator, mediator } from "lib/mediator"
 
 export interface ClientContext {
-  user: object
+  user: User
   mediator: Mediator
   analytics: AnalyticsContextProps
 }

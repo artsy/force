@@ -319,7 +319,6 @@ describe("Email Confirmation CTA", () => {
 
     it("does not request user-specific data from metaphysics if there is no user", () => {
       const wrapper = mount(
-        // @ts-expect-error STRICT_NULL_CHECK
         <SystemContextProvider user={null}>
           <FlashBannerQueryRenderer />
         </SystemContextProvider>

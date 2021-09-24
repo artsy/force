@@ -17,9 +17,7 @@ describe("trackingMiddleware", () => {
   const noop = x => x
 
   beforeEach(() => {
-    // FIXME: reaction migration
-    // @ts-ignore
-    window.analytics = { page: jest.fn() }
+    window.analytics = { page: jest.fn() } as any
   })
 
   afterEach(() => {
@@ -138,8 +136,7 @@ describe("trackingMiddleware", () => {
           { integrations: { Marketo: false } }
         )
 
-        // @ts-expect-error STRICT_NULL_CHECK
-        expect(window.analytics.__artsyClientSideRoutingReferrer).toEqual(
+        expect(window.analytics!.__artsyClientSideRoutingReferrer).toEqual(
           "http://testing.com/referrer?with=queryparams"
         )
       })

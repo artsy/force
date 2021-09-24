@@ -7,7 +7,7 @@ module.exports = {
     "styled-components-a11y",
     "jest",
     "jest-dom",
-    "testing-library"
+    "testing-library",
   ],
   extends: [
     "eslint:recommended",
@@ -18,7 +18,7 @@ module.exports = {
     "plugin:styled-components-a11y/recommended",
     "plugin:jest/recommended",
     "plugin:jest-dom/recommended",
-    "plugin:testing-library/react"
+    "plugin:testing-library/react",
   ],
   parserOptions: {
     ecmaFeatures: {
@@ -50,6 +50,10 @@ module.exports = {
     "@typescript-eslint/no-use-before-define": 0,
     "@typescript-eslint/no-unused-vars": 0,
     "@typescript-eslint/no-var-requires": 0,
+    // Looks like their logic fails to account for the original location of the
+    // import; meaninig: any variable named `wrapper` or function called `render`
+    // from libs such as `enzyme` will throw. Disabling until we have an approach.
+    "testing-library/render-result-naming-convention": 0,
     "no-console": [
       "error",
       {

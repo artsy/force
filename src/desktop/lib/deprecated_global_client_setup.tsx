@@ -5,7 +5,7 @@
 import "lib/webpackPublicPath"
 import $ from "jquery"
 import Backbone from "backbone"
-import _ from "underscore"
+import _ from "lodash"
 import Cookies from "cookies-js"
 import { configureScope } from "@sentry/browser"
 import { data as sd } from "sharify"

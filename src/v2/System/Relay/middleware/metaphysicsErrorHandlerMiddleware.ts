@@ -3,7 +3,7 @@ import { NetworkError } from "v2/Utils/errors"
 export function metaphysicsErrorHandlerMiddleware({
   checkStatus,
 }: {
-  checkStatus: boolean
+  checkStatus?: boolean
 }) {
   return next => async req => {
     const response = await next(req)
