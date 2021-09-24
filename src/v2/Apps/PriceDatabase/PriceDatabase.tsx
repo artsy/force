@@ -1,12 +1,22 @@
 import { Flex, Separator, Spacer } from "@artsy/palette"
 import React from "react"
+import { useTracking } from "react-tracking"
 import { PriceDatabaseBenefits } from "./Components/PriceDatabaseBenefits"
 import { PriceDatabaseSearch } from "./Components/PriceDatabaseSearch"
 import { PriceDatabaseMeta } from "./Components/PriceDatabaseMeta"
 import { AuctionResultsFilterContextProvider } from "v2/Apps/Artist/Routes/AuctionResults/AuctionResultsFilterContext"
 import { Media } from "v2/Utils/Responsive"
+import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
 
 export const PriceDatabase = () => {
+  const { trackEvent } = useTracking()
+
+  trackEvent({
+    action: ActionType.screen,
+    context_module: ContextModule.priceDatabaseLanding,
+    context_screen_owner_type: OwnerType.priceDatabase,
+  })
+
   return (
     <AuctionResultsFilterContextProvider>
       <Flex flexDirection="column" mx="auto" py={[0, 4]}>
