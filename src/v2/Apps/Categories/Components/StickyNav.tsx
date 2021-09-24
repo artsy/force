@@ -26,7 +26,7 @@ const StickyNav: React.FC<StickyNavProps> = props => {
   }
 
   return (
-    <HorizontalOverflow>
+    <HorizontalOverflow my={-1} py={1}>
       {/* This AppContainer looks weird considering we wrap StickyNav in an
       AppConainer in the parent. It's necessary to get the rail to align with 
       the rest of the content on the page on first load, but then go all the 
