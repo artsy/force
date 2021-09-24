@@ -1,9 +1,8 @@
 import {
   Box,
   Column,
-  FullBleed,
   GridColumns,
-  Separator,
+  ResponsiveBox,
   Spacer,
   Text,
 } from "@artsy/palette"
@@ -28,7 +27,8 @@ const HeaderPlaceholder: React.FC = () => {
         right={0}
         height={[MOBILE_NAV_HEIGHT, DESKTOP_NAV_BAR_HEIGHT]}
         p={1}
-        bg="black5"
+        bg="black10"
+        zIndex={2}
       >
         <Text variant="sm">Header placeholder</Text>
       </Box>
@@ -102,13 +102,28 @@ export const ContainedExample = () => {
 
         <GridColumns my={2}>
           <Column span={6}>
-            <Sticky proportional>
-              <Box bg="black10" height={400} width="100%" />
+            <Sticky proportional contained>
+              <ResponsiveBox
+                aspectWidth={6}
+                aspectHeight={4}
+                maxWidth="100%"
+                bg="black60"
+              >
+                <img
+                  src="https://picsum.photos/seed/example/600/400"
+                  alt=""
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    display: "block",
+                  }}
+                />
+              </ResponsiveBox>
             </Sticky>
           </Column>
 
           <Column span={6}>
-            <Filler amount={30} />
+            <Filler amount={25} />
           </Column>
         </GridColumns>
 
@@ -124,32 +139,12 @@ export const GridExample = () => {
       <HorizontalPadding>
         <HeaderPlaceholder />
 
-        <Text variant="sm">
-          This is a bit verbose but we currently don't match{" "}
-          <code>position: sticky;</code>
-          exactly. One of the side effects of this is that content when stuck
-          will break out of the container completely. At the moment this is
-          desireable though we may revisit in the future. In the meantime simply
-          break out of the container with the <code>FullBleed</code> component,
-          then wrap it in our <code>AppContainer</code>, which controls
-          max-width; and <code>HorizontalPadding</code> which controls the
-          page's padding.
-        </Text>
-
-        <Separator my={1} />
-
         <Filler />
 
-        <Sticky>
-          <FullBleed>
-            <AppContainer bg="black100">
-              <HorizontalPadding>
-                <Text variant="sm" color="white100">
-                  Is aligned with underlying content
-                </Text>
-              </HorizontalPadding>
-            </AppContainer>
-          </FullBleed>
+        <Sticky proportional>
+          <Text variant="sm" color="white100" bg="black100" px={2} mx={-2}>
+            Is aligned with underlying content
+          </Text>
         </Sticky>
 
         {[...new Array(100)].map((_, i) => {
@@ -168,4 +163,38 @@ GridExample.story = {
   parameters: {
     layout: "fullscreen",
   },
+}
+
+export const SidebarStory = () => {
+  return (
+    <AppContainer>
+      <HorizontalPadding>
+        <HeaderPlaceholder />
+        <GridColumns>
+          <Column span={3}>
+            <Sticky proportional>
+              {({ stuck }) => {
+                return (
+                  <Box bg={stuck ? "black10" : "black5"} height="100%">
+                    Sidebar example
+                    <br />
+                    Etcetera
+                    <br />
+                    Etc.
+                    <br />
+                    &c.
+                    <br />
+                  </Box>
+                )
+              }}
+            </Sticky>
+          </Column>
+
+          <Column span={9}>
+            <Filler amount={100} />
+          </Column>
+        </GridColumns>
+      </HorizontalPadding>
+    </AppContainer>
+  )
 }
