@@ -17,20 +17,11 @@ export const PriceDatabaseBenefits: React.FC = () => {
     <Flex py={[1, 4]} flexDirection="column">
       <GridColumns mt={4} gridRowGap={[2, 0]}>
         <Column span={12}>
-          <Media lessThan="md">
-            <Text as="h1" variant="xl">
-              Auction records from 340,000
-              <br />
-              artists—and counting
-            </Text>
-          </Media>
-          <Media greaterThanOrEqual="md">
-            <Text as="h1" variant="xxl">
-              Auction records from 340,000
-              <br />
-              artists—and counting
-            </Text>
-          </Media>
+          <Text as="h1" variant={["xl", "xxl"]}>
+            Auction records from 340,000
+            <br />
+            artists—and counting
+          </Text>
         </Column>
       </GridColumns>
 

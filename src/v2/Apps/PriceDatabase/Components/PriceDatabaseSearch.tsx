@@ -67,30 +67,20 @@ export const PriceDatabaseSearch: React.FC = () => {
     <>
       <GridColumns my={4} gridRowGap={[2, 0]}>
         <Column span={12}>
-          <Media lessThan="md">
-            <Text as="h1" variant="xl">
-              Artsy Price
+          <Text as="h1" variant={["xl", "xxl"]}>
+            <Media lessThan="sm">
+              Artsy
               <br />
-              Database
-            </Text>
-            <Text variant="sm" mb={[0, 2]}>
-              Unlimited access to auction results and art market data—for free.
-              <br />
-              Browse 6.5 million auction records from 2,400 top auction houses,
-              from 1986 to today.
-            </Text>
-          </Media>
-          <Media greaterThanOrEqual="md">
-            <Text as="h1" variant="xxl">
-              Artsy Price Database
-            </Text>
-            <Text variant="lg" mb={[0, 2]}>
-              Unlimited access to auction results and art market data—for free.
-              <br />
-              Browse 6.5 million auction records from 2,400 top auction houses,
-              from 1986 to today.
-            </Text>
-          </Media>
+              Price Database
+            </Media>
+            <Media greaterThanOrEqual="sm">Artsy Price Database</Media>
+          </Text>
+          <Text variant={["sm", "lg"]} mb={[0, 2]}>
+            Unlimited access to auction results and art market data—for free.
+            <br />
+            Browse 6.5 million auction records from 2,400 top auction houses,
+            from 1986 to today.
+          </Text>
         </Column>
       </GridColumns>
       <Flex
