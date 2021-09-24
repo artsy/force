@@ -719,6 +719,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
                   shippingQuotes={compact(shippingQuotes)}
                   onSelect={this.handleShippingQuoteSelected}
                 />
+                <Spacer mt={4} />
               </Collapse>
 
               <Media greaterThan="xs">
