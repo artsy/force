@@ -230,32 +230,6 @@ describe("PaymentPickerFragmentContainer", () => {
     expect(page.addressFormIsVisible).toBe(true)
   })
 
-  it("removes all data when the billing address form is hidden", async () => {
-    const page = await env.buildPage()
-    // expand address form
-    expect(page.sameAddressCheckbox.props().selected).toBe(true)
-    expect(page.addressFormIsVisible).toBe(false)
-    await page.toggleSameAddressCheckbox()
-    page.setName("Dr Collector")
-
-    expect((page.nameInput.instance() as any).value).toEqual("Dr Collector")
-
-    // hide address form
-    page.toggleSameAddressCheckbox()
-
-    expect(page.addressFormIsVisible).toBe(false)
-
-    // expand address form again
-    page.toggleSameAddressCheckbox()
-    await page.update()
-
-    expect(page.addressFormIsVisible).toBe(true)
-    await page.update()
-
-    // expect name to be empty
-    expect((page.nameInput.instance() as any).value).toEqual("")
-  })
-
   it("does not pre-populate with available details when returning to the payment route", async () => {
     const page = await env.buildPage({
       mockData: {
