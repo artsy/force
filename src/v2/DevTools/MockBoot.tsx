@@ -15,7 +15,6 @@ export const MockBoot: React.SFC<{
       onlyMatchMediaQueries={[breakpoint]}
       headTags={headTags}
       context={mockContext}
-      // @ts-expect-error STRICT_NULL_CHECK
       user={user}
       relayEnvironment={null as any}
       routes={null as any}

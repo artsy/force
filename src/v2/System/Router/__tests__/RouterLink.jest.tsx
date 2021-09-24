@@ -22,12 +22,12 @@ describe("RouterLink", () => {
           },
         ]}
       />
-      // @ts-expect-error STRICT_NULL_CHECK
     ).renderUntil(enzyme => {
       try {
         return enzyme.html().length > 0
       } catch {
         // Guard against enzyme == null, which is the first render pass
+        return false
       }
     })
   }

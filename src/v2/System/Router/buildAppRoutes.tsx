@@ -29,8 +29,7 @@ export function buildAppRoutes(routeList: RouteList[]): AppRouteConfig[] {
     // Store global reference to router instance
     useEffect(() => {
       if (props.router !== router) {
-        // @ts-expect-error STRICT_NULL_CHECK
-        setRouter(props.router)
+        setRouter?.(props.router)
       }
 
       interceptLinks({
