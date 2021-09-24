@@ -5,7 +5,7 @@ module.exports = {
       collectCoverage: true,
       coverageDirectory: "./coverage/",
       coverageReporters: ["lcov", "text-summary"],
-      displayName: "v1",
+      displayName: "legacy",
       moduleFileExtensions: ["coffee", "js", "json", "jsx", "ts", "tsx"],
       reporters: ["default", "jest-junit"],
       roots: ["<rootDir>/src"],

@@ -14,8 +14,8 @@ function runJest() {
       --config "${1}"
 }
 
-if [ "$1" == "v1" ]; then
-  runJest jest.config.v1.js
+if [ "$1" == "legacy" ]; then
+  runJest jest.config.legacy.js
 elif [ "$1" == "v2" ]; then
   runJest jest.config.v2.js
 fi

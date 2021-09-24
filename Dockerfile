@@ -118,7 +118,7 @@ COPY .env.oss \
   coffeelint.json \
   cypress.json \
   dangerfile.ts \
-  jest.config.v1.js \
+  jest.config.legacy.js \
   jest.config.v2.js \
   package.json \
   relay.config.js \
