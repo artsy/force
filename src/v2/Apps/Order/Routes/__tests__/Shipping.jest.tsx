@@ -482,9 +482,7 @@ describe("Shipping", () => {
         await page.clickSubmit()
 
         expect(page.find(`[data-test="shipping-quotes"]`)).toHaveLength(0)
-        expect(
-          page.find(`[data-test="supportedShippingAreaErrorMessage"]`)
-        ).not.toHaveLength(0)
+        expect(page.find(`[data-test="artaErrorMessage"]`)).not.toHaveLength(0)
       })
 
       it("save address only once", async () => {

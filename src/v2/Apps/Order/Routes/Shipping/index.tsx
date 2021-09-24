@@ -531,7 +531,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
     }
   }
 
-  renderSupportedShippingAreaErrorMessage() {
+  renderArtaErrorMessage() {
     return (
       <Text
         py={1}
@@ -539,15 +539,14 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
         mb={2}
         bg="red10"
         color="red100"
-        data-test="supportedShippingAreaErrorMessage"
+        data-test="artaErrorMessage"
       >
-        Address is outside our supported shipping area. Select a different
-        address or reach out to{" "}
+        We need to confirm some details with you before processing this order.
+        Please reach out to{" "}
         <Link color="red100" hoverColor="red100" href="mailto:orders@artsy.net">
           orders@artsy.net
         </Link>{" "}
-        and our team will reach out to the gallery on your behalf to request a
-        custom shipping quote
+        for assistance
       </Text>
     )
   }
@@ -641,7 +640,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
                 {isArtaShipping &&
                   shippingQuotes &&
                   shippingQuotes.length === 0 &&
-                  this.renderSupportedShippingAreaErrorMessage()}
+                  this.renderArtaErrorMessage()}
                 <SavedAddresses
                   me={this.props.me}
                   selectedAddress={selectedAddressID}
@@ -657,7 +656,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
                 {isArtaShipping &&
                   shippingQuotes &&
                   shippingQuotes.length === 0 &&
-                  this.renderSupportedShippingAreaErrorMessage()}
+                  this.renderArtaErrorMessage()}
                 <AddressForm
                   value={address}
                   errors={addressErrors}
