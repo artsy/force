@@ -27,7 +27,6 @@ describe("ad display logic in Feature and Standard Articles", () => {
 
   const getWrapper = (passedProps = props) => {
     return mount(
-      // @ts-expect-error STRICT_NULL_CHECK
       <SystemContextProvider user={null}>
         <ArticleLayout {...passedProps} />
       </SystemContextProvider>
@@ -90,7 +89,6 @@ describe("ad display frequency logic in News Articles", () => {
 
   const getWrapper = (passedProps = props) => {
     return mount(
-      // @ts-expect-error STRICT_NULL_CHECK
       <SystemContextProvider user={null}>
         <NewsArticle {...passedProps} />
       </SystemContextProvider>

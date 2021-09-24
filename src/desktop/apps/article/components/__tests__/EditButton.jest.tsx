@@ -20,7 +20,6 @@ describe("EditButton", () => {
   let props
   const getWrapper = () => {
     return mount(
-      // @ts-expect-error STRICT_NULL_CHECK
       <SystemContextProvider user={null}>
         <EditButton {...props} />
       </SystemContextProvider>

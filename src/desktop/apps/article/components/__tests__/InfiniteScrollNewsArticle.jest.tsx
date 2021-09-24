@@ -6,6 +6,7 @@ import { NewsArticle } from "@artsy/reaction/dist/Components/Publishing/Fixtures
 import { NewsLayout } from "@artsy/reaction/dist/Components/Publishing/Layouts/NewsLayout"
 import { NewsNav } from "@artsy/reaction/dist/Components/Publishing/Nav/NewsNav"
 import { extend, times } from "lodash"
+// eslint-disable-next-line no-restricted-imports
 import moment from "moment"
 import Waypoint from "react-waypoint"
 import { Environment } from "react-relay"
@@ -47,7 +48,6 @@ describe("InfiniteScrollNewsArticle", () => {
   const getWrapper = (passedProps = props) => {
     return mount(
       <SystemContextProvider
-        // @ts-expect-error STRICT_NULL_CHECK
         user={null}
         // @ts-ignore
         relayEnvironment={{ environment: {} } as Environment}

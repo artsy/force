@@ -4,9 +4,9 @@ import { findCurrentRoute } from "v2/System/Router/Utils/findCurrentRoute"
 import { useMaybeReloadAfterInquirySignIn } from "v2/System/Router/Utils/useMaybeReloadAfterInquirySignIn"
 import {
   DESKTOP_NAV_BAR_HEIGHT,
-  NavBar,
   MOBILE_NAV_HEIGHT,
   MOBILE_LOGGED_IN_NAV_HEIGHT,
+  NavBar,
 } from "v2/Components/NavBar"
 import { Match } from "found"
 import { isFunction } from "lodash"

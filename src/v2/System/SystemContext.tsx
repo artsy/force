@@ -23,8 +23,8 @@ export type SystemContextState = Partial<{
   /**
    * The current router instance
    */
-  router: Router
-  setRouter: (router: Router) => void
+  router: Router | null
+  setRouter: (router?: Router) => void
 
   /**
    * The currently signed-in user.
@@ -89,9 +89,11 @@ export const SystemContextProvider: FC<SystemContextProps> = ({
   children,
   ...props
 }) => {
-  const [isFetching, setFetching] = useState(false)
-  const [router, setRouter] = useState(null)
-  const [user, setUser] = useState(getUser(props.user))
+  const [isFetching, setFetching] = useState<boolean>(false)
+  const [router, setRouter] = useState<SystemContextProps["router"]>(null)
+  const [user, setUser] = useState<SystemContextProps["user"]>(
+    getUser(props.user!)
+  )
 
   const relayEnvironment =
     props.relayEnvironment || createRelaySSREnvironment({ user })
@@ -110,7 +112,6 @@ export const SystemContextProvider: FC<SystemContextProps> = ({
   }
 
   return (
-    // @ts-expect-error STRICT_NULL_CHECK
     <SystemContext.Provider value={providerValues}>
       {children}
     </SystemContext.Provider>

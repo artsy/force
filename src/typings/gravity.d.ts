@@ -1,14 +1,17 @@
-interface User {
-  roles?: UserRole[]
-  accessToken?: string
-  appToken?: string
-  email?: string
-  has_partner_access?: string
-  id?: string
-  lab_features?: string[]
-  type?: string
-  name?: string
-}
+type User =
+  | {
+      roles?: UserRole[]
+      accessToken?: string
+      appToken?: string
+      email?: string
+      has_partner_access?: string
+      id?: string
+      lab_features?: string[]
+      type?: string
+      name?: string
+    }
+  | null
+  | undefined
 
 /**
  * Determinies permissions/access granted to CurrentUser.

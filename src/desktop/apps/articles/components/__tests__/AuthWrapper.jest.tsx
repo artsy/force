@@ -30,7 +30,6 @@ describe("AuthWrapper", () => {
     jest.spyOn(mediator, "on")
     // @ts-expect-error STRICT_NULL_CHECK
     delete sd.IS_MOBILE
-    // @ts-expect-error STRICT_NULL_CHECK
     delete sd.CURRENT_USER
     window.addEventListener = jest.fn()
   })

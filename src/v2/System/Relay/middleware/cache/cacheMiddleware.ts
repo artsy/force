@@ -1,4 +1,3 @@
-import { QueryResponseCache } from "relay-runtime"
 import createLogger from "v2/Utils/logger"
 import { Cache, CacheConfig } from "./Cache"
 import { isFunction } from "lodash"
@@ -6,7 +5,7 @@ import { isFunction } from "lodash"
 const logger = createLogger("v2/System/middleware/cache/cacheMiddleware")
 
 interface CacheMiddlewareOpts extends CacheConfig {
-  onInit?: (cache: QueryResponseCache) => any
+  onInit?: (cache: Cache) => any
   allowMutations?: boolean
   allowFormData?: boolean
   clearOnMutation?: boolean
@@ -37,7 +36,6 @@ export function cacheMiddleware(opts?: CacheMiddlewareOpts) {
   })
 
   if (isFunction(onInit)) {
-    // @ts-expect-error STRICT_NULL_CHECK
     onInit(cache)
   }
 

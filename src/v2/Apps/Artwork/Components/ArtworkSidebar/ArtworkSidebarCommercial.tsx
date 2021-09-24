@@ -505,7 +505,7 @@ export const ArtworkSidebarCommercial: FC<ArtworkSidebarCommercialProps> = ({
       artworkID={artwork.internalID}
       artwork={artwork}
       mediator={mediator!}
-      router={router}
+      router={router!}
       user={user}
       {...inquiry}
       {...rest}
