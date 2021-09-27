@@ -80,7 +80,7 @@ jobs:
     steps:
       - run: yarn test:ci:mocha
 
-  jest-v1:
+  jest-legacy:
     docker:
       - image: 585031190124.dkr.ecr.us-east-1.amazonaws.com/force:$CIRCLE_SHA1-builder
         aws_auth:
@@ -90,7 +90,7 @@ jobs:
     environment:
       - JEST_JUNIT_OUTPUT: reports/junit/js-test-results.xml
     steps:
-      - run: yarn test:ci:jest:v1
+      - run: yarn test:ci:jest:legacy
 
   jest-v2:
     docker:
@@ -242,7 +242,7 @@ workflows:
           requires:
             - builder-image-push
 
-      - jest-v1:
+      - jest-legacy:
           <<: *not_staging_or_release
           context: hokusai
           requires:
@@ -292,7 +292,7 @@ workflows:
           name: production-image-push
           requires:
             - mocha
-            - jest-v1
+            - jest-legacy
             - jest-v2
             - type-check
             - relay-check
