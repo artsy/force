@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useMemo } from "react"
 import { Box, DROP_SHADOW, FullBleed, Spacer, Text } from "@artsy/palette"
 import { SearchApp_viewer } from "v2/__generated__/SearchApp_viewer.graphql"
 import { NavigationTabsFragmentContainer as NavigationTabs } from "v2/Apps/Search/Components/NavigationTabs"
@@ -35,11 +35,10 @@ export const SearchApp: React.FC<SearchAppProps> = ({ viewer, children }) => {
     match: { location },
   } = useRouter()
   const { searchConnection, artworksConnection } = viewer
-  const {
-    query: { term },
-  } = location
+  const { query } = location
   const { aggregations } = searchConnection!
 
+  const term = useMemo(() => query.term ?? "", [])
   const typeAggregation = aggregations?.find(agg => agg?.slice === "TYPE")
     ?.counts
 
