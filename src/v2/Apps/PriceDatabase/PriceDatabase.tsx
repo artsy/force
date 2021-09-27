@@ -25,12 +25,14 @@ export const PriceDatabase = () => {
         <PriceDatabaseMeta />
 
         <PriceDatabaseSearch />
+
         <Media lessThan="sm">
           <Spacer mt={4} />
         </Media>
         <Media greaterThanOrEqual="sm">
           <Separator mt={4} />
         </Media>
+
         <PriceDatabaseBenefits />
       </Flex>
     </AuctionResultsFilterContextProvider>
