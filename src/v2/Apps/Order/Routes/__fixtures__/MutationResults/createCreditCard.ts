@@ -5,7 +5,7 @@ const creditCard = {
   street2: "Suite 2.5, The Loom",
   city: "London",
   state: "Whitechapel",
-  country: "UK",
+  country: "GB",
   postalCode: "E1 8PY",
   expirationMonth: 12,
   expirationYear: 2022,
