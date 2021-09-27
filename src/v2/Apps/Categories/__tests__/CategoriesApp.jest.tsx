@@ -1,17 +1,14 @@
 import React from "react"
 import { graphql } from "react-relay"
 import { MockBoot } from "v2/DevTools"
-import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
+import { setupTestWrapperTL } from "v2/DevTools/setupTestWrapper"
+import { screen } from "@testing-library/react"
 import { CategoriesAppFragmentContainer } from "../CategoriesApp"
 import { CategoriesApp_Test_Query } from "v2/__generated__/CategoriesApp_Test_Query.graphql"
 
 jest.unmock("react-relay")
 
-jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
-  useMatchMedia: () => ({}),
-}))
-
-const { getWrapper } = setupTestWrapper<CategoriesApp_Test_Query>({
+const { renderWithRelay } = setupTestWrapperTL<CategoriesApp_Test_Query>({
   Component: props => {
     return (
       <MockBoot>
@@ -30,7 +27,34 @@ const { getWrapper } = setupTestWrapper<CategoriesApp_Test_Query>({
 
 describe("CategoriesApp", () => {
   it("renders", () => {
-    const wrapper = getWrapper()
-    expect(wrapper.find("CategoriesApp").exists()).toBe(true)
+    renderWithRelay()
+    expect(screen.getByText("The Art Genome Project")).toBeInTheDocument()
+  })
+
+  it("displays families and genes", () => {
+    renderWithRelay({
+      GeneFamilyConnection: () => ({
+        edges: [
+          {
+            node: {
+              name: "Styles and Movements",
+              genes: [
+                {
+                  displayName: "Early Randomcore",
+                },
+              ],
+            },
+          },
+        ],
+      }),
+    })
+
+    expect(
+      screen.getByRole("heading", { name: "Styles and Movements" })
+    ).toBeInTheDocument()
+
+    expect(
+      screen.getByRole("link", { name: "Early Randomcore" })
+    ).toBeInTheDocument()
   })
 })

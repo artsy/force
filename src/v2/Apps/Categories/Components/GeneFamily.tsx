@@ -27,7 +27,9 @@ export const GeneFamily: React.FC<GeneFamilyProps> = props => {
 
   return (
     <Box id={`jump--${geneFamily.slug}`}>
-      <Text variant="xl">{name}</Text>
+      <Text as="h2" variant="xl">
+        {name}
+      </Text>
       <Spacer mt={4} />
       <Masonry columnCount={[1, 3]}>
         {sortedGenes?.map(gene => {
