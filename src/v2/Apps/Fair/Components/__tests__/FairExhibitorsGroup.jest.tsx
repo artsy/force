@@ -2,6 +2,16 @@ import React from "react"
 import { FairExhibitorsGroupFragmentContainer } from "../FairExhibitors"
 import { mount } from "enzyme"
 
+jest.mock("v2/System/Router/useRouter", () => ({
+  useRouter: () => ({
+    match: {
+      location: {
+        query: "",
+      },
+    },
+  }),
+}))
+
 describe("FairExhibitorsGroup", () => {
   const getWrapper = () => {
     return mount(

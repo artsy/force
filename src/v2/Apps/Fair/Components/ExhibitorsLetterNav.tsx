@@ -1,13 +1,12 @@
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
-import { Text, Flex, Swiper, themeProps } from "@artsy/palette"
+import { Text, Flex, Swiper } from "@artsy/palette"
 import { Media } from "v2/Utils/Responsive"
 import { scrollIntoView } from "v2/Utils/scrollHelpers"
 import { ExhibitorsLetterNav_fair } from "v2/__generated__/ExhibitorsLetterNav_fair.graphql"
-import { __internal__useMatchMedia } from "v2/Utils/Hooks/useMatchMedia"
-import { useNavBarHeight } from "v2/Components/NavBar/useNavBarHeight"
 import { getExhibitorSectionId } from "../Utils/getExhibitorSectionId"
+import { useExhibitorsTabOffset } from "../Utils/useExhibitorsTabOffset"
 
 const LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ#".split("")
 
@@ -19,15 +18,7 @@ export const ExhibitorsLetterNav: React.FC<ExhibitorsLetterNavProps> = ({
   fair,
 }) => {
   const letters = fair?.exhibitorsGroupedByName?.map(group => group?.letter)
-  const {
-    height: [mobileNavBarHeight, desktopNavBarHeight],
-  } = useNavBarHeight()
-
-  const isMobile = __internal__useMatchMedia(themeProps.mediaQueries.xs)
-  const stickyTabsHeight = 150
-
-  const offset =
-    (isMobile ? mobileNavBarHeight : desktopNavBarHeight) + stickyTabsHeight
+  const offset = useExhibitorsTabOffset()
 
   const Letters = ({ withSwiper = false }) => {
     return (

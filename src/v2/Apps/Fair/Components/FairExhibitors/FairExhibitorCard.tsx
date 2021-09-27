@@ -12,6 +12,7 @@ import {
 import { FairExhibitorCard_exhibitor } from "v2/__generated__/FairExhibitorCard_exhibitor.graphql"
 import { FollowProfileButtonFragmentContainer as FollowProfileButton } from "v2/Components/FollowButton/FollowProfileButton"
 import { RouterLink } from "v2/System/Router/RouterLink"
+import { useRouter } from "v2/System/Router/useRouter"
 
 interface FairExhibitorCardProps {
   exhibitor: FairExhibitorCard_exhibitor
@@ -30,6 +31,7 @@ export const FairExhibitorCard: React.FC<FairExhibitorCardProps> = ({
     contextPageOwnerSlug,
     contextPageOwnerType,
   } = useAnalyticsContext()
+  const { match } = useRouter()
 
   const tappedPartnerTrackingData: ClickedPartnerCard = {
     context_module: ContextModule.galleryBoothRail,
@@ -43,6 +45,9 @@ export const FairExhibitorCard: React.FC<FairExhibitorCardProps> = ({
     action: ActionType.clickedPartnerCard,
   }
 
+  const { focused_exhibitor: focusedExhibitorID } = match.location.query
+  const focused = focusedExhibitorID === exhibitor?.partner?.internalID
+
   const partnerAddress = (cities: readonly (string | null)[]) => {
     const visibleCities = cities.slice(0, VISIBLE_CITIES_NUM).join(", ")
 
@@ -55,11 +60,13 @@ export const FairExhibitorCard: React.FC<FairExhibitorCardProps> = ({
 
   return (
     <RouterLink
-      to={`/show/${exhibitor.profileID}`}
-      noUnderline
+      // use this param to display navigation banner on show
+      to={`/show/${exhibitor.profileID}?from_fair=true`}
+      textDecoration="none"
+      display="block"
       onClick={() => tracking.trackEvent(tappedPartnerTrackingData)}
     >
-      <Flex mb={1} flex={1}>
+      <Flex id={`jump--${exhibitor.partner?.internalID}`}>
         <BorderBox width={52} height={52} p={0} mr={1}>
           {profile?.icon?.cropped && (
             <Image
@@ -93,6 +100,7 @@ export const FairExhibitorCard: React.FC<FairExhibitorCardProps> = ({
                 variant: "secondaryOutline",
                 width: 70,
                 height: 30,
+                focus: focused,
               }}
             />
           </Box>

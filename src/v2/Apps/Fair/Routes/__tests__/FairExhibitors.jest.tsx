@@ -4,8 +4,19 @@ import { FairExhibitorsFragmentContainer } from "../FairExhibitors"
 import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
 
 jest.unmock("react-relay")
+
 jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => false,
+}))
+
+jest.mock("v2/System/Router/useRouter", () => ({
+  useRouter: () => ({
+    match: {
+      location: {
+        query: "",
+      },
+    },
+  }),
 }))
 
 describe("FairExhibitors", () => {
@@ -51,7 +62,7 @@ describe("FairExhibitors", () => {
   it("renders the exhibitors group", () => {
     const wrapper = getWrapper(FAIR_FIXTURE)
 
-    const exhibitorsGroups = wrapper.find("FairExhibitorsGroupPlaceholder")
+    const exhibitorsGroups = wrapper.find("FairExhibitorsGroup")
 
     expect(exhibitorsGroups.length).toBe(3)
   })
