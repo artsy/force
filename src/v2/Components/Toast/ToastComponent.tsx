@@ -58,6 +58,7 @@ const ToastComponent: React.FC<ToastComponentProps> = ({
       position="fixed"
       left={0}
       width="100%"
+      zIndex={1}
       opacity={showNotification ? 1 : 0}
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
