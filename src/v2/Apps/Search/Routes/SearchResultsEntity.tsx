@@ -8,7 +8,6 @@ import { RouterState, withRouter } from "found"
 import qs from "qs"
 import React from "react"
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
-import { get } from "v2/Utils/get"
 
 export interface Props extends RouterState {
   viewer: SearchResultsEntity_viewer
@@ -24,10 +23,9 @@ interface State extends LoadingAreaState {
 const PAGE_SIZE = 10
 
 export class SearchResultsEntityRoute extends React.Component<Props, State> {
-  // @ts-expect-error STRICT_NULL_CHECK
   state = {
     isLoading: false,
-    page: null,
+    page: 1,
   }
 
   constructor(props) {
@@ -35,8 +33,7 @@ export class SearchResultsEntityRoute extends React.Component<Props, State> {
     const {
       match: { location },
     } = this.props
-    // @ts-expect-error STRICT_NULL_CHECK
-    const { page } = get(location, l => l.query)
+    const { page } = location.query
 
     this.state = { isLoading: false, page: (page && parseInt(page, 10)) || 1 }
   }
@@ -55,13 +52,11 @@ export class SearchResultsEntityRoute extends React.Component<Props, State> {
     const { searchConnection } = viewer
 
     const {
-      // @ts-expect-error STRICT_NULL_CHECK
       pageInfo: { hasNextPage, endCursor },
-    } = searchConnection
+    } = searchConnection!
 
     if (hasNextPage) {
-      // @ts-expect-error STRICT_NULL_CHECK
-      this.loadAfter(endCursor, this.state.page + 1)
+      this.loadAfter(endCursor!, this.state.page + 1)
     }
   }
 
@@ -94,8 +89,7 @@ export class SearchResultsEntityRoute extends React.Component<Props, State> {
           match: { location },
           tab,
         } = this.props
-        // @ts-expect-error STRICT_NULL_CHECK
-        const { term } = get(location, l => l.query)
+        const { term } = location.query
         const urlParams = qs.stringify({
           page,
           term,
@@ -113,15 +107,10 @@ export class SearchResultsEntityRoute extends React.Component<Props, State> {
       viewer,
       match: { location },
     } = this.props
-    // @ts-expect-error STRICT_NULL_CHECK
-    const { term } = get(location, l => l.query)
+    const { term } = location.query
     const { searchConnection } = viewer
 
-    // @ts-expect-error STRICT_NULL_CHECK
-    const items = get(viewer, v => v.searchConnection.edges, []).map(
-      // @ts-expect-error STRICT_NULL_CHECK
-      e => e.node
-    )
+    const items = (viewer.searchConnection?.edges ?? []).map(e => e?.node)
 
     return (
       <>
@@ -168,14 +157,8 @@ export class SearchResultsEntityRoute extends React.Component<Props, State> {
       match: { location },
     } = this.props
 
-    // @ts-expect-error STRICT_NULL_CHECK
-    const { term } = get(location, l => l.query)
-
-    // @ts-expect-error STRICT_NULL_CHECK
-    const items = get(viewer, v => v.searchConnection.edges, []).map(
-      // @ts-expect-error STRICT_NULL_CHECK
-      e => e.node
-    )
+    const { term } = location.query
+    const items = (viewer.searchConnection?.edges ?? []).map(e => e?.node)
     return (
       <LoadingArea isLoading={this.state.isLoading}>
         {items.length === 0 ? (

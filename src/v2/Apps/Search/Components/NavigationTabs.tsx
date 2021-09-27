@@ -1,14 +1,33 @@
-import { Text } from "@artsy/palette"
-import { NavigationTabs_searchableConnection } from "v2/__generated__/NavigationTabs_searchableConnection.graphql"
-import { track } from "v2/System/Analytics"
-import * as Schema from "v2/System/Analytics/Schema"
-import { RouteTab, RouteTabs } from "v2/Components/RouteTabs"
 import React from "react"
+import {
+  BoxProps,
+  Flex,
+  Pill,
+  Sup,
+  Swiper,
+  SwiperCell,
+  SwiperCellProps,
+  SwiperRail,
+  SwiperRailProps,
+  Text,
+} from "@artsy/palette"
+import { NavigationTabs_searchableConnection } from "v2/__generated__/NavigationTabs_searchableConnection.graphql"
+import { useAnalyticsContext, useTracking } from "v2/System/Analytics"
 import { createFragmentContainer, graphql } from "react-relay"
-import { get } from "v2/Utils/get"
-import { SystemContextProps, withSystemContext } from "v2/System"
+import { RouterLink, RouterLinkProps } from "v2/System/Router/RouterLink"
+import { useIsRouteActive } from "v2/System/Router/useRouter"
+import { Media } from "v2/Utils/Responsive"
+import {
+  ActionType,
+  ClickedNavigationTab,
+  ContextModule,
+  PageOwnerType,
+} from "@artsy/cohesion"
+import { useRouter } from "found"
+import { AppContainer } from "v2/Apps/Components/AppContainer"
+import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
 
-export interface Props extends SystemContextProps {
+export interface NavigationTabsProps {
   searchableConnection: NavigationTabs_searchableConnection
   term: string
   artworkCount: number
@@ -17,37 +36,75 @@ export interface Props extends SystemContextProps {
 const MORE_TABS = ["tag", "city", "feature", "page"]
 
 const TAB_NAME_MAP = {
-  PartnerGallery: "Galleries",
+  artist: "Artists",
+  article: "Articles",
+  sale: "Auctions",
+  artist_series: "Artist Series",
+  marketing_collection: "Collections",
+  fair: "Fairs",
+  partner_show: "Shows",
   PartnerInstitution: "Institutions",
   PartnerInstitutionalSeller: "Institutions",
-  article: "Articles",
-  artist: "Artists",
-  artist_series: "Artist Series",
-  fair: "Fairs",
+  PartnerGallery: "Galleries",
   gene: "Categories",
-  marketing_collection: "Collections",
-  partner_show: "Shows",
-  sale: "Auctions",
 }
 
-@track({
-  context_module: Schema.ContextModule.NavigationTabs,
-})
-export class NavigationTabs extends React.Component<Props> {
-  @track((_props, _state, [tab, destination_path]: string[]) => ({
-    action_type: Schema.ActionType.Click,
-    destination_path,
-    subject: tab,
-  }))
-  trackClick(tab: string, destination_path: string) {
-    // noop
+interface RouteTabProps extends BoxProps, RouterLinkProps {
+  text: string
+  count?: number
+}
+
+const RoundedRouteTab: React.FC<RouteTabProps> = ({ text, count, ...rest }) => {
+  const isActive = useIsRouteActive(rest.to, { exact: rest.exact ?? true })
+
+  return (
+    // @ts-ignore
+    <Pill variant="filter" as={RouterLink} my={0.5} mr={1} {...rest}>
+      <Flex alignItems="center">
+        <Text variant={["xs", "md"]}>{text}&nbsp;</Text>
+        <Media greaterThan="xs">
+          {count && (
+            <Sup variant="xs" color={isActive ? "brand" : "inherit"}>
+              {count}
+            </Sup>
+          )}
+        </Media>
+      </Flex>
+    </Pill>
+  )
+}
+
+export const NavigationTabs: React.FC<NavigationTabsProps> = ({
+  term,
+  artworkCount,
+  searchableConnection,
+}) => {
+  const tracking = useTracking()
+  const router = useRouter()
+  const {
+    contextPageOwnerId,
+    contextPageOwnerSlug,
+    contextPageOwnerType,
+  } = useAnalyticsContext()
+
+  const trackClick = (destinationPath: string, subject: string) => () => {
+    const trackingData: ClickedNavigationTab = {
+      action: ActionType.clickedNavigationTab,
+      destination_path: destinationPath,
+      context_module: "SearchResults" as ContextModule,
+      context_page_owner_id: contextPageOwnerId,
+      context_page_owner_slug: contextPageOwnerSlug,
+      context_page_owner_type: contextPageOwnerType as PageOwnerType,
+      subject,
+    }
+
+    tracking.trackEvent(trackingData)
   }
 
-  shouldComponentUpdate = prevProps => {
-    return this.props.term !== prevProps.term
-  }
+  const route = (tab: string) =>
+    `/search${tab.replace(/\s/g, "_")}?term=${term}`
 
-  renderTab = (
+  const renderTab = (
     text: string,
     to: string,
     options: {
@@ -59,89 +116,87 @@ export class NavigationTabs extends React.Component<Props> {
     const tabName = text.replace(/[0-9]/g, "").trim()
 
     return (
-      <RouteTab
+      <RoundedRouteTab
         to={to}
+        text={tabName}
+        key={tabName}
         exact={exact}
+        count={count}
         onClick={event => {
           event.preventDefault()
-          // @ts-expect-error STRICT_NULL_CHECK
-          this.props.router.push(to)
-          this.trackClick(tabName, to)
+          router.router.push(to)
+          trackClick(tabName, to)
         }}
-        key={to}
-      >
-        {text}
-        {count != null && (
-          <Text variant="text" display="inline">
-            &nbsp;({count})
-          </Text>
-        )}
-      </RouteTab>
+      />
     )
   }
 
-  tabs() {
-    const { term, artworkCount } = this.props
+  const tabs: JSX.Element[] = []
 
-    const route = tab =>
-      `/search${tab.replace(/\s/g, "_")}?term=${encodeURIComponent(term)}`
-
-    let restAggregationCount: number = 0
-    MORE_TABS.forEach(
-      key =>
-        // @ts-expect-error STRICT_NULL_CHECK
-        (restAggregationCount += get(
-          aggregationFor(this.props, key),
-          // @ts-expect-error STRICT_NULL_CHECK
-          agg => agg.count,
-          0
-        ))
+  artworkCount > 0 &&
+    tabs.push(
+      renderTab("Artworks", route(""), {
+        count: artworkCount,
+        exact: true,
+      })
     )
 
-    const tabs = []
-
-    !!artworkCount &&
+  Object.entries(tabCountMap(searchableConnection)).map(
+    ([key, value]: [string, number]) => {
       tabs.push(
-        // @ts-expect-error STRICT_NULL_CHECK
-        this.renderTab("Artworks", route(""), {
-          count: artworkCount,
-          exact: true,
+        renderTab(key, route(`/${key.toLowerCase()}`), {
+          count: value,
         })
       )
+    }
+  )
 
-    Object.entries(tabCountMap(this.props)).map(
-      ([key, value]: [string, number]) => {
-        tabs.push(
-          // @ts-expect-error STRICT_NULL_CHECK
-          this.renderTab(key, route(`/${key.toLowerCase()}`), {
-            count: value,
-          })
-        )
-      }
+  const restAggregationCount = MORE_TABS.reduce((prev, key) => {
+    const tabAggregation = aggregationFor(searchableConnection, key)?.count ?? 0
+
+    return tabAggregation ? (prev += tabAggregation) : prev
+  }, 0)
+
+  restAggregationCount > 0 &&
+    tabs.push(
+      renderTab("More", route("/more"), {
+        count: restAggregationCount,
+      })
     )
 
-    !!restAggregationCount &&
-      tabs.push(
-        // @ts-expect-error STRICT_NULL_CHECK
-        this.renderTab("More", route("/more"), {
-          count: restAggregationCount,
-        })
-      )
+  return (
+    <Swiper Cell={Cell} Rail={Rail}>
+      {tabs}
+    </Swiper>
+  )
+}
 
-    return tabs
-  }
-
-  render() {
+const Cell: React.ForwardRefExoticComponent<SwiperCellProps> = React.forwardRef(
+  (props, ref) => {
     return (
-      <RouteTabs key={`tab-carousel-${this.props.term}`}>
-        {this.tabs()}
-      </RouteTabs>
+      <SwiperCell
+        {...props}
+        ref={ref as any}
+        display="inline-flex"
+        verticalAlign="top"
+        pr={0}
+      />
     )
   }
+)
+
+const Rail: React.FC<SwiperRailProps> = props => {
+  return (
+    <AppContainer>
+      <HorizontalPadding>
+        <SwiperRail {...props} />
+      </HorizontalPadding>
+    </AppContainer>
+  )
 }
 
 export const NavigationTabsFragmentContainer = createFragmentContainer(
-  withSystemContext(NavigationTabs),
+  NavigationTabs,
   {
     searchableConnection: graphql`
       fragment NavigationTabs_searchableConnection on SearchableConnection {
@@ -170,10 +225,11 @@ export interface TabCounts {
   "Artist Series"?: number
 }
 
-export const tabCountMap: (props: Props) => TabCounts = props => {
+export const tabCountMap: (
+  searchableConnection: NavigationTabs_searchableConnection
+) => TabCounts = props => {
   return Object.entries(TAB_NAME_MAP).reduce((acc, [key, val]) => {
-    // @ts-expect-error STRICT_NULL_CHECK
-    let count = get(aggregationFor(props, key), agg => agg.count, 0)
+    let count = aggregationFor(props, key)?.count ?? 0
     if (!count) {
       return acc
     }
@@ -187,13 +243,14 @@ export const tabCountMap: (props: Props) => TabCounts = props => {
   }, {})
 }
 
-const aggregationFor = (props: Props, type: string) => {
-  const { searchableConnection } = props
+const aggregationFor = (
+  searchableConnection: NavigationTabs_searchableConnection,
+  type: string
+) => {
   const { aggregations } = searchableConnection
 
-  // @ts-expect-error STRICT_NULL_CHECK
-  const typeAggregation = aggregations.find(agg => agg.slice === "TYPE").counts
+  const typeAggregation = aggregations?.find(agg => agg?.slice === "TYPE")
+    ?.counts
 
-  // @ts-expect-error STRICT_NULL_CHECK
-  return typeAggregation.find(agg => agg.name === type)
+  return typeAggregation?.find(agg => agg?.name === type)
 }

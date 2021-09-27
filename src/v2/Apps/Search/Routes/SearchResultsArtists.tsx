@@ -8,7 +8,6 @@ import { RouterState, withRouter } from "found"
 import qs from "qs"
 import React from "react"
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
-import { get } from "v2/Utils/get"
 
 export interface Props extends RouterState {
   viewer: SearchResultsArtists_viewer
@@ -60,15 +59,13 @@ export class SearchResultsArtistsRoute extends React.Component<Props, State> {
     const {
       match: { location },
     } = this.props
-    const param = get(location, l => l.query)?.[paramName]
+    const param = location.query?.[paramName]
     return param ?? ""
   }
 
   getArtists = () => {
     const { viewer } = this.props
-    const artists = get(viewer, v => v?.searchConnection?.edges, [])?.map(
-      e => e!.node
-    )
+    const artists = (viewer?.searchConnection?.edges ?? []).map(e => e!.node)
     return artists
   }
 

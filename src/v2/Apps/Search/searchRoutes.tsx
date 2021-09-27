@@ -1,24 +1,21 @@
 import { AppRouteConfig } from "v2/System/Router/Route"
 import { omit } from "lodash"
-import React from "react"
 import { graphql } from "react-relay"
 import loadable from "@loadable/component"
-
-import { RouteSpinner } from "v2/System/Relay/renderWithLoadProgress"
 import { allowedFilters } from "v2/Components/ArtworkFilter/Utils/allowedFilters"
 import { paramsToCamelCase } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
 
-const SearchResultsArtistsRouteFragmentContainer = loadable(
+const SearchResultsArtists = loadable(
   () =>
     import(
-      /* webpackChunkName: "searchBundle" */ "./Routes/Artists/SearchResultsArtists"
+      /* webpackChunkName: "searchBundle" */ "./Routes/SearchResultsArtists"
     ),
   {
     resolveComponent: component =>
       component.SearchResultsArtistsRouteFragmentContainer,
   }
 )
-const SearchResultsArtworksRoute = loadable(
+const SearchResultsArtworks = loadable(
   () =>
     import(
       /* webpackChunkName: "searchBundle" */ "./Routes/SearchResultsArtworks"
@@ -28,17 +25,17 @@ const SearchResultsArtworksRoute = loadable(
       component.SearchResultsArtworksRouteFragmentContainer,
   }
 )
-const SearchResultsEntityRouteFragmentContainer = loadable(
+const SearchResultsEntity = loadable(
   () =>
     import(
-      /* webpackChunkName: "searchBundle" */ "./Routes/Entity/SearchResultsEntity"
+      /* webpackChunkName: "searchBundle" */ "./Routes/SearchResultsEntity"
     ),
   {
     resolveComponent: component =>
       component.SearchResultsEntityRouteFragmentContainer,
   }
 )
-const SearchAppFragmentContainer = loadable(
+const SearchApp = loadable(
   () => import(/* webpackChunkName: "searchBundle" */ "./SearchApp"),
   {
     resolveComponent: component => component.SearchAppFragmentContainer,
@@ -77,15 +74,10 @@ const tabsToEntitiesMap = {
 const entityTabs = Object.entries(tabsToEntitiesMap).map(([key, entities]) => {
   return {
     path: key,
-    Component: SearchResultsEntityRouteFragmentContainer,
-
-    // FIXME: We shouldn't overwrite our route functionality, as that breaks
-    // global route configuration behavior.
-    render: ({ props, Component }: { props?: any; Component?: any }) => {
-      if (!props) {
-        return <RouteSpinner />
-      }
-      return <Component {...props} tab={key} entities={entities} />
+    theme: "v3",
+    getComponent: () => SearchResultsEntity,
+    prepare: () => {
+      SearchResultsEntity.preload()
     },
     prepareVariables: (params, { location }) => {
       return {
@@ -111,7 +103,11 @@ const entityTabs = Object.entries(tabsToEntitiesMap).map(([key, entities]) => {
 export const searchRoutes: AppRouteConfig[] = [
   {
     path: "/search",
-    Component: SearchAppFragmentContainer,
+    theme: "v3",
+    getComponent: () => SearchApp,
+    prepare: () => {
+      SearchApp.preload()
+    },
     query: graphql`
       query searchRoutes_SearchResultsTopLevelQuery($keyword: String!) {
         viewer {
@@ -123,7 +119,11 @@ export const searchRoutes: AppRouteConfig[] = [
     children: [
       {
         path: "/",
-        Component: SearchResultsArtworksRoute,
+        theme: "v3",
+        getComponent: () => SearchResultsArtworks,
+        prepare: () => {
+          SearchResultsArtworks.preload()
+        },
         prepareVariables: (params, { location, context }) => {
           const {
             aggregations: sourceAggregations,
@@ -169,7 +169,11 @@ export const searchRoutes: AppRouteConfig[] = [
       },
       {
         path: "artists",
-        Component: SearchResultsArtistsRouteFragmentContainer,
+        theme: "v3",
+        getComponent: () => SearchResultsArtists,
+        prepare: () => {
+          SearchResultsArtists.preload()
+        },
         prepareVariables,
         query: graphql`
           query searchRoutes_SearchResultsArtistsQuery(

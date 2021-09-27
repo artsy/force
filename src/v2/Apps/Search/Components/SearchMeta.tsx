@@ -1,24 +1,13 @@
-import React, { Component } from "react"
-import { Link, Meta, Title } from "react-head"
-import { data as sd } from "sharify"
+import React from "react"
+import { MetaTags } from "v2/Components/MetaTags"
 
-interface Props {
+interface SearchMetaProps {
   term: string
 }
 
-export class SearchMeta extends Component<Props> {
-  render() {
-    const { term } = this.props
+export const SearchMeta: React.FC<SearchMetaProps> = ({ term }) => {
+  const title = `Search Results for '${term}' | Artsy`
+  const href = `/search?term=${term}`
 
-    const title = `Search Results for '${term}' | Artsy`
-    const href = `/search?term=${term}`
-    return (
-      <>
-        <Title>{title}</Title>
-        <Link rel="canonical" href={`${sd.APP_URL}${href}`} />
-        <Meta property="og:title" content={title} />
-        <Meta property="og:url" content={`${sd.APP_URL}${href}`} />
-      </>
-    )
-  }
+  return <MetaTags title={title} pathname={href} />
 }
