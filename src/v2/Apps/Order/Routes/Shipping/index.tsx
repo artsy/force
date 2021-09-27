@@ -709,7 +709,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
                 }
               >
                 <Text variant="sm" mb="1">
-                  Artsy shipping options
+                  Artsy Shipping options
                 </Text>
 
                 <ShippingQuotesFragmentContainer
