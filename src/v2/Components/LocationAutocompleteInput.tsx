@@ -45,6 +45,8 @@ export const LocationAutocompleteInput: React.FC<LocationAutocompleteInputProps>
   const autocompleteServiceRef = useRef<any | null>(null)
 
   useEffect(() => {
+    // @ts-ignore
+    if (typeof google === "undefined") return
     if (!ready || !inputRef.current) return
 
     // @ts-ignore

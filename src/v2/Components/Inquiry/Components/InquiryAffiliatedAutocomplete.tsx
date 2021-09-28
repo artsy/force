@@ -51,6 +51,7 @@ export const InquiryAffiliatedAutocomplete = <T extends OperationType>({
           return (
             <AutocompleteInput
               options={[]}
+              name="search"
               placeholder="Search"
               mb={2}
               onChange={handleChange}

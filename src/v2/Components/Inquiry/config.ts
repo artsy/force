@@ -135,7 +135,7 @@ export const useEngine = ({ context, onDone }: UseEngine) => {
               !!context.current.location?.city &&
               !!context.current.phone &&
               !!context.current.shareFollows &&
-              // And has logged all the relevant steps
+              // And is a collector
               (context.current.collectorLevel ?? 0) >= 3
               ? // If you're a collector then you should have seen all of these
                 // before "completing" your profile
