@@ -166,6 +166,7 @@ const InquiryInquiry: React.FC<InquiryInquiryProps> = ({ artwork }) => {
       {!user && (
         <>
           <Input
+            name="name"
             title="Your name"
             placeholder="Your full name"
             onChange={handleInputChange("name")}
@@ -174,6 +175,7 @@ const InquiryInquiry: React.FC<InquiryInquiryProps> = ({ artwork }) => {
           />
 
           <Input
+            name="email"
             title="Your email"
             placeholder="Your email address"
             onChange={handleInputChange("email")}
