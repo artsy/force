@@ -123,4 +123,45 @@ describe("InquiryLogin", () => {
       expect(next).toBeCalled()
     })
   })
+
+  describe("with on-demand auth", () => {
+    it("logs in and sends the message", async () => {
+      const wrapper = mount(<InquiryLogin />)
+
+      expect(submitArtworkInquiryRequest).not.toBeCalled()
+      expect(next).not.toBeCalled()
+
+      // Enter password
+      fill(wrapper, "password", "secret")
+
+      // Login will error asking for 2fa code
+      ;(login as jest.Mock).mockImplementation(() =>
+        Promise.reject(new Error("missing on-demand authentication code"))
+      )
+
+      // Submit form
+      wrapper.find("form").simulate("submit")
+      await flushPromiseQueue()
+      wrapper.update()
+
+      expect(wrapper.text()).toContain(
+        "This login requires additional authorization. Please check your email for a one-time authentication code."
+      )
+
+      // Input two factor auth code
+      fill(wrapper, "authenticationCode", "code")
+
+      // Login works now
+      ;(login as jest.Mock).mockImplementation(() =>
+        Promise.resolve({ user: { id: "id", access_token: "token" } })
+      )
+
+      // Submit form again
+      wrapper.find("form").simulate("submit")
+      await flushPromiseQueue()
+
+      expect(submitArtworkInquiryRequest).toBeCalled()
+      expect(next).toBeCalled()
+    })
+  })
 })
