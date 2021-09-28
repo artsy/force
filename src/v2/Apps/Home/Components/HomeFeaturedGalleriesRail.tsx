@@ -193,6 +193,7 @@ export const HomeFeaturedGalleriesRailFragmentContainer = createFragmentContaine
                 name
                 slug
                 href
+                # following
                 location
                 image {
                   cropped(width: 325, height: 230) {
