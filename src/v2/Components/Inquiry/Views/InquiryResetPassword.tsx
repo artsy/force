@@ -3,6 +3,14 @@ import React, { useState, useEffect } from "react"
 import { useInquiryContext } from "../Hooks/useInquiryContext"
 import { resetPassword } from "v2/Utils/auth"
 import { useInquiryAccountContext, Screen } from "./InquiryAccount"
+import { useTracking } from "v2/System/Analytics/useTracking"
+import {
+  ActionType,
+  AuthModalType,
+  ContextModule,
+  Intent,
+  ResetYourPassword,
+} from "@artsy/cohesion"
 
 enum Mode {
   Resetting,
@@ -16,18 +24,32 @@ export const InquiryResetPassword: React.FC = () => {
 
   const [mode, setMode] = useState<Mode>(Mode.Resetting)
 
+  const { trackEvent } = useTracking()
+
   useEffect(() => {
     const init = async () => {
       try {
         await resetPassword({ email: inquiry.email! })
         setMode(Mode.Done)
+
+        const options: ResetYourPassword = {
+          action: ActionType.resetYourPassword,
+          auth_redirect: window.location.href,
+          context_module: ContextModule.inquiry,
+          intent: Intent.inquire,
+          service: "email",
+          trigger: "click",
+          type: AuthModalType.forgot,
+        }
+
+        trackEvent(options)
       } catch (err) {
         setMode(Mode.Error)
       }
     }
 
     init()
-  }, [inquiry.email])
+  }, [inquiry.email, trackEvent])
 
   const handleClick = () => {
     navigateTo(Screen.Login)

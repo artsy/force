@@ -16,6 +16,14 @@ import { useArtworkInquiryRequest } from "../Hooks/useArtworkInquiryRequest"
 import { login } from "v2/Utils/auth"
 import { useInquiryAccountContext, Screen } from "./InquiryAccount"
 import { logger } from "../util"
+import { useTracking } from "v2/System/Analytics/useTracking"
+import {
+  ActionType,
+  AuthModalType,
+  ContextModule,
+  Intent,
+  SuccessfullyLoggedIn,
+} from "@artsy/cohesion"
 
 enum Mode {
   Pending,
@@ -49,6 +57,8 @@ export const InquiryLogin: React.FC = () => {
 
   const { submitArtworkInquiryRequest } = useArtworkInquiryRequest()
 
+  const { trackEvent } = useTracking()
+
   const handleSubmit = async (event: React.FormEvent<HTMLElement>) => {
     event.preventDefault()
 
@@ -72,6 +82,19 @@ export const InquiryLogin: React.FC = () => {
       setMode(Mode.Success)
       await wait(500)
       next()
+
+      const options: SuccessfullyLoggedIn = {
+        action: ActionType.successfullyLoggedIn,
+        auth_redirect: window.location.href,
+        context_module: ContextModule.inquiry,
+        intent: Intent.inquire,
+        service: "email",
+        trigger: "click",
+        type: AuthModalType.login,
+        user_id: user.id,
+      }
+
+      trackEvent(options)
     } catch (err) {
       if (
         err.message === "missing two-factor authentication code" ||
