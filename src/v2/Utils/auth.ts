@@ -26,7 +26,8 @@ export const login = async (args: {
     body: JSON.stringify({
       email: args.email,
       password: args.password,
-      otp_attempt: args.authenticationCode,
+      otp_attempt: args.authenticationCode.replace(/ /g, ""),
+      otpRequired: !!args.authenticationCode,
       session_id: sd.SESSION_ID,
       _csrf: Cookies.get("CSRF_TOKEN"),
     }),

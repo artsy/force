@@ -30,7 +30,7 @@ describe("login", () => {
 
     expect(mockFetch).toBeCalledWith("https://www.artsy.net/login", {
       body:
-        '{"email":"example@example.com","password":"secret","otp_attempt":"code","session_id":"session_id"}',
+        '{"email":"example@example.com","password":"secret","otp_attempt":"code","otpRequired":true,"session_id":"session_id"}',
       credentials: "same-origin",
       headers: {
         Accept: "application/json",

@@ -4,6 +4,7 @@ import {
   Clickable,
   Flex,
   Input,
+  Message,
   Separator,
   Spacer,
   Text,
@@ -29,6 +30,7 @@ enum Mode {
   Pending,
   Loading,
   TwoFactor,
+  OnDemand,
   Error,
   Success,
 }
@@ -96,6 +98,11 @@ export const InquiryLogin: React.FC = () => {
 
       trackEvent(options)
     } catch (err) {
+      if (err.message === "missing on-demand authentication code") {
+        setMode(Mode.OnDemand)
+        return
+      }
+
       if (
         err.message === "missing two-factor authentication code" ||
         err.message === "invalid two-factor authentication code"
@@ -146,7 +153,14 @@ export const InquiryLogin: React.FC = () => {
           my={1}
         />
 
-        {mode === Mode.TwoFactor && (
+        {mode === Mode.OnDemand && (
+          <Message mt={2} mb={1}>
+            This login requires additional authorization. Please check your
+            email for a one-time authentication code.
+          </Message>
+        )}
+
+        {(mode === Mode.TwoFactor || mode === Mode.OnDemand) && (
           <Input
             name="authenticationCode"
             title="Authentication Code"
