@@ -77,4 +77,32 @@ describe("HomeCurrentFairsRail", () => {
       })
     })
   })
+
+  describe("tracking", () => {
+    it("tracks item clicks", () => {
+      const wrapper = getWrapper()
+      wrapper.find("RouterLink").last().simulate("click")
+      expect(trackEvent).toBeCalledWith({
+        action: "clickedFairGroup",
+        context_module: "fairRail",
+        context_page_owner_type: "home",
+        destination_page_owner_id: '<mock-value-for-field-"internalID">',
+        destination_page_owner_slug: '<mock-value-for-field-"slug">',
+        destination_page_owner_type: "fair",
+        type: "thumbnail",
+      })
+    })
+
+    it("tracks view all", () => {
+      const wrapper = getWrapper()
+      wrapper.find("RouterLink").first().simulate("click")
+      expect(trackEvent).toBeCalledWith({
+        action: "clickedFairGroup",
+        context_module: "fairRail",
+        context_page_owner_type: "home",
+        destination_page_owner_type: "fairs",
+        type: "viewAll",
+      })
+    })
+  })
 })
