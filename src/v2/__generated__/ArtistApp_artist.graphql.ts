@@ -14,6 +14,7 @@ export type ArtistApp_artist = {
     } | null;
     readonly counts: {
         readonly forSaleArtworks: number | null;
+        readonly auctionResults: number | null;
     } | null;
     readonly related: {
         readonly genes: {
@@ -137,6 +138,13 @@ return {
           "args": null,
           "kind": "ScalarField",
           "name": "forSaleArtworks",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "auctionResults",
           "storageKey": null
         }
       ],
@@ -344,5 +352,5 @@ return {
   "type": "Artist"
 };
 })();
-(node as any).hash = 'a21c7efae92fa9bb9dffb510abc41558';
+(node as any).hash = '7b0d149ef1f4685a9520e95ea03f8dc7';
 export default node;

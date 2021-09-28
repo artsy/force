@@ -47,7 +47,7 @@ const ArtistApp: React.FC<ArtistAppProps> = ({ artist, children, match }) => {
 
   const showOverviewTab = hasOverviewContent(artist)
   const showArtworksTab = artist?.statuses?.artworks
-  const showAuctionLotsTab = artist?.statuses?.auctionLots
+  const showAuctionResultsTab = artist?.counts?.auctionResults
 
   // Default page
   return (
@@ -71,7 +71,7 @@ const ArtistApp: React.FC<ArtistAppProps> = ({ artist, children, match }) => {
           </RouteTab>
         )}
 
-        {showAuctionLotsTab && (
+        {showAuctionResultsTab && (
           <RouteTab to={`/artist/${artist.slug}/auction-results`}>
             Auction Results
           </RouteTab>
@@ -116,6 +116,7 @@ export const ArtistAppFragmentContainer = createFragmentContainer(ArtistApp, {
 
       counts {
         forSaleArtworks
+        auctionResults
       }
       internalID
       name
@@ -142,6 +143,7 @@ export const sharedMetaDataQuery = graphql`
     }
     counts {
       forSaleArtworks
+      auctionResults
     }
     related {
       genes {
