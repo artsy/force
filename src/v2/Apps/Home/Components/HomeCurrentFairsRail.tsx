@@ -11,11 +11,17 @@ import {
 } from "@artsy/palette"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { useSystemContext } from "v2/System"
+import { useSystemContext, useTracking } from "v2/System"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { HomeCurrentFairsRail_viewer } from "v2/__generated__/HomeCurrentFairsRail_viewer.graphql"
 import { HomeCurrentFairsRailQuery } from "v2/__generated__/HomeCurrentFairsRailQuery.graphql"
+import {
+  ActionType,
+  ClickedFairGroup,
+  ContextModule,
+  OwnerType,
+} from "@artsy/cohesion"
 
 interface HomeCurrentFairsRailProps {
   viewer: HomeCurrentFairsRail_viewer
@@ -24,6 +30,8 @@ interface HomeCurrentFairsRailProps {
 const HomeCurrentFairsRail: React.FC<HomeCurrentFairsRailProps> = ({
   viewer,
 }) => {
+  const { trackEvent } = useTracking()
+
   if (viewer.fairs?.length === 0) {
     return null
   }
@@ -37,7 +45,23 @@ const HomeCurrentFairsRail: React.FC<HomeCurrentFairsRailProps> = ({
           }
 
           return (
-            <RouterLink to={fair.href} textDecoration="none" key={index}>
+            <RouterLink
+              to={fair.href}
+              textDecoration="none"
+              key={index}
+              onClick={() => {
+                const trackingEvent: ClickedFairGroup = {
+                  action: ActionType.clickedFairGroup,
+                  context_module: ContextModule.fairRail,
+                  context_page_owner_type: OwnerType.home,
+                  destination_page_owner_id: fair.internalID,
+                  destination_page_owner_slug: fair.slug,
+                  destination_page_owner_type: OwnerType.fair,
+                  type: "thumbnail",
+                }
+                trackEvent(trackingEvent)
+              }}
+            >
               <Box key={index}>
                 {fair.image?.cropped?.src ? (
                   <Image
@@ -67,6 +91,7 @@ const HomeCurrentFairsRail: React.FC<HomeCurrentFairsRailProps> = ({
 }
 
 const HomeCurrentFairsContainer: React.FC = ({ children }) => {
+  const { trackEvent } = useTracking()
   return (
     <>
       <Flex justifyContent="space-between" alignItems="center">
@@ -77,6 +102,16 @@ const HomeCurrentFairsContainer: React.FC = ({ children }) => {
           as={RouterLink}
           // @ts-ignore
           to="/art-fairs"
+          onClick={() => {
+            const trackingEvent: ClickedFairGroup = {
+              action: ActionType.clickedFairGroup,
+              context_module: ContextModule.fairRail,
+              context_page_owner_type: OwnerType.home,
+              destination_page_owner_type: OwnerType.fairs,
+              type: "viewAll",
+            }
+            trackEvent(trackingEvent)
+          }}
         >
           View All Fairs
         </Text>
@@ -122,6 +157,7 @@ export const HomeCurrentFairsRailFragmentContainer = createFragmentContainer(
           status: RUNNING
         ) {
           internalID
+          slug
           bannerSize
           isPublished
           profile {

@@ -3,8 +3,10 @@ import { graphql } from "relay-runtime"
 import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
 import { HomeAuctionLotsRailFragmentContainer } from "../Components/HomeAuctionLotsRail"
 import { HomeAuctionLotsRail_Test_Query } from "v2/__generated__/HomeAuctionLotsRail_Test_Query.graphql"
+import { useTracking } from "v2/System/Analytics/useTracking"
 
 jest.unmock("react-relay")
+jest.mock("v2/System/Analytics/useTracking")
 
 const { getWrapper } = setupTestWrapper<HomeAuctionLotsRail_Test_Query>({
   Component: props => {
@@ -17,6 +19,16 @@ const { getWrapper } = setupTestWrapper<HomeAuctionLotsRail_Test_Query>({
       }
     }
   `,
+})
+
+const trackEvent = jest.fn()
+
+beforeEach(() => {
+  ;(useTracking as jest.Mock).mockImplementation(() => ({ trackEvent }))
+})
+
+afterEach(() => {
+  trackEvent.mockClear()
 })
 
 describe("HomeAuctionLotsRail", () => {
@@ -43,5 +55,73 @@ describe("HomeAuctionLotsRail", () => {
     expect(wrapper.text()).toContain("View All Auctions")
     expect(wrapper.text()).toContain("Test Auction")
     expect(wrapper.html()).toContain("test-href")
+  })
+
+  describe("tracking", () => {
+    it("tracks artwork click", () => {
+      const wrapper = getWrapper({
+        Viewer: () => ({
+          saleArtworksConnection: {
+            edges: [
+              {
+                node: {
+                  title: "Test Auction",
+                  href: "test-href",
+                  sale: {
+                    isClosed: false,
+                  },
+                },
+              },
+            ],
+          },
+        }),
+      })
+
+      wrapper.find("Shelf").find("RouterLink").first().simulate("click")
+
+      expect(trackEvent).toBeCalledWith({
+        action: "clickedArtworkGroup",
+        context_module: "auctionLots",
+        context_page_owner_type: "home",
+        destination_page_owner_id: '<mock-value-for-field-"internalID">',
+        destination_page_owner_slug: '<mock-value-for-field-"slug">',
+        destination_page_owner_type: "artwork",
+        type: "thumbnail",
+      })
+    })
+
+    it("tracks view all", () => {
+      const wrapper = getWrapper({
+        Viewer: () => ({
+          saleArtworksConnection: {
+            edges: [
+              {
+                node: {
+                  title: "Test Auction",
+                  href: "test-href",
+                  sale: {
+                    isClosed: false,
+                  },
+                },
+              },
+            ],
+          },
+        }),
+      })
+
+      wrapper
+        .find("HomeAuctionLotsRailContainer")
+        .find("RouterLink")
+        .first()
+        .simulate("click")
+
+      expect(trackEvent).toBeCalledWith({
+        action: "clickedArtworkGroup",
+        context_module: "auctionLots",
+        context_page_owner_type: "home",
+        destination_page_owner_type: "auctions",
+        type: "viewAll",
+      })
+    })
   })
 })

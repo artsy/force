@@ -1,4 +1,10 @@
 import {
+  ActionType,
+  ClickedPromoSpace,
+  ContextModule,
+  OwnerType,
+} from "@artsy/cohesion"
+import {
   Box,
   Image,
   Text,
@@ -10,6 +16,7 @@ import {
 import { compact, take } from "lodash"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
+import { useTracking } from "v2/System"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { Media } from "v2/Utils/Responsive"
 import { HomeFeaturedEventsRail_orderedSet } from "v2/__generated__/HomeFeaturedEventsRail_orderedSet.graphql"
@@ -21,6 +28,8 @@ interface HomeFeaturedEventsRailProps {
 const HomeFeaturedEventsRail: React.FC<HomeFeaturedEventsRailProps> = ({
   orderedSet,
 }) => {
+  const { trackEvent } = useTracking()
+
   const events = take(
     compact(orderedSet.items).flatMap(item =>
       item.__typename === "FeaturedLink" ? [item] : []
@@ -45,6 +54,16 @@ const HomeFeaturedEventsRail: React.FC<HomeFeaturedEventsRailProps> = ({
               <RouterLink
                 to={event.href ?? ""}
                 style={{ display: "block", textDecoration: "none" }}
+                onClick={() => {
+                  const trackingEvent: ClickedPromoSpace = {
+                    action: ActionType.clickedPromoSpace,
+                    context_module: ContextModule.featuredRail,
+                    context_screen_owner_type: OwnerType.home,
+                    destination_path: event.href ?? "",
+                    subject: "clicking on an item in featured rail",
+                  }
+                  trackEvent(trackingEvent)
+                }}
               >
                 <Media lessThan="sm">
                   <Flex>

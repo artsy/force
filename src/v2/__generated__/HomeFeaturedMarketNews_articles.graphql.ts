@@ -6,6 +6,7 @@ import { FragmentRefs } from "relay-runtime";
 export type HomeFeaturedMarketNews_articles = ReadonlyArray<{
     readonly internalID: string;
     readonly href: string | null;
+    readonly slug: string | null;
     readonly title: string | null;
     readonly publishedAt: string | null;
     readonly vertical: string | null;
@@ -88,6 +89,13 @@ return {
       "args": null,
       "kind": "ScalarField",
       "name": "href",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "slug",
       "storageKey": null
     },
     {
@@ -199,5 +207,5 @@ return {
   "type": "Article"
 };
 })();
-(node as any).hash = '9d20317d7100f669742294f87ddbebbf';
+(node as any).hash = '1b97e3b9f42df81f9275d86ec85c55f1';
 export default node;

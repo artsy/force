@@ -1,4 +1,10 @@
 import {
+  ActionType,
+  ClickedArticleGroup,
+  ContextModule,
+  OwnerType,
+} from "@artsy/cohesion"
+import {
   Box,
   Image,
   Text,
@@ -15,7 +21,7 @@ import { compact, take } from "lodash"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Masonry } from "v2/Components/Masonry"
-import { useSystemContext } from "v2/System"
+import { useSystemContext, useTracking } from "v2/System"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { useLazyLoadComponent } from "v2/Utils/Hooks/useLazyLoadComponent"
@@ -32,6 +38,7 @@ interface HomeFeaturedMarketNewsProps {
 const HomeFeaturedMarketNews: React.FC<HomeFeaturedMarketNewsProps> = ({
   articles,
 }) => {
+  const { trackEvent } = useTracking()
   const [firstArticle, ...restOfArticles] = articles
   const firstImage = firstArticle.thumbnailImage?.large
   const articlesList = take(restOfArticles, ARTICLE_COUNT)
@@ -45,6 +52,18 @@ const HomeFeaturedMarketNews: React.FC<HomeFeaturedMarketNewsProps> = ({
             to={firstArticle.href ?? ""}
             display="block"
             textDecoration="none"
+            onClick={() => {
+              const trackingEvent: ClickedArticleGroup = {
+                action: ActionType.clickedArticleGroup,
+                context_module: ContextModule.marketNews,
+                context_page_owner_type: OwnerType.home,
+                context_page_owner_id: firstArticle.internalID,
+                context_page_owner_slug: firstArticle.slug ?? "",
+                destination_page_owner_type: OwnerType.article,
+                type: "thumbnail",
+              }
+              trackEvent(trackingEvent)
+            }}
           >
             {firstImage && (
               <ResponsiveBox
@@ -84,6 +103,18 @@ const HomeFeaturedMarketNews: React.FC<HomeFeaturedMarketNewsProps> = ({
                   to={article.href ?? ""}
                   display="block"
                   textDecoration="none"
+                  onClick={() => {
+                    const trackingEvent: ClickedArticleGroup = {
+                      action: ActionType.clickedArticleGroup,
+                      context_module: ContextModule.marketNews,
+                      context_page_owner_type: OwnerType.home,
+                      context_page_owner_id: article.internalID,
+                      context_page_owner_slug: article.slug ?? "",
+                      destination_page_owner_type: OwnerType.article,
+                      type: "thumbnail",
+                    }
+                    trackEvent(trackingEvent)
+                  }}
                 >
                   <Box mb={4}>
                     {image && (
@@ -125,6 +156,8 @@ const HomeFeaturedMarketNews: React.FC<HomeFeaturedMarketNewsProps> = ({
 }
 
 const HomeFeaturedMarketNewsContainer: React.FC = ({ children }) => {
+  const { trackEvent } = useTracking()
+
   return (
     <>
       <Flex justifyContent="space-between" alignItems="center">
@@ -135,6 +168,16 @@ const HomeFeaturedMarketNewsContainer: React.FC = ({ children }) => {
           as={RouterLink}
           // @ts-ignore
           to="/articles"
+          onClick={() => {
+            const trackingEvent: ClickedArticleGroup = {
+              action: ActionType.clickedArticleGroup,
+              context_module: ContextModule.marketNews,
+              context_page_owner_type: OwnerType.home,
+              destination_page_owner_type: OwnerType.articles,
+              type: "viewAll",
+            }
+            trackEvent(trackingEvent)
+          }}
         >
           Explore Editorial
         </Text>
@@ -154,6 +197,7 @@ export const HomeFeaturedMarketNewsFragmentContainer = createFragmentContainer(
       fragment HomeFeaturedMarketNews_articles on Article @relay(plural: true) {
         internalID
         href
+        slug
         title
         publishedAt(format: "MMM D YYYY")
         vertical

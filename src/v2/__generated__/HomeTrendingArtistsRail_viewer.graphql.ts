@@ -8,6 +8,7 @@ export type HomeTrendingArtistsRail_viewer = {
         readonly edges: ReadonlyArray<{
             readonly node: {
                 readonly internalID: string;
+                readonly isFollowed: boolean | null;
                 readonly name: string | null;
                 readonly slug: string;
                 readonly href: string | null;
@@ -80,6 +81,13 @@ const node: ReaderFragment = {
                   "args": null,
                   "kind": "ScalarField",
                   "name": "internalID",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "isFollowed",
                   "storageKey": null
                 },
                 {
@@ -188,5 +196,5 @@ const node: ReaderFragment = {
   ],
   "type": "Viewer"
 };
-(node as any).hash = '8b151902bc8376812b5231b9eb02fe03';
+(node as any).hash = '36a8216ebf215e085480e876d9cf294e';
 export default node;

@@ -17,6 +17,13 @@ import { cropped } from "v2/Utils/resized"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { Media } from "v2/Utils/Responsive"
 import { HomeHeroUnitCredit } from "./HomeHeroUnitCredit"
+import { useTracking } from "v2/System"
+import {
+  ActionType,
+  ClickedPromoSpace,
+  ContextModule,
+  OwnerType,
+} from "@artsy/cohesion"
 
 export interface StaticHeroUnit {
   backgroundImageURL: string
@@ -41,6 +48,19 @@ export const HomeHeroUnit: React.FC<HomeHeroUnitProps> = ({
   layout = "a",
   index,
 }) => {
+  const { trackEvent } = useTracking()
+
+  const handleTrackEvent = () => {
+    const event: ClickedPromoSpace = {
+      action: ActionType.clickedPromoSpace,
+      context_module: ContextModule.banner,
+      context_screen_owner_type: OwnerType.home,
+      destination_path: heroUnit.href ?? "",
+      subject: "clicking on the promo banner",
+    }
+    trackEvent(event)
+  }
+
   const colorScheme = {
     black5: {
       heading: "black100",
@@ -77,6 +97,7 @@ export const HomeHeroUnit: React.FC<HomeHeroUnitProps> = ({
           height: "100%",
         }}
         tabIndex={-1}
+        onClick={handleTrackEvent}
       >
         {image && (
           <>
@@ -153,6 +174,7 @@ export const HomeHeroUnit: React.FC<HomeHeroUnitProps> = ({
             to={heroUnit.href ?? ""}
             tabIndex={-1}
             style={{ display: "block", textDecoration: "none" }}
+            onClick={handleTrackEvent}
           >
             <Media greaterThan="xs">
               {heroUnit.heading && (
@@ -217,7 +239,11 @@ export const HomeHeroUnit: React.FC<HomeHeroUnitProps> = ({
               <Media at="xs">
                 <Spacer mt={1} />
 
-                <RouterLink to={heroUnit.href} noUnderline>
+                <RouterLink
+                  to={heroUnit.href}
+                  noUnderline
+                  onClick={handleTrackEvent}
+                >
                   <Text variant="xs" color={colorScheme.linkText}>
                     {heroUnit.linkText}
                   </Text>

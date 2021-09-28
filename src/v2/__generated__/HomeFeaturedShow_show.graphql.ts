@@ -4,6 +4,8 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type HomeFeaturedShow_show = {
+    readonly internalID: string;
+    readonly slug: string;
     readonly name: string | null;
     readonly href: string | null;
     readonly startAt: string | null;
@@ -55,6 +57,20 @@ return {
   "metadata": null,
   "name": "HomeFeaturedShow_show",
   "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "internalID",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "slug",
+      "storageKey": null
+    },
     (v0/*: any*/),
     {
       "alias": null,
@@ -177,5 +193,5 @@ return {
   "type": "Show"
 };
 })();
-(node as any).hash = '0c3979e37c2401671ad42d3c3a8631ac';
+(node as any).hash = 'a46613c876093cac1b3e515f0b516138';
 export default node;

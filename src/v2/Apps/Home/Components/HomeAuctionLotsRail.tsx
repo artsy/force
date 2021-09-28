@@ -18,6 +18,13 @@ import { HomeAuctionLotsRail_viewer } from "v2/__generated__/HomeAuctionLotsRail
 import { HomeAuctionLotsRailQuery } from "v2/__generated__/HomeAuctionLotsRailQuery.graphql"
 import { extractNodes } from "v2/Utils/extractNodes"
 import { ShelfArtworkFragmentContainer } from "v2/Components/Artwork/ShelfArtwork"
+import {
+  ActionType,
+  ClickedArtworkGroup,
+  ContextModule,
+  OwnerType,
+} from "@artsy/cohesion"
+import { useTracking } from "v2/System"
 
 interface HomeAuctionLotsRailProps {
   viewer: HomeAuctionLotsRail_viewer
@@ -26,6 +33,8 @@ interface HomeAuctionLotsRailProps {
 const HomeAuctionLotsRail: React.FC<HomeAuctionLotsRailProps> = ({
   viewer,
 }) => {
+  const { trackEvent } = useTracking()
+
   const nodes = extractNodes(viewer.saleArtworksConnection).filter(node => {
     return !node.sale?.isClosed
   })
@@ -42,10 +51,21 @@ const HomeAuctionLotsRail: React.FC<HomeAuctionLotsRailProps> = ({
             <ShelfArtworkFragmentContainer
               artwork={node}
               key={node.slug}
-              // TODO: Add home type to cohesion once we have tracking
-              contextModule={null as any}
+              contextModule={ContextModule.auctionLots}
               hidePartnerName
               lazyLoad
+              onClick={() => {
+                const trackingEvent: ClickedArtworkGroup = {
+                  action: ActionType.clickedArtworkGroup,
+                  context_module: ContextModule.auctionLots,
+                  context_page_owner_type: OwnerType.home,
+                  destination_page_owner_id: node.internalID,
+                  destination_page_owner_slug: node.slug,
+                  destination_page_owner_type: OwnerType.artwork,
+                  type: "thumbnail",
+                }
+                trackEvent(trackingEvent)
+              }}
             />
           )
         })}
@@ -58,6 +78,8 @@ const HomeAuctionLotsRailContainer: React.FC<{ lotCount: number }> = ({
   children,
   lotCount,
 }) => {
+  const { trackEvent } = useTracking()
+
   return (
     <>
       <Flex justifyContent="space-between" alignItems="center">
@@ -70,6 +92,16 @@ const HomeAuctionLotsRailContainer: React.FC<{ lotCount: number }> = ({
           as={RouterLink}
           // @ts-ignore
           to="/auctions"
+          onClick={() => {
+            const trackingEvent: ClickedArtworkGroup = {
+              action: ActionType.clickedArtworkGroup,
+              context_module: ContextModule.auctionLots,
+              context_page_owner_type: OwnerType.home,
+              destination_page_owner_type: OwnerType.auctions,
+              type: "viewAll",
+            }
+            trackEvent(trackingEvent)
+          }}
         >
           View All Auctions
         </Text>

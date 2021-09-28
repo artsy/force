@@ -6,6 +6,7 @@ import { FragmentRefs } from "relay-runtime";
 export type HomeCurrentFairsRail_viewer = {
     readonly fairs: ReadonlyArray<{
         readonly internalID: string;
+        readonly slug: string;
         readonly bannerSize: string | null;
         readonly isPublished: boolean | null;
         readonly profile: {
@@ -87,6 +88,13 @@ return {
           "args": null,
           "kind": "ScalarField",
           "name": "internalID",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "slug",
           "storageKey": null
         },
         {
@@ -217,5 +225,5 @@ return {
   "type": "Viewer"
 };
 })();
-(node as any).hash = '3286a8c32ccbbdf063ae43b571a69faa';
+(node as any).hash = 'd353b7c7261684dd763575e06d3cc1e8';
 export default node;

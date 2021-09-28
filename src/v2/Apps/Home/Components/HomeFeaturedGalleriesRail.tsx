@@ -13,14 +13,19 @@ import {
 } from "@artsy/palette"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { useSystemContext } from "v2/System"
+import { useSystemContext, useTracking } from "v2/System"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { HomeFeaturedGalleriesRail_orderedSet } from "v2/__generated__/HomeFeaturedGalleriesRail_orderedSet.graphql"
 import { HomeFeaturedGalleriesRailQuery } from "v2/__generated__/HomeFeaturedGalleriesRailQuery.graphql"
 import { extractNodes } from "v2/Utils/extractNodes"
 import { FollowProfileButtonFragmentContainer } from "v2/Components/FollowButton/FollowProfileButton"
-import { ContextModule } from "@artsy/cohesion"
+import {
+  ActionType,
+  ClickedGalleryGroup,
+  ContextModule,
+  OwnerType,
+} from "@artsy/cohesion"
 
 interface HomeFeaturedGalleriesRailProps {
   orderedSet: HomeFeaturedGalleriesRail_orderedSet
@@ -29,6 +34,7 @@ interface HomeFeaturedGalleriesRailProps {
 const HomeFeaturedGalleriesRail: React.FC<HomeFeaturedGalleriesRailProps> = ({
   orderedSet,
 }) => {
+  const { trackEvent } = useTracking()
   const { user } = useSystemContext()
   const nodes = extractNodes(orderedSet.orderedItemsConnection)
 
@@ -48,6 +54,18 @@ const HomeFeaturedGalleriesRail: React.FC<HomeFeaturedGalleriesRailProps> = ({
               to={`/partner${node.href}`}
               textDecoration="none"
               key={index}
+              onClick={() => {
+                const trackingEvent: ClickedGalleryGroup = {
+                  action: ActionType.clickedGalleryGroup,
+                  context_module: ContextModule.featuredGalleriesRail,
+                  context_page_owner_type: OwnerType.home,
+                  destination_page_owner_id: node.internalID,
+                  destination_page_owner_slug: node.slug,
+                  destination_page_owner_type: OwnerType.galleries,
+                  type: "thumbnail",
+                }
+                trackEvent(trackingEvent)
+              }}
             >
               <Box width={325} key={index}>
                 <EntityHeader
@@ -57,11 +75,21 @@ const HomeFeaturedGalleriesRail: React.FC<HomeFeaturedGalleriesRailProps> = ({
                   FollowButton={
                     <FollowProfileButtonFragmentContainer
                       user={user}
-                      profile={node as any}
+                      profile={node}
                       contextModule={ContextModule.partnerHeader}
                       buttonProps={{
                         size: "small",
                         variant: "secondaryOutline",
+                      }}
+                      onClick={() => {
+                        const trackingEvent: any = {
+                          action: node.isFollowed
+                            ? ActionType.unfollowedPartner
+                            : ActionType.followedPartner,
+                          context_module: ContextModule.featuredGalleriesRail,
+                          context_owner_type: OwnerType.partner,
+                        }
+                        trackEvent(trackingEvent)
                       }}
                     />
                   }
@@ -95,6 +123,7 @@ const HomeFeaturedGalleriesRail: React.FC<HomeFeaturedGalleriesRailProps> = ({
 const HomeFeaturedGalleriesRailContainer: React.FC<{
   galleriesCount: number
 }> = ({ children, galleriesCount }) => {
+  const { trackEvent } = useTracking()
   return (
     <>
       <Flex justifyContent="space-between" alignItems="center">
@@ -108,6 +137,16 @@ const HomeFeaturedGalleriesRailContainer: React.FC<{
           as={RouterLink}
           // @ts-ignore
           to="/galleries"
+          onClick={() => {
+            const trackingEvent: ClickedGalleryGroup = {
+              action: ActionType.clickedGalleryGroup,
+              context_module: ContextModule.featuredGalleriesRail,
+              context_page_owner_type: OwnerType.home,
+              destination_page_owner_type: OwnerType.galleries,
+              type: "viewAll",
+            }
+            trackEvent(trackingEvent)
+          }}
         >
           View All Galleries
         </Text>
@@ -150,6 +189,7 @@ export const HomeFeaturedGalleriesRailFragmentContainer = createFragmentContaine
               ... on Profile {
                 ...FollowProfileButton_profile
                 internalID
+                isFollowed
                 name
                 slug
                 href

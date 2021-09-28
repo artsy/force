@@ -6,6 +6,8 @@ import { FragmentRefs } from "relay-runtime";
 export type HomeWorksByArtistsYouFollowRail_homePage = {
     readonly artworkModule: {
         readonly results: ReadonlyArray<{
+            readonly internalID: string;
+            readonly slug: string;
             readonly " $fragmentRefs": FragmentRefs<"ShelfArtwork_artwork">;
         } | null> | null;
     } | null;
@@ -48,6 +50,20 @@ const node: ReaderFragment = {
           "plural": true,
           "selections": [
             {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "internalID",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "slug",
+              "storageKey": null
+            },
+            {
               "args": [
                 {
                   "kind": "Literal",
@@ -67,5 +83,5 @@ const node: ReaderFragment = {
   ],
   "type": "HomePage"
 };
-(node as any).hash = '536fc5c5bf814da3cc2284c35e5b45be';
+(node as any).hash = '67ebfff4507a1f299a511c8f6493e370';
 export default node;

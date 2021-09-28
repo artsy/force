@@ -9,6 +9,7 @@ export type HomeFeaturedGalleriesRail_orderedSet = {
             readonly node: ({
                 readonly __typename: "Profile";
                 readonly internalID: string;
+                readonly isFollowed: boolean | null;
                 readonly name: string | null;
                 readonly slug: string;
                 readonly href: string | null;
@@ -90,6 +91,13 @@ const node: ReaderFragment = {
                       "args": null,
                       "kind": "ScalarField",
                       "name": "internalID",
+                      "storageKey": null
+                    },
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "isFollowed",
                       "storageKey": null
                     },
                     {
@@ -201,5 +209,5 @@ const node: ReaderFragment = {
   ],
   "type": "OrderedSet"
 };
-(node as any).hash = '7326b5dabc44a4be0621c7bec35ff111';
+(node as any).hash = 'f8ae1e1bb759b8b9931b20689894a3fc';
 export default node;
