@@ -40,11 +40,7 @@ const HomeTrendingArtistsRail: React.FC<HomeTrendingArtistsRailProps> = ({
       <Shelf alignItems="flex-start">
         {nodes.map((node, index) => {
           return (
-            <RouterLink
-              to={`/partner${node.href}`}
-              textDecoration="none"
-              key={index}
-            >
+            <RouterLink to={node.href} textDecoration="none" key={index}>
               <Box width={325} key={index}>
                 {node.image?.cropped?.src ? (
                   <Box>
