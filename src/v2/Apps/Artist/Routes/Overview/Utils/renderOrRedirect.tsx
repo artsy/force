@@ -39,17 +39,22 @@ export function renderOrRedirect({
 
   const hasArtistContent = hasOverviewContent(artist)
 
-  const alreadyAtWorksForSalePath = pathname.includes(
-    `${artist.slug}/works-for-sale`
-  )
-
+  const onOverviewPath = pathname.endsWith(`${artist.slug}`)
   const canShowOverview = showArtistInsights || hasArtistContent
+
+  const onAuctionResultsPath = pathname.includes(
+    `${artist.slug}/auction-results`
+  )
+  const canShowAuctionResults = artist?.counts?.auctionResults
 
   if (pathname === `/artist/${artist.slug}/`) {
     throw new RedirectException(`/artist/${artist.slug}`, 301)
   }
 
-  if (!canShowOverview && !alreadyAtWorksForSalePath) {
+  if (
+    (onOverviewPath && !canShowOverview) ||
+    (onAuctionResultsPath && !canShowAuctionResults)
+  ) {
     throw new RedirectException(`/artist/${artist.slug}/works-for-sale`, 301)
   }
 

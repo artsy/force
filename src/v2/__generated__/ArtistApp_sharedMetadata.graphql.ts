@@ -12,6 +12,7 @@ export type ArtistApp_sharedMetadata = {
     } | null;
     readonly counts: {
         readonly forSaleArtworks: number | null;
+        readonly auctionResults: number | null;
     } | null;
     readonly related: {
         readonly genes: {
@@ -118,6 +119,13 @@ return {
           "args": null,
           "kind": "ScalarField",
           "name": "forSaleArtworks",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "auctionResults",
           "storageKey": null
         }
       ],
@@ -296,5 +304,5 @@ return {
   "type": "Artist"
 };
 })();
-(node as any).hash = '7f0b4ccb7b8d65fb7eab207aab721621';
+(node as any).hash = 'd8ed25b0f0386b0abc35b684cc1e72ec';
 export default node;
