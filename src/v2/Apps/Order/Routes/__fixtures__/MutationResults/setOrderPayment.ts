@@ -12,7 +12,7 @@ export const settingOrderPaymentSuccess = {
           street2: "Suite 2.5, The Loom",
           city: "London",
           state: "Whitechapel",
-          country: "GB",
+          country: "UK",
           postal_code: "E1 8PY",
         },
       },

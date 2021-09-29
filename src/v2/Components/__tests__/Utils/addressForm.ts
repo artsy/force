@@ -9,7 +9,7 @@ export const validAddress: Address = {
   city: "Whitechapel",
   region: "London",
   postalCode: "E1 8PY",
-  country: "GB",
+  country: "UK",
   phoneNumber: "8475937743",
 }
 
@@ -37,9 +37,6 @@ export const fillInPhoneNumber = (
 
 export const fillCountrySelect = (component, value) => {
   const input = component.find(CountrySelect)
-  // input.simulate("select", {
-  //   target: { value: "GB" },
-  // })
   input.props().onSelect(value)
 }
 

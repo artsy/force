@@ -24,7 +24,7 @@ describe("formValidators/validateAddress", () => {
       city: "Whitechapel",
       region: "London",
       postalCode: "E1 8PY",
-      country: "GB",
+      country: "UK",
       phoneNumber: "8475937743",
     }
   }

@@ -42,7 +42,7 @@ const stripeCallAddress = {
   address_city: "Whitechapel",
   address_state: "London",
   address_zip: "E1 8PY",
-  address_country: "GB",
+  address_country: "UK",
 }
 
 const testPaymentModalProps: PaymentModalProps = {
