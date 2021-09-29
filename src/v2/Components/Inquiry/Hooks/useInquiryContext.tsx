@@ -1,4 +1,11 @@
-import React, { createContext, useContext, useRef, useState } from "react"
+import React, {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react"
 import { Engine } from "../Engine"
 import { useEngine } from "../config"
 import { createFragmentContainer, graphql, Environment } from "react-relay"
@@ -14,21 +21,23 @@ import { Spinner } from "@artsy/palette"
 export type Context = {
   askSpecialist: boolean
   collectorLevel?: number | null
+  isLoggedIn: boolean
   location?: Location | null
   phone?: string | null
   profession?: string | null
+  requiresReload: boolean
   shareFollows: boolean
-  isLoggedIn: boolean
 }
 
 export const DEFAULT_CONTEXT: Context = {
   askSpecialist: false,
   collectorLevel: null,
+  isLoggedIn: false,
   location: null,
   phone: null,
   profession: null,
+  requiresReload: false,
   shareFollows: false,
-  isLoggedIn: false,
 }
 
 export const DEFAULT_MESSAGE =
@@ -82,15 +91,13 @@ const InquiryContext = createContext<{
 interface InquiryProviderProps {
   artworkID: string
   askSpecialist?: boolean
-  me: useInquiryContext_me | null
   onClose(): void
 }
 
-const InquiryProvider: React.FC<InquiryProviderProps> = ({
+export const InquiryProvider: React.FC<InquiryProviderProps> = ({
   artworkID,
   askSpecialist,
   children,
-  me,
   onClose,
 }) => {
   /**
@@ -99,28 +106,37 @@ const InquiryProvider: React.FC<InquiryProviderProps> = ({
    * this data to re-render any views; it's only used to make decisions between views.
    */
   const context = useRef<Context>({
+    ...DEFAULT_CONTEXT,
     askSpecialist: !!askSpecialist,
-    collectorLevel: me?.collectorLevel,
-    isLoggedIn: !!me,
-    location: !!me?.location?.city ? { city: me.location.city } : null,
-    phone: me?.phone,
-    profession: me?.profession,
-    shareFollows: !!me?.shareFollows,
   })
 
   // Mutate the decision context directly
-  const setContext = (updatedContext: Partial<Context>) => {
+  const setContext = useCallback((updatedContext: Partial<Context>) => {
     context.current = { ...context.current, ...updatedContext }
     return context
-  }
+  }, [])
 
   const [inquiry, setInquiry] = useState<InquiryState>({
     message: DEFAULT_MESSAGE,
   })
 
+  const handleClose = () => {
+    /**
+     * We flip the `requiresReload` flag to `true` after either login or sign up.
+     * We currently don't have the ability to fully login a user on the client-side.
+     * The reload is what fully logs in the authenticated user.
+     */
+    if (context.current.requiresReload) {
+      window.location.reload()
+      return
+    }
+
+    onClose()
+  }
+
   const { engine, current, next, View, visited } = useEngine({
     context,
-    onDone: onClose,
+    onDone: handleClose,
   })
 
   const { relayEnvironment: defaultRelayEnvironment } = useSystemContext()
@@ -132,10 +148,10 @@ const InquiryProvider: React.FC<InquiryProviderProps> = ({
    * where we have to execute mutations like sending the inquiry, saving your
    * information, etc. We store the Relay environment in a ref then update it here.
    */
-  const setRelayEnvironment = (updatedEnvironment: Environment) => {
+  const setRelayEnvironment = useCallback((updatedEnvironment: Environment) => {
     relayEnvironment.current = updatedEnvironment
     return relayEnvironment
-  }
+  }, [])
 
   return (
     <InquiryContext.Provider
@@ -146,7 +162,7 @@ const InquiryProvider: React.FC<InquiryProviderProps> = ({
         engine,
         inquiry,
         next,
-        onClose,
+        onClose: handleClose,
         relayEnvironment,
         setContext,
         setInquiry,
@@ -160,8 +176,32 @@ const InquiryProvider: React.FC<InquiryProviderProps> = ({
   )
 }
 
-const InquiryProviderFragmentContainer = createFragmentContainer(
-  InquiryProvider,
+interface InquiryContextContextProps {
+  me: useInquiryContext_me | null
+}
+
+const InquiryContextContext: React.FC<InquiryContextContextProps> = ({
+  me,
+  children,
+}) => {
+  const { setContext } = useInquiryContext()
+
+  useEffect(() => {
+    setContext({
+      collectorLevel: me?.collectorLevel,
+      isLoggedIn: !!me,
+      location: !!me?.location?.city ? { city: me.location.city } : null,
+      phone: me?.phone,
+      profession: me?.profession,
+      shareFollows: !!me?.shareFollows,
+    })
+  }, [me, setContext])
+
+  return <>{children}</>
+}
+
+const InquiryContextContextFragmentContainer = createFragmentContainer(
+  InquiryContextContext,
   {
     me: graphql`
       fragment useInquiryContext_me on Me {
@@ -177,18 +217,7 @@ const InquiryProviderFragmentContainer = createFragmentContainer(
   }
 )
 
-interface InquiryProviderQueryRendererProps {
-  artworkID: string
-  askSpecialist?: boolean
-  onClose(): void
-}
-
-export const InquiryProviderQueryRenderer: React.FC<InquiryProviderQueryRendererProps> = ({
-  artworkID,
-  askSpecialist,
-  children,
-  onClose,
-}) => {
+export const InquiryContextContextQueryRenderer: React.FC = ({ children }) => {
   const { relayEnvironment } = useSystemContext()
 
   return (
@@ -213,14 +242,9 @@ export const InquiryProviderQueryRenderer: React.FC<InquiryProviderQueryRenderer
         }
 
         return (
-          <InquiryProviderFragmentContainer
-            artworkID={artworkID}
-            askSpecialist={askSpecialist}
-            me={props.me}
-            onClose={onClose}
-          >
+          <InquiryContextContextFragmentContainer me={props.me}>
             {children}
-          </InquiryProviderFragmentContainer>
+          </InquiryContextContextFragmentContainer>
         )
       }}
     />

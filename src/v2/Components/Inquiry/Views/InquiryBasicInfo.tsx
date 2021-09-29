@@ -16,7 +16,6 @@ import { useInquiryContext } from "../Hooks/useInquiryContext"
 import { InquiryBasicInfo_artwork } from "v2/__generated__/InquiryBasicInfo_artwork.graphql"
 import { InquiryBasicInfo_me } from "v2/__generated__/InquiryBasicInfo_me.graphql"
 import { InquiryBasicInfoQuery } from "v2/__generated__/InquiryBasicInfoQuery.graphql"
-import { useSystemContext } from "v2/System"
 import {
   Location,
   LocationAutocompleteInput,
@@ -204,12 +203,11 @@ export const InquiryBasicInfoFragmentContainer = createFragmentContainer(
 )
 
 export const InquiryBasicInfoQueryRenderer: React.FC = () => {
-  const { relayEnvironment } = useSystemContext()
-  const { artworkID } = useInquiryContext()
+  const { artworkID, relayEnvironment } = useInquiryContext()
 
   return (
     <SystemQueryRenderer<InquiryBasicInfoQuery>
-      environment={relayEnvironment}
+      environment={relayEnvironment.current!}
       placeholder={<InquiryBasicInfoPlaceholder />}
       query={graphql`
         query InquiryBasicInfoQuery($id: String!) {
