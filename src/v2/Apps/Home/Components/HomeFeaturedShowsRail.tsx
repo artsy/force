@@ -1,4 +1,10 @@
 import {
+  ActionType,
+  ClickedShowGroup,
+  ContextModule,
+  OwnerType,
+} from "@artsy/cohesion"
+import {
   ResponsiveBox,
   Text,
   Spacer,
@@ -12,7 +18,7 @@ import {
 import { compact, take } from "lodash"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { useSystemContext } from "v2/System"
+import { useSystemContext, useTracking } from "v2/System"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { useLazyLoadComponent } from "v2/Utils/Hooks/useLazyLoadComponent"
@@ -57,6 +63,8 @@ const HomeFeaturedShowsRailContainer: React.FC<{ showsCount: number }> = ({
   children,
   showsCount,
 }) => {
+  const { trackEvent } = useTracking()
+
   return (
     <>
       <Flex justifyContent="space-between" alignItems="center">
@@ -70,6 +78,16 @@ const HomeFeaturedShowsRailContainer: React.FC<{ showsCount: number }> = ({
           as={RouterLink}
           // @ts-ignore
           to="/shows"
+          onClick={() => {
+            const trackingEvent: ClickedShowGroup = {
+              action: ActionType.clickedShowGroup,
+              context_module: ContextModule.featuredShowsRail,
+              context_page_owner_type: OwnerType.home,
+              destination_page_owner_type: OwnerType.shows,
+              type: "viewAll",
+            }
+            trackEvent(trackingEvent)
+          }}
         >
           Explore All Shows
         </Text>

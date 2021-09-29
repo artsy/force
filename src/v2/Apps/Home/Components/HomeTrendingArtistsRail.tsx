@@ -12,13 +12,18 @@ import {
 } from "@artsy/palette"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { useSystemContext } from "v2/System"
+import { useSystemContext, useTracking } from "v2/System"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { HomeTrendingArtistsRail_viewer } from "v2/__generated__/HomeTrendingArtistsRail_viewer.graphql"
 import { HomeTrendingArtistsRailQuery } from "v2/__generated__/HomeTrendingArtistsRailQuery.graphql"
 import { extractNodes } from "v2/Utils/extractNodes"
-import { ContextModule } from "@artsy/cohesion"
+import {
+  ActionType,
+  ClickedArtistGroup,
+  ContextModule,
+  OwnerType,
+} from "@artsy/cohesion"
 import { FollowArtistButtonFragmentContainer } from "v2/Components/FollowButton/FollowArtistButton"
 
 interface HomeTrendingArtistsRailProps {
@@ -28,6 +33,7 @@ interface HomeTrendingArtistsRailProps {
 const HomeTrendingArtistsRail: React.FC<HomeTrendingArtistsRailProps> = ({
   viewer,
 }) => {
+  const { trackEvent } = useTracking()
   const { user } = useSystemContext()
   const nodes = extractNodes(viewer.artistsConnection)
 
@@ -40,7 +46,23 @@ const HomeTrendingArtistsRail: React.FC<HomeTrendingArtistsRailProps> = ({
       <Shelf alignItems="flex-start">
         {nodes.map((node, index) => {
           return (
-            <RouterLink to={node.href} textDecoration="none" key={index}>
+            <RouterLink
+              to={node.href}
+              textDecoration="none"
+              key={index}
+              onClick={() => {
+                const trackingEvent: ClickedArtistGroup = {
+                  action: ActionType.clickedArtistGroup,
+                  context_module: ContextModule.trendingArtistsRail,
+                  context_page_owner_type: OwnerType.home,
+                  destination_page_owner_id: node.internalID,
+                  destination_page_owner_slug: node.slug,
+                  destination_page_owner_type: OwnerType.artist,
+                  type: "thumbnail",
+                }
+                trackEvent(trackingEvent)
+              }}
+            >
               <Box width={325} key={index}>
                 {node.image?.cropped?.src ? (
                   <Box>
@@ -72,6 +94,16 @@ const HomeTrendingArtistsRail: React.FC<HomeTrendingArtistsRailProps> = ({
                         size: "small",
                         variant: "secondaryOutline",
                       }}
+                      onClick={() => {
+                        const trackingEvent: any = {
+                          action: node.isFollowed
+                            ? ActionType.unfollowedArtist
+                            : ActionType.followedArtist,
+                          context_module: ContextModule.trendingArtistsRail,
+                          context_page_owner_type: OwnerType.home,
+                        }
+                        trackEvent(trackingEvent)
+                      }}
                     />
                   }
                 />
@@ -85,6 +117,8 @@ const HomeTrendingArtistsRail: React.FC<HomeTrendingArtistsRailProps> = ({
 }
 
 const HomeTrendingArtistsRailContainer: React.FC = ({ children }) => {
+  const { trackEvent } = useTracking()
+
   return (
     <>
       <Flex justifyContent="space-between" alignItems="center">
@@ -95,6 +129,16 @@ const HomeTrendingArtistsRailContainer: React.FC = ({ children }) => {
           as={RouterLink}
           // @ts-ignore
           to="/artists"
+          onClick={() => {
+            const trackingEvent: ClickedArtistGroup = {
+              action: ActionType.clickedArtistGroup,
+              context_module: ContextModule.trendingArtistsRail,
+              context_page_owner_type: OwnerType.home,
+              destination_page_owner_type: OwnerType.artists,
+              type: "viewAll",
+            }
+            trackEvent(trackingEvent)
+          }}
         >
           View All Artists
         </Text>
@@ -135,6 +179,7 @@ export const HomeTrendingArtistsRailFragmentContainer = createFragmentContainer(
             node {
               ...FollowArtistButton_artist
               internalID
+              isFollowed
               name
               slug
               href

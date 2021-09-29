@@ -26,6 +26,7 @@ query HomeCurrentFairsRailQuery {
 fragment HomeCurrentFairsRail_viewer on Viewer {
   fairs(hasListing: true, hasFullFeature: true, sort: START_AT_DESC, size: 25, status: RUNNING) {
     internalID
+    slug
     bannerSize
     isPublished
     profile {
@@ -143,6 +144,13 @@ return {
                 "args": null,
                 "kind": "ScalarField",
                 "name": "internalID",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "slug",
                 "storageKey": null
               },
               {
@@ -281,7 +289,7 @@ return {
     "metadata": {},
     "name": "HomeCurrentFairsRailQuery",
     "operationKind": "query",
-    "text": "query HomeCurrentFairsRailQuery {\n  viewer {\n    ...HomeCurrentFairsRail_viewer\n  }\n}\n\nfragment HomeCurrentFairsRail_viewer on Viewer {\n  fairs(hasListing: true, hasFullFeature: true, sort: START_AT_DESC, size: 25, status: RUNNING) {\n    internalID\n    bannerSize\n    isPublished\n    profile {\n      isPublished\n      id\n    }\n    href\n    name\n    startAt(format: \"MMM Do\")\n    endAt(format: \"MMM Do YYYY\")\n    image {\n      cropped(width: 440, height: 315) {\n        src\n        srcSet\n        width\n        height\n      }\n    }\n    id\n  }\n}\n"
+    "text": "query HomeCurrentFairsRailQuery {\n  viewer {\n    ...HomeCurrentFairsRail_viewer\n  }\n}\n\nfragment HomeCurrentFairsRail_viewer on Viewer {\n  fairs(hasListing: true, hasFullFeature: true, sort: START_AT_DESC, size: 25, status: RUNNING) {\n    internalID\n    slug\n    bannerSize\n    isPublished\n    profile {\n      isPublished\n      id\n    }\n    href\n    name\n    startAt(format: \"MMM Do\")\n    endAt(format: \"MMM Do YYYY\")\n    image {\n      cropped(width: 440, height: 315) {\n        src\n        srcSet\n        width\n        height\n      }\n    }\n    id\n  }\n}\n"
   }
 };
 })();

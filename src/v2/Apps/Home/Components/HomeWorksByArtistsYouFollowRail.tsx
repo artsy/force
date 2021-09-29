@@ -8,11 +8,17 @@ import {
 } from "@artsy/palette"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { useSystemContext } from "v2/System"
+import { useSystemContext, useTracking } from "v2/System"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { HomeWorksByArtistsYouFollowRail_homePage } from "v2/__generated__/HomeWorksByArtistsYouFollowRail_homePage.graphql"
 import { HomeWorksByArtistsYouFollowRailQuery } from "v2/__generated__/HomeWorksByArtistsYouFollowRailQuery.graphql"
 import { ShelfArtworkFragmentContainer } from "v2/Components/Artwork/ShelfArtwork"
+import {
+  ActionType,
+  ClickedArtworkGroup,
+  ContextModule,
+  OwnerType,
+} from "@artsy/cohesion"
 
 interface HomeWorksByArtistsYouFollowRailProps {
   homePage: HomeWorksByArtistsYouFollowRail_homePage
@@ -21,6 +27,8 @@ interface HomeWorksByArtistsYouFollowRailProps {
 const HomeWorksByArtistsYouFollowRail: React.FC<HomeWorksByArtistsYouFollowRailProps> = ({
   homePage,
 }) => {
+  const { trackEvent } = useTracking()
+
   const results = homePage.artworkModule?.results
   if (!results || results?.length === 0) {
     return null
@@ -29,14 +37,30 @@ const HomeWorksByArtistsYouFollowRail: React.FC<HomeWorksByArtistsYouFollowRailP
   return (
     <Shelf>
       {results.map((artwork, index) => {
+        if (!artwork) {
+          return <></>
+        }
+
         return (
           <ShelfArtworkFragmentContainer
-            artwork={artwork!}
+            artwork={artwork}
             key={index}
             // TODO: Add home type to cohesion once we have tracking
             contextModule={null as any}
             hidePartnerName
             lazyLoad
+            onClick={() => {
+              const trackingEvent: ClickedArtworkGroup = {
+                action: ActionType.clickedArtworkGroup,
+                context_module: ContextModule.worksByArtistsYouFollowRail,
+                context_page_owner_type: OwnerType.home,
+                destination_page_owner_id: artwork.internalID,
+                destination_page_owner_slug: artwork.slug,
+                destination_page_owner_type: OwnerType.artwork,
+                type: "thumbnail",
+              }
+              trackEvent(trackingEvent)
+            }}
           />
         )
       })}
@@ -72,6 +96,8 @@ export const HomeWorksByArtistsYouFollowRailFragmentContainer = createFragmentCo
       fragment HomeWorksByArtistsYouFollowRail_homePage on HomePage {
         artworkModule(key: FOLLOWED_ARTISTS) {
           results {
+            internalID
+            slug
             ...ShelfArtwork_artwork @arguments(width: 210)
           }
         }
