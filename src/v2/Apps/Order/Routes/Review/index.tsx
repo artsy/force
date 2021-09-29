@@ -37,6 +37,7 @@ import {
   ActionType,
   ClickedChangePaymentMethod,
   ClickedChangeShippingAddress,
+  ClickedChangeShippingMethod,
   ContextModule,
 } from "@artsy/cohesion"
 export interface ReviewProps {
@@ -332,7 +333,19 @@ export class ReviewRoute extends Component<ReviewProps> {
         context_page_owner_type: "orders_review", // TODO: add this to cohesion
       } as ClickedChangeShippingAddress)
   )
-  onChangeShipping() {
+  onChangeShippingAddress() {
+    this.props.router.push(`/orders/${this.props.order.internalID}/shipping`)
+  }
+
+  @track<ReviewProps>(
+    () =>
+      ({
+        action: ActionType.clickedChangeShippingMethod,
+        context_module: ContextModule.ordersReview,
+        context_page_owner_type: "orders_review", // TODO: add this to cohesion
+      } as ClickedChangeShippingMethod)
+  )
+  onChangeShippingMethod() {
     this.props.router.push(`/orders/${this.props.order.internalID}/shipping`)
   }
 
@@ -380,7 +393,7 @@ export class ReviewRoute extends Component<ReviewProps> {
                   )}
                   <ShippingSummaryItem
                     order={order}
-                    onChange={this.onChangeShipping.bind(this)}
+                    onChange={this.onChangeShippingAddress.bind(this)}
                   />
                   <CreditCardSummaryItem
                     order={order}
@@ -389,7 +402,7 @@ export class ReviewRoute extends Component<ReviewProps> {
                   />
                   <ShippingArtaSummaryItemFragmentContainer
                     order={order}
-                    onChange={this.onChangeShipping}
+                    onChange={this.onChangeShippingMethod.bind(this)}
                     title="Shipping"
                   />
                 </Flex>
