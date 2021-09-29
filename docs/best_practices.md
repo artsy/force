@@ -45,7 +45,7 @@ To learn how to create a new sub-app, see [the docs](https://github.com/artsy/fo
 
 We use [TypeScript](https://www.typescriptlang.org/docs) to maximize runtime code safety.
 
-### Avoid copying and try to fix all `// @ts-expect-error STRICT_NULL_CHECK` flags 
+### Avoid copying and try to fix `// @ts-expect-error STRICT_NULL_CHECK` flags 
 
 Around mid-2021 we migrated to strict type checking for **all new code**. What this meant in practice was that all _old code_ that failed strict type checking was silenced via a special flag inserted by a script (`// @ts-expect-error STRICT_NULL_CHECK`) with all _new code_ expected to adhere to best practices. Going forward, this flag should never be used, and if encounted while working on old code it should be removed and the type error fixed.
 
