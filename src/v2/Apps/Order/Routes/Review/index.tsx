@@ -33,6 +33,11 @@ import { createStripeWrapper } from "v2/Utils/createStripeWrapper"
 import type { Stripe, StripeElements } from "@stripe/stripe-js"
 import { withSystemContext } from "v2/System"
 import { ShippingArtaSummaryItemFragmentContainer } from "../../Components/ShippingArtaSummaryItem"
+import {
+  ActionType,
+  ClickedChangeShippingAddress,
+  ContextModule,
+} from "@artsy/cohesion"
 export interface ReviewProps {
   stripe: Stripe
   elements: StripeElements
@@ -310,7 +315,14 @@ export class ReviewRoute extends Component<ReviewProps> {
     this.props.router.push(`/orders/${this.props.order.internalID}/payment`)
   }
 
-  onChangeShipping = () => {
+  @track<ReviewProps>(() => {
+    return {
+      action: ActionType.clickedChangeShippingAddress,
+      context_module: ContextModule.ordersReview,
+      context_page_owner_type: "orders_review", // TODO: add this to cohesion
+    } as ClickedChangeShippingAddress
+  })
+  onChangeShipping() {
     this.props.router.push(`/orders/${this.props.order.internalID}/shipping`)
   }
 
@@ -358,7 +370,7 @@ export class ReviewRoute extends Component<ReviewProps> {
                   )}
                   <ShippingSummaryItem
                     order={order}
-                    onChange={this.onChangeShipping}
+                    onChange={this.onChangeShipping.bind(this)}
                   />
                   <CreditCardSummaryItem
                     order={order}
