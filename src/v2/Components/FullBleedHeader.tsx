@@ -17,16 +17,22 @@ export const FullBleedHeader: React.FC<FullBleedHeaderProps> = ({
   caption,
   ...rest
 }) => {
-  const xs = cropped(src, { width: 450, height: 320 })
-  const sm = cropped(src, { width: 767, height: 320 })
-  const md = cropped(src, { width: 1024, height: 600 })
-  const lg = cropped(src, { width: 1440, height: 600 })
-  const xl = cropped(src, { width: 2000, height: 600 })
+  const xs = cropped(src, { width: 320, height: 600 })
+  const sm = cropped(src, { width: 767, height: 600 })
+  const md = cropped(src, { width: 896, height: 600 })
+  const lg = cropped(src, { width: 1000, height: 600 })
+  const xl = cropped(src, { width: 1600, height: 600 })
 
   const height = useFullBleedHeaderHeight()
 
   return (
-    <Container bg="black10" height={height} position="relative" {...rest}>
+    <Container
+      bg="black10"
+      height={height}
+      position="relative"
+      overflow="hidden"
+      {...rest}
+    >
       <picture>
         <source srcSet={xl.srcSet} media="(min-width: 1720px)" />
         <source srcSet={lg.srcSet} media="(min-width: 1232px)" />
