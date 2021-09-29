@@ -35,6 +35,7 @@ import { withSystemContext } from "v2/System"
 import { ShippingArtaSummaryItemFragmentContainer } from "../../Components/ShippingArtaSummaryItem"
 import {
   ActionType,
+  ClickedChangePaymentMethod,
   ClickedChangeShippingAddress,
   ContextModule,
 } from "@artsy/cohesion"
@@ -311,17 +312,26 @@ export class ReviewRoute extends Component<ReviewProps> {
     this.props.router.push(`/orders/${this.props.order.internalID}/offer`)
   }
 
-  onChangePayment = () => {
+  @track<ReviewProps>(
+    () =>
+      ({
+        action: ActionType.clickedChangePaymentMethod,
+        context_module: ContextModule.ordersReview,
+        context_page_owner_type: "orders_review", // TODO: add this to cohesion
+      } as ClickedChangePaymentMethod)
+  )
+  onChangePayment() {
     this.props.router.push(`/orders/${this.props.order.internalID}/payment`)
   }
 
-  @track<ReviewProps>(() => {
-    return {
-      action: ActionType.clickedChangeShippingAddress,
-      context_module: ContextModule.ordersReview,
-      context_page_owner_type: "orders_review", // TODO: add this to cohesion
-    } as ClickedChangeShippingAddress
-  })
+  @track<ReviewProps>(
+    () =>
+      ({
+        action: ActionType.clickedChangeShippingAddress,
+        context_module: ContextModule.ordersReview,
+        context_page_owner_type: "orders_review", // TODO: add this to cohesion
+      } as ClickedChangeShippingAddress)
+  )
   onChangeShipping() {
     this.props.router.push(`/orders/${this.props.order.internalID}/shipping`)
   }
@@ -374,7 +384,7 @@ export class ReviewRoute extends Component<ReviewProps> {
                   />
                   <CreditCardSummaryItem
                     order={order}
-                    onChange={this.onChangePayment}
+                    onChange={this.onChangePayment.bind(this)}
                     title="Payment method"
                   />
                   <ShippingArtaSummaryItemFragmentContainer
