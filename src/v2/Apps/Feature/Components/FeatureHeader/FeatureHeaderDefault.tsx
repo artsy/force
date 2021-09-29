@@ -1,6 +1,5 @@
 import React from "react"
 import styled from "styled-components"
-// import { Text } from "@artsy/palette"
 import { Flex, HTML, Text, FullBleed } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FeatureHeaderDefault_feature } from "v2/__generated__/FeatureHeaderDefault_feature.graphql"
@@ -41,7 +40,6 @@ export interface FeatureHeaderDefaultProps {
 }
 
 export const FeatureHeaderDefault: React.FC<FeatureHeaderDefaultProps> = ({
-  // feature: { name },
   feature: { name, subheadline, defaultImage: image },
 }) => {
   if (image) {
