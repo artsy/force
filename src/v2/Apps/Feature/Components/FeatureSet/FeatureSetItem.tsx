@@ -14,7 +14,6 @@ export const FeatureSetItem: React.FC<FeatureSetItemProps> = ({
   setItem,
   size,
 }) => {
-  console.log("setItem", setItem)
   switch (setItem.__typename) {
     case "FeaturedLink":
       return (
