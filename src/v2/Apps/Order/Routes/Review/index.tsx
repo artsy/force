@@ -55,6 +55,9 @@ export interface ReviewProps {
 
 const logger = createLogger("Order/Routes/Review/index.tsx")
 
+// TODO: move this to cohesion
+const OrdersReviewOwnerType = "orders-review"
+
 @track()
 export class ReviewRoute extends Component<ReviewProps> {
   @track<ReviewProps>(props => ({
@@ -318,7 +321,7 @@ export class ReviewRoute extends Component<ReviewProps> {
       ({
         action: ActionType.clickedChangePaymentMethod,
         context_module: ContextModule.ordersReview,
-        context_page_owner_type: "orders_review", // TODO: add this to cohesion
+        context_page_owner_type: OrdersReviewOwnerType,
       } as ClickedChangePaymentMethod)
   )
   onChangePayment() {
@@ -330,7 +333,7 @@ export class ReviewRoute extends Component<ReviewProps> {
       ({
         action: ActionType.clickedChangeShippingAddress,
         context_module: ContextModule.ordersReview,
-        context_page_owner_type: "orders_review", // TODO: add this to cohesion
+        context_page_owner_type: OrdersReviewOwnerType,
       } as ClickedChangeShippingAddress)
   )
   onChangeShippingAddress() {
@@ -342,7 +345,7 @@ export class ReviewRoute extends Component<ReviewProps> {
       ({
         action: ActionType.clickedChangeShippingMethod,
         context_module: ContextModule.ordersReview,
-        context_page_owner_type: "orders_review", // TODO: add this to cohesion
+        context_page_owner_type: OrdersReviewOwnerType,
       } as ClickedChangeShippingMethod)
   )
   onChangeShippingMethod() {
