@@ -5,6 +5,7 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type FeatureHeaderDefault_feature = {
     readonly name: string;
+    readonly subheadline: string | null;
     readonly defaultImage: {
         readonly sm: {
             readonly src: string;
@@ -66,6 +67,19 @@ return {
       "kind": "ScalarField",
       "name": "name",
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "format",
+          "value": "HTML"
+        }
+      ],
+      "kind": "ScalarField",
+      "name": "subheadline",
+      "storageKey": "subheadline(format:\"HTML\")"
     },
     {
       "alias": "defaultImage",
@@ -148,5 +162,5 @@ return {
   "type": "Feature"
 };
 })();
-(node as any).hash = 'bfde9b2bc11d0d24dff2f68bde6164d6';
+(node as any).hash = '588199148f1e426283021a9e9f40a168';
 export default node;

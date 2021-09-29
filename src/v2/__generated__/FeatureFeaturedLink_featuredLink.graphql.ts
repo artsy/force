@@ -82,12 +82,7 @@ v1 = [
     "name": "height",
     "storageKey": null
   }
-],
-v2 = {
-  "kind": "Literal",
-  "name": "width",
-  "value": 1112
-};
+];
 return {
   "argumentDefinitions": [],
   "kind": "Fragment",
@@ -142,13 +137,13 @@ return {
             {
               "kind": "Literal",
               "name": "height",
-              "value": 500
+              "value": 240
             },
             (v0/*: any*/),
             {
               "kind": "Literal",
               "name": "width",
-              "value": 400
+              "value": 335
             }
           ],
           "concreteType": "CroppedImageUrl",
@@ -156,7 +151,7 @@ return {
           "name": "cropped",
           "plural": false,
           "selections": (v1/*: any*/),
-          "storageKey": "cropped(height:500,version:[\"main\",\"wide\"],width:400)"
+          "storageKey": "cropped(height:240,version:[\"main\",\"wide\"],width:335)"
         },
         {
           "alias": "medium",
@@ -164,13 +159,13 @@ return {
             {
               "kind": "Literal",
               "name": "height",
-              "value": 683
+              "value": 324
             },
             (v0/*: any*/),
             {
               "kind": "Literal",
               "name": "width",
-              "value": 546
+              "value": 452
             }
           ],
           "concreteType": "CroppedImageUrl",
@@ -178,7 +173,7 @@ return {
           "name": "cropped",
           "plural": false,
           "selections": (v1/*: any*/),
-          "storageKey": "cropped(height:683,version:[\"main\",\"wide\"],width:546)"
+          "storageKey": "cropped(height:324,version:[\"main\",\"wide\"],width:452)"
         },
         {
           "alias": "large",
@@ -186,17 +181,21 @@ return {
             {
               "kind": "Literal",
               "name": "height",
-              "value": 626
+              "value": 648
             },
             (v0/*: any*/),
-            (v2/*: any*/)
+            {
+              "kind": "Literal",
+              "name": "width",
+              "value": 904
+            }
           ],
           "concreteType": "CroppedImageUrl",
           "kind": "LinkedField",
           "name": "cropped",
           "plural": false,
           "selections": (v1/*: any*/),
-          "storageKey": "cropped(height:626,version:[\"main\",\"wide\"],width:1112)"
+          "storageKey": "cropped(height:648,version:[\"main\",\"wide\"],width:904)"
         },
         {
           "alias": "full",
@@ -204,17 +203,21 @@ return {
             {
               "kind": "Literal",
               "name": "height",
-              "value": 1112
+              "value": 777
             },
             (v0/*: any*/),
-            (v2/*: any*/)
+            {
+              "kind": "Literal",
+              "name": "width",
+              "value": 1085
+            }
           ],
           "concreteType": "ResizedImageUrl",
           "kind": "LinkedField",
           "name": "resized",
           "plural": false,
           "selections": (v1/*: any*/),
-          "storageKey": "resized(height:1112,version:[\"main\",\"wide\"],width:1112)"
+          "storageKey": "resized(height:777,version:[\"main\",\"wide\"],width:1085)"
         }
       ],
       "storageKey": null
@@ -223,5 +226,5 @@ return {
   "type": "FeaturedLink"
 };
 })();
-(node as any).hash = '1313caa56afa7adb03b9be20b03b67c8';
+(node as any).hash = 'e1feba4f429faf0cc00c661497862007';
 export default node;

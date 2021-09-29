@@ -25,7 +25,15 @@ export type FeatureApp_feature$key = {
 
 
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = [
+  {
+    "kind": "Literal",
+    "name": "format",
+    "value": "HTML"
+  }
+];
+return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
@@ -33,17 +41,17 @@ const node: ReaderFragment = {
   "selections": [
     {
       "alias": null,
-      "args": null,
+      "args": (v0/*: any*/),
       "kind": "ScalarField",
       "name": "description",
-      "storageKey": null
+      "storageKey": "description(format:\"HTML\")"
     },
     {
       "alias": null,
-      "args": null,
+      "args": (v0/*: any*/),
       "kind": "ScalarField",
       "name": "callout",
-      "storageKey": null
+      "storageKey": "callout(format:\"HTML\")"
     },
     {
       "alias": "sets",
@@ -109,5 +117,6 @@ const node: ReaderFragment = {
   ],
   "type": "Feature"
 };
-(node as any).hash = '42443fda660f74d06c2ba425865da33e';
+})();
+(node as any).hash = 'a03892745f198465e63df7420b7e1d3d';
 export default node;

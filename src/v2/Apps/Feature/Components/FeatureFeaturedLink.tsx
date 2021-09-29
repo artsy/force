@@ -98,7 +98,7 @@ export const FeatureFeaturedLink: React.FC<FeatureFeaturedLinkProps> = ({
 
       <Flex flexDirection={size === "large" ? ["column", "row"] : "column"}>
         {subtitle && (
-          <Text my={1} variant="xl" textTransform="uppercase">
+          <Text my={1} variant={["xs", "xs"]} textTransform="uppercase">
             {subtitle}
           </Text>
         )}
@@ -132,29 +132,29 @@ export const FeatureFeaturedLinkFragmentContainer = createFragmentContainer(
         subtitle
         description(format: HTML)
         image {
-          # 4:5
-          small: cropped(width: 400, height: 500, version: ["main", "wide"]) {
+          # 9:16
+          small: cropped(width: 335, height: 240, version: ["main", "wide"]) {
             src
             srcSet
             width
             height
           }
           # 4:5
-          medium: cropped(width: 546, height: 683, version: ["main", "wide"]) {
+          medium: cropped(width: 452, height: 324, version: ["main", "wide"]) {
             src
             srcSet
             width
             height
           }
           # 16:9
-          large: cropped(width: 1112, height: 626, version: ["main", "wide"]) {
+          large: cropped(width: 904, height: 648, version: ["main", "wide"]) {
             src
             srcSet
             width
             height
           }
           # ?:?
-          full: resized(width: 1112, height: 1112, version: ["main", "wide"]) {
+          full: resized(width: 1085, height: 777, version: ["main", "wide"]) {
             src
             srcSet
             width
