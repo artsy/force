@@ -15,6 +15,7 @@ Links should point to specific commits, and not a branch (in case the branch or 
 - [When writing UI, use Palette](#when-writing-ui-use-palette)
 - [For routing, use our framework](#for-routing-use-our-framework)
 - [Leverage TypeScript to prevent runtime bugs](#leverage-typescript-to-prevent-runtime-bugs)
+- [Avoid copying and try to fix `// @ts-expect-error STRICT_NULL_CHECK` flags](#avoid-copying-and-try-to-fix-all--ts-expect-error-strict_null_check-flags)
 - [Use Relay for network requests](#use-relay-for-network-requests)
 - [Prefer Relay containers (higher order components) over relay-hooks](#prefer-relay-containers-higher-order-components-over-relay-hooks)
 - [Keep file structure organized](#keep-file-structure-organized)
