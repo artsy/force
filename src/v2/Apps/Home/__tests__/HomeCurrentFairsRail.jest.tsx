@@ -26,7 +26,7 @@ describe("HomeCurrentFairsRail", () => {
         fairs: [
           {
             name: "Test Fair",
-            href: "test-href",
+            href: "/fair/test-href",
           },
         ],
       }),
@@ -35,6 +35,6 @@ describe("HomeCurrentFairsRail", () => {
     expect(wrapper.text()).toContain("Current Fairs")
     expect(wrapper.text()).toContain("View All Fairs")
     expect(wrapper.text()).toContain("Test Fair")
-    expect(wrapper.html()).toContain("test-href")
+    expect(wrapper.html()).toContain("/fair/test-href")
   })
 })
