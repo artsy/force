@@ -1,6 +1,8 @@
-# Split Test
+# A/B Testing
 
-The Split Test component enables the bucketing of users into categories. When a test is enabled, a cookie is set for each user that is also stored on the window via sharify. The cookie/SD var's name is based on the test name, and its value is set to one of the test's possible outcomes. Engineers can expose multiple variations of features, content, components etc. by hooking into a test outcome.
+> Note: Apologies about the following examples being written in CoffeeScript; this lib code is very old!
+
+The [A/B Test component](https://github.com/artsy/force/blob/master/src/desktop/components/split_test) enables the bucketing of users into categories. When a test is enabled, a cookie is set for each user that is also stored on the window via sharify. The cookie/SD var's name is based on the test name, and its value is set to one of the test's possible outcomes. Engineers can expose multiple variations of features, content, components etc. by hooking into a test outcome.
 
 Rolling out a test requires a few steps:
 
@@ -58,129 +60,9 @@ Once this step is complete, an `sd` variable will be present for all users ident
 
 Tests are by default initialized globally meaning as soon as there is a configuration in the running tests file you'll get access to a Sharify variable the same name as your configuration key with the outcome and the test will set itself up client-side.
 
-### Tracking experiments
-
 A test is not enabled from the analytics side without a `view` event. This must be triggered on the client.
 
-#### In Reaction
-
-SD variables are made available _on the client-side only_ in Reaction when they are added to [Reaction's Sharify `GlobalData`](https://github.com/artsy/reaction/blob/master/typings/sharify.d.ts).
-
-Once that is done, your Reaction app can access Sharify variables as follows:
-
-```jsx
-import { data as sd } from "sharify"
-
-const MyApp = () => {
-  return (
-    <div>{sd.MY_FEATURE === "new" ? <NewComponent /> : <OldComponent />}</div>
-  )
-}
-```
-
-### Add link to artist collections rail test!!!
-
-```javascript
-@track()
-export class MyComponent extends React.Component<Props> {
-  componentDidMount() {
-    this.trackMyTest()
-  }
-
-  @track <
-    Props >
-    (props => {
-      const experiment = "my_test"
-      const variation = sd.MY_TEST
-
-      return {
-        action_type: Schema.ActionType.ExperimentViewed,
-        experiment_id: experiment,
-        experiment_name: experiment,
-        variation_id: variation,
-        variation_name: variation,
-        nonInteraction: 1,
-      }
-    })
-  trackMyTest() {
-    // no-op
-  }
-}
-```
-
-#### In Force
-
-When testing an app built in Reaction, you will only have access to SD data on the client. If you need this information on the server as well, you will need to pass it down from Force.
-
-##### Via Stitch (usually in app routes)
-
-```javascript
-export async function index(req, res, next) {
-  const { MY_TEST } = res.locals.sd
-  const showMyTest = MY_TEST === "experiment"
-
-  const layout = await stitch({
-    basePath: res.app.get("views"),
-    layout: layoutTemplate,
-    config: { ... },
-    blocks: { ... },
-    locals: { ...res.locals },
-    data: {
-      showMyTest, // pass in a/b test as a prop
-    },
-  })
-}
-```
-
-##### Via reaction app with React Router
-
-Reaction apps using React Route, properties should be passed to the context object.
-
-ADD LINK TO ARTIST PAGE
-
-```javascript
-// Server side: buildServerAppContext
-
-app.get("/:slug", async (req, res, next) => {
-    try {
-      const user = req.user && req.user.toJSON()
-      const { MY_TEST } = res.locals.sd
-      const {
-        ...
-      } = await buildServerApp({
-        req,
-        res,
-        routes,
-        context: {
-          injectedData: {
-            showMyTest: MY_TEST === "experiment"
-          }
-        },
-      })
-    // Render layout logic
-    ...
-    }
-  } catch (error) {
-    ...
-  }
-)
-```
-
-```javascript
-// Server side: buildClientApp
-buildClientApp({
-  routes,
-  context: {
-    injectedData: {
-      myTest: sd.MY_TEST,
-    },
-  },
-}).then(({ ClientApp }) => {
-  ReactDOM.hydrate(<ClientApp />, document.getElementById("react-root"))
-})
-```
-
-##### Via Backbone and React Apps housed in Force (legacy)
+## Examples
 
 ```javascript
 // On the client!
