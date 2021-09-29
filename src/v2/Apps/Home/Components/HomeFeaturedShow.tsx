@@ -59,7 +59,7 @@ const HomeFeaturedShow: React.FC<HomeFeaturedShowProps> = ({ show }) => {
         <Box bg="black30" width={325} height={230} />
       )}
 
-      <Spacer mt={2} />
+      <Spacer mt={1} />
 
       <Text variant="lg" mr={1} lineClamp={2}>
         {show.name}

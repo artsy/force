@@ -8,6 +8,7 @@ import {
   Skeleton,
   SkeletonText,
   SkeletonBox,
+  ResponsiveBox,
 } from "@artsy/palette"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -22,6 +23,7 @@ import {
   ContextModule,
   OwnerType,
 } from "@artsy/cohesion"
+import { Masonry } from "v2/Components/Masonry"
 
 interface HomeCurrentFairsRailProps {
   viewer: HomeCurrentFairsRail_viewer
@@ -38,7 +40,8 @@ const HomeCurrentFairsRail: React.FC<HomeCurrentFairsRailProps> = ({
 
   return (
     <HomeCurrentFairsContainer>
-      <Shelf alignItems="flex-start">
+      {/* <Shelf alignItems="flex-start"> */}
+      <Masonry columnCount={2}>
         {viewer.fairs!.map((fair, index) => {
           if (!fair) {
             return <></>
@@ -63,17 +66,23 @@ const HomeCurrentFairsRail: React.FC<HomeCurrentFairsRailProps> = ({
               }}
             >
               <Box key={index}>
-                {fair.image?.cropped?.src ? (
-                  <Image
-                    src={fair.image.cropped.src}
-                    srcSet={fair.image.cropped.srcSet}
-                    width={fair.image.cropped.width}
-                    height={fair.image.cropped.height}
-                    alt=""
-                    lazyLoad
-                  />
-                ) : (
-                  <Box bg="black30" width={440} height={315} />
+                {fair.image?.cropped?.src && (
+                  <ResponsiveBox
+                    aspectWidth={fair.image.cropped.width}
+                    aspectHeight={fair.image.cropped.height}
+                    maxWidth="100%"
+                    display="block"
+                  >
+                    <Image
+                      width="100%"
+                      height="100%"
+                      src={fair.image.cropped.src}
+                      srcSet={fair.image.cropped.srcSet}
+                      style={{ display: "block" }}
+                      alt=""
+                      lazyLoad
+                    />
+                  </ResponsiveBox>
                 )}
               </Box>
               <Text variant="xl" mt={1}>
@@ -82,10 +91,12 @@ const HomeCurrentFairsRail: React.FC<HomeCurrentFairsRailProps> = ({
               <Text variant="lg" color="black60">
                 {fair.startAt} - {fair?.endAt}
               </Text>
+              <Spacer mb={2} />
             </RouterLink>
           )
         })}
-      </Shelf>
+      </Masonry>
+      {/* </Shelf> */}
     </HomeCurrentFairsContainer>
   )
 }
@@ -169,7 +180,7 @@ export const HomeCurrentFairsRailFragmentContainer = createFragmentContainer(
           endAt(format: "MMM Do YYYY")
           bannerSize
           image {
-            cropped(width: 440, height: 315) {
+            cropped(width: 540, height: 415) {
               src
               srcSet
               width
