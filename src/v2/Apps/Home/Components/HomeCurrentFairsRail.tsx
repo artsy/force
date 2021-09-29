@@ -37,11 +37,7 @@ const HomeCurrentFairsRail: React.FC<HomeCurrentFairsRailProps> = ({
           }
 
           return (
-            <RouterLink
-              to={`/fair${fair.href}`}
-              textDecoration="none"
-              key={index}
-            >
+            <RouterLink to={fair.href} textDecoration="none" key={index}>
               <Box key={index}>
                 {fair.image?.cropped?.src ? (
                   <Image
