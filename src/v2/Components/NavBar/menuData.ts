@@ -98,9 +98,9 @@ export const ARTISTS_SUBMENU_DATA: MenuLinkData = {
         dividerBelow: true,
       },
       {
-        text: "Artist Nationality or Ethicity",
+        text: "Artist Nationality or Ethnicity",
         menu: {
-          title: "Artist Nationality or Ethicity",
+          title: "Artist Nationality or Ethnicity",
           links: [
             {
               text: "American",
