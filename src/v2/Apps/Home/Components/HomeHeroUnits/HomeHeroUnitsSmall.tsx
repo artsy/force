@@ -13,7 +13,7 @@ export const HomeHeroUnitsSmall: React.FC = ({ children }) => {
     <>
       <HomeSwiper onChange={setIndex}>{children}</HomeSwiper>
 
-      <Spacer mt={4} />
+      <Spacer mt={2} />
 
       <ProgressDots variant="dash" amount={length} activeIndex={index} />
     </>
