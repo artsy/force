@@ -48,7 +48,7 @@ fragment MyBidsBidItem_saleArtwork on SaleArtwork {
       display
     }
   }
-  position
+  lotLabel
   slug
 }
 */
@@ -253,7 +253,7 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "position",
+            "name": "lotLabel",
             "storageKey": null
           },
           {
@@ -274,7 +274,7 @@ return {
     "metadata": {},
     "name": "MyBidsBidItem_Test_Query",
     "operationKind": "query",
-    "text": "query MyBidsBidItem_Test_Query {\n  saleArtwork(id: \"foo\") {\n    ...MyBidsBidItem_saleArtwork\n    id\n  }\n}\n\nfragment MyBidsBidItem_saleArtwork on SaleArtwork {\n  artwork {\n    artistNames\n    image {\n      resized(width: 55, height: 55) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n  estimate\n  currentBid {\n    display\n  }\n  internalID\n  isHighestBidder\n  isWatching\n  lotState {\n    bidCount\n    sellingPrice {\n      display\n    }\n  }\n  position\n  slug\n}\n"
+    "text": "query MyBidsBidItem_Test_Query {\n  saleArtwork(id: \"foo\") {\n    ...MyBidsBidItem_saleArtwork\n    id\n  }\n}\n\nfragment MyBidsBidItem_saleArtwork on SaleArtwork {\n  artwork {\n    artistNames\n    image {\n      resized(width: 55, height: 55) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n  estimate\n  currentBid {\n    display\n  }\n  internalID\n  isHighestBidder\n  isWatching\n  lotState {\n    bidCount\n    sellingPrice {\n      display\n    }\n  }\n  lotLabel\n  slug\n}\n"
   }
 };
 })();

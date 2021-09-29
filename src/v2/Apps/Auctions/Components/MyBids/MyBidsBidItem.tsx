@@ -70,7 +70,7 @@ export const MyBidsBidItem: React.FC<MyBidsBidItemProps> = ({
             </Text>
 
             <Text variant="xs" color="black60">
-              Lot {saleArtwork.position}
+              Lot {saleArtwork.lotLabel}
             </Text>
           </Box>
 
@@ -162,7 +162,7 @@ export const MyBidsBidItemFragmentContainer = createFragmentContainer(
             display
           }
         }
-        position
+        lotLabel
         slug
       }
     `,

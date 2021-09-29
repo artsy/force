@@ -26,7 +26,7 @@ export type MyBidsBidItem_saleArtwork = {
             readonly display: string | null;
         } | null;
     } | null;
-    readonly position: number | null;
+    readonly lotLabel: string | null;
     readonly slug: string;
     readonly " $refType": "MyBidsBidItem_saleArtwork";
 };
@@ -189,7 +189,7 @@ return {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "position",
+      "name": "lotLabel",
       "storageKey": null
     },
     {
@@ -203,5 +203,5 @@ return {
   "type": "SaleArtwork"
 };
 })();
-(node as any).hash = '75d4f2f4b2a4840a5725d1900cdbdeef';
+(node as any).hash = '96aa172209d13cf0db980cf0357f473b';
 export default node;

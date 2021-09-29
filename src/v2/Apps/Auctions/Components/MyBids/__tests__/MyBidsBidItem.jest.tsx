@@ -47,7 +47,7 @@ describe("MyBidsBidItem", () => {
         slug: "saleArtworkSlug",
         name: "saleArtworkName",
         formattedStartDateTime: "formattedStartDateTime",
-        position: 1,
+        lotLabel: 1,
         isWatching: true,
         artwork: {
           artistNames: "artistNames",
