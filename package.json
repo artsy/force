@@ -411,7 +411,7 @@
   "husky": {
     "hooks": {
       "post-merge": "sh scripts/pull-lock.sh",
-      "pre-commit": "lint-staged",
+      "pre-commit": "lint-staged && scripts/detect-secrets.sh",
       "pre-push": "yarn type-check"
     }
   },
