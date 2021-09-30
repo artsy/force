@@ -18,10 +18,12 @@ import {
 import { AcceptFragmentContainer } from "../Accept"
 import { OrderAppTestPage } from "./Utils/OrderAppTestPage"
 import { mockLocation } from "v2/DevTools/mockLocation"
+import { useTracking } from "v2/System"
 
 jest.unmock("react-relay")
 
 jest.mock("v2/Utils/getCurrentTimeAsIsoString")
+jest.mock("v2/System/Analytics/useTracking")
 const NOW = "2018-12-05T13:47:16.446Z"
 require("v2/Utils/getCurrentTimeAsIsoString").__setCurrentTime(NOW)
 
@@ -41,6 +43,12 @@ const testOrder = {
 }
 
 describe("Accept seller offer", () => {
+  beforeAll(() => {
+    ;(useTracking as jest.Mock).mockImplementation(() => ({
+      trackEvent: jest.fn(),
+    }))
+  })
+
   beforeEach(() => {
     mockLocation()
   })

@@ -14,11 +14,13 @@ import {
 } from "../__fixtures__/MutationResults/submitPendingOffer"
 import { CounterFragmentContainer } from "../Counter"
 import { OrderAppTestPage } from "./Utils/OrderAppTestPage"
+import { useTracking } from "v2/System"
 
 jest.mock("v2/Utils/getCurrentTimeAsIsoString")
 const NOW = "2018-12-05T13:47:16.446Z"
 require("v2/Utils/getCurrentTimeAsIsoString").__setCurrentTime(NOW)
 jest.unmock("react-relay")
+jest.mock("v2/System/Analytics/useTracking")
 
 const realSetInterval = global.setInterval
 
@@ -43,6 +45,12 @@ const testOrder: CounterTestQueryRawResponse["order"] = {
 }
 
 describe("Submit Pending Counter Offer", () => {
+  beforeAll(() => {
+    ;(useTracking as jest.Mock).mockImplementation(() => ({
+      trackEvent: jest.fn(),
+    }))
+  })
+
   const { buildPage, mutations, routes } = createTestEnv({
     Component: CounterFragmentContainer,
     query: graphql`

@@ -76,6 +76,12 @@ import { updateUserAddress } from "../../Mutations/UpdateUserAddress"
 import { deleteUserAddress } from "../../Mutations/DeleteUserAddress"
 import { CreateUserAddressMutationResponse } from "v2/__generated__/CreateUserAddressMutation.graphql"
 import { UpdateUserAddressMutationResponse } from "v2/__generated__/UpdateUserAddressMutation.graphql"
+import {
+  ActionType,
+  ClickedSelectShippingOption,
+  ClickedShippingAddress,
+  ContextModule,
+} from "@artsy/cohesion"
 
 export interface ShippingProps extends SystemContextProps {
   order: Shipping_order
@@ -481,8 +487,29 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
     }
   }
 
-  handleShippingQuoteSelected = (shippingQuoteId: string) => {
+  @track(
+    (_props, _state, args) =>
+      ({
+        action: ActionType.clickedSelectShippingOption,
+        context_module: ContextModule.ordersShipping,
+        context_page_owner_type: "orders-shipping",
+        subject: args[0],
+      } as ClickedSelectShippingOption)
+  )
+  handleShippingQuoteSelected(shippingQuoteId: string) {
     this.setState({ shippingQuoteId: shippingQuoteId })
+  }
+
+  @track(
+    () =>
+      ({
+        action: ActionType.clickedShippingAddress,
+        context_module: ContextModule.ordersShipping,
+        context_page_owner_type: "orders-shipping",
+      } as ClickedShippingAddress)
+  )
+  selectSavedAddressWithTracking(value: string) {
+    this.selectSavedAddress(value)
   }
 
   selectSavedAddress = (value: string) => {
@@ -644,7 +671,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
                 <SavedAddresses
                   me={this.props.me}
                   selectedAddress={selectedAddressID}
-                  onSelect={this.selectSavedAddress}
+                  onSelect={this.selectSavedAddressWithTracking.bind(this)}
                   inCollectorProfile={false}
                   onAddressDelete={this.handleAddressDelete}
                   onAddressCreate={this.handleAddressCreate}
@@ -716,7 +743,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
                   mb={3}
                   selectedShippingQuoteId={shippingQuoteId}
                   shippingQuotes={compact(shippingQuotes)}
-                  onSelect={this.handleShippingQuoteSelected}
+                  onSelect={this.handleShippingQuoteSelected.bind(this)}
                 />
                 <Spacer mt={4} />
               </Collapse>
@@ -740,7 +767,11 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
                 <ArtworkSummaryItem order={order} />
                 <TransactionDetailsSummaryItem order={order} />
               </Flex>
-              <BuyerGuarantee />
+              <BuyerGuarantee
+                contextModule={ContextModule.ordersShipping}
+                // TODO: move this constant to cohesion!
+                contextPageOwnerType="orders-shipping"
+              />
               <Spacer mb={[2, 4]} />
               <Media at="xs">
                 <Button

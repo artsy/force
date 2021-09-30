@@ -4,8 +4,10 @@ import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
 import { commitMutation as _commitMutation, graphql } from "relay-runtime"
 import ToastComponent from "v2/Components/Toast/ToastComponent"
 import { deleteUserAddress } from "v2/Apps/Order/Mutations/DeleteUserAddress"
+import { useTracking } from "v2/System"
 
 jest.unmock("react-relay")
+jest.mock("v2/System/Analytics/useTracking")
 jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => ({}),
 }))
@@ -26,6 +28,11 @@ describe("ToastComponent", () => {
   })
   const mockDeleteUserAddress = deleteUserAddress as jest.Mock
 
+  beforeAll(() => {
+    ;(useTracking as jest.Mock).mockImplementation(() => ({
+      trackEvent: jest.fn(),
+    }))
+  })
   it("renders ToastComponent when address was deleted", () => {
     return new Promise<void>(done => {
       const wrapper = getWrapper({

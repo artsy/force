@@ -435,7 +435,11 @@ export class ReviewRoute extends Component<ReviewProps> {
                   placeholderOverride="To be confirmed*"
                 />
               </Flex>
-              <BuyerGuarantee />
+              <BuyerGuarantee
+                contextModule={ContextModule.ordersReview}
+                // TODO: move this constant to cohesion!
+                contextPageOwnerType="orders-review"
+              />
               {order.myLastOffer && !order.myLastOffer?.hasDefiniteTotal && (
                 <Text variant="xs" color="black60">
                   *Shipping and taxes to be confirmed by gallery

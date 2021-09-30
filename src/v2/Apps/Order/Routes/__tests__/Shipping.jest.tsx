@@ -31,8 +31,10 @@ import {
   saveAddressSuccess,
   updateAddressSuccess,
 } from "../__fixtures__/MutationResults/saveAddress"
+import { useTracking } from "v2/System"
 
 jest.unmock("react-relay")
+jest.mock("v2/System/Analytics/useTracking")
 jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => ({}),
 }))
@@ -147,6 +149,13 @@ describe("Shipping", () => {
     `,
     TestPage: ShippingTestPage,
   })
+
+  beforeAll(() => {
+    ;(useTracking as jest.Mock).mockImplementation(() => ({
+      trackEvent: jest.fn(),
+    }))
+  })
+
   describe("with no saved addresses", () => {
     it("removes radio group if pickup_available flag is false", async () => {
       const pickupAvailableOrder = cloneDeep(testOrder) as any

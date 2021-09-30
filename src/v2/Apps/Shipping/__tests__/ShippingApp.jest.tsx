@@ -4,9 +4,11 @@ import { ShippingApp_Test_Query } from "v2/__generated__/ShippingApp_Test_Query.
 import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
 import { ShippingAppFragmentContainer } from "../Routes/Shipping/ShippingApp"
 import { HeadProvider } from "react-head"
+import { useTracking } from "v2/System"
 
 jest.mock("react-tracking")
 jest.unmock("react-relay")
+jest.mock("v2/System/Analytics/useTracking")
 jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => ({}),
 }))
@@ -28,6 +30,12 @@ const { getWrapper } = setupTestWrapper<ShippingApp_Test_Query>({
 })
 
 describe("ShippingApp", () => {
+  beforeAll(() => {
+    ;(useTracking as jest.Mock).mockImplementation(() => ({
+      trackEvent: jest.fn(),
+    }))
+  })
+
   it("renders collector name and some menu routes", () => {
     const wrapper = getWrapper({
       Me: () => ({
