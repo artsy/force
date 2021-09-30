@@ -546,7 +546,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
         <Link color="red100" hoverColor="red100" href="mailto:orders@artsy.net">
           orders@artsy.net
         </Link>{" "}
-        for assistance
+        for assistance.
       </Text>
     )
   }
