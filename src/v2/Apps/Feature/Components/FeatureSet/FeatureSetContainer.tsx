@@ -12,8 +12,7 @@ export const FeatureSetContainer: React.FC<FeatureSetContainerProps> = ({
   set,
   children,
 }) => {
-  // @ts-expect-error STRICT_NULL_CHECK
-  const count = set.orderedItems.edges.length
+  const count = set?.orderedItems?.edges?.length ?? 0
 
   if (set.layout === "FULL") {
     return (

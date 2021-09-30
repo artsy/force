@@ -77,15 +77,12 @@ export const FeatureFeaturedLink: React.FC<FeatureFeaturedLinkProps> = ({
       {img && (
         <Figure to={href}>
           <ResponsiveImage
-            // @ts-expect-error STRICT_NULL_CHECK
-            aspectWidth={img.width}
-            // @ts-expect-error STRICT_NULL_CHECK
-            aspectHeight={img.height}
+            aspectWidth={img.width ?? 0}
+            aspectHeight={img.height ?? 0}
             maxWidth="100%"
             bg="black10"
           >
-            {/* @ts-expect-error STRICT_NULL_CHECK */}
-            <img src={img.src} srcSet={img.srcSet} alt={title} />
+            <img src={img.src} srcSet={img.srcSet} alt={title ?? ""} />
           </ResponsiveImage>
         </Figure>
       )}

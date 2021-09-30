@@ -33,12 +33,11 @@ const FeatureApp: React.FC<FeatureAppProps> = ({ feature }) => {
         </>
       )}
       <Spacer mb={12} />
-      {/* @ts-expect-error STRICT_NULL_CHECK */}
-      {feature.sets.edges.length > 0 &&
-        // @ts-expect-error STRICT_NULL_CHECK
+      {feature.sets?.edges &&
+        feature.sets.edges.length > 0 &&
         feature.sets.edges.map(
-          // @ts-expect-error STRICT_NULL_CHECK
-          ({ node: set }) => set && <FeatureSet key={set.id} set={set} />
+          edge =>
+            edge?.node && <FeatureSet key={edge.node.id} set={edge.node} />
         )}
     </>
   )
