@@ -42,11 +42,12 @@ interface InquiryLoginState {
 
 export const InquiryLogin: React.FC = () => {
   const {
-    inquiry,
     artworkID,
-    next,
-    setRelayEnvironment,
     engine,
+    inquiry,
+    next,
+    setContext,
+    setRelayEnvironment,
   } = useInquiryContext()
   const { navigateTo } = useInquiryAccountContext()
 
@@ -68,6 +69,22 @@ export const InquiryLogin: React.FC = () => {
 
     try {
       const { user } = await login({ email: inquiry.email!, ...state })
+
+      setContext({
+        collectorLevel: user.collector_level,
+        isLoggedIn: true,
+        location: {
+          city: user.location?.city,
+          state: user.location?.state,
+          stateCode: user.location?.stateCode,
+          postalCode: user.location?.postalCode,
+          country: user.location?.country,
+        },
+        phone: user.phone,
+        profession: user.profession,
+        requiresReload: true,
+        shareFollows: user.share_follows,
+      })
 
       // Creates an authenticated relay environment now that we have a user
       const relayEnvironment = createRelaySSREnvironment({ user })

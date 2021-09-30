@@ -331,7 +331,7 @@ describe("Review", () => {
 
       expect(text).toContain("Shipping")
       expect(text).toContain("Premium delivery")
-      expect(text).toContain("($4.00)")
+      expect(text).toContain("($5.00)")
     })
 
     it("ship to section contains shipping address", () => {

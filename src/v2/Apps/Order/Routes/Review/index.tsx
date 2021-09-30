@@ -33,7 +33,13 @@ import { createStripeWrapper } from "v2/Utils/createStripeWrapper"
 import type { Stripe, StripeElements } from "@stripe/stripe-js"
 import { withSystemContext } from "v2/System"
 import { ShippingArtaSummaryItemFragmentContainer } from "../../Components/ShippingArtaSummaryItem"
-import { ContextModule } from "@artsy/cohesion"
+import {
+  ActionType,
+  ClickedChangePaymentMethod,
+  ClickedChangeShippingAddress,
+  ClickedChangeShippingMethod,
+  ContextModule,
+} from "@artsy/cohesion"
 export interface ReviewProps {
   stripe: Stripe
   elements: StripeElements
@@ -48,6 +54,9 @@ export interface ReviewProps {
 }
 
 const logger = createLogger("Order/Routes/Review/index.tsx")
+
+// TODO: move this to cohesion
+const OrdersReviewOwnerType = "orders-review"
 
 @track()
 export class ReviewRoute extends Component<ReviewProps> {
@@ -307,11 +316,39 @@ export class ReviewRoute extends Component<ReviewProps> {
     this.props.router.push(`/orders/${this.props.order.internalID}/offer`)
   }
 
-  onChangePayment = () => {
+  @track<ReviewProps>(
+    () =>
+      ({
+        action: ActionType.clickedChangePaymentMethod,
+        context_module: ContextModule.ordersReview,
+        context_page_owner_type: OrdersReviewOwnerType,
+      } as ClickedChangePaymentMethod)
+  )
+  onChangePayment() {
     this.props.router.push(`/orders/${this.props.order.internalID}/payment`)
   }
 
-  onChangeShipping = () => {
+  @track<ReviewProps>(
+    () =>
+      ({
+        action: ActionType.clickedChangeShippingAddress,
+        context_module: ContextModule.ordersReview,
+        context_page_owner_type: OrdersReviewOwnerType,
+      } as ClickedChangeShippingAddress)
+  )
+  onChangeShippingAddress() {
+    this.props.router.push(`/orders/${this.props.order.internalID}/shipping`)
+  }
+
+  @track<ReviewProps>(
+    () =>
+      ({
+        action: ActionType.clickedChangeShippingMethod,
+        context_module: ContextModule.ordersReview,
+        context_page_owner_type: OrdersReviewOwnerType,
+      } as ClickedChangeShippingMethod)
+  )
+  onChangeShippingMethod() {
     this.props.router.push(`/orders/${this.props.order.internalID}/shipping`)
   }
 
@@ -359,16 +396,16 @@ export class ReviewRoute extends Component<ReviewProps> {
                   )}
                   <ShippingSummaryItem
                     order={order}
-                    onChange={this.onChangeShipping}
+                    onChange={this.onChangeShippingAddress.bind(this)}
                   />
                   <CreditCardSummaryItem
                     order={order}
-                    onChange={this.onChangePayment}
+                    onChange={this.onChangePayment.bind(this)}
                     title="Payment method"
                   />
                   <ShippingArtaSummaryItemFragmentContainer
                     order={order}
-                    onChange={this.onChangeShipping}
+                    onChange={this.onChangeShippingMethod.bind(this)}
                     title="Shipping"
                   />
                 </Flex>

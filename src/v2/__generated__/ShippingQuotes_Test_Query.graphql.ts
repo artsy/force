@@ -32,6 +32,7 @@ export type ShippingQuotes_Test_QueryRawResponse = {
                                 readonly displayName: string;
                                 readonly isSelected: boolean;
                                 readonly price: string | null;
+                                readonly priceCents: number;
                             }) | null;
                         }) | null> | null;
                     }) | null;
@@ -76,6 +77,7 @@ fragment ShippingQuotes_shippingQuotes on CommerceShippingQuoteEdge {
     displayName
     isSelected
     price(precision: 2)
+    priceCents
   }
 }
 */
@@ -265,6 +267,13 @@ return {
                                     "kind": "ScalarField",
                                     "name": "price",
                                     "storageKey": "price(precision:2)"
+                                  },
+                                  {
+                                    "alias": null,
+                                    "args": null,
+                                    "kind": "ScalarField",
+                                    "name": "priceCents",
+                                    "storageKey": null
                                   }
                                 ],
                                 "storageKey": null
@@ -296,7 +305,7 @@ return {
     "metadata": {},
     "name": "ShippingQuotes_Test_Query",
     "operationKind": "query",
-    "text": "query ShippingQuotes_Test_Query {\n  order: commerceOrder {\n    __typename\n    lineItems {\n      edges {\n        node {\n          shippingQuoteOptions {\n            edges {\n              ...ShippingQuotes_shippingQuotes\n            }\n          }\n          id\n        }\n      }\n    }\n    id\n  }\n}\n\nfragment ShippingQuotes_shippingQuotes on CommerceShippingQuoteEdge {\n  node {\n    id\n    displayName\n    isSelected\n    price(precision: 2)\n  }\n}\n"
+    "text": "query ShippingQuotes_Test_Query {\n  order: commerceOrder {\n    __typename\n    lineItems {\n      edges {\n        node {\n          shippingQuoteOptions {\n            edges {\n              ...ShippingQuotes_shippingQuotes\n            }\n          }\n          id\n        }\n      }\n    }\n    id\n  }\n}\n\nfragment ShippingQuotes_shippingQuotes on CommerceShippingQuoteEdge {\n  node {\n    id\n    displayName\n    isSelected\n    price(precision: 2)\n    priceCents\n  }\n}\n"
   }
 };
 })();

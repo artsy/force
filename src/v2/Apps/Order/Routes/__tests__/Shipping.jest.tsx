@@ -453,7 +453,7 @@ describe("Shipping", () => {
           .toMatchInlineSnapshot(`
             Object {
               "id": "1234",
-              "selectedShippingQuoteId": "278ba0c4-f815-4197-8a8d-b97f1883db21",
+              "selectedShippingQuoteId": "1eb3ba19-643b-4101-b113-2eb4ef7e30b6",
             }
         `)
 
@@ -926,7 +926,7 @@ describe("Shipping", () => {
         page.find(`[data-test="shipping-quotes"]`).last().simulate("click")
 
         expect(page.find(ShippingRoute).state().shippingQuoteId).toEqual(
-          "278ba0c4-f815-4197-8a8d-b97f1883db21"
+          "1eb3ba19-643b-4101-b113-2eb4ef7e30b6"
         )
 
         expect(page.submitButton.props().disabled).toBeFalsy()
@@ -959,7 +959,7 @@ describe("Shipping", () => {
           Object {
             "input": Object {
               "id": "1234",
-              "selectedShippingQuoteId": "278ba0c4-f815-4197-8a8d-b97f1883db21",
+              "selectedShippingQuoteId": "1eb3ba19-643b-4101-b113-2eb4ef7e30b6",
             },
           }
         `)

@@ -129,27 +129,27 @@ export const useEngine = ({ context, onDone }: UseEngine) => {
           )
         },
         hasCompletedProfile: () => {
-          return (
-            // Has all the basic info
+          const hasBasicInfo =
             !!context.current?.profession &&
-              !!context.current.location?.city &&
-              !!context.current.phone &&
-              !!context.current.shareFollows &&
-              // And is a collector
-              (context.current.collectorLevel ?? 0) >= 3
-              ? // If you're a collector then you should have seen all of these
-                // before "completing" your profile
-                visited.current.hasSeen(
-                  "CommercialInterest",
-                  "ArtistsInCollection",
-                  "GalleriesYouWorkWith",
-                  "AuctionHousesYouWorkWith",
-                  "FairsYouAttend",
-                  "InstitutionalAffiliations"
-                )
-              : // If you've never bought art then you only saw this step
-                visited.current.hasSeen("CommercialInterest")
-          )
+            !!context.current?.location?.city &&
+            !!context.current?.phone &&
+            !!context.current?.shareFollows
+
+          const isCollector = (context.current?.collectorLevel ?? 0) >= 3
+
+          return hasBasicInfo && isCollector
+            ? // If you're a collector then you should have seen all of these
+              // before "completing" your profile
+              visited.current.hasSeen(
+                "CommercialInterest",
+                "ArtistsInCollection",
+                "GalleriesYouWorkWith",
+                "AuctionHousesYouWorkWith",
+                "FairsYouAttend",
+                "InstitutionalAffiliations"
+              )
+            : // If you've never bought art then you only saw this step
+              visited.current.hasSeen("CommercialInterest")
         },
         hasSeenArtistsInCollection: () => {
           return visited.current.hasSeen("ArtistsInCollection")
@@ -192,13 +192,6 @@ export const useEngine = ({ context, onDone }: UseEngine) => {
   }, [current, visited])
 
   const next = () => {
-    // At the end, and previously logged out; refresh the page
-    // to log in the entire stack
-    if (engine.current.isEnd() && !context.current?.isLoggedIn) {
-      window.location.reload()
-      return
-    }
-
     // At the end; closes the modal
     if (engine.current.isEnd()) {
       onDone()

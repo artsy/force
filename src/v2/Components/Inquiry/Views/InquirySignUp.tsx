@@ -36,11 +36,12 @@ export const InquirySignUp: React.FC = () => {
   const [error, setError] = useState("")
 
   const {
-    inquiry,
     artworkID,
-    next,
-    setRelayEnvironment,
     engine,
+    inquiry,
+    next,
+    setContext,
+    setRelayEnvironment,
   } = useInquiryContext()
 
   const { submitArtworkInquiryRequest } = useArtworkInquiryRequest()
@@ -60,6 +61,8 @@ export const InquirySignUp: React.FC = () => {
 
     try {
       const { user } = await signUp(state)
+
+      setContext({ isLoggedIn: true, requiresReload: true })
 
       // Creates an authenticated relay environment now that we have a user
       const relayEnvironment = createRelaySSREnvironment({ user })

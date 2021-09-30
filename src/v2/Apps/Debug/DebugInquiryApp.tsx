@@ -10,7 +10,7 @@ export const DebugInquiryApp: React.FC<{}> = () => {
 
   return (
     <>
-      <Button onClick={() => showInquiry({ askSpecialist: true })}>
+      <Button onClick={() => showInquiry({ askSpecialist: false })}>
         Open inquiry questionnaire
       </Button>
 

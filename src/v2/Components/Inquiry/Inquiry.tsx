@@ -1,6 +1,7 @@
 import React from "react"
 import {
-  InquiryProviderQueryRenderer,
+  InquiryContextContextQueryRenderer,
+  InquiryProvider,
   useInquiryContext,
 } from "./Hooks/useInquiryContext"
 import { InquiryBackdrop } from "./Components/InquiryBackdrop"
@@ -18,15 +19,17 @@ export const Inquiry: React.FC<InquiryProps> = ({
   onClose,
 }) => {
   return (
-    <InquiryBackdrop onClose={onClose}>
-      <InquiryProviderQueryRenderer
-        artworkID={artworkID}
-        askSpecialist={askSpecialist}
-        onClose={onClose}
-      >
-        <InquiryDialog />
-      </InquiryProviderQueryRenderer>
-    </InquiryBackdrop>
+    <InquiryProvider
+      artworkID={artworkID}
+      askSpecialist={askSpecialist}
+      onClose={onClose}
+    >
+      <InquiryBackdrop>
+        <InquiryContextContextQueryRenderer>
+          <InquiryDialog />
+        </InquiryContextContextQueryRenderer>
+      </InquiryBackdrop>
+    </InquiryProvider>
   )
 }
 

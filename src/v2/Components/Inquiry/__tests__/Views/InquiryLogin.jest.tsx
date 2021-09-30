@@ -24,11 +24,12 @@ describe("InquiryLogin", () => {
       submitArtworkInquiryRequest,
     }))
     ;(useInquiryContext as jest.Mock).mockImplementation(() => ({
-      next,
       artworkID: "example",
-      inquiry: { email: "example@example.com", message: "Hello world" },
-      setRelayEnvironment: jest.fn(),
       engine: { decide: jest.fn().mockReturnValue(false) },
+      inquiry: { email: "example@example.com", message: "Hello world" },
+      next,
+      setContext: jest.fn(),
+      setRelayEnvironment: jest.fn(),
     }))
     ;(useTracking as jest.Mock).mockImplementation(() => ({ trackEvent }))
   })

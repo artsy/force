@@ -9,6 +9,7 @@ import {
   ShippingQuotesFragmentContainer,
 } from "../ShippingQuotes"
 import { cloneDeep, compact } from "lodash"
+import { ReactWrapper } from "enzyme"
 
 jest.unmock("react-relay")
 
@@ -103,6 +104,18 @@ describe("ShippingQuotes", () => {
     )
   })
 
+  it("quotes are in ascending order by price", async () => {
+    const shippingQuotes = page
+      .find(`[data-test="shipping-quotes"]`)
+      .find(BorderedRadio)
+
+    const ascendingPrices = ["$1.00", "$2.00", "$3.00", "$4.00", "$5.00"]
+
+    shippingQuotes.forEach((node: ReactWrapper, index: number) => {
+      expect(node.find("Text").first().text()).toContain(ascendingPrices[index])
+    })
+  })
+
   it("call onSelect callback on sellected quote change", async () => {
     const shippingQuotes = page
       .find(`[data-test="shipping-quotes"]`)
@@ -110,7 +123,7 @@ describe("ShippingQuotes", () => {
 
     shippingQuotes.first().simulate("click")
 
-    expect(onSelect).toBeCalledWith("1eb3ba19-643b-4101-b113-2eb4ef7e30b6")
+    expect(onSelect).toBeCalledWith("4a8f8080-23d3-4c0e-9811-7a41a9df6933")
   })
 
   it("does not render component if no shhipping quotes", async () => {
