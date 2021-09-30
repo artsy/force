@@ -67,6 +67,8 @@ export const HomeHeroUnitsLarge: React.FC = ({ children }) => {
         <HomeCarousel initialIndex={index}>{children}</HomeCarousel>
       </FullBleed>
 
+      <Spacer my={2} />
+
       <Flex alignItems="center">
         <Box flex={1}>
           <ProgressDots

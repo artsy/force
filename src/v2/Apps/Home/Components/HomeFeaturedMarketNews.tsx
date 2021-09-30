@@ -232,6 +232,7 @@ const PLACEHOLDER = (
         <Column span={6}>
           <Media greaterThan="xs">
             <SkeletonBox bg="black30" width="670" height={720} mb={2} />
+
             <SkeletonText variant="xs" textTransform="uppercase" my={1}>
               Art Fairs
             </SkeletonText>
@@ -264,7 +265,7 @@ const PLACEHOLDER = (
                       <ResponsiveBox
                         aspectWidth={325}
                         aspectHeight={280}
-                        maxWidth={325}
+                        maxWidth="100%"
                       >
                         <SkeletonBox
                           bg="black30"
