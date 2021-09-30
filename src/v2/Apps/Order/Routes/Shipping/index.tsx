@@ -78,6 +78,7 @@ import { CreateUserAddressMutationResponse } from "v2/__generated__/CreateUserAd
 import { UpdateUserAddressMutationResponse } from "v2/__generated__/UpdateUserAddressMutation.graphql"
 import {
   ActionType,
+  ClickedSelectShippingOption,
   ClickedShippingAddress,
   ContextModule,
 } from "@artsy/cohesion"
@@ -486,7 +487,16 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
     }
   }
 
-  handleShippingQuoteSelected = (shippingQuoteId: string) => {
+  @track(
+    (_props, _state, args) =>
+      ({
+        action: ActionType.clickedSelectShippingOption,
+        context_module: ContextModule.ordersShipping,
+        context_page_owner_type: "orders-shipping",
+        subject: args[0],
+      } as ClickedSelectShippingOption)
+  )
+  handleShippingQuoteSelected(shippingQuoteId: string) {
     this.setState({ shippingQuoteId: shippingQuoteId })
   }
 
@@ -733,7 +743,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
                   mb={3}
                   selectedShippingQuoteId={shippingQuoteId}
                   shippingQuotes={compact(shippingQuotes)}
-                  onSelect={this.handleShippingQuoteSelected}
+                  onSelect={this.handleShippingQuoteSelected.bind(this)}
                 />
                 <Spacer mt={4} />
               </Collapse>
