@@ -75,6 +75,7 @@ fragment ShippingQuotes_shippingQuotes on CommerceShippingQuoteEdge {
     displayName
     isSelected
     price(precision: 2)
+    priceCents
   }
 }
 ",
