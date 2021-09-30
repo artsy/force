@@ -76,6 +76,11 @@ import { updateUserAddress } from "../../Mutations/UpdateUserAddress"
 import { deleteUserAddress } from "../../Mutations/DeleteUserAddress"
 import { CreateUserAddressMutationResponse } from "v2/__generated__/CreateUserAddressMutation.graphql"
 import { UpdateUserAddressMutationResponse } from "v2/__generated__/UpdateUserAddressMutation.graphql"
+import {
+  ActionType,
+  ClickedShippingAddress,
+  ContextModule,
+} from "@artsy/cohesion"
 
 export interface ShippingProps extends SystemContextProps {
   order: Shipping_order
@@ -485,6 +490,18 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
     this.setState({ shippingQuoteId: shippingQuoteId })
   }
 
+  @track(
+    () =>
+      ({
+        action: ActionType.clickedShippingAddress,
+        context_module: ContextModule.ordersShipping,
+        context_page_owner_type: "orders-shipping",
+      } as ClickedShippingAddress)
+  )
+  selectSavedAddressWithTracking(value: string) {
+    this.selectSavedAddress(value)
+  }
+
   selectSavedAddress = (value: string) => {
     if (this.state.selectedAddressID !== value) {
       this.setState(
@@ -644,7 +661,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
                 <SavedAddresses
                   me={this.props.me}
                   selectedAddress={selectedAddressID}
-                  onSelect={this.selectSavedAddress}
+                  onSelect={this.selectSavedAddressWithTracking.bind(this)}
                   inCollectorProfile={false}
                   onAddressDelete={this.handleAddressDelete}
                   onAddressCreate={this.handleAddressCreate}
