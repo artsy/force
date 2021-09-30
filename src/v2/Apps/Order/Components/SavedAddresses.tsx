@@ -30,6 +30,8 @@ import { compact } from "lodash"
 import { extractNodes } from "v2/Utils/extractNodes"
 import { UpdateUserAddressMutationResponse } from "v2/__generated__/UpdateUserAddressMutation.graphql"
 import { CreateUserAddressMutationResponse } from "v2/__generated__/CreateUserAddressMutation.graphql"
+import { useTracking } from "v2/System"
+import { ActionType, ContextModule } from "@artsy/cohesion"
 
 export const NEW_ADDRESS = "NEW_ADDRESS"
 const PAGE_SIZE = 30
@@ -72,6 +74,7 @@ const defaultAddressIndex = (addressList: Address[]) => {
 }
 
 const SavedAddresses: React.FC<SavedAddressesProps> = props => {
+  const { trackEvent } = useTracking()
   const [modalDetails, setModalDetails] = useState<ModalDetails | undefined>()
   const [showAddressModal, setShowAddressModal] = useState<boolean>(false)
   const [address, setAddress] = useState<Address | undefined | null>(null)
@@ -156,6 +159,15 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
     })
 
     onShowToast && onShowToast(true, "Saved")
+  }
+
+  const trackAddAddressClick = () => {
+    trackEvent({
+      action: ActionType.clickedAddNewShippingAddress,
+      // TODO: move this constant to cohesion!
+      context_page_owner_type: "orders-shipping",
+      context_module: ContextModule.ordersShipping,
+    })
   }
 
   const styles = useThemeConfig({
@@ -262,6 +274,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
             data-test="shippingButton"
             variant="secondaryOutline"
             onClick={() => {
+              trackAddAddressClick()
               setShowAddressModal(true),
                 setModalDetails({
                   addressModalTitle: "Add address",
