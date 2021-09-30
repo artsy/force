@@ -33,9 +33,11 @@ import { mockLocation } from "v2/DevTools/mockLocation"
 import { mockStripe } from "v2/DevTools/mockStripe"
 import { TransactionDetailsSummaryItem } from "../../Components/TransactionDetailsSummaryItem"
 import { cloneDeep } from "lodash"
+import { useTracking } from "v2/System"
 
 jest.unmock("react-relay")
 
+jest.mock("v2/System/Analytics/useTracking")
 jest.mock("@stripe/stripe-js", () => {
   let mock = null
   return {
@@ -68,6 +70,9 @@ class ReviewTestPage extends OrderAppTestPage {
 describe("Review", () => {
   beforeAll(() => {
     window.sd = { STRIPE_PUBLISHABLE_KEY: "" } as GlobalData
+    ;(useTracking as jest.Mock).mockImplementation(() => ({
+      trackEvent: jest.fn(),
+    }))
   })
 
   beforeEach(() => {
