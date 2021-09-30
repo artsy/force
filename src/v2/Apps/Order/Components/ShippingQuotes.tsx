@@ -29,7 +29,9 @@ export const ShippingQuotes: React.FC<ShippingQuotesProps> = ({
   selectedShippingQuoteId,
   ...rest
 }) => {
-  const quotes = compact(shippingQuotes?.map(quote => quote.node))
+  const quotes = compact(
+    shippingQuotes?.map(quote => quote.node)
+  ).sort((a, b) => (a && b ? a.priceCents - b.priceCents : 0))
 
   if (!quotes || !quotes.length) {
     return null
@@ -76,6 +78,7 @@ export const ShippingQuotesFragmentContainer = createFragmentContainer(
           displayName
           isSelected
           price(precision: 2)
+          priceCents
         }
       }
     `,
