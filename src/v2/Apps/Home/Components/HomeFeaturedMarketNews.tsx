@@ -101,7 +101,6 @@ const HomeFeaturedMarketNews: React.FC<HomeFeaturedMarketNewsProps> = ({
                 <RouterLink
                   key={article.internalID}
                   to={article.href ?? ""}
-                  display="block"
                   textDecoration="none"
                   onClick={() => {
                     const trackingEvent: ClickedArticleGroup = {
@@ -248,7 +247,7 @@ const PLACEHOLDER = (
         </Column>
 
         <Column span={[12, 6]}>
-          <Masonry columnCount={[1, 2]}>
+          <Masonry columnCount={2}>
             {[...new Array(8)].map((_, i) => {
               return (
                 <React.Fragment key={i}>
