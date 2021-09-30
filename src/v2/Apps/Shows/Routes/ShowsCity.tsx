@@ -14,7 +14,7 @@ import { ShowsCity_viewer } from "v2/__generated__/ShowsCity_viewer.graphql"
 import { ShowsCity_city } from "v2/__generated__/ShowsCity_city.graphql"
 import { ShowsMeta } from "../Components/ShowsMeta"
 import { ShowsFeaturedShowFragmentContainer } from "../Components/ShowsFeaturedShow"
-import moment from "moment"
+import { DateTime } from "luxon"
 import { extractNodes } from "v2/Utils/extractNodes"
 import { FragmentRefs } from "relay-runtime"
 
@@ -37,7 +37,9 @@ export const ShowsCity: React.FC<ShowsCityProps> = ({ viewer, city }) => {
     return extractNodes(city.upcomingShows).reduce(
       ([openingThisWeek, upcomingShows]: [Shows, Shows], show) => {
         // Split upcomingShows into shows opening this week...
-        if (moment(show.startAt!).isBefore(moment().add(7, "days"))) {
+        if (
+          DateTime.fromISO(show.startAt!) < DateTime.local().plus({ day: 7 })
+        ) {
           return [[...openingThisWeek, show], upcomingShows]
         }
 
