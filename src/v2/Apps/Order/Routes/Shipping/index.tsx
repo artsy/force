@@ -757,7 +757,11 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
                 <ArtworkSummaryItem order={order} />
                 <TransactionDetailsSummaryItem order={order} />
               </Flex>
-              <BuyerGuarantee />
+              <BuyerGuarantee
+                contextModule={ContextModule.ordersShipping}
+                // TODO: move this constant to cohesion!
+                contextPageOwnerType="orders-shipping"
+              />
               <Spacer mb={[2, 4]} />
               <Media at="xs">
                 <Button

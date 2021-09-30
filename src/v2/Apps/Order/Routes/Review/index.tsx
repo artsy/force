@@ -33,6 +33,7 @@ import { createStripeWrapper } from "v2/Utils/createStripeWrapper"
 import type { Stripe, StripeElements } from "@stripe/stripe-js"
 import { withSystemContext } from "v2/System"
 import { ShippingArtaSummaryItemFragmentContainer } from "../../Components/ShippingArtaSummaryItem"
+import { ContextModule } from "@artsy/cohesion"
 export interface ReviewProps {
   stripe: Stripe
   elements: StripeElements
@@ -397,7 +398,11 @@ export class ReviewRoute extends Component<ReviewProps> {
                   placeholderOverride="To be confirmed*"
                 />
               </Flex>
-              <BuyerGuarantee />
+              <BuyerGuarantee
+                contextModule={ContextModule.ordersReview}
+                // TODO: move this constant to cohesion!
+                contextPageOwnerType="orders-review"
+              />
               {order.myLastOffer && !order.myLastOffer?.hasDefiniteTotal && (
                 <Text variant="xs" color="black60">
                   *Shipping and taxes to be confirmed by gallery

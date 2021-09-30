@@ -1,10 +1,32 @@
+import { ActionType, ContextModule } from "@artsy/cohesion"
 import { CircleBlackCheckIcon, Flex, Link, Text } from "@artsy/palette"
 import React from "react"
+import { useTracking } from "v2/System"
 
 export const BUYER_GUARANTEE_URL =
   "https://support.artsy.net/hc/en-us/articles/360048946973-How-does-Artsy-protect-me"
 
-export const BuyerGuarantee: React.FC = () => {
+interface BuyerGuaranteeProps {
+  contextModule?: ContextModule
+  contextPageOwnerType?: string
+}
+
+export const BuyerGuarantee: React.FC<BuyerGuaranteeProps> = ({
+  contextModule,
+  contextPageOwnerType,
+}) => {
+  const { trackEvent } = useTracking()
+
+  const handleClick = () => {
+    if (contextModule && contextPageOwnerType) {
+      trackEvent({
+        action: ActionType.clickedBuyerProtection,
+        context_module: contextModule,
+        context_page_owner_type: contextPageOwnerType,
+      })
+    }
+  }
+
   return (
     <Flex p={2} my={1} backgroundColor="black10">
       <CircleBlackCheckIcon mr={1} />
@@ -18,6 +40,7 @@ export const BuyerGuarantee: React.FC = () => {
             target="_blank"
             rel="noopener noreferrer"
             href={BUYER_GUARANTEE_URL}
+            onClick={handleClick}
           >
             Artsy’s buyer protection.
           </Link>
