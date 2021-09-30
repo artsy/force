@@ -8,8 +8,10 @@ import { createTestEnv } from "v2/DevTools/createTestEnv"
 import { RootTestPage } from "v2/DevTools/RootTestPage"
 import { userAddressMutation } from "v2/Apps/__tests__/Fixtures/Order/MutationResults"
 import { SavedAddressItem } from "v2/Apps/Order/Components/SavedAddressItem"
+import { useTracking } from "v2/System"
 
 jest.unmock("react-relay")
+jest.mock("v2/System/Analytics/useTracking")
 jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => ({}),
 }))
@@ -21,209 +23,219 @@ class SavedAddressesTestPage extends RootTestPage {
   }
 }
 
-describe("Saved Addresses mutations", () => {
-  const { mutations, buildPage } = createTestEnv({
-    Component: (props: any) => (
-      <SavedAddressesFragmentContainer inCollectorProfile {...props} />
-    ),
-    defaultData: userAddressMutation,
-    TestPage: SavedAddressesTestPage,
-    query: graphql`
-      query SavedAddressesMutation_Test_Query {
-        me {
-          ...SavedAddresses_me
+describe("Saved Addresses", () => {
+  beforeAll(() => {
+    ;(useTracking as jest.Mock).mockImplementation(() => ({
+      trackEvent: jest.fn(),
+    }))
+  })
+  describe("Saved Addresses mutations", () => {
+    const { mutations, buildPage } = createTestEnv({
+      Component: (props: any) => (
+        <SavedAddressesFragmentContainer inCollectorProfile {...props} />
+      ),
+      defaultData: userAddressMutation,
+      TestPage: SavedAddressesTestPage,
+      query: graphql`
+        query SavedAddressesMutation_Test_Query {
+          me {
+            ...SavedAddresses_me
+          }
         }
-      }
-    `,
+      `,
+    })
+
+    it("edits the saved addresses after calling edit address mutation", async () => {
+      const page = await buildPage()
+      const editButton = page
+        .find(`[data-test="editAddressInProfileClick"]`)
+        .first()
+      // @ts-expect-error STRICT_NULL_CHECK
+      editButton
+        .props()
+        .onClick(userAddressMutation.me.addressConnection.edges[0].node as any)
+      const addresses = page.find(SavedAddressItem).first().text()
+
+      setTimeout(() => {
+        expect(mutations.mockFetch).toHaveBeenCalledTimes(1)
+
+        expect(addresses).toBe(
+          "Test Name1 Main StMadrid, Spain, 28001555-555-5555Edit"
+        )
+      }, 0)
+    })
   })
 
-  it("edits the saved addresses after calling edit address mutation", async () => {
-    const page = await buildPage()
-    const editButton = page
-      .find(`[data-test="editAddressInProfileClick"]`)
-      .first()
-    // @ts-expect-error STRICT_NULL_CHECK
-    editButton
-      .props()
-      .onClick(userAddressMutation.me.addressConnection.edges[0].node as any)
-    const addresses = page.find(SavedAddressItem).first().text()
-
-    setTimeout(() => {
-      expect(mutations.mockFetch).toHaveBeenCalledTimes(1)
-
-      expect(addresses).toBe(
-        "Test Name1 Main StMadrid, Spain, 28001555-555-5555Edit"
-      )
-    }, 0)
-  })
-})
-
-describe("SavedAddresses in collector profile", () => {
-  const { getWrapper } = setupTestWrapper({
-    Component: (props: any) => (
-      <SavedAddressesFragmentContainer inCollectorProfile {...props} />
-    ),
-    query: graphql`
-      query SavedAddressesInCollectorProfile_Test_Query {
-        me {
-          ...SavedAddresses_me
+  describe("SavedAddresses in collector profile", () => {
+    const { getWrapper } = setupTestWrapper({
+      Component: (props: any) => (
+        <SavedAddressesFragmentContainer inCollectorProfile {...props} />
+      ),
+      query: graphql`
+        query SavedAddressesInCollectorProfile_Test_Query {
+          me {
+            ...SavedAddresses_me
+          }
         }
-      }
-    `,
-  })
-
-  it("renders modal when button is clicked", () => {
-    const wrapper = getWrapper({
-      Me: () => ({
-        addressConnection: mockAddressConnection,
-      }),
-    })
-    const button = wrapper.find("Button[data-test='profileButton']")
-    const modal = wrapper.find(AddressModal)
-    expect(modal.props().show).toBe(false)
-    button.simulate("click")
-
-    setTimeout(() => {
-      expect(modal).toHaveLength(1)
-    }, 0)
-  })
-
-  it("add address modal with expected props", () => {
-    const wrapper = getWrapper({
-      Me: () => ({
-        addressConnection: mockAddressConnection,
-      }),
+      `,
     })
 
-    const button = wrapper.find("Button[data-test='profileButton']")
-    const modal = wrapper.find(AddressModal)
-    expect(modal.props().show).toBe(false)
-    button.simulate("click")
-
-    setTimeout(() => {
-      expect(modal.props().modalDetails).toBe({
-        addressModalTitle: "Add new address",
-        addressModalAction: "createUserAddress",
+    it("renders modal when button is clicked", () => {
+      const wrapper = getWrapper({
+        Me: () => ({
+          addressConnection: mockAddressConnection,
+        }),
       })
-    }, 0)
-  })
+      const button = wrapper.find("Button[data-test='profileButton']")
+      const modal = wrapper.find(AddressModal)
+      expect(modal.props().show).toBe(false)
+      button.simulate("click")
 
-  it("edit address modal with expected props", () => {
-    const wrapper = getWrapper({
-      Me: () => ({
-        addressConnection: mockAddressConnection,
-      }),
+      setTimeout(() => {
+        expect(modal).toHaveLength(1)
+      }, 0)
     })
-    const button = wrapper.find("Button[data-test='profileButton']")
-    const modal = wrapper.find(AddressModal)
-    expect(modal.props().show).toBe(false)
-    button.simulate("click")
-    setTimeout(() => {
-      expect(modal.props().modalDetails).toBe({
-        addressModalTitle: "Edit address",
-        addressModalAction: "editUserAddress",
+
+    it("add address modal with expected props", () => {
+      const wrapper = getWrapper({
+        Me: () => ({
+          addressConnection: mockAddressConnection,
+        }),
       })
-    }, 0)
-  })
 
-  it("render an add address button", () => {
-    const wrapper = getWrapper({
-      Me: () => ({
-        addressConnection: mockAddressConnection,
-      }),
+      const button = wrapper.find("Button[data-test='profileButton']")
+      const modal = wrapper.find(AddressModal)
+      expect(modal.props().show).toBe(false)
+      button.simulate("click")
+
+      setTimeout(() => {
+        expect(modal.props().modalDetails).toBe({
+          addressModalTitle: "Add new address",
+          addressModalAction: "createUserAddress",
+        })
+      }, 0)
     })
-    expect(wrapper.find("Button[data-test='profileButton']")).toHaveLength(1)
-  })
 
-  it("renders addresses", () => {
-    const wrapper = getWrapper({
-      Me: () => ({
-        addressConnection: mockAddressConnection,
-      }),
+    it("edit address modal with expected props", () => {
+      const wrapper = getWrapper({
+        Me: () => ({
+          addressConnection: mockAddressConnection,
+        }),
+      })
+      const button = wrapper.find("Button[data-test='profileButton']")
+      const modal = wrapper.find(AddressModal)
+      expect(modal.props().show).toBe(false)
+      button.simulate("click")
+      setTimeout(() => {
+        expect(modal.props().modalDetails).toBe({
+          addressModalTitle: "Edit address",
+          addressModalAction: "editUserAddress",
+        })
+      }, 0)
     })
-    const addresses = wrapper.find(BorderBox)
 
-    expect(addresses).toHaveLength(2)
-    expect(addresses.map(address => address.text())).toEqual([
-      "Test Name1 Main StMadrid, Spain, 28001555-555-5555EditEditDelete",
-      "Test Name401 BroadwayFloor 25New York, NY, USA, 10013422-424-4242EditDefault AddressEditDelete",
-    ])
+    it("render an add address button", () => {
+      const wrapper = getWrapper({
+        Me: () => ({
+          addressConnection: mockAddressConnection,
+        }),
+      })
+      expect(wrapper.find("Button[data-test='profileButton']")).toHaveLength(1)
+    })
+
+    it("renders addresses", () => {
+      const wrapper = getWrapper({
+        Me: () => ({
+          addressConnection: mockAddressConnection,
+        }),
+      })
+      const addresses = wrapper.find(BorderBox)
+
+      expect(addresses).toHaveLength(2)
+      expect(addresses.map(address => address.text())).toEqual([
+        "Test Name1 Main StMadrid, Spain, 28001555-555-5555EditEditDelete",
+        "Test Name401 BroadwayFloor 25New York, NY, USA, 10013422-424-4242EditDefault AddressEditDelete",
+      ])
+    })
   })
-})
 
-describe("SavedAddresses outside collector profile", () => {
-  const { getWrapper } = setupTestWrapper({
-    Component: (props: any) => (
-      <SavedAddressesFragmentContainer inCollectorProfile={false} {...props} />
-    ),
-    query: graphql`
-      query SavedAddressesOutsiseCollectorProfile_Test_Query {
-        me {
-          ...SavedAddresses_me
+  describe("SavedAddresses outside collector profile", () => {
+    const { getWrapper } = setupTestWrapper({
+      Component: (props: any) => (
+        <SavedAddressesFragmentContainer
+          inCollectorProfile={false}
+          {...props}
+        />
+      ),
+      query: graphql`
+        query SavedAddressesOutsiseCollectorProfile_Test_Query {
+          me {
+            ...SavedAddresses_me
+          }
         }
-      }
-    `,
-  })
-
-  it("renders modal when button is clicked", () => {
-    const wrapper = getWrapper({
-      Me: () => ({
-        addressConnection: mockAddressConnection,
-      }),
+      `,
     })
-    const button = wrapper.find("Button[data-test='shippingButton']")
-    const modal = wrapper.find(AddressModal)
-    expect(modal.props().show).toBe(false)
-    button.simulate("click")
 
-    setTimeout(() => {
-      expect(modal).toHaveLength(1)
-    }, 0)
-  })
-
-  it("add address modal with expected props", () => {
-    const wrapper = getWrapper({
-      Me: () => ({
-        addressConnection: mockAddressConnection,
-      }),
-    })
-    const button = wrapper.find("Button[data-test='shippingButton']")
-    const modal = wrapper.find(AddressModal)
-    expect(modal.props().show).toBe(false)
-    button.simulate("click")
-
-    setTimeout(() => {
-      expect(modal.props().modalDetails).toBe({
-        addressModalTitle: "Add address",
-        addressModalAction: "createUserAddress",
+    it("renders modal when button is clicked", () => {
+      const wrapper = getWrapper({
+        Me: () => ({
+          addressConnection: mockAddressConnection,
+        }),
       })
-    }, 0)
-  })
+      const button = wrapper.find("Button[data-test='shippingButton']")
+      const modal = wrapper.find(AddressModal)
+      expect(modal.props().show).toBe(false)
+      button.simulate("click")
 
-  it("render an add address button", () => {
-    const wrapper = getWrapper({
-      Me: () => ({
-        addressConnection: mockAddressConnection,
-      }),
+      setTimeout(() => {
+        expect(modal).toHaveLength(1)
+      }, 0)
     })
-    expect(wrapper.find("Button[data-test='shippingButton']")).toHaveLength(1)
-  })
 
-  it("renders radio buttons with addresses", () => {
-    const wrapper = getWrapper({
-      Me: () => ({
-        addressConnection: mockAddressConnection,
-      }),
+    it("add address modal with expected props", () => {
+      const wrapper = getWrapper({
+        Me: () => ({
+          addressConnection: mockAddressConnection,
+        }),
+      })
+      const button = wrapper.find("Button[data-test='shippingButton']")
+      const modal = wrapper.find(AddressModal)
+      expect(modal.props().show).toBe(false)
+      button.simulate("click")
+
+      setTimeout(() => {
+        expect(modal.props().modalDetails).toBe({
+          addressModalTitle: "Add address",
+          addressModalAction: "createUserAddress",
+        })
+      }, 0)
     })
-    const radios = wrapper.find("Radio")
 
-    expect(radios.length).toBe(2)
-    expect(radios.map(radio => radio.props().value)).toEqual(["1", "2"])
-    expect(radios.map(radio => radio.props().selected)).toEqual([false, true])
-    expect(radios.map(radio => radio.text())).toEqual([
-      "Test Name1 Main StMadrid, Spain, 28001555-555-5555Edit",
-      "Test Name401 BroadwayFloor 25New York, NY, USA, 10013422-424-4242Edit",
-    ])
+    it("render an add address button", () => {
+      const wrapper = getWrapper({
+        Me: () => ({
+          addressConnection: mockAddressConnection,
+        }),
+      })
+      expect(wrapper.find("Button[data-test='shippingButton']")).toHaveLength(1)
+    })
+
+    it("renders radio buttons with addresses", () => {
+      const wrapper = getWrapper({
+        Me: () => ({
+          addressConnection: mockAddressConnection,
+        }),
+      })
+      const radios = wrapper.find("Radio")
+
+      expect(radios.length).toBe(2)
+      expect(radios.map(radio => radio.props().value)).toEqual(["1", "2"])
+      expect(radios.map(radio => radio.props().selected)).toEqual([false, true])
+      expect(radios.map(radio => radio.text())).toEqual([
+        "Test Name1 Main StMadrid, Spain, 28001555-555-5555Edit",
+        "Test Name401 BroadwayFloor 25New York, NY, USA, 10013422-424-4242Edit",
+      ])
+    })
   })
 })
 
