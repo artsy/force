@@ -8,7 +8,6 @@ import {
   HTML,
   HTMLProps,
   ResponsiveBox,
-  ResponsiveBoxProps,
   Row,
   Text,
   color,
@@ -17,6 +16,12 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { FeatureFeaturedLink_featuredLink } from "v2/__generated__/FeatureFeaturedLink_featuredLink.graphql"
 import { themeGet } from "@styled-system/theme-get"
+
+const Container = styled(Flex)<FlexProps>`
+  &:hover > div {
+    color: ${color("blue100")};
+  }
+`
 
 const FullHTML = styled(HTML)<HTMLProps>`
   > blockquote {
@@ -28,34 +33,6 @@ const FullHTML = styled(HTML)<HTMLProps>`
     @media (max-width: ${themeGet("breakpoints.xs")}) {
       font-size: ${themeGet("fontSizes.size8")};
     }
-  }
-`
-
-const ResponsiveImage = styled(ResponsiveBox)<ResponsiveBoxProps>`
-  img {
-    width: 100%;
-    height: 100%;
-  }
-`
-
-const Figure = styled(RouterLink)`
-  display: block;
-  position: relative;
-
-  /* Inset border */
-  &::after {
-    content: "";
-    display: block;
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    transition: box-shadow 250ms;
-  }
-
-  &:hover::after {
-    box-shadow: inset 0 0 0 1px ${color("black100")};
   }
 `
 
@@ -73,18 +50,24 @@ export const FeatureFeaturedLink: React.FC<FeatureFeaturedLinkProps> = ({
   const img = image && image[size]
 
   return (
-    <Flex flexDirection="column" {...rest}>
+    <Container flexDirection="column" {...rest}>
       {img && (
-        <Figure to={href}>
-          <ResponsiveImage
+        <RouterLink to={href}>
+          <ResponsiveBox
             aspectWidth={img.width ?? 0}
             aspectHeight={img.height ?? 0}
             maxWidth="100%"
             bg="black10"
           >
-            <img src={img.src} srcSet={img.srcSet} alt={title ?? ""} />
-          </ResponsiveImage>
-        </Figure>
+            <img
+              src={img.src}
+              srcSet={img.srcSet}
+              alt={title ?? ""}
+              width="100%"
+              height="100%"
+            />
+          </ResponsiveBox>
+        </RouterLink>
       )}
 
       {!img && title && (
@@ -115,7 +98,7 @@ export const FeatureFeaturedLink: React.FC<FeatureFeaturedLinkProps> = ({
             <HTML variant="text" html={description} mt={1} flexBasis="50%" />
           ))}
       </Flex>
-    </Flex>
+    </Container>
   )
 }
 
@@ -126,7 +109,7 @@ export const FeatureFeaturedLinkFragmentContainer = createFragmentContainer(
       fragment FeatureFeaturedLink_featuredLink on FeaturedLink {
         href
         title
-        subtitle
+        subtitle(format: PLAIN)
         description(format: HTML)
         image {
           # 9:16

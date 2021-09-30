@@ -23,11 +23,11 @@ const FeatureApp: React.FC<FeatureAppProps> = ({ feature }) => {
           <Spacer my={2} />
           <Join separator={<Spacer my={2} />}>
             {feature.description && (
-              <HTML variant={["xs", "md"]} html={feature.description} />
+              <HTML variant={["md", "lg"]} html={feature.description} />
             )}
 
             {feature.callout && (
-              <HTML variant={["md", "lg"]} html={feature.callout} />
+              <HTML variant={["xs", "md"]} html={feature.callout} />
             )}
           </Join>
         </>

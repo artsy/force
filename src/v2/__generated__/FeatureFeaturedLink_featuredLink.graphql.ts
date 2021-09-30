@@ -105,10 +105,16 @@ return {
     },
     {
       "alias": null,
-      "args": null,
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "format",
+          "value": "PLAIN"
+        }
+      ],
       "kind": "ScalarField",
       "name": "subtitle",
-      "storageKey": null
+      "storageKey": "subtitle(format:\"PLAIN\")"
     },
     {
       "alias": null,
@@ -226,5 +232,5 @@ return {
   "type": "FeaturedLink"
 };
 })();
-(node as any).hash = 'e1feba4f429faf0cc00c661497862007';
+(node as any).hash = '80c4cca0a36a443e6ac6394d2cfd9be9';
 export default node;
