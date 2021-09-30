@@ -38,7 +38,7 @@ fragment HomeCurrentFairsRail_viewer on Viewer {
     startAt(format: "MMM Do")
     endAt(format: "MMM Do YYYY")
     image {
-      cropped(width: 440, height: 315) {
+      cropped(width: 540, height: 415) {
         src
         srcSet
         width
@@ -228,12 +228,12 @@ return {
                       {
                         "kind": "Literal",
                         "name": "height",
-                        "value": 315
+                        "value": 415
                       },
                       {
                         "kind": "Literal",
                         "name": "width",
-                        "value": 440
+                        "value": 540
                       }
                     ],
                     "concreteType": "CroppedImageUrl",
@@ -270,7 +270,7 @@ return {
                         "storageKey": null
                       }
                     ],
-                    "storageKey": "cropped(height:315,width:440)"
+                    "storageKey": "cropped(height:415,width:540)"
                   }
                 ],
                 "storageKey": null
@@ -289,7 +289,7 @@ return {
     "metadata": {},
     "name": "HomeCurrentFairsRailQuery",
     "operationKind": "query",
-    "text": "query HomeCurrentFairsRailQuery {\n  viewer {\n    ...HomeCurrentFairsRail_viewer\n  }\n}\n\nfragment HomeCurrentFairsRail_viewer on Viewer {\n  fairs(hasListing: true, hasFullFeature: true, sort: START_AT_DESC, size: 25, status: RUNNING) {\n    internalID\n    slug\n    bannerSize\n    isPublished\n    profile {\n      isPublished\n      id\n    }\n    href\n    name\n    startAt(format: \"MMM Do\")\n    endAt(format: \"MMM Do YYYY\")\n    image {\n      cropped(width: 440, height: 315) {\n        src\n        srcSet\n        width\n        height\n      }\n    }\n    id\n  }\n}\n"
+    "text": "query HomeCurrentFairsRailQuery {\n  viewer {\n    ...HomeCurrentFairsRail_viewer\n  }\n}\n\nfragment HomeCurrentFairsRail_viewer on Viewer {\n  fairs(hasListing: true, hasFullFeature: true, sort: START_AT_DESC, size: 25, status: RUNNING) {\n    internalID\n    slug\n    bannerSize\n    isPublished\n    profile {\n      isPublished\n      id\n    }\n    href\n    name\n    startAt(format: \"MMM Do\")\n    endAt(format: \"MMM Do YYYY\")\n    image {\n      cropped(width: 540, height: 415) {\n        src\n        srcSet\n        width\n        height\n      }\n    }\n    id\n  }\n}\n"
   }
 };
 })();
