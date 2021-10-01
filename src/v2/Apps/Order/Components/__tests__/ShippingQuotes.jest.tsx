@@ -112,7 +112,7 @@ describe("ShippingQuotes", () => {
     const ascendingPrices = ["$1.00", "$2.00", "$3.00", "$4.00", "$5.00"]
 
     shippingQuotes.forEach((node: ReactWrapper, index: number) => {
-      expect(node.find("Text").first().text()).toContain(ascendingPrices[index])
+      expect(node.find("Text").at(1).text()).toContain(ascendingPrices[index])
     })
   })
 
