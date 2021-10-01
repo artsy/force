@@ -13,9 +13,8 @@ describe("useLazyLoadComponent", () => {
     )
     expect(result.current.isEnteredView).toBeFalsy()
 
-    let wrapper
     act(() => {
-      wrapper = render(result.current.Waypoint())
+      render(result.current.Waypoint())
       jest.advanceTimersByTime(5000)
     })
     waitForNextUpdate()
