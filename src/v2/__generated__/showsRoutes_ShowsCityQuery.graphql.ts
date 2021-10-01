@@ -33,8 +33,31 @@ query showsRoutes_ShowsCityQuery(
   }
 }
 
+fragment Pagination_pageCursors on PageCursors {
+  around {
+    cursor
+    page
+    isCurrent
+  }
+  first {
+    cursor
+    page
+    isCurrent
+  }
+  last {
+    cursor
+    page
+    isCurrent
+  }
+  previous {
+    cursor
+    page
+  }
+}
+
 fragment ShowsCity_city on City {
   name
+  slug
   upcomingShows: showsConnection(first: 18, status: UPCOMING) {
     edges {
       node {
@@ -46,6 +69,13 @@ fragment ShowsCity_city on City {
     }
   }
   currentShows: showsConnection(first: 18, status: CURRENT) {
+    pageInfo {
+      hasNextPage
+      endCursor
+    }
+    pageCursors {
+      ...Pagination_pageCursors
+    }
     totalCount
     edges {
       node {
@@ -395,6 +425,31 @@ v9 = {
 },
 v10 = [
   (v9/*: any*/)
+],
+v11 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "cursor",
+  "storageKey": null
+},
+v12 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "page",
+  "storageKey": null
+},
+v13 = [
+  (v11/*: any*/),
+  (v12/*: any*/),
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "isCurrent",
+    "storageKey": null
+  }
 ];
 return {
   "fragment": {
@@ -491,6 +546,13 @@ return {
         "selections": [
           (v3/*: any*/),
           {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "slug",
+            "storageKey": null
+          },
+          {
             "alias": "upcomingShows",
             "args": [
               (v4/*: any*/),
@@ -522,6 +584,85 @@ return {
             "name": "showsConnection",
             "plural": false,
             "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "PageInfo",
+                "kind": "LinkedField",
+                "name": "pageInfo",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "hasNextPage",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "endCursor",
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "PageCursors",
+                "kind": "LinkedField",
+                "name": "pageCursors",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "PageCursor",
+                    "kind": "LinkedField",
+                    "name": "around",
+                    "plural": true,
+                    "selections": (v13/*: any*/),
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "PageCursor",
+                    "kind": "LinkedField",
+                    "name": "first",
+                    "plural": false,
+                    "selections": (v13/*: any*/),
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "PageCursor",
+                    "kind": "LinkedField",
+                    "name": "last",
+                    "plural": false,
+                    "selections": (v13/*: any*/),
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "PageCursor",
+                    "kind": "LinkedField",
+                    "name": "previous",
+                    "plural": false,
+                    "selections": [
+                      (v11/*: any*/),
+                      (v12/*: any*/)
+                    ],
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              },
               {
                 "alias": null,
                 "args": null,
@@ -560,7 +701,7 @@ return {
     "metadata": {},
     "name": "showsRoutes_ShowsCityQuery",
     "operationKind": "query",
-    "text": "query showsRoutes_ShowsCityQuery(\n  $slug: String!\n) {\n  viewer {\n    ...ShowsCity_viewer\n  }\n  city(slug: $slug) {\n    ...ShowsCity_city\n  }\n}\n\nfragment ShowsCity_city on City {\n  name\n  upcomingShows: showsConnection(first: 18, status: UPCOMING) {\n    edges {\n      node {\n        internalID\n        startAt\n        ...ShowsFeaturedShow_show\n        id\n      }\n    }\n  }\n  currentShows: showsConnection(first: 18, status: CURRENT) {\n    totalCount\n    edges {\n      node {\n        internalID\n        ...ShowsFeaturedShow_show\n        id\n      }\n    }\n  }\n  pastShows: showsConnection(first: 18, status: CLOSED) {\n    edges {\n      node {\n        internalID\n        ...ShowsFeaturedShow_show\n        id\n      }\n    }\n  }\n}\n\nfragment ShowsCity_viewer on Viewer {\n  ...ShowsHeader_viewer\n}\n\nfragment ShowsFeaturedShow_show on Show {\n  ...ShowsShowDates_show\n  id\n  name\n  href\n  coverImage {\n    title\n    large: cropped(width: 910, height: 683) {\n      width\n      height\n      src\n      srcSet\n    }\n    small: cropped(width: 600, height: 450) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on ExternalPartner {\n      name\n      id\n    }\n    ... on Node {\n      id\n    }\n  }\n}\n\nfragment ShowsHeader_viewer on Viewer {\n  allCities: cities {\n    text: name\n    value: slug\n  }\n  featuredCities: cities(featured: true) {\n    text: name\n    value: slug\n  }\n}\n\nfragment ShowsShowDates_show on Show {\n  startAt\n  endAt\n  formattedStartAt: startAt(format: \"MMM D\")\n  formattedEndAt: endAt(format: \"MMM D\")\n  location {\n    city\n    id\n  }\n}\n"
+    "text": "query showsRoutes_ShowsCityQuery(\n  $slug: String!\n) {\n  viewer {\n    ...ShowsCity_viewer\n  }\n  city(slug: $slug) {\n    ...ShowsCity_city\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n\nfragment ShowsCity_city on City {\n  name\n  slug\n  upcomingShows: showsConnection(first: 18, status: UPCOMING) {\n    edges {\n      node {\n        internalID\n        startAt\n        ...ShowsFeaturedShow_show\n        id\n      }\n    }\n  }\n  currentShows: showsConnection(first: 18, status: CURRENT) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    totalCount\n    edges {\n      node {\n        internalID\n        ...ShowsFeaturedShow_show\n        id\n      }\n    }\n  }\n  pastShows: showsConnection(first: 18, status: CLOSED) {\n    edges {\n      node {\n        internalID\n        ...ShowsFeaturedShow_show\n        id\n      }\n    }\n  }\n}\n\nfragment ShowsCity_viewer on Viewer {\n  ...ShowsHeader_viewer\n}\n\nfragment ShowsFeaturedShow_show on Show {\n  ...ShowsShowDates_show\n  id\n  name\n  href\n  coverImage {\n    title\n    large: cropped(width: 910, height: 683) {\n      width\n      height\n      src\n      srcSet\n    }\n    small: cropped(width: 600, height: 450) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on ExternalPartner {\n      name\n      id\n    }\n    ... on Node {\n      id\n    }\n  }\n}\n\nfragment ShowsHeader_viewer on Viewer {\n  allCities: cities {\n    text: name\n    value: slug\n  }\n  featuredCities: cities(featured: true) {\n    text: name\n    value: slug\n  }\n}\n\nfragment ShowsShowDates_show on Show {\n  startAt\n  endAt\n  formattedStartAt: startAt(format: \"MMM D\")\n  formattedEndAt: endAt(format: \"MMM D\")\n  location {\n    city\n    id\n  }\n}\n"
   }
 };
 })();

@@ -19,7 +19,7 @@ const ShowsIndexRoute = loadable(
 const ShowsCityRoute = loadable(
   () => import(/* webpackChunkName: "showsBundle" */ "./Routes/ShowsCity"),
   {
-    resolveComponent: component => component.ShowsCityFragmentContainer,
+    resolveComponent: component => component.ShowsCityRefetchContainer,
   }
 )
 
