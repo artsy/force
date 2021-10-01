@@ -63,8 +63,8 @@ describe("NavBar", () => {
   describe("desktop", () => {
     it("renders logged out items", () => {
       const wrapper = getWrapper()
-      expect(wrapper.html()).toContain("Log in")
-      expect(wrapper.html()).toContain("Sign up")
+      expect(wrapper.html()).toContain("Log In")
+      expect(wrapper.html()).toContain("Sign Up")
       expect(wrapper.find(BellIcon).length).toEqual(0)
       expect(wrapper.find(SoloIcon).length).toEqual(0)
     })
@@ -72,8 +72,8 @@ describe("NavBar", () => {
     it("renders logged in items", () => {
       // @ts-expect-error STRICT_NULL_CHECK
       const wrapper = getWrapper({ user: true })
-      expect(wrapper.html()).not.toContain("Log in")
-      expect(wrapper.html()).not.toContain("Sign up")
+      expect(wrapper.html()).not.toContain("Log In")
+      expect(wrapper.html()).not.toContain("Sign Up")
       expect(wrapper.find(BellIcon).length).toEqual(1)
       expect(wrapper.find(SoloIcon).length).toEqual(1)
     })

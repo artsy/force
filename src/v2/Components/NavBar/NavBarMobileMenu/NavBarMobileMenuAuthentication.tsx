@@ -146,11 +146,11 @@ const NavBarMobileMenuLoggedOut: React.FC = () => {
   return (
     <>
       <NavBarMobileMenuItemLink to={authLink(ModalType.signup)}>
-        Sign up
+        Sign Up
       </NavBarMobileMenuItemLink>
 
       <NavBarMobileMenuItemLink to={authLink(ModalType.login)}>
-        Log in
+        Log In
       </NavBarMobileMenuItemLink>
     </>
   )
