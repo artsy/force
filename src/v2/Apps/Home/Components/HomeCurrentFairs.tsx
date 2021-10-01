@@ -48,7 +48,7 @@ const HomeCurrentFairs: React.FC<HomeCurrentFairsProps> = ({ viewer }) => {
               to={fair.href}
               key={index}
               textDecoration="none"
-              style={{ display: "block " }}
+              display="block"
               onClick={() => {
                 const trackingEvent: ClickedFairGroup = {
                   action: ActionType.clickedFairGroup,
