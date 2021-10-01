@@ -68,8 +68,8 @@ describe("NavBarMobileMenu", () => {
         ["/institutions", "Museums"],
         ["/consign", "Sell"],
         ["/articles", "Editorial"],
-        ["/signup?intent=signup&contextModule=header", "Sign up"],
-        ["/login?intent=login&contextModule=header", "Log in"],
+        ["/signup?intent=signup&contextModule=header", "Sign Up"],
+        ["/login?intent=login&contextModule=header", "Log In"],
       ].map(link => link.join(""))
 
       const linkContainer = getWrapper({})

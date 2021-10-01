@@ -147,7 +147,7 @@ export const NavBar: React.FC = track(
                   flex={1}
                   size="small"
                 >
-                  Sign up
+                  Sign Up
                 </Button>
 
                 <Button
@@ -158,7 +158,7 @@ export const NavBar: React.FC = track(
                   ml={1}
                   size="small"
                 >
-                  Log in
+                  Log In
                 </Button>
               </Flex>
             )}
@@ -216,7 +216,7 @@ export const NavBar: React.FC = track(
                         })
                       }}
                     >
-                      Log in
+                      Log In
                     </Button>
 
                     <Button
@@ -230,7 +230,7 @@ export const NavBar: React.FC = track(
                         })
                       }}
                     >
-                      Sign up
+                      Sign Up
                     </Button>
                   </Flex>
                 )}
