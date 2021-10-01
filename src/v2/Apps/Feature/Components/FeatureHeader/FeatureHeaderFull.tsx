@@ -58,17 +58,12 @@ export const FeatureHeaderFull: React.FC<FeatureHeaderFullProps> = ({
 
         <Box p={4}>
           <Join separator={<Spacer my={1} />}>
-            <Text
-              variant="largeTitle"
-              as="h1"
-              fontSize="size10"
-              textAlign="center"
-            >
+            <Text variant="xxl" as="h1" textAlign="center">
               {name}
             </Text>
 
             {subheadline && (
-              <HTML variant="subtitle" textAlign="center" html={subheadline} />
+              <HTML variant="md" textAlign="center" html={subheadline} />
             )}
           </Join>
         </Box>

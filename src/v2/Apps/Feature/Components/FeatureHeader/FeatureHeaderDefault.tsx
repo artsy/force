@@ -62,16 +62,11 @@ export const FeatureHeaderDefault: React.FC<FeatureHeaderDefaultProps> = ({
           </Figure>
 
           <Meta p={4} flexBasis={image ? "50%" : "100%"}>
-            <Text
-              variant="largeTitle"
-              as="h1"
-              fontSize="size10"
-              textAlign="center"
-            >
+            <Text variant="xxl" as="h1" textAlign="center">
               {name}
             </Text>
             {subheadline && (
-              <HTML variant="subtitle" html={subheadline} textAlign="center" />
+              <HTML variant="md" html={subheadline} textAlign="center" mt={1} />
             )}
           </Meta>
         </Container>

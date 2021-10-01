@@ -4,13 +4,13 @@ import {
   Col,
   Flex,
   FlexProps,
+  Image,
   Grid,
   HTML,
   HTMLProps,
   ResponsiveBox,
   Row,
   Text,
-  color,
 } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "v2/System/Router/RouterLink"
@@ -19,7 +19,7 @@ import { themeGet } from "@styled-system/theme-get"
 
 const Container = styled(Flex)<FlexProps>`
   &:hover > div {
-    color: ${color("blue100")};
+    color: ${themeGet("colors.blue100")};
   }
 `
 
@@ -59,12 +59,13 @@ export const FeatureFeaturedLink: React.FC<FeatureFeaturedLinkProps> = ({
             maxWidth="100%"
             bg="black10"
           >
-            <img
+            <Image
               src={img.src}
               srcSet={img.srcSet}
               alt={title ?? ""}
               width="100%"
               height="100%"
+              lazyLoad
             />
           </ResponsiveBox>
         </RouterLink>
@@ -78,7 +79,7 @@ export const FeatureFeaturedLink: React.FC<FeatureFeaturedLinkProps> = ({
 
       <Flex flexDirection={size === "large" ? ["column", "row"] : "column"}>
         {subtitle && (
-          <Text my={1} variant={["xs", "xs"]} textTransform="uppercase">
+          <Text my={1} variant="xs" textTransform="uppercase">
             {subtitle}
           </Text>
         )}
