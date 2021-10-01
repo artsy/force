@@ -19,12 +19,11 @@ describe("useDialog", () => {
   })
 
   it("visibility is set to true", () => {
-    const { result, waitForNextUpdate } = renderHook(() => useDialog(hookProps))
+    const { result } = renderHook(() => useDialog(hookProps))
 
     act(() => {
       result.current.showDialog()
     })
-    waitForNextUpdate()
     render(result.current.dialogComponent)
 
     expect(result.current.isVisible).toBeTruthy()
@@ -34,13 +33,12 @@ describe("useDialog", () => {
   })
 
   it("visibility is set to false after being set to true", () => {
-    const { result, waitForNextUpdate } = renderHook(() => useDialog(hookProps))
+    const { result } = renderHook(() => useDialog(hookProps))
 
     act(() => {
       result.current.showDialog()
       result.current.hideDialog()
     })
-    waitForNextUpdate()
     render(result.current.dialogComponent)
 
     expect(screen.queryByText("Dialog")).not.toBeInTheDocument()

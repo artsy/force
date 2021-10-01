@@ -8,16 +8,15 @@ describe("useLazyLoadComponent", () => {
   })
 
   it("renders the component lazily after 1s", () => {
-    const { result, waitForNextUpdate } = renderHook(() =>
+    const { result } = renderHook(() =>
       useLazyLoadComponent({ threshold: 500 })
     )
     expect(result.current.isEnteredView).toBeFalsy()
 
     act(() => {
       render(result.current.Waypoint())
-      jest.advanceTimersByTime(5000)
+      jest.advanceTimersByTime(500)
     })
-    waitForNextUpdate()
 
     expect(result.current.isEnteredView).toBeTruthy()
   })
