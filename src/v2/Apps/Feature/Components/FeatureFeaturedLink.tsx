@@ -13,12 +13,12 @@ import {
   Text,
 } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { RouterLink } from "v2/System/Router/RouterLink"
+import { RouterLink, RouterLinkProps } from "v2/System/Router/RouterLink"
 import { FeatureFeaturedLink_featuredLink } from "v2/__generated__/FeatureFeaturedLink_featuredLink.graphql"
 import { themeGet } from "@styled-system/theme-get"
 
-const Container = styled(Flex)<FlexProps>`
-  &:hover > div {
+const Figure = styled(RouterLink)<RouterLinkProps>`
+  &:hover + div {
     color: ${themeGet("colors.blue100")};
   }
 `
@@ -50,9 +50,9 @@ export const FeatureFeaturedLink: React.FC<FeatureFeaturedLinkProps> = ({
   const img = image && image[size]
 
   return (
-    <Container flexDirection="column" {...rest}>
+    <Flex flexDirection="column" {...rest}>
       {img && (
-        <RouterLink to={href}>
+        <Figure to={href}>
           <ResponsiveBox
             aspectWidth={img.width ?? 0}
             aspectHeight={img.height ?? 0}
@@ -68,7 +68,7 @@ export const FeatureFeaturedLink: React.FC<FeatureFeaturedLinkProps> = ({
               lazyLoad
             />
           </ResponsiveBox>
-        </RouterLink>
+        </Figure>
       )}
 
       {!img && title && (
@@ -99,7 +99,7 @@ export const FeatureFeaturedLink: React.FC<FeatureFeaturedLinkProps> = ({
             <HTML variant="text" html={description} mt={1} flexBasis="50%" />
           ))}
       </Flex>
-    </Container>
+    </Flex>
   )
 }
 
