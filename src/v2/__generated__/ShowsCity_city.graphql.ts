@@ -5,6 +5,7 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ShowsCity_city = {
     readonly name: string;
+    readonly slug: string;
     readonly upcomingShows: {
         readonly edges: ReadonlyArray<{
             readonly node: {
@@ -15,6 +16,13 @@ export type ShowsCity_city = {
         } | null> | null;
     } | null;
     readonly currentShows: {
+        readonly pageInfo: {
+            readonly hasNextPage: boolean;
+            readonly endCursor: string | null;
+        };
+        readonly pageCursors: {
+            readonly " $fragmentRefs": FragmentRefs<"Pagination_pageCursors">;
+        };
         readonly totalCount: number | null;
         readonly edges: ReadonlyArray<{
             readonly node: {
@@ -84,7 +92,14 @@ v3 = {
   "storageKey": null
 };
 return {
-  "argumentDefinitions": [],
+  "argumentDefinitions": [
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "after",
+      "type": "String"
+    }
+  ],
   "kind": "Fragment",
   "metadata": null,
   "name": "ShowsCity_city",
@@ -94,6 +109,13 @@ return {
       "args": null,
       "kind": "ScalarField",
       "name": "name",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "slug",
       "storageKey": null
     },
     {
@@ -148,6 +170,11 @@ return {
     {
       "alias": "currentShows",
       "args": [
+        {
+          "kind": "Variable",
+          "name": "after",
+          "variableName": "after"
+        },
         (v0/*: any*/),
         {
           "kind": "Literal",
@@ -163,13 +190,54 @@ return {
         {
           "alias": null,
           "args": null,
+          "concreteType": "PageInfo",
+          "kind": "LinkedField",
+          "name": "pageInfo",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "hasNextPage",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "endCursor",
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "PageCursors",
+          "kind": "LinkedField",
+          "name": "pageCursors",
+          "plural": false,
+          "selections": [
+            {
+              "args": null,
+              "kind": "FragmentSpread",
+              "name": "Pagination_pageCursors"
+            }
+          ],
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
           "kind": "ScalarField",
           "name": "totalCount",
           "storageKey": null
         },
         (v3/*: any*/)
       ],
-      "storageKey": "showsConnection(first:18,status:\"CURRENT\")"
+      "storageKey": null
     },
     {
       "alias": "pastShows",
@@ -194,5 +262,5 @@ return {
   "type": "City"
 };
 })();
-(node as any).hash = '192d91d92a4d89a2df7cd00e8b801303';
+(node as any).hash = '72897c3f4c45b368dd4ac890718f9c60';
 export default node;

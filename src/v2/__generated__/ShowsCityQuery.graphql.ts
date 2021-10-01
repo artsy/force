@@ -3,29 +3,29 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type ShowsCity_Test_QueryVariables = {};
-export type ShowsCity_Test_QueryResponse = {
-    readonly viewer: {
-        readonly " $fragmentRefs": FragmentRefs<"ShowsCity_viewer">;
-    } | null;
+export type ShowsCityQueryVariables = {
+    slug: string;
+    after?: string | null;
+};
+export type ShowsCityQueryResponse = {
     readonly city: {
         readonly " $fragmentRefs": FragmentRefs<"ShowsCity_city">;
     } | null;
 };
-export type ShowsCity_Test_Query = {
-    readonly response: ShowsCity_Test_QueryResponse;
-    readonly variables: ShowsCity_Test_QueryVariables;
+export type ShowsCityQuery = {
+    readonly response: ShowsCityQueryResponse;
+    readonly variables: ShowsCityQueryVariables;
 };
 
 
 
 /*
-query ShowsCity_Test_Query {
-  viewer {
-    ...ShowsCity_viewer
-  }
-  city(slug: "example") {
-    ...ShowsCity_city
+query ShowsCityQuery(
+  $slug: String!
+  $after: String
+) {
+  city(slug: $slug) {
+    ...ShowsCity_city_WGPvJ
   }
 }
 
@@ -51,7 +51,7 @@ fragment Pagination_pageCursors on PageCursors {
   }
 }
 
-fragment ShowsCity_city on City {
+fragment ShowsCity_city_WGPvJ on City {
   name
   slug
   upcomingShows: showsConnection(first: 18, status: UPCOMING) {
@@ -64,7 +64,7 @@ fragment ShowsCity_city on City {
       }
     }
   }
-  currentShows: showsConnection(first: 18, status: CURRENT) {
+  currentShows: showsConnection(first: 18, status: CURRENT, after: $after) {
     pageInfo {
       hasNextPage
       endCursor
@@ -90,10 +90,6 @@ fragment ShowsCity_city on City {
       }
     }
   }
-}
-
-fragment ShowsCity_viewer on Viewer {
-  ...ShowsHeader_viewer
 }
 
 fragment ShowsFeaturedShow_show on Show {
@@ -131,17 +127,6 @@ fragment ShowsFeaturedShow_show on Show {
   }
 }
 
-fragment ShowsHeader_viewer on Viewer {
-  allCities: cities {
-    text: name
-    value: slug
-  }
-  featuredCities: cities(featured: true) {
-    text: name
-    value: slug
-  }
-}
-
 fragment ShowsShowDates_show on Show {
   startAt
   endAt
@@ -157,54 +142,57 @@ fragment ShowsShowDates_show on Show {
 const node: ConcreteRequest = (function(){
 var v0 = [
   {
-    "kind": "Literal",
+    "defaultValue": null,
+    "kind": "LocalArgument",
     "name": "slug",
-    "value": "example"
+    "type": "String!"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "after",
+    "type": "String"
   }
 ],
 v1 = [
   {
-    "alias": "text",
-    "args": null,
-    "kind": "ScalarField",
-    "name": "name",
-    "storageKey": null
-  },
-  {
-    "alias": "value",
-    "args": null,
-    "kind": "ScalarField",
+    "kind": "Variable",
     "name": "slug",
-    "storageKey": null
+    "variableName": "slug"
   }
 ],
 v2 = {
+  "kind": "Variable",
+  "name": "after",
+  "variableName": "after"
+},
+v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "name",
   "storageKey": null
 },
-v3 = {
+v4 = {
   "kind": "Literal",
   "name": "first",
   "value": 18
 },
-v4 = [
+v5 = [
   {
     "kind": "Literal",
     "name": "format",
     "value": "MMM D"
   }
 ],
-v5 = {
+v6 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v6 = [
+v7 = [
   {
     "alias": null,
     "args": null,
@@ -234,10 +222,10 @@ v6 = [
     "storageKey": null
   }
 ],
-v7 = [
-  (v2/*: any*/)
+v8 = [
+  (v3/*: any*/)
 ],
-v8 = {
+v9 = {
   "alias": null,
   "args": null,
   "concreteType": "ShowEdge",
@@ -276,14 +264,14 @@ v8 = {
         },
         {
           "alias": "formattedStartAt",
-          "args": (v4/*: any*/),
+          "args": (v5/*: any*/),
           "kind": "ScalarField",
           "name": "startAt",
           "storageKey": "startAt(format:\"MMM D\")"
         },
         {
           "alias": "formattedEndAt",
-          "args": (v4/*: any*/),
+          "args": (v5/*: any*/),
           "kind": "ScalarField",
           "name": "endAt",
           "storageKey": "endAt(format:\"MMM D\")"
@@ -303,12 +291,12 @@ v8 = {
               "name": "city",
               "storageKey": null
             },
-            (v5/*: any*/)
+            (v6/*: any*/)
           ],
           "storageKey": null
         },
-        (v5/*: any*/),
-        (v2/*: any*/),
+        (v6/*: any*/),
+        (v3/*: any*/),
         {
           "alias": null,
           "args": null,
@@ -349,7 +337,7 @@ v8 = {
               "kind": "LinkedField",
               "name": "cropped",
               "plural": false,
-              "selections": (v6/*: any*/),
+              "selections": (v7/*: any*/),
               "storageKey": "cropped(height:683,width:910)"
             },
             {
@@ -370,7 +358,7 @@ v8 = {
               "kind": "LinkedField",
               "name": "cropped",
               "plural": false,
-              "selections": (v6/*: any*/),
+              "selections": (v7/*: any*/),
               "storageKey": "cropped(height:450,width:600)"
             }
           ],
@@ -391,15 +379,15 @@ v8 = {
               "name": "__typename",
               "storageKey": null
             },
-            (v5/*: any*/),
+            (v6/*: any*/),
             {
               "kind": "InlineFragment",
-              "selections": (v7/*: any*/),
+              "selections": (v8/*: any*/),
               "type": "Partner"
             },
             {
               "kind": "InlineFragment",
-              "selections": (v7/*: any*/),
+              "selections": (v8/*: any*/),
               "type": "ExternalPartner"
             }
           ],
@@ -411,26 +399,26 @@ v8 = {
   ],
   "storageKey": null
 },
-v9 = [
-  (v8/*: any*/)
+v10 = [
+  (v9/*: any*/)
 ],
-v10 = {
+v11 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "cursor",
   "storageKey": null
 },
-v11 = {
+v12 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "page",
   "storageKey": null
 },
-v12 = [
-  (v10/*: any*/),
+v13 = [
   (v11/*: any*/),
+  (v12/*: any*/),
   {
     "alias": null,
     "args": null,
@@ -441,98 +429,47 @@ v12 = [
 ];
 return {
   "fragment": {
-    "argumentDefinitions": [],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "ShowsCity_Test_Query",
+    "name": "ShowsCityQuery",
     "selections": [
       {
         "alias": null,
-        "args": null,
-        "concreteType": "Viewer",
-        "kind": "LinkedField",
-        "name": "viewer",
-        "plural": false,
-        "selections": [
-          {
-            "args": null,
-            "kind": "FragmentSpread",
-            "name": "ShowsCity_viewer"
-          }
-        ],
-        "storageKey": null
-      },
-      {
-        "alias": null,
-        "args": (v0/*: any*/),
+        "args": (v1/*: any*/),
         "concreteType": "City",
         "kind": "LinkedField",
         "name": "city",
         "plural": false,
         "selections": [
           {
-            "args": null,
+            "args": [
+              (v2/*: any*/)
+            ],
             "kind": "FragmentSpread",
             "name": "ShowsCity_city"
           }
         ],
-        "storageKey": "city(slug:\"example\")"
+        "storageKey": null
       }
     ],
     "type": "Query"
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": [],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "ShowsCity_Test_Query",
+    "name": "ShowsCityQuery",
     "selections": [
       {
         "alias": null,
-        "args": null,
-        "concreteType": "Viewer",
-        "kind": "LinkedField",
-        "name": "viewer",
-        "plural": false,
-        "selections": [
-          {
-            "alias": "allCities",
-            "args": null,
-            "concreteType": "City",
-            "kind": "LinkedField",
-            "name": "cities",
-            "plural": true,
-            "selections": (v1/*: any*/),
-            "storageKey": null
-          },
-          {
-            "alias": "featuredCities",
-            "args": [
-              {
-                "kind": "Literal",
-                "name": "featured",
-                "value": true
-              }
-            ],
-            "concreteType": "City",
-            "kind": "LinkedField",
-            "name": "cities",
-            "plural": true,
-            "selections": (v1/*: any*/),
-            "storageKey": "cities(featured:true)"
-          }
-        ],
-        "storageKey": null
-      },
-      {
-        "alias": null,
-        "args": (v0/*: any*/),
+        "args": (v1/*: any*/),
         "concreteType": "City",
         "kind": "LinkedField",
         "name": "city",
         "plural": false,
         "selections": [
-          (v2/*: any*/),
+          (v3/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -543,7 +480,7 @@ return {
           {
             "alias": "upcomingShows",
             "args": [
-              (v3/*: any*/),
+              (v4/*: any*/),
               {
                 "kind": "Literal",
                 "name": "status",
@@ -554,13 +491,14 @@ return {
             "kind": "LinkedField",
             "name": "showsConnection",
             "plural": false,
-            "selections": (v9/*: any*/),
+            "selections": (v10/*: any*/),
             "storageKey": "showsConnection(first:18,status:\"UPCOMING\")"
           },
           {
             "alias": "currentShows",
             "args": [
-              (v3/*: any*/),
+              (v2/*: any*/),
+              (v4/*: any*/),
               {
                 "kind": "Literal",
                 "name": "status",
@@ -612,7 +550,7 @@ return {
                     "kind": "LinkedField",
                     "name": "around",
                     "plural": true,
-                    "selections": (v12/*: any*/),
+                    "selections": (v13/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -622,7 +560,7 @@ return {
                     "kind": "LinkedField",
                     "name": "first",
                     "plural": false,
-                    "selections": (v12/*: any*/),
+                    "selections": (v13/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -632,7 +570,7 @@ return {
                     "kind": "LinkedField",
                     "name": "last",
                     "plural": false,
-                    "selections": (v12/*: any*/),
+                    "selections": (v13/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -643,8 +581,8 @@ return {
                     "name": "previous",
                     "plural": false,
                     "selections": [
-                      (v10/*: any*/),
-                      (v11/*: any*/)
+                      (v11/*: any*/),
+                      (v12/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -658,14 +596,14 @@ return {
                 "name": "totalCount",
                 "storageKey": null
               },
-              (v8/*: any*/)
+              (v9/*: any*/)
             ],
-            "storageKey": "showsConnection(first:18,status:\"CURRENT\")"
+            "storageKey": null
           },
           {
             "alias": "pastShows",
             "args": [
-              (v3/*: any*/),
+              (v4/*: any*/),
               {
                 "kind": "Literal",
                 "name": "status",
@@ -676,22 +614,22 @@ return {
             "kind": "LinkedField",
             "name": "showsConnection",
             "plural": false,
-            "selections": (v9/*: any*/),
+            "selections": (v10/*: any*/),
             "storageKey": "showsConnection(first:18,status:\"CLOSED\")"
           }
         ],
-        "storageKey": "city(slug:\"example\")"
+        "storageKey": null
       }
     ]
   },
   "params": {
     "id": null,
     "metadata": {},
-    "name": "ShowsCity_Test_Query",
+    "name": "ShowsCityQuery",
     "operationKind": "query",
-    "text": "query ShowsCity_Test_Query {\n  viewer {\n    ...ShowsCity_viewer\n  }\n  city(slug: \"example\") {\n    ...ShowsCity_city\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n\nfragment ShowsCity_city on City {\n  name\n  slug\n  upcomingShows: showsConnection(first: 18, status: UPCOMING) {\n    edges {\n      node {\n        internalID\n        startAt\n        ...ShowsFeaturedShow_show\n        id\n      }\n    }\n  }\n  currentShows: showsConnection(first: 18, status: CURRENT) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    totalCount\n    edges {\n      node {\n        internalID\n        ...ShowsFeaturedShow_show\n        id\n      }\n    }\n  }\n  pastShows: showsConnection(first: 18, status: CLOSED) {\n    edges {\n      node {\n        internalID\n        ...ShowsFeaturedShow_show\n        id\n      }\n    }\n  }\n}\n\nfragment ShowsCity_viewer on Viewer {\n  ...ShowsHeader_viewer\n}\n\nfragment ShowsFeaturedShow_show on Show {\n  ...ShowsShowDates_show\n  id\n  name\n  href\n  coverImage {\n    title\n    large: cropped(width: 910, height: 683) {\n      width\n      height\n      src\n      srcSet\n    }\n    small: cropped(width: 600, height: 450) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on ExternalPartner {\n      name\n      id\n    }\n    ... on Node {\n      id\n    }\n  }\n}\n\nfragment ShowsHeader_viewer on Viewer {\n  allCities: cities {\n    text: name\n    value: slug\n  }\n  featuredCities: cities(featured: true) {\n    text: name\n    value: slug\n  }\n}\n\nfragment ShowsShowDates_show on Show {\n  startAt\n  endAt\n  formattedStartAt: startAt(format: \"MMM D\")\n  formattedEndAt: endAt(format: \"MMM D\")\n  location {\n    city\n    id\n  }\n}\n"
+    "text": "query ShowsCityQuery(\n  $slug: String!\n  $after: String\n) {\n  city(slug: $slug) {\n    ...ShowsCity_city_WGPvJ\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n\nfragment ShowsCity_city_WGPvJ on City {\n  name\n  slug\n  upcomingShows: showsConnection(first: 18, status: UPCOMING) {\n    edges {\n      node {\n        internalID\n        startAt\n        ...ShowsFeaturedShow_show\n        id\n      }\n    }\n  }\n  currentShows: showsConnection(first: 18, status: CURRENT, after: $after) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    totalCount\n    edges {\n      node {\n        internalID\n        ...ShowsFeaturedShow_show\n        id\n      }\n    }\n  }\n  pastShows: showsConnection(first: 18, status: CLOSED) {\n    edges {\n      node {\n        internalID\n        ...ShowsFeaturedShow_show\n        id\n      }\n    }\n  }\n}\n\nfragment ShowsFeaturedShow_show on Show {\n  ...ShowsShowDates_show\n  id\n  name\n  href\n  coverImage {\n    title\n    large: cropped(width: 910, height: 683) {\n      width\n      height\n      src\n      srcSet\n    }\n    small: cropped(width: 600, height: 450) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on ExternalPartner {\n      name\n      id\n    }\n    ... on Node {\n      id\n    }\n  }\n}\n\nfragment ShowsShowDates_show on Show {\n  startAt\n  endAt\n  formattedStartAt: startAt(format: \"MMM D\")\n  formattedEndAt: endAt(format: \"MMM D\")\n  location {\n    city\n    id\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'e3f6d8589ffd1ba6458647b709cb61a4';
+(node as any).hash = '423664c549ebe7d7ee40b4b29157e5c3';
 export default node;
