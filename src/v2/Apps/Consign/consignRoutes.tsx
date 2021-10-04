@@ -21,6 +21,46 @@ const OfferDetailApp = loadable(
   }
 )
 
+const ArtworkDetails = loadable(
+  () =>
+    import(
+      /* webpackChunkName: "consignBundle" */ "./Routes/SubmissionFlow/ArtworkDetails/ArtworkDetails"
+    ),
+  {
+    resolveComponent: component => component.ArtworkDetails,
+  }
+)
+
+const UploadPhotos = loadable(
+  () =>
+    import(
+      /* webpackChunkName: "consignBundle" */ "./Routes/SubmissionFlow/UploadPhotos/UploadPhotos"
+    ),
+  {
+    resolveComponent: component => component.UploadPhotos,
+  }
+)
+
+const ContactInformation = loadable(
+  () =>
+    import(
+      /* webpackChunkName: "consignBundle" */ "./Routes/SubmissionFlow/ContactInformation/ContactInformation"
+    ),
+  {
+    resolveComponent: component => component.ContactInformation,
+  }
+)
+
+const ThankYou = loadable(
+  () =>
+    import(
+      /* webpackChunkName: "consignBundle" */ "./Routes/SubmissionFlow/ThankYou/ThankYou"
+    ),
+  {
+    resolveComponent: component => component.ThankYou,
+  }
+)
+
 export const consignRoutes: AppRouteConfig[] = [
   {
     theme: "v3",
@@ -29,6 +69,44 @@ export const consignRoutes: AppRouteConfig[] = [
     prepare: () => {
       MarketingLandingApp.preload()
     },
+  },
+  {
+    theme: "v3",
+    path: "/consign/submission2",
+    children: [
+      {
+        theme: "v3",
+        path: "artwork-details",
+        getComponent: () => ArtworkDetails,
+        prepare: () => {
+          ArtworkDetails.preload()
+        },
+      },
+      {
+        theme: "v3",
+        path: ":id/upload-photos",
+        getComponent: () => UploadPhotos,
+        prepare: () => {
+          UploadPhotos.preload()
+        },
+      },
+      {
+        theme: "v3",
+        path: ":id/contact-information",
+        getComponent: () => ContactInformation,
+        prepare: () => {
+          ContactInformation.preload()
+        },
+      },
+      {
+        theme: "v3",
+        path: ":id/thank-you",
+        getComponent: () => ThankYou,
+        prepare: () => {
+          ThankYou.preload()
+        },
+      },
+    ],
   },
   {
     path: "/consign/offer/:offerID",
