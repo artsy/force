@@ -31,11 +31,11 @@ export const ShowsIndex: React.FC<ShowsIndexProps> = ({
       <Spacer mt={4} />
 
       <Join separator={<Spacer mt={6} />}>
+        <ShowsHeaderFragmentContainer viewer={viewer} />
+
         <Text as="h1" variant="xl">
           {featuredShows.name}
         </Text>
-
-        <ShowsHeaderFragmentContainer viewer={viewer} />
 
         <GridColumns gridRowGap={6}>
           {(featuredShows.items ?? []).map((show, i) => {

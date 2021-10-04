@@ -56,11 +56,28 @@ type RouterLinkMixinProps = BoxProps & {
   textDecoration?: ResponsiveValue<string>
 }
 
+const VALID_ROUTER_LINK_PROPS = [
+  "activeClassName",
+  "activeStyle",
+  "exact",
+  "target",
+  "to",
+]
+
+const routerLinkValidator = (prop: string) => {
+  return VALID_ROUTER_LINK_PROPS.includes(prop)
+}
+
 export const RouterAwareLink: React.FC<LinkPropsSimple & RouterLinkMixinProps> =
   // TODO: Update styled-components types
   // @ts-ignore
   styled(Link).withConfig({
-    shouldForwardProp: (prop, defaultValidatorFn) => defaultValidatorFn(prop),
+    shouldForwardProp: (
+      prop: string,
+      defaultValidatorFn: (prop: string) => boolean
+    ) => {
+      return defaultValidatorFn(prop) || routerLinkValidator(prop)
+    },
   })`
     ${routerLinkMixin}
   `
