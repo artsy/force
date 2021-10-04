@@ -13,6 +13,7 @@ jest.mock("@artsy/palette", () => {
   const moduleMock = jest.requireActual("@artsy/palette")
   return {
     ...moduleMock,
+    useMutationObserver: jest.fn(),
     paginate: () => [0, 100],
   }
 })

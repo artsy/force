@@ -19,7 +19,7 @@ const ShowsIndexRoute = loadable(
 const ShowsCityRoute = loadable(
   () => import(/* webpackChunkName: "showsBundle" */ "./Routes/ShowsCity"),
   {
-    resolveComponent: component => component.ShowsCityFragmentContainer,
+    resolveComponent: component => component.ShowsCityRefetchContainer,
   }
 )
 
@@ -56,13 +56,20 @@ export const showsRoutes: RouteConfig[] = [
         prepare: () => {
           return ShowsCityRoute.preload()
         },
+        prepareVariables: (params, props) => {
+          return {
+            ...params,
+            ...props,
+            page: parseInt(props.location.query.page, 10) || 1,
+          }
+        },
         query: graphql`
-          query showsRoutes_ShowsCityQuery($slug: String!) {
+          query showsRoutes_ShowsCityQuery($slug: String!, $page: Int) {
             viewer {
               ...ShowsCity_viewer
             }
             city(slug: $slug) {
-              ...ShowsCity_city
+              ...ShowsCity_city @arguments(page: $page)
             }
           }
         `,

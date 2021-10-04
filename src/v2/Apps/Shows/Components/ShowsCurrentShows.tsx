@@ -1,5 +1,5 @@
-import { Join, Separator } from "@artsy/palette"
-import React from "react"
+import { Box, Button, Join, Separator } from "@artsy/palette"
+import React, { useState } from "react"
 import {
   createPaginationContainer,
   graphql,
@@ -26,24 +26,52 @@ const ShowsCurrentShows: React.FC<ShowsCurrentShowsProps> = ({
 }) => {
   const shows = extractNodes(viewer.showsConnection)
 
+  const [loading, setLoading] = useState(false)
+
+  const handleClick = () => {
+    if (!relay.hasMore() || relay.isLoading()) return
+
+    setLoading(true)
+
+    relay.loadMore(10, error => {
+      if (error) console.error(error)
+
+      setLoading(false)
+    })
+  }
+
   return (
-    <Join separator={<Separator my={6} />}>
-      {shows.map(show => {
-        return (
-          <ShowsCurrentShowFragmentContainer
-            key={show.internalID}
-            show={show}
-          />
-        )
-      })}
-    </Join>
+    <>
+      <Join separator={<Separator my={6} />}>
+        {shows.map(show => {
+          return (
+            <ShowsCurrentShowFragmentContainer
+              key={show.internalID}
+              show={show}
+            />
+          )
+        })}
+
+        {relay.hasMore() && (
+          <Box textAlign="center">
+            <Button
+              onClick={handleClick}
+              loading={loading}
+              disabled={!relay.hasMore()}
+            >
+              Show more
+            </Button>
+          </Box>
+        )}
+      </Join>
+    </>
   )
 }
 
 const SHOWS_CURRENT_SHOWS_QUERY = graphql`
-  query ShowsCurrentShowsQuery {
+  query ShowsCurrentShowsQuery($first: Int, $after: String) {
     viewer {
-      ...ShowsCurrentShows_viewer
+      ...ShowsCurrentShows_viewer @arguments(first: $first, after: $after)
     }
   }
 `
@@ -107,6 +135,7 @@ export const ShowsCurrentShowsQueryRenderer: React.FC = () => {
       environment={relayEnvironment}
       query={SHOWS_CURRENT_SHOWS_QUERY}
       placeholder={SHOWS_CURRENT_SHOWS_PLACEHOLDER}
+      variables={{ first: 10 }}
       render={({ error, props }) => {
         if (error) {
           console.error(error)

@@ -1,4 +1,4 @@
-const getElementPosition = $element => {
+const getElementPosition = ($element: Element) => {
   const rect = $element.getBoundingClientRect()
   return {
     left: rect.left + window.scrollX,
@@ -12,6 +12,9 @@ export interface ScrollIntoViewProps {
   behavior?: ScrollBehavior
 }
 
+/**
+ * @deprecated Use the `useScrollTo` hook instead
+ */
 export const scrollIntoView = (props: ScrollIntoViewProps) => {
   const { selector, offset = 0, ...rest } = props
   const $element = document.querySelector(selector)

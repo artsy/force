@@ -17,7 +17,7 @@ export const Masonry = styled(Box)<
 >`
   ${compose(columnCount, gridColumnGap)};
 
-  > * {
+  * {
     break-inside: avoid;
   }
 `

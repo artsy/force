@@ -4,7 +4,6 @@ import {
   Text,
   Flex,
   Spacer,
-  Shelf,
   Skeleton,
   SkeletonText,
   SkeletonBox,
@@ -49,8 +48,9 @@ const HomeCurrentFairsRail: React.FC<HomeCurrentFairsRailProps> = ({
           return (
             <RouterLink
               to={fair.href}
-              textDecoration="none"
               key={index}
+              textDecoration="none"
+              style={{ display: "block " }}
               onClick={() => {
                 const trackingEvent: ClickedFairGroup = {
                   action: ActionType.clickedFairGroup,
@@ -64,7 +64,7 @@ const HomeCurrentFairsRail: React.FC<HomeCurrentFairsRailProps> = ({
                 trackEvent(trackingEvent)
               }}
             >
-              <Box key={index}>
+              <Box>
                 {fair.image?.cropped?.src && (
                   <ResponsiveBox
                     aspectWidth={fair.image.cropped.width}
@@ -137,11 +137,18 @@ const HomeCurrentFairsContainer: React.FC = ({ children }) => {
 const PLACEHOLDER = (
   <Skeleton>
     <HomeCurrentFairsContainer>
-      <Shelf>
+      <Masonry columnCount={[2, 2, 3]}>
         {[...new Array(3)].map((_, i) => {
           return (
             <Box key={i}>
-              <SkeletonBox width={440} height={315} />
+              <ResponsiveBox
+                aspectWidth={540}
+                aspectHeight={415}
+                maxWidth="100%"
+                display="block"
+              >
+                <SkeletonBox width="100%" height="100%" />
+              </ResponsiveBox>
               <SkeletonText variant="xl" mt={1}>
                 Some Gallery
               </SkeletonText>
@@ -149,7 +156,7 @@ const PLACEHOLDER = (
             </Box>
           )
         })}
-      </Shelf>
+      </Masonry>
     </HomeCurrentFairsContainer>
   </Skeleton>
 )

@@ -10,6 +10,7 @@ jest.mock("@artsy/palette", () => {
   return {
     ...jest.requireActual("@artsy/palette"),
     ModalBase: ({ children }) => children,
+    useMutationObserver: jest.fn(),
   }
 })
 
