@@ -130,6 +130,11 @@ return {
         (v0/*: any*/),
         {
           "kind": "Literal",
+          "name": "sort",
+          "value": "START_AT_ASC"
+        },
+        {
+          "kind": "Literal",
           "name": "status",
           "value": "UPCOMING"
         }
@@ -171,7 +176,7 @@ return {
           "storageKey": null
         }
       ],
-      "storageKey": "showsConnection(first:18,status:\"UPCOMING\")"
+      "storageKey": "showsConnection(first:18,sort:\"START_AT_ASC\",status:\"UPCOMING\")"
     },
     {
       "alias": "currentShows",
@@ -189,8 +194,13 @@ return {
         },
         {
           "kind": "Literal",
+          "name": "sort",
+          "value": "END_AT_ASC"
+        },
+        {
+          "kind": "Literal",
           "name": "status",
-          "value": "CURRENT"
+          "value": "RUNNING"
         }
       ],
       "concreteType": "ShowConnection",
@@ -273,5 +283,5 @@ return {
   "type": "City"
 };
 })();
-(node as any).hash = 'f6e8eee12eba3d9c6f4f329e8acc73c2';
+(node as any).hash = 'd94f5343badc470c9b69f769b7ff268d';
 export default node;

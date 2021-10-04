@@ -104,10 +104,15 @@ export const ShowsCity: React.FC<ShowsCityProps> = ({
       <Spacer mt={4} />
 
       <Join separator={<Spacer mt={6} />}>
+        <ShowsHeaderFragmentContainer viewer={viewer} />
+
         {openingThisWeek.length > 0 && (
           <>
             <Text as="h2" variant="xl">
-              Opening This Week in {city.name}
+              {city.slug === "online"
+                ? "Opening This Week"
+                : `Opening This Week in ${city.name}`}
+
               {openingThisWeek.length > 0 && (
                 <>
                   &nbsp;
@@ -132,7 +137,10 @@ export const ShowsCity: React.FC<ShowsCityProps> = ({
         )}
 
         <Text as="h2" variant="xl" ref={currentShowsRef as any}>
-          Current Shows in {city.name}
+          {city.slug === "online"
+            ? "Current Shows"
+            : `Current Shows in ${city.name}`}
+
           {(city.currentShows?.totalCount ?? 0) > 0 && (
             <>
               &nbsp;
@@ -237,7 +245,11 @@ export const ShowsCityRefetchContainer = createRefetchContainer(
         @argumentDefinitions(after: { type: "String" }, page: { type: "Int" }) {
         name
         slug
-        upcomingShows: showsConnection(first: 18, status: UPCOMING) {
+        upcomingShows: showsConnection(
+          first: 18
+          status: UPCOMING
+          sort: START_AT_ASC
+        ) {
           edges {
             node {
               internalID
@@ -248,9 +260,10 @@ export const ShowsCityRefetchContainer = createRefetchContainer(
         }
         currentShows: showsConnection(
           first: 18
-          status: CURRENT
+          status: RUNNING
           after: $after
           page: $page
+          sort: END_AT_ASC
         ) {
           pageInfo {
             hasNextPage
