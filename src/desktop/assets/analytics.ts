@@ -24,6 +24,7 @@ const excludedRoutes = [
   "/orders(.*)",
   "/search(.*)",
   "/show/(.*)",
+  "/shows",
   "/user/conversations(.*)",
   "/user/purchases(.*)",
   "/viewing-room(.*)",

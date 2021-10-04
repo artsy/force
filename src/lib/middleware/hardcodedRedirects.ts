@@ -48,6 +48,26 @@ const redirects = {
   "/following/profiles": "/user/saves#galleries-institutions",
   "/artsy.net/artwork/marilyn-minter-miley": "/artwork/marilyn-minter-miley",
   "/article/artsy-editorial-the-year-in-art-2016": "/2016-year-in-art",
+  "/show": "/shows",
+  "/all-cities": "/shows/all-cities",
+  // pre-2015 city shows routes
+  "/beijing": "/shows/beijing-china",
+  "/berlin": "/shows/berlin-germany",
+  "/boston": "/shows/boston-ma-usa",
+  "/chicago": "/shows/chicago-il-usa",
+  "/hong-kong": "/shows/hong-kong-hong-kong",
+  "/london": "/shows/london-united-kingdom",
+  "/los-angeles": "/shows/los-angeles-ca-usa",
+  "/miami": "/shows/miami-fl-usa",
+  "/milan": "/shows/milan-italy",
+  "/new-york": "/shows/new-york-ny-usa",
+  "/paris": "/shows/paris-france",
+  "/san-francisco": "/shows/san-francisco-ca-usa",
+  "/santa-fe": "/shows/santa-fe-nm-usa",
+  "/sao-paulo": "/shows/sao-paulo-brazil",
+  "/shanghai": "/shows/shanghai-china",
+  "/tokyo": "/shows/tokyo-japan",
+  "/toronto": "/shows/toronto-canada",
 }
 
 for (let from in redirects) {

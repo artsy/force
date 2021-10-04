@@ -19,7 +19,6 @@ const routes = {
   "/institution-partnerships": require("../apps/partnerships/client/index.coffee")
     .init,
   "/institutions": require("../apps/galleries_institutions/client/index.coffee"),
-  "/shows": require("../apps/shows/client/index.coffee").init,
 }
 
 for (let path in routes) {

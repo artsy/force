@@ -33,7 +33,7 @@ export const ShowsHeader: React.FC<ShowsHeaderProps> = ({
   const { router } = useRouter()
 
   const handleSelect = (value: string) => {
-    router.push(`/shows2/${value}`)
+    router.push(`/shows/${value}`)
   }
 
   const options = uniqBy([...DEFAULT_CITIES, ...allCities], city => city.value)
@@ -44,11 +44,15 @@ export const ShowsHeader: React.FC<ShowsHeaderProps> = ({
         <Column span={10} display={["none", "block"]}>
           <HorizontalOverflow height="100%" p={2}>
             <Join separator={<Box mx={1} />}>
-              {[...DEFAULT_CITIES, ...featuredCities].map((city, i) => {
+              {[
+                ...DEFAULT_CITIES,
+                ...featuredCities,
+                { text: "All Cities", value: "all-cities" },
+              ].map((city, i) => {
                 return (
                   <City
                     key={city.value}
-                    to={`/shows2/${city.value}`}
+                    to={`/shows/${city.value}`}
                     textDecoration="none"
                     exact
                     activeClassName="active"
