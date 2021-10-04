@@ -109,7 +109,7 @@ describe("Authentication Helpers", () => {
         },
         {
           email: "foo@foo.com",
-          password: "password",
+          password: "password", // pragma: allowlist secret
           otp_attempt: 123456,
         },
         formikBag
@@ -122,7 +122,7 @@ describe("Authentication Helpers", () => {
           _csrf: "csrf-token",
           email: "foo@foo.com",
           otp_attempt: 123456,
-          password: "password",
+          password: "password", // pragma: allowlist secret
           session_id: "session-id",
         })
         expect(formikBag.setSubmitting).toBeCalledWith(false)
@@ -167,7 +167,7 @@ describe("Authentication Helpers", () => {
         {
           name: "foo",
           email: "foo@foo.com",
-          password: "password",
+          password: "password", // pragma: allowlist secret
           accepted_terms_of_service: true,
           agreed_to_receive_emails: true,
         },
@@ -181,7 +181,7 @@ describe("Authentication Helpers", () => {
           _csrf: "csrf-token",
           name: "foo",
           email: "foo@foo.com",
-          password: "password",
+          password: "password", // pragma: allowlist secret
           session_id: "session-id",
           signupIntent: "viewEditorial",
           accepted_terms_of_service: true,

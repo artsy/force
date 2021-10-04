@@ -66,7 +66,7 @@ describe("ConfirmPasswordModal", () => {
       })
     wrapper.find("button[type='submit']").simulate("submit")
     await flushPromiseQueue()
-    expect(ConfirmPassword).toBeCalledWith({}, { password: "mypassword" })
+    expect(ConfirmPassword).toBeCalledWith({}, { password: "mypassword" }) // pragma: allowlist secret
     expect(onConfirm).toBeCalled()
   })
 
@@ -83,7 +83,7 @@ describe("ConfirmPasswordModal", () => {
       })
     wrapper.find("button[type='submit']").simulate("submit")
     await flushPromiseQueue()
-    expect(ConfirmPassword).toBeCalledWith({}, { password: "mypassword" })
+    expect(ConfirmPassword).toBeCalledWith({}, { password: "mypassword" }) // pragma: allowlist secret
     expect(onConfirm).not.toBeCalled()
     expect(wrapper.text()).toContain("Invalid password.")
   })

@@ -37,12 +37,12 @@ export const ChangeEvents = {
 
 export const SignupValues = {
   email: "foo@bar.com",
-  password: "password123",
+  password: "password123", // pragma: allowlist secret
   name: "John Doe",
   accepted_terms_of_service: true,
 }
 
 export const LoginValues = {
   email: "foo@bar.com",
-  password: "password123",
+  password: "password123", // pragma: allowlist secret
 }

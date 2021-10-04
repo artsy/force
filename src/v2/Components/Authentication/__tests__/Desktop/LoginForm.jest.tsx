@@ -77,7 +77,7 @@ describe("LoginForm", () => {
         expect(props.handleSubmit).toBeCalledWith(
           {
             email: "foo@bar.com",
-            password: "password123",
+            password: "password123", // pragma: allowlist secret
             otpRequired: false,
           },
           expect.anything()
@@ -104,7 +104,7 @@ describe("LoginForm", () => {
       expect(props.handleSubmit).toBeCalledWith(
         {
           email: "foo@bar.com",
-          password: "password123",
+          password: "password123", // pragma: allowlist secret
           otp_attempt: "123456",
           otpRequired: true,
         },
@@ -143,7 +143,7 @@ describe("LoginForm", () => {
 
       expect(props.handleSubmit.mock.calls[0][0]).toEqual({
         email: "email@email.com",
-        password: "password",
+        password: "password", // pragma: allowlist secret
         otpRequired: false,
       })
     })
@@ -202,7 +202,7 @@ describe("LoginForm", () => {
       )
       expect(props.handleSubmit.mock.calls[0][0]).toEqual({
         email: "email@email.com",
-        password: "password",
+        password: "password", // pragma: allowlist secret
         otpRequired: false,
       })
 
@@ -219,7 +219,7 @@ describe("LoginForm", () => {
       expect(wrapper.html()).toMatch("invalid two-factor authentication code")
       expect(props.handleSubmit.mock.calls[1][0]).toEqual({
         email: "email@email.com",
-        password: "password",
+        password: "password", // pragma: allowlist secret
         otp_attempt: "111111",
         otpRequired: true,
       })
@@ -233,7 +233,7 @@ describe("LoginForm", () => {
       expect(wrapper.html()).not.toMatch("Error")
       expect(props.handleSubmit.mock.calls[2][0]).toEqual({
         email: "email@email.com",
-        password: "password",
+        password: "password", // pragma: allowlist secret
         otp_attempt: "123456",
         otpRequired: true,
       })
@@ -285,7 +285,7 @@ describe("LoginForm", () => {
       console.log(wrapper.state())
       expect(props.handleSubmit.mock.calls[0][0]).toEqual({
         email: "email@email.com",
-        password: "password",
+        password: "password", // pragma: allowlist secret
         otpRequired: false,
       })
       expect((wrapper.state() as any).otpRequired).toEqual(true)
@@ -303,7 +303,7 @@ describe("LoginForm", () => {
       expect(wrapper.html()).toMatch("invalid on-demand authentication code")
       expect(props.handleSubmit.mock.calls[1][0]).toEqual({
         email: "email@email.com",
-        password: "password",
+        password: "password", // pragma: allowlist secret
         otp_attempt: "111111",
         otpRequired: true,
       })
@@ -317,7 +317,7 @@ describe("LoginForm", () => {
       expect(wrapper.html()).not.toMatch("Error")
       expect(props.handleSubmit.mock.calls[2][0]).toEqual({
         email: "email@email.com",
-        password: "password",
+        password: "password", // pragma: allowlist secret
         otp_attempt: "123456",
         otpRequired: true,
       })

@@ -17,7 +17,7 @@ module.exports = class PasswordEdit extends CurrentUser
     "#{super}/password"
 
   errorMessages:
-    new_password_min: "Minimum 8 characters." # pragma: allowlist secret
+    new_password_min: "Minimum 8 characters."
     new_password_same: "Your new password must be different."
     password_confirmation: "Passwords don't match up. Please try again."
 

@@ -96,7 +96,7 @@ describe("React components", () => {
       wrapper.handleSubmit(
         {
           email: "user@email.com",
-          password: "mypassword",
+          password: "mypassword", // pragma: allowlist secret
         },
         {}
       )
@@ -108,7 +108,7 @@ describe("React components", () => {
           intent: "consign",
           redirectTo: "/consign/submission",
         },
-        { email: "user@email.com", password: "mypassword" },
+        { email: "user@email.com", password: "mypassword" }, // pragma: allowlist secret
         {}
       )
     })
@@ -121,7 +121,7 @@ describe("React components", () => {
       wrapperWithTrackingParams.handleSubmit(
         {
           email: "user@email.com",
-          password: "mypassword",
+          password: "mypassword", // pragma: allowlist secret
         },
         {}
       )
@@ -134,7 +134,7 @@ describe("React components", () => {
           intent: "consign",
           redirectTo: "/consign/submission?contextPath=foo&subject=bar",
         },
-        { email: "user@email.com", password: "mypassword" },
+        { email: "user@email.com", password: "mypassword" }, // pragma: allowlist secret
         {}
       )
     })
@@ -147,7 +147,7 @@ describe("React components", () => {
       wrapperWithTrackingParams.handleSubmit(
         {
           email: "user@email.com",
-          password: "mypassword",
+          password: "mypassword", // pragma: allowlist secret
         },
         {}
       )
@@ -160,7 +160,7 @@ describe("React components", () => {
           intent: "consign",
           redirectTo: "/consign/submission?artistId=111&artistName=Andy",
         },
-        { email: "user@email.com", password: "mypassword" },
+        { email: "user@email.com", password: "mypassword" }, // pragma: allowlist secret
         {}
       )
     })
@@ -179,7 +179,7 @@ describe("React components", () => {
       wrapperWithTrackingParams.handleSubmit(
         {
           email: "user@email.com",
-          password: "mypassword",
+          password: "mypassword", // pragma: allowlist secret
         },
         {}
       )
@@ -193,7 +193,7 @@ describe("React components", () => {
           redirectTo:
             "/consign/submission?artistId=111&artistName=Andy&contextPath=foo&subject=bar",
         },
-        { email: "user@email.com", password: "mypassword" },
+        { email: "user@email.com", password: "mypassword" }, // pragma: allowlist secret
         {}
       )
     })
