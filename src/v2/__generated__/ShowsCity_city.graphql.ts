@@ -98,6 +98,12 @@ return {
       "kind": "LocalArgument",
       "name": "after",
       "type": "String"
+    },
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "page",
+      "type": "Int"
     }
   ],
   "kind": "Fragment",
@@ -176,6 +182,11 @@ return {
           "variableName": "after"
         },
         (v0/*: any*/),
+        {
+          "kind": "Variable",
+          "name": "page",
+          "variableName": "page"
+        },
         {
           "kind": "Literal",
           "name": "status",
@@ -262,5 +273,5 @@ return {
   "type": "City"
 };
 })();
-(node as any).hash = '72897c3f4c45b368dd4ac890718f9c60';
+(node as any).hash = 'f6e8eee12eba3d9c6f4f329e8acc73c2';
 export default node;

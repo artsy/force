@@ -65,13 +65,13 @@ export const ShowsCity: React.FC<ShowsCityProps> = ({
     offset: 20,
   })
 
-  const handleClick = (cursor: string) => {
+  const handleClick = (cursor: string, page: number) => {
     scrollTo()
 
     setLoading(true)
 
     relay.refetch(
-      { slug: city.slug, first: 18, after: cursor },
+      { slug: city.slug, first: 18, after: cursor, page: null },
       null,
       error => {
         if (error) {
@@ -79,11 +79,13 @@ export const ShowsCity: React.FC<ShowsCityProps> = ({
         }
 
         setLoading(false)
+
+        window.history.replaceState({}, "", `?page=${page}`)
       }
     )
   }
 
-  const handleNext = () => {
+  const handleNext = (page: number) => {
     if (!city.currentShows?.pageInfo) return
 
     const { hasNextPage, endCursor } = city.currentShows.pageInfo
@@ -92,7 +94,7 @@ export const ShowsCity: React.FC<ShowsCityProps> = ({
 
     scrollTo()
 
-    handleClick(endCursor)
+    handleClick(endCursor, page)
   }
 
   return (
@@ -232,7 +234,7 @@ export const ShowsCityRefetchContainer = createRefetchContainer(
     `,
     city: graphql`
       fragment ShowsCity_city on City
-        @argumentDefinitions(after: { type: "String" }) {
+        @argumentDefinitions(after: { type: "String" }, page: { type: "Int" }) {
         name
         slug
         upcomingShows: showsConnection(first: 18, status: UPCOMING) {
@@ -248,6 +250,7 @@ export const ShowsCityRefetchContainer = createRefetchContainer(
           first: 18
           status: CURRENT
           after: $after
+          page: $page
         ) {
           pageInfo {
             hasNextPage
@@ -276,9 +279,9 @@ export const ShowsCityRefetchContainer = createRefetchContainer(
     `,
   },
   graphql`
-    query ShowsCityQuery($slug: String!, $after: String) {
+    query ShowsCityQuery($slug: String!, $after: String, $page: Int) {
       city(slug: $slug) {
-        ...ShowsCity_city @arguments(after: $after)
+        ...ShowsCity_city @arguments(after: $after, page: $page)
       }
     }
   `
