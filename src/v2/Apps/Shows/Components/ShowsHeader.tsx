@@ -3,10 +3,10 @@ import {
   BorderBox,
   Text,
   Join,
-  Flex,
   Select,
   GridColumns,
   Column,
+  HorizontalOverflow,
 } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
 import { graphql } from "lib/graphql"
@@ -24,7 +24,7 @@ interface ShowsHeaderProps {
 
 const DEFAULT_CITIES = [
   { text: "All", value: "" },
-  // { text: "Online Exclusive", value: "online" }, // TODO
+  { text: "Online Exclusive", value: "online" },
 ]
 
 export const ShowsHeader: React.FC<ShowsHeaderProps> = ({
@@ -42,27 +42,23 @@ export const ShowsHeader: React.FC<ShowsHeaderProps> = ({
     <BorderBox p={0}>
       <GridColumns width="100%">
         <Column span={10} display={["none", "block"]}>
-          <Overlay>
-            <Viewport px={2}>
-              <Rail mr={2}>
-                <Join separator={<Box mx={1} />}>
-                  {[...DEFAULT_CITIES, ...featuredCities].map((city, i) => {
-                    return (
-                      <City
-                        key={city.value}
-                        to={`/shows2/${city.value}`}
-                        textDecoration="none"
-                        exact
-                        activeClassName="active"
-                      >
-                        <Text variant="md">{city.text}</Text>
-                      </City>
-                    )
-                  })}
-                </Join>
-              </Rail>
-            </Viewport>
-          </Overlay>
+          <HorizontalOverflow height="100%" p={2}>
+            <Join separator={<Box mx={1} />}>
+              {[...DEFAULT_CITIES, ...featuredCities].map((city, i) => {
+                return (
+                  <City
+                    key={city.value}
+                    to={`/shows2/${city.value}`}
+                    textDecoration="none"
+                    exact
+                    activeClassName="active"
+                  >
+                    <Text variant="md">{city.text}</Text>
+                  </City>
+                )
+              })}
+            </Join>
+          </HorizontalOverflow>
         </Column>
 
         <Column span={2} p={1} pl={[1, 0]}>
@@ -92,44 +88,10 @@ export const ShowsHeaderFragmentContainer = createFragmentContainer(
 )
 
 const City = styled(RouterLink)`
+  display: flex;
+  align-items: center;
+
   &.active {
     color: ${themeGet("colors.brand")};
   }
-`
-
-// TODO: Extract this pattern
-const Overlay = styled(Box)`
-  position: relative;
-  height: 100%;
-
-  /* Fade-out gradient */
-  &::after {
-    display: block;
-    content: "";
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    width: 60px;
-    z-index: 1;
-    pointer-events: none;
-    background: linear-gradient(
-      to right,
-      rgba(255, 255, 255, 0) 0%,
-      rgba(255, 255, 255, 1) 100%
-    );
-    /* TODO: Hide when scrolled all the way over */
-    /* transition: opacity 250ms; */
-  }
-`
-
-const Viewport = styled(Flex)`
-  overflow-x: auto;
-  height: 100%;
-  align-items: center;
-`
-
-const Rail = styled(Box)`
-  display: flex;
-  white-space: nowrap;
 `
