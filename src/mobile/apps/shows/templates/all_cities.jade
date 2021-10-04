@@ -1,8 +1,0 @@
-extends ../../../components/layout/templates/main
-
-block content
-  #all-cities-page
-    #all-cities-page-content.main-side-margin
-      nav.chevron-nav-list.all-cities-page-all-cities
-        for city in cities
-          a(href="/shows/#{city.slug}")= city.name

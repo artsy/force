@@ -1,6 +1,7 @@
 import loadable from "@loadable/component"
 import { graphql } from "react-relay"
-import { RouteConfig } from "found"
+import { RedirectException, RouteConfig } from "found"
+import { PLACE_REDIRECTS } from "./redirects"
 
 const ShowsApp = loadable(
   () => import(/* webpackChunkName: "showsBundle" */ "./ShowsApp"),
@@ -23,9 +24,16 @@ const ShowsCityRoute = loadable(
   }
 )
 
+const ShowsAllCities = loadable(
+  () => import(/* webpackChunkName: "showsBundle" */ "./Routes/ShowsAllCities"),
+  {
+    resolveComponent: component => component.ShowsAllCitiesFragmentContainer,
+  }
+)
+
 export const showsRoutes: RouteConfig[] = [
   {
-    path: "/shows2",
+    path: "/shows",
     getComponent: () => ShowsApp,
     prepare: () => {
       return ShowsApp.preload()
@@ -51,14 +59,35 @@ export const showsRoutes: RouteConfig[] = [
       },
       {
         theme: "v3",
+        path: "all-cities",
+        getComponent: () => ShowsAllCities,
+        prepare: () => {
+          return ShowsAllCities.preload()
+        },
+        query: graphql`
+          query showsRoutes_ShowsAllCitiesQuery {
+            viewer {
+              ...ShowsAllCities_viewer
+            }
+          }
+        `,
+      },
+      {
+        theme: "v3",
         path: ":slug",
         getComponent: () => ShowsCityRoute,
         prepare: () => {
           return ShowsCityRoute.preload()
         },
-        prepareVariables: (params, props) => {
+        prepareVariables: ({ slug }: { slug: string }, props) => {
+          const place = PLACE_REDIRECTS[slug]
+
+          if (typeof place === "string") {
+            throw new RedirectException(place, 301)
+          }
+
           return {
-            ...params,
+            slug,
             ...props,
             page: parseInt(props.location.query.page, 10) || 1,
           }
@@ -68,12 +97,22 @@ export const showsRoutes: RouteConfig[] = [
             viewer {
               ...ShowsCity_viewer
             }
-            city(slug: $slug) {
+            city(slug: $slug) @principalField {
               ...ShowsCity_city @arguments(page: $page)
             }
           }
         `,
       },
     ],
+  },
+  {
+    path: "/city/:slug",
+    render: ({
+      match: {
+        params: { slug },
+      },
+    }) => {
+      throw new RedirectException(`/shows/${slug}`, 301)
+    },
   },
 ]
