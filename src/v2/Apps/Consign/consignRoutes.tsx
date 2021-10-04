@@ -21,6 +21,16 @@ const OfferDetailApp = loadable(
   }
 )
 
+const SubmissionLayout = loadable(
+  () =>
+    import(
+      /* webpackChunkName: "consignBundle" */ "./Routes/SubmissionFlow/SubmissionLayout"
+    ),
+  {
+    resolveComponent: component => component.SubmissionLayout,
+  }
+)
+
 const ArtworkDetails = loadable(
   () =>
     import(
@@ -73,10 +83,12 @@ export const consignRoutes: AppRouteConfig[] = [
   {
     theme: "v3",
     path: "/consign/submission2",
+    getComponent: () => SubmissionLayout,
     children: [
       {
         theme: "v3",
         path: "artwork-details",
+        hideFooter: true,
         getComponent: () => ArtworkDetails,
         prepare: () => {
           ArtworkDetails.preload()
@@ -85,6 +97,7 @@ export const consignRoutes: AppRouteConfig[] = [
       {
         theme: "v3",
         path: ":id/upload-photos",
+        hideFooter: true,
         getComponent: () => UploadPhotos,
         prepare: () => {
           UploadPhotos.preload()
@@ -93,6 +106,7 @@ export const consignRoutes: AppRouteConfig[] = [
       {
         theme: "v3",
         path: ":id/contact-information",
+        hideFooter: true,
         getComponent: () => ContactInformation,
         prepare: () => {
           ContactInformation.preload()
@@ -101,6 +115,7 @@ export const consignRoutes: AppRouteConfig[] = [
       {
         theme: "v3",
         path: ":id/thank-you",
+        hideFooter: true,
         getComponent: () => ThankYou,
         prepare: () => {
           ThankYou.preload()
