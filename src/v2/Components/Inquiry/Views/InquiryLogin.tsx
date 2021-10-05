@@ -172,8 +172,8 @@ export const InquiryLogin: React.FC = () => {
 
         {mode === Mode.OnDemand && (
           <Message mt={2} mb={1}>
-            This login requires additional authorization. Please check your
-            email for a one-time authentication code.
+            Your safety and security are important to us. Please check your
+            email for a one-time authentication code to complete your login.
           </Message>
         )}
 
