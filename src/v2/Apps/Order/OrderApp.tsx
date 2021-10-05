@@ -14,12 +14,10 @@ import { Elements } from "@stripe/react-stripe-js"
 import styled from "styled-components"
 import { get } from "v2/Utils/get"
 import { ConnectedModalDialog } from "./Dialogs"
-import { Mediator } from "lib/mediator"
 import { data as sd } from "sharify"
 import { ZendeskWrapper } from "v2/Components/ZendeskWrapper"
 import { HorizontalPadding } from "../Components/HorizontalPadding"
 import { AppContainer } from "../Components/AppContainer"
-import { LegacyArtworkDllContainer } from "v2/Utils/LegacyArtworkDllContainer"
 import { isExceededZendeskThreshold } from "v2/Utils/isExceededZendeskThreshold"
 
 export interface OrderAppProps extends RouterState {
@@ -30,7 +28,6 @@ export interface OrderAppProps extends RouterState {
 }
 
 class OrderApp extends React.Component<OrderAppProps, {}> {
-  mediator: Mediator | null = null
   state = { stripe: null }
   removeNavigationListener: () => void
 
@@ -126,16 +123,9 @@ class OrderApp extends React.Component<OrderAppProps, {}> {
 
     return (
       <SystemContextConsumer>
-        {({ isEigen, mediator }) => {
-          this.mediator = mediator!
-
+        {({ isEigen }) => {
           return (
             <Box>
-              <LegacyArtworkDllContainer />
-              {/* FIXME: remove once we refactor out legacy backbone code.
-                    Add place to attach legacy flash message, used in legacy inquiry flow
-                */}
-              <div id="main-layout-flash" />
               <MinimalNavBar to={artworkHref} isBlank={isModal}>
                 <Title>Checkout | Artsy</Title>
                 {isEigen ? (

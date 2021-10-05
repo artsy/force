@@ -73,7 +73,6 @@ export const ENABLE_QUERY_BATCHING: any = false
 export const ENABLE_RATE_LIMITING: any = false
 export const ENABLE_REQUEST_CONDITION_REPORT: any = false
 export const ENABLE_SERVER_SIDE_CACHE: any = false
-export const ENABLE_V3_INQUIRY: any = false
 export const ENABLE_WEB_CRAWLING: any = false
 export const EOY_2016_ARTICLE: any = "58472d93b7b31d00116f5ab0"
 export const EOY_2016: any = "5829db77b5989e6f98f779a5"

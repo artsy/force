@@ -2,7 +2,7 @@ import { SystemContextProvider } from "v2/System"
 import { mockTracking } from "v2/System/Analytics"
 import { mount } from "enzyme"
 import React from "react"
-import { StickyFooterWithInquiry } from "../StickyFooter"
+import { StickyFooterWithInquiry, StickyFooter } from "../StickyFooter"
 import { mediator } from "lib/mediator"
 jest.unmock("react-tracking")
 
@@ -10,21 +10,6 @@ describe("Sticky footer", () => {
   beforeEach(() => {
     jest.spyOn(mediator, "trigger")
   })
-  // FIXME: Reenable when React 16.4.5 is release
-  // https://github.com/facebook/react/issues/13150#issuecomment-411134477
-
-  // describe("snapshots", () => {
-  //   it("renders the StickyFooter properly", () => {
-  //     const component = renderer
-  //       .create(
-  //         <SystemContextProvider>
-  //           <StickyFooterWithInquiry artworkID="whatever" />
-  //         </SystemContextProvider>
-  //       )
-  //       .toJSON()
-  //     expect(component).toMatchSnapshot()
-  //   })
-  // })
 
   it("handles FAQ modal", () => {
     const component = mount(
@@ -40,18 +25,24 @@ describe("Sticky footer", () => {
   })
 
   it("handles contact specialist modal", () => {
+    const showInquiry = jest.fn()
+
     const component = mount(
       <SystemContextProvider>
-        <StickyFooterWithInquiry orderType="OFFER" artworkID="whatever" />
+        <StickyFooter
+          orderType="OFFER"
+          artworkID="whatever"
+          showInquiry={showInquiry}
+          hideInquiry={jest.fn()}
+          isInquiryVisible={false}
+          inquiryComponent={<></>}
+        />
       </SystemContextProvider>
     )
+
     component.find("Clickable[data-test='ask-question-link']").simulate("click")
-    expect(mediator.trigger).toHaveBeenCalledWith(
-      "openOrdersContactArtsyModal",
-      {
-        artworkId: "whatever",
-      }
-    )
+
+    expect(showInquiry).toHaveBeenCalledWith({ askSpecialist: true })
   })
 
   it("displays the 'Need help?' message", () => {

@@ -34,7 +34,6 @@ import { openAuthModal } from "v2/Utils/openAuthModal"
 import { ArtworkSidebarSizeInfoFragmentContainer as SizeInfo } from "./ArtworkSidebarSizeInfo"
 import { Mediator } from "lib/mediator"
 import { useInquiry, WithInquiryProps } from "v2/Components/Inquiry/useInquiry"
-import { data as sd } from "sharify"
 
 type EditionSet = NonNullable<
   ArtworkSidebarCommercial_artwork["edition_sets"]
@@ -166,15 +165,7 @@ export class ArtworkSidebarCommercialContainer extends React.Component<
     artwork_slug: props.artwork.slug,
   }))
   handleInquiry() {
-    if (sd.ENABLE_V3_INQUIRY) {
-      this.props.showInquiry()
-      return
-    }
-
-    get(this.props, props => props.mediator.trigger) &&
-      this.props.mediator.trigger("launchInquiryFlow", {
-        artworkId: this.props.artwork.internalID,
-      })
+    this.props.showInquiry()
   }
 
   @track<ArtworkSidebarCommercialContainerProps>((props, state, args) => ({

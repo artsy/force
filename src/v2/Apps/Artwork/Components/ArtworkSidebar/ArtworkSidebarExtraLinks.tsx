@@ -1,13 +1,10 @@
 import { Clickable, Link, Separator, Spacer, Text } from "@artsy/palette"
-import { SystemContext } from "v2/System"
 import { track } from "v2/System/Analytics"
 import * as Schema from "v2/System/Analytics/Schema"
-import React, { useContext } from "react"
+import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworkSidebarExtraLinks_artwork } from "v2/__generated__/ArtworkSidebarExtraLinks_artwork.graphql"
-import { Mediator } from "lib/mediator"
 import { useInquiry, WithInquiryProps } from "v2/Components/Inquiry/useInquiry"
-import { data as sd } from "sharify"
 import { useDialog } from "v2/Utils/Hooks/useDialog"
 import { AuctionFAQsDialogQueryRenderer } from "v2/Components/AuctionFAQsDialog"
 
@@ -18,7 +15,6 @@ export interface ArtworkSidebarExtraLinksProps {
 export interface ArtworkSidebarExtraLinksContainerProps
   extends ArtworkSidebarExtraLinksProps,
     WithInquiryProps {
-  mediator: Mediator
   auctionFAQsDialog: {
     showDialog(): void
     dialogComponent: JSX.Element
@@ -79,16 +75,7 @@ class ArtworkSidebarExtraLinksContainer extends React.Component<
     type: Schema.Type.Link,
   }))
   onClickAuctionAskSpecialist() {
-    if (sd.ENABLE_V3_INQUIRY) {
-      this.props.showInquiry({ askSpecialist: true })
-      return
-    }
-
-    this.props.mediator &&
-      this.props.mediator.trigger &&
-      this.props.mediator.trigger("openAuctionAskSpecialistModal", {
-        artworkId: this.props.artwork.internalID,
-      })
+    this.props.showInquiry({ askSpecialist: true })
   }
 
   @track(() => ({
@@ -97,16 +84,7 @@ class ArtworkSidebarExtraLinksContainer extends React.Component<
     type: Schema.Type.Link,
   }))
   onClickBuyNowAskSpecialist() {
-    if (sd.ENABLE_V3_INQUIRY) {
-      this.props.showInquiry({ askSpecialist: true })
-      return
-    }
-
-    this.props.mediator &&
-      this.props.mediator.trigger &&
-      this.props.mediator.trigger("openBuyNowAskSpecialistModal", {
-        artworkId: this.props.artwork.internalID,
-      })
+    this.props.showInquiry({ askSpecialist: true })
   }
 
   @track(() => ({
@@ -274,7 +252,6 @@ class ArtworkSidebarExtraLinksContainer extends React.Component<
 }
 
 export const ArtworkSidebarExtraLinks: React.FC<ArtworkSidebarExtraLinksProps> = props => {
-  const { mediator } = useContext(SystemContext)
   const inquiry = useInquiry({ artworkID: props.artwork.internalID })
 
   const { dialogComponent, showDialog, hideDialog } = useDialog({
@@ -284,7 +261,6 @@ export const ArtworkSidebarExtraLinks: React.FC<ArtworkSidebarExtraLinksProps> =
   return (
     <ArtworkSidebarExtraLinksContainer
       artworkID={props.artwork.internalID}
-      mediator={mediator!}
       auctionFAQsDialog={{ dialogComponent, showDialog }}
       {...inquiry}
       {...props}
