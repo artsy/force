@@ -4,7 +4,6 @@ import {
   Column,
   GridColumns,
   Input,
-  Spacer,
   Text,
   Select,
   Flex,
@@ -79,8 +78,7 @@ export const ArtworkDetailsForm: FC = () => {
       <GridColumns mt={[2, 4]}>
         <Column span={6}>
           <Flex alignItems="center">
-            <Input title="Height" placeholder="in" name="Height" />
-            <Spacer mx={1} />
+            <Input title="Height" placeholder="in" name="Height" mr={2} />
             <Input title="Width" placeholder="in" name="Width" />
           </Flex>
         </Column>
@@ -91,16 +89,16 @@ export const ArtworkDetailsForm: FC = () => {
               placeholder="in"
               name="Depth"
               width="50%"
+              pr={1}
             />
-            <Spacer paddingX={2} />
             <RadioGroup
               width="50%"
               defaultValue="in"
               flexDirection="row"
               mt={2}
+              ml={2}
             >
-              <Radio value="in" label="in" selected />
-              <Spacer mx={2} />
+              <Radio mr={4} value="in" label="in" selected />
               <Radio value="cm" label="cm" />
             </RadioGroup>
           </Flex>
