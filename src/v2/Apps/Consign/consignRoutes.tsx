@@ -1,4 +1,5 @@
 import loadable from "@loadable/component"
+import { Redirect } from "found"
 import { graphql } from "react-relay"
 import { AppRouteConfig } from "v2/System/Router/Route"
 
@@ -85,6 +86,10 @@ export const consignRoutes: AppRouteConfig[] = [
     path: "/consign/submission2",
     getComponent: () => SubmissionLayout,
     children: [
+      new Redirect({
+        from: "/",
+        to: "/consign/submission2/artwork-details",
+      }) as any,
       {
         theme: "v3",
         path: "artwork-details",

@@ -1,0 +1,53 @@
+import { Media } from "v2/Utils/Responsive"
+import { Box, Step, Stepper } from "@artsy/palette"
+import React, { FC } from "react"
+
+interface SubmissionStepperProps {
+  currentStep: "Artwork Details" | "Upload Photos" | "Contact Information"
+}
+
+function typedArray<T extends string>(...elems: T[]): T[] {
+  return elems
+}
+
+export const submissionFlowSteps = typedArray(
+  "Artwork Details",
+  "Upload Photos",
+  "Contact Information"
+)
+
+export const SubmissionStepper: FC<SubmissionStepperProps> = ({
+  currentStep,
+}) => {
+  const stepIndex = submissionFlowSteps.indexOf(currentStep)
+  return (
+    <>
+      <Media between={["xs", "md"]}>
+        <Box>
+          <Stepper
+            initialTabIndex={stepIndex}
+            currentStepIndex={stepIndex}
+            disableNavigation
+            autoScroll
+          >
+            {submissionFlowSteps.map(step => (
+              <Step name={step} key={step} />
+            ))}
+          </Stepper>
+        </Box>
+      </Media>
+      <Media greaterThan="sm">
+        <Stepper
+          initialTabIndex={stepIndex}
+          currentStepIndex={stepIndex}
+          disableNavigation
+          autoScroll
+        >
+          {submissionFlowSteps.map(step => (
+            <Step name={step} key={step} />
+          ))}
+        </Stepper>
+      </Media>
+    </>
+  )
+}
