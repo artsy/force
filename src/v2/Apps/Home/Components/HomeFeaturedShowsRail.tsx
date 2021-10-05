@@ -6,21 +6,17 @@ import {
 } from "@artsy/cohesion"
 import {
   ResponsiveBox,
-  Text,
   Spacer,
-  Flex,
   Skeleton,
   SkeletonBox,
   SkeletonText,
-  Shelf,
-  Sup,
 } from "@artsy/palette"
 import { compact, take } from "lodash"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
+import { Rail } from "v2/Components/Rail"
 import { useSystemContext, useTracking } from "v2/System"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
-import { RouterLink } from "v2/System/Router/RouterLink"
 import { useLazyLoadComponent } from "v2/Utils/Hooks/useLazyLoadComponent"
 import { HomeFeaturedShowsRailQuery } from "v2/__generated__/HomeFeaturedShowsRailQuery.graphql"
 import { HomeFeaturedShowsRail_orderedSet } from "v2/__generated__/HomeFeaturedShowsRail_orderedSet.graphql"
@@ -35,6 +31,8 @@ interface HomeFeaturedShowsRailProps {
 const HomeFeaturedShowsRail: React.FC<HomeFeaturedShowsRailProps> = ({
   orderedSet,
 }) => {
+  const { trackEvent } = useTracking()
+
   const shows = take(
     compact(orderedSet.items).flatMap(item =>
       item.__typename === "Show" ? [item] : []
@@ -42,61 +40,32 @@ const HomeFeaturedShowsRail: React.FC<HomeFeaturedShowsRailProps> = ({
     SHOWS_LIMIT
   )
 
-  if (shows.length === 0) return null
+  if (shows.length === 0) {
+    return null
+  }
 
   return (
-    <HomeFeaturedShowsRailContainer showsCount={shows.length}>
-      <Shelf alignItems="flex-start">
-        {shows.map((show, index) => {
-          return (
-            <React.Fragment key={index}>
-              <HomeFeaturedShowFragmentContainer show={show} />
-            </React.Fragment>
-          )
-        })}
-      </Shelf>
-    </HomeFeaturedShowsRailContainer>
-  )
-}
-
-const HomeFeaturedShowsRailContainer: React.FC<{ showsCount: number }> = ({
-  children,
-  showsCount,
-}) => {
-  const { trackEvent } = useTracking()
-
-  return (
-    <>
-      <Flex justifyContent="space-between" alignItems="center">
-        <Text variant="lg">
-          Featured shows{" "}
-          {showsCount > 1 && <Sup color="brand">{showsCount}</Sup>}
-        </Text>
-
-        <Text
-          variant="sm"
-          as={RouterLink}
-          // @ts-ignore
-          to="/shows"
-          onClick={() => {
-            const trackingEvent: ClickedShowGroup = {
-              action: ActionType.clickedShowGroup,
-              context_module: ContextModule.featuredShowsRail,
-              context_page_owner_type: OwnerType.home,
-              destination_page_owner_type: OwnerType.shows,
-              type: "viewAll",
-            }
-            trackEvent(trackingEvent)
-          }}
-        >
-          Explore All Shows
-        </Text>
-      </Flex>
-
-      <Spacer mt={4} />
-
-      {children}
-    </>
+    <Rail
+      title="Featured shows"
+      countLabel={shows.length}
+      viewAllLabel="Explore All Shows"
+      viewAllHref="/shows"
+      viewAllOnClick={() => {
+        const trackingEvent: ClickedShowGroup = {
+          action: ActionType.clickedShowGroup,
+          context_module: ContextModule.featuredShowsRail,
+          context_page_owner_type: OwnerType.home,
+          destination_page_owner_type: OwnerType.shows,
+          type: "viewAll",
+        }
+        trackEvent(trackingEvent)
+      }}
+      getItems={() => {
+        return shows.map((show, index) => {
+          return <HomeFeaturedShowFragmentContainer show={show} />
+        })
+      }}
+    />
   )
 }
 
@@ -118,10 +87,13 @@ export const HomeFeaturedShowsRailFragmentContainer = createFragmentContainer(
 )
 
 const PLACEHOLDER = (
-  <HomeFeaturedShowsRailContainer showsCount={0}>
-    <Skeleton>
-      <Shelf>
-        {[...new Array(6)].map((_, i) => {
+  <Skeleton>
+    <Rail
+      title="Featured shows"
+      viewAllLabel="Explore All Shows"
+      viewAllHref="/shows"
+      getItems={() => {
+        return [...new Array(6)].map((_, i) => {
           return (
             <React.Fragment key={i}>
               <ResponsiveBox aspectWidth={4} aspectHeight={3} maxWidth="100%">
@@ -139,10 +111,10 @@ const PLACEHOLDER = (
               <SkeletonText variant="sm">Jan 1–31</SkeletonText>
             </React.Fragment>
           )
-        })}
-      </Shelf>
-    </Skeleton>
-  </HomeFeaturedShowsRailContainer>
+        })
+      }}
+    />
+  </Skeleton>
 )
 
 export const HomeFeaturedShowsRailQueryRenderer: React.FC = () => {

@@ -1,7 +1,7 @@
 import React from "react"
 import { graphql } from "relay-runtime"
 import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
-import { HomeArtworkModuleContextFragmentContainer } from "../Components/HomeArtworkModuleContext"
+import { HomeArtworkModuleContextFragmentContainer } from "../Components/HomeArtworkModules/HomeArtworkModuleContext"
 import { HomeArtworkModuleContext_Test_Query } from "v2/__generated__/HomeArtworkModuleContext_Test_Query.graphql"
 
 jest.unmock("react-relay")

@@ -4,7 +4,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { HomeApp_homePage } from "v2/__generated__/HomeApp_homePage.graphql"
 import { HomeApp_featuredEventsOrderedSet } from "v2/__generated__/HomeApp_featuredEventsOrderedSet.graphql"
 import { HomeHeroUnitsFragmentContainer } from "./Components/HomeHeroUnits/HomeHeroUnits"
-import { HomeFeaturedMarketNewsLazyQueryRenderer } from "./Components/HomeFeaturedMarketNews"
+import { HomeFeaturedMarketNewsQueryRenderer } from "./Components/HomeFeaturedMarketNews"
 import { HomeFeaturedEventsRailFragmentContainer } from "./Components/HomeFeaturedEventsRail"
 import { HomeMeta } from "./Components/HomeMeta"
 import { FlashBannerQueryRenderer } from "v2/Components/FlashBanner"
@@ -52,7 +52,7 @@ export const HomeApp: React.FC<HomeAppProps> = ({
 
         <HomeWorksForYouTabBar />
 
-        <HomeFeaturedMarketNewsLazyQueryRenderer />
+        <HomeFeaturedMarketNewsQueryRenderer />
 
         <HomeAuctionLotsRailQueryRenderer />
 
@@ -63,11 +63,6 @@ export const HomeApp: React.FC<HomeAppProps> = ({
         <HomeFeaturedGalleriesRailQueryRenderer />
 
         <HomeTrendingArtistsRailQueryRenderer />
-
-        {/* TODO: Remove this code once we're 100% sure we don't want anymore  */}
-        {/* {homePage && (
-          <HomeArtworkModulesFragmentContainer homePage={homePage} />
-        )} */}
       </Join>
     </>
   )

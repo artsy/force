@@ -1,19 +1,14 @@
 import {
   Box,
-  Text,
-  Flex,
   Spacer,
-  Shelf,
   Skeleton,
   SkeletonText,
   SkeletonBox,
-  Sup,
 } from "@artsy/palette"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "v2/System"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
-import { RouterLink } from "v2/System/Router/RouterLink"
 import { HomeAuctionLotsRail_viewer } from "v2/__generated__/HomeAuctionLotsRail_viewer.graphql"
 import { HomeAuctionLotsRailQuery } from "v2/__generated__/HomeAuctionLotsRailQuery.graphql"
 import { extractNodes } from "v2/Utils/extractNodes"
@@ -25,6 +20,7 @@ import {
   OwnerType,
 } from "@artsy/cohesion"
 import { useTracking } from "v2/System"
+import { Rail } from "v2/Components/Rail"
 
 interface HomeAuctionLotsRailProps {
   viewer: HomeAuctionLotsRail_viewer
@@ -44,9 +40,23 @@ const HomeAuctionLotsRail: React.FC<HomeAuctionLotsRailProps> = ({
   }
 
   return (
-    <HomeAuctionLotsRailContainer lotCount={nodes.length}>
-      <Shelf>
-        {nodes.map((node, index) => {
+    <Rail
+      title="Auction Lots"
+      countLabel={nodes.length}
+      viewAllLabel="View All Auctions"
+      viewAllHref="/auctions"
+      viewAllOnClick={() => {
+        const trackingEvent: ClickedArtworkGroup = {
+          action: ActionType.clickedArtworkGroup,
+          context_module: ContextModule.auctionLots,
+          context_page_owner_type: OwnerType.home,
+          destination_page_owner_type: OwnerType.auctions,
+          type: "viewAll",
+        }
+        trackEvent(trackingEvent)
+      }}
+      getItems={() => {
+        return nodes.map(node => {
           return (
             <ShelfArtworkFragmentContainer
               artwork={node}
@@ -68,72 +78,33 @@ const HomeAuctionLotsRail: React.FC<HomeAuctionLotsRailProps> = ({
               }}
             />
           )
-        })}
-      </Shelf>
-    </HomeAuctionLotsRailContainer>
-  )
-}
-
-const HomeAuctionLotsRailContainer: React.FC<{ lotCount: number }> = ({
-  children,
-  lotCount,
-}) => {
-  const { trackEvent } = useTracking()
-
-  return (
-    <>
-      <Flex justifyContent="space-between" alignItems="center">
-        <Text variant="lg">
-          Auction Lots {lotCount > 1 && <Sup color="brand">{lotCount}</Sup>}
-        </Text>
-
-        <Text
-          variant="sm"
-          as={RouterLink}
-          // @ts-ignore
-          to="/auctions"
-          onClick={() => {
-            const trackingEvent: ClickedArtworkGroup = {
-              action: ActionType.clickedArtworkGroup,
-              context_module: ContextModule.auctionLots,
-              context_page_owner_type: OwnerType.home,
-              destination_page_owner_type: OwnerType.auctions,
-              type: "viewAll",
-            }
-            trackEvent(trackingEvent)
-          }}
-        >
-          View All Auctions
-        </Text>
-      </Flex>
-
-      <Spacer mt={4} />
-
-      {children}
-    </>
+        })
+      }}
+    />
   )
 }
 
 const PLACEHOLDER = (
   <Skeleton>
-    <HomeAuctionLotsRailContainer lotCount={0}>
-      <Shelf>
-        {[...new Array(8)].map((_, i) => {
+    <Rail
+      title="Auction Lots"
+      viewAllLabel="View All Auctions"
+      viewAllHref="/auctions"
+      getItems={() => {
+        return [...new Array(8)].map((_, i) => {
           return (
             <Box width={200} key={i}>
               <SkeletonBox width={200} height={[200, 300, 250, 275][i % 4]} />
-
               <Spacer mt={1} />
-
               <SkeletonText variant="md">Artist Name</SkeletonText>
               <SkeletonText variant="md">Artwork Title</SkeletonText>
               <SkeletonText variant="xs">Partner</SkeletonText>
               <SkeletonText variant="xs">Price</SkeletonText>
             </Box>
           )
-        })}
-      </Shelf>
-    </HomeAuctionLotsRailContainer>
+        })
+      }}
+    />
   </Skeleton>
 )
 
