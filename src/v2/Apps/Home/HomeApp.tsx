@@ -10,7 +10,7 @@ import { HomeMeta } from "./Components/HomeMeta"
 import { FlashBannerQueryRenderer } from "v2/Components/FlashBanner"
 import { HomeFeaturedGalleriesRailQueryRenderer } from "./Components/HomeFeaturedGalleriesRail"
 import { HomeFeaturedShowsRailQueryRenderer } from "./Components/HomeFeaturedShowsRail"
-import { HomeCurrentFairsRailQueryRenderer } from "./Components/HomeCurrentFairsRail"
+import { HomeCurrentFairsQueryRenderer } from "./Components/HomeCurrentFairs"
 import { HomeTrendingArtistsRailQueryRenderer } from "./Components/HomeTrendingArtistsRail"
 import { HomeAuctionLotsRailQueryRenderer } from "./Components/HomeAuctionLotsRail"
 import { HomeWorksForYouTabBar } from "./Components/HomeWorksForYouTabBar"
@@ -58,7 +58,7 @@ export const HomeApp: React.FC<HomeAppProps> = ({
 
         <HomeFeaturedShowsRailQueryRenderer />
 
-        <HomeCurrentFairsRailQueryRenderer />
+        <HomeCurrentFairsQueryRenderer />
 
         <HomeFeaturedGalleriesRailQueryRenderer />
 

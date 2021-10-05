@@ -14,8 +14,8 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext, useTracking } from "v2/System"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { RouterLink } from "v2/System/Router/RouterLink"
-import { HomeCurrentFairsRail_viewer } from "v2/__generated__/HomeCurrentFairsRail_viewer.graphql"
-import { HomeCurrentFairsRailQuery } from "v2/__generated__/HomeCurrentFairsRailQuery.graphql"
+import { HomeCurrentFairs_viewer } from "v2/__generated__/HomeCurrentFairs_viewer.graphql"
+import { HomeCurrentFairsQuery } from "v2/__generated__/HomeCurrentFairsQuery.graphql"
 import {
   ActionType,
   ClickedFairGroup,
@@ -24,13 +24,11 @@ import {
 } from "@artsy/cohesion"
 import { Masonry } from "v2/Components/Masonry"
 
-interface HomeCurrentFairsRailProps {
-  viewer: HomeCurrentFairsRail_viewer
+interface HomeCurrentFairsProps {
+  viewer: HomeCurrentFairs_viewer
 }
 
-const HomeCurrentFairsRail: React.FC<HomeCurrentFairsRailProps> = ({
-  viewer,
-}) => {
+const HomeCurrentFairs: React.FC<HomeCurrentFairsProps> = ({ viewer }) => {
   const { trackEvent } = useTracking()
 
   if (viewer.fairs?.length === 0) {
@@ -50,7 +48,7 @@ const HomeCurrentFairsRail: React.FC<HomeCurrentFairsRailProps> = ({
               to={fair.href}
               key={index}
               textDecoration="none"
-              style={{ display: "block " }}
+              display="block"
               onClick={() => {
                 const trackingEvent: ClickedFairGroup = {
                   action: ActionType.clickedFairGroup,
@@ -161,11 +159,11 @@ const PLACEHOLDER = (
   </Skeleton>
 )
 
-export const HomeCurrentFairsRailFragmentContainer = createFragmentContainer(
-  HomeCurrentFairsRail,
+export const HomeCurrentFairsFragmentContainer = createFragmentContainer(
+  HomeCurrentFairs,
   {
     viewer: graphql`
-      fragment HomeCurrentFairsRail_viewer on Viewer {
+      fragment HomeCurrentFairs_viewer on Viewer {
         fairs(
           hasListing: true
           hasFullFeature: true
@@ -199,16 +197,16 @@ export const HomeCurrentFairsRailFragmentContainer = createFragmentContainer(
   }
 )
 
-export const HomeCurrentFairsRailQueryRenderer: React.FC = () => {
+export const HomeCurrentFairsQueryRenderer: React.FC = () => {
   const { relayEnvironment } = useSystemContext()
 
   return (
-    <SystemQueryRenderer<HomeCurrentFairsRailQuery>
+    <SystemQueryRenderer<HomeCurrentFairsQuery>
       environment={relayEnvironment}
       query={graphql`
-        query HomeCurrentFairsRailQuery {
+        query HomeCurrentFairsQuery {
           viewer {
-            ...HomeCurrentFairsRail_viewer
+            ...HomeCurrentFairs_viewer
           }
         }
       `}
@@ -224,7 +222,7 @@ export const HomeCurrentFairsRailQueryRenderer: React.FC = () => {
         }
 
         if (props.viewer) {
-          return <HomeCurrentFairsRailFragmentContainer viewer={props.viewer} />
+          return <HomeCurrentFairsFragmentContainer viewer={props.viewer} />
         }
 
         return null

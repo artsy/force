@@ -3,27 +3,27 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type HomeCurrentFairsRailQueryVariables = {};
-export type HomeCurrentFairsRailQueryResponse = {
+export type HomeCurrentFairsQueryVariables = {};
+export type HomeCurrentFairsQueryResponse = {
     readonly viewer: {
-        readonly " $fragmentRefs": FragmentRefs<"HomeCurrentFairsRail_viewer">;
+        readonly " $fragmentRefs": FragmentRefs<"HomeCurrentFairs_viewer">;
     } | null;
 };
-export type HomeCurrentFairsRailQuery = {
-    readonly response: HomeCurrentFairsRailQueryResponse;
-    readonly variables: HomeCurrentFairsRailQueryVariables;
+export type HomeCurrentFairsQuery = {
+    readonly response: HomeCurrentFairsQueryResponse;
+    readonly variables: HomeCurrentFairsQueryVariables;
 };
 
 
 
 /*
-query HomeCurrentFairsRailQuery {
+query HomeCurrentFairsQuery {
   viewer {
-    ...HomeCurrentFairsRail_viewer
+    ...HomeCurrentFairs_viewer
   }
 }
 
-fragment HomeCurrentFairsRail_viewer on Viewer {
+fragment HomeCurrentFairs_viewer on Viewer {
   fairs(hasListing: true, hasFullFeature: true, sort: START_AT_DESC, size: 25, status: RUNNING) {
     internalID
     slug
@@ -70,7 +70,7 @@ return {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "HomeCurrentFairsRailQuery",
+    "name": "HomeCurrentFairsQuery",
     "selections": [
       {
         "alias": null,
@@ -83,7 +83,7 @@ return {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "HomeCurrentFairsRail_viewer"
+            "name": "HomeCurrentFairs_viewer"
           }
         ],
         "storageKey": null
@@ -95,7 +95,7 @@ return {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "HomeCurrentFairsRailQuery",
+    "name": "HomeCurrentFairsQuery",
     "selections": [
       {
         "alias": null,
@@ -287,11 +287,11 @@ return {
   "params": {
     "id": null,
     "metadata": {},
-    "name": "HomeCurrentFairsRailQuery",
+    "name": "HomeCurrentFairsQuery",
     "operationKind": "query",
-    "text": "query HomeCurrentFairsRailQuery {\n  viewer {\n    ...HomeCurrentFairsRail_viewer\n  }\n}\n\nfragment HomeCurrentFairsRail_viewer on Viewer {\n  fairs(hasListing: true, hasFullFeature: true, sort: START_AT_DESC, size: 25, status: RUNNING) {\n    internalID\n    slug\n    bannerSize\n    isPublished\n    profile {\n      isPublished\n      id\n    }\n    href\n    name\n    startAt(format: \"MMM Do\")\n    endAt(format: \"MMM Do YYYY\")\n    image {\n      cropped(width: 540, height: 415) {\n        src\n        srcSet\n        width\n        height\n      }\n    }\n    id\n  }\n}\n"
+    "text": "query HomeCurrentFairsQuery {\n  viewer {\n    ...HomeCurrentFairs_viewer\n  }\n}\n\nfragment HomeCurrentFairs_viewer on Viewer {\n  fairs(hasListing: true, hasFullFeature: true, sort: START_AT_DESC, size: 25, status: RUNNING) {\n    internalID\n    slug\n    bannerSize\n    isPublished\n    profile {\n      isPublished\n      id\n    }\n    href\n    name\n    startAt(format: \"MMM Do\")\n    endAt(format: \"MMM Do YYYY\")\n    image {\n      cropped(width: 540, height: 415) {\n        src\n        srcSet\n        width\n        height\n      }\n    }\n    id\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'd6deeb5cc700f8a8f0d11d90f3357146';
+(node as any).hash = 'de8a28a2efbdaa20ead65ac67dda7a4b';
 export default node;

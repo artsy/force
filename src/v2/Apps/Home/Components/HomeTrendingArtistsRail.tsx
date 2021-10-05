@@ -1,10 +1,7 @@
 import {
   Box,
   Image,
-  Text,
-  Flex,
   Spacer,
-  Shelf,
   EntityHeader,
   Skeleton,
   SkeletonText,
@@ -25,6 +22,7 @@ import {
   OwnerType,
 } from "@artsy/cohesion"
 import { FollowArtistButtonFragmentContainer } from "v2/Components/FollowButton/FollowArtistButton"
+import { Rail } from "v2/Components/Rail"
 
 interface HomeTrendingArtistsRailProps {
   viewer: HomeTrendingArtistsRail_viewer
@@ -42,14 +40,26 @@ const HomeTrendingArtistsRail: React.FC<HomeTrendingArtistsRailProps> = ({
   }
 
   return (
-    <HomeTrendingArtistsRailContainer>
-      <Shelf alignItems="flex-start">
-        {nodes.map((node, index) => {
+    <Rail
+      title="Trending Artists on Artsy"
+      viewAllLabel="View All Artists"
+      viewAllHref="/artists"
+      viewAllOnClick={() => {
+        const trackingEvent: ClickedArtistGroup = {
+          action: ActionType.clickedArtistGroup,
+          context_module: ContextModule.trendingArtistsRail,
+          context_page_owner_type: OwnerType.home,
+          destination_page_owner_type: OwnerType.artists,
+          type: "viewAll",
+        }
+        trackEvent(trackingEvent)
+      }}
+      getItems={() => {
+        return nodes.map(node => {
           return (
             <RouterLink
               to={node.href}
               textDecoration="none"
-              key={index}
               onClick={() => {
                 const trackingEvent: ClickedArtistGroup = {
                   action: ActionType.clickedArtistGroup,
@@ -63,7 +73,7 @@ const HomeTrendingArtistsRail: React.FC<HomeTrendingArtistsRailProps> = ({
                 trackEvent(trackingEvent)
               }}
             >
-              <Box width={325} key={index}>
+              <Box width={325}>
                 {node.image?.cropped?.src ? (
                   <Box>
                     <Image
@@ -110,52 +120,20 @@ const HomeTrendingArtistsRail: React.FC<HomeTrendingArtistsRailProps> = ({
               </Box>
             </RouterLink>
           )
-        })}
-      </Shelf>
-    </HomeTrendingArtistsRailContainer>
-  )
-}
-
-const HomeTrendingArtistsRailContainer: React.FC = ({ children }) => {
-  const { trackEvent } = useTracking()
-
-  return (
-    <>
-      <Flex justifyContent="space-between" alignItems="center">
-        <Text variant="lg">Trending Artists on Artsy</Text>
-
-        <Text
-          variant="sm"
-          as={RouterLink}
-          // @ts-ignore
-          to="/artists"
-          onClick={() => {
-            const trackingEvent: ClickedArtistGroup = {
-              action: ActionType.clickedArtistGroup,
-              context_module: ContextModule.trendingArtistsRail,
-              context_page_owner_type: OwnerType.home,
-              destination_page_owner_type: OwnerType.artists,
-              type: "viewAll",
-            }
-            trackEvent(trackingEvent)
-          }}
-        >
-          View All Artists
-        </Text>
-      </Flex>
-
-      <Spacer mt={4} />
-
-      {children}
-    </>
+        })
+      }}
+    />
   )
 }
 
 const PLACEHOLDER = (
   <Skeleton>
-    <HomeTrendingArtistsRailContainer>
-      <Shelf>
-        {[...new Array(8)].map((_, i) => {
+    <Rail
+      title="Trending Artists on Artsy"
+      viewAllLabel="View All Artists"
+      viewAllHref="/artists"
+      getItems={() => {
+        return [...new Array(8)].map((_, i) => {
           return (
             <Box width={325} key={i}>
               <SkeletonBox width={325} height={230} />
@@ -163,9 +141,9 @@ const PLACEHOLDER = (
               <SkeletonText variant="md">Location</SkeletonText>
             </Box>
           )
-        })}
-      </Shelf>
-    </HomeTrendingArtistsRailContainer>
+        })
+      }}
+    />
   </Skeleton>
 )
 

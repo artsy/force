@@ -1,21 +1,21 @@
 import React from "react"
 import { graphql } from "relay-runtime"
 import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
-import { HomeCurrentFairsRailFragmentContainer } from "../Components/HomeCurrentFairsRail"
-import { HomeCurrentFairsRail_Test_Query } from "v2/__generated__/HomeCurrentFairsRail_Test_Query.graphql"
+import { HomeCurrentFairsFragmentContainer } from "../Components/HomeCurrentFairs"
+import { HomeCurrentFairs_Test_Query } from "v2/__generated__/HomeCurrentFairs_Test_Query.graphql"
 import { useTracking } from "v2/System/Analytics/useTracking"
 
 jest.unmock("react-relay")
 jest.mock("v2/System/Analytics/useTracking")
 
-const { getWrapper } = setupTestWrapper<HomeCurrentFairsRail_Test_Query>({
+const { getWrapper } = setupTestWrapper<HomeCurrentFairs_Test_Query>({
   Component: props => {
-    return <HomeCurrentFairsRailFragmentContainer viewer={props.viewer!} />
+    return <HomeCurrentFairsFragmentContainer viewer={props.viewer!} />
   },
   query: graphql`
-    query HomeCurrentFairsRail_Test_Query {
+    query HomeCurrentFairs_Test_Query {
       viewer {
-        ...HomeCurrentFairsRail_viewer
+        ...HomeCurrentFairs_viewer
       }
     }
   `,
@@ -31,7 +31,7 @@ afterEach(() => {
   trackEvent.mockClear()
 })
 
-describe("HomeCurrentFairsRail", () => {
+describe("HomeCurrentFairs", () => {
   it("renders correctly", () => {
     const wrapper = getWrapper({
       Viewer: () => ({

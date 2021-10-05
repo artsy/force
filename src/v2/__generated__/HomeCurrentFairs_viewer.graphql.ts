@@ -3,7 +3,7 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type HomeCurrentFairsRail_viewer = {
+export type HomeCurrentFairs_viewer = {
     readonly fairs: ReadonlyArray<{
         readonly internalID: string;
         readonly slug: string;
@@ -25,12 +25,12 @@ export type HomeCurrentFairsRail_viewer = {
             } | null;
         } | null;
     } | null> | null;
-    readonly " $refType": "HomeCurrentFairsRail_viewer";
+    readonly " $refType": "HomeCurrentFairs_viewer";
 };
-export type HomeCurrentFairsRail_viewer$data = HomeCurrentFairsRail_viewer;
-export type HomeCurrentFairsRail_viewer$key = {
-    readonly " $data"?: HomeCurrentFairsRail_viewer$data;
-    readonly " $fragmentRefs": FragmentRefs<"HomeCurrentFairsRail_viewer">;
+export type HomeCurrentFairs_viewer$data = HomeCurrentFairs_viewer;
+export type HomeCurrentFairs_viewer$key = {
+    readonly " $data"?: HomeCurrentFairs_viewer$data;
+    readonly " $fragmentRefs": FragmentRefs<"HomeCurrentFairs_viewer">;
 };
 
 
@@ -47,7 +47,7 @@ return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "HomeCurrentFairsRail_viewer",
+  "name": "HomeCurrentFairs_viewer",
   "selections": [
     {
       "alias": null,
@@ -225,5 +225,5 @@ return {
   "type": "Viewer"
 };
 })();
-(node as any).hash = '3a2db52cfa48d6142c2abc37570f2e68';
+(node as any).hash = '3ee0be65c58b5f7a9dad6ba728773d57';
 export default node;
