@@ -165,6 +165,14 @@ jobs:
           from: storybook-static
           to: "s3://artsy-static-sites/artsy-force-storybook"
 
+  detect-secrets:
+    docker:
+      - image: lirantal/detect-secrets
+    working_directory: /usr/src/app
+    steps:
+      - checkout
+      - run: detect-secrets-hook --baseline .secrets.baseline $(git ls-files)
+
 not_master_or_staging_or_release: &not_master_or_staging_or_release
   filters:
     branches:
@@ -195,6 +203,9 @@ only_release: &only_release
 workflows:
   default:
     jobs:
+      - detect-secrets:
+          <<: *not_master_or_staging_or_release
+
       # Main build
       - artsy-remote-docker/buildkit-build:
           <<: *not_staging_or_release

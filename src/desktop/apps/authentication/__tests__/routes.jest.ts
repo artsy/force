@@ -25,7 +25,7 @@ describe("Routes", () => {
         req.query = {
           reset_password_redirect_to: "/articles",
           reset_password_token: "foobar",
-          set_password: "set password",
+          set_password: "set password", // pragma: allowlist secret
         }
       })
 
@@ -55,7 +55,7 @@ describe("Routes", () => {
         req.session = {
           reset_password_redirect_to: "/articles",
           reset_password_token: "foobar",
-          set_password: "set password",
+          set_password: "set password", // pragma: allowlist secret
         }
       })
 
