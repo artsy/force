@@ -4,12 +4,12 @@ import { useAnalyticsContext } from "v2/System"
 import { WorksByArtistsYouFollowRail_viewer } from "v2/__generated__/WorksByArtistsYouFollowRail_viewer.graphql"
 import { useTracking } from "react-tracking"
 import { AuthContextModule } from "@artsy/cohesion"
-import { tabTypeToContextModuleMap } from "../../Utils/tabTypeToContextModuleMap"
-import { Shelf, Spacer, Text, Sup } from "@artsy/palette"
+import { tabTypeToContextModuleMap } from "../Utils/tabTypeToContextModuleMap"
 import { ShelfArtworkFragmentContainer } from "v2/Components/Artwork/ShelfArtwork"
 import { extractNodes } from "v2/Utils/extractNodes"
-import { CuratorialRailsZeroState } from "../CuratorialRailsZeroState/CuratorialRailsZeroState"
 import { trackHelpers } from "v2/Utils/cohesionHelpers"
+import { CuratorialRailsZeroState } from "./CuritorialRailsTabBar"
+import { Rail } from "v2/Components/Rail"
 
 export interface WorksByArtistsYouFollowRailProps {
   viewer: WorksByArtistsYouFollowRail_viewer
@@ -29,20 +29,12 @@ const WorksByArtistsYouFollowRail: React.FC<WorksByArtistsYouFollowRailProps> = 
   }
 
   return (
-    <>
-      <Text as="h3" variant="lg" color="black100" mt={6}>
-        Works for you{" "}
-        <Sup color="brand">{viewer.saleArtworksConnection?.edges?.length}</Sup>
-      </Text>
-
-      <Text as="h3" variant="lg" color="black60">
-        Works at auction by artists you follow
-      </Text>
-
-      <Spacer mt={4} />
-
-      <Shelf>
-        {nodes.map((node, index) => {
+    <Rail
+      title="Works for you"
+      subTitle="Works at auction by artists you follow"
+      countLabel={nodes.length}
+      getItems={() => {
+        return nodes.map((node, index) => {
           return (
             <ShelfArtworkFragmentContainer
               artwork={node}
@@ -63,9 +55,9 @@ const WorksByArtistsYouFollowRail: React.FC<WorksByArtistsYouFollowRailProps> = 
               }}
             />
           )
-        })}
-      </Shelf>
-    </>
+        })
+      }}
+    />
   )
 }
 

@@ -1,27 +1,27 @@
 import { AuthContextModule } from "@artsy/cohesion"
-import { Shelf, Spacer, Sup, Text } from "@artsy/palette"
 import { graphql } from "lib/graphql"
 import React from "react"
 import { createFragmentContainer } from "react-relay"
 import { useTracking } from "react-tracking"
 import { ShelfArtworkFragmentContainer } from "v2/Components/Artwork/ShelfArtwork"
+import { Rail } from "v2/Components/Rail"
 import { useAnalyticsContext } from "v2/System"
 import { trackHelpers } from "v2/Utils/cohesionHelpers"
 import { extractNodes } from "v2/Utils/extractNodes"
-import { StandoutLots_viewer } from "v2/__generated__/StandoutLots_viewer.graphql"
-import { tabTypeToContextModuleMap } from "../../Utils/tabTypeToContextModuleMap"
-import { CuratorialRailsZeroState } from "../CuratorialRailsZeroState/CuratorialRailsZeroState"
+import { StandoutLotsRail_viewer } from "v2/__generated__/StandoutLotsRail_viewer.graphql"
+import { tabTypeToContextModuleMap } from "../Utils/tabTypeToContextModuleMap"
+import { CuratorialRailsZeroState } from "./CuritorialRailsTabBar"
 
-export interface StandoutLotsProps {
-  viewer: StandoutLots_viewer
+export interface StandoutLotsRailProps {
+  viewer: StandoutLotsRail_viewer
 }
 
-const StandoutLots: React.FC<StandoutLotsProps> = ({ viewer }) => {
+const StandoutLotsRail: React.FC<StandoutLotsRailProps> = ({ viewer }) => {
   const { trackEvent } = useTracking()
   const { contextPageOwnerType } = useAnalyticsContext()
   const contextModule = tabTypeToContextModuleMap.standoutLots as AuthContextModule
 
-  const nodes = extractNodes(viewer.standoutLotsConnection)
+  const nodes = extractNodes(viewer.StandoutLotsRailConnection)
 
   const liveSaleArtworks = nodes.filter(node => {
     return !node.sale?.isClosed
@@ -32,19 +32,12 @@ const StandoutLots: React.FC<StandoutLotsProps> = ({ viewer }) => {
   }
 
   return (
-    <>
-      <Text as="h3" variant="lg" color="black100" mt={6}>
-        Standout Lots <Sup color="brand">{liveSaleArtworks.length}</Sup>
-      </Text>
-
-      <Text as="h3" variant="lg" color="black60">
-        Works that Artsy curators love
-      </Text>
-
-      <Spacer mb={4} />
-
-      <Shelf>
-        {liveSaleArtworks.map((node, index) => {
+    <Rail
+      title="Standout Lots"
+      countLabel={liveSaleArtworks.length}
+      subTitle="Works that Artsy curators love"
+      getItems={() => {
+        return liveSaleArtworks.map((node, index) => {
           return (
             <ShelfArtworkFragmentContainer
               artwork={node}
@@ -65,18 +58,18 @@ const StandoutLots: React.FC<StandoutLotsProps> = ({ viewer }) => {
               }}
             />
           )
-        })}
-      </Shelf>
-    </>
+        })
+      }}
+    />
   )
 }
 
-export const StandoutLotsFragmentContainer = createFragmentContainer(
-  StandoutLots,
+export const StandoutLotsRailFragmentContainer = createFragmentContainer(
+  StandoutLotsRail,
   {
     viewer: graphql`
-      fragment StandoutLots_viewer on Viewer {
-        standoutLotsConnection: saleArtworksConnection(
+      fragment StandoutLotsRail_viewer on Viewer {
+        StandoutLotsRailConnection: saleArtworksConnection(
           first: 50
           geneIDs: "highlights-at-auction"
         ) {

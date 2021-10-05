@@ -3,23 +3,23 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type TrendingLots_Test_QueryVariables = {};
-export type TrendingLots_Test_QueryResponse = {
+export type StandoutLotsRail_Test_QueryVariables = {};
+export type StandoutLotsRail_Test_QueryResponse = {
     readonly viewer: {
-        readonly " $fragmentRefs": FragmentRefs<"TrendingLots_viewer">;
+        readonly " $fragmentRefs": FragmentRefs<"StandoutLotsRail_viewer">;
     } | null;
 };
-export type TrendingLots_Test_Query = {
-    readonly response: TrendingLots_Test_QueryResponse;
-    readonly variables: TrendingLots_Test_QueryVariables;
+export type StandoutLotsRail_Test_Query = {
+    readonly response: StandoutLotsRail_Test_QueryResponse;
+    readonly variables: StandoutLotsRail_Test_QueryVariables;
 };
 
 
 
 /*
-query TrendingLots_Test_Query {
+query StandoutLotsRail_Test_Query {
   viewer {
-    ...TrendingLots_viewer
+    ...StandoutLotsRail_viewer
   }
 }
 
@@ -131,12 +131,9 @@ fragment ShelfArtwork_artwork_20bRBg on Artwork {
   ...Badge_artwork
 }
 
-fragment TrendingLots_viewer on Viewer {
-  trendingLotsConnection: saleArtworksConnection(first: 50, sort: "-bidder_positions_count") {
+fragment StandoutLotsRail_viewer on Viewer {
+  StandoutLotsRailConnection: saleArtworksConnection(first: 50, geneIDs: "highlights-at-auction") {
     edges {
-      counts {
-        bidderPositions
-      }
       node {
         internalID
         slug
@@ -203,7 +200,7 @@ return {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "TrendingLots_Test_Query",
+    "name": "StandoutLotsRail_Test_Query",
     "selections": [
       {
         "alias": null,
@@ -216,7 +213,7 @@ return {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "TrendingLots_viewer"
+            "name": "StandoutLotsRail_viewer"
           }
         ],
         "storageKey": null
@@ -228,7 +225,7 @@ return {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "TrendingLots_Test_Query",
+    "name": "StandoutLotsRail_Test_Query",
     "selections": [
       {
         "alias": null,
@@ -239,7 +236,7 @@ return {
         "plural": false,
         "selections": [
           {
-            "alias": "trendingLotsConnection",
+            "alias": "StandoutLotsRailConnection",
             "args": [
               {
                 "kind": "Literal",
@@ -248,8 +245,8 @@ return {
               },
               {
                 "kind": "Literal",
-                "name": "sort",
-                "value": "-bidder_positions_count"
+                "name": "geneIDs",
+                "value": "highlights-at-auction"
               }
             ],
             "concreteType": "SaleArtworksConnection",
@@ -265,24 +262,6 @@ return {
                 "name": "edges",
                 "plural": true,
                 "selections": [
-                  {
-                    "alias": null,
-                    "args": null,
-                    "concreteType": "SaleArtworkCounts",
-                    "kind": "LinkedField",
-                    "name": "counts",
-                    "plural": false,
-                    "selections": [
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "bidderPositions",
-                        "storageKey": null
-                      }
-                    ],
-                    "storageKey": null
-                  },
                   {
                     "alias": null,
                     "args": null,
@@ -582,7 +561,7 @@ return {
                 "storageKey": null
               }
             ],
-            "storageKey": "saleArtworksConnection(first:50,sort:\"-bidder_positions_count\")"
+            "storageKey": "saleArtworksConnection(first:50,geneIDs:\"highlights-at-auction\")"
           }
         ],
         "storageKey": null
@@ -592,11 +571,11 @@ return {
   "params": {
     "id": null,
     "metadata": {},
-    "name": "TrendingLots_Test_Query",
+    "name": "StandoutLotsRail_Test_Query",
     "operationKind": "query",
-    "text": "query TrendingLots_Test_Query {\n  viewer {\n    ...TrendingLots_viewer\n  }\n}\n\nfragment Badge_artwork on Artwork {\n  is_biddable: isBiddable\n  href\n  sale {\n    is_preview: isPreview\n    display_timely_at: displayTimelyAt\n    id\n  }\n}\n\nfragment Contact_artwork on Artwork {\n  href\n  is_inquireable: isInquireable\n  sale {\n    is_auction: isAuction\n    is_live_open: isLiveOpen\n    is_open: isOpen\n    is_closed: isClosed\n    id\n  }\n  partner(shallow: true) {\n    type\n    id\n  }\n  sale_artwork: saleArtwork {\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    counts {\n      bidder_positions: bidderPositions\n    }\n    id\n  }\n}\n\nfragment Details_artwork on Artwork {\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  ...Contact_artwork\n  href\n}\n\nfragment SaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n\nfragment ShelfArtwork_artwork_20bRBg on Artwork {\n  image {\n    resized(width: 325) {\n      src\n      srcSet\n      width\n      height\n    }\n    aspectRatio\n    height\n  }\n  imageTitle\n  title\n  href\n  is_saved: isSaved\n  ...Metadata_artwork\n  ...SaveButton_artwork\n  ...Badge_artwork\n}\n\nfragment TrendingLots_viewer on Viewer {\n  trendingLotsConnection: saleArtworksConnection(first: 50, sort: \"-bidder_positions_count\") {\n    edges {\n      counts {\n        bidderPositions\n      }\n      node {\n        internalID\n        slug\n        ...ShelfArtwork_artwork_20bRBg\n        sale {\n          isClosed\n          id\n        }\n        id\n      }\n      id\n    }\n  }\n}\n"
+    "text": "query StandoutLotsRail_Test_Query {\n  viewer {\n    ...StandoutLotsRail_viewer\n  }\n}\n\nfragment Badge_artwork on Artwork {\n  is_biddable: isBiddable\n  href\n  sale {\n    is_preview: isPreview\n    display_timely_at: displayTimelyAt\n    id\n  }\n}\n\nfragment Contact_artwork on Artwork {\n  href\n  is_inquireable: isInquireable\n  sale {\n    is_auction: isAuction\n    is_live_open: isLiveOpen\n    is_open: isOpen\n    is_closed: isClosed\n    id\n  }\n  partner(shallow: true) {\n    type\n    id\n  }\n  sale_artwork: saleArtwork {\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    counts {\n      bidder_positions: bidderPositions\n    }\n    id\n  }\n}\n\nfragment Details_artwork on Artwork {\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  ...Contact_artwork\n  href\n}\n\nfragment SaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n\nfragment ShelfArtwork_artwork_20bRBg on Artwork {\n  image {\n    resized(width: 325) {\n      src\n      srcSet\n      width\n      height\n    }\n    aspectRatio\n    height\n  }\n  imageTitle\n  title\n  href\n  is_saved: isSaved\n  ...Metadata_artwork\n  ...SaveButton_artwork\n  ...Badge_artwork\n}\n\nfragment StandoutLotsRail_viewer on Viewer {\n  StandoutLotsRailConnection: saleArtworksConnection(first: 50, geneIDs: \"highlights-at-auction\") {\n    edges {\n      node {\n        internalID\n        slug\n        ...ShelfArtwork_artwork_20bRBg\n        sale {\n          isClosed\n          id\n        }\n        id\n      }\n      id\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '367f6ad57d950f8547e7c605420bdbe6';
+(node as any).hash = '632fb6cd39663769fd5db8eda7348d00';
 export default node;

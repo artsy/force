@@ -1,21 +1,28 @@
-import React, { useRef } from "react"
-import { Box, BoxProps, Text } from "@artsy/palette"
+import React from "react"
+import { BoxProps, Skeleton, SkeletonBox, SkeletonText } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { AuctionArtworksRail_sale } from "v2/__generated__/AuctionArtworksRail_sale.graphql"
-import { RouterLink } from "v2/System/Router/RouterLink"
 import { useLazyLoadComponent } from "v2/Utils/Hooks/useLazyLoadComponent"
-import { AuctionArtworksRailArtworksQueryRenderer } from "./AuctionArtworksRailArtworks"
 import { AuctionArtworksRailPlaceholder } from "../AuctionArtworksRailPlaceholder"
 import { tabTypeToContextModuleMap } from "../../Utils/tabTypeToContextModuleMap"
 import { useTracking } from "react-tracking"
 import {
   ActionType,
+  AuthContextModule,
   ClickedArtworkGroup,
   ContextModule,
   OwnerType,
   PageOwnerType,
 } from "@artsy/cohesion"
-import { useAnalyticsContext } from "v2/System"
+import { useAnalyticsContext, useSystemContext } from "v2/System"
+import { Rail } from "v2/Components/Rail"
+import { extractNodes } from "v2/Utils/extractNodes"
+import {
+  ShelfArtworkFragmentContainer,
+  IMG_HEIGHT,
+} from "v2/Components/Artwork/ShelfArtwork"
+import { trackHelpers } from "v2/Utils/cohesionHelpers"
+import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 
 export type TabType =
   | "current"
@@ -29,72 +36,129 @@ interface AuctionArtworksRailProps extends BoxProps {
   tabType: TabType
 }
 
-/**
- * Though it is likely to exist, the sale message line may be missing.
- * In order to avoid the page shifting between the loading state and the ready state,
- * we need to hardcode the height.
- */
-
 export const AuctionArtworksRail: React.FC<AuctionArtworksRailProps> = ({
   sale,
   tabType,
   ...rest
 }) => {
-  const ref = useRef<HTMLDivElement | null>(null)
   const { trackEvent } = useTracking()
   const { isEnteredView, Waypoint } = useLazyLoadComponent({ threshold: 2000 })
   const { contextPageOwnerType } = useAnalyticsContext()
-  const contextModule = tabTypeToContextModuleMap[tabType]
-
-  const trackViewSaleClick = () => {
-    trackEvent(
-      tracks.clickedArtworkGroupHeader(
-        contextModule,
-        contextPageOwnerType!,
-        sale.internalID,
-        sale.slug
-      )
-    )
-  }
+  const contextModule = tabTypeToContextModuleMap[tabType] as AuthContextModule
+  const nodes = extractNodes(sale.artworksConnection)
 
   return (
     <>
       <Waypoint />
 
-      <Box ref={ref as any} {...rest}>
-        <Box display="flex" mb={[2, 4]} pr={[1, 0]}>
-          <Box flex="1">
-            <Text as="h3" variant="lg" color="black100">
-              <RouterLink
-                to={sale.href}
-                noUnderline
-                onClick={trackViewSaleClick}
-              >
-                {sale.name}
-              </RouterLink>
-            </Text>
-            <Text as="h3" variant="lg" color="black60" mb={1}>
-              {sale.formattedStartDateTime}
-            </Text>
-          </Box>
-
-          <Text variant="sm" color="black100">
-            <RouterLink to={sale.href} onClick={trackViewSaleClick}>
-              View all
-            </RouterLink>
-          </Text>
-        </Box>
-
-        {isEnteredView ? (
-          <AuctionArtworksRailArtworksQueryRenderer
-            id={sale.internalID}
-            tabType={tabType}
-          />
-        ) : (
-          <AuctionArtworksRailPlaceholder />
-        )}
-      </Box>
+      {isEnteredView ? (
+        <Rail
+          title={sale.name!}
+          subTitle={sale.formattedStartDateTime!}
+          countLabel={nodes.length}
+          viewAllLabel="View All"
+          viewAllHref={sale.href!}
+          viewAllOnClick={() => {
+            trackEvent(
+              tracks.clickedArtworkGroupHeader(
+                contextModule,
+                contextPageOwnerType!,
+                sale.internalID,
+                sale.slug
+              )
+            )
+          }}
+          getItems={() => {
+            return nodes.map((node, index) => {
+              return (
+                <ShelfArtworkFragmentContainer
+                  artwork={node}
+                  key={node.slug}
+                  contextModule={contextModule}
+                  hidePartnerName
+                  lazyLoad
+                  onClick={() => {
+                    trackEvent(
+                      trackHelpers.clickedArtworkGroup(
+                        contextModule,
+                        contextPageOwnerType!,
+                        node.internalID,
+                        node.slug,
+                        index
+                      )
+                    )
+                  }}
+                />
+              )
+            })
+          }}
+        />
+      ) : (
+        <AuctionArtworksRailPlaceholder />
+      )}
     </>
+  )
+}
+
+const PLACEHOLDER = (
+  <Skeleton>
+    <Rail
+      isLoading
+      title="Some title"
+      subTitle="Some subtitle"
+      getItems={() => {
+        return [...new Array(10)].map((_, i) => {
+          return (
+            <React.Fragment key={i}>
+              <SkeletonBox
+                width={200}
+                height={[IMG_HEIGHT.mobile, IMG_HEIGHT.desktop]}
+                mb={1}
+              />
+              <SkeletonText variant="mediumText">Artist Name</SkeletonText>
+              <SkeletonText variant="text">Artwork Title</SkeletonText>
+              <SkeletonText variant="text">Price</SkeletonText>
+            </React.Fragment>
+          )
+        })
+      }}
+    />
+  </Skeleton>
+)
+
+export const AuctionArtworkRailQueryRenderer = props => {
+  const { relayEnvironment } = useSystemContext()
+
+  return (
+    <SystemQueryRenderer<HomeTrendingArtistsRailQuery>
+      environment={relayEnvironment}
+      query={graphql`
+        query HomeTrendingArtistsRailQuery {
+          viewer {
+            ...HomeTrendingArtistsRail_viewer
+          }
+        }
+      `}
+      placeholder={PLACEHOLDER}
+      render={({ error, props }) => {
+        if (error) {
+          console.error(error)
+          return null
+        }
+
+        if (!props) {
+          return PLACEHOLDER
+        }
+
+        if (props.viewer) {
+          return (
+            <HomeTrendingArtistsRailFragmentContainer viewer={props.viewer} />
+          )
+        }
+
+        return null
+      }}
+    />
   )
 }
 
@@ -103,6 +167,15 @@ export const AuctionArtworksRailFragmentContainer = createFragmentContainer(
   {
     sale: graphql`
       fragment AuctionArtworksRail_sale on Sale {
+        artworksConnection(first: 20) {
+          edges {
+            node {
+              internalID
+              slug
+              ...ShelfArtwork_artwork @arguments(width: 200)
+            }
+          }
+        }
         internalID
         slug
         href

@@ -3,8 +3,8 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type StandoutLots_viewer = {
-    readonly standoutLotsConnection: {
+export type StandoutLotsRail_viewer = {
+    readonly StandoutLotsRailConnection: {
         readonly edges: ReadonlyArray<{
             readonly node: {
                 readonly internalID: string;
@@ -16,12 +16,12 @@ export type StandoutLots_viewer = {
             } | null;
         } | null> | null;
     } | null;
-    readonly " $refType": "StandoutLots_viewer";
+    readonly " $refType": "StandoutLotsRail_viewer";
 };
-export type StandoutLots_viewer$data = StandoutLots_viewer;
-export type StandoutLots_viewer$key = {
-    readonly " $data"?: StandoutLots_viewer$data;
-    readonly " $fragmentRefs": FragmentRefs<"StandoutLots_viewer">;
+export type StandoutLotsRail_viewer$data = StandoutLotsRail_viewer;
+export type StandoutLotsRail_viewer$key = {
+    readonly " $data"?: StandoutLotsRail_viewer$data;
+    readonly " $fragmentRefs": FragmentRefs<"StandoutLotsRail_viewer">;
 };
 
 
@@ -30,10 +30,10 @@ const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "StandoutLots_viewer",
+  "name": "StandoutLotsRail_viewer",
   "selections": [
     {
-      "alias": "standoutLotsConnection",
+      "alias": "StandoutLotsRailConnection",
       "args": [
         {
           "kind": "Literal",
@@ -122,5 +122,5 @@ const node: ReaderFragment = {
   ],
   "type": "Viewer"
 };
-(node as any).hash = 'cc0c0ba6e1321bb08110e79c4991f2da';
+(node as any).hash = '014a1939216e5b896476d7c80e82e971';
 export default node;

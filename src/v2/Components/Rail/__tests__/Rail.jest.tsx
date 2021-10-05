@@ -12,6 +12,7 @@ describe("Rail", () => {
 
     const wrapper = getWrapper({
       title: "Test Title",
+      subTitle: "Test SubTitle",
       viewAllLabel: "Test View All",
       viewAllHref: "/test-href",
       viewAllOnClick: spy,
@@ -20,6 +21,7 @@ describe("Rail", () => {
 
     const text = wrapper.text()
     expect(text).toContain("Test Title")
+    expect(text).toContain("Test SubTitle")
     expect(text).toContain("Test View All")
     expect(wrapper.html()).toContain("/test-href")
     expect(text).toContain("slide-1")

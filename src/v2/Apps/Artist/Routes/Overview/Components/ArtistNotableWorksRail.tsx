@@ -1,5 +1,4 @@
 import { clickedEntityGroup, ContextModule, OwnerType } from "@artsy/cohesion"
-import { Flex, Shelf, Text } from "@artsy/palette"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
@@ -7,8 +6,8 @@ import { useAnalyticsContext } from "v2/System"
 import { ShelfArtworkFragmentContainer } from "v2/Components/Artwork/ShelfArtwork"
 import { extractNodes } from "v2/Utils/extractNodes"
 import { ArtistNotableWorksRail_artist } from "v2/__generated__/ArtistNotableWorksRail_artist.graphql"
-import { RouterLink } from "v2/System/Router/RouterLink"
 import { scrollToTop } from "../Utils/scrollToTop"
+import { Rail } from "v2/Components/Rail"
 
 interface ArtistNotableWorksRailProps {
   artist: ArtistNotableWorksRail_artist
@@ -31,37 +30,28 @@ const ArtistNotableWorksRail: React.FC<ArtistNotableWorksRailProps> = ({
   }
 
   return (
-    <>
-      <Flex justifyContent="space-between">
-        <Text variant="lg" mb={2} as="h2">
-          Notable works
-        </Text>
+    <Rail
+      title="Notable Works"
+      viewAllLabel="View All Works"
+      viewAllHref={`/artist/${artist.slug}/works-for-sale`}
+      viewAllOnClick={() => {
+        scrollToTop()
 
-        <RouterLink
-          to={`/artist/${artist.slug}/works-for-sale`}
-          onClick={() => {
-            scrollToTop()
-
-            tracking.trackEvent(
-              clickedEntityGroup({
-                contextModule: ContextModule.topWorksRail,
-                contextPageOwnerId,
-                contextPageOwnerSlug,
-                contextPageOwnerType: contextPageOwnerType!,
-                destinationPageOwnerType: OwnerType.artist,
-                destinationPageOwnerId: artist.internalID,
-                destinationPageOwnerSlug: artist.slug,
-                type: "viewAll",
-              })
-            )
-          }}
-        >
-          <Text variant="sm">View all works</Text>
-        </RouterLink>
-      </Flex>
-
-      <Shelf>
-        {nodes.map((node, index) => {
+        tracking.trackEvent(
+          clickedEntityGroup({
+            contextModule: ContextModule.topWorksRail,
+            contextPageOwnerId,
+            contextPageOwnerSlug,
+            contextPageOwnerType: contextPageOwnerType!,
+            destinationPageOwnerType: OwnerType.artist,
+            destinationPageOwnerId: artist.internalID,
+            destinationPageOwnerSlug: artist.slug,
+            type: "viewAll",
+          })
+        )
+      }}
+      getItems={() => {
+        return nodes.map((node, index) => {
           return (
             <ShelfArtworkFragmentContainer
               artwork={node}
@@ -89,9 +79,9 @@ const ArtistNotableWorksRail: React.FC<ArtistNotableWorksRailProps> = ({
               }}
             />
           )
-        })}
-      </Shelf>
-    </>
+        })
+      }}
+    />
   )
 }
 
