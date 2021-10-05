@@ -7,7 +7,7 @@ export interface RailHeaderProps {
   title: string
   viewAllHref: string
   viewAllLabel: string
-  viewAllOnClick?(): void
+  viewAllOnClick?(event: React.MouseEvent<HTMLElement, MouseEvent>): void
 }
 
 export const RailHeader: React.FC<RailHeaderProps> = ({
