@@ -42,6 +42,7 @@ export const ArtworkDetails: FC = () => {
             <ArtworkDetailsForm />
             <Button
               mt={6}
+              data-test-id="save-button"
               type="submit"
               size="medium"
               variant="primaryBlack"
