@@ -7,21 +7,21 @@ import {
   ArtworkDetailsFormModel,
 } from "./Components/ArtworkDetailsForm"
 
-export const ArtworkDetails: FC = () => {
-  const initialValues = {
-    artist: "",
-    year: "",
-    title: "",
-    medium: "",
-    rarity: "default",
-    editionNumber: "",
-    editionSize: "",
-    heigth: "",
-    width: "",
-    depth: "",
-    units: "in",
-  }
+export const initialValues = {
+  artist: "",
+  year: "",
+  title: "",
+  medium: "",
+  rarity: "default",
+  editionNumber: "",
+  editionSize: "",
+  heigth: "",
+  width: "",
+  depth: "",
+  units: "in",
+}
 
+export const ArtworkDetails: FC = () => {
   const handleSubmit = () => {}
 
   return (
