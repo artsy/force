@@ -146,7 +146,7 @@ describe("InquiryLogin", () => {
       wrapper.update()
 
       expect(wrapper.text()).toContain(
-        "This login requires additional authorization. Please check your email for a one-time authentication code."
+        "Your safety and security are important to us. Please check your email for a one-time authentication code to complete your login."
       )
 
       // Input two factor auth code
