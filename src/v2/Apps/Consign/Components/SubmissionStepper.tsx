@@ -16,13 +16,19 @@ export const submissionFlowSteps = typedArray(
   "Contact Information"
 )
 
+export const submissionFlowStepsMobile = typedArray(
+  "Artwork",
+  "Upload",
+  "Contact"
+)
+
 export const SubmissionStepper: FC<SubmissionStepperProps> = ({
   currentStep,
 }) => {
   const stepIndex = submissionFlowSteps.indexOf(currentStep)
   return (
     <>
-      <Media between={["xs", "md"]}>
+      <Media at={"xs"}>
         <Box>
           <Stepper
             initialTabIndex={stepIndex}
@@ -30,13 +36,13 @@ export const SubmissionStepper: FC<SubmissionStepperProps> = ({
             disableNavigation
             autoScroll
           >
-            {submissionFlowSteps.map(step => (
+            {submissionFlowStepsMobile.map(step => (
               <Step name={step} key={step} />
             ))}
           </Stepper>
         </Box>
       </Media>
-      <Media greaterThan="sm">
+      <Media greaterThan="xs">
         <Stepper
           initialTabIndex={stepIndex}
           currentStepIndex={stepIndex}
