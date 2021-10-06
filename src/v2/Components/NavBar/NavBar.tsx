@@ -360,7 +360,7 @@ export const NavBar: React.FC = track(
                   Fairs
                 </NavBarItemLink>
 
-                <NavBarItemLink href="/Shows" onClick={handleClick}>
+                <NavBarItemLink href="/shows" onClick={handleClick}>
                   Shows
                 </NavBarItemLink>
 
