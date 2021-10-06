@@ -3,8 +3,7 @@ import { BoxProps, Skeleton, SkeletonBox, SkeletonText } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { AuctionArtworksRail_sale } from "v2/__generated__/AuctionArtworksRail_sale.graphql"
 import { useLazyLoadComponent } from "v2/Utils/Hooks/useLazyLoadComponent"
-import { AuctionArtworksRailPlaceholder } from "../AuctionArtworksRailPlaceholder"
-import { tabTypeToContextModuleMap } from "../../Utils/tabTypeToContextModuleMap"
+import { tabTypeToContextModuleMap } from "../Utils/tabTypeToContextModuleMap"
 import { useTracking } from "react-tracking"
 import {
   ActionType,
@@ -23,6 +22,7 @@ import {
 } from "v2/Components/Artwork/ShelfArtwork"
 import { trackHelpers } from "v2/Utils/cohesionHelpers"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
+import { AuctionArtworksRailQuery } from "v2/__generated__/AuctionArtworksRailQuery.graphql"
 
 export type TabType =
   | "current"
@@ -42,61 +42,52 @@ export const AuctionArtworksRail: React.FC<AuctionArtworksRailProps> = ({
   ...rest
 }) => {
   const { trackEvent } = useTracking()
-  const { isEnteredView, Waypoint } = useLazyLoadComponent({ threshold: 2000 })
   const { contextPageOwnerType } = useAnalyticsContext()
   const contextModule = tabTypeToContextModuleMap[tabType] as AuthContextModule
   const nodes = extractNodes(sale.artworksConnection)
 
   return (
-    <>
-      <Waypoint />
-
-      {isEnteredView ? (
-        <Rail
-          title={sale.name!}
-          subTitle={sale.formattedStartDateTime!}
-          countLabel={nodes.length}
-          viewAllLabel="View All"
-          viewAllHref={sale.href!}
-          viewAllOnClick={() => {
-            trackEvent(
-              tracks.clickedArtworkGroupHeader(
-                contextModule,
-                contextPageOwnerType!,
-                sale.internalID,
-                sale.slug
-              )
-            )
-          }}
-          getItems={() => {
-            return nodes.map((node, index) => {
-              return (
-                <ShelfArtworkFragmentContainer
-                  artwork={node}
-                  key={node.slug}
-                  contextModule={contextModule}
-                  hidePartnerName
-                  lazyLoad
-                  onClick={() => {
-                    trackEvent(
-                      trackHelpers.clickedArtworkGroup(
-                        contextModule,
-                        contextPageOwnerType!,
-                        node.internalID,
-                        node.slug,
-                        index
-                      )
-                    )
-                  }}
-                />
-              )
-            })
-          }}
-        />
-      ) : (
-        <AuctionArtworksRailPlaceholder />
-      )}
-    </>
+    <Rail
+      title={sale.name!}
+      subTitle={sale.formattedStartDateTime!}
+      countLabel={nodes.length}
+      viewAllLabel="View All"
+      viewAllHref={sale.href!}
+      viewAllOnClick={() => {
+        trackEvent(
+          tracks.clickedArtworkGroupHeader(
+            contextModule,
+            contextPageOwnerType!,
+            sale.internalID,
+            sale.slug
+          )
+        )
+      }}
+      getItems={() => {
+        return nodes.map((node, index) => {
+          return (
+            <ShelfArtworkFragmentContainer
+              artwork={node}
+              key={node.slug}
+              contextModule={contextModule}
+              hidePartnerName
+              lazyLoad
+              onClick={() => {
+                trackEvent(
+                  trackHelpers.clickedArtworkGroup(
+                    contextModule,
+                    contextPageOwnerType!,
+                    node.internalID,
+                    node.slug,
+                    index
+                  )
+                )
+              }}
+            />
+          )
+        })
+      }}
+    />
   )
 }
 
@@ -126,42 +117,6 @@ const PLACEHOLDER = (
   </Skeleton>
 )
 
-export const AuctionArtworkRailQueryRenderer = props => {
-  const { relayEnvironment } = useSystemContext()
-
-  return (
-    <SystemQueryRenderer<HomeTrendingArtistsRailQuery>
-      environment={relayEnvironment}
-      query={graphql`
-        query HomeTrendingArtistsRailQuery {
-          viewer {
-            ...HomeTrendingArtistsRail_viewer
-          }
-        }
-      `}
-      placeholder={PLACEHOLDER}
-      render={({ error, props }) => {
-        if (error) {
-          console.error(error)
-          return null
-        }
-
-        if (!props) {
-          return PLACEHOLDER
-        }
-
-        if (props.viewer) {
-          return (
-            <HomeTrendingArtistsRailFragmentContainer viewer={props.viewer} />
-          )
-        }
-
-        return null
-      }}
-    />
-  )
-}
-
 export const AuctionArtworksRailFragmentContainer = createFragmentContainer(
   AuctionArtworksRail,
   {
@@ -185,6 +140,55 @@ export const AuctionArtworksRailFragmentContainer = createFragmentContainer(
     `,
   }
 )
+
+export const AuctionArtworkRailQueryRenderer = ({ slug, tabType }) => {
+  const { isEnteredView, Waypoint } = useLazyLoadComponent({ threshold: 2000 })
+  const { relayEnvironment } = useSystemContext()
+
+  return (
+    <>
+      <Waypoint />
+
+      {isEnteredView && (
+        <SystemQueryRenderer<AuctionArtworksRailQuery>
+          environment={relayEnvironment}
+          query={graphql`
+            query AuctionArtworksRailQuery($slug: String!) {
+              sale(id: $slug) {
+                ...AuctionArtworksRail_sale
+              }
+            }
+          `}
+          variables={{
+            slug,
+          }}
+          placeholder={PLACEHOLDER}
+          render={({ error, props }) => {
+            if (error) {
+              console.error(error)
+              return null
+            }
+
+            if (!props) {
+              return PLACEHOLDER
+            }
+
+            if (props.sale) {
+              return (
+                <AuctionArtworksRailFragmentContainer
+                  tabType={tabType}
+                  sale={props.sale}
+                />
+              )
+            }
+
+            return null
+          }}
+        />
+      )}
+    </>
+  )
+}
 
 const tracks = {
   clickedArtworkGroupHeader: (

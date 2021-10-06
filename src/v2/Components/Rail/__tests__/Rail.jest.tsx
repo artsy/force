@@ -4,7 +4,12 @@ import { Rail } from "../Rail"
 
 describe("Rail", () => {
   const getWrapper = props => {
-    return mount(<Rail {...props} />)
+    return mount(
+      <Rail
+        getItems={() => [<div>slide-1</div>, <div>slide-2</div>]}
+        {...props}
+      />
+    )
   }
 
   it("renders and behaves correctly", () => {
@@ -16,7 +21,6 @@ describe("Rail", () => {
       viewAllLabel: "Test View All",
       viewAllHref: "/test-href",
       viewAllOnClick: spy,
-      getItems: () => [<div>slide-1</div>, <div>slide-2</div>],
     })
 
     const text = wrapper.text()
@@ -29,5 +33,16 @@ describe("Rail", () => {
 
     wrapper.find('[href="/test-href"]').first().simulate("click")
     expect(spy).toHaveBeenCalled()
+  })
+
+  it("shows isLoading state", () => {
+    const wrapper = getWrapper({
+      isLoading: true,
+      title: "Test Title",
+      subTitle: "Test SubTitle",
+      getItems: () => [<div>slide-1</div>, <div>slide-2</div>],
+    })
+
+    expect(wrapper.find("SkeletonText").length).toBe(2)
   })
 })
