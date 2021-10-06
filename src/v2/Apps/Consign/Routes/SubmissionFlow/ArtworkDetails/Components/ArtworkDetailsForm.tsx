@@ -10,6 +10,7 @@ import {
   RadioGroup,
   Radio,
   LabeledInput,
+  InfoCircleIcon,
 } from "@artsy/palette"
 import { Form, useFormikContext } from "formik"
 
@@ -106,9 +107,12 @@ export const ArtworkDetailsForm: FC = () => {
       </GridColumns>
       <GridColumns mt={[2, 4]}>
         <Column span={6}>
-          <Text variant="xs" mb={0.5} textTransform="uppercase">
-            Rarity
-          </Text>
+          <Flex justifyContent="space-between">
+            <Text variant="xs" mb={0.5} textTransform="uppercase">
+              Rarity
+            </Text>
+            <InfoCircleIcon />
+          </Flex>
           <Select
             name="rarity"
             options={rarityOptions}
