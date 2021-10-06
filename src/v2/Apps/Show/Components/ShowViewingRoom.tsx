@@ -1,9 +1,9 @@
 import React from "react"
-import { Box, BoxProps, MediumCard, ResponsiveBox, Text } from "@artsy/palette"
+import { Box, BoxProps, Card, ResponsiveBox, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ShowViewingRoom_show } from "v2/__generated__/ShowViewingRoom_show.graphql"
 import { RouterLink } from "v2/System/Router/RouterLink"
-import { getTagProps } from "v2/Components/ViewingRoomCard"
+import { getCardStatus } from "v2/Components/ViewingRoomCard"
 import { cropped } from "v2/Utils/resized"
 import { useTracking } from "v2/System"
 import { useAnalyticsContext } from "v2/System/Analytics/AnalyticsContext"
@@ -56,21 +56,18 @@ export const ShowViewingRoom: React.FC<ShowViewingRoomProps> = ({
 
   return (
     <Box {...rest}>
-      <Text variant="mediumText" mb={1}>
+      <Text variant="xs" textTransform="uppercase" mb={2}>
         Viewing Room
       </Text>
 
       <ResponsiveBox maxWidth="100%" aspectWidth={3} aspectHeight={4}>
         <RouterLink to={viewingRoom.href} onClick={handleClick}>
-          <MediumCard
-            width="100%"
-            height="100%"
+          <Card
+            maxWidth="100%"
             image={image}
             title={viewingRoom.title}
-            // @ts-expect-error STRICT_NULL_CHECK
             subtitle={show.partner?.name}
-            // @ts-expect-error STRICT_NULL_CHECK
-            tag={getTagProps(
+            status={getCardStatus(
               viewingRoom.status,
               viewingRoom.distanceToOpen,
               viewingRoom.distanceToClose

@@ -1,9 +1,9 @@
 import React from "react"
-import { Box, Flex, Link, MediumCard, Sans, Spacer } from "@artsy/palette"
+import { Box, Flex, Link, Card, Sans, Spacer } from "@artsy/palette"
 import { ViewingRoomsFeaturedRail_featuredViewingRooms } from "v2/__generated__/ViewingRoomsFeaturedRail_featuredViewingRooms.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ViewingRoomCarousel } from "./ViewingRoomCarousel"
-import { getTagProps } from "v2/Components/ViewingRoomCard"
+import { getCardStatus } from "v2/Components/ViewingRoomCard"
 import { cropped } from "v2/Utils/resized"
 import { extractNodes } from "../../../Utils/extractNodes"
 
@@ -26,7 +26,6 @@ export const ViewingRoomsFeaturedRail: React.FC<ViewingRoomsFeaturedRailProps> =
     { image, slug, title, partner, status, distanceToOpen, distanceToClose },
     slideIndex: number
   ): React.ReactElement => {
-    const tag = getTagProps(status, distanceToOpen, distanceToClose)
     const sized = cropped(image?.imageURLs?.normalized, {
       height: 370,
       width: 280,
@@ -36,12 +35,11 @@ export const ViewingRoomsFeaturedRail: React.FC<ViewingRoomsFeaturedRailProps> =
       <Flex flexDirection="row">
         {slideIndex !== 0 && <Spacer ml="15px" />}
         <Link href={`/viewing-room/${slug}`} key={slug} noUnderline>
-          <MediumCard
+          <Card
             image={sized}
             title={title}
             subtitle={partner.name}
-            // @ts-expect-error STRICT_NULL_CHECK
-            tag={tag}
+            status={getCardStatus(status, distanceToOpen, distanceToClose)}
           />
         </Link>
       </Flex>

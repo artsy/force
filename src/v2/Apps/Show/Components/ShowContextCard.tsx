@@ -2,7 +2,7 @@ import {
   Box,
   Column,
   GridColumns,
-  SmallCard,
+  TriptychCard,
   Spacer,
   Text,
 } from "@artsy/palette"
@@ -145,8 +145,7 @@ export const ShowContextCard: React.FC<Props> = ({ show }) => {
         <Column span={6}>
           {/* @ts-expect-error STRICT_NULL_CHECK */}
           <StyledLink to={partnerHref} noUnderline onClick={handleClick}>
-            <SmallCard
-              // @ts-expect-error STRICT_NULL_CHECK
+            <TriptychCard
               title={partnerName}
               subtitle={locationNames}
               images={images}

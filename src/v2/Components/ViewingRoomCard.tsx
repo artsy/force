@@ -1,41 +1,16 @@
-import { CardTagProps } from "@artsy/palette"
-
-// TODO:
-// Palette should export a `CardTag` component that has codified states,
-// rather than having to compute a set of styles.
-// TODO:
-// Gravity should just return the text that should be displayed in a GraphQL field.
-export const getTagProps = (
+export const getCardStatus = (
   status: string,
   distanceToOpen: string | null,
   distanceToClose: string | null
-  // @ts-expect-error STRICT_NULL_CHECK
-): CardTagProps | null => {
+): string | null => {
   switch (status) {
     case "closed":
-      return {
-        text: "Closed",
-        textColor: "white100",
-        color: "black100",
-        borderColor: "black100",
-      }
+      return "Closed"
     case "live":
-      return distanceToClose
-        ? {
-            text: `${distanceToClose} left`,
-            textColor: "black60",
-            color: "white100",
-            borderColor: "black5",
-          }
-        : null
+      return distanceToClose ? `${distanceToClose} left` : null
     case "scheduled":
-      return distanceToOpen
-        ? {
-            text: "Opening soon",
-            textColor: "white100",
-            color: "black100",
-            borderColor: "black100",
-          }
-        : null
+      return distanceToOpen ? "Opening soon" : null
+    default:
+      return null
   }
 }
