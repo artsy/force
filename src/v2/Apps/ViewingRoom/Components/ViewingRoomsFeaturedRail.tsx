@@ -1,63 +1,56 @@
 import React from "react"
-import { Box, Flex, Link, Card, Sans, Spacer } from "@artsy/palette"
+import { Card, Shelf } from "@artsy/palette"
 import { ViewingRoomsFeaturedRail_featuredViewingRooms } from "v2/__generated__/ViewingRoomsFeaturedRail_featuredViewingRooms.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ViewingRoomCarousel } from "./ViewingRoomCarousel"
 import { getCardStatus } from "v2/Components/ViewingRoomCard"
 import { cropped } from "v2/Utils/resized"
 import { extractNodes } from "../../../Utils/extractNodes"
+import { RouterLink } from "v2/System/Router/RouterLink"
 
 interface ViewingRoomsFeaturedRailProps {
   featuredViewingRooms: ViewingRoomsFeaturedRail_featuredViewingRooms
 }
 
-export const ViewingRoomsFeaturedRail: React.FC<ViewingRoomsFeaturedRailProps> = props => {
-  const featuredViewingRooms = props.featuredViewingRooms
+export const ViewingRoomsFeaturedRail: React.FC<ViewingRoomsFeaturedRailProps> = ({
+  featuredViewingRooms,
+}) => {
+  const viewingRooms = extractNodes(featuredViewingRooms)
 
-  const featuredViewingRoomsForRail = extractNodes(featuredViewingRooms)
-
-  const numFeaturedViewingRooms = featuredViewingRoomsForRail.length
-
-  if (numFeaturedViewingRooms === 0) {
+  if (viewingRooms.length === 0) {
     return null
   }
 
-  const carouselItemRender = (
-    { image, slug, title, partner, status, distanceToOpen, distanceToClose },
-    slideIndex: number
-  ): React.ReactElement => {
-    const sized = cropped(image?.imageURLs?.normalized, {
-      height: 370,
-      width: 280,
-    })
-
-    return (
-      <Flex flexDirection="row">
-        {slideIndex !== 0 && <Spacer ml="15px" />}
-        <Link href={`/viewing-room/${slug}`} key={slug} noUnderline>
-          <Card
-            image={sized}
-            title={title}
-            subtitle={partner.name}
-            status={getCardStatus(status, distanceToOpen, distanceToClose)}
-          />
-        </Link>
-      </Flex>
-    )
-  }
-
   return (
-    <Box>
-      <Sans size="5">Featured</Sans>
-      <ViewingRoomCarousel
-        height={380}
-        data={featuredViewingRoomsForRail}
-        render={carouselItemRender}
-        maxWidth="100%"
-        justifyContent="left"
-        scrollPercentByCustomCount={numFeaturedViewingRooms - 2}
-      />
-    </Box>
+    <Shelf>
+      {viewingRooms.map(viewingRoom => {
+        const image = cropped(viewingRoom.image?.imageURLs?.normalized!, {
+          width: 280,
+          height: 370,
+        })
+
+        const status = getCardStatus(
+          viewingRoom.status,
+          viewingRoom.distanceToOpen,
+          viewingRoom.distanceToClose
+        )
+
+        return (
+          <RouterLink
+            key={viewingRoom.slug}
+            display="block"
+            to={`/viewing-room/${viewingRoom.slug}`}
+          >
+            <Card
+              width={280}
+              image={image}
+              title={viewingRoom.title}
+              subtitle={viewingRoom.partner?.name}
+              status={status}
+            />
+          </RouterLink>
+        )
+      })}
+    </Shelf>
   )
 }
 export const ViewingRoomsFeaturedRailFragmentContainer = createFragmentContainer(

@@ -60,7 +60,7 @@ describe("ViewingRoomsApp", () => {
       it("renders correct viewing rooms", async () => {
         const wrapper = await getWrapper()
         const html = wrapper.html()
-        expect(wrapper.find("TriptychCard").length).toBe(4)
+        expect(wrapper.find("Card").length).toBe(6)
         expect(html).not.toContain("Draft VR")
         expect(html).toContain("Scheduled VR")
         expect(html).toContain("Live VR")
@@ -124,10 +124,6 @@ const ViewingRoomsAppFixture: ViewingRoomsApp_Test_QueryRawResponse = {
           cursor: "one",
           node: {
             __typename: "ViewingRoom",
-            artworksConnection: {
-              edges: [],
-              totalCount: 0,
-            },
             distanceToClose: null,
             distanceToOpen: null,
             image: {
@@ -148,26 +144,6 @@ const ViewingRoomsAppFixture: ViewingRoomsApp_Test_QueryRawResponse = {
           cursor: "two",
           node: {
             __typename: "ViewingRoom",
-            artworksConnection: {
-              edges: [
-                {
-                  node: {
-                    id: "hello",
-                    image: {
-                      square: {
-                        src: "https://www.example.com/square-mat.jpg",
-                        srcSet: "https://www.example.com/square-mat.jpg",
-                      },
-                      tall: {
-                        src: "https://www.example.com/tall-mat.jpg",
-                        srcSet: "https://www.example.com/tall-mat.jpg",
-                      },
-                    },
-                  },
-                },
-              ],
-              totalCount: 1,
-            },
             distanceToClose: null,
             distanceToOpen: "soon",
             image: {
@@ -188,41 +164,6 @@ const ViewingRoomsAppFixture: ViewingRoomsApp_Test_QueryRawResponse = {
           cursor: "three",
           node: {
             __typename: "ViewingRoom",
-            artworksConnection: {
-              edges: [
-                {
-                  node: {
-                    id: "hello",
-                    image: {
-                      square: {
-                        src: "https://www.example.com/square-fat.jpg",
-                        srcSet: "https://www.example.com/square-fat.jpg",
-                      },
-                      tall: {
-                        src: "https://www.example.com/tall-fat.jpg",
-                        srcSet: "https://www.example.com/tall-fat.jpg",
-                      },
-                    },
-                  },
-                },
-                {
-                  node: {
-                    id: "there",
-                    image: {
-                      square: {
-                        src: "https://www.example.com/square-pet.jpg",
-                        srcSet: "https://www.example.com/square-pet.jpg",
-                      },
-                      tall: {
-                        src: "https://www.example.com/tall-pet.jpg",
-                        srcSet: "https://www.example.com/tall-pet.jpg",
-                      },
-                    },
-                  },
-                },
-              ],
-              totalCount: 2,
-            },
             distanceToClose: "3 days",
             distanceToOpen: null,
             image: {
@@ -243,41 +184,6 @@ const ViewingRoomsAppFixture: ViewingRoomsApp_Test_QueryRawResponse = {
           cursor: "four",
           node: {
             __typename: "ViewingRoom",
-            artworksConnection: {
-              edges: [
-                {
-                  node: {
-                    id: "hello",
-                    image: {
-                      square: {
-                        src: "https://www.example.com/square-cat.jpg",
-                        srcSet: "https://www.example.com/square-cat.jpg",
-                      },
-                      tall: {
-                        src: "https://www.example.com/tall-cat.jpg",
-                        srcSet: "https://www.example.com/tall-cat.jpg",
-                      },
-                    },
-                  },
-                },
-                {
-                  node: {
-                    id: "there",
-                    image: {
-                      square: {
-                        src: "https://www.example.com/square-bat.jpg",
-                        srcSet: "https://www.example.com/square-bat.jpg",
-                      },
-                      tall: {
-                        src: "https://www.example.com/tall-bat.jpg",
-                        srcSet: "https://www.example.com/tall-bat.jpg",
-                      },
-                    },
-                  },
-                },
-              ],
-              totalCount: 3,
-            },
             distanceToClose: null,
             distanceToOpen: null,
             image: {

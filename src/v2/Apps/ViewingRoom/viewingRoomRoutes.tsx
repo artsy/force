@@ -38,6 +38,7 @@ const ViewingRoomsApp = loadable(
 
 export const viewingRoomRoutes: AppRouteConfig[] = [
   {
+    theme: "v3",
     path: "/viewing-rooms",
     getComponent: () => ViewingRoomsApp,
     prepare: () => {

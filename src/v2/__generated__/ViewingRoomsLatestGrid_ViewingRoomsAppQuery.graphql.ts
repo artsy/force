@@ -51,24 +51,6 @@ fragment ViewingRoomsLatestGrid_viewingRooms_2QE1um on Viewer {
           name
           id
         }
-        artworksConnection(first: 2) {
-          totalCount
-          edges {
-            node {
-              image {
-                tall: cropped(width: 140, height: 280) {
-                  src
-                  srcSet
-                }
-                square: cropped(width: 140, height: 140) {
-                  src
-                  srcSet
-                }
-              }
-              id
-            }
-          }
-        }
         __typename
       }
       cursor
@@ -114,34 +96,6 @@ v3 = [
     "kind": "Literal",
     "name": "short",
     "value": true
-  }
-],
-v4 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "id",
-  "storageKey": null
-},
-v5 = {
-  "kind": "Literal",
-  "name": "width",
-  "value": 140
-},
-v6 = [
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "src",
-    "storageKey": null
-  },
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "srcSet",
-    "storageKey": null
   }
 ];
 return {
@@ -294,101 +248,15 @@ return {
                             "name": "name",
                             "storageKey": null
                           },
-                          (v4/*: any*/)
-                        ],
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": [
-                          {
-                            "kind": "Literal",
-                            "name": "first",
-                            "value": 2
-                          }
-                        ],
-                        "concreteType": "ArtworkConnection",
-                        "kind": "LinkedField",
-                        "name": "artworksConnection",
-                        "plural": false,
-                        "selections": [
                           {
                             "alias": null,
                             "args": null,
                             "kind": "ScalarField",
-                            "name": "totalCount",
-                            "storageKey": null
-                          },
-                          {
-                            "alias": null,
-                            "args": null,
-                            "concreteType": "ArtworkEdge",
-                            "kind": "LinkedField",
-                            "name": "edges",
-                            "plural": true,
-                            "selections": [
-                              {
-                                "alias": null,
-                                "args": null,
-                                "concreteType": "Artwork",
-                                "kind": "LinkedField",
-                                "name": "node",
-                                "plural": false,
-                                "selections": [
-                                  {
-                                    "alias": null,
-                                    "args": null,
-                                    "concreteType": "Image",
-                                    "kind": "LinkedField",
-                                    "name": "image",
-                                    "plural": false,
-                                    "selections": [
-                                      {
-                                        "alias": "tall",
-                                        "args": [
-                                          {
-                                            "kind": "Literal",
-                                            "name": "height",
-                                            "value": 280
-                                          },
-                                          (v5/*: any*/)
-                                        ],
-                                        "concreteType": "CroppedImageUrl",
-                                        "kind": "LinkedField",
-                                        "name": "cropped",
-                                        "plural": false,
-                                        "selections": (v6/*: any*/),
-                                        "storageKey": "cropped(height:280,width:140)"
-                                      },
-                                      {
-                                        "alias": "square",
-                                        "args": [
-                                          {
-                                            "kind": "Literal",
-                                            "name": "height",
-                                            "value": 140
-                                          },
-                                          (v5/*: any*/)
-                                        ],
-                                        "concreteType": "CroppedImageUrl",
-                                        "kind": "LinkedField",
-                                        "name": "cropped",
-                                        "plural": false,
-                                        "selections": (v6/*: any*/),
-                                        "storageKey": "cropped(height:140,width:140)"
-                                      }
-                                    ],
-                                    "storageKey": null
-                                  },
-                                  (v4/*: any*/)
-                                ],
-                                "storageKey": null
-                              }
-                            ],
+                            "name": "id",
                             "storageKey": null
                           }
                         ],
-                        "storageKey": "artworksConnection(first:2)"
+                        "storageKey": null
                       },
                       {
                         "alias": null,
@@ -457,7 +325,7 @@ return {
     "metadata": {},
     "name": "ViewingRoomsLatestGrid_ViewingRoomsAppQuery",
     "operationKind": "query",
-    "text": "query ViewingRoomsLatestGrid_ViewingRoomsAppQuery(\n  $count: Int!\n  $after: String\n) {\n  allViewingRooms: viewer {\n    ...ViewingRoomsApp_allViewingRooms_2QE1um\n  }\n}\n\nfragment ViewingRoomsApp_allViewingRooms_2QE1um on Viewer {\n  ...ViewingRoomsLatestGrid_viewingRooms_2QE1um\n}\n\nfragment ViewingRoomsLatestGrid_viewingRooms_2QE1um on Viewer {\n  viewingRoomsConnection(first: $count, after: $after) {\n    edges {\n      node {\n        slug\n        status\n        title\n        image {\n          imageURLs {\n            normalized\n          }\n        }\n        distanceToOpen(short: true)\n        distanceToClose(short: true)\n        partner {\n          name\n          id\n        }\n        artworksConnection(first: 2) {\n          totalCount\n          edges {\n            node {\n              image {\n                tall: cropped(width: 140, height: 280) {\n                  src\n                  srcSet\n                }\n                square: cropped(width: 140, height: 140) {\n                  src\n                  srcSet\n                }\n              }\n              id\n            }\n          }\n        }\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query ViewingRoomsLatestGrid_ViewingRoomsAppQuery(\n  $count: Int!\n  $after: String\n) {\n  allViewingRooms: viewer {\n    ...ViewingRoomsApp_allViewingRooms_2QE1um\n  }\n}\n\nfragment ViewingRoomsApp_allViewingRooms_2QE1um on Viewer {\n  ...ViewingRoomsLatestGrid_viewingRooms_2QE1um\n}\n\nfragment ViewingRoomsLatestGrid_viewingRooms_2QE1um on Viewer {\n  viewingRoomsConnection(first: $count, after: $after) {\n    edges {\n      node {\n        slug\n        status\n        title\n        image {\n          imageURLs {\n            normalized\n          }\n        }\n        distanceToOpen(short: true)\n        distanceToClose(short: true)\n        partner {\n          name\n          id\n        }\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();

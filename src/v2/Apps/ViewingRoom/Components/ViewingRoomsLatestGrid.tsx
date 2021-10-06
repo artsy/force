@@ -1,15 +1,15 @@
 import React, { useState } from "react"
-import { Box, Button, CSSGrid, Flex, Sans, TriptychCard } from "@artsy/palette"
+import { Button, Card, GridColumns, Column, Box } from "@artsy/palette"
 import {
   RelayPaginationProp,
   createPaginationContainer,
   graphql,
 } from "react-relay"
-import { scrollIntoView } from "v2/Utils/scrollHelpers"
 import { ViewingRoomsLatestGrid_viewingRooms } from "v2/__generated__/ViewingRoomsLatestGrid_viewingRooms.graphql"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { getCardStatus } from "v2/Components/ViewingRoomCard"
 import { cropped } from "v2/Utils/resized"
+import { extractNodes } from "v2/Utils/extractNodes"
 
 export interface ViewingRoomsLatestGridProps {
   relay: RelayPaginationProp
@@ -19,128 +19,78 @@ export interface ViewingRoomsLatestGridProps {
 export const PAGE_SIZE = 12
 
 export const ViewingRoomsLatestGrid: React.FC<ViewingRoomsLatestGridProps> = props => {
-  const viewingRooms = props.viewingRooms?.viewingRoomsConnection
-  const [isLoading, setIsLoading] = useState(false)
-  const hasMoreItems = props.relay.hasMore() as boolean
+  const [loading, setLoading] = useState(false)
+
+  const hasMore = props.relay.hasMore()
 
   const loadMore = () => {
-    if (hasMoreItems) {
-      setIsLoading(true)
+    if (!hasMore) return
 
-      props.relay.loadMore(PAGE_SIZE, error => {
-        if (error) {
-          console.error(error)
-        }
-        setIsLoading(false)
+    setLoading(true)
 
-        setTimeout(
-          () => scrollIntoView({ offset: 60, selector: "#jump--viewingRoom" }),
-          100
-        )
-      })
-    }
+    props.relay.loadMore(PAGE_SIZE, error => {
+      if (error) console.error(error)
+      setLoading(false)
+    })
   }
 
-  if (!viewingRooms?.edges?.length) {
+  const viewingRooms = extractNodes(
+    props.viewingRooms?.viewingRoomsConnection
+  ).filter(viewingRoom => {
+    return viewingRoom.status === "scheduled" || viewingRoom.status === "live"
+  })
+
+  if (viewingRooms.length === 0) {
     return null
   }
 
-  const viewingRoomsForLatestGrid = viewingRooms.edges
-    .map(vr => {
-      // @ts-expect-error STRICT_NULL_CHECK
-      if (!vr.node) {
-        return null
-      }
-
-      // @ts-expect-error STRICT_NULL_CHECK
-      if (vr.node.status != "scheduled" && vr.node.status != "live") {
-        return null
-      }
-
-      return {
-        // @ts-expect-error STRICT_NULL_CHECK
-        ...vr.node,
-      }
-    })
-    .filter(Boolean)
-  const count = viewingRoomsForLatestGrid.length
-
   return (
-    <Box>
-      <Sans size="5">Latest</Sans>
-      <Box>
-        <CSSGrid
-          mt={2}
-          mb={6}
-          gridTemplateColumns={[
-            "repeat(1fr)",
-            `repeat(${Math.min(count, 2)}, 1fr)`,
-            `repeat(${Math.min(count, 3)}, 1fr)`,
-          ]}
-          gridColumnGap={2}
-          gridRowGap={6}
-        >
-          {viewingRoomsForLatestGrid.map((vr, index) => {
-            const {
-              // @ts-expect-error STRICT_NULL_CHECK
-              slug,
-              // @ts-expect-error STRICT_NULL_CHECK
-              title,
-              // @ts-expect-error STRICT_NULL_CHECK
-              status,
-              // @ts-expect-error STRICT_NULL_CHECK
-              image,
-              // @ts-expect-error STRICT_NULL_CHECK
-              partner,
-              // @ts-expect-error STRICT_NULL_CHECK
-              distanceToOpen,
-              // @ts-expect-error STRICT_NULL_CHECK
-              distanceToClose,
-              // @ts-expect-error STRICT_NULL_CHECK
-              artworksConnection,
-            } = vr
-            const heroImageURL = cropped(image?.imageURLs?.normalized, {
-              height: 490,
-              width: 490,
-            })
-            const artworksCount = artworksConnection.totalCount
-            const artworkImages = artworksConnection.edges.map(({ node }) => {
-              return artworksCount < 2 ? node.image.tall : node.image.square
-            })
-            const tag = getCardStatus(status, distanceToOpen, distanceToClose)
+    <>
+      <GridColumns>
+        {viewingRooms.map(viewingRoom => {
+          const image = cropped(viewingRoom.image?.imageURLs?.normalized!, {
+            height: 490,
+            width: 490,
+          })
 
-            return (
-              <RouterLink to={`/viewing-room/${slug}`} key={slug} noUnderline>
-                {
-                  // Add a css id selector to an empty div above the last list item and scroll to that div when the Show More button is pressed.
-                  viewingRoomsForLatestGrid.length - PAGE_SIZE === index && (
-                    <div id="jump--viewingRoom" />
-                  )
-                }
-                <TriptychCard
-                  title={title}
-                  subtitle={partner.name}
-                  images={[heroImageURL].concat(artworkImages)}
-                  status={tag}
+          const status = getCardStatus(
+            viewingRoom.status,
+            viewingRoom.distanceToOpen,
+            viewingRoom.distanceToClose
+          )
+
+          return (
+            <Column key={viewingRoom.slug} span={3}>
+              <RouterLink
+                display="block"
+                to={`/viewing-room/${viewingRoom.slug}`}
+              >
+                <Card
+                  maxWidth="100%"
+                  title={viewingRoom.title}
+                  subtitle={viewingRoom.partner?.name}
+                  image={image}
+                  status={status}
                 />
               </RouterLink>
-            )
-          })}
-        </CSSGrid>
-        {hasMoreItems && (
-          <Flex flexDirection="column" alignItems="center">
-            <Button
-              variant="secondaryOutline"
-              size="medium"
-              onClick={loadMore}
-              loading={isLoading}
-            >
-              Show more
-            </Button>
-          </Flex>
-        )}
-      </Box>
-    </Box>
+            </Column>
+          )
+        })}
+      </GridColumns>
+
+      {hasMore && (
+        <Box textAlign="center" mt={4}>
+          <Button
+            variant="secondaryOutline"
+            size="medium"
+            onClick={loadMore}
+            loading={loading}
+          >
+            Show More
+          </Button>
+        </Box>
+      )}
+    </>
   )
 }
 
@@ -169,23 +119,6 @@ export const ViewingRoomsLatestGridFragmentContainer = createPaginationContainer
               distanceToClose(short: true)
               partner {
                 name
-              }
-              artworksConnection(first: 2) {
-                totalCount
-                edges {
-                  node {
-                    image {
-                      tall: cropped(width: 140, height: 280) {
-                        src
-                        srcSet
-                      }
-                      square: cropped(width: 140, height: 140) {
-                        src
-                        srcSet
-                      }
-                    }
-                  }
-                }
               }
             }
           }

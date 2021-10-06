@@ -20,23 +20,6 @@ export type ViewingRoomsLatestGrid_viewingRooms = {
                 readonly partner: {
                     readonly name: string | null;
                 } | null;
-                readonly artworksConnection: {
-                    readonly totalCount: number | null;
-                    readonly edges: ReadonlyArray<{
-                        readonly node: {
-                            readonly image: {
-                                readonly tall: {
-                                    readonly src: string;
-                                    readonly srcSet: string;
-                                } | null;
-                                readonly square: {
-                                    readonly src: string;
-                                    readonly srcSet: string;
-                                } | null;
-                            } | null;
-                        } | null;
-                    } | null> | null;
-                } | null;
             } | null;
         } | null> | null;
     } | null;
@@ -56,27 +39,6 @@ var v0 = [
     "kind": "Literal",
     "name": "short",
     "value": true
-  }
-],
-v1 = {
-  "kind": "Literal",
-  "name": "width",
-  "value": 140
-},
-v2 = [
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "src",
-    "storageKey": null
-  },
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "srcSet",
-    "storageKey": null
   }
 ];
 return {
@@ -217,97 +179,6 @@ return {
                 },
                 {
                   "alias": null,
-                  "args": [
-                    {
-                      "kind": "Literal",
-                      "name": "first",
-                      "value": 2
-                    }
-                  ],
-                  "concreteType": "ArtworkConnection",
-                  "kind": "LinkedField",
-                  "name": "artworksConnection",
-                  "plural": false,
-                  "selections": [
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "totalCount",
-                      "storageKey": null
-                    },
-                    {
-                      "alias": null,
-                      "args": null,
-                      "concreteType": "ArtworkEdge",
-                      "kind": "LinkedField",
-                      "name": "edges",
-                      "plural": true,
-                      "selections": [
-                        {
-                          "alias": null,
-                          "args": null,
-                          "concreteType": "Artwork",
-                          "kind": "LinkedField",
-                          "name": "node",
-                          "plural": false,
-                          "selections": [
-                            {
-                              "alias": null,
-                              "args": null,
-                              "concreteType": "Image",
-                              "kind": "LinkedField",
-                              "name": "image",
-                              "plural": false,
-                              "selections": [
-                                {
-                                  "alias": "tall",
-                                  "args": [
-                                    {
-                                      "kind": "Literal",
-                                      "name": "height",
-                                      "value": 280
-                                    },
-                                    (v1/*: any*/)
-                                  ],
-                                  "concreteType": "CroppedImageUrl",
-                                  "kind": "LinkedField",
-                                  "name": "cropped",
-                                  "plural": false,
-                                  "selections": (v2/*: any*/),
-                                  "storageKey": "cropped(height:280,width:140)"
-                                },
-                                {
-                                  "alias": "square",
-                                  "args": [
-                                    {
-                                      "kind": "Literal",
-                                      "name": "height",
-                                      "value": 140
-                                    },
-                                    (v1/*: any*/)
-                                  ],
-                                  "concreteType": "CroppedImageUrl",
-                                  "kind": "LinkedField",
-                                  "name": "cropped",
-                                  "plural": false,
-                                  "selections": (v2/*: any*/),
-                                  "storageKey": "cropped(height:140,width:140)"
-                                }
-                              ],
-                              "storageKey": null
-                            }
-                          ],
-                          "storageKey": null
-                        }
-                      ],
-                      "storageKey": null
-                    }
-                  ],
-                  "storageKey": "artworksConnection(first:2)"
-                },
-                {
-                  "alias": null,
                   "args": null,
                   "kind": "ScalarField",
                   "name": "__typename",
@@ -358,5 +229,5 @@ return {
   "type": "Viewer"
 };
 })();
-(node as any).hash = '5749e886d2569028cc98ad3edf47a9df';
+(node as any).hash = '8a3e6fe9095d678b418a8c2f34a18dae';
 export default node;
