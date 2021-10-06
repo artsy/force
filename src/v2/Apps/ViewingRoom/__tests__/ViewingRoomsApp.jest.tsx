@@ -60,7 +60,7 @@ describe("ViewingRoomsApp", () => {
       it("renders correct viewing rooms", async () => {
         const wrapper = await getWrapper()
         const html = wrapper.html()
-        expect(wrapper.find("SmallCard").length).toBe(2)
+        expect(wrapper.find("TriptychCard").length).toBe(4)
         expect(html).not.toContain("Draft VR")
         expect(html).toContain("Scheduled VR")
         expect(html).toContain("Live VR")

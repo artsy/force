@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { Box, Button, CSSGrid, Flex, Sans, SmallCard } from "@artsy/palette"
+import { Box, Button, CSSGrid, Flex, Sans, TriptychCard } from "@artsy/palette"
 import {
   RelayPaginationProp,
   createPaginationContainer,
@@ -8,7 +8,7 @@ import {
 import { scrollIntoView } from "v2/Utils/scrollHelpers"
 import { ViewingRoomsLatestGrid_viewingRooms } from "v2/__generated__/ViewingRoomsLatestGrid_viewingRooms.graphql"
 import { RouterLink } from "v2/System/Router/RouterLink"
-import { getTagProps } from "v2/Components/ViewingRoomCard"
+import { getCardStatus } from "v2/Components/ViewingRoomCard"
 import { cropped } from "v2/Utils/resized"
 
 export interface ViewingRoomsLatestGridProps {
@@ -107,7 +107,7 @@ export const ViewingRoomsLatestGrid: React.FC<ViewingRoomsLatestGridProps> = pro
             const artworkImages = artworksConnection.edges.map(({ node }) => {
               return artworksCount < 2 ? node.image.tall : node.image.square
             })
-            const tag = getTagProps(status, distanceToOpen, distanceToClose)
+            const tag = getCardStatus(status, distanceToOpen, distanceToClose)
 
             return (
               <RouterLink to={`/viewing-room/${slug}`} key={slug} noUnderline>
@@ -117,12 +117,11 @@ export const ViewingRoomsLatestGrid: React.FC<ViewingRoomsLatestGridProps> = pro
                     <div id="jump--viewingRoom" />
                   )
                 }
-                <SmallCard
+                <TriptychCard
                   title={title}
                   subtitle={partner.name}
                   images={[heroImageURL].concat(artworkImages)}
-                  // @ts-expect-error STRICT_NULL_CHECK
-                  tag={tag}
+                  status={tag}
                 />
               </RouterLink>
             )

@@ -1,7 +1,7 @@
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FairCollection_collection } from "v2/__generated__/FairCollection_collection.graphql"
-import { SmallCard } from "@artsy/palette"
+import { TriptychCard } from "@artsy/palette"
 import { crop } from "v2/Utils/resizer"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { compact } from "lodash"
@@ -72,7 +72,7 @@ export const FairCollection: React.FC<FairCollectionProps> = ({
     })
 
     return {
-      src: _1x,
+      src: _1x!,
       srcSet: `${_1x} 1x, ${_2x} 2x`,
     }
   })
@@ -86,11 +86,10 @@ export const FairCollection: React.FC<FairCollectionProps> = ({
       noUnderline
       onClick={() => tracking.trackEvent(collectionTrackingData)}
     >
-      <SmallCard
+      <TriptychCard
         width={CARD_WIDTH}
         title={collection.title}
         subtitle={`${count} work${count === 1 ? "" : "s"}`}
-        // @ts-expect-error STRICT_NULL_CHECK
         images={images}
       />
     </RouterLink>
