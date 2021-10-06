@@ -1,4 +1,4 @@
-import { AuthModalType, authImpression } from "@artsy/cohesion"
+import { ActionType, AuthImpression, AuthModalType } from "@artsy/cohesion"
 import { Theme } from "@artsy/palette"
 import qs from "querystring"
 import React from "react"
@@ -72,27 +72,17 @@ export class FormSwitcher extends React.Component<FormSwitcherProps, State> {
       tracking,
     } = this.props
 
-    // Analytics
-    const event = Object.assign(
-      {
-        contextModule,
-        copy: copy || title,
-        intent,
-        triggerSeconds,
-        type: AuthModalType[type],
-      },
-      type === "signup"
-        ? {
-            onboarding: !redirectTo,
-          }
-        : null
-    )
-
-    const trackingArgs = authImpression(event)
-
-    if (tracking) {
-      tracking.trackEvent(trackingArgs)
+    const trackingArgs: AuthImpression = {
+      action: ActionType.authImpression,
+      context_module: contextModule,
+      modal_copy: copy || title,
+      intent,
+      trigger: triggerSeconds ? "timed" : "click",
+      trigger_seconds: triggerSeconds,
+      type: AuthModalType[type],
+      onboarding: type === "signup" ? !redirectTo : false,
     }
+    tracking?.trackEvent(trackingArgs)
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
