@@ -1,4 +1,3 @@
-import { Shelf, Text } from "@artsy/palette"
 import { RelatedCollectionsRail_collections } from "v2/__generated__/RelatedCollectionsRail_collections.graphql"
 import { useTracking } from "v2/System/Analytics"
 import * as Schema from "v2/System/Analytics/Schema"
@@ -8,6 +7,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import Waypoint from "react-waypoint"
 import { RelatedCollectionEntityFragmentContainer as RelatedCollectionEntity } from "./RelatedCollectionEntity"
 import { useAnalyticsContext } from "v2/System/Analytics/AnalyticsContext"
+import { Rail } from "../Rail"
 
 interface RelatedCollectionsRailProps {
   collections: RelatedCollectionsRail_collections
@@ -41,22 +41,22 @@ export const RelatedCollectionsRail: React.FC<RelatedCollectionsRailProps> = pro
         {/* FIXME: Must remove this dependency */}
         <Waypoint onEnter={once(trackImpression)} />
 
-        <Text variant="lg" mb={2}>
-          More like {title}
-        </Text>
-
-        <Shelf showProgress={false}>
-          {collectionsWithArtworks.map((slide, i) => {
-            return (
-              <RelatedCollectionEntity
-                key={i}
-                lazyLoad={lazyLoadImages}
-                collection={slide}
-                slideIndex={i}
-              />
-            )
-          })}
-        </Shelf>
+        <Rail
+          title={`More like ${title}`}
+          showProgress={false}
+          getItems={() => {
+            return collectionsWithArtworks.map((slide, i) => {
+              return (
+                <RelatedCollectionEntity
+                  key={i}
+                  lazyLoad={lazyLoadImages}
+                  collection={slide}
+                  slideIndex={i}
+                />
+              )
+            })
+          }}
+        />
       </>
     )
   } else {

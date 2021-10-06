@@ -10,6 +10,7 @@ export const DefaultRail = () => {
     <Rail
       title="Default Rail"
       subTitle="Default Subtitle"
+      showProgress={true}
       viewAllLabel="View All"
       viewAllHref="/artists"
       viewAllOnClick={event => {

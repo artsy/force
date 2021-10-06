@@ -48,12 +48,12 @@ describe("ArtistCurrentShowsRail", () => {
         slug: "artistSlug",
       }),
     })
-    expect(wrapper.text()).toContain("Shows featuring artistName")
+    expect(wrapper.text()).toContain("Shows Featuring artistName")
     expect(wrapper.find("RouterLink").length).toBe(2)
     expect(wrapper.find("RouterLink").at(0).props().to).toContain(
       "/artist/artistSlug/shows"
     )
-    expect(wrapper.text()).toContain("View all shows")
+    expect(wrapper.text()).toContain("View All Shows")
     expect(wrapper.find("Shelf").length).toBe(1)
     expect(wrapper.find("Image").length).toBe(1)
     expect(wrapper.text()).toContain("name")

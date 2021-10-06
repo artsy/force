@@ -1,5 +1,4 @@
 import { ContextModule } from "@artsy/cohesion"
-import { Shelf, Text } from "@artsy/palette"
 import { RecentlyViewed_me } from "v2/__generated__/RecentlyViewed_me.graphql"
 import { RecentlyViewedQuery } from "v2/__generated__/RecentlyViewedQuery.graphql"
 import { SystemContext } from "v2/System"
@@ -11,6 +10,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { extractNodes } from "v2/Utils/extractNodes"
 import { ShelfArtworkFragmentContainer } from "../Artwork/ShelfArtwork"
 import { RecentlyViewedPlaceholder } from "./RecentlyViewedPlaceholder"
+import { Rail } from "../Rail"
 
 export interface RecentlyViewedProps {
   me: RecentlyViewed_me
@@ -34,13 +34,11 @@ export const RecentlyViewed: React.FC<RecentlyViewedProps> = ({ me }) => {
   if (artworks.length === 0) return null
 
   return (
-    <>
-      <Text variant="lg" mb={2}>
-        Recently viewed
-      </Text>
-
-      <Shelf showProgress={false}>
-        {artworks.map(artwork => {
+    <Rail
+      title="Recently Viewed"
+      showProgress={false}
+      getItems={() => {
+        return artworks.map(artwork => {
           return (
             <ShelfArtworkFragmentContainer
               key={artwork.id}
@@ -50,9 +48,9 @@ export const RecentlyViewed: React.FC<RecentlyViewedProps> = ({ me }) => {
               contextModule={ContextModule.recentlyViewedRail}
             />
           )
-        })}
-      </Shelf>
-    </>
+        })
+      }}
+    />
   )
 }
 
