@@ -82,7 +82,7 @@ export const MediumFilter: FC<MediumFilterProps> = ({ expanded }) => {
   )
 }
 
-const hardcodedMediums = [
+export const hardcodedMediums = [
   {
     value: "painting",
     name: "Painting",

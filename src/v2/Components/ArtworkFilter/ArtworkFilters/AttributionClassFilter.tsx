@@ -3,7 +3,7 @@ import { Checkbox, Flex, useThemeConfig } from "@artsy/palette"
 import { useArtworkFilterContext } from "../ArtworkFilterContext"
 import { FilterExpandable } from "./FilterExpandable"
 
-const checkboxValues = [
+export const checkboxValues = [
   {
     name: "Unique",
     value: "unique",

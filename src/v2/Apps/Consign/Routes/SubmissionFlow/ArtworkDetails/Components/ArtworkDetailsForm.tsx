@@ -13,31 +13,25 @@ import {
   InfoCircleIcon,
 } from "@artsy/palette"
 import { Form, useFormikContext } from "formik"
+import { hardcodedMediums } from "v2/Components/ArtworkFilter/ArtworkFilters/MediumFilter"
+import { checkboxValues } from "v2/Components/ArtworkFilter/ArtworkFilters/AttributionClassFilter"
 
-const rarityOptions = [
-  { text: "Unique, Limited Edition, Open Edition…", value: "default" },
-  { text: "Unique", value: "Unique" },
-  { text: "Limited Edition", value: "Limited Edition" },
-  { text: "Open Edition", value: "Open Edition" },
-  { text: "Unknown Edinion", value: "Unknown Edinion" },
-]
+const rarityOptions = checkboxValues.map(({ name, value }) => ({
+  text: name,
+  value,
+}))
 
-const mediumOptions = [
-  { text: "Painting, Print, Sculpture…", value: "default" },
-  { text: "Painting", value: "painting" },
-  { text: "Photography", value: "photography" },
-  { text: "Sculpture", value: "sculpture" },
-  { text: "Prints", value: "prints" },
-  { text: "Work on Paper", value: "work-on-paper" },
-  { text: "Design", value: "design" },
-  { text: "Drawing", value: "drawing" },
-  { text: "Installation", value: "installation" },
-  { text: "Film/Video", value: "film-slash-video" },
-  { text: "Jewelry", value: "jewelry" },
-  { text: "Performance Art", value: "performance-art" },
-  { text: "Reproduction", value: "reproduction" },
-  { text: "Ephemera or Merchandise", value: "ephemera-or-merchandise" },
-]
+rarityOptions.unshift({
+  text: "Unique, Limited Edition, Open Edition…",
+  value: "default",
+})
+
+const mediumOptions = hardcodedMediums.map(({ name, value }) => ({
+  text: name,
+  value,
+}))
+
+mediumOptions.unshift({ text: "Painting, Print, Sculpture…", value: "default" })
 
 export interface ArtworkDetailsFormModel {
   artist: string
@@ -57,7 +51,7 @@ export const ArtworkDetailsForm: FC = () => {
   const { values, handleChange, setFieldValue } = useFormikContext<
     ArtworkDetailsFormModel
   >()
-  const uniqueRarity = values.rarity === "Unique"
+  const uniqueRarity = values.rarity === "unique"
 
   return (
     <Form>
