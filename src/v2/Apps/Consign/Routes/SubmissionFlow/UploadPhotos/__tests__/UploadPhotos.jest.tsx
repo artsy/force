@@ -28,7 +28,11 @@ describe("UploadPhotos", () => {
     expect(wrapper.find(UploadPhotosForm).length).toBe(1)
   })
 
-  it("shows uploaded image name", async () => {
+  it.each([
+    ["foo.png", "image/png"],
+    ["foo.jpg", "image/jpeg"],
+    ["foo.jpeg", "image/jpeg"],
+  ])("shows uploaded image name for %s", async (name, type) => {
     const wrapper = getWrapper()
 
     const dropzoneInput = wrapper
@@ -40,9 +44,9 @@ describe("UploadPhotos", () => {
       target: {
         files: [
           {
-            name: "foo.png",
-            path: "foo.png",
-            type: "image/png",
+            name: name,
+            path: name,
+            type: type,
             size: 200,
           },
         ],
@@ -51,7 +55,7 @@ describe("UploadPhotos", () => {
 
     await wrapper.update()
 
-    expect(wrapper.text()).toContain("foo.png")
+    expect(wrapper.text()).toContain(name)
   })
 
   it("skip non image file", async () => {
