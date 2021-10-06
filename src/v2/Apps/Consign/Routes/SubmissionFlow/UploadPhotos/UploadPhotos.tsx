@@ -16,11 +16,11 @@ export const UploadPhotos: FC = () => {
 
       <Text variant="lg">Upload photos of your artwork</Text>
       <Text variant="sm" color="black60" mt={1}>
-        • For a faster valuation, please upload high-quality photos of the
-        work’s front and back.
+        &#8226; For a faster valuation, please upload high-quality photos of the
+        work&#39;s front and back.
       </Text>
       <Text variant="sm" color="black60">
-        • If possible, include photos of any signatures or certificates of
+        &#8226; If possible, include photos of any signatures or certificates of
         authenticity.
       </Text>
 
