@@ -57,7 +57,9 @@ export const ShippingQuotes: React.FC<ShippingQuotesProps> = ({
             <Flex flexDirection="column" width="100%">
               <Flex justifyContent="space-between">
                 <Text textTransform="capitalize">{displayName}</Text>
-                <Text textTransform="capitalize">{price}</Text>
+                <Text textTransform="capitalize" data-test="quotePrice">
+                  {price}
+                </Text>
               </Flex>
               <Text textColor="black60">{description}</Text>
             </Flex>
