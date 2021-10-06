@@ -24,7 +24,6 @@ import { Masonry } from "v2/Components/Masonry"
 import { useSystemContext, useTracking } from "v2/System"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { RouterLink } from "v2/System/Router/RouterLink"
-import { useLazyLoadComponent } from "v2/Utils/Hooks/useLazyLoadComponent"
 import { Media } from "v2/Utils/Responsive"
 import { HomeFeaturedMarketNewsQuery } from "v2/__generated__/HomeFeaturedMarketNewsQuery.graphql"
 import { HomeFeaturedMarketNews_articles } from "v2/__generated__/HomeFeaturedMarketNews_articles.graphql"
@@ -333,17 +332,5 @@ export const HomeFeaturedMarketNewsQueryRenderer: React.FC = () => {
         return null
       }}
     />
-  )
-}
-
-export const HomeFeaturedMarketNewsLazyQueryRenderer: React.FC = () => {
-  const { Waypoint, isEnteredView } = useLazyLoadComponent()
-
-  return (
-    <>
-      <Waypoint />
-
-      {isEnteredView ? <HomeFeaturedMarketNewsQueryRenderer /> : PLACEHOLDER}
-    </>
   )
 }

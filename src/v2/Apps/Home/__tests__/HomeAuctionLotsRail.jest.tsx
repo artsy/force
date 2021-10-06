@@ -109,11 +109,7 @@ describe("HomeAuctionLotsRail", () => {
         }),
       })
 
-      wrapper
-        .find("HomeAuctionLotsRailContainer")
-        .find("RouterLink")
-        .first()
-        .simulate("click")
+      wrapper.find("RouterLink").first().simulate("click")
 
       expect(trackEvent).toBeCalledWith({
         action: "clickedArtworkGroup",

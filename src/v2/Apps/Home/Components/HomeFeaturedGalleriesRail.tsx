@@ -1,15 +1,11 @@
 import {
   Box,
   Image,
-  Text,
-  Flex,
   Spacer,
-  Shelf,
   EntityHeader,
   Skeleton,
   SkeletonText,
   SkeletonBox,
-  Sup,
 } from "@artsy/palette"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -26,6 +22,7 @@ import {
   ContextModule,
   OwnerType,
 } from "@artsy/cohesion"
+import { Rail } from "v2/Components/Rail"
 
 interface HomeFeaturedGalleriesRailProps {
   orderedSet: HomeFeaturedGalleriesRail_orderedSet
@@ -43,9 +40,23 @@ const HomeFeaturedGalleriesRail: React.FC<HomeFeaturedGalleriesRailProps> = ({
   }
 
   return (
-    <HomeFeaturedGalleriesRailContainer galleriesCount={nodes.length}>
-      <Shelf>
-        {nodes.map((node, index) => {
+    <Rail
+      title="Featured Galleries"
+      countLabel={nodes.length}
+      viewAllLabel="View All Galleries"
+      viewAllHref="/galleries"
+      viewAllOnClick={() => {
+        const trackingEvent: ClickedGalleryGroup = {
+          action: ActionType.clickedGalleryGroup,
+          context_module: ContextModule.featuredGalleriesRail,
+          context_page_owner_type: OwnerType.home,
+          destination_page_owner_type: OwnerType.galleries,
+          type: "viewAll",
+        }
+        trackEvent(trackingEvent)
+      }}
+      getItems={() => {
+        return nodes.map((node, index) => {
           if (node.__typename !== "Profile") {
             return <></>
           }
@@ -114,56 +125,20 @@ const HomeFeaturedGalleriesRail: React.FC<HomeFeaturedGalleriesRailProps> = ({
               </Box>
             </RouterLink>
           )
-        })}
-      </Shelf>
-    </HomeFeaturedGalleriesRailContainer>
-  )
-}
-
-const HomeFeaturedGalleriesRailContainer: React.FC<{
-  galleriesCount: number
-}> = ({ children, galleriesCount }) => {
-  const { trackEvent } = useTracking()
-  return (
-    <>
-      <Flex justifyContent="space-between" alignItems="center">
-        <Text variant="lg">
-          Featured Galleries{" "}
-          {galleriesCount > 1 && <Sup color="brand">{galleriesCount}</Sup>}
-        </Text>
-
-        <Text
-          variant="sm"
-          as={RouterLink}
-          // @ts-ignore
-          to="/galleries"
-          onClick={() => {
-            const trackingEvent: ClickedGalleryGroup = {
-              action: ActionType.clickedGalleryGroup,
-              context_module: ContextModule.featuredGalleriesRail,
-              context_page_owner_type: OwnerType.home,
-              destination_page_owner_type: OwnerType.galleries,
-              type: "viewAll",
-            }
-            trackEvent(trackingEvent)
-          }}
-        >
-          View All Galleries
-        </Text>
-      </Flex>
-
-      <Spacer mt={4} />
-
-      {children}
-    </>
+        })
+      }}
+    />
   )
 }
 
 const PLACEHOLDER = (
   <Skeleton>
-    <HomeFeaturedGalleriesRailContainer galleriesCount={0}>
-      <Shelf>
-        {[...new Array(8)].map((_, i) => {
+    <Rail
+      title="Featured Galleries"
+      viewAllLabel="View All Galleries"
+      viewAllHref="/galleries"
+      getItems={() => {
+        return [...new Array(8)].map((_, i) => {
           return (
             <Box width={325} key={i}>
               <SkeletonText variant="lg">Some Gallery</SkeletonText>
@@ -171,9 +146,9 @@ const PLACEHOLDER = (
               <SkeletonBox width={325} height={230} />
             </Box>
           )
-        })}
-      </Shelf>
-    </HomeFeaturedGalleriesRailContainer>
+        })
+      }}
+    />
   </Skeleton>
 )
 
