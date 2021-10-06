@@ -28,7 +28,7 @@ export const SubmissionStepper: FC<SubmissionStepperProps> = ({
   const stepIndex = submissionFlowSteps.indexOf(currentStep)
   return (
     <>
-      <Media at={"xs"}>
+      <Media at="xs">
         <Box>
           <Stepper
             initialTabIndex={stepIndex}
