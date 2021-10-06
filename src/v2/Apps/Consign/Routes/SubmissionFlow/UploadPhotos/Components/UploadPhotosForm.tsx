@@ -40,10 +40,10 @@ export const UploadPhotosForm: React.FC<UploadPhotosFormProps> = ({
       >
         <input {...getInputProps()} />
 
-        <Media greaterThanOrEqual="sm">
+        <Media greaterThan="xs">
           <Text variant="lg">Drag and drop photos here</Text>
         </Media>
-        <Media lessThan="sm">
+        <Media at="xs">
           <Text variant="lg">Add photos here</Text>
         </Media>
 
