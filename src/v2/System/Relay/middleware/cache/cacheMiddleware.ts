@@ -40,6 +40,8 @@ export function cacheMiddleware(opts?: CacheMiddlewareOpts) {
   }
 
   return next => async req => {
+    const isServer = typeof window === "undefined"
+
     if (req.isMutation()) {
       if (clearOnMutation) {
         await cache.clear()
@@ -53,7 +55,10 @@ export function cacheMiddleware(opts?: CacheMiddlewareOpts) {
       return next(req)
     }
 
-    if (disableServerSideCache || (req.cacheConfig && req.cacheConfig.force)) {
+    if (
+      (isServer && disableServerSideCache) ||
+      (req.cacheConfig && req.cacheConfig.force)
+    ) {
       return next(req)
     }
 
