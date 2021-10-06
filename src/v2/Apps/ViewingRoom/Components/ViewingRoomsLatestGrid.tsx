@@ -7,9 +7,9 @@ import {
 } from "react-relay"
 import { ViewingRoomsLatestGrid_viewingRooms } from "v2/__generated__/ViewingRoomsLatestGrid_viewingRooms.graphql"
 import { RouterLink } from "v2/System/Router/RouterLink"
-import { getCardStatus } from "v2/Components/ViewingRoomCard"
 import { cropped } from "v2/Utils/resized"
 import { extractNodes } from "v2/Utils/extractNodes"
+import { getStatus } from "../Utils/getStatus"
 
 export interface ViewingRoomsLatestGridProps {
   relay: RelayPaginationProp
@@ -53,11 +53,11 @@ export const ViewingRoomsLatestGrid: React.FC<ViewingRoomsLatestGridProps> = pro
             width: 490,
           })
 
-          const status = getCardStatus(
-            viewingRoom.status,
-            viewingRoom.distanceToOpen,
-            viewingRoom.distanceToClose
-          )
+          const status = getStatus({
+            status: viewingRoom.status,
+            distanceToOpen: viewingRoom.distanceToOpen,
+            distanceToClose: viewingRoom.distanceToClose,
+          })
 
           return (
             <Column key={viewingRoom.slug} span={3}>

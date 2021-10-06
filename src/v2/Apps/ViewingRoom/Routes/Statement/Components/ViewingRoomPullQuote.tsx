@@ -1,5 +1,5 @@
 import React from "react"
-import { Box, Sans } from "@artsy/palette"
+import { Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ViewingRoomPullQuote_viewingRoom } from "v2/__generated__/ViewingRoomPullQuote_viewingRoom.graphql"
 
@@ -15,11 +15,9 @@ const ViewingRoomPullQuote: React.FC<ViewingRoomPullQuoteProps> = ({
   }
 
   return (
-    <Box>
-      <Sans size="8" textAlign="center" style={{ whiteSpace: "pre-line" }}>
-        {pullQuote}
-      </Sans>
-    </Box>
+    <Text variant="xxl" style={{ whiteSpace: "pre-line" }}>
+      {pullQuote}
+    </Text>
   )
 }
 

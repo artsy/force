@@ -3,7 +3,6 @@ import { Box, BoxProps, Card, ResponsiveBox, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ShowViewingRoom_show } from "v2/__generated__/ShowViewingRoom_show.graphql"
 import { RouterLink } from "v2/System/Router/RouterLink"
-import { getCardStatus } from "v2/Components/ViewingRoomCard"
 import { cropped } from "v2/Utils/resized"
 import { useTracking } from "v2/System"
 import { useAnalyticsContext } from "v2/System/Analytics/AnalyticsContext"
@@ -13,6 +12,8 @@ import {
   ContextModule,
   OwnerType,
 } from "@artsy/cohesion"
+import { getStatus } from "v2/Apps/ViewingRoom/Utils/getStatus"
+import { extractNodes } from "v2/Utils/extractNodes"
 
 interface ShowViewingRoomProps extends BoxProps {
   show: ShowViewingRoom_show
@@ -22,10 +23,9 @@ export const ShowViewingRoom: React.FC<ShowViewingRoomProps> = ({
   show,
   ...rest
 }) => {
-  // @ts-expect-error STRICT_NULL_CHECK
-  const [{ node: viewingRoom }] = show.viewingRoomsConnection.edges
+  const [viewingRoom] = extractNodes(show.viewingRoomsConnection)
 
-  const image = cropped(viewingRoom.image?.imageURLs?.normalized, {
+  const image = cropped(viewingRoom.image?.imageURLs?.normalized!, {
     width: 450,
     height: 600,
   })
@@ -67,11 +67,11 @@ export const ShowViewingRoom: React.FC<ShowViewingRoomProps> = ({
             image={image}
             title={viewingRoom.title}
             subtitle={show.partner?.name}
-            status={getCardStatus(
-              viewingRoom.status,
-              viewingRoom.distanceToOpen,
-              viewingRoom.distanceToClose
-            )}
+            status={getStatus({
+              status: viewingRoom.status,
+              distanceToOpen: viewingRoom.distanceToOpen,
+              distanceToClose: viewingRoom.distanceToClose,
+            })}
           />
         </RouterLink>
       </ResponsiveBox>

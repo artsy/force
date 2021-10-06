@@ -2,10 +2,10 @@ import React from "react"
 import { Card, Shelf } from "@artsy/palette"
 import { ViewingRoomsFeaturedRail_featuredViewingRooms } from "v2/__generated__/ViewingRoomsFeaturedRail_featuredViewingRooms.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
-import { getCardStatus } from "v2/Components/ViewingRoomCard"
 import { cropped } from "v2/Utils/resized"
 import { extractNodes } from "../../../Utils/extractNodes"
 import { RouterLink } from "v2/System/Router/RouterLink"
+import { getStatus } from "../Utils/getStatus"
 
 interface ViewingRoomsFeaturedRailProps {
   featuredViewingRooms: ViewingRoomsFeaturedRail_featuredViewingRooms
@@ -28,11 +28,11 @@ export const ViewingRoomsFeaturedRail: React.FC<ViewingRoomsFeaturedRailProps> =
           height: 370,
         })
 
-        const status = getCardStatus(
-          viewingRoom.status,
-          viewingRoom.distanceToOpen,
-          viewingRoom.distanceToClose
-        )
+        const status = getStatus({
+          status: viewingRoom.status,
+          distanceToOpen: viewingRoom.distanceToOpen,
+          distanceToClose: viewingRoom.distanceToClose,
+        })
 
         return (
           <RouterLink

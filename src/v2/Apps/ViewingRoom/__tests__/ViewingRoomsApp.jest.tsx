@@ -71,7 +71,7 @@ describe("ViewingRoomsApp", () => {
         const wrapper = await getWrapper()
         const html = wrapper.html()
         expect(wrapper.find("CardTag").length).toBe(3)
-        expect(html).toContain("Opening soon")
+        expect(html).toContain("Opens in 1 week")
         expect(html).toContain("3 days left")
         expect(html).not.toContain("Closed")
       })
@@ -145,7 +145,7 @@ const ViewingRoomsAppFixture: ViewingRoomsApp_Test_QueryRawResponse = {
           node: {
             __typename: "ViewingRoom",
             distanceToClose: null,
-            distanceToOpen: "soon",
+            distanceToOpen: "1 week",
             image: {
               imageURLs: {
                 normalized: "https://www.example.com/tikki.jpg",

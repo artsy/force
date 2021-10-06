@@ -1,11 +1,12 @@
 import React from "react"
-import { Box, Flex, Link, Sans, color } from "@artsy/palette"
-import { DESKTOP_NAV_BAR_HEIGHT, MOBILE_NAV_HEIGHT } from "v2/Components/NavBar"
+import { Box, Flex, FullBleed, Image, Text, TEXT_SHADOW } from "@artsy/palette"
 import { Media } from "v2/Utils/Responsive"
 import { createFragmentContainer, graphql } from "react-relay"
-
 import { ViewingRoomHeader_viewingRoom } from "v2/__generated__/ViewingRoomHeader_viewingRoom.graphql"
-import { resize } from "v2/Utils/resizer"
+import { useNavBarHeight } from "v2/Components/NavBar/useNavBarHeight"
+import { resized } from "v2/Utils/resized"
+import { RouterLink } from "v2/System/Router/RouterLink"
+import { getStatus } from "../Utils/getStatus"
 
 interface ViewingRoomHeaderProps {
   viewingRoom: ViewingRoomHeader_viewingRoom
@@ -17,6 +18,7 @@ const ViewingRoomHeader: React.FC<ViewingRoomHeaderProps> = props => {
       <Media greaterThanOrEqual="sm">
         <ViewingRoomHeaderLarge {...props} />
       </Media>
+
       <Media lessThan="sm">
         <ViewingRoomHeaderSmall {...props} />
       </Media>
@@ -47,163 +49,139 @@ export const ViewingRoomHeaderFragmentContainer = createFragmentContainer(
   }
 )
 
-/**
- * Header used for desktop layouts
- */
-const ViewingRoomHeaderLarge: React.FC<ViewingRoomHeaderProps> = props => {
-  const {
-    viewingRoom: { image, title },
-  } = props
+const ViewingRoomHeaderLarge: React.FC<ViewingRoomHeaderProps> = ({
+  viewingRoom,
+}) => {
+  const { desktop } = useNavBarHeight()
 
-  // @ts-expect-error STRICT_NULL_CHECK
-  const heroImageURL = resize(image?.imageURLs?.normalized, {
+  const img = resized(viewingRoom.image?.imageURLs?.normalized!, {
     width: 1200,
-    convert_to: "jpg",
   })
 
   return (
-    <Flex
-      style={{
-        height: `calc(90vh - ${DESKTOP_NAV_BAR_HEIGHT}px)`,
-        borderBottom: `1px solid ${color("black10")}`,
-      }}
+    <FullBleed
+      display="flex"
+      borderBottom="1px solid"
+      borderColor="black30"
+      height={`calc(90vh - ${desktop}px)`}
     >
-      <Box width="50%" style={{ overflow: "hidden" }}>
-        <div
-          style={{
-            backgroundImage: `url(${heroImageURL})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            height: "100%",
-            paddingBottom: "100%",
-          }}
+      <Box bg="black5" width="50%" height="100%">
+        <Image
+          src={img.src}
+          srcSet={img.srcSet}
+          alt=""
+          width="100%"
+          height="100%"
+          decoding="async"
+          style={{ objectFit: "cover" }}
         />
       </Box>
 
       <Flex
+        position="relative"
         alignItems="center"
         justifyContent="center"
+        flexDirection="column"
         width="50%"
-        style={{ position: "relative" }}
       >
-        <Sans textAlign="center" size="10" element="h1" p={2} unstable_trackIn>
-          {title}
-        </Sans>
+        <Text as="h1" textAlign="center" variant="xl" p={2}>
+          {viewingRoom.title}
+        </Text>
 
-        <RoomInfo {...props} />
+        <Text
+          variant="md"
+          display="flex"
+          position="absolute"
+          width="100%"
+          bottom={0}
+          p={2}
+          justifyContent="space-between"
+        >
+          {viewingRoom.partner && (
+            <RouterLink to={viewingRoom.partner.href!} textDecoration="none">
+              {viewingRoom.partner.name}
+            </RouterLink>
+          )}
+
+          <h3>
+            {getStatus({
+              status: viewingRoom.status,
+              distanceToOpen: viewingRoom.distanceToOpen,
+              distanceToClose: viewingRoom.distanceToClose,
+            })}
+          </h3>
+        </Text>
       </Flex>
-    </Flex>
+    </FullBleed>
   )
 }
 
-/**
- * Header used for mobile layouts
- */
-const ViewingRoomHeaderSmall: React.FC<ViewingRoomHeaderProps> = props => {
-  const {
-    viewingRoom: { image, title },
-  } = props
+const ViewingRoomHeaderSmall: React.FC<ViewingRoomHeaderProps> = ({
+  viewingRoom,
+}) => {
+  const { mobile } = useNavBarHeight()
 
-  const HeaderHeight = `calc(100vh - ${MOBILE_NAV_HEIGHT * 2.8}px)`
-  // @ts-expect-error STRICT_NULL_CHECK
-  const heroImageURL = resize(image?.imageURLs?.normalized, {
+  const img = resized(viewingRoom.image?.imageURLs?.normalized!, {
     width: 1200,
-    convert_to: "jpg",
   })
 
   return (
-    <Flex
+    <FullBleed
+      display="flex"
       flexDirection="row"
       justifyContent="center"
       alignItems="center"
-      height={HeaderHeight}
-      style={{
-        borderBottom: `1px solid ${color("black10")}`,
-        overflow: "hidden",
-        position: "relative",
-      }}
+      position="relative"
+      height={`calc(80vh - ${mobile}px)`}
     >
-      <div
-        style={{
-          backgroundImage: `url(${heroImageURL})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          height: "100%",
-          paddingBottom: "100%",
-          width: "100%",
-        }}
-      />
-
-      {/*
-        Gradient overlay to raise text visibility
-      */}
-      <Box
+      <Image
+        src={img.src}
+        srcSet={img.srcSet}
+        alt=""
         width="100%"
-        height={HeaderHeight}
-        position="absolute"
-        top="0"
-        style={{
-          background:
-            "linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(0,0,0,0.25) 100%)",
-        }}
+        height="100%"
+        decoding="async"
+        style={{ objectFit: "cover" }}
       />
 
-      <Box position="absolute" bottom="20%">
-        <Sans textAlign="center" size="8" element="h1" color="white100" p={2}>
-          {title}
-        </Sans>
+      <Box
+        position="absolute"
+        top={0}
+        width="100%"
+        height="100%"
+        background="linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.33) 100%)"
+      />
+
+      <Box position="absolute" bottom="20%" style={{ textShadow: TEXT_SHADOW }}>
+        <Text variant="xl" textAlign="center" as="h1" color="white100" p={2}>
+          {viewingRoom.title}
+        </Text>
       </Box>
 
-      <RoomInfo {...props} />
-    </Flex>
-  )
-}
-
-const RoomInfo: React.FC<ViewingRoomHeaderProps> = props => {
-  const {
-    viewingRoom: {
-      // @ts-expect-error STRICT_NULL_CHECK
-      partner: { name, href },
-      distanceToOpen,
-      distanceToClose,
-      status,
-    },
-  } = props
-
-  const InfoText: React.FC = ({ children }) => (
-    <Sans size={["3", "4"]} color={["white100", "black100"]}>
-      {children}
-    </Sans>
-  )
-
-  const TimingInfo: React.FC = () => {
-    switch (status) {
-      case "closed":
-        return <InfoText>Closed</InfoText>
-      case "live":
-        if (distanceToClose === null) return null
-        return <InfoText>Closes in {distanceToClose}</InfoText>
-      case "scheduled":
-        if (distanceToOpen === null) return null
-        return <InfoText>Opens in {distanceToOpen}</InfoText>
-      default:
-        return null
-    }
-  }
-
-  return (
-    <Box position="absolute" left={0} bottom={0} width="100%">
-      <Flex
-        alignItems="center"
-        justifyContent="space-between"
+      <Text
+        variant="md"
+        color="white100"
+        display="flex"
+        position="absolute"
         width="100%"
+        bottom={0}
         p={2}
+        justifyContent="space-between"
       >
-        <Link href={href} underlineBehavior="hover">
-          <InfoText>{name}</InfoText>
-        </Link>
-        <TimingInfo />
-      </Flex>
-    </Box>
+        {viewingRoom.partner && (
+          <RouterLink to={viewingRoom.partner.href!} textDecoration="none">
+            {viewingRoom.partner.name}
+          </RouterLink>
+        )}
+
+        <h3>
+          {getStatus({
+            status: viewingRoom.status,
+            distanceToOpen: viewingRoom.distanceToOpen,
+            distanceToClose: viewingRoom.distanceToClose,
+          })}
+        </h3>
+      </Text>
+    </FullBleed>
   )
 }

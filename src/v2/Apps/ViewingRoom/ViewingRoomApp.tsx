@@ -1,13 +1,18 @@
 import React, { useContext } from "react"
-import { Banner, Box, ClosedEyeIcon, Text } from "@artsy/palette"
+import {
+  Banner,
+  ClosedEyeIcon,
+  Flex,
+  FullBleed,
+  Join,
+  Spacer,
+} from "@artsy/palette"
 import { ViewingRoomHeaderFragmentContainer as ViewingRoomHeader } from "./Components/ViewingRoomHeader"
 import { ViewingRoomContentNotAccessibleFragmentContainer as ViewingRoomContentNotAccessible } from "./Components/ViewingRoomContentNotAccessible"
 import { ViewingRoomTabBar } from "./Components/ViewingRoomTabBar"
 import { createFragmentContainer, graphql } from "react-relay"
-
 import { ViewingRoomApp_viewingRoom } from "v2/__generated__/ViewingRoomApp_viewingRoom.graphql"
 import { ViewingRoomMetaFragmentContainer as ViewingRoomMeta } from "./Components/ViewingRoomMeta"
-import { ErrorPage } from "v2/Components/ErrorPage"
 import { SystemContext } from "v2/System"
 import { userHasAccessToPartner } from "v2/Utils/user"
 
@@ -22,51 +27,43 @@ const ViewingRoomApp: React.FC<ViewingRoomAppProps> = ({
 }) => {
   const { user } = useContext(SystemContext)
 
-  if (!viewingRoom) {
-    return <ErrorPage code={404} />
-  }
-
-  const showPreview =
+  const isPreviewable =
     user &&
-    // @ts-expect-error STRICT_NULL_CHECK
-    userHasAccessToPartner(user, viewingRoom.partner.internalID) &&
+    userHasAccessToPartner(user, viewingRoom.partner?.internalID!) &&
     (viewingRoom.status === "draft" || viewingRoom.status === "scheduled")
-
-  const getView = () => {
-    if (viewingRoom.status === "live" || showPreview) {
-      return (
-        <>
-          <ViewingRoomTabBar mb={[2, 3]} />
-          {children}
-        </>
-      )
-    }
-    return <ViewingRoomContentNotAccessible viewingRoom={viewingRoom} />
-  }
 
   return (
     <>
       <ViewingRoomMeta viewingRoom={viewingRoom} />
-      {showPreview && (
-        <Box position="fixed" left={0} top={58} width="100%" zIndex={1}>
+
+      {isPreviewable && (
+        <FullBleed>
           <Banner variant="defaultLight">
-            <ClosedEyeIcon />
-            <Text
-              display="inline"
-              verticalAlign="top"
-              px={0.5}
-              lineHeight="18px"
+            <Flex
+              alignItems="center"
+              justifyContent="center"
+              textAlign="center"
             >
+              <ClosedEyeIcon mr={1} />
               This is a preview of your viewing room.
-            </Text>
+            </Flex>
           </Banner>
-        </Box>
+        </FullBleed>
       )}
 
-      <>
+      <Join separator={<Spacer mt={4} />}>
         <ViewingRoomHeader viewingRoom={viewingRoom} />
-        {getView()}
-      </>
+
+        {viewingRoom.status === "live" || isPreviewable ? (
+          <>
+            <ViewingRoomTabBar />
+
+            <div>{children}</div>
+          </>
+        ) : (
+          <ViewingRoomContentNotAccessible viewingRoom={viewingRoom} />
+        )}
+      </Join>
     </>
   )
 }

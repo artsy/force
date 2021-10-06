@@ -22,7 +22,7 @@ export type viewingRoomRoutes_ViewingRoomQuery = {
 query viewingRoomRoutes_ViewingRoomQuery(
   $slug: ID!
 ) {
-  viewingRoom(id: $slug) {
+  viewingRoom(id: $slug) @principalField {
     ...ViewingRoomApp_viewingRoom
   }
 }
@@ -246,9 +246,9 @@ return {
     "metadata": {},
     "name": "viewingRoomRoutes_ViewingRoomQuery",
     "operationKind": "query",
-    "text": "query viewingRoomRoutes_ViewingRoomQuery(\n  $slug: ID!\n) {\n  viewingRoom(id: $slug) {\n    ...ViewingRoomApp_viewingRoom\n  }\n}\n\nfragment ViewingRoomApp_viewingRoom on ViewingRoom {\n  ...ViewingRoomMeta_viewingRoom\n  ...ViewingRoomHeader_viewingRoom\n  ...ViewingRoomContentNotAccessible_viewingRoom\n  partner {\n    internalID\n    id\n  }\n  status\n}\n\nfragment ViewingRoomContentNotAccessible_viewingRoom on ViewingRoom {\n  status\n  partner {\n    href\n    id\n  }\n}\n\nfragment ViewingRoomHeader_viewingRoom on ViewingRoom {\n  image {\n    imageURLs {\n      normalized\n    }\n  }\n  title\n  partner {\n    name\n    href\n    id\n  }\n  distanceToOpen\n  distanceToClose\n  status\n}\n\nfragment ViewingRoomMeta_viewingRoom on ViewingRoom {\n  title\n  href\n  pullQuote\n  image {\n    imageURLs {\n      normalized\n    }\n  }\n}\n"
+    "text": "query viewingRoomRoutes_ViewingRoomQuery(\n  $slug: ID!\n) {\n  viewingRoom(id: $slug) @principalField {\n    ...ViewingRoomApp_viewingRoom\n  }\n}\n\nfragment ViewingRoomApp_viewingRoom on ViewingRoom {\n  ...ViewingRoomMeta_viewingRoom\n  ...ViewingRoomHeader_viewingRoom\n  ...ViewingRoomContentNotAccessible_viewingRoom\n  partner {\n    internalID\n    id\n  }\n  status\n}\n\nfragment ViewingRoomContentNotAccessible_viewingRoom on ViewingRoom {\n  status\n  partner {\n    href\n    id\n  }\n}\n\nfragment ViewingRoomHeader_viewingRoom on ViewingRoom {\n  image {\n    imageURLs {\n      normalized\n    }\n  }\n  title\n  partner {\n    name\n    href\n    id\n  }\n  distanceToOpen\n  distanceToClose\n  status\n}\n\nfragment ViewingRoomMeta_viewingRoom on ViewingRoom {\n  title\n  href\n  pullQuote\n  image {\n    imageURLs {\n      normalized\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'c87ca77e9f5800965495d7161809a8ce';
+(node as any).hash = 'ef9bd45ea7fddd443ff22649736a823d';
 export default node;

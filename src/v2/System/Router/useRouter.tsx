@@ -9,9 +9,13 @@ export function useRouter(): {
   return { match, router }
 }
 
-export function useIsRouteActive(to, options = { exact: true }): boolean {
+export function useIsRouteActive(
+  to: string | null,
+  options = { exact: true }
+): boolean {
   const { match, router } = useRouter()
 
+  if (!to) return false
   if (match === undefined && router === undefined) return false
 
   const toLocation = router.createLocation(to)

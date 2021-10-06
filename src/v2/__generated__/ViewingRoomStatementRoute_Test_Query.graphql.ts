@@ -19,11 +19,18 @@ export type ViewingRoomStatementRoute_Test_QueryRawResponse = {
             readonly edges: ReadonlyArray<({
                 readonly node: ({
                     readonly internalID: string;
-                    readonly imageUrl: string | null;
                     readonly artistNames: string | null;
-                    readonly title: string | null;
                     readonly date: string | null;
                     readonly saleMessage: string | null;
+                    readonly title: string | null;
+                    readonly image: ({
+                        readonly resized: ({
+                            readonly src: string;
+                            readonly srcSet: string;
+                            readonly width: number | null;
+                            readonly height: number | null;
+                        }) | null;
+                    }) | null;
                     readonly id: string | null;
                 }) | null;
             }) | null> | null;
@@ -35,6 +42,8 @@ export type ViewingRoomStatementRoute_Test_QueryRawResponse = {
             readonly title: string | null;
             readonly body: string | null;
             readonly image: ({
+                readonly width: number | null;
+                readonly height: number | null;
                 readonly imageURLs: ({
                     readonly normalized: string | null;
                 }) | null;
@@ -81,6 +90,9 @@ fragment ViewingRoomStatementRoute_viewingRoom on ViewingRoom {
   artworksConnection(first: 2) {
     totalCount
   }
+  subsections {
+    internalID
+  }
 }
 
 fragment ViewingRoomSubsections_viewingRoom on ViewingRoom {
@@ -89,11 +101,28 @@ fragment ViewingRoomSubsections_viewingRoom on ViewingRoom {
     title
     body
     image {
+      width
+      height
       imageURLs {
         normalized
       }
     }
     caption
+  }
+}
+
+fragment ViewingRoomWorksArtwork_artwork on Artwork {
+  artistNames
+  date
+  saleMessage
+  title
+  image {
+    resized(width: 445) {
+      src
+      srcSet
+      width
+      height
+    }
   }
 }
 
@@ -103,11 +132,7 @@ fragment ViewingRoomWorks_viewingRoom on ViewingRoom {
     edges {
       node {
         internalID
-        imageUrl
-        artistNames
-        title
-        date
-        saleMessage
+        ...ViewingRoomWorksArtwork_artwork
         id
       }
     }
@@ -146,6 +171,20 @@ v3 = {
   "storageKey": null
 },
 v4 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "width",
+  "storageKey": null
+},
+v5 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "height",
+  "storageKey": null
+},
+v6 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -241,17 +280,9 @@ return {
                         "alias": null,
                         "args": null,
                         "kind": "ScalarField",
-                        "name": "imageUrl",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
                         "name": "artistNames",
                         "storageKey": null
                       },
-                      (v3/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -264,6 +295,51 @@ return {
                         "args": null,
                         "kind": "ScalarField",
                         "name": "saleMessage",
+                        "storageKey": null
+                      },
+                      (v3/*: any*/),
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": "Image",
+                        "kind": "LinkedField",
+                        "name": "image",
+                        "plural": false,
+                        "selections": [
+                          {
+                            "alias": null,
+                            "args": [
+                              {
+                                "kind": "Literal",
+                                "name": "width",
+                                "value": 445
+                              }
+                            ],
+                            "concreteType": "ResizedImageUrl",
+                            "kind": "LinkedField",
+                            "name": "resized",
+                            "plural": false,
+                            "selections": [
+                              {
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "src",
+                                "storageKey": null
+                              },
+                              {
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "srcSet",
+                                "storageKey": null
+                              },
+                              (v4/*: any*/),
+                              (v5/*: any*/)
+                            ],
+                            "storageKey": "resized(width:445)"
+                          }
+                        ],
                         "storageKey": null
                       },
                       {
@@ -289,7 +365,7 @@ return {
             "name": "pullQuote",
             "storageKey": null
           },
-          (v4/*: any*/),
+          (v6/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -300,7 +376,7 @@ return {
             "selections": [
               (v2/*: any*/),
               (v3/*: any*/),
-              (v4/*: any*/),
+              (v6/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -309,6 +385,8 @@ return {
                 "name": "image",
                 "plural": false,
                 "selections": [
+                  (v4/*: any*/),
+                  (v5/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -350,7 +428,7 @@ return {
     "metadata": {},
     "name": "ViewingRoomStatementRoute_Test_Query",
     "operationKind": "query",
-    "text": "query ViewingRoomStatementRoute_Test_Query(\n  $slug: ID!\n) {\n  viewingRoom(id: $slug) {\n    ...ViewingRoomStatementRoute_viewingRoom\n  }\n}\n\nfragment ViewingRoomBody_viewingRoom on ViewingRoom {\n  body\n}\n\nfragment ViewingRoomIntro_viewingRoom on ViewingRoom {\n  introStatement\n}\n\nfragment ViewingRoomPullQuote_viewingRoom on ViewingRoom {\n  pullQuote\n}\n\nfragment ViewingRoomStatementRoute_viewingRoom on ViewingRoom {\n  ...ViewingRoomIntro_viewingRoom\n  ...ViewingRoomWorks_viewingRoom\n  ...ViewingRoomPullQuote_viewingRoom\n  ...ViewingRoomBody_viewingRoom\n  ...ViewingRoomSubsections_viewingRoom\n  artworksConnection(first: 2) {\n    totalCount\n  }\n}\n\nfragment ViewingRoomSubsections_viewingRoom on ViewingRoom {\n  subsections {\n    internalID\n    title\n    body\n    image {\n      imageURLs {\n        normalized\n      }\n    }\n    caption\n  }\n}\n\nfragment ViewingRoomWorks_viewingRoom on ViewingRoom {\n  artworksConnection(first: 2) {\n    totalCount\n    edges {\n      node {\n        internalID\n        imageUrl\n        artistNames\n        title\n        date\n        saleMessage\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query ViewingRoomStatementRoute_Test_Query(\n  $slug: ID!\n) {\n  viewingRoom(id: $slug) {\n    ...ViewingRoomStatementRoute_viewingRoom\n  }\n}\n\nfragment ViewingRoomBody_viewingRoom on ViewingRoom {\n  body\n}\n\nfragment ViewingRoomIntro_viewingRoom on ViewingRoom {\n  introStatement\n}\n\nfragment ViewingRoomPullQuote_viewingRoom on ViewingRoom {\n  pullQuote\n}\n\nfragment ViewingRoomStatementRoute_viewingRoom on ViewingRoom {\n  ...ViewingRoomIntro_viewingRoom\n  ...ViewingRoomWorks_viewingRoom\n  ...ViewingRoomPullQuote_viewingRoom\n  ...ViewingRoomBody_viewingRoom\n  ...ViewingRoomSubsections_viewingRoom\n  artworksConnection(first: 2) {\n    totalCount\n  }\n  subsections {\n    internalID\n  }\n}\n\nfragment ViewingRoomSubsections_viewingRoom on ViewingRoom {\n  subsections {\n    internalID\n    title\n    body\n    image {\n      width\n      height\n      imageURLs {\n        normalized\n      }\n    }\n    caption\n  }\n}\n\nfragment ViewingRoomWorksArtwork_artwork on Artwork {\n  artistNames\n  date\n  saleMessage\n  title\n  image {\n    resized(width: 445) {\n      src\n      srcSet\n      width\n      height\n    }\n  }\n}\n\nfragment ViewingRoomWorks_viewingRoom on ViewingRoom {\n  artworksConnection(first: 2) {\n    totalCount\n    edges {\n      node {\n        internalID\n        ...ViewingRoomWorksArtwork_artwork\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();
