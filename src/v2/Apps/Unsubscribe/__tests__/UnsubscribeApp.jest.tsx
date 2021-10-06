@@ -2,6 +2,7 @@ import { MockBoot } from "v2/DevTools"
 import React from "react"
 import { mount } from "enzyme"
 import {
+  parseTokenFromQuery,
   UnsubscribeApp,
   UnsubscribeAppFragmentContainer,
 } from "../UnsubscribeApp"
@@ -93,5 +94,27 @@ describe("UnsubscribeApp", () => {
 
       expect(html).not.toContain("Email Preferences")
     })
+  })
+})
+
+describe("parseTokenFromQuery", () => {
+  it("returns an empty string without a token in query", () => {
+    const query = {}
+    const authenticationToken = parseTokenFromQuery(query)
+    expect(authenticationToken).toEqual("")
+  })
+
+  it("returns the token from the query", () => {
+    const token = "abcd1234"
+    const query = { authentication_token: token }
+    const authenticationToken = parseTokenFromQuery(query)
+    expect(authenticationToken).toEqual(token)
+  })
+
+  it("returns the token from the query and cleans up any malformed values", () => {
+    const token = "abcd1234"
+    const query = { authentication_token: `${token}?foo=bar` }
+    const authenticationToken = parseTokenFromQuery(query)
+    expect(authenticationToken).toEqual(token)
   })
 })

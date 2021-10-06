@@ -11,10 +11,15 @@ interface UnsubscribeAppProps {
   me: UnsubscribeApp_me | null
 }
 
+export const parseTokenFromQuery = (query): string => {
+  const tokenFromQuery = query.authentication_token || ""
+  return tokenFromQuery.split("?")[0]
+}
+
 export const UnsubscribeApp: React.FC<UnsubscribeAppProps> = ({ me }) => {
   const { match } = useRouter()
 
-  const { authentication_token: authenticationToken } = match.location.query
+  const authenticationToken = parseTokenFromQuery(match.location.query)
 
   return (
     <>
