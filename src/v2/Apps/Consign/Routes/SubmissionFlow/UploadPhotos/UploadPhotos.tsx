@@ -1,12 +1,42 @@
 import React, { FC } from "react"
-import { Box } from "@artsy/palette"
+import { Box, Text } from "@artsy/palette"
+import { Formik } from "formik"
 import { SubmissionStepper } from "v2/Apps/Consign/Components/SubmissionStepper"
+import {
+  UploadPhotosForm,
+  UploadPhotosFormModel,
+} from "./Components/UploadPhotosForm"
 
 export const UploadPhotos: FC = () => {
+  const handleSubmit = () => {}
+
   return (
-    <>
+    <Box>
       <SubmissionStepper currentStep="Upload Photos" />
-      <Box mt={50}>Upload Photos step</Box>
-    </>
+
+      <Text variant="lg">Upload photos of your artwork</Text>
+      <Text variant="sm" color="black60" mt={1}>
+        &#8226; For a faster valuation, please upload high-quality photos of the
+        work&#39;s front and back.
+      </Text>
+      <Text variant="sm" color="black60">
+        &#8226; If possible, include photos of any signatures or certificates of
+        authenticity.
+      </Text>
+
+      <Formik<UploadPhotosFormModel>
+        onSubmit={handleSubmit}
+        initialValues={{ photos: [] }}
+      >
+        {({ values }) => (
+          <>
+            <UploadPhotosForm mt={4} />
+            {values.photos.map(photo => (
+              <p key={photo.name}>{photo.name}</p>
+            ))}
+          </>
+        )}
+      </Formik>
+    </Box>
   )
 }
