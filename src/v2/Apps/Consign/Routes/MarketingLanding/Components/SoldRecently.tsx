@@ -1,5 +1,5 @@
 import React from "react"
-import { Box, Flex, Shelf, Spacer, Text } from "@artsy/palette"
+import { Box, Flex, Spacer, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "v2/System"
 import { SoldRecentlyQuery } from "v2/__generated__/SoldRecentlyQuery.graphql"
@@ -11,6 +11,7 @@ import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { flatten, shuffle } from "lodash"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { trackHelpers } from "v2/Utils/cohesionHelpers"
+import { Rail } from "v2/Components/Rail"
 
 const HEIGHT = 300
 
@@ -50,13 +51,10 @@ const SoldRecently: React.FC<SoldRecentlyProps> = ({ targetSupply }) => {
   }
 
   return (
-    <>
-      <Text variant="xl" mb={2}>
-        Sold recently on Artsy
-      </Text>
-
-      <Shelf>
-        {recentlySoldArtworks.map((artwork, index) => {
+    <Rail
+      title="Sold recently on Artsy"
+      getItems={() => {
+        return recentlySoldArtworks.map((artwork, index) => {
           return (
             <React.Fragment key={index}>
               <FillwidthItem
@@ -101,9 +99,9 @@ const SoldRecently: React.FC<SoldRecentlyProps> = ({ targetSupply }) => {
               </Text>
             </React.Fragment>
           )
-        })}
-      </Shelf>
-    </>
+        })
+      }}
+    />
   )
 }
 

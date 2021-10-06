@@ -44,7 +44,7 @@ const CurrentAuctions: React.FC<CurrentAuctionsProps> = ({ viewer, relay }) => {
   const nodes = extractNodes(viewer.salesConnection)
 
   if (nodes.length === 0) {
-    return <AuctionsZeroState>No current auctions</AuctionsZeroState>
+    return <AuctionsZeroState>No current auctions.</AuctionsZeroState>
   }
 
   return (

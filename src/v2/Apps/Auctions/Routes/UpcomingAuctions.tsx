@@ -47,7 +47,7 @@ const UpcomingAuctions: React.FC<UpcomingAuctionsProps> = ({
   const nodes = extractNodes(viewer.salesConnection)
 
   if (nodes.length === 0) {
-    return <AuctionsZeroState>No upcoming auctions</AuctionsZeroState>
+    return <AuctionsZeroState>No upcoming auctions.</AuctionsZeroState>
   }
 
   return (

@@ -1,8 +1,9 @@
-import { Box, Join, Spacer, Tab, Tabs, Text } from "@artsy/palette"
+import { Join, Spacer, Tab, Tabs } from "@artsy/palette"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "v2/System"
 import { CuritorialRailsTabBar_viewer } from "v2/__generated__/CuritorialRailsTabBar_viewer.graphql"
+import { AuctionsZeroState } from "./AuctionsZeroState"
 import { MyBidsFragmentContainer } from "./MyBids/MyBids"
 import { StandoutLotsRailFragmentContainer } from "./StandoutLotsRail"
 import { TrendingLotsRailFragmentContainer } from "./TrendingLotsRail"
@@ -55,18 +56,5 @@ export const CuritorialRailsTabBarFragmentContainer = createFragmentContainer(
 )
 
 export const CuratorialRailsZeroState: React.FC = () => {
-  return (
-    <Box>
-      <Text
-        as="h3"
-        color="black60"
-        mb={12}
-        mt={6}
-        textAlign="center"
-        variant="mediumText"
-      >
-        No Works To Show
-      </Text>
-    </Box>
-  )
+  return <AuctionsZeroState>No Works To Show</AuctionsZeroState>
 }

@@ -44,7 +44,7 @@ const PastAuctions: React.FC<PastAuctionsProps> = ({ viewer, relay }) => {
   const nodes = extractNodes(viewer.salesConnection)
 
   if (nodes.length === 0) {
-    return <AuctionsZeroState>No past auctions</AuctionsZeroState>
+    return <AuctionsZeroState>No past auctions.</AuctionsZeroState>
   }
 
   return (
