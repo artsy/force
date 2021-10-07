@@ -48,12 +48,12 @@ describe("ArtistNotableWorksRail", () => {
         slug: "artistSlug",
       }),
     })
-    expect(wrapper.text()).toContain("Notable works")
+    expect(wrapper.text()).toContain("Notable Works")
     expect(wrapper.find("RouterLink").length).toBe(3)
     expect(wrapper.find("RouterLink").at(0).props().to).toContain(
       "/artist/artistSlug/works-for-sale"
     )
-    expect(wrapper.text()).toContain("View all works")
+    expect(wrapper.text()).toContain("View All Works")
     expect(wrapper.find("Shelf").length).toBe(1)
     expect(wrapper.find("Image").length).toBe(2)
     expect(wrapper.text()).toContain("title")

@@ -3,7 +3,7 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type TrendingLots_viewer = {
+export type TrendingLotsRail_viewer = {
     readonly trendingLotsConnection: {
         readonly edges: ReadonlyArray<{
             readonly counts: {
@@ -19,12 +19,12 @@ export type TrendingLots_viewer = {
             } | null;
         } | null> | null;
     } | null;
-    readonly " $refType": "TrendingLots_viewer";
+    readonly " $refType": "TrendingLotsRail_viewer";
 };
-export type TrendingLots_viewer$data = TrendingLots_viewer;
-export type TrendingLots_viewer$key = {
-    readonly " $data"?: TrendingLots_viewer$data;
-    readonly " $fragmentRefs": FragmentRefs<"TrendingLots_viewer">;
+export type TrendingLotsRail_viewer$data = TrendingLotsRail_viewer;
+export type TrendingLotsRail_viewer$key = {
+    readonly " $data"?: TrendingLotsRail_viewer$data;
+    readonly " $fragmentRefs": FragmentRefs<"TrendingLotsRail_viewer">;
 };
 
 
@@ -33,7 +33,7 @@ const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "TrendingLots_viewer",
+  "name": "TrendingLotsRail_viewer",
   "selections": [
     {
       "alias": "trendingLotsConnection",
@@ -143,5 +143,5 @@ const node: ReaderFragment = {
   ],
   "type": "Viewer"
 };
-(node as any).hash = 'b1b4ae5c3bc22a7a2bbd6bf93450912f';
+(node as any).hash = '221336697ce6a87c379c25736819ab39';
 export default node;

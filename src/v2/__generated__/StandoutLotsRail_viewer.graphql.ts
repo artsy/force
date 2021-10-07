@@ -3,22 +3,25 @@
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type AuctionArtworksRailArtworks_sale = {
-    readonly artworksConnection: {
+export type StandoutLotsRail_viewer = {
+    readonly StandoutLotsRailConnection: {
         readonly edges: ReadonlyArray<{
             readonly node: {
                 readonly internalID: string;
                 readonly slug: string;
+                readonly sale: {
+                    readonly isClosed: boolean | null;
+                } | null;
                 readonly " $fragmentRefs": FragmentRefs<"ShelfArtwork_artwork">;
             } | null;
         } | null> | null;
     } | null;
-    readonly " $refType": "AuctionArtworksRailArtworks_sale";
+    readonly " $refType": "StandoutLotsRail_viewer";
 };
-export type AuctionArtworksRailArtworks_sale$data = AuctionArtworksRailArtworks_sale;
-export type AuctionArtworksRailArtworks_sale$key = {
-    readonly " $data"?: AuctionArtworksRailArtworks_sale$data;
-    readonly " $fragmentRefs": FragmentRefs<"AuctionArtworksRailArtworks_sale">;
+export type StandoutLotsRail_viewer$data = StandoutLotsRail_viewer;
+export type StandoutLotsRail_viewer$key = {
+    readonly " $data"?: StandoutLotsRail_viewer$data;
+    readonly " $fragmentRefs": FragmentRefs<"StandoutLotsRail_viewer">;
 };
 
 
@@ -27,26 +30,31 @@ const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "AuctionArtworksRailArtworks_sale",
+  "name": "StandoutLotsRail_viewer",
   "selections": [
     {
-      "alias": null,
+      "alias": "StandoutLotsRailConnection",
       "args": [
         {
           "kind": "Literal",
           "name": "first",
-          "value": 20
+          "value": 50
+        },
+        {
+          "kind": "Literal",
+          "name": "geneIDs",
+          "value": "highlights-at-auction"
         }
       ],
-      "concreteType": "ArtworkConnection",
+      "concreteType": "SaleArtworksConnection",
       "kind": "LinkedField",
-      "name": "artworksConnection",
+      "name": "saleArtworksConnection",
       "plural": false,
       "selections": [
         {
           "alias": null,
           "args": null,
-          "concreteType": "ArtworkEdge",
+          "concreteType": "SaleArtwork",
           "kind": "LinkedField",
           "name": "edges",
           "plural": true,
@@ -74,11 +82,29 @@ const node: ReaderFragment = {
                   "storageKey": null
                 },
                 {
+                  "alias": null,
+                  "args": null,
+                  "concreteType": "Sale",
+                  "kind": "LinkedField",
+                  "name": "sale",
+                  "plural": false,
+                  "selections": [
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "isClosed",
+                      "storageKey": null
+                    }
+                  ],
+                  "storageKey": null
+                },
+                {
                   "args": [
                     {
                       "kind": "Literal",
                       "name": "width",
-                      "value": 200
+                      "value": 325
                     }
                   ],
                   "kind": "FragmentSpread",
@@ -91,10 +117,10 @@ const node: ReaderFragment = {
           "storageKey": null
         }
       ],
-      "storageKey": "artworksConnection(first:20)"
+      "storageKey": "saleArtworksConnection(first:50,geneIDs:\"highlights-at-auction\")"
     }
   ],
-  "type": "Sale"
+  "type": "Viewer"
 };
-(node as any).hash = '4374642b11d489aa90b88aa25099e2a0';
+(node as any).hash = '014a1939216e5b896476d7c80e82e971';
 export default node;

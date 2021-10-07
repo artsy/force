@@ -1,9 +1,10 @@
 import { ContextModule, OwnerType } from "@artsy/cohesion"
-import { EntityHeader, Image, Shelf, Text } from "@artsy/palette"
+import { EntityHeader, Image } from "@artsy/palette"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { FollowArtistButtonFragmentContainer } from "v2/Components/FollowButton/FollowArtistButton"
+import { Rail } from "v2/Components/Rail"
 import { AnalyticsSchema, useAnalyticsContext } from "v2/System"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { extractNodes } from "v2/Utils/extractNodes"
@@ -30,13 +31,11 @@ const ArtistRelatedArtistsRail: React.FC<ArtistRelatedArtistsRailProps> = ({
   }
 
   return (
-    <>
-      <Text variant="lg" mb={4} as="h2">
-        Related artists
-      </Text>
-
-      <Shelf alignItems="flex-start" data-test="relatedArtistsRail">
-        {nodes.map((node, index) => {
+    <Rail
+      title="Related Artists"
+      alignItems="flex-start"
+      getItems={() => {
+        return nodes.map((node, index) => {
           const artworkImage = extractNodes(node.filterArtworksConnection)?.[0]
             ?.image
 
@@ -100,9 +99,9 @@ const ArtistRelatedArtistsRail: React.FC<ArtistRelatedArtistsRailProps> = ({
               />
             </React.Fragment>
           )
-        })}
-      </Shelf>
-    </>
+        })
+      }}
+    />
   )
 }
 

@@ -1,16 +1,14 @@
-import { Shelf, SkeletonBox, SkeletonText, Text } from "@artsy/palette"
+import { SkeletonBox, SkeletonText } from "@artsy/palette"
 import React from "react"
 import { IMG_HEIGHT } from "../Artwork/ShelfArtwork"
+import { Rail } from "../Rail"
 
 export const RecentlyViewedPlaceholder: React.FC = () => {
   return (
-    <>
-      <Text variant="lg" mb={2}>
-        Recently viewed
-      </Text>
-
-      <Shelf showProgress={false}>
-        {[...new Array(10)].map((_, i) => {
+    <Rail
+      title="Recently Viewed"
+      getItems={() => {
+        return [...new Array(10)].map((_, i) => {
           return (
             <React.Fragment key={i}>
               <SkeletonBox
@@ -42,8 +40,8 @@ export const RecentlyViewedPlaceholder: React.FC = () => {
               <SkeletonText variant="xs">Price</SkeletonText>
             </React.Fragment>
           )
-        })}
-      </Shelf>
-    </>
+        })
+      }}
+    />
   )
 }

@@ -1,4 +1,11 @@
-import { Image, Shelf, Spacer, Text } from "@artsy/palette"
+import {
+  Image,
+  Skeleton,
+  SkeletonBox,
+  SkeletonText,
+  Spacer,
+  Text,
+} from "@artsy/palette"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { AnalyticsSchema, Type, useSystemContext } from "v2/System"
@@ -9,8 +16,8 @@ import { RouterLink } from "v2/System/Router/RouterLink"
 import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { data as sd } from "sharify"
 import { useTracking } from "react-tracking"
-import { LoadingPlaceholder } from "./LoadingPlaceholder"
 import { ArtistIconicCollectionsRailQuery } from "v2/__generated__/ArtistIconicCollectionsRailQuery.graphql"
+import { Rail } from "v2/Components/Rail"
 
 interface ArtistIconicCollectionsRailProps {
   marketingCollections: ArtistIconicCollectionsRail_marketingCollections
@@ -30,12 +37,10 @@ const ArtistIconicCollectionsRail: React.FC<ArtistIconicCollectionsRailProps> = 
   }
 
   return (
-    <>
-      <Text variant="lg" my={4}>
-        Iconic Collections
-      </Text>
-      <Shelf>
-        {marketingCollections.map((marketingCollection, index) => {
+    <Rail
+      title="Iconic Collections"
+      getItems={() => {
+        return marketingCollections.map((marketingCollection, index) => {
           const image =
             marketingCollection?.artworksConnection?.edges?.[0]?.node?.image
           const formattedTitle = marketingCollection.title.split(": ")[1]
@@ -80,11 +85,30 @@ const ArtistIconicCollectionsRail: React.FC<ArtistIconicCollectionsRailProps> = 
               </Text>
             </RouterLink>
           )
-        })}
-      </Shelf>
-    </>
+        })
+      }}
+    />
   )
 }
+
+const PLACEHOLDER = (
+  <Skeleton>
+    <Rail
+      title="Iconic Collections"
+      getItems={() => {
+        return [...new Array(10)].map((_, i) => {
+          return (
+            <>
+              <SkeletonBox width={325} height={230} />
+              <SkeletonText variant="md">Works on Paper</SkeletonText>
+              <SkeletonText variant="md">From $500</SkeletonText>
+            </>
+          )
+        })
+      }}
+    />
+  </Skeleton>
+)
 
 export const ArtistIconicCollectionsRailFragmentContainer = createFragmentContainer(
   ArtistIconicCollectionsRail,
@@ -153,7 +177,7 @@ export const ArtistIconicCollectionsRailQueryRenderer = props => {
         }
 
         if (!props) {
-          return <LoadingPlaceholder />
+          return PLACEHOLDER
         }
 
         if (props.marketingCollections) {

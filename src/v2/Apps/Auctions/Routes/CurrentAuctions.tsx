@@ -1,14 +1,14 @@
 import React, { useState } from "react"
-import { Box, Grid, Row, Col, Button, Text } from "@artsy/palette"
+import { Box, Button, GridColumns, Column } from "@artsy/palette"
 import {
   createPaginationContainer,
   graphql,
   RelayPaginationProp,
 } from "react-relay"
-
 import { CurrentAuctions_viewer } from "v2/__generated__/CurrentAuctions_viewer.graphql"
-import { AuctionArtworksRailFragmentContainer } from "../Components/AuctionArtworksRail/AuctionArtworksRail"
 import { extractNodes } from "v2/Utils/extractNodes"
+import { AuctionArtworkRailQueryRenderer } from "../Components/AuctionArtworksRail"
+import { AuctionsZeroState } from "../Components/AuctionsZeroState"
 
 export interface CurrentAuctionsProps {
   viewer: CurrentAuctions_viewer
@@ -44,52 +44,35 @@ const CurrentAuctions: React.FC<CurrentAuctionsProps> = ({ viewer, relay }) => {
   const nodes = extractNodes(viewer.salesConnection)
 
   if (nodes.length === 0) {
-    return (
-      <Box>
-        <Text
-          as="h3"
-          color="black60"
-          mb={12}
-          mt={6}
-          textAlign="center"
-          variant="mediumText"
-        >
-          No current auctions.
-        </Text>
-      </Box>
-    )
+    return <AuctionsZeroState>No current auctions.</AuctionsZeroState>
   }
 
   return (
     <>
-      <Box>
-        {nodes.map((node, index) => {
-          return (
-            <Box my={6} key={index}>
-              <AuctionArtworksRailFragmentContainer
-                sale={node}
-                tabType="current"
-              />
-            </Box>
-          )
-        })}
-      </Box>
+      {nodes.map((node, index) => {
+        return (
+          <Box my={6} key={index}>
+            <AuctionArtworkRailQueryRenderer
+              slug={node.slug}
+              tabType="current"
+            />
+          </Box>
+        )
+      })}
 
-      <Grid my={6}>
-        <Row>
-          <Col sm={6} mx="auto">
-            <Button
-              width="100%"
-              variant="secondaryGray"
-              onClick={handleClick}
-              loading={isLoading}
-              disabled={!relay.hasMore()}
-            >
-              Show more
-            </Button>
-          </Col>
-        </Row>
-      </Grid>
+      <GridColumns my={6}>
+        <Column span={12} mx="auto">
+          <Button
+            width="100%"
+            variant="secondaryGray"
+            onClick={handleClick}
+            loading={isLoading}
+            disabled={!relay.hasMore()}
+          >
+            Show more
+          </Button>
+        </Column>
+      </GridColumns>
     </>
   )
 }

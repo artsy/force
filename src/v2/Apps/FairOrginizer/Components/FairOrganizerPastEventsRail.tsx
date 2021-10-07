@@ -1,9 +1,9 @@
-import { Shelf, Text } from "@artsy/palette"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FairOrganizerPastEventRailCellFragmentContainer as FairOrganizerPastEventRailCell } from "./FairOrganizerPastEventRailCell"
 import { FairOrganizerPastEventsRail_fairOrganizer } from "v2/__generated__/FairOrganizerPastEventsRail_fairOrganizer.graphql"
 import { extractNodes } from "v2/Utils/extractNodes"
+import { Rail } from "v2/Components/Rail"
 
 interface FairOrganizerPastEventsRailProps {
   fairOrganizer: FairOrganizerPastEventsRail_fairOrganizer
@@ -18,16 +18,14 @@ export const FairOrganizerPastEventsRail: React.FC<FairOrganizerPastEventsRailPr
   }
 
   return (
-    <>
-      <Text variant="lg" as="h3" mb={4}>
-        Past Events
-      </Text>
-      <Shelf alignItems="flex-start">
-        {pastFairs.map(fair => {
+    <Rail
+      title="Past Events"
+      getItems={() => {
+        return pastFairs.map(fair => {
           return <FairOrganizerPastEventRailCell key={fair.id} fair={fair} />
-        })}
-      </Shelf>
-    </>
+        })
+      }}
+    />
   )
 }
 

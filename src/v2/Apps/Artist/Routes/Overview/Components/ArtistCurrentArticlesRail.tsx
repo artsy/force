@@ -1,8 +1,9 @@
 import { clickedEntityGroup, ContextModule, OwnerType } from "@artsy/cohesion"
-import { Box, Flex, Image, Shelf, Spacer, Text } from "@artsy/palette"
+import { Box, Image, Spacer, Text } from "@artsy/palette"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
+import { Rail } from "v2/Components/Rail"
 import { AnalyticsSchema, useAnalyticsContext } from "v2/System"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { extractNodes } from "v2/Utils/extractNodes"
@@ -29,34 +30,27 @@ const ArtistCurrentArticlesRail: React.FC<ArtistCurrentArticlesRailProps> = ({
   }
 
   return (
-    <>
-      <Flex justifyContent="space-between">
-        <Text variant="lg" mb={4}>
-          Articles featuring {artist.name}
-        </Text>
-
-        <RouterLink
-          to={`/artist/${artist.slug}/articles`}
-          onClick={() => {
-            tracking.trackEvent(
-              clickedEntityGroup({
-                contextModule: ContextModule.relatedArticles,
-                contextPageOwnerId,
-                contextPageOwnerSlug,
-                contextPageOwnerType: contextPageOwnerType!,
-                destinationPageOwnerType: OwnerType.artist,
-                destinationPageOwnerId: artist.internalID,
-                destinationPageOwnerSlug: artist.slug,
-                type: "viewAll",
-              })
-            )
-          }}
-        >
-          <Text variant="sm">View all articles</Text>
-        </RouterLink>
-      </Flex>
-      <Shelf alignItems="flex-start">
-        {nodes.map((node, index) => {
+    <Rail
+      title={`Articles Featuring ${artist.name}`}
+      alignItems="flex-start"
+      viewAllLabel="View All Articles"
+      viewAllHref={`/artist/${artist.slug}/articles`}
+      viewAllOnClick={() => {
+        tracking.trackEvent(
+          clickedEntityGroup({
+            contextModule: ContextModule.relatedArticles,
+            contextPageOwnerId,
+            contextPageOwnerSlug,
+            contextPageOwnerType: contextPageOwnerType!,
+            destinationPageOwnerType: OwnerType.artist,
+            destinationPageOwnerId: artist.internalID,
+            destinationPageOwnerSlug: artist.slug,
+            type: "viewAll",
+          })
+        )
+      }}
+      getItems={() => {
+        return nodes.map((node, index) => {
           return (
             <Box maxWidth={345} key={index}>
               <RouterLink
@@ -99,9 +93,9 @@ const ArtistCurrentArticlesRail: React.FC<ArtistCurrentArticlesRailProps> = ({
               </RouterLink>
             </Box>
           )
-        })}
-      </Shelf>
-    </>
+        })
+      }}
+    />
   )
 }
 

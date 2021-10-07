@@ -1,22 +1,20 @@
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
-
-import { Shelf, Spacer, Sup, Text } from "@artsy/palette"
 import { AuthContextModule } from "@artsy/cohesion"
-
 import { extractNodes } from "v2/Utils/extractNodes"
 import { ShelfArtworkFragmentContainer } from "v2/Components/Artwork/ShelfArtwork"
-import { tabTypeToContextModuleMap } from "../../Utils/tabTypeToContextModuleMap"
-import { TrendingLots_viewer } from "v2/__generated__/TrendingLots_viewer.graphql"
+import { tabTypeToContextModuleMap } from "../Utils/tabTypeToContextModuleMap"
+import { TrendingLotsRail_viewer } from "v2/__generated__/TrendingLotsRail_viewer.graphql"
 import { useAnalyticsContext } from "v2/System"
-import { CuratorialRailsZeroState } from "../CuratorialRailsZeroState/CuratorialRailsZeroState"
 import { trackHelpers } from "v2/Utils/cohesionHelpers"
-export interface TrendingLotsProps {
-  viewer: TrendingLots_viewer
+import { CuratorialRailsZeroState } from "./CuritorialRailsTabBar"
+import { Rail } from "v2/Components/Rail"
+export interface TrendingLotsRailProps {
+  viewer: TrendingLotsRail_viewer
 }
 
-const TrendingLots: React.FC<TrendingLotsProps> = ({ viewer }) => {
+const TrendingLotsRail: React.FC<TrendingLotsRailProps> = ({ viewer }) => {
   const { trackEvent } = useTracking()
   const { contextPageOwnerType } = useAnalyticsContext()
   const contextModule = tabTypeToContextModuleMap.trendingLots as AuthContextModule
@@ -32,19 +30,12 @@ const TrendingLots: React.FC<TrendingLotsProps> = ({ viewer }) => {
   }
 
   return (
-    <>
-      <Text as="h3" variant="lg" color="black100" mt={6}>
-        Trending lots <Sup color="brand">{liveSaleArtworks?.length}</Sup>
-      </Text>
-
-      <Text as="h3" variant="lg" color="black60">
-        Works with the most bids today
-      </Text>
-
-      <Spacer mb={4} />
-
-      <Shelf>
-        {liveSaleArtworks.map((node, index) => {
+    <Rail
+      title="Trending lots"
+      subTitle="Works with the most bids today"
+      countLabel={liveSaleArtworks.length}
+      getItems={() => {
+        return liveSaleArtworks.map((node, index) => {
           return (
             <ShelfArtworkFragmentContainer
               artwork={node}
@@ -65,17 +56,17 @@ const TrendingLots: React.FC<TrendingLotsProps> = ({ viewer }) => {
               }}
             />
           )
-        })}
-      </Shelf>
-    </>
+        })
+      }}
+    />
   )
 }
 
-export const TrendingLotsFragmentContainer = createFragmentContainer(
-  TrendingLots,
+export const TrendingLotsRailFragmentContainer = createFragmentContainer(
+  TrendingLotsRail,
   {
     viewer: graphql`
-      fragment TrendingLots_viewer on Viewer {
+      fragment TrendingLotsRail_viewer on Viewer {
         trendingLotsConnection: saleArtworksConnection(
           first: 50
           sort: "-bidder_positions_count"

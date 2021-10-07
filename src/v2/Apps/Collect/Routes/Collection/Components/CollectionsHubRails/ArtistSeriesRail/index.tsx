@@ -1,8 +1,8 @@
-import { Text, Shelf } from "@artsy/palette"
 import { ArtistSeriesRail_collectionGroup } from "v2/__generated__/ArtistSeriesRail_collectionGroup.graphql"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtistSeriesRailContainer as ArtistSeriesEntity } from "./ArtistSeriesEntity"
+import { Rail } from "v2/Components/Rail"
 
 export interface ArtistSeriesRailProps {
   collectionGroup: ArtistSeriesRail_collectionGroup
@@ -11,13 +11,10 @@ export const ArtistSeriesRail: React.FC<ArtistSeriesRailProps> = ({
   collectionGroup: { members, name },
 }) => {
   return (
-    <>
-      <Text variant="lg" mb={4}>
-        {name}
-      </Text>
-
-      <Shelf>
-        {members.map((slide, slideIndex) => {
+    <Rail
+      title={name}
+      getItems={() => {
+        return members.map((slide, slideIndex) => {
           return (
             <ArtistSeriesEntity
               key={slide.slug || slideIndex}
@@ -25,9 +22,9 @@ export const ArtistSeriesRail: React.FC<ArtistSeriesRailProps> = ({
               itemNumber={slideIndex}
             />
           )
-        })}
-      </Shelf>
-    </>
+        })
+      }}
+    />
   )
 }
 

@@ -1,4 +1,3 @@
-import { Flex, Link, Shelf, Spacer, Text } from "@artsy/palette"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtistSeriesArtworkRail_artwork } from "v2/__generated__/ArtistSeriesArtworkRail_artwork.graphql"
@@ -10,6 +9,8 @@ import {
   ContextModule,
   OwnerType,
 } from "@artsy/cohesion"
+import { extractNodes } from "v2/Utils/extractNodes"
+import { Rail } from "v2/Components/Rail"
 
 interface Props {
   artwork: ArtistSeriesArtworkRail_artwork
@@ -18,86 +19,66 @@ interface Props {
 export const ArtistSeriesArtworkRail: React.FC<Props> = ({ artwork }) => {
   const { trackEvent } = useTracking()
   const { artistSeriesConnection } = artwork
+  const nodes = extractNodes(artistSeriesConnection)
 
-  if (!artistSeriesConnection?.edges?.length) {
+  if (nodes.length === 0) {
     return null
   }
 
-  // @ts-expect-error STRICT_NULL_CHECK
-  const artistSeries = artistSeriesConnection.edges[0].node
-  // @ts-expect-error STRICT_NULL_CHECK
-  const { filterArtworksConnection, slug } = artistSeries
+  const node = nodes[0]
+  const artworks = extractNodes(node.filterArtworksConnection)
 
-  const artworks = filterArtworksConnection?.edges?.map(({ node }) => node)
-
-  if (!artworks) {
+  if (artworks.length === 0) {
     return null
   }
 
-  const trackArtworkClick = (artworkSlug, artworkID, index) => {
-    const properties: ClickedArtworkGroup = {
-      action: ActionType.clickedArtworkGroup,
-      context_module: ContextModule.moreFromThisSeries,
-      context_page_owner_type: OwnerType.artwork,
-      context_page_owner_slug: artwork.slug,
-      context_page_owner_id: artwork.internalID,
-      destination_page_owner_type: OwnerType.artwork,
-      destination_page_owner_id: artworkID,
-      destination_page_owner_slug: artworkSlug,
-      horizontal_slide_position: index,
-      type: "thumbnail",
-    }
-    trackEvent(properties)
-  }
-
-  const trackViewSeriesClick = () => {
-    const properties: ClickedArtworkGroup = {
-      action: ActionType.clickedArtworkGroup,
-      context_module: ContextModule.moreFromThisSeries,
-      context_page_owner_type: OwnerType.artwork,
-      context_page_owner_slug: artwork.slug,
-      context_page_owner_id: artwork.internalID,
-      destination_page_owner_type: OwnerType.artistSeries,
-      // @ts-expect-error STRICT_NULL_CHECK
-      destination_page_owner_id: artistSeries.internalID,
-      // @ts-expect-error STRICT_NULL_CHECK
-      destination_page_owner_slug: artistSeries.slug,
-      type: "viewAll",
-    }
-    trackEvent(properties)
-  }
-
-  return artworks.length > 0 ? (
-    <>
-      <Flex justifyContent="space-between">
-        <Text variant="lg">More from this series</Text>
-
-        <Link
-          href={`/artist-series/${slug}`}
-          onClick={() => trackViewSeriesClick()}
-        >
-          <Text variant="md">View series</Text>
-        </Link>
-      </Flex>
-
-      <Spacer mt={4} />
-
-      <Shelf>
-        {artworks.map((artwork, index) => {
+  return (
+    <Rail
+      title="More From This Series"
+      viewAllLabel="View series"
+      viewAllHref={`/artist-series/${node.slug}`}
+      viewAllOnClick={() => {
+        const properties: ClickedArtworkGroup = {
+          action: ActionType.clickedArtworkGroup,
+          context_module: ContextModule.moreFromThisSeries,
+          context_page_owner_type: OwnerType.artwork,
+          context_page_owner_slug: artwork.slug,
+          context_page_owner_id: artwork.internalID,
+          destination_page_owner_type: OwnerType.artistSeries,
+          destination_page_owner_id: node.internalID,
+          destination_page_owner_slug: node.slug,
+          type: "viewAll",
+        }
+        trackEvent(properties)
+      }}
+      getItems={() => {
+        return artworks.map((artwork, index) => {
           return (
             <ShelfArtworkFragmentContainer
               key={artwork.internalID}
               contextModule={ContextModule.artistSeriesRail}
               artwork={artwork}
-              onClick={() =>
-                trackArtworkClick(artwork.slug, artwork.internalID, index)
-              }
+              onClick={() => {
+                const properties: ClickedArtworkGroup = {
+                  action: ActionType.clickedArtworkGroup,
+                  context_module: ContextModule.moreFromThisSeries,
+                  context_page_owner_type: OwnerType.artwork,
+                  context_page_owner_slug: artwork.slug,
+                  context_page_owner_id: artwork.internalID,
+                  destination_page_owner_type: OwnerType.artwork,
+                  destination_page_owner_id: artwork.internalID,
+                  destination_page_owner_slug: artwork.slug,
+                  horizontal_slide_position: index,
+                  type: "thumbnail",
+                }
+                trackEvent(properties)
+              }}
             />
           )
-        })}
-      </Shelf>
-    </>
-  ) : null
+        })
+      }}
+    />
+  )
 }
 
 export const ArtistSeriesArtworkRailFragmentContainer = createFragmentContainer(

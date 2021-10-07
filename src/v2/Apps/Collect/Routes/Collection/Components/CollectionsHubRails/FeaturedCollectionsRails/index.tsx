@@ -1,4 +1,4 @@
-import { ReadMore, Text, Image, Shelf, Box } from "@artsy/palette"
+import { ReadMore, Text, Image, Box } from "@artsy/palette"
 import { FeaturedCollectionsRails_collectionGroup } from "v2/__generated__/FeaturedCollectionsRails_collectionGroup.graphql"
 import { useTracking } from "v2/System/Analytics/useTracking"
 import { RouterLink } from "v2/System/Router/RouterLink"
@@ -8,6 +8,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { ContextModule, clickedCollectionGroup } from "@artsy/cohesion"
 import { useAnalyticsContext } from "v2/System/Analytics/AnalyticsContext"
 import { cropped } from "v2/Utils/resized"
+import { Rail } from "v2/Components/Rail"
 
 interface Props {
   collectionGroup: FeaturedCollectionsRails_collectionGroup
@@ -17,13 +18,11 @@ export const FeaturedCollectionsRails: React.FC<Props> = ({
   collectionGroup: { members, name },
 }) => {
   return (
-    <>
-      <Text variant="lg" mb={4}>
-        {name}
-      </Text>
-
-      <Shelf alignItems="flex-start">
-        {members.map((slide, slideIndex) => {
+    <Rail
+      title={name}
+      alignItems="flex-start"
+      getItems={() => {
+        return members.map((slide, slideIndex) => {
           return (
             <FeaturedCollectionEntity
               key={slide.slug}
@@ -31,9 +30,9 @@ export const FeaturedCollectionsRails: React.FC<Props> = ({
               itemNumber={slideIndex}
             />
           )
-        })}
-      </Shelf>
-    </>
+        })
+      }}
+    />
   )
 }
 

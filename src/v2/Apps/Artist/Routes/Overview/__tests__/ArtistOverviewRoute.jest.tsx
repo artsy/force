@@ -8,7 +8,7 @@ jest.mock("react-head", () => ({
   Title: () => null,
 }))
 jest.mock(
-  "v2/Apps/Artist/Routes/Overview/Components/IconicCollectionsRail/ArtistIconicCollectionsRail",
+  "v2/Apps/Artist/Routes/Overview/Components/ArtistIconicCollectionsRail",
   () => ({
     ArtistIconicCollectionsRailQueryRenderer: () => null,
   })

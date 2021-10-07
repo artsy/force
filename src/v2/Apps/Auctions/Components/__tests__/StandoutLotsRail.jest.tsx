@@ -2,23 +2,23 @@ import React from "react"
 import { graphql } from "relay-runtime"
 import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
 import { useTracking as baseUseTracking } from "react-tracking"
-import { StandoutLotsFragmentContainer } from "../StandoutLots"
+import { StandoutLotsRailFragmentContainer } from "../StandoutLotsRail"
 
 jest.mock("react-tracking")
 jest.unmock("react-relay")
 
-describe("StandoutLots", () => {
+describe("StandoutLotsRail", () => {
   const useTracking = baseUseTracking as jest.Mock
   const trackEvent = jest.fn()
 
   const { getWrapper } = setupTestWrapper({
     Component: (props: any) => {
-      return <StandoutLotsFragmentContainer viewer={props.viewer} />
+      return <StandoutLotsRailFragmentContainer viewer={props.viewer} />
     },
     query: graphql`
-      query StandoutLots_Test_Query {
+      query StandoutLotsRail_Test_Query {
         viewer {
-          ...StandoutLots_viewer
+          ...StandoutLotsRail_viewer
         }
       }
     `,

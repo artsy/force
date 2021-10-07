@@ -4,10 +4,7 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type AuctionsApp_viewer = {
-    readonly me: {
-        readonly " $fragmentRefs": FragmentRefs<"MyBids_me">;
-    } | null;
-    readonly " $fragmentRefs": FragmentRefs<"WorksByArtistsYouFollowRail_viewer" | "TrendingLots_viewer" | "StandoutLots_viewer">;
+    readonly " $fragmentRefs": FragmentRefs<"CuritorialRailsTabBar_viewer">;
     readonly " $refType": "AuctionsApp_viewer";
 };
 export type AuctionsApp_viewer$data = AuctionsApp_viewer;
@@ -25,38 +22,12 @@ const node: ReaderFragment = {
   "name": "AuctionsApp_viewer",
   "selections": [
     {
-      "alias": null,
-      "args": null,
-      "concreteType": "Me",
-      "kind": "LinkedField",
-      "name": "me",
-      "plural": false,
-      "selections": [
-        {
-          "args": null,
-          "kind": "FragmentSpread",
-          "name": "MyBids_me"
-        }
-      ],
-      "storageKey": null
-    },
-    {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "WorksByArtistsYouFollowRail_viewer"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "TrendingLots_viewer"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "StandoutLots_viewer"
+      "name": "CuritorialRailsTabBar_viewer"
     }
   ],
   "type": "Viewer"
 };
-(node as any).hash = '45cba12260871ce91aea116e78af67db';
+(node as any).hash = 'a21e446dcd4d92f163c3a4cc47bb561a';
 export default node;
