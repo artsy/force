@@ -8,6 +8,7 @@ import { extractNodes } from "v2/Utils/extractNodes"
 import { ArtistWorksForSaleRail_artist } from "v2/__generated__/ArtistWorksForSaleRail_artist.graphql"
 import { scrollToTop } from "../Utils/scrollToTop"
 import { Rail } from "v2/Components/Rail"
+import { Box } from "@artsy/palette"
 
 interface ArtistWorksForSaleRailProps {
   artist: ArtistWorksForSaleRail_artist
@@ -53,32 +54,33 @@ const ArtistWorksForSaleRail: React.FC<ArtistWorksForSaleRailProps> = ({
       getItems={() => {
         return nodes.map((node, index) => {
           return (
-            <ShelfArtworkFragmentContainer
-              artwork={node}
-              contextModule={ContextModule.worksForSaleRail}
-              hidePartnerName
-              key={index}
-              showExtended={false}
-              showMetadata
-              lazyLoad
-              onClick={() => {
-                tracking.trackEvent(
-                  clickedEntityGroup({
-                    contextModule: ContextModule.worksForSaleRail,
-                    contextPageOwnerId,
-                    contextPageOwnerSlug,
-                    // @ts-expect-error STRICT_NULL_CHECK
-                    contextPageOwnerType,
-                    destinationPageOwnerType: OwnerType.artwork,
-                    destinationPageOwnerId: node.internalID,
-                    destinationPageOwnerSlug: node.slug,
-                    horizontalSlidePosition: index + 1,
-                    type: "thumbnail",
-                  })
-                )
-              }}
-              data-test="worksForSaleRail"
-            />
+            <Box data-test="worksForSaleRail">
+              <ShelfArtworkFragmentContainer
+                artwork={node}
+                contextModule={ContextModule.worksForSaleRail}
+                hidePartnerName
+                key={index}
+                showExtended={false}
+                showMetadata
+                lazyLoad
+                onClick={() => {
+                  tracking.trackEvent(
+                    clickedEntityGroup({
+                      contextModule: ContextModule.worksForSaleRail,
+                      contextPageOwnerId,
+                      contextPageOwnerSlug,
+                      // @ts-expect-error STRICT_NULL_CHECK
+                      contextPageOwnerType,
+                      destinationPageOwnerType: OwnerType.artwork,
+                      destinationPageOwnerId: node.internalID,
+                      destinationPageOwnerSlug: node.slug,
+                      horizontalSlidePosition: index + 1,
+                      type: "thumbnail",
+                    })
+                  )
+                }}
+              />
+            </Box>
           )
         })
       }}

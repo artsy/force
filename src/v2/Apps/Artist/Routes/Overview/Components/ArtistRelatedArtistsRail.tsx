@@ -1,5 +1,5 @@
 import { ContextModule, OwnerType } from "@artsy/cohesion"
-import { EntityHeader, Image } from "@artsy/palette"
+import { Box, EntityHeader, Image } from "@artsy/palette"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
@@ -31,78 +31,80 @@ const ArtistRelatedArtistsRail: React.FC<ArtistRelatedArtistsRailProps> = ({
   }
 
   return (
-    <Rail
-      title="Related Artists"
-      alignItems="flex-start"
-      getItems={() => {
-        return nodes.map((node, index) => {
-          const artworkImage = extractNodes(node.filterArtworksConnection)?.[0]
-            ?.image
+    <Box data-test="relatedArtistsRail">
+      <Rail
+        title="Related Artists"
+        alignItems="flex-start"
+        getItems={() => {
+          return nodes.map((node, index) => {
+            const artworkImage = extractNodes(
+              node.filterArtworksConnection
+            )?.[0]?.image
 
-          if (!artworkImage) {
-            return null as any
-          }
+            if (!artworkImage) {
+              return null as any
+            }
 
-          return (
-            <React.Fragment key={index}>
-              <RouterLink
-                to={node.href}
-                display="block"
-                textDecoration="none"
-                onClick={() => {
-                  tracking.trackEvent({
-                    action_type: AnalyticsSchema.ActionType.Click,
-                    contextModule: ContextModule.relatedArtistsRail,
-                    contextPageOwnerId,
-                    contextPageOwnerSlug,
-                    contextPageOwnerType,
-                    destination_path: node.href,
-                    destinationPageOwnerId: node.internalID,
-                    destinationPageOwnerSlug: node.slug,
-                    destinationPageOwnerType: OwnerType.artwork,
-                    horizontalSlidePosition: index + 1,
-                    type: "thumbnail",
-                  })
-                }}
-              >
-                <Image
-                  width={325}
-                  maxHeight={230}
-                  height={230}
-                  src={artworkImage?.cropped?.src}
-                  srcSet={artworkImage?.cropped?.srcSet}
-                />
-              </RouterLink>
-
-              <EntityHeader
-                mt={1}
-                width={325}
-                name={node.name!}
-                imageUrl={node?.image?.cropped?.url}
-                href={`/artist/${node.slug}`}
-                meta={
-                  node.nationality && node.birthday
-                    ? `${node.nationality}, b. ${node.birthday}`
-                    : undefined
-                }
-                FollowButton={
-                  <FollowArtistButtonFragmentContainer
-                    artist={node}
-                    contextModule={ContextModule.featuredArtistsRail}
-                    buttonProps={{
-                      size: "small",
-                      variant: "secondaryOutline",
-                      width: null,
-                    }}
+            return (
+              <React.Fragment key={index}>
+                <RouterLink
+                  to={node.href}
+                  display="block"
+                  textDecoration="none"
+                  onClick={() => {
+                    tracking.trackEvent({
+                      action_type: AnalyticsSchema.ActionType.Click,
+                      contextModule: ContextModule.relatedArtistsRail,
+                      contextPageOwnerId,
+                      contextPageOwnerSlug,
+                      contextPageOwnerType,
+                      destination_path: node.href,
+                      destinationPageOwnerId: node.internalID,
+                      destinationPageOwnerSlug: node.slug,
+                      destinationPageOwnerType: OwnerType.artwork,
+                      horizontalSlidePosition: index + 1,
+                      type: "thumbnail",
+                    })
+                  }}
+                >
+                  <Image
+                    width={325}
+                    maxHeight={230}
+                    height={230}
+                    src={artworkImage?.cropped?.src}
+                    srcSet={artworkImage?.cropped?.srcSet}
                   />
-                }
-              />
-            </React.Fragment>
-          )
-        })
-      }}
-      data-test="relatedArtistsRail"
-    />
+                </RouterLink>
+
+                <EntityHeader
+                  mt={1}
+                  width={325}
+                  name={node.name!}
+                  imageUrl={node?.image?.cropped?.url}
+                  href={`/artist/${node.slug}`}
+                  meta={
+                    node.nationality && node.birthday
+                      ? `${node.nationality}, b. ${node.birthday}`
+                      : undefined
+                  }
+                  FollowButton={
+                    <FollowArtistButtonFragmentContainer
+                      artist={node}
+                      contextModule={ContextModule.featuredArtistsRail}
+                      buttonProps={{
+                        size: "small",
+                        variant: "secondaryOutline",
+                        width: null,
+                      }}
+                    />
+                  }
+                />
+              </React.Fragment>
+            )
+          })
+        }}
+      />
+    </Box>
   )
 }
 
