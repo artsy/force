@@ -129,31 +129,39 @@ describe("FormSwitcher", () => {
     it("tracks login impressions", () => {
       const tracking = { trackEvent: jest.fn() }
       getWrapper({ tracking, type: ModalType.login })
-      expect(tracking.trackEvent).toBeCalledWith({
-        action: "authImpression",
-        context_module: "header",
-        intent: "followArtist",
-        modal_copy: "Foo Bar",
-        onboarding: false,
-        trigger: "timed",
-        trigger_seconds: 1,
-        type: "login",
-      })
+      expect(tracking.trackEvent.mock.calls[0]).toMatchInlineSnapshot(`
+        Array [
+          Object {
+            "action": "authImpression",
+            "context_module": "header",
+            "intent": "followArtist",
+            "modal_copy": "Foo Bar",
+            "onboarding": false,
+            "trigger": "timed",
+            "trigger_seconds": 1,
+            "type": "login",
+          },
+        ]
+      `)
     })
 
     it("tracks forgot password impressions", () => {
       const tracking = { trackEvent: jest.fn() }
       getWrapper({ tracking, type: ModalType.forgot })
-      expect(tracking.trackEvent).toBeCalledWith({
-        action: "authImpression",
-        context_module: "header",
-        intent: "followArtist",
-        modal_copy: "Foo Bar",
-        onboarding: false,
-        trigger: "timed",
-        trigger_seconds: 1,
-        type: "forgot",
-      })
+      expect(tracking.trackEvent.mock.calls[0]).toMatchInlineSnapshot(`
+        Array [
+          Object {
+            "action": "authImpression",
+            "context_module": "header",
+            "intent": "followArtist",
+            "modal_copy": "Foo Bar",
+            "onboarding": false,
+            "trigger": "timed",
+            "trigger_seconds": 1,
+            "type": "forgot",
+          },
+        ]
+      `)
     })
 
     it("tracks signup impressions", () => {
@@ -162,16 +170,20 @@ describe("FormSwitcher", () => {
         tracking,
         type: ModalType.signup,
       })
-      expect(tracking.trackEvent).toBeCalledWith({
-        action: "authImpression",
-        context_module: "header",
-        intent: "followArtist",
-        modal_copy: "Foo Bar",
-        onboarding: false,
-        trigger: "timed",
-        trigger_seconds: 1,
-        type: "signup",
-      })
+      expect(tracking.trackEvent.mock.calls[0]).toMatchInlineSnapshot(`
+        Array [
+          Object {
+            "action": "authImpression",
+            "context_module": "header",
+            "intent": "followArtist",
+            "modal_copy": "Foo Bar",
+            "onboarding": false,
+            "trigger": "timed",
+            "trigger_seconds": 1,
+            "type": "signup",
+          },
+        ]
+      `)
     })
   })
 })
