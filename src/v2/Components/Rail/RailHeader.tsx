@@ -12,6 +12,20 @@ export interface RailHeaderProps {
   viewAllOnClick?(event: React.MouseEvent<HTMLElement, MouseEvent>): void
 }
 
+export const computeTitleContent = (viewAllHref, viewAllOnClick, title) => {
+  if (!viewAllHref) return title
+
+  return (
+    <RouterLink
+      // @ts-ignore
+      to={viewAllHref}
+      onClick={viewAllOnClick}
+    >
+      {title}
+    </RouterLink>
+  )
+}
+
 export const RailHeader: React.FC<RailHeaderProps> = ({
   countLabel,
   isLoading = false,
@@ -24,18 +38,13 @@ export const RailHeader: React.FC<RailHeaderProps> = ({
   const showViewAll = Boolean(viewAllLabel && viewAllHref)
 
   const Text = isLoading ? SkeletonText : BaseText
+  const titleContent = computeTitleContent(viewAllHref, viewAllOnClick, title)
 
   return (
     <Flex justifyContent="space-between" alignItems="center">
       <Box>
         <Text variant="lg" as="h3">
-          <RouterLink
-            // @ts-ignore
-            to={viewAllHref}
-            onClick={viewAllOnClick}
-          >
-            {title}
-          </RouterLink>{" "}
+          {titleContent}{" "}
           {countLabel && countLabel > 1 && (
             <Sup color="brand">{countLabel}</Sup>
           )}
