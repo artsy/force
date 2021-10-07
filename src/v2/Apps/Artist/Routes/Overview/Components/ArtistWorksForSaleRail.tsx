@@ -77,6 +77,7 @@ const ArtistWorksForSaleRail: React.FC<ArtistWorksForSaleRailProps> = ({
                   })
                 )
               }}
+              data-test="worksForSaleRail"
             />
           )
         })
