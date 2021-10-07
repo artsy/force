@@ -10,7 +10,6 @@ import React from "react"
 import SaleQuery from "desktop/apps/auction/queries/sale"
 import auctionReducer from "desktop/apps/auction/reducers"
 import configureStore from "desktop/components/react/utils/configureStore"
-import footerItems from "desktop/apps/auction/utils/footerItems"
 import { get, isEmpty } from "lodash"
 import { metaphysics } from "lib/metaphysics"
 import metaphysics2 from "lib/metaphysics2.coffee"
@@ -97,7 +96,6 @@ export async function index(req, res, next) {
         {
           articles: new Articles(articles),
           auction: auctionModel,
-          footerItems: footerItems,
           isEcommerceSale,
           isLiveOpen: auctionModel.isLiveOpen(),
           isMobile: res.locals.sd.IS_MOBILE,

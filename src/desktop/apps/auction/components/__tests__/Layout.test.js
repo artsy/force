@@ -1,5 +1,4 @@
 import Articles from "desktop/collections/articles.coffee"
-import footerItems from "desktop/apps/auction/utils/footerItems"
 import moment from "moment"
 import renderTestComponent from "desktop/apps/auction/__tests__/utils/renderTestComponent"
 import { cloneDeep } from "lodash"
@@ -480,7 +479,6 @@ xdescribe("<Layout />", () => {
                 name: "An Auction",
               },
               articles: [article],
-              footerItems,
               isMobile: false,
               sd: {
                 sd: {
