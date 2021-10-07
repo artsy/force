@@ -49,7 +49,7 @@ describe("ArtistCurrentShowsRail", () => {
       }),
     })
     expect(wrapper.text()).toContain("Shows Featuring artistName")
-    expect(wrapper.find("RouterLink").length).toBe(2)
+    expect(wrapper.find("RouterLink").length).toBe(3)
     expect(wrapper.find("RouterLink").at(0).props().to).toContain(
       "/artist/artistSlug/shows"
     )
