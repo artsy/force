@@ -54,33 +54,13 @@ function Footer(props) {
           })}
         </div>
       )}
-
-      {showFooterItems && (
-        <div className={b("auction-app-promo-wrapper")}>
-          <a className={b("auction-app-promo")}>
-            <div className={b("auction-app-promo-image")}>
-              <img src={footerItem.src} alt={footerItem.alt} />
-            </div>
-            <div className={b("auction-app-promo-metadata")}>
-              <div className={b("auction-app-promo-title")}>
-                {footerItem.title}
-              </div>
-              <div className={b("auction-app-promo-subtitle")}>
-                {footerItem.subtitle}
-              </div>
-            </div>
-          </a>
-        </div>
-      )}
     </footer>
   )
 }
 
 Footer.propTypes = {
   articles: PropTypes.object,
-  footerItem: PropTypes.object,
   showArticles: PropTypes.bool,
-  showFooterItems: PropTypes.bool,
   sd: PropTypes.object.isRequired,
 }
 
@@ -90,16 +70,12 @@ Footer.defaultProps = {
 }
 
 const mapStateToProps = state => {
-  const { auction, articles, footerItems, sd } = state.app
-  const footerItem = first(footerItems)
+  const { auction, articles, sd } = state.app
   const showArticles = Boolean(articles.length)
-  const showFooterItems = Boolean(footerItem && !auction.isAuctionPromo())
 
   return {
     articles,
-    footerItem,
     showArticles,
-    showFooterItems,
     sd,
   }
 }

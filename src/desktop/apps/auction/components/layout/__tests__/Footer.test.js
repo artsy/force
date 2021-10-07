@@ -1,5 +1,4 @@
 import Articles from "desktop/collections/articles.coffee"
-import footerItems from "desktop/apps/auction/utils/footerItems"
 import renderTestComponent from "desktop/apps/auction/__tests__/utils/renderTestComponent"
 import { test } from "desktop/apps/auction/components/layout/Footer"
 
@@ -63,8 +62,6 @@ xdescribe("auction/components/layout/Footer.test", () => {
           props: {
             articles: new Articles([article]),
             showArticles: true,
-            showFooterItems: true,
-            footerItem: footerItems[0],
             sd: {
               sd: {
                 ARTSY_EDITORIAL_CHANNEL: "foo",
@@ -93,8 +90,6 @@ xdescribe("auction/components/layout/Footer.test", () => {
           props: {
             articles: new Articles([article]),
             showArticles: true,
-            showFooterItems: true,
-            footerItem: footerItems[0],
             sd: {
               sd: {
                 ARTSY_EDITORIAL_CHANNEL: "foo",
