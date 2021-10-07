@@ -409,6 +409,7 @@ export class SearchBar extends Component<Props, State> {
 
     return (
       <Autosuggest
+        focusInputOnSuggestionClick={false}
         alwaysRenderSuggestions={this.userClickedOnDescendant}
         suggestions={suggestions}
         onSuggestionsClearRequested={this.onSuggestionsClearRequested}
