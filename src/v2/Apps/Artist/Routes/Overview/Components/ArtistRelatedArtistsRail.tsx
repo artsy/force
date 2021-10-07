@@ -101,6 +101,7 @@ const ArtistRelatedArtistsRail: React.FC<ArtistRelatedArtistsRailProps> = ({
           )
         })
       }}
+      data-test="relatedArtistsRail"
     />
   )
 }
