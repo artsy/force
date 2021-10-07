@@ -200,11 +200,21 @@ only_release: &only_release
     branches:
       only: release
 
+not_master_or_staging_or_release_or_renovate:
+  &not_master_or_staging_or_release_or_renovate
+  filters:
+    branches:
+      ignore:
+        - master
+        - staging
+        - release
+        - /renovate.*/
+
 workflows:
   default:
     jobs:
       - detect-secrets:
-          <<: *not_master_or_staging_or_release
+          <<: *not_master_or_staging_or_release_or_renovate
 
       # Main build
       - artsy-remote-docker/buildkit-build:
