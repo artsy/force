@@ -4,6 +4,7 @@ import React from "react"
 import { ExtractProps } from "v2/Utils/ExtractProps"
 import { OfferNote } from "../OfferNote"
 import { mediator } from "lib/mediator"
+import { useInquiry } from "v2/Components/Inquiry/useInquiry"
 
 const simulateTyping = (wrapper: ReactWrapper, text: string) => {
   const textArea = wrapper.find("textarea")
@@ -12,18 +13,30 @@ const simulateTyping = (wrapper: ReactWrapper, text: string) => {
   textArea.simulate("change")
 }
 
+jest.mock("v2/Components/Inquiry/useInquiry")
+
 describe("OfferNote", () => {
   const onChange = jest.fn()
+  const showInquiry = jest.fn()
+
   beforeEach(() => {
     jest.spyOn(mediator, "trigger")
+    ;(useInquiry as jest.Mock).mockImplementation(() => ({ showInquiry }))
   })
 
-  const getWrapper = (props: Partial<ExtractProps<typeof OfferNote>> = {}) =>
-    mount(
+  afterEach(() => {
+    onChange.mockReset()
+    showInquiry.mockReset()
+  })
+
+  const getWrapper = (props: Partial<ExtractProps<typeof OfferNote>> = {}) => {
+    return mount(
       <SystemContextProvider>
         <OfferNote onChange={onChange} artworkId="artwork-id" {...props} />
       </SystemContextProvider>
     )
+  }
+
   it("calls onChange with appropriate change events", () => {
     const wrapper = getWrapper()
 
@@ -71,15 +84,11 @@ describe("OfferNote", () => {
   it("has a link to ask a specialist things", () => {
     const wrapper = getWrapper()
     const link = wrapper.find("Text[data-test='ask-specialists']")
+
     expect(link.text()).toContain("ask our specialists")
 
     link.simulate("click")
 
-    expect(mediator.trigger).toHaveBeenCalledWith(
-      "openOrdersContactArtsyModal",
-      {
-        artworkId: "artwork-id",
-      }
-    )
+    expect(showInquiry).toBeCalledWith({ askSpecialist: true })
   })
 })

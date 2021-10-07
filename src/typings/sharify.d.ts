@@ -31,7 +31,6 @@ declare module "sharify" {
       readonly ENABLE_SERVER_SIDE_CACHE: string
       readonly ENABLE_QUERY_BATCHING: boolean
       readonly ENABLE_NEW_AUCTIONS_FILTER: boolean
-      readonly ENABLE_V3_INQUIRY: boolean
       readonly FACEBOOK_APP_NAMESPACE: string
       readonly FACEBOOK_ID: string
       readonly FORCE_CLOUDFRONT_URL: string
@@ -76,7 +75,6 @@ declare module "sharify" {
       ARTSY_EDITORIAL_CHANNEL: string
       ARTSY_XAPP_TOKEN: string
       ARTWORK?: any // mobile artist app data
-      ASSET_LEGACY_ARTWORK_DLL: string
       AUCTION?: any
       CSRF_TOKEN: string
       CHANNEL?: { slug?: string } // Articles
@@ -84,7 +82,6 @@ declare module "sharify" {
       FAIR_ORGANIZER?: any
       GALLERY_INSIGHTS_CHANNEL: string
       JSON_PAGE_DATA: any
-      LEGACY_MAIN_CSS: string
       MARKETING_SIGNUP_MODALS: any
       MARKETING_SIGNUP_MODALS: any[]
       PAGE_TYPE?: string

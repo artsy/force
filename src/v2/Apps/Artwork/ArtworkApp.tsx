@@ -23,10 +23,9 @@ import {
   AnalyticsContext,
   useAnalyticsContext,
 } from "v2/System/Analytics/AnalyticsContext"
-import { Mediator } from "lib/mediator"
 import { useRouteComplete } from "v2/Utils/Hooks/useRouteComplete"
 import { Media } from "v2/Utils/Responsive"
-import { LegacyArtworkDllContainer } from "../../Utils/LegacyArtworkDllContainer"
+import { UseRecordArtworkView } from "./useRecordArtworkView"
 
 export interface Props {
   artwork: ArtworkApp_artwork
@@ -35,7 +34,6 @@ export interface Props {
   routerPathname: string
   shouldTrackPageView: boolean
   me: ArtworkApp_me
-  mediator: Mediator
 }
 
 declare const window: any
@@ -166,55 +164,45 @@ export class ArtworkApp extends React.Component<Props> {
 
     return (
       <>
-        <LegacyArtworkDllContainer />
+        <UseRecordArtworkView />
 
-        {/**
-         * FIXME: remove once we refactor out legacy backbone code.
-         * Add place to attach legacy flash message, used in legacy inquiry flow
-         */}
-        <div id="main-layout-flash" />
+        <ArtworkMetaFragmentContainer artwork={artwork} />
 
-        <>
-          <ArtworkMetaFragmentContainer artwork={artwork} />
+        <ArtworkBannerFragmentContainer artwork={artwork} />
 
-          <ArtworkBannerFragmentContainer artwork={artwork} />
+        <GridColumns>
+          <Column span={8}>
+            <ArtworkImageBrowserFragmentContainer artwork={artwork} />
 
-          <GridColumns>
-            <Column span={8}>
-              <ArtworkImageBrowserFragmentContainer artwork={artwork} />
+            <Media greaterThanOrEqual="sm">{BelowTheFoldArtworkDetails}</Media>
+          </Column>
 
-              <Media greaterThanOrEqual="sm">
-                {BelowTheFoldArtworkDetails}
-              </Media>
-            </Column>
+          <Column span={4} pt={[0, 2]}>
+            <ArtworkSidebarFragmentContainer artwork={artwork} me={me} />
+          </Column>
+        </GridColumns>
 
-            <Column span={4} pt={[0, 2]}>
-              <ArtworkSidebarFragmentContainer artwork={artwork} me={me} />
-            </Column>
-          </GridColumns>
+        <Media lessThan="sm">{BelowTheFoldArtworkDetails}</Media>
 
-          <Media lessThan="sm">{BelowTheFoldArtworkDetails}</Media>
+        <Spacer mt={6} />
 
-          <Spacer mt={6} />
+        <ArtworkArtistSeriesFragmentContainer artwork={artwork} />
 
-          <ArtworkArtistSeriesFragmentContainer artwork={artwork} />
+        <Spacer mt={6} />
 
-          <Spacer mt={6} />
+        <OtherWorksFragmentContainer artwork={artwork} />
 
-          <OtherWorksFragmentContainer artwork={artwork} />
+        {artwork.artist && (
+          <>
+            <Spacer mt={6} />
 
-          {artwork.artist && (
-            <>
-              <Spacer mt={6} />
+            <ArtworkRelatedArtistsPaginationContainer artwork={artwork} />
+          </>
+        )}
 
-              <ArtworkRelatedArtistsPaginationContainer artwork={artwork} />
-            </>
-          )}
+        <Spacer mt={6} />
 
-          <Spacer mt={6} />
-
-          <RecentlyViewed />
-        </>
+        <RecentlyViewed />
       </>
     )
   }

@@ -1,10 +1,8 @@
 import type { NextFunction } from "express"
 import type { ArtsyRequest, ArtsyResponse } from "./artsyExpress"
-
 import { parse } from "url"
 import artsyXapp from "@artsy/xapp"
 import uuid from "node-uuid"
-import fs from "fs"
 import { getAsyncLocalStorage } from "lib/asyncLocalWrapper"
 
 /**
@@ -63,18 +61,6 @@ export function bootstrapSharifyAndContextLocalsMiddleware(
   const reqIp = req.ip || ""
   updateSharifyAndContext(res, "IP_ADDRESS", reqIp)
 
-  // Required to know the hashed dll name.try
-  updateSharifyAndContext(
-    res,
-    "ASSET_LEGACY_ARTWORK_DLL",
-    assetLegacyArtworkDllName()
-  )
-  updateSharifyAndContext(
-    res,
-    "LEGACY_MAIN_CSS",
-    res.locals.asset("/assets/main_layout.css")
-  )
-
   next()
 }
 
@@ -86,20 +72,4 @@ function updateSharifyAndContext(res, key, value) {
   res.locals.sd[key] = value
   const asyncLocalStorage = getAsyncLocalStorage()
   asyncLocalStorage.getStore()?.set(key, value)
-}
-
-function assetLegacyArtworkDllName(): string {
-  let dllName
-  if (dllName) {
-    return dllName
-  }
-  try {
-    const dllManifest = JSON.parse(
-      fs.readFileSync("./manifest-legacy-artwork-dll.json", "utf-8")
-    ) as any
-    dllName = `legacy-artwork-dll.${dllManifest.name}.js`
-  } catch {
-    dllName = "legacy-artwork-dll.js"
-  }
-  return dllName
 }
