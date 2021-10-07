@@ -29,7 +29,13 @@ export const RailHeader: React.FC<RailHeaderProps> = ({
     <Flex justifyContent="space-between" alignItems="center">
       <Box>
         <Text variant="lg" as="h3">
-          {title}{" "}
+          <RouterLink
+            // @ts-ignore
+            to={viewAllHref}
+            onClick={viewAllOnClick}
+          >
+            {title}
+          </RouterLink>{" "}
           {countLabel && countLabel > 1 && (
             <Sup color="brand">{countLabel}</Sup>
           )}
