@@ -191,6 +191,7 @@ export const HomeFeaturedGalleriesRailQueryRenderer: React.FC = () => {
 
   return (
     <SystemQueryRenderer<HomeFeaturedGalleriesRailQuery>
+      lazyLoad
       environment={relayEnvironment}
       query={graphql`
         query HomeFeaturedGalleriesRailQuery {

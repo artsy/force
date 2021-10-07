@@ -136,6 +136,7 @@ export const HomeAuctionLotsRailQueryRenderer: React.FC = () => {
 
   return (
     <SystemQueryRenderer<HomeAuctionLotsRailQuery>
+      lazyLoad
       environment={relayEnvironment}
       query={graphql`
         query HomeAuctionLotsRailQuery {
