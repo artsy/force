@@ -5,7 +5,7 @@ import { RecentlyViewedV2Query } from "v2/__generated__/RecentlyViewedV2Query.gr
 import { SystemContext, SystemContextConsumer } from "v2/System"
 import { track } from "v2/System/Analytics"
 import * as Schema from "v2/System/Analytics/Schema"
-import { SystemQueryRenderer as QueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
+import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { FillwidthItem } from "v2/Components/Artwork/FillwidthItem"
 import { Carousel } from "v2/Components/Carousel"
 import React, { useContext } from "react"
@@ -97,7 +97,8 @@ export const RecentlyViewedV2QueryRenderer = () => {
   if (!user) return null
 
   return (
-    <QueryRenderer<RecentlyViewedV2Query>
+    <SystemQueryRenderer<RecentlyViewedV2Query>
+      lazyLoad
       environment={relayEnvironment}
       query={graphql`
         query RecentlyViewedV2Query {
@@ -106,6 +107,7 @@ export const RecentlyViewedV2QueryRenderer = () => {
           }
         }
       `}
+      placeholder={<RecentlyViewedV2Placeholder />}
       render={({ error, props }) => {
         if (error) {
           console.error(error)

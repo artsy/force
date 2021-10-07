@@ -17,7 +17,6 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { Rail } from "v2/Components/Rail"
 import { useSystemContext, useTracking } from "v2/System"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
-import { useLazyLoadComponent } from "v2/Utils/Hooks/useLazyLoadComponent"
 import { HomeFeaturedShowsRailQuery } from "v2/__generated__/HomeFeaturedShowsRailQuery.graphql"
 import { HomeFeaturedShowsRail_orderedSet } from "v2/__generated__/HomeFeaturedShowsRail_orderedSet.graphql"
 import { HomeFeaturedShowFragmentContainer } from "./HomeFeaturedShow"
@@ -153,17 +152,5 @@ export const HomeFeaturedShowsRailQueryRenderer: React.FC = () => {
         return null
       }}
     />
-  )
-}
-
-export const HomeFeaturedShowsRailLazyQueryRenderer: React.FC = () => {
-  const { Waypoint, isEnteredView } = useLazyLoadComponent()
-
-  return (
-    <>
-      <Waypoint />
-
-      {isEnteredView ? <HomeFeaturedShowsRailQueryRenderer /> : PLACEHOLDER}
-    </>
   )
 }

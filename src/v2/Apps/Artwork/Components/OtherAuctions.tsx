@@ -59,6 +59,7 @@ export const OtherAuctionsQueryRenderer = () => {
 
   return (
     <SystemQueryRenderer<OtherAuctionsQuery>
+      lazyLoad
       environment={relayEnvironment}
       variables={{ first: 4, sort: "TIMELY_AT_NAME_ASC" }}
       query={graphql`

@@ -132,6 +132,7 @@ export const ShowsCurrentShowsQueryRenderer: React.FC = () => {
 
   return (
     <SystemQueryRenderer<ShowsCurrentShowsQuery>
+      lazyLoad
       environment={relayEnvironment}
       query={SHOWS_CURRENT_SHOWS_QUERY}
       placeholder={SHOWS_CURRENT_SHOWS_PLACEHOLDER}

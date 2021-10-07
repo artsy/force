@@ -245,6 +245,7 @@ export const MarketStatsQueryRenderer: React.FC<{
 
   return (
     <SystemQueryRenderer<MarketStatsQuery>
+      lazyLoad
       environment={environment}
       variables={{ artistInternalID }}
       placeholder={<MarketStatsPlaceholder {...rest} />}

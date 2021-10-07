@@ -235,6 +235,7 @@ export const FairBoothsQueryRenderer: React.FC<{ slug: string }> = ({
 
   return (
     <SystemQueryRenderer<FairBoothsContainerQuery>
+      lazyLoad
       environment={relayEnvironment}
       query={graphql`
         query FairBoothsContainerQuery(

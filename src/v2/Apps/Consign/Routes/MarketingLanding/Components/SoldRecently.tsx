@@ -128,6 +128,7 @@ export const SoldRecentlyQueryRenderer: React.FC = () => {
 
   return (
     <SystemQueryRenderer<SoldRecentlyQuery>
+      lazyLoad
       environment={relayEnvironment}
       query={graphql`
         query SoldRecentlyQuery {

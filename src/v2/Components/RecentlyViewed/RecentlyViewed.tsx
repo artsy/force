@@ -4,7 +4,7 @@ import { RecentlyViewedQuery } from "v2/__generated__/RecentlyViewedQuery.graphq
 import { SystemContext } from "v2/System"
 import { useTracking } from "v2/System/Analytics"
 import * as Schema from "v2/System/Analytics/Schema"
-import { SystemQueryRenderer as QueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
+import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import React, { useContext } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { extractNodes } from "v2/Utils/extractNodes"
@@ -78,7 +78,8 @@ export const RecentlyViewedQueryRenderer = () => {
   if (!user) return null
 
   return (
-    <QueryRenderer<RecentlyViewedQuery>
+    <SystemQueryRenderer<RecentlyViewedQuery>
+      lazyLoad
       environment={relayEnvironment}
       query={graphql`
         query RecentlyViewedQuery {
@@ -87,6 +88,7 @@ export const RecentlyViewedQueryRenderer = () => {
           }
         }
       `}
+      placeholder={<RecentlyViewedPlaceholder />}
       render={({ error, props }) => {
         if (error) {
           console.error(error)
