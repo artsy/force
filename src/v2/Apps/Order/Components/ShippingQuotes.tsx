@@ -54,10 +54,13 @@ export const ShippingQuotes: React.FC<ShippingQuotesProps> = ({
             key={id}
             position="relative"
           >
-            <Flex flexDirection="column">
-              <Text textTransform="capitalize">
-                {displayName} ({price})
-              </Text>
+            <Flex flexDirection="column" width="100%">
+              <Flex justifyContent="space-between">
+                <Text textTransform="capitalize">{displayName}</Text>
+                <Text textTransform="capitalize" data-test="quotePrice">
+                  {price}
+                </Text>
+              </Flex>
               <Text textColor="black60">{description}</Text>
             </Flex>
           </BorderedRadio>
