@@ -49,7 +49,7 @@ describe("ArtistNotableWorksRail", () => {
       }),
     })
     expect(wrapper.text()).toContain("Notable Works")
-    expect(wrapper.find("RouterLink").length).toBe(3)
+    expect(wrapper.find("RouterLink").length).toBe(4)
     expect(wrapper.find("RouterLink").at(0).props().to).toContain(
       "/artist/artistSlug/works-for-sale"
     )
@@ -77,7 +77,7 @@ describe("ArtistNotableWorksRail", () => {
 
   it("tracks work click", () => {
     const wrapper = getWrapper()
-    wrapper.find("RouterLink").at(1).simulate("click")
+    wrapper.find("RouterLink").at(2).simulate("click")
     expect(trackingSpy).toHaveBeenCalledWith(
       expect.objectContaining({
         action: "clickedArtworkGroup",
