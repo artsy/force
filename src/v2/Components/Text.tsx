@@ -47,7 +47,7 @@ const RawText: React.SFC<TextProps> = (props: TextProps) => {
 
 /**
  * @deprecated in favor of our Design System Typography components in @artsy/palette
- * https://palette.artsy.net/tokens/typography
+ * https://palette.artsy.net/atoms/typography
  */
 const Text = styled(RawText)`
   ${props =>
