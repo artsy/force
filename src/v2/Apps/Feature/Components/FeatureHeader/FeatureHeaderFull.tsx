@@ -11,7 +11,7 @@ import {
 } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FeatureHeaderFull_feature } from "v2/__generated__/FeatureHeaderFull_feature.graphql"
-import { DESKTOP_NAV_BAR_HEIGHT, MOBILE_NAV_HEIGHT } from "v2/Components/NavBar"
+import { useNavBarHeight } from "v2/Components/NavBar/useNavBarHeight"
 
 const Figure = styled(Box)`
   overflow: hidden;
@@ -36,15 +36,14 @@ export const FeatureHeaderFull: React.FC<FeatureHeaderFullProps> = ({
   feature: { name, subheadline, fullImage: image },
   ...rest
 }) => {
+  const { desktop, mobile } = useNavBarHeight()
+
   return (
     <FullBleed>
       <Box {...rest}>
         {image && (
           <Figure
-            height={[
-              `calc(95vh - ${MOBILE_NAV_HEIGHT}px)`,
-              `calc(95vh - ${DESKTOP_NAV_BAR_HEIGHT}px)`,
-            ]}
+            height={[`calc(95vh - ${mobile}px)`, `calc(95vh - ${desktop}px)`]}
             bg="black10"
           >
             <picture>

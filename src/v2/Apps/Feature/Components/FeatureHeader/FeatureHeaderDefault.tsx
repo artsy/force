@@ -3,7 +3,7 @@ import styled from "styled-components"
 import { Flex, HTML, Text, FullBleed } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FeatureHeaderDefault_feature } from "v2/__generated__/FeatureHeaderDefault_feature.graphql"
-import { DESKTOP_NAV_BAR_HEIGHT } from "v2/Components/NavBar"
+import { useNavBarHeight } from "v2/Components/NavBar/useNavBarHeight"
 
 const Container = styled(Flex)`
   width: 100%;
@@ -42,15 +42,14 @@ export interface FeatureHeaderDefaultProps {
 export const FeatureHeaderDefault: React.FC<FeatureHeaderDefaultProps> = ({
   feature: { name, subheadline, defaultImage: image },
 }) => {
+  const { desktop } = useNavBarHeight()
+
   if (image) {
     return (
       <FullBleed>
         <Container
           display={["block", "flex"]}
-          height={[
-            "auto",
-            !!image ? `calc(95vh - ${DESKTOP_NAV_BAR_HEIGHT}px)` : "50vh",
-          ]}
+          height={["auto", !!image ? `calc(95vh - ${desktop}px)` : "50vh"]}
         >
           <Figure height={["50vh", "auto"]} backgroundColor="black10">
             <picture>
