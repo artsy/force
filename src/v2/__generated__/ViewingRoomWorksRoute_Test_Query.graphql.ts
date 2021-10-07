@@ -20,8 +20,15 @@ export type ViewingRoomWorksRoute_Test_QueryRawResponse = {
                     readonly title: string | null;
                     readonly images: ReadonlyArray<({
                         readonly internalID: string | null;
+                        readonly solo: ({
+                            readonly src: string;
+                            readonly srcSet: string;
+                            readonly width: number | null;
+                            readonly height: number | null;
+                        }) | null;
                         readonly resized: ({
-                            readonly url: string;
+                            readonly src: string;
+                            readonly srcSet: string;
                             readonly width: number | null;
                             readonly height: number | null;
                         }) | null;
@@ -72,8 +79,15 @@ fragment ViewingRoomWorksRoute_viewingRoom on ViewingRoom {
         title
         images {
           internalID
-          resized(height: 1100, version: "normalized") {
-            url
+          solo: resized(width: 600, version: "normalized") {
+            src
+            srcSet
+            width
+            height
+          }
+          resized(height: 550, version: "normalized") {
+            src
+            srcSet
             width
             height
           }
@@ -108,7 +122,42 @@ v2 = {
   "kind": "ScalarField",
   "name": "internalID",
   "storageKey": null
-};
+},
+v3 = {
+  "kind": "Literal",
+  "name": "version",
+  "value": "normalized"
+},
+v4 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "src",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "srcSet",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "width",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "height",
+    "storageKey": null
+  }
+];
 return {
   "fragment": {
     "argumentDefinitions": (v0/*: any*/),
@@ -191,47 +240,38 @@ return {
                         "selections": [
                           (v2/*: any*/),
                           {
-                            "alias": null,
+                            "alias": "solo",
                             "args": [
+                              (v3/*: any*/),
                               {
                                 "kind": "Literal",
-                                "name": "height",
-                                "value": 1100
-                              },
-                              {
-                                "kind": "Literal",
-                                "name": "version",
-                                "value": "normalized"
+                                "name": "width",
+                                "value": 600
                               }
                             ],
                             "concreteType": "ResizedImageUrl",
                             "kind": "LinkedField",
                             "name": "resized",
                             "plural": false,
-                            "selections": [
+                            "selections": (v4/*: any*/),
+                            "storageKey": "resized(version:\"normalized\",width:600)"
+                          },
+                          {
+                            "alias": null,
+                            "args": [
                               {
-                                "alias": null,
-                                "args": null,
-                                "kind": "ScalarField",
-                                "name": "url",
-                                "storageKey": null
-                              },
-                              {
-                                "alias": null,
-                                "args": null,
-                                "kind": "ScalarField",
-                                "name": "width",
-                                "storageKey": null
-                              },
-                              {
-                                "alias": null,
-                                "args": null,
-                                "kind": "ScalarField",
+                                "kind": "Literal",
                                 "name": "height",
-                                "storageKey": null
-                              }
+                                "value": 550
+                              },
+                              (v3/*: any*/)
                             ],
-                            "storageKey": "resized(height:1100,version:\"normalized\")"
+                            "concreteType": "ResizedImageUrl",
+                            "kind": "LinkedField",
+                            "name": "resized",
+                            "plural": false,
+                            "selections": (v4/*: any*/),
+                            "storageKey": "resized(height:550,version:\"normalized\")"
                           }
                         ],
                         "storageKey": null
@@ -297,7 +337,7 @@ return {
     "metadata": {},
     "name": "ViewingRoomWorksRoute_Test_Query",
     "operationKind": "query",
-    "text": "query ViewingRoomWorksRoute_Test_Query(\n  $slug: ID!\n) {\n  viewingRoom(id: $slug) {\n    ...ViewingRoomWorksRoute_viewingRoom\n  }\n}\n\nfragment ViewingRoomArtworkDetails_artwork on Artwork {\n  id\n  additionalInformation\n  artistNames\n  title\n  date\n  href\n  saleMessage\n}\n\nfragment ViewingRoomWorksRoute_viewingRoom on ViewingRoom {\n  artworksConnection {\n    edges {\n      node {\n        internalID\n        title\n        images {\n          internalID\n          resized(height: 1100, version: \"normalized\") {\n            url\n            width\n            height\n          }\n        }\n        ...ViewingRoomArtworkDetails_artwork\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query ViewingRoomWorksRoute_Test_Query(\n  $slug: ID!\n) {\n  viewingRoom(id: $slug) {\n    ...ViewingRoomWorksRoute_viewingRoom\n  }\n}\n\nfragment ViewingRoomArtworkDetails_artwork on Artwork {\n  id\n  additionalInformation\n  artistNames\n  title\n  date\n  href\n  saleMessage\n}\n\nfragment ViewingRoomWorksRoute_viewingRoom on ViewingRoom {\n  artworksConnection {\n    edges {\n      node {\n        internalID\n        title\n        images {\n          internalID\n          solo: resized(width: 600, version: \"normalized\") {\n            src\n            srcSet\n            width\n            height\n          }\n          resized(height: 550, version: \"normalized\") {\n            src\n            srcSet\n            width\n            height\n          }\n        }\n        ...ViewingRoomArtworkDetails_artwork\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();

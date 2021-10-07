@@ -1,9 +1,9 @@
 import React from "react"
 import { RouterLink } from "v2/System/Router/RouterLink"
-import { scrollToId } from "../Utils/scrollToId"
 import { AnalyticsSchema, useTracking } from "v2/System"
 import { Button } from "@artsy/palette"
 import { useRouter } from "v2/System/Router/useRouter"
+import { useScrollTo } from "v2/Utils/Hooks/useScrollTo"
 
 interface ViewWorksButtonProps {
   artworksCount: number
@@ -14,35 +14,43 @@ export const ViewWorksButton: React.FC<ViewWorksButtonProps> = ({
 }) => {
   const tracking = useTracking()
 
+  const { scrollTo } = useScrollTo({
+    selectorOrRef: "#scrollTo--ViewingRoomTabBar",
+    offset: 20,
+    behavior: "smooth",
+  })
+
   const {
     match: {
       params: { slug },
     },
   } = useRouter()
 
-  const navigateTo = `/viewing-room/${slug}/works`
+  const to = `/viewing-room/${slug}/works`
 
   if (artworksCount === 0) {
     return null
   }
 
   return (
-    <RouterLink
-      to={navigateTo}
+    <Button
+      width="100%"
+      // @ts-ignore
+      as={RouterLink}
+      to={to}
       data-test="viewingRoomWorksButton"
       onClick={() => {
-        scrollToId("viewingRoomTabBarAnchor")
+        scrollTo()
+
         tracking.trackEvent({
           action_type: AnalyticsSchema.ActionType.ClickedArtworkGroup,
           context_module: AnalyticsSchema.ContextModule.ViewingRoomArtworkRail,
           subject: AnalyticsSchema.Subject.ViewWorks,
-          destination_path: navigateTo,
+          destination_path: to,
         })
       }}
     >
-      <Button size="large" width="100%">
-        View works ({artworksCount})
-      </Button>
-    </RouterLink>
+      View works ({artworksCount})
+    </Button>
   )
 }

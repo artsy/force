@@ -38,6 +38,7 @@ const ViewingRoomsApp = loadable(
 
 export const viewingRoomRoutes: AppRouteConfig[] = [
   {
+    theme: "v3",
     path: "/viewing-rooms",
     getComponent: () => ViewingRoomsApp,
     prepare: () => {
@@ -75,18 +76,19 @@ export const viewingRoomRoutes: AppRouteConfig[] = [
     },
     query: graphql`
       query viewingRoomRoutes_ViewingRoomQuery($slug: ID!) {
-        viewingRoom(id: $slug) {
+        viewingRoom(id: $slug) @principalField {
           ...ViewingRoomApp_viewingRoom
         }
       }
     `,
     children: [
       {
+        theme: "v3",
         path: "/",
         Component: StatementRoute,
         query: graphql`
           query viewingRoomRoutes_ViewingRoomStatementRouteQuery($slug: ID!) {
-            viewingRoom(id: $slug) {
+            viewingRoom(id: $slug) @principalField {
               ...ViewingRoomStatementRoute_viewingRoom
             }
           }
@@ -103,11 +105,12 @@ export const viewingRoomRoutes: AppRouteConfig[] = [
         },
       },
       {
+        theme: "v3",
         path: "artworks",
         Component: WorksRoute,
         query: graphql`
           query viewingRoomRoutes_ViewingRoomWorksRouteQuery($slug: ID!) {
-            viewingRoom(id: $slug) {
+            viewingRoom(id: $slug) @principalField {
               ...ViewingRoomWorksRoute_viewingRoom
             }
           }

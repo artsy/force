@@ -9,11 +9,7 @@ export type ViewingRoomWorks_viewingRoom = {
         readonly edges: ReadonlyArray<{
             readonly node: {
                 readonly internalID: string;
-                readonly imageUrl: string | null;
-                readonly artistNames: string | null;
-                readonly title: string | null;
-                readonly date: string | null;
-                readonly saleMessage: string | null;
+                readonly " $fragmentRefs": FragmentRefs<"ViewingRoomWorksArtwork_artwork">;
             } | null;
         } | null> | null;
     } | null;
@@ -78,39 +74,9 @@ const node: ReaderFragment = {
                   "storageKey": null
                 },
                 {
-                  "alias": null,
                   "args": null,
-                  "kind": "ScalarField",
-                  "name": "imageUrl",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "artistNames",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "title",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "date",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "saleMessage",
-                  "storageKey": null
+                  "kind": "FragmentSpread",
+                  "name": "ViewingRoomWorksArtwork_artwork"
                 }
               ],
               "storageKey": null
@@ -124,5 +90,5 @@ const node: ReaderFragment = {
   ],
   "type": "ViewingRoom"
 };
-(node as any).hash = 'bb3cd65dc62fcfd09d126365aecc9e51';
+(node as any).hash = '8863d53589b86e1c1dc40e2feec77109';
 export default node;

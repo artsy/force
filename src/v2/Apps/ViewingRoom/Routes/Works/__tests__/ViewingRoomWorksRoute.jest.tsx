@@ -47,39 +47,24 @@ describe("ViewingRoomWorksRoute", () => {
     })
   }
 
+  const trackEvent = jest.fn()
+
+  beforeEach(async () => {
+    const mockTracking = useTracking as jest.Mock
+    mockTracking.mockImplementation(() => ({ trackEvent }))
+  })
+
   it("renders the correct components", async () => {
     const wrapper = await getWrapper()
-    expect(wrapper.find("ViewingRoomCarousel").length).toBe(2)
+    expect(wrapper.find("Shelf").length).toBe(2)
     expect(wrapper.find("ViewingRoomArtworkDetails").length).toBe(2)
   })
 
-  describe("ViewingRoomCarousel", () => {
-    let wrapper
-
-    beforeEach(async () => {
-      wrapper = (await getWrapper()).find("ViewingRoomCarousel").first()
-    })
-
-    it("renders correct components", () => {
-      expect(wrapper.find("Carousel").length).toBe(1)
-      expect(wrapper.find("Image").length).toBe(3)
-      expect(wrapper.find("Arrow").length).toBe(2)
-      expect(wrapper.find("ProgressBar").length).toBe(1)
-    })
-  })
-
   describe("ViewingRoomArtworkDetails", () => {
-    const trackEvent = jest.fn()
     let wrapper
 
     beforeEach(async () => {
       wrapper = (await getWrapper()).find("ViewingRoomArtworkDetails").first()
-      const mockTracking = useTracking as jest.Mock
-      mockTracking.mockImplementation(() => {
-        return {
-          trackEvent,
-        }
-      })
     })
 
     it("displays correct text", () => {
@@ -118,28 +103,58 @@ const ViewingRoomWorksRouteFixture: ViewingRoomWorksRoute_Test_QueryRawResponse 
             images: [
               {
                 internalID: "5de6b49b7bc07c0013d44b5d",
+                solo: {
+                  width: 500,
+                  height: 500,
+                  src:
+                    "https://d32dm0rphc51dk.cloudfront.net/1xRLCisVngeUx0aiAfsP3Q/large.jpg",
+                  srcSet:
+                    "https://d32dm0rphc51dk.cloudfront.net/1xRLCisVngeUx0aiAfsP3Q/large.jpg",
+                },
                 resized: {
                   width: 500,
                   height: 500,
-                  url:
+                  src:
+                    "https://d32dm0rphc51dk.cloudfront.net/1xRLCisVngeUx0aiAfsP3Q/large.jpg",
+                  srcSet:
                     "https://d32dm0rphc51dk.cloudfront.net/1xRLCisVngeUx0aiAfsP3Q/large.jpg",
                 },
               },
               {
                 internalID: "5eb95fc5c74214001104a724",
+                solo: {
+                  width: 500,
+                  height: 500,
+                  src:
+                    "https://d32dm0rphc51dk.cloudfront.net/1xRLCisVngeUx0aiAfsP3Q/large.jpg",
+                  srcSet:
+                    "https://d32dm0rphc51dk.cloudfront.net/1xRLCisVngeUx0aiAfsP3Q/large.jpg",
+                },
                 resized: {
                   width: 500,
                   height: 500,
-                  url:
+                  src:
+                    "https://d32dm0rphc51dk.cloudfront.net/1xRLCisVngeUx0aiAfsP3Q/large.jpg",
+                  srcSet:
                     "https://d32dm0rphc51dk.cloudfront.net/1xRLCisVngeUx0aiAfsP3Q/large.jpg",
                 },
               },
               {
                 internalID: "5eb95fcdc74214001104a726",
+                solo: {
+                  width: 500,
+                  height: 500,
+                  src:
+                    "https://d32dm0rphc51dk.cloudfront.net/1xRLCisVngeUx0aiAfsP3Q/large.jpg",
+                  srcSet:
+                    "https://d32dm0rphc51dk.cloudfront.net/1xRLCisVngeUx0aiAfsP3Q/large.jpg",
+                },
                 resized: {
                   width: 500,
                   height: 500,
-                  url:
+                  src:
+                    "https://d32dm0rphc51dk.cloudfront.net/1xRLCisVngeUx0aiAfsP3Q/large.jpg",
+                  srcSet:
                     "https://d32dm0rphc51dk.cloudfront.net/1xRLCisVngeUx0aiAfsP3Q/large.jpg",
                 },
               },
@@ -159,37 +174,77 @@ const ViewingRoomWorksRouteFixture: ViewingRoomWorksRoute_Test_QueryRawResponse 
             images: [
               {
                 internalID: "5de6b3a4a665fc000db78117",
+                solo: {
+                  width: 500,
+                  height: 500,
+                  src:
+                    "https://d32dm0rphc51dk.cloudfront.net/1xRLCisVngeUx0aiAfsP3Q/large.jpg",
+                  srcSet:
+                    "https://d32dm0rphc51dk.cloudfront.net/1xRLCisVngeUx0aiAfsP3Q/large.jpg",
+                },
                 resized: {
                   width: 500,
                   height: 500,
-                  url:
+                  src:
+                    "https://d32dm0rphc51dk.cloudfront.net/1xRLCisVngeUx0aiAfsP3Q/large.jpg",
+                  srcSet:
                     "https://d32dm0rphc51dk.cloudfront.net/1xRLCisVngeUx0aiAfsP3Q/large.jpg",
                 },
               },
               {
                 internalID: "5eb95f3ec74214001104a71d",
+                solo: {
+                  width: 500,
+                  height: 500,
+                  src:
+                    "https://d32dm0rphc51dk.cloudfront.net/1xRLCisVngeUx0aiAfsP3Q/large.jpg",
+                  srcSet:
+                    "https://d32dm0rphc51dk.cloudfront.net/1xRLCisVngeUx0aiAfsP3Q/large.jpg",
+                },
                 resized: {
                   width: 500,
                   height: 500,
-                  url:
+                  src:
+                    "https://d32dm0rphc51dk.cloudfront.net/1xRLCisVngeUx0aiAfsP3Q/large.jpg",
+                  srcSet:
                     "https://d32dm0rphc51dk.cloudfront.net/1xRLCisVngeUx0aiAfsP3Q/large.jpg",
                 },
               },
               {
                 internalID: "5eb95f45b5fef100123a168f",
+                solo: {
+                  width: 500,
+                  height: 500,
+                  src:
+                    "https://d32dm0rphc51dk.cloudfront.net/1xRLCisVngeUx0aiAfsP3Q/large.jpg",
+                  srcSet:
+                    "https://d32dm0rphc51dk.cloudfront.net/1xRLCisVngeUx0aiAfsP3Q/large.jpg",
+                },
                 resized: {
                   width: 500,
                   height: 500,
-                  url:
+                  src:
+                    "https://d32dm0rphc51dk.cloudfront.net/1xRLCisVngeUx0aiAfsP3Q/large.jpg",
+                  srcSet:
                     "https://d32dm0rphc51dk.cloudfront.net/1xRLCisVngeUx0aiAfsP3Q/large.jpg",
                 },
               },
               {
                 internalID: "5eb95f46c74214001104a720",
+                solo: {
+                  width: 500,
+                  height: 500,
+                  src:
+                    "https://d32dm0rphc51dk.cloudfront.net/1xRLCisVngeUx0aiAfsP3Q/large.jpg",
+                  srcSet:
+                    "https://d32dm0rphc51dk.cloudfront.net/1xRLCisVngeUx0aiAfsP3Q/large.jpg",
+                },
                 resized: {
                   width: 500,
                   height: 500,
-                  url:
+                  src:
+                    "https://d32dm0rphc51dk.cloudfront.net/1xRLCisVngeUx0aiAfsP3Q/large.jpg",
+                  srcSet:
                     "https://d32dm0rphc51dk.cloudfront.net/1xRLCisVngeUx0aiAfsP3Q/large.jpg",
                 },
               },

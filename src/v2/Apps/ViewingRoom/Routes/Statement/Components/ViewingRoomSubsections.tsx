@@ -1,9 +1,8 @@
 import React, { Fragment } from "react"
-import { Box, Image, Sans, Serif, Spacer } from "@artsy/palette"
+import { Image, ResponsiveBox, Spacer, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-
 import { ViewingRoomSubsections_viewingRoom } from "v2/__generated__/ViewingRoomSubsections_viewingRoom.graphql"
-import { resize } from "v2/Utils/resizer"
+import { resized } from "v2/Utils/resized"
 
 interface ViewingRoomSubsectionsProps {
   viewingRoom: ViewingRoomSubsections_viewingRoom
@@ -17,60 +16,53 @@ const ViewingRoomSubsections: React.FC<ViewingRoomSubsectionsProps> = ({
   }
 
   return (
-    <Box>
+    <>
       {subsections.map(({ internalID, title, body, image, caption }) => {
-        // @ts-expect-error STRICT_NULL_CHECK
-        const imageURL = resize(image?.imageURLs?.normalized, {
+        const img = resized(image?.imageURLs?.normalized!, {
           width: 1200,
-          convert_to: "jpg",
         })
+
         return (
           <Fragment key={internalID}>
-            <>
-              {title && (
-                <Box>
-                  <Sans size="5">{title}</Sans>
-                </Box>
-              )}
+            {title && <Text variant="lg">{title}</Text>}
 
-              {body && (
-                <>
-                  <Spacer my={1} />
-                  <Box>
-                    <Serif size={["4", "5"]} style={{ whiteSpace: "pre-wrap" }}>
-                      {body}
-                    </Serif>
-                  </Box>
-                </>
-              )}
+            {body && (
+              <Text variant="sm" mt={2} style={{ whiteSpace: "pre-wrap" }}>
+                {body}
+              </Text>
+            )}
 
-              {imageURL && (
-                <>
-                  <Spacer my={4} />
-                  <Box>
-                    <Box width="100%">
-                      {/* @ts-expect-error STRICT_NULL_CHECK */}
-                      <Image width="100%" src={imageURL} alt={title} />
-                    </Box>
-                    {caption && (
-                      <>
-                        <Spacer my={1} />
-                        <Box>
-                          <Sans size="2" color="black60">
-                            {caption}
-                          </Sans>
-                        </Box>
-                      </>
-                    )}
-                  </Box>
-                </>
-              )}
-            </>
-            <Spacer my={4} />
+            {img && (
+              <>
+                <Spacer mt={4} />
+
+                <ResponsiveBox
+                  aspectWidth={image?.width ?? 1}
+                  aspectHeight={image?.height ?? 1}
+                  maxWidth="100%"
+                >
+                  <Image
+                    src={img.src}
+                    srcSet={img.srcSet}
+                    width="100%"
+                    height="100%"
+                    alt=""
+                    lazyLoad
+                    style={{ display: "block" }}
+                  />
+                </ResponsiveBox>
+
+                {caption && (
+                  <Text variant="xs" color="black60" mt={1}>
+                    {caption}
+                  </Text>
+                )}
+              </>
+            )}
           </Fragment>
         )
       })}
-    </Box>
+    </>
   )
 }
 
@@ -84,6 +76,8 @@ export const ViewingRoomSubsectionsFragmentContainer = createFragmentContainer(
           title
           body
           image {
+            width
+            height
             imageURLs {
               normalized
             }

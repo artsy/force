@@ -9,6 +9,8 @@ export type ViewingRoomSubsections_viewingRoom = {
         readonly title: string | null;
         readonly body: string | null;
         readonly image: {
+            readonly width: number | null;
+            readonly height: number | null;
             readonly imageURLs: {
                 readonly normalized: string | null;
             } | null;
@@ -71,6 +73,20 @@ const node: ReaderFragment = {
             {
               "alias": null,
               "args": null,
+              "kind": "ScalarField",
+              "name": "width",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "height",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
               "concreteType": "ImageURLs",
               "kind": "LinkedField",
               "name": "imageURLs",
@@ -102,5 +118,5 @@ const node: ReaderFragment = {
   ],
   "type": "ViewingRoom"
 };
-(node as any).hash = '3f1d6a976cc3a98198563a8e78f35c4a';
+(node as any).hash = 'e5981115f09332e8129f7bb001196d11';
 export default node;

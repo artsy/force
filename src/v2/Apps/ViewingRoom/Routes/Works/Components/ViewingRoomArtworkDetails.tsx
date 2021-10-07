@@ -1,5 +1,5 @@
 import React from "react"
-import { Box, Button, Sans, Serif } from "@artsy/palette"
+import { Button, GridColumns, Column, Text } from "@artsy/palette"
 import { ViewingRoomArtworkDetails_artwork } from "v2/__generated__/ViewingRoomArtworkDetails_artwork.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "v2/System/Router/RouterLink"
@@ -19,51 +19,51 @@ export const ViewingRoomArtworkDetails: React.FC<ViewingRoomArtworkDetailsProps>
     saleMessage,
   },
 }) => {
-  const tracking = useTracking()
+  const { trackEvent } = useTracking()
 
   return (
-    <Box maxWidth={["100%", 470]} m="auto">
-      <Box>
-        <Sans size="3t">{artistNames}</Sans>
-      </Box>
+    <>
+      <Text variant="md">{artistNames}</Text>
 
-      <Box style={{ textOverflow: "ellipsis" }}>
-        <Sans size="3t" color="black60">
-          {[title, date].filter(s => s).join(", ")}
-        </Sans>
-      </Box>
+      <Text variant="md" color="black60" overflowEllipsis>
+        {[title, date].filter(s => s).join(", ")}
+      </Text>
 
       {saleMessage && (
-        <Box>
-          <Sans size="3t" color="black60">
-            {saleMessage}
-          </Sans>
-        </Box>
+        <Text variant="md" color="black60">
+          {saleMessage}
+        </Text>
       )}
 
-      <RouterLink
-        to={href}
-        onClick={() => {
-          tracking.trackEvent({
-            action_type: AnalyticsSchema.ActionType.ClickedBuyViewingGroup,
-            // @ts-expect-error STRICT_NULL_CHECK
-            context_module:
-              AnalyticsSchema.ContextModule.ViewingRoomArtworkRail,
-            subject: AnalyticsSchema.Subject.Rail,
-            // @ts-expect-error STRICT_NULL_CHECK
-            destination_path: href,
-          })
-        }}
-      >
-        <Button width="100%" size="large" my={2}>
-          Buy
-        </Button>
-      </RouterLink>
+      <GridColumns>
+        <Column span={4}>
+          <Button
+            width="100%"
+            // @ts-ignore
+            as={RouterLink}
+            to={href}
+            my={2}
+            onClick={() => {
+              trackEvent({
+                action_type: AnalyticsSchema.ActionType.ClickedBuyViewingGroup,
+                context_module:
+                  AnalyticsSchema.ContextModule.ViewingRoomArtworkRail,
+                subject: AnalyticsSchema.Subject.Rail,
+                destination_path: href!,
+              })
+            }}
+          >
+            Buy
+          </Button>
+        </Column>
+      </GridColumns>
 
       {additionalInformation && (
-        <Serif size={["4", "5"]}>{additionalInformation}</Serif>
+        <Text variant="sm" mt={4}>
+          {additionalInformation}
+        </Text>
       )}
-    </Box>
+    </>
   )
 }
 

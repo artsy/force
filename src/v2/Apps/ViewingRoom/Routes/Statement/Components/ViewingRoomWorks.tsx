@@ -1,48 +1,49 @@
 import React from "react"
-import { Box, Flex, Image, Sans, Spacer } from "@artsy/palette"
+import { Column, GridColumns } from "@artsy/palette"
 import { useRouter } from "v2/System/Router/useRouter"
 import { createFragmentContainer, graphql } from "react-relay"
-
 import { ViewingRoomWorks_viewingRoom } from "v2/__generated__/ViewingRoomWorks_viewingRoom.graphql"
-import { RouterLink } from "v2/System/Router/RouterLink"
-import { AnalyticsSchema, useTracking } from "v2/System"
-import { scrollToId } from "../Utils/scrollToId"
 import { ViewWorksButton } from "./ViewWorksButton"
+import { extractNodes } from "v2/Utils/extractNodes"
+import { ViewingRoomWorksArtworkFragmentContainer } from "./ViewingRoomWorksArtwork"
 
 interface ViewingRoomWorksProps {
   viewingRoom: ViewingRoomWorks_viewingRoom
 }
 
-const ViewingRoomWorks: React.FC<ViewingRoomWorksProps> = ({
-  viewingRoom: {
-    // @ts-expect-error STRICT_NULL_CHECK
-    artworksConnection: { totalCount, edges },
-  },
-}) => {
+const ViewingRoomWorks: React.FC<ViewingRoomWorksProps> = ({ viewingRoom }) => {
+  const artworks = extractNodes(viewingRoom.artworksConnection)
+
   const {
     match: {
       params: { slug },
     },
   } = useRouter()
 
-  const navigateTo = `/viewing-room/${slug}/works`
-
   return (
-    <>
-      <Flex>
-        {edges.map(({ node: artwork }) => {
-          return (
-            <ArtworkItem
-              key={artwork.internalID}
-              navigateTo={navigateTo}
-              {...artwork}
+    <GridColumns gridRowGap={4}>
+      {artworks.map(artwork => {
+        return (
+          <Column
+            span={6}
+            key={artwork.internalID}
+            display="flex"
+            alignItems="flex-end"
+          >
+            <ViewingRoomWorksArtworkFragmentContainer
+              to={`/viewing-room/${slug}/works`}
+              artwork={artwork}
             />
-          )
-        })}
-      </Flex>
-      <Spacer my={4} />
-      <ViewWorksButton artworksCount={totalCount} />
-    </>
+          </Column>
+        )
+      })}
+
+      <Column span={4}>
+        <ViewWorksButton
+          artworksCount={viewingRoom.artworksConnection?.totalCount ?? 0}
+        />
+      </Column>
+    </GridColumns>
   )
 }
 
@@ -56,11 +57,7 @@ export const ViewingRoomWorksFragmentContainer = createFragmentContainer(
           edges {
             node {
               internalID
-              imageUrl
-              artistNames
-              title
-              date
-              saleMessage
+              ...ViewingRoomWorksArtwork_artwork
             }
           }
         }
@@ -68,57 +65,3 @@ export const ViewingRoomWorksFragmentContainer = createFragmentContainer(
     `,
   }
 )
-
-// @ts-expect-error STRICT_NULL_CHECK
-type ArtworkNode = ViewingRoomWorksProps["viewingRoom"]["artworksConnection"]["edges"][0]["node"] & {
-  navigateTo: string
-}
-
-const ArtworkItem: React.FC<ArtworkNode> = ({
-  artistNames,
-  date,
-  imageUrl,
-  navigateTo,
-  title,
-  saleMessage,
-}) => {
-  const tracking = useTracking()
-
-  return (
-    <RouterLink
-      to={navigateTo}
-      style={{ textDecoration: "none", width: "50%" }}
-      onClick={() => {
-        scrollToId("viewingRoomTabBarAnchor")
-
-        tracking.trackEvent({
-          action_type: AnalyticsSchema.ActionType.ClickedArtworkGroup,
-          context_module: AnalyticsSchema.ContextModule.ViewingRoomArtworkRail,
-          subject: AnalyticsSchema.Subject.ArtworkThumbnail,
-          destination_path: navigateTo,
-        })
-      }}
-    >
-      <Box width="95%">
-        <Box mb={0.5}>
-          <Image width="100%" src={imageUrl} alt={title} />
-        </Box>
-        <Box>
-          <Sans size="3t">{artistNames}</Sans>
-        </Box>
-        <Box style={{ textOverflow: "ellipsis" }}>
-          <Sans size="3t" color="black60">
-            {[title, date].filter(s => s).join(", ")}
-          </Sans>
-        </Box>
-        {saleMessage && (
-          <Box>
-            <Sans size="3t" color="black60">
-              {saleMessage}
-            </Sans>
-          </Box>
-        )}
-      </Box>
-    </RouterLink>
-  )
-}

@@ -1,5 +1,5 @@
 import React from "react"
-import { Box, Button, Flex, Sans } from "@artsy/palette"
+import { Button, Column, GridColumns, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "v2/System/Router/RouterLink"
 
@@ -9,33 +9,36 @@ interface ViewingRoomContentNotAccessibleProps {
   viewingRoom: ViewingRoomContentNotAccessible_viewingRoom
 }
 
-const ViewingRoomContentNotAccessible: React.FC<ViewingRoomContentNotAccessibleProps> = props => {
-  const {
-    viewingRoom: {
-      status,
-      // @ts-expect-error STRICT_NULL_CHECK
-      partner: { href },
-    },
-  } = props
-
+const ViewingRoomContentNotAccessible: React.FC<ViewingRoomContentNotAccessibleProps> = ({
+  viewingRoom,
+}) => {
   const infoText =
-    status === "scheduled"
+    viewingRoom.status === "scheduled"
       ? "This viewing room is not yet open."
       : "This viewing room is now closed."
 
   return (
-    <Box>
-      <Flex flexDirection="column" alignItems="center">
-        <Sans size="4" mt={50} mb={1} textAlign="center" maxWidth="470px">
+    <GridColumns gridRowGap={4}>
+      <Column start={4} span={6}>
+        <Text variant="lg">
           {infoText} We invite you to view this gallery's current works.
-        </Sans>
-        {href && (
-          <RouterLink to={href}>
-            <Button variant="secondaryGray">Visit Gallery</Button>
-          </RouterLink>
-        )}
-      </Flex>
-    </Box>
+        </Text>
+      </Column>
+
+      {viewingRoom.partner?.href && (
+        <Column start={4} span={2}>
+          <Button
+            width="100%"
+            variant="secondaryGray"
+            // @ts-ignore
+            as={RouterLink}
+            to={viewingRoom.partner.href}
+          >
+            Visit Gallery
+          </Button>
+        </Column>
+      )}
+    </GridColumns>
   )
 }
 

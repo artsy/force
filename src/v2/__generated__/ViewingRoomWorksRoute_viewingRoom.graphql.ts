@@ -11,8 +11,15 @@ export type ViewingRoomWorksRoute_viewingRoom = {
                 readonly title: string | null;
                 readonly images: ReadonlyArray<{
                     readonly internalID: string | null;
+                    readonly solo: {
+                        readonly src: string;
+                        readonly srcSet: string;
+                        readonly width: number | null;
+                        readonly height: number | null;
+                    } | null;
                     readonly resized: {
-                        readonly url: string;
+                        readonly src: string;
+                        readonly srcSet: string;
                         readonly width: number | null;
                         readonly height: number | null;
                     } | null;
@@ -38,7 +45,42 @@ var v0 = {
   "kind": "ScalarField",
   "name": "internalID",
   "storageKey": null
-};
+},
+v1 = {
+  "kind": "Literal",
+  "name": "version",
+  "value": "normalized"
+},
+v2 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "src",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "srcSet",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "width",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "height",
+    "storageKey": null
+  }
+];
 return {
   "argumentDefinitions": [],
   "kind": "Fragment",
@@ -87,47 +129,38 @@ return {
                   "selections": [
                     (v0/*: any*/),
                     {
-                      "alias": null,
+                      "alias": "solo",
                       "args": [
+                        (v1/*: any*/),
                         {
                           "kind": "Literal",
-                          "name": "height",
-                          "value": 1100
-                        },
-                        {
-                          "kind": "Literal",
-                          "name": "version",
-                          "value": "normalized"
+                          "name": "width",
+                          "value": 600
                         }
                       ],
                       "concreteType": "ResizedImageUrl",
                       "kind": "LinkedField",
                       "name": "resized",
                       "plural": false,
-                      "selections": [
+                      "selections": (v2/*: any*/),
+                      "storageKey": "resized(version:\"normalized\",width:600)"
+                    },
+                    {
+                      "alias": null,
+                      "args": [
                         {
-                          "alias": null,
-                          "args": null,
-                          "kind": "ScalarField",
-                          "name": "url",
-                          "storageKey": null
-                        },
-                        {
-                          "alias": null,
-                          "args": null,
-                          "kind": "ScalarField",
-                          "name": "width",
-                          "storageKey": null
-                        },
-                        {
-                          "alias": null,
-                          "args": null,
-                          "kind": "ScalarField",
+                          "kind": "Literal",
                           "name": "height",
-                          "storageKey": null
-                        }
+                          "value": 550
+                        },
+                        (v1/*: any*/)
                       ],
-                      "storageKey": "resized(height:1100,version:\"normalized\")"
+                      "concreteType": "ResizedImageUrl",
+                      "kind": "LinkedField",
+                      "name": "resized",
+                      "plural": false,
+                      "selections": (v2/*: any*/),
+                      "storageKey": "resized(height:550,version:\"normalized\")"
                     }
                   ],
                   "storageKey": null
@@ -150,5 +183,5 @@ return {
   "type": "ViewingRoom"
 };
 })();
-(node as any).hash = '5eb993431963feae086cbb4bfcc063ca';
+(node as any).hash = 'ec3ae2365d5c3b73112c59e847447b20';
 export default node;

@@ -1,10 +1,10 @@
 import React from "react"
-import { Box, Sans, breakpoints } from "@artsy/palette"
-import { ViewingRoomsLatestGridFragmentContainer as ViewingRoomsLatestGrid } from "./Components/ViewingRoomsLatestGrid"
+import { Join, Spacer, Text } from "@artsy/palette"
+import { ViewingRoomsLatestGridFragmentContainer } from "./Components/ViewingRoomsLatestGrid"
 import { ViewingRoomsMeta } from "./Components/ViewingRoomsMeta"
 import { ViewingRoomsApp_allViewingRooms } from "v2/__generated__/ViewingRoomsApp_allViewingRooms.graphql"
 import { ViewingRoomsApp_featuredViewingRooms } from "v2/__generated__/ViewingRoomsApp_featuredViewingRooms.graphql"
-import { ViewingRoomsFeaturedRailFragmentContainer as ViewingRoomsFeaturedRail } from "./Components/ViewingRoomsFeaturedRail"
+import { ViewingRoomsFeaturedRailFragmentContainer } from "./Components/ViewingRoomsFeaturedRail"
 import { createFragmentContainer, graphql } from "react-relay"
 
 interface ViewingRoomsAppProps {
@@ -18,17 +18,25 @@ const ViewingRoomsApp: React.FC<ViewingRoomsAppProps> = props => {
     <>
       <ViewingRoomsMeta />
 
-      <Box maxWidth={breakpoints.xl} mx="auto" width="100%">
-        <Box mx={2}>
-          <Sans size="10" my={3} element="h1">
-            Viewing Rooms
-          </Sans>
-          <ViewingRoomsFeaturedRail
-            featuredViewingRooms={featuredViewingRooms}
-          />
-          <ViewingRoomsLatestGrid viewingRooms={allViewingRooms} />
-        </Box>
-      </Box>
+      <Spacer mt={4} />
+
+      <Join separator={<Spacer mt={6} />}>
+        <Text variant="xl" as="h1">
+          Viewing Rooms
+        </Text>
+
+        <Text variant="lg">Featured</Text>
+
+        <ViewingRoomsFeaturedRailFragmentContainer
+          featuredViewingRooms={featuredViewingRooms}
+        />
+
+        <Text variant="lg">Latest</Text>
+
+        <ViewingRoomsLatestGridFragmentContainer
+          viewingRooms={allViewingRooms}
+        />
+      </Join>
     </>
   )
 }

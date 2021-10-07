@@ -7,7 +7,6 @@ import { ViewingRoomApp_DraftTest_QueryRawResponse } from "v2/__generated__/View
 import { ViewingRoomApp_ScheduledTest_QueryRawResponse } from "v2/__generated__/ViewingRoomApp_ScheduledTest_Query.graphql"
 import { ViewingRoomApp_OpenTest_QueryRawResponse } from "v2/__generated__/ViewingRoomApp_OpenTest_Query.graphql"
 import { ViewingRoomApp_ClosedTest_QueryRawResponse } from "v2/__generated__/ViewingRoomApp_ClosedTest_Query.graphql"
-import { ViewingRoomApp_UnfoundTest_QueryRawResponse } from "v2/__generated__/ViewingRoomApp_UnfoundTest_Query.graphql"
 import { ViewingRoomApp_LoggedOutTest_QueryRawResponse } from "v2/__generated__/ViewingRoomApp_LoggedOutTest_Query.graphql"
 import { Breakpoint } from "@artsy/palette"
 import { mockLocation } from "v2/DevTools/mockLocation"
@@ -131,7 +130,7 @@ describe("ViewingRoomApp", () => {
         it("renders correctly", async () => {
           const wrapper = await getWrapper()
           const html = wrapper.html()
-          expect(html).toContain("background-image: url")
+          expect(html).toContain("<img")
           expect(html).toContain("Guy Yanai")
           expect(html).toContain("Subscription Demo GG")
           expect(html).toContain("Opens in 8 days")
@@ -142,7 +141,7 @@ describe("ViewingRoomApp", () => {
         it("renders correctly", async () => {
           const wrapper = await getWrapper()
           const html = wrapper.html()
-          expect(html).toContain("background-image: url")
+          expect(html).toContain("<img")
           expect(html).toContain("Guy Yanai")
           expect(html).toContain("Subscription Demo GG")
           expect(html).toContain("Opens in 8 days")
@@ -197,10 +196,10 @@ describe("ViewingRoomApp", () => {
         it("renders correctly", async () => {
           const wrapper = await getWrapper()
           const html = wrapper.html()
-          expect(html).toContain("background-image: url")
+          expect(html).toContain("<img")
           expect(html).toContain("Guy Yanai")
           expect(html).toContain("Subscription Demo GG")
-          expect(html).toContain("Closes in 1 month")
+          expect(html).toContain("1 month left")
         })
       })
 
@@ -209,10 +208,10 @@ describe("ViewingRoomApp", () => {
           const wrapper = await getWrapper()
 
           const html = wrapper.html()
-          expect(html).toContain("background-image: url")
+          expect(html).toContain("<img")
           expect(html).toContain("Guy Yanai")
           expect(html).toContain("Subscription Demo GG")
-          expect(html).toContain("Closes in 1 month")
+          expect(html).toContain("1 month left")
         })
       })
     })
@@ -220,7 +219,7 @@ describe("ViewingRoomApp", () => {
     describe("ViewingRoomTabBar", () => {
       it("renders correct tabs", async () => {
         const wrapper = await getWrapper()
-        expect(wrapper.find("Tab").length).toBe(2)
+        expect(wrapper.find("RouteTab").length).toBe(2)
         const html = wrapper.html()
         expect(html).toContain(`href="/viewing-room/${slug}"`)
         expect(html).toContain(`href="/viewing-room/${slug}/artworks"`)
@@ -274,7 +273,7 @@ describe("ViewingRoomApp", () => {
         it("renders correctly", async () => {
           const wrapper = await getWrapper()
           const html = wrapper.html()
-          expect(html).toContain("background-image: url")
+          expect(html).toContain("<img")
           expect(html).toContain("Guy Yanai")
           expect(html).toContain("Subscription Demo GG")
           expect(html).toContain("Closed")
@@ -285,50 +284,12 @@ describe("ViewingRoomApp", () => {
         it("renders correctly", async () => {
           const wrapper = await getWrapper()
           const html = wrapper.html()
-          expect(html).toContain("background-image: url")
+          expect(html).toContain("<img")
           expect(html).toContain("Guy Yanai")
           expect(html).toContain("Subscription Demo GG")
           expect(html).toContain("Closed")
         })
       })
-    })
-  })
-
-  describe("with unfound viewing room", () => {
-    const getWrapper = async (
-      breakpoint: Breakpoint = "lg",
-      response: ViewingRoomApp_UnfoundTest_QueryRawResponse = UnfoundViewingRoomAppFixture
-    ) => {
-      return renderRelayTree({
-        Component: ({ viewingRoom }) => {
-          return (
-            <MockBoot breakpoint={breakpoint} user={user}>
-              <ViewingRoomAppFragmentContainer viewingRoom={viewingRoom}>
-                some child
-              </ViewingRoomAppFragmentContainer>
-            </MockBoot>
-          )
-        },
-        mockData: response,
-        query: graphql`
-          query ViewingRoomApp_UnfoundTest_Query($slug: ID!)
-            @raw_response_type {
-            viewingRoom(id: $slug) {
-              ...ViewingRoomApp_viewingRoom
-            }
-          }
-        `,
-        variables: {
-          slug,
-        },
-      })
-    }
-    it("returns 404 page", async () => {
-      const wrapper = await getWrapper()
-      const html = wrapper.html()
-      expect(html).toContain(
-        "Sorry, the page you were looking for doesn’t exist at this URL."
-      )
     })
   })
 
@@ -361,6 +322,7 @@ describe("ViewingRoomApp", () => {
         },
       })
     }
+
     it("shows viewing room content", async () => {
       const wrapper = await getWrapper()
       expect(wrapper.find("ViewingRoomMeta").length).toBe(1)
@@ -465,15 +427,11 @@ const ClosedViewingRoomAppFixture: ViewingRoomApp_ClosedTest_QueryRawResponse = 
   },
 }
 
-const UnfoundViewingRoomAppFixture: ViewingRoomApp_UnfoundTest_QueryRawResponse = {
-  viewingRoom: null,
-}
-
 const LoggedOutViewingRoomAppFixture: ViewingRoomApp_LoggedOutTest_QueryRawResponse = {
   viewingRoom: {
     href: "/viewing-room/example",
     pullQuote: "Example pull quote",
-    distanceToClose: "Closes in 1 month",
+    distanceToClose: "1 month",
     distanceToOpen: null,
     image: {
       imageURLs: {

@@ -1,4 +1,5 @@
 import { themeProps } from "@artsy/palette-tokens"
+import { useEffect, useRef } from "react"
 import { useNavBarHeight } from "v2/Components/NavBar/useNavBarHeight"
 import { useSticky } from "v2/Components/Sticky"
 import { __internal__useMatchMedia } from "./useMatchMedia"
@@ -19,16 +20,21 @@ export const useScrollTo = ({
   offset = 0,
   selectorOrRef,
 }: UseScrollTo) => {
-  const el =
-    typeof selectorOrRef === "string"
-      ? document.querySelector(selectorOrRef)
-      : selectorOrRef.current
+  const ref = useRef<HTMLElement | null>(null)
+
+  useEffect(() => {
+    if (typeof selectorOrRef !== "string") return
+    ref.current = document.querySelector(selectorOrRef)
+  }, [selectorOrRef])
 
   const isMobile = __internal__useMatchMedia(themeProps.mediaQueries.xs)
   const { mobile, desktop } = useNavBarHeight()
   const { offsetTop } = useSticky()
 
   const scrollTo = () => {
+    const el =
+      typeof selectorOrRef === "string" ? ref.current : selectorOrRef.current
+
     if (!el) return
 
     const { top } = el.getBoundingClientRect()

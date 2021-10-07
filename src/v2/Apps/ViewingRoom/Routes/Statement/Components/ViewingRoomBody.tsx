@@ -1,5 +1,5 @@
 import React from "react"
-import { Box, Serif } from "@artsy/palette"
+import { Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ViewingRoomBody_viewingRoom } from "v2/__generated__/ViewingRoomBody_viewingRoom.graphql"
 
@@ -15,11 +15,9 @@ const ViewingRoomBody: React.FC<ViewingRoomBodyProps> = ({
   }
 
   return (
-    <Box>
-      <Serif size={["4", "5"]} style={{ whiteSpace: "pre-line" }}>
-        {body}
-      </Serif>
-    </Box>
+    <Text variant="sm" style={{ whiteSpace: "pre-line" }}>
+      {body}
+    </Text>
   )
 }
 
