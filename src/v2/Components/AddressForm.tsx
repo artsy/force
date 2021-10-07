@@ -1,6 +1,15 @@
-import { Flex, Join, Sans, Serif, Spacer, Input } from "@artsy/palette"
+import {
+  Flex,
+  Join,
+  Text,
+  Spacer,
+  Input,
+  TextVariant,
+  useThemeConfig,
+  TextTransform,
+} from "@artsy/palette"
 import { CountrySelect } from "v2/Components/CountrySelect"
-import * as React from "react";
+import * as React from "react"
 import { TwoColumnSplit } from "../Apps/Order/Components/TwoColumnLayout"
 
 export interface Address {
@@ -44,190 +53,199 @@ export interface AddressFormProps {
   touched: AddressTouched
 }
 
-interface AddressFormState {
-  address: Address
-}
+export const AddressForm: React.FC<AddressFormProps> = ({
+  onChange,
+  value,
+  billing,
+  domesticOnly,
+  euOrigin,
+  showPhoneNumberInput,
+  shippingCountry,
+  errors,
+  touched,
+}) => {
+  const [address, setAddress] = useState({ ...emptyAddress, ...value })
+  const [key, setKey] = useState<keyof Address>()
 
-export class AddressForm extends React.Component<
-  AddressFormProps,
-  AddressFormState
-> {
-  state = {
-    address: {
-      ...emptyAddress,
-      ...this.props.value,
+  const styles = useThemeConfig({
+    v2: {
+      smallVariant: "text" as TextVariant,
+      xsVariant: "caption" as TextVariant,
+      textTransform: "none" as TextTransform,
     },
-  }
+    v3: {
+      smallVariant: "xs" as TextVariant,
+      xsVariant: "xs" as TextVariant,
+      textTransform: "uppercase" as TextTransform,
+    },
+  })
 
-  componentDidUpdate(prevProps) {
-    if (prevProps.isCollapsed !== this.props.isCollapsed) {
-      this.setState({ address: { ...emptyAddress } })
-    }
-  }
-
-  changeEventHandler = (key: keyof Address) => (
+  const changeEventHandler = (key: keyof Address) => (
     ev: React.FormEvent<HTMLInputElement>
   ) => {
-    this.onChangeValue(key, ev.currentTarget.value)
+    setKey(key)
+    onChangeValue(key, ev.currentTarget.value)
   }
 
-  changeValueHandler = (key: keyof Address) => (value: string) => {
-    this.onChangeValue(key, value)
+  const changeValueHandler = (key: keyof Address) => (value: string) => {
+    setKey(key)
+    onChangeValue(key, value)
   }
 
-  onChangeValue = (key: keyof Address, value: string) => {
-    this.setState({ address: { ...this.state.address, [key]: value } }, () => {
-      this.props.onChange(this.state.address, key)
-    })
+  useEffect(() => {
+    if (key) {
+      onChange(address, key)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [address, key])
+
+  const onChangeValue = (key: keyof Address, value: string) => {
+    setAddress(prevAddress => ({ ...prevAddress, [key]: value }))
   }
 
-  getError = (key: keyof Address): string => {
-    return (
-      (this.props.touched &&
-        this.props.touched[key] &&
-        this.props.errors &&
-        this.props.errors[key]) ||
-      ""
-    )
-  }
+  const getError = useCallback(
+    (key: keyof Address) => {
+      return (touched && touched[key] && errors && errors[key]) || ""
+    },
+    [errors, touched]
+  )
 
-  phoneNumberInputDescription = (): string | undefined => {
-    if (this.props.billing && this.props.showPhoneNumberInput) {
+  const phoneNumberInputDescription = (): string | undefined => {
+    if (billing && showPhoneNumberInput) {
       return
     } else {
       return "Required for shipping logistics"
     }
   }
 
-  render() {
-    const { billing, domesticOnly, euOrigin } = this.props
-    const onlyLocalShipping = !billing && !!domesticOnly
-    const lockCountryToOrigin = onlyLocalShipping && !euOrigin
-    const lockCountriesToEU = onlyLocalShipping && euOrigin
+  const onlyLocalShipping = !billing && !!domesticOnly
+  const lockCountryToOrigin = onlyLocalShipping && !euOrigin
+  const lockCountriesToEU = onlyLocalShipping && euOrigin
 
-    const { address } = this.state
+  return (
+    <Join separator={<Spacer mb={2} />}>
+      <Flex flexDirection="column">
+        <Input
+          id="AddressForm_name"
+          placeholder="Add full name"
+          title={billing ? "Name on card" : "Full name"}
+          autoCorrect="off"
+          value={address.name}
+          onChange={changeEventHandler("name")}
+          error={getError("name")}
+        />
+      </Flex>
 
-    return (
-      <Join separator={<Spacer mb={2} />}>
+      <TwoColumnSplit>
+        <Flex flexDirection="column" pb={1}>
+          <Text
+            mb={0.5}
+            variant={styles.smallVariant}
+            color="black100"
+            textTransform={styles.textTransform}
+          >
+            Country
+          </Text>
+          <CountrySelect
+            selected={
+              lockCountryToOrigin || (lockCountriesToEU && !address.country)
+                ? shippingCountry
+                : address.country
+            }
+            onSelect={changeValueHandler("country")}
+            disabled={lockCountryToOrigin}
+            euShippingOnly={lockCountriesToEU}
+          />
+          {(lockCountryToOrigin || lockCountriesToEU) && (
+            <>
+              <Spacer m={0.5} />
+              <Text variant={styles.xsVariant} color="black60">
+                {lockCountriesToEU
+                  ? "Continental Europe shipping only."
+                  : "Domestic shipping only."}
+              </Text>
+            </>
+          )}
+        </Flex>
+
         <Flex flexDirection="column">
           <Input
-            id="AddressForm_name"
-            placeholder="Add full name"
-            title={this.props.billing ? "Name on card" : "Full name"}
+            id="AddressForm_postalCode"
+            placeholder="Add postal code"
+            title="Postal code"
+            autoCapitalize="characters"
             autoCorrect="off"
-            value={address.name}
-            onChange={this.changeEventHandler("name")}
-            error={this.getError("name")}
+            value={address.postalCode}
+            onChange={changeEventHandler("postalCode")}
+            error={getError("postalCode")}
+          />
+        </Flex>
+      </TwoColumnSplit>
+      <TwoColumnSplit>
+        <Flex flexDirection="column">
+          <Input
+            id="AddressForm_addressLine1"
+            placeholder="Add street address"
+            title="Address line 1"
+            value={address.addressLine1}
+            onChange={changeEventHandler("addressLine1")}
+            error={getError("addressLine1")}
           />
         </Flex>
 
-        <TwoColumnSplit>
-          <Flex flexDirection="column" pb={1}>
-            <Serif mb={1} size="3t" color="black100" lineHeight="1.1em">
-              Country
-            </Serif>
-            <CountrySelect
-              selected={
-                lockCountryToOrigin ||
-                (lockCountriesToEU && !this.state.address.country)
-                  ? this.props.shippingCountry
-                  : this.state.address.country
-              }
-              onSelect={this.changeValueHandler("country")}
-              disabled={lockCountryToOrigin}
-              euShippingOnly={lockCountriesToEU}
-            />
-            {(lockCountryToOrigin || lockCountriesToEU) && (
-              <>
-                <Spacer m={0.5} />
-                <Sans size="2" color="black60">
-                  {lockCountriesToEU
-                    ? "Continental Europe shipping only."
-                    : "Domestic shipping only."}
-                </Sans>
-              </>
-            )}
-          </Flex>
+        <Flex flexDirection="column">
+          <Input
+            id="AddressForm_addressLine2"
+            placeholder="Add apt, floor, suite, etc."
+            title="Address line 2 (optional)"
+            value={address.addressLine2}
+            onChange={changeEventHandler("addressLine2")}
+            error={getError("addressLine2")}
+          />
+        </Flex>
+      </TwoColumnSplit>
+      <TwoColumnSplit>
+        <Flex flexDirection="column">
+          <Input
+            id="AddressForm_city"
+            placeholder="Add city"
+            title="City"
+            value={address.city}
+            onChange={changeEventHandler("city")}
+            error={getError("city")}
+          />
+        </Flex>
 
+        <Flex flexDirection="column">
+          <Input
+            id="AddressForm_region"
+            placeholder="Add State, province, or region"
+            title="State, province, or region"
+            autoCorrect="off"
+            value={address.region}
+            onChange={changeEventHandler("region")}
+            error={getError("region")}
+          />
+        </Flex>
+      </TwoColumnSplit>
+      {showPhoneNumberInput && (
+        <>
           <Flex flexDirection="column">
             <Input
-              id="AddressForm_postalCode"
-              placeholder="Add postal code"
-              title="Postal code"
-              autoCapitalize="characters"
-              autoCorrect="off"
-              value={address.postalCode}
-              onChange={this.changeEventHandler("postalCode")}
-              error={this.getError("postalCode")}
+              id="AddressForm_phoneNumber"
+              title="Phone number"
+              type="tel"
+              description={phoneNumberInputDescription()}
+              placeholder="Add phone"
+              pattern="[^a-z]+"
+              value={address.phoneNumber}
+              onChange={changeEventHandler("phoneNumber")}
+              error={getError("phoneNumber")}
             />
           </Flex>
-        </TwoColumnSplit>
-        <TwoColumnSplit>
-          <Flex flexDirection="column">
-            <Input
-              id="AddressForm_addressLine1"
-              placeholder="Add street address"
-              title="Address line 1"
-              value={address.addressLine1}
-              onChange={this.changeEventHandler("addressLine1")}
-              error={this.getError("addressLine1")}
-            />
-          </Flex>
-
-          <Flex flexDirection="column">
-            <Input
-              id="AddressForm_addressLine2"
-              placeholder="Add apt, floor, suite, etc."
-              title="Address line 2 (optional)"
-              value={address.addressLine2}
-              onChange={this.changeEventHandler("addressLine2")}
-              error={this.getError("addressLine2")}
-            />
-          </Flex>
-        </TwoColumnSplit>
-        <TwoColumnSplit>
-          <Flex flexDirection="column">
-            <Input
-              id="AddressForm_city"
-              placeholder="Add city"
-              title="City"
-              value={address.city}
-              onChange={this.changeEventHandler("city")}
-              error={this.getError("city")}
-            />
-          </Flex>
-
-          <Flex flexDirection="column">
-            <Input
-              id="AddressForm_region"
-              placeholder="Add State, province, or region"
-              title="State, province, or region"
-              autoCorrect="off"
-              value={address.region}
-              onChange={this.changeEventHandler("region")}
-              error={this.getError("region")}
-            />
-          </Flex>
-        </TwoColumnSplit>
-        {this.props.showPhoneNumberInput && (
-          <>
-            <Flex flexDirection="column">
-              <Input
-                id="AddressForm_phoneNumber"
-                title="Phone number"
-                type="tel"
-                description={this.phoneNumberInputDescription()}
-                placeholder="Add phone"
-                pattern="[^a-z]+"
-                value={address.phoneNumber}
-                onChange={this.changeEventHandler("phoneNumber")}
-                error={this.getError("phoneNumber")}
-              />
-            </Flex>
-            <Spacer mb={2} />
-          </>
-        )}
-      </Join>
-    )
-  }
+          <Spacer mb={2} />
+        </>
+      )}
+    </Join>
+  )
 }
