@@ -6,12 +6,13 @@ import {
   UploadPhotosForm,
   UploadPhotosFormModel,
 } from "./Components/UploadPhotosForm"
+import { PhotoThumbnail } from "./Components/PhotoThumbnail"
 
 export const UploadPhotos: FC = () => {
   const handleSubmit = () => {}
 
   return (
-    <Box>
+    <Box mb={4}>
       <SubmissionStepper currentStep="Upload Photos" />
 
       <Text variant="lg">Upload photos of your artwork</Text>
@@ -28,14 +29,28 @@ export const UploadPhotos: FC = () => {
         onSubmit={handleSubmit}
         initialValues={{ photos: [] }}
       >
-        {({ values }) => (
-          <>
-            <UploadPhotosForm mt={4} />
-            {values.photos.map(photo => (
-              <p key={photo.name}>{photo.name}</p>
-            ))}
-          </>
-        )}
+        {({ values, setFieldValue }) => {
+          const handlePhotoDelete = photo => {
+            setFieldValue(
+              "photos",
+              values.photos.filter(c => c !== photo)
+            )
+          }
+
+          return (
+            <>
+              <UploadPhotosForm mt={4} mb={6} />
+              {values.photos.map(photo => (
+                <PhotoThumbnail
+                  mt={2}
+                  key={photo.name}
+                  photo={photo}
+                  onDelete={handlePhotoDelete}
+                />
+              ))}
+            </>
+          )
+        }}
       </Formik>
     </Box>
   )
