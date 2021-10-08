@@ -5,9 +5,13 @@ import {
   getConvectionGeminiKey,
   getGeminiCredentialsForEnvironment,
 } from "../Mutations"
+import { ErrorCode, FileRejection } from "react-dropzone"
+
+export const KBSize = 1000
+export const MBSize = Math.pow(KBSize, 2)
 
 export function formatFileSize(size: number): string {
-  const sizeInMB = (size / (1000 * 1000)).toFixed(2)
+  const sizeInMB = (size / MBSize).toFixed(2)
 
   return `${sizeInMB} MB`
 }
@@ -23,9 +27,10 @@ export interface Photo {
   removed: boolean
   loading?: boolean
   bucket?: string
+  errorMessage?: string
 }
 
-export function normalizePhoto(file: File): Photo {
+export function normalizePhoto(file: File, errorMessage?: string): Photo {
   return {
     id: uuid(),
     file,
@@ -36,7 +41,26 @@ export function normalizePhoto(file: File): Photo {
     progress: undefined,
     removed: false,
     loading: false,
+    errorMessage,
   }
+}
+
+export enum CustomErrorCode {
+  TotalSizeLimit = "total-size-limit",
+}
+
+export const getErrorMessage = (fileRejection: FileRejection) => {
+  const errorCodes = fileRejection.errors.map(e => e.code)
+  let errorMessage
+
+  if (errorCodes.includes(ErrorCode.FileInvalidType)) {
+    errorMessage = "File format not supported. Please upload JPG or PNG files."
+  } else if (errorCodes.includes(CustomErrorCode.TotalSizeLimit)) {
+    errorMessage =
+      "File exceeds the total size limit. Please delete photos or upload smaller files."
+  }
+
+  return errorMessage
 }
 
 export const uploadPhoto = async (
