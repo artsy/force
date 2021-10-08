@@ -37,14 +37,12 @@ export interface StaticHeroUnit {
 
 export interface HomeHeroUnitProps {
   heroUnit: HomeHeroUnit_heroUnit | StaticHeroUnit
-  bg?: "black5" | "black100"
   layout: "a" | "b"
   index: number
 }
 
 export const HomeHeroUnit: React.FC<HomeHeroUnitProps> = ({
   heroUnit,
-  bg = "black5",
   layout = "a",
   index,
 }) => {
@@ -69,14 +67,7 @@ export const HomeHeroUnit: React.FC<HomeHeroUnitProps> = ({
       button: "secondaryOutline",
       linkText: "black100",
     },
-    black100: {
-      heading: "white100",
-      title: "white100",
-      subtitle: "white100",
-      button: "primaryWhite",
-      linkText: "white100",
-    },
-  }[bg]
+  }
 
   const image = heroUnit.backgroundImageURL
     ? cropped(heroUnit.backgroundImageURL, {
@@ -182,7 +173,7 @@ export const HomeHeroUnit: React.FC<HomeHeroUnitProps> = ({
                   <Text
                     variant="xs"
                     textTransform="uppercase"
-                    color={colorScheme.heading}
+                    color={colorScheme.black5.heading}
                   >
                     {heroUnit.heading}
                   </Text>
@@ -195,7 +186,7 @@ export const HomeHeroUnit: React.FC<HomeHeroUnitProps> = ({
             <Text
               as={index === 0 ? "h1" : "h2"}
               variant={["lg", "xl", "xxl"]}
-              color={colorScheme.title}
+              color={colorScheme.black5.title}
             >
               {heroUnit.title}
             </Text>
@@ -206,7 +197,7 @@ export const HomeHeroUnit: React.FC<HomeHeroUnitProps> = ({
 
                 <HTML
                   variant={["xs", "md", "lg"]}
-                  color={colorScheme.subtitle}
+                  color={colorScheme.black5.subtitle}
                   html={heroUnit.subtitle}
                 />
               </>
@@ -224,7 +215,7 @@ export const HomeHeroUnit: React.FC<HomeHeroUnitProps> = ({
                 <GridColumns>
                   <Column span={[12, 12, 6]}>
                     <Button
-                      variant={colorScheme.button as any}
+                      variant={colorScheme.black5.button as any}
                       // @ts-ignore
                       as={RouterLink}
                       to={heroUnit.href}
@@ -244,7 +235,7 @@ export const HomeHeroUnit: React.FC<HomeHeroUnitProps> = ({
                   noUnderline
                   onClick={handleTrackEvent}
                 >
-                  <Text variant="xs" color={colorScheme.linkText}>
+                  <Text variant="xs" color={colorScheme.black5.linkText}>
                     {heroUnit.linkText}
                   </Text>
                 </RouterLink>
@@ -267,7 +258,7 @@ export const HomeHeroUnit: React.FC<HomeHeroUnitProps> = ({
         />
       )}
 
-      <GridColumns bg={bg} width="100%">
+      <GridColumns bg="black5" width="100%">
         {layout === "a" ? (
           <>
             {figure}
