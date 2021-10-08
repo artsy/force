@@ -29,8 +29,6 @@ describe("Fair Organizer", () =>
       const sd = {
         APP_URL: "http://localhost:5000",
         API_URL: "http://localhost:5000",
-        CSS_EXT: ".css.gz",
-        JS_EXT: ".js.gz",
         NODE_ENV: "test",
         CURRENT_PATH: "/cool-fair",
         PROFILE: fabricate("fair_organizer_profile"),

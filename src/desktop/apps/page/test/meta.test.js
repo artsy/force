@@ -12,7 +12,6 @@ describe("Meta tags", function () {
     before(function () {
       this.file = `${path.resolve(__dirname, "../")}/meta/press.jade`
       this.sd = {
-        MOBILE_MEDIA_QUERY: "mobile-media-query",
         APP_URL: "http://localhost:5000",
       }
       return (this.html = jade.render(fs.readFileSync(this.file).toString(), {
@@ -41,7 +40,6 @@ describe("Meta tags", function () {
     before(function () {
       this.file = `${path.resolve(__dirname, "../")}/meta/terms.jade`
       this.sd = {
-        MOBILE_MEDIA_QUERY: "mobile-media-query",
         APP_URL: "http://localhost:5000",
       }
       return (this.html = jade.render(fs.readFileSync(this.file).toString(), {
@@ -67,7 +65,6 @@ describe("Meta tags", function () {
     before(function () {
       this.file = `${path.resolve(__dirname, "../")}/meta/privacy.jade`
       this.sd = {
-        MOBILE_MEDIA_QUERY: "mobile-media-query",
         APP_URL: "http://localhost:5000",
       }
       return (this.html = jade.render(fs.readFileSync(this.file).toString(), {
@@ -96,7 +93,6 @@ describe("Meta tags", function () {
     before(function () {
       this.file = `${path.resolve(__dirname, "../")}/meta/security.jade`
       this.sd = {
-        MOBILE_MEDIA_QUERY: "mobile-media-query",
         APP_URL: "http://localhost:5000",
       }
       return (this.html = jade.render(fs.readFileSync(this.file).toString(), {

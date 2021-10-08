@@ -1,13 +1,13 @@
 import { NextFunction } from "express"
 import { ArtsyRequest, ArtsyResponse } from "lib/middleware/artsyExpress"
-import { data as sd } from "sharify"
+import { ENABLE_FAIR_ORGANIZER_REDIRECT } from "../../../config"
 
 export const fairOrganizerRedirectionMiddleware = (
   req: ArtsyRequest,
   res: ArtsyResponse,
   next: NextFunction
 ): void => {
-  if (!sd.ENABLE_FAIR_ORGANIZER_REDIRECT) {
+  if (!ENABLE_FAIR_ORGANIZER_REDIRECT) {
     return next()
   }
 
