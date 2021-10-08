@@ -12,9 +12,12 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { SelectedCareerAchievementsFragmentContainer } from "v2/Components/SelectedCareerAchievements"
 import { ArtistCareerHighlights_artist } from "v2/__generated__/ArtistCareerHighlights_artist.graphql"
+import { ArtistCareerHighlightsQuery } from "v2/__generated__/ArtistCareerHighlightsQuery.graphql"
 import { ArtistConsignButtonFragmentContainer } from "./ArtistConsignButton"
 import { ArtistGenesFragmentContainer } from "./ArtistGenes"
 import { data as sd } from "sharify"
+import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
+import { useSystemContext } from "v2/System"
 
 interface ArtistCareerHighlightsProps {
   artist: ArtistCareerHighlights_artist
@@ -104,3 +107,41 @@ export const ArtistCareerHighlightsFragmentContainer = createFragmentContainer(
     `,
   }
 )
+
+const PLACEHOLDER = <div />
+
+export const ArtistCareerHighlightsQueryRenderer: React.FC<{
+  slug: string
+}> = ({ slug }) => {
+  const { relayEnvironment } = useSystemContext()
+
+  return (
+    <SystemQueryRenderer<ArtistCareerHighlightsQuery>
+      lazyLoad
+      environment={relayEnvironment}
+      variables={{ slug }}
+      placeholder={PLACEHOLDER}
+      query={graphql`
+        query ArtistCareerHighlightsQuery($slug: String!) {
+          artist(id: $slug) {
+            ...ArtistCareerHighlights_artist
+          }
+        }
+      `}
+      render={({ error, props }) => {
+        if (error) {
+          console.error(error)
+          return null
+        }
+        if (!props) {
+          return PLACEHOLDER
+        }
+        if (props.artist) {
+          return (
+            <ArtistCareerHighlightsFragmentContainer artist={props.artist} />
+          )
+        }
+      }}
+    />
+  )
+}

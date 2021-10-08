@@ -2,13 +2,15 @@ import { clickedEntityGroup, ContextModule, OwnerType } from "@artsy/cohesion"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
-import { useAnalyticsContext } from "v2/System"
+import { useAnalyticsContext, useSystemContext } from "v2/System"
 import { ShelfArtworkFragmentContainer } from "v2/Components/Artwork/ShelfArtwork"
 import { extractNodes } from "v2/Utils/extractNodes"
 import { ArtistWorksForSaleRail_artist } from "v2/__generated__/ArtistWorksForSaleRail_artist.graphql"
+import { ArtistWorksForSaleRailQuery } from "v2/__generated__/ArtistWorksForSaleRailQuery.graphql"
 import { scrollToTop } from "../Utils/scrollToTop"
 import { Rail } from "v2/Components/Rail"
 import { Box } from "@artsy/palette"
+import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 
 interface ArtistWorksForSaleRailProps {
   artist: ArtistWorksForSaleRail_artist
@@ -108,3 +110,41 @@ export const ArtistWorksForSaleRailFragmentContainer = createFragmentContainer(
     `,
   }
 )
+
+const PLACEHOLDER = <div />
+
+export const ArtistWorksForSaleRailQueryRenderer: React.FC<{
+  slug: string
+}> = ({ slug }) => {
+  const { relayEnvironment } = useSystemContext()
+
+  return (
+    <SystemQueryRenderer<ArtistWorksForSaleRailQuery>
+      lazyLoad
+      environment={relayEnvironment}
+      variables={{ slug }}
+      placeholder={PLACEHOLDER}
+      query={graphql`
+        query ArtistWorksForSaleRailQuery($slug: String!) {
+          artist(id: $slug) {
+            ...ArtistWorksForSaleRail_artist
+          }
+        }
+      `}
+      render={({ error, props }) => {
+        if (error) {
+          console.error(error)
+          return null
+        }
+        if (!props) {
+          return PLACEHOLDER
+        }
+        if (props.artist) {
+          return (
+            <ArtistWorksForSaleRailFragmentContainer artist={props.artist} />
+          )
+        }
+      }}
+    />
+  )
+}

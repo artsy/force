@@ -1,11 +1,7 @@
 import { EntityHeader, Spacer, StackableBorderBox } from "@artsy/palette"
 import { ArtistInfo_artist } from "v2/__generated__/ArtistInfo_artist.graphql"
-import { ArtistInfoQuery } from "v2/__generated__/ArtistInfoQuery.graphql"
-import { SystemContextConsumer } from "v2/System"
 import { track } from "v2/System/Analytics"
 import * as Schema from "v2/System/Analytics/Schema"
-import { renderWithLoadProgress } from "v2/System/Relay/renderWithLoadProgress"
-import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { FollowArtistButtonFragmentContainer as FollowArtistButton } from "v2/Components/FollowButton/FollowArtistButton"
 import { ArtistBioFragmentContainer as ArtistBio } from "v2/Components/ArtistBio"
 import { ArtistMarketInsightsFragmentContainer as ArtistMarketInsights } from "v2/Components/ArtistMarketInsights"
@@ -166,25 +162,42 @@ export const ArtistInfoFragmentContainer = createFragmentContainer(
   }
 )
 
-export const ArtistInfoQueryRenderer = ({ artistID }: { artistID: string }) => {
+import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
+import { ArtistInfoQuery } from "v2/__generated__/ArtistInfoQuery.graphql"
+import { useSystemContext } from "v2/System"
+
+const PLACEHOLDER = <div />
+
+export const ArtistInfoQueryRenderer: React.FC<{
+  slug: string
+}> = ({ slug }) => {
+  const { relayEnvironment } = useSystemContext()
+
   return (
-    <SystemContextConsumer>
-      {({ relayEnvironment }) => {
-        return (
-          <SystemQueryRenderer<ArtistInfoQuery>
-            environment={relayEnvironment}
-            variables={{ artistID }}
-            query={graphql`
-              query ArtistInfoQuery($artistID: String!) {
-                artist(id: $artistID) {
-                  ...ArtistInfo_artist
-                }
-              }
-            `}
-            render={renderWithLoadProgress(ArtistInfoFragmentContainer)}
-          />
-        )
+    <SystemQueryRenderer<ArtistInfoQuery>
+      lazyLoad
+      environment={relayEnvironment}
+      variables={{ slug }}
+      placeholder={PLACEHOLDER}
+      query={graphql`
+        query ArtistInfoQuery($slug: String!) {
+          artist(id: $slug) {
+            ...ArtistInfo_artist
+          }
+        }
+      `}
+      render={({ error, props }) => {
+        if (error) {
+          console.error(error)
+          return null
+        }
+        if (!props) {
+          return PLACEHOLDER
+        }
+        if (props.artist) {
+          return <ArtistInfoFragmentContainer artist={props.artist} />
+        }
       }}
-    </SystemContextConsumer>
+    />
   )
 }

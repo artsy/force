@@ -3,12 +3,12 @@ import React from "react"
 import { Title } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtistIconicCollectionsRailQueryRenderer } from "v2/Apps/Artist/Routes/Overview/Components/ArtistIconicCollectionsRail"
-import { ArtistNotableWorksRailFragmentContainer } from "v2/Apps/Artist/Routes/Overview/Components/ArtistNotableWorksRail"
-import { ArtistWorksForSaleRailFragmentContainer } from "./Components/ArtistWorksForSaleRail"
-import { ArtistCurrentShowsRailFragmentContainer } from "./Components/ArtistCurrentShowsRail"
-import { ArtistCurrentArticlesRailFragmentContainer } from "./Components/ArtistCurrentArticlesRail"
-import { ArtistCareerHighlightsFragmentContainer } from "./Components/ArtistCareerHighlights"
-import { ArtistRelatedArtistsRailFragmentContainer } from "./Components/ArtistRelatedArtistsRail"
+import { ArtistNotableWorksRailQueryRenderer } from "v2/Apps/Artist/Routes/Overview/Components/ArtistNotableWorksRail"
+import { ArtistWorksForSaleRailQueryRenderer } from "./Components/ArtistWorksForSaleRail"
+import { ArtistCurrentShowsRailQueryRenderer } from "./Components/ArtistCurrentShowsRail"
+import { ArtistCurrentArticlesRailQueryRenderer } from "./Components/ArtistCurrentArticlesRail"
+import { ArtistCareerHighlightsQueryRenderer } from "./Components/ArtistCareerHighlights"
+import { ArtistRelatedArtistsRailQueryRenderer } from "./Components/ArtistRelatedArtistsRail"
 import { computeTitle } from "../../Utils/computeTitle"
 
 interface ArtistOverviewRouteProps {
@@ -25,15 +25,15 @@ const ArtistOverviewRoute: React.FC<ArtistOverviewRouteProps> = ({
       <Title>{title}</Title>
 
       <Join separator={<Spacer mb={6} />}>
-        <ArtistNotableWorksRailFragmentContainer artist={artist} />
-        <ArtistCareerHighlightsFragmentContainer artist={artist} />
+        <ArtistNotableWorksRailQueryRenderer slug={artist.slug} />
+        <ArtistCareerHighlightsQueryRenderer slug={artist.slug} />
         <ArtistIconicCollectionsRailQueryRenderer
-          artistID={artist.internalID}
+          internalID={artist.internalID}
         />
-        <ArtistWorksForSaleRailFragmentContainer artist={artist} />
-        <ArtistCurrentShowsRailFragmentContainer artist={artist} />
-        <ArtistCurrentArticlesRailFragmentContainer artist={artist} />
-        <ArtistRelatedArtistsRailFragmentContainer artist={artist} />
+        <ArtistWorksForSaleRailQueryRenderer slug={artist.slug} />
+        <ArtistCurrentShowsRailQueryRenderer slug={artist.slug} />
+        <ArtistCurrentArticlesRailQueryRenderer slug={artist.slug} />
+        <ArtistRelatedArtistsRailQueryRenderer slug={artist.slug} />
       </Join>
     </>
   )
@@ -44,13 +44,7 @@ export const ArtistOverviewRouteFragmentContainer = createFragmentContainer(
   {
     artist: graphql`
       fragment ArtistOverviewRoute_artist on Artist {
-        ...ArtistNotableWorksRail_artist
-        ...ArtistCareerHighlights_artist
-        ...ArtistWorksForSaleRail_artist
-        ...ArtistCurrentShowsRail_artist
-        ...ArtistCurrentArticlesRail_artist
-        ...ArtistRelatedArtistsRail_artist
-
+        slug
         name
         counts {
           artworks

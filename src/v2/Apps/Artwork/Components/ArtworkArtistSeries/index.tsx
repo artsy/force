@@ -6,7 +6,9 @@ import { ArtistSeriesArtworkRailFragmentContainer as ArtistSeriesArtworkRail } f
 import { ArtistSeriesRailFragmentContainer as ArtistSeriesRail } from "v2/Components/ArtistSeriesRail/ArtistSeriesRail"
 import { ArtworkArtistSeries_artwork } from "v2/__generated__/ArtworkArtistSeries_artwork.graphql"
 import { Spacer } from "@artsy/palette"
-
+import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
+import { ArtworkArtistSeriesQuery } from "v2/__generated__/ArtworkArtistSeriesQuery.graphql"
+import { useSystemContext } from "v2/System"
 interface ArtworkArtistSeriesProps {
   artwork: ArtworkArtistSeries_artwork
 }
@@ -83,3 +85,41 @@ export const ArtworkArtistSeriesFragmentContainer = createFragmentContainer<{
     }
   `,
 })
+
+const PLACEHOLDER = <div />
+
+export const ArtworkArtistSeriesQueryRenderer: React.FC<{
+  slug: string
+}> = ({ slug }) => {
+  const { relayEnvironment } = useSystemContext()
+
+  return (
+    <SystemQueryRenderer<ArtworkArtistSeriesQuery>
+      lazyLoad
+      environment={relayEnvironment}
+      variables={{ slug }}
+      placeholder={PLACEHOLDER}
+      query={graphql`
+        query ArtworkArtistSeriesQuery($slug: String!) {
+          artwork(id: $slug) {
+            ...ArtworkArtistSeries_artwork
+          }
+        }
+      `}
+      render={({ error, props }) => {
+        if (error) {
+          console.error(error)
+          return null
+        }
+        if (!props) {
+          return PLACEHOLDER
+        }
+        if (props.artwork) {
+          return (
+            <ArtworkArtistSeriesFragmentContainer artwork={props.artwork} />
+          )
+        }
+      }}
+    />
+  )
+}

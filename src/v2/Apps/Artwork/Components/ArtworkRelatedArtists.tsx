@@ -21,6 +21,9 @@ import {
 } from "react-relay"
 import createLogger from "v2/Utils/logger"
 import { extractNodes } from "v2/Utils/extractNodes"
+import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
+import { ArtworkRelatedArtistsQuery } from "v2/__generated__/ArtworkRelatedArtistsQuery.graphql"
+import { useSystemContext } from "v2/System"
 
 const logger = createLogger("ArtworkRelatedArtists.tsx")
 
@@ -181,3 +184,41 @@ export const ArtworkRelatedArtistsPaginationContainer = createPaginationContaine
     `,
   }
 )
+
+const PLACEHOLDER = <div />
+
+export const ArtworkRelatedArtistsQueryRenderer: React.FC<{
+  slug: string
+}> = ({ slug }) => {
+  const { relayEnvironment } = useSystemContext()
+
+  return (
+    <SystemQueryRenderer<ArtworkRelatedArtistsQuery>
+      lazyLoad
+      environment={relayEnvironment}
+      variables={{ slug }}
+      placeholder={PLACEHOLDER}
+      query={graphql`
+        query ArtworkRelatedArtistsQuery($slug: String!) {
+          artwork(id: $slug) {
+            ...ArtworkRelatedArtists_artwork
+          }
+        }
+      `}
+      render={({ error, props }) => {
+        if (error) {
+          console.error(error)
+          return null
+        }
+        if (!props) {
+          return PLACEHOLDER
+        }
+        if (props.artwork) {
+          return (
+            <ArtworkRelatedArtistsPaginationContainer artwork={props.artwork} />
+          )
+        }
+      }}
+    />
+  )
+}

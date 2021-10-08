@@ -10,6 +10,9 @@ import Waypoint from "react-waypoint"
 import Events from "v2/Utils/Events"
 import { createCollectUrl } from "./../Utils/createCollectUrl"
 import { PricingContextModal } from "./PricingContextModal"
+import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
+import { PricingContextQuery } from "v2/__generated__/PricingContextQuery.graphql"
+import { useSystemContext } from "v2/System"
 
 interface PricingContextProps {
   artwork: PricingContext_artwork
@@ -202,5 +205,41 @@ export const PricingContextFragmentContainer = createFragmentContainer(
     `,
   }
 )
+
+const PLACEHOLDER = <div />
+
+export const PricingContextQueryRenderer: React.FC<{
+  slug: string
+}> = ({ slug }) => {
+  const { relayEnvironment } = useSystemContext()
+
+  return (
+    <SystemQueryRenderer<PricingContextQuery>
+      lazyLoad
+      environment={relayEnvironment}
+      variables={{ slug }}
+      placeholder={PLACEHOLDER}
+      query={graphql`
+        query PricingContextQuery($slug: String!) {
+          artwork(id: $slug) {
+            ...PricingContext_artwork
+          }
+        }
+      `}
+      render={({ error, props }) => {
+        if (error) {
+          console.error(error)
+          return null
+        }
+        if (!props) {
+          return PLACEHOLDER
+        }
+        if (props.artwork) {
+          return <PricingContextFragmentContainer artwork={props.artwork} />
+        }
+      }}
+    />
+  )
+}
 
 PricingContextFragmentContainer.displayName = "PricingContext"

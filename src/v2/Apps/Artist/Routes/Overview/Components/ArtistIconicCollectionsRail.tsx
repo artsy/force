@@ -152,7 +152,7 @@ export const ArtistIconicCollectionsRailQueryRenderer = props => {
       lazyLoad
       environment={relayEnvironment}
       variables={{
-        artistID: props.artistID, // Refers to `internalID`, not `slug`
+        internalID: props.internalID,
         isFeaturedArtistContent: true,
         size: 16,
       }}
@@ -160,12 +160,12 @@ export const ArtistIconicCollectionsRailQueryRenderer = props => {
         query ArtistIconicCollectionsRailQuery(
           $isFeaturedArtistContent: Boolean
           $size: Int
-          $artistID: String
+          $internalID: String
         ) {
           marketingCollections(
             isFeaturedArtistContent: $isFeaturedArtistContent
             size: $size
-            artistID: $artistID
+            artistID: $internalID
           ) {
             ...ArtistIconicCollectionsRail_marketingCollections
           }

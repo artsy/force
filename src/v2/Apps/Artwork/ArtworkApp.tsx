@@ -4,16 +4,16 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { data as sd } from "sharify"
 import { ArtworkApp_artwork } from "v2/__generated__/ArtworkApp_artwork.graphql"
 import { ArtworkApp_me } from "v2/__generated__/ArtworkApp_me.graphql"
-import { ArtistInfoFragmentContainer } from "./Components/ArtistInfo"
+import { ArtistInfoQueryRenderer } from "./Components/ArtistInfo"
 import { ArtworkBannerFragmentContainer } from "./Components/ArtworkBanner/ArtworkBanner"
-import { ArtworkDetailsFragmentContainer } from "./Components/ArtworkDetails"
+import { ArtworkDetailsQueryRenderer } from "./Components/ArtworkDetails"
 import { ArtworkImageBrowserFragmentContainer } from "./Components/ArtworkImageBrowser"
 import { ArtworkMetaFragmentContainer } from "./Components/ArtworkMeta"
 import { ArtworkRelatedArtistsPaginationContainer } from "./Components/ArtworkRelatedArtists"
 import { ArtworkSidebarFragmentContainer } from "./Components/ArtworkSidebar"
-import { OtherWorksFragmentContainer } from "./Components/OtherWorks"
-import { ArtworkArtistSeriesFragmentContainer } from "./Components/ArtworkArtistSeries"
-import { PricingContextFragmentContainer } from "./Components/PricingContext"
+import { OtherWorksQueryRenderer } from "./Components/OtherWorks"
+import { ArtworkArtistSeriesQueryRenderer } from "./Components/ArtworkArtistSeries"
+import { PricingContextQueryRenderer } from "./Components/PricingContext"
 import { withSystemContext } from "v2/System"
 import * as Schema from "v2/System/Analytics/Schema"
 import { RecentlyViewed } from "v2/Components/RecentlyViewed"
@@ -146,16 +146,16 @@ export class ArtworkApp extends React.Component<Props> {
       <>
         <Spacer mt={6} />
         <Join separator={<Spacer mt={2} />}>
-          <ArtworkDetailsFragmentContainer artwork={artwork} />
+          <ArtworkDetailsQueryRenderer slug={artwork.slug} />
 
-          <PricingContextFragmentContainer artwork={artwork} />
+          <PricingContextQueryRenderer slug={artwork.slug} />
 
           {artwork.artists &&
             artwork.artists.map(artist => {
               if (!artist) return null
 
               return (
-                <ArtistInfoFragmentContainer key={artist.id} artist={artist} />
+                <ArtistInfoQueryRenderer key={artist.id} slug={artist.slug} />
               )
             })}
         </Join>
@@ -186,11 +186,11 @@ export class ArtworkApp extends React.Component<Props> {
 
         <Spacer mt={6} />
 
-        <ArtworkArtistSeriesFragmentContainer artwork={artwork} />
+        <ArtworkArtistSeriesQueryRenderer slug={artwork.slug} />
 
         <Spacer mt={6} />
 
-        <OtherWorksFragmentContainer artwork={artwork} />
+        <OtherWorksQueryRenderer slug={artwork.slug} />
 
         {artwork.artist && (
           <>

@@ -5,10 +5,16 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { FollowArtistButtonFragmentContainer } from "v2/Components/FollowButton/FollowArtistButton"
 import { Rail } from "v2/Components/Rail"
-import { AnalyticsSchema, useAnalyticsContext } from "v2/System"
+import {
+  AnalyticsSchema,
+  useAnalyticsContext,
+  useSystemContext,
+} from "v2/System"
+import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { extractNodes } from "v2/Utils/extractNodes"
 import { ArtistRelatedArtistsRail_artist } from "v2/__generated__/ArtistRelatedArtistsRail_artist.graphql"
+import { ArtistRelatedArtistsRailQuery } from "v2/__generated__/ArtistRelatedArtistsRailQuery.graphql"
 
 interface ArtistRelatedArtistsRailProps {
   artist: ArtistRelatedArtistsRail_artist
@@ -159,3 +165,41 @@ export const ArtistRelatedArtistsRailFragmentContainer = createFragmentContainer
     `,
   }
 )
+
+const PLACEHOLDER = <div />
+
+export const ArtistRelatedArtistsRailQueryRenderer: React.FC<{
+  slug: string
+}> = ({ slug }) => {
+  const { relayEnvironment } = useSystemContext()
+
+  return (
+    <SystemQueryRenderer<ArtistRelatedArtistsRailQuery>
+      lazyLoad
+      environment={relayEnvironment}
+      variables={{ slug }}
+      placeholder={PLACEHOLDER}
+      query={graphql`
+        query ArtistRelatedArtistsRailQuery($slug: String!) {
+          artist(id: $slug) {
+            ...ArtistRelatedArtistsRail_artist
+          }
+        }
+      `}
+      render={({ error, props }) => {
+        if (error) {
+          console.error(error)
+          return null
+        }
+        if (!props) {
+          return PLACEHOLDER
+        }
+        if (props.artist) {
+          return (
+            <ArtistRelatedArtistsRailFragmentContainer artist={props.artist} />
+          )
+        }
+      }}
+    />
+  )
+}

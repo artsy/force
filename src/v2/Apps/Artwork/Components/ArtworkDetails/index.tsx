@@ -10,6 +10,9 @@ import { ArtworkDetails_artwork } from "v2/__generated__/ArtworkDetails_artwork.
 import { track } from "v2/System/Analytics"
 import * as Schema from "v2/System/Analytics/Schema"
 import Events from "v2/Utils/Events"
+import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
+import { ArtworkDetailsQuery } from "v2/__generated__/ArtworkDetailsQuery.graphql"
+import { useSystemContext } from "v2/System"
 
 export interface ArtworkDetailsProps {
   artwork: ArtworkDetails_artwork
@@ -115,6 +118,42 @@ export const ArtworkDetailsFragmentContainer = createFragmentContainer(
     `,
   }
 )
+
+const PLACEHOLDER = <div />
+
+export const ArtworkDetailsQueryRenderer: React.FC<{
+  slug: string
+}> = ({ slug }) => {
+  const { relayEnvironment } = useSystemContext()
+
+  return (
+    <SystemQueryRenderer<ArtworkDetailsQuery>
+      lazyLoad
+      environment={relayEnvironment}
+      variables={{ slug }}
+      placeholder={PLACEHOLDER}
+      query={graphql`
+        query ArtworkDetailsQuery($slug: String!) {
+          artwork(id: $slug) {
+            ...ArtworkDetails_artwork
+          }
+        }
+      `}
+      render={({ error, props }) => {
+        if (error) {
+          console.error(error)
+          return null
+        }
+        if (!props) {
+          return PLACEHOLDER
+        }
+        if (props.artwork) {
+          return <ArtworkDetailsFragmentContainer artwork={props.artwork} />
+        }
+      }}
+    />
+  )
+}
 
 const TabContainer = styled(Box)``
 const ArtworkDetailsContainer = TabContainer
