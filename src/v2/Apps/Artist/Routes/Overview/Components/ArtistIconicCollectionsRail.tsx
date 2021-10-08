@@ -149,6 +149,7 @@ export const ArtistIconicCollectionsRailQueryRenderer = props => {
 
   return (
     <SystemQueryRenderer<ArtistIconicCollectionsRailQuery>
+      lazyLoad
       environment={relayEnvironment}
       variables={{
         artistID: props.artistID, // Refers to `internalID`, not `slug`
@@ -170,6 +171,7 @@ export const ArtistIconicCollectionsRailQueryRenderer = props => {
           }
         }
       `}
+      placeholder={PLACEHOLDER}
       render={({ error, props }) => {
         if (error) {
           console.error(error)

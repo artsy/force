@@ -2,9 +2,7 @@ import React, { useRef } from "react"
 import { Box, BoxProps, Flex, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FairBoothRail_show } from "v2/__generated__/FairBoothRail_show.graphql"
-import { useLazyLoadComponent } from "v2/Utils/Hooks/useLazyLoadComponent"
 import { FairBoothRailArtworksQueryRenderer as FairBoothRailArtworks } from "./FairBoothRailArtworks"
-import { FairBoothRailPlaceholder } from "./FairBoothRailPlaceholder"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { useTracking } from "react-tracking"
 import {
@@ -26,7 +24,6 @@ export const FairBoothRail: React.FC<FairBoothRailProps> = ({
 }) => {
   const ref = useRef<HTMLDivElement | null>(null)
   const tracking = useTracking()
-  const { isEnteredView, Waypoint } = useLazyLoadComponent({ threshold: 2000 })
   const {
     contextPageOwnerId,
     contextPageOwnerSlug,
@@ -47,8 +44,6 @@ export const FairBoothRail: React.FC<FairBoothRailProps> = ({
 
   return (
     <>
-      <Waypoint />
-
       <Box ref={ref as any} {...rest}>
         <Flex mb={[2, 4]} pr={[1, 0]}>
           <Box flex="1">
@@ -81,11 +76,7 @@ export const FairBoothRail: React.FC<FairBoothRailProps> = ({
         </Flex>
 
         <Box>
-          {isEnteredView ? (
-            <FairBoothRailArtworks id={show.internalID} />
-          ) : (
-            <FairBoothRailPlaceholder />
-          )}
+          <FairBoothRailArtworks id={show.internalID} />
         </Box>
       </Box>
     </>

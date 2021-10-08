@@ -1,5 +1,5 @@
 import { BorderBoxProps, Box, Flex, Sans } from "@artsy/palette"
-import { SystemQueryRenderer as QueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
+import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 
@@ -56,7 +56,7 @@ export const BackupSecondFactorModalContentQueryRenderer = () => {
   const { relayEnvironment } = useSystemContext()
 
   return (
-    <QueryRenderer<BackupSecondFactorModalContentQuery>
+    <SystemQueryRenderer<BackupSecondFactorModalContentQuery>
       environment={relayEnvironment}
       variables={{}}
       query={graphql`

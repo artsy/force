@@ -7,7 +7,7 @@ import { compact, take, uniqBy } from "lodash"
 import { useSystemContext } from "v2/System"
 import { ShowBannersRailPlaceholder } from "./ShowBannersRailPlaceholder"
 import { Media } from "v2/Utils/Responsive"
-import { SystemQueryRenderer as QueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
+import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import {
   PartnerShowBannersContextProvider,
   usePartnerShowBannersContext,
@@ -153,7 +153,8 @@ export const ShowBannersRailRenderer: React.FC<
   const { relayEnvironment } = useSystemContext()
 
   return (
-    <QueryRenderer<ShowBannersRailRendererQuery>
+    <SystemQueryRenderer<ShowBannersRailRendererQuery>
+      lazyLoad
       environment={relayEnvironment}
       query={graphql`
         query ShowBannersRailRendererQuery($partnerId: String!) {

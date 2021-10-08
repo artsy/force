@@ -1,6 +1,6 @@
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { SystemQueryRenderer as QueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
+import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { PartnerArtistDetails_partnerArtist } from "v2/__generated__/PartnerArtistDetails_partnerArtist.graphql"
 import { PartnerArtistDetailsQuery } from "v2/__generated__/PartnerArtistDetailsQuery.graphql"
 import {
@@ -116,7 +116,8 @@ export const PartnerArtistDetailsRenderer: React.FC<{
   const { relayEnvironment } = useSystemContext()
 
   return (
-    <QueryRenderer<PartnerArtistDetailsQuery>
+    <SystemQueryRenderer<PartnerArtistDetailsQuery>
+      lazyLoad
       environment={relayEnvironment}
       query={graphql`
         query PartnerArtistDetailsQuery(

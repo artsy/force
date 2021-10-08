@@ -21,7 +21,7 @@ import { RelayProp, createFragmentContainer, graphql } from "react-relay"
 import { BidForm_me } from "v2/__generated__/BidForm_me.graphql"
 import { BidForm_saleArtwork } from "v2/__generated__/BidForm_saleArtwork.graphql"
 import { CreditCardInstructions } from "v2/Apps/Auction/Components/CreditCardInstructions"
-import { PricingTransparencyQueryRenderer as PricingTransparency } from "v2/Apps/Auction/Components/PricingTransparency"
+import { PricingTransparencyQueryRenderer } from "v2/Apps/Auction/Components/PricingTransparency"
 import { CreditCardInput } from "v2/Apps/Order/Components/CreditCardInput"
 import { AddressForm } from "v2/Components/AddressForm"
 import { ConditionsOfSaleCheckbox } from "v2/Components/Auction/ConditionsOfSaleCheckbox"
@@ -134,7 +134,7 @@ export const BidForm: React.FC<Props> = ({
             error={touched.selectedBid && errors.selectedBid}
           />
 
-          <PricingTransparency
+          <PricingTransparencyQueryRenderer
             relayEnvironment={relay.environment}
             // @ts-expect-error STRICT_NULL_CHECK
             saleId={saleArtwork.sale.slug}

@@ -9,7 +9,7 @@ import { useRouter } from "v2/System/Router/useRouter"
 import { ShowPaginatedEventsRendererQuery } from "v2/__generated__/ShowPaginatedEventsRendererQuery.graphql"
 import { ShowPaginatedEvents_partner } from "v2/__generated__/ShowPaginatedEvents_partner.graphql"
 import { EventStatus } from "v2/__generated__/ShowPaginatedEventsRendererQuery.graphql"
-import { SystemQueryRenderer as QueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
+import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 
 interface ShowEventsProps {
   relay: RelayRefetchProp
@@ -187,7 +187,7 @@ export const ShowPaginatedEventsRenderer: React.FC<ShowPaginatedEventsRendererPr
   const { relayEnvironment } = useSystemContext()
 
   return (
-    <QueryRenderer<ShowPaginatedEventsRendererQuery>
+    <SystemQueryRenderer<ShowPaginatedEventsRendererQuery>
       environment={relayEnvironment}
       query={graphql`
         query ShowPaginatedEventsRendererQuery(

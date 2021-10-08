@@ -2,7 +2,6 @@ import React from "react"
 import { BoxProps, Skeleton, SkeletonBox, SkeletonText } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { AuctionArtworksRail_sale } from "v2/__generated__/AuctionArtworksRail_sale.graphql"
-import { useLazyLoadComponent } from "v2/Utils/Hooks/useLazyLoadComponent"
 import { tabTypeToContextModuleMap } from "../Utils/tabTypeToContextModuleMap"
 import { useTracking } from "react-tracking"
 import {
@@ -142,51 +141,45 @@ export const AuctionArtworksRailFragmentContainer = createFragmentContainer(
 )
 
 export const AuctionArtworkRailQueryRenderer = ({ slug, tabType }) => {
-  const { isEnteredView, Waypoint } = useLazyLoadComponent({ threshold: 2000 })
   const { relayEnvironment } = useSystemContext()
 
   return (
-    <>
-      <Waypoint />
+    <SystemQueryRenderer<AuctionArtworksRailQuery>
+      lazyLoad
+      environment={relayEnvironment}
+      query={graphql`
+        query AuctionArtworksRailQuery($slug: String!) {
+          sale(id: $slug) {
+            ...AuctionArtworksRail_sale
+          }
+        }
+      `}
+      variables={{
+        slug,
+      }}
+      placeholder={PLACEHOLDER}
+      render={({ error, props }) => {
+        if (error) {
+          console.error(error)
+          return null
+        }
 
-      {isEnteredView && (
-        <SystemQueryRenderer<AuctionArtworksRailQuery>
-          environment={relayEnvironment}
-          query={graphql`
-            query AuctionArtworksRailQuery($slug: String!) {
-              sale(id: $slug) {
-                ...AuctionArtworksRail_sale
-              }
-            }
-          `}
-          variables={{
-            slug,
-          }}
-          placeholder={PLACEHOLDER}
-          render={({ error, props }) => {
-            if (error) {
-              console.error(error)
-              return null
-            }
+        if (!props) {
+          return PLACEHOLDER
+        }
 
-            if (!props) {
-              return PLACEHOLDER
-            }
+        if (props.sale) {
+          return (
+            <AuctionArtworksRailFragmentContainer
+              tabType={tabType}
+              sale={props.sale}
+            />
+          )
+        }
 
-            if (props.sale) {
-              return (
-                <AuctionArtworksRailFragmentContainer
-                  tabType={tabType}
-                  sale={props.sale}
-                />
-              )
-            }
-
-            return null
-          }}
-        />
-      )}
-    </>
+        return null
+      }}
+    />
   )
 }
 

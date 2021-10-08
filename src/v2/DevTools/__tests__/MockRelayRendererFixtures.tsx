@@ -5,7 +5,7 @@ import { MockRelayRendererFixtures_artworkMetadata } from "v2/__generated__/Mock
 import { MockRelayRendererFixturesArtistQuery } from "v2/__generated__/MockRelayRendererFixturesArtistQuery.graphql"
 import { SystemContextConsumer } from "v2/System"
 import { renderWithLoadProgress } from "v2/System/Relay/renderWithLoadProgress"
-import { SystemQueryRenderer as QueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
+import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import cheerio from "cheerio"
 import { render } from "enzyme"
 import React from "react"
@@ -67,7 +67,7 @@ const ArtistQueryRenderer = (props: { id: string }) => (
   <SystemContextConsumer>
     {({ relayEnvironment }) => {
       return (
-        <QueryRenderer<MockRelayRendererFixturesArtistQuery>
+        <SystemQueryRenderer<MockRelayRendererFixturesArtistQuery>
           environment={relayEnvironment}
           variables={props}
           query={graphql`

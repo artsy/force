@@ -5,7 +5,7 @@ import {
 } from "v2/__generated__/ArtistSearchResultsArtistMutation.graphql"
 import { ArtistSearchResultsQuery } from "v2/__generated__/ArtistSearchResultsQuery.graphql"
 import { SystemContextProps, withSystemContext } from "v2/System"
-import { SystemQueryRenderer as QueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
+import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import React from "react"
 import {
   RelayProp,
@@ -216,7 +216,7 @@ const ArtistSearchResultsComponent: React.SFC<
   ContainerProps & SystemContextProps
 > = ({ onArtistFollow, onNoResults, relayEnvironment, term }) => {
   return (
-    <QueryRenderer<ArtistSearchResultsQuery>
+    <SystemQueryRenderer<ArtistSearchResultsQuery>
       environment={relayEnvironment}
       query={graphql`
         query ArtistSearchResultsQuery($term: String!) {

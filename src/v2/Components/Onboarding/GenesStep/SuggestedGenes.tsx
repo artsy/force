@@ -5,7 +5,7 @@ import {
 } from "v2/__generated__/SuggestedGenesFollowGeneMutation.graphql"
 import { SuggestedGenesQuery } from "v2/__generated__/SuggestedGenesQuery.graphql"
 import { SystemContextProps, withSystemContext } from "v2/System"
-import { SystemQueryRenderer as QueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
+import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import React from "react"
 import {
   RelayProp,
@@ -170,7 +170,7 @@ const SuggestedGenesComponent: React.SFC<
   ContainerProps & SystemContextProps
 > = ({ onGeneFollow, relayEnvironment }) => {
   return (
-    <QueryRenderer<SuggestedGenesQuery>
+    <SystemQueryRenderer<SuggestedGenesQuery>
       environment={relayEnvironment}
       query={graphql`
         query SuggestedGenesQuery {

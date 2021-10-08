@@ -1,9 +1,5 @@
 import { ArtworkBanner_artwork } from "v2/__generated__/ArtworkBanner_artwork.graphql"
-import { ArtworkBannerQuery } from "v2/__generated__/ArtworkBannerQuery.graphql"
-import { SystemContext } from "v2/System"
-import { renderWithLoadProgress } from "v2/System/Relay/renderWithLoadProgress"
-import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
-import React, { useContext } from "react"
+import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import {
   Box,
@@ -179,26 +175,3 @@ export const ArtworkBannerFragmentContainer = createFragmentContainer(
     `,
   }
 )
-
-export const ArtworkBannerQueryRenderer = ({
-  artworkID,
-}: {
-  artworkID: string
-}) => {
-  const { relayEnvironment } = useContext(SystemContext)
-
-  return (
-    <SystemQueryRenderer<ArtworkBannerQuery>
-      environment={relayEnvironment}
-      variables={{ artworkID }}
-      query={graphql`
-        query ArtworkBannerQuery($artworkID: String!) {
-          artwork(id: $artworkID) {
-            ...ArtworkBanner_artwork
-          }
-        }
-      `}
-      render={renderWithLoadProgress(ArtworkBannerFragmentContainer)}
-    />
-  )
-}

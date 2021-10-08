@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import { Banner, Box, Flex, SelectSmall, Serif } from "@artsy/palette"
 import { useSystemContext } from "v2/System/SystemContext"
 import { graphql } from "react-relay"
-import { SystemQueryRenderer as QueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
+import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import {
   UserEmailPreferencesQuery,
   UserEmailPreferencesQueryResponse,
@@ -77,7 +77,7 @@ export const UserEmailPreferencesQueryRenderer = () => {
   }
 
   return (
-    <QueryRenderer<UserEmailPreferencesQuery>
+    <SystemQueryRenderer<UserEmailPreferencesQuery>
       environment={relayEnvironment}
       variables={{}}
       query={graphql`

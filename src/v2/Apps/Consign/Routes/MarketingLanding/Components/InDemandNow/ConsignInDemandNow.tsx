@@ -11,7 +11,7 @@ import {
   ResponsiveBox,
   FullBleed,
 } from "@artsy/palette"
-import { SystemQueryRenderer as QueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
+import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { useSystemContext } from "v2/System"
 import { graphql } from "react-relay"
 import { ConsignInDemandNowQuery } from "v2/__generated__/ConsignInDemandNowQuery.graphql"
@@ -48,7 +48,7 @@ const ConsignInDemandNowQueryRenderer: React.FC = () => {
   const { relayEnvironment } = useSystemContext()
 
   return (
-    <QueryRenderer<ConsignInDemandNowQuery>
+    <SystemQueryRenderer<ConsignInDemandNowQuery>
       environment={relayEnvironment}
       variables={{
         artistInternalId: "4ed901b755a41e0001000a9f", // Kehinde Wiley

@@ -5,7 +5,7 @@ import { SystemContextConsumer } from "v2/System"
 import { track } from "v2/System/Analytics"
 import * as Schema from "v2/System/Analytics/Schema"
 import { renderWithLoadProgress } from "v2/System/Relay/renderWithLoadProgress"
-import { SystemQueryRenderer as QueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
+import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { FollowArtistButtonFragmentContainer as FollowArtistButton } from "v2/Components/FollowButton/FollowArtistButton"
 import { ArtistBioFragmentContainer as ArtistBio } from "v2/Components/ArtistBio"
 import { ArtistMarketInsightsFragmentContainer as ArtistMarketInsights } from "v2/Components/ArtistMarketInsights"
@@ -171,7 +171,7 @@ export const ArtistInfoQueryRenderer = ({ artistID }: { artistID: string }) => {
     <SystemContextConsumer>
       {({ relayEnvironment }) => {
         return (
-          <QueryRenderer<ArtistInfoQuery>
+          <SystemQueryRenderer<ArtistInfoQuery>
             environment={relayEnvironment}
             variables={{ artistID }}
             query={graphql`

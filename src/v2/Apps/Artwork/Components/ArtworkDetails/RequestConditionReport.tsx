@@ -7,7 +7,7 @@ import {
   useSystemContext,
   useTracking,
 } from "v2/System"
-import { SystemQueryRenderer as QueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
+import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { ErrorModal } from "v2/Components/Modal/ErrorModal"
 import createLogger from "v2/Utils/logger"
 import { openAuthModal } from "v2/Utils/openAuthModal"
@@ -204,7 +204,7 @@ export const RequestConditionReportQueryRenderer: React.FC<{
   const { relayEnvironment } = useSystemContext()
 
   return (
-    <QueryRenderer<RequestConditionReportQuery>
+    <SystemQueryRenderer<RequestConditionReportQuery>
       environment={relayEnvironment}
       variables={{ artworkID }}
       query={graphql`

@@ -165,6 +165,7 @@ export const ViewingRoomsPaginatedRenderer: React.FC<
 
   return (
     <SystemQueryRenderer<ViewingRoomsPaginatedRendererQuery>
+      lazyLoad
       environment={relayEnvironment}
       query={graphql`
         query ViewingRoomsPaginatedRendererQuery(

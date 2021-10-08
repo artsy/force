@@ -11,7 +11,7 @@ import { RouterLink } from "v2/System/Router/RouterLink"
 import { ScrollToPartnerHeader } from "../ScrollToPartnerHeader"
 import { ArtworksRailPlaceholder } from "./ArtworkRailPlaceholder"
 import { ViewAllButton } from "./ViewAllButton"
-import { SystemQueryRenderer as QueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
+import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 
 interface ArtworksRailProps extends BoxProps {
   partner: ArtworksRail_partner
@@ -116,7 +116,8 @@ export const ArtworksRailRenderer: React.FC<
   const { relayEnvironment } = useSystemContext()
 
   return (
-    <QueryRenderer<ArtworksRailRendererQuery>
+    <SystemQueryRenderer<ArtworksRailRendererQuery>
+      lazyLoad
       environment={relayEnvironment}
       query={graphql`
         query ArtworksRailRendererQuery($partnerId: String!) {

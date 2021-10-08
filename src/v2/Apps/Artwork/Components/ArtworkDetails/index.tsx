@@ -1,6 +1,5 @@
 import { BorderBox, Box, HTML, Tab, Tabs } from "@artsy/palette"
-import { renderWithLoadProgress } from "v2/System/Relay/renderWithLoadProgress"
-import React, { Component, useContext } from "react"
+import React, { Component } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { ArtworkDetailsAboutTheWorkFromArtsyFragmentContainer } from "./ArtworkDetailsAboutTheWorkFromArtsy"
@@ -8,11 +7,8 @@ import { ArtworkDetailsAboutTheWorkFromPartnerFragmentContainer } from "./Artwor
 import { ArtworkDetailsAdditionalInfoFragmentContainer } from "./ArtworkDetailsAdditionalInfo"
 import { ArtworkDetailsArticlesFragmentContainer } from "./ArtworkDetailsArticles"
 import { ArtworkDetails_artwork } from "v2/__generated__/ArtworkDetails_artwork.graphql"
-import { ArtworkDetailsQuery } from "v2/__generated__/ArtworkDetailsQuery.graphql"
-import { SystemContext } from "v2/System"
 import { track } from "v2/System/Analytics"
 import * as Schema from "v2/System/Analytics/Schema"
-import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import Events from "v2/Utils/Events"
 
 export interface ArtworkDetailsProps {
@@ -119,28 +115,6 @@ export const ArtworkDetailsFragmentContainer = createFragmentContainer(
     `,
   }
 )
-
-export const ArtworkDetailsQueryRenderer = ({
-  artworkID,
-}: {
-  artworkID: string
-}) => {
-  const { relayEnvironment } = useContext(SystemContext)
-  return (
-    <SystemQueryRenderer<ArtworkDetailsQuery>
-      environment={relayEnvironment}
-      variables={{ artworkID }}
-      query={graphql`
-        query ArtworkDetailsQuery($artworkID: String!) {
-          artwork(id: $artworkID) {
-            ...ArtworkDetails_artwork
-          }
-        }
-      `}
-      render={renderWithLoadProgress(ArtworkDetailsFragmentContainer)}
-    />
-  )
-}
 
 const TabContainer = styled(Box)``
 const ArtworkDetailsContainer = TabContainer

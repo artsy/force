@@ -1,9 +1,8 @@
 import React from "react"
-import { QueryRenderer, createFragmentContainer, graphql } from "react-relay"
+import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "v2/System"
 import { FairBoothRailArtworksQuery } from "v2/__generated__/FairBoothRailArtworksQuery.graphql"
 import { FairBoothRailArtworks_show } from "v2/__generated__/FairBoothRailArtworks_show.graphql"
-import { FairBoothRailPlaceholder } from "./FairBoothRailPlaceholder"
 import {
   ActionType,
   ClickedArtworkGroup,
@@ -13,9 +12,11 @@ import {
 } from "@artsy/cohesion"
 import { useTracking } from "react-tracking"
 import { useAnalyticsContext } from "v2/System/Analytics/AnalyticsContext"
-import { Shelf } from "@artsy/palette"
+import { Box, Shelf, SkeletonBox, SkeletonText } from "@artsy/palette"
 import { ShelfArtworkFragmentContainer } from "v2/Components/Artwork/ShelfArtwork"
 import { extractNodes } from "v2/Utils/extractNodes"
+import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
+import { IMG_HEIGHT } from "v2/Components/Artwork/ShelfArtwork"
 
 export interface FairBoothRailArtworksProps {
   show: FairBoothRailArtworks_show
@@ -79,6 +80,25 @@ const FairBoothRailArtworks: React.FC<FairBoothRailArtworksProps> = ({
   )
 }
 
+const PLACEHOLDER = (
+  <Shelf>
+    {[...new Array(10)].map((_, i) => {
+      return (
+        <Box key={i}>
+          <SkeletonBox
+            width={200}
+            height={[IMG_HEIGHT.mobile, IMG_HEIGHT.desktop]}
+            mb={1}
+          />
+          <SkeletonText variant="md">Artist Name</SkeletonText>
+          <SkeletonText>Artwork Title</SkeletonText>
+          <SkeletonText>Price</SkeletonText>
+        </Box>
+      )
+    })}
+  </Shelf>
+)
+
 export const FairBoothRailArtworksFragmentContainer = createFragmentContainer(
   FairBoothRailArtworks,
   {
@@ -103,12 +123,9 @@ export const FairBoothRailArtworksQueryRenderer: React.FC<{
 }> = ({ id, ...rest }) => {
   const { relayEnvironment } = useSystemContext()
 
-  if (!relayEnvironment) {
-    return null
-  }
-
   return (
-    <QueryRenderer<FairBoothRailArtworksQuery>
+    <SystemQueryRenderer<FairBoothRailArtworksQuery>
+      lazyLoad
       environment={relayEnvironment}
       query={graphql`
         query FairBoothRailArtworksQuery($id: String!) {
@@ -118,13 +135,14 @@ export const FairBoothRailArtworksQueryRenderer: React.FC<{
         }
       `}
       variables={{ id }}
+      placeholder={PLACEHOLDER}
       render={({ error, props }) => {
         if (error) {
           return null
         }
 
         if (!props) {
-          return <FairBoothRailPlaceholder />
+          return PLACEHOLDER
         }
 
         if (props.show) {
