@@ -8,7 +8,7 @@ import {
   PricingTransparencyQueryVariables,
 } from "v2/__generated__/PricingTransparencyQuery.graphql"
 import { SystemContextProps, withSystemContext } from "v2/System"
-import { SystemQueryRenderer as QueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
+import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 
 const Text = props => <Serif size="3t" color="black100" {...props} />
 const Row = props => (
@@ -52,7 +52,7 @@ export const PricingTransparencyQueryRenderer = withSystemContext(
     relayEnvironment,
   }: SystemContextProps & PricingTransparencyQueryVariables) => {
     return (
-      <QueryRenderer<PricingTransparencyQuery>
+      <SystemQueryRenderer<PricingTransparencyQuery>
         environment={relayEnvironment}
         query={graphql`
           query PricingTransparencyQuery(

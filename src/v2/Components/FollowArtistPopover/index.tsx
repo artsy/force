@@ -2,7 +2,7 @@ import { Join, Separator, Spacer } from "@artsy/palette"
 import { FollowArtistPopover_artist } from "v2/__generated__/FollowArtistPopover_artist.graphql"
 import { FollowArtistPopoverQuery } from "v2/__generated__/FollowArtistPopoverQuery.graphql"
 import { SystemContext, SystemContextProps } from "v2/System"
-import { SystemQueryRenderer as QueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
+import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import React, { useContext } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Provider } from "unstated"
@@ -74,7 +74,7 @@ export const FollowArtistPopoverQueryRenderer = ({
 }) => {
   const { relayEnvironment, user } = useContext(SystemContext)
   return (
-    <QueryRenderer<FollowArtistPopoverQuery>
+    <SystemQueryRenderer<FollowArtistPopoverQuery>
       environment={relayEnvironment}
       variables={{ artistID }}
       query={graphql`

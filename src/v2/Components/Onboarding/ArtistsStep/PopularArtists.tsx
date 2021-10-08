@@ -5,7 +5,7 @@ import {
 } from "v2/__generated__/PopularArtistsFollowArtistMutation.graphql"
 import { PopularArtistsQuery } from "v2/__generated__/PopularArtistsQuery.graphql"
 import { SystemContextProps, withSystemContext } from "v2/System"
-import { SystemQueryRenderer as QueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
+import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import React from "react"
 import {
   RelayProp,
@@ -202,7 +202,7 @@ const PopularArtistsComponent: React.SFC<
   ContainerProps & SystemContextProps
 > = ({ onArtistFollow, relayEnvironment }) => {
   return (
-    <QueryRenderer<PopularArtistsQuery>
+    <SystemQueryRenderer<PopularArtistsQuery>
       environment={relayEnvironment}
       query={graphql`
         query PopularArtistsQuery {

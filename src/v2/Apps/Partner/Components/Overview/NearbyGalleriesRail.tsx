@@ -7,7 +7,7 @@ import { Carousel } from "../Carousel"
 import { useSystemContext } from "v2/System"
 import { NearbyGalleryCardFragmentContainer } from "./NearbyGalleryCard"
 import { NearbyGalleriesRailPlaceholder } from "./NearbyGalleriesRailPlaceholder"
-import { SystemQueryRenderer as QueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
+import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { compact } from "lodash"
 
 interface NearbyGalleriesRailProps extends BoxProps {
@@ -72,8 +72,10 @@ export const NearbyGalleriesRailRenderer: React.FC<
   const { relayEnvironment } = useSystemContext()
 
   return (
-    <QueryRenderer<NearbyGalleriesRailRendererQuery>
+    <SystemQueryRenderer<NearbyGalleriesRailRendererQuery>
+      lazyLoad
       environment={relayEnvironment}
+      placeholder={<NearbyGalleriesRailPlaceholder {...rest} count={9} />}
       query={graphql`
         query NearbyGalleriesRailRendererQuery($near: String!) {
           partnersConnection(

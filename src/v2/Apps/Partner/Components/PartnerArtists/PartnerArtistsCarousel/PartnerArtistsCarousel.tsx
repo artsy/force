@@ -13,7 +13,7 @@ import {
 import { PartnerArtistsCarouselPlaceholder } from "./PartnerArtistsCarouselPlaceholder"
 import { ScrollToPartnerHeader } from "../../ScrollToPartnerHeader"
 import { Carousel } from "../../Carousel"
-import { SystemQueryRenderer as QueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
+import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 
 const PAGE_SIZE = 19
 
@@ -113,7 +113,8 @@ export const PartnerArtistsCarouselRenderer: React.FC<{
   const { relayEnvironment } = useSystemContext()
 
   return (
-    <QueryRenderer<PartnerArtistsCarouselRendererQuery>
+    <SystemQueryRenderer<PartnerArtistsCarouselRendererQuery>
+      lazyLoad
       environment={relayEnvironment}
       query={graphql`
         query PartnerArtistsCarouselRendererQuery($partnerId: String!) {

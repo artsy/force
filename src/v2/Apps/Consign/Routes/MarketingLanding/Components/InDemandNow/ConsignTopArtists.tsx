@@ -1,5 +1,5 @@
 import React from "react"
-import { SystemQueryRenderer as QueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
+import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { useSystemContext } from "v2/System"
 import { graphql } from "react-relay"
 import { chunk, shuffle } from "lodash"
@@ -28,7 +28,7 @@ const ConsignTopArtistsQueryRenderer: React.FC = () => {
   const { relayEnvironment } = useSystemContext()
 
   return (
-    <QueryRenderer<ConsignTopArtistsQuery>
+    <SystemQueryRenderer<ConsignTopArtistsQuery>
       environment={relayEnvironment}
       variables={{}}
       query={graphql`

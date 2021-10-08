@@ -4,7 +4,7 @@ import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
 
 import { SystemContextProps, useSystemContext } from "v2/System"
 import { renderWithLoadProgress } from "v2/System/Relay/renderWithLoadProgress"
-import { SystemQueryRenderer as QueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
+import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 
 import { AppSecondFactorFragmentContainer as AppSecondFactor } from "./Components/AppSecondFactor"
 import { BackupSecondFactorFragmentContainer as BackupSecondFactor } from "./Components/BackupSecondFactor"
@@ -77,7 +77,7 @@ export const TwoFactorAuthenticationQueryRenderer = () => {
   }
 
   return (
-    <QueryRenderer<TwoFactorAuthenticationQuery>
+    <SystemQueryRenderer<TwoFactorAuthenticationQuery>
       environment={relayEnvironment}
       variables={{}}
       query={graphql`

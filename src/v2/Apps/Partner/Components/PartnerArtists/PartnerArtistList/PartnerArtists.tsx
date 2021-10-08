@@ -8,7 +8,7 @@ import { useSystemContext } from "v2/System"
 import { usePartnerArtistsLoadingContext } from "v2/Apps/Partner/Utils/PartnerArtistsLoadingContext"
 import { PartnerArtistListPlaceholder } from "./PartnerArtistListPlaceholder"
 import { PartnerArtistListFragmentContainer } from "./PartnerArtistList"
-import { SystemQueryRenderer as QueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
+import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 
 export interface PartnerArtistsProps {
   partner: PartnerArtists_partner
@@ -78,7 +78,8 @@ export const PartnerArtistsRenderer: React.FC<{
   const { relayEnvironment } = useSystemContext()
 
   return (
-    <QueryRenderer<PartnerArtistsQuery>
+    <SystemQueryRenderer<PartnerArtistsQuery>
+      lazyLoad
       environment={relayEnvironment}
       query={graphql`
         query PartnerArtistsQuery($partnerId: String!) {

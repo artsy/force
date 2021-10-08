@@ -10,7 +10,7 @@ import { PartnerArtistDetailsList_partner } from "v2/__generated__/PartnerArtist
 import { PartnerArtistDetailsListQuery } from "v2/__generated__/PartnerArtistDetailsListQuery.graphql"
 import { PartnerArtistDetailsListPlaceholder } from "./PartnerArtistDetailsListPlaceholder"
 import { PartnerArtistDetailsFragmentContainer } from "../PartnerArtistDetails"
-import { SystemQueryRenderer as QueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
+import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 
 export interface PartnerArtistDetailsListProps {
   partner: PartnerArtistDetailsList_partner
@@ -138,7 +138,8 @@ export const PartnerArtistDetailsListRenderer: React.FC<{
   const { relayEnvironment } = useSystemContext()
 
   return (
-    <QueryRenderer<PartnerArtistDetailsListQuery>
+    <SystemQueryRenderer<PartnerArtistDetailsListQuery>
+      lazyLoad
       environment={relayEnvironment}
       query={graphql`
         query PartnerArtistDetailsListRendererQuery($partnerId: String!) {
