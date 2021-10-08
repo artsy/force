@@ -156,13 +156,16 @@ const ArtistSuggestion: FC<{ node: NonNullable<Suggestion>["node"] }> = (
       bg={isHighlighted ? "black5" : "white100"}
       style={{ cursor: "pointer" }}
     >
-      <Image
-        src={node?.image?.cropped?.src}
-        srcSet={node?.image?.cropped?.srcSet}
-        width={node?.image?.cropped?.width}
-        height={node?.image?.cropped?.height}
-        alt="Artist Image"
-      />
+      {node?.image?.cropped ? (
+        <Image
+          src={node?.image?.cropped?.src}
+          srcSet={node?.image?.cropped?.srcSet}
+          width={node?.image?.cropped?.width}
+          height={node?.image?.cropped?.height}
+        />
+      ) : (
+        <Box width={44} height={44} backgroundColor="black10" />
+      )}
       <Text ml={1} variant="md">
         {node?.displayLabel}
       </Text>
