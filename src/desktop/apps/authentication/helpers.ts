@@ -68,8 +68,8 @@ export const handleSubmit = async (
           modal_copy: copy,
           intent,
           trigger_seconds: triggerSeconds,
-          trigger: "timed" as AuthTrigger,
-          service: "email" as AuthService,
+          trigger: "timed",
+          service: "email",
         }
 
         let analyticsOptions
