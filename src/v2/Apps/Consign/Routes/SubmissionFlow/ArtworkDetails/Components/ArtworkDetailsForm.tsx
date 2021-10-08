@@ -15,6 +15,7 @@ import {
 import { Form, useFormikContext } from "formik"
 import { hardcodedMediums } from "v2/Components/ArtworkFilter/ArtworkFilters/MediumFilter"
 import { checkboxValues } from "v2/Components/ArtworkFilter/ArtworkFilters/AttributionClassFilter"
+import { ArtistAutosuggest } from "./ArtistAutosuggest"
 
 const rarityOptions = checkboxValues.map(({ name, value }) => ({
   text: name,
@@ -57,13 +58,7 @@ export const ArtworkDetailsForm: FC = () => {
     <Form>
       <GridColumns>
         <Column span={6}>
-          <Input
-            title="Artist"
-            placeholder="Enter Full Name"
-            name="artist"
-            onChange={handleChange}
-            value={values.artist || ""}
-          />
+          <ArtistAutosuggest />
         </Column>
         <Column span={6} mt={[2, 0]}>
           <Input
@@ -79,7 +74,7 @@ export const ArtworkDetailsForm: FC = () => {
         <Column span={6}>
           <Input
             title="Title"
-            placeholder="Add Title or Write “Unknown”"
+            placeholder="Add Title or Write 'Unknown'"
             name="title"
             onChange={handleChange}
             value={values.title || ""}
@@ -121,7 +116,7 @@ export const ArtworkDetailsForm: FC = () => {
             <Flex alignItems="center" mt={[2, 0]}>
               <Input
                 title="Edition Number"
-                placeholder="Your Work’s #"
+                placeholder="Your Work's #"
                 name="editionNumber"
                 onChange={handleChange}
                 value={values.editionNumber || ""}
