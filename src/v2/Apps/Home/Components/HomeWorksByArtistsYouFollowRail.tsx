@@ -111,6 +111,7 @@ export const HomeWorksByArtistsYouFollowRailQueryRenderer: React.FC = () => {
 
   return (
     <SystemQueryRenderer<HomeWorksByArtistsYouFollowRailQuery>
+      lazyLoad
       environment={relayEnvironment}
       query={graphql`
         query HomeWorksByArtistsYouFollowRailQuery {

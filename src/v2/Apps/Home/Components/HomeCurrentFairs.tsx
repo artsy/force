@@ -202,6 +202,7 @@ export const HomeCurrentFairsQueryRenderer: React.FC = () => {
 
   return (
     <SystemQueryRenderer<HomeCurrentFairsQuery>
+      lazyLoad
       environment={relayEnvironment}
       query={graphql`
         query HomeCurrentFairsQuery {

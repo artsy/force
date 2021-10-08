@@ -183,6 +183,7 @@ export const HomeTrendingArtistsRailQueryRenderer: React.FC = () => {
 
   return (
     <SystemQueryRenderer<HomeTrendingArtistsRailQuery>
+      lazyLoad
       environment={relayEnvironment}
       query={graphql`
         query HomeTrendingArtistsRailQuery {

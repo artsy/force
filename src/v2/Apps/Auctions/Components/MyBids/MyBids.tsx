@@ -211,6 +211,7 @@ export const MyBidsQueryRenderer: React.FC = () => {
 
   return (
     <SystemQueryRenderer<MyBidsQuery>
+      lazyLoad
       environment={relayEnvironment}
       query={graphql`
         query MyBidsQuery {
