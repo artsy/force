@@ -8,7 +8,7 @@ import {
   SubmitButton,
   EmailSubscriptionCheckbox,
   TermsOfServiceCheckbox,
-} from "v2/Components/Authentication/commonElements"
+} from "v2/Components/Authentication/Components/commonElements"
 import {
   FormProps,
   InputValues,

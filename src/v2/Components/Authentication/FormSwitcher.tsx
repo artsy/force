@@ -4,11 +4,10 @@ import qs from "querystring"
 import React from "react"
 import track, { TrackingProp } from "react-tracking"
 import Events from "v2/Utils/Events"
-
 import { SystemContextProvider } from "v2/System"
-import { ForgotPasswordForm } from "v2/Components/Authentication/Desktop/ForgotPasswordForm"
-import { LoginForm } from "v2/Components/Authentication/Desktop/LoginForm"
-import { SignUpFormQueryRenderer } from "v2/Components/Authentication/Desktop/SignUpForm"
+import { ForgotPasswordForm } from "v2/Components/Authentication/Views/ForgotPasswordForm"
+import { LoginForm } from "v2/Components/Authentication/Views/LoginForm"
+import { SignUpFormQueryRenderer } from "v2/Components/Authentication/Views/SignUpForm"
 import {
   AfterSignUpAction,
   FormComponentType,

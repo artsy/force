@@ -1,4 +1,4 @@
-import { DesktopModal } from "v2/Components/Authentication/Desktop/Components/DesktopModal"
+import { DesktopModal } from "v2/Components/Authentication/Components/DesktopModal"
 import { mount } from "enzyme"
 import React from "react"
 

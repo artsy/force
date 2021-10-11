@@ -1,8 +1,8 @@
-import { ForgotPasswordForm } from "v2/Components/Authentication/Desktop/ForgotPasswordForm"
+import { ForgotPasswordForm } from "v2/Components/Authentication/Views/ForgotPasswordForm"
 import { mount } from "enzyme"
 import React from "react"
 import { Clickable } from "@artsy/palette"
-import { Footer } from "v2/Components/Authentication/Footer"
+import { Footer } from "v2/Components/Authentication/Components/Footer"
 
 jest.mock("sharify", () => ({ data: { RECAPTCHA_KEY: "recaptcha-api-key" } }))
 
@@ -24,6 +24,7 @@ describe("ForgotPasswordForm", () => {
   }
 
   describe("onSubmit", () => {
+    // eslint-disable-next-line jest/no-done-callback
     it("calls handleSubmit with expected params", done => {
       const wrapper = getWrapper()
       const input = wrapper.find(`Formik`)
@@ -41,6 +42,7 @@ describe("ForgotPasswordForm", () => {
       })
     })
 
+    // eslint-disable-next-line jest/no-done-callback
     it("fires reCAPTCHA event", done => {
       const wrapper = getWrapper()
       const input = wrapper.find(`Formik`)
@@ -55,6 +57,7 @@ describe("ForgotPasswordForm", () => {
     })
   })
 
+  // eslint-disable-next-line jest/no-done-callback
   it("renders errors", done => {
     props.values = {}
     const wrapper = getWrapper()
@@ -68,6 +71,7 @@ describe("ForgotPasswordForm", () => {
     })
   })
 
+  // eslint-disable-next-line jest/no-done-callback
   it("clears error after input change", done => {
     props.error = "Some global server error"
     const wrapper = getWrapper()

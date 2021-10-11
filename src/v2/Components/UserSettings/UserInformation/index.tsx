@@ -9,7 +9,7 @@ import {
 import { useSystemContext } from "v2/System/SystemContext"
 import { renderWithLoadProgress } from "v2/System/Relay/renderWithLoadProgress"
 import { Form, Formik, FormikProps } from "formik"
-import { Error } from "v2/Components/Authentication/commonElements"
+import { Error } from "v2/Components/Authentication/Components/commonElements"
 import { UserInformation_me } from "v2/__generated__/UserInformation_me.graphql"
 import { UserInformationQuery } from "v2/__generated__/UserInformationQuery.graphql"
 import { Box, Button, Serif, Text, space } from "@artsy/palette"

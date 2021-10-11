@@ -1,8 +1,7 @@
 import { FormikProps } from "formik"
 import React, { Component } from "react"
 import { TrackingProp } from "react-tracking"
-
-import { DesktopModal } from "v2/Components/Authentication/Desktop/Components/DesktopModal"
+import { DesktopModal } from "v2/Components/Authentication/Components/DesktopModal"
 import { FormSwitcher } from "v2/Components/Authentication/FormSwitcher"
 import { handleSubmit as defaultHandleSubmit } from "v2/Components/Authentication/helpers"
 import {

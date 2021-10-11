@@ -2,7 +2,7 @@ import { Box, Flex, Clickable, Sans } from "@artsy/palette"
 import React from "react"
 import styled from "styled-components"
 import { CaptchaTerms, FooterText } from "./commonElements"
-import { ModalType } from "./Types"
+import { ModalType } from "../Types"
 import { themeGet } from "@styled-system/theme-get"
 
 interface FooterProps {

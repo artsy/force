@@ -2,7 +2,7 @@
 import React from "react"
 import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
-import { tests } from "v2/Components/Authentication/Desktop/SignUpForm"
+import { tests } from "v2/Components/Authentication/Views/SignUpForm"
 import { SignupValues } from "../fixtures"
 import { ContextModule, Intent } from "@artsy/cohesion"
 
@@ -158,65 +158,66 @@ describe("SignUpForm", () => {
     })
   })
 
-  // These tests are commented out due to an issue with the formik onChange handlers that aren’t firing correctly
+  // These tests are skipped due to an issue with the formik onChange handlers that aren’t firing correctly
   // Plan is to explore Cypress integration testing for the Sign Up Flow to cover these tests scope
   // TODO: JIRA TICKET GRO-353: Add Cyprus based integration tests to Sign Up Flow
+  describe.skip("Unit testing that needs to be bundled under Cypress Integration", () => {
+    it("clears error after input change", done => {
+      passedProps.error = "Some global server error"
+      const wrapper = getWrapper()
+      const input = wrapper.find(`input[name="email"]`)
+      expect((wrapper.state() as any).error).toEqual("Some global server error")
+      input.simulate("change")
+      wrapper.update()
 
-  //   describe("Unit testing that needs to be bundled under Cypress Integration", () => {
-  //     it("clears error after input change", done => {
-  //       passedProps.error = "Some global server error"
-  //       const wrapper = getWrapper()
-  //       const input = wrapper.find(`input[name="email"]`)
-  //       expect((wrapper.state() as any).error).toEqual("Some global server error")
-  //       input.simulate("change")
-  //       wrapper.update()
+      setTimeout(() => {
+        expect((wrapper.state() as any).error).toEqual(null)
+        done()
+      })
+    })
 
-  //       setTimeout(() => {
-  //         expect((wrapper.state() as any).error).toEqual(null)
-  //         done()
-  //       })
-  //     })
+    it("leaves email flag alone when accepting terms", done => {
+      passedProps.values.accepted_terms_of_service = false
+      passedProps.values.agreed_to_receive_emails = false
 
-  //     it("leaves email flag alone when accepting terms", done => {
-  //       passedProps.values.accepted_terms_of_service = false
-  //       passedProps.values.agreed_to_receive_emails = false
+      const wrapper = getWrapper({
+        RequestLocation: () => ({
+          countryCode: "I_DONT_KNOW_WHAT_THIS_VALUE_IS",
+        }),
+      })
 
-  //       const wrapper = getWrapper({
-  //         RequestLocation: () => ({ countryCode }),
-  //       })
+      const termsInput = wrapper.find("input[name='accepted_terms_of_service']")
+      termsInput.simulate("change", { currentTarget: { checked: true } })
+      const formik = wrapper.find("Formik")
+      formik.simulate("submit")
 
-  //       const termsInput = wrapper.find("input[name='accepted_terms_of_service']")
-  //       termsInput.simulate("change", { currentTarget: { checked: true } })
-  //       const formik = wrapper.find("Formik")
-  //       formik.simulate("submit")
+      setTimeout(() => {
+        const calls = passedProps.handleSubmit.mock.calls
+        const {
+          accepted_terms_of_service,
+          agreed_to_receive_emails,
+        } = calls[0][0]
 
-  //       setTimeout(() => {
-  //         const calls = passedProps.handleSubmit.mock.calls
-  //         const {
-  //           accepted_terms_of_service,
-  //           agreed_to_receive_emails,
-  //         } = calls[0][0]
+        expect(accepted_terms_of_service).toEqual(true)
+        expect(agreed_to_receive_emails).toEqual(false)
 
-  //         expect(accepted_terms_of_service).toEqual(true)
-  //         expect(agreed_to_receive_emails).toEqual(false)
+        done()
+      })
+    })
 
-  //         done()
-  //       })
-  //     })
+    it("mixes in the recaptcha token", done => {
+      const wrapper = getWrapper()
+      const formik = wrapper.find("Formik")
+      formik.simulate("submit")
 
-  //     it("mixes in the recaptcha token", done => {
-  //       const wrapper = getWrapper()
-  //       const formik = wrapper.find("Formik")
-  //       formik.simulate("submit")
+      setTimeout(() => {
+        const calls = passedProps.handleSubmit.mock.calls
+        const { recaptcha_token } = calls[0][0]
 
-  //       setTimeout(() => {
-  //         const calls = passedProps.handleSubmit.mock.calls
-  //         const { recaptcha_token } = calls[0][0]
+        expect(recaptcha_token).toEqual("recaptcha-token")
 
-  //         expect(recaptcha_token).toEqual("recaptcha-token")
-
-  //         done()
-  //       })
-  //     })
-  //   })
+        done()
+      })
+    })
+  })
 })

@@ -6,7 +6,7 @@ import {
   Footer,
   FormContainer as Form,
   SubmitButton,
-} from "v2/Components/Authentication/commonElements"
+} from "v2/Components/Authentication/Components/commonElements"
 import QuickInput from "v2/Components/QuickInput"
 import { recaptcha } from "v2/Utils/recaptcha"
 import { FormProps, InputValues, ModalType } from "../Types"

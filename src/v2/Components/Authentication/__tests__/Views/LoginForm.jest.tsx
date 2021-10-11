@@ -1,5 +1,5 @@
 /* eslint-disable jest/no-done-callback */
-import { LoginForm } from "v2/Components/Authentication/Desktop/LoginForm"
+import { LoginForm } from "v2/Components/Authentication/Views/LoginForm"
 import { mount } from "enzyme"
 import React from "react"
 import { ChangeEvents, LoginValues } from "../fixtures"

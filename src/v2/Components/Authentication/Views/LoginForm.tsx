@@ -5,7 +5,7 @@ import {
   ForgotPassword,
   FormContainer as Form,
   SubmitButton,
-} from "v2/Components/Authentication/commonElements"
+} from "v2/Components/Authentication/Components/commonElements"
 import {
   FormProps,
   InputValues,
