@@ -18,22 +18,18 @@ declare module "sharify" {
     export interface GlobalData {
       readonly ADMIN_URL: string
       readonly APP_URL: string
-      readonly ARTIST_COLLECTIONS_RAIL_IDS: string[]
       readonly ARTIST_COLLECTIONS_RAIL?: string // TODO: remove after CollectionsRail a/b test
       readonly CDN_URL: string
       readonly CMS_URL: string
       CURRENT_PATH: string
       CURRENT_USER: User
-      readonly DEPLOY_ENV: string
       readonly EIGEN: boolean
       readonly ENABLE_FAIR_PAGE_EXHIBITORS_TAB: boolean
-      readonly ENABLE_FAIR_ORGANIZER_REDIRECT: boolean
-      readonly ENABLE_SERVER_SIDE_CACHE: string
-      readonly ENABLE_QUERY_BATCHING: boolean
       readonly ENABLE_NEW_AUCTIONS_FILTER: boolean
+      readonly ENABLE_QUERY_BATCHING: boolean
+      readonly ENABLE_SERVER_SIDE_CACHE: string
       readonly FACEBOOK_APP_NAMESPACE: string
       readonly FACEBOOK_ID: string
-      readonly FORCE_CLOUDFRONT_URL: string
       readonly GEMINI_CLOUDFRONT_URL: string
       readonly GENOME_URL: string
       readonly GOOGLE_ADWORDS_ID: string

@@ -27,8 +27,6 @@ describe("Header template", function () {
       const sd = {
         APP_URL: "http://localhost:5000",
         API_URL: "http://localhost:5000",
-        CSS_EXT: ".css.gz",
-        JS_EXT: ".js.gz",
         NODE_ENV: "test",
         CURRENT_PATH: "/cool-fair",
         PROFILE: fabricate("fair_profile"),
@@ -61,8 +59,6 @@ describe("Header template", function () {
       const sd = {
         APP_URL: "http://localhost:5000",
         API_URL: "http://localhost:5000",
-        CSS_EXT: ".css.gz",
-        JS_EXT: ".js.gz",
         NODE_ENV: "test",
         CURRENT_PATH: "/cool-fair",
         PROFILE: fabricate("fair_profile"),
