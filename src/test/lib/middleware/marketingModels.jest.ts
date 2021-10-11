@@ -41,7 +41,6 @@ describe("showMarketingSignupModal", () => {
         sd: {
           IS_MOBILE: true,
           APP_URL: "http://www.artsy.net",
-          MOBILE_MARKETING_SIGNUP_MODALS: data,
           MARKETING_SIGNUP_MODALS: data,
         },
         modal: { slug: "foo", copy: "welcome to artsy", image: "img.jpg" },

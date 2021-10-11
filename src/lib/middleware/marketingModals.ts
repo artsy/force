@@ -1,6 +1,6 @@
 import type { NextFunction } from "express"
 import type { ArtsyRequest, ArtsyResponse } from "./artsyExpress"
-import _ from "underscore"
+import { find } from "lodash"
 const JSONPage = require("../../desktop/components/json_page/index.coffee")
 
 export function marketingModalsMiddleware(
@@ -20,9 +20,7 @@ export function marketingModalsMiddleware(
         // Used by desktop
         res.locals.sd.MARKETING_SIGNUP_MODALS = data.modals
 
-        // Used by mobile
-        res.locals.sd.MOBILE_MARKETING_SIGNUP_MODALS = data.modals
-        const modalData = _.findWhere(data.modals, { slug })
+        const modalData = find(data.modals, { slug })
         if (modalData) {
           res.locals.modal = modalData
         }
