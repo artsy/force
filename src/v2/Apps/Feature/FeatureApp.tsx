@@ -3,7 +3,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { FeatureMetaFragmentContainer as FeatureMeta } from "./Components/FeatureMeta"
 import { FeatureHeaderFragmentContainer as FeatureHeader } from "./Components/FeatureHeader"
 import { FeatureApp_feature } from "v2/__generated__/FeatureApp_feature.graphql"
-import { Col, FullBleed, Grid, HTML, Join, Row, Spacer } from "@artsy/palette"
+import { Join, Spacer, HTML } from "@artsy/palette"
 import { FeatureSetFragmentContainer as FeatureSet } from "./Components/FeatureSet"
 
 interface FeatureAppProps {
@@ -16,35 +16,28 @@ const FeatureApp: React.FC<FeatureAppProps> = ({ feature }) => {
   return (
     <>
       <FeatureMeta feature={feature} />
-
-      <FullBleed>
-        <FeatureHeader feature={feature} />
-      </FullBleed>
+      <FeatureHeader feature={feature} />
 
       {(feature.description || feature.callout) && (
-        <Grid my={3} px={3}>
-          <Row>
-            <Col sm={8} mx="auto">
-              <Join separator={<Spacer my={3} />}>
-                {feature.description && (
-                  <HTML variant="text" html={feature.description} />
-                )}
+        <>
+          <Spacer my={2} />
+          <Join separator={<Spacer my={2} />}>
+            {feature.description && (
+              <HTML variant={["md", "lg"]} html={feature.description} />
+            )}
 
-                {feature.callout && (
-                  <HTML variant="title" html={feature.callout} />
-                )}
-              </Join>
-            </Col>
-          </Row>
-        </Grid>
+            {feature.callout && (
+              <HTML variant={["xs", "md"]} html={feature.callout} />
+            )}
+          </Join>
+        </>
       )}
-
-      {/* @ts-expect-error STRICT_NULL_CHECK */}
-      {feature.sets.edges.length > 0 &&
-        // @ts-expect-error STRICT_NULL_CHECK
+      <Spacer mb={12} />
+      {feature.sets?.edges &&
+        feature.sets.edges.length > 0 &&
         feature.sets.edges.map(
-          // @ts-expect-error STRICT_NULL_CHECK
-          ({ node: set }) => set && <FeatureSet key={set.id} set={set} />
+          edge =>
+            edge?.node && <FeatureSet key={edge.node.id} set={edge.node} />
         )}
     </>
   )

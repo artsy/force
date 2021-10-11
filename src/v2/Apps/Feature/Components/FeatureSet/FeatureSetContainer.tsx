@@ -12,8 +12,7 @@ export const FeatureSetContainer: React.FC<FeatureSetContainerProps> = ({
   set,
   children,
 }) => {
-  // @ts-expect-error STRICT_NULL_CHECK
-  const count = set.orderedItems.edges.length
+  const count = set?.orderedItems?.edges?.length ?? 0
 
   if (set.layout === "FULL") {
     return (
@@ -28,14 +27,14 @@ export const FeatureSetContainer: React.FC<FeatureSetContainerProps> = ({
       return (
         <CSSGrid
           mt={2}
-          mb={6}
+          mb={[6, 12]}
           gridTemplateColumns={[
             "repeat(1fr)",
             `repeat(${Math.min(count, 2)}, 1fr)`,
             `repeat(${Math.min(count, 3)}, 1fr)`,
           ]}
           gridColumnGap={2}
-          gridRowGap={6}
+          gridRowGap={[4, 6]}
         >
           {children}
         </CSSGrid>
@@ -44,7 +43,7 @@ export const FeatureSetContainer: React.FC<FeatureSetContainerProps> = ({
     case "Artwork":
       return (
         <Masonry
-          columnCount={[Math.min(count, 2), Math.min(count, 3)]}
+          columnCount={[Math.min(count, 2), Math.min(count, 4)]}
           gridColumnGap={20}
         >
           {children}

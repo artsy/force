@@ -45,14 +45,7 @@ export type FeatureFeaturedLink_featuredLink$key = {
 
 
 const node: ReaderFragment = (function(){
-var v0 = [
-  {
-    "kind": "Literal",
-    "name": "format",
-    "value": "HTML"
-  }
-],
-v1 = {
+var v0 = {
   "kind": "Literal",
   "name": "version",
   "value": [
@@ -60,7 +53,7 @@ v1 = {
     "wide"
   ]
 },
-v2 = [
+v1 = [
   {
     "alias": null,
     "args": null,
@@ -89,12 +82,7 @@ v2 = [
     "name": "height",
     "storageKey": null
   }
-],
-v3 = {
-  "kind": "Literal",
-  "name": "width",
-  "value": 1112
-};
+];
 return {
   "argumentDefinitions": [],
   "kind": "Fragment",
@@ -117,14 +105,26 @@ return {
     },
     {
       "alias": null,
-      "args": (v0/*: any*/),
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "format",
+          "value": "PLAIN"
+        }
+      ],
       "kind": "ScalarField",
       "name": "subtitle",
-      "storageKey": "subtitle(format:\"HTML\")"
+      "storageKey": "subtitle(format:\"PLAIN\")"
     },
     {
       "alias": null,
-      "args": (v0/*: any*/),
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "format",
+          "value": "HTML"
+        }
+      ],
       "kind": "ScalarField",
       "name": "description",
       "storageKey": "description(format:\"HTML\")"
@@ -143,21 +143,21 @@ return {
             {
               "kind": "Literal",
               "name": "height",
-              "value": 500
+              "value": 240
             },
-            (v1/*: any*/),
+            (v0/*: any*/),
             {
               "kind": "Literal",
               "name": "width",
-              "value": 400
+              "value": 335
             }
           ],
           "concreteType": "CroppedImageUrl",
           "kind": "LinkedField",
           "name": "cropped",
           "plural": false,
-          "selections": (v2/*: any*/),
-          "storageKey": "cropped(height:500,version:[\"main\",\"wide\"],width:400)"
+          "selections": (v1/*: any*/),
+          "storageKey": "cropped(height:240,version:[\"main\",\"wide\"],width:335)"
         },
         {
           "alias": "medium",
@@ -165,21 +165,21 @@ return {
             {
               "kind": "Literal",
               "name": "height",
-              "value": 683
+              "value": 324
             },
-            (v1/*: any*/),
+            (v0/*: any*/),
             {
               "kind": "Literal",
               "name": "width",
-              "value": 546
+              "value": 452
             }
           ],
           "concreteType": "CroppedImageUrl",
           "kind": "LinkedField",
           "name": "cropped",
           "plural": false,
-          "selections": (v2/*: any*/),
-          "storageKey": "cropped(height:683,version:[\"main\",\"wide\"],width:546)"
+          "selections": (v1/*: any*/),
+          "storageKey": "cropped(height:324,version:[\"main\",\"wide\"],width:452)"
         },
         {
           "alias": "large",
@@ -187,17 +187,21 @@ return {
             {
               "kind": "Literal",
               "name": "height",
-              "value": 626
+              "value": 648
             },
-            (v1/*: any*/),
-            (v3/*: any*/)
+            (v0/*: any*/),
+            {
+              "kind": "Literal",
+              "name": "width",
+              "value": 904
+            }
           ],
           "concreteType": "CroppedImageUrl",
           "kind": "LinkedField",
           "name": "cropped",
           "plural": false,
-          "selections": (v2/*: any*/),
-          "storageKey": "cropped(height:626,version:[\"main\",\"wide\"],width:1112)"
+          "selections": (v1/*: any*/),
+          "storageKey": "cropped(height:648,version:[\"main\",\"wide\"],width:904)"
         },
         {
           "alias": "full",
@@ -205,17 +209,21 @@ return {
             {
               "kind": "Literal",
               "name": "height",
-              "value": 1112
+              "value": 777
             },
-            (v1/*: any*/),
-            (v3/*: any*/)
+            (v0/*: any*/),
+            {
+              "kind": "Literal",
+              "name": "width",
+              "value": 1085
+            }
           ],
           "concreteType": "ResizedImageUrl",
           "kind": "LinkedField",
           "name": "resized",
           "plural": false,
-          "selections": (v2/*: any*/),
-          "storageKey": "resized(height:1112,version:[\"main\",\"wide\"],width:1112)"
+          "selections": (v1/*: any*/),
+          "storageKey": "resized(height:777,version:[\"main\",\"wide\"],width:1085)"
         }
       ],
       "storageKey": null
@@ -224,5 +232,5 @@ return {
   "type": "FeaturedLink"
 };
 })();
-(node as any).hash = 'cb4a054d338fc3c7f4c9df3b09d7a4a1';
+(node as any).hash = '80c4cca0a36a443e6ac6394d2cfd9be9';
 export default node;

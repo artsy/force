@@ -1,9 +1,17 @@
 import React from "react"
 import styled from "styled-components"
-import { Box, BoxProps, HTML, Join, Spacer, Text } from "@artsy/palette"
+import {
+  Box,
+  BoxProps,
+  HTML,
+  Join,
+  Spacer,
+  Text,
+  FullBleed,
+} from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FeatureHeaderFull_feature } from "v2/__generated__/FeatureHeaderFull_feature.graphql"
-import { DESKTOP_NAV_BAR_HEIGHT, MOBILE_NAV_HEIGHT } from "v2/Components/NavBar"
+import { useNavBarHeight } from "v2/Components/NavBar/useNavBarHeight"
 
 const Figure = styled(Box)`
   overflow: hidden;
@@ -28,46 +36,38 @@ export const FeatureHeaderFull: React.FC<FeatureHeaderFullProps> = ({
   feature: { name, subheadline, fullImage: image },
   ...rest
 }) => {
+  const { desktop, mobile } = useNavBarHeight()
+
   return (
-    <Box {...rest}>
-      {image && (
-        <Figure
-          height={[
-            `calc(95vh - ${MOBILE_NAV_HEIGHT}px)`,
-            `calc(95vh - ${DESKTOP_NAV_BAR_HEIGHT}px)`,
-          ]}
-          bg="black10"
-        >
-          <picture>
-            {/* @ts-expect-error STRICT_NULL_CHECK */}
-            <source srcSet={image.sm.srcSet} media="(max-width: 400px)" />
-            {/* @ts-expect-error STRICT_NULL_CHECK */}
-            <source srcSet={image.md.srcSet} media="(max-width: 1200px)" />
-            {/* @ts-expect-error STRICT_NULL_CHECK */}
-            <source srcSet={image.lg.srcSet} media="(min-width: 1200px)" />
-            {/* @ts-expect-error STRICT_NULL_CHECK */}
-            <Image src={image.sm.src} alt={name} loading="lazy" />
-          </picture>
-        </Figure>
-      )}
-
-      <Box p={4}>
-        <Join separator={<Spacer my={1} />}>
-          <Text
-            variant="largeTitle"
-            as="h1"
-            fontSize="size10"
-            textAlign="center"
+    <FullBleed>
+      <Box {...rest}>
+        {image && (
+          <Figure
+            height={[`calc(95vh - ${mobile}px)`, `calc(95vh - ${desktop}px)`]}
+            bg="black10"
           >
-            {name}
-          </Text>
+            <picture>
+              <source srcSet={image?.sm?.srcSet} media="(max-width: 400px)" />
+              <source srcSet={image?.md?.srcSet} media="(max-width: 1200px)" />
+              <source srcSet={image?.lg?.srcSet} media="(min-width: 1200px)" />
+              <Image src={image?.sm?.src} alt={name} loading="lazy" />
+            </picture>
+          </Figure>
+        )}
 
-          {subheadline && (
-            <HTML variant="subtitle" textAlign="center" html={subheadline} />
-          )}
-        </Join>
+        <Box p={4}>
+          <Join separator={<Spacer my={1} />}>
+            <Text variant="xxl" as="h1" textAlign="center">
+              {name}
+            </Text>
+
+            {subheadline && (
+              <HTML variant="md" textAlign="center" html={subheadline} />
+            )}
+          </Join>
+        </Box>
       </Box>
-    </Box>
+    </FullBleed>
   )
 }
 
