@@ -19,6 +19,7 @@ export interface Photo {
   abortUploading?: () => void
   progress?: number
   removed: boolean
+  loading?: boolean
 }
 
 export function normalizePhoto(file: File): Photo {
@@ -31,6 +32,7 @@ export function normalizePhoto(file: File): Photo {
     abortUploading: undefined,
     progress: undefined,
     removed: false,
+    loading: false,
   }
 }
 

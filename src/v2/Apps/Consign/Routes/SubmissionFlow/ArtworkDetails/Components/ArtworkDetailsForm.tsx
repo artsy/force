@@ -12,7 +12,7 @@ import {
   LabeledInput,
   InfoCircleIcon,
 } from "@artsy/palette"
-import { Form, useFormikContext } from "formik"
+import { useFormikContext } from "formik"
 import { hardcodedMediums } from "v2/Components/ArtworkFilter/ArtworkFilters/MediumFilter"
 import { checkboxValues } from "v2/Components/ArtworkFilter/ArtworkFilters/AttributionClassFilter"
 import { ArtistAutosuggest } from "./ArtistAutosuggest"
@@ -55,7 +55,7 @@ export const ArtworkDetailsForm: FC = () => {
   const uniqueRarity = values.rarity === "unique"
 
   return (
-    <Form>
+    <>
       <GridColumns>
         <Column span={6}>
           <ArtistAutosuggest />
@@ -186,6 +186,6 @@ export const ArtworkDetailsForm: FC = () => {
           </Flex>
         </Column>
       </GridColumns>
-    </Form>
+    </>
   )
 }

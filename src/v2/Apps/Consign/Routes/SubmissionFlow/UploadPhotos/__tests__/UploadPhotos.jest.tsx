@@ -5,12 +5,26 @@ import { UploadPhotosForm } from "../Components/UploadPhotosForm"
 import { PhotoThumbnail } from "../Components/PhotoThumbnail"
 import { UploadPhotos } from "../UploadPhotos"
 import { flushPromiseQueue } from "v2/DevTools"
+import { SystemContextProvider } from "v2/System"
+
+jest.mock("v2/System/Router/useRouter", () => {
+  return {
+    useRouter: jest.fn(() => {
+      return { router: { push: mockRouterPush } }
+    }),
+  }
+})
+
+const mockRouterPush = jest.fn()
 
 jest.unmock("react-relay")
-
 const { getWrapper } = setupTestWrapper({
   Component: () => {
-    return <UploadPhotos />
+    return (
+      <SystemContextProvider user={null}>
+        <UploadPhotos />
+      </SystemContextProvider>
+    )
   },
   query: graphql`
     query UploadPhotosQuery {
@@ -20,21 +34,49 @@ const { getWrapper } = setupTestWrapper({
     }
   `,
 })
+let sessionStore = { submission: JSON.stringify({ artistId: "artistId" }) }
+
+Object.defineProperty(window, "sessionStorage", {
+  value: {
+    getItem(key) {
+      return sessionStore[key] || null
+    },
+    setItem: jest.fn(),
+  },
+})
+
+jest.mock("../../Utils/FileUtils", () => ({
+  ...jest.requireActual("../../Utils/FileUtils"),
+  uploadPhoto: jest
+    .fn()
+    .mockImplementation(async (relayEnvironment, photo, updateProgress) => {
+      return await new Promise((resolve, reject) => {
+        updateProgress(100)
+        resolve("s3Key")
+      })
+    }),
+}))
 
 describe("UploadPhotos", () => {
   beforeEach(() => {
+    sessionStore = { submission: JSON.stringify({ artistId: "artistId" }) }
     //@ts-ignore
     jest.spyOn(global, "FileReader").mockImplementation(function () {
       this.readAsDataURL = jest.fn()
     })
   })
 
-  it("renders correct", () => {
+  it("renders correct", async () => {
     const wrapper = getWrapper()
+
+    await flushPromiseQueue()
+    wrapper.update()
+
     const text = wrapper.text()
 
     expect(text).toContain("Upload photos of your artwork")
     expect(wrapper.find(UploadPhotosForm).length).toBe(1)
+    expect(wrapper.find("button[type='submit']").length).toBe(1)
   })
 
   it.each([
@@ -131,5 +173,66 @@ describe("UploadPhotos", () => {
     deletePhotoThumbnail.simulate("click")
 
     expect(wrapper.find(PhotoThumbnail)).toHaveLength(0)
+  })
+
+  it("prepopulates images from session storage", async () => {
+    sessionStore = {
+      submission: JSON.stringify({
+        artistId: "artistId",
+        photos: [
+          {
+            id: "id",
+            name: "foo.png",
+            size: 111084,
+            s3Key: "Sr63tiKsuvMKfCWViJPWHw/foo.png",
+            removed: false,
+          },
+        ],
+      }),
+    }
+    const wrapper = getWrapper()
+
+    await flushPromiseQueue()
+    wrapper.update()
+
+    expect(wrapper.find(PhotoThumbnail)).toHaveLength(1)
+  })
+
+  it("save images to session storage", async () => {
+    const wrapper = getWrapper()
+
+    const dropzoneInput = wrapper
+      .find(UploadPhotosForm)
+      .find("[data-test-id='image-dropzone']")
+      .find("input")
+
+    dropzoneInput.simulate("change", {
+      target: {
+        files: [
+          {
+            name: "foo.png",
+            path: "foo.png",
+            type: "image/png",
+            size: 20000,
+          },
+        ],
+      },
+    })
+
+    await flushPromiseQueue()
+    wrapper.update()
+
+    wrapper.find("Form").simulate("submit")
+
+    await flushPromiseQueue()
+    wrapper.update()
+
+    expect(wrapper.find(PhotoThumbnail)).toHaveLength(1)
+
+    expect(sessionStorage.setItem).toHaveBeenCalled()
+    expect(mockRouterPush).toHaveBeenCalled()
+    expect(mockRouterPush).toHaveBeenCalledWith({
+      pathname: "/consign/submission2/contact-information",
+    })
   })
 })
