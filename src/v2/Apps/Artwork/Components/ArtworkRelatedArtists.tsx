@@ -5,6 +5,8 @@ import {
   Column,
   Flex,
   GridColumns,
+  Skeleton,
+  SkeletonText,
   Spacer,
   Text,
 } from "@artsy/palette"
@@ -185,7 +187,37 @@ export const ArtworkRelatedArtistsPaginationContainer = createPaginationContaine
   }
 )
 
-const PLACEHOLDER = <div />
+const PLACEHOLDER = (
+  <Skeleton>
+    <Text variant="lg">Related artists</Text>
+
+    <Spacer mt={4} />
+
+    <GridColumns>
+      {[...new Array(4)].map((node, index) => {
+        return (
+          <Column key={index} span={[12, 6, 3, 3]}>
+            <Flex flexDirection="row">
+              <Flex
+                width="100%"
+                alignItems="center"
+                justifyContent="space-between"
+              >
+                <Box>
+                  <SkeletonText variant="sm">Georges Braque</SkeletonText>
+                  <SkeletonText variant="xs">French 1900-2000</SkeletonText>
+                </Box>
+                <Button variant="secondaryOutline" size="small">
+                  Follow
+                </Button>
+              </Flex>
+            </Flex>
+          </Column>
+        )
+      })}
+    </GridColumns>
+  </Skeleton>
+)
 
 export const ArtworkRelatedArtistsQueryRenderer: React.FC<{
   slug: string

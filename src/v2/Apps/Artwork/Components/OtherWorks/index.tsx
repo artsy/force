@@ -1,5 +1,12 @@
 import { ContextModule } from "@artsy/cohesion"
-import { Box, Join, Spacer } from "@artsy/palette"
+import {
+  Box,
+  Join,
+  Skeleton,
+  SkeletonBox,
+  SkeletonText,
+  Spacer,
+} from "@artsy/palette"
 import { OtherWorks_artwork } from "v2/__generated__/OtherWorks_artwork.graphql"
 import { OtherAuctionsQueryRenderer } from "v2/Apps/Artwork/Components/OtherAuctions"
 import { Header } from "v2/Apps/Artwork/Components/OtherWorks/Header"
@@ -15,6 +22,8 @@ import { Mediator } from "lib/mediator"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { OtherWorksQuery } from "v2/__generated__/OtherWorksQuery.graphql"
 import { useSystemContext } from "v2/System"
+import { random } from "lodash"
+import { Rail } from "v2/Components/Rail"
 
 export interface OtherWorksContextProps {
   artwork: OtherWorks_artwork
@@ -183,7 +192,32 @@ export const OtherWorksFragmentContainer = createFragmentContainer<{
   `,
 })
 
-const PLACEHOLDER = <div />
+const PLACEHOLDER = (
+  <Skeleton>
+    <Rail
+      title="Other works by Pablo Picasso"
+      viewAllLabel="View All"
+      showProgress={false}
+      getItems={() => {
+        return [...new Array(4)].map((_, i) => {
+          return (
+            <Box key={i} p={1}>
+              <SkeletonBox width={random(200, 400)} height={400} />
+              <Spacer mt={1} />
+              <SkeletonText variant="xs">Pablo Picasso</SkeletonText>
+              <SkeletonText variant="xs">
+                Paysage (Landscape), 1953
+              </SkeletonText>
+              <SkeletonText variant="xs">
+                Paysage (Landscape), 1953
+              </SkeletonText>
+            </Box>
+          )
+        })
+      }}
+    />
+  </Skeleton>
+)
 
 export const OtherWorksQueryRenderer: React.FC<{
   slug: string

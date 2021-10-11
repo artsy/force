@@ -1,4 +1,14 @@
-import { BorderBox, Box, HTML, Tab, Tabs } from "@artsy/palette"
+import {
+  BorderBox,
+  Box,
+  HTML,
+  Skeleton,
+  SkeletonBox,
+  SkeletonText,
+  StackableBorderBox,
+  Tab,
+  Tabs,
+} from "@artsy/palette"
 import React, { Component } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
@@ -119,7 +129,34 @@ export const ArtworkDetailsFragmentContainer = createFragmentContainer(
   }
 )
 
-const PLACEHOLDER = <div />
+const TabContainer = styled(Box)``
+const ArtworkDetailsContainer = TabContainer
+const ExhibitionHistory = TabContainer
+const Literature = TabContainer
+const Provenance = TabContainer
+
+const PLACEHOLDER = (
+  <Skeleton>
+    <ArtworkDetailsContainer>
+      <Tabs>
+        <Tab name="About the work">
+          <StackableBorderBox>
+            <SkeletonBox width="100%" height={90} />
+          </StackableBorderBox>
+          <StackableBorderBox flexDirection="column">
+            <SkeletonText variant="xs">Medium</SkeletonText>
+            <SkeletonText variant="xs">Condition</SkeletonText>
+            <SkeletonText variant="xs">Signature</SkeletonText>
+            <SkeletonText variant="xs">
+              Certificate of authenticity
+            </SkeletonText>
+            <SkeletonText variant="xs">Frame</SkeletonText>
+          </StackableBorderBox>
+        </Tab>
+      </Tabs>
+    </ArtworkDetailsContainer>
+  </Skeleton>
+)
 
 export const ArtworkDetailsQueryRenderer: React.FC<{
   slug: string
@@ -154,9 +191,3 @@ export const ArtworkDetailsQueryRenderer: React.FC<{
     />
   )
 }
-
-const TabContainer = styled(Box)``
-const ArtworkDetailsContainer = TabContainer
-const ExhibitionHistory = TabContainer
-const Literature = TabContainer
-const Provenance = TabContainer

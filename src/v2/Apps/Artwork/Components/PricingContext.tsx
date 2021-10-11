@@ -1,4 +1,14 @@
-import { BorderBox, Flex, Link, Spacer, Text } from "@artsy/palette"
+import {
+  BorderBox,
+  Flex,
+  Link,
+  Skeleton,
+  SkeletonBox,
+  SkeletonText,
+  Spacer,
+  StackableBorderBox,
+  Text,
+} from "@artsy/palette"
 import { BarChart, BarDescriptor } from "@artsy/palette-charts"
 import { PricingContext_artwork } from "v2/__generated__/PricingContext_artwork.graphql"
 import { track } from "v2/System/Analytics"
@@ -206,7 +216,18 @@ export const PricingContextFragmentContainer = createFragmentContainer(
   }
 )
 
-const PLACEHOLDER = <div />
+const PLACEHOLDER = (
+  <Skeleton>
+    <StackableBorderBox flexDirection="column">
+      <SkeletonText variant="xs">
+        Price ranges of small prints by Pablo Picasso
+      </SkeletonText>
+      <SkeletonText variant="xs">Browse works in this category</SkeletonText>
+      <Spacer mt={2} />
+      <SkeletonBox width="100%" height={100} />
+    </StackableBorderBox>
+  </Skeleton>
+)
 
 export const PricingContextQueryRenderer: React.FC<{
   slug: string

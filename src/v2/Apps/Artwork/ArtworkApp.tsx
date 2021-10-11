@@ -9,7 +9,7 @@ import { ArtworkBannerFragmentContainer } from "./Components/ArtworkBanner/Artwo
 import { ArtworkDetailsQueryRenderer } from "./Components/ArtworkDetails"
 import { ArtworkImageBrowserFragmentContainer } from "./Components/ArtworkImageBrowser"
 import { ArtworkMetaFragmentContainer } from "./Components/ArtworkMeta"
-import { ArtworkRelatedArtistsPaginationContainer } from "./Components/ArtworkRelatedArtists"
+import { ArtworkRelatedArtistsQueryRenderer } from "./Components/ArtworkRelatedArtists"
 import { ArtworkSidebarFragmentContainer } from "./Components/ArtworkSidebar"
 import { OtherWorksQueryRenderer } from "./Components/OtherWorks"
 import { ArtworkArtistSeriesQueryRenderer } from "./Components/ArtworkArtistSeries"
@@ -196,7 +196,7 @@ export class ArtworkApp extends React.Component<Props> {
           <>
             <Spacer mt={6} />
 
-            <ArtworkRelatedArtistsPaginationContainer artwork={artwork} />
+            <ArtworkRelatedArtistsQueryRenderer slug={artwork.slug} />
           </>
         )}
 
@@ -279,11 +279,7 @@ export const ArtworkAppFragmentContainer = createFragmentContainer(
         ...ArtworkMeta_artwork
         ...ArtworkBanner_artwork
         ...ArtworkSidebar_artwork
-        ...ArtworkDetails_artwork
         ...ArtworkImageBrowser_artwork
-        ...OtherWorks_artwork
-        ...ArtworkArtistSeries_artwork
-        ...PricingContext_artwork
       }
     `,
     me: graphql`

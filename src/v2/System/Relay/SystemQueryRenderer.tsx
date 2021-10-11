@@ -10,7 +10,9 @@ export type SystemQueryRendererProps<T extends OperationType> = Omit<
   QueryRendererProps,
   "render" | "environment" | "variables"
 > & {
+  debugPlaceholder?: boolean
   lazyLoad?: boolean
+  lazyLoadThreshold?: number
   placeholder?: React.ReactNode
   environment?: QueryRendererProps["environment"]
   variables?: QueryRendererProps["variables"]
@@ -22,7 +24,9 @@ export type SystemQueryRendererProps<T extends OperationType> = Omit<
 }
 
 export function SystemQueryRenderer<T extends OperationType>({
+  debugPlaceholder = false,
   lazyLoad = false,
+  lazyLoadThreshold = 100,
   placeholder,
   environment,
   variables = {},
@@ -30,8 +34,11 @@ export function SystemQueryRenderer<T extends OperationType>({
   ...rest
 }: SystemQueryRendererProps<T>): JSX.Element {
   const isMounted = useDidMount()
-  const { isEnteredView, Waypoint } = useLazyLoadComponent({ threshold: 2000 })
-  const showPlaceholder = !isMounted || (lazyLoad && !isEnteredView)
+  const { isEnteredView, Waypoint } = useLazyLoadComponent({
+    threshold: lazyLoadThreshold,
+  })
+  const showPlaceholder =
+    debugPlaceholder || !isMounted || (lazyLoad && !isEnteredView)
 
   if (!environment) {
     return <></>
