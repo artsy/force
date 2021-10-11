@@ -32,6 +32,7 @@ export const fairsRoutes: AppRouteConfig[] = [
     },
     children: [
       {
+        theme: "v3",
         path: "",
         getComponent: () => FairsIndexRoute,
         prepare: () => {

@@ -3,9 +3,11 @@ import {
   Box,
   Button,
   Column,
+  FullBleed,
   GridColumns,
   Image,
   ResponsiveBox,
+  Spacer,
   Tab,
   Tabs,
   Text,
@@ -26,6 +28,8 @@ import { FairsMeta } from "../Components/FairsMeta"
 import { FairsPastFairsPaginationContainer } from "../Components/FairsPastFairs"
 import { mediator } from "lib/mediator"
 import { useSystemContext } from "v2/System"
+import { compact } from "lodash"
+import { cropped } from "v2/Utils/resized"
 
 interface FairsIndexProps {
   featuredFairs: FairsIndex_featuredFairs
@@ -39,34 +43,24 @@ export const FairsIndex: React.FC<FairsIndexProps> = ({
   const { user } = useSystemContext()
   const isLoggedIn = Boolean(user)
 
-  const [{ items: promoSlides }] = featuredFairs
-  const { runningFairs, closedFairs } = viewer
-
-  // @ts-expect-error STRICT_NULL_CHECK
-  const upcomingFairs = viewer.upcomingFairs.filter(fair => {
-    // @ts-expect-error STRICT_NULL_CHECK
+  const promoSlides = compact(featuredFairs[0]?.items)
+  const runningFairs = compact(viewer.runningFairs)
+  const closedFairs = compact(viewer.closedFairs)
+  const upcomingFairs = compact(viewer.upcomingFairs).filter(fair => {
     return fair.isPublished
   })
 
   const currentFairs = [
-    // @ts-expect-error STRICT_NULL_CHECK
     ...runningFairs.filter(
       fair =>
-        // @ts-expect-error STRICT_NULL_CHECK
         fair.isPublished &&
-        // @ts-expect-error STRICT_NULL_CHECK
         fair.profile?.isPublished &&
-        // @ts-expect-error STRICT_NULL_CHECK
         fair.bannerSize === "x-large"
     ),
-    // @ts-expect-error STRICT_NULL_CHECK
     ...runningFairs.filter(
       fair =>
-        // @ts-expect-error STRICT_NULL_CHECK
         fair.isPublished &&
-        // @ts-expect-error STRICT_NULL_CHECK
         fair.profile?.isPublished &&
-        // @ts-expect-error STRICT_NULL_CHECK
         fair.bannerSize !== "x-large"
     ),
   ]
@@ -76,29 +70,41 @@ export const FairsIndex: React.FC<FairsIndexProps> = ({
       <FairsMeta />
 
       <Media lessThan="sm">
-        <ResponsiveBox aspectWidth={16} aspectHeight={9} maxWidth="100%">
-          <Text
-            variant="largeTitle"
-            color="white100"
-            mx={-2}
-            height="100%"
-            backgroundImage="url('https://files.artsy.net/images/fairs-header-img.jpg')"
-            backgroundSize="cover"
-            backgroundPosition="center center"
+        <FullBleed>
+          <ResponsiveBox
+            aspectWidth={16}
+            aspectHeight={9}
+            maxWidth="100%"
+            position="relative"
           >
-            <Box
-              px={2}
-              display="flex"
-              alignItems="center"
-              textAlign="center"
+            <Image
+              src={mobileHeaderBg.src}
+              srcSet={mobileHeaderBg.srcSet}
               width="100%"
               height="100%"
+              alt=""
+              lazyLoad
+            />
+
+            <Text
+              variant="lg"
+              color="white100"
+              position="absolute"
+              top={0}
+              left={0}
+              width="100%"
+              height="100%"
+              p={4}
               bg="rgba(0, 0, 0, 0.25)"
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+              textAlign="center"
             >
               Collect from leading art fairs on Artsy
-            </Box>
-          </Text>
-        </ResponsiveBox>
+            </Text>
+          </ResponsiveBox>
+        </FullBleed>
 
         {currentFairs.length === 0 && !isLoggedIn && (
           <Box textAlign="center">
@@ -119,15 +125,13 @@ export const FairsIndex: React.FC<FairsIndexProps> = ({
           </Box>
         )}
 
-        <Box my={3}>
+        <Box my={2}>
           <Tabs>
             {currentFairs.length !== 0 && (
               <Tab name="Current">
                 {currentFairs.map(fair => (
                   <FairsFairRowFragmentContainer
-                    // @ts-expect-error STRICT_NULL_CHECK
                     key={fair.internalID}
-                    // @ts-expect-error STRICT_NULL_CHECK
                     fair={fair}
                   />
                 ))}
@@ -137,22 +141,18 @@ export const FairsIndex: React.FC<FairsIndexProps> = ({
               <Tab name="Upcoming">
                 {upcomingFairs.map(fair => (
                   <FairsFairRowFragmentContainer
-                    // @ts-expect-error STRICT_NULL_CHECK
                     key={fair.internalID}
-                    // @ts-expect-error STRICT_NULL_CHECK
                     fair={fair}
                   />
                 ))}
               </Tab>
             )}
 
-            {closedFairs?.length !== 0 && (
+            {closedFairs.length !== 0 && (
               <Tab name="Past">
-                {closedFairs?.map(fair => (
+                {closedFairs.map(fair => (
                   <FairsFairRowFragmentContainer
-                    // @ts-expect-error STRICT_NULL_CHECK
                     key={fair.internalID}
-                    // @ts-expect-error STRICT_NULL_CHECK
                     fair={fair}
                   />
                 ))}
@@ -163,7 +163,9 @@ export const FairsIndex: React.FC<FairsIndexProps> = ({
       </Media>
 
       <Media greaterThanOrEqual="sm">
-        <Box my={3}>
+        <Spacer mt={4} />
+
+        <Box my={2}>
           {currentFairs.length === 0 && (
             <GridColumns>
               <Column
@@ -174,7 +176,7 @@ export const FairsIndex: React.FC<FairsIndexProps> = ({
                 justifyContent="center"
                 textAlign="center"
               >
-                <Text variant="title" px={4} mb={2}>
+                <Text variant="lg" px={4} mb={2}>
                   {isLoggedIn
                     ? "Preview and collect from the world's leading art fairs"
                     : "Sign up to follow fairs and be the first to preview them on Artsy"}
@@ -198,12 +200,12 @@ export const FairsIndex: React.FC<FairsIndexProps> = ({
 
               <Column span={6}>
                 <FairsPromoCarousel>
-                  {/* @ts-expect-error STRICT_NULL_CHECK */}
                   {promoSlides.map((slide, i) => {
+                    if (!slide.image?.cropped) return <></>
+
                     return (
                       <ResponsiveBox
-                        // @ts-expect-error STRICT_NULL_CHECK
-                        key={slide.internalID}
+                        key={slide.internalID ?? i}
                         aspectWidth={4}
                         aspectHeight={3}
                         maxWidth="100%"
@@ -211,12 +213,12 @@ export const FairsIndex: React.FC<FairsIndexProps> = ({
                         bg="black10"
                       >
                         <Image
-                          // @ts-expect-error STRICT_NULL_CHECK
                           src={slide.image.cropped.src}
-                          // @ts-expect-error STRICT_NULL_CHECK
                           srcSet={slide.image.cropped.srcSet}
                           width="100%"
                           height="100%"
+                          alt=""
+                          lazyLoad
                         />
                       </ResponsiveBox>
                     )
@@ -228,20 +230,17 @@ export const FairsIndex: React.FC<FairsIndexProps> = ({
 
           {currentFairs.length > 0 && (
             <>
-              <Text as="h1" variant="largeTitle" my={1}>
+              <Text as="h1" variant="xl" my={2}>
                 Current Events
               </Text>
 
-              <GridColumns my={1}>
+              <GridColumns my={2}>
                 {currentFairs.map(fair => {
                   return (
                     <Column
-                      // @ts-expect-error STRICT_NULL_CHECK
                       key={fair.internalID}
-                      // @ts-expect-error STRICT_NULL_CHECK
                       span={fair.bannerSize === "x-large" ? 12 : 6}
                     >
-                      {/* @ts-expect-error STRICT_NULL_CHECK */}
                       <FairsFairBannerFragmentContainer fair={fair} />
                     </Column>
                   )
@@ -249,7 +248,6 @@ export const FairsIndex: React.FC<FairsIndexProps> = ({
 
                 {
                   // Avoids orphaned CTA
-                  // @ts-expect-error STRICT_NULL_CHECK
                   currentFairs[currentFairs.length - 1].bannerSize !==
                     "x-large" && (
                     <Column span={6}>
@@ -262,12 +260,12 @@ export const FairsIndex: React.FC<FairsIndexProps> = ({
           )}
         </Box>
 
-        <GridColumns my={3}>
-          <Column span={7}>
+        <GridColumns my={4}>
+          <Column span={8}>
             <Text
               as={currentFairs.length > 0 ? "h2" : "h1"}
-              variant="title"
-              pb={1}
+              variant="lg"
+              pb={2}
               borderBottom="1px solid"
               borderColor="black10"
             >
@@ -280,8 +278,8 @@ export const FairsIndex: React.FC<FairsIndexProps> = ({
           <Column start={9} span={4}>
             <Text
               as="h2"
-              variant="title"
-              pb={1}
+              variant="lg"
+              pb={2}
               borderBottom="1px solid"
               borderColor="black10"
             >
@@ -290,26 +288,18 @@ export const FairsIndex: React.FC<FairsIndexProps> = ({
 
             {upcomingFairs.map(fair => {
               return (
-                // @ts-expect-error STRICT_NULL_CHECK
-                <Text key={fair.internalID} my={3}>
-                  {/* @ts-expect-error STRICT_NULL_CHECK */}
+                <Text key={fair.internalID} my={2} variant="sm">
                   {fair.organizer?.profile?.href ? (
-                    // @ts-expect-error STRICT_NULL_CHECK
                     <RouterLink to={fair.organizer.profile.href}>
-                      {/* @ts-expect-error STRICT_NULL_CHECK */}
                       {fair.name}
                     </RouterLink>
                   ) : (
-                    // @ts-expect-error STRICT_NULL_CHECK
                     fair.name
                   )}
 
                   <Box>
-                    {/* @ts-expect-error STRICT_NULL_CHECK */}
                     {fair.startAt} – {fair.endAt}
                   </Box>
-
-                  {/* @ts-expect-error STRICT_NULL_CHECK */}
                   {fair.location && <Box>{fair.location.city}</Box>}
                 </Text>
               )
@@ -400,3 +390,8 @@ export const FairsIndexFragmentContainer = createFragmentContainer(FairsIndex, {
     }
   `,
 })
+
+const mobileHeaderBg = cropped(
+  "https://files.artsy.net/images/fairs-header-img.jpg",
+  { width: 767, height: 431 }
+)
