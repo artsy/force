@@ -101,7 +101,7 @@ export const consignRoutes: AppRouteConfig[] = [
       },
       {
         theme: "v3",
-        path: ":id/upload-photos",
+        path: "upload-photos",
         hideFooter: true,
         getComponent: () => UploadPhotos,
         prepare: () => {
@@ -110,7 +110,7 @@ export const consignRoutes: AppRouteConfig[] = [
       },
       {
         theme: "v3",
-        path: ":id/contact-information",
+        path: "contact-information",
         hideFooter: true,
         getComponent: () => ContactInformation,
         prepare: () => {
