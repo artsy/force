@@ -24,11 +24,16 @@ class SavedAddressesTestPage extends RootTestPage {
 }
 
 describe("Saved Addresses", () => {
+  const trackEvent = jest.fn()
   beforeAll(() => {
     ;(useTracking as jest.Mock).mockImplementation(() => ({
-      trackEvent: jest.fn(),
+      trackEvent,
     }))
   })
+  afterEach(() => {
+    jest.clearAllMocks()
+  })
+
   describe("Saved Addresses mutations", () => {
     const { mutations, buildPage } = createTestEnv({
       Component: (props: any) => (
@@ -143,6 +148,20 @@ describe("Saved Addresses", () => {
       expect(wrapper.find("Button[data-test='profileButton']")).toHaveLength(1)
     })
 
+    describe("when clicking on the add address button", () => {
+      it("does not track an analytics event", () => {
+        const wrapper = getWrapper({
+          Me: () => ({
+            addressConnection: mockAddressConnection,
+          }),
+        })
+
+        wrapper.find("Button[data-test='profileButton']").simulate("click")
+
+        expect(trackEvent).not.toHaveBeenCalled()
+      })
+    })
+
     it("renders addresses", () => {
       const wrapper = getWrapper({
         Me: () => ({
@@ -218,6 +237,29 @@ describe("Saved Addresses", () => {
         }),
       })
       expect(wrapper.find("Button[data-test='shippingButton']")).toHaveLength(1)
+    })
+
+    describe("when clicking on the add address button", () => {
+      it("tracks an analytics event", () => {
+        const wrapper = getWrapper({
+          Me: () => ({
+            addressConnection: mockAddressConnection,
+          }),
+        })
+
+        wrapper.find("Button[data-test='shippingButton']").simulate("click")
+
+        expect(trackEvent).toHaveBeenCalled()
+        expect(trackEvent.mock.calls[0]).toMatchInlineSnapshot(`
+          Array [
+            Object {
+              "action": "clickedAddNewShippingAddress",
+              "context_module": "ordersShipping",
+              "context_page_owner_type": "orders-shipping",
+            },
+          ]
+        `)
+      })
     })
 
     it("renders radio buttons with addresses", () => {
