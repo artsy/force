@@ -35,7 +35,6 @@ const HomeHeroUnits: React.FC<HomeHeroUnitsProps> = ({ homePage }) => {
           index={i}
           heroUnit={heroUnit as StaticHeroUnit}
           layout={i % 2 === 0 ? "b" : "a"}
-          bg="black100"
         />
       )
     }
@@ -46,7 +45,6 @@ const HomeHeroUnits: React.FC<HomeHeroUnitsProps> = ({ homePage }) => {
         index={i}
         heroUnit={heroUnit}
         layout={i % 2 === 0 ? "b" : "a"}
-        bg="black5"
       />
     )
   })

@@ -39,7 +39,6 @@ export interface HomeHeroUnitProps {
   heroUnit: HomeHeroUnit_heroUnit | StaticHeroUnit
   layout: "a" | "b"
   index: number
-  bg?: string
 }
 
 export const HomeHeroUnit: React.FC<HomeHeroUnitProps> = ({
