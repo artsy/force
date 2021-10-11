@@ -97,8 +97,6 @@ export const MEMORY_PAGE_CACHE_TTL_MINUTES: any = 3 * 60
 export const MEMORY_PAGE_URL_FILTER: any = null
 export const METAPHYSICS_ENDPOINT: any =
   "https://metaphysics-production.artsy.net"
-export const MOBILE_MARKETING_SIGNUP_MODALS: any =
-  '[{"slug":"ca1","copy":"An art collection for every budget","image":"http://files.artsy.net/images/modal-collect-art.jpg"},{"slug":"ca2","copy":"Buy art from the best galleries and auction houses","image":"http://files.artsy.net/images/modal-collect-art.jpg"},{"slug":"ca3","copy":"Discover and Buy Works from Seattle Art Fair 2017","image":"http://files.artsy.net/images/seattle-art-fair-modal.jpg","photoCredit":"Sarah Cain, waves, 2016; Courtesy of the artist and Galerie Lelong & Co., New York"}]'
 export const NODE_ENV: any = "development"
 export const ONETRUST_SCRIPT_ID: any = null
 export const OPENREDIS_URL: any = null
