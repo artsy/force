@@ -108,10 +108,10 @@
   dependencies:
     passport-strategy "1.x.x"
 
-"@artsy/passport@3.3.0":
-  version "3.3.0"
-  resolved "https://registry.yarnpkg.com/@artsy/passport/-/passport-3.3.0.tgz#e84dc3099f61ce85505bcc4f824b430ed8359f09"
-  integrity sha512-AqvJ3LC9H6hwfLnMIxBTfr3VLn+K01m8l4G9rwzvQflcLIiETMiCsqQe5D5VsW7B5okUnZB2mzki+oZ2XR0puQ==
+"@artsy/passport@3.4.0":
+  version "3.4.0"
+  resolved "https://registry.yarnpkg.com/@artsy/passport/-/passport-3.4.0.tgz#533a5ed34e18badd5f8d83603dab718c7fcd28ae"
+  integrity sha512-g2tJgxHO6+6kZwb4LP8ywpjysnD//GaFl7ztmqN075QQB9CeKVHgHQMkm257/pe//povIKQ1Gf5XgN/bl61hyA==
   dependencies:
     "@artsy/passport-local-with-otp" "0.3.1"
     "@artsy/xapp" "1.0.6"
@@ -125,7 +125,7 @@
     passport-facebook "2.1.1"
     superagent "1.8.4"
     underscore "^1.12.1"
-    underscore.string "3.3.4"
+    underscore.string "3.3.5"
 
 "@artsy/react-html-parser@^3.0.2":
   version "3.0.2"
@@ -20217,14 +20217,6 @@ undefsafe@^2.0.2:
   integrity sha512-nrXZwwXrD/T/JXeygJqdCO6NZZ1L66HrxM/Z7mIq2oPanoN0F1nLx3lwJMu6AwJY69hdixaFQOuoYsMjE5/C2A==
   dependencies:
     debug "^2.2.0"
-
-underscore.string@3.3.4:
-  version "3.3.4"
-  resolved "https://registry.yarnpkg.com/underscore.string/-/underscore.string-3.3.4.tgz#2c2a3f9f83e64762fdc45e6ceac65142864213db"
-  integrity sha1-LCo/n4PmR2L9xF5s6sZRQoZCE9s=
-  dependencies:
-    sprintf-js "^1.0.3"
-    util-deprecate "^1.0.2"
 
 underscore.string@3.3.5, underscore.string@^3.3.5:
   version "3.3.5"
