@@ -28,11 +28,11 @@ export const CuritorialRailsTabBar: React.FC<CuritorialRailsTabBarProps> = ({
           </Join>
         </Tab>
       )}
-      <Tab name="Trending Lots">
-        <TrendingLotsRailFragmentContainer viewer={viewer} />
-      </Tab>
       <Tab name="Standout Lots">
         <StandoutLotsRailFragmentContainer viewer={viewer} />
+      </Tab>
+      <Tab name="Trending Lots">
+        <TrendingLotsRailFragmentContainer viewer={viewer} />
       </Tab>
     </Tabs>
   )
