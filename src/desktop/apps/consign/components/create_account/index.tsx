@@ -1,6 +1,6 @@
 import React from "react"
 import { connect } from "react-redux"
-import { Box } from "@artsy/palette"
+import { Box, ThemeProviderV3 } from "@artsy/palette"
 import { FormSwitcher } from "v2/Components/Authentication/FormSwitcher"
 import { handleSubmit } from "desktop/apps/authentication/helpers"
 import { ModalHeader } from "v2/Components/Modal/ModalHeader"
@@ -63,28 +63,30 @@ export class CreateAccount extends React.Component<CreateAccountProps> {
 
   render() {
     return (
-      <Box mx="auto" maxWidth={550}>
-        <ModalHeader title={this.props.title} />
-        <FormSwitcher
-          options={{
-            copy: this.props.title,
-            contextModule: ContextModule.consignSubmissionFlow,
-            intent: Intent.consign,
-            redirectTo: this.redirectUrl,
-          }}
-          type={this.props.type}
-          handleSubmit={this.handleSubmit}
-          handleTypeChange={this.handleTypeChange}
-          submitUrls={{
-            login: "/log_in",
-            forgot: "/forgot_password",
-            signup: "/sign_up",
-            apple: "/users/auth/apple",
-            facebook: "/users/auth/facebook",
-          }}
-          showRecaptchaDisclaimer={true}
-        />
-      </Box>
+      <ThemeProviderV3>
+        <Box mx="auto" maxWidth={550}>
+          <ModalHeader title={this.props.title} />
+          <FormSwitcher
+            options={{
+              copy: this.props.title,
+              contextModule: ContextModule.consignSubmissionFlow,
+              intent: Intent.consign,
+              redirectTo: this.redirectUrl,
+            }}
+            type={this.props.type}
+            handleSubmit={this.handleSubmit}
+            handleTypeChange={this.handleTypeChange}
+            submitUrls={{
+              login: "/log_in",
+              forgot: "/forgot_password",
+              signup: "/sign_up",
+              apple: "/users/auth/apple",
+              facebook: "/users/auth/facebook",
+            }}
+            showRecaptchaDisclaimer={true}
+          />
+        </Box>
+      </ThemeProviderV3>
     )
   }
 }

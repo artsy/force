@@ -1,6 +1,11 @@
+import { ThemeProviderV3 } from "@artsy/palette"
 import React from "react"
 import { AuthStatic } from "./AuthStatic"
 
 export const FullPageAuthStatic: React.FC = (props: any) => {
-  return <AuthStatic px={3} {...props} />
+  return (
+    <ThemeProviderV3>
+      <AuthStatic {...props} />
+    </ThemeProviderV3>
+  )
 }

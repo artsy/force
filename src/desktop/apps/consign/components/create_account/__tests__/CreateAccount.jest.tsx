@@ -18,7 +18,7 @@ jest.mock("v2/System/SystemContext", () => ({
   useContext: Component => Component,
 }))
 
-jest.mock("v2/Components/Authentication/Desktop/SignUpForm", () => ({
+jest.mock("v2/Components/Authentication/Views/SignUpForm", () => ({
   SignUpFormQueryRenderer: () => null,
 }))
 

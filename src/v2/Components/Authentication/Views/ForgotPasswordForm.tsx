@@ -1,19 +1,13 @@
+import { Banner, Box, Button, Input, Join, Spacer } from "@artsy/palette"
 import { Formik, FormikProps } from "formik"
 import React, { Component } from "react"
-
-import {
-  Error,
-  Footer,
-  FormContainer as Form,
-  SubmitButton,
-} from "v2/Components/Authentication/Components/commonElements"
-import QuickInput from "v2/Components/QuickInput"
 import { recaptcha } from "v2/Utils/recaptcha"
+import { AuthenticationFooter } from "../Components/AuthenticationFooter"
 import { FormProps, InputValues, ModalType } from "../Types"
 import { ForgotPasswordValidator } from "../Validators"
 
 export interface ForgotPasswordFormState {
-  error?: string
+  error?: string | null
 }
 
 export class ForgotPasswordForm extends Component<
@@ -26,8 +20,7 @@ export class ForgotPasswordForm extends Component<
 
   onSubmit = (values: InputValues, formikBag: FormikProps<InputValues>) => {
     recaptcha("forgot_submit")
-    // @ts-expect-error STRICT_NULL_CHECK
-    this.props.handleSubmit(values, formikBag)
+    this.props.handleSubmit?.(values, formikBag)
   }
 
   render() {
@@ -49,41 +42,48 @@ export class ForgotPasswordForm extends Component<
           status,
           setStatus,
         }: FormikProps<InputValues>) => {
-          const handleChange = e => {
+          const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
             setStatus(null)
-            // @ts-expect-error STRICT_NULL_CHECK
             this.setState({ error: null })
-            formikHandleChange(e)
+            formikHandleChange(event)
           }
 
           return (
-            <Form
-              onSubmit={handleSubmit}
-              height={180}
+            <Box
+              as="form"
               data-test="ForgotPasswordForm"
+              width="100%"
+              // @ts-ignore
+              onSubmit={handleSubmit}
             >
-              <QuickInput
-                block
-                // @ts-expect-error STRICT_NULL_CHECK
-                error={touched.email && errors.email}
-                placeholder="Enter your email address"
-                name="email"
-                label="Email"
-                type="email"
-                value={values.email}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                autoFocus
-              />
-              {status && !status.success && <Error show>{status.error}</Error>}
-              <SubmitButton disabled={isSubmitting}>
-                Send me reset instructions
-              </SubmitButton>
-              <Footer
-                handleTypeChange={this.props.handleTypeChange}
-                mode={"forgot" as ModalType}
-              />
-            </Form>
+              <Join separator={<Spacer mt={2} />}>
+                <Input
+                  error={touched.email && errors.email}
+                  placeholder="Enter your email address"
+                  name="email"
+                  title="Email"
+                  type="email"
+                  value={values.email}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  autoFocus
+                  autoComplete="email"
+                />
+
+                {status && !status.success && (
+                  <Banner variant="error">{status.error}</Banner>
+                )}
+
+                <Button type="submit" width="100%" disabled={isSubmitting}>
+                  Send me reset instructions
+                </Button>
+
+                <AuthenticationFooter
+                  handleTypeChange={this.props.handleTypeChange}
+                  mode={"forgot" as ModalType}
+                />
+              </Join>
+            </Box>
           )
         }}
       </Formik>

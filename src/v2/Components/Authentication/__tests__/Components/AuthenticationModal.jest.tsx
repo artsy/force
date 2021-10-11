@@ -1,15 +1,15 @@
-import { DesktopModal } from "v2/Components/Authentication/Components/DesktopModal"
+import { AuthenticationModal } from "v2/Components/Authentication/Components/AuthenticationModal"
 import { mount } from "enzyme"
 import React from "react"
 
 jest.mock("v2/Utils/Events")
 
-describe("DesktopModal", () => {
+describe("AuthenticationModal", () => {
   const getWrapper = (props: any = {}) =>
     mount(
-      <DesktopModal tracking={props.tracking} onClose={jest.fn()} show>
+      <AuthenticationModal tracking={props.tracking} onClose={jest.fn()} show>
         <div>Modal Contents</div>
-      </DesktopModal>
+      </AuthenticationModal>
     )
 
   it("renders children", () => {
@@ -19,9 +19,9 @@ describe("DesktopModal", () => {
 
   it("renders a subtitle", () => {
     const wrapper = mount(
-      <DesktopModal subtitle="Test Subtitle" onClose={jest.fn()} show>
+      <AuthenticationModal subtitle="Test Subtitle" onClose={jest.fn()} show>
         <div>Modal Contents</div>
-      </DesktopModal>
+      </AuthenticationModal>
     )
     expect(wrapper.text()).toMatch("Test Subtitle")
   })

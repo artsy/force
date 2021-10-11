@@ -1,27 +1,22 @@
-import { QueryRenderer, createFragmentContainer, graphql } from "react-relay"
+import { createFragmentContainer, graphql } from "react-relay"
 import { SignUpFormLocationQuery } from "v2/__generated__/SignUpFormLocationQuery.graphql"
 import { useSystemContext } from "v2/System"
-import {
-  Error,
-  Footer,
-  FormContainer as Form,
-  SubmitButton,
-  EmailSubscriptionCheckbox,
-  TermsOfServiceCheckbox,
-} from "v2/Components/Authentication/Components/commonElements"
 import {
   FormProps,
   InputValues,
   ModalType,
 } from "v2/Components/Authentication/Types"
 import { SignUpValidator } from "v2/Components/Authentication/Validators"
-import { PasswordInput } from "v2/Components/PasswordInput"
-import QuickInput from "v2/Components/QuickInput"
 import { Formik, FormikProps } from "formik"
 import React, { Component } from "react"
 import { recaptcha } from "v2/Utils/recaptcha"
 import { data as sd } from "sharify"
 import { SignUpForm_requestLocation } from "v2/__generated__/SignUpForm_requestLocation.graphql"
+import { Banner, Box, Button, Input, Join, Spacer, Text } from "@artsy/palette"
+import { AuthenticationPasswordInput } from "../Components/AuthenticationPasswordInput"
+import { AuthenticationCheckbox } from "../Components/AuthenticationCheckbox"
+import { AuthenticationFooter } from "../Components/AuthenticationFooter"
+import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 
 const gdprCountries = [
   "AT",
@@ -55,7 +50,7 @@ const gdprCountries = [
 ]
 
 export interface SignUpFormState {
-  error?: string
+  error?: string | null
 }
 
 interface SignUpFormProps extends FormProps {
@@ -73,8 +68,8 @@ export class SignUpForm extends Component<SignUpFormProps, SignUpFormState> {
         ...values,
         recaptcha_token,
       }
-      // @ts-expect-error STRICT_NULL_CHECK
-      this.props.handleSubmit(valuesWithToken, formikBag)
+
+      this.props.handleSubmit?.(valuesWithToken, formikBag)
     })
   }
 
@@ -107,11 +102,10 @@ export class SignUpForm extends Component<SignUpFormProps, SignUpFormState> {
           touched,
           values,
         }: FormikProps<InputValues>) => {
-          const handleChange = e => {
+          const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
             setStatus(null)
-            // @ts-expect-error STRICT_NULL_CHECK
             this.setState({ error: null })
-            formikHandleChange(e)
+            formikHandleChange(event)
           }
 
           const emailErrorMessage = touched.email ? errors.email : ""
@@ -122,89 +116,155 @@ export class SignUpForm extends Component<SignUpFormProps, SignUpFormState> {
             : ""
 
           return (
-            <Form onSubmit={handleSubmit} data-test="SignUpForm">
-              <QuickInput
-                autoFocus
-                block
-                error={nameErrorMessage}
-                label="Name"
-                name="name"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                placeholder="Enter your full name"
-                type="text"
-                value={values.name}
-              />
-              <QuickInput
-                block
-                error={emailErrorMessage}
-                label="Email"
-                name="email"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                placeholder="Enter your email address"
-                type="email"
-                value={values.email}
-              />
-              <PasswordInput
-                block
-                error={passwordErrorMessage}
-                label="Password"
-                name="password"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                placeholder="Enter a password"
-                showPasswordMessage
-                value={values.password}
-              />
-              <TermsOfServiceCheckbox
-                checked={values.accepted_terms_of_service}
-                error={termsErrorMessage}
-                name="accepted_terms_of_service"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                setEmailSubscribe={collapseCheckboxes}
-                setFieldValue={setFieldValue}
-              />
-              {!collapseCheckboxes && (
-                <EmailSubscriptionCheckbox
-                  checked={values.agreed_to_receive_emails}
-                  name="agreed_to_receive_emails"
+            <Box
+              as="form"
+              data-test="SignUpForm"
+              width="100%"
+              // @ts-ignore
+              onSubmit={handleSubmit}
+            >
+              <Join separator={<Spacer mt={2} />}>
+                <Input
+                  autoFocus
+                  error={nameErrorMessage}
+                  title="Name"
+                  name="name"
                   onBlur={handleBlur}
                   onChange={handleChange}
+                  placeholder="Enter your full name"
+                  type="text"
+                  value={values.name}
+                  autoComplete="name"
                 />
-              )}
-              {status && !status.success && <Error show>{status.error}</Error>}
-              <SubmitButton loading={isSubmitting}>Sign up</SubmitButton>
-              <Footer
-                handleTypeChange={() =>
-                  // @ts-expect-error STRICT_NULL_CHECK
-                  this.props.handleTypeChange(ModalType.login)
-                }
-                onAppleLogin={e => {
-                  if (!values.accepted_terms_of_service) {
-                    setTouched({
-                      accepted_terms_of_service: true,
-                    })
-                  } else {
-                    // @ts-expect-error STRICT_NULL_CHECK
-                    this.props.onAppleLogin(e)
+
+                <Input
+                  error={emailErrorMessage}
+                  title="Email"
+                  name="email"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  placeholder="Enter your email address"
+                  type="email"
+                  value={values.email}
+                  autoComplete="email"
+                />
+
+                <Box>
+                  <AuthenticationPasswordInput
+                    error={passwordErrorMessage}
+                    title="Password"
+                    name="password"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    placeholder="Enter a password"
+                    value={values.password}
+                    autoComplete="new-password"
+                  />
+
+                  {!passwordErrorMessage && (
+                    <Text variant="xs" color="black60" mt={0.5}>
+                      Password must be at least 8 characters.
+                    </Text>
+                  )}
+                </Box>
+
+                {collapseCheckboxes ? (
+                  <AuthenticationCheckbox
+                    error={!!termsErrorMessage}
+                    selected={values.accepted_terms_of_service}
+                    onSelect={selected => {
+                      setFieldValue("agreed_to_receive_emails", selected)
+                      setFieldValue("accepted_terms_of_service", selected)
+                    }}
+                  >
+                    {"I agree to the "}
+                    <a href="https://www.artsy.net/terms" target="_blank">
+                      Terms of Use
+                    </a>
+                    {", "}
+                    <a href="https://www.artsy.net/privacy" target="_blank">
+                      Privacy Policy
+                    </a>
+                    {", and "}
+                    <a
+                      href="https://www.artsy.net/conditions-of-sale"
+                      target="_blank"
+                    >
+                      Conditions of Sale
+                    </a>
+                    {" and to receiving emails from Artsy."}
+                  </AuthenticationCheckbox>
+                ) : (
+                  <AuthenticationCheckbox
+                    error={!!termsErrorMessage}
+                    selected={values.accepted_terms_of_service}
+                    onSelect={selected => {
+                      setFieldValue("accepted_terms_of_service", selected)
+                    }}
+                  >
+                    {"By checking this box, you consent to our "}
+                    <a href="https://www.artsy.net/terms" target="_blank">
+                      Terms of Use
+                    </a>
+                    {", "}
+                    <a href="https://www.artsy.net/privacy" target="_blank">
+                      Privacy Policy
+                    </a>
+                    {", and "}
+                    <a
+                      href="https://www.artsy.net/conditions-of-sale"
+                      target="_blank"
+                    >
+                      Conditions of Sale
+                    </a>
+                    {"."}
+                  </AuthenticationCheckbox>
+                )}
+
+                {!collapseCheckboxes && (
+                  <AuthenticationCheckbox
+                    selected={values.agreed_to_receive_emails}
+                    onSelect={selected => {
+                      setFieldValue("agreed_to_receive_emails", selected)
+                    }}
+                  >
+                    Dive deeper into the art market with Artsy emails. Subscribe
+                    to hear about our products, services, editorials, and other
+                    promotional content. Unsubscribe at any time.
+                  </AuthenticationCheckbox>
+                )}
+
+                {status && !status.success && (
+                  <Banner variant="error">{status.error}</Banner>
+                )}
+
+                <Button type="submit" loading={isSubmitting} width="100%">
+                  Sign up
+                </Button>
+
+                <AuthenticationFooter
+                  mode={"signup" as ModalType}
+                  handleTypeChange={() =>
+                    this.props.handleTypeChange?.(ModalType.login)
                   }
-                }}
-                onFacebookLogin={e => {
-                  if (!values.accepted_terms_of_service) {
-                    setTouched({
-                      accepted_terms_of_service: true,
-                    })
-                  } else {
-                    // @ts-expect-error STRICT_NULL_CHECK
-                    this.props.onFacebookLogin(e)
-                  }
-                }}
-                inline
-                showRecaptchaDisclaimer={this.props.showRecaptchaDisclaimer}
-              />
-            </Form>
+                  onAppleLogin={e => {
+                    if (!values.accepted_terms_of_service) {
+                      setTouched({ accepted_terms_of_service: true })
+                    } else {
+                      this.props.onAppleLogin?.(e)
+                    }
+                  }}
+                  onFacebookLogin={e => {
+                    if (!values.accepted_terms_of_service) {
+                      setTouched({ accepted_terms_of_service: true })
+                    } else {
+                      this.props.onFacebookLogin?.(e)
+                    }
+                  }}
+                  showRecaptchaDisclaimer={this.props.showRecaptchaDisclaimer}
+                />
+              </Join>
+            </Box>
           )
         }}
       </Formik>
@@ -222,14 +282,11 @@ const SignUpFormFragmentContainer = createFragmentContainer(SignUpForm, {
 
 export const SignUpFormQueryRenderer: React.FC<FormProps> = passedProps => {
   const { relayEnvironment } = useSystemContext()
-  const ipAddress = sd.IP_ADDRESS || "0.0.0.0"
-  const variables = { ip: ipAddress }
 
   return (
-    <QueryRenderer<SignUpFormLocationQuery>
-      //  @ts-expect-error STRICT_NULL_CHECK
-      environment={relayEnvironment}
-      variables={variables}
+    <SystemQueryRenderer<SignUpFormLocationQuery>
+      environment={relayEnvironment!}
+      variables={{ ip: sd.IP_ADDRESS || "0.0.0.0" }}
       query={graphql`
         query SignUpFormLocationQuery($ip: String!) {
           requestLocation(ip: $ip) {
@@ -238,7 +295,6 @@ export const SignUpFormQueryRenderer: React.FC<FormProps> = passedProps => {
         }
       `}
       render={({ error, props }) => {
-        // what's the cooler way to do this??
         if (error || !props || !props.requestLocation) {
           return <SignUpFormFragmentContainer {...passedProps} />
         } else {

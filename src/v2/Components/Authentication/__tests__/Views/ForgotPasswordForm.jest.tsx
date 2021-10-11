@@ -2,7 +2,7 @@ import { ForgotPasswordForm } from "v2/Components/Authentication/Views/ForgotPas
 import { mount } from "enzyme"
 import React from "react"
 import { Clickable } from "@artsy/palette"
-import { Footer } from "v2/Components/Authentication/Components/Footer"
+import { AuthenticationFooter } from "v2/Components/Authentication/Components/AuthenticationFooter"
 
 jest.mock("sharify", () => ({ data: { RECAPTCHA_KEY: "recaptcha-api-key" } }))
 
@@ -87,12 +87,20 @@ describe("ForgotPasswordForm", () => {
   })
 
   it("can switch to login form", () => {
-    getWrapper().find(Footer).find(Clickable).at(0).simulate("click")
+    getWrapper()
+      .find(AuthenticationFooter)
+      .find(Clickable)
+      .at(0)
+      .simulate("click")
     expect(props.handleTypeChange).toBeCalledWith("login")
   })
 
   it("can switch to signup form", () => {
-    getWrapper().find(Footer).find(Clickable).at(1).simulate("click")
+    getWrapper()
+      .find(AuthenticationFooter)
+      .find(Clickable)
+      .at(1)
+      .simulate("click")
     expect(props.handleTypeChange).toBeCalledWith("signup")
   })
 })
