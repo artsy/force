@@ -1,18 +1,11 @@
-import {
-  Box,
-  BoxProps,
-  ChevronIcon,
-  color,
-  Flex,
-  Image,
-  Text,
-} from "@artsy/palette"
+import { Box, BoxProps, ChevronIcon, Flex, Image, Text } from "@artsy/palette"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled, { css } from "styled-components"
 import { DateTime } from "luxon"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { FairsFairRow_fair } from "v2/__generated__/FairsFairRow_fair.graphql"
+import { themeGet } from "@styled-system/theme-get"
 
 const Container = styled(Flex)<{ href?: string }>`
   ${({ href }) =>
@@ -21,7 +14,7 @@ const Container = styled(Flex)<{ href?: string }>`
       transition: background-color 250ms;
 
       &:hover {
-        background-color: ${color("black5")};
+        background-color: ${themeGet("colors.black5")};
       }
     `}
 `
@@ -43,11 +36,9 @@ const FairsFairRow: React.FC<FairsFairRowProps> = ({ fair, ...rest }) => {
   const LinkOrBox = href ? RouterLink : Box
 
   return (
-    // @ts-expect-error STRICT_NULL_CHECK
-    <LinkOrBox to={href} style={{ display: "block", textDecoration: "none" }}>
+    <LinkOrBox to={href!} display="block" textDecoration="none">
       <Container
-        // @ts-expect-error STRICT_NULL_CHECK
-        href={href}
+        href={href!}
         alignItems="center"
         borderBottom="1px solid"
         borderColor="black10"
@@ -66,7 +57,7 @@ const FairsFairRow: React.FC<FairsFairRowProps> = ({ fair, ...rest }) => {
             justifyContent="center"
             width={80}
             height={80}
-            mr={3}
+            mr={2}
           >
             {icon ? (
               <Image
@@ -74,25 +65,18 @@ const FairsFairRow: React.FC<FairsFairRowProps> = ({ fair, ...rest }) => {
                 height={icon.height}
                 src={icon.src}
                 srcSet={icon.srcSet}
-                // @ts-expect-error STRICT_NULL_CHECK
-                alt={fair.name}
+                alt=""
               />
             ) : (
               <Box width={60} height={60} bg="black10" borderRadius="50%" />
             )}
           </Flex>
 
-          <Text
-            as="h4"
-            variant={["mediumText", "text"]}
-            mr={3}
-            display="flex"
-            flex={1}
-          >
+          <Text as="h4" variant="md" mr={2} display="flex" flex={1}>
             {fair.name}
           </Text>
 
-          <Text as="h4" display="flex" flex={1}>
+          <Text as="h4" variant="md" display="flex" flex={1}>
             {fair.startAt} – {fair.endAt}
           </Text>
         </Flex>

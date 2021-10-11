@@ -45,8 +45,7 @@ export const FairsPromoCarousel: React.FC<FairsPromoCarouselProps> = ({
           cursor="e-resize"
           onClick={event => {
             setInteracted(true)
-            // @ts-expect-error STRICT_NULL_CHECK
-            onClick(event)
+            onClick?.(event)
           }}
           {...rest}
         />

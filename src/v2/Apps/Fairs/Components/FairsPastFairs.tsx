@@ -5,6 +5,7 @@ import {
   graphql,
   RelayPaginationProp,
 } from "react-relay"
+import { extractNodes } from "v2/Utils/extractNodes"
 import { FairsPastFairs_viewer } from "v2/__generated__/FairsPastFairs_viewer.graphql"
 import { FairsFairRowFragmentContainer } from "./FairsFairRow"
 
@@ -17,7 +18,7 @@ export const FairsPastFairs: React.FC<FairsPastFairsProps> = ({
   viewer,
   relay,
 }) => {
-  const closedFairs = viewer.pastFairs?.edges
+  const closedFairs = extractNodes(viewer.pastFairs)
 
   const [isLoading, setIsLoading] = useState(false)
 
@@ -37,9 +38,8 @@ export const FairsPastFairs: React.FC<FairsPastFairsProps> = ({
 
   return (
     <>
-      <Box mb={3} data-test="pastFairs">
-        {/* @ts-expect-error STRICT_NULL_CHECK */}
-        {closedFairs.map(({ node: fair }) => {
+      <Box mb={4} data-test="pastFairs">
+        {closedFairs.map(fair => {
           if (!fair.isPublished && !fair.profile?.isPublished) return null
 
           return (
@@ -50,7 +50,8 @@ export const FairsPastFairs: React.FC<FairsPastFairsProps> = ({
 
       <Button
         variant="secondaryOutline"
-        width="100%"
+        display="block"
+        mx="auto"
         loading={isLoading}
         onClick={handleClick}
       >

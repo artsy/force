@@ -17,8 +17,17 @@ const Overlay = styled(Box)`
   opacity: 0;
   transition: opacity 250ms;
 
+  > div {
+    transition: transform 250ms;
+    transform: translateY(25%);
+  }
+
   &:hover {
     opacity: 1;
+
+    > div {
+      transform: translateY(0);
+    }
   }
 `
 
@@ -37,7 +46,8 @@ const FairsFairBanner: React.FC<FairsFairBannerProps> = ({ fair, ...rest }) => {
     <Box {...rest}>
       <RouterLink
         to={fair.href}
-        style={{ display: "block", textDecoration: "none" }}
+        display="block"
+        textDecoration="none"
         aria-label={`Go to ${fair.name}`}
       >
         {banner && (
@@ -54,22 +64,21 @@ const FairsFairBanner: React.FC<FairsFairBannerProps> = ({ fair, ...rest }) => {
               height="100%"
               src={banner.src}
               srcSet={banner.srcSet}
-              // @ts-expect-error STRICT_NULL_CHECK
-              alt={fair.name}
+              alt=""
               lazyLoad
             />
 
             <Overlay>
-              <Text variant="subtitle" m={3} color="white100">
+              <Text variant="lg" m={4} color="white100">
                 Explore the event
               </Text>
             </Overlay>
           </ResponsiveBox>
         )}
 
-        <Box display="flex" alignItems="center">
+        <Box display="flex" alignItems="center" mt={1}>
           {icon && (
-            <Box mr={3}>
+            <Box mr={2}>
               <Image
                 width={icon.width}
                 height={icon.height}
@@ -80,7 +89,7 @@ const FairsFairBanner: React.FC<FairsFairBannerProps> = ({ fair, ...rest }) => {
             </Box>
           )}
 
-          <Box my={3}>
+          <Box>
             <Text>{fair.name}</Text>
 
             <Text>
@@ -104,13 +113,13 @@ export const FairsFairBannerFragmentContainer = createFragmentContainer(
         endAt(format: "MMM Do YYYY")
         bannerSize
         image {
-          large: cropped(width: 1112, height: 477, version: ["wide"]) {
+          large: cropped(width: 1840, height: 790, version: ["wide"]) {
             src
             srcSet
             width
             height
           }
-          small: cropped(width: 556, height: 313, version: ["wide"]) {
+          small: cropped(width: 910, height: 512, version: ["wide"]) {
             src
             srcSet
             width

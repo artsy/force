@@ -152,13 +152,13 @@ return {
             {
               "kind": "Literal",
               "name": "height",
-              "value": 477
+              "value": 790
             },
             (v0/*: any*/),
             {
               "kind": "Literal",
               "name": "width",
-              "value": 1112
+              "value": 1840
             }
           ],
           "concreteType": "CroppedImageUrl",
@@ -166,7 +166,7 @@ return {
           "name": "cropped",
           "plural": false,
           "selections": (v5/*: any*/),
-          "storageKey": "cropped(height:477,version:[\"wide\"],width:1112)"
+          "storageKey": "cropped(height:790,version:[\"wide\"],width:1840)"
         },
         {
           "alias": "small",
@@ -174,13 +174,13 @@ return {
             {
               "kind": "Literal",
               "name": "height",
-              "value": 313
+              "value": 512
             },
             (v0/*: any*/),
             {
               "kind": "Literal",
               "name": "width",
-              "value": 556
+              "value": 910
             }
           ],
           "concreteType": "CroppedImageUrl",
@@ -188,7 +188,7 @@ return {
           "name": "cropped",
           "plural": false,
           "selections": (v5/*: any*/),
-          "storageKey": "cropped(height:313,version:[\"wide\"],width:556)"
+          "storageKey": "cropped(height:512,version:[\"wide\"],width:910)"
         }
       ],
       "storageKey": null
@@ -250,5 +250,5 @@ return {
   "type": "Fair"
 };
 })();
-(node as any).hash = 'c43792b2d4bb82cff9dd76a7b06b1f70';
+(node as any).hash = '58e8880a9280ec9cf910d1dff96f8d2f';
 export default node;
