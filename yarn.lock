@@ -39,10 +39,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/detect-responsive-traits/-/detect-responsive-traits-0.0.5.tgz#abf85959f8567816babec6f582b744f58c98b726"
   integrity sha512-axgW5YuqSpPzHb27yo2jmPHz/N9eN2hh2E+Mub5BKuu/jHZI+iDTdw0OZ3I+z7Z9WKBh+FPVx4gpza5w7slJNA==
 
-"@artsy/express-reloadable@1.5.0":
-  version "1.5.0"
-  resolved "https://registry.yarnpkg.com/@artsy/express-reloadable/-/express-reloadable-1.5.0.tgz#f1affb10ce7cd95230033d5b8b651fe91737516d"
-  integrity sha512-tYSbAfswKuIVjtnCNq/HuLOFeDsLz1UVFI0MSUMKBAK1XKoRZKfxblY9V3v3gvpN/MtHnDxrPl6OCCSB3GbuXg==
+"@artsy/express-reloadable@1.6.0":
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/@artsy/express-reloadable/-/express-reloadable-1.6.0.tgz#5660febfa07d4c7ea5a838878ae61b906fd10c0d"
+  integrity sha512-UVUn6s1D38mO1s711JPkvG1uy0fkVy504TpLnl745hbF2TtACv/I52hwFv1xISGdyz8rvQreYYHcXjkZvzmsnw==
   dependencies:
     chalk "^2.3.1"
     chokidar "^3.0.0"
