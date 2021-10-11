@@ -7,10 +7,17 @@ import {
 import { Image } from "@artsy/palette"
 
 const deleteFn = jest.fn()
+const file = new File([new Array(10000).join(" ")], "foo.png", {
+  type: "image/png",
+})
 const defaultProps: PhotoThumbnailProps = {
-  photo: new File([new Array(10000).join(" ")], "foo.png", {
-    type: "image/png",
-  }),
+  photo: {
+    file: file,
+    id: "id",
+    name: "foo.png",
+    size: file.size,
+    removed: false,
+  },
   onDelete: deleteFn,
 }
 

@@ -10,11 +10,11 @@ import {
   Clickable,
 } from "@artsy/palette"
 import styled from "styled-components"
-import { formatFileSize } from "../../Utils/FileUtils"
+import { formatFileSize, Photo } from "../../Utils/FileUtils"
 
 export interface PhotoThumbnailProps extends BoxProps {
-  photo: File
-  onDelete: (photo: File) => void
+  photo: Photo
+  onDelete: (photo: Photo) => void
 }
 
 const TruncatedLine = styled(Text)`
@@ -28,11 +28,12 @@ export const PhotoThumbnail: React.FC<PhotoThumbnailProps> = ({
   onDelete,
   ...rest
 }) => {
+  const { file, name, size } = photo
   const [photoSrc, setPhotoSrc] = useState<string>()
 
   useEffect(() => {
     const reader = new FileReader()
-    reader.readAsDataURL(photo)
+    reader.readAsDataURL(file)
 
     reader.onloadend = () => {
       setPhotoSrc(reader.result as string)
@@ -52,6 +53,7 @@ export const PhotoThumbnail: React.FC<PhotoThumbnailProps> = ({
             width={[48, 120]}
             minWidth={[48, 120]}
             mr={[15, 2]}
+            bg="black10"
           >
             <Image
               src={photoSrc}
@@ -60,7 +62,7 @@ export const PhotoThumbnail: React.FC<PhotoThumbnailProps> = ({
               width="100%"
             />
           </Box>
-          <TruncatedLine variant="xs">{photo.name}</TruncatedLine>
+          <TruncatedLine variant="xs">{name}</TruncatedLine>
         </Column>
         <Column
           span={[3]}
@@ -69,7 +71,7 @@ export const PhotoThumbnail: React.FC<PhotoThumbnailProps> = ({
           alignItems="center"
           justifyContent="space-between"
         >
-          <Text variant="xs">{formatFileSize(photo.size)}</Text>
+          <Text variant="xs">{formatFileSize(size)}</Text>
           <Clickable
             data-test-id="delete-photo-thumbnail"
             onClick={handleDelete}
