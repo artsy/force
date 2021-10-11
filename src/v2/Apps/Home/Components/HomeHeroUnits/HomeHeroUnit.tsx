@@ -59,16 +59,6 @@ export const HomeHeroUnit: React.FC<HomeHeroUnitProps> = ({
     trackEvent(event)
   }
 
-  const colorScheme = {
-    black5: {
-      heading: "black100",
-      title: "black100",
-      subtitle: "black60",
-      button: "secondaryOutline",
-      linkText: "black100",
-    },
-  }
-
   const image = heroUnit.backgroundImageURL
     ? cropped(heroUnit.backgroundImageURL, {
         // 3:2
@@ -170,11 +160,7 @@ export const HomeHeroUnit: React.FC<HomeHeroUnitProps> = ({
             <Media greaterThan="xs">
               {heroUnit.heading && (
                 <>
-                  <Text
-                    variant="xs"
-                    textTransform="uppercase"
-                    color={colorScheme.black5.heading}
-                  >
+                  <Text variant="xs" textTransform="uppercase" color="black100">
                     {heroUnit.heading}
                   </Text>
 
@@ -186,7 +172,7 @@ export const HomeHeroUnit: React.FC<HomeHeroUnitProps> = ({
             <Text
               as={index === 0 ? "h1" : "h2"}
               variant={["lg", "xl", "xxl"]}
-              color={colorScheme.black5.title}
+              color="black100"
             >
               {heroUnit.title}
             </Text>
@@ -197,7 +183,7 @@ export const HomeHeroUnit: React.FC<HomeHeroUnitProps> = ({
 
                 <HTML
                   variant={["xs", "md", "lg"]}
-                  color={colorScheme.black5.subtitle}
+                  color="black60"
                   html={heroUnit.subtitle}
                 />
               </>
@@ -215,7 +201,7 @@ export const HomeHeroUnit: React.FC<HomeHeroUnitProps> = ({
                 <GridColumns>
                   <Column span={[12, 12, 6]}>
                     <Button
-                      variant={colorScheme.black5.button as any}
+                      variant="secondaryOutline"
                       // @ts-ignore
                       as={RouterLink}
                       to={heroUnit.href}
@@ -235,7 +221,7 @@ export const HomeHeroUnit: React.FC<HomeHeroUnitProps> = ({
                   noUnderline
                   onClick={handleTrackEvent}
                 >
-                  <Text variant="xs" color={colorScheme.black5.linkText}>
+                  <Text variant="xs" color="black100">
                     {heroUnit.linkText}
                   </Text>
                 </RouterLink>
