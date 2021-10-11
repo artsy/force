@@ -10,6 +10,13 @@ import { ArtistNotableWorksRailQuery } from "v2/__generated__/ArtistNotableWorks
 import { scrollToTop } from "../Utils/scrollToTop"
 import { Rail } from "v2/Components/Rail"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
+import {
+  Box,
+  Skeleton,
+  SkeletonBox,
+  SkeletonText,
+  Spacer,
+} from "@artsy/palette"
 
 interface ArtistNotableWorksRailProps {
   artist: ArtistNotableWorksRail_artist
@@ -108,7 +115,28 @@ export const ArtistNotableWorksRailFragmentContainer = createFragmentContainer(
   }
 )
 
-const PLACEHOLDER = <div />
+const PLACEHOLDER = (
+  <Skeleton>
+    <Rail
+      title="Notable Works"
+      viewAllLabel="View All Works"
+      getItems={() => {
+        return [...new Array(8)].map((_, i) => {
+          return (
+            <Box width={200} key={i}>
+              <SkeletonBox width={200} height={[200, 300, 250, 275][i % 4]} />
+              <Spacer mt={1} />
+              <SkeletonText variant="md">Artist Name</SkeletonText>
+              <SkeletonText variant="md">Artwork Title</SkeletonText>
+              <SkeletonText variant="xs">Partner</SkeletonText>
+              <SkeletonText variant="xs">Price</SkeletonText>
+            </Box>
+          )
+        })
+      }}
+    />
+  </Skeleton>
+)
 
 export const ArtistNotableWorksRailQueryRenderer: React.FC<{
   slug: string

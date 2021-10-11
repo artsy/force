@@ -1,5 +1,12 @@
 import { ContextModule, OwnerType } from "@artsy/cohesion"
-import { Box, EntityHeader, Image } from "@artsy/palette"
+import {
+  Box,
+  EntityHeader,
+  Image,
+  Skeleton,
+  SkeletonBox,
+  SkeletonText,
+} from "@artsy/palette"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
@@ -166,7 +173,25 @@ export const ArtistRelatedArtistsRailFragmentContainer = createFragmentContainer
   }
 )
 
-const PLACEHOLDER = <div />
+const PLACEHOLDER = (
+  <Skeleton>
+    <Rail
+      title="Related Artists"
+      viewAllLabel="View All Articles"
+      getItems={() => {
+        return [...new Array(8)].map((_, i) => {
+          return (
+            <Box width={325} key={i}>
+              <SkeletonBox width={325} height={230} />
+              <SkeletonText variant="lg">Some Artist</SkeletonText>
+              <SkeletonText variant="md">Location</SkeletonText>
+            </Box>
+          )
+        })
+      }}
+    />
+  </Skeleton>
+)
 
 export const ArtistRelatedArtistsRailQueryRenderer: React.FC<{
   slug: string

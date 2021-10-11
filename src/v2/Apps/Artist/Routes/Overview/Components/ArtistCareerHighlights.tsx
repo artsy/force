@@ -4,6 +4,8 @@ import {
   GridColumns,
   HTML,
   Join,
+  Skeleton,
+  SkeletonBox,
   Spacer,
   Text,
 } from "@artsy/palette"
@@ -108,7 +110,14 @@ export const ArtistCareerHighlightsFragmentContainer = createFragmentContainer(
   }
 )
 
-const PLACEHOLDER = <div />
+const PLACEHOLDER = (
+  <Skeleton>
+    <Text variant="lg" mb={4}>
+      Career highlights
+    </Text>
+    <SkeletonBox width="100%" height={170} />
+  </Skeleton>
+)
 
 export const ArtistCareerHighlightsQueryRenderer: React.FC<{
   slug: string

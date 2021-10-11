@@ -9,7 +9,7 @@ import { ArtistWorksForSaleRail_artist } from "v2/__generated__/ArtistWorksForSa
 import { ArtistWorksForSaleRailQuery } from "v2/__generated__/ArtistWorksForSaleRailQuery.graphql"
 import { scrollToTop } from "../Utils/scrollToTop"
 import { Rail } from "v2/Components/Rail"
-import { Box } from "@artsy/palette"
+import { Box, Skeleton, SkeletonBox, SkeletonText } from "@artsy/palette"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 
 interface ArtistWorksForSaleRailProps {
@@ -111,7 +111,25 @@ export const ArtistWorksForSaleRailFragmentContainer = createFragmentContainer(
   }
 )
 
-const PLACEHOLDER = <div />
+const PLACEHOLDER = (
+  <Skeleton>
+    <Rail
+      title="Works For Sale"
+      viewAllLabel="View All Works"
+      getItems={() => {
+        return [...new Array(8)].map((_, i) => {
+          return (
+            <React.Fragment key={i}>
+              <SkeletonBox width={200} height={[200, 300, 250, 275][i % 4]} />
+              <SkeletonText variant="lg">Some Artist</SkeletonText>
+              <SkeletonText variant="md">Location</SkeletonText>
+            </React.Fragment>
+          )
+        })
+      }}
+    />
+  </Skeleton>
+)
 
 export const ArtistWorksForSaleRailQueryRenderer: React.FC<{
   slug: string
