@@ -3,9 +3,11 @@ import { Box, BoxProps, Button, Text } from "@artsy/palette"
 import { useDropzone } from "react-dropzone"
 import { useFormikContext } from "formik"
 import { Media } from "v2/Utils/Responsive"
+import { useSystemContext } from "v2/System"
+import { Photo, normalizePhoto, uploadPhoto } from "../../Utils/FileUtils"
 
 export interface UploadPhotosFormModel {
-  photos: File[]
+  photos: Photo[]
 }
 
 export interface UploadPhotosFormProps extends BoxProps {}
@@ -13,10 +15,35 @@ export interface UploadPhotosFormProps extends BoxProps {}
 export const UploadPhotosForm: React.FC<UploadPhotosFormProps> = ({
   ...rest
 }) => {
+  const { relayEnvironment } = useSystemContext()
   const { setFieldValue, values } = useFormikContext<UploadPhotosFormModel>()
 
-  const onDrop = useCallback(acceptedFiles => {
-    setFieldValue("photos", [...values.photos, ...acceptedFiles])
+  const handlePhotoUploadingProgress = (photo: Photo) => progress => {
+    photo.progress = progress
+
+    setFieldValue("photos", values.photos)
+  }
+
+  const handlePhotoUploaded = (photo: Photo) => key => {
+    photo.s3Key = key
+
+    setFieldValue("photos", values.photos)
+  }
+
+  const onDrop = useCallback((acceptedFiles: File[]) => {
+    const photos = acceptedFiles.map(normalizePhoto)
+
+    if (relayEnvironment) {
+      photos.forEach(photo => {
+        uploadPhoto(
+          relayEnvironment,
+          photo,
+          handlePhotoUploadingProgress(photo)
+        ).then(handlePhotoUploaded(photo))
+      })
+    }
+
+    setFieldValue("photos", [...values.photos, ...photos])
   }, [])
 
   const { getRootProps, getInputProps, open } = useDropzone({
