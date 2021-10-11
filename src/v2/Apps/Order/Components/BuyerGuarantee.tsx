@@ -7,8 +7,8 @@ export const BUYER_GUARANTEE_URL =
   "https://support.artsy.net/hc/en-us/articles/360048946973-How-does-Artsy-protect-me"
 
 interface BuyerGuaranteeProps {
-  contextModule?: ContextModule
-  contextPageOwnerType?: string
+  contextModule: ContextModule
+  contextPageOwnerType: string
 }
 
 export const BuyerGuarantee: React.FC<BuyerGuaranteeProps> = ({
