@@ -31,7 +31,7 @@ import { extractNodes } from "v2/Utils/extractNodes"
 import { UpdateUserAddressMutationResponse } from "v2/__generated__/UpdateUserAddressMutation.graphql"
 import { CreateUserAddressMutationResponse } from "v2/__generated__/CreateUserAddressMutation.graphql"
 import { useTracking } from "v2/System"
-import { ActionType, ContextModule } from "@artsy/cohesion"
+import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
 
 export const NEW_ADDRESS = "NEW_ADDRESS"
 const PAGE_SIZE = 30
@@ -164,8 +164,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
   const trackAddAddressClick = () => {
     trackEvent({
       action: ActionType.clickedAddNewShippingAddress,
-      // TODO: move this constant to cohesion!
-      context_page_owner_type: "orders-shipping",
+      context_page_owner_type: OwnerType.ordersShipping,
       context_module: ContextModule.ordersShipping,
     })
   }

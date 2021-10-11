@@ -81,6 +81,7 @@ import {
   ClickedSelectShippingOption,
   ClickedShippingAddress,
   ContextModule,
+  OwnerType,
 } from "@artsy/cohesion"
 
 export interface ShippingProps extends SystemContextProps {
@@ -771,8 +772,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
               </Flex>
               <BuyerGuarantee
                 contextModule={ContextModule.ordersShipping}
-                // TODO: move this constant to cohesion!
-                contextPageOwnerType="orders-shipping"
+                contextPageOwnerType={OwnerType.ordersShipping}
               />
               <Spacer mb={[2, 4]} />
               <Media at="xs">

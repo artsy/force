@@ -39,6 +39,7 @@ import {
   ClickedChangeShippingAddress,
   ClickedChangeShippingMethod,
   ContextModule,
+  OwnerType,
 } from "@artsy/cohesion"
 export interface ReviewProps {
   stripe: Stripe
@@ -55,8 +56,7 @@ export interface ReviewProps {
 
 const logger = createLogger("Order/Routes/Review/index.tsx")
 
-// TODO: move this to cohesion
-const OrdersReviewOwnerType = "orders-review"
+const OrdersReviewOwnerType = OwnerType.ordersReview
 
 @track()
 export class ReviewRoute extends Component<ReviewProps> {
@@ -437,8 +437,7 @@ export class ReviewRoute extends Component<ReviewProps> {
               </Flex>
               <BuyerGuarantee
                 contextModule={ContextModule.ordersReview}
-                // TODO: move this constant to cohesion!
-                contextPageOwnerType="orders-review"
+                contextPageOwnerType={OwnerType.ordersReview}
               />
               {order.myLastOffer && !order.myLastOffer?.hasDefiniteTotal && (
                 <Text variant="xs" color="black60">
