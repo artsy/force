@@ -50,6 +50,7 @@ const ArtistArtworkFilter: React.FC<ArtistArtworkFilterProps> = props => {
         relayVariables={{
           aggregations: ["TOTAL"],
         }}
+        enableCreateAlert
       >
         {artist.counts!.artworks === 0 && (
           <ZeroState artist={artist} isFollowed={artist.isFollowed} />

@@ -128,6 +128,7 @@ export const BaseArtworkFilter: React.FC<
       | CollectionArtworksFilter_collection
     Filters?: JSX.Element
     offset?: number
+    enableCreateAlert?: boolean
   }
 > = ({
   relay,
@@ -136,6 +137,7 @@ export const BaseArtworkFilter: React.FC<
   relayVariables = {},
   children,
   offset,
+  enableCreateAlert = false,
   ...rest
 }) => {
   const tracking = useTracking()
@@ -152,6 +154,8 @@ export const BaseArtworkFilter: React.FC<
 
   const { filtered_artworks } = viewer
   const hasFilter = filtered_artworks && filtered_artworks.id
+
+  const showCreateAlert = enableCreateAlert && filterContext.hasFilters
 
   /**
    * Check to see if the mobile action sheet is present and prevent scrolling
@@ -325,6 +329,8 @@ export const BaseArtworkFilter: React.FC<
             <ArtworkSortFilter />
           </Flex>
         )}
+
+        {showCreateAlert && <Button>Create Alert</Button>}
 
         <GridColumns>
           <Column span={3} pr={tokens.pr}>
