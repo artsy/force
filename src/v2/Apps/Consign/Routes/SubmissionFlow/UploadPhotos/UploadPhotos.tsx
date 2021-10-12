@@ -23,10 +23,16 @@ export const uploadPhotosValidationSchema = yup.object().shape({
 })
 
 export const UploadPhotos: FC = () => {
-  const { router } = useRouter()
+  const {
+    router,
+    match: {
+      params: { id },
+    },
+  } = useRouter()
 
   const handleSubmit = (values: UploadPhotosFormModel) => {
-    const submissionData = sessionStorage.getItem("submission")
+    const key = `submission-${id}`
+    const submissionData = sessionStorage.getItem(key)
 
     if (submissionData) {
       let submission = JSON.parse(submissionData)
@@ -37,10 +43,10 @@ export const UploadPhotos: FC = () => {
         progress: undefined,
       }))
 
-      sessionStorage.setItem("submission", JSON.stringify(submission))
+      sessionStorage.setItem(key, JSON.stringify(submission))
 
       router.push({
-        pathname: "/consign/submission2/contact-information",
+        pathname: `/consign/submission2/${id}/contact-information`,
       })
     }
   }
@@ -70,7 +76,7 @@ export const UploadPhotos: FC = () => {
         {({ values, setFieldValue, isValid, errors }) => {
           const handlePhotoDelete = (photo: Photo) => {
             photo.removed = true
-            photo.abortUploading && photo.abortUploading()
+            photo.abortUploading?.()
 
             setFieldValue(
               "photos",

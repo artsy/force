@@ -5,6 +5,7 @@ import { useFormikContext } from "formik"
 import { Media } from "v2/Utils/Responsive"
 import { useSystemContext } from "v2/System"
 import { Photo, normalizePhoto, uploadPhoto } from "../../Utils/FileUtils"
+import { useRouter } from "v2/System/Router/useRouter"
 
 export interface UploadPhotosFormModel {
   photos: Photo[]
@@ -15,11 +16,17 @@ export interface UploadPhotosFormProps extends BoxProps {}
 export const UploadPhotosForm: React.FC<UploadPhotosFormProps> = ({
   ...rest
 }) => {
+  const {
+    match: {
+      params: { id },
+    },
+  } = useRouter()
+
   const { relayEnvironment } = useSystemContext()
   const { setFieldValue, values } = useFormikContext<UploadPhotosFormModel>()
 
   useEffect(() => {
-    const storageValue = sessionStorage.getItem("submission")
+    const storageValue = sessionStorage.getItem(`submission-${id}`)
     const submissionData = storageValue ? JSON.parse(storageValue) : undefined
 
     if (submissionData.photos) {

@@ -7,6 +7,7 @@ import {
   ArtworkDetailsFormModel,
 } from "./Components/ArtworkDetailsForm"
 import { useRouter } from "v2/System/Router/useRouter"
+import uuid from "uuid"
 
 export const initialValues = {
   artist: "",
@@ -23,16 +24,26 @@ export const initialValues = {
 }
 
 export const ArtworkDetails: FC = () => {
-  const { router } = useRouter()
+  const {
+    router,
+    match: {
+      params: { id },
+    },
+  } = useRouter()
 
   const handleSubmit = () => {
+    const submissionId = id ? id : uuid()
+
     sessionStorage.setItem(
-      "submission",
+      `submission-${submissionId}`,
       JSON.stringify({ artistId: "4d8b92b34eb68a1b2c0003f4" })
     )
 
+    router.replace({
+      pathname: `/consign/submission2/${submissionId}/artwork-details`,
+    })
     router.push({
-      pathname: "/consign/submission2/upload-photos",
+      pathname: `/consign/submission2/${submissionId}/upload-photos`,
     })
   }
 

@@ -7,35 +7,25 @@ import { UploadPhotos } from "../UploadPhotos"
 import { flushPromiseQueue } from "v2/DevTools"
 import { SystemContextProvider } from "v2/System"
 
+jest.unmock("react-relay")
+
+const mockRouterPush = jest.fn()
 jest.mock("v2/System/Router/useRouter", () => {
   return {
     useRouter: jest.fn(() => {
-      return { router: { push: mockRouterPush } }
+      return {
+        router: { push: mockRouterPush },
+        match: {
+          params: {
+            id: "1",
+          },
+        },
+      }
     }),
   }
 })
 
-const mockRouterPush = jest.fn()
-
-jest.unmock("react-relay")
-const { getWrapper } = setupTestWrapper({
-  Component: () => {
-    return (
-      <SystemContextProvider user={null}>
-        <UploadPhotos />
-      </SystemContextProvider>
-    )
-  },
-  query: graphql`
-    query UploadPhotosQuery {
-      submission(id: "") {
-        id
-      }
-    }
-  `,
-})
-let sessionStore = { submission: JSON.stringify({ artistId: "artistId" }) }
-
+let sessionStore = { "submission-1": JSON.stringify({ artistId: "artistId" }) }
 Object.defineProperty(window, "sessionStorage", {
   value: {
     getItem(key) {
@@ -57,9 +47,26 @@ jest.mock("../../Utils/FileUtils", () => ({
     }),
 }))
 
+const { getWrapper } = setupTestWrapper({
+  Component: () => {
+    return (
+      <SystemContextProvider>
+        <UploadPhotos />
+      </SystemContextProvider>
+    )
+  },
+  query: graphql`
+    query UploadPhotosQuery {
+      submission(id: "") {
+        id
+      }
+    }
+  `,
+})
+
 describe("UploadPhotos", () => {
   beforeEach(() => {
-    sessionStore = { submission: JSON.stringify({ artistId: "artistId" }) }
+    sessionStore = { "submission-1": JSON.stringify({ artistId: "artistId" }) }
     //@ts-ignore
     jest.spyOn(global, "FileReader").mockImplementation(function () {
       this.readAsDataURL = jest.fn()
@@ -177,7 +184,7 @@ describe("UploadPhotos", () => {
 
   it("prepopulates images from session storage", async () => {
     sessionStore = {
-      submission: JSON.stringify({
+      "submission-1": JSON.stringify({
         artistId: "artistId",
         photos: [
           {
@@ -232,7 +239,7 @@ describe("UploadPhotos", () => {
     expect(sessionStorage.setItem).toHaveBeenCalled()
     expect(mockRouterPush).toHaveBeenCalled()
     expect(mockRouterPush).toHaveBeenCalledWith({
-      pathname: "/consign/submission2/contact-information",
+      pathname: "/consign/submission2/1/contact-information",
     })
   })
 })
