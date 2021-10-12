@@ -45,6 +45,7 @@ import {
   ContextModule,
   ClickedChangePage,
 } from "@artsy/cohesion"
+import { data as sd } from "sharify"
 import { allowedFilters } from "./Utils/allowedFilters"
 import { Sticky } from "v2/Components/Sticky"
 import { ScrollRefContext } from "./ArtworkFilters/useScrollContext"
@@ -171,7 +172,8 @@ export const BaseArtworkFilter: React.FC<
   const { filtered_artworks } = viewer
   const hasFilter = filtered_artworks && filtered_artworks.id
 
-  const showCreateAlert = enableCreateAlert && filterContext.hasFilters
+  const showCreateAlert =
+    sd.ENABLE_SAVED_SEARCH && enableCreateAlert && filterContext.hasFilters
 
   /**
    * Check to see if the mobile action sheet is present and prevent scrolling

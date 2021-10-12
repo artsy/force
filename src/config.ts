@@ -53,6 +53,7 @@ export const ENABLE_INSTANT_PAGE: any = true
 export const ENABLE_MEMORY_PROFILING: any = false
 export const ENABLE_NEW_AUCTIONS_FILTER: any = false
 export const ENABLE_QUERY_BATCHING: any = false
+export const ENABLE_SAVED_SEARCH: any = false
 export const ENABLE_SERVER_SIDE_CACHE: any = false
 export const ENABLE_WEB_CRAWLING: any = false
 export const EOY_2016_ARTICLE: any = "58472d93b7b31d00116f5ab0"
