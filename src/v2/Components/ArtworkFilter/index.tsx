@@ -321,7 +321,11 @@ export const BaseArtworkFilter: React.FC<
       {/* Desktop Artwork Filter */}
       <Media greaterThan="xs">
         {tokens.version === "v3" && (
-          <Flex justifyContent="space-between" alignItems="flex-start" pb={4}>
+          <Flex
+            justifyContent="space-between"
+            alignItems="flex-start"
+            pb={showCreateAlert ? 0 : 40}
+          >
             <Text variant="xs" textTransform="uppercase">
               Filter by
             </Text>
@@ -330,7 +334,12 @@ export const BaseArtworkFilter: React.FC<
           </Flex>
         )}
 
-        {showCreateAlert && <Button>Create Alert</Button>}
+        {showCreateAlert && (
+          <>
+            <Button size="small">Create Alert</Button>
+            <Spacer mb={10} />
+          </>
+        )}
 
         <GridColumns>
           <Column span={3} pr={tokens.pr}>
