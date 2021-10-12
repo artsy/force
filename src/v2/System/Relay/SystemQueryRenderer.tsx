@@ -26,7 +26,7 @@ export type SystemQueryRendererProps<T extends OperationType> = Omit<
 export function SystemQueryRenderer<T extends OperationType>({
   debugPlaceholder = false,
   lazyLoad = false,
-  lazyLoadThreshold = 1000,
+  lazyLoadThreshold = 1500,
   placeholder,
   environment,
   variables = {},
