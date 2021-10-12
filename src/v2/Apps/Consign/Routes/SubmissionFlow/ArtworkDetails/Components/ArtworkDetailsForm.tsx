@@ -42,16 +42,21 @@ export interface ArtworkDetailsFormModel {
   rarity: string
   editionNumber: string
   editionSize: string
-  heigth: string
+  height: string
   width: string
   depth: string
   units: string
 }
 
 export const ArtworkDetailsForm: FC = () => {
-  const { values, handleChange, setFieldValue } = useFormikContext<
-    ArtworkDetailsFormModel
-  >()
+  const {
+    values,
+    handleChange,
+    setFieldValue,
+    errors,
+    touched,
+    handleBlur,
+  } = useFormikContext<ArtworkDetailsFormModel>()
   const uniqueRarity = values.rarity === "unique"
 
   return (
@@ -65,6 +70,9 @@ export const ArtworkDetailsForm: FC = () => {
             title="year"
             placeholder="YYYY"
             name="year"
+            maxLength={4}
+            error={touched.year && errors.year}
+            onBlur={handleBlur}
             onChange={handleChange}
             value={values.year || ""}
           />
@@ -76,6 +84,9 @@ export const ArtworkDetailsForm: FC = () => {
             title="Title"
             placeholder="Add Title or Write 'Unknown'"
             name="title"
+            maxLength={256}
+            error={touched.title && errors.title}
+            onBlur={handleBlur}
             onChange={handleChange}
             value={values.title || ""}
           />
@@ -88,6 +99,9 @@ export const ArtworkDetailsForm: FC = () => {
             name="medium"
             options={mediumOptions}
             selected={values.medium}
+            error={touched.medium && errors.medium}
+            onBlur={handleBlur}
+            onChange={handleChange}
             onSelect={selected => {
               setFieldValue("medium", selected)
             }}
@@ -106,6 +120,9 @@ export const ArtworkDetailsForm: FC = () => {
             name="rarity"
             options={rarityOptions}
             selected={values.rarity}
+            error={touched.rarity && errors.rarity}
+            onBlur={handleBlur}
+            onChange={handleChange}
             onSelect={selected => {
               setFieldValue("rarity", selected)
             }}
@@ -118,6 +135,8 @@ export const ArtworkDetailsForm: FC = () => {
                 title="Edition Number"
                 placeholder="Your Work's #"
                 name="editionNumber"
+                error={touched.editionNumber && errors.editionNumber}
+                onBlur={handleBlur}
                 onChange={handleChange}
                 value={values.editionNumber || ""}
               />
@@ -128,6 +147,8 @@ export const ArtworkDetailsForm: FC = () => {
                 title="Edition Size"
                 placeholder="Total # in Edition"
                 name="editionSize"
+                error={touched.editionSize && errors.editionSize}
+                onBlur={handleBlur}
                 onChange={handleChange}
                 value={values.editionSize || ""}
               />
@@ -142,13 +163,25 @@ export const ArtworkDetailsForm: FC = () => {
               <Text variant="xs" mb={0.5} mr={0.5} textTransform="uppercase">
                 Height
               </Text>
-              <LabeledInput label={values.units} name="height" />
+              <LabeledInput
+                label={values.units}
+                name="height"
+                error={touched.height && errors.height}
+                onBlur={handleBlur}
+                onChange={handleChange}
+              />
             </Box>
             <Box width="50%">
               <Text variant="xs" mb={0.5} mr={0.5} textTransform="uppercase">
                 Width
               </Text>
-              <LabeledInput label={values.units} name="width" />
+              <LabeledInput
+                label={values.units}
+                name="width"
+                error={touched.width && errors.width}
+                onBlur={handleBlur}
+                onChange={handleChange}
+              />
             </Box>
           </Flex>
         </Column>
@@ -166,6 +199,8 @@ export const ArtworkDetailsForm: FC = () => {
               <LabeledInput
                 label={values.units}
                 name="depth"
+                error={touched.depth && errors.depth}
+                onBlur={handleBlur}
                 onChange={handleChange}
                 value={values.depth || ""}
               />

@@ -8,16 +8,55 @@ import {
 } from "./Components/ArtworkDetailsForm"
 import { useRouter } from "v2/System/Router/useRouter"
 import uuid from "uuid"
+import * as Yup from "yup"
+
+const ArtworkDetailsSchema = Yup.object().shape({
+  artist: Yup.string().label("Artist").required(),
+  year: Yup.number()
+    .typeError("Year must be a number")
+    .label("Year")
+    .required()
+    .positive()
+    .integer(),
+  title: Yup.string().label("Title").required(),
+  medium: Yup.string().required(),
+  rarity: Yup.string().required(),
+  editionNumber: Yup.number()
+    .typeError("Edition Number must be a number")
+    .label("Edition number")
+    .positive()
+    .integer(),
+  editionSize: Yup.number()
+    .typeError("Edition Size must be a number")
+    .label("Edition size")
+    .positive()
+    .integer(),
+  height: Yup.number()
+    .typeError("Height must be a number")
+    .label("Height")
+    .required()
+    .positive(),
+  width: Yup.number()
+    .typeError("Width must be a number")
+    .label("Width")
+    .required()
+    .positive(),
+  depth: Yup.number()
+    .typeError("Depth must be a number")
+    .label("Depth")
+    .positive(),
+  units: Yup.string().required(),
+})
 
 export const initialValues = {
   artist: "",
   year: "",
   title: "",
   medium: "",
-  rarity: "default",
+  rarity: "",
   editionNumber: "",
   editionSize: "",
-  heigth: "",
+  height: "",
   width: "",
   depth: "",
   units: "in",
@@ -59,8 +98,10 @@ export const ArtworkDetails: FC = () => {
       <Formik<ArtworkDetailsFormModel>
         initialValues={initialValues}
         onSubmit={handleSubmit}
+        validationSchema={ArtworkDetailsSchema}
+        validateOnMount
       >
-        {({ isSubmitting }) => (
+        {({ isSubmitting, errors }) => (
           <Form>
             <ArtworkDetailsForm />
             <Button
@@ -70,6 +111,7 @@ export const ArtworkDetails: FC = () => {
               size="medium"
               variant="primaryBlack"
               loading={isSubmitting}
+              disabled={Object.keys(errors).length > 0}
             >
               Save and Continue
             </Button>
