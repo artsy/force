@@ -1,4 +1,14 @@
-import { BorderBox, Box, HTML, Tab, Tabs } from "@artsy/palette"
+import {
+  BorderBox,
+  Box,
+  HTML,
+  Skeleton,
+  SkeletonBox,
+  SkeletonText,
+  StackableBorderBox,
+  Tab,
+  Tabs,
+} from "@artsy/palette"
 import React, { Component } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
@@ -10,6 +20,9 @@ import { ArtworkDetails_artwork } from "v2/__generated__/ArtworkDetails_artwork.
 import { track } from "v2/System/Analytics"
 import * as Schema from "v2/System/Analytics/Schema"
 import Events from "v2/Utils/Events"
+import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
+import { ArtworkDetailsQuery } from "v2/__generated__/ArtworkDetailsQuery.graphql"
+import { useSystemContext } from "v2/System"
 
 export interface ArtworkDetailsProps {
   artwork: ArtworkDetails_artwork
@@ -121,3 +134,60 @@ const ArtworkDetailsContainer = TabContainer
 const ExhibitionHistory = TabContainer
 const Literature = TabContainer
 const Provenance = TabContainer
+
+const PLACEHOLDER = (
+  <Skeleton>
+    <ArtworkDetailsContainer>
+      <Tabs>
+        <Tab name="About the work">
+          <StackableBorderBox>
+            <SkeletonBox width="100%" height={90} />
+          </StackableBorderBox>
+          <StackableBorderBox flexDirection="column">
+            <SkeletonText variant="xs">Medium</SkeletonText>
+            <SkeletonText variant="xs">Condition</SkeletonText>
+            <SkeletonText variant="xs">Signature</SkeletonText>
+            <SkeletonText variant="xs">
+              Certificate of authenticity
+            </SkeletonText>
+            <SkeletonText variant="xs">Frame</SkeletonText>
+          </StackableBorderBox>
+        </Tab>
+      </Tabs>
+    </ArtworkDetailsContainer>
+  </Skeleton>
+)
+
+export const ArtworkDetailsQueryRenderer: React.FC<{
+  slug: string
+}> = ({ slug }) => {
+  const { relayEnvironment } = useSystemContext()
+
+  return (
+    <SystemQueryRenderer<ArtworkDetailsQuery>
+      lazyLoad
+      environment={relayEnvironment}
+      variables={{ slug }}
+      placeholder={PLACEHOLDER}
+      query={graphql`
+        query ArtworkDetailsQuery($slug: String!) {
+          artwork(id: $slug) {
+            ...ArtworkDetails_artwork
+          }
+        }
+      `}
+      render={({ error, props }) => {
+        if (error) {
+          console.error(error)
+          return null
+        }
+        if (!props) {
+          return PLACEHOLDER
+        }
+        if (props.artwork) {
+          return <ArtworkDetailsFragmentContainer artwork={props.artwork} />
+        }
+      }}
+    />
+  )
+}

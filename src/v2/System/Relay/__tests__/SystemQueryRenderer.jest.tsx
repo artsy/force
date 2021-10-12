@@ -49,6 +49,15 @@ describe("SystemQueryRenderer", () => {
     expect(wrapper.text()).toContain("placeholder")
   })
 
+  it("renders a placeholder if debugPlaceholder is true", () => {
+    mockuseDidMount.mockImplementation(() => true)
+    const wrapper = getWrapper({
+      debugPlaceholder: true,
+      placeholder: <>placeholder</>,
+    })
+    expect(wrapper.text()).toContain("placeholder")
+  })
+
   it("renders a QueryRenderer", () => {
     mockuseDidMount.mockImplementation(() => true)
     const wrapper = getWrapper()

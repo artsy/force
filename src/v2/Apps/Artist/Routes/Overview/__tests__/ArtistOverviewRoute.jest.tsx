@@ -8,45 +8,46 @@ jest.mock("react-head", () => ({
   Title: () => null,
 }))
 jest.mock(
+  "v2/Apps/Artist/Routes/Overview/Components/ArtistNotableWorksRail",
+  () => ({
+    ArtistNotableWorksRailQueryRenderer: () => null,
+  })
+)
+jest.mock(
+  "v2/Apps/Artist/Routes/Overview/Components/ArtistCareerHighlights",
+  () => ({
+    ArtistCareerHighlightsQueryRenderer: () => null,
+  })
+)
+jest.mock(
   "v2/Apps/Artist/Routes/Overview/Components/ArtistIconicCollectionsRail",
   () => ({
     ArtistIconicCollectionsRailQueryRenderer: () => null,
   })
 )
 jest.mock(
-  "v2/Apps/Artist/Routes/Overview/Components/ArtistNotableWorksRail",
-  () => ({
-    ArtistNotableWorksRailFragmentContainer: () => null,
-  })
-)
-jest.mock(
   "v2/Apps/Artist/Routes/Overview/Components/ArtistWorksForSaleRail",
   () => ({
-    ArtistWorksForSaleRailFragmentContainer: () => null,
+    ArtistWorksForSaleRailQueryRenderer: () => null,
   })
 )
 jest.mock(
   "v2/Apps/Artist/Routes/Overview/Components/ArtistCurrentShowsRail",
   () => ({
-    ArtistCurrentShowsRailFragmentContainer: () => null,
+    ArtistCurrentShowsRailQueryRenderer: () => null,
   })
 )
 jest.mock(
   "v2/Apps/Artist/Routes/Overview/Components/ArtistCurrentArticlesRail",
   () => ({
-    ArtistCurrentArticlesRailFragmentContainer: () => null,
+    ArtistCurrentArticlesRailQueryRenderer: () => null,
   })
 )
-jest.mock(
-  "v2/Apps/Artist/Routes/Overview/Components/ArtistCareerHighlights",
-  () => ({
-    ArtistCareerHighlightsFragmentContainer: () => null,
-  })
-)
+
 jest.mock(
   "v2/Apps/Artist/Routes/Overview/Components/ArtistRelatedArtistsRail",
   () => ({
-    ArtistRelatedArtistsRailFragmentContainer: () => null,
+    ArtistRelatedArtistsRailQueryRenderer: () => null,
   })
 )
 
@@ -64,26 +65,16 @@ describe("ArtistOverviewRoute", () => {
 
   it("renders correctly", () => {
     const wrapper = getWrapper()
-    expect(wrapper.find("ArtistNotableWorksRailFragmentContainer").length).toBe(
-      1
-    )
-    expect(wrapper.find("ArtistCareerHighlightsFragmentContainer").length).toBe(
-      1
-    )
+    expect(wrapper.find("ArtistNotableWorksRailQueryRenderer").length).toBe(1)
+    expect(wrapper.find("ArtistCareerHighlightsQueryRenderer").length).toBe(1)
     expect(
       wrapper.find("ArtistIconicCollectionsRailQueryRenderer").length
     ).toBe(1)
-    expect(wrapper.find("ArtistWorksForSaleRailFragmentContainer").length).toBe(
+    expect(wrapper.find("ArtistWorksForSaleRailQueryRenderer").length).toBe(1)
+    expect(wrapper.find("ArtistCurrentShowsRailQueryRenderer").length).toBe(1)
+    expect(wrapper.find("ArtistCurrentArticlesRailQueryRenderer").length).toBe(
       1
     )
-    expect(wrapper.find("ArtistCurrentShowsRailFragmentContainer").length).toBe(
-      1
-    )
-    expect(
-      wrapper.find("ArtistCurrentArticlesRailFragmentContainer").length
-    ).toBe(1)
-    expect(
-      wrapper.find("ArtistRelatedArtistsRailFragmentContainer").length
-    ).toBe(1)
+    expect(wrapper.find("ArtistRelatedArtistsRailQueryRenderer").length).toBe(1)
   })
 })

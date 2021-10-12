@@ -1,4 +1,14 @@
-import { BorderBox, Flex, Link, Spacer, Text } from "@artsy/palette"
+import {
+  BorderBox,
+  Flex,
+  Link,
+  Skeleton,
+  SkeletonBox,
+  SkeletonText,
+  Spacer,
+  StackableBorderBox,
+  Text,
+} from "@artsy/palette"
 import { BarChart, BarDescriptor } from "@artsy/palette-charts"
 import { PricingContext_artwork } from "v2/__generated__/PricingContext_artwork.graphql"
 import { track } from "v2/System/Analytics"
@@ -10,6 +20,9 @@ import Waypoint from "react-waypoint"
 import Events from "v2/Utils/Events"
 import { createCollectUrl } from "./../Utils/createCollectUrl"
 import { PricingContextModal } from "./PricingContextModal"
+import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
+import { PricingContextQuery } from "v2/__generated__/PricingContextQuery.graphql"
+import { useSystemContext } from "v2/System"
 
 interface PricingContextProps {
   artwork: PricingContext_artwork
@@ -202,5 +215,52 @@ export const PricingContextFragmentContainer = createFragmentContainer(
     `,
   }
 )
+
+const PLACEHOLDER = (
+  <Skeleton>
+    <StackableBorderBox flexDirection="column">
+      <SkeletonText variant="xs">
+        Price ranges of small prints by Pablo Picasso
+      </SkeletonText>
+      <SkeletonText variant="xs">Browse works in this category</SkeletonText>
+      <Spacer mt={2} />
+      <SkeletonBox width="100%" height={100} />
+    </StackableBorderBox>
+  </Skeleton>
+)
+
+export const PricingContextQueryRenderer: React.FC<{
+  slug: string
+}> = ({ slug }) => {
+  const { relayEnvironment } = useSystemContext()
+
+  return (
+    <SystemQueryRenderer<PricingContextQuery>
+      lazyLoad
+      environment={relayEnvironment}
+      variables={{ slug }}
+      placeholder={PLACEHOLDER}
+      query={graphql`
+        query PricingContextQuery($slug: String!) {
+          artwork(id: $slug) {
+            ...PricingContext_artwork
+          }
+        }
+      `}
+      render={({ error, props }) => {
+        if (error) {
+          console.error(error)
+          return null
+        }
+        if (!props) {
+          return PLACEHOLDER
+        }
+        if (props.artwork) {
+          return <PricingContextFragmentContainer artwork={props.artwork} />
+        }
+      }}
+    />
+  )
+}
 
 PricingContextFragmentContainer.displayName = "PricingContext"

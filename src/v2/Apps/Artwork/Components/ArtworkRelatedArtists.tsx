@@ -5,6 +5,8 @@ import {
   Column,
   Flex,
   GridColumns,
+  Skeleton,
+  SkeletonText,
   Spacer,
   Text,
 } from "@artsy/palette"
@@ -21,6 +23,9 @@ import {
 } from "react-relay"
 import createLogger from "v2/Utils/logger"
 import { extractNodes } from "v2/Utils/extractNodes"
+import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
+import { ArtworkRelatedArtistsQuery } from "v2/__generated__/ArtworkRelatedArtistsQuery.graphql"
+import { useSystemContext } from "v2/System"
 
 const logger = createLogger("ArtworkRelatedArtists.tsx")
 
@@ -181,3 +186,71 @@ export const ArtworkRelatedArtistsPaginationContainer = createPaginationContaine
     `,
   }
 )
+
+const PLACEHOLDER = (
+  <Skeleton>
+    <Text variant="lg">Related artists</Text>
+
+    <Spacer mt={4} />
+
+    <GridColumns>
+      {[...new Array(4)].map((node, index) => {
+        return (
+          <Column key={index} span={[12, 6, 3, 3]}>
+            <Flex flexDirection="row">
+              <Flex
+                width="100%"
+                alignItems="center"
+                justifyContent="space-between"
+              >
+                <Box>
+                  <SkeletonText variant="sm">Georges Braque</SkeletonText>
+                  <SkeletonText variant="xs">French 1900-2000</SkeletonText>
+                </Box>
+                <Button variant="secondaryOutline" size="small">
+                  Follow
+                </Button>
+              </Flex>
+            </Flex>
+          </Column>
+        )
+      })}
+    </GridColumns>
+  </Skeleton>
+)
+
+export const ArtworkRelatedArtistsQueryRenderer: React.FC<{
+  slug: string
+}> = ({ slug }) => {
+  const { relayEnvironment } = useSystemContext()
+
+  return (
+    <SystemQueryRenderer<ArtworkRelatedArtistsQuery>
+      lazyLoad
+      environment={relayEnvironment}
+      variables={{ slug }}
+      placeholder={PLACEHOLDER}
+      query={graphql`
+        query ArtworkRelatedArtistsQuery($slug: String!) {
+          artwork(id: $slug) {
+            ...ArtworkRelatedArtists_artwork
+          }
+        }
+      `}
+      render={({ error, props }) => {
+        if (error) {
+          console.error(error)
+          return null
+        }
+        if (!props) {
+          return PLACEHOLDER
+        }
+        if (props.artwork) {
+          return (
+            <ArtworkRelatedArtistsPaginationContainer artwork={props.artwork} />
+          )
+        }
+      }}
+    />
+  )
+}

@@ -3,46 +3,42 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type ArtistIconicCollectionsRailQueryVariables = {
-    isFeaturedArtistContent?: boolean | null;
-    size?: number | null;
-    internalID?: string | null;
+export type ArtistCurrentArticlesRailQueryVariables = {
+    slug: string;
 };
-export type ArtistIconicCollectionsRailQueryResponse = {
-    readonly marketingCollections: ReadonlyArray<{
-        readonly " $fragmentRefs": FragmentRefs<"ArtistIconicCollectionsRail_marketingCollections">;
-    }>;
+export type ArtistCurrentArticlesRailQueryResponse = {
+    readonly artist: {
+        readonly " $fragmentRefs": FragmentRefs<"ArtistCurrentArticlesRail_artist">;
+    } | null;
 };
-export type ArtistIconicCollectionsRailQuery = {
-    readonly response: ArtistIconicCollectionsRailQueryResponse;
-    readonly variables: ArtistIconicCollectionsRailQueryVariables;
+export type ArtistCurrentArticlesRailQuery = {
+    readonly response: ArtistCurrentArticlesRailQueryResponse;
+    readonly variables: ArtistCurrentArticlesRailQueryVariables;
 };
 
 
 
 /*
-query ArtistIconicCollectionsRailQuery(
-  $isFeaturedArtistContent: Boolean
-  $size: Int
-  $internalID: String
+query ArtistCurrentArticlesRailQuery(
+  $slug: String!
 ) {
-  marketingCollections(isFeaturedArtistContent: $isFeaturedArtistContent, size: $size, artistID: $internalID) {
-    ...ArtistIconicCollectionsRail_marketingCollections
+  artist(id: $slug) {
+    ...ArtistCurrentArticlesRail_artist
     id
   }
 }
 
-fragment ArtistIconicCollectionsRail_marketingCollections on MarketingCollection {
-  headerImage
-  thumbnail
-  slug
-  title
-  priceGuidance
-  artworksConnection(first: 1, aggregations: [TOTAL], sort: "-decayed_merch") {
+fragment ArtistCurrentArticlesRail_artist on Artist {
+  articlesConnection(first: 10, sort: PUBLISHED_AT_DESC, inEditorialFeed: true) {
     edges {
       node {
-        image {
-          resized(width: 325, height: 230) {
+        internalID
+        slug
+        href
+        thumbnailTitle
+        publishedAt(format: "MMM Do, YYYY")
+        thumbnailImage {
+          cropped(width: 325, height: 230) {
             width
             height
             src
@@ -52,8 +48,10 @@ fragment ArtistIconicCollectionsRail_marketingCollections on MarketingCollection
         id
       }
     }
-    id
   }
+  internalID
+  name
+  slug
 }
 */
 
@@ -62,40 +60,32 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "isFeaturedArtistContent",
-    "type": "Boolean"
-  },
-  {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "size",
-    "type": "Int"
-  },
-  {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "internalID",
-    "type": "String"
+    "name": "slug",
+    "type": "String!"
   }
 ],
 v1 = [
   {
     "kind": "Variable",
-    "name": "artistID",
-    "variableName": "internalID"
-  },
-  {
-    "kind": "Variable",
-    "name": "isFeaturedArtistContent",
-    "variableName": "isFeaturedArtistContent"
-  },
-  {
-    "kind": "Variable",
-    "name": "size",
-    "variableName": "size"
+    "name": "id",
+    "variableName": "slug"
   }
 ],
 v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+},
+v3 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "slug",
+  "storageKey": null
+},
+v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -107,20 +97,20 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "ArtistIconicCollectionsRailQuery",
+    "name": "ArtistCurrentArticlesRailQuery",
     "selections": [
       {
         "alias": null,
         "args": (v1/*: any*/),
-        "concreteType": "MarketingCollection",
+        "concreteType": "Artist",
         "kind": "LinkedField",
-        "name": "marketingCollections",
-        "plural": true,
+        "name": "artist",
+        "plural": false,
         "selections": [
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "ArtistIconicCollectionsRail_marketingCollections"
+            "name": "ArtistCurrentArticlesRail_artist"
           }
         ],
         "storageKey": null
@@ -132,81 +122,44 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "ArtistIconicCollectionsRailQuery",
+    "name": "ArtistCurrentArticlesRailQuery",
     "selections": [
       {
         "alias": null,
         "args": (v1/*: any*/),
-        "concreteType": "MarketingCollection",
+        "concreteType": "Artist",
         "kind": "LinkedField",
-        "name": "marketingCollections",
-        "plural": true,
+        "name": "artist",
+        "plural": false,
         "selections": [
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "headerImage",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "thumbnail",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "slug",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "title",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "priceGuidance",
-            "storageKey": null
-          },
           {
             "alias": null,
             "args": [
               {
                 "kind": "Literal",
-                "name": "aggregations",
-                "value": [
-                  "TOTAL"
-                ]
+                "name": "first",
+                "value": 10
               },
               {
                 "kind": "Literal",
-                "name": "first",
-                "value": 1
+                "name": "inEditorialFeed",
+                "value": true
               },
               {
                 "kind": "Literal",
                 "name": "sort",
-                "value": "-decayed_merch"
+                "value": "PUBLISHED_AT_DESC"
               }
             ],
-            "concreteType": "FilterArtworksConnection",
+            "concreteType": "ArticleConnection",
             "kind": "LinkedField",
-            "name": "artworksConnection",
+            "name": "articlesConnection",
             "plural": false,
             "selections": [
               {
                 "alias": null,
                 "args": null,
-                "concreteType": "FilterArtworksEdge",
+                "concreteType": "ArticleEdge",
                 "kind": "LinkedField",
                 "name": "edges",
                 "plural": true,
@@ -214,17 +167,46 @@ return {
                   {
                     "alias": null,
                     "args": null,
-                    "concreteType": "Artwork",
+                    "concreteType": "Article",
                     "kind": "LinkedField",
                     "name": "node",
                     "plural": false,
                     "selections": [
+                      (v2/*: any*/),
+                      (v3/*: any*/),
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "href",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "thumbnailTitle",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": [
+                          {
+                            "kind": "Literal",
+                            "name": "format",
+                            "value": "MMM Do, YYYY"
+                          }
+                        ],
+                        "kind": "ScalarField",
+                        "name": "publishedAt",
+                        "storageKey": "publishedAt(format:\"MMM Do, YYYY\")"
+                      },
                       {
                         "alias": null,
                         "args": null,
                         "concreteType": "Image",
                         "kind": "LinkedField",
-                        "name": "image",
+                        "name": "thumbnailImage",
                         "plural": false,
                         "selections": [
                           {
@@ -241,9 +223,9 @@ return {
                                 "value": 325
                               }
                             ],
-                            "concreteType": "ResizedImageUrl",
+                            "concreteType": "CroppedImageUrl",
                             "kind": "LinkedField",
-                            "name": "resized",
+                            "name": "cropped",
                             "plural": false,
                             "selections": [
                               {
@@ -275,23 +257,31 @@ return {
                                 "storageKey": null
                               }
                             ],
-                            "storageKey": "resized(height:230,width:325)"
+                            "storageKey": "cropped(height:230,width:325)"
                           }
                         ],
                         "storageKey": null
                       },
-                      (v2/*: any*/)
+                      (v4/*: any*/)
                     ],
                     "storageKey": null
                   }
                 ],
                 "storageKey": null
-              },
-              (v2/*: any*/)
+              }
             ],
-            "storageKey": "artworksConnection(aggregations:[\"TOTAL\"],first:1,sort:\"-decayed_merch\")"
+            "storageKey": "articlesConnection(first:10,inEditorialFeed:true,sort:\"PUBLISHED_AT_DESC\")"
           },
-          (v2/*: any*/)
+          (v2/*: any*/),
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "name",
+            "storageKey": null
+          },
+          (v3/*: any*/),
+          (v4/*: any*/)
         ],
         "storageKey": null
       }
@@ -300,11 +290,11 @@ return {
   "params": {
     "id": null,
     "metadata": {},
-    "name": "ArtistIconicCollectionsRailQuery",
+    "name": "ArtistCurrentArticlesRailQuery",
     "operationKind": "query",
-    "text": "query ArtistIconicCollectionsRailQuery(\n  $isFeaturedArtistContent: Boolean\n  $size: Int\n  $internalID: String\n) {\n  marketingCollections(isFeaturedArtistContent: $isFeaturedArtistContent, size: $size, artistID: $internalID) {\n    ...ArtistIconicCollectionsRail_marketingCollections\n    id\n  }\n}\n\nfragment ArtistIconicCollectionsRail_marketingCollections on MarketingCollection {\n  headerImage\n  thumbnail\n  slug\n  title\n  priceGuidance\n  artworksConnection(first: 1, aggregations: [TOTAL], sort: \"-decayed_merch\") {\n    edges {\n      node {\n        image {\n          resized(width: 325, height: 230) {\n            width\n            height\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n    id\n  }\n}\n"
+    "text": "query ArtistCurrentArticlesRailQuery(\n  $slug: String!\n) {\n  artist(id: $slug) {\n    ...ArtistCurrentArticlesRail_artist\n    id\n  }\n}\n\nfragment ArtistCurrentArticlesRail_artist on Artist {\n  articlesConnection(first: 10, sort: PUBLISHED_AT_DESC, inEditorialFeed: true) {\n    edges {\n      node {\n        internalID\n        slug\n        href\n        thumbnailTitle\n        publishedAt(format: \"MMM Do, YYYY\")\n        thumbnailImage {\n          cropped(width: 325, height: 230) {\n            width\n            height\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n  }\n  internalID\n  name\n  slug\n}\n"
   }
 };
 })();
-(node as any).hash = '16b2ee794c09a8f1354209f080fbe116';
+(node as any).hash = 'be4434fca4312f2b84c9aa68f0eb0eb9';
 export default node;

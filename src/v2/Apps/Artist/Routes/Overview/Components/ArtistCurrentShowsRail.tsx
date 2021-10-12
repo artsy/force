@@ -1,13 +1,27 @@
 import { clickedEntityGroup, ContextModule, OwnerType } from "@artsy/cohesion"
-import { Box, Image, Spacer, Text } from "@artsy/palette"
+import {
+  Box,
+  Image,
+  Skeleton,
+  SkeletonBox,
+  SkeletonText,
+  Spacer,
+  Text,
+} from "@artsy/palette"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { Rail } from "v2/Components/Rail"
-import { AnalyticsSchema, useAnalyticsContext } from "v2/System"
+import {
+  AnalyticsSchema,
+  useAnalyticsContext,
+  useSystemContext,
+} from "v2/System"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { extractNodes } from "v2/Utils/extractNodes"
 import { ArtistCurrentShowsRail_artist } from "v2/__generated__/ArtistCurrentShowsRail_artist.graphql"
+import { ArtistCurrentShowsRailQuery } from "v2/__generated__/ArtistCurrentShowsRailQuery.graphql"
+import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 
 interface ArtistCurrentShowsRailProps {
   artist: ArtistCurrentShowsRail_artist
@@ -129,3 +143,59 @@ export const ArtistCurrentShowsRailFragmentContainer = createFragmentContainer(
     `,
   }
 )
+
+const PLACEHOLDER = (
+  <Skeleton>
+    <Rail
+      title="Shows"
+      viewAllLabel="View All Shows"
+      getItems={() => {
+        return [...new Array(8)].map((_, i) => {
+          return (
+            <Box width={325} key={i}>
+              <SkeletonBox width={325} height={230} />
+              <SkeletonText variant="lg">Some Artist</SkeletonText>
+              <SkeletonText variant="md">Location</SkeletonText>
+            </Box>
+          )
+        })
+      }}
+    />
+  </Skeleton>
+)
+
+export const ArtistCurrentShowsRailQueryRenderer: React.FC<{
+  slug: string
+}> = ({ slug }) => {
+  const { relayEnvironment } = useSystemContext()
+
+  return (
+    <SystemQueryRenderer<ArtistCurrentShowsRailQuery>
+      lazyLoad
+      environment={relayEnvironment}
+      variables={{ slug }}
+      placeholder={PLACEHOLDER}
+      query={graphql`
+        query ArtistCurrentShowsRailQuery($slug: String!) {
+          artist(id: $slug) {
+            ...ArtistCurrentShowsRail_artist
+          }
+        }
+      `}
+      render={({ error, props }) => {
+        if (error) {
+          console.error(error)
+          return null
+        }
+        if (!props) {
+          return PLACEHOLDER
+        }
+        if (props.artist) {
+          return (
+            <ArtistCurrentShowsRailFragmentContainer artist={props.artist} />
+          )
+        }
+      }}
+    />
+  )
+}

@@ -4,12 +4,12 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type ArtistOverviewRoute_artist = {
+    readonly slug: string;
     readonly name: string | null;
     readonly counts: {
         readonly artworks: number | null;
     } | null;
     readonly internalID: string;
-    readonly " $fragmentRefs": FragmentRefs<"ArtistNotableWorksRail_artist" | "ArtistCareerHighlights_artist" | "ArtistWorksForSaleRail_artist" | "ArtistCurrentShowsRail_artist" | "ArtistCurrentArticlesRail_artist" | "ArtistRelatedArtistsRail_artist">;
     readonly " $refType": "ArtistOverviewRoute_artist";
 };
 export type ArtistOverviewRoute_artist$data = ArtistOverviewRoute_artist;
@@ -26,6 +26,13 @@ const node: ReaderFragment = {
   "metadata": null,
   "name": "ArtistOverviewRoute_artist",
   "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "slug",
+      "storageKey": null
+    },
     {
       "alias": null,
       "args": null,
@@ -57,39 +64,9 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "name": "internalID",
       "storageKey": null
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "ArtistNotableWorksRail_artist"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "ArtistCareerHighlights_artist"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "ArtistWorksForSaleRail_artist"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "ArtistCurrentShowsRail_artist"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "ArtistCurrentArticlesRail_artist"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "ArtistRelatedArtistsRail_artist"
     }
   ],
   "type": "Artist"
 };
-(node as any).hash = '751e99d3d16a87d5df8db9fe06d72e83';
+(node as any).hash = '8406e33d38f3f4802a073421c8463b10';
 export default node;

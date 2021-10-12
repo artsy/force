@@ -1,5 +1,12 @@
 import { ContextModule } from "@artsy/cohesion"
-import { Box, Join, Spacer } from "@artsy/palette"
+import {
+  Box,
+  Join,
+  Skeleton,
+  SkeletonBox,
+  SkeletonText,
+  Spacer,
+} from "@artsy/palette"
 import { OtherWorks_artwork } from "v2/__generated__/OtherWorks_artwork.graphql"
 import { OtherAuctionsQueryRenderer } from "v2/Apps/Artwork/Components/OtherAuctions"
 import { Header } from "v2/Apps/Artwork/Components/OtherWorks/Header"
@@ -12,6 +19,11 @@ import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { get } from "v2/Utils/get"
 import { Mediator } from "lib/mediator"
+import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
+import { OtherWorksQuery } from "v2/__generated__/OtherWorksQuery.graphql"
+import { useSystemContext } from "v2/System"
+import { random } from "lodash"
+import { Rail } from "v2/Components/Rail"
 
 export interface OtherWorksContextProps {
   artwork: OtherWorks_artwork
@@ -179,3 +191,64 @@ export const OtherWorksFragmentContainer = createFragmentContainer<{
     }
   `,
 })
+
+const PLACEHOLDER = (
+  <Skeleton>
+    <Rail
+      title="Other works by Pablo Picasso"
+      viewAllLabel="View All"
+      showProgress={false}
+      getItems={() => {
+        return [...new Array(4)].map((_, i) => {
+          return (
+            <Box key={i} p={1}>
+              <SkeletonBox width={random(200, 400)} height={400} />
+              <Spacer mt={1} />
+              <SkeletonText variant="xs">Pablo Picasso</SkeletonText>
+              <SkeletonText variant="xs">
+                Paysage (Landscape), 1953
+              </SkeletonText>
+              <SkeletonText variant="xs">
+                Paysage (Landscape), 1953
+              </SkeletonText>
+            </Box>
+          )
+        })
+      }}
+    />
+  </Skeleton>
+)
+
+export const OtherWorksQueryRenderer: React.FC<{
+  slug: string
+}> = ({ slug }) => {
+  const { relayEnvironment } = useSystemContext()
+
+  return (
+    <SystemQueryRenderer<OtherWorksQuery>
+      lazyLoad
+      environment={relayEnvironment}
+      variables={{ slug }}
+      placeholder={PLACEHOLDER}
+      query={graphql`
+        query OtherWorksQuery($slug: String!) {
+          artwork(id: $slug) {
+            ...OtherWorks_artwork
+          }
+        }
+      `}
+      render={({ error, props }) => {
+        if (error) {
+          console.error(error)
+          return null
+        }
+        if (!props) {
+          return PLACEHOLDER
+        }
+        if (props.artwork) {
+          return <OtherWorksFragmentContainer artwork={props.artwork} />
+        }
+      }}
+    />
+  )
+}

@@ -2,12 +2,21 @@ import { clickedEntityGroup, ContextModule, OwnerType } from "@artsy/cohesion"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
-import { useAnalyticsContext } from "v2/System"
+import { useAnalyticsContext, useSystemContext } from "v2/System"
 import { ShelfArtworkFragmentContainer } from "v2/Components/Artwork/ShelfArtwork"
 import { extractNodes } from "v2/Utils/extractNodes"
 import { ArtistNotableWorksRail_artist } from "v2/__generated__/ArtistNotableWorksRail_artist.graphql"
+import { ArtistNotableWorksRailQuery } from "v2/__generated__/ArtistNotableWorksRailQuery.graphql"
 import { scrollToTop } from "../Utils/scrollToTop"
 import { Rail } from "v2/Components/Rail"
+import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
+import {
+  Box,
+  Skeleton,
+  SkeletonBox,
+  SkeletonText,
+  Spacer,
+} from "@artsy/palette"
 
 interface ArtistNotableWorksRailProps {
   artist: ArtistNotableWorksRail_artist
@@ -105,3 +114,62 @@ export const ArtistNotableWorksRailFragmentContainer = createFragmentContainer(
     `,
   }
 )
+
+const PLACEHOLDER = (
+  <Skeleton>
+    <Rail
+      title="Notable Works"
+      viewAllLabel="View All Works"
+      getItems={() => {
+        return [...new Array(8)].map((_, i) => {
+          return (
+            <Box width={200} key={i}>
+              <SkeletonBox width={200} height={[200, 300, 250, 275][i % 4]} />
+              <Spacer mt={1} />
+              <SkeletonText variant="md">Artist Name</SkeletonText>
+              <SkeletonText variant="md">Artwork Title</SkeletonText>
+              <SkeletonText variant="xs">Partner</SkeletonText>
+              <SkeletonText variant="xs">Price</SkeletonText>
+            </Box>
+          )
+        })
+      }}
+    />
+  </Skeleton>
+)
+
+export const ArtistNotableWorksRailQueryRenderer: React.FC<{
+  slug: string
+}> = ({ slug }) => {
+  const { relayEnvironment } = useSystemContext()
+
+  return (
+    <SystemQueryRenderer<ArtistNotableWorksRailQuery>
+      lazyLoad
+      environment={relayEnvironment}
+      variables={{ slug }}
+      placeholder={PLACEHOLDER}
+      query={graphql`
+        query ArtistNotableWorksRailQuery($slug: String!) {
+          artist(id: $slug) {
+            ...ArtistNotableWorksRail_artist
+          }
+        }
+      `}
+      render={({ error, props }) => {
+        if (error) {
+          console.error(error)
+          return null
+        }
+        if (!props) {
+          return PLACEHOLDER
+        }
+        if (props.artist) {
+          return (
+            <ArtistNotableWorksRailFragmentContainer artist={props.artist} />
+          )
+        }
+      }}
+    />
+  )
+}
