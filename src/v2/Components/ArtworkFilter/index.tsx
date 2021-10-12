@@ -113,6 +113,21 @@ const FiltersWithScrollIntoView: React.FC<{
   )
 }
 
+const CreateAlertButton = () => {
+  return (
+    <>
+      <Button size="small">
+        <Flex justifyContent="space-between" alignItems="center">
+          <BellIcon fill="white100" width="16px" height="16px" />
+          <Spacer mr={0.5} />
+          Create Alert
+        </Flex>
+      </Button>
+      <Spacer mb={10} />
+    </>
+  )
+}
+
 export const BaseArtworkFilter: React.FC<
   BoxProps & {
     relay: RelayRefetchProp
@@ -335,18 +350,7 @@ export const BaseArtworkFilter: React.FC<
           </Flex>
         )}
 
-        {showCreateAlert && (
-          <>
-            <Button size="small">
-              <Flex justifyContent="space-between" alignItems="center">
-                <BellIcon fill="white100" width="16px" height="16px" />
-                <Spacer mr={0.5} />
-                Create Alert
-              </Flex>
-            </Button>
-            <Spacer mb={10} />
-          </>
-        )}
+        {showCreateAlert && <CreateAlertButton />}
 
         <GridColumns>
           <Column span={3} pr={tokens.pr}>
