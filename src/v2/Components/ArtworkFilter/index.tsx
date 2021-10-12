@@ -20,6 +20,7 @@ import {
 import { ArtworkFilterMobileActionSheet } from "./ArtworkFilterMobileActionSheet"
 import { ArtworkFilters } from "./ArtworkFilters"
 import {
+  BellIcon,
   Box,
   BoxProps,
   Button,
@@ -336,7 +337,13 @@ export const BaseArtworkFilter: React.FC<
 
         {showCreateAlert && (
           <>
-            <Button size="small">Create Alert</Button>
+            <Button size="small">
+              <Flex justifyContent="space-between" alignItems="center">
+                <BellIcon fill="white100" width="16px" height="16px" />
+                <Spacer mr={0.5} />
+                Create Alert
+              </Flex>
+            </Button>
             <Spacer mb={10} />
           </>
         )}
