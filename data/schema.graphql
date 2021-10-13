@@ -2757,6 +2757,7 @@ type CommerceBuyOrder implements CommerceOrder {
   creditCardId: String
   currencyCode: String!
   displayCommissionRate: String
+  displayState: String
   id: ID!
   internalID: ID!
   itemsTotal(
@@ -3399,6 +3400,7 @@ type CommerceOfferOrder implements CommerceOrder {
   creditCardId: String
   currencyCode: String!
   displayCommissionRate: String
+  displayState: String
   id: ID!
   impulseConversationId: String
   internalID: ID!
@@ -3608,6 +3610,7 @@ interface CommerceOrder {
   creditCardId: String
   currencyCode: String!
   displayCommissionRate: String
+  displayState: String
   id: ID!
   internalID: ID!
   itemsTotal(
