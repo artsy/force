@@ -1,9 +1,8 @@
-import { Button, Flex, Modal, space, Text } from "@artsy/palette"
+import { Banner, Button, Flex, Modal, space, Text } from "@artsy/palette"
 import React from "react"
 import { useSystemContext } from "v2/System"
 import { PasswordInput } from "v2/Components/PasswordInput"
 import { Form, Formik, FormikProps } from "formik"
-import { Error } from "v2/Components/Authentication/commonElements"
 import { ConfirmPassword } from "./Mutations/ConfirmPassword"
 import { ConfirmPasswordInput } from "v2/__generated__/ConfirmPasswordMutation.graphql"
 import { loginPassword } from "v2/Components/Authentication/Validators"
@@ -84,7 +83,9 @@ export const ConfirmPasswordModal: React.FC<ConfirmPasswordModalProps> = props =
               onChange={handleChange}
               onBlur={handleBlur}
             />
-            {status && !status.success && <Error show>{status.error}</Error>}
+            {status && !status.success && (
+              <Banner variant="error">{status.error}</Banner>
+            )}
             <Flex mt={space(2)} justifyContent="flex-end">
               <Button variant="noOutline" onClick={onClickCancel}>
                 Cancel

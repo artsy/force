@@ -1,9 +1,8 @@
 /* eslint-disable jest/no-done-callback */
-import { LoginForm } from "v2/Components/Authentication/Desktop/LoginForm"
+import { LoginForm } from "v2/Components/Authentication/Views/LoginForm"
 import { mount } from "enzyme"
 import React from "react"
 import { ChangeEvents, LoginValues } from "../fixtures"
-import QuickInput from "v2/Components/QuickInput"
 import { flushPromiseQueue } from "v2/DevTools"
 
 jest.mock("sharify", () => ({ data: { RECAPTCHA_KEY: "recaptcha-api-key" } }))
@@ -38,8 +37,10 @@ describe("LoginForm", () => {
   })
 
   it("clears error after input change", done => {
-    props.error = "Some global server error"
-    const wrapper = getWrapper()
+    const wrapper = getWrapper({
+      values: { email: "" },
+      error: "Some global server error",
+    })
     const input = wrapper.find(`input[name="email"]`)
     expect((wrapper.state() as any).error).toEqual("Some global server error")
     input.simulate("change")
@@ -52,14 +53,13 @@ describe("LoginForm", () => {
   })
 
   it("renders spinner", done => {
-    props.values = LoginValues
-    const wrapper = getWrapper()
-    const input = wrapper.find(`Formik`)
+    const wrapper = getWrapper({ values: LoginValues })
+    const input = wrapper.find("form")
     input.simulate("submit")
     wrapper.update()
 
     setTimeout(() => {
-      const submitButton = wrapper.find(`SubmitButton`)
+      const submitButton = wrapper.find("Button")
       expect((submitButton.props() as any).loading).toEqual(true)
       done()
     })
@@ -69,7 +69,7 @@ describe("LoginForm", () => {
     it("calls handleSubmit with expected params", done => {
       props.values = LoginValues
       const wrapper = getWrapper()
-      const input = wrapper.find(`Formik`)
+      const input = wrapper.find("form")
       input.simulate("submit")
       wrapper.update()
 
@@ -87,16 +87,17 @@ describe("LoginForm", () => {
     })
 
     it("calls handleSubmit with expected params when server requests a two-factor authentication code", async () => {
-      props.error = "missing two-factor authentication code"
-      props.values = LoginValues
-      const wrapper = getWrapper()
-      const inputOtp = wrapper
-        .find(QuickInput)
-        .filterWhere(el => el.prop("name") === "otp_attempt")
-        .instance() as QuickInput
-      inputOtp.onChange(ChangeEvents.otpAttempt)
-      const input = wrapper.find(`Formik`)
-      input.simulate("submit")
+      const wrapper = getWrapper({
+        ...props,
+        values: { ...LoginValues, otp_attempt: "" },
+        error: "missing two-factor authentication code",
+      })
+
+      wrapper
+        .find("input[name='otp_attempt']")
+        .simulate("change", ChangeEvents.otpAttempt)
+
+      wrapper.find("form").simulate("submit")
 
       await flushPromiseQueue()
       wrapper.update()
@@ -114,27 +115,23 @@ describe("LoginForm", () => {
 
     it("renders password error", async () => {
       ;(props.handleSubmit as jest.Mock).mockImplementation(
-        (values, actions) => {
+        (_values, actions) => {
           actions.setStatus({ error: "some password error" })
         }
       )
 
-      const wrapper = getWrapper()
+      const wrapper = getWrapper({
+        ...props,
+        values: { email: "", password: "" },
+      })
 
-      const inputEmail = wrapper
-        .find(QuickInput)
-        .filterWhere(el => el.prop("name") === "email")
-        .instance() as QuickInput
-      inputEmail.onChange(ChangeEvents.email)
+      wrapper.find('input[name="email"]').simulate("change", ChangeEvents.email)
 
-      const inputPass = wrapper
-        .find(QuickInput)
-        .filterWhere(el => el.prop("name") === "password")
-        .instance() as QuickInput
-      inputPass.onChange(ChangeEvents.password)
+      wrapper
+        .find('input[name="password"]')
+        .simulate("change", ChangeEvents.password)
 
-      const form = wrapper.find(`Formik`)
-      form.simulate("submit")
+      wrapper.find("form").simulate("submit")
 
       await flushPromiseQueue()
       wrapper.update()
@@ -177,21 +174,18 @@ describe("LoginForm", () => {
         }
       )
 
-      const wrapper = getWrapper()
+      const wrapper = getWrapper({
+        ...props,
+        values: { email: "", password: "", otp_attempt: "" },
+      })
 
-      const inputEmail = wrapper
-        .find(QuickInput)
-        .filterWhere(el => el.prop("name") === "email")
-        .instance() as QuickInput
-      inputEmail.onChange(ChangeEvents.email)
+      wrapper.find('input[name="email"]').simulate("change", ChangeEvents.email)
 
-      const inputPass = wrapper
-        .find(QuickInput)
-        .filterWhere(el => el.prop("name") === "password")
-        .instance() as QuickInput
-      inputPass.onChange(ChangeEvents.password)
+      wrapper
+        .find('input[name="password"]')
+        .simulate("change", ChangeEvents.password)
 
-      const form = wrapper.find(`Formik`)
+      const form = wrapper.find("form")
       form.simulate("submit")
 
       await flushPromiseQueue()
@@ -200,17 +194,18 @@ describe("LoginForm", () => {
       expect(wrapper.html()).not.toMatch(
         "missing two-factor authentication code"
       )
+
       expect(props.handleSubmit.mock.calls[0][0]).toEqual({
         email: "email@email.com",
         password: "password", // pragma: allowlist secret
         otpRequired: false,
+        otp_attempt: "",
       })
 
-      const inputOtp = wrapper
-        .find(QuickInput)
-        .filterWhere(el => el.prop("name") === "otp_attempt")
-        .instance() as QuickInput
-      inputOtp.onChange(ChangeEvents.invalidOtpAttempt)
+      const inputOtp = wrapper.find('input[name="otp_attempt"]')
+
+      inputOtp.simulate("change", ChangeEvents.invalidOtpAttempt)
+
       form.simulate("submit")
 
       await flushPromiseQueue()
@@ -224,7 +219,7 @@ describe("LoginForm", () => {
         otpRequired: true,
       })
 
-      inputOtp.onChange(ChangeEvents.otpAttempt)
+      inputOtp.simulate("change", ChangeEvents.otpAttempt)
       form.simulate("submit")
 
       await flushPromiseQueue()
@@ -256,21 +251,19 @@ describe("LoginForm", () => {
         }
       )
 
-      const wrapper = getWrapper()
+      const wrapper = getWrapper({
+        ...props,
+        values: { email: "", password: "", otp_attempt: "" },
+      })
 
-      const inputEmail = wrapper
-        .find(QuickInput)
-        .filterWhere(el => el.prop("name") === "email")
-        .instance() as QuickInput
-      inputEmail.onChange(ChangeEvents.email)
+      wrapper.find('input[name="email"]').simulate("change", ChangeEvents.email)
 
-      const inputPass = wrapper
-        .find(QuickInput)
-        .filterWhere(el => el.prop("name") === "password")
-        .instance() as QuickInput
-      inputPass.onChange(ChangeEvents.password)
+      wrapper
+        .find('input[name="password"]')
+        .simulate("change", ChangeEvents.password)
 
-      const form = wrapper.find(`Formik`)
+      const form = wrapper.find("form")
+
       form.simulate("submit")
 
       await flushPromiseQueue()
@@ -282,19 +275,17 @@ describe("LoginForm", () => {
       expect(wrapper.html()).toMatch(
         "Your safety and security are important to us. Please check your email for a one-time authentication code to complete your login."
       )
-      console.log(wrapper.state())
+
       expect(props.handleSubmit.mock.calls[0][0]).toEqual({
         email: "email@email.com",
         password: "password", // pragma: allowlist secret
         otpRequired: false,
+        otp_attempt: "",
       })
       expect((wrapper.state() as any).otpRequired).toEqual(true)
 
-      const inputOtp = wrapper
-        .find(QuickInput)
-        .filterWhere(el => el.prop("name") === "otp_attempt")
-        .instance() as QuickInput
-      inputOtp.onChange(ChangeEvents.invalidOtpAttempt)
+      const inputOtp = wrapper.find('input[name="otp_attempt"]')
+      inputOtp.simulate("change", ChangeEvents.invalidOtpAttempt)
       form.simulate("submit")
 
       await flushPromiseQueue()
@@ -308,7 +299,7 @@ describe("LoginForm", () => {
         otpRequired: true,
       })
 
-      inputOtp.onChange(ChangeEvents.otpAttempt)
+      inputOtp.simulate("change", ChangeEvents.otpAttempt)
       form.simulate("submit")
 
       await flushPromiseQueue()
@@ -326,7 +317,7 @@ describe("LoginForm", () => {
     it("fires reCAPTCHA event", done => {
       props.values = LoginValues
       const wrapper = getWrapper()
-      const input = wrapper.find(`Formik`)
+      const input = wrapper.find("form")
       input.simulate("submit")
 
       setTimeout(() => {

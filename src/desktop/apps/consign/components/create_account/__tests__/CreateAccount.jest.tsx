@@ -7,9 +7,9 @@ import CreateAccount, {
   CreateAccount as UnconnectedCreateAccount,
 } from "../index"
 import { ModalHeader } from "v2/Components/Modal/ModalHeader"
-import { LoginForm } from "v2/Components/Authentication/Desktop/LoginForm"
-import { ForgotPasswordForm } from "v2/Components/Authentication/Desktop/ForgotPasswordForm"
-import { SignUpFormQueryRenderer } from "v2/Components/Authentication/Desktop/SignUpForm"
+import { LoginForm } from "v2/Components/Authentication/Views/LoginForm"
+import { ForgotPasswordForm } from "v2/Components/Authentication/Views/ForgotPasswordForm"
+import { SignUpFormQueryRenderer } from "v2/Components/Authentication/Views/SignUpForm"
 import { ModalType } from "v2/Components/Authentication/Types"
 
 jest.mock("v2/System/SystemContext", () => ({
@@ -18,7 +18,7 @@ jest.mock("v2/System/SystemContext", () => ({
   useContext: Component => Component,
 }))
 
-jest.mock("v2/Components/Authentication/Desktop/SignUpForm", () => ({
+jest.mock("v2/Components/Authentication/Views/SignUpForm", () => ({
   SignUpFormQueryRenderer: () => null,
 }))
 

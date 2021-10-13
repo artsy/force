@@ -1,4 +1,4 @@
-import { LoginForm } from "v2/Components/Authentication/Desktop/LoginForm"
+import { LoginForm } from "v2/Components/Authentication/Views/LoginForm"
 import { ModalType } from "v2/Components/Authentication/Types"
 import { ReactWrapper, mount } from "enzyme"
 import React from "react"
@@ -7,7 +7,7 @@ import { ContextModule, Intent } from "@artsy/cohesion"
 import {
   ModalManager,
   ModalManagerProps,
-} from "v2/Components/Authentication/Desktop/ModalManager"
+} from "v2/Components/Authentication/ModalManager"
 
 const getWrapper = (
   props?: ModalManagerProps
@@ -62,7 +62,7 @@ describe("ModalManager", () => {
     const wrapper = getWrapper()
     const manager = wrapper.instance() as ModalManager
 
-    expect(document.body.style.overflowY).toEqual("visible")
+    expect(document.body).toHaveStyle({ overflowY: "visible" })
 
     manager.openModal({
       mode: ModalType.login,
@@ -70,7 +70,7 @@ describe("ModalManager", () => {
       contextModule: ContextModule.header,
     })
 
-    expect(document.body.style.overflowY).toEqual("hidden")
+    expect(document.body).toHaveStyle({ overflowY: "hidden" })
   })
 
   it("handles type changes", () => {

@@ -1,22 +1,32 @@
-import { ArtsyLogoBlackIcon, Flex, Serif, space } from "@artsy/palette"
-import React, { FC } from "react"
+import {
+  ArtsyLogoBlackIcon,
+  Flex,
+  Serif,
+  Text,
+  useThemeConfig,
+} from "@artsy/palette"
+import React from "react"
 
-export const ModalHeader: FC<{
+export const ModalHeader: React.FC<{
   title?: string
   hasLogo?: boolean
-}> = props => {
-  const { hasLogo, title } = props
+}> = ({ hasLogo, title }) => {
+  const version = useThemeConfig({ v2: "v2", v3: "v3" })
 
   return (
     <Flex flexDirection="column" alignItems="center" justifyContent="center">
-      {hasLogo && (
-        <ArtsyLogoBlackIcon fontSize="34px" display="block" mb={space(1)} />
-      )}
-      {title && (
-        <Serif size="5" weight="semibold" pb={space(1)}>
-          {title}
-        </Serif>
-      )}
+      {hasLogo && <ArtsyLogoBlackIcon mb={1} />}
+
+      {title &&
+        (version === "v2" ? (
+          <Serif size="5" weight="semibold" mb={1}>
+            {title}
+          </Serif>
+        ) : (
+          <Text variant="lg" my={2}>
+            {title}
+          </Text>
+        ))}
     </Flex>
   )
 }

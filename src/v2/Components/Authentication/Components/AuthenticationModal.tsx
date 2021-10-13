@@ -5,7 +5,7 @@ import track from "react-tracking"
 import { TrackingProp } from "react-tracking"
 import Events from "v2/Utils/Events"
 
-export interface DesktopModalProps extends ModalProps {
+export interface AuthenticationModalProps extends ModalProps {
   blurContainerSelector?: string
   onClose: () => void
   onTypeChange?: (options: ModalOptions) => void
@@ -15,10 +15,9 @@ export interface DesktopModalProps extends ModalProps {
 }
 
 @track({}, { dispatch: data => Events.postEvent(data) })
-export class DesktopModal extends Component<DesktopModalProps> {
+export class AuthenticationModal extends Component<AuthenticationModalProps> {
   onClose = () => {
-    // @ts-expect-error STRICT_NULL_CHECK
-    this.props.tracking.trackEvent({
+    this.props.tracking?.trackEvent({
       action: "Click",
       type: "dismiss",
       label: "dismiss auth modal",
@@ -32,7 +31,13 @@ export class DesktopModal extends Component<DesktopModalProps> {
     const title = this.props.subtitle || "The art world online"
 
     return (
-      <Modal {...this.props} onClose={this.onClose} title={title} hasLogo>
+      <Modal
+        {...this.props}
+        onClose={this.onClose}
+        title={title}
+        hasLogo
+        theme="v3"
+      >
         {this.props.children}
       </Modal>
     )
