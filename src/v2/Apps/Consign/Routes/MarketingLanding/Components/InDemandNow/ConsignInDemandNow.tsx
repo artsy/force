@@ -183,9 +183,13 @@ const InDemandNowLarge: React.FC<
 
       <GridColumns gridRowGap={6}>
         <Column span={[12, 12, 4]}>
-          <DemandRank demandRank={demandRank} />
+          {demandRank && (
+            <>
+              <DemandRank demandRank={demandRank} />
 
-          <Spacer mt={4} />
+              <Spacer mt={4} />
+            </>
+          )}
 
           <Text variant="xs" textTransform="uppercase">
             Highest Realized Price
@@ -193,22 +197,30 @@ const InDemandNowLarge: React.FC<
 
           <Text variant="xl">{highRangeDollars}</Text>
 
-          <Spacer my={2} />
+          {sellThroughRate && (
+            <>
+              <Spacer my={2} />
 
-          <Text variant="xs" textTransform="uppercase">
-            Sell-Through Rate
-          </Text>
+              <Text variant="xs" textTransform="uppercase">
+                Sell-Through Rate
+              </Text>
 
-          <Text variant="xl">{sellThroughRate * 100}%</Text>
+              <Text variant="xl">{sellThroughRate * 100}%</Text>
+            </>
+          )}
 
-          <Spacer my={2} />
+          {medianSaleToEstimateRatio && (
+            <>
+              <Spacer my={2} />
 
-          <Text variant="xs" textTransform="uppercase">
-            Realized Price / Estimate
-          </Text>
+              <Text variant="xs" textTransform="uppercase">
+                Realized Price / Estimate
+              </Text>
 
-          {/* TODO: Follow-up on how real diffusion number (1.84) maps to designs (184%) */}
-          <Text variant="xl">{medianSaleToEstimateRatio * 100}%</Text>
+              {/* TODO: Follow-up on how real diffusion number (1.84) maps to designs (184%) */}
+              <Text variant="xl">{medianSaleToEstimateRatio * 100}%</Text>
+            </>
+          )}
         </Column>
 
         <Column span={[12, 12, 4]} textAlign="center">
@@ -230,23 +242,31 @@ const InDemandNowLarge: React.FC<
                 </Text>
               </Flex>
 
-              <Spacer my={1} />
+              {lastAuctionResult?.images?.larger && (
+                <>
+                  <Spacer my={1} />
 
-              <Image
-                src={lastAuctionResult.images.larger.url}
-                srcSet={lastAuctionResult.images.larger.resized.srcSet}
-                alt={lastAuctionResult.title}
-                width={IMAGE_SIZE}
-                height="auto"
-              />
+                  <Image
+                    src={lastAuctionResult.images.larger.url!}
+                    srcSet={lastAuctionResult.images.larger.resized?.srcSet!}
+                    alt={lastAuctionResult.title ?? ""}
+                    width={IMAGE_SIZE}
+                    height="auto"
+                  />
+                </>
+              )}
 
-              <Spacer my={1} />
+              {lastAuctionResult && (
+                <>
+                  <Spacer my={1} />
 
-              <Text variant="xs" overflowEllipsis>
-                {lastAuctionResult.title}, {lastAuctionResult.dateText}
-              </Text>
+                  <Text variant="xs" overflowEllipsis>
+                    {lastAuctionResult.title}, {lastAuctionResult.dateText}
+                  </Text>
 
-              <Text variant="xs">{lastAuctionResult.organization}</Text>
+                  <Text variant="xs">{lastAuctionResult.organization}</Text>
+                </>
+              )}
             </Flex>
           </Box>
         </Column>
@@ -311,21 +331,29 @@ const InDemandNowSmall: React.FC<
       <Flex justifyContent="space-between">
         <Box>
           <Box maxWidth={IMAGE_SIZE}>
-            <Image
-              src={lastAuctionResult.images.larger.url}
-              srcSet={lastAuctionResult.images.larger.resized.srcSet}
-              alt={lastAuctionResult.title}
-              width={IMAGE_SIZE}
-              height="auto"
-            />
+            {lastAuctionResult?.images?.larger && (
+              <>
+                <Image
+                  src={lastAuctionResult.images.larger.url!}
+                  srcSet={lastAuctionResult.images.larger.resized?.srcSet!}
+                  alt={lastAuctionResult.title ?? ""}
+                  width={IMAGE_SIZE}
+                  height="auto"
+                />
 
-            <Spacer my={0.5} />
+                <Spacer my={0.5} />
+              </>
+            )}
 
-            <Text variant="xs" overflowEllipsis>
-              {lastAuctionResult.title}, {lastAuctionResult.dateText}
-            </Text>
+            {lastAuctionResult && (
+              <>
+                <Text variant="xs" overflowEllipsis>
+                  {lastAuctionResult.title}, {lastAuctionResult.dateText}
+                </Text>
 
-            <Text variant="xs">{lastAuctionResult.organization}</Text>
+                <Text variant="xs">{lastAuctionResult.organization}</Text>
+              </>
+            )}
           </Box>
 
           <Spacer my={2} />
@@ -348,30 +376,42 @@ const InDemandNowSmall: React.FC<
 
           <Text variant="xl">{highRangeDollars}</Text>
 
-          <Spacer my={1} />
+          {sellThroughRate && (
+            <>
+              <Spacer my={1} />
 
-          <Text variant="xs" textTransform="uppercase">
-            Sell-Through Rate
-          </Text>
+              <Text variant="xs" textTransform="uppercase">
+                Sell-Through Rate
+              </Text>
 
-          <Text variant="xl">{sellThroughRate * 100}%</Text>
+              <Text variant="xl">{sellThroughRate * 100}%</Text>
+            </>
+          )}
 
-          <Spacer my={1} />
+          {medianSaleToEstimateRatio && (
+            <>
+              <Spacer my={1} />
 
-          <Text variant="xs" textTransform="uppercase">
-            Realized Price/Estimate
-          </Text>
+              <Text variant="xs" textTransform="uppercase">
+                Realized Price/Estimate
+              </Text>
 
-          {/* TODO: Follow-up on how real diffusion number (1.84) maps to designs (184%) */}
-          <Text variant="xl">{medianSaleToEstimateRatio * 100}%</Text>
+              {/* TODO: Follow-up on how real diffusion number (1.84) maps to designs (184%) */}
+              <Text variant="xl">{medianSaleToEstimateRatio * 100}%</Text>
+            </>
+          )}
         </Box>
       </Flex>
 
       <Spacer mt={4} />
 
-      <DemandRank demandRank={demandRank} />
+      {demandRank && (
+        <>
+          <DemandRank demandRank={demandRank} />
 
-      <Spacer mt={4} />
+          <Spacer mt={4} />
+        </>
+      )}
 
       <Box textAlign="center">
         <Box display="inline-block" textAlign="left" width="100%">
@@ -388,7 +428,12 @@ const InDemandNowSmall: React.FC<
   )
 }
 
-const computeProps = ({ artist, marketPriceInsights }) => {
+const computeProps = ({
+  artist,
+  marketPriceInsights,
+}: ConsignInDemandNowQuery["response"]) => {
+  if (!artist || !marketPriceInsights) return {}
+
   const {
     artistName,
     demandRank,
@@ -399,7 +444,7 @@ const computeProps = ({ artist, marketPriceInsights }) => {
   } = marketPriceInsights
 
   const { birthday, nationality, auctionResultsConnection } = artist
-  const lastAuctionResult = auctionResultsConnection?.edges?.[0].node
+  const lastAuctionResult = auctionResultsConnection?.edges?.[0]?.node
 
   // TODO: Follow-up if this maps correctly to Highest Realized Price
   const highRangeDollars = formatCentsToDollars(Number(highRangeCents))
