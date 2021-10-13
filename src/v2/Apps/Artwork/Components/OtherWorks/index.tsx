@@ -225,30 +225,32 @@ export const OtherWorksQueryRenderer: React.FC<{
   const { relayEnvironment } = useSystemContext()
 
   return (
-    <SystemQueryRenderer<OtherWorksQuery>
-      lazyLoad
-      environment={relayEnvironment}
-      variables={{ slug }}
-      placeholder={PLACEHOLDER}
-      query={graphql`
-        query OtherWorksQuery($slug: String!) {
-          artwork(id: $slug) {
-            ...OtherWorks_artwork
+    <Box data-test="OtherWorksQueryRenderer">
+      <SystemQueryRenderer<OtherWorksQuery>
+        lazyLoad
+        environment={relayEnvironment}
+        variables={{ slug }}
+        placeholder={PLACEHOLDER}
+        query={graphql`
+          query OtherWorksQuery($slug: String!) {
+            artwork(id: $slug) {
+              ...OtherWorks_artwork
+            }
           }
-        }
-      `}
-      render={({ error, props }) => {
-        if (error) {
-          console.error(error)
-          return null
-        }
-        if (!props) {
-          return PLACEHOLDER
-        }
-        if (props.artwork) {
-          return <OtherWorksFragmentContainer artwork={props.artwork} />
-        }
-      }}
-    />
+        `}
+        render={({ error, props }) => {
+          if (error) {
+            console.error(error)
+            return null
+          }
+          if (!props) {
+            return PLACEHOLDER
+          }
+          if (props.artwork) {
+            return <OtherWorksFragmentContainer artwork={props.artwork} />
+          }
+        }}
+      />
+    </Box>
   )
 }
