@@ -20,6 +20,7 @@ const redirects = {
   "/institution": "/institutions",
   "/filter/artworks": "/browse",
   "/filter/artworks/*": "/browse",
+  "/artworks": "/collect",
   "/category": "/categories",
   "/gene": "/categories",
   "/genes": "/categories",
