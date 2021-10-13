@@ -1,7 +1,7 @@
 import { BoxProps, Flex, HTML, FullBleed } from "@artsy/palette"
 import React from "react"
 import styled from "styled-components"
-import { useGeometryOf } from "v2/Utils/Hooks/useGeometryOf"
+import { useSizeAndPosition } from "v2/Utils/Hooks/useSizeAndPosition"
 import { cropped } from "v2/Utils/resized"
 import { useNavBarHeight } from "./NavBar/useNavBarHeight"
 
@@ -25,8 +25,7 @@ export const FullBleedHeader: React.FC<FullBleedHeaderProps> = ({
   const xl = cropped(src, { width: 2000, height: 600 })
 
   const { mobile, desktop } = useNavBarHeight()
-
-  const { ref, geometry } = useGeometryOf()
+  const { ref, top, height } = useSizeAndPosition()
 
   return (
     <Container
@@ -39,9 +38,7 @@ export const FullBleedHeader: React.FC<FullBleedHeaderProps> = ({
       position="relative"
       {...rest}
     >
-      <Picture
-        style={{ top: `${geometry.top}px`, height: `${geometry.height}px` }}
-      >
+      <Picture style={{ top: `${top}px`, height: `${height}px` }}>
         <source srcSet={xl.srcSet} media="(min-width: 1720px)" />
         <source srcSet={lg.srcSet} media="(min-width: 1232px)" />
         <source srcSet={md.srcSet} media="(min-width: 896px)" />

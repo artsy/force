@@ -16,7 +16,7 @@ const DEFAULT_GEOMETRY: Geometry = {
 }
 
 /** Hook that returns the offset geometry of the ref. Updates on resize. */
-export const useGeometryOf = () => {
+export const useSizeAndPosition = () => {
   const ref = useRef<HTMLElement | null>(null)
 
   const [geometry, setGeometry] = useState<Geometry>(DEFAULT_GEOMETRY)
@@ -44,5 +44,5 @@ export const useGeometryOf = () => {
     }
   }, [ref])
 
-  return { ref, geometry }
+  return { ref, ...geometry }
 }
