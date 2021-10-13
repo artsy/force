@@ -80,7 +80,11 @@ const ArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {
             </Column>
 
             {!!artist.counts?.follows && (
-              <Column span={6} display={["block", "flex"]} alignItems="center">
+              <Column
+                span={6}
+                display={["block", "none", "none", "flex"]}
+                alignItems="center"
+              >
                 <Text
                   variant="xs"
                   color="black60"
