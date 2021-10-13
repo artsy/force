@@ -32,11 +32,13 @@ export const PhotoThumbnail: React.FC<PhotoThumbnailProps> = ({
   const [photoSrc, setPhotoSrc] = useState<string>()
 
   useEffect(() => {
-    const reader = new FileReader()
-    reader.readAsDataURL(file)
+    if (file) {
+      const reader = new FileReader()
+      reader.readAsDataURL(file)
 
-    reader.onloadend = () => {
-      setPhotoSrc(reader.result as string)
+      reader.onloadend = () => {
+        setPhotoSrc(reader.result as string)
+      }
     }
   }, [])
 

@@ -1,5 +1,5 @@
 import React, { FC } from "react"
-import { Box, Text } from "@artsy/palette"
+import { Box, Button, Text } from "@artsy/palette"
 import { Form, Formik } from "formik"
 import { SubmissionStepper } from "v2/Apps/Consign/Components/SubmissionStepper"
 import {
@@ -8,9 +8,48 @@ import {
 } from "./Components/UploadPhotosForm"
 import { PhotoThumbnail } from "./Components/PhotoThumbnail"
 import { Photo } from "../Utils/FileUtils"
+import * as yup from "yup"
+import { useRouter } from "v2/System/Router/useRouter"
+
+export const uploadPhotosValidationSchema = yup.object().shape({
+  photos: yup
+    .array()
+    .min(1)
+    .of(
+      yup.object().shape({
+        s3Key: yup.string().required(),
+      })
+    ),
+})
 
 export const UploadPhotos: FC = () => {
-  const handleSubmit = () => {}
+  const {
+    router,
+    match: {
+      params: { id },
+    },
+  } = useRouter()
+
+  const handleSubmit = (values: UploadPhotosFormModel) => {
+    const key = `submission-${id}`
+    const submissionData = sessionStorage.getItem(key)
+
+    if (submissionData) {
+      let submission = JSON.parse(submissionData)
+
+      submission.photos = values.photos.map(photo => ({
+        ...photo,
+        file: undefined,
+        progress: undefined,
+      }))
+
+      sessionStorage.setItem(key, JSON.stringify(submission))
+
+      router.push({
+        pathname: `/consign/submission2/${id}/contact-information`,
+      })
+    }
+  }
 
   return (
     <Box mb={4}>
@@ -27,13 +66,17 @@ export const UploadPhotos: FC = () => {
       </Text>
 
       <Formik<UploadPhotosFormModel>
+        validateOnMount
         onSubmit={handleSubmit}
-        initialValues={{ photos: [] }}
+        initialValues={{
+          photos: [],
+        }}
+        validationSchema={uploadPhotosValidationSchema}
       >
-        {({ values, setFieldValue }) => {
+        {({ values, setFieldValue, isValid, errors }) => {
           const handlePhotoDelete = (photo: Photo) => {
             photo.removed = true
-            photo.abortUploading && photo.abortUploading()
+            photo.abortUploading?.()
 
             setFieldValue(
               "photos",
@@ -53,6 +96,15 @@ export const UploadPhotos: FC = () => {
                   onDelete={handlePhotoDelete}
                 />
               ))}
+
+              <Button
+                mt={2}
+                disabled={!isValid}
+                loading={values.photos.some(c => !c.s3Key)}
+                type="submit"
+              >
+                Save and Continue
+              </Button>
             </Form>
           )
         }}

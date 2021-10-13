@@ -101,6 +101,15 @@ export const consignRoutes: AppRouteConfig[] = [
       },
       {
         theme: "v3",
+        path: ":id/artwork-details",
+        hideFooter: true,
+        getComponent: () => ArtworkDetails,
+        prepare: () => {
+          ArtworkDetails.preload()
+        },
+      },
+      {
+        theme: "v3",
         path: ":id/upload-photos",
         hideFooter: true,
         getComponent: () => UploadPhotos,

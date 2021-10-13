@@ -1,11 +1,13 @@
 import React, { FC } from "react"
 import { Button, Text } from "@artsy/palette"
 import { SubmissionStepper } from "v2/Apps/Consign/Components/SubmissionStepper"
-import { Formik } from "formik"
+import { Form, Formik } from "formik"
 import {
   ArtworkDetailsForm,
   ArtworkDetailsFormModel,
 } from "./Components/ArtworkDetailsForm"
+import { useRouter } from "v2/System/Router/useRouter"
+import uuid from "uuid"
 
 export const initialValues = {
   artist: "",
@@ -22,7 +24,28 @@ export const initialValues = {
 }
 
 export const ArtworkDetails: FC = () => {
-  const handleSubmit = () => {}
+  const {
+    router,
+    match: {
+      params: { id },
+    },
+  } = useRouter()
+
+  const handleSubmit = () => {
+    const submissionId = id ? id : uuid()
+
+    sessionStorage.setItem(
+      `submission-${submissionId}`,
+      JSON.stringify({ artistId: "4d8b92b34eb68a1b2c0003f4" })
+    )
+
+    router.replace({
+      pathname: `/consign/submission2/${submissionId}/artwork-details`,
+    })
+    router.push({
+      pathname: `/consign/submission2/${submissionId}/upload-photos`,
+    })
+  }
 
   return (
     <>
@@ -38,7 +61,7 @@ export const ArtworkDetails: FC = () => {
         onSubmit={handleSubmit}
       >
         {({ isSubmitting }) => (
-          <>
+          <Form>
             <ArtworkDetailsForm />
             <Button
               mt={6}
@@ -50,7 +73,7 @@ export const ArtworkDetails: FC = () => {
             >
               Save and Continue
             </Button>
-          </>
+          </Form>
         )}
       </Formik>
     </>

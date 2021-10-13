@@ -1,10 +1,11 @@
-import React, { useCallback } from "react"
+import React, { useCallback, useEffect } from "react"
 import { Box, BoxProps, Button, Text } from "@artsy/palette"
 import { useDropzone } from "react-dropzone"
 import { useFormikContext } from "formik"
 import { Media } from "v2/Utils/Responsive"
 import { useSystemContext } from "v2/System"
 import { Photo, normalizePhoto, uploadPhoto } from "../../Utils/FileUtils"
+import { useRouter } from "v2/System/Router/useRouter"
 
 export interface UploadPhotosFormModel {
   photos: Photo[]
@@ -15,8 +16,23 @@ export interface UploadPhotosFormProps extends BoxProps {}
 export const UploadPhotosForm: React.FC<UploadPhotosFormProps> = ({
   ...rest
 }) => {
+  const {
+    match: {
+      params: { id },
+    },
+  } = useRouter()
+
   const { relayEnvironment } = useSystemContext()
   const { setFieldValue, values } = useFormikContext<UploadPhotosFormModel>()
+
+  useEffect(() => {
+    const storageValue = sessionStorage.getItem(`submission-${id}`)
+    const submissionData = storageValue ? JSON.parse(storageValue) : undefined
+
+    if (submissionData.photos) {
+      setFieldValue("photos", submissionData.photos)
+    }
+  }, [])
 
   const handlePhotoUploadingProgress = (photo: Photo) => progress => {
     photo.progress = progress
@@ -26,22 +42,32 @@ export const UploadPhotosForm: React.FC<UploadPhotosFormProps> = ({
 
   const handlePhotoUploaded = (photo: Photo) => key => {
     photo.s3Key = key
+    photo.loading = false
 
-    setFieldValue("photos", values.photos)
+    setFieldValue("photos", values.photos, true)
   }
+
+  useEffect(() => {
+    const imagesToUpload = values.photos.filter(c => !c.s3Key && !c.loading)
+
+    if (imagesToUpload.length) {
+      imagesToUpload.forEach(photo => {
+        photo.loading = true
+
+        if (relayEnvironment) {
+          uploadPhoto(
+            relayEnvironment,
+            photo,
+            handlePhotoUploadingProgress(photo)
+          ).then(handlePhotoUploaded(photo))
+        }
+      })
+      setFieldValue("photos", [...values.photos])
+    }
+  }, [values.photos])
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
     const photos = acceptedFiles.map(normalizePhoto)
-
-    if (relayEnvironment) {
-      photos.forEach(photo => {
-        uploadPhoto(
-          relayEnvironment,
-          photo,
-          handlePhotoUploadingProgress(photo)
-        ).then(handlePhotoUploaded(photo))
-      })
-    }
 
     setFieldValue("photos", [...values.photos, ...photos])
   }, [])
@@ -80,7 +106,7 @@ export const UploadPhotosForm: React.FC<UploadPhotosFormProps> = ({
         <Text variant="md" color="black60" mt={1}>
           Maximum size: 30 MB
         </Text>
-        <Button mt={4} variant="secondaryOutline" onClick={open}>
+        <Button type="button" mt={4} variant="secondaryOutline" onClick={open}>
           Add Photo
         </Button>
       </Box>
