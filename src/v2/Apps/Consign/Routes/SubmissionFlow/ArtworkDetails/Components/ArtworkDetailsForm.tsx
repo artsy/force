@@ -78,7 +78,7 @@ export const ArtworkDetailsForm: FC = () => {
           />
         </Column>
       </GridColumns>
-      <GridColumns mt={[2, 4]}>
+      <GridColumns mt={[1, 2]}>
         <Column span={6}>
           <Input
             title="Title"
@@ -91,7 +91,7 @@ export const ArtworkDetailsForm: FC = () => {
             value={values.title || ""}
           />
         </Column>
-        <Column span={6} mt={[2, 0]}>
+        <Column span={6} mt={[1, 0]}>
           <Text variant="xs" mb={0.5} textTransform="uppercase">
             Medium
           </Text>
@@ -108,7 +108,7 @@ export const ArtworkDetailsForm: FC = () => {
           />
         </Column>
       </GridColumns>
-      <GridColumns mt={[2, 4]}>
+      <GridColumns mt={[1, 2]}>
         <Column span={6}>
           <Flex justifyContent="space-between">
             <Text variant="xs" mb={0.5} textTransform="uppercase">
@@ -130,7 +130,7 @@ export const ArtworkDetailsForm: FC = () => {
         </Column>
         <Column span={6}>
           {!uniqueRarity && (
-            <Flex alignItems="center" mt={[2, 0]}>
+            <Flex alignItems="center" mt={[1, 0]}>
               <Input
                 title="Edition Number"
                 placeholder="Your Work's #"
@@ -156,10 +156,10 @@ export const ArtworkDetailsForm: FC = () => {
           )}
         </Column>
       </GridColumns>
-      <GridColumns mt={[2, 4]}>
+      <GridColumns mt={[1, 2]}>
         <Column span={6}>
-          <Flex alignItems="center">
-            <Box width="50%" mr={2}>
+          <Flex height="100%">
+            <Box width="50%" mr={2} height="100%">
               <Text variant="xs" mb={0.5} mr={0.5} textTransform="uppercase">
                 Height
               </Text>
@@ -169,9 +169,10 @@ export const ArtworkDetailsForm: FC = () => {
                 error={touched.height && errors.height}
                 onBlur={handleBlur}
                 onChange={handleChange}
+                value={values.height || ""}
               />
             </Box>
-            <Box width="50%">
+            <Box width="50%" height="100%">
               <Text variant="xs" mb={0.5} mr={0.5} textTransform="uppercase">
                 Width
               </Text>
@@ -181,13 +182,14 @@ export const ArtworkDetailsForm: FC = () => {
                 error={touched.width && errors.width}
                 onBlur={handleBlur}
                 onChange={handleChange}
+                value={values.width || ""}
               />
             </Box>
           </Flex>
         </Column>
-        <Column span={6} mt={[2, 0]}>
-          <Flex alignItems="center">
-            <Box pr={[0, 1]} width="50%">
+        <Column span={6} mt={[1, 0]}>
+          <Flex height="100%">
+            <Box pr={[0, 1]} width="50%" height="100%">
               <Flex>
                 <Text variant="xs" mb={0.5} mr={0.5} textTransform="uppercase">
                   Depth

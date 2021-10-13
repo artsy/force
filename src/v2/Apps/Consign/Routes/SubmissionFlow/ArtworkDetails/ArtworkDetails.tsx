@@ -19,8 +19,8 @@ const ArtworkDetailsSchema = Yup.object().shape({
     .positive()
     .integer(),
   title: Yup.string().label("Title").required(),
-  medium: Yup.string().required(),
-  rarity: Yup.string().required(),
+  medium: Yup.string().label("Medium").required(),
+  rarity: Yup.string().label("Rarity").required(),
   editionNumber: Yup.number()
     .typeError("Edition Number must be a number")
     .label("Edition number")
