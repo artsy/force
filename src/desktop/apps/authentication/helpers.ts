@@ -5,13 +5,28 @@ import * as qs from "query-string"
 import type { Response } from "express"
 import {
   AuthService,
-  createdAccount,
-  resetYourPassword,
-  successfullyLoggedIn,
+  CreatedAccount,
+  SuccessfullyLoggedIn,
+  ResetYourPassword,
+  ActionType,
+  AuthModalType,
+  AuthTrigger,
+  AuthContextModule,
 } from "@artsy/cohesion"
-import { omit, pick } from "lodash"
+import { pick } from "lodash"
 import { mediator } from "lib/mediator"
 import { reportError } from "v2/Utils/errors"
+import { trackEvent } from "lib/analytics/helpers"
+
+interface AnalyticsOptions {
+  auth_redirect: string
+  context_module: AuthContextModule
+  modal_copy
+  intent
+  trigger_seconds?: number
+  trigger: AuthTrigger
+  service: AuthService
+}
 
 export const handleSubmit = async (
   type: ModalType,
@@ -47,38 +62,36 @@ export const handleSubmit = async (
       const analytics = (window as any).analytics
 
       if (analytics) {
-        let options = {
-          authRedirect: redirectTo || destination,
-          contextModule,
-          copy,
+        const options: AnalyticsOptions = {
+          auth_redirect: redirectTo || destination!,
+          context_module: contextModule,
+          modal_copy: copy,
           intent,
-          service: "email" as AuthService,
-          triggerSeconds,
-          userId: res && res.user && res.user.id,
+          trigger_seconds: triggerSeconds,
+          trigger: "timed",
+          service: "email",
         }
 
         let analyticsOptions
         switch (type) {
           case ModalType.login:
-            // @ts-expect-error STRICT_NULL_CHECK
-            analyticsOptions = successfullyLoggedIn(options)
+            analyticsOptions = tracks.successfullyLoggedIn(
+              options,
+              res?.user?.id
+            )
             break
           case ModalType.signup:
-            // @ts-expect-error STRICT_NULL_CHECK
-            analyticsOptions = createdAccount({
-              onboarding: !redirectTo,
-              ...options,
-            })
+            analyticsOptions = tracks.createdAccount(
+              options,
+              res?.user?.id,
+              !redirectTo
+            )
             break
           case ModalType.forgot:
-            // @ts-expect-error STRICT_NULL_CHECK
-            analyticsOptions = resetYourPassword(options)
+            analyticsOptions = tracks.resetYourPassword(options)
             break
         }
-        analytics.track(
-          analyticsOptions.action,
-          omit(analyticsOptions, "action")
-        )
+        trackEvent(analyticsOptions)
       }
 
       let afterAuthURL: URL
@@ -299,4 +312,32 @@ const forgotUserPassword = async (
       }
     })
     .catch(e => reportError(e))
+}
+
+const tracks = {
+  resetYourPassword: (options: AnalyticsOptions): ResetYourPassword => ({
+    action: ActionType.resetYourPassword,
+    type: AuthModalType.forgot,
+    ...options,
+  }),
+  successfullyLoggedIn: (
+    options: AnalyticsOptions,
+    userId: string
+  ): SuccessfullyLoggedIn => ({
+    action: ActionType.successfullyLoggedIn,
+    type: AuthModalType.login,
+    user_id: userId,
+    ...options,
+  }),
+  createdAccount: (
+    options: AnalyticsOptions,
+    userId: string,
+    onboarding: boolean
+  ): CreatedAccount => ({
+    action: ActionType.createdAccount,
+    type: AuthModalType.signup,
+    user_id: userId,
+    onboarding,
+    ...options,
+  }),
 }
