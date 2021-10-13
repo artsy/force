@@ -3,12 +3,10 @@ import { avantgarde } from "v2/Assets/Fonts"
 import React from "react"
 import styled from "styled-components"
 import { block } from "../Helpers"
-import { IconProps } from "../Icon"
 
 export interface ButtonProps extends React.HTMLProps<"button"> {
   state?: ButtonState
   block?: boolean
-  icon?: React.ReactElement<IconProps>
   color?: string
 }
 
@@ -31,16 +29,13 @@ export class Button extends React.Component<ButtonProps, any> {
     const newProps: any = { ...this.props }
     delete newProps.state
     delete newProps.block
-    delete newProps.icon
 
     return this.props.href ? (
       <a className={this.props.className} {...newProps}>
-        {this.props.icon}
         <span>{this.props.children}</span>
       </a>
     ) : (
       <button className={this.props.className} {...newProps}>
-        {this.props.icon}
         <span>{this.props.children}</span>
       </button>
     )

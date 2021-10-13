@@ -3,8 +3,8 @@ import React, { Component } from "react"
 import { ReactNode } from "react"
 import styled from "styled-components"
 import colors from "../../Assets/Colors"
-import Icon from "../Icon"
 import Text from "../Text"
+import { CheckIcon } from "@artsy/palette"
 
 export interface RenderProps {
   nextStep: () => void
@@ -69,7 +69,7 @@ export class StepMarker extends Component<StepMarkerProps, StepMarkerState> {
           {steps.map((step, key) => {
             return (
               <Mark {...step} key={key}>
-                {step.isComplete && <StyledIcon name="check" color="white" />}
+                {step.isComplete && <StyledIcon fill="white100" />}
                 <StyledText onClick={step.onClick} align="center">
                   {step.label}
                 </StyledText>
@@ -149,7 +149,7 @@ const StyledText = styled(Text)`
   margin-bottom: 0;
 `
 
-const StyledIcon = styled(Icon)`
+const StyledIcon = styled(CheckIcon)`
   width: 100%;
   text-align: center;
   font-size: 6px;
