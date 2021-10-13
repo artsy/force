@@ -49,14 +49,9 @@ export interface ArtworkDetailsFormModel {
 }
 
 export const ArtworkDetailsForm: FC = () => {
-  const {
-    values,
-    handleChange,
-    setFieldValue,
-    errors,
-    touched,
-    handleBlur,
-  } = useFormikContext<ArtworkDetailsFormModel>()
+  const { values, handleChange, setFieldValue, handleBlur } = useFormikContext<
+    ArtworkDetailsFormModel
+  >()
   const uniqueRarity = values.rarity === "unique"
 
   return (
@@ -70,11 +65,9 @@ export const ArtworkDetailsForm: FC = () => {
             title="year"
             placeholder="YYYY"
             name="year"
-            maxLength={4}
-            error={touched.year && errors.year}
             onBlur={handleBlur}
             onChange={handleChange}
-            value={values.year || ""}
+            value={values.year}
           />
         </Column>
       </GridColumns>
@@ -85,10 +78,9 @@ export const ArtworkDetailsForm: FC = () => {
             placeholder="Add Title or Write 'Unknown'"
             name="title"
             maxLength={256}
-            error={touched.title && errors.title}
             onBlur={handleBlur}
             onChange={handleChange}
-            value={values.title || ""}
+            value={values.title}
           />
         </Column>
         <Column span={6} mt={[1, 0]}>
@@ -99,7 +91,6 @@ export const ArtworkDetailsForm: FC = () => {
             name="medium"
             options={mediumOptions}
             selected={values.medium}
-            error={touched.medium && errors.medium}
             onBlur={handleBlur}
             onChange={handleChange}
             onSelect={selected => {
@@ -120,7 +111,6 @@ export const ArtworkDetailsForm: FC = () => {
             name="rarity"
             options={rarityOptions}
             selected={values.rarity}
-            error={touched.rarity && errors.rarity}
             onBlur={handleBlur}
             onChange={handleChange}
             onSelect={selected => {
@@ -135,10 +125,9 @@ export const ArtworkDetailsForm: FC = () => {
                 title="Edition Number"
                 placeholder="Your Work's #"
                 name="editionNumber"
-                error={touched.editionNumber && errors.editionNumber}
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.editionNumber || ""}
+                value={values.editionNumber}
               />
               <Box paddingX={[0.5, 2]} mt={2}>
                 /
@@ -147,10 +136,9 @@ export const ArtworkDetailsForm: FC = () => {
                 title="Edition Size"
                 placeholder="Total # in Edition"
                 name="editionSize"
-                error={touched.editionSize && errors.editionSize}
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.editionSize || ""}
+                value={values.editionSize}
               />
             </Flex>
           )}
@@ -166,10 +154,9 @@ export const ArtworkDetailsForm: FC = () => {
               <LabeledInput
                 label={values.units}
                 name="height"
-                error={touched.height && errors.height}
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.height || ""}
+                value={values.height}
               />
             </Box>
             <Box width="50%" height="100%">
@@ -179,10 +166,9 @@ export const ArtworkDetailsForm: FC = () => {
               <LabeledInput
                 label={values.units}
                 name="width"
-                error={touched.width && errors.width}
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.width || ""}
+                value={values.width}
               />
             </Box>
           </Flex>
@@ -201,10 +187,9 @@ export const ArtworkDetailsForm: FC = () => {
               <LabeledInput
                 label={values.units}
                 name="depth"
-                error={touched.depth && errors.depth}
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.depth || ""}
+                value={values.depth}
               />
             </Box>
             <RadioGroup
