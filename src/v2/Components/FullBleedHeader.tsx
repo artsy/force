@@ -1,6 +1,7 @@
 import { BoxProps, Flex, HTML, FullBleed } from "@artsy/palette"
 import React from "react"
 import styled from "styled-components"
+import { useSizeAndPosition } from "v2/Utils/Hooks/useSizeAndPosition"
 import { cropped } from "v2/Utils/resized"
 import { useNavBarHeight } from "./NavBar/useNavBarHeight"
 
@@ -23,11 +24,21 @@ export const FullBleedHeader: React.FC<FullBleedHeaderProps> = ({
   const lg = cropped(src, { width: 1440, height: 600 })
   const xl = cropped(src, { width: 2000, height: 600 })
 
-  const height = useFullBleedHeaderHeight()
+  const { mobile, desktop } = useNavBarHeight()
+  const { ref, top, height } = useSizeAndPosition()
 
   return (
-    <Container bg="black10" height={height} position="relative" {...rest}>
-      <picture>
+    <Container
+      ref={ref as any}
+      bg="black10"
+      height={[
+        `max(calc(50vh - ${mobile}px), ${MIN_HEIGHT}px)`,
+        `max(calc(50vh - ${desktop}px), ${MIN_HEIGHT}px)`,
+      ]}
+      position="relative"
+      {...rest}
+    >
+      <Picture style={{ top: `${top}px`, height: `${height}px` }}>
         <source srcSet={xl.srcSet} media="(min-width: 1720px)" />
         <source srcSet={lg.srcSet} media="(min-width: 1232px)" />
         <source srcSet={md.srcSet} media="(min-width: 896px)" />
@@ -35,7 +46,7 @@ export const FullBleedHeader: React.FC<FullBleedHeaderProps> = ({
         <source srcSet={xs.srcSet} media="(max-width: 766px)" />
 
         <Image src={sm.src} alt="" loading="lazy" />
-      </picture>
+      </Picture>
 
       {caption && (
         <Overlay display={["none", "flex"]}>
@@ -48,16 +59,11 @@ export const FullBleedHeader: React.FC<FullBleedHeaderProps> = ({
   )
 }
 
-export const useFullBleedHeaderHeight = () => {
-  const { mobile, desktop } = useNavBarHeight()
-  return [
-    `max(calc(50vh - ${mobile}px), 360px)`,
-    `max(calc(50vh - ${desktop}px), 360px)`,
-  ]
-}
+const MIN_HEIGHT = 360
 
 const Container = styled(FullBleed)`
   overflow: hidden;
+  clip-path: inset(0);
 `
 
 const Image = styled.img`
@@ -65,6 +71,12 @@ const Image = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
+`
+
+const Picture = styled.picture`
+  position: fixed;
+  width: 100%;
+  left: 0;
 `
 
 const Overlay = styled(Flex)`
