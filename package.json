@@ -22,6 +22,7 @@
     "cypress:run": "./node_modules/.bin/cypress run",
     "cypress": "./node_modules/.bin/cypress open",
     "delete-review-app": "kubectl --context staging delete namespace",
+    "detect-secrets": "scripts/detect-secrets.sh",
     "docker": "DOCKER_BUILDKIT=1; BUILDKIT_PROGRESS=plain; COMPOSE_DOCKER_CLI_BUILD=1; docker build .",
     "docker:builder": "yarn docker --target builder -t force:builder",
     "docker:electron": "yarn docker --target electron-runner -t force:electron",
@@ -50,7 +51,7 @@
     "sync-schema-local": "scripts/sync-schema-local.sh",
     "test": "concurrently 'yarn test:ci:jest:legacy' 'yarn test:ci:jest:v2' 'yarn test:ci:mocha'",
     "test:smoke": "scripts/smoke_test.sh",
-		"test:smoke:spec": "./node_modules/.bin/cypress run -s",
+    "test:smoke:spec": "./node_modules/.bin/cypress run -s",
     "test:ci:jest:legacy": "scripts/jest.sh legacy",
     "test:ci:jest:v2": "scripts/jest.sh v2",
     "test:ci:mocha": "NODE_ENV=test yarn mocha src/**/*.test.js src/**/*.test.ts",
@@ -414,11 +415,12 @@
   "husky": {
     "hooks": {
       "post-merge": "sh scripts/pull-lock.sh",
-      "pre-commit": "lint-staged && scripts/detect-secrets.sh",
+      "pre-commit": "lint-staged",
       "pre-push": "yarn type-check"
     }
   },
   "lint-staged": {
+    "*": "yarn detect-secrets",
     "*.@(md)": [
       "yarn prettier-write"
     ],
