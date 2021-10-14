@@ -25,6 +25,7 @@ import { RelayProp, createFragmentContainer, graphql } from "react-relay"
 import createLogger from "v2/Utils/logger"
 import { Media } from "v2/Utils/Responsive"
 import { BuyerGuarantee } from "../../Components/BuyerGuarantee"
+import { ContextModule, OwnerType } from "@artsy/cohesion"
 
 export interface CounterProps {
   order: Counter_order
@@ -175,7 +176,10 @@ export class CounterRoute extends Component<CounterProps> {
                 <ShippingSummaryItem order={order} locked />
                 <CreditCardSummaryItem order={order} locked />
               </Flex>
-              <BuyerGuarantee />
+              <BuyerGuarantee
+                contextModule={ContextModule.ordersCounter}
+                contextPageOwnerType={OwnerType.ordersCounter}
+              />
               <Media greaterThan="xs">
                 <Spacer mb={2} />
               </Media>

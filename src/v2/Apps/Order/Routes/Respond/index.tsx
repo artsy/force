@@ -37,6 +37,7 @@ import {
 } from "../../Components/OrderStepper"
 import { ShippingSummaryItemFragmentContainer as ShippingSummaryItem } from "../../Components/ShippingSummaryItem"
 import { BuyerGuarantee } from "../../Components/BuyerGuarantee"
+import { ContextModule, OwnerType } from "@artsy/cohesion"
 
 export interface RespondProps extends RouterState {
   order: Respond_order
@@ -322,7 +323,10 @@ export class RespondRoute extends Component<RespondProps, RespondState> {
                 <ShippingSummaryItem order={order} locked />
                 <CreditCardSummaryItem order={order} locked />
               </Flex>
-              <BuyerGuarantee />
+              <BuyerGuarantee
+                contextModule={ContextModule.ordersRespond}
+                contextPageOwnerType={OwnerType.ordersRespond}
+              />
               <Spacer mb={2} />
               <Media at="xs">
                 <>

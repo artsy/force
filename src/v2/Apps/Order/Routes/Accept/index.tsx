@@ -27,6 +27,7 @@ import createLogger from "v2/Utils/logger"
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "../../Components/ArtworkSummaryItem"
 import { CreditCardSummaryItemFragmentContainer as CreditCardSummaryItem } from "../../Components/CreditCardSummaryItem"
 import { BuyerGuarantee } from "../../Components/BuyerGuarantee"
+import { ContextModule, OwnerType } from "@artsy/cohesion"
 
 interface AcceptProps {
   order: Accept_order
@@ -218,7 +219,10 @@ export class Accept extends Component<AcceptProps> {
                 <ShippingSummaryItem order={order} locked />
                 <CreditCardSummaryItem order={order} locked />
               </Flex>
-              <BuyerGuarantee />
+              <BuyerGuarantee
+                contextModule={ContextModule.ordersAccept}
+                contextPageOwnerType={OwnerType.ordersAccept}
+              />
               <Media greaterThan="xs">
                 <Spacer mb={2} />
               </Media>

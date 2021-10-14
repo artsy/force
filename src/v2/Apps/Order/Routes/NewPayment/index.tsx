@@ -27,6 +27,7 @@ import {
 import { get } from "v2/Utils/get"
 import { BuyerGuarantee } from "../../Components/BuyerGuarantee"
 import { createStripeWrapper } from "v2/Utils/createStripeWrapper"
+import { ContextModule, OwnerType } from "@artsy/cohesion"
 
 export const ContinueButton = props => (
   <Button variant="primaryBlack" width="100%" {...props}>
@@ -182,7 +183,10 @@ export class NewPaymentRoute extends Component<
                 <ArtworkSummaryItem order={order} />
                 <TransactionDetailsSummaryItem order={order} />
               </Flex>
-              <BuyerGuarantee />
+              <BuyerGuarantee
+                contextModule={ContextModule.ordersNewPayment}
+                contextPageOwnerType={OwnerType.ordersNewPayment}
+              />
               <Spacer mb={[2, 4]} />
               <Media at="xs">
                 <>
