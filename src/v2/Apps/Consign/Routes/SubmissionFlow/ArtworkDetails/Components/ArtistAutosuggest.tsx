@@ -60,7 +60,8 @@ export const ArtistAutosuggest: FC = () => {
       onSuggestionsFetchRequested={({ value }) => {
         updateSuggestions(value)
       }}
-      onSuggestionSelected={(_, { suggestionValue }) => {
+      onSuggestionSelected={(e: Event, { suggestionValue }) => {
+        e.preventDefault()
         setFieldValue("artist", suggestionValue)
       }}
       getSuggestionValue={suggestion => suggestion.node.displayLabel}
@@ -69,14 +70,8 @@ export const ArtistAutosuggest: FC = () => {
       renderSuggestionsContainer={SuggestionsContainer}
       inputProps={inputProps}
       theme={{
-        container: {
-          width: "100%",
-          position: "relative",
-        },
-        suggestionsContainer: {
-          boxShadow: DROP_SHADOW,
-          marginTop: "4px",
-        },
+        container: { width: "100%", position: "relative" },
+        suggestionsContainer: { boxShadow: DROP_SHADOW, marginTop: "4px" },
       }}
     />
   )
