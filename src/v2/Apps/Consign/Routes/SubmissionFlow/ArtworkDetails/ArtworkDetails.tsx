@@ -46,12 +46,15 @@ export const ArtworkDetails: FC = () => {
     },
   } = useRouter()
 
-  const handleSubmit = () => {
+  const handleSubmit = (values: ArtworkDetailsFormModel) => {
     const submissionId = id ? id : uuid()
 
     sessionStorage.setItem(
       `submission-${submissionId}`,
-      JSON.stringify({ artistId: "4d8b92b34eb68a1b2c0003f4" })
+      JSON.stringify({
+        artistId: "4d8b92b34eb68a1b2c0003f4",
+        artworkDetailsForm: values,
+      })
     )
 
     router.replace({

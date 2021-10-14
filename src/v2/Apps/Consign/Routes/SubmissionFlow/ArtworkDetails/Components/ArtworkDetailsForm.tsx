@@ -1,4 +1,4 @@
-import React, { FC } from "react"
+import React, { FC, useEffect } from "react"
 import {
   Box,
   Column,
@@ -16,6 +16,7 @@ import { useFormikContext } from "formik"
 import { hardcodedMediums } from "v2/Components/ArtworkFilter/ArtworkFilters/MediumFilter"
 import { checkboxValues } from "v2/Components/ArtworkFilter/ArtworkFilters/AttributionClassFilter"
 import { ArtistAutosuggest } from "./ArtistAutosuggest"
+import { useRouter } from "v2/System/Router/useRouter"
 
 const rarityOptions = checkboxValues.map(({ name, value }) => ({
   text: name,
@@ -49,10 +50,28 @@ export interface ArtworkDetailsFormModel {
 }
 
 export const ArtworkDetailsForm: FC = () => {
-  const { values, handleChange, setFieldValue, handleBlur } = useFormikContext<
-    ArtworkDetailsFormModel
-  >()
+  const {
+    match: {
+      params: { id },
+    },
+  } = useRouter()
+
+  const {
+    values,
+    handleChange,
+    setFieldValue,
+    handleBlur,
+    setValues,
+  } = useFormikContext<ArtworkDetailsFormModel>()
+
   const uniqueRarity = values.rarity === "unique"
+
+  useEffect(() => {
+    if (id) {
+      const formValues = sessionStorage.getItem(`submission-${id}`)
+      formValues && setValues(JSON.parse(formValues).artworkDetailsForm, true)
+    }
+  }, [])
 
   return (
     <>
