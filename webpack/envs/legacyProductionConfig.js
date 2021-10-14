@@ -6,13 +6,13 @@ import { HashedModuleIdsPlugin } from "webpack"
 import { getCSSManifest } from "../utils/getCSSManifest"
 import { basePath, env } from "../utils/env"
 import { getEntrypoints } from "../utils/getEntrypoints"
-import { standardMinimizer } from "./commonEnv"
+import { minimizer } from "./sharedConfig"
 
 export const legacyProductionConfig = {
   entry: getEntrypoints(),
   optimization: {
     minimize: !env.webpackDebug && !env.fastProductionBuild,
-    minimizer: standardMinimizer,
+    minimizer,
   },
   output: {
     filename: "[name].[contenthash].js",

@@ -15,7 +15,7 @@ const webpackHotMiddleware = require("webpack-hot-middleware")
 const { startServer } = require("./lib/startServer")
 const { setAliases } = require("require-control")
 const { createReloadable } = require("@artsy/express-reloadable")
-const { createConfig } = require("../webpack")
+const { getDevelopmentWebpackConfig } = require("../webpack")
 const { initializeMiddleware } = require("./middleware")
 
 /**
@@ -32,16 +32,16 @@ setAliases({
   ),
 })
 
-const clientConfig = createConfig("client.dev")
-const clientLegacyConfig = createConfig("legacy.dev")
-const compiler = webpack([clientConfig, clientLegacyConfig])
+const webpackConfig = getDevelopmentWebpackConfig("client.dev")
+const legacyWebpackConfig = getDevelopmentWebpackConfig("legacy.dev")
+const compiler = webpack([webpackConfig, legacyWebpackConfig])
 const app = express()
 
 const wdm = webpackDevMiddleware(compiler, {
-  publicPath: clientLegacyConfig.output.publicPath,
+  publicPath: legacyWebpackConfig.output.publicPath,
   quiet: true,
   serverSideRender: true,
-  stats: clientLegacyConfig.stats,
+  stats: legacyWebpackConfig.stats,
   writeToDisk(filePath) {
     /**
      * Emit the stats file to disk during dev so that loadable-compoents can

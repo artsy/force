@@ -14,28 +14,6 @@ export const babelLoader = {
         cacheDirectory:
           !env.onCi && path.join(basePath, ".cache", "babel/force"),
         plugins: [
-          env.isDevelopment && require.resolve("react-refresh/babel"),
-        ].filter(Boolean),
-      },
-    },
-  ],
-}
-
-/**
- * This loader ensures that all requisite babel configurations are in place to
- * properly optimize lodash.
- */
-export const babelLoaderWithLodashOptimization = {
-  exclude: /(node_modules)/,
-  include: path.resolve(basePath, "src"),
-  test: /(\.(js|ts)x?$)/,
-  use: [
-    {
-      loader: "babel-loader",
-      options: {
-        cacheDirectory:
-          !env.onCi && path.join(basePath, ".cache", "babel/force"),
-        plugins: [
           "lodash",
           env.isDevelopment && require.resolve("react-refresh/babel"),
         ].filter(Boolean),
@@ -60,10 +38,10 @@ export const coffeeLoader = {
   ],
 }
 
-// https://github.com/bazilio91/ejs-compiled-loader/issues/46
 export const ejsLoader = {
   test: /\.ejs$/,
   use: {
+    // https://github.com/bazilio91/ejs-compiled-loader/issues/46
     loader: "ejs-compiled-loader",
     options: {
       htmlmin: true,
@@ -88,7 +66,8 @@ export const jadeLoader = {
   ],
 }
 
-// TODO: This may be removed once all dependant references to @babel/runtime-corejs3 are removed.
+// TODO: This may be removed once all dependant references to
+// @babel/runtime-corejs3 are removed.
 export const mjsLoader = {
   test: /\.mjs$/,
   type: "javascript/auto",

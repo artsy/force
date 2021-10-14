@@ -1,12 +1,11 @@
 // @ts-check
-import crypto from 'crypto'
+import crypto from "crypto"
 import { env } from "../utils/env"
 
 const FRAMEWORK_BUNDLES = ["react", "react-dom", "@sentry"]
-
 const TOTAL_PAGES = 12
 
-export const clientChunks = {
+export const splitChunks = {
   chunks: "all",
   automaticNameDelimiter: "-",
   cacheGroups: {
@@ -22,18 +21,21 @@ export const clientChunks = {
     framework: {
       name: "framework",
       chunks: "all",
-      // This regex ignores nested copies of framework libraries so they're bundled with their issuer.
+      // This regex ignores nested copies of framework libraries so they're
+      // bundled with their issuer.
       test: new RegExp(
         `(?<!node_modules.*)[\\\\/]node_modules[\\\\/](${FRAMEWORK_BUNDLES.join(
           `|`
         )})[\\\\/]`
       ),
       priority: 50,
-      // Don't let webpack eliminate this chunk (prevents this chunk from becoming a part of the commons chunk)
+      // Don't let webpack eliminate this chunk (prevents this chunk from
+      // becoming a part of the commons chunk)
       enforce: true,
     },
     lib: {
-      // if a module is bigger than 160kb from node_modules we make a separate chunk for it
+      // if a module is bigger than 160kb from node_modules we make a separate
+      // chunk for it
       test(module) {
         return (
           module.size() > 160000 &&
