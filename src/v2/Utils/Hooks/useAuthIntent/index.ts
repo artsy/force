@@ -47,7 +47,6 @@ export const runAuthIntent = async (
 
   const value = parse(afterAuthActionCookie)
   if (value === null) return
-  console.log("value", value)
 
   try {
     await (() => {

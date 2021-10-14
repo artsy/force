@@ -46,5 +46,3 @@ export const ContactInformation: FC = () => {
     </>
   )
 }
-
-// sessionStorage.setItem("key", "value")
