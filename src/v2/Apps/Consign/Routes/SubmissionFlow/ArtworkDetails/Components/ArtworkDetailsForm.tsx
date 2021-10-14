@@ -64,7 +64,7 @@ export const ArtworkDetailsForm: FC = () => {
     setValues,
   } = useFormikContext<ArtworkDetailsFormModel>()
 
-  const uniqueRarity = values.rarity === "unique"
+  const limitedEditionRarity = values.rarity === "limited edition"
 
   useEffect(() => {
     if (id) {
@@ -138,7 +138,7 @@ export const ArtworkDetailsForm: FC = () => {
           />
         </Column>
         <Column span={6}>
-          {!uniqueRarity && (
+          {limitedEditionRarity && (
             <Flex alignItems="center" mt={[1, 0]}>
               <Input
                 title="Edition Number"
