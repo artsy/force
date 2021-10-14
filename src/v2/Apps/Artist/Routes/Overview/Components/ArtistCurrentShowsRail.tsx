@@ -69,6 +69,8 @@ const ArtistCurrentShowsRail: React.FC<ArtistCurrentShowsRailProps> = ({
             <RouterLink
               to={node.href!}
               key={index}
+              display="block"
+              width={325}
               noUnderline
               onClick={() => {
                 tracking.trackEvent({
@@ -94,6 +96,7 @@ const ArtistCurrentShowsRail: React.FC<ArtistCurrentShowsRailProps> = ({
                   src={node.coverImage.cropped.src}
                   srcSet={node.coverImage.cropped.srcSet}
                   lazyLoad
+                  alt=""
                 />
               ) : (
                 <Box width={325} height={230} bg="black10" />
