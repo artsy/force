@@ -86,6 +86,8 @@ const ArtistRelatedArtistsRail: React.FC<ArtistRelatedArtistsRailProps> = ({
                     height={230}
                     src={artworkImage?.cropped?.src}
                     srcSet={artworkImage?.cropped?.srcSet}
+                    lazyLoad
+                    alt=""
                   />
                 </RouterLink>
 

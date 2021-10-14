@@ -36,7 +36,6 @@ export const RecentlyViewed: React.FC<RecentlyViewedProps> = ({ me }) => {
   return (
     <Rail
       title="Recently Viewed"
-      showProgress={false}
       getItems={() => {
         return artworks.map(artwork => {
           return (
