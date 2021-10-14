@@ -20,27 +20,27 @@ describe("ArtworkDetailsForm", () => {
   beforeEach(() => (wrapper = renderArtworkForm(initialValues)))
 
   it("renders correctly all fields", () => {
-    expect(wrapper.find("Input[name='artist']")).toBeTruthy()
-    expect(wrapper.find("Input[name='year']")).toBeTruthy()
-    expect(wrapper.find("Input[name='title']")).toBeTruthy()
-    expect(wrapper.find("Select[name='medium']")).toBeTruthy()
-    expect(wrapper.find("Select[name='rarity']")).toBeTruthy()
-    expect(wrapper.find("Input[name='editionNumber']")).toBeTruthy()
-    expect(wrapper.find("Input[name='editionSize']")).toBeTruthy()
-    expect(wrapper.find("LabeledInput[name='height']")).toBeTruthy()
-    expect(wrapper.find("LabeledInput[name='width']")).toBeTruthy()
-    expect(wrapper.find("LabeledInput[name='depth']")).toBeTruthy()
+    expect(wrapper.find("input[name='artist']")).toBeTruthy()
+    expect(wrapper.find("input[name='year']")).toBeTruthy()
+    expect(wrapper.find("input[name='title']")).toBeTruthy()
+    expect(wrapper.find("select[name='medium']")).toBeTruthy()
+    expect(wrapper.find("select[name='rarity']")).toBeTruthy()
+    expect(wrapper.find("input[name='editionNumber']")).toBeTruthy()
+    expect(wrapper.find("input[name='editionSize']")).toBeTruthy()
+    expect(wrapper.find("input[name='height']")).toBeTruthy()
+    expect(wrapper.find("input[name='width']")).toBeTruthy()
+    expect(wrapper.find("input[name='depth']")).toBeTruthy()
     expect(wrapper.find("Radio[value='in']")).toBeTruthy()
     expect(wrapper.find("Radio[value='cm']")).toBeTruthy()
   })
 
   it("if Rarity is Unique doesn't renders Edition fields", () => {
     wrapper
-      .find("Select[name='rarity']")
-      .simulate("change", { target: { value: "unique" } })
+      .find("select[name='rarity']")
+      .simulate("change", { target: { name: "rarity", value: "unique" } })
 
-    expect(wrapper.find("Input[name='editionNumber']").length).toBe(0)
-    expect(wrapper.find("Input[name='editionSize']").length).toBe(0)
+    expect(wrapper.find("input[name='editionNumber']").length).toBe(0)
+    expect(wrapper.find("input[name='editionSize']").length).toBe(0)
   })
 
   it("if units are 'in' renders size fields correctly", () => {

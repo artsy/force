@@ -1,4 +1,4 @@
-import React, { FC, useState, useCallback } from "react"
+import React, { FC, useState } from "react"
 import { fetchQuery, graphql } from "react-relay"
 import RelayModernEnvironment from "relay-runtime/lib/store/RelayModernEnvironment"
 import { useSystemContext } from "v2/System"
@@ -25,26 +25,30 @@ type Suggestion =
 type Suggestions = readonly Suggestion[] | undefined | null
 
 export const ArtistAutosuggest: FC = () => {
-  const { values, handleChange, setFieldValue } = useFormikContext<
-    ArtworkDetailsFormModel
-  >()
+  const {
+    values,
+    handleChange,
+    setFieldValue,
+    errors,
+    touched,
+    handleBlur,
+  } = useFormikContext<ArtworkDetailsFormModel>()
   const [suggestions, setSuggestions] = useState<Suggestions>([])
   const { relayEnvironment } = useSystemContext()
 
-  const updateSuggestions = useCallback(async () => {
+  const updateSuggestions = async (value: string) => {
     setSuggestions([])
-    if (values.artist.length >= 3 && relayEnvironment) {
-      const suggestions = await fetchSuggestions(
-        values.artist,
-        relayEnvironment
-      )
+    if (value.length >= 3 && relayEnvironment) {
+      const suggestions = await fetchSuggestions(value, relayEnvironment)
       setSuggestions(suggestions)
     }
-  }, [relayEnvironment, values.artist])
+  }
 
   const inputProps = {
     onChange: handleChange,
+    onBlur: handleBlur,
     value: values.artist,
+    error: touched.artist && errors.artist,
   }
 
   return (
@@ -53,7 +57,9 @@ export const ArtistAutosuggest: FC = () => {
       onSuggestionsClearRequested={() => {
         setSuggestions([])
       }}
-      onSuggestionsFetchRequested={updateSuggestions}
+      onSuggestionsFetchRequested={({ value }) => {
+        updateSuggestions(value)
+      }}
       onSuggestionSelected={(_, { suggestionValue }) => {
         setFieldValue("artist", suggestionValue)
       }}

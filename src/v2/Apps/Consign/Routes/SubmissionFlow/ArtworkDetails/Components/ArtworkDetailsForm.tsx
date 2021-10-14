@@ -42,14 +42,14 @@ export interface ArtworkDetailsFormModel {
   rarity: string
   editionNumber: string
   editionSize: string
-  heigth: string
+  height: string
   width: string
   depth: string
   units: string
 }
 
 export const ArtworkDetailsForm: FC = () => {
-  const { values, handleChange, setFieldValue } = useFormikContext<
+  const { values, handleChange, setFieldValue, handleBlur } = useFormikContext<
     ArtworkDetailsFormModel
   >()
   const uniqueRarity = values.rarity === "unique"
@@ -65,22 +65,25 @@ export const ArtworkDetailsForm: FC = () => {
             title="year"
             placeholder="YYYY"
             name="year"
+            onBlur={handleBlur}
             onChange={handleChange}
-            value={values.year || ""}
+            value={values.year}
           />
         </Column>
       </GridColumns>
-      <GridColumns mt={[2, 4]}>
+      <GridColumns mt={[1, 2]}>
         <Column span={6}>
           <Input
             title="Title"
             placeholder="Add Title or Write 'Unknown'"
             name="title"
+            maxLength={256}
+            onBlur={handleBlur}
             onChange={handleChange}
-            value={values.title || ""}
+            value={values.title}
           />
         </Column>
-        <Column span={6} mt={[2, 0]}>
+        <Column span={6} mt={[1, 0]}>
           <Text variant="xs" mb={0.5} textTransform="uppercase">
             Medium
           </Text>
@@ -88,13 +91,15 @@ export const ArtworkDetailsForm: FC = () => {
             name="medium"
             options={mediumOptions}
             selected={values.medium}
+            onBlur={handleBlur}
+            onChange={handleChange}
             onSelect={selected => {
               setFieldValue("medium", selected)
             }}
           />
         </Column>
       </GridColumns>
-      <GridColumns mt={[2, 4]}>
+      <GridColumns mt={[1, 2]}>
         <Column span={6}>
           <Flex justifyContent="space-between">
             <Text variant="xs" mb={0.5} textTransform="uppercase">
@@ -106,6 +111,8 @@ export const ArtworkDetailsForm: FC = () => {
             name="rarity"
             options={rarityOptions}
             selected={values.rarity}
+            onBlur={handleBlur}
+            onChange={handleChange}
             onSelect={selected => {
               setFieldValue("rarity", selected)
             }}
@@ -113,13 +120,14 @@ export const ArtworkDetailsForm: FC = () => {
         </Column>
         <Column span={6}>
           {!uniqueRarity && (
-            <Flex alignItems="center" mt={[2, 0]}>
+            <Flex alignItems="center" mt={[1, 0]}>
               <Input
                 title="Edition Number"
                 placeholder="Your Work's #"
                 name="editionNumber"
+                onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.editionNumber || ""}
+                value={values.editionNumber}
               />
               <Box paddingX={[0.5, 2]} mt={2}>
                 /
@@ -128,33 +136,46 @@ export const ArtworkDetailsForm: FC = () => {
                 title="Edition Size"
                 placeholder="Total # in Edition"
                 name="editionSize"
+                onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.editionSize || ""}
+                value={values.editionSize}
               />
             </Flex>
           )}
         </Column>
       </GridColumns>
-      <GridColumns mt={[2, 4]}>
+      <GridColumns mt={[1, 2]}>
         <Column span={6}>
-          <Flex alignItems="center">
-            <Box width="50%" mr={2}>
+          <Flex height="100%">
+            <Box width="50%" mr={2} height="100%">
               <Text variant="xs" mb={0.5} mr={0.5} textTransform="uppercase">
                 Height
               </Text>
-              <LabeledInput label={values.units} name="height" />
+              <LabeledInput
+                label={values.units}
+                name="height"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                value={values.height}
+              />
             </Box>
-            <Box width="50%">
+            <Box width="50%" height="100%">
               <Text variant="xs" mb={0.5} mr={0.5} textTransform="uppercase">
                 Width
               </Text>
-              <LabeledInput label={values.units} name="width" />
+              <LabeledInput
+                label={values.units}
+                name="width"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                value={values.width}
+              />
             </Box>
           </Flex>
         </Column>
-        <Column span={6} mt={[2, 0]}>
-          <Flex alignItems="center">
-            <Box pr={[0, 1]} width="50%">
+        <Column span={6} mt={[1, 0]}>
+          <Flex height="100%">
+            <Box pr={[0, 1]} width="50%" height="100%">
               <Flex>
                 <Text variant="xs" mb={0.5} mr={0.5} textTransform="uppercase">
                   Depth
@@ -166,8 +187,9 @@ export const ArtworkDetailsForm: FC = () => {
               <LabeledInput
                 label={values.units}
                 name="depth"
+                onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.depth || ""}
+                value={values.depth}
               />
             </Box>
             <RadioGroup

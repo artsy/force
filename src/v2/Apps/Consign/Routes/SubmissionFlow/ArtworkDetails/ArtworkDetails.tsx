@@ -8,16 +8,31 @@ import {
 } from "./Components/ArtworkDetailsForm"
 import { useRouter } from "v2/System/Router/useRouter"
 import uuid from "uuid"
+import * as Yup from "yup"
+
+const ArtworkDetailsSchema = Yup.object().shape({
+  artist: Yup.string().label("Artist").required(),
+  year: Yup.string().required(),
+  title: Yup.string().required(),
+  medium: Yup.string().required(),
+  rarity: Yup.string().required(),
+  editionNumber: Yup.string(),
+  editionSize: Yup.string(),
+  height: Yup.number().positive().required(),
+  width: Yup.number().positive().required(),
+  depth: Yup.number().positive(),
+  units: Yup.string().required(),
+})
 
 export const initialValues = {
   artist: "",
   year: "",
   title: "",
   medium: "",
-  rarity: "default",
+  rarity: "",
   editionNumber: "",
   editionSize: "",
-  heigth: "",
+  height: "",
   width: "",
   depth: "",
   units: "in",
@@ -59,8 +74,10 @@ export const ArtworkDetails: FC = () => {
       <Formik<ArtworkDetailsFormModel>
         initialValues={initialValues}
         onSubmit={handleSubmit}
+        validationSchema={ArtworkDetailsSchema}
+        validateOnMount
       >
-        {({ isSubmitting }) => (
+        {({ isSubmitting, isValid }) => (
           <Form>
             <ArtworkDetailsForm />
             <Button
@@ -70,6 +87,7 @@ export const ArtworkDetails: FC = () => {
               size="medium"
               variant="primaryBlack"
               loading={isSubmitting}
+              disabled={!isValid}
             >
               Save and Continue
             </Button>
