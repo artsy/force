@@ -24,6 +24,7 @@ import useOnScreen from "../Utils/useOnScreen"
 import { UpdateConversation } from "../Mutation/UpdateConversationMutation"
 
 import { Conversation_conversation } from "v2/__generated__/Conversation_conversation.graphql"
+import { useRouter } from "v2/System/Router/useRouter"
 export interface ConversationProps {
   conversation: Conversation_conversation
   showDetails: boolean
@@ -85,6 +86,7 @@ const Conversation: React.FC<ConversationProps> = props => {
   // States and Refs
   const bottomOfMessageContainer = useRef<HTMLElement>(null)
   const initialMount = useRef(true)
+  const initialScroll = useRef(true)
   const scrollContainer = useRef<HTMLDivElement>(null)
   const [fetchingMore, setFetchingMore] = useState<boolean>(false)
   const [lastMessageID, setLastMessageID] = useState<string | null>()
@@ -94,7 +96,7 @@ const Conversation: React.FC<ConversationProps> = props => {
 
   // Functions
   const loadMore = (): void => {
-    if (relay.isLoading() || !relay.hasMore() || initialMount.current) return
+    if (relay.isLoading() || !relay.hasMore() || !initialMount.current) return
 
     setFetchingMore(true)
     const scrollCursor = scrollContainer.current
@@ -113,6 +115,23 @@ const Conversation: React.FC<ConversationProps> = props => {
       }
     })
   }
+
+  const { match } = useRouter()
+
+  // TODO: refactor
+  useEffect(() => {
+    initialScroll.current = false
+  }, [match.params?.conversationID])
+
+  useEffect(() => {
+    initialScroll.current = !fetchingMore
+  }, [fetchingMore])
+
+  useEffect(() => {
+    if (!fetchingMore && !initialScroll.current) {
+      scrollToBottom()
+    }
+  })
 
   const scrollToBottom = () => {
     if (!!bottomOfMessageContainer?.current) {
@@ -162,6 +181,7 @@ const Conversation: React.FC<ConversationProps> = props => {
     )
   }, [lastMessageID])
   // -Workaround Reply render resizing race condition
+
   useEffect(() => {
     if (initialMount.current) scrollToBottom()
     const rect = scrollContainer.current?.getBoundingClientRect()
