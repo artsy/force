@@ -1,13 +1,12 @@
 import type { NextFunction } from "express"
 import type { ArtsyRequest, ArtsyResponse } from "lib/middleware/artsyExpress"
 import { buildServerApp } from "v2/System/Router/server"
-import { getAppRoutes } from "v2/routes"
 import ReactDOM from "react-dom/server"
 import loadAssetManifest from "lib/manifest"
 import express from "express"
 import path from "path"
 import { getServerParam } from "./Utils/getServerParam"
-import { getCacheableRoutes } from "./System/Router/getCacheableRoutes"
+import { getRouteConfig } from "./System/Router/getRouteConfig"
 
 // TODO: Use the same variables as the asset middleware. Both config and sharify
 // have a default CDN_URL while this does not.
@@ -21,14 +20,13 @@ if (!NOVO_MANIFEST) {
 }
 
 const app = express()
-const routes = getAppRoutes()
-const cacheableRoutes = getCacheableRoutes()
+const { routes, routePaths } = getRouteConfig()
 
 /**
  * Mount routes that will connect to global SSR router
  */
 app.get(
-  cacheableRoutes,
+  routePaths,
   async (req: ArtsyRequest, res: ArtsyResponse, next: NextFunction) => {
     try {
       const {
