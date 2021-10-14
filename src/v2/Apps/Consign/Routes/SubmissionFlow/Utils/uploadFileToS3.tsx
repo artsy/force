@@ -1,4 +1,4 @@
-import { AssetCredentials } from "../Mutations/Gemini/getGeminiCredentialsForEnvironment"
+import { AssetCredentials } from "v2/Components/ConsignSubmission/Mutations/Gemini/getGeminiCredentialsForEnvironment"
 import { Photo } from "./FileUtils"
 
 export const uploadFileToS3 = (
@@ -44,11 +44,8 @@ export const uploadFileToS3 = (
         asset.policyDocument.conditions.successActionStatus
       ) {
         photo.abortUploading = undefined
-        // e.g. https://artsy-media-uploads.s3.amazonaws.com/A3tfuXp0t5OuUKv07XaBOw%2F%24%7Bfilename%7D
-        const url = request.responseXML?.getElementsByTagName("Location")[0]
-          .childNodes[0].nodeValue
 
-        resolve(url?.split("/").pop()?.replace("%2F", "/"))
+        resolve(`${geminiKey}/${photo.file.name}`)
       } else {
         reject(new Error("S3 upload failed"))
       }
@@ -60,6 +57,7 @@ export const uploadFileToS3 = (
     request.open("POST", uploadURL, true)
     request.send(formData)
 
+    photo.bucket = bucket
     photo.abortUploading = () => {
       request.abort()
     }

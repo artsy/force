@@ -96,6 +96,24 @@ function getDesktopIntentToSaveArtwork({
   }
 }
 
+// function getDesktopIntentToCreateSubmmission({
+//   contextModule,
+//   entity,
+//   intent,
+// }: AuthModalOptions): ModalOptions {
+//   return {
+//     afterSignUpAction: {
+//       action: "save",
+//       kind: "submissions",
+//       objectId: entity.slug,
+//     },
+//     contextModule,
+//     copy: `Sign up to save artworks`,
+//     intent,
+//     mode: ModalType.signup,
+//   }
+// }
+
 function getDesktopIntent(options: AuthModalOptions): ModalOptions {
   switch (options.intent) {
     case Intent.followArtist:
@@ -104,6 +122,8 @@ function getDesktopIntent(options: AuthModalOptions): ModalOptions {
       return getDesktopIntentToFollow(options)
     case Intent.saveArtwork:
       return getDesktopIntentToSaveArtwork(options)
+    // case Intent.createSubmmission:
+    //   return getDesktopIntentToCreateSubmmission(options)
     default:
       // @ts-expect-error STRICT_NULL_CHECK
       return undefined

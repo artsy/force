@@ -1,6 +1,7 @@
 import Cookies from "cookies-js"
 import { useEffect } from "react"
 import { Environment } from "react-relay"
+import { createConsignSubmission } from "v2/Components/ConsignSubmission/createConsignSubmission"
 import { useSystemContext } from "v2/System"
 import { followArtistMutation } from "./mutations/AuthIntentFollowArtistMutation"
 import { followGeneMutation } from "./mutations/AuthIntentFollowGeneMutation"
@@ -14,6 +15,7 @@ export type AfterAuthAction =
   | { action: "follow"; kind: "profile"; objectId: string }
   | { action: "follow"; kind: "gene"; objectId: string }
   | { action: "save"; kind: "artworks"; objectId: string }
+  | { action: "save"; kind: "submissions"; objectId: string }
 
 const isValid = (value: any): value is AfterAuthAction => {
   return (
@@ -45,6 +47,7 @@ export const runAuthIntent = async (
 
   const value = parse(afterAuthActionCookie)
   if (value === null) return
+  console.log("value", value)
 
   try {
     await (() => {
@@ -60,7 +63,13 @@ export const runAuthIntent = async (
           }
           break
         case "save":
-          return saveArtworkMutation(relayEnvironment, value.objectId)
+          switch (value.kind) {
+            case "artworks":
+              return saveArtworkMutation(relayEnvironment, value.objectId)
+            case "submissions":
+              return createConsignSubmission(relayEnvironment, value.objectId)
+          }
+          break
       }
     })()
 
