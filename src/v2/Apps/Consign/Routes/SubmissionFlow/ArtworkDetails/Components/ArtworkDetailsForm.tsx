@@ -36,7 +36,8 @@ const mediumOptions = hardcodedMediums.map(({ name, value }) => ({
 mediumOptions.unshift({ text: "Painting, Print, Sculpture…", value: "default" })
 
 export interface ArtworkDetailsFormModel {
-  artist: string
+  artistName: string
+  artistId: string
   year: string
   title: string
   medium: string
