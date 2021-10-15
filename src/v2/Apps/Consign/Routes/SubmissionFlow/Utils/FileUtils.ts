@@ -1,8 +1,10 @@
-import { getConvectionGeminiKey } from "../Mutations/Gemini/getConvectionGeminiKey"
-import { getGeminiCredentialsForEnvironment } from "../Mutations/Gemini/getGeminiCredentialsForEnvironment"
-import { uploadFileToS3 } from "./uploadFileToS3"
 import uuid from "uuid"
 import { Environment } from "relay-runtime"
+import { uploadFileToS3 } from "./uploadFileToS3"
+import {
+  getConvectionGeminiKey,
+  getGeminiCredentialsForEnvironment,
+} from "../Mutations"
 
 export function formatFileSize(size: number): string {
   const sizeInMB = (size / (1000 * 1000)).toFixed(2)
@@ -20,6 +22,7 @@ export interface Photo {
   progress?: number
   removed: boolean
   loading?: boolean
+  bucket?: string
 }
 
 export function normalizePhoto(file: File): Photo {

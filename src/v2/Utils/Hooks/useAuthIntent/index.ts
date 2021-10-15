@@ -6,6 +6,7 @@ import { followArtistMutation } from "./mutations/AuthIntentFollowArtistMutation
 import { followGeneMutation } from "./mutations/AuthIntentFollowGeneMutation"
 import { followProfileMutation } from "./mutations/AuthIntentFollowProfileMutation"
 import { saveArtworkMutation } from "./mutations/AuthIntentSaveArtworkMutation"
+import { createConsignSubmission } from "v2/Apps/Consign/Routes/SubmissionFlow/Utils/createConsignSubmission"
 
 const AFTER_AUTH_ACTION_KEY = "afterSignUpAction"
 
@@ -14,6 +15,7 @@ export type AfterAuthAction =
   | { action: "follow"; kind: "profile"; objectId: string }
   | { action: "follow"; kind: "gene"; objectId: string }
   | { action: "save"; kind: "artworks"; objectId: string }
+  | { action: "save"; kind: "submissions"; objectId: string }
 
 const isValid = (value: any): value is AfterAuthAction => {
   return (
@@ -60,7 +62,13 @@ export const runAuthIntent = async (
           }
           break
         case "save":
-          return saveArtworkMutation(relayEnvironment, value.objectId)
+          switch (value.kind) {
+            case "artworks":
+              return saveArtworkMutation(relayEnvironment, value.objectId)
+            case "submissions":
+              return createConsignSubmission(relayEnvironment, value.objectId)
+          }
+          break
       }
     })()
 
