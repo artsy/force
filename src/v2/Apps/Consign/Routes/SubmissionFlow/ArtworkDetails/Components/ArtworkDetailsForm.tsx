@@ -13,7 +13,6 @@ import {
   InfoCircleIcon,
 } from "@artsy/palette"
 import { useFormikContext } from "formik"
-import { hardcodedMediums } from "v2/Components/ArtworkFilter/ArtworkFilters/MediumFilter"
 import { checkboxValues } from "v2/Components/ArtworkFilter/ArtworkFilters/AttributionClassFilter"
 import { ArtistAutosuggest } from "./ArtistAutosuggest"
 import { useRouter } from "v2/System/Router/useRouter"
@@ -173,6 +172,9 @@ export const ArtworkDetailsForm: FC = () => {
               </Box>
               <Input
                 type="number"
+                onKeyDown={e =>
+                  (e.key === "." || e.key === ",") && e.preventDefault()
+                }
                 title="Edition Size"
                 placeholder="Total # in Edition"
                 name="editionSize"
