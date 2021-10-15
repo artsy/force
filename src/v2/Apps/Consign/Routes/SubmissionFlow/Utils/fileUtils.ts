@@ -14,7 +14,7 @@ export function formatFileSize(size: number): string {
 
 export interface Photo {
   id: string
-  file: File
+  file?: File
   name: string
   size: number
   s3Key?: string

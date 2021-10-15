@@ -10,7 +10,7 @@ import {
   Clickable,
 } from "@artsy/palette"
 import styled from "styled-components"
-import { formatFileSize, Photo } from "../../Utils/FileUtils"
+import { formatFileSize, Photo } from "../../Utils/fileUtils"
 
 export interface PhotoThumbnailProps extends BoxProps {
   photo: Photo

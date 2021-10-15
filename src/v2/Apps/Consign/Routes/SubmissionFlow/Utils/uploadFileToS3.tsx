@@ -1,5 +1,5 @@
 import { AssetCredentials } from "../Mutations"
-import { Photo } from "./FileUtils"
+import { Photo } from "./fileUtils"
 
 export const uploadFileToS3 = (
   photo: Photo,
@@ -10,6 +10,11 @@ export const uploadFileToS3 = (
   new Promise((resolve, reject) => {
     if (!asset) {
       reject(new Error("Empty credentials"))
+      return
+    }
+
+    if (!photo.file) {
+      reject(new Error("File not found"))
       return
     }
 
@@ -36,6 +41,7 @@ export const uploadFileToS3 = (
       }
     }
 
+    const key = `${geminiKey}/${photo.file.name}`
     const request = new XMLHttpRequest()
 
     request.onload = () => {
@@ -45,7 +51,7 @@ export const uploadFileToS3 = (
       ) {
         photo.abortUploading = undefined
 
-        resolve(`${geminiKey}/${photo.file.name}`)
+        resolve(key)
       } else {
         reject(new Error("S3 upload failed"))
       }

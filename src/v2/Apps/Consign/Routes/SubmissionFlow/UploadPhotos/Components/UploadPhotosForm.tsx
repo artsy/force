@@ -4,7 +4,7 @@ import { useDropzone } from "react-dropzone"
 import { useFormikContext } from "formik"
 import { Media } from "v2/Utils/Responsive"
 import { useSystemContext } from "v2/System"
-import { Photo, normalizePhoto, uploadPhoto } from "../../Utils/FileUtils"
+import { normalizePhoto, Photo, uploadPhoto } from "../../Utils/fileUtils"
 import { useRouter } from "v2/System/Router/useRouter"
 
 export interface UploadPhotosFormModel {

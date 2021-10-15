@@ -58,7 +58,8 @@ const ContactInformation = loadable(
       /* webpackChunkName: "consignBundle" */ "./Routes/SubmissionFlow/ContactInformation/ContactInformation"
     ),
   {
-    resolveComponent: component => component.ContactInformation,
+    resolveComponent: component =>
+      component.ContactInformationFragmentContainer,
   }
 )
 
@@ -125,6 +126,13 @@ export const consignRoutes: AppRouteConfig[] = [
         prepare: () => {
           ContactInformation.preload()
         },
+        query: graphql`
+          query consignRoutes_ContactInformationQuery {
+            me {
+              ...ContactInformation_me
+            }
+          }
+        `,
       },
       {
         theme: "v3",
