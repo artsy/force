@@ -45,7 +45,12 @@ describe("BuyerGuarantee", () => {
 
     describe("when the parent didn't specify a context module", () => {
       it("does not track an analytics event", () => {
-        render(<BuyerGuarantee />)
+        render(
+          <BuyerGuarantee
+            contextModule={null as any}
+            contextPageOwnerType={null as any}
+          />
+        )
 
         userEvent.click(screen.getByText("Artsy’s buyer protection."))
 
