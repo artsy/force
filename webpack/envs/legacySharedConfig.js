@@ -15,7 +15,7 @@ import {
   mjsLoader,
 } from "./sharedLoaders"
 
-export const legacyCommonConfig = {
+export const legacySharedConfig = {
   devtool,
   externals,
   mode,

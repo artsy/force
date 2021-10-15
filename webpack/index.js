@@ -7,7 +7,7 @@ import path from "path"
 import { bundleAnalyzer } from "./plugins/bundleAnalyzer"
 import { metrics } from "./plugins/datadog"
 import { env, basePath } from "./utils/env"
-import { legacyCommonConfig } from "./envs/legacyCommonConfig"
+import { legacySharedConfig } from "./envs/legacySharedConfig"
 import { legacyDevelopmentConfig } from "./envs/legacyDevelopmentConfig"
 import { legacyProductionConfig } from "./envs/legacyProductionConfig"
 import { clientDevelopmentConfig } from "./envs/clientDevelopmentConfig"
@@ -56,12 +56,12 @@ function getLegacyConfig() {
       )
     }
 
-    return merge.smart(legacyCommonConfig, legacyDevelopmentConfig)
+    return merge.smart(legacySharedConfig, legacyDevelopmentConfig)
   }
 
   if (env.isProduction) {
     console.log("[Force Client] Building legacy client-side production code...")
-    return merge.smart(legacyCommonConfig, legacyProductionConfig)
+    return merge.smart(legacySharedConfig, legacyProductionConfig)
   }
 
   throw new Error(`[Force Client] Unsupported environment ${env.nodeEnv}`)
@@ -76,9 +76,9 @@ export function getDevelopmentWebpackConfig(configName) {
     case "client.prod":
       return clientProductionConfig
     case "legacy.dev":
-      return merge.smart(legacyCommonConfig, legacyDevelopmentConfig)
+      return merge.smart(legacySharedConfig, legacyDevelopmentConfig)
     case "legacy.prod":
-      return merge.smart(legacyCommonConfig, legacyProductionConfig)
+      return merge.smart(legacySharedConfig, legacyProductionConfig)
     case "server.dev":
       return serverConfig
     case "server.prod":
