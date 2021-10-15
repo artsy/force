@@ -1,10 +1,12 @@
 import { Environment } from "relay-runtime"
-import { addAssetToConsignment } from "./Mutations/addAssetToConsignment"
-import { createConsignSubmissionInput } from "./createConsignSubmissionInput"
 import { getSubmissionFromSessionStorage } from "./getSubmissionFromSessionStorage"
-import { createGeminiAssetWithS3Credentials } from "./Mutations/Gemini/createGeminiAssetWithS3Credentials"
-import { getConvectionGeminiKey } from "./Mutations/Gemini/getConvectionGeminiKey"
-import { createConsignSubmissionMutation } from "./Mutations/CreateConsignSubmissionMutation"
+import { createConsignSubmissionInput } from "./createConsignSubmissionInput"
+import {
+  addAssetToConsignment,
+  createConsignSubmissionMutation,
+  createGeminiAssetWithS3Credentials,
+  getConvectionGeminiKey,
+} from "../Mutations"
 
 export const createConsignSubmission = async (
   relayEnvironment: Environment,

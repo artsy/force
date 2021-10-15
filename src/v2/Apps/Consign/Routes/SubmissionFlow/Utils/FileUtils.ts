@@ -1,8 +1,10 @@
 import uuid from "uuid"
 import { Environment } from "relay-runtime"
 import { uploadFileToS3 } from "./uploadFileToS3"
-import { getConvectionGeminiKey } from "v2/Components/ConsignSubmission/Mutations/Gemini/getConvectionGeminiKey"
-import { getGeminiCredentialsForEnvironment } from "v2/Components/ConsignSubmission/Mutations/Gemini/getGeminiCredentialsForEnvironment"
+import {
+  getConvectionGeminiKey,
+  getGeminiCredentialsForEnvironment,
+} from "../Mutations"
 
 export function formatFileSize(size: number): string {
   const sizeInMB = (size / (1000 * 1000)).toFixed(2)

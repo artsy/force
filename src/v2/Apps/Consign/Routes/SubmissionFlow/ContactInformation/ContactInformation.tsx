@@ -6,7 +6,7 @@ import { openAuthModal } from "v2/Utils/openAuthModal"
 import { ModalType } from "v2/Components/Authentication/Types"
 import { ContextModule, Intent } from "@artsy/cohesion"
 import { useRouter } from "v2/System/Router/useRouter"
-import { createConsignSubmission } from "v2/Components/ConsignSubmission/createConsignSubmission"
+import { createConsignSubmission } from "../Utils/createConsignSubmission"
 
 export const ContactInformation: FC = () => {
   const {

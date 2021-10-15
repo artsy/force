@@ -1,12 +1,12 @@
 import Cookies from "cookies-js"
 import { useEffect } from "react"
 import { Environment } from "react-relay"
-import { createConsignSubmission } from "v2/Components/ConsignSubmission/createConsignSubmission"
 import { useSystemContext } from "v2/System"
 import { followArtistMutation } from "./mutations/AuthIntentFollowArtistMutation"
 import { followGeneMutation } from "./mutations/AuthIntentFollowGeneMutation"
 import { followProfileMutation } from "./mutations/AuthIntentFollowProfileMutation"
 import { saveArtworkMutation } from "./mutations/AuthIntentSaveArtworkMutation"
+import { createConsignSubmission } from "v2/Apps/Consign/Routes/SubmissionFlow/Utils/createConsignSubmission"
 
 const AFTER_AUTH_ACTION_KEY = "afterSignUpAction"
 
