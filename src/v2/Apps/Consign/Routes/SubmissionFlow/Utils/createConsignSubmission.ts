@@ -17,7 +17,7 @@ export const createConsignSubmission = async (
 ) => {
   let submission = getSubmission(id)
 
-  if (!submission) {
+  if (!submission || !submission.uploadPhotosForm) {
     return
   }
 

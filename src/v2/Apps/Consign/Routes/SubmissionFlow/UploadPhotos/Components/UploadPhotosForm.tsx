@@ -6,6 +6,7 @@ import { Media } from "v2/Utils/Responsive"
 import { useSystemContext } from "v2/System"
 import { normalizePhoto, Photo, uploadPhoto } from "../../Utils/fileUtils"
 import { useRouter } from "v2/System/Router/useRouter"
+import { getSubmission } from "../../Utils/submissionUtils"
 
 export interface UploadPhotosFormModel {
   photos: Photo[]
@@ -26,11 +27,10 @@ export const UploadPhotosForm: React.FC<UploadPhotosFormProps> = ({
   const { setFieldValue, values } = useFormikContext<UploadPhotosFormModel>()
 
   useEffect(() => {
-    const storageValue = sessionStorage.getItem(`submission-${id}`)
-    const submissionData = storageValue ? JSON.parse(storageValue) : undefined
+    const submission = getSubmission(id)
 
-    if (submissionData.photos) {
-      setFieldValue("photos", submissionData.photos)
+    if (submission && submission.uploadPhotosForm) {
+      setFieldValue("photos", submission.uploadPhotosForm.photos)
     }
   }, [])
 

@@ -1,13 +1,14 @@
 import createLogger from "v2/Utils/logger"
+import { ArtworkDetailsFormModel } from "../ArtworkDetails/Components/ArtworkDetailsForm"
 import { ContactInformationFormModel } from "../ContactInformation/Components/ContactInformationForm"
 import { UploadPhotosFormModel } from "../UploadPhotos/Components/UploadPhotosForm"
 
 const logger = createLogger("getSubmissionFromSessionStorage.ts")
 
 export interface SubmissionModel {
-  artistId: string
-  uploadPhotosForm: UploadPhotosFormModel
-  contactInformationForm: ContactInformationFormModel
+  artworkDetailsForm: ArtworkDetailsFormModel
+  uploadPhotosForm?: UploadPhotosFormModel
+  contactInformationForm?: ContactInformationFormModel
 }
 
 export const getSubmissionKey = (id: string) => `submission-${id}`

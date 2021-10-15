@@ -9,6 +9,7 @@ import {
 import { useRouter } from "v2/System/Router/useRouter"
 import uuid from "uuid"
 import * as Yup from "yup"
+import { saveSubmission } from "../Utils/submissionUtils"
 
 const ArtworkDetailsSchema = Yup.object().shape({
   artistId: Yup.string().label("Artist").required(),
@@ -17,7 +18,7 @@ const ArtworkDetailsSchema = Yup.object().shape({
   medium: Yup.string().required(),
   rarity: Yup.string().required(),
   editionNumber: Yup.string(),
-  editionSize: Yup.string(),
+  editionSize: Yup.number(),
   height: Yup.number().positive().required(),
   width: Yup.number().positive().required(),
   depth: Yup.number().positive(),
@@ -32,7 +33,7 @@ export const initialValues = {
   medium: "",
   rarity: "",
   editionNumber: "",
-  editionSize: "",
+  editionSize: undefined,
   height: "",
   width: "",
   depth: "",
@@ -52,16 +53,13 @@ export const ArtworkDetails: FC = () => {
 
     const isLimitedEditionRarity = values.rarity === "limited edition"
 
-    sessionStorage.setItem(
-      `submission-${submissionId}`,
-      JSON.stringify({
-        artworkDetailsForm: {
-          ...values,
-          editionNumber: isLimitedEditionRarity ? values.editionNumber : "",
-          editionSize: isLimitedEditionRarity ? values.editionSize : "",
-        },
-      })
-    )
+    saveSubmission(submissionId, {
+      artworkDetailsForm: {
+        ...values,
+        editionNumber: isLimitedEditionRarity ? values.editionNumber : "",
+        editionSize: isLimitedEditionRarity ? values.editionSize : undefined,
+      },
+    })
 
     router.replace({
       pathname: `/consign/submission2/${submissionId}/artwork-details`,
