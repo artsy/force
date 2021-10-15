@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from "react"
+import React, { FC, useEffect, useState } from "react"
 import {
   Box,
   Column,
@@ -10,13 +10,14 @@ import {
   RadioGroup,
   Radio,
   LabeledInput,
-  InfoCircleIcon,
+  Clickable,
 } from "@artsy/palette"
 import { useFormikContext } from "formik"
 import { hardcodedMediums } from "v2/Components/ArtworkFilter/ArtworkFilters/MediumFilter"
 import { checkboxValues } from "v2/Components/ArtworkFilter/ArtworkFilters/AttributionClassFilter"
 import { ArtistAutosuggest } from "./ArtistAutosuggest"
 import { useRouter } from "v2/System/Router/useRouter"
+import { ArtworkSidebarClassificationsModalQueryRenderer } from "v2/Apps/Artwork/Components/ArtworkSidebarClassificationsModal"
 
 const rarityOptions = checkboxValues.map(({ name, value }) => ({
   text: name,
@@ -57,6 +58,8 @@ export const ArtworkDetailsForm: FC = () => {
     },
   } = useRouter()
 
+  const [rarityModal, setRarityModal] = useState<boolean>(false)
+
   const {
     values,
     handleChange,
@@ -76,6 +79,10 @@ export const ArtworkDetailsForm: FC = () => {
 
   return (
     <>
+      <ArtworkSidebarClassificationsModalQueryRenderer
+        onClose={() => setRarityModal(false)}
+        show={rarityModal}
+      />
       <GridColumns>
         <Column span={6}>
           <ArtistAutosuggest />
@@ -125,7 +132,14 @@ export const ArtworkDetailsForm: FC = () => {
             <Text variant="xs" mb={0.5} textTransform="uppercase">
               Rarity
             </Text>
-            <InfoCircleIcon />
+            <Clickable
+              onClick={() => setRarityModal(true)}
+              data-test-id="open-rarity-modal"
+            >
+              <Text variant="xs" color="black60">
+                What is this?
+              </Text>
+            </Clickable>
           </Flex>
           <Select
             name="rarity"
