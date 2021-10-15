@@ -14,61 +14,79 @@ import { clientDevelopmentConfig } from "./envs/clientDevelopmentConfig"
 import { clientProductionConfig } from "./envs/clientProductionConfig"
 import { serverConfig } from "./envs/serverConfig"
 
-function getServerConfig() {
+const logEnv = () =>
   console.log(chalk.green(`\n[Force] NODE_ENV=${env.nodeEnv} \n`))
 
-  switch (true) {
-    case env.isDevelopment || env.isProduction:
-      console.log("[Force Server] Building server-side code...")
-      return serverConfig
+function getClientConfig() {
+  if (env.isDevelopment) {
+    console.log("[Force] Building client-side development code...")
+    return clientDevelopmentConfig
+  }
+  if (env.isProduction) {
+    console.log("[Force] Building client-side production code...")
+    return clientProductionConfig
+  }
+
+  throw new Error(`[Force] Unsupported environment ${env.nodeEnv}`)
+}
+
+function getServerConfig() {
+  logEnv()
+
+  if (env.isDevelopment || env.isProduction) {
+    console.log("[Force Server] Building server-side code...")
+    return serverConfig
   }
 
   throw new Error(`[Force Server] Unsupported environment ${env.nodeEnv}`)
 }
 
 function getLegacyConfig() {
-  console.log(chalk.green(`\n[Force] NODE_ENV=${env.nodeEnv} \n`))
+  logEnv()
 
-  switch (true) {
-    case env.isDevelopment:
-      const cacheDirectory = path.resolve(basePath, ".cache")
+  if (env.isDevelopment) {
+    const cacheDirectory = path.resolve(basePath, ".cache")
 
-      if (!env.onCi && !fs.existsSync(cacheDirectory)) {
-        console.log(
-          chalk.yellow(
-            "\n[!] No existing `.cache` directory detected, initial " +
-              "launch will take a while.\n"
-          )
-        )
-      }
-
-      return merge.smart(legacyCommonConfig, legacyDevelopmentConfig)
-
-    case env.isProduction:
+    if (!env.onCi && !fs.existsSync(cacheDirectory)) {
       console.log(
-        "[Force Client] Building legacy client-side production code..."
+        chalk.yellow(
+          "\n[!] No existing `.cache` directory detected, initial " +
+            "launch will take a while.\n"
+        )
       )
-      return merge.smart(legacyCommonConfig, legacyProductionConfig)
+    }
+
+    return merge.smart(legacyCommonConfig, legacyDevelopmentConfig)
+  }
+
+  if (env.isProduction) {
+    console.log("[Force Client] Building legacy client-side production code...")
+    return merge.smart(legacyCommonConfig, legacyProductionConfig)
   }
 
   throw new Error(`[Force Client] Unsupported environment ${env.nodeEnv}`)
 }
 
-function getClientConfig() {
-  switch (true) {
-    case env.isDevelopment:
-      console.log("[Force] Building client-side development code...")
+// TODO: This should eventually replace `getProductionConfig` below
+// Currently used only in dev.ts
+export function getDevelopmentWebpackConfig(configName) {
+  switch (configName) {
+    case "client.dev":
       return clientDevelopmentConfig
-
-    case env.isProduction:
-      console.log("[Force] Building client-side production code...")
+    case "client.prod":
       return clientProductionConfig
+    case "legacy.dev":
+      return merge.smart(legacyCommonConfig, legacyDevelopmentConfig)
+    case "legacy.prod":
+      return merge.smart(legacyCommonConfig, legacyProductionConfig)
+    case "server.dev":
+      return serverConfig
+    case "server.prod":
+      return serverConfig
   }
-
-  throw new Error(`[Force] Unsupported environment ${env.nodeEnv}`)
 }
 
-function generateEnvBasedConfig() {
+function getProductionWebpackConfig() {
   if (env.isDevelopment) {
     return {}
   }
@@ -104,7 +122,6 @@ function generateEnvBasedConfig() {
 
   // Optionally analyze the bundle
   config = bundleAnalyzer(config)
-
   // Add datadog metrics
   config = metrics(config, name)
 
@@ -120,23 +137,6 @@ function generateEnvBasedConfig() {
   return config
 }
 
-// Currently used only in dev.ts
-export function createConfig(config, _options) {
-  if (config === "client.dev") {
-    return clientDevelopmentConfig
-  } else if (config === "client.prod") {
-    return clientProductionConfig
-  } else if (config === "legacy.dev") {
-    return merge.smart(legacyCommonConfig, legacyDevelopmentConfig)
-  } else if (config === "legacy.prod") {
-    return merge.smart(legacyCommonConfig, legacyProductionConfig)
-  } else if (config === "server.dev") {
-    return serverConfig
-  } else if (config === "server.prod") {
-    return serverConfig
-  }
-}
-
 // Currently only used for prod
-const webpackConfig = generateEnvBasedConfig()
-export default webpackConfig
+const productionWebpackConfig = getProductionWebpackConfig()
+export default productionWebpackConfig

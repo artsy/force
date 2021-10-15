@@ -2,35 +2,30 @@
 
 import LoadablePlugin from "@loadable/webpack-plugin"
 import path from "path"
+
 import { basePath, env } from "../utils/env"
-import {
-  clientExternals,
-  standardDevtool,
-  standardMode,
-  standardResolve,
-  standardStats,
-} from "./commonEnv"
+import { sharedPlugins } from "./sharedPlugins"
+
+import { externals, devtool, mode, resolve, stats } from "./sharedConfig"
+
 import {
   babelLoader,
   coffeeLoader,
   jadeLoader,
   mjsLoader,
-} from "./commonLoaders"
-
-import { standardPlugins } from "./commonPlugins"
+} from "./sharedLoaders"
 
 export const legacyCommonConfig = {
-  devtool: standardDevtool,
-  externals: clientExternals,
-  mode: standardMode,
+  devtool,
+  externals,
+  mode,
   module: {
     rules: [coffeeLoader, jadeLoader, babelLoader, mjsLoader],
   },
   optimization: {
-    // Extract webpack runtime code into it's own file
     concatenateModules: env.webpackConcatenate,
     runtimeChunk: {
-      name: "legacy-runtime",
+      name: "legacy-runtime", // Extract webpack runtime code into it's own file
     },
     splitChunks: {
       maxInitialRequests: Infinity,
@@ -106,7 +101,7 @@ export const legacyCommonConfig = {
     path: path.resolve(basePath, "public/assets"),
     publicPath: "/assets/",
   },
-  plugins: [...standardPlugins, new LoadablePlugin()],
-  resolve: standardResolve,
-  stats: standardStats,
+  plugins: [...sharedPlugins, new LoadablePlugin()],
+  resolve,
+  stats,
 }

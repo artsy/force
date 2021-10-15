@@ -4,16 +4,13 @@ import path from "path"
 import TerserPlugin from "terser-webpack-plugin"
 import { basePath, env } from "../utils/env"
 
-export const standardDevtool = env.webpackDevtool || "eval"
-
+export const devtool = env.webpackDevtool || "eval"
 export const productionDevtool = env.webpackDevtool || "source-map"
-
-export const standardMode = env.webpackDebug ? "development" : env.nodeEnv
-
-export const standardStats = env.webpackStats || "errors-only"
+export const mode = env.webpackDebug ? "development" : env.nodeEnv
+export const stats = env.webpackStats || "errors-only"
 
 // The standard minimization config to production.
-export const standardMinimizer = [
+export const minimizer = [
   new TerserPlugin({
     cache: false,
     parallel: env.onCi ? env.webpackCiCpuLimit : true, // Only use 4 cpus (default) in CircleCI, by default it will try using 36 and OOM
@@ -22,7 +19,7 @@ export const standardMinimizer = [
 ]
 
 // The standard resolve configuration used everywhere.
-export const standardResolve = {
+export const resolve = {
   alias: {
     "jquery.ui.widget": "blueimp-file-upload/js/vendor/jquery.ui.widget.js",
 
@@ -48,7 +45,7 @@ export const standardResolve = {
   symlinks: false,
 }
 
-export const clientExternals = {
+export const externals = {
   // Required because the cacheMiddleware include redis
   redis: "redis",
   // TODO: Needs research to determine if if this is still required
