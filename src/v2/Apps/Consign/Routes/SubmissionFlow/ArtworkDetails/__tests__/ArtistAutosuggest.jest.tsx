@@ -4,6 +4,7 @@ import { ArtworkDetailsFormModel } from "../Components/ArtworkDetailsForm"
 import { ArtistAutosuggest } from "../Components/ArtistAutosuggest"
 import { Formik } from "formik"
 import { initialValues } from "../ArtworkDetails"
+import { Input } from "@artsy/palette"
 
 const renderArtistAutosuggest = (values: ArtworkDetailsFormModel) =>
   mount(
@@ -17,9 +18,9 @@ describe("ArtistAutosuggest", () => {
   beforeEach(() => (wrapper = renderArtistAutosuggest(initialValues)))
 
   it("renders correctly", () => {
-    const input = wrapper.find("input[name='artist']")
+    const input = wrapper.find(Input)
     expect(wrapper.find(ArtistAutosuggest)).toBeTruthy()
-    expect(input).toBeTruthy()
     expect(input.prop("placeholder")).toBe("Enter Full Name")
+    expect(input.prop("title")).toBe("Artist")
   })
 })

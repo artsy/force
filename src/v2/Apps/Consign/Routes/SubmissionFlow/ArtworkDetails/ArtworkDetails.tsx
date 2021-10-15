@@ -11,7 +11,7 @@ import uuid from "uuid"
 import * as Yup from "yup"
 
 const ArtworkDetailsSchema = Yup.object().shape({
-  artist: Yup.string().label("Artist").required(),
+  artistId: Yup.string().label("Artist").required(),
   year: Yup.string().required(),
   title: Yup.string().required(),
   medium: Yup.string().required(),
@@ -25,7 +25,8 @@ const ArtworkDetailsSchema = Yup.object().shape({
 })
 
 export const initialValues = {
-  artist: "",
+  artistId: "",
+  artistName: "",
   year: "",
   title: "",
   medium: "",
@@ -46,12 +47,20 @@ export const ArtworkDetails: FC = () => {
     },
   } = useRouter()
 
-  const handleSubmit = () => {
+  const handleSubmit = (values: ArtworkDetailsFormModel) => {
     const submissionId = id ? id : uuid()
+
+    const isLimitedEditionRarity = values.rarity === "limited edition"
 
     sessionStorage.setItem(
       `submission-${submissionId}`,
-      JSON.stringify({ artistId: "4d8b92b34eb68a1b2c0003f4" })
+      JSON.stringify({
+        artworkDetailsForm: {
+          ...values,
+          editionNumber: isLimitedEditionRarity ? values.editionNumber : "",
+          editionSize: isLimitedEditionRarity ? values.editionSize : "",
+        },
+      })
     )
 
     router.replace({
