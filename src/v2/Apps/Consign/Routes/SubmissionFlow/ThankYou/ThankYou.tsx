@@ -41,13 +41,18 @@ export const ThankYou: FC = () => {
 
       <Flex py={[2, 4]} mt={4}>
         <Button
+          data-test-id="submit-another-work"
           size="medium"
           variant="primaryBlack"
           onClick={submitAnotherWork}
         >
           Submit Another Work
         </Button>
-        <Clickable ml={150} onClick={goToArtsyHomePage}>
+        <Clickable
+          ml={150}
+          onClick={goToArtsyHomePage}
+          data-test-id="go-to-artsy-homepage"
+        >
           <Text variant="xs">
             <u>Back to Artsy Homepage</u>
           </Text>
