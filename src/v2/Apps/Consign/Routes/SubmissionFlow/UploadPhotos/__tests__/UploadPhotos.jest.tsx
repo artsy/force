@@ -35,8 +35,8 @@ Object.defineProperty(window, "sessionStorage", {
   },
 })
 
-jest.mock("../../Utils/FileUtils", () => ({
-  ...jest.requireActual("../../Utils/FileUtils"),
+jest.mock("../../Utils/fileUtils", () => ({
+  ...jest.requireActual("../../Utils/fileUtils"),
   uploadPhoto: jest
     .fn()
     .mockImplementation(async (relayEnvironment, photo, updateProgress) => {
