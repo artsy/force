@@ -171,7 +171,19 @@ jobs:
     working_directory: /usr/src/app
     steps:
       - checkout
-      - run: detect-secrets-hook --baseline .secrets.baseline $(git ls-files)
+      - run: |
+            cp .secrets.baseline /tmp/.secrets.baseline
+            set +e && set +o pipefail
+            detect-secrets-hook --baseline .secrets.baseline $(git ls-files)
+            code=$?
+            if [[ $code -ne 3 ]]; then
+              exit $code
+            else
+              lines=$(diff -y --suppress-common-lines .secrets.baseline /tmp/.secrets.baseline | wc -l)
+              [ $lines -eq 1 ] && git restore .secrets.baseline && exit 0
+              echo "changes to baseline results need to be committed."
+              exit $code
+            fi
 
 not_master_or_staging_or_release: &not_master_or_staging_or_release
   filters:
