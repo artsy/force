@@ -29,6 +29,7 @@ import {
 } from "v2/Apps/Order/Utils/commitMutation"
 import { AnalyticsSchema, track } from "v2/System"
 import { BuyerGuarantee } from "../../Components/BuyerGuarantee"
+import { ContextModule, OwnerType } from "@artsy/cohesion"
 
 export const ContinueButton = props => (
   <Button variant="primaryBlack" width="100%" {...props}>
@@ -152,7 +153,10 @@ export class PaymentRoute extends Component<
                 <ArtworkSummaryItem order={order} />
                 <TransactionDetailsSummaryItem order={order} />
               </Flex>
-              <BuyerGuarantee />
+              <BuyerGuarantee
+                contextModule={ContextModule.ordersPayment}
+                contextPageOwnerType={OwnerType.ordersPayment}
+              />
               <Spacer mb={[2, 4]} />
               <Media at="xs">
                 <>

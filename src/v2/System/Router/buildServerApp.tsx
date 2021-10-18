@@ -55,17 +55,30 @@ export interface ServerRouterConfig extends RouterConfig {
   context?: {
     injectedData?: any
   }
+  /* For loadable-components bundle splitting */
+  loadableFile?: string
+  loadablePath?: string
+  assetsPath?: string
 }
 
 export function buildServerApp(
-  config: ServerRouterConfig,
-  loadableFile: string = "loadable-stats.json",
-  loadablePath: string = "public/assets",
-  assetsPath: string = "/assets"
+  config: ServerRouterConfig
 ): Promise<ServerAppResolve> {
   return new Promise(async (resolve, reject) => {
     try {
-      const { context = {}, routes = [], res, req } = config
+      const {
+        context = {},
+        routes = [],
+        res,
+        req,
+        // FIXME: We don't, and wont, bundle split legacy code. Can remove this
+        // configuration once desktop/apps/art_keeps_going and auction_reaction
+        // are deleted from the codebase.
+        loadableFile = "loadable-stats.json",
+        loadablePath = "public/assets",
+        assetsPath = "/assets",
+      } = config
+
       const serverContext = buildServerAppContext(req, res, context)
       const userAgent = req.header("User-Agent")
       const user = getUser(serverContext.user)

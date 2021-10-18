@@ -1,5 +1,5 @@
-import { AssetCredentials } from "../Mutations/Gemini/getGeminiCredentialsForEnvironment"
-import { Photo } from "./FileUtils"
+import { AssetCredentials } from "../Mutations"
+import { Photo } from "./fileUtils"
 
 export const uploadFileToS3 = (
   photo: Photo,
@@ -10,6 +10,11 @@ export const uploadFileToS3 = (
   new Promise((resolve, reject) => {
     if (!asset) {
       reject(new Error("Empty credentials"))
+      return
+    }
+
+    if (!photo.file) {
+      reject(new Error("File not found"))
       return
     }
 
@@ -36,6 +41,7 @@ export const uploadFileToS3 = (
       }
     }
 
+    const key = `${geminiKey}/${photo.file.name}`
     const request = new XMLHttpRequest()
 
     request.onload = () => {
@@ -44,11 +50,8 @@ export const uploadFileToS3 = (
         asset.policyDocument.conditions.successActionStatus
       ) {
         photo.abortUploading = undefined
-        // e.g. https://artsy-media-uploads.s3.amazonaws.com/A3tfuXp0t5OuUKv07XaBOw%2F%24%7Bfilename%7D
-        const url = request.responseXML?.getElementsByTagName("Location")[0]
-          .childNodes[0].nodeValue
 
-        resolve(url?.split("/").pop()?.replace("%2F", "/"))
+        resolve(key)
       } else {
         reject(new Error("S3 upload failed"))
       }
@@ -60,6 +63,7 @@ export const uploadFileToS3 = (
     request.open("POST", uploadURL, true)
     request.send(formData)
 
+    photo.bucket = bucket
     photo.abortUploading = () => {
       request.abort()
     }

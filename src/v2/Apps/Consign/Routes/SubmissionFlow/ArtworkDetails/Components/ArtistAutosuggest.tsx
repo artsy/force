@@ -1,4 +1,4 @@
-import React, { FC, useState, useCallback } from "react"
+import React, { FC, useState, useEffect } from "react"
 import { fetchQuery, graphql } from "react-relay"
 import RelayModernEnvironment from "relay-runtime/lib/store/RelayModernEnvironment"
 import { useSystemContext } from "v2/System"
@@ -25,26 +25,38 @@ type Suggestion =
 type Suggestions = readonly Suggestion[] | undefined | null
 
 export const ArtistAutosuggest: FC = () => {
-  const { values, handleChange, setFieldValue } = useFormikContext<
-    ArtworkDetailsFormModel
-  >()
+  const {
+    values,
+    setFieldValue,
+    errors,
+    touched,
+    handleBlur,
+  } = useFormikContext<ArtworkDetailsFormModel>()
   const [suggestions, setSuggestions] = useState<Suggestions>([])
+  const [searchString, setSearchString] = useState<string>("")
   const { relayEnvironment } = useSystemContext()
 
-  const updateSuggestions = useCallback(async () => {
+  useEffect(() => {
+    if (values.artistName !== searchString) {
+      setSearchString(values.artistName)
+    }
+  }, [values.artistName])
+
+  const updateSuggestions = async (value: string) => {
     setSuggestions([])
-    if (values.artist.length >= 3 && relayEnvironment) {
-      const suggestions = await fetchSuggestions(
-        values.artist,
-        relayEnvironment
-      )
+    if (value.length >= 3 && relayEnvironment) {
+      const suggestions = await fetchSuggestions(value, relayEnvironment)
       setSuggestions(suggestions)
     }
-  }, [relayEnvironment, values.artist])
+  }
 
   const inputProps = {
-    onChange: handleChange,
-    value: values.artist,
+    onChange: (e, { newValue }) => {
+      setSearchString(newValue)
+    },
+    onBlur: handleBlur,
+    value: searchString,
+    error: touched.artistId && errors.artistId,
   }
 
   return (
@@ -53,9 +65,13 @@ export const ArtistAutosuggest: FC = () => {
       onSuggestionsClearRequested={() => {
         setSuggestions([])
       }}
-      onSuggestionsFetchRequested={updateSuggestions}
-      onSuggestionSelected={(_, { suggestionValue }) => {
-        setFieldValue("artist", suggestionValue)
+      onSuggestionsFetchRequested={({ value }) => {
+        updateSuggestions(value)
+      }}
+      onSuggestionSelected={(e: Event, { suggestion, suggestionValue }) => {
+        e.preventDefault()
+        setFieldValue("artistId", suggestion.node.internalID)
+        setFieldValue("artistName", suggestionValue)
       }}
       getSuggestionValue={suggestion => suggestion.node.displayLabel}
       renderInputComponent={AutosuggestInput}
@@ -63,14 +79,8 @@ export const ArtistAutosuggest: FC = () => {
       renderSuggestionsContainer={SuggestionsContainer}
       inputProps={inputProps}
       theme={{
-        container: {
-          width: "100%",
-          position: "relative",
-        },
-        suggestionsContainer: {
-          boxShadow: DROP_SHADOW,
-          marginTop: "4px",
-        },
+        container: { width: "100%", position: "relative" },
+        suggestionsContainer: { boxShadow: DROP_SHADOW, marginTop: "4px" },
       }}
     />
   )
@@ -134,7 +144,6 @@ const AutosuggestInput: FC = props => {
     <Input
       title="Artist"
       placeholder="Enter Full Name"
-      name="artist"
       spellCheck={false}
       {...props}
     />

@@ -10,7 +10,6 @@ import qs from "qs"
 import React, { useState } from "react"
 import { useTracking } from "react-tracking"
 import { useAuctionResultsFilterContext } from "v2/Apps/Artist/Routes/AuctionResults/AuctionResultsFilterContext"
-import { auctionHouseMap } from "v2/Apps/Artist/Routes/AuctionResults/Components/AuctionFilters/AuctionHouseFilter"
 import { categoryMap } from "v2/Apps/Artist/Routes/AuctionResults/Components/AuctionFilters/MediumFilter"
 import { sizeMap } from "v2/Apps/Artist/Routes/AuctionResults/Components/AuctionFilters/SizeFilter"
 import { paramsToSnakeCase } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
@@ -20,7 +19,7 @@ import { filterSearchFilters } from "../Utils/filterSearchFilters"
 import { PriceDatabaseArtistAutosuggest } from "./PriceDatabaseArtistAutosuggest"
 import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
 
-const ALLOWED_FILTERS = ["categories", "sizes", "organizations"]
+const ALLOWED_FILTERS = ["categories", "sizes"]
 
 const mapMapToOptions = map => {
   return map.map(element => {
@@ -30,7 +29,6 @@ const mapMapToOptions = map => {
 
 const categoryOptions = mapMapToOptions(categoryMap)
 const sizeOptions = mapMapToOptions(sizeMap)
-const organizationOptions = mapMapToOptions(auctionHouseMap)
 
 export const PriceDatabaseSearch: React.FC = () => {
   const { router } = useRouter()
@@ -119,7 +117,7 @@ export const PriceDatabaseSearch: React.FC = () => {
               }}
             />
           </Column>
-          <Column span={4} pb={[0, 4]}>
+          <Column span={4} start={3} pb={[0, 4]}>
             <MultiSelect
               options={categoryOptions}
               onSelect={handleFilterSelect("categories")}
@@ -131,13 +129,6 @@ export const PriceDatabaseSearch: React.FC = () => {
               options={sizeOptions}
               name="Size"
               onSelect={handleFilterSelect("sizes")}
-            />
-          </Column>
-          <Column span={4} pb={[0, 4]}>
-            <MultiSelect
-              options={organizationOptions}
-              name="Auction Houses"
-              onSelect={handleFilterSelect("organizations")}
             />
           </Column>
         </GridColumns>

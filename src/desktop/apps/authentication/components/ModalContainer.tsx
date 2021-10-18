@@ -8,7 +8,7 @@ import {
   successfullyLoggedIn,
 } from "@artsy/cohesion"
 import { handleSubmit, setCookies } from "../helpers"
-import { ModalManager } from "v2/Components/Authentication/Desktop/ModalManager"
+import { ModalManager } from "v2/Components/Authentication/ModalManager"
 import { ModalOptions, ModalType } from "v2/Components/Authentication/Types"
 import { mediator } from "lib/mediator"
 

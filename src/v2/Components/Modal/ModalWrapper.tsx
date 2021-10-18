@@ -22,6 +22,7 @@ export interface ModalWrapperProps extends React.HTMLProps<ModalWrapper> {
   image?: string
   show?: boolean
   disableCloseOnBackgroundClick?: boolean
+  theme?: "v2" | "v3"
 }
 
 export interface ModalWrapperState {
@@ -125,7 +126,13 @@ export class ModalWrapper extends React.Component<
   }
 
   render(): JSX.Element {
-    const { children, width, fullscreenResponsiveModal, image } = this.props
+    const {
+      children,
+      width,
+      fullscreenResponsiveModal,
+      image,
+      theme,
+    } = this.props
     const { isShown, isAnimating } = this.state
     const { width: viewportWidth } = getViewportDimensions()
 
@@ -136,7 +143,7 @@ export class ModalWrapper extends React.Component<
     }
 
     return (
-      <Theme>
+      <Theme theme={theme}>
         <Wrapper isShown={isShown || isAnimating}>
           <GlobalStyle suppressMultiMountWarning />
           {isShown && (

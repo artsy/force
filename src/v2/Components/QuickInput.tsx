@@ -26,7 +26,7 @@ export interface QuickInputState {
 
 /**
  * Quick input. Renders the label inside of the textbox.
- *
+ * @deprecated
  */
 export class QuickInput extends React.Component<
   QuickInputProps,

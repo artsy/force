@@ -1,4 +1,4 @@
-import React, { FC } from "react"
+import React, { FC, useEffect, useState } from "react"
 import {
   Box,
   Column,
@@ -10,12 +10,13 @@ import {
   RadioGroup,
   Radio,
   LabeledInput,
-  InfoCircleIcon,
+  Clickable,
 } from "@artsy/palette"
 import { useFormikContext } from "formik"
-import { hardcodedMediums } from "v2/Components/ArtworkFilter/ArtworkFilters/MediumFilter"
 import { checkboxValues } from "v2/Components/ArtworkFilter/ArtworkFilters/AttributionClassFilter"
 import { ArtistAutosuggest } from "./ArtistAutosuggest"
+import { useRouter } from "v2/System/Router/useRouter"
+import { ArtworkSidebarClassificationsModalQueryRenderer } from "v2/Apps/Artwork/Components/ArtworkSidebarClassificationsModal"
 
 const rarityOptions = checkboxValues.map(({ name, value }) => ({
   text: name,
@@ -27,35 +28,79 @@ rarityOptions.unshift({
   value: "default",
 })
 
-const mediumOptions = hardcodedMediums.map(({ name, value }) => ({
-  text: name,
-  value,
-}))
+const mediumOptions = [
+  { text: "Painting", value: "PAINTING" },
+  { text: "Sculpture", value: "SCULPTURE" },
+  { text: "Photography", value: "PHOTOGRAPHY" },
+  { text: "Print", value: "PRINT" },
+  {
+    text: "Drawing, Collage or other Work on Paper",
+    value: "DRAWING_COLLAGE_OR_OTHER_WORK_ON_PAPER",
+  },
+  { text: "Mixed Media", value: "MIXED_MEDIA" },
+  { text: "Performance Art", value: "PERFORMANCE_ART" },
+  { text: "Installation", value: "INSTALLATION" },
+  { text: "Video/Film/Animation", value: "VIDEO_FILM_ANIMATION" },
+  { text: "Architecture", value: "ARCHITECTURE" },
+  {
+    text: "Fashion Design and Wearable Art",
+    value: "FASHION_DESIGN_AND_WEARABLE_ART",
+  },
+  { text: "Jewelry", value: "JEWELRY" },
+  { text: "Design/Decorative Art", value: "DESIGN_DECORATIVE_ART" },
+  { text: "Textile Arts", value: "TEXTILE_ARTS" },
+  { text: "Other", value: "OTHER" },
+]
 
 mediumOptions.unshift({ text: "Painting, Print, Sculpture…", value: "default" })
 
 export interface ArtworkDetailsFormModel {
-  artist: string
+  artistName: string
+  artistId: string
   year: string
   title: string
   medium: string
   rarity: string
   editionNumber: string
-  editionSize: string
-  heigth: string
+  editionSize?: number
+  height: string
   width: string
   depth: string
   units: string
 }
 
 export const ArtworkDetailsForm: FC = () => {
-  const { values, handleChange, setFieldValue } = useFormikContext<
-    ArtworkDetailsFormModel
-  >()
-  const uniqueRarity = values.rarity === "unique"
+  const {
+    match: {
+      params: { id },
+    },
+  } = useRouter()
+
+  const [isRarityModalOpen, setIsRarityModalOpen] = useState<boolean>(false)
+
+  const {
+    values,
+    handleChange,
+    setFieldValue,
+    handleBlur,
+    setValues,
+  } = useFormikContext<ArtworkDetailsFormModel>()
+
+  const limitedEditionRarity = values.rarity === "limited edition"
+
+  useEffect(() => {
+    if (id) {
+      const formValues = sessionStorage.getItem(`submission-${id}`)
+      formValues && setValues(JSON.parse(formValues).artworkDetailsForm, true)
+    }
+  }, [])
 
   return (
     <>
+      <ArtworkSidebarClassificationsModalQueryRenderer
+        onClose={() => setIsRarityModalOpen(false)}
+        show={isRarityModalOpen}
+      />
       <GridColumns>
         <Column span={6}>
           <ArtistAutosuggest />
@@ -65,22 +110,25 @@ export const ArtworkDetailsForm: FC = () => {
             title="year"
             placeholder="YYYY"
             name="year"
+            onBlur={handleBlur}
             onChange={handleChange}
-            value={values.year || ""}
+            value={values.year}
           />
         </Column>
       </GridColumns>
-      <GridColumns mt={[2, 4]}>
+      <GridColumns mt={[1, 2]}>
         <Column span={6}>
           <Input
             title="Title"
             placeholder="Add Title or Write 'Unknown'"
             name="title"
+            maxLength={256}
+            onBlur={handleBlur}
             onChange={handleChange}
-            value={values.title || ""}
+            value={values.title}
           />
         </Column>
-        <Column span={6} mt={[2, 0]}>
+        <Column span={6} mt={[1, 0]}>
           <Text variant="xs" mb={0.5} textTransform="uppercase">
             Medium
           </Text>
@@ -88,73 +136,102 @@ export const ArtworkDetailsForm: FC = () => {
             name="medium"
             options={mediumOptions}
             selected={values.medium}
+            onBlur={handleBlur}
+            onChange={handleChange}
             onSelect={selected => {
               setFieldValue("medium", selected)
             }}
           />
         </Column>
       </GridColumns>
-      <GridColumns mt={[2, 4]}>
+      <GridColumns mt={[1, 2]}>
         <Column span={6}>
           <Flex justifyContent="space-between">
             <Text variant="xs" mb={0.5} textTransform="uppercase">
               Rarity
             </Text>
-            <InfoCircleIcon />
+            <Clickable
+              onClick={() => setIsRarityModalOpen(true)}
+              data-test-id="open-rarity-modal"
+            >
+              <Text variant="xs" color="black60">
+                <u>What is this?</u>
+              </Text>
+            </Clickable>
           </Flex>
           <Select
             name="rarity"
             options={rarityOptions}
             selected={values.rarity}
+            onBlur={handleBlur}
+            onChange={handleChange}
             onSelect={selected => {
               setFieldValue("rarity", selected)
             }}
           />
         </Column>
         <Column span={6}>
-          {!uniqueRarity && (
-            <Flex alignItems="center" mt={[2, 0]}>
+          {limitedEditionRarity && (
+            <Flex alignItems="center" mt={[1, 0]}>
               <Input
                 title="Edition Number"
                 placeholder="Your Work's #"
                 name="editionNumber"
+                onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.editionNumber || ""}
+                value={values.editionNumber}
               />
               <Box paddingX={[0.5, 2]} mt={2}>
                 /
               </Box>
               <Input
+                type="number"
+                onKeyDown={e =>
+                  (e.key === "." || e.key === ",") && e.preventDefault()
+                }
                 title="Edition Size"
                 placeholder="Total # in Edition"
                 name="editionSize"
+                onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.editionSize || ""}
+                value={values.editionSize}
               />
             </Flex>
           )}
         </Column>
       </GridColumns>
-      <GridColumns mt={[2, 4]}>
+      <GridColumns mt={[1, 2]}>
         <Column span={6}>
-          <Flex alignItems="center">
-            <Box width="50%" mr={2}>
+          <Flex height="100%">
+            <Box width="50%" mr={2} height="100%">
               <Text variant="xs" mb={0.5} mr={0.5} textTransform="uppercase">
                 Height
               </Text>
-              <LabeledInput label={values.units} name="height" />
+              <LabeledInput
+                label={values.units}
+                name="height"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                value={values.height}
+              />
             </Box>
-            <Box width="50%">
+            <Box width="50%" height="100%">
               <Text variant="xs" mb={0.5} mr={0.5} textTransform="uppercase">
                 Width
               </Text>
-              <LabeledInput label={values.units} name="width" />
+              <LabeledInput
+                label={values.units}
+                name="width"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                value={values.width}
+              />
             </Box>
           </Flex>
         </Column>
-        <Column span={6} mt={[2, 0]}>
-          <Flex alignItems="center">
-            <Box pr={[0, 1]} width="50%">
+        <Column span={6} mt={[1, 0]}>
+          <Flex height="100%">
+            <Box pr={[0, 1]} width="50%" height="100%">
               <Flex>
                 <Text variant="xs" mb={0.5} mr={0.5} textTransform="uppercase">
                   Depth
@@ -166,8 +243,9 @@ export const ArtworkDetailsForm: FC = () => {
               <LabeledInput
                 label={values.units}
                 name="depth"
+                onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.depth || ""}
+                value={values.depth}
               />
             </Box>
             <RadioGroup

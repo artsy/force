@@ -9,10 +9,9 @@ import {
 import { useSystemContext } from "v2/System/SystemContext"
 import { renderWithLoadProgress } from "v2/System/Relay/renderWithLoadProgress"
 import { Form, Formik, FormikProps } from "formik"
-import { Error } from "v2/Components/Authentication/commonElements"
 import { UserInformation_me } from "v2/__generated__/UserInformation_me.graphql"
 import { UserInformationQuery } from "v2/__generated__/UserInformationQuery.graphql"
-import { Box, Button, Serif, Text, space } from "@artsy/palette"
+import { Box, Button, Serif, Text, space, Banner } from "@artsy/palette"
 import { ChangeUserInformationValidator } from "v2/Components/Authentication/Validators"
 import { PasswordInput } from "v2/Components/PasswordInput"
 import type { SystemContextProps } from "@artsy/reaction/dist/Artsy"
@@ -156,7 +155,9 @@ export const UserInformation: React.FC<UserInformationProps> = ({
                 />
               </>
             )}
-            {status && !status.success && <Error show>{status.error}</Error>}
+            {status && !status.success && (
+              <Banner variant="error">{status.error}</Banner>
+            )}
             <Button
               type="submit"
               size="large"

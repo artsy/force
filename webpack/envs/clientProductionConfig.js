@@ -1,54 +1,49 @@
 // @ts-check
+import path from "path"
 
 import { HashedModuleIdsPlugin } from "webpack"
 import HtmlWebpackPlugin from "html-webpack-plugin"
 import LoadablePlugin from "@loadable/webpack-plugin"
-import path from "path"
 import WebpackManifestPlugin from "webpack-manifest-plugin"
+
 import { basePath, env } from "../utils/env"
+import { sharedPlugins } from "./sharedPlugins"
+import { splitChunks } from "./splitChunks"
+
 import {
-  babelLoaderWithLodashOptimization,
+  babelLoader,
   coffeeLoader,
   ejsLoader,
   jadeLoader,
   mjsLoader,
-} from "./commonLoaders"
+} from "./sharedLoaders"
+
 import {
-  clientExternals,
+  externals,
   productionDevtool,
-  standardMinimizer,
-  standardMode,
-  standardResolve,
-  standardStats,
-} from "./commonEnv"
-import { standardPlugins } from "./commonPlugins"
-import { clientPlugins } from "./clientPlugins"
-import { clientChunks } from "./clientCommonConfig"
+  minimizer,
+  mode,
+  resolve,
+  stats,
+} from "./sharedConfig"
 
 export const clientProductionConfig = {
   devtool: productionDevtool,
   entry: {
     "artsy-entry": [path.resolve(process.cwd(), "src/v2/client.tsx")],
   },
-  externals: clientExternals,
-  mode: standardMode,
+  externals,
+  mode,
   module: {
-    rules: [
-      coffeeLoader,
-      jadeLoader,
-      babelLoaderWithLodashOptimization,
-      ejsLoader,
-      mjsLoader,
-    ],
+    rules: [coffeeLoader, jadeLoader, babelLoader, ejsLoader, mjsLoader],
   },
   optimization: {
     concatenateModules: env.webpackConcatenate,
     minimize: !env.webpackDebug && !env.fastProductionBuild,
-    minimizer: standardMinimizer,
-    // Extract webpack runtime code into it's own file
-    runtimeChunk: "single",
-    splitChunks: clientChunks,
+    minimizer,
     moduleIds: "hashed",
+    runtimeChunk: "single", // Extract webpack runtime code into it's own file
+    splitChunks,
   },
   output: {
     filename: "[name].[contenthash].js",
@@ -56,8 +51,7 @@ export const clientProductionConfig = {
     publicPath: "/assets/",
   },
   plugins: [
-    ...standardPlugins,
-    ...clientPlugins,
+    ...sharedPlugins,
     new LoadablePlugin({
       filename: "loadable-novo-stats.json",
       path: path.resolve(basePath, "public", "assets"),
@@ -78,6 +72,6 @@ export const clientProductionConfig = {
       template: path.resolve(basePath, "src", "v2", "index.ejs"),
     }),
   ],
-  resolve: standardResolve,
-  stats: standardStats,
+  resolve,
+  stats,
 }

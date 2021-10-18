@@ -29,6 +29,7 @@ import { Media } from "v2/Utils/Responsive"
 import { OrderStepper, offerFlowSteps } from "../../Components/OrderStepper"
 import { BuyerGuarantee } from "../../Components/BuyerGuarantee"
 import { getOfferItemFromOrder } from "v2/Apps/Order/Utils/offerItemExtractor"
+import { ContextModule, OwnerType } from "@artsy/cohesion"
 
 export interface OfferProps {
   order: Offer_order
@@ -294,7 +295,10 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
                   }
                 />
               </Flex>
-              <BuyerGuarantee />
+              <BuyerGuarantee
+                contextModule={ContextModule.ordersOffer}
+                contextPageOwnerType={OwnerType.ordersOffer}
+              />
               <Spacer mb={[2, 4]} />
               <Media at="xs">
                 <>

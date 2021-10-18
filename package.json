@@ -22,6 +22,7 @@
     "cypress:run": "./node_modules/.bin/cypress run",
     "cypress": "./node_modules/.bin/cypress open",
     "delete-review-app": "kubectl --context staging delete namespace",
+    "detect-secrets": "scripts/detect-secrets.sh",
     "docker": "DOCKER_BUILDKIT=1; BUILDKIT_PROGRESS=plain; COMPOSE_DOCKER_CLI_BUILD=1; docker build .",
     "docker:builder": "yarn docker --target builder -t force:builder",
     "docker:electron": "yarn docker --target electron-runner -t force:electron",
@@ -37,7 +38,6 @@
     "publish-assets": "cd packages/publish && yarn && yarn publish-assets",
     "publish-assets:local": "yarn clean && yarn build:assets:legacy && yarn build:assets && yarn publish-assets",
     "relay": "relay-compiler",
-    "sentry": "scripts/sentry.sh",
     "sync-env": "aws s3 cp s3://artsy-citadel/dev/.env.force .env.shared && echo 'ENV sync complete.'",
     "start": "scripts/start.sh",
     "start:dev": "concurrently 'yarn start:dev:relay' 'yarn start:dev:server'",
@@ -50,7 +50,7 @@
     "sync-schema-local": "scripts/sync-schema-local.sh",
     "test": "concurrently 'yarn test:ci:jest:legacy' 'yarn test:ci:jest:v2' 'yarn test:ci:mocha'",
     "test:smoke": "scripts/smoke_test.sh",
-		"test:smoke:spec": "./node_modules/.bin/cypress run -s",
+    "test:smoke:spec": "./node_modules/.bin/cypress run -s",
     "test:ci:jest:legacy": "scripts/jest.sh legacy",
     "test:ci:jest:v2": "scripts/jest.sh v2",
     "test:ci:mocha": "NODE_ENV=test yarn mocha src/**/*.test.js src/**/*.test.ts",
@@ -82,9 +82,9 @@
     "@artsy/express-reloadable": "1.6.0",
     "@artsy/fresnel": "3.0.2",
     "@artsy/gemup": "0.1.0",
-    "@artsy/palette": "18.1.1",
-    "@artsy/palette-charts": "17.1.1",
-    "@artsy/passport": "3.4.0",
+    "@artsy/palette": "18.2.0",
+    "@artsy/palette-charts": "17.2.0",
+    "@artsy/passport": "3.5.0",
     "@artsy/reaction": "29.2.1",
     "@artsy/stitch": "6.4.0",
     "@artsy/to-title-case": "1.1.0",
@@ -265,7 +265,6 @@
     "@loadable/babel-plugin": "5.13.2",
     "@loadable/webpack-plugin": "5.14.0",
     "@pmmmwh/react-refresh-webpack-plugin": "0.4.3",
-    "@sentry/cli": "1.41.2",
     "@storybook/addon-actions": "6.3.7",
     "@storybook/addon-essentials": "6.3.7",
     "@storybook/addon-links": "6.3.7",
@@ -414,11 +413,12 @@
   "husky": {
     "hooks": {
       "post-merge": "sh scripts/pull-lock.sh",
-      "pre-commit": "lint-staged && scripts/detect-secrets.sh",
+      "pre-commit": "lint-staged",
       "pre-push": "yarn type-check"
     }
   },
   "lint-staged": {
+    "*": "yarn detect-secrets",
     "*.@(md)": [
       "yarn prettier-write"
     ],

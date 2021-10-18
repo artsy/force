@@ -3,47 +3,47 @@ import { FormSwitcher } from "v2/Components/Authentication/FormSwitcher"
 import { ModalOptions, ModalType } from "v2/Components/Authentication/Types"
 import { ModalHeader } from "v2/Components/Modal/ModalHeader"
 import { handleSubmit } from "../helpers"
-import { Box, Flex, FlexProps } from "@artsy/palette"
+import { Flex, FlexProps } from "@artsy/palette"
 
-interface Props extends FlexProps {
+interface AuthStaticProps extends FlexProps {
   type: ModalType
-  meta: {
-    title?: string
-  }
+  meta: { title?: string }
   options: ModalOptions
 }
 
-export const AuthStatic: React.FC<Props> = props => {
-  const {
-    type,
-    meta: { title },
-    options,
-    ...flexProps
-  } = props
+export const AuthStatic: React.FC<AuthStaticProps> = ({
+  type,
+  meta: { title },
+  options,
+  ...rest
+}) => {
   return (
     <Flex
       alignItems="center"
+      flexDirection="column"
+      minHeight="100vh"
       justifyContent="center"
-      height="90vh"
-      {...flexProps}
+      mx="auto"
+      p={4}
+      width={440}
+      {...rest}
     >
-      <Box py={2} maxWidth={400}>
-        <ModalHeader title={title} hasLogo />
-        <FormSwitcher
-          {...props}
-          type={type}
-          isStatic
-          handleSubmit={handleSubmit.bind(this, type, options)}
-          submitUrls={{
-            apple: "/users/auth/apple",
-            facebook: "/users/auth/facebook",
-            forgot: "/forgot_password",
-            login: "/log_in",
-            signup: "/sign_up",
-          }}
-          showRecaptchaDisclaimer={true}
-        />
-      </Box>
+      <ModalHeader title={title} hasLogo />
+
+      <FormSwitcher
+        type={type}
+        isStatic
+        handleSubmit={handleSubmit.bind(this, type, options)}
+        submitUrls={{
+          apple: "/users/auth/apple",
+          facebook: "/users/auth/facebook",
+          forgot: "/forgot_password",
+          login: "/log_in",
+          signup: "/sign_up",
+        }}
+        showRecaptchaDisclaimer
+        options={options}
+      />
     </Flex>
   )
 }

@@ -1,11 +1,10 @@
 import { ContextModule, Intent } from "@artsy/cohesion"
 import { Clickable } from "@artsy/palette"
-import QuickInput from "v2/Components/QuickInput"
 import { mount } from "enzyme"
 import React from "react"
-import { ForgotPasswordForm } from "../Desktop/ForgotPasswordForm"
-import { LoginForm } from "../Desktop/LoginForm"
-import { SignUpFormQueryRenderer } from "../Desktop/SignUpForm"
+import { ForgotPasswordForm } from "../Views/ForgotPasswordForm"
+import { LoginForm } from "../Views/LoginForm"
+import { SignUpFormQueryRenderer } from "../Views/SignUpForm"
 import { FormSwitcher } from "../FormSwitcher"
 import { ModalType } from "../Types"
 import { mockLocation } from "v2/DevTools/mockLocation"
@@ -59,7 +58,7 @@ describe("FormSwitcher", () => {
 
       expect(wrapper.find(ForgotPasswordForm).length).toEqual(1)
       expect(wrapper.html()).toContain("user@example.com")
-      expect(wrapper.find(QuickInput).prop("value")).toEqual("user@example.com")
+      expect(wrapper.find("input").prop("value")).toEqual("user@example.com")
     })
   })
 
@@ -69,12 +68,13 @@ describe("FormSwitcher", () => {
     })
 
     it("redirects to a url if static", () => {
-      const wrapper = getWrapper({
-        isStatic: true,
-        type: ModalType.login,
-      })
+      const wrapper = getWrapper({ isStatic: true, type: ModalType.login })
 
-      wrapper.find(Clickable).at(2).simulate("click")
+      wrapper
+        .find(Clickable)
+        .findWhere(node => node.text() === "Sign up.")
+        .first()
+        .simulate("click")
 
       expect(window.location.assign).toHaveBeenCalledWith(
         "/signup?contextModule=header&copy=Foo%20Bar&destination=%2Fcollect&intent=followArtist&redirectTo=%2Ffoo&triggerSeconds=1"
@@ -82,11 +82,13 @@ describe("FormSwitcher", () => {
     })
 
     it("sets type and notifies parent component when type is changed", () => {
-      const wrapper = getWrapper({
-        type: ModalType.login,
-      })
+      const wrapper = getWrapper({ type: ModalType.login })
 
-      wrapper.find(Clickable).at(2).simulate("click")
+      wrapper
+        .find(Clickable)
+        .findWhere(node => node.text() === "Sign up.")
+        .first()
+        .simulate("click")
 
       expect((wrapper.state() as any).type).toMatch("signup")
       expect(wrapper.props().handleTypeChange).toBeCalled()
@@ -111,7 +113,11 @@ describe("FormSwitcher", () => {
         type: ModalType.login,
       })
 
-      wrapper.find(Clickable).at(0).simulate("click")
+      wrapper
+        .find(Clickable)
+        .findWhere(node => node.text() === "Apple")
+        .first()
+        .simulate("click")
 
       expect(wrapper.props().onSocialAuthEvent).toHaveBeenCalledWith(
         expect.objectContaining({

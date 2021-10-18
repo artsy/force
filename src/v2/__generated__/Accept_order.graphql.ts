@@ -18,6 +18,7 @@ export type Accept_order = {
             } | null;
         } | null> | null;
     } | null;
+    readonly creditCardId: string | null;
     readonly lastOffer?: {
         readonly internalID: string;
         readonly createdAt: string;
@@ -120,6 +121,13 @@ return {
       "storageKey": null
     },
     {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "creditCardId",
+      "storageKey": null
+    },
+    {
       "kind": "InlineFragment",
       "selections": [
         {
@@ -168,5 +176,5 @@ return {
   "type": "CommerceOrder"
 };
 })();
-(node as any).hash = '91654c3e6d9f31a894287e9684b81500';
+(node as any).hash = '84d733fc8802dca399f723514c86be5a';
 export default node;

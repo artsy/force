@@ -35,8 +35,8 @@ Object.defineProperty(window, "sessionStorage", {
   },
 })
 
-jest.mock("../../Utils/FileUtils", () => ({
-  ...jest.requireActual("../../Utils/FileUtils"),
+jest.mock("../../Utils/fileUtils", () => ({
+  ...jest.requireActual("../../Utils/fileUtils"),
   uploadPhoto: jest
     .fn()
     .mockImplementation(async (relayEnvironment, photo, updateProgress) => {
@@ -66,7 +66,13 @@ const { getWrapper } = setupTestWrapper({
 
 describe("UploadPhotos", () => {
   beforeEach(() => {
-    sessionStore = { "submission-1": JSON.stringify({ artistId: "artistId" }) }
+    sessionStore = {
+      "submission-1": JSON.stringify({
+        artworkDetailsForm: {
+          artistId: "artistId",
+        },
+      }),
+    }
     //@ts-ignore
     jest.spyOn(global, "FileReader").mockImplementation(function () {
       this.readAsDataURL = jest.fn()
@@ -185,16 +191,20 @@ describe("UploadPhotos", () => {
   it("prepopulates images from session storage", async () => {
     sessionStore = {
       "submission-1": JSON.stringify({
-        artistId: "artistId",
-        photos: [
-          {
-            id: "id",
-            name: "foo.png",
-            size: 111084,
-            s3Key: "Sr63tiKsuvMKfCWViJPWHw/foo.png",
-            removed: false,
-          },
-        ],
+        artworkDetailsForm: {
+          artistId: "artistId",
+        },
+        uploadPhotosForm: {
+          photos: [
+            {
+              id: "id",
+              name: "foo.png",
+              size: 111084,
+              s3Key: "Sr63tiKsuvMKfCWViJPWHw/foo.png",
+              removed: false,
+            },
+          ],
+        },
       }),
     }
     const wrapper = getWrapper()

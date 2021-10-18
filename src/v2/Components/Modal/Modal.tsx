@@ -1,7 +1,6 @@
 import { CloseIcon, Clickable } from "@artsy/palette"
 import React from "react"
 import styled from "styled-components"
-
 import { ModalWidth, ModalWrapper } from "v2/Components/Modal/ModalWrapper"
 import { media } from "../Helpers"
 import { CtaProps, ModalCta } from "./ModalCta"
@@ -17,6 +16,7 @@ export interface ModalProps extends React.HTMLProps<Modal> {
   show?: boolean
   title?: string
   disableCloseOnBackgroundClick?: boolean
+  theme?: "v2" | "v3"
 }
 
 /**
@@ -47,8 +47,7 @@ export class Modal extends React.Component<ModalProps> {
   }
 
   close = () => {
-    // @ts-expect-error STRICT_NULL_CHECK
-    this.props.onClose()
+    this.props.onClose?.()
   }
 
   render(): JSX.Element {
@@ -62,6 +61,7 @@ export class Modal extends React.Component<ModalProps> {
       show,
       title,
       disableCloseOnBackgroundClick,
+      theme,
     } = this.props
 
     return (
@@ -73,18 +73,22 @@ export class Modal extends React.Component<ModalProps> {
         image={image}
         fullscreenResponsiveModal
         disableCloseOnBackgroundClick={disableCloseOnBackgroundClick}
+        theme={theme}
       >
         <Clickable
           position="absolute"
-          top="15px"
-          right="12px"
+          top={0}
+          right={0}
+          p={2}
           onClick={this.close}
+          aria-label="Close"
         >
           <CloseIcon />
         </Clickable>
+
         {image && <Image image={image} />}
-        {/* @ts-expect-error STRICT_NULL_CHECK */}
-        <ModalContent cta={cta} hasImage={image && true}>
+
+        <ModalContent cta={cta} hasImage={!!image}>
           {(hasLogo || title) && (
             <ModalHeader title={title} hasLogo={hasLogo} />
           )}
@@ -92,8 +96,7 @@ export class Modal extends React.Component<ModalProps> {
           <div>{children}</div>
 
           {cta && (
-            // @ts-expect-error STRICT_NULL_CHECK
-            <ModalCta cta={cta} hasImage={image && true} onClose={this.close} />
+            <ModalCta cta={cta} hasImage={!!image} onClose={this.close} />
           )}
         </ModalContent>
       </ModalWrapper>
@@ -102,7 +105,7 @@ export class Modal extends React.Component<ModalProps> {
 }
 
 export const ModalContent = styled.div<{
-  cta: CtaProps
+  cta?: CtaProps
   hasImage: boolean
 }>`
   padding: ${props =>
@@ -116,8 +119,8 @@ export const ModalContent = styled.div<{
   ${props => props.hasImage && "margin-left: 50%"};
   ${media.sm`
     width: 100%;
-    margin: 0px;
-    padding: ${(props: { cta: CtaProps }) =>
+    margin: 0;
+    padding: ${(props: { cta?: CtaProps }) =>
       props.cta && props.cta.isFixed ? "20px 20px 110px" : "20px"};
   `};
 `

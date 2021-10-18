@@ -11,9 +11,10 @@ import {
   Link,
   BoxProps,
   Box,
+  PinterestIcon,
+  TumblrIcon,
 } from "@artsy/palette"
 import { ArtworkSharePanel_artwork } from "v2/__generated__/ArtworkSharePanel_artwork.graphql"
-import Icon from "v2/Components/Icon"
 import React, { useRef, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { data as sd } from "sharify"
@@ -193,10 +194,18 @@ const ICONS = {
       fill="currentColor"
     />
   ),
-  // TODO: Extract into Palette
-  pinterest: <Icon mx={0} name="pinterest" color="currentColor" />,
-  // TODO: Extract into Palette
-  tumblr: <Icon mx={0} name="tumblr" color="currentColor" />,
+  pinterest: (
+    <PinterestIcon
+      // @ts-ignore
+      fill="currentColor"
+    />
+  ),
+  tumblr: (
+    <TumblrIcon
+      // @ts-ignore
+      fill="currentColor"
+    />
+  ),
 }
 
 const ShareButton: React.FC<{

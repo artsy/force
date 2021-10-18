@@ -43,7 +43,7 @@ export interface FormProps {
 export interface AfterSignUpAction {
   action: "save" | "follow" | "editorialSignup"
   objectId?: string
-  kind?: "artist" | "artworks" | "gene" | "profile" | "show"
+  kind?: "artist" | "artworks" | "gene" | "profile" | "show" | "submissions"
 }
 
 export interface ModalOptions {

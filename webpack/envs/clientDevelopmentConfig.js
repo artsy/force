@@ -8,50 +8,39 @@ import WebpackManifestPlugin from "webpack-manifest-plugin"
 import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin"
 import path from "path"
 import webpack from "webpack"
+
 import { basePath, env } from "../utils/env"
+import { splitChunks } from "./splitChunks"
+import { sharedPlugins } from "./sharedPlugins"
+
 import {
-  clientExternals,
-  standardDevtool,
-  standardMode,
-  standardResolve,
-  standardStats,
-} from "./commonEnv"
-import {
-  babelLoaderWithLodashOptimization,
+  babelLoader,
   coffeeLoader,
   ejsLoader,
   jadeLoader,
   mjsLoader,
-} from "./commonLoaders"
-import { standardPlugins } from "./commonPlugins"
-import { clientPlugins } from "./clientPlugins"
-import { clientChunks } from "./clientCommonConfig"
+} from "./sharedLoaders"
+
+import { externals, devtool, mode, resolve, stats } from "./sharedConfig"
 
 export const clientDevelopmentConfig = {
-  devtool: standardDevtool,
+  devtool,
   entry: {
     "artsy-entry": [
       "webpack-hot-middleware/client?name=novo&reload=true",
       path.resolve(process.cwd(), "src/v2/client.tsx"),
     ],
   },
-  externals: clientExternals,
-  mode: standardMode,
+  externals,
+  mode,
   module: {
-    rules: [
-      coffeeLoader,
-      jadeLoader,
-      babelLoaderWithLodashOptimization,
-      ejsLoader,
-      mjsLoader,
-    ],
+    rules: [coffeeLoader, jadeLoader, babelLoader, ejsLoader, mjsLoader],
   },
   name: "novo",
   optimization: {
     concatenateModules: env.webpackConcatenate,
-    // Extract webpack runtime code into it's own file
-    runtimeChunk: "single",
-    splitChunks: clientChunks,
+    runtimeChunk: "single", // Extract webpack runtime code into it's own file
+    splitChunks,
   },
   output: {
     filename: "[name].js",
@@ -59,8 +48,7 @@ export const clientDevelopmentConfig = {
     publicPath: "/assets/",
   },
   plugins: [
-    ...standardPlugins,
-    ...clientPlugins,
+    ...sharedPlugins,
     new webpack.HotModuleReplacementPlugin(),
     new ForkTsCheckerWebpackPlugin({
       checkSyntacticErrors: true,
@@ -86,6 +74,6 @@ export const clientDevelopmentConfig = {
       overlay: false,
     }),
   ],
-  resolve: standardResolve,
-  stats: standardStats,
+  resolve,
+  stats,
 }
