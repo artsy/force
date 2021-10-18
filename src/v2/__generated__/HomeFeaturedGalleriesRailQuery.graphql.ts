@@ -39,6 +39,7 @@ fragment HomeFeaturedGalleriesRail_orderedSet on OrderedSet {
         __typename
         ... on Profile {
           ...FollowProfileButton_profile
+          initials
           internalID
           isFollowed
           name
@@ -195,6 +196,13 @@ return {
                             "alias": null,
                             "args": null,
                             "kind": "ScalarField",
+                            "name": "initials",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
                             "name": "isFollowed",
                             "storageKey": null
                           },
@@ -296,7 +304,7 @@ return {
     "metadata": {},
     "name": "HomeFeaturedGalleriesRailQuery",
     "operationKind": "query",
-    "text": "query HomeFeaturedGalleriesRailQuery {\n  orderedSet(id: \"5638fdfb7261690296000031\") {\n    ...HomeFeaturedGalleriesRail_orderedSet\n    id\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  is_followed: isFollowed\n}\n\nfragment HomeFeaturedGalleriesRail_orderedSet on OrderedSet {\n  orderedItemsConnection(first: 20) {\n    edges {\n      node {\n        __typename\n        ... on Profile {\n          ...FollowProfileButton_profile\n          internalID\n          isFollowed\n          name\n          slug\n          href\n          location\n          image {\n            cropped(width: 325, height: 230) {\n              src\n              srcSet\n              width\n              height\n            }\n          }\n          id\n        }\n        ... on Node {\n          id\n        }\n        ... on FeaturedLink {\n          id\n        }\n      }\n    }\n  }\n}\n"
+    "text": "query HomeFeaturedGalleriesRailQuery {\n  orderedSet(id: \"5638fdfb7261690296000031\") {\n    ...HomeFeaturedGalleriesRail_orderedSet\n    id\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  is_followed: isFollowed\n}\n\nfragment HomeFeaturedGalleriesRail_orderedSet on OrderedSet {\n  orderedItemsConnection(first: 20) {\n    edges {\n      node {\n        __typename\n        ... on Profile {\n          ...FollowProfileButton_profile\n          initials\n          internalID\n          isFollowed\n          name\n          slug\n          href\n          location\n          image {\n            cropped(width: 325, height: 230) {\n              src\n              srcSet\n              width\n              height\n            }\n          }\n          id\n        }\n        ... on Node {\n          id\n        }\n        ... on FeaturedLink {\n          id\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
