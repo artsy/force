@@ -18,6 +18,7 @@ import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
 import { AppContainer } from "./AppContainer"
 import { useRouteComplete } from "v2/Utils/Hooks/useRouteComplete"
 import { useAuthIntent } from "v2/Utils/Hooks/useAuthIntent"
+import { AppToasts } from "./AppToasts"
 
 const logger = createLogger("Apps/Components/AppShell")
 
@@ -93,30 +94,30 @@ export const AppShell: React.FC<AppShellProps> = props => {
       </Box>
 
       <Theme theme={theme}>
-        <>
-          <Flex
-            as="main"
-            id="main"
-            // Occupies available vertical space
-            flex={1}
-          >
-            <AppContainer maxWidth={appContainerMaxWidth}>
-              <HorizontalPadding>{children}</HorizontalPadding>
+        <AppToasts />
+
+        <Flex
+          as="main"
+          id="main"
+          // Occupies available vertical space
+          flex={1}
+        >
+          <AppContainer maxWidth={appContainerMaxWidth}>
+            <HorizontalPadding>{children}</HorizontalPadding>
+          </AppContainer>
+        </Flex>
+
+        <NetworkOfflineMonitor />
+
+        {showFooter && (
+          <Flex bg="white100">
+            <AppContainer>
+              <HorizontalPadding>
+                <Footer />
+              </HorizontalPadding>
             </AppContainer>
           </Flex>
-
-          <NetworkOfflineMonitor />
-
-          {showFooter && (
-            <Flex bg="white100">
-              <AppContainer>
-                <HorizontalPadding>
-                  <Footer />
-                </HorizontalPadding>
-              </AppContainer>
-            </Flex>
-          )}
-        </>
+        )}
       </Theme>
     </Flex>
   )

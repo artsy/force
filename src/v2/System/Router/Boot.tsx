@@ -1,4 +1,10 @@
-import { Grid, Theme, injectGlobalStyles, themeProps } from "@artsy/palette"
+import {
+  Grid,
+  Theme,
+  injectGlobalStyles,
+  themeProps,
+  ToastsProvider,
+} from "@artsy/palette"
 import { SystemContextProvider, track } from "v2/System"
 import { AppRouteConfig } from "v2/System/Router/Route"
 import React, { useEffect } from "react"
@@ -73,13 +79,15 @@ export const Boot = track(undefined, {
                     mediaQueries={themeProps.mediaQueries}
                     initialMatchingMediaQueries={onlyMatchMediaQueries as any}
                   >
-                    <Grid fluid maxWidth="100%">
-                      <GlobalStyles />
-                      <FlashMessage />
-                      <FocusVisible />
-                      <SiftContainer />
-                      {children}
-                    </Grid>
+                    <ToastsProvider>
+                      <Grid fluid maxWidth="100%">
+                        <GlobalStyles />
+                        <FlashMessage />
+                        <FocusVisible />
+                        <SiftContainer />
+                        {children}
+                      </Grid>
+                    </ToastsProvider>
                   </ResponsiveProvider>
                 </MediaContextProvider>
               </ErrorBoundary>
