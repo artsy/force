@@ -33,6 +33,13 @@ interface StatusPageConfig {
   showTransactionSummary?: boolean
 }
 
+interface ShipmentData {
+  shipperName: string | null
+  trackingId: string | null
+  trackingUrl: string | null
+  estimatedDelivery: string | null
+}
+
 export interface StatusProps {
   order: Status_order
   router: Router
@@ -51,6 +58,8 @@ export class StatusRoute extends Component<StatusProps> {
     } = this.props.order
     const isOfferFlow = mode === "OFFER"
     const isPickup = requestedFulfillment?.__typename === "CommercePickup"
+    const isArtaShipped: boolean =
+      requestedFulfillment?.__typename === "CommerceShipArta"
 
     switch (displayState?.toUpperCase()) {
       case "SUBMITTED":
@@ -104,19 +113,19 @@ export class StatusRoute extends Component<StatusProps> {
       case "IN_TRANSIT":
         return {
           title: "Your order has shipped",
-          description: this.shipmentDescription(),
+          description: this.shipmentDescription(isArtaShipped, false),
         }
       case "FULFILLED": {
-        // TODO: Need to do a switch based on  requestedFulfillment?.__typename
-        // we have 3 different copies here.
         return isPickup
           ? {
               title: "Your order has been picked up",
               description: null,
             }
           : {
-              title: "Your order has shipped",
-              description: this.partnerShippedFulfilledDescription(),
+              title: isArtaShipped
+                ? "Your order is complete"
+                : "Your order has shipped",
+              description: this.shipmentDescription(isArtaShipped, true),
             }
       }
       case "CANCELED":
@@ -187,71 +196,69 @@ export class StatusRoute extends Component<StatusProps> {
       : null
   }
 
-  shipmentDescription(): React.ReactNode {
-    const shipment = get(
-      this.props.order,
-      o => o.lineItems?.edges?.[0]?.node?.shipment
-    )
+  shipmentDescription(
+    isArtaShiiped: boolean,
+    isDelivered: boolean
+  ): React.ReactNode {
+    const shipmentData: ShipmentData | null = this.getShipmentInfo()
 
-    if (!shipment) {
+    if (!shipmentData) {
       return null
     }
 
     return (
       <>
-        Your order is on its way.
+        {isArtaShiiped && isDelivered
+          ? "Your order has been delivered."
+          : "Your work is on its way."}
         <Spacer mb={2} />
-        {shipment.carrierName && (
+        {shipmentData.shipperName && (
           <>
-            Carrier: {shipment.carrierName}
+            Shipper: {shipmentData.shipperName}
             <Spacer mb={1} />
           </>
         )}
-        {shipment.trackingNumber && (
+        {shipmentData.trackingId && (
           <>
             {/* TODO: link it if trackingUrl is present */}
-            <>Tracking: {shipment.trackingNumber}</>
+            <>Tracking: {shipmentData.trackingId}</>
             <Spacer mb={1} />
           </>
         )}
-        {shipment.estimatedDeliveryWindow && (
-          <>Estimated delivery: {shipment.estimatedDeliveryWindow}</>
+        {shipmentData.estimatedDelivery && (
+          <>
+            {isArtaShiiped && isDelivered
+              ? "Delivery date:"
+              : "Estimated delivery:"}{" "}
+            {shipmentData.estimatedDelivery}
+          </>
         )}
       </>
     )
   }
 
-  partnerShippedFulfilledDescription(): React.ReactNode {
+  getShipmentInfo(): ShipmentData | null {
     const fulfillment = get(
       this.props.order,
       o => o.lineItems?.edges?.[0]?.node?.fulfillments?.edges?.[0]?.node
     )
 
-    if (!fulfillment) {
-      return null
-    }
-
-    return (
-      <>
-        Your work is on its way.
-        <Spacer mb={2} />
-        {fulfillment.courier && (
-          <>
-            Shipper: {fulfillment.courier}
-            <Spacer mb={1} />
-          </>
-        )}
-        {fulfillment.trackingId && (
-          <>
-            <>Tracking info: {fulfillment.trackingId}</>
-            <Spacer mb={1} />
-          </>
-        )}
-        {fulfillment.estimatedDelivery && (
-          <>Estimated delivery: {fulfillment.estimatedDelivery}</>
-        )}
-      </>
+    const shipment = get(
+      this.props.order,
+      o => o.lineItems?.edges?.[0]?.node?.shipment
     )
+
+    if (!fulfillment && !shipment) return null
+
+    return {
+      shipperName: shipment?.carrierName || fulfillment?.courier || null,
+      trackingId: shipment?.trackingNumber || fulfillment?.trackingId || null,
+      trackingUrl: shipment?.trackingUrl || null,
+      estimatedDelivery:
+        shipment?.estimatedDeliveryWindow ||
+        fulfillment?.estimatedDelivery ||
+        null,
+    }
   }
 
   canceledOfferOrderCopy(): StatusPageConfig {
