@@ -32,6 +32,7 @@ import {
   updateAddressSuccess,
 } from "../__fixtures__/MutationResults/saveAddress"
 import { useTracking } from "v2/System"
+import { flushPromiseQueue } from "v2/DevTools"
 
 jest.unmock("react-relay")
 jest.mock("v2/System/Analytics/useTracking")
@@ -647,6 +648,9 @@ describe("Shipping", () => {
           fillAddressForm(page.root, address)
           await page.clickSubmit()
 
+          await flushPromiseQueue()
+          page.update()
+
           const input = page
             .find(Input)
             .filterWhere(wrapper => wrapper.props().title === "Postal code")
@@ -678,6 +682,9 @@ describe("Shipping", () => {
           fillIn(page.root, { title: "Full name", value: "Erik David" })
 
           await page.clickSubmit()
+
+          await flushPromiseQueue()
+          page.update()
 
           const cityInput = page
             .find(Input)
@@ -718,6 +725,10 @@ describe("Shipping", () => {
           }
           fillAddressForm(page.root, address)
           await page.clickSubmit()
+
+          await flushPromiseQueue()
+          page.update()
+
           expect(mutations.mockFetch).toBeCalled()
         })
       })
