@@ -68,7 +68,7 @@ describe("Status", () => {
     })
   }
 
-  describe("offers", () => {
+  describe.only("offers", () => {
     it("should should have a title containing status", async () => {
       expect(env.headTags.length).toEqual(0)
       await env.buildPage()
@@ -76,7 +76,7 @@ describe("Status", () => {
       expect(render(env.headTags[0]).text()).toBe("Offer status | Artsy")
     })
 
-    describe("submitted", () => {
+    describe.only("submitted", () => {
       it("should say order submitted and have message box", async () => {
         const page = await env.buildPage()
         expect(page.text()).toContain("Your offer has been submitted")
