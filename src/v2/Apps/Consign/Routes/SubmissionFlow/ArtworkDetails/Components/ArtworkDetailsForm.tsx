@@ -58,7 +58,7 @@ export const ArtworkDetailsForm: FC = () => {
     },
   } = useRouter()
 
-  const [rarityModal, setRarityModal] = useState<boolean>(false)
+  const [isRarityModalOpen, setIsRarityModalOpen] = useState<boolean>(false)
 
   const {
     values,
@@ -80,8 +80,8 @@ export const ArtworkDetailsForm: FC = () => {
   return (
     <>
       <ArtworkSidebarClassificationsModalQueryRenderer
-        onClose={() => setRarityModal(false)}
-        show={rarityModal}
+        onClose={() => setIsRarityModalOpen(false)}
+        show={isRarityModalOpen}
       />
       <GridColumns>
         <Column span={6}>
@@ -133,11 +133,11 @@ export const ArtworkDetailsForm: FC = () => {
               Rarity
             </Text>
             <Clickable
-              onClick={() => setRarityModal(true)}
+              onClick={() => setIsRarityModalOpen(true)}
               data-test-id="open-rarity-modal"
             >
               <Text variant="xs" color="black60">
-                What is this?
+                <u>What is this?</u>
               </Text>
             </Clickable>
           </Flex>
