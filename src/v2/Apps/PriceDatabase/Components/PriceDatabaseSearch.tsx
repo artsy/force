@@ -117,14 +117,14 @@ export const PriceDatabaseSearch: React.FC = () => {
               }}
             />
           </Column>
-          <Column span={6} pb={[0, 4]}>
+          <Column span={4} start={3} pb={[0, 4]}>
             <MultiSelect
               options={categoryOptions}
               onSelect={handleFilterSelect("categories")}
               name="Medium"
             />
           </Column>
-          <Column span={6} pb={[0, 4]}>
+          <Column span={4} pb={[0, 4]}>
             <MultiSelect
               options={sizeOptions}
               name="Size"
