@@ -13,7 +13,6 @@ import {
   Clickable,
 } from "@artsy/palette"
 import { useFormikContext } from "formik"
-import { hardcodedMediums } from "v2/Components/ArtworkFilter/ArtworkFilters/MediumFilter"
 import { checkboxValues } from "v2/Components/ArtworkFilter/ArtworkFilters/AttributionClassFilter"
 import { ArtistAutosuggest } from "./ArtistAutosuggest"
 import { useRouter } from "v2/System/Router/useRouter"
@@ -29,10 +28,29 @@ rarityOptions.unshift({
   value: "default",
 })
 
-const mediumOptions = hardcodedMediums.map(({ name, value }) => ({
-  text: name,
-  value,
-}))
+const mediumOptions = [
+  { text: "Painting", value: "PAINTING" },
+  { text: "Sculpture", value: "SCULPTURE" },
+  { text: "Photography", value: "PHOTOGRAPHY" },
+  { text: "Print", value: "PRINT" },
+  {
+    text: "Drawing, Collage or other Work on Paper",
+    value: "DRAWING_COLLAGE_OR_OTHER_WORK_ON_PAPER",
+  },
+  { text: "Mixed Media", value: "MIXED_MEDIA" },
+  { text: "Performance Art", value: "PERFORMANCE_ART" },
+  { text: "Installation", value: "INSTALLATION" },
+  { text: "Video/Film/Animation", value: "VIDEO_FILM_ANIMATION" },
+  { text: "Architecture", value: "ARCHITECTURE" },
+  {
+    text: "Fashion Design and Wearable Art",
+    value: "FASHION_DESIGN_AND_WEARABLE_ART",
+  },
+  { text: "Jewelry", value: "JEWELRY" },
+  { text: "Design/Decorative Art", value: "DESIGN_DECORATIVE_ART" },
+  { text: "Textile Arts", value: "TEXTILE_ARTS" },
+  { text: "Other", value: "OTHER" },
+]
 
 mediumOptions.unshift({ text: "Painting, Print, Sculpture…", value: "default" })
 
@@ -44,7 +62,7 @@ export interface ArtworkDetailsFormModel {
   medium: string
   rarity: string
   editionNumber: string
-  editionSize: string
+  editionSize?: number
   height: string
   width: string
   depth: string
@@ -167,6 +185,10 @@ export const ArtworkDetailsForm: FC = () => {
                 /
               </Box>
               <Input
+                type="number"
+                onKeyDown={e =>
+                  (e.key === "." || e.key === ",") && e.preventDefault()
+                }
                 title="Edition Size"
                 placeholder="Total # in Edition"
                 name="editionSize"

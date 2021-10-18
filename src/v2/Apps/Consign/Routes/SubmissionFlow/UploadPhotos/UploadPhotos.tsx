@@ -7,9 +7,10 @@ import {
   UploadPhotosFormModel,
 } from "./Components/UploadPhotosForm"
 import { PhotoThumbnail } from "./Components/PhotoThumbnail"
-import { Photo } from "../Utils/FileUtils"
+import { Photo } from "../Utils/fileUtils"
 import * as yup from "yup"
 import { useRouter } from "v2/System/Router/useRouter"
+import { getSubmission, saveSubmission } from "../Utils/submissionUtils"
 
 export const uploadPhotosValidationSchema = yup.object().shape({
   photos: yup
@@ -31,19 +32,18 @@ export const UploadPhotos: FC = () => {
   } = useRouter()
 
   const handleSubmit = (values: UploadPhotosFormModel) => {
-    const key = `submission-${id}`
-    const submissionData = sessionStorage.getItem(key)
+    const submission = getSubmission(id)
 
-    if (submissionData) {
-      let submission = JSON.parse(submissionData)
+    if (submission) {
+      submission.uploadPhotosForm = {
+        photos: values.photos.map(photo => ({
+          ...photo,
+          file: undefined,
+          progress: undefined,
+        })),
+      }
 
-      submission.photos = values.photos.map(photo => ({
-        ...photo,
-        file: undefined,
-        progress: undefined,
-      }))
-
-      sessionStorage.setItem(key, JSON.stringify(submission))
+      saveSubmission(id, submission)
 
       router.push({
         pathname: `/consign/submission2/${id}/contact-information`,
@@ -55,7 +55,9 @@ export const UploadPhotos: FC = () => {
     <Box mb={4}>
       <SubmissionStepper currentStep="Upload Photos" />
 
-      <Text variant="lg">Upload photos of your artwork</Text>
+      <Text mt={4} variant="lg">
+        Upload photos of your artwork
+      </Text>
       <Text variant="sm" color="black60" mt={1}>
         &#8226; For a faster valuation, please upload high-quality photos of the
         work&#39;s front and back.
