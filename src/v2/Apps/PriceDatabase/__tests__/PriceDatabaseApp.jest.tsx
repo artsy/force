@@ -72,7 +72,7 @@ describe("PriceDatabaseApp", () => {
         "destination_owner_slug": "gerhard-richter",
         "destination_owner_type": "artistAuctionResults",
         "destination_path": "/artist/gerhard-richter/auction-results",
-        "filters": "{\\"organizations\\":[],\\"categories\\":[],\\"sizes\\":[]}",
+        "filters": "{\\"categories\\":[],\\"sizes\\":[]}",
         "query": "",
       }
     `)
@@ -90,18 +90,13 @@ describe("PriceDatabaseApp", () => {
       { value: "MEDIUM", text: "MEDIUM" },
     ])
 
-    const organizationFilter = wrapper.find(MultiSelect).at(2)
-    organizationFilter
-      .props()
-      .onSelect([{ value: "Phillips", text: "Phillips" }])
-
     wrapper.find(Button).simulate("click")
 
     expect(mockRouterPush).toHaveBeenCalledWith(
-      "/artist/banksy/auction-results?organizations%5B0%5D=Phillips&categories%5B0%5D=Painting&sizes%5B0%5D=SMALL&sizes%5B1%5D=MEDIUM&scroll_to_market_signals=true"
+      "/artist/banksy/auction-results?categories%5B0%5D=Painting&sizes%5B0%5D=SMALL&sizes%5B1%5D=MEDIUM&scroll_to_market_signals=true"
     )
 
-    expect(trackEvent.mock.calls[4][0]).toMatchInlineSnapshot(`
+    expect(trackEvent.mock.calls[3][0]).toMatchInlineSnapshot(`
       Object {
         "action": "searchedPriceDatabase",
         "context_module": "priceDatabaseLanding",
@@ -109,8 +104,8 @@ describe("PriceDatabaseApp", () => {
         "destination_owner_slug": "banksy",
         "destination_owner_type": "artistAuctionResults",
         "destination_path": "/artist/banksy/auction-results",
-        "filters": "{\\"organizations\\":[\\"Phillips\\"],\\"categories\\":[\\"Painting\\"],\\"sizes\\":[\\"SMALL\\",\\"MEDIUM\\"]}",
-        "query": "organizations%5B0%5D=Phillips&categories%5B0%5D=Painting&sizes%5B0%5D=SMALL&sizes%5B1%5D=MEDIUM",
+        "filters": "{\\"categories\\":[\\"Painting\\"],\\"sizes\\":[\\"SMALL\\",\\"MEDIUM\\"]}",
+        "query": "categories%5B0%5D=Painting&sizes%5B0%5D=SMALL&sizes%5B1%5D=MEDIUM",
       }
     `)
   })
