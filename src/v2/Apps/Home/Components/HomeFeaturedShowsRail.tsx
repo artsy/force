@@ -45,6 +45,7 @@ const HomeFeaturedShowsRail: React.FC<HomeFeaturedShowsRailProps> = ({
 
   return (
     <Rail
+      alignItems="flex-start"
       title="Featured shows"
       countLabel={shows.length}
       viewAllLabel="Explore All Shows"

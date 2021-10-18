@@ -8,6 +8,7 @@ export type HomeFeaturedGalleriesRail_orderedSet = {
         readonly edges: ReadonlyArray<{
             readonly node: ({
                 readonly __typename: "Profile";
+                readonly initials: string | null;
                 readonly internalID: string;
                 readonly isFollowed: boolean | null;
                 readonly name: string | null;
@@ -86,6 +87,13 @@ const node: ReaderFragment = {
                 {
                   "kind": "InlineFragment",
                   "selections": [
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "initials",
+                      "storageKey": null
+                    },
                     {
                       "alias": null,
                       "args": null,
@@ -209,5 +217,5 @@ const node: ReaderFragment = {
   ],
   "type": "OrderedSet"
 };
-(node as any).hash = 'f8ae1e1bb759b8b9931b20689894a3fc';
+(node as any).hash = 'ad6d002279e9b40dd32d5e3f8c72602f';
 export default node;
