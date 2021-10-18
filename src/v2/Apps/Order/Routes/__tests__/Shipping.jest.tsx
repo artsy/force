@@ -690,10 +690,7 @@ describe("Shipping", () => {
             .find(Input)
             .filterWhere(wrapper => wrapper.props().title === "City")
 
-          // Test fails without this, if you have a better solution please implement!
-          setTimeout(() => {
-            expect(cityInput.props().error).toBeTruthy()
-          }, 0)
+          expect(cityInput.props().error).toBeTruthy()
         })
 
         it("does not submit the mutation without a phone number", async () => {
