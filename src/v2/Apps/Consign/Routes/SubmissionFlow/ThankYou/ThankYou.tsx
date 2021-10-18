@@ -1,28 +1,10 @@
 import React, { FC } from "react"
-import {
-  Button,
-  Clickable,
-  Flex,
-  Text,
-  Join,
-  Spacer,
-  Box,
-} from "@artsy/palette"
+import { Button, Flex, Text, Join, Spacer, Box } from "@artsy/palette"
 import { FAQ } from "../../MarketingLanding/Components/FAQ"
 import { SoldRecentlyQueryRenderer } from "../../MarketingLanding/Components/SoldRecently"
-import { useRouter } from "v2/System/Router/useRouter"
+import { RouterLink } from "v2/System/Router/RouterLink"
 
 export const ThankYou: FC = () => {
-  const { router } = useRouter()
-
-  const submitAnotherWork = () => {
-    router.push({ pathname: "/consign/submission2" })
-  }
-
-  const goToArtsyHomePage = () => {
-    router.push({ pathname: "/" })
-  }
-
   return (
     <>
       <Text variant="xxl" mt={4}>
@@ -39,24 +21,20 @@ export const ThankYou: FC = () => {
         </Text>
       </Box>
 
-      <Flex py={[2, 4]} mt={4}>
-        <Button
-          data-test-id="submit-another-work"
-          size="medium"
-          variant="primaryBlack"
-          onClick={submitAnotherWork}
-        >
-          Submit Another Work
-        </Button>
-        <Clickable
-          ml={150}
-          onClick={goToArtsyHomePage}
-          data-test-id="go-to-artsy-homepage"
-        >
-          <Text variant="xs">
-            <u>Back to Artsy Homepage</u>
-          </Text>
-        </Clickable>
+      <Flex py={[2, 4]} mt={4} alignItems="center">
+        <RouterLink to="/consign/submission2">
+          <Button
+            data-test-id="submit-another-work"
+            size="medium"
+            variant="primaryBlack"
+          >
+            Submit Another Work
+          </Button>
+        </RouterLink>
+
+        <RouterLink to="/" ml={150} data-test-id="go-to-artsy-homepage">
+          Back to Artsy Homepage
+        </RouterLink>
       </Flex>
 
       <Join separator={<Spacer mt={6} />}>
