@@ -15,8 +15,20 @@ const ArtworkDetailsSchema = Yup.object().shape({
   artistId: Yup.string().label("Artist").required(),
   year: Yup.string().required(),
   title: Yup.string().required(),
-  medium: Yup.string().required(),
-  rarity: Yup.string().required(),
+  medium: Yup.string()
+    .required()
+    .test(
+      "isDefault",
+      "Medium field not selected",
+      medium => medium !== "default"
+    ),
+  rarity: Yup.string()
+    .required()
+    .test(
+      "isDefault",
+      "Rarity field not selected",
+      rarity => rarity !== "default"
+    ),
   editionNumber: Yup.string(),
   editionSize: Yup.number(),
   height: Yup.number().positive().required(),
