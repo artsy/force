@@ -59,6 +59,31 @@ describe("HomeFeaturedGalleriesRail", () => {
     expect(wrapper.html()).toContain("test-href")
   })
 
+  it("shows initials if no images", () => {
+    const wrapper = getWrapper({
+      OrderedSet: () => ({
+        orderedItemsConnection: {
+          edges: [
+            {
+              node: {
+                name: "Test Gallery",
+                href: "test-href",
+                initials: "initials",
+                image: {
+                  cropped: {
+                    src: null,
+                  },
+                },
+              },
+            },
+          ],
+        },
+      }),
+    })
+
+    expect(wrapper.html()).toContain("initials")
+  })
+
   describe("tracking", () => {
     it("tracks item clicks", () => {
       const wrapper = getWrapper()

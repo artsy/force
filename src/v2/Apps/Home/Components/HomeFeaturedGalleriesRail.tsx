@@ -6,6 +6,7 @@ import {
   Skeleton,
   SkeletonText,
   SkeletonBox,
+  Text,
 } from "@artsy/palette"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -120,7 +121,17 @@ const HomeFeaturedGalleriesRail: React.FC<HomeFeaturedGalleriesRailProps> = ({
                     />
                   </Box>
                 ) : (
-                  <Box bg="black30" width={325} height={230} />
+                  <Text
+                    variant="lg"
+                    bg="black10"
+                    width={325}
+                    height={230}
+                    display="flex"
+                    alignItems="center"
+                    justifyContent="center"
+                  >
+                    {node.initials}
+                  </Text>
                 )}
               </Box>
             </RouterLink>
@@ -163,6 +174,7 @@ export const HomeFeaturedGalleriesRailFragmentContainer = createFragmentContaine
               __typename
               ... on Profile {
                 ...FollowProfileButton_profile
+                initials
                 internalID
                 isFollowed
                 name
