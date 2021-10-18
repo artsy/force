@@ -28,6 +28,9 @@ import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "../..
 import { CreditCardSummaryItemFragmentContainer as CreditCardSummaryItem } from "../../Components/CreditCardSummaryItem"
 import { BuyerGuarantee } from "../../Components/BuyerGuarantee"
 import { ContextModule, OwnerType } from "@artsy/cohesion"
+import { AcceptRouteSetOrderPaymentMutation } from "v2/__generated__/AcceptRouteSetOrderPaymentMutation.graphql"
+import { createStripeWrapper } from "v2/Utils/createStripeWrapper"
+import { Stripe, StripeElements } from "@stripe/stripe-js"
 
 interface AcceptProps {
   order: Accept_order
@@ -41,8 +44,13 @@ interface AcceptProps {
 
 const logger = createLogger("Order/Routes/Offer/index.tsx")
 
+export interface StripeProps {
+  stripe: Stripe
+  elements: StripeElements
+}
+
 @track()
-export class Accept extends Component<AcceptProps> {
+export class Accept extends Component<AcceptProps & StripeProps> {
   acceptOffer() {
     return this.props.commitMutation<AcceptOfferMutation>({
       variables: {
@@ -81,9 +89,39 @@ export class Accept extends Component<AcceptProps> {
       const orderOrError = (await this.acceptOffer()).commerceBuyerAcceptOffer
         ?.orderOrError
 
-      if (orderOrError?.error) {
+      if (!orderOrError?.error) {
+        this.props.router.push(`/orders/${this.props.order.internalID}/status`)
+        return
+      }
+
+      if (orderOrError.error.code !== "payment_requires_action") {
         this.handleAcceptError(orderOrError?.error)
         return
+      }
+
+      const fixedOrderOrError = (
+        await this.fixFailedPayment({
+          input: {
+            creditCardId: this.props.order.creditCardId!,
+            offerId: this.props.order.lastOffer?.internalID!,
+          },
+        })
+      ).commerceFixFailedPayment?.orderOrError!
+
+      if (fixedOrderOrError.error) {
+        this.handleAcceptError(orderOrError?.error)
+        return
+      }
+
+      const scaResult = await this.props.stripe.handleCardAction(
+        fixedOrderOrError.actionData?.clientSecret!
+      )
+
+      if (scaResult.error) {
+        return this.props.dialog.showErrorDialog({
+          title: "An error occurred",
+          message: scaResult.error.message,
+        })
       }
 
       this.props.router.push(`/orders/${this.props.order.internalID}/status`)
@@ -91,6 +129,53 @@ export class Accept extends Component<AcceptProps> {
       logger.error(error)
       this.props.dialog.showErrorDialog()
     }
+  }
+
+  fixFailedPayment(variables: AcceptRouteSetOrderPaymentMutation["variables"]) {
+    return this.props.commitMutation<AcceptRouteSetOrderPaymentMutation>({
+      variables,
+      // TODO: Inputs to the mutation might have changed case of the keys!
+      mutation: graphql`
+        mutation AcceptRouteSetOrderPaymentMutation(
+          $input: CommerceFixFailedPaymentInput!
+        ) {
+          commerceFixFailedPayment(input: $input) {
+            orderOrError {
+              ... on CommerceOrderWithMutationSuccess {
+                order {
+                  state
+                  creditCard {
+                    internalID
+                    name
+                    street1
+                    street2
+                    city
+                    state
+                    country
+                    postal_code: postalCode
+                  }
+                  ... on CommerceOfferOrder {
+                    awaitingResponseFrom
+                  }
+                }
+              }
+              ... on CommerceOrderRequiresAction {
+                actionData {
+                  clientSecret
+                }
+              }
+              ... on CommerceOrderWithMutationFailure {
+                error {
+                  type
+                  code
+                  data
+                }
+              }
+            }
+          }
+        }
+      `,
+    })
   }
 
   async handleAcceptError(error: { code: string; data: string | null }) {
@@ -249,7 +334,7 @@ export class Accept extends Component<AcceptProps> {
 }
 
 export const AcceptFragmentContainer = createFragmentContainer(
-  injectCommitMutation(injectDialog(Accept)),
+  createStripeWrapper(injectCommitMutation(injectDialog(Accept)) as any),
   {
     order: graphql`
       fragment Accept_order on CommerceOrder {
@@ -267,6 +352,7 @@ export const AcceptFragmentContainer = createFragmentContainer(
             }
           }
         }
+        creditCardId
         ... on CommerceOfferOrder {
           lastOffer {
             internalID

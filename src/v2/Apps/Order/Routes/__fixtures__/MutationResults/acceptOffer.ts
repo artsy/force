@@ -32,6 +32,18 @@ export const acceptOfferPaymentFailed = {
   },
 }
 
+export const acceptOfferPaymentRequiresAction = {
+  commerceBuyerAcceptOffer: {
+    orderOrError: {
+      error: {
+        type: "processing",
+        code: "payment_requires_action",
+        data: null,
+      },
+    },
+  },
+}
+
 export const acceptOfferPaymentFailedInsufficientFunds = {
   commerceBuyerAcceptOffer: {
     orderOrError: {
