@@ -29,8 +29,14 @@ const ArtworkDetailsSchema = Yup.object().shape({
       "Rarity field not selected",
       rarity => rarity !== "default"
     ),
-  editionNumber: Yup.string(),
-  editionSize: Yup.number(),
+  editionNumber: Yup.string().when("rarity", {
+    is: "limited edition",
+    then: Yup.string().required(),
+  }),
+  editionSize: Yup.number().when("rarity", {
+    is: "limited edition",
+    then: Yup.number().required(),
+  }),
   height: Yup.number().positive().required(),
   width: Yup.number().positive().required(),
   depth: Yup.number().positive(),
