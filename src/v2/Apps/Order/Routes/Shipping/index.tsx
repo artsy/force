@@ -635,10 +635,8 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
                     onSelect={this.onSelectShippingOption.bind(this)}
                     defaultValue={shippingOption}
                   >
-                    <Text variant="md">Delivery method</Text>
-                    <Text variant="xs" mb="1" color="black60">
-                      All options are eligible for Artsy’s Buyer Protection
-                      policy, which protects against damage and loss.
+                    <Text variant="md" mb="1">
+                      Delivery method
                     </Text>
                     <BorderedRadio value="SHIP" label="Shipping" />
 
@@ -738,8 +736,10 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
                   shippingQuotes.length > 0
                 }
               >
-                <Text variant="sm" mb="1">
-                  Artsy Shipping options
+                <Text variant="sm">Artsy Shipping options</Text>
+                <Text variant="xs" mb="1" color="black60">
+                  All options are eligible for Artsy’s Buyer Protection policy,
+                  which protects against damage and loss.
                 </Text>
 
                 <ShippingQuotesFragmentContainer
