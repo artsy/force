@@ -174,7 +174,9 @@ export class FollowArtistButton extends React.Component<Props> {
           title="Other artists you might like"
           placement="bottom"
           popover={
-            <FollowArtistPopoverQueryRenderer artistID={artist!.internalID} />
+            artist ? (
+              <FollowArtistPopoverQueryRenderer artistID={artist.internalID} />
+            ) : null
           }
         >
           {({ anchorRef, onVisible }) => {

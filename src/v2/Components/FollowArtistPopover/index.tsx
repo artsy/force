@@ -1,4 +1,4 @@
-import { Join, Separator, Spacer } from "@artsy/palette"
+import { Join, Separator, Spacer, Text } from "@artsy/palette"
 import { FollowArtistPopover_artist } from "v2/__generated__/FollowArtistPopover_artist.graphql"
 import { FollowArtistPopoverQuery } from "v2/__generated__/FollowArtistPopoverQuery.graphql"
 import { SystemContext, SystemContextProps } from "v2/System"
@@ -18,18 +18,20 @@ interface FollowArtistPopoverProps extends SystemContextProps {
   artist: FollowArtistPopover_artist
 }
 
-const FollowArtistPopover: React.FC<FollowArtistPopoverProps> = props => {
-  const {
-    artist: { related },
-    user,
-  } = props
-
+const FollowArtistPopover: React.FC<FollowArtistPopoverProps> = ({
+  artist: { related },
+  user,
+}) => {
   const suggestedArtists = extractNodes(related?.suggestedConnection)
-
-  const suggetionsCount = suggestedArtists.length
-  if (suggetionsCount === 0) return null
-
   const excludeArtistIds = suggestedArtists.map(({ internalID }) => internalID)
+
+  if (suggestedArtists.length === 0) {
+    return (
+      <Text variant="md" color="black60">
+        No suggestions at this time
+      </Text>
+    )
+  }
 
   return (
     <Provider inject={[new FollowArtistPopoverState({ excludeArtistIds })]}>
@@ -77,6 +79,7 @@ export const FollowArtistPopoverQueryRenderer = ({
   artistID: string
 }) => {
   const { relayEnvironment, user } = useContext(SystemContext)
+
   return (
     <SystemQueryRenderer<FollowArtistPopoverQuery>
       environment={relayEnvironment}
@@ -105,7 +108,7 @@ export const FollowArtistPopoverQueryRenderer = ({
   )
 }
 
-const FollowArtistPopoverPlaceholder: React.FC = () => {
+export const FollowArtistPopoverPlaceholder: React.FC = () => {
   return (
     <>
       <Spacer mt={1} />
