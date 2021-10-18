@@ -23,6 +23,14 @@ describe("ArtworkDetails", () => {
     const wrapper = mount(<ArtworkDetails />)
     const text = wrapper.text()
 
+    const artworkCurrentStep = wrapper
+      .find("button")
+      .filterWhere(n => n.prop("aria-selected") === true)
+
+    artworkCurrentStep.forEach(n => {
+      expect(n.text()).toContain("Artwork")
+    })
+
     expect(wrapper.find(SubmissionStepper)).toBeTruthy()
     expect(text).toContain("Tell us about your artwork")
     expect(text).toContain("All fields are required to submit a work.")
