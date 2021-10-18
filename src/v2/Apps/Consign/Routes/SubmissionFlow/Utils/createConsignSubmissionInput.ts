@@ -24,9 +24,8 @@ export const createConsignSubmissionInput = (
     depth: submission.artworkDetailsForm.depth,
     dimensionsMetric: submission.artworkDetailsForm.units,
     state: "SUBMITTED",
-
-    // userEmail: submission.contactInformationForm.email
-    // userName: submission.contactInformationForm.name
-    // userPhone: submission.contactInformationForm.phone
+    userEmail: submission.contactInformationForm?.email,
+    userName: submission.contactInformationForm?.name,
+    userPhone: submission.contactInformationForm?.phone,
   }
 }
