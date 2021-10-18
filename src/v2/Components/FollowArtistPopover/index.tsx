@@ -7,15 +7,18 @@ import { useContext } from "react";
 import * as React from "react";
 import { createFragmentContainer, graphql } from "react-relay"
 import { Provider } from "unstated"
-import { FollowArtistPopoverRowFragmentContainer } from "./FollowArtistPopoverRow"
+import {
+  FollowArtistPopoverRowFragmentContainer,
+  FollowArtistPopoverRowPlaceholder,
+} from "./FollowArtistPopoverRow"
 import { FollowArtistPopoverState } from "./state"
 import { extractNodes } from "v2/Utils/extractNodes"
 
-interface Props extends SystemContextProps {
+interface FollowArtistPopoverProps extends SystemContextProps {
   artist: FollowArtistPopover_artist
 }
 
-const FollowArtistPopover: React.FC<Props> = props => {
+const FollowArtistPopover: React.FC<FollowArtistPopoverProps> = props => {
   const {
     artist: { related },
     user,
@@ -78,6 +81,7 @@ export const FollowArtistPopoverQueryRenderer = ({
     <SystemQueryRenderer<FollowArtistPopoverQuery>
       environment={relayEnvironment}
       variables={{ artistID }}
+      placeholder={<FollowArtistPopoverPlaceholder />}
       query={graphql`
         query FollowArtistPopoverQuery($artistID: String!) {
           artist(id: $artistID) {
@@ -86,15 +90,31 @@ export const FollowArtistPopoverQueryRenderer = ({
         }
       `}
       render={({ props }) => {
-        return (
-          props && (
+        if (props?.artist) {
+          return (
             <FollowArtistPopoverFragmentContainer
-              artist={props.artist!}
+              artist={props.artist}
               user={user}
             />
           )
-        )
+        }
+
+        return <FollowArtistPopoverPlaceholder />
       }}
     />
+  )
+}
+
+const FollowArtistPopoverPlaceholder: React.FC = () => {
+  return (
+    <>
+      <Spacer mt={1} />
+
+      <Join separator={<Separator my={1} />}>
+        <FollowArtistPopoverRowPlaceholder />
+        <FollowArtistPopoverRowPlaceholder />
+        <FollowArtistPopoverRowPlaceholder />
+      </Join>
+    </>
   )
 }

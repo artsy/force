@@ -8,8 +8,8 @@ import {
 import { Box, ButtonProps, Popover } from "@artsy/palette"
 import { FollowArtistButtonMutation } from "v2/__generated__/FollowArtistButtonMutation.graphql"
 import * as Artsy from "v2/System"
-import { FollowArtistPopoverFragmentContainer } from "v2/Components/FollowArtistPopover"
-import * as React from "react";
+import { FollowArtistPopoverQueryRenderer } from "v2/Components/FollowArtistPopover"
+import * as React from "react"
 import track, { TrackingProp } from "react-tracking"
 import styled from "styled-components"
 import { FollowArtistButton_artist } from "../../__generated__/FollowArtistButton_artist.graphql"
@@ -174,10 +174,7 @@ export class FollowArtistButton extends React.Component<Props> {
           title="Other artists you might like"
           placement="bottom"
           popover={
-            <FollowArtistPopoverFragmentContainer
-              user={user}
-              artist={artist!}
-            />
+            <FollowArtistPopoverQueryRenderer artistID={artist!.internalID} />
           }
         >
           {({ anchorRef, onVisible }) => {
