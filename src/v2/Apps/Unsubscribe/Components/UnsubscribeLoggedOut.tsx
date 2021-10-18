@@ -1,4 +1,4 @@
-import { Button, Checkbox, Banner, Spacer } from "@artsy/palette"
+import { Button, Checkbox, Spacer, useToasts } from "@artsy/palette"
 import React, { useRef, useState } from "react"
 import { data as sd } from "sharify"
 
@@ -19,6 +19,8 @@ export const UnsubscribeLoggedOut: React.FC<UnsubscribeLoggedOutProps> = ({
   const [emailTypes, setEmailTypes] = useState<string[]>([])
   const [mode, setMode] = useState(Mode.Pending)
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  const { sendToast } = useToasts()
 
   const handleClick = async () => {
     try {
@@ -42,13 +44,34 @@ export const UnsubscribeLoggedOut: React.FC<UnsubscribeLoggedOutProps> = ({
 
       if (res.ok) {
         setMode(Mode.Success)
+
+        sendToast({
+          variant: "success",
+          message: "Your email preferences have been updated.",
+        })
+
         return
       }
+
+      const err = await res.json()
+
+      sendToast({
+        variant: "error",
+        message: "There was a problem updating your email preferences.",
+        description: err.text,
+      })
 
       setMode(Mode.Error)
       timeoutRef.current = setTimeout(() => setMode(Mode.Pending), 5000)
     } catch (err) {
       console.error(err)
+
+      sendToast({
+        variant: "error",
+        message: "There was a problem updating your email preferences.",
+        description: err.message,
+      })
+
       setMode(Mode.Error)
       timeoutRef.current = setTimeout(() => setMode(Mode.Pending), 5000)
     }
@@ -63,18 +86,6 @@ export const UnsubscribeLoggedOut: React.FC<UnsubscribeLoggedOutProps> = ({
   }
   return (
     <>
-      {mode === Mode.Success && (
-        <Banner variant="success" my={6} dismissable>
-          Your email preferences have been updated.
-        </Banner>
-      )}
-
-      {mode === Mode.Error && (
-        <Banner variant="error" my={6} dismissable>
-          There was a problem updating your email preferences.
-        </Banner>
-      )}
-
       <Checkbox
         onSelect={handleSelect("all")}
         selected={emailTypes.includes("all")}
