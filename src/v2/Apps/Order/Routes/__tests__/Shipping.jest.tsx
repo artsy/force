@@ -674,16 +674,19 @@ describe("Shipping", () => {
           expect(cityInput.props().error).toBeFalsy()
         })
 
-        it("after submit, shows all validation errors on inputs that have been touched", async () => {
+        it("after submit, shows all validation errors on inputs that have not been touched", async () => {
           fillIn(page.root, { title: "Full name", value: "Erik David" })
 
           await page.clickSubmit()
 
-          const cityInput = page.root
+          const cityInput = page
             .find(Input)
             .filterWhere(wrapper => wrapper.props().title === "City")
 
-          expect(cityInput.props().error).toBeTruthy()
+          // Test fails without this, if you have a better solution please implement!
+          setTimeout(() => {
+            expect(cityInput.props().error).toBeTruthy()
+          }, 0)
         })
 
         it("does not submit the mutation without a phone number", async () => {

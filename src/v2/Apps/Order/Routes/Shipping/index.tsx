@@ -218,6 +218,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
         const { errors, hasErrors } = validateAddress(address)
         const { error, hasError } = validatePhoneNumber(phoneNumber)
         if (hasErrors && hasError) {
+          console.log("HAS ERRORS", errors)
           this.setState({
             addressErrors: errors!,
             addressTouched: this.touchedAddress,

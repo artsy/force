@@ -89,7 +89,7 @@ fragment ShippingQuotes_shippingQuotes on CommerceShippingQuoteEdge {
           "addressLine1": "14 Gower's Walk",
           "addressLine2": "Suite 2.5, The Loom",
           "city": "Whitechapel",
-          "country": "US",
+          "country": "UK",
           "name": "Artsy UK Ltd",
           "phoneNumber": "",
           "postalCode": "E1 8PY",
