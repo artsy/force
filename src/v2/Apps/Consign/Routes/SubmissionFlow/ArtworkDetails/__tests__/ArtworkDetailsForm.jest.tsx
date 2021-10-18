@@ -6,13 +6,13 @@ import {
 } from "../Components/ArtworkDetailsForm"
 import { Formik } from "formik"
 import { initialValues } from "../ArtworkDetails"
-import { LabeledInput } from "@artsy/palette"
+import { LabeledInput, Text } from "@artsy/palette"
+import { useRouter } from "v2/System/Router/useRouter"
+import { ArtworkSidebarClassificationsModalQueryRenderer } from "v2/Apps/Artwork/Components/ArtworkSidebarClassificationsModal"
 
 jest.mock("v2/System/Router/useRouter", () => ({
   useRouter: jest.fn(),
 }))
-
-import { useRouter } from "v2/System/Router/useRouter"
 
 const renderArtworkForm = (values: ArtworkDetailsFormModel) =>
   mount(
@@ -43,7 +43,7 @@ describe("ArtworkDetailsForm", () => {
     expect(wrapper.find("Radio[value='cm']")).toBeTruthy()
   })
 
-  describe("Rarity Select", () => {
+  describe("Rarity", () => {
     it("if not 'Limited Edition' doesn't render Edition fields", () => {
       expect(wrapper.find("input[name='editionNumber']").length).toBe(0)
       expect(wrapper.find("input[name='editionSize']").length).toBe(0)
@@ -77,6 +77,25 @@ describe("ArtworkDetailsForm", () => {
 
       expect(wrapper.find("input[name='editionNumber']")).toBeTruthy()
       expect(wrapper.find("input[name='editionSize']")).toBeTruthy()
+    })
+
+    it("classifications modal", () => {
+      expect(
+        wrapper
+          .find(ArtworkSidebarClassificationsModalQueryRenderer)
+          .prop("show")
+      ).toBe(false)
+
+      wrapper
+        .find("[data-test-id='open-rarity-modal']")
+        .find(Text)
+        .simulate("click")
+
+      expect(
+        wrapper
+          .find(ArtworkSidebarClassificationsModalQueryRenderer)
+          .prop("show")
+      ).toBe(true)
     })
   })
 
