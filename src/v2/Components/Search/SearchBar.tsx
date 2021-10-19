@@ -348,12 +348,12 @@ export class SearchBar extends Component<Props, State> {
   }
 
   renderDefaultSuggestion = (edge, { query, isHighlighted }) => {
-    const { displayLabel, href, counts } = edge.node
+    const { displayLabel, href, counts, isDisplayAuctionLink } = edge.node
 
     const label = this.getLabel(edge.node)
 
     const showArtworksButton = !!counts?.artworks
-    const showAuctionResultsButton = !!counts?.auctionResults
+    const showAuctionResultsButton = !!isDisplayAuctionLink
 
     return (
       <SuggestionItem
@@ -484,9 +484,9 @@ export const SearchBarRefetchContainer = createRefetchContainer(
                 slug
               }
               ... on Artist {
+                isDisplayAuctionLink
                 counts {
                   artworks
-                  auctionResults
                 }
               }
             }

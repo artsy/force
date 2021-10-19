@@ -41,9 +41,9 @@ fragment SearchBar_viewer_2Mejjw on Viewer {
           slug
         }
         ... on Artist {
+          isDisplayAuctionLink
           counts {
             artworks
-            auctionResults
           }
         }
         ... on Node {
@@ -220,6 +220,13 @@ return {
                               {
                                 "alias": null,
                                 "args": null,
+                                "kind": "ScalarField",
+                                "name": "isDisplayAuctionLink",
+                                "storageKey": null
+                              },
+                              {
+                                "alias": null,
+                                "args": null,
                                 "concreteType": "ArtistCounts",
                                 "kind": "LinkedField",
                                 "name": "counts",
@@ -230,13 +237,6 @@ return {
                                     "args": null,
                                     "kind": "ScalarField",
                                     "name": "artworks",
-                                    "storageKey": null
-                                  },
-                                  {
-                                    "alias": null,
-                                    "args": null,
-                                    "kind": "ScalarField",
-                                    "name": "auctionResults",
                                     "storageKey": null
                                   }
                                 ],
@@ -266,7 +266,7 @@ return {
     "metadata": {},
     "name": "SearchBarRefetchQuery",
     "operationKind": "query",
-    "text": "query SearchBarRefetchQuery(\n  $term: String!\n  $hasTerm: Boolean!\n) {\n  viewer {\n    ...SearchBar_viewer_2Mejjw\n  }\n}\n\nfragment SearchBar_viewer_2Mejjw on Viewer {\n  searchConnection(query: $term, mode: AUTOSUGGEST, first: 7) @include(if: $hasTerm) {\n    edges {\n      node {\n        displayLabel\n        href\n        __typename\n        ... on SearchableItem {\n          displayType\n          slug\n        }\n        ... on Artist {\n          counts {\n            artworks\n            auctionResults\n          }\n        }\n        ... on Node {\n          id\n        }\n      }\n    }\n  }\n}\n"
+    "text": "query SearchBarRefetchQuery(\n  $term: String!\n  $hasTerm: Boolean!\n) {\n  viewer {\n    ...SearchBar_viewer_2Mejjw\n  }\n}\n\nfragment SearchBar_viewer_2Mejjw on Viewer {\n  searchConnection(query: $term, mode: AUTOSUGGEST, first: 7) @include(if: $hasTerm) {\n    edges {\n      node {\n        displayLabel\n        href\n        __typename\n        ... on SearchableItem {\n          displayType\n          slug\n        }\n        ... on Artist {\n          isDisplayAuctionLink\n          counts {\n            artworks\n          }\n        }\n        ... on Node {\n          id\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();

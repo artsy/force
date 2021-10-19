@@ -47,7 +47,7 @@ const ArtistApp: React.FC<ArtistAppProps> = ({ artist, children, match }) => {
 
   const showOverviewTab = hasOverviewContent(artist)
   const showArtworksTab = artist?.statuses?.artworks
-  const showAuctionResultsTab = artist?.counts?.auctionResults
+  const showAuctionResultsTab = artist?.isDisplayAuctionLink
 
   // Default page
   return (
@@ -113,12 +113,11 @@ export const ArtistAppFragmentContainer = createFragmentContainer(ArtistApp, {
       ...ArtistMeta_artist
       ...ArtistHeader_artist
       ...BackLink_artist
-
       counts {
         forSaleArtworks
-        auctionResults
       }
       internalID
+      isDisplayAuctionLink
       name
       slug
       statuses {

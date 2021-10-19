@@ -12,9 +12,9 @@ export type SearchBar_viewer = {
                 readonly __typename: string;
                 readonly displayType?: string | null;
                 readonly slug?: string;
+                readonly isDisplayAuctionLink?: boolean | null;
                 readonly counts?: {
                     readonly artworks: number | null;
-                    readonly auctionResults: number | null;
                 } | null;
             } | null;
         } | null> | null;
@@ -140,6 +140,13 @@ const node: ReaderFragment = {
                         {
                           "alias": null,
                           "args": null,
+                          "kind": "ScalarField",
+                          "name": "isDisplayAuctionLink",
+                          "storageKey": null
+                        },
+                        {
+                          "alias": null,
+                          "args": null,
                           "concreteType": "ArtistCounts",
                           "kind": "LinkedField",
                           "name": "counts",
@@ -150,13 +157,6 @@ const node: ReaderFragment = {
                               "args": null,
                               "kind": "ScalarField",
                               "name": "artworks",
-                              "storageKey": null
-                            },
-                            {
-                              "alias": null,
-                              "args": null,
-                              "kind": "ScalarField",
-                              "name": "auctionResults",
                               "storageKey": null
                             }
                           ],
@@ -179,5 +179,5 @@ const node: ReaderFragment = {
   ],
   "type": "Viewer"
 };
-(node as any).hash = 'a6694021e48afcf170cda92cb611ed97';
+(node as any).hash = 'dba70b00ce1a4b387ca2e663f616add5';
 export default node;

@@ -121,6 +121,38 @@ describe("ArtistApp", () => {
       })
       expect(wrapper.find("RouteTab").at(1).text()).toBe("Works for Sale (20)")
     })
+
+    it("does not render auction results tab when no auction results are available", () => {
+      mockfindCurrentRoute.mockImplementation(() => ({}))
+      const wrapper = getWrapper({
+        Artist: () => ({
+          isDisplayAuctionLink: false,
+          counts: {
+            forSaleArtworks: 20,
+          },
+        }),
+      })
+
+      expect(wrapper.find("RouteTab").at(0).text()).toBe("Overview")
+      expect(wrapper.find("RouteTab").at(1).text()).toBe("Works for Sale (20)")
+      expect(wrapper.find("RouteTab").length).toBe(2)
+    })
+
+    it("renders auction results tab when auction results are available", () => {
+      mockfindCurrentRoute.mockImplementation(() => ({}))
+      const wrapper = getWrapper({
+        Artist: () => ({
+          isDisplayAuctionLink: true,
+          counts: {
+            forSaleArtworks: 20,
+          },
+        }),
+      })
+
+      expect(wrapper.find("RouteTab").at(0).text()).toBe("Overview")
+      expect(wrapper.find("RouteTab").at(1).text()).toBe("Works for Sale (20)")
+      expect(wrapper.find("RouteTab").at(2).text()).toBe("Auction Results")
+    })
   })
 
   describe("for `displayFullPage` routes", () => {

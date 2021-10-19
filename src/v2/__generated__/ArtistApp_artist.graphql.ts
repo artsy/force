@@ -43,6 +43,7 @@ export type ArtistApp_artist = {
         readonly text: string | null;
     } | null;
     readonly internalID: string;
+    readonly isDisplayAuctionLink: boolean | null;
     readonly name: string | null;
     readonly " $fragmentRefs": FragmentRefs<"ArtistMeta_artist" | "ArtistHeader_artist" | "BackLink_artist">;
     readonly " $refType": "ArtistApp_artist";
@@ -330,6 +331,13 @@ return {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
+      "name": "isDisplayAuctionLink",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "name",
       "storageKey": null
     },
@@ -352,5 +360,5 @@ return {
   "type": "Artist"
 };
 })();
-(node as any).hash = '7b0d149ef1f4685a9520e95ea03f8dc7';
+(node as any).hash = 'b6c86c270fc4e5bb4a8c5ceb77fcb705';
 export default node;
