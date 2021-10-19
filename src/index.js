@@ -1,6 +1,7 @@
 // @ts-check
 
 import { loadEnvs } from "@artsy/multienv"
+loadEnvs(".env.shared", ".env")
 // This must come before any other instrumented module.
 // See https://docs.datadoghq.com/tracing/languages/nodejs/ for more info.
 import "./lib/datadog"
@@ -15,7 +16,6 @@ import legacyDesktopApp from "./desktop"
 import legacyMobileApp from "./mobile"
 import forceV2 from "./v2/server"
 
-loadEnvs(".env.shared", ".env")
 console.log(chalk.green(`\n[Force] NODE_ENV=${process.env.NODE_ENV}\n`))
 
 export const app = express()
