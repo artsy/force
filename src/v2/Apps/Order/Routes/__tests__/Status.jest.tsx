@@ -23,25 +23,16 @@ class StatusTestPage extends OrderAppTestPage {
   get messageText() {
     return expectOne(this.find(Message)).text()
   }
-  expectMessage() {
-    expect(this.find(Message).length).toBe(1)
-  }
-  expectNoMessage() {
-    expect(this.find(Message).length).toBe(0)
+  getMessage() {
+    return this.find(Message).length
   }
 }
 
-type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends (
-  k: infer I
-) => void
-  ? I
-  : never
-
-const testOrder: UnionToIntersection<StatusQueryRawResponse["order"]> = {
+const testOrder: StatusQueryRawResponse["order"] = {
   ...OfferOrderWithShippingDetailsAndNote,
   ...PaymentDetails,
-  // @ts-expect-error STRICT_NULL_CHECK
   state: "SUBMITTED",
+  displayState: "SUBMITTED",
 }
 
 describe("Status", () => {
@@ -83,13 +74,13 @@ describe("Status", () => {
         expect(page.text()).toContain(
           "The seller will respond to your offer by Jan 15"
         )
-        page.expectMessage()
+        expect(page.getMessage()).toBe(1)
       })
 
       it("should show a note section", async () => {
         const page = await env.buildPage()
         expect(page.text()).toContain("Your noteAnother note!")
-        page.expectMessage()
+        expect(page.getMessage()).toBe(1)
       })
 
       it("should not show a note section if none exists", async () => {
@@ -109,9 +100,36 @@ describe("Status", () => {
           ...OfferOrderWithShippingDetails,
           ...PaymentDetails,
           state: "APPROVED",
+          displayState: "APPROVED",
         })
         expect(page.text()).toContain("Offer accepted")
-        page.expectMessage()
+        expect(page.getMessage()).toBe(1)
+      })
+    })
+
+    describe("processing", () => {
+      it("should say confirmed and have message box", async () => {
+        const page = await buildPageWithOrder({
+          ...OfferOrderWithShippingDetails,
+          ...PaymentDetails,
+          state: "APPROVED",
+          displayState: "PROCESSING",
+        })
+        expect(page.text()).toContain("Offer accepted")
+        expect(page.getMessage()).toBe(1)
+      })
+    })
+
+    describe("in transit", () => {
+      it("should say confirmed and have message box", async () => {
+        const page = await buildPageWithOrder({
+          ...OfferOrderWithShippingDetails,
+          ...PaymentDetails,
+          state: "APPROVED",
+          displayState: "IN_TRANSIT",
+        })
+        expect(page.text()).toContain("Your order has shipped")
+        expect(page.getMessage()).toBe(1)
       })
     })
 
@@ -121,9 +139,10 @@ describe("Status", () => {
           ...OfferOrderWithShippingDetails,
           ...PaymentDetails,
           state: "FULFILLED",
+          displayState: "FULFILLED",
         })
         expect(page.text()).toContain("Your order has shipped")
-        page.expectMessage()
+        expect(page.getMessage()).toBe(1)
       })
 
       it("should not contain a note section", async () => {
@@ -131,6 +150,7 @@ describe("Status", () => {
           ...OfferOrderWithShippingDetails,
           ...PaymentDetails,
           state: "FULFILLED",
+          displayState: "FULFILLED",
         })
         expect(page.text()).not.toContain("Your note")
       })
@@ -142,9 +162,10 @@ describe("Status", () => {
           ...OfferOrderPickup,
           ...PaymentDetails,
           state: "FULFILLED",
+          displayState: "FULFILLED",
         })
         expect(page.text()).toContain("Your order has been picked up")
-        page.expectNoMessage()
+        expect(page.getMessage()).toBe(0)
       })
     })
 
@@ -154,10 +175,11 @@ describe("Status", () => {
           ...OfferOrderPickup,
           ...PaymentDetails,
           state: "CANCELED",
+          displayState: "CANCELED",
           stateReason: "buyer_rejected",
         })
         expect(page.text()).toContain("Offer declined")
-        page.expectMessage()
+        expect(page.getMessage()).toBe(1)
       })
     })
 
@@ -167,10 +189,11 @@ describe("Status", () => {
           ...OfferOrderPickup,
           ...PaymentDetails,
           state: "CANCELED",
+          displayState: "CANCELED",
           stateReason: "seller_rejected",
         })
         expect(page.text()).toContain("Offer declined")
-        page.expectMessage()
+        expect(page.getMessage()).toBe(1)
       })
     })
 
@@ -180,10 +203,11 @@ describe("Status", () => {
           ...OfferOrderPickup,
           ...PaymentDetails,
           state: "CANCELED",
+          displayState: "CANCELED",
           stateReason: "seller_lapsed",
         })
         expect(page.text()).toContain("offer expired")
-        page.expectMessage()
+        expect(page.getMessage()).toBe(1)
       })
     })
 
@@ -193,10 +217,11 @@ describe("Status", () => {
           ...OfferOrderPickup,
           ...PaymentDetails,
           state: "CANCELED",
+          displayState: "CANCELED",
           stateReason: "buyer_lapsed",
         })
         expect(page.text()).toContain("offer expired")
-        page.expectMessage()
+        expect(page.getMessage()).toBe(1)
       })
     })
 
@@ -206,9 +231,10 @@ describe("Status", () => {
           ...OfferOrderPickup,
           ...PaymentDetails,
           state: "REFUNDED",
+          displayState: "REFUNDED",
         })
         expect(page.text()).toContain("Your order was canceled and refunded")
-        page.expectMessage()
+        expect(page.getMessage()).toBe(1)
       })
     })
 
@@ -218,10 +244,11 @@ describe("Status", () => {
           ...OfferOrderPickup,
           ...PaymentDetails,
           state: "CANCELED",
+          displayState: "CANCELED",
           stateReason: null,
         })
         expect(page.text()).toContain("Your order was canceled and refunded")
-        page.expectMessage()
+        expect(page.getMessage()).toBe(1)
         expect(page.find(TransactionDetailsSummaryItem).length).toBe(1)
       })
     })
@@ -241,12 +268,13 @@ describe("Status", () => {
           ...BuyOrderWithShippingDetails,
           ...PaymentDetails,
           state: "SUBMITTED",
+          displayState: "SUBMITTED",
         })
         expect(page.text()).toContain("Your order has been submitted")
         expect(page.text()).toContain(
           "You will receive a confirmation email by Jan 15"
         )
-        page.expectMessage()
+        expect(page.getMessage()).toBe(1)
       })
     })
 
@@ -256,6 +284,7 @@ describe("Status", () => {
           ...BuyOrderWithShippingDetails,
           ...PaymentDetails,
           state: "APPROVED",
+          displayState: "APPROVED",
         })
         expect(page.text()).toContain("Your order is confirmed")
       })
@@ -267,9 +296,10 @@ describe("Status", () => {
           ...BuyOrderWithShippingDetails,
           ...PaymentDetails,
           state: "FULFILLED",
+          displayState: "FULFILLED",
         })
         expect(page.text()).toContain("Your order has shipped")
-        page.expectMessage()
+        expect(page.getMessage()).toBe(1)
       })
     })
 
@@ -279,6 +309,7 @@ describe("Status", () => {
           ...BuyOrderPickup,
           ...PaymentDetails,
           state: "FULFILLED",
+          displayState: "FULFILLED",
         })
         expect(page.text()).toContain("Your order has been picked up")
         expect(page.find(Message).length).toBe(0)
@@ -291,9 +322,10 @@ describe("Status", () => {
           ...BuyOrderWithShippingDetails,
           ...PaymentDetails,
           state: "CANCELED",
+          displayState: "CANCELED",
         })
         expect(page.text()).toContain("Your order was canceled and refunded")
-        page.expectMessage()
+        expect(page.getMessage()).toBe(1)
       })
     })
 
@@ -303,9 +335,10 @@ describe("Status", () => {
           ...BuyOrderPickup,
           ...PaymentDetails,
           state: "CANCELED",
+          displayState: "CANCELED",
         })
         expect(page.text()).toContain("Your order was canceled and refunded")
-        page.expectMessage()
+        expect(page.getMessage()).toBe(1)
       })
     })
 
@@ -315,9 +348,10 @@ describe("Status", () => {
           ...BuyOrderPickup,
           ...PaymentDetails,
           state: "REFUNDED",
+          displayState: "REFUNDED",
         })
         expect(page.text()).toContain("Your order was canceled and refunded")
-        page.expectMessage()
+        expect(page.getMessage()).toBe(1)
       })
     })
   })

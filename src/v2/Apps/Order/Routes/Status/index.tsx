@@ -16,7 +16,6 @@ import styled from "styled-components"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { TransactionDetailsSummaryItemFragmentContainer as TransactionDetailsSummaryItem } from "v2/Apps/Order/Components/TransactionDetailsSummaryItem"
 import { TwoColumnLayout } from "v2/Apps/Order/Components/TwoColumnLayout"
-import { get } from "v2/Utils/get"
 import createLogger from "v2/Utils/logger"
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "../../Components/ArtworkSummaryItem"
 import { CreditCardSummaryItemFragmentContainer as CreditCardSummaryItem } from "../../Components/CreditCardSummaryItem"
@@ -175,10 +174,8 @@ export class StatusRoute extends Component<StatusProps> {
   }
 
   deliverText(): React.ReactNode {
-    const selectedShipping = get(
-      this.props.order,
-      o => o.lineItems?.edges?.[0]?.node?.selectedShippingQuote?.displayName
-    )
+    const selectedShipping = this.props.order?.lineItems?.edges?.[0]?.node
+      ?.selectedShippingQuote?.displayName
 
     let daysToDeliver: string | null = null
     switch (selectedShipping) {
@@ -197,7 +194,7 @@ export class StatusRoute extends Component<StatusProps> {
   }
 
   shipmentDescription(
-    isArtaShiiped: boolean,
+    isArtaShipped: boolean,
     isDelivered: boolean
   ): React.ReactNode {
     const shipmentData: ShipmentData | null = this.getShipmentInfo()
@@ -208,7 +205,7 @@ export class StatusRoute extends Component<StatusProps> {
 
     return (
       <>
-        {isArtaShiiped && isDelivered
+        {isArtaShipped && isDelivered
           ? "Your order has been delivered."
           : "Your work is on its way."}
         <Spacer mb={2} />
@@ -227,7 +224,7 @@ export class StatusRoute extends Component<StatusProps> {
         )}
         {shipmentData.estimatedDelivery && (
           <>
-            {isArtaShiiped && isDelivered
+            {isArtaShipped && isDelivered
               ? "Delivery date:"
               : "Estimated delivery:"}{" "}
             {shipmentData.estimatedDelivery}
@@ -238,15 +235,10 @@ export class StatusRoute extends Component<StatusProps> {
   }
 
   getShipmentInfo(): ShipmentData | null {
-    const fulfillment = get(
-      this.props.order,
-      o => o.lineItems?.edges?.[0]?.node?.fulfillments?.edges?.[0]?.node
-    )
+    const fulfillment = this.props.order?.lineItems?.edges?.[0]?.node
+      ?.fulfillments?.edges?.[0]?.node
 
-    const shipment = get(
-      this.props.order,
-      o => o.lineItems?.edges?.[0]?.node?.shipment
-    )
+    const shipment = this.props.order?.lineItems?.edges?.[0]?.node?.shipment
 
     if (!fulfillment && !shipment) return null
 
