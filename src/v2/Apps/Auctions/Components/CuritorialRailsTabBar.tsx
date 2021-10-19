@@ -4,7 +4,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "v2/System"
 import { CuritorialRailsTabBar_viewer } from "v2/__generated__/CuritorialRailsTabBar_viewer.graphql"
 import { AuctionsZeroState } from "./AuctionsZeroState"
-import { MyBidsFragmentContainer } from "./MyBids/MyBids"
+import { MyBidsQueryRenderer } from "./MyBids/MyBids"
 import { StandoutLotsRailFragmentContainer } from "./StandoutLotsRail"
 import { TrendingLotsRailFragmentContainer } from "./TrendingLotsRail"
 import { WorksByArtistsYouFollowRailFragmentContainer } from "./WorksByArtistsYouFollowRail"
@@ -23,7 +23,7 @@ export const CuritorialRailsTabBar: React.FC<CuritorialRailsTabBarProps> = ({
       {user && (
         <Tab name="Works For You">
           <Join separator={<Spacer mt={2} />}>
-            {viewer.me && <MyBidsFragmentContainer me={viewer.me} />}
+            <MyBidsQueryRenderer />
             <WorksByArtistsYouFollowRailFragmentContainer viewer={viewer} />
           </Join>
         </Tab>
