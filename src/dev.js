@@ -26,6 +26,9 @@ const { initializeMiddleware } = require("./middleware")
  */
 setAliases({
   react: path.resolve(path.join(__dirname, "../node_modules/react")),
+  "react/jsx-runtime": path.resolve(
+    path.join(__dirname, "../node_modules/react/jsx-runtime")
+  ),
   "react-dom": path.resolve(path.join(__dirname, "../node_modules/react-dom")),
   "styled-components": path.resolve(
     path.join(__dirname, "../node_modules/styled-components")

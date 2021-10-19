@@ -1,6 +1,5 @@
 import { Box, BoxProps, Spacer } from "@artsy/palette"
 import { Match } from "found"
-import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { findCurrentRoute } from "v2/System/Router/Utils/findCurrentRoute"
 import { ArtistApp_artist } from "v2/__generated__/ArtistApp_artist.graphql"
