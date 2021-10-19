@@ -1,10 +1,10 @@
-import { Text } from "@artsy/palette"
 import React from "react"
-import { SettingsPaymentsRoute_me } from "v2/__generated__/SettingsPaymentsRoute_me.graphql"
+import { PaymentSection_me } from "v2/__generated__/PaymentSection_me.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
+import { PaymentSection } from "v2/Apps/Payment/Components/PaymentSection"
 
 interface SettingsPaymentsRouteProps {
-  me: SettingsPaymentsRoute_me
+  me: PaymentSection_me
 }
 
 const SettingsPaymentsRoute: React.FC<SettingsPaymentsRouteProps> = ({
@@ -12,7 +12,7 @@ const SettingsPaymentsRoute: React.FC<SettingsPaymentsRouteProps> = ({
 }) => {
   return (
     <>
-      <Text>Payments Route</Text>
+      <PaymentSection me={me} />
     </>
   )
 }
@@ -22,7 +22,7 @@ export const SettingsPaymentsRouteFragmentContainer = createFragmentContainer(
   {
     me: graphql`
       fragment SettingsPaymentsRoute_me on Me {
-        name
+        ...PaymentSection_me
       }
     `,
   }
