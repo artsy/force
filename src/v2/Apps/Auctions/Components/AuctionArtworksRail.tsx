@@ -49,7 +49,6 @@ export const AuctionArtworksRail: React.FC<AuctionArtworksRailProps> = ({
     <Rail
       title={sale.name!}
       subTitle={sale.formattedStartDateTime!}
-      countLabel={nodes.length}
       viewAllLabel="View All"
       viewAllHref={sale.href!}
       viewAllOnClick={() => {
