@@ -8,40 +8,8 @@ import {
 } from "./Components/ArtworkDetailsForm"
 import { useRouter } from "v2/System/Router/useRouter"
 import uuid from "uuid"
-import * as Yup from "yup"
-import { saveSubmission } from "../Utils/submissionUtils"
-
-const ArtworkDetailsSchema = Yup.object().shape({
-  artistId: Yup.string().label("Artist").required(),
-  year: Yup.string().required(),
-  title: Yup.string().required(),
-  medium: Yup.string()
-    .required()
-    .test(
-      "isDefault",
-      "Medium field not selected",
-      medium => medium !== "default"
-    ),
-  rarity: Yup.string()
-    .required()
-    .test(
-      "isDefault",
-      "Rarity field not selected",
-      rarity => rarity !== "default"
-    ),
-  editionNumber: Yup.string().when("rarity", {
-    is: "limited edition",
-    then: Yup.string().required(),
-  }),
-  editionSize: Yup.number().when("rarity", {
-    is: "limited edition",
-    then: Yup.number().required(),
-  }),
-  height: Yup.number().positive().required(),
-  width: Yup.number().positive().required(),
-  depth: Yup.number().positive(),
-  units: Yup.string().required(),
-})
+import { useSubmission } from "../Utils/useSubmission"
+import { artworkDetailsValidationSchema } from "../Utils/validation"
 
 export const initialValues = {
   artistId: "",
@@ -65,19 +33,27 @@ export const ArtworkDetails: FC = () => {
       params: { id },
     },
   } = useRouter()
+  const { submission, saveSubmission, submissionId } = useSubmission(
+    id ? id : uuid()
+  )
 
   const handleSubmit = (values: ArtworkDetailsFormModel) => {
-    const submissionId = id ? id : uuid()
-
     const isLimitedEditionRarity = values.rarity === "limited edition"
 
-    saveSubmission(submissionId, {
-      artworkDetailsForm: {
-        ...values,
-        editionNumber: isLimitedEditionRarity ? values.editionNumber : "",
-        editionSize: isLimitedEditionRarity ? values.editionSize : undefined,
-      },
-    })
+    const artworkDetailsForm = {
+      ...values,
+      editionNumber: isLimitedEditionRarity ? values.editionNumber : "",
+      editionSize: isLimitedEditionRarity ? values.editionSize : undefined,
+    }
+
+    saveSubmission(
+      submission
+        ? {
+            ...submission,
+            artworkDetailsForm,
+          }
+        : { artworkDetailsForm }
+    )
 
     router.replace({
       pathname: `/consign/submission2/${submissionId}/artwork-details`,
@@ -99,7 +75,7 @@ export const ArtworkDetails: FC = () => {
       <Formik<ArtworkDetailsFormModel>
         initialValues={initialValues}
         onSubmit={handleSubmit}
-        validationSchema={ArtworkDetailsSchema}
+        validationSchema={artworkDetailsValidationSchema}
         validateOnMount
       >
         {({ isSubmitting, isValid }) => (

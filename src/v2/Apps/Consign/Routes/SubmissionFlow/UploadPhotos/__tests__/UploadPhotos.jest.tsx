@@ -25,7 +25,13 @@ jest.mock("v2/System/Router/useRouter", () => {
   }
 })
 
-let sessionStore = { "submission-1": JSON.stringify({ artistId: "artistId" }) }
+let sessionStore = {
+  "submission-1": JSON.stringify({
+    artworkDetailsForm: {
+      artistId: "artistId",
+    },
+  }),
+}
 Object.defineProperty(window, "sessionStorage", {
   value: {
     getItem(key) {

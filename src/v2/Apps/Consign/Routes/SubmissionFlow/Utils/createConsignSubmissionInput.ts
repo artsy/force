@@ -3,7 +3,7 @@ import {
   ConsignmentSubmissionCategoryAggregation,
   CreateSubmissionMutationInput,
 } from "v2/__generated__/CreateConsignSubmissionMutation.graphql"
-import { SubmissionModel } from "./submissionUtils"
+import { SubmissionModel } from "./useSubmission"
 
 export const createConsignSubmissionInput = (
   submission: SubmissionModel
