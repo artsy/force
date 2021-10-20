@@ -1,4 +1,4 @@
-import { Spacer, Button, Select, Banner } from "@artsy/palette"
+import { Spacer, Button, Select, useToasts } from "@artsy/palette"
 import React, { useRef, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "v2/System"
@@ -27,6 +27,8 @@ export const UnsubscribeLoggedIn: React.FC<UnsubscribeLoggedInProps> = ({
   const [mode, setMode] = useState(Mode.Pending)
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
+  const { sendToast } = useToasts()
+
   const handleClick = async () => {
     try {
       timeoutRef.current && clearTimeout(timeoutRef.current)
@@ -39,10 +41,22 @@ export const UnsubscribeLoggedIn: React.FC<UnsubscribeLoggedInProps> = ({
         me.id
       )
 
+      sendToast({
+        variant: "success",
+        message: "Your email preferences have been updated.",
+      })
+
       setMode(Mode.Success)
       timeoutRef.current = setTimeout(() => setMode(Mode.Pending), 5000)
     } catch (err) {
       console.error(err)
+
+      sendToast({
+        variant: "error",
+        message: "There was a problem updating your email preferences.",
+        description: err.message,
+      })
+
       setMode(Mode.Error)
       timeoutRef.current = setTimeout(() => setMode(Mode.Pending), 5000)
     }
@@ -50,12 +64,6 @@ export const UnsubscribeLoggedIn: React.FC<UnsubscribeLoggedInProps> = ({
 
   return (
     <>
-      {mode === Mode.Success && (
-        <Banner variant="success" my={2} dismissable>
-          Your email preferences have been updated.
-        </Banner>
-      )}
-
       <Select
         title="Email frequency"
         selected={emailFrequency}

@@ -7,6 +7,11 @@ import express from "express"
 import path from "path"
 import { getServerParam } from "./Utils/getServerParam"
 import { getRouteConfig } from "./System/Router/getRouteConfig"
+import {
+  filterObjectKeys,
+  generateCustomSharifyScript,
+  V2_SHARIFY,
+} from "./System/Server/sharifyHelpers"
 
 // TODO: Use the same variables as the asset middleware. Both config and sharify
 // have a default CDN_URL while this does not.
@@ -21,6 +26,8 @@ if (!NOVO_MANIFEST) {
 
 const app = express()
 const { routes, routePaths } = getRouteConfig()
+
+console.log(routePaths)
 
 /**
  * Mount routes that will connect to global SSR router
@@ -59,7 +66,9 @@ app.get(
         cdnUrl: NODE_ENV === "production" ? CDN_URL : "",
         content: {
           body: bodyHTML,
-          data: sharify.script(),
+          data: generateCustomSharifyScript(
+            filterObjectKeys(sharify.data, [...V2_SHARIFY])
+          ),
           head: headTagsString,
           scripts,
           style: styleTags,
@@ -90,6 +99,12 @@ app.get(
         // TODO: Post-release review that sharify is still used in the template.
         sd: sharify.data,
       }
+
+      // Move uncachable per response data to a cookie.
+      res.cookie("ARTSY_XAPP_TOKEN", sharify.data["ARTSY_XAPP_TOKEN"])
+      res.cookie("IP_ADDRESS", sharify.data["IP_ADDRESS"])
+      res.cookie("REQUEST_ID", sharify.data["REQUEST_ID"])
+      res.cookie("SESSION_ID", sharify.data["SESSION_ID"])
 
       res.render(`${PUBLIC_DIR}/index.ejs`, options)
     } catch (error) {

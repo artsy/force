@@ -64,13 +64,19 @@
   integrity sha512-Ipzswe6djF3c1fbiZLnlX2XTUoOUHRFkkj7aQdJknabA6+/TCNYEt3f2GGd8TmjqC3dwc/PhoIyKfYJd8vAYdQ==
   dependencies:
     uuid "^8.3.0"
-
-"@artsy/palette-charts@17.2.0":
-  version "17.2.0"
-  resolved "https://registry.yarnpkg.com/@artsy/palette-charts/-/palette-charts-17.2.0.tgz#9b8eecb08b859a64a90c3ae0f14f01e9584cfb02"
-  integrity sha512-BooenP8hy32TJrfeO1WUyKZwEzHXBCL5FK+n4XlXV9Ij7geuvo8E5uA3xuKrDN7KTGDLTN9pEAbFcZSzvQEFWw==
+"@artsy/multienv@^1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@artsy/multienv/-/multienv-1.2.0.tgz#ff4bb0b86ee8bb1c2867e5d887931d274024e68a"
+  integrity sha512-ElwKuJ4DVw3/X27t/v+/hBJLNx4gP76foiVTX11kguiurzBFDln3k/nRTYnalOkU+33nCWgZnpj5elI4jUPqSg==
   dependencies:
-    "@artsy/palette" "^18.2.0"
+    dotenv "^10.0.0"
+
+"@artsy/palette-charts@17.3.0":
+  version "17.3.0"
+  resolved "https://registry.yarnpkg.com/@artsy/palette-charts/-/palette-charts-17.3.0.tgz#d6c7ce7ab30743ccdf96258881a6166d735b232b"
+  integrity sha512-eCxsSM8310D46w56qngQAFwKEpfxnneds34FAOCHmBd87gVrDE28JFpdVtL77VJuPsW6grm45bfphGzSrTzdHg==
+  dependencies:
+    "@artsy/palette" "^18.3.0"
     "@seznam/compose-react-refs" "^1.0.6"
     "@styled-system/theme-get" "^5.1.2"
     d3-interpolate "^1.3.2"
@@ -82,10 +88,29 @@
   resolved "https://registry.yarnpkg.com/@artsy/palette-tokens/-/palette-tokens-2.6.0.tgz#3d780ff65994fef0daadef29d43d11f89470b728"
   integrity sha512-UQP6P+xv/5hm82ep0z5X3kCFFnk03H6y8kdW/wTU+xPq45ESUay7aNFYXeub47tmW2v6dXJ8Oa01Z0iwc6BVpA==
 
-"@artsy/palette@18.2.0", "@artsy/palette@^18.2.0":
-  version "18.2.0"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-18.2.0.tgz#2386f5a149a07032ae4b8a86104d692583d9cf38"
-  integrity sha512-8CdCfE1rlt/pFHh9sCXXY6jz2JNr7nTxKtSnsR8nmqLqUX88Gr0M//8FnKTL62Wa5SGgEmDagHmK7tInKiT0Ig==
+"@artsy/palette@18.4.0":
+  version "18.4.0"
+  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-18.4.0.tgz#4b5e31ab13cefcbf5a35cfbc9916943fc35bb21a"
+  integrity sha512-gCDgmHWRm+raaVYJy+/PHDmeUc9OWMtKhXZaJg3cA3C2TbaOg5XiiuMISCEIzJVOPQXNMlLPhneM3sJyGrpRmg==
+  dependencies:
+    "@artsy/palette-tokens" "^2.6.0"
+    "@seznam/compose-react-refs" "^1.0.6"
+    "@styled-system/theme-get" "^5.1.2"
+    debounce "^1.2.0"
+    luxon "^1.15"
+    proportional-scale "^4.0.0"
+    react-lazy-load-image-component "1.5.0"
+    react-remove-scroll "^2.3.0"
+    styled-bootstrap-grid "3.1.0"
+    styled-system "^5.1.5"
+    trunc-html "^1.1.2"
+    use-cursor "^1.2.3"
+    use-keyboard-list-navigation "2.4.1"
+
+"@artsy/palette@^18.3.0":
+  version "18.3.0"
+  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-18.3.0.tgz#2f06bb9c645dc7abe0afc3e76cf8240f74b2d493"
+  integrity sha512-3OfUohjii3nSqzJSvw7HXmjhEV4XlbKwQFaGsG8ISLtg7wEWUXNCmVMcEACUl58i5OOMX0FFZQApBUYoRV6XKg==
   dependencies:
     "@artsy/palette-tokens" "^2.6.0"
     "@seznam/compose-react-refs" "^1.0.6"
@@ -184,10 +209,10 @@
     url "^0.11.0"
     use-deep-compare-effect "^1.2.0"
 
-"@artsy/stitch@6.4.0":
-  version "6.4.0"
-  resolved "https://registry.yarnpkg.com/@artsy/stitch/-/stitch-6.4.0.tgz#10e6072dc51a7b23d9c59b113d58408df894be26"
-  integrity sha512-0IYbFj6qtCuIzVxukJUiHEywGWCi8j8XHkzrUGs35mCH1ZK5lKyWU1XXSyKx5lU0U1mNGzSznwJLrGUyToLpNQ==
+"@artsy/stitch@6.4.1":
+  version "6.4.1"
+  resolved "https://registry.yarnpkg.com/@artsy/stitch/-/stitch-6.4.1.tgz#c0391e2dc809da3ff96719ec6ccb026755f03155"
+  integrity sha512-/0Dv1BivTnyPPes7XiNxm3tl3Z7S1KO+n2QaSqTXyS+KaAYXDy8Suv+SP7Acfd2E9F0pooHqyNfr02h5E+P5UA==
   dependencies:
     consolidate "^0.14.5"
     lodash "^4.17.11"
@@ -8095,6 +8120,11 @@ dotenv@4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-4.0.0.tgz#864ef1379aced55ce6f95debecdce179f7a0cd1d"
   integrity sha1-hk7xN5rO1Vzm+V3r7NzhefegzR0=
+
+dotenv@^10.0.0:
+  version "10.0.0"
+  resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-10.0.0.tgz#3d4227b8fb95f81096cdd2b66653fb2c7085ba81"
+  integrity sha512-rlBi9d8jpv9Sf1klPjNfFAuWDjKLwTIJJ/VxtoTwIR6hnZxcEOQCZg2oIL3MWBYw5GpUDKOEnND7LXTbIpQ03Q==
 
 dotenv@^6.2.0:
   version "6.2.0"

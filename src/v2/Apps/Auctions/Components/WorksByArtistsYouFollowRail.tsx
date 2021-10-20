@@ -32,7 +32,6 @@ const WorksByArtistsYouFollowRail: React.FC<WorksByArtistsYouFollowRailProps> = 
     <Rail
       title="Works for you"
       subTitle="Works at auction by artists you follow"
-      countLabel={nodes.length}
       getItems={() => {
         return nodes.map((node, index) => {
           return (

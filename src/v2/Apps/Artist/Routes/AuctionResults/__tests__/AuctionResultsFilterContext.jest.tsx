@@ -31,6 +31,10 @@ describe("AuctionResultsFilterContext", () => {
         endDate: null,
       })
     )
+
+    // Sets year filters to a wide range in case the data is not provided
+    expect(context.filters?.["createdAfterYear"]).toEqual(0)
+    expect(context.filters?.["createdBeforeYear"]).toEqual(10000)
   })
 
   describe("behaviors", () => {

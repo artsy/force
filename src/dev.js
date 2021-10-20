@@ -5,7 +5,7 @@ require("@babel/register")({
   extensions: [".ts", ".js", ".tsx", ".jsx"],
   plugins: ["babel-plugin-dynamic-import-node"],
 })
-require("./lib/loadenv")
+require("@artsy/multienv").loadEnvs(".env.shared", ".env")
 
 const express = require("express")
 const path = require("path")
