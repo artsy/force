@@ -26,6 +26,7 @@ import { paymentRoutes } from "v2/Apps/Payment/paymentRoutes"
 import { priceDatabaseRoutes } from "./Apps/PriceDatabase/priceDatabaseRoutes"
 import { purchaseRoutes } from "v2/Apps/Purchase/purchaseRoutes"
 import { searchRoutes } from "v2/Apps/Search/searchRoutes"
+import { settingsRoutes } from "v2/Apps/Settings/settingsRoutes"
 import { shippingRoutes } from "v2/Apps/Shipping/shippingRoutes"
 import { showRoutes } from "v2/Apps/Show/showRoutes"
 import { showsRoutes } from "v2/Apps/Shows/showsRoutes"
@@ -60,6 +61,7 @@ export function getAppRoutes(): AppRouteConfig[] {
     { routes: priceDatabaseRoutes },
     { routes: purchaseRoutes },
     { routes: searchRoutes },
+    { routes: settingsRoutes },
     { routes: shippingRoutes },
     { routes: showRoutes },
     { routes: showsRoutes },

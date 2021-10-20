@@ -23,7 +23,7 @@ declare module "sharify" {
       readonly CMS_URL: string
       CURRENT_PATH: string
       CURRENT_USER: User
-      readonly EIGEN: boolean
+      EIGEN: boolean
       readonly ENABLE_FAIR_PAGE_EXHIBITORS_TAB: boolean
       readonly ENABLE_NEW_AUCTIONS_FILTER: boolean
       readonly ENABLE_QUERY_BATCHING: boolean
@@ -35,7 +35,7 @@ declare module "sharify" {
       readonly GOOGLE_ADWORDS_ID: string
       IS_GOOGLEBOT: boolean
       IS_MOBILE: boolean
-      readonly IP_ADDRESS: string
+      IP_ADDRESS: string
       readonly METAPHYSICS_ENDPOINT: string
       readonly NETWORK_CACHE_SIZE: string
       readonly NETWORK_CACHE_TTL: string
