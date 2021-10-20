@@ -1,4 +1,4 @@
-import React from "react"
+import * as React from "react";
 import { Box, Flex, Image, ResponsiveBox, Text } from "@artsy/palette"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { ContextModule } from "@artsy/cohesion"

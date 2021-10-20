@@ -61,6 +61,8 @@ module.exports = {
       },
     ],
     "react/display-name": 0,
+    "react/jsx-uses-react": "off",
+    "react/react-in-jsx-scope": "off",
     "react/prop-types": 0,
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",

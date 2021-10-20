@@ -1,6 +1,6 @@
 import { ArrowDownIcon } from "@artsy/palette"
 import PropTypes from "prop-types"
-import React, { Component } from "react"
+import { Component } from "react";
 import styled, { css } from "styled-components"
 
 export class Reveal extends Component {

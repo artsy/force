@@ -1,6 +1,6 @@
 import { AnalyticsSchema } from "v2/System/Analytics"
 import { mount } from "enzyme"
-import React from "react"
+import * as React from "react";
 import { renderToString } from "react-dom/server"
 import { track } from "../track"
 import { useTracking } from "../useTracking"

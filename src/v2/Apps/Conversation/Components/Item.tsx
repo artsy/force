@@ -1,4 +1,4 @@
-import React from "react"
+import * as React from "react";
 import { createFragmentContainer, graphql } from "react-relay"
 import { Flex, Image, Link, Text } from "@artsy/palette"
 import { Item_item } from "v2/__generated__/Item_item.graphql"

@@ -1,4 +1,3 @@
-import React from "react"
 import { AuctionRegistrationModal } from "v2/Components/Auction/AuctionRegistrationModal"
 
 export const RegistrationModal = ({ auction, me, onClose }) => {

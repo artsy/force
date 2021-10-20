@@ -1,5 +1,4 @@
 import PropTypes from "prop-types"
-import React from "react"
 import block from "bem-cn-lite"
 import { Range } from "rc-slider"
 import { connect } from "react-redux"

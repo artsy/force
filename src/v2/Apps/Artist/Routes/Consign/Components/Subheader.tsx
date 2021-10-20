@@ -1,5 +1,5 @@
 import { Box, Color, Serif } from "@artsy/palette"
-import React from "react"
+import * as React from "react";
 
 interface SubheaderProps {
   children: React.ReactNode

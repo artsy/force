@@ -7,7 +7,7 @@ import { track } from "v2/System/Analytics"
 import * as Schema from "v2/System/Analytics/Schema"
 import ArtworkGrid from "v2/Components/ArtworkGrid"
 import { take } from "lodash"
-import React from "react"
+import { Component } from "react";
 import styled from "styled-components"
 import createLogger from "v2/Utils/logger"
 import { ContextModule } from "@artsy/cohesion"
@@ -32,7 +32,7 @@ interface RelatedWorksArtworkGridState {
 @track({
   context_module: Schema.ContextModule.RelatedWorks,
 })
-class RelatedWorksArtworkGrid extends React.Component<
+class RelatedWorksArtworkGrid extends Component<
   RelatedWorksArtworkGridProps,
   RelatedWorksArtworkGridState
 > {

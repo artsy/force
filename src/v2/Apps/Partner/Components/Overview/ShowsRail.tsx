@@ -1,4 +1,5 @@
-import React, { useState } from "react"
+import { useState } from "react";
+import * as React from "react";
 import { Box, BoxProps, Flex, ResponsiveBox, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ShowsRail_partner } from "v2/__generated__/ShowsRail_partner.graphql"

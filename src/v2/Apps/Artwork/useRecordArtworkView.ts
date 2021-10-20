@@ -1,4 +1,5 @@
-import React, { useCallback, useEffect } from "react"
+import { useCallback, useEffect } from "react";
+import * as React from "react";
 import { commitMutation, graphql } from "relay-runtime"
 import { useSystemContext } from "v2/System"
 import { useRouter } from "v2/System/Router/useRouter"

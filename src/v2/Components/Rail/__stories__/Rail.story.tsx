@@ -1,4 +1,3 @@
-import React from "react"
 import { Rail } from "../Rail"
 
 export default {

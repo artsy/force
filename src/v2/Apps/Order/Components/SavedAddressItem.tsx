@@ -5,7 +5,7 @@ import {
   useThemeConfig,
   TextVariant,
 } from "@artsy/palette"
-import React from "react"
+import * as React from "react";
 import styled from "styled-components"
 import { SavedAddresses_me } from "v2/__generated__/SavedAddresses_me.graphql"
 

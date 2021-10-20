@@ -1,4 +1,4 @@
-import React from "react"
+import * as React from "react";
 import { createFragmentContainer, graphql } from "react-relay"
 import { Join, Spacer } from "@artsy/palette"
 import { InfoSection } from "v2/Components/InfoSection"

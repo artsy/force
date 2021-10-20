@@ -1,5 +1,5 @@
 import { Box, BoxProps, ChevronIcon, Flex, Image, Text } from "@artsy/palette"
-import React from "react"
+import * as React from "react";
 import { createFragmentContainer, graphql } from "react-relay"
 import styled, { css } from "styled-components"
 import { DateTime } from "luxon"

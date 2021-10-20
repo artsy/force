@@ -1,4 +1,3 @@
-import React from "react"
 import { commitMutation as _commitMutation, RelayProp } from "react-relay"
 import { mockStripe } from "v2/DevTools/mockStripe"
 import { Elements } from "@stripe/react-stripe-js"

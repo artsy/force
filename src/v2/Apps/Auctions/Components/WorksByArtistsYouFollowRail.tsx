@@ -1,4 +1,4 @@
-import React from "react"
+import * as React from "react";
 import { createFragmentContainer, graphql } from "react-relay"
 import { useAnalyticsContext } from "v2/System"
 import { WorksByArtistsYouFollowRail_viewer } from "v2/__generated__/WorksByArtistsYouFollowRail_viewer.graphql"

@@ -6,7 +6,7 @@ import {
 } from "v2/Components/ArtworkFilter/ArtworkFilterContext"
 import { updateUrl } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
 import { Match, RouterState, withRouter } from "found"
-import React from "react"
+import * as React from "react";
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
 
 interface ArtistSeriesArtworksFilterProps {

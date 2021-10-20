@@ -15,7 +15,7 @@ import { CollectionDefaultHeaderFragmentContainer } from "v2/Apps/Collect/Routes
 import { FollowArtistButtonFragmentContainer } from "v2/Components/FollowButton/FollowArtistButton"
 import { Link } from "found"
 import { compact, filter, take } from "lodash"
-import React from "react"
+import * as React from "react";
 import { createFragmentContainer, graphql } from "react-relay"
 import { FullBleedHeader } from "v2/Components/FullBleedHeader"
 import { slugify } from "underscore.string"

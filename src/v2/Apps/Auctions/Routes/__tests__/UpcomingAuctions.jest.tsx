@@ -1,4 +1,3 @@
-import React from "react"
 import { graphql } from "react-relay"
 import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
 import { MockBoot } from "v2/DevTools"

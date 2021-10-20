@@ -1,4 +1,3 @@
-import React from "react"
 import { Box } from "@artsy/palette"
 import { ArtistInfoQueryRenderer } from "v2/Apps/Artwork/Components/ArtistInfo"
 

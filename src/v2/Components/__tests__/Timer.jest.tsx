@@ -1,5 +1,4 @@
 import { Text } from "@artsy/palette"
-import React from "react"
 import * as renderer from "react-test-renderer"
 import { Timer } from "../Timer"
 

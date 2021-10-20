@@ -9,7 +9,6 @@ import { ConfirmRegistrationModal } from "desktop/apps/auction/components/layout
 import { RegistrationModal } from "desktop/apps/auction/components/layout/RegistrationModal"
 import MyActiveBids from "desktop/apps/auction/components/layout/active_bids/MyActiveBids"
 import PropTypes from "prop-types"
-import React from "react"
 import block from "bem-cn-lite"
 import { connect } from "react-redux"
 import { showModal } from "../actions/app"

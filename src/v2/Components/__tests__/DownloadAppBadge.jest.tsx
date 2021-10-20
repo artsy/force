@@ -1,4 +1,3 @@
-import React from "react"
 import { mount } from "enzyme"
 import { useTracking } from "react-tracking"
 import { Link } from "@artsy/palette"

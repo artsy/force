@@ -1,4 +1,4 @@
-import React from "react"
+import * as React from "react";
 import { Text, TextProps } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useCurrentTime } from "v2/Utils/Hooks/useCurrentTime"

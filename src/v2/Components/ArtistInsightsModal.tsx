@@ -3,12 +3,12 @@ import { Link, Sans, Separator, Serif } from "@artsy/palette"
 import { track } from "v2/System/Analytics"
 import * as Schema from "v2/System/Analytics/Schema"
 import { Modal } from "v2/Components/Modal/Modal"
-import React from "react"
+import { Component } from "react";
 
 @track(() => ({
   context_module: Schema.ContextModule.ArtistInsights,
 }))
-export class ArtistInsightsModal extends React.Component {
+export class ArtistInsightsModal extends Component {
   state = {
     showModal: false,
   }

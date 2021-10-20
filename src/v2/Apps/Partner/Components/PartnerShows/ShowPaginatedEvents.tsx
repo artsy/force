@@ -1,5 +1,6 @@
 import { Box } from "@artsy/palette"
-import React, { useState } from "react"
+import { useState } from "react";
+import * as React from "react";
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 import { PaginationFragmentContainer } from "v2/Components/Pagination"
 import { LoadingArea } from "v2/Components/LoadingArea"

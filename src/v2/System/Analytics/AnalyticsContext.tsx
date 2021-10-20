@@ -1,4 +1,4 @@
-import React, { useContext } from "react"
+import { createContext, useContext } from "react";
 import { PageOwnerType } from "@artsy/cohesion"
 
 export interface AnalyticsContextProps {
@@ -7,7 +7,7 @@ export interface AnalyticsContextProps {
   contextPageOwnerType?: PageOwnerType
 }
 
-export const AnalyticsContext = React.createContext<{
+export const AnalyticsContext = createContext<{
   contextPageOwnerId?: string
   contextPageOwnerSlug?: string
   contextPageOwnerType?: PageOwnerType

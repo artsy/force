@@ -1,6 +1,5 @@
 import { SystemContextProvider } from "v2/System"
 import { mount } from "enzyme"
-import React from "react"
 import { NavBarUserMenu } from "../NavBarUserMenu"
 import { mediator } from "lib/mediator"
 

@@ -1,6 +1,5 @@
 import { ConversationMessages } from "../ConversationMessages"
 import { mount } from "enzyme"
-import React from "react"
 
 describe("ConversationMessages", () => {
   it("check components render", () => {

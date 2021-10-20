@@ -2,7 +2,6 @@ import { SystemContextProvider } from "v2/System"
 import { buildAppRoutes } from "v2/System/Router/buildAppRoutes"
 import { buildClientApp } from "v2/System/Router/client"
 import { mount } from "enzyme"
-import React from "react"
 
 jest.mock("v2/Components/NavBar/NavBar", () => ({
   NavBar: () => <div />,

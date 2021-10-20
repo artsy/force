@@ -1,5 +1,5 @@
 import { breakpoints, DROP_SHADOW, FullBleed } from "@artsy/palette"
-import React from "react"
+import * as React from "react";
 import { createFragmentContainer, graphql } from "react-relay"
 import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
 import { useNavBarHeight } from "v2/Components/NavBar/useNavBarHeight"

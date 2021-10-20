@@ -1,6 +1,6 @@
 import { Box, Text } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
-import React from "react"
+import * as React from "react";
 import styled from "styled-components"
 
 export const EIGHT_FEET_PX = 567

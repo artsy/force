@@ -3,7 +3,8 @@ import { FollowArtistPopover_artist } from "v2/__generated__/FollowArtistPopover
 import { FollowArtistPopoverQuery } from "v2/__generated__/FollowArtistPopoverQuery.graphql"
 import { SystemContext, SystemContextProps } from "v2/System"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
-import React, { useContext } from "react"
+import { useContext } from "react";
+import * as React from "react";
 import { createFragmentContainer, graphql } from "react-relay"
 import { Provider } from "unstated"
 import { FollowArtistPopoverRowFragmentContainer } from "./FollowArtistPopoverRow"

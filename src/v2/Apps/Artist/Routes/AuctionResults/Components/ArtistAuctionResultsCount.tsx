@@ -1,4 +1,3 @@
-import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Sans } from "@artsy/palette"
 import { ArtistAuctionResultsCount_results } from "v2/__generated__/ArtistAuctionResultsCount_results.graphql"

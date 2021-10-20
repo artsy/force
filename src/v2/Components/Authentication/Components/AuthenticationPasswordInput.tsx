@@ -5,7 +5,8 @@ import {
   LabeledInput,
   OpenEyeIcon,
 } from "@artsy/palette"
-import React, { useState } from "react"
+import { useState } from "react";
+import * as React from "react";
 
 export const AuthenticationPasswordInput: React.FC<InputProps> = ({
   ...rest

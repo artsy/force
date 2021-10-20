@@ -3,7 +3,6 @@ import { getRedirect } from "v2/Apps/Order/getRedirect"
 import { redirects } from "v2/Apps/Order/redirects"
 import { ErrorPage } from "v2/Components/ErrorPage"
 import { Redirect, RedirectException } from "found"
-import React from "react"
 import { graphql } from "react-relay"
 import { AppRouteConfig } from "v2/System/Router/Route"
 

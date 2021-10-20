@@ -4,7 +4,6 @@ import { ArtistConsignButton_Test_Query } from "v2/__generated__/ArtistConsignBu
 import { useTracking } from "v2/System/Analytics/useTracking"
 import { MockBoot } from "v2/DevTools"
 import { cloneDeep } from "lodash"
-import React from "react"
 import { QueryRenderer, graphql } from "react-relay"
 import { ArtistConsignButtonFragmentContainer } from "../ArtistConsignButton"
 import { MockPayloadGenerator, createMockEnvironment } from "relay-test-utils"

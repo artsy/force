@@ -1,5 +1,6 @@
 import { Box, Button, Join, Separator } from "@artsy/palette"
-import React, { useState } from "react"
+import { useState } from "react";
+import * as React from "react";
 import {
   createPaginationContainer,
   graphql,

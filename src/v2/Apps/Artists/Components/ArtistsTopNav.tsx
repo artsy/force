@@ -1,5 +1,5 @@
 import { Box, BoxProps } from "@artsy/palette"
-import React from "react"
+import * as React from "react";
 import { ArtistsLetterNav } from "./ArtistsLetterNav"
 
 interface ArtistsTopNavProps extends BoxProps {}

@@ -1,5 +1,4 @@
 import { mount, shallow } from "enzyme"
-import React from "react"
 import { Header } from "../OtherWorks/Header"
 import { OtherWorksFragmentContainer as OtherWorks } from "../OtherWorks/index"
 import { useTracking } from "v2/System/Analytics/useTracking"

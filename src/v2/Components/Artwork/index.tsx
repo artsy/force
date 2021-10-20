@@ -1,5 +1,5 @@
 import { Artwork_artwork } from "v2/__generated__/Artwork_artwork.graphql"
-import React from "react"
+import * as React from "react";
 // @ts-ignore
 import { ComponentRef, createFragmentContainer, graphql } from "react-relay"
 import styled, { css } from "styled-components"

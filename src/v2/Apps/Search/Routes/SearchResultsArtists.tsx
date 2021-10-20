@@ -6,7 +6,7 @@ import { LoadingArea, LoadingAreaState } from "v2/Components/LoadingArea"
 import { PaginationFragmentContainer as Pagination } from "v2/Components/Pagination"
 import { RouterState, withRouter } from "found"
 import qs from "qs"
-import React from "react"
+import * as React from "react";
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
 
 export interface Props extends RouterState {

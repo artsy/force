@@ -1,4 +1,4 @@
-import React from "react"
+import * as React from "react";
 import { ConsignArtistAutosuggest } from "./ConsignArtistAutosuggest"
 import { PriceEstimateContextProvider } from "./ConsignPriceEstimateContext"
 import { Column, FullBleed, GridColumns, Spacer, Text } from "@artsy/palette"

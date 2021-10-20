@@ -1,5 +1,5 @@
 import { Box, Flex, NoArtworkIcon } from "@artsy/palette"
-import React, { useState } from "react"
+import { useState } from "react";
 
 export const ImageWithFallback = ({ Fallback, ...props }) => {
   const [useFallback, setFallback] = useState(false)

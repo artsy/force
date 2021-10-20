@@ -12,7 +12,7 @@ import {
   SkeletonText,
 } from "@artsy/palette"
 import { compact, take } from "lodash"
-import React from "react"
+import * as React from "react";
 import { createFragmentContainer, graphql } from "react-relay"
 import { Rail } from "v2/Components/Rail"
 import { useSystemContext, useTracking } from "v2/System"

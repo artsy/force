@@ -1,7 +1,6 @@
 import { buildClientApp } from "v2/System/Router/client"
 import { data as sd } from "sharify"
 import { featureAKGRoutes } from "v2/Apps/FeatureAKG/featureAKGRoutes"
-import React from "react"
 import ReactDOM from "react-dom"
 import { loadableReady } from "@loadable/component"
 

@@ -1,4 +1,4 @@
-import React from "react"
+import * as React from "react";
 import { Box, Flex, FullBleed, Image, Text, TEXT_SHADOW } from "@artsy/palette"
 import { Media } from "v2/Utils/Responsive"
 import { createFragmentContainer, graphql } from "react-relay"

@@ -1,4 +1,4 @@
-import React from "react"
+import * as React from "react";
 import { Column, GridColumns } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FairExhibitorsGroup_exhibitorsGroup } from "v2/__generated__/FairExhibitorsGroup_exhibitorsGroup.graphql"

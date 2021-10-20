@@ -1,5 +1,5 @@
 import { Separator, Text } from "@artsy/palette"
-import React from "react"
+import * as React from "react";
 
 export const ArtworkCredits: React.FC = () => {
   return (

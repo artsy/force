@@ -1,5 +1,5 @@
 import { unica } from "v2/Assets/Fonts"
-import React, { Component } from "react"
+import { Component } from "react";
 import { ReactNode } from "react"
 import styled from "styled-components"
 import colors from "../../Assets/Colors"

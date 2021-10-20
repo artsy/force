@@ -1,6 +1,4 @@
 // @ts-ignore - https://github.com/styled-components/styled-components/issues/1063#issuecomment-320344957
-import React from "react"
-// @ts-ignore
 import Artwork, { ArtworkProps } from "./Artwork"
 // @ts-ignore
 import ArtworkGrid, { ArtworkGridProps } from "./ArtworkGrid/ArtworkGrid"

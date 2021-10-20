@@ -1,4 +1,3 @@
-import React from "react"
 import { InquiryInstitutionalAffiliations } from "../../Views/InquiryInstitutionalAffiliations"
 import { useUpdateCollectorProfile } from "../../Hooks/useUpdateCollectorProfile"
 import { useInquiryContext } from "../../Hooks/useInquiryContext"

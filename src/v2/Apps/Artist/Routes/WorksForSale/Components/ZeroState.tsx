@@ -1,7 +1,6 @@
 import { ContextModule } from "@artsy/cohesion"
 import { Clickable, Flex, Message, Text } from "@artsy/palette"
 import { FollowArtistButtonFragmentContainer as FollowArtistButton } from "v2/Components/FollowButton/FollowArtistButton"
-import React from "react"
 
 export const ZeroState = props => {
   const { isFollowed, artist } = props

@@ -9,7 +9,8 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import React, { useState } from "react"
+import { useState } from "react";
+import * as React from "react";
 import { createRelaySSREnvironment } from "v2/System/Relay/createRelaySSREnvironment"
 import { wait } from "v2/Utils/wait"
 import { useInquiryContext } from "../Hooks/useInquiryContext"

@@ -2,7 +2,6 @@ import { ArtworkDetails_Test_Query } from "v2/__generated__/ArtworkDetails_Test_
 import { ArtworkDetailsFragmentContainer } from "v2/Apps/Artwork/Components/ArtworkDetails"
 import { useTracking } from "v2/System/Analytics/useTracking"
 import { MockBoot } from "v2/DevTools"
-import React from "react"
 import { graphql } from "react-relay"
 import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
 

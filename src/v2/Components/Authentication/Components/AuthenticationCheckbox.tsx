@@ -1,5 +1,5 @@
 import { Checkbox, CheckboxProps, Text } from "@artsy/palette"
-import React from "react"
+import * as React from "react";
 
 interface AuthenticationCheckboxProps extends CheckboxProps {}
 

@@ -1,5 +1,5 @@
 import { Column, GridColumns, Text } from "@artsy/palette"
-import React from "react"
+import * as React from "react";
 import { createFragmentContainer, graphql } from "react-relay"
 import { ShowCardFragmentContainer } from "./ShowCard"
 import { ShowEvents_edges } from "v2/__generated__/ShowEvents_edges.graphql"

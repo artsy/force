@@ -1,5 +1,5 @@
 import Cookies from "cookies-js"
-import React from "react"
+import { Component } from "react";
 import { data as sd } from "sharify"
 
 import {
@@ -16,7 +16,7 @@ interface SocialAuthArgs extends ModalOptions {
   service: AuthService
 }
 
-export class ModalContainer extends React.Component<any> {
+export class ModalContainer extends Component<any> {
   public manager: ModalManager | null
 
   UNSAFE_componentWillMount() {

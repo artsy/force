@@ -1,4 +1,4 @@
-import React from "react"
+import * as React from "react";
 import { Button, Flex, Link, Text } from "@artsy/palette"
 import { SectionContainer } from "./SectionContainer"
 import { Media } from "v2/Utils/Responsive"

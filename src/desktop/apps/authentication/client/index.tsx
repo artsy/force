@@ -1,4 +1,3 @@
-import React from "react"
 import ReactDOM from "react-dom"
 import { FullPageAuthStatic } from "../components/FullPageAuthStatic"
 import { setCookies } from "../helpers"

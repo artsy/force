@@ -1,4 +1,4 @@
-import React from "react"
+import * as React from "react";
 import { MetaTags } from "v2/Components/MetaTags"
 
 export const FairsMeta: React.FC = ({}) => {

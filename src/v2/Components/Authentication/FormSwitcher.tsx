@@ -1,6 +1,6 @@
 import { ActionType, AuthImpression, AuthModalType } from "@artsy/cohesion"
 import qs from "querystring"
-import React from "react"
+import { Component } from "react";
 import track, { TrackingProp } from "react-tracking"
 import Events from "v2/Utils/Events"
 import { SystemContextProvider } from "v2/System"
@@ -44,7 +44,7 @@ export interface State {
 }
 
 @track({}, { dispatch: data => Events.postEvent(data) })
-export class FormSwitcher extends React.Component<FormSwitcherProps, State> {
+export class FormSwitcher extends Component<FormSwitcherProps, State> {
   static defaultProps: Partial<FormSwitcherProps> = {
     values: {},
   }

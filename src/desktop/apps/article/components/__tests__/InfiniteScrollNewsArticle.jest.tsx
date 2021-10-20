@@ -1,4 +1,3 @@
-import React from "react"
 import { getENV } from "v2/Utils/getENV"
 import { mount } from "enzyme"
 import { InfiniteScrollNewsArticle } from "../InfiniteScrollNewsArticle"

@@ -1,8 +1,8 @@
-import React from "react"
+import { Component } from "react";
 import sharify from "sharify"
 const sd = sharify.data
 
-export class SiftContainer extends React.Component {
+export class SiftContainer extends Component {
   componentDidMount() {
     if (sd.THIRD_PARTIES_DISABLED || !sd.SIFT_BEACON_KEY) {
       return

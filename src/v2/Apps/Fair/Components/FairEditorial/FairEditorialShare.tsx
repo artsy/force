@@ -5,7 +5,7 @@ import {
   FacebookIcon,
   TwitterIcon,
 } from "@artsy/palette"
-import React from "react"
+import * as React from "react";
 
 interface FairEditorialShareProps extends BoxProps {
   subject: string

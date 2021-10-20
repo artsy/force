@@ -11,7 +11,7 @@ import {
 import { SendFeedbackSearchResultsMutation } from "v2/__generated__/SendFeedbackSearchResultsMutation.graphql"
 import { SystemContextProps } from "v2/System"
 import { withSystemContext } from "v2/System"
-import React from "react"
+import { Component } from "react";
 import { commitMutation, graphql } from "react-relay"
 import styled from "styled-components"
 import { ErrorWithMetadata } from "v2/Utils/errors"
@@ -32,7 +32,7 @@ interface State extends Inputs {
 
 const logger = createLogger("Apps/Search/Components/SendFeedback.tsx")
 
-class SendFeedbackForm extends React.Component<SystemContextProps, State> {
+class SendFeedbackForm extends Component<SystemContextProps, State> {
   state = {
     submitted: false,
     message: "",

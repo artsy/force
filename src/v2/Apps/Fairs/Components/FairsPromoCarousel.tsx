@@ -1,4 +1,5 @@
-import React, { Children, useEffect, useState } from "react"
+import { Children, useEffect, useState } from "react";
+import * as React from "react";
 import { Carousel, Clickable, CarouselRail, CarouselCell } from "@artsy/palette"
 import { CarouselProps } from "v2/Components/Carousel"
 

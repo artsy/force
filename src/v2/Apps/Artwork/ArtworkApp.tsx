@@ -1,5 +1,6 @@
 import { Column, GridColumns, Join, Spacer } from "@artsy/palette"
-import React, { useContext } from "react"
+import { useContext } from "react";
+import * as React from "react";
 import { createFragmentContainer, graphql } from "react-relay"
 import { data as sd } from "sharify"
 import { ArtworkApp_artwork } from "v2/__generated__/ArtworkApp_artwork.graphql"

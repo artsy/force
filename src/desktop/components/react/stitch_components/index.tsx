@@ -11,7 +11,6 @@
  */
 
 import { Box } from "@artsy/palette"
-import React from "react"
 
 export { StitchWrapper } from "./StitchWrapper"
 export { NavBar } from "./NavBar"

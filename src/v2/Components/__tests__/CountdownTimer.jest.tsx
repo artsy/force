@@ -1,6 +1,5 @@
 import { mount } from "enzyme"
 import { DateTime, Duration, Settings } from "luxon"
-import React from "react"
 import { ExtractProps } from "v2/Utils/ExtractProps"
 import { CountdownTimer } from "../CountdownTimer"
 

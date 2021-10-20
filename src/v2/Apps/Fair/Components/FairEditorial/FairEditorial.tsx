@@ -1,4 +1,4 @@
-import React from "react"
+import * as React from "react";
 import { createFragmentContainer, graphql } from "react-relay"
 import { Box, Text } from "@artsy/palette"
 import { FairEditorialRailArticlesFragmentContainer as FairEditorialRailArticles } from "./FairEditorialRailArticles"

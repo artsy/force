@@ -1,4 +1,5 @@
-import React, { useState } from "react"
+import { useState } from "react";
+import * as React from "react";
 import { throttle } from "lodash"
 import styled from "styled-components"
 import { ProgressIndicator } from "v2/Components/ProgressIndicator"

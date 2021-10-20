@@ -1,6 +1,6 @@
 import { Flex, Sans, color } from "@artsy/palette"
 import { ModalWidth, ModalWrapper } from "v2/Components/Modal/ModalWrapper"
-import React from "react"
+import * as React from "react";
 import styled from "styled-components"
 
 export interface CtaProps {

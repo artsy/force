@@ -1,5 +1,4 @@
 import { mount } from "enzyme"
-import React from "react"
 import { InquiryLogin } from "../../Views/InquiryLogin"
 import { login } from "v2/Utils/auth"
 import { useArtworkInquiryRequest } from "../../Hooks/useArtworkInquiryRequest"

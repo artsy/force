@@ -1,4 +1,4 @@
-import React from "react"
+import * as React from "react";
 import { BoxProps, ChevronIcon, Text, boxMixin } from "@artsy/palette"
 import { StyledLink } from "./StyledLink"
 import styled from "styled-components"

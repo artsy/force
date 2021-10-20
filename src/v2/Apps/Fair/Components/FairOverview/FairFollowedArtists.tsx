@@ -1,4 +1,4 @@
-import React from "react"
+import * as React from "react";
 import { createFragmentContainer, graphql } from "react-relay"
 import { FairFollowedArtists_fair } from "v2/__generated__/FairFollowedArtists_fair.graphql"
 import { Carousel } from "v2/Components/Carousel"

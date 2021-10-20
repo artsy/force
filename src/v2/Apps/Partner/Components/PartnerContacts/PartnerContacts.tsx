@@ -1,4 +1,4 @@
-import React from "react"
+import * as React from "react";
 import { PartnerContacts_edges } from "v2/__generated__/PartnerContacts_edges.graphql"
 import { Column, GridColumns } from "@artsy/palette"
 import { PartnerContactCardFragmentContainer as PartnerContactCard } from "./PartnerContactCard"

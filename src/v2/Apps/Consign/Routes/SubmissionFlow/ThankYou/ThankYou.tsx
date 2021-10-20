@@ -1,4 +1,4 @@
-import React, { FC } from "react"
+import { FC } from "react";
 import { Button, Flex, Text, Spacer, Box } from "@artsy/palette"
 import { FAQ } from "../../MarketingLanding/Components/FAQ"
 import { SoldRecentlyQueryRenderer } from "../../MarketingLanding/Components/SoldRecently"

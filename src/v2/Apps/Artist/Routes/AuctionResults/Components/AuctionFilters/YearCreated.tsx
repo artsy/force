@@ -1,4 +1,5 @@
-import React, { useMemo } from "react"
+import { useMemo } from "react";
+import * as React from "react";
 import { Box, Checkbox, Flex, Select, Spacer } from "@artsy/palette"
 import { FilterResetLink } from "v2/Components/FilterResetLink"
 import createLogger from "v2/Utils/logger"

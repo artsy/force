@@ -1,4 +1,4 @@
-import React from "react"
+import * as React from "react";
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworksRoute_viewer } from "v2/__generated__/ArtworksRoute_viewer.graphql"
 

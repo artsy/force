@@ -2,7 +2,6 @@ import {
   ArtistBioTestQueryRawResponse,
   ArtistBioTestQueryResponse,
 } from "v2/__generated__/ArtistBioTestQuery.graphql"
-import React from "react"
 
 import { MockBoot, renderRelayTree } from "v2/DevTools"
 import { graphql } from "react-relay"

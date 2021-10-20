@@ -1,6 +1,6 @@
 import { BorderBox, Box, Join, Spacer } from "@artsy/palette"
 import { ArtistMarketInsights_artist } from "v2/__generated__/ArtistMarketInsights_artist.graphql"
-import React from "react"
+import { Component } from "react";
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworkDefinitionList } from "v2/Apps/Artwork/Components/ArtworkDefinitionList"
 import { groupBy } from "lodash"
@@ -22,7 +22,7 @@ const CATEGORY_LABEL_MAP = {
   "top-emerging": "Represented by up-and-coming galleries.",
 }
 
-export class MarketInsights extends React.Component<MarketInsightsProps> {
+export class MarketInsights extends Component<MarketInsightsProps> {
   static defaultProps = {
     border: true,
   }

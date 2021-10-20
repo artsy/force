@@ -1,6 +1,6 @@
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements, ElementsConsumer } from "@stripe/react-stripe-js"
-import React from "react"
+import * as React from "react";
 import { data as sd } from "sharify"
 
 export function createStripeWrapper<T>(Component: React.FC<T>): React.FC<T> {

@@ -1,6 +1,5 @@
 import { Media } from "v2/Utils/Responsive"
 import { Box, Step, Stepper } from "@artsy/palette"
-import React from "react"
 
 function typedArray<T extends string>(...elems: T[]): T[] {
   return elems

@@ -1,4 +1,3 @@
-import React from "react"
 import { Box } from "@artsy/palette"
 import { SearchBarQueryRenderer } from "v2/Components/Search/SearchBar"
 import styled from "styled-components"

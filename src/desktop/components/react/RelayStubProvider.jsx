@@ -1,8 +1,8 @@
 import { Environment, Network, RecordSource, Store } from "relay-runtime"
 import { ReactRelayContext } from "react-relay"
-import React from "react"
+import { Component } from "react";
 
-export class RelayStubProvider extends React.Component {
+export class RelayStubProvider extends Component {
   static defaultProps = {
     relay: {
       environment: new Environment({

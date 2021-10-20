@@ -1,6 +1,6 @@
 import { ArtsyLogoBlackIcon, Box } from "@artsy/palette"
 import { RouterLink } from "v2/System/Router/RouterLink"
-import React from "react"
+import * as React from "react";
 import { useSystemContext } from "v2/System"
 
 interface MinimalNavBarProps {

@@ -1,7 +1,7 @@
 import { Box, Button, Flex, Sans, Serif, color } from "@artsy/palette"
 import { AnalyticsSchema, useTracking } from "v2/System"
 import { RouterLink } from "v2/System/Router/RouterLink"
-import React from "react"
+import * as React from "react";
 import { createFragmentContainer, graphql } from "react-relay"
 import { SectionContainer } from "./SectionContainer"
 import { Subheader } from "./Subheader"

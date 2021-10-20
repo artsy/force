@@ -1,5 +1,5 @@
 import { Box, Link } from "@artsy/palette"
-import React from "react"
+import { Component } from "react";
 import { getENV } from "v2/Utils/getENV"
 import { ModalDialog } from "./ModalDialog"
 import { ModalWidth } from "./ModalWrapper"
@@ -15,7 +15,7 @@ export interface ErrorModalProps {
   ctaAction?: () => void
 }
 
-export class ErrorModal extends React.Component<ErrorModalProps> {
+export class ErrorModal extends Component<ErrorModalProps> {
   static defaultProps = {
     closeText: "Continue",
     headerText: "An error occurred",

@@ -1,13 +1,13 @@
 import { Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import React from "react"
+import { Component } from "react";
 import { ArtworkSidebarAuctionPartnerInfo_artwork } from "v2/__generated__/ArtworkSidebarAuctionPartnerInfo_artwork.graphql"
 
 export interface ArtworkSidebarAuctionPartnerInfoProps {
   artwork: ArtworkSidebarAuctionPartnerInfo_artwork
 }
 
-export class ArtworkSidebarAuctionPartnerInfo extends React.Component<
+export class ArtworkSidebarAuctionPartnerInfo extends Component<
   ArtworkSidebarAuctionPartnerInfoProps
 > {
   render() {

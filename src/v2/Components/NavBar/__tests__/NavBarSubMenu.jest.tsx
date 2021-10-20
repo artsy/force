@@ -2,7 +2,6 @@ import { ContextModule } from "v2/System"
 import { useTracking } from "v2/System/Analytics/useTracking"
 import { ARTWORKS_SUBMENU_DATA } from "v2/Components/NavBar/menuData"
 import { mount } from "enzyme"
-import React from "react"
 import { NavBarSubMenu } from "../Menus/NavBarSubMenu"
 
 jest.mock("v2/System/Analytics/useTracking")

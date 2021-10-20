@@ -1,4 +1,4 @@
-import React from "react"
+import * as React from "react";
 import { ArtsyMarkIcon } from "@artsy/palette"
 import styled from "styled-components"
 import { RouterLink, RouterLinkProps } from "v2/System/Router/RouterLink"

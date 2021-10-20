@@ -1,6 +1,7 @@
 import { AnalyticsSchema } from "v2/System/Analytics"
 import { useTracking } from "v2/System/Analytics/useTracking"
-import React, { useContext } from "react"
+import { useContext } from "react";
+import * as React from "react";
 import { createFragmentContainer, graphql } from "react-relay"
 import { SystemContext } from "v2/System"
 import { NavBarNotificationsQuery } from "v2/__generated__/NavBarNotificationsQuery.graphql"

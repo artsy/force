@@ -11,7 +11,8 @@ import {
 import { Match } from "found"
 import { isFunction } from "lodash"
 import { Footer } from "v2/Components/Footer"
-import React, { useEffect, useState } from "react"
+import { useEffect, useState } from "react";
+import * as React from "react";
 import createLogger from "v2/Utils/logger"
 import { useSystemContext } from "v2/System"
 import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"

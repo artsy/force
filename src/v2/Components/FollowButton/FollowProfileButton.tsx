@@ -1,6 +1,6 @@
 import { FollowProfileButtonMutation } from "v2/__generated__/FollowProfileButtonMutation.graphql"
 import * as Artsy from "v2/System"
-import React from "react"
+import * as React from "react";
 import track, { TrackingProp } from "react-tracking"
 import { FollowProfileButton_profile } from "../../__generated__/FollowProfileButton_profile.graphql"
 import { FollowButton } from "./Button"

@@ -1,6 +1,5 @@
 import { CollectionsRailFixture } from "v2/Apps/__tests__/Fixtures/Collections"
 import { mount } from "enzyme"
-import React from "react"
 import { RelatedCollectionEntity } from "../RelatedCollectionEntity"
 import { useTracking } from "v2/System/Analytics/useTracking"
 import { OwnerType } from "@artsy/cohesion"

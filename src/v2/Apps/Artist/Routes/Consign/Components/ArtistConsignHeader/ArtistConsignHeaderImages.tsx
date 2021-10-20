@@ -1,7 +1,7 @@
 import { Box, Flex } from "@artsy/palette"
 import { ArtistConsignHeaderImages_artist } from "v2/__generated__/ArtistConsignHeaderImages_artist.graphql"
 import { last } from "lodash"
-import React from "react"
+import * as React from "react";
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 

@@ -1,6 +1,5 @@
 import { AuthenticationModal } from "v2/Components/Authentication/Components/AuthenticationModal"
 import { mount } from "enzyme"
-import React from "react"
 
 jest.mock("v2/Utils/Events")
 

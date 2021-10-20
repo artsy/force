@@ -1,5 +1,6 @@
 import { Clickable, Text } from "@artsy/palette"
-import React, { useEffect } from "react"
+import { useEffect } from "react";
+import * as React from "react";
 import { useInquiryContext } from "../Hooks/useInquiryContext"
 
 export const InquiryDone: React.FC = () => {

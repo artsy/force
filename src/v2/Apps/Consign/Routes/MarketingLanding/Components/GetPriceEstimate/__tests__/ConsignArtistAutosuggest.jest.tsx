@@ -1,5 +1,4 @@
 import Autosuggest from "react-autosuggest"
-import React from "react"
 import { mount } from "enzyme"
 import { ConsignArtistAutosuggest, tests } from "../ConsignArtistAutosuggest"
 import { usePriceEstimateContext } from "../ConsignPriceEstimateContext"

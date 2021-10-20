@@ -1,5 +1,5 @@
 import { BorderBoxProps, Box, Flex, Text } from "@artsy/palette"
-import React from "react"
+import * as React from "react";
 
 interface BackupSecondFactorReminderProps extends BorderBoxProps {
   backupSecondFactors: string[]

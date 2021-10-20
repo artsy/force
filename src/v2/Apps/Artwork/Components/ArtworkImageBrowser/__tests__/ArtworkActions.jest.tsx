@@ -1,4 +1,3 @@
-import React from "react"
 import { ArtworkActionsFragmentContainer } from "../ArtworkActions"
 import {
   BellFillIcon,

@@ -1,5 +1,5 @@
 import { Router } from "found"
-import React, { FC, useState } from "react"
+import { createContext, FC, useState } from "react";
 import { data as sd } from "sharify"
 import { Environment } from "relay-runtime"
 
@@ -79,7 +79,7 @@ export interface SystemContextProps extends SystemContextState {
   isLoggedIn?: boolean
 }
 
-export const SystemContext = React.createContext<SystemContextProps>({})
+export const SystemContext = createContext<SystemContextProps>({})
 
 /**
  * Creates a new Context.Provider with a user and Relay environment, or defaults

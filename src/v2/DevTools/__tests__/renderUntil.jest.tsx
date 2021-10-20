@@ -1,5 +1,5 @@
 import { mount } from "enzyme"
-import React from "react"
+import * as React from "react";
 import { Responsive } from "v2/Utils/Responsive"
 import { MockBoot } from "../MockBoot"
 import { renderUntil } from "../renderUntil"

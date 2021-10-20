@@ -2,7 +2,7 @@ import { Box, Flex, Image, Text } from "@artsy/palette"
 import { RelatedCollectionEntity_collection } from "v2/__generated__/RelatedCollectionEntity_collection.graphql"
 import { useTracking } from "v2/System/Analytics"
 import currency from "currency.js"
-import React from "react"
+import * as React from "react";
 import { createFragmentContainer, graphql } from "react-relay"
 import { ContextModule, clickedCollectionGroup } from "@artsy/cohesion"
 import { useAnalyticsContext } from "v2/System/Analytics/AnalyticsContext"

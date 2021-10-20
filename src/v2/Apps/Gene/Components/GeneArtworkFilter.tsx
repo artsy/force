@@ -1,4 +1,4 @@
-import React from "react"
+import * as React from "react";
 import { createRefetchContainer, RelayRefetchProp, graphql } from "react-relay"
 import { useRouter } from "v2/System/Router/useRouter"
 import { BaseArtworkFilter } from "v2/Components/ArtworkFilter"

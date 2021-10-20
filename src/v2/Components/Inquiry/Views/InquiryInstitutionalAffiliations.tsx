@@ -6,7 +6,7 @@ import {
   TextArea,
   TextAreaChange,
 } from "@artsy/palette"
-import React from "react"
+import * as React from "react";
 import { useState } from "react"
 import { useInquiryContext } from "../Hooks/useInquiryContext"
 import { useUpdateCollectorProfile } from "../Hooks/useUpdateCollectorProfile"

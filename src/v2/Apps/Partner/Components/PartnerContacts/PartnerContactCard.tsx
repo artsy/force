@@ -1,4 +1,4 @@
-import React from "react"
+import * as React from "react";
 import { Column, GridColumns } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { PartnerContactAddressFragmentContainer as PartnerContactAddress } from "./PartnerContactAddress"

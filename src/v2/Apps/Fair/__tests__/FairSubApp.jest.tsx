@@ -1,5 +1,4 @@
 import { MockBoot, renderRelayTree } from "v2/DevTools"
-import React from "react"
 import { FairSubAppFragmentContainer } from "../FairSubApp"
 import { graphql } from "react-relay"
 import { Title } from "react-head"

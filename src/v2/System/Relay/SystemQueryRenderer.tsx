@@ -1,4 +1,4 @@
-import React from "react"
+import * as React from "react";
 import { QueryRenderer } from "react-relay"
 import { OperationType } from "relay-runtime"
 import { useDidMount } from "v2/Utils/Hooks/useDidMount"

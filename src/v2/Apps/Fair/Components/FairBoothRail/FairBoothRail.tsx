@@ -1,4 +1,5 @@
-import React, { useRef } from "react"
+import { useRef } from "react";
+import * as React from "react";
 import { Box, BoxProps, Flex, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FairBoothRail_show } from "v2/__generated__/FairBoothRail_show.graphql"

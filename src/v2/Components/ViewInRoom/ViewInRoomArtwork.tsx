@@ -1,5 +1,5 @@
 import { Image } from "@artsy/palette"
-import React from "react"
+import * as React from "react";
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { ViewInRoomArtwork_artwork } from "v2/__generated__/ViewInRoomArtwork_artwork.graphql"

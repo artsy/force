@@ -1,5 +1,6 @@
 import { ErrorModal } from "v2/Components/Modal/ErrorModal"
-import React, { useEffect, useState } from "react"
+import { useEffect, useState } from "react";
+import * as React from "react";
 import { ErrorWithMetadata } from "v2/Utils/errors"
 import createLogger from "v2/Utils/logger"
 

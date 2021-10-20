@@ -6,7 +6,6 @@ import {
 import deepMerge from "deepmerge"
 import { createTestEnv } from "v2/DevTools/createTestEnv"
 import { Location, Match } from "found"
-import React from "react"
 import { graphql } from "react-relay"
 import { LargeSelect } from "@artsy/palette"
 

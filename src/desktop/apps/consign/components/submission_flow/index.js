@@ -1,5 +1,4 @@
 import PropTypes from "prop-types"
-import React from "react"
 import _StepMarker from "../step_marker"
 import block from "bem-cn-lite"
 import _stepsConfig from "../../client/steps_config"

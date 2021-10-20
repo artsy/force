@@ -1,4 +1,4 @@
-import React from "react"
+import * as React from "react";
 import { Text, Button } from "@artsy/palette"
 import { SubmissionStepper } from "v2/Apps/Consign/Components/SubmissionStepper"
 import { useSystemContext } from "v2/System"

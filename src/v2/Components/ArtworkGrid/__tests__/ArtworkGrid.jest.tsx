@@ -3,7 +3,6 @@ import { ArtworkGrid_artworks } from "v2/__generated__/ArtworkGrid_artworks.grap
 import { ArtworkGrid_Test_QueryRawResponse } from "v2/__generated__/ArtworkGrid_Test_Query.graphql"
 import { renderRelayTree } from "v2/DevTools"
 import { cloneDeep } from "lodash"
-import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ExtractProps } from "v2/Utils/ExtractProps"
 import GridItem, { ArtworkGridItem } from "../../Artwork/GridItem"

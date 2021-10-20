@@ -1,5 +1,4 @@
 import { mount } from "enzyme"
-import React from "react"
 import { ArtworkFilterContextProvider } from "../../ArtworkFilterContext"
 import { ResultsFilter, sortResults } from "../ResultsFilter"
 

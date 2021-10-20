@@ -1,7 +1,6 @@
 import { SearchMeta } from "v2/Apps/Search/Components/SearchMeta"
 import { MockBoot } from "v2/DevTools"
 import { mount } from "enzyme"
-import React from "react"
 import { Link, Title } from "react-head"
 
 jest.mock("sharify", () => ({

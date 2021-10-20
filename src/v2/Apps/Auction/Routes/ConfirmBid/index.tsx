@@ -17,7 +17,7 @@ import * as Schema from "v2/System/Analytics/Schema"
 import { useTracking } from "v2/System/Analytics/useTracking"
 import { FormikHelpers as FormikActions } from "formik"
 import { isEmpty } from "lodash"
-import React from "react"
+import * as React from "react";
 import { Title } from "react-head"
 import {
   RelayProp,

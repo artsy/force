@@ -1,4 +1,3 @@
-import React from "react"
 import { graphql } from "react-relay"
 import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
 import { NavigationTabs_Test_PartnerQuery } from "v2/__generated__/NavigationTabs_Test_PartnerQuery.graphql"

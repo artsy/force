@@ -7,7 +7,7 @@ import {
   SkeletonBox,
   SkeletonText,
 } from "@artsy/palette"
-import React from "react"
+import * as React from "react";
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { FollowArtistButtonFragmentContainer } from "v2/Components/FollowButton/FollowArtistButton"

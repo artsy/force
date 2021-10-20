@@ -1,7 +1,6 @@
 import Document from "../../../../components/main_layout/public/icons/consignments-doc.svg"
 import GreenCheck from "../../../../components/main_layout/public/icons/green-check.svg"
 import PropTypes from "prop-types"
-import React from "react"
 import Select from "../../../../components/main_layout/public/icons/consignments-select.svg"
 import SpeechBubble from "../../../../components/main_layout/public/icons/consignments-speech-bubble.svg"
 import block from "bem-cn-lite"

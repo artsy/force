@@ -1,4 +1,3 @@
-import React from "react"
 import { StructuredData } from "./StructuredData"
 
 export const CreativeWork = ({ data }) => {

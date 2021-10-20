@@ -7,7 +7,8 @@ import {
   Sans,
   color,
 } from "@artsy/palette"
-import React, { useEffect, useRef } from "react"
+import { useEffect, useRef } from "react";
+import * as React from "react";
 import styled from "styled-components"
 import {
   initialArtworkFilterState,

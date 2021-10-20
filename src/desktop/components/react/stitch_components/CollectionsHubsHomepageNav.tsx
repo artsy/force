@@ -1,4 +1,3 @@
-import React from "react"
 import { CollectionsHubsHomepageNav as ReactionHubsNav } from "v2/Components/CollectionsHubsHomepageNav"
 
 export const CollectionsHubsHomepageNav = ({ collectionsHubs }) => {

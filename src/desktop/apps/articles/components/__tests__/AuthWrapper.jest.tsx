@@ -1,4 +1,3 @@
-import React from "react"
 import { mount } from "enzyme"
 import { AuthWrapper } from "../AuthWrapper"
 import sharify, { data as sd } from "sharify"

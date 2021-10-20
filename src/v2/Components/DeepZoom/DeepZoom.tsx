@@ -1,7 +1,7 @@
 import { Box, Flex, ModalBase } from "@artsy/palette"
 import { AnalyticsSchema, useTracking } from "v2/System/Analytics"
 import { once, throttle } from "lodash"
-import React from "react"
+import * as React from "react";
 import { DeepZoomCloseButton } from "./DeepZoomCloseButton"
 import { DeepZoomSlider } from "./DeepZoomSlider"
 import { useState } from "react"

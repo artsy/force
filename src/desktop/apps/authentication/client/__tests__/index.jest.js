@@ -1,4 +1,3 @@
-import React from "react"
 import Cookies from "cookies-js"
 import ReactDOM from "react-dom"
 import { init } from "../index"

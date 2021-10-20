@@ -1,6 +1,6 @@
 import { Box, BoxProps, useTheme, useThemeConfig } from "@artsy/palette"
 import { ThemeV2, ThemeV3 } from "@artsy/palette/dist/themes"
-import React from "react"
+import * as React from "react";
 
 interface AppContainerProps extends BoxProps {}
 

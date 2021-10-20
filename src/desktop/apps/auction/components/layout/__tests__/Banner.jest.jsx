@@ -1,4 +1,3 @@
-import React from "react"
 import renderTestComponent from "desktop/apps/auction/__tests__/utils/renderTestComponent"
 import moment from "moment"
 import { test as Banner } from "../Banner"

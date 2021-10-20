@@ -8,7 +8,6 @@ import { ArtworkSidebarArtistsFragmentContainer } from "v2/Apps/Artwork/Componen
 import { SystemContextProvider } from "v2/System"
 import { FollowArtistButton } from "v2/Components/FollowButton/FollowArtistButton"
 import { renderRelayTree } from "v2/DevTools"
-import React from "react"
 import { graphql } from "react-relay"
 import { mockLocation } from "v2/DevTools/mockLocation"
 import { mediator } from "lib/mediator"

@@ -1,4 +1,3 @@
-import React from "react"
 import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
 import { ArtworkDetailsAdditionalInfoFragmentContainer } from "../ArtworkDetailsAdditionalInfo"

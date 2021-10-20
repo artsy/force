@@ -1,6 +1,6 @@
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { Image, ResponsiveBox, Text } from "@artsy/palette"
-import React from "react"
+import * as React from "react";
 import { createFragmentContainer, graphql } from "react-relay"
 import { ShowCard_show } from "v2/__generated__/ShowCard_show.graphql"
 

@@ -1,5 +1,5 @@
 import { Spinner, SpinnerProps } from "@artsy/palette"
-import React from "react"
+import * as React from "react";
 import { QueryRenderer, Container as RelayContainer } from "react-relay"
 import styled from "styled-components"
 import createLogger from "v2/Utils/logger"
