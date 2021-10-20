@@ -143,6 +143,7 @@ const AutosuggestInput: FC = props => {
   return (
     <Input
       title="Artist"
+      data-test-id="autosuggest-input"
       placeholder="Enter Full Name"
       spellCheck={false}
       {...props}
