@@ -2,12 +2,7 @@ import { Box, Flex, Theme } from "@artsy/palette"
 import { NetworkOfflineMonitor } from "v2/System/Router/NetworkOfflineMonitor"
 import { findCurrentRoute } from "v2/System/Router/Utils/findCurrentRoute"
 import { useMaybeReloadAfterInquirySignIn } from "v2/System/Router/Utils/useMaybeReloadAfterInquirySignIn"
-import {
-  DESKTOP_NAV_BAR_HEIGHT,
-  MOBILE_NAV_HEIGHT,
-  MOBILE_LOGGED_IN_NAV_HEIGHT,
-  NavBar,
-} from "v2/Components/NavBar"
+import { NavBar } from "v2/Components/NavBar"
 import { Match } from "found"
 import { isFunction } from "lodash"
 import { Footer } from "v2/Components/Footer"
@@ -20,6 +15,7 @@ import { AppContainer } from "./AppContainer"
 import { useRouteComplete } from "v2/Utils/Hooks/useRouteComplete"
 import { useAuthIntent } from "v2/Utils/Hooks/useAuthIntent"
 import { AppToasts } from "./AppToasts"
+import { useNavBarHeight } from "v2/Components/NavBar/useNavBarHeight"
 
 const logger = createLogger("Apps/Components/AppShell")
 
@@ -33,10 +29,11 @@ export const AppShell: React.FC<AppShellProps> = props => {
 
   const { children, match } = props
   const routeConfig = findCurrentRoute(match)!
-  const { user, isEigen } = useSystemContext()
+  const { isEigen } = useSystemContext()
+  const showNav = !routeConfig.hideNav
   const showFooter = !isEigen && !routeConfig.hideFooter
   const appContainerMaxWidth = routeConfig.displayFullPage ? "100%" : null
-  const isLoggedIn = Boolean(user)
+
   /**
    * Check to see if a route has a prepare key; if so call it. Used typically to
    * preload bundle-split components (import()) while the route is fetching data
@@ -73,6 +70,8 @@ export const AppShell: React.FC<AppShellProps> = props => {
   // TODO: When old backbone inquiry modal goes away, this can be removed
   useMaybeReloadAfterInquirySignIn()
 
+  const { height: navBarHeight } = useNavBarHeight()
+
   return (
     <Flex
       width="100%"
@@ -83,19 +82,16 @@ export const AppShell: React.FC<AppShellProps> = props => {
       minHeight="100vh"
       flexDirection="column"
     >
-      <Box
-        pb={[
-          isLoggedIn ? MOBILE_LOGGED_IN_NAV_HEIGHT : MOBILE_NAV_HEIGHT,
-          DESKTOP_NAV_BAR_HEIGHT,
-        ]}
-      >
-        <Box left={0} position="fixed" width="100%" zIndex={100}>
-          <NavBar />
+      {showNav && (
+        <Box height={navBarHeight}>
+          <Box left={0} position="fixed" width="100%" zIndex={100}>
+            <NavBar />
+          </Box>
         </Box>
-      </Box>
+      )}
 
       <Theme theme={theme}>
-        <AppToasts />
+        <AppToasts accomodateNav={showNav} />
 
         <Flex
           as="main"
