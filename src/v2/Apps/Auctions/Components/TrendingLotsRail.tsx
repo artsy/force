@@ -33,7 +33,6 @@ const TrendingLotsRail: React.FC<TrendingLotsRailProps> = ({ viewer }) => {
     <Rail
       title="Trending lots"
       subTitle="Works with the most bids today"
-      countLabel={liveSaleArtworks.length}
       getItems={() => {
         return liveSaleArtworks.map((node, index) => {
           return (

@@ -34,7 +34,6 @@ const StandoutLotsRail: React.FC<StandoutLotsRailProps> = ({ viewer }) => {
   return (
     <Rail
       title="Standout Lots"
-      countLabel={liveSaleArtworks.length}
       subTitle="Works that Artsy curators love"
       getItems={() => {
         return liveSaleArtworks.map((node, index) => {
