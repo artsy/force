@@ -14,7 +14,7 @@ const { getWrapper } = setupTestWrapper<SettingsPaymentsRoute_Test_Query>({
   query: graphql`
     query SettingsPaymentsRoute_Test_Query {
       me {
-        ...PaymentSection_me
+        ...SettingsPaymentsRoute_me
       }    
     }
   `,

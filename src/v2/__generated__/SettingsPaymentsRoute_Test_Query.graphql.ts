@@ -6,7 +6,7 @@ import { FragmentRefs } from "relay-runtime";
 export type SettingsPaymentsRoute_Test_QueryVariables = {};
 export type SettingsPaymentsRoute_Test_QueryResponse = {
     readonly me: {
-        readonly " $fragmentRefs": FragmentRefs<"PaymentSection_me">;
+        readonly " $fragmentRefs": FragmentRefs<"SettingsPaymentsRoute_me">;
     } | null;
 };
 export type SettingsPaymentsRoute_Test_Query = {
@@ -19,7 +19,7 @@ export type SettingsPaymentsRoute_Test_Query = {
 /*
 query SettingsPaymentsRoute_Test_Query {
   me {
-    ...PaymentSection_me
+    ...SettingsPaymentsRoute_me
     id
   }
 }
@@ -45,6 +45,10 @@ fragment PaymentSection_me on Me {
       hasNextPage
     }
   }
+}
+
+fragment SettingsPaymentsRoute_me on Me {
+  ...PaymentSection_me
 }
 */
 
@@ -88,7 +92,7 @@ return {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "PaymentSection_me"
+            "name": "SettingsPaymentsRoute_me"
           }
         ],
         "storageKey": null
@@ -233,9 +237,9 @@ return {
     "metadata": {},
     "name": "SettingsPaymentsRoute_Test_Query",
     "operationKind": "query",
-    "text": "query SettingsPaymentsRoute_Test_Query {\n  me {\n    ...PaymentSection_me\n    id\n  }\n}\n\nfragment PaymentSection_me on Me {\n  id\n  internalID\n  creditCards(first: 100) {\n    edges {\n      node {\n        id\n        internalID\n        brand\n        lastDigits\n        expirationYear\n        expirationMonth\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query SettingsPaymentsRoute_Test_Query {\n  me {\n    ...SettingsPaymentsRoute_me\n    id\n  }\n}\n\nfragment PaymentSection_me on Me {\n  id\n  internalID\n  creditCards(first: 100) {\n    edges {\n      node {\n        id\n        internalID\n        brand\n        lastDigits\n        expirationYear\n        expirationMonth\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment SettingsPaymentsRoute_me on Me {\n  ...PaymentSection_me\n}\n"
   }
 };
 })();
-(node as any).hash = '73408fe18654ee057fa8f7c0b65ba5de';
+(node as any).hash = 'e13404149f5c360b9213e81d00b05b83';
 export default node;
