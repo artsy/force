@@ -12,9 +12,9 @@ export type SearchBar_viewer = {
                 readonly __typename: string;
                 readonly displayType?: string | null;
                 readonly slug?: string;
-                readonly isDisplayAuctionLink?: boolean | null;
-                readonly counts?: {
-                    readonly artworks: number | null;
+                readonly statuses?: {
+                    readonly artworks: boolean | null;
+                    readonly auctionLots: boolean | null;
                 } | null;
             } | null;
         } | null> | null;
@@ -140,16 +140,9 @@ const node: ReaderFragment = {
                         {
                           "alias": null,
                           "args": null,
-                          "kind": "ScalarField",
-                          "name": "isDisplayAuctionLink",
-                          "storageKey": null
-                        },
-                        {
-                          "alias": null,
-                          "args": null,
-                          "concreteType": "ArtistCounts",
+                          "concreteType": "ArtistStatuses",
                           "kind": "LinkedField",
-                          "name": "counts",
+                          "name": "statuses",
                           "plural": false,
                           "selections": [
                             {
@@ -157,6 +150,13 @@ const node: ReaderFragment = {
                               "args": null,
                               "kind": "ScalarField",
                               "name": "artworks",
+                              "storageKey": null
+                            },
+                            {
+                              "alias": null,
+                              "args": null,
+                              "kind": "ScalarField",
+                              "name": "auctionLots",
                               "storageKey": null
                             }
                           ],
@@ -179,5 +179,5 @@ const node: ReaderFragment = {
   ],
   "type": "Viewer"
 };
-(node as any).hash = 'dba70b00ce1a4b387ca2e663f616add5';
+(node as any).hash = 'd1b44d00fe49c0ef5f9236590d3604f8';
 export default node;

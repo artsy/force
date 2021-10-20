@@ -126,7 +126,9 @@ describe("ArtistApp", () => {
       mockfindCurrentRoute.mockImplementation(() => ({}))
       const wrapper = getWrapper({
         Artist: () => ({
-          isDisplayAuctionLink: false,
+          statuses: {
+            auctionLots: false,
+          },
           counts: {
             forSaleArtworks: 20,
           },
@@ -142,7 +144,9 @@ describe("ArtistApp", () => {
       mockfindCurrentRoute.mockImplementation(() => ({}))
       const wrapper = getWrapper({
         Artist: () => ({
-          isDisplayAuctionLink: true,
+          statuses: {
+            auctionLots: true,
+          },
           counts: {
             forSaleArtworks: 20,
           },
