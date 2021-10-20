@@ -22,9 +22,9 @@ const { getWrapper } = setupTestWrapper<SettingsPaymentsRoute_Test_Query>({
 
 describe("SettingsPaymentsRoute", () => {
   beforeEach(() => {})
-  it("renders PaymentSection", () => {
+  it("renders PaymentSection with", () => {
     const wrapper = getWrapper({})
-    const paymentSection = wrapper.find("No Saved Cards")
-    expect(paymentSection).toContain("Please add a payment card for a faster checkout experience in future.")
+    expect(wrapper.text()).toContain("No Saved Cards")
+    expect(wrapper.text()).toContain("Please add a payment card for a faster checkout experience in future.")
   })
 })
