@@ -88,19 +88,20 @@ export const UploadPhotos: FC = () => {
 
           return (
             <Form>
-              <UploadPhotosForm mt={4} mb={6} />
+              <UploadPhotosForm mt={4} maxTotalSize={30} />
 
-              {values.photos.map(photo => (
-                <PhotoThumbnail
-                  mt={2}
-                  key={photo.id}
-                  photo={photo}
-                  onDelete={handlePhotoDelete}
-                />
-              ))}
+              <Box mb={6}>
+                {values.photos.map(photo => (
+                  <PhotoThumbnail
+                    mt={2}
+                    key={photo.id}
+                    photo={photo}
+                    onDelete={handlePhotoDelete}
+                  />
+                ))}
+              </Box>
 
               <Button
-                mt={2}
                 disabled={!isValid}
                 loading={values.photos.some(c => !c.s3Key)}
                 type="submit"
