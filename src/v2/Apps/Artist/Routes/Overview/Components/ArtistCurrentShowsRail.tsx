@@ -173,32 +173,34 @@ export const ArtistCurrentShowsRailQueryRenderer: React.FC<{
   const { relayEnvironment } = useSystemContext()
 
   return (
-    <SystemQueryRenderer<ArtistCurrentShowsRailQuery>
-      lazyLoad
-      environment={relayEnvironment}
-      variables={{ slug }}
-      placeholder={PLACEHOLDER}
-      query={graphql`
-        query ArtistCurrentShowsRailQuery($slug: String!) {
-          artist(id: $slug) {
-            ...ArtistCurrentShowsRail_artist
+    <Box data-test="ArtistCurrentShowsRailQueryRenderer">
+      <SystemQueryRenderer<ArtistCurrentShowsRailQuery>
+        lazyLoad
+        environment={relayEnvironment}
+        variables={{ slug }}
+        placeholder={PLACEHOLDER}
+        query={graphql`
+          query ArtistCurrentShowsRailQuery($slug: String!) {
+            artist(id: $slug) {
+              ...ArtistCurrentShowsRail_artist
+            }
           }
-        }
-      `}
-      render={({ error, props }) => {
-        if (error) {
-          console.error(error)
-          return null
-        }
-        if (!props) {
-          return PLACEHOLDER
-        }
-        if (props.artist) {
-          return (
-            <ArtistCurrentShowsRailFragmentContainer artist={props.artist} />
-          )
-        }
-      }}
-    />
+        `}
+        render={({ error, props }) => {
+          if (error) {
+            console.error(error)
+            return null
+          }
+          if (!props) {
+            return PLACEHOLDER
+          }
+          if (props.artist) {
+            return (
+              <ArtistCurrentShowsRailFragmentContainer artist={props.artist} />
+            )
+          }
+        }}
+      />
+    </Box>
   )
 }
