@@ -1,4 +1,4 @@
-import { login, resetPassword, signUp } from "../auth"
+import { login, forgotPassword, signUp, resetPassword } from "../auth"
 
 jest.mock("sharify", () => ({
   data: {
@@ -44,7 +44,7 @@ describe("login", () => {
   })
 })
 
-describe("resetPassword", () => {
+describe("forgotPassword", () => {
   it("makes the correct request", async () => {
     const mockFetch = jest.fn(() =>
       Promise.resolve({
@@ -56,7 +56,7 @@ describe("resetPassword", () => {
     // @ts-ignore
     global.fetch = mockFetch
 
-    const res = await resetPassword({ email: "example@example" })
+    const res = await forgotPassword({ email: "example@example" })
 
     expect(mockFetch).toBeCalledWith(
       "https://api.artsy.net/api/v1/users/send_reset_password_instructions",
@@ -70,6 +70,44 @@ describe("resetPassword", () => {
           "X-XAPP-TOKEN": "artsy_xapp_token",
         },
         method: "POST",
+      }
+    )
+
+    expect(res).toEqual({ success: true })
+  })
+})
+
+describe("resetPassword", () => {
+  it("makes the correct request", async () => {
+    const mockFetch = jest.fn(() =>
+      Promise.resolve({
+        ok: true,
+        json: () => Promise.resolve({ success: true }),
+      })
+    )
+
+    // @ts-ignore
+    global.fetch = mockFetch
+
+    const res = await resetPassword({
+      password: "secret", // pragma: allowlist secret
+      passwordConfirmation: "secret", // pragma: allowlist secret
+      resetPasswordToken: "token", // pragma: allowlist secret
+    })
+
+    expect(mockFetch).toBeCalledWith(
+      "https://api.artsy.net/api/v1/users/reset_password",
+      {
+        body:
+          '{"password":"secret","password_confirmation":"secret","reset_password_token":"token"}',
+        credentials: "same-origin",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          "X-Requested-With": "XMLHttpRequest",
+          "X-XAPP-TOKEN": "artsy_xapp_token",
+        },
+        method: "PUT",
       }
     )
 

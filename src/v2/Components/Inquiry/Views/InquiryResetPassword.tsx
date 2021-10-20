@@ -2,7 +2,7 @@ import { Button, Skeleton, SkeletonText, Spacer, Text } from "@artsy/palette"
 import { useState, useEffect } from "react";
 import * as React from "react";
 import { useInquiryContext } from "../Hooks/useInquiryContext"
-import { resetPassword } from "v2/Utils/auth"
+import { forgotPassword } from "v2/Utils/auth"
 import { useInquiryAccountContext, Screen } from "./InquiryAccount"
 import { useTracking } from "v2/System/Analytics/useTracking"
 import {
@@ -30,7 +30,7 @@ export const InquiryResetPassword: React.FC = () => {
   useEffect(() => {
     const init = async () => {
       try {
-        await resetPassword({ email: inquiry.email! })
+        await forgotPassword({ email: inquiry.email! })
         setMode(Mode.Done)
 
         const options: ResetYourPassword = {
