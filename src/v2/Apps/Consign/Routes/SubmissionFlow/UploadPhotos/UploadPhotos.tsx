@@ -52,7 +52,7 @@ export const UploadPhotos: FC = () => {
   }
 
   return (
-    <Box mb={4}>
+    <>
       <SubmissionStepper currentStep="Upload Photos" />
 
       <Text mt={4} variant="lg">
@@ -112,6 +112,6 @@ export const UploadPhotos: FC = () => {
           )
         }}
       </Formik>
-    </Box>
+    </>
   )
 }
