@@ -1,4 +1,3 @@
-import React from "react"
 import { graphql } from "react-relay"
 
 import { createTestEnv } from "v2/DevTools/createTestEnv"

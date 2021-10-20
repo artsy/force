@@ -1,6 +1,6 @@
 import Colors from "v2/Assets/Colors"
 import { avantgarde } from "v2/Assets/Fonts"
-import React from "react"
+import { Component } from "react";
 import styled from "styled-components"
 import MultiStateButton, {
   MultiButtonState,
@@ -91,7 +91,7 @@ const NextButton = styled(MultiStateButton)`
 `
 NextButton.displayName = "NextButton"
 
-export class Layout extends React.Component<Props, null> {
+export class Layout extends Component<Props, null> {
   render() {
     const disabled = !this.props.onNextButtonPressed
     const buttonText = this.props.isLastStep ? "finished" : "next"

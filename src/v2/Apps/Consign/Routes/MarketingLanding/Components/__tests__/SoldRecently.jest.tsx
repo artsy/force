@@ -1,4 +1,3 @@
-import React from "react"
 import { MockBoot } from "v2/DevTools"
 import { Breakpoint } from "@artsy/palette"
 import { tests } from "../SoldRecently"

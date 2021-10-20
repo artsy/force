@@ -1,5 +1,4 @@
 import { mount } from "enzyme"
-import React from "react"
 import { Image, Modal, ModalContent } from "../Modal"
 import { ModalCta } from "../ModalCta"
 import { ModalHeader } from "../ModalHeader"

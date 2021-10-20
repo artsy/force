@@ -2,7 +2,7 @@ import { Box, EntityHeader, Separator, Spacer, Spinner } from "@artsy/palette"
 import { WorksForYouFeed_viewer } from "v2/__generated__/WorksForYouFeed_viewer.graphql"
 import { SystemContextProps } from "v2/System"
 import ArtworkGrid from "v2/Components/ArtworkGrid"
-import React, { Component } from "react"
+import { Component } from "react";
 import ReactDOM from "react-dom"
 import styled from "styled-components"
 import { get } from "v2/Utils/get"

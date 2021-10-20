@@ -1,6 +1,5 @@
 import { MockBoot } from "v2/DevTools/MockBoot"
 import { mount } from "enzyme"
-import React from "react"
 import { Footer } from "../Footer"
 import { DownloadAppBadge } from "v2/Components/DownloadAppBadge"
 import { CCPARequest } from "../../CCPARequest"

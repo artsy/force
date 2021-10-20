@@ -1,5 +1,5 @@
 import { Box, Button, Link, Sans, Serif } from "@artsy/palette"
-import React from "react"
+import * as React from "react";
 
 export const CompleteFailed: React.FC = () => {
   return (

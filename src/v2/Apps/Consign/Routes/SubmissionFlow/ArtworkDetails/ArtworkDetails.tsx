@@ -1,4 +1,4 @@
-import React, { FC } from "react"
+import { FC } from "react";
 import { Button, Text } from "@artsy/palette"
 import { SubmissionStepper } from "v2/Apps/Consign/Components/SubmissionStepper"
 import { Form, Formik } from "formik"

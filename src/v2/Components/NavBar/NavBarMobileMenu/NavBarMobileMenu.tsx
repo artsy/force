@@ -5,7 +5,7 @@ import {
   ARTISTS_SUBMENU_DATA,
   ARTWORKS_SUBMENU_DATA,
 } from "v2/Components/NavBar/menuData"
-import React from "react"
+import * as React from "react";
 import { NavBarMobileMenuAuthentication } from "./NavBarMobileMenuAuthentication"
 import {
   NavBarMobileMenuItemLink,

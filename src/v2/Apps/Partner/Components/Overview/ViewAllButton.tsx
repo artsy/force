@@ -1,4 +1,4 @@
-import React from "react"
+import * as React from "react";
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { ScrollToPartnerHeader } from "../ScrollToPartnerHeader"
 import { Text } from "@artsy/palette"

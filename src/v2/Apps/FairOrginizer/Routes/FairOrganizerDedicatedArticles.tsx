@@ -7,7 +7,8 @@ import {
   Text,
   Title,
 } from "@artsy/palette"
-import React, { useEffect, useState } from "react"
+import { useEffect, useState } from "react";
+import * as React from "react";
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 import { PaginationFragmentContainer as Pagination } from "v2/Components/Pagination"
 import { extractNodes } from "v2/Utils/extractNodes"

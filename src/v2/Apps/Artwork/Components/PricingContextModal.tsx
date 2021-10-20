@@ -10,7 +10,7 @@ import {
 } from "@artsy/palette"
 import { track } from "v2/System/Analytics"
 import * as Schema from "v2/System/Analytics/Schema"
-import React from "react"
+import { Component } from "react";
 import { data as sd } from "sharify"
 import Events from "v2/Utils/Events"
 
@@ -26,7 +26,7 @@ interface State {
     dispatch: data => Events.postEvent(data),
   }
 )
-export class PricingContextModal extends React.Component<State> {
+export class PricingContextModal extends Component<State> {
   state = {
     isModalOpen: false,
   }

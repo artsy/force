@@ -1,5 +1,5 @@
 import { ModalBase } from "@artsy/palette"
-import React from "react"
+import * as React from "react";
 import { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { AnalyticsSchema, useTracking } from "v2/System"

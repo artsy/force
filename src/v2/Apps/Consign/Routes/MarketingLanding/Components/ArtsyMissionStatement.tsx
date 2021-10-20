@@ -1,4 +1,4 @@
-import React from "react"
+import * as React from "react";
 import { Column, GridColumns, Separator, Text } from "@artsy/palette"
 
 export const ArtsyMissionStatement: React.FC = () => {

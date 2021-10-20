@@ -1,6 +1,5 @@
 import { Input } from "@artsy/palette"
 import { mount } from "enzyme"
-import React from "react"
 import { flushPromiseQueue } from "v2/DevTools"
 import {
   ArtworkFilterContextProps,

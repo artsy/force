@@ -1,6 +1,5 @@
 import { Reveal } from "../Reveal"
 import { mount } from "enzyme"
-import React from "react"
 
 describe("Reveal", () => {
   const getWrapper = props => {

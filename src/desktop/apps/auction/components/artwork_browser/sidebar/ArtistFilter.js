@@ -1,6 +1,5 @@
 import _BasicCheckbox from "./BasicCheckbox"
 import PropTypes from "prop-types"
-import React from "react"
 import block from "bem-cn-lite"
 import { connect } from "react-redux"
 import { contains } from "underscore"

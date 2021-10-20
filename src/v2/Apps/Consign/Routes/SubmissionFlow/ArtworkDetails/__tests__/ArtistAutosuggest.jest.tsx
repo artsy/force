@@ -1,4 +1,3 @@
-import React from "react"
 import { mount, ReactWrapper } from "enzyme"
 import { ArtworkDetailsFormModel } from "../Components/ArtworkDetailsForm"
 import { ArtistAutosuggest } from "../Components/ArtistAutosuggest"

@@ -5,7 +5,6 @@ import {
 import { UntouchedBuyOrder } from "v2/Apps/__tests__/Fixtures/Order"
 import { SystemContextProvider } from "v2/System"
 import { MockBoot, renderRelayTree } from "v2/DevTools"
-import React from "react"
 import { HeadProvider } from "react-head"
 import { graphql } from "react-relay"
 import { PurchaseHistoryProps } from "../Components/PurchaseHistory"

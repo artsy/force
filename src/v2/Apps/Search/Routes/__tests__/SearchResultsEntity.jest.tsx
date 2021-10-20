@@ -2,7 +2,6 @@ import { ZeroState } from "v2/Apps/Search/Components/ZeroState"
 import { PaginationFragmentContainer as Pagination } from "v2/Components/Pagination"
 import { MockBoot } from "v2/DevTools"
 import { mount } from "enzyme"
-import React from "react"
 import { SearchResultsEntityRoute as SearchResultsEntity } from "../SearchResultsEntity"
 
 jest.mock("v2/System/Router/useRouter", () => ({

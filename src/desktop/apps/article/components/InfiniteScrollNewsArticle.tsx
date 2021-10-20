@@ -2,7 +2,7 @@ import { data as sd } from "sharify"
 import { getENV } from "v2/Utils/getENV"
 import moment from "moment"
 import styled from "styled-components"
-import React, { Component, Fragment } from "react"
+import { Component, Fragment } from "react";
 import { flatten, throttle } from "lodash"
 import Waypoint from "react-waypoint"
 import { positronql } from "desktop/lib/positronql"

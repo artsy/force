@@ -2,7 +2,7 @@ import { CSSGrid, Text } from "@artsy/palette"
 import { CollectionsHubsNav_marketingHubCollections } from "v2/__generated__/CollectionsHubsNav_marketingHubCollections.graphql"
 import { useTracking } from "v2/System/Analytics"
 import * as Schema from "v2/System/Analytics/Schema"
-import React, { FC } from "react"
+import { FC } from "react";
 import { createFragmentContainer, graphql } from "react-relay"
 import { resize } from "v2/Utils/resizer"
 import { ImageLink } from "./ImageLink"

@@ -1,4 +1,4 @@
-import React from "react"
+import * as React from "react";
 import { createFragmentContainer, graphql } from "react-relay"
 import { GeneMeta_gene } from "v2/__generated__/GeneMeta_gene.graphql"
 import { MetaTags } from "v2/Components/MetaTags"

@@ -1,4 +1,4 @@
-import React from "react"
+import * as React from "react";
 import { createFragmentContainer, graphql } from "react-relay"
 import { FairCollection_collection } from "v2/__generated__/FairCollection_collection.graphql"
 import { TriptychCard } from "@artsy/palette"

@@ -1,5 +1,5 @@
 import { CheckIcon, Clickable, ClickableProps, CloseIcon } from "@artsy/palette"
-import React from "react"
+import * as React from "react";
 import { useState } from "react"
 
 export const InquiryAffiliatedRemoveButton: React.FC<ClickableProps> = props => {

@@ -1,4 +1,3 @@
-import React from "react"
 import loadable from "@loadable/component"
 import { Redirect, RedirectException } from "found"
 import { graphql } from "react-relay"

@@ -1,5 +1,5 @@
 import { Box, BoxProps, Image, ResponsiveBox, Text } from "@artsy/palette"
-import React from "react"
+import * as React from "react";
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { RouterLink } from "v2/System/Router/RouterLink"

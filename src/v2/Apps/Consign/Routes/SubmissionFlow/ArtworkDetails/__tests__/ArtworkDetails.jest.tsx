@@ -1,4 +1,3 @@
-import React from "react"
 import { mount } from "enzyme"
 import { ArtworkDetails, initialValues } from "../ArtworkDetails"
 import { ArtworkDetailsForm } from "../Components/ArtworkDetailsForm"

@@ -6,7 +6,7 @@ import {
 import { SuggestedGenesQuery } from "v2/__generated__/SuggestedGenesQuery.graphql"
 import { SystemContextProps, withSystemContext } from "v2/System"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
-import React from "react"
+import * as React from "react";
 import {
   RelayProp,
   commitMutation,

@@ -3,7 +3,6 @@ import { SystemContextProvider } from "v2/System"
 import { PaginationFragmentContainer as Pagination } from "v2/Components/Pagination"
 import { MockBoot } from "v2/DevTools"
 import { mount } from "enzyme"
-import React from "react"
 import { SearchResultsArtistsRoute as SearchResultsArtists } from "../SearchResultsArtists"
 
 jest.mock("v2/Components/Pagination/useComputeHref")

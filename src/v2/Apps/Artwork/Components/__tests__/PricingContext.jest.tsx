@@ -7,7 +7,6 @@ import {
 import { mockTracking } from "v2/System/Analytics"
 import { renderRelayTree } from "v2/DevTools"
 import { mount } from "enzyme"
-import React from "react"
 import { graphql } from "react-relay"
 import Waypoint from "react-waypoint"
 import {

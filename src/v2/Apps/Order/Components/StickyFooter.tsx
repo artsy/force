@@ -1,7 +1,7 @@
 import { Flex, Spacer, Text, Clickable } from "@artsy/palette"
 import { track } from "v2/System/Analytics"
 import * as Schema from "v2/System/Analytics/Schema"
-import React, { Component } from "react"
+import { Component } from "react";
 import styled from "styled-components"
 import { themeGet } from "@styled-system/theme-get"
 import { withInquiry, WithInquiryProps } from "v2/Components/Inquiry/useInquiry"

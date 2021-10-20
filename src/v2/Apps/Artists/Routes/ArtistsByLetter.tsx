@@ -8,7 +8,8 @@ import {
   Spacer,
   Column,
 } from "@artsy/palette"
-import React, { useState } from "react"
+import { useState } from "react";
+import * as React from "react";
 import { graphql, createRefetchContainer, RelayRefetchProp } from "react-relay"
 import styled, { css } from "styled-components"
 import { RouterLink } from "v2/System/Router/RouterLink"

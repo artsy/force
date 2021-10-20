@@ -1,4 +1,3 @@
-import React from "react"
 import { mount } from "enzyme"
 import ItemLink from "../ItemLink"
 import { CircleWhiteCheckIcon, PlusIcon } from "@artsy/palette"

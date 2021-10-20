@@ -1,6 +1,5 @@
 import { mount } from "enzyme"
 import "jest-styled-components"
-import React from "react"
 import { FollowButton } from "../Button"
 
 describe("FollowButton", () => {

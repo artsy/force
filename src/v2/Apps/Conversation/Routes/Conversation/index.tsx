@@ -1,4 +1,5 @@
-import React, { useState } from "react"
+import { useState } from "react";
+import * as React from "react";
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
 import { Box, Flex, FullBleed, Title, ThemeProviderV3 } from "@artsy/palette"
 import { Match } from "found"

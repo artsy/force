@@ -1,5 +1,4 @@
 import { mount } from "enzyme"
-import React from "react"
 import { ArtistSeriesItem } from "../ArtistSeriesItem"
 import { ArtistSeriesItem_artistSeries } from "v2/__generated__/ArtistSeriesItem_artistSeries.graphql"
 import { useTracking } from "v2/System/Analytics/useTracking"

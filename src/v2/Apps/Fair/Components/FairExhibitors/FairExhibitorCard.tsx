@@ -1,4 +1,4 @@
-import React from "react"
+import * as React from "react";
 import { Box, Flex, Image, Text, BorderBox } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useAnalyticsContext, useSystemContext, useTracking } from "v2/System"

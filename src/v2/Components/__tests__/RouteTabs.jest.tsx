@@ -1,7 +1,6 @@
 import { MockBoot } from "v2/DevTools/MockBoot"
 import { MockRouter } from "v2/DevTools/MockRouter"
 import { mount } from "enzyme"
-import React from "react"
 import { RouteTab, RouteTabs } from "../RouteTabs"
 
 describe("RouteTabs", () => {

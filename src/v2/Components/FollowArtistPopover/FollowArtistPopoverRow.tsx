@@ -2,7 +2,7 @@ import { EntityHeader } from "@artsy/palette"
 import { FollowArtistPopoverRow_artist } from "v2/__generated__/FollowArtistPopoverRow_artist.graphql"
 import { FollowArtistPopoverRowMutation } from "v2/__generated__/FollowArtistPopoverRowMutation.graphql"
 import { SystemContextProps } from "v2/System"
-import React from "react"
+import { Component } from "react";
 import {
   RelayProp,
   commitMutation,
@@ -24,7 +24,7 @@ interface State {
   followed: boolean
 }
 
-class FollowArtistPopoverRow extends React.Component<Props, State> {
+class FollowArtistPopoverRow extends Component<Props, State> {
   state: State = {
     // @ts-expect-error STRICT_NULL_CHECK
     swappedArtist: null,

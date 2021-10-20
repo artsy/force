@@ -1,7 +1,6 @@
 import { CollectionHubFixture } from "v2/Apps/__tests__/Fixtures/Collections"
 import { useTracking } from "v2/System/Analytics/useTracking"
 import { mount } from "enzyme"
-import React from "react"
 import { OtherCollectionEntity } from "../OtherCollectionEntity"
 import { OwnerType } from "@artsy/cohesion"
 import { AnalyticsContext } from "v2/System/Analytics/AnalyticsContext"

@@ -1,5 +1,5 @@
 import { Image, ResponsiveBox, Text } from "@artsy/palette"
-import React from "react"
+import * as React from "react";
 import { createFragmentContainer } from "react-relay"
 import { useTracking } from "v2/System/Analytics/useTracking"
 import { graphql } from "relay-runtime"

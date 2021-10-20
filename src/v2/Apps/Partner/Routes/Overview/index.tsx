@@ -1,4 +1,4 @@
-import React from "react"
+import * as React from "react";
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArticlesRailFragmentContainer } from "../../Components/Overview/ArticlesRail"
 import { Overview_partner } from "v2/__generated__/Overview_partner.graphql"

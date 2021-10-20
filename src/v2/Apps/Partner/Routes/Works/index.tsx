@@ -1,4 +1,4 @@
-import React from "react"
+import * as React from "react";
 import { createRefetchContainer, RelayRefetchProp } from "react-relay"
 import { graphql } from "relay-runtime"
 import { Works_partner } from "v2/__generated__/Works_partner.graphql"

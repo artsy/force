@@ -1,5 +1,5 @@
 import { Input } from "@artsy/palette"
-import React from "react"
+import { Component } from "react";
 
 export interface OfferInputProps {
   id: string
@@ -8,7 +8,7 @@ export interface OfferInputProps {
   onFocus?: () => void
 }
 
-export class OfferInput extends React.Component<OfferInputProps> {
+export class OfferInput extends Component<OfferInputProps> {
   render() {
     const { id, showError, onFocus } = this.props
 
@@ -34,6 +34,6 @@ export class OfferInput extends React.Component<OfferInputProps> {
           this.props.onChange(Number(ev.currentTarget.value || "0"))
         }}
       />
-    )
+    );
   }
 }

@@ -1,6 +1,6 @@
 import { Box, Image, Text } from "@artsy/palette"
 import { ArtistSeriesItem_artistSeries } from "v2/__generated__/ArtistSeriesItem_artistSeries.graphql"
-import React from "react"
+import * as React from "react";
 import { createFragmentContainer, graphql } from "react-relay"
 import { ContextModule, clickedArtistSeriesGroup } from "@artsy/cohesion"
 import { useTracking } from "v2/System/Analytics/useTracking"

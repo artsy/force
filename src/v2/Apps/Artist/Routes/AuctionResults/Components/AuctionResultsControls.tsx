@@ -1,5 +1,5 @@
 import { Button, FilterIcon, Flex, Row, Spacer } from "@artsy/palette"
-import React from "react"
+import * as React from "react";
 import { Media } from "v2/Utils/Responsive"
 import { KeywordFilter } from "./KeywordFilter"
 import { SortSelect } from "./SortSelect"

@@ -1,5 +1,5 @@
 import { Checkbox, Flex } from "@artsy/palette"
-import React from "react"
+import * as React from "react";
 import { ShowMore } from "v2/Components/ArtworkFilter/ArtworkFilters/ShowMore"
 import { useAuctionResultsFilterContext } from "../../AuctionResultsFilterContext"
 import { FilterExpandable } from "v2/Components/ArtworkFilter/ArtworkFilters/FilterExpandable"

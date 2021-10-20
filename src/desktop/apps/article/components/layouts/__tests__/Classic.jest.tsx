@@ -1,4 +1,3 @@
-import React from "react"
 import { ClassicArticleLayout } from "../Classic"
 import { mount } from "enzyme"
 import {

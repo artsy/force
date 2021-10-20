@@ -1,5 +1,4 @@
 import { mount } from "enzyme"
-import React from "react"
 import { computeOptionalSchemaData, LocalBusiness } from "../LocalBusiness"
 import { HeadProvider } from "react-head"
 

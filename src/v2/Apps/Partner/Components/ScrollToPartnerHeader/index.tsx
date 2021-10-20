@@ -1,4 +1,4 @@
-import React from "react"
+import * as React from "react";
 import { Clickable, BoxProps, themeProps } from "@artsy/palette"
 import { __internal__useMatchMedia } from "v2/Utils/Hooks/useMatchMedia"
 import { scrollIntoView } from "v2/Utils/scrollHelpers"

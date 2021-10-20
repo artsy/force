@@ -1,4 +1,4 @@
-import React from "react"
+import * as React from "react";
 import { Box, BoxProps, Spacer } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FeatureSet_set } from "v2/__generated__/FeatureSet_set.graphql"

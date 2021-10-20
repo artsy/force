@@ -1,4 +1,5 @@
-import React, { useMemo } from "react"
+import { useMemo } from "react";
+import * as React from "react";
 import { Box, DROP_SHADOW, FullBleed, Spacer, Text } from "@artsy/palette"
 import { SearchApp_viewer } from "v2/__generated__/SearchApp_viewer.graphql"
 import { NavigationTabsFragmentContainer as NavigationTabs } from "v2/Apps/Search/Components/NavigationTabs"

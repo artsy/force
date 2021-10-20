@@ -1,4 +1,5 @@
-import React, { useState } from "react"
+import { useState } from "react";
+import * as React from "react";
 import { Box, Text, Flex } from "@artsy/palette"
 import { compact, flatten } from "lodash"
 import { createFragmentContainer, graphql } from "react-relay"

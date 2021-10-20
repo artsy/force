@@ -1,4 +1,5 @@
-import React, { Children } from "react"
+import { Children } from "react";
+import * as React from "react";
 import { Box, Swiper as TouchCarousel } from "@artsy/palette"
 import { CarouselProps } from "./Carousel"
 

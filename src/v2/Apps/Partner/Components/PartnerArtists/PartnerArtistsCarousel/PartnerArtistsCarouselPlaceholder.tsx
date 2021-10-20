@@ -1,5 +1,5 @@
 import { Box, Flex, SkeletonBox, SkeletonText } from "@artsy/palette"
-import React from "react"
+import * as React from "react";
 import { Carousel } from "../../Carousel/Carousel"
 import { ResponsiveImage } from "./PartnerArtistsCarouselItem"
 

@@ -1,4 +1,3 @@
-import React from "react"
 import { MockBoot, renderRelayTree } from "v2/DevTools"
 import { SystemContextProvider } from "v2/System"
 import { ViewingRoomAppFragmentContainer } from "../ViewingRoomApp"

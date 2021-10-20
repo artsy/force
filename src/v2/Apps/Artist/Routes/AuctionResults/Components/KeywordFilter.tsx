@@ -1,6 +1,7 @@
 import { LabeledInput, MagnifyingGlassIcon } from "@artsy/palette"
 import { debounce } from "lodash"
-import React, { useEffect, useMemo } from "react"
+import { useEffect, useMemo } from "react";
+import * as React from "react";
 import { useAuctionResultsFilterContext } from "../AuctionResultsFilterContext"
 
 const DEBOUNCE_DELAY = 300

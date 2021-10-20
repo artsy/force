@@ -3,7 +3,6 @@ import {
   useSystemContext,
 } from "v2/System/SystemContext"
 import { mount } from "enzyme"
-import React from "react"
 import { buildAppRoutes } from "../buildAppRoutes"
 import { buildClientApp } from "../buildClientApp"
 

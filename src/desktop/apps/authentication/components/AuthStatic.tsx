@@ -1,4 +1,4 @@
-import React from "react"
+import * as React from "react";
 import { FormSwitcher } from "v2/Components/Authentication/FormSwitcher"
 import { ModalOptions, ModalType } from "v2/Components/Authentication/Types"
 import { ModalHeader } from "v2/Components/Modal/ModalHeader"

@@ -1,4 +1,4 @@
-import React from "react"
+import * as React from "react";
 
 import { BorderBox, Flex, Text, Image } from "@artsy/palette"
 import { ItemReview_lineItem } from "v2/__generated__/ItemReview_lineItem.graphql"

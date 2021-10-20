@@ -1,5 +1,5 @@
 import { Banner, Button, Flex, Modal, space, Text } from "@artsy/palette"
-import React from "react"
+import * as React from "react";
 import { useSystemContext } from "v2/System"
 import { PasswordInput } from "v2/Components/PasswordInput"
 import { Form, Formik, FormikProps } from "formik"

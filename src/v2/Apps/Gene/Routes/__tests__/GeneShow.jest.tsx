@@ -1,4 +1,3 @@
-import React from "react"
 import { GeneShowFragmentContainer } from "../GeneShow"
 import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
 import { graphql } from "react-relay"

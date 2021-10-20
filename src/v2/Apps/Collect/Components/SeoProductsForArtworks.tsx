@@ -1,5 +1,5 @@
 import currency from "currency.js"
-import React from "react"
+import { Component } from "react";
 import { createFragmentContainer, graphql } from "react-relay"
 import { toSentence } from "underscore.string"
 
@@ -20,7 +20,7 @@ interface SeoProductsProps {
   artworks: SeoProductsForArtworks_artworks
 }
 
-export class SeoProducts extends React.Component<SeoProductsProps> {
+export class SeoProducts extends Component<SeoProductsProps> {
   render() {
     const { artworks } = this.props
 

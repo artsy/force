@@ -1,5 +1,5 @@
 import { Pill, Spacer, Flex, HorizontalOverflow } from "@artsy/palette"
-import React from "react"
+import * as React from "react";
 import { createFragmentContainer, graphql } from "react-relay"
 import { AppContainer } from "v2/Apps/Components/AppContainer"
 import { extractNodes } from "v2/Utils/extractNodes"

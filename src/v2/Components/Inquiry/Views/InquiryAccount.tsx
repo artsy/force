@@ -1,4 +1,4 @@
-import React from "react"
+import * as React from "react";
 import { InquiryExistingUserQueryRenderer } from "./InquiryExistingUser"
 import { InquirySignUp } from "./InquirySignUp"
 import { InquiryLogin } from "./InquiryLogin"

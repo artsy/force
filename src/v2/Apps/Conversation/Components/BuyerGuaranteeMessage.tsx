@@ -1,4 +1,4 @@
-import React from "react"
+import * as React from "react";
 import { Flex, Text } from "@artsy/palette"
 
 export const BuyerGuaranteeMessage: React.FC = () => {

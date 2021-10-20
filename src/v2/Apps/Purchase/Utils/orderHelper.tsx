@@ -3,7 +3,6 @@ import {
   PendingCircleIcon,
   XCircleIcon,
 } from "@artsy/palette"
-import React from "react"
 import {
   CommerceOrderStateEnum,
   OrderRow_order,

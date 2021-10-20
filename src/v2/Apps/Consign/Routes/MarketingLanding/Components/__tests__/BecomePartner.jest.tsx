@@ -1,4 +1,3 @@
-import React from "react"
 import { mount } from "enzyme"
 import { BecomePartner } from "../BecomePartner"
 import { MockBoot } from "v2/DevTools"

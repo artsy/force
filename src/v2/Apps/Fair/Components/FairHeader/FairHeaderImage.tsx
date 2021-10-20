@@ -1,4 +1,4 @@
-import React from "react"
+import * as React from "react";
 import { createFragmentContainer, graphql } from "react-relay"
 import { FairHeaderImage_fair } from "v2/__generated__/FairHeaderImage_fair.graphql"
 import { FullBleedHeader } from "v2/Components/FullBleedHeader"

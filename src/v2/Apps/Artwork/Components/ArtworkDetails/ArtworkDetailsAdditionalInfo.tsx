@@ -8,7 +8,8 @@ import {
   Text,
 } from "@artsy/palette"
 import { ArtworkDetailsAdditionalInfo_artwork } from "v2/__generated__/ArtworkDetailsAdditionalInfo_artwork.graphql"
-import React, { useState } from "react"
+import { useState } from "react";
+import * as React from "react";
 import { createFragmentContainer, graphql } from "react-relay"
 import { RequestConditionReportQueryRenderer } from "./RequestConditionReport"
 import { ArtworkDetailsMediumModalFragmentContainer } from "../ArtworkDetailsMediumModal"

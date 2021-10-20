@@ -1,7 +1,6 @@
 import { MockRouter } from "v2/DevTools"
 import { mount } from "enzyme"
 import { Link } from "found"
-import React from "react"
 import { RouterLink } from "../RouterLink"
 
 describe("RouterLink", () => {

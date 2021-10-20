@@ -5,7 +5,8 @@ import { SystemContext } from "v2/System"
 import { renderWithLoadProgress } from "v2/System/Relay/renderWithLoadProgress"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { AuctionCardFragmentContainer } from "v2/Components/AuctionCard"
-import React, { useContext } from "react"
+import { useContext } from "react";
+import * as React from "react";
 import { createFragmentContainer, graphql } from "react-relay"
 import { data as sd } from "sharify"
 import { Header } from "./OtherWorks/Header"

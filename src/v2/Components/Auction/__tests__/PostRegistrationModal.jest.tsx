@@ -1,6 +1,5 @@
 import { Modal } from "@artsy/palette"
 import { mount } from "enzyme"
-import React from "react"
 import { flushPromiseQueue } from "v2/DevTools"
 import { ContentKey, PostRegistrationModal } from "../PostRegistrationModal"
 

@@ -6,7 +6,7 @@
 import { RouteSpinner } from "v2/System/Relay/renderWithLoadProgress"
 import { RouteConfig, HttpError } from "found"
 import BaseRoute from "found/Route"
-import React from "react"
+import * as React from "react";
 import { CacheConfig, GraphQLTaggedNode } from "relay-runtime";
 
 type RemoveIndex<T> = {

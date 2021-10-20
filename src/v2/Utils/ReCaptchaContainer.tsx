@@ -1,4 +1,4 @@
-import React from "react"
+import * as React from "react";
 import { data as sd } from "sharify"
 import { useAppendStylesheet } from "./Hooks/useAppendStylesheet"
 import { useLoadScript } from "./Hooks/useLoadScript"

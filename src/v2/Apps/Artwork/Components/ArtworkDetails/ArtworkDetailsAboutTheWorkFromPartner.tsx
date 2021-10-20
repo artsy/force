@@ -2,7 +2,7 @@ import { filterLocations } from "v2/Apps/Artwork/Utils/filterLocations"
 import { limitWithCount } from "v2/Apps/Artwork/Utils/limitWithCount"
 import { SystemContextConsumer } from "v2/System"
 import { FollowProfileButtonFragmentContainer as FollowProfileButton } from "v2/Components/FollowButton/FollowProfileButton"
-import React from "react"
+import { Component } from "react";
 import { createFragmentContainer, graphql } from "react-relay"
 import { get } from "v2/Utils/get"
 import { Media } from "v2/Utils/Responsive"
@@ -31,7 +31,7 @@ export interface ArtworkDetailsAboutTheWorkFromPartnerProps {
   { context_module: Schema.ContextModule.AboutTheWorkPartner },
   { dispatch: data => Events.postEvent(data) }
 )
-export class ArtworkDetailsAboutTheWorkFromPartner extends React.Component<
+export class ArtworkDetailsAboutTheWorkFromPartner extends Component<
   ArtworkDetailsAboutTheWorkFromPartnerProps
 > {
   @track({

@@ -1,4 +1,4 @@
-import React from "react"
+import * as React from "react";
 import { Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FairTiming_fair } from "v2/__generated__/FairTiming_fair.graphql"

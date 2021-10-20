@@ -1,6 +1,7 @@
 import { Input, Message } from "@artsy/palette"
 import { useFormikContext } from "formik"
-import React, { useState } from "react"
+import { useState } from "react";
+import * as React from "react";
 import { isMissingOnDemandOtpError, isOtpError } from "../helpers"
 import { InputValues } from "../Types"
 

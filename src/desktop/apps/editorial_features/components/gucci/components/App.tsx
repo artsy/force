@@ -1,5 +1,5 @@
 import { Box, Theme } from "@artsy/palette"
-import React, { Component } from "react"
+import { Component } from "react";
 import { debounce } from "lodash"
 import { FixedHeader } from "./nav/fixed_header"
 import { SeriesHeader } from "./series/series_header"

@@ -1,4 +1,3 @@
-import React from "react"
 import { FairExhibitorsGroupFragmentContainer } from "../FairExhibitors"
 import { mount } from "enzyme"
 

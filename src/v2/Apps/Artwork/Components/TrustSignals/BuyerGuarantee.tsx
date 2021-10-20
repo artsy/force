@@ -1,5 +1,5 @@
 import { CheckCircleIcon, Link } from "@artsy/palette"
-import React from "react"
+import * as React from "react";
 import { BuyerGuarantee_artwork } from "v2/__generated__/BuyerGuarantee_artwork.graphql"
 
 import { createFragmentContainer, graphql } from "react-relay"

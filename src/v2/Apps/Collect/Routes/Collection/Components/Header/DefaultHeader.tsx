@@ -1,6 +1,6 @@
 import { Shelf } from "@artsy/palette"
 import { DefaultHeader_headerArtworks } from "v2/__generated__/DefaultHeader_headerArtworks.graphql"
-import React, { FC } from "react"
+import { FC } from "react";
 import { createFragmentContainer, graphql } from "react-relay"
 import { DefaultHeaderArtworkFragmentContainer as DefaultHeaderArtwork } from "./DefaultHeaderArtwork"
 import { extractNodes } from "v2/Utils/extractNodes"

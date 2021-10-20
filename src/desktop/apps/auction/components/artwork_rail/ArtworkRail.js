@@ -1,7 +1,7 @@
 import ChevronLeft from "../../../../components/main_layout/public/icons/chevron-left.svg"
 import ChevronRight from "../../../../components/main_layout/public/icons/chevron-right.svg"
 import PropTypes from "prop-types"
-import React, { Component } from "react"
+import { Component } from "react";
 import block from "bem-cn-lite"
 import classNames from "classnames"
 

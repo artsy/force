@@ -1,4 +1,3 @@
-import React from "react"
 import { graphql } from "react-relay"
 import { PaymentSection_Test_Query } from "v2/__generated__/PaymentSection_Test_Query.graphql"
 import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"

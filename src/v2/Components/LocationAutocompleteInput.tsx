@@ -1,4 +1,4 @@
-import React from "react"
+import * as React from "react";
 import {
   DEFAULT_MODAL_Z_INDEX,
   DROP_SHADOW,

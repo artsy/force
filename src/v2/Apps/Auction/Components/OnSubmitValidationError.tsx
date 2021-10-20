@@ -1,5 +1,5 @@
 import { FormikProps } from "formik"
-import React from "react"
+import * as React from "react";
 
 import { FormValuesForRegistration } from "v2/Apps/Auction/Components/Form"
 

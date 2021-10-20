@@ -1,5 +1,4 @@
 import { mount } from "enzyme"
-import React from "react"
 import { BreadCrumbList, computeListItems } from "../BreadCrumbList"
 import { HeadProvider } from "react-head"
 

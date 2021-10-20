@@ -7,7 +7,8 @@ import {
 } from "@artsy/palette"
 import { SystemContextProvider, track } from "v2/System"
 import { AppRouteConfig } from "v2/System/Router/Route"
-import React, { useEffect } from "react"
+import { useEffect } from "react";
+import * as React from "react";
 import { HeadProvider } from "react-head"
 import { Environment } from "relay-runtime"
 import { data as sd } from "sharify"

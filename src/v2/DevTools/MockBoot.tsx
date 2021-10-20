@@ -1,5 +1,5 @@
 import { Boot } from "v2/System/Router"
-import React from "react"
+import * as React from "react";
 import { Breakpoint } from "v2/Utils/Responsive"
 import { buildClientAppContext } from "desktop/lib/buildClientAppContext"
 

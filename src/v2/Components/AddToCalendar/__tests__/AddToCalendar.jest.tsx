@@ -1,4 +1,3 @@
-import React from "react"
 import { mount } from "enzyme"
 import { AddToCalendar, CalendarEventProps } from "../AddToCalendar"
 import { MenuItem } from "@artsy/palette"

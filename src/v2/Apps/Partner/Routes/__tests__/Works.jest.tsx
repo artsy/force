@@ -1,5 +1,4 @@
 import { MockBoot } from "v2/DevTools"
-import React from "react"
 import { ArtworksRefetchContainer } from "../Works"
 import { graphql } from "react-relay"
 import { Works_Query } from "v2/__generated__/Works_Query.graphql"

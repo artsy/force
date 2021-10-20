@@ -4,7 +4,6 @@ import {
   StepSummaryItem,
   StepSummaryItemProps,
 } from "v2/Components/StepSummaryItem"
-import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ShippingAddressFragmentContainer as ShippingAddress } from "./ShippingAddress"
 

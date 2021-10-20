@@ -1,5 +1,4 @@
 import { Text } from "@artsy/palette"
-import React from "react"
 
 import { ShippingAddress_ship } from "v2/__generated__/ShippingAddress_ship.graphql"
 import { COUNTRY_CODE_TO_COUNTRY_NAME } from "v2/Components/CountrySelect"

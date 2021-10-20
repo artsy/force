@@ -7,7 +7,8 @@ import {
   Text,
   TextArea,
 } from "@artsy/palette"
-import React, { useState } from "react"
+import { useState } from "react";
+import * as React from "react";
 import { useSystemContext } from "v2/System/useSystemContext"
 import { wait } from "v2/Utils/wait"
 import { useArtworkInquiryRequest } from "../Hooks/useArtworkInquiryRequest"

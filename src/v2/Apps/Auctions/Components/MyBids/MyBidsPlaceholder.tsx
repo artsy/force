@@ -1,4 +1,3 @@
-import React from "react"
 import { Carousel } from "v2/Components/Carousel"
 
 import {

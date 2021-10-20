@@ -1,4 +1,3 @@
-import React from "react"
 import { mount } from "enzyme"
 import { InquiryResetPassword } from "../../Views/InquiryResetPassword"
 import { useTracking } from "v2/System/Analytics/useTracking"

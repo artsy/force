@@ -6,7 +6,7 @@ import {
 } from "v2/DevTools/createMockNetworkLayer"
 import { FarceCreateRouterArgs, RouteConfig } from "found"
 import { IMocks } from "graphql-tools/dist/Interfaces"
-import React from "react"
+import { Component, Fragment } from "react";
 import { getUser } from "v2/Utils/user"
 
 interface Props {
@@ -20,7 +20,7 @@ interface Props {
   context?: RouterConfig["context"]
 }
 
-export class MockRouter extends React.Component<Props> {
+export class MockRouter extends Component<Props> {
   state = {
     ClientApp: null,
   }
@@ -75,10 +75,10 @@ export class MockRouter extends React.Component<Props> {
     const { ClientApp } = this.state
 
     return (
-      <React.Fragment>
+      <Fragment>
         {/* @ts-expect-error STRICT_NULL_CHECK */}
         {ClientApp && <ClientApp {...this.props.initialState} />}
-      </React.Fragment>
-    )
+      </Fragment>
+    );
   }
 }

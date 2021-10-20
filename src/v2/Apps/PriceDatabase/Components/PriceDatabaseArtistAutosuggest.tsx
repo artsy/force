@@ -1,5 +1,6 @@
 import Autosuggest from "react-autosuggest"
-import React, { Ref, useEffect, useState } from "react"
+import { Ref, useEffect, useState } from "react";
+import * as React from "react";
 import {
   MagnifyingGlassIcon,
   usePosition,

@@ -2,7 +2,6 @@ import { Button } from "@artsy/palette"
 import { SendFeedback } from "v2/Apps/Search/Components/SendFeedback"
 import { MockBoot } from "v2/DevTools"
 import { ReactWrapper, mount } from "enzyme"
-import React from "react"
 import { commitMutation as _commitMutation } from "react-relay"
 import { Environment } from "relay-runtime"
 

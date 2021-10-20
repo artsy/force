@@ -1,7 +1,6 @@
 import loadable from "@loadable/component"
 import { ErrorPage } from "v2/Components/ErrorPage"
 import { RedirectException } from "found"
-import React from "react"
 import { graphql } from "react-relay"
 import createLogger from "v2/Utils/logger"
 import { Redirect, confirmBidRedirect, registerRedirect } from "./getRedirect"

@@ -1,4 +1,3 @@
-import React from "react"
 import { graphql } from "react-relay"
 import { GalleriesRouteFragmentContainer } from "../Routes/GalleriesRoute"
 import { setupTestWrapperTL } from "v2/DevTools/setupTestWrapper"

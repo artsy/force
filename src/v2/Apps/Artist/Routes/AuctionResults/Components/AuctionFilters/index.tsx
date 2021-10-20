@@ -1,4 +1,4 @@
-import React from "react"
+import * as React from "react";
 import { AuctionHouseFilter } from "./AuctionHouseFilter"
 import { MediumFilter } from "./MediumFilter"
 import { SizeFilter } from "./SizeFilter"

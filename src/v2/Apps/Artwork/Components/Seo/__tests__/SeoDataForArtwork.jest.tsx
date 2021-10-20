@@ -4,7 +4,6 @@ import { graphql } from "react-relay"
 import { SeoDataForArtwork_Test_QueryRawResponse } from "v2/__generated__/SeoDataForArtwork_Test_Query.graphql"
 import { CreativeWork } from "v2/Components/Seo/CreativeWork"
 import { Product } from "v2/Components/Seo/Product"
-import React from "react"
 import {
   AVAILABILITY,
   SeoDataForArtworkFragmentContainer,

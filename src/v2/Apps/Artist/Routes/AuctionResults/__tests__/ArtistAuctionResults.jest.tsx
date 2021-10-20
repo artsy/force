@@ -3,7 +3,6 @@ import { ArtistAuctionResults_Test_QueryRawResponse } from "v2/__generated__/Art
 import { AuctionResultsRouteFragmentContainer as AuctionResultsRoute } from "v2/Apps/Artist/Routes/AuctionResults/ArtistAuctionResultsRoute"
 import { MockBoot, renderRelayTree } from "v2/DevTools"
 import { ReactWrapper } from "enzyme"
-import React from "react"
 import { act } from "react-dom/test-utils"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"

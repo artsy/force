@@ -8,7 +8,7 @@ import {
   useThemeConfig,
 } from "@artsy/palette"
 import { intersection } from "lodash"
-import React from "react"
+import * as React from "react";
 import styled from "styled-components"
 import { useArtworkFilterContext } from "../ArtworkFilterContext"
 import { sortResults } from "./ResultsFilter"

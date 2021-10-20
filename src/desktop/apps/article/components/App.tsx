@@ -1,4 +1,4 @@
-import React, { Fragment } from "react"
+import { Component, Fragment } from "react";
 import ReactDOM from "react-dom"
 import { Article } from "@artsy/reaction/dist/Components/Publishing"
 import { Mediator, SystemContextProvider } from "@artsy/reaction/dist/Artsy"
@@ -19,7 +19,7 @@ export interface AppProps extends ArticleProps {
   }
 }
 
-export class App extends React.Component<AppProps> {
+export class App extends Component<AppProps> {
   getArticleLayout = () => {
     const { article, isEigen } = this.props
 
@@ -72,7 +72,7 @@ export class App extends React.Component<AppProps> {
   }
 }
 
-class EditPortal extends React.Component<ArticleProps> {
+class EditPortal extends Component<ArticleProps> {
   render() {
     const { article } = this.props
     const positionTop = article.layout === "news" ? 125 : null

@@ -1,5 +1,5 @@
 import { trim } from "lodash"
-import React from "react"
+import * as React from "react";
 
 import { SeoDataForArtwork_artwork } from "v2/__generated__/SeoDataForArtwork_artwork.graphql"
 import { CreativeWork } from "v2/Components/Seo/CreativeWork"

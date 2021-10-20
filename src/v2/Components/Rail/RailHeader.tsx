@@ -1,5 +1,5 @@
 import { Box, Flex, SkeletonText, Sup, Text as BaseText } from "@artsy/palette"
-import React from "react"
+import * as React from "react";
 import { RouterLink } from "v2/System/Router/RouterLink"
 
 export interface RailHeaderProps {

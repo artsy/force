@@ -1,7 +1,6 @@
 import { ContextModule, Intent } from "@artsy/cohesion"
 import { Clickable } from "@artsy/palette"
 import { mount } from "enzyme"
-import React from "react"
 import { ForgotPasswordForm } from "../Views/ForgotPasswordForm"
 import { LoginForm } from "../Views/LoginForm"
 import { SignUpFormQueryRenderer } from "../Views/SignUpForm"

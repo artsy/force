@@ -1,4 +1,4 @@
-import React from "react"
+import * as React from "react";
 import { Column, GridColumns } from "@artsy/palette"
 import { useRouter } from "v2/System/Router/useRouter"
 import { createFragmentContainer, graphql } from "react-relay"

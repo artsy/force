@@ -1,4 +1,3 @@
-import React from "react"
 import loadable from "@loadable/component"
 import { graphql } from "react-relay"
 import { ErrorPage } from "v2/Components/ErrorPage"

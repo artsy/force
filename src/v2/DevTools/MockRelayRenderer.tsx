@@ -3,7 +3,7 @@ import { SystemContextConsumer } from "v2/System"
 import { renderWithLoadProgress } from "v2/System/Relay/renderWithLoadProgress"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { IMocks } from "graphql-tools/dist/Interfaces"
-import React from "react"
+import * as React from "react";
 /* tslint:disable-next-line:no-query-renderer-import */
 import { QueryRenderer } from "react-relay"
 import {

@@ -1,4 +1,3 @@
-import React from "react"
 import { ConversationPaginationContainer } from "../Conversation"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"

@@ -1,5 +1,5 @@
 import { Clickable, Text, TextArea, TextAreaChange } from "@artsy/palette"
-import React from "react"
+import * as React from "react";
 import { useInquiry } from "v2/Components/Inquiry/useInquiry"
 
 export const OfferNote: React.FC<{

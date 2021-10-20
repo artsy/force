@@ -9,7 +9,6 @@ import {
   StandardArticle,
   VideoArticle,
 } from "@artsy/reaction/dist/Components/Publishing/Fixtures/Articles"
-import React from "react"
 
 describe("App", () => {
   let props

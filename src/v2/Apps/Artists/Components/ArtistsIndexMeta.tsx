@@ -1,4 +1,4 @@
-import React from "react"
+import * as React from "react";
 import { Link, Meta, Title } from "react-head"
 import { getENV } from "v2/Utils/getENV"
 

@@ -1,7 +1,6 @@
 import Autosuggest from "react-autosuggest"
 import Close from "../../../../components/main_layout/public/icons/close.svg"
 import PropTypes from "prop-types"
-import React from "react"
 import block from "bem-cn-lite"
 import { connect } from "react-redux"
 import {

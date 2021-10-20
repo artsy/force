@@ -1,7 +1,6 @@
 import { AboutPartnerFragmentContainer } from "../../Overview/AboutPartner"
 import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
-import React from "react"
 
 jest.unmock("react-relay")
 

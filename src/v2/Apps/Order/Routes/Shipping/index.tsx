@@ -46,7 +46,7 @@ import {
   AddressTouched,
 } from "v2/Components/AddressForm"
 import { Router } from "found"
-import React, { Component } from "react"
+import { Component } from "react";
 import { RelayProp, createFragmentContainer, graphql } from "react-relay"
 import createLogger from "v2/Utils/logger"
 import { Media } from "v2/Utils/Responsive"

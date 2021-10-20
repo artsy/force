@@ -1,5 +1,5 @@
 import { Box, Flex, Sans, Serif } from "@artsy/palette"
-import React from "react"
+import * as React from "react";
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
 
 import { SystemContextProps, useSystemContext } from "v2/System"

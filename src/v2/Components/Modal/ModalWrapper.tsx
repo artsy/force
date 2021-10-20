@@ -1,5 +1,5 @@
 import { Theme } from "@artsy/palette"
-import React from "react"
+import * as React from "react";
 import styled, { createGlobalStyle, keyframes } from "styled-components"
 import { getViewportDimensions } from "v2/Utils/viewport"
 import FadeTransition from "../Animation/FadeTransition"

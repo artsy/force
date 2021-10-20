@@ -1,4 +1,4 @@
-import React from "react"
+import * as React from "react";
 import { createFragmentContainer } from "react-relay"
 import { graphql } from "relay-runtime"
 import Linkify from "react-linkify"

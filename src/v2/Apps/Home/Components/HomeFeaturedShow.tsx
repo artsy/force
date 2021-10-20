@@ -5,7 +5,7 @@ import {
   OwnerType,
 } from "@artsy/cohesion"
 import { Box, Image, Spacer, Text } from "@artsy/palette"
-import React from "react"
+import * as React from "react";
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "v2/System"
 import { RouterLink } from "v2/System/Router/RouterLink"

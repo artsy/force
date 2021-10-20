@@ -1,4 +1,3 @@
-import React from "react"
 import { ConsignMeta } from "./Components/ConsignMeta"
 import { Header } from "./Components/Header"
 import { SellArtDifferently } from "./Components/SellArtDifferently"

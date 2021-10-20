@@ -1,6 +1,6 @@
 import { Media } from "v2/Utils/Responsive"
 import { Box, Step, Stepper } from "@artsy/palette"
-import React, { FC } from "react"
+import { FC } from "react";
 
 interface SubmissionStepperProps {
   currentStep: "Artwork Details" | "Upload Photos" | "Contact Information"

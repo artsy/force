@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react"
+import { useState, useEffect } from "react";
+import * as React from "react";
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 import { ArrowDownIcon, Flex, Text } from "@artsy/palette"
 import styled from "styled-components"

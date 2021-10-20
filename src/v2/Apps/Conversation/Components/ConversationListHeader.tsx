@@ -1,4 +1,4 @@
-import React, { FC } from "react"
+import { FC } from "react";
 import { Flex, Text, Separator } from "@artsy/palette"
 
 import { LARGE_SCREEN_HEADER_HEIGHT } from "./ConversationHeader"

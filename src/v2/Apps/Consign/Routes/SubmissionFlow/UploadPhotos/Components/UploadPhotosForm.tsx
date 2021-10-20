@@ -1,4 +1,5 @@
-import React, { useCallback, useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
+import * as React from "react"
 import { Box, BoxProps } from "@artsy/palette"
 import { useFormikContext } from "formik"
 import { useSystemContext } from "v2/System"

@@ -4,7 +4,7 @@ import { track } from "v2/System/Analytics"
 import * as Schema from "v2/System/Analytics/Schema"
 import { pMedia } from "v2/Components/Helpers"
 import { once } from "lodash"
-import React from "react"
+import { Component } from "react";
 import { createFragmentContainer, graphql } from "react-relay"
 import Waypoint from "react-waypoint"
 import styled from "styled-components"
@@ -38,7 +38,7 @@ const RailsWrapper = styled(Flex)`
 @track(null, {
   dispatch: data => Events.postEvent(data),
 })
-export class CollectionsRail extends React.Component<CollectionRailsProps> {
+export class CollectionsRail extends Component<CollectionRailsProps> {
   @track({
     action_type: Schema.ActionType.Impression,
     context_module: Schema.ContextModule.CollectionsRail,

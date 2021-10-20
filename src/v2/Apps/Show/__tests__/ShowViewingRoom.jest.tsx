@@ -1,4 +1,3 @@
-import React from "react"
 import { graphql } from "react-relay"
 import { ShowViewingRoomFragmentContainer as ShowViewingRoom } from "../Components/ShowViewingRoom"
 import { ShowViewingRoom_Test_Query } from "v2/__generated__/ShowViewingRoom_Test_Query.graphql"

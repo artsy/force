@@ -1,5 +1,5 @@
 import { CloseIcon, Clickable } from "@artsy/palette"
-import React from "react"
+import * as React from "react";
 import styled from "styled-components"
 import { ModalWidth, ModalWrapper } from "v2/Components/Modal/ModalWrapper"
 import { media } from "../Helpers"

@@ -6,7 +6,7 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import React from "react"
+import * as React from "react";
 import { createFragmentContainer, graphql } from "react-relay"
 import { ShowContextCard_show } from "v2/__generated__/ShowContextCard_show.graphql"
 import { FairTimingFragmentContainer as FairTiming } from "v2/Apps/Fair/Components/FairHeader/FairTiming"

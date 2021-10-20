@@ -1,4 +1,3 @@
-import React from "react"
 import renderTestComponent from "desktop/apps/auction/__tests__/utils/renderTestComponent"
 import { ArtworkRail } from "../ArtworkRail"
 import { promotedSaleArtworks } from "../../artwork_browser/__tests__/fixtures/promotedSaleArtworks"

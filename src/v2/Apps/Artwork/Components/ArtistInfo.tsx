@@ -14,7 +14,8 @@ import { ArtistBioFragmentContainer as ArtistBio } from "v2/Components/ArtistBio
 import { ArtistMarketInsightsFragmentContainer as ArtistMarketInsights } from "v2/Components/ArtistMarketInsights"
 import { SelectedExhibitionFragmentContainer as SelectedExhibitions } from "v2/Components/SelectedExhibitions"
 import { ContextModule } from "@artsy/cohesion"
-import React, { Component } from "react"
+import { Component } from "react";
+import * as React from "react";
 import { createFragmentContainer, graphql } from "react-relay"
 import { data as sd } from "sharify"
 import Events from "v2/Utils/Events"

@@ -1,5 +1,5 @@
 import { avantgarde } from "v2/Assets/Fonts"
-import React from "react"
+import * as React from "react";
 import styled from "styled-components"
 
 interface NavLinkProps extends React.HTMLProps<HTMLAnchorElement> {

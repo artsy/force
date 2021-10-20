@@ -1,4 +1,3 @@
-import React from "react"
 import { mount } from "enzyme"
 import { BannerPopUp, Container } from "../BannerPopUp"
 import { mediator } from "lib/mediator"

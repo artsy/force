@@ -5,7 +5,7 @@ import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "v2/Ap
 import { ConditionsOfSaleDisclaimer } from "v2/Apps/Order/Components/ConditionsOfSaleDisclaimer"
 import { TwoColumnLayout } from "v2/Apps/Order/Components/TwoColumnLayout"
 import { Router } from "found"
-import React, { Component } from "react"
+import { Component } from "react";
 
 import { CountdownTimer } from "v2/Components/CountdownTimer"
 import { StepSummaryItem } from "v2/Components/StepSummaryItem"

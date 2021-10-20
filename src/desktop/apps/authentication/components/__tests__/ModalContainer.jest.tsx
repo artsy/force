@@ -1,6 +1,5 @@
 import { mount } from "enzyme"
 import { data as sd } from "sharify"
-import React from "react"
 import { ModalManager } from "v2/Components/Authentication/ModalManager"
 import { ModalContainer } from "../ModalContainer"
 import { ContextModule, Intent } from "@artsy/cohesion"

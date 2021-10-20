@@ -1,4 +1,4 @@
-import React from "react"
+import * as React from "react";
 import { Box, Text } from "@artsy/palette"
 import { Timer } from "v2/Components/Timer"
 import { createFragmentContainer, graphql } from "react-relay"

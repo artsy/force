@@ -1,4 +1,5 @@
-import React, { useContext, useReducer, useState } from "react"
+import { useContext, useReducer, useState } from "react";
+import * as React from "react";
 import { omit } from "lodash"
 import useDeepCompareEffect from "use-deep-compare-effect"
 

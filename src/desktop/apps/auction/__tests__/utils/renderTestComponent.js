@@ -1,7 +1,6 @@
 import Articles from "desktop/collections/articles.coffee"
 import Auction from "desktop/models/auction.coffee"
 import CurrentUser from "desktop/models/current_user"
-import React from "react"
 import auctions from "desktop/apps/auction/reducers"
 import bootstrap from "desktop/apps/auction/__tests__/fixtures/auction"
 import thunk from "redux-thunk"
