@@ -1,4 +1,5 @@
 import {
+  Box,
   Image,
   Skeleton,
   SkeletonBox,
@@ -148,48 +149,50 @@ export const ArtistIconicCollectionsRailQueryRenderer = props => {
   const { relayEnvironment } = useSystemContext()
 
   return (
-    <SystemQueryRenderer<ArtistIconicCollectionsRailQuery>
-      lazyLoad
-      environment={relayEnvironment}
-      variables={{
-        internalID: props.internalID,
-        isFeaturedArtistContent: true,
-        size: 16,
-      }}
-      query={graphql`
-        query ArtistIconicCollectionsRailQuery(
-          $isFeaturedArtistContent: Boolean
-          $size: Int
-          $internalID: String
-        ) {
-          marketingCollections(
-            isFeaturedArtistContent: $isFeaturedArtistContent
-            size: $size
-            artistID: $internalID
+    <Box data-test="ArtistIconicCollectionsRailQueryRenderer">
+      <SystemQueryRenderer<ArtistIconicCollectionsRailQuery>
+        lazyLoad
+        environment={relayEnvironment}
+        variables={{
+          internalID: props.internalID,
+          isFeaturedArtistContent: true,
+          size: 16,
+        }}
+        query={graphql`
+          query ArtistIconicCollectionsRailQuery(
+            $isFeaturedArtistContent: Boolean
+            $size: Int
+            $internalID: String
           ) {
-            ...ArtistIconicCollectionsRail_marketingCollections
+            marketingCollections(
+              isFeaturedArtistContent: $isFeaturedArtistContent
+              size: $size
+              artistID: $internalID
+            ) {
+              ...ArtistIconicCollectionsRail_marketingCollections
+            }
           }
-        }
-      `}
-      placeholder={PLACEHOLDER}
-      render={({ error, props }) => {
-        if (error) {
-          console.error(error)
-          return null
-        }
+        `}
+        placeholder={PLACEHOLDER}
+        render={({ error, props }) => {
+          if (error) {
+            console.error(error)
+            return null
+          }
 
-        if (!props) {
-          return PLACEHOLDER
-        }
+          if (!props) {
+            return PLACEHOLDER
+          }
 
-        if (props.marketingCollections) {
-          return (
-            <ArtistIconicCollectionsRailFragmentContainer
-              marketingCollections={props.marketingCollections}
-            />
-          )
-        }
-      }}
-    />
+          if (props.marketingCollections) {
+            return (
+              <ArtistIconicCollectionsRailFragmentContainer
+                marketingCollections={props.marketingCollections}
+              />
+            )
+          }
+        }}
+      />
+    </Box>
   )
 }
