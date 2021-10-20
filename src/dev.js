@@ -1,13 +1,11 @@
 // @ts-check
 
-const { loadEnvs } = require("@artsy/multienv")
 require("coffeescript/register")
 require("@babel/register")({
   extensions: [".ts", ".js", ".tsx", ".jsx"],
   plugins: ["babel-plugin-dynamic-import-node"],
 })
-
-loadEnvs(".env.shared", ".env")
+require("@artsy/multienv").loadEnvs(".env.shared", ".env")
 
 const express = require("express")
 const path = require("path")

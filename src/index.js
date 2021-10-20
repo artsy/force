@@ -1,6 +1,6 @@
 // @ts-check
 
-import "./lib/autoenv"
+import "./lib/loadenv"
 // This must come before any other instrumented module.
 // See https://docs.datadoghq.com/tracing/languages/nodejs/ for more info.
 import "./lib/datadog"

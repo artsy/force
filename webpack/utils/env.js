@@ -1,13 +1,12 @@
 // @ts-check
 
-import { loadEnvs } from "@artsy/multienv"
 import { createHash } from "crypto"
 import chalk from "chalk"
 import path from "path"
 import yn from "yn"
 import os from "os"
 import v8 from "v8"
-
+import { loadEnvs } from "@artsy/multienv"
 loadEnvs(".env.shared", ".env")
 
 const hostnameHash = createHash("sha256")
