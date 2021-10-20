@@ -48,7 +48,7 @@ export const PhotoThumbnail: React.FC<PhotoThumbnailProps & BoxProps> = ({
   }
 
   const renderThumbnail = photoSrc => {
-    const props = {
+    const props: PhotoThumbnailStateProps = {
       photo,
       onDelete: handleDelete,
       photoSrc,
