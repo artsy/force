@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import {
   DEFAULT_MODAL_Z_INDEX,
   DROP_SHADOW,
@@ -12,7 +12,7 @@ import { useEffect } from "react"
 import { useState } from "react"
 import { useAppendStylesheet } from "v2/Utils/Hooks/useAppendStylesheet"
 
-const GOOGLE_PLACES_API_SRC = `https://maps.googleapis.com/maps/api/js?key=${sd.GOOGLE_MAPS_API_KEY}&libraries=places&language=en`
+const GOOGLE_PLACES_API_SRC = `https://maps.googleapis.com/maps/api/js?key=${sd.GOOGLE_MAPS_API_KEY}&libraries=places&language=en&sessiontoken=${sd.SESSION_ID}`
 
 interface LocationAutocompleteInputProps extends Omit<InputProps, "onChange"> {
   onChange(place: Place): void
