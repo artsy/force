@@ -1,7 +1,6 @@
-import { useEffect, useState } from "react";
-import * as React from "react";
+import { useEffect, useState } from "react"
 import {
-  GridColumns,
+  CSSGrid,
   BoxProps,
   Flex,
   Image,
@@ -73,9 +72,13 @@ export const PhotoThumbnail: React.FC<PhotoThumbnailProps & BoxProps> = ({
         borderColor={photo.errorMessage ? "red100" : "black15"}
         {...rest}
       >
-        <GridColumns gridGap={2} width="100%">
+        <CSSGrid
+          gridTemplateColumns="minmax(50px, 75%) minmax(120px, 25%)"
+          gridGap={2}
+          width="100%"
+        >
           {renderThumbnail(photoSrc)}
-        </GridColumns>
+        </CSSGrid>
       </Flex>
       {photo.errorMessage && (
         <Text
@@ -131,7 +134,7 @@ const PhotoThumbnailLoadingState: React.FC<PhotoThumbnailStateProps> = ({
   photo,
 }) => {
   return (
-    <Column span={12} display="flex" alignItems="center" flexDirection="row">
+    <Column span={[2]} display="flex" alignItems="center" flexDirection="row">
       <Box
         height={[48, 120]}
         width={[48, 120]}
@@ -162,19 +165,13 @@ const PhotoThumbnailErrorState: React.FC<PhotoThumbnailStateProps> = ({
 }) => {
   return (
     <>
-      <Column span={[9]} display="flex" alignItems="center">
+      <Flex alignItems="center">
         <TruncatedLine variant="xs">{photo.name}</TruncatedLine>
-      </Column>
-      <Column
-        span={[3]}
-        minWidth={120}
-        display="flex"
-        alignItems="center"
-        justifyContent="space-between"
-      >
+      </Flex>
+      <Flex alignItems="center" justifyContent="space-between">
         <Text variant="xs">{formatFileSize(photo.size)}</Text>
         <RemoveButton withIconButton handleDelete={onDelete} />
-      </Column>
+      </Flex>
     </>
   )
 }
@@ -186,7 +183,7 @@ const PhotoThumbnailSuccessState: React.FC<PhotoThumbnailStateProps> = ({
 }) => {
   return (
     <>
-      <Column span={[9]} display="flex" alignItems="center">
+      <Flex alignItems="center">
         <Box
           height={[48, 120]}
           width={[48, 120]}
@@ -202,17 +199,11 @@ const PhotoThumbnailSuccessState: React.FC<PhotoThumbnailStateProps> = ({
           />
         </Box>
         <TruncatedLine variant="xs">{photo.name}</TruncatedLine>
-      </Column>
-      <Column
-        span={[3]}
-        minWidth={120}
-        display="flex"
-        alignItems="center"
-        justifyContent="space-between"
-      >
+      </Flex>
+      <Flex alignItems="center" justifyContent="space-between">
         <Text variant="xs">{formatFileSize(photo.size)}</Text>
         <RemoveButton handleDelete={onDelete} />
-      </Column>
+      </Flex>
     </>
   )
 }
