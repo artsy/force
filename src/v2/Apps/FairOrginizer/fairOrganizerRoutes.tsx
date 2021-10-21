@@ -32,7 +32,6 @@ const FairOrganizerDedicatedArticles = loadable(
 export const fairOrganizerRoutes: AppRouteConfig[] = [
   {
     path: "/fair-organizer/:slug",
-    theme: "v3",
     getComponent: () => FairOrganizerApp,
     prepare: () => {
       FairOrganizerApp.preload()
@@ -80,7 +79,6 @@ export const fairOrganizerRoutes: AppRouteConfig[] = [
   },
   {
     path: "/fair-organizer/:slug/articles",
-    theme: "v3",
     getComponent: () => FairOrganizerDedicatedArticles,
     prepare: () => {
       FairOrganizerDedicatedArticles.preload()

@@ -84,7 +84,6 @@ const ConsignRoute = loadable(
 export const artistRoutes: AppRouteConfig[] = [
   {
     path: "/artist/:artistID",
-    theme: "v3",
     ignoreScrollBehaviorBetweenChildren: true,
     getComponent: () => ArtistApp,
     prepare: () => {
@@ -104,7 +103,6 @@ export const artistRoutes: AppRouteConfig[] = [
     children: [
       {
         path: "/",
-        theme: "v3",
         getComponent: () => OverviewRoute,
         prepare: () => {
           OverviewRoute.preload()
@@ -119,7 +117,6 @@ export const artistRoutes: AppRouteConfig[] = [
       },
       {
         path: "works-for-sale",
-        theme: "v3",
         getComponent: () => WorksForSaleRoute,
         prepare: () => {
           WorksForSaleRoute.preload()
@@ -140,7 +137,6 @@ export const artistRoutes: AppRouteConfig[] = [
       },
       {
         path: "auction-results",
-        theme: "v3",
         getComponent: () => AuctionResultsRoute,
         prepare: () => {
           AuctionResultsRoute.preload()
@@ -185,7 +181,6 @@ export const artistRoutes: AppRouteConfig[] = [
 
       {
         path: "articles",
-        theme: "v3",
         hideNavigationTabs: true,
         getComponent: () => ArticlesRoute,
         prepare: () => {
@@ -237,7 +232,6 @@ export const artistRoutes: AppRouteConfig[] = [
       },
       {
         path: "cv",
-        theme: "v3",
         hideNavigationTabs: true,
         getComponent: () => CVRoute,
         prepare: () => {
@@ -253,7 +247,6 @@ export const artistRoutes: AppRouteConfig[] = [
       },
       {
         path: "shows",
-        theme: "v3",
         hideNavigationTabs: true,
         getComponent: () => ShowsRoute,
         prepare: () => {
