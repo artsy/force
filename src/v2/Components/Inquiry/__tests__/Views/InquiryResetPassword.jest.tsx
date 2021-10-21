@@ -12,7 +12,7 @@ jest.mock("../../Hooks/useInquiryContext", () => ({
 jest.mock("v2/System/Analytics/useTracking")
 
 jest.mock("v2/Utils/auth", () => ({
-  resetPassword: () => Promise.resolve(),
+  forgotPassword: () => Promise.resolve(),
 }))
 
 describe("InquiryResetPassword", () => {
