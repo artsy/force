@@ -1,4 +1,3 @@
-import * as React from "react";
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArticlesRailFragmentContainer } from "../../Components/Overview/ArticlesRail"
 import { Overview_partner } from "v2/__generated__/Overview_partner.graphql"
@@ -9,6 +8,7 @@ import { SubscriberBannerFragmentContainer } from "../../Components/Overview/Sub
 import { ArtworksRailRenderer } from "../../Components/Overview/ArtworksRail"
 import { ShowBannersRailRenderer } from "../../Components/Overview/ShowBannersRail"
 import { NearbyGalleriesRailRenderer } from "../../Components/Overview/NearbyGalleriesRail"
+import { compact } from "lodash"
 
 interface OverviewProps {
   partner: Overview_partner
@@ -21,14 +21,13 @@ const Overview: React.FC<OverviewProps> = ({ partner }) => {
     displayFullPartnerPage,
     profileBannerDisplay,
     displayArtistsSection,
-    // @ts-expect-error STRICT_NULL_CHECK
-    articlesConnection: { edges: articles },
+    articlesConnection,
     locationsConnection,
   } = partner
 
   const location = locationsConnection?.edges![0]?.node
 
-  const hasArticles = articles.length > 0
+  const articles = compact(articlesConnection?.edges)
 
   return displayFullPartnerPage ? (
     <>
@@ -44,7 +43,7 @@ const Overview: React.FC<OverviewProps> = ({ partner }) => {
       {displayArtistsSection && (
         <ArtistsRailFragmentContainer mt={4} mb={[4, 80]} partner={partner} />
       )}
-      {hasArticles && (
+      {articles.length > 0 && (
         <ArticlesRailFragmentContainer partnerSlug={slug} articles={articles} />
       )}
     </>

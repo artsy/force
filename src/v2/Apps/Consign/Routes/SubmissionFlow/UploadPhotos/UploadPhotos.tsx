@@ -1,4 +1,3 @@
-import { FC } from "react";
 import { Box, Button, Text } from "@artsy/palette"
 import { Form, Formik } from "formik"
 import { SubmissionStepper } from "v2/Apps/Consign/Components/SubmissionStepper"
@@ -8,22 +7,11 @@ import {
 } from "./Components/UploadPhotosForm"
 import { PhotoThumbnail } from "./Components/PhotoThumbnail"
 import { Photo } from "../Utils/fileUtils"
-import * as yup from "yup"
 import { useRouter } from "v2/System/Router/useRouter"
-import { getSubmission, saveSubmission } from "../Utils/submissionUtils"
+import { useSubmission } from "../Utils/useSubmission"
+import { uploadPhotosValidationSchema } from "../Utils/validation"
 
-export const uploadPhotosValidationSchema = yup.object().shape({
-  photos: yup
-    .array()
-    .min(1)
-    .of(
-      yup.object().shape({
-        s3Key: yup.string().required(),
-      })
-    ),
-})
-
-export const UploadPhotos: FC = () => {
+export const UploadPhotos: React.FC = () => {
   const {
     router,
     match: {
@@ -31,9 +19,9 @@ export const UploadPhotos: FC = () => {
     },
   } = useRouter()
 
-  const handleSubmit = (values: UploadPhotosFormModel) => {
-    const submission = getSubmission(id)
+  const { submission, saveSubmission, submissionId } = useSubmission(id)
 
+  const handleSubmit = (values: UploadPhotosFormModel) => {
     if (submission) {
       submission.uploadPhotosForm = {
         photos: values.photos.map(photo => ({
@@ -43,10 +31,10 @@ export const UploadPhotos: FC = () => {
         })),
       }
 
-      saveSubmission(id, submission)
+      saveSubmission(submission)
 
       router.push({
-        pathname: `/consign/submission2/${id}/contact-information`,
+        pathname: `/consign/submission2/${submissionId}/contact-information`,
       })
     }
   }

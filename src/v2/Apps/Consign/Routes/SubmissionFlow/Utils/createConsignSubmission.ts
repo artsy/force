@@ -1,5 +1,4 @@
 import { Environment } from "relay-runtime"
-import { getSubmission, removeSubmissionFromStorage } from "./submissionUtils"
 import { createConsignSubmissionInput } from "./createConsignSubmissionInput"
 import {
   addAssetToConsignment,
@@ -8,15 +7,14 @@ import {
   getConvectionGeminiKey,
 } from "../Mutations"
 import createLogger from "v2/Utils/logger"
+import { SubmissionModel } from "./useSubmission"
 
 const logger = createLogger("createConsignSubmission.ts")
 
 export const createConsignSubmission = async (
   relayEnvironment: Environment,
-  id: string
+  submission: SubmissionModel
 ) => {
-  let submission = getSubmission(id)
-
   if (!submission || !submission.uploadPhotosForm) {
     return
   }
@@ -27,8 +25,6 @@ export const createConsignSubmission = async (
     relayEnvironment,
     input
   )
-
-  removeSubmissionFromStorage(id)
 
   const convectionKey = await getConvectionGeminiKey(relayEnvironment)
 

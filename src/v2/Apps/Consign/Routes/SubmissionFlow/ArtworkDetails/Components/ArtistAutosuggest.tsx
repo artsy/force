@@ -38,7 +38,7 @@ export const ArtistAutosuggest: FC = () => {
 
   useEffect(() => {
     if (values.artistName !== searchString) {
-      setSearchString(values.artistName)
+      setSearchString(values.artistName || "")
     }
   }, [values.artistName])
 
