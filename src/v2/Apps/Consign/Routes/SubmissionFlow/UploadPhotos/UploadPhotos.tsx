@@ -15,6 +15,7 @@ import { openAuthModal } from "v2/Utils/openAuthModal"
 import { ModalType } from "v2/Components/Authentication/Types"
 import { ContextModule, Intent } from "@artsy/cohesion"
 import { createConsignSubmission } from "../Utils/createConsignSubmission"
+import { BackLink } from "v2/Components/Links/BackLink"
 
 export const UploadPhotos: React.FC = () => {
   const {
@@ -72,6 +73,14 @@ export const UploadPhotos: React.FC = () => {
 
   return (
     <>
+      <BackLink
+        py={2}
+        mb={6}
+        to={`/consign/submission2/${submissionId}/artwork-details`}
+      >
+        Back ....
+      </BackLink>
+
       <SubmissionStepper currentStep="Upload Photos" />
 
       <Text mt={4} variant="lg">
