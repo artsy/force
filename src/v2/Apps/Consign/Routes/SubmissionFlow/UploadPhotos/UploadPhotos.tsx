@@ -1,4 +1,3 @@
-import { FC } from "react";
 import { Box, Button, Text } from "@artsy/palette"
 import { Form, Formik } from "formik"
 import { SubmissionStepper } from "v2/Apps/Consign/Components/SubmissionStepper"
@@ -12,7 +11,7 @@ import { useRouter } from "v2/System/Router/useRouter"
 import { useSubmission } from "../Utils/useSubmission"
 import { uploadPhotosValidationSchema } from "../Utils/validation"
 
-export const UploadPhotos: FC = () => {
+export const UploadPhotos: React.FC = () => {
   const {
     router,
     match: {

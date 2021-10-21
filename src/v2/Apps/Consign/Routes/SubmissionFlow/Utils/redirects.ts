@@ -95,15 +95,13 @@ const isActiveRoute = (router: Router, match: Match, path: string) => {
   }
 }
 
-// the generator that returns paths for each route
-function* getPaths(node, path) {
-  if (!node) return
-
-  yield [path + node.path, node]
+function getPaths(node, path) {
+  let result = [[path + node.path, node]]
 
   if (node.children) {
-    for (const n of node.children) {
-      yield* getPaths(n, path + node.path)
-    }
+    const subPaths = node.children.flatMap(n => getPaths(n, path + node.path))
+    return result.concat(subPaths)
   }
+
+  return result
 }
