@@ -39,7 +39,6 @@ export const geneRoutes: AppRouteConfig[] = [
         },
       },
       {
-        theme: "v3",
         path: "",
         getComponent: () => GeneShowRoute,
         prepare: () => {

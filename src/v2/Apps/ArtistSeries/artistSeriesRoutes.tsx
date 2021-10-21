@@ -13,7 +13,6 @@ const ArtistSeriesApp = loadable(
 
 export const artistSeriesRoutes: AppRouteConfig[] = [
   {
-    theme: "v3",
     path: "/artist-series/:slug",
     getComponent: () => ArtistSeriesApp,
     prepare: () => {

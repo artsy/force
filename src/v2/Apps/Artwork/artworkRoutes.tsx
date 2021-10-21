@@ -11,7 +11,6 @@ const ArtworkApp = loadable(
 
 export const artworkRoutes: AppRouteConfig[] = [
   {
-    theme: "v3",
     path: "/artwork/:artworkID/:optional?", // There's a `confirm-bid` nested route.
     getComponent: () => ArtworkApp,
     prepare: () => {

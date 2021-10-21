@@ -9,7 +9,6 @@ const UnsubscribeApp = loadable(
 
 export const unsubscribeRoutes: AppRouteConfig[] = [
   {
-    theme: "v3",
     path: "/unsubscribe",
     getComponent: () => UnsubscribeApp,
     prepare: () => {

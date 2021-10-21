@@ -12,7 +12,6 @@ const CategoriesApp = loadable(
 export const categoriesRoutes: AppRouteConfig[] = [
   {
     path: "/categories",
-    theme: "v3",
     getComponent: () => CategoriesApp,
     prepare: () => {
       CategoriesApp.preload()

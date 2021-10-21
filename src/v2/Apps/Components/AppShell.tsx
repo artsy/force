@@ -6,8 +6,8 @@ import { NavBar } from "v2/Components/NavBar"
 import { Match } from "found"
 import { isFunction } from "lodash"
 import { Footer } from "v2/Components/Footer"
-import { useEffect, useState } from "react";
-import * as React from "react";
+import { useEffect, useState } from "react"
+import * as React from "react"
 import createLogger from "v2/Utils/logger"
 import { useSystemContext } from "v2/System"
 import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
@@ -63,7 +63,7 @@ export const AppShell: React.FC<AppShellProps> = props => {
    * will cause the styles to update out of sync with the page change. Here we
    * wait for the route to finish rendering before setting the next theme.
    */
-  const nextTheme = routeConfig.theme ?? "v2"
+  const nextTheme = routeConfig.theme ?? "v3"
   const [theme, setTheme] = useState<"v2" | "v3">(nextTheme)
   useRouteComplete({ onComplete: () => setTheme(nextTheme) })
 

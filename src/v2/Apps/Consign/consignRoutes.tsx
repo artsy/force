@@ -75,7 +75,6 @@ const ThankYou = loadable(
 
 export const consignRoutes: AppRouteConfig[] = [
   {
-    theme: "v3",
     path: "/consign",
     getComponent: () => MarketingLandingApp,
     prepare: () => {
@@ -83,7 +82,6 @@ export const consignRoutes: AppRouteConfig[] = [
     },
   },
   {
-    theme: "v3",
     path: "/consign/submission2",
     getComponent: () => SubmissionLayout,
     children: [
@@ -92,7 +90,6 @@ export const consignRoutes: AppRouteConfig[] = [
         to: "/consign/submission2/artwork-details",
       }) as any,
       {
-        theme: "v3",
         path: "artwork-details",
         hideFooter: true,
         getComponent: () => ArtworkDetails,
@@ -101,7 +98,6 @@ export const consignRoutes: AppRouteConfig[] = [
         },
       },
       {
-        theme: "v3",
         path: ":id/artwork-details",
         hideFooter: true,
         getComponent: () => ArtworkDetails,
@@ -110,7 +106,6 @@ export const consignRoutes: AppRouteConfig[] = [
         },
       },
       {
-        theme: "v3",
         path: ":id/upload-photos",
         hideFooter: true,
         getComponent: () => UploadPhotos,
@@ -119,7 +114,6 @@ export const consignRoutes: AppRouteConfig[] = [
         },
       },
       {
-        theme: "v3",
         path: ":id/contact-information",
         hideFooter: true,
         getComponent: () => ContactInformation,
@@ -135,7 +129,6 @@ export const consignRoutes: AppRouteConfig[] = [
         `,
       },
       {
-        theme: "v3",
         path: ":id/thank-you",
         hideFooter: true,
         getComponent: () => ThankYou,
@@ -147,6 +140,7 @@ export const consignRoutes: AppRouteConfig[] = [
   },
   {
     path: "/consign/offer/:offerID",
+    theme: "v2",
     getComponent: () => OfferDetailApp,
     prepare: () => {
       OfferDetailApp.preload()
