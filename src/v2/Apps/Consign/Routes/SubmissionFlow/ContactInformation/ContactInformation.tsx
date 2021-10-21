@@ -1,6 +1,5 @@
-import * as React from "react";
+import * as React from "react"
 import { Text, Button } from "@artsy/palette"
-import { SubmissionStepper } from "v2/Apps/Consign/Components/SubmissionStepper"
 import { useSystemContext } from "v2/System"
 import { openAuthModal } from "v2/Utils/openAuthModal"
 import { ModalType } from "v2/Components/Authentication/Types"
@@ -30,7 +29,7 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
       params: { id },
     },
   } = useRouter()
-  const { mediator, isLoggedIn, relayEnvironment } = useSystemContext()
+  const { mediator, isLoggedIn, relayEnvironment, user } = useSystemContext()
   const {
     submission,
     saveSubmission,
@@ -58,7 +57,7 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
       })
     } else {
       if (relayEnvironment && submission) {
-        await createConsignSubmission(relayEnvironment, submission)
+        await createConsignSubmission(relayEnvironment, submission, user)
         removeSubmission()
         router.push(`/consign/submission2/${submissionId}/thank-you`)
       }
@@ -67,7 +66,7 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
 
   return (
     <>
-      <SubmissionStepper currentStep="Contact Information" />
+      {/* <SubmissionStepper currentStep="Contact Information" /> */}
 
       <Text mt={4} variant="lg">
         Let us know how to reach you

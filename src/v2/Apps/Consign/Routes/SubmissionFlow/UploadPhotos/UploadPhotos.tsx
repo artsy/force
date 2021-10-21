@@ -10,6 +10,11 @@ import { Photo } from "../Utils/fileUtils"
 import { useRouter } from "v2/System/Router/useRouter"
 import { useSubmission } from "../Utils/useSubmission"
 import { uploadPhotosValidationSchema } from "../Utils/validation"
+import { useSystemContext } from "v2/System"
+import { openAuthModal } from "v2/Utils/openAuthModal"
+import { ModalType } from "v2/Components/Authentication/Types"
+import { ContextModule, Intent } from "@artsy/cohesion"
+import { createConsignSubmission } from "../Utils/createConsignSubmission"
 
 export const UploadPhotos: React.FC = () => {
   const {
@@ -19,9 +24,15 @@ export const UploadPhotos: React.FC = () => {
     },
   } = useRouter()
 
-  const { submission, saveSubmission, submissionId } = useSubmission(id)
+  const { mediator, isLoggedIn, relayEnvironment, user } = useSystemContext()
+  const {
+    submission,
+    saveSubmission,
+    submissionId,
+    removeSubmission,
+  } = useSubmission(id)
 
-  const handleSubmit = (values: UploadPhotosFormModel) => {
+  const handleSubmit = async (values: UploadPhotosFormModel) => {
     if (submission) {
       submission.uploadPhotosForm = {
         photos: values.photos.map(photo => ({
@@ -33,9 +44,29 @@ export const UploadPhotos: React.FC = () => {
 
       saveSubmission(submission)
 
-      router.push({
-        pathname: `/consign/submission2/${submissionId}/contact-information`,
-      })
+      // router.push({
+      //   pathname: `/consign/submission2/${submissionId}/contact-information`,
+      // })
+
+      if (!isLoggedIn && mediator) {
+        openAuthModal(mediator, {
+          mode: ModalType.signup,
+          intent: Intent.consign,
+          contextModule: ContextModule.consignSubmissionFlow,
+          redirectTo: `/consign/submission2/${submissionId}/thank-you`,
+          afterSignUpAction: {
+            action: "save",
+            kind: "submissions",
+            objectId: submissionId,
+          },
+        })
+      } else {
+        if (relayEnvironment && submission) {
+          await createConsignSubmission(relayEnvironment, submission, user)
+          removeSubmission()
+          router.push(`/consign/submission2/${submissionId}/thank-you`)
+        }
+      }
     }
   }
 
@@ -94,7 +125,8 @@ export const UploadPhotos: React.FC = () => {
                 loading={values.photos.some(c => !c.s3Key)}
                 type="submit"
               >
-                Save and Continue
+                {/* Save and Continue */}
+                Submit Artwork
               </Button>
             </Form>
           )
