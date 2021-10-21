@@ -13,13 +13,14 @@ const logger = createLogger("createConsignSubmission.ts")
 
 export const createConsignSubmission = async (
   relayEnvironment: Environment,
-  submission: SubmissionModel
+  submission: SubmissionModel,
+  user: User
 ) => {
   if (!submission || !submission.uploadPhotosForm) {
     return
   }
 
-  const input = createConsignSubmissionInput(submission)
+  const input = createConsignSubmissionInput(submission, user)
 
   const submissionId = await createConsignSubmissionMutation(
     relayEnvironment,
