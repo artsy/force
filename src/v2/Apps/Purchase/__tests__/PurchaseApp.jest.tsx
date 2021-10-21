@@ -59,7 +59,7 @@ const render = (me: PurchaseAppTestQueryRawResponse["me"], user: User) =>
 
 describe("Purchase app", () => {
   const userType = { type: "User" }
-  describe("A logged in use", () => {
+  describe("A logged in user", () => {
     describe("having previous orders", () => {
       it("renders orders", async () => {
         const mockMe = {
