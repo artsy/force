@@ -170,6 +170,7 @@ jobs:
       - image: lirantal/detect-secrets
     working_directory: /usr/src/app
     steps:
+      - run: apt-get update && apt-get install -y openssh-client
       - checkout
       - run: |
           cp .secrets.baseline /tmp/.secrets.baseline
@@ -181,7 +182,7 @@ jobs:
           else
             lines=$(diff -y --suppress-common-lines .secrets.baseline /tmp/.secrets.baseline | wc -l)
             [ $lines -eq 1 ] && git restore .secrets.baseline && exit 0
-            echo \<< EOF
+            cat \<<EOF
             Changes to baseline results need to be committed.
 
             If seeing this message in CI you may have ran your commit using --no-verify, thereby skipping the detect-secrets git-hook.
@@ -189,7 +190,7 @@ jobs:
             To fix, run:
               git reset --soft HEAD^
               yarn detect-secrets
-            EOF
+          EOF
             exit $code
           fi
 
