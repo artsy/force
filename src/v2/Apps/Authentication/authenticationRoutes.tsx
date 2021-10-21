@@ -11,6 +11,8 @@ const ResetPasswordRoute = loadable(
 
 export const authenticationRoutes: AppRouteConfig[] = [
   {
+    hideNav: true,
+    hideFooter: true,
     theme: "v3",
     path: "/reset_password2",
     getComponent: () => ResetPasswordRoute,
