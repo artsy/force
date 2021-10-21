@@ -9,6 +9,7 @@ type User =
       lab_features?: string[]
       type?: string
       name?: string
+      phone?: string
     }
   | null
   | undefined
