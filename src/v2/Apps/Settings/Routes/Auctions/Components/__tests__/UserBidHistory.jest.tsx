@@ -1,0 +1,3 @@
+describe("UserBidHistory", () => {
+  // TODO
+})

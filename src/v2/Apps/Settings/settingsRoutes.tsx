@@ -117,8 +117,15 @@ export const settingsRoutes: AppRouteConfig[] = [
         theme: "v3",
         getComponent: () => AuctionsRoute,
         prepare: () => {
-          AuctionsRoute.preload()
+          return AuctionsRoute.preload()
         },
+        query: graphql`
+          query settingsRoutes_SettingsAuctionsRouteQuery {
+            me {
+              ...SettingsAuctionsRoute_me
+            }
+          }
+        `,
       },
       {
         path: "edit-profile",
