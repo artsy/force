@@ -1,4 +1,3 @@
-import * as React from "react"
 import { Text, Button } from "@artsy/palette"
 import { useSystemContext } from "v2/System"
 import { openAuthModal } from "v2/Utils/openAuthModal"
@@ -15,6 +14,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { ContactInformation_me } from "v2/__generated__/ContactInformation_me.graphql"
 import { useSubmission } from "../Utils/useSubmission"
 import { contactInformationValidationSchema } from "../Utils/validation"
+import { BackLink } from "v2/Components/Links/BackLink"
 
 export interface ContactInformationProps {
   me: ContactInformation_me
@@ -66,6 +66,14 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
 
   return (
     <>
+      <BackLink
+        py={2}
+        mb={6}
+        to={`/consign/submission2/${submissionId}/upload-photos`}
+      >
+        Back ....
+      </BackLink>
+
       {/* <SubmissionStepper currentStep="Contact Information" /> */}
 
       <Text mt={4} variant="lg">

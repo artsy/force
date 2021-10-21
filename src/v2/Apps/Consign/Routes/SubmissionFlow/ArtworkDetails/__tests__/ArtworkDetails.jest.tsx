@@ -84,6 +84,8 @@ describe("ArtworkDetails", () => {
       expect(text).toContain("All fields are required to submit a work.")
       expect(wrapper.find(ArtworkDetailsForm)).toBeTruthy()
       expect(wrapper.find("[data-test-id='save-button']")).toBeTruthy()
+      expect(wrapper.find("BackLink")).toHaveLength(1)
+      expect(wrapper.find("BackLink").prop("to")).toEqual("/consign")
     })
 
     it("fields are pre-populating from session storage", async () => {

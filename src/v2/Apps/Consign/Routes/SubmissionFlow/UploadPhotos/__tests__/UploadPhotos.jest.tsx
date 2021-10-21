@@ -96,6 +96,10 @@ describe("UploadPhotos", () => {
     expect(text).toContain("Upload photos of your artwork")
     expect(wrapper.find(UploadPhotosForm).length).toBe(1)
     expect(wrapper.find("button[type='submit']").length).toBe(1)
+    expect(wrapper.find("BackLink")).toHaveLength(1)
+    expect(wrapper.find("BackLink").prop("to")).toEqual(
+      "/consign/submission2/1/artwork-details"
+    )
   })
 
   it.each([
