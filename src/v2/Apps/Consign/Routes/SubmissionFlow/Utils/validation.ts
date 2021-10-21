@@ -7,8 +7,8 @@ export const artworkDetailsValidationSchema = yup.object().shape({
     .required(
       "Unfortunately, this artist’s work does not have enough current demand from Artsy collectors to be accepted for consignment."
     ),
-  year: yup.string().required(),
-  title: yup.string().required(),
+  year: yup.string().required().trim(),
+  title: yup.string().required().trim(),
   medium: yup
     .string()
     .required()
@@ -27,7 +27,7 @@ export const artworkDetailsValidationSchema = yup.object().shape({
     ),
   editionNumber: yup.string().when("rarity", {
     is: "limited edition",
-    then: yup.string().required(),
+    then: yup.string().required().trim(),
   }),
   editionSize: yup.number().when("rarity", {
     is: "limited edition",

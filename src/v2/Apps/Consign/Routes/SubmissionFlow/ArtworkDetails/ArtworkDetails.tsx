@@ -46,6 +46,15 @@ export const ArtworkDetails: React.FC = () => {
       editionSize: isLimitedEditionRarity ? values.editionSize : undefined,
     }
 
+    for (let key in artworkDetailsForm) {
+      if (typeof artworkDetailsForm[key] !== "string") {
+        artworkDetailsForm[key] = artworkDetailsForm[key] || undefined
+      } else {
+        artworkDetailsForm[key] =
+          artworkDetailsForm[key] && artworkDetailsForm[key].trim()
+      }
+    }
+
     saveSubmission(
       submission
         ? {
