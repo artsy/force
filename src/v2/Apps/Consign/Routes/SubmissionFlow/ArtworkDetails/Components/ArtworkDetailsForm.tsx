@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react"
 import {
   Box,
   Column,
@@ -135,6 +135,7 @@ export const ArtworkDetailsForm: FC = () => {
           </Text>
           <Select
             name="medium"
+            focus={values.medium !== "default"}
             options={mediumOptions}
             selected={values.medium}
             onBlur={handleBlur}
@@ -162,6 +163,7 @@ export const ArtworkDetailsForm: FC = () => {
           </Flex>
           <Select
             name="rarity"
+            focus={values.rarity !== "default"}
             options={rarityOptions}
             selected={values.rarity}
             onBlur={handleBlur}
