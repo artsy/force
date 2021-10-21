@@ -62,7 +62,7 @@ export interface ArtworkDetailsFormModel {
   medium: string
   rarity: string
   editionNumber: string
-  editionSize?: number
+  editionSize?: string
   height: string
   width: string
   depth: string
@@ -185,10 +185,6 @@ export const ArtworkDetailsForm: FC = () => {
                 /
               </Box>
               <Input
-                type="number"
-                onKeyDown={e =>
-                  (e.key === "." || e.key === ",") && e.preventDefault()
-                }
                 title="Edition Size"
                 placeholder="Total # in Edition"
                 name="editionSize"

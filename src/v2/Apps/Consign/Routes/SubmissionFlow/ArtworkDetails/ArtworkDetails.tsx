@@ -33,9 +33,9 @@ const ArtworkDetailsSchema = Yup.object().shape({
     is: "limited edition",
     then: Yup.string().required(),
   }),
-  editionSize: Yup.number().when("rarity", {
+  editionSize: Yup.string().when("rarity", {
     is: "limited edition",
-    then: Yup.number().required(),
+    then: Yup.string().required(),
   }),
   height: Yup.number().positive().required(),
   width: Yup.number().positive().required(),
@@ -51,7 +51,7 @@ export const initialValues = {
   medium: "",
   rarity: "",
   editionNumber: "",
-  editionSize: undefined,
+  editionSize: "",
   height: "",
   width: "",
   depth: "",
@@ -75,7 +75,7 @@ export const ArtworkDetails: FC = () => {
       artworkDetailsForm: {
         ...values,
         editionNumber: isLimitedEditionRarity ? values.editionNumber : "",
-        editionSize: isLimitedEditionRarity ? values.editionSize : undefined,
+        editionSize: isLimitedEditionRarity ? values.editionSize : "",
       },
     })
 
