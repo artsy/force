@@ -20,7 +20,6 @@ import {
 import { ArtworkFilterMobileActionSheet } from "./ArtworkFilterMobileActionSheet"
 import { ArtworkFilters } from "./ArtworkFilters"
 import {
-  BellIcon,
   Box,
   BoxProps,
   Button,
@@ -55,6 +54,7 @@ import type RelayModernEnvironment from "relay-runtime/lib/store/RelayModernEnvi
 import { TagArtworkFilter_tag } from "v2/__generated__/TagArtworkFilter_tag.graphql"
 import { Works_partner } from "v2/__generated__/Works_partner.graphql"
 import { CollectionArtworksFilter_collection } from "v2/__generated__/CollectionArtworksFilter_collection.graphql"
+import { CreateAlertButton } from "./CreateAlertButton"
 
 /**
  * Primary ArtworkFilter which is wrapped with a context and refetch container.
@@ -111,21 +111,6 @@ const FiltersWithScrollIntoView: React.FC<{
         )}
       </ScrollRefContext.Provider>
     </Box>
-  )
-}
-
-const CreateAlertButton = () => {
-  return (
-    <>
-      <Button size="small">
-        <Flex justifyContent="space-between" alignItems="center">
-          <BellIcon fill="white100" width="16px" height="16px" />
-          <Spacer mr={0.5} />
-          Create Alert
-        </Flex>
-      </Button>
-      <Spacer mb={10} />
-    </>
   )
 }
 
@@ -352,7 +337,12 @@ export const BaseArtworkFilter: React.FC<
           </Flex>
         )}
 
-        {showCreateAlert && <CreateAlertButton />}
+        {showCreateAlert && (
+          <>
+            <CreateAlertButton />
+            <Spacer mb={10} />
+          </>
+        )}
 
         <GridColumns>
           <Column span={3} pr={tokens.pr}>
