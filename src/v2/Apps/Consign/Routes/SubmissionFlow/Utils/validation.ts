@@ -2,7 +2,11 @@ import * as yup from "yup"
 import { email } from "v2/Components/Authentication/Validators"
 
 export const artworkDetailsValidationSchema = yup.object().shape({
-  artistId: yup.string().label("Artist").required(),
+  artistId: yup
+    .string()
+    .required(
+      "Unfortunately, this artist’s work does not have enough current demand from Artsy collectors to be accepted for consignment."
+    ),
   year: yup.string().required(),
   title: yup.string().required(),
   medium: yup

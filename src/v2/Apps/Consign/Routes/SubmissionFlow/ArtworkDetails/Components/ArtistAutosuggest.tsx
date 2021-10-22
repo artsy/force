@@ -1,4 +1,4 @@
-import { FC, useState, useEffect } from "react";
+import React, { FC, useState } from "react"
 import { fetchQuery, graphql } from "react-relay"
 import RelayModernEnvironment from "relay-runtime/lib/store/RelayModernEnvironment"
 import { useSystemContext } from "v2/System"
@@ -30,33 +30,31 @@ export const ArtistAutosuggest: FC = () => {
     setFieldValue,
     errors,
     touched,
+    setFieldTouched,
     handleBlur,
   } = useFormikContext<ArtworkDetailsFormModel>()
   const [suggestions, setSuggestions] = useState<Suggestions>([])
-  const [searchString, setSearchString] = useState<string>("")
   const { relayEnvironment } = useSystemContext()
-
-  useEffect(() => {
-    if (values.artistName !== searchString) {
-      setSearchString(values.artistName || "")
-    }
-  }, [values.artistName])
 
   const updateSuggestions = async (value: string) => {
     setSuggestions([])
-    if (value.length >= 3 && relayEnvironment) {
+    if (relayEnvironment) {
       const suggestions = await fetchSuggestions(value, relayEnvironment)
       setSuggestions(suggestions)
     }
   }
 
   const inputProps = {
-    onChange: (e, { newValue }) => {
-      setSearchString(newValue)
+    onChange: (e: Event, { newValue }) => {
+      setFieldValue("artistId", "")
+      setFieldValue("artistName", newValue)
     },
-    onBlur: handleBlur,
-    value: searchString,
-    error: touched.artistId && errors.artistId,
+    onBlur: handleBlur("artistName"),
+    onFocus: () => {
+      setFieldTouched("artistName", false)
+    },
+    value: values.artistName,
+    error: values.artistName.trim() && touched.artistName && errors.artistId,
   }
 
   return (
@@ -72,6 +70,9 @@ export const ArtistAutosuggest: FC = () => {
         e.preventDefault()
         setFieldValue("artistId", suggestion.node.internalID)
         setFieldValue("artistName", suggestionValue)
+      }}
+      shouldRenderSuggestions={(value: string) => {
+        return value.trim().length > 2
       }}
       getSuggestionValue={suggestion => suggestion.node.displayLabel}
       renderInputComponent={AutosuggestInput}
