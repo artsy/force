@@ -46,16 +46,19 @@ export const UserActiveBid: React.FC<UserActiveBidProps> = ({
           <Image width={100} height={100} src={image?.url} lazyLoad />
         </RouterLink>
 
-        <Flex ml={1} mr={1} p={0.2} flexDirection="column">
+        <Flex ml={1} mr={1} flexDirection="column">
           <Text color="black60" variant="xs">
-            {`Lot: ${lotLabel}`}
+            Lot {lotLabel}
           </Text>
 
           <Spacer mb={0.5} />
 
-          <Text color="black80" variant="sm">
-            {artist?.name}
-          </Text>
+          {artist?.name && (
+            <Text color="black80" variant="sm">
+              {artist.name}
+            </Text>
+          )}
+
           <Text color="black60" variant="sm" fontStyle="italic">
             {title}
           </Text>
@@ -63,7 +66,7 @@ export const UserActiveBid: React.FC<UserActiveBidProps> = ({
           <Spacer mb={0.5} />
 
           <Text color="black60" variant="xs">
-            {`${highestBid?.display} (${bidderPositions} Bids)`}
+            {highestBid?.display} ({bidderPositions} Bids)
           </Text>
         </Flex>
       </Flex>

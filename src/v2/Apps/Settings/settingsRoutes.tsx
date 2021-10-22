@@ -117,7 +117,7 @@ export const settingsRoutes: AppRouteConfig[] = [
         theme: "v3",
         getComponent: () => AuctionsRoute,
         prepare: () => {
-          return AuctionsRoute.preload()
+          AuctionsRoute.preload()
         },
         query: graphql`
           query settingsRoutes_SettingsAuctionsRouteQuery {

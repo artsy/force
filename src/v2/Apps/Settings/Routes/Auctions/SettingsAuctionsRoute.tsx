@@ -13,45 +13,33 @@ interface SettingsAuctionsRouteProps {
 const SettingsAuctionsRoute: React.FC<SettingsAuctionsRouteProps> = ({
   me,
 }) => {
-  const userLots = me?.lotStandings ?? []
+  const lotStandings = me?.lotStandings ?? []
 
   return (
     <>
-      <Box
-        id="user-active-bids"
-        mt={16}
-        mb={16}
-        borderBottom="1px solid"
-        borderColor="black10"
-      >
+      <Box mt={16} mb={16} borderBottom="1px solid" borderColor="black10">
         <Text variant={["sm", "lg"]} mt={4} mb={[2, 4]}>
           Active Bids
         </Text>
 
-        {!userLots.length ? (
-          <Text mb={2} color="black60" variant="sm">
-            Nothing to Show
-          </Text>
-        ) : (
+        {lotStandings.length ? (
           <GridColumns mb={6}>
-            {userLots.map((lot, i) => (
+            {lotStandings.map((lot, i) => (
               <UserActiveBid
                 key={lot?.activeBid?.id}
                 lot={lot}
-                shouldDisplayBorderBottom={i + 1 < userLots.length}
+                shouldDisplayBorderBottom={i + 1 < lotStandings.length}
               />
             ))}
           </GridColumns>
+        ) : (
+          <Text mb={2} color="black60" variant="sm">
+            Nothing to Show
+          </Text>
         )}
       </Box>
 
-      <Box
-        id="user-bid-history"
-        mt={16}
-        mb={16}
-        borderBottom="1px solid"
-        borderColor="black10"
-      >
+      <Box mt={16} mb={16} borderBottom="1px solid" borderColor="black10">
         <Text variant={["sm", "lg"]} mt={4} mb={[2, 4]}>
           Bid History
         </Text>
@@ -59,7 +47,7 @@ const SettingsAuctionsRoute: React.FC<SettingsAuctionsRouteProps> = ({
         <UserBidHistory />
       </Box>
 
-      <Box id="user-registeration-for-upcoming-auctions" mt={16} mb={16}>
+      <Box mt={16} mb={16}>
         <Text variant={["sm", "lg"]} mt={4} mb={[2, 4]}>
           Registration for Upcoming Auctions
         </Text>
