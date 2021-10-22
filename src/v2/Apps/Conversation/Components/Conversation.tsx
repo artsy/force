@@ -121,7 +121,7 @@ const Conversation: React.FC<ConversationProps> = props => {
   // TODO: refactor
   useEffect(() => {
     initialScroll.current = false
-  }, [match.params?.conversationID])
+  }, [match?.params?.conversationID])
 
   useEffect(() => {
     initialScroll.current = !fetchingMore
