@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { useEffect, useState } from "react"
 import {
   Box,
   Column,
@@ -70,7 +70,7 @@ export interface ArtworkDetailsFormModel {
   units: string
 }
 
-export const ArtworkDetailsForm: FC = () => {
+export const ArtworkDetailsForm: React.FC = () => {
   const {
     match: {
       params: { id },

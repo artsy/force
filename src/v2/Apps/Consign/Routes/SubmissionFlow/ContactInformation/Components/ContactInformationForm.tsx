@@ -1,4 +1,3 @@
-import * as React from "react";
 import { Box, BoxProps, Input } from "@artsy/palette"
 import { useFormikContext } from "formik"
 
