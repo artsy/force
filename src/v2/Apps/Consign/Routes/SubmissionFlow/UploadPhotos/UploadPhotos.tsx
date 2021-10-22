@@ -130,6 +130,7 @@ export const UploadPhotos: React.FC = () => {
               </Box>
 
               <Button
+                width={["100%", "auto"]}
                 disabled={!isValid}
                 loading={values.photos.some(c => !c.s3Key)}
                 type="submit"

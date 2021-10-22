@@ -89,6 +89,7 @@ export const ArtworkDetails: React.FC = () => {
             <ArtworkDetailsForm />
             <Button
               mt={6}
+              width={["100%", "auto"]}
               data-test-id="save-button"
               type="submit"
               size="medium"

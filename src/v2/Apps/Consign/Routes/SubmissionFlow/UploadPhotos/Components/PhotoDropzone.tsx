@@ -121,7 +121,13 @@ export const PhotoDropzone: React.FC<PhotoDropzoneProps> = ({
           Maximum size: {maxTotalSize} MB
         </Text>
 
-        <Button type="button" mt={4} variant="secondaryOutline" onClick={open}>
+        <Button
+          width={["100%", "auto"]}
+          type="button"
+          mt={4}
+          variant="secondaryOutline"
+          onClick={open}
+        >
           Add Photo
         </Button>
       </Box>
