@@ -1,6 +1,9 @@
 import { mount } from "enzyme"
-import { ArtworkDetails, initialValues } from "../ArtworkDetails"
-import { ArtworkDetailsForm } from "../Components/ArtworkDetailsForm"
+import { ArtworkDetails } from "../ArtworkDetails"
+import {
+  ArtworkDetailsForm,
+  getArtworkDetailsFormInitialValues,
+} from "../Components/ArtworkDetailsForm"
 import {
   submissionFlowSteps,
   submissionFlowStepsMobile,
@@ -74,7 +77,7 @@ describe("ArtworkDetails", () => {
   beforeEach(() => {
     sessionStore = {
       "submission-1": JSON.stringify({
-        artworkDetailsForm: { ...initialValues },
+        artworkDetailsForm: getArtworkDetailsFormInitialValues(),
       }),
     }
   })

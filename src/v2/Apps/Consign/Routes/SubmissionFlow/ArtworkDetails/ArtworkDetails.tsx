@@ -4,27 +4,13 @@ import { Form, Formik } from "formik"
 import {
   ArtworkDetailsForm,
   ArtworkDetailsFormModel,
+  getArtworkDetailsFormInitialValues,
 } from "./Components/ArtworkDetailsForm"
 import { useRouter } from "v2/System/Router/useRouter"
 import uuid from "uuid"
 import { useSubmission } from "../Utils/useSubmission"
 import { artworkDetailsValidationSchema } from "../Utils/validation"
 import { BackLink } from "v2/Components/Links/BackLink"
-
-export const initialValues = {
-  artistId: "",
-  artistName: "",
-  year: "",
-  title: "",
-  medium: "",
-  rarity: "",
-  editionNumber: "",
-  editionSize: undefined,
-  height: "",
-  width: "",
-  depth: "",
-  units: "in",
-}
 
 export const ArtworkDetails: React.FC = () => {
   const {
@@ -88,7 +74,7 @@ export const ArtworkDetails: React.FC = () => {
       </Text>
 
       <Formik<ArtworkDetailsFormModel>
-        initialValues={initialValues}
+        initialValues={getArtworkDetailsFormInitialValues()}
         onSubmit={handleSubmit}
         validationSchema={artworkDetailsValidationSchema}
         validateOnMount
