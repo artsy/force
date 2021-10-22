@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react"
+import { useState } from "react"
 import { fetchQuery, graphql } from "react-relay"
 import RelayModernEnvironment from "relay-runtime/lib/store/RelayModernEnvironment"
 import { useSystemContext } from "v2/System"
@@ -24,7 +24,7 @@ type Suggestion =
 
 type Suggestions = readonly Suggestion[] | undefined | null
 
-export const ArtistAutosuggest: FC = () => {
+export const ArtistAutosuggest: React.FC = () => {
   const {
     values,
     setFieldValue,
@@ -140,7 +140,7 @@ const SuggestionsContainer = ({ containerProps, children }) => {
   )
 }
 
-const AutosuggestInput: FC = props => {
+const AutosuggestInput: React.FC = props => {
   return (
     <Input
       title="Artist"
@@ -152,7 +152,7 @@ const AutosuggestInput: FC = props => {
   )
 }
 
-const ArtistSuggestion: FC<{ node: NonNullable<Suggestion>["node"] }> = (
+const ArtistSuggestion: React.FC<{ node: NonNullable<Suggestion>["node"] }> = (
   { node },
   { isHighlighted }
 ) => {
