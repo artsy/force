@@ -300,7 +300,7 @@ describe("UploadPhotos", () => {
       wrapper.update()
 
       expect(wrapper.text()).toContain(
-        "File exceeds the total size limit. Please delete photos or upload smaller files."
+        "Whoa, you've reached the size limit! Please delete or upload smaller files."
       )
     })
 

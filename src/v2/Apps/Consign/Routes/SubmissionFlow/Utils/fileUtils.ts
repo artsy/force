@@ -57,7 +57,7 @@ export const getErrorMessage = (fileRejection: FileRejection) => {
     errorMessage = "File format not supported. Please upload JPG or PNG files."
   } else if (errorCodes.includes(CustomErrorCode.TotalSizeLimit)) {
     errorMessage =
-      "File exceeds the total size limit. Please delete photos or upload smaller files."
+      "Whoa, you've reached the size limit! Please delete or upload smaller files."
   }
 
   return errorMessage
