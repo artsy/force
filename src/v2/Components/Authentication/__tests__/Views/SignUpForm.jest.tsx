@@ -1,9 +1,10 @@
 /* eslint-disable jest/no-done-callback */
-import { setupTestWrapper } from "v2/DevTools/setupTestWrapper";
+import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
 import { tests } from "v2/Components/Authentication/Views/SignUpForm"
 import { SignupValues } from "../fixtures"
 import { ContextModule, Intent } from "@artsy/cohesion"
+import { flushPromiseQueue } from "v2/DevTools"
 
 jest.unmock("react-relay")
 
@@ -48,18 +49,15 @@ describe("SignUpForm", () => {
     }
   })
 
-  describe("general stuff", () => {
-    it("renders errors", done => {
-      passedProps.values.email = ""
-      const wrapper = getWrapper()
-      const button = wrapper.find(`input[name="email"]`)
-      button.simulate("blur")
+  it("renders errors", async () => {
+    passedProps.values.email = ""
+    const wrapper = getWrapper()
 
-      setTimeout(() => {
-        expect(wrapper.html()).toMatch("Please enter a valid email.")
-        done()
-      })
-    })
+    wrapper.find("form").simulate("submit")
+
+    await flushPromiseQueue()
+
+    expect(wrapper.html()).toMatch("Please enter a valid email.")
   })
 
   describe("with a GDPR country code", () => {
