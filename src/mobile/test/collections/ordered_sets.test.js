@@ -6,7 +6,7 @@
 const sinon = require("sinon")
 const rewire = require("rewire")
 const Backbone = require("backbone")
-const OrderedSets = rewire("../../collections/ordered_sets.coffee")
+const OrderedSets = rewire("../../collections/ordered_sets")
 const { fabricate } = require("@artsy/antigravity")
 
 describe("OrderedSets", function () {
