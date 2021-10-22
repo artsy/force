@@ -14,7 +14,6 @@ const ShippingApp = loadable(
 
 export const shippingRoutes: AppRouteConfig[] = [
   {
-    theme: "v3",
     // TODO: update route to /user/shipping and remove stitched route to launch
     path: "/user/shipping",
     getComponent: () => ShippingApp,

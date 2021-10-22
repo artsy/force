@@ -1,4 +1,3 @@
-import React from "react"
 import { mount } from "enzyme"
 import { ArtistsStep } from "../ArtistsStep"
 import { MultiButtonState } from "v2/Components/Buttons/MultiStateButton"

@@ -9,7 +9,6 @@ import {
   UntouchedBuyOrder,
 } from "v2/Apps/__tests__/Fixtures/Order"
 import { renderRelayTree } from "v2/DevTools"
-import React from "react"
 import { graphql } from "react-relay"
 import { ExtractProps } from "v2/Utils/ExtractProps"
 import { TransactionDetailsSummaryItemFragmentContainer } from "../TransactionDetailsSummaryItem"

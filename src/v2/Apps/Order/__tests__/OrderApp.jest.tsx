@@ -4,7 +4,6 @@ import { ErrorPage } from "v2/Components/ErrorPage"
 import { mount } from "enzyme"
 import { Resolver } from "found-relay"
 import { getFarceResult } from "found/server"
-import React from "react"
 import { HeadProvider, Meta } from "react-head"
 import { OrderApp } from "../OrderApp"
 

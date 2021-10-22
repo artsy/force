@@ -1,4 +1,5 @@
-import React, { useState } from "react"
+import { useState } from "react";
+import * as React from "react";
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 import useDeepCompareEffect from "use-deep-compare-effect"
 import { Box, Flex, Spacer } from "@artsy/palette"

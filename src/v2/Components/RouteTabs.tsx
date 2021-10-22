@@ -1,4 +1,4 @@
-import React from "react"
+import * as React from "react";
 import { RouterLink, RouterLinkProps } from "v2/System/Router/RouterLink"
 import { BaseTab, BaseTabs, BaseTabProps, BaseTabsProps } from "@artsy/palette"
 import { useIsRouteActive } from "v2/System/Router/useRouter"

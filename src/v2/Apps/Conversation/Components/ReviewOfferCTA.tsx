@@ -1,4 +1,4 @@
-import React from "react"
+import * as React from "react";
 import { useTracking } from "react-tracking"
 import { tappedViewOffer } from "@artsy/cohesion"
 import { DateTime } from "luxon"

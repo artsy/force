@@ -4,6 +4,7 @@ import { artistSeriesRoutes } from "v2/Apps/ArtistSeries/artistSeriesRoutes"
 import { artistsRoutes } from "v2/Apps/Artists/artistsRoutes"
 import { artworkRoutes } from "v2/Apps/Artwork/artworkRoutes"
 import { auctionsRoutes } from "v2/Apps/Auctions/auctionsRoutes"
+import { authenticationRoutes } from "v2/Apps/Authentication/authenticationRoutes"
 import { buildAppRoutes } from "v2/System/Router/buildAppRoutes"
 import { buyerGuaranteeRoutes } from "v2/Apps/BuyerGuarantee/buyerGuaranteeRoutes"
 import { categoriesRoutes } from "./Apps/Categories/categoriesRoutes"
@@ -26,6 +27,7 @@ import { paymentRoutes } from "v2/Apps/Payment/paymentRoutes"
 import { priceDatabaseRoutes } from "./Apps/PriceDatabase/priceDatabaseRoutes"
 import { purchaseRoutes } from "v2/Apps/Purchase/purchaseRoutes"
 import { searchRoutes } from "v2/Apps/Search/searchRoutes"
+import { settingsRoutes } from "v2/Apps/Settings/settingsRoutes"
 import { shippingRoutes } from "v2/Apps/Shipping/shippingRoutes"
 import { showRoutes } from "v2/Apps/Show/showRoutes"
 import { showsRoutes } from "v2/Apps/Shows/showsRoutes"
@@ -40,6 +42,7 @@ export function getAppRoutes(): AppRouteConfig[] {
     { routes: artistsRoutes },
     { routes: artworkRoutes },
     { routes: auctionsRoutes },
+    { routes: authenticationRoutes },
     { routes: buyerGuaranteeRoutes },
     { routes: categoriesRoutes },
     { routes: collectRoutes },
@@ -60,6 +63,7 @@ export function getAppRoutes(): AppRouteConfig[] {
     { routes: priceDatabaseRoutes },
     { routes: purchaseRoutes },
     { routes: searchRoutes },
+    { routes: settingsRoutes },
     { routes: shippingRoutes },
     { routes: showRoutes },
     { routes: showsRoutes },

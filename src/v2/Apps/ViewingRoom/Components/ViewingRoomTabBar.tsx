@@ -1,4 +1,4 @@
-import React from "react"
+import * as React from "react";
 import { useRouter } from "v2/System/Router/useRouter"
 import { RouteTab, RouteTabs } from "v2/Components/RouteTabs"
 

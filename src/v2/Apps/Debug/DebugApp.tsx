@@ -1,5 +1,5 @@
 import { Text } from "@artsy/palette"
-import React from "react"
+import * as React from "react";
 import { Title } from "react-head"
 
 export const DebugApp: React.FC<{}> = () => {

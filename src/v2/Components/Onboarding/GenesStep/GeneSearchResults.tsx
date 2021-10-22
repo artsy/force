@@ -7,7 +7,7 @@ import { GeneSearchResultsQuery } from "v2/__generated__/GeneSearchResultsQuery.
 import { SystemContextProps, withSystemContext } from "v2/System"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { garamond } from "v2/Assets/Fonts"
-import React from "react"
+import * as React from "react";
 import {
   RelayProp,
   commitMutation,

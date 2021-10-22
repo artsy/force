@@ -1,4 +1,3 @@
-import React from "react"
 import { Meta, Title } from "react-head"
 import { data as sd } from "sharify"
 

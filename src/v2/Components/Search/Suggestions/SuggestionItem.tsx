@@ -1,7 +1,7 @@
 import { ArtworkIcon, AuctionIcon, Flex, Pill, Text } from "@artsy/palette"
 import match from "autosuggest-highlight/match"
 import parse from "autosuggest-highlight/parse"
-import React from "react"
+import * as React from "react";
 import styled from "styled-components"
 import { RouterLink } from "v2/System/Router/RouterLink"
 

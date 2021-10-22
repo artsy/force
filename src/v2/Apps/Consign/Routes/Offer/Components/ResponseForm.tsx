@@ -1,4 +1,5 @@
-import React, { useState } from "react"
+import { useState } from "react";
+import * as React from "react";
 import { Form, Formik } from "formik"
 import { BorderedRadio, Button, RadioGroup, Text } from "@artsy/palette"
 import { useSystemContext } from "v2/System"

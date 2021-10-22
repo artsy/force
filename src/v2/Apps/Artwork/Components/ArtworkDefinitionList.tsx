@@ -1,4 +1,4 @@
-import React from "react"
+import * as React from "react";
 import { BoxProps, Flex, Text } from "@artsy/palette"
 
 interface ArtworkDefinitionListProps extends BoxProps {

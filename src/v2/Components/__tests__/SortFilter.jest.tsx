@@ -1,5 +1,4 @@
 import { mount } from "enzyme"
-import React from "react"
 import { SortFilter } from "../SortFilter"
 
 describe("SortFilter", () => {

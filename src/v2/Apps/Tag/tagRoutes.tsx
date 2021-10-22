@@ -16,7 +16,6 @@ export const tagRoutes: AppRouteConfig[] = [
   {
     path: "/tag/:slug",
     getComponent: () => TagApp,
-    theme: "v3",
     prepare: () => {
       TagApp.preload()
     },

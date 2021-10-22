@@ -1,4 +1,4 @@
-import React from "react"
+import * as React from "react";
 import Waypoint from "react-waypoint"
 import { SectionVideo } from "./section_video"
 import { SectionText } from "./section_text"

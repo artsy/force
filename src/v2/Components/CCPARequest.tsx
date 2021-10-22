@@ -13,7 +13,8 @@ import {
 } from "@artsy/palette"
 import { CCPARequestMutation } from "v2/__generated__/CCPARequestMutation.graphql"
 import { useSystemContext } from "v2/System"
-import React, { useEffect, useState } from "react"
+import { useEffect, useState } from "react";
+import * as React from "react";
 import { commitMutation, graphql } from "react-relay"
 import styled from "styled-components"
 import { ErrorWithMetadata } from "v2/Utils/errors"

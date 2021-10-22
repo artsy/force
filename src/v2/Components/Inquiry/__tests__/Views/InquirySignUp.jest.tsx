@@ -1,5 +1,4 @@
 import { mount } from "enzyme"
-import React from "react"
 import { flushPromiseQueue } from "v2/DevTools"
 import { InquirySignUp } from "../../Views/InquirySignUp"
 import { useArtworkInquiryRequest } from "../../Hooks/useArtworkInquiryRequest"

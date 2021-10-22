@@ -1,5 +1,4 @@
 import { mount } from "enzyme"
-import React from "react"
 import { ModalContainer, ModalOverlay, ModalWrapper } from "../ModalWrapper"
 
 describe("Modal", () => {

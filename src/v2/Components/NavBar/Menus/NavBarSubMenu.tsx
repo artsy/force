@@ -1,7 +1,7 @@
 import { Box, Text, GridColumns, Column, Flex } from "@artsy/palette"
 import { AnalyticsSchema, ContextModule } from "v2/System"
 import { useTracking } from "v2/System/Analytics/useTracking"
-import React from "react"
+import * as React from "react";
 import { MenuData, SimpleLinkData } from "../menuData"
 import { AppContainer } from "v2/Apps/Components/AppContainer"
 import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"

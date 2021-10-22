@@ -1,4 +1,3 @@
-import React from "react"
 import renderTestComponent from "desktop/apps/auction/__tests__/utils/renderTestComponent"
 
 const rewire = require("rewire")("../MasonryArtwork")

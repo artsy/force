@@ -1,5 +1,5 @@
 import { groupBy } from "lodash"
-import React from "react"
+import * as React from "react";
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { extractNodes } from "v2/Utils/extractNodes"
 import { ArtistCVGroup_artist } from "v2/__generated__/ArtistCVGroup_artist.graphql"

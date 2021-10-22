@@ -1,4 +1,4 @@
-import React from "react"
+import { Component } from "react";
 import { connect } from "react-redux"
 import { Box, ThemeProviderV3 } from "@artsy/palette"
 import { FormSwitcher } from "v2/Components/Authentication/FormSwitcher"
@@ -18,7 +18,7 @@ interface CreateAccountProps {
   updateAuthFormStateAndClearErrorAction: (type: ModalType) => void
 }
 
-export class CreateAccount extends React.Component<CreateAccountProps> {
+export class CreateAccount extends Component<CreateAccountProps> {
   get redirectUrl() {
     const { artistId, artistName, contextPath, subject } = this.props
 

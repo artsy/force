@@ -1,5 +1,6 @@
 import { Button, Checkbox, Spacer, useToasts } from "@artsy/palette"
-import React, { useRef, useState } from "react"
+import { useRef, useState } from "react";
+import * as React from "react";
 import { data as sd } from "sharify"
 
 enum Mode {

@@ -1,5 +1,5 @@
 import { Box, Flex, Sans, Spacer } from "@artsy/palette"
-import React from "react"
+import * as React from "react";
 
 import { ArtistConsignRecentlySold_artist } from "v2/__generated__/ArtistConsignRecentlySold_artist.graphql"
 

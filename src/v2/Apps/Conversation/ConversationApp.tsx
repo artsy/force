@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react"
+import { useEffect, useState } from "react";
+import * as React from "react";
 import { Title } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Match, Router } from "found"

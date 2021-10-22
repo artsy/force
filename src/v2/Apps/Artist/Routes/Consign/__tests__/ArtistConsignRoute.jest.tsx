@@ -3,7 +3,6 @@ import { SystemContextProvider } from "v2/System"
 import { useTracking } from "v2/System/Analytics/useTracking"
 import { MockBoot, renderRelayTree } from "v2/DevTools"
 import { cloneDeep } from "lodash"
-import React from "react"
 import { graphql } from "relay-runtime"
 import { ArtistConsignRouteFragmentContainer } from "../ArtistConsignRoute"
 

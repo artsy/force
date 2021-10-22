@@ -170,20 +170,29 @@ jobs:
       - image: lirantal/detect-secrets
     working_directory: /usr/src/app
     steps:
+      - run: apt-get update && apt-get install -y openssh-client
       - checkout
       - run: |
-            cp .secrets.baseline /tmp/.secrets.baseline
-            set +e && set +o pipefail
-            detect-secrets-hook --baseline .secrets.baseline $(git ls-files)
-            code=$?
-            if [[ $code -ne 3 ]]; then
-              exit $code
-            else
-              lines=$(diff -y --suppress-common-lines .secrets.baseline /tmp/.secrets.baseline | wc -l)
-              [ $lines -eq 1 ] && git restore .secrets.baseline && exit 0
-              echo "changes to baseline results need to be committed."
-              exit $code
-            fi
+          cp .secrets.baseline /tmp/.secrets.baseline
+          set +e && set +o pipefail
+          detect-secrets-hook --baseline .secrets.baseline $(git ls-files)
+          code=$?
+          if [[ $code -ne 3 ]]; then
+            exit $code
+          else
+            lines=$(diff -y --suppress-common-lines .secrets.baseline /tmp/.secrets.baseline | wc -l)
+            [ $lines -eq 1 ] && git restore .secrets.baseline && exit 0
+            cat \<<EOF
+            Changes to baseline results need to be committed.
+
+            If seeing this message in CI you may have ran your commit using --no-verify, thereby skipping the detect-secrets git-hook.
+
+            To fix, run:
+              git reset --soft HEAD^
+              yarn detect-secrets
+          EOF
+            exit $code
+          fi
 
 not_master_or_staging_or_release: &not_master_or_staging_or_release
   filters:

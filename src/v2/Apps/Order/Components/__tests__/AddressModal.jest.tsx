@@ -1,4 +1,3 @@
-import React from "react"
 import { commitMutation as _commitMutation } from "react-relay"
 import { AddressModal, Props, GENERIC_FAIL_MESSAGE } from "../AddressModal"
 import { mount } from "enzyme"

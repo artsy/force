@@ -1,4 +1,4 @@
-import React from "react"
+import { Component } from "react";
 import { Box, Flex, Image, Link, Text, BorderBox } from "@artsy/palette"
 import { track } from "v2/System/Analytics"
 import * as Schema from "v2/System/Analytics/Schema"
@@ -17,7 +17,7 @@ interface GenericSearchResultItemProps {
 }
 
 @track()
-export class GenericSearchResultItem extends React.Component<
+export class GenericSearchResultItem extends Component<
   GenericSearchResultItemProps
 > {
   @track((props: GenericSearchResultItemProps) => ({

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import { useEffect, useState } from "react";
 import { LazyLoadComponent } from "react-lazy-load-image-component"
 
 const Ready = ({ onMount }) => {

@@ -1,20 +1,30 @@
-import React, { useCallback, useEffect } from "react"
-import { Box, BoxProps, Button, Text } from "@artsy/palette"
-import { useDropzone } from "react-dropzone"
+import { useCallback, useEffect, useState } from "react"
+import * as React from "react"
+import { Box, BoxProps } from "@artsy/palette"
 import { useFormikContext } from "formik"
-import { Media } from "v2/Utils/Responsive"
 import { useSystemContext } from "v2/System"
-import { normalizePhoto, Photo, uploadPhoto } from "../../Utils/fileUtils"
+import {
+  getErrorMessage,
+  normalizePhoto,
+  Photo,
+  uploadPhoto,
+} from "../../Utils/fileUtils"
 import { useRouter } from "v2/System/Router/useRouter"
-import { getSubmission } from "../../Utils/submissionUtils"
+import { PhotoDropzone } from "./PhotoDropzone"
+import { FileRejection } from "react-dropzone"
+import { PhotoThumbnail } from "./PhotoThumbnail"
+import { useSubmission } from "../../Utils/useSubmission"
 
 export interface UploadPhotosFormModel {
   photos: Photo[]
 }
 
-export interface UploadPhotosFormProps extends BoxProps {}
+export interface UploadPhotosFormProps extends BoxProps {
+  maxTotalSize: number
+}
 
 export const UploadPhotosForm: React.FC<UploadPhotosFormProps> = ({
+  maxTotalSize,
   ...rest
 }) => {
   const {
@@ -24,15 +34,18 @@ export const UploadPhotosForm: React.FC<UploadPhotosFormProps> = ({
   } = useRouter()
 
   const { relayEnvironment } = useSystemContext()
-  const { setFieldValue, values } = useFormikContext<UploadPhotosFormModel>()
+  const [errors, setErrors] = useState<Array<FileRejection>>([])
+  const { setFieldValue, values, validateField } = useFormikContext<
+    UploadPhotosFormModel
+  >()
+  const { submission } = useSubmission(id)
 
   useEffect(() => {
-    const submission = getSubmission(id)
-
     if (submission && submission.uploadPhotosForm) {
       setFieldValue("photos", submission.uploadPhotosForm.photos)
+      validateField("photos")
     }
-  }, [])
+  }, [submission])
 
   const handlePhotoUploadingProgress = (photo: Photo) => progress => {
     photo.progress = progress
@@ -67,49 +80,45 @@ export const UploadPhotosForm: React.FC<UploadPhotosFormProps> = ({
   }, [values.photos])
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
-    const photos = acceptedFiles.map(normalizePhoto)
+    const photos = acceptedFiles.map(file => normalizePhoto(file))
 
     setFieldValue("photos", [...values.photos, ...photos])
   }, [])
 
-  const { getRootProps, getInputProps, open } = useDropzone({
-    onDrop,
-    accept: ["image/jpeg", "image/png"],
-    noClick: true,
-    noKeyboard: true,
-    multiple: false,
-  })
+  const onReject = (rejections: FileRejection[]) => {
+    setErrors(rejections)
+  }
 
   return (
     <Box {...rest}>
-      <Box
-        data-test-id="image-dropzone"
+      <PhotoDropzone
+        onDrop={onDrop}
+        maxTotalSize={maxTotalSize}
         px={[2, 4]}
         pt={[4, 6]}
-        pb={[6, 80]}
+        pb={[6]}
+        mb={[6]}
         border="1px solid"
         borderColor="black10"
-        {...getRootProps()}
-      >
-        <input {...getInputProps()} />
+        onReject={onReject}
+      />
 
-        <Media greaterThan="xs">
-          <Text variant="lg">Drag and drop photos here</Text>
-        </Media>
-        <Media at="xs">
-          <Text variant="lg">Add photos here</Text>
-        </Media>
-
-        <Text variant="md" color="black60" mt={1}>
-          Files supported: JPG, PNG
-        </Text>
-        <Text variant="md" color="black60" mt={1}>
-          Maximum size: 30 MB
-        </Text>
-        <Button type="button" mt={4} variant="secondaryOutline" onClick={open}>
-          Add Photo
-        </Button>
-      </Box>
+      {errors.map((error, i) => {
+        const normalizedPhoto = normalizePhoto(
+          error.file,
+          getErrorMessage(error)
+        )
+        return (
+          <PhotoThumbnail
+            mt={2}
+            key={normalizedPhoto.id}
+            photo={normalizedPhoto}
+            onDelete={() => {
+              setErrors(errors.filter(e => e !== error))
+            }}
+          />
+        )
+      })}
     </Box>
   )
 }

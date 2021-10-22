@@ -1,4 +1,4 @@
-import React from "react"
+import * as React from "react";
 import { ReactElement } from "react"
 import { Portal, Position, TransitionCallbacks } from "react-overlays"
 import { TransitionProps } from "react-transition-group/Transition"

@@ -1,5 +1,5 @@
 import PropTypes from "prop-types"
-import React from "react"
+import * as React from "react";
 import styled from "styled-components"
 import { data as sd } from "sharify"
 import { Share } from "@artsy/reaction/dist/Components/Publishing/Byline/Share"

@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import React from "react"
+import * as React from "react";
 import { PartnerInline } from "@artsy/reaction/dist/Components/Publishing/Partner/PartnerInline"
 import {
   Clickable,

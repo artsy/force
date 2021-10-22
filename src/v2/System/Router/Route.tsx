@@ -6,27 +6,28 @@
 import { RouteSpinner } from "v2/System/Relay/renderWithLoadProgress"
 import { RouteConfig, HttpError } from "found"
 import BaseRoute from "found/Route"
-import React from "react"
+import * as React from "react";
 import { CacheConfig, GraphQLTaggedNode } from "relay-runtime";
 
 type RemoveIndex<T> = {
-  [ P in keyof T as string extends P ? never : number extends P ? never : P ]: T[P]
+  [P in keyof T as string extends P ? never : number extends P ? never : P]: T[P]
 };
 
 interface RouteConfigProps extends RouteConfig {
   cacheConfig?: CacheConfig
   displayFullPage?: boolean
   fetchIndicator?: FetchIndicator
-  hideFooter?: true
+  hideNav?: boolean
+  hideFooter?: boolean
   hideNavigationTabs?: boolean
   ignoreScrollBehavior?: boolean
   ignoreScrollBehaviorBetweenChildren?: boolean
   prepare?: () => void
   prepareVariables?: (params: any, props: any) => object
   query?: GraphQLTaggedNode
+  scrollToTop?: boolean
   shouldWarnBeforeLeaving?: boolean
   theme?: 'v2' | 'v3'
-  scrollToTop?: boolean
 }
 
 export type AppRouteConfig = RemoveIndex<RouteConfigProps>

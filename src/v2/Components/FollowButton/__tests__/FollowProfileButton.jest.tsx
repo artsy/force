@@ -1,7 +1,6 @@
 import { SystemContextProvider } from "v2/System"
 import { mount } from "enzyme"
 import "jest-styled-components"
-import React from "react"
 import { commitMutation } from "react-relay"
 import { FollowButton } from "../Button"
 import { FollowProfileButtonFragmentContainer as FollowProfileButton } from "../FollowProfileButton"

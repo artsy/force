@@ -1,4 +1,4 @@
-import React from "react"
+import * as React from "react";
 import { Expandable, Join, Spacer, Text } from "@artsy/palette"
 
 export const FAQ: React.FC = () => {

@@ -1,4 +1,5 @@
-import React, { useContext } from "react"
+import { useContext } from "react";
+import * as React from "react";
 import { graphql } from "react-relay"
 
 import { CollectionsRailQuery } from "v2/__generated__/CollectionsRailQuery.graphql"

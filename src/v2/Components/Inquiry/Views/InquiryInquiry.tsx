@@ -14,7 +14,7 @@ import {
   TextArea,
 } from "@artsy/palette"
 import { useSystemContext } from "v2/System"
-import React from "react"
+import * as React from "react";
 import { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { InquiryInquiry_artwork } from "v2/__generated__/InquiryInquiry_artwork.graphql"

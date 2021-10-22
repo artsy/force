@@ -1,6 +1,5 @@
 import Camera from "../../../../components/main_layout/public/icons/camera.svg"
 import PropTypes from "prop-types"
-import React from "react"
 import _UploadedImage from "../uploaded_image"
 import block from "bem-cn-lite"
 import { connect } from "react-redux"

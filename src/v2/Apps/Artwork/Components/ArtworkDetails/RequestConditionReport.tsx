@@ -1,5 +1,6 @@
 import { Button, Link, Modal, Text } from "@artsy/palette"
-import React, { useState } from "react"
+import { useState } from "react";
+import * as React from "react";
 import { commitMutation, createFragmentContainer, graphql } from "react-relay"
 import {
   AnalyticsSchema as Schema,

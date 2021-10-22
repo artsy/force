@@ -1,5 +1,4 @@
 import PropTypes from "prop-types"
-import React from "react"
 import _AuctionInfoDesktop from "./AuctionInfoDesktop"
 import _AuctionInfoMobile from "./AuctionInfoMobile"
 import { connect } from "react-redux"

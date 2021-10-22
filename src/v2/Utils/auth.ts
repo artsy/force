@@ -47,10 +47,13 @@ export const login = async (args: {
   return await Promise.reject(new Error(err.error))
 }
 
-export const resetPassword = async (args: { email: string }) => {
-  const resetPasswordUrl = `${sd.API_URL}/api/v1/users/send_reset_password_instructions`
+/**
+ * Triggers a password reset (sends an email with password reset instructions)
+ */
+export const forgotPassword = async (args: { email: string }) => {
+  const forgotPasswordUrl = `${sd.API_URL}/api/v1/users/send_reset_password_instructions`
 
-  const response = await fetch(resetPasswordUrl, {
+  const response = await fetch(forgotPasswordUrl, {
     headers: { ...headers, "X-XAPP-TOKEN": sd.ARTSY_XAPP_TOKEN },
     method: "POST",
     credentials: "same-origin",
@@ -63,6 +66,44 @@ export const resetPassword = async (args: { email: string }) => {
 
   const err = await response.text()
   return await Promise.reject(new Error(err))
+}
+
+/**
+ * Requires a password reset token (see: `forgotPassword`) to update
+ */
+export const resetPassword = async (args: {
+  resetPasswordToken: string
+  password: string
+  passwordConfirmation: string
+}) => {
+  const resetPasswordUrl = `${sd.API_URL}/api/v1/users/reset_password`
+
+  const response = await fetch(resetPasswordUrl, {
+    headers: { ...headers, "X-XAPP-TOKEN": sd.ARTSY_XAPP_TOKEN },
+    method: "PUT",
+    credentials: "same-origin",
+    body: JSON.stringify({
+      password: args.password,
+      password_confirmation: args.passwordConfirmation,
+      reset_password_token: args.resetPasswordToken,
+    }),
+  })
+
+  if (response.ok) {
+    return await response.json()
+  }
+
+  const err = await response.json()
+
+  if ("error" in err) {
+    return await Promise.reject({ message: err.error })
+  }
+
+  if ("message" in err) {
+    return await Promise.reject({ message: err.message })
+  }
+
+  return await Promise.reject(new Error(JSON.stringify(err)))
 }
 
 // TODO: Handle recaptcha impressions

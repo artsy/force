@@ -1,4 +1,5 @@
-import React, { useContext } from "react"
+import { useContext } from "react";
+import * as React from "react";
 import { NavBarNotificationsQueryRenderer, NavBarUserMenu } from "./Menus"
 import { AnalyticsSchema, SystemContext, useTracking } from "v2/System"
 import {

@@ -9,7 +9,7 @@ import {
   ResponsiveBox,
   Text,
 } from "@artsy/palette"
-import React from "react"
+import * as React from "react";
 import { ContextModule } from "@artsy/cohesion"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FollowArtistButtonFragmentContainer } from "v2/Components/FollowButton/FollowArtistButton"

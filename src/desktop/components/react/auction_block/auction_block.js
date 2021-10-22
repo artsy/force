@@ -1,5 +1,4 @@
 import PropTypes from "prop-types"
-import React from "react"
 import upcomingLabel from "./utils/upcoming_label"
 
 export default function AuctionBlock(props) {

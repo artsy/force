@@ -1,5 +1,4 @@
 import { Checkbox, Text, TextVariant, useThemeConfig } from "@artsy/palette"
-import React from "react"
 
 export const TermsOfServiceCheckbox = props => {
   const styles = useThemeConfig({

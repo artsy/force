@@ -1,4 +1,4 @@
-import React from "react"
+import * as React from "react";
 import { Card, Shelf } from "@artsy/palette"
 import { ViewingRoomsFeaturedRail_featuredViewingRooms } from "v2/__generated__/ViewingRoomsFeaturedRail_featuredViewingRooms.graphql"
 import { createFragmentContainer, graphql } from "react-relay"

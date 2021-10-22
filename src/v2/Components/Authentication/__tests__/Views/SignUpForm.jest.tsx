@@ -1,6 +1,5 @@
 /* eslint-disable jest/no-done-callback */
-import React from "react"
-import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
+import { setupTestWrapper } from "v2/DevTools/setupTestWrapper";
 import { graphql } from "react-relay"
 import { tests } from "v2/Components/Authentication/Views/SignUpForm"
 import { SignupValues } from "../fixtures"

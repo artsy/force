@@ -1,4 +1,3 @@
-import React, { FC } from "react"
 import { Box, Button, Text } from "@artsy/palette"
 import { Form, Formik } from "formik"
 import { SubmissionStepper } from "v2/Apps/Consign/Components/SubmissionStepper"
@@ -8,22 +7,17 @@ import {
 } from "./Components/UploadPhotosForm"
 import { PhotoThumbnail } from "./Components/PhotoThumbnail"
 import { Photo } from "../Utils/fileUtils"
-import * as yup from "yup"
 import { useRouter } from "v2/System/Router/useRouter"
-import { getSubmission, saveSubmission } from "../Utils/submissionUtils"
+import { useSubmission } from "../Utils/useSubmission"
+import { uploadPhotosValidationSchema } from "../Utils/validation"
+import { useSystemContext } from "v2/System"
+import { openAuthModal } from "v2/Utils/openAuthModal"
+import { ModalType } from "v2/Components/Authentication/Types"
+import { ContextModule, Intent } from "@artsy/cohesion"
+import { createConsignSubmission } from "../Utils/createConsignSubmission"
+import { BackLink } from "v2/Components/Links/BackLink"
 
-export const uploadPhotosValidationSchema = yup.object().shape({
-  photos: yup
-    .array()
-    .min(1)
-    .of(
-      yup.object().shape({
-        s3Key: yup.string().required(),
-      })
-    ),
-})
-
-export const UploadPhotos: FC = () => {
+export const UploadPhotos: React.FC = () => {
   const {
     router,
     match: {
@@ -31,9 +25,15 @@ export const UploadPhotos: FC = () => {
     },
   } = useRouter()
 
-  const handleSubmit = (values: UploadPhotosFormModel) => {
-    const submission = getSubmission(id)
+  const { mediator, isLoggedIn, relayEnvironment, user } = useSystemContext()
+  const {
+    submission,
+    saveSubmission,
+    submissionId,
+    removeSubmission,
+  } = useSubmission(id)
 
+  const handleSubmit = async (values: UploadPhotosFormModel) => {
     if (submission) {
       submission.uploadPhotosForm = {
         photos: values.photos.map(photo => ({
@@ -43,16 +43,44 @@ export const UploadPhotos: FC = () => {
         })),
       }
 
-      saveSubmission(id, submission)
+      saveSubmission(submission)
 
-      router.push({
-        pathname: `/consign/submission2/${id}/contact-information`,
-      })
+      // router.push({
+      //   pathname: `/consign/submission2/${submissionId}/contact-information`,
+      // })
+
+      if (!isLoggedIn && mediator) {
+        openAuthModal(mediator, {
+          mode: ModalType.signup,
+          intent: Intent.consign,
+          contextModule: ContextModule.consignSubmissionFlow,
+          redirectTo: `/consign/submission2/${submissionId}/thank-you`,
+          afterSignUpAction: {
+            action: "save",
+            kind: "submissions",
+            objectId: submissionId,
+          },
+        })
+      } else {
+        if (relayEnvironment && submission) {
+          await createConsignSubmission(relayEnvironment, submission, user)
+          removeSubmission()
+          router.push(`/consign/submission2/${submissionId}/thank-you`)
+        }
+      }
     }
   }
 
   return (
-    <Box mb={4}>
+    <>
+      <BackLink
+        py={2}
+        mb={6}
+        to={`/consign/submission2/${submissionId}/artwork-details`}
+      >
+        Back ....
+      </BackLink>
+
       <SubmissionStepper currentStep="Upload Photos" />
 
       <Text mt={4} variant="lg">
@@ -88,29 +116,31 @@ export const UploadPhotos: FC = () => {
 
           return (
             <Form>
-              <UploadPhotosForm mt={4} mb={6} />
+              <UploadPhotosForm mt={4} maxTotalSize={30} />
 
-              {values.photos.map(photo => (
-                <PhotoThumbnail
-                  mt={2}
-                  key={photo.id}
-                  photo={photo}
-                  onDelete={handlePhotoDelete}
-                />
-              ))}
+              <Box mb={6}>
+                {values.photos.map(photo => (
+                  <PhotoThumbnail
+                    mt={2}
+                    key={photo.id}
+                    photo={photo}
+                    onDelete={handlePhotoDelete}
+                  />
+                ))}
+              </Box>
 
               <Button
-                mt={2}
                 disabled={!isValid}
                 loading={values.photos.some(c => !c.s3Key)}
                 type="submit"
               >
-                Save and Continue
+                {/* Save and Continue */}
+                Submit Artwork
               </Button>
             </Form>
           )
         }}
       </Formik>
-    </Box>
+    </>
   )
 }

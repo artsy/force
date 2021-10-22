@@ -1,5 +1,4 @@
 import * as actions from "desktop/apps/consign/client//actions"
-import React from "react"
 import reducers from "desktop/apps/consign/client/reducers"
 import { responsiveWindowAction } from "desktop/components/react/responsive_window"
 import { createStore } from "redux"

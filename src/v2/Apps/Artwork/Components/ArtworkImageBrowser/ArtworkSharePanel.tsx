@@ -15,7 +15,8 @@ import {
   TumblrIcon,
 } from "@artsy/palette"
 import { ArtworkSharePanel_artwork } from "v2/__generated__/ArtworkSharePanel_artwork.graphql"
-import React, { useRef, useState } from "react"
+import { useRef, useState } from "react";
+import * as React from "react";
 import { createFragmentContainer, graphql } from "react-relay"
 import { data as sd } from "sharify"
 

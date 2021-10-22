@@ -1,13 +1,7 @@
 import { compound } from "@artsy/palette"
 import { uniqBy } from "lodash"
-import React, {
-  createContext,
-  useCallback,
-  useContext,
-  useMemo,
-  useRef,
-  useState,
-} from "react"
+import { createContext, useCallback, useContext, useMemo, useRef, useState } from "react";
+import * as React from "react";
 
 type Sticky = {
   id: string

@@ -4,7 +4,6 @@ import { createTestEnvOrderMutation } from "v2/__generated__/createTestEnvOrderM
 import { createTestEnvQueryRawResponse } from "v2/__generated__/createTestEnvQuery.graphql"
 import { createTestEnv } from "v2/DevTools/createTestEnv"
 import { RootTestPage, expectOne } from "v2/DevTools/RootTestPage"
-import React from "react"
 import {
   RelayProp,
   commitMutation,

@@ -1,6 +1,5 @@
 import { SystemContextProvider } from "v2/System"
 import { ReactWrapper, mount } from "enzyme"
-import React from "react"
 import { ExtractProps } from "v2/Utils/ExtractProps"
 import { OfferNote } from "../OfferNote"
 import { mediator } from "lib/mediator"

@@ -1,4 +1,4 @@
-import React from "react"
+import * as React from "react";
 import { Button, Flex, Join, Text, Spacer, ArtsyLogoIcon } from "@artsy/palette"
 import { RouterLink } from "v2/System/Router/RouterLink"
 

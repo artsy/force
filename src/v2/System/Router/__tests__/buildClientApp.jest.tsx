@@ -2,7 +2,6 @@ import { SystemContextConsumer } from "v2/System"
 import { buildClientApp } from "v2/System/Router/buildClientApp"
 import { createMockNetworkLayer } from "v2/DevTools"
 import { mount } from "enzyme"
-import React from "react"
 import { graphql } from "react-relay"
 import { Boot } from "../Boot"
 

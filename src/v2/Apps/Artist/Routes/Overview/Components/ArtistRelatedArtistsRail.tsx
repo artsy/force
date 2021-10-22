@@ -7,7 +7,7 @@ import {
   SkeletonBox,
   SkeletonText,
 } from "@artsy/palette"
-import React from "react"
+import * as React from "react";
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { FollowArtistButtonFragmentContainer } from "v2/Components/FollowButton/FollowArtistButton"
@@ -201,32 +201,36 @@ export const ArtistRelatedArtistsRailQueryRenderer: React.FC<{
   const { relayEnvironment } = useSystemContext()
 
   return (
-    <SystemQueryRenderer<ArtistRelatedArtistsRailQuery>
-      lazyLoad
-      environment={relayEnvironment}
-      variables={{ slug }}
-      placeholder={PLACEHOLDER}
-      query={graphql`
-        query ArtistRelatedArtistsRailQuery($slug: String!) {
-          artist(id: $slug) {
-            ...ArtistRelatedArtistsRail_artist
+    <Box data-test="ArtistRelatedArtistsRailQueryRenderer">
+      <SystemQueryRenderer<ArtistRelatedArtistsRailQuery>
+        lazyLoad
+        environment={relayEnvironment}
+        variables={{ slug }}
+        placeholder={PLACEHOLDER}
+        query={graphql`
+          query ArtistRelatedArtistsRailQuery($slug: String!) {
+            artist(id: $slug) {
+              ...ArtistRelatedArtistsRail_artist
+            }
           }
-        }
-      `}
-      render={({ error, props }) => {
-        if (error) {
-          console.error(error)
-          return null
-        }
-        if (!props) {
-          return PLACEHOLDER
-        }
-        if (props.artist) {
-          return (
-            <ArtistRelatedArtistsRailFragmentContainer artist={props.artist} />
-          )
-        }
-      }}
-    />
+        `}
+        render={({ error, props }) => {
+          if (error) {
+            console.error(error)
+            return null
+          }
+          if (!props) {
+            return PLACEHOLDER
+          }
+          if (props.artist) {
+            return (
+              <ArtistRelatedArtistsRailFragmentContainer
+                artist={props.artist}
+              />
+            )
+          }
+        }}
+      />
+    </Box>
   )
 }

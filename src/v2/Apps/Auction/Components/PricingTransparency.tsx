@@ -1,5 +1,5 @@
 import { Flex, Sans, Serif, Spinner } from "@artsy/palette"
-import React from "react"
+import * as React from "react";
 import { graphql } from "react-relay"
 
 import {

@@ -1,5 +1,5 @@
-import React, { Fragment } from "react"
-import { Image, ResponsiveBox, Spacer, Text } from "@artsy/palette"
+import React from "react"
+import { Box, Image, Join, ResponsiveBox, Spacer, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ViewingRoomSubsections_viewingRoom } from "v2/__generated__/ViewingRoomSubsections_viewingRoom.graphql"
 import { resized } from "v2/Utils/resized"
@@ -16,15 +16,21 @@ const ViewingRoomSubsections: React.FC<ViewingRoomSubsectionsProps> = ({
   }
 
   return (
-    <>
+    <Join separator={<Spacer mt={4} />}>
       {subsections.map(({ internalID, title, body, image, caption }) => {
-        const img = resized(image?.imageURLs?.normalized!, {
-          width: 1200,
-        })
+        const img = image?.imageURLs?.normalized
+          ? resized(image?.imageURLs?.normalized, {
+              width: 1200,
+            })
+          : null
 
         return (
-          <Fragment key={internalID}>
-            {title && <Text variant="lg">{title}</Text>}
+          <Box key={internalID}>
+            {title && (
+              <Text variant="lg" mt={2}>
+                {title}
+              </Text>
+            )}
 
             {body && (
               <Text variant="sm" mt={2} style={{ whiteSpace: "pre-wrap" }}>
@@ -59,10 +65,10 @@ const ViewingRoomSubsections: React.FC<ViewingRoomSubsectionsProps> = ({
                 )}
               </>
             )}
-          </Fragment>
+          </Box>
         )
       })}
-    </>
+    </Join>
   )
 }
 

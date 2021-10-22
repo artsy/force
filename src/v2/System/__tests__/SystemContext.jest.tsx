@@ -1,7 +1,7 @@
 import { SystemContextProps } from "v2/System"
 import * as Artsy from "v2/System"
 import { render } from "enzyme"
-import React from "react"
+import * as React from "react";
 
 jest.mock("v2/System/Relay/createRelaySSREnvironment", () => ({
   createRelaySSREnvironment: config => ({

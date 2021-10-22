@@ -11,7 +11,7 @@ import {
 import { themeGet } from "@styled-system/theme-get"
 import { graphql } from "lib/graphql"
 import { uniqBy } from "lodash"
-import React from "react"
+import * as React from "react";
 import { createFragmentContainer } from "react-relay"
 import styled from "styled-components"
 import { RouterLink } from "v2/System/Router/RouterLink"

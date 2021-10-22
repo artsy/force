@@ -1,4 +1,3 @@
-import React from "react"
 import { useTracking } from "v2/System/Analytics/useTracking"
 import { MockedConversation } from "v2/Apps/__tests__/Fixtures/Conversation"
 import { Conversation_conversation } from "v2/__generated__/Conversation_conversation.graphql"

@@ -1,6 +1,5 @@
 import { ArtsyLogoBlackIcon } from "@artsy/palette"
 import { mount } from "enzyme"
-import React from "react"
 import { SystemContextProvider } from "v2/System"
 import { MinimalNavBar } from "../MinimalNavBar"
 

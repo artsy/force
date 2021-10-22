@@ -1,5 +1,4 @@
 import { Text } from "@artsy/palette"
-import React from "react"
 
 export const TombstoneExample = () => {
   return (

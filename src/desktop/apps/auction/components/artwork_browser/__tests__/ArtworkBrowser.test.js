@@ -6,7 +6,6 @@ import FilterSort from "desktop/apps/auction/components/artwork_browser/header/F
 import MediumFilter from "desktop/apps/auction/components/artwork_browser/sidebar/MediumFilter"
 import RangeSlider from "desktop/apps/auction/components/artwork_browser/sidebar/RangeSlider"
 import auctions from "desktop/apps/auction/reducers"
-import React from "react"
 import renderTestComponent from "desktop/apps/auction/__tests__/utils/renderTestComponent"
 import { createStore } from "redux"
 

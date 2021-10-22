@@ -1,5 +1,5 @@
 import { Dialog } from "@artsy/palette"
-import React from "react"
+import * as React from "react";
 import { ApiError } from "../ApiError"
 
 interface ApiErrorModalProps {

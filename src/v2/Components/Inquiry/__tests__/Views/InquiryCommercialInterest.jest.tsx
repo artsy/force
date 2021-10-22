@@ -1,4 +1,3 @@
-import React from "react"
 import { mount } from "enzyme"
 import { InquiryCommercialInterest } from "../../Views/InquiryCommercialInterest"
 import { useUpdateMyUserProfile } from "../../Hooks/useUpdateMyUserProfile"

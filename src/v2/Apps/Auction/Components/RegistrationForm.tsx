@@ -1,6 +1,6 @@
 import { Box, Button, Flex, Sans, Serif, Spacer } from "@artsy/palette"
 import { Form, Formik, FormikConfig } from "formik"
-import React from "react"
+import * as React from "react";
 
 import { CreditCardInstructions } from "v2/Apps/Auction/Components/CreditCardInstructions"
 import { CreditCardInput } from "v2/Apps/Order/Components/CreditCardInput"

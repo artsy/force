@@ -1,7 +1,6 @@
 import { LoginForm } from "v2/Components/Authentication/Views/LoginForm"
 import { ModalType } from "v2/Components/Authentication/Types"
 import { ReactWrapper, mount } from "enzyme"
-import React from "react"
 
 import { ContextModule, Intent } from "@artsy/cohesion"
 import {

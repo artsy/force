@@ -14,7 +14,7 @@ import { CreditCardInput } from "v2/Apps/Order/Components/CreditCardInput"
 import { validateAddress } from "v2/Apps/Order/Utils/formValidators"
 import { track } from "v2/System/Analytics"
 import * as Schema from "v2/System/Analytics/Schema"
-import React from "react"
+import * as React from "react";
 import { createFragmentContainer, graphql } from "react-relay"
 import type {
   StripeError,

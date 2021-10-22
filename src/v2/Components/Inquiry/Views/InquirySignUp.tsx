@@ -1,5 +1,5 @@
 import { Box, Button, Input, Separator, Spacer, Text } from "@artsy/palette"
-import React from "react"
+import * as React from "react";
 import { useState } from "react"
 import { createRelaySSREnvironment } from "v2/System/Relay/createRelaySSREnvironment"
 import { ReCaptchaContainer } from "v2/Utils/ReCaptchaContainer"

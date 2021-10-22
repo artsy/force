@@ -1,4 +1,3 @@
-import React from "react"
 import ReactDOM from "react-dom"
 import { SystemContextProvider } from "v2/System"
 import CollectorIntent from "v2/Components/Onboarding/Steps/CollectorIntent"

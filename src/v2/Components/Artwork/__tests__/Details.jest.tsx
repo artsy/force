@@ -1,6 +1,5 @@
 import { Details_Test_QueryRawResponse } from "v2/__generated__/Details_Test_Query.graphql"
 import { renderRelayTree } from "v2/DevTools"
-import React from "react"
 import { graphql } from "react-relay"
 import { DetailsFragmentContainer } from "../Details"
 

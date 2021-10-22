@@ -13,7 +13,8 @@ import {
   FullBleed,
 } from "@artsy/palette"
 import { random } from "lodash"
-import React, { useState } from "react"
+import { useState } from "react";
+import * as React from "react";
 import { ContentHeaderExample } from "./Components/ContentHeaderExample"
 import { Page } from "./Components/Page"
 import { TombstoneExample } from "./Components/TombstoneExample"

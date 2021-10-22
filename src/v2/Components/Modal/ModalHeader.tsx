@@ -5,7 +5,7 @@ import {
   Text,
   useThemeConfig,
 } from "@artsy/palette"
-import React from "react"
+import * as React from "react";
 
 export const ModalHeader: React.FC<{
   title?: string

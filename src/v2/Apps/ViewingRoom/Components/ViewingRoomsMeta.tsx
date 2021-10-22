@@ -1,4 +1,4 @@
-import React from "react"
+import * as React from "react";
 import { Meta, Title } from "react-head"
 
 export const ViewingRoomsMeta: React.FC = () => {

@@ -1,6 +1,5 @@
 import _BidStatus from "./BidStatus"
 import PropTypes from "prop-types"
-import React from "react"
 import block from "bem-cn-lite"
 import classNames from "classnames"
 import titleAndYear from "desktop/apps/auction/utils/titleAndYear"

@@ -1,4 +1,4 @@
-import React from "react"
+import * as React from "react";
 import { Link, Meta, Title } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ShowMeta_show } from "v2/__generated__/ShowMeta_show.graphql"

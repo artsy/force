@@ -1,9 +1,10 @@
 import { Media } from "v2/Utils/Responsive"
 import { Box, Step, Stepper } from "@artsy/palette"
-import React, { FC } from "react"
+import { FC } from "react"
 
 interface SubmissionStepperProps {
-  currentStep: "Artwork Details" | "Upload Photos" | "Contact Information"
+  currentStep: "Artwork Details" | "Upload Photos"
+  // | "Contact Information"
 }
 
 function typedArray<T extends string>(...elems: T[]): T[] {
@@ -12,14 +13,14 @@ function typedArray<T extends string>(...elems: T[]): T[] {
 
 export const submissionFlowSteps = typedArray(
   "Artwork Details",
-  "Upload Photos",
-  "Contact Information"
+  "Upload Photos"
+  // "Contact Information"
 )
 
 export const submissionFlowStepsMobile = typedArray(
   "Artwork",
-  "Upload",
-  "Contact"
+  "Upload"
+  // "Contact"
 )
 
 export const SubmissionStepper: FC<SubmissionStepperProps> = ({

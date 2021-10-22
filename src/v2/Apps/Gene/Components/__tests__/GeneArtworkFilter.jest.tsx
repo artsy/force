@@ -1,5 +1,4 @@
 import { MockBoot } from "v2/DevTools"
-import React from "react"
 import { GeneArtworkFilterRefetchContainer } from "../GeneArtworkFilter"
 import { graphql } from "react-relay"
 import { GeneArtworkFilter_Query } from "v2/__generated__/GeneArtworkFilter_Query.graphql"

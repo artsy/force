@@ -1,6 +1,5 @@
 import { Button, MultiSelect } from "@artsy/palette"
 import { mount, ReactWrapper } from "enzyme"
-import React from "react"
 import { HeadProvider } from "react-head"
 import { PriceDatabaseArtistAutosuggest } from "../Components/PriceDatabaseArtistAutosuggest"
 import { PriceDatabase } from "../PriceDatabase"

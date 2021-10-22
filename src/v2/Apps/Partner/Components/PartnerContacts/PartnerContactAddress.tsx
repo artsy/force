@@ -1,4 +1,4 @@
-import React from "react"
+import * as React from "react";
 import { Text } from "@artsy/palette"
 import { getContactAddressLines } from "./partnerContactUtils"
 import { PartnerContactAddress_location } from "v2/__generated__/PartnerContactAddress_location.graphql"

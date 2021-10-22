@@ -1,4 +1,3 @@
-import React from "react"
 import { MockBoot, renderRelayTree } from "v2/DevTools"
 import { graphql } from "react-relay"
 import { ArtworkArtistSeries_QueryRawResponse } from "v2/__generated__/ArtworkArtistSeries_Query.graphql"

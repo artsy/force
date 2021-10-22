@@ -1,4 +1,3 @@
-import React from "react"
 import {
   ArtistsByLetterFragmentContainer,
   ARTISTS_BY_LETTER_QUERY,

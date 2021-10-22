@@ -11,7 +11,6 @@ const PurchasesApp = loadable(
 
 export const purchaseRoutes: AppRouteConfig[] = [
   {
-    theme: "v3",
     path: "/user/purchases",
     getComponent: () => PurchasesApp,
     prepare: () => {

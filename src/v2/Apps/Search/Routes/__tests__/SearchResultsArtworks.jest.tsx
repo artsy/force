@@ -1,5 +1,4 @@
 import { MockBoot } from "v2/DevTools"
-import React from "react"
 import { SearchResultsArtworksRouteFragmentContainer as SearchResultsArtworks } from "../SearchResultsArtworks"
 import { graphql } from "react-relay"
 import { SearchResultsArtworks_Query } from "v2/__generated__/SearchResultsArtworks_Query.graphql"

@@ -3,7 +3,7 @@ import { CollectionEntity_collection } from "v2/__generated__/CollectionEntity_c
 import { track } from "v2/System/Analytics"
 import * as Schema from "v2/System/Analytics/Schema"
 import currency from "currency.js"
-import React from "react"
+import { Component } from "react";
 import { createFragmentContainer, graphql } from "react-relay"
 import { data as sd } from "sharify"
 import styled from "styled-components"
@@ -36,7 +36,7 @@ export const StyledLink = styled(Link)`
 `
 
 @track()
-export class CollectionEntity extends React.Component<CollectionProps> {
+export class CollectionEntity extends Component<CollectionProps> {
   @track<CollectionProps>(({ collection }) => ({
     action_type: Schema.ActionType.Click,
     context_module: Schema.ContextModule.CollectionsRail,

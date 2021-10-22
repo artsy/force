@@ -1,4 +1,3 @@
-import React from "react"
 import { ArtworkSidebarFragmentContainer } from "v2/Apps/Artwork/Components/ArtworkSidebar"
 import { ArtworkSidebarArtists } from "v2/Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarArtists"
 import { ArtworkSidebarMetadata } from "v2/Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarMetadata"

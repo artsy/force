@@ -1,6 +1,6 @@
 import { AuthContextModule } from "@artsy/cohesion"
 import { graphql } from "lib/graphql"
-import React from "react"
+import * as React from "react";
 import { createFragmentContainer } from "react-relay"
 import { useTracking } from "react-tracking"
 import { ShelfArtworkFragmentContainer } from "v2/Components/Artwork/ShelfArtwork"
@@ -34,7 +34,6 @@ const StandoutLotsRail: React.FC<StandoutLotsRailProps> = ({ viewer }) => {
   return (
     <Rail
       title="Standout Lots"
-      countLabel={liveSaleArtworks.length}
       subTitle="Works that Artsy curators love"
       getItems={() => {
         return liveSaleArtworks.map((node, index) => {

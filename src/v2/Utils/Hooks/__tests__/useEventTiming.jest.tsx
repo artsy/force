@@ -1,4 +1,3 @@
-import React from "react"
 import { useEventTiming } from "../useEventTiming"
 import { DateTime } from "luxon"
 import { mount } from "enzyme"

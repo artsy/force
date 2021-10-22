@@ -9,7 +9,8 @@ import { createCreditCardAndUpdatePhone } from "v2/Apps/Auction/Operations/Creat
 import { RegistrationForm } from "v2/Apps/Auction/Components/RegistrationForm"
 import { track } from "v2/System"
 import * as Schema from "v2/System/Analytics/Schema"
-import React, { ComponentProps } from "react"
+import { ComponentProps } from "react";
+import * as React from "react";
 import { Title } from "react-head"
 import {
   RelayProp,

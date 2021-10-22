@@ -1,4 +1,4 @@
-import React, { Component } from "react"
+import { Component } from "react";
 import { data as sd } from "sharify"
 import styled from "styled-components"
 

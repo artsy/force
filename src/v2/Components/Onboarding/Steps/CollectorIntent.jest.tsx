@@ -1,4 +1,3 @@
-import React from "react"
 import { mount } from "enzyme"
 import CollectorIntent from "./CollectorIntent"
 import { MultiButtonState } from "../../Buttons/MultiStateButton"

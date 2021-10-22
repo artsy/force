@@ -1,4 +1,3 @@
-import React from "react"
 import { ShowsCityRefetchContainer } from "../ShowsCity"
 import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
 import { graphql } from "react-relay"

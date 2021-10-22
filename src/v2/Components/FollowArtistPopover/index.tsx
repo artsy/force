@@ -1,31 +1,37 @@
-import { Join, Separator, Spacer } from "@artsy/palette"
+import { Join, Separator, Spacer, Text } from "@artsy/palette"
 import { FollowArtistPopover_artist } from "v2/__generated__/FollowArtistPopover_artist.graphql"
 import { FollowArtistPopoverQuery } from "v2/__generated__/FollowArtistPopoverQuery.graphql"
 import { SystemContext, SystemContextProps } from "v2/System"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
-import React, { useContext } from "react"
+import { useContext } from "react";
+import * as React from "react";
 import { createFragmentContainer, graphql } from "react-relay"
 import { Provider } from "unstated"
-import { FollowArtistPopoverRowFragmentContainer } from "./FollowArtistPopoverRow"
+import {
+  FollowArtistPopoverRowFragmentContainer,
+  FollowArtistPopoverRowPlaceholder,
+} from "./FollowArtistPopoverRow"
 import { FollowArtistPopoverState } from "./state"
 import { extractNodes } from "v2/Utils/extractNodes"
 
-interface Props extends SystemContextProps {
+interface FollowArtistPopoverProps extends SystemContextProps {
   artist: FollowArtistPopover_artist
 }
 
-const FollowArtistPopover: React.FC<Props> = props => {
-  const {
-    artist: { related },
-    user,
-  } = props
-
+const FollowArtistPopover: React.FC<FollowArtistPopoverProps> = ({
+  artist: { related },
+  user,
+}) => {
   const suggestedArtists = extractNodes(related?.suggestedConnection)
-
-  const suggetionsCount = suggestedArtists.length
-  if (suggetionsCount === 0) return null
-
   const excludeArtistIds = suggestedArtists.map(({ internalID }) => internalID)
+
+  if (suggestedArtists.length === 0) {
+    return (
+      <Text variant="md" color="black60">
+        No suggestions at this time
+      </Text>
+    )
+  }
 
   return (
     <Provider inject={[new FollowArtistPopoverState({ excludeArtistIds })]}>
@@ -73,10 +79,12 @@ export const FollowArtistPopoverQueryRenderer = ({
   artistID: string
 }) => {
   const { relayEnvironment, user } = useContext(SystemContext)
+
   return (
     <SystemQueryRenderer<FollowArtistPopoverQuery>
       environment={relayEnvironment}
       variables={{ artistID }}
+      placeholder={<FollowArtistPopoverPlaceholder />}
       query={graphql`
         query FollowArtistPopoverQuery($artistID: String!) {
           artist(id: $artistID) {
@@ -85,15 +93,31 @@ export const FollowArtistPopoverQueryRenderer = ({
         }
       `}
       render={({ props }) => {
-        return (
-          props && (
+        if (props?.artist) {
+          return (
             <FollowArtistPopoverFragmentContainer
-              artist={props.artist!}
+              artist={props.artist}
               user={user}
             />
           )
-        )
+        }
+
+        return <FollowArtistPopoverPlaceholder />
       }}
     />
+  )
+}
+
+export const FollowArtistPopoverPlaceholder: React.FC = () => {
+  return (
+    <>
+      <Spacer mt={1} />
+
+      <Join separator={<Separator my={1} />}>
+        <FollowArtistPopoverRowPlaceholder />
+        <FollowArtistPopoverRowPlaceholder />
+        <FollowArtistPopoverRowPlaceholder />
+      </Join>
+    </>
   )
 }

@@ -1,5 +1,4 @@
 import PropTypes from "prop-types"
-import React from "react"
 import { connect } from "react-redux"
 import { formattedLocation } from "../../helpers"
 import { makeDescribeWorkDesktop } from "../describe_work_desktop"

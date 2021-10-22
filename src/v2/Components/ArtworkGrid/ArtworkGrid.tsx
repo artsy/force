@@ -4,7 +4,8 @@ import { ArtworkGrid_artworks } from "v2/__generated__/ArtworkGrid_artworks.grap
 import { ArtworkGridEmptyState } from "v2/Components/ArtworkGrid/ArtworkGridEmptyState"
 import { isEqual } from "lodash"
 import memoizeOnce from "memoize-one"
-import React, { ReactNode } from "react"
+import { ReactNode } from "react";
+import * as React from "react";
 import ReactDOM from "react-dom"
 // @ts-ignore
 import { ComponentRef, createFragmentContainer, graphql } from "react-relay"

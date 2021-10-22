@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from "react"
+import { FC, useEffect, useState } from "react";
 import {
   Box,
   Column,
@@ -17,6 +17,7 @@ import { checkboxValues } from "v2/Components/ArtworkFilter/ArtworkFilters/Attri
 import { ArtistAutosuggest } from "./ArtistAutosuggest"
 import { useRouter } from "v2/System/Router/useRouter"
 import { ArtworkSidebarClassificationsModalQueryRenderer } from "v2/Apps/Artwork/Components/ArtworkSidebarClassificationsModal"
+import { useSubmission } from "../../Utils/useSubmission"
 
 const rarityOptions = checkboxValues.map(({ name, value }) => ({
   text: name,
@@ -87,13 +88,13 @@ export const ArtworkDetailsForm: FC = () => {
   } = useFormikContext<ArtworkDetailsFormModel>()
 
   const limitedEditionRarity = values.rarity === "limited edition"
+  const { submission } = useSubmission(id)
 
   useEffect(() => {
-    if (id) {
-      const formValues = sessionStorage.getItem(`submission-${id}`)
-      formValues && setValues(JSON.parse(formValues).artworkDetailsForm, true)
+    if (submission) {
+      setValues(submission.artworkDetailsForm, true)
     }
-  }, [])
+  }, [submission])
 
   return (
     <>

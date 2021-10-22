@@ -1,5 +1,6 @@
 import { Environment, RelayRefetchProp } from "react-relay"
-import React, { useRef, useState } from "react"
+import { useRef, useState } from "react";
+import * as React from "react";
 import {
   Button,
   Dialog,

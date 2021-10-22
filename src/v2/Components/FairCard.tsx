@@ -1,4 +1,4 @@
-import React from "react"
+import * as React from "react";
 import { Image, ResponsiveBox } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FairCard_fair } from "v2/__generated__/FairCard_fair.graphql"

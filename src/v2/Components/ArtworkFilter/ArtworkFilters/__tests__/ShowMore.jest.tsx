@@ -1,4 +1,3 @@
-import React from "react"
 import { ShowMore } from "../ShowMore"
 import { mount } from "enzyme"
 

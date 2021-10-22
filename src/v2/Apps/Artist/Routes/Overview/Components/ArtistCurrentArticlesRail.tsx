@@ -8,7 +8,7 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import React from "react"
+import * as React from "react";
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { Rail } from "v2/Components/Rail"
@@ -175,32 +175,36 @@ export const ArtistCurrentArticlesRailQueryRenderer: React.FC<{
   const { relayEnvironment } = useSystemContext()
 
   return (
-    <SystemQueryRenderer<ArtistCurrentArticlesRailQuery>
-      lazyLoad
-      environment={relayEnvironment}
-      variables={{ slug }}
-      placeholder={PLACEHOLDER}
-      query={graphql`
-        query ArtistCurrentArticlesRailQuery($slug: String!) {
-          artist(id: $slug) {
-            ...ArtistCurrentArticlesRail_artist
+    <Box data-test="ArtistCurrentArticlesRailQueryRenderer">
+      <SystemQueryRenderer<ArtistCurrentArticlesRailQuery>
+        lazyLoad
+        environment={relayEnvironment}
+        variables={{ slug }}
+        placeholder={PLACEHOLDER}
+        query={graphql`
+          query ArtistCurrentArticlesRailQuery($slug: String!) {
+            artist(id: $slug) {
+              ...ArtistCurrentArticlesRail_artist
+            }
           }
-        }
-      `}
-      render={({ error, props }) => {
-        if (error) {
-          console.error(error)
-          return null
-        }
-        if (!props) {
-          return PLACEHOLDER
-        }
-        if (props.artist) {
-          return (
-            <ArtistCurrentArticlesRailFragmentContainer artist={props.artist} />
-          )
-        }
-      }}
-    />
+        `}
+        render={({ error, props }) => {
+          if (error) {
+            console.error(error)
+            return null
+          }
+          if (!props) {
+            return PLACEHOLDER
+          }
+          if (props.artist) {
+            return (
+              <ArtistCurrentArticlesRailFragmentContainer
+                artist={props.artist}
+              />
+            )
+          }
+        }}
+      />
+    </Box>
   )
 }

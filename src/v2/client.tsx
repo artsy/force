@@ -1,6 +1,5 @@
 import "lib/webpackPublicPath"
 
-import React from "react"
 import ReactDOM from "react-dom"
 import { getAppRoutes } from "v2/routes"
 import { loadableReady } from "@loadable/component"
@@ -9,8 +8,11 @@ import { mediator } from "lib/mediator"
 import { beforeAnalyticsReady, onAnalyticsReady } from "lib/analytics/helpers"
 import { getClientParam } from "./Utils/getClientParam"
 import { buildClientApp } from "v2/System/Router/client"
+import { syncNonCacheableData } from "./System/Client/syncSharify"
 
 async function setupClient() {
+  syncNonCacheableData()
+
   Promise.all([
     import(
       /* webpackChunkName: "clientAppModals", webpackPrefetch: true */

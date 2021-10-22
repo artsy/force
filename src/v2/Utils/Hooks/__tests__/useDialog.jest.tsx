@@ -1,4 +1,3 @@
-import React from "react"
 import { renderHook, act } from "@testing-library/react-hooks"
 import { render, screen } from "@testing-library/react"
 import { useDialog } from "../useDialog"

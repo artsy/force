@@ -1,4 +1,4 @@
-import React from "react"
+import * as React from "react";
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { useSystemContext } from "v2/System"
 import { graphql } from "react-relay"

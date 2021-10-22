@@ -1,4 +1,5 @@
-import React, { ComponentProps } from "react"
+import { ComponentProps } from "react";
+import * as React from "react";
 import { Box } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FeatureFeaturedLinkFragmentContainer as FeatureFeaturedLink } from "../FeatureFeaturedLink"

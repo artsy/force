@@ -1,4 +1,3 @@
-import React from "react"
 import { graphql } from "react-relay"
 
 import { ArtworkGridExampleQuery } from "v2/__generated__/ArtworkGridExampleQuery.graphql"

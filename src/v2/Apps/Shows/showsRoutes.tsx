@@ -40,7 +40,6 @@ export const showsRoutes: RouteConfig[] = [
     },
     children: [
       {
-        theme: "v3",
         path: "",
         getComponent: () => ShowsIndexRoute,
         prepare: () => {
@@ -58,7 +57,6 @@ export const showsRoutes: RouteConfig[] = [
         `,
       },
       {
-        theme: "v3",
         path: "all-cities",
         getComponent: () => ShowsAllCities,
         prepare: () => {
@@ -73,7 +71,6 @@ export const showsRoutes: RouteConfig[] = [
         `,
       },
       {
-        theme: "v3",
         path: ":slug",
         getComponent: () => ShowsCityRoute,
         prepare: () => {

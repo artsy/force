@@ -3,10 +3,11 @@ import {
   ConsignmentSubmissionCategoryAggregation,
   CreateSubmissionMutationInput,
 } from "v2/__generated__/CreateConsignSubmissionMutation.graphql"
-import { SubmissionModel } from "./submissionUtils"
+import { SubmissionModel } from "./useSubmission"
 
 export const createConsignSubmissionInput = (
-  submission: SubmissionModel
+  submission: SubmissionModel,
+  user: User
 ): CreateSubmissionMutationInput => {
   return {
     artistID: submission.artworkDetailsForm.artistId,
@@ -24,8 +25,8 @@ export const createConsignSubmissionInput = (
     depth: submission.artworkDetailsForm.depth,
     dimensionsMetric: submission.artworkDetailsForm.units,
     state: "SUBMITTED",
-    userEmail: submission.contactInformationForm?.email,
-    userName: submission.contactInformationForm?.name,
-    userPhone: submission.contactInformationForm?.phone,
+    userEmail: user?.email,
+    userName: user?.name,
+    userPhone: user?.phone,
   }
 }

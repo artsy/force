@@ -1,7 +1,6 @@
 import { exhibitions } from "v2/Apps/__tests__/Fixtures/SelectedExhibitions"
 import { MockBoot } from "v2/DevTools/MockBoot"
 import { mount } from "enzyme"
-import React from "react"
 import { SelectedExhibitions } from "../SelectedExhibitions"
 
 describe("SelectedExhibitions", () => {

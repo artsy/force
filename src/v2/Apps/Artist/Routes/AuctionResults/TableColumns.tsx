@@ -1,5 +1,4 @@
 import { Col, Row, Sans } from "@artsy/palette"
-import React from "react"
 import { Media } from "v2/Utils/Responsive"
 
 export const TableColumns = () => {

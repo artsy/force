@@ -1,6 +1,6 @@
 import PropTypes from "prop-types"
 import MasonryGrid from "desktop/components/react/masonry_grid/MasonryGrid"
-import React, { Fragment } from "react"
+import { Fragment } from "react";
 import { get } from "lodash"
 import { Artwork } from "v2/Components/Artwork"
 import { ArtworkRail } from "../artwork_rail/ArtworkRail"

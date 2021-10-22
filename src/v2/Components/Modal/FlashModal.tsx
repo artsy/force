@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react"
+import { useEffect, useState } from "react";
+import * as React from "react";
 import { useSystemContext } from "v2/System/useSystemContext"
 import { ErrorModal, ErrorModalProps } from "./ErrorModal"
 

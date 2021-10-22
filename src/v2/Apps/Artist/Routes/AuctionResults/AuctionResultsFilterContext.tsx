@@ -1,4 +1,5 @@
-import React, { useContext, useReducer, useState } from "react"
+import { useContext, useReducer, useState } from "react";
+import * as React from "react";
 import { omit } from "lodash"
 import useDeepCompareEffect from "use-deep-compare-effect"
 
@@ -36,8 +37,8 @@ export const initialAuctionResultsFilterState = ({
   keyword: undefined,
   pageAndCursor: { page: 1, cursor: null },
   sort: "DATE_DESC",
-  createdAfterYear: startDate,
-  createdBeforeYear: endDate,
+  createdAfterYear: typeof startDate === "number" ? startDate : MIN_START_DATE,
+  createdBeforeYear: typeof endDate === "number" ? endDate : MAX_END_DATE,
   allowEmptyCreatedDates: true,
 })
 

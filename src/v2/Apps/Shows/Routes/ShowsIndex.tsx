@@ -6,7 +6,7 @@ import {
   Text,
   Separator,
 } from "@artsy/palette"
-import React from "react"
+import * as React from "react";
 import { createFragmentContainer, graphql } from "react-relay"
 import { ShowsIndex_featuredShows } from "v2/__generated__/ShowsIndex_featuredShows.graphql"
 import { ShowsIndex_viewer } from "v2/__generated__/ShowsIndex_viewer.graphql"

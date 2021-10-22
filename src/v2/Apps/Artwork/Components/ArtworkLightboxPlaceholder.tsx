@@ -1,5 +1,5 @@
 import { Box, Image } from "@artsy/palette"
-import React from "react"
+import * as React from "react";
 import { Link } from "react-head"
 import { resized } from "v2/Utils/resized"
 

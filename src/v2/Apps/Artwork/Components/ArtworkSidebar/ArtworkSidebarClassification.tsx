@@ -1,5 +1,5 @@
 import { Clickable, Text } from "@artsy/palette"
-import React from "react"
+import { Component } from "react";
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworkSidebarClassification_artwork } from "v2/__generated__/ArtworkSidebarClassification_artwork.graphql"
 import * as Schema from "v2/System/Analytics/Schema"
@@ -18,7 +18,7 @@ interface State {
 }
 
 @track()
-export class ArtworkSidebarClassification extends React.Component<
+export class ArtworkSidebarClassification extends Component<
   ArtworkSidebarClassificationProps,
   State
 > {

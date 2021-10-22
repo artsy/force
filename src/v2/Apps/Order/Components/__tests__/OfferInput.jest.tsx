@@ -1,5 +1,4 @@
 import { ReactWrapper, mount } from "enzyme"
-import React from "react"
 import { OfferInput, OfferInputProps } from "../OfferInput"
 
 // https://github.com/airbnb/enzyme/issues/218#issuecomment-388481390

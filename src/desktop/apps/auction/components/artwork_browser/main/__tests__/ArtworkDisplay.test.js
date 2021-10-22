@@ -1,4 +1,3 @@
-import React from "react"
 import LoadingSpinner from "desktop/apps/auction/components/artwork_browser/main/LoadingSpinner"
 import renderTestComponent from "desktop/apps/auction/__tests__/utils/renderTestComponent"
 

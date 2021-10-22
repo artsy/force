@@ -1,6 +1,5 @@
 import Autosuggest from "react-autosuggest"
 import PropTypes from "prop-types"
-import React from "react"
 import block from "bem-cn-lite"
 import { connect } from "react-redux"
 import { get } from "lodash"

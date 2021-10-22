@@ -1,5 +1,4 @@
 import { ArtworkGridExample } from "v2/Components/ArtworkGridExample"
-import React from "react"
 import { Media } from "v2/Utils/Responsive"
 
 export const FullArtworkGrid = props => (

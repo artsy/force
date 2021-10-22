@@ -1,4 +1,4 @@
-import React from "react"
+import * as React from "react";
 import block from "bem-cn-lite"
 import { connect } from "react-redux"
 import { Button, Sans } from "@artsy/palette"

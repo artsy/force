@@ -1,5 +1,6 @@
 import { Box, Button, CheckCircleIcon, Modal, Text } from "@artsy/palette"
-import React, { useEffect, useState } from "react"
+import { useEffect, useState } from "react";
+import * as React from "react";
 
 export type ContentKey =
   | "registrationConfirmed"

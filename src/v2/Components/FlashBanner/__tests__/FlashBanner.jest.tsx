@@ -1,5 +1,4 @@
 import "jest-styled-components"
-import React from "react"
 import {
   FlashBanner,
   FlashBannerQueryRenderer,

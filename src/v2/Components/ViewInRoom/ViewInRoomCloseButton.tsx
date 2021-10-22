@@ -1,5 +1,5 @@
 import { Clickable, ClickableProps, CloseIcon } from "@artsy/palette"
-import React from "react"
+import * as React from "react";
 
 interface ViewInRoomCloseButtonProps extends ClickableProps {}
 

@@ -4,14 +4,14 @@ import { SystemContext } from "v2/System"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { Timer } from "v2/Components/Timer"
 import { DateTime } from "luxon"
-import React, { useContext } from "react"
+import { Component, useContext } from "react";
 import { createFragmentContainer, graphql } from "react-relay"
 
 export interface Props {
   sale: AuctionTimer_sale
 }
 
-export class AuctionTimer extends React.Component<Props> {
+export class AuctionTimer extends Component<Props> {
   get endDate() {
     const { sale } = this.props
     const { end_at } = sale

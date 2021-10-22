@@ -38,7 +38,6 @@ const ViewingRoomsApp = loadable(
 
 export const viewingRoomRoutes: AppRouteConfig[] = [
   {
-    theme: "v3",
     path: "/viewing-rooms",
     getComponent: () => ViewingRoomsApp,
     prepare: () => {
@@ -83,7 +82,6 @@ export const viewingRoomRoutes: AppRouteConfig[] = [
     `,
     children: [
       {
-        theme: "v3",
         path: "/",
         Component: StatementRoute,
         query: graphql`
@@ -105,7 +103,6 @@ export const viewingRoomRoutes: AppRouteConfig[] = [
         },
       },
       {
-        theme: "v3",
         path: "artworks",
         Component: WorksRoute,
         query: graphql`

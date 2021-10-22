@@ -1,5 +1,4 @@
 import { Serif } from "@artsy/palette"
-import React from "react"
 
 export const CreditCardInstructions = () => {
   return (

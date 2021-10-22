@@ -1,5 +1,5 @@
 import { Box, Column, GridColumns, SkeletonText } from "@artsy/palette"
-import React from "react"
+import * as React from "react";
 
 export const MarketStatsPlaceholder: React.FC = () => (
   <Box mb={[4, 12]} mt={[0, 6]}>

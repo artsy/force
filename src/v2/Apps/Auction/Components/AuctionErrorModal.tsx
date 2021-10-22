@@ -1,4 +1,4 @@
-import React, { ComponentProps } from "react"
+import { ComponentProps } from "react";
 
 import { ErrorModal } from "v2/Components/Modal/ErrorModal"
 import {

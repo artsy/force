@@ -1,5 +1,5 @@
 import { Box, BoxProps, Flex, SkeletonBox, SkeletonText } from "@artsy/palette"
-import React from "react"
+import * as React from "react";
 import { Carousel } from "../Carousel"
 import { ARTWORK_CAROUSEL_ITEM_HEIGHT } from "./ArtworksRail"
 

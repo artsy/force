@@ -1,6 +1,6 @@
 import Colors from "v2/Assets/Colors"
 import { media } from "v2/Components/Helpers"
-import React from "react"
+import { Component } from "react";
 import styled from "styled-components"
 
 interface Props {
@@ -11,7 +11,7 @@ interface Props {
  * @deprecated in favor of our Design System ProgressBar component in @artsy/palette
  * https://palette.artsy.net/elements/loaders/progressbar
  */
-export class ProgressIndicator extends React.Component<Props, null> {
+export class ProgressIndicator extends Component<Props, null> {
   static defaultProps = {
     percentComplete: 0,
   }

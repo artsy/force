@@ -1,4 +1,4 @@
-import React from "react"
+import * as React from "react";
 import { Link } from "react-head"
 import { data as sd } from "sharify"
 import { createFragmentContainer, graphql } from "react-relay"

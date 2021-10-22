@@ -1,0 +1,65 @@
+// The exhaustive list of sharify values used by V2
+export const V2_SHARIFY = [
+  "ADMIN_URL",
+  "AP",
+  "API_REQUEST_TIMEOUT",
+  "API_URL",
+  "APP_URL",
+  "APPLICATION_NAME",
+  "ARTSY_EDITORIAL_CHANNEL",
+  "AUCTION_ZENDESK_KEY",
+  "CDN_URL",
+  "CMS_URL",
+  "CURRENT_PATH",
+  "CURRENT_USER",
+  "ENABLE_FAIR_PAGE_EXHIBITORS_TAB",
+  "ENABLE_NEW_AUCTIONS_FILTER",
+  "ERROR",
+  "FACEBOOK_APP_NAMESPACE",
+  "GEMINI_CLOUDFRONT_URL",
+  "GENOME_URL",
+  "GOOGLE_ADWORDS_ID",
+  "GOOGLE_MAPS_API_KEY",
+  "MARKETING_SIGNUP_MODALS",
+  "METAPHYSICS_ENDPOINT",
+  "NODE_ENV",
+  "ONETRUST_SCRIPT_ID",
+  "PREDICTION_URL",
+  "RECAPTCHA_KEY",
+  "SEGMENT_WRITE_KEY",
+  "SENTRY_PUBLIC_DSN",
+  "SHOW_ANALYTICS_CALLS",
+  "SIFT_BEACON_KEY",
+  "STRIPE_PUBLISHABLE_KEY",
+  "TARGET_CAMPAIGN_URL",
+  "THIRD_PARTIES_DISABLED,",
+  "TRACK_PAGELOAD_PATHS",
+  "VOLLEY_ENDPOINT",
+  "WEBFONT_URL",
+  "ZENDESK_KEY",
+]
+
+export function filterObjectKeys(sharifyData, excludeList) {
+  return Object.keys(sharifyData)
+    .filter(key => excludeList.indexOf(key) !== -1)
+    .reduce((orig, key) => {
+      orig[key] = sharifyData[key]
+      return orig
+    }, {})
+}
+
+// Required so that we can control limit the data being injected in to the page.
+export function generateCustomSharifyScript(sharifyData) {
+  return (
+    '<script type="text/javascript">' +
+    "window.__sharifyData = " +
+    //There are tricky rules about safely embedding JSON within HTML
+    //see http://stackoverflow.com/a/4180424/266795
+    JSON.stringify(sharifyData)
+      .replace(/</g, "\\u003c")
+      .replace(/-->/g, "--\\>")
+      .replace(/\u2028/g, "\\u2028")
+      .replace(/\u2029/g, "\\u2029") +
+    ";</script>"
+  )
+}

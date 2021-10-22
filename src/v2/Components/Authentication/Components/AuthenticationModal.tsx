@@ -1,6 +1,6 @@
 import { ModalOptions } from "v2/Components/Authentication/Types"
 import Modal, { ModalProps } from "v2/Components/Modal/Modal"
-import React, { Component } from "react"
+import { Component } from "react";
 import track from "react-tracking"
 import { TrackingProp } from "react-tracking"
 import Events from "v2/Utils/Events"

@@ -1,4 +1,4 @@
-import React from "react"
+import * as React from "react";
 import compact from "lodash/compact"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Shows_partner } from "v2/__generated__/Shows_partner.graphql"

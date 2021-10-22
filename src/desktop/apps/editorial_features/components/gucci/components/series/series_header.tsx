@@ -1,6 +1,6 @@
 import { Box, media } from "@artsy/palette"
 import styled from "styled-components"
-import React from "react"
+import * as React from "react";
 import Waypoint from "react-waypoint"
 import { Header } from "../nav/header"
 import { SectionsNav } from "../nav/sections_nav"

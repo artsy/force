@@ -1,5 +1,5 @@
 import { clickedEntityGroup, ContextModule, OwnerType } from "@artsy/cohesion"
-import React from "react"
+import * as React from "react";
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { useAnalyticsContext, useSystemContext } from "v2/System"
@@ -137,32 +137,34 @@ export const ArtistWorksForSaleRailQueryRenderer: React.FC<{
   const { relayEnvironment } = useSystemContext()
 
   return (
-    <SystemQueryRenderer<ArtistWorksForSaleRailQuery>
-      lazyLoad
-      environment={relayEnvironment}
-      variables={{ slug }}
-      placeholder={PLACEHOLDER}
-      query={graphql`
-        query ArtistWorksForSaleRailQuery($slug: String!) {
-          artist(id: $slug) {
-            ...ArtistWorksForSaleRail_artist
+    <Box data-test="ArtistWorksForSaleRailQueryRenderer">
+      <SystemQueryRenderer<ArtistWorksForSaleRailQuery>
+        lazyLoad
+        environment={relayEnvironment}
+        variables={{ slug }}
+        placeholder={PLACEHOLDER}
+        query={graphql`
+          query ArtistWorksForSaleRailQuery($slug: String!) {
+            artist(id: $slug) {
+              ...ArtistWorksForSaleRail_artist
+            }
           }
-        }
-      `}
-      render={({ error, props }) => {
-        if (error) {
-          console.error(error)
-          return null
-        }
-        if (!props) {
-          return PLACEHOLDER
-        }
-        if (props.artist) {
-          return (
-            <ArtistWorksForSaleRailFragmentContainer artist={props.artist} />
-          )
-        }
-      }}
-    />
+        `}
+        render={({ error, props }) => {
+          if (error) {
+            console.error(error)
+            return null
+          }
+          if (!props) {
+            return PLACEHOLDER
+          }
+          if (props.artist) {
+            return (
+              <ArtistWorksForSaleRailFragmentContainer artist={props.artist} />
+            )
+          }
+        }}
+      />
+    </Box>
   )
 }

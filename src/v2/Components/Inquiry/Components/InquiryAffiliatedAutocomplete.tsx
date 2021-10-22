@@ -1,5 +1,5 @@
 import { AutocompleteInput } from "@artsy/palette"
-import React from "react"
+import * as React from "react";
 import { useState } from "react"
 import { GraphQLTaggedNode, OperationType } from "relay-runtime"
 import { useSystemContext } from "v2/System"

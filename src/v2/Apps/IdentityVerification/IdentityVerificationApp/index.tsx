@@ -3,7 +3,8 @@ import { IdentityVerificationApp_me } from "v2/__generated__/IdentityVerificatio
 import { IdentityVerificationAppStartMutation } from "v2/__generated__/IdentityVerificationAppStartMutation.graphql"
 import * as Schema from "v2/System/Analytics/Schema"
 import { ErrorModal } from "v2/Components/Modal/ErrorModal"
-import React, { useState } from "react"
+import { useState } from "react";
+import * as React from "react";
 import { Title as HeadTitle } from "react-head"
 import {
   RelayProp,

@@ -6,7 +6,7 @@ import {
   Box,
   ThemeProviderV3,
 } from "@artsy/palette"
-import React from "react"
+import * as React from "react";
 import styled from "styled-components"
 import { RouterLink } from "v2/System/Router/RouterLink"
 
@@ -30,7 +30,7 @@ export const ErrorPage: React.FC<ErrorPageProps> = ({
 
   return (
     <ThemeProviderV3>
-      <GridColumns my={4} gridRowGap={4}>
+      <GridColumns gridRowGap={4} m={4}>
         <Column span={6} wrap>
           <Text variant="xl">{defaultMessage}</Text>
 

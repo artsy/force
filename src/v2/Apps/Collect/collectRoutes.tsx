@@ -27,7 +27,6 @@ const CollectionApp = loadable(
 export const collectRoutes: AppRouteConfig[] = [
   {
     path: "/collect/:medium?",
-    theme: "v3",
     getComponent: () => CollectApp,
     prepare: () => {
       CollectApp.preload()
@@ -37,7 +36,6 @@ export const collectRoutes: AppRouteConfig[] = [
   },
   {
     path: "/collect/color/:color?",
-    theme: "v3",
     getComponent: () => CollectApp,
     prepare: () => {
       CollectApp.preload()
@@ -47,7 +45,6 @@ export const collectRoutes: AppRouteConfig[] = [
   },
   {
     path: "/collections",
-    theme: "v3",
     getComponent: () => CollectionsApp,
     prepare: () => {
       CollectionsApp.preload()
@@ -61,7 +58,6 @@ export const collectRoutes: AppRouteConfig[] = [
     `,
   },
   {
-    theme: "v3",
     path: "/collection/:slug",
     getComponent: () => CollectionApp,
     prepare: () => {

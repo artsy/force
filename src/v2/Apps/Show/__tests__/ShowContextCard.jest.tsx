@@ -1,4 +1,3 @@
-import React from "react"
 import { ShowContextCardFragmentContainer } from "../Components/ShowContextCard"
 import { graphql } from "react-relay"
 import { ShowContextCard_Test_Query } from "v2/__generated__/ShowContextCard_Test_Query.graphql"

@@ -1,5 +1,5 @@
 import { Checkbox, CheckboxProps, Link, Serif } from "@artsy/palette"
-import React from "react"
+import * as React from "react";
 import { data as sd } from "sharify"
 
 export const ConditionsOfSaleCheckbox: React.FC<CheckboxProps> = ({

@@ -1,4 +1,4 @@
-import React from "react"
+import * as React from "react";
 import { Column, GridColumns, Join, Separator, Spacer } from "@artsy/palette"
 import { ViewingRoomWorksFragmentContainer as ViewingRoomWorks } from "./Components/ViewingRoomWorks"
 import { ViewingRoomIntroFragmentContainer as ViewingRoomIntro } from "./Components/ViewingRoomIntro"
@@ -19,7 +19,7 @@ const StatementRoute: React.FC<ViewingRoomStatementRouteProps> = ({
   return (
     <GridColumns gridRowGap={4}>
       <Column span={6} start={4}>
-        <Join separator={<Spacer my={4} />}>
+        <Join separator={<Spacer mt={4} />}>
           <ViewingRoomIntro viewingRoom={viewingRoom} />
 
           <ViewingRoomWorks viewingRoom={viewingRoom} />

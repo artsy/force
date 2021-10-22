@@ -1,4 +1,4 @@
-import React from "react"
+import * as React from "react";
 import { SearchResultsArtworks_viewer } from "v2/__generated__/SearchResultsArtworks_viewer.graphql"
 import { ZeroState } from "v2/Apps/Search/Components/ZeroState"
 import { ArtworkFilter } from "v2/Components/ArtworkFilter"

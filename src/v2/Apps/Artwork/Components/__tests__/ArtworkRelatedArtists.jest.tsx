@@ -1,7 +1,6 @@
 import { ArtworkRelatedArtistsFixture } from "v2/Apps/__tests__/Fixtures/Artwork/ArtworkRelatedArtists.fixture"
 import { useTracking } from "v2/System/Analytics/useTracking"
 import { mount } from "enzyme"
-import React from "react"
 import { ArtworkRelatedArtists } from "../ArtworkRelatedArtists"
 
 jest.mock("v2/System/Analytics/useTracking")

@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect } from "react"
+import { FC, useState, useEffect } from "react";
 import { fetchQuery, graphql } from "react-relay"
 import RelayModernEnvironment from "relay-runtime/lib/store/RelayModernEnvironment"
 import { useSystemContext } from "v2/System"
@@ -38,7 +38,7 @@ export const ArtistAutosuggest: FC = () => {
 
   useEffect(() => {
     if (values.artistName !== searchString) {
-      setSearchString(values.artistName)
+      setSearchString(values.artistName || "")
     }
   }, [values.artistName])
 
@@ -143,6 +143,7 @@ const AutosuggestInput: FC = props => {
   return (
     <Input
       title="Artist"
+      data-test-id="autosuggest-input"
       placeholder="Enter Full Name"
       spellCheck={false}
       {...props}

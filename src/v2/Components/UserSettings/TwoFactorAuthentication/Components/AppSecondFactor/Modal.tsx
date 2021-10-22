@@ -3,7 +3,8 @@ import { CreateAppSecondFactorMutationResponse } from "v2/__generated__/CreateAp
 import { useSystemContext } from "v2/System"
 import { Formik, FormikHelpers as FormikActions, FormikProps } from "formik"
 import QRCode from "qrcode.react"
-import React, { useState } from "react"
+import { useState } from "react";
+import * as React from "react";
 import * as Yup from "yup"
 import { ApiError } from "../../ApiError"
 import { EnableSecondFactor } from "../Mutation/EnableSecondFactor"
