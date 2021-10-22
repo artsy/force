@@ -35,7 +35,9 @@ describe("Footer", () => {
       expect(links.at(10).prop("to")).toBe("/auction-partnerships")
 
       expect(links.at(11).text()).toBe("Artsy for Fairs")
-      expect(links.at(11).prop("to")).toBe("")
+      expect(links.at(11).prop("to")).toBe(
+        "https://partners.artsy.net/artsy-fair-partnerships/"
+      )
     })
 
     it("renders links to download the app", () => {
