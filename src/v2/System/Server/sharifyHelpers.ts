@@ -1,5 +1,7 @@
+import { pick } from "lodash"
+
 // The exhaustive list of sharify values used by V2
-export const V2_SHARIFY = [
+const V2_SHARIFY_ALLOWLIST = [
   "ADMIN_URL",
   "AP",
   "API_REQUEST_TIMEOUT",
@@ -39,17 +41,8 @@ export const V2_SHARIFY = [
   "ZENDESK_KEY",
 ]
 
-export function filterObjectKeys(sharifyData, excludeList) {
-  return Object.keys(sharifyData)
-    .filter(key => excludeList.indexOf(key) !== -1)
-    .reduce((orig, key) => {
-      orig[key] = sharifyData[key]
-      return orig
-    }, {})
-}
-
 // Required so that we can control limit the data being injected in to the page.
-export function generateCustomSharifyScript(sharifyData) {
+function generateCustomSharifyScript(sharifyData) {
   return (
     '<script type="text/javascript">' +
     "window.__sharifyData = " +
@@ -62,4 +55,11 @@ export function generateCustomSharifyScript(sharifyData) {
       .replace(/\u2029/g, "\\u2029") +
     ";</script>"
   )
+}
+
+export function getV2SharifyScript(sharifyData) {
+  const script = generateCustomSharifyScript(
+    pick(sharifyData, V2_SHARIFY_ALLOWLIST)
+  )
+  return script
 }
