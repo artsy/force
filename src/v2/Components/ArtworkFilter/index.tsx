@@ -324,24 +324,13 @@ export const BaseArtworkFilter: React.FC<
       {/* Desktop Artwork Filter */}
       <Media greaterThan="xs">
         {tokens.version === "v3" && (
-          <Flex
-            justifyContent="space-between"
-            alignItems="flex-start"
-            pb={showCreateAlert ? 0 : 40}
-          >
+          <Flex justifyContent="space-between" alignItems="flex-start" pb={40}>
             <Text variant="xs" textTransform="uppercase">
               Filter by
             </Text>
 
             <ArtworkSortFilter />
           </Flex>
-        )}
-
-        {showCreateAlert && (
-          <>
-            <CreateAlertButton />
-            <Spacer mb={10} />
-          </>
         )}
 
         <GridColumns>
@@ -366,6 +355,15 @@ export const BaseArtworkFilter: React.FC<
               <Box mb={2} pt={2} borderTop="1px solid" borderTopColor="black10">
                 <ArtworkSortFilter />
               </Box>
+            )}
+
+            {showCreateAlert && (
+              <>
+                <Flex>
+                  <CreateAlertButton />
+                </Flex>
+                <Spacer mt={4} />
+              </>
             )}
 
             {children || (
