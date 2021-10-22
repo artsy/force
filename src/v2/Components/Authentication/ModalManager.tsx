@@ -1,5 +1,5 @@
 import { FormikProps } from "formik"
-import React, { Component } from "react"
+import { Component } from "react";
 import { TrackingProp } from "react-tracking"
 import { AuthenticationModal } from "v2/Components/Authentication/Components/AuthenticationModal"
 import { FormSwitcher } from "v2/Components/Authentication/FormSwitcher"

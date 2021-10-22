@@ -12,6 +12,7 @@ const FeatureAKGApp = loadable(
 export const featureAKGRoutes: AppRouteConfig[] = [
   {
     path: "/campaign/art-keeps-going",
+    theme: "v2",
     getComponent: () => FeatureAKGApp,
     prepare: () => {
       FeatureAKGApp.preload()

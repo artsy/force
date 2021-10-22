@@ -1,4 +1,3 @@
-import React from "react"
 import { MockBoot } from "v2/DevTools"
 import { FeatureAppFragmentContainer } from "../FeatureApp"
 import { graphql } from "react-relay"

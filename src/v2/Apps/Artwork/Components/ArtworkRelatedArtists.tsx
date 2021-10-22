@@ -15,7 +15,8 @@ import { hideGrid } from "v2/Apps/Artwork/Components/OtherWorks"
 import { track, useTracking } from "v2/System/Analytics"
 import * as Schema from "v2/System/Analytics/Schema"
 import { ArtistCardFragmentContainer as ArtistCard } from "v2/Components/ArtistCard"
-import React, { useState } from "react"
+import { useState } from "react";
+import * as React from "react";
 import {
   RelayPaginationProp,
   createPaginationContainer,

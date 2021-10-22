@@ -1,5 +1,3 @@
-import React from "react"
-
 import { CreditCardIcon, Flex, Text } from "@artsy/palette"
 
 export const CreditCardDetails = ({

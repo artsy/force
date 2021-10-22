@@ -1,4 +1,4 @@
-import React from "react"
+import { Component } from "react";
 import { data as sd } from "sharify"
 import { handleScrollingAuthModal } from "desktop/lib/openAuthModal"
 import { ContextModule, Intent } from "@artsy/cohesion"
@@ -6,7 +6,7 @@ import { mediator } from "lib/mediator"
 
 import Cookies from "desktop/components/cookies/index"
 
-export class AuthWrapper extends React.Component {
+export class AuthWrapper extends Component {
   public openModal
 
   UNSAFE_componentWillMount() {

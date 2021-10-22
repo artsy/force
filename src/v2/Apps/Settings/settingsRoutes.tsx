@@ -106,7 +106,6 @@ export const settingsRoutes: AppRouteConfig[] = [
     children: [
       {
         path: "/",
-        theme: "v3",
         getComponent: () => OverviewRoute,
         prepare: () => {
           OverviewRoute.preload()
@@ -114,7 +113,6 @@ export const settingsRoutes: AppRouteConfig[] = [
       },
       {
         path: "auctions",
-        theme: "v3",
         getComponent: () => AuctionsRoute,
         prepare: () => {
           AuctionsRoute.preload()
@@ -122,7 +120,6 @@ export const settingsRoutes: AppRouteConfig[] = [
       },
       {
         path: "edit-profile",
-        theme: "v3",
         getComponent: () => EditProfileRoute,
         prepare: () => {
           EditProfileRoute.preload()
@@ -130,7 +127,6 @@ export const settingsRoutes: AppRouteConfig[] = [
       },
       {
         path: "payments",
-        theme: "v3",
         getComponent: () => PaymentsRoute,
         prepare: () => {
           PaymentsRoute.preload()
@@ -138,7 +134,6 @@ export const settingsRoutes: AppRouteConfig[] = [
       },
       {
         path: "purchases",
-        theme: "v3",
         getComponent: () => PurchasesRoute,
         prepare: () => {
           PurchasesRoute.preload()
@@ -146,7 +141,6 @@ export const settingsRoutes: AppRouteConfig[] = [
       },
       {
         path: "saves",
-        theme: "v3",
         getComponent: () => SavesRoute,
         prepare: () => {
           SavesRoute.preload()
@@ -155,7 +149,6 @@ export const settingsRoutes: AppRouteConfig[] = [
 
       {
         path: "edit-settings",
-        theme: "v3",
         getComponent: () => SettingsRoute,
         prepare: () => {
           SettingsRoute.preload()
@@ -164,7 +157,6 @@ export const settingsRoutes: AppRouteConfig[] = [
 
       {
         path: "shipping",
-        theme: "v3",
         getComponent: () => ShippingRoute,
         prepare: () => {
           ShippingRoute.preload()

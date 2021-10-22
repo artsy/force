@@ -51,6 +51,9 @@ const WelcomeRoute = loadable(
 export const exampleRoutes: AppRouteConfig[] = [
   {
     path: "/example",
+
+    // FIXME: V2 theme is deprecated. Still need to refactor example app to use latest
+    theme: "v2",
     getComponent: () => ExampleApp,
     prepare: () => {
       ExampleApp.preload()
@@ -65,10 +68,12 @@ export const exampleRoutes: AppRouteConfig[] = [
     children: [
       {
         path: "",
+        theme: "v2",
         Component: WelcomeRoute,
       },
       {
         path: "artist/:slug",
+        theme: "v2",
         getComponent: () => ArtistRoute,
         prepare: () => {
           ArtistRoute.preload()
@@ -84,6 +89,7 @@ export const exampleRoutes: AppRouteConfig[] = [
       },
       {
         path: "artwork/:slug",
+        theme: "v2",
         getComponent: () => ArtworkRoute,
         prepare: () => {
           ArtworkRoute.preload()
@@ -99,6 +105,7 @@ export const exampleRoutes: AppRouteConfig[] = [
       },
       {
         path: "artwork-filter/:slug",
+        theme: "v2",
         getComponent: () => ArtworkFilterRoute,
         prepare: () => {
           ArtworkRoute.preload()

@@ -1,4 +1,4 @@
-import React from "react"
+import * as React from "react";
 import { Banner, Box, FullBleed } from "@artsy/palette"
 
 export const PromoSpace: React.FC = () => {

@@ -1,5 +1,4 @@
 import { mount } from "enzyme"
-import React from "react"
 import { Message_message } from "v2/__generated__/Message_message.graphql"
 import { Message as messageFixture } from "v2/Apps/__tests__/Fixtures/Conversation"
 import { Message } from "../Message"

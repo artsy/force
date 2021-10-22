@@ -1,4 +1,5 @@
-import React, { Dispatch, useContext, useReducer } from "react"
+import { Dispatch, useContext, useReducer } from "react";
+import * as React from "react";
 import { createContext } from "react"
 import { Environment, fetchQuery, graphql } from "react-relay"
 import { useSystemContext } from "v2/System"

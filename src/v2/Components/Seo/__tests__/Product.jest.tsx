@@ -1,5 +1,4 @@
 import { mount } from "enzyme"
-import React from "react"
 import { Product } from "../Product"
 import { HeadProvider } from "react-head"
 

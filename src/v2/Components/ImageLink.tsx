@@ -1,6 +1,7 @@
 import { Box, Image, SerifProps } from "@artsy/palette"
 import { RouterLink } from "v2/System/Router/RouterLink"
-import React, { FC } from "react"
+import { FC } from "react";
+import * as React from "react";
 import styled from "styled-components"
 import { Media } from "v2/Utils/Responsive"
 

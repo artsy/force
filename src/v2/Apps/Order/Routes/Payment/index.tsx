@@ -11,7 +11,7 @@ import {
 import { TransactionDetailsSummaryItemFragmentContainer as TransactionDetailsSummaryItem } from "v2/Apps/Order/Components/TransactionDetailsSummaryItem"
 import { TwoColumnLayout } from "v2/Apps/Order/Components/TwoColumnLayout"
 import { Router } from "found"
-import React, { Component } from "react"
+import { createRef, Component } from "react";
 import { createFragmentContainer, graphql } from "react-relay"
 import type { Stripe, StripeElements } from "@stripe/stripe-js"
 import createLogger from "v2/Utils/logger"
@@ -68,7 +68,7 @@ export class PaymentRoute extends Component<
   PaymentState
 > {
   state: PaymentState = { isGettingCreditCardId: false }
-  paymentPicker = React.createRef<PaymentPicker>()
+  paymentPicker = createRef<PaymentPicker>()
   onContinue = async () => {
     try {
       this.setState({ isGettingCreditCardId: true })

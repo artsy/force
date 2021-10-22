@@ -1,4 +1,3 @@
-import React from "react"
 import { mount, shallow } from "enzyme"
 import { NewsArticle } from "../NewsArticle"
 import { NewsArticle as NewsArticleFixture } from "@artsy/reaction/dist/Components/Publishing/Fixtures/Articles"

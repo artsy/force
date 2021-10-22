@@ -1,4 +1,3 @@
-import React from "react"
 import { AppContainer } from "v2/Apps/Components/AppContainer"
 import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
 import { MinimalNavBar } from "v2/Components/NavBar/MinimalNavBar"

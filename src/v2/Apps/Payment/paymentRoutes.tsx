@@ -15,7 +15,6 @@ const PaymentApp = loadable(
 export const paymentRoutes: AppRouteConfig[] = [
   {
     // TODO: update route to /user/payments and remove stitched route to launch
-    theme: "v3",
     path: "/user/payments",
     getComponent: () => PaymentApp,
     prepare: () => {

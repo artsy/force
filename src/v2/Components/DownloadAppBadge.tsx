@@ -1,4 +1,4 @@
-import React from "react"
+import * as React from "react";
 import track, { useTracking } from "react-tracking"
 import { clickedAppDownload, ContextModule } from "@artsy/cohesion"
 import { useAnalyticsContext } from "v2/System"

@@ -1,4 +1,3 @@
-import React from "react"
 import { useTracking } from "v2/System/Analytics/useTracking"
 import { MockBoot, renderRelayTree } from "v2/DevTools"
 import { graphql } from "react-relay"

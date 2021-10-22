@@ -1,4 +1,3 @@
-import React from "react"
 import { mount } from "enzyme"
 import { useInquiryAffiliated, Mode } from "../../Hooks/useInquiryAffiliated"
 import { useUpdateCollectorProfile } from "../../Hooks/useUpdateCollectorProfile"

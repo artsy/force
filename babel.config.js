@@ -10,7 +10,12 @@ module.exports = {
         corejs: 2,
       },
     ],
-    "@babel/react",
+    [
+      "@babel/preset-react",
+      {
+        runtime: "automatic",
+      },
+    ],
     "@babel/preset-typescript",
   ],
   plugins: [

@@ -5,7 +5,7 @@ import {
 } from "v2/__generated__/SavedCreditCardsDeleteCreditCardMutation.graphql"
 import { CreditCardDetails } from "v2/Apps/Order/Components/CreditCardDetails"
 import { ErrorModal } from "v2/Components/Modal/ErrorModal"
-import React from "react"
+import * as React from "react";
 import { RelayProp, commitMutation, graphql } from "react-relay"
 import { ConnectionHandler, RecordSourceSelectorProxy } from "relay-runtime"
 import styled from "styled-components"

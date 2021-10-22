@@ -1,4 +1,4 @@
-import React from "react"
+import { Component } from "react";
 import ChannelMemberQuery from "desktop/apps/article/queries/channelMember"
 import { positronql } from "desktop/lib/positronql"
 import { data as sd } from "sharify"
@@ -16,7 +16,7 @@ interface EditButtonState {
   showEditButton: boolean
 }
 
-export class EditButton extends React.Component<
+export class EditButton extends Component<
   EditButtonProps,
   EditButtonState
 > {

@@ -1,6 +1,6 @@
 import { Box, Flex } from "@artsy/palette"
 import { AnalyticsSchema } from "v2/System"
-import React from "react"
+import * as React from "react";
 import { FeaturedContentLink, FeaturedLinkType } from "./Feature"
 
 interface FeaturedArtistsProps {

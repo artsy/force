@@ -1,5 +1,4 @@
 import { mount } from "enzyme"
-import React from "react"
 import { InquirySpecialist } from "../../Views/InquirySpecialist"
 import { useArtworkInquiryRequest } from "../../Hooks/useArtworkInquiryRequest"
 import { useInquiryContext } from "../../Hooks/useInquiryContext"

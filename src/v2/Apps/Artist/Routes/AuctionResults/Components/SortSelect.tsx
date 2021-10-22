@@ -1,5 +1,4 @@
 import { Select, SelectProps } from "@artsy/palette"
-import React from "react"
 import { Media } from "v2/Utils/Responsive"
 import { useAuctionResultsFilterContext } from "../AuctionResultsFilterContext"
 

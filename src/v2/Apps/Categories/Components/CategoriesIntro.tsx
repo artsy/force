@@ -1,5 +1,5 @@
 import { Column, GridColumns, Text } from "@artsy/palette"
-import React from "react"
+import * as React from "react";
 
 export const CategoriesIntro: React.FC = () => {
   return (

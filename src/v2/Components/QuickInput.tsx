@@ -2,7 +2,7 @@ import { space } from "@artsy/palette"
 import { fadeIn, fadeOut } from "v2/Assets/Animations"
 import Colors from "v2/Assets/Colors"
 import { garamond, unica } from "v2/Assets/Fonts"
-import React from "react"
+import { Component } from "react";
 import styled from "styled-components"
 import { borderedInputMixin } from "./Mixins"
 
@@ -28,7 +28,7 @@ export interface QuickInputState {
  * Quick input. Renders the label inside of the textbox.
  * @deprecated
  */
-export class QuickInput extends React.Component<
+export class QuickInput extends Component<
   QuickInputProps,
   QuickInputState
 > {

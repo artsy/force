@@ -6,7 +6,7 @@ import {
 } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
 import { isEmpty } from "lodash"
-import React from "react"
+import * as React from "react";
 import styled from "styled-components"
 
 const SearchButton = styled(Clickable)`

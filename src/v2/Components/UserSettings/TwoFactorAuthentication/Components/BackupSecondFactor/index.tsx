@@ -7,7 +7,8 @@ import {
   Sans,
   Serif,
 } from "@artsy/palette"
-import React, { useState } from "react"
+import { useState } from "react";
+import * as React from "react";
 import { createFragmentContainer, graphql } from "react-relay"
 
 import { useSystemContext } from "v2/System"

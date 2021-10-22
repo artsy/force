@@ -1,4 +1,3 @@
-import React from "react"
 import { graphql } from "react-relay"
 import { FollowGeneButtonFragmentContainer } from "../FollowGeneButton"
 import * as openAuthModal from "v2/Utils/openAuthModal"

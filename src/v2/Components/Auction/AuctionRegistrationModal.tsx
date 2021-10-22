@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react"
+import { useEffect, useState } from "react";
+import * as React from "react";
 
 import { Box, Button, Flex, Modal, Sans, Serif } from "@artsy/palette"
 import { bidderNeedsIdentityVerification } from "v2/Utils/identityVerificationRequirements"

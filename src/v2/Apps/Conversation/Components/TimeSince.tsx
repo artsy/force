@@ -1,4 +1,4 @@
-import React from "react"
+import * as React from "react";
 import { Box, BoxProps, Text } from "@artsy/palette"
 import { DateTime } from "luxon"
 

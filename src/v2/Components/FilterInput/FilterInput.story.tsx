@@ -1,4 +1,3 @@
-import React from "react"
 import { States } from "storybook-states"
 import { FilterInput } from "./FilterInput"
 

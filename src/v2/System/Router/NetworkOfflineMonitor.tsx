@@ -1,6 +1,7 @@
 import { Banner, Box } from "@artsy/palette"
 import { throttle } from "lodash"
-import React, { useEffect, useState } from "react"
+import { useEffect, useState } from "react";
+import * as React from "react";
 
 export const NetworkOfflineMonitor: React.FC = () => {
   const [showOfflineModal, toggleOfflineModal] = useState(false)

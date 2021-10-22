@@ -1,5 +1,5 @@
 import { Checkbox, useThemeConfig } from "@artsy/palette"
-import React from "react"
+import * as React from "react";
 import {
   MultiSelectArtworkFilters,
   useArtworkFilterContext,

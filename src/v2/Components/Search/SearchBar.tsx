@@ -1,4 +1,5 @@
-import React, { Component, useContext } from "react"
+import { Component, useContext } from "react";
+import * as React from "react";
 import { Box, BoxProps } from "@artsy/palette"
 import { SearchBar_viewer } from "v2/__generated__/SearchBar_viewer.graphql"
 import { SearchBarSuggestQuery } from "v2/__generated__/SearchBarSuggestQuery.graphql"

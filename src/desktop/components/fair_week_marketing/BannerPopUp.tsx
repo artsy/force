@@ -1,4 +1,4 @@
-import React from "react"
+import * as React from "react";
 import styled from "styled-components"
 import colors from "v2/Assets/Colors"
 import InvertedButton from "v2/Components/Buttons/Inverted"

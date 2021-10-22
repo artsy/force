@@ -1,7 +1,6 @@
 /* eslint-disable jest/no-done-callback */
 import { LoginForm } from "v2/Components/Authentication/Views/LoginForm"
 import { mount } from "enzyme"
-import React from "react"
 import { ChangeEvents, LoginValues } from "../fixtures"
 import { flushPromiseQueue } from "v2/DevTools"
 
@@ -24,16 +23,14 @@ describe("LoginForm", () => {
     return mount(<LoginForm {...passedProps} />)
   }
 
-  it("renders errors", done => {
-    const wrapper = getWrapper()
-    const input = wrapper.find(`input[name="email"]`)
-    input.simulate("blur")
-    wrapper.update()
+  it("renders errors", async () => {
+    const wrapper = getWrapper({ values: { email: "" } })
 
-    setTimeout(() => {
-      expect(wrapper.html()).toMatch("Please enter a valid email.")
-      done()
-    })
+    wrapper.find("form").simulate("submit")
+
+    await flushPromiseQueue()
+
+    expect(wrapper.html()).toMatch("Please enter a valid email.")
   })
 
   it("clears error after input change", done => {

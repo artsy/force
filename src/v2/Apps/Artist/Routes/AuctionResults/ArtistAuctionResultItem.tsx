@@ -16,7 +16,7 @@ import { AnalyticsSchema, SystemContextProps } from "v2/System"
 import { SystemContext } from "v2/System"
 import { ModalType } from "v2/Components/Authentication/Types"
 import { DateTime, LocaleOptions } from "luxon"
-import React, { FC, useContext, useState } from "react"
+import { FC, useContext, useState } from "react";
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import styled from "styled-components"

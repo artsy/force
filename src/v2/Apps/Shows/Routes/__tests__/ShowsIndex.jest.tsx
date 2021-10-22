@@ -1,4 +1,3 @@
-import React from "react"
 import { ShowsIndexFragmentContainer } from "../ShowsIndex"
 import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
 import { graphql } from "react-relay"

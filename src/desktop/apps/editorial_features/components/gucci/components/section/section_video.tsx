@@ -1,5 +1,5 @@
 import moment from "moment"
-import React from "react"
+import * as React from "react";
 import styled from "styled-components"
 import { unica } from "@artsy/reaction/dist/Assets/Fonts"
 import { Video } from "@artsy/reaction/dist/Components/Publishing"

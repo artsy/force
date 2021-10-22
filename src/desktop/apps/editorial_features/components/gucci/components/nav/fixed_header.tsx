@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import React, { Component } from "react"
+import { Component } from "react";
 import { SectionsNav } from "./sections_nav"
 import { Header } from "./header"
 import { color } from "@artsy/palette"

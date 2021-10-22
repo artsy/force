@@ -20,13 +20,11 @@ export const debugRoutes: AppRouteConfig[] = [
     Component: ({ children }) => children,
     children: [
       {
-        theme: "v3",
         path: "baseline",
         Component: DebugApp,
       },
       // TODO: Remove once inquiry is complete
       {
-        theme: "v3",
         path: "inquiry",
         Component: DebugInquiryApp,
       },

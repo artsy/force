@@ -1,6 +1,5 @@
 import { Text } from "@artsy/palette"
 import { shallow } from "enzyme"
-import React from "react"
 import { CreditCardInput, StyledCardElement } from "../CreditCardInput"
 
 describe("CreditCardInput", () => {

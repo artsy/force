@@ -1,7 +1,6 @@
 import { Link } from "@artsy/palette"
 import { MockBoot } from "v2/DevTools/MockBoot"
 import { mount } from "enzyme"
-import React from "react"
 import { ArtistInsight } from "../ArtistInsight"
 
 describe("AuctionCard", () => {

@@ -1,4 +1,4 @@
-import React from "react"
+import * as React from "react";
 import { Box, color, Icon, IconProps, Path } from "@artsy/palette"
 
 export const MoneyBackIcon: React.FC<IconProps> = props => (

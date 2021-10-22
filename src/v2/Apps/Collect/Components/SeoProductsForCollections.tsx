@@ -1,7 +1,7 @@
 import { SeoProductsForCollections_ascending_artworks } from "v2/__generated__/SeoProductsForCollections_ascending_artworks.graphql"
 import { SeoProductsForCollections_descending_artworks } from "v2/__generated__/SeoProductsForCollections_descending_artworks.graphql"
 import { Product } from "v2/Components/Seo/Product"
-import React from "react"
+import { Component } from "react";
 import { createFragmentContainer, graphql } from "react-relay"
 import { get } from "v2/Utils/get"
 
@@ -59,7 +59,7 @@ const getPriceRange = (
   }
 }
 
-export class SeoProducts extends React.Component<SeoProductsProps> {
+export class SeoProducts extends Component<SeoProductsProps> {
   render() {
     const {
       descending_artworks,

@@ -20,7 +20,6 @@ const InstitutionsRoute = loadable(
 
 export const partnersRoutes: AppRouteConfig[] = [
   {
-    theme: "v3",
     path: "/galleries2",
     getComponent: () => GalleriesRoute,
     prepare: () => {
@@ -35,7 +34,6 @@ export const partnersRoutes: AppRouteConfig[] = [
     `,
   },
   {
-    theme: "v3",
     path: "/institutions2",
     getComponent: () => InstitutionsRoute,
     prepare: () => {

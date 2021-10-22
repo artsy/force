@@ -1,4 +1,5 @@
-import React, { useState } from "react"
+import { useState } from "react";
+import * as React from "react";
 import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
 import { commitMutation, graphql } from "react-relay"
 import styled from "styled-components"

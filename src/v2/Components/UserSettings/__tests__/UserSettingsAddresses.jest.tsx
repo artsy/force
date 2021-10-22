@@ -1,4 +1,3 @@
-import React from "react"
 import { UserSettingsAddressesFragmentContainer } from "../UserSettingsAddresses"
 import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
 import { commitMutation as _commitMutation, graphql } from "relay-runtime"

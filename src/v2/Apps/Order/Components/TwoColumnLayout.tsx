@@ -1,5 +1,5 @@
 import { Box, Column, Flex, GridColumns, Spacer } from "@artsy/palette"
-import React from "react"
+import { Children } from "react";
 import { Media } from "v2/Utils/Responsive"
 
 const CONTENT_SPAN = 7
@@ -10,7 +10,7 @@ const COL_SPACE = 2
 const columnRatioWidth = (spans, size) => Math.round((spans / size) * 100) + "%"
 
 export const TwoColumnSplit = ({ children, ...props }) => {
-  const [firstColumn, secondColumn] = React.Children.toArray(children)
+  const [firstColumn, secondColumn] = Children.toArray(children)
 
   return (
     <>

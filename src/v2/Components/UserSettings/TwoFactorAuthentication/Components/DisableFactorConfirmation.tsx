@@ -1,4 +1,4 @@
-import React from "react"
+import * as React from "react";
 import { useSystemContext } from "v2/System"
 import { DisableSecondFactor } from "./Mutation/DisableSecondFactor"
 import { FormikProps } from "formik"

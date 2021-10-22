@@ -1,4 +1,4 @@
-import React from "react"
+import * as React from "react";
 import { createFragmentContainer, graphql } from "react-relay"
 import truncate from "trunc-html"
 import { Box, Spacer } from "@artsy/palette"

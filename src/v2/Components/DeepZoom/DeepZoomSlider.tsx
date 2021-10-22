@@ -1,6 +1,6 @@
 import { Flex, ClickableProps, Clickable, FlexProps } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
-import React from "react"
+import * as React from "react";
 import styled, { css } from "styled-components"
 
 interface DeepZoomSliderProps extends FlexProps {

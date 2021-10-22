@@ -3,7 +3,6 @@ import { FollowArtistPopover_Test_QueryRawResponse } from "v2/__generated__/Foll
 import { FollowArtistPopoverFragmentContainer as FollowArtistPopover } from "v2/Components/FollowArtistPopover"
 import { MockBoot, renderRelayTree } from "v2/DevTools"
 import { ReactWrapper } from "enzyme"
-import React from "react"
 import { graphql } from "react-relay"
 
 jest.unmock("react-relay")

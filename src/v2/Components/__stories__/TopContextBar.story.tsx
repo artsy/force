@@ -1,5 +1,4 @@
 import { Text } from "@artsy/palette"
-import React from "react"
 import { AppContainer } from "v2/Apps/Components/AppContainer"
 import { TopContextBar } from "../TopContextBar"
 

@@ -1,4 +1,3 @@
-import React from "react"
 import { RootTestPage } from "v2/DevTools/RootTestPage"
 import { createTestEnv } from "v2/DevTools/createTestEnv"
 import { SaveButtonFragmentContainer } from "../index"

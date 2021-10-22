@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import { Fragment, useEffect, useState } from "react";
 import { createFragmentContainer } from "react-relay"
 import { graphql } from "relay-runtime"
 import { Spacer } from "@artsy/palette"
@@ -72,82 +72,80 @@ export const ConversationMessages = ({
       item?.__typename !== "Message" && relevantEvents.includes(item.__typename)
     )
   }
-  return (
-    <>
-      {messagesAndEvents.map((messageGroup, groupIndex) => {
-        let today: boolean
-        let newFlagShown = false
-        if (messageGroup[0].createdAt) {
-          today = fromToday(messageGroup[0].createdAt)
-        }
+  return <>
+    {messagesAndEvents.map((messageGroup, groupIndex) => {
+      let today: boolean
+      let newFlagShown = false
+      if (messageGroup[0].createdAt) {
+        today = fromToday(messageGroup[0].createdAt)
+      }
 
-        return (
-          <React.Fragment
-            key={`group-${groupIndex}-${messageGroup[0]?.internalID}`}
-          >
-            {messageGroup[0].__typename === "Message" && (
-              <TimeSince
-                style={{ alignSelf: "center" }}
-                time={
-                  messageGroup[0].createdAt ? messageGroup[0].createdAt : ""
-                }
-                exact
-                mb={1}
-              />
-            )}
+      return (
+        <Fragment
+          key={`group-${groupIndex}-${messageGroup[0]?.internalID}`}
+        >
+          {messageGroup[0].__typename === "Message" && (
+            <TimeSince
+              style={{ alignSelf: "center" }}
+              time={
+                messageGroup[0].createdAt ? messageGroup[0].createdAt : ""
+              }
+              exact
+              mb={1}
+            />
+          )}
 
-            {[...messageGroup].reverse().map((message, messageIndex) => {
-              if (isRelevantEvent(message)) {
-                return (
-                  <OrderUpdateFragmentContainer
-                    key={`event-${messageIndex}`}
-                    event={message as any}
+          {[...messageGroup].reverse().map((message, messageIndex) => {
+            if (isRelevantEvent(message)) {
+              return (
+                <OrderUpdateFragmentContainer
+                  key={`event-${messageIndex}`}
+                  event={message as any}
+                />
+              )
+            }
+            if (message.__typename === "Message") {
+              const nextMessage = messageGroup[messageIndex + 1]
+              const senderChanges =
+                nextMessage && nextMessage.isFromUser !== message.isFromUser
+              const lastMessageInGroup =
+                messageIndex === messageGroup.length - 1
+              const spaceAfter = senderChanges || lastMessageInGroup ? 2 : 0.5
+
+              let showNewFlag = false
+              if (
+                !newFlagShown &&
+                !!lastViewedMessageID &&
+                message.internalID > +lastViewedMessageID &&
+                !message.isFromUser
+              ) {
+                // This marks visibility
+                showNewFlag = true
+                // This makes sure that it appears only on the first new message
+                newFlagShown = true
+              }
+
+              return (
+                <Fragment key={`message-${message.internalID}`}>
+                  {showNewFlag && <NewMessageMarker />}
+                  <Message
+                    message={message}
+                    key={message.internalID}
+                    showTimeSince={
+                      message.createdAt &&
+                      today &&
+                      messageGroup.length - 1 === messageIndex
+                    }
                   />
-                )
-              }
-              if (message.__typename === "Message") {
-                const nextMessage = messageGroup[messageIndex + 1]
-                const senderChanges =
-                  nextMessage && nextMessage.isFromUser !== message.isFromUser
-                const lastMessageInGroup =
-                  messageIndex === messageGroup.length - 1
-                const spaceAfter = senderChanges || lastMessageInGroup ? 2 : 0.5
-
-                let showNewFlag = false
-                if (
-                  !newFlagShown &&
-                  !!lastViewedMessageID &&
-                  message.internalID > +lastViewedMessageID &&
-                  !message.isFromUser
-                ) {
-                  // This marks visibility
-                  showNewFlag = true
-                  // This makes sure that it appears only on the first new message
-                  newFlagShown = true
-                }
-
-                return (
-                  <React.Fragment key={`message-${message.internalID}`}>
-                    {showNewFlag && <NewMessageMarker />}
-                    <Message
-                      message={message}
-                      key={message.internalID}
-                      showTimeSince={
-                        message.createdAt &&
-                        today &&
-                        messageGroup.length - 1 === messageIndex
-                      }
-                    />
-                    <Spacer mb={spaceAfter} />
-                  </React.Fragment>
-                )
-              }
-            })}
-          </React.Fragment>
-        )
-      })}
-    </>
-  )
+                  <Spacer mb={spaceAfter} />
+                </Fragment>
+              );
+            }
+          })}
+        </Fragment>
+      );
+    })}
+  </>;
 }
 
 export const ConversationMessagesFragmentContainer = createFragmentContainer(

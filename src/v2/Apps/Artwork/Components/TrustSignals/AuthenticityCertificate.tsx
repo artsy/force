@@ -7,7 +7,8 @@ import {
   Spacer,
 } from "@artsy/palette"
 import { AuthenticityCertificate_artwork } from "v2/__generated__/AuthenticityCertificate_artwork.graphql"
-import React, { useState } from "react"
+import { useState } from "react";
+import * as React from "react";
 import { createFragmentContainer } from "react-relay"
 import { graphql } from "react-relay"
 import { TrustSignal, TrustSignalProps } from "./TrustSignal"

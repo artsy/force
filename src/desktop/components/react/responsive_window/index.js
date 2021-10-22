@@ -1,5 +1,5 @@
 import PropTypes from "prop-types"
-import React, { Component } from "react"
+import { Component } from "react";
 import u from "updeep"
 import { composeReducers } from "desktop/components/react/utils/composeReducers"
 import { connect } from "react-redux"

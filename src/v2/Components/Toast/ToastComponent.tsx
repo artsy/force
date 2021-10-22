@@ -1,5 +1,6 @@
 import { Banner, Box, Text, themeProps } from "@artsy/palette"
-import React, { useEffect, useState } from "react"
+import { useEffect, useState } from "react";
+import * as React from "react";
 import { useNavBarHeight } from "../NavBar/useNavBarHeight"
 import { __internal__useMatchMedia } from "v2/Utils/Hooks/useMatchMedia"
 

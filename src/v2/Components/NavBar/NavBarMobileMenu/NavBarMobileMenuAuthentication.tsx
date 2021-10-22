@@ -1,4 +1,5 @@
-import React, { useContext } from "react"
+import { useContext } from "react";
+import * as React from "react";
 import { Box } from "@artsy/palette"
 import { isServer } from "lib/isServer"
 import { SystemContext, useSystemContext } from "v2/System"

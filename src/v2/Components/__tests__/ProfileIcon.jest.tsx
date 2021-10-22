@@ -1,7 +1,6 @@
 import { Breakpoint } from "@artsy/palette"
 import { MockBoot } from "v2/DevTools/MockBoot"
 import { mount } from "enzyme"
-import React from "react"
 import { Profile, ProfileIcon } from "../ProfileIcon"
 
 describe("ProfileIcon", () => {

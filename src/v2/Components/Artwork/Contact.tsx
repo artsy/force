@@ -1,5 +1,5 @@
 import { Contact_artwork } from "v2/__generated__/Contact_artwork.graphql"
-import React from "react"
+import * as React from "react";
 import { createFragmentContainer, graphql } from "react-relay"
 import { get } from "v2/Utils/get"
 import TextLink from "../TextLink"

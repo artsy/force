@@ -1,7 +1,6 @@
 import { SystemContextConsumer } from "v2/System"
 import { Boot } from "v2/System/Router"
 import { mount } from "enzyme"
-import React from "react"
 
 describe("Boot", () => {
   const bootProps: any = {

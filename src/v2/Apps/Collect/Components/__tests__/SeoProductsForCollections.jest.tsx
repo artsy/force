@@ -1,7 +1,6 @@
 import { SeoProductsForCollections_ascending_artworks } from "v2/__generated__/SeoProductsForCollections_ascending_artworks.graphql"
 import { SeoProductsForCollections_descending_artworks } from "v2/__generated__/SeoProductsForCollections_descending_artworks.graphql"
 import { mount } from "enzyme"
-import React from "react"
 import { HeadProvider } from "react-head"
 import { SeoProductsForCollections } from "../SeoProductsForCollections"
 

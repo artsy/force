@@ -1,5 +1,4 @@
 import { Box, Text, GridColumns, Column, HTML } from "@artsy/palette"
-import React from "react"
 import { Page } from "./Components/Page"
 
 export default {

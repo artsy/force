@@ -1,4 +1,4 @@
-import React from "react"
+import * as React from "react";
 import { ContextModule } from "@artsy/cohesion"
 import { createFragmentContainer, graphql } from "react-relay"
 import { EntityHeader } from "@artsy/palette"

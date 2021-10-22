@@ -1,6 +1,4 @@
-import React from "react"
 import { Text, Button } from "@artsy/palette"
-import { SubmissionStepper } from "v2/Apps/Consign/Components/SubmissionStepper"
 import { useSystemContext } from "v2/System"
 import { openAuthModal } from "v2/Utils/openAuthModal"
 import { ModalType } from "v2/Components/Authentication/Types"
@@ -14,15 +12,9 @@ import {
 } from "./Components/ContactInformationForm"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ContactInformation_me } from "v2/__generated__/ContactInformation_me.graphql"
-import * as yup from "yup"
-import { email } from "v2/Components/Authentication/Validators"
-import { getSubmission, saveSubmission } from "../Utils/submissionUtils"
-
-export const contactInformationValidationSchema = yup.object().shape({
-  name: yup.string().label("Name").required(),
-  email,
-  phone: yup.string().label("Phone number").required(),
-})
+import { useSubmission } from "../Utils/useSubmission"
+import { contactInformationValidationSchema } from "../Utils/validation"
+import { BackLink } from "v2/Components/Links/BackLink"
 
 export interface ContactInformationProps {
   me: ContactInformation_me
@@ -37,15 +29,18 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
       params: { id },
     },
   } = useRouter()
-  const { mediator, isLoggedIn, relayEnvironment } = useSystemContext()
-
+  const { mediator, isLoggedIn, relayEnvironment, user } = useSystemContext()
+  const {
+    submission,
+    saveSubmission,
+    submissionId,
+    removeSubmission,
+  } = useSubmission(id)
   const handleSubmit = async (values: ContactInformationFormModel) => {
-    const submission = getSubmission(id)
-
     if (submission) {
       submission.contactInformationForm = values
 
-      saveSubmission(id, submission)
+      saveSubmission(submission)
     }
 
     if (!isLoggedIn && mediator) {
@@ -53,24 +48,33 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
         mode: ModalType.signup,
         intent: Intent.consign,
         contextModule: ContextModule.consignSubmissionFlow,
-        redirectTo: `/consign/submission2/${id}/thank-you`,
+        redirectTo: `/consign/submission2/${submissionId}/thank-you`,
         afterSignUpAction: {
           action: "save",
           kind: "submissions",
-          objectId: id,
+          objectId: submissionId,
         },
       })
     } else {
-      if (relayEnvironment) {
-        await createConsignSubmission(relayEnvironment, id)
-        router.push(`/consign/submission2/${id}/thank-you`)
+      if (relayEnvironment && submission) {
+        await createConsignSubmission(relayEnvironment, submission, user)
+        removeSubmission()
+        router.push(`/consign/submission2/${submissionId}/thank-you`)
       }
     }
   }
 
   return (
     <>
-      <SubmissionStepper currentStep="Contact Information" />
+      <BackLink
+        py={2}
+        mb={6}
+        to={`/consign/submission2/${submissionId}/upload-photos`}
+      >
+        Back ....
+      </BackLink>
+
+      {/* <SubmissionStepper currentStep="Contact Information" /> */}
 
       <Text mt={4} variant="lg">
         Let us know how to reach you
@@ -95,6 +99,7 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
               <ContactInformationForm my={6} />
 
               <Button
+                width={["100%", "auto"]}
                 disabled={!isValid || isSubmitting}
                 loading={isSubmitting}
                 type="submit"

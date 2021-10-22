@@ -1,4 +1,3 @@
-import React from "react"
 import { Box, Button, Flex, Text } from "@artsy/palette"
 
 import { RouterLink } from "v2/System/Router/RouterLink"

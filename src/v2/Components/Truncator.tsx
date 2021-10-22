@@ -1,5 +1,5 @@
 import { ErrorBoundary } from "v2/System/Router/ErrorBoundary"
-import React from "react"
+import * as React from "react";
 import ReactDOM from "react-dom/server"
 
 interface Props {

@@ -1,5 +1,4 @@
 import { mount } from "enzyme"
-import React from "react"
 import { ModalButton, ModalDialog, ModalDialogProps } from "../ModalDialog"
 import { ModalOverlay } from "../ModalWrapper"
 

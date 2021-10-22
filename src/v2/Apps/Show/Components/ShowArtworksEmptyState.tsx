@@ -1,4 +1,4 @@
-import React from "react"
+import * as React from "react";
 import { Message } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ShowArtworksEmptyState_show } from "v2/__generated__/ShowArtworksEmptyState_show.graphql"

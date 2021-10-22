@@ -1,5 +1,5 @@
 import { BoxProps, Flex, HTML, FullBleed } from "@artsy/palette"
-import React from "react"
+import * as React from "react";
 import styled from "styled-components"
 import { useSizeAndPosition } from "v2/Utils/Hooks/useSizeAndPosition"
 import { cropped } from "v2/Utils/resized"

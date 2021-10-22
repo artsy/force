@@ -10,7 +10,8 @@ import {
   themeProps,
 } from "@artsy/palette"
 import { isEqual } from "lodash"
-import React, { useContext, useState } from "react"
+import { useContext, useState } from "react";
+import * as React from "react";
 import { Title } from "react-head"
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 import { useTracking } from "react-tracking"

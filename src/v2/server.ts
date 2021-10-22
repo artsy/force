@@ -7,11 +7,7 @@ import express from "express"
 import path from "path"
 import { getServerParam } from "./Utils/getServerParam"
 import { getRouteConfig } from "./System/Router/getRouteConfig"
-import {
-  filterObjectKeys,
-  generateCustomSharifyScript,
-  V2_SHARIFY,
-} from "./System/Server/sharifyHelpers"
+import { getV2SharifyScript } from "./System/Server/sharifyHelpers"
 
 // TODO: Use the same variables as the asset middleware. Both config and sharify
 // have a default CDN_URL while this does not.
@@ -26,8 +22,6 @@ if (!NOVO_MANIFEST) {
 
 const app = express()
 const { routes, routePaths } = getRouteConfig()
-
-console.log(routePaths)
 
 /**
  * Mount routes that will connect to global SSR router
@@ -66,9 +60,7 @@ app.get(
         cdnUrl: NODE_ENV === "production" ? CDN_URL : "",
         content: {
           body: bodyHTML,
-          data: generateCustomSharifyScript(
-            filterObjectKeys(sharify.data, [...V2_SHARIFY])
-          ),
+          data: getV2SharifyScript(sharify.data),
           head: headTagsString,
           scripts,
           style: styleTags,

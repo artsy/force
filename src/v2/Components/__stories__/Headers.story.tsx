@@ -7,7 +7,6 @@ import {
   ProgressDots,
   FullBleed,
 } from "@artsy/palette"
-import React from "react"
 import { Page } from "./Components/Page"
 
 export default {

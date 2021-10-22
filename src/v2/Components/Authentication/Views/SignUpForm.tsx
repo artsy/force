@@ -8,7 +8,8 @@ import {
 } from "v2/Components/Authentication/Types"
 import { SignUpValidator } from "v2/Components/Authentication/Validators"
 import { Formik, FormikProps } from "formik"
-import React, { Component } from "react"
+import { Component } from "react"
+import * as React from "react"
 import { recaptcha } from "v2/Utils/recaptcha"
 import { data as sd } from "sharify"
 import { SignUpForm_requestLocation } from "v2/__generated__/SignUpForm_requestLocation.graphql"
@@ -88,6 +89,7 @@ export class SignUpForm extends Component<SignUpFormProps, SignUpFormState> {
         initialValues={initialValues}
         onSubmit={this.onSubmit}
         validationSchema={SignUpValidator}
+        validateOnBlur={false}
       >
         {({
           errors,

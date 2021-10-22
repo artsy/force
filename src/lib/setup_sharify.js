@@ -14,6 +14,15 @@ import _ from "lodash"
 import * as config from "../config"
 import sharify from "sharify"
 
+/**
+ * Attention! When adding new values be sure to update the allowlist in
+ * v2/System/Server/sharifyHelpers
+ *
+ * TODO: Reset sharify when navigating between v2 apps and legacy so we don't
+ * need to add ENV var keys to multiple places and instead can refer to canonical
+ * files for each version of force.
+ */
+
 sharify.data = _.extend(
   _.pick(
     config,

@@ -1,4 +1,3 @@
-import React from "react"
 import { mount } from "enzyme"
 import { HeadProvider } from "react-head"
 import { ArtistMetaCanonicalLink_artist } from "v2/__generated__/ArtistMetaCanonicalLink_artist.graphql"

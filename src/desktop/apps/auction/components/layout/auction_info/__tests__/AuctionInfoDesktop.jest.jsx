@@ -1,4 +1,3 @@
-import React from "react"
 import Registration from "desktop/apps/auction/components/layout/auction_info/Registration"
 import renderTestComponent from "desktop/apps/auction/__tests__/utils/renderTestComponent"
 import { test } from "../AuctionInfoDesktop"

@@ -1,4 +1,3 @@
-import React from "react"
 import { FairFollowedArtists } from "../FairOverview/FairFollowedArtists"
 import { useTracking } from "react-tracking"
 import { AnalyticsContext } from "v2/System/Analytics/AnalyticsContext"

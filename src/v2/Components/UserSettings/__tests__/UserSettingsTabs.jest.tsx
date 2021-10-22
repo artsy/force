@@ -1,5 +1,4 @@
 import { mount } from "enzyme"
-import React from "react"
 import { UserSettingsTabs } from "../UserSettingsTabs"
 
 describe("UserSettingsTabs", () => {

@@ -1,4 +1,3 @@
-import React from "react"
 import { graphql } from "relay-runtime"
 import { useTracking as baseUseTracking } from "react-tracking"
 import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"

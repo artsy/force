@@ -1,5 +1,4 @@
 import PropTypes from "prop-types"
-import React from "react"
 import block from "bem-cn-lite"
 import renderTemplate from "../../utils/renderTemplate"
 import { connect } from "react-redux"

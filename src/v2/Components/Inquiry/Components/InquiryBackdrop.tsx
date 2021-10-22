@@ -1,5 +1,5 @@
 import { ModalBase, ModalBaseProps } from "@artsy/palette"
-import React from "react"
+import * as React from "react";
 import styled from "styled-components"
 import { useDidMount } from "v2/Utils/Hooks/useDidMount"
 import { useInquiryContext } from "../Hooks/useInquiryContext"

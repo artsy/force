@@ -1,8 +1,8 @@
 import { ForgotPasswordForm } from "v2/Components/Authentication/Views/ForgotPasswordForm"
 import { mount } from "enzyme"
-import React from "react"
 import { Clickable } from "@artsy/palette"
 import { AuthenticationFooter } from "v2/Components/Authentication/Components/AuthenticationFooter"
+import { flushPromiseQueue } from "v2/DevTools"
 
 jest.mock("sharify", () => ({ data: { RECAPTCHA_KEY: "recaptcha-api-key" } }))
 
@@ -57,18 +57,14 @@ describe("ForgotPasswordForm", () => {
     })
   })
 
-  // eslint-disable-next-line jest/no-done-callback
-  it("renders errors", done => {
-    props.values = {}
-    const wrapper = getWrapper()
-    const button = wrapper.find(`input[name="email"]`)
-    button.simulate("blur")
-    wrapper.update()
+  it("renders errors", async () => {
+    const wrapper = getWrapper({ values: { email: "" } })
 
-    setTimeout(() => {
-      expect(wrapper.html()).toMatch("Please enter a valid email.")
-      done()
-    })
+    wrapper.find("form").simulate("submit")
+
+    await flushPromiseQueue()
+
+    expect(wrapper.html()).toMatch("Please enter a valid email.")
   })
 
   // eslint-disable-next-line jest/no-done-callback

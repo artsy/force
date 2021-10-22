@@ -74,7 +74,6 @@ const tabsToEntitiesMap = {
 const entityTabs = Object.entries(tabsToEntitiesMap).map(([key, entities]) => {
   return {
     path: key,
-    theme: "v3",
     getComponent: () => SearchResultsEntity,
     prepare: () => {
       SearchResultsEntity.preload()
@@ -103,7 +102,6 @@ const entityTabs = Object.entries(tabsToEntitiesMap).map(([key, entities]) => {
 export const searchRoutes: AppRouteConfig[] = [
   {
     path: "/search",
-    theme: "v3",
     getComponent: () => SearchApp,
     prepare: () => {
       SearchApp.preload()
@@ -119,7 +117,6 @@ export const searchRoutes: AppRouteConfig[] = [
     children: [
       {
         path: "/",
-        theme: "v3",
         getComponent: () => SearchResultsArtworks,
         prepare: () => {
           SearchResultsArtworks.preload()
@@ -169,7 +166,6 @@ export const searchRoutes: AppRouteConfig[] = [
       },
       {
         path: "artists",
-        theme: "v3",
         getComponent: () => SearchResultsArtists,
         prepare: () => {
           SearchResultsArtists.preload()

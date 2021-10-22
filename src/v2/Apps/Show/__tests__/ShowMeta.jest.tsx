@@ -1,4 +1,3 @@
-import React from "react"
 import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
 import { ShowMetaFragmentContainer } from "../Components/ShowMeta"
 import { graphql } from "react-relay"

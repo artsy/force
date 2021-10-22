@@ -1,4 +1,3 @@
-import React from "react"
 import { SystemContextProvider } from "v2/System"
 import { MockBoot } from "v2/DevTools"
 import { SearchApp_Test_Query } from "v2/__generated__/SearchApp_Test_Query.graphql"

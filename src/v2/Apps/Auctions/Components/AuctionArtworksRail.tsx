@@ -1,4 +1,4 @@
-import React from "react"
+import * as React from "react";
 import { BoxProps, Skeleton, SkeletonBox, SkeletonText } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { AuctionArtworksRail_sale } from "v2/__generated__/AuctionArtworksRail_sale.graphql"

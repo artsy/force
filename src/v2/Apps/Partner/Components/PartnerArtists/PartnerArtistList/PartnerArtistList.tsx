@@ -1,4 +1,4 @@
-import React from "react"
+import * as React from "react";
 import { PartnerArtistList_artists } from "v2/__generated__/PartnerArtistList_artists.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Box, Column, GridColumns, Text } from "@artsy/palette"

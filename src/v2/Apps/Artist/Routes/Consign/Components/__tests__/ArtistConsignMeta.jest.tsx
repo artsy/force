@@ -1,6 +1,5 @@
 import { MockBoot } from "v2/DevTools"
 import { mount } from "enzyme"
-import React from "react"
 import { ArtistConsignMeta } from "../ArtistConsignMeta"
 
 jest.mock("v2/Utils/getENV", () => ({

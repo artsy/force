@@ -1,4 +1,4 @@
-import React from "react"
+import * as React from "react";
 import styled from "styled-components"
 import { NavBar as ReactionNavBar } from "v2/Components/NavBar"
 import { FlashBannerQueryRenderer as FlashBanner } from "v2/Components/FlashBanner"

@@ -1,5 +1,5 @@
 import { Text } from "@artsy/palette"
-import React from "react"
+import { Component } from "react";
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworkSidebarClassificationFragmentContainer } from "./ArtworkSidebarClassification"
 import { ArtworkSidebarSizeInfoFragmentContainer } from "./ArtworkSidebarSizeInfo"
@@ -10,7 +10,7 @@ export interface ArtworkSidebarMetadataProps {
   artwork: ArtworkSidebarMetadata_artwork
 }
 
-export class ArtworkSidebarMetadata extends React.Component<
+export class ArtworkSidebarMetadata extends Component<
   ArtworkSidebarMetadataProps
 > {
   render() {

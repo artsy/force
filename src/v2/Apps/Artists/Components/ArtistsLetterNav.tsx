@@ -1,6 +1,6 @@
 import { Box, BoxProps, Flex, Text } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
-import React from "react"
+import * as React from "react";
 import styled from "styled-components"
 import { RouterLink, RouterLinkProps } from "v2/System/Router/RouterLink"
 

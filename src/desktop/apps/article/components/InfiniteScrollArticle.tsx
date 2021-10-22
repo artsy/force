@@ -1,4 +1,4 @@
-import React from "react"
+import { Component } from "react";
 import { flatten } from "underscore"
 import Waypoint from "react-waypoint"
 import styled from "styled-components"
@@ -22,7 +22,7 @@ interface InfiniteScrollArticleState {
   isEnabled: boolean
 }
 
-export class InfiniteScrollArticle extends React.Component<
+export class InfiniteScrollArticle extends Component<
   ArticleProps & { isEigen?: boolean },
   InfiniteScrollArticleState
 > {

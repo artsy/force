@@ -5,7 +5,7 @@ import { MarketingHeader } from "v2/Apps/WorksForYou/MarketingHeader"
 import { SystemContextConsumer, SystemContextProps } from "v2/System"
 import { track } from "v2/System/Analytics"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
-import React, { Component } from "react"
+import { Component } from "react";
 import { graphql } from "react-relay"
 import styled from "styled-components"
 import Events from "v2/Utils/Events"

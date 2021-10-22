@@ -9,25 +9,24 @@ export const productionDevtool = env.webpackDevtool || "source-map"
 export const mode = env.webpackDebug ? "development" : env.nodeEnv
 export const stats = env.webpackStats || "errors-only"
 
-// The standard minimization config to production.
 export const minimizer = [
   new TerserPlugin({
     cache: false,
-    parallel: env.onCi ? env.webpackCiCpuLimit : true, // Only use 4 cpus (default) in CircleCI, by default it will try using 36 and OOM
+    // Only use 4 cpus (default) in CircleCI, by default it will try using 36 and OOM
+    parallel: env.onCi ? env.webpackCiCpuLimit : true,
     sourceMap: true, // Must be set to true if using source-maps in production
   }),
 ]
 
-// The standard resolve configuration used everywhere.
 export const resolve = {
   alias: {
     "jquery.ui.widget": "blueimp-file-upload/js/vendor/jquery.ui.widget.js",
 
     // The following packages need to be resolved to the host app (force) to get
     // around issues involving `yarn link` and multiple instances. A  similar
-    // configuration has been setup for SSR in `src/index`, via `require-control`.
+    // configuration has been setup for SSR in `src/dev`, via `require-control`.
     "styled-components": require.resolve("styled-components"),
-    react: require.resolve("react"),
+    "react/jsx-runtime": require.resolve("react/jsx-runtime"),
     "lodash-es": "lodash",
   },
   extensions: [

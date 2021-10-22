@@ -1,5 +1,5 @@
 import { Box, Text } from "@artsy/palette"
-import React from "react"
+import { Component } from "react";
 import { createFragmentContainer, graphql } from "react-relay"
 
 import { ArtworkSidebarSizeInfo_piece } from "v2/__generated__/ArtworkSidebarSizeInfo_piece.graphql"
@@ -8,7 +8,7 @@ export interface ArtworkSidebarSizeInfoProps {
   piece: ArtworkSidebarSizeInfo_piece
 }
 
-export class ArtworkSidebarSizeInfo extends React.Component<
+export class ArtworkSidebarSizeInfo extends Component<
   ArtworkSidebarSizeInfoProps
 > {
   render() {

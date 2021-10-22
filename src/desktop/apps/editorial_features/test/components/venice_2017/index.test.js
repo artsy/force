@@ -225,9 +225,7 @@ describe("Venice Main", function () {
 
   it("chooses a medium quality mp4 video for iOS", function () {
     this.view.parser = { getOS: sinon.stub().returns({ name: "iOS" }) }
-    return this.view
-      .chooseVideoFile()
-      .should.equal("localhost/vanity/url-medium.mp4")
+    return this.view.chooseVideoFile().should.equal("localhost/vanity/url.mp4")
   })
 
   it("chooses an adaptive video for mobile", function () {
@@ -235,7 +233,7 @@ describe("Venice Main", function () {
       getOS: sinon.stub().returns({ name: "Android" }),
       getDevice: sinon.stub().returns({ type: "mobile" }),
     }
-    return this.view.chooseVideoFile().should.equal("localhost/vanity/url.mpd")
+    return this.view.chooseVideoFile().should.equal("localhost/vanity/url.mp4")
   })
 
   it("chooses a high quality video for desktop", function () {

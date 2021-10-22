@@ -5,7 +5,6 @@ import {
 import { UntouchedBuyOrder } from "v2/Apps/__tests__/Fixtures/Order"
 import { SystemContextProvider } from "v2/System"
 import { MockBoot, renderRelayTree } from "v2/DevTools"
-import React from "react"
 import { HeadProvider } from "react-head"
 import { graphql } from "react-relay"
 import { PurchaseHistoryProps } from "../Components/PurchaseHistory"
@@ -60,7 +59,7 @@ const render = (me: PurchaseAppTestQueryRawResponse["me"], user: User) =>
 
 describe("Purchase app", () => {
   const userType = { type: "User" }
-  describe("A logged in use", () => {
+  describe("A logged in user", () => {
     describe("having previous orders", () => {
       it("renders orders", async () => {
         const mockMe = {

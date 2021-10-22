@@ -1,4 +1,5 @@
-import React, { useMemo } from "react"
+import { useMemo } from "react";
+import * as React from "react";
 import qs from "qs"
 import { graphql } from "react-relay"
 import { Banner } from "@artsy/palette"

@@ -9,6 +9,7 @@ export type Status_order = {
     readonly __typename: string;
     readonly internalID: string;
     readonly code: string;
+    readonly displayState: string | null;
     readonly state: CommerceOrderStateEnum;
     readonly mode: CommerceOrderModeEnum | null;
     readonly stateReason: string | null;
@@ -18,6 +19,8 @@ export type Status_order = {
     } | {
         readonly __typename: "CommercePickup";
     } | {
+        readonly __typename: "CommerceShipArta";
+    } | {
         /*This will never be '%other', but we need some
         value in case none of the concrete values match.*/
         readonly __typename: "%other";
@@ -25,6 +28,15 @@ export type Status_order = {
     readonly lineItems: {
         readonly edges: ReadonlyArray<{
             readonly node: {
+                readonly shipment: {
+                    readonly trackingNumber: string | null;
+                    readonly trackingUrl: string | null;
+                    readonly carrierName: string | null;
+                    readonly estimatedDeliveryWindow: string | null;
+                } | null;
+                readonly selectedShippingQuote: {
+                    readonly displayName: string;
+                } | null;
                 readonly fulfillments: {
                     readonly edges: ReadonlyArray<{
                         readonly node: {
@@ -101,6 +113,13 @@ return {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
+      "name": "displayState",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "state",
       "storageKey": null
     },
@@ -148,6 +167,11 @@ return {
           "kind": "InlineFragment",
           "selections": (v2/*: any*/),
           "type": "CommercePickup"
+        },
+        {
+          "kind": "InlineFragment",
+          "selections": (v2/*: any*/),
+          "type": "CommerceShipArta"
         }
       ],
       "storageKey": null
@@ -176,6 +200,63 @@ return {
               "name": "node",
               "plural": false,
               "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "concreteType": "CommerceShipment",
+                  "kind": "LinkedField",
+                  "name": "shipment",
+                  "plural": false,
+                  "selections": [
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "trackingNumber",
+                      "storageKey": null
+                    },
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "trackingUrl",
+                      "storageKey": null
+                    },
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "carrierName",
+                      "storageKey": null
+                    },
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "estimatedDeliveryWindow",
+                      "storageKey": null
+                    }
+                  ],
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "concreteType": "CommerceShippingQuote",
+                  "kind": "LinkedField",
+                  "name": "selectedShippingQuote",
+                  "plural": false,
+                  "selections": [
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "displayName",
+                      "storageKey": null
+                    }
+                  ],
+                  "storageKey": null
+                },
                 {
                   "alias": null,
                   "args": null,
@@ -329,5 +410,5 @@ return {
   "type": "CommerceOrder"
 };
 })();
-(node as any).hash = '6d7b7eae932926afe8a4dd215e13d78f';
+(node as any).hash = '84404fce0ea7ba44b921fed4e02566c9';
 export default node;

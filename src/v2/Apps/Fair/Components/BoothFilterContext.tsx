@@ -1,4 +1,5 @@
-import React, { createContext, useReducer, useContext } from "react"
+import { createContext, useReducer, useContext } from "react";
+import * as React from "react";
 import { omit } from "lodash"
 import useDeepCompareEffect from "use-deep-compare-effect"
 import { paramsToCamelCase } from "v2/Components/ArtworkFilter/Utils/urlBuilder"

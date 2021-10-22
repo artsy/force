@@ -3,7 +3,6 @@ import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
 import { ConversationCTAFragmentContainer } from "../ConversationCTA"
 import { useTracking } from "react-tracking"
 import { useSystemContext as baseUseSystemContext } from "v2/System/useSystemContext"
-import React from "react"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")

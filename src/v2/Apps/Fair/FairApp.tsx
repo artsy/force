@@ -1,4 +1,5 @@
-import React, { useRef } from "react"
+import { useRef } from "react";
+import * as React from "react";
 import { createFragmentContainer, graphql } from "react-relay"
 import { FairApp_fair } from "v2/__generated__/FairApp_fair.graphql"
 import { DROP_SHADOW, FullBleed, Text } from "@artsy/palette"

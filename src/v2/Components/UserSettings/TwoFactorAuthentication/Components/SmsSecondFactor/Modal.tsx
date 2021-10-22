@@ -9,7 +9,8 @@ import {
   Spacer,
 } from "@artsy/palette"
 import { FormikHelpers as FormikActions } from "formik"
-import React, { useState } from "react"
+import { useState } from "react";
+import * as React from "react";
 import styled from "styled-components"
 
 import * as Yup from "yup"

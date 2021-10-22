@@ -1,4 +1,3 @@
-import React from "react"
 import { MarketingLandingApp } from "../MarketingLandingApp"
 import { mount } from "enzyme"
 

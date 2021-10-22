@@ -1,7 +1,7 @@
 import { Clickable, Link, Separator, Spacer, Text } from "@artsy/palette"
 import { track } from "v2/System/Analytics"
 import * as Schema from "v2/System/Analytics/Schema"
-import React from "react"
+import * as React from "react";
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworkSidebarExtraLinks_artwork } from "v2/__generated__/ArtworkSidebarExtraLinks_artwork.graphql"
 import { useInquiry, WithInquiryProps } from "v2/Components/Inquiry/useInquiry"

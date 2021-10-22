@@ -1,4 +1,4 @@
-import React from "react"
+import * as React from "react";
 import { Text, TextProps } from "@artsy/palette"
 import { useEventTiming } from "v2/Utils/Hooks/useEventTiming"
 

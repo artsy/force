@@ -51,7 +51,6 @@ const ArtworksRoute = loadable(
 export const auctionsRoutes: AppRouteConfig[] = [
   {
     path: "/auctions",
-    theme: "v3",
     ignoreScrollBehaviorBetweenChildren: true,
     getComponent: () => AuctionsApp,
     prepare: () => {
@@ -68,7 +67,6 @@ export const auctionsRoutes: AppRouteConfig[] = [
     children: [
       {
         path: "", // represents current auctions aka /auctions/current
-        theme: "v3",
         Component: CurrentAuctionsPaginationContainer,
         query: graphql`
           query auctionsRoutes_Current_AuctionsQuery {
@@ -80,7 +78,6 @@ export const auctionsRoutes: AppRouteConfig[] = [
       },
       {
         path: "upcoming",
-        theme: "v3",
         Component: UpcomingAuctionsPaginationContainer,
         query: graphql`
           query auctionsRoutes_Upcoming_AuctionsQuery {
@@ -92,7 +89,6 @@ export const auctionsRoutes: AppRouteConfig[] = [
       },
       {
         path: "past",
-        theme: "v3",
         Component: PastAuctionsPaginationContainer,
         query: graphql`
           query auctionsRoutes_Past_AuctionsQuery {
@@ -104,7 +100,6 @@ export const auctionsRoutes: AppRouteConfig[] = [
       },
       {
         path: "auctions",
-        theme: "v3",
         getComponent: () => AuctionsRoute,
         query: graphql`
           query auctionsRoutes_Auctions_AuctionsQuery {
@@ -116,7 +111,6 @@ export const auctionsRoutes: AppRouteConfig[] = [
       },
       {
         path: "artworks",
-        theme: "v3",
         getComponent: () => ArtworksRoute,
         query: graphql`
           query auctionsRoutes_Artworks_AuctionsQuery {

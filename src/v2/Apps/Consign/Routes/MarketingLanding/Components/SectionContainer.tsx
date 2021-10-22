@@ -1,5 +1,5 @@
 import { Color, Flex, FlexProps, breakpoints } from "@artsy/palette"
-import React from "react"
+import * as React from "react";
 import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
 
 interface SectionContainerProps extends FlexProps {

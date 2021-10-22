@@ -1,7 +1,8 @@
 import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { Box, Column, GridColumns, Select, Text } from "@artsy/palette"
 import { rest } from "lodash"
-import React, { useEffect, useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react";
+import * as React from "react";
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import type RelayModernEnvironment from "relay-runtime/lib/store/RelayModernEnvironment"

@@ -1,4 +1,4 @@
-import React from "react"
+import * as React from "react";
 import { Box, Button, Column, GridColumns, Spacer, Text } from "@artsy/palette"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { createFragmentContainer, graphql, _FragmentRefs } from "react-relay"

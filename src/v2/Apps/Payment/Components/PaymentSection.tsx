@@ -1,7 +1,8 @@
 import { Box, Button, Text } from "@artsy/palette"
 import { SystemContextProps } from "v2/System"
 
-import React, { useState } from "react"
+import { useState } from "react";
+import * as React from "react";
 import { RelayProp, createFragmentContainer, graphql } from "react-relay"
 import { SavedCreditCards } from "v2/Components/Payment/SavedCreditCards"
 import { PaymentSectionCreditCard } from "v2/__generated__/PaymentSectionCreditCard.graphql"

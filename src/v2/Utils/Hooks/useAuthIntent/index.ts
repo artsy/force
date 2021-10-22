@@ -7,6 +7,10 @@ import { followGeneMutation } from "./mutations/AuthIntentFollowGeneMutation"
 import { followProfileMutation } from "./mutations/AuthIntentFollowProfileMutation"
 import { saveArtworkMutation } from "./mutations/AuthIntentSaveArtworkMutation"
 import { createConsignSubmission } from "v2/Apps/Consign/Routes/SubmissionFlow/Utils/createConsignSubmission"
+import {
+  getSubmission,
+  removeSubmission,
+} from "v2/Apps/Consign/Routes/SubmissionFlow/Utils/useSubmission"
 
 const AFTER_AUTH_ACTION_KEY = "afterSignUpAction"
 
@@ -66,7 +70,17 @@ export const runAuthIntent = async (
             case "artworks":
               return saveArtworkMutation(relayEnvironment, value.objectId)
             case "submissions":
-              return createConsignSubmission(relayEnvironment, value.objectId)
+              const submission = getSubmission(value.objectId)
+
+              if (submission) {
+                return createConsignSubmission(
+                  relayEnvironment,
+                  submission,
+                  user
+                ).then(() => {
+                  removeSubmission(value.objectId)
+                })
+              }
           }
           break
       }

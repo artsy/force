@@ -1,5 +1,4 @@
 import { PurchaseApp_me } from "v2/__generated__/PurchaseApp_me.graphql"
-import React from "react"
 import { Title } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
 import { PurchaseHistoryFragmentContainer as PurchaseHistory } from "./Components/PurchaseHistory"

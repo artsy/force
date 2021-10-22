@@ -1,5 +1,5 @@
 import { StaticCountdownTimer } from "@artsy/palette"
-import React from "react"
+import * as React from "react";
 
 import { WithCurrentTime } from "v2/Components/WithCurrentTime"
 

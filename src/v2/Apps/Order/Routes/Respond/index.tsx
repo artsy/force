@@ -24,7 +24,7 @@ import { track } from "v2/System"
 import * as Schema from "v2/System/Analytics/Schema"
 import { CountdownTimer } from "v2/Components/CountdownTimer"
 import { RouterState } from "found"
-import React, { Component } from "react"
+import { Component } from "react";
 import { RelayProp, createFragmentContainer, graphql } from "react-relay"
 import createLogger from "v2/Utils/logger"
 import { Media } from "v2/Utils/Responsive"

@@ -2,7 +2,7 @@ import ActiveBidItem from "desktop/apps/auction/components/layout/active_bids/Ac
 import BidStatus from "desktop/components/bid_status/react"
 import MeQuery from "desktop/apps/auction/queries/me"
 import PropTypes from "prop-types"
-import React, { Component } from "react"
+import { Component } from "react";
 import block from "bem-cn-lite"
 import { get } from "lodash"
 import { metaphysics } from "lib/metaphysics"

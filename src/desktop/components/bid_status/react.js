@@ -1,5 +1,4 @@
 import PropTypes from "prop-types"
-import React from "react"
 import BidStatusArrowIcon from "./public/icons/bid-status-arrow.svg"
 import block from "bem-cn-lite"
 

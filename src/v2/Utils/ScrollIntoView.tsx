@@ -1,11 +1,11 @@
 import { Box } from "@artsy/palette"
-import React from "react"
+import { Component } from "react";
 import { scrollIntoView, ScrollIntoViewProps } from "v2/Utils/scrollHelpers"
 
 /**
  * @deprecated use scrollIntoView
  */
-export class ScrollIntoView extends React.Component<ScrollIntoViewProps> {
+export class ScrollIntoView extends Component<ScrollIntoViewProps> {
   static defaultProps = {
     offset: 40,
   }

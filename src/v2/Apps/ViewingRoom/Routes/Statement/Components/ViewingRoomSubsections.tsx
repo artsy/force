@@ -18,9 +18,11 @@ const ViewingRoomSubsections: React.FC<ViewingRoomSubsectionsProps> = ({
   return (
     <Join separator={<Spacer mt={4} />}>
       {subsections.map(({ internalID, title, body, image, caption }) => {
-        const img = resized(image?.imageURLs?.normalized!, {
-          width: 1200,
-        })
+        const img = image?.imageURLs?.normalized
+          ? resized(image?.imageURLs?.normalized, {
+              width: 1200,
+            })
+          : null
 
         return (
           <Box key={internalID}>

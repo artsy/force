@@ -1,4 +1,3 @@
-import React from "react"
 import { data as sd } from "sharify"
 import { SystemContextProvider } from "v2/System"
 import { MediaContextProvider } from "v2/Utils/Responsive"

@@ -1,4 +1,4 @@
-import React from "react"
+import { Component } from "react";
 import { Article } from "@artsy/reaction/dist/Components/Publishing/Article"
 import { AppProps } from "../App"
 import { InfiniteScrollArticle } from "../InfiniteScrollArticle"
@@ -10,7 +10,7 @@ const SuperArticleView = require("desktop/components/article/client/super_articl
 const ArticleModel = require("desktop/models/article.coffee")
 import Cookies from "desktop/components/cookies/index"
 
-export class ArticleLayout extends React.Component<AppProps> {
+export class ArticleLayout extends Component<AppProps> {
   componentDidMount() {
     const { article, isSuper } = this.props
     if (isSuper) {

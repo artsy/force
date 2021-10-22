@@ -9,7 +9,6 @@ const HomeApp = loadable(
 
 export const homeRoutes: AppRouteConfig[] = [
   {
-    theme: "v3",
     path: "/",
     getComponent: () => HomeApp,
     prepare: () => {

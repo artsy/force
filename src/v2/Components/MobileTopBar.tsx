@@ -1,5 +1,5 @@
 import { BorderBox, Flex } from "@artsy/palette"
-import React, { ReactNode, SFC } from "react"
+import { ReactNode, SFC } from "react";
 import styled from "styled-components"
 
 interface MobileTopBarProps {

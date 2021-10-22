@@ -1,4 +1,5 @@
-import React, { useState } from "react"
+import { useState } from "react";
+import * as React from "react";
 import { Box, Button, Dialog, Text } from "@artsy/palette"
 import { useAnalyticsContext, useTracking } from "v2/System"
 import { ContextModule, clickedShowMore } from "@artsy/cohesion"

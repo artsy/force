@@ -1,4 +1,3 @@
-import React from "react"
 import { MockBoot, renderRelayTree } from "v2/DevTools"
 import { ViewingRoomsAppFragmentContainer } from "../ViewingRoomsApp"
 import { graphql } from "react-relay"

@@ -2,7 +2,7 @@ import { Column, GridColumns, Join, Spacer, Text } from "@artsy/palette"
 import { Collections_marketingCategories } from "v2/__generated__/Collections_marketingCategories.graphql"
 import { FrameWithRecentlyViewed } from "v2/Components/FrameWithRecentlyViewed"
 import { BreadCrumbList } from "v2/Components/Seo"
-import React from "react"
+import * as React from "react";
 import { Meta, Title } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
 import { data as sd } from "sharify"

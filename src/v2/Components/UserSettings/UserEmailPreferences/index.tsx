@@ -1,4 +1,5 @@
-import React, { useState } from "react"
+import { useState } from "react";
+import * as React from "react";
 import { Banner, Box, Flex, SelectSmall, Serif } from "@artsy/palette"
 import { useSystemContext } from "v2/System/SystemContext"
 import { graphql } from "react-relay"

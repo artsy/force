@@ -1,5 +1,5 @@
 import { Box, Spacer, Text } from "@artsy/palette"
-import React from "react"
+import * as React from "react";
 import { createFragmentContainer, graphql } from "react-relay"
 import { GeneFamily_geneFamily } from "v2/__generated__/GeneFamily_geneFamily.graphql"
 import { sortBy } from "lodash"

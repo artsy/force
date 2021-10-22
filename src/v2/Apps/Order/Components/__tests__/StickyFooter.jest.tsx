@@ -1,7 +1,6 @@
 import { SystemContextProvider } from "v2/System"
 import { mockTracking } from "v2/System/Analytics"
 import { mount } from "enzyme"
-import React from "react"
 import { StickyFooterWithInquiry, StickyFooter } from "../StickyFooter"
 import { mediator } from "lib/mediator"
 jest.unmock("react-tracking")

@@ -1,5 +1,5 @@
 import { Flex, Separator, Spacer } from "@artsy/palette"
-import React, { useEffect } from "react"
+import { useEffect } from "react";
 import { useTracking } from "react-tracking"
 import { PriceDatabaseBenefits } from "./Components/PriceDatabaseBenefits"
 import { PriceDatabaseSearch } from "./Components/PriceDatabaseSearch"

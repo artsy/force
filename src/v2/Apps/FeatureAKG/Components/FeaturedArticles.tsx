@@ -4,7 +4,7 @@ import { StyledLink } from "./StyledLink"
 import { AnalyticsSchema } from "v2/System"
 import { useTracking } from "v2/System/Analytics/useTracking"
 import { RouterLink } from "v2/System/Router/RouterLink"
-import React from "react"
+import * as React from "react";
 import { createFragmentContainer } from "react-relay"
 import { graphql } from "relay-runtime"
 import styled from "styled-components"

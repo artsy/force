@@ -1,4 +1,4 @@
-import React from "react"
+import * as React from "react";
 import { BoxProps } from "@artsy/palette"
 import { Media } from "v2/Utils/Responsive"
 import { SmallCarousel } from "./SmallCarousel"

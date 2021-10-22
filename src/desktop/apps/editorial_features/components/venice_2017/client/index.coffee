@@ -2,7 +2,6 @@ Backbone = require 'backbone'
 sd = require('sharify').data
 _ = require 'underscore'
 VeniceVideoView = require './video.coffee'
-UAParser = require 'ua-parser-js'
 initCarousel = require '../../../../../components/merry_go_round/bottom_nav_mgr.coffee'
 initFooterCarousel = require '../../../../../components/merry_go_round/horizontal_nav_mgr.coffee'
 Curation = require '../../../../../models/curation.coffee'
@@ -20,7 +19,6 @@ module.exports = class VeniceView extends Backbone.View
     'click .venice-info-icon, .venice-overlay--completed__buttons .read-more': 'onReadMore'
 
   initialize: ->
-    @parser = new UAParser()
     @curation = new Curation sd.CURATION
     @section = @curation.get('sections')[sd.VIDEO_INDEX]
     @sectionIndex = sd.VIDEO_INDEX
@@ -33,7 +31,7 @@ module.exports = class VeniceView extends Backbone.View
       el: $('.venice-video')
       video: @chooseVideoFile()
       slug: @section.slug
-      isMobile: @parser.getDevice().type is 'mobile'
+      isMobile: sd.IS_MOBILE
     @listenTo @VeniceVideoView, 'videoCompleted', @onVideoCompleted
     @listenTo @VeniceVideoView, 'closeVideo', @fadeInCoverAndPauseVideo
     @listenTo @VeniceVideoView, 'videoReady', @onVideoReady
@@ -123,9 +121,7 @@ module.exports = class VeniceView extends Backbone.View
 
   chooseVideoFile: ->
     section = if @section.published then @section else @curation.get('sections')[0]
-    if @parser.getOS().name is 'iOS'
-      sd.APP_URL + section.video_url_medium
-    else if @parser.getDevice().type is 'mobile'
+    if sd.IS_MOBILE is 'mobile'
       sd.APP_URL + section.video_url_adaptive
     else
       sd.APP_URL + section.video_url

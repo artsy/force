@@ -7,7 +7,7 @@ import { SystemContextProps, withSystemContext } from "v2/System/SystemContext"
 import { FrameWithRecentlyViewed } from "v2/Components/FrameWithRecentlyViewed"
 import { RelatedCollectionsRailFragmentContainer as RelatedCollectionsRail } from "v2/Components/RelatedCollectionsRail/RelatedCollectionsRail"
 import { BreadCrumbList } from "v2/Components/Seo"
-import React from "react"
+import * as React from "react";
 import { Title } from "react-head"
 import { RelayRefetchProp, graphql, createFragmentContainer } from "react-relay"
 import { data as sd } from "sharify"

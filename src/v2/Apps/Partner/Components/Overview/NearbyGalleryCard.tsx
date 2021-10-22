@@ -1,7 +1,7 @@
 import { ContextModule } from "@artsy/cohesion"
 import { Box, BoxProps, ResponsiveBox, Image, Flex, Text } from "@artsy/palette"
 import { capitalize, compact, uniq } from "lodash"
-import React from "react"
+import * as React from "react";
 import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "v2/System"
 import { RouterLink } from "v2/System/Router/RouterLink"

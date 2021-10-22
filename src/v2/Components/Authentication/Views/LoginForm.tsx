@@ -15,7 +15,8 @@ import {
 } from "v2/Components/Authentication/Types"
 import { LoginValidator } from "v2/Components/Authentication/Validators"
 import { Formik, FormikProps } from "formik"
-import React, { Component, useEffect } from "react"
+import { Component, useEffect } from "react"
+import * as React from "react"
 import { recaptcha } from "v2/Utils/recaptcha"
 import { isOtpError } from "v2/Components/Authentication/helpers"
 import { AuthenticationPasswordInput } from "../Components/AuthenticationPasswordInput"
@@ -58,6 +59,7 @@ export class LoginForm extends Component<FormProps, LoginFormState> {
         initialValues={this.props.values || {}}
         onSubmit={this.onSubmit}
         validationSchema={LoginValidator}
+        validateOnBlur={false}
       >
         {({
           values,

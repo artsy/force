@@ -15,7 +15,7 @@ import {
   FormikValues,
 } from "formik"
 import { dropWhile } from "lodash"
-import React from "react"
+import * as React from "react";
 import { RelayProp, createFragmentContainer, graphql } from "react-relay"
 
 import { BidForm_me } from "v2/__generated__/BidForm_me.graphql"

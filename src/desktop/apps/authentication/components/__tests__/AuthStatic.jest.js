@@ -1,5 +1,4 @@
 import { mount } from "enzyme"
-import React from "react"
 import { ModalHeader } from "v2/Components/Modal/ModalHeader"
 import { FormSwitcher } from "v2/Components/Authentication/FormSwitcher"
 import { AuthStatic } from "../AuthStatic"

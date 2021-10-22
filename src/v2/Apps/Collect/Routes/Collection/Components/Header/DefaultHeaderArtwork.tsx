@@ -3,7 +3,7 @@ import { DefaultHeaderArtwork_artwork } from "v2/__generated__/DefaultHeaderArtw
 import { AnalyticsSchema } from "v2/System/Analytics"
 import { useTracking } from "v2/System/Analytics/useTracking"
 import { RouterLink } from "v2/System/Router/RouterLink"
-import React from "react"
+import * as React from "react";
 import { createFragmentContainer, graphql } from "react-relay"
 
 export interface DefaultHeaderArtworkProps {

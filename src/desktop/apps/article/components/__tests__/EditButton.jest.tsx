@@ -1,4 +1,3 @@
-import React from "react"
 import { mount } from "enzyme"
 import { EditButton } from "../EditButton"
 import { SystemContextProvider } from "@artsy/reaction/dist/Artsy"

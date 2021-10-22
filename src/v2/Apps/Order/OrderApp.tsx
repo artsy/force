@@ -6,7 +6,7 @@ import { findCurrentRoute } from "v2/System/Router/Utils/findCurrentRoute"
 import { ErrorPage } from "v2/Components/ErrorPage"
 import { MinimalNavBar } from "v2/Components/NavBar/MinimalNavBar"
 import { RouterState, withRouter } from "found"
-import React from "react"
+import { Component } from "react";
 import { Meta, Title } from "react-head"
 import { graphql } from "react-relay"
 import { loadStripe } from "@stripe/stripe-js"
@@ -27,7 +27,7 @@ export interface OrderAppProps extends RouterState {
   order: OrderApp_order
 }
 
-class OrderApp extends React.Component<OrderAppProps, {}> {
+class OrderApp extends Component<OrderAppProps, {}> {
   state = { stripe: null }
   removeNavigationListener: () => void
 
