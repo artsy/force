@@ -19,6 +19,21 @@ import { useRouter } from "v2/System/Router/useRouter"
 import { ArtworkSidebarClassificationsModalQueryRenderer } from "v2/Apps/Artwork/Components/ArtworkSidebarClassificationsModal"
 import { useSubmission } from "../../Utils/useSubmission"
 
+export const getArtworkDetailsFormInitialValues = () => ({
+  artistId: "",
+  artistName: "",
+  year: "",
+  title: "",
+  medium: "",
+  rarity: "",
+  editionNumber: "",
+  editionSize: undefined,
+  height: "",
+  width: "",
+  depth: "",
+  units: "in",
+})
+
 const rarityOptions = checkboxValues.map(({ name, value }) => ({
   text: name,
   value,
@@ -84,7 +99,9 @@ export const ArtworkDetailsForm: React.FC = () => {
     handleChange,
     setFieldValue,
     handleBlur,
-    setValues,
+    setErrors,
+    resetForm,
+    validateForm,
   } = useFormikContext<ArtworkDetailsFormModel>()
 
   const limitedEditionRarity = values.rarity === "limited edition"
@@ -92,7 +109,14 @@ export const ArtworkDetailsForm: React.FC = () => {
 
   useEffect(() => {
     if (submission) {
-      setValues(submission.artworkDetailsForm, true)
+      resetForm({ values: submission.artworkDetailsForm })
+      validateForm(submission.artworkDetailsForm).then(e => {
+        setErrors(e)
+      })
+    } else {
+      resetForm({
+        values: getArtworkDetailsFormInitialValues(),
+      })
     }
   }, [submission])
 
