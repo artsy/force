@@ -81,12 +81,7 @@ export const PhotoThumbnail: React.FC<PhotoThumbnailProps & BoxProps> = ({
         </CSSGrid>
       </Flex>
       {photo.errorMessage && (
-        <Text
-          mt={[0.5, 2]}
-          textAlign={["right", "left"]}
-          variant="xs"
-          color="red100"
-        >
+        <Text mt={[0.5, 2]} variant="xs" color="red100">
           {photo.errorMessage}
         </Text>
       )}
