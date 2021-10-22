@@ -98,6 +98,30 @@ describe("ArtworkDetailsForm", () => {
     })
   })
 
+  describe("Correct focus on Rariry and Medium", () => {
+    it("no focus if default option", () => {
+      expect(wrapper.find("Select[name='rarity']").prop("focus")).toBe(false)
+      expect(wrapper.find("Select[name='medium']").prop("focus")).toBe(false)
+    })
+    it("in focus if not default option", () => {
+      wrapper
+        .find("select[name='rarity']")
+        .simulate("change", {
+          target: { name: "rarity", value: "limited edition" },
+        })
+        .simulate("blur")
+      wrapper
+        .find("select[name='medium']")
+        .simulate("change", {
+          target: { name: "medium", value: "PAINTING" },
+        })
+        .simulate("blur")
+
+      expect(wrapper.find("Select[name='rarity']").prop("focus")).toBe(true)
+      expect(wrapper.find("Select[name='medium']").prop("focus")).toBe(true)
+    })
+  })
+
   it("if units are 'in' renders size fields correctly", () => {
     const sizeFields = wrapper.find(LabeledInput)
 
