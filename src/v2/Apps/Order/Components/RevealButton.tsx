@@ -1,5 +1,5 @@
 import { Button, Collapse, Flex } from "@artsy/palette"
-import React from "react"
+import { Component } from "react";
 
 interface RevealButtonProps {
   buttonLabel: string
@@ -10,7 +10,7 @@ interface RevealButtonState {
   showing: boolean
 }
 
-export class RevealButton extends React.Component<
+export class RevealButton extends Component<
   RevealButtonProps,
   RevealButtonState
 > {

@@ -1,4 +1,3 @@
-import React from "react"
 import { TagAppFragmentContainer } from "../TagApp"
 import { setupTestWrapperTL } from "v2/DevTools/setupTestWrapper"
 import { graphql } from "react-relay"

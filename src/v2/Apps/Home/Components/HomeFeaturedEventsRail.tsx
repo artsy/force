@@ -14,7 +14,7 @@ import {
   Flex,
 } from "@artsy/palette"
 import { compact, take } from "lodash"
-import React from "react"
+import * as React from "react";
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "v2/System"
 import { RouterLink } from "v2/System/Router/RouterLink"

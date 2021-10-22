@@ -1,4 +1,5 @@
-import React, { useContext, useState } from "react"
+import { useContext, useState } from "react";
+import * as React from "react";
 
 export const NavBarMobileMenuNavigationContext = React.createContext<{
   path: string[]

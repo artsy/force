@@ -13,7 +13,7 @@ import {
   Text,
 } from "@artsy/palette"
 import { uniq } from "lodash"
-import React from "react"
+import * as React from "react";
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "v2/System/Analytics/useTracking"
 import { useSystemContext } from "v2/System"

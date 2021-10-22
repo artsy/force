@@ -1,4 +1,3 @@
-import React from "react"
 import { injectGlobalStyles, ThemeProviderV3 } from "@artsy/palette"
 
 const { GlobalStyles } = injectGlobalStyles()

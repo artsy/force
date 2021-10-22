@@ -1,7 +1,7 @@
 import { ArtistMeta_artist } from "v2/__generated__/ArtistMeta_artist.graphql"
 import { Person as SeoDataForArtist } from "v2/Components/Seo/Person"
 import { identity, pickBy } from "lodash"
-import React, { Component } from "react"
+import { Component } from "react";
 import { Meta } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
 import { data as sd } from "sharify"

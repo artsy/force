@@ -7,7 +7,8 @@ import {
   Sup,
   Message,
 } from "@artsy/palette"
-import React, { useMemo, useRef, useState } from "react"
+import { useMemo, useRef, useState } from "react";
+import * as React from "react";
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 import { ShowsHeaderFragmentContainer } from "../Components/ShowsHeader"
 import { ShowsCity_viewer } from "v2/__generated__/ShowsCity_viewer.graphql"

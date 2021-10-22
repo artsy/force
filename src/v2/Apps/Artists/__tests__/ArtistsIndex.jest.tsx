@@ -1,4 +1,3 @@
-import React from "react"
 import { graphql } from "react-relay"
 import { ArtistsIndexFragmentContainer } from "../Routes/ArtistsIndex"
 import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"

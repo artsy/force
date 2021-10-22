@@ -1,4 +1,4 @@
-import React from "react"
+import * as React from "react";
 import { Swiper, SwiperCell, SwiperRail } from "@artsy/palette"
 import { ShowBannerFragmentContainer } from "../../PartnerShows"
 import { ShowBannersMobileCarousel_shows } from "v2/__generated__/ShowBannersMobileCarousel_shows.graphql"

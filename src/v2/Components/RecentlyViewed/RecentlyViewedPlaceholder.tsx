@@ -1,5 +1,5 @@
 import { SkeletonBox, SkeletonText } from "@artsy/palette"
-import React from "react"
+import * as React from "react";
 import { IMG_HEIGHT } from "../Artwork/ShelfArtwork"
 import { Rail } from "../Rail"
 

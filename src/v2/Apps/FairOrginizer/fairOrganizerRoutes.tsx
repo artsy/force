@@ -1,4 +1,3 @@
-import React from "react"
 import loadable from "@loadable/component"
 import { graphql } from "react-relay"
 import { ErrorPage } from "v2/Components/ErrorPage"
@@ -33,7 +32,6 @@ const FairOrganizerDedicatedArticles = loadable(
 export const fairOrganizerRoutes: AppRouteConfig[] = [
   {
     path: "/fair-organizer/:slug",
-    theme: "v3",
     getComponent: () => FairOrganizerApp,
     prepare: () => {
       FairOrganizerApp.preload()
@@ -81,7 +79,6 @@ export const fairOrganizerRoutes: AppRouteConfig[] = [
   },
   {
     path: "/fair-organizer/:slug/articles",
-    theme: "v3",
     getComponent: () => FairOrganizerDedicatedArticles,
     prepare: () => {
       FairOrganizerDedicatedArticles.preload()

@@ -9,7 +9,6 @@ import {
   buildServerApp,
 } from "v2/System/Router/buildServerApp"
 import { render } from "enzyme"
-import React from "react"
 import ReactDOMServer from "react-dom/server"
 import { Title } from "react-head"
 import { graphql } from "react-relay"

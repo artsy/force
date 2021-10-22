@@ -1,5 +1,5 @@
 import { Box, Link, Text } from "@artsy/palette"
-import React from "react"
+import * as React from "react";
 import { Title as HeadTitle } from "react-head"
 
 export const Error: React.FC = () => {

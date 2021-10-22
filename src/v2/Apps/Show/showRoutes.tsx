@@ -28,7 +28,6 @@ export const showRoutes: AppRouteConfig[] = [
   {
     getComponent: () => ShowApp,
     path: "/show/:slug",
-    theme: "v3",
     prepare: () => {
       ShowApp.preload()
     },
@@ -58,7 +57,6 @@ export const showRoutes: AppRouteConfig[] = [
       {
         getComponent: () => ShowInfoRoute,
         path: "info",
-        theme: "v3",
         prepare: () => {
           ShowInfoRoute.preload()
         },
@@ -79,7 +77,6 @@ export const showRoutes: AppRouteConfig[] = [
     ],
     getComponent: () => ShowSubApp,
     path: "/show/:slug",
-    theme: "v3",
     prepare: () => {
       ShowSubApp.preload()
     },

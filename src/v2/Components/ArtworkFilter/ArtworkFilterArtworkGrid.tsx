@@ -1,5 +1,5 @@
 import { Spacer, useThemeConfig } from "@artsy/palette"
-import React from "react"
+import * as React from "react";
 import { RelayProp, createFragmentContainer, graphql } from "react-relay"
 import { ArtworkFilterArtworkGrid_filtered_artworks } from "v2/__generated__/ArtworkFilterArtworkGrid_filtered_artworks.graphql"
 import { useSystemContext, useTracking } from "v2/System"

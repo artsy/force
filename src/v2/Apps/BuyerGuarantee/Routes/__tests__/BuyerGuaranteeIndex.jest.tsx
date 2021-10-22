@@ -1,4 +1,3 @@
-import React from "react"
 import { BuyerGuaranteeIndex } from "../BuyerGuaranteeIndex"
 import { MockBoot } from "v2/DevTools"
 import { mount } from "enzyme"

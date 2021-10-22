@@ -1,4 +1,4 @@
-import React, { FC } from "react"
+import { FC } from "react";
 import { Flex, Text } from "@artsy/palette"
 import { color } from "styled-system"
 

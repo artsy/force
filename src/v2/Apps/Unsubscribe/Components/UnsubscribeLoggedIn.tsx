@@ -1,5 +1,6 @@
 import { Spacer, Button, Select, useToasts } from "@artsy/palette"
-import React, { useRef, useState } from "react"
+import { useRef, useState } from "react";
+import * as React from "react";
 import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "v2/System"
 import { UpdateUserEmailPreferencesMutation } from "v2/Components/UserSettings/UserEmailPreferences/UserEmailPreferencesMutation"

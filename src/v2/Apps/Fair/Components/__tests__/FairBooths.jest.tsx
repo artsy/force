@@ -1,4 +1,3 @@
-import React from "react"
 import { ReactWrapper } from "enzyme"
 import { FairBoothsFragmentContainer } from "../FairBooths"
 import { FairBooths_QueryRawResponse } from "v2/__generated__/FairBooths_Query.graphql"

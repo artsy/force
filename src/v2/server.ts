@@ -27,8 +27,6 @@ if (!NOVO_MANIFEST) {
 const app = express()
 const { routes, routePaths } = getRouteConfig()
 
-console.log(routePaths)
-
 /**
  * Mount routes that will connect to global SSR router
  */

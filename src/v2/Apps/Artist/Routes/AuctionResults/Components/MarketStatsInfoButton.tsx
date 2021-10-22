@@ -1,5 +1,6 @@
 import { Box, InfoCircleIcon, Modal, Text } from "@artsy/palette"
-import React, { useState } from "react"
+import { useState } from "react";
+import * as React from "react";
 
 interface MarketStatsInfoButtonProps {
   onClick?: () => void

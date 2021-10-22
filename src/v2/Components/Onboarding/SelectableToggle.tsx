@@ -1,4 +1,4 @@
-import React from "react"
+import { Component } from "react";
 import styled from "styled-components"
 
 import { CircleBlackCheckIcon } from "@artsy/palette"
@@ -51,7 +51,7 @@ const EmptyCircle = styled.div`
   background-color: transparent;
 `
 
-class SelectableToggle extends React.Component<SelectableToggleProps, null> {
+class SelectableToggle extends Component<SelectableToggleProps, null> {
   constructor(props) {
     super(props)
     this.onSelect = this.onSelect.bind(this)

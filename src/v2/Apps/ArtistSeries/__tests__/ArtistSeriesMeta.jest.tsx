@@ -1,4 +1,3 @@
-import React from "react"
 import { MockBoot, renderRelayTree } from "v2/DevTools"
 import { ArtistSeriesMetaFragmentContainer } from "../Components/ArtistSeriesMeta"
 import { graphql } from "react-relay"

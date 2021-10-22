@@ -1,4 +1,3 @@
-import React from "react"
 import { mount } from "enzyme"
 import { SystemContextProvider } from "@artsy/reaction/dist/Artsy"
 import { InfiniteScrollArticle } from "../InfiniteScrollArticle"

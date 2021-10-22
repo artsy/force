@@ -7,7 +7,6 @@ import {
 import { renderRelayTree } from "v2/DevTools"
 import { MockBoot } from "v2/DevTools/MockBoot"
 import { ReactWrapper } from "enzyme"
-import React from "react"
 import { graphql } from "react-relay"
 import { flushPromiseQueue } from "v2/DevTools"
 

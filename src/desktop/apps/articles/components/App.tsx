@@ -1,4 +1,4 @@
-import React, { Component } from "react"
+import { Component } from "react";
 import type { ArticleData } from "@artsy/reaction/dist/Components/Publishing/Typings"
 import { Mediator, SystemContextProvider } from "@artsy/reaction/dist/Artsy"
 import { InfiniteScrollNewsArticle } from "desktop/apps/article/components/InfiniteScrollNewsArticle"

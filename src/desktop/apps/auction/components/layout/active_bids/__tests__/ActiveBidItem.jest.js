@@ -1,4 +1,3 @@
-import React from "react"
 import renderTestComponent from "desktop/apps/auction/__tests__/utils/renderTestComponent"
 import { test } from "desktop/apps/auction/components/layout/active_bids/ActiveBidItem"
 

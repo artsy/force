@@ -1,6 +1,5 @@
 import PropTypes from "prop-types"
-import { Component } from "react"
-import React from "react"
+import { createElement, Component } from "react";
 import { StepProps } from "./types"
 
 /**
@@ -27,6 +26,6 @@ export class Step extends Component<StepProps> {
       return null
     }
     const { wizard, form } = this.context
-    return React.createElement(this.props.children, { wizard, form })
+    return createElement(this.props.children, { wizard, form });
   }
 }

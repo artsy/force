@@ -1,4 +1,4 @@
-import React from "react"
+import * as React from "react";
 import { Carousel, CarouselCell, CarouselRail } from "@artsy/palette"
 import { ShowBannerFragmentContainer } from "../../PartnerShows"
 import { usePartnerShowBannersContext } from "v2/Apps/Partner/Utils/PartnerShowBannersContex"

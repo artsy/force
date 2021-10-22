@@ -2,7 +2,8 @@ import { Box, Text } from "@artsy/palette"
 import { SavedAddressesFragmentContainer as SavedAddresses } from "v2/Apps/Order/Components/SavedAddresses"
 import { renderWithLoadProgress } from "v2/System/Relay/renderWithLoadProgress"
 import { SystemContextProps } from "v2/System"
-import React, { useState } from "react"
+import { useState } from "react";
+import * as React from "react";
 import { createFragmentContainer, graphql, QueryRenderer } from "react-relay"
 import { UserSettingsAddressesQuery } from "v2/__generated__/UserSettingsAddressesQuery.graphql"
 import { UserSettingsAddresses_me } from "v2/__generated__/UserSettingsAddresses_me.graphql"

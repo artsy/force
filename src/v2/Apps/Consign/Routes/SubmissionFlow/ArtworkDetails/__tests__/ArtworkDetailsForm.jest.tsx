@@ -1,11 +1,10 @@
-import React from "react"
 import { mount, ReactWrapper } from "enzyme"
 import {
   ArtworkDetailsForm,
   ArtworkDetailsFormModel,
+  getArtworkDetailsFormInitialValues,
 } from "../Components/ArtworkDetailsForm"
 import { Formik } from "formik"
-import { initialValues } from "../ArtworkDetails"
 import { LabeledInput, Text } from "@artsy/palette"
 import { useRouter } from "v2/System/Router/useRouter"
 import { ArtworkSidebarClassificationsModalQueryRenderer } from "v2/Apps/Artwork/Components/ArtworkSidebarClassificationsModal"
@@ -27,7 +26,7 @@ describe("ArtworkDetailsForm", () => {
     ;(useRouter as jest.Mock).mockImplementation(() => ({
       match: { params: { id: null } },
     }))
-    wrapper = renderArtworkForm(initialValues)
+    wrapper = renderArtworkForm(getArtworkDetailsFormInitialValues())
   })
 
   it("renders correctly initial fields", () => {

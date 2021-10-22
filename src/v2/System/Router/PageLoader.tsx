@@ -1,6 +1,6 @@
 import { Box, ProgressBar } from "@artsy/palette"
 import { random } from "lodash"
-import React from "react"
+import { Component } from "react";
 
 interface PageLoaderProps {
   className?: string
@@ -20,7 +20,7 @@ interface PageLoaderState {
  *
  * Spec: https://app.zeplin.io/project/5acd19ff49a1429169c3128b/screen/5d7166295b4fca9d4724c13d
  */
-export class PageLoader extends React.Component<
+export class PageLoader extends Component<
   PageLoaderProps,
   PageLoaderState
 > {

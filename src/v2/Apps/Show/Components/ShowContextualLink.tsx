@@ -1,5 +1,5 @@
 import { Box, Text } from "@artsy/palette"
-import React from "react"
+import * as React from "react";
 import { createFragmentContainer, graphql } from "react-relay"
 import { Media } from "v2/Utils/Responsive"
 import { ShowContextualLink_show } from "v2/__generated__/ShowContextualLink_show.graphql"

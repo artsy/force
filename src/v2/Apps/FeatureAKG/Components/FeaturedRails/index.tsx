@@ -7,7 +7,7 @@ import { FeaturedFairsRailFragmentContainer as FeaturedFairs } from "v2/Apps/Fea
 import { AnalyticsSchema, ContextModule } from "v2/System"
 import { useTracking } from "v2/System/Analytics/useTracking"
 import { Carousel } from "v2/Components/Carousel"
-import React from "react"
+import * as React from "react";
 import { createFragmentContainer, graphql } from "react-relay"
 import { crop } from "v2/Utils/resizer"
 

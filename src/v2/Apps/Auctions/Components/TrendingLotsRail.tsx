@@ -1,4 +1,4 @@
-import React from "react"
+import * as React from "react";
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { AuthContextModule } from "@artsy/cohesion"
@@ -33,7 +33,6 @@ const TrendingLotsRail: React.FC<TrendingLotsRailProps> = ({ viewer }) => {
     <Rail
       title="Trending lots"
       subTitle="Works with the most bids today"
-      countLabel={liveSaleArtworks.length}
       getItems={() => {
         return liveSaleArtworks.map((node, index) => {
           return (

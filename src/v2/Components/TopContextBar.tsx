@@ -1,4 +1,4 @@
-import React from "react"
+import * as React from "react";
 import { Flex, FullBleed, Separator } from "@artsy/palette"
 
 export const TopContextBar: React.FC = ({ children }) => {

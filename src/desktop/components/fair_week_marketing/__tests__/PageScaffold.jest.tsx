@@ -1,4 +1,3 @@
-import React from "react"
 import { cloneDeep, extend } from "lodash"
 import { mount } from "enzyme"
 import { FairWeekPageScaffold } from "../PageScaffold"

@@ -1,4 +1,4 @@
-import React from "react"
+import * as React from "react";
 import { Checkbox, Flex, Text } from "@artsy/palette"
 import { FilterExpandable } from "v2/Components/ArtworkFilter/ArtworkFilters/FilterExpandable"
 import { ShowMore } from "v2/Components/ArtworkFilter/ArtworkFilters/ShowMore"

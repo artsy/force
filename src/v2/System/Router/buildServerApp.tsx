@@ -1,5 +1,5 @@
 import path from "path"
-import React from "react"
+import * as React from "react";
 import ReactDOMServer from "react-dom/server"
 import serialize from "serialize-javascript"
 import { ServerStyleSheet } from "styled-components"
@@ -271,7 +271,7 @@ export function buildServerApp(
       logger.error(error)
       reject(error)
     }
-  })
+  });
 }
 
 export const __TEST_INTERNAL_SERVER_APP__ =

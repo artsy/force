@@ -1,5 +1,4 @@
 import { mount } from "enzyme"
-import React from "react"
 import { NavBarMobileMenuInboxNotificationCount } from "../NavBarMobileMenuInboxNotificationCount"
 
 jest.mock("lib/isServer", () => ({

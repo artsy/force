@@ -26,7 +26,6 @@ import {
   isUnpublishedVideo,
 } from "./helpers"
 import cheerio from "cheerio"
-import React from "react"
 import {
   auctionQuery,
   partnerQuery,

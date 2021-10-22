@@ -1,5 +1,5 @@
 import { Box, Text } from "@artsy/palette"
-import React from "react"
+import * as React from "react";
 import { InquiryAffiliatedRemoveButton } from "./InquiryAffiliatedRemoveButton"
 
 type Option = { text: string; value: string }

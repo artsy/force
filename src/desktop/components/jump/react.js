@@ -1,6 +1,6 @@
 import JumpView from "./view.coffee"
 import PropTypes from "prop-types"
-import React, { Component } from "react"
+import { Component } from "react";
 
 export default class Jump extends Component {
   static propTypes = {

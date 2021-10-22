@@ -1,5 +1,4 @@
 import { mount } from "enzyme"
-import React from "react"
 import { PartnerContactAddress_location } from "v2/__generated__/PartnerContactAddress_location.graphql"
 import { PartnerContactAddress } from "../../PartnerContacts"
 

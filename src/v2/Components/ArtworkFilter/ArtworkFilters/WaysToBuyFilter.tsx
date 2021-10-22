@@ -1,6 +1,6 @@
 import { Checkbox, Flex, useThemeConfig } from "@artsy/palette"
 import { isEmpty } from "lodash"
-import React, { FC } from "react"
+import { FC } from "react";
 import {
   ArtworkFilters,
   useArtworkFilterContext,

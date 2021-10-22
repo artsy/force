@@ -1,4 +1,5 @@
-import React, { useCallback, useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
+import * as React from "react"
 import { Box, BoxProps } from "@artsy/palette"
 import { useFormikContext } from "formik"
 import { useSystemContext } from "v2/System"
@@ -9,10 +10,10 @@ import {
   uploadPhoto,
 } from "../../Utils/fileUtils"
 import { useRouter } from "v2/System/Router/useRouter"
-import { getSubmission } from "../../Utils/submissionUtils"
 import { PhotoDropzone } from "./PhotoDropzone"
 import { FileRejection } from "react-dropzone"
 import { PhotoThumbnail } from "./PhotoThumbnail"
+import { useSubmission } from "../../Utils/useSubmission"
 
 export interface UploadPhotosFormModel {
   photos: Photo[]
@@ -33,16 +34,18 @@ export const UploadPhotosForm: React.FC<UploadPhotosFormProps> = ({
   } = useRouter()
 
   const { relayEnvironment } = useSystemContext()
-  const { setFieldValue, values } = useFormikContext<UploadPhotosFormModel>()
   const [errors, setErrors] = useState<Array<FileRejection>>([])
+  const { setFieldValue, values, validateField } = useFormikContext<
+    UploadPhotosFormModel
+  >()
+  const { submission } = useSubmission(id)
 
   useEffect(() => {
-    const submission = getSubmission(id)
-
     if (submission && submission.uploadPhotosForm) {
       setFieldValue("photos", submission.uploadPhotosForm.photos)
+      validateField("photos")
     }
-  }, [])
+  }, [submission])
 
   const handlePhotoUploadingProgress = (photo: Photo) => progress => {
     photo.progress = progress

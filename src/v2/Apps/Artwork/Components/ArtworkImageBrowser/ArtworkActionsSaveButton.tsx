@@ -5,7 +5,7 @@ import {
   HeartFillIcon,
   HeartIcon,
 } from "@artsy/palette"
-import React from "react"
+import * as React from "react";
 import { createFragmentContainer, graphql } from "react-relay"
 import { useSaveArtwork } from "v2/Components/Artwork/SaveButton/useSaveArtwork"
 import { ArtworkActionsSaveButton_artwork } from "v2/__generated__/ArtworkActionsSaveButton_artwork.graphql"

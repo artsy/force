@@ -1,5 +1,6 @@
 import { Clickable, Text, TextVariant, useThemeConfig } from "@artsy/palette"
-import React, { Children, isValidElement, useState } from "react"
+import { Children, isValidElement, useState } from "react";
+import * as React from "react";
 
 interface ShowMoreProps {
   initial?: number

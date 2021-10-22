@@ -1,5 +1,5 @@
 import { Button, color, space } from "@artsy/palette"
-import React, { SFC } from "react"
+import { SFC } from "react";
 import styled from "styled-components"
 import { media } from "../Helpers"
 

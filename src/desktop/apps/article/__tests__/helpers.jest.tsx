@@ -8,7 +8,6 @@ import {
   VideoArticle,
   VideoArticleUnpublished,
 } from "@artsy/reaction/dist/Components/Publishing/Fixtures/Articles"
-import React from "react"
 import { NewsArticle } from "desktop/apps/article/components/NewsArticle"
 import { DisplayAd } from "@artsy/reaction/dist/Components/Publishing/Display/DisplayAd"
 import { mount } from "enzyme"

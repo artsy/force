@@ -1,4 +1,3 @@
-import React from "react"
 import { graphql } from "react-relay"
 import { FairOrganizerApp_Test_Query } from "v2/__generated__/FairOrganizerApp_Test_Query.graphql"
 import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"

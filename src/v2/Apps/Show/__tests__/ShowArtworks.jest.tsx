@@ -1,4 +1,3 @@
-import React from "react"
 import { ShowArtworksRefetchContainer } from "../Components/ShowArtworks"
 import { graphql } from "react-relay"
 import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"

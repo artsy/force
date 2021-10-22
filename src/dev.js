@@ -5,7 +5,7 @@ require("@babel/register")({
   extensions: [".ts", ".js", ".tsx", ".jsx"],
   plugins: ["babel-plugin-dynamic-import-node"],
 })
-require("./lib/loadenv")
+require("@artsy/multienv").loadEnvs(".env.shared", ".env")
 
 const express = require("express")
 const path = require("path")
@@ -26,6 +26,9 @@ const { initializeMiddleware } = require("./middleware")
  */
 setAliases({
   react: path.resolve(path.join(__dirname, "../node_modules/react")),
+  "react/jsx-runtime": path.resolve(
+    path.join(__dirname, "../node_modules/react/jsx-runtime")
+  ),
   "react-dom": path.resolve(path.join(__dirname, "../node_modules/react-dom")),
   "styled-components": path.resolve(
     path.join(__dirname, "../node_modules/styled-components")

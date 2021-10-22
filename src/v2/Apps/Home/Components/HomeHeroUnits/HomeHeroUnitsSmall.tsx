@@ -1,5 +1,5 @@
 import { ProgressDots, Spacer } from "@artsy/palette"
-import React from "react"
+import * as React from "react";
 import { Children } from "react"
 import { useState } from "react"
 import { HomeSwiper } from "../HomeSwiper"

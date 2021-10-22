@@ -2,7 +2,6 @@ import { CollectionsHubLinkedCollections } from "v2/Apps/__tests__/Fixtures/Coll
 import { useTracking } from "v2/System/Analytics/useTracking"
 import { mount } from "enzyme"
 import "jest-styled-components"
-import React from "react"
 import { ArtistSeriesRail } from "../index"
 import { paginateCarousel } from "@artsy/palette"
 import { OwnerType } from "@artsy/cohesion"

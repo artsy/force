@@ -1,4 +1,4 @@
-import React from "react"
+import * as React from "react";
 import { BorderedRadio, BoxProps, Flex, RadioGroup, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ShippingQuotes_shippingQuotes } from "v2/__generated__/ShippingQuotes_shippingQuotes.graphql"

@@ -1,5 +1,5 @@
 import { Checkbox, Flex, useThemeConfig } from "@artsy/palette"
-import React, { FC } from "react"
+import { FC } from "react";
 import { intersection } from "lodash"
 import { useArtworkFilterContext } from "../ArtworkFilterContext"
 import { FilterExpandable } from "./FilterExpandable"

@@ -6,7 +6,7 @@ import _ListArtwork from "desktop/apps/auction/components/artwork_browser/main/a
 import LoadingSpinner from "desktop/apps/auction/components/artwork_browser/main/LoadingSpinner"
 import _MasonryGrid from "desktop/components/react/masonry_grid/MasonryGrid"
 import PropTypes from "prop-types"
-import React, { Component } from "react"
+import { Component } from "react";
 import block from "bem-cn-lite"
 import { get } from "lodash"
 import { infiniteScroll } from "desktop/apps/auction/actions/artworkBrowser"

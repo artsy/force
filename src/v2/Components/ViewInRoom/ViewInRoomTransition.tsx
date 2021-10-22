@@ -1,5 +1,5 @@
 import { Box, Image } from "@artsy/palette"
-import React from "react"
+import * as React from "react";
 import { useLayoutEffect } from "react"
 import { useState } from "react"
 import { wait } from "v2/Utils/wait"

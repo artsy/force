@@ -1,6 +1,7 @@
 import { Banner, Box, Button, Input, Join, Spacer } from "@artsy/palette"
 import { Formik, FormikProps } from "formik"
-import React, { Component } from "react"
+import { Component } from "react";
+import * as React from "react";
 import { recaptcha } from "v2/Utils/recaptcha"
 import { AuthenticationFooter } from "../Components/AuthenticationFooter"
 import { FormProps, InputValues, ModalType } from "../Types"

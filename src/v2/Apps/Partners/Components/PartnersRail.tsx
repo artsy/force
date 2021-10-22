@@ -1,5 +1,6 @@
 import { compact, take } from "lodash"
-import React, { useMemo } from "react"
+import { useMemo } from "react";
+import * as React from "react";
 import { createFragmentContainer, graphql } from "react-relay"
 import { PartnerCellFragmentContainer } from "v2/Components/Cells/PartnerCell"
 import { Rail } from "v2/Components/Rail"

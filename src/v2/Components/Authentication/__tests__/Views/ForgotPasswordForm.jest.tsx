@@ -1,6 +1,5 @@
 import { ForgotPasswordForm } from "v2/Components/Authentication/Views/ForgotPasswordForm"
 import { mount } from "enzyme"
-import React from "react"
 import { Clickable } from "@artsy/palette"
 import { AuthenticationFooter } from "v2/Components/Authentication/Components/AuthenticationFooter"
 

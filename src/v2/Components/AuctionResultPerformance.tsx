@@ -1,4 +1,3 @@
-import React from "react"
 import { Text, IncreaseIcon, Flex, DecreaseIcon, Spacer } from "@artsy/palette"
 
 export const AuctionResultPerformance = ({

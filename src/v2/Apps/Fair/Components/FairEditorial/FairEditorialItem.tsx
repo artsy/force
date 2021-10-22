@@ -1,4 +1,4 @@
-import React from "react"
+import * as React from "react";
 import { createFragmentContainer, graphql } from "react-relay"
 import { FairEditorialItem_article } from "v2/__generated__/FairEditorialItem_article.graphql"
 import {

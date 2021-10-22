@@ -1,5 +1,5 @@
 import styled, { css, keyframes } from "styled-components"
-import React from "react"
+import * as React from "react";
 import { Flex, Sans, color } from "@artsy/palette"
 
 interface SectionsNavProps {

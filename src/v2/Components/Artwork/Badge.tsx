@@ -1,6 +1,6 @@
 import { Flex, Text } from "@artsy/palette"
 import { Badge_artwork } from "v2/__generated__/Badge_artwork.graphql"
-import React from "react"
+import { Component } from "react";
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { get } from "v2/Utils/get"
@@ -13,7 +13,7 @@ interface BadgeProps {
 
 const MIN_IMAGE_SIZE = 150
 
-class Badge extends React.Component<BadgeProps> {
+class Badge extends Component<BadgeProps> {
   get stackedLayout() {
     // During the SSR render pass we don't have access to window pixel data so
     // default to high density screen.

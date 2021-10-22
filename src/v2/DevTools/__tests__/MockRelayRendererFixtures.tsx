@@ -8,7 +8,6 @@ import { renderWithLoadProgress } from "v2/System/Relay/renderWithLoadProgress"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import cheerio from "cheerio"
 import { render } from "enzyme"
-import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 
 const Metadata = createFragmentContainer(

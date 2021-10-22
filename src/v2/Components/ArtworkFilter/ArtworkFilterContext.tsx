@@ -1,5 +1,6 @@
 import { omit } from "lodash"
-import React, { useContext, useReducer, useState } from "react"
+import { useContext, useReducer, useState } from "react";
+import * as React from "react";
 import useDeepCompareEffect from "use-deep-compare-effect"
 import { SortOptions } from "../SortFilter"
 import { hasFilters } from "./Utils/hasFilters"

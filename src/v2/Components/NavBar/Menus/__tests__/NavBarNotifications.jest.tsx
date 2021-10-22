@@ -1,6 +1,5 @@
 import { useTracking } from "v2/System/Analytics/useTracking"
 import { mount } from "enzyme"
-import React from "react"
 import { NavBarNotifications } from "../NavBarNotifications"
 
 jest.mock("v2/System/Analytics/useTracking")

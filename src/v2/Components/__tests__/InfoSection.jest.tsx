@@ -1,4 +1,3 @@
-import React from "react"
 import { mount } from "enzyme"
 import { Text } from "@artsy/palette"
 import { InfoSection } from "../InfoSection"

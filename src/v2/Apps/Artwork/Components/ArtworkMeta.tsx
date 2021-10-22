@@ -1,5 +1,5 @@
 import { ArtworkMeta_artwork } from "v2/__generated__/ArtworkMeta_artwork.graphql"
-import React, { Component } from "react"
+import { Component } from "react";
 import { Link, Meta, Title } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
 import { data as sd } from "sharify"

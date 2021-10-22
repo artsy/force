@@ -1,4 +1,3 @@
-import React from "react"
 import { mount } from "enzyme"
 import { SystemQueryRenderer } from "../SystemQueryRenderer"
 import { useDidMount } from "v2/Utils/Hooks/useDidMount"

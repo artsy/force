@@ -1,4 +1,3 @@
-import React from "react"
 import { graphql } from "relay-runtime"
 import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
 import { HomeRecentlyViewedRailFragmentContainer } from "../Components/HomeRecentlyViewedRail"

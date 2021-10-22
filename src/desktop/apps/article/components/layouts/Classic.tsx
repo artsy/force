@@ -1,11 +1,11 @@
-import React from "react"
+import { Component } from "react";
 import { Article } from "@artsy/reaction/dist/Components/Publishing/Article"
 import { AppProps } from "../App"
 
 const ArticlesGridView = require("desktop/components/articles_grid/view.coffee")
 const Articles = require("desktop/collections/articles.coffee")
 
-export class ClassicArticleLayout extends React.Component<AppProps> {
+export class ClassicArticleLayout extends Component<AppProps> {
   componentDidMount() {
     const { article } = this.props
 

@@ -1,7 +1,6 @@
 import { Button, Checkbox, Modal } from "@artsy/palette"
 import { mount } from "enzyme"
 import "jest-styled-components"
-import React from "react"
 import { act } from "react-dom/test-utils"
 import { flushPromiseQueue } from "v2/DevTools"
 import { AuctionRegistrationModal } from "../AuctionRegistrationModal"

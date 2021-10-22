@@ -1,11 +1,11 @@
-import React, { ReactInstance, cloneElement } from "react"
+import { Component, ReactInstance, cloneElement } from "react";
 import { findDOMNode } from "react-dom"
 import { Overlay } from "react-overlays"
 import styled from "styled-components"
 
 import { OverlayTriggerProps } from "./types"
 
-export class OverlayTrigger extends React.Component<OverlayTriggerProps> {
+export class OverlayTrigger extends Component<OverlayTriggerProps> {
   private target: ReactInstance
 
   render() {

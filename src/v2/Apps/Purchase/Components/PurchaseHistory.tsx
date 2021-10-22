@@ -8,7 +8,8 @@ import {
 } from "@artsy/palette"
 import { data as sd } from "sharify"
 import { PurchaseHistory_me } from "v2/__generated__/PurchaseHistory_me.graphql"
-import React, { useState } from "react"
+import { useState } from "react";
+import * as React from "react";
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { Media } from "v2/Utils/Responsive"

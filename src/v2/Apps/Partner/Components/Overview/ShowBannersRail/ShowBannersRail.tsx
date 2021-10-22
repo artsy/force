@@ -1,4 +1,4 @@
-import React from "react"
+import * as React from "react";
 import { Box, BoxProps, ProgressDots } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ShowBannersRail_partner } from "v2/__generated__/ShowBannersRail_partner.graphql"

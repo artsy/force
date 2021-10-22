@@ -10,7 +10,7 @@ import { SelectedCareerAchievements_artist } from "v2/__generated__/SelectedCare
 
 import { ArtistInsight } from "v2/Components/ArtistInsight"
 import { ArtistInsightsModal } from "v2/Components/ArtistInsightsModal"
-import React from "react"
+import { Component } from "react";
 import { createFragmentContainer, graphql } from "react-relay"
 import { SpaceProps } from "styled-system"
 import { RouterLink } from "v2/System/Router/RouterLink"
@@ -34,7 +34,7 @@ const CATEGORY_LABEL_MAP = {
   "top-emerging": "Represented by up-and-coming galleries.",
 }
 
-export class SelectedCareerAchievements extends React.Component<
+export class SelectedCareerAchievements extends Component<
   SelectedCareerAchievementsProps
 > {
   state = {

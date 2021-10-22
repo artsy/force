@@ -1,6 +1,6 @@
 import { Box, Flex, Text } from "@artsy/palette"
 import { RouterLink } from "v2/System/Router/RouterLink"
-import React from "react"
+import * as React from "react";
 
 interface HeaderProps {
   buttonHref?: string

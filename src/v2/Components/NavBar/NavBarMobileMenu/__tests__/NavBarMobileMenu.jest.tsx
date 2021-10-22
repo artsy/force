@@ -1,7 +1,6 @@
 import { SystemContextProvider } from "v2/System"
 import { useTracking } from "v2/System/Analytics/useTracking"
 import { mount } from "enzyme"
-import React from "react"
 import { NavBarMobileMenu } from "../NavBarMobileMenu"
 import { mediator } from "lib/mediator"
 import { NavBarMobileMenuTransition } from "../NavBarMobileMenuTransition"

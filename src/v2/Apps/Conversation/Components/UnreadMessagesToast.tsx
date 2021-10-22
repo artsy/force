@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react"
+import { useState, useEffect } from "react";
+import * as React from "react";
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 import { ArrowDownIcon, Flex, Text } from "@artsy/palette"
 import styled from "styled-components"
@@ -19,7 +20,7 @@ import { UnreadMessagesToast_conversation } from "v2/__generated__/UnreadMessage
 
 // TODO: refactor into one of the newer components when ready
 const Container = styled(Flex)<{ bottom?: number }>`
-  background-color: ${themeGet("colors.blue10")};
+  background-color: ${themeGet("colors.blue100")};
   border: none;
   border-radius: 30px;
   height: 40px;
@@ -59,7 +60,7 @@ export const UnreadMessagesToast: React.FC<UnreadMessagesToastProps> = ({
     const activeOrder = extractNodes(conversation?.activeOrders)[0]
     const newMessages =
       conversation?.lastMessageID !== conversation?.fromLastViewedMessageID ||
-      lastOrderUpdate !== activeOrder?.updatedAt
+      (!!activeOrder && lastOrderUpdate !== activeOrder?.updatedAt)
     if (!hasScrolled && newMessages && !visible) refreshCallback()
 
     setVisible(hasScrolled && newMessages)

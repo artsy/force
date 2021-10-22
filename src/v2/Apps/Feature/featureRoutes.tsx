@@ -12,7 +12,6 @@ const FeatureApp = loadable(
 export const featureRoutes: AppRouteConfig[] = [
   {
     path: "/feature/:slug",
-    theme: "v3",
     getComponent: () => FeatureApp,
     prepare: () => {
       FeatureApp.preload()

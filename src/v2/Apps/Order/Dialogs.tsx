@@ -1,6 +1,6 @@
 import { Link } from "@artsy/palette"
 import { ModalDialog, ModalDialogProps } from "v2/Components/Modal/ModalDialog"
-import React from "react"
+import * as React from "react";
 import { Container, Subscribe } from "unstated"
 
 interface DialogState {

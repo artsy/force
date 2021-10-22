@@ -1,5 +1,5 @@
 import { Color, Flex, FlexProps, color } from "@artsy/palette"
-import React from "react"
+import * as React from "react";
 
 // Doesn't exist in design system
 export const LightPurpleColor = "#DDDADC"

@@ -1,7 +1,7 @@
 import { intersection, orderBy } from "lodash"
 import { Flex } from "@artsy/palette"
 import { toTitleCase } from "@artsy/to-title-case"
-import React from "react"
+import * as React from "react";
 import {
   MultiSelectArtworkFilters,
   Slice,

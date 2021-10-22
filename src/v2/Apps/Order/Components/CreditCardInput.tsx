@@ -9,7 +9,7 @@ import {
   TextVariant,
 } from "@artsy/palette"
 import { borderMixin, v3BorderMixin } from "v2/Components/Mixins"
-import React from "react"
+import * as React from "react";
 import type {
   StripeCardNumberElementChangeEvent,
   StripeError,

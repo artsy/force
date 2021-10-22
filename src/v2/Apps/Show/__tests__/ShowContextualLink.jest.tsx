@@ -1,4 +1,3 @@
-import React from "react"
 import { ShowContextualLinkFragmentContainer } from "../Components/ShowContextualLink"
 import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
 import { graphql } from "react-relay"

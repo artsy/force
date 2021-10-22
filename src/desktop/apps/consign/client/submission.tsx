@@ -1,6 +1,5 @@
 import analyticsMiddleware from "./analytics_middleware"
 import ResponsiveWindow from "../../../components/react/responsive_window"
-import React from "react"
 import SubmissionFlow from "../components/submission_flow"
 import reducers from "./reducers"
 import createHistory from "history/createBrowserHistory"

@@ -1,5 +1,4 @@
 import { MockBoot } from "v2/DevTools"
-import React from "react"
 import { FairAppFragmentContainer } from "../FairApp"
 import { graphql } from "react-relay"
 import { Title } from "react-head"

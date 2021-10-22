@@ -1,5 +1,5 @@
 import { Join, Spacer } from "@artsy/palette"
-import React from "react"
+import * as React from "react";
 import { Title } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtistIconicCollectionsRailQueryRenderer } from "v2/Apps/Artist/Routes/Overview/Components/ArtistIconicCollectionsRail"

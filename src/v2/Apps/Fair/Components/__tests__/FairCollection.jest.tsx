@@ -1,5 +1,4 @@
 import { renderRelayTree } from "v2/DevTools"
-import React from "react"
 import { graphql } from "react-relay"
 import { FairCollectionFragmentContainer } from "../FairCollections"
 import { FairCollection_QueryRawResponse } from "v2/__generated__/FairCollection_Query.graphql"

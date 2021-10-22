@@ -1,5 +1,4 @@
 import { Spacer, Join } from "@artsy/palette"
-import React from "react"
 
 import {
   HeaderWithCoverImage,

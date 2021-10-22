@@ -1,4 +1,4 @@
-import React from "react"
+import { Component } from "react";
 import Registration from "./Registration"
 import block from "bem-cn-lite"
 import { connect } from "react-redux"
@@ -22,7 +22,7 @@ interface AuctionInfoDesktopProps {
   upcomingLabel?: string
 }
 @track({}, { dispatch: data => Events.postEvent(data) })
-export class AuctionInfoDesktop extends React.Component<
+export class AuctionInfoDesktop extends Component<
   AuctionInfoDesktopProps
 > {
   render() {

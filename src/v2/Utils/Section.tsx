@@ -1,5 +1,5 @@
 import { Flex, Sans, color, themeProps } from "@artsy/palette"
-import React from "react"
+import { Component, Fragment } from "react";
 import styled from "styled-components"
 
 const Header = styled.div`
@@ -17,7 +17,7 @@ export interface SectionProps {
   title?: string
 }
 
-export class Section extends React.Component<SectionProps> {
+export class Section extends Component<SectionProps> {
   state = {
     expanded: true,
   }
@@ -28,7 +28,7 @@ export class Section extends React.Component<SectionProps> {
     const maxWidth = themeProps.grid.breakpoints.xl
 
     return (
-      <React.Fragment>
+      <Fragment>
         <Header onClick={this.toggleExpand}>
           <Flex justifyContent="space-between">
             <Sans size="4" color="black60">
@@ -52,7 +52,7 @@ export class Section extends React.Component<SectionProps> {
             {this.props.children}
           </Flex>
         )}
-      </React.Fragment>
-    )
+      </Fragment>
+    );
   }
 }

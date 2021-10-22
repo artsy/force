@@ -1,4 +1,4 @@
-import React from "react"
+import * as React from "react";
 import { Text, Box, Flex, Spacer } from "@artsy/palette"
 import styled from "styled-components"
 import { themeGet } from "@styled-system/theme-get"

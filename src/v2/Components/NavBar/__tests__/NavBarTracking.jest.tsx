@@ -1,5 +1,4 @@
 import { mount } from "enzyme"
-import React from "react"
 import { AnalyticsSchema, SystemContextProvider } from "v2/System"
 import { useTracking } from "v2/System/Analytics/useTracking"
 import { NavBarUserMenu } from "../Menus"

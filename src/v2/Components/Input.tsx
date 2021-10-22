@@ -1,7 +1,7 @@
 import { Box, color, space } from "@artsy/palette"
 import { growAndFadeIn } from "v2/Assets/Animations"
 import { garamond, unica } from "v2/Assets/Fonts"
-import React from "react"
+import * as React from "react";
 import styled from "styled-components"
 import { block } from "./Helpers"
 import { borderedInputMixin } from "./Mixins"

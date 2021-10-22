@@ -2,7 +2,7 @@ import { ArtworkActions_artwork } from "v2/__generated__/ArtworkActions_artwork.
 import { useSystemContext } from "v2/System"
 import { AnalyticsSchema, useTracking } from "v2/System/Analytics"
 import { compact } from "lodash"
-import React from "react"
+import * as React from "react";
 import { createFragmentContainer, graphql } from "react-relay"
 import { data as sd } from "sharify"
 import styled, { css } from "styled-components"

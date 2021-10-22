@@ -20,7 +20,8 @@ import { ModalType } from "v2/Components/Authentication/Types"
 import { ErrorModal } from "v2/Components/Modal/ErrorModal"
 import currency from "currency.js"
 import { Router } from "found"
-import React, { FC, useContext } from "react"
+import { FC, useContext } from "react";
+import * as React from "react";
 import {
   RelayProp,
   commitMutation,

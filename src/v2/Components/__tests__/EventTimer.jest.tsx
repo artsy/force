@@ -1,5 +1,4 @@
 import { mount } from "enzyme"
-import React from "react"
 import { EventTiming } from "../EventTiming"
 
 const currentTime = "2018-05-10T20:22:32.000Z"

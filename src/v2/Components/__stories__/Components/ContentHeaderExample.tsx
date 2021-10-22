@@ -1,5 +1,5 @@
 import { Box, BoxProps, Flex, Text } from "@artsy/palette"
-import React from "react"
+import * as React from "react";
 
 export const ContentHeaderExample: React.FC<BoxProps> = props => {
   return (

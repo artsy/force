@@ -4,7 +4,7 @@ import {
   createResponsiveComponents,
 } from "@artsy/fresnel/dist/DynamicResponsive"
 import { themeProps } from "@artsy/palette"
-import React from "react"
+import * as React from "react";
 import * as sharify from "sharify"
 
 type MediaQuery = keyof typeof themeProps["mediaQueries"]

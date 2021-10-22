@@ -1,7 +1,9 @@
-import React from "react"
 import { mount } from "enzyme"
-import { ArtworkDetails, initialValues } from "../ArtworkDetails"
-import { ArtworkDetailsForm } from "../Components/ArtworkDetailsForm"
+import { ArtworkDetails } from "../ArtworkDetails"
+import {
+  ArtworkDetailsForm,
+  getArtworkDetailsFormInitialValues,
+} from "../Components/ArtworkDetailsForm"
 import {
   submissionFlowSteps,
   submissionFlowStepsMobile,
@@ -24,6 +26,21 @@ const validForm = {
   width: "4",
   depth: "5",
   units: "cm",
+}
+
+const validFormWithSpaces = {
+  artistId: "artistId",
+  artistName: "Banksy",
+  year: " 2021 ",
+  title: " Some title ",
+  medium: "PAINTING",
+  rarity: "limited edition",
+  editionNumber: " 1 ",
+  editionSize: " 2 ",
+  height: " 3 ",
+  width: " 4 ",
+  depth: " 5 ",
+  units: " cm ",
 }
 
 const mockRouterPush = jest.fn()
@@ -60,7 +77,7 @@ describe("ArtworkDetails", () => {
   beforeEach(() => {
     sessionStore = {
       "submission-1": JSON.stringify({
-        artworkDetailsForm: { ...initialValues },
+        artworkDetailsForm: getArtworkDetailsFormInitialValues(),
       }),
     }
   })
@@ -85,6 +102,8 @@ describe("ArtworkDetails", () => {
       expect(text).toContain("All fields are required to submit a work.")
       expect(wrapper.find(ArtworkDetailsForm)).toBeTruthy()
       expect(wrapper.find("[data-test-id='save-button']")).toBeTruthy()
+      expect(wrapper.find("BackLink")).toHaveLength(1)
+      expect(wrapper.find("BackLink").prop("to")).toEqual("/consign")
     })
 
     it("fields are pre-populating from session storage", async () => {
@@ -202,6 +221,25 @@ describe("ArtworkDetails", () => {
         sessionStore = {
           "submission-1": JSON.stringify({
             artworkDetailsForm: { ...validForm },
+          }),
+        }
+        const wrapper = getWrapper()
+        await flushPromiseQueue()
+
+        wrapper.find("Form").simulate("submit")
+
+        await flushPromiseQueue()
+
+        expect(sessionStorage.setItem).toHaveBeenCalledWith(
+          "submission-1",
+          JSON.stringify({ artworkDetailsForm: { ...validForm } })
+        )
+      })
+
+      it("delete spaces before saving to session storage", async () => {
+        sessionStore = {
+          "submission-1": JSON.stringify({
+            artworkDetailsForm: { ...validFormWithSpaces },
           }),
         }
         const wrapper = getWrapper()

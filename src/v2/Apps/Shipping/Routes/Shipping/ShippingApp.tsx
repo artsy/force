@@ -1,4 +1,4 @@
-import React from "react"
+import * as React from "react";
 import { createFragmentContainer, graphql } from "react-relay"
 import { Title } from "react-head"
 import { ShippingApp_me } from "v2/__generated__/ShippingApp_me.graphql"

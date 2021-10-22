@@ -9,7 +9,6 @@ import {
   SavedCreditCards,
 } from "v2/Components/Payment/SavedCreditCards"
 import { mount } from "enzyme"
-import React from "react"
 import { RelayProp, commitMutation } from "react-relay"
 
 jest.mock("react-relay", () => ({

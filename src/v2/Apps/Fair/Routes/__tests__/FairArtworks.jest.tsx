@@ -1,5 +1,4 @@
 import { MockBoot, renderRelayTree } from "v2/DevTools"
-import React from "react"
 import { FairArtworksRefetchContainer } from "../FairArtworks"
 import { graphql } from "react-relay"
 import { FairArtworks_QueryRawResponse } from "v2/__generated__/FairArtworks_Query.graphql"

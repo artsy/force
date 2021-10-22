@@ -1,4 +1,3 @@
-import React from "react"
 import { mount } from "enzyme"
 import { MetaTags } from "../MetaTags"
 import { MockBoot } from "v2/DevTools"

@@ -12,7 +12,6 @@ const PriceDatabaseApp = loadable(
 export const priceDatabaseRoutes: AppRouteConfig[] = [
   {
     path: "/price-database",
-    theme: "v3",
     getComponent: () => PriceDatabase,
     prepare: () => {
       PriceDatabaseApp.preload()

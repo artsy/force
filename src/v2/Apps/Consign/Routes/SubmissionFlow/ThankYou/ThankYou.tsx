@@ -1,10 +1,9 @@
-import React, { FC } from "react"
 import { Button, Flex, Text, Spacer, Box } from "@artsy/palette"
 import { FAQ } from "../../MarketingLanding/Components/FAQ"
 import { SoldRecentlyQueryRenderer } from "../../MarketingLanding/Components/SoldRecently"
 import { RouterLink } from "v2/System/Router/RouterLink"
 
-export const ThankYou: FC = () => {
+export const ThankYou: React.FC = () => {
   return (
     <>
       <Text variant="xxl" mt={4}>
@@ -21,9 +20,16 @@ export const ThankYou: FC = () => {
         </Text>
       </Box>
 
-      <Flex py={[2, 4]} mt={4} alignItems="center">
-        <RouterLink to="/consign/submission2">
+      <Flex
+        py={2}
+        my={4}
+        flexDirection={["column", "row"]}
+        alignItems={["stretch", "center"]}
+      >
+        <RouterLink to="/consign/submission2/artwork-details">
           <Button
+            mr={[0, 150]}
+            width={["100%", "auto"]}
             data-test-id="submit-another-work"
             size="medium"
             variant="primaryBlack"
@@ -32,7 +38,13 @@ export const ThankYou: FC = () => {
           </Button>
         </RouterLink>
 
-        <RouterLink to="/" ml={150} data-test-id="go-to-artsy-homepage">
+        <RouterLink
+          to="/"
+          data-test-id="go-to-artsy-homepage"
+          display="flex"
+          justifyContent="center"
+          mt={[4, 0]}
+        >
           Back to Artsy Homepage
         </RouterLink>
       </Flex>

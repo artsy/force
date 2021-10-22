@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import { useState } from "react";
 import styled from "styled-components"
 import { Banner, Box } from "@artsy/palette"
 import { data as sd } from "sharify"

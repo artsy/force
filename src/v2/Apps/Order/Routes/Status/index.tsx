@@ -1,4 +1,5 @@
-import React, { Component } from "react"
+import { Component } from "react";
+import * as React from "react";
 import { createFragmentContainer, graphql } from "react-relay"
 import { Title } from "react-head"
 import { Router, Match } from "found"
@@ -15,7 +16,6 @@ import styled from "styled-components"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { TransactionDetailsSummaryItemFragmentContainer as TransactionDetailsSummaryItem } from "v2/Apps/Order/Components/TransactionDetailsSummaryItem"
 import { TwoColumnLayout } from "v2/Apps/Order/Components/TwoColumnLayout"
-import { get } from "v2/Utils/get"
 import createLogger from "v2/Utils/logger"
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "../../Components/ArtworkSummaryItem"
 import { CreditCardSummaryItemFragmentContainer as CreditCardSummaryItem } from "../../Components/CreditCardSummaryItem"
@@ -32,6 +32,13 @@ interface StatusPageConfig {
   showTransactionSummary?: boolean
 }
 
+interface ShipmentData {
+  shipperName: string | null
+  trackingId: string | null
+  trackingUrl: string | null
+  estimatedDelivery: string | null
+}
+
 export interface StatusProps {
   order: Status_order
   router: Router
@@ -41,6 +48,7 @@ export interface StatusProps {
 export class StatusRoute extends Component<StatusProps> {
   getStatusCopy(): StatusPageConfig {
     const {
+      displayState,
       state,
       requestedFulfillment,
       mode,
@@ -48,9 +56,11 @@ export class StatusRoute extends Component<StatusProps> {
       stateExpiresAt,
     } = this.props.order
     const isOfferFlow = mode === "OFFER"
-    const isShip = requestedFulfillment?.__typename === "CommerceShip"
+    const isPickup = requestedFulfillment?.__typename === "CommercePickup"
+    const isArtaShipped: boolean =
+      requestedFulfillment?.__typename === "CommerceShipArta"
 
-    switch (state) {
+    switch (displayState?.toUpperCase()) {
       case "SUBMITTED":
         return isOfferFlow
           ? {
@@ -67,43 +77,54 @@ export class StatusRoute extends Component<StatusProps> {
               description: (
                 <>
                   Thank you for your purchase. You will receive a confirmation
-                  email by {stateExpiresAt}.
-                  <Spacer mb={1} />
-                  Disruptions caused by COVID-19 may cause delays — we
-                  appreciate your understanding.
+                  email by {stateExpiresAt}.{this.covidNote()}
                 </>
               ),
             }
       case "APPROVED":
         return {
-          title: isOfferFlow ? "Offer accepted" : "Your order is confirmed",
-          description: isShip ? (
-            <>
-              Thank you for your purchase. You will be notified when the work
-              has shipped, typically within 5–7 business days.
-              <Spacer mb={1} />
-              Disruptions caused by COVID-19 may cause delays — we appreciate
-              your understanding.
-            </>
-          ) : (
+          title: this.approvedTitle(isOfferFlow),
+          description: isPickup ? (
             <>
               Thank you for your purchase. A specialist will contact you within
               2 business days to coordinate pickup.
-              <Spacer mb={1} />
-              Disruptions caused by COVID-19 may cause delays — we appreciate
-              your understanding.
+              {this.covidNote()}
+            </>
+          ) : (
+            <>
+              Thank you for your purchase. You will be notified when the work
+              has shipped, typically within 5–7 business days.
+              {this.covidNote()}
             </>
           ),
         }
+      case "PROCESSING":
+        return {
+          title: this.approvedTitle(isOfferFlow),
+          description: (
+            <>
+              Thank you for your purchase. {this.deliverText()}More delivery
+              information will be available once your order ships.
+              {this.covidNote()}
+            </>
+          ),
+        }
+      case "IN_TRANSIT":
+        return {
+          title: "Your order has shipped",
+          description: this.shipmentDescription(isArtaShipped, false),
+        }
       case "FULFILLED": {
-        return isShip
+        return isPickup
           ? {
-              title: "Your order has shipped",
-              description: this.getFulfilmentDescription(),
-            }
-          : {
               title: "Your order has been picked up",
               description: null,
+            }
+          : {
+              title: isArtaShipped
+                ? "Your order is complete"
+                : "Your order has shipped",
+              description: this.shipmentDescription(isArtaShipped, true),
             }
       }
       case "CANCELED":
@@ -125,7 +146,7 @@ export class StatusRoute extends Component<StatusProps> {
         }
         // otherwise this was an offer order that was rejected before being
         // accepted
-        return this.getCanceledOfferOrderCopy()
+        return this.canceledOfferOrderCopy()
       default:
         // This should not happen. Check the order states are all accounted for:
         // https://github.com/artsy/exchange/blob/master/app/models/order.rb
@@ -138,7 +159,101 @@ export class StatusRoute extends Component<StatusProps> {
     }
   }
 
-  getCanceledOfferOrderCopy(): StatusPageConfig {
+  covidNote(): React.ReactNode {
+    return (
+      <>
+        <Spacer mb={1} />
+        Disruptions caused by COVID-19 may cause delays — we appreciate your
+        understanding.
+      </>
+    )
+  }
+
+  approvedTitle(isOferFlow): string {
+    return isOferFlow ? "Offer accepted" : "Your order is confirmed"
+  }
+
+  deliverText(): React.ReactNode {
+    const selectedShipping = this.props.order?.lineItems?.edges?.[0]?.node
+      ?.selectedShippingQuote?.displayName
+
+    let daysToDeliver: string | null = null
+    switch (selectedShipping) {
+      case "Rush":
+        daysToDeliver = "1 business day "
+        break
+      case "Express":
+        daysToDeliver = "2 business days"
+        break
+      case "Standard":
+        daysToDeliver = "3-5 business days"
+    }
+    return daysToDeliver
+      ? `Your order will be delivered in ${daysToDeliver} once shipped, plus up to 7 days processing time. `
+      : null
+  }
+
+  shipmentDescription(
+    isArtaShipped: boolean,
+    isDelivered: boolean
+  ): React.ReactNode {
+    const shipmentData: ShipmentData | null = this.getShipmentInfo()
+
+    if (!shipmentData) {
+      return null
+    }
+
+    return (
+      <>
+        {isArtaShipped && isDelivered
+          ? "Your order has been delivered."
+          : "Your work is on its way."}
+        <Spacer mb={2} />
+        {shipmentData.shipperName && (
+          <>
+            Shipper: {shipmentData.shipperName}
+            <Spacer mb={1} />
+          </>
+        )}
+        {shipmentData.trackingId && (
+          <>
+            {/* TODO: link it if trackingUrl is present */}
+            <>Tracking: {shipmentData.trackingId}</>
+            <Spacer mb={1} />
+          </>
+        )}
+        {shipmentData.estimatedDelivery && (
+          <>
+            {isArtaShipped && isDelivered
+              ? "Delivery date:"
+              : "Estimated delivery:"}{" "}
+            {shipmentData.estimatedDelivery}
+          </>
+        )}
+      </>
+    )
+  }
+
+  getShipmentInfo(): ShipmentData | null {
+    const fulfillment = this.props.order?.lineItems?.edges?.[0]?.node
+      ?.fulfillments?.edges?.[0]?.node
+
+    const shipment = this.props.order?.lineItems?.edges?.[0]?.node?.shipment
+
+    if (!fulfillment && !shipment) return null
+
+    return {
+      shipperName: shipment?.carrierName || fulfillment?.courier || null,
+      trackingId: shipment?.trackingNumber || fulfillment?.trackingId || null,
+      trackingUrl: shipment?.trackingUrl || null,
+      estimatedDelivery:
+        shipment?.estimatedDeliveryWindow ||
+        fulfillment?.estimatedDelivery ||
+        null,
+    }
+  }
+
+  canceledOfferOrderCopy(): StatusPageConfig {
     const { stateReason } = this.props.order
     switch (stateReason) {
       case "buyer_rejected":
@@ -200,39 +315,6 @@ export class StatusRoute extends Component<StatusProps> {
           showTransactionSummary: false,
         }
     }
-  }
-
-  getFulfilmentDescription(): React.ReactNode {
-    const fulfillment = get(
-      this.props.order,
-      o => o.lineItems?.edges?.[0]?.node?.fulfillments?.edges?.[0]?.node
-    )
-
-    if (!fulfillment) {
-      return null
-    }
-
-    return (
-      <>
-        Your work is on its way.
-        <Spacer mb={2} />
-        {fulfillment.courier && (
-          <>
-            Shipper: {fulfillment.courier}
-            <Spacer mb={1} />
-          </>
-        )}
-        {fulfillment.trackingId && (
-          <>
-            <>Tracking info: {fulfillment.trackingId}</>
-            <Spacer mb={1} />
-          </>
-        )}
-        {fulfillment.estimatedDelivery && (
-          <>Estimated delivery: {fulfillment.estimatedDelivery}</>
-        )}
-      </>
-    )
   }
 
   shouldButtonDisplay(): React.ReactNode | null {
@@ -357,6 +439,7 @@ export const StatusFragmentContainer = createFragmentContainer(StatusRoute, {
       __typename
       internalID
       code
+      displayState
       state
       mode
       stateReason
@@ -368,6 +451,9 @@ export const StatusFragmentContainer = createFragmentContainer(StatusRoute, {
         ... on CommercePickup {
           __typename
         }
+        ... on CommerceShipArta {
+          __typename
+        }
       }
       ...ArtworkSummaryItem_order
       ...TransactionDetailsSummaryItem_order
@@ -376,6 +462,15 @@ export const StatusFragmentContainer = createFragmentContainer(StatusRoute, {
       lineItems {
         edges {
           node {
+            shipment {
+              trackingNumber
+              trackingUrl
+              carrierName
+              estimatedDeliveryWindow
+            }
+            selectedShippingQuote {
+              displayName
+            }
             fulfillments {
               edges {
                 node {

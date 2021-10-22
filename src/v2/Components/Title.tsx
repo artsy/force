@@ -1,5 +1,5 @@
 import { garamond } from "v2/Assets/Fonts"
-import React from "react"
+import * as React from "react";
 import styled from "styled-components"
 import { media } from "./Helpers"
 

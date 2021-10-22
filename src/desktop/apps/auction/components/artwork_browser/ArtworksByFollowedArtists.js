@@ -1,7 +1,7 @@
 import PropTypes from "prop-types"
 import GridArtwork from "desktop/apps/auction/components/artwork_browser/main/artwork/GridArtwork"
 import MasonryGrid from "desktop/components/react/masonry_grid/MasonryGrid"
-import React, { Fragment } from "react"
+import { Fragment } from "react";
 import { get } from "lodash"
 import { Artwork } from "v2/Components/Artwork"
 import { ArtworkRail } from "../artwork_rail/ArtworkRail"

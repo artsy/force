@@ -1,4 +1,4 @@
-import React from "react"
+import * as React from "react";
 import { usePriceEstimateContext } from "./ConsignPriceEstimateContext"
 import { formatCentsToDollars } from "v2/Apps/Consign/Routes/MarketingLanding/Utils/formatCentsToDollars"
 import {

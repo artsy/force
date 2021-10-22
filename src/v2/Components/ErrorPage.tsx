@@ -6,7 +6,7 @@ import {
   Box,
   ThemeProviderV3,
 } from "@artsy/palette"
-import React from "react"
+import * as React from "react";
 import styled from "styled-components"
 import { RouterLink } from "v2/System/Router/RouterLink"
 
