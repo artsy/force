@@ -4,7 +4,7 @@ import { SystemContext } from "v2/System"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
 import { Timer } from "v2/Components/Timer"
 import { DateTime } from "luxon"
-import { Component, useContext } from "react";
+import { Component, useContext } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 
 export interface Props {
@@ -14,18 +14,18 @@ export interface Props {
 export class AuctionTimer extends Component<Props> {
   get endDate() {
     const { sale } = this.props
-    const { end_at } = sale
+    const { endAt } = sale
 
-    return this.liveStartAt || end_at
+    return this.liveStartAt || endAt
   }
 
   get liveStartAt() {
     const { sale } = this.props
-    const { live_start_at } = sale
+    const { liveStartAt } = sale
 
     // TODO: Figure out why this comes back from MP
-    if (live_start_at !== "Invalid date") {
-      return live_start_at
+    if (liveStartAt !== "Invalid date") {
+      return liveStartAt
     }
 
     return null
@@ -35,16 +35,14 @@ export class AuctionTimer extends Component<Props> {
       <Timer
         labelWithTimeRemaining={this.labelWithTimeRemaining()}
         labelWithoutTimeRemaining={this.labelWithoutTimeRemaining()}
-        // @ts-expect-error STRICT_NULL_CHECK
-        endDate={this.endDate}
+        endDate={this.endDate!}
         alignItems="center"
       />
     )
   }
 
   labelWithTimeRemaining() {
-    // @ts-expect-error STRICT_NULL_CHECK
-    const dateTime = DateTime.fromISO(this.endDate)
+    const dateTime = DateTime.fromISO(this.endDate!)
     const amPm = dateTime.hour >= 12 ? "pm" : "am"
     const minutes =
       dateTime.minute < 10 ? "0" + dateTime.minute : dateTime.minute
@@ -78,8 +76,8 @@ export const AuctionTimerFragmentContainer = createFragmentContainer(
   {
     sale: graphql`
       fragment AuctionTimer_sale on Sale {
-        live_start_at: liveStartAt
-        end_at: endAt
+        liveStartAt
+        endAt
       }
     `,
   }
