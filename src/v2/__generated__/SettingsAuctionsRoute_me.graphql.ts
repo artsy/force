@@ -30,6 +30,28 @@ export type SettingsAuctionsRoute_me = {
             } | null;
         } | null;
     } | null> | null;
+    readonly myBids: {
+        readonly closed: ReadonlyArray<{
+            readonly sale: {
+                readonly name: string | null;
+                readonly href: string | null;
+            } | null;
+        } | null> | null;
+    } | null;
+    readonly saleRegistrationsConnection: {
+        readonly edges: ReadonlyArray<{
+            readonly node: {
+                readonly isRegistered: boolean | null;
+                readonly sale: {
+                    readonly name: string | null;
+                    readonly href: string | null;
+                    readonly id: string;
+                    readonly isClosed: boolean | null;
+                    readonly startAt: string | null;
+                } | null;
+            } | null;
+        } | null> | null;
+    } | null;
     readonly " $refType": "SettingsAuctionsRoute_me";
 };
 export type SettingsAuctionsRoute_me$data = SettingsAuctionsRoute_me;
@@ -46,6 +68,20 @@ var v0 = {
   "args": null,
   "kind": "ScalarField",
   "name": "name",
+  "storageKey": null
+},
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+},
+v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "href",
   "storageKey": null
 };
 return {
@@ -78,13 +114,7 @@ return {
           "name": "activeBid",
           "plural": false,
           "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "id",
-              "storageKey": null
-            }
+            (v1/*: any*/)
           ],
           "storageKey": null
         },
@@ -154,13 +184,7 @@ return {
                   "name": "title",
                   "storageKey": null
                 },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "href",
-                  "storageKey": null
-                },
+                (v2/*: any*/),
                 {
                   "alias": null,
                   "args": null,
@@ -199,10 +223,119 @@ return {
         }
       ],
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "MyBids",
+      "kind": "LinkedField",
+      "name": "myBids",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "MyBid",
+          "kind": "LinkedField",
+          "name": "closed",
+          "plural": true,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": "Sale",
+              "kind": "LinkedField",
+              "name": "sale",
+              "plural": false,
+              "selections": [
+                (v0/*: any*/),
+                (v2/*: any*/)
+              ],
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "registered",
+          "value": false
+        }
+      ],
+      "concreteType": "SaleRegistrationConnection",
+      "kind": "LinkedField",
+      "name": "saleRegistrationsConnection",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "SaleRegistrationEdge",
+          "kind": "LinkedField",
+          "name": "edges",
+          "plural": true,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": "SaleRegistration",
+              "kind": "LinkedField",
+              "name": "node",
+              "plural": false,
+              "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "isRegistered",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "concreteType": "Sale",
+                  "kind": "LinkedField",
+                  "name": "sale",
+                  "plural": false,
+                  "selections": [
+                    (v0/*: any*/),
+                    (v2/*: any*/),
+                    (v1/*: any*/),
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "isClosed",
+                      "storageKey": null
+                    },
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "startAt",
+                      "storageKey": null
+                    }
+                  ],
+                  "storageKey": null
+                }
+              ],
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        }
+      ],
+      "storageKey": "saleRegistrationsConnection(registered:false)"
     }
   ],
   "type": "Me"
 };
 })();
-(node as any).hash = '5bf8d26156c92a019434b5f136327403';
+(node as any).hash = '8c7d151810fe45d027b58a04f5e7e02a';
 export default node;

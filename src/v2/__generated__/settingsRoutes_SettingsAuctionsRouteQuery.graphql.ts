@@ -54,6 +54,30 @@ fragment SettingsAuctionsRoute_me on Me {
       id
     }
   }
+  myBids {
+    closed {
+      sale {
+        name
+        href
+        id
+      }
+    }
+  }
+  saleRegistrationsConnection(registered: false) {
+    edges {
+      node {
+        isRegistered
+        sale {
+          name
+          href
+          id
+          isClosed
+          startAt
+        }
+        id
+      }
+    }
+  }
 }
 */
 
@@ -70,6 +94,13 @@ v1 = {
   "args": null,
   "kind": "ScalarField",
   "name": "id",
+  "storageKey": null
+},
+v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "href",
   "storageKey": null
 };
 return {
@@ -206,13 +237,7 @@ return {
                         "name": "title",
                         "storageKey": null
                       },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "href",
-                        "storageKey": null
-                      },
+                      (v2/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -255,6 +280,117 @@ return {
             ],
             "storageKey": null
           },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "MyBids",
+            "kind": "LinkedField",
+            "name": "myBids",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "MyBid",
+                "kind": "LinkedField",
+                "name": "closed",
+                "plural": true,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "Sale",
+                    "kind": "LinkedField",
+                    "name": "sale",
+                    "plural": false,
+                    "selections": [
+                      (v0/*: any*/),
+                      (v2/*: any*/),
+                      (v1/*: any*/)
+                    ],
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": [
+              {
+                "kind": "Literal",
+                "name": "registered",
+                "value": false
+              }
+            ],
+            "concreteType": "SaleRegistrationConnection",
+            "kind": "LinkedField",
+            "name": "saleRegistrationsConnection",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "SaleRegistrationEdge",
+                "kind": "LinkedField",
+                "name": "edges",
+                "plural": true,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "SaleRegistration",
+                    "kind": "LinkedField",
+                    "name": "node",
+                    "plural": false,
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "isRegistered",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": "Sale",
+                        "kind": "LinkedField",
+                        "name": "sale",
+                        "plural": false,
+                        "selections": [
+                          (v0/*: any*/),
+                          (v2/*: any*/),
+                          (v1/*: any*/),
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "isClosed",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "startAt",
+                            "storageKey": null
+                          }
+                        ],
+                        "storageKey": null
+                      },
+                      (v1/*: any*/)
+                    ],
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              }
+            ],
+            "storageKey": "saleRegistrationsConnection(registered:false)"
+          },
           (v1/*: any*/)
         ],
         "storageKey": null
@@ -266,7 +402,7 @@ return {
     "metadata": {},
     "name": "settingsRoutes_SettingsAuctionsRouteQuery",
     "operationKind": "query",
-    "text": "query settingsRoutes_SettingsAuctionsRouteQuery {\n  me {\n    ...SettingsAuctionsRoute_me\n    id\n  }\n}\n\nfragment SettingsAuctionsRoute_me on Me {\n  name\n  lotStandings {\n    isLeadingBidder\n    activeBid {\n      id\n    }\n    saleArtwork {\n      lotLabel\n      highestBid {\n        display\n      }\n      counts {\n        bidderPositions\n      }\n      artwork {\n        title\n        href\n        image {\n          url\n        }\n        artist {\n          name\n          id\n        }\n        id\n      }\n      id\n    }\n  }\n}\n"
+    "text": "query settingsRoutes_SettingsAuctionsRouteQuery {\n  me {\n    ...SettingsAuctionsRoute_me\n    id\n  }\n}\n\nfragment SettingsAuctionsRoute_me on Me {\n  name\n  lotStandings {\n    isLeadingBidder\n    activeBid {\n      id\n    }\n    saleArtwork {\n      lotLabel\n      highestBid {\n        display\n      }\n      counts {\n        bidderPositions\n      }\n      artwork {\n        title\n        href\n        image {\n          url\n        }\n        artist {\n          name\n          id\n        }\n        id\n      }\n      id\n    }\n  }\n  myBids {\n    closed {\n      sale {\n        name\n        href\n        id\n      }\n    }\n  }\n  saleRegistrationsConnection(registered: false) {\n    edges {\n      node {\n        isRegistered\n        sale {\n          name\n          href\n          id\n          isClosed\n          startAt\n        }\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();

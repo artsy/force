@@ -43,6 +43,7 @@ export const UserActiveBid: React.FC<UserActiveBidProps> = ({
     >
       <Flex>
         <RouterLink to={href} noUnderline>
+          {/* // TODO */}
           <Image width={100} height={100} src={image?.url} lazyLoad />
         </RouterLink>
 
@@ -51,6 +52,7 @@ export const UserActiveBid: React.FC<UserActiveBidProps> = ({
             Lot {lotLabel}
           </Text>
 
+          {/* // TODO */}
           <Spacer mb={0.5} />
 
           {artist?.name && (
