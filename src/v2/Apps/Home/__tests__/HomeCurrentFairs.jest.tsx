@@ -49,6 +49,16 @@ describe("HomeCurrentFairs", () => {
     expect(wrapper.html()).toContain("/fair/test-href")
   })
 
+  it("returns null when no data is received", () => {
+    const wrapper = getWrapper({
+      Viewer: () => ({
+        fairs: null,
+      }),
+    })
+
+    expect(wrapper.isEmptyRender()).toBe(true)
+  })
+
   describe("tracking", () => {
     it("tracks item clicks", () => {
       const wrapper = getWrapper()
