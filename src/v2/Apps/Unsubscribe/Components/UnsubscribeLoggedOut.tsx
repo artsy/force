@@ -34,6 +34,7 @@ export const UnsubscribeLoggedOut: React.FC<UnsubscribeLoggedOutProps> = ({
           Accept: "application/json",
           "Content-Type": "application/json",
           "X-Requested-With": "XMLHttpRequest",
+          "X-Xapp-Token": sd.ARTSY_XAPP_TOKEN,
         },
         method: "POST",
         credentials: "same-origin",
