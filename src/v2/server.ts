@@ -98,12 +98,6 @@ app.get(
         sd: sharify.data,
       }
 
-      // Move uncachable per response data to a cookie.
-      res.cookie("ARTSY_XAPP_TOKEN", sharify.data["ARTSY_XAPP_TOKEN"])
-      res.cookie("IP_ADDRESS", sharify.data["IP_ADDRESS"])
-      res.cookie("REQUEST_ID", sharify.data["REQUEST_ID"])
-      res.cookie("SESSION_ID", sharify.data["SESSION_ID"])
-
       res.render(`${PUBLIC_DIR}/index.ejs`, options)
     } catch (error) {
       console.error(error)

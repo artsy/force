@@ -32,7 +32,6 @@ import {
   FACEBOOK_ID,
   FACEBOOK_SECRET,
   IP_DENYLIST,
-  MEMORY_PAGE_URL_FILTER,
   NODE_ENV,
   SEGMENT_WRITE_KEY_SERVER,
   SENTRY_PRIVATE_DSN,
@@ -62,7 +61,6 @@ import { redisPageCacheMiddleware } from "./lib/middleware/redisPageCache"
 import { sameOriginMiddleware } from "./lib/middleware/sameOrigin"
 import { unsupportedBrowserMiddleware } from "./lib/middleware/unsupportedBrowser"
 import { backboneSync } from "lib/backboneSync"
-import { memoryPageCacheMiddleware } from "lib/middleware/memoryPageCache"
 import { serverTimingHeaders } from "lib/middleware/serverTimingHeaders"
 
 // App-specific V2 server-side functionality
@@ -72,7 +70,7 @@ import { handleArtworkImageDownload } from "lib/middleware/artworkMiddleware"
 import { searchMiddleware } from "lib/middleware/searchMiddleware"
 import { splitTestMiddleware } from "desktop/components/split_test/splitTestMiddleware"
 import { IGNORED_ERRORS } from "lib/analytics/sentryFilters"
-import { getRouteConfig } from "v2/System/Router/getRouteConfig"
+import { sharifyToCookie } from "lib/middleware/sharifyToCookie"
 
 // Find the v2 routes, we will not be testing memory caching for legacy pages.
 
@@ -268,23 +266,13 @@ function applyStaticAssetMiddlewares(app) {
 }
 
 function applyCacheMiddleware(app) {
-  // For full page cache testing, find all the modern routes and enable pages we
-  // would like to test.
-  const { routePaths } = getRouteConfig()
-  let cachedRoutePaths = routePaths
-
-  if (MEMORY_PAGE_URL_FILTER && MEMORY_PAGE_URL_FILTER.split(",").length > 0) {
-    const cacheFilters = MEMORY_PAGE_URL_FILTER.split(",")
-    cachedRoutePaths = cachedRoutePaths.filter(route => {
-      for (const cacheFilter of cacheFilters) {
-        if (route.startsWith(cacheFilter)) {
-          return true
-        }
-      }
-      return false
-    })
-  }
-
+  app.use(
+    sharifyToCookie([
+      "ARTSY_XAPP_TOKEN",
+      "IP_ADDRESS",
+      "REQUEST_ID",
+      "SESSION_ID",
+    ])
+  )
   app.use(redisPageCacheMiddleware)
-  app.use(cachedRoutePaths, memoryPageCacheMiddleware)
 }
