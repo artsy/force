@@ -43,11 +43,16 @@ export type SettingsAuctionsRoute_me = {
             readonly node: {
                 readonly isRegistered: boolean | null;
                 readonly sale: {
+                    readonly id: string;
                     readonly name: string | null;
                     readonly href: string | null;
-                    readonly id: string;
-                    readonly isClosed: boolean | null;
                     readonly startAt: string | null;
+                    readonly isClosed: boolean | null;
+                    readonly profile: {
+                        readonly icon: {
+                            readonly url: string | null;
+                        } | null;
+                    } | null;
                 } | null;
             } | null;
         } | null> | null;
@@ -83,7 +88,16 @@ v2 = {
   "kind": "ScalarField",
   "name": "href",
   "storageKey": null
-};
+},
+v3 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "url",
+    "storageKey": null
+  }
+];
 return {
   "argumentDefinitions": [],
   "kind": "Fragment",
@@ -192,15 +206,7 @@ return {
                   "kind": "LinkedField",
                   "name": "image",
                   "plural": false,
-                  "selections": [
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "url",
-                      "storageKey": null
-                    }
-                  ],
+                  "selections": (v3/*: any*/),
                   "storageKey": null
                 },
                 {
@@ -264,8 +270,23 @@ return {
       "args": [
         {
           "kind": "Literal",
-          "name": "registered",
-          "value": false
+          "name": "first",
+          "value": 10
+        },
+        {
+          "kind": "Literal",
+          "name": "isAuction",
+          "value": true
+        },
+        {
+          "kind": "Literal",
+          "name": "published",
+          "value": true
+        },
+        {
+          "kind": "Literal",
+          "name": "sort",
+          "value": "CREATED_AT_DESC"
         }
       ],
       "concreteType": "SaleRegistrationConnection",
@@ -304,9 +325,22 @@ return {
                   "name": "sale",
                   "plural": false,
                   "selections": [
+                    (v1/*: any*/),
                     (v0/*: any*/),
                     (v2/*: any*/),
-                    (v1/*: any*/),
+                    {
+                      "alias": null,
+                      "args": [
+                        {
+                          "kind": "Literal",
+                          "name": "format",
+                          "value": "MMMM D, h:mmA"
+                        }
+                      ],
+                      "kind": "ScalarField",
+                      "name": "startAt",
+                      "storageKey": "startAt(format:\"MMMM D, h:mmA\")"
+                    },
                     {
                       "alias": null,
                       "args": null,
@@ -317,8 +351,22 @@ return {
                     {
                       "alias": null,
                       "args": null,
-                      "kind": "ScalarField",
-                      "name": "startAt",
+                      "concreteType": "Profile",
+                      "kind": "LinkedField",
+                      "name": "profile",
+                      "plural": false,
+                      "selections": [
+                        {
+                          "alias": null,
+                          "args": null,
+                          "concreteType": "Image",
+                          "kind": "LinkedField",
+                          "name": "icon",
+                          "plural": false,
+                          "selections": (v3/*: any*/),
+                          "storageKey": null
+                        }
+                      ],
                       "storageKey": null
                     }
                   ],
@@ -331,11 +379,11 @@ return {
           "storageKey": null
         }
       ],
-      "storageKey": "saleRegistrationsConnection(registered:false)"
+      "storageKey": "saleRegistrationsConnection(first:10,isAuction:true,published:true,sort:\"CREATED_AT_DESC\")"
     }
   ],
   "type": "Me"
 };
 })();
-(node as any).hash = '8c7d151810fe45d027b58a04f5e7e02a';
+(node as any).hash = '7f32f9973c6345d43f27163fe41fd676';
 export default node;

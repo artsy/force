@@ -1,4 +1,5 @@
-import { Column, Flex, Text } from "@artsy/palette"
+import { Button, Column, Flex, Text } from "@artsy/palette"
+import { RouterLink } from "v2/System/Router/RouterLink"
 import React from "react"
 
 interface UserRegistrationAuctionsProps {
@@ -20,8 +21,15 @@ export const UserRegistrationAuctions: React.FC<UserRegistrationAuctionsProps> =
       borderBottom={shouldDisplayBorderBottom ? "1px solid" : ""}
       borderColor="black10"
     >
-      <Flex>
+      <Flex flexDirection="column">
         <Text>{sale.name}</Text>
+        <Text>{sale.startAt}</Text>
+      </Flex>
+
+      <Flex>
+        <RouterLink to={sale.href} noUnderline>
+          <Button size="medium">Register</Button>
+        </RouterLink>
       </Flex>
     </Column>
   )

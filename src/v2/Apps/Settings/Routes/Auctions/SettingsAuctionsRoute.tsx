@@ -29,7 +29,7 @@ const SettingsAuctionsRoute: React.FC<SettingsAuctionsRouteProps> = ({
           <GridColumns mb={6}>
             {lotStandings.map((lot, i) => (
               <UserActiveBid
-                key={lot?.activeBid?.id}
+                key={i}
                 lot={lot}
                 shouldDisplayBorderBottom={i + 1 < lotStandings.length}
               />
@@ -128,16 +128,21 @@ export const SettingsAuctionsRouteFragmentContainer = createFragmentContainer(
             }
           }
         }
-        saleRegistrationsConnection(registered: false) {
+        saleRegistrationsConnection(
+          published: true
+          isAuction: true
+          sort: CREATED_AT_DESC
+          first: 10
+          isRegistered: false
+        ) {
           edges {
             node {
-              isRegistered
               sale {
+                id
                 name
                 href
-                id
+                startAt(format: "MMMM D, h:mmA")
                 isClosed
-                startAt
               }
             }
           }

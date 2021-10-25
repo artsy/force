@@ -68,7 +68,7 @@ export const UserActiveBid: React.FC<UserActiveBidProps> = ({
           <Spacer mb={0.5} />
 
           <Text color="black60" variant="xs">
-            {highestBid?.display} ({bidderPositions} Bids)
+            {highestBid?.display} ({bidderPositions} Bid)
           </Text>
         </Flex>
       </Flex>
