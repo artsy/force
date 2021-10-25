@@ -20,17 +20,36 @@ describe("Footer", () => {
       expect(wrapper.find(DownloadAppBadge).length).toEqual(2)
     })
 
+    it("renders correct routes to partnerships", () => {
+      const wrapper = getWrapper("lg")
+      const links = wrapper.find("FooterLink")
+
+      expect(links.at(8).text()).toBe("Artsy for Galleries")
+      expect(links.at(8).prop("to")).toBe("https://partners.artsy.net")
+
+      expect(links.at(9).text()).toBe("Artsy for Museums")
+      expect(links.at(9).prop("to")).toBe("/institution-partnerships")
+
+      expect(links.at(10).text()).toBe("Artsy for Auctions")
+      expect(links.at(10).prop("to")).toBe("/auction-partnerships")
+
+      expect(links.at(11).text()).toBe("Artsy for Fairs")
+      expect(links.at(11).prop("to")).toBe(
+        "https://partners.artsy.net/artsy-fair-partnerships/"
+      )
+    })
+
     it("renders links to download the app", () => {
       const wrapper = getWrapper("lg")
       const links = wrapper.find("FooterLink")
 
-      expect(links.at(13).text()).toBe("iOS App")
-      expect(links.at(13).prop("to")).toBe(
+      expect(links.at(14).text()).toBe("iOS App")
+      expect(links.at(14).prop("to")).toBe(
         "https://apps.apple.com/us/app/artsy-buy-sell-original-art/id703796080"
       )
 
-      expect(links.at(14).text()).toBe("Android App")
-      expect(links.at(14).prop("to")).toBe(
+      expect(links.at(15).text()).toBe("Android App")
+      expect(links.at(15).prop("to")).toBe(
         "https://play.google.com/store/apps/details?id=net.artsy.app"
       )
     })

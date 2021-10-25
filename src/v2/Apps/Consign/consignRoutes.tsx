@@ -91,6 +91,7 @@ export const consignRoutes: AppRouteConfig[] = [
       }) as any,
       {
         path: "artwork-details",
+        hideNav: true,
         hideFooter: true,
         getComponent: () => ArtworkDetails,
         prepare: () => {
@@ -99,6 +100,7 @@ export const consignRoutes: AppRouteConfig[] = [
       },
       {
         path: ":id/artwork-details",
+        hideNav: true,
         hideFooter: true,
         getComponent: () => ArtworkDetails,
         prepare: () => {
@@ -107,6 +109,7 @@ export const consignRoutes: AppRouteConfig[] = [
       },
       {
         path: ":id/upload-photos",
+        hideNav: true,
         hideFooter: true,
         getComponent: () => UploadPhotos,
         prepare: () => {
@@ -115,6 +118,7 @@ export const consignRoutes: AppRouteConfig[] = [
       },
       {
         path: ":id/contact-information",
+        hideNav: true,
         hideFooter: true,
         getComponent: () => ContactInformation,
         prepare: () => {
@@ -130,6 +134,7 @@ export const consignRoutes: AppRouteConfig[] = [
       },
       {
         path: ":id/thank-you",
+        hideNav: true,
         hideFooter: true,
         getComponent: () => ThankYou,
         prepare: () => {

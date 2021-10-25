@@ -5,8 +5,8 @@ import { SystemContext } from "v2/System"
 import { useTracking } from "v2/System/Analytics"
 import * as Schema from "v2/System/Analytics/Schema"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
-import { useContext } from "react";
-import * as React from "react";
+import { useContext } from "react"
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { extractNodes } from "v2/Utils/extractNodes"
 import { ShelfArtworkFragmentContainer } from "../Artwork/ShelfArtwork"
@@ -100,6 +100,9 @@ export const RecentlyViewedQueryRenderer = () => {
         }
 
         return <RecentlyViewedFragmentContainer me={props.me!} />
+      }}
+      cacheConfig={{
+        force: true,
       }}
     />
   )

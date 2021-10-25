@@ -4,27 +4,13 @@ import { Form, Formik } from "formik"
 import {
   ArtworkDetailsForm,
   ArtworkDetailsFormModel,
+  getArtworkDetailsFormInitialValues,
 } from "./Components/ArtworkDetailsForm"
 import { useRouter } from "v2/System/Router/useRouter"
 import uuid from "uuid"
 import { useSubmission } from "../Utils/useSubmission"
 import { artworkDetailsValidationSchema } from "../Utils/validation"
 import { BackLink } from "v2/Components/Links/BackLink"
-
-export const initialValues = {
-  artistId: "",
-  artistName: "",
-  year: "",
-  title: "",
-  medium: "",
-  rarity: "",
-  editionNumber: "",
-  editionSize: "",
-  height: "",
-  width: "",
-  depth: "",
-  units: "in",
-}
 
 export const ArtworkDetails: React.FC = () => {
   const {
@@ -44,6 +30,15 @@ export const ArtworkDetails: React.FC = () => {
       ...values,
       editionNumber: isLimitedEditionRarity ? values.editionNumber : "",
       editionSize: isLimitedEditionRarity ? values.editionSize : "",
+    }
+
+    for (let key in artworkDetailsForm) {
+      if (typeof artworkDetailsForm[key] !== "string") {
+        artworkDetailsForm[key] = artworkDetailsForm[key] || undefined
+      } else {
+        artworkDetailsForm[key] =
+          artworkDetailsForm[key] && artworkDetailsForm[key].trim()
+      }
     }
 
     saveSubmission(
@@ -66,7 +61,7 @@ export const ArtworkDetails: React.FC = () => {
   return (
     <>
       <BackLink py={2} mb={6} to="/consign">
-        Back ....
+        Back
       </BackLink>
 
       <SubmissionStepper currentStep="Artwork Details" />
@@ -79,7 +74,7 @@ export const ArtworkDetails: React.FC = () => {
       </Text>
 
       <Formik<ArtworkDetailsFormModel>
-        initialValues={initialValues}
+        initialValues={getArtworkDetailsFormInitialValues()}
         onSubmit={handleSubmit}
         validationSchema={artworkDetailsValidationSchema}
         validateOnMount
@@ -89,6 +84,7 @@ export const ArtworkDetails: React.FC = () => {
             <ArtworkDetailsForm />
             <Button
               mt={6}
+              width={["100%", "auto"]}
               data-test-id="save-button"
               type="submit"
               size="medium"

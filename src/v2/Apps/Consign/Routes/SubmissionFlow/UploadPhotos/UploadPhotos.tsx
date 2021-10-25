@@ -78,7 +78,7 @@ export const UploadPhotos: React.FC = () => {
         mb={6}
         to={`/consign/submission2/${submissionId}/artwork-details`}
       >
-        Back ....
+        Back
       </BackLink>
 
       <SubmissionStepper currentStep="Upload Photos" />
@@ -130,6 +130,7 @@ export const UploadPhotos: React.FC = () => {
               </Box>
 
               <Button
+                width={["100%", "auto"]}
                 disabled={!isValid}
                 loading={values.photos.some(c => !c.s3Key)}
                 type="submit"
