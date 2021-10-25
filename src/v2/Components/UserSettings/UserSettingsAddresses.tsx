@@ -1,17 +1,14 @@
 import { Box, Text } from "@artsy/palette"
 import { SavedAddressesFragmentContainer as SavedAddresses } from "v2/Apps/Order/Components/SavedAddresses"
-import { renderWithLoadProgress } from "v2/System/Relay/renderWithLoadProgress"
 import { SystemContextProps } from "v2/System"
-import { useState } from "react";
-import * as React from "react";
-import { createFragmentContainer, graphql, QueryRenderer } from "react-relay"
-import { UserSettingsAddressesQuery } from "v2/__generated__/UserSettingsAddressesQuery.graphql"
+import { useState } from "react"
+import * as React from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 import { UserSettingsAddresses_me } from "v2/__generated__/UserSettingsAddresses_me.graphql"
 import {
   CommitMutation,
   injectCommitMutation,
 } from "v2/Apps/Order/Utils/commitMutation"
-import { useSystemContext } from "v2/System"
 import ToastComponent from "../Toast/ToastComponent"
 
 interface UserSettingsAddressesProps extends SystemContextProps {
@@ -21,7 +18,7 @@ interface UserSettingsAddressesProps extends SystemContextProps {
 }
 
 export const UserSettingsAddresses: React.FC<UserSettingsAddressesProps> = props => {
-  const { me } = props
+  const { me, ...rest } = props
 
   const [notificationState, setNotificationState] = useState({
     notificationVisible: false,
@@ -58,12 +55,11 @@ export const UserSettingsAddresses: React.FC<UserSettingsAddressesProps> = props
         onCloseToast={onCloseToast}
       />
       <SavedAddresses
-        // @ts-expect-error STRICT_NULL_CHECK
         me={me}
         onChangeAddressCount={handleChangeAddressCount}
         onShowToast={onShowToast}
         inCollectorProfile
-        {...props}
+        {...rest}
       />
     </Box>
   )
@@ -84,26 +80,3 @@ export const UserSettingsAddressesFragmentContainer = createFragmentContainer(
     `,
   }
 )
-
-export const UserSettingsAddressesQueryRenderer = () => {
-  const { relayEnvironment, user } = useSystemContext()
-
-  if (!user) {
-    return null
-  }
-
-  return (
-    <QueryRenderer<UserSettingsAddressesQuery>
-      environment={relayEnvironment!}
-      variables={{}}
-      query={graphql`
-        query UserSettingsAddressesQuery {
-          me {
-            ...UserSettingsAddresses_me
-          }
-        }
-      `}
-      render={renderWithLoadProgress(UserSettingsAddressesFragmentContainer)}
-    />
-  )
-}

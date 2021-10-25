@@ -131,6 +131,13 @@ export const settingsRoutes: AppRouteConfig[] = [
         prepare: () => {
           PaymentsRoute.preload()
         },
+        query: graphql`
+          query settingsRoutes_PaymentsRouteQuery {
+            me {
+              ...SettingsPaymentsRoute_me
+            }
+          }
+        `,
       },
       {
         path: "purchases",
@@ -146,7 +153,6 @@ export const settingsRoutes: AppRouteConfig[] = [
           SavesRoute.preload()
         },
       },
-
       {
         path: "edit-settings",
         getComponent: () => SettingsRoute,
@@ -154,13 +160,19 @@ export const settingsRoutes: AppRouteConfig[] = [
           SettingsRoute.preload()
         },
       },
-
       {
         path: "shipping",
         getComponent: () => ShippingRoute,
         prepare: () => {
           ShippingRoute.preload()
         },
+        query: graphql`
+          query settingsRoutes_ShippingRouteQuery {
+            me {
+              ...SettingsShippingRoute_me
+            }
+          }
+        `,
       },
     ],
   },

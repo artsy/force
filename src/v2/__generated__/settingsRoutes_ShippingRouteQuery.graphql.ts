@@ -3,23 +3,23 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type UserSettingsAddressesQueryVariables = {};
-export type UserSettingsAddressesQueryResponse = {
+export type settingsRoutes_ShippingRouteQueryVariables = {};
+export type settingsRoutes_ShippingRouteQueryResponse = {
     readonly me: {
-        readonly " $fragmentRefs": FragmentRefs<"UserSettingsAddresses_me">;
+        readonly " $fragmentRefs": FragmentRefs<"SettingsShippingRoute_me">;
     } | null;
 };
-export type UserSettingsAddressesQuery = {
-    readonly response: UserSettingsAddressesQueryResponse;
-    readonly variables: UserSettingsAddressesQueryVariables;
+export type settingsRoutes_ShippingRouteQuery = {
+    readonly response: settingsRoutes_ShippingRouteQueryResponse;
+    readonly variables: settingsRoutes_ShippingRouteQueryVariables;
 };
 
 
 
 /*
-query UserSettingsAddressesQuery {
+query settingsRoutes_ShippingRouteQuery {
   me {
-    ...UserSettingsAddresses_me
+    ...SettingsShippingRoute_me
     id
   }
 }
@@ -53,6 +53,10 @@ fragment SavedAddresses_me on Me {
       startCursor
     }
   }
+}
+
+fragment SettingsShippingRoute_me on Me {
+  ...UserSettingsAddresses_me
 }
 
 fragment UserSettingsAddresses_me on Me {
@@ -99,7 +103,7 @@ return {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "UserSettingsAddressesQuery",
+    "name": "settingsRoutes_ShippingRouteQuery",
     "selections": [
       {
         "alias": null,
@@ -112,7 +116,7 @@ return {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "UserSettingsAddresses_me"
+            "name": "SettingsShippingRoute_me"
           }
         ],
         "storageKey": null
@@ -124,7 +128,7 @@ return {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "UserSettingsAddressesQuery",
+    "name": "settingsRoutes_ShippingRouteQuery",
     "selections": [
       {
         "alias": null,
@@ -324,11 +328,11 @@ return {
   "params": {
     "id": null,
     "metadata": {},
-    "name": "UserSettingsAddressesQuery",
+    "name": "settingsRoutes_ShippingRouteQuery",
     "operationKind": "query",
-    "text": "query UserSettingsAddressesQuery {\n  me {\n    ...UserSettingsAddresses_me\n    id\n  }\n}\n\nfragment SavedAddresses_me on Me {\n  id\n  addressConnection(first: 30) {\n    totalCount\n    edges {\n      node {\n        id\n        internalID\n        addressLine1\n        addressLine2\n        addressLine3\n        city\n        country\n        isDefault\n        name\n        phoneNumber\n        postalCode\n        region\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n\nfragment UserSettingsAddresses_me on Me {\n  id\n  internalID\n  ...SavedAddresses_me\n  addresses: addressConnection {\n    totalCount\n  }\n}\n"
+    "text": "query settingsRoutes_ShippingRouteQuery {\n  me {\n    ...SettingsShippingRoute_me\n    id\n  }\n}\n\nfragment SavedAddresses_me on Me {\n  id\n  addressConnection(first: 30) {\n    totalCount\n    edges {\n      node {\n        id\n        internalID\n        addressLine1\n        addressLine2\n        addressLine3\n        city\n        country\n        isDefault\n        name\n        phoneNumber\n        postalCode\n        region\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n\nfragment SettingsShippingRoute_me on Me {\n  ...UserSettingsAddresses_me\n}\n\nfragment UserSettingsAddresses_me on Me {\n  id\n  internalID\n  ...SavedAddresses_me\n  addresses: addressConnection {\n    totalCount\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '97c78d58a3257d7fbbba3073230db79f';
+(node as any).hash = 'cd31c14d8951d621c32fafc96271888b';
 export default node;
