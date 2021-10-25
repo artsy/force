@@ -120,8 +120,8 @@ export class SearchResultsArtistsRoute extends React.Component<Props, State> {
             <Box key={index}>
               <GenericSearchResultItem
                 name={name}
-                description={bio || ""}
-                imageUrl={imageUrl || ""}
+                description={bio ?? ""}
+                imageUrl={imageUrl ?? ""}
                 entityType="Artist"
                 href={worksForSaleHref}
                 index={index}

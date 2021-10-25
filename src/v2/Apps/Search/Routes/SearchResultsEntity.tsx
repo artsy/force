@@ -132,9 +132,9 @@ export class SearchResultsEntityRoute extends React.Component<Props, State> {
             <Box key={index}>
               <GenericSearchResultItem
                 name={name}
-                description={description || ""}
+                description={description ?? ""}
                 href={href}
-                imageUrl={imageUrl || ""}
+                imageUrl={imageUrl ?? ""}
                 entityType={entityType}
                 index={index}
                 term={term}
