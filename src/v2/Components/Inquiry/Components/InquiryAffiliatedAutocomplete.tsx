@@ -1,5 +1,5 @@
 import { AutocompleteInput } from "@artsy/palette"
-import * as React from "react";
+import * as React from "react"
 import { useState } from "react"
 import { GraphQLTaggedNode, OperationType } from "relay-runtime"
 import { useSystemContext } from "v2/System"
@@ -42,7 +42,6 @@ export const InquiryAffiliatedAutocomplete = <T extends OperationType>({
           placeholder="Search"
           mb={2}
           onChange={handleChange}
-          value={term}
           loading
         />
       }
@@ -55,7 +54,6 @@ export const InquiryAffiliatedAutocomplete = <T extends OperationType>({
               placeholder="Search"
               mb={2}
               onChange={handleChange}
-              value={term}
               loading
             />
           )
@@ -70,7 +68,6 @@ export const InquiryAffiliatedAutocomplete = <T extends OperationType>({
             mb={2}
             onChange={handleChange}
             onSelect={handleSelect}
-            value={term}
           />
         )
       }}
