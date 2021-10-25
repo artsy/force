@@ -71,7 +71,7 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
         mb={6}
         to={`/consign/submission2/${submissionId}/upload-photos`}
       >
-        Back ....
+        Back
       </BackLink>
 
       {/* <SubmissionStepper currentStep="Contact Information" /> */}
