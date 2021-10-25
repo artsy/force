@@ -118,7 +118,7 @@ export const PhotoDropzone: React.FC<PhotoDropzoneProps> = ({
           Files supported: JPG, PNG
         </Text>
         <Text variant="md" color="black60" mt={1}>
-          Maximum size: {maxTotalSize} MB
+          Total maximum size: {maxTotalSize} MB
         </Text>
 
         <Button
