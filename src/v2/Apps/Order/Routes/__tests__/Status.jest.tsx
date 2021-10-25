@@ -131,6 +131,36 @@ describe("Status", () => {
         expect(page.text()).toContain("Your order has shipped")
         expect(page.getMessage()).toBe(1)
       })
+
+      it("should display tracking number if present", async () => {
+        const page = await buildPageWithOrder({
+          ...OfferOrderWithShippingDetails,
+          ...PaymentDetails,
+          state: "APPROVED",
+          displayState: "IN_TRANSIT",
+          shipment: {
+            trackingNumber: "steve",
+          },
+        })
+        expect(page.text()).toContain("steve")
+      })
+
+      it("should display link to tracking URL if present", async () => {
+        const page = await buildPageWithOrder({
+          ...OfferOrderWithShippingDetails,
+          ...PaymentDetails,
+          state: "APPROVED",
+          displayState: "IN_TRANSIT",
+          shipment: {
+            trackingNumber: "steve",
+            trackingUrl: "steves-house",
+          },
+        })
+        expect(page.text()).toContain("steve")
+        expect(
+          page.find(Message).find("Message").find("RouterLink").html()
+        ).toContain(`href="steves-house"`)
+      })
     })
 
     describe("fulfilled (ship)", () => {

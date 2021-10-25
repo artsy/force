@@ -1,5 +1,5 @@
-import { Component } from "react";
-import * as React from "react";
+import { Component } from "react"
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Title } from "react-head"
 import { Router, Match } from "found"
@@ -193,6 +193,26 @@ export class StatusRoute extends Component<StatusProps> {
       : null
   }
 
+  trackingInfo(trackingId, trackingUrl): React.ReactNode | null {
+    if (!trackingId && !trackingUrl) {
+      return null
+    }
+
+    const node = trackingUrl ? (
+      <RouterLink to={trackingUrl} target="_blank">
+        {trackingId ? trackingId : "info"}
+      </RouterLink>
+    ) : (
+      trackingId
+    )
+    return (
+      <>
+        Tracking: {node}
+        <Spacer mb={1} />
+      </>
+    )
+  }
+
   shipmentDescription(
     isArtaShipped: boolean,
     isDelivered: boolean
@@ -202,6 +222,11 @@ export class StatusRoute extends Component<StatusProps> {
     if (!shipmentData) {
       return null
     }
+
+    const trackingInfo = this.trackingInfo(
+      shipmentData.trackingId,
+      shipmentData.trackingUrl
+    )
 
     return (
       <>
@@ -215,13 +240,7 @@ export class StatusRoute extends Component<StatusProps> {
             <Spacer mb={1} />
           </>
         )}
-        {shipmentData.trackingId && (
-          <>
-            {/* TODO: link it if trackingUrl is present */}
-            <>Tracking: {shipmentData.trackingId}</>
-            <Spacer mb={1} />
-          </>
-        )}
+        {trackingInfo}
         {shipmentData.estimatedDelivery && (
           <>
             {isArtaShipped && isDelivered
