@@ -61,7 +61,7 @@ export const ArtworkDetails: React.FC = () => {
   return (
     <>
       <BackLink py={2} mb={6} to="/consign">
-        Back ....
+        Back
       </BackLink>
 
       <SubmissionStepper currentStep="Artwork Details" />
