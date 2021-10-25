@@ -21,7 +21,7 @@ export type CCPARequestMutationResponse = {
             } | null;
             readonly mutationError?: {
                 readonly type: string | null;
-                readonly message: string;
+                readonly message: string | null;
                 readonly detail: string | null;
             } | null;
         } | null;

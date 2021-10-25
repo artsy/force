@@ -16,7 +16,7 @@ export type IdentityVerificationAppStartMutationResponse = {
             readonly mutationError?: {
                 readonly detail: string | null;
                 readonly error: string | null;
-                readonly message: string;
+                readonly message: string | null;
             } | null;
         } | null;
     } | null;

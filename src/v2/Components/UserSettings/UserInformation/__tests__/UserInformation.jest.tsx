@@ -102,7 +102,7 @@ describe("UserInformation", () => {
                 name: "email",
               },
             ],
-            message: null,
+            message: "foo",
             type: "error",
           },
         },

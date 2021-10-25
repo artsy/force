@@ -9,7 +9,7 @@ export type requestEmailConfirmationMutationResponse = {
             readonly unconfirmedEmail?: string | null;
             readonly mutationError?: {
                 readonly error: string | null;
-                readonly message: string;
+                readonly message: string | null;
             } | null;
         } | null;
     } | null;
