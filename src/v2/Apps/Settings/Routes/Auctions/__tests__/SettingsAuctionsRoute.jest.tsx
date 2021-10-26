@@ -2,7 +2,7 @@ import React from "react"
 import { graphql } from "react-relay"
 import { SettingsAuctionsRouteFragmentContainer } from "../SettingsAuctionsRoute"
 import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
-import { UserActiveBid } from "../Components/UserActiveBid"
+import { UserActiveBids } from "../Components/UserActiveBids"
 import { UserBidHistory } from "../Components/UserBidHistory"
 import { UserRegistrationAuctions } from "../Components/UserRegistrationAuctions"
 
@@ -39,7 +39,10 @@ const data = {
           title: "mist",
           href: "/mist",
           image: {
-            url: "someMockImageUrl",
+            cropped: {
+              src: "src",
+              srcSet: "srcSet",
+            },
           },
           artist: {
             name: "Caspar",
@@ -96,7 +99,7 @@ describe("SettingsAuctionsRoute", () => {
     expect(
       wrapper
         .children()
-        .contains(<UserActiveBid lotStandings={data.lotStandings} />)
+        .contains(<UserActiveBids lotStandings={data.lotStandings} />)
     ).toBe(true)
 
     expect(

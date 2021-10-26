@@ -1,7 +1,7 @@
 import React from "react"
 import { SettingsAuctionsRoute_me } from "v2/__generated__/SettingsAuctionsRoute_me.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
-import { UserActiveBid } from "./Components/UserActiveBid"
+import { UserActiveBids } from "./Components/UserActiveBids"
 import { UserBidHistory } from "./Components/UserBidHistory"
 import { UserRegistrationAuctions } from "./Components/UserRegistrationAuctions"
 
@@ -14,7 +14,7 @@ const SettingsAuctionsRoute: React.FC<SettingsAuctionsRouteProps> = ({
 }) => {
   return (
     <>
-      <UserActiveBid lotStandings={me.lotStandings} />
+      <UserActiveBids lotStandings={me.lotStandings} />
       <UserBidHistory myBids={me.myBids} />
       <UserRegistrationAuctions
         saleRegistrationsConnection={me.saleRegistrationsConnection}

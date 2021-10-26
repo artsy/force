@@ -14,11 +14,11 @@ import React from "react"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import { SettingsAuctionsRoute_me } from "v2/__generated__/SettingsAuctionsRoute_me.graphql"
 
-interface UserActiveBidProps {
+interface UserActiveBidsProps {
   lotStandings: SettingsAuctionsRoute_me["lotStandings"]
 }
 
-export const UserActiveBid: React.FC<UserActiveBidProps> = ({
+export const UserActiveBids: React.FC<UserActiveBidsProps> = ({
   lotStandings,
 }) => {
   return (
@@ -44,7 +44,6 @@ export const UserActiveBid: React.FC<UserActiveBidProps> = ({
                   to={lot?.saleArtwork?.artwork?.href ?? ""}
                   noUnderline
                 >
-                  {/* // TODO */}
                   <Image
                     width={100}
                     height={100}

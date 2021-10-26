@@ -1,5 +1,5 @@
 import React from "react"
-import { UserActiveBid } from "../UserActiveBid"
+import { UserActiveBids } from "../UserActiveBids"
 import { mount } from "enzyme"
 
 const data = [
@@ -33,8 +33,8 @@ const data = [
   },
 ]
 
-describe("UserActiveBid", () => {
-  let wrapper = mount(<UserActiveBid lotStandings={data} />)
+describe("UserActiveBids", () => {
+  let wrapper = mount(<UserActiveBids lotStandings={data} />)
 
   afterAll(() => {
     wrapper.unmount()
@@ -61,7 +61,7 @@ describe("UserActiveBid", () => {
   })
 
   it("renders nothing message when no data found", () => {
-    wrapper = mount(<UserActiveBid lotStandings={[]} />)
+    wrapper = mount(<UserActiveBids lotStandings={[]} />)
     expect(wrapper.html()).toContain("Nothing to Show")
   })
 })
