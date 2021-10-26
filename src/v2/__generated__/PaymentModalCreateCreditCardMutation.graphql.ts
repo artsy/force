@@ -26,7 +26,7 @@ export type PaymentModalCreateCreditCardMutationResponse = {
             } | null;
             readonly mutationError?: {
                 readonly type: string | null;
-                readonly message: string | null;
+                readonly message: string;
                 readonly detail: string | null;
             } | null;
         } | null;

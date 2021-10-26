@@ -50,7 +50,7 @@ export type UpdateUserInformationMutationResponse = {
             } | null;
             readonly mutationError?: {
                 readonly type: string | null;
-                readonly message: string | null;
+                readonly message: string;
                 readonly detail: string | null;
                 readonly error: string | null;
                 readonly fieldErrors: ReadonlyArray<{
@@ -73,7 +73,7 @@ export type UpdateUserInformationMutationRawResponse = {
             readonly __typename: "UpdateMyProfileMutationFailure";
             readonly mutationError: ({
                 readonly type: string | null;
-                readonly message: string | null;
+                readonly message: string;
                 readonly detail: string | null;
                 readonly error: string | null;
                 readonly fieldErrors: ReadonlyArray<({
