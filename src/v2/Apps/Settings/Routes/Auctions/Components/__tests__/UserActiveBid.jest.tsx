@@ -20,7 +20,10 @@ const data = [
         title: "mist",
         href: "/mist",
         image: {
-          url: "someMockImageUrl",
+          cropped: {
+            src: "somesource",
+            srcSet: "somesourceset",
+          },
         },
         artist: {
           name: "Caspar",
@@ -53,7 +56,7 @@ describe("UserActiveBid", () => {
 
   it("renders the passed image url", () => {
     expect(wrapper.find("Image").props().src).toEqual(
-      data[0].saleArtwork.artwork.image.url
+      data[0].saleArtwork.artwork.image.cropped.src
     )
   })
 

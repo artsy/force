@@ -48,7 +48,10 @@ export const UserActiveBid: React.FC<UserActiveBidProps> = ({
                   <Image
                     width={100}
                     height={100}
-                    src={lot?.saleArtwork?.artwork?.image?.url ?? ""}
+                    src={lot?.saleArtwork?.artwork?.image?.cropped?.src ?? ""}
+                    srcSet={
+                      lot?.saleArtwork?.artwork?.image?.cropped?.srcSet ?? ""
+                    }
                     lazyLoad
                   />
                 </RouterLink>

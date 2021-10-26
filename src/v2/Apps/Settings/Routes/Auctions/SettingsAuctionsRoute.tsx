@@ -46,7 +46,10 @@ export const SettingsAuctionsRouteFragmentContainer = createFragmentContainer(
               title
               href
               image {
-                url
+                cropped(height: 100, width: 100) {
+                  src
+                  srcSet
+                }
               }
               artist {
                 name

@@ -22,7 +22,10 @@ export type SettingsAuctionsRoute_me = {
                 readonly title: string | null;
                 readonly href: string | null;
                 readonly image: {
-                    readonly url: string | null;
+                    readonly cropped: {
+                        readonly src: string;
+                        readonly srcSet: string;
+                    } | null;
                 } | null;
                 readonly artist: {
                     readonly name: string | null;
@@ -205,10 +208,39 @@ return {
                   "selections": [
                     {
                       "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "url",
-                      "storageKey": null
+                      "args": [
+                        {
+                          "kind": "Literal",
+                          "name": "height",
+                          "value": 100
+                        },
+                        {
+                          "kind": "Literal",
+                          "name": "width",
+                          "value": 100
+                        }
+                      ],
+                      "concreteType": "CroppedImageUrl",
+                      "kind": "LinkedField",
+                      "name": "cropped",
+                      "plural": false,
+                      "selections": [
+                        {
+                          "alias": null,
+                          "args": null,
+                          "kind": "ScalarField",
+                          "name": "src",
+                          "storageKey": null
+                        },
+                        {
+                          "alias": null,
+                          "args": null,
+                          "kind": "ScalarField",
+                          "name": "srcSet",
+                          "storageKey": null
+                        }
+                      ],
+                      "storageKey": "cropped(height:100,width:100)"
                     }
                   ],
                   "storageKey": null
@@ -385,5 +417,5 @@ return {
   "type": "Me"
 };
 })();
-(node as any).hash = 'bdd392dd9576725c896f1c97cb839686';
+(node as any).hash = 'b8372a39f1ed1a64846f66588f00c643';
 export default node;
