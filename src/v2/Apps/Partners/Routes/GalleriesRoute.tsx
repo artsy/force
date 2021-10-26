@@ -13,9 +13,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { MetaTags } from "v2/Components/MetaTags"
 import { GalleriesRoute_viewer } from "v2/__generated__/GalleriesRoute_viewer.graphql"
 import { PartnersRailFragmentContainer } from "v2/Apps/Partners/Components/PartnersRail"
-import { PartnersLocationAutocompleteQueryRenderer } from "../Components/PartnersLocationAutocomplete"
-import { PartnersSpecialtyAutocompleteQueryRenderer } from "../Components/PartnersSpecialtyAutocomplete"
-import { PartnersSearchQueryRenderer } from "../Components/PartnersSearch"
+import { PartnersFilters } from "../Components/PartnersFilters"
 
 interface GalleriesRouteProps {
   viewer: GalleriesRoute_viewer
@@ -38,19 +36,7 @@ const GalleriesRoute: React.FC<GalleriesRouteProps> = ({ viewer }) => {
           Browse Galleries
         </Text>
 
-        <GridColumns>
-          <Column span={4}>
-            <PartnersLocationAutocompleteQueryRenderer />
-          </Column>
-
-          <Column span={4}>
-            <PartnersSpecialtyAutocompleteQueryRenderer type="GALLERY" />
-          </Column>
-
-          <Column span={4}>
-            <PartnersSearchQueryRenderer type="GALLERY" />
-          </Column>
-        </GridColumns>
+        <PartnersFilters type="GALLERY" />
 
         {categories.map((partnerCategory, i) => {
           return (

@@ -16,6 +16,10 @@ jest.mock("v2/System/Analytics/useTracking", () => ({
   useTracking: () => ({}),
 }))
 
+jest.mock("../../Components/PartnersFilters", () => ({
+  PartnersFilters: () => null,
+}))
+
 const { renderWithRelay } = setupTestWrapperTL<
   InstitutionsRouteFragmentContainer_Test_Query
 >({

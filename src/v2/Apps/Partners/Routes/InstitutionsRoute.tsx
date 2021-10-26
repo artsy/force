@@ -12,10 +12,8 @@ import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { MetaTags } from "v2/Components/MetaTags"
 import { InstitutionsRoute_viewer } from "v2/__generated__/InstitutionsRoute_viewer.graphql"
-import { PartnersLocationAutocompleteQueryRenderer } from "../Components/PartnersLocationAutocomplete"
+import { PartnersFilters } from "../Components/PartnersFilters"
 import { PartnersRailFragmentContainer } from "../Components/PartnersRail"
-import { PartnersSearchQueryRenderer } from "../Components/PartnersSearch"
-import { PartnersSpecialtyAutocompleteQueryRenderer } from "../Components/PartnersSpecialtyAutocomplete"
 
 interface InstitutionsRouteProps {
   viewer: InstitutionsRoute_viewer
@@ -38,19 +36,7 @@ const InstitutionsRoute: React.FC<InstitutionsRouteProps> = ({ viewer }) => {
           Browse Institutions
         </Text>
 
-        <GridColumns>
-          <Column span={4}>
-            <PartnersLocationAutocompleteQueryRenderer />
-          </Column>
-
-          <Column span={4}>
-            <PartnersSpecialtyAutocompleteQueryRenderer type="INSTITUTION" />
-          </Column>
-
-          <Column span={4}>
-            <PartnersSearchQueryRenderer type="INSTITUTION" />
-          </Column>
-        </GridColumns>
+        <PartnersFilters type="INSTITUTION" />
 
         {categories.map((partnerCategory, i) => {
           return (
