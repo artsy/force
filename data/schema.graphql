@@ -4836,7 +4836,7 @@ type ConsignmentSubmission {
   dimensionsMetric: String
   edition: String
   editionNumber: String
-  editionSize: String
+  editionSize: Int
   height: String
 
   # Uniq ID for this submission
@@ -5688,7 +5688,7 @@ input CreateSubmissionMutationInput {
   dimensionsMetric: String
   edition: Boolean
   editionNumber: String
-  editionSize: String
+  editionSize: Int
   height: String
   locationCity: String
   locationCountry: String
@@ -12619,7 +12619,7 @@ input UpdateSubmissionMutationInput {
   dimensionsMetric: String
   edition: Boolean
   editionNumber: String
-  editionSize: String
+  editionSize: Int
   height: String
   id: ID!
   locationCity: String
