@@ -3,14 +3,22 @@ import { UserBidHistory } from "../UserBidHistory"
 import { mount } from "enzyme"
 
 const data = {
-  name: "mockSaleName",
-  href: "/mockSaleHref",
+  closed: [
+    {
+      sale: {
+        name: "mockSaleName",
+        href: "/mockSaleHref",
+        endAt: "this is the end",
+        profile: {
+          bio: "my beautiful friend",
+        },
+      },
+    },
+  ],
 }
 
 describe("UserBidHistory component", () => {
-  let wrapper = mount(
-    <UserBidHistory closedSale={data} shouldDisplayBorderBottom={false} />
-  )
+  let wrapper = mount(<UserBidHistory myBids={data} />)
 
   afterAll(() => {
     wrapper.unmount()
@@ -20,7 +28,18 @@ describe("UserBidHistory component", () => {
     expect(wrapper.isEmptyRender()).toBe(false)
   })
 
-  it("renders correct sale name", () => {
-    expect(wrapper.find("Text").first().html()).toContain("mockSaleName")
+  it("renders active bids title", () => {
+    expect(wrapper.find("Text").first().html()).toContain("Bid History")
+  })
+
+  it("renders correct artwork link", () => {
+    expect(wrapper.find("RouterLink").props().to).toEqual(
+      data.closed[0].sale.href
+    )
+  })
+
+  it("renders nothing message when no data found", () => {
+    wrapper = mount(<UserBidHistory myBids={{ closed: [] }} />)
+    expect(wrapper.html()).toContain("Nothing to Show")
   })
 })
