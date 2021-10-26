@@ -11,7 +11,7 @@ const SettingsApp = loadable(
 const OverviewRoute = loadable(
   () =>
     import(
-      /* webpackChunkName: "settingsBundle" */ "./Routes/Overview/SettingsOverviewRoute"
+      /* webpackChunkName: "settingsBundle" */ "./Routes/Overview/Components/SettingsOverviewRoute"
     ),
   {
     resolveComponent: component =>
@@ -21,7 +21,7 @@ const OverviewRoute = loadable(
 const AuctionsRoute = loadable(
   () =>
     import(
-      /* webpackChunkName: "settingsBundle" */ "./Routes/Auctions/SettingsAuctionsRoute"
+      /* webpackChunkName: "settingsBundle" */ "./Routes/Auctions/Components/SettingsAuctionsRoute"
     ),
   {
     resolveComponent: component =>
@@ -31,7 +31,7 @@ const AuctionsRoute = loadable(
 const EditProfileRoute = loadable(
   () =>
     import(
-      /* webpackChunkName: "settingsBundle" */ "./Routes/EditProfile/SettingsEditProfileRoute"
+      /* webpackChunkName: "settingsBundle" */ "./Routes/EditProfile/Components/SettingsEditProfileRoute"
     ),
   {
     resolveComponent: component =>
@@ -41,7 +41,7 @@ const EditProfileRoute = loadable(
 const PaymentsRoute = loadable(
   () =>
     import(
-      /* webpackChunkName: "settingsBundle" */ "./Routes/Payments/SettingsPaymentsRoute"
+      /* webpackChunkName: "settingsBundle" */ "./Routes/Payments/Components/SettingsPaymentsRoute"
     ),
   {
     resolveComponent: component =>
@@ -51,7 +51,7 @@ const PaymentsRoute = loadable(
 const PurchasesRoute = loadable(
   () =>
     import(
-      /* webpackChunkName: "settingsBundle" */ "./Routes/Purchases/SettingsPurchasesRoute"
+      /* webpackChunkName: "settingsBundle" */ "./Routes/Purchases/Components/SettingsPurchasesRoute"
     ),
   {
     resolveComponent: component =>
@@ -61,7 +61,7 @@ const PurchasesRoute = loadable(
 const SavesRoute = loadable(
   () =>
     import(
-      /* webpackChunkName: "settingsBundle" */ "./Routes/Saves/SettingsSavesRoute"
+      /* webpackChunkName: "settingsBundle" */ "./Routes/Saves/Components/SettingsSavesRoute"
     ),
   {
     resolveComponent: component =>
@@ -71,7 +71,7 @@ const SavesRoute = loadable(
 const SettingsRoute = loadable(
   () =>
     import(
-      /* webpackChunkName: "settingsBundle" */ "./Routes/Settings/SettingsEditRoute"
+      /* webpackChunkName: "settingsBundle" */ "./Routes/Settings/Components/SettingsEditRoute"
     ),
   {
     resolveComponent: component => component.SettingsEditRouteFragmentContainer,
@@ -80,7 +80,7 @@ const SettingsRoute = loadable(
 const ShippingRoute = loadable(
   () =>
     import(
-      /* webpackChunkName: "settingsBundle" */ "./Routes/Shipping/SettingsShippingRoute"
+      /* webpackChunkName: "settingsBundle" */ "./Routes/Shipping/Components/SettingsShippingRoute"
     ),
   {
     resolveComponent: component =>

@@ -2,7 +2,7 @@ import React from "react"
 import { graphql } from "react-relay"
 import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
 
-import { SettingsPaymentsRouteFragmentContainer } from "../Payments/SettingsPaymentsRoute"
+import { SettingsPaymentsRouteFragmentContainer } from "../Payments/Components/SettingsPaymentsRoute"
 import { SettingsPaymentsRoute_Test_Query } from "v2/__generated__/SettingsPaymentsRoute_Test_Query.graphql"
 
 jest.unmock("react-relay")
