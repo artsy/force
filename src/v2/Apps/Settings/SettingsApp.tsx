@@ -43,7 +43,7 @@ const SettingsApp: React.FC<SettingsAppProps> = ({ me, children }) => {
   return (
     <>
       <Text variant="lg" mt={[2, 4]}>
-        {me?.name ? `Hi ${me.name}!` : "Hi there!"}
+        Hi {me.name}!
       </Text>
 
       <RouteTabs my={4}>
