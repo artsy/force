@@ -102,6 +102,7 @@ export class SignUpForm extends Component<SignUpFormProps, SignUpFormState> {
           setTouched,
           status,
           touched,
+          validateForm,
           values,
         }: FormikProps<InputValues>) => {
           const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -249,16 +250,18 @@ export class SignUpForm extends Component<SignUpFormProps, SignUpFormState> {
                   handleTypeChange={() =>
                     this.props.handleTypeChange?.(ModalType.login)
                   }
-                  onAppleLogin={e => {
+                  onAppleLogin={async e => {
                     if (!values.accepted_terms_of_service) {
                       setTouched({ accepted_terms_of_service: true })
+                      await validateForm()
                     } else {
                       this.props.onAppleLogin?.(e)
                     }
                   }}
-                  onFacebookLogin={e => {
+                  onFacebookLogin={async e => {
                     if (!values.accepted_terms_of_service) {
                       setTouched({ accepted_terms_of_service: true })
+                      await validateForm()
                     } else {
                       this.props.onFacebookLogin?.(e)
                     }

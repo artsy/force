@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import { Link, Meta, Title } from "react-head"
 import { useRouter } from "v2/System/Router/useRouter"
 import { getENV } from "v2/Utils/getENV"
@@ -14,7 +14,9 @@ export const ArtistsByLetterMeta: React.FC = () => {
 
   const title = `Artists Starting with ${params.letter.toUpperCase()} | ${TITLE}`
   const description = `Research and discover artists starting with ${params.letter.toUpperCase()} on Artsy. Find works for sale, biographies, CVs, and auction results.`
-  const href = `${getENV("APP_URL")}/artists/${params.letter}`
+  const appUrl = getENV("APP_URL")
+  const prefix = "/artists/artists-starting-with-"
+  const href = [appUrl, prefix, params.letter].join("")
 
   return (
     <>

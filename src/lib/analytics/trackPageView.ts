@@ -4,12 +4,13 @@ import { OwnerType } from "@artsy/cohesion"
 import { data as sd } from "sharify"
 
 const foundExcludedPath = excludedRoutes => {
-  return excludedRoutes.some(excludedPath => {
+  const isFound = excludedRoutes.some(excludedPath => {
     const { path } = getContextPageFromClient()
     const matcher = match(excludedPath, { decode: decodeURIComponent })
     const foundMatch = !!matcher(path)
     return foundMatch
   })
+  return isFound
 }
 
 export const trackPageView = (excludedRoutes: string[] = []) => {

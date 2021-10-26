@@ -44,6 +44,8 @@ export const UploadPhotosForm: React.FC<UploadPhotosFormProps> = ({
     if (submission && submission.uploadPhotosForm) {
       setFieldValue("photos", submission.uploadPhotosForm.photos)
       validateField("photos")
+    } else {
+      setFieldValue("photos", [])
     }
   }, [submission])
 

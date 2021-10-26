@@ -103,7 +103,7 @@ export const UploadPhotos: React.FC = () => {
         }}
         validationSchema={uploadPhotosValidationSchema}
       >
-        {({ values, setFieldValue, isValid, errors }) => {
+        {({ values, setFieldValue, isValid, isSubmitting }) => {
           const handlePhotoDelete = (photo: Photo) => {
             photo.removed = true
             photo.abortUploading?.()
@@ -131,8 +131,8 @@ export const UploadPhotos: React.FC = () => {
 
               <Button
                 width={["100%", "auto"]}
-                disabled={!isValid}
-                loading={values.photos.some(c => !c.s3Key)}
+                disabled={!isValid || isSubmitting}
+                loading={isSubmitting || values.photos.some(c => !c.s3Key)}
                 type="submit"
               >
                 {/* Save and Continue */}
