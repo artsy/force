@@ -1,5 +1,4 @@
 import {
-  AutocompleteInput,
   Button,
   Column,
   GridColumns,
@@ -9,10 +8,11 @@ import {
   Text,
 } from "@artsy/palette"
 import { compact } from "lodash"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { MetaTags } from "v2/Components/MetaTags"
 import { InstitutionsRoute_viewer } from "v2/__generated__/InstitutionsRoute_viewer.graphql"
+import { PartnersFilters } from "../Components/PartnersFilters"
 import { PartnersRailFragmentContainer } from "../Components/PartnersRail"
 
 interface InstitutionsRouteProps {
@@ -36,43 +36,7 @@ const InstitutionsRoute: React.FC<InstitutionsRouteProps> = ({ viewer }) => {
           Browse Institutions
         </Text>
 
-        <GridColumns>
-          <Column span={4}>
-            <AutocompleteInput
-              options={[]}
-              placeholder="All Locations"
-              mb={2}
-              onChange={() => {
-                // TODO
-              }}
-              value=""
-            />
-          </Column>
-
-          <Column span={4}>
-            <AutocompleteInput
-              options={[]}
-              placeholder="All Specialties"
-              mb={2}
-              onChange={() => {
-                // TODO
-              }}
-              value=""
-            />
-          </Column>
-
-          <Column span={4}>
-            <AutocompleteInput
-              options={[]}
-              placeholder="All Institutions"
-              mb={2}
-              onChange={() => {
-                // TODO
-              }}
-              value=""
-            />
-          </Column>
-        </GridColumns>
+        <PartnersFilters type="INSTITUTION" />
 
         {categories.map((partnerCategory, i) => {
           return (
