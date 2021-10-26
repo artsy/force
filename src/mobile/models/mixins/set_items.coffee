@@ -1,7 +1,7 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 sd = require('sharify').data
-FeaturedLinks = require '../../collections/featured_links.coffee'
+FeaturedLinks = require '../../collections/featured_links'
 
 module.exports = (ownerType) ->
 

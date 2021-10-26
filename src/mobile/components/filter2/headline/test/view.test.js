@@ -9,7 +9,7 @@ const { resolve } = require("path")
 const { fabricate, fabricate2 } = require("@artsy/antigravity")
 const Fair = require("../../../../models/fair.coffee")
 const Gene = require("../../../../models/gene.coffee")
-const FilterArtworks = require("../../../../collections/filter_artworks.coffee")
+const FilterArtworks = require("../../../../collections/filter_artworks")
 
 describe("Filter / Headline", function () {
   beforeEach(function (done) {

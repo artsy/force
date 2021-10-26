@@ -1,6 +1,6 @@
 Backbone = require 'backbone'
-FollowProfiles = require '../../../collections/follow_profiles.coffee'
-Profiles = require '../../../collections/profiles.coffee'
+FollowProfiles = require '../../../collections/follow_profiles'
+Profiles = require '../../../collections/profiles'
 profilesTemplate = -> require('../templates/profiles.jade') arguments...
 
 module.exports = class FollowingView extends Backbone.View

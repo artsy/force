@@ -4,10 +4,10 @@ module.exports   =
   related: ->
     return @__related__ if @__related__?
 
-    Articles = require '../../../collections/articles.coffee'
-    Artists = require '../../../collections/artists.coffee'
-    ShowEvents = require '../../../collections/show_events.coffee'
-    InstallShots = require '../../../collections/install_shots.coffee'
+    Articles = require '../../../collections/articles'
+    Artists = require '../../../collections/artists'
+    ShowEvents = require '../../../collections/show_events'
+    InstallShots = require '../../../collections/install_shots'
     Fair = require '../../fair.coffee'
 
     articles = new Articles
