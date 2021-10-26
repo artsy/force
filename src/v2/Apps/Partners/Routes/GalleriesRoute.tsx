@@ -1,5 +1,4 @@
 import {
-  AutocompleteInput,
   Button,
   Column,
   GridColumns,
@@ -9,11 +8,14 @@ import {
   Text,
 } from "@artsy/palette"
 import { compact } from "lodash"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { MetaTags } from "v2/Components/MetaTags"
 import { GalleriesRoute_viewer } from "v2/__generated__/GalleriesRoute_viewer.graphql"
 import { PartnersRailFragmentContainer } from "v2/Apps/Partners/Components/PartnersRail"
+import { PartnersLocationAutocompleteQueryRenderer } from "../Components/PartnersLocationAutocomplete"
+import { PartnersSpecialtyAutocompleteQueryRenderer } from "../Components/PartnersSpecialtyAutocomplete"
+import { PartnersSearchQueryRenderer } from "../Components/PartnersSearch"
 
 interface GalleriesRouteProps {
   viewer: GalleriesRoute_viewer
@@ -38,39 +40,15 @@ const GalleriesRoute: React.FC<GalleriesRouteProps> = ({ viewer }) => {
 
         <GridColumns>
           <Column span={4}>
-            <AutocompleteInput
-              options={[]}
-              placeholder="All Locations"
-              mb={2}
-              onChange={() => {
-                // TODO
-              }}
-              value=""
-            />
+            <PartnersLocationAutocompleteQueryRenderer />
           </Column>
 
           <Column span={4}>
-            <AutocompleteInput
-              options={[]}
-              placeholder="All Specialties"
-              mb={2}
-              onChange={() => {
-                // TODO
-              }}
-              value=""
-            />
+            <PartnersSpecialtyAutocompleteQueryRenderer type="GALLERY" />
           </Column>
 
           <Column span={4}>
-            <AutocompleteInput
-              options={[]}
-              placeholder="All Galleries"
-              mb={2}
-              onChange={() => {
-                // TODO
-              }}
-              value=""
-            />
+            <PartnersSearchQueryRenderer type="GALLERY" />
           </Column>
         </GridColumns>
 
