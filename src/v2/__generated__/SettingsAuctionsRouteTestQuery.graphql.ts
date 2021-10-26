@@ -59,26 +59,24 @@ fragment SettingsAuctionsRoute_me on Me {
       sale {
         name
         href
+        endAt(format: "MMMM D, h:mmA")
+        profile {
+          bio
+          id
+        }
         id
       }
     }
   }
-  saleRegistrationsConnection(published: true, isAuction: true, sort: CREATED_AT_DESC, first: 10) {
+  saleRegistrationsConnection(published: true, isAuction: true, sort: CREATED_AT_DESC, first: 10, registered: false) {
     edges {
       node {
-        isRegistered
         sale {
           id
           name
           href
           startAt(format: "MMMM D, h:mmA")
           isClosed
-          profile {
-            icon {
-              url
-            }
-            id
-          }
         }
         id
       }
@@ -111,11 +109,9 @@ v2 = {
 },
 v3 = [
   {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "url",
-    "storageKey": null
+    "kind": "Literal",
+    "name": "format",
+    "value": "MMMM D, h:mmA"
   }
 ];
 return {
@@ -260,7 +256,15 @@ return {
                         "kind": "LinkedField",
                         "name": "image",
                         "plural": false,
-                        "selections": (v3/*: any*/),
+                        "selections": [
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "url",
+                            "storageKey": null
+                          }
+                        ],
                         "storageKey": null
                       },
                       {
@@ -313,6 +317,32 @@ return {
                     "selections": [
                       (v0/*: any*/),
                       (v2/*: any*/),
+                      {
+                        "alias": null,
+                        "args": (v3/*: any*/),
+                        "kind": "ScalarField",
+                        "name": "endAt",
+                        "storageKey": "endAt(format:\"MMMM D, h:mmA\")"
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": "Profile",
+                        "kind": "LinkedField",
+                        "name": "profile",
+                        "plural": false,
+                        "selections": [
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "bio",
+                            "storageKey": null
+                          },
+                          (v1/*: any*/)
+                        ],
+                        "storageKey": null
+                      },
                       (v1/*: any*/)
                     ],
                     "storageKey": null
@@ -340,6 +370,11 @@ return {
                 "kind": "Literal",
                 "name": "published",
                 "value": true
+              },
+              {
+                "kind": "Literal",
+                "name": "registered",
+                "value": false
               },
               {
                 "kind": "Literal",
@@ -371,13 +406,6 @@ return {
                       {
                         "alias": null,
                         "args": null,
-                        "kind": "ScalarField",
-                        "name": "isRegistered",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
                         "concreteType": "Sale",
                         "kind": "LinkedField",
                         "name": "sale",
@@ -388,13 +416,7 @@ return {
                           (v2/*: any*/),
                           {
                             "alias": null,
-                            "args": [
-                              {
-                                "kind": "Literal",
-                                "name": "format",
-                                "value": "MMMM D, h:mmA"
-                              }
-                            ],
+                            "args": (v3/*: any*/),
                             "kind": "ScalarField",
                             "name": "startAt",
                             "storageKey": "startAt(format:\"MMMM D, h:mmA\")"
@@ -404,28 +426,6 @@ return {
                             "args": null,
                             "kind": "ScalarField",
                             "name": "isClosed",
-                            "storageKey": null
-                          },
-                          {
-                            "alias": null,
-                            "args": null,
-                            "concreteType": "Profile",
-                            "kind": "LinkedField",
-                            "name": "profile",
-                            "plural": false,
-                            "selections": [
-                              {
-                                "alias": null,
-                                "args": null,
-                                "concreteType": "Image",
-                                "kind": "LinkedField",
-                                "name": "icon",
-                                "plural": false,
-                                "selections": (v3/*: any*/),
-                                "storageKey": null
-                              },
-                              (v1/*: any*/)
-                            ],
                             "storageKey": null
                           }
                         ],
@@ -439,7 +439,7 @@ return {
                 "storageKey": null
               }
             ],
-            "storageKey": "saleRegistrationsConnection(first:10,isAuction:true,published:true,sort:\"CREATED_AT_DESC\")"
+            "storageKey": "saleRegistrationsConnection(first:10,isAuction:true,published:true,registered:false,sort:\"CREATED_AT_DESC\")"
           },
           (v1/*: any*/)
         ],
@@ -452,7 +452,7 @@ return {
     "metadata": {},
     "name": "SettingsAuctionsRouteTestQuery",
     "operationKind": "query",
-    "text": "query SettingsAuctionsRouteTestQuery {\n  me {\n    ...SettingsAuctionsRoute_me\n    id\n  }\n}\n\nfragment SettingsAuctionsRoute_me on Me {\n  name\n  lotStandings {\n    isLeadingBidder\n    activeBid {\n      id\n    }\n    saleArtwork {\n      lotLabel\n      highestBid {\n        display\n      }\n      counts {\n        bidderPositions\n      }\n      artwork {\n        title\n        href\n        image {\n          url\n        }\n        artist {\n          name\n          id\n        }\n        id\n      }\n      id\n    }\n  }\n  myBids {\n    closed {\n      sale {\n        name\n        href\n        id\n      }\n    }\n  }\n  saleRegistrationsConnection(published: true, isAuction: true, sort: CREATED_AT_DESC, first: 10) {\n    edges {\n      node {\n        isRegistered\n        sale {\n          id\n          name\n          href\n          startAt(format: \"MMMM D, h:mmA\")\n          isClosed\n          profile {\n            icon {\n              url\n            }\n            id\n          }\n        }\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query SettingsAuctionsRouteTestQuery {\n  me {\n    ...SettingsAuctionsRoute_me\n    id\n  }\n}\n\nfragment SettingsAuctionsRoute_me on Me {\n  name\n  lotStandings {\n    isLeadingBidder\n    activeBid {\n      id\n    }\n    saleArtwork {\n      lotLabel\n      highestBid {\n        display\n      }\n      counts {\n        bidderPositions\n      }\n      artwork {\n        title\n        href\n        image {\n          url\n        }\n        artist {\n          name\n          id\n        }\n        id\n      }\n      id\n    }\n  }\n  myBids {\n    closed {\n      sale {\n        name\n        href\n        endAt(format: \"MMMM D, h:mmA\")\n        profile {\n          bio\n          id\n        }\n        id\n      }\n    }\n  }\n  saleRegistrationsConnection(published: true, isAuction: true, sort: CREATED_AT_DESC, first: 10, registered: false) {\n    edges {\n      node {\n        sale {\n          id\n          name\n          href\n          startAt(format: \"MMMM D, h:mmA\")\n          isClosed\n        }\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();

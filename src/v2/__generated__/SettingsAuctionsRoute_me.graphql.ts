@@ -35,24 +35,22 @@ export type SettingsAuctionsRoute_me = {
             readonly sale: {
                 readonly name: string | null;
                 readonly href: string | null;
+                readonly endAt: string | null;
+                readonly profile: {
+                    readonly bio: string | null;
+                } | null;
             } | null;
         } | null> | null;
     } | null;
     readonly saleRegistrationsConnection: {
         readonly edges: ReadonlyArray<{
             readonly node: {
-                readonly isRegistered: boolean | null;
                 readonly sale: {
                     readonly id: string;
                     readonly name: string | null;
                     readonly href: string | null;
                     readonly startAt: string | null;
                     readonly isClosed: boolean | null;
-                    readonly profile: {
-                        readonly icon: {
-                            readonly url: string | null;
-                        } | null;
-                    } | null;
                 } | null;
             } | null;
         } | null> | null;
@@ -91,11 +89,9 @@ v2 = {
 },
 v3 = [
   {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "url",
-    "storageKey": null
+    "kind": "Literal",
+    "name": "format",
+    "value": "MMMM D, h:mmA"
   }
 ];
 return {
@@ -206,7 +202,15 @@ return {
                   "kind": "LinkedField",
                   "name": "image",
                   "plural": false,
-                  "selections": (v3/*: any*/),
+                  "selections": [
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "url",
+                      "storageKey": null
+                    }
+                  ],
                   "storageKey": null
                 },
                 {
@@ -255,7 +259,32 @@ return {
               "plural": false,
               "selections": [
                 (v0/*: any*/),
-                (v2/*: any*/)
+                (v2/*: any*/),
+                {
+                  "alias": null,
+                  "args": (v3/*: any*/),
+                  "kind": "ScalarField",
+                  "name": "endAt",
+                  "storageKey": "endAt(format:\"MMMM D, h:mmA\")"
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "concreteType": "Profile",
+                  "kind": "LinkedField",
+                  "name": "profile",
+                  "plural": false,
+                  "selections": [
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "bio",
+                      "storageKey": null
+                    }
+                  ],
+                  "storageKey": null
+                }
               ],
               "storageKey": null
             }
@@ -282,6 +311,11 @@ return {
           "kind": "Literal",
           "name": "published",
           "value": true
+        },
+        {
+          "kind": "Literal",
+          "name": "registered",
+          "value": false
         },
         {
           "kind": "Literal",
@@ -313,13 +347,6 @@ return {
                 {
                   "alias": null,
                   "args": null,
-                  "kind": "ScalarField",
-                  "name": "isRegistered",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
                   "concreteType": "Sale",
                   "kind": "LinkedField",
                   "name": "sale",
@@ -330,13 +357,7 @@ return {
                     (v2/*: any*/),
                     {
                       "alias": null,
-                      "args": [
-                        {
-                          "kind": "Literal",
-                          "name": "format",
-                          "value": "MMMM D, h:mmA"
-                        }
-                      ],
+                      "args": (v3/*: any*/),
                       "kind": "ScalarField",
                       "name": "startAt",
                       "storageKey": "startAt(format:\"MMMM D, h:mmA\")"
@@ -346,27 +367,6 @@ return {
                       "args": null,
                       "kind": "ScalarField",
                       "name": "isClosed",
-                      "storageKey": null
-                    },
-                    {
-                      "alias": null,
-                      "args": null,
-                      "concreteType": "Profile",
-                      "kind": "LinkedField",
-                      "name": "profile",
-                      "plural": false,
-                      "selections": [
-                        {
-                          "alias": null,
-                          "args": null,
-                          "concreteType": "Image",
-                          "kind": "LinkedField",
-                          "name": "icon",
-                          "plural": false,
-                          "selections": (v3/*: any*/),
-                          "storageKey": null
-                        }
-                      ],
                       "storageKey": null
                     }
                   ],
@@ -379,11 +379,11 @@ return {
           "storageKey": null
         }
       ],
-      "storageKey": "saleRegistrationsConnection(first:10,isAuction:true,published:true,sort:\"CREATED_AT_DESC\")"
+      "storageKey": "saleRegistrationsConnection(first:10,isAuction:true,published:true,registered:false,sort:\"CREATED_AT_DESC\")"
     }
   ],
   "type": "Me"
 };
 })();
-(node as any).hash = '7f32f9973c6345d43f27163fe41fd676';
+(node as any).hash = 'bdd392dd9576725c896f1c97cb839686';
 export default node;
