@@ -28,11 +28,11 @@ describe("UserBidHistory component", () => {
     expect(wrapper.isEmptyRender()).toBe(false)
   })
 
-  it("renders active bids title", () => {
+  it("renders active bid history", () => {
     expect(wrapper.find("Text").first().html()).toContain("Bid History")
   })
 
-  it("renders correct artwork link", () => {
+  it("renders correct bid sale link", () => {
     expect(wrapper.find("RouterLink").props().to).toEqual(
       data.closed[0].sale.href
     )
