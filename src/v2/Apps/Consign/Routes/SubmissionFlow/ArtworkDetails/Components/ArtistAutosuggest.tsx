@@ -1,6 +1,5 @@
 import { useState } from "react"
-import { fetchQuery, graphql } from "react-relay"
-import RelayModernEnvironment from "relay-runtime/lib/store/RelayModernEnvironment"
+import { Environment, fetchQuery, graphql } from "react-relay"
 import { useSystemContext } from "v2/System"
 import { useFormikContext } from "formik"
 import { Text, DROP_SHADOW, Input, Image, Flex, Box } from "@artsy/palette"
@@ -89,7 +88,7 @@ export const ArtistAutosuggest: React.FC = () => {
 
 const fetchSuggestions = async (
   searchQuery: string,
-  relayEnvironment: RelayModernEnvironment
+  relayEnvironment: Environment
 ) => {
   const response = await fetchQuery<ArtistAutosuggest_SearchConnection_Query>(
     relayEnvironment,
@@ -129,6 +128,7 @@ const fetchSuggestions = async (
 const SuggestionsContainer = ({ containerProps, children }) => {
   return (
     <Box
+      data-test-id="suggestions-container"
       {...containerProps}
       position="absolute"
       left={0}
@@ -158,6 +158,7 @@ const ArtistSuggestion: React.FC<{ node: NonNullable<Suggestion>["node"] }> = (
 ) => {
   return (
     <Flex
+      data-test-id="artist-suggestion"
       alignItems="center"
       p={1}
       width="100%"
