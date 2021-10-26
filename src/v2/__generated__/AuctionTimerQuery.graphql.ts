@@ -29,8 +29,8 @@ query AuctionTimerQuery(
 }
 
 fragment AuctionTimer_sale on Sale {
-  live_start_at: liveStartAt
-  end_at: endAt
+  liveStartAt
+  endAt
 }
 */
 
@@ -91,14 +91,14 @@ return {
         "plural": false,
         "selections": [
           {
-            "alias": "live_start_at",
+            "alias": null,
             "args": null,
             "kind": "ScalarField",
             "name": "liveStartAt",
             "storageKey": null
           },
           {
-            "alias": "end_at",
+            "alias": null,
             "args": null,
             "kind": "ScalarField",
             "name": "endAt",
@@ -121,7 +121,7 @@ return {
     "metadata": {},
     "name": "AuctionTimerQuery",
     "operationKind": "query",
-    "text": "query AuctionTimerQuery(\n  $saleID: String!\n) {\n  sale(id: $saleID) {\n    ...AuctionTimer_sale\n    id\n  }\n}\n\nfragment AuctionTimer_sale on Sale {\n  live_start_at: liveStartAt\n  end_at: endAt\n}\n"
+    "text": "query AuctionTimerQuery(\n  $saleID: String!\n) {\n  sale(id: $saleID) {\n    ...AuctionTimer_sale\n    id\n  }\n}\n\nfragment AuctionTimer_sale on Sale {\n  liveStartAt\n  endAt\n}\n"
   }
 };
 })();

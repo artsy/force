@@ -1,8 +1,10 @@
-import { Box } from "@artsy/palette"
+import { Box, Spacer } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { AnalyticsContext, useAnalyticsContext } from "v2/System"
 import { Auction2App_sale } from "v2/__generated__/Auction2App_sale.graphql"
 import { Auction2MetaFragmentContainer } from "./Components/Auction2Meta"
+import { FullBleedHeader } from "v2/Components/FullBleedHeader"
+import { AuctionDetailsFragmentContainer } from "./Components/AuctionDetails"
 
 interface Auction2AppProps {
   sale: Auction2App_sale
@@ -19,8 +21,16 @@ const Auction2App: React.FC<Auction2AppProps> = ({ children, sale }) => {
         contextPageOwnerType,
       }}
     >
+      <Auction2MetaFragmentContainer sale={sale} />
+
       <>
-        <Auction2MetaFragmentContainer sale={sale} />
+        {sale.coverImage?.cropped && (
+          <FullBleedHeader src={sale.coverImage.cropped.src} />
+        )}
+
+        <Spacer my={2} />
+
+        <AuctionDetailsFragmentContainer sale={sale} />
 
         <Box>{children}</Box>
       </>
@@ -34,7 +44,18 @@ export const Auction2AppFragmentContainer = createFragmentContainer(
     sale: graphql`
       fragment Auction2App_sale on Sale {
         ...Auction2Meta_sale
+        ...AuctionDetails_sale
 
+        # New
+        formattedStartDateTime
+        href
+        coverImage {
+          cropped(width: 1800, height: 600, version: "wide") {
+            src
+          }
+        }
+
+        # Old
         internalID
         slug
         associatedSale {
@@ -60,7 +81,6 @@ export const Auction2AppFragmentContainer = createFragmentContainer(
           }
         }
         currency
-        description
         eligibleSaleArtworksCount
         endAt
         isAuction

@@ -32,10 +32,16 @@ const node: ReaderFragment = {
     },
     {
       "alias": null,
-      "args": null,
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "format",
+          "value": "HTML"
+        }
+      ],
       "kind": "ScalarField",
       "name": "description",
-      "storageKey": null
+      "storageKey": "description(format:\"HTML\")"
     },
     {
       "alias": null,
@@ -47,5 +53,5 @@ const node: ReaderFragment = {
   ],
   "type": "Sale"
 };
-(node as any).hash = '709edfb2739abd0f0aacd9da6d8a44af';
+(node as any).hash = 'c76adbcad1cb888efa03fa7caabf9358';
 export default node;
