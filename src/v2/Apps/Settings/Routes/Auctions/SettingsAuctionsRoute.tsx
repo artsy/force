@@ -1,9 +1,9 @@
 import React from "react"
 import { SettingsAuctionsRoute_me } from "v2/__generated__/SettingsAuctionsRoute_me.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
+import { UserActiveBid } from "./Components/UserActiveBid"
 import { UserBidHistory } from "./Components/UserBidHistory"
 import { UserRegistrationAuctions } from "./Components/UserRegistrationAuctions"
-import { UserActiveBid } from "./Components/UserActiveBid"
 
 interface SettingsAuctionsRouteProps {
   me: SettingsAuctionsRoute_me

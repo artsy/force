@@ -31,6 +31,7 @@ export const UserActiveBid: React.FC<UserActiveBidProps> = ({
         <GridColumns mb={6}>
           {lotStandings.map((lot, i) => (
             <Column
+              key={i}
               span={8}
               pb={2}
               display="flex"

@@ -1,6 +1,10 @@
+import React from "react"
 import { graphql } from "react-relay"
 import { SettingsAuctionsRouteFragmentContainer } from "../SettingsAuctionsRoute"
 import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
+import { UserActiveBid } from "../Components/UserActiveBid"
+import { UserBidHistory } from "../Components/UserBidHistory"
+import { UserRegistrationAuctions } from "../Components/UserRegistrationAuctions"
 
 jest.unmock("react-relay")
 
@@ -50,6 +54,10 @@ const data = {
         sale: {
           name: "mockSaleName",
           href: "/mockSaleName",
+          endAt: "endDate",
+          profile: {
+            bio: "some sale bio",
+          },
         },
       },
     ],
@@ -58,7 +66,6 @@ const data = {
     edges: [
       {
         node: {
-          isRegistered: false,
           sale: {
             name: "saleName",
             href: "/saleName",
@@ -73,7 +80,7 @@ const data = {
 }
 
 describe("SettingsAuctionsRoute", () => {
-  it("renders correctly with 3 sections", () => {
+  it("renders correctly", () => {
     const wrapper = getWrapper({
       Me: () => data,
     })
@@ -81,13 +88,29 @@ describe("SettingsAuctionsRoute", () => {
     expect(wrapper.isEmptyRender()).toBe(false)
   })
 
-  it("renders with 3 section titles", () => {
+  it("renders 3 correct children", () => {
     const wrapper = getWrapper({
       Me: () => data,
     })
 
-    expect(wrapper.html()).toContain("Active Bids")
-    expect(wrapper.html()).toContain("Bid History")
-    expect(wrapper.html()).toContain("Registration for Upcoming Auctions")
+    expect(
+      wrapper
+        .children()
+        .contains(<UserActiveBid lotStandings={data.lotStandings} />)
+    ).toBe(true)
+
+    expect(
+      wrapper.children().contains(<UserBidHistory myBids={data.myBids} />)
+    ).toBe(true)
+
+    expect(
+      wrapper
+        .children()
+        .contains(
+          <UserRegistrationAuctions
+            saleRegistrationsConnection={data.saleRegistrationsConnection}
+          />
+        )
+    ).toBe(true)
   })
 })
