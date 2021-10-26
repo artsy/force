@@ -4,7 +4,7 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type SettingsShippingRoute_me = {
-    readonly name: string | null;
+    readonly " $fragmentRefs": FragmentRefs<"UserSettingsAddresses_me">;
     readonly " $refType": "SettingsShippingRoute_me";
 };
 export type SettingsShippingRoute_me$data = SettingsShippingRoute_me;
@@ -22,14 +22,12 @@ const node: ReaderFragment = {
   "name": "SettingsShippingRoute_me",
   "selections": [
     {
-      "alias": null,
       "args": null,
-      "kind": "ScalarField",
-      "name": "name",
-      "storageKey": null
+      "kind": "FragmentSpread",
+      "name": "UserSettingsAddresses_me"
     }
   ],
   "type": "Me"
 };
-(node as any).hash = '613daa2b2e49638aab047365489da964';
+(node as any).hash = '2bbdca97d4e731d2d908e7419abd5217';
 export default node;
