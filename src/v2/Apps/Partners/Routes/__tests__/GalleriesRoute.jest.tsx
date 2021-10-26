@@ -1,5 +1,5 @@
 import { graphql } from "react-relay"
-import { GalleriesRouteFragmentContainer } from "../Routes/GalleriesRoute"
+import { GalleriesRouteFragmentContainer } from "../GalleriesRoute"
 import { setupTestWrapperTL } from "v2/DevTools/setupTestWrapper"
 import { GalleriesRouteFragmentContainer_Test_Query } from "v2/__generated__/GalleriesRouteFragmentContainer_Test_Query.graphql"
 import { MockBoot } from "v2/DevTools"

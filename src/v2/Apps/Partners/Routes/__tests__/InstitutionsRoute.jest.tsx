@@ -1,5 +1,5 @@
 import { graphql } from "react-relay"
-import { InstitutionsRouteFragmentContainer } from "../Routes/InstitutionsRoute"
+import { InstitutionsRouteFragmentContainer } from "../InstitutionsRoute"
 import { setupTestWrapperTL } from "v2/DevTools/setupTestWrapper"
 import { InstitutionsRouteFragmentContainer_Test_Query } from "v2/__generated__/InstitutionsRouteFragmentContainer_Test_Query.graphql"
 import { MockBoot } from "v2/DevTools"
