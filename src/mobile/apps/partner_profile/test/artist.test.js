@@ -10,7 +10,7 @@ const Backbone = require("backbone")
 const Artist = require("../../../models/artist")
 const Profile = require("../../../models/profile")
 const Partner = require("../../../models/partner")
-const Artworks = require("../../../collections/artworks")
+const { Artworks } = require("../../../collections/artworks")
 const { resolve } = require("path")
 const { fabricate } = require("@artsy/antigravity")
 

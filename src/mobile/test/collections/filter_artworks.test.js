@@ -7,7 +7,7 @@ const sinon = require("sinon")
 const _ = require("underscore")
 const Backbone = require("backbone")
 const { fabricate2 } = require("@artsy/antigravity")
-const FilterArtworks = require("../../collections/filter_artworks")
+const { FilterArtworks } = require("../../collections/filter_artworks")
 
 describe("Filter Artworks", function () {
   beforeEach(function () {

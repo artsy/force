@@ -2,7 +2,7 @@ require '../../../../../node_modules/waypoints/lib/jquery.waypoints.js'
 
 { CITY, PARTNERS } = require('sharify').data
 bootstrap = require '../../../components/layout/bootstrap.coffee'
-Partners = require '../../../collections/partners'
+{ Partners } = require '../../../collections/partners'
 template = -> require('../templates/partner.jade') arguments...
 
 render = ($el, partner) ->

@@ -3,7 +3,7 @@
  * DS102: Remove unnecessary code created because of implicit returns
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
  */
-const DaySchedules = require("../../collections/day_schedules")
+const { DaySchedules } = require("../../collections/day_schedules")
 
 describe("DaySchedules", function () {
   beforeEach(function () {

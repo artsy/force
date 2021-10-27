@@ -6,13 +6,13 @@
  * DS207: Consider shorter variations of null checks
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
  */
-let PartnerLocations
+let _PartnerLocations
 const Backbone = require("backbone")
 const sd = require("sharify").data
 const PartnerLocation = require("../models/partner_location")
 
-module.exports = PartnerLocations = (function () {
-  PartnerLocations = class PartnerLocations extends Backbone.Collection {
+export default _PartnerLocations = (function () {
+  _PartnerLocations = class PartnerLocations extends Backbone.Collection {
     static initClass() {
       this.prototype.model = PartnerLocation
     }
@@ -45,8 +45,8 @@ module.exports = PartnerLocations = (function () {
       }
     }
   }
-  PartnerLocations.initClass()
-  return PartnerLocations
+  _PartnerLocations.initClass()
+  return _PartnerLocations
 })()
 
 function __guard__(value, transform) {
@@ -54,3 +54,5 @@ function __guard__(value, transform) {
     ? transform(value)
     : undefined
 }
+
+export const PartnerLocations = _PartnerLocations

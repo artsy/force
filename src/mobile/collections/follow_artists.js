@@ -4,18 +4,18 @@
  * DS206: Consider reworking classes to avoid initClass
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
  */
-let FollowArtists
+let _FollowArtists
 const _ = require("underscore")
 const sd = require("sharify").data
-const Follows = require("./follows")
+const { Follows } = require("./follows")
 const FollowArtist = require("../models/follow_artist")
 
 //
 // FollowArtists
 // Maintains the entities followed by the current user and offers `syncFollows` to retrieve
 //
-module.exports = FollowArtists = (function () {
-  FollowArtists = class FollowArtists extends Follows {
+export default _FollowArtists = (function () {
+  _FollowArtists = class FollowArtists extends Follows {
     static initClass() {
       this.prototype.url = `${sd.API_URL}/api/v1/me/follow/artists`
 
@@ -35,6 +35,7 @@ module.exports = FollowArtists = (function () {
       return follow
     }
   }
-  FollowArtists.initClass()
-  return FollowArtists
+  _FollowArtists.initClass()
+  return _FollowArtists
 })()
+export const FollowArtists = _FollowArtists

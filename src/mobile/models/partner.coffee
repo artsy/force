@@ -4,8 +4,8 @@ sd = require('sharify').data
 Artist = require '../models/artist.coffee'
 Icon = require '../models/icon.coffee'
 Profile = require '../models/profile.coffee'
-Artists = require '../collections/artists'
-PartnerShows = require '../collections/partner_shows'
+{ Artists } = require '../collections/artists'
+{ PartnerShows } = require '../collections/partner_shows'
 fetchUntilEnd = require('@artsy/backbone-mixins').Fetch().fetchUntilEnd
 Relations = require './mixins/relations/partner.coffee'
 

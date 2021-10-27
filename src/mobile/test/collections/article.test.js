@@ -6,7 +6,7 @@
 const sinon = require("sinon")
 const Backbone = require("backbone")
 const fixtures = require("../helpers/fixtures")
-const Articles = require("../../collections/articles")
+const { Articles } = require("../../collections/articles")
 
 describe("Articles", function () {
   beforeEach(function () {

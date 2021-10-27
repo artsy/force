@@ -8,13 +8,13 @@
  * DS207: Consider shorter variations of null checks
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
  */
-let Articles
+let _Articles
 const Backbone = require("backbone")
 const Article = require("../models/article")
 const sd = require("sharify").data
 
-module.exports = Articles = (function () {
-  Articles = class Articles extends Backbone.Collection {
+export default _Articles = (function () {
+  _Articles = class Articles extends Backbone.Collection {
     static initClass() {
       this.prototype.url = `${sd.POSITRON_URL}/api/articles`
 
@@ -53,6 +53,7 @@ module.exports = Articles = (function () {
       return super.sync(...arguments)
     }
   }
-  Articles.initClass()
-  return Articles
+  _Articles.initClass()
+  return _Articles
 })()
+export const Articles = _Articles

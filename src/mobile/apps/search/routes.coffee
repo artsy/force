@@ -1,4 +1,4 @@
-SearchResults = require '../../collections/search_results'
+{ SearchResults } = require '../../collections/search_results'
 removeDiacritics = require('diacritics').remove
 
 module.exports.index = (req, res, next) ->

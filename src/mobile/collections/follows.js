@@ -5,7 +5,7 @@
  * DS207: Consider shorter variations of null checks
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
  */
-let Follows;
+let _Follows;
 const _ = require('underscore');
 const Backbone = require('backbone');
 const CurrentUser = require('../models/current_user');
@@ -14,10 +14,10 @@ const CurrentUser = require('../models/current_user');
 // Follows
 // Maintains the entities followed by the current user and offers `syncFollows` to retrieve
 //
-module.exports = (Follows = (function() {
-  Follows = class Follows extends Backbone.Collection {
+export default (_Follows = (function() {
+  _Follows = class Follows extends Backbone.Collection {
     static initClass() {
-  
+
       this.prototype.maxSyncSize = 10;
     }
 
@@ -86,6 +86,7 @@ module.exports = (Follows = (function() {
       return this.remove(follow);
     }
   };
-  Follows.initClass();
-  return Follows;
+  _Follows.initClass();
+  return _Follows;
 })());
+export const Follows = _Follows

@@ -3,7 +3,7 @@
  * DS102: Remove unnecessary code created because of implicit returns
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
  */
-const Artworks = require("../../../collections/artworks")
+const { Artworks } = require("../../../collections/artworks")
 const { fabricate } = require("@artsy/antigravity")
 const path = require("path")
 const fs = require("fs")

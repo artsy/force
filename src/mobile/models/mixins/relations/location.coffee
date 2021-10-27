@@ -2,7 +2,7 @@ module.exports   =
   related: ->
     return @__related__ if @__related__?
 
-    DaySchedules = require '../../../collections/day_schedules'
+    { DaySchedules } = require '../../../collections/day_schedules'
 
     daySchedules = new DaySchedules @get('day_schedules')
 

@@ -4,7 +4,7 @@
  * DS206: Consider reworking classes to avoid initClass
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
  */
-let Fairs
+let _Fairs
 const _ = require("underscore")
 const sd = require("sharify").data
 const Backbone = require("backbone")
@@ -13,8 +13,8 @@ const Fair = require("../models/fair")
 const { API_URL } = require("sharify").data
 const { Fetch } = require("@artsy/backbone-mixins")
 
-module.exports = Fairs = (function () {
-  Fairs = class Fairs extends Backbone.Collection {
+export default _Fairs = (function () {
+  _Fairs = class Fairs extends Backbone.Collection {
     static initClass() {
       _.extend(this.prototype, Fetch(API_URL))
 
@@ -36,6 +36,7 @@ module.exports = Fairs = (function () {
       )
     }
   }
-  Fairs.initClass()
-  return Fairs
+  _Fairs.initClass()
+  return _Fairs
 })()
+export const Fairs = _Fairs
