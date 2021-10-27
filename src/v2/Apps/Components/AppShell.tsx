@@ -1,5 +1,5 @@
 import { Box, Flex, Theme } from "@artsy/palette"
-import { NetworkOfflineMonitor } from "v2/System/Router/NetworkOfflineMonitor"
+import { useNetworkOfflineMonitor } from "v2/System/Router/useNetworkOfflineMonitor"
 import { findCurrentRoute } from "v2/System/Router/Utils/findCurrentRoute"
 import { useMaybeReloadAfterInquirySignIn } from "v2/System/Router/Utils/useMaybeReloadAfterInquirySignIn"
 import { NavBar } from "v2/Components/NavBar"
@@ -72,6 +72,8 @@ export const AppShell: React.FC<AppShellProps> = props => {
 
   const { height: navBarHeight } = useNavBarHeight()
 
+  useNetworkOfflineMonitor()
+
   return (
     <Flex
       width="100%"
@@ -103,8 +105,6 @@ export const AppShell: React.FC<AppShellProps> = props => {
             <HorizontalPadding>{children}</HorizontalPadding>
           </AppContainer>
         </Flex>
-
-        <NetworkOfflineMonitor />
 
         {showFooter && (
           <Flex bg="white100">
