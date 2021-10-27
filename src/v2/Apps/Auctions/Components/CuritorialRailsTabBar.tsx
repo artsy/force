@@ -1,10 +1,10 @@
 import { Join, Spacer, Tab, Tabs } from "@artsy/palette"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "v2/System"
 import { CuritorialRailsTabBar_viewer } from "v2/__generated__/CuritorialRailsTabBar_viewer.graphql"
 import { AuctionsZeroState } from "./AuctionsZeroState"
-import { MyBidsQueryRenderer } from "./MyBids/MyBids"
+import { MyBidsFragmentContainer } from "./MyBids/MyBids"
 import { StandoutLotsRailFragmentContainer } from "./StandoutLotsRail"
 import { TrendingLotsRailFragmentContainer } from "./TrendingLotsRail"
 import { WorksByArtistsYouFollowRailFragmentContainer } from "./WorksByArtistsYouFollowRail"
@@ -23,7 +23,7 @@ export const CuritorialRailsTabBar: React.FC<CuritorialRailsTabBarProps> = ({
       {user && (
         <Tab name="Works For You">
           <Join separator={<Spacer mt={2} />}>
-            <MyBidsQueryRenderer />
+            <MyBidsFragmentContainer me={viewer.me!} />
             <WorksByArtistsYouFollowRailFragmentContainer viewer={viewer} />
           </Join>
         </Tab>
