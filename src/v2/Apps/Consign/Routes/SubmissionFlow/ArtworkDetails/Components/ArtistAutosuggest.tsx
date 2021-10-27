@@ -128,8 +128,8 @@ const fetchSuggestions = async (
 const SuggestionsContainer = ({ containerProps, children }) => {
   return (
     <Box
-      data-test-id="suggestions-container"
       {...containerProps}
+      data-test-id="suggestions-container"
       position="absolute"
       left={0}
       right={0}
