@@ -1,8 +1,8 @@
 import {
   ContextModule,
   Intent,
-  createdAccount,
-  successfullyLoggedIn,
+  ActionType,
+  AuthModalType,
 } from "@artsy/cohesion"
 import { omit } from "lodash"
 import { analyticsHooks } from "desktop/components/inquiry_questionnaire/analytics/analyticsHooks"
@@ -130,13 +130,16 @@ import { setAnalyticsClientReferrerOptions } from "lib/analytics/setAnalyticsCli
   // Non-namespaced events
   bind("user:login", function (context) {
     const userId = context.user.get("id")
-    const analyticsOptions = successfullyLoggedIn({
-      authRedirect: location.href,
-      contextModule: ContextModule.artworkSidebar,
+    const analyticsOptions = {
+      action: ActionType.successfullyLoggedIn,
+      type: AuthModalType.login,
+      user_id: userId,
+      auth_redirect: location.href,
+      context_module: ContextModule.artworkSidebar,
       intent: Intent.inquire,
       service: "email",
-      userId,
-    })
+      trigger: "click",
+    }
     trackWithoutNamespace(
       analyticsOptions.action,
       omit(analyticsOptions, "action")
@@ -145,13 +148,17 @@ import { setAnalyticsClientReferrerOptions } from "lib/analytics/setAnalyticsCli
 
   bind("user:signup", function (context) {
     const userId = context.user.get("id")
-    const analyticsOptions = createdAccount({
-      authRedirect: location.href,
-      contextModule: ContextModule.artworkSidebar,
+    const analyticsOptions = {
+      action: ActionType.createdAccount,
+      type: AuthModalType.signup,
+      user_id: userId,
+      onboarding: false,
+      auth_redirect: location.href,
+      context_module: ContextModule.artworkSidebar,
       intent: Intent.inquire,
       service: "email",
-      userId,
-    })
+      trigger: "click",
+    }
     trackWithoutNamespace(
       analyticsOptions.action,
       omit(analyticsOptions, "action")
