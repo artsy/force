@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { AuthContextModule } from "@artsy/cohesion"
@@ -21,11 +21,7 @@ const TrendingLotsRail: React.FC<TrendingLotsRailProps> = ({ viewer }) => {
 
   const nodes = extractNodes(viewer.trendingLotsConnection)
 
-  const liveSaleArtworks = nodes.filter(node => {
-    return !node.sale?.isClosed
-  })
-
-  if (nodes.length === 0 || liveSaleArtworks.length === 0) {
+  if (nodes.length === 0) {
     return <CuratorialRailsZeroState />
   }
 
@@ -34,7 +30,7 @@ const TrendingLotsRail: React.FC<TrendingLotsRailProps> = ({ viewer }) => {
       title="Trending lots"
       subTitle="Works with the most bids today"
       getItems={() => {
-        return liveSaleArtworks.map((node, index) => {
+        return nodes.map((node, index) => {
           return (
             <ShelfArtworkFragmentContainer
               artwork={node}
@@ -67,7 +63,8 @@ export const TrendingLotsRailFragmentContainer = createFragmentContainer(
     viewer: graphql`
       fragment TrendingLotsRail_viewer on Viewer {
         trendingLotsConnection: saleArtworksConnection(
-          first: 50
+          biddableSale: true
+          first: 10
           sort: "-bidder_positions_count"
         ) {
           edges {
@@ -78,9 +75,6 @@ export const TrendingLotsRailFragmentContainer = createFragmentContainer(
               internalID
               slug
               ...ShelfArtwork_artwork @arguments(width: 325)
-              sale {
-                isClosed
-              }
             }
           }
         }
