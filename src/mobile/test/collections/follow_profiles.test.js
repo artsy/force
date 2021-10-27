@@ -4,7 +4,7 @@ const { fabricate } = require("@artsy/antigravity")
 const Backbone = require("backbone")
 const CurrentUser = require("../../models/current_user")
 const FollowProfile = require("../../models/follow_profile.coffee")
-const FollowProfiles = require("../../collections/follow_profiles.coffee")
+const FollowProfiles = require("../../collections/follow_profiles")
 const Profile = require("../../models/profile.coffee")
 const benv = require("benv")
 

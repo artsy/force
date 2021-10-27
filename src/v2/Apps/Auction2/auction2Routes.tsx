@@ -105,7 +105,7 @@ export const auction2Routes: AppRouteConfig[] = [
     ],
   },
   {
-    path: "/auction-faq",
+    path: "/auction-faq2",
     getComponent: () => AuctionFAQRoute,
   },
 ]

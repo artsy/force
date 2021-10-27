@@ -4836,7 +4836,7 @@ type ConsignmentSubmission {
   dimensionsMetric: String
   edition: String
   editionNumber: String
-  editionSize: Int
+  editionSize: String
   height: String
 
   # Uniq ID for this submission
@@ -5688,7 +5688,10 @@ input CreateSubmissionMutationInput {
   dimensionsMetric: String
   edition: Boolean
   editionNumber: String
+
+  # Deprecated: Use edition_size_formatted field instead
   editionSize: Int
+  editionSizeFormatted: String
   height: String
   locationCity: String
   locationCountry: String
@@ -7352,7 +7355,7 @@ type GravityMutationError {
   detail: String
   error: String
   fieldErrors: [FieldErrorResults]
-  message: String
+  message: String!
   type: String
 }
 
@@ -11007,7 +11010,7 @@ type Sale implements Node {
   collectPayments: Boolean!
   coverImage: Image
   currency: String
-  description: String
+  description(format: Format): String
   displayTimelyAt: String
   eligibleSaleArtworksCount: Int
   endAt(
@@ -11395,9 +11398,6 @@ type SaleRegistration {
 
   # A globally unique ID.
   id: ID!
-
-  # A type-specific ID likely used as a database ID.
-  internalID: ID!
   isRegistered: Boolean
   sale: Sale
 }
@@ -12619,7 +12619,10 @@ input UpdateSubmissionMutationInput {
   dimensionsMetric: String
   edition: Boolean
   editionNumber: String
+
+  # Deprecated: Use edition_size_formatted field instead
   editionSize: Int
+  editionSizeFormatted: String
   height: String
   id: ID!
   locationCity: String

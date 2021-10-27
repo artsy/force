@@ -66,11 +66,16 @@ export const ArtworkDetails: React.FC = () => {
 
       <SubmissionStepper currentStep="Artwork Details" />
 
-      <Text mt={4} mb={1} variant="lg">
+      <Text mt={4} variant="lg">
         Tell us about your artwork
       </Text>
+
+      <Text mt={1} variant="sm" color="black60">
+        &#8226; All fields are required to submit a work.
+      </Text>
       <Text mb={[2, 6]} variant="sm" color="black60">
-        All fields are required to submit a work.
+        &#8226; Unfortunately we are not accepting consignments directly from
+        artists at this time.
       </Text>
 
       <Formik<ArtworkDetailsFormModel>

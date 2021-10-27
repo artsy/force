@@ -45,7 +45,7 @@ module.exports = class Article extends Backbone.Model
     @get('fair_ids')?.length > 0 and @get('channel_id') is sd.FAIR_CHANNEL_ID
 
   fetchRelated: (options) ->
-    Articles = require '../collections/articles.coffee'
+    Articles = require '../collections/articles'
     dfds = []
     channel_id = @get('channel_id') or @get('partner_channel_id') or sd.ARTSY_EDITORIAL_CHANNEL
     dfds.push (footerArticles = new Articles).fetch

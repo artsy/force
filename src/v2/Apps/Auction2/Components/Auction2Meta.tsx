@@ -30,7 +30,7 @@ export const Auction2MetaFragmentContainer = createFragmentContainer(
     sale: graphql`
       fragment Auction2Meta_sale on Sale {
         name
-        description
+        description(format: HTML)
         slug
       }
     `,

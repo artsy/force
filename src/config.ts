@@ -114,16 +114,6 @@ export const PORT: any = 5000
 export const POSITRON_URL: any = "http://writer.artsy.net"
 export const PREDICTION_URL: any = "https://live.artsy.net"
 export const RECAPTCHA_KEY: any = null
-// The period in seconds to measure rate limits
-export const REQUEST_EXPIRE: any = 60
-// The maximum number of requests allowed by 1 IP in REQUEST_EXPOR
-export const REQUEST_LIMIT: any = 300
-// The amount of time the requesting ip has to wait before the in-memory rate limit is disabled
-export const REQUEST_PER_INSTANCE_EXPIRE: any = 300
-// If Redis fails, fall back to this amount of requests per force instance for rate limiting
-export const REQUEST_PER_INSTANCE_FALLBACK: any = 60
-// The process level rate limit. If a single instance of force hits this, it falls back to a performant in memory rate limiting strategy,
-export const REQUEST_PER_INSTANCE_LIMIT: any = 301
 export const S3_BUCKET: any = null
 export const S3_KEY: any = null
 export const S3_SECRET: any = null

@@ -10,6 +10,11 @@ const padWithZero = (n: number) => {
 
 interface UseEventTiming {
   startAt: string
+  /**
+   * Live sales don't have a formal endTime, but rather start at "liveStartAt".
+   * So toggling this flag adjusts the language from "closed" to "opens".
+   */
+  isLiveSale?: boolean //
   endAt: string
   currentTime: string
 }
@@ -17,6 +22,7 @@ interface UseEventTiming {
 export const useEventTiming = ({
   currentTime,
   startAt,
+  isLiveSale = false,
   endAt,
 }: UseEventTiming) => {
   const durationTilEnd = Duration.fromISO(
@@ -44,7 +50,7 @@ export const useEventTiming = ({
 
   const formattedTime = useMemo(() => {
     if (hasEnded) {
-      return "Closed"
+      return isLiveSale ? "In Progress" : "Closed"
     }
 
     if (!hasStarted) {
@@ -52,13 +58,17 @@ export const useEventTiming = ({
     }
 
     if (closesSoon) {
-      return `Closes in ${Math.ceil(daysTilEnd)} day${
-        Math.ceil(daysTilEnd) === 1 ? "" : "s"
-      }`
+      return `${isLiveSale ? "Opens" : "Closes"} in ${Math.ceil(
+        daysTilEnd
+      )} day${Math.ceil(daysTilEnd) === 1 ? "" : "s"}`
     }
 
     if (closesToday) {
-      return `Closes in ${[hours, minutes, seconds].join(SEPARATOR)}`
+      return `${isLiveSale ? "Opens" : "Closes"} in ${[
+        hours,
+        minutes,
+        seconds,
+      ].join(SEPARATOR)}`
     }
 
     return null
@@ -71,6 +81,7 @@ export const useEventTiming = ({
     hours,
     minutes,
     seconds,
+    isLiveSale,
   ])
 
   return {

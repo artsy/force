@@ -27,10 +27,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/cohesion/-/cohesion-1.60.0.tgz#854db37b9f8643ed650f3cc9d14234a1b762fcc8"
   integrity sha512-GBfa0/AoiLtG/Mw0VBR0vCiEj1s8+eBMTtKSLQS82iFo41Z84Li8M0YrlHAmXUrK3oBOO/YvhVNFE40avgK8xQ==
 
-"@artsy/cohesion@4.10.0":
-  version "4.10.0"
-  resolved "https://registry.yarnpkg.com/@artsy/cohesion/-/cohesion-4.10.0.tgz#33ab9c9cef37622bce6a2581b68df7c1a42a4bd8"
-  integrity sha512-8IAY8O9QBeUei83SORW2AvBcsUy3Pw3ZT+AfcmKio9OKa7tXT0BK9FuiSiAaocpWxloc3QwWE+9DMTHrDMMkzw==
+"@artsy/cohesion@4.18.0":
+  version "4.18.0"
+  resolved "https://registry.yarnpkg.com/@artsy/cohesion/-/cohesion-4.18.0.tgz#908e2084a7357435657e4173a0717a51b283fec5"
+  integrity sha512-97ObICElU6QMi3kYCXubMuk7wbJ77CCCEb5f/+B7o6xUZj0FmVggbzyixbEAJ9bK+bvG06jj8YAIs50BAw/Vyg==
   dependencies:
     core-js "3"
 
@@ -72,12 +72,12 @@
   dependencies:
     dotenv "^10.0.0"
 
-"@artsy/palette-charts@17.4.1":
-  version "17.4.1"
-  resolved "https://registry.yarnpkg.com/@artsy/palette-charts/-/palette-charts-17.4.1.tgz#a87a86d3d7dc397590a2da6617a3e4b1df1affc6"
-  integrity sha512-g2gojVkRBJZ0lUoPP19M3q1Mq+4UbMYiZ3ouZuaSU4fcod34s0x5i8Ntpwh0OtED3fNHx4gSOmaVDkoNB9KPcQ==
+"@artsy/palette-charts@17.4.2":
+  version "17.4.2"
+  resolved "https://registry.yarnpkg.com/@artsy/palette-charts/-/palette-charts-17.4.2.tgz#809af94025fcae80b2cb59ae9d83750c8c70370a"
+  integrity sha512-binF21uLae8V9GYaSDz2qckDBE5XieCIBn9QSbL3s2kDy29XEpbQW4s1CtD6KOLn9eCC/Nd5J+2jp/qngzZ2rg==
   dependencies:
-    "@artsy/palette" "^18.4.1"
+    "@artsy/palette" "^18.4.2"
     "@seznam/compose-react-refs" "^1.0.6"
     "@styled-system/theme-get" "^5.1.2"
     d3-interpolate "^1.3.2"
@@ -89,10 +89,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/palette-tokens/-/palette-tokens-2.6.0.tgz#3d780ff65994fef0daadef29d43d11f89470b728"
   integrity sha512-UQP6P+xv/5hm82ep0z5X3kCFFnk03H6y8kdW/wTU+xPq45ESUay7aNFYXeub47tmW2v6dXJ8Oa01Z0iwc6BVpA==
 
-"@artsy/palette@18.4.1", "@artsy/palette@^18.4.1":
-  version "18.4.1"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-18.4.1.tgz#b2952905fd7bb250d7d19cfd2a56128dc7f9f01c"
-  integrity sha512-JwrpCHMP9/vcRajSKP9WFcJJHaax7lFPhcfoBJv1fRfAiVxvNGe2RQE0fx6PN2HBgN/actD22dorNW7tvR8sng==
+"@artsy/palette@18.4.2", "@artsy/palette@^18.4.2":
+  version "18.4.2"
+  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-18.4.2.tgz#bfaf2b10987ef793a243b3d393f0c244db0fb265"
+  integrity sha512-klu/L7sJ8OBA5qzE9JG+EtkOQPfWOIcWIyYGV/OMgueE1S/oumPIglnD9DuYEy6pnFdxWwXN1EyfpOjwMXRzfQ==
   dependencies:
     "@artsy/palette-tokens" "^2.6.0"
     "@seznam/compose-react-refs" "^1.0.6"

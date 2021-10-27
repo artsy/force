@@ -100,6 +100,9 @@ describe("ArtworkDetails", () => {
       expect(wrapper.find(SubmissionStepper)).toBeTruthy()
       expect(text).toContain("Tell us about your artwork")
       expect(text).toContain("All fields are required to submit a work.")
+      expect(text).toContain(
+        "Unfortunately we are not accepting consignments directly from artists at this time."
+      )
       expect(wrapper.find(ArtworkDetailsForm)).toBeTruthy()
       expect(wrapper.find("[data-test-id='save-button']")).toBeTruthy()
       expect(wrapper.find("BackLink")).toHaveLength(1)
