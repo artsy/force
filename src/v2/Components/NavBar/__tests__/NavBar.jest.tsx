@@ -89,8 +89,8 @@ describe("NavBar", () => {
 
     it("includes the sub-menus when rendering", () => {
       const wrapper = getWrapper()
-      expect(wrapper.html()).toContain("View all artists")
-      expect(wrapper.html()).toContain("View all artworks")
+      expect(wrapper.html()).toContain("View All Artists")
+      expect(wrapper.html()).toContain("View All Artworks")
     })
   })
 

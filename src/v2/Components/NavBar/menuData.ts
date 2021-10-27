@@ -32,66 +32,34 @@ export const ARTISTS_SUBMENU_DATA: MenuLinkData = {
     title: "Artists",
     links: [
       {
-        text: "In-Demand Artists",
-        href: "/collection/in-demand-artists",
+        text: "Trending on Artsy",
+        href: "/collection/highlights-this-month",
       },
       {
-        text: "Artists We're Eyeing",
-        href: "/collection/artists-we-are-eyeing",
-      },
-      {
-        text: "Artsy Vanguard Artists",
+        text: "The Artsy Vanguard Artists",
         href: "/collection/artsy-vanguard-artists",
+      },
+      {
+        text: "Limited-Edition Prints by Leading Artists",
+        href: "/collection/limited-edition-prints-trending-artists",
         dividerBelow: true,
       },
       {
-        text: "Career Stage",
+        text: "New From",
         menu: {
-          title: "Career Stage",
+          title: "New From",
           links: [
             {
-              text: "Blue-Chip Artists",
-              href: "/collection/blue-chip-artists",
-            },
-            {
-              text: "Critically Acclaimed Artists",
-              href: "/collection/critically-acclaimed-artists",
-            },
-            {
-              text: "Trending Emerging Artists",
-              href: "/collection/trending-emerging-artists",
-            },
-            {
-              text: "New & Noteworthy Artists",
-              href: "/collection/new-and-noteworthy-artists",
-            },
-          ],
-        },
-      },
-      {
-        text: "Popular Categories",
-        menu: {
-          title: "Popular Categories",
-          links: [
-            {
-              text: "New From Emerging Artists",
+              text: "Emerging Artists",
               href: "/collection/new-from-emerging-artists",
             },
             {
-              text: "Modern & Contemporary Masters",
-              href: "/collection/master-works",
+              text: "Established Artists",
+              href: "/collection/new-from-established-artists",
             },
             {
-              text: "Limited-Edition Prints by Leading Artists",
-              href: "/collection/limited-edition-prints-trending-artists",
-            },
-            {
-              text: "Black Figurative Painters",
-              href: "/collection/black-figurative-painters",
-            },
-            {
-              text: "Women Artists to Watch",
-              href: "/collection/women-painters-on-the-rise",
+              text: "Street Artists",
+              href: "/collection/street-art-highlights",
             },
           ],
         },
@@ -139,38 +107,38 @@ export const ARTISTS_SUBMENU_DATA: MenuLinkData = {
           title: "Featured Artists",
           links: [
             {
-              text: "Derrick Adams",
-              href: "/artist/derrick-adams/works-for-sale",
+              text: "Barbara Kruger",
+              href: "/artist/barbara-kruger/works-for-sale",
             },
             {
-              text: "Bridget Riley",
-              href: "/artist/bridget-riley/works-for-sale",
+              text: "Carrie Mae Weems",
+              href: "/artist/carrie-mae-weems/works-for-sale",
             },
             {
-              text: "Frank Stella",
-              href: "/artist/frank-stella/works-for-sale",
+              text: "Daniel Arsham",
+              href: "/artist/daniel-arsham/works-for-sale",
             },
             {
-              text: "Julian Opie",
-              href: "/artist/julian-opie/works-for-sale",
+              text: "Sam Gilliam",
+              href: "/artist/sam-gilliam/works-for-sale",
             },
             {
-              text: "Judy Chicago",
-              href: "/artist/judy-chicago/works-for-sale",
+              text: "Takashi Murakami",
+              href: "/artist/takashi-murakami/works-for-sale",
             },
             {
-              text: "Etel Adnan",
-              href: "/artist/etel-adnan/works-for-sale",
+              text: "Tracey Emin",
+              href: "/artist/tracey-emin/works-for-sale",
             },
             {
-              text: "Mickalene Thomas",
-              href: "/artist/mickalene-thomas/works-for-sale",
+              text: "Yinka Shonibare",
+              href: "/artist/yinka-shonibare/works-for-sale",
             },
           ],
         },
       },
       {
-        text: "View all artists",
+        text: "View All Artists",
         href: "/artists",
       },
     ],
@@ -187,45 +155,16 @@ export const ARTWORKS_SUBMENU_DATA: MenuLinkData = {
         href: "/gene/trove",
       },
       {
-        text: "New This Week",
-        href: "/collection/new-this-week",
+        text: "Highlights at Auction This Week",
+        href: "/collection/auction-highlights",
       },
       {
-        text: "Trending on Artsy",
-        href: "/collection/highlights-this-month",
+        text: "Highlights at Fairs This Week",
+        href: "/collection/art-fair-highlights",
       },
       {
-        text: "Exclusively on Artsy",
-        href: "/collection/exclusively-on-artsy",
-      },
-      {
-        text: "Limited Editions",
-        href: "/collection/limited-edition-works",
-        dividerBelow: true,
-      },
-      {
-        text: "Highlights From",
-        menu: {
-          title: "Highlights From",
-          links: [
-            {
-              text: "Auction",
-              href: "/collection/auction-highlights",
-            },
-            {
-              text: "Art Fairs",
-              href: "/collection/art-fair-highlights",
-            },
-            {
-              text: "Gallery Shows",
-              href: "/collection/gallery-show-highlights",
-            },
-            {
-              text: "Non-profit Shops",
-              href: "/collection/nonprofit-shops",
-            },
-          ],
-        },
+        text: "New in Figurative Painting",
+        href: "/collection/emerging-figurative-painting",
       },
       {
         text: "Price",
@@ -256,42 +195,6 @@ export const ARTWORKS_SUBMENU_DATA: MenuLinkData = {
         },
       },
       {
-        text: "Medium",
-        menu: {
-          title: "Medium",
-          links: [
-            {
-              text: "Painting",
-              href: "/collection/painting",
-            },
-            {
-              text: "Prints",
-              href: "/collection/prints",
-            },
-            {
-              text: "Photography",
-              href: "/collection/photography",
-            },
-            {
-              text: "Sculpture",
-              href: "/collection/sculpture",
-            },
-            {
-              text: "Works on Paper",
-              href: "/collection/works-on-paper",
-            },
-            {
-              text: "Mixed Media",
-              href: "/collection/mixed-media",
-            },
-            {
-              text: "Design",
-              href: "/collection/design",
-            },
-          ],
-        },
-      },
-      {
         text: "Movements",
         menu: {
           title: "Movements",
@@ -317,7 +220,7 @@ export const ARTWORKS_SUBMENU_DATA: MenuLinkData = {
               href: "/collection/post-war",
             },
             {
-              text: "Impressionism & Modernism",
+              text: "Impressionism and Modernism",
               href: "/collection/impressionist-and-modern",
             },
             {
@@ -326,33 +229,45 @@ export const ARTWORKS_SUBMENU_DATA: MenuLinkData = {
             },
           ],
         },
-        dividerBelow: true,
       },
       {
-        text: "Subject Matter",
+        text: "Medium",
         menu: {
-          title: "Subject Matter",
+          title: "Medium",
           links: [
             {
-              text: "Abstract Art",
-              href: "/gene/abstract-art",
+              text: "Painting",
+              href: "/collection/painting",
             },
             {
-              text: "Figurative Art",
-              href: "/gene/figurative-art",
+              text: "Prints",
+              href: "/collection/prints",
             },
             {
-              text: "Landscapes",
-              href: "/gene/landscapes",
+              text: "Photography",
+              href: "/collection/photography",
             },
             {
-              text: "Still Life",
-              href: "/gene/still-life",
+              text: "Sculpture",
+              href: "/collection/sculpture",
+            },
+            {
+              text: "Work on Paper",
+              href: "/collection/works-on-paper",
+            },
+            {
+              text: "Mixed Media",
+              href: "/collection/mixed-media",
+            },
+            {
+              text: "Design",
+              href: "/collection/design",
             },
           ],
         },
+        dividerBelow: true,
       },
-      { text: "View all artworks", href: "/collect" },
+      { text: "View All Artworks", href: "/collect" },
     ],
   },
 }

@@ -37,25 +37,28 @@ describe("NavBarSubMenu", () => {
     // expect(linkMenuItems.length).toBe(5)
     expect(linkMenuItems.at(0).text()).toContain("Trove")
     expect(linkMenuItems.at(0).prop("href")).toEqual("/gene/trove")
-    expect(linkMenuItems.at(1).text()).toContain("New This Week")
+
+    expect(linkMenuItems.at(1).text()).toContain(
+      "Highlights at Auction This Week"
+    )
     expect(linkMenuItems.at(1).prop("href")).toEqual(
-      "/collection/new-this-week"
-    )
-    expect(linkMenuItems.at(2).text()).toContain("Trending on Artsy")
-    expect(linkMenuItems.at(2).prop("href")).toEqual(
-      "/collection/highlights-this-month"
-    )
-    expect(linkMenuItems.at(3).text()).toContain("Exclusively on Artsy")
-    expect(linkMenuItems.at(3).prop("href")).toEqual(
-      "/collection/exclusively-on-artsy"
-    )
-    expect(linkMenuItems.at(4).text()).toContain("Limited Editions")
-    expect(linkMenuItems.at(4).prop("href")).toEqual(
-      "/collection/limited-edition-works"
+      "/collection/auction-highlights"
     )
 
-    expect(linkMenuItems.at(5).text()).toContain("View all artworks")
-    expect(linkMenuItems.at(5).prop("href")).toEqual("/collect")
+    expect(linkMenuItems.at(2).text()).toContain(
+      "Highlights at Fairs This Week"
+    )
+    expect(linkMenuItems.at(2).prop("href")).toEqual(
+      "/collection/art-fair-highlights"
+    )
+
+    expect(linkMenuItems.at(3).text()).toContain("New in Figurative Painting")
+    expect(linkMenuItems.at(3).prop("href")).toEqual(
+      "/collection/emerging-figurative-painting"
+    )
+
+    expect(linkMenuItems.at(4).text()).toContain("View All Artworks")
+    expect(linkMenuItems.at(4).prop("href")).toEqual("/collect")
   })
 
   it("doesn't render artists letter nav inside artworks dropdown", () => {
