@@ -268,6 +268,8 @@ describe("UploadPhotos", () => {
     expect(wrapper.find(PhotoThumbnail)).toHaveLength(1)
 
     expect(sessionStorage.setItem).toHaveBeenCalled()
+
+    // TODO: SWA-78
     // expect(mockRouterPush).toHaveBeenCalled()
     // expect(mockRouterPush).toHaveBeenCalledWith({
     //   pathname: "/consign/submission/1/contact-information",

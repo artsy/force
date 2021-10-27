@@ -1,4 +1,3 @@
-import * as React from "react";
 import {
   AddItemIcon,
   ArtworkWithCheckIcon,
@@ -56,7 +55,9 @@ export const HowToSell: React.FC = () => {
           variant="primaryBlack"
           // @ts-ignore
           as={RouterLink}
-          to="/consign/submission"
+          // TODO: SWA-77
+          // to="/consign/submission"
+          to="/consign/submission/artwork-details"
         >
           Submit your artwork
         </Button>

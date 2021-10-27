@@ -35,6 +35,7 @@ export const UploadPhotos: React.FC = () => {
 
   const handleSubmit = async () => {
     if (submission) {
+      // TODO: SWA-78
       // router.push({
       //   pathname: `/consign/submission/${submissionId}/contact-information`,
       // })
@@ -145,6 +146,7 @@ export const UploadPhotos: React.FC = () => {
                 loading={isSubmitting || values.photos.some(c => !c.s3Key)}
                 type="submit"
               >
+                {/* TODO: SWA-78 */}
                 {/* Save and Continue */}
                 Submit Artwork
               </Button>

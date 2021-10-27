@@ -74,6 +74,7 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
         Back
       </BackLink>
 
+      {/* TODO: SWA-78 */}
       {/* <SubmissionStepper currentStep="Contact Information" /> */}
 
       <Text mt={4} variant="lg">
