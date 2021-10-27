@@ -80,7 +80,7 @@ const SettingsRoute = loadable(
 const ShippingRoute = loadable(
   () =>
     import(
-      /* webpackChunkName: "settingsBundle" */ "./Routes/Shipping/SettingsShippingRoute"
+      /* webpackChunkName: "settingsBundle" */ "./Routes/Shipping/Components/SettingsShippingRoute"
     ),
   {
     resolveComponent: component =>
