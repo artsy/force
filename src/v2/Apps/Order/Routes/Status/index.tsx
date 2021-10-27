@@ -194,10 +194,6 @@ export class StatusRoute extends Component<StatusProps> {
   }
 
   trackingInfo(trackingId, trackingUrl): React.ReactNode | null {
-    if (!trackingId && !trackingUrl) {
-      return null
-    }
-
     const node = trackingUrl ? (
       <RouterLink to={trackingUrl} target="_blank">
         {trackingId ? trackingId : "info"}
@@ -223,16 +219,19 @@ export class StatusRoute extends Component<StatusProps> {
       return null
     }
 
-    const trackingInfo = this.trackingInfo(
-      shipmentData.trackingId,
-      shipmentData.trackingUrl
-    )
+    const hasTrackingInfo =
+      shipmentData.trackingId?.length || shipmentData.trackingUrl?.length
 
     return (
       <>
         {isArtaShipped && isDelivered
           ? "Your order has been delivered."
           : "Your work is on its way."}
+        {isArtaShipped &&
+          !hasTrackingInfo &&
+          !isDelivered &&
+          " " +
+            "Our delivery provider will call you to provide a delivery window when it arrives in your area."}
         <Spacer mb={2} />
         {shipmentData.shipperName && (
           <>
@@ -240,7 +239,8 @@ export class StatusRoute extends Component<StatusProps> {
             <Spacer mb={1} />
           </>
         )}
-        {trackingInfo}
+        {hasTrackingInfo &&
+          this.trackingInfo(shipmentData.trackingId, shipmentData.trackingUrl)}
         {shipmentData.estimatedDelivery && (
           <>
             {isArtaShipped && isDelivered

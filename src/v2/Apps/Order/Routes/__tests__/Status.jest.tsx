@@ -1,6 +1,8 @@
 import { Message } from "@artsy/palette"
 import { StatusQueryRawResponse } from "v2/__generated__/StatusQuery.graphql"
 import {
+  ArtaShippedWithTrackingIdNoTrackingUrl,
+  ArtaShippedWithNoTrackingIdNoTrackingUrl,
   BuyOrderPickup,
   BuyOrderWithShippingDetails,
   OfferOrderPickup,
@@ -98,8 +100,6 @@ describe("Status", () => {
       it("should say confirmed and have message box", async () => {
         const page = await buildPageWithOrder({
           ...OfferOrderWithShippingDetails,
-          ...PaymentDetails,
-          state: "APPROVED",
           displayState: "APPROVED",
         })
         expect(page.text()).toContain("Offer accepted")
@@ -111,8 +111,6 @@ describe("Status", () => {
       it("should say confirmed and have message box", async () => {
         const page = await buildPageWithOrder({
           ...OfferOrderWithShippingDetails,
-          ...PaymentDetails,
-          state: "APPROVED",
           displayState: "PROCESSING",
         })
         expect(page.text()).toContain("Offer accepted")
@@ -124,42 +122,43 @@ describe("Status", () => {
       it("should say confirmed and have message box", async () => {
         const page = await buildPageWithOrder({
           ...OfferOrderWithShippingDetails,
-          ...PaymentDetails,
-          state: "APPROVED",
           displayState: "IN_TRANSIT",
         })
         expect(page.text()).toContain("Your order has shipped")
         expect(page.getMessage()).toBe(1)
       })
 
-      it("should display tracking number if present", async () => {
+      it("should display non linked tracking number if no Url", async () => {
         const page = await buildPageWithOrder({
-          ...OfferOrderWithShippingDetails,
-          ...PaymentDetails,
-          state: "APPROVED",
+          ...ArtaShippedWithTrackingIdNoTrackingUrl,
           displayState: "IN_TRANSIT",
-          shipment: {
-            trackingNumber: "steve",
-          },
         })
-        expect(page.text()).toContain("steve")
+        expect(page.text()).toContain("oxa")
+        expect(
+          page.find(Message).find("Message").find("RouterLink").length
+        ).toBe(0)
       })
 
       it("should display link to tracking URL if present", async () => {
         const page = await buildPageWithOrder({
           ...OfferOrderWithShippingDetails,
-          ...PaymentDetails,
-          state: "APPROVED",
           displayState: "IN_TRANSIT",
-          shipment: {
-            trackingNumber: "steve",
-            trackingUrl: "steves-house",
-          },
         })
         expect(page.text()).toContain("steve")
         expect(
           page.find(Message).find("Message").find("RouterLink").html()
         ).toContain(`href="steves-house"`)
+      })
+
+      it("should display note about shipping when tracking is not available", async () => {
+        const page = await buildPageWithOrder({
+          ...ArtaShippedWithNoTrackingIdNoTrackingUrl,
+          ...PaymentDetails,
+          displayState: "IN_TRANSIT",
+        })
+        expect(page.text()).toContain(
+          "Our delivery provider will call you to provide a delivery window when it arrives in your area."
+        )
       })
     })
 
@@ -167,8 +166,6 @@ describe("Status", () => {
       it("should say order has shipped and have message box", async () => {
         const page = await buildPageWithOrder({
           ...OfferOrderWithShippingDetails,
-          ...PaymentDetails,
-          state: "FULFILLED",
           displayState: "FULFILLED",
         })
         expect(page.text()).toContain("Your order has shipped")
@@ -178,8 +175,6 @@ describe("Status", () => {
       it("should not contain a note section", async () => {
         const page = await buildPageWithOrder({
           ...OfferOrderWithShippingDetails,
-          ...PaymentDetails,
-          state: "FULFILLED",
           displayState: "FULFILLED",
         })
         expect(page.text()).not.toContain("Your note")
@@ -191,7 +186,6 @@ describe("Status", () => {
         const page = await buildPageWithOrder({
           ...OfferOrderPickup,
           ...PaymentDetails,
-          state: "FULFILLED",
           displayState: "FULFILLED",
         })
         expect(page.text()).toContain("Your order has been picked up")
@@ -204,7 +198,6 @@ describe("Status", () => {
         const page = await buildPageWithOrder({
           ...OfferOrderPickup,
           ...PaymentDetails,
-          state: "CANCELED",
           displayState: "CANCELED",
           stateReason: "buyer_rejected",
         })
@@ -218,7 +211,6 @@ describe("Status", () => {
         const page = await buildPageWithOrder({
           ...OfferOrderPickup,
           ...PaymentDetails,
-          state: "CANCELED",
           displayState: "CANCELED",
           stateReason: "seller_rejected",
         })
@@ -232,7 +224,6 @@ describe("Status", () => {
         const page = await buildPageWithOrder({
           ...OfferOrderPickup,
           ...PaymentDetails,
-          state: "CANCELED",
           displayState: "CANCELED",
           stateReason: "seller_lapsed",
         })
@@ -246,7 +237,6 @@ describe("Status", () => {
         const page = await buildPageWithOrder({
           ...OfferOrderPickup,
           ...PaymentDetails,
-          state: "CANCELED",
           displayState: "CANCELED",
           stateReason: "buyer_lapsed",
         })
@@ -260,7 +250,6 @@ describe("Status", () => {
         const page = await buildPageWithOrder({
           ...OfferOrderPickup,
           ...PaymentDetails,
-          state: "REFUNDED",
           displayState: "REFUNDED",
         })
         expect(page.text()).toContain("Your order was canceled and refunded")
@@ -273,7 +262,6 @@ describe("Status", () => {
         const page = await buildPageWithOrder({
           ...OfferOrderPickup,
           ...PaymentDetails,
-          state: "CANCELED",
           displayState: "CANCELED",
           stateReason: null,
         })
@@ -297,7 +285,6 @@ describe("Status", () => {
         const page = await buildPageWithOrder({
           ...BuyOrderWithShippingDetails,
           ...PaymentDetails,
-          state: "SUBMITTED",
           displayState: "SUBMITTED",
         })
         expect(page.text()).toContain("Your order has been submitted")
@@ -313,7 +300,6 @@ describe("Status", () => {
         const page = await buildPageWithOrder({
           ...BuyOrderWithShippingDetails,
           ...PaymentDetails,
-          state: "APPROVED",
           displayState: "APPROVED",
         })
         expect(page.text()).toContain("Your order is confirmed")
@@ -325,7 +311,6 @@ describe("Status", () => {
         const page = await buildPageWithOrder({
           ...BuyOrderWithShippingDetails,
           ...PaymentDetails,
-          state: "FULFILLED",
           displayState: "FULFILLED",
         })
         expect(page.text()).toContain("Your order has shipped")
@@ -338,7 +323,6 @@ describe("Status", () => {
         const page = await buildPageWithOrder({
           ...BuyOrderPickup,
           ...PaymentDetails,
-          state: "FULFILLED",
           displayState: "FULFILLED",
         })
         expect(page.text()).toContain("Your order has been picked up")
@@ -351,7 +335,6 @@ describe("Status", () => {
         const page = await buildPageWithOrder({
           ...BuyOrderWithShippingDetails,
           ...PaymentDetails,
-          state: "CANCELED",
           displayState: "CANCELED",
         })
         expect(page.text()).toContain("Your order was canceled and refunded")
@@ -364,7 +347,6 @@ describe("Status", () => {
         const page = await buildPageWithOrder({
           ...BuyOrderPickup,
           ...PaymentDetails,
-          state: "CANCELED",
           displayState: "CANCELED",
         })
         expect(page.text()).toContain("Your order was canceled and refunded")
@@ -377,7 +359,6 @@ describe("Status", () => {
         const page = await buildPageWithOrder({
           ...BuyOrderPickup,
           ...PaymentDetails,
-          state: "REFUNDED",
           displayState: "REFUNDED",
         })
         expect(page.text()).toContain("Your order was canceled and refunded")
