@@ -16,6 +16,7 @@ import { useRouteComplete } from "v2/Utils/Hooks/useRouteComplete"
 import { useAuthIntent } from "v2/Utils/Hooks/useAuthIntent"
 import { AppToasts } from "./AppToasts"
 import { useNavBarHeight } from "v2/Components/NavBar/useNavBarHeight"
+import { useProductionEnvironmentWarning } from "./useProductionEnvironmentWarning"
 
 const logger = createLogger("Apps/Components/AppShell")
 
@@ -73,6 +74,7 @@ export const AppShell: React.FC<AppShellProps> = props => {
   const { height: navBarHeight } = useNavBarHeight()
 
   useNetworkOfflineMonitor()
+  useProductionEnvironmentWarning()
 
   return (
     <Flex
