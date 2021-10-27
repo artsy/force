@@ -51,10 +51,10 @@ export const ArtworkDetails: React.FC = () => {
     )
 
     router.replace({
-      pathname: `/consign/submission2/${submissionId}/artwork-details`,
+      pathname: `/consign/submission/${submissionId}/artwork-details`,
     })
     router.push({
-      pathname: `/consign/submission2/${submissionId}/upload-photos`,
+      pathname: `/consign/submission/${submissionId}/upload-photos`,
     })
   }
 

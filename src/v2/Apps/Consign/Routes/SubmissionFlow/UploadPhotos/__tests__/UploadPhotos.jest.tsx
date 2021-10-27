@@ -98,7 +98,7 @@ describe("UploadPhotos", () => {
     expect(wrapper.find("button[type='submit']").length).toBe(1)
     expect(wrapper.find("BackLink")).toHaveLength(1)
     expect(wrapper.find("BackLink").prop("to")).toEqual(
-      "/consign/submission2/1/artwork-details"
+      "/consign/submission/1/artwork-details"
     )
   })
 
@@ -270,7 +270,7 @@ describe("UploadPhotos", () => {
     expect(sessionStorage.setItem).toHaveBeenCalled()
     // expect(mockRouterPush).toHaveBeenCalled()
     // expect(mockRouterPush).toHaveBeenCalledWith({
-    //   pathname: "/consign/submission2/1/contact-information",
+    //   pathname: "/consign/submission/1/contact-information",
     // })
   })
 

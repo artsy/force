@@ -212,11 +212,11 @@ describe("ArtworkDetails", () => {
         await flushPromiseQueue()
 
         expect(mockRouterReplace).toHaveBeenCalledWith({
-          pathname: "/consign/submission2/1/artwork-details",
+          pathname: "/consign/submission/1/artwork-details",
         })
 
         expect(mockRouterPush).toHaveBeenCalledWith({
-          pathname: "/consign/submission2/1/upload-photos",
+          pathname: "/consign/submission/1/upload-photos",
         })
       })
 
