@@ -9,7 +9,7 @@ import {
   CommitMutation,
   injectCommitMutation,
 } from "v2/Apps/Order/Utils/commitMutation"
-import ToastComponent from "../Toast/ToastComponent"
+import ToastComponent from "../../../../../Components/Toast/ToastComponent"
 
 interface UserSettingsAddressesProps extends SystemContextProps {
   me: UserSettingsAddresses_me

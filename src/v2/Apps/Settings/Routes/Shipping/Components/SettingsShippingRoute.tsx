@@ -1,6 +1,6 @@
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { UserSettingsAddresses } from "v2/Components/UserSettings/UserSettingsAddresses"
+import { UserSettingsAddresses } from "./UserSettingsAddresses"
 import { UserSettingsAddresses_me } from "v2/__generated__/UserSettingsAddresses_me.graphql"
 import { CommitMutation } from "v2/Apps/Order/Utils/commitMutation"
 
