@@ -12,9 +12,6 @@ export type TrendingLotsRail_viewer = {
             readonly node: {
                 readonly internalID: string;
                 readonly slug: string;
-                readonly sale: {
-                    readonly isClosed: boolean | null;
-                } | null;
                 readonly " $fragmentRefs": FragmentRefs<"ShelfArtwork_artwork">;
             } | null;
         } | null> | null;
@@ -40,8 +37,13 @@ const node: ReaderFragment = {
       "args": [
         {
           "kind": "Literal",
+          "name": "biddableSale",
+          "value": true
+        },
+        {
+          "kind": "Literal",
           "name": "first",
-          "value": 50
+          "value": 10
         },
         {
           "kind": "Literal",
@@ -103,24 +105,6 @@ const node: ReaderFragment = {
                   "storageKey": null
                 },
                 {
-                  "alias": null,
-                  "args": null,
-                  "concreteType": "Sale",
-                  "kind": "LinkedField",
-                  "name": "sale",
-                  "plural": false,
-                  "selections": [
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "isClosed",
-                      "storageKey": null
-                    }
-                  ],
-                  "storageKey": null
-                },
-                {
                   "args": [
                     {
                       "kind": "Literal",
@@ -138,10 +122,10 @@ const node: ReaderFragment = {
           "storageKey": null
         }
       ],
-      "storageKey": "saleArtworksConnection(first:50,sort:\"-bidder_positions_count\")"
+      "storageKey": "saleArtworksConnection(biddableSale:true,first:10,sort:\"-bidder_positions_count\")"
     }
   ],
   "type": "Viewer"
 };
-(node as any).hash = '221336697ce6a87c379c25736819ab39';
+(node as any).hash = '2005b66ba10525ca3634d80108f148ef';
 export default node;
