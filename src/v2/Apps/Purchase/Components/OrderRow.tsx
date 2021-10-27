@@ -13,7 +13,7 @@ import {
 } from "@artsy/palette"
 import { DateTime } from "luxon"
 
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { Media } from "v2/Utils/Responsive"
@@ -313,7 +313,7 @@ export const OrderRowFragmentContainer = createFragmentContainer(
         creditCard {
           lastDigits
         }
-        buyerTotal
+        buyerTotal(precision: 2)
         createdAt
         itemsTotal
         lineItems {
