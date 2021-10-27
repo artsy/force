@@ -19,7 +19,7 @@ export const createConsignSubmissionInput = (
       .replace(" ", "_")
       .toUpperCase() as ConsignmentAttributionClass,
     editionNumber: submission.artworkDetailsForm.editionNumber,
-    editionSize: submission.artworkDetailsForm.editionSize,
+    editionSizeFormatted: submission.artworkDetailsForm.editionSize,
     height: submission.artworkDetailsForm.height,
     width: submission.artworkDetailsForm.width,
     depth: submission.artworkDetailsForm.depth,

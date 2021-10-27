@@ -40,7 +40,7 @@ const rarityOptions = checkboxValues.map(({ name, value }) => ({
 }))
 
 rarityOptions.unshift({
-  text: "Unique, Limited Edition, Open Edition…",
+  text: "Select a classification",
   value: "default",
 })
 
@@ -68,7 +68,7 @@ const mediumOptions = [
   { text: "Other", value: "OTHER" },
 ]
 
-mediumOptions.unshift({ text: "Painting, Print, Sculpture…", value: "default" })
+mediumOptions.unshift({ text: "Select a medium", value: "default" })
 
 export interface ArtworkDetailsFormModel {
   artistName: string
@@ -78,7 +78,7 @@ export interface ArtworkDetailsFormModel {
   medium: string
   rarity: string
   editionNumber: string
-  editionSize?: number
+  editionSize?: string
   height: string
   width: string
   depth: string
@@ -125,6 +125,7 @@ export const ArtworkDetailsForm: React.FC = () => {
       <ArtworkSidebarClassificationsModalQueryRenderer
         onClose={() => setIsRarityModalOpen(false)}
         show={isRarityModalOpen}
+        showDisclaimer={false}
       />
       <GridColumns>
         <Column span={6}>
@@ -210,10 +211,6 @@ export const ArtworkDetailsForm: React.FC = () => {
                 /
               </Box>
               <Input
-                type="number"
-                onKeyDown={e =>
-                  (e.key === "." || e.key === ",") && e.preventDefault()
-                }
                 title="Edition Size"
                 placeholder="Total # in Edition"
                 name="editionSize"

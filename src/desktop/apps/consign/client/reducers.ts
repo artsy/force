@@ -53,7 +53,7 @@ const initialState = {
     dimensions_metric: "in",
     edition: false,
     edition_number: "",
-    edition_size: 0,
+    edition_size: "",
     height: "",
     location_city: "",
     location_state: "",

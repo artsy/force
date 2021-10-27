@@ -78,7 +78,7 @@ describe("ModalContainer", () => {
 
     expect(cookieSet).toBeCalledWith(
       "analytics-signup",
-      '{"action":"createdAccount","auth_redirect":"/artist/andy-warhol","context_module":"popUpModal","intent":"viewArtist","onboarding":false,"service":"facebook","trigger":"timed","trigger_seconds":2,"type":"signup"}',
+      '{"action":"createdAccount","auth_redirect":"/artist/andy-warhol","context_module":"popUpModal","intent":"viewArtist","service":"facebook","trigger":"timed","trigger_seconds":2,"type":"signup","onboarding":false}',
       { expires: 86400 }
     )
   })

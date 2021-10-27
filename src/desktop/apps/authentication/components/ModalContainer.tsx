@@ -1,12 +1,8 @@
 import Cookies from "cookies-js"
-import { Component } from "react";
+import { Component } from "react"
 import { data as sd } from "sharify"
 
-import {
-  AuthService,
-  createdAccount,
-  successfullyLoggedIn,
-} from "@artsy/cohesion"
+import { ActionType, AuthModalType, AuthService } from "@artsy/cohesion"
 import { handleSubmit, setCookies } from "../helpers"
 import { ModalManager } from "v2/Components/Authentication/ModalManager"
 import { ModalOptions, ModalType } from "v2/Components/Authentication/Types"
@@ -58,25 +54,30 @@ export class ModalContainer extends Component<any> {
     triggerSeconds,
   }: SocialAuthArgs) => {
     const options = {
-      authRedirect: redirectTo || destination,
-      contextModule,
-      copy,
+      auth_redirect: redirectTo || destination,
+      context_module: contextModule,
+      modal_copy: copy,
       intent,
       service,
-      triggerSeconds,
-      userId: sd.CURRENT_USER && sd.CURRENT_USER.id,
+      trigger: "timed",
+      trigger_seconds: triggerSeconds,
+      user_id: sd.CURRENT_USER && sd.CURRENT_USER.id,
     }
 
     let analyticsOptions
     if (mode === "signup") {
-      // @ts-expect-error STRICT_NULL_CHECK
-      analyticsOptions = createdAccount({
-        onboarding: !redirectTo,
+      analyticsOptions = {
+        action: ActionType.createdAccount,
         ...options,
-      })
+        type: AuthModalType.signup,
+        onboarding: !redirectTo,
+      }
     } else {
-      // @ts-expect-error STRICT_NULL_CHECK
-      analyticsOptions = successfullyLoggedIn(options)
+      analyticsOptions = {
+        action: ActionType.successfullyLoggedIn,
+        ...options,
+        type: AuthModalType.login,
+      }
     }
 
     Cookies.set(`analytics-${mode}`, JSON.stringify(analyticsOptions), {

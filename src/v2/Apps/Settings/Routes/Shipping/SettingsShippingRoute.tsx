@@ -1,18 +1,27 @@
-import { Text } from "@artsy/palette"
 import React from "react"
-import { SettingsShippingRoute_me } from "v2/__generated__/SettingsShippingRoute_me.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
+import { UserSettingsAddresses } from "v2/Components/UserSettings/UserSettingsAddresses"
+import { UserSettingsAddresses_me } from "v2/__generated__/UserSettingsAddresses_me.graphql"
+import { CommitMutation } from "v2/Apps/Order/Utils/commitMutation"
 
 interface SettingsShippingRouteProps {
-  me: SettingsShippingRoute_me
+  me: UserSettingsAddresses_me
+  commitMutation: CommitMutation
+  isCommittingMutation: boolean
 }
 
 const SettingsShippingRoute: React.FC<SettingsShippingRouteProps> = ({
   me,
+  commitMutation,
+  isCommittingMutation,
 }) => {
   return (
     <>
-      <Text>Shipping Route</Text>
+      <UserSettingsAddresses
+        me={me}
+        commitMutation={commitMutation}
+        isCommittingMutation={isCommittingMutation}
+      />
     </>
   )
 }
@@ -22,7 +31,7 @@ export const SettingsShippingRouteFragmentContainer = createFragmentContainer(
   {
     me: graphql`
       fragment SettingsShippingRoute_me on Me {
-        name
+        ...UserSettingsAddresses_me
       }
     `,
   }

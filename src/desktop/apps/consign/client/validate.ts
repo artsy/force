@@ -46,8 +46,7 @@ export function validate(values) {
   if (numberWarning(depth)) errors.depth = "Required"
   if (edition) {
     if (!edition_number) errors.edition_number = "Required"
-    if (!edition_size || numberWarning(edition_size))
-      errors.edition_size = "Required"
+    if (!edition_size) errors.edition_size = "Required"
   }
   if (!location) errors.location = "Required"
 
