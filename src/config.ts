@@ -29,12 +29,6 @@ export const APPLICATION_NAME: any = "force-staging"
 export const APPLY_URL: any = "http://apply.artsy.net"
 export const ARTSY_EDITORIAL_CHANNEL: any = "5759e3efb5989e6f98f77993"
 export const AUCTION_ZENDESK_KEY: any = null
-// The number of seconds to block bursts after their limit is reached
-export const BURST_REQUEST_BLOCK_FOR: any = 180
-// The period in seconds to measure burst requests
-export const BURST_REQUEST_EXPIRE: any = 1
-// Number of requests allowed per BURST_REQUEST_EXPIRE
-export const BURST_REQUEST_LIMIT: any = 15
 export const CDN_URL: any = "https://d1s2w0upia4e9w.cloudfront.net"
 export const CLIENT_ID: any = null
 export const CLIENT_SECRET: any = null
@@ -89,12 +83,6 @@ export const IMAGE_PROXY: any = "GEMINI"
 export const IP_DENYLIST: any = ""
 export const LINKEDIN_KEY: any = null
 export const LINKEDIN_SECRET: any = null
-export const MAILCHIMP_AUCTION_LIST_ID: any = "b7b9959ee0"
-export const MAX_SOCKETS: any = -1
-export const MEMORY_PAGE_CACHE_ENABLED: any = false
-export const MEMORY_PAGE_CACHE_LIMIT: any = 100000
-export const MEMORY_PAGE_CACHE_TTL_MINUTES: any = 3 * 60
-export const MEMORY_PAGE_URL_FILTER: any = null
 export const METAPHYSICS_ENDPOINT: any =
   "https://metaphysics-production.artsy.net"
 export const NODE_ENV: any = "development"
