@@ -4,7 +4,7 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
  */
 const { fabricate } = require("@artsy/antigravity")
-const PartnerShows = require("../../collections/partner_shows")
+const { PartnerShows } = require("../../collections/partner_shows")
 const moment = require("moment")
 
 describe("PartnerShows", function () {

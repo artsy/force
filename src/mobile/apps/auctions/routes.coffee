@@ -1,7 +1,7 @@
 _ = require 'underscore'
 { API_URL } = require('sharify').data
-Sales = require '../../collections/sales'
-Artworks = require '../../collections/artworks'
+{ Sales } = require '../../collections/sales'
+{ Artworks } = require '../../collections/artworks'
 require '../../../lib/promiseDone'
 
 eligibleFilter = _.partial _.filter, _, ((sale) ->

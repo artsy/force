@@ -4,7 +4,7 @@ qs = require 'querystring'
 bootstrap = require '../../components/layout/bootstrap.coffee'
 Backbone = require 'backbone'
 Tag = require '../../models/tag.coffee'
-Artworks = require '../../collections/artworks'
+{ Artworks } = require '../../collections/artworks'
 artworkColumnsTemplate = -> require('../../components/artwork_columns/template.jade') arguments...
 
 module.exports.TagArtworksView = class TagArtworksView extends Backbone.View

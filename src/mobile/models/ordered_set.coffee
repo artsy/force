@@ -1,6 +1,6 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-Items = require '../collections/items'
+{ Items } = require '../collections/items'
 
 module.exports = class OrderedSet extends Backbone.Model
 

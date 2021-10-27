@@ -11,7 +11,7 @@ const rewire = require("rewire")
 const moment = require("moment")
 const routes = rewire("../routes")
 const Fair = require("../../../models/fair.coffee")
-const Fairs = require("../../../collections/fairs")
+const { Fairs } = require("../../../collections/fairs")
 const FairOrganizer = require("../../../models/fair_organizer.coffee")
 const Profile = require("../../../models/profile.coffee")
 

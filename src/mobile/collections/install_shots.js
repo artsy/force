@@ -5,18 +5,18 @@
  * DS207: Consider shorter variations of null checks
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
  */
-let InstallShots;
+let _InstallShots;
 const _ = require('underscore');
 const Backbone = require('backbone');
 const { InstallShot } = require('../models/install_shot');
 const { Fetch } = require('@artsy/backbone-mixins');
 const { API_URL } = require('sharify').data;
 
-module.exports = (InstallShots = (function() {
-  InstallShots = class InstallShots extends Backbone.Collection {
+export default (_InstallShots = (function() {
+  _InstallShots = class InstallShots extends Backbone.Collection {
     static initClass() {
       _.extend(this.prototype, Fetch(API_URL));
-  
+
       this.prototype.model = InstallShot;
     }
 
@@ -29,6 +29,7 @@ module.exports = (InstallShots = (function() {
       return _.any(_.map(this.pluck('caption'), _.negate(_.isEmpty)));
     }
   };
-  InstallShots.initClass();
-  return InstallShots;
+  _InstallShots.initClass();
+  return _InstallShots;
 })());
+export const InstallShots = _InstallShots

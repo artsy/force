@@ -1,6 +1,6 @@
 Backbone = require 'backbone'
 sd = require('sharify').data
-Artworks = require '../collections/artworks'
+{ Artworks } = require '../collections/artworks'
 FairLocation = require './fair_location.coffee'
 PartnerLocation = require './partner_location.coffee'
 _ = require 'underscore'

@@ -5,7 +5,7 @@
  */
 const moment = require("moment")
 const { fabricate } = require("@artsy/antigravity")
-const Fairs = require("../../collections/fairs")
+const { Fairs } = require("../../collections/fairs")
 
 describe("Fairs", () =>
   describe("#pastYearRoundFairs", () =>

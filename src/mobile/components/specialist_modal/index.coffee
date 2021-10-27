@@ -1,5 +1,5 @@
 SpecialistsView = require './client/specialist_view.coffee'
-Representatives = require '../../collections/representatives'
+{ Representatives } = require '../../collections/representatives'
 ModalView = require '../modal/view.coffee'
 
 module.exports = ($el)->

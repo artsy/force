@@ -2,7 +2,7 @@ const benv = require("benv")
 const sinon = require("sinon")
 const Backbone = require("backbone")
 const Article = require("../../../models/article")
-const Articles = require("../../../collections/articles")
+const { Articles } = require("../../../collections/articles")
 const { resolve } = require("path")
 const { fabricate } = require("@artsy/antigravity")
 

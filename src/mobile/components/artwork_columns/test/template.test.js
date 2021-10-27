@@ -4,7 +4,7 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
  */
 const Artwork = require("../../../models/artwork")
-const Artworks = require("../../../collections/artworks")
+const { Artworks } = require("../../../collections/artworks")
 const cheerio = require("cheerio")
 const { fabricate } = require("@artsy/antigravity")
 const path = require("path")

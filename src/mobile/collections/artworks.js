@@ -7,14 +7,14 @@
  * DS207: Consider shorter variations of null checks
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
  */
-let Artworks
+let _Artworks
 const Backbone = require("backbone")
 const _ = require("underscore")
 const sd = require("sharify").data
 const { Fetch } = require("@artsy/backbone-mixins")
 
-module.exports = Artworks = (function () {
-  Artworks = class Artworks extends Backbone.Collection {
+export default _Artworks = (function () {
+  _Artworks = class Artworks extends Backbone.Collection {
     static initClass() {
       _.extend(this.prototype, Fetch(sd.API_URL))
     }
@@ -101,6 +101,8 @@ module.exports = Artworks = (function () {
       return columns
     }
   }
-  Artworks.initClass()
-  return Artworks
+  _Artworks.initClass()
+  return _Artworks
 })()
+
+export const Artworks = _Artworks

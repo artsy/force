@@ -1,9 +1,9 @@
 _ = require 'underscore'
 Profile = require '../../models/profile.coffee'
 FairOrganizer = require '../../models/fair_organizer.coffee'
-Fairs = require '../../collections/fairs'
-OrderedSets = require '../../collections/ordered_sets'
-Articles = require '../../collections/articles'
+{ Fairs } = require '../../collections/fairs'
+{ OrderedSets } = require '../../collections/ordered_sets'
+{ Articles } = require '../../collections/articles'
 require '../../../lib/promiseDone'
 moment = require 'moment'
 

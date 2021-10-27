@@ -4,14 +4,14 @@
  * DS206: Consider reworking classes to avoid initClass
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
  */
-let DaySchedules
+let _DaySchedules
 const _ = require("underscore")
 const moment = require("moment")
 const Backbone = require("backbone")
 const DaySchedule = require("../models/day_schedule")
 
-module.exports = DaySchedules = (function () {
-  DaySchedules = class DaySchedules extends Backbone.Collection {
+export default _DaySchedules = (function () {
+  _DaySchedules = class DaySchedules extends Backbone.Collection {
     static initClass() {
       this.prototype.model = DaySchedule
 
@@ -74,6 +74,7 @@ module.exports = DaySchedules = (function () {
       return formattedDaySchedules
     }
   }
-  DaySchedules.initClass()
-  return DaySchedules
+  _DaySchedules.initClass()
+  return _DaySchedules
 })()
+export const DaySchedules = _DaySchedules

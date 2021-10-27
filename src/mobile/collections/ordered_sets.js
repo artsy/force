@@ -5,13 +5,12 @@
  * DS207: Consider shorter variations of null checks
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
  */
-let _OrderedSets
 const _ = require("underscore")
 const sd = require("sharify").data
 const Backbone = require("backbone")
 const OrderedSet = require("../models/ordered_set")
 
-class OrderedSets extends Backbone.Collection {
+class OrderedSetsInner extends Backbone.Collection {
   static initClass() {
     this.prototype.url = `${sd.API_URL}/api/v1/sets`
     this.prototype.model = OrderedSet
@@ -63,7 +62,7 @@ class OrderedSets extends Backbone.Collection {
     })
   }
 }
-OrderedSets.initClass()
+OrderedSetsInner.initClass()
 
 class OrderedSetMeta extends Backbone.Model {
   static initClass() {
@@ -72,8 +71,9 @@ class OrderedSetMeta extends Backbone.Model {
 }
 OrderedSetMeta.initClass()
 
-module.exports = _OrderedSets = class _OrderedSets {
+export const OrderedSets = class OrderedSetsPrime {
   constructor(options) {
-    return new OrderedSets(null, { meta: new OrderedSetMeta(options) })
+    return new OrderedSetsInner(null, { meta: new OrderedSetMeta(options) })
   }
 }
+export default OrderedSets

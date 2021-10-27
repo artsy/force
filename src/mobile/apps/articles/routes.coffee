@@ -2,7 +2,7 @@
 sd = require('sharify').data
 request = require 'superagent'
 Article = require '../../models/article'
-Articles = require '../../collections/articles'
+{ Articles } = require '../../collections/articles'
 Section = require '../../models/section'
 { stringifyJSONForWeb } = require '../../components/util/json.coffee'
 
