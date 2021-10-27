@@ -2,7 +2,7 @@ import { useToasts } from "@artsy/palette"
 import { useEffect, useRef } from "react"
 import { data as sd } from "sharify"
 
-const shouldWarnProductionEnvironment =
+export const SHOULD_WARN_PRODUCTION_ENVIRONMENT =
   sd.NODE_ENV === "development" &&
   (sd.API_URL === "https://api.artsy.net" ||
     sd.METAPHYSICS_ENDPOINT === "https://metaphysics-production.artsy.net")
@@ -14,7 +14,7 @@ export const useProductionEnvironmentWarning = () => {
   const alreadyWarned = useRef(false)
 
   useEffect(() => {
-    if (shouldWarnProductionEnvironment && !alreadyWarned.current) {
+    if (SHOULD_WARN_PRODUCTION_ENVIRONMENT && !alreadyWarned.current) {
       sendToast({
         message: "You are running a production environment.",
         description: `API_URL: ${sd.API_URL}, METAPHYSICS_ENDPOINT: ${sd.METAPHYSICS_ENDPOINT}`,

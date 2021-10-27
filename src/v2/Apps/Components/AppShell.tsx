@@ -1,5 +1,5 @@
 import { Box, Flex, Theme } from "@artsy/palette"
-import { useNetworkOfflineMonitor } from "v2/System/Router/useNetworkOfflineMonitor"
+import { useNetworkOfflineMonitor } from "v2/Utils/Hooks/useNetworkOfflineMonitor"
 import { findCurrentRoute } from "v2/System/Router/Utils/findCurrentRoute"
 import { useMaybeReloadAfterInquirySignIn } from "v2/System/Router/Utils/useMaybeReloadAfterInquirySignIn"
 import { NavBar } from "v2/Components/NavBar"
@@ -16,7 +16,7 @@ import { useRouteComplete } from "v2/Utils/Hooks/useRouteComplete"
 import { useAuthIntent } from "v2/Utils/Hooks/useAuthIntent"
 import { AppToasts } from "./AppToasts"
 import { useNavBarHeight } from "v2/Components/NavBar/useNavBarHeight"
-import { useProductionEnvironmentWarning } from "./useProductionEnvironmentWarning"
+import { useProductionEnvironmentWarning } from "v2/Utils/Hooks/useProductionEnvironmentWarning"
 
 const logger = createLogger("Apps/Components/AppShell")
 
