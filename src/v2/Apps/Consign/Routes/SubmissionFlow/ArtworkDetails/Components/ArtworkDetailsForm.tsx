@@ -125,6 +125,7 @@ export const ArtworkDetailsForm: React.FC = () => {
       <ArtworkSidebarClassificationsModalQueryRenderer
         onClose={() => setIsRarityModalOpen(false)}
         show={isRarityModalOpen}
+        showDisclaimer={false}
       />
       <GridColumns>
         <Column span={6}>

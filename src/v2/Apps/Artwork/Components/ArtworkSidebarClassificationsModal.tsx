@@ -1,5 +1,4 @@
 import { Box, SkeletonText, Modal, Button, Join, Spacer } from "@artsy/palette"
-import * as React from "react";
 import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "v2/System"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
@@ -26,12 +25,14 @@ interface ArtworkSidebarClassificationsModalProps {
   viewer: ArtworkSidebarClassificationsModal_viewer
   show: boolean
   onClose(): void
+  showDisclaimer?: boolean
 }
 
 const ArtworkSidebarClassificationsModal: React.FC<ArtworkSidebarClassificationsModalProps> = ({
   viewer,
   show,
   onClose,
+  showDisclaimer = true,
 }) => {
   return (
     <Modal
@@ -64,10 +65,12 @@ const ArtworkSidebarClassificationsModal: React.FC<ArtworkSidebarClassifications
             })
           : ARTWORK_CLASSIFICATIONS_PLACEHOLDER}
 
-        <Text variant="xs" color="black60">
-          Our partners are responsible for providing accurate classification
-          information for all works.
-        </Text>
+        {showDisclaimer && (
+          <Text variant="xs" color="black60">
+            Our partners are responsible for providing accurate classification
+            information for all works.
+          </Text>
+        )}
       </Join>
     </Modal>
   )
