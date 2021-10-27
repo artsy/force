@@ -1,5 +1,4 @@
 import {
-  Box,
   Image,
   Text,
   Flex,
@@ -8,8 +7,10 @@ import {
   SkeletonText,
   SkeletonBox,
   ResponsiveBox,
+  GridColumns,
+  Column,
 } from "@artsy/palette"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext, useTracking } from "v2/System"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
@@ -22,7 +23,6 @@ import {
   ContextModule,
   OwnerType,
 } from "@artsy/cohesion"
-import { Masonry } from "v2/Components/Masonry"
 
 interface HomeCurrentFairsProps {
   viewer: HomeCurrentFairs_viewer
@@ -37,38 +37,34 @@ const HomeCurrentFairs: React.FC<HomeCurrentFairsProps> = ({ viewer }) => {
 
   return (
     <HomeCurrentFairsContainer>
-      <Masonry columnCount={[2, 2, 3]}>
+      <GridColumns gridRowGap={4}>
         {viewer.fairs!.map((fair, index) => {
-          if (!fair) {
-            return <></>
-          }
+          if (!fair) return null
 
           return (
-            <RouterLink
-              to={fair.href}
-              key={index}
-              textDecoration="none"
-              display="block"
-              onClick={() => {
-                const trackingEvent: ClickedFairGroup = {
-                  action: ActionType.clickedFairGroup,
-                  context_module: ContextModule.fairRail,
-                  context_page_owner_type: OwnerType.home,
-                  destination_page_owner_id: fair.internalID,
-                  destination_page_owner_slug: fair.slug,
-                  destination_page_owner_type: OwnerType.fair,
-                  type: "thumbnail",
-                }
-                trackEvent(trackingEvent)
-              }}
-            >
-              <Box>
+            <Column key={index} span={[6, 4]}>
+              <RouterLink
+                to={fair.href}
+                textDecoration="none"
+                display="block"
+                onClick={() => {
+                  const trackingEvent: ClickedFairGroup = {
+                    action: ActionType.clickedFairGroup,
+                    context_module: ContextModule.fairRail,
+                    context_page_owner_type: OwnerType.home,
+                    destination_page_owner_id: fair.internalID,
+                    destination_page_owner_slug: fair.slug,
+                    destination_page_owner_type: OwnerType.fair,
+                    type: "thumbnail",
+                  }
+                  trackEvent(trackingEvent)
+                }}
+              >
                 {fair.image?.cropped?.src && (
                   <ResponsiveBox
                     aspectWidth={fair.image.cropped.width}
                     aspectHeight={fair.image.cropped.height}
                     maxWidth="100%"
-                    display="block"
                   >
                     <Image
                       width="100%"
@@ -81,19 +77,19 @@ const HomeCurrentFairs: React.FC<HomeCurrentFairsProps> = ({ viewer }) => {
                     />
                   </ResponsiveBox>
                 )}
-              </Box>
-              <Text variant="xl" mt={1}>
-                {fair?.name}
-              </Text>
-              <Text variant="lg" color="black60">
-                {fair.startAt} - {fair?.endAt}
-              </Text>
 
-              <Spacer mb={2} />
-            </RouterLink>
+                <Text variant={["lg", "xl"]} mt={1}>
+                  {fair?.name}
+                </Text>
+
+                <Text variant={["md", "lg"]} color="black60">
+                  {fair.startAt} – {fair?.endAt}
+                </Text>
+              </RouterLink>
+            </Column>
           )
         })}
-      </Masonry>
+      </GridColumns>
     </HomeCurrentFairsContainer>
   )
 }
@@ -135,26 +131,25 @@ const HomeCurrentFairsContainer: React.FC = ({ children }) => {
 const PLACEHOLDER = (
   <Skeleton>
     <HomeCurrentFairsContainer>
-      <Masonry columnCount={[2, 2, 3]}>
-        {[...new Array(3)].map((_, i) => {
+      <GridColumns>
+        {[...new Array(6)].map((_, i) => {
           return (
-            <Box key={i}>
-              <ResponsiveBox
-                aspectWidth={540}
-                aspectHeight={415}
-                maxWidth="100%"
-                display="block"
-              >
+            <Column key={i} span={[6, 4]}>
+              <ResponsiveBox aspectWidth={4} aspectHeight={3} maxWidth="100%">
                 <SkeletonBox width="100%" height="100%" />
               </ResponsiveBox>
-              <SkeletonText variant="xl" mt={1}>
-                Some Gallery
+
+              <SkeletonText variant={["lg", "xl"]} mt={1}>
+                Name of Fair 0000
               </SkeletonText>
-              <SkeletonText variant="lg">Location</SkeletonText>
-            </Box>
+
+              <SkeletonText variant={["md", "lg"]}>
+                Jan 00th – Jan 00th 0000
+              </SkeletonText>
+            </Column>
           )
         })}
-      </Masonry>
+      </GridColumns>
     </HomeCurrentFairsContainer>
   </Skeleton>
 )
@@ -184,7 +179,8 @@ export const HomeCurrentFairsFragmentContainer = createFragmentContainer(
           endAt(format: "MMM Do YYYY")
           bannerSize
           image {
-            cropped(width: 540, height: 415) {
+            # 4:3 aspect ratio
+            cropped(width: 600, height: 450) {
               src
               srcSet
               width

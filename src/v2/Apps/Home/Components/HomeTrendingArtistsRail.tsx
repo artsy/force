@@ -7,7 +7,7 @@ import {
   SkeletonText,
   SkeletonBox,
 } from "@artsy/palette"
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext, useTracking } from "v2/System"
 import { SystemQueryRenderer } from "v2/System/Relay/SystemQueryRenderer"
@@ -41,6 +41,7 @@ const HomeTrendingArtistsRail: React.FC<HomeTrendingArtistsRailProps> = ({
 
   return (
     <Rail
+      alignItems="flex-start"
       title="Trending Artists on Artsy"
       viewAllLabel="View All Artists"
       viewAllHref="/artists"
