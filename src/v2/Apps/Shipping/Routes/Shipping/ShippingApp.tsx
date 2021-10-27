@@ -5,7 +5,7 @@ import { ShippingApp_me } from "v2/__generated__/ShippingApp_me.graphql"
 import { data as sd } from "sharify"
 import { Box } from "@artsy/palette"
 import { UserSettingsTabs } from "v2/Components/UserSettings/UserSettingsTabs"
-import { UserSettingsAddressesFragmentContainer as UserSettingsAddresses } from "v2/Components/UserSettings/UserSettingsAddresses"
+import { UserSettingsAddressesFragmentContainer as UserSettingsAddresses } from "v2/Apps/Settings/Routes/Shipping/Components/UserSettingsAddresses"
 
 export interface ShippingAppProps {
   me: ShippingApp_me

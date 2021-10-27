@@ -1,4 +1,4 @@
-import { UserSettingsAddressesFragmentContainer } from "../UserSettingsAddresses"
+import { UserSettingsAddressesFragmentContainer } from "../Shipping/Components/UserSettingsAddresses"
 import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
 import { commitMutation as _commitMutation, graphql } from "relay-runtime"
 import ToastComponent from "v2/Components/Toast/ToastComponent"
