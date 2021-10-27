@@ -1,5 +1,5 @@
-import { Component } from "react";
-import * as React from "react";
+import { Component } from "react"
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Title } from "react-head"
 import { Router, Match } from "found"
@@ -193,6 +193,22 @@ export class StatusRoute extends Component<StatusProps> {
       : null
   }
 
+  trackingInfo(trackingId, trackingUrl): React.ReactNode | null {
+    const node = trackingUrl ? (
+      <RouterLink to={trackingUrl} target="_blank">
+        {trackingId ? trackingId : "info"}
+      </RouterLink>
+    ) : (
+      trackingId
+    )
+    return (
+      <>
+        Tracking: {node}
+        <Spacer mb={1} />
+      </>
+    )
+  }
+
   shipmentDescription(
     isArtaShipped: boolean,
     isDelivered: boolean
@@ -203,11 +219,19 @@ export class StatusRoute extends Component<StatusProps> {
       return null
     }
 
+    const hasTrackingInfo =
+      shipmentData.trackingId?.length || shipmentData.trackingUrl?.length
+
     return (
       <>
         {isArtaShipped && isDelivered
           ? "Your order has been delivered."
           : "Your work is on its way."}
+        {isArtaShipped &&
+          !hasTrackingInfo &&
+          !isDelivered &&
+          " " +
+            "Our delivery provider will call you to provide a delivery window when it arrives in your area."}
         <Spacer mb={2} />
         {shipmentData.shipperName && (
           <>
@@ -215,13 +239,8 @@ export class StatusRoute extends Component<StatusProps> {
             <Spacer mb={1} />
           </>
         )}
-        {shipmentData.trackingId && (
-          <>
-            {/* TODO: link it if trackingUrl is present */}
-            <>Tracking: {shipmentData.trackingId}</>
-            <Spacer mb={1} />
-          </>
-        )}
+        {hasTrackingInfo &&
+          this.trackingInfo(shipmentData.trackingId, shipmentData.trackingUrl)}
         {shipmentData.estimatedDelivery && (
           <>
             {isArtaShipped && isDelivered

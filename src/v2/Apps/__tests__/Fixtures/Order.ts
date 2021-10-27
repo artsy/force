@@ -143,7 +143,7 @@ const OrderArtworkOrEditionSetkNode_Artwork = {
   },
 }
 
-const OfferArtworkOrEditionSetkNode_Artwork = {
+const OfferArtworkOrEditionSetNode_Artwork = {
   artworkOrEditionSet: {
     __typename: "Artwork",
     displayPriceRange: false as boolean,
@@ -152,7 +152,7 @@ const OfferArtworkOrEditionSetkNode_Artwork = {
   },
 }
 
-const OfferArtworkOrEditionSetkNode_ArtworkInPounds = {
+const OfferArtworkOrEditionSetNode_ArtworkInPounds = {
   artworkOrEditionSet: {
     __typename: "Artwork",
     displayPriceRange: false as boolean,
@@ -161,7 +161,7 @@ const OfferArtworkOrEditionSetkNode_ArtworkInPounds = {
   },
 }
 
-const OfferArtworkOrEditionSetkNode_Range = {
+const OfferArtworkOrEditionSetNode_Range = {
   artworkOrEditionSet: {
     __typename: "EditionSet",
     displayPriceRange: true as boolean,
@@ -185,7 +185,13 @@ const OrderArtworkFulfillmentsNode = {
   },
 }
 
-const OrderArtworkShipmentNode = {
+const EmptyFulfillmentsNode = {
+  fulfillments: {
+    edges: [],
+  },
+}
+
+const ArtaShipmentNode = {
   shipment: {
     trackingNumber: "steve",
     trackingUrl: "steves-house",
@@ -193,6 +199,32 @@ const OrderArtworkShipmentNode = {
     estimatedDeliveryWindow: "yuck",
     id: "completely-fake",
     status: "Pending",
+  },
+}
+
+const EmptyShipmentNode = {
+  shipment: null,
+}
+
+const ArtaShipmentNodeWithNoTrackingInfo = {
+  shipment: {
+    trackingNumber: null,
+    trackingUrl: null,
+    carrierName: "sled dogs",
+    estimatedDeliveryWindow: "quack",
+    id: "utterly-fake",
+    status: "Confirmed",
+  },
+}
+
+const ArtaShipmentNodeNoUrl = {
+  shipment: {
+    trackingNumber: "oxa",
+    trackingUrl: null,
+    carrierName: "plane",
+    estimatedDeliveryWindow: "shmack",
+    id: "fully-fake",
+    status: "Confirmed",
   },
 }
 
@@ -219,7 +251,7 @@ export const UntouchedOrder = {
           ...OrderArtworkNode,
           ...OrderArtworkOrEditionSetkNode_Artwork,
           ...OrderArtworkFulfillmentsNode,
-          ...OrderArtworkShipmentNode,
+          ...EmptyShipmentNode,
         },
       },
     ],
@@ -266,8 +298,8 @@ export const UntouchedBuyOrderWithArtaEnabled = {
           shippingQuoteOptions: null,
           ...ArtaEnabledOrderArtworkNode,
           ...OrderArtworkOrEditionSetkNode_Artwork,
-          ...OrderArtworkFulfillmentsNode,
-          ...OrderArtworkShipmentNode,
+          ...EmptyFulfillmentsNode,
+          ...ArtaShipmentNode,
         },
       },
     ],
@@ -349,8 +381,8 @@ export const UntouchedBuyOrderWithShippingQuotes = {
           },
           ...ArtaEnabledOrderArtworkNode,
           ...OrderArtworkOrEditionSetkNode_Artwork,
-          ...OrderArtworkFulfillmentsNode,
-          ...OrderArtworkShipmentNode,
+          ...EmptyFulfillmentsNode,
+          ...ArtaShipmentNode,
         },
       },
     ],
@@ -443,7 +475,7 @@ export const UntouchedBuyOrderWithSelectedShippingQuote = {
           ...ArtaEnabledOrderArtworkNode,
           ...OrderArtworkOrEditionSetkNode_Artwork,
           ...OrderArtworkFulfillmentsNode,
-          ...OrderArtworkShipmentNode,
+          ...ArtaShipmentNode,
         },
       },
     ],
@@ -505,9 +537,9 @@ export const UntouchedOfferOrder = {
           selectedShippingQuote: null,
           shippingQuoteOptions: null,
           ...OrderArtworkNode,
-          ...OfferArtworkOrEditionSetkNode_Artwork,
+          ...OfferArtworkOrEditionSetNode_Artwork,
           ...OrderArtworkFulfillmentsNode,
-          ...OrderArtworkShipmentNode,
+          ...ArtaShipmentNode,
         },
       },
     ],
@@ -540,9 +572,9 @@ export const UntouchedInquiryOfferOrder = {
           selectedShippingQuote: null,
           shippingQuoteOptions: null,
           ...InquiryOrderArtworkNode,
-          ...OfferArtworkOrEditionSetkNode_Artwork,
+          ...OfferArtworkOrEditionSetNode_Artwork,
           ...OrderArtworkFulfillmentsNode,
-          ...OrderArtworkShipmentNode,
+          ...ArtaShipmentNode,
         },
       },
     ],
@@ -562,9 +594,9 @@ export const UntouchedOfferOrderInPounds = {
           selectedShippingQuote: null,
           shippingQuoteOptions: null,
           ...OrderArtworkNode,
-          ...OfferArtworkOrEditionSetkNode_ArtworkInPounds,
+          ...OfferArtworkOrEditionSetNode_ArtworkInPounds,
           ...OrderArtworkFulfillmentsNode,
-          ...OrderArtworkShipmentNode,
+          ...ArtaShipmentNode,
         },
       },
     ],
@@ -582,9 +614,9 @@ export const UntouchedOfferOrderWithRange = {
           selectedShippingQuote: null,
           shippingQuoteOptions: null,
           ...OrderArtworkNode,
-          ...OfferArtworkOrEditionSetkNode_Range,
+          ...OfferArtworkOrEditionSetNode_Range,
           ...OrderArtworkFulfillmentsNode,
-          ...OrderArtworkShipmentNode,
+          ...ArtaShipmentNode,
         },
       },
     ],
@@ -689,6 +721,50 @@ export const OfferOrderWithShippingDetailsAndNote = {
   ...OfferOrderWithOffersAndNote,
   ...ShippingDetails,
   ...PaymentDetails,
+} as const
+
+export const ArtaShippedWithTrackingIdNoTrackingUrl = {
+  ...UntouchedOfferOrder,
+  ...ArtaShippingDetails,
+  ...PaymentDetails,
+  lineItems: {
+    edges: [
+      {
+        node: {
+          editionSetId: null,
+          id: "line-item-node-id",
+          selectedShippingQuote: null,
+          shippingQuoteOptions: null,
+          ...OrderArtworkNode,
+          ...OfferArtworkOrEditionSetNode_Artwork,
+          ...EmptyFulfillmentsNode,
+          ...ArtaShipmentNodeNoUrl,
+        },
+      },
+    ],
+  },
+} as const
+
+export const ArtaShippedWithNoTrackingIdNoTrackingUrl = {
+  ...UntouchedOfferOrder,
+  ...ArtaShippingDetails,
+  ...PaymentDetails,
+  lineItems: {
+    edges: [
+      {
+        node: {
+          editionSetId: null,
+          id: "line-item-node-id",
+          selectedShippingQuote: null,
+          shippingQuoteOptions: null,
+          ...OrderArtworkNode,
+          ...OfferArtworkOrEditionSetNode_Artwork,
+          ...EmptyFulfillmentsNode,
+          ...ArtaShipmentNodeWithNoTrackingInfo,
+        },
+      },
+    ],
+  },
 } as const
 
 export const BuyOrderWithArtaShippingDetails = {
