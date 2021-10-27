@@ -8,7 +8,7 @@ const urlParser = require("url")
 const sinon = require("sinon")
 const Backbone = require("backbone")
 const Partner = require("../../models/partner")
-const PartnerLocations = require("../../collections/partner_locations")
+const { PartnerLocations } = require("../../collections/partner_locations")
 const { fabricate } = require("@artsy/antigravity")
 
 describe("Partner", function () {

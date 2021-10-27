@@ -1,24 +1,19 @@
 /*
  * decaffeinate suggestions:
- * DS002: Fix invalid constructor
  * DS101: Remove unnecessary use of Array.from
  * DS102: Remove unnecessary code created because of implicit returns
  * DS206: Consider reworking classes to avoid initClass
  * DS207: Consider shorter variations of null checks
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
  */
-let FilterArtworks
+let _FilterArtworks
 const _ = require("underscore")
 const qs = require("qs")
-const Artworks = require("../collections/artworks")
+import _Artworks from "../collections/artworks"
 const { API_URL } = require("sharify").data
 
-module.exports = FilterArtworks = (function () {
-  FilterArtworks = class FilterArtworks extends Artworks {
-    constructor(...args) {
-      super(...args)
-    }
-
+export default _FilterArtworks = (function () {
+  _FilterArtworks = class FilterArtworks extends _Artworks {
     preinitialize() {
       this.sync = this.sync.bind(this)
     }
@@ -137,6 +132,7 @@ module.exports = FilterArtworks = (function () {
         : undefined
     }
   }
-  FilterArtworks.initClass()
-  return FilterArtworks
+  _FilterArtworks.initClass()
+  return _FilterArtworks
 })()
+export const FilterArtworks = _FilterArtworks

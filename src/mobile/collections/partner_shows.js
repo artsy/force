@@ -6,15 +6,15 @@
  * DS207: Consider shorter variations of null checks
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
  */
-let PartnerShows
+let _PartnerShows
 const _ = require("underscore")
 const Backbone = require("backbone")
 const sd = require("sharify").data
 const Show = require("../models/show")
 const moment = require("moment")
 
-module.exports = PartnerShows = (function () {
-  PartnerShows = class PartnerShows extends Backbone.Collection {
+export default _PartnerShows = (function () {
+  _PartnerShows = class PartnerShows extends Backbone.Collection {
     static initClass() {
       this.prototype.model = Show
     }
@@ -117,6 +117,7 @@ module.exports = PartnerShows = (function () {
       }
     }
   }
-  PartnerShows.initClass()
-  return PartnerShows
+  _PartnerShows.initClass()
+  return _PartnerShows
 })()
+export const PartnerShows = _PartnerShows

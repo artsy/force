@@ -4,13 +4,13 @@
  * DS206: Consider reworking classes to avoid initClass
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
  */
-let Representatives
+let _Representatives
 const Backbone = require("backbone")
 const { API_URL } = require("sharify").data
 const Representative = require("../models/representative")
 
-module.exports = Representatives = (function () {
-  Representatives = class Representatives extends Backbone.Collection {
+export default _Representatives = (function () {
+  _Representatives = class Representatives extends Backbone.Collection {
     static initClass() {
       this.prototype.model = Representative
 
@@ -28,6 +28,7 @@ module.exports = Representatives = (function () {
       return dfd.promise()
     }
   }
-  Representatives.initClass()
-  return Representatives
+  _Representatives.initClass()
+  return _Representatives
 })()
+export const Representatives = _Representatives

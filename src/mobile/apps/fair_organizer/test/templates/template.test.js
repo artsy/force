@@ -8,11 +8,11 @@ const jade = require("jade")
 const path = require("path")
 const fs = require("fs")
 const { fabricate } = require("@artsy/antigravity")
-const Fairs = require("../../../../collections/fairs")
+const { Fairs } = require("../../../../collections/fairs")
 const FairOrganizer = require("../../../../models/fair_organizer")
 const Profile = require("../../../../models/profile")
 const Item = require("../../../../models/item")
-const Items = require("../../../../collections/items")
+const { Items } = require("../../../../collections/items")
 const cheerio = require("cheerio")
 
 const render = function (templateName) {

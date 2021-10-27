@@ -5,15 +5,15 @@
  * DS207: Consider shorter variations of null checks
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
  */
-let FeaturedLinks
+let _FeaturedLinks
 const Backbone = require("backbone")
 const sd = require("sharify").data
 const _ = require("underscore")
 const FeaturedLink = require("../models/featured_link")
 const { Fetch } = require("@artsy/backbone-mixins")
 
-module.exports = FeaturedLinks = (function () {
-  FeaturedLinks = class FeaturedLinks extends Backbone.Collection {
+export default _FeaturedLinks = (function () {
+  _FeaturedLinks = class FeaturedLinks extends Backbone.Collection {
     static initClass() {
       _.extend(this.prototype, Fetch(sd.API_URL))
 
@@ -38,6 +38,7 @@ module.exports = FeaturedLinks = (function () {
       })
     }
   }
-  FeaturedLinks.initClass()
-  return FeaturedLinks
+  _FeaturedLinks.initClass()
+  return _FeaturedLinks
 })()
+export const FeaturedLinks = _FeaturedLinks

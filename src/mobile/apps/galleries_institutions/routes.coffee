@@ -2,8 +2,8 @@ _ = require 'underscore'
 sd = require('sharify').data
 require '../../../lib/promiseDone'
 { FeaturedCities, Cities } = require 'places'
-Profiles = require '../../collections/profiles'
-Partners = require '../../collections/partners'
+{ Profiles } = require '../../collections/profiles'
+{ Partners } = require '../../collections/partners'
 
 partnerOptions = (type) ->
   {

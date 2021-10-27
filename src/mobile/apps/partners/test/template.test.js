@@ -10,7 +10,7 @@ const cheerio = require("cheerio")
 const Backbone = require("backbone")
 const { fabricate } = require("@artsy/antigravity")
 const Partner = require("../../../models/partner")
-const Profiles = require("../../../collections/profiles")
+const { Profiles } = require("../../../collections/profiles")
 
 const render = function (templateName) {
   const filename = path.resolve(__dirname, `../${templateName}.jade`)

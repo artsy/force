@@ -11,7 +11,7 @@ const Backbone = require("backbone")
 const Profile = require("../../../models/profile")
 const Partner = require("../../../models/partner")
 const { fabricate } = require("@artsy/antigravity")
-const Artists = require("../../../collections/artists")
+const { Artists } = require("../../../collections/artists")
 const fixtures = require("../../../test/helpers/fixtures")
 const {
   GALLERY_DEFAULT,

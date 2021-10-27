@@ -6,14 +6,14 @@
  * DS207: Consider shorter variations of null checks
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
  */
-let Items
+let _Items
 const sd = require("sharify").data
 const Item = require("../models/item")
 const PageableCollection = require("backbone-pageable")
 
 // Collection of Items for an OrderedSet
-module.exports = Items = (function () {
-  Items = class Items extends PageableCollection {
+export default _Items = (function () {
+  _Items = class Items extends PageableCollection {
     constructor(...args) {
       super(...args)
     }
@@ -68,6 +68,7 @@ module.exports = Items = (function () {
       return super.initialize(...arguments)
     }
   }
-  Items.initClass()
-  return Items
+  _Items.initClass()
+  return _Items
 })()
+export const Items = _Items

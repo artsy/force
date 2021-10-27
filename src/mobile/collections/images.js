@@ -3,16 +3,17 @@
  * DS206: Consider reworking classes to avoid initClass
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
  */
-let Images
+let _Images
 const Backbone = require("backbone")
 const Image = require("../models/image")
 
-module.exports = Images = (function () {
-  Images = class Images extends Backbone.Collection {
+export default _Images = (function () {
+  _Images = class Images extends Backbone.Collection {
     static initClass() {
       this.prototype.model = Image
     }
   }
-  Images.initClass()
-  return Images
+  _Images.initClass()
+  return _Images
 })()
+export const Images = _Images

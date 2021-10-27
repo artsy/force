@@ -11,7 +11,7 @@ const cheerio = require("cheerio")
 const Backbone = require("backbone")
 const Article = require("../../../models/article")
 const Section = require("../../../models/section")
-const Articles = require("../../../collections/articles")
+const { Articles } = require("../../../collections/articles")
 const fixtures = require("../../../test/helpers/fixtures")
 
 const render = function (templateName) {

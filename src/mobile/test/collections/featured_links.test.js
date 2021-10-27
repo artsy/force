@@ -5,7 +5,7 @@
  */
 const sinon = require("sinon")
 const Backbone = require("backbone")
-const FeaturedLinks = require("../../collections/featured_links")
+const { FeaturedLinks } = require("../../collections/featured_links")
 const { fabricate } = require("@artsy/antigravity")
 
 describe("FeaturedLinks", function () {

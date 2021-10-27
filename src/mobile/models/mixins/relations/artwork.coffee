@@ -8,9 +8,9 @@ module.exports =
     SaleArtwork = require '../../sale_artwork.coffee'
     Partner = require '../../partner.coffee'
 
-    Artworks = require '../../../collections/artworks'
-    Sales = require '../../../collections/sales'
-    Artists = require '../../../collections/artists'
+    { Artworks } = require '../../../collections/artworks'
+    { Sales } = require '../../../collections/sales'
+    { Artists } = require '../../../collections/artists'
 
     artist = new Artist @get('artist')
     saleArtwork = new SaleArtwork @get('sale_artwork')

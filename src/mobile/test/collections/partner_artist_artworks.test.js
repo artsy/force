@@ -4,8 +4,8 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
  */
 const { fabricate } = require("@artsy/antigravity")
-const Artworks = require("../../collections/artworks")
-const PartnerArtistArtworks = require("../../collections/partner_artist_artworks")
+const { Artworks } = require("../../collections/artworks")
+const { PartnerArtistArtworks } = require("../../collections/partner_artist_artworks")
 
 describe("PartnerArtistArtworks", function () {
   beforeEach(function () {
