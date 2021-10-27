@@ -29,9 +29,9 @@ export const artworkDetailsValidationSchema = yup.object().shape({
     is: "limited edition",
     then: yup.string().required().trim(),
   }),
-  editionSize: yup.number().when("rarity", {
+  editionSize: yup.string().when("rarity", {
     is: "limited edition",
-    then: yup.number().required(),
+    then: yup.string().required().trim(),
   }),
   height: yup.number().positive().required(),
   width: yup.number().positive().required(),
