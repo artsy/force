@@ -20,7 +20,7 @@ const titleSizes = {
 
 /**
  * @deprecated in favor of our Design System Typography components in @artsy/palette
- * https://palette.artsy.net/tokens/typography
+ * https://palette.artsy.net/atoms/typography
  */
 const Title: React.SFC<TitleProps> = props => {
   const newProps: TitleProps = { ...props }
