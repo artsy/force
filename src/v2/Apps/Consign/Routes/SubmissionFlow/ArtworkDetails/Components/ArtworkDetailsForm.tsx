@@ -40,7 +40,7 @@ const rarityOptions = checkboxValues.map(({ name, value }) => ({
 }))
 
 rarityOptions.unshift({
-  text: "Unique, Limited Edition, Open Edition…",
+  text: "Select a classification",
   value: "default",
 })
 
@@ -68,7 +68,7 @@ const mediumOptions = [
   { text: "Other", value: "OTHER" },
 ]
 
-mediumOptions.unshift({ text: "Painting, Print, Sculpture…", value: "default" })
+mediumOptions.unshift({ text: "Select a medium", value: "default" })
 
 export interface ArtworkDetailsFormModel {
   artistName: string
