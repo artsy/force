@@ -542,11 +542,11 @@ describe("Reducers", () => {
         it("ignores edition number and size if the checkbox is not checked", () => {
           initialResponse.submissionFlow.inputs.edition.should.eql(false)
           initialResponse.submissionFlow.inputs.edition_number.should.eql("")
-          initialResponse.submissionFlow.inputs.edition_size.should.eql(0)
+          initialResponse.submissionFlow.inputs.edition_size.should.eql("")
           const newInputs = {
             edition: false,
             edition_number: "12a",
-            edition_size: 120,
+            edition_size: "120",
           }
           const newInputsStep = reducers(
             initialResponse,
@@ -554,17 +554,17 @@ describe("Reducers", () => {
           )
           newInputsStep.submissionFlow.inputs.edition.should.eql(false)
           newInputsStep.submissionFlow.inputs.edition_number.should.eql("")
-          newInputsStep.submissionFlow.inputs.edition_size.should.eql(0)
+          newInputsStep.submissionFlow.inputs.edition_size.should.eql("")
         })
 
         it("keeps edition number and size if the checkbox is checked", () => {
           initialResponse.submissionFlow.inputs.edition.should.eql(false)
           initialResponse.submissionFlow.inputs.edition_number.should.eql("")
-          initialResponse.submissionFlow.inputs.edition_size.should.eql(0)
+          initialResponse.submissionFlow.inputs.edition_size.should.eql("")
           const newInputs = {
             edition: true,
             edition_number: "12a",
-            edition_size: 120,
+            edition_size: "120",
           }
           const newInputsStep = reducers(
             initialResponse,
@@ -572,7 +572,7 @@ describe("Reducers", () => {
           )
           newInputsStep.submissionFlow.inputs.edition.should.eql(true)
           newInputsStep.submissionFlow.inputs.edition_number.should.eql("12a")
-          newInputsStep.submissionFlow.inputs.edition_size.should.eql(120)
+          newInputsStep.submissionFlow.inputs.edition_size.should.eql("120")
         })
       })
 

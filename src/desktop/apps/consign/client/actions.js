@@ -611,7 +611,7 @@ export function updateCurrentStep(step) {
 export function updateInputs(inputs) {
   if (inputs.edition === false) {
     inputs.edition_number = ""
-    inputs.edition_size = 0
+    inputs.edition_size = ""
   }
 
   return {

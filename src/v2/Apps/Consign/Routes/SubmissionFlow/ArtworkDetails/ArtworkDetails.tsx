@@ -29,7 +29,7 @@ export const ArtworkDetails: React.FC = () => {
     const artworkDetailsForm = {
       ...values,
       editionNumber: isLimitedEditionRarity ? values.editionNumber : "",
-      editionSize: isLimitedEditionRarity ? values.editionSize : undefined,
+      editionSize: isLimitedEditionRarity ? values.editionSize : "",
     }
 
     for (let key in artworkDetailsForm) {

@@ -143,7 +143,6 @@ export function makeDescribeWorkMobile(initialValues = {}) {
                     component={renderTextInput}
                     item={"edition_size"}
                     label={"Size of Edition*"}
-                    warn={numberWarning}
                   />
                 </div>
               </div>
