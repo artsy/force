@@ -35,7 +35,7 @@ export const UserActiveBids: React.FC<UserActiveBidsProps> = ({ me }) => {
         return (
           <Column
             key={i}
-            span={8}
+            span={12}
             pb={2}
             display="flex"
             justifyContent="space-between"
@@ -78,7 +78,7 @@ export const UserActiveBids: React.FC<UserActiveBidsProps> = ({ me }) => {
               </Flex>
             </Flex>
 
-            <Flex flexDirection="column" alignItems="center">
+            <Flex alignItems="center">
               {lot.isLeadingBidder ? (
                 <Text
                   variant="xs"
@@ -86,6 +86,8 @@ export const UserActiveBids: React.FC<UserActiveBidsProps> = ({ me }) => {
                   overflowEllipsis
                   display="flex"
                   alignItems="center"
+                  mr={2}
+                  mt={1}
                 >
                   <ArrowUpCircleIcon height={15} width={15} fill="green100" />
                   &nbsp; Highest bid
@@ -97,6 +99,8 @@ export const UserActiveBids: React.FC<UserActiveBidsProps> = ({ me }) => {
                   overflowEllipsis
                   display="flex"
                   alignItems="center"
+                  mr={2}
+                  mt={1}
                 >
                   <ArrowDownCircleIcon height={15} width={15} fill="red100" />
                   &nbsp; Outbid
@@ -109,6 +113,7 @@ export const UserActiveBids: React.FC<UserActiveBidsProps> = ({ me }) => {
                 to={lot?.saleArtwork?.artwork?.href ?? ""}
                 mt={1}
                 size="medium"
+                width="150px"
               >
                 Bid
               </Button>

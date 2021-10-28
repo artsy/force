@@ -31,7 +31,7 @@ export const UserRegistrationAuctions: React.FC<UserRegistrationAuctionsProps> =
         return (
           <Column
             key={i}
-            span={8}
+            span={12}
             pb={2}
             display="flex"
             justifyContent="space-between"
@@ -53,6 +53,7 @@ export const UserRegistrationAuctions: React.FC<UserRegistrationAuctionsProps> =
                 as={RouterLink}
                 to={sale.sale.href ?? ""}
                 size="medium"
+                width="150px"
               >
                 Register
               </Button>

@@ -24,7 +24,7 @@ export const UserBidHistory: React.FC<UserBidHistoryProps> = ({ me }) => {
         return (
           <Column
             key={i}
-            span={8}
+            span={12}
             pb={2}
             display="flex"
             borderBottom={i + 1 < a.length ? "1px solid" : ""}
