@@ -1,7 +1,8 @@
-import { Button, Column, Flex, GridColumns, Text } from "@artsy/palette"
+import { Button, Column, Flex, Text } from "@artsy/palette"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
+import { SectionContainer } from "./SectionContainer"
 import { extractNodes } from "v2/Utils/extractNodes"
 import { UserRegistrationAuctions_me } from "v2/__generated__/UserRegistrationAuctions_me.graphql"
 
@@ -19,51 +20,45 @@ export const UserRegistrationAuctions: React.FC<UserRegistrationAuctionsProps> =
   }
 
   return (
-    <>
-      <Text variant={["sm", "lg"]} mt={4} mb={[2, 4]}>
-        Registration for Upcoming Auctions
-      </Text>
+    <SectionContainer title="Registration for Upcoming Auctions">
+      {saleRegistrations.map((sale, i) => {
+        if (!sale?.sale) {
+          return null
+        }
 
-      <GridColumns mb={6}>
-        {saleRegistrations.map((sale, i) => {
-          if (!sale?.sale) {
-            return null
-          }
+        return (
+          <Column
+            key={i}
+            span={8}
+            pb={2}
+            display="flex"
+            justifyContent="space-between"
+            borderBottom={i + 1 < saleRegistrations.length ? "1px solid" : ""}
+            borderColor="black10"
+          >
+            <Flex flexDirection="column">
+              <Text color="black80" variant="sm">
+                {sale.sale.name ?? ""}
+              </Text>
+              <Text color="black60" variant="sm">
+                {sale.sale.startAt ?? ""}
+              </Text>
+            </Flex>
 
-          return (
-            <Column
-              key={i}
-              span={8}
-              pb={2}
-              display="flex"
-              justifyContent="space-between"
-              borderBottom={i + 1 < saleRegistrations.length ? "1px solid" : ""}
-              borderColor="black10"
-            >
-              <Flex flexDirection="column">
-                <Text color="black80" variant="sm">
-                  {sale.sale.name ?? ""}
-                </Text>
-                <Text color="black60" variant="sm">
-                  {sale.sale.startAt ?? ""}
-                </Text>
-              </Flex>
-
-              <Flex>
-                <Button
-                  // @ts-ignore
-                  as={RouterLink}
-                  to={sale.sale.href ?? ""}
-                  size="medium"
-                >
-                  Register
-                </Button>
-              </Flex>
-            </Column>
-          )
-        })}
-      </GridColumns>
-    </>
+            <Flex>
+              <Button
+                // @ts-ignore
+                as={RouterLink}
+                to={sale.sale.href ?? ""}
+                size="medium"
+              >
+                Register
+              </Button>
+            </Flex>
+          </Column>
+        )
+      })}
+    </SectionContainer>
   )
 }
 
