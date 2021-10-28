@@ -113,7 +113,7 @@ export const UploadPhotos: React.FC = () => {
             const photosToSave = values.photos.filter(p => p.id !== photo.id)
 
             setFieldValue("photos", photosToSave)
-            saveUpladPhotosForm(photosToSave)
+            saveUpladPhotosForm(photosToSave.filter(p => p.s3Key))
           }
 
           const handlePhotoUploaded = () => {
