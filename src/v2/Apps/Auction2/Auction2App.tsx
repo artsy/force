@@ -2,15 +2,22 @@ import { Box, Spacer } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { AnalyticsContext, useAnalyticsContext } from "v2/System"
 import { Auction2App_sale } from "v2/__generated__/Auction2App_sale.graphql"
+import { Auction2App_me } from "v2/__generated__/Auction2App_me.graphql"
 import { Auction2MetaFragmentContainer } from "./Components/Auction2Meta"
 import { FullBleedHeader } from "v2/Components/FullBleedHeader"
-import { AuctionDetailsFragmentContainer } from "./Components/AuctionDetails"
+import { AuctionDetailsFragmentContainer } from "./Components/AuctionDetails/AuctionDetails"
+
+/**
+ * TODO:
+ * - Add ZenDesk
+ */
 
 interface Auction2AppProps {
   sale: Auction2App_sale
+  me: Auction2App_me
 }
 
-const Auction2App: React.FC<Auction2AppProps> = ({ children, sale }) => {
+const Auction2App: React.FC<Auction2AppProps> = ({ children, sale, me }) => {
   const { contextPageOwnerType, contextPageOwnerSlug } = useAnalyticsContext()
 
   return (
@@ -30,7 +37,7 @@ const Auction2App: React.FC<Auction2AppProps> = ({ children, sale }) => {
 
         <Spacer my={2} />
 
-        <AuctionDetailsFragmentContainer sale={sale} />
+        <AuctionDetailsFragmentContainer sale={sale} me={me} />
 
         <Box>{children}</Box>
       </>
@@ -130,6 +137,8 @@ export const Auction2AppFragmentContainer = createFragmentContainer(
     `,
     me: graphql`
       fragment Auction2App_me on Me {
+        ...AuctionDetails_me
+
         internalID
         hasCreditCards
         identityVerified
