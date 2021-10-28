@@ -16,13 +16,20 @@ export const UserBidHistory: React.FC<UserBidHistoryProps> = ({ me }) => {
 
   return (
     <SectionContainer title="Bid History">
-      {me.myBids.closed.map((bid, i) => {
+      {me.myBids.closed.map((bid, i, a) => {
         if (!bid?.sale) {
           return null
         }
 
         return (
-          <Column key={i} span={8} pb={2} display="flex">
+          <Column
+            key={i}
+            span={8}
+            pb={2}
+            display="flex"
+            borderBottom={i + 1 < a.length ? "1px solid" : ""}
+            borderColor="black10"
+          >
             <Flex flexDirection="column">
               <RouterLink to={bid.sale.href ?? ""}>
                 <Text color="black80" variant="sm">

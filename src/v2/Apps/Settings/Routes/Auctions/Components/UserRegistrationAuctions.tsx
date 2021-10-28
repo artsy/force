@@ -23,7 +23,7 @@ export const UserRegistrationAuctions: React.FC<UserRegistrationAuctionsProps> =
 
   return (
     <SectionContainer title="Registration for Upcoming Auctions">
-      {saleRegistrations.map((sale, i) => {
+      {saleRegistrations.map((sale, i, a) => {
         if (!sale?.sale) {
           return null
         }
@@ -35,7 +35,7 @@ export const UserRegistrationAuctions: React.FC<UserRegistrationAuctionsProps> =
             pb={2}
             display="flex"
             justifyContent="space-between"
-            borderBottom={i + 1 < saleRegistrations.length ? "1px solid" : ""}
+            borderBottom={i + 1 < a.length ? "1px solid" : ""}
             borderColor="black10"
           >
             <Flex flexDirection="column">

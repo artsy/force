@@ -19,13 +19,15 @@ interface UserActiveBidsProps {
 }
 
 export const UserActiveBids: React.FC<UserActiveBidsProps> = ({ me }) => {
-  if (!me?.lotStandings) {
+  const { lotStandings } = me
+
+  if (!lotStandings || lotStandings.length === 0) {
     return <SectionContainer title="Active Bids"></SectionContainer>
   }
 
   return (
     <SectionContainer title="Active Bids">
-      {me.lotStandings.map((lot, i) => {
+      {lotStandings.map((lot, i, a) => {
         if (!lot?.saleArtwork?.artwork) {
           return null
         }
@@ -37,6 +39,8 @@ export const UserActiveBids: React.FC<UserActiveBidsProps> = ({ me }) => {
             pb={2}
             display="flex"
             justifyContent="space-between"
+            borderBottom={i + 1 < a.length ? "1px solid" : ""}
+            borderColor="black10"
           >
             <Flex>
               <RouterLink to={lot.saleArtwork.artwork.href ?? ""} noUnderline>
