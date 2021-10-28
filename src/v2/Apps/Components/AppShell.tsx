@@ -1,5 +1,5 @@
 import { Box, Flex, Theme } from "@artsy/palette"
-import { NetworkOfflineMonitor } from "v2/System/Router/NetworkOfflineMonitor"
+import { useNetworkOfflineMonitor } from "v2/Utils/Hooks/useNetworkOfflineMonitor"
 import { findCurrentRoute } from "v2/System/Router/Utils/findCurrentRoute"
 import { useMaybeReloadAfterInquirySignIn } from "v2/System/Router/Utils/useMaybeReloadAfterInquirySignIn"
 import { NavBar } from "v2/Components/NavBar"
@@ -16,6 +16,7 @@ import { useRouteComplete } from "v2/Utils/Hooks/useRouteComplete"
 import { useAuthIntent } from "v2/Utils/Hooks/useAuthIntent"
 import { AppToasts } from "./AppToasts"
 import { useNavBarHeight } from "v2/Components/NavBar/useNavBarHeight"
+import { useProductionEnvironmentWarning } from "v2/Utils/Hooks/useProductionEnvironmentWarning"
 
 const logger = createLogger("Apps/Components/AppShell")
 
@@ -72,6 +73,9 @@ export const AppShell: React.FC<AppShellProps> = props => {
 
   const { height: navBarHeight } = useNavBarHeight()
 
+  useNetworkOfflineMonitor()
+  useProductionEnvironmentWarning()
+
   return (
     <Flex
       width="100%"
@@ -103,8 +107,6 @@ export const AppShell: React.FC<AppShellProps> = props => {
             <HorizontalPadding>{children}</HorizontalPadding>
           </AppContainer>
         </Flex>
-
-        <NetworkOfflineMonitor />
 
         {showFooter && (
           <Flex bg="white100">
