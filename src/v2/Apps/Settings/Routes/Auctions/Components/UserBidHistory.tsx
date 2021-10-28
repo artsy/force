@@ -1,4 +1,4 @@
-import { Box, Column, Flex, GridColumns, Text } from "@artsy/palette"
+import { Column, Flex, GridColumns, Text } from "@artsy/palette"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "v2/System/Router/RouterLink"
@@ -12,7 +12,7 @@ export const UserBidHistory: React.FC<UserBidHistoryProps> = ({ me }) => {
   const myBids = me?.myBids
 
   return (
-    <Box mt={16} mb={16} borderBottom="1px solid" borderColor="black10">
+    <>
       <Text variant={["sm", "lg"]} mt={4} mb={[2, 4]}>
         Bid History
       </Text>
@@ -55,7 +55,7 @@ export const UserBidHistory: React.FC<UserBidHistoryProps> = ({ me }) => {
           Nothing to Show
         </Text>
       )}
-    </Box>
+    </>
   )
 }
 

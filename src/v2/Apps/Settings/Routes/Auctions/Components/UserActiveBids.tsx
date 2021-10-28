@@ -1,7 +1,6 @@
 import {
   ArrowDownCircleIcon,
   ArrowUpCircleIcon,
-  Box,
   Button,
   Column,
   Image,
@@ -24,7 +23,7 @@ export const UserActiveBids: React.FC<UserActiveBidsProps> = ({ me }) => {
   const lotStandings = me.lotStandings
 
   return (
-    <Box mt={16} mb={16} borderBottom="1px solid" borderColor="black10">
+    <>
       <Text variant={["sm", "lg"]} mt={4} mb={[2, 4]}>
         Active Bids
       </Text>
@@ -123,7 +122,7 @@ export const UserActiveBids: React.FC<UserActiveBidsProps> = ({ me }) => {
           Nothing to Show
         </Text>
       )}
-    </Box>
+    </>
   )
 }
 

@@ -115,6 +115,9 @@ export const settingsRoutes: AppRouteConfig[] = [
       {
         path: "auctions",
         theme: "v3",
+        cacheConfig: {
+          force: true,
+        },
         getComponent: () => AuctionsRoute,
         prepare: () => {
           AuctionsRoute.preload()

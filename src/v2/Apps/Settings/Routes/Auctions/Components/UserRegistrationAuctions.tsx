@@ -1,4 +1,4 @@
-import { Box, Button, Column, Flex, GridColumns, Text } from "@artsy/palette"
+import { Button, Column, Flex, GridColumns, Text } from "@artsy/palette"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -15,7 +15,7 @@ export const UserRegistrationAuctions: React.FC<UserRegistrationAuctionsProps> =
   const saleRegistrations = extractNodes(me?.saleRegistrationsConnection)
 
   return (
-    <Box mt={16} mb={16}>
+    <>
       <Text variant={["sm", "lg"]} mt={4} mb={[2, 4]}>
         Registration for Upcoming Auctions
       </Text>
@@ -54,7 +54,7 @@ export const UserRegistrationAuctions: React.FC<UserRegistrationAuctionsProps> =
           Nothing to Show
         </Text>
       )}
-    </Box>
+    </>
   )
 }
 
