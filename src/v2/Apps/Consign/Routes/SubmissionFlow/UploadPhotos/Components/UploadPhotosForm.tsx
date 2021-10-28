@@ -21,10 +21,12 @@ export interface UploadPhotosFormModel {
 
 export interface UploadPhotosFormProps extends BoxProps {
   maxTotalSize: number
+  onPhotoUploaded?: () => void
 }
 
 export const UploadPhotosForm: React.FC<UploadPhotosFormProps> = ({
   maxTotalSize,
+  onPhotoUploaded,
   ...rest
 }) => {
   const {
@@ -74,7 +76,9 @@ export const UploadPhotosForm: React.FC<UploadPhotosFormProps> = ({
             relayEnvironment,
             photo,
             handlePhotoUploadingProgress(photo)
-          ).then(handlePhotoUploaded(photo))
+          )
+            .then(handlePhotoUploaded(photo))
+            .then(onPhotoUploaded)
         }
       })
       setFieldValue("photos", [...values.photos])
