@@ -30,7 +30,6 @@ import { stripeTokenResponse } from "../__fixtures__/Stripe"
 import { ConfirmBidRouteFragmentContainer } from "../ConfirmBid"
 import { ConfirmBidTestPage } from "./Utils/ConfirmBidTestPage"
 import { ValidFormValues } from "./Utils/RegisterTestPage"
-import { CreditCardInput } from "v2/Apps/Order/Components/CreditCardInput"
 import { ErrorModal } from "v2/Components/Modal/ErrorModal"
 import { mockLocation, resetMockLocation } from "v2/DevTools/mockLocation"
 import { mockStripe } from "v2/DevTools/mockStripe"
@@ -818,20 +817,6 @@ describe("Routes/ConfirmBid", () => {
       expect(page.text()).toMatch("Telephone is required")
       expect(env.mutations.mockFetch).not.toBeCalled()
       expect(window.location.assign).not.toHaveBeenCalled()
-    })
-
-    it("displays an error as the user types invalid input", async () => {
-      const env = setupTestEnv()
-      const page = await env.buildPage({
-        mockData: FixtureForUnregisteredUserWithoutCreditCard,
-      })
-
-      page
-        .find(CreditCardInput)
-        .props()
-        .onChange({ error: { message: "Your card number is invalid." } } as any)
-
-      expect(page.text()).toContain("Your card number is invalid.")
     })
 
     it("displays an error when the input in the credit card field is invalid", async () => {

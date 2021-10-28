@@ -1,4 +1,5 @@
 import { commitMutation as _commitMutation } from "react-relay"
+import { MockBoot } from "v2/DevTools"
 import { AddressModal, Props, GENERIC_FAIL_MESSAGE } from "../AddressModal"
 import { mount } from "enzyme"
 import { validAddress } from "v2/Components/__tests__/Utils/addressForm"
@@ -13,9 +14,7 @@ jest.mock("v2/System/useSystemContext")
 jest.mock("v2/Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => ({}),
 }))
-jest.mock("v2/Utils/user", () => ({
-  userHasLabFeature: jest.fn(),
-}))
+jest.mock("v2/Utils/user")
 
 const errorBoxQuery = "Banner[data-test='credit-card-error']"
 
@@ -35,7 +34,11 @@ const savedAddress: SavedAddressType = {
 let testAddressModalProps: Props
 
 function getWrapper(props: Props) {
-  return mount(<AddressModal {...props} />)
+  return mount(
+    <MockBoot>
+      <AddressModal {...props} />
+    </MockBoot>
+  )
 }
 
 describe("AddressModal", () => {
@@ -179,7 +182,7 @@ describe("AddressModal", () => {
 
       const formik = wrapper.find("Formik").first()
       // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-      formik.props().onSubmit(validAddress as any)
+      formik.props().onSubmit({ address: validAddress })
 
       await wrapper.update()
 
@@ -210,7 +213,7 @@ describe("AddressModal", () => {
 
       const formik = wrapper.find("Formik").first()
       // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-      formik.props().onSubmit(validAddress as any)
+      formik.props().onSubmit({ address: validAddress })
 
       await wrapper.update()
 
@@ -239,7 +242,7 @@ describe("AddressModal", () => {
 
       const formik = wrapper.find("Formik").first()
       // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-      formik.props().onSubmit(validAddress as any)
+      formik.props().onSubmit({ address: validAddress })
 
       await wrapper.update()
 
@@ -271,7 +274,7 @@ describe("AddressModal", () => {
     const setFieldError = jest.fn()
 
     const onSubmit = formik.props().onSubmit as any
-    onSubmit(validAddress as any, {
+    onSubmit(validAddress, {
       setFieldError: setFieldError,
       setSubmitting: jest.fn(),
     })
@@ -284,51 +287,5 @@ describe("AddressModal", () => {
       "phoneNumber",
       "Please enter a valid phone number"
     )
-  })
-})
-
-describe("AddressModal feature flag", () => {
-  beforeEach(() => {
-    testAddressModalProps = {
-      show: true,
-      address: savedAddress,
-      onSuccess: jest.fn(),
-      onError: jest.fn(),
-      onDeleteAddress: jest.fn(),
-      modalDetails: {
-        addressModalTitle: "Edit address",
-        addressModalAction: "editUserAddress",
-      },
-      me: {
-        id: "1234",
-        addressConnection: {
-          totalCount: 0,
-          edges: [],
-        },
-        " $refType": "SavedAddresses_me",
-      },
-      closeModal: jest.fn(),
-    }
-    commitMutation.mockReset()
-    ;(useSystemContext as jest.Mock).mockImplementation(() => {
-      return {
-        user: { lab_features: ["Phone Number Validation"] },
-        isLoggedIn: true,
-        relayEnvironment: {},
-        mediator: {
-          on: jest.fn(),
-          off: jest.fn(),
-          ready: jest.fn(),
-          trigger: jest.fn(),
-        },
-      }
-    })
-  })
-
-  it("renders dropdown phone input field when feat flag present", () => {
-    const wrapper = getWrapper(testAddressModalProps)
-    expect(
-      wrapper.find("Input[data-test='phoneInputWithoutValidationFlag']").length
-    ).toBe(0)
   })
 })

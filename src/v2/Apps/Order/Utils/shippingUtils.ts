@@ -11,6 +11,7 @@ import {
   CommerceOrderFulfillmentTypeEnum,
   SetShippingMutationResponse,
 } from "v2/__generated__/SetShippingMutation.graphql"
+import { BillingInfoFormValues } from "v2/Apps/Auction/Components/Form/formValidation"
 
 export type SavedAddressType = NonNullable<
   NonNullable<
@@ -120,12 +121,12 @@ export const convertShippingAddressForExchange = (
 }
 
 export const convertShippingAddressToMutationInput = (
-  address: SavedAddressType
+  values: Pick<BillingInfoFormValues, "address">
 ): UserAddressAttributes => {
   return omit(
     {
-      ...address,
-      name: address?.name || "",
+      ...values.address,
+      name: values.address?.name || "",
     },
     ["isDefault", "internalID", "id", "__typename"]
   )

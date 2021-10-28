@@ -1,7 +1,10 @@
-import { FormikProps } from "formik"
+import { useFormikContext } from "formik"
 import * as React from "react"
 
-import { FormValuesForRegistration } from "v2/Apps/Auction/Components/Form"
+import {
+  BillingInfoWithBid,
+  BillingInfoWithTerms,
+} from "v2/Apps/Auction/Components/Form"
 
 export type TrackErrors = (errors: string[]) => void
 
@@ -18,15 +21,15 @@ export type TrackErrors = (errors: string[]) => void
     https://github.com/jaredpalmer/formik/issues/1484#issuecomment-490558973
  */
 
-export const OnSubmitValidationError: React.FC<{
-  cb: TrackErrors
-  formikProps: Partial<FormikProps<FormValuesForRegistration>>
-}> = props => {
-  const { cb, formikProps } = props
+export const OnSubmitValidationError: React.FC<{ cb: TrackErrors }> = ({
+  cb,
+}) => {
+  const formikProps = useFormikContext<
+    BillingInfoWithTerms | BillingInfoWithBid
+  >()
 
   const effect = () => {
     if (
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       formikProps.submitCount > 0 &&
       !formikProps.isSubmitting &&
       !formikProps.isValid
@@ -36,10 +39,8 @@ export const OnSubmitValidationError: React.FC<{
       delete clonedErrors.address
 
       const errors = Object.assign({}, clonedErrors, addressErrors)
-
       // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       cb(Object.values(errors as string[]))
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       formikProps.setSubmitting(false)
     }
   }

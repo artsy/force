@@ -9,8 +9,8 @@ import {
 } from "@artsy/palette"
 import {
   Form,
-  Formik,
   FormikHelpers as FormikActions,
+  FormikProps,
   FormikValues,
 } from "formik"
 import { dropWhile } from "lodash"
@@ -22,31 +22,20 @@ import { BidForm_saleArtwork } from "v2/__generated__/BidForm_saleArtwork.graphq
 import { CreditCardInstructions } from "v2/Apps/Auction/Components/CreditCardInstructions"
 import { PricingTransparencyQueryRenderer } from "v2/Apps/Auction/Components/PricingTransparency"
 import { CreditCardInput } from "v2/Apps/Order/Components/CreditCardInput"
-import {
-  AddressErrors,
-  AddressForm,
-  AddressTouched,
-} from "v2/Components/AddressForm"
+import { AddressForm } from "v2/Components/AddressForm"
 import { ConditionsOfSaleCheckbox } from "v2/Components/Auction/ConditionsOfSaleCheckbox"
 import {
   OnSubmitValidationError,
   TrackErrors,
 } from "v2/Apps/Auction/Components/OnSubmitValidationError"
 import {
-  Bidding as BiddingValidationSchemas,
-  FormValuesForBidding,
+  BillingInfoFormContext,
   determineDisplayRequirements,
+  BillingInfoWithBid,
   getSelectedBid,
-  initialValuesForBidding,
 } from "v2/Apps/Auction/Components/Form"
 import { AuctionErrorModal } from "v2/Apps/Auction/Components/AuctionErrorModal"
-import type { StripeError } from "@stripe/stripe-js"
-
-const {
-  validationSchemaForRegisteredUsers,
-  validationSchemaForUnregisteredUsersWithCreditCard,
-  validationSchemaForUnregisteredUsersWithoutCreditCard,
-} = BiddingValidationSchemas
+import { BillingInfoFormKeys } from "./Form/formValidation"
 
 interface Props {
   artworkSlug: string
@@ -81,60 +70,50 @@ export const BidForm: React.FC<Props> = ({
   const {
     requiresCheckbox,
     requiresPaymentInformation,
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-  } = determineDisplayRequirements(saleArtwork.sale.registrationStatus, me)
-  const validationSchema = requiresCheckbox
+  } = determineDisplayRequirements(
+    saleArtwork.sale?.registrationStatus!,
+    me as { hasQualifiedCreditCards: boolean }
+  )
+  const registeredUsers: BillingInfoFormKeys[] = ["selectedBid"]
+  const unregisteredUsersWithCreditCard: BillingInfoFormKeys[] = [
+    "agreeToTerms",
+    ...registeredUsers,
+  ]
+  const unregisteredUsersWithoutCreditCard: BillingInfoFormKeys[] = [
+    "addressWithPhone",
+    ...unregisteredUsersWithCreditCard,
+  ]
+
+  const formKeys = requiresCheckbox
     ? requiresPaymentInformation
-      ? validationSchemaForUnregisteredUsersWithoutCreditCard
-      : validationSchemaForUnregisteredUsersWithCreditCard
-    : validationSchemaForRegisteredUsers
+      ? unregisteredUsersWithoutCreditCard
+      : unregisteredUsersWithCreditCard
+    : registeredUsers
 
   return (
-    <Formik<FormValuesForBidding>
-      initialValues={{ ...initialValuesForBidding, selectedBid }}
-      validationSchema={validationSchema}
+    <BillingInfoFormContext
+      formKeys={formKeys}
+      initialValues={{ selectedBid }}
       onSubmit={onSubmit}
     >
-      {({
-        values,
-        touched,
-        errors,
-        isSubmitting,
-        isValid,
-        setFieldError,
-        setFieldValue,
-        setFieldTouched,
-        setStatus,
-        setSubmitting,
-        status,
-        submitCount,
-      }) => (
+      {(formik: FormikProps<BillingInfoWithBid>) => (
         <Form>
-          <OnSubmitValidationError
-            cb={trackSubmissionErrors}
-            formikProps={{
-              errors,
-              isSubmitting,
-              isValid,
-              setSubmitting,
-              submitCount,
-            }}
-          />
+          <OnSubmitValidationError cb={trackSubmissionErrors} />
 
           <Text variant="md" mt={2} pb={0.5} fontWeight="bold" color="black100">
             Set your max bid
           </Text>
 
           <Select
-            selected={values.selectedBid}
+            selected={formik.values.selectedBid}
             onSelect={value => {
               onMaxBidSelect && onMaxBidSelect(value)
-              setFieldValue("selectedBid", value)
-              setFieldTouched("selectedBid")
+              formik.setFieldValue("selectedBid", value)
+              formik.setFieldTouched("selectedBid")
             }}
             // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
             options={displayIncrements}
-            error={touched.selectedBid && errors.selectedBid}
+            error={formik.touched.selectedBid && formik.errors.selectedBid}
           />
 
           <PricingTransparencyQueryRenderer
@@ -142,7 +121,7 @@ export const BidForm: React.FC<Props> = ({
             // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
             saleId={saleArtwork.sale.slug}
             artworkId={artworkSlug}
-            bidAmountMinor={parseInt(values.selectedBid)}
+            bidAmountMinor={parseInt(formik.values.selectedBid)}
           />
 
           <Spacer mt={2} />
@@ -162,23 +141,11 @@ export const BidForm: React.FC<Props> = ({
                 Card Information
               </Text>
 
-              <CreditCardInput
-                error={{ message: errors.creditCard } as StripeError}
-                onChange={({ error }) =>
-                  setFieldError("creditCard", error?.message)
-                }
-              />
+              <CreditCardInput />
 
               <Spacer mt={4} />
 
-              <AddressForm
-                value={values.address}
-                onChange={address => setFieldValue("address", address)}
-                errors={errors.address as AddressErrors}
-                touched={touched.address as AddressTouched}
-                billing
-                showPhoneNumberInput
-              />
+              <AddressForm billing={true} showPhoneNumberInput={true} />
             </>
           )}
 
@@ -188,18 +155,18 @@ export const BidForm: React.FC<Props> = ({
             <Flex mb={4} flexDirection="column" justifyContent="center">
               <Box mx="auto">
                 <ConditionsOfSaleCheckbox
-                  selected={values.agreeToTerms}
+                  selected={formik.values.agreeToTerms}
                   onSelect={value => {
                     // `setFieldTouched` needs to be called first otherwise it would cause race condition.
-                    setFieldTouched("agreeToTerms")
-                    setFieldValue("agreeToTerms", value)
+                    formik.setFieldTouched("agreeToTerms")
+                    formik.setFieldValue("agreeToTerms", value)
                   }}
                 />
               </Box>
 
-              {touched.agreeToTerms && errors.agreeToTerms && (
+              {formik.touched.agreeToTerms && formik.errors.agreeToTerms && (
                 <Text variant="md" mt={1} color="red100" textAlign="center">
-                  {errors.agreeToTerms}
+                  {formik.errors.agreeToTerms}
                 </Text>
               )}
             </Flex>
@@ -208,7 +175,7 @@ export const BidForm: React.FC<Props> = ({
           <Button
             variant="primaryBlack"
             width="100%"
-            loading={isSubmitting}
+            loading={formik.isSubmitting}
             type="submit"
             mb={4}
           >
@@ -216,13 +183,13 @@ export const BidForm: React.FC<Props> = ({
           </Button>
 
           <AuctionErrorModal
-            show={!!status}
-            onClose={() => setStatus(null)}
-            status={status}
+            show={!!formik.status}
+            onClose={() => formik.setStatus(null)}
+            status={formik.status}
           />
         </Form>
       )}
-    </Formik>
+    </BillingInfoFormContext>
   )
 }
 

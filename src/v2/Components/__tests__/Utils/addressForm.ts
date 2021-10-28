@@ -15,24 +15,30 @@ export const validAddress: Address = {
 
 export const fillIn = (
   component: any,
-  inputData: { title: string; value: string }
+  inputData: { title: string; value: string; name: string }
 ) => {
+  const { title, value, name } = inputData
   const input = component
     .find(Input)
-    .filterWhere(wrapper => wrapper.props().title === inputData.title)
-  input.props().onChange({ currentTarget: { value: inputData.value } } as any)
+    .filterWhere(wrapper => wrapper.props().title === title)
+  input.props().onChange({ currentTarget: { name, value } })
+  input.props().onBlur({ target: { name } })
 }
 
 export const fillInPhoneNumber = (
   component: any,
   inputData: { isPickup?: boolean; value: string }
 ) => {
-  const index = inputData.isPickup ? 0 : 1
+  const name = "address.phoneNumber"
+  const index = inputData.isPickup ? 1 : 0
   const input = component
     .find(Input)
     .filterWhere(wrapper => wrapper.props().title === "Phone number")
     .at(index)
-  input.props().onChange({ currentTarget: { value: inputData.value } } as any)
+  input.props().onChange({
+    currentTarget: { name, value: inputData.value },
+  })
+  input.props().onBlur?.({ target: { name } })
 }
 
 export const fillCountrySelect = (component, value) => {
@@ -42,18 +48,36 @@ export const fillCountrySelect = (component, value) => {
 
 export const fillAddressForm = (component: any, address: Address) => {
   fillCountrySelect(component, address.country)
-  fillIn(component, { title: "Full name", value: address.name })
-  fillIn(component, { title: "Address line 1", value: address.addressLine1 })
+  fillIn(component, {
+    title: "Full name",
+    value: address.name,
+    name: "address.name",
+  })
+  fillIn(component, {
+    title: "Address line 1",
+    value: address.addressLine1,
+    name: "address.addressLine1",
+  })
   fillIn(component, {
     title: "Address line 2 (optional)",
     value: address.addressLine2,
+    name: "address.addressLine2",
   })
-  fillIn(component, { title: "City", value: address.city })
+  fillIn(component, {
+    title: "City",
+    value: address.city,
+    name: "address.city",
+  })
   fillIn(component, {
     title: "State, province, or region",
     value: address.region,
+    name: "address.region",
   })
-  fillIn(component, { title: "Postal code", value: address.postalCode })
+  fillIn(component, {
+    title: "Postal code",
+    value: address.postalCode,
+    name: "address.postalCode",
+  })
   fillInPhoneNumber(component, {
     value: address.phoneNumber,
   })

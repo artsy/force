@@ -125,13 +125,7 @@ export const RegisterRoute: React.FC<RegisterProps> = props => {
   }
 
   const createTokenAndSubmit: OnSubmitType = async (values, helpers) => {
-    // FIXME: workaround for Formik calling `setSubmitting(false)` when the
-    //  `onSubmit` function does not block.
-    setTimeout(() => helpers.setSubmitting(true), 0)
-
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     const address = toStripeAddress(values.address)
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     const { phoneNumber } = values.address
     const { setFieldError, setSubmitting } = helpers
     const element = elements.getElement(CardElement)
@@ -139,7 +133,6 @@ export const RegisterRoute: React.FC<RegisterProps> = props => {
     try {
       // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       const { error, token } = await stripe.createToken(element, address)
-
       if (error) {
         setFieldError("creditCard", error.message)
         return
@@ -151,7 +144,6 @@ export const RegisterRoute: React.FC<RegisterProps> = props => {
         // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         createCreditCard: { creditCardOrError },
       } = await createCreditCardAndUpdatePhone(environment, phoneNumber, id)
-
       // TODO: We are not handling errors for `updateMyUserProfile`. Should we?
       if (creditCardOrError.mutationError) {
         setFieldError(
@@ -160,7 +152,6 @@ export const RegisterRoute: React.FC<RegisterProps> = props => {
         )
         return
       }
-
       const data = await createBidder(environment, sale.internalID)
 
       // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
@@ -172,7 +163,6 @@ export const RegisterRoute: React.FC<RegisterProps> = props => {
       setSubmitting(false)
     }
   }
-
   return (
     <>
       <Title>Auction Registration</Title>

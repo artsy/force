@@ -1,4 +1,5 @@
 import { commitMutation as _commitMutation, RelayProp } from "react-relay"
+import { MockBoot } from "v2/DevTools"
 import { mockStripe } from "v2/DevTools/mockStripe"
 import { Elements } from "@stripe/react-stripe-js"
 import { PaymentModal, PaymentModalProps } from "../PaymentModal"
@@ -59,9 +60,11 @@ const testPaymentModalProps: PaymentModalProps = {
 function getWrapper() {
   const stripePromise = loadStripe("")
   return mount(
-    <Elements stripe={stripePromise}>
-      <PaymentModal {...testPaymentModalProps} />
-    </Elements>
+    <MockBoot breakpoint="md">
+      <Elements stripe={stripePromise}>
+        <PaymentModal {...testPaymentModalProps} />
+      </Elements>
+    </MockBoot>
   )
 }
 
@@ -70,6 +73,7 @@ describe("PaymentModal", () => {
     commitMutation.mockReset()
     _mockReset()
   })
+
   it("renders Modal with input fields", () => {
     const wrapper = getWrapper()
     expect(wrapper.find("input").length).toBe(6)

@@ -1,16 +1,24 @@
+import { SavedAddressType } from "v2/Apps/Order/Utils/shippingUtils"
 import { Address } from "v2/Components/AddressForm"
+import { BillingInfoFormValues } from "./formValidation"
 
-export interface FormValuesForRegistration {
-  address?: Address
+export interface BillingInfoWithTerms {
+  address?: SavedAddressType | Address
   creditCard?: string
   agreeToTerms: boolean
 }
 
-export interface FormValuesForBidding extends FormValuesForRegistration {
+export interface BillingInfoWithBid extends BillingInfoWithTerms {
   selectedBid: string
 }
 
-const address: Address = {
+export interface BillingInfo {
+  address?: Address | SavedAddressType
+  isDefault?: boolean
+  internalID?: string
+}
+
+export const initAddress: Omit<Address, "phoneNumber"> | SavedAddressType = {
   name: "",
   addressLine1: "",
   addressLine2: "",
@@ -18,17 +26,27 @@ const address: Address = {
   city: "",
   region: "",
   postalCode: "",
+  isDefault: false,
+}
+
+export const initAddressWithPhone: Address | SavedAddressType = {
+  ...initAddress,
   phoneNumber: "",
 }
 
-export const initialValuesForRegistration: FormValuesForRegistration = {
-  address,
+export const initBillingInfoWithTerms: Pick<
+  BillingInfoFormValues,
+  "address" | "agreeToTerms" | "creditCard"
+> = {
+  address: initAddressWithPhone,
   creditCard: undefined,
   agreeToTerms: false,
 }
 
-export const initialValuesForBidding: FormValuesForBidding = {
-  ...initialValuesForRegistration,
-  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+export const initBillingInfoWithBid: Pick<
+  BillingInfoFormValues,
+  "address" | "agreeToTerms" | "creditCard" | "selectedBid"
+> = {
+  ...initBillingInfoWithTerms,
   selectedBid: undefined,
 }

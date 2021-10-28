@@ -1,11 +1,12 @@
 import { useState } from "react"
 import * as React from "react"
 import { Button, Modal, Spacer, Text } from "@artsy/palette"
-import { Formik, FormikHelpers, FormikProps } from "formik"
 import {
-  validateAddress,
-  removeEmptyKeys,
-} from "v2/Apps/Order/Utils/formValidators"
+  BillingInfoFormContext,
+  BillingInfoFormValues,
+} from "v2/Apps/Auction/Components/Form"
+import { AddressForm } from "../AddressForm"
+import { Form, FormikHelpers, FormikValues, FormikProps } from "formik"
 import { SavedAddressType } from "v2/Apps/Order/Utils/shippingUtils"
 import { CreditCardInput } from "v2/Apps/Order/Components/CreditCardInput"
 import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js"
@@ -19,7 +20,6 @@ import {
 import { CreateTokenCardData } from "@stripe/stripe-js"
 import { PaymentSection_me } from "v2/__generated__/PaymentSection_me.graphql"
 import createLogger from "v2/Utils/logger"
-import { AddressModalFields } from "../Address/AddressModalFields"
 
 const logger = createLogger("Components/Payment/PaymentModal.tsx")
 
@@ -53,12 +53,6 @@ const onCreditCardAdded = (
   }
 }
 
-const validator = (values: any) => {
-  const validationResult = validateAddress(values)
-  const errorsTrimmed = removeEmptyKeys(validationResult.errors)
-  return errorsTrimmed
-}
-
 const mutation = graphql`
   mutation PaymentModalCreateCreditCardMutation($input: CreditCardInput!) {
     createCreditCard(input: $input) {
@@ -90,6 +84,8 @@ export interface PaymentModalProps {
   relay: RelayProp
 }
 
+type BillingInfoPicked = Pick<BillingInfoFormValues, "address">
+
 export const PaymentModal: React.FC<PaymentModalProps> = props => {
   const { show, closeModal, relay } = props
   const stripe = useStripe()
@@ -97,8 +93,8 @@ export const PaymentModal: React.FC<PaymentModalProps> = props => {
   const [createError, setCreateError] = useState(null)
 
   const addCreditCard = async (
-    values: SavedAddressType,
-    actions: FormikHelpers<SavedAddressType>
+    values: FormikValues,
+    actions: FormikHelpers<BillingInfoPicked>
   ) => {
     const billingAddress: CreateTokenCardData = {
       name: values.name || undefined,
@@ -163,17 +159,12 @@ export const PaymentModal: React.FC<PaymentModalProps> = props => {
   }
   return (
     <Modal isWide title="Add credit card" show={show} onClose={closeModal}>
-      <Formik
-        initialValues={{
-          country: "US",
-        }}
-        validate={validator}
-        onSubmit={(values, actions) => {
-          addCreditCard(values, actions)
-        }}
+      <BillingInfoFormContext
+        onSubmit={(values, actions) => addCreditCard(values, actions)}
+        formKeys={["address"]}
       >
         {(formik: FormikProps<SavedAddressType>) => (
-          <form onSubmit={formik.handleSubmit}>
+          <Form>
             <Text data-test="credit-card-error" color="red100" my={2}>
               {createError}
             </Text>
@@ -182,21 +173,21 @@ export const PaymentModal: React.FC<PaymentModalProps> = props => {
             </Text>
             <CreditCardInput />
             <Spacer mt={1} />
-            <AddressModalFields />
+            <AddressForm billing={true} />
             <Spacer mb={1} />
             <Button
               type="submit"
               variant="primaryBlack"
               loading={formik.isSubmitting}
-              disabled={Object.keys(formik.errors).length > 0}
+              disabled={!formik.isValid}
               width="100%"
               mt={2}
             >
               Save changes
             </Button>
-          </form>
+          </Form>
         )}
-      </Formik>
+      </BillingInfoFormContext>
     </Modal>
   )
 }

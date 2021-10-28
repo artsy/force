@@ -92,7 +92,7 @@ fragment ShippingQuotes_shippingQuotes on CommerceShippingQuoteEdge {
           "city": "Whitechapel",
           "country": "UK",
           "name": "Artsy UK Ltd",
-          "phoneNumber": "",
+          "phoneNumber": "8475937743",
           "postalCode": "E1 8PY",
           "region": "London",
         },

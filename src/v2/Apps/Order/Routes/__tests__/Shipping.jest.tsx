@@ -197,6 +197,7 @@ describe("Shipping", () => {
 
       expect(mutations.mockFetch).not.toHaveBeenCalled()
 
+      await page.update()
       await page.clickSubmit()
 
       expect(mutations.mockFetch).toHaveBeenCalledTimes(2)
@@ -218,28 +219,29 @@ describe("Shipping", () => {
 
       expect(page.find(ShippingRoute).state().saveAddress).toEqual(false)
 
+      await page.update()
       await page.clickSubmit()
 
       expect(mutations.mockFetch).toHaveBeenCalledTimes(1)
       expect(mutations.lastFetchVariables).toMatchInlineSnapshot(`
-              Object {
-                "input": Object {
-                  "fulfillmentType": "SHIP",
-                  "id": "1234",
-                  "phoneNumber": "8475937743",
-                  "shipping": Object {
-                    "addressLine1": "14 Gower's Walk",
-                    "addressLine2": "Suite 2.5, The Loom",
-                    "city": "Whitechapel",
-                    "country": "UK",
-                    "name": "Artsy UK Ltd",
-                    "phoneNumber": "",
-                    "postalCode": "E1 8PY",
-                    "region": "London",
-                  },
-                },
-              }
-          `)
+        Object {
+          "input": Object {
+            "fulfillmentType": "SHIP",
+            "id": "1234",
+            "phoneNumber": "8475937743",
+            "shipping": Object {
+              "addressLine1": "14 Gower's Walk",
+              "addressLine2": "Suite 2.5, The Loom",
+              "city": "Whitechapel",
+              "country": "UK",
+              "name": "Artsy UK Ltd",
+              "phoneNumber": "8475937743",
+              "postalCode": "E1 8PY",
+              "region": "London",
+            },
+          },
+        }
+      `)
     })
 
     it("commits the mutation with shipping option", async () => {
@@ -251,7 +253,9 @@ describe("Shipping", () => {
         country: "US",
       })
 
+      await page.update()
       await page.clickSubmit()
+
       expect(mutations.mockFetch.mock.calls.map(call => call[1].input))
         .toMatchInlineSnapshot(`
         Array [
@@ -265,7 +269,7 @@ describe("Shipping", () => {
               "city": "Whitechapel",
               "country": "US",
               "name": "Artsy UK Ltd",
-              "phoneNumber": "",
+              "phoneNumber": "8475937743",
               "postalCode": "E1 8PY",
               "region": "New Brunswick",
             },
@@ -291,7 +295,10 @@ describe("Shipping", () => {
       await page.selectPickupOption()
       fillInPhoneNumber(page.root, { isPickup: true, value: "2813308004" })
       expect(mutations.mockFetch).not.toHaveBeenCalled()
+
+      await page.update()
       await page.clickSubmit()
+
       expect(mutations.mockFetch).toHaveBeenCalledTimes(1)
       expect(mutations.lastFetchVariables.input.fulfillmentType).toBe("PICKUP")
     })
@@ -304,6 +311,7 @@ describe("Shipping", () => {
 
       it("routes to payment screen after mutation completes", async () => {
         fillAddressForm(page.root, validAddress)
+        await page.update()
         await page.clickSubmit()
         expect(routes.mockPushRoute).toHaveBeenCalledWith(
           "/orders/1234/payment"
@@ -312,12 +320,14 @@ describe("Shipping", () => {
 
       it("shows the button spinner while loading the mutation", async () => {
         fillAddressForm(page.root, validAddress)
+        await page.update()
         await page.expectButtonSpinnerWhenSubmitting()
       })
 
       it("shows an error modal when there is an error from the server", async () => {
         mutations.useResultsOnce(settingOrderShipmentFailure)
         fillAddressForm(page.root, validAddress)
+        await page.update()
         await page.clickSubmit()
         await page.expectAndDismissDefaultErrorDialog()
       })
@@ -325,6 +335,7 @@ describe("Shipping", () => {
       it("shows an error modal when there is a network error", async () => {
         fillAddressForm(page.root, validAddress)
         mutations.mockNetworkFailureOnce()
+        await page.update()
         await page.clickSubmit()
         await page.expectAndDismissDefaultErrorDialog()
       })
@@ -332,6 +343,7 @@ describe("Shipping", () => {
       it("shows a validation error modal when there is a missing_country error from the server", async () => {
         mutations.useResultsOnce(settingOrderShipmentMissingCountryFailure)
         fillAddressForm(page.root, validAddress)
+        await page.update()
         await page.clickSubmit()
         await page.expectAndDismissErrorDialogMatching(
           "Invalid address",
@@ -342,6 +354,7 @@ describe("Shipping", () => {
       it("shows a validation error modal when there is a missing_region error from the server", async () => {
         mutations.useResultsOnce(settingOrderShipmentMissingRegionFailure)
         fillAddressForm(page.root, validAddress)
+        await page.update()
         await page.clickSubmit()
         await page.expectAndDismissErrorDialogMatching(
           "Invalid address",
@@ -370,6 +383,7 @@ describe("Shipping", () => {
           country: "US",
         })
 
+        await page.update()
         await page.clickSubmit()
 
         expect(mutations.mockFetch).toHaveBeenCalledTimes(2)
@@ -390,7 +404,7 @@ describe("Shipping", () => {
                 "city": "Whitechapel",
                 "country": "US",
                 "name": "Artsy UK Ltd",
-                "phoneNumber": "",
+                "phoneNumber": "8475937743",
                 "postalCode": "E1 8PY",
                 "region": "New Brunswick",
               },
@@ -425,6 +439,7 @@ describe("Shipping", () => {
 
         mutations.useResultsOnce(settingOrderArtaShipmentSuccess)
 
+        await page.update()
         await page.clickSubmit()
 
         expect(mutations.mockFetch).toHaveBeenCalledTimes(1)
@@ -491,6 +506,7 @@ describe("Shipping", () => {
 
         mutations.useResultsOnce(settingOrderArtaShipmentSuccessWithoutQuotes)
 
+        await page.update()
         await page.clickSubmit()
 
         expect(page.find(`[data-test="shipping-quotes"]`)).toHaveLength(0)
@@ -506,6 +522,7 @@ describe("Shipping", () => {
 
         mutations.useResultsOnce(settingOrderArtaShipmentSuccess)
 
+        await page.update()
         await page.clickSubmit()
 
         expect(mutations.mockFetch).toHaveBeenCalledTimes(2)
@@ -539,6 +556,7 @@ describe("Shipping", () => {
 
         mutations.useResultsOnce(settingOrderArtaShipmentSuccess)
 
+        await page.update()
         await page.clickSubmit()
 
         expect(mutations.mockFetch).toHaveBeenCalledTimes(2)
@@ -612,28 +630,36 @@ describe("Shipping", () => {
 
       describe("for Ship orders", () => {
         it("does not submit an empty form for a SHIP order", async () => {
+          await page.update()
           await page.clickSubmit()
           expect(mutations.mockFetch).not.toBeCalled()
         })
 
         it("does not submit the mutation with an incomplete form for a SHIP order", async () => {
-          fillIn(page.root, { title: "Full name", value: "Air Bud" })
+          fillIn(page.root, {
+            title: "Full name",
+            value: "Air Bud",
+            name: "address.name",
+          })
+          await page.update()
           await page.clickSubmit()
           expect(mutations.mockFetch).not.toBeCalled()
         })
 
         it("does submit the mutation with a complete form for a SHIP order", async () => {
           fillAddressForm(page.root, validAddress)
+          await page.update()
           await page.clickSubmit()
           expect(mutations.mockFetch).toBeCalled()
         })
 
         it("says a required field is required for a SHIP order", async () => {
+          await page.update()
           await page.clickSubmit()
           const input = page
             .find(Input)
             .filterWhere(wrapper => wrapper.props().title === "Full name")
-          expect(input.props().error).toEqual("This field is required")
+          expect(input.props().error).toEqual("Name is required")
         })
 
         it("allows a missing postal code if the selected country is not US or Canada", async () => {
@@ -648,6 +674,7 @@ describe("Shipping", () => {
             country: "AQ",
           }
           fillAddressForm(page.root, address)
+          await page.update()
           await page.clickSubmit()
 
           await flushPromiseQueue()
@@ -662,8 +689,16 @@ describe("Shipping", () => {
         })
 
         it("before submit, only shows a validation error on inputs that have been touched", async () => {
-          fillIn(page.root, { title: "Full name", value: "Erik David" })
-          fillIn(page.root, { title: "Address line 1", value: "" })
+          fillIn(page.root, {
+            title: "Full name",
+            value: "Erik David",
+            name: "address.name",
+          })
+          fillIn(page.root, {
+            title: "Address line 1",
+            value: "",
+            name: "address.addressLine1",
+          })
 
           await page.update()
 
@@ -681,7 +716,11 @@ describe("Shipping", () => {
         })
 
         it("after submit, shows all validation errors on inputs that have not been touched", async () => {
-          fillIn(page.root, { title: "Full name", value: "Erik David" })
+          fillIn(page.root, {
+            title: "Full name",
+            value: "Erik David",
+            name: "address.name",
+          })
 
           await flushPromiseQueue()
           await page.clickSubmit()
@@ -721,6 +760,7 @@ describe("Shipping", () => {
             country: "AQ",
           }
           fillAddressForm(page.root, address)
+          await page.update()
           await page.clickSubmit()
 
           await flushPromiseQueue()
@@ -1011,14 +1051,14 @@ describe("Shipping", () => {
               internalID: "2",
               id: "addressID2",
               isDefault: true,
-              addressLine1: "Test input 'addressLine1'",
-              addressLine2: "Test input 'addressLine2'",
-              city: "Test input 'city'",
+              addressLine1: "Test input 'address.addressLine1'",
+              addressLine2: "Test input 'address.addressLine2'",
+              city: "Test input 'address.city'",
               country: "US",
-              name: "Test input 'name'",
-              phoneNumber: "Test input 'phoneNumber'",
-              postalCode: "Test input 'postalCode'",
-              region: "Test input 'region'",
+              name: "Test input 'address.name'",
+              phoneNumber: "Test input 'address.phoneNumber'",
+              postalCode: "Test input 'address.postalCode'",
+              region: "Test input 'address.region'",
             },
           },
         })
@@ -1040,15 +1080,15 @@ describe("Shipping", () => {
           Object {
             "input": Object {
               "attributes": Object {
-                "addressLine1": "Test input 'addressLine1'",
-                "addressLine2": "Test input 'addressLine2'",
+                "addressLine1": "Test input 'address.addressLine1'",
+                "addressLine2": "Test input 'address.addressLine2'",
                 "addressLine3": "",
-                "city": "Test input 'city'",
+                "city": "Test input 'address.city'",
                 "country": "US",
-                "name": "Test input 'name'",
-                "phoneNumber": "422-424-4242",
-                "postalCode": "Test input 'postalCode'",
-                "region": "Test input 'region'",
+                "name": "Test input 'address.name'",
+                "phoneNumber": "Test input 'address.phoneNumber'",
+                "postalCode": "Test input 'address.postalCode'",
+                "region": "Test input 'address.region'",
               },
               "userAddressID": "2",
             },
@@ -1080,14 +1120,14 @@ describe("Shipping", () => {
               internalID: "1",
               id: "addressID1",
               isDefault: false,
-              addressLine1: "Test input 'addressLine1'",
-              addressLine2: "Test input 'addressLine2'",
-              city: "Test input 'city'",
+              addressLine1: "Test input 'address.addressLine1'",
+              addressLine2: "Test input 'address.addressLine2'",
+              city: "Test input 'address.city'",
               country: "US",
-              name: "Test input 'name'",
-              phoneNumber: "Test input 'phoneNumber'",
-              postalCode: "Test input 'postalCode'",
-              region: "Test input 'region'",
+              name: "Test input 'address.name'",
+              phoneNumber: "Test input 'address.phoneNumber'",
+              postalCode: "Test input 'address.postalCode'",
+              region: "Test input 'address.region'",
             },
           },
         })
@@ -1106,15 +1146,15 @@ describe("Shipping", () => {
           Object {
             "input": Object {
               "attributes": Object {
-                "addressLine1": "Test input 'addressLine1'",
-                "addressLine2": "Test input 'addressLine2'",
+                "addressLine1": "Test input 'address.addressLine1'",
+                "addressLine2": "Test input 'address.addressLine2'",
                 "addressLine3": "",
-                "city": "Test input 'city'",
+                "city": "Test input 'address.city'",
                 "country": "US",
-                "name": "Test input 'name'",
-                "phoneNumber": "555-555-5555",
-                "postalCode": "Test input 'postalCode'",
-                "region": "Test input 'region'",
+                "name": "Test input 'address.name'",
+                "phoneNumber": "Test input 'address.phoneNumber'",
+                "postalCode": "Test input 'address.postalCode'",
+                "region": "Test input 'address.region'",
               },
               "userAddressID": "1",
             },
@@ -1157,9 +1197,11 @@ describe("Shipping", () => {
             "",
             "Madrid",
             "",
+            "555-555-5555",
           ]
         `)
       })
+
       it("sends mutation with updated values when modal form is submitted", async () => {
         page
           .find(`[data-test="editAddressInShipping"]`)
@@ -1182,15 +1224,15 @@ describe("Shipping", () => {
           Object {
             "input": Object {
               "attributes": Object {
-                "addressLine1": "Test input 'addressLine1'",
-                "addressLine2": "Test input 'addressLine2'",
+                "addressLine1": "Test input 'address.addressLine1'",
+                "addressLine2": "Test input 'address.addressLine2'",
                 "addressLine3": "",
-                "city": "Test input 'city'",
+                "city": "Test input 'address.city'",
                 "country": "US",
-                "name": "Test input 'name'",
-                "phoneNumber": "555-555-5555",
-                "postalCode": "Test input 'postalCode'",
-                "region": "Test input 'region'",
+                "name": "Test input 'address.name'",
+                "phoneNumber": "Test input 'address.phoneNumber'",
+                "postalCode": "Test input 'address.postalCode'",
+                "region": "Test input 'address.region'",
               },
               "userAddressID": "1",
             },

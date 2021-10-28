@@ -7,10 +7,17 @@ import {
   TextVariant,
   useThemeConfig,
   TextTransform,
+  Box,
+  Select,
 } from "@artsy/palette"
+import { countries } from "v2/Utils/countries"
 import { CountrySelect } from "v2/Components/CountrySelect"
-import * as React from "react"
+import React, { useCallback } from "react"
 import { TwoColumnSplit } from "../Apps/Order/Components/TwoColumnLayout"
+import { useFormikContext } from "formik"
+import { BillingInfoWithTerms } from "v2/Apps/Auction/Components/Form"
+import { userHasLabFeature } from "v2/Utils/user"
+import { useSystemContext } from "v2/System/SystemContext"
 
 export interface Address {
   name: string
@@ -23,13 +30,6 @@ export interface Address {
   phoneNumber: string
 }
 
-export type AddressErrors = Partial<Address>
-export type AddressTouched = Partial<{ [T in keyof Address]: boolean }>
-export type AddressChangeHandler = (
-  address: Address,
-  key: keyof Address
-) => void
-
 export const emptyAddress: Address = Object.freeze({
   name: "",
   country: "",
@@ -40,32 +40,33 @@ export const emptyAddress: Address = Object.freeze({
   region: "",
   phoneNumber: "",
 })
+
+export type AddressErrors = Partial<Address>
+export type AddressTouched = Partial<{ [T in keyof Address]: boolean }>
+
 export interface AddressFormProps {
-  onChange: AddressChangeHandler
-  value?: Partial<Address>
   billing?: boolean
   domesticOnly?: boolean
   euOrigin?: boolean
   showPhoneNumberInput?: boolean
-  isCollapsed?: boolean
   shippingCountry?: string
-  errors: AddressErrors
-  touched: AddressTouched
 }
 
 export const AddressForm: React.FC<AddressFormProps> = ({
-  onChange,
-  value,
   billing,
   domesticOnly,
   euOrigin,
   showPhoneNumberInput,
   shippingCountry,
-  errors,
-  touched,
 }) => {
-  const [address, setAddress] = React.useState({ ...emptyAddress, ...value })
-  const [key, setKey] = React.useState<keyof Address>()
+  const {
+    values,
+    touched,
+    handleBlur,
+    handleChange,
+    errors,
+    setFieldValue,
+  } = useFormikContext<BillingInfoWithTerms>()
 
   const styles = useThemeConfig({
     v2: {
@@ -80,43 +81,19 @@ export const AddressForm: React.FC<AddressFormProps> = ({
     },
   })
 
-  const changeEventHandler = (key: keyof Address) => (
-    ev: React.FormEvent<HTMLInputElement>
-  ) => {
-    setKey(key)
-    onChangeValue(key, ev.currentTarget.value)
-  }
-
-  const changeValueHandler = (key: keyof Address) => (value: string) => {
-    setKey(key)
-    onChangeValue(key, value)
-  }
-
-  React.useEffect(() => {
-    if (key) {
-      onChange(address, key)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [address, key])
-
-  const onChangeValue = (key: keyof Address, value: string) => {
-    setAddress(prevAddress => ({ ...prevAddress, [key]: value }))
-  }
-
-  const getError = React.useCallback(
-    (key: keyof Address) => {
-      return (touched && touched[key] && errors && errors[key]) || ""
-    },
+  const getErrorMessage = useCallback(
+    (key: keyof Address) =>
+      (touched?.address &&
+        touched.address[key] &&
+        errors?.address &&
+        errors.address[key]) ||
+      "",
     [errors, touched]
   )
 
-  const phoneNumberInputDescription = (): string | undefined => {
-    if (billing && showPhoneNumberInput) {
-      return
-    } else {
-      return "Required for shipping logistics"
-    }
-  }
+  const { user } = useSystemContext()
+  const showPhoneNumberCountry =
+    user && userHasLabFeature(user, "Phone Number Validation")
 
   const onlyLocalShipping = !billing && !!domesticOnly
   const lockCountryToOrigin = onlyLocalShipping && !euOrigin
@@ -126,16 +103,16 @@ export const AddressForm: React.FC<AddressFormProps> = ({
     <Join separator={<Spacer mb={2} />}>
       <Flex flexDirection="column">
         <Input
-          id="AddressForm_name"
+          name="address.name"
           placeholder="Add full name"
           title={billing ? "Name on card" : "Full name"}
           autoCorrect="off"
-          value={address.name}
-          onChange={changeEventHandler("name")}
-          error={getError("name")}
+          value={values?.address?.name || ""}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          error={getErrorMessage("name")}
         />
       </Flex>
-
       <TwoColumnSplit>
         <Flex flexDirection="column" pb={1}>
           <Text
@@ -148,11 +125,12 @@ export const AddressForm: React.FC<AddressFormProps> = ({
           </Text>
           <CountrySelect
             selected={
-              lockCountryToOrigin || (lockCountriesToEU && !address.country)
+              lockCountryToOrigin ||
+              (lockCountriesToEU && !values?.address?.country)
                 ? shippingCountry
-                : address.country
+                : values?.address?.country
             }
-            onSelect={changeValueHandler("country")}
+            onSelect={value => setFieldValue("address.country", value)}
             disabled={lockCountryToOrigin}
             euShippingOnly={lockCountriesToEU}
           />
@@ -170,81 +148,129 @@ export const AddressForm: React.FC<AddressFormProps> = ({
 
         <Flex flexDirection="column">
           <Input
-            id="AddressForm_postalCode"
+            name="address.postalCode"
             placeholder="Add postal code"
             title="Postal code"
             autoCapitalize="characters"
             autoCorrect="off"
-            value={address.postalCode}
-            onChange={changeEventHandler("postalCode")}
-            error={getError("postalCode")}
+            value={values?.address?.postalCode || ""}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            error={getErrorMessage("postalCode")}
           />
         </Flex>
       </TwoColumnSplit>
       <TwoColumnSplit>
         <Flex flexDirection="column">
           <Input
-            id="AddressForm_addressLine1"
+            name="address.addressLine1"
             placeholder="Add street address"
             title="Address line 1"
-            value={address.addressLine1}
-            onChange={changeEventHandler("addressLine1")}
-            error={getError("addressLine1")}
+            value={values?.address?.addressLine1 || ""}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            error={getErrorMessage("addressLine1")}
           />
         </Flex>
 
         <Flex flexDirection="column">
           <Input
-            id="AddressForm_addressLine2"
+            name="address.addressLine2"
             placeholder="Add apt, floor, suite, etc."
             title="Address line 2 (optional)"
-            value={address.addressLine2}
-            onChange={changeEventHandler("addressLine2")}
-            error={getError("addressLine2")}
+            value={values?.address?.addressLine2 || ""}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            error={getErrorMessage("addressLine2")}
           />
         </Flex>
       </TwoColumnSplit>
       <TwoColumnSplit>
         <Flex flexDirection="column">
           <Input
-            id="AddressForm_city"
+            name="address.city"
             placeholder="Add city"
             title="City"
-            value={address.city}
-            onChange={changeEventHandler("city")}
-            error={getError("city")}
+            value={values?.address?.city || ""}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            error={getErrorMessage("city")}
           />
         </Flex>
 
         <Flex flexDirection="column">
           <Input
-            id="AddressForm_region"
+            name="address.region"
             placeholder="Add State, province, or region"
             title="State, province, or region"
             autoCorrect="off"
-            value={address.region}
-            onChange={changeEventHandler("region")}
-            error={getError("region")}
+            value={values?.address?.region || ""}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            error={getErrorMessage("region")}
           />
         </Flex>
       </TwoColumnSplit>
-      {showPhoneNumberInput && (
+      {showPhoneNumberInput && !showPhoneNumberCountry && (
         <>
           <Flex flexDirection="column">
             <Input
-              id="AddressForm_phoneNumber"
+              name="address.phoneNumber"
               title="Phone number"
               type="tel"
-              description={phoneNumberInputDescription()}
+              description={
+                !billing ? "Required for shipping logistics" : undefined
+              }
               placeholder="Add phone"
-              pattern="[^a-z]+"
-              value={address.phoneNumber}
-              onChange={changeEventHandler("phoneNumber")}
-              error={getError("phoneNumber")}
+              autoCorrect="off"
+              value={values?.address?.phoneNumber || ""}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              error={getErrorMessage("phoneNumber")}
             />
           </Flex>
           <Spacer mb={2} />
         </>
+      )}
+      {showPhoneNumberInput && showPhoneNumberCountry && (
+        <Flex>
+          <Box style={{ maxWidth: "35%" }}>
+            <Select
+              title="Phone number"
+              description={
+                !billing ? "Only used for shipping purposes" : undefined
+              }
+              options={countries}
+              style={{
+                letterSpacing: "1px",
+                borderRight: "none",
+              }}
+              // TODO: Replace data-testid with queryByDisplayValue() on tests
+              // when a `selected` property is implemented
+              data-testid="phoneNumberCountry"
+            />
+          </Box>
+          <Flex
+            flexDirection="column"
+            style={{
+              width: "100%",
+            }}
+          >
+            <Box height="100%"></Box>
+            <Input
+              name="address.phoneNumber"
+              title=""
+              type="tel"
+              description=""
+              placeholder="Add phone"
+              autoCorrect="off"
+              value={values?.address?.phoneNumber || ""}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              error={getErrorMessage("phoneNumber")}
+            />
+          </Flex>
+        </Flex>
       )}
     </Join>
   )

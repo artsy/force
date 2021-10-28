@@ -11,7 +11,7 @@ import {
 import { TransactionDetailsSummaryItemFragmentContainer as TransactionDetailsSummaryItem } from "v2/Apps/Order/Components/TransactionDetailsSummaryItem"
 import { TwoColumnLayout } from "v2/Apps/Order/Components/TwoColumnLayout"
 import { Router } from "found"
-import { createRef, Component } from "react";
+import { createRef, Component } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import type { Stripe, StripeElements } from "@stripe/stripe-js"
 import createLogger from "v2/Utils/logger"
@@ -72,7 +72,7 @@ export class PaymentRoute extends Component<
   onContinue = async () => {
     try {
       this.setState({ isGettingCreditCardId: true })
-      const result = await this.paymentPicker?.current?.getCreditCardId()
+      const result = await this.paymentPicker?.current?.getCreditCardId()!
       this.setState({ isGettingCreditCardId: false })
 
       if (result?.type === "invalid_form") {

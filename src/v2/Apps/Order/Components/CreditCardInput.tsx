@@ -9,15 +9,14 @@ import {
   TextVariant,
 } from "@artsy/palette"
 import { borderMixin, v3BorderMixin } from "v2/Components/Mixins"
-import * as React from "react";
-import type {
-  StripeCardNumberElementChangeEvent,
-  StripeError,
-} from "@stripe/stripe-js"
+import * as React from "react"
+import type { StripeCardNumberElementChangeEvent } from "@stripe/stripe-js"
 import { CardElement } from "@stripe/react-stripe-js"
 import styled, { css } from "styled-components"
 import { useState } from "react"
 import { fontFamily } from "@artsy/palette/dist/platform/fonts"
+import { BillingInfoWithTerms } from "v2/Apps/Auction/Components/Form"
+import { useFormikContext } from "formik"
 
 export const StyledCardElement = styled(CardElement)<{ isV3?: boolean }>`
   ${props => {
@@ -35,7 +34,7 @@ export const StyledCardElement = styled(CardElement)<{ isV3?: boolean }>`
 
 // Re-uses old input border behavior
 export interface BorderProps {
-  hasError?: boolean
+  hasError: boolean
 }
 
 const StyledBorderBox = styled(BorderBox)<BorderProps>`
@@ -53,12 +52,12 @@ const StyledBorderBox = styled(BorderBox)<BorderProps>`
 `
 
 interface CreditCardInputProps {
-  error?: StripeError
   onChange?: (response: StripeCardNumberElementChangeEvent) => void
 }
 
 export const CreditCardInput: React.FC<CreditCardInputProps> = props => {
   const [focused, setFocused] = useState(false)
+  const { errors, setFieldError } = useFormikContext<BillingInfoWithTerms>()
 
   const styles = useThemeConfig({
     v2: {
@@ -80,18 +79,17 @@ export const CreditCardInput: React.FC<CreditCardInputProps> = props => {
   })
 
   const onChange = (response: StripeCardNumberElementChangeEvent) => {
+    setFieldError("creditCard", response.error?.message)
     if (props.onChange) {
       props.onChange(response)
     }
   }
 
-  const { message } = props.error ? props.error : { message: null }
-
   return (
     <>
       <StyledBorderBox
         className={`${focused ? "focused" : ""}`}
-        hasError={!!message}
+        hasError={!!errors?.creditCard}
         p={1}
         height={styles.fieldHeight}
       >
@@ -113,9 +111,9 @@ export const CreditCardInput: React.FC<CreditCardInputProps> = props => {
           onBlur={() => setFocused(false)}
         />
       </StyledBorderBox>
-      {message && (
+      {!!errors?.creditCard && (
         <Text pt={1} variant={styles.variant} color="red100">
-          {message}
+          {errors.creditCard}
         </Text>
       )}
     </>

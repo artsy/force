@@ -1,4 +1,11 @@
-import { BorderedRadio, Checkbox, Collapse, Link, Input } from "@artsy/palette"
+import {
+  BorderedRadio,
+  Checkbox,
+  Collapse,
+  Link,
+  Input,
+  Select,
+} from "@artsy/palette"
 import { PaymentPicker_me } from "v2/__generated__/PaymentPicker_me.graphql"
 import { PaymentPickerTestQueryRawResponse } from "v2/__generated__/PaymentPickerTestQuery.graphql"
 import {
@@ -60,18 +67,36 @@ _mockStripe().createToken.mockImplementation(() =>
 )
 
 const fillAddressForm = (component: any, address: Address) => {
-  fillIn(component, { title: "Name on card", value: address.name })
-  fillIn(component, { title: "Address line 1", value: address.addressLine1 })
+  fillIn(component, {
+    title: "Name on card",
+    value: address.name,
+    name: "address.name",
+  })
+  fillIn(component, {
+    title: "Address line 1",
+    value: address.addressLine1,
+    name: "address.addressLine1",
+  })
   fillIn(component, {
     title: "Address line 2 (optional)",
     value: address.addressLine2,
+    name: "address.addressLine2",
   })
-  fillIn(component, { title: "City", value: address.city })
+  fillIn(component, {
+    title: "City",
+    value: address.city,
+    name: "address.city",
+  })
   fillIn(component, {
     title: "State, province, or region",
     value: address.region,
+    name: "address.region",
   })
-  fillIn(component, { title: "Postal code", value: address.postalCode })
+  fillIn(component, {
+    title: "Postal code",
+    value: address.postalCode,
+    name: "address.postalCode",
+  })
   fillCountrySelect(component, address.country)
 }
 
@@ -263,16 +288,22 @@ describe("PaymentPickerFragmentContainer", () => {
       },
     })
 
-    expect(page.addressForm.props().value).toEqual({
-      name: "",
-      addressLine1: "",
-      addressLine2: "",
-      city: "",
-      region: "",
-      postalCode: "",
-      country: "US",
-      phoneNumber: "",
-    })
+    expect(
+      page
+        .find("AddressForm")
+        .find(Input)
+        .map(input => input.props().value)
+    ).toMatchInlineSnapshot(`
+      Array [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+      ]
+    `)
+    expect(page.find("AddressForm").find(Select).props().selected).toEqual("US")
   })
 
   it("always uses the billing address for stripe tokenization when the user selected 'pick' shipping option", async () => {
@@ -288,6 +319,7 @@ describe("PaymentPickerFragmentContainer", () => {
 
     fillAddressForm(page.root, validAddress)
 
+    await page.update()
     await page.getCreditCardId()
 
     expect(_mockStripe().createToken).toHaveBeenLastCalledWith(null, {
@@ -367,17 +399,12 @@ describe("PaymentPickerFragmentContainer", () => {
   it("shows an error message when CreateToken passes in an error", async () => {
     const stripeError: { error: StripeError } = {
       error: {
-        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-        type: null,
-        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-        charge: null,
+        type: "validation_error",
+        charge: undefined,
         message: "Your card number is invalid.",
-        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-        code: null,
-        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-        decline_code: null,
-        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-        param: null,
+        code: undefined,
+        decline_code: undefined,
+        param: undefined,
       },
     }
 
@@ -387,9 +414,8 @@ describe("PaymentPickerFragmentContainer", () => {
 
     expect(page.root.text()).not.toContain("Your card number is invalid.")
 
-    await page.getCreditCardId()
-
-    expect(page.root.text()).toContain("Your card number is invalid.")
+    const status = await page.getCreditCardId()
+    expect(status).toStrictEqual({ type: "invalid_form" })
   })
 
   describe("when the user has existing credit cards", () => {
@@ -700,30 +726,43 @@ describe("PaymentPickerFragmentContainer", () => {
       const input = page
         .find(Input)
         .filterWhere(wrapper => wrapper.props().title === "Name on card")
-      expect(input.props().error).toEqual("This field is required")
+      expect(input.props().error).toEqual("Name is required")
     })
 
     it("before submit, only shows a validation error on inputs that have been touched", async () => {
       const page = await env.buildPage()
       await page.toggleSameAddressCheckbox()
 
-      fillIn(page.root, { title: "Name on card", value: "Erik David" })
-      fillIn(page.root, { title: "Address line 1", value: "" })
-      page.root.update()
+      fillIn(page.root, {
+        title: "Name on card",
+        value: "Erik David",
+        name: "address.name",
+      })
+      fillIn(page.root, {
+        title: "Address line 1",
+        value: "",
+        name: "address.addressLine1",
+      })
+      const addressLine1 = page
+        .find(Input)
+        .filterWhere(wrapper => wrapper.props().title === "Address line 1")
+      addressLine1.props().onBlur({ target: { name: "address.addressLine1" } })
 
-      const [addressInput, cityInput] = ["Address line 1", "City"].map(label =>
-        page.find(Input).filterWhere(wrapper => wrapper.props().title === label)
-      )
+      await page.update()
 
-      expect(addressInput.props().error).toBeTruthy()
-      expect(cityInput.props().error).toBeFalsy()
+      expect(page.text()).not.toContain("City is required")
+      expect(page.text()).toContain("Address is required")
     })
 
     it("after submit, shows all validation errors on inputs that have been touched", async () => {
       const page = await env.buildPage()
       await page.toggleSameAddressCheckbox()
 
-      fillIn(page.root, { title: "Name on card", value: "Erik David" })
+      fillIn(page.root, {
+        title: "Name on card",
+        value: "Erik David",
+        name: "address.name",
+      })
 
       await page.update()
       await page.getCreditCardId()

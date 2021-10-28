@@ -32,21 +32,12 @@ import {
   CommitMutation,
   injectCommitMutation,
 } from "v2/Apps/Order/Utils/commitMutation"
-import {
-  validateAddress,
-  validatePhoneNumber,
-} from "v2/Apps/Order/Utils/formValidators"
+import { validatePhoneNumber } from "v2/Apps/Order/Utils/formValidators"
 import { track } from "v2/System/Analytics"
 import * as Schema from "v2/System/Analytics/Schema"
-import {
-  Address,
-  AddressChangeHandler,
-  AddressErrors,
-  AddressForm,
-  AddressTouched,
-} from "v2/Components/AddressForm"
+import { Address, AddressForm } from "v2/Components/AddressForm"
 import { Router } from "found"
-import { Component } from "react"
+import { Component, createRef } from "react"
 import { RelayProp, createFragmentContainer, graphql } from "react-relay"
 import createLogger from "v2/Utils/logger"
 import { Media } from "v2/Utils/Responsive"
@@ -83,6 +74,8 @@ import {
   ContextModule,
   OwnerType,
 } from "@artsy/cohesion"
+import { BillingInfoFormContext } from "v2/Apps/Auction/Components/Form"
+import { Form } from "formik"
 
 export interface ShippingProps extends SystemContextProps {
   order: Shipping_order
@@ -96,17 +89,21 @@ export interface ShippingProps extends SystemContextProps {
 
 export interface ShippingState {
   shippingOption: CommerceOrderFulfillmentTypeEnum
-  address: Address
   phoneNumber: PhoneNumber
   phoneNumberError: PhoneNumberError
   phoneNumberTouched: PhoneNumberTouched
-  addressErrors: AddressErrors | {}
-  addressTouched: AddressTouched
   selectedAddressID: string
   saveAddress: boolean
   shippingQuotes: ShippingQuotesType
   shippingQuoteId?: string
   savedAddressID?: string
+  formRef: React.RefObject<{
+    handleSubmit: () => Promise<void>
+    values?: {
+      address: Address
+    }
+    isValid: boolean
+  }>
 }
 
 const logger = createLogger("Order/Routes/Shipping/index.tsx")
@@ -116,10 +113,6 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
     shippingOption: getShippingOption(
       this.props.order.requestedFulfillment?.__typename
     ),
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-    address: startingAddress(this.props.me, this.props.order),
-    addressErrors: {},
-    addressTouched: {},
     savedAddressID: undefined,
     phoneNumber: startingPhoneNumber(this.props.me, this.props.order),
     phoneNumberError: "",
@@ -131,19 +124,11 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
     shippingQuotes: getShippingQuotes(this.props.order),
     shippingQuoteId: getSelectedShippingQuoteId(this.props.order),
     saveAddress: true,
-  }
-
-  get touchedAddress() {
-    return {
-      name: true,
-      country: true,
-      postalCode: true,
-      addressLine1: true,
-      addressLine2: true,
-      city: true,
-      region: true,
-      phoneNumber: true,
-    }
+    formRef: createRef<{
+      handleSubmit: () => Promise<void>
+      values: undefined
+      isValid: false
+    }>(),
   }
 
   handleAddressDelete = (deletedAddressID: string) => {
@@ -179,25 +164,33 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
   isCreateNewAddress = () => this.state.selectedAddressID === NEW_ADDRESS
 
   isArtaShipping = () => {
+    const { formRef, selectedAddressID, shippingOption } = this.state
     const addresses = this.getAddressList()
     const artaShippingEnabled = !!this.getOrderArtwork()?.artaShippingEnabled
-
+    const address = formRef.current?.values?.address
     const shippingCountry = this.isCreateNewAddress()
-      ? this.state.address.country
+      ? address?.country
       : addresses &&
         addresses.find(
-          address => address?.node?.internalID == this.state.selectedAddressID
+          address => address?.node?.internalID == selectedAddressID
         )?.node?.country
 
     return (
-      this.state.shippingOption === "SHIP" &&
+      shippingOption === "SHIP" &&
       artaShippingEnabled &&
       shippingCountry === "US"
     )
   }
 
   onContinueButtonPressed = async () => {
-    if (this.isArtaShipping() && !!this.state.shippingQuoteId) {
+    const { formRef, shippingQuoteId, shippingOption } = this.state
+
+    if (shippingOption === "SHIP" && this.isCreateNewAddress()) {
+      formRef.current?.handleSubmit()
+      if (!formRef.current?.isValid) return
+    }
+
+    if (this.isArtaShipping() && !!shippingQuoteId) {
       this.selectShippingQuote()
     } else {
       this.selectShipping()
@@ -206,40 +199,13 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
 
   selectShipping = async () => {
     const {
-      address,
       shippingOption,
       phoneNumber,
       selectedAddressID,
+      formRef,
     } = this.state
 
-    if (shippingOption === "SHIP") {
-      if (this.isCreateNewAddress()) {
-        // validate when order is not pickup and the address is new
-        const { errors, hasErrors } = validateAddress(address)
-        const { error, hasError } = validatePhoneNumber(phoneNumber)
-        if (hasErrors && hasError) {
-          this.setState({
-            addressErrors: errors!,
-            addressTouched: this.touchedAddress,
-            phoneNumberError: error!,
-            phoneNumberTouched: true,
-          })
-          return
-        } else if (hasErrors) {
-          this.setState({
-            addressErrors: errors!,
-            addressTouched: this.touchedAddress,
-          })
-          return
-        } else if (hasError) {
-          this.setState({
-            phoneNumberError: error!,
-            phoneNumberTouched: true,
-          })
-          return
-        }
-      }
-    } else {
+    if (shippingOption !== "SHIP") {
       const { error, hasError } = validatePhoneNumber(phoneNumber)
       if (hasError) {
         this.setState({
@@ -253,14 +219,14 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
     try {
       // if not creating a new address, use the saved address selection for shipping
       const shipToAddress = this.isCreateNewAddress()
-        ? address
+        ? formRef.current?.values?.address
         : convertShippingAddressForExchange(
             this.getAddressList()?.find(
               address => address?.node?.internalID == selectedAddressID
             )?.node!
           )
       const shipToPhoneNumber = this.isCreateNewAddress()
-        ? phoneNumber
+        ? formRef.current?.values?.address.phoneNumber
         : this.getAddressList()?.find(
             address => address?.node?.internalID == selectedAddressID
           )?.node?.phoneNumber
@@ -336,26 +302,18 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
   }
 
   saveAddress = async () => {
-    const {
-      address,
-      phoneNumber,
-      shippingOption,
-      saveAddress,
-      savedAddressID,
-    } = this.state
+    const { shippingOption, saveAddress, savedAddressID, formRef } = this.state
+    const address = formRef.current?.values?.address
     const { relayEnvironment } = this.props
     const isCreateNewAddress = this.isCreateNewAddress()
 
-    if (saveAddress) {
-      if (shippingOption === "SHIP" && isCreateNewAddress && relayEnvironment) {
+    if (saveAddress && address && relayEnvironment) {
+      if (shippingOption === "SHIP" && isCreateNewAddress) {
         if (savedAddressID) {
           updateUserAddress(
             relayEnvironment,
             savedAddressID,
-            {
-              ...address,
-              phoneNumber: phoneNumber,
-            }, // address
+            address,
             () => {},
             () => {
               message => {
@@ -367,10 +325,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
         } else {
           await createUserAddress(
             relayEnvironment,
-            {
-              ...address,
-              phoneNumber: phoneNumber,
-            }, // address
+            address,
             data => {
               this.setState({
                 savedAddressID:
@@ -402,6 +357,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
   handleSubmitError(error: { code: string; data: string | null }) {
     logger.error(error)
     const parsedData = error.data ? JSON.parse(error.data) : {}
+
     if (
       error.code === "missing_region" ||
       error.code === "missing_country" ||
@@ -436,23 +392,6 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
       <RouterLink to={`mailto:orders@artsy.net`}>orders@artsy.net</RouterLink>.
     </>
   )
-
-  onAddressChange: AddressChangeHandler = (address, key) => {
-    const { errors } = validateAddress(address)
-    this.setState({
-      address,
-      addressErrors: {
-        ...this.state.addressErrors,
-        ...errors,
-      },
-      addressTouched: {
-        ...this.state.addressTouched,
-        [key]: true,
-      },
-      shippingQuotes: null,
-      shippingQuoteId: undefined,
-    })
-  }
 
   onPhoneNumberChange: PhoneNumberChangeHandler = phoneNumber => {
     const { error } = validatePhoneNumber(phoneNumber)
@@ -582,9 +521,6 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
   render() {
     const { order, isCommittingMutation } = this.props
     const {
-      address,
-      addressErrors,
-      addressTouched,
       phoneNumber,
       phoneNumberError,
       phoneNumberTouched,
@@ -681,38 +617,42 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
               </Collapse>
 
               <Collapse data-test="addressFormCollapse" open={showAddressForm}>
-                {isArtaShipping &&
-                  shippingQuotes &&
-                  shippingQuotes.length === 0 &&
-                  this.renderArtaErrorMessage()}
-                <AddressForm
-                  value={address}
-                  errors={addressErrors}
-                  touched={addressTouched}
-                  onChange={this.onAddressChange}
-                  domesticOnly={artwork?.onlyShipsDomestically!}
-                  euOrigin={artwork?.euShippingOrigin!}
-                  shippingCountry={artwork?.shippingCountry!}
-                  showPhoneNumberInput={false}
-                />
-                <Spacer mb={2} />
-                <PhoneNumberForm
-                  value={phoneNumber}
-                  errors={phoneNumberError}
-                  touched={phoneNumberTouched}
-                  onChange={this.onPhoneNumberChange}
-                  label="Required for shipping logistics"
-                />
-                <Checkbox
-                  onSelect={selected =>
-                    this.setState({ saveAddress: selected })
-                  }
-                  selected={this.state.saveAddress}
-                  data-test="save-address-checkbox"
+                <BillingInfoFormContext
+                  ref={this.state.formRef}
+                  formKeys={["addressWithPhone"]}
+                  initialValues={{
+                    address: startingAddress(
+                      this.props.me,
+                      this.props.order
+                    ) as Address,
+                  }}
+                  onSubmit={() => {}}
                 >
-                  Save shipping address for later use
-                </Checkbox>
-                <Spacer mt={4} />
+                  {() => (
+                    <Form>
+                      {isArtaShipping &&
+                        shippingQuotes &&
+                        shippingQuotes.length === 0 &&
+                        this.renderArtaErrorMessage()}
+                      <AddressForm
+                        domesticOnly={artwork?.onlyShipsDomestically!}
+                        euOrigin={artwork?.euShippingOrigin!}
+                        shippingCountry={artwork?.shippingCountry!}
+                        showPhoneNumberInput={true}
+                      />
+                      <Checkbox
+                        onSelect={selected =>
+                          this.setState({ saveAddress: selected })
+                        }
+                        selected={this.state.saveAddress}
+                        data-test="save-address-checkbox"
+                      >
+                        Save shipping address for later use
+                      </Checkbox>
+                      <Spacer mt={4} />
+                    </Form>
+                  )}
+                </BillingInfoFormContext>
               </Collapse>
 
               <Collapse
@@ -753,6 +693,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
 
               <Media greaterThan="xs">
                 <Button
+                  type="button"
                   onClick={this.onContinueButtonPressed}
                   loading={isCommittingMutation}
                   disabled={isContinueButtonDisabled}
@@ -777,6 +718,7 @@ export class ShippingRoute extends Component<ShippingProps, ShippingState> {
               <Spacer mb={[2, 4]} />
               <Media at="xs">
                 <Button
+                  type="button"
                   onClick={this.onContinueButtonPressed}
                   loading={isCommittingMutation}
                   disabled={isContinueButtonDisabled}

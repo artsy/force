@@ -3,7 +3,6 @@ import { PaymentPicker_order } from "v2/__generated__/PaymentPicker_order.graphq
 import { PaymentPickerCreateCreditCardMutation } from "v2/__generated__/PaymentPickerCreateCreditCardMutation.graphql"
 import {
   Address,
-  AddressChangeHandler,
   AddressErrors,
   AddressForm,
   AddressTouched,
@@ -11,7 +10,6 @@ import {
 } from "v2/Components/AddressForm"
 
 import { CreditCardInput } from "v2/Apps/Order/Components/CreditCardInput"
-import { validateAddress } from "v2/Apps/Order/Utils/formValidators"
 import { track } from "v2/System/Analytics"
 import * as Schema from "v2/System/Analytics/Schema"
 import * as React from "react"
@@ -42,6 +40,8 @@ import {
 } from "v2/System/SystemContext"
 import { createStripeWrapper } from "v2/Utils/createStripeWrapper"
 import { isNull, mergeWith } from "lodash"
+import { BillingInfoFormContext } from "v2/Apps/Auction/Components/Form"
+import { Form } from "formik"
 
 export interface StripeProps {
   stripe: Stripe
@@ -55,6 +55,15 @@ export interface PaymentPickerProps {
   innerRef: React.RefObject<PaymentPicker>
 }
 
+interface BillingAddressFormShape {
+  handleSubmit: () => Promise<void>
+  handleReset: () => Promise<void>
+  values: {
+    address: Address
+  }
+  isValid: boolean
+}
+
 interface PaymentPickerState {
   hideBillingAddress: boolean
   address: Address
@@ -64,7 +73,14 @@ interface PaymentPickerState {
   isCreatingStripeToken: boolean
   creditCardSelection: { type: "existing"; id: string } | { type: "new" }
   saveNewCreditCard: boolean
+  formRef: React.RefObject<BillingAddressFormShape>
 }
+
+export type CreditCardIdResult =
+  | { type: "error"; error: string | undefined }
+  | { type: "internal_error"; error: string | undefined }
+  | { type: "invalid_form" }
+  | { type: "success"; creditCardId: string }
 
 export class PaymentPicker extends React.Component<
   PaymentPickerProps & SystemContextProps & StripeProps,
@@ -75,11 +91,9 @@ export class PaymentPicker extends React.Component<
     hideBillingAddress: true,
     stripeError: null,
     isCreatingStripeToken: false,
-    address: this.startingAddress(),
-    addressErrors: {},
-    addressTouched: {},
     creditCardSelection: this.getInitialCreditCardSelection(),
     saveNewCreditCard: true,
+    formRef: React.createRef<BillingAddressFormShape>(),
   }
 
   private getInitialCreditCardSelection(): PaymentPickerState["creditCardSelection"] {
@@ -95,26 +109,6 @@ export class PaymentPicker extends React.Component<
             id: this.props.me.creditCards.edges[0]?.node?.internalID!,
           }
         : { type: "new" }
-    }
-  }
-
-  private startingAddress(): Address {
-    return {
-      ...emptyAddress,
-      country: "US",
-    }
-  }
-
-  private get touchedAddress() {
-    return {
-      name: true,
-      country: true,
-      postalCode: true,
-      addressLine1: true,
-      addressLine2: true,
-      city: true,
-      region: true,
-      phoneNumber: true,
     }
   }
 
@@ -135,19 +129,14 @@ export class PaymentPicker extends React.Component<
     | { type: "invalid_form" }
     | { type: "success"; creditCardId: string }
   > = async () => {
-    const { creditCardSelection, saveNewCreditCard } = this.state
+    const { creditCardSelection, saveNewCreditCard, formRef } = this.state
     if (creditCardSelection.type === "existing") {
       return { type: "success", creditCardId: creditCardSelection.id }
     }
 
     if (this.needsAddress()) {
-      const { errors, hasErrors } = validateAddress(this.state.address)
-      if (hasErrors) {
-        this.setState({
-          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-          addressErrors: errors,
-          addressTouched: this.touchedAddress,
-        })
+      formRef.current?.handleSubmit()
+      if (!formRef.current?.isValid) {
         return { type: "invalid_form" }
       }
     }
@@ -185,11 +174,12 @@ export class PaymentPicker extends React.Component<
         type: "internal_error",
         error: creditCardOrError.mutationError.message,
       }
-    } else
+    } else {
       return {
         type: "success",
         creditCardId: creditCardOrError?.creditCard?.internalID!,
       }
+    }
   }
 
   // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
@@ -206,46 +196,18 @@ export class PaymentPicker extends React.Component<
   })
   private handleChangeHideBillingAddress(hideBillingAddress: boolean) {
     if (!hideBillingAddress) {
-      this.setState({
-        address: {
-          ...emptyAddress,
-          country: "US",
-        },
-      })
+      this.state.formRef.current?.handleReset()
     }
 
     this.setState({ hideBillingAddress })
   }
 
-  private onAddressChange: AddressChangeHandler = (address, key) => {
-    const { errors } = validateAddress(address)
-    this.setState({
-      address,
-      addressErrors: {
-        ...this.state.addressErrors,
-        [key]: errors[key],
-      },
-      addressTouched: {
-        ...this.state.addressTouched,
-        [key]: true,
-      },
-    })
-  }
-
   render() {
-    const {
-      stripeError,
-      address,
-      addressErrors,
-      addressTouched,
-      creditCardSelection,
-      hideBillingAddress,
-    } = this.state
+    const { creditCardSelection, hideBillingAddress } = this.state
     const {
       me: { creditCards },
       isEigen,
     } = this.props
-
     const orderCard = this.props.order.creditCard
 
     const creditCardsArray = creditCards?.edges?.map(e => e?.node)!
@@ -317,54 +279,58 @@ export class PaymentPicker extends React.Component<
 
         <Collapse open={this.state.creditCardSelection.type === "new"}>
           {userHasExistingCards && <Spacer mb={2} />}
-          <Flex flexDirection="column">
-            <Text mb={1} size="md" color="black100" lineHeight="1.1em">
-              Credit card
-            </Text>
-            <CreditCardInput
-              error={stripeError!}
-              onChange={response => {
-                this.setState({ stripeError: response.error! })
-              }}
-            />
+          <BillingInfoFormContext
+            ref={this.state.formRef}
+            formKeys={["address"]}
+            onSubmit={() => {}}
+          >
+            {() => (
+              <Form>
+                <Flex flexDirection="column">
+                  <Text mb={1} size="md" color="black100" lineHeight="1.1em">
+                    Credit card
+                  </Text>
+                  <CreditCardInput
+                    onChange={response => {
+                      this.setState({ stripeError: response.error! })
+                    }}
+                  />
 
-            {!this.isPickup() && (
-              <>
-                <Spacer mb={2} />
-                <Checkbox
-                  selected={hideBillingAddress}
-                  onSelect={this.handleChangeHideBillingAddress.bind(this)}
-                  data-test="BillingAndShippingAreTheSame"
-                >
-                  Billing and shipping addresses are the same.
-                </Checkbox>
-              </>
+                  {!this.isPickup() && (
+                    <>
+                      <Spacer mb={2} />
+                      <Checkbox
+                        selected={hideBillingAddress}
+                        onSelect={this.handleChangeHideBillingAddress.bind(
+                          this
+                        )}
+                        data-test="BillingAndShippingAreTheSame"
+                      >
+                        Billing and shipping addresses are the same.
+                      </Checkbox>
+                    </>
+                  )}
+                  <Collapse open={this.needsAddress()}>
+                    <Spacer mb={2} />
+                    <AddressForm billing={true} showPhoneNumberInput={false} />
+                    <Spacer mb={2} />
+                  </Collapse>
+                  <Spacer mb={1} />
+                  <Checkbox
+                    data-test="SaveNewCreditCard"
+                    selected={this.state.saveNewCreditCard}
+                    onSelect={() =>
+                      this.setState({
+                        saveNewCreditCard: !this.state.saveNewCreditCard,
+                      })
+                    }
+                  >
+                    Save credit card for later use.
+                  </Checkbox>
+                </Flex>
+              </Form>
             )}
-            <Collapse open={this.needsAddress()}>
-              <Spacer mb={2} />
-              <AddressForm
-                value={address}
-                errors={addressErrors}
-                touched={addressTouched}
-                onChange={this.onAddressChange}
-                isCollapsed={hideBillingAddress}
-                billing
-              />
-              <Spacer mb={2} />
-            </Collapse>
-            <Spacer mb={1} />
-            <Checkbox
-              data-test="SaveNewCreditCard"
-              selected={this.state.saveNewCreditCard}
-              onSelect={() =>
-                this.setState({
-                  saveNewCreditCard: !this.state.saveNewCreditCard,
-                })
-              }
-            >
-              Save credit card for later use.
-            </Checkbox>
-          </Flex>
+          </BillingInfoFormContext>
         </Collapse>
       </>
     )
@@ -379,7 +345,7 @@ export class PaymentPicker extends React.Component<
       (o, s) => (isNull(s) ? o : s)
     )
     const selectedBillingAddress = (this.needsAddress()
-      ? this.state.address
+      ? this.state.formRef.current?.values?.address
       : shippingAddress) as Address
     const {
       name,

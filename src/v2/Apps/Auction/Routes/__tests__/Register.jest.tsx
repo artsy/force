@@ -16,7 +16,6 @@ import {
 import { stripeTokenResponse } from "../__fixtures__/Stripe"
 import { RegisterRouteFragmentContainer } from "../Register"
 import { RegisterTestPage, ValidFormValues } from "./Utils/RegisterTestPage"
-import { CreditCardInput } from "v2/Apps/Order/Components/CreditCardInput"
 import { mockLocation, resetMockLocation } from "v2/DevTools/mockLocation"
 import { mockStripe } from "v2/DevTools/mockStripe"
 
@@ -89,7 +88,6 @@ describe("Routes/Register", () => {
   it("emits a RegistrationSubmitFailed analytics event and halts submission", async () => {
     const env = setupTestEnv()
     const page = await env.buildPage()
-
     await page.submitForm()
 
     expect(mockPostEvent).toBeCalledWith({
@@ -102,9 +100,9 @@ describe("Routes/Register", () => {
         "Address is required",
         "City is required",
         "Name is required",
-        "Telephone is required",
         "Postal code is required",
         "State is required",
+        "Telephone is required",
       ],
       sale_id: RegisterQueryResponseFixture?.sale?.internalID,
       user_id: RegisterQueryResponseFixture?.me?.internalID,
@@ -214,20 +212,10 @@ describe("Routes/Register", () => {
     address.phoneNumber = "    "
 
     await page.fillAddressForm(address)
+    await page.update()
     await page.submitForm()
 
     expect(page.text()).toMatch("Telephone is required")
-  })
-
-  it("displays an error message as the user types invalid input", async () => {
-    const env = setupTestEnv()
-    const page = await env.buildPage()
-    page
-      .find(CreditCardInput)
-      .props()
-      .onChange({ error: { message: "Your card number is invalid." } } as any)
-
-    expect(page.text()).toContain("Your card number is invalid.")
   })
 
   it("displays an error message when the input in the credit card field is missing", async () => {

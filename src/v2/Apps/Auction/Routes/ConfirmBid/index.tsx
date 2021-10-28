@@ -29,7 +29,7 @@ import type { Stripe, StripeElements } from "@stripe/stripe-js"
 import { CardElement } from "@stripe/react-stripe-js"
 import createLogger from "v2/Utils/logger"
 import {
-  FormValuesForBidding,
+  BillingInfoWithBid,
   determineDisplayRequirements,
   errorMessageForBidding,
   errorMessageForCard,
@@ -42,7 +42,7 @@ import { data as sd } from "sharify"
 
 const logger = createLogger("Apps/Auction/Routes/ConfirmBid")
 
-type BidFormActions = FormikActions<FormValuesForBidding>
+type BidFormActions = FormikActions<BillingInfoWithBid>
 // TODO: Replace with a GraphQL type
 interface BidderPosition {
   status: string
@@ -180,7 +180,7 @@ export const ConfirmBidRoute: React.FC<
   }
 
   async function handleSubmit(
-    values: FormValuesForBidding,
+    values: BillingInfoWithBid,
     actions: BidFormActions
   ) {
     // FIXME: workaround for Formik calling `setSubmitting(false)` when the
