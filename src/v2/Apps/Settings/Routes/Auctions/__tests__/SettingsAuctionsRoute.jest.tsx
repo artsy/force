@@ -1,91 +1,27 @@
-import React from "react"
 import { graphql } from "react-relay"
-import { SettingsAuctionsRouteFragmentContainer } from "../SettingsAuctionsRoute"
 import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
-import { UserActiveBids } from "../Components/UserActiveBids"
-import { UserBidHistory } from "../Components/UserBidHistory"
-import { UserRegistrationAuctions } from "../Components/UserRegistrationAuctions"
+import { SettingsAuctionsRouteFragmentContainer } from "../SettingsAuctionsRoute"
+import { SettingsAuctionsRouteQuery_Test_Query } from "v2/__generated__/SettingsAuctionsRouteQuery_Test_Query.graphql"
 
 jest.unmock("react-relay")
 
-const { getWrapper } = setupTestWrapper({
-  Component: SettingsAuctionsRouteFragmentContainer,
-  query: graphql`
-    query SettingsAuctionsRouteTestQuery {
-      me {
-        ...SettingsAuctionsRoute_me
-      }
-    }
-  `,
-})
-
-const data = {
-  name: "test",
-  lotStandings: [
-    {
-      isLeadingBidder: true,
-      activeBid: {
-        id: "activeBid-id",
-      },
-      saleArtwork: {
-        lotLabel: "xxx",
-        highestBid: {
-          display: "$1000",
-        },
-        counts: {
-          bidderPositions: 5,
-        },
-        artwork: {
-          title: "mist",
-          href: "/mist",
-          image: {
-            cropped: {
-              src: "src",
-              srcSet: "srcSet",
-            },
-          },
-          artist: {
-            name: "Caspar",
-          },
-        },
-      },
-    },
-  ],
-  myBids: {
-    closed: [
-      {
-        sale: {
-          name: "mockSaleName",
-          href: "/mockSaleName",
-          endAt: "endDate",
-          profile: {
-            bio: "some sale bio",
-          },
-        },
-      },
-    ],
-  },
-  saleRegistrationsConnection: {
-    edges: [
-      {
-        node: {
-          sale: {
-            name: "saleName",
-            href: "/saleName",
-            id: "1234",
-            isClosed: false,
-            startAt: "yyy",
-          },
-        },
-      },
-    ],
-  },
-}
-
 describe("SettingsAuctionsRoute", () => {
+  const { getWrapper } = setupTestWrapper<
+    SettingsAuctionsRouteQuery_Test_Query
+  >({
+    Component: SettingsAuctionsRouteFragmentContainer,
+    query: graphql`
+      query SettingsAuctionsRouteQuery_Test_Query {
+        me {
+          ...SettingsAuctionsRoute_me
+        }
+      }
+    `,
+  })
+
   it("renders correctly", () => {
     const wrapper = getWrapper({
-      Me: () => data,
+      Me: () => {},
     })
 
     expect(wrapper.isEmptyRender()).toBe(false)
@@ -93,27 +29,11 @@ describe("SettingsAuctionsRoute", () => {
 
   it("renders 3 correct children", () => {
     const wrapper = getWrapper({
-      Me: () => data,
+      Me: () => {},
     })
 
-    expect(
-      wrapper
-        .children()
-        .contains(<UserActiveBids lotStandings={data.lotStandings} />)
-    ).toBe(true)
-
-    expect(
-      wrapper.children().contains(<UserBidHistory myBids={data.myBids} />)
-    ).toBe(true)
-
-    expect(
-      wrapper
-        .children()
-        .contains(
-          <UserRegistrationAuctions
-            saleRegistrationsConnection={data.saleRegistrationsConnection}
-          />
-        )
-    ).toBe(true)
+    expect(wrapper.find("UserActiveBids").length).toBe(1)
+    expect(wrapper.find("UserBidHistory").length).toBe(1)
+    expect(wrapper.find("UserRegistrationAuctions").length).toBe(1)
   })
 })

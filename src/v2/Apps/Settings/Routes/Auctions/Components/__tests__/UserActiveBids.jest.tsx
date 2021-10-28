@@ -1,67 +1,97 @@
-import React from "react"
-import { UserActiveBids } from "../UserActiveBids"
-import { mount } from "enzyme"
+import { graphql } from "react-relay"
+import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
+import { UserActiveBidsFragmentContainer } from "../UserActiveBids"
+import { UserActiveBids_Test_Query } from "v2/__generated__/UserActiveBids_Test_Query.graphql"
 
-const data = [
-  {
-    isLeadingBidder: true,
-    activeBid: {
-      id: "activeBid-id",
-    },
-    saleArtwork: {
-      lotLabel: "xxx",
-      highestBid: {
-        display: "$1000",
-      },
-      counts: {
-        bidderPositions: 5,
-      },
-      artwork: {
-        title: "mist",
-        href: "/mist",
-        image: {
-          cropped: {
-            src: "somesource",
-            srcSet: "somesourceset",
-          },
-        },
-        artist: {
-          name: "Caspar",
-        },
-      },
-    },
-  },
-]
+jest.unmock("react-relay")
 
 describe("UserActiveBids", () => {
-  let wrapper = mount(<UserActiveBids lotStandings={data} />)
-
-  afterAll(() => {
-    wrapper.unmount()
+  const { getWrapper } = setupTestWrapper<UserActiveBids_Test_Query>({
+    Component: UserActiveBidsFragmentContainer,
+    query: graphql`
+      query UserActiveBids_Test_Query {
+        me {
+          ...UserActiveBids_me
+        }
+      }
+    `,
   })
 
   it("renders correctly", () => {
-    expect(wrapper.isEmptyRender()).toBe(false)
+    const wrapper = getWrapper({
+      Me: () => ({
+        lotStandings: [
+          {
+            saleArtwork: {
+              artwork: {
+                title: "monk by the sea",
+              },
+            },
+          },
+        ],
+      }),
+    })
+
+    expect(wrapper.text()).toContain("monk by the sea")
   })
 
-  it("renders active bids title", () => {
-    expect(wrapper.find("Text").first().html()).toContain("Active Bids")
+  it("renders -Nothing to Show- message when no lot found", () => {
+    const wrapper = getWrapper({
+      Me: () => ({
+        lotStandings: null,
+      }),
+    })
+
+    expect(wrapper.text()).toContain("Nothing to Show")
   })
 
-  it("renders correct artwork link", () => {
+  it("renders -Active Bids- title even if data is not there", () => {
+    const wrapper = getWrapper({
+      Me: () => ({
+        lotStandings: null,
+      }),
+    })
+
+    expect(wrapper.text()).toContain("Active Bids")
+  })
+
+  it("renders a router link with correct href", () => {
+    const wrapper = getWrapper({
+      Me: () => ({
+        lotStandings: [
+          {
+            saleArtwork: {
+              artwork: {
+                href: "/monk-by-the-sea",
+              },
+            },
+          },
+        ],
+      }),
+    })
+
     expect(wrapper.find("RouterLink").first().props().to).toEqual(
-      data[0].saleArtwork.artwork.href
+      "/monk-by-the-sea"
     )
   })
 
-  it("renders the passed image url", () => {
-    expect(wrapper.find("Image").props().src).toEqual(
-      data[0].saleArtwork.artwork.image.cropped.src
-    )
-  })
+  it("when user is the highest bidder, renders -Highest bid- text with correct icon", () => {
+    const wrapper = getWrapper({
+      Me: () => ({
+        lotStandings: [
+          {
+            isLeadingBidder: true,
+            saleArtwork: {
+              artwork: {
+                title: "monk by the sea",
+              },
+            },
+          },
+        ],
+      }),
+    })
 
-  it("renders nothing message when no data found", () => {
-    wrapper = mount(<UserActiveBids lotStandings={[]} />)
-    expect(wrapper.html()).toContain("Nothing to Show")
+    expect(wrapper.text()).toContain("Highest bid")
+    expect(wrapper.find("ArrowUpCircleIcon").length).toBe(1)
   })
 })

@@ -11,7 +11,7 @@ interface UserBidHistoryProps {
 
 export const UserBidHistory: React.FC<UserBidHistoryProps> = ({ me }) => {
   if (!me?.myBids?.closed) {
-    return null
+    return <SectionContainer title="Bid History"></SectionContainer>
   }
 
   return (

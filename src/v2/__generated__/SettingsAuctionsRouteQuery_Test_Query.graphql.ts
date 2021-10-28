@@ -3,21 +3,21 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type SettingsAuctionsRouteTestQueryVariables = {};
-export type SettingsAuctionsRouteTestQueryResponse = {
+export type SettingsAuctionsRouteQuery_Test_QueryVariables = {};
+export type SettingsAuctionsRouteQuery_Test_QueryResponse = {
     readonly me: {
         readonly " $fragmentRefs": FragmentRefs<"SettingsAuctionsRoute_me">;
     } | null;
 };
-export type SettingsAuctionsRouteTestQuery = {
-    readonly response: SettingsAuctionsRouteTestQueryResponse;
-    readonly variables: SettingsAuctionsRouteTestQueryVariables;
+export type SettingsAuctionsRouteQuery_Test_Query = {
+    readonly response: SettingsAuctionsRouteQuery_Test_QueryResponse;
+    readonly variables: SettingsAuctionsRouteQuery_Test_QueryVariables;
 };
 
 
 
 /*
-query SettingsAuctionsRouteTestQuery {
+query SettingsAuctionsRouteQuery_Test_Query {
   me {
     ...SettingsAuctionsRoute_me
     id
@@ -133,7 +133,7 @@ return {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "SettingsAuctionsRouteTestQuery",
+    "name": "SettingsAuctionsRouteQuery_Test_Query",
     "selections": [
       {
         "alias": null,
@@ -158,7 +158,7 @@ return {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "SettingsAuctionsRouteTestQuery",
+    "name": "SettingsAuctionsRouteQuery_Test_Query",
     "selections": [
       {
         "alias": null,
@@ -492,11 +492,11 @@ return {
   "params": {
     "id": null,
     "metadata": {},
-    "name": "SettingsAuctionsRouteTestQuery",
+    "name": "SettingsAuctionsRouteQuery_Test_Query",
     "operationKind": "query",
-    "text": "query SettingsAuctionsRouteTestQuery {\n  me {\n    ...SettingsAuctionsRoute_me\n    id\n  }\n}\n\nfragment SettingsAuctionsRoute_me on Me {\n  ...UserActiveBids_me\n  ...UserBidHistory_me\n  ...UserRegistrationAuctions_me\n}\n\nfragment UserActiveBids_me on Me {\n  lotStandings {\n    isLeadingBidder\n    activeBid {\n      id\n    }\n    saleArtwork {\n      lotLabel\n      highestBid {\n        display\n      }\n      counts {\n        bidderPositions\n      }\n      artwork {\n        title\n        href\n        image {\n          cropped(height: 100, width: 100) {\n            src\n            srcSet\n          }\n        }\n        artist {\n          name\n          id\n        }\n        id\n      }\n      id\n    }\n  }\n}\n\nfragment UserBidHistory_me on Me {\n  myBids {\n    closed {\n      sale {\n        name\n        href\n        endAt(format: \"MMMM D, h:mmA\")\n        profile {\n          bio\n          id\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment UserRegistrationAuctions_me on Me {\n  saleRegistrationsConnection(published: true, isAuction: true, sort: CREATED_AT_DESC, first: 10, registered: false) {\n    edges {\n      node {\n        sale {\n          id\n          name\n          href\n          startAt(format: \"MMMM D, h:mmA\")\n          isClosed\n        }\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query SettingsAuctionsRouteQuery_Test_Query {\n  me {\n    ...SettingsAuctionsRoute_me\n    id\n  }\n}\n\nfragment SettingsAuctionsRoute_me on Me {\n  ...UserActiveBids_me\n  ...UserBidHistory_me\n  ...UserRegistrationAuctions_me\n}\n\nfragment UserActiveBids_me on Me {\n  lotStandings {\n    isLeadingBidder\n    activeBid {\n      id\n    }\n    saleArtwork {\n      lotLabel\n      highestBid {\n        display\n      }\n      counts {\n        bidderPositions\n      }\n      artwork {\n        title\n        href\n        image {\n          cropped(height: 100, width: 100) {\n            src\n            srcSet\n          }\n        }\n        artist {\n          name\n          id\n        }\n        id\n      }\n      id\n    }\n  }\n}\n\nfragment UserBidHistory_me on Me {\n  myBids {\n    closed {\n      sale {\n        name\n        href\n        endAt(format: \"MMMM D, h:mmA\")\n        profile {\n          bio\n          id\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment UserRegistrationAuctions_me on Me {\n  saleRegistrationsConnection(published: true, isAuction: true, sort: CREATED_AT_DESC, first: 10, registered: false) {\n    edges {\n      node {\n        sale {\n          id\n          name\n          href\n          startAt(format: \"MMMM D, h:mmA\")\n          isClosed\n        }\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '0dba8539019df214549b3d5d9558871a';
+(node as any).hash = '57cd2ce66cdc3318bccdcff2e9afa044';
 export default node;

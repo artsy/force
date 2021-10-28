@@ -16,7 +16,9 @@ export const UserRegistrationAuctions: React.FC<UserRegistrationAuctionsProps> =
   const saleRegistrations = extractNodes(me?.saleRegistrationsConnection)
 
   if (!saleRegistrations) {
-    return null
+    return (
+      <SectionContainer title="Registration for Upcoming Auctions"></SectionContainer>
+    )
   }
 
   return (

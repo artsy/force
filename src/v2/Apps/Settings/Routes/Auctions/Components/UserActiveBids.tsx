@@ -20,7 +20,7 @@ interface UserActiveBidsProps {
 
 export const UserActiveBids: React.FC<UserActiveBidsProps> = ({ me }) => {
   if (!me?.lotStandings) {
-    return null
+    return <SectionContainer title="Active Bids"></SectionContainer>
   }
 
   return (

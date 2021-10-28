@@ -1,52 +1,84 @@
-import React from "react"
-import { UserRegistrationAuctions } from "../UserRegistrationAuctions"
-import { mount } from "enzyme"
+import { graphql } from "react-relay"
+import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
+import { UserRegistrationAuctionsFragmentContainer } from "../UserRegistrationAuctions"
+import { UserRegistrationAuctions_Test_Query } from "v2/__generated__/UserRegistrationAuctions_Test_Query.graphql"
 
-const data = {
-  edges: [
-    {
-      node: {
-        sale: {
-          name: "mockSaleName",
-          href: "/mockSaleHref",
-          id: "1234",
-          isClosed: false,
-          startAt: "yyy",
-        },
-      },
-    },
-  ],
-}
+jest.unmock("react-relay")
 
-describe("UserRegistrationAuctions component", () => {
-  let wrapper = mount(
-    <UserRegistrationAuctions saleRegistrationsConnection={data} />
-  )
-
-  afterAll(() => {
-    wrapper.unmount()
+describe("UserRegistrationAuctions", () => {
+  const { getWrapper } = setupTestWrapper<UserRegistrationAuctions_Test_Query>({
+    Component: UserRegistrationAuctionsFragmentContainer,
+    query: graphql`
+      query UserRegistrationAuctions_Test_Query {
+        me {
+          ...UserRegistrationAuctions_me
+        }
+      }
+    `,
   })
 
   it("renders correctly", () => {
-    expect(wrapper.isEmptyRender()).toBe(false)
+    const wrapper = getWrapper({
+      Me: () => ({
+        saleRegistrationsConnection: {
+          edges: [
+            {
+              node: {
+                sale: {
+                  name: "the-good-sale",
+                },
+              },
+            },
+          ],
+        },
+      }),
+    })
+
+    expect(wrapper.text()).toContain("the-good-sale")
   })
 
-  it("renders Registration for Upcoming Auctions title", () => {
-    expect(wrapper.find("Text").first().html()).toContain(
-      "Registration for Upcoming Auctions"
-    )
+  it("renders -Nothing to Show- message when no available sale found", () => {
+    const wrapper = getWrapper({
+      Me: () => ({
+        saleRegistrationsConnection: {
+          edges: [],
+        },
+      }),
+    })
+
+    expect(wrapper.text()).toContain("Nothing to Show")
   })
 
-  it("renders correct link for sale", () => {
-    expect(wrapper.find("RouterLink").props().to).toEqual(
-      data.edges[0].node.sale.href
-    )
+  it("renders -Registration for Upcoming Auctions- title even if data is not there", () => {
+    const wrapper = getWrapper({
+      Me: () => ({
+        saleRegistrationsConnection: {
+          edges: [],
+        },
+      }),
+    })
+
+    expect(wrapper.text()).toContain("Registration for Upcoming Auctions")
   })
 
-  it("renders nothing message when no data found", () => {
-    wrapper = mount(
-      <UserRegistrationAuctions saleRegistrationsConnection={{ edges: [] }} />
-    )
-    expect(wrapper.html()).toContain("Nothing to Show")
+  it("renders button with correct href of sale", () => {
+    const wrapper = getWrapper({
+      Me: () => ({
+        saleRegistrationsConnection: {
+          edges: [
+            {
+              node: {
+                sale: {
+                  name: "the-good-sale",
+                  href: "/the-good-sale",
+                },
+              },
+            },
+          ],
+        },
+      }),
+    })
+
+    expect(wrapper.find("Button").props().to).toEqual("/the-good-sale")
   })
 })

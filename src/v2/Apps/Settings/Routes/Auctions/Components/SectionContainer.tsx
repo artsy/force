@@ -1,7 +1,15 @@
 import { Text, GridColumns } from "@artsy/palette"
 import React from "react"
 
-export const SectionContainer = ({ children, title }) => {
+interface SectionContainerProps {
+  title: string
+  children?: React.ReactNode
+}
+
+export const SectionContainer: React.FC<SectionContainerProps> = ({
+  children,
+  title,
+}) => {
   const hasChildren = !!React.Children.count(children)
 
   return (
