@@ -9,7 +9,9 @@ interface UserBidHistoryProps {
 }
 
 export const UserBidHistory: React.FC<UserBidHistoryProps> = ({ me }) => {
-  const myBids = me?.myBids
+  if (!me?.myBids?.closed) {
+    return null
+  }
 
   return (
     <>
@@ -17,44 +19,33 @@ export const UserBidHistory: React.FC<UserBidHistoryProps> = ({ me }) => {
         Bid History
       </Text>
 
-      {myBids?.closed?.length ? (
-        <GridColumns mb={6}>
-          {myBids.closed.map((bid, i) => (
-            <Column
-              key={i}
-              span={8}
-              pb={2}
-              display="flex"
-              borderBottom={
-                myBids?.closed?.length && i + 1 < myBids?.closed?.length
-                  ? "1px solid"
-                  : ""
-              }
-              borderColor="black10"
-            >
+      <GridColumns mb={6}>
+        {me.myBids.closed.map((bid, i) => {
+          if (!bid?.sale) {
+            return null
+          }
+
+          return (
+            <Column key={i} span={8} pb={2} display="flex">
               <Flex flexDirection="column">
-                <RouterLink to={bid?.sale?.href ?? ""}>
+                <RouterLink to={bid.sale.href ?? ""}>
                   <Text color="black80" variant="sm">
-                    {bid?.sale?.name}
+                    {bid.sale.name ?? ""}
                   </Text>
                 </RouterLink>
 
                 <Text color="black60" variant="xs">
-                  {bid?.sale?.profile?.bio}
+                  {bid.sale.profile?.bio ?? ""}
                 </Text>
 
                 <Text color="black60" variant="xs">
-                  Ended at: {bid?.sale?.endAt}
+                  Ended at: {bid.sale.endAt ?? ""}
                 </Text>
               </Flex>
             </Column>
-          ))}
-        </GridColumns>
-      ) : (
-        <Text mb={4} color="black60" variant="sm">
-          Nothing to Show
-        </Text>
-      )}
+          )
+        })}
+      </GridColumns>
     </>
   )
 }

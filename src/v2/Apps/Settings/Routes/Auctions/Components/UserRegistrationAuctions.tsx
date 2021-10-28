@@ -14,15 +14,23 @@ export const UserRegistrationAuctions: React.FC<UserRegistrationAuctionsProps> =
 }) => {
   const saleRegistrations = extractNodes(me?.saleRegistrationsConnection)
 
+  if (!saleRegistrations) {
+    return null
+  }
+
   return (
     <>
       <Text variant={["sm", "lg"]} mt={4} mb={[2, 4]}>
         Registration for Upcoming Auctions
       </Text>
 
-      {saleRegistrations.length ? (
-        <GridColumns mb={6}>
-          {saleRegistrations.map((sale, i) => (
+      <GridColumns mb={6}>
+        {saleRegistrations.map((sale, i) => {
+          if (!sale?.sale) {
+            return null
+          }
+
+          return (
             <Column
               key={i}
               span={8}
@@ -34,26 +42,27 @@ export const UserRegistrationAuctions: React.FC<UserRegistrationAuctionsProps> =
             >
               <Flex flexDirection="column">
                 <Text color="black80" variant="sm">
-                  {sale?.sale?.name}
+                  {sale.sale.name ?? ""}
                 </Text>
                 <Text color="black60" variant="sm">
-                  {sale?.sale?.startAt}
+                  {sale.sale.startAt ?? ""}
                 </Text>
               </Flex>
 
               <Flex>
-                <RouterLink to={sale?.sale?.href ?? ""} noUnderline>
-                  <Button size="medium">Register</Button>
-                </RouterLink>
+                <Button
+                  // @ts-ignore
+                  as={RouterLink}
+                  to={sale.sale.href ?? ""}
+                  size="medium"
+                >
+                  Register
+                </Button>
               </Flex>
             </Column>
-          ))}
-        </GridColumns>
-      ) : (
-        <Text mb={4} color="black60" variant="sm">
-          Nothing to Show
-        </Text>
-      )}
+          )
+        })}
+      </GridColumns>
     </>
   )
 }
