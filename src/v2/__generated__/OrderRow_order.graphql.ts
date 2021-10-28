@@ -177,10 +177,16 @@ return {
     },
     {
       "alias": null,
-      "args": null,
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "precision",
+          "value": 2
+        }
+      ],
       "kind": "ScalarField",
       "name": "buyerTotal",
-      "storageKey": null
+      "storageKey": "buyerTotal(precision:2)"
     },
     {
       "alias": null,
@@ -452,5 +458,5 @@ return {
   "type": "CommerceOrder"
 };
 })();
-(node as any).hash = 'e3a37c6bc7d17729054affe374a30407';
+(node as any).hash = 'cc3aab2af5f141b441387780908689c9';
 export default node;

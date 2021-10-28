@@ -48,6 +48,7 @@ export type Auction2App_me = {
             } | null;
         } | null;
     } | null> | null;
+    readonly " $fragmentRefs": FragmentRefs<"AuctionDetails_me">;
     readonly " $refType": "Auction2App_me";
 };
 export type Auction2App_me$data = Auction2App_me;
@@ -353,10 +354,15 @@ return {
         }
       ],
       "storageKey": null
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "AuctionDetails_me"
     }
   ],
   "type": "Me"
 };
 })();
-(node as any).hash = '028bbf1edafa9d3914fb37a2e9652bd0';
+(node as any).hash = '751f54cbe42e37407c5d7e980200e3fb';
 export default node;

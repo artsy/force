@@ -33,18 +33,8 @@ export const UploadPhotos: React.FC = () => {
     removeSubmission,
   } = useSubmission(id)
 
-  const handleSubmit = async (values: UploadPhotosFormModel) => {
+  const handleSubmit = async () => {
     if (submission) {
-      submission.uploadPhotosForm = {
-        photos: values.photos.map(photo => ({
-          ...photo,
-          file: undefined,
-          progress: undefined,
-        })),
-      }
-
-      saveSubmission(submission)
-
       // router.push({
       //   pathname: `/consign/submission2/${submissionId}/contact-information`,
       // })
@@ -69,6 +59,18 @@ export const UploadPhotos: React.FC = () => {
         }
       }
     }
+  }
+
+  const saveUpladPhotosForm = (photos: Photo[]) => {
+    submission!.uploadPhotosForm = {
+      photos: photos.map(photo => ({
+        ...photo,
+        file: undefined,
+        progress: undefined,
+      })),
+    }
+
+    saveSubmission(submission!)
   }
 
   return (
@@ -108,15 +110,23 @@ export const UploadPhotos: React.FC = () => {
             photo.removed = true
             photo.abortUploading?.()
 
-            setFieldValue(
-              "photos",
-              values.photos.filter(p => p.id !== photo.id)
-            )
+            const photosToSave = values.photos.filter(p => p.id !== photo.id)
+
+            setFieldValue("photos", photosToSave)
+            saveUpladPhotosForm(photosToSave.filter(p => p.s3Key))
+          }
+
+          const handlePhotoUploaded = () => {
+            saveUpladPhotosForm(values.photos.filter(p => p.s3Key))
           }
 
           return (
             <Form>
-              <UploadPhotosForm mt={4} maxTotalSize={30} />
+              <UploadPhotosForm
+                mt={4}
+                maxTotalSize={30}
+                onPhotoUploaded={handlePhotoUploaded}
+              />
 
               <Box mb={6}>
                 {values.photos.map(photo => (

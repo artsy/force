@@ -1,12 +1,4 @@
-import {
-  Box,
-  Flex,
-  HTML,
-  QuestionCircleIcon,
-  Spacer,
-  Text,
-  Tooltip,
-} from "@artsy/palette"
+import { Column, Flex, GridColumns, HTML, Spacer, Text } from "@artsy/palette"
 import { data as sd } from "sharify"
 import { createFragmentContainer, graphql } from "react-relay"
 import { AddToCalendar } from "./AddToCalendar"
@@ -15,14 +7,18 @@ import { useSystemContext } from "v2/System"
 import { formatIsoDateNoZoneOffset } from "v2/Components/AddToCalendar/helpers"
 import { ContextModule } from "@artsy/cohesion"
 import { AuctionDetails_sale } from "v2/__generated__/AuctionDetails_sale.graphql"
+import { AuctionDetails_me } from "v2/__generated__/AuctionDetails_me.graphql"
 import { useCurrentTime } from "v2/Utils/Hooks/useCurrentTime"
 import { useEventTiming } from "v2/Utils/Hooks/useEventTiming"
+import { AuctionInfoSidebarFragmentContainer } from "./AuctionInfoSidebar"
+import { RegisterButtonFragmentContainer } from "./RegisterButton"
 
 interface AuctionDetailsProps {
   sale: AuctionDetails_sale
+  me: AuctionDetails_me
 }
 
-const AuctionDetails: React.FC<AuctionDetailsProps> = ({ sale }) => {
+const AuctionDetails: React.FC<AuctionDetailsProps> = ({ sale, me }) => {
   const { user } = useSystemContext()
 
   const liveAuctionUrl = getLiveAuctionUrl(sale.slug, {
@@ -42,7 +38,14 @@ const AuctionDetails: React.FC<AuctionDetailsProps> = ({ sale }) => {
 
   return (
     <>
-      <Text variant="xl">{sale.name}</Text>
+      <GridColumns>
+        <Column span={9}>
+          <Text variant="xl">{sale.name}</Text>
+        </Column>
+        <Column span={3}>
+          <RegisterButtonFragmentContainer sale={sale} me={me} />
+        </Column>
+      </GridColumns>
 
       <Spacer my={4} />
 
@@ -64,36 +67,18 @@ const AuctionDetails: React.FC<AuctionDetailsProps> = ({ sale }) => {
             />
           )}
         </Flex>
-
-        {sale.liveStartAt && (
-          <Box>
-            <Text
-              variant="md"
-              display="flex"
-              alignItems="center"
-              lineHeight={1}
-            >
-              Live Auction <Spacer mr={0.5} />
-              <Tooltip
-                content="Participating in a live auction means you’ll be competing
-                  against bidders in real time on an auction room floor. You can
-                  place max bids which will be represented by Artsy in the
-                  auction room or you can bid live when the auction opens."
-                placement="bottom"
-              >
-                {/* Icons don't forwardRefs so we have to wrap in a span */}
-                <Box as="span" style={{ lineHeight: 0 }}>
-                  <QuestionCircleIcon width={25} height={25} />
-                </Box>
-              </Tooltip>
-            </Text>
-          </Box>
-        )}
       </Flex>
 
       <Spacer my={2} />
 
-      <HTML html={sale.description!} />
+      <GridColumns>
+        <Column span={9}>
+          <HTML html={sale.description!} />
+        </Column>
+        <Column span={3}>
+          <AuctionInfoSidebarFragmentContainer sale={sale} />
+        </Column>
+      </GridColumns>
     </>
   )
 }
@@ -103,6 +88,9 @@ export const AuctionDetailsFragmentContainer = createFragmentContainer(
   {
     sale: graphql`
       fragment AuctionDetails_sale on Sale {
+        ...RegisterButton_sale
+        ...AuctionInfoSidebar_sale
+
         name
         slug
         formattedStartDateTime
@@ -111,6 +99,11 @@ export const AuctionDetailsFragmentContainer = createFragmentContainer(
         endAt
         description(format: HTML)
         href
+      }
+    `,
+    me: graphql`
+      fragment AuctionDetails_me on Me {
+        ...RegisterButton_me
       }
     `,
   }
