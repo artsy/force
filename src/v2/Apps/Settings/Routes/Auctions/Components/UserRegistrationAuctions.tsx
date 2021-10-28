@@ -1,17 +1,18 @@
 import { Box, Button, Column, Flex, GridColumns, Text } from "@artsy/palette"
 import { RouterLink } from "v2/System/Router/RouterLink"
 import React from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 import { extractNodes } from "v2/Utils/extractNodes"
-import { SettingsAuctionsRoute_me } from "v2/__generated__/SettingsAuctionsRoute_me.graphql"
+import { UserRegistrationAuctions_me } from "v2/__generated__/UserRegistrationAuctions_me.graphql"
 
 interface UserRegistrationAuctionsProps {
-  saleRegistrationsConnection: SettingsAuctionsRoute_me["saleRegistrationsConnection"]
+  me: UserRegistrationAuctions_me
 }
 
 export const UserRegistrationAuctions: React.FC<UserRegistrationAuctionsProps> = ({
-  saleRegistrationsConnection,
+  me,
 }) => {
-  const saleRegistrations = extractNodes(saleRegistrationsConnection)
+  const saleRegistrations = extractNodes(me?.saleRegistrationsConnection)
 
   return (
     <Box mt={16} mb={16}>
@@ -56,3 +57,32 @@ export const UserRegistrationAuctions: React.FC<UserRegistrationAuctionsProps> =
     </Box>
   )
 }
+
+export const UserRegistrationAuctionsFragmentContainer = createFragmentContainer(
+  UserRegistrationAuctions,
+  {
+    me: graphql`
+      fragment UserRegistrationAuctions_me on Me {
+        saleRegistrationsConnection(
+          published: true
+          isAuction: true
+          sort: CREATED_AT_DESC
+          first: 10
+          registered: false
+        ) {
+          edges {
+            node {
+              sale {
+                id
+                name
+                href
+                startAt(format: "MMMM D, h:mmA")
+                isClosed
+              }
+            }
+          }
+        }
+      }
+    `,
+  }
+)

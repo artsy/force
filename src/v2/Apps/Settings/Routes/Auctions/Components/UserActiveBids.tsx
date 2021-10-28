@@ -12,15 +12,17 @@ import {
 } from "@artsy/palette"
 import React from "react"
 import { RouterLink } from "v2/System/Router/RouterLink"
-import { SettingsAuctionsRoute_me } from "v2/__generated__/SettingsAuctionsRoute_me.graphql"
+import { UserActiveBids_me } from "v2/__generated__/UserActiveBids_me.graphql"
+
+import { createFragmentContainer, graphql } from "react-relay"
 
 interface UserActiveBidsProps {
-  lotStandings: SettingsAuctionsRoute_me["lotStandings"]
+  me: UserActiveBids_me
 }
 
-export const UserActiveBids: React.FC<UserActiveBidsProps> = ({
-  lotStandings,
-}) => {
+export const UserActiveBids: React.FC<UserActiveBidsProps> = ({ me }) => {
+  const lotStandings = me.lotStandings
+
   return (
     <Box mt={16} mb={16} borderBottom="1px solid" borderColor="black10">
       <Text variant={["sm", "lg"]} mt={4} mb={[2, 4]}>
@@ -124,3 +126,41 @@ export const UserActiveBids: React.FC<UserActiveBidsProps> = ({
     </Box>
   )
 }
+
+export const UserActiveBidsFragmentContainer = createFragmentContainer(
+  UserActiveBids,
+  {
+    me: graphql`
+      fragment UserActiveBids_me on Me {
+        lotStandings {
+          isLeadingBidder
+          activeBid {
+            id
+          }
+          saleArtwork {
+            lotLabel
+            highestBid {
+              display
+            }
+            counts {
+              bidderPositions
+            }
+            artwork {
+              title
+              href
+              image {
+                cropped(height: 100, width: 100) {
+                  src
+                  srcSet
+                }
+              }
+              artist {
+                name
+              }
+            }
+          }
+        }
+      }
+    `,
+  }
+)

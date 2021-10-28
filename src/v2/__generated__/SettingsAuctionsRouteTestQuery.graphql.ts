@@ -25,7 +25,12 @@ query SettingsAuctionsRouteTestQuery {
 }
 
 fragment SettingsAuctionsRoute_me on Me {
-  name
+  ...UserActiveBids_me
+  ...UserBidHistory_me
+  ...UserRegistrationAuctions_me
+}
+
+fragment UserActiveBids_me on Me {
   lotStandings {
     isLeadingBidder
     activeBid {
@@ -57,6 +62,9 @@ fragment SettingsAuctionsRoute_me on Me {
       id
     }
   }
+}
+
+fragment UserBidHistory_me on Me {
   myBids {
     closed {
       sale {
@@ -71,6 +79,9 @@ fragment SettingsAuctionsRoute_me on Me {
       }
     }
   }
+}
+
+fragment UserRegistrationAuctions_me on Me {
   saleRegistrationsConnection(published: true, isAuction: true, sort: CREATED_AT_DESC, first: 10, registered: false) {
     edges {
       node {
@@ -93,21 +104,21 @@ var v0 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "name",
+  "name": "id",
   "storageKey": null
 },
 v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "id",
+  "name": "href",
   "storageKey": null
 },
 v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "href",
+  "name": "name",
   "storageKey": null
 },
 v3 = [
@@ -157,7 +168,6 @@ return {
         "name": "me",
         "plural": false,
         "selections": [
-          (v0/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -181,7 +191,7 @@ return {
                 "name": "activeBid",
                 "plural": false,
                 "selections": [
-                  (v1/*: any*/)
+                  (v0/*: any*/)
                 ],
                 "storageKey": null
               },
@@ -251,7 +261,7 @@ return {
                         "name": "title",
                         "storageKey": null
                       },
-                      (v2/*: any*/),
+                      (v1/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -307,16 +317,16 @@ return {
                         "name": "artist",
                         "plural": false,
                         "selections": [
-                          (v0/*: any*/),
-                          (v1/*: any*/)
+                          (v2/*: any*/),
+                          (v0/*: any*/)
                         ],
                         "storageKey": null
                       },
-                      (v1/*: any*/)
+                      (v0/*: any*/)
                     ],
                     "storageKey": null
                   },
-                  (v1/*: any*/)
+                  (v0/*: any*/)
                 ],
                 "storageKey": null
               }
@@ -347,8 +357,8 @@ return {
                     "name": "sale",
                     "plural": false,
                     "selections": [
-                      (v0/*: any*/),
                       (v2/*: any*/),
+                      (v1/*: any*/),
                       {
                         "alias": null,
                         "args": (v3/*: any*/),
@@ -371,11 +381,11 @@ return {
                             "name": "bio",
                             "storageKey": null
                           },
-                          (v1/*: any*/)
+                          (v0/*: any*/)
                         ],
                         "storageKey": null
                       },
-                      (v1/*: any*/)
+                      (v0/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -443,9 +453,9 @@ return {
                         "name": "sale",
                         "plural": false,
                         "selections": [
-                          (v1/*: any*/),
                           (v0/*: any*/),
                           (v2/*: any*/),
+                          (v1/*: any*/),
                           {
                             "alias": null,
                             "args": (v3/*: any*/),
@@ -463,7 +473,7 @@ return {
                         ],
                         "storageKey": null
                       },
-                      (v1/*: any*/)
+                      (v0/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -473,7 +483,7 @@ return {
             ],
             "storageKey": "saleRegistrationsConnection(first:10,isAuction:true,published:true,registered:false,sort:\"CREATED_AT_DESC\")"
           },
-          (v1/*: any*/)
+          (v0/*: any*/)
         ],
         "storageKey": null
       }
@@ -484,7 +494,7 @@ return {
     "metadata": {},
     "name": "SettingsAuctionsRouteTestQuery",
     "operationKind": "query",
-    "text": "query SettingsAuctionsRouteTestQuery {\n  me {\n    ...SettingsAuctionsRoute_me\n    id\n  }\n}\n\nfragment SettingsAuctionsRoute_me on Me {\n  name\n  lotStandings {\n    isLeadingBidder\n    activeBid {\n      id\n    }\n    saleArtwork {\n      lotLabel\n      highestBid {\n        display\n      }\n      counts {\n        bidderPositions\n      }\n      artwork {\n        title\n        href\n        image {\n          cropped(height: 100, width: 100) {\n            src\n            srcSet\n          }\n        }\n        artist {\n          name\n          id\n        }\n        id\n      }\n      id\n    }\n  }\n  myBids {\n    closed {\n      sale {\n        name\n        href\n        endAt(format: \"MMMM D, h:mmA\")\n        profile {\n          bio\n          id\n        }\n        id\n      }\n    }\n  }\n  saleRegistrationsConnection(published: true, isAuction: true, sort: CREATED_AT_DESC, first: 10, registered: false) {\n    edges {\n      node {\n        sale {\n          id\n          name\n          href\n          startAt(format: \"MMMM D, h:mmA\")\n          isClosed\n        }\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query SettingsAuctionsRouteTestQuery {\n  me {\n    ...SettingsAuctionsRoute_me\n    id\n  }\n}\n\nfragment SettingsAuctionsRoute_me on Me {\n  ...UserActiveBids_me\n  ...UserBidHistory_me\n  ...UserRegistrationAuctions_me\n}\n\nfragment UserActiveBids_me on Me {\n  lotStandings {\n    isLeadingBidder\n    activeBid {\n      id\n    }\n    saleArtwork {\n      lotLabel\n      highestBid {\n        display\n      }\n      counts {\n        bidderPositions\n      }\n      artwork {\n        title\n        href\n        image {\n          cropped(height: 100, width: 100) {\n            src\n            srcSet\n          }\n        }\n        artist {\n          name\n          id\n        }\n        id\n      }\n      id\n    }\n  }\n}\n\nfragment UserBidHistory_me on Me {\n  myBids {\n    closed {\n      sale {\n        name\n        href\n        endAt(format: \"MMMM D, h:mmA\")\n        profile {\n          bio\n          id\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment UserRegistrationAuctions_me on Me {\n  saleRegistrationsConnection(published: true, isAuction: true, sort: CREATED_AT_DESC, first: 10, registered: false) {\n    edges {\n      node {\n        sale {\n          id\n          name\n          href\n          startAt(format: \"MMMM D, h:mmA\")\n          isClosed\n        }\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();

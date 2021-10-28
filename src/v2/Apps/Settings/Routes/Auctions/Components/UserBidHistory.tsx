@@ -1,13 +1,16 @@
 import { Box, Column, Flex, GridColumns, Text } from "@artsy/palette"
 import React from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "v2/System/Router/RouterLink"
-import { SettingsAuctionsRoute_me } from "v2/__generated__/SettingsAuctionsRoute_me.graphql"
+import { UserBidHistory_me } from "v2/__generated__/UserBidHistory_me.graphql"
 
 interface UserBidHistoryProps {
-  myBids: SettingsAuctionsRoute_me["myBids"]
+  me: UserBidHistory_me
 }
 
-export const UserBidHistory: React.FC<UserBidHistoryProps> = ({ myBids }) => {
+export const UserBidHistory: React.FC<UserBidHistoryProps> = ({ me }) => {
+  const myBids = me?.myBids
+
   return (
     <Box mt={16} mb={16} borderBottom="1px solid" borderColor="black10">
       <Text variant={["sm", "lg"]} mt={4} mb={[2, 4]}>
@@ -55,3 +58,25 @@ export const UserBidHistory: React.FC<UserBidHistoryProps> = ({ myBids }) => {
     </Box>
   )
 }
+
+export const UserBidHistoryFragmentContainer = createFragmentContainer(
+  UserBidHistory,
+  {
+    me: graphql`
+      fragment UserBidHistory_me on Me {
+        myBids {
+          closed {
+            sale {
+              name
+              href
+              endAt(format: "MMMM D, h:mmA")
+              profile {
+                bio
+              }
+            }
+          }
+        }
+      }
+    `,
+  }
+)
