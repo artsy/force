@@ -19,7 +19,7 @@ export const useProductionEnvironmentWarning = () => {
         message: "You are running a production environment.",
         description: `API_URL: ${sd.API_URL}, METAPHYSICS_ENDPOINT: ${sd.METAPHYSICS_ENDPOINT}`,
         variant: "error",
-        ttl: 60000,
+        ttl: Infinity,
       })
 
       alreadyWarned.current = true
