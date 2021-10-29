@@ -25,6 +25,7 @@ describe("SearchResultsArtworks", () => {
         edges: [
           {
             node: {
+              internalID: "catty-artist",
               name: "Catty Artist",
               imageUrl: "",
               href: "/artist/catty-artist",
