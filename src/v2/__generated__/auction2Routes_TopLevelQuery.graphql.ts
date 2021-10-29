@@ -209,22 +209,22 @@ fragment RegisterButton_me on Me {
 }
 
 fragment RegisterButton_sale on Sale {
-  slug
+  bidder {
+    qualifiedForBidding
+    id
+  }
   isAuction
   isClosed
   isLiveOpen
-  liveURLIfOpen
   isRegistrationClosed
+  liveURLIfOpen
   requireIdentityVerification
   registrationStatus {
     internalID
     id
   }
+  slug
   status
-  bidder {
-    qualifiedForBidding
-    id
-  }
 }
 */
 
@@ -262,35 +262,10 @@ v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "isClosed",
-  "storageKey": null
-},
-v5 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "isLiveOpen",
-  "storageKey": null
-},
-v6 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "internalID",
-  "storageKey": null
-},
-v7 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v8 = [
-  (v6/*: any*/),
-  (v7/*: any*/)
-],
-v9 = [
+v5 = [
   {
     "alias": null,
     "args": null,
@@ -298,7 +273,32 @@ v9 = [
     "name": "qualifiedForBidding",
     "storageKey": null
   },
-  (v7/*: any*/)
+  (v4/*: any*/)
+],
+v6 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "isClosed",
+  "storageKey": null
+},
+v7 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "isLiveOpen",
+  "storageKey": null
+},
+v8 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+},
+v9 = [
+  (v8/*: any*/),
+  (v4/*: any*/)
 ],
 v10 = {
   "alias": null,
@@ -351,7 +351,7 @@ v16 = {
 },
 v17 = [
   (v2/*: any*/),
-  (v7/*: any*/)
+  (v4/*: any*/)
 ],
 v18 = {
   "kind": "Variable",
@@ -432,24 +432,34 @@ return {
           {
             "alias": null,
             "args": null,
-            "kind": "ScalarField",
-            "name": "isAuction",
+            "concreteType": "Bidder",
+            "kind": "LinkedField",
+            "name": "bidder",
+            "plural": false,
+            "selections": (v5/*: any*/),
             "storageKey": null
           },
-          (v4/*: any*/),
-          (v5/*: any*/),
           {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "liveURLIfOpen",
+            "name": "isAuction",
             "storageKey": null
           },
+          (v6/*: any*/),
+          (v7/*: any*/),
           {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
             "name": "isRegistrationClosed",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "liveURLIfOpen",
             "storageKey": null
           },
           {
@@ -466,7 +476,7 @@ return {
             "kind": "LinkedField",
             "name": "registrationStatus",
             "plural": false,
-            "selections": (v8/*: any*/),
+            "selections": (v9/*: any*/),
             "storageKey": null
           },
           {
@@ -474,16 +484,6 @@ return {
             "args": null,
             "kind": "ScalarField",
             "name": "status",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "concreteType": "Bidder",
-            "kind": "LinkedField",
-            "name": "bidder",
-            "plural": false,
-            "selections": (v9/*: any*/),
             "storageKey": null
           },
           (v10/*: any*/),
@@ -543,7 +543,7 @@ return {
             ],
             "storageKey": null
           },
-          (v6/*: any*/),
+          (v8/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -589,8 +589,8 @@ return {
               (v12/*: any*/),
               (v13/*: any*/),
               (v3/*: any*/),
-              (v4/*: any*/),
-              (v5/*: any*/),
+              (v6/*: any*/),
+              (v7/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -601,7 +601,7 @@ return {
               (v10/*: any*/),
               (v2/*: any*/),
               (v11/*: any*/),
-              (v7/*: any*/)
+              (v4/*: any*/)
             ],
             "storageKey": null
           },
@@ -728,7 +728,7 @@ return {
                                   (v3/*: any*/),
                                   (v13/*: any*/),
                                   (v2/*: any*/),
-                                  (v7/*: any*/)
+                                  (v4/*: any*/)
                                 ],
                                 "storageKey": null
                               },
@@ -750,11 +750,11 @@ return {
                                 "name": "isAcquireable",
                                 "storageKey": null
                               },
-                              (v7/*: any*/)
+                              (v4/*: any*/)
                             ],
                             "storageKey": null
                           },
-                          (v7/*: any*/)
+                          (v4/*: any*/)
                         ],
                         "storageKey": null
                       }
@@ -764,7 +764,7 @@ return {
                 ],
                 "storageKey": "saleArtworksConnection(first:25)"
               },
-              (v7/*: any*/)
+              (v4/*: any*/)
             ],
             "storageKey": null
           },
@@ -782,7 +782,7 @@ return {
             "name": "symbol",
             "storageKey": null
           },
-          (v7/*: any*/)
+          (v4/*: any*/)
         ],
         "storageKey": null
       },
@@ -808,10 +808,10 @@ return {
             "kind": "LinkedField",
             "name": "pendingIdentityVerification",
             "plural": false,
-            "selections": (v8/*: any*/),
+            "selections": (v9/*: any*/),
             "storageKey": null
           },
-          (v6/*: any*/),
+          (v8/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -828,7 +828,7 @@ return {
             "kind": "LinkedField",
             "name": "bidders",
             "plural": true,
-            "selections": (v9/*: any*/),
+            "selections": (v5/*: any*/),
             "storageKey": null
           },
           {
@@ -853,7 +853,7 @@ return {
                 "kind": "LinkedField",
                 "name": "activeBid",
                 "plural": false,
-                "selections": (v8/*: any*/),
+                "selections": (v9/*: any*/),
                 "storageKey": null
               },
               {
@@ -939,9 +939,9 @@ return {
                     "selections": [
                       (v10/*: any*/),
                       (v12/*: any*/),
-                      (v5/*: any*/),
-                      (v4/*: any*/),
-                      (v7/*: any*/)
+                      (v7/*: any*/),
+                      (v6/*: any*/),
+                      (v4/*: any*/)
                     ],
                     "storageKey": null
                   },
@@ -990,18 +990,18 @@ return {
                         "selections": (v17/*: any*/),
                         "storageKey": null
                       },
-                      (v7/*: any*/)
+                      (v4/*: any*/)
                     ],
                     "storageKey": null
                   },
-                  (v7/*: any*/)
+                  (v4/*: any*/)
                 ],
                 "storageKey": null
               }
             ],
             "storageKey": null
           },
-          (v7/*: any*/)
+          (v4/*: any*/)
         ],
         "storageKey": null
       }
@@ -1012,7 +1012,7 @@ return {
     "metadata": {},
     "name": "auction2Routes_TopLevelQuery",
     "operationKind": "query",
-    "text": "query auction2Routes_TopLevelQuery(\n  $slug: String!\n) {\n  sale(id: $slug) @principalField {\n    ...Auction2App_sale\n    id\n  }\n  me {\n    ...Auction2App_me\n    id\n  }\n}\n\nfragment Auction2App_me on Me {\n  ...AuctionDetails_me\n  internalID\n  hasCreditCards\n  identityVerified\n  pendingIdentityVerification {\n    internalID\n    id\n  }\n  bidders(saleID: $slug) {\n    qualifiedForBidding\n    id\n  }\n  lotStandings(saleID: $slug, live: true) {\n    activeBid {\n      internalID\n      id\n    }\n    isLeadingBidder\n    saleArtwork {\n      slug\n      lotLabel\n      reserveStatus\n      counts {\n        bidderPositions\n      }\n      saleID\n      highestBid {\n        display\n      }\n      sale {\n        liveStartAt\n        endAt\n        isLiveOpen\n        isClosed\n        id\n      }\n      artwork {\n        href\n        title\n        date\n        image {\n          url(version: \"square\")\n        }\n        artist {\n          name\n          id\n        }\n        id\n      }\n      id\n    }\n  }\n}\n\nfragment Auction2App_sale on Sale {\n  ...Auction2Meta_sale\n  ...AuctionDetails_sale\n  formattedStartDateTime\n  href\n  coverImage {\n    cropped(width: 1800, height: 600, version: \"wide\") {\n      src\n      url\n    }\n  }\n  internalID\n  slug\n  associatedSale {\n    coverImage {\n      cropped(width: 260, height: 110) {\n        url\n      }\n    }\n    endAt\n    href\n    slug\n    isClosed\n    isLiveOpen\n    isPreview\n    liveStartAt\n    name\n    startAt\n    id\n  }\n  status\n  currency\n  eligibleSaleArtworksCount\n  endAt\n  isAuction\n  isClosed\n  isLiveOpen\n  isOpen\n  liveStartAt\n  name\n  promotedSale {\n    slug\n    name\n    saleArtworksConnection(first: 25) {\n      edges {\n        node {\n          artwork {\n            slug\n            title\n            date\n            saleMessage\n            isInAuction\n            image {\n              placeholder\n              url\n              aspectRatio\n            }\n            artists {\n              slug\n              href\n              name\n              id\n            }\n            partner {\n              name\n              id\n            }\n            href\n            isAcquireable\n            id\n          }\n          id\n        }\n      }\n    }\n    id\n  }\n  registrationEndsAt\n  requireIdentityVerification\n  startAt\n  symbol\n}\n\nfragment Auction2Meta_sale on Sale {\n  name\n  description(format: HTML)\n  slug\n}\n\nfragment AuctionDetails_me on Me {\n  ...RegisterButton_me\n}\n\nfragment AuctionDetails_sale on Sale {\n  ...RegisterButton_sale\n  ...AuctionInfoSidebar_sale\n  name\n  slug\n  formattedStartDateTime\n  liveStartAt\n  startAt\n  endAt\n  description(format: HTML)\n  href\n}\n\nfragment AuctionInfoSidebar_sale on Sale {\n  liveStartAt\n}\n\nfragment RegisterButton_me on Me {\n  identityVerified\n  pendingIdentityVerification {\n    internalID\n    id\n  }\n}\n\nfragment RegisterButton_sale on Sale {\n  slug\n  isAuction\n  isClosed\n  isLiveOpen\n  liveURLIfOpen\n  isRegistrationClosed\n  requireIdentityVerification\n  registrationStatus {\n    internalID\n    id\n  }\n  status\n  bidder {\n    qualifiedForBidding\n    id\n  }\n}\n"
+    "text": "query auction2Routes_TopLevelQuery(\n  $slug: String!\n) {\n  sale(id: $slug) @principalField {\n    ...Auction2App_sale\n    id\n  }\n  me {\n    ...Auction2App_me\n    id\n  }\n}\n\nfragment Auction2App_me on Me {\n  ...AuctionDetails_me\n  internalID\n  hasCreditCards\n  identityVerified\n  pendingIdentityVerification {\n    internalID\n    id\n  }\n  bidders(saleID: $slug) {\n    qualifiedForBidding\n    id\n  }\n  lotStandings(saleID: $slug, live: true) {\n    activeBid {\n      internalID\n      id\n    }\n    isLeadingBidder\n    saleArtwork {\n      slug\n      lotLabel\n      reserveStatus\n      counts {\n        bidderPositions\n      }\n      saleID\n      highestBid {\n        display\n      }\n      sale {\n        liveStartAt\n        endAt\n        isLiveOpen\n        isClosed\n        id\n      }\n      artwork {\n        href\n        title\n        date\n        image {\n          url(version: \"square\")\n        }\n        artist {\n          name\n          id\n        }\n        id\n      }\n      id\n    }\n  }\n}\n\nfragment Auction2App_sale on Sale {\n  ...Auction2Meta_sale\n  ...AuctionDetails_sale\n  formattedStartDateTime\n  href\n  coverImage {\n    cropped(width: 1800, height: 600, version: \"wide\") {\n      src\n      url\n    }\n  }\n  internalID\n  slug\n  associatedSale {\n    coverImage {\n      cropped(width: 260, height: 110) {\n        url\n      }\n    }\n    endAt\n    href\n    slug\n    isClosed\n    isLiveOpen\n    isPreview\n    liveStartAt\n    name\n    startAt\n    id\n  }\n  status\n  currency\n  eligibleSaleArtworksCount\n  endAt\n  isAuction\n  isClosed\n  isLiveOpen\n  isOpen\n  liveStartAt\n  name\n  promotedSale {\n    slug\n    name\n    saleArtworksConnection(first: 25) {\n      edges {\n        node {\n          artwork {\n            slug\n            title\n            date\n            saleMessage\n            isInAuction\n            image {\n              placeholder\n              url\n              aspectRatio\n            }\n            artists {\n              slug\n              href\n              name\n              id\n            }\n            partner {\n              name\n              id\n            }\n            href\n            isAcquireable\n            id\n          }\n          id\n        }\n      }\n    }\n    id\n  }\n  registrationEndsAt\n  requireIdentityVerification\n  startAt\n  symbol\n}\n\nfragment Auction2Meta_sale on Sale {\n  name\n  description(format: HTML)\n  slug\n}\n\nfragment AuctionDetails_me on Me {\n  ...RegisterButton_me\n}\n\nfragment AuctionDetails_sale on Sale {\n  ...RegisterButton_sale\n  ...AuctionInfoSidebar_sale\n  name\n  slug\n  formattedStartDateTime\n  liveStartAt\n  startAt\n  endAt\n  description(format: HTML)\n  href\n}\n\nfragment AuctionInfoSidebar_sale on Sale {\n  liveStartAt\n}\n\nfragment RegisterButton_me on Me {\n  identityVerified\n  pendingIdentityVerification {\n    internalID\n    id\n  }\n}\n\nfragment RegisterButton_sale on Sale {\n  bidder {\n    qualifiedForBidding\n    id\n  }\n  isAuction\n  isClosed\n  isLiveOpen\n  isRegistrationClosed\n  liveURLIfOpen\n  requireIdentityVerification\n  registrationStatus {\n    internalID\n    id\n  }\n  slug\n  status\n}\n"
   }
 };
 })();
