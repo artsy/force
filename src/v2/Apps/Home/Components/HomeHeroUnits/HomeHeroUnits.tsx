@@ -1,9 +1,6 @@
-import * as React from "react";
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { HomeHeroUnitsLarge } from "./HomeHeroUnitsLarge"
-import { HomeHeroUnitsSmall } from "./HomeHeroUnitsSmall"
 import { HomeHeroUnits_homePage } from "v2/__generated__/HomeHeroUnits_homePage.graphql"
-import { Media } from "v2/Utils/Responsive"
 import { useSystemContext } from "v2/System"
 import {
   HomeHeroUnit,
@@ -12,6 +9,7 @@ import {
   StaticHeroUnit,
 } from "./HomeHeroUnit"
 import { compact } from "lodash"
+import { HeroCarousel } from "v2/Components/HeroCarousel/HeroCarousel"
 
 interface HomeHeroUnitsProps {
   homePage: HomeHeroUnits_homePage
@@ -25,40 +23,32 @@ const HomeHeroUnits: React.FC<HomeHeroUnitsProps> = ({ homePage }) => {
     ...compact(homePage.heroUnits),
   ]
 
-  const rendered = heroUnits.map((heroUnit, i) => {
-    // If logged out, the first hero unit is static and
-    // needs to be rendered without the fragment container
-    if (!isLoggedIn && i === 0) {
-      return (
-        <HomeHeroUnit
-          key={i}
-          index={i}
-          heroUnit={heroUnit as StaticHeroUnit}
-          layout={i % 2 === 0 ? "b" : "a"}
-        />
-      )
-    }
-
-    return (
-      <HomeHeroUnitFragmentContainer
-        key={i}
-        index={i}
-        heroUnit={heroUnit}
-        layout={i % 2 === 0 ? "b" : "a"}
-      />
-    )
-  })
-
   return (
-    <>
-      <Media at="xs">
-        <HomeHeroUnitsSmall>{rendered}</HomeHeroUnitsSmall>
-      </Media>
+    <HeroCarousel>
+      {heroUnits.map((heroUnit, i) => {
+        // If logged out, the first hero unit is static and
+        // needs to be rendered without the fragment container
+        if (!isLoggedIn && i === 0) {
+          return (
+            <HomeHeroUnit
+              key={i}
+              index={i}
+              heroUnit={heroUnit as StaticHeroUnit}
+              layout={i % 2 === 0 ? "b" : "a"}
+            />
+          )
+        }
 
-      <Media greaterThan="xs">
-        <HomeHeroUnitsLarge>{rendered}</HomeHeroUnitsLarge>
-      </Media>
-    </>
+        return (
+          <HomeHeroUnitFragmentContainer
+            key={i}
+            index={i}
+            heroUnit={heroUnit}
+            layout={i % 2 === 0 ? "b" : "a"}
+          />
+        )
+      })}
+    </HeroCarousel>
   )
 }
 
