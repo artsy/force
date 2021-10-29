@@ -17,7 +17,7 @@ import * as Schema from "v2/System/Analytics/Schema"
 import { useTracking } from "v2/System/Analytics/useTracking"
 import { FormikHelpers as FormikActions } from "formik"
 import { isEmpty } from "lodash"
-import * as React from "react";
+import * as React from "react"
 import { Title } from "react-head"
 import {
   RelayProp,
@@ -163,9 +163,7 @@ export const ConfirmBidRoute: React.FC<
     })
   }
 
-  function trackConfirmBidSuccess(
-    positionId: string
-  ) {
+  function trackConfirmBidSuccess(positionId: string) {
     trackEvent({
       action_type: Schema.ActionType.ConfirmBidSubmitted,
       bidder_id: bidderId,
@@ -207,7 +205,6 @@ export const ConfirmBidRoute: React.FC<
         )
 
         if (error) {
-          // @ts-expect-error STRICT_NULL_CHECK
           setFieldError("creditCard", error.message)
           setSubmitting(false)
           return
