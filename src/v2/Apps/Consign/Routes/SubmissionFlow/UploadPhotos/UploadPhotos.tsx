@@ -35,8 +35,9 @@ export const UploadPhotos: React.FC = () => {
 
   const handleSubmit = async () => {
     if (submission) {
+      // TODO: SWA-78
       // router.push({
-      //   pathname: `/consign/submission2/${submissionId}/contact-information`,
+      //   pathname: `/consign/submission/${submissionId}/contact-information`,
       // })
 
       if (!isLoggedIn && mediator) {
@@ -44,7 +45,7 @@ export const UploadPhotos: React.FC = () => {
           mode: ModalType.signup,
           intent: Intent.consign,
           contextModule: ContextModule.consignSubmissionFlow,
-          redirectTo: `/consign/submission2/${submissionId}/thank-you`,
+          redirectTo: `/consign/submission/${submissionId}/thank-you`,
           afterSignUpAction: {
             action: "save",
             kind: "submissions",
@@ -55,7 +56,7 @@ export const UploadPhotos: React.FC = () => {
         if (relayEnvironment && submission) {
           await createConsignSubmission(relayEnvironment, submission, user)
           removeSubmission()
-          router.push(`/consign/submission2/${submissionId}/thank-you`)
+          router.push(`/consign/submission/${submissionId}/thank-you`)
         }
       }
     }
@@ -78,7 +79,7 @@ export const UploadPhotos: React.FC = () => {
       <BackLink
         py={2}
         mb={6}
-        to={`/consign/submission2/${submissionId}/artwork-details`}
+        to={`/consign/submission/${submissionId}/artwork-details`}
       >
         Back
       </BackLink>
@@ -145,6 +146,7 @@ export const UploadPhotos: React.FC = () => {
                 loading={isSubmitting || values.photos.some(c => !c.s3Key)}
                 type="submit"
               >
+                {/* TODO: SWA-78 */}
                 {/* Save and Continue */}
                 Submit Artwork
               </Button>

@@ -82,12 +82,12 @@ export const consignRoutes: AppRouteConfig[] = [
     },
   },
   {
-    path: "/consign/submission2",
+    path: "/consign/submission",
     getComponent: () => SubmissionLayout,
     children: [
       new Redirect({
         from: "/",
-        to: "/consign/submission2/artwork-details",
+        to: "/consign/submission/artwork-details",
       }) as any,
       {
         path: "artwork-details",

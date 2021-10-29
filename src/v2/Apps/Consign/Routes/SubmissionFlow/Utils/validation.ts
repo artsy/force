@@ -33,14 +33,14 @@ export const artworkDetailsValidationSchema = yup.object().shape({
     is: "limited edition",
     then: yup.string().required().trim(),
   }),
-  height: yup.number().positive().required(),
-  width: yup.number().positive().required(),
+  height: yup.string().required().trim(),
+  width: yup.string().required().trim(),
   depth: yup
-    .number()
-    .positive()
+    .string()
     .transform((value, originalValue) =>
       String(originalValue).trim() === "" ? undefined : value
-    ),
+    )
+    .trim(),
   units: yup.string().required(),
 })
 
