@@ -51,6 +51,8 @@ describe("InstitutionsRoute", () => {
   })
 
   it("renders the page", () => {
-    expect(screen.getByText("Browse Institutions")).toBeInTheDocument()
+    expect(
+      screen.getByText("Interested in Listing Your Museum on Artsy?")
+    ).toBeInTheDocument()
   })
 })

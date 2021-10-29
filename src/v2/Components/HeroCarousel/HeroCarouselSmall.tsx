@@ -23,7 +23,6 @@ export const HeroCarouselSmall: FC = ({ children }) => {
   return (
     <>
       <Swiper
-        bg="black5"
         borderRadius={3}
         snap="center"
         Cell={Cell}

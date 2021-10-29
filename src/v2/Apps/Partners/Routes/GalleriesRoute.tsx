@@ -14,6 +14,7 @@ import { MetaTags } from "v2/Components/MetaTags"
 import { GalleriesRoute_viewer } from "v2/__generated__/GalleriesRoute_viewer.graphql"
 import { PartnersRailFragmentContainer } from "v2/Apps/Partners/Components/PartnersRail"
 import { PartnersFilters } from "../Components/PartnersFilters"
+import { PartnersFeaturedCarouselFragmentContainer } from "../Components/PartnersFeaturedCarousel"
 
 interface GalleriesRouteProps {
   viewer: GalleriesRoute_viewer
@@ -32,9 +33,7 @@ const GalleriesRoute: React.FC<GalleriesRouteProps> = ({ viewer }) => {
       />
 
       <Join separator={<Spacer mt={4} />}>
-        <Text variant="xl" mt={4}>
-          Browse Galleries
-        </Text>
+        <PartnersFeaturedCarouselFragmentContainer viewer={viewer} />
 
         <PartnersFilters type="GALLERY" />
 
@@ -90,6 +89,8 @@ export const GalleriesRouteFragmentContainer = createFragmentContainer(
   {
     viewer: graphql`
       fragment GalleriesRoute_viewer on Viewer {
+        ...PartnersFeaturedCarousel_viewer
+          @arguments(id: "5638fdfb7261690296000031")
         partnerCategories(categoryType: GALLERY, size: 50, internal: false) {
           name
           slug

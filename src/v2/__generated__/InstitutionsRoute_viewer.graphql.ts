@@ -9,6 +9,7 @@ export type InstitutionsRoute_viewer = {
         readonly slug: string;
         readonly " $fragmentRefs": FragmentRefs<"PartnersRail_partnerCategory">;
     } | null> | null;
+    readonly " $fragmentRefs": FragmentRefs<"PartnersFeaturedCarousel_viewer">;
     readonly " $refType": "InstitutionsRoute_viewer";
 };
 export type InstitutionsRoute_viewer$data = InstitutionsRoute_viewer;
@@ -76,9 +77,20 @@ const node: ReaderFragment = {
         }
       ],
       "storageKey": "partnerCategories(categoryType:\"INSTITUTION\",internal:false,size:50)"
+    },
+    {
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "id",
+          "value": "564e181a258faf3d5c000080"
+        }
+      ],
+      "kind": "FragmentSpread",
+      "name": "PartnersFeaturedCarousel_viewer"
     }
   ],
   "type": "Viewer"
 };
-(node as any).hash = 'f6c5793e52e4ab9945be3a6669d1102a';
+(node as any).hash = '4bbf1101a55a168cb787473f66e0d5d8';
 export default node;

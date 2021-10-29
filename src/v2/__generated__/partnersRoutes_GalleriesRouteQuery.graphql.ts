@@ -32,6 +32,7 @@ fragment FollowProfileButton_profile on Profile {
 }
 
 fragment GalleriesRoute_viewer on Viewer {
+  ...PartnersFeaturedCarousel_viewer_4uWBz4
   partnerCategories(categoryType: GALLERY, size: 50, internal: false) {
     name
     slug
@@ -67,6 +68,62 @@ fragment PartnerCell_partner on Partner {
   }
 }
 
+fragment PartnersFeaturedCarouselCell_profile on Profile {
+  ...FollowProfileButton_profile
+  owner {
+    __typename
+    ... on Partner {
+      internalID
+      name
+      featuredShow {
+        name
+        status
+        statusUpdate
+        startAt(format: "MMM D")
+        endAt(format: "MMM D")
+        isOnlineExclusive
+        location {
+          city
+          id
+        }
+        coverImage {
+          resized(height: 500, version: ["normalized", "larger", "large"]) {
+            src
+            srcSet
+          }
+        }
+        id
+      }
+    }
+    ... on Node {
+      id
+    }
+    ... on FairOrganizer {
+      id
+    }
+  }
+}
+
+fragment PartnersFeaturedCarousel_viewer_4uWBz4 on Viewer {
+  orderedSet(id: "5638fdfb7261690296000031") {
+    items {
+      __typename
+      ... on Profile {
+        internalID
+        ...PartnersFeaturedCarouselCell_profile
+        id
+      }
+      ... on Node {
+        id
+      }
+      ... on FeaturedLink {
+        id
+      }
+    }
+    id
+  }
+}
+
 fragment PartnersRail_partnerCategory_uMgyM on PartnerCategory {
   name
   primary: partners(eligibleForListing: true, eligibleForPrimaryBucket: true, type: GALLERY, sort: RANDOM_SCORE_DESC, defaultProfilePublic: true) {
@@ -87,54 +144,101 @@ var v0 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "name",
+  "name": "__typename",
   "storageKey": null
 },
 v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "slug",
+  "name": "id",
   "storageKey": null
 },
 v2 = {
-  "kind": "Literal",
-  "name": "defaultProfilePublic",
-  "value": true
-},
-v3 = {
-  "kind": "Literal",
-  "name": "eligibleForListing",
-  "value": true
-},
-v4 = {
-  "kind": "Literal",
-  "name": "sort",
-  "value": "RANDOM_SCORE_DESC"
-},
-v5 = {
-  "kind": "Literal",
-  "name": "type",
-  "value": "GALLERY"
-},
-v6 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "internalID",
   "storageKey": null
 },
-v7 = {
+v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "id",
+  "name": "slug",
   "storageKey": null
 },
+v4 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "name",
+  "storageKey": null
+},
+v5 = {
+  "alias": "is_followed",
+  "args": null,
+  "kind": "ScalarField",
+  "name": "isFollowed",
+  "storageKey": null
+},
+v6 = [
+  {
+    "kind": "Literal",
+    "name": "format",
+    "value": "MMM D"
+  }
+],
+v7 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "city",
+    "storageKey": null
+  },
+  (v1/*: any*/)
+],
 v8 = [
-  (v6/*: any*/),
-  (v1/*: any*/),
-  (v0/*: any*/),
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "src",
+    "storageKey": null
+  },
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "srcSet",
+    "storageKey": null
+  }
+],
+v9 = {
+  "kind": "Literal",
+  "name": "defaultProfilePublic",
+  "value": true
+},
+v10 = {
+  "kind": "Literal",
+  "name": "eligibleForListing",
+  "value": true
+},
+v11 = {
+  "kind": "Literal",
+  "name": "sort",
+  "value": "RANDOM_SCORE_DESC"
+},
+v12 = {
+  "kind": "Literal",
+  "name": "type",
+  "value": "GALLERY"
+},
+v13 = [
+  (v2/*: any*/),
+  (v3/*: any*/),
+  (v4/*: any*/),
   {
     "alias": null,
     "args": null,
@@ -178,16 +282,7 @@ v8 = [
             "kind": "LinkedField",
             "name": "node",
             "plural": false,
-            "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "city",
-                "storageKey": null
-              },
-              (v7/*: any*/)
-            ],
+            "selections": (v7/*: any*/),
             "storageKey": null
           }
         ],
@@ -204,17 +299,11 @@ v8 = [
     "name": "profile",
     "plural": false,
     "selections": [
-      (v7/*: any*/),
       (v1/*: any*/),
-      (v0/*: any*/),
-      (v6/*: any*/),
-      {
-        "alias": "is_followed",
-        "args": null,
-        "kind": "ScalarField",
-        "name": "isFollowed",
-        "storageKey": null
-      },
+      (v3/*: any*/),
+      (v4/*: any*/),
+      (v2/*: any*/),
+      (v5/*: any*/),
       {
         "alias": null,
         "args": null,
@@ -258,22 +347,7 @@ v8 = [
             "kind": "LinkedField",
             "name": "cropped",
             "plural": false,
-            "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "src",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "srcSet",
-                "storageKey": null
-              }
-            ],
+            "selections": (v8/*: any*/),
             "storageKey": "cropped(height:244,version:[\"wide\",\"large\",\"featured\",\"larger\"],width:325)"
           }
         ],
@@ -282,7 +356,7 @@ v8 = [
     ],
     "storageKey": null
   },
-  (v7/*: any*/)
+  (v1/*: any*/)
 ];
 return {
   "fragment": {
@@ -329,6 +403,162 @@ return {
             "args": [
               {
                 "kind": "Literal",
+                "name": "id",
+                "value": "5638fdfb7261690296000031"
+              }
+            ],
+            "concreteType": "OrderedSet",
+            "kind": "LinkedField",
+            "name": "orderedSet",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": null,
+                "kind": "LinkedField",
+                "name": "items",
+                "plural": true,
+                "selections": [
+                  (v0/*: any*/),
+                  (v1/*: any*/),
+                  {
+                    "kind": "InlineFragment",
+                    "selections": [
+                      (v2/*: any*/),
+                      (v3/*: any*/),
+                      (v4/*: any*/),
+                      (v5/*: any*/),
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": null,
+                        "kind": "LinkedField",
+                        "name": "owner",
+                        "plural": false,
+                        "selections": [
+                          (v0/*: any*/),
+                          (v1/*: any*/),
+                          {
+                            "kind": "InlineFragment",
+                            "selections": [
+                              (v2/*: any*/),
+                              (v4/*: any*/),
+                              {
+                                "alias": null,
+                                "args": null,
+                                "concreteType": "Show",
+                                "kind": "LinkedField",
+                                "name": "featuredShow",
+                                "plural": false,
+                                "selections": [
+                                  (v4/*: any*/),
+                                  {
+                                    "alias": null,
+                                    "args": null,
+                                    "kind": "ScalarField",
+                                    "name": "status",
+                                    "storageKey": null
+                                  },
+                                  {
+                                    "alias": null,
+                                    "args": null,
+                                    "kind": "ScalarField",
+                                    "name": "statusUpdate",
+                                    "storageKey": null
+                                  },
+                                  {
+                                    "alias": null,
+                                    "args": (v6/*: any*/),
+                                    "kind": "ScalarField",
+                                    "name": "startAt",
+                                    "storageKey": "startAt(format:\"MMM D\")"
+                                  },
+                                  {
+                                    "alias": null,
+                                    "args": (v6/*: any*/),
+                                    "kind": "ScalarField",
+                                    "name": "endAt",
+                                    "storageKey": "endAt(format:\"MMM D\")"
+                                  },
+                                  {
+                                    "alias": null,
+                                    "args": null,
+                                    "kind": "ScalarField",
+                                    "name": "isOnlineExclusive",
+                                    "storageKey": null
+                                  },
+                                  {
+                                    "alias": null,
+                                    "args": null,
+                                    "concreteType": "Location",
+                                    "kind": "LinkedField",
+                                    "name": "location",
+                                    "plural": false,
+                                    "selections": (v7/*: any*/),
+                                    "storageKey": null
+                                  },
+                                  {
+                                    "alias": null,
+                                    "args": null,
+                                    "concreteType": "Image",
+                                    "kind": "LinkedField",
+                                    "name": "coverImage",
+                                    "plural": false,
+                                    "selections": [
+                                      {
+                                        "alias": null,
+                                        "args": [
+                                          {
+                                            "kind": "Literal",
+                                            "name": "height",
+                                            "value": 500
+                                          },
+                                          {
+                                            "kind": "Literal",
+                                            "name": "version",
+                                            "value": [
+                                              "normalized",
+                                              "larger",
+                                              "large"
+                                            ]
+                                          }
+                                        ],
+                                        "concreteType": "ResizedImageUrl",
+                                        "kind": "LinkedField",
+                                        "name": "resized",
+                                        "plural": false,
+                                        "selections": (v8/*: any*/),
+                                        "storageKey": "resized(height:500,version:[\"normalized\",\"larger\",\"large\"])"
+                                      }
+                                    ],
+                                    "storageKey": null
+                                  },
+                                  (v1/*: any*/)
+                                ],
+                                "storageKey": null
+                              }
+                            ],
+                            "type": "Partner"
+                          }
+                        ],
+                        "storageKey": null
+                      }
+                    ],
+                    "type": "Profile"
+                  }
+                ],
+                "storageKey": null
+              },
+              (v1/*: any*/)
+            ],
+            "storageKey": "orderedSet(id:\"5638fdfb7261690296000031\")"
+          },
+          {
+            "alias": null,
+            "args": [
+              {
+                "kind": "Literal",
                 "name": "categoryType",
                 "value": "GALLERY"
               },
@@ -348,49 +578,49 @@ return {
             "name": "partnerCategories",
             "plural": true,
             "selections": [
-              (v0/*: any*/),
-              (v1/*: any*/),
+              (v4/*: any*/),
+              (v3/*: any*/),
               {
                 "alias": "primary",
                 "args": [
-                  (v2/*: any*/),
-                  (v3/*: any*/),
+                  (v9/*: any*/),
+                  (v10/*: any*/),
                   {
                     "kind": "Literal",
                     "name": "eligibleForPrimaryBucket",
                     "value": true
                   },
-                  (v4/*: any*/),
-                  (v5/*: any*/)
+                  (v11/*: any*/),
+                  (v12/*: any*/)
                 ],
                 "concreteType": "Partner",
                 "kind": "LinkedField",
                 "name": "partners",
                 "plural": true,
-                "selections": (v8/*: any*/),
+                "selections": (v13/*: any*/),
                 "storageKey": "partners(defaultProfilePublic:true,eligibleForListing:true,eligibleForPrimaryBucket:true,sort:\"RANDOM_SCORE_DESC\",type:\"GALLERY\")"
               },
               {
                 "alias": "secondary",
                 "args": [
-                  (v2/*: any*/),
-                  (v3/*: any*/),
+                  (v9/*: any*/),
+                  (v10/*: any*/),
                   {
                     "kind": "Literal",
                     "name": "eligibleForSecondaryBucket",
                     "value": true
                   },
-                  (v4/*: any*/),
-                  (v5/*: any*/)
+                  (v11/*: any*/),
+                  (v12/*: any*/)
                 ],
                 "concreteType": "Partner",
                 "kind": "LinkedField",
                 "name": "partners",
                 "plural": true,
-                "selections": (v8/*: any*/),
+                "selections": (v13/*: any*/),
                 "storageKey": "partners(defaultProfilePublic:true,eligibleForListing:true,eligibleForSecondaryBucket:true,sort:\"RANDOM_SCORE_DESC\",type:\"GALLERY\")"
               },
-              (v7/*: any*/)
+              (v1/*: any*/)
             ],
             "storageKey": "partnerCategories(categoryType:\"GALLERY\",internal:false,size:50)"
           }
@@ -404,7 +634,7 @@ return {
     "metadata": {},
     "name": "partnersRoutes_GalleriesRouteQuery",
     "operationKind": "query",
-    "text": "query partnersRoutes_GalleriesRouteQuery {\n  viewer {\n    ...GalleriesRoute_viewer\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  is_followed: isFollowed\n}\n\nfragment GalleriesRoute_viewer on Viewer {\n  partnerCategories(categoryType: GALLERY, size: 50, internal: false) {\n    name\n    slug\n    ...PartnersRail_partnerCategory_uMgyM\n    id\n  }\n}\n\nfragment PartnerCell_partner on Partner {\n  internalID\n  slug\n  name\n  href\n  initials\n  locationsConnection(first: 15) {\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n  profile {\n    ...FollowProfileButton_profile\n    isFollowed\n    image {\n      cropped(width: 325, height: 244, version: [\"wide\", \"large\", \"featured\", \"larger\"]) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment PartnersRail_partnerCategory_uMgyM on PartnerCategory {\n  name\n  primary: partners(eligibleForListing: true, eligibleForPrimaryBucket: true, type: GALLERY, sort: RANDOM_SCORE_DESC, defaultProfilePublic: true) {\n    internalID\n    ...PartnerCell_partner\n    id\n  }\n  secondary: partners(eligibleForListing: true, eligibleForSecondaryBucket: true, type: GALLERY, sort: RANDOM_SCORE_DESC, defaultProfilePublic: true) {\n    internalID\n    ...PartnerCell_partner\n    id\n  }\n}\n"
+    "text": "query partnersRoutes_GalleriesRouteQuery {\n  viewer {\n    ...GalleriesRoute_viewer\n  }\n}\n\nfragment FollowProfileButton_profile on Profile {\n  id\n  slug\n  name\n  internalID\n  is_followed: isFollowed\n}\n\nfragment GalleriesRoute_viewer on Viewer {\n  ...PartnersFeaturedCarousel_viewer_4uWBz4\n  partnerCategories(categoryType: GALLERY, size: 50, internal: false) {\n    name\n    slug\n    ...PartnersRail_partnerCategory_uMgyM\n    id\n  }\n}\n\nfragment PartnerCell_partner on Partner {\n  internalID\n  slug\n  name\n  href\n  initials\n  locationsConnection(first: 15) {\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n  profile {\n    ...FollowProfileButton_profile\n    isFollowed\n    image {\n      cropped(width: 325, height: 244, version: [\"wide\", \"large\", \"featured\", \"larger\"]) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment PartnersFeaturedCarouselCell_profile on Profile {\n  ...FollowProfileButton_profile\n  owner {\n    __typename\n    ... on Partner {\n      internalID\n      name\n      featuredShow {\n        name\n        status\n        statusUpdate\n        startAt(format: \"MMM D\")\n        endAt(format: \"MMM D\")\n        isOnlineExclusive\n        location {\n          city\n          id\n        }\n        coverImage {\n          resized(height: 500, version: [\"normalized\", \"larger\", \"large\"]) {\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n    ... on Node {\n      id\n    }\n    ... on FairOrganizer {\n      id\n    }\n  }\n}\n\nfragment PartnersFeaturedCarousel_viewer_4uWBz4 on Viewer {\n  orderedSet(id: \"5638fdfb7261690296000031\") {\n    items {\n      __typename\n      ... on Profile {\n        internalID\n        ...PartnersFeaturedCarouselCell_profile\n        id\n      }\n      ... on Node {\n        id\n      }\n      ... on FeaturedLink {\n        id\n      }\n    }\n    id\n  }\n}\n\nfragment PartnersRail_partnerCategory_uMgyM on PartnerCategory {\n  name\n  primary: partners(eligibleForListing: true, eligibleForPrimaryBucket: true, type: GALLERY, sort: RANDOM_SCORE_DESC, defaultProfilePublic: true) {\n    internalID\n    ...PartnerCell_partner\n    id\n  }\n  secondary: partners(eligibleForListing: true, eligibleForSecondaryBucket: true, type: GALLERY, sort: RANDOM_SCORE_DESC, defaultProfilePublic: true) {\n    internalID\n    ...PartnerCell_partner\n    id\n  }\n}\n"
   }
 };
 })();

@@ -51,6 +51,9 @@ describe("GalleriesRoute", () => {
   })
 
   it("renders the page", () => {
-    expect(screen.getByText("Browse Galleries")).toBeInTheDocument()
+    //
+    expect(
+      screen.getByText("Interested in Listing Your Gallery on Artsy?")
+    ).toBeInTheDocument()
   })
 })
