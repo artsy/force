@@ -30,9 +30,9 @@ const searchResults: SearchBarTestQueryRawResponse["viewer"] = {
           displayLabel: "Banksy",
           href: "/artist/banksy",
           __typename: "Artist",
-          counts: {
-            artworks: 3390,
-            auctionResults: 734,
+          statuses: {
+            artworks: true,
+            auctionLots: true,
           },
           id: "opaque-searchable-item-id2",
         },
@@ -42,9 +42,9 @@ const searchResults: SearchBarTestQueryRawResponse["viewer"] = {
           displayLabel: "Not Banksy",
           href: "/artist/not-banksy",
           __typename: "Artist",
-          counts: {
-            artworks: 0,
-            auctionResults: 0,
+          statuses: {
+            artworks: false,
+            auctionLots: false,
           },
           id: "opaque-searchable-item-id3",
         },

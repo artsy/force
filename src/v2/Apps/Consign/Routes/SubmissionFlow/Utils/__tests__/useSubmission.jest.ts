@@ -103,7 +103,7 @@ describe("useSubmission", () => {
 
     expect(mockRouterReplace).toHaveBeenCalled()
     expect(mockRouterReplace).toHaveBeenCalledWith(
-      "/consign/submission2/artwork-details"
+      "/consign/submission/artwork-details"
     )
   })
 })
