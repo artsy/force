@@ -40,22 +40,22 @@ fragment RegisterButton_me on Me {
 }
 
 fragment RegisterButton_sale on Sale {
-  slug
+  bidder {
+    qualifiedForBidding
+    id
+  }
   isAuction
   isClosed
   isLiveOpen
-  liveURLIfOpen
   isRegistrationClosed
+  liveURLIfOpen
   requireIdentityVerification
   registrationStatus {
     internalID
     id
   }
+  slug
   status
-  bidder {
-    qualifiedForBidding
-    id
-  }
 }
 */
 
@@ -143,8 +143,20 @@ return {
           {
             "alias": null,
             "args": null,
-            "kind": "ScalarField",
-            "name": "slug",
+            "concreteType": "Bidder",
+            "kind": "LinkedField",
+            "name": "bidder",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "qualifiedForBidding",
+                "storageKey": null
+              },
+              (v1/*: any*/)
+            ],
             "storageKey": null
           },
           {
@@ -172,14 +184,14 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "liveURLIfOpen",
+            "name": "isRegistrationClosed",
             "storageKey": null
           },
           {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "isRegistrationClosed",
+            "name": "liveURLIfOpen",
             "storageKey": null
           },
           {
@@ -203,26 +215,14 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "status",
+            "name": "slug",
             "storageKey": null
           },
           {
             "alias": null,
             "args": null,
-            "concreteType": "Bidder",
-            "kind": "LinkedField",
-            "name": "bidder",
-            "plural": false,
-            "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "qualifiedForBidding",
-                "storageKey": null
-              },
-              (v1/*: any*/)
-            ],
+            "kind": "ScalarField",
+            "name": "status",
             "storageKey": null
           },
           (v1/*: any*/)
@@ -265,7 +265,7 @@ return {
     "metadata": {},
     "name": "RegisterButton_Test_Query",
     "operationKind": "query",
-    "text": "query RegisterButton_Test_Query {\n  sale(id: \"foo\") {\n    ...RegisterButton_sale\n    id\n  }\n  me {\n    ...RegisterButton_me\n    id\n  }\n}\n\nfragment RegisterButton_me on Me {\n  identityVerified\n  pendingIdentityVerification {\n    internalID\n    id\n  }\n}\n\nfragment RegisterButton_sale on Sale {\n  slug\n  isAuction\n  isClosed\n  isLiveOpen\n  liveURLIfOpen\n  isRegistrationClosed\n  requireIdentityVerification\n  registrationStatus {\n    internalID\n    id\n  }\n  status\n  bidder {\n    qualifiedForBidding\n    id\n  }\n}\n"
+    "text": "query RegisterButton_Test_Query {\n  sale(id: \"foo\") {\n    ...RegisterButton_sale\n    id\n  }\n  me {\n    ...RegisterButton_me\n    id\n  }\n}\n\nfragment RegisterButton_me on Me {\n  identityVerified\n  pendingIdentityVerification {\n    internalID\n    id\n  }\n}\n\nfragment RegisterButton_sale on Sale {\n  bidder {\n    qualifiedForBidding\n    id\n  }\n  isAuction\n  isClosed\n  isLiveOpen\n  isRegistrationClosed\n  liveURLIfOpen\n  requireIdentityVerification\n  registrationStatus {\n    internalID\n    id\n  }\n  slug\n  status\n}\n"
   }
 };
 })();
