@@ -12,6 +12,7 @@ import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { MetaTags } from "v2/Components/MetaTags"
 import { InstitutionsRoute_viewer } from "v2/__generated__/InstitutionsRoute_viewer.graphql"
+import { PartnersFeaturedCarouselFragmentContainer } from "../Components/PartnersFeaturedCarousel"
 import { PartnersFilters } from "../Components/PartnersFilters"
 import { PartnersRailFragmentContainer } from "../Components/PartnersRail"
 
@@ -32,9 +33,7 @@ const InstitutionsRoute: React.FC<InstitutionsRouteProps> = ({ viewer }) => {
       />
 
       <Join separator={<Spacer mt={4} />}>
-        <Text variant="xl" mt={4}>
-          Browse Institutions
-        </Text>
+        <PartnersFeaturedCarouselFragmentContainer viewer={viewer} />
 
         <PartnersFilters type="INSTITUTION" />
 
@@ -75,6 +74,8 @@ export const InstitutionsRouteFragmentContainer = createFragmentContainer(
   {
     viewer: graphql`
       fragment InstitutionsRoute_viewer on Viewer {
+        ...PartnersFeaturedCarousel_viewer
+          @arguments(id: "564e181a258faf3d5c000080")
         partnerCategories(
           categoryType: INSTITUTION
           size: 50
