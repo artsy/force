@@ -16,9 +16,6 @@ export default _ShowsFeed = (function () {
   _ShowsFeed = class ShowsFeed extends Backbone.Collection {
     constructor(...args) {
       super(...args)
-    }
-
-    preinitialize() {
       this.nextPage = this.nextPage.bind(this)
     }
 

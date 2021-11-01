@@ -18,8 +18,8 @@ let aboutTemplate,
 const _ = require("underscore")
 const sinon = require("sinon")
 const rewire = require("rewire")
-const PartnerShows = require("../../../../collections/partner_shows.coffee")
-const Articles = require("../../../../collections/articles.coffee")
+const { PartnerShows } = require("../../../../collections/partner_shows")
+const { Articles } = require("../../../../collections/articles")
 const Profile = require("../../../../models/profile.coffee")
 const Partner = require("../../../../models/partner.coffee")
 const { fabricate } = require("@artsy/antigravity")
@@ -54,7 +54,7 @@ factory.__set__("ShowsGrid", (ShowsGrid = sinon.stub()))
 factory.__set__("LocationsView", (LocationsView = sinon.stub()))
 
 describe("overview_layout_factory", function () {
-  xdescribe("gallery_six", function () {
+  describe.skip("gallery_six", function () {
     beforeEach(function () {
       this.profile = new Profile(
         fabricate("partner_profile", { full_bio: "full bio here" })
@@ -139,7 +139,7 @@ describe("overview_layout_factory", function () {
     })
   })
 
-  xdescribe("gallery_five", function () {
+  describe.skip("gallery_five", function () {
     beforeEach(function () {
       this.profile = new Profile(
         fabricate("partner_profile", { full_bio: "full_bil" })
@@ -355,7 +355,7 @@ describe("overview_layout_factory", function () {
     })
   })
 
-  xdescribe("gallery_four", function () {
+  describe.skip("gallery_four", function () {
     beforeEach(function () {
       this.profile = new Profile(
         fabricate("partner_profile", { full_bio: "full_bio here" })

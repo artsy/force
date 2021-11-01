@@ -6,13 +6,13 @@ module.exports =
 
     Artist = require '../../artist.coffee'
     SaleArtwork = require '../../sale_artwork.coffee'
-    AdditionalImages = require '../../../collections/additional_images.coffee'
+    { AdditionalImages } = require '../../../collections/additional_images'
     Partner = require '../../partner.coffee'
 
-    Sales = require '../../../collections/sales.coffee'
-    Fairs = require '../../../collections/fairs.coffee'
-    Shows = require '../../../collections/partner_shows.coffee'
-    Artists = require '../../../collections/artists.coffee'
+    { Sales } = require '../../../collections/sales'
+    { Fairs } = require '../../../collections/fairs'
+    { PartnerShows } = require '../../../collections/partner_shows'
+    { Artists } = require '../../../collections/artists'
 
     artist = new Artist @get('artist')
     saleArtwork = new SaleArtwork @get('sale_artwork')
@@ -24,7 +24,7 @@ module.exports =
     sales.url = "#{API_URL}/api/v1/related/sales?artwork[]=#{@id}&active=true&cache_bust=#{Math.random()}"
     fairs = new Fairs
     fairs.url = "#{API_URL}/api/v1/related/fairs?artwork[]=#{@id}&active=true"
-    shows = new Shows
+    shows = new PartnerShows
     shows.url = "#{API_URL}/api/v1/related/shows?artwork_id=#{@id}&active=true"
 
     @__related__ =

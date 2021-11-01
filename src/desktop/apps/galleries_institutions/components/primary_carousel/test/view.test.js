@@ -6,7 +6,7 @@
 const benv = require("benv")
 const sinon = require("sinon")
 const Backbone = require("backbone")
-const Profiles = require("../../../../../collections/profiles.coffee")
+const { Profiles } = require("../../../../../collections/profiles")
 const rewire = require("rewire")
 const PrimaryCarousel = rewire("../view.coffee")
 const { fabricate } = require("@artsy/antigravity")

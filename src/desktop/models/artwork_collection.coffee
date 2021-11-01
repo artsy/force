@@ -1,7 +1,7 @@
 Backbone = require 'backbone'
 _ = require 'underscore'
 sd = require('sharify').data
-Artworks = require '../collections/artworks.coffee'
+{ Artworks } = require '../collections/artworks'
 Artwork = require './artwork.coffee'
 
 #

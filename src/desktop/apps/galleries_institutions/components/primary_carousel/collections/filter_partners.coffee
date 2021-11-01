@@ -1,6 +1,6 @@
 _ = require 'underscore'
 qs = require 'qs'
-Partners = require '../../../../../collections/partners.coffee'
+{ Partners } = require '../../../../../collections/partners'
 { Cities } = require '../../../../../components/partner_cities/index.coffee'
 
 module.exports = class FilterPartners extends Partners

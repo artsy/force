@@ -9,13 +9,13 @@ const sinon = require("sinon")
 const Backbone = require("backbone")
 const CurrentUser = require("../../../models/current_user")
 const Artwork = require("../../../models/artwork.coffee")
-const Artworks = require("../../../collections/artworks.coffee")
+const { Artworks } = require("../../../collections/artworks")
 const { fabricate } = require("@artsy/antigravity")
 const { resolve } = require("path")
 
 let ArtworkColumnsView = null
 
-xdescribe("ArtworkColumns", function () {
+describe.skip("ArtworkColumns", function () {
   before(done =>
     benv.setup(function () {
       benv.expose({

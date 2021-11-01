@@ -2,7 +2,7 @@ Backbone = require 'backbone'
 { defer } = require 'underscore'
 { Following, FollowButton } = require '../../../../components/follow_button/index'
 FillwidthView = require '../../../../components/fillwidth_row/view.coffee'
-Categories = require '../../../../collections/genes.coffee'
+{ Categories } = require '../../../../collections/genes'
 QuasiInfiniteView = require '../quasi_infinite/view.coffee'
 template = -> require('./index.jade') arguments...
 

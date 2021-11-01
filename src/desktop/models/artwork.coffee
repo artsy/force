@@ -21,7 +21,7 @@ module.exports = class Artwork extends Backbone.Model
   bidSuccessUrl: -> "#{@href()}/confirm-bid"
 
   initialize: ->
-    Articles = require '../collections/articles.coffee'
+    { Articles } = require '../collections/articles'
     @relatedArticles = new Articles
     @relatedArticles.url += "?artwork_id=#{@get '_id'}&published=true"
 
