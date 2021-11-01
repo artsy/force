@@ -4,20 +4,20 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type RegisterButton_sale = {
-    readonly slug: string;
+    readonly bidder: {
+        readonly qualifiedForBidding: boolean | null;
+    } | null;
     readonly isAuction: boolean | null;
     readonly isClosed: boolean | null;
     readonly isLiveOpen: boolean | null;
-    readonly liveURLIfOpen: string | null;
     readonly isRegistrationClosed: boolean | null;
+    readonly liveURLIfOpen: string | null;
     readonly requireIdentityVerification: boolean | null;
     readonly registrationStatus: {
         readonly internalID: string;
     } | null;
+    readonly slug: string;
     readonly status: string | null;
-    readonly bidder: {
-        readonly qualifiedForBidding: boolean | null;
-    } | null;
     readonly " $refType": "RegisterButton_sale";
 };
 export type RegisterButton_sale$data = RegisterButton_sale;
@@ -37,8 +37,19 @@ const node: ReaderFragment = {
     {
       "alias": null,
       "args": null,
-      "kind": "ScalarField",
-      "name": "slug",
+      "concreteType": "Bidder",
+      "kind": "LinkedField",
+      "name": "bidder",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "qualifiedForBidding",
+          "storageKey": null
+        }
+      ],
       "storageKey": null
     },
     {
@@ -66,14 +77,14 @@ const node: ReaderFragment = {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "liveURLIfOpen",
+      "name": "isRegistrationClosed",
       "storageKey": null
     },
     {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "isRegistrationClosed",
+      "name": "liveURLIfOpen",
       "storageKey": null
     },
     {
@@ -105,29 +116,18 @@ const node: ReaderFragment = {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "status",
+      "name": "slug",
       "storageKey": null
     },
     {
       "alias": null,
       "args": null,
-      "concreteType": "Bidder",
-      "kind": "LinkedField",
-      "name": "bidder",
-      "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "qualifiedForBidding",
-          "storageKey": null
-        }
-      ],
+      "kind": "ScalarField",
+      "name": "status",
       "storageKey": null
     }
   ],
   "type": "Sale"
 };
-(node as any).hash = 'd0028e512f8ab292d2bd9a2b5a0c1138';
+(node as any).hash = '70eb9020abfc06c5aa8350243fd5f520';
 export default node;

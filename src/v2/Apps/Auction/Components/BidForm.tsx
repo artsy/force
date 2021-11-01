@@ -15,7 +15,7 @@ import {
   FormikValues,
 } from "formik"
 import { dropWhile } from "lodash"
-import * as React from "react";
+import * as React from "react"
 import { RelayProp, createFragmentContainer, graphql } from "react-relay"
 
 import { BidForm_me } from "v2/__generated__/BidForm_me.graphql"
@@ -156,7 +156,6 @@ export const BidForm: React.FC<Props> = ({
               <CreditCardInput
                 error={{ message: errors.creditCard } as StripeError}
                 onChange={({ error }) =>
-                  // @ts-expect-error STRICT_NULL_CHECK
                   setFieldError("creditCard", error?.message)
                 }
               />

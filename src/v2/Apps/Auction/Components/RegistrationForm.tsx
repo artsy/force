@@ -1,6 +1,6 @@
 import { Box, Button, Flex, Sans, Serif, Spacer } from "@artsy/palette"
 import { Form, Formik, FormikConfig } from "formik"
-import * as React from "react";
+import * as React from "react"
 
 import { CreditCardInstructions } from "v2/Apps/Auction/Components/CreditCardInstructions"
 import { CreditCardInput } from "v2/Apps/Order/Components/CreditCardInput"
@@ -65,7 +65,6 @@ export const RegistrationForm: React.FC<RegistrationFormProps> = props => (
 
         <CreditCardInput
           error={{ message: errors.creditCard } as StripeError}
-          // @ts-expect-error STRICT_NULL_CHECK
           onChange={({ error }) => setFieldError("creditCard", error?.message)}
         />
 
