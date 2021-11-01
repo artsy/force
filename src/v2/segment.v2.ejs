@@ -22,7 +22,7 @@
 // CONFIG — EDIT ME!
 const OPT_IN = true; // false = only disable after opt out, can replace with a function such as inEU above
 const YOUR_DOMAIN = "domain.com"; // the hostname of your website
-const WEBSITE_WRITE_KEY = sd.SEGMENT_WRITE_KEY; // your segment website source write key
+const WEBSITE_WRITE_KEY = "<%%= sd.SEGMENT_WRITE_KEY %>"; // your segment website source write key
 const SEGMENT_MAPPING = 1;
 const OTHER_WRITE_KEYS = []; // any other sources w destinations that you want to include in config
 

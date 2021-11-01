@@ -3,6 +3,17 @@
 
 <head>
 
+  <!-- onetrust cookie consent, must be the first js loaded -->
+  <%% if ( !disable.onetrust && !sd.THIRD_PARTIES_DISABLED && !sd.EIGEN && sd.ONETRUST_SCRIPT_ID ) { %>
+    <script src="https://cdn.cookielaw.org/consent/<%%= sd.ONETRUST_SCRIPT_ID %>/OtAutoBlock.js" type="text/javascript" >
+    </script>
+    <script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js"  type="text/javascript" charset="UTF-8" data-domain-script="<%%= sd.ONETRUST_SCRIPT_ID %>" >
+    </script>
+    <script type="text/javascript">
+      function OptanonWrapper() { }
+    </script>
+  <%% } %>
+
   <% include ./segment.v2.ejs %>
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
@@ -47,13 +58,7 @@
   <!-- String concatenation is needed allow outputting a template tag -->
   <%- htmlWebpackPlugin.tags.bodyTags.map((originalTag) => { const tag = { ...originalTag, attributes: { ...originalTag.attributes } }; tag.attributes['src'] = "<" + "%= cdnUrl %" + ">" + originalTag.attributes['src']; tag.attributes['async'] = true; return tag; }) %>
 
-  <%% if (!disable.segment && !sd.THIRD_PARTIES_DISABLED && sd.SEGMENT_WRITE_KEY) { %>
-  <script type="text/javascript" defer>
-    !function(){var analytics=window.analytics=window.analytics||[];if(!analytics.initialize)if(analytics.invoked)window.console&&console.error&&console.error("Segment snippet included twice.");else{analytics.invoked=!0;analytics.methods=["trackSubmit","trackClick","trackLink","trackForm","pageview","identify","reset","group","track","ready","alias","debug","page","once","off","on","addSourceMiddleware","addIntegrationMiddleware","setAnonymousId","addDestinationMiddleware"];analytics.factory=function(t){return function(){var e=Array.prototype.slice.call(arguments);e.unshift(t);analytics.push(e);return analytics}};for(var t=0;t<analytics.methods.length;t++){var e=analytics.methods[t];analytics[e]=analytics.factory(e)}analytics.load=function(t,e){var n=document.createElement("script");n.type="text/javascript";n.async=!0;n.src="https://cdn.segment.com/analytics.js/v1/"+t+"/analytics.min.js";var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(n,a);analytics._loadOptions=e};analytics.SNIPPET_VERSION="4.1.0";
-    analytics.load("<%%= sd.SEGMENT_WRITE_KEY %>");
-    }}();
-  </script>
-  <%% } %>
+  <% include ./segment.v2.ejs %>
 
   <%% if (!disable.postie && !sd.THIRD_PARTIES_DISABLED) { %>
   <script>
