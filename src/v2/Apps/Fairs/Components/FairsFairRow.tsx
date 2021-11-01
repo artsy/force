@@ -1,5 +1,5 @@
+import * as React from "react"
 import { Box, BoxProps, ChevronIcon, Flex, Image, Text } from "@artsy/palette"
-import * as React from "react";
 import { createFragmentContainer, graphql } from "react-relay"
 import styled, { css } from "styled-components"
 import { DateTime } from "luxon"
@@ -77,7 +77,7 @@ const FairsFairRow: React.FC<FairsFairRowProps> = ({ fair, ...rest }) => {
           </Text>
 
           <Text as="h4" variant="md" display="flex" flex={1}>
-            {fair.startAt} – {fair.endAt}
+            {fair.exhibitionPeriod}
           </Text>
         </Flex>
 
@@ -95,8 +95,7 @@ export const FairsFairRowFragmentContainer = createFragmentContainer(
         href
         name
         isoStartAt: startAt
-        startAt(format: "MMM Do")
-        endAt(format: "MMM Do YYYY")
+        exhibitionPeriod
         profile {
           icon {
             resized(width: 80, height: 80, version: "square140") {
