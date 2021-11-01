@@ -10,6 +10,7 @@ import {
   uploadPhoto,
 } from "../../Utils/fileUtils"
 import { useRouter } from "v2/System/Router/useRouter"
+import { ErrorModal } from "v2/Components/Modal/ErrorModal"
 import { PhotoDropzone } from "./PhotoDropzone"
 import { FileRejection } from "react-dropzone"
 import { PhotoThumbnail } from "./PhotoThumbnail"
@@ -37,6 +38,7 @@ export const UploadPhotosForm: React.FC<UploadPhotosFormProps> = ({
 
   const { relayEnvironment } = useSystemContext()
   const [errors, setErrors] = useState<Array<FileRejection>>([])
+  const [showErrorModal, setShowErrorModal] = useState(false)
   const { setFieldValue, values, validateField } = useFormikContext<
     UploadPhotosFormModel
   >()
@@ -64,6 +66,15 @@ export const UploadPhotosForm: React.FC<UploadPhotosFormProps> = ({
     setFieldValue("photos", values.photos, true)
   }
 
+  const handlePhotoUploadError = photo => {
+    setShowErrorModal(true)
+
+    setFieldValue(
+      "photos",
+      values.photos.filter(p => p.id !== photo.id)
+    )
+  }
+
   useEffect(() => {
     const imagesToUpload = values.photos.filter(c => !c.s3Key && !c.loading)
 
@@ -78,9 +89,14 @@ export const UploadPhotosForm: React.FC<UploadPhotosFormProps> = ({
             handlePhotoUploadingProgress(photo)
           )
             .then(handlePhotoUploaded(photo))
-            .then(onPhotoUploaded)
+            .catch(err => {
+              console.error(err)
+              handlePhotoUploadError(photo)
+            })
+            .finally(onPhotoUploaded)
         }
       })
+
       setFieldValue("photos", [...values.photos])
     }
   }, [values.photos])
@@ -97,6 +113,13 @@ export const UploadPhotosForm: React.FC<UploadPhotosFormProps> = ({
 
   return (
     <Box {...rest}>
+      <ErrorModal
+        show={showErrorModal}
+        headerText="An error occurred"
+        contactEmail="orders@artsy.net"
+        closeText="Close"
+        onClose={() => setShowErrorModal(false)}
+      />
       <PhotoDropzone
         onDrop={onDrop}
         maxTotalSize={maxTotalSize}

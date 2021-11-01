@@ -71,6 +71,8 @@ export const uploadPhoto = async (
 ) => {
   const convectionKey = await getConvectionGeminiKey(relayEnvironment)
 
+  if (!convectionKey) return
+
   // Get S3 Credentials from Gemini
   let assetCredentials = await getGeminiCredentialsForEnvironment(
     relayEnvironment,
