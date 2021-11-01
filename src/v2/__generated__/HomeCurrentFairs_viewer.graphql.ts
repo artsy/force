@@ -16,6 +16,7 @@ export type HomeCurrentFairs_viewer = {
         readonly name: string | null;
         readonly startAt: string | null;
         readonly endAt: string | null;
+        readonly exhibitionPeriod: string | null;
         readonly image: {
             readonly cropped: {
                 readonly src: string;
@@ -160,6 +161,13 @@ return {
         {
           "alias": null,
           "args": null,
+          "kind": "ScalarField",
+          "name": "exhibitionPeriod",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
           "concreteType": "Image",
           "kind": "LinkedField",
           "name": "image",
@@ -225,5 +233,5 @@ return {
   "type": "Viewer"
 };
 })();
-(node as any).hash = '06d53aa66fea0db7f33c1f11a4a27b32';
+(node as any).hash = '772c24fda5e4c96fef072e0a03e6f8f4';
 export default node;
