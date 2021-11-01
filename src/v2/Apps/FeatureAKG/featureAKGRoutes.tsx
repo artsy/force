@@ -14,7 +14,7 @@ export const featureAKGRoutes: AppRouteConfig[] = [
     path: "/campaign/art-keeps-going",
     theme: "v2",
     getComponent: () => FeatureAKGApp,
-    prepare: () => {
+    onClientSideRender: () => {
       FeatureAKGApp.preload()
     },
     query: graphql`

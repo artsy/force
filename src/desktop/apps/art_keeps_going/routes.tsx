@@ -3,7 +3,7 @@ import { stitch } from "@artsy/stitch"
 import { featureAKGRoutes } from "v2/Apps/FeatureAKG/featureAKGRoutes"
 // @ts-ignore
 import JSONPage from "../../components/json_page"
-import { Fragment } from "react";
+import { Fragment } from "react"
 import { NextFunction } from "express"
 import type { ArtsyRequest, ArtsyResponse } from "lib/middleware/artsyExpress"
 
@@ -28,6 +28,7 @@ export const landingPage = async (
       context: { injectedData: data },
       req,
       res,
+      next,
       routes: featureAKGRoutes,
     })
 

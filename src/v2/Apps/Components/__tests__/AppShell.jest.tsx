@@ -44,6 +44,7 @@ describe("AppShell", () => {
     expect(wrapper.find("AppShell").length).toEqual(1)
   })
 
+  // eslint-disable-next-line jest/no-done-callback, jest/expect-expect
   it("calls the matched routes `prepare` function if found", async done => {
     const { ClientApp } = await buildClientApp({
       history: {
@@ -56,7 +57,7 @@ describe("AppShell", () => {
             {
               path: "/foo",
               Component: () => <div />,
-              prepare: () => {
+              onClientSideRender: () => {
                 done()
               },
             },

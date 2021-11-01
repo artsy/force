@@ -1,6 +1,6 @@
-import { searchMiddleware } from "../searchMiddleware"
+import { redirectQueryToTerm } from "../redirectQueryToTerm"
 
-describe("searchMiddleware", () => {
+describe("redirectQueryToTerm", () => {
   describe("missing query.term", () => {
     it("if query.q is present it redirects to search page", async () => {
       const req = {
@@ -24,7 +24,7 @@ describe("searchMiddleware", () => {
       }
 
       const next = jest.fn()
-      await searchMiddleware(req, res, next)
+      await redirectQueryToTerm({ req, res, next })
       expect(spy).toHaveBeenCalledWith(302, "/search?term=foo")
       expect(next).not.toHaveBeenCalled()
     })
@@ -51,7 +51,7 @@ describe("searchMiddleware", () => {
       }
 
       const next = jest.fn()
-      await searchMiddleware(req, res, next)
+      await redirectQueryToTerm({ req, res, next })
       expect(spy).toHaveBeenCalledWith(302, "/")
     })
   })
@@ -77,7 +77,7 @@ describe("searchMiddleware", () => {
     }
 
     const next = jest.fn()
-    await searchMiddleware(req, res, next)
+    await redirectQueryToTerm({ req, res, next })
     expect(res.locals.sd.searchQuery).toEqual("foo")
   })
 })

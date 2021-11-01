@@ -24,7 +24,7 @@ export const geneRoutes: AppRouteConfig[] = [
   {
     path: "/gene/:slug",
     getComponent: () => GeneApp,
-    prepare: () => {
+    onClientSideRender: () => {
       return GeneApp.preload()
     },
     children: [
@@ -41,7 +41,7 @@ export const geneRoutes: AppRouteConfig[] = [
       {
         path: "",
         getComponent: () => GeneShowRoute,
-        prepare: () => {
+        onClientSideRender: () => {
           return GeneShowRoute.preload()
         },
         prepareVariables: ({ slug }, props) => {

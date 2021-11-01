@@ -17,7 +17,7 @@ export const shippingRoutes: AppRouteConfig[] = [
     // TODO: update route to /user/shipping and remove stitched route to launch
     path: "/user/shipping",
     getComponent: () => ShippingApp,
-    prepare: () => {
+    onClientSideRender: () => {
       ShippingApp.preload()
     },
     query: graphql`

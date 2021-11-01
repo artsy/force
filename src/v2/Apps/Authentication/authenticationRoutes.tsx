@@ -15,7 +15,7 @@ export const authenticationRoutes: AppRouteConfig[] = [
     hideFooter: true,
     path: "/reset_password2",
     getComponent: () => ResetPasswordRoute,
-    prepare: () => {
+    onClientSideRender: () => {
       return ResetPasswordRoute.preload()
     },
   },

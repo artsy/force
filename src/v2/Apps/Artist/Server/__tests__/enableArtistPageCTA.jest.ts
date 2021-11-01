@@ -1,6 +1,6 @@
-import { artistMiddleware } from "../artistMiddleware"
+import { enableArtistPageCTA } from "../enableArtistPageCTA"
 
-describe("artistMiddleware", () => {
+describe("enableArtistPageCTA", () => {
   it("skips middleware if not correct pageType", () => {
     const req = {
       path: "/do-not-match",
@@ -21,7 +21,7 @@ describe("artistMiddleware", () => {
     }
 
     const next = jest.fn()
-    artistMiddleware(req, res, next)
+    enableArtistPageCTA({ req, res, next })
     expect(next).toHaveBeenCalled()
   })
 
@@ -46,7 +46,7 @@ describe("artistMiddleware", () => {
     }
 
     const next = jest.fn()
-    artistMiddleware(req, res, next)
+    enableArtistPageCTA({ req, res, next })
     expect(res.locals.sd.ARTIST_PAGE_CTA_ENABLED).toEqual(true)
     expect(res.locals.sd.ARTIST_PAGE_CTA_ARTIST_ID).toEqual("test-artist")
     expect(next).toHaveBeenCalled()
@@ -75,7 +75,7 @@ describe("artistMiddleware", () => {
     }
 
     const next = jest.fn()
-    artistMiddleware(req, res, next)
+    enableArtistPageCTA({ req, res, next })
     expect(res.locals.sd.ARTIST_PAGE_CTA_ENABLED).toEqual(false)
     expect(res.locals.sd.ARTIST_PAGE_CTA_ARTIST_ID).toEqual("test-artist")
     expect(next).toHaveBeenCalled()

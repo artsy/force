@@ -11,7 +11,7 @@ export const unsubscribeRoutes: AppRouteConfig[] = [
   {
     path: "/unsubscribe",
     getComponent: () => UnsubscribeApp,
-    prepare: () => {
+    onClientSideRender: () => {
       UnsubscribeApp.preload()
     },
     query: graphql`

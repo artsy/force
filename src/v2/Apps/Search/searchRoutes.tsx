@@ -4,6 +4,7 @@ import { graphql } from "react-relay"
 import loadable from "@loadable/component"
 import { allowedFilters } from "v2/Components/ArtworkFilter/Utils/allowedFilters"
 import { paramsToCamelCase } from "v2/Components/ArtworkFilter/Utils/urlBuilder"
+import { redirectQueryToTerm } from "./Server/redirectQueryToTerm"
 
 const SearchResultsArtists = loadable(
   () =>
@@ -75,7 +76,7 @@ const entityTabs = Object.entries(tabsToEntitiesMap).map(([key, entities]) => {
   return {
     path: key,
     getComponent: () => SearchResultsEntity,
-    prepare: () => {
+    onClientSideRender: () => {
       SearchResultsEntity.preload()
     },
     prepareVariables: (params, { location }) => {
@@ -103,7 +104,8 @@ export const searchRoutes: AppRouteConfig[] = [
   {
     path: "/search",
     getComponent: () => SearchApp,
-    prepare: () => {
+    onServerSideRender: redirectQueryToTerm,
+    onClientSideRender: () => {
       SearchApp.preload()
     },
     query: graphql`
@@ -118,7 +120,7 @@ export const searchRoutes: AppRouteConfig[] = [
       {
         path: "/",
         getComponent: () => SearchResultsArtworks,
-        prepare: () => {
+        onClientSideRender: () => {
           SearchResultsArtworks.preload()
         },
         prepareVariables: (params, { location, context }) => {
@@ -167,7 +169,7 @@ export const searchRoutes: AppRouteConfig[] = [
       {
         path: "artists",
         getComponent: () => SearchResultsArtists,
-        prepare: () => {
+        onClientSideRender: () => {
           SearchResultsArtists.preload()
         },
         prepareVariables,

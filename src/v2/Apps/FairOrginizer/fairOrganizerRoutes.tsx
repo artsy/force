@@ -33,7 +33,7 @@ export const fairOrganizerRoutes: AppRouteConfig[] = [
   {
     path: "/fair-organizer/:slug",
     getComponent: () => FairOrganizerApp,
-    prepare: () => {
+    onClientSideRender: () => {
       FairOrganizerApp.preload()
     },
     render: ({ Component, props }) => {
@@ -80,7 +80,7 @@ export const fairOrganizerRoutes: AppRouteConfig[] = [
   {
     path: "/fair-organizer/:slug/articles",
     getComponent: () => FairOrganizerDedicatedArticles,
-    prepare: () => {
+    onClientSideRender: () => {
       FairOrganizerDedicatedArticles.preload()
     },
     prepareVariables: ({ slug }, { location }) => {

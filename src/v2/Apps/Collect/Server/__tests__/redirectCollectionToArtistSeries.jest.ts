@@ -1,6 +1,6 @@
-import { collectionToArtistSeriesRedirect } from "../artistSeriesRedirect"
+import { redirectCollectionToArtistSeries } from "../redirectCollectionToArtistSeries"
 
-describe("collectionToArtistSeriesRedirect", () => {
+describe("redirectCollectionToArtistSeries", () => {
   it("does not redirect for a non-migrated artist series", () => {
     const req = {
       params: {
@@ -13,8 +13,7 @@ describe("collectionToArtistSeriesRedirect", () => {
     }
     const next = jest.fn()
 
-    collectionToArtistSeriesRedirect(req, res, next)
-
+    redirectCollectionToArtistSeries({ req, res, next })
     expect(res.redirect).not.toHaveBeenCalled()
     expect(next).toHaveBeenCalled()
   })
@@ -34,7 +33,7 @@ describe("collectionToArtistSeriesRedirect", () => {
     }
 
     const next = jest.fn()
-    collectionToArtistSeriesRedirect(req, res, next)
+    redirectCollectionToArtistSeries({ req, res, next })
     expect(spy).toHaveBeenCalledWith(
       301,
       "/artist-series/kaws-4-foot-companion"

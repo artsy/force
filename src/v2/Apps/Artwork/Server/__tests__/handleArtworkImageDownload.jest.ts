@@ -1,4 +1,4 @@
-import { handleArtworkImageDownload } from "../artworkMiddleware"
+import { handleArtworkImageDownload } from "../handleArtworkImageDownload"
 
 jest.mock("desktop/models/artwork.coffee", () => {
   return class {
@@ -34,7 +34,7 @@ describe("artworkMiddleware", () => {
 
     const res = {}
     const next = jest.fn()
-    await handleArtworkImageDownload(req, res, next)
+    await handleArtworkImageDownload({ req, res, next })
     expect(spy).toHaveBeenCalled()
     expect(next).not.toHaveBeenCalled()
   })
@@ -56,7 +56,7 @@ describe("artworkMiddleware", () => {
 
     const res = {}
     const next = jest.fn()
-    await handleArtworkImageDownload(req, res, next)
+    await handleArtworkImageDownload({ req, res, next })
     expect(spy).not.toHaveBeenCalled()
     expect(next).toHaveBeenCalledWith(
       expect.objectContaining({
