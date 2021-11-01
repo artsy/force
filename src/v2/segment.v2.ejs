@@ -170,7 +170,6 @@ async function fetchDestinationForWriteKey(writeKey) {
 }
 
 async function fetchDestinations(...writeKeys) {
-  console.log('hello world for v2 segment')
   const destinationsRequests = [];
   for (const writeKey of writeKeys) {
     destinationsRequests.push(fetchDestinationForWriteKey(writeKey));
