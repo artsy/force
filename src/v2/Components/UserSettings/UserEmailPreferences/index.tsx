@@ -1,5 +1,5 @@
-import { useState } from "react";
-import * as React from "react";
+import { useState } from "react"
+import * as React from "react"
 import { Banner, Box, Flex, SelectSmall, Serif } from "@artsy/palette"
 import { useSystemContext } from "v2/System/SystemContext"
 import { graphql } from "react-relay"
@@ -17,6 +17,7 @@ const options = [
   { text: "None", value: "none" },
   { text: "Daily", value: "daily" },
   { text: "Weekly", value: "weekly" },
+  { text: "Alerts Only", value: "alerts_only" },
 ]
 
 export const UserEmailPreferences: React.FC<UserEmailPreferencesQueryResponse> = props => {
