@@ -1,7 +1,7 @@
 import _ from "underscore"
 import Backbone from "backbone"
 import { fabricate } from "@artsy/antigravity"
-const DeepZoom = require("../../../models/mixins/deep_zoom.coffee")
+const { DeepZoom } = require("../../../models/mixins/deep_zoom")
 const { Image } = require("@artsy/backbone-mixins")
 
 const SECURE_IMAGES_URL = "https://supersecure.foo.bar"

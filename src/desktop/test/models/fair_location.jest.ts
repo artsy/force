@@ -1,4 +1,4 @@
-const FairLocation = require("../../models/partner_location.coffee")
+const FairLocation = require("../../models/partner_location")
 
 describe("FairLocation", () => {
   let testContext

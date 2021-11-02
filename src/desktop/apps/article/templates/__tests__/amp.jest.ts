@@ -4,7 +4,7 @@ import fs from "fs"
 import jade from "jade"
 import path from "path"
 import * as Fixtures from "@artsy/reaction/dist/Components/Publishing/Fixtures/Components"
-const Article = require("desktop/models/article.coffee")
+const Article = require("desktop/models/article")
 const fixtures = require("desktop/test/helpers/fixtures.coffee")
 
 const render = templateName => {

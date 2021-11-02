@@ -14,9 +14,9 @@ Following = require '../desktop/components/follow_button/collection.coffee'
 { Genes } = require '../desktop/collections/genes'
 { Artworks } = require '../desktop/collections/artworks'
 { Genes } = require '../desktop/collections/genes'
-User = require '../desktop/models/user.coffee'
-ArtworkCollection = require '../desktop/models/artwork_collection.coffee'
-Location = require '../mobile/models/location.coffee'
+{ User } = require '../desktop/models/user'
+{ ArtworkCollection } = require '../desktop/models/artwork_collection'
+{ Location } = require '../mobile/models/location'
 
 module.exports = class CurrentUser extends Backbone.Model
   _.extend @prototype, User.prototype

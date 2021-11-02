@@ -2,7 +2,7 @@ import _ from "underscore"
 import { fabricate } from "@artsy/antigravity"
 import sinon from "sinon"
 import Backbone from "backbone"
-const Fair = require("../../models/fair.coffee")
+const Fair = require("../../models/fair")
 const moment = require("moment")
 
 describe("Fair", () => {

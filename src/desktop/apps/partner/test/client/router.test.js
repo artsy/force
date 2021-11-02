@@ -6,7 +6,7 @@
 const benv = require("benv")
 const Backbone = require("backbone")
 const sinon = require("sinon")
-const Profile = require("../../../../models/profile.coffee")
+const Profile = require("../../../../models/profile")
 const fixtures = require("../../../../test/helpers/fixtures")
 
 const { resolve } = require("path")

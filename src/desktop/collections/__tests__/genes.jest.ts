@@ -1,5 +1,5 @@
 import { fabricate } from "@artsy/antigravity"
-const Gene = require("../../models/gene.coffee")
+const Gene = require("../../models/gene")
 const { Genes } = require("../genes")
 
 describe("Genes", () => {

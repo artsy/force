@@ -8,7 +8,7 @@ const sinon = require("sinon")
 const benv = require("benv")
 const rewire = require("rewire")
 const Backbone = require("backbone")
-const Partner = require("../../../../../models/partner.coffee")
+const Partner = require("../../../../../models/partner")
 const { PartnerShows } = require("../../../../../collections/partner_shows")
 const { fabricate } = require("@artsy/antigravity")
 

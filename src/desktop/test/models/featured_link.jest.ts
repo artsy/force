@@ -1,5 +1,5 @@
 import _ from "underscore"
-const FeaturedLink = require("../../models/featured_link.coffee")
+const FeaturedLink = require("../../models/featured_link")
 import { fabricate } from "@artsy/antigravity"
 
 describe("FeaturedLink", () => {

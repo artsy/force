@@ -6,7 +6,7 @@
 const sinon = require("sinon")
 const rewire = require("rewire")
 const Backbone = require("backbone")
-const OrderedSet = rewire("../../models/ordered_set.coffee")
+const OrderedSet = rewire("../../models/ordered_set")
 
 class Items extends Backbone.Model {}
 

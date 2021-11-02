@@ -6,7 +6,7 @@
  */
 const Backbone = require("backbone")
 const sinon = require("sinon")
-const PartnerArtist = require("../../../../models/partner_artist.coffee")
+const PartnerArtist = require("../../../../models/partner_artist")
 const { PartnerArtistArtworks } = require("../../../../collections/partner_artist_artworks")
 const _ = require("underscore")
 const benv = require("benv")

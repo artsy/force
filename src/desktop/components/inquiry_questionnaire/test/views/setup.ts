@@ -4,9 +4,9 @@ import sinon from "sinon"
 import Backbone from "backbone"
 import { fabricate } from "@artsy/antigravity"
 const CurrentUser = require("../../../../models/current_user")
-const LoggedOutUser = require("../../../../models/logged_out_user.coffee")
-const Artwork = require("../../../../models/artwork.coffee")
-const ArtworkInquiry = require("../../../../models/artwork_inquiry.coffee")
+const LoggedOutUser = require("../../../../models/logged_out_user")
+const Artwork = require("../../../../models/artwork")
+const ArtworkInquiry = require("../../../../models/artwork_inquiry")
 const State = require("../../../branching_state/index.coffee")
 
 export const setup = cb =>

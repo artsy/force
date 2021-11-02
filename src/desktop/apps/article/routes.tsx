@@ -36,7 +36,7 @@ import { buildServerAppContext } from "desktop/lib/buildServerAppContext"
 const { Articles } = require("desktop/collections/articles")
 const markdown = require("desktop/components/util/markdown.coffee")
 const { crop, resize } = require("desktop/components/resizer/index.coffee")
-const Article = require("desktop/models/article.coffee")
+const Article = require("desktop/models/article")
 const { stringifyJSONForWeb } = require("desktop/components/util/json.coffee")
 const metaphysics = require("lib/metaphysics2.coffee")
 

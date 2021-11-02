@@ -2,7 +2,7 @@ import _ from "underscore"
 import Backbone from "backbone"
 const { fabricate } = require("@artsy/antigravity")
 const { Image } = require("@artsy/backbone-mixins")
-const ImageSizes = require("../../../models/mixins/image_sizes.coffee")
+const { ImageSizes } = require("../../../models/mixins/image_sizes")
 
 class Model extends Backbone.Model {
   static initClass() {

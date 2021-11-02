@@ -12,8 +12,8 @@ const { resolve } = require("path")
 const fixtures = require("../../../../test/helpers/fixtures")
 const { fabricate } = require("@artsy/antigravity")
 const { Articles } = require("../../../../collections/articles")
-const Article = require("../../../../models/article.coffee")
-const Channel = require("../../../../models/channel.coffee")
+const Article = require("../../../../models/article")
+const Channel = require("../../../../models/channel")
 const sd = require("sharify").data
 const { resize, crop } = require("../../../../components/resizer")
 

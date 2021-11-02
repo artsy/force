@@ -86,7 +86,7 @@ const geoFormatter = {
   },
 }
 
-const Geo = rewire("../../../models/mixins/geo")
+const { Geo } = rewire("../../../models/mixins/geo")
 Geo.__set__("geo", {
   locate: (locateStub = sinon.stub().yieldsTo("success", geoFormatter)),
 })

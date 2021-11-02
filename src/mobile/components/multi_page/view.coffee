@@ -1,7 +1,7 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 markdown = require '../util/markdown.coffee'
-Page = require '../../../desktop/models/page.coffee'
+{ Page } = require '../../../desktop/models/page'
 { mediator } = require '../../../lib/mediator'
 template = -> require('./template.jade') arguments...
 

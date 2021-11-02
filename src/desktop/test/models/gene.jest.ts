@@ -1,6 +1,6 @@
 import Backbone from "backbone"
 import { fabricate } from "@artsy/antigravity"
-const Gene = require("../../models/gene.coffee")
+const Gene = require("../../models/gene")
 import sinon from "sinon"
 
 describe("Gene", () => {

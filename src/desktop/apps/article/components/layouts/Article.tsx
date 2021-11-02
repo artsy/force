@@ -7,7 +7,7 @@ import { handleScrollingAuthModal } from "desktop/lib/openAuthModal"
 import { ContextModule, Intent } from "@artsy/cohesion"
 import { mediator } from "lib/mediator"
 const SuperArticleView = require("desktop/components/article/client/super_article.coffee")
-const ArticleModel = require("desktop/models/article.coffee")
+const ArticleModel = require("desktop/models/article")
 import Cookies from "desktop/components/cookies/index"
 
 export class ArticleLayout extends Component<AppProps> {

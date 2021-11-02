@@ -7,7 +7,7 @@ const benv = require("benv")
 const sinon = require("sinon")
 const Backbone = require("backbone")
 const Article = require("../../../../../models/article")
-const Curation = require("../../../../../models/curation.coffee")
+const Curation = require("../../../../../models/curation")
 const { resolve } = require("path")
 const markdown = require("../../../../../components/util/markdown.coffee")
 

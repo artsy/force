@@ -1,8 +1,8 @@
 import path from "path"
 import jade from "jade"
 import fs from "fs"
-const Article = require("desktop/models/article.coffee")
-const Channel = require("desktop/models/channel.coffee")
+const Article = require("desktop/models/article")
+const Channel = require("desktop/models/channel")
 
 const render = templateName => {
   const filename = path.resolve(__dirname, `../${templateName}.jade`)

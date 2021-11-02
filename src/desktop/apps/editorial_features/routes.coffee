@@ -1,9 +1,9 @@
 sd = require('sharify').data
 markdown = require '../../components/util/markdown.coffee'
 httpProxy = require 'http-proxy'
-Curation = require '../../models/curation.coffee'
-Article = require '../../models/article.coffee'
-Channel = require '../../models/channel.coffee'
+Curation = require '../../models/curation'
+Article = require '../../models/article'
+Channel = require '../../models/channel'
 { Articles } = require '../../collections/articles'
 { stringifyJSONForWeb } = require '../../components/util/json.coffee'
 { ALLOWED_VANITY_ASSETS, VANITY_BUCKET } = require '../../../config'

@@ -3,7 +3,7 @@ import sinon from "sinon"
 import Backbone from "backbone"
 import moment from "moment"
 const { fabricate } = require("@artsy/antigravity")
-const ClockMixin = require("../../../models/mixins/clock.coffee")
+const { ClockMixin } = require("../../../models/mixins/clock")
 
 class Model extends Backbone.Model {
   static initClass() {

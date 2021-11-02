@@ -1,6 +1,6 @@
 import sinon from "sinon"
 import Backbone from "backbone"
-const ArtworkInquiry = require("../../models/artwork_inquiry.coffee")
+const ArtworkInquiry = require("../../models/artwork_inquiry")
 
 describe("ArtworkInquiry", () => {
   let testContext

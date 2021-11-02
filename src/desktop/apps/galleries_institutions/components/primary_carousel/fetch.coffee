@@ -1,6 +1,6 @@
 _ = require 'underscore'
-Profile = require '../../../../models/profile.coffee'
 FilterPartners = require './collections/filter_partners.coffee'
+{ Profile } = require '../../../../models/profile'
 { Profiles } = require '../../../../collections/profiles'
 { OrderedSets } = require '../../../../collections/ordered_sets'
 
