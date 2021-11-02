@@ -8,7 +8,7 @@ const { crop } = require("desktop/components/resizer/index.coffee")
 const _topParselyArticles = require("desktop/components/util/parsely.coffee")
   .topParselyArticles
 const magazineQuery = require("./queries/editorial_articles.coffee")
-const Articles = require("desktop/collections/articles.coffee")
+const { Articles } = require("desktop/collections/articles")
 const Channel = require("desktop/models/channel.coffee")
 const Section = require("desktop/models/section.coffee")
 

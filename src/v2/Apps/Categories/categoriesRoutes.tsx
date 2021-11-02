@@ -13,7 +13,7 @@ export const categoriesRoutes: AppRouteConfig[] = [
   {
     path: "/categories",
     getComponent: () => CategoriesApp,
-    prepare: () => {
+    onClientSideRender: () => {
       CategoriesApp.preload()
     },
     query: graphql`

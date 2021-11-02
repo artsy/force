@@ -6,9 +6,9 @@ module.exports =
     return @__related__ if @__related__?
 
     Artist = require '../../artist.coffee'
-    PartnerShows = require '../../../collections/partner_shows.coffee'
-    Artworks = require '../../../collections/artworks.coffee'
-    Articles = require '../../../collections/articles.coffee'
+    { PartnerShows } = require '../../../collections/partner_shows'
+    { Artworks } = require '../../../collections/artworks'
+    { Articles } = require '../../../collections/articles'
 
     artists = new Backbone.Collection [], model: Artist
     artists.url = "#{API_URL}/api/v1/related/layer/main/artists?artist[]=#{@id}&exclude_artists_without_artworks=true"

@@ -1,6 +1,6 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-FilterArtworks = require '../../collections/filter_artworks.coffee'
+{ FilterArtworks } = require '../../collections/filter_artworks'
 ArtworkColumnsView = require '../artwork_columns/view.coffee'
 DropdownGroupView = require './dropdown_group/view.coffee'
 FilterFixedHeader = require './fixed_header/view.coffee'

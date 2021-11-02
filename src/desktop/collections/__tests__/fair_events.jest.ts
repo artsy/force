@@ -1,6 +1,6 @@
 import { fabricate } from "@artsy/antigravity"
 const FairEvent = require("../../models/fair_event.coffee")
-const FairEvents = require("../fair_events.coffee")
+const { Fairs } = require("../fair_events")
 
 describe("FairEvents", () => {
   let fairEvent1
@@ -29,7 +29,7 @@ describe("FairEvents", () => {
 
   describe("#initialize", () => {
     it("sets the fairId", () => {
-      const fairEvents = new FairEvents([fairEvent1], {
+      const fairEvents = new Fairs([fairEvent1], {
         fairId: "armory-show-2013",
       })
       fairEvents.fairId.should.equal("armory-show-2013")
@@ -38,7 +38,7 @@ describe("FairEvents", () => {
 
   describe("#sortedEvents", () => {
     it("sorts the events by start_at", () => {
-      const fairEvents = new FairEvents([fairEvent1, fairEvent2, fairEvent3], {
+      const fairEvents = new Fairs([fairEvent1, fairEvent2, fairEvent3], {
         fairId: "armory-show-2013",
       })
       const sorted = fairEvents.sortedEvents()

@@ -17,7 +17,7 @@ export const paymentRoutes: AppRouteConfig[] = [
     // TODO: update route to /user/payments and remove stitched route to launch
     path: "/user/payments",
     getComponent: () => PaymentApp,
-    prepare: () => {
+    onClientSideRender: () => {
       PaymentApp.preload()
     },
     query: graphql`

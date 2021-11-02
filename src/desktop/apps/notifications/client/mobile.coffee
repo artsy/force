@@ -1,6 +1,6 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-Notifications = require '../../../collections/notifications.coffee'
+{ Notifications } = require '../../../collections/notifications'
 { Artworks } = require '../../../../mobile/collections/artworks'
 Artist = require '../../../models/artist.coffee'
 DateHelpers = require '../../../../mobile/components/util/date_helpers.coffee'

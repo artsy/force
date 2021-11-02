@@ -5,7 +5,7 @@ moment = require 'moment'
 momentTimezone = require 'moment-timezone'
 { POSITRON_URL, APP_URL, ARTSY_EDITORIAL_CHANNEL } = sd = require('sharify').data
 Artwork = require '../models/artwork.coffee'
-Artworks = require '../collections/artworks.coffee'
+{ Artworks } = require '../collections/artworks'
 Partner = require '../models/partner.coffee'
 Channel = require '../models/channel.coffee'
 { crop, resize } = require '../components/resizer/index.coffee'
@@ -23,7 +23,7 @@ module.exports = class Article extends Backbone.Model
 
   fetchWithRelated: (options = {}) ->
     # Deferred require
-    Articles = require '../collections/articles.coffee'
+    { Articles } = require '../collections/articles'
     superArticles = new Articles
     Promise.allSettled([
       @fetch(

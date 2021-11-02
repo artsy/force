@@ -1,10 +1,10 @@
 _ = require 'underscore'
 moment = require 'moment'
 Profile = require '../../models/profile.coffee'
-Fairs = require '../../collections/fairs.coffee'
+{ Fairs } = require '../../collections/fairs'
 { cache } = require('../../../lib/cache')
-OrderedSets = require '../../collections/ordered_sets'
-Articles = require '../../collections/articles'
+{ OrderedSets } = require '../../collections/ordered_sets'
+{ Articles } = require '../../collections/articles'
 
 representation = (fair) ->
   new Promise((resolve) ->

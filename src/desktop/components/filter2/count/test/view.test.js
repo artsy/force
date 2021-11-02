@@ -7,7 +7,7 @@ const benv = require("benv")
 const Backbone = require("backbone")
 const { resolve } = require("path")
 const { fabricate2 } = require("@artsy/antigravity")
-const FilterArtworks = require("../../../../collections/filter_artworks.coffee")
+const { FilterArtworks } = require("../../../../collections/filter_artworks")
 
 describe("Filter / Count", function () {
   beforeEach(function (done) {

@@ -1,6 +1,6 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-PartnerArtists = require '../../../../collections/partner_artists.coffee'
+{ PartnerArtists } = require '../../../../collections/partner_artists'
 require '../../../../../lib/promiseDone'
 template = -> require('./index.jade') arguments...
 

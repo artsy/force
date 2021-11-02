@@ -6,7 +6,7 @@ Backbone pageable's collection itself is: "Backbone.PageableCollection is a stri
 
 ## Usage
 ```coffeescript
-PageableCollection = require '../components/pageable_collection/index.coffee
+PageableCollection = require '../components/pageable_collection/index
 
 module.exports = class PageableArtists extends PageableCollection
 ```

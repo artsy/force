@@ -8,7 +8,7 @@ const Backbone = require("backbone")
 const { resolve } = require("path")
 const { fabricate, fabricate2 } = require("@artsy/antigravity")
 const Fair = require("../../../../models/fair.coffee")
-const FilterArtworks = require("../../../../collections/filter_artworks.coffee")
+const { FilterArtworks } = require("../../../../collections/filter_artworks")
 
 describe("Filter / Headline", function () {
   beforeEach(function (done) {

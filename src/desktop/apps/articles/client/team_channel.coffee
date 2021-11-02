@@ -1,6 +1,6 @@
 Backbone = require 'backbone'
 _ = require 'underscore'
-Articles = require '../../../collections/articles.coffee'
+{ Articles } = require '../../../collections/articles'
 Channel = require '../../../models/channel.coffee'
 ArticlesGridView = require '../../../components/articles_grid/view.coffee'
 TeamChannelNavView = require '../../../components/channel_nav/view.coffee'

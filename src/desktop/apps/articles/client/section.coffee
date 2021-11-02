@@ -1,5 +1,5 @@
 Backbone = require 'backbone'
-Articles = require '../../../collections/articles.coffee'
+{ Articles } = require '../../../collections/articles'
 ArticlesFeedView = require '../../../components/articles_feed/view.coffee'
 sd = require('sharify').data
 

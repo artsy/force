@@ -1,10 +1,10 @@
-import Articles from "desktop/collections/articles.coffee"
+import Articles from "desktop/collections/articles"
 import renderTestComponent from "desktop/apps/auction/__tests__/utils/renderTestComponent"
 import { test } from "desktop/apps/auction/components/layout/Footer"
 
 const { Footer } = test
 
-xdescribe("auction/components/layout/Footer.test", () => {
+describe.skip("auction/components/layout/Footer.test", () => {
   describe("<Footer />", () => {
     let article
 

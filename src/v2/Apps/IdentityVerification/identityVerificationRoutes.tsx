@@ -31,7 +31,7 @@ export const identityVerificationRoutes: AppRouteConfig[] = [
     path: "/identity-verification/processing",
     theme: "v2",
     getComponent: () => Processing,
-    prepare: () => {
+    onClientSideRender: () => {
       Processing.preload()
     },
   },
@@ -39,7 +39,7 @@ export const identityVerificationRoutes: AppRouteConfig[] = [
     path: "/identity-verification/error",
     theme: "v2",
     getComponent: () => Error,
-    prepare: () => {
+    onClientSideRender: () => {
       Error.preload()
     },
   },
@@ -47,7 +47,7 @@ export const identityVerificationRoutes: AppRouteConfig[] = [
     path: "/identity-verification/:id",
     theme: "v2",
     getComponent: () => IdentityVerificationApp,
-    prepare: () => {
+    onClientSideRender: () => {
       IdentityVerificationApp.preload()
     },
     query: graphql`

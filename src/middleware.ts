@@ -16,7 +16,7 @@ import glob from "glob"
 import helmet from "helmet"
 import path from "path"
 import sharify from "sharify"
-import siteAssociation from "artsy-eigen-web-association"
+import siteAssociation from "@artsy/eigen-web-association"
 import timeout from "connect-timeout"
 import bodyParser from "body-parser"
 import {
@@ -63,11 +63,6 @@ import { unsupportedBrowserMiddleware } from "./lib/middleware/unsupportedBrowse
 import { backboneSync } from "lib/backboneSync"
 import { serverTimingHeaders } from "lib/middleware/serverTimingHeaders"
 
-// App-specific V2 server-side functionality
-import { artistMiddleware } from "lib/middleware/artistMiddleware"
-import { collectionToArtistSeriesRedirect } from "lib/middleware/artistSeriesRedirect"
-import { handleArtworkImageDownload } from "lib/middleware/artworkMiddleware"
-import { searchMiddleware } from "lib/middleware/searchMiddleware"
 import { splitTestMiddleware } from "desktop/components/split_test/splitTestMiddleware"
 import { IGNORED_ERRORS } from "lib/analytics/sentryFilters"
 import { sharifyToCookie } from "lib/middleware/sharifyToCookie"
@@ -149,20 +144,6 @@ export function initializeMiddleware(app) {
 
   // Static assets
   applyStaticAssetMiddlewares(app)
-
-  // Redirects
-  app.get("/collection/:collectionSlug", collectionToArtistSeriesRedirect)
-
-  /**
-   * FIXME: Move this into function
-   * Mount middleware for handling server-side portions of apps mounted into
-   * global router.
-   */
-  app.get("/artist/*", artistMiddleware)
-  app.get("/search*", searchMiddleware)
-
-  // TODO: Artwork download, does this belong here.
-  app.get("/artwork/:artworkID/download/:filename", handleArtworkImageDownload)
 }
 
 function applySecurityMiddleware(app) {

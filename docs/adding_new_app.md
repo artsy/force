@@ -62,23 +62,39 @@ For most apps we don't need more than the above to get a new route and SSR rende
 Extending the example above, lets add a server-side redirect if the user isn't logged in:
 
 - Create a co-located `/Server` folder -- `v2/Apps/MyNewApp/Server`
-- Create a file inside of it called `myNewAppNameMiddleware.tsx`
-- Add the following to our new middleware file:
+- Create a file inside of it called `myNewAppRedirect.tsx`
+- Add the following to our new file:
 
 ```tsx
-export function myNewAppNameMiddleware(req, res, next) {
-  const { pageType, pageParts } = getContextPageFromReq(req)
-
-  if (pageType === "myNewApp") {
-    if (!res.locals.sd.CURRENT_USER) {
-      return res.redirect(
-        `/login?redirectTo=${encodeURIComponent(req.originalUrl)}`
-      )
-    }
+export function myNewAppRedirect({ req, res, next }) {
+  if (!res.locals.sd.CURRENT_USER) {
+    return res.redirect(
+      `/login?redirectTo=${encodeURIComponent(req.originalUrl)}`
+    )
   }
 }
 ```
 
-- Then finally, mount your middleware inside `src/middleware.tsx` alongside other similar middleware.
+- Then update the route:
 
-This pattern is still evolving, but thats the gist. Middleware can be mounted in the same way that express subapps are mounted, so its just a matter of checking whether we're currently at a certain route and performing an action.
+```tsx
+const routes = [
+  {
+    path: '/foo',
+    Component: () => <div>hello how are you?</div>
+    onServerSideRender: myNewAppRedirect
+  }
+]
+```
+
+Similar to the above, there's also a client-side hook that one can execute:
+
+```tsx
+const routes = [
+  {
+    path: '/foo',
+    Component: () => <div>hello how are you?</div>
+    onClientSideRender: () => console.log('hey there!')
+  }
+]
+```

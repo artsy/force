@@ -2,7 +2,7 @@ import Backbone from "backbone"
 import { fabricate } from "@artsy/antigravity"
 import { times } from "lodash"
 const CurrentUser = require("../../../lib/current_user.coffee")
-const FollowProfiles = require("../follow_profiles.coffee")
+const { FollowProfiles } = require("../follow_profiles")
 const FollowProfile = require("../../models/follow_profile.coffee")
 const Profile = require("../../models/profile.coffee")
 

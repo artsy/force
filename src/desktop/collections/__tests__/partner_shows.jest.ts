@@ -1,6 +1,6 @@
 import Backbone from "backbone"
 import { fabricate } from "@artsy/antigravity"
-const PartnerShows = require("../partner_shows.coffee")
+const { PartnerShows } = require("../partner_shows")
 
 describe("PartnerShows", () => {
   let partnerShows

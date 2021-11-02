@@ -1,6 +1,6 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-PartnerShows = require '../../../collections/partner_shows.coffee'
+{ PartnerShows } = require '../../../collections/partner_shows'
 template = -> require('../templates/shows_grid.jade') arguments...
 showFiguresTemplate = -> require('../templates/show_figures.jade') arguments...
 

@@ -33,7 +33,7 @@ import {
 import { ArticleMeta } from "@artsy/reaction/dist/Components/Publishing/ArticleMeta"
 import { GalleryInsightsRedirects } from "./gallery_insights_redirects"
 import { buildServerAppContext } from "desktop/lib/buildServerAppContext"
-const Articles = require("desktop/collections/articles.coffee")
+const { Articles } = require("desktop/collections/articles")
 const markdown = require("desktop/components/util/markdown.coffee")
 const { crop, resize } = require("desktop/components/resizer/index.coffee")
 const Article = require("desktop/models/article.coffee")

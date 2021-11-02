@@ -11,7 +11,7 @@ export const homeRoutes: AppRouteConfig[] = [
   {
     path: "/",
     getComponent: () => HomeApp,
-    prepare: () => {
+    onClientSideRender: () => {
       HomeApp.preload()
     },
     query: graphql`

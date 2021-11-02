@@ -3,7 +3,7 @@ import { Article } from "@artsy/reaction/dist/Components/Publishing/Article"
 import { AppProps } from "../App"
 
 const ArticlesGridView = require("desktop/components/articles_grid/view.coffee")
-const Articles = require("desktop/collections/articles.coffee")
+const { Articles } = require("desktop/collections/articles")
 
 export class ClassicArticleLayout extends Component<AppProps> {
   componentDidMount() {

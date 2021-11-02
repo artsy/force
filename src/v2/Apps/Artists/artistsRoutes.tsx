@@ -28,14 +28,14 @@ export const artistsRoutes: AppRouteConfig[] = [
   {
     path: "/artists",
     getComponent: () => ArtistsApp,
-    prepare: () => {
+    onClientSideRender: () => {
       return ArtistsApp.preload()
     },
     children: [
       {
         path: "",
         getComponent: () => ArtistsIndexRoute,
-        prepare: () => {
+        onClientSideRender: () => {
           return ArtistsIndexRoute.preload()
         },
         query: graphql`
@@ -52,7 +52,7 @@ export const artistsRoutes: AppRouteConfig[] = [
       {
         path: "artists-starting-with-:letter([a-zA-Z])",
         getComponent: () => ArtistsByLetterRoute,
-        prepare: () => {
+        onClientSideRender: () => {
           return ArtistsByLetterRoute.preload()
         },
         prepareVariables: (params, props) => {
