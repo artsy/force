@@ -16,7 +16,7 @@ export const tagRoutes: AppRouteConfig[] = [
   {
     path: "/tag/:slug",
     getComponent: () => TagApp,
-    prepare: () => {
+    onClientSideRender: () => {
       TagApp.preload()
     },
     prepareVariables: ({ slug }, props) => {

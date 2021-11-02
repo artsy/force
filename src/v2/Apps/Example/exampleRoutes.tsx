@@ -55,7 +55,7 @@ export const exampleRoutes: AppRouteConfig[] = [
     // FIXME: V2 theme is deprecated. Still need to refactor example app to use latest
     theme: "v2",
     getComponent: () => ExampleApp,
-    prepare: () => {
+    onClientSideRender: () => {
       ExampleApp.preload()
     },
     query: graphql`
@@ -75,7 +75,7 @@ export const exampleRoutes: AppRouteConfig[] = [
         path: "artist/:slug",
         theme: "v2",
         getComponent: () => ArtistRoute,
-        prepare: () => {
+        onClientSideRender: () => {
           ArtistRoute.preload()
         },
         query: graphql`
@@ -91,7 +91,7 @@ export const exampleRoutes: AppRouteConfig[] = [
         path: "artwork/:slug",
         theme: "v2",
         getComponent: () => ArtworkRoute,
-        prepare: () => {
+        onClientSideRender: () => {
           ArtworkRoute.preload()
         },
         query: graphql`
@@ -107,7 +107,7 @@ export const exampleRoutes: AppRouteConfig[] = [
         path: "artwork-filter/:slug",
         theme: "v2",
         getComponent: () => ArtworkFilterRoute,
-        prepare: () => {
+        onClientSideRender: () => {
           ArtworkRoute.preload()
         },
         query: graphql`

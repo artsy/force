@@ -14,6 +14,7 @@ const renderPage = async ({ layoutTemplate }, req, res, next) => {
     } = await buildServerApp({
       req,
       res,
+      next,
       routes: auctionRoutes,
     })
 

@@ -58,7 +58,7 @@ export const fairRoutes: AppRouteConfig[] = [
     path: "/fair/:slug",
     ignoreScrollBehaviorBetweenChildren: true,
     getComponent: () => FairApp,
-    prepare: () => {
+    onClientSideRender: () => {
       FairApp.preload()
     },
     query: graphql`
@@ -72,7 +72,7 @@ export const fairRoutes: AppRouteConfig[] = [
       {
         path: "",
         getComponent: () => FairOverviewRoute,
-        prepare: () => {
+        onClientSideRender: () => {
           FairOverviewRoute.preload()
         },
         query: graphql`
@@ -86,7 +86,7 @@ export const fairRoutes: AppRouteConfig[] = [
       {
         path: "exhibitors(.*)?",
         getComponent: () => FairExhibitorsRoute,
-        prepare: () => {
+        onClientSideRender: () => {
           FairExhibitorsRoute.preload()
         },
         query: graphql`
@@ -100,7 +100,7 @@ export const fairRoutes: AppRouteConfig[] = [
       {
         path: "booths(.*)?",
         getComponent: () => FairBoothsRoute,
-        prepare: () => {
+        onClientSideRender: () => {
           FairBoothsRoute.preload()
         },
         prepareVariables: ({ slug }, { location }) => {
@@ -149,7 +149,7 @@ export const fairRoutes: AppRouteConfig[] = [
       {
         path: "artworks(.*)?",
         getComponent: () => FairArtworksRoute,
-        prepare: () => {
+        onClientSideRender: () => {
           FairArtworksRoute.preload()
         },
         prepareVariables: initializeVariablesWithFilterState,
@@ -178,7 +178,7 @@ export const fairRoutes: AppRouteConfig[] = [
   {
     path: "/fair/:slug",
     getComponent: () => FairSubApp,
-    prepare: () => {
+    onClientSideRender: () => {
       FairSubApp.preload()
     },
     query: graphql`
@@ -192,7 +192,7 @@ export const fairRoutes: AppRouteConfig[] = [
       {
         path: "articles",
         getComponent: () => FairArticlesRoute,
-        prepare: () => {
+        onClientSideRender: () => {
           FairArticlesRoute.preload()
         },
         query: graphql`

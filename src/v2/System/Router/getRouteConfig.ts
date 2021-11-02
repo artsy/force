@@ -5,8 +5,13 @@ import { RouteConfig } from "found"
 export function getRouteConfig(): {
   routes: RouteConfig[]
   routePaths: string[]
+  flatRoutes: RouteConfig[]
 } {
   const routes = getAppRoutes()
+
+  // Store all routes, including `children` routes, in a flat array. Useful for
+  // lookup and other forms of introspection.
+  const flatRoutes: RouteConfig[] = []
 
   const getRoutes = (acc, route: RouteConfig, basePath = "") => {
     const path = compact([basePath, route.path]).join("/")
@@ -19,6 +24,10 @@ export function getRouteConfig(): {
 
     if (!isInvalid) {
       acc.push(path)
+      flatRoutes.push({
+        ...route,
+        path: path,
+      })
     }
 
     if (route.children) {
@@ -34,5 +43,6 @@ export function getRouteConfig(): {
   return {
     routes,
     routePaths,
+    flatRoutes,
   }
 }

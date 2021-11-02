@@ -1,4 +1,4 @@
-import { handleArtworkImageDownload } from "../artworkMiddleware"
+import { handleArtworkImageDownload } from "../handleArtworkImageDownload"
 
 jest.mock("desktop/models/artwork.coffee", () => {
   return class {
@@ -33,10 +33,8 @@ describe("artworkMiddleware", () => {
     }
 
     const res = {}
-    const next = jest.fn()
-    await handleArtworkImageDownload(req, res, next)
+    await handleArtworkImageDownload({ req, res })
     expect(spy).toHaveBeenCalled()
-    expect(next).not.toHaveBeenCalled()
   })
 
   it("returns an error if not downloadable", async () => {
@@ -55,14 +53,7 @@ describe("artworkMiddleware", () => {
     }
 
     const res = {}
-    const next = jest.fn()
-    await handleArtworkImageDownload(req, res, next)
+    await handleArtworkImageDownload({ req, res })
     expect(spy).not.toHaveBeenCalled()
-    expect(next).toHaveBeenCalledWith(
-      expect.objectContaining({
-        message: "Not authorized to download this image.",
-        status: 403,
-      })
-    )
   })
 })

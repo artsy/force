@@ -93,7 +93,7 @@ export const settingsRoutes: AppRouteConfig[] = [
     path: "/settings2",
     theme: "v3",
     getComponent: () => SettingsApp,
-    prepare: () => {
+    onClientSideRender: () => {
       SettingsApp.preload()
     },
     query: graphql`
@@ -107,14 +107,14 @@ export const settingsRoutes: AppRouteConfig[] = [
       {
         path: "/",
         getComponent: () => OverviewRoute,
-        prepare: () => {
+        onClientSideRender: () => {
           OverviewRoute.preload()
         },
       },
       {
         path: "auctions",
         getComponent: () => AuctionsRoute,
-        prepare: () => {
+        onClientSideRender: () => {
           AuctionsRoute.preload()
         },
         query: graphql`
@@ -128,14 +128,14 @@ export const settingsRoutes: AppRouteConfig[] = [
       {
         path: "edit-profile",
         getComponent: () => EditProfileRoute,
-        prepare: () => {
+        onClientSideRender: () => {
           EditProfileRoute.preload()
         },
       },
       {
         path: "payments",
         getComponent: () => PaymentsRoute,
-        prepare: () => {
+        onClientSideRender: () => {
           PaymentsRoute.preload()
         },
         query: graphql`
@@ -149,28 +149,28 @@ export const settingsRoutes: AppRouteConfig[] = [
       {
         path: "purchases",
         getComponent: () => PurchasesRoute,
-        prepare: () => {
+        onClientSideRender: () => {
           PurchasesRoute.preload()
         },
       },
       {
         path: "saves",
         getComponent: () => SavesRoute,
-        prepare: () => {
+        onClientSideRender: () => {
           SavesRoute.preload()
         },
       },
       {
         path: "edit-settings",
         getComponent: () => SettingsRoute,
-        prepare: () => {
+        onClientSideRender: () => {
           SettingsRoute.preload()
         },
       },
       {
         path: "shipping",
         getComponent: () => ShippingRoute,
-        prepare: () => {
+        onClientSideRender: () => {
           ShippingRoute.preload()
         },
         query: graphql`

@@ -13,7 +13,7 @@ export const purchaseRoutes: AppRouteConfig[] = [
   {
     path: "/user/purchases",
     getComponent: () => PurchasesApp,
-    prepare: () => {
+    onClientSideRender: () => {
       PurchasesApp.preload()
     },
     query: graphql`

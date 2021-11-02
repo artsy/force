@@ -40,6 +40,7 @@ app.get(
       } = await buildServerApp({
         req,
         res,
+        next,
         routes,
         loadableFile: "loadable-novo-stats.json",
         loadablePath: "public/assets",

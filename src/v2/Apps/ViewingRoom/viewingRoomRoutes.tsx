@@ -40,7 +40,7 @@ export const viewingRoomRoutes: AppRouteConfig[] = [
   {
     path: "/viewing-rooms",
     getComponent: () => ViewingRoomsApp,
-    prepare: () => {
+    onClientSideRender: () => {
       ViewingRoomsApp.preload()
     },
     prepareVariables: () => {
@@ -70,7 +70,7 @@ export const viewingRoomRoutes: AppRouteConfig[] = [
     path: "/viewing-room/:slug",
     getComponent: () => ViewingRoomApp,
     ignoreScrollBehaviorBetweenChildren: true,
-    prepare: () => {
+    onClientSideRender: () => {
       ViewingRoomApp.preload()
     },
     query: graphql`
