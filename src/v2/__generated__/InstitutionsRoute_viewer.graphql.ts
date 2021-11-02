@@ -4,11 +4,6 @@
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type InstitutionsRoute_viewer = {
-    readonly partnerCategories: ReadonlyArray<{
-        readonly name: string | null;
-        readonly slug: string;
-        readonly " $fragmentRefs": FragmentRefs<"PartnersRail_partnerCategory">;
-    } | null> | null;
     readonly " $fragmentRefs": FragmentRefs<"PartnersFeaturedCarousel_viewer">;
     readonly " $refType": "InstitutionsRoute_viewer";
 };
@@ -27,58 +22,6 @@ const node: ReaderFragment = {
   "name": "InstitutionsRoute_viewer",
   "selections": [
     {
-      "alias": null,
-      "args": [
-        {
-          "kind": "Literal",
-          "name": "categoryType",
-          "value": "INSTITUTION"
-        },
-        {
-          "kind": "Literal",
-          "name": "internal",
-          "value": false
-        },
-        {
-          "kind": "Literal",
-          "name": "size",
-          "value": 50
-        }
-      ],
-      "concreteType": "PartnerCategory",
-      "kind": "LinkedField",
-      "name": "partnerCategories",
-      "plural": true,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "name",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "slug",
-          "storageKey": null
-        },
-        {
-          "args": [
-            {
-              "kind": "Literal",
-              "name": "type",
-              "value": "INSTITUTION"
-            }
-          ],
-          "kind": "FragmentSpread",
-          "name": "PartnersRail_partnerCategory"
-        }
-      ],
-      "storageKey": "partnerCategories(categoryType:\"INSTITUTION\",internal:false,size:50)"
-    },
-    {
       "args": [
         {
           "kind": "Literal",
@@ -92,5 +35,5 @@ const node: ReaderFragment = {
   ],
   "type": "Viewer"
 };
-(node as any).hash = '4bbf1101a55a168cb787473f66e0d5d8';
+(node as any).hash = '8c395bc11a0178f10f342c07631bf2f2';
 export default node;
