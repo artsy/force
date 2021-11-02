@@ -89,8 +89,7 @@ export const UploadPhotosForm: React.FC<UploadPhotosFormProps> = ({
             handlePhotoUploadingProgress(photo)
           )
             .then(handlePhotoUploaded(photo))
-            .catch(err => {
-              console.error(err)
+            .catch(() => {
               handlePhotoUploadError(photo)
             })
             .finally(onPhotoUploaded)
