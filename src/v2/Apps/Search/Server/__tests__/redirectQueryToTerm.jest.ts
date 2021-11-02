@@ -23,10 +23,8 @@ describe("redirectQueryToTerm", () => {
         },
       }
 
-      const next = jest.fn()
-      await redirectQueryToTerm({ req, res, next })
+      await redirectQueryToTerm({ req, res })
       expect(spy).toHaveBeenCalledWith(302, "/search?term=foo")
-      expect(next).not.toHaveBeenCalled()
     })
 
     it("if q.query is not present it redirects to home", async () => {
@@ -50,8 +48,7 @@ describe("redirectQueryToTerm", () => {
         },
       }
 
-      const next = jest.fn()
-      await redirectQueryToTerm({ req, res, next })
+      await redirectQueryToTerm({ req, res })
       expect(spy).toHaveBeenCalledWith(302, "/")
     })
   })
@@ -76,8 +73,7 @@ describe("redirectQueryToTerm", () => {
       },
     }
 
-    const next = jest.fn()
-    await redirectQueryToTerm({ req, res, next })
+    await redirectQueryToTerm({ req, res })
     expect(res.locals.sd.searchQuery).toEqual("foo")
   })
 })

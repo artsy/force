@@ -33,8 +33,7 @@ describe("artworkMiddleware", () => {
     }
 
     const res = {}
-    const next = jest.fn()
-    await handleArtworkImageDownload({ req, res, next })
+    await handleArtworkImageDownload({ req, res })
     expect(spy).toHaveBeenCalled()
   })
 
@@ -54,8 +53,7 @@ describe("artworkMiddleware", () => {
     }
 
     const res = {}
-    const next = jest.fn()
-    await handleArtworkImageDownload({ req, res, next })
+    await handleArtworkImageDownload({ req, res })
     expect(spy).not.toHaveBeenCalled()
   })
 })

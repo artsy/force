@@ -2,7 +2,7 @@ import request from "superagent"
 
 const Artwork = require("desktop/models/artwork.coffee")
 
-export const handleArtworkImageDownload = async ({ req, res, next }) => {
+export const handleArtworkImageDownload = async ({ req, res }) => {
   const artwork = new Artwork({ id: req.params.artworkID })
   await artwork.fetch({
     cache: true,

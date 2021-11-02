@@ -1,6 +1,6 @@
 import { stringify } from "qs"
 
-export function redirectQueryToTerm({ req, res, next }) {
+export function redirectQueryToTerm({ req, res }) {
   if (req.query.term) {
     res.locals.sd.searchQuery = req.query.term
   } else {

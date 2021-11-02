@@ -1,4 +1,4 @@
-export function enableArtistPageCTA({ req, res, next }) {
+export function enableArtistPageCTA({ req, res }) {
   const { APP_URL, IS_MOBILE } = res.locals.sd
 
   if (IS_MOBILE) {

@@ -11,8 +11,7 @@ describe("redirectCollectionToArtistSeries", () => {
       redirect: jest.fn(),
       locals: { sd: {} },
     }
-    const next = jest.fn()
-    redirectCollectionToArtistSeries({ req, res, next })
+    redirectCollectionToArtistSeries({ req, res })
     expect(res.redirect).not.toHaveBeenCalled()
   })
 
@@ -30,8 +29,7 @@ describe("redirectCollectionToArtistSeries", () => {
       },
     }
 
-    const next = jest.fn()
-    redirectCollectionToArtistSeries({ req, res, next })
+    redirectCollectionToArtistSeries({ req, res })
     expect(spy).toHaveBeenCalledWith(
       301,
       "/artist-series/kaws-4-foot-companion"

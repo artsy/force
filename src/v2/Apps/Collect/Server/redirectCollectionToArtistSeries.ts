@@ -1,6 +1,6 @@
 import { collectionToArtistSeriesSlugMap } from "../Utils/collectionToArtistSeriesSlugMap"
 
-export function redirectCollectionToArtistSeries({ req, res, next }) {
+export function redirectCollectionToArtistSeries({ req, res }) {
   const collectionSlug: string = req.params.collectionSlug
   const seriesSlug: string = collectionToArtistSeriesSlugMap[collectionSlug]
 

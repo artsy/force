@@ -35,9 +35,9 @@ export const AppShell: React.FC<AppShellProps> = props => {
   const showFooter = !isEigen && !routeConfig.hideFooter
   const appContainerMaxWidth = routeConfig.displayFullPage ? "100%" : null
 
-  // Check to see if a route has a prepare key; if so call it. Used typically
-  // to preload bundle-split components (import()) while the route is fetching
-  // data in the background.
+  // Check to see if a route has a onServerSideRender key; if so call it. Used
+  // typically to preload bundle-split components (import()) while the route is
+  // fetching data in the background.
   useEffect(() => {
     if (isFunction(routeConfig.onClientSideRender)) {
       try {

@@ -15,12 +15,16 @@ import { Media } from "v2/Utils/Responsive"
 import { NextFunction, Request } from "express"
 import type { ArtsyResponse } from "lib/middleware/artsyExpress"
 import { createMockNetworkLayer } from "v2/DevTools/createMockNetworkLayer"
+import { findRoutesByPath } from "../Utils/findRoutesByPath"
 
 jest.unmock("react-relay")
 
 // FIXME: Not sure why this fails test since all code here is server-side. Need
 // to investigate where this dep intersects
 jest.mock("found-scroll", () => {})
+jest.mock("../Utils/findRoutesByPath", () => ({
+  findRoutesByPath: jest.fn(),
+}))
 
 jest.mock("@loadable/server", () => ({
   ChunkExtractor: class {
@@ -33,11 +37,16 @@ jest.mock("@loadable/server", () => ({
 const defaultComponent = () => <div>hi!</div>
 
 describe("buildServerApp", () => {
+  let mockFindRoutesByPath = findRoutesByPath as jest.Mock
   let res: ArtsyResponse
   let req: Request
   let next: NextFunction
   // @ts-ignore
   let options: any = { req, res, next }
+
+  mockFindRoutesByPath.mockImplementation(() => {
+    return []
+  })
 
   beforeEach(() => {
     res = {
@@ -287,10 +296,16 @@ describe("buildServerApp", () => {
       Component: () => null,
       onServerSideRender: spy,
     }
+
+    mockFindRoutesByPath.mockImplementation(() => {
+      return [route]
+    })
+
     await getWrapper(() => <>Hello</>, {
       ...options,
       routes: [route],
     })
+
     expect(spy).toHaveBeenCalledWith(
       expect.objectContaining({
         ...options,

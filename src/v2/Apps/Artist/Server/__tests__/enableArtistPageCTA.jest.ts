@@ -4,6 +4,9 @@ describe("enableArtistPageCTA", () => {
   it("sets ARTIST_PAGE_CTA_ENABLED if external referrer", () => {
     const req = {
       path: "/artist/test-artist",
+      params: {
+        artistID: "test-artist",
+      },
       user: {
         toJSON: () => null,
       },
@@ -21,8 +24,7 @@ describe("enableArtistPageCTA", () => {
       },
     }
 
-    const next = jest.fn()
-    enableArtistPageCTA({ req, res, next })
+    enableArtistPageCTA({ req, res })
     expect(res.locals.sd.ARTIST_PAGE_CTA_ENABLED).toEqual(true)
     expect(res.locals.sd.ARTIST_PAGE_CTA_ARTIST_ID).toEqual("test-artist")
   })
@@ -30,6 +32,9 @@ describe("enableArtistPageCTA", () => {
   it("sets ARTIST_PAGE_CTA_ENABLED=false if not external referrer", () => {
     const req = {
       path: "/artist/test-artist",
+      params: {
+        artistID: "test-artist",
+      },
       user: {
         toJSON: () => ({
           name: "foo",
@@ -49,8 +54,7 @@ describe("enableArtistPageCTA", () => {
       },
     }
 
-    const next = jest.fn()
-    enableArtistPageCTA({ req, res, next })
+    enableArtistPageCTA({ req, res })
     expect(res.locals.sd.ARTIST_PAGE_CTA_ENABLED).toEqual(false)
     expect(res.locals.sd.ARTIST_PAGE_CTA_ARTIST_ID).toEqual("test-artist")
   })
