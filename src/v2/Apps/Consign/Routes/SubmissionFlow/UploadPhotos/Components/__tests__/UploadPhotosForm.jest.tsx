@@ -61,7 +61,7 @@ const { getWrapper } = setupTestWrapper({
     )
   },
   query: graphql`
-    query UploadPhotosQuery {
+    query UploadPhotosFormQuery {
       submission(id: "") {
         id
       }
