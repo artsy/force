@@ -1,16 +1,17 @@
 import { injectGlobalStyles, ThemeProviderV3 } from "@artsy/palette"
+import { MediaContextProvider } from "v2/Utils/Responsive"
 
 const { GlobalStyles } = injectGlobalStyles()
 
 export const decorators = [
   Story => {
     return (
-      <ThemeProviderV3>
-        <>
+      <MediaContextProvider>
+        <ThemeProviderV3>
           <GlobalStyles />
           <Story />
-        </>
-      </ThemeProviderV3>
+        </ThemeProviderV3>
+      </MediaContextProvider>
     )
   },
 ]

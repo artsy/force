@@ -24,8 +24,7 @@ export type FairsIndex_viewer = {
     readonly upcomingFairs: ReadonlyArray<{
         readonly internalID: string;
         readonly name: string | null;
-        readonly startAt: string | null;
-        readonly endAt: string | null;
+        readonly exhibitionPeriod: string | null;
         readonly location: {
             readonly city: string | null;
         } | null;
@@ -203,29 +202,10 @@ return {
         },
         {
           "alias": null,
-          "args": [
-            {
-              "kind": "Literal",
-              "name": "format",
-              "value": "MMM Do"
-            }
-          ],
+          "args": null,
           "kind": "ScalarField",
-          "name": "startAt",
-          "storageKey": "startAt(format:\"MMM Do\")"
-        },
-        {
-          "alias": null,
-          "args": [
-            {
-              "kind": "Literal",
-              "name": "format",
-              "value": "MMM Do YYYY"
-            }
-          ],
-          "kind": "ScalarField",
-          "name": "endAt",
-          "storageKey": "endAt(format:\"MMM Do YYYY\")"
+          "name": "exhibitionPeriod",
+          "storageKey": null
         },
         {
           "alias": null,
@@ -289,5 +269,5 @@ return {
   "type": "Viewer"
 };
 })();
-(node as any).hash = '4bf7c4475b0a6d845cc4543c6144b3ce';
+(node as any).hash = '863757b83cf4b9a2c9aab52c1fb95c00';
 export default node;

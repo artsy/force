@@ -28,8 +28,7 @@ fragment FairsFairRow_fair on Fair {
   href
   name
   isoStartAt: startAt
-  startAt(format: "MMM Do")
-  endAt(format: "MMM Do YYYY")
+  exhibitionPeriod
   profile {
     icon {
       resized(width: 80, height: 80, version: "square140") {
@@ -130,29 +129,10 @@ return {
           },
           {
             "alias": null,
-            "args": [
-              {
-                "kind": "Literal",
-                "name": "format",
-                "value": "MMM Do"
-              }
-            ],
+            "args": null,
             "kind": "ScalarField",
-            "name": "startAt",
-            "storageKey": "startAt(format:\"MMM Do\")"
-          },
-          {
-            "alias": null,
-            "args": [
-              {
-                "kind": "Literal",
-                "name": "format",
-                "value": "MMM Do YYYY"
-              }
-            ],
-            "kind": "ScalarField",
-            "name": "endAt",
-            "storageKey": "endAt(format:\"MMM Do YYYY\")"
+            "name": "exhibitionPeriod",
+            "storageKey": null
           },
           {
             "alias": null,
@@ -268,7 +248,7 @@ return {
     "metadata": {},
     "name": "FairsFairRow_Test_Query",
     "operationKind": "query",
-    "text": "query FairsFairRow_Test_Query {\n  fair(id: \"example\") {\n    ...FairsFairRow_fair\n    id\n  }\n}\n\nfragment FairsFairRow_fair on Fair {\n  href\n  name\n  isoStartAt: startAt\n  startAt(format: \"MMM Do\")\n  endAt(format: \"MMM Do YYYY\")\n  profile {\n    icon {\n      resized(width: 80, height: 80, version: \"square140\") {\n        width\n        height\n        src\n        srcSet\n      }\n    }\n    id\n  }\n  organizer {\n    profile {\n      href\n      id\n    }\n    id\n  }\n}\n"
+    "text": "query FairsFairRow_Test_Query {\n  fair(id: \"example\") {\n    ...FairsFairRow_fair\n    id\n  }\n}\n\nfragment FairsFairRow_fair on Fair {\n  href\n  name\n  isoStartAt: startAt\n  exhibitionPeriod\n  profile {\n    icon {\n      resized(width: 80, height: 80, version: \"square140\") {\n        width\n        height\n        src\n        srcSet\n      }\n    }\n    id\n  }\n  organizer {\n    profile {\n      href\n      id\n    }\n    id\n  }\n}\n"
   }
 };
 })();

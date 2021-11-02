@@ -6,8 +6,7 @@ import { FragmentRefs } from "relay-runtime";
 export type FairsFairBanner_fair = {
     readonly href: string | null;
     readonly name: string | null;
-    readonly startAt: string | null;
-    readonly endAt: string | null;
+    readonly exhibitionPeriod: string | null;
     readonly bannerSize: string | null;
     readonly image: {
         readonly large: {
@@ -107,29 +106,10 @@ return {
     },
     {
       "alias": null,
-      "args": [
-        {
-          "kind": "Literal",
-          "name": "format",
-          "value": "MMM Do"
-        }
-      ],
+      "args": null,
       "kind": "ScalarField",
-      "name": "startAt",
-      "storageKey": "startAt(format:\"MMM Do\")"
-    },
-    {
-      "alias": null,
-      "args": [
-        {
-          "kind": "Literal",
-          "name": "format",
-          "value": "MMM Do YYYY"
-        }
-      ],
-      "kind": "ScalarField",
-      "name": "endAt",
-      "storageKey": "endAt(format:\"MMM Do YYYY\")"
+      "name": "exhibitionPeriod",
+      "storageKey": null
     },
     {
       "alias": null,
@@ -250,5 +230,5 @@ return {
   "type": "Fair"
 };
 })();
-(node as any).hash = '58e8880a9280ec9cf910d1dff96f8d2f';
+(node as any).hash = '8b6356d6ed39457f9f42fa416367490e';
 export default node;
