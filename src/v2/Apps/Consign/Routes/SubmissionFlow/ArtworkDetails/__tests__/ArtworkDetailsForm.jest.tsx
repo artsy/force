@@ -30,9 +30,9 @@ describe("ArtworkDetailsForm", () => {
   })
 
   it("renders correctly initial fields", () => {
-    expect(wrapper.find("input[data-test-id='autosuggest-input']").length).toBe(
-      1
-    )
+    expect(
+      wrapper.find("input[data-test-id='autocomplete-input']").length
+    ).toBe(1)
     expect(wrapper.find("input[name='year']").length).toBe(1)
     expect(wrapper.find("input[name='title']").length).toBe(1)
     expect(wrapper.find("input[name='materials']").length).toBe(1)
@@ -113,7 +113,9 @@ describe("ArtworkDetailsForm", () => {
   })
 
   it("if units are 'in' renders size fields correctly", () => {
-    const sizeFields = wrapper.find(LabeledInput)
+    const sizeFields = wrapper
+      .find(LabeledInput)
+      .filterWhere(n => n.prop("title") !== "Artist")
 
     sizeFields.forEach((node: ReactWrapper) => {
       expect(node.text()).toBe("in")
@@ -122,7 +124,9 @@ describe("ArtworkDetailsForm", () => {
 
   it("if units are 'cm' renders size fields correctly", () => {
     wrapper.find("Radio[value='cm']").simulate("click")
-    const sizeFields = wrapper.find(LabeledInput)
+    const sizeFields = wrapper
+      .find(LabeledInput)
+      .filterWhere(n => n.prop("title") !== "Artist")
 
     sizeFields.forEach((node: ReactWrapper) => {
       expect(node.text()).toBe("cm")

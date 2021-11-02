@@ -17,10 +17,10 @@ import {
 import { useFormikContext } from "formik"
 import { checkboxValues } from "v2/Components/ArtworkFilter/ArtworkFilters/AttributionClassFilter"
 import { ErrorModal } from "v2/Components/Modal/ErrorModal"
-import { ArtistAutosuggest } from "./ArtistAutosuggest"
 import { useRouter } from "v2/System/Router/useRouter"
 import { ArtworkSidebarClassificationsModalQueryRenderer } from "v2/Apps/Artwork/Components/ArtworkSidebarClassificationsModal"
 import { useSubmission } from "../../Utils/useSubmission"
+import { ArtistAutoComplete } from "./ArtistAutocomplete"
 
 export const getArtworkDetailsFormInitialValues = () => ({
   artistId: "",
@@ -43,36 +43,7 @@ const rarityOptions = checkboxValues.map(({ name, value }) => ({
   value,
 }))
 
-rarityOptions.unshift({
-  text: "Select a classification",
-  value: "default",
-})
-
-const mediumOptions = [
-  { text: "Painting", value: "PAINTING" },
-  { text: "Sculpture", value: "SCULPTURE" },
-  { text: "Photography", value: "PHOTOGRAPHY" },
-  { text: "Print", value: "PRINT" },
-  {
-    text: "Drawing, Collage or other Work on Paper",
-    value: "DRAWING_COLLAGE_OR_OTHER_WORK_ON_PAPER",
-  },
-  { text: "Mixed Media", value: "MIXED_MEDIA" },
-  { text: "Performance Art", value: "PERFORMANCE_ART" },
-  { text: "Installation", value: "INSTALLATION" },
-  { text: "Video/Film/Animation", value: "VIDEO_FILM_ANIMATION" },
-  { text: "Architecture", value: "ARCHITECTURE" },
-  {
-    text: "Fashion Design and Wearable Art",
-    value: "FASHION_DESIGN_AND_WEARABLE_ART",
-  },
-  { text: "Jewelry", value: "JEWELRY" },
-  { text: "Design/Decorative Art", value: "DESIGN_DECORATIVE_ART" },
-  { text: "Textile Arts", value: "TEXTILE_ARTS" },
-  { text: "Other", value: "OTHER" },
-]
-
-mediumOptions.unshift({ text: "Select a medium", value: "default" })
+rarityOptions.unshift({ text: "Select a classification", value: "default" })
 
 export interface ArtworkDetailsFormModel {
   artistName: string
@@ -97,7 +68,7 @@ export const ArtworkDetailsForm: React.FC = () => {
     },
   } = useRouter()
 
-  const [isAutosuggestError, setIsAutosuggestError] = useState(false)
+  const [isArtistApiError, setIsArtistApiError] = useState(false)
   const [isRarityModalOpen, setIsRarityModalOpen] = useState(false)
   const [isProvenanceModalOpen, setIsProvenanceModalOpen] = useState(false)
 
@@ -106,7 +77,6 @@ export const ArtworkDetailsForm: React.FC = () => {
     handleChange,
     setFieldValue,
     handleBlur,
-    setErrors,
     resetForm,
     validateForm,
   } = useFormikContext<ArtworkDetailsFormModel>()
@@ -117,33 +87,20 @@ export const ArtworkDetailsForm: React.FC = () => {
   useEffect(() => {
     if (submission) {
       resetForm({ values: submission.artworkDetailsForm })
-      validateForm(submission.artworkDetailsForm).then(e => {
-        setErrors(e)
-      })
+      validateForm(submission.artworkDetailsForm)
     } else {
-      resetForm({
-        values: getArtworkDetailsFormInitialValues(),
-      })
+      resetForm({ values: getArtworkDetailsFormInitialValues() })
     }
   }, [submission])
-
-  const handleAutosuggestError = (isError: boolean) => {
-    setIsAutosuggestError(isError)
-
-    if (!isError) {
-      setFieldValue("artistName", "")
-      setFieldValue("artistId", "")
-    }
-  }
 
   return (
     <>
       <ErrorModal
-        show={isAutosuggestError}
+        show={isArtistApiError}
         headerText="An error occurred"
         contactEmail="consign@artsymail.com"
         closeText="Close"
-        onClose={() => handleAutosuggestError(false)}
+        onClose={() => setIsArtistApiError(false)}
       />
       <ArtworkSidebarClassificationsModalQueryRenderer
         onClose={() => setIsRarityModalOpen(false)}
@@ -181,9 +138,7 @@ export const ArtworkDetailsForm: React.FC = () => {
 
       <GridColumns>
         <Column span={6}>
-          <ArtistAutosuggest
-            onAutosuggestError={() => handleAutosuggestError(true)}
-          />
+          <ArtistAutoComplete onError={() => setIsArtistApiError(true)} />
         </Column>
         <Column span={6} mt={[2, 0]}>
           <Input
@@ -241,9 +196,7 @@ export const ArtworkDetailsForm: React.FC = () => {
             selected={values.rarity}
             onBlur={handleBlur}
             onChange={handleChange}
-            onSelect={selected => {
-              setFieldValue("rarity", selected)
-            }}
+            onSelect={selected => setFieldValue("rarity", selected)}
           />
         </Column>
         <Column span={6}>
@@ -326,9 +279,7 @@ export const ArtworkDetailsForm: React.FC = () => {
               flexDirection="row"
               mt={2}
               ml={2}
-              onSelect={selected => {
-                setFieldValue("units", selected)
-              }}
+              onSelect={selected => setFieldValue("units", selected)}
             >
               <Radio mr={4} value="in" label="in" selected />
               <Radio value="cm" label="cm" />
