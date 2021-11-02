@@ -1,4 +1,4 @@
-import Articles from "desktop/collections/articles.coffee"
+import Articles from "desktop/collections/articles"
 import moment from "moment"
 import renderTestComponent from "desktop/apps/auction/__tests__/utils/renderTestComponent"
 import { cloneDeep } from "lodash"
@@ -8,7 +8,7 @@ import { promotedSaleArtworks } from "../artwork_browser/__tests__/fixtures/prom
 const rewire = require("rewire")("../Layout")
 const Layout = rewire.default
 
-xdescribe("<Layout />", () => {
+describe.skip("<Layout />", () => {
   let resetRewire
 
   beforeEach(() => {

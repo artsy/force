@@ -1,6 +1,6 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-FilterArtworks = require '../../../../collections/filter_artworks.coffee'
+{ FilterArtworks } = require '../../../../collections/filter_artworks'
 initCarousel = require '../../../../components/merry_go_round/bottom_nav_mgr.coffee'
 require '../../../../../lib/promiseDone'
 template = -> require('./index.jade') arguments...

@@ -1,6 +1,6 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
-PartnerShows = require '../../../../collections/partner_shows.coffee'
+{ PartnerShows } = require '../../../../collections/partner_shows'
 initCarousel = require '../../../../components/merry_go_round/bottom_nav_mgr.coffee'
 require '../../../../../lib/promiseDone'
 template = -> require('./index.jade') arguments...

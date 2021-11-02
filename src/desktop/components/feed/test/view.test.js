@@ -9,10 +9,10 @@ const sinon = require("sinon")
 const { resolve } = require("path")
 const sd = require("sharify").data
 const FeedItem = require("../models/feed_item")
-const FeedItems = require("../collections/feed_items")
+const { FeedItems } = require("../collections/feed_items")
 const { fabricate } = require("@artsy/antigravity")
 
-xdescribe("FeedView", function () {
+describe.skip("FeedView", function () {
   before(function (done) {
     // FIXME: Error: the string "userId is required" was thrown, throw an Error :)
     return benv.setup(() => {
@@ -104,7 +104,7 @@ xdescribe("FeedView", function () {
     }))
 
   return describe("save buttons", function () {
-    xit("able to save artworks in a post", function () {})
-    return xit("able to save artworks in a show", function () {})
+    it.skip("able to save artworks in a post", function () {})
+    return it.skip("able to save artworks in a show", function () {})
   })
 })

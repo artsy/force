@@ -1,7 +1,7 @@
 _ = require 'underscore'
 _s = require 'underscore.string'
 Backbone = require 'backbone'
-Artworks = require '../../../collections/artworks.coffee'
+{ Artworks } = require '../../../collections/artworks'
 FilterSortCount = require '../sort_count/view.coffee'
 ArtworkColumnsView = require '../../artwork_columns/view.coffee'
 FilterArtworksNav = require '../artworks_nav/view.coffee'

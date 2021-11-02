@@ -5,7 +5,7 @@
  */
 const Backbone = require("backbone")
 const sinon = require("sinon")
-const PartnerArtists = require("../../../../collections/partner_artists.coffee")
+const { PartnerArtists } = require("../../../../collections/partner_artists")
 const _ = require("underscore")
 const benv = require("benv")
 const { resolve } = require("path")

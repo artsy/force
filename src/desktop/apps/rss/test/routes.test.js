@@ -1,4 +1,4 @@
-import Articles from "../../../collections/articles.coffee"
+import Articles from "../../../collections/articles"
 import Backbone from "backbone"
 import sinon from "sinon"
 import request from "superagent"

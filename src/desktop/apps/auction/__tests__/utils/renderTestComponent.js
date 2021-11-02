@@ -1,4 +1,4 @@
-import Articles from "desktop/collections/articles.coffee"
+import Articles from "desktop/collections/articles"
 import Auction from "desktop/models/auction.coffee"
 import CurrentUser from "desktop/models/current_user"
 import auctions from "desktop/apps/auction/reducers"

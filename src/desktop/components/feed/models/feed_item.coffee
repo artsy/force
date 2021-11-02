@@ -1,5 +1,5 @@
 Backbone = require 'backbone'
-Artworks = require '../../../collections/artworks.coffee'
+{ Artworks } = require '../../../collections/artworks'
 PartnerShow = require '../../../models/partner_show.coffee'
 underscore = require('../../util/string.coffee').underscore
 DOMPurify = require 'dompurify'

@@ -12,7 +12,7 @@ const articleTemplate = require("jade").compileFile(
 )
 const sd = { APP_URL: "http://localhost" }
 const Article = require("../../../models/article")
-const Articles = require("../../../collections/articles")
+const { Articles } = require("../../../collections/articles")
 const moment = require("moment")
 const { toSentence } = require("underscore.string")
 const { resize } = require("../../../components/resizer")

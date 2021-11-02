@@ -2,7 +2,7 @@ _ = require 'underscore'
 { CURRENT_USER } = require('sharify').data
 Backbone = require 'backbone'
 Following = require '../follow_button/collection.coffee'
-UserInterests = require '../../collections/user_interests.coffee'
+{ UserInterests } = require '../../collections/user_interests'
 TypeaheadView = require '../typeahead/view.coffee'
 ResultsListView = require '../results_list/view.coffee'
 

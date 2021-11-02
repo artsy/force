@@ -9,7 +9,7 @@ const Backbone = require("backbone")
 const { resolve } = require("path")
 const { fabricate } = require("@artsy/antigravity")
 const Article = require("../../../models/article")
-const Articles = require("../../../collections/articles")
+const { Articles } = require("../../../collections/articles")
 const ArticlesGridView = benv.requireWithJadeify(
   resolve(__dirname, "../view"),
   ["template", "button", "empty", "figure"]

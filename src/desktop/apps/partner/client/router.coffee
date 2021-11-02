@@ -1,6 +1,6 @@
 Backbone = require 'backbone'
 PartnerView = require './view.coffee'
-FilterArtworks = require '../../../collections/filter_artworks.coffee'
+{ FilterArtworks } = require '../../../collections/filter_artworks'
 filterSettings = require './filter_settings.coffee'
 _ = require 'underscore'
 sd = require('sharify').data

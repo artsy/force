@@ -2,8 +2,8 @@ module.exports =
   related: ->
     return @__related__ if @__related__?
 
-    SaleArtworks = require '../../../collections/sale_artworks.coffee'
-    Artworks = require '../../../collections/artworks.coffee'
+    { SaleArtworks } = require '../../../collections/sale_artworks'
+    { Artworks } = require '../../../collections/artworks'
     Profile = require '../../profile.coffee'
     Sale = require '../../sale.coffee'
 

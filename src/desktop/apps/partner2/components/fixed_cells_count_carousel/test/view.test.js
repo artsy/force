@@ -9,7 +9,7 @@ const benv = require("benv")
 const rewire = require("rewire")
 const Backbone = require("backbone")
 const Partner = require("../../../../../models/partner.coffee")
-const PartnerShows = require("../../../../../collections/partner_shows.coffee")
+const { PartnerShows } = require("../../../../../collections/partner_shows")
 const { fabricate } = require("@artsy/antigravity")
 
 const FixedCellsCountCarousel = rewire("../view.coffee")

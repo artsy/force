@@ -7,7 +7,7 @@ const _ = require("underscore")
 const benv = require("benv")
 const Backbone = require("backbone")
 const { resolve } = require("path")
-const Articles = require("../../../collections/articles")
+const { Articles } = require("../../../collections/articles")
 const ArticleView = benv.requireWithJadeify(resolve(__dirname, "../article"), [
   "template",
 ])
