@@ -17,7 +17,7 @@ const { getWrapper } = setupTestWrapper<HomeFeaturedGalleriesRail_Test_Query>({
   },
   query: graphql`
     query HomeFeaturedGalleriesRail_Test_Query {
-      orderedSet(id: "5638fdfb7261690296000031") {
+      orderedSet(id: "example") {
         ...HomeFeaturedGalleriesRail_orderedSet
       }
     }
@@ -37,17 +37,9 @@ afterEach(() => {
 describe("HomeFeaturedGalleriesRail", () => {
   it("renders correctly", () => {
     const wrapper = getWrapper({
-      OrderedSet: () => ({
-        orderedItemsConnection: {
-          edges: [
-            {
-              node: {
-                name: "Test Gallery",
-                href: "test-href",
-              },
-            },
-          ],
-        },
+      Partner: () => ({
+        name: "Test Gallery",
+        href: "/test-href",
       }),
     })
 
@@ -60,22 +52,14 @@ describe("HomeFeaturedGalleriesRail", () => {
 
   it("shows initials if no images", () => {
     const wrapper = getWrapper({
-      OrderedSet: () => ({
-        orderedItemsConnection: {
-          edges: [
-            {
-              node: {
-                name: "Test Gallery",
-                href: "test-href",
-                initials: "initials",
-                image: {
-                  cropped: {
-                    src: null,
-                  },
-                },
-              },
-            },
-          ],
+      Profile: () => ({
+        owner: {
+          initials: "initials",
+        },
+        image: {
+          cropped: {
+            src: null,
+          },
         },
       }),
     })
