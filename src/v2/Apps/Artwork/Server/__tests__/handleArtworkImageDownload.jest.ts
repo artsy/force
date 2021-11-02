@@ -36,7 +36,6 @@ describe("artworkMiddleware", () => {
     const next = jest.fn()
     await handleArtworkImageDownload({ req, res, next })
     expect(spy).toHaveBeenCalled()
-    expect(next).not.toHaveBeenCalled()
   })
 
   it("returns an error if not downloadable", async () => {
@@ -58,11 +57,5 @@ describe("artworkMiddleware", () => {
     const next = jest.fn()
     await handleArtworkImageDownload({ req, res, next })
     expect(spy).not.toHaveBeenCalled()
-    expect(next).toHaveBeenCalledWith(
-      expect.objectContaining({
-        message: "Not authorized to download this image.",
-        status: 403,
-      })
-    )
   })
 })

@@ -8,6 +8,4 @@ export function redirectCollectionToArtistSeries({ req, res, next }) {
     const artistSeriesPath = `/artist-series/${seriesSlug}`
     res.redirect(301, artistSeriesPath)
   }
-
-  next()
 }

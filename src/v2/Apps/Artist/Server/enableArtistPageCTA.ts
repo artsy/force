@@ -15,6 +15,4 @@ export function enableArtistPageCTA({ req, res, next }) {
 
   res.locals.sd.ARTIST_PAGE_CTA_ENABLED = !user && isExternalReferer
   res.locals.sd.ARTIST_PAGE_CTA_ARTIST_ID = artistID
-
-  next()
 }

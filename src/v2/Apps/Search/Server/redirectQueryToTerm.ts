@@ -12,6 +12,4 @@ export function redirectQueryToTerm({ req, res, next }) {
       res.redirect(302, "/")
     }
   }
-
-  next()
 }

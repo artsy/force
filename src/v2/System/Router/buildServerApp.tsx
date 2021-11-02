@@ -35,7 +35,7 @@ import RelayServerSSR from "react-relay-network-modern-ssr/lib/server"
 import { buildServerAppContext } from "desktop/lib/buildServerAppContext"
 import { AppRouteConfig } from "v2/System/Router/Route"
 import { NextFunction } from "express"
-import { findRoutesByPath } from "./Utils/findCurrentRoute"
+import { findRoutesByPath } from "./Utils/findRoutesByPath"
 
 export interface ServerAppResolve {
   bodyHTML?: string
