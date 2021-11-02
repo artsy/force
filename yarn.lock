@@ -122,10 +122,10 @@
   dependencies:
     passport-strategy "1.x.x"
 
-"@artsy/passport@3.5.0":
-  version "3.5.0"
-  resolved "https://registry.yarnpkg.com/@artsy/passport/-/passport-3.5.0.tgz#f87a0e524190e25a29143c2ca3d1104eeedde83d"
-  integrity sha512-cPCVkz/4sftVsa0jxzdYBe0CsJHTg77GsDWpZ8tdfMKLi3ClR0tQWIc0lXYYfBmppC6xwb6ZZYGqfYUPDAwkog==
+"@artsy/passport@3.5.1":
+  version "3.5.1"
+  resolved "https://registry.yarnpkg.com/@artsy/passport/-/passport-3.5.1.tgz#a4f858acf2cfd3242efad60d4581bc0673420979"
+  integrity sha512-yvU0xOICAn9EfOMTEeL23JIQZWI6/DVsX2L3ucG6qze+KhmNaK0G7v9Sc9ydUth8qZV9Bgn+mhvfhLmKw7sUjQ==
   dependencies:
     "@artsy/passport-local-with-otp" "0.3.1"
     "@artsy/xapp" "1.0.6"
@@ -135,9 +135,9 @@
     express "^4.14.0"
     ip "^1.1.5"
     passport "0.3.2"
-    passport-apple "https://github.com/artsy/passport-apple#f41adb7822c8344b72bc36a7d68312f6592cb14f"
+    passport-apple "git+https://github.com/artsy/passport-apple.git#f41adb7822c8344b72bc36a7d68312f6592cb14f"
     passport-facebook "2.1.1"
-    superagent "^1.8.4"
+    superagent "^3.7.0"
     underscore "^1.12.1"
     underscore.string "^3.3.5"
 
@@ -15673,9 +15673,10 @@ pascalcase@^0.1.1:
   resolved "https://registry.yarnpkg.com/pascalcase/-/pascalcase-0.1.1.tgz#b363e55e8006ca6fe21784d2db22bd15d7917f14"
   integrity sha1-s2PlXoAGym/iF4TS2yK9FdeRfxQ=
 
-"passport-apple@https://github.com/artsy/passport-apple#f41adb7822c8344b72bc36a7d68312f6592cb14f":
+"passport-apple@git+https://github.com/artsy/passport-apple.git#f41adb7822c8344b72bc36a7d68312f6592cb14f":
   version "1.1.2"
-  resolved "https://github.com/artsy/passport-apple#f41adb7822c8344b72bc36a7d68312f6592cb14f"
+  uid f41adb7822c8344b72bc36a7d68312f6592cb14f
+  resolved "git+https://github.com/artsy/passport-apple.git#f41adb7822c8344b72bc36a7d68312f6592cb14f"
   dependencies:
     jsonwebtoken "^8.5.1"
     passport-oauth2 "^1.5.0"
@@ -19274,7 +19275,7 @@ superagent-retry@^0.6.0:
   resolved "https://registry.yarnpkg.com/superagent-retry/-/superagent-retry-0.6.0.tgz#e49b35ca96c0e3b1d0e3f49605136df0e0a028b7"
   integrity sha1-5Js1ypbA47HQ4/SWBRNt8OCgKLc=
 
-superagent@*, superagent@3.8.3, superagent@^1.2.0, superagent@^1.8.4, superagent@^2.0.0, superagent@^3.5.0, superagent@^3.6.3:
+superagent@*, superagent@3.8.3, superagent@^1.2.0, superagent@^2.0.0, superagent@^3.5.0, superagent@^3.6.3, superagent@^3.7.0:
   version "3.8.3"
   resolved "https://registry.yarnpkg.com/superagent/-/superagent-3.8.3.tgz#460ea0dbdb7d5b11bc4f78deba565f86a178e128"
   integrity sha512-GLQtLMCoEIK4eDv6OGtkOoSMt3D+oq0y3dsxMuYuDvaNUvuT8eFBuLmfR0iYYzHC1e8hpzC6ZsxbuP6DIalMFA==
