@@ -3,11 +3,14 @@ import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
 import { UploadPhotosForm } from "../Components/UploadPhotosForm"
 import { PhotoThumbnail } from "../Components/PhotoThumbnail"
 import { UploadPhotos } from "../UploadPhotos"
+import { ErrorModalProps } from "v2/Components/Modal/ErrorModal"
 import { flushPromiseQueue } from "v2/DevTools"
 import { SystemContextProvider } from "v2/System"
 import { MBSize } from "../../Utils/fileUtils"
 import * as openAuthModal from "v2/Utils/openAuthModal"
 import { createConsignSubmission } from "../../Utils/createConsignSubmission"
+
+import { uploadPhoto } from "../../Utils/fileUtils"
 
 jest.unmock("react-relay")
 
@@ -46,14 +49,7 @@ Object.defineProperty(window, "sessionStorage", {
 
 jest.mock("../../Utils/fileUtils", () => ({
   ...jest.requireActual("../../Utils/fileUtils"),
-  uploadPhoto: jest
-    .fn()
-    .mockImplementation(async (relayEnvironment, photo, updateProgress) => {
-      return await new Promise((resolve, reject) => {
-        updateProgress(100)
-        resolve("s3Key")
-      })
-    }),
+  uploadPhoto: jest.fn(),
 }))
 
 jest.mock("../../Utils/createConsignSubmission", () => ({
@@ -94,6 +90,7 @@ describe("UploadPhotos", () => {
     jest.spyOn(global, "FileReader").mockImplementation(function () {
       this.readAsDataURL = jest.fn()
     })
+    ;(uploadPhoto as jest.Mock).mockResolvedValue("s3key")
   })
 
   afterEach(() => {
@@ -423,5 +420,38 @@ describe("UploadPhotos", () => {
         "File format not supported. Please upload JPG or PNG files."
       )
     })
+  })
+})
+
+describe("upload photos form component", () => {
+  it("shows an error modal when uploading a photo fails", async () => {
+    ;(uploadPhoto as jest.Mock).mockRejectedValue("rejected")
+
+    const wrapper = getWrapper()
+
+    const dropzoneInput = wrapper
+      .find(UploadPhotosForm)
+      .find("[data-test-id='image-dropzone']")
+      .find("input")
+
+    dropzoneInput.simulate("change", {
+      target: {
+        files: [
+          {
+            name: "foo.png",
+            path: "foo.png",
+            type: "image/png",
+            size: 20000,
+          },
+        ],
+      },
+    })
+
+    await flushPromiseQueue()
+    wrapper.update()
+
+    const errorModal = wrapper.find("ErrorModal")
+    const { show } = errorModal.props() as ErrorModalProps
+    expect(show).toBe(true)
   })
 })
