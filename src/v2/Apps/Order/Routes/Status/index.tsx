@@ -60,7 +60,7 @@ export class StatusRoute extends Component<StatusProps> {
     const isArtaShipped: boolean =
       requestedFulfillment?.__typename === "CommerceShipArta"
 
-    switch (displayState?.toUpperCase()) {
+    switch (displayState) {
       case "SUBMITTED":
         return isOfferFlow
           ? {
@@ -148,10 +148,10 @@ export class StatusRoute extends Component<StatusProps> {
         // accepted
         return this.canceledOfferOrderCopy()
       default:
-        // This should not happen. Check the order states are all accounted for:
+        // This should not happen. Check the order displayState here:
         // https://github.com/artsy/exchange/blob/master/app/models/order.rb
         // (Aside from PENDING and ABANDONED)
-        logger.error(`Unhandled order state: ${state}`)
+        logger.error(`Unhandled order state: ${displayState} in ${state} state`)
         return {
           title: "Your order",
           description: null,
