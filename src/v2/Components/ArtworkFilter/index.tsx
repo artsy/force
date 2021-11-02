@@ -1,6 +1,6 @@
 import { isEqual } from "lodash"
-import { useEffect, useRef, useState } from "react";
-import * as React from "react";
+import { useEffect, useRef, useState } from "react"
+import * as React from "react"
 import useDeepCompareEffect from "use-deep-compare-effect"
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
 import { useSystemContext } from "v2/System"
@@ -44,7 +44,6 @@ import {
   ContextModule,
   ClickedChangePage,
 } from "@artsy/cohesion"
-import { data as sd } from "sharify"
 import { allowedFilters } from "./Utils/allowedFilters"
 import { Sticky } from "v2/Components/Sticky"
 import { ScrollRefContext } from "./ArtworkFilters/useScrollContext"
@@ -157,8 +156,7 @@ export const BaseArtworkFilter: React.FC<
   const { filtered_artworks } = viewer
   const hasFilter = filtered_artworks && filtered_artworks.id
 
-  const isCreateAlertEnabled = sd.ENABLE_SAVED_SEARCH && enableCreateAlert
-  const showCreateAlert = isCreateAlertEnabled && filterContext.hasFilters
+  const showCreateAlert = enableCreateAlert && filterContext.hasFilters
 
   /**
    * Check to see if the mobile action sheet is present and prevent scrolling
@@ -324,7 +322,7 @@ export const BaseArtworkFilter: React.FC<
       {/* Desktop Artwork Filter */}
       <Media greaterThan="xs">
         {tokens.version === "v3" && (
-          <Flex justifyContent="space-between" alignItems="flex-start" pb={40}>
+          <Flex justifyContent="space-between" alignItems="flex-start" pb={4}>
             <Text variant="xs" textTransform="uppercase">
               Filter by
             </Text>
@@ -357,7 +355,7 @@ export const BaseArtworkFilter: React.FC<
               </Box>
             )}
 
-            {isCreateAlertEnabled && <FiltersPills show={showCreateAlert} />}
+            {enableCreateAlert && <FiltersPills show={showCreateAlert} />}
 
             {children || (
               <ArtworkFilterArtworkGrid
