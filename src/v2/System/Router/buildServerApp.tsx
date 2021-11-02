@@ -84,11 +84,12 @@ export function buildServerApp(
         assetsPath = "/assets",
       } = config
 
-      const maybeRoutesWithRenderHooks = findRoutesByPath({
+      // Find and execute pre-render hooks
+      const matchedRoutes = findRoutesByPath({
         path: req.path,
       })
 
-      maybeRoutesWithRenderHooks.forEach((route: AppRouteConfig) => {
+      matchedRoutes.forEach((route: AppRouteConfig) => {
         if (isFunction(route?.onServerSideRender)) {
           route.onServerSideRender({
             req,
