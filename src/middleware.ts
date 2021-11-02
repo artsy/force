@@ -16,7 +16,7 @@ import glob from "glob"
 import helmet from "helmet"
 import path from "path"
 import sharify from "sharify"
-import siteAssociation from "artsy-eigen-web-association"
+import siteAssociation from "@artsy/eigen-web-association"
 import timeout from "connect-timeout"
 import bodyParser from "body-parser"
 import {
