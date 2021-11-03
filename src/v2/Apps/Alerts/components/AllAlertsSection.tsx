@@ -20,21 +20,14 @@ const AllAlertsSection: React.FC<AllAlertsSectionProps> = ({ me, relay }) => {
   const nodes = extractNodes(me.savedSearchesConnection)
 
   const handleClick = () => {
-    if (!relay.hasMore() || relay.isLoading()) return
+    if (!relay.hasMore() || relay.isLoading()) {
+      return
+    }
 
     setIsLoading(true)
 
-    const previousScrollY = window.scrollY
-
     relay.loadMore(10, err => {
       setIsLoading(false)
-
-      if (window.scrollY > previousScrollY) {
-        window.scrollTo({
-          behavior: "auto",
-          top: previousScrollY,
-        })
-      }
 
       if (err) {
         console.error(err)
@@ -60,19 +53,21 @@ const AllAlertsSection: React.FC<AllAlertsSectionProps> = ({ me, relay }) => {
         })}
       </GridColumns>
 
-      <GridColumns my={6}>
-        <Column span={12} mx="auto">
-          <Button
-            width="100%"
-            variant="secondaryGray"
-            onClick={handleClick}
-            loading={isLoading}
-            disabled={!relay.hasMore()}
-          >
-            Show more
-          </Button>
-        </Column>
-      </GridColumns>
+      {relay.hasMore() && (
+        <GridColumns my={6}>
+          <Column span={12} mx="auto">
+            <Button
+              width="100%"
+              variant="secondaryGray"
+              onClick={handleClick}
+              loading={isLoading}
+              disabled={isLoading}
+            >
+              Show more
+            </Button>
+          </Column>
+        </GridColumns>
+      )}
     </>
   )
 }

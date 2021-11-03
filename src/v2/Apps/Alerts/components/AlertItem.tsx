@@ -16,7 +16,7 @@ interface AlertItemProps {
 
 export const AlertItem: React.FC<AlertItemProps> = ({ item }) => {
   return (
-    <Column span={[12, 12, 6, 4]}>
+    <Column span={[12, 12, 6]}>
       <BorderBox>
         <Flex flex={1} justifyContent="space-between" alignItems="center">
           <Text color="black80" variant="sm">
@@ -27,7 +27,7 @@ export const AlertItem: React.FC<AlertItemProps> = ({ item }) => {
           <Clickable textDecoration="underline">
             <Text variant="sm">Edit</Text>
           </Clickable>
-          <Spacer ml={1} />
+          <Spacer ml={2} />
           <Clickable textDecoration="underline" color="red100">
             <Text variant="sm">Delete</Text>
           </Clickable>
