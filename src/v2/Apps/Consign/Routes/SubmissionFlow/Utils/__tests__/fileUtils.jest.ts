@@ -78,5 +78,26 @@ describe("fileUtils", () => {
 
       expect(uploadFileToS3).not.toHaveBeenCalled()
     })
+
+    it("does not attempt to get gemini credentials or file upload if no conviction key found", async () => {
+      ;(getConvectionGeminiKey as jest.Mock).mockRejectedValueOnce(
+        "no key found"
+      )
+
+      expect(getGeminiCredentialsForEnvironment).toHaveBeenCalledTimes(0)
+      expect(uploadFileToS3).toHaveBeenCalledTimes(0)
+    })
+
+    it("return undefined when s3 upload fails", async () => {
+      ;(uploadFileToS3 as jest.Mock).mockRejectedValueOnce("rejected")
+
+      const uploadPhotoResult = await uploadPhoto(
+        relayEnvironment,
+        photo,
+        updateProgress
+      )
+
+      expect(uploadPhotoResult).toBe(undefined)
+    })
   })
 })

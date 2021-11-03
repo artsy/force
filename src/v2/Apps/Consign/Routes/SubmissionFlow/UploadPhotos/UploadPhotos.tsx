@@ -105,6 +105,14 @@ export const UploadPhotos: React.FC = () => {
         authenticity.
       </Text>
 
+      <ErrorModal
+        show={isSubmissionApiError}
+        headerText="An error occurred"
+        contactEmail="orders@artsy.net"
+        closeText="Close"
+        onClose={() => setIsSubmissionApiError(false)}
+      />
+
       <Formik<UploadPhotosFormModel>
         validateOnMount
         onSubmit={handleSubmit}
@@ -130,14 +138,6 @@ export const UploadPhotos: React.FC = () => {
 
           return (
             <Form>
-              <ErrorModal
-                show={isSubmissionApiError}
-                headerText="An error occurred"
-                contactEmail="orders@artsy.net"
-                closeText="Close"
-                onClose={() => setIsSubmissionApiError(false)}
-              />
-
               <UploadPhotosForm
                 mt={4}
                 maxTotalSize={30}

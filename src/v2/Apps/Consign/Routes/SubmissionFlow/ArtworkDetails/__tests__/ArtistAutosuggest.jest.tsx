@@ -37,6 +37,8 @@ jest.mock("react-relay", () => ({
 import { fetchQuery } from "react-relay"
 import { artworkDetailsValidationSchema } from "../../Utils/validation"
 
+const mockErrorHandler = jest.fn(arg => arg)
+
 let formikValues: ArtworkDetailsFormModel
 const renderArtistAutosuggest = (values: ArtworkDetailsFormModel) =>
   mount(
@@ -50,7 +52,7 @@ const renderArtistAutosuggest = (values: ArtworkDetailsFormModel) =>
           formikValues = values
           return (
             <Form>
-              <ArtistAutosuggest />
+              <ArtistAutosuggest handleAutosuggestError={mockErrorHandler} />
             </Form>
           )
         }}
@@ -127,6 +129,17 @@ describe("ArtistAutosuggest", () => {
 
         expect(fetchQuery).toHaveBeenCalledTimes(0)
       })
+    })
+  })
+
+  describe("Autosuggest component", () => {
+    it("fires error handler with correct arg when query failed", async () => {
+      ;(fetchQuery as jest.Mock).mockRejectedValueOnce("no artist")
+
+      await simulateTyping(wrapper, "cas")
+
+      expect(mockErrorHandler).toHaveBeenCalledTimes(1)
+      expect(mockErrorHandler).toHaveBeenCalledWith(true)
     })
   })
 
