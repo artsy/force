@@ -52,7 +52,9 @@ const renderArtistAutosuggest = (values: ArtworkDetailsFormModel) =>
           formikValues = values
           return (
             <Form>
-              <ArtistAutosuggest handleAutosuggestError={mockErrorHandler} />
+              <ArtistAutosuggest
+                onAutosuggestError={() => mockErrorHandler(true)}
+              />
             </Form>
           )
         }}

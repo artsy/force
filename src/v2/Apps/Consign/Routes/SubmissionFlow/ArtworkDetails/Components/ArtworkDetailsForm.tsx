@@ -127,6 +127,7 @@ export const ArtworkDetailsForm: React.FC = () => {
 
     if (!isError) {
       setFieldValue("artistName", "")
+      setFieldValue("artistId", "")
     }
   }
 
@@ -146,7 +147,9 @@ export const ArtworkDetailsForm: React.FC = () => {
       />
       <GridColumns>
         <Column span={6}>
-          <ArtistAutosuggest handleAutosuggestError={handleAutosuggestError} />
+          <ArtistAutosuggest
+            onAutosuggestError={() => handleAutosuggestError(true)}
+          />
         </Column>
         <Column span={6} mt={[2, 0]}>
           <Input

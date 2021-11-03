@@ -63,9 +63,7 @@ export const uploadFileToS3 = (
     request.open("POST", uploadURL, true)
 
     request.onerror = () => {
-      reject(
-        new Error("Network error: Something went wrong while uploading to S3")
-      )
+      reject(new Error("Network error: Something went wrong"))
       return
     }
 
