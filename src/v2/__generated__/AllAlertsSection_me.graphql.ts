@@ -8,9 +8,7 @@ export type AllAlertsSection_me = {
         readonly edges: ReadonlyArray<{
             readonly node: {
                 readonly internalID: string;
-                readonly userAlertSettings: {
-                    readonly name: string | null;
-                };
+                readonly " $fragmentRefs": FragmentRefs<"AlertItem_item">;
             } | null;
         } | null> | null;
     } | null;
@@ -88,27 +86,14 @@ const node: ReaderFragment = {
                 {
                   "alias": null,
                   "args": null,
-                  "concreteType": "SavedSearchUserAlertSettings",
-                  "kind": "LinkedField",
-                  "name": "userAlertSettings",
-                  "plural": false,
-                  "selections": [
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "name",
-                      "storageKey": null
-                    }
-                  ],
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
                   "kind": "ScalarField",
                   "name": "__typename",
                   "storageKey": null
+                },
+                {
+                  "args": null,
+                  "kind": "FragmentSpread",
+                  "name": "AlertItem_item"
                 }
               ],
               "storageKey": null
@@ -154,5 +139,5 @@ const node: ReaderFragment = {
   ],
   "type": "Me"
 };
-(node as any).hash = 'a19701a3f48bffb5bbfe65489e6fa013';
+(node as any).hash = '52fdaab90c3e4c327a6b766a95ada374';
 export default node;

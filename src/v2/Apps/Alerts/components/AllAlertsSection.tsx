@@ -1,6 +1,6 @@
 import { useState } from "react"
 import * as React from "react"
-import { Box, Button, GridColumns, Column } from "@artsy/palette"
+import { Button, GridColumns, Column, Text } from "@artsy/palette"
 import {
   createPaginationContainer,
   graphql,
@@ -8,6 +8,7 @@ import {
 } from "react-relay"
 import { AllAlertsSection_me } from "v2/__generated__/AllAlertsSection_me.graphql"
 import { extractNodes } from "v2/Utils/extractNodes"
+import { AlertItemFragmentContainer } from "./AlertItem"
 
 export interface AllAlertsSectionProps {
   me: AllAlertsSection_me
@@ -16,6 +17,7 @@ export interface AllAlertsSectionProps {
 
 const AllAlertsSection: React.FC<AllAlertsSectionProps> = ({ me, relay }) => {
   const [isLoading, setIsLoading] = useState(false)
+  const nodes = extractNodes(me.savedSearchesConnection)
 
   const handleClick = () => {
     if (!relay.hasMore() || relay.isLoading()) return
@@ -40,21 +42,23 @@ const AllAlertsSection: React.FC<AllAlertsSectionProps> = ({ me, relay }) => {
     })
   }
 
-  const nodes = extractNodes(me.savedSearchesConnection)
-
   if (nodes.length === 0) {
-    return null
+    return (
+      <Text mb={4} variant="sm">
+        No alerts
+      </Text>
+    )
   }
 
   return (
     <>
-      {nodes.map((node, index) => {
-        return (
-          <Box my={6} key={index}>
-            {node.userAlertSettings.name}
-          </Box>
-        )
-      })}
+      <GridColumns my={4}>
+        {nodes.map(node => {
+          return (
+            <AlertItemFragmentContainer key={node.internalID} item={node} />
+          )
+        })}
+      </GridColumns>
 
       <GridColumns my={6}>
         <Column span={12} mx="auto">
@@ -87,9 +91,7 @@ export const AllAlertsPaginationContainer = createPaginationContainer(
           edges {
             node {
               internalID
-              userAlertSettings {
-                name
-              }
+              ...AlertItem_item
             }
           }
         }

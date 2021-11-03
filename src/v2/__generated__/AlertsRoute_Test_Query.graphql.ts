@@ -24,6 +24,13 @@ query AlertsRoute_Test_Query {
   }
 }
 
+fragment AlertItem_item on SearchCriteria {
+  internalID
+  userAlertSettings {
+    name
+  }
+}
+
 fragment AlertsRoute_me on Me {
   name
   ...AllAlertsSection_me
@@ -34,9 +41,7 @@ fragment AllAlertsSection_me on Me {
     edges {
       node {
         internalID
-        userAlertSettings {
-          name
-        }
+        ...AlertItem_item
         __typename
       }
       cursor
@@ -222,7 +227,7 @@ return {
     "metadata": {},
     "name": "AlertsRoute_Test_Query",
     "operationKind": "query",
-    "text": "query AlertsRoute_Test_Query {\n  me {\n    ...AlertsRoute_me\n    id\n  }\n}\n\nfragment AlertsRoute_me on Me {\n  name\n  ...AllAlertsSection_me\n}\n\nfragment AllAlertsSection_me on Me {\n  savedSearchesConnection(first: 10) {\n    edges {\n      node {\n        internalID\n        userAlertSettings {\n          name\n        }\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query AlertsRoute_Test_Query {\n  me {\n    ...AlertsRoute_me\n    id\n  }\n}\n\nfragment AlertItem_item on SearchCriteria {\n  internalID\n  userAlertSettings {\n    name\n  }\n}\n\nfragment AlertsRoute_me on Me {\n  name\n  ...AllAlertsSection_me\n}\n\nfragment AllAlertsSection_me on Me {\n  savedSearchesConnection(first: 10) {\n    edges {\n      node {\n        internalID\n        ...AlertItem_item\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();

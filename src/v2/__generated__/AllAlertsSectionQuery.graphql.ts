@@ -30,14 +30,19 @@ query AllAlertsSectionQuery(
   }
 }
 
+fragment AlertItem_item on SearchCriteria {
+  internalID
+  userAlertSettings {
+    name
+  }
+}
+
 fragment AllAlertsSection_me_1G22uz on Me {
   savedSearchesConnection(first: $count, after: $cursor) {
     edges {
       node {
         internalID
-        userAlertSettings {
-          name
-        }
+        ...AlertItem_item
         __typename
       }
       cursor
@@ -251,7 +256,7 @@ return {
     "metadata": {},
     "name": "AllAlertsSectionQuery",
     "operationKind": "query",
-    "text": "query AllAlertsSectionQuery(\n  $count: Int!\n  $cursor: String\n) {\n  me {\n    ...AllAlertsSection_me_1G22uz\n    id\n  }\n}\n\nfragment AllAlertsSection_me_1G22uz on Me {\n  savedSearchesConnection(first: $count, after: $cursor) {\n    edges {\n      node {\n        internalID\n        userAlertSettings {\n          name\n        }\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query AllAlertsSectionQuery(\n  $count: Int!\n  $cursor: String\n) {\n  me {\n    ...AllAlertsSection_me_1G22uz\n    id\n  }\n}\n\nfragment AlertItem_item on SearchCriteria {\n  internalID\n  userAlertSettings {\n    name\n  }\n}\n\nfragment AllAlertsSection_me_1G22uz on Me {\n  savedSearchesConnection(first: $count, after: $cursor) {\n    edges {\n      node {\n        internalID\n        ...AlertItem_item\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
