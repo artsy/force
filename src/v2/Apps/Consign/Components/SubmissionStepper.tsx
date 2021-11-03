@@ -3,9 +3,7 @@ import { Box, Step, Stepper } from "@artsy/palette"
 import { FC } from "react"
 
 interface SubmissionStepperProps {
-  currentStep: "Artwork Details" | "Upload Photos"
-  // TODO: SWA-78
-  // | "Contact Information"
+  currentStep: "Artwork Details" | "Upload Photos" | "Contact Information"
 }
 
 function typedArray<T extends string>(...elems: T[]): T[] {
@@ -14,16 +12,15 @@ function typedArray<T extends string>(...elems: T[]): T[] {
 
 export const submissionFlowSteps = typedArray(
   "Artwork Details",
-  "Upload Photos"
-  // TODO: SWA-78
-  // "Contact Information"
+  "Upload Photos",
+  "Contact Information"
 )
 
 export const submissionFlowStepsMobile = typedArray(
   "Artwork",
-  "Photos"
+  "Photos",
   // TODO: SWA-78
-  // "Contact"
+  "Contact"
 )
 
 export const SubmissionStepper: FC<SubmissionStepperProps> = ({
