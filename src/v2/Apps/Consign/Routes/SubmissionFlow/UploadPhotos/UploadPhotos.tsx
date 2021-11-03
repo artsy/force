@@ -1,3 +1,4 @@
+import { useState } from "react"
 import { Box, Button, Text } from "@artsy/palette"
 import { Form, Formik } from "formik"
 import { SubmissionStepper } from "v2/Apps/Consign/Components/SubmissionStepper"
@@ -13,6 +14,7 @@ import { uploadPhotosValidationSchema } from "../Utils/validation"
 import { useSystemContext } from "v2/System"
 import { openAuthModal } from "v2/Utils/openAuthModal"
 import { ModalType } from "v2/Components/Authentication/Types"
+import { ErrorModal } from "v2/Components/Modal/ErrorModal"
 import { ContextModule, Intent } from "@artsy/cohesion"
 import { createConsignSubmission } from "../Utils/createConsignSubmission"
 import { BackLink } from "v2/Components/Links/BackLink"
@@ -25,6 +27,7 @@ export const UploadPhotos: React.FC = () => {
     },
   } = useRouter()
 
+  const [isSubmissionApiError, setIsSubmissionApiError] = useState(false)
   const { mediator, isLoggedIn, relayEnvironment, user } = useSystemContext()
   const {
     submission,
@@ -54,9 +57,13 @@ export const UploadPhotos: React.FC = () => {
         })
       } else {
         if (relayEnvironment && submission) {
-          await createConsignSubmission(relayEnvironment, submission, user)
-          removeSubmission()
-          router.push(`/consign/submission/${submissionId}/thank-you`)
+          try {
+            await createConsignSubmission(relayEnvironment, submission, user)
+            removeSubmission()
+            router.push(`/consign/submission/${submissionId}/thank-you`)
+          } catch (error) {
+            setIsSubmissionApiError(true)
+          }
         }
       }
     }
@@ -123,6 +130,14 @@ export const UploadPhotos: React.FC = () => {
 
           return (
             <Form>
+              <ErrorModal
+                show={isSubmissionApiError}
+                headerText="An error occurred"
+                contactEmail="orders@artsy.net"
+                closeText="Close"
+                onClose={() => setIsSubmissionApiError(false)}
+              />
+
               <UploadPhotosForm
                 mt={4}
                 maxTotalSize={30}
@@ -142,8 +157,12 @@ export const UploadPhotos: React.FC = () => {
 
               <Button
                 width={["100%", "auto"]}
-                disabled={!isValid || isSubmitting}
-                loading={isSubmitting || values.photos.some(c => !c.s3Key)}
+                disabled={
+                  !isValid ||
+                  isSubmitting ||
+                  values.photos.some(c => c.errorMessage)
+                }
+                loading={isSubmitting || values.photos.some(c => c.loading)}
                 type="submit"
               >
                 {/* TODO: SWA-78 */}
