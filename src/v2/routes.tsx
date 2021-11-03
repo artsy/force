@@ -1,4 +1,5 @@
 import { AppRouteConfig } from "v2/System/Router/Route"
+import { alertsRoutes } from "./Apps/Alerts/alertsRoutes"
 import { artistRoutes } from "v2/Apps/Artist/artistRoutes"
 import { artistSeriesRoutes } from "v2/Apps/ArtistSeries/artistSeriesRoutes"
 import { artistsRoutes } from "v2/Apps/Artists/artistsRoutes"
@@ -38,6 +39,7 @@ import { auction2Routes } from "./Apps/Auction2/auction2Routes"
 
 export function getAppRoutes(): AppRouteConfig[] {
   return buildAppRoutes([
+    { routes: alertsRoutes },
     { routes: artistRoutes },
     { routes: artistSeriesRoutes },
     { routes: artistsRoutes },
