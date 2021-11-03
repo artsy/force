@@ -13,6 +13,6 @@ export const handleArtworkImageDownload = async ({ req, res }) => {
     if (req.user) {
       imageRequest.set("X-ACCESS-TOKEN", req.user.get("accessToken"))
     }
-    res.redirect(302, imageRequest.url.replace("original", "normalized"))
+    res.redirect(302, imageRequest.url)
   }
 }
