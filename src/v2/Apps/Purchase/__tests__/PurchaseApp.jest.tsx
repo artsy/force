@@ -74,7 +74,7 @@ describe("Purchase app", () => {
         const component = await render(mockMe, userType)
         const text = component.text()
         expect(text).toContain(
-          "Moira RoseSaves & FollowsCollector ProfileOrder HistoryBidsSettingsPaymentsShipping Dec 19, 2019Pendingprocessing•Track orderLisa BreslowGramercy Park SouthAGA Gallery New York, NYOrder No.abcdefgTotal$12,000Payment MethodN/AFulfillmentDeliveryMore infoNeed Help? Contact Us.1234…7Navigate leftPrevNextNavigate right"
+          "Moira RoseSaves & FollowsCollector ProfileOrder HistoryBidsSettingsPaymentsShipping Dec 19, 2019PendingPending•Track orderLisa BreslowGramercy Park SouthAGA Gallery New York, NYOrder No.abcdefgTotal$12,000Payment MethodN/AFulfillmentDeliveryMore infoNeed Help? Contact Us.1234…7Navigate leftPrevNextNavigate right"
         )
       })
     })
