@@ -1,4 +1,5 @@
 import { Text, Button } from "@artsy/palette"
+import { SubmissionStepper } from "v2/Apps/Consign/Components/SubmissionStepper"
 import { useSystemContext } from "v2/System"
 import { openAuthModal } from "v2/Utils/openAuthModal"
 import { ModalType } from "v2/Components/Authentication/Types"
@@ -15,6 +16,8 @@ import { ContactInformation_me } from "v2/__generated__/ContactInformation_me.gr
 import { useSubmission } from "../Utils/useSubmission"
 import { contactInformationValidationSchema } from "../Utils/validation"
 import { BackLink } from "v2/Components/Links/BackLink"
+import { ErrorModal } from "v2/Components/Modal/ErrorModal"
+import { useState } from "react"
 
 export interface ContactInformationProps {
   me: ContactInformation_me
@@ -29,6 +32,7 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
       params: { id },
     },
   } = useRouter()
+  const [isSubmissionApiError, setIsSubmissionApiError] = useState(false)
   const { mediator, isLoggedIn, relayEnvironment, user } = useSystemContext()
   const {
     submission,
@@ -57,9 +61,13 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
       })
     } else {
       if (relayEnvironment && submission) {
-        await createConsignSubmission(relayEnvironment, submission, user)
-        removeSubmission()
-        router.push(`/consign/submission/${submissionId}/thank-you`)
+        try {
+          await createConsignSubmission(relayEnvironment, submission, user?.id)
+          removeSubmission()
+          router.push(`/consign/submission/${submissionId}/thank-you`)
+        } catch (error) {
+          setIsSubmissionApiError(true)
+        }
       }
     }
   }
@@ -74,8 +82,7 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
         Back
       </BackLink>
 
-      {/* TODO: SWA-78 */}
-      {/* <SubmissionStepper currentStep="Contact Information" /> */}
+      <SubmissionStepper currentStep="Contact Information" />
 
       <Text mt={4} variant="lg">
         Let us know how to reach you
@@ -83,6 +90,14 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
       <Text mt={1} variant="md" color="black60">
         We&#39;ll only use these details to share updates on your submission.
       </Text>
+
+      <ErrorModal
+        show={isSubmissionApiError}
+        headerText="An error occurred"
+        contactEmail="consign@artsymail.com"
+        closeText="Close"
+        onClose={() => setIsSubmissionApiError(false)}
+      />
 
       <Formik<ContactInformationFormModel>
         initialValues={{
