@@ -31,6 +31,7 @@ describe("NavBarUserMenu", () => {
       ["/user/purchases", "Pending Order History"],
       ["/user/saves", "Save Saves & Follows"],
       ["/profile/edit", "User Collector Profile"],
+      ["/user/alerts", "Watch lot Alerts"],
       ["/user/edit", "Settings Settings"],
     ])
 

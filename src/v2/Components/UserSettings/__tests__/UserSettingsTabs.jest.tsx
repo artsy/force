@@ -8,6 +8,7 @@ describe("UserSettingsTabs", () => {
 
   const tabs = [
     ["/user/saves", "Saves & Follows"],
+    ["/user/alerts", "Alerts"],
     ["/profile/edit", "Collector Profile"],
     ["/user/purchases", "Order History"],
     ["/user/auctions", "Bids"],
