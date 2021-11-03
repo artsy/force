@@ -16,13 +16,17 @@ const logger = createLogger("createConsignSubmission.ts")
 export const createConsignSubmission = async (
   relayEnvironment: Environment,
   submission: SubmissionModel,
-  user: User
+  userId?: string
 ) => {
-  if (!submission || !submission.uploadPhotosForm) {
+  if (
+    !submission ||
+    !submission.uploadPhotosForm ||
+    !submission.contactInformationForm
+  ) {
     return
   }
 
-  const input = createConsignSubmissionInput(submission, user)
+  const input = createConsignSubmissionInput(submission)
 
   const submissionId = await createConsignSubmissionMutation(
     relayEnvironment,
@@ -32,8 +36,8 @@ export const createConsignSubmission = async (
   trackEvent({
     action: ActionType.consignmentSubmitted,
     submission_id: submissionId,
-    user_id: user?.id,
-    user_email: user?.email,
+    user_id: userId,
+    user_email: submission.contactInformationForm.email,
   })
 
   const convectionKey = await getConvectionGeminiKey(relayEnvironment)

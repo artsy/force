@@ -6,8 +6,6 @@ import { UploadPhotos } from "../UploadPhotos"
 import { flushPromiseQueue } from "v2/DevTools"
 import { SystemContextProvider } from "v2/System"
 import { MBSize } from "../../Utils/fileUtils"
-import * as openAuthModal from "v2/Utils/openAuthModal"
-import { createConsignSubmission } from "../../Utils/createConsignSubmission"
 
 jest.unmock("react-relay")
 
@@ -56,18 +54,10 @@ jest.mock("../../Utils/fileUtils", () => ({
     }),
 }))
 
-jest.mock("../../Utils/createConsignSubmission", () => ({
-  ...jest.requireActual("../../Utils/createConsignSubmission"),
-  createConsignSubmission: jest.fn(),
-}))
-
-const openAuthModalSpy = jest.spyOn(openAuthModal, "openAuthModal")
-let user: User = undefined
-
 const { getWrapper } = setupTestWrapper({
   Component: () => {
     return (
-      <SystemContextProvider user={user} isLoggedIn={!!user}>
+      <SystemContextProvider>
         <UploadPhotos />
       </SystemContextProvider>
     )
@@ -94,11 +84,6 @@ describe("UploadPhotos", () => {
     jest.spyOn(global, "FileReader").mockImplementation(function () {
       this.readAsDataURL = jest.fn()
     })
-  })
-
-  afterEach(() => {
-    user = undefined
-    openAuthModalSpy.mockReset()
   })
 
   it("renders correct", async () => {
@@ -252,87 +237,41 @@ describe("UploadPhotos", () => {
     expect(wrapper.find(PhotoThumbnail)).toHaveLength(1)
   })
 
-  describe("save images to session storage", () => {
-    it("if user not logged in", async () => {
-      const wrapper = getWrapper()
+  it("save images to session storage", async () => {
+    const wrapper = getWrapper()
 
-      const dropzoneInput = wrapper
-        .find(UploadPhotosForm)
-        .find("[data-test-id='image-dropzone']")
-        .find("input")
+    const dropzoneInput = wrapper
+      .find(UploadPhotosForm)
+      .find("[data-test-id='image-dropzone']")
+      .find("input")
 
-      dropzoneInput.simulate("change", {
-        target: {
-          files: [
-            {
-              name: "foo.png",
-              path: "foo.png",
-              type: "image/png",
-              size: 20000,
-            },
-          ],
-        },
-      })
-
-      await flushPromiseQueue()
-      wrapper.update()
-
-      wrapper.find("Form").simulate("submit")
-
-      await flushPromiseQueue()
-      wrapper.update()
-
-      expect(mockRouterPush).not.toHaveBeenCalled()
-      expect(openAuthModalSpy).toBeCalled()
+    dropzoneInput.simulate("change", {
+      target: {
+        files: [
+          {
+            name: "foo.png",
+            path: "foo.png",
+            type: "image/png",
+            size: 20000,
+          },
+        ],
+      },
     })
 
-    it("if user logged in", async () => {
-      user = {
-        email: "test@test.test",
-      }
+    await flushPromiseQueue()
+    wrapper.update()
 
-      const wrapper = getWrapper()
+    wrapper.find("Form").simulate("submit")
 
-      const dropzoneInput = wrapper
-        .find(UploadPhotosForm)
-        .find("[data-test-id='image-dropzone']")
-        .find("input")
+    await flushPromiseQueue()
+    wrapper.update()
 
-      dropzoneInput.simulate("change", {
-        target: {
-          files: [
-            {
-              name: "foo.png",
-              path: "foo.png",
-              type: "image/png",
-              size: 20000,
-            },
-          ],
-        },
-      })
+    expect(wrapper.find(PhotoThumbnail)).toHaveLength(1)
 
-      expect(sessionStorage.setItem).toHaveBeenCalled()
-
-      await flushPromiseQueue()
-      wrapper.update()
-
-      wrapper.find("Form").simulate("submit")
-
-      await flushPromiseQueue()
-      wrapper.update()
-
-      expect(createConsignSubmission).toHaveBeenCalled()
-      expect(sessionStorage.removeItem).toHaveBeenCalled()
-      // TODO: SWA-78
-      // expect(mockRouterPush).toHaveBeenCalled()
-      // expect(mockRouterPush).toHaveBeenCalledWith({
-      //   pathname: "/consign/submission/1/contact-information",
-      // })
-      expect(mockRouterPush).toHaveBeenCalled()
-      expect(mockRouterPush).toHaveBeenCalledWith(
-        "/consign/submission/1/thank-you"
-      )
-      expect(openAuthModalSpy).not.toBeCalled()
+    expect(sessionStorage.setItem).toHaveBeenCalled()
+    expect(mockRouterPush).toHaveBeenCalled()
+    expect(mockRouterPush).toHaveBeenCalledWith({
+      pathname: "/consign/submission/1/contact-information",
     })
   })
 

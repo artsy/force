@@ -10,11 +10,6 @@ import { Photo } from "../Utils/fileUtils"
 import { useRouter } from "v2/System/Router/useRouter"
 import { useSubmission } from "../Utils/useSubmission"
 import { uploadPhotosValidationSchema } from "../Utils/validation"
-import { useSystemContext } from "v2/System"
-import { openAuthModal } from "v2/Utils/openAuthModal"
-import { ModalType } from "v2/Components/Authentication/Types"
-import { ContextModule, Intent } from "@artsy/cohesion"
-import { createConsignSubmission } from "../Utils/createConsignSubmission"
 import { BackLink } from "v2/Components/Links/BackLink"
 
 export const UploadPhotos: React.FC = () => {
@@ -25,40 +20,13 @@ export const UploadPhotos: React.FC = () => {
     },
   } = useRouter()
 
-  const { mediator, isLoggedIn, relayEnvironment, user } = useSystemContext()
-  const {
-    submission,
-    saveSubmission,
-    submissionId,
-    removeSubmission,
-  } = useSubmission(id)
+  const { submission, saveSubmission, submissionId } = useSubmission(id)
 
   const handleSubmit = async () => {
     if (submission) {
-      // TODO: SWA-78
-      // router.push({
-      //   pathname: `/consign/submission/${submissionId}/contact-information`,
-      // })
-
-      if (!isLoggedIn && mediator) {
-        openAuthModal(mediator, {
-          mode: ModalType.signup,
-          intent: Intent.consign,
-          contextModule: ContextModule.consignSubmissionFlow,
-          redirectTo: `/consign/submission/${submissionId}/thank-you`,
-          afterSignUpAction: {
-            action: "save",
-            kind: "submissions",
-            objectId: submissionId,
-          },
-        })
-      } else {
-        if (relayEnvironment && submission) {
-          await createConsignSubmission(relayEnvironment, submission, user)
-          removeSubmission()
-          router.push(`/consign/submission/${submissionId}/thank-you`)
-        }
-      }
+      router.push({
+        pathname: `/consign/submission/${submissionId}/contact-information`,
+      })
     }
   }
 
@@ -146,9 +114,7 @@ export const UploadPhotos: React.FC = () => {
                 loading={isSubmitting || values.photos.some(c => !c.s3Key)}
                 type="submit"
               >
-                {/* TODO: SWA-78 */}
-                {/* Save and Continue */}
-                Submit Artwork
+                Save and Continue
               </Button>
             </Form>
           )
