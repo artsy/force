@@ -43,13 +43,9 @@ const file = new File([new Array(10000).join(" ")], "foo.png", {
 })
 
 describe("createConsignSubmission", () => {
-  let user, submission: SubmissionModel, relayEnvironment
+  let submission: SubmissionModel, relayEnvironment
 
   beforeEach(() => {
-    user = {
-      id: "1",
-      email: "test@test.test",
-    }
     submission = {
       artworkDetailsForm: {
         artistId: "artistId",
@@ -79,6 +75,11 @@ describe("createConsignSubmission", () => {
           },
         ],
       },
+      contactInformationForm: {
+        name: "name",
+        email: "test@test.test",
+        phone: "123456789",
+      },
     }
     relayEnvironment = {} as Environment
     ;(createGeminiAssetWithS3Credentials as jest.Mock).mockClear()
@@ -90,8 +91,7 @@ describe("createConsignSubmission", () => {
     it("submition empty", async () => {
       const result = await createConsignSubmission(
         relayEnvironment,
-        (null as unknown) as SubmissionModel,
-        user
+        (null as unknown) as SubmissionModel
       )
 
       expect(result).toBeUndefined()
@@ -100,8 +100,7 @@ describe("createConsignSubmission", () => {
     it("uploadPhotosForm empty", async () => {
       const result = await createConsignSubmission(
         relayEnvironment,
-        {} as SubmissionModel,
-        user
+        {} as SubmissionModel
       )
 
       expect(result).toBeUndefined()
@@ -109,11 +108,7 @@ describe("createConsignSubmission", () => {
   })
 
   it("creates submission", async () => {
-    const result = await createConsignSubmission(
-      relayEnvironment,
-      submission,
-      user
-    )
+    const result = await createConsignSubmission(relayEnvironment, submission)
 
     const input = {
       artistID: "artistId",
@@ -128,9 +123,9 @@ describe("createConsignSubmission", () => {
       depth: "",
       dimensionsMetric: "units",
       state: "SUBMITTED",
-      userEmail: user.email,
-      userName: undefined,
-      userPhone: undefined,
+      userEmail: "test@test.test",
+      userName: "name",
+      userPhone: "123456789",
       provenance: "provenance",
     }
 
@@ -143,19 +138,19 @@ describe("createConsignSubmission", () => {
   })
 
   it("tracks consignment submitted event", async () => {
-    await createConsignSubmission(relayEnvironment, submission, user)
+    await createConsignSubmission(relayEnvironment, submission)
 
     expect(trackEvent).toHaveBeenCalled()
     expect(trackEvent).toHaveBeenCalledWith({
       action: ActionType.consignmentSubmitted,
       submission_id: "123",
-      user_id: "1",
+      user_id: undefined,
       user_email: "test@test.test",
     })
   })
 
   it("saves images", async () => {
-    await createConsignSubmission(relayEnvironment, submission, user)
+    await createConsignSubmission(relayEnvironment, submission)
 
     expect(createGeminiAssetWithS3Credentials).toHaveBeenCalledTimes(1)
     expect(createGeminiAssetWithS3Credentials).toHaveBeenCalledWith(

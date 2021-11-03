@@ -63,7 +63,7 @@ const mockCreateConsignSubmission = createConsignSubmission as jest.Mock
 const { getWrapper } = setupTestWrapper({
   Component: () => {
     return (
-      <SystemContextProvider user={user} isLoggedIn={!!user}>
+      <SystemContextProvider>
         <UploadPhotos />
       </SystemContextProvider>
     )
@@ -250,82 +250,41 @@ describe("UploadPhotos", () => {
     expect(wrapper.find(PhotoThumbnail)).toHaveLength(1)
   })
 
-  describe("save images to session storage", () => {
-    it("if user not logged in", async () => {
-      const wrapper = getWrapper()
+  it("save images to session storage", async () => {
+    const wrapper = getWrapper()
 
-      const dropzoneInput = wrapper
-        .find(UploadPhotosForm)
-        .find("[data-test-id='image-dropzone']")
-        .find("input")
+    const dropzoneInput = wrapper
+      .find(UploadPhotosForm)
+      .find("[data-test-id='image-dropzone']")
+      .find("input")
 
-      dropzoneInput.simulate("change", {
-        target: {
-          files: [
-            {
-              name: "foo.png",
-              path: "foo.png",
-              type: "image/png",
-              size: 20000,
-            },
-          ],
-        },
-      })
-
-      await flushPromiseQueue()
-      wrapper.update()
-
-      wrapper.find("Form").simulate("submit")
-
-      await flushPromiseQueue()
-      wrapper.update()
-
-      expect(mockRouterPush).not.toHaveBeenCalled()
-      expect(openAuthModalSpy).toBeCalled()
+    dropzoneInput.simulate("change", {
+      target: {
+        files: [
+          {
+            name: "foo.png",
+            path: "foo.png",
+            type: "image/png",
+            size: 20000,
+          },
+        ],
+      },
     })
 
-    it("if user logged in", async () => {
-      user = {
-        email: "test@test.test",
-      }
+    await flushPromiseQueue()
+    wrapper.update()
 
-      const wrapper = getWrapper()
+    wrapper.find("Form").simulate("submit")
 
-      const dropzoneInput = wrapper
-        .find(UploadPhotosForm)
-        .find("[data-test-id='image-dropzone']")
-        .find("input")
+    await flushPromiseQueue()
+    wrapper.update()
 
-      dropzoneInput.simulate("change", {
-        target: {
-          files: [
-            {
-              name: "foo.png",
-              path: "foo.png",
-              type: "image/png",
-              size: 20000,
-            },
-          ],
-        },
-      })
+    expect(wrapper.find(PhotoThumbnail)).toHaveLength(1)
 
-      expect(sessionStorage.setItem).toHaveBeenCalled()
-
-      await flushPromiseQueue()
-      wrapper.update()
-
-      wrapper.find("Form").simulate("submit")
-
-      await flushPromiseQueue()
-      wrapper.update()
-
-      expect(createConsignSubmission).toHaveBeenCalled()
-      expect(sessionStorage.removeItem).toHaveBeenCalled()
-
-      expect(mockRouterPush).toHaveBeenCalled()
-      expect(mockRouterPush).toHaveBeenCalledWith({
-        pathname: "/consign/submission/1/contact-information",
-      })
+    expect(sessionStorage.setItem).toHaveBeenCalled()
+    expect(mockRouterPush).toHaveBeenCalled()
+    expect(mockRouterPush).toHaveBeenCalledWith({
+      pathname: "/consign/submission/1/contact-information",
     })
   })
 
