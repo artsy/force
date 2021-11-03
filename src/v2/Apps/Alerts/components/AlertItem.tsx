@@ -1,4 +1,11 @@
-import { BorderBox, Button, Column, Flex, Spacer, Text } from "@artsy/palette"
+import {
+  BorderBox,
+  Clickable,
+  Column,
+  Flex,
+  Spacer,
+  Text,
+} from "@artsy/palette"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { AlertItem_item } from "v2/__generated__/AlertItem_item.graphql"
@@ -16,12 +23,14 @@ export const AlertItem: React.FC<AlertItemProps> = ({ item }) => {
             {item.userAlertSettings.name}
           </Text>
         </Flex>
-        <Flex flexDirection="row" ml={1}>
-          <Button variant="secondaryOutline" size="small">
-            Delete
-          </Button>
+        <Flex flexDirection="row">
+          <Clickable textDecoration="underline">
+            <Text variant="sm">Edit</Text>
+          </Clickable>
           <Spacer ml={1} />
-          <Button size="small">Edit</Button>
+          <Clickable textDecoration="underline" color="red100">
+            <Text variant="sm">Delete</Text>
+          </Clickable>
         </Flex>
       </BorderBox>
     </Column>
