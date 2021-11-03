@@ -136,7 +136,7 @@ export const ArtworkDetailsForm: React.FC = () => {
       <ErrorModal
         show={isAutosuggestError}
         headerText="An error occurred"
-        contactEmail="orders@artsy.net"
+        contactEmail="consign@artsymail.com"
         closeText="Close"
         onClose={() => handleAutosuggestError(false)}
       />

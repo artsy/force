@@ -108,7 +108,7 @@ export const UploadPhotos: React.FC = () => {
       <ErrorModal
         show={isSubmissionApiError}
         headerText="An error occurred"
-        contactEmail="orders@artsy.net"
+        contactEmail="consign@artsymail.com"
         closeText="Close"
         onClose={() => setIsSubmissionApiError(false)}
       />
