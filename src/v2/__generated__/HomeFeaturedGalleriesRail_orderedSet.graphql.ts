@@ -8,22 +8,9 @@ export type HomeFeaturedGalleriesRail_orderedSet = {
         readonly edges: ReadonlyArray<{
             readonly node: ({
                 readonly __typename: "Profile";
-                readonly initials: string | null;
-                readonly internalID: string;
-                readonly isFollowed: boolean | null;
-                readonly name: string | null;
-                readonly slug: string;
-                readonly href: string | null;
-                readonly location: string | null;
-                readonly image: {
-                    readonly cropped: {
-                        readonly src: string;
-                        readonly srcSet: string;
-                        readonly width: number;
-                        readonly height: number;
-                    } | null;
-                } | null;
-                readonly " $fragmentRefs": FragmentRefs<"FollowProfileButton_profile">;
+                readonly owner: {
+                    readonly " $fragmentRefs": FragmentRefs<"PartnerCell_partner">;
+                };
             } | {
                 /*This will never be '%other', but we need some
                 value in case none of the concrete values match.*/
@@ -90,117 +77,18 @@ const node: ReaderFragment = {
                     {
                       "alias": null,
                       "args": null,
-                      "kind": "ScalarField",
-                      "name": "initials",
-                      "storageKey": null
-                    },
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "internalID",
-                      "storageKey": null
-                    },
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "isFollowed",
-                      "storageKey": null
-                    },
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "name",
-                      "storageKey": null
-                    },
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "slug",
-                      "storageKey": null
-                    },
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "href",
-                      "storageKey": null
-                    },
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "location",
-                      "storageKey": null
-                    },
-                    {
-                      "alias": null,
-                      "args": null,
-                      "concreteType": "Image",
+                      "concreteType": null,
                       "kind": "LinkedField",
-                      "name": "image",
+                      "name": "owner",
                       "plural": false,
                       "selections": [
                         {
-                          "alias": null,
-                          "args": [
-                            {
-                              "kind": "Literal",
-                              "name": "height",
-                              "value": 230
-                            },
-                            {
-                              "kind": "Literal",
-                              "name": "width",
-                              "value": 325
-                            }
-                          ],
-                          "concreteType": "CroppedImageUrl",
-                          "kind": "LinkedField",
-                          "name": "cropped",
-                          "plural": false,
-                          "selections": [
-                            {
-                              "alias": null,
-                              "args": null,
-                              "kind": "ScalarField",
-                              "name": "src",
-                              "storageKey": null
-                            },
-                            {
-                              "alias": null,
-                              "args": null,
-                              "kind": "ScalarField",
-                              "name": "srcSet",
-                              "storageKey": null
-                            },
-                            {
-                              "alias": null,
-                              "args": null,
-                              "kind": "ScalarField",
-                              "name": "width",
-                              "storageKey": null
-                            },
-                            {
-                              "alias": null,
-                              "args": null,
-                              "kind": "ScalarField",
-                              "name": "height",
-                              "storageKey": null
-                            }
-                          ],
-                          "storageKey": "cropped(height:230,width:325)"
+                          "args": null,
+                          "kind": "FragmentSpread",
+                          "name": "PartnerCell_partner"
                         }
                       ],
                       "storageKey": null
-                    },
-                    {
-                      "args": null,
-                      "kind": "FragmentSpread",
-                      "name": "FollowProfileButton_profile"
                     }
                   ],
                   "type": "Profile"
@@ -217,5 +105,5 @@ const node: ReaderFragment = {
   ],
   "type": "OrderedSet"
 };
-(node as any).hash = 'ad6d002279e9b40dd32d5e3f8c72602f';
+(node as any).hash = 'c1d656d65f824f2ce8b585cecd25cd2c';
 export default node;

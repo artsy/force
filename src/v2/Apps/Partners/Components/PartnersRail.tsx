@@ -1,6 +1,6 @@
 import { compact, take } from "lodash"
-import { useMemo } from "react";
-import * as React from "react";
+import { useMemo } from "react"
+import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { PartnerCellFragmentContainer } from "v2/Components/Cells/PartnerCell"
 import { Rail } from "v2/Components/Rail"
@@ -40,14 +40,20 @@ export const PartnersRailFragmentContainer = createFragmentContainer(
   {
     partnerCategory: graphql`
       fragment PartnersRail_partnerCategory on PartnerCategory
-        @argumentDefinitions(type: { type: "[PartnerClassification!]!" }) {
+        @argumentDefinitions(
+          category: { type: "[String]" }
+          near: { type: "String" }
+          type: { type: "[PartnerClassification!]!" }
+        ) {
         name
         primary: partners(
+          defaultProfilePublic: true
           eligibleForListing: true
           eligibleForPrimaryBucket: true
-          type: $type
+          near: $near
+          partnerCategories: $category
           sort: RANDOM_SCORE_DESC
-          defaultProfilePublic: true
+          type: $type
         ) {
           internalID
           ...PartnerCell_partner
@@ -56,6 +62,8 @@ export const PartnersRailFragmentContainer = createFragmentContainer(
           eligibleForListing: true
           eligibleForSecondaryBucket: true
           type: $type
+          near: $near
+          partnerCategories: $category
           sort: RANDOM_SCORE_DESC
           defaultProfilePublic: true
         ) {

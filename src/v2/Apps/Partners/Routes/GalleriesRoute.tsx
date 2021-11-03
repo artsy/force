@@ -7,23 +7,26 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { compact } from "lodash"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { MetaTags } from "v2/Components/MetaTags"
 import { GalleriesRoute_viewer } from "v2/__generated__/GalleriesRoute_viewer.graphql"
-import { PartnersRailFragmentContainer } from "v2/Apps/Partners/Components/PartnersRail"
 import { PartnersFilters } from "../Components/PartnersFilters"
 import { PartnersFeaturedCarouselFragmentContainer } from "../Components/PartnersFeaturedCarousel"
+import { PartnersFilteredCellsQueryRenderer } from "../Components/PartnersFilteredCells"
+import { PartnersRailsQueryRenderer } from "../Components/PartnersRails"
+import { useRouter } from "v2/System/Router/useRouter"
 
 interface GalleriesRouteProps {
   viewer: GalleriesRoute_viewer
 }
 
 const GalleriesRoute: React.FC<GalleriesRouteProps> = ({ viewer }) => {
-  // TODO: In the original implementation these categories are shuffled.
-  // We need a way to do SSR-stable shuffle.
-  const categories = compact(viewer.partnerCategories)
+  const {
+    match: {
+      location: { query },
+    },
+  } = useRouter()
 
   return (
     <>
@@ -37,14 +40,15 @@ const GalleriesRoute: React.FC<GalleriesRouteProps> = ({ viewer }) => {
 
         <PartnersFilters type="GALLERY" />
 
-        {categories.map((partnerCategory, i) => {
-          return (
-            <PartnersRailFragmentContainer
-              key={i}
-              partnerCategory={partnerCategory}
-            />
-          )
-        })}
+        {"category" in query || "near" in query ? (
+          <PartnersFilteredCellsQueryRenderer
+            type="GALLERY"
+            category={query.category}
+            near={query.near}
+          />
+        ) : (
+          <PartnersRailsQueryRenderer type="GALLERY" />
+        )}
 
         <Separator />
 
@@ -91,11 +95,6 @@ export const GalleriesRouteFragmentContainer = createFragmentContainer(
       fragment GalleriesRoute_viewer on Viewer {
         ...PartnersFeaturedCarousel_viewer
           @arguments(id: "5638fdfb7261690296000031")
-        partnerCategories(categoryType: GALLERY, size: 50, internal: false) {
-          name
-          slug
-          ...PartnersRail_partnerCategory @arguments(type: GALLERY)
-        }
       }
     `,
   }
