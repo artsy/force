@@ -14,7 +14,6 @@ export const artworkRoutes: AppRouteConfig[] = [
   {
     path: "/artwork/:artworkID/:optional?", // There's a `confirm-bid` nested route.
     getComponent: () => ArtworkApp,
-    onServerSideRender: handleArtworkImageDownload,
     onClientSideRender: () => {
       ArtworkApp.preload()
     },
@@ -36,5 +35,10 @@ export const artworkRoutes: AppRouteConfig[] = [
     cacheConfig: {
       force: true,
     },
+  },
+  {
+    path: "/artwork/:artworkID/download/:filename",
+    Component: () => null,
+    onServerSideRender: handleArtworkImageDownload,
   },
 ]
