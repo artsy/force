@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import { track } from "v2/System"
 import { RouteTab, RouteTabs } from "v2/Components/RouteTabs"
 import { Box, Text, TextVariant, useThemeConfig } from "@artsy/palette"
@@ -12,6 +12,10 @@ const routes: Record<"name" | "url", string>[] = [
   {
     name: "Saves & Follows",
     url: "/user/saves",
+  },
+  {
+    name: "Alerts",
+    url: "/user/alerts",
   },
   {
     name: "Collector Profile",

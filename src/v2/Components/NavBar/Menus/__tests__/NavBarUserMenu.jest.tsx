@@ -30,8 +30,8 @@ describe("NavBarUserMenu", () => {
       // Label also includes SVG image title
       ["/user/purchases", "Pending Order History"],
       ["/user/saves", "Save Saves & Follows"],
-      ["/profile/edit", "User Collector Profile"],
       ["/user/alerts", "Watch lot Alerts"],
+      ["/profile/edit", "User Collector Profile"],
       ["/user/edit", "Settings Settings"],
     ])
 
