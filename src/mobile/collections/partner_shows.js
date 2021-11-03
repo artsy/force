@@ -10,7 +10,7 @@ let _PartnerShows
 const _ = require("underscore")
 const Backbone = require("backbone")
 const sd = require("sharify").data
-const Show = require("../models/show")
+const { Show } = require("../models/show")
 const moment = require("moment")
 
 export default _PartnerShows = (function () {

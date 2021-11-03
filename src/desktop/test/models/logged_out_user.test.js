@@ -8,7 +8,7 @@ const benv = require("benv")
 const sinon = require("sinon")
 const Backbone = require("backbone")
 const rewire = require("rewire")
-const LoggedOutUser = rewire("../../models/logged_out_user")
+const { LoggedOutUser } = rewire("../../models/logged_out_user")
 
 describe("LoggedOutUser", function () {
   before(done =>

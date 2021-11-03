@@ -14,7 +14,7 @@ const moment = require('moment');
 const Backbone = require('backbone');
 const { Partner } = require('./partner');
 const { Fair } = require('./fair');
-const { crop, resize } = require('../components/resizer/index.coffee');
+import resizer from '../components/resizer/index';
 const { compactObject } = require('./mixins/compact_object');
 
 export default (_Article = (function() {
@@ -51,7 +51,7 @@ export default (_Article = (function() {
     }
 
     cropUrlFor(attr, ...args) {
-      return crop(this.get(attr), ...Array.from(args));
+      return resizer.crop(this.get(attr), ...Array.from(args));
     }
 
     authorHref() {

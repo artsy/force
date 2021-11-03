@@ -9,11 +9,11 @@ const sinon = require("sinon")
 const { fabricate } = require("@artsy/antigravity")
 const _ = require("underscore")
 const Backbone = require("backbone")
-const setItems = require("../../../models/mixins/set_items")
+const { SetItems } = require("../../../models/mixins/set_items")
 
 class Model extends Backbone.Model {
   static initClass() {
-    _.extend(this.prototype, setItems("FooModelName"))
+    _.extend(this.prototype, SetItems("FooModelName"))
   }
 }
 Model.initClass()

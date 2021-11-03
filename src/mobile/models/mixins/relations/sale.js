@@ -10,8 +10,8 @@ export const SaleRelations = {
 
     const { SaleArtworks } = require('../../../collections/sale_artworks');
     const { Artworks } = require('../../../collections/artworks');
-    const Profile = require('../../profile.coffee');
-    const Sale = require('../../sale.coffee');
+    const { Profile } = require('../../profile');
+    const { Sale } = require('../../sale');
 
     const saleArtworks = new SaleArtworks([], {id: this.id});
     const artworks = new Artworks;

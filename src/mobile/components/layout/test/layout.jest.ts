@@ -1,6 +1,6 @@
 import { logoutEventHandler } from "desktop/lib/deprecated_global_client_setup"
 import { mediator } from "lib/mediator"
-const bootstrap = require("../bootstrap.coffee")
+import bootstrap from "../bootstrap"
 
 jest.mock("jquery.transition", () => ({}))
 jest.mock("desktop/lib/deprecated_global_client_setup", () => ({

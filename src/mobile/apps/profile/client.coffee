@@ -1,6 +1,6 @@
-bootstrap = require '../../components/layout/bootstrap.coffee'
+bootstrap = require '../../components/layout/bootstrap'
 sd = require('sharify').data
-Profile = require '../../models/profile.coffee'
+{ Profile } = require '../../models/profile'
 { Articles } = require '../../collections/articles'
 artworkListTemplate = -> require('../../components/artwork_list/template.jade') arguments...
 articleFigureTemplate = -> require('../../components/article_figure/template.jade') arguments...

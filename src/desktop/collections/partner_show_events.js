@@ -4,7 +4,7 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
  */
 let _PartnerShowEvents
-const PartnerShowEvent = require("../models/partner_show_event")
+const { PartnerShowEvent } = require("../models/partner_show_event")
 const Backbone = require("backbone")
 
 export default _PartnerShowEvents = (function () {

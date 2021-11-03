@@ -9,7 +9,7 @@ const _ = require("underscore")
 const sinon = require("sinon")
 const Backbone = require("backbone")
 const routes = require("../routes")
-const Profile = require("../../../models/profile")
+const { Profile } = require("../../../models/profile")
 
 describe("Profile routes", function () {
   beforeEach(function () {

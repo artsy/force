@@ -20,9 +20,9 @@ const _ = require('underscore');
 const moment = require('moment');
 const { DateMixin } = require('./mixins/date');
 const { ShowRelations } = require('./mixins/relations/show');
-const { AdditionalImage } = require('./additional_image.');
+const { AdditionalImage } = require('./additional_image');
 const { Fetch, Markdown } = require('@artsy/backbone-mixins');
-const { DateHelpers } = require('../components/util/date_helpers.');
+const { DateHelpers } = require('../components/util/date_helpers');
 const { fetchUntilEnd } = Fetch(sd.API_URL);
 
 export default (_Show = (function() {

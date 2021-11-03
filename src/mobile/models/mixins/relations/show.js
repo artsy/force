@@ -14,7 +14,7 @@ export const ShowRelations = {
     const { Artists } = require('../../../collections/artists');
     const { ShowEvents } = require('../../../collections/show_events');
     const { InstallShots } = require('../../../collections/install_shots');
-    const Fair = require('../../fair.coffee');
+    const { Fair } = require('../../fair');
 
     const articles = new Articles;
     articles.url = `${POSITRON_URL}/api/articles?show_id=${this.get('_id')}&published=true`;

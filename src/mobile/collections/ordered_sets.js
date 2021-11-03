@@ -8,7 +8,7 @@
 const _ = require("underscore")
 const sd = require("sharify").data
 const Backbone = require("backbone")
-const OrderedSet = require("../models/ordered_set")
+const { OrderedSet } = require("../models/ordered_set")
 
 class OrderedSetsInner extends Backbone.Collection {
   static initClass() {

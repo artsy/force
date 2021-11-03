@@ -8,7 +8,7 @@ const $ = require("cheerio")
 const fs = require("fs")
 const jade = require("jade")
 const { fabricate } = require("@artsy/antigravity")
-const Profile = require("../../../../../models/profile")
+const { Profile } = require("../../../../../models/profile")
 const template = jade.compile(
   fs.readFileSync((filename = require.resolve("../template.jade"))),
   { filename }

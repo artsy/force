@@ -11,7 +11,7 @@ const Backbone = require("backbone")
 const { stringify } = require("qs")
 const { map, groupBy, toArray, without } = require("underscore")
 const { API_URL, CURRENT_USER } = require("sharify").data
-const SavedArtwork = require("../models/saved_artwork")
+const { SavedArtwork } = require("../models/saved_artwork")
 
 const chunk = function (array, size) {
   if (size == null) {

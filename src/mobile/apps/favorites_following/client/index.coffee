@@ -1,4 +1,4 @@
-bootstrap = require '../../../components/layout/bootstrap.coffee'
+bootstrap = require '../../../components/layout/bootstrap'
 FollowingView = require './following.coffee'
 
 module.exports = ->

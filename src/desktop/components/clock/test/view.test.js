@@ -11,7 +11,7 @@ const moment = require("moment")
 const sinon = require("sinon")
 const rewire = require("rewire")
 const ClockView = rewire("../view.coffee")
-const Sale = require("../../../models/sale")
+const { Sale } = require("../../../models/sale")
 const { fabricate } = require("@artsy/antigravity")
 
 describe("ClockView", function () {

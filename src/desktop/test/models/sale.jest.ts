@@ -2,8 +2,8 @@ import moment from "moment"
 import sinon from "sinon"
 import Backbone from "backbone"
 import { fabricate } from "@artsy/antigravity"
-const Artwork = require("../../models/artwork")
-const Sale = require("../../models/sale")
+const { Artwork } = require("../../models/artwork")
+const { Sale } = require("../../models/sale")
 
 describe("Sale", () => {
   let testContext

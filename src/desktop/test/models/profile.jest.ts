@@ -1,6 +1,6 @@
 import { fabricate } from "@artsy/antigravity"
 import Backbone from "backbone"
-const Profile = require("../../models/profile")
+const { Profile } = require("../../models/profile")
 import sinon from "sinon"
 
 describe("Profile", () => {

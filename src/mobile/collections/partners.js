@@ -8,7 +8,7 @@ const _ = require("underscore")
 const Backbone = require("backbone")
 const { API_URL } = require("sharify").data
 const { AToZ, Fetch } = require("@artsy/backbone-mixins")
-const Partner = require("../models/partner")
+const { Partner } = require("../models/partner")
 
 export default _Partners = (function () {
   _Partners = class Partners extends Backbone.Collection {

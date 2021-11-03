@@ -1,4 +1,4 @@
-const FilterSuggest = require("../../models/filter_suggest")
+const { FilterSuggest } = require("../../models/filter_suggest")
 
 describe("FilterSuggest", () => {
   let testContext

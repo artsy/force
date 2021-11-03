@@ -13,7 +13,7 @@ const { InquiryOutcomeRelations } = require('./mixins/relations/inquiry_outcome'
 export default (_InquiryOutcome = (function() {
   _InquiryOutcome = class InquiryOutcome extends Backbone.Model {
     static initClass() {
-      _.extend(this.prototype, Relations);
+      _.extend(this.prototype, InquiryOutcomeRelations);
 
       this.prototype.urlRoot = `${API_URL}/api/v1/inquiry_request`;
     }

@@ -5,8 +5,8 @@
  */
 const Backbone = require("backbone")
 const sinon = require("sinon")
-const Partner = require("../../../../models/partner")
-const Profile = require("../../../../models/profile")
+const { Partner } = require("../../../../models/partner")
+const { Profile } = require("../../../../models/profile")
 const Contact = require("../../client/contact.coffee")
 const benv = require("benv")
 const { resolve } = require("path")

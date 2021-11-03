@@ -1,8 +1,8 @@
 Backbone = require 'backbone'
-openMultiPage = require '../../../components/multi_page/index.coffee'
+openMultiPage = require '../../../components/multi_page/index'
 { mediator } = require '../../../../lib/mediator'
-ModalView = require '../../../components/modal/view.coffee'
-openSpecialistModal = require '../../../components/specialist_modal/index.coffee'
+{ ModalView } = require '../../../components/modal/view'
+openSpecialistModal = require '../../../components/specialist_modal/index'
 
 module.exports = class ContactView extends Backbone.View
 

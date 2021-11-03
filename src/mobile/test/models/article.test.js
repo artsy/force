@@ -6,7 +6,7 @@
 const Backbone = require("backbone")
 const { fabricate } = require("@artsy/antigravity")
 const rewire = require("rewire")
-const Article = rewire("../../models/article.coffee")
+const { Article } = rewire("../../models/article")
 const sinon = require("sinon")
 const fixtures = require("../helpers/fixtures.coffee")
 

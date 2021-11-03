@@ -7,7 +7,7 @@
 let _Match
 const Backbone = require("backbone")
 const { API_URL } = require("sharify").data
-const Suggestion = require("../models/suggestion")
+const { Suggestion } = require("../models/suggestion")
 
 export default _Match = (function () {
   _Match = class Match extends Backbone.Collection {

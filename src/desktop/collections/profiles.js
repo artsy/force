@@ -6,7 +6,7 @@
 let _Profiles
 const _ = require("underscore")
 const Backbone = require("backbone")
-const Profile = require("../models/profile")
+const { Profile } = require("../models/profile")
 const { API_URL } = require("sharify").data
 const { Fetch, AToZ } = require("@artsy/backbone-mixins")
 

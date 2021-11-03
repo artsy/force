@@ -9,7 +9,7 @@ const fs = require("fs")
 const cheerio = require("cheerio")
 const Backbone = require("backbone")
 const { fabricate } = require("@artsy/antigravity")
-const Partner = require("../../../models/partner")
+const { Partner } = require("../../../models/partner")
 const { Profiles } = require("../../../collections/profiles")
 
 const render = function (templateName) {

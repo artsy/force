@@ -8,7 +8,7 @@ let _FollowArtists
 const _ = require("underscore")
 const sd = require("sharify").data
 const { Follows } = require("./follows")
-const FollowArtist = require("../models/follow_artist")
+const { FollowArtist } = require("../models/follow_artist")
 
 //
 // FollowArtists

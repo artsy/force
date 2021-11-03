@@ -1,6 +1,6 @@
 sd = require('sharify').data
 Backbone = require 'backbone'
-Partner = require '../../models/partner'
+{ Partner } = require '../../models/partner'
 { Profiles } = require '../../collections/profiles'
 
 module.exports.index = (req, res) ->

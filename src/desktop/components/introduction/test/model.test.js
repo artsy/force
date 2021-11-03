@@ -8,8 +8,8 @@ const Backbone = require("backbone")
 const sinon = require("sinon")
 const { fabricate } = require("@artsy/antigravity")
 const Introduction = require("../model")
-const LoggedOutUser = require("../../../models/logged_out_user")
-const Artist = require("../../../models/artist")
+const { LoggedOutUser } = require("../../../models/logged_out_user")
+const { Artist } = require("../../../models/artist")
 const { UserInterests } = require("../../../collections/user_interests")
 
 describe("Introduction", function () {

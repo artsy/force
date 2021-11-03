@@ -5,7 +5,7 @@
  */
 const { fabricate } = require("@artsy/antigravity")
 const rewire = require("rewire")
-const SearchResult = rewire("../../models/search_result.coffee")
+const { SearchResult } = rewire("../../models/search_result")
 const moment = require("moment")
 
 describe("SearchResult", function () {

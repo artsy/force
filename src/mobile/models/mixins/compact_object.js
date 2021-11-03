@@ -11,6 +11,6 @@ export const compactObject = (o) => {
     if (!v) {
       return delete clone[k];
     }
-});
+  });
   return clone;
 }

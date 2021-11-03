@@ -1,4 +1,4 @@
-Profile = require '../../models/profile'
+{ Profile } = require '../../models/profile'
 
 module.exports.index = (req, res, next) ->
   return next() unless req.profile?.isUser()

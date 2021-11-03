@@ -7,8 +7,8 @@ const benv = require("benv")
 const Backbone = require("backbone")
 const { resolve } = require("path")
 const { fabricate, fabricate2 } = require("@artsy/antigravity")
-const Fair = require("../../../../models/fair.coffee")
-const Gene = require("../../../../models/gene.coffee")
+const { Fair } = require("../../../../models/fair")
+const { Gene } = require("../../../../models/gene")
 const { FilterArtworks } = require("../../../../collections/filter_artworks")
 
 describe("Filter / Headline", function () {

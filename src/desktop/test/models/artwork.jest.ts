@@ -3,7 +3,7 @@ import sinon from "sinon"
 import should from "should"
 import Backbone from "backbone"
 import { fabricate } from "@artsy/antigravity"
-const Artwork = require("../../models/artwork")
+const { Artwork } = require("../../models/artwork")
 
 describe("Artwork", () => {
   let testContext: { artwork: any } = { artwork: null }

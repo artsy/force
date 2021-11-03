@@ -6,7 +6,7 @@
 const benv = require("benv")
 const { resolve } = require("path")
 const { fabricate } = require("@artsy/antigravity")
-const Sale = require("../../../models/sale")
+const { Sale } = require("../../../models/sale")
 
 describe("Auctions template", function () {
   before(function () {

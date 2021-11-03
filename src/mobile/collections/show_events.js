@@ -5,7 +5,7 @@
  */
 let _ShowEvents
 const Backbone = require("backbone")
-const ShowEvent = require("../models/show_event")
+const { ShowEvent } = require("../models/show_event")
 
 export default _ShowEvents = (function () {
   _ShowEvents = class ShowEvents extends Backbone.Collection {

@@ -1,4 +1,4 @@
-Shortcut = require '../../models/shortcut'
+{ Shortcut } = require '../../models/shortcut'
 
 @index = (req, res, next) ->
   next() unless req.params.short

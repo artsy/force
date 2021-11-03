@@ -1,4 +1,4 @@
-multiPageView = require '../../../components/multi_page/index.coffee'
+multiPageView = require '../../../components/multi_page/index'
 { openAuthModal } = require '../../../lib/openAuthModal'
 { ModalType } = require "../../../../v2/Components/Authentication/Types"
 { Intent } = require "@artsy/cohesion"

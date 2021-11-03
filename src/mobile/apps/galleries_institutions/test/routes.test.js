@@ -8,7 +8,7 @@ const sinon = require("sinon")
 const Backbone = require("backbone")
 const { fabricate } = require("@artsy/antigravity")
 const routes = require("../routes")
-const Partner = require("../../../models/partner")
+const { Partner } = require("../../../models/partner")
 
 describe("Galleries routes", function () {
   beforeEach(() => sinon.stub(Backbone, "sync").yieldsTo("success", []))

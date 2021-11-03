@@ -10,8 +10,8 @@ const rewire = require("rewire")
 const Backbone = require("backbone")
 const { fabricate } = require("@artsy/antigravity")
 const CurrentUser = require("../../../models/current_user")
-const Artwork = require("../../../models/artwork")
-const ArtworkInquiry = require("../../../models/artwork_inquiry")
+const { Artwork } = require("../../../models/artwork")
+const { ArtworkInquiry } = require("../../../models/artwork_inquiry")
 let openInquiryQuestionnaireFor = null
 
 describe("openInquiryQuestionnaireFor", function () {

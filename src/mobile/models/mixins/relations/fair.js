@@ -9,7 +9,7 @@ export const FairRelations = {
   related() {
     if (this.__related__ != null) { return this.__related__; }
 
-    const Profile = require('../../../models/profile.coffee');
+    const { Profile } = require('../../../models/profile');
 
     const profile_id = this.get('default_profile_id') || __guard__(this.get('organizer'), x => x.profile_id);
 

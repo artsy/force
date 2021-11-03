@@ -1,7 +1,7 @@
 import _ from "underscore"
 import sinon from "sinon"
 const Backone = require("backbone")
-const SaleArtwork = require("../../models/sale_artwork")
+const { SaleArtwork } = require("../../models/sale_artwork")
 import { fabricate } from "@artsy/antigravity"
 
 describe("SaleArtwork", () => {

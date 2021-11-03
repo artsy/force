@@ -3,8 +3,8 @@
  * DS102: Remove unnecessary code created because of implicit returns
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
  */
-const Artwork = require("../../../models/artwork")
-const Partner = require("../../../models/partner")
+const { Artwork } = require("../../../models/artwork")
+const { Partner } = require("../../../models/partner")
 const defaultMessage = require("../default_message")
 
 describe("defaultMessage", function () {

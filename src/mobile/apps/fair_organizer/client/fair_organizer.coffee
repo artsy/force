@@ -1,12 +1,12 @@
 _ = require 'underscore'
 Backbone = require 'backbone'
 CurrentUser = require '../../../models/current_user'
-bootstrap = require '../../../components/layout/bootstrap.coffee'
-AvantGardeTabsView = require '../../../components/avant_garde_tabs/view.coffee'
+bootstrap = require '../../../components/layout/bootstrap'
+{ AvantGardeTabsView } = require '../../../components/avant_garde_tabs/view'
 { Articles } = require '../../../collections/articles'
 { FollowProfiles } = require '../../../collections/follow_profiles'
-FollowButtonView = require '../../../components/follow_button/view.coffee'
-FairOrganizer = require '../../../models/fair_organizer.coffee'
+{ FollowButtonView } = require '../../../components/follow_button/view'
+{ FairOrganizer } = require '../../../models/fair_organizer'
 
 articlesTemplate = -> require('../templates/articles.jade') arguments...
 

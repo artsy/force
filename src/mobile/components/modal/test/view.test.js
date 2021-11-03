@@ -14,7 +14,7 @@ describe("ModalView", function () {
     return benv.setup(() => {
       benv.expose({ $: benv.require("jquery") })
       Backbone.$ = $
-      const filename = path.resolve(__dirname, "../view.coffee")
+      const filename = path.resolve(__dirname, "../view")
       const ModalView = benv.requireWithJadeify(filename, ["template"])
 
       this.triggerSpy = sinon.stub()

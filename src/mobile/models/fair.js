@@ -238,4 +238,4 @@ export default (_Fair = (function() {
 function __guard__(value, transform) {
   return (typeof value !== 'undefined' && value !== null) ? transform(value) : undefined;
 }
-export default Fair = _Fair
+export const Fair = _Fair

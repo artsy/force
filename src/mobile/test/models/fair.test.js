@@ -5,7 +5,7 @@
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
  */
 const Backbone = require("backbone")
-const Fair = require("../../models/fair")
+const { Fair } = require("../../models/fair")
 const { fabricate } = require("@artsy/antigravity")
 const sinon = require("sinon")
 

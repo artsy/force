@@ -1,5 +1,5 @@
 sd = require('sharify').data
-bootstrap = require '../../../components/layout/bootstrap.coffee'
+bootstrap = require '../../../components/layout/bootstrap'
 { Articles } = require '../../../collections/articles'
 articleFigureTemplate = -> require('../../../components/article_figure/template.jade') arguments...
 

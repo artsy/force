@@ -8,7 +8,7 @@ const benv = require("benv")
 const sinon = require("sinon")
 const Backbone = require("backbone")
 const { fabricate } = require("@artsy/antigravity")
-const Artwork = require("../../../models/artwork")
+const { Artwork } = require("../../../models/artwork")
 const CurrentUser = require("../../../models/current_user")
 let EmbeddedInquiryView = null
 

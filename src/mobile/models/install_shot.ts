@@ -1,3 +1,3 @@
-const AdditionalImage = require("./additional_image.coffee")
+const { AdditionalImage } = require("./additional_image")
 
 export class InstallShot extends AdditionalImage {}

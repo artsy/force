@@ -1,7 +1,7 @@
 _ = require 'underscore'
 _s = require 'underscore.string'
 Backbone = require 'backbone'
-PasswordEdit = require '../models/password_edit.coffee'
+{ PasswordEdit } = require '../models/password_edit'
 ErrorHelpers = require './error_handling.coffee'
 
 module.exports = class AccountForm extends Backbone.View

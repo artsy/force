@@ -7,7 +7,7 @@ const _ = require("underscore")
 const sinon = require("sinon")
 const Backbone = require("backbone")
 const { fabricate } = require("@artsy/antigravity")
-const Sale = require("../../../models/sale")
+const { Sale } = require("../../../models/sale")
 const routes = require("../routes")
 const moment = require("moment")
 

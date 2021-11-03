@@ -1,4 +1,4 @@
-bootstrap = require '../../../components/layout/bootstrap.coffee'
+bootstrap = require '../../../components/layout/bootstrap'
 _ = require 'underscore'
 sd = require('sharify').data
 Backbone = require 'backbone'
@@ -7,7 +7,7 @@ ReactDOM = require 'react-dom'
 { NewsPanel } = require '@artsy/reaction/dist/Components/Publishing/News/NewsPanel'
 articleTemplate = -> require('../templates/articles_feed.jade') arguments...
 request = require 'superagent'
-{ crop } = require '../../../components/resizer/index.coffee'
+resizer = require '../../../components/resizer/index'
 { toSentence } = require 'underscore.string'
 
 module.exports.MagazineView = class MagazineView extends Backbone.View
@@ -63,7 +63,7 @@ module.exports.MagazineView = class MagazineView extends Backbone.View
     if @collection.length > 0
       html = articleTemplate
         articles: @collection
-        crop: crop
+        crop: resizer.crop
         toSentence: toSentence
         pluck: _.pluck
       @$('.js-articles-feed').append html

@@ -8,7 +8,7 @@ const fs = require("fs")
 const jade = require("jade")
 const path = require("path")
 const { fabricate } = require("@artsy/antigravity")
-const Artwork = require("../../../models/artwork")
+const { Artwork } = require("../../../models/artwork")
 const { Artworks } = require("../../../collections/artworks")
 
 const render = function (template) {

@@ -3,9 +3,9 @@ const sinon = require("sinon")
 const { fabricate } = require("@artsy/antigravity")
 const Backbone = require("backbone")
 const CurrentUser = require("../../models/current_user")
-const FollowProfile = require("../../models/follow_profile.coffee")
+const { FollowProfile } = require("../../models/follow_profile")
 const { FollowProfiles } = require("../../collections/follow_profiles")
-const Profile = require("../../models/profile.coffee")
+const { Profile } = require("../../models/profile")
 const benv = require("benv")
 
 describe("FollowProfiles", () => {

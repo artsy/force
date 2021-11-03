@@ -4,7 +4,7 @@ request = require 'superagent'
 Article = require '../../models/article'
 { Articles } = require '../../collections/articles'
 Section = require '../../models/section'
-{ stringifyJSONForWeb } = require '../../components/util/json.coffee'
+{ stringifyJSONForWeb } = require '../../components/util/json'
 
 module.exports.article = (req, res, next) ->
   # Handles fair and partner articles

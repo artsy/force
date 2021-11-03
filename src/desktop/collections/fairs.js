@@ -8,7 +8,7 @@ let _Fairs
 const _ = require("underscore")
 const sd = require("sharify").data
 const Backbone = require("backbone")
-const Fair = require("../models/fair")
+const { Fair } = require("../models/fair")
 const { API_URL } = require("sharify").data
 const { Fetch } = require("@artsy/backbone-mixins")
 

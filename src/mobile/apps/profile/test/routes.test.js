@@ -7,7 +7,7 @@ const { fabricate } = require("@artsy/antigravity")
 const sinon = require("sinon")
 const routes = require("../routes")
 const Backbone = require("backbone")
-const Profile = require("../../../models/profile")
+const { Profile } = require("../../../models/profile")
 
 describe("#index", function () {
   beforeEach(function () {

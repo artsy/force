@@ -184,4 +184,4 @@ function __range__(left, right, inclusive) {
   }
   return range;
 }
-export default Sale = _Sale
+export const Sale = _Sale

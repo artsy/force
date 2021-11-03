@@ -10,7 +10,7 @@ const _ = require("underscore")
 const MultiPageView = benv.requireWithJadeify(require.resolve("../view"), [
   "template",
 ])
-const config = require("../config")
+import config from "../config"
 
 describe("MultiPageView", function () {
   before(function (done) {

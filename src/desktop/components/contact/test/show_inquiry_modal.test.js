@@ -6,7 +6,7 @@
 const benv = require("benv")
 const sinon = require("sinon")
 const Backbone = require("backbone")
-const Partner = require("../../../models/partner")
+const { Partner } = require("../../../models/partner")
 const { resolve } = require("path")
 const { fabricate } = require("@artsy/antigravity")
 

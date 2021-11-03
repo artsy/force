@@ -10,9 +10,9 @@ export const ArtworkRelations = {
   related() {
     if (this.__related__ != null) { return this.__related__; }
 
-    const Artist = require('../../artist.coffee');
-    const SaleArtwork = require('../../sale_artwork.coffee');
-    const Partner = require('../../partner.coffee');
+    const { Artist } = require('../../artist');
+    const { SaleArtwork } = require('../../sale_artwork');
+    const { Partner } = require('../../partner');
 
     const { Artworks } = require('../../../collections/artworks');
     const { Sales } = require('../../../collections/sales');

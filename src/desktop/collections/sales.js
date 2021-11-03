@@ -8,7 +8,7 @@ let _Sales
 const _ = require("underscore")
 const Backbone = require("backbone")
 const { API_URL } = require("sharify").data
-const Sale = require("../models/sale")
+const { Sale } = require("../models/sale")
 
 export default _Sales = (function () {
   _Sales = class Sales extends Backbone.Collection {

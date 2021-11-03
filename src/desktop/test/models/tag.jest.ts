@@ -1,6 +1,6 @@
 import Backbone from "backbone"
 import { fabricate } from "@artsy/antigravity"
-const Tag = require("../../models/tag")
+const { Tag } = require("../../models/tag")
 import sinon from "sinon"
 
 describe("Tag", () => {

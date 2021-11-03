@@ -7,7 +7,7 @@ const sinon = require("sinon")
 const moment = require("moment")
 const Backbone = require("backbone")
 const { fabricate } = require("@artsy/antigravity")
-const Sale = require("../../models/sale")
+const { Sale } = require("../../models/sale")
 
 describe("Sale", function () {
   beforeEach(function () {

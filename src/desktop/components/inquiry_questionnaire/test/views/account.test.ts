@@ -5,9 +5,9 @@ import { setup } from "./setup"
 import { resolve } from "path"
 import rewire from "rewire"
 import { fabricate } from "@artsy/antigravity"
-const LoggedOutUser = require("../../../../models/logged_out_user")
-const Artwork = require("../../../../models/artwork")
-const ArtworkInquiry = require("../../../../models/artwork_inquiry")
+const { LoggedOutUser } = require("../../../../models/logged_out_user")
+const { Artwork } = require("../../../../models/artwork")
+const { ArtworkInquiry } = require("../../../../models/artwork_inquiry")
 const State = require("../../../branching_state/index.coffee")
 const Form = rewire("../../../form/index.coffee")
 
