@@ -76,7 +76,7 @@ export const runAuthIntent = async (
                 return createConsignSubmission(
                   relayEnvironment,
                   submission,
-                  user
+                  user.id
                 ).then(() => {
                   removeSubmission(value.objectId)
                 })
