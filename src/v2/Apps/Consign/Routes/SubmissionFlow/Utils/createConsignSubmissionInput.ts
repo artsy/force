@@ -5,8 +5,7 @@ import {
 import { SubmissionModel } from "./useSubmission"
 
 export const createConsignSubmissionInput = (
-  submission: SubmissionModel,
-  user: User
+  submission: SubmissionModel
 ): CreateSubmissionMutationInput => {
   return {
     artistID: submission.artworkDetailsForm.artistId,
@@ -24,9 +23,9 @@ export const createConsignSubmissionInput = (
     dimensionsMetric: submission.artworkDetailsForm.units,
     provenance: submission.artworkDetailsForm.provenance,
     state: "SUBMITTED",
-    userEmail: user?.email,
-    userName: user?.name,
-    userPhone: user?.phone,
+    userEmail: submission.contactInformationForm?.email,
+    userName: submission.contactInformationForm?.name,
+    userPhone: submission.contactInformationForm?.phone,
     utmMedium: submission?.utmParams?.utmMedium,
     utmSource: submission?.utmParams?.utmSource,
     utmTerm: submission?.utmParams?.utmTerm,
