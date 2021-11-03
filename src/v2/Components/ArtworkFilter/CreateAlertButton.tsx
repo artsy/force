@@ -6,8 +6,8 @@ import { BellIcon, Button, Flex, Spacer, Text } from "@artsy/palette"
 const StyledCreateAlertButton = styled(Button).attrs({
   variant: "secondaryOutline",
   size: "small",
-  width: 130,
 })`
+  padding: 0 10px;
   border-color: ${themeGet("colors.blue100")};
   div {
     color: ${themeGet("colors.blue100")};
