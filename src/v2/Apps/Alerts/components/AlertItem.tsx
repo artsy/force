@@ -14,13 +14,15 @@ interface AlertItemProps {
   item: AlertItem_item
 }
 
+const FALLBACK_TITLE = "Untitled Alert"
+
 export const AlertItem: React.FC<AlertItemProps> = ({ item }) => {
   return (
     <Column span={[12, 12, 6]}>
       <BorderBox>
         <Flex flex={1} justifyContent="space-between" alignItems="center">
           <Text color="black80" variant="sm">
-            {item.userAlertSettings.name}
+            {item.userAlertSettings.name ?? FALLBACK_TITLE}
           </Text>
         </Flex>
         <Flex flexDirection="row">
