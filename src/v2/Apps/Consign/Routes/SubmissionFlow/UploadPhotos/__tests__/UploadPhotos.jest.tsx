@@ -323,16 +323,11 @@ describe("UploadPhotos", () => {
 
       expect(createConsignSubmission).toHaveBeenCalled()
       expect(sessionStorage.removeItem).toHaveBeenCalled()
-      // TODO: SWA-78
-      // expect(mockRouterPush).toHaveBeenCalled()
-      // expect(mockRouterPush).toHaveBeenCalledWith({
-      //   pathname: "/consign/submission/1/contact-information",
-      // })
+
       expect(mockRouterPush).toHaveBeenCalled()
-      expect(mockRouterPush).toHaveBeenCalledWith(
-        "/consign/submission/1/thank-you"
-      )
-      expect(openAuthModalSpy).not.toBeCalled()
+      expect(mockRouterPush).toHaveBeenCalledWith({
+        pathname: "/consign/submission/1/contact-information",
+      })
     })
   })
 

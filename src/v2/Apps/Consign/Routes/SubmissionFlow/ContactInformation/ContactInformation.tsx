@@ -1,4 +1,5 @@
 import { Text, Button } from "@artsy/palette"
+import { SubmissionStepper } from "v2/Apps/Consign/Components/SubmissionStepper"
 import { useSystemContext } from "v2/System"
 import { openAuthModal } from "v2/Utils/openAuthModal"
 import { ModalType } from "v2/Components/Authentication/Types"
@@ -57,7 +58,7 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
       })
     } else {
       if (relayEnvironment && submission) {
-        await createConsignSubmission(relayEnvironment, submission, user)
+        await createConsignSubmission(relayEnvironment, submission, user?.id)
         removeSubmission()
         router.push(`/consign/submission/${submissionId}/thank-you`)
       }
@@ -74,8 +75,7 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
         Back
       </BackLink>
 
-      {/* TODO: SWA-78 */}
-      {/* <SubmissionStepper currentStep="Contact Information" /> */}
+      <SubmissionStepper currentStep="Contact Information" />
 
       <Text mt={4} variant="lg">
         Let us know how to reach you
