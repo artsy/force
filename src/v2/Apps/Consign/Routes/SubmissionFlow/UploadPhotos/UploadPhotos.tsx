@@ -1,4 +1,3 @@
-import { useState } from "react"
 import { Box, Button, Text } from "@artsy/palette"
 import { Form, Formik } from "formik"
 import { SubmissionStepper } from "v2/Apps/Consign/Components/SubmissionStepper"
@@ -10,12 +9,6 @@ import { PhotoThumbnail } from "./Components/PhotoThumbnail"
 import { Photo } from "../Utils/fileUtils"
 import { useRouter } from "v2/System/Router/useRouter"
 import { useSubmission } from "../Utils/useSubmission"
-import { useSystemContext } from "v2/System"
-import { openAuthModal } from "v2/Utils/openAuthModal"
-import { ModalType } from "v2/Components/Authentication/Types"
-import { ErrorModal } from "v2/Components/Modal/ErrorModal"
-import { ContextModule, Intent } from "@artsy/cohesion"
-import { createConsignSubmission } from "../Utils/createConsignSubmission"
 import { BackLink } from "v2/Components/Links/BackLink"
 
 export const UploadPhotos: React.FC = () => {
@@ -25,46 +18,13 @@ export const UploadPhotos: React.FC = () => {
       params: { id },
     },
   } = useRouter()
-
-  const [isSubmissionApiError, setIsSubmissionApiError] = useState(false)
-  const { mediator, isLoggedIn, relayEnvironment, user } = useSystemContext()
-  const {
-    submission,
-    saveSubmission,
-    submissionId,
-    removeSubmission,
-  } = useSubmission(id)
+  const { submission, saveSubmission, submissionId } = useSubmission(id)
 
   const handleSubmit = async () => {
     if (submission) {
-      // TODO: SWA-78
-      // router.push({
-      //   pathname: `/consign/submission/${submissionId}/contact-information`,
-      // })
-
-      if (!isLoggedIn && mediator) {
-        openAuthModal(mediator, {
-          mode: ModalType.signup,
-          intent: Intent.consign,
-          contextModule: ContextModule.consignSubmissionFlow,
-          redirectTo: `/consign/submission/${submissionId}/thank-you`,
-          afterSignUpAction: {
-            action: "save",
-            kind: "submissions",
-            objectId: submissionId,
-          },
-        })
-      } else {
-        if (relayEnvironment && submission) {
-          try {
-            await createConsignSubmission(relayEnvironment, submission, user)
-            removeSubmission()
-            router.push(`/consign/submission/${submissionId}/thank-you`)
-          } catch (error) {
-            setIsSubmissionApiError(true)
-          }
-        }
-      }
+      router.push({
+        pathname: `/consign/submission/${submissionId}/contact-information`,
+      })
     }
   }
 
@@ -103,14 +63,6 @@ export const UploadPhotos: React.FC = () => {
         &#8226; If possible, include photos of any signatures or certificates of
         authenticity.
       </Text>
-
-      <ErrorModal
-        show={isSubmissionApiError}
-        headerText="An error occurred"
-        contactEmail="consign@artsymail.com"
-        closeText="Close"
-        onClose={() => setIsSubmissionApiError(false)}
-      />
 
       <Formik<UploadPhotosFormModel>
         validateOnMount
@@ -159,9 +111,7 @@ export const UploadPhotos: React.FC = () => {
                 loading={isSubmitting || values.photos.some(c => c.loading)}
                 type="submit"
               >
-                {/* TODO: SWA-78 */}
-                {/* Save and Continue */}
-                Submit Artwork
+                Save and Continue
               </Button>
             </Form>
           )
