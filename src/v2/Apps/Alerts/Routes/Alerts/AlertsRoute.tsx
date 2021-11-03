@@ -5,6 +5,7 @@ import { AlertsRoute_me } from "v2/__generated__/AlertsRoute_me.graphql"
 import { data as sd } from "sharify"
 import { Box } from "@artsy/palette"
 import { UserSettingsTabs } from "v2/Components/UserSettings/UserSettingsTabs"
+import { AllAlertsPaginationContainer } from "../../components/AllAlertsSection"
 
 export interface AlertsRouteProps {
   me: AlertsRoute_me
@@ -20,6 +21,8 @@ const AlertsRoute: React.FC<AlertsRouteProps> = props => {
         <Box mb={2} mt={1}>
           <UserSettingsTabs route={sd.CURRENT_PATH} username={me?.name} />
         </Box>
+
+        <AllAlertsPaginationContainer me={me} />
       </Box>
     </>
   )
@@ -31,6 +34,7 @@ export const AlertsRouteFragmentContainer = createFragmentContainer(
     me: graphql`
       fragment AlertsRoute_me on Me {
         name
+        ...AllAlertsSection_me
       }
     `,
   }

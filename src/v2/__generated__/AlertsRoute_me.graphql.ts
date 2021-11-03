@@ -5,6 +5,7 @@ import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
 export type AlertsRoute_me = {
     readonly name: string | null;
+    readonly " $fragmentRefs": FragmentRefs<"AllAlertsSection_me">;
     readonly " $refType": "AlertsRoute_me";
 };
 export type AlertsRoute_me$data = AlertsRoute_me;
@@ -27,9 +28,14 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "name": "name",
       "storageKey": null
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "AllAlertsSection_me"
     }
   ],
   "type": "Me"
 };
-(node as any).hash = 'f8d69c066c442d4ae2c6c7d81472ce48';
+(node as any).hash = '28f07c05e231cd3f10cfccfbf677adff';
 export default node;

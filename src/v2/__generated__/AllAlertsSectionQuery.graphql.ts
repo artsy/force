@@ -3,34 +3,35 @@
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
-export type AlertsRoute_Test_QueryVariables = {};
-export type AlertsRoute_Test_QueryResponse = {
+export type AllAlertsSectionQueryVariables = {
+    count: number;
+    cursor?: string | null;
+};
+export type AllAlertsSectionQueryResponse = {
     readonly me: {
-        readonly " $fragmentRefs": FragmentRefs<"AlertsRoute_me">;
+        readonly " $fragmentRefs": FragmentRefs<"AllAlertsSection_me">;
     } | null;
 };
-export type AlertsRoute_Test_Query = {
-    readonly response: AlertsRoute_Test_QueryResponse;
-    readonly variables: AlertsRoute_Test_QueryVariables;
+export type AllAlertsSectionQuery = {
+    readonly response: AllAlertsSectionQueryResponse;
+    readonly variables: AllAlertsSectionQueryVariables;
 };
 
 
 
 /*
-query AlertsRoute_Test_Query {
+query AllAlertsSectionQuery(
+  $count: Int!
+  $cursor: String
+) {
   me {
-    ...AlertsRoute_me
+    ...AllAlertsSection_me_1G22uz
     id
   }
 }
 
-fragment AlertsRoute_me on Me {
-  name
-  ...AllAlertsSection_me
-}
-
-fragment AllAlertsSection_me on Me {
-  savedSearchesConnection(first: 10) {
+fragment AllAlertsSection_me_1G22uz on Me {
+  savedSearchesConnection(first: $count, after: $cursor) {
     edges {
       node {
         internalID
@@ -50,26 +51,38 @@ fragment AllAlertsSection_me on Me {
 */
 
 const node: ConcreteRequest = (function(){
-var v0 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "name",
-  "storageKey": null
-},
+var v0 = [
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "count",
+    "type": "Int!"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "cursor",
+    "type": "String"
+  }
+],
 v1 = [
   {
-    "kind": "Literal",
+    "kind": "Variable",
+    "name": "after",
+    "variableName": "cursor"
+  },
+  {
+    "kind": "Variable",
     "name": "first",
-    "value": 10
+    "variableName": "count"
   }
 ];
 return {
   "fragment": {
-    "argumentDefinitions": [],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "AlertsRoute_Test_Query",
+    "name": "AllAlertsSectionQuery",
     "selections": [
       {
         "alias": null,
@@ -80,9 +93,20 @@ return {
         "plural": false,
         "selections": [
           {
-            "args": null,
+            "args": [
+              {
+                "kind": "Variable",
+                "name": "count",
+                "variableName": "count"
+              },
+              {
+                "kind": "Variable",
+                "name": "cursor",
+                "variableName": "cursor"
+              }
+            ],
             "kind": "FragmentSpread",
-            "name": "AlertsRoute_me"
+            "name": "AllAlertsSection_me"
           }
         ],
         "storageKey": null
@@ -92,9 +116,9 @@ return {
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": [],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "AlertsRoute_Test_Query",
+    "name": "AllAlertsSectionQuery",
     "selections": [
       {
         "alias": null,
@@ -104,7 +128,6 @@ return {
         "name": "me",
         "plural": false,
         "selections": [
-          (v0/*: any*/),
           {
             "alias": null,
             "args": (v1/*: any*/),
@@ -144,7 +167,13 @@ return {
                         "name": "userAlertSettings",
                         "plural": false,
                         "selections": [
-                          (v0/*: any*/)
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "name",
+                            "storageKey": null
+                          }
                         ],
                         "storageKey": null
                       },
@@ -194,7 +223,7 @@ return {
                 "storageKey": null
               }
             ],
-            "storageKey": "savedSearchesConnection(first:10)"
+            "storageKey": null
           },
           {
             "alias": null,
@@ -220,11 +249,11 @@ return {
   "params": {
     "id": null,
     "metadata": {},
-    "name": "AlertsRoute_Test_Query",
+    "name": "AllAlertsSectionQuery",
     "operationKind": "query",
-    "text": "query AlertsRoute_Test_Query {\n  me {\n    ...AlertsRoute_me\n    id\n  }\n}\n\nfragment AlertsRoute_me on Me {\n  name\n  ...AllAlertsSection_me\n}\n\nfragment AllAlertsSection_me on Me {\n  savedSearchesConnection(first: 10) {\n    edges {\n      node {\n        internalID\n        userAlertSettings {\n          name\n        }\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query AllAlertsSectionQuery(\n  $count: Int!\n  $cursor: String\n) {\n  me {\n    ...AllAlertsSection_me_1G22uz\n    id\n  }\n}\n\nfragment AllAlertsSection_me_1G22uz on Me {\n  savedSearchesConnection(first: $count, after: $cursor) {\n    edges {\n      node {\n        internalID\n        userAlertSettings {\n          name\n        }\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '636ef42d66ed18f2064452311ae8b55e';
+(node as any).hash = 'c06a1fb8075923e792618d7d8a5ca166';
 export default node;
