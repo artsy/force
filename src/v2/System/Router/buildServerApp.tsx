@@ -89,16 +89,16 @@ export function buildServerApp(
         path: req.path,
       })
 
-      matchedRoutes.forEach((route: AppRouteConfig) => {
+      for await (const route of matchedRoutes) {
         if (isFunction(route?.onServerSideRender)) {
-          route.onServerSideRender({
+          await route.onServerSideRender({
             req,
             res,
             next,
             route,
           })
         }
-      })
+      }
 
       const serverContext = buildServerAppContext(req, res, context)
       const userAgent = req.header("User-Agent")

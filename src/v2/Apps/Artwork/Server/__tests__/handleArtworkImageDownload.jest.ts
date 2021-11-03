@@ -27,12 +27,11 @@ describe("artworkMiddleware", () => {
         canDownload: true,
         get: jest.fn(),
       },
-      pipe: () => ({
-        pipe: spy,
-      }),
     }
 
-    const res = {}
+    const res = {
+      redirect: spy,
+    }
     await handleArtworkImageDownload({ req, res })
     expect(spy).toHaveBeenCalled()
   })
@@ -47,12 +46,11 @@ describe("artworkMiddleware", () => {
         canDownload: false,
         get: jest.fn(),
       },
-      pipe: () => ({
-        pipe: jest.fn(),
-      }),
     }
 
-    const res = {}
+    const res = {
+      redirect: spy,
+    }
     await handleArtworkImageDownload({ req, res })
     expect(spy).not.toHaveBeenCalled()
   })
