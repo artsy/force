@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React from "react"
 import styled from "styled-components"
 import { Box, Flex, Spacer } from "@artsy/palette"
 import { growAndFadeIn, shrinkAndFadeOut } from "v2/Assets/Animations"
@@ -7,25 +7,13 @@ import { CreateAlertButton } from "./CreateAlertButton"
 const WRAPPER_HEIGHT = 70
 
 export const FiltersPills: React.FC<{ show: boolean }> = ({ show }) => {
-  const [showBlock, setShowBlock] = useState(show)
-
-  useEffect(() => {
-    if (show) {
-      setShowBlock(true)
-    }
-  }, [show])
-
   return (
-    <>
-      {showBlock && (
-        <AnimatedBox show={show}>
-          <Flex>
-            <CreateAlertButton />
-          </Flex>
-          <Spacer mt={4} />
-        </AnimatedBox>
-      )}
-    </>
+    <AnimatedBox show={show}>
+      <Flex>
+        <CreateAlertButton />
+      </Flex>
+      <Spacer mt={4} />
+    </AnimatedBox>
   )
 }
 

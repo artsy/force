@@ -355,7 +355,11 @@ export const BaseArtworkFilter: React.FC<
               </Box>
             )}
 
-            {enableCreateAlert && <FiltersPills show={showCreateAlert} />}
+            {enableCreateAlert && (
+              <Box>
+                <FiltersPills show={showCreateAlert} />
+              </Box>
+            )}
 
             {children || (
               <ArtworkFilterArtworkGrid

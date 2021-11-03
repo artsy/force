@@ -25,6 +25,8 @@ const ArtistArtworkFilter: React.FC<ArtistArtworkFilterProps> = props => {
   const { filtered_artworks } = artist
   const hasFilter = filtered_artworks && filtered_artworks.id
 
+  console.log("[debug] SD", sd)
+
   if (!hasFilter) {
     return null
   }

@@ -39,6 +39,7 @@ const V2_SHARIFY_ALLOWLIST = [
   "VOLLEY_ENDPOINT",
   "WEBFONT_URL",
   "ZENDESK_KEY",
+  "ENABLE_SAVED_SEARCH",
 ]
 
 // Required so that we can control limit the data being injected in to the page.
