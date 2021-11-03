@@ -239,7 +239,7 @@
     "use-cursor": "^1.2.3",
     "useragent": "2.3.0",
     "uuid": "3.3.2",
-    "validator": "7.0.0",
+    "validator": "13.7.0",
     "waypoints": "4.0.0",
     "xss-filters": "1.2.7",
     "yargs": "11.0.0",
