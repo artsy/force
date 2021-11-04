@@ -57,7 +57,7 @@ export const uploadPhotosValidationSchema = yup.object().shape({
 })
 
 export const contactInformationValidationSchema = yup.object().shape({
-  name: yup.string().label("Name").required(),
-  email,
-  phone: yup.string().label("Phone number").required(),
+  name: yup.string().label("Name").required().trim(),
+  email: email.trim(),
+  phone: yup.string().label("Phone number").required().trim(),
 })
