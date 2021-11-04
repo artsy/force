@@ -163,5 +163,32 @@ describe("userRequiredMiddleware", () => {
       )
       expect(next).not.toHaveBeenCalled()
     })
+
+    it("performs redirect on an /alerts route", () => {
+      const spy = jest.fn()
+      const req = {
+        originalUrl: "/user/alerts",
+        path: "/user/alerts",
+        query: {
+          "accepted-conditions": false,
+        },
+        url: "/user/alerts",
+      }
+      const res = {
+        locals: {
+          sd: {
+            CURRENT_USER: null,
+          },
+        },
+        redirect: spy,
+      }
+      const next = jest.fn()
+
+      userRequiredMiddleware(req, res, next)
+      expect(spy).toHaveBeenCalledWith(
+        `/login?redirectTo=${encodeURIComponent(req.originalUrl)}`
+      )
+      expect(next).not.toHaveBeenCalled()
+    })
   })
 })
