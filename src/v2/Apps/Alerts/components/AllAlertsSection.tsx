@@ -64,7 +64,7 @@ const AllAlertsSection: React.FC<AllAlertsSectionProps> = ({ me, relay }) => {
           <Column span={12} mx="auto">
             <Button
               width="100%"
-              variant="secondaryGray"
+              variant="secondaryOutline"
               onClick={handleClick}
               loading={isLoading}
               disabled={isLoading}
