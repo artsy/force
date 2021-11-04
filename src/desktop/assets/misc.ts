@@ -33,8 +33,6 @@ const routes = {
   "/profile/.*": require("../apps/user/client/index.coffee").init,
 
   "/user/.*": require("../apps/user/client/index.coffee").init,
-
-  "/search": require("../apps/search/client/index.coffee").init,
 }
 
 for (let path in routes) {
