@@ -1,5 +1,5 @@
-import { useContext } from "react";
-import * as React from "react";
+import { useContext } from "react"
+import * as React from "react"
 import { Box } from "@artsy/palette"
 import { isServer } from "lib/isServer"
 import { SystemContext, useSystemContext } from "v2/System"
@@ -34,6 +34,10 @@ export const NavBarMobileMenuLoggedIn: React.FC<NavBarMobileMenuLoggedInProps> =
       {
         text: "Saves & Follows",
         href: "/user/saves",
+      },
+      {
+        text: "Alerts",
+        href: "/user/alerts",
       },
       {
         text: "Auctions",
