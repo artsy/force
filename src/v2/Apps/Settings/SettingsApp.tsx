@@ -15,6 +15,10 @@ const tabs = [
     url: "/settings2/saves",
   },
   {
+    name: "Alerts",
+    url: "/settings2/alerts",
+  },
+  {
     name: "Collector Profile",
     url: "/settings2/edit-profile",
   },

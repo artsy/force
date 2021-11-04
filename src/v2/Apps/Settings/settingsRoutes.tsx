@@ -87,6 +87,16 @@ const ShippingRoute = loadable(
       component.SettingsShippingRouteFragmentContainer,
   }
 )
+const AlertsRoute = loadable(
+  () =>
+    import(
+      /* webpackChunkName: "settingsBundle" */ "./Routes/Alerts/SettingsAlertsRoute"
+    ),
+  {
+    resolveComponent: component =>
+      component.SettingsAlertsRouteFragmentContainer,
+  }
+)
 
 export const settingsRoutes: AppRouteConfig[] = [
   {
@@ -205,6 +215,20 @@ export const settingsRoutes: AppRouteConfig[] = [
           query settingsRoutes_ShippingRouteQuery {
             me {
               ...SettingsShippingRoute_me
+            }
+          }
+        `,
+      },
+      {
+        path: "alerts",
+        getComponent: () => AlertsRoute,
+        onClientSideRender: () => {
+          AlertsRoute.preload()
+        },
+        query: graphql`
+          query settingsRoutes_AlertsRouteQuery {
+            me {
+              ...SettingsAlertsRoute_me
             }
           }
         `,
