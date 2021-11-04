@@ -40,14 +40,20 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
     submissionId,
     removeSubmission,
   } = useSubmission(id)
-  const handleSubmit = async (values: ContactInformationFormModel) => {
+  const handleSubmit = async ({
+    name,
+    email,
+    phone,
+  }: ContactInformationFormModel) => {
     if (submission) {
       const contactInformationForm = {
-        ...values,
-        email: values.email.trim(),
+        name: name.trim(),
+        email: email.trim(),
+        phone: phone.trim(),
       }
 
       submission.contactInformationForm = contactInformationForm
+
       saveSubmission(submission)
     }
 
