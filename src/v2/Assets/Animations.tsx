@@ -34,12 +34,12 @@ export const growAndFadeIn = height => keyframes`
 
 export const shrinkAndFadeOut = height => keyframes`
   from {
-    opacity: 0;
-    height: 0;
+    opacity: 1;
+    height: ${height};
   }
 
   to {
-    opacity: 1;
-    height: ${height};
+    opacity: 0;
+    height: 0;
   }
 `
