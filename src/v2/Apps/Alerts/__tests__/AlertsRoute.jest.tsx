@@ -29,6 +29,13 @@ describe("AlertsRoute", () => {
       Me: () => ({
         name: "Rob Ross",
       }),
+      SearchCriteriaConnection: () => ({
+        pageInfo: {
+          endCursor: "cursor",
+          hasNextPage: false,
+        },
+        edges: [],
+      }),
     })
 
     const userSettingsTabs = wrapper.find("UserSettingsTabs")
