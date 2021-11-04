@@ -34,10 +34,7 @@ export const ContactInformationForm: React.FC<ContactInformationFormProps> = ({
         title="email"
         placeholder="Your Email Address"
         value={values.email}
-        onChange={e => {
-          e.target.value = e.target.value.trim()
-          handleChange(e)
-        }}
+        onChange={handleChange}
         onBlur={handleBlur}
       />
       <Input
