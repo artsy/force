@@ -12,13 +12,9 @@ export interface ContactInformationFormProps extends BoxProps {}
 export const ContactInformationForm: React.FC<ContactInformationFormProps> = ({
   ...rest
 }) => {
-  const {
-    values,
-    errors,
-    touched,
-    handleChange,
-    handleBlur,
-  } = useFormikContext<ContactInformationFormModel>()
+  const { values, handleChange, handleBlur } = useFormikContext<
+    ContactInformationFormModel
+  >()
 
   return (
     <Box {...rest}>
@@ -30,7 +26,6 @@ export const ContactInformationForm: React.FC<ContactInformationFormProps> = ({
         value={values.name}
         onChange={handleChange}
         onBlur={handleBlur}
-        error={touched.name && errors.name}
       />
       <Input
         mt={4}
@@ -41,7 +36,6 @@ export const ContactInformationForm: React.FC<ContactInformationFormProps> = ({
         value={values.email}
         onChange={handleChange}
         onBlur={handleBlur}
-        error={touched.email && errors.email}
       />
       <Input
         mt={4}
@@ -52,7 +46,6 @@ export const ContactInformationForm: React.FC<ContactInformationFormProps> = ({
         value={values.phone}
         onChange={handleChange}
         onBlur={handleBlur}
-        error={touched.phone && errors.phone}
       />
     </Box>
   )
