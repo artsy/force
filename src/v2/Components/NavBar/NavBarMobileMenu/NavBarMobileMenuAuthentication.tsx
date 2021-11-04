@@ -14,6 +14,7 @@ import { getMobileAuthLink } from "v2/Utils/openAuthModal"
 import { ContextModule, Intent } from "@artsy/cohesion"
 import { createFragmentContainer } from "react-relay"
 import { NavBarMobileSubMenu } from "./NavBarMobileSubMenu"
+import { getENV } from "v2/Utils/getENV"
 
 interface NavBarMobileMenuLoggedInProps {
   me?: NavBarMobileMenuAuthentication_me | null
@@ -24,7 +25,7 @@ export const NavBarMobileMenuLoggedIn: React.FC<NavBarMobileMenuLoggedInProps> =
 }) => {
   const { mediator } = useSystemContext()
 
-  const menu = {
+  const sourceMenu = {
     title: "Account",
     links: [
       {
@@ -69,6 +70,16 @@ export const NavBarMobileMenuLoggedIn: React.FC<NavBarMobileMenuLoggedInProps> =
         },
       },
     ],
+  }
+  const menu = {
+    ...sourceMenu,
+    links: sourceMenu.links.filter(link => {
+      if (link.text === "Alerts") {
+        return getENV("ENABLE_SAVED_SEARCH")
+      }
+
+      return true
+    }),
   }
 
   const conversationCount =

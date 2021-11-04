@@ -15,6 +15,7 @@ import { useTracking } from "v2/System/Analytics/useTracking"
 import { data as sd } from "sharify"
 import { userIsAdmin } from "v2/Utils/user"
 import { NavBarMenuItemButton, NavBarMenuItemLink } from "./NavBarMenuItem"
+import { getENV } from "v2/Utils/getENV"
 
 export const NavBarUserMenu: React.FC = () => {
   const { trackEvent } = useTracking()
@@ -39,6 +40,7 @@ export const NavBarUserMenu: React.FC = () => {
 
   const isAdmin = userIsAdmin(user)
   const hasPartnerAccess = Boolean(user?.has_partner_access)
+  const isSavedSearchEnabled = getENV("ENABLE_SAVED_SEARCH")
 
   return (
     <Text variant="sm" py={1} width={230}>
@@ -74,13 +76,15 @@ export const NavBarUserMenu: React.FC = () => {
         <HeartIcon mr={1} aria-hidden="true" /> Saves &amp; Follows
       </NavBarMenuItemLink>
 
-      <NavBarMenuItemLink
-        aria-label="View your saved alerts"
-        to="/user/alerts"
-        onClick={trackClick}
-      >
-        <BellIcon mr={1} aria-hidden="true" /> Alerts
-      </NavBarMenuItemLink>
+      {isSavedSearchEnabled && (
+        <NavBarMenuItemLink
+          aria-label="View your saved alerts"
+          to="/user/alerts"
+          onClick={trackClick}
+        >
+          <BellIcon mr={1} aria-hidden="true" /> Alerts
+        </NavBarMenuItemLink>
+      )}
 
       <NavBarMenuItemLink
         aria-label="View your Collector Profile"
