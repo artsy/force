@@ -18,6 +18,7 @@ export type Respond_order = {
             readonly node: {
                 readonly artwork: {
                     readonly slug: string;
+                    readonly price: string | null;
                 } | null;
             } | null;
         } | null> | null;
@@ -150,6 +151,13 @@ return {
                       "kind": "ScalarField",
                       "name": "slug",
                       "storageKey": null
+                    },
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "price",
+                      "storageKey": null
                     }
                   ],
                   "storageKey": null
@@ -237,5 +245,5 @@ return {
   "type": "CommerceOrder"
 };
 })();
-(node as any).hash = 'bbd091ab5575798ec842fd1ec4cb70fb';
+(node as any).hash = 'd366cfe716f61655fe42b01c7bcff567';
 export default node;

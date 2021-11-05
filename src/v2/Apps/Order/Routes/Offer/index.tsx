@@ -22,7 +22,7 @@ import {
 import { track } from "v2/System/Analytics"
 import * as Schema from "v2/System/Analytics"
 import { Router } from "found"
-import { Component } from "react";
+import { Component } from "react"
 import { RelayProp, createFragmentContainer, graphql } from "react-relay"
 import createLogger from "v2/Utils/logger"
 import { Media } from "v2/Utils/Responsive"
@@ -30,7 +30,7 @@ import { OrderStepper, offerFlowSteps } from "../../Components/OrderStepper"
 import { BuyerGuarantee } from "../../Components/BuyerGuarantee"
 import { getOfferItemFromOrder } from "v2/Apps/Order/Utils/offerItemExtractor"
 import { ContextModule, OwnerType } from "@artsy/cohesion"
-
+import { isNil } from "lodash"
 export interface OfferProps {
   order: Offer_order
   relay?: RelayProp
@@ -168,6 +168,9 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
     }
 
     const listPriceCents = this.props.order.totalListPriceCents
+    const artworkPrice = this?.props?.order?.lineItems?.edges?.[0]?.node
+      ?.artwork?.price
+    const isPriceHidden = isNil(artworkPrice) || artworkPrice === ""
     const isRangeOffer = getOfferItemFromOrder(this.props.order.lineItems)
       ?.displayPriceRange
 
@@ -183,7 +186,8 @@ export class OfferRoute extends Component<OfferProps, OfferState> {
     if (
       !highSpeedBumpEncountered &&
       this.state.offerValue * 100 > listPriceCents &&
-      !isRangeOffer
+      !isRangeOffer &&
+      !isPriceHidden
     ) {
       this.showHighSpeedbump()
       return
@@ -335,6 +339,7 @@ export const OfferFragmentContainer = createFragmentContainer(
             node {
               artwork {
                 slug
+                price
               }
               artworkOrEditionSet {
                 __typename
