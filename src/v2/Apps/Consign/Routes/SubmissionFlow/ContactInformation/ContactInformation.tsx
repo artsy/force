@@ -10,6 +10,7 @@ import { Form, Formik } from "formik"
 import {
   ContactInformationForm,
   ContactInformationFormModel,
+  getContactInformationFormInitialValues,
 } from "./Components/ContactInformationForm"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ContactInformation_me } from "v2/__generated__/ContactInformation_me.graphql"
@@ -110,11 +111,7 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
       />
 
       <Formik<ContactInformationFormModel>
-        initialValues={{
-          name: me?.name || "",
-          email: me?.email || "",
-          phone: me?.phone || "",
-        }}
+        initialValues={getContactInformationFormInitialValues(me)}
         validateOnMount
         onSubmit={handleSubmit}
         validationSchema={contactInformationValidationSchema}
@@ -122,7 +119,7 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
         {({ isValid, isSubmitting }) => {
           return (
             <Form>
-              <ContactInformationForm my={6} />
+              <ContactInformationForm my={6} me={me} />
 
               <Button
                 data-test-id="save-button"

@@ -1,20 +1,59 @@
 import { Box, BoxProps, Input } from "@artsy/palette"
 import { useFormikContext } from "formik"
+import { useEffect } from "react"
+import { useRouter } from "v2/System/Router/useRouter"
+import { ContactInformation_me } from "v2/__generated__/ContactInformation_me.graphql"
+import { useSubmission } from "../../Utils/useSubmission"
 
+export const getContactInformationFormInitialValues = (
+  me: ContactInformation_me
+) => ({
+  name: me?.name || "",
+  email: me?.email || "",
+  phone: me?.phone || "",
+})
 export interface ContactInformationFormModel {
   name: string
   email: string
   phone: string
 }
 
-export interface ContactInformationFormProps extends BoxProps {}
+export interface ContactInformationFormProps extends BoxProps {
+  me: ContactInformation_me
+}
 
 export const ContactInformationForm: React.FC<ContactInformationFormProps> = ({
+  me,
   ...rest
 }) => {
-  const { values, handleChange, handleBlur } = useFormikContext<
-    ContactInformationFormModel
-  >()
+  const {
+    values,
+    handleChange,
+    handleBlur,
+    resetForm,
+    validateForm,
+    setErrors,
+  } = useFormikContext<ContactInformationFormModel>()
+
+  const {
+    match: {
+      params: { id },
+    },
+  } = useRouter()
+  const { submission } = useSubmission(id)
+
+  useEffect(() => {
+    if (submission) {
+      resetForm({ values: submission.contactInformationForm })
+      validateForm(submission.contactInformationForm).then(e => {
+        setErrors(e)
+      })
+    } else {
+      resetForm({
+        values: getContactInformationFormInitialValues(me),
+      })
+    }
+  }, [submission])
 
   return (
     <Box {...rest}>
