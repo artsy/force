@@ -110,6 +110,7 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
               <ContactInformationForm my={6} />
 
               <Button
+                data-test-id="save-button"
                 width={["100%", "auto"]}
                 disabled={!isValid || isSubmitting}
                 loading={isSubmitting}
