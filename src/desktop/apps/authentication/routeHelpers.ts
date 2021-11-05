@@ -1,7 +1,7 @@
 import { ModalType } from "v2/Components/Authentication/Types"
 import { parse } from "url"
-import { FullPageAuthStatic } from "./components/FullPageAuthStatic"
-import { AuthenticationMeta } from "./components/meta"
+import { FullPageAuthStatic } from "v2/Apps/Authentication/Components/FullPageAuthStatic"
+import { AuthenticationMeta } from "v2/Apps/Authentication/Components/AuthenticationMeta"
 
 export const computeCopy = ({ intent, pageTitle, req, res, type }) => {
   let title

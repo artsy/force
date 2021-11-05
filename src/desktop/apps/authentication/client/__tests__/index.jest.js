@@ -2,8 +2,8 @@ import Cookies from "cookies-js"
 import ReactDOM from "react-dom"
 import { init } from "../index"
 import { initModalManager } from "../initModalManager"
-import { FullPageAuthStatic } from "../../components/FullPageAuthStatic"
-import { ModalContainer } from "../../components/ModalContainer"
+import { FullPageAuthStatic } from "v2/Apps/Authentication/Components/FullPageAuthStatic"
+import { ModalContainer } from "v2/Apps/Authentication/Components/ModalContainer"
 
 jest.mock("cookies-js")
 jest.mock("react-dom")

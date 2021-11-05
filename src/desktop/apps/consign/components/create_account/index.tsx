@@ -1,8 +1,8 @@
-import { Component } from "react";
+import { Component } from "react"
 import { connect } from "react-redux"
 import { Box, ThemeProviderV3 } from "@artsy/palette"
 import { FormSwitcher } from "v2/Components/Authentication/FormSwitcher"
-import { handleSubmit } from "desktop/apps/authentication/helpers"
+import { handleSubmit } from "v2/Apps/Authentication/Utils/helpers"
 import { ModalHeader } from "v2/Components/Modal/ModalHeader"
 import { updateAuthFormStateAndClearError } from "../../client/actions"
 import { ModalType } from "v2/Components/Authentication/Types"

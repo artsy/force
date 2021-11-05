@@ -64,7 +64,7 @@ export const handleSubmit = async (
       if (analytics) {
         const options: AnalyticsOptions = {
           auth_redirect: redirectTo || destination!,
-          context_module: contextModule,
+          context_module: contextModule!,
           modal_copy: copy,
           intent,
           trigger_seconds: triggerSeconds,

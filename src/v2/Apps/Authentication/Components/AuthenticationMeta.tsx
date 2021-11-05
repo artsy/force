@@ -1,6 +1,7 @@
-import * as React from "react";
+import * as React from "react"
 
-interface MetaProps {
+export interface AuthenticationMetaProps {
+  // FIXME: Flatten this out once old code is retired
   meta: {
     canonical?: string
     title: string
@@ -8,7 +9,7 @@ interface MetaProps {
   }
 }
 
-export const AuthenticationMeta: React.SFC<MetaProps> = props => {
+export const AuthenticationMeta: React.FC<AuthenticationMetaProps> = props => {
   const {
     meta: { canonical, description, title },
   } = props
