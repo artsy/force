@@ -10,7 +10,6 @@ import { PhotoThumbnail } from "./Components/PhotoThumbnail"
 import { Photo } from "../Utils/fileUtils"
 import { useRouter } from "v2/System/Router/useRouter"
 import { useSubmission } from "../Utils/useSubmission"
-import { uploadPhotosValidationSchema } from "../Utils/validation"
 import { useSystemContext } from "v2/System"
 import { openAuthModal } from "v2/Utils/openAuthModal"
 import { ModalType } from "v2/Components/Authentication/Types"
@@ -119,9 +118,8 @@ export const UploadPhotos: React.FC = () => {
         initialValues={{
           photos: [],
         }}
-        validationSchema={uploadPhotosValidationSchema}
       >
-        {({ values, setFieldValue, isValid, isSubmitting }) => {
+        {({ values, setFieldValue, isSubmitting }) => {
           const handlePhotoDelete = (photo: Photo) => {
             photo.removed = true
             photo.abortUploading?.()
@@ -157,11 +155,7 @@ export const UploadPhotos: React.FC = () => {
 
               <Button
                 width={["100%", "auto"]}
-                disabled={
-                  !isValid ||
-                  isSubmitting ||
-                  values.photos.some(c => c.errorMessage)
-                }
+                disabled={isSubmitting || !values.photos.some(c => c.s3Key)}
                 loading={isSubmitting || values.photos.some(c => c.loading)}
                 type="submit"
               >

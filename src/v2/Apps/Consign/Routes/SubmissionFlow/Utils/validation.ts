@@ -44,6 +44,13 @@ export const artworkDetailsValidationSchema = yup.object().shape({
   units: yup.string().required(),
 })
 
+/*
+this validation currently not in use until we find a workaround
+formik is checking whether errorMessage found for a photo under the hood
+and invalidates form submission if errorMessage exists
+
+The check is currently moved to UploadPhotos.tsx's Button directly
+*/
 export const uploadPhotosValidationSchema = yup.object().shape({
   photos: yup
     .array()

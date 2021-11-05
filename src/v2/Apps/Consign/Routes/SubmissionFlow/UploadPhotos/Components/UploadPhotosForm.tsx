@@ -88,10 +88,10 @@ export const UploadPhotosForm: React.FC<UploadPhotosFormProps> = ({
     const imagesToUpload = values.photos.filter(c => !c.s3Key && !c.loading)
 
     if (imagesToUpload.length) {
-      imagesToUpload.forEach(photo => uploadImage(photo))
+      imagesToUpload.forEach(uploadImage)
       setFieldValue("photos", [...values.photos])
     }
-  }, [values.photos])
+  }, [values.photos, errors])
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
     const photos = acceptedFiles.map(file => normalizePhoto(file))

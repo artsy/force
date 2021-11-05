@@ -57,6 +57,9 @@ jest.mock("../../Utils/createConsignSubmission", () => ({
 const openAuthModalSpy = jest.spyOn(openAuthModal, "openAuthModal")
 let user: User = undefined
 
+const mockUploadPhoto = uploadPhoto as jest.Mock
+const mockCreateConsignSubmission = createConsignSubmission as jest.Mock
+
 const { getWrapper } = setupTestWrapper({
   Component: () => {
     return (
@@ -87,13 +90,13 @@ describe("UploadPhotos", () => {
     jest.spyOn(global, "FileReader").mockImplementation(function () {
       this.readAsDataURL = jest.fn()
     })
-    ;(uploadPhoto as jest.Mock).mockResolvedValue("s3key")
+    mockUploadPhoto.mockResolvedValue("s3key")
   })
 
   afterEach(() => {
     user = undefined
     openAuthModalSpy.mockReset()
-    ;(uploadPhoto as jest.Mock).mockClear()
+    mockUploadPhoto.mockClear()
   })
 
   it("renders correct", async () => {
@@ -333,7 +336,7 @@ describe("UploadPhotos", () => {
 
   describe("show error message", () => {
     it("if an image could not be uploaded", async () => {
-      ;(uploadPhoto as jest.Mock).mockRejectedValueOnce("rejected")
+      mockUploadPhoto.mockRejectedValueOnce("rejected")
 
       const wrapper = getWrapper()
 
@@ -452,7 +455,7 @@ describe("UploadPhotos", () => {
 
   describe("show error modal", () => {
     beforeEach(() => {
-      ;(createConsignSubmission as jest.Mock).mockRejectedValueOnce("rejected")
+      mockCreateConsignSubmission.mockRejectedValueOnce("rejected")
     })
 
     it("if consingment submission fails", async () => {
