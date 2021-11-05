@@ -55,7 +55,7 @@ jest.mock("../../Utils/createConsignSubmission", () => ({
 }))
 
 const openAuthModalSpy = jest.spyOn(openAuthModal, "openAuthModal")
-let user: User = undefined
+// let user: User = undefined
 
 const mockUploadPhoto = uploadPhoto as jest.Mock
 const mockCreateConsignSubmission = createConsignSubmission as jest.Mock
@@ -94,7 +94,7 @@ describe("UploadPhotos", () => {
   })
 
   afterEach(() => {
-    user = undefined
+    // user = undefined
     openAuthModalSpy.mockReset()
     mockUploadPhoto.mockClear()
   })
@@ -414,9 +414,9 @@ describe("UploadPhotos", () => {
     })
 
     it("if consingment submission fails", async () => {
-      user = {
-        email: "test@test.test",
-      }
+      // user = {
+      //   email: "test@test.test",
+      // }
 
       const wrapper = getWrapper()
 
