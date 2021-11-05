@@ -1,5 +1,5 @@
-import { useState } from "react";
-import * as React from "react";
+import { useState } from "react"
+import * as React from "react"
 import {
   ResponsiveBox,
   Text,
@@ -172,12 +172,11 @@ const FairArticles: React.FC<FairArticlesProps> = ({ fair, relay }) => {
           <Column span={6} start={4}>
             <Button
               width="100%"
-              variant="secondaryGray"
               onClick={handleClick}
               loading={isLoading}
               disabled={!relay.hasMore()}
             >
-              Show more
+              Show More
             </Button>
           </Column>
         )}
