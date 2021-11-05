@@ -1,0 +1,265 @@
+import { graphql } from "relay-runtime"
+import { setupTestWrapper } from "v2/DevTools/setupTestWrapper"
+import { ContactInformationFragmentContainer } from "../ContactInformation"
+import { ContactInformationForm } from "../Components/ContactInformationForm"
+import { flushPromiseQueue } from "v2/DevTools"
+import { SystemContextProvider } from "v2/System"
+import * as openAuthModal from "v2/Utils/openAuthModal"
+import { ReactWrapper } from "enzyme"
+import { createConsignSubmission } from "../../Utils/createConsignSubmission"
+
+jest.unmock("react-relay")
+
+const previousStepsData = {
+  artworkDetailsForm: {
+    artistId: "artistId",
+    artistName: "Banksy",
+    year: "2021",
+    title: "Some title",
+    medium: "PAINTING",
+    rarity: "limited edition",
+    editionNumber: "1",
+    editionSize: "2",
+    height: "3",
+    width: "4",
+    depth: "5",
+    units: "cm",
+  },
+  uploadPhotosForm: {
+    photos: [
+      {
+        id: "id",
+        name: "foo.png",
+        size: 111084,
+        s3Key: "Sr63tiKsuvMKfCWViJPWHw/foo.png",
+        removed: false,
+      },
+    ],
+  },
+}
+const mockMe = { name: "Serge", email: "test@test.test", phone: "123456789" }
+const openAuthModalSpy = jest.spyOn(openAuthModal, "openAuthModal")
+const mockRouterPush = jest.fn()
+
+jest.mock("v2/System/Router/useRouter", () => ({
+  useRouter: jest.fn(() => ({
+    router: { push: mockRouterPush },
+    match: { params: { id: "1" } },
+  })),
+}))
+
+jest.mock("../../Utils/createConsignSubmission", () => ({
+  ...jest.requireActual("../../Utils/createConsignSubmission"),
+  createConsignSubmission: jest.fn(),
+}))
+
+let sessionStore = {
+  "submission-1": JSON.stringify({
+    ...previousStepsData,
+  }),
+}
+Object.defineProperty(window, "sessionStorage", {
+  value: {
+    getItem: key => sessionStore[key] || null,
+    setItem: jest.fn(),
+    removeItem: jest.fn(),
+  },
+})
+
+const getWrapperWithProps = (user?: User) =>
+  setupTestWrapper({
+    Component: (props: any) => {
+      return (
+        <SystemContextProvider user={user} isLoggedIn={!!user}>
+          <ContactInformationFragmentContainer me={props.me} />
+        </SystemContextProvider>
+      )
+    },
+    query: graphql`
+      query ContactInformationTestQuery {
+        me {
+          ...ContactInformation_me
+        }
+      }
+    `,
+  })
+
+const simulateTyping = async (
+  wrapper: ReactWrapper,
+  field: string,
+  text: string
+) => {
+  const input = wrapper.find(`input[name='${field}']`)
+  input.simulate("change", { target: { name: field, value: text } })
+  await flushPromiseQueue()
+  wrapper.update()
+}
+
+describe("Contact Information step", () => {
+  const saveButtonSelector = "button[data-test-id='save-button']"
+
+  afterEach(() => {
+    jest.clearAllMocks()
+  })
+
+  describe("Initial render", () => {
+    it("renders correctly", async () => {
+      const { getWrapper } = getWrapperWithProps(mockMe)
+      const wrapper = getWrapper({ Me: () => mockMe })
+      await flushPromiseQueue()
+      wrapper.update()
+      const text = wrapper.text()
+      const artworkCurrentStep = wrapper
+        .find("button")
+        .filterWhere(n => n.prop("aria-selected") === true)
+      artworkCurrentStep.forEach(n => {
+        expect(n.text()).toContain("Contact")
+      })
+      expect(text).toContain("Let us know how to reach you")
+      expect(text).toContain(
+        "We'll only use these details to share updates on your submission."
+      )
+      expect(wrapper.find(ContactInformationForm).length).toBe(1)
+      expect(wrapper.find("button[type='submit']").length).toBe(1)
+      expect(wrapper.find("BackLink")).toHaveLength(1)
+      expect(wrapper.find("BackLink").prop("to")).toEqual(
+        "/consign/submission/1/upload-photos"
+      )
+    })
+  })
+
+  describe("Save and Continue button", () => {
+    it("is disabled if at least one field is not valid", async () => {
+      const { getWrapper } = getWrapperWithProps()
+      const wrapper = getWrapper({
+        Me: () => ({ name: null, email: null, phone: null }),
+      })
+      await flushPromiseQueue()
+      wrapper.update()
+
+      expect(wrapper.find(saveButtonSelector).prop("disabled")).toBe(true)
+
+      await simulateTyping(wrapper, "name", "Andy")
+
+      expect(wrapper.find(saveButtonSelector).prop("disabled")).toBe(true)
+
+      await simulateTyping(wrapper, "email", "test@test.test")
+
+      expect(wrapper.find(saveButtonSelector).prop("disabled")).toBe(true)
+
+      await simulateTyping(wrapper, "phone", "123456789")
+
+      expect(wrapper.find(saveButtonSelector).prop("disabled")).toBe(false)
+    })
+
+    it("is enabled if  all fields is valid", async () => {
+      const { getWrapper } = getWrapperWithProps(mockMe)
+      const wrapper = getWrapper({ Me: () => mockMe })
+      await flushPromiseQueue()
+      wrapper.update()
+      const button = wrapper.find(saveButtonSelector)
+      expect(button.prop("disabled")).toBe(false)
+    })
+  })
+
+  describe("If not logged in", () => {
+    it("fields are not pre-populating from user profile", async () => {
+      const { getWrapper } = getWrapperWithProps()
+      const wrapper = getWrapper({
+        Me: () => ({ name: null, email: null, phone: null }),
+      })
+      expect(wrapper.find("input[name='name']").prop("value")).toBe("")
+      expect(wrapper.find("input[name='email']").prop("value")).toBe("")
+      expect(wrapper.find("input[name='phone']").prop("value")).toBe("")
+    })
+
+    it("submiting a valid form", async () => {
+      const { getWrapper } = getWrapperWithProps()
+      const wrapper = getWrapper()
+      await flushPromiseQueue()
+      wrapper.update()
+
+      await simulateTyping(wrapper, "name", "Andy")
+      await simulateTyping(wrapper, "email", "test@test.test")
+      await simulateTyping(wrapper, "phone", "123456789")
+
+      wrapper.find("Form").simulate("submit")
+      await flushPromiseQueue()
+      wrapper.update()
+      expect(mockRouterPush).not.toHaveBeenCalled()
+      expect(openAuthModalSpy).toBeCalled()
+    })
+  })
+
+  describe("If logged in", () => {
+    it("fields are pre-populating from user profile", async () => {
+      const { getWrapper } = getWrapperWithProps(mockMe)
+      const wrapper = getWrapper({ Me: () => mockMe })
+      await flushPromiseQueue()
+      wrapper.update()
+      expect(wrapper.find("input[name='name']").prop("value")).toBe(mockMe.name)
+      expect(wrapper.find("input[name='email']").prop("value")).toBe(
+        mockMe.email
+      )
+      expect(wrapper.find("input[name='phone']").prop("value")).toBe(
+        mockMe.phone
+      )
+    })
+
+    it("submiting a valid form", async () => {
+      const { getWrapper } = getWrapperWithProps(mockMe)
+      const wrapper = getWrapper({ Me: () => mockMe })
+      await flushPromiseQueue()
+      wrapper.update()
+      wrapper.find("Form").simulate("submit")
+      await flushPromiseQueue()
+      wrapper.update()
+      expect(sessionStorage.setItem).toHaveBeenCalled()
+      expect(createConsignSubmission).toHaveBeenCalled()
+      expect(sessionStorage.removeItem).toHaveBeenCalled()
+      expect(mockRouterPush).toHaveBeenCalledWith(
+        "/consign/submission/1/thank-you"
+      )
+      expect(openAuthModalSpy).not.toBeCalled()
+    })
+  })
+
+  it("values are trimmed before any actions", async () => {
+    const { getWrapper } = getWrapperWithProps(mockMe)
+    const wrapper = getWrapper({ Me: () => mockMe })
+    await flushPromiseQueue()
+    wrapper.update()
+
+    await simulateTyping(wrapper, "name", " Andy  ")
+    await simulateTyping(wrapper, "email", "  test@test.test  ")
+    await simulateTyping(wrapper, "phone", "  123456789  ")
+
+    wrapper.find("Form").simulate("submit")
+    await flushPromiseQueue()
+    wrapper.update()
+
+    expect(sessionStorage.setItem).toHaveBeenCalledWith(
+      "submission-1",
+      JSON.stringify({
+        ...previousStepsData,
+        contactInformationForm: {
+          name: "Andy",
+          email: "test@test.test",
+          phone: "123456789",
+        },
+      })
+    )
+
+    const createConsignSubmissionData = (createConsignSubmission as jest.Mock)
+      .mock.calls[0][1]
+    expect(createConsignSubmission).toHaveBeenCalledTimes(1)
+    expect(createConsignSubmissionData).toEqual({
+      ...previousStepsData,
+      contactInformationForm: {
+        name: "Andy",
+        email: "test@test.test",
+        phone: "123456789",
+      },
+    })
+  })
+})
