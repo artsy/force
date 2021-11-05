@@ -1,8 +1,8 @@
-import * as React from "react";
+import * as React from "react"
 import { FormSwitcher } from "v2/Components/Authentication/FormSwitcher"
 import { ModalOptions, ModalType } from "v2/Components/Authentication/Types"
 import { ModalHeader } from "v2/Components/Modal/ModalHeader"
-import { handleSubmit } from "../helpers"
+import { handleSubmit } from "v2/Apps/Authentication/Utils/helpers"
 import { Flex, BoxProps } from "@artsy/palette"
 import { HorizontalPadding } from "v2/Apps/Components/HorizontalPadding"
 

@@ -3,7 +3,7 @@ import { Component } from "react"
 import { data as sd } from "sharify"
 
 import { ActionType, AuthModalType, AuthService } from "@artsy/cohesion"
-import { handleSubmit, setCookies } from "../helpers"
+import { handleSubmit, setCookies } from "v2/Apps/Authentication/Utils/helpers"
 import { ModalManager } from "v2/Components/Authentication/ModalManager"
 import { ModalOptions, ModalType } from "v2/Components/Authentication/Types"
 import { mediator } from "lib/mediator"

@@ -4,7 +4,7 @@ import { flushPromiseQueue, MockBoot } from "v2/DevTools"
 import { mockLocation, resetMockLocation } from "v2/DevTools/mockLocation"
 import { useRouter } from "v2/System/Router/useRouter"
 import { resetPassword } from "v2/Utils/auth"
-import { ResetPasswordRoute } from "../Routes/ResetPasswordRoute"
+import { ResetPasswordRoute } from "../ResetPasswordRoute"
 
 jest.mock("v2/System/Router/useRouter")
 jest.mock("v2/Utils/auth")
