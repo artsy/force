@@ -104,26 +104,6 @@ const OrderArtworkNode = {
       major: 100,
       display: "$100",
     },
-    price: "11111",
-  },
-}
-
-const OrderArtworkNodePriceHidden = {
-  artwork: {
-    ...OrderArtworkNodeWithoutShipping,
-    shippingOrigin: "New York, NY",
-    artaShippingEnabled: false,
-    domesticShippingFee: {
-      minor: 10000,
-      major: 100,
-      display: "$100",
-    },
-    internationalShippingFee: {
-      minor: 10000,
-      major: 100,
-      display: "$100",
-    },
-    price: "",
   },
 }
 
@@ -572,40 +552,6 @@ export const UntouchedOfferOrder = {
     edges: [{ node: OfferWithTotals }],
   },
   totalListPriceCents: 1600000,
-} as const
-
-export const UntouchedOfferOrderPriceHidden = {
-  ...UntouchedOrder,
-  __typename: "CommerceOfferOrder",
-  awaitingResponseFrom: null,
-  currencyCode: "USD",
-  itemsTotal: "$10,000",
-  itemsTotalCents: 1000000,
-  lastOffer: null,
-  lineItems: {
-    edges: [
-      {
-        node: {
-          ...OrderArtworkNodePriceHidden,
-          editionSetId: null,
-          id: "line-item-node-id",
-          selectedShippingQuote: null,
-          shippingQuoteOptions: null,
-          ...OfferArtworkOrEditionSetkNode_Artwork,
-          ...OrderArtworkFulfillmentsNode,
-          ...OrderArtworkShipmentNode,
-        },
-      },
-    ],
-  },
-  isInquiryOrder: false,
-  mode: "OFFER",
-  myLastOffer: null,
-  conversation: null,
-  offers: {
-    edges: [{ node: OfferWithTotals }],
-  },
-  totalListPriceCents: 10000000,
 } as const
 
 export const UntouchedInquiryOfferOrder = {

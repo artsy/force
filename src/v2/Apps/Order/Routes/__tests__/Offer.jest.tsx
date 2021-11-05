@@ -5,7 +5,6 @@ import {
   UntouchedOfferOrder,
   UntouchedOfferOrderInPounds,
   UntouchedOfferOrderWithRange,
-  UntouchedOfferOrderPriceHidden,
 } from "../../../__tests__/Fixtures/Order"
 import {
   initialOfferFailedAmountIsInvalid,
@@ -29,11 +28,6 @@ const mockPostEvent = require("v2/Utils/Events").postEvent as jest.Mock
 
 const testOffer: OfferTestQueryRawResponse["order"] = {
   ...UntouchedOfferOrder,
-  internalID: "1234",
-}
-
-const testOfferHiddenPrice: OfferTestQueryRawResponse["order"] = {
-  ...UntouchedOfferOrderPriceHidden,
   internalID: "1234",
 }
 
@@ -148,28 +142,6 @@ describe("Offer InitialMutation", () => {
     })
   })
 
-  describe("an offer on the work with price hidden", () => {
-    let page: OrderAppTestPage
-    beforeEach(async () => {
-      page = await buildPage({
-        mockData: {
-          order: {
-            ...testOfferHiddenPrice,
-            price: "",
-          },
-        },
-      })
-    })
-
-    it("shows no modal warning when an offer made on work with hidden price", async () => {
-      await page.setOfferAmount(2000000)
-      await page.clickSubmit()
-      await page.expectButtonSpinnerWhenSubmitting()
-      await page.expectNoModal()
-      expect(mutations.mockFetch).toHaveBeenCalled()
-    })
-  })
-
   describe("a offer note", () => {
     let page: OrderAppTestPage
 
@@ -259,27 +231,6 @@ describe("Offer InitialMutation", () => {
       )
     })
 
-    describe("The 'amount too high' speed bump", () => {
-      it("shows if the offer amount is too high", async () => {
-        await page.setOfferAmount(17000)
-        await page.clickSubmit()
-
-        expect(mutations.mockFetch).not.toHaveBeenCalled()
-
-        await page.expectAndDismissErrorDialogMatching(
-          "Offer higher than list price",
-          "You’re making an offer higher than the list price",
-          "OK"
-        )
-
-        expect(mutations.mockFetch).not.toHaveBeenCalled()
-
-        await page.clickSubmit()
-
-        expect(mutations.mockFetch).toHaveBeenCalledTimes(1)
-      })
-    })
-
     describe("The 'amount too small' speed bump", () => {
       it("shows if the offer amount is too small", async () => {
         await page.setOfferAmount(1000)
@@ -301,9 +252,30 @@ describe("Offer InitialMutation", () => {
         expect(mutations.mockFetch).toHaveBeenCalledTimes(1)
       })
     })
+
+    describe("The 'amount too high' speed bump", () => {
+      it("shows if the offer amount is too high", async () => {
+        await page.setOfferAmount(17000)
+        await page.clickSubmit()
+
+        expect(mutations.mockFetch).not.toHaveBeenCalled()
+
+        await page.expectAndDismissErrorDialogMatching(
+          "Offer higher than list price",
+          "You’re making an offer higher than the list price",
+          "OK"
+        )
+
+        expect(mutations.mockFetch).not.toHaveBeenCalled()
+
+        await page.clickSubmit()
+
+        expect(mutations.mockFetch).toHaveBeenCalledTimes(1)
+      })
+    })
   })
 
-  describe("Analytics", () => {
+  describe("Analaytics", () => {
     let page: OrderAppTestPage
     beforeEach(async () => {
       page = await buildPage()
