@@ -1,5 +1,5 @@
-import { useState } from "react";
-import * as React from "react";
+import { useState } from "react"
+import * as React from "react"
 import { Box, Button, GridColumns, Column } from "@artsy/palette"
 import {
   createPaginationContainer,
@@ -65,12 +65,11 @@ const CurrentAuctions: React.FC<CurrentAuctionsProps> = ({ viewer, relay }) => {
         <Column span={12} mx="auto">
           <Button
             width="100%"
-            variant="secondaryGray"
             onClick={handleClick}
             loading={isLoading}
             disabled={!relay.hasMore()}
           >
-            Show more
+            Show More
           </Button>
         </Column>
       </GridColumns>
